@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A1BC982D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AC9CC982D0
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Mjj-0003wC-5z; Thu, 17 Sep 2026 20:45:55 -0400
+	id 1x7MhV-0007XQ-Qu; Thu, 17 Sep 2026 20:43:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7MjY-0003BZ-DS
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:45:44 -0400
+ id 1x7MhS-0007UI-Uj
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:43:34 -0400
 Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7MjV-0002Iw-QN
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:45:44 -0400
+ id 1x7MhP-0001eg-Ui
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:43:34 -0400
 Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc4cdc0d663so55916a12.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:45:41 -0700 (PDT)
+ 41be03b00d2f7-cc4cdc0d663so55131a12.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789692340; x=1790297140; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789692210; x=1790297010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4eesfdmRkhMU+wZpTSQiOdW3SKXScTF3aj/NWSnvq2A=;
- b=n7AJaEcQSOH4rUer3CbopSivSGcU/AQW8vl6dwTLKwXin9eGRA6byYlWL7xziy6e7f
- sdL81eTsCwY59M4z1G6TAi67RAvjY3cMrsGbJ6zyBhFUmvxXqYIJk8EXddnJvfSG8fow
- kU7KhjTM2dNHHvaaeqzE3VoOc1W88BMscrtxXwrUx6XRjH4aYcyR6d7BSKPHltehjVTJ
- NpK0zJNLA6IVzNEDeRswRn89Ix/fYdBOaHhV+uYIX1KMN8RcsUwxj0WK41FyWKb/kCBt
- VE6prdYvr+wHm9dCV7ZKzGVOjKTbPxpquKSvClpEF/I6pBErVrtAcUaWIPzA5RBtIxn3
- Y+Ng==
+ bh=hmDO6zTK1S69QUicgCowNUg+ALAjpN+7pbeoaU6cbXI=;
+ b=XCPypPlH+aGVyrgjQ3O/m/nVIO3ToNHGA7MTEIwPbVAz+ldFmTws6O+dPiOTOGhemj
+ hUV9ketk1mEijENKtrazfSvd1UNfhfjn4OXA76+ZuEc8c9HUEuCazIzdW9ZfpEd6GFe1
+ 9pipNfXWJbcYabWnpnIAGnDmTWQUg+O7NDKX0lMZPp3VxHHhyMA0RvdWOkoypHJtfn60
+ ZlIb3EtRnOjkgyl/HTGSWrvzDCRLI3GclYmRWVN8v/aEW5BpCBfFpXVH5SGcHigPJ52L
+ 40xAVsyBjl01cZHJQ5F4xZtGioeMGc8afVukUWvgAja+lHaDzDvUmbBwt0PtJYfMFCCf
+ Zedg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789692340; x=1790297140;
+ d=1e100.net; s=20260707; t=1789692210; x=1790297010;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4eesfdmRkhMU+wZpTSQiOdW3SKXScTF3aj/NWSnvq2A=;
- b=bXhhRiemLSs2Bz9FMDwPpw7oY/aZm2eAMuibLyLtjEc2xDngbK6so/Y2isAU2XG89H
- tjzUrf3jQBTqFOavXUETf8CVyyEMQDgznWEk3wQ7OqEykYwJ2378WzxUJj9+W066mKtI
- RnU7C/ylRIKQXYcqA0vTHi2SQ4bk/HsL6BM4SEC2+niVpYdUYjfkd6cA9NxwLKb+WX8c
- fmPb+OO9Oo0Bvm6vBn0CIcv643KRElQAmc2yjPJmG0jnndQArb/GUAGhhe1VyVAT+Yr2
- g/gmoebLK9wUIHIIqfhICQLABfGQBxy51RESs+IsyIjDmy5bAz93Y55//r0D3vASYWb7
- +l6A==
-X-Gm-Message-State: AFuF++lI1hBSeMe2drkbrsB/Nn+lf30G67POhELXCJ7GwwedQvgvnnnM
- WrlK69MLbBSLyRtHDoKwuBRJ0tbWM0J05fQB0VCOtXgyqBjhqmzsNgHBJRjZIQGwAu8=
-X-Gm-Gg: AYBFou1d+QCp2A/uCIkIwLDeqdfTwzC9DSqlBYs4sb7v+8yCQYQXQwTft8Qkdk7zKDx
- vHcID2knNDIpPEjRUz5sm8yjIaPtufQ0CcFHoEnrXjjMPZGVKtNx8U3pxFHeCbsWYVGKTdRKGVJ
- l/N7E+f029EPoF++ZyTvfMGOwf5Eyb9IglMRwn8oZneNUxTVRpU11g05C57TQZtaJcY1ioZ25KU
- lmcD/SKTVKpNRkSyd/3ZEwC9WFyI5z3CZBNoMfNkEeX7T31Hvbx1gJ1zIJE7sbSlSUxdgbYGmgS
- mc8g0w+SPDmwGbObFmhjItdRfcGRD3NC3JtlKQ2l5o3ams6kGxk2ASmgtmn4zSK6dOoZn4bw8vn
- jQy0Hhv94DNj+Tdj/Vxs8QOyU8tlzg+/rpFcKYeKb5AxOQY1CNpQQYZOkPitAnnFLErZBWgby7Q
- U87Keju3lc2Gfz9q9fFqoCEA0P37ef2ZzEFMc3TpxXPCHT84Wt5NjVlIB6bDwMCQ9Xfg5ye4uvK
- xk7ESy0HyXnYl1JVOzg9W9QEgXbaOvt
-X-Received: by 2002:a17:90b:5305:b0:39e:4c81:6c63 with SMTP id
- 98e67ed59e1d1-39e54dbe3c1mr1614944a91.30.1789692340229; 
- Thu, 17 Sep 2026 17:45:40 -0700 (PDT)
+ bh=hmDO6zTK1S69QUicgCowNUg+ALAjpN+7pbeoaU6cbXI=;
+ b=ynmN8MFNpG/rI6hKg1m7Ewu2fwarzHub7PmcDDlJ5bDNwRBsf5O3wPsAZ5JKk8nFPO
+ +IdN584PTYcGq78fBfkRMXmrac8Cw0ZzHrYPZUiVtbD0VqbKca5/1NFvtadXfkiLX/LN
+ XMbCXGNptI32odL0BeaIbohYrjc/1ovPdA/aF65V6rVnJoteM7lTuZgpg38VMdPDICod
+ IM2HnD1IDFLZeJ7sLVMNrmIjKO1OuTFT8JBC0RjNOLPswJt5T81W9KexV9lUSFoDLYyy
+ VsXfWcJNU+lkNJrTOz+Y/i5mdBJ+hhaHcGBH3pk4LV9sx27Rer6Oy+8PHNzt+xYDueVK
+ +6Mw==
+X-Gm-Message-State: AFuF++ngP+Ip3XOrGpew9pGhl1bWzm4N0wVlyPc9/z0J4Wjgt4vbCkui
+ pKSYnUP7opiGDisLQMPr6MH/KcIQeYOLt1TgZ8rZxZLBYkPzs4hOFkHSZovo9DZwSwE=
+X-Gm-Gg: AYBFou3uczCj0zc31S7HfgdYj9QEtKN/ERFbiP3WE7pE1VkbF9nGLTGdLkwLLGzR+Un
+ qJhThvLSzXi3Iv7qe4yh8ABiV31ZipopjTbmefGAa75SoCxACvVJRkqhy1PU8xLHW28lFJ6gzBg
+ aZU+NiWjo86ItJ28YyEVcXY/t/gmL8Ncd+pOVCXUHOptNNH1jFE0DCZktiz2ktLC1yEFwpUBVDt
+ 2w6xVbKJ1oRAWtqui2fOgwAAMF9L25iWWsusNWtrEW3FmV1154280HaljFoZw0SUtP/TxcqGokf
+ BjlIBU6cATnx/KEWIm8LdMtzaaaaLxxCcg97z9Xvk5XeIKpQdBKase7gVDjXz2aAZvpxEr4KEon
+ z87QrWKecI1toqUazw+VaN21ZrWCdLtdnfoZC8S4D0lPJH66euDqhXZrTI0wfFl07A25b1DByxB
+ /mL1yT59VZOdrlc8G3Joc38+PE4jGD6hdPQY3Btus9M6uKM3Gr4ynoJKijEnAYFG7TxTSW7Uf1M
+ 7eBNCoWJ8TV5MXnIFY7Pz+vSDX9+U1NGJC2rfnLc1c=
+X-Received: by 2002:a17:90a:d00e:b0:39d:fd82:de0c with SMTP id
+ 98e67ed59e1d1-39e54aeed0emr1765463a91.2.1789692210488; 
+ Thu, 17 Sep 2026 17:43:30 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-144cdfc3df2sm600286c88.5.2026.09.17.17.45.32
+ a92af1059eb24-144cdfc3df2sm600286c88.5.2026.09.17.17.43.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:45:39 -0700 (PDT)
+ Thu, 17 Sep 2026 17:43:29 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-s390x@nongnu.org,
@@ -98,10 +98,9 @@ Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-s390x@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
  Song Gao <17746591750@163.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH 21/21] target/i386: convert raise_exception to
- i386_raise_exception
-Date: Fri, 18 Sep 2026 08:42:23 +0800
-Message-ID: <20260918004225.827-22-luoyonggang@gmail.com>
+Subject: [PATCH 06/21] target/m68k: convert raises to raise_excp
+Date: Fri, 18 Sep 2026 08:42:08 +0800
+Message-ID: <20260918004225.827-7-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260918004225.827-1-luoyonggang@gmail.com>
 References: <20260918004225.827-1-luoyonggang@gmail.com>
@@ -130,147 +129,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefix leftover TCG raise_exception to i386_raise_exception. Rename
-C raise_exception family globals to i386_raise_exception*, and keep
-the short names as static inline wrappers in helper-tcg.h. Wrappers
-still call raise_interrupt2.
+Translate through gen_helper_raise_excp with restore 0. Drop TCG
+raise_exception and the one-line raise_exception_ra wrappers. Keep
+leftover raise_exception_format2.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- target/i386/helper.h          |  2 +-
- target/i386/tcg/excp_helper.c | 18 +++++++--------
- target/i386/tcg/helper-tcg.h  | 42 +++++++++++++++++++++++++++++------
- target/i386/tcg/translate.c   |  2 +-
- 4 files changed, 46 insertions(+), 18 deletions(-)
+ target/m68k/helper.c    | 12 ++----------
+ target/m68k/helper.h    |  1 -
+ target/m68k/op_helper.c | 19 -------------------
+ target/m68k/translate.c |  2 +-
+ 4 files changed, 3 insertions(+), 31 deletions(-)
 
-diff --git a/target/i386/helper.h b/target/i386/helper.h
-index 3f67098f11f..cf643e820a6 100644
---- a/target/i386/helper.h
-+++ b/target/i386/helper.h
-@@ -56,7 +56,7 @@ DEF_HELPER_2(syscall, void, env, int)
- DEF_HELPER_2(sysret, void, env, int)
- DEF_HELPER_FLAGS_1(pause, TCG_CALL_NO_WG, noreturn, env)
- DEF_HELPER_FLAGS_3(raise_interrupt, TCG_CALL_NO_WG, noreturn, env, int, int)
--DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
-+DEF_HELPER_FLAGS_2(i386_raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
- DEF_HELPER_FLAGS_1(icebp, TCG_CALL_NO_WG, noreturn, env)
- DEF_HELPER_3(boundw, void, env, tl, int)
- DEF_HELPER_3(boundl, void, env, tl, int)
-diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
-index 1eaa602c91d..ab3aa17a870 100644
---- a/target/i386/tcg/excp_helper.c
-+++ b/target/i386/tcg/excp_helper.c
-@@ -32,9 +32,9 @@ G_NORETURN void helper_raise_interrupt(CPUX86State *env, int intno,
-     raise_interrupt(env, intno, next_eip_addend);
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 5f91d206f59..3c62e15735d 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -162,14 +162,6 @@ void HELPER(cf_movec_to)(CPUM68KState *env, uint32_t reg, uint32_t val)
+     }
  }
  
--G_NORETURN void helper_raise_exception(CPUX86State *env, int exception_index)
-+G_NORETURN void helper_i386_raise_exception(CPUX86State *env, int exception_index)
+-static void raise_exception_ra(CPUM68KState *env, int tt, uintptr_t raddr)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = tt;
+-    cpu_loop_exit_restore(cs, raddr);
+-}
+-
+ void HELPER(m68k_movec_to)(CPUM68KState *env, uint32_t reg, uint32_t val)
  {
--    raise_exception(env, exception_index);
-+    i386_raise_exception(env, exception_index);
+     switch (reg) {
+@@ -291,7 +283,7 @@ void HELPER(m68k_movec_to)(CPUM68KState *env, uint32_t reg, uint32_t val)
+     }
+ 
+     /* Invalid control registers will generate an exception. */
+-    raise_exception_ra(env, EXCP_ILLEGAL, 0);
++    cpu_loop_exit_excp(env_cpu(env), EXCP_ILLEGAL, 0);
  }
  
- /*
-@@ -120,25 +120,25 @@ G_NORETURN void raise_interrupt(CPUX86State *env, int intno, int next_eip_addend
-     raise_interrupt2(env, intno, 1, 0, next_eip_addend, 0);
- }
+ uint32_t HELPER(m68k_movec_from)(CPUM68KState *env, uint32_t reg)
+@@ -394,7 +386,7 @@ uint32_t HELPER(m68k_movec_from)(CPUM68KState *env, uint32_t reg)
+     }
  
--G_NORETURN void raise_exception_err(CPUX86State *env, int exception_index,
--                                    int error_code)
-+G_NORETURN void i386_raise_exception_err(CPUX86State *env, int exception_index,
-+                                         int error_code)
+     /* Invalid control registers will generate an exception. */
+-    raise_exception_ra(env, EXCP_ILLEGAL, 0);
++    cpu_loop_exit_excp(env_cpu(env), EXCP_ILLEGAL, 0);
+ 
+     return 0;
+ }
+diff --git a/target/m68k/helper.h b/target/m68k/helper.h
+index 0bda8f8152d..a6ca811ebe2 100644
+--- a/target/m68k/helper.h
++++ b/target/m68k/helper.h
+@@ -111,7 +111,6 @@ DEF_HELPER_3(set_mac_extu, void, env, i32, i32)
+ DEF_HELPER_2(flush_flags, void, env, i32)
+ DEF_HELPER_2(set_ccr, void, env, i32)
+ DEF_HELPER_FLAGS_1(get_ccr, TCG_CALL_NO_WG_SE, i32, env)
+-DEF_HELPER_2(raise_exception, noreturn, env, i32)
+ 
+ DEF_HELPER_FLAGS_3(bfffo_reg, TCG_CALL_NO_RWG_SE, i32, i32, i32, i32)
+ 
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 38f7a689814..5f539f8fd75 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -539,25 +539,6 @@ bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ 
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-G_NORETURN static void
+-raise_exception_ra(CPUM68KState *env, int tt, uintptr_t raddr)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = tt;
+-    cpu_loop_exit_restore(cs, raddr);
+-}
+-
+-G_NORETURN static void raise_exception(CPUM68KState *env, int tt)
+-{
+-    raise_exception_ra(env, tt, 0);
+-}
+-
+-void HELPER(raise_exception)(CPUM68KState *env, uint32_t tt)
+-{
+-    raise_exception(env, tt);
+-}
+-
+ G_NORETURN static void
+ raise_exception_format2(CPUM68KState *env, int tt, int ilen, uintptr_t raddr)
  {
-     raise_interrupt2(env, exception_index, 0, error_code, 0, 0);
- }
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index 138c89d3e53..15f368afd54 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -252,7 +252,7 @@ static void gen_jmp(DisasContext *s, TCGv dest)
  
--G_NORETURN void raise_exception_err_ra(CPUX86State *env, int exception_index,
--                                       int error_code, uintptr_t retaddr)
-+G_NORETURN void i386_raise_exception_err_ra(CPUX86State *env, int exception_index,
-+                                            int error_code, uintptr_t retaddr)
+ static void gen_raise_exception(int nr)
  {
-     raise_interrupt2(env, exception_index, 0, error_code, 0, retaddr);
+-    gen_helper_raise_exception(tcg_env, tcg_constant_i32(nr));
++    gen_helper_raise_excp(tcg_env, tcg_constant_i32(nr), tcg_constant_i32(0));
  }
  
--G_NORETURN void raise_exception(CPUX86State *env, int exception_index)
-+G_NORETURN void i386_raise_exception(CPUX86State *env, int exception_index)
- {
-     raise_interrupt2(env, exception_index, 0, 0, 0, 0);
- }
- 
--G_NORETURN void raise_exception_ra(CPUX86State *env, int exception_index,
--                                   uintptr_t retaddr)
-+G_NORETURN void i386_raise_exception_ra(CPUX86State *env, int exception_index,
-+                                        uintptr_t retaddr)
- {
-     raise_interrupt2(env, exception_index, 0, 0, 0, retaddr);
- }
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index f4b2ff740d5..430e49efe0e 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -60,13 +60,41 @@ void x86_translate_code(CPUState *cs, TranslationBlock *tb,
-                         int *max_insns, vaddr pc, void *host_pc);
- 
- /* excp_helper.c */
--G_NORETURN void raise_exception(CPUX86State *env, int exception_index);
--G_NORETURN void raise_exception_ra(CPUX86State *env, int exception_index,
--                                   uintptr_t retaddr);
--G_NORETURN void raise_exception_err(CPUX86State *env, int exception_index,
--                                    int error_code);
--G_NORETURN void raise_exception_err_ra(CPUX86State *env, int exception_index,
--                                       int error_code, uintptr_t retaddr);
-+G_NORETURN void i386_raise_exception(CPUX86State *env, int exception_index);
-+G_NORETURN void i386_raise_exception_ra(CPUX86State *env, int exception_index,
-+                                        uintptr_t retaddr);
-+G_NORETURN void i386_raise_exception_err(CPUX86State *env, int exception_index,
-+                                         int error_code);
-+G_NORETURN void i386_raise_exception_err_ra(CPUX86State *env,
-+                                            int exception_index,
-+                                            int error_code, uintptr_t retaddr);
-+
-+static inline G_NORETURN
-+void raise_exception(CPUX86State *env, int exception_index)
-+{
-+    i386_raise_exception(env, exception_index);
-+}
-+
-+static inline G_NORETURN
-+void raise_exception_ra(CPUX86State *env, int exception_index,
-+                        uintptr_t retaddr)
-+{
-+    i386_raise_exception_ra(env, exception_index, retaddr);
-+}
-+
-+static inline G_NORETURN
-+void raise_exception_err(CPUX86State *env, int exception_index,
-+                         int error_code)
-+{
-+    i386_raise_exception_err(env, exception_index, error_code);
-+}
-+
-+static inline G_NORETURN
-+void raise_exception_err_ra(CPUX86State *env, int exception_index,
-+                            int error_code, uintptr_t retaddr)
-+{
-+    i386_raise_exception_err_ra(env, exception_index, error_code, retaddr);
-+}
- G_NORETURN void raise_interrupt(CPUX86State *nenv, int intno, int next_eip_addend);
- G_NORETURN void handle_unaligned_access(CPUX86State *env, vaddr vaddr,
-                                         MMUAccessType access_type,
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index d8de290acb6..379af59ea71 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1506,7 +1506,7 @@ static void gen_exception(DisasContext *s, int trapno)
- {
-     gen_update_cc_op(s);
-     gen_update_eip_cur(s);
--    gen_helper_raise_exception(tcg_env, tcg_constant_i32(trapno));
-+    gen_helper_i386_raise_exception(tcg_env, tcg_constant_i32(trapno));
-     s->base.is_jmp = DISAS_NORETURN;
- }
- 
+ static void gen_raise_exception_format2(DisasContext *s, int nr,
 -- 
 2.52.0.windows.1
 
