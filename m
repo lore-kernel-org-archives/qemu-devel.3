@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0284DC982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AE4C88E75
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7QAJ-0005YP-Ph; Fri, 18 Sep 2026 00:25:35 -0400
+	id 1x7QAR-0005aV-61; Fri, 18 Sep 2026 00:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAE-0005WG-J6
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:31 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAK-0005Yi-DB
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:36 -0400
+Received: from mail-oi2-x0f.google.com ([2607:f8b0:4864:32::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAC-0004Mc-JE
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:30 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-80638c24bedso266070a34.0
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAH-0004NM-PZ
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:35 -0400
+Received: by mail-oi2-x0f.google.com with SMTP id
+ 46e09a7af769-805bf8c2661so195644a34.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705527; x=1790310327;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705533; x=1790310333;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
- b=atJSwybuR4al1J2DZ5JVnxTpLWibKhA++UJ1hI/4u3M/lZ/Kl1jzN0014PHMa3mhC9
- nDZNvbNX4PRVrGf5poYqpYI/+e/k/wQEWHPS8KamI8jw/63dzkewkUL9geFYohVxWZkt
- 8kUECUWdPQY0Y+vTsbNr+02lJ915cijXWBJdvHKukFt5y8boe4ZPzwb8u1JuX/gunQL2
- BdMxAurQAJKeHIiPDM9HvVKEzwYViSqMs5CPSeAurTn9Q2zVXejAwPpRpJ8NWteWC3fp
- 8Oqk/eu4uQB1pI1Mbr3smPGX16zXpbtMhAUMKc/UzapNbPj8Isn1nP4hbjMl5jULUuJT
- rT7Q==
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9olzYjwumX7R7LPQVvbR/Zq9y6lTKJ3ONx88TImvWwg=;
+ b=PPaQJMWjHHAIlSZsii0I/cYQp9o8y6gcTcaPdRgCO9WYQYeh6iJ8gOjgUsTu0iNU8U
+ umtJL7uYAh232Yg5rqe5sF6jRpU0+JeqLcXVnB4cO8O6OgJRoy4oYrQJHk1gcw+EiEzX
+ 3R7wQsHl1i5+ys9zMiEyLP+k6Am6hDCeqEZX4HP9+GtsZKYTK622QHPrb8Fw0PrhJJ7p
+ PfAzt+fVvvNLhrKSDrmHxTqlHfSeYjrV4OirvAMgsqqpIt52vc/xS5d5qiNzmBet2/Tf
+ o25pB0vSlpD2txi4z5CNEaa7x6G6P6ELVi42k9Ar/Rju9rXDW1H/Y3vrTXLC6K2132P3
+ LsGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789705527; x=1790310327;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
- b=xozlAYt9Aa01pUvdQFz3t8v0Oy3lWiXu6W/Gr2VF5R5wzbOh+jj3FyPvx1+CGzm6sB
- Q+DX5lZu2G+a0HUYheifieYrDDu7I6bby6dSFp8rkMjoOlwNkk8tqTLEjO6Ih8vtzEXc
- +DOowurp1xWLyJxs20u9uKRQkgrX1P5a0oKEi+nIs1W7bdK+SE1zZqGggCGSB6DApEV9
- 1sYAwyMJjNWgcbiQSS2TKtfZ8XOxP4CW642NOrcyYWjHlaKM7CP3bcc5Vg4x1Fw5t7C7
- mH9Zi63Co5bHcpOdvcqL8XBStrW6KUBLYzQwnB8jfWjjL5aPMT9sby559hw4QqA7+45U
- gArA==
-X-Gm-Message-State: AFuF++norWMuhrpAzCJJb8eOCSTlzvUWW5VvTEH7yl4a22n1qToMnxRf
- kEfVpnuwnuUaynGvqo0eH3PEeIbLEKaJhukmwf3n5FfqA87nhAsJx4KQn5PdFKKgb0twVeA9269
- GaTgy/VQ=
-X-Gm-Gg: AYBFou2prZYQ+f5ClC3Vcpws+Lx2kfXHQtkbLwUNbQeLIlzkUwjzpEGiHShunEp3or4
- q7rsQJJINrhdbkphTnu+NUE7iuv1bJk43p+M93v6kEU9Ya2n1SuIU66ttSvWg7Bhn1rdiL6fGcW
- 5LQThBzy6+pCBEmlIMEPeV8pPwNN+srL635QNg4M9J76Qix5xoAHvi43FCLLCmUN/OFYLNPIMSg
- Yp5LJU0lZT+WLBvlJem01zorb7aSUMav1poXcQ3LhaVtVRr/75G2Fp1mGg1T5jh1TOF5MgCJ/cg
- ITz/c/E41O3Df8cL+zet64fpO3aTyUq3ett8cUrGjbZP9T5XISK3+kzifOx1+2JXIdkM+WQes5x
- sq0oOe0FmkK25bcT3S7ziFHpHscZcrlHCfg4wa/TzgoD3YxLg3l4sZJOuBK8ESNCR54tj5reBsc
- HsMUZOUBMwu21Ma8sH9foFayVOHuMP9bll73LtTQYU/+jp8IfxF3hnAP4V2Q==
-X-Received: by 2002:a05:6830:a1d0:10b0:804:3ca9:8e5c with SMTP id
- 46e09a7af769-80c4bd14d95mr3486551a34.8.1789705527407; 
- Thu, 17 Sep 2026 21:25:27 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789705533; x=1790310333;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9olzYjwumX7R7LPQVvbR/Zq9y6lTKJ3ONx88TImvWwg=;
+ b=ob9YUvbNG8VaQBEESbf6egOLLE7dopzJvjZGLsr8sR1SDcm3LBnaHjEjmQLK7O9Pr6
+ W+61bI7ng2Lxi7R6BsOs4QenNcLqRUFkWdWtVvYYNJ1sUqbOo/Yzk2tzMBjP8RsWzh40
+ fgdSJ2LM/auN1ZX2RwX9RaFfnys3e0Ih/uO61EGIwTLLrxSD0od6EWxg7enuG3cqK5sf
+ eqi3hgP7Iz1gAuGZjSOsLal4jaoB/3G2/XIN6BjIriZF6tFPcyTb008BXaF3feCwdFVZ
+ b3RrjU6tRcTHKpuTqDof+spDS63LpSRcaDLLEKq0G7+dhCToGv9LUCs+bbR17AZoY7Va
+ ++vA==
+X-Gm-Message-State: AFuF++nXcCfrI9Axrf17BwjqkcXBhxa9JDQkI3QM3gOqVxq/Ugh3vbTI
+ 1kThXNoYBTxptNwvFD23JO3SzYOwAFVsjR3dxff49rZ3pjndmMlHL/KX2iTpbljr9c4HTRXG8g5
+ /DQGgf+o=
+X-Gm-Gg: AYBFou0Z0XcHCmWx4+xh9BlWDZ6qwtnM119dA9ljOJU5Elt/TqzpcuiInxorbhhHwl/
+ 5Z+60d6LjaGOm4A4NT3XN+j0gzV1RVBFIRlYtabGLJrmuX8nzd8Nwpq4E9KInAmz98QUvSfRsuT
+ 6k4xVNsP2Ke76o7zzYhls8GjG787th5wNRYhL9FttJ3j8qYy0nO9VJIONIFUOp97pF7/gVnustT
+ xphEoUwyo9K1/+qCM04USyfjJPlcrmeNoD5PlzwherSPWhuTcWUwBLQvpAV8e1i+zEPS7sQF+N8
+ VF1s6LdeDCj99wXGgpNZfpgpz3W0CxGrCPhlay1eWJ24cNEaJFcvcQzxkw1PJdQ4nEIN0FeC4SR
+ iFk6vKE/iRzGRH81oazpK8xl0aGQOdpwvxboVV1FKp9DOBxCJVrujFvpZlzN9vIBk+UuVN9W57M
+ Uaktn9IPXcM2FhcylP3BLXfcQkUxX+1qbEw/A6XMeJMtWPKRpjRVJTgyRkbQ==
+X-Received: by 2002:a05:6830:6aa5:b0:806:104e:b770 with SMTP id
+ 46e09a7af769-80de2bd561dmr1660507a34.17.1789705532771; 
+ Thu, 17 Sep 2026 21:25:32 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.26
+ 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 21:25:27 -0700 (PDT)
+ Thu, 17 Sep 2026 21:25:32 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+ Stacey Son <sson@FreeBSD.org>,
+ =?UTF-8?q?Mika=C3=ABl=20Urankar?= <mikael.urankar@gmail.com>,
+ Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/41] bsd-user: Implement both getsockopt and setsockopt
-Date: Thu, 17 Sep 2026 22:23:59 -0600
-Message-ID: <20260918042422.38713-19-imp@bsdimp.com>
+Subject: [PULL 22/41] bsd-user: Add os-time.h with clock and time-of-day
+ functions
+Date: Thu, 17 Sep 2026 22:24:03 -0600
+Message-ID: <20260918042422.38713-23-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918042422.38713-1-imp@bsdimp.com>
 References: <20260918042422.38713-1-imp@bsdimp.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::f; envelope-from=imp@bsdimp.com;
+ helo=mail-oi2-x0f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,364 +106,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement get/setsockopt with the generated file describing the socket
-options. This uses a table driven conversion. At the moment, we only
-implement the simple types. For 64 on 64 with the same endian, we also
-try to just copy in/out since the representation should be the same.
+Add the first part of FreeBSD time support: nanosleep, clock_nanosleep,
+clock_gettime, clock_settime, clock_getres, gettimeofday, settimeofday,
+adjtime, ntp_adjtime, and ntp_gettime. Also add safe_syscall wrappers
+for nanosleep, clock_nanosleep, and kevent.
 
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-socket.h | 340 +++++++++++++++++++++++++++++++++++
- 1 file changed, 340 insertions(+)
- create mode 100644 bsd-user/freebsd/os-socket.h
+ bsd-user/freebsd/os-time.h | 225 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 225 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-time.h
 
-diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
+diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
 new file mode 100644
-index 0000000000..126e49b282
+index 0000000000..e387441d86
 --- /dev/null
-+++ b/bsd-user/freebsd/os-socket.h
-@@ -0,0 +1,340 @@
++++ b/bsd-user/freebsd/os-time.h
+@@ -0,0 +1,225 @@
 +/*
-+ * FreeBSD socket related system call shims
++ * FreeBSD time related system call shims
 + *
-+ * Copyright (c) 2013-2014 Stacey D. Son
++ * Copyright (c) 2013-2015 Stacey Son
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#ifndef BSD_USER_FREEBSD_OS_SOCKET_H
-+#define BSD_USER_FREEBSD_OS_SOCKET_H
++#ifndef FREEBSD_OS_TIME_H
++#define FREEBSD_OS_TIME_H
 +
 +#include <sys/types.h>
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+#include <netinet/in.h>
++#include <sys/event.h>
++#include <sys/select.h>
++#include <sys/timex.h>
++#include <poll.h>
++#include <signal.h>
++#include <time.h>
 +
++#include "qemu.h"
 +#include "qemu-os.h"
-+#include "os-sockopt.h"
 +
-+ssize_t safe_recvmsg(int s, struct msghdr *msg, int flags);
-+ssize_t safe_sendmsg(int s, const struct msghdr *msg, int flags);
++#include "bsd-socket.h"
 +
-+/* do_sendrecvmsg_locked() Must return target values and target errnos. */
-+static abi_long do_sendrecvmsg_locked(int fd, struct target_msghdr *msgp,
-+                                      int flags, int send)
-+{
-+    abi_long ret, len;
-+    struct msghdr msg;
-+    abi_ulong count;
-+    struct iovec *vec;
-+    abi_ulong target_vec;
++int safe_clock_nanosleep(clockid_t clock_id, int flags,
++     const struct timespec *rqtp, struct timespec *rmtp);
++int safe_nanosleep(const struct timespec *rqtp, struct timespec *rmtp);
++int safe_kevent(int, const struct kevent *, int, struct kevent *, int,
++     const struct timespec *);
 +
-+    if (msgp->msg_name) {
-+        msg.msg_namelen = tswap32(msgp->msg_namelen);
-+        msg.msg_name = alloca(msg.msg_namelen + 1);
-+        ret = target_to_host_sockaddr(msg.msg_name,
-+                                      tswapal(msgp->msg_name),
-+                                      msg.msg_namelen);
-+        if (ret == -TARGET_EFAULT) {
-+            /*
-+             * For connected sockets msg_name and msg_namelen must be ignored,
-+             * so returning EFAULT immediately is wrong.  Instead, pass a bad
-+             * msg_name to the host kernel, and let it decide whether to return
-+             * EFAULT or not.
-+             */
-+            msg.msg_name = (void *)-1;
-+        } else if (ret) {
-+            goto out2;
-+        }
-+    } else {
-+        msg.msg_name = NULL;
-+        msg.msg_namelen = 0;
-+    }
-+    msg.msg_controllen = 2 * tswap32(msgp->msg_controllen);
-+    if (msgp->msg_control) {
-+        msg.msg_control = alloca(msg.msg_controllen);
-+        memset(msg.msg_control, 0, msg.msg_controllen);
-+    } else {
-+        msg.msg_control = NULL;
-+    }
++int __sys_ktimer_create(clockid_t, struct sigevent *restrict,
++     int *restrict);
++int __sys_ktimer_gettime(int, struct itimerspec *);
++int __sys_ktimer_settime(int, int, const struct itimerspec *restrict,
++     struct itimerspec *restrict);
++int __sys_ktimer_delete(int);
 +
-+    msg.msg_flags = tswap32(msgp->msg_flags);
-+
-+    count = tswap32(msgp->msg_iovlen);
-+    target_vec = tswapal(msgp->msg_iov);
-+
-+    if (count > IOV_MAX) {
-+        /*
-+         * sendrcvmsg returns a different errno for this condition than
-+         * readv/writev, so we must catch it here before lock_iovec() does.
-+         */
-+        ret = -TARGET_EMSGSIZE;
-+        goto out2;
-+    }
-+
-+    vec = lock_iovec(send ? VERIFY_READ : VERIFY_WRITE,
-+                     target_vec, count, send);
-+    if (vec == NULL) {
-+        ret = -host_to_target_errno(errno);
-+        goto out2;
-+    }
-+    msg.msg_iovlen = count;
-+    msg.msg_iov = vec;
-+
-+    if (send) {
-+        if (msg.msg_control != NULL) {
-+            ret = t2h_freebsd_cmsg(&msg, msgp);
-+        } else {
-+            ret = 0;
-+        }
-+        if (ret == 0) {
-+            ret = get_errno(safe_sendmsg(fd, &msg, flags));
-+        }
-+    } else {
-+        ret = get_errno(safe_recvmsg(fd, &msg, flags));
-+        if (!is_error(ret)) {
-+            len = ret;
-+            if (msg.msg_control != NULL) {
-+                ret = h2t_freebsd_cmsg(msgp, &msg);
-+            } else {
-+                ret = 0;
-+            }
-+            if (!is_error(ret)) {
-+                msgp->msg_namelen = tswap32(msg.msg_namelen);
-+                msgp->msg_flags = tswap32(msg.msg_flags);
-+                if (msg.msg_name != NULL && msg.msg_name != (void *)-1) {
-+                    ret = host_to_target_sockaddr(tswapal(msgp->msg_name),
-+                                    msg.msg_name, msg.msg_namelen);
-+                    if (ret) {
-+                        goto out;
-+                    }
-+                }
-+
-+                ret = len;
-+            }
-+        }
-+    }
-+
-+out:
-+    unlock_iovec(vec, target_vec, count, !send);
-+out2:
-+    return ret;
-+}
-+
-+
-+static abi_long do_sendrecvmsg(int fd, abi_ulong target_msg,
-+                               int flags, int send)
++/* nanosleep(2) */
++static inline abi_long do_freebsd_nanosleep(abi_long arg1, abi_long arg2)
 +{
 +    abi_long ret;
-+    struct target_msghdr *msgp;
++    struct timespec req, rem;
 +
-+    if (!lock_user_struct(send ? VERIFY_READ : VERIFY_WRITE,
-+                          msgp,
-+                          target_msg,
-+                          send ? 1 : 0)) {
-+        return -TARGET_EFAULT;
++    ret = t2h_freebsd_timespec(&req, arg1);
++    if (!is_error(ret)) {
++        ret = get_errno(safe_nanosleep(&req, &rem));
++        if (ret == -TARGET_EINTR && arg2) {
++            if (h2t_freebsd_timespec(arg2, &rem) != 0) {
++                ret = -TARGET_EFAULT;
++            }
++        }
 +    }
-+    ret = do_sendrecvmsg_locked(fd, msgp, flags, send);
-+    unlock_user_struct(msgp, target_msg, send ? 0 : 1);
++
 +    return ret;
 +}
 +
-+static inline struct sockopt_entry *get_sockopt_entry(int level)
++/* clock_nanosleep(2) */
++static inline abi_long do_freebsd_clock_nanosleep(abi_long arg1, abi_long arg2,
++    abi_long arg3, abi_long arg4)
 +{
-+    for (int i = 0; i < ARRAY_SIZE(so_cache); i++) {
-+        if (so_cache[i].level == level) {
-+            return so_cache[i].entry;
++    struct timespec req, rem;
++    abi_long ret;
++    int clkid, flags;
++
++    clkid = arg1;
++    /* XXX Translate? */
++    flags = arg2;
++    ret = t2h_freebsd_timespec(&req, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(safe_clock_nanosleep(clkid, flags, &req, &rem));
++        if (ret == -TARGET_EINTR && arg4) {
++            if (h2t_freebsd_timespec(arg4, &rem) != 0) {
++                ret = -TARGET_EFAULT;
++            }
 +        }
 +    }
-+    return NULL;
++
++    return ret;
 +}
 +
-+/* setsockopt(2) */
-+static inline abi_long do_bsd_setsockopt(int sockfd, int level, int optname,
-+        abi_ulong optval_addr, socklen_t optlen)
++/* clock_gettime(2) */
++static inline abi_long do_freebsd_clock_gettime(abi_long arg1, abi_long arg2)
 +{
 +    abi_long ret;
-+    int val;
-+    u_char ch;
-+    uint64_t val64;
-+    struct sockopt_entry *e = get_sockopt_entry(level);
-+    void *p;
++    struct timespec ts;
 +
-+    if (e == NULL) {
-+        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
-+        e++;
-+    }
-+
-+    if (e->level == SOCK_LEVEL_NONE) {
-+        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
-+        switch (e->type[i]) {
-+        case SOCKOPT_TYPE_BOOL:
-+        case SOCKOPT_TYPE_INT:
-+        case SOCKOPT_TYPE_U_INT:
-+        case SOCKOPT_TYPE_UINT32_T:
-+            if (optlen != sizeof(int)) {
-+                continue;
-+            }
-+            if (get_user_u32(val, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
-+        case SOCKOPT_TYPE_U_CHAR:
-+            if (optlen != sizeof(u_char)) {
-+                continue;
-+            }
-+            if (get_user_u8(ch, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &ch, sizeof(ch)));
-+        case SOCKOPT_TYPE_UINT64_T:
-+            if (optlen != sizeof(uint64_t)) {
-+                continue;
-+            }
-+            if (get_user_u64(val64, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &val64, sizeof(val64)));
-+        default:
-+#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-+            gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                     level, optname);
-+            return -TARGET_ENOPROTOOPT;
-+#endif
-+            break;
++    ret = get_errno(clock_gettime(arg1, &ts));
++    if (!is_error(ret)) {
++        if (h2t_freebsd_timespec(arg2, &ts) != 0) {
++            return -TARGET_EFAULT;
 +        }
 +    }
 +
-+    /*
-+     * When bit size and endian are the same, the structures are the same (we hope).
-+     */
-+    p = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(setsockopt(sockfd, level, optname, p, optlen));
-+    unlock_user(p, optval_addr, 0);
 +    return ret;
 +}
 +
-+/* getsockopt(2) */
-+static inline abi_long do_bsd_getsockopt(int sockfd, int level, int optname,
-+        abi_ulong optval_addr, abi_ulong optlen)
++/* clock_settime(2) */
++static inline abi_long do_freebsd_clock_settime(abi_long arg1, abi_long arg2)
++{
++    struct timespec ts;
++
++    if (t2h_freebsd_timespec(&ts, arg2) != 0) {
++        return -TARGET_EFAULT;
++    }
++
++    return get_errno(clock_settime(arg1, &ts));
++}
++
++/* clock_getres(2) */
++static inline abi_long do_freebsd_clock_getres(abi_long arg1, abi_long arg2)
 +{
 +    abi_long ret;
-+    int val;
-+    u_char ch;
-+    socklen_t len;
-+    uint64_t val64;
-+    struct sockopt_entry *e = get_sockopt_entry(level);
-+    void *p;
++    struct timespec ts;
 +
-+    if (e == NULL) {
-+        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
-+        e++;
-+    }
-+
-+    if (e->level == SOCK_LEVEL_NONE) {
-+        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    if (get_user_u32(len, optlen)) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
-+        switch (e->type[i]) {
-+        case SOCKOPT_TYPE_BOOL:
-+        case SOCKOPT_TYPE_INT:
-+        case SOCKOPT_TYPE_U_INT:
-+        case SOCKOPT_TYPE_UINT32_T:
-+            if (len != sizeof(int)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &val, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(int)) {
-+                if (put_user_u32(val, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        case SOCKOPT_TYPE_U_CHAR:
-+            if (len != sizeof(u_char)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &ch, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(u_char)) {
-+                if (put_user_u8(ch, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        case SOCKOPT_TYPE_UINT64_T:
-+            if (len != sizeof(uint64_t)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &val64, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(uint64_t)) {
-+                if (put_user_u64(val64, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        default:
-+#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-+            gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                     level, optname);
-+            return -TARGET_ENOPROTOOPT;
-+#endif
-+            break;
++    ret = get_errno(clock_getres(arg1, &ts));
++    if (!is_error(ret)) {
++        if (h2t_freebsd_timespec(arg2, &ts) != 0) {
++            return -TARGET_EFAULT;
 +        }
 +    }
 +
-+    /*
-+     * When bit size and endian are the same, the structures are the same, and
-+     * if not that is handled above.
-+     */
-+    p = lock_user(VERIFY_WRITE, optval_addr, len, 0);
-+    if (p == NULL) {
++    return ret;
++}
++
++/* gettimeofday(2) */
++static inline abi_long do_freebsd_gettimeofday(abi_ulong arg1, abi_ulong arg2)
++{
++    abi_long ret;
++    struct timeval tv;
++    struct timezone tz, *target_tz; /* XXX */
++
++    if (arg2 != 0) {
++        if (!lock_user_struct(VERIFY_READ, target_tz, arg2, 0)) {
++            return -TARGET_EFAULT;
++        }
++        __get_user(tz.tz_minuteswest, &target_tz->tz_minuteswest);
++        __get_user(tz.tz_dsttime, &target_tz->tz_dsttime);
++        unlock_user_struct(target_tz, arg2, 1);
++    }
++    ret = get_errno(gettimeofday(&tv, arg2 != 0 ? &tz : NULL));
++    if (!is_error(ret)) {
++        if (h2t_freebsd_timeval(&tv, arg1)) {
++            return -TARGET_EFAULT;
++        }
++    }
++
++    return ret;
++}
++
++/* settimeofday(2) */
++static inline abi_long do_freebsd_settimeofday(abi_long arg1, abi_long arg2)
++{
++    struct timeval tv;
++    struct timezone tz, *target_tz; /* XXX */
++
++    if (arg2 != 0) {
++        if (!lock_user_struct(VERIFY_READ, target_tz, arg2, 0)) {
++            return -TARGET_EFAULT;
++        }
++        __get_user(tz.tz_minuteswest, &target_tz->tz_minuteswest);
++        __get_user(tz.tz_dsttime, &target_tz->tz_dsttime);
++        unlock_user_struct(target_tz, arg2, 1);
++    }
++    if (t2h_freebsd_timeval(&tv, arg1)) {
 +        return -TARGET_EFAULT;
 +    }
-+    ret = get_errno(getsockopt(sockfd, level, optname, p, &len));
-+    unlock_user(p, optval_addr, ret < 0 ? 0 : len);
-+done:
-+    if (put_user_u32(len, optlen)) {
-+        return -TARGET_EFAULT;
++
++    return get_errno(settimeofday(&tv, arg2 != 0 ? &tz : NULL));
++}
++
++/* adjtime(2) */
++static inline abi_long do_freebsd_adjtime(abi_ulong target_delta_addr,
++        abi_ulong target_old_addr)
++{
++    abi_long ret;
++    struct timeval host_delta, host_old;
++
++    ret = t2h_freebsd_timeval(&host_delta, target_delta_addr);
++    if (is_error(ret)) {
++        return ret;
 +    }
++
++    if (target_old_addr) {
++        ret = get_errno(adjtime(&host_delta, &host_old));
++        if (is_error(ret)) {
++            return ret;
++        }
++        ret = h2t_freebsd_timeval(&host_old, target_old_addr);
++    } else {
++        ret = get_errno(adjtime(&host_delta, NULL));
++    }
++
++    return ret;
++}
++
++/* ntp_adjtime(2) */
++static inline abi_long do_freebsd_ntp_adjtime(abi_ulong target_tx_addr)
++{
++    abi_long ret;
++    struct timex host_tx;
++
++    ret = t2h_freebsd_timex(&host_tx, target_tx_addr);
++    if (ret == 0) {
++        ret = get_errno(ntp_adjtime(&host_tx));
++    }
++
++    return ret;
++}
++
++/* ntp_gettime(2) */
++static inline abi_long do_freebsd_ntp_gettime(abi_ulong target_ntv_addr)
++{
++    abi_long ret;
++    struct ntptimeval host_ntv;
++
++    ret = get_errno(ntp_gettime(&host_ntv));
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_ntptimeval(target_ntv_addr, &host_ntv);
++    }
++
 +    return ret;
 +}
 +
 +
-+#endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
++
++#endif /* FREEBSD_OS_TIME_H */
 -- 
 2.55.0
 
