@@ -4,94 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9424AC982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 18:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04D7C982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 18:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7d2s-0002XY-GF; Fri, 18 Sep 2026 14:10:47 -0400
+	id 1x7dJc-00058A-AE; Fri, 18 Sep 2026 14:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x7d2S-0002Lq-5p
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 14:10:27 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1x7d2O-0000hC-S4
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 14:10:18 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- d2e1a72fcca58-85469a34908so1061853b3a.0
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 11:10:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1789755014; x=1790359814; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/Hfpy/x3gmRurkqv60Bg2/RIVF22wanQR3zYhofeKyo=;
- b=B4BnCvOTMP5kTv01wnoWSNYbaLa+JzAiuqsN/QyuuarqVzZ+TtGPr/uJ6uePPFMbKR
- PWFn9cE2bMz2+bCKXGvrQiXhPxdNjLkyWMb9h+EPsj25ieeLnI0wv8p/2mH+MVvWyLrK
- FUPbpLp3QF4F+XVB3JGQCTP3RMNlIFN4Dl0DkBhDkCWanKo236rO2l2JnSBfvtYw0+4e
- gJNd/YN8KRWtgOtVo1aMNUVHPypieisC4mHd0Td0RdUOaAQkrECIAyhP2xBwIhMAdHUb
- f6pHf2LV+ZkHxOfJTZ1En1fUQ6kCou7095ZkhW05o1zQruyS3gZD8mBhYy0FzGI3FYQa
- DlUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789755014; x=1790359814;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=/Hfpy/x3gmRurkqv60Bg2/RIVF22wanQR3zYhofeKyo=;
- b=IQaNxW/D6DouOYp04qqB73aGEBfGCM0HwqYFzYpKOrmbFZqn4jdWcZSLOif7+25ohT
- GO6Ajd99G+GOZ1xLU1IEIzT124kc2e8R0HK/A2e77KpOaq4InBW9OLwVxbNjPFXwatDV
- 8oE1FIxQgOZzjqGtuIfQmOIcRo1oHpfYqKdcTIMQDuXdvruUEOqEGFYFySKglu1TXxbb
- HoBzsThChC7Hc7/dEF97IhHxymqEnZsiH0gQYQZbMugtHUxcriSKShrC1eWzC1fUT6nO
- 1Bv/2wvTaoMe3KCnd8tB5II3UgdsgV0ulVW4CFBXJTcQCKu1EUSpyvHJ1YxadkyaN7l4
- dYPA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByD/3SWfkXKxlDaNQe6L2otoseiweSnkk6U01T7kYCRZev6GmGavi/0XmQKWXSvImCG4ptpv4zYApEi@nongnu.org
-X-Gm-Message-State: AFuF++lCIpcLeEgUDiJz8faTS8JKDW8vU+yrMJ6m30wZO/XfW3oArE9y
- uUb2TMltXz2HidzjzyiiOz+g/EHOUUmeSgFPDsnXp4JVkWcW61cSwC+6jxY6VGKIGiM=
-X-Gm-Gg: AYBFou327dzgJDALijcCdAPCRujFK7KKPtnGTVDDcjFRSZ3fFds2yiM05Y0+jFyEiuY
- P6VKS4AeTEXluwPKB5zFwfO33ce+w133AHvMIP36R/kGrOZofnrD8Hs/whUUJjCGwzM2Bew09oW
- SHKufYJ76jJXogIRAzJdL3Y1XUxm+9YiTqTiCoBesRY25o+tAKrVbNiP/hcTnxjTfFz4h9a8dK4
- BOeloFPOSxiVtFRH7f8qH+tWOfv215uYGL/mt7wyZWo6BJ+nq28qBo7d0FHjuGVc4/d5WExlx7/
- +5gmkP4+YgQq1Mr4UyRuI8cQ1j0eE9lUrQe5FiZjmYogRtpgu/1pthF7NaBOw3oua/b/w2vJ9r9
- ZZchqPizie70Bx2FOztMfSvw8hqPgTS/evea6cnjL/5uVtGsst1/+sxhqC29iUosiGXXKX7uI5K
- V6GUK25uHcOXeYxSV/RAZDCmOHLMRbknUVnH0Qrpx3jn2R/nSGWl8rylDHOReGIfSiKIgqmjHUE
- LwSPJzqu2PQGPT/Rb/9KfRPG3iH1cdVCD0rYovHknpM
-X-Received: by 2002:a05:6a00:ad89:b0:847:77e9:acbb with SMTP id
- d2e1a72fcca58-874dc3f65a8mr6628507b3a.13.1789755013712; 
- Fri, 18 Sep 2026 11:10:13 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-877a94f4fefsm157029b3a.25.2026.09.18.11.10.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 11:10:13 -0700 (PDT)
-Date: Sat, 19 Sep 2026 02:10:09 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>, richard.henderson@linaro.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Alistair Francis <Alistair.Francis@wdc.com>, daniel.barboza@oss.qualcomm.com,
- joel@jms.id.au
-Subject: Re: [PATCH v2] tcg/riscv64: Set vtype before whole-register vector
- moves
-Message-ID: <aq184D2BedTg-Jjc@sifive.com>
-References: <1f02f0fc-fee2-4722-9798-97bb0132561d@linaro.org>
- <mhng-2ECF390B-6BDB-4DF3-8133-18F4AC3A4DD2@Palmers-Mini.rwc.dabbelt.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x7dJX-00057l-Tv
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 14:28:00 -0400
+Received: from mail-centralusazon11011011.outbound.protection.outlook.com
+ ([52.101.62.11] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x7dJW-0003xN-Cx
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 14:27:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ws6nS+tcJjLm9J+rew/Ze3902kSbi3KlFu4cr4jTQjzkzBHB/2EdbRFPK6SjxeMmPH3/PTeWRgLHfLIKgyztvloTfzStShYl9RLY4Lztlbhdk60FWDCq1QJt1ur9Fvpu4W4wTIO48xSYRKyhFSoeFSrD/fvGalZAUDL2dg7c3rbQwHLnmNfFK9sOw+GIe03cP5AlvNGwoZtOozp+k/0zvsu/Obvy5rSYNDDjBtvsv3dI2PnUh47iRUTcqPUVJ45NOzXFFJaZGIqCFns4YybF6MjGzknNDLQy2ii66jo2tN7hBocV7l26yfP1b7afbp3N2lr9GvmFQ9KoFNo3Olgo6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AzaS+KXdeufyu2IV0dSyqtTvp68KHT1tPeCxoNggPg0=;
+ b=TlpUf5nuJvNS9LcfqHYho44kMuhR3ef8CunA6hQTzETs9PwDPHufYpoG3LZRlPI26cylDA7nhu04/h6kDiMk1aH5YYNdgTE+58meLM9/HpRIi/2HkzcPPzgAIiOfae9ryPQVvvAXQTlRmppbRfxNad6mhEik9MsMXGmfXPT5DIZNWx0tRFViPaDWftxpUWv6AxLon3AqgjtPsFI8X3m39yWgUVPDqBmI5sznFXWLs09LiO7wEXG8uiMWadOq3ITG/UsKra5g06pbzt50iHbSdnOlyBFFhlr/a3gU1L8Z/jKQPJsaAK38E3NFERCgj0S29rIg8claWjthpIB79lKViQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AzaS+KXdeufyu2IV0dSyqtTvp68KHT1tPeCxoNggPg0=;
+ b=sqNM0wsCsFUxpQHrisFJ55bIopcKeRDzWMEE6gMGpp+nt9hmycuOD7pOMv49buUh9bVMiV9FSBcvCG6yJhDLWOzTtTr7E2vywn3ZufiTSUL/iz1kqqk/jDEMgBfHCLRUqHqmFWS0PTPRfNQMUWUfT0Spy53yosJZm+E8VFeAcXcnesnnKNth1g0ZRTEpVHd6EJevDg/yDsmPv8tla5pr5n/tspXJCogCifDBSvKle4Ks+qJM8DWKFRtmB/uzdd2dYdaXrx1aDNvPzvNcXXOjvE+LOAIaPnIdj/d7N8c92745+YlsNzR53dSAirJ+Tjc9kycwzl18pg+fVmb5DDu3Rw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17) by MN2PR12MB4486.namprd12.prod.outlook.com
+ (2603:10b6:208:263::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.13; Fri, 18 Sep
+ 2026 18:22:51 +0000
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0428.011; Fri, 18 Sep 2026
+ 18:22:51 +0000
+Message-ID: <7c826624-113a-40b9-841b-1bd8c375a9bc@nvidia.com>
+Date: Fri, 18 Sep 2026 13:22:47 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] MdeModulePkg, ArmVirtPkg, OvmfPkg: fixed PCI BAR
+ placement
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: devel@edk2.groups.io, gaoliming@byosoft.com.cn,
+ ardb+tianocore@kernel.org, sami.mujawar@arm.com, jiewen.yao@intel.com,
+ qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com
+References: <20260916192408.928411-1-tdave@nvidia.com>
+ <aq06JQWs6KszJI9w@nucbdw.ghoffman.csb.home.kraxel.org>
+From: Tushar Dave <tdave@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <aq06JQWs6KszJI9w@nucbdw.ghoffman.csb.home.kraxel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <mhng-2ECF390B-6BDB-4DF3-8133-18F4AC3A4DD2@Palmers-Mini.rwc.dabbelt.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=max.chou@sifive.com; helo=mail-pz2-x0d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: SJ0PR13CA0227.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c1::22) To IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|MN2PR12MB4486:EE_
+X-MS-Office365-Filtering-Correlation-Id: b188e56f-3c1e-47dd-5892-08df15b1d952
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|376014|1800799024|10067099003|56012099006|4143699003|6133799003|5023799004|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: oQV+g50yygKiSI4ahmaLQnd5FSC0CVYwmZxKGxjXRChscywyZaZkNBPZBC5yJyISltc3P5vOYDjrZL4b0l822lBQ5j6kBF9SlAnM7CTSUEuyUaRsXwjQ2ibQVargxXOWoMpFa69nA9goxBgaIuPyLricPf2AMgek0cNpKqjHYd1SoCaA3jSNlaDIRW0pDluv3i1FqHvJgpTdnOrXwGPRoqfiPj1xttRp+zs0UR2chRyp/NVz+c6Dmui/vIHWjKHFCMi2EsxLM0RzmQc7JruCVT0SuLv5nWXN9HeHxR2Y/31ujtgLsYbaADFHrRRQZv208cCexMObjMG8gPJ/D9KLm5BHVfzWEec4h+lSRejcnH1Nl7tgvkhan9bDecwz2V9CwMZVZ3Qjasw5is3cVRAqRoC9XYbC3UPCQCoM/5797nXdIzdNucn4+9W3DjhoGdJb3S+D7eX81OQlK+7lkxYlBtXLhOLR0wRqw6cirhbsP+At5rADzP75M9TmKA8Dzff3RO96omV227hBe/rjNI6vung5Dizng/j7cuzy1NCqL/Tu1vEu04lck4XSf3XK1/8OWtBUk8eFem0Wc5yD60cmuRAZMP7/xcODbJG17esG0R914Lc3Yy4mrypBvlfiL2mGACYUkReBpLYjXrsRLf6nqNnjnZR45GTOEK3HOTFL8OM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(10067099003)(56012099006)(4143699003)(6133799003)(5023799004)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cU9OWWJCd3AyMXN6SXFteWJqSmdsNnRuRzlacXNNcXRPY1M0QzBsYjdpTW5N?=
+ =?utf-8?B?SHNrL1VZbVN4bDR3VC9hVDRkd3IzZEhCdktMR2J1WjRncWFZQWJDT2cyRmFL?=
+ =?utf-8?B?ZnowTXpJMENDQXZWYk9jU3FVbU1EZjV3M2t6UmV4TzYzWGQ1eGUrQ2hYY1Bi?=
+ =?utf-8?B?VmgzTkNqRVFDZmR2OEJ1SEdwTFhJUFp4SE9OOVd2VFgxZ2pHSy9vVVBiR1lu?=
+ =?utf-8?B?NkYwWklOVW5kblZJL2NFbXlOU3JYUnRQOXFnMUc5SHJGeHVNdllxTkVVR3NR?=
+ =?utf-8?B?VlVpTXFRWkFKZEdYT0RweVljdlY3OW44Qk5IbnBocGlabTZjSVhiVWxsVDYw?=
+ =?utf-8?B?U1U2OVg4ZElmWjB4SWlYTE8vVWkxUDVRSnkxUGMwZENZd2J6cXE0N2sxdFFh?=
+ =?utf-8?B?MWQvSU5xQnVJVWR3Z0d6WWoyT0hUOXowWjgzQmpFdm1ZVmpBbStQZy9tNU1j?=
+ =?utf-8?B?dkNIVnlzdW9SRWhOMC9JdHBVdlI1QWMrVDllSlFUZzdaV0lXbjROUTFGQWhs?=
+ =?utf-8?B?akJDZEs4Q2VkV2NBa1E2NVJWWjMrbUtCSUtyejNRdC9nL3phUnNnSGphcGRZ?=
+ =?utf-8?B?RytyMGNGMTJ0UVRkd09lM0RuVDI1QlgzVHVsMnY1UkdFdUF4dnJUWjY5SzZ5?=
+ =?utf-8?B?b2JpWkxCQThHVFhFWE11SXZhR0lsRlZnUENQVFlwNnBVOFFDWFA1MU5nUTJv?=
+ =?utf-8?B?Sm1rdEhycHhkRVpMb3FoaFZNZStzd3JtTnRXZEFFM2daK2xCcDNiVkxqb3hl?=
+ =?utf-8?B?eHRaWmttdWpCcUc3ck9BZVpFVkFsVGNYR2lwRmNiZzRxdDBHTXFLQVllbTlh?=
+ =?utf-8?B?OGlRcnh3VlJHMVJja2hNMERVanc4WWhlNkluN2pLbWtGZ0xQa1JtZnZ4Rzht?=
+ =?utf-8?B?V1VpNU5IMS8rL1llaEFTK25jeHVaRGtrdEx0c1FLUlNsakx4Uk0ycFZKNjhr?=
+ =?utf-8?B?eENWbVpCWkt1VUNQZDJLL2dpelZiS2NPRktxK0RWWjZnZFc1eVFmRlpKTFlK?=
+ =?utf-8?B?US80V2FYLzVrK25tcHJwdEFlVjZRRUtacFozYTVzckRqc0I0dTVWUEFzYlEr?=
+ =?utf-8?B?ZXkyS0NwTzNvc2puV3R6UG9vZVRtajN4L3E3ampCWktQeVAwQ2FjWDZ1MkhH?=
+ =?utf-8?B?STh5R0N0aCsrTDZoY0x0cXI4VFZWK2hrbURmZW1uYzA1Yzd1MHhGUzI4MkVt?=
+ =?utf-8?B?anNDMzVoRFpyYnB0a2JPUVkzTHBDRlZNMFcwTWpEaXpaOWRNNjZBKzhhRTRY?=
+ =?utf-8?B?MmgvUU1XR1pYS1hiQy85SEpnNFlkUHRGd3RxZ2ZpRmZSeG9kdlRSN1ErVElw?=
+ =?utf-8?B?SzJyc1hwWktucGJGVkZYdnAveTM5bmlzZldsb1V5dkh6UDFZR25qSVlEV0Jo?=
+ =?utf-8?B?Q2V6WXpyaWVDWnU0cjZaUytBbzZCM1gzUS9tUTdhTk5ySzBRUFBhcHMvYnIx?=
+ =?utf-8?B?eis4bFRiZytMZElPSCtZQXh0NzRXNnBMSUh0Z1ZaeGZNZEl5ZW9ubUZwNmlQ?=
+ =?utf-8?B?QmRTSVRJVHVDOTRaUTRyM1RsaHdJS2tHcysrZHYzcEdBbjJMdWhVZGIzRGcz?=
+ =?utf-8?B?Y051WTd3TFlqYUZrWFFGNUVVY1BVSytpZ0UvalJHZStIMGx6VjFnNHR4RkZs?=
+ =?utf-8?B?NnlvOU5TRUVJM0czVXZtUk11NEtwcXAvNFdhclJ3OWpHNFBIbmZEamlzbWNR?=
+ =?utf-8?B?dnJkVlhObzNtMEJhK0VkNmhYVVFoajl2Yk5jWHRmb1lXTVBWM1Zsbzc4Z3hK?=
+ =?utf-8?B?RnQxNVhpK0lnakxldTNuMkdmYlJ0WVdtMlhZTUhuNm94c216TXdKTzZ4SXJK?=
+ =?utf-8?B?cWJ2WU1oTkp4K0MvNHJQR3Zzb3kwMkI3ZEN3N1daTDc1NGZLKzQ2TjhYTFU5?=
+ =?utf-8?B?aXBmZTQ1ZEMvUWErU0JYNmZOUHlZNHRBUTdGbjdTMEppamdLNVpVN0tjZ1VJ?=
+ =?utf-8?B?Q2w3V0JMa2JhNlQ1NloyTGNuMnlqNDljV3k5ekR2WmVGaER1TlZhYVJ5d0Vr?=
+ =?utf-8?B?ZEdGV0tiMGhWZGhqeWNMVHZMOG5xQm9uOEZuU3N1SlA2elljbzl0QWtDQ2lk?=
+ =?utf-8?B?bnNSditJWjIzWnBzZ2tvK3JMUHZENUY4OTNiZHlFaDhqMWo3UjA3c1R1dE1C?=
+ =?utf-8?B?amd1dUExbmxZUkp0UTZTdThJaEd4NWgyVHN0aHpPUjV0UFdwY3FybDB1ZllJ?=
+ =?utf-8?B?TmNIUnNkS25rZEljejd0R1lMS0FhcDRWaDBwekIwYnU3QlRiT29aV216ekJj?=
+ =?utf-8?B?MGNNcFlpRXJpYzBDMHd5YmFjUnR3bm5naGVOWUdzNjVvemJaUmZUcGZqSjJt?=
+ =?utf-8?Q?b+i3oKoZAqZ5edzBjC?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b188e56f-3c1e-47dd-5892-08df15b1d952
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2026 18:22:51.0828 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PC0suP0IjhasjMhhnpdsNnr8zAOLVcaMDf5lp93iW70DpfbmpeYCepUr0Vep+FkUCYOgDQAt6EUpElmHMMiF+w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4486
+Received-SPF: permerror client-ip=52.101.62.11; envelope-from=tdave@nvidia.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,139 +152,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-17 17:21, Palmer Dabbelt wrote:
-> On Thu, 17 Sep 2026 14:49:07 PDT (-0700), Richard Henderson wrote:
-> > On 9/17/26 10:59, Palmer Dabbelt wrote:
-> > > On Thu, 17 Sep 2026 13:51:10 PDT (-0700), Richard Henderson wrote:
-> > > > On 9/17/26 03:37, Max Chou wrote:
-> > > > > According to the RISC-V unpriviledge spec,
-> > > > >    "vset{i}vl{i} and whole register loads and stores do not depend upon
-> > > > >     vtype."
-> > > > > The whole-register vector move instructions reuqire legal vtype that
-> > > > > trap when VILL is set.
-> > > > > 
-> > > > > The tcg_out_mov in tcg/riscv64 missed the vtype setup before emitting
-> > > > > the
-> > > > > OPC_VMVNR_V.
-> > > > > 
-> > > > > Fixes: d4be6ee1111 ("tcg/riscv: Implement vector mov/dup{m/i}")
-> > > > > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> > > > > Reviewed-by: Joel Stanley <joel@jms.id.au>
-> > > > > Signed-off-by: Max Chou <max.chou@sifive.com>
-> > > > > ---
-> > > > >   tcg/riscv64/tcg-target.c.inc | 4 ++++
-> > > > >   1 file changed, 4 insertions(+)
-> > > > > 
-> > > > > diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-> > > > > index 2ce9d47a633..e3cfedb579d 100644
-> > > > > --- a/tcg/riscv64/tcg-target.c.inc
-> > > > > +++ b/tcg/riscv64/tcg-target.c.inc
-> > > > > @@ -778,6 +778,10 @@ static bool tcg_out_mov(TCGContext *s, TCGType
-> > > > > type, TCGReg ret, TCGReg arg)
-> > > > >           {
-> > > > >               int lmul = type - riscv_lg2_vlenb;
-> > > > >               int nf = 1 << MAX(lmul, 0);
-> > > > > +
-> > > > > +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
-> > > > > +                set_vtype_len(s, type);
-> > > > > +            }
-> > > > >               tcg_out_opc_vi(s, OPC_VMVNR_V, ret, arg, nf - 1);
-> > > > >           }
-> > > > >           break;
-> > > > 
-> > > > Do you have a reproducer for this?  I ask because I still wonder how
-> > > > this can occur.
-> > > > 
-> > > > Given that
-> > > > 
-> > > > (1) all vector registers are call-clobbered, there should be none live
-> > > > across tcg_out_call_int (which clears the remembered vtype),
-> > > > 
-> > > > (2) the first vector action with no vector registers live must be a load
-> > > > or movi (which will initialize vtype).
-> > > > 
-> > > > Performing a move between vector registers when all such registers must
-> > > > be dead is... wrong.  It indicates that there's a bug elsewhere.
-> > > 
-> > > I'm not quite sure the commit message is right here, but this whole area
-> > > is a bit of a landmine: one of the post-ratification changes to V was
-> > > either this (or very close to this), so we've been through it for every
-> > > project.
-> > > 
-> > > Here's the LLVM thread, which I think has links to everything else:
-> > > https://github.com/llvm/llvm-project/issues/114518 (there's a GCC change
-> > > as well).  IIRC hardware is a bit all over the place on this one, for
-> > > the compilers we decided to just emit the code that's safe either way --
-> > > that's not really an option for QEMU, though, so we'll have to pick one
-> > > side or the other.
-> > Yes, I get that.  But my point stands that after a function call (which
-> > can set VILL), all vector registers should be dead.  A move of a dead
-> > register is itself a bug.
+
+
+On 9/18/2026 8:24 AM, Gerd Hoffmann wrote:
+>   Hi,
 > 
-> That's true for standard ABI functions, but there's a variant for vector-ABI
-> functions that allows some registers to be saved and that variant doesn't
-> preserve vtype.  That's basically how we ended up in the mess with
-> whole-register moves: pre-change vector-1.0 versions didn't trap
-> whole-vector moves on vtype=VILL, so variant functions could use
-> whole-register moves to save/restore registers and it was legal.  It was
-> only when Linux started clobbering with VILL on implementations that
-> respected the post-change ISA that we ended up with the traps.
+>> The series was tested together with the QEMU companion patches on the
+>> AArch64 virt machine across a range of PCIe topologies: emulated devices,
+>> VFIO passthrough devices, PCIe switches, single and multiple fixed-BAR
+>> endpoints under a shared root port, and fixed BARs behind nested bridges.
 > 
-> That said, in GCC we just had a proper bug in there where we treated vytpe
-> as saved over calls, so it was pretty easy to roll it up into that fix.
-> Here's the GCC bug, if you're interested:
-> <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117544>.  IIUC it was a little
-> different in LLVM because they didn't have that bug and were thus actually
-> correct for the pre-change ISA, but they also decided to just emit the code
-> that's safe for both cases.
+> Given this is active for both aarch64 and x86_64:  Any testing with OVMF
+> on x86_64?
+
+Gerd,
+
+Thank you for the review.
+
+Yes — tested on x86_64 OVMF (OvmfPkgX64, q35). There's no fixed-BAR
+placement to actually exercise on x86 since nothing on the QEMU side
+populates the fw_cfg blob there, so this was really a check that the
+fixed-BAR addition to IncompatiblePciDeviceSupportDxe is a correct no-op
+when that blob is absent. And it is — existing behavior is unchanged,
+without any regressions.
+
 > 
-> > There should have been *something* that brought the source vector
-> > register back to life: a load or a movi.  Both of which reinitialize vtype.
-> > 
-> > That's why I'd like to see a reproducer, or if there isn't one,
-> > 
-> >      tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
-> > 
-> > I'm currently running the assert through the testsuite to make sure I've
-> > not gone loopy.
+> Overall this looks good to me.  edk2 has switched to github PRs, so
+> please open a PR there.  edk2 has a policy that patches should not touch
+> multiple packages, so patch #2 should be split into two for ArmVirtPkg
+> and OvmfPkg.
+
+Sure, I'll open a GitHub PR for this series and split patch #2 into
+ArmVirtPkg and OvmfPkg patches.
+
 > 
-> Ya, seems reasonable.  It's certainly pretty likely this is masking some
-> other bug as it was in GCC.
+> take care,
+>   Gerd
 
-Hi Palmer and Richard,
+Thanks.
+-Tushar
 
-Thanks Palmer for providing the toolchain discussion information and
-links.
-
-Richard, I have a reproducer for this issue listed below:
-
-—
-The reproducer follows this flow:
-
-x86_64 `ls` executable -> qemu_x86-64 -> qemu-system-riscv64
-
-1. Get x86_64 sysroot and `ls` executable from x86_64 host
-```
-$ podman create --name x86_64_container ubuntu:24.04
-$ podman cp x86_64_container:/ {x86_64_sysroot}
-```
-2. Cross build qemu-x86_64
-3. Obtain the riscv64 images (I built it using buildroot with
-`qemu_riscv64_virt_defconfig` config).
-4. Boot up riscv64 Linux on qemu-system-riscv64 and mount the
-{x86_64_sysroot} (and the qemu-x86_64) directory.
-5. Execute the x86_64 ls executable on qemu-x86_64 in
-qemu-system-riscv64
-```
-# qemu-x86_64 -cpu max -L {x86_64_sysroot} {x86_64_sysroot}/usr/bin/ls
-qemu-x86_64: QEMU internal SIGILL {code=ILLOPC, addr=0x7fff8c076450}
-Illegal instruction
-```
-—
-
-I understand that this reproducer could be simplified by building a
-standalone executable without copying from the x86_64 container. I’ll
-try to make it simpler.
-
-rnax
 
