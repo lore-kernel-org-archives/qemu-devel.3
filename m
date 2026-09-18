@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C5CC982D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BE1C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 00:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7M8O-0006gz-QL; Thu, 17 Sep 2026 20:07:20 -0400
+	id 1x7M8i-0006tW-5g; Thu, 17 Sep 2026 20:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7M8G-0006g5-U4
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:13 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1x7M8d-0006rq-3H
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:35 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x7M8F-0004tu-EN
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:12 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-396ccd4f99dso200380a91.2
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:07:11 -0700 (PDT)
+ id 1x7M8a-0004xu-Hy
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 20:07:34 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ d9443c01a7336-2d91ede8035so1899005ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 17:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789690030; x=1790294830; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1789690051; x=1790294851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FFu1GWUOTl4gGw9oxLcpuVAdjKyzH7fM1wcdIhlx/50=;
- b=CbirgYWo/IaNM6BqSpiIi2al91SlJlRMMol9gJsHm7A96+QmMsQVD6V/LI537MY31G
- BEZf3juv52688sY+tkUlc/quCJKuPZpeLTJW0k656iP9mUqq/kEfh51/34okcQjsvJmq
- gMUreU3TQSLofCADezP8o5FHgxS1co1n+H9kTROHk0aqxIqr5gLlRqaqaNr6zqN/DJPY
- mGy8UTGf8/dLJK7Nt/WCCw38q7+MoCCnv9qjIkAv1Xd8J3Hqmmp6240X9ckIAS8IaAj9
- B+OCJUTVoGkbUpX6cjkIZ4XyCbbtBd6z5PH6sJykmZKsfxl0rqC818l2yOYdWm9J4jhf
- qrvw==
+ bh=oBMRBBSVYhuVagEH9MTyYgooh4obneZYFeG93/UBHbo=;
+ b=rW7ccpA/QN4Nltt1nREMT98FSfbtUgQD9nvxSE4X5k52xFrL1g4ByTK/ut5arcP1sl
+ Jh5FamRLS5ihaVn8FBJvulYX+JiVm7wL6UHn5K1rjRAqUav6uk2fpuVhbYOUIb7ZGDhe
+ f/HvJJN8cGuGp8EvzR2o82AmmSfiT6wrDQg0YAY0NZNI8kEZjpvAqMw1sChkWjicJRVt
+ D8iTXsKWaMd/EblK8wj1i5uDY5w+0gf4xvnMNyjSxDPRyeDYMK4losVrX6Mo6Odx0QOM
+ M7DbuS0hrkmmrhSa0Lie3json8mNOARqJaBqXgBXZgsldmEJN6fwQZkl8O7RCwGnOI19
+ 7GOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789690030; x=1790294830;
+ d=1e100.net; s=20260707; t=1789690051; x=1790294851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=FFu1GWUOTl4gGw9oxLcpuVAdjKyzH7fM1wcdIhlx/50=;
- b=xGmAS9L/6YuTK97ua2z/jkxl8I+xqaHEDIoLM5clqyIpXIe8tRsGDD/nfoZK6aMhnr
- 5PFYlr8yYS9H8cx2S7SP0amPXkyx0YiUStqKAiSgTgyrAYiT1h2Ap/1y5evZV9FR7fLu
- VcYjJ7ssvxwGYVBd5N1M2sY/KipMPVRI/Se4nRur2k0F7F46OIN+HuyCzlD4B4x+aH5T
- 9GBgptKMyOU8yjKNMkDfiNotTwR9Wv73nFvje6LJrytxIi3epEJmXgR5x/ihEAHlvmNZ
- M/KKotUOxvMNFLlJAfKso1NDArnQLq3E+mpgZeZ2cMTf8CQ9jBUpAW9E2PMpFLeyTTRU
- gYSg==
-X-Gm-Message-State: AFuF++lGFO6TZd/tcdOK/2y2DIL8/c4WXxGYivxjKo9xs5LIbhUY1u2W
- 0o2Dy5mTjgYCJwV1HUkR+mevZcoFTeFrBkDsoh0UfxqhjVXt+/IZAqzC3zXtxlPDNxE=
-X-Gm-Gg: AYBFou0xTX5LT1rn4AWJpkRW6Jh+Gw5oOJuSUFL1N+hgb23MFAtOUP57kWOa3nUbIOZ
- TxuXaRMWMyTcXD+K9nCTNzxJt8+tYYU5JEOzVh/3rCH5QEfv8IaYz62xsEuEWsSpQHGKTjzb6ka
- aq7H3qbulGezdKbi3ctwjCuUwOq1HezYQqd4AjCrOr94UxKyGWWLQFiXu8gIarm5te0WQugCMr8
- ja8zE1qJA9lGfOMxawlW+cjbkoXqO1+LAB1wfmjV1uPANrJM03ZmPj91euISIkohct2H21jJTFu
- tPAJ/hc+NE4eA7NZHE1i7KAq3SG85lxABs4zxkbxm6sbRLZZSteKIsDMiRKKEdwywm2enfYfeB4
- 4obIL+iSz76HEXycD9ORqUmgtOF6gc2M2drAmBYFoFnTO1Az9LvLwkHaRwtV6AcayrKhABtDUyu
- aCspx7zkmwogeoPkxgnYHv0xTGEk3BJqag+0E3bCm1w9Y5kg3nLv+8pjjAmyWZjCOqHmGRuDHaT
- h1VLJ0rL5aFlgCwbF7KeAXkFh2biYIwxX/LP7TQyGA=
-X-Received: by 2002:a17:90b:224a:b0:39e:4c81:6c99 with SMTP id
- 98e67ed59e1d1-39e54fa5deamr1509803a91.31.1789690030121; 
- Thu, 17 Sep 2026 17:07:10 -0700 (PDT)
+ bh=oBMRBBSVYhuVagEH9MTyYgooh4obneZYFeG93/UBHbo=;
+ b=I4BwPtbKeRGozJjNMX7EwXMDuZmYBS8EPbbvfwy62IQbbswmX9TvqJfGlqaq58hrsN
+ wcaiZkvtNlDeU1qp9rGEhfDiVMxA/7DYqIoZ9xK7sPeMaMOT2opmZ1Z/mXVvgVdydnwM
+ xsT169p0Qll6LgZjepnZrOhcssX0qrnbF3rWCaO2Ywvzt8ORerRQJ87cZEOd7xh0U2hy
+ ESlUWFatJO7UdDi8H4furg37l5WoindYUFMzKZMhX/nGCgjqmQWQwzm354bIKIJCDSDh
+ /dCnHSiC7sZo25OTfZf1BRphNiGJSqfHf9FTpNzDLzs3LzI19FQkFhGaEBP+hGcRPIC+
+ 8ikg==
+X-Gm-Message-State: AFuF++n7zT75QIm0RcT9uNIXk9iLXRSUpECYHwise68xl+aR07MQo9yN
+ RXK7a1k8ig0y2gq5TJij633HyJXzotlXR8OAv+J1bXuueCbuR8ETLgelMFyU6P2RU60=
+X-Gm-Gg: AYBFou2ID8cbPkh4UTsKewQIiSnDYKN52/KY6qpiSKqcZhsifIPt4e5/6udZtP9n6bb
+ TFaHmoFd6dag6MJt9MFduzooNjXDPmFFn8CvFlP1qJXvq3AlYW4CzJ99J1b3KDNLvOZpu5Kydcm
+ 4eIzcXvshiInWR7QWGy4d5XIHE9oglv0TtACgetdZ9gCXnxeHfMUqhNugaNiPG/SqSmivAWF9MR
+ 4POkRWuPLJD0lz/GJkYznAsGV8qSG3kTU4mMD8I/YpmJ5oEju9GJFKK86cvgpKc6gypiv8LsO3O
+ XWH6AJTPA2YYvh2jZNSwfgmQJvBjj/mpe+Cco+d9+AU3fPYQr8s8lYFt2g+0xbdIGEoKXKQYL02
+ W0T4Rb9DdJLJti1fVrlM6oMphjUcRLtLze+6gAnR6nGJ3dEMMVtmlzAplTyBOS8JqKsd20dGE34
+ bvNcnNJADfZgQPcifCY8F11LWQo6f54FnEDjYRHiaRPQHHA6Dot36oBa4Ymt2Z96KrYHtPkE+g7
+ ELK+ZjzGA3F1bceFWZRU4dLBAiyd3KsglYmuUe+DiM=
+X-Received: by 2002:a17:903:124c:b0:2dd:ad74:ac84 with SMTP id
+ d9443c01a7336-2ddb1be0d9bmr15362295ad.31.1789690051200; 
+ Thu, 17 Sep 2026 17:07:31 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33bf5b1d335sm20328212eec.28.2026.09.17.17.07.05
+ 5a478bee46e88-33bf5b1d335sm20328212eec.28.2026.09.17.17.07.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 17:07:09 -0700 (PDT)
+ Thu, 17 Sep 2026 17:07:30 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
@@ -83,23 +83,22 @@ Cc: Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 4/8] hw/or1k/virt: use unique QOM name
-Date: Fri, 18 Sep 2026 08:06:35 +0800
-Message-ID: <20260918000640.1001-5-luoyonggang@gmail.com>
+Subject: [PATCH 8/8] hw/xtensa/virt: use unique QOM name
+Date: Fri, 18 Sep 2026 08:06:39 +0800
+Message-ID: <20260918000640.1001-9-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260918000640.1001-1-luoyonggang@gmail.com>
 References: <20260918000640.1001-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-pj2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=luoyonggang@gmail.com; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,37 +114,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set TYPE_VIRT_MACHINE to MACHINE_TYPE_NAME("or1k-virt") so OpenRISC
-virt no longer collides with other virt-machine types in one process.
-Keep the -M / help / migration name as virt via
-machine_class_set_name().
+Register the board as xtensa-virt so Xtensa virt no longer collides
+with other virt-machine types in one process. Keep the -M / help /
+migration name as virt via machine_class_set_name().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/or1k/virt.c | 3 ++-
+ hw/xtensa/virt.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
-index 2ff5c084a2b..35884252379 100644
---- a/hw/or1k/virt.c
-+++ b/hw/or1k/virt.c
-@@ -34,7 +34,7 @@
- #define VIRT_CPUS_MAX 4
- #define VIRT_CLK_MHZ 20000000
- 
--#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
-+#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("or1k-virt")
- #define VIRT_MACHINE(obj) \
-     OBJECT_CHECK(OR1KVirtState, (obj), TYPE_VIRT_MACHINE)
- 
-@@ -548,6 +548,7 @@ static void openrisc_virt_machine_init(ObjectClass *oc, const void *data)
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "or1k virtual machine";
+diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
+index 271f06e0953..dc5b255b9b1 100644
+--- a/hw/xtensa/virt.c
++++ b/hw/xtensa/virt.c
+@@ -118,10 +118,11 @@ static void xtensa_virt_init(MachineState *machine)
+ static void xtensa_virt_machine_init(MachineClass *mc)
+ {
+     mc->desc = "virt machine (" XTENSA_DEFAULT_CPU_MODEL ")";
 +    machine_class_set_name(mc, "virt");
-     mc->init = openrisc_virt_init;
-     mc->max_cpus = VIRT_CPUS_MAX;
-     mc->is_default = false;
+     mc->init = xtensa_virt_init;
+     mc->max_cpus = 32;
+     mc->default_cpu_type = XTENSA_DEFAULT_CPU_TYPE;
+     mc->default_nic = "virtio-net-pci";
+ }
+ 
+-DEFINE_MACHINE("virt", xtensa_virt_machine_init)
++DEFINE_MACHINE("xtensa-virt", xtensa_virt_machine_init)
 -- 
 2.52.0.windows.1
 
