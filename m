@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFE5C982DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33452C982D7
 	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 20:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7fDb-0001KB-OR; Fri, 18 Sep 2026 16:29:59 -0400
+	id 1x7fDs-0001Mi-0Z; Fri, 18 Sep 2026 16:30:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7fDZ-0001Jd-DX; Fri, 18 Sep 2026 16:29:57 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1x7fDf-0001L7-27; Fri, 18 Sep 2026 16:30:04 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7fDX-0003D1-Q7; Fri, 18 Sep 2026 16:29:57 -0400
+ id 1x7fDd-0003E9-8f; Fri, 18 Sep 2026 16:30:02 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9EEB440A20;
- Fri, 18 Sep 2026 20:29:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378FC1F000FF;
- Fri, 18 Sep 2026 20:29:52 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 5E6436053B;
+ Fri, 18 Sep 2026 20:30:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE7D1F000FF;
+ Fri, 18 Sep 2026 20:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789763394;
- bh=/QkkhWti4U0cgjOq7ipLejpbLll6u8Vh1wDZGs+1W40=;
+ s=k20260515; t=1789763400;
+ bh=Df2nNEkPeb+r6J6ucH1JvlVX0AQgSLBybIOjF2SuXKs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lLQV1yy3OYKOHLzBsvL1MICLItq7E3PkEtygISaB9UwlQnt2bJzenWb5RmFCHxYt8
- V0p2GwyXBjWUfssUPrBztGA85UiCK4cKhOPISiB4YZ3bvfxrale9anJi5cnetM3J0l
- cQm4GMw1XO0sIN9KOqttPDM11j5FoS/+T9diGGGoFs3CJWw3uP3vAzQMCVshmJCLYJ
- B/wfm2NuA75n/hp6mpUfZcLzyFXs6SWjKWBuBMhAGo80WjID9yam8fmZ0H5GdPpMQn
- +SQTYboNZlvDOJ85MfK8/5wPrwk0Yc5V6aAgPQGydtX8SI3a5Pf9vRkUg35DZaAR8g
- WKlmSBTUTrabA==
+ b=B1u88lClFGO8kCubF3hGXJtJ/bsagAhrzTPILbwzVIu7m5Gr0dNwIq2jEMKfdAAmU
+ dQzX5FQP1m3a/lJrXMWZ6k2bmx+EuesjeV9KMwfKPbEmSKj5x4xkWRXlxPRjoH820P
+ fqTV7HgKLUB1vddiENo5FVUH2Ou4ovSAwF9xMO3ZaGMZRYohvEqjzwnus9dNXmo9+y
+ GFV5z8vyPUN7dwJl3t9PS5PDnxCpd1auC9ABH/L0YdhZbKVfd2/5MYbNIg2SUJO5NX
+ /jCv3Btiz8R3kTc0yqzIcgocIhHOSa7TR83PZNPN611uL7KrUmfZYmC8pNQnYlu7zB
+ dFlDWlvYRdrzw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
@@ -43,16 +43,16 @@ Cc: Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
  Alistair Francis <alistair.francis@wdc.com>,
  Chao Liu <chao.liu@processmission.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PULL 1/4] linux-user/riscv: honor zicntr=false for base counterCSRs
-Date: Fri, 18 Sep 2026 22:29:44 +0200
-Message-ID: <20260918202947.5322-2-deller@kernel.org>
+Subject: [PULL 3/4] linux-user: implement mlock2(2) syscall
+Date: Fri, 18 Sep 2026 22:29:46 +0200
+Message-ID: <20260918202947.5322-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260918202947.5322-1-deller@kernel.org>
 References: <20260918202947.5322-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,51 +74,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Michael Morrell <mmorrell@tachyum.com>
 
-In user-only builds, the base cycle and instret CSRs bypass the zicntr
-feature gate because the check is inside the system-mode block. Move the
-check before the conditional block so an explicitly disabled zicntr
-extension makes the CSRs illegal in linux-user mode.
+TARGET_NR_mlock2 is defined for every target's syscall table (it has
+been available on all Linux architectures since it was added in
+kernel 4.4), and linux-user/strace.list already has an entry for it,
+but linux-user/syscall.c has no case handler for it. A guest mlock2()
+call therefore falls through to the default case and gets -ENOSYS
+instead of being emulated, on every target.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4148
+mlock2() differs from mlock() only by a third `flags` argument
+(MLOCK_ONFAULT). Add TARGET_MLOCK_ONFAULT and a case that validates
+the flags argument and forwards to the host mlock2(), mirroring the
+existing TARGET_NR_mlock case immediately above it.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Signed-off-by: Michael Morrell <mmorrell@tachyum.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/riscv/tcg/csr.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ linux-user/syscall.c      | 9 +++++++++
+ linux-user/syscall_defs.h | 4 ++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index bd4b6dc114..061bc9db77 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -111,6 +111,13 @@ static RISCVException vs(CPURISCVState *env, int csrno)
- 
- static RISCVException ctr(CPURISCVState *env, int csrno)
- {
-+    if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
-+        (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
-+        if (!riscv_cpu_cfg(env)->ext_zicntr) {
-+            return RISCV_EXCP_ILLEGAL_INST;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index cfa68dfbdb..9f454502cb 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -11230,6 +11230,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_mlock:
+         return get_errno(mlock(g2h(cpu, arg1), arg2));
+ #endif
++#ifdef TARGET_NR_mlock2
++    case TARGET_NR_mlock2:
++        if (arg3 & ~TARGET_MLOCK_ONFAULT) {
++            return -TARGET_EINVAL;
 +        }
-+    }
++        return get_errno(mlock2(g2h(cpu, arg1), arg2,
++                                 (arg3 & TARGET_MLOCK_ONFAULT) ?
++                                 MLOCK_ONFAULT : 0));
++#endif
+ #ifdef TARGET_NR_munlock
+     case TARGET_NR_munlock:
+         return get_errno(munlock(g2h(cpu, arg1), arg2));
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index e28853c93b..f5831a6bad 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2795,6 +2795,10 @@ struct target_mount_attr_ver0 {
+ #ifndef RESOLVE_IN_ROOT
+ #define RESOLVE_IN_ROOT         0x10
+ #endif
 +
- #if !defined(CONFIG_USER_ONLY)
-     RISCVCPU *cpu = env_archcpu(env);
-     int ctr_index;
-@@ -127,10 +134,6 @@ static RISCVException ctr(CPURISCVState *env, int csrno)
- 
-     if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
-         (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
--        if (!riscv_cpu_cfg(env)->ext_zicntr) {
--            return RISCV_EXCP_ILLEGAL_INST;
--        }
--
-         goto skip_ext_pmu_check;
-     }
- 
++/* flags for mlock2() */
++#define TARGET_MLOCK_ONFAULT    0x01
++
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
+     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
+     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
 -- 
 2.54.0
 
