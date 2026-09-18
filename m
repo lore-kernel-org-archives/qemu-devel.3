@@ -4,56 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD7EC88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 06:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D14C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 06:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7SCn-0003Sl-2i; Fri, 18 Sep 2026 02:36:17 -0400
+	id 1x7SI9-0004G1-AA; Fri, 18 Sep 2026 02:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=md1715FC36BB=lirongqing@baidu.com>)
- id 1x7SCN-0003Rf-Pe
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 02:35:52 -0400
-Received: from mx15.baidu.com ([111.202.115.100] helo=outbound.baidu.com)
- by eggs.gnu.org with smtp (Exim 4.90_1)
- (envelope-from <prvs=md1715FC36BB=lirongqing@baidu.com>)
- id 1x7SCG-0000gE-Q1
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 02:35:51 -0400
-X-MD-Sfrom: lirongqing@baidu.com
-X-MD-SrcIP: 172.31.50.47
-From: lirongqing <lirongqing@baidu.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>
-CC: Li RongQing <lirongqing@baidu.com>
-Subject: [PATCH v2] pcie_sriov: fix wrong write width and off-by-one in
- pf_reset
-Date: Fri, 18 Sep 2026 14:35:26 +0800
-Message-ID: <20260918063526.2191-1-lirongqing@baidu.com>
-X-Mailer: git-send-email 2.17.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7SI7-0004FI-8W
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 02:41:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x7SI5-0001nk-5B
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 02:41:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789713703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=N9/ajaWRtzmxqAVtFV3qqqKq77DGgiX44YqMPYPOY+c=;
+ b=EyeQE1PpsQcW3zQaPzTyLSeZMDb/KcfhZ7hCy0xfGJnJHZpj/vDddDts167/VnOk6Cn4V/
+ GIu1AgSFz6HpV7FTAye6slJ5QGX4b4SY4uD7wCcsRzuFAvTCU3T/PPDWhqWme/dWh1rxm3
+ ljWBH784zi08VEv7X7AX7BWk661CNBM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-90-Xw1kOKKNOraaqRVbgfYxPQ-1; Fri,
+ 18 Sep 2026 02:41:38 -0400
+X-MC-Unique: Xw1kOKKNOraaqRVbgfYxPQ-1
+X-Mimecast-MFC-AGG-ID: Xw1kOKKNOraaqRVbgfYxPQ_1789713697
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 243621956054; Fri, 18 Sep 2026 06:41:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25AC830001A2; Fri, 18 Sep 2026 06:41:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B574321E6A04; Fri, 18 Sep 2026 08:41:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org,  Eric Blake <eblake@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>
+Subject: Re: [PATCH 2/9] qapi: convert multi-paragraph intros (commands)
+In-Reply-To: <CAFn=p-aEjPnXH_xvJJWcPYoZmqXP1PCyKAReV7rXfJD0hQskLA@mail.gmail.com>
+ (John Snow's message of "Thu, 17 Sep 2026 16:09:44 -0400")
+References: <20260911203002.305316-1-jsnow@redhat.com>
+ <20260911203002.305316-3-jsnow@redhat.com>
+ <874ifpcz85.fsf@pond.sub.org>
+ <CAFn=p-aEjPnXH_xvJJWcPYoZmqXP1PCyKAReV7rXfJD0hQskLA@mail.gmail.com>
+Date: Fri, 18 Sep 2026 08:41:32 +0200
+Message-ID: <87jyojoycj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.127.73.8]
-X-ClientProxiedBy: bjkjy-exc9.internal.baidu.com (172.31.50.19) To
- bjkjy-exc3.internal.baidu.com (172.31.50.47)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
- s=selector1; t=1789713335;
- bh=d5FC4Yg0oTjZ0sBoNRxonYn9axtEGnVf6xF5hHBqw/I=;
- h=From:To:CC:Subject:Date:Message-ID:Content-Type;
- b=Cvx4KaDkyBI7PYRsvF2KjZjR7ltnpUNFE9WBtSWH4A/y4+ls9Id3SC+wmugVoGeUU
- 4SCArp2hjKBQoxI+IRwBn+yOCUCduU969lnWRRug7UH/J9ouhU4gv3/LOynuEavJA+
- AWadc9LHluQXua3+KwM41AOZsxnJcS6ndwUfC8ZgM+sPS5hRKyOzPTMbY2NHXfliGI
- a3lYv6ACHbVCWGpH5eVGl4Tpl2kTZyJDeIP2EZGHF6Lc4nJ5DRh27TNqn7faY2tSGm
- tLEY1TwmSrNVv+0Nff9175wzAg+9EGcwNYKgiEH5Vq/1P0JDOkqDZ12hO+tsc3mlRo
- k2dgrWI2VUt+Q==
-Received-SPF: pass client-ip=111.202.115.100;
- envelope-from=prvs=md1715FC36BB=lirongqing@baidu.com; helo=outbound.baidu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,81 +100,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li RongQing <lirongqing@baidu.com>
+John Snow <jsnow@redhat.com> writes:
 
-pcie_sriov_pf_reset() restores the VF BAR type registers using
-pci_set_quad() with a 4-byte stride. Since each VF BAR register is
-4 bytes wide, the 8-byte write also covers the following BAR
-register. Although subsequent iterations overwrite most of the
-unintended writes, the access is incorrect and the final iteration
-can write beyond the VF BAR registers.
+> On Wed, Sep 16, 2026 at 5:38=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This patch converts some slightly-non-trivial intros with more than
+>> > one paragraph, but doesn't create any new intro/details splits.
+>> >
+>> > Review notes: Some of these possibly could be split, but as they are c=
+ommands
+>> > (not eligible as an inlining source) and the additional information in
+>> > the intro is not terribly long, I opted to leave them alone instead of
+>> > laboring on prose rewrites.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > ---
+>> >  qapi/block-core.json | 49 +++++++++++++++++++++-----------------------
+>> >  qapi/block.json      | 29 +++++++++++++-------------
+>> >  qapi/migration.json  |  9 ++++----
+>> >  qapi/misc-arm.json   |  9 ++++----
+>> >  qapi/misc.json       | 13 ++++++------
+>> >  qapi/qdev.json       | 14 ++++++-------
+>> >  6 files changed, 58 insertions(+), 65 deletions(-)
+>> >
+>> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> > index 1ca147285e7..c505369aeb2 100644
+>> > --- a/qapi/block-core.json
+>> > +++ b/qapi/block-core.json
+>> > @@ -1772,13 +1772,12 @@
+>> >
+>> >  ##
+>> >  # @blockdev-snapshot:
+>> > +#     Takes a snapshot of a block device.
+>> >  #
+>> > -# Takes a snapshot of a block device.
+>> > -#
+>> > -# Take a snapshot, by installing 'node' as the backing image of
+>> > -# 'overlay'.  Additionally, if 'node' is associated with a block
+>> > -# device, the block device changes to using 'overlay' as its new
+>> > -# active image.
+>> > +#     Take a snapshot, by installing 'node' as the backing image of
+>> > +#     'overlay'.  Additionally, if 'node' is associated with a block
+>> > +#     device, the block device changes to using 'overlay' as its new
+>> > +#     active image.
+>>
+>> 'overlay' and 'node' refer to arguments, so they should be @overlay and
+>> @node.  Since the arguments are in type BlockdevSnapshot, the reference
+>> is non-local until the inliner lands.
+>
+> It isn't a reference at all as far as Sphinx is concerned, merely a
+> markup convention. Whether or not that convention applies to non-local
+> things is kind of up to you. If you say the word, I'll edit these in
+> this series and forward if you wish, but my default will be to leave
+> it alone.
 
-SR-IOV defines six VF BAR registers and does not provide a VF ROM BAR.
-However, several SR-IOV code paths use PCI_NUM_REGIONS, which includes
-the ROM slot and therefore has a value of seven.
+Right now, improving markup is a distraction we need to avoid.  We
+should still take notes for later, though.
 
-In particular, the final iteration in pcie_sriov_pf_reset() currently
-writes a quadword at the offset of the seventh region. This starts at
-the byte immediately following the six VF BAR registers and can
-overwrite subsequent fields in the SR-IOV capability.
+The obvious goal is to mark up references to things so they can be
+suitably rendered, preferably as links.
 
-Use pci_set_long() to match the 4-byte VF BAR register width, and use
-PCI_SRIOV_NUM_BARS when iterating over SR-IOV VF BARs. This also makes
-the BAR count consistent with the assertion in
-pcie_sriov_pf_init_vf_bar().
+Solved markup problem for references to definitions (`name-of-defn`) and
+local member descriptions (@name-of-member).  We don't have a good
+solution for referencing non-local member descriptions.
 
-Fixes: 19e55471d4e8a4 ("pcie_sriov: Allow user to create SR-IOV device")
-Fixes: c8bc4db403e176 ("pcie_sriov: Reset SR-IOV extended capability")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
----
-Diff with v1: fix the Fixes tag, it should be 19e55471d4e8a4
+>> We may want to render this paragraph below the argument descriptions to
+>> avoid forward references.  This requires splitting it off the intro.  We
+>> can do it now, or leave it for later.
+>>
+>> Not splitting now keeps the conversion simple, which is a plus.  It
+>> reindents the entire unsplit intro, and if we do split it later, the
+>> part split off gets reindented right back.
+>>
+>> I'm leaning towards not rocking the boat, but you decide.
+>
+> I'm likely to forget or ignore about later splits, so if it's
+> something you want, we may as well do it now. Note that we can just
+> decide to only indent the first paragraph and leave the second
+> unindented, and then it gets shifted into place during a later code
+> movement patch.
 
- hw/pci/pcie_sriov.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Yes, that's splitting off the intro.  It forces us to revisit the doc
+comment when we eliminate the plain sections between intro and tagged
+sections.  Simple way to punt contents work down the road some.
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index c41ac95..6122a26 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -229,7 +229,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
- 
-     assert(sriov_cap > 0);
-     assert(region_num >= 0);
--    assert(region_num < PCI_NUM_REGIONS);
-+    assert(region_num < PCI_SRIOV_NUM_BARS);
-     assert(region_num != PCI_ROM_SLOT);
- 
-     wmask = ~(size - 1);
-@@ -308,7 +308,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-             return -1;
-         }
- 
--        for (size_t j = 0; j < PCI_NUM_REGIONS; j++) {
-+        for (size_t j = 0; j < PCI_SRIOV_NUM_BARS; j++) {
-             if (vfs[i]->io_regions[j].size != vfs[0]->io_regions[j].size ||
-                 vfs[i]->io_regions[j].type != vfs[0]->io_regions[j].type) {
-                 error_setg(errp, "inconsistent SR-IOV BARs");
-@@ -344,7 +344,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-     dev->exp.sriov_pf.vf = vfs;
-     dev->exp.sriov_pf.vf_user_created = true;
- 
--    for (i = 0; i < PCI_NUM_REGIONS; i++) {
-+    for (i = 0; i < PCI_SRIOV_NUM_BARS; i++) {
-         PCIIORegion *region = &vfs[0]->io_regions[i];
- 
-         if (region->size) {
-@@ -463,8 +463,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
-      */
-     pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
- 
--    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
--        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
-+    for (uint16_t i = 0; i < PCI_SRIOV_NUM_BARS; i++) {
-+        pci_set_long(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
-                      dev->exp.sriov_pf.vf_bar_type[i]);
-     }
- }
--- 
-2.9.4
+I'm encouraging you to do that when you're less than sure the contents
+should be intro, simply because the primary goal right now is to get the
+syntax conversion done.  Limiting followup cleanup work is secondary: we
+do it whenever it doesn't distract us from the primary.
+
+Makes sense?
+
+>> Not noting these things again.
+>>
+>> >  #
+>> >  # Features:
+>> >  #
+>> > @@ -2471,15 +2470,15 @@
+>> >  ##
+>> >  # @block-dirty-bitmap-merge:
+>> >  #
+>>
+>> Drop the blank line.
+>
+> ACK. Accidental remnants of adding a blank line intentionally to get
+> reflow to behave how I want.
+>
+>>
+>> > -# Merge dirty bitmaps listed in @bitmaps to the @target dirty bitmap.
+>> > -# Dirty bitmaps in @bitmaps will be unchanged, except if it also
+>> > -# appears as the @target bitmap.  Any bits already set in @target will
+>> > -# still be set after the merge, i.e., this operation does not clear
+>> > -# the target.  On error, @target is unchanged.
+>> > +#     Merge dirty bitmaps listed in @bitmaps to the @target dirty
+>> > +#     bitmap.  Dirty bitmaps in @bitmaps will be unchanged, except if
+>> > +#     it also appears as the @target bitmap.  Any bits already set in
+>> > +#     @target will still be set after the merge, i.e., this operation
+>> > +#     does not clear the target.  On error, @target is unchanged.
+>> >  #
+>> > -# The resulting bitmap will count as dirty any clusters that were
+>> > -# dirty in any of the source bitmaps.  This can be used to achieve
+>> > -# backup checkpoints, or in simpler usages, to copy bitmaps.
+>> > +#     The resulting bitmap will count as dirty any clusters that were
+>> > +#     dirty in any of the source bitmaps.  This can be used to achieve
+>> > +#     backup checkpoints, or in simpler usages, to copy bitmaps.
+>> >  #
+>> >  # Errors:
+>> >  #     - If @node is not a valid block device, DeviceNotFound
+>> > @@ -5848,15 +5847,14 @@
+>> >
+>> >  ##
+>> >  # @block-set-write-threshold:
+>> > +#     Change the write threshold for a block drive.  An event will be
+>> > +#     delivered if a write to this block drive crosses the configured
+>> > +#     threshold.  The threshold is an offset, thus must be
+>> > +#     non-negative.  Default is no write threshold.  Setting the
+>> > +#     threshold to zero disables it.
+>> >  #
+>> > -# Change the write threshold for a block drive.  An event will be
+>> > -# delivered if a write to this block drive crosses the configured
+>> > -# threshold.  The threshold is an offset, thus must be non-negative.
+>> > -# Default is no write threshold.  Setting the threshold to zero
+>> > -# disables it.
+>> > -#
+>> > -# This is useful to transparently resize thin-provisioned drives
+>> > -# without the guest OS noticing.
+>> > +#     This is useful to transparently resize thin-provisioned drives
+>> > +#     without the guest OS noticing.
+>> >  #
+>> >  # @node-name: graph node name on which the threshold must be set.
+>> >  #
+>> > @@ -5938,11 +5936,10 @@
+>> >
+>> >  ##
+>> >  # @x-blockdev-set-iothread:
+>> > +#     Move @node and its children into the @iothread.  If @iothread is
+>> > +#     null then move @node and its children into the main loop.
+>> >  #
+>> > -# Move @node and its children into the @iothread.  If @iothread is
+>> > -# null then move @node and its children into the main loop.
+>> > -#
+>> > -# The node must not be attached to a BlockBackend.
+>> > +#     The node must not be attached to a BlockBackend.
+>>
+>> This one arguably lacks an intro.  Let's not worry about this now.
+>
+> How about I indent *nothing* and lead with a "#TODO: This command
+> needs an introduction" ?
+
+Do we want every command to have an intro?
+
+If we do, we should enforce it at some point.  If we plan to enforce it,
+simply leaving the intro empty now will be caught without a TODO.
+
+I'm taking note:
+
+9. Consider making intro mandatory (maybe just for commands and
+events?)
+
+>> >  #
+>> >  # @node-name: the name of the block driver node
+>> >  #
+>> > diff --git a/qapi/block.json b/qapi/block.json
+>> > index e47592d5500..15f08372564 100644
+>> > --- a/qapi/block.json
+>> > +++ b/qapi/block.json
+>> > @@ -181,12 +181,13 @@
+>> >
+>> >  ##
+>> >  # @blockdev-close-tray:
+>> > +#     Closes a block device's tray.
+>> >  #
+>> > -# Closes a block device's tray.  If there is a block driver state tree
+>> > -# associated with the block device (which is currently ejected), that
+>> > -# tree will be loaded as the medium.
+>> > +#     If there is a block driver state tree associated with the block
+>> > +#     device (which is currently ejected), that tree will be loaded as
+>> > +#     the medium.
+>> >  #
+>> > -# If the tray was already closed before, this will be a no-op.
+>> > +#     If the tray was already closed before, this will be a no-op.
+>> >  #
+>> >  # @device: Block device name
+>> >  #
+>>
+>> Shouldn't this one be in "[PATCH 5/9] qapi: split intro sections for
+>> commands"?
+>
+> Ah, I did something halfway between ... Well, this particular block
+> doesn't actually add a new "split", but I did reflow the paragraphs
+> *as if* I had performed the split.
+
+You're right.
+
+> Let's collapse this one way or the other: please state your
+> preference, and I'll sift it into the correct patch.
+
+Breaking the paragraph like you did feels like an improvement to me.
+
+If we think the contents after the paragraph split should not be intro,
+then the adjusted patch should be in "[PATCH 5/9] qapi: split intro
+sections for commands".
+
+If we think keeping it in intro is fine, then it should stay here.
+However, the paragraph split is an unnecesseary contents improvement
+then.  Better to keep the syntax conversion patches focused to ease
+review.
+
+I'm leaning towards the latter.  Thus:
+
+   ##
+   # @blockdev-close-tray:
+  -#
+  -# Closes a block device's tray.  If there is a block driver state tree
+  -# associated with the block device (which is currently ejected), that
+  -# tree will be loaded as the medium.
+  -#
+  -# If the tray was already closed before, this will be a no-op.
+  +#     Closes a block device's tray.  If there is a block driver state
+  +#     tree associated with the block device (which is currently
+  +#     ejected), that tree will be loaded as the medium.
+  +#=20=20=20=20=20
+  +#     If the tray was already closed before, this will be a no-op.
+   #
+   # @device: Block device name
+   #
+
+Thoughts?
+
+[...]
 
 
