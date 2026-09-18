@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A00C982DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79675C982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 11:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7Wwb-0000Rm-EX; Fri, 18 Sep 2026 07:39:53 -0400
+	id 1x7WwY-0000QQ-FC; Fri, 18 Sep 2026 07:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwZ-0000RO-Gy
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwW-0000QE-Lh
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwX-0001d0-JP
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x7WwU-0001cg-WB
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 07:39:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789731589;
+ s=mimecast20190719; t=1789731586;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
- b=ZAGJhbRMOFF1NmfnQR2tEYChj+GLMfx/KgVl+vidi/Xpx5+lmJrTqgaIucK38oY1WygJkq
- Wz0hVZLibMWB8qYg43NM1jXUxbrMJrMeYgxF600HwlPao8ENhwiu/A6C75alun+GT2zAiA
- oHeKtgb9YsK3y8xOCVDLU3SDfQnOa6I=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NYiDFxM5DTkwPjVQc++Tthuv6NIMIlEmS75dFNyYj4E=;
+ b=S0BbpeCtFfChgzhjxaQe79qMregGtf1EhagSrJwGH0EwFc+s44rHFHNSWS5PbjOg/XUTGp
+ nIfBgZCmcRp1EiqGP+tJjJCob4fffQMzSkx0SorM0TfQKChw5aU0su4uUBdqP8RUn07KZI
+ zV+J1d9JTom8ckT/K9Nigg8BBmNouDc=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-Gs9fzMA8M4iEiGaDW6bE2g-1; Fri, 18 Sep 2026 07:39:47 -0400
-X-MC-Unique: Gs9fzMA8M4iEiGaDW6bE2g-1
-X-Mimecast-MFC-AGG-ID: Gs9fzMA8M4iEiGaDW6bE2g_1789731587
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-530f65ddee1so12388501cf.2
- for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:39:47 -0700 (PDT)
+ us-mta-444-a25Db9JFOuSMaY-f_MBNdw-1; Fri, 18 Sep 2026 07:39:43 -0400
+X-MC-Unique: a25Db9JFOuSMaY-f_MBNdw-1
+X-Mimecast-MFC-AGG-ID: a25Db9JFOuSMaY-f_MBNdw_1789731583
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-52fb8f67601so6848921cf.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 04:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1789731586; x=1790336386; darn=nongnu.org;
+ d=redhat.com; s=google; t=1789731583; x=1790336383; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
- b=Ii5gfaJPplqCXWjzp+POKKOsMeCYtPDviYVCOr4oEVsqPt4QZWfxs35vvE0EryTkwl
- DAfgYFCGy1NazDgYLTDMNd24/rZmZou9e+vemBSd8g+o3NGFZUgd5UfTG9NhyeQGMUWb
- +u8vNKzqKLH56Hu45VqEZnwka93XQ/092wv7SydcQua25ZYhGNkB/moVkntaXRUJyV5F
- XgxajDWkma9mquHJyF698LXfVVZ5v4WRS4C8uPOPJn98NVrzfBx1qmrgoy7nPojt1wze
- 61z4wsAopRMGnn/mu6zynsE3nZJwvBHlfWRQkmVluwCgdNNXRQit9vLk5ysBUL5UDkAv
- 14ZA==
+ bh=NYiDFxM5DTkwPjVQc++Tthuv6NIMIlEmS75dFNyYj4E=;
+ b=ncJnPb6dHdK2BOmsq67+wF6usuG6FysXLqymo8RoXHI+jVc/kQe0OA9egzCdbSeS6B
+ s9tP0khedsTW8zyFaQWDkCITxZoDG9SLUhHLMYPZXTSmq8SDC0ZprfYn0tjLOAs3f/SC
+ IiVS29YGL1/09ZsY5ARVhLWy+7kriPAQGLSWeUexsLXKBG7qnRxVmXUHJ4npxLkl9/0z
+ PED3qPrh5S/AueWAKKBLcw1Jy+VlLz67iM2eu8KDexGMRUWWDG2hLSJwQNEJn6t4tr50
+ CO2JD1SISB1CAwO1NpQ5typPqTpCqC0qR/lHk10wdbhCd/O6kKCK0TPkZUxfo/A3lI1d
+ vidQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789731586; x=1790336386;
+ d=1e100.net; s=20260707; t=1789731583; x=1790336383;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=yfu1MBXsRmVP1HEFbBooqDFu2xyDHNFt7BQUuf2IFiw=;
- b=decJt2HQzt5dj9Vi6IxZd8g7iEMOzmFDoQJfyGsdG4sG6o9zHEcrVdlzwXWRio5sNz
- 6zKHWG4CHah6fjy9eN3EKPSdoTdZjOeBoEzSMeGYoD31MtV5mX1IPZ7jAygzP4qp2yoN
- 1L2Y9dVifdPqHsiqTX/iIe56Y4jjYjP7ZxuClV67G7Qb/ijx24dd9LE4aCP2Ernlbd9X
- R40IRV3BvLjgNRaMMKU1tkL2LK4N82RYSG/Cf+cblU2UfT5TorBtFJZe6ZoKcThG04/X
- TuziiY0l5+WbTwwvIyGx1haCBQ8hYOxguQVZbmuAkbPL5B5P8KOpph+gsL95EJhXaFFi
- UKpg==
-X-Gm-Message-State: AFuF++kiXN1HzulH36IGK87f4g8HL9F4ha2rK8qtLvhdajXof/J4S80Y
- 5R1l22zH3UTwKC/Mzp9mKt5Omzjb6luRXXGcDo1hu28I20g0mtJQxEVbBgvRNCG3HTK5dUpMO9C
- yOiVSiqdmnc7dZIdALInhljr6XIR+PpmGgJKK4uahFKyMLe3V3n0J9Otn2pmn9RIEQgzGutEtH1
- 1irctWTuYjN+pO2ZrS11ZP50FqItdPK96LYEj9h1Xu
-X-Gm-Gg: AYBFou3VGHUMuWQu0jDkoWHI6VGQKUYi8H4tBPwJsVtfP0nDZhmUGsaSpNL6fnxUl+m
- 4Xt76HtDpoxU3kkvC6l5tWwK61X8UbCnR+AH3OkE+wDl8TATCIhh+Qi3rS+NUMc20ZxU89KX8Le
- 6M8Gg6Z26uj6lF9mnTfgg9Y63f0TA4Prb+MUISVO5VE2l6V/qbA4VxkwLiic+ex98C+TE2eLlKS
- Tnk7dM+iSMSaQqk2mHFDF/tcufA3jVB0i2vS+xC+L5iulPSr2f3z9rVCDeZ4cMSVJOWHFOfqP31
- 3QZDX/KPbyhkj611n5MW9KqdUJE1XxfVmhaKvcx+QkMbfs9Zc4mZ+O5BnuornC48QQzgW3/tc5/
- YafccWHiw92Ott9jb7bw3XD6XMGvGz1x/IzccSPby+zr8yoBH61GD5jN9yC8=
-X-Received: by 2002:a05:622a:587:b0:530:ea70:39f8 with SMTP id
- d75a77b69052e-5329e47e893mr32013241cf.40.1789731586556; 
- Fri, 18 Sep 2026 04:39:46 -0700 (PDT)
-X-Received: by 2002:a05:622a:587:b0:530:ea70:39f8 with SMTP id
- d75a77b69052e-5329e47e893mr32012811cf.40.1789731586002; 
- Fri, 18 Sep 2026 04:39:46 -0700 (PDT)
+ bh=NYiDFxM5DTkwPjVQc++Tthuv6NIMIlEmS75dFNyYj4E=;
+ b=c/f73lwuCBd0Vg47XT8IYpD2LvN7ClrLmNoY4yprhFyJrjKKTcmQrm2XRtJx5aYwAH
+ GIG+8NWJCf161+SKv+wtQQvEk8ZvgyaG0yAQ+zBS2cqn+IcQZbbejwKnzQXvIrH3+NGR
+ l0FrUMfsJHgaU1eVeM5GlevCRlZuITN5M/4LBobIDpCR9RsCk02BIUla47fzDz+MkW4r
+ 1orUkShWBW4WiyQJEuwM/v6vv7poEhJBaJE6QuOL3wcNwzWkqGK9sMIVEiD9DXkJkeVD
+ nTod6VMF4Ho0+mzsERR/YgBvTQmwhV5c2G5Ihx+aYRbcw9TqifwY33szRpWqd9NkyeuT
+ 9ylA==
+X-Gm-Message-State: AFuF++ku+x4IlL+rXZfhbj/vOl6JSjJmZSoW+6J2XmigACbyU9kBr6FZ
+ isdUwUHfpFocttxGEL3SQLeHAJQqX4OKTLP54Z0KBkhL4DsqbgWkj9W1icXg30MzGt2KEYKvGoH
+ KGJgZPrgp7IY4vjqoxp6pPSukj3FAkdQPw5nEBXT7D2JQI9j9j/M1tQp6b4AOw5L/JiI+w1TNUH
+ d+YW8woc6iDjdByyffLycXtcSeNnWegyb4LfWRDx9R
+X-Gm-Gg: AYBFou17p9A22R83/HLAravQGaH1cwd+FGjQwlrpFZph/F8kaEDqbseeuF3LVgq/yVd
+ YxyyW3RZ75WHlKJShsNrNTzSpaxdjR6sNZT17pgGxaRxcqB5aAOZACmXLBGmK6Hy5Hus8JY/7kT
+ dha4qf8WbQYSpeqxQaBxKnLgHIdwC9h+ZnXWaTBnwO5vR8OJOViO+aOfeEGEOVc6FOxDYUBpok+
+ r+OJZcJkNQqPMpdg6u8+YkvUrVS4NPRDlshfVsRlLgEeZMthporCYSm33pmznMMg6U6mMURRz0f
+ GbhaPXkKY7mwAi2KQ76yUXx7uNvyLOJIKHdpD8zsyMml541uJ/ZfLSO4CKOYcFjUGMr7LAhy/RK
+ lfgte/6cNrqqAtvkYzIdzJFkaBMZPwypLy2QlX7i5ESm01wohYbYg3HjVBWA=
+X-Received: by 2002:ac8:7d47:0:b0:532:9ade:b6d3 with SMTP id
+ d75a77b69052e-5329e59c03emr30340761cf.79.1789731582975; 
+ Fri, 18 Sep 2026 04:39:42 -0700 (PDT)
+X-Received: by 2002:ac8:7d47:0:b0:532:9ade:b6d3 with SMTP id
+ d75a77b69052e-5329e59c03emr30340301cf.79.1789731582325; 
+ Fri, 18 Sep 2026 04:39:42 -0700 (PDT)
 Received: from localhost
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-532a19f19f1sm11263171cf.22.2026.09.18.04.39.43
+ d75a77b69052e-532aac41140sm1770451cf.5.2026.09.18.04.39.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 18 Sep 2026 04:39:44 -0700 (PDT)
+ Fri, 18 Sep 2026 04:39:41 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-arm@nongnu.org
-Subject: [PULL 02/11] hw/vexpress.c: Remove forced cast to u64
-Date: Fri, 18 Sep 2026 07:39:17 -0400
-Message-ID: <20260918113926.831204-3-peterx@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PULL 01/11] system: Define ram_addr_t to be always uint64_t
+Date: Fri, 18 Sep 2026 07:39:16 -0400
+Message-ID: <20260918113926.831204-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918113926.831204-1-peterx@redhat.com>
 References: <20260918113926.831204-1-peterx@redhat.com>
@@ -108,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,44 +124,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now since ram_addr_t has switched to u64, remove the forced cast as not
-needed.
+QEMU's 32bit host support was deprecated since 10.0 and removed in
+11.0 (commit 372ec46b9f), at least system emulation part (cf634dfcd8fc
+revived tools).  Now it's safe to move ram_addr_t completely over to
+uint64_t.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+It should be almost the same as uintptr_t as before for !Xen, except that
+on some systems (like MacOS) uintptr_t and uint64_t can be typed slightly
+differently, causing unnecessary compiler warnings when use them in a
+mixture way.
+
+Hopefully, this change also makes it clear that ram_addr_t is never used as
+a host pointer in any form, but only an internal QEMU integer based address
+space for allocating ramblocks.
+
+[1] https://lore.kernel.org/r/d7b2fbf6-f9fa-4b39-8f40-95b7d5d0d8fb@oss.qualcomm.com
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260818172012.3052821-3-peterx@redhat.com
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260818172012.3052821-2-peterx@redhat.com
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@mailo.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/arm/vexpress.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ include/system/ram_addr.h | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
-index 914cda66d2..a4328ec74b 100644
---- a/hw/arm/vexpress.c
-+++ b/hw/arm/vexpress.c
-@@ -362,16 +362,9 @@ static void a15_daughterboard_init(VexpressMachineState *vms,
-     MachineState *machine = MACHINE(vms);
-     MemoryRegion *sysmem = get_system_memory();
+diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
+index 129f6b8757..044c0b52cc 100644
+--- a/include/system/ram_addr.h
++++ b/include/system/ram_addr.h
+@@ -14,16 +14,14 @@
+ #ifndef RAM_ADDR_H
+ #define RAM_ADDR_H
  
--    {
--        /* We have to use a separate 64 bit variable here to avoid the gcc
--         * "comparison is always false due to limited range of data type"
--         * warning if we are on a host where ram_addr_t is 32 bits.
--         */
--        uint64_t rsz = ram_size;
--        if (rsz > (30ULL * 1024 * 1024 * 1024)) {
--            error_report("vexpress-a15: cannot model more than 30GB RAM");
--            exit(1);
--        }
-+    if (ram_size > (30ULL * 1024 * 1024 * 1024)) {
-+        error_report("vexpress-a15: cannot model more than 30GB RAM");
-+        exit(1);
-     }
+-/* address in the RAM (different from a physical address) */
+-#if defined(CONFIG_XEN_BACKEND)
++/*
++ * QEMU's internal RAM address space for ramblock allocations (different
++ * from guest physical address).
++ */
+ typedef uint64_t ram_addr_t;
+-#  define RAM_ADDR_MAX UINT64_MAX
+-#  define RAM_ADDR_FMT "%" PRIx64
+-#else
+-typedef uintptr_t ram_addr_t;
+-#  define RAM_ADDR_MAX UINTPTR_MAX
+-#  define RAM_ADDR_FMT "%" PRIxPTR
+-#endif
++
++#define RAM_ADDR_MAX UINT64_MAX
++#define RAM_ADDR_FMT "%" PRIx64
  
-     /* RAM is from 0x80000000 upwards; there is no low-memory alias for it. */
+ #define DIRTY_MEMORY_VGA       0
+ #define DIRTY_MEMORY_CODE      1
 -- 
 2.55.0
 
