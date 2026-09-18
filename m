@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7059FC88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65405C88E75
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7QBD-0006fe-DI; Fri, 18 Sep 2026 00:26:31 -0400
+	id 1x7QAx-0006Eb-Tj; Fri, 18 Sep 2026 00:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAt-0006GA-U1
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:14 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAl-0005rh-Ga
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:03 -0400
 Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAs-0004QN-JI
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:11 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QAi-0004PG-MA
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:26:03 -0400
 Received: by mail-oi2-x10.google.com with SMTP id
- 46e09a7af769-7f4f0d37dc4so162264a34.1
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:26:00 -0700 (PDT)
+ 46e09a7af769-7f4f0cfb33cso186936a34.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705559; x=1790310359;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705549; x=1790310349;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6DETv+CjgZyBFHWbhuSop809p8a2VDLtxX9l7nrrCw0=;
- b=MZvu28slp6Bcb3wBVv/QvFSm0ABG76u5G/p70IPLhtY2TEH+p+T1I1WRheScGklqPM
- 3pgOGXHbv7djpQq1yEXjM+nVSt/gP4QuNp2HnNZlig9mWOHEOTNjzOlI2cL+fR/t55em
- Y6moyT0OUTtekr5Yxfg3IQdFagArfcIY/2fGLpeV+ET+pCII3gLT/xA5SAmjFUYepsiS
- sa33RTbQmjl1JS6ZL1dcSw67GIXUo9iTQvVv5sgoyWY2GJ53kFaku/mZbmG887eN7Bsd
- Ukg7/rznxr5Q8y1lSYAImFbIZ6de+JvxJxf+jl+ic79tJRILjLxY9Url7tn8InGE0W5d
- iXnw==
+ bh=txxZEGmgiR65GvH6Ifffpx5njMN/4m8TrPzV4WhVh9U=;
+ b=O32dVuYILdRV1+yX08Lq57A4BGIO6kW8ztw3zYFHxVS5SKjKdcbT1KOwstV+7c1vQr
+ UlrUvz+hAj37Sx5r0lFjoOzi6BQEB99jqB5vGeLZ9geXeZiaksHo4vRsXNDlOenYAWx1
+ KoTKDqjMDhHxUgwCbLFcwLur/gMHB1Vy3nuaYNJ69WAgoO4ykqKAUsXhILQTT0uOZMg0
+ 4yiFkqf7EyjakgNZ7CJywe/synwPjwBeY+0BR2tRLZelwNSf6mqU+lvP1xBdOResMNpE
+ Gt5ccdsNqkVxrEbunRnlR1jjom8REMu+IQjuBJzn80kOt8fYCr0iQJisE+t1VtxBoBWb
+ 4R5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789705559; x=1790310359;
+ d=1e100.net; s=20260707; t=1789705549; x=1790310349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6DETv+CjgZyBFHWbhuSop809p8a2VDLtxX9l7nrrCw0=;
- b=aaV49WEqxG9SdstsGe79v5IPQzLvaQ2agtLpiJQ6hIamDpsnb+ZtfjySN3gCsP6cqY
- q3ZIHe0j8dBHfarok+W4nRjwQB3s9m5xyZJyvIe6BZz8sab7xJOQ72wfDlH9hI4kPU6W
- 5AE8/TASzQRbmS+CA0G3vI7OBcTTCnmIaFqyJV941EDke7KWyfW47UOFRa2rQnCfTBe4
- e/TvQsZeVYy1MwHzA1fFtPKs32vhzUm6C+drdfrhovoD7Hqa2zSh2Lh4Zfjrfbaxw/Bz
- +nvjjV1QmCUngA21uwOTlMNdfIIKT9dzN0TYeTwrxQBtMIc0hq1LFMrZPRam+ays6ums
- 9+bw==
-X-Gm-Message-State: AFuF++mGQCPHpXOCxomCRghFXZ9E7QfyVDTNbpiGC+4dAr4rwkFW/XA8
- aFiSHjPuVgVrnkw7lanTsNMNUYAZklrTRMfXHAIOYejhYppg5a0DgwuYzt1VOR6qHlHDmSHCuNb
- QD+Mon+w=
-X-Gm-Gg: AYBFou16kdZ9ImSgLcEZPU1LvAyqQSaW4/MqAKCpN+UIc/gJU6F7UjMVVP69KtrJPBI
- +sqD4Hoa8/XfmA5mHby4UkB8ZBbLDEGSz2lErzJv3flHRNCMjqBkSxzJPCts2gc00FEf35904DA
- SAf11dHUiVFKMCsHzfq7KvbGhSxB/vzQzg2ZD6PCyTEtB3AX7JKpyyUvTfMhttwrvL3b/aNdI2m
- oOl8eB5LSjjNwZ3QosiwCkqbyMEjXvYkVHzNJWrG+d9QLndKe9U8c/1yhliu6InUDM5bujQ3w28
- Q8ZBtt1HSjmiI6bTdiB8hCmrt9CBy06ZzMzqV8LuWBJ0zSALdl61vNN66oqtMJKY0Rx0GS84VTG
- RJDONHHxO/83F+jphrP0yN6Oqm+8ltmjnkhurTVBgaIv51w2fuTtgthC5mkIv9BWeiMVYxniCOj
- 7h7obFtra12YTDMYRXq0641ne2L52GXF9h/eDZI97IyEj5wOxj+W9i+wxx2g==
-X-Received: by 2002:a05:6830:6306:b0:807:70aa:b2ac with SMTP id
- 46e09a7af769-80de2ddd1d3mr1605606a34.22.1789705559439; 
- Thu, 17 Sep 2026 21:25:59 -0700 (PDT)
+ bh=txxZEGmgiR65GvH6Ifffpx5njMN/4m8TrPzV4WhVh9U=;
+ b=MrQzEyvt1n/BsS84h2KKweZ3guGPmFi+xR5+rcrdIeLLuNlynl47PyKnPTAQkL5Hry
+ Et8yIRfjYYo290k9oFmCDh0qtYHIAFIPQWPHehU9x/BGFKSHyXbh2aKRgEHcwr6r/CrG
+ B7fzXgGklk9uTHv4ETnwl/atTpG/jVzAPMVEOdOxpGm+lh6DaOY5CcgLS5LiGiAtdUFR
+ 3a+FjDTv3WYZIMUiFPuqyeb6j8G+ZIsIT3K0JSoqfcZ82I8lZJVBa8hYPLXSC2z5OP2A
+ gH5hSokKszdfftx4Tm6ix7TYKar4M3+Ar+N8hNoUPUddALf8j+hPFLL2bqWiKXo/lKpc
+ tkdw==
+X-Gm-Message-State: AFuF++nEqukYo2+PLqwLFZ8EOEkcI1B1TFuZz+TT+OugJb/uDPz779ph
+ Peue/2/PR3V60Sv9eTRjKX5sAsHPvIBSWVtMqS4kKN8bc0GcKyQqqUAiJH7RocDrSuld/xp+cWE
+ WPjEp9Ck=
+X-Gm-Gg: AYBFou0lUrq39e3mr2XTLsscLhBGO0NnfHk71QhAQjQphZjWCiSXCK93I/s1zGSZ602
+ 4avi+8EeWwgrTl0fKJJqRUEAs3POd1NaiR5b3oXoDwmn2GDdgI3132B+aU8/kRWWFhwMuFtuMpx
+ Hn8xL+1Yq37897Guid3chb2YZmNZVMzbSRv4QFnmUgxkaAAwwwyv/yONRkUp2dvhHf4Tqr1ySOp
+ I32/inEHaeAfCd5PqZ4nMUHFFrEoSMyAB83ZymRaT7QvpaFmsRkAOjNCqo0t+taFs5+IX5MYlJB
+ B5HI725e0LyPkHWmMmOt9gyEZ0pxqZEfbqrPTCknXAHbwatyOXQcURE2AI1jIypu4X/aQmPPceb
+ HBE9TTvqkRzuvYwZKacFnO8MTEWkTGJ/BkyZdhWtlCdoRdshEupc+2YoLKPL/8nzyEnvFC86Fy6
+ a77aooHwKHGAg0ayqFZzlc4cHoJ4L4/LqmN5HHKZaJhcWwuh9s8FLK/F49Lg==
+X-Received: by 2002:a05:6830:44a2:b0:80c:d34f:5f5f with SMTP id
+ 46e09a7af769-80de2de5911mr1614127a34.24.1789705549605; 
+ Thu, 17 Sep 2026 21:25:49 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.58
+ 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 21:25:58 -0700 (PDT)
+ Thu, 17 Sep 2026 21:25:49 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+ Stacey Son <sson@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 40/41] bsd-user: Move qemu_guest_random_seed_main to same as
- linux-user
-Date: Thu, 17 Sep 2026 22:24:21 -0600
-Message-ID: <20260918042422.38713-41-imp@bsdimp.com>
+Subject: [PULL 33/41] bsd-user: Add os-extattr.h with file and fd extattr
+ functions
+Date: Thu, 17 Sep 2026 22:24:14 -0600
+Message-ID: <20260918042422.38713-34-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918042422.38713-1-imp@bsdimp.com>
 References: <20260918042422.38713-1-imp@bsdimp.com>
@@ -100,40 +101,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux-user initializes this before doing the environment stuff. Go ahead
-and move it there for consistency, though it doesn't matter since we
-don't use it until later.
+Add the first part of extended attribute support: extattrctl,
+extattr_set_file, extattr_get_file, extattr_delete_file,
+extattr_set_fd, extattr_get_fd, and extattr_delete_fd.
 
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ bsd-user/freebsd/os-extattr.h | 208 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 208 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-extattr.h
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 2fbbfc3d86..13cd752b99 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -541,9 +541,6 @@ int main(int argc, char **argv)
-         do_strace = 1;
-     }
- 
--    target_environ = envlist_to_environ(envlist, NULL);
--    envlist_free(envlist);
--
-     {
-         Error *err = NULL;
-         if (seed_optarg != NULL) {
-@@ -557,6 +554,9 @@ int main(int argc, char **argv)
-         }
-     }
- 
-+    target_environ = envlist_to_environ(envlist, NULL);
-+    envlist_free(envlist);
+diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
+new file mode 100644
+index 0000000000..fb3ef27346
+--- /dev/null
++++ b/bsd-user/freebsd/os-extattr.h
+@@ -0,0 +1,208 @@
++/*
++ * FreeBSD extended attributes and ACL system call support
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <sys/extattr.h>
++#include <sys/acl.h>
 +
-     /*
-      * Now that page sizes are configured we can do
-      * proper page alignment for guest_base.
++/* extattrctl() */
++static inline abi_long do_freebsd_extattrctl(abi_ulong arg1, abi_ulong arg2,
++                                             abi_ulong arg3, abi_ulong arg4,
++                                             abi_ulong arg5)
++{
++    abi_long ret;
++    void *p, *a, *f;
++
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    f = lock_user_string(arg3);
++    if (f == NULL) {
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    a = lock_user_string(arg5);
++    if (a == NULL) {
++        unlock_user(f, arg3, 0);
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(extattrctl(path(p), arg2, f, arg4, a));
++    unlock_user(a, arg5, 0);
++    unlock_user(f, arg3, 0);
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* extattr_set_file(2) */
++static inline abi_long do_freebsd_extattr_set_file(abi_long arg1,
++                                                   abi_long arg2,
++                                                   abi_long arg3,
++                                                   abi_long arg4,
++                                                   abi_long arg5)
++{
++    abi_long ret;
++    void *p, *a, *d;
++
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    d = lock_user(VERIFY_READ, arg4, arg5, 1);
++    if (d == NULL) {
++        unlock_user(a, arg3, 0);
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(extattr_set_file(path(p), arg2, a, d, arg5));
++    unlock_user(d, arg4, arg5);
++    unlock_user(a, arg3, 0);
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* extattr_get_file(2) */
++static inline abi_long do_freebsd_extattr_get_file(abi_long arg1,
++                                                   abi_long arg2,
++                                                   abi_long arg3,
++                                                   abi_long arg4,
++                                                   abi_long arg5)
++{
++    abi_long ret;
++    void *p, *a, *d;
++
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    if (arg4 && arg5 > 0) {
++        d = lock_user(VERIFY_WRITE, arg4, arg5, 0);
++        if (d == NULL) {
++            unlock_user(a, arg3, 0);
++            unlock_user(p, arg1, 0);
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(extattr_get_file(path(p), arg2, a, d, arg5));
++        unlock_user(d, arg4, arg5);
++    } else {
++        ret = get_errno(extattr_get_file(path(p), arg2, a, NULL, arg5));
++    }
++    unlock_user(a, arg3, 0);
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* extattr_delete_file(2) */
++static inline abi_long do_freebsd_extattr_delete_file(abi_long arg1,
++                                                      abi_long arg2,
++                                                      abi_long arg3)
++{
++    abi_long ret;
++    void *p, *a;
++
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        unlock_user(p, arg1, 0);
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(extattr_delete_file(path(p), arg2, a));
++    unlock_user(a, arg3, 0);
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* extattr_set_fd(2) */
++static inline abi_long do_freebsd_extattr_set_fd(abi_long arg1, abi_long arg2,
++                                                 abi_long arg3, abi_long arg4,
++                                                 abi_long arg5)
++{
++    abi_long ret;
++    void *a, *d;
++
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        return -TARGET_EFAULT;
++    }
++    d = lock_user(VERIFY_READ, arg4, arg5, 1);
++    if (d == NULL) {
++        unlock_user(a, arg3, 0);
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(extattr_set_fd(arg1, arg2, a, d, arg5));
++    unlock_user(d, arg4, arg5);
++    unlock_user(a, arg3, 0);
++
++    return ret;
++}
++
++/* extattr_get_fd(2) */
++static inline abi_long do_freebsd_extattr_get_fd(abi_long arg1, abi_long arg2,
++                                                 abi_long arg3, abi_long arg4,
++                                                 abi_long arg5)
++{
++    abi_long ret;
++    void *a, *d;
++
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        return -TARGET_EFAULT;
++    }
++
++    if (arg4 && arg5 > 0) {
++        d = lock_user(VERIFY_WRITE, arg4, arg5, 0);
++        if (d == NULL) {
++            unlock_user(a, arg3, 0);
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(extattr_get_fd(arg1, arg2, a, d, arg5));
++        unlock_user(d, arg4, arg5);
++    } else {
++        ret = get_errno(extattr_get_fd(arg1, arg2, a, NULL, arg5));
++    }
++    unlock_user(a, arg3, 0);
++
++    return ret;
++}
++
++/* extattr_delete_fd(2) */
++static inline abi_long do_freebsd_extattr_delete_fd(abi_long arg1,
++                                                    abi_long arg2,
++                                                    abi_long arg3)
++{
++    abi_long ret;
++    void *a;
++
++    a = lock_user_string(arg3);
++    if (a == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(extattr_delete_fd(arg1, arg2, a));
++    unlock_user(a, arg3, 0);
++
++    return ret;
++}
++
++
++#endif /* FREEBSD_OS_EXTATTR_H */
 -- 
 2.55.0
 
