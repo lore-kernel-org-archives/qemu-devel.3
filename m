@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33452C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 20:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A573C982DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 20:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7fDs-0001Mi-0Z; Fri, 18 Sep 2026 16:30:16 -0400
+	id 1x7fDY-0001JN-2m; Fri, 18 Sep 2026 16:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7fDf-0001L7-27; Fri, 18 Sep 2026 16:30:04 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1x7fDX-0001J5-8E; Fri, 18 Sep 2026 16:29:55 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <deller@kernel.org>)
- id 1x7fDd-0003E9-8f; Fri, 18 Sep 2026 16:30:02 -0400
+ id 1x7fDV-0003Ci-KZ; Fri, 18 Sep 2026 16:29:55 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 5E6436053B;
- Fri, 18 Sep 2026 20:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE7D1F000FF;
- Fri, 18 Sep 2026 20:29:57 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D7AA24160C;
+ Fri, 18 Sep 2026 20:29:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676751F000FF;
+ Fri, 18 Sep 2026 20:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789763400;
- bh=Df2nNEkPeb+r6J6ucH1JvlVX0AQgSLBybIOjF2SuXKs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B1u88lClFGO8kCubF3hGXJtJ/bsagAhrzTPILbwzVIu7m5Gr0dNwIq2jEMKfdAAmU
- dQzX5FQP1m3a/lJrXMWZ6k2bmx+EuesjeV9KMwfKPbEmSKj5x4xkWRXlxPRjoH820P
- fqTV7HgKLUB1vddiENo5FVUH2Ou4ovSAwF9xMO3ZaGMZRYohvEqjzwnus9dNXmo9+y
- GFV5z8vyPUN7dwJl3t9PS5PDnxCpd1auC9ABH/L0YdhZbKVfd2/5MYbNIg2SUJO5NX
- /jCv3Btiz8R3kTc0yqzIcgocIhHOSa7TR83PZNPN611uL7KrUmfZYmC8pNQnYlu7zB
- dFlDWlvYRdrzw==
+ s=k20260515; t=1789763391;
+ bh=d9b45h+0PbT+j+W7nwklXtvP6ReaP2gu+9ivmyVlqs0=;
+ h=From:To:Cc:Subject:Date;
+ b=nQ/7hA+q1OIYdUuCUbtJs/z02PH5jUkm2idRcY6OdSzeTkACTPCb6J5Qctp7OhvMT
+ HH3+5xaEYkqFPn2QgkqAYhoeGArtPt2ot1cgoi4+LMtfRLUWYGwmf3OMrCuiv3x41O
+ 9G13yOF1uExNQizX1mNA5Uq3bRjwdz+2pKxmEIyntCG0lhelZsoHUpgEBJgdeTUclU
+ mRa94WSkStPTaMcvC8iTMxdTIOm8ytPj0XUvz0Eaf58IIFV2cjypQOul5Zw3nklaH5
+ MUyNIvQHmPLwY6x/q2zI/HDanj2N2D59FhhRj/YcRJrcAHKwPk3Neudv66+EOUbeQP
+ HGcJAo0u8cq5A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
@@ -43,16 +43,15 @@ Cc: Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
  Alistair Francis <alistair.francis@wdc.com>,
  Chao Liu <chao.liu@processmission.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PULL 3/4] linux-user: implement mlock2(2) syscall
-Date: Fri, 18 Sep 2026 22:29:46 +0200
-Message-ID: <20260918202947.5322-4-deller@kernel.org>
+Subject: [PULL 0/4] Linux user patches
+Date: Fri, 18 Sep 2026 22:29:43 +0200
+Message-ID: <20260918202947.5322-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260918202947.5322-1-deller@kernel.org>
-References: <20260918202947.5322-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,62 +73,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Morrell <mmorrell@tachyum.com>
+From: Helge Deller <deller@gmx.de>
 
-TARGET_NR_mlock2 is defined for every target's syscall table (it has
-been available on all Linux architectures since it was added in
-kernel 4.4), and linux-user/strace.list already has an entry for it,
-but linux-user/syscall.c has no case handler for it. A guest mlock2()
-call therefore falls through to the default case and gets -ENOSYS
-instead of being emulated, on every target.
+The following changes since commit e8dca265c91b45f4cde746e5094d7b763444eb6a:
 
-mlock2() differs from mlock() only by a third `flags` argument
-(MLOCK_ONFAULT). Add TARGET_MLOCK_ONFAULT and a case that validates
-the flags argument and forwards to the host mlock2(), mirroring the
-existing TARGET_NR_mlock case immediately above it.
+  Merge tag 'pull-11.1-more-check-tcg-docker-meson-180926-1' of https://gitlab.com/stsquad/qemu into staging (2026-09-18 07:52:24 -1000)
 
-Signed-off-by: Michael Morrell <mmorrell@tachyum.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/syscall.c      | 9 +++++++++
- linux-user/syscall_defs.h | 4 ++++
- 2 files changed, 13 insertions(+)
+are available in the Git repository at:
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index cfa68dfbdb..9f454502cb 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11230,6 +11230,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_mlock:
-         return get_errno(mlock(g2h(cpu, arg1), arg2));
- #endif
-+#ifdef TARGET_NR_mlock2
-+    case TARGET_NR_mlock2:
-+        if (arg3 & ~TARGET_MLOCK_ONFAULT) {
-+            return -TARGET_EINVAL;
-+        }
-+        return get_errno(mlock2(g2h(cpu, arg1), arg2,
-+                                 (arg3 & TARGET_MLOCK_ONFAULT) ?
-+                                 MLOCK_ONFAULT : 0));
-+#endif
- #ifdef TARGET_NR_munlock
-     case TARGET_NR_munlock:
-         return get_errno(munlock(g2h(cpu, arg1), arg2));
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index e28853c93b..f5831a6bad 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2795,6 +2795,10 @@ struct target_mount_attr_ver0 {
- #ifndef RESOLVE_IN_ROOT
- #define RESOLVE_IN_ROOT         0x10
- #endif
-+
-+/* flags for mlock2() */
-+#define TARGET_MLOCK_ONFAULT    0x01
-+
- #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
+
+for you to fetch changes up to e95f53e30be7935d98e38eb09cd6360fe2886249:
+
+  linux-user/loongarch64: Detect vector stores in host_signal_write() (2026-09-18 22:20:21 +0200)
+
+----------------------------------------------------------------
+linux-user patches for mlock syscall and loongarch64 and riscv fixes
+
+Add support for the mlock syscall, and some fixes for loongarch64 and riscv.
+
+----------------------------------------------------------------
+
+Michael Morrell (1):
+  linux-user: implement mlock2(2) syscall
+
+SignKirigami (1):
+  linux-user/loongarch64: Detect vector stores in host_signal_write()
+
+wangyang (2):
+  linux-user/riscv: honor zicntr=false for base counterCSRs
+  linux-user/riscv: invalidate reservations after stores
+
+ .../include/host/loongarch64/host-signal.h    |  6 +++
+ linux-user/riscv/target_cpu.h                 |  2 +
+ linux-user/syscall.c                          |  9 +++++
+ linux-user/syscall_defs.h                     |  4 ++
+ target/riscv/cpu.c                            |  3 ++
+ target/riscv/cpu.h                            |  3 ++
+ target/riscv/helper.h                         |  5 +++
+ target/riscv/tcg/csr.c                        | 11 ++++--
+ target/riscv/tcg/insn_trans/trans_rva.c.inc   | 24 ++++++++++++
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc   | 11 ++++++
+ .../riscv/tcg/insn_trans/trans_rvzawrs.c.inc  |  3 ++
+ target/riscv/tcg/op_helper.c                  | 35 +++++++++++++++++
+ target/riscv/tcg/translate.c                  | 38 +++++++++++++++++++
+ 13 files changed, 150 insertions(+), 4 deletions(-)
+
 -- 
 2.54.0
 
