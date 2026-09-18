@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB7C5C88E75
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D296C88E75
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 04:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7QAA-0005Nw-IE; Fri, 18 Sep 2026 00:25:26 -0400
+	id 1x7QA2-0005Kn-Lt; Fri, 18 Sep 2026 00:25:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QA7-0005M0-57
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:23 -0400
-Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QA1-0005K8-L8
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:17 -0400
+Received: from mail-oi2-x0f.google.com ([2607:f8b0:4864:32::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7QA5-0004Aj-Km
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:22 -0400
-Received: by mail-oi2-x10.google.com with SMTP id
- 46e09a7af769-7ff1e4ffb3aso141870a34.1
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7Q9z-00049m-Td
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 00:25:17 -0400
+Received: by mail-oi2-x0f.google.com with SMTP id
+ 46e09a7af769-7fcb425fc2bso151787a34.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 21:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705520; x=1790310320;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789705515; x=1790310315;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mDkP0dtWB36TzbGajHdmCtPZU5XPoaXCX6IaOFZEw+0=;
- b=nka5stu+ZiuiyOMJxvtWo+kNQzLeK8SVzPEuuNEjw4aN0hh5sFDsEr6sjyg9ZNIOR8
- 2PnTTaPj7puhfVbyqhVveukym24skaBakayrnYq3Pm+vH43aUBkYDW3N0oBOoA/V7beo
- bXcL7iigJIl4m3lqyG553LtFpzSt+H4I+fKi0XcG/cX8SOn4qCncWJYDEmQRy8jpsir6
- dkbgnsDI0vORaZ859ZYxYSMBTZ848YDMbSsyhI1oQM5zBjaJERUf6WY5ZHAqJriVLj3N
- 5Zbcy9FhkmNPJnPNj+II6JpphHgwbYZPLJtDu+ONUpuwewchViNnkzey0S1NoICmlPEY
- uCgA==
+ bh=4s+zO78YhAlvSbx1P5A7DHRUJ8bdtiX0ksZky7VNtEA=;
+ b=DBRZ16ajVRtkUPXZgWM5uNoa2+h9Puai+GB0yS8NK9tPljT3Sd/4cntr3Tgxi3zL2p
+ 7IVPFU6GME9NUfkawuNIp2uVU9rS5TDhkkZTbrM6YeyiIevNN6b5gtHBaeDM9dA6xBfe
+ qI6L6VckvTpdy96sNS2MlsOEAwJnYU9gUXJGv5D7L2wAviHwJvziI/DbG2g9Kgz/Xeu3
+ xgefu+Z0pKAMBeb5lKB0glK+m683nT2caqp2K/eV6iPyY9+44lehLTAOPu0YnJg/DNYf
+ /npQTumajMNh/nW6KIP9baYoQ0pskgzPPKKjVX9ituPQF+6HE705MbMsj0hMOP/tt4pl
+ m9MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789705520; x=1790310320;
+ d=1e100.net; s=20260707; t=1789705515; x=1790310315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mDkP0dtWB36TzbGajHdmCtPZU5XPoaXCX6IaOFZEw+0=;
- b=LvcvguRsi7HyIGsblptFfLZibkQZ6SgipIWQp2DYqHPsAjI6PkdE2S4FvRB3gsay77
- DWqBCggFK9AuwtdVySMMZVuGXFQF/kjmdZVIiLEoYGuRZVeCUA4UxWnFp2IlVm5h8OEQ
- JIlZgVGJhpSPPFW1DzAzogDzTTXr4uM+CL9HNVOxb5b1eKZlvOjGLvWosSWnfQ87thQ2
- t8lI7GqUBsP6EQNEr7gwFjeZLWdzbC9dMzbG18oT7siDaOwvCTdpkwzTNf/ubiMPqTuN
- OUpTsCWm6Gf7jpnOJsIIUYEgjnP4LF1arG3Xs0Q3zZkv1nAZm6DT9QPvFzA+L+ENtT5i
- jUsg==
-X-Gm-Message-State: AFuF++nv7pdQl24dpghj+kvY99nMWXIX63pktBLdi754y7FISUX1gZA0
- HcUmdOmuz+bOlJbXpC/94tpdL5BLqQZRgeSelFPUCOXYwgv3qvpHyQSrr/4n+SkkyuPl+YGJySX
- M0M2QBCg=
-X-Gm-Gg: AYBFou3AnsJvVhCPDZ/rDAroyREmj8O+THV58L5/hu+ehsd0xceJox8BbWWznqNbImJ
- j5RhRUyg5rjRjcYnt3JSGfuA1ht7LOCTIH7GKfvPeXZ9w2P6L9MIAW3MyF+6S4xZ/A8xUVCVBbs
- xYHM1XvE0gbJxngxf1r0ewtrH8CMAU1te2xIJbWxXDiZPXkd7IiOwOO/L6B8ruDuiqds1mMKUmD
- qboN1Zo7ZX7GYj63xccfUn/SZJZGl4eQgnFaxRxKyMmuDOtQS+VSxlLqb35Brt74lGnSAHGyqHT
- d8b3D3BK3Swb7FIHIqJc4lRSoz/rW+jKFV8M5GpdDXdpokVzDizY+3SFNECjYdJKEzwsEUF1hH8
- 9p/Q3S1dDhQeomzmXPdOXW9vOnegVom3cnc/M+d424ZvyYnjYaRricdcrXAp9jAGpemF2t79LKJ
- JtEIKOWywWVrAze3axIth2pnVljK3s/a+4CxS6L9BHkiIbuIX9sL2DhlJTvg==
-X-Received: by 2002:a05:6830:25c2:b0:7f8:4a55:b82b with SMTP id
- 46e09a7af769-80ddf967e8fmr1628859a34.2.1789705520594; 
- Thu, 17 Sep 2026 21:25:20 -0700 (PDT)
+ bh=4s+zO78YhAlvSbx1P5A7DHRUJ8bdtiX0ksZky7VNtEA=;
+ b=nUuelyeV4V4fQb2k5YR9P/dQ0+4ivHgFDQPwmX1TIM1Z3cmFyUIVb3TGf+J+giN7YT
+ xAJ9np+Mhc2ETjZcpuUbmIlUG6i9h//t8/oyiMyFBYu5Sqaopj5r1GJ7nx1gbbg3FNe/
+ RzIPkUUAQHvwQ6ieT8tEEprvT/gThLmUBBN8VV3hutHtYYKJ6ahfWIY/JCnr7oYeiVPu
+ 7EdHq3+zWd9KKp7OLfiiD3+Yqt5oH767tqgspukZQ7FxRBgicVM/ocvNxat6jC8d9uM+
+ YL4Uv2McCp7DFqwtSq6ASoxTSooDZOm7i4m/wOPZglXgxw3asZWdbLCltfrrFDr5R/Dv
+ +4mA==
+X-Gm-Message-State: AFuF++kjZZN/ElVKYblTGhLqGudgtT3PdkERhpgGa5Dl3delxpAc8TH5
+ 5nhY2UVimjk/PCegyvTUI1wfdMOkZZA7HwW7VV/eR30SFftpYopxxEoKf8uoC8HsB5OZfmqBNVm
+ FIU7dk3M=
+X-Gm-Gg: AYBFou1CN9vflvBTW5io8pyHy9oO6LrYB6gqSwDkA0RAh8usjCSeecWYhaNV5JdTTGI
+ RXRCYEE3YKgL/tFdrONsR5heglGmdYo9ge2QVVo4NtCq90JHz0ANpbKpj69BenujKiAUBIdMOHV
+ WWLAuy6/n7GrvUHvYPvgoYFy47NOjo1J95yfbMYAfjsGQ9zDs0gWOVO7XvY78GaUAUtOtjK3Nu/
+ UbCgnPjwQcxQ0mpn/acwMgxOH9E4VxM96ojnBr0/juADiiOvsxn59P0jjq/OyMyULyc2MijiWby
+ i/+ZMYQsGjq+N9lz0dPRrheByxyhs5Re8zIjK14a9E4j52UK4Lz2QpmPaYJnnyucfmG4LtofBc3
+ xmLC79ApwW8LrOlwIo5Qbbxfy4PqpZ84HcqPabCQpwMtTX3nJZJLhaS5Fq+dMJCQa4U706lzzCR
+ 8bkCxlkseGugFus4ighYl9FN+pofSBCjRDFTBO8oGM8JkW9A0nzO9GFxbCpQ==
+X-Received: by 2002:a05:6830:4708:b0:7e9:cf6f:aef8 with SMTP id
+ 46e09a7af769-80de115f4f6mr1595015a34.11.1789705514861; 
+ Thu, 17 Sep 2026 21:25:14 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.19
+ 46e09a7af769-80e51d627b5sm489718a34.20.2026.09.17.21.25.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2026 21:25:20 -0700 (PDT)
+ Thu, 17 Sep 2026 21:25:14 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
+ Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/41] bsd-user: Fix realpathat for FreeBSD 15.0 and newer
-Date: Thu, 17 Sep 2026 22:23:52 -0600
-Message-ID: <20260918042422.38713-12-imp@bsdimp.com>
+Subject: [PULL 06/41] bsd-user: Add signal system call dispatch
+Date: Thu, 17 Sep 2026 22:23:47 -0600
+Message-ID: <20260918042422.38713-7-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918042422.38713-1-imp@bsdimp.com>
 References: <20260918042422.38713-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:32::10;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::f; envelope-from=imp@bsdimp.com;
+ helo=mail-oi2-x0f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,46 +101,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix __realpathat to use __sys___realpathat on FreeBSD >= 15.0.
+Wire up the signal-related system calls in the FreeBSD syscall
+dispatcher: sigaction, sigprocmask, sigpending, sigsuspend, sigreturn,
+sigwait, sigwaitinfo, sigqueue, sigaltstack, kill, and pdkill.
 
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-stat.h | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ bsd-user/freebsd/os-syscall.c | 48 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-stat.h b/bsd-user/freebsd/os-stat.h
-index ea95aa6344..4e5fc30de4 100644
---- a/bsd-user/freebsd/os-stat.h
-+++ b/bsd-user/freebsd/os-stat.h
-@@ -622,11 +622,6 @@ static inline abi_long do_freebsd_fcntl(abi_long arg1, abi_long arg2,
-     return ret;
- }
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 7fefdb569f..06148fe3ce 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -43,6 +43,7 @@
+ /* BSD dependent syscall shims */
+ #include "os-stat.h"
+ #include "os-proc.h"
++#include "os-signal.h"
+ #include "os-misc.h"
  
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300080
--extern int __realpathat(int fd, const char *path, char *buf, size_t size,
--        int flags);
--/* https://svnweb.freebsd.org/base?view=revision&revision=358172 */
--/* no man page */
- static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
-         abi_long arg3, abi_long arg4, abi_long arg5)
- {
-@@ -640,12 +635,11 @@ static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
-         return -TARGET_EFAULT;
-     }
+ /* I/O */
+@@ -950,6 +951,53 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_getdtablesize();
+         break;
  
--    ret = get_errno(__realpathat(arg1, p, b, arg4, arg5));
-+    ret = get_errno(syscall(SYS___realpathat, arg1, p, b, arg4, arg5));
-     UNLOCK_PATH(p, arg2);
-     unlock_user(b, arg3, ret);
- 
-     return ret;
- }
--#endif
- 
- #endif /* BSD_USER_FREEBSD_OS_STAT_H */
++        /*
++         * signal system calls
++         */
++    case TARGET_FREEBSD_NR_sigaction: /* sigaction(2) */
++        ret = do_bsd_sigaction(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigprocmask: /* sigprocmask(2) */
++        ret = do_bsd_sigprocmask(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigpending: /* sigpending(2) */
++        ret = do_bsd_sigpending(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sigsuspend: /* sigsuspend(2) */
++        ret = do_bsd_sigsuspend(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sigreturn: /* sigreturn(2) */
++        ret = do_bsd_sigreturn(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sigwait: /* sigwait(2) */
++        ret = do_bsd_sigwait(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigwaitinfo: /* sigwaitinfo(2) */
++        ret = do_bsd_sigwaitinfo(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sigqueue: /* sigqueue(2) */
++        ret = do_bsd_sigqueue(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigaltstack: /* sigaltstack(2) */
++        ret = do_bsd_sigaltstack(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_kill: /* kill(2) */
++        ret = do_bsd_kill(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_pdkill: /* pdkill(2) */
++        ret = do_freebsd_pdkill(arg1, arg2);
++        break;
++
+         /*
+          * sys{ctl, arch, call}
+          */
 -- 
 2.55.0
 
