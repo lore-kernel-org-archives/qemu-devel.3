@@ -4,64 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2DB4C982D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 01:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F3CC982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 01:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7NTg-0006zy-Pe; Thu, 17 Sep 2026 21:33:24 -0400
+	id 1x7NWY-0007qp-Hg; Thu, 17 Sep 2026 21:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=md1715FC36BB=lirongqing@baidu.com>)
- id 1x7NTa-0006zi-Rs
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:33:22 -0400
-Received: from mx24.baidu.com ([111.206.215.185] helo=outbound.baidu.com)
- by eggs.gnu.org with smtp (Exim 4.90_1)
- (envelope-from <prvs=md1715FC36BB=lirongqing@baidu.com>)
- id 1x7NTU-0007NI-TW
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:33:18 -0400
-X-MD-Sfrom: lirongqing@baidu.com
-X-MD-SrcIP: 172.31.50.46
-From: "Li,Rongqing" <lirongqing@baidu.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: =?gb2312?B?tPC4tDogWz8/Pz9dIFJlOiBbUEFUQ0hdIHBjaWVfc3Jpb3Y6IGZpeCB3cm9u?=
- =?gb2312?Q?g_write_width_and_off-by-one_in_pf=5Freset?=
-Thread-Topic: [????] Re: [PATCH] pcie_sriov: fix wrong write width and
- off-by-one in pf_reset
-Thread-Index: AQHdRmbDW/vAvH20xkyUoLoMFn6w4bbSfcsAgAEQdQA=
-Date: Fri, 18 Sep 2026 01:33:00 +0000
-Message-ID: <3394886bda904bd79a49ff6de6c17438@baidu.com>
-References: <20260917053818.2565-1-lirongqing@baidu.com>
- <20260917131304-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260917131304-mutt-send-email-mst@kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.127.72.25]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x7NWW-0007qa-RL
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:36:20 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x7NWU-0007hE-Ua
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:36:20 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a6056c2064so247078a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 18:36:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789695377; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fKpEqjIga44Gf/los5VwR3t7yo4YA0MdZLb04pS+bMqomNCZlmsgrG9Yn2Rn6tzxMI
+ dLI4lPjLLscxd2NMOyS1eV4VI0TKWYVsf28eLjRil3KcE6ywnNSLdGRGpq41ntSBeIFJ
+ xw1VuywLqC1mwhPnxFSlFP3vrhH83PgaJ3znaAcMesFlDpc2FumZ+i6OLtIbYrS5UejY
+ CcBf7Q22G88Lkip4TMO/xit0KsgP9hYGX46f/gwLH3w/H+3qGaOLxnAcAwPq3nP5dB66
+ 05o0VaTB2dJ9FhDUr5AiyYUjMHRHddQ3WmqXHhy/x2pK3GSMKFkhPUYVTcO7DW8wdaph
+ riZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=koZ8qJ4cKA01hZ1BuEgqe4zBUCMd+v4SCuOeAVFtrdqNf7UnUY706IUhkgM9389g6x
+ stuIUrfnkwW42m5+oWovboHJLUUVdZ4Wd4ys51fjb237ejf5Uu0lRF+OlKeKj2xlxrfi
+ yBnYOBPfDI1pZh0skqN4RMO9BESzRiu+CNQxA/3+esYNvoocAIoyjUo3SOh7E3uKxKyo
+ qmVh8ihXBK4FfhJLq9JT4QTocP7srbmv5Ww2GuJW/SE9d2AJNOKUL2BcfDwC06tp7YwQ
+ 8LHA40AlH7pvMkiYMIgtmwUoWyAO90wsAuT4AhQMYKLdyapC6TQjM0X36ntNH4MxdfZK
+ my2w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1789695377; x=1790300177; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
+ b=R4LpBOF7OA3GhVnFscHawTvzEOLL30HJ4Hoot/dpUP3jFZmFMKeN2xN10Yxy7//JGI
+ vL6H99ZNqk8k5LHa9b1gMZakPu+Bh+cDhCe5RZN0Q7+FUNx5jfxxiR8VwplmdBly14oI
+ p9Ul8nUPRUmZzOu2YbxhPuzmtJwllMZqmSDpaTd9BuOsLeySB+4e14yAj4l+KGcVIE10
+ Y6Ti7sPWCKkeFPWWDv1gxlnlA/3hLHPdXfoofCsGlaZ4raRNVLGLFXn60x8o4VkedNdL
+ ew4Szbp1Mdc5XuGzswF1FbvCGrAKmsy0GLzVAIr/vyO0YkbFVUTayG5XBow/IYSIoLR2
+ psGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789695377; x=1790300177;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZY9puDclBvEzT6YB4uwjAUe0cpa5tvMQY/c5MhF/Ucw=;
+ b=dB+xXWYZoFFAMbxVMkuaxVk4e6stRKezwIICl7QjS1nafibmDZvL7TwQwgeZ/1KkrX
+ 5ORzReOMRg0KvYhLPhFzGc7EPTOGHd+11agfgKqSsyMd4eFwCND4IuBrphSryqpbLVr/
+ WgiDEn9nNvspVc1NpWxbphkUVjouBVaNj4OOKSnWLe5eERhzPzI79ZlxjcBqss+UEkTK
+ Z5p7uZ1Q11eHu6Bv0YUyaHcm3FxaupvaGYgq4LbAdUbGV54RbUxXiH3Ttcy6HDseuI6V
+ d/4QjmUN+vzz1GsjvseS2aPFih5yggOdpJhE0pG00wFbJfU6VzCi74sCPZh0xwKsV4Dp
+ p/0g==
+X-Gm-Message-State: AFuF++kO4W4V9Ezj8K7Hut57+hXmhMRQUqJLUvwSzioEdgONGUJO+ziN
+ YXOvBR7p2DDQzDeQMbSS13XBzyMsTq3dn2hi0PdB4IlkDWOmMLNHkcoNlfcuF/EK267ZQON8nK6
+ CDZvplYunN8sunBJQEFnumKJIcWDmaMU=
+X-Gm-Gg: AYBFou1ZNBnmOOUlaRjTpGFipujvoteqhmmOubkYnIfiSJnlyqjcModWmW13wDENuUe
+ 2sdX3GNhmYef8HSp68bHyHGfoNt62cpSjO2Szgds7XZmg00nirfi/ogEFGqTfcOM0noPJCk5B08
+ pXJSQTqzgjgKmIG6NTd9zsoWUOqczur3tScTeHrj+Q7jEKnSjGcbI5fmHnm8MXBXo4tUyDurh81
+ lAEGAiSgzhuGrHSgqXnDkkYl4tDph5wUFdJfrsbY4gZEMeI2puFR6RgGfDybtrFQ7idKxMkaKSe
+ gzYz1nGha45/MyoqIObSyfyirdlXq8z0/GJCbngwQbDyGbQBoJNR/Tw=
+X-Received: by 2002:a17:907:c1b:b0:c26:19e3:e979 with SMTP id
+ a640c23a62f3a-c2a157c41b3mr92775166b.25.1789695376737; Thu, 17 Sep 2026
+ 18:36:16 -0700 (PDT)
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
- s=selector1; t=1789695183;
- bh=ZRu54IkBneOM1lrKV3LI0ZZI8UU4svplW6EVUBkP4Xo=;
- h=From:To:CC:Subject:Date:Message-ID:Content-Type;
- b=E/VSrC42lUwiDH66E+nPCnta4LYpJid/tflvTyNOPqlehrLh0dtoaQl5PmE78VIh/
- nEqvvuD4kRCGHcCpQxIjqilr53xd92lX8twVx81KmT7TeWzME2bgyiyRrPup2JIixu
- 0Xcl+4/2h3ZeqWnpByQtW8hfpv/RQkUZBQmLEBM+2rZ3hgZRPuxkIAi9wBrOL+fmIV
- Gh72UFeSu2sxytU8AV9X+XVzOvLjoODR7BVUAO/G+2c5SsI6tcP9w24ASXVjvXXga+
- J2A1j+zhIEmyLDiGtmyLDyMqEdTC4nDNZoXGOGAFeszHMUJr6BYvAQx/yxsIy0vMYk
- E88/YabtATUMA==
-Received-SPF: pass client-ip=111.206.215.185;
- envelope-from=prvs=md1715FC36BB=lirongqing@baidu.com; helo=outbound.baidu.com
-X-Spam_score_int: 29
-X-Spam_score: 2.9
-X-Spam_bar: ++
-X-Spam_report: (2.9 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+References: <20260918004225.827-1-luoyonggang@gmail.com>
+ <20260918004225.827-3-luoyonggang@gmail.com>
+ <db731c3c-69c3-4c4d-b1d4-27e2a943d900@linaro.org>
+In-Reply-To: <db731c3c-69c3-4c4d-b1d4-27e2a943d900@linaro.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Fri, 18 Sep 2026 09:36:02 +0800
+X-Gm-Features: AcwNN1XALxAE471dq9S7qtW3S-9RErAdHzzxsQo1O1xZI8X5l-YENDERcGK4BWE
+Message-ID: <CAE2XoE-Pvvqux9NeD8k6FTJ-TYKjdVNtsVDU3SXB=bi8_TjW5Q@mail.gmail.com>
+Subject: Re: [PATCH 02/21] helper-gen: move helper_info extern into gen_helper
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000002fca3e065bb7edf6"
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,74 +113,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQo+IE9uIFRodSwgU2VwIDE3LCAyMDI2IGF0IDAxOjM4OjE4UE0gKzA4MDAsIGxpcm9uZ3Fpbmcg
-d3JvdGU6DQo+ID4gRnJvbTogTGkgUm9uZ1FpbmcgPGxpcm9uZ3FpbmdAYmFpZHUuY29tPg0KPiA+
-DQo+ID4gcGNpZV9zcmlvdl9wZl9yZXNldCgpIHJlc3RvcmVzIHRoZSBWRiBCQVIgdHlwZSByZWdp
-c3RlcnMgdXNpbmcNCj4gPiBwY2lfc2V0X3F1YWQoKSB3aXRoIGEgNC1ieXRlIHN0cmlkZS4gU2lu
-Y2UgZWFjaCBWRiBCQVIgcmVnaXN0ZXIgaXMNCj4gPiA0IGJ5dGVzIHdpZGUsIHRoZSA4LWJ5dGUg
-d3JpdGUgYWxzbyBjb3ZlcnMgdGhlIGZvbGxvd2luZyBCQVIgcmVnaXN0ZXIuDQo+ID4gQWx0aG91
-Z2ggc3Vic2VxdWVudCBpdGVyYXRpb25zIG92ZXJ3cml0ZSBtb3N0IG9mIHRoZSB1bmludGVuZGVk
-DQo+ID4gd3JpdGVzLCB0aGUgYWNjZXNzIGlzIGluY29ycmVjdCBhbmQgdGhlIGZpbmFsIGl0ZXJh
-dGlvbiBjYW4gd3JpdGUNCj4gPiBiZXlvbmQgdGhlIFZGIEJBUiByZWdpc3RlcnMuDQo+ID4NCj4g
-PiBTUi1JT1YgZGVmaW5lcyBzaXggVkYgQkFSIHJlZ2lzdGVycyBhbmQgZG9lcyBub3QgcHJvdmlk
-ZSBhIFZGIFJPTSBCQVIuDQo+ID4gSG93ZXZlciwgc2V2ZXJhbCBTUi1JT1YgY29kZSBwYXRocyB1
-c2UgUENJX05VTV9SRUdJT05TLCB3aGljaCBpbmNsdWRlcw0KPiA+IHRoZSBST00gc2xvdCBhbmQg
-dGhlcmVmb3JlIGhhcyBhIHZhbHVlIG9mIHNldmVuLg0KPiA+DQo+ID4gSW4gcGFydGljdWxhciwg
-dGhlIGZpbmFsIGl0ZXJhdGlvbiBpbiBwY2llX3NyaW92X3BmX3Jlc2V0KCkgY3VycmVudGx5DQo+
-ID4gd3JpdGVzIGEgcXVhZHdvcmQgYXQgdGhlIG9mZnNldCBvZiB0aGUgc2V2ZW50aCByZWdpb24u
-IFRoaXMgc3RhcnRzIGF0DQo+ID4gdGhlIGJ5dGUgaW1tZWRpYXRlbHkgZm9sbG93aW5nIHRoZSBz
-aXggVkYgQkFSIHJlZ2lzdGVycyBhbmQgY2FuDQo+ID4gb3ZlcndyaXRlIHN1YnNlcXVlbnQgZmll
-bGRzIGluIHRoZSBTUi1JT1YgY2FwYWJpbGl0eS4NCj4gPg0KPiA+IFVzZSBwY2lfc2V0X2xvbmco
-KSB0byBtYXRjaCB0aGUgNC1ieXRlIFZGIEJBUiByZWdpc3RlciB3aWR0aCwgYW5kIHVzZQ0KPiA+
-IFBDSV9TUklPVl9OVU1fQkFSUyB3aGVuIGl0ZXJhdGluZyBvdmVyIFNSLUlPViBWRiBCQVJzLiBU
-aGlzIGFsc28gbWFrZXMNCj4gPiB0aGUgQkFSIGNvdW50IGNvbnNpc3RlbnQgd2l0aCB0aGUgYXNz
-ZXJ0aW9uIGluDQo+ID4gcGNpZV9zcmlvdl9wZl9pbml0X3ZmX2JhcigpLg0KPiA+DQo+ID4gRml4
-ZXM6IDdjMGZhOGRmZjgxMWI1ICgicGNpZTogQWRkIHN1cHBvcnQgZm9yIFNpbmdsZSBSb290IEkv
-Tw0KPiA+IFZpcnR1YWxpemF0aW9uIChTUi9JT1YpIikNCj4gDQo+IGkgZG8gbm90IHNlZSB0aGUg
-YnVnIGluIHRoYXQgdmVyc2lvbi4NCj4gZG8gdSBtZWFuIDE5ZTU1NDcxZDRlOCBtYXliZT8NCj4g
-DQoNCllvdSBhcmUgcmlnaHQuIFRoYW5rcyBmb3IgY2F0Y2hpbmcgdGhhdCEgVGhlIGlzc3VlIHdh
-cyBpbmRlZWQgaW50cm9kdWNlZCBieSBjb21taXQgMTllNTU0NzFkNGU4LCBub3QgdGhlIGluaXRp
-YWwgU1IvSU9WIHN1cHBvcnQgY29tbWl0Lg0KDQp0aGFua3MNCg0KW0xpLFJvbmdxaW5nXSANCg0K
-DQo+ID4gRml4ZXM6IGM4YmM0ZGI0MDNlMTc2ICgicGNpZV9zcmlvdjogUmVzZXQgU1ItSU9WIGV4
-dGVuZGVkIGNhcGFiaWxpdHkiKQ0KPiA+IFNpZ25lZC1vZmYtYnk6IExpIFJvbmdRaW5nIDxsaXJv
-bmdxaW5nQGJhaWR1LmNvbT4NCj4gPiAtLS0NCj4gPiAgaHcvcGNpL3BjaWVfc3Jpb3YuYyB8IDEw
-ICsrKysrLS0tLS0NCj4gPiAgMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgNSBkZWxl
-dGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS9ody9wY2kvcGNpZV9zcmlvdi5jIGIvaHcv
-cGNpL3BjaWVfc3Jpb3YuYyBpbmRleA0KPiA+IGM0MWFjOTUuLjYxMjJhMjYgMTAwNjQ0DQo+ID4g
-LS0tIGEvaHcvcGNpL3BjaWVfc3Jpb3YuYw0KPiA+ICsrKyBiL2h3L3BjaS9wY2llX3NyaW92LmMN
-Cj4gPiBAQCAtMjI5LDcgKzIyOSw3IEBAIHZvaWQgcGNpZV9zcmlvdl9wZl9pbml0X3ZmX2JhcihQ
-Q0lEZXZpY2UgKmRldiwgaW50DQo+ID4gcmVnaW9uX251bSwNCj4gPg0KPiA+ICAgICAgYXNzZXJ0
-KHNyaW92X2NhcCA+IDApOw0KPiA+ICAgICAgYXNzZXJ0KHJlZ2lvbl9udW0gPj0gMCk7DQo+ID4g
-LSAgICBhc3NlcnQocmVnaW9uX251bSA8IFBDSV9OVU1fUkVHSU9OUyk7DQo+ID4gKyAgICBhc3Nl
-cnQocmVnaW9uX251bSA8IFBDSV9TUklPVl9OVU1fQkFSUyk7DQo+ID4gICAgICBhc3NlcnQocmVn
-aW9uX251bSAhPSBQQ0lfUk9NX1NMT1QpOw0KPiA+DQo+ID4gICAgICB3bWFzayA9IH4oc2l6ZSAt
-IDEpOw0KPiA+IEBAIC0zMDgsNyArMzA4LDcgQEAgaW50MTZfdA0KPiBwY2llX3NyaW92X3BmX2lu
-aXRfZnJvbV91c2VyX2NyZWF0ZWRfdmZzKFBDSURldmljZSAqZGV2LA0KPiA+ICAgICAgICAgICAg
-ICByZXR1cm4gLTE7DQo+ID4gICAgICAgICAgfQ0KPiA+DQo+ID4gLSAgICAgICAgZm9yIChzaXpl
-X3QgaiA9IDA7IGogPCBQQ0lfTlVNX1JFR0lPTlM7IGorKykgew0KPiA+ICsgICAgICAgIGZvciAo
-c2l6ZV90IGogPSAwOyBqIDwgUENJX1NSSU9WX05VTV9CQVJTOyBqKyspIHsNCj4gPiAgICAgICAg
-ICAgICAgaWYgKHZmc1tpXS0+aW9fcmVnaW9uc1tqXS5zaXplICE9IHZmc1swXS0+aW9fcmVnaW9u
-c1tqXS5zaXplIHx8DQo+ID4gICAgICAgICAgICAgICAgICB2ZnNbaV0tPmlvX3JlZ2lvbnNbal0u
-dHlwZSAhPSB2ZnNbMF0tPmlvX3JlZ2lvbnNbal0udHlwZSkgew0KPiA+ICAgICAgICAgICAgICAg
-ICAgZXJyb3Jfc2V0ZyhlcnJwLCAiaW5jb25zaXN0ZW50IFNSLUlPViBCQVJzIik7IEBADQo+ID4g
-LTM0NCw3ICszNDQsNyBAQCBpbnQxNl90DQo+IHBjaWVfc3Jpb3ZfcGZfaW5pdF9mcm9tX3VzZXJf
-Y3JlYXRlZF92ZnMoUENJRGV2aWNlICpkZXYsDQo+ID4gICAgICBkZXYtPmV4cC5zcmlvdl9wZi52
-ZiA9IHZmczsNCj4gPiAgICAgIGRldi0+ZXhwLnNyaW92X3BmLnZmX3VzZXJfY3JlYXRlZCA9IHRy
-dWU7DQo+ID4NCj4gPiAtICAgIGZvciAoaSA9IDA7IGkgPCBQQ0lfTlVNX1JFR0lPTlM7IGkrKykg
-ew0KPiA+ICsgICAgZm9yIChpID0gMDsgaSA8IFBDSV9TUklPVl9OVU1fQkFSUzsgaSsrKSB7DQo+
-ID4gICAgICAgICAgUENJSU9SZWdpb24gKnJlZ2lvbiA9ICZ2ZnNbMF0tPmlvX3JlZ2lvbnNbaV07
-DQo+ID4NCj4gPiAgICAgICAgICBpZiAocmVnaW9uLT5zaXplKSB7DQo+ID4gQEAgLTQ2Myw4ICs0
-NjMsOCBAQCB2b2lkIHBjaWVfc3Jpb3ZfcGZfcmVzZXQoUENJRGV2aWNlICpkZXYpDQo+ID4gICAg
-ICAgKi8NCj4gPiAgICAgIHBjaV9zZXRfd29yZChkZXYtPmNvbmZpZyArIHNyaW92X2NhcCArIFBD
-SV9TUklPVl9TWVNfUEdTSVpFLA0KPiA+IDB4MSk7DQo+ID4NCj4gPiAtICAgIGZvciAodWludDE2
-X3QgaSA9IDA7IGkgPCBQQ0lfTlVNX1JFR0lPTlM7IGkrKykgew0KPiA+IC0gICAgICAgIHBjaV9z
-ZXRfcXVhZChkZXYtPmNvbmZpZyArIHNyaW92X2NhcCArIFBDSV9TUklPVl9CQVIgKyBpICogNCwN
-Cj4gPiArICAgIGZvciAodWludDE2X3QgaSA9IDA7IGkgPCBQQ0lfU1JJT1ZfTlVNX0JBUlM7IGkr
-Kykgew0KPiA+ICsgICAgICAgIHBjaV9zZXRfbG9uZyhkZXYtPmNvbmZpZyArIHNyaW92X2NhcCAr
-IFBDSV9TUklPVl9CQVIgKyBpICogNCwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgZGV2LT5l
-eHAuc3Jpb3ZfcGYudmZfYmFyX3R5cGVbaV0pOw0KPiA+ICAgICAgfQ0KPiA+ICB9DQo+ID4gLS0N
-Cj4gPiAyLjkuNA0KDQo=
+--0000000000002fca3e065bb7edf6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Sep 18, 2026 at 8:58=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
+>
+> On 9/17/26 14:42, Yonggang Luo wrote:
+> > Declare helper_info inside each gen_helper_* body so a comment on
+> > DEF_HELPER attaches to gen_helper_*, not helper_info_*. The extern
+> > still refers to the global from helper-info.c.inc. Silence
+> > -Wnested-externs around the HELPER_H expansion only.
+> >
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >   include/exec/helper-gen.h.inc | 24 ++++++++++++++++--------
+> >   1 file changed, 16 insertions(+), 8 deletions(-)
+>
+> Huh?  Why does comment placement matter?
+>
+>
+> >   #define DEF_HELPER_FLAGS_0(name, flags, ret)
+   \
+> > -extern TCGHelperInfo glue(helper_info_, name);
+ \
+> >   static inline void glue(gen_helper_, name)(dh_retvar_decl0(ret))
+   \
+
+Please look here, this is the implementation in the header already, so we
+have no .c file to
+comment on it. comments on  &glue(helper_info_,name) do not help, because
+we are always calling
+to gen_helper_$name. The clangd and other auto-tools can not infer comments
+from &glue(helper_info_,name).
+
+If we move extern TCGHelperInfo glue(helper_info_, name);   into inline
+function content, then the comment on
+DEF_HELPER_*() macros will take effect.
+
+The static inline void is the source of the issue. I have no other way to
+deal with it.
+
+> >   {
+  \
+> > +    extern TCGHelperInfo glue(helper_info_, name);
+ \
+> >       tcg_gen_call0(glue(helper_info_,name).func,
+  \
+> >                     &glue(helper_info_,name), dh_retvar(ret));
+   \
+> >   }
+
+
+> ...> +/*
+> > + * helper_info_* is declared inside gen_helper_* so a comment on
+> > + * DEF_HELPER attaches to gen_helper_*, not helper_info_*. That is a
+> > + * nested extern; silence -Wnested-externs for this expansion only.
+> > + */
+> > +#pragma GCC diagnostic push
+> > +#pragma GCC diagnostic ignored "-Wnested-externs"
+> >   #include HELPER_H
+> > +#pragma GCC diagnostic pop
+> >
+> >   #undef DEF_HELPER_FLAGS_0
+> >   #undef DEF_HELPER_FLAGS_1
+>
+> That you have to have to have this workaround makes me less than
+receptive.
+>
+>
+> r~
+
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--0000000000002fca3e065bb7edf6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div id=3D"gmail-:2ij" class=3D"gmail-Am gmail-aiL gmail-a=
+O9 gmail-Al editable gmail-LW-avf gmail-tS-tW gmail-tS-tY" aria-label=3D"Me=
+ssage Body" role=3D"textbox" aria-multiline=3D"true" tabindex=3D"1" style=
+=3D"direction:ltr;min-height:85px" aria-controls=3D":2l6" aria-expanded=3D"=
+false"><br><br>On Fri, Sep 18, 2026 at 8:58=E2=80=AFAM Richard Henderson &l=
+t;<a href=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.=
+org</a>&gt; wrote:<br>&gt;<br>&gt; On 9/17/26 14:42, Yonggang Luo wrote:<br=
+>&gt; &gt; Declare helper_info inside each gen_helper_* body so a comment o=
+n<br>&gt; &gt; DEF_HELPER attaches to gen_helper_*, not helper_info_*. The =
+extern<br>&gt; &gt; still refers to the global from helper-info.c.inc. Sile=
+nce<br>&gt; &gt; -Wnested-externs around the HELPER_H expansion only.<br>&g=
+t; &gt;<br>&gt; &gt; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoy=
+onggang@gmail.com">luoyonggang@gmail.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &=
+gt; =C2=A0 include/exec/helper-gen.h.inc | 24 ++++++++++++++++--------<br>&=
+gt; &gt; =C2=A0 1 file changed, 16 insertions(+), 8 deletions(-)<br>&gt;<br=
+>&gt; Huh?=C2=A0 Why does comment placement matter?<br>&gt;<br>&gt;<br>&gt;=
+ &gt; =C2=A0 #define DEF_HELPER_FLAGS_0(name, flags, ret) =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0\<br>&gt; &gt; -extern TCGHelperInfo glue(helper_info_, name); =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0\<br>&gt; &gt; =C2=A0 static inline void glue(gen_helper_, name)(=
+dh_retvar_decl0(ret)) =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br><br>Please look here,=
+ this is the implementation in the header already, so we have no .c file to=
+<br>comment on it. comments on =C2=A0&amp;glue(helper_info_,name) do not he=
+lp, because we are always calling<br>to gen_helper_$name. The clangd and ot=
+her auto-tools can not infer comments from &amp;glue(helper_info_,name).<br=
+><br>If we move extern TCGHelperInfo glue(helper_info_, name); =C2=A0 into =
+inline function content, then the comment on <br>DEF_HELPER_*() macros will=
+ take effect.<br><br>The static inline void is the source of the issue. I h=
+ave no other way to deal with it.<br><br>&gt; &gt; =C2=A0 { =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0extern TCGHelperInfo glue(helper_i=
+nfo_, name); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0\<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 tcg_gen_call0(glue(helper=
+_info_,name).func, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;glue(helper_info_,name), dh_ret=
+var(ret)); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; =C2=A0 }=
+<br><br><br>&gt; ...&gt; +/*<br>&gt; &gt; + * helper_info_* is declared ins=
+ide gen_helper_* so a comment on<br>&gt; &gt; + * DEF_HELPER attaches to ge=
+n_helper_*, not helper_info_*. That is a<br>&gt; &gt; + * nested extern; si=
+lence -Wnested-externs for this expansion only.<br>&gt; &gt; + */<br>&gt; &=
+gt; +#pragma GCC diagnostic push<br>&gt; &gt; +#pragma GCC diagnostic ignor=
+ed &quot;-Wnested-externs&quot;<br>&gt; &gt; =C2=A0 #include HELPER_H<br>&g=
+t; &gt; +#pragma GCC diagnostic pop<br>&gt; &gt; =C2=A0<br>&gt; &gt; =C2=A0=
+ #undef DEF_HELPER_FLAGS_0<br>&gt; &gt; =C2=A0 #undef DEF_HELPER_FLAGS_1<br=
+>&gt;<br>&gt; That you have to have to have this workaround makes me less t=
+han receptive.<br>&gt;<br>&gt;<br>&gt; r~<br><br><br><br>--<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=
+=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div></di=
+v>
+
+--0000000000002fca3e065bb7edf6--
 
