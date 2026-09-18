@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95655C982D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 01:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10920C982D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 01:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7NEU-0005GM-VN; Thu, 17 Sep 2026 21:17:42 -0400
+	id 1x7NIT-000625-AS; Thu, 17 Sep 2026 21:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7NES-0005GB-T5
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:17:40 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x7NIP-00061O-PG
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:21:45 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7NER-0005yl-Cs
- for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:17:40 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc1cea34ef4so133522a12.3
- for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 18:17:38 -0700 (PDT)
+ id 1x7NIO-0006RG-3g
+ for qemu-devel@nongnu.org; Thu, 17 Sep 2026 21:21:45 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ d9443c01a7336-2d8fdc579daso2369725ad.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Sep 2026 18:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789694257; x=1790299057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789694502; x=1790299302; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xOkOX7kE703GIbeIZS6QTAYQ5+YUQih3IxYL3qOn9QA=;
- b=vRubSpsP6IkugS0qMafbCE/ITw3o6WRIhgD9TXStRrgJEgjy+lIHGLgxzQt6XvqOUf
- 08ir5EyYYnjPQMe7k/5HbzYa5Xhj6NTbDBgPDyjyPijheFhc2uCQF00vsagshDkRtsfU
- wHGspPYJokq10yxtGI7lv200Nxbw+O/JlJGrYUi5/tCoOC/bQ5yDb/4EUEj7MOi5Lor7
- BRshrl8XX2MXkRW8DZ58DVx4iKhDBjaWI/7QEdoa8D8LmF72+nBWT+Vl1hCSlBgE715J
- Xe05l4HceCgSwmsBTQVjIwrd5J2GZgXH0jGBoJj8u/wIW2QT09wW1kkMtOT2KCjUuDp+
- ke/A==
+ bh=64bkQ+YgT1+9HX8cq10KUYJY7H5Knck7zkIpHGPCJDs=;
+ b=jO9xbjuH8eK+hEDZNQDw5i9mK27X7CVLzAjbyRZLDSrdCC2YaCjdzHEfWTRTAULc4D
+ nWgiUzZftCoLQC1Hz/PHlWPj6NJvvYaNBXL3j7tTkbz9mVzvABp9is80V6Kl4m8o7T4M
+ aVs1Rw2HidDxhgYxCFHMxlxdqvQWL3KqA6qUw/cw7Ve/UhyZ/WY8ejW1YTl7h44ttzVB
+ Ux71M741YDcOSeohcOr/1EjZL8enllDqkVUciO/O56ExuZ79Mv6BbCRJIqfJ1teTxLl0
+ uK2VbQ65q7TdGOfPIXFP8cJFrrczfcYH0czvXmQcsE3jjua0PTlH1v7TdDYtkxQWICv9
+ LJqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789694257; x=1790299057;
+ d=1e100.net; s=20260707; t=1789694502; x=1790299302;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=xOkOX7kE703GIbeIZS6QTAYQ5+YUQih3IxYL3qOn9QA=;
- b=u39OEzwnftGygxk/0lS6LS0Bx58tjd/uoTGzwXa+f+jJ4uV5+dGFXJAOlO4wZxGaM4
- SGjSN7aObnqt8dNGfa3rVOc0c9ZalCq3i/mhnqPykUy8mcJBVCxkBBn7okeqoZYOXAUQ
- fxKPx+IpPE9jO+2Phv3h4XlQgaTPw3w/ZtDR62QX6n2tjmSTDkoWlyYyn53FiDMNZ7rs
- iSwKr1/Wl3Fy0qUc7QdxINd91S1MB57kUpUPebkYcpcbC8svTJIt4eW3CUZDfx12ccjx
- wzc9zhv/Fbzw9Iz+pvsbWbikBAINs/jcTHEC0ru6kV3Qv1p637FdKbuxzJ2DpwEQLso+
- rqjA==
-X-Gm-Message-State: AFuF++lebOZ0EQ1c9/zEDeWBqDMwGwBmDaP9Y5WEJMpZmbbXj7vQFLdR
- XeHTebtBFlKrIlouRRmIffGg3JZO7K668jGgsCa/MzpMb8Y5M6+Nhd0yzuS4SSgPAF5o1eHpBcB
- iErZJNtI=
-X-Gm-Gg: AYBFou0hibxOKD7NUlBgZyk/7hmP+D6xBUZkO1gwdHSWsf2Sdtr+ByYOV3pmmVTKVzt
- N4XVN4B5iLr71yPs/7Rm6OHSHNnbuJy+7GsETnWnWf6tuu6DviThxT9qtIPCiZM4jjr/V5iwGu1
- mwPQHR0Dsxt2auViXUZie9pfhz7snUPgMUiNKZ6pYthzrzfql/nywDOTLl3wDz9PtMYe8J3rBoW
- arG3Ucrbe824gBDEkv7/tfl9ZLC1OMjxN3iwn1gJ5UjkaC9KNuPTvYVxy9zqozCP8aJ93v2JU6N
- oxq/VFZekZ9ZRGxeDAd1VERpBTsb/IHAlbaxBL5AeGI8faRZbCvQVICcayK92YfbIeJDJl01yst
- 9pkL4d+VRv7Z2C1Ug2MMj5J3JJ60gE5aJX92snngC4jgXoq1RNo+81D8EaLlRGCvn/I55iK97B9
- jbkoxUsVcn2Hx+pJEW2bLMC13CCCRbWOburE9Poxxk77hFMUKxVdVXmhac74UntfJExrIV52yl+
- a+rMgZ9mw5Ry0Uc8jo85ZbkBvbUhjjqh+BLsO1aG1eeH0ZA737pQovtCuw5cg==
-X-Received: by 2002:a17:90b:50c6:b0:39d:e213:9dd3 with SMTP id
- 98e67ed59e1d1-39e54cc62d2mr2140621a91.1.1789694257150; 
- Thu, 17 Sep 2026 18:17:37 -0700 (PDT)
+ bh=64bkQ+YgT1+9HX8cq10KUYJY7H5Knck7zkIpHGPCJDs=;
+ b=XAGQSWCXrJbB3FA5is9a7rl3R15uaqi9yoGLq3ATUCpmmX2i0NntigYGtmzqMh6VQ7
+ 7dBcwKKv+AstTFjyQeWN4Wk2TIGll+/ke8qgFnYIU3E+L5YSEyFQw7I3EXFV4znIwwzX
+ ByP7GOhdCZSY/LqPgGCnBX8mqJD4Xc5CXfDFtQ4hByl9ENoKQ6bbZNixWbTXbplUW8Nz
+ dq8BlHZcwVnw5jNMEgPrGe4bwtLSJxy/VApUf2e53GF0kmAUArm+ko0xxk55jmy5ZAPT
+ Ex3ot3PPFcJ7mr6FsXhifjhj0qGWCAvWYz6NG4Xzvsxv2SDQAPubi20ebbNz5l+36xIC
+ HL9g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwMDCM96PK4fzLAd+9mmJp1ygjiFr8o4hWF+O+RLdgmj/knfRJVSWwecU8pBtXSHc1I1l+EYgNXyWuW@nongnu.org
+X-Gm-Message-State: AFuF++nq+e4SQq9HYYF+bKFuGr+vvJACPUvbSg5mN+LjKeMeG7N6ql09
+ S0Dl66GHXflf0bQluPIiEPSDBG55uuTv2qHsHE3zLt+Qc3rJqGEBWf4271VFwkDR+jQ=
+X-Gm-Gg: AYBFou23M9fF1MQniV4nsAbzObPRmyrNU/wMKdApm+ROQHTTxL+/ZcqQnrazo11plOT
+ vb9DGUX0U/toI7Fn0KhYI6OXNzPsr4E9TAl184W8ULCBhxAQWonQ9C2tCPDjoQyHeB3t5DtQRC4
+ bJ5Yan6P9PVv7EzLBlWjKolk7BqpojPNqOG7aB90pbBLaAxHrIFOrvfsXEfGSAAHFS1gfIjcG7v
+ nE3CYZ1VDRSkp/AkmP241EMuBz2BQI30villjEgkd0ZniFz+iP0ZkKp9Y704z9+44zKMhYBiW9c
+ nk4nyM3XBFQ5MlsWXN0v0ZMtANfH1Q75GI923oQ+A9UJ3iILhPPxX368ydzxLsUJwXN0nBbPjrF
+ I3WMVzGiiFbBadoLrn+IA6LnvErSwIiHauzBfNmImUD+q0ZF53uLTmjVTRHo4EYX7eexjSPH68S
+ qpGtEhAmb/IqoTVo7P3KiXeNDowYg4gYxoIHPDBAbEtYpPJv+ALKaasJq/91ryQkIRuq8Q7nMqw
+ w+U9Hx3qY53dtWr7ymv+WCWIuSyZiWJBdamTsDDe6BouVdN76aUtH54brHFDA==
+X-Received: by 2002:a17:902:da89:b0:2ca:d91d:d3a7 with SMTP id
+ d9443c01a7336-2ddb1adf98cmr20598765ad.10.1789694502259; 
+ Thu, 17 Sep 2026 18:21:42 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:83aa:9d68:3956:350a?
  ([2603:800c:7900:ed00:83aa:9d68:3956:350a])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144cdfc2346sm459900c88.4.2026.09.17.18.17.36
- for <qemu-devel@nongnu.org>
+ 5a478bee46e88-33c284ac724sm30384eec.2.2026.09.17.18.21.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Sep 2026 18:17:36 -0700 (PDT)
-Message-ID: <b84e40b1-fa40-42ac-8868-443c86d8bff1@linaro.org>
-Date: Thu, 17 Sep 2026 15:17:33 -1000
+ Thu, 17 Sep 2026 18:21:41 -0700 (PDT)
+Message-ID: <94fbf653-0eea-4e76-9b80-37a3f0455657@linaro.org>
+Date: Thu, 17 Sep 2026 15:21:38 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] target/s390x/tcg patch queue
+Subject: Re: [PATCH 19/21] target/mips: convert raise_exception to raise_excp
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+References: <20260918004225.827-1-luoyonggang@gmail.com>
+ <20260918004225.827-20-luoyonggang@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20260917213749.36756-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260917213749.36756-1-richard.henderson@linaro.org>
+In-Reply-To: <20260918004225.827-20-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,23 +106,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/17/26 11:37, Richard Henderson wrote:
-> The following changes since commit f8296b816fabd370307cd22b0270b610fc0fa279:
-> 
->    Merge tag 'pull-loongarch-20260917' ofhttps://github.com/bibo-mao/qemu into staging (2026-09-16 18:24:08 -1000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-s390x-20260917
-> 
-> for you to fetch changes up to 38efe3f4978b9b5e90f88c3c6d0f44b84d3e03a3:
-> 
->    tests/tcg/s390x: Test LOAD and STORE REVERSED (2026-09-17 11:33:53 -1000)
-> 
-> ----------------------------------------------------------------
-> target/s390x/tcg: Clean up mem ops and byte swapping
+On 9/17/26 14:42, Yonggang Luo wrote:
+> @@ -8683,7 +8688,7 @@ static void gen_cp0(CPUMIPSState *env, DisasContext *ctx, uint32_t opc,
+>           ctx->base.pc_next += 4;
+>           save_cpu_state(ctx, 1);
+>           ctx->base.pc_next -= 4;
+> -        gen_helper_wait(tcg_env);
+> +        gen_helper_mips_wait(tcg_env);
 
-Applied, thanks.
+This is unrelated to $SUBJECT.
+
 
 r~
 
