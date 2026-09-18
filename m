@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F78C982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A910C982D8
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 17:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7cPs-0004th-N7; Fri, 18 Sep 2026 13:30:28 -0400
+	id 1x7cR0-00069y-KI; Fri, 18 Sep 2026 13:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPM-0004bd-MO; Fri, 18 Sep 2026 13:29:56 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1x7cPj-0004qg-5L; Fri, 18 Sep 2026 13:30:19 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x7cPJ-0000Ho-1v; Fri, 18 Sep 2026 13:29:54 -0400
+ id 1x7cPg-0000Ww-5T; Fri, 18 Sep 2026 13:30:17 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 257416053D;
- Fri, 18 Sep 2026 17:29:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA14F1F000FF;
- Fri, 18 Sep 2026 17:29:49 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 3CABD6053D;
+ Fri, 18 Sep 2026 17:30:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00B31F000FF;
+ Fri, 18 Sep 2026 17:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1789752591;
- bh=OgmltRd6wLig8bdrWuXMSgOtC3LvgvNQhmF8C2SSCKc=;
+ s=k20260515; t=1789752614;
+ bh=wkePXI2ZAhs57urNC3Xrzyj8N64ULkLTlQbeBh3xUWk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O4BNlH3H8mTpE57q4AOmYjOg6+aYui1RZ1Iq9rUBxa9mgEzAG89qBfLFrRsUiuqtf
- pWYZENTMitsE1a78X7yUcJZ9ZLCu2JgTv+96+OAgbz/RgzpAejDHtFcFmWSYQh0gy/
- 2sxaKZI+57rNymNznRO6sxBGaSESF9PrDRIqwZAKdml3soex/XX2SKPqjyUT7uvwfd
- I6yWtXIH6SDBIc6l/MmkRlqLrUYi5cW6slVZQ5mpdjPuFZmkQA2Tz9JuYQDejAUT1G
- uLoRwoo3fj2/1hwluNWFB5ybjKNddrYPCAsluAuPfVxuPpePlhu4ZuiRGfajOAZ1BK
- HO8B1fbpWPRpA==
+ b=CVzQrGourI1q4QpFbSes7/dYfTMPKYo7gTMSfl3V+pucUJZZMVnfKfSSybkK5fzJw
+ t1rSKRQ3xrpzwtwo6cMc5GsNyGAnevTu3UJ4BwT5f+5yoPvJJ9EShCjiPZVZfOR40I
+ 4Xr2ymvLUY53KNWxxsIYPUKcPBG0tNes/RokfJGXh08XdApA6Tv+XZJFnVJFG2S0bP
+ gy2ODR1/9fEL6rv2L45/yBKnmBQblIkUa2mdnl9QAHqYNNtigBxE8Uo+ds3bGFMDA+
+ BT9OzygS1vkYZRqna5/I/LKigOd3KRX7VnRvjRIb2gqwwiihSVHn1n0zI0Ib8QYqpN
+ E2y8llc2ePUJA==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 06/15] virtio-blk: check the write granularity of writes to
- sequential zones
-Date: Fri, 18 Sep 2026 19:29:14 +0200
-Message-ID: <20260918172925.2640888-7-cassel@kernel.org>
+Subject: [PATCH v5 15/15] block: do not use CoroutineIOCompletion to hold a
+ return value
+Date: Fri, 18 Sep 2026 19:29:23 +0200
+Message-ID: <20260918172925.2640888-16-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260918172925.2640888-1-cassel@kernel.org>
 References: <20260918172925.2640888-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,92 +71,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
-VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
-that are multiples of the write granularity reported by the device
-(virtio 1.4, 5.2.6.1), and a violation is reported as
-VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
+bdrv_co_zone_report(), bdrv_co_zone_mgmt() and bdrv_co_zone_append() each
+declare a CoroutineIOCompletion in order to use its ret field, and never
+touch the coroutine field that the rest of the structure exists for.
 
-Neither request type was fully checked. Zone appends validated only the
-offset, while writes were not checked at all.
+That structure is for a request which completes through
+bdrv_co_io_em_complete(), where the callback has to store the result
+somewhere and wake the coroutine that is waiting for it. These three call
+into the driver directly and are already running in the coroutine that
+wants the result, so there is nothing to wake and nowhere else for the
+value to live.
 
-Check the size of the appended data, and both the offset and the size of
-a write, against blkconf_zone_write_granularity(), so that every request the
-device accepts is one that the guest driver was told is valid. Writes to
-conventional zones keep no alignment constraint beyond the logical block
-size. The write path performs the check after virtio_blk_sect_range_ok()
-so that the zone index derived from the guest supplied sector is known to
-be in range.
+Use a plain int. bdrv_co_zone_append() already has one.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- hw/block/virtio-blk.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ block/io.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 6bf1049aea..449de307b4 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -392,6 +392,33 @@ static bool virtio_blk_sect_range_ok(VirtIOBlock *dev,
-     return true;
+diff --git a/block/io.c b/block/io.c
+index a4fb56f799..c62c3764d3 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -3303,40 +3303,36 @@ int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offset,
+                         BlockZoneDescriptor *zones)
+ {
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
++    int ret;
+     IO_CODE();
+ 
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_report || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
++    ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
  }
  
-+/*
-+ * Both the offset and the size of a write to a sequential zone must be a
-+ * multiple of the write granularity that the device reports. Conventional
-+ * zones are not constrained. The zone index is derived from a guest supplied
-+ * sector, so this must only be called once virtio_blk_sect_range_ok() has
-+ * bounded it.
-+ */
-+static bool virtio_blk_zone_write_granularity_ok(VirtIOBlock *dev,
-+                                                 uint64_t sector, size_t size)
-+{
-+    BlockDriverState *bs = blk_bs(dev->blk);
-+    uint64_t offset = sector << BDRV_SECTOR_BITS;
-+    uint32_t wg_mask;
-+
-+    if (bs->bl.zoned == BLK_Z_NONE) {
-+        return true;
-+    }
-+
-+    if (bdrv_zone_is_conv(bs, bdrv_zone_index(bs, offset))) {
-+        return true;
-+    }
-+
-+    wg_mask = blkconf_zone_write_granularity(&dev->conf.conf) - 1;
-+
-+    return !(offset & wg_mask) && !(size & wg_mask);
-+}
-+
- static uint8_t virtio_blk_handle_discard_write_zeroes(VirtIOBlockReq *req,
-     struct virtio_blk_discard_write_zeroes *dwz_hdr, bool is_write_zeroes)
+ int coroutine_fn bdrv_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
+         int64_t offset, int64_t len)
  {
-@@ -518,7 +545,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-     if (append) {
-         uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
++    int ret;
+     IO_CODE();
  
--        if (offset & wg_mask) {
-+        if (offset & wg_mask || len & wg_mask) {
-             *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
-             return false;
-         }
-@@ -913,6 +940,15 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
-             return 0;
-         }
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_mgmt || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
++    ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
+ }
  
-+        if (is_write &&
-+            !virtio_blk_zone_write_granularity_ok(s, req->sector_num,
-+                                                  req->qiov.size)) {
-+            virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
-+            block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
-+            g_free(req);
-+            return 0;
-+        }
-+
-         block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
-                          is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
+ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+@@ -3345,9 +3341,6 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+ {
+     int ret;
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
+     IO_CODE();
  
+     ret = bdrv_check_qiov_request(*offset, qiov->size, qiov, 0, NULL);
+@@ -3379,13 +3372,13 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+ 
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
++    ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
+ }
+ 
+ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
 -- 
 2.55.0
 
