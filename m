@@ -4,103 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDCEC982D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 22:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D01C982D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 22:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7h8B-0004MQ-9p; Fri, 18 Sep 2026 18:32:31 -0400
+	id 1x7hEO-0005PF-Hw; Fri, 18 Sep 2026 18:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h89-0004MF-6G
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:32:29 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
+ id 1x7hEL-0005Oy-47
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:38:54 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x7h87-0000vN-GB
- for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:32:28 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2146521EDE;
- Fri, 18 Sep 2026 22:32:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789770742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NjZAUxu1YfB1mjPj270FZ7cYB0YSC9+XyeOsFMSb9og=;
- b=iRG1gxWUiTxLTwYlyCpdYnkQfIktnnMvS/SkB/ngLCxBzVzGnrAyHWr9bWnpQUGqRdu8tY
- vLXrf60pKO2zZ7TPzJa3ZxTNx5xm6H9U4XrmdPe3Po61BXG2KFbk7qTKrwHOij0ocPKvPJ
- nAr5X/uBeTaT+N8WY49UHE9urCPMB3g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789770742;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NjZAUxu1YfB1mjPj270FZ7cYB0YSC9+XyeOsFMSb9og=;
- b=xkHwhuGulLDhxeqJNCwflfNcijY22EJBxuEqnE7XzN/+px+OpnqgsO0zBeYcOv/y8GJ5dt
- Dnx+XMJKgRBBHDAg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1789770738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NjZAUxu1YfB1mjPj270FZ7cYB0YSC9+XyeOsFMSb9og=;
- b=kxtNzQ2bdgDLC/x2TfZsXW9X/NR3aRauN9UMgXNAyR3+KyKVv8UVvDw33g8KD8I6KXsrgZ
- 2s0b4QMHxghxGUHDttl8sSg+spg6tAg9nuvg4DX4qoZPsb2pSmRCa00/SEECiBRsZLnk4O
- b7Hq4DDAbGYXXO0MOpQWvv7ZLAqTIyo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1789770738;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NjZAUxu1YfB1mjPj270FZ7cYB0YSC9+XyeOsFMSb9og=;
- b=ZFIb9A/PdWCf0Q+m43PC8C660D73O1nfFraOZQTfj+tfOPrS7rvdgz7wRj39d+0y+jAaYn
- qbGQTpgVu8OCoJCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7448D1348F;
- Fri, 18 Sep 2026 22:32:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id pWIvBvG7rWoxeAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 18 Sep 2026 22:32:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>, "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 14/20] migration: Use output visitor in info command
-In-Reply-To: <87h5jnnf7u.fsf@pond.sub.org>
-References: <20260915000209.3692668-1-farosas@suse.de>
- <20260915000209.3692668-15-farosas@suse.de> <87zexg2ix9.fsf@pond.sub.org>
- <aqw0anGmdLfHtv3q@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <aqxUMH9Q3OtkV9oW@gallifrey> <87h5jnnf7u.fsf@pond.sub.org>
-Date: Fri, 18 Sep 2026 19:32:07 -0300
-Message-ID: <87ik42ry1k.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <palmer@dabbelt.com>)
+ id 1x7hEI-0002Ac-QD
+ for qemu-devel@nongnu.org; Fri, 18 Sep 2026 18:38:52 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-cbedd5aece4so1812140a12.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Sep 2026 15:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=dabbelt-com.20251104.gappssmtp.com; s=20251104; t=1789771129; x=1790375929;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:content-type:mime-version:message-id:to
+ :from:cc:in-reply-to:subject:date:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Z/S0uVRAdE+BJ7Ud/T6QlGxvk5qkMlC9JY1oAT2GstI=;
+ b=nX6UglPMheTL00hh78AWc4DKGO2iiyXx6vrPGPGYnyiR+FgjWyIz0rWwF+zrRi5lmp
+ jyr14GI2JZ2ai23crmmHXEB8MmgLYYptUV7d59iJCnVyh7x8ef0Ogekue6ZDYmw3Am6n
+ b623bq+Js/5zmsHrvEhotLriLb+2y4XmQV0elKhi1r+C6c0WoBNvcWTxlAZO3hYFJt0z
+ p51LgqvKnOWF99u7iv17cRoEEnOTIxIp1gOWcbHdgXCbnhNkt+bXNOM9G0h/xH3AQ/uq
+ erSTlaJQhxw0Ssr4fDRpbxh5Ij6wEdsCCx2SkwVGsONLktQtaslP/Rdw2YraivuOAY09
+ 69xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789771129; x=1790375929;
+ h=content-transfer-encoding:content-type:mime-version:message-id:to
+ :from:cc:in-reply-to:subject:date:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=Z/S0uVRAdE+BJ7Ud/T6QlGxvk5qkMlC9JY1oAT2GstI=;
+ b=mM/A91abybkiidbgGL8VKMKeElNQg1vcJSqiq1rEF+IWjA+yRfaCyNIJ5xdY6Hjve4
+ 2Tr4RcCLeBMMaLxxbJEeuGqq9jkpHv9bSvvvIcD2hnH2NGGICjheRgmnRXEabnCgt0VN
+ ak2gDzspzeTGy47iioN8ILs6y9YzDVzyfs5jNXzmsJGxj90FTRmAOz5s8p7R9K7fPLxT
+ hIMeTaLxY3xcojYuXI6b3baUWh/mOz6nWrxKd0gfC2XDmrlMomsv1b3LFhsMyUfsLzZg
+ sXnaS3D6Qjj0M6TJ56HifxBpO1Ixszvc18Rzu659y7xiWs7WHujkGG6zDJXdRfAF+vS6
+ wybw==
+X-Gm-Message-State: AFuF++kdI464Bydc/lkMcMmUCagf1dP7U3ZinNbqUArNAQ0aGWj3XiWB
+ zpThaI8sr+jdY71rSd+WrpfDR1Mll56m9CKCpkcd5g3+lDy+N2piZZ/Zzmlhhy5hu0mM3BFWHIC
+ VTojS
+X-Gm-Gg: AYBFou2VuRHhuGfs5T6tRZQ79tXYnc+7kV1ZG0YKllPS01Y3X6pjwJiL7HlznGbyPOB
+ InfvdxP0fO5h12/IQhmGNi9NpLmnYpJO7nerVti7nuydQNgGtyJSb/x2+XeDOz3tFfoS44gbZ2t
+ HA+2aMGUY2D7aA8KZocAczQHC7at6s6NEZtI+JgWooyOghdM+wXFO10VGersd7SOLhviu1FT2KW
+ Z9znMi5H9EDow+lIOMtAE6f/pB7b1tBAqGme6awWzjDTOh3aV8kUVriG/XGACOT8I167x3l/PP+
+ X66jP7TTiLxcE2fexYv8j/7i1SSmoiL0BIWblSZbXrwjssqbP4ohV5OqINiTzzsU6+hiK/EatYX
+ s5o9uDlR1rNacIHyHtcF5QiZgtgZx2rkkx/+LSeTTljVFIbkCV1yFUWFJN2Yymo7h0GIZdGhSw/
+ KWfGZ9cDlpy1re0R5mm6PIh6O+El5Tca8bvCjeQnk8ZtKxDkzx/JaVTt3D5gi8uABEQ0D1gncmA
+ I8DL64MWfPZXTBiBIfSHvpyxvdmZA==
+X-Received: by 2002:a17:90b:57e6:b0:39e:58d8:f899 with SMTP id
+ 98e67ed59e1d1-39e58d8fa69mr4809925a91.35.1789771128434; 
+ Fri, 18 Sep 2026 15:38:48 -0700 (PDT)
+Received: from localhost ([2001:5a8:4687:d600:b5c5:5de3:d341:6ae9])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c32f17d77sm1656267eec.3.2026.09.18.15.38.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 18 Sep 2026 15:38:47 -0700 (PDT)
+Date: Fri, 18 Sep 2026 15:38:47 -0700 (PDT)
+X-Google-Original-Date: Fri, 18 Sep 2026 15:38:46 PDT (-0700)
+Subject: Re: [PATCH] tcg/riscv64: Set vtype before whole-register vector loads
+In-Reply-To: <20260918201007.153384-1-richard.henderson@linaro.org>
+CC: qemu-devel@nongnu.org, max.chou@sifive.com
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <mhng-9266D400-F468-4D4D-99CB-0F754C22F36D@Palmers-Mini.rwc.dabbelt.com>
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=palmer@dabbelt.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,128 +101,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On Fri, 18 Sep 2026 13:10:07 PDT (-0700), Richard Henderson wrote:
+> With vtype uninitialized, VILL might be set, leading to SIGILL.
+> Also, assert vtype initialized for whole-register stores and moves.
+>
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> Reported-by: Max Chou <max.chou@sifive.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  tcg/riscv64/tcg-target.c.inc | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+> index 2ce9d47a633..de9a3570b23 100644
+> --- a/tcg/riscv64/tcg-target.c.inc
+> +++ b/tcg/riscv64/tcg-target.c.inc
+> @@ -775,6 +775,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+>      case TCG_TYPE_V64:
+>      case TCG_TYPE_V128:
+>      case TCG_TYPE_V256:
+> +        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+>          {
+>              int lmul = type - riscv_lg2_vlenb;
+>              int nf = 1 << MAX(lmul, 0);
+> @@ -1014,6 +1015,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+>              unsigned idx = type - riscv_lg2_vlenb;
+>
+>              tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
+> +            /* We must initialize vtype to something to avoid VILL. */
+> +            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
+> +                set_vtype(s, type, MO_8);
+> +            }
+>              insn = whole_reg_ld[idx];
+>          } else {
+>              static const RISCVInsn unit_stride_ld[] = {
+> @@ -1046,6 +1051,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+>      case TCG_TYPE_V64:
+>      case TCG_TYPE_V128:
+>      case TCG_TYPE_V256:
+> +        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+>          if (type >= riscv_lg2_vlenb) {
+              static const RISCVInsn whole_reg_st[] = {
+>                  OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
 
-> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
->
->> * Peter Xu (peterx@redhat.com) wrote:
->>> On Thu, Sep 17, 2026 at 01:53:22PM +0200, Markus Armbruster wrote:
->>> > Fabiano Rosas <farosas@suse.de> writes:
->>> > 
->>> > > The hmp_info_migrate_parameters function currently open-codes the
->>> > > mon_printf calls for each migration parameter. As with the set command
->>> > > in the last patch, this should not be necessary as the QAPI
->>> > > infrastructure already has generated code that takes type and struct
->>> > > member names into account, including converting _ from C into the '-'
->>> > > character as part of parameter names strings.
->>> > >
->>> > > The current code is also quite painful to rebase if a series has been
->>> > > carried for a long time while parameters have been added in master.
->>> > >
->>> > > Replace all of this with a conversion from MigrationParameters to
->>> > > QDict using an output visitor and a loop over the QDict that prints
->>> > > per-QAPI-type formatted strings.
->>> > >
->>> > > Modelled after block/qapi.c:dump_qobject, but with some changes to
->>> > > keep the migration command output formatting.
->>> > >
->>> > > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>> > 
->>> > Old output of info migrate_parameters for me:
->>> > 
->>> >     announce-initial: 50
->>> >     announce-max: 550
->>> >     announce-rounds: 5
->>> >     announce-step: 100
->>> >     throttle-trigger-threshold: 50
->>> >     cpu-throttle-initial: 20
->>> >     cpu-throttle-increment: 10
->>> >     cpu-throttle-tailslow: off
->>> >     max-cpu-throttle: 99
->>> >     tls-creds: 
->>> >     tls-hostname: 
->>> >     tls-authz: 
->>> >     max-bandwidth: 134217728
->>> >     avail-switchover-bandwidth: 0
->>> >     max-postcopy-bandwidth: 0
->>> >     downtime-limit: 300
->>> >     x-checkpoint-delay: 20000
->>> >     multifd-channels: 2
->>> >     multifd-compression: none
->>> >     zero-page-detection: multifd
->>> >     xbzrle-cache-size: 67108864
->>> >     x-vcpu-dirty-limit-period: 1000
->>> >     vcpu-dirty-limit: 1
->>> >     mode: normal
->>> >     direct-io: off
->>> >     x-rdma-chunk-size: 1048576
->>> >     cpr-exec-command:
->>> > 
->>> > New output:
->>> > 
->>> >     cpu-throttle-tailslow: off
->>> >     xbzrle-cache-size: 67108864
->>> >     cpu-throttle-initial: 20
->>> >     announce-max: 550
->>> >     direct-io: off
->>> >     avail-switchover-bandwidth: 0
->>> >     local: off
->>> >     zero-page-detection: multifd
->>> >     multifd-qatzip-level: 1
->>> >     x-rdma-chunk-size: 1048576
->>> >     multifd-channels: 2
->>> >     mode: normal
->>> >     multifd-zstd-level: 1
->>> >     announce-initial: 50
->>> >     downtime-limit: 300
->>> >     tls-authz: 
->>> >     cpr-exec-command:
->>> > 
->>> >     vcpu-dirty-limit: 1
->>> >     multifd-compression: none
->>> >     announce-rounds: 5
->>> >     announce-step: 100
->>> >     tls-creds: 
->>> >     x-vcpu-dirty-limit-period: 1000
->>> >     multifd-zlib-level: 1
->>> >     max-cpu-throttle: 99
->>> >     max-postcopy-bandwidth: 0
->>> >     tls-hostname: 
->>> >     throttle-trigger-threshold: 50
->>> >     max-bandwidth: 134217728
->>> >     x-checkpoint-delay: 20000
->>> >     cpu-throttle-increment: 10
->>> > 
->>> > New output has an unwanted blank line after "cpr-exec-command:".
->>> > 
->>> > New output adds @local, @multifd-qatzip-level, @multifd-zlib-level,
->>> > @multifd-zstd-level.  Commit message should point that out.
->>> > 
->>> > Order of parameters changes, and not for the better.  Hmm.
->>> 
->>> Good point.. it might start to be awkward to users looking for tls-*,
->>> multifd-*, announce-* or cpu-throttle*, etc. after this change, expecting
->>> them grouped.
->>> 
->>> Maybe we can sort them by name with inserting top level to a QList first
->>> from the QDict.
->>
->> Are there any filter visitors in qemu's visitor system - e.g. something that
->> sorts?
->
-> No.  Visitors walk members in source order.  Source order is good as
-> long as we care to make it good.  But it doesn't help us here, because
-> we use the visitor only to convert to QObject, then walk that.  This
-> loses order.
->
-> If QDict iterated in insertion order, we'd be fine.  Python dict do.
-> Could be a fun little project for someone with time to spare.
->
-> The other solution is to iterate over sorted QDict keys, as Peter says.
->
+Thanks!  Looks like it was just a lurking bug then.
 
-Thanks, I didn't notice the output changed so drastically. The readline
-completion suggestions are sorted, so I just assumed the parameters were
-sorted too. I'll fix it up.
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+
+and
+
+Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
+
+though that's old enough I'm not sure it really matters.
+
+It looks like we're clobbering vtype and the rest of the V registers on calls,
+so I think we're good there.
+
+I poked through and it looks like every other case that constructs a V
+instruction that depends on the vector configuration has a vtype set
+immediately before it, so I think the rest of the port is safe.  That said, if
+I understand the ISA correctly, we need a valid vector configuration before
+executing any V instruction (assuming the post-change ISA), so I think we could
+also just throw something like this in there and maybe catch some mistakes in
+the future?
+
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 2ce9d47a63..42fcc8182e 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -686,18 +686,21 @@ static bool patch_reloc(tcg_insn_unit *code_ptr, int type,
+ static void tcg_out_opc_vv(TCGContext *s, RISCVInsn opc,
+                            TCGReg vd, TCGReg vs2, TCGReg vs1)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     tcg_out32(s, encode_v(opc, vd, vs1, vs2, true));
+ }
+ 
+ static void tcg_out_opc_vx(TCGContext *s, RISCVInsn opc,
+                            TCGReg vd, TCGReg vs2, TCGReg rs1)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     tcg_out32(s, encode_v(opc, vd, rs1, vs2, true));
+ }
+ 
+ static void tcg_out_opc_vi(TCGContext *s, RISCVInsn opc,
+                            TCGReg vd, TCGReg vs2, int32_t imm)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     tcg_out32(s, encode_vi(opc, vd, imm, vs2, true));
+ }
+ 
+@@ -714,12 +717,14 @@ static void tcg_out_opc_vv_vi(TCGContext *s, RISCVInsn o_vv, RISCVInsn o_vi,
+ static void tcg_out_opc_vim_mask(TCGContext *s, RISCVInsn opc, TCGReg vd,
+                                  TCGReg vs2, int32_t imm)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     tcg_out32(s, encode_vi(opc, vd, imm, vs2, false));
+ }
+ 
+ static void tcg_out_opc_vvm_mask(TCGContext *s, RISCVInsn opc, TCGReg vd,
+                                  TCGReg vs2, TCGReg vs1)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     tcg_out32(s, encode_v(opc, vd, vs1, vs2, false));
+ }
+ 
+@@ -978,6 +983,7 @@ static void tcg_out_vec_ldst(TCGContext *s, RISCVInsn opc, TCGReg data,
+ {
+     tcg_debug_assert(data >= TCG_REG_V0);
+     tcg_debug_assert(addr < TCG_REG_V0);
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+ 
+     if (offset) {
+         tcg_debug_assert(addr != TCG_REG_ZERO);
+@@ -1554,6 +1560,7 @@ static void tcg_out_cmpsel(TCGContext *s, TCGType type, unsigned vece,
+ static void tcg_out_vshifti(TCGContext *s, RISCVInsn opc_vi, RISCVInsn opc_vx,
+                              TCGReg dst, TCGReg src, unsigned imm)
+ {
++    tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+     if (imm < 32) {
+         tcg_out_opc_vi(s, opc_vi, dst, src, imm);
+     } else {
 
 
