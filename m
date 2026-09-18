@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C04C982DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD1CC982DA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Sep 2026 13:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7YRw-00039k-UV; Fri, 18 Sep 2026 09:16:20 -0400
+	id 1x7YTn-0003VG-8q; Fri, 18 Sep 2026 09:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YRv-00039W-LY; Fri, 18 Sep 2026 09:16:19 -0400
+ id 1x7YTP-0003S1-1B; Fri, 18 Sep 2026 09:17:53 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YRu-0007uZ-1M; Fri, 18 Sep 2026 09:16:19 -0400
+ id 1x7YTN-0008AF-G4; Fri, 18 Sep 2026 09:17:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=D+MPdP3fvsZ6J5VDmoorf9o0yMyjer69qYvzN8EEw20=; b=aa+fqJmIlVeua1rm8+fVcW86iC
- RR/AYnJLRhLe0Xi1Oy+6e9N/GgTb+VBBVjYUFjYNyfEOTH5xVniVLpQDb/LrDXPMLcKNuA292L5ad
- D3AtF4mNDPuYXK6KKAU2VY6UM3YlbSox1K97RLjUyviTK0h2kiNuDOCF5shxYlcxhyktLoD/pTRWj
- SU7u19Vzee4bUQSQX4wP8pI/5UcqhISzs7XJ5tdHz+k9sOZ5YJtmzHTF+6x3dQrQjshaoR+6ZXMg/
- koswziGzaMTB9X5TCln1OjzAONA2JU1Ibd3A0YbtXDuOYrXCNdZxjjPr6t2worjRbX2rey7G+FdJu
- JxNZ6GQimcSjrDylIHgCREVHz9dT6PUBQyhGnP4gnGTqORuxbbsLx6CZo5VS/GZ23/dzCwOXm1lOZ
- 5MNY/mffIjMD2jqs4YIjDtPXokPWU9qBVZo6jRHMZGwc2kelgoL3lSHgHKZRdtz3GTp9GiduE8Zqv
- s7bE1PEzuEQodOgf1Y3rYZh60dadpPEXZFQRb4b4TxUK/lXVgGs6wWixHVFzXrFb4YO3b0FHgbqz0
- APeupeGDPA5emg/nzJwFhV+e1XU+DMWabjOm7pDCALI4o65aoqZZ0t4TIFyrxWDwrFyqxoEg5JS+s
- Lx3EWZW93LsdnsFMsxLyGQOH6nN2akPXBcI2YyuhM=;
+ bh=8QeWgOLWciIRqnF/OqA+rDP7NOpOgBUUfhIian4kPhk=; b=rvAzpG6GlPnqjPwVzsVr1gluj4
+ VhSxSJDK2v2DRSwilPPzVVZiYFGPzzu4eFmKtG+4NrDUXldA9PbR0U1EzOStOJt0dEvyjUTBTRpym
+ ChLsjBMHZSPCDDdneO0ocRxt+BPJhEf1mmGW3iv9KbgdqPsuOimI2tLxvKx88HL03pCeQ/DQIyTtd
+ BkNQ17UG2YtWb6+1T5Il0aKdPmrIXEt1LSuQuwQ94iFM02E8WaTno64g+uwLJBDV8BdUVbb6J34k3
+ 86fhr8f+Vsq3yyu3tE4E9qNPcPl5hxseevhBKG7q0h3jRJx7aFjy3U9l6RDQ8bXMVZTbh1Ww0TC1Y
+ dkLvD9SaK1WFpfsog2JF/4r2SnfVoOtKhugFh6Fx4VBfvBQCDkkR4IiONCIaP4qxP8fZl4FsMMFJx
+ V1YyKt5u0sGpVOoVNKrdNdsGp0pf7iTCDMLSkut0cghO8JYgPRJaeQPd8RjtmeBkOB6q7MpkN5kSG
+ yhRzKoELME9s93tJkRbai9hu8Zp7OyqrPQYKoivnQcwKIlTawibupbMiYnkw3oWO5oJkI6T+hJGhc
+ +rARf2Fj604nVaONltAvPM4HD+N0FE1cnkjYMULwi8w/BluBrrmsmhqry2EpDkFOouR4iTyqTCoar
+ LI5Pf2EJfOppzCV6uqXs/y72YdFaEWub1hxSSmeOo=;
 Received: from [217.155.175.48] (helo=[10.8.0.6])
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x7YRM-00EgPt-Mb; Fri, 18 Sep 2026 14:15:44 +0100
-Message-ID: <15ff80b4-6bfd-4175-a961-731e62be4664@ilande.co.uk>
-Date: Fri, 18 Sep 2026 14:16:13 +0100
+ id 1x7YSr-00EgRI-2D; Fri, 18 Sep 2026 14:17:17 +0100
+Message-ID: <c3fedfcf-2644-4b64-a9ec-2566aef30db5@ilande.co.uk>
+Date: Fri, 18 Sep 2026 14:17:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: "Kirill A. Korinsky" <kirill@korins.ky>,
@@ -48,6 +48,7 @@ To: "Kirill A. Korinsky" <kirill@korins.ky>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20260903115229.95811-1-kirill@korins.ky>
+ <20260903115229.95811-2-kirill@korins.ky>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,12 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260903115229.95811-1-kirill@korins.ky>
+In-Reply-To: <20260903115229.95811-2-kirill@korins.ky>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 217.155.175.48
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/5] mac99: Boot OpenBSD/macppc
+Subject: Re: [PATCH 1/5] openpic: Preserve IRQs masked by CTPR
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,25 +108,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/09/2026 12:50, Kirill A. Korinsky wrote:
 
-> Greetings,
+> OpenBSD exposes this by raising CTPR while handling interrupts. If an
+> edge remains pending when EOI lowers the servicing priority, QEMU
+> reasserts INT without checking CTPR; IACK then returns the spurious
+> vector and consumes the masked edge before CTPR permits delivery.
 > 
-> OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
-> reassert an interrupt still masked by CTPR; the edge triggered
-> decrementer does not raise on zero; successful CUDA ADB replies omit the
-> original command; and the fixed CUDA shift register delay can stretch
-> packet delivery past the guest timeout on hosts with coarse timers.
+> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> ---
+>   hw/intc/openpic.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> This series corrects these four behaviours and adds a functional test
-> which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
-> 
-> P.S. this is second third to send the same patch because previous one
-> had missed maintainers.
+> diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+> index 99d2a1e65e..6f9a562163 100644
+> --- a/hw/intc/openpic.c
+> +++ b/hw/intc/openpic.c
+> @@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+>           n_IRQ = IRQ_get_next(opp, &dst->raised);
+>           if (n_IRQ != -1) {
+>               src = &opp->src[n_IRQ];
+> -            if (s_IRQ == -1 ||
+> -                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
+> +            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
+> +                (s_IRQ == -1 ||
+> +                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+>                   DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+>                           idx, n_IRQ);
+>                   qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+> @@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
+>       }
+>   
+>       src = &opp->src[irq];
+> -    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
+> -            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
+> +    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
+>           error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
+>                   __func__, irq, dst->ctpr, src->ivpr);
+>           openpic_update_irq(opp, irq);
+>           retval = opp->spve;
+> +    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
+> +        return opp->spve;
+>       } else {
+>           /* IRQ enter servicing state */
+>           IRQ_setbit(&dst->servicing, irq);
 
-Thanks for this work! I've given it a boot test on all my OpenBIOS ppc test images 
-and it appears to work well with no regressions. I'll reply to the individual 
-patches, but in the meantime:
+Getting hold of the OpenPIC datasheet was a little tricky, however from what I can 
+tell this matches the expected behaviour.
 
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
