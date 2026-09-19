@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454A0C982DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108C1C982D8
 	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yHh-0005kU-PL; Sat, 19 Sep 2026 12:51:30 -0400
+	id 1x7yGp-0004mX-Kb; Sat, 19 Sep 2026 12:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFy-0003yS-LI
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:46 -0400
-Received: from mail-oa2-x10.google.com ([2607:f8b0:4864:30::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFw-0003vL-63
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:45 -0400
+Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFw-0008R3-WB
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:42 -0400
-Received: by mail-oa2-x10.google.com with SMTP id
- 586e51a60fabf-4693691fc81so1085276fac.3
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFu-0008Qm-8c
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:39 -0400
+Received: by mail-oo2-x0d.google.com with SMTP id
+ 006d021491bc7-6bcc0c495efso965663eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836580; x=1790441380;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836576; x=1790441376;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BNP16yPun+E5+eIoIGqFoDrmD6nTs5/XLq7Sft9YkM8=;
- b=q4YyCOE6wCKpRQ8JS4iKtOKJNq3ea9e4Dnbh3dGyb6XMZiwGGf6KzH09eRY91cytVC
- XPINbU4JgHD1TsnMzil6Fe9YNLmq79/Y6gnR1Qk7F65A0Q7TEOHdpYjBFMN/uqsiF8E/
- Q4OcNEv9LirAW+KBBZbUC+nA4cmt9pPbCkZaap+ep2gxWdzRfD34Ed91iUjknnZfoARv
- 8WoLnV4iEiJpfikM4h1IE93gCFSDPVK/wZYhqaHKFR4cObXMzvfDqgPPVfUBI44vdHHk
- 7aK4KP/C6ZmI7FOjxsoky2bJ4y3dsD7Ihi/NURDz8Jup21ZYkGHZt1cb+MNRxSARhSi+
- 9Hkw==
+ bh=NrpL46Nay44SFqEpTz9O0LUdm+A+DGPsy/qGZpi6vus=;
+ b=iYyInU1uyxjT58KqDmXI8jvl5jN1DmckxrP7Vs6HSL+JzbJ/W/ly5vcHSmgUjvxHhc
+ GRR5wm7NlMnEFUvdxmPZWrNYGW0gQLCfb7cF2+RHSTn2dTIAj9BihSCIetmbB/YkCaaw
+ cWiA/Al2b0O94twQ2Zn6sGOqWQe2dSZSiOEBh1QPcuvP7Z+hnD78CoKkHaUtaf0IddJY
+ mu2YvlAtrhCmhGJojWePn8OjKkpsk5gMcF+fleTPXrxJdKCj9aCRINNx4bgo1w9ah+gT
+ 55bAW8sfsWvy8Eu3kWl4LWKy3/mExNFqv4fvEmciMFFgpzjosWIrxMTpWyAV3CzBGy6u
+ rkEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836580; x=1790441380;
+ d=1e100.net; s=20260707; t=1789836576; x=1790441376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BNP16yPun+E5+eIoIGqFoDrmD6nTs5/XLq7Sft9YkM8=;
- b=eDkq9odgz55UPKVQyKibCkNWeWzZukApoSz69XI4iG3KP+GANa+ZhH5MzNScx0INbO
- 2vwt5nf9hDwm6vZdzLZNtFSv4WqirDmpxEdYQA993Hcz/+cqFdTY0/Jp3/yXTvBFn4WO
- 3qCJCE0We0G9Nf7LiKFcAahlBXz5yhUveSWYPhjWVN09f5iL/+trT85cfF4/7dbzdHJ2
- Vv0mTKRXPbPveZb6bUEfVpIT+BjS5nOjAoNMy4/6oslyLIuwXMdNOr8Vzwgn4450HmlA
- WqSaIdqkXE0qBDdRzKXBThRklTV+aeE8b2AmhVg9aT4TBzb3CCIboW9yttgHywKNjart
- sc2g==
-X-Gm-Message-State: AFuF++nOX11wD9E8JJL5Ul8Ga8oZNAeAW7bo0K/Jz+s60mvFB1MYgfyb
- w/MmM1VPC81q7y1T5UbIGub14kJqwU5I8Nz0yVJ9CcevXKbFWvKO5iX0SfxDtk7Vh0EalEs5HBr
- T/bZF3JQ=
-X-Gm-Gg: AYBFou2KZDjVaSqCEE4f0D5i+H7CyzTFkz5n+NN0I803jYiBBpwaX49Z1sxNo1EeQPP
- Oj6qMVpm/LPQWHE2nJ+amsCem1jSlRuCOtv0JlZ5QnQVH8xDWwKB7Evge3+9MxI9YaSK+bPLpc+
- FGPFdxFtJ5zJO6Ie/P33vELMjBxjYeKqPu7Dvl73tVIB9lnNrT3hXihEq8Qdk+fYxZCxetviw5P
- u2xlWeVuaNDm31Lzqz6MjoU053zmbyfDkcqGpecX3D9CdCvZOxRx7qE5c0B0uwOxoGI2shDjXR9
- E+/peUl4ypcm9ab/25W5OOfg+9rSHXFC0nmarZoxqHRkjktlA9jP0XjWIe8VygdOYnNF3s6tu0G
- Vm5VGZaY1mBoivlP6sObS1Ue2Ap7uNSj2UkHp8kfFqxIyyZQCFvpjohJIAmCeD7zhTyx4edQrCz
- OyzJQB3GLdvaqi05ebOcMQSP9q73LEXDeXHlJxxXAYQdPHhjj/wvaKBZkDvYo=
-X-Received: by 2002:a05:6820:3088:b0:6cd:3ffc:ad01 with SMTP id
- 006d021491bc7-6cd3ffcb611mr2626870eaf.81.1789836579974; 
- Sat, 19 Sep 2026 09:49:39 -0700 (PDT)
+ bh=NrpL46Nay44SFqEpTz9O0LUdm+A+DGPsy/qGZpi6vus=;
+ b=11EFlMxiMqk+ah7d+5GxsxoXXHAPY+k/HDuiX0yD968Qv/g4gsB4lfcskZ4Q73nv/n
+ L/Q/GTg19KfE1xrsMHKK8JNfPy5T1nVegbxyKAfSraC0jXFo/gua8fqYdBIdHc9qFG2H
+ fqtt09ud3jvVqxajMUhR1ySgEkVPVthLpyzrWrJAXt71gmsjkQ1EUrYFXW9N/SsM+is6
+ jaOHGYKOBCo9e48hldLJaIIx9mfN/eQd1ALyfKTcq72Iti9hPJIXsWR6/47KWTsFXGPx
+ txwAJHgsqWHihoMk7mptjnZdA0sItx0+dXdmLq/EJynXUnTfnEqcCKJ5cEjYRakMo3IT
+ OhKQ==
+X-Gm-Message-State: AFuF++nsJAe11R5HVYcKoijTPVV8zJ3XIeL+wPa1NeeZuWW8VkFgUbPc
+ DjAUkKfNGlZeKPQtVZHZj+ND211sl4cEm5rx/kp7XJmomuuD2OaelNa6Z/owkJTN2o9u6i85xFo
+ ICQyJJzc=
+X-Gm-Gg: AYBFou3jPMdXALdCLoVJPVoYA+6xsF521Oe9mKEQDk1tlUo6ls4tuJcygOoePHYlf6q
+ bzk0Nw7gsGmsHqYk4bbrlYDE0KIgmzpiOFCyNZrYjR2c3OU+dUG7aodnpdpCBtqI4W6L9PCkhI1
+ UJJb08MxUKU9F1nR/Fx/gHIPeLbbYq42zhMExLqc46PU3zcXUStmh4x2lwhWyfcZxV5D2LTTH1K
+ 2883Ihv6DOWKitI/DH1c3vSY5yqAjuSudjztTKIIhaAiI8lDtFZhNOPwsG4yxi9lSyqKAL1EmrZ
+ dBLwZcj2WWMWxwCsb5+zBJk1KI7u6SZ+5prx4Q7b0WFf4KXTOXi3KEKhECwEQ/68LBiIYhEDDNy
+ FmNdNFUcJUaGwT9b9cREU7PCEM5SGLlK23+08Je9nWLRgMf0t6WQ+n/cC3GF600MQkH8YvTsNyd
+ ZY33eTSvqvRCoBqq77MhwFkjQQ2XhW1fZ/5jijQkOVgrQAWB8IorwQMRq/vw==
+X-Received: by 2002:a05:6820:f06:b0:6b7:8415:d77d with SMTP id
+ 006d021491bc7-6ca9c058dfbmr4589336eaf.40.1789836576559; 
+ Sat, 19 Sep 2026 09:49:36 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.38
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:49:39 -0700 (PDT)
+ Sat, 19 Sep 2026 09:49:35 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Stacey Son <sson@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 37/41] bsd-user: Add extended attribute and ACL system call
- dispatch
-Date: Sat, 19 Sep 2026 10:48:05 -0600
-Message-ID: <20260919164810.70151-38-imp@bsdimp.com>
+Subject: [PULL 35/41] bsd-user: Add ACL system call shims to os-extattr.h
+Date: Sat, 19 Sep 2026 10:48:03 -0600
+Message-ID: <20260919164810.70151-36-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:30::10;
- envelope-from=imp@bsdimp.com; helo=mail-oa2-x10.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:31::d; envelope-from=imp@bsdimp.com;
+ helo=mail-oo2-x0d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,133 +100,338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up extended attribute and ACL system calls: extattrctl,
-extattr_set/get/delete for file, fd, and link variants,
-extattr_list for fd, file, and link, and all __acl_* operations
-(aclcheck, delete, get, set for fd, file, and link).
+Complete os-extattr.h with ACL operations: __acl_aclcheck_fd,
+__acl_aclcheck_file, __acl_aclcheck_link, __acl_delete_fd,
+__acl_delete_file, __acl_delete_link, __acl_get_fd, __acl_get_file,
+__acl_get_link, __acl_set_fd, __acl_set_file, and __acl_set_link.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Assisted-by: Claude Opus 4.6 (1M context)
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.c | 103 ++++++++++++++++++++++++++++++++++
- 1 file changed, 103 insertions(+)
+ bsd-user/freebsd/os-extattr.h | 289 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 285 insertions(+), 4 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index f385034a53..a14efd3fd4 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -1365,6 +1365,109 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_sysarch(env, arg1, arg2);
-         break;
+diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
+index 90f0c64c93..b6fe9051f1 100644
+--- a/bsd-user/freebsd/os-extattr.h
++++ b/bsd-user/freebsd/os-extattr.h
+@@ -65,7 +65,7 @@ static inline abi_long do_freebsd_extattr_set_file(abi_long arg1,
+         return -TARGET_EFAULT;
+     }
+     ret = get_errno(extattr_set_file(path(p), arg2, a, d, arg5));
+-    unlock_user(d, arg4, arg5);
++    unlock_user(d, arg4, 0);
+     unlock_user(a, arg3, 0);
+     unlock_user(p, arg1, 0);
  
-+        /*
-+         * extended attributes and ACL system calls
-+         */
-+    case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
-+        ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
-+        break;
+@@ -151,7 +151,7 @@ static inline abi_long do_freebsd_extattr_set_fd(abi_long arg1, abi_long arg2,
+         return -TARGET_EFAULT;
+     }
+     ret = get_errno(extattr_set_fd(arg1, arg2, a, d, arg5));
+-    unlock_user(d, arg4, arg5);
++    unlock_user(d, arg4, 0);
+     unlock_user(a, arg3, 0);
+ 
+     return ret;
+@@ -267,7 +267,7 @@ static inline abi_long do_freebsd_extattr_set_link(abi_long arg1,
+         return -TARGET_EFAULT;
+     }
+     ret = get_errno(extattr_set_link(path(p), arg2, a, d, arg5));
+-    unlock_user(d, arg4, arg5);
++    unlock_user(d, arg4, 0);
+     unlock_user(a, arg3, 0);
+     unlock_user(p, arg1, 0);
+ 
+@@ -376,5 +376,286 @@ static inline abi_long do_freebsd_extattr_list_link(
+  *  Access Control Lists
+  */
+ 
++/* __acl_aclcheck_fd(int filedes, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_aclcheck_fd(abi_long arg1, abi_long arg2,
++                                                   abi_long arg3)
++{
++    abi_long ret;
++    struct acl host_acl;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR_extattr_set_file: /* extattr_set_file(2) */
-+        ret = do_freebsd_extattr_set_file(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_aclcheck_fd(arg1, type, &host_acl));
++    }
 +
-+    case TARGET_FREEBSD_NR_extattr_get_file: /* extattr_get_file(2) */
-+        ret = do_freebsd_extattr_get_file(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_extattr_delete_file: /* extattr_delete_file(2) */
-+        ret = do_freebsd_extattr_delete_file(arg1, arg2, arg3);
-+        break;
++/* __acl_aclcheck_file(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_aclcheck_file(abi_long arg1,
++                                                     abi_long arg2,
++                                                     abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    struct acl host_acl;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR_extattr_set_fd: /* extattr_set_fd(2) */
-+        ret = do_freebsd_extattr_set_fd(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_aclcheck_file(path(p), type, &host_acl));
++    }
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR_extattr_get_fd: /* extattr_get_fd(2) */
-+        ret = do_freebsd_extattr_get_fd(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_extattr_delete_fd: /* extattr_delete_fd(2) */
-+        ret = do_freebsd_extattr_delete_fd(arg1, arg2, arg3);
-+        break;
++/* __acl_aclcheck_link(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_aclcheck_link(abi_long arg1,
++                                                     abi_long arg2,
++                                                     abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    struct acl host_acl;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR_extattr_get_link: /* extattr_get_link(2) */
-+        ret = do_freebsd_extattr_get_link(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_aclcheck_link(path(p), type, &host_acl));
++    }
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR_extattr_set_link: /* extattr_set_link(2) */
-+        ret = do_freebsd_extattr_set_link(arg1, arg2, arg3, arg4, arg5);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_extattr_delete_link: /* extattr_delete_link(2) */
-+        ret = do_freebsd_extattr_delete_link(arg1, arg2, arg3);
-+        break;
++/* int __acl_delete_fd(int filedes, acl_type_t type); */
++static inline abi_long do_freebsd__acl_delete_fd(abi_long arg1, abi_long arg2)
++{
++    abi_long ret;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR_extattr_list_fd: /* extattr_list_fd(2) */
-+        ret = do_freebsd_extattr_list_fd(arg1, arg2, arg3, arg4);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    return get_errno(__acl_delete_fd(arg1, type));
++}
 +
-+    case TARGET_FREEBSD_NR_extattr_list_file: /* extattr_list_file(2) */
-+        ret = do_freebsd_extattr_list_file(arg1, arg2, arg3, arg4);
-+        break;
++/* int __acl_delete_file(const char *path, acl_type_t type); */
++static inline abi_long do_freebsd__acl_delete_file(abi_long arg1,
++                                                   abi_long arg2)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR_extattr_list_link: /* extattr_list_link(2) */
-+        ret = do_freebsd_extattr_list_link(arg1, arg2, arg3, arg4);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(__acl_delete_file(path(p), type));
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR___acl_aclcheck_fd: /* __acl_aclcheck_fd() */
-+        ret = do_freebsd__acl_aclcheck_fd(arg1, arg2, arg3);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR___acl_aclcheck_file: /* __acl_aclcheck_file() */
-+        ret = do_freebsd__acl_aclcheck_file(arg1, arg2, arg3);
-+        break;
++/* int __acl_delete_link(const char *path, acl_type_t type); */
++static inline abi_long do_freebsd__acl_delete_link(abi_long arg1,
++                                                   abi_long arg2)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
 +
-+    case TARGET_FREEBSD_NR___acl_aclcheck_link: /* __acl_aclcheck_link() */
-+        ret = do_freebsd__acl_aclcheck_link(arg1, arg2, arg3);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(__acl_delete_link(path(p), type));
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR___acl_delete_fd: /* __acl_delete_fd() */
-+        ret = do_freebsd__acl_delete_fd(arg1, arg2);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR___acl_delete_file: /* __acl_delete_file() */
-+        ret = do_freebsd__acl_delete_file(arg1, arg2);
-+        break;
++/* int __acl_get_fd(int filedes, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_get_fd(abi_long arg1, abi_long arg2,
++                                              abi_long arg3)
++{
++    abi_long ret;
++    acl_type_t type;
++    struct acl host_acl;
 +
-+    case TARGET_FREEBSD_NR___acl_delete_link: /* __acl_delete_link() */
-+        ret = do_freebsd__acl_delete_link(arg1, arg2);
-+        break;
++    memset(&host_acl, 0, sizeof(struct acl));
++    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
+ 
+-#endif /* FREEBSD_OS_EXTATTR_H */
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    ret = get_errno(__acl_get_fd(arg1, type, &host_acl));
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_acl(arg3, &host_acl);
++    }
 +
-+    case TARGET_FREEBSD_NR___acl_get_fd: /* __acl_get_fd() */
-+        ret = do_freebsd__acl_get_fd(arg1, arg2, arg3);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR___acl_get_file: /* __acl_get_file() */
-+        ret = do_freebsd__acl_get_file(arg1, arg2, arg3);
-+        break;
++/* __acl_get_file(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_get_file(abi_long arg1, abi_long arg2,
++                                                abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
++    struct acl host_acl;
 +
-+    case TARGET_FREEBSD_NR___acl_get_link: /* __acl_get_link() */
-+        ret = do_freebsd__acl_get_link(arg1, arg2, arg3);
-+        break;
++    memset(&host_acl, 0, sizeof(struct acl));
++    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
 +
-+    case TARGET_FREEBSD_NR___acl_set_fd: /* __acl_set_fd() */
-+        ret = do_freebsd__acl_set_fd(arg1, arg2, arg3);
-+        break;
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(__acl_get_file(path(p), type, &host_acl));
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_acl(arg3, &host_acl);
++    }
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR___acl_set_file: /* __acl_set_file() */
-+        ret = do_freebsd__acl_set_file(arg1, arg2, arg3);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR___acl_set_link: /* __acl_set_link() */
-+        ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
-+        break;
++/* int __acl_get_link(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_get_link(abi_long arg1, abi_long arg2,
++                                                abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
++    struct acl host_acl;
 +
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         ret = -TARGET_ENOSYS;
++    memset(&host_acl, 0, sizeof(struct acl));
++    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
++
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(__acl_get_link(path(p), type, &host_acl));
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_acl(arg3, &host_acl);
++    }
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* int __acl_set_fd(int filedes, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_set_fd(abi_long arg1, abi_long arg2,
++                                              abi_long arg3)
++{
++    abi_long ret;
++    acl_type_t type;
++    struct acl host_acl;
++
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_set_fd(arg1, type, &host_acl));
++    }
++
++    return ret;
++}
++
++/* int __acl_set_file(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_set_file(abi_long arg1, abi_long arg2,
++                                                abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
++    struct acl host_acl;
++
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_set_file(path(p), type, &host_acl));
++    }
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
++
++/* int __acl_set_link(const char *path, acl_type_t type, struct acl *aclp); */
++static inline abi_long do_freebsd__acl_set_link(abi_long arg1, abi_long arg2,
++                                                abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    acl_type_t type;
++    struct acl host_acl;
++
++    ret = t2h_freebsd_acl_type(&type, arg2);
++    if (is_error(ret)) {
++        return ret;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = t2h_freebsd_acl(&host_acl, arg3);
++    if (!is_error(ret)) {
++        ret = get_errno(__acl_set_link(path(p), type, &host_acl));
++    }
++    unlock_user(p, arg1, 0);
++
++    return ret;
++}
 -- 
 2.55.0
 
