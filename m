@@ -4,102 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60952C982DA
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A17C982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yI1-0006Il-4n; Sat, 19 Sep 2026 12:51:49 -0400
+	id 1x7yHK-0005TA-N0; Sat, 19 Sep 2026 12:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x7yGM-0004B7-Hd
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:50:16 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFm-0003Y4-Ey
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:32 -0400
+Received: from mail-oo2-x0c.google.com ([2607:f8b0:4864:31::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x7yGK-0008TL-PC
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:50:06 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2dd77300825so17829525ad.1
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:50:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789836602; cv=none;
- d=google.com; s=arc-20260327;
- b=cregnLjt+W+K/KICuiZJUX9CNNgsibweNhcH4WKW4maLNNSnf9CgfZDrVd1zBAeEfi
- +3IkSxouBVDWon04K/TpF9Y+1+eLFFY3SMgGktgkD33s9bcOOqTolYzVJtGqaEm5cQrN
- eF3OICkjxCHf7Mc5JsN184QskjIanE/1KI0yAYTtqZiietQM3S1axBqrC4S40hckLWPa
- Cghke2gV/7sxW/YdGYIbAYIncSgENX+iEteyJajFcJD/R0f+K786YkRxgaLsDeRLq3nh
- zWJdkZkRUlTKzBljzoYn5ytC1fdOqECHEWV5TujclX0YBHKXgB6T+htUV5dkP17IPZWM
- Uh8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=k032ONJdzfO8UzVH2BjndUo9NnG/bvpWEVjrBG9YBWQ=;
- fh=r4/nE9OmcLm5mjOOjCFNN/RpV9Fu521abdkuZPvwWRM=;
- b=UZenDtmwbUENkvLYzs6wXg6znUCMHrNedlB3NNajtYhjZOlJofQpKLbuSpLnwJajEo
- ANR7S4i0k/piSN77Fc5DKL/CAHZpI77rF3tkFO+vMHjxbwZ/wp1l+2U7pdL1fm0vCXzB
- pVwXjw5qrkBeNo/Q15nS5tD+IEXqkCFvKI41zWoZIGcLMme8CJo3Rhp9crgg0OgKBuGJ
- INF9lSw9KB1UE5Vx1/A9hhubRAHD9GEQ3fyRkAJe8LpdJYHgTS8uiJXHSNgNL+EbEMV2
- sxX8h+uV9MmiRYNbd8e4js6fb9aZWp3UdzK1NQQ8bxPA77Z3CEqG6pncgHm4/IijIvv0
- nyzg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFk-0008PN-Gv
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:30 -0400
+Received: by mail-oo2-x0c.google.com with SMTP id
+ 006d021491bc7-6b1ae7089c0so855324eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836602; x=1790441402;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836567; x=1790441367;
  darn=nongnu.org; 
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=k032ONJdzfO8UzVH2BjndUo9NnG/bvpWEVjrBG9YBWQ=;
- b=erPtQZMkPPCj/t6s3iOwrFcPQIFId/7zqv5ga9kf9EXDay5C45QfHtWsh666QXpmxk
- P/X0tULvtUgjUWxdQJsj7+72mFlyVNLnW3XJE9DbyqsY9QSkUv+c1jCwx9PRmL8qHu5d
- 8uMXpn9m5AaTwc84qOd36mcFerzFr2dNf3fjRiAyPOHGsfaUWCqvautLjBnKXbImyO43
- O0q4cmHs2mXN/I5Z2quA2g532Ahsm+ZADt9k5HnNZZ5Yp4SyH7E1hxzSzD3fM7Adu+8H
- 5gknhDr6GJRLOMhpEpJubvUUqRlzODQcxZA4qPjXeylyWJBMq17RT17kw2m4cfqaK4zX
- n4jA==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=gN5bPPz2ZX9SFfIIzKLBsSzIgLDk7FdQLhmqcIDkoOA=;
+ b=DeWh76II6pdwgGr4Nk5Y2+H6VnmrC6HUEL4vW7jc6CJr7O5m22vC3KkSV8+FfKAPe8
+ qT9eYBQ9Fn3BJXAUw7L8rudXqyqjbRDjsdRaArh7RajmIne90n31Pp/jTPT+rcpeWtds
+ X95zvD513ope/wZPUtft5sQMBCrCWjvQIKRQo3m/zz4YncprYI1xb74pAHqOMp5KudaZ
+ 3a4a1BfrD1pW4/KT8IAG2HcB0fYYxG/rK5GwaDf17mVs/UluDwydD7b34Jd/Os2cdcDW
+ W2W2aHC1y7WnPx3sBUAAAuBV/UAZ6iK6TZugGlSYiDR+H05J1+9Wm4sl6hisp9n7rgAK
+ KVKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836602; x=1790441402;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=k032ONJdzfO8UzVH2BjndUo9NnG/bvpWEVjrBG9YBWQ=;
- b=q1Zmfl5PEJkaDHjiZw3PwguR3IIyFS9LcJaEQJfxPcpgsJW9kLIJOM91Q7zJ3N/yks
- ORSuki9YeKPaR3cwmCHJy9dyvphDye2sKU15bG1Ye4GVO31OuPZLdn4n3Aisln9v++2r
- ZxR4opgfcQxUzIeN7FW2cKhcqdcM4vhseMVAJ41gukCl7IY8aO22JNfJcwq6ZqMfYI+3
- HBw1wT4kZdmjShS7c+aWNdxh61uoLYCJDt45pus9CbVF3Ts2Hv0CnnxfXhYJjDOSPGKq
- p/rAsQMTA6qx+1S1qsRlqQez2uS8f60ulRppCv1ebP7GpQO+WgNFycKGBhYh5dtpLPnq
- GSxg==
-X-Gm-Message-State: AFuF++kiiPvevMsQ0CPeRHE63kFj/54nkplHs1+kE8UbP9b7LvMgPSAz
- 2putEKI6IPuQhJaBHok/AT4jGMmr0bKmUJnRcGMJ7BXUNclMrMhgMML/YNfcX+N/rJKQf9W0rZD
- a7gwhQim667eWGdulaRmk13t2AbJZjSCKZghXI3LjDQ==
-X-Gm-Gg: AYBFou0Hbkh+UMJjLrEiaA8Sk0wD3o1QH/2V9Z+plwR+hNor8gElwLxasP+LQBfGnif
- t4zKmnY5PNPhSt76B3nFzaNwphZo8FHLfHQEbiue2pwRtz5CAvNL1yJntvaBTf6zGK1H7VNWGPW
- hkqKg8DuaG9935T1jAou9/WZGz4nx7e4yMxKYii0sSVbGprijkos1mFcn6jPE35MEZCt6cjSx4j
- zjQ9DB3y2pw/6zEjcmAoRpqmAqM0lZdZ5cmJOr1AuXy76+w5QRpRSIIdbSrWO2qnEVHB3Bm94T8
- Sk4Oe7QPwicec+GJMMAYEnv6Hf7/8e2TP6VC+TBohnJdVUCaGpyOgWzzm0AlnuO1YQBBBgNo9hy
- 0VCqMR2iCtg==
-X-Received: by 2002:a17:903:3c05:b0:2dd:4070:8eb with SMTP id
- d9443c01a7336-2ddb1b97f0amr107832335ad.20.1789836601581; Sat, 19 Sep 2026
- 09:50:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260918042422.38713-1-imp@bsdimp.com>
- <590a4134-dea2-418c-8613-4209369828f7@linaro.org>
-In-Reply-To: <590a4134-dea2-418c-8613-4209369828f7@linaro.org>
+ d=1e100.net; s=20260707; t=1789836567; x=1790441367;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gN5bPPz2ZX9SFfIIzKLBsSzIgLDk7FdQLhmqcIDkoOA=;
+ b=D84xNJol/HT535kVcxmqBOx6DpSCra4HVivS0YPo09abwMoYuvFDuSlGOacmjjP5zg
+ Jj86AwRQVJRxZ3AEqRxenQcHup26zwuSu2zp/XcPyKloL4JTHwznwbTX2EXfsCwn3WHF
+ 4Ub/Ya7KOc8lkSyLkBn38hQHbDlcH865CmOYaDEThvJ4QZO/+bHnwFr1c+NbwudZGkn/
+ 1fiS5KgyuGtWxIQggUmbyyYKI8U1AzFLu3xilhNNSAVgFEk1L44322Y1BWqW+SUzROat
+ +7JYG0g2ZF12fcmto24vpojxrBmarI/EMUBy8l6yO2Zb0ujDs3Hfd6MKCN5d487sTGoB
+ Ccvg==
+X-Gm-Message-State: AFuF++kY1UwDVA4EvODNgYKxp08sMGxZm4KXXgCljGlHxANvnUrM7YPc
+ jJ4Pb8Qainn8Vw4FCWKwDwH3VEsTYwnNga7vU6o6xMpyiFROO+/wlSJyqoM3yzlGgTZ62i06TLC
+ jMLe/j8Q=
+X-Gm-Gg: AYBFou1Q4hqukl42tL2m20UxcbkcciWF9b8fFXRejY3DGYuUhx96aIFzp5TlnAW9jau
+ K9sPwl+MUxF3qp6B0agjZlCvYU0zlHkfPJVJqdc05b+SDr7wwRsb+slPapcNzeMHZ1ultd5hIUt
+ naeaLDXYA2xTv9fw6kIa2DWFXEnqHY0BRHP9wWqF9dft93EEKHQamVFT/wAc8AQXp8O7pteC+jL
+ NCHQVrgYMP40BvxSOmiXd5qjm4VgzP6CrBzkn6ygOLiE9LsbtJqBbuQUT+mvPmS7rF54Cb+lM6I
+ Jxw5Xhb2qLF2I5MOs1Hoq910wLPt95QBjYjDnMNwZxepYGOxTG3YEKKait7rbPLDNL0Wkp0zb6A
+ FEwx/y5fC/FiPAAhWhY/IArTRds4BhsRKliV5+0WAGxw3mDTUnHjCcVZDu+dzo9qwz8E+veKL8+
+ rtOyPTQpHQWVLZH0oN9KZHrBOTaHV+9qzCwXDSpSWEfFz23alECyTdc4kvOMunwkeiL3vg
+X-Received: by 2002:a05:6820:2909:b0:6b7:8396:f3c6 with SMTP id
+ 006d021491bc7-6ca9c05bde7mr5476950eaf.40.1789836567211; 
+ Sat, 19 Sep 2026 09:49:27 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 19 Sep 2026 09:49:26 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 19 Sep 2026 10:49:49 -0600
-X-Gm-Features: AcwNN1U2RrIGKA47IJah-czk_pR1R_tFXZjXJclpvYUrh8X0ZVrLjgxa5k4BG-U
-Message-ID: <CANCZdfqeL6pT8gN36qdSr+Ev7nX8uU0Fzv088_az-FjskOT74g@mail.gmail.com>
-Subject: Re: [PULL 00/41] Misc 2026q2 v4 patches
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="000000000000d7f352065bd8ce9c"
-Received-SPF: none client-ip=2607:f8b0:4864:39::10;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj2-x10.google.com
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Jessica Clarke <jrtc27@jrtc27.com>, Michal Meloun <mmel@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 30/41] bsd-user: Add os-thread.h with thr and context functions
+Date: Sat, 19 Sep 2026 10:47:58 -0600
+Message-ID: <20260919164810.70151-31-imp@bsdimp.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
+References: <20260919164810.70151-1-imp@bsdimp.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:31::c; envelope-from=imp@bsdimp.com;
+ helo=mail-oo2-x0c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,81 +101,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d7f352065bd8ce9c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Add thread management system call shims: thr_self, thr_exit, thr_kill,
+thr_kill2, thr_suspend, thr_wake, thr_set_name, rtprio_thread,
+getcontext, setcontext, and swapcontext.
 
-On Fri, Sep 18, 2026 at 1:19=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/freebsd/os-syscall.c |   6 +
+ bsd-user/freebsd/os-thread.h  | 244 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 250 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-thread.h
 
-> On 9/17/26 18:23, Warner Losh wrote:
-> > The following changes since commit
-> 3b5d71cc3652fa7f5ecc449f05dae3ead2b718d7:
-> >
-> >    Merge tag 'pull-ufs-20260918' ofhttps://gitlab.com/jeuk20.kim/qemu
-> into staging (2026-09-17 15:18:09 -1000)
-> >
-> > are available in the Git repository at:
-> >
-> >    git@gitlab.com:bsdimp/qemu-from-official.git
-> tags/misc-2026q2-v4-pull-request
-> >
-> > for you to fetch changes up to 1f71ada86d7ad43c7241a6ae96912139ec3a6a7e=
-:
-> >
-> >    bsd-user Update random_seed on thread creation (2026-09-17 22:07:42
-> -0600)
-> >
-> > ----------------------------------------------------------------
-> > bsd-user: Upstream most of the remaining system calls
->
-> Applied, thanks.
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index cc66be3b7c..f2c3ff25e8 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -49,6 +49,7 @@
+ #include "os-file.h"
+ #include "os-socket.h"
+ #include "os-time.h"
++#include "os-thread.h"
+ #include "os-misc.h"
+ 
+ /* I/O */
+@@ -90,6 +91,11 @@ safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len, int,
+ safe_syscall3(ssize_t, recvmsg, int, s, struct msghdr *, msg, int, flags);
+ safe_syscall3(ssize_t, sendmsg, int, s, const struct msghdr *, msg, int, flags);
+ 
++/* used in os-thread */
++safe_syscall1(int, thr_suspend, struct timespec *, timeout);
++safe_syscall5(int, _umtx_op, void *, obj, int, op, unsigned long, val, void *,
++    uaddr, void *, uaddr2);
++
+ /* used in os-time */
+ safe_syscall2(int, nanosleep, const struct timespec *, rqtp, struct timespec *,
+     rmtp);
+diff --git a/bsd-user/freebsd/os-thread.h b/bsd-user/freebsd/os-thread.h
+new file mode 100644
+index 0000000000..d3f1f01b13
+--- /dev/null
++++ b/bsd-user/freebsd/os-thread.h
+@@ -0,0 +1,244 @@
++/*
++ * FreeBSD thread and user mutex related system call shims
++ *
++ * Copyright (c) 2013-2015 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef FREEBSD_OS_THREAD_H
++#define FREEBSD_OS_THREAD_H
++
++#include <sys/thr.h>
++#include <sys/rtprio.h>
++#include <sys/umtx.h>
++
++#include "qemu.h"
++#include "qemu-os.h"
++
++int safe_thr_suspend(struct timespec *timeout);
++int safe__umtx_op(void *, int, unsigned long, void *, void *);
++
++#if defined(HOST_BIG_ENDIAN) == defined(TARGET_BIG_ENDIAN) && \
++    (TARGET_ABI_BITS == HOST_LONG_BITS || defined(UMTX_OP__32BIT))
++#define _UMTX_OPTIMIZED
++#if defined(TARGET_ABI32)
++#define QEMU_UMTX_OP(n) (UMTX_OP__32BIT | (n))
++#else
++#define QEMU_UMTX_OP(n) (n)
++#endif /* TARGET_ABI32 */
++#else
++#define QEMU_UMTX_OP(n) (n)
++#endif
++
++static inline abi_long do_freebsd_thr_self(abi_ulong target_id)
++{
++    abi_long ret;
++    long tid;
++
++    ret = get_errno(thr_self(&tid));
++    if (!is_error(ret)) {
++        if (put_user_sal(tid, target_id)) {
++            return -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
++
++static inline abi_long do_freebsd_thr_exit(CPUArchState *env,
++        abi_ulong tid_addr)
++{
++    CPUState *cpu = env_cpu(env);
++    TaskState *ts;
++
++    if (block_signals()) {
++        return -TARGET_ERESTART;
++    }
++
++    pthread_mutex_lock(new_freebsd_thread_lock_ptr);
++
++    ts = cpu->opaque;
++
++    if (tid_addr) {
++        /* Signal target userland that it can free the stack. */
++        if (!put_user_sal(1, tid_addr)) {
++            freebsd_umtx_wake_unsafe(tid_addr, INT_MAX);
++        }
++    }
++
++    object_unparent(OBJECT(env_cpu(env)));
++    object_unref(OBJECT(env_cpu(env)));
++    /*
++     * At this point the CPU should be unrealized and removed
++     * from cpu lists. We can clean-up the rest of the thread
++     * data without the lock held.
++     */
++
++    pthread_mutex_unlock(new_freebsd_thread_lock_ptr);
++
++    thread_cpu = NULL;
++    g_free(ts);
++    rcu_unregister_thread();
++    pthread_exit(NULL);
++    /* Doesn't return */
++    return 0;
++}
++
++static inline abi_long do_freebsd_thr_kill(long id, int sig)
++{
++
++    return get_errno(thr_kill(id, target_to_host_signal(sig)));
++}
++
++static inline abi_long do_freebsd_thr_kill2(pid_t pid, long id, int sig)
++{
++
++    return get_errno(thr_kill2(pid, id, target_to_host_signal(sig)));
++}
++
++static inline abi_long do_freebsd_thr_suspend(abi_ulong target_ts)
++{
++    abi_long ret;
++    struct timespec ts;
++
++    if (target_ts != 0) {
++        if (t2h_freebsd_timespec(&ts, target_ts)) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(safe_thr_suspend(&ts));
++    } else {
++        ret = get_errno(safe_thr_suspend(NULL));
++    }
++    return ret;
++}
++
++static inline abi_long do_freebsd_thr_wake(long tid)
++{
++
++    return get_errno(thr_wake(tid));
++}
++
++static inline abi_long do_freebsd_thr_set_name(long tid, abi_ulong target_name)
++{
++    abi_long ret;
++    void *p;
++
++    p = lock_user_string(target_name);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(thr_set_name(tid, p));
++    unlock_user(p, target_name, 0);
++
++    return ret;
++}
++
++static inline abi_long do_freebsd_rtprio_thread(int function, lwpid_t lwpid,
++        abi_ulong target_addr)
++{
++    int ret;
++    struct rtprio rtp;
++
++    ret = t2h_freebsd_rtprio(&rtp, target_addr);
++    if (!is_error(ret)) {
++        ret = get_errno(rtprio_thread(function, lwpid, &rtp));
++    }
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_rtprio(target_addr, &rtp);
++    }
++    return ret;
++}
++
++static inline abi_long do_freebsd_getcontext(CPUArchState *env, abi_ulong arg1)
++{
++    abi_long ret;
++    target_ucontext_t *ucp;
++    sigset_t sigmask;
++
++    if (arg1 == 0) {
++        return -TARGET_EINVAL;
++    }
++    ret = do_sigprocmask(0, NULL, &sigmask);
++    if (!is_error(ret)) {
++        ucp = lock_user(VERIFY_WRITE, arg1, sizeof(target_ucontext_t), 0);
++        if (ucp == 0) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_mcontext(env, &ucp->uc_mcontext, TARGET_MC_GET_CLEAR_RET);
++        host_to_target_sigset(&ucp->uc_sigmask, &sigmask);
++        memset(ucp->__spare__, 0, sizeof(ucp->__spare__));
++        unlock_user(ucp, arg1, sizeof(target_ucontext_t));
++    }
++    return ret;
++}
++
++static inline abi_long do_freebsd_setcontext(CPUArchState *env, abi_ulong arg1)
++{
++    abi_long ret;
++    target_ucontext_t *ucp;
++    sigset_t sigmask;
++    if (arg1 == 0) {
++        return -TARGET_EINVAL;
++    }
++    ucp = lock_user(VERIFY_READ, arg1, sizeof(target_ucontext_t), 1);
++    if (ucp == 0) {
++        return -TARGET_EFAULT;
++    }
++    ret = set_mcontext(env, &ucp->uc_mcontext, 0);
++    target_to_host_sigset(&sigmask, &ucp->uc_sigmask);
++    unlock_user(ucp, arg1, 0);
++    if (!is_error(ret)) {
++        (void)do_sigprocmask(SIG_SETMASK, &sigmask, NULL);
++    }
++    return ret == 0 ? -TARGET_EJUSTRETURN : ret;
++}
++
++/* swapcontext(2) */
++static inline abi_long do_freebsd_swapcontext(CPUArchState *env, abi_ulong arg1,
++        abi_ulong arg2)
++{
++    abi_long ret;
++    target_ucontext_t *ucp;
++    sigset_t sigmask;
++
++    if (arg1 == 0 || arg2 == 0) {
++        return -TARGET_EINVAL;
++    }
++    /* Save current context in arg1. */
++    ret = do_sigprocmask(0, NULL, &sigmask);
++    if (!is_error(ret)) {
++        ucp = lock_user(VERIFY_WRITE, arg1, sizeof(target_ucontext_t), 0);
++        if (ucp == 0) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_mcontext(env, &ucp->uc_mcontext, TARGET_MC_GET_CLEAR_RET);
++        host_to_target_sigset(&ucp->uc_sigmask, &sigmask);
++        memset(ucp->__spare__, 0, sizeof(ucp->__spare__));
++        unlock_user(ucp, arg1, sizeof(target_ucontext_t));
++    }
++    if (is_error(ret)) {
++        return ret;
++    }
++
++    /* Restore the context in arg2 to the current context. */
++    ucp = lock_user(VERIFY_READ, arg2, sizeof(target_ucontext_t), 1);
++    if (ucp == 0) {
++        return -TARGET_EFAULT;
++    }
++    ret = set_mcontext(env, &ucp->uc_mcontext, 0);
++    target_to_host_sigset(&sigmask, &ucp->uc_sigmask);
++    unlock_user(ucp, arg2, 0);
++    if (!is_error(ret)) {
++        (void)do_sigprocmask(SIG_SETMASK, &sigmask, NULL);
++    }
++    return ret == 0 ? -TARGET_EJUSTRETURN : ret;
++}
++
++
++#define safe_g2h_untagged(x) ((x) != 0 ? g2h_untagged(x) : NULL)
++
++/*
++ * undocumented _umtx_op(void *obj, int op, u_long val, void *uaddr,
++ *                           void *target_time);
++ */
++
++#endif /* FREEBSD_OS_THREAD_H */
+-- 
+2.55.0
 
-
-I missed this and just resent it with a tiny tweak. Ignore it. I'll include
-the tiny tweak in my next pull request which should be quicker now... My
-apologies for the extra email. No need to revert or anything.
-
-Warner
-
---000000000000d7f352065bd8ce9c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 18,=
- 2026 at 1:19=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
-nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On 9/17/26 18:23, Warner Lo=
-sh wrote:<br>
-&gt; The following changes since commit 3b5d71cc3652fa7f5ecc449f05dae3ead2b=
-718d7:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 Merge tag &#39;pull-ufs-20260918&#39; ofhttps://<a href=
-=3D"http://gitlab.com/jeuk20.kim/qemu" rel=3D"noreferrer" target=3D"_blank"=
->gitlab.com/jeuk20.kim/qemu</a> into staging (2026-09-17 15:18:09 -1000)<br=
->
-&gt; <br>
-&gt; are available in the Git repository at:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 git@gitlab.com:bsdimp/qemu-from-official.git tags/misc-20=
-26q2-v4-pull-request<br>
-&gt; <br>
-&gt; for you to fetch changes up to 1f71ada86d7ad43c7241a6ae96912139ec3a6a7=
-e:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 bsd-user Update random_seed on thread creation (2026-09-1=
-7 22:07:42 -0600)<br>
-&gt; <br>
-&gt; ----------------------------------------------------------------<br>
-&gt; bsd-user: Upstream most of the remaining system calls<br>
-<br>
-Applied, thanks.</blockquote><div><br></div><div>I missed this and just res=
-ent it with a tiny tweak. Ignore it. I&#39;ll include the tiny tweak in my =
-next pull request which should be quicker now... My apologies for the extra=
- email. No need to revert or anything.</div><div><br></div><div>Warner=C2=
-=A0</div></div></div>
-
---000000000000d7f352065bd8ce9c--
 
