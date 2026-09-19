@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6064C982D8
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF20C982D7
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yI7-0007Ii-Ev; Sat, 19 Sep 2026 12:51:55 -0400
+	id 1x7yFA-0002pz-Vn; Sat, 19 Sep 2026 12:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG4-00040u-N3
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:50 -0400
-Received: from mail-oa2-x10.google.com ([2607:f8b0:4864:30::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yF6-0002pW-NZ
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:48 -0400
+Received: from mail-oo2-x2b.google.com ([2607:f8b0:4864:31::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG0-0008Rb-Gs
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:47 -0400
-Received: by mail-oa2-x10.google.com with SMTP id
- 586e51a60fabf-466ccdd7695so629491fac.1
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yF5-0008EQ-DE
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:48 -0400
+Received: by mail-oo2-x2b.google.com with SMTP id
+ 006d021491bc7-6b4bff33d18so736215eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836583; x=1790441383;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836526; x=1790441326;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PeXmulczeEFfRnnsswIIkQUohVaNMNkAYTGURuthEZk=;
- b=QAEqoWNks9AX2T0xG9fQHxtFWaPVEok9AM1s8o5oXKLBf60D1Trq01OjQfAA4OZzi1
- EMQEfU4iBm0LCDuO5lZuQTeTUblY1n1mQinPX0aqH71Ua4cRJqjo67h5UoVcvqQJWXoV
- 48PQFcO7sRhsUwzhyDWXHelloX5aCvh5AnmdKcy4Q+vQBJEDwFo/CXwkN57KARA86bAU
- YRktiGwKGcxC7+hKuTi8iBsO3pDU/bdhOv/a+h8ned590szRymrkDgOkkAD+cvfjuPDo
- p/TEqPjGOYKXN92VifQCwMLhhic3Do2FvQTuthAQUJTaREgn+XDOUNn5AcZol/k3kD8p
- JbNA==
+ bh=3X5p8HsBP/JRwDiZ+tLss6J0kLBzgb+35YGZ9nZAIkM=;
+ b=kauGC1nYmkI14z6tdEo/htVHLfuS5E/FBOyq8P6uIc6LudgX+jW/w6qKk483OhiuY3
+ uM9HL3uBUssQKUTxu+jNp/ad6scQYfA6kHo93I1UNlXUSMWkmji5Iekjwq4YHw3dL6Db
+ MyJgv5zwSfQk8IaFOLQuZr0m7TEmVSflh5/sp/s2OZMOZqaxitdeAWwCZOBf7wI0qiY0
+ xj5rXTDlBMlUzTxjegN6aJ8l9YyK1xkH6VH8npnLtf/qsNqnz3OHTgjHdjNuNnAq8A1H
+ acpwFOT7GYN5OPQUePhLoUrBKwql4jIa90t/vF8vpYxY6Z4gZ3LytVD0coNbRZYN0gSo
+ pU1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836583; x=1790441383;
+ d=1e100.net; s=20260707; t=1789836526; x=1790441326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PeXmulczeEFfRnnsswIIkQUohVaNMNkAYTGURuthEZk=;
- b=N7biyKakDTMMB4w4MOmyYCPVZTV1TkNzgLmJzMf9f0LDOIyTWfjxa0/7FdsKHUS34v
- c0f0FgOkx2Dtx9FrxbW/J00HBYoo1ARrKULwklZOaWfMIICJWamHasxQHzuHbX0Hm35j
- AAhFbw3XMo+QhVBZ4C2qxukFi0Wpn9IN4F4t1xcTOlj5oFblemCEt3tbso2eusESIOSd
- 69pa4jlaauzJTA/HIGChku44ucggnSCuGVQfCyuPa1e7dfcKA7wO188EngAl3CipI013
- LBy/d1cXtOWtnr/4vVrTDndk7TVGXaTpZp54/pik2d0kwIRBD9hW27+nnkEC1OtiVINU
- /+LQ==
-X-Gm-Message-State: AFuF++kfV+B8WLvae+TV2016+yYXqvWa69+yEgmvgyEe+AA3vTRxM8b1
- gVchXv82KxTXwL92P+MsotdBfPtZbzwhZ6gZpPQMehsNyyS+5KAKzGnKFiwQxMSOGdPquvTWTmp
- zEZT8W1Q=
-X-Gm-Gg: AYBFou3bl3+xDwZiL/uQcI/Tz211RvnwcGMUpHHumnpj0n3fZVD3Hm/OiySMvHrIMQp
- AAS4l7ixy/KAnPIDbMhFEC1QYvIjEcoSxI+0D00/atBH1uQ/ch235czZiSIfjgXIfUm7XzL/8/m
- YswRcRN+yi0Zy3YlVlCSBzFXq6moUVZDQivKqJsFlwA8ucXRBFF75KFaI/MgS/vD6gMCfJD2/jk
- nnbnk7naAc7lSkyCuivqK8GoOTkoqXrxkUEjxIpxw6YPYKUGgF6fJ9CCJ67ZquzigzS0v4pRUIL
- qK8JGuLj3pqIpeF9Lv1d23k4QiBp49OgvYRClH9iUK3d+t+5foQb1n6hZveppvMUMe0Esi3lc5n
- T98I1X98301a7H1Swyhoka1sacLD1lXCRcd1uoss+29EOnbkrTQDjqRrzHVqgoWrUIblHDLbITQ
- TSAzc9hpBOGr4gM44Yf9DLaHBOC3fChMudsj7W/uaZ538nsjaAkAz5d6kIJfp6DfBqv21u
-X-Received: by 2002:a05:6820:2004:b0:6ca:4a52:797b with SMTP id
- 006d021491bc7-6ca9c8500b6mr5131956eaf.50.1789836583415; 
- Sat, 19 Sep 2026 09:49:43 -0700 (PDT)
+ bh=3X5p8HsBP/JRwDiZ+tLss6J0kLBzgb+35YGZ9nZAIkM=;
+ b=XjTHQ4htLsKFx/dPJXtJupJMWd1Jv9YXUaIo6HvaLBp45FtycPIKhlBaDKCsYZqsUO
+ aWmiSCWnlxTi/K78ZiGGJt1/JZEb4gMqEPi7YZShKC7fRZH9/InLUo/axrFuDjduddle
+ cDFGzRwqJMh3zHMH2E1OEEf43AA0+YdYLAKm7LGlWWIPt4OY7Qy0q0sfAHx+N1vMLxtI
+ N53GJC9NE9MmQL/H9jkQmPfNksX2zQ3c88PCfRiyp4QdQOXOkIsbbtr6eHmXaL8iwOEg
+ w/Ztq6hEES252EeY0H0OH3jV6ylui+K0DJoJ3hj97H4SnKO0FR0r35NETosK/mWNokE/
+ 17OQ==
+X-Gm-Message-State: AFuF++l8kuO+u1Hs6vofL8AXLyBH4OmlGnlkuIZJa8FzbZGu4yJ3KgrS
+ Rb9M5wYfUKhk95sgOr3FdeOKP5n/tdTG8+olrkEjRIkQnwwSTk24dm4pzTyC9WajQ6WkVCTfl4w
+ jFgJkZNI=
+X-Gm-Gg: AYBFou2NxIujHrHaw0VihwzmcOjMHFJ17bcHA7MxIM3pyelFSpukkJgx9a1zqWEr4sp
+ lJ1G8SXmOIkkLgfjKLQ43fHGbq/4jeVCLJ/BwExrBcSZt5gT0CL/JumZrQvs7X62PfXKvbbblCN
+ NCD9vq5Y2/QpI4ow9C97ansk4boYraaPlyU95HMeLJufxbHI9U2Rra4rsFWYXIfvqBtsrtFOZLd
+ MUL2FoxAvvHtfdG0d1nG3yeuKz7PvCcs5ioTVr4tzIB1UdKMHu4T5cLG6jczP/FDAcGHj6C0DjV
+ sJSLNCH3hUt95JNqIKBZJaZTb3XijpZtuVVxnJW3+fKadA6OGMuWGXEVxE9xzROJo7jNGCb9bgv
+ p54t0Snes52oJ/PObpPEluGGf4Jrp5av/bAlKTW7kMorgGpji/ejxSyQdzZlXw6V+AwxZGycoxY
+ YukJxKeT60beYMgRK9vWiEfZh9vxhd0mvAI9D/nR3+i1XVzWZTfoeJbEjgNg==
+X-Received: by 2002:a05:6820:207:b0:6b7:8396:f3e2 with SMTP id
+ 006d021491bc7-6ca9d652d06mr5442786eaf.68.1789836526236; 
+ Sat, 19 Sep 2026 09:48:46 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.41
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:49:42 -0700 (PDT)
+ Sat, 19 Sep 2026 09:48:45 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 39/41] bsd-user: Add scheduler, cpuset, kmod,
- and misc syscall dispatch
-Date: Sat, 19 Sep 2026 10:48:07 -0600
-Message-ID: <20260919164810.70151-40-imp@bsdimp.com>
+Subject: [PULL 10/41] bsd-user: Move sys/uuid.h defines
+Date: Sat, 19 Sep 2026 10:47:38 -0600
+Message-ID: <20260919164810.70151-11-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:30::10;
- envelope-from=imp@bsdimp.com; helo=mail-oa2-x10.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:31::2b;
+ envelope-from=imp@bsdimp.com; helo=mail-oo2-x2b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,638 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up remaining system calls: sched_setparam, sched_getparam,
-sched_setscheduler, sched_getscheduler, sched_get_priority_max,
-sched_get_priority_min, sched_rr_get_interval, sched_yield,
-cpuset, cpuset_setid, cpuset_getid, cpuset_getaffinity,
-cpuset_setaffinity, modfnext, modfind, kldload, kldunload,
-kldunloadf, kldfind, kldnext, kldstat, kldfirstmod, kldsym,
-posix_fallocate, posix_openpt, getrandom, kenv, cap_rights_limit,
-cap_ioctls_limit, cap_fcntls_limit, cap_enter, syscall, and
-__syscall.
+Diff reduction to blitz. Move sys/uuid.h to the location in the blitz
+branch.
 
-We also reshuffle a few system calls here to match the blitz branch
-which adds some churn, but is the least bad way to deal with the issues.
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.c | 512 +++++++++++++++++++++-------------
- 1 file changed, 323 insertions(+), 189 deletions(-)
+ bsd-user/syscall_defs.h | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index a14efd3fd4..7e400c89bc 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -532,6 +532,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_closefrom(arg1);
-         break;
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 4af79669e2..47aa01fbb5 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -418,6 +418,21 @@ struct target_freebsd_flock {
+ /* user: vfork(2) semantics, clear signals */
+ #define TARGET_RFSPAWN (1U << 31)
  
-+    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
-+        ret = do_freebsd_close_range(arg1, arg2, arg3);
-+        break;
++/*
++ *  sys/uuid.h
++ */
 +
-     case TARGET_FREEBSD_NR_revoke: /* revoke(2) */
-         ret = do_bsd_revoke(arg1);
-         break;
-@@ -696,6 +700,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_chflags(arg1, arg2);
-         break;
++#define TARGET_UUID_NODE_LEN    6
++
++struct target_uuid {
++    uint32_t    time_low;
++    uint16_t    time_mid;
++    uint16_t    time_hi_and_version;
++    uint8_t     clock_seq_hi_and_reserved;
++    uint8_t     clock_seq_low;
++    uint8_t     node[TARGET_UUID_NODE_LEN];
++};
++
+ /*
+  * from sys/procctl.h
+  */
+@@ -459,21 +474,6 @@ struct target_procctl_reaper_kill {
+     uint32_t rk_pad0[15];
+ };
  
-+    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
-+        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
-+        break;
-+
-     case TARGET_FREEBSD_NR_lchflags: /* lchflags(2) */
-         ret = do_bsd_lchflags(arg1, arg2);
-         break;
-@@ -740,6 +748,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_poll(arg1, arg2, arg3);
-         break;
- 
-+    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
-+        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
-+        break;
-+
-     case TARGET_FREEBSD_NR_lseek: /* lseek(2) */
-         ret = do_bsd_lseek(env, arg1, arg2, arg3, arg4, arg5);
-         break;
-@@ -766,14 +778,6 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_swapoff(arg1, arg2);
-         break;
- 
--    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
--        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
--        break;
+-/*
+- * sys/uuid.h
+- */
+-#define TARGET_UUID_NODE_LEN    6
 -
--    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
--        ret = do_freebsd_close_range(arg1, arg2, arg3);
--        break;
+-struct target_uuid {
+-    uint32_t    time_low;
+-    uint16_t    time_mid;
+-    uint16_t    time_hi_and_version;
+-    uint8_t     clock_seq_hi_and_reserved;
+-    uint8_t     clock_seq_low;
+-    uint8_t     node[TARGET_UUID_NODE_LEN];
+-};
 -
-     case TARGET_FREEBSD_NR___realpathat:
-         /* __realpathat(2) (XXX no realpathat()) */
-         ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
-@@ -787,125 +791,12 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd___specialfd(arg1, arg2, arg3);
-         break;
- 
--        /*
--         * ioctl(2)
--         */
--    case TARGET_FREEBSD_NR_ioctl: /* ioctl(2) */
--        ret = do_bsd_ioctl(arg1, arg2, arg3);
--        break;
 -
--        /*
--         * stat system calls
--         */
--    case TARGET_FREEBSD_NR_freebsd11_stat: /* stat(2) */
--        ret = do_freebsd11_stat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_lstat: /* lstat(2) */
--        ret = do_freebsd11_lstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_fstat: /* fstat(2) */
--        ret = do_freebsd11_fstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_fstat: /* fstat(2) */
--        ret = do_freebsd_fstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_fstatat: /* fstatat(2) */
--        ret = do_freebsd11_fstatat(arg1, arg2, arg3, arg4);
--        break;
--
--    case TARGET_FREEBSD_NR_fstatat: /* fstatat(2) */
--        ret = do_freebsd_fstatat(arg1, arg2, arg3, arg4);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_nstat: /* undocumented */
--        ret = do_freebsd11_nstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_nfstat: /* undocumented */
--        ret = do_freebsd11_nfstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_nlstat: /* undocumented */
--        ret = do_freebsd11_nlstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_getfh: /* getfh(2) */
--        ret = do_freebsd_getfh(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_lgetfh: /* lgetfh(2) */
--        ret = do_freebsd_lgetfh(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_fhopen: /* fhopen(2) */
--        ret = do_freebsd_fhopen(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_fhstat: /* fhstat(2) */
--        ret = do_freebsd11_fhstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_fhstat: /* fhstat(2) */
--        ret = do_freebsd_fhstat(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_fhstatfs: /* fhstatfs(2) */
--        ret = do_freebsd11_fhstatfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_fhstatfs: /* fhstatfs(2) */
--        ret = do_freebsd_fhstatfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_statfs: /* statfs(2) */
--        ret = do_freebsd11_statfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_statfs: /* statfs(2) */
--        ret = do_freebsd_statfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_fstatfs: /* fstatfs(2) */
--        ret = do_freebsd11_fstatfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_fstatfs: /* fstatfs(2) */
--        ret = do_freebsd_fstatfs(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_getfsstat: /* getfsstat(2) */
--        ret = do_freebsd11_getfsstat(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_getfsstat: /* getfsstat(2) */
--        ret = do_freebsd_getfsstat(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_getdents: /* getdents(2) */
--        ret = do_freebsd11_getdents(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_getdirentries: /* getdirentries(2) */
--        ret = do_freebsd_getdirentries(arg1, arg2, arg3, arg4);
--        break;
--
--    case TARGET_FREEBSD_NR_freebsd11_getdirentries: /* getdirentries(2) */
--        ret = do_freebsd11_getdirentries(arg1, arg2, arg3, arg4);
--        break;
--    case TARGET_FREEBSD_NR_fcntl: /* fcntl(2) */
--        ret = do_freebsd_fcntl(arg1, arg2, arg3);
--        break;
--
-         /*
-          * Memory management system calls.
-          */
-     case TARGET_FREEBSD_NR_mmap: /* mmap(2) */
-         ret = do_bsd_mmap(env, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
--                          arg8);
-+           arg8);
-         break;
- 
-     case TARGET_FREEBSD_NR_munmap: /* munmap(2) */
-@@ -952,17 +843,13 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_shm_open(arg1, arg2, arg3);
-         break;
- 
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300048
-     case TARGET_FREEBSD_NR_shm_open2: /* shm_open2(2) */
-         ret = do_freebsd_shm_open2(arg1, arg2, arg3, arg4, arg5);
-         break;
--#endif
- 
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300049
-     case TARGET_FREEBSD_NR_shm_rename: /* shm_rename(2) */
-         ret = do_freebsd_shm_rename(arg1, arg2, arg3);
-         break;
--#endif
- 
-     case TARGET_FREEBSD_NR_shm_unlink: /* shm_unlink(2) */
-         ret = do_bsd_shm_unlink(arg1);
-@@ -984,68 +871,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_shmdt(arg1);
-         break;
- 
--        /*
--         * System V Semaphores
--         */
--    case TARGET_FREEBSD_NR_semget: /* semget(2) */
--        ret = do_bsd_semget(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_semop: /* semop(2) */
--        ret = do_bsd_semop(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
--        ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
--        break;
--    }
--
--        /*
--         * System V Messages
--         */
--    case TARGET_FREEBSD_NR_msgctl: /* msgctl(2) */
--        ret = do_bsd_msgctl(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_msgget: /* msgget(2) */
--        ret = do_bsd_msgget(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_msgsnd: /* msgsnd(2) */
--        ret = do_bsd_msgsnd(arg1, arg2, arg3, arg4);
--        break;
--
--    case TARGET_FREEBSD_NR_msgrcv: /* msgrcv(2) */
--        ret = do_bsd_msgrcv(arg1, arg2, arg3, arg4, arg5);
--        break;
--
-     case TARGET_FREEBSD_NR_freebsd11_vadvise:
-         ret = do_bsd_vadvise();
-         break;
- 
--        /*
--         * Misc
--         */
--    case TARGET_FREEBSD_NR_break:
--        ret = do_obreak(arg1);
--        break;
--
--    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
--        ret = do_bsd_quotactl(arg1, arg2, arg3);
--        break;
--
--    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
--        ret = do_bsd_reboot(arg1);
--        break;
--
--    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
--        ret = do_bsd_uuidgen(arg1, arg2);
--        break;
--
--    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
--        ret = do_bsd_getdtablesize();
--        break;
--
-         /*
-          * time related system calls.
-          */
-@@ -1133,10 +962,6 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_pselect(env, arg1, arg2, arg3, arg4, arg5, arg6);
-         break;
- 
--    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
--        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
--        break;
--
-     case TARGET_FREEBSD_NR_kqueue: /* kqueue(2) */
-         ret = do_freebsd_kqueue();
-         break;
-@@ -1350,6 +1175,119 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd__umtx_op(arg1, arg2, arg3, arg4, arg5);
-         break;
- 
-+        /*
-+         * ioctl(2)
-+         */
-+    case TARGET_FREEBSD_NR_ioctl: /* ioctl(2) */
-+        ret = do_bsd_ioctl(arg1, arg2, arg3);
-+        break;
-+
-+        /*
-+         * stat system calls
-+         */
-+    case TARGET_FREEBSD_NR_freebsd11_stat: /* stat(2) */
-+        ret = do_freebsd11_stat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_lstat: /* lstat(2) */
-+        ret = do_freebsd11_lstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_fstat: /* fstat(2) */
-+        ret = do_freebsd11_fstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fstat: /* fstat(2) */
-+        ret = do_freebsd_fstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_fstatat: /* fstatat(2) */
-+        ret = do_freebsd11_fstatat(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fstatat: /* fstatat(2) */
-+        ret = do_freebsd_fstatat(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_nstat: /* undocumented */
-+        ret = do_freebsd11_nstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_nfstat: /* undocumented */
-+        ret = do_freebsd11_nfstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_nlstat: /* undocumented */
-+        ret = do_freebsd11_nlstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getfh: /* getfh(2) */
-+        ret = do_freebsd_getfh(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_lgetfh: /* lgetfh(2) */
-+        ret = do_freebsd_lgetfh(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fhopen: /* fhopen(2) */
-+        ret = do_freebsd_fhopen(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_fhstat: /* fhstat(2) */
-+        ret = do_freebsd11_fhstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fhstat: /* fhstat(2) */
-+        ret = do_freebsd_fhstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_fhstatfs: /* fhstatfs(2) */
-+        ret = do_freebsd11_fhstatfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fhstatfs: /* fhstatfs(2) */
-+        ret = do_freebsd_fhstatfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_statfs: /* statfs(2) */
-+        ret = do_freebsd11_statfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_statfs: /* statfs(2) */
-+        ret = do_freebsd_statfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_fstatfs: /* fstatfs(2) */
-+        ret = do_freebsd11_fstatfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_fstatfs: /* fstatfs(2) */
-+        ret = do_freebsd_fstatfs(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_getfsstat: /* getfsstat(2) */
-+        ret = do_freebsd11_getfsstat(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getfsstat: /* getfsstat(2) */
-+        ret = do_freebsd_getfsstat(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_getdents: /* getdents(2) */
-+        ret = do_freebsd11_getdents(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getdirentries: /* getdirentries(2) */
-+        ret = do_freebsd_getdirentries(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_getdirentries: /* getdirentries(2) */
-+        ret = do_freebsd11_getdirentries(arg1, arg2, arg3, arg4);
-+        break;
-+    case TARGET_FREEBSD_NR_fcntl: /* fcntl(2) */
-+        ret = do_freebsd_fcntl(arg1, arg2, arg3);
-+        break;
-+
-         /*
-          * sys{ctl, arch, call}
-          */
-@@ -1365,8 +1303,14 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_sysarch(env, arg1, arg2);
-         break;
- 
-+    case TARGET_FREEBSD_NR_syscall: /* syscall(2) */
-+    case TARGET_FREEBSD_NR___syscall: /* __syscall(2) */
-+        ret = do_freebsd_syscall(env, arg1 & 0xffff, arg2, arg3, arg4,
-+                arg5, arg6, arg7, arg8, 0);
-+        break;
-+
-         /*
--         * extended attributes and ACL system calls
-+         * extended attributes system calls
-          */
-     case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
-         ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
-@@ -1468,6 +1412,196 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
-         break;
- 
-+        /*
-+         * System V Semaphores
-+         */
-+    case TARGET_FREEBSD_NR_semget: /* semget(2) */
-+        ret = do_bsd_semget(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_semop: /* semop(2) */
-+        ret = do_bsd_semop(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
-+        ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
-+        break;
-+    }
-+
-+        /*
-+         * System V Messages
-+         */
-+    case TARGET_FREEBSD_NR_msgctl: /* msgctl(2) */
-+        ret = do_bsd_msgctl(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_msgget: /* msgget(2) */
-+        ret = do_bsd_msgget(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_msgsnd: /* msgsnd(2) */
-+        ret = do_bsd_msgsnd(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_msgrcv: /* msgrcv(2) */
-+        ret = do_bsd_msgrcv(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+        /*
-+         * FreeBSD scheduler control
-+         */
-+    case TARGET_FREEBSD_NR_sched_setparam: /* sched_setparam(2) */
-+        ret = do_freebsd_sched_setparam(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_getparam: /* sched_getparam(2) */
-+        ret = do_freebsd_sched_getparam(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_setscheduler: /* sched_setscheduler(2) */
-+        ret = do_freebsd_sched_setscheduler(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_getscheduler: /* sched_getscheduler(2) */
-+        ret = do_freebsd_sched_getscheduler(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_get_priority_max: /* sched_get_priority_max(2)*/
-+        ret = do_bsd_sched_get_priority_max(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_get_priority_min: /* sched_get_priority_min(2)*/
-+        ret = do_bsd_sched_get_priority_min(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_rr_get_interval: /* sched_rr_get_interval(2) */
-+        ret = do_freebsd_sched_rr_get_interval(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sched_yield: /* sched_yield(2)*/
-+        ret = do_bsd_sched_yield();
-+        break;
-+
-+
-+        /*
-+         * FreeBSD CPU affinity sets management
-+         */
-+    case TARGET_FREEBSD_NR_cpuset: /* cpuset(2) */
-+        ret = do_freebsd_cpuset(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_cpuset_setid: /* cpuset_setid(2) */
-+        ret = do_freebsd_cpuset_setid(env, arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_cpuset_getid: /* cpuset_getid(2) */
-+        ret = do_freebsd_cpuset_getid(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_cpuset_getaffinity: /* cpuset_getaffinity(2) */
-+        ret = do_freebsd_cpuset_getaffinity(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_cpuset_setaffinity: /* cpuset_setaffinity(2) */
-+        ret = do_freebsd_cpuset_setaffinity(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+        /*
-+         * FreeBSD kernel module
-+         */
-+    case TARGET_FREEBSD_NR_modfnext: /* modfnext(2) */
-+        ret = do_freebsd_modfnext(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_modfind: /* modfind(2) */
-+        ret = do_freebsd_modfind(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldload: /* kldload(2) */
-+        ret = do_freebsd_kldload(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldunload: /* kldunload(2) */
-+        ret = do_freebsd_kldunload(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldunloadf: /* kldunloadf(2) */
-+        ret = do_freebsd_kldunloadf(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldfind: /* kldfind(2) */
-+        ret = do_freebsd_kldfind(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldnext: /* kldnext(2) */
-+        ret = do_freebsd_kldnext(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldstat: /* kldstat(2) */
-+        ret = do_freebsd_kldstat(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldfirstmod: /* kldfirstmod(2) */
-+        ret = do_freebsd_kldfirstmod(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kldsym: /* kldsym(2) */
-+        ret = do_freebsd_kldsym(arg1, arg2, arg3);
-+        break;
-+
-+        /*
-+         * FreeBSD additional posix support
-+         */
-+    case TARGET_FREEBSD_NR_posix_fallocate: /* posix_fallocate(2) */
-+        ret = do_freebsd_posix_fallocate(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_posix_openpt: /* posix_openpt(2) */
-+        ret = do_freebsd_posix_openpt(arg1);
-+        break;
-+
-+        /*
-+         * Misc
-+         */
-+    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
-+        ret = do_bsd_quotactl(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
-+        ret = do_bsd_reboot(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
-+        ret = do_bsd_uuidgen(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
-+        ret = do_bsd_getdtablesize();
-+        break;
-+
-+    case TARGET_FREEBSD_NR_break:
-+        ret = do_obreak(arg1);
-+        break;
-+
-+#if defined(CONFIG_GETRANDOM)
-+    case TARGET_FREEBSD_NR_getrandom:
-+        ret = do_freebsd_getrandom(arg1, arg2, arg3);
-+        break;
-+#endif
-+    case TARGET_FREEBSD_NR_kenv:
-+        ret = do_freebsd_kenv(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    /* XXX */
-+    case TARGET_FREEBSD_NR_cap_rights_limit:
-+    case TARGET_FREEBSD_NR_cap_ioctls_limit:
-+    case TARGET_FREEBSD_NR_cap_fcntls_limit:
-+        ret = -TARGET_EINVAL;
-+        break;
-+    case TARGET_FREEBSD_NR_cap_enter:
-+        ret = 0;
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         ret = -TARGET_ENOSYS;
+ #define safe_syscall0(type, name) \
+ type safe_##name(void) \
+ { \
 -- 
 2.55.0
 
