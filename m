@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CCAC982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87CFC982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yI5-000716-Oj; Sat, 19 Sep 2026 12:51:53 -0400
+	id 1x7yHi-0005me-8F; Sat, 19 Sep 2026 12:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG5-00041U-S3
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:52 -0400
-Received: from mail-oo2-x2a.google.com ([2607:f8b0:4864:31::2a])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFp-0003if-LL
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:34 -0400
+Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG4-0008S2-Fq
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:49 -0400
-Received: by mail-oo2-x2a.google.com with SMTP id
- 006d021491bc7-6c901f4bfffso1001234eaf.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFn-0008Q2-UD
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:33 -0400
+Received: by mail-oo2-x0d.google.com with SMTP id
+ 006d021491bc7-6b1ae6f5fc5so803189eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836587; x=1790441387;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836571; x=1790441371;
  darn=nongnu.org; 
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=T5VFNKpjfwVhXvcVbNvhtkKH4RjHMlqu1CWJ8L9VSDY=;
- b=FN4fO+Ce0dYhjZKzUT41kKVOhknSqjNUmnZ5lya9rGNWUaQzsjnTdb/6rFhzE94mJ0
- 8wC4vrn1WbDeXUu7SAwHCcbhtfkR1jG1BanJLm3nIuUIoECBKnH+I/1D3Y6Qm4jL+Hy+
- E7GgQOLlX2UVbxH2qqrbVhtNI9EwTr6jNFpdxQQy5V6wl8cVJOLoM5lHF0uQAHuEbTsI
- IlVYKMwXYF/1VHl5l3KD8B5MQ2Jo34UKWxb5gBbwwdYyB9YhXXtEOFo0tA07PuSIpFRX
- YizstAGyeQkCj86SpktbLdKa533HmcbL0kkPksKzSj0DApr1NF2U0R6flPzeCrwXNwIr
- iwig==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5hPSthJIovrntwFBfq1pmFnZ8Gyy72MTs0mluUnzf20=;
+ b=ROCMD0x8WbQkSqkTsCin6OTBcXFeoUtubnZ8GExvW92fUBi5oVrxfM/RqONHH1DqcG
+ NBgsozBqbR26O5VYEcKYpkx48mVwVP3SZsLSoQskUWXME3tp86hDVk11F+MH7PmUp/r0
+ CjvNY1ENM1sXqgBdtp/cKVRPrkAsT/qF74C6Soa7ATA2Co4IadpnbWR9wxsFbKlYr7gu
+ HMZvyuEIQ8MsqnuOumzkQsyNQqmRO2D5kKo0MFUer5iGQQ2aFPr3mrfgH2SAyEoaQtrX
+ 2ro6lsY3lMbwgpjJGl43iO9y/08daJiWwQ5qZ3YlCfXYlksEDPkYXDo7XdZyIMPfUc4+
+ guuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836587; x=1790441387;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=T5VFNKpjfwVhXvcVbNvhtkKH4RjHMlqu1CWJ8L9VSDY=;
- b=ILnlFKduB/sSxnCN6GSXcQGvhOmJv7xNisgAlqH3WMJHxXyns5M2HO78w1tbtyaDGb
- yLjWNBB3cm4cdgpPaLhidLKvHCr53jCVzKhAvDf2o2LP0Z66AqMh2DEunRkADo0l+2yG
- UCxvcW8201U76khrdEdEyAskp/9w8jhfpvEzA1tGnyG0MUcPIjf1ZZJon6u68tcfsa2E
- XcBewuj2YvX96u1MI89frs+FM0Nu7HFa9Qx2wEc5kCFWO+VRXY9R+3D+MImObW7vGAme
- /EfENpUM060vqLm9PmLCB3y56WccP2jzxWILn5mjIoI5FsyYE+SZrUAI27BoiH1Akz7c
- 0B4w==
-X-Gm-Message-State: AFuF++lT4fkVg+qesYGFIXSsAQUDjIGxqAo6nLoK8MgXJ3I7rTvGLG9e
- mSLH7w5CDMt/ABySgbb2kjUKksqK9VRGUDv1MkXJwkUeTLi1Ql/neTrB3h/lATjfG+tn6FxObPt
- 9rpvRCm0=
-X-Gm-Gg: AYBFou2C3drdWzEhsgxO80TclWpdTHC5H7ajMLK5Q1yPgRbfomij56X64AnLZXG7Iu7
- xkv3jQ7wV/5934blOk/RIe3cHPznN5+sFHJcjPQYgf5xHvsj3a+GYNplTsNBJzeJp4KJzIbcRV8
- 6W7bBnsccGJWDLQ72o2pSD26WIKMqT8HPPdIZgXNfN4gGc82fE4JUTlHAEmmDxQ3F05F7xNZcOt
- KrG44Heo/Klj87hYR85MRdHx2TfWTsa9A6mV+fmLtlcyZf+QpOMaGvojnTWH5a1h1cePjFz9H3G
- qeMoSzdpv/R+CCCKhshX6MJep7tBQYHaBYmvTi7uCr/NGM7IIhoDNUNGwtg1yNM1O2ARLAzT1qO
- TFcsvYK6Ah5jphPvp+R9JhIRrBPq+xwZvguYCM6MlFKxcno4W8TKL5jEt4lnT0SqWR8GJORH7HA
- IfNXzt5T1raHDAJFx+jRNjv7JaJLfKbz8h2mRdySvRFTHIN4mxTST8IwAWZg==
-X-Received: by 2002:a05:6820:222a:b0:6ba:1878:2a6c with SMTP id
- 006d021491bc7-6ca9a54782emr5931424eaf.4.1789836586853; 
- Sat, 19 Sep 2026 09:49:46 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789836571; x=1790441371;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5hPSthJIovrntwFBfq1pmFnZ8Gyy72MTs0mluUnzf20=;
+ b=nyFqpAjLeHh7O9PeQuM029NijuIENgWWLFahXCvO0dT+7W/8mTmTL6HaySvH9f/JOb
+ CevKBmibnus0s2CA2QuGlFaKJWnGsC5Ju+JWynnAGlUqGobLn/cm9AQ2pY2B0GZOKreI
+ J4thL/AuezyLQ4v2Oo1MGD2viUadXNSpY1D1Nv8LP/XCnD17acin5/CjGjxxkmT4esNm
+ yOcdrgdPOtD3SoXy8BwcPTH7XtBbmV7suQSwyVLcO7IutyoOuhKGWdY8eOPGeTii2FMk
+ Xq6inSuQtu9d0GRGrfi85Dm56iQhvxp3PtgjYYWIkyawd+mey6z/l4rfOVZ2PkoKwUCz
+ MUIA==
+X-Gm-Message-State: AFuF++lX/k8T0ig/ms6IFZu3qN0p604bJ96lpcK4w3rVk8YikYTWz67Z
+ wDLjpj9DrI7chZTFsY8jNeQ7ev084PnRCGiS1/GC92gA7oZgswzQ6WilOYPtghcHUm19eNr/lqw
+ MHqf6MKc=
+X-Gm-Gg: AYBFou3sFz6MQwPld8zmY7ayagp0Y+yOtNcLXCQyV8pNDARf5ZixxHqzPaZjwHRso8W
+ 6ZxzT9QdulH5MxK6cZrUUIsnnfPx1n9oXX4LWXb67eBhAbZdJ2oY9smvOtxw41EGgET9Uf9LR3Q
+ cn39gJ3gp67NL6oSzCGTwZGiridpu5acd0bY4s94tQcLCz6mPLIOJ854hViur3prFgogEZqK4LF
+ VeC+8+ngG0taiYS2SnFMUWX/w3mVoWcoFjvHeWEVmalO68jQXZhuADeOOhJWNgNTh/ReluMleYY
+ NhdPZ/ojY1upjTwK5mR+werf4Yk7N3xF+LCE07FhVTt9fzAGDzAah4+el9Vz9eZaaWcevk56r6f
+ nfqbUUpYEGsSRDEIANftHgk33wZfbx68tdE+LBh4EmlIOKcbqysSopyH+uiI3e3aT6esfBq3lXy
+ P5gZcczfYbedo+TBCqcU/93nb+AzUpV6a4i0drOVxyQgcH9lzQiT6++hn7Fw==
+X-Received: by 2002:a05:6820:c90:b0:6b1:39b1:80ee with SMTP id
+ 006d021491bc7-6ca9a849aaamr5065909eaf.24.1789836570859; 
+ Sat, 19 Sep 2026 09:49:30 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.45
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:49:46 -0700 (PDT)
+ Sat, 19 Sep 2026 09:49:30 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 41/41] bsd-user Update random_seed on thread creation
-Date: Sat, 19 Sep 2026 10:48:09 -0600
-Message-ID: <20260919164810.70151-42-imp@bsdimp.com>
+Subject: [PULL 32/41] bsd-user: Add thread system call dispatch
+Date: Sat, 19 Sep 2026 10:48:00 -0600
+Message-ID: <20260919164810.70151-33-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::2a;
- envelope-from=imp@bsdimp.com; helo=mail-oo2-x2a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:31::d; envelope-from=imp@bsdimp.com;
+ helo=mail-oo2-x0d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,47 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize / update cpu->random_seed in similar locations to the
-linux-user code. Set it just before we create the thread, and update it
-in the thread startup code.
+Wire up thread-related system calls: thr_new, thr_set_name, thr_self,
+thr_suspend, thr_wake, thr_kill, thr_kill2, thr_exit, rtprio_thread,
+getcontext, setcontext, swapcontext, and _umtx_op.
 
-Reported-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-thread.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ bsd-user/freebsd/os-syscall.c | 55 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-index 63c17e10d0..15872f03fd 100644
---- a/bsd-user/freebsd/os-thread.c
-+++ b/bsd-user/freebsd/os-thread.c
-@@ -14,6 +14,7 @@
- #include "signal-common.h"
- #include "target_arch_cpu.h"
- #include "target_arch_thread.h"
-+#include "qemu/guest-random.h"
- #include "tcg/startup.h"
- #include "exec/tb-flush.h"
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f2c3ff25e8..0c729da0ab 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -1293,6 +1293,61 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd_setfib(arg1);
+         break;
  
-@@ -142,7 +143,7 @@ void *new_freebsd_thread_start(void *arg)
-     target_thread_set_upcall(env, info->param.start_func, info->param.arg,
-         info->param.stack_base, info->param.stack_size);
-     target_cpu_set_tls(env, info->param.tls_base);
--
-+    qemu_guest_random_seed_thread_part2(cpu->random_seed);
-     /* Enable signals */
-     sigprocmask(SIG_SETMASK, &info->sigmask, NULL);
-     /* Signal to the parent that we're ready. */
-@@ -1657,6 +1658,7 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
-      */
-     sigfillset(&sigmask);
-     sigprocmask(SIG_BLOCK, &sigmask, &info.sigmask);
-+    cpu->random_seed = qemu_guest_random_seed_thread_part1();
- 
-     ret = pthread_create(&info.thread, &attr, new_freebsd_thread_start, &info);
- 
++        /*
++         * thread system calls
++         */
++    case TARGET_FREEBSD_NR_thr_new: /* thr_new(2) */
++        ret = do_freebsd_thr_new(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_set_name: /* thr_set_name(2) */
++        ret = do_freebsd_thr_set_name(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_self: /* thr_self(2) */
++        ret = do_freebsd_thr_self(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_suspend: /* thr_suspend(2) */
++        ret = do_freebsd_thr_suspend(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_wake: /* thr_wake(2) */
++        ret = do_freebsd_thr_wake(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_kill: /* thr_kill(2) */
++        ret = do_freebsd_thr_kill(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_kill2: /* thr_kill2(2) */
++        ret = do_freebsd_thr_kill2(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_thr_exit: /* thr_exit(2) */
++        ret = do_freebsd_thr_exit(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_rtprio_thread: /* rtprio_thread(2) */
++        ret = do_freebsd_rtprio_thread(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_getcontext: /* getcontext(2) */
++        ret = do_freebsd_getcontext(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_setcontext: /* setcontext(2) */
++        ret = do_freebsd_setcontext(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_swapcontext: /* swapcontext(2) */
++        ret = do_freebsd_swapcontext(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR__umtx_op: /* undocumented */
++        ret = do_freebsd__umtx_op(arg1, arg2, arg3, arg4, arg5);
++        break;
++
+         /*
+          * sys{ctl, arch, call}
+          */
 -- 
 2.55.0
 
