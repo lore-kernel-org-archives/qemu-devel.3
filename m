@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F69C982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 08:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7CCC982CC
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 08:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7qqw-0005Ak-Kw; Sat, 19 Sep 2026 04:55:22 -0400
+	id 1x7qqy-0005C6-Rp; Sat, 19 Sep 2026 04:55:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1x7qqv-0005AT-EI
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:21 -0400
+ id 1x7qqw-0005Am-Mo
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:22 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1x7qqo-0007HC-M9
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:21 -0400
+ id 1x7qqv-0007Hf-3T
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:22 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd38e0e5dso19364445e9.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 01:55:13 -0700 (PDT)
+ 5b1f17b1804b1-49b912d3920so10095135e9.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 01:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789808112; x=1790412912; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=sVIDxMipN7YpL2oyYDQlS7+ScjY2/jWoiD+NtutxMX0=;
- b=A11RrXKs6/2fCwuCUeKAYmCPZU/Nv4cUgncJuf4i6iDyiX8xJdGHNCoVbIdHB/MpHU
- 430leIVeYQ7aBginl21ZyuThy4mT8c+MPwDBYiNsTiKMet5iuoXFTGJzWK6Lqd0vk8dH
- MtYdoI+yKQWwBqxhSzNNfk/nkzibmrZrMDZ21IDFPhSVRTZ0ibUrCwnpVlnOEpdf5I4l
- a+jL5bXCNrWPb5VxxAdhmIramqHcQ/toXYVegwJ24XVsu4bTw4ynUEGOhaoQZ6pKshwn
- S5I/eod/F1MJTe7Ch3ZLSBzGt05fmcxKYcRlJM5NlyBfGlf3wS5mYXmniDTDtfisfPgM
- rnpA==
+ d=linaro.org; s=google; t=1789808114; x=1790412914; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=TfWtRMVTGUYok1dnpe7O4lkf1E1YGNiXpJ5wSK2yxSE=;
+ b=oYGbmaNxQddPfVC2Vns5VEqpeY3DjBXkVwPwwjgDfsxYnH63oHFR0A1smxbjcbRsuo
+ NCHfoAtZ3M6Dtet5Zixuu9mMWEctEv2s8r6UMGBV3JGBT5oYh7UZ6RsbL1NgzjqTVyKt
+ Dhlpe8DIQgZiOkVeNj4CKZ9DxzTlUavBvXlmr9/THnzm1mKH2JXwNLWBDUFqeuUJ6HJ5
+ V2jY/FbhPgz7evSTkDrsjDtKo5hzGyFhYdRO5ul4Cqb2ng7Pyy+GEuKS6+DF/+GyOV9y
+ D//rQRzXg4Wn9p4JQdxRgE5HEjOnp81L/hCG9yoy+xDtXmdiC4ccWMDXE7oq2/333VwE
+ tCOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789808112; x=1790412912;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sVIDxMipN7YpL2oyYDQlS7+ScjY2/jWoiD+NtutxMX0=;
- b=BclpCzfiFryNOHlnt6L01P3Hdtfl4TNcM6n3dyPQhEbyzwKGrxtsIWCn+SJ2jWuTTE
- d3BX9v2GBq6OvOfFlBpEQ9XLFYN2Kl/nMe2UolNxduJHyt3G8gvQv4JD1ocWgTF/bBPn
- hN84kDWnaanfuWl0E87WDleDyK0TsO2TdUhpYNgoTRRwsJ7wC4LMWfDogZibyVHop/tH
- Et2vZ/PLliShLs84I7tgJUMo6rlFLxLv0TJtemfkO2aE5xOvwPHJU8TQP7hlkaO4WJPu
- UhTuFpDWrQQ66qKKA8qcQqL6omNrdkm20/S2fVrMUD/OcstlikVreT05i/5XNPqr6WVr
- hT6Q==
-X-Gm-Message-State: AFuF++k9JSgMZF5/SNQzbeYuOQjdGHyoUmm+KTP2OiarqfZVtwN2Mafp
- 2CRQS3T2m4d6cgwJ6abbxstW7MLjUnPGvYD+UgRl8CnFE8i1GYByMQyGTAOWofUZYYMy6LCwCfH
- E67BA7qE=
-X-Gm-Gg: AYBFou3B0jVN2uiRdF6LOfVU7lo2SRyWnEalxVV+cVF5MOLGIpIVE6f9JnELtCNDFat
- EmyNKh7sJNwxivshEUsMsEWUL/gN+uNapJa2NA7VTJyBl060i9Ul8FJOFNLdMFwEVvfTtY3dw0X
- wreHxrwJFIC9w6uJESEA+8NWqCFTW/mDOx6mWievo4ZgwkYmdE/E9kUm9IPxUPhwwiUwopwEu3l
- wBjV675OVEwXqpIS4QG3k8AbEnBvpa+10RslSdQOx1Tw3OpQ8nc6tJvlvGQPd73u2XNkwC9TUKz
- hKUducBC/X18L75VAk1aVzVAqBkPwaGEdOGwzbdajLzGy51nrzx9xihBHw8oQU3Oxzkef0F14gc
- PSUoCZttLCYifPT7Rsp65KAVQ9TGHpAc8qo2ztHpMwAWSLHEDwme4D5Fae2eUrlTSvlooFjEgGa
- MntIAHmkBHjZxssnv8u6CIkUhVe+93JXNU3tDaGoIm9Si/Q48eO01DfBTvRymNB/32GfFNRedrK
- ooSfYe0fPbwRFueeRG+HPLtHPBMLo41paaMvrDiQVoTT2QDtoF7Sx7W9taKev1clCWMhNevXy6L
- k3h0YrNyaIsfCzMTEY8BrZoi51B4pXldux85QTRC+gg82JazEQkdNeTn/2+6fHTgtOvNVrSeNtK
- /QoegZbP0LleNNwkr79tDnFpQXecXYOxPdQ==
-X-Received: by 2002:a05:600c:a085:b0:49f:bd3c:bc23 with SMTP id
- 5b1f17b1804b1-49fc5747887mr68834485e9.30.1789808112027; 
- Sat, 19 Sep 2026 01:55:12 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789808114; x=1790412914;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=TfWtRMVTGUYok1dnpe7O4lkf1E1YGNiXpJ5wSK2yxSE=;
+ b=Wds1Ka/nCBCYB8JAywQblrT03irdV2QFlbyr1JN7norp61f9d4Wf3V55aBNNS8TCtT
+ ysz1+e2AvvgdYR8GjGUEd+ALxsm6aW/Urwe+yQBBeEl6SuwVSuON/vf+MQxqh9LOQbf6
+ v/b48wLaHRo7k3u/njbUJU9TOsyCNPzWbpS7wtQEyHavx1ab4tN81soYZx/lR558lOry
+ WyO9Z+DTVdI4YNF4UXAsw+Pcj+Dt/ZeDMCgw8Z0ESB2uQMUWFQmWwWaxHCyMS3hcgcOo
+ sa2DNK8W0HoxH3AD/5i+RPovcAXOporfl4gWN1/ArK21gql+LHjIej/c6Xl8Urck9nR9
+ mh5g==
+X-Gm-Message-State: AFuF++k/RrVD23XlsWf0IFl546UxLDRvykJwQhcyp775yR1sB+g/jbEb
+ MUaDqY8qYtYa9vD3Cwtavg/KUwwAc1P//MESfBbvsFnAJaz3kPS9hFWF8/SHI7C9Ixfj+DTtuze
+ 3WSuR7S8=
+X-Gm-Gg: AYBFou2XTPXYxvaziR6lemfAPG6HZQK8aB2gWQsR7VSqep/8n26CCw1gfeUhqYhoz/7
+ eAPjAik2+AdypeeozxqgBAl9Lyg9DZLVARJ2tAI8E+wP8k4yXVjQbhYU70JnFKjotCLdom2qz2C
+ tPGNNs72oHHn2grB0I28rMecghljrZlBT0WFKL6J91NuOz2Xdfnhhl8Dx0KmP4k1oDRBDs6X/fA
+ e94xQuOppW9GI4HWIF8tdTtE8iECeE4bwKn8yqe3+aEliMh+K0/vne10R2KSy4Y6SRJPvegypqv
+ N7cRDjWGxYA9xzsedvHYllf9fD9C1bDY7lo+PHclfbxEeIw+Z5t76tkt+EdsnNmjq9qbsyAsHc1
+ MIEWU+3B8NYPXcjEpeyyZUztm72UVtL6pCRNRAVT77lFRCvLt8HTh8O6gEaBW+MrhBns5k5kBGA
+ gsF70W8GBL+ESX0Rn+Jn6Ga51G1ewfklGWLMts5y0y6aUqbrLqe0dXgnTW4N081ImJ8xjp/Sm9Y
+ 5fvtoUzUenWeh2ED0Z47Iwv+p5s1UcSIstwj2cmbAfWmunnvW4H+FhJcfi6kWZEbfi2SR8IYqcx
+ eIHUwjG7eRw+Rd3yma3iEG1BYVcEpX3J+k1Ue+F25J9LAKpHuDMcKqtBnfRACP8sCpC//eZd5IV
+ 4PEyp42m8DCx5EsrGXN4FjefJxHSY/+P8wKfbzUlMrWsX
+X-Received: by 2002:a05:600c:3ba4:b0:49c:fc6c:be15 with SMTP id
+ 5b1f17b1804b1-49fc57414c4mr84729675e9.27.1789808113800; 
+ Sat, 19 Sep 2026 01:55:13 -0700 (PDT)
 Received: from localhost.localdomain (athedsl-116222.home.otenet.gr.
  [85.75.29.157]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fc58ce1ddsm82736875e9.3.2026.09.19.01.55.11
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-49fc58ce1ddsm82736875e9.3.2026.09.19.01.55.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 01:55:11 -0700 (PDT)
+ Sat, 19 Sep 2026 01:55:13 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/10] virtio-sound migration
-Date: Sat, 19 Sep 2026 11:54:47 +0300
-Message-ID: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+Cc: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL v2 02/10] hw/audio/virtio-sound: drop unused struct
+ VirtIOSoundPCMStream.flushing field
+Date: Sat, 19 Sep 2026 11:54:49 +0300
+Message-ID: <20260919085510.3388454-3-manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+References: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -101,44 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 
-b36ad6a0510aee81ecf6087b59f412b9bccaa369:
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-ID: <20260803081159.91981-3-alexander@mihalicyn.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ include/hw/audio/virtio-snd.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/epilys/qemu.git tags/virtio-snd-migrate-pr-v2
-
-for you to fetch changes up to b36ad6a0510aee81ecf6087b59f412b9bccaa369:
-
-  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
-
-----------------------------------------------------------------
-virtio-snd-migrate-pr-v2
-
-----------------------------------------------------------------
-
-Alexander Mikhalitsyn (2):
-  hw/audio/virtio-sound: remove channel positions field from
-    VirtIOSoundPCMStream
-  hw/audio/virtio-sound: drop unused struct
-    VirtIOSoundPCMStream.flushing field
-
-Volker Rümelin (8):
-  hw/audio/virtio-sound: remove command and stream mutexes
-  hw/audio/virtio-sound: allocate an array of streams
-  hw/audio/virtio-sound: free all stream buffers on reset
-  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-  hw/audio/virtio-sound: add stream state variable
-  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-  hw/audio/virtio-sound: introduce virtio_snd_set_active()
-  hw/audio/virtio-sound: add missing vmstate fields
-
- include/hw/audio/virtio-snd.h |  26 +-
- hw/audio/virtio-snd.c         | 716 ++++++++++++++++++++--------------
- 2 files changed, 424 insertions(+), 318 deletions(-)
-
+diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+index f8bb5c95b9..b60b098ccd 100644
+--- a/include/hw/audio/virtio-snd.h
++++ b/include/hw/audio/virtio-snd.h
+@@ -138,7 +138,6 @@ struct VirtIOSoundPCMStream {
+     virtio_snd_pcm_set_params params;
+     uint32_t id;
+     VirtIOSound *s;
+-    bool flushing;
+     audsettings as;
+     union {
+         SWVoiceIn *in;
 -- 
 γαῖα πυρί μιχθήτω
 
