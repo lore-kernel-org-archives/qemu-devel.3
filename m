@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A177BC982D8
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E242AC982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yFT-00034u-1a; Sat, 19 Sep 2026 12:49:11 -0400
+	id 1x7yF3-0002oc-5X; Sat, 19 Sep 2026 12:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFP-0002yh-Ge
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:07 -0400
-Received: from mail-oi2-x0f.google.com ([2607:f8b0:4864:32::f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yF1-0002oP-OQ
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:43 -0400
+Received: from mail-oa2-x10.google.com ([2607:f8b0:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFN-0008Iz-2V
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:06 -0400
-Received: by mail-oi2-x0f.google.com with SMTP id
- 46e09a7af769-80032c08611so1189015a34.3
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yEz-0008Bx-Mw
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:43 -0400
+Received: by mail-oa2-x10.google.com with SMTP id
+ 586e51a60fabf-466ccde2ad9so1853539fac.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836543; x=1790441343;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836520; x=1790441320;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
- b=y7I5UqtGzYbm//dwzWmZnx3D4mChy/L7UO8MnIWFnehUO86jakoVAiwKkDDcBq1fyA
- oGkjveO2GdAc5xLy2yXrMhujPMxwgFyXc+r3VLmVZJ1JvyquZzlGFQbIuqLlD4FrU1k9
- RERzz2PxY/A0ZnmzGyDbPSLpZpMFxtvhG8Ggdh/dQIYgoe09Y7mWqpYiPdzpTMRKJwcz
- pHlxy0WbgQICHLeE5HqZVd5QSbTK4swizQ1VkGuNvinDj6TJIGJxHo6YdJGdLxKHnyWb
- gUFgcraEbn/EJ6VWI4v4FPCd3+pZkvihgR3vER9lRQZhHIaCxZnXx0XVX7OH2oObzEgt
- ycqQ==
+ bh=QKa4VLZ5jfw+X6tvUsehGfxYPqmvOq6odUzllSREcnI=;
+ b=dmArt3nRxPnSyCWhtTZz1UFwCv8LSzfc1byQqOsls5XzitgLw12OCx4dTWB1wqoIqd
+ nNArVmZjrIq8xAzvhqwT1rQZkPBeAT0CgmBz84DTEoZYLlM3yOH35Aw8oqR6l5rSNekI
+ KB6lwQjPluU/hoiviQCotfmEBJwReb4jYxoDST+nbk/ar5s+4RJgwRF4+lSLBGbp/X2F
+ WfjG+loVUX3QelS9bp8JAXjGTlkKJwyUhY+R0wKMWSkZr8/kTH21huAMU7D90vNgoBJd
+ TOwUO5EN9kZjLJuPyXbqtvMg3xwqOJgITjxREt9H2VCA8P9Thnynu/UV75CigZCjrIsX
+ i+ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836543; x=1790441343;
+ d=1e100.net; s=20260707; t=1789836520; x=1790441320;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eYUyMQoT40u2msHNKD8OftoQr7GgD9EvZv1AL0aAxu4=;
- b=Jr+3cnlWN0+bhQMGdUiKIEWqMCxT0eaaIOX3JF9amlRtX9keePU+tnD4U0A4wYNNN7
- hCyxXA/gSt76cNgOt0jSpKRGc11VItTDBcV6QXRW6eKbLQKYVrow/L3r3wmOxltKEAKG
- hyeNhEfbscLDMIlABvqbE0FK1Kri2NVgUOQSmh2LD8zcY1TO0UbqZR+i32LzdQd26QSa
- SZ+lPSymSu7IkUkhRgXJjTYDTLK1sGSdC7LF5675+xGxdSNHefcxqyitKVPMck9L/Wc+
- hvjOzbrkzBukYuZduDVwOoddZOwf995i/A5a75Krwm+ElNn/xz0LNQEtd5SGVDObkfE9
- crbw==
-X-Gm-Message-State: AFuF++mKnfnIda7lXEd0tOBEqzl1qJDFVi1ILzxXmQakmdL6XGWxy9RK
- 5Y+sksdrfX8YKoXRP6+zm7KsdoI0bwotK/G2aRi8MGDFwz4nfStFZq9THh5ajRgYkDUoTjrR46G
- 5yZn/SJs=
-X-Gm-Gg: AYBFou1QqKCjuOXOC7cYEf35N69MwbxcDm1drAjTUW0nSL5Hf7HJyHrMoZvLZGaKebb
- oaIFDRdR4rqwFpfWGNy+VInXTNof3qe3G/FiHTa9kqwCMolSgx/I67O6Dpr3rD4g3iwIJNV3LfL
- /0JjnoWHoI/gAgDdxVGupNBSiVVSJf/a0e8HM4V1H7mTiyTiPZRDDuEGZkMqvIa1UmJuFjZrarJ
- S5Ai+dhqjyfgFXSFW4T5bNcbJSPwkBPBhmxjUca4S6Jm+aOrC9CGBY3GelGYjcbaA0kljhMnv5E
- /sGMJTXawAwveiMJzGdKOmnAhGgVeh2NXN0fxmUH35a7Ao8Rg8th26rb7IzNUYKuhzhX/e2hL84
- mZ0NaKy6bBTerAGS5zS6rx+/sLuvEm8upemLio/gIQDBDLHSW4Z7UrK9w3lOpcntE1MWbEaZNTO
- E3MNQCqT7z7gzHg6I56hhC+UQdcQuuPcFaMZGkkYHBnk+FHBNVZOma73GBmA==
-X-Received: by 2002:a05:6820:1845:b0:6c9:80d8:a1ec with SMTP id
- 006d021491bc7-6ca9c24e998mr6293039eaf.41.1789836542589; 
- Sat, 19 Sep 2026 09:49:02 -0700 (PDT)
+ bh=QKa4VLZ5jfw+X6tvUsehGfxYPqmvOq6odUzllSREcnI=;
+ b=jqMuiXJwH1FERrPtldFX+0GEPnjuVC9tEIuZ3RjiQa8O7vQfE4Zr3Qyo0Ie0atCTvR
+ ZfuSMEzXDOThGMKx3WbD37iLacAvzblmctjcLFUePGuSf84LuhdQvAmSmEvKSEH+Ub8U
+ Jg1EP0Sc0aTB+gzDK46spGm500SNzpDOf40GbJDp29BZXl2+qiQ63x0wAJrxsYuhjb/J
+ C3cxLQ1AK7x+KbF0/QUUANEoqJ4qlHbs6gPX4j/WuayZtdzGV4yC2tNrhB+7DpgIlxv8
+ bbXCI2HUhDGmyDBJMz1kT+DKkF4twr2usEB+EcduGks66bnNaU5xeJowoVcXjG9bzAs/
+ H4HA==
+X-Gm-Message-State: AFuF++lCUPq2iAMBN0/WRELhDQjShTdaXCLOHm9Oc8NrTowf8RjgyzH9
+ xtFe70yLlaPbdlrSMGWC1I8lCdbi8OgwsgdvznCancNTRteg8wUtNPZzIgLYJ8RndbRBvsfEi+Y
+ yYviB794=
+X-Gm-Gg: AYBFou26gmWaxxvo4tDCNKIBmr3vygEj/pz/sUuHkMMePjJzdm/kGyI3Q/MhXCjCBN6
+ 4ezBqmOsOJFAC8M1nRynUht5zsjdxMWVdKwKkKq+uUVoJuMnZAULzSzmyTH+9M9h7Co9o5NzKDc
+ ZgeHIvwBb/5KP3mj+5sszXj6Tv6xbyUHoZ+pO5ZOdvuZIxBvvQ70ZnsfMulBBvlzc2i2X1u2Dfl
+ yZgRUPOP1LqQToyjCEHK7QvR4ZKVlU5j9Ynu4UiJ6GDkRd0pYQr3TLYY6Sz+RprOil9z3N0NYim
+ gFJ0RCvN7e9M0xs4cZEvbQDURkSi7s5FfTujDtw4+k4jbGnqz2jJXiFUl5ZvlzIOM1HIP7m4xZH
+ EvoJSlPzvYA1s4ZUAr38HpPj17BBKVbjB/5/a0lk2YshCwYEjSrosTEDHo0Du7fg00p8ZskfQbf
+ +tn8rpvVMzt7Anu5WbdHfW5FUMZilhztBY1cdZ3egcbwrywcG0q+g3WNLkdg==
+X-Received: by 2002:a05:6820:4b0f:b0:6c9:80d9:5e6 with SMTP id
+ 006d021491bc7-6ca9bf53de0mr4779637eaf.39.1789836520497; 
+ Sat, 19 Sep 2026 09:48:40 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.01
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:49:01 -0700 (PDT)
+ Sat, 19 Sep 2026 09:48:39 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/41] bsd-user: Implement both getsockopt and setsockopt
-Date: Sat, 19 Sep 2026 10:47:46 -0600
-Message-ID: <20260919164810.70151-19-imp@bsdimp.com>
+Subject: [PULL 07/41] bsd-user: move sys/shm.h lines
+Date: Sat, 19 Sep 2026 10:47:35 -0600
+Message-ID: <20260919164810.70151-8-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:32::f; envelope-from=imp@bsdimp.com;
- helo=mail-oi2-x0f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:30::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oa2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,364 +100,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement get/setsockopt with the generated file describing the socket
-options. This uses a table driven conversion. At the moment, we only
-implement the simple types. For 64 on 64 with the same endian, we also
-try to just copy in/out since the representation should be the same.
+Diff reduction with blitz: move these lines to the same place in the
+blitz branch.
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-socket.h | 340 +++++++++++++++++++++++++++++++++++
- 1 file changed, 340 insertions(+)
- create mode 100644 bsd-user/freebsd/os-socket.h
+ bsd-user/syscall_defs.h | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
-new file mode 100644
-index 0000000000..126e49b282
---- /dev/null
-+++ b/bsd-user/freebsd/os-socket.h
-@@ -0,0 +1,340 @@
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 0612be8bbb..7e70d6ad57 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -42,26 +42,6 @@ struct target_ipc_perm {
+ #define TARGET_IPC_SET  1   /* set options */
+ #define TARGET_IPC_STAT 2   /* get options */
+ 
+-/*
+- * sys/shm.h
+- */
+-struct target_shmid_ds {
+-    struct  target_ipc_perm shm_perm; /* peration permission structure */
+-    abi_ulong   shm_segsz;  /* size of segment in bytes */
+-    int32_t     shm_lpid;   /* process ID of last shared memory op */
+-    int32_t     shm_cpid;   /* process ID of creator */
+-    int32_t     shm_nattch; /* number of current attaches */
+-    target_time_t shm_atime;  /* time of last shmat() */
+-    target_time_t shm_dtime;  /* time of last shmdt() */
+-    target_time_t shm_ctime;  /* time of last change by shmctl() */
+-};
+-
+-#define N_BSD_SHM_REGIONS   32
+-struct bsd_shm_regions {
+-    abi_long start;
+-    abi_long size;
+-};
+-
+ /*
+  * sys/sem.h
+  */
+@@ -93,6 +73,26 @@ struct target_semid_ds {
+     target_time_t   sem_ctime;  /* times measured in secs */
+ };
+ 
 +/*
-+ * FreeBSD socket related system call shims
-+ *
-+ * Copyright (c) 2013-2014 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * sys/shm.h
 + */
-+#ifndef BSD_USER_FREEBSD_OS_SOCKET_H
-+#define BSD_USER_FREEBSD_OS_SOCKET_H
++struct target_shmid_ds {
++    struct  target_ipc_perm shm_perm; /* peration permission structure */
++    abi_ulong   shm_segsz;  /* size of segment in bytes */
++    int32_t     shm_lpid;   /* process ID of last shared memory op */
++    int32_t     shm_cpid;   /* process ID of creator */
++    int32_t     shm_nattch; /* number of current attaches */
++    target_time_t shm_atime;  /* time of last shmat() */
++    target_time_t shm_dtime;  /* time of last shmdt() */
++    target_time_t shm_ctime;  /* time of last change by shmctl() */
++};
 +
-+#include <sys/types.h>
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+#include <netinet/in.h>
++#define N_BSD_SHM_REGIONS   32
++struct bsd_shm_regions {
++    abi_long start;
++    abi_long size;
++};
 +
-+#include "qemu-os.h"
-+#include "os-sockopt.h"
-+
-+ssize_t safe_recvmsg(int s, struct msghdr *msg, int flags);
-+ssize_t safe_sendmsg(int s, const struct msghdr *msg, int flags);
-+
-+/* do_sendrecvmsg_locked() Must return target values and target errnos. */
-+static abi_long do_sendrecvmsg_locked(int fd, struct target_msghdr *msgp,
-+                                      int flags, int send)
-+{
-+    abi_long ret, len;
-+    struct msghdr msg;
-+    abi_ulong count;
-+    struct iovec *vec;
-+    abi_ulong target_vec;
-+
-+    if (msgp->msg_name) {
-+        msg.msg_namelen = tswap32(msgp->msg_namelen);
-+        msg.msg_name = alloca(msg.msg_namelen + 1);
-+        ret = target_to_host_sockaddr(msg.msg_name,
-+                                      tswapal(msgp->msg_name),
-+                                      msg.msg_namelen);
-+        if (ret == -TARGET_EFAULT) {
-+            /*
-+             * For connected sockets msg_name and msg_namelen must be ignored,
-+             * so returning EFAULT immediately is wrong.  Instead, pass a bad
-+             * msg_name to the host kernel, and let it decide whether to return
-+             * EFAULT or not.
-+             */
-+            msg.msg_name = (void *)-1;
-+        } else if (ret) {
-+            goto out2;
-+        }
-+    } else {
-+        msg.msg_name = NULL;
-+        msg.msg_namelen = 0;
-+    }
-+    msg.msg_controllen = 2 * tswap32(msgp->msg_controllen);
-+    if (msgp->msg_control) {
-+        msg.msg_control = alloca(msg.msg_controllen);
-+        memset(msg.msg_control, 0, msg.msg_controllen);
-+    } else {
-+        msg.msg_control = NULL;
-+    }
-+
-+    msg.msg_flags = tswap32(msgp->msg_flags);
-+
-+    count = tswap32(msgp->msg_iovlen);
-+    target_vec = tswapal(msgp->msg_iov);
-+
-+    if (count > IOV_MAX) {
-+        /*
-+         * sendrcvmsg returns a different errno for this condition than
-+         * readv/writev, so we must catch it here before lock_iovec() does.
-+         */
-+        ret = -TARGET_EMSGSIZE;
-+        goto out2;
-+    }
-+
-+    vec = lock_iovec(send ? VERIFY_READ : VERIFY_WRITE,
-+                     target_vec, count, send);
-+    if (vec == NULL) {
-+        ret = -host_to_target_errno(errno);
-+        goto out2;
-+    }
-+    msg.msg_iovlen = count;
-+    msg.msg_iov = vec;
-+
-+    if (send) {
-+        if (msg.msg_control != NULL) {
-+            ret = t2h_freebsd_cmsg(&msg, msgp);
-+        } else {
-+            ret = 0;
-+        }
-+        if (ret == 0) {
-+            ret = get_errno(safe_sendmsg(fd, &msg, flags));
-+        }
-+    } else {
-+        ret = get_errno(safe_recvmsg(fd, &msg, flags));
-+        if (!is_error(ret)) {
-+            len = ret;
-+            if (msg.msg_control != NULL) {
-+                ret = h2t_freebsd_cmsg(msgp, &msg);
-+            } else {
-+                ret = 0;
-+            }
-+            if (!is_error(ret)) {
-+                msgp->msg_namelen = tswap32(msg.msg_namelen);
-+                msgp->msg_flags = tswap32(msg.msg_flags);
-+                if (msg.msg_name != NULL && msg.msg_name != (void *)-1) {
-+                    ret = host_to_target_sockaddr(tswapal(msgp->msg_name),
-+                                    msg.msg_name, msg.msg_namelen);
-+                    if (ret) {
-+                        goto out;
-+                    }
-+                }
-+
-+                ret = len;
-+            }
-+        }
-+    }
-+
-+out:
-+    unlock_iovec(vec, target_vec, count, !send);
-+out2:
-+    return ret;
-+}
-+
-+
-+static abi_long do_sendrecvmsg(int fd, abi_ulong target_msg,
-+                               int flags, int send)
-+{
-+    abi_long ret;
-+    struct target_msghdr *msgp;
-+
-+    if (!lock_user_struct(send ? VERIFY_READ : VERIFY_WRITE,
-+                          msgp,
-+                          target_msg,
-+                          send ? 1 : 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = do_sendrecvmsg_locked(fd, msgp, flags, send);
-+    unlock_user_struct(msgp, target_msg, send ? 0 : 1);
-+    return ret;
-+}
-+
-+static inline struct sockopt_entry *get_sockopt_entry(int level)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(so_cache); i++) {
-+        if (so_cache[i].level == level) {
-+            return so_cache[i].entry;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+/* setsockopt(2) */
-+static inline abi_long do_bsd_setsockopt(int sockfd, int level, int optname,
-+        abi_ulong optval_addr, socklen_t optlen)
-+{
-+    abi_long ret;
-+    int val;
-+    u_char ch;
-+    uint64_t val64;
-+    struct sockopt_entry *e = get_sockopt_entry(level);
-+    void *p;
-+
-+    if (e == NULL) {
-+        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
-+        e++;
-+    }
-+
-+    if (e->level == SOCK_LEVEL_NONE) {
-+        gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
-+        switch (e->type[i]) {
-+        case SOCKOPT_TYPE_BOOL:
-+        case SOCKOPT_TYPE_INT:
-+        case SOCKOPT_TYPE_U_INT:
-+        case SOCKOPT_TYPE_UINT32_T:
-+            if (optlen != sizeof(int)) {
-+                continue;
-+            }
-+            if (get_user_u32(val, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
-+        case SOCKOPT_TYPE_U_CHAR:
-+            if (optlen != sizeof(u_char)) {
-+                continue;
-+            }
-+            if (get_user_u8(ch, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &ch, sizeof(ch)));
-+        case SOCKOPT_TYPE_UINT64_T:
-+            if (optlen != sizeof(uint64_t)) {
-+                continue;
-+            }
-+            if (get_user_u64(val64, optval_addr)) {
-+                return -TARGET_EFAULT;
-+            }
-+            return get_errno(setsockopt(sockfd, level, optname, &val64, sizeof(val64)));
-+        default:
-+#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-+            gemu_log("Unsupported setsockopt level=%d optname=%d\n",
-+                     level, optname);
-+            return -TARGET_ENOPROTOOPT;
-+#endif
-+            break;
-+        }
-+    }
-+
-+    /*
-+     * When bit size and endian are the same, the structures are the same (we hope).
-+     */
-+    p = lock_user(VERIFY_READ, optval_addr, optlen, 1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(setsockopt(sockfd, level, optname, p, optlen));
-+    unlock_user(p, optval_addr, 0);
-+    return ret;
-+}
-+
-+/* getsockopt(2) */
-+static inline abi_long do_bsd_getsockopt(int sockfd, int level, int optname,
-+        abi_ulong optval_addr, abi_ulong optlen)
-+{
-+    abi_long ret;
-+    int val;
-+    u_char ch;
-+    socklen_t len;
-+    uint64_t val64;
-+    struct sockopt_entry *e = get_sockopt_entry(level);
-+    void *p;
-+
-+    if (e == NULL) {
-+        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    while (e->level != SOCK_LEVEL_NONE && e->optname != optname) {
-+        e++;
-+    }
-+
-+    if (e->level == SOCK_LEVEL_NONE) {
-+        gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                 level, optname);
-+        return -TARGET_ENOPROTOOPT;
-+    }
-+
-+    if (get_user_u32(len, optlen)) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(e->type) && e->type[i] != 0; i++) {
-+        switch (e->type[i]) {
-+        case SOCKOPT_TYPE_BOOL:
-+        case SOCKOPT_TYPE_INT:
-+        case SOCKOPT_TYPE_U_INT:
-+        case SOCKOPT_TYPE_UINT32_T:
-+            if (len != sizeof(int)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &val, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(int)) {
-+                if (put_user_u32(val, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        case SOCKOPT_TYPE_U_CHAR:
-+            if (len != sizeof(u_char)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &ch, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(u_char)) {
-+                if (put_user_u8(ch, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        case SOCKOPT_TYPE_UINT64_T:
-+            if (len != sizeof(uint64_t)) {
-+                continue;
-+            }
-+            ret = get_errno(getsockopt(sockfd, level, optname, &val64, &len));
-+            if (ret < 0) {
-+                return ret;
-+            }
-+            if (len == sizeof(uint64_t)) {
-+                if (put_user_u64(val64, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+                goto done;
-+            }
-+            continue;
-+        default:
-+#if HOST_LONG_BITS != TARGET_ABI_BITS || HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-+            gemu_log("Unsupported getsockopt level=%d optname=%d\n",
-+                     level, optname);
-+            return -TARGET_ENOPROTOOPT;
-+#endif
-+            break;
-+        }
-+    }
-+
-+    /*
-+     * When bit size and endian are the same, the structures are the same, and
-+     * if not that is handled above.
-+     */
-+    p = lock_user(VERIFY_WRITE, optval_addr, len, 0);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(getsockopt(sockfd, level, optname, p, &len));
-+    unlock_user(p, optval_addr, ret < 0 ? 0 : len);
-+done:
-+    if (put_user_u32(len, optlen)) {
-+        return -TARGET_EFAULT;
-+    }
-+    return ret;
-+}
-+
-+
-+#endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
+ /*
+  * sys/msg.h
+  */
 -- 
 2.55.0
 
