@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAD7C982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 17:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF9FAC982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 17:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yTo-0002a0-54; Sat, 19 Sep 2026 13:04:00 -0400
+	id 1x7yTp-0002aQ-1T; Sat, 19 Sep 2026 13:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1x7yDt-0002fO-CN; Sat, 19 Sep 2026 12:47:33 -0400
+ id 1x7yDv-0002fn-7R; Sat, 19 Sep 2026 12:47:36 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1x7yDr-0007zG-AF; Sat, 19 Sep 2026 12:47:32 -0400
-DKIM-Signature: a=rsa-sha256; bh=Rj9uNGEVJhRstE9JW5DAYITP9zahe6g9UYJbpThkatA=; 
+ id 1x7yDr-0007z6-AI; Sat, 19 Sep 2026 12:47:34 -0400
+DKIM-Signature: a=rsa-sha256; bh=IfCqFNjN/Dd2uXBzGYxSYHGbyOrNnpc/hbRaIw2Ar0k=; 
  c=simple/simple; d=git.sr.ht;
  h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
  t=1789836443; v=1;
- b=csGm2nFC5izikNCk6YDl9AkWaROiYSqm0IbOh/rSJogBPcaSpCt53GIQOVLQyxrDJz5bDbqk
- /UXabj/+NqmQRAMfLmu5VKtY9Grz8ICV35MebYmf3bCybW8kAXRpk7gSNjfDZ2ceSGNw0LhKkkV
- VBlhcHls8TSwpHqtqloowmecYkYtsAwal0X6LdXh/kxD24vUchIycALhnYoopDYhxcvd+AXR1nh
- VrkydAHiPjTZ0LKMirBVuQ9Wa9D29+RM3AMdaRYu28g8xHvz1xxrSpzENaeJVzKuDJQDfi9eUGW
- LFzIcM6xdMMtgcwUIOqFpcNU38FlsUX4XuBRRvMfaxnhg==
+ b=Ff3Ddn7q7Cyza5vUbT0EYVoa5Kl2eFloZ4yxR+PVAamYcKz7CIhY/RKnfNZyovNbCGJ8XM+3
+ 7vlxKTFQisY9xje+AK/fWZIFgthYNOCo1G0JLVdQnMYJjZiIbzphIogbTpzx6hX4crzmIbDbYu6
+ Yo145/tvt5uSF6lLNjRFUwBr7ZxmlSpb7kLfhaBLtR0UqTQIIDNSi668oLyMvVhWrctWcacN4OG
+ GOW+9CZM8Aczfsgb/3jXBhdbK20DoP+xwuauYQo5O9jhmY94cbi80eggu4bXWWjmxyFYR0MDQop
+ YHXzq41c/bn3fz3+w2bM5iCyQPhtPlflh/rf2ssN4K7xw==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 90F4522482;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id A69FC224AA;
  Sat, 19 Sep 2026 16:47:23 +0000 (UTC)
 From: ~jprx <jprx@git.sr.ht>
-Date: Sat, 19 Sep 2026 10:15:52 -0400
-Subject: [PATCH qemu 1/2] tests/qtest: add test for exynos4210 uart fifo
- overflow bug
-Message-ID: <178983644340.22135.11298603231632238119-1@git.sr.ht>
+Date: Sat, 19 Sep 2026 10:37:52 -0400
+Subject: [PATCH qemu 2/2] hw/char/exynos4210_uart: fix fifo overflow
+Message-ID: <178983644340.22135.11298603231632238119-2@git.sr.ht>
 X-Mailer: git.sr.ht
 In-Reply-To: <178983644340.22135.11298603231632238119-0@git.sr.ht>
 To: qemu-devel@nongnu.org
@@ -73,142 +72,306 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: jprx <jravi@mit.edu>
 
-The Exynos 4210 UART FIFO implementation will overflow if a large buffer
-is sent via a chardev. This test demonstrates the issue by sending an
-input message that is 4x the size of the UART0 FIFO length.
+The Exynos 4210 UART FIFO implementation uses a circular buffer with a
+store and retrieve pointer. When implemented this way, a circular
+buffer's capacity is 1 less than the size of the backing buffer, because
+there is no way to disambiguate the empty and full states (when the
+store pointer =3D=3D retrieve pointer).
 
-A correct implementation will return the complete message, and an
-incorrect one will timeout. This is because the FIFO overflows when
-receiving data from the chardev, skipping over the first part of the
-input message, resulting in us not reading the full message and timing
-out.
+When exynos4210_uart_can_receive is called, it may report that the
+entire is buffer is available for receiving data, as
+fifo_empty_elements_number may incorrectly report that the FIFO capacity
+is equal to the entire buffer size (rather than 1 less than the size).
+
+If this happens, a full FIFO buffer's worth of data will be read into
+the circular buffer, the store pointer will wrap around back to its
+starting value, and the FIFO will reset back to the empty state. The
+next time exynos4210_uart_can_receive is called, it will report the
+entire buffer is empty instead of full, and promptly allow the data to
+be overwritten before the guest has received it.
+
+The consequence is that if a message is sent into the UART (eg. via a
+chardev) longer than the FIFO's buffer length, the first part of the
+message will be lost due to this overflowing behavior, and only the last
+part of the message will be received.
+
+This patch fixes this bug by refactoring the Exynos 4210 UART to make
+use of the fifo8 implementation, which is implemented via a head pointer
+and length field, and therefore has capacity equal to the buffer length
+and is immune to this behavior.
+
+The Exynos 4210 UART FIFO test now passes instead of timing out.
 
 Signed-off-by: Joseph Ravichandran <jravi@mit.edu>
----
- tests/qtest/exynos4210_uart_fifo-test.c | 86 +++++++++++++++++++++++++
- tests/qtest/meson.build                 |  4 ++
- 2 files changed, 90 insertions(+)
- create mode 100644 tests/qtest/exynos4210_uart_fifo-test.c
 
-diff --git a/tests/qtest/exynos4210_uart_fifo-test.c b/tests/qtest/exynos4210=
-_uart_fifo-test.c
-new file mode 100644
-index 0000000000..54c09a6de7
---- /dev/null
-+++ b/tests/qtest/exynos4210_uart_fifo-test.c
-@@ -0,0 +1,86 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+/* defs from exynos4210.c */
-+#define UART0_BASE_ADDR     0x13800000
-+#define UART0_FIFO_SIZE     256
-+#define UFCON      0x0008 /* FIFO Control             */
-+#define UTRSTAT    0x0010 /* Tx/Rx Status             */
-+#define URXH       0x0024 /* Receive Buffer           */
-+#define UFCON_FIFO_ENABLE                    0x1
-+#define UTRSTAT_Rx_BUFFER_DATA_READY         0x1
-+
-+#define TEST_BUFFER_LEN        ((4 * UART0_FIFO_SIZE))
-+
-+static bool uart_wait_for_flag(QTestState *qts, uint32_t event_addr,
-+                               uint32_t flag)
-+{
-+    while (true) {
-+        if ((qtest_readl(qts, event_addr) & flag)) {
-+            return true;
-+        }
-+        g_usleep(1000);
-+    }
-+
-+    return false;
-+}
-+
-+static void uart_receive_string(QTestState *qts, int sock_fd, const char *in,
-+                                char *out)
-+{
-+    size_t i, in_len =3D strlen(in);
-+
-+    g_assert_true(send(sock_fd, in, in_len, 0) =3D=3D in_len);
-+    for (i =3D 0; i < in_len; i++) {
-+        g_assert_true(uart_wait_for_flag(qts,
-+            UART0_BASE_ADDR + UTRSTAT, UTRSTAT_Rx_BUFFER_DATA_READY));
-+        out[i] =3D qtest_readl(qts, UART0_BASE_ADDR + URXH);
-+    }
-+    out[i] =3D '\0';
-+}
-+
-+static void enable_uart_fifo(QTestState *qts)
-+{
-+    qtest_writel(qts, UART0_BASE_ADDR + UFCON, UFCON_FIFO_ENABLE);
-+}
-+
-+/*
-+ * If the FIFO overflows when receiving data from the chardev, early input
-+ * chunks will be lost, and this will timeout waiting to read the full
-+ * buffer. If the FIFO behaves correctly, we will receive the full buffer.
-+ */
-+static void test_recv_large_str(void)
-+{
-+    int sock_fd;
-+    char *sendbuf, *recvbuf;
-+    QTestState *qts =3D qtest_init_with_serial("-M smdkc210", &sock_fd);
-+
-+    enable_uart_fifo(qts);
-+
-+    sendbuf =3D g_new0(char, TEST_BUFFER_LEN);
-+    recvbuf =3D g_new0(char, TEST_BUFFER_LEN);
-+    memset(sendbuf, 'A', TEST_BUFFER_LEN);
-+    sendbuf[TEST_BUFFER_LEN - 1] =3D '\x00';
-+
-+    g_assert_true(0 =3D=3D strlen(recvbuf));
-+    g_assert_true(TEST_BUFFER_LEN - 1 =3D=3D strlen(sendbuf));
-+
-+    uart_receive_string(qts, sock_fd, sendbuf, recvbuf);
-+
-+    g_assert_true(TEST_BUFFER_LEN - 1 =3D=3D strlen(recvbuf));
-+    g_assert_true(strcmp(sendbuf, recvbuf) =3D=3D 0);
-+
-+    close(sock_fd);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_set_nonfatal_assertions();
-+
-+    qtest_add_func("exynos4210/uart/receive_large_str", test_recv_large_str);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 33f58b0e95..860159df44 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -249,6 +249,9 @@ qtests_stm32l4x5 =3D \
-    'stm32l4x5_gpio-test',
-    'stm32l4x5_usart-test']
+---
+
+One thing I wasn't sure about is whether we need to save rx_capacity and
+tx_capacity in the vmstate description. Since these are linked to the
+rx-size and tx-size properties respectively I wasn't sure if they need
+to be saved explicitly or not, so I didn't include them.
+
+The only place either field gets used after the UART is realized is when
+rx_capacity is read for a call to trace_exynos_uart_rxsize, but
+otherwise the capacity info gets baked into the fifo8s after they are
+created and should be covered by the VMSTATE_FIFO8.
+---
+ hw/char/exynos4210_uart.c | 107 ++++++++++----------------------------
+ 1 file changed, 27 insertions(+), 80 deletions(-)
+
+diff --git a/hw/char/exynos4210_uart.c b/hw/char/exynos4210_uart.c
+index 46fc4e31b8..8446d2f9b9 100644
+--- a/hw/char/exynos4210_uart.c
++++ b/hw/char/exynos4210_uart.c
+@@ -28,6 +28,7 @@
+ #include "qemu/timer.h"
+ #include "chardev/char-fe.h"
+ #include "chardev/char-serial.h"
++#include "qemu/fifo8.h"
 =20
-+qtests_exynos4210 =3D \
-+  ['exynos4210_uart_fifo-test']
-+
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-du=
-altimer-test'] : []) + \
-@@ -282,6 +285,7 @@ qtests_aarch64 =3D \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', '=
-tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) +=
- \
-   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
-+  (config_all_devices.has_key('CONFIG_EXYNOS4') ? qtests_exynos4210 : []) + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_ARM_VIRT') ?
-    ['iommu-smmuv3-test'] : []) + \
+ #include "hw/arm/exynos4210.h"
+ #include "hw/core/irq.h"
+@@ -133,12 +134,6 @@ static const Exynos4210UartReg exynos4210_uart_regs[] =
+=3D {
+ #define UERSTAT_FRAME    0x4
+ #define UERSTAT_BREAK    0x8
+=20
+-typedef struct {
+-    uint8_t    *data;
+-    uint32_t    sp, rp; /* store and retrieve pointers */
+-    uint32_t    size;
+-} Exynos4210UartFIFO;
+-
+ #define TYPE_EXYNOS4210_UART "exynos4210.uart"
+ OBJECT_DECLARE_SIMPLE_TYPE(Exynos4210UartState, EXYNOS4210_UART)
+=20
+@@ -148,8 +143,10 @@ struct Exynos4210UartState {
+     MemoryRegion iomem;
+=20
+     uint32_t             reg[EXYNOS4210_UART_REGS_MEM_SIZE / sizeof(uint32_t=
+)];
+-    Exynos4210UartFIFO   rx;
+-    Exynos4210UartFIFO   tx;
++    Fifo8                rx;
++    Fifo8                tx;
++    uint32_t             rx_capacity;
++    uint32_t             tx_capacity;
+=20
+     QEMUTimer *fifo_timeout_timer;
+     uint64_t wordtime;        /* word time in ns */
+@@ -178,45 +175,6 @@ static const char *exynos4210_uart_regname(hwaddr  offse=
+t)
+     return NULL;
+ }
+=20
+-
+-static void fifo_store(Exynos4210UartFIFO *q, uint8_t ch)
+-{
+-    q->data[q->sp] =3D ch;
+-    q->sp =3D (q->sp + 1) % q->size;
+-}
+-
+-static uint8_t fifo_retrieve(Exynos4210UartFIFO *q)
+-{
+-    uint8_t ret =3D q->data[q->rp];
+-    q->rp =3D (q->rp + 1) % q->size;
+-    return  ret;
+-}
+-
+-static int fifo_elements_number(const Exynos4210UartFIFO *q)
+-{
+-    if (q->sp < q->rp) {
+-        return q->size - q->rp + q->sp;
+-    }
+-
+-    return q->sp - q->rp;
+-}
+-
+-static int fifo_empty_elements_number(const Exynos4210UartFIFO *q)
+-{
+-    return q->size - fifo_elements_number(q);
+-}
+-
+-static void fifo_reset(Exynos4210UartFIFO *q)
+-{
+-    g_free(q->data);
+-    q->data =3D NULL;
+-
+-    q->data =3D g_malloc0(q->size);
+-
+-    q->sp =3D 0;
+-    q->rp =3D 0;
+-}
+-
+ static uint32_t exynos4210_uart_FIFO_trigger_level(uint32_t channel,
+                                                    uint32_t reg)
+ {
+@@ -271,7 +229,7 @@ exynos4210_uart_Rx_FIFO_trigger_level(const Exynos4210Uar=
+tState *s)
+ static void exynos4210_uart_update_dmabusy(Exynos4210UartState *s)
+ {
+     bool rx_dma_enabled =3D (s->reg[I_(UCON)] & 0x03) =3D=3D 0x02;
+-    uint32_t count =3D fifo_elements_number(&s->rx);
++    uint32_t count =3D fifo8_num_used(&s->rx);
+=20
+     if (rx_dma_enabled && !count) {
+         qemu_irq_raise(s->dmairq);
+@@ -300,7 +258,7 @@ static void exynos4210_uart_update_irq(Exynos4210UartStat=
+e *s)
+          * Rx interrupt if trigger level is reached or if rx timeout
+          * interrupt is disabled and there is data in the receive buffer
+          */
+-        count =3D fifo_elements_number(&s->rx);
++        count =3D fifo8_num_used(&s->rx);
+         if ((count && !(s->reg[I_(UCON)] & 0x80)) ||
+             count >=3D exynos4210_uart_Rx_FIFO_trigger_level(s)) {
+             exynos4210_uart_update_dmabusy(s);
+@@ -416,12 +374,12 @@ static void exynos4210_uart_write(void *opaque, hwaddr =
+offset,
+     case UFCON:
+         s->reg[I_(UFCON)] =3D val;
+         if (val & UFCON_Rx_FIFO_RESET) {
+-            fifo_reset(&s->rx);
++            fifo8_reset(&s->rx);
+             s->reg[I_(UFCON)] &=3D ~UFCON_Rx_FIFO_RESET;
+             trace_exynos_uart_rx_fifo_reset(s->channel);
+         }
+         if (val & UFCON_Tx_FIFO_RESET) {
+-            fifo_reset(&s->tx);
++            fifo8_reset(&s->tx);
+             s->reg[I_(UFCON)] &=3D ~UFCON_Tx_FIFO_RESET;
+             trace_exynos_uart_tx_fifo_reset(s->channel);
+         }
+@@ -490,8 +448,8 @@ static uint64_t exynos4210_uart_read(void *opaque, hwaddr=
+ offset,
+                                exynos4210_uart_regname(offset), res);
+         return res;
+     case UFSTAT: /* Read Only */
+-        s->reg[I_(UFSTAT)] =3D fifo_elements_number(&s->rx) & 0xff;
+-        if (fifo_empty_elements_number(&s->rx) =3D=3D 0) {
++        s->reg[I_(UFSTAT)] =3D fifo8_num_used(&s->rx) & 0xff;
++        if (fifo8_num_free(&s->rx) =3D=3D 0) {
+             s->reg[I_(UFSTAT)] |=3D UFSTAT_Rx_FIFO_FULL;
+             s->reg[I_(UFSTAT)] &=3D ~0xff;
+         }
+@@ -501,10 +459,10 @@ static uint64_t exynos4210_uart_read(void *opaque, hwad=
+dr offset,
+         return s->reg[I_(UFSTAT)];
+     case URXH:
+         if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
+-            if (fifo_elements_number(&s->rx)) {
+-                res =3D fifo_retrieve(&s->rx);
++            if (fifo8_num_used(&s->rx)) {
++                res =3D fifo8_pop(&s->rx);
+                 trace_exynos_uart_rx(s->channel, res);
+-                if (!fifo_elements_number(&s->rx)) {
++                if (!fifo8_num_used(&s->rx)) {
+                     s->reg[I_(UTRSTAT)] &=3D ~UTRSTAT_Rx_BUFFER_DATA_READY;
+                 } else {
+                     s->reg[I_(UTRSTAT)] |=3D UTRSTAT_Rx_BUFFER_DATA_READY;
+@@ -555,7 +513,7 @@ static int exynos4210_uart_can_receive(void *opaque)
+     Exynos4210UartState *s =3D (Exynos4210UartState *)opaque;
+=20
+     if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
+-        return fifo_empty_elements_number(&s->rx);
++        return fifo8_num_free(&s->rx);
+     } else {
+         return !(s->reg[I_(UTRSTAT)] & UTRSTAT_Rx_BUFFER_DATA_READY);
+     }
+@@ -567,12 +525,12 @@ static void exynos4210_uart_receive(void *opaque, const=
+ uint8_t *buf, int size)
+     int i;
+=20
+     if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
+-        if (fifo_empty_elements_number(&s->rx) < size) {
+-            size =3D fifo_empty_elements_number(&s->rx);
++        if (fifo8_num_free(&s->rx) < size) {
++            size =3D fifo8_num_free(&s->rx);
+             s->reg[I_(UINTSP)] |=3D UINTSP_ERROR;
+         }
+         for (i =3D 0; i < size; i++) {
+-            fifo_store(&s->rx, buf[i]);
++            fifo8_push(&s->rx, buf[i]);
+         }
+         exynos4210_uart_rx_timeout_set(s);
+     } else {
+@@ -591,7 +549,7 @@ static void exynos4210_uart_event(void *opaque, QEMUChrEv=
+ent event)
+     if (event =3D=3D CHR_EVENT_BREAK) {
+         /* When the RxDn is held in logic 0, then a null byte is pushed into=
+ the
+          * fifo */
+-        fifo_store(&s->rx, '\0');
++        fifo8_push(&s->rx, '\0');
+         s->reg[I_(UERSTAT)] |=3D UERSTAT_BREAK;
+         exynos4210_uart_update_irq(s);
+     }
+@@ -608,10 +566,10 @@ static void exynos4210_uart_reset(DeviceState *dev)
+                 exynos4210_uart_regs[i].reset_value;
+     }
+=20
+-    fifo_reset(&s->rx);
+-    fifo_reset(&s->tx);
++    fifo8_reset(&s->rx);
++    fifo8_reset(&s->tx);
+=20
+-    trace_exynos_uart_rxsize(s->channel, s->rx.size);
++    trace_exynos_uart_rxsize(s->channel, s->rx_capacity);
+ }
+=20
+ static int exynos4210_uart_post_load(void *opaque, int version_id)
+@@ -624,26 +582,13 @@ static int exynos4210_uart_post_load(void *opaque, int =
+version_id)
+     return 0;
+ }
+=20
+-static const VMStateDescription vmstate_exynos4210_uart_fifo =3D {
+-    .name =3D "exynos4210.uart.fifo",
+-    .version_id =3D 1,
+-    .minimum_version_id =3D 1,
+-    .fields =3D (const VMStateField[]) {
+-        VMSTATE_UINT32(sp, Exynos4210UartFIFO),
+-        VMSTATE_UINT32(rp, Exynos4210UartFIFO),
+-        VMSTATE_VBUFFER_UINT32(data, Exynos4210UartFIFO, 1, NULL, size),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+ static const VMStateDescription vmstate_exynos4210_uart =3D {
+     .name =3D "exynos4210.uart",
+     .version_id =3D 1,
+     .minimum_version_id =3D 1,
+     .post_load =3D exynos4210_uart_post_load,
+     .fields =3D (const VMStateField[]) {
+-        VMSTATE_STRUCT(rx, Exynos4210UartState, 1,
+-                       vmstate_exynos4210_uart_fifo, Exynos4210UartFIFO),
++        VMSTATE_FIFO8(rx, Exynos4210UartState),
+         VMSTATE_UINT32_ARRAY(reg, Exynos4210UartState,
+                              EXYNOS4210_UART_REGS_MEM_SIZE / sizeof(uint32_t=
+)),
+         VMSTATE_END_OF_LIST()
+@@ -699,6 +644,8 @@ static void exynos4210_uart_realize(DeviceState *dev, Err=
+or **errp)
+     s->fifo_timeout_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                          exynos4210_uart_timeout_int, s);
+=20
++    fifo8_create(&s->rx, s->rx_capacity);
++    fifo8_create(&s->tx, s->tx_capacity);
+     qemu_chr_fe_set_handlers(&s->chr, exynos4210_uart_can_receive,
+                              exynos4210_uart_receive, exynos4210_uart_event,
+                              NULL, s, NULL, true);
+@@ -707,8 +654,8 @@ static void exynos4210_uart_realize(DeviceState *dev, Err=
+or **errp)
+ static const Property exynos4210_uart_properties[] =3D {
+     DEFINE_PROP_CHR("chardev", Exynos4210UartState, chr),
+     DEFINE_PROP_UINT32("channel", Exynos4210UartState, channel, 0),
+-    DEFINE_PROP_UINT32("rx-size", Exynos4210UartState, rx.size, 16),
+-    DEFINE_PROP_UINT32("tx-size", Exynos4210UartState, tx.size, 16),
++    DEFINE_PROP_UINT32("rx-size", Exynos4210UartState, rx_capacity, 16),
++    DEFINE_PROP_UINT32("tx-size", Exynos4210UartState, tx_capacity, 16),
+ };
+=20
+ static void exynos4210_uart_class_init(ObjectClass *klass, const void *data)
 --=20
 2.49.1
-
 
