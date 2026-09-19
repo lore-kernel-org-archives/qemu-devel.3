@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87CFC982D8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC685C982DA
 	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yHi-0005me-8F; Sat, 19 Sep 2026 12:51:33 -0400
+	id 1x7yFL-0002sO-6n; Sat, 19 Sep 2026 12:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFp-0003if-LL
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:34 -0400
-Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFJ-0002s6-6X
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:01 -0400
+Received: from mail-oi2-x11.google.com ([2607:f8b0:4864:32::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFn-0008Q2-UD
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:33 -0400
-Received: by mail-oo2-x0d.google.com with SMTP id
- 006d021491bc7-6b1ae6f5fc5so803189eaf.0
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFH-0008He-HX
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:00 -0400
+Received: by mail-oi2-x11.google.com with SMTP id
+ 46e09a7af769-80a71781323so749536a34.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836571; x=1790441371;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836538; x=1790441338;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5hPSthJIovrntwFBfq1pmFnZ8Gyy72MTs0mluUnzf20=;
- b=ROCMD0x8WbQkSqkTsCin6OTBcXFeoUtubnZ8GExvW92fUBi5oVrxfM/RqONHH1DqcG
- NBgsozBqbR26O5VYEcKYpkx48mVwVP3SZsLSoQskUWXME3tp86hDVk11F+MH7PmUp/r0
- CjvNY1ENM1sXqgBdtp/cKVRPrkAsT/qF74C6Soa7ATA2Co4IadpnbWR9wxsFbKlYr7gu
- HMZvyuEIQ8MsqnuOumzkQsyNQqmRO2D5kKo0MFUer5iGQQ2aFPr3mrfgH2SAyEoaQtrX
- 2ro6lsY3lMbwgpjJGl43iO9y/08daJiWwQ5qZ3YlCfXYlksEDPkYXDo7XdZyIMPfUc4+
- guuw==
+ bh=1UnoJZ2salmo3FsO31OG+t/xnG8LyqG6BerW+1cdcvI=;
+ b=n23uQECN0FTwMNuYdI97ipBStH3QNpNh5MXfh5d2lI8m6kg0hELypHH6/mTYrr+buT
+ apcMRP7R5MyH2We/1i5SOYrg1zMG3Y9v9LeVwyyzrsomiQhaz86LdByu9oGIFEjDydHG
+ T0J1k8au4uhBszjv6HodxEhALVUTJFBQje4qP04W0Zq2ii2qKcHqKCikFHxBC/K6/4KT
+ +h4N9j4BTKQmWJ91TtmkMXd63GsHti/rSzfsvd/SfkLAceRcqtcGkoPwYmcgucTbD79Y
+ c8lHO4Ay6SYAmRmVTJw3Y+zasOLy72jWe8PG9RPDkCHZg8FlqGT7wmILyvLI7gPsA7Jb
+ mXPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836571; x=1790441371;
+ d=1e100.net; s=20260707; t=1789836538; x=1790441338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5hPSthJIovrntwFBfq1pmFnZ8Gyy72MTs0mluUnzf20=;
- b=nyFqpAjLeHh7O9PeQuM029NijuIENgWWLFahXCvO0dT+7W/8mTmTL6HaySvH9f/JOb
- CevKBmibnus0s2CA2QuGlFaKJWnGsC5Ju+JWynnAGlUqGobLn/cm9AQ2pY2B0GZOKreI
- J4thL/AuezyLQ4v2Oo1MGD2viUadXNSpY1D1Nv8LP/XCnD17acin5/CjGjxxkmT4esNm
- yOcdrgdPOtD3SoXy8BwcPTH7XtBbmV7suQSwyVLcO7IutyoOuhKGWdY8eOPGeTii2FMk
- Xq6inSuQtu9d0GRGrfi85Dm56iQhvxp3PtgjYYWIkyawd+mey6z/l4rfOVZ2PkoKwUCz
- MUIA==
-X-Gm-Message-State: AFuF++lX/k8T0ig/ms6IFZu3qN0p604bJ96lpcK4w3rVk8YikYTWz67Z
- wDLjpj9DrI7chZTFsY8jNeQ7ev084PnRCGiS1/GC92gA7oZgswzQ6WilOYPtghcHUm19eNr/lqw
- MHqf6MKc=
-X-Gm-Gg: AYBFou3sFz6MQwPld8zmY7ayagp0Y+yOtNcLXCQyV8pNDARf5ZixxHqzPaZjwHRso8W
- 6ZxzT9QdulH5MxK6cZrUUIsnnfPx1n9oXX4LWXb67eBhAbZdJ2oY9smvOtxw41EGgET9Uf9LR3Q
- cn39gJ3gp67NL6oSzCGTwZGiridpu5acd0bY4s94tQcLCz6mPLIOJ854hViur3prFgogEZqK4LF
- VeC+8+ngG0taiYS2SnFMUWX/w3mVoWcoFjvHeWEVmalO68jQXZhuADeOOhJWNgNTh/ReluMleYY
- NhdPZ/ojY1upjTwK5mR+werf4Yk7N3xF+LCE07FhVTt9fzAGDzAah4+el9Vz9eZaaWcevk56r6f
- nfqbUUpYEGsSRDEIANftHgk33wZfbx68tdE+LBh4EmlIOKcbqysSopyH+uiI3e3aT6esfBq3lXy
- P5gZcczfYbedo+TBCqcU/93nb+AzUpV6a4i0drOVxyQgcH9lzQiT6++hn7Fw==
-X-Received: by 2002:a05:6820:c90:b0:6b1:39b1:80ee with SMTP id
- 006d021491bc7-6ca9a849aaamr5065909eaf.24.1789836570859; 
- Sat, 19 Sep 2026 09:49:30 -0700 (PDT)
+ bh=1UnoJZ2salmo3FsO31OG+t/xnG8LyqG6BerW+1cdcvI=;
+ b=J84AUHjx1+kjB1lpQteTnXodK+6dMy+PPL2LdjNgpNej1dFxawja2GDwrEkPXyxMNu
+ mwL6iUXhK9ZyCCBcmyArO+PTy/3niIqTZL4pu7Kqzf1PgY+UnvKwEMZy5neZAhfpbKTr
+ +cnbhVxkAgoVTJpK8XNwBQkpE+ipzv2Tixpmc4xTIaGA6WlxH5q6LCxFW6ydxXjR/LQ9
+ lXi23kRt5aR2amwghPWhqXiXjEZfB0HBI9LDH5spUh3I+8aS43u05b5XFzIvVC6XlV6r
+ 1TIMfjKXxvFXGDv1MmrPVyTctUUpb5z2aYmtMkuzW3YYBZE3jBS1K/dNIaWkJMiEVotI
+ 4UUA==
+X-Gm-Message-State: AFuF++mqcfbhyL3MLRnQ3dYQneEz8rToULwVVaMUJyOfvbB6Wm6jpf8T
+ NFJKcETzEFMHRRZc4aCAQhgUyM9flTqZQf9xZK1wYi1T3HVsAqi6JtRYdSWTsM1snkCsap2gxgp
+ ILPzx83w=
+X-Gm-Gg: AYBFou1R03Pe9LMyyqy9d/HK1EeV/F3kPURMlnyzLz5Q89kRAqsd/uonOm9d0LegWio
+ j8TiwOC8We7Srbo8aC8oCjOUk6R3OFNtHxVVdJ1RxzmZFA48oeZZ5yRaS5fHsNF5308B4aiiSyC
+ R5ujVehsAcFfnry9r4jswUe0d3N3gCSFTY1zY+14n/hPDtEaSKfCo6Q8lfHvtoM17oHaci/hgCc
+ 3A4SAw8YIDW/y8E3RqBvTuTRBCmOHUKrs0UbU8v5AplI1jFbMGt9Yx231PlKmu93mxTKkqYcftY
+ WyVURTxQzZoIW6cuM2G+DhvhS5GU/aWGGXG0KISaiIfMVh4PkNHW0zLwRdzqm20dbnGlJObtzqA
+ ovCtwYAaCK4+Y8D8/doeVZwaKSEVYFXMba355KdUrN7AsX5GGfl07AJuEP0nTS3eSPAveqoGn+o
+ UwyGZrKJqPNKVkKeJ/jcRYzhxa1kNS1iwVjQbMczfAdk9md+ih7bCJ/dMVsA==
+X-Received: by 2002:a05:6820:8591:10b0:6cd:3fdc:a93a with SMTP id
+ 006d021491bc7-6cd3fece101mr1799431eaf.87.1789836538549; 
+ Sat, 19 Sep 2026 09:48:58 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.29
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:49:30 -0700 (PDT)
+ Sat, 19 Sep 2026 09:48:57 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 32/41] bsd-user: Add thread system call dispatch
-Date: Sat, 19 Sep 2026 10:48:00 -0600
-Message-ID: <20260919164810.70151-33-imp@bsdimp.com>
+Subject: [PULL 16/41] bsd-user: Add socket shims socketpair through shutdown
+Date: Sat, 19 Sep 2026 10:47:44 -0600
+Message-ID: <20260919164810.70151-17-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::d; envelope-from=imp@bsdimp.com;
- helo=mail-oo2-x0d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::11;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x11.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,85 +101,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up thread-related system calls: thr_new, thr_set_name, thr_self,
-thr_suspend, thr_wake, thr_kill, thr_kill2, thr_exit, rtprio_thread,
-getcontext, setcontext, swapcontext, and _umtx_op.
+Complete bsd-socket.h with socketpair, sendto, recvfrom, socket,
+and shutdown system call shims.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.c | 55 +++++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
+ bsd-user/bsd-socket.h | 116 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index f2c3ff25e8..0c729da0ab 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -1293,6 +1293,61 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_setfib(arg1);
-         break;
+diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
+index c786d6717a..43aacce5dc 100644
+--- a/bsd-user/bsd-socket.h
++++ b/bsd-user/bsd-socket.h
+@@ -164,4 +164,120 @@ static inline abi_long do_bsd_getsockname(int fd, abi_ulong target_addr,
+     return ret;
+ }
  
-+        /*
-+         * thread system calls
-+         */
-+    case TARGET_FREEBSD_NR_thr_new: /* thr_new(2) */
-+        ret = do_freebsd_thr_new(env, arg1, arg2);
-+        break;
++/* socketpair(2) */
++static inline abi_long do_bsd_socketpair(int domain, int type, int protocol,
++                                         abi_ulong target_tab_addr)
++{
++    int tab[2];
++    abi_long ret;
 +
-+    case TARGET_FREEBSD_NR_thr_set_name: /* thr_set_name(2) */
-+        ret = do_freebsd_thr_set_name(arg1, arg2);
-+        break;
++    if (!access_ok(VERIFY_WRITE, target_tab_addr, sizeof(tab[0]) * 2)) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(socketpair(domain, type, protocol, tab));
++    if (!is_error(ret)) {
++        if (put_user_s32(tab[0], target_tab_addr) ||
++                put_user_s32(tab[1], target_tab_addr + sizeof(tab[0]))) {
++            ret = -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_thr_self: /* thr_self(2) */
-+        ret = do_freebsd_thr_self(arg1);
-+        break;
++/* sendto(2) */
++static inline abi_long do_bsd_sendto(int fd, abi_ulong msg, size_t len,
++                                     int flags, abi_ulong target_addr,
++                                     socklen_t addrlen)
++{
++    struct sockaddr *saddr;
++    void *host_msg;
++    abi_long ret;
 +
-+    case TARGET_FREEBSD_NR_thr_suspend: /* thr_suspend(2) */
-+        ret = do_freebsd_thr_suspend(arg1);
-+        break;
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (len != 0) {
++        host_msg = lock_user(VERIFY_READ, msg, len, 1);
++        if (!host_msg) {
++            return -TARGET_EFAULT;
++        }
++    } else {
++        host_msg = NULL;
++    }
++    if (target_addr) {
++        saddr = alloca(addrlen + 1);
++        ret = target_to_host_sockaddr(saddr, target_addr, addrlen);
++        if (is_error(ret)) {
++            unlock_user(host_msg, msg, 0);
++            return ret;
++        }
++        ret = get_errno(safe_sendto(fd, host_msg, len, flags, saddr, addrlen));
++    } else {
++        ret = get_errno(send(fd, host_msg, len, flags));
++    }
++    unlock_user(host_msg, msg, 0);
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_thr_wake: /* thr_wake(2) */
-+        ret = do_freebsd_thr_wake(arg1);
-+        break;
++/* recvfrom(2) */
++static inline abi_long do_bsd_recvfrom(int fd, abi_ulong msg, size_t len,
++                                       int flags, abi_ulong target_addr,
++                                       abi_ulong target_addrlen)
++{
++    socklen_t addrlen;
++    struct sockaddr *saddr;
++    void *host_msg;
++    abi_long ret;
 +
-+    case TARGET_FREEBSD_NR_thr_kill: /* thr_kill(2) */
-+        ret = do_freebsd_thr_kill(arg1, arg2);
-+        break;
++    host_msg = lock_user(VERIFY_WRITE, msg, len, 0);
++    if (!host_msg) {
++        return -TARGET_EFAULT;
++    }
++    if (target_addr) {
++        if (get_user_u32(addrlen, target_addrlen)) {
++            ret = -TARGET_EFAULT;
++            goto fail;
++        }
++        if ((int)addrlen < 0) {
++            ret = -TARGET_EINVAL;
++            goto fail;
++        }
++        saddr = alloca(addrlen + 1);
++        ret = get_errno(safe_recvfrom(fd, host_msg, len, flags, saddr,
++                    &addrlen));
++    } else {
++        saddr = NULL; /* To keep compiler quiet.  */
++        ret = get_errno(recv(fd, host_msg, len, flags));
++    }
++    if (!is_error(ret)) {
++        if (target_addr) {
++            if (is_error(host_to_target_sockaddr(target_addr, saddr, addrlen))) {
++                ret = -TARGET_EFAULT;
++                goto fail;
++            } else if (put_user_u32(addrlen, target_addrlen)) {
++                ret = -TARGET_EFAULT;
++                goto fail;
++            }
++        }
++        unlock_user(host_msg, msg, ret);
++    } else {
++fail:
++        unlock_user(host_msg, msg, 0);
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_thr_kill2: /* thr_kill2(2) */
-+        ret = do_freebsd_thr_kill2(arg1, arg2, arg3);
-+        break;
++/* socket(2) */
++static inline abi_long do_bsd_socket(abi_long domain, abi_long type,
++                                     abi_long protocol)
++{
++    return get_errno(socket(domain, type, protocol));
++}
 +
-+    case TARGET_FREEBSD_NR_thr_exit: /* thr_exit(2) */
-+        ret = do_freebsd_thr_exit(env, arg1);
-+        break;
++/* shutdown(2) */
++static inline abi_long do_bsd_shutdown(abi_long s, abi_long how)
++{
++    return get_errno(shutdown(s, how));
++}
 +
-+    case TARGET_FREEBSD_NR_rtprio_thread: /* rtprio_thread(2) */
-+        ret = do_freebsd_rtprio_thread(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getcontext: /* getcontext(2) */
-+        ret = do_freebsd_getcontext(env, arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_setcontext: /* setcontext(2) */
-+        ret = do_freebsd_setcontext(env, arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_swapcontext: /* swapcontext(2) */
-+        ret = do_freebsd_swapcontext(env, arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR__umtx_op: /* undocumented */
-+        ret = do_freebsd__umtx_op(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-         /*
-          * sys{ctl, arch, call}
-          */
+ #endif /* BSD_SOCKET_H */
 -- 
 2.55.0
 
