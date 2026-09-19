@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BFAC982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CCAC982D7
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yFI-0002rl-BE; Sat, 19 Sep 2026 12:49:00 -0400
+	id 1x7yI5-000716-Oj; Sat, 19 Sep 2026 12:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFE-0002qY-9L
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:56 -0400
-Received: from mail-oo2-x0c.google.com ([2607:f8b0:4864:31::c])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG5-00041U-S3
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:52 -0400
+Received: from mail-oo2-x2a.google.com ([2607:f8b0:4864:31::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFC-0008GF-9O
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:56 -0400
-Received: by mail-oo2-x0c.google.com with SMTP id
- 006d021491bc7-6c72bd8a02fso1053568eaf.0
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yG4-0008S2-Fq
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:49 -0400
+Received: by mail-oo2-x2a.google.com with SMTP id
+ 006d021491bc7-6c901f4bfffso1001234eaf.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836532; x=1790441332;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836587; x=1790441387;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yauLkwe0Wh6vvIGKrOK0Q6uatxr0RlPtom0vJwzNFiw=;
- b=FlURzSp9XoT/ci18HUjZTI/7KN/Jcsjj04qZcDSAsQSadgZkYt1ituV9XXGiFbbdsG
- zy3F+0nm6y5S1QC09hG1k/1cbf0lG89AgvMwfFoy9Og4gqRv/mDNwDfQsgHx2IV5VYXW
- nm2RvSe5/e216ZntV0L9s8/6PXJROea4Nv24RtIxFc1ro+isEBQIiF0C9r8StSbt/rKO
- uz0S3shImNK2gRIV+NqWCXkZH8Mf3WsWUy2mxblXLPpMwIm484SkhnZNchLvJu1MlEKY
- 4DbpJagckiCQq8RfQbndVYCHJvyGUmmir1YocVRur3hVf5u+s8Rr3g8an85MXvP7xNoK
- z1eQ==
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=T5VFNKpjfwVhXvcVbNvhtkKH4RjHMlqu1CWJ8L9VSDY=;
+ b=FN4fO+Ce0dYhjZKzUT41kKVOhknSqjNUmnZ5lya9rGNWUaQzsjnTdb/6rFhzE94mJ0
+ 8wC4vrn1WbDeXUu7SAwHCcbhtfkR1jG1BanJLm3nIuUIoECBKnH+I/1D3Y6Qm4jL+Hy+
+ E7GgQOLlX2UVbxH2qqrbVhtNI9EwTr6jNFpdxQQy5V6wl8cVJOLoM5lHF0uQAHuEbTsI
+ IlVYKMwXYF/1VHl5l3KD8B5MQ2Jo34UKWxb5gBbwwdYyB9YhXXtEOFo0tA07PuSIpFRX
+ YizstAGyeQkCj86SpktbLdKa533HmcbL0kkPksKzSj0DApr1NF2U0R6flPzeCrwXNwIr
+ iwig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836532; x=1790441332;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yauLkwe0Wh6vvIGKrOK0Q6uatxr0RlPtom0vJwzNFiw=;
- b=P+U4tJ535m8AncDYnCDBYBWHJPc433M+pyx9DIi5UZpVXJbyMxaNqxMHo2/9A4/AA1
- X/uWncc8WRCBhWHjLq7ipvTNGxtBnNw0sgnvNEE94kmoqk/vCIGNMLvFAmhF+SbmHCft
- RuIqSz+jWE/SqNHC73lvhIYB9xTKRAbAuuot8aQWgIx7BxObRhScOaS1lunLbk+z7goc
- 7RHPfSL6gyjO9QqedTc1jF4uCP9jWmXaY8hc9vmCgNCYetM3GPu1bSlt6ub+e9wry1pp
- gC1W4VCUDGRv/ZExzibdJwxNuMdrbNswiX8sNYQ/JKTJBUi5AUaiuL2tIQ/fvNPh3zLD
- Tm4Q==
-X-Gm-Message-State: AFuF++npV4N1BOqKy7+tow3KnNtGnp+SQYVa24W8lIlTEzjakPJt9NI+
- LSjCh6QjyiQq9Tbuzs9fe2E31YpRRuFa/fEF29sZqmQ9uyOFTjt1mYqb+rgzwekKl4k19yjCpqe
- MysgFJgY=
-X-Gm-Gg: AYBFou3xzBDOmnpOP7uOpW5XeUPLc6VpqYEekqxthE60LRk+eMi1iiTC3mjKwfiAP7F
- AuKBE4XrkhqkQNmTdxTdwmoLc9WrdJJOt+SbLu/ReTsZOXMjTulqCmUwOZJur2aNkvxet6fenI+
- 6p+HOrK/rIC3TPW+njT9a1copsDeqpdWse7XsPFc/RydK8Mv/EVTabazWzib7vKBjUPwj1Hm1F6
- rNr/FAatiR6zsdEvdesZQ6UPTTNYkKCLzaQh5ZsR6jBZ3zAnwxpugmasiwtLsVhTNM9ywPIjIe/
- RggyHX0TUC5DrWJgLtwrLD7cJ42QMcqyHT+niVo65gewj7rywQNuZM3/oanhrTBnYNnE0MopC76
- 6BRME3dUo72kbTiRXjYu++qL2zoufOHnuLAkUoqZKs6xjZbdFjW4FrlU1Xl9DKJMROkgTlxHUDS
- qAX4DFRaOUgHPBuojXqjizGrEaGCtCGOENCIhyDCBEdkpSgPfcP8GEVwsYiw==
-X-Received: by 2002:a05:6820:8108:b0:6c9:80d8:a1fc with SMTP id
- 006d021491bc7-6ca9d149cf5mr5400308eaf.57.1789836531730; 
- Sat, 19 Sep 2026 09:48:51 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1789836587; x=1790441387;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=T5VFNKpjfwVhXvcVbNvhtkKH4RjHMlqu1CWJ8L9VSDY=;
+ b=ILnlFKduB/sSxnCN6GSXcQGvhOmJv7xNisgAlqH3WMJHxXyns5M2HO78w1tbtyaDGb
+ yLjWNBB3cm4cdgpPaLhidLKvHCr53jCVzKhAvDf2o2LP0Z66AqMh2DEunRkADo0l+2yG
+ UCxvcW8201U76khrdEdEyAskp/9w8jhfpvEzA1tGnyG0MUcPIjf1ZZJon6u68tcfsa2E
+ XcBewuj2YvX96u1MI89frs+FM0Nu7HFa9Qx2wEc5kCFWO+VRXY9R+3D+MImObW7vGAme
+ /EfENpUM060vqLm9PmLCB3y56WccP2jzxWILn5mjIoI5FsyYE+SZrUAI27BoiH1Akz7c
+ 0B4w==
+X-Gm-Message-State: AFuF++lT4fkVg+qesYGFIXSsAQUDjIGxqAo6nLoK8MgXJ3I7rTvGLG9e
+ mSLH7w5CDMt/ABySgbb2kjUKksqK9VRGUDv1MkXJwkUeTLi1Ql/neTrB3h/lATjfG+tn6FxObPt
+ 9rpvRCm0=
+X-Gm-Gg: AYBFou2C3drdWzEhsgxO80TclWpdTHC5H7ajMLK5Q1yPgRbfomij56X64AnLZXG7Iu7
+ xkv3jQ7wV/5934blOk/RIe3cHPznN5+sFHJcjPQYgf5xHvsj3a+GYNplTsNBJzeJp4KJzIbcRV8
+ 6W7bBnsccGJWDLQ72o2pSD26WIKMqT8HPPdIZgXNfN4gGc82fE4JUTlHAEmmDxQ3F05F7xNZcOt
+ KrG44Heo/Klj87hYR85MRdHx2TfWTsa9A6mV+fmLtlcyZf+QpOMaGvojnTWH5a1h1cePjFz9H3G
+ qeMoSzdpv/R+CCCKhshX6MJep7tBQYHaBYmvTi7uCr/NGM7IIhoDNUNGwtg1yNM1O2ARLAzT1qO
+ TFcsvYK6Ah5jphPvp+R9JhIRrBPq+xwZvguYCM6MlFKxcno4W8TKL5jEt4lnT0SqWR8GJORH7HA
+ IfNXzt5T1raHDAJFx+jRNjv7JaJLfKbz8h2mRdySvRFTHIN4mxTST8IwAWZg==
+X-Received: by 2002:a05:6820:222a:b0:6ba:1878:2a6c with SMTP id
+ 006d021491bc7-6ca9a54782emr5931424eaf.4.1789836586853; 
+ Sat, 19 Sep 2026 09:49:46 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.50
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:48:50 -0700 (PDT)
+ Sat, 19 Sep 2026 09:49:46 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/41] bsd-user: Add poll, poll2, lseek, pipe,
- and swap system call shims
-Date: Sat, 19 Sep 2026 10:47:41 -0600
-Message-ID: <20260919164810.70151-14-imp@bsdimp.com>
+Subject: [PULL 41/41] bsd-user Update random_seed on thread creation
+Date: Sat, 19 Sep 2026 10:48:09 -0600
+Message-ID: <20260919164810.70151-42-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::c; envelope-from=imp@bsdimp.com;
- helo=mail-oo2-x0c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:31::2a;
+ envelope-from=imp@bsdimp.com; helo=mail-oo2-x2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,288 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add do_bsd_poll, do_bsd_lseek, do_bsd_pipe, do_bsd_swapon,
-do_freebsd13_swapoff, and do_bsd_swapoff to bsd-file.h. Also add
-target_pollfd structure to syscall_defs.h and include poll.h in
-os-syscall.c.
+Initialize / update cpu->random_seed in similar locations to the
+linux-user code. Set it just before we create the thread, and update it
+in the thread startup code.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reported-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-file.h           | 136 ++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-file.h    |  26 +++++++
- bsd-user/freebsd/os-syscall.c |  34 +++++++++
- bsd-user/syscall_defs.h       |   6 ++
- 4 files changed, 202 insertions(+)
+ bsd-user/freebsd/os-thread.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
-index 7ef9470c4e..0fefc07232 100644
---- a/bsd-user/bsd-file.h
-+++ b/bsd-user/bsd-file.h
-@@ -55,6 +55,10 @@ ssize_t safe_pwrite(int fd, void *buf, size_t nbytes, off_t offset);
- ssize_t safe_writev(int fd, const struct iovec *iov, int iovcnt);
- ssize_t safe_pwritev(int fd, const struct iovec *iov, int iovcnt, off_t offset);
+diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
+index 63c17e10d0..15872f03fd 100644
+--- a/bsd-user/freebsd/os-thread.c
++++ b/bsd-user/freebsd/os-thread.c
+@@ -14,6 +14,7 @@
+ #include "signal-common.h"
+ #include "target_arch_cpu.h"
+ #include "target_arch_thread.h"
++#include "qemu/guest-random.h"
+ #include "tcg/startup.h"
+ #include "exec/tb-flush.h"
  
-+int safe_ppoll(struct pollfd *fds, nfds_t nfds,
-+               const struct timespec *restrict timeout,
-+               const sigset_t *restrict newsigmask);
-+
- /* read(2) */
- static abi_long do_bsd_read(abi_long arg1, abi_long arg2, abi_long arg3)
- {
-@@ -925,4 +929,136 @@ static abi_long do_bsd_undelete(abi_long arg1)
-     return ret;
- }
+@@ -142,7 +143,7 @@ void *new_freebsd_thread_start(void *arg)
+     target_thread_set_upcall(env, info->param.start_func, info->param.arg,
+         info->param.stack_base, info->param.stack_size);
+     target_cpu_set_tls(env, info->param.tls_base);
+-
++    qemu_guest_random_seed_thread_part2(cpu->random_seed);
+     /* Enable signals */
+     sigprocmask(SIG_SETMASK, &info->sigmask, NULL);
+     /* Signal to the parent that we're ready. */
+@@ -1657,6 +1658,7 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
+      */
+     sigfillset(&sigmask);
+     sigprocmask(SIG_BLOCK, &sigmask, &info.sigmask);
++    cpu->random_seed = qemu_guest_random_seed_thread_part1();
  
-+/* poll(2) */
-+static abi_long do_bsd_poll(abi_long arg1, abi_long arg2, abi_long arg3)
-+{
-+    abi_long ret;
-+    nfds_t i, nfds = arg2;
-+    int timeout = arg3;
-+    struct pollfd *pfd;
-+    struct target_pollfd *target_pfd;
-+    struct timespec ts, *pts = NULL;
-+
-+    target_pfd = lock_user(VERIFY_WRITE, arg1,
-+            sizeof(struct target_pollfd) * nfds, 1);
-+    if (!target_pfd) {
-+        return -TARGET_EFAULT;
-+    }
-+    pfd = alloca(sizeof(struct pollfd) * nfds);
-+    for (i = 0; i < nfds; i++) {
-+        pfd[i].fd = tswap32(target_pfd[i].fd);
-+        pfd[i].events = tswap16(target_pfd[i].events);
-+    }
-+
-+    if (timeout != INFTIM) {
-+        ts.tv_sec = timeout / 1000;
-+        ts.tv_nsec = (timeout % 1000) * 1000000;
-+        pts = &ts;
-+    }
-+
-+    ret = get_errno(safe_ppoll(pfd, nfds, pts, NULL));
-+
-+    if (!is_error(ret)) {
-+        for (i = 0; i < nfds; i++) {
-+            target_pfd[i].revents = tswap16(pfd[i].revents);
-+        }
-+    }
-+    unlock_user(target_pfd, arg1, sizeof(struct target_pollfd) * nfds);
-+
-+    return ret;
-+}
-+
-+/* lseek(2) */
-+static abi_long do_bsd_lseek(CPUArchState *env, abi_long arg1, abi_long arg2,
-+        abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    abi_long ret;
-+#if TARGET_ABI_BITS == 32
-+    int64_t res;
-+
-+    /* 32-bit arch's use two 32 registers for 64 bit return value */
-+    if (regpairs_aligned(env) != 0) {
-+        res = lseek(arg1, target_arg64(arg3, arg4), arg5);
-+    } else {
-+        res = lseek(arg1, target_arg64(arg2, arg3), arg4);
-+    }
-+    if (res == -1) {
-+        ret = get_errno(res);
-+        set_second_rval(env, 0xFFFFFFFF);
-+    } else {
-+#ifdef TARGET_BIG_ENDIAN
-+        ret = ((res >> 32) & 0xFFFFFFFF);
-+        set_second_rval(env, res & 0xFFFFFFFF);
-+#else
-+        ret = res & 0xFFFFFFFF;
-+        set_second_rval(env, (res >> 32) & 0xFFFFFFFF);
-+#endif
-+    }
-+#else
-+    ret = get_errno(lseek(arg1, arg2, arg3));
-+#endif
-+    return ret;
-+}
-+
-+/* pipe(2) */
-+static abi_long do_bsd_pipe(CPUArchState *env, abi_ulong pipedes)
-+{
-+    abi_long ret;
-+    int host_pipe[2];
-+    int host_ret = pipe(host_pipe);
-+
-+    if (host_ret != -1) {
-+        set_second_rval(env, host_pipe[1]);
-+        ret = host_pipe[0];
-+    } else {
-+        ret = get_errno(host_ret);
-+    }
-+    return ret;
-+}
-+
-+/* swapon(2) */
-+static abi_long do_bsd_swapon(abi_long arg1)
-+{
-+    abi_long ret;
-+    void *p;
-+
-+    LOCK_PATH(p, arg1);
-+    ret = get_errno(swapon(path(p)));
-+    UNLOCK_PATH(p, arg1);
-+
-+    return ret;
-+}
-+
-+#ifdef TARGET_FREEBSD_NR_freebsd13_swapoff
-+/* swapoff(2) */
-+static abi_long do_freebsd13_swapoff(abi_long arg1)
-+{
-+    abi_long ret;
-+    void *p;
-+
-+    LOCK_PATH(p, arg1);
-+    ret = get_errno(swapoff(path(p), 0));
-+    UNLOCK_PATH(p, arg1);
-+
-+    return ret;
-+}
-+#endif
-+
-+/* swapoff(2) */
-+static abi_long do_bsd_swapoff(abi_long arg1, abi_long arg2)
-+{
-+    abi_long ret;
-+    void *p;
-+
-+    LOCK_PATH(p, arg1);
-+#ifdef TARGET_FREEBSD_NR_freebsd13_swapoff
-+    ret = get_errno(swapoff(path(p), arg2));
-+#else
-+    ret = get_errno(swapoff(path(p)));
-+#endif
-+    UNLOCK_PATH(p, arg1);
-+
-+    return ret;
-+}
-+
- #endif /* BSD_FILE_H */
-diff --git a/bsd-user/freebsd/os-file.h b/bsd-user/freebsd/os-file.h
-index d5d91336ea..c1da52789a 100644
---- a/bsd-user/freebsd/os-file.h
-+++ b/bsd-user/freebsd/os-file.h
-@@ -14,6 +14,32 @@
-  * Asynchronous I/O.
-  */
+     ret = pthread_create(&info.thread, &attr, new_freebsd_thread_start, &info);
  
-+/* pipe2(2) */
-+static abi_long do_bsd_pipe2(CPUArchState *env, abi_ulong pipedes, int flags)
-+{
-+    int host_pipe[2];
-+    int host_ret = pipe2(host_pipe, flags);
-+    /* XXXss - flags should be translated from target to host. */
-+
-+    if (host_ret == -1) {
-+        return get_errno(host_ret);
-+    }
-+
-+    /*
-+     * pipe2() returns it's second FD by copying it back to userspace and not in
-+     * a second register like pipe(2): set_second_rval(env, host_pipe[1]);
-+     *
-+     * Copy the FD's back to userspace:
-+     */
-+    if (put_user_s32(host_pipe[0], pipedes) ||
-+        put_user_s32(host_pipe[1], pipedes + sizeof(host_pipe[0]))) {
-+        close(host_pipe[0]);
-+        close(host_pipe[1]);
-+        return -TARGET_EFAULT;
-+    }
-+    return 0;
-+}
-+
- /* chflagsat(2) */
- static inline abi_long do_bsd_chflagsat(int fd, abi_ulong path,
-         abi_ulong flags, int atflags)
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 4fc230e8e5..228daed4c4 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -26,6 +26,7 @@
- #include <sys/mount.h>
- #include <sys/sysctl.h>
- #include <utime.h>
-+#include <poll.h>
- 
- #include "include/gdbstub/syscalls.h"
- 
-@@ -66,6 +67,9 @@ safe_syscall3(ssize_t, writev, int, fd, const struct iovec *, iov, int, iovcnt);
- safe_syscall4(ssize_t, pwritev, int, fd, const struct iovec *, iov, int, iovcnt,
-     off_t, offset);
- 
-+safe_syscall4(int, ppoll, struct pollfd *, fds, nfds_t, nfds,
-+    const struct timespec *, restrict_timeout, const sigset_t *,
-+    restrict_newsigmask);
- safe_syscall6(ssize_t, copy_file_range, int, infd, off_t *, inoffp, int, outfd,
-     off_t *, outoffp, size_t, len, unsigned int, flags);
- 
-@@ -696,6 +700,36 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_undelete(arg1);
-         break;
- 
-+    case TARGET_FREEBSD_NR_poll: /* poll(2) */
-+        ret = do_bsd_poll(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_lseek: /* lseek(2) */
-+        ret = do_bsd_lseek(env, arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd10_pipe: /* pipe(2) */
-+        ret = do_bsd_pipe(env, arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_pipe2: /* pipe2(2) */
-+        ret = do_bsd_pipe2(env, arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_swapon: /* swapon(2) */
-+        ret = do_bsd_swapon(arg1);
-+        break;
-+
-+#if TARGET_FREEBSD_NR_freebsd13_swapoff
-+    case TARGET_FREEBSD_NR_freebsd13_swapoff: /* freebsd13_swapoff(2) */
-+        ret = do_freebsd13_swapoff(arg1);
-+        break;
-+#endif
-+
-+    case TARGET_FREEBSD_NR_swapoff: /* swapoff(2) */
-+        ret = do_bsd_swapoff(arg1, arg2);
-+        break;
-+
-     case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
-         ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
-         break;
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 88dd7a763a..75122ad521 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -547,6 +547,12 @@ struct target_in_addr {
- #define safe_ioctl(...) safe_syscall(SYS_ioctl, __VA_ARGS__)
- #define safe_fcntl(...) safe_syscall(SYS_fcntl, __VA_ARGS__)
- 
-+struct target_pollfd {
-+    int32_t fd;         /* file descriptor */
-+    int16_t events;     /* requested events */
-+    int16_t revents;    /* returned events */
-+};
-+
- /* So far all target and host bitmasks are the same */
- #undef  target_to_host_bitmask
- #define target_to_host_bitmask(x, tbl) (x)
 -- 
 2.55.0
 
