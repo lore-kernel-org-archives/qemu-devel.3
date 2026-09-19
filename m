@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B51C982D8
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B47CC982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7y4L-0001b1-MK; Sat, 19 Sep 2026 12:37:41 -0400
+	id 1x7yEu-0002m1-TM; Sat, 19 Sep 2026 12:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1x7y4H-0001ah-Q8
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:37:37 -0400
-Received: from mail-ej2-x0f.google.com ([2a00:1450:4864:34::f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yEs-0002lP-1v
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:35 -0400
+Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1x7y4F-0005yQ-WA
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:37:37 -0400
-Received: by mail-ej2-x0f.google.com with SMTP id
- a640c23a62f3a-c2a1a631f6aso195112166b.3
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:37:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yEp-00088p-CP
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:32 -0400
+Received: by mail-oo2-x0d.google.com with SMTP id
+ 006d021491bc7-6b1ae740487so1058434eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789835853; x=1790440653; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=N6wnGmKgvjVVHMQ06XeVIkpnoPx8IDty374UJRSfqRI=;
- b=jf27IMJdq618u+kRPp/VmwEZ8qw2hphDWrVtBqJPM8u/tMGiDa3kkeBYLDOJo/m5p/
- /wTtbQeak8HWK8j9B3+6cQqneYax42UtCNjSlJDPZmczrL+7BQ5BlIIpKAYs1Y5Lmksy
- y6U84M2v9x3eJtVKM0jZJBEdqVvcstat6sjMPfp//e/h6vromEnDD5dby0GbU31GjKc8
- 2gRnRS3sm1G79hlzGqeWcwSDik/ltaV3SCltWAiULf+Q/K1oedoPRfJbvYKt2ZD0YsKs
- dhwMX5JWUb1XV03VyLHyw0oX+sugiQRjvIuXxv1akEsx0MJn2TEcrf7sh31IDddYX/2+
- UmoQ==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836510; x=1790441310;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=nLDE8rSQgGkGSmO1rhlXeHCgMm2I4kYbhowtxMdHM6M=;
+ b=ca+3/bysdOyhwpauEd6swzyMrVW+JLMMemCG/S8diKx6NOfRCuCk8+n6QjNnT9a4Om
+ 2dPntv8/V4Ww3Utdoejjffk4yGZMfAkD/JGjzF6KCDuIZF117nYuN+wnooZqH1UqJMu4
+ NxySDhIAqUAZtMNXxncN/dSp+saYYyK7xaX82cZIjoTXS2hNUSlwTF1j5SfhseX0DB9d
+ LDaRIqTNSZ6K0JOgZExEUQvJIK4+N7AH8nfG+FC2TRt8tzP6GL/6FzqYk2/ZIVjdIoh5
+ BluSNw/IdaDnCbWIJkx0i/1+3Co77zy9rO5C/0HVIrz1TVSGtWSr2d2gF75r6MCqQLOq
+ Ireg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789835853; x=1790440653;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=N6wnGmKgvjVVHMQ06XeVIkpnoPx8IDty374UJRSfqRI=;
- b=OQai21VtQvIni2wxAYRXOXVGybQXsdP6EzzQkjkz13Y2JYaw6/rWC714IdKF8Jhu+I
- kFVsKORtGmbB2ueoCC1lM/yrBG14k62/Vu2A+0VmsjhFsSPl8QeaqyF798p3sNkA9n33
- +BBQMMC4su3sCL3ydloh4gK+32S2Trwfz65vnCqnQc3VC0422jefRcPiBLbF+HiR1w3u
- qHhL+FygxFssFsVjGEx7RcdmyAuyLg2f6qa0qa65TtnXP7LDSWL9dTtMxq0dWTnzDFr8
- bT7OQZubpyx+P/q8AgP4kurAyZyJiOeZ1Eic1SdXd0YLZmQ4kKECI3scWpqEq294IVGf
- tuHg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx5edMOK0aI2DYaaJNw+7C0YwGuebCXuiTiHKI3eh2yJuGdD72m3ORhO0aOfK/zAsB3+te5WMY8orbT@nongnu.org
-X-Gm-Message-State: AFuF++n/3VgxAAZ7zKEI1Ft7GiOnLf1UVdOnf4x8heqyt5O8U64lQe2U
- BI6VXMBpC1su3LEp00sWI/DJwnzhdiKZzW2I5E0h+GA4QiPYZ9NvqBql
-X-Gm-Gg: AYBFou2pMZs/HYPWexXLXXjFferJi8Yh+sPePab7G9M0cE6ZqwYMFRhudi2ucyGmNrU
- 3xSJVSY+0vR9Btgczv/a+JZ2WAydYO9abTryHPmex5fUhY+dDe8a3xwy7MOyDIkPHabjdh9z1mP
- u7+pKJ2PK+ZgKJHylX0+lUsdZqqUhuP1WgW/UXHEoZdVzVTrwdGh9dexa0sjMnl6JNbrkGQe3LF
- RN+XZ62wCCjvWqRkUo+AMbYoNXLrcKfFM6XWInX39LZ7umX/tAk9d8xU2IIfKs9dAjFUcyOZl+e
- oYwaijdowlpg+8Cn7RIF1wpSDeXJJhED6aBah+UhpjrjFUSEVSJ73qXFCdFmy4VFH3BL74l7lZi
- U19hUiXT1opb9SjlT0qaHUHJeNyIHvhpk8q+AukzZ779FftlydIogSiCUKPcmnIpVpphhGXfvu0
- FqoY8W1DbEE+nO0KmmI3w1TsvG5N9CBqtb+pGO2D6/2nlAVM2hc/pehyWn5xCJzskrT7zEiMtPy
- G5BoTzxrIEshRjwtR1ljx7l
-X-Received: by 2002:a17:907:971e:b0:c25:fdbc:52df with SMTP id
- a640c23a62f3a-c2a15699d4cmr457733866b.10.1789835853154; 
- Sat, 19 Sep 2026 09:37:33 -0700 (PDT)
-Received: from tulp (84-25-144-101.cable.dynamic.v4.ziggo.nl. [84.25.144.101])
+ d=1e100.net; s=20260707; t=1789836510; x=1790441310;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nLDE8rSQgGkGSmO1rhlXeHCgMm2I4kYbhowtxMdHM6M=;
+ b=FFNczMun0AvE+avV1xC3xLOr5y9fOYsn8tWKOlHh2Qnxr6/YKdz0BqECYvUcqf1I/q
+ wJK3EWMzhTZwxVz23zEWLfdIp/3qOVPU7S7IZDphfY+0JDpYSWLB1FwfCRE4jBMtqLK0
+ RROnd73n4zSeROwD3ObOCnw9pkUhA+GupcIgRsIvQLTx7mMF+WcH8eJPXTgVeW/gQ6wu
+ JC2RHznbg2yT6EJraipLf/8aoUDE9MZHiY7y24IeLqiYU8fTpG8UimeA9ZwBs1CWUDrO
+ ps9GrwEgwaZgk6mFCvv/sOx4n8F2y3NOU1PmCBYGti0jZUurtw8k44iMNqBahtHXBHnc
+ WLwg==
+X-Gm-Message-State: AFuF++nie9HlHpqVR9o1aec3j7kzCY9lMMspq5trdxaBOos57hHqvkrH
+ b9jupmzYIDGcYOIuSw1PS0sl/FUJlzqpNHyaQneUXrW2gMc2oB+95lK37qnDl8H78Tyz2ZoQ/s/
+ MC2+v0W8=
+X-Gm-Gg: AYBFou3jx0C1WIm68tUh6qfWUeotivBqSnLHZ02g8B3LVcB1OTidvcHByK185Aj+XIz
+ sQbdiIrkRVhp9oZAQMmmQQC6KvaAK6DEfceQLwEG+k+Dscsus4OYWHebzld3RuSKJ9TiuSQ3/E1
+ kT7ROdKEJW6Ri6cPeiJQXJf+JxMONiid6+Jasq+pMMrRMOjZdFSFEHYnHULqYgaSOm+2P778YL8
+ dsX9hJN5IVjKvaH/09D6iKmnEBgtdRF28dFzdPCIGpd+P5KAer0o2J4CzgoWprq+qhl+3tZQ8XB
+ yED1wi07Byk22KYAn03uHdaTWyoktOb2MCoKvMXdNxXaRB5TDVml1UkGFfCmdiSmxN2Ot4TDCFW
+ HL1GQnPXkyGtJBJjTKbPZ3GOCejopQzWOV2zcXCwh1UzYSJPFxZgA51jplSl7rvcB/tlfAppHo9
+ Le44TsCpUbbhbyuU0v7V3vFNv1fdWkR4//y0Xp0saHSt6xJ9wvObZpCOhMzw==
+X-Received: by 2002:a05:6820:4cc6:b0:6ba:a5cd:aac4 with SMTP id
+ 006d021491bc7-6ca9ca4bc44mr5523934eaf.50.1789836510271; 
+ Sat, 19 Sep 2026 09:48:30 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2a35239716sm101318066b.3.2026.09.19.09.37.32
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:37:32 -0700 (PDT)
-Date: Sat, 19 Sep 2026 18:36:21 +0200
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: Brad Smith <brad@comstyle.com>
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] qga: implement 'guest-get-fsinfo' for NetBSD and OpenBSD
-Message-ID: <aq66Bd-9wa3N5Zn8@tulp>
-References: <aq2m9yuSGK0m2zRb@humpty.home.comstyle.com>
+ Sat, 19 Sep 2026 09:48:29 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 03/41] bsd-user: Fix copy direciton in preadv
+Date: Sat, 19 Sep 2026 10:47:31 -0600
+Message-ID: <20260919164810.70151-4-imp@bsdimp.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
+References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aq2m9yuSGK0m2zRb@humpty.home.comstyle.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2a00:1450:4864:34::f;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej2-x0f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:31::d; envelope-from=imp@bsdimp.com;
+ helo=mail-oo2-x0d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,20 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Brad Smith wrote:
+As written, we copy in the vector and data then don't copy it out, when
+instead. Instead, we should copy the data out. pread and read are
+already correct.
 
-> qga: implement 'guest-get-fsinfo' for NetBSD and OpenBSD
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  qga/commands-bsd.c    | 19 +++++++++++++------
->  qga/commands-common.h | 12 +++++++-----
->  qga/commands-posix.c  |  4 ++--
->  qga/qapi-schema.json  | 12 ++++++------
->  4 files changed, 28 insertions(+), 19 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/bsd-file.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Look reasonable and does not introduce regressions to the FreeBSD
-implementation, so:
+diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
+index dec59bd80b..7ef9470c4e 100644
+--- a/bsd-user/bsd-file.h
++++ b/bsd-user/bsd-file.h
+@@ -113,7 +113,7 @@ static abi_long do_bsd_preadv(CPUArchState *env, abi_long arg1,
+     abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
+ {
+     abi_long ret;
+-    struct iovec *vec = lock_iovec(VERIFY_WRITE, arg2, arg3, 1);
++    struct iovec *vec = lock_iovec(VERIFY_WRITE, arg2, arg3, 0);
+ 
+     if (vec != NULL) {
+         if (regpairs_aligned(env) != 0) {
+@@ -121,7 +121,7 @@ static abi_long do_bsd_preadv(CPUArchState *env, abi_long arg1,
+             arg5 = arg6;
+         }
+         ret = get_errno(safe_preadv(arg1, vec, arg3, target_arg64(arg4, arg5)));
+-        unlock_iovec(vec, arg2, arg3, 0);
++        unlock_iovec(vec, arg2, arg3, 1);
+     } else {
+         ret = -host_to_target_errno(errno);
+     }
+-- 
+2.55.0
 
-Reviewed-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
 
