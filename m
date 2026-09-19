@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC78C982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 08:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F69C982D7
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 08:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7qdL-0002PF-5Q; Sat, 19 Sep 2026 04:41:19 -0400
+	id 1x7qqw-0005Ak-Kw; Sat, 19 Sep 2026 04:55:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7qdF-0002ND-Qw
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:41:15 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x7qqv-0005AT-EI
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:21 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x7qdA-0005Kn-2T
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:41:13 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-8693af0d7c4so1728498b3a.3
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 01:41:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x7qqo-0007HC-M9
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 04:55:21 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd38e0e5dso19364445e9.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 01:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789807266; x=1790412066; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=eHdxLmUj0LMv+NPMwDsc3wsCddiFEfoKqwE5w4PmUy8=;
- b=GsJ+5YHawgY9M7WNuQ+RLvTKZVHyRHZwADOFzteU2Q1QgtnnxSAb8C2Nc+c4Gpkh8r
- fZWF27z+FJ5xK+SGsBRtczzk59fAPwQD4/sBdoJnc0ajYwJ4MwmfMq3EvVFSsPphg7wX
- c6YhkRw97P0fMCThXO/HgWzzsiXEv0fLb6uNRDPeLfDcUIRAB+uVClZ5SA++ssnKn803
- mYT3oemp/eCNmySHrchRQE0RUCybRqlcDcIw7xR2lMdUdN7F+kWbqrgv5BMsHafBFtTb
- g6T9BAI+AJ8BxLJOXzjnK4TYoHni4PVqtVVHFvBxjuokGsM5ydYhTvM+N+mGHRswzCME
- bVgg==
+ d=linaro.org; s=google; t=1789808112; x=1790412912; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=sVIDxMipN7YpL2oyYDQlS7+ScjY2/jWoiD+NtutxMX0=;
+ b=A11RrXKs6/2fCwuCUeKAYmCPZU/Nv4cUgncJuf4i6iDyiX8xJdGHNCoVbIdHB/MpHU
+ 430leIVeYQ7aBginl21ZyuThy4mT8c+MPwDBYiNsTiKMet5iuoXFTGJzWK6Lqd0vk8dH
+ MtYdoI+yKQWwBqxhSzNNfk/nkzibmrZrMDZ21IDFPhSVRTZ0ibUrCwnpVlnOEpdf5I4l
+ a+jL5bXCNrWPb5VxxAdhmIramqHcQ/toXYVegwJ24XVsu4bTw4ynUEGOhaoQZ6pKshwn
+ S5I/eod/F1MJTe7Ch3ZLSBzGt05fmcxKYcRlJM5NlyBfGlf3wS5mYXmniDTDtfisfPgM
+ rnpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789807266; x=1790412066;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1789808112; x=1790412912;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eHdxLmUj0LMv+NPMwDsc3wsCddiFEfoKqwE5w4PmUy8=;
- b=htbUM+AubFwH/Jvr+7bMlFAxAZPHgzWrNCR5DGuwIEZ+jlP5SOByZAf2I2leR1s1pm
- 6JpLlBZfO4uRWq86BFTxUcivLm/dQO5Vvoh/y+lyyk6Tuox919+AnOv0DOillQ9slzFy
- 4nmMni+Zl6GaBNnwUZpgxWgyASYRdaNwg0nFalmmFKBj6mbRoFIXMZNoLjsNMg0CtKZA
- OzGSjkPTahad68klu5RJnB/x1p1SU7Drws8y0Naq08/E3S0LCUuRcepmULfv99d2sWvz
- cRRSPjZjyHA64AfLnIM1UJI9FPytOi9Z8tevDxwwbyJqjHHJ7AHlCmTjayZhR81itb7C
- l0tA==
-X-Gm-Message-State: AFuF++mpcSwpHPLdskxEzsNm/Z9SBbouNXw3qrfeAZ5auFFBh/Cxo3Rm
- 1o6daADuY6Xbvmm25qfkZWF4yFD+d5tM8rem4dIoamdj1kRy0INdzsqbozJ5Yz06oM8=
-X-Gm-Gg: AYBFou1y2WJgWnXY7lwBBXdZzERbM0UO+smj1XAQIMxaGADK0jnFwDwvx4H4KIBvBmN
- T7/L50pLKzRivRBa1NzhoFDmjUIru/CPoVl75A51JV41wpN5tgLh3xNWIjNKur0A3uuZ1ldDFDf
- pCgJqxS8xQLO2xL7Js35/c5+F+eMLs5wpqamBP82212BRvkGtDGzMwUpHKwHFE+RDTvOeNx3Lse
- Mg/5RwdtrYLqfnp6qQBc8NvID5mblCc3D26sZnVvuQpv3xN5maDg69taynwoWzJ1EKSFOIX7tqB
- 8BYEYfsd7/CLbJmy8xVavWKVn0Ay7jTi8dDzMLoQEafaXFgoJmBcQy1svpMY0Qz5EVyakjLNrHp
- vTfclZBAA++stlvdOaA9MeVVIxTxQMmhRiLJBRYsrUNwaDx4QYChdAY0SyaJ7GSEbZUdPp8hon7
- mhm0E1I01BHl5tW+Pl/9Y9aPtq6mnknd8F/Aazmbru3p0pKobU7YsyPegyxOkBb4jPpiYaW2Pe9
- zVU+dVG/nNI74z2Nvjujr2lXTqJlMlUw0+G2nnYfM55eOsDFfO2BbQn0Hc=
-X-Received: by 2002:a05:6a20:244e:b0:3dd:a197:cf31 with SMTP id
- adf61e73a8af0-3dda197da70mr2519664637.85.1789807266062; 
- Sat, 19 Sep 2026 01:41:06 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:9141:cc7:be11:1ef7?
- ([2603:800c:7900:ed00:9141:cc7:be11:1ef7])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144d55a4378sm4245381c88.4.2026.09.19.01.41.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 19 Sep 2026 01:41:05 -0700 (PDT)
-Message-ID: <288f6e74-4ddd-4b8b-b6e3-1148454bcfc8@linaro.org>
-Date: Fri, 18 Sep 2026 22:41:02 -1000
+ bh=sVIDxMipN7YpL2oyYDQlS7+ScjY2/jWoiD+NtutxMX0=;
+ b=BclpCzfiFryNOHlnt6L01P3Hdtfl4TNcM6n3dyPQhEbyzwKGrxtsIWCn+SJ2jWuTTE
+ d3BX9v2GBq6OvOfFlBpEQ9XLFYN2Kl/nMe2UolNxduJHyt3G8gvQv4JD1ocWgTF/bBPn
+ hN84kDWnaanfuWl0E87WDleDyK0TsO2TdUhpYNgoTRRwsJ7wC4LMWfDogZibyVHop/tH
+ Et2vZ/PLliShLs84I7tgJUMo6rlFLxLv0TJtemfkO2aE5xOvwPHJU8TQP7hlkaO4WJPu
+ UhTuFpDWrQQ66qKKA8qcQqL6omNrdkm20/S2fVrMUD/OcstlikVreT05i/5XNPqr6WVr
+ hT6Q==
+X-Gm-Message-State: AFuF++k9JSgMZF5/SNQzbeYuOQjdGHyoUmm+KTP2OiarqfZVtwN2Mafp
+ 2CRQS3T2m4d6cgwJ6abbxstW7MLjUnPGvYD+UgRl8CnFE8i1GYByMQyGTAOWofUZYYMy6LCwCfH
+ E67BA7qE=
+X-Gm-Gg: AYBFou3B0jVN2uiRdF6LOfVU7lo2SRyWnEalxVV+cVF5MOLGIpIVE6f9JnELtCNDFat
+ EmyNKh7sJNwxivshEUsMsEWUL/gN+uNapJa2NA7VTJyBl060i9Ul8FJOFNLdMFwEVvfTtY3dw0X
+ wreHxrwJFIC9w6uJESEA+8NWqCFTW/mDOx6mWievo4ZgwkYmdE/E9kUm9IPxUPhwwiUwopwEu3l
+ wBjV675OVEwXqpIS4QG3k8AbEnBvpa+10RslSdQOx1Tw3OpQ8nc6tJvlvGQPd73u2XNkwC9TUKz
+ hKUducBC/X18L75VAk1aVzVAqBkPwaGEdOGwzbdajLzGy51nrzx9xihBHw8oQU3Oxzkef0F14gc
+ PSUoCZttLCYifPT7Rsp65KAVQ9TGHpAc8qo2ztHpMwAWSLHEDwme4D5Fae2eUrlTSvlooFjEgGa
+ MntIAHmkBHjZxssnv8u6CIkUhVe+93JXNU3tDaGoIm9Si/Q48eO01DfBTvRymNB/32GfFNRedrK
+ ooSfYe0fPbwRFueeRG+HPLtHPBMLo41paaMvrDiQVoTT2QDtoF7Sx7W9taKev1clCWMhNevXy6L
+ k3h0YrNyaIsfCzMTEY8BrZoi51B4pXldux85QTRC+gg82JazEQkdNeTn/2+6fHTgtOvNVrSeNtK
+ /QoegZbP0LleNNwkr79tDnFpQXecXYOxPdQ==
+X-Received: by 2002:a05:600c:a085:b0:49f:bd3c:bc23 with SMTP id
+ 5b1f17b1804b1-49fc5747887mr68834485e9.30.1789808112027; 
+ Sat, 19 Sep 2026 01:55:12 -0700 (PDT)
+Received: from localhost.localdomain (athedsl-116222.home.otenet.gr.
+ [85.75.29.157]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fc58ce1ddsm82736875e9.3.2026.09.19.01.55.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 19 Sep 2026 01:55:11 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/10] virtio-sound migration
+Date: Sat, 19 Sep 2026 11:54:47 +0300
+Message-ID: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/riscv64: Set vtype before whole-register vector loads
-To: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: qemu-devel@nongnu.org, max.chou@sifive.com
-References: <mhng-9266D400-F468-4D4D-99CB-0F754C22F36D@Palmers-Mini.rwc.dabbelt.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <mhng-9266D400-F468-4D4D-99CB-0F754C22F36D@Palmers-Mini.rwc.dabbelt.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/26 12:38, Palmer Dabbelt wrote:
-> That said, if I understand the ISA correctly, we need a valid vector
-> configuration before executing any V instruction (assuming the post-
-> change ISA), so I think we could also just throw something like this
-> in there and maybe catch some mistakes in the future?
-Yes, that seems reasonable.
+The following changes since commit 
+b36ad6a0510aee81ecf6087b59f412b9bccaa369:
 
-While you're at it, can I get you to look at
+  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
 
-https://patchew.org/QEMU/20260914000814.785155-1-richard.henderson@linaro.org/
+are available in the Git repository at:
 
-which does something similar in adding assertions against the integer 
-instruction formats.
+  https://gitlab.com/epilys/qemu.git tags/virtio-snd-migrate-pr-v2
 
+for you to fetch changes up to b36ad6a0510aee81ecf6087b59f412b9bccaa369:
 
-r~
+  hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
+
+----------------------------------------------------------------
+virtio-snd-migrate-pr-v2
+
+----------------------------------------------------------------
+
+Alexander Mikhalitsyn (2):
+  hw/audio/virtio-sound: remove channel positions field from
+    VirtIOSoundPCMStream
+  hw/audio/virtio-sound: drop unused struct
+    VirtIOSoundPCMStream.flushing field
+
+Volker Rümelin (8):
+  hw/audio/virtio-sound: remove command and stream mutexes
+  hw/audio/virtio-sound: allocate an array of streams
+  hw/audio/virtio-sound: free all stream buffers on reset
+  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+  hw/audio/virtio-sound: add stream state variable
+  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+  hw/audio/virtio-sound: introduce virtio_snd_set_active()
+  hw/audio/virtio-sound: add missing vmstate fields
+
+ include/hw/audio/virtio-snd.h |  26 +-
+ hw/audio/virtio-snd.c         | 716 ++++++++++++++++++++--------------
+ 2 files changed, 424 insertions(+), 318 deletions(-)
+
+-- 
+γαῖα πυρί μιχθήτω
+
 
