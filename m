@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A0BC982D8
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63247C982D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yFD-0002qU-Lx; Sat, 19 Sep 2026 12:48:55 -0400
+	id 1x7yH3-0005GZ-DJ; Sat, 19 Sep 2026 12:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFB-0002q1-94
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:53 -0400
-Received: from mail-oo2-x0f.google.com ([2607:f8b0:4864:31::f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFy-0003yR-I3
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:46 -0400
+Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yF9-0008Fl-8E
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:52 -0400
-Received: by mail-oo2-x0f.google.com with SMTP id
- 006d021491bc7-6bd42f1c01cso1143730eaf.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFw-0008Qz-K4
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:42 -0400
+Received: by mail-oi2-x10.google.com with SMTP id
+ 46e09a7af769-801a8bf8112so630248a34.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836530; x=1790441330;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836578; x=1790441378;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1md8Q5IGeth07Sa1XguPxqxA55w0N697rIHuBKnwpxg=;
- b=FXW34iQyOoSITpOvVC5+Ri+Vxi20PM2S3TigrSbYL6zjM1+iEDw5H35TJafuR+tR8O
- chGDcGfuPyfSYpPh6vuxKor7WHi7ZcmcqwzgDytuo+9xnPy4aNPO9toUbWj+BPZ0EbIR
- 9ljZJ7cigtdN8/P928pPbdy/IF3CRw7d0sMSWoaY1TkfR7YWqTqq2GOOaMXLTXxq612A
- dbbKI8s3THk6PyA8OBnLjYXMPoK+bH2y7Ov2zGBCNuyXN+WcIQ20qP0ZvR4K+3QKSp/j
- S5g+4VqcxTwoYLWA6W3KFvpnHKiQDrOESvXJjGDLn410jSWMU62c4lABLGA8FDZ0xhJ6
- rQuA==
+ bh=WtfmsscsalVrAJPd73Q0DzcpHT4vVxE/8E3wbnd6UT0=;
+ b=EHFNfmHGe7NayOsdCTF8VJxbz9EmdcUgQ/MFvzXbDHF0cBd7Zzy+CzVHpL3hmP15KW
+ XZjg6mcwWzAEGxH8A8Rr6RRrMIl6hAzO0P0ZeNz45OyFkMXNqbbTu3EVpP9v0Ch2NDSk
+ z8yQ6qT2cpmzv+NroxIhwAXpU1UoVX5SbnW72ibTEdpU93M9oWfhQTRLwZWgmYB02kEa
+ dCrva6FgxDWJIa4ZrQBNSX+nYtrSuM+9wB54tlMUr0QMYgjGVRD2cTgbsW8tyUeooEyU
+ Fz0+b0M2ztcbiMLoJyLQEGoRKlSjEE9d6Gj+h4lYl1j2otb9f+GgUPjZMWeBW35nBmlM
+ rgsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836530; x=1790441330;
+ d=1e100.net; s=20260707; t=1789836578; x=1790441378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1md8Q5IGeth07Sa1XguPxqxA55w0N697rIHuBKnwpxg=;
- b=uk38bIi24Ln9ijX0UAxQugeEu4+YTzOsLf+yWhVPxxgoupDzgFpAu0n99Be38AEr6U
- 1b7HyQbpu55WnnFPIb0tJLLaAM5WlsgLsUpe08GyLXEJplGn5ExxSxDyn9kElz7kPMNy
- 6mpk65cU2FyY573taUiLxFJc427FVXvVAgJDFI2slu78uVgYumEg0mbWw9IE50eXQqso
- sIZdL61g66OUZcJteIUyb5oP4vVa77TH1PzEijSmOP/liJXhMaV6yzephhaKSfcG0FAp
- o064bqOTLzfqHRGH1uxTx5Wt5LB/AtxCMSbx4gW7UqgctMrNwKOIDQnSFZ84CIiRn+ex
- W6ig==
-X-Gm-Message-State: AFuF++l6rAlfFPhZsfIdVhfMpFpYNsVP6K69Hco8IayBvpxckFYcbb05
- AevvIhsik+yiAbY3F8ppfDhrurBeKxN3BL/uvVt1OKclX9c8LPWi8FBYAtv2wc6lSq2JX9zELgx
- S9BflwiY=
-X-Gm-Gg: AYBFou1Y1W82IobHhHO1SQ8kV0+D2w3MvTCSIEtW1jNxg2Fe94YK2s99tB8GUDa88UE
- 6WXBIwb2wAhhx8lweYXONvmLM3iM/TpgTjeYxEiQqvaBKFjkT5enldVmkTivWAK2sZrfhpjEA/p
- cBBxAIUJtVpgew9qTzpbLiajouLVyIOSPEIP00Qiy9cK7NY/Y/7OfUUYxH12c2VwFHxQsjz2vTl
- r+2DVp56fSWOxAoDiXK5mKys/fAYNdHydBDzm5cny2bZUjmU2kx7WJ64qMRaULEPjuHq5KJOHPr
- bEs5X/IGUOY5d0j9t6SJuClNNWUageaH+5u5Sr/TpbMXXbFqSflTABip6mw8rrmC78/k9rFkq9l
- 2X9t9ezoooqlism3jFlLdtBRbiGUrlrDatO9UD0GJxrD0zoHpq9/ottIL8LmbqBWpRvCpt7nh38
- NMyh4FGeqdpfN+zE15J+oom/cFABbJUWrfCpyRPUMLxl2fuX3iZL8Sq4Olkw==
-X-Received: by 2002:a05:6820:1ca3:b0:6c4:6699:53b7 with SMTP id
- 006d021491bc7-6ca9c659e48mr5371952eaf.52.1789836529975; 
- Sat, 19 Sep 2026 09:48:49 -0700 (PDT)
+ bh=WtfmsscsalVrAJPd73Q0DzcpHT4vVxE/8E3wbnd6UT0=;
+ b=cPFG0XkqJukTRj9nL60bwE207cehghNUo8m/hlHe2BsgVGX2rAab6DeVGZtxzdd5my
+ t7a9wwfTyFn15hGz3SUGW9Een+AK4eyiLQBqL/AWJXGibz1Pi+GfwRsH0XIrf9OM9kMP
+ ImAnwKYx1a7MrrsAXSgeBrG+9DG9GUQuqcKD0kuDXt45NA+zID9ewkeMiJmBgJwJqNGZ
+ vfx5aJSN6XJI5yPrkcftxTavF9kg/QNLEkJEXjfDoJV9epZ1pbPVTJMDSVgP1P6bPdwu
+ JgLLXhkDhYotNwbRptkWNTnDNOfcCRzPnWFogK5TkHFv4/leg8DjvYefkpqN2L4TwuGD
+ bCSA==
+X-Gm-Message-State: AFuF++mDAO4q8FyNx0VfrrMgQitHrnQoj/AfDqiAXJJhVQsrHmFhxzA3
+ SFhE4IFqTrGb4CkhG488L2uz+ur/1ZX3Nydux28zYFW52atGdIK4nklmiMabevbpiaauNeraI+1
+ 7kjnHHxw=
+X-Gm-Gg: AYBFou19dhbNZXKMMcixjzQ+hzTZA9lGgbRopOgDK02DMkDgT9UhIIbA20iGs47k/7B
+ hzJ6uCcjFHDmHPLIpfWLA3k+h7st+MEy1T9kCf8+l7QBGjB9oAU1FyFNlJqldwSHEoN/NLbhRM0
+ 29rLgkDCF6Z7AYR7HMTqbZR1ZiPW01sTq8nNlQPQ/lygbLNTBlmz0dkIXzvEc9EwGRcMA26z31K
+ TYcX9NfAP9zT0JsvqQ22Byp1GDoL4K1vRyEWzJg7VZOaXCejX3pE7h/C3sABUBprkHBJ20FuIZG
+ uR3htiF3YoAwNzLNBl3RLfvHvQT++q3gqFNKCmK1d7pVdLmZEe5RSxPzGx7RH1E0tWDkDXgL7ax
+ 63p7pU0aHv46Je0tk0kd2OpK+EhfV1vVXdQRXPR8K4SVAr442ODoAT6ZwbxZLZWheygCjkn3yjN
+ n75pZWUvi5Uwmsv/9uiV4YAkyN8N3M3E4eBQG3w9CIh/8EMAHKQW5qba/hFQ==
+X-Received: by 2002:a05:6820:a04:b0:6c0:7620:fccf with SMTP id
+ 006d021491bc7-6ca9d145308mr5841669eaf.57.1789836578538; 
+ Sat, 19 Sep 2026 09:49:38 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.48
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:48:49 -0700 (PDT)
+ Sat, 19 Sep 2026 09:49:37 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Stacey Son <sson@FreeBSD.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/41] bsd-user: Add os-file.h with chflagsat, close_range,
- and more
-Date: Sat, 19 Sep 2026 10:47:40 -0600
-Message-ID: <20260919164810.70151-13-imp@bsdimp.com>
+Subject: [PULL 36/41] bsd-user: Add os-extattr.c with ACL conversion functions
+Date: Sat, 19 Sep 2026 10:48:04 -0600
+Message-ID: <20260919164810.70151-37-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
 References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::f; envelope-from=imp@bsdimp.com;
- helo=mail-oo2-x0f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,204 +100,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add FreeBSD-specific file operation shims: chflagsat, close_range,
-copy_file_range, and __specialfd. Also add the safe_copy_file_range and
-safe_ppoll syscall wrappers and the target_specialfd_eventfd type
-definitions.
+Add os-extattr.c with t2h_freebsd_acl, h2t_freebsd_acl, and
+t2h_freebsd_acl_type helper functions for ACL operations. Add
+os-extattr.c to the build and include os-extattr.h in the
+syscall dispatcher.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-file.h    | 103 ++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-syscall.c |  25 +++++++++
- bsd-user/syscall_defs.h       |  10 ++++
- 3 files changed, 138 insertions(+)
- create mode 100644 bsd-user/freebsd/os-file.h
+ bsd-user/freebsd/meson.build  |   1 +
+ bsd-user/freebsd/os-extattr.c | 118 ++++++++++++++++++++++++++++++++++
+ bsd-user/freebsd/os-syscall.c |   2 +
+ 3 files changed, 121 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-extattr.c
 
-diff --git a/bsd-user/freebsd/os-file.h b/bsd-user/freebsd/os-file.h
+diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
+index db531604ad..0fc779749d 100644
+--- a/bsd-user/freebsd/meson.build
++++ b/bsd-user/freebsd/meson.build
+@@ -4,6 +4,7 @@ bsd_syscall_nr = custom_target('bsd-syscall-h',
+     command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
+ 
+ bsd_user_ss.add(files(
++  'os-extattr.c',
+   'os-proc.c',
+   'os-socket.c',
+   'os-stat.c',
+diff --git a/bsd-user/freebsd/os-extattr.c b/bsd-user/freebsd/os-extattr.c
 new file mode 100644
-index 0000000000..d5d91336ea
+index 0000000000..3456157b4d
 --- /dev/null
-+++ b/bsd-user/freebsd/os-file.h
-@@ -0,0 +1,103 @@
++++ b/bsd-user/freebsd/os-extattr.c
+@@ -0,0 +1,118 @@
 +/*
-+ * FreeBSD file related system call shims and definitions
++ * FreeBSD extend attributes and ACL conversions
 + *
-+ * Copyright (c) 2014 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#ifndef FREEBSD_OS_FILE_H
-+#define FREEBSD_OS_FILE_H
++#include "qemu/osdep.h"
 +
-+#include <sys/specialfd.h>
++#ifndef _ACL_PRIVATE
++#define _ACL_PRIVATE
++#endif
++#include <sys/acl.h>
++
++#include "qemu.h"
++#include "qemu-os.h"
 +
 +/*
-+ * Asynchronous I/O.
++ * FreeBSD ACL conversion.
 + */
-+
-+/* chflagsat(2) */
-+static inline abi_long do_bsd_chflagsat(int fd, abi_ulong path,
-+        abi_ulong flags, int atflags)
++abi_long t2h_freebsd_acl(struct acl *host_acl, abi_ulong target_addr)
 +{
-+    abi_long ret;
-+    void *p;
++    uint32_t i;
++    struct target_freebsd_acl *target_acl;
 +
-+    LOCK_PATH(p, path);
-+    ret = get_errno(chflagsat(fd, p, flags, atflags)); /* XXX path(p)? */
-+    UNLOCK_PATH(p, path);
-+
-+    return ret;
-+}
-+
-+/* close_range(2) */
-+static inline abi_long do_freebsd_close_range(unsigned int lowfd,
-+    unsigned int highfd, int flags)
-+{
-+
-+    return get_errno(close_range(lowfd, highfd, flags));
-+}
-+
-+ssize_t safe_copy_file_range(int, off_t *, int, off_t *, size_t, unsigned int);
-+
-+/* copy_file_range(2) */
-+static inline abi_long do_freebsd_copy_file_range(int infd,
-+    abi_ulong inofftp, int outfd, abi_ulong outofftp, size_t len,
-+    unsigned int flags)
-+{
-+    off_t inoff, outoff, *inp, *outp;
-+    abi_long ret;
-+
-+    inp = outp = NULL;
-+    if (inofftp != 0 && !access_ok(VERIFY_WRITE, inofftp, sizeof(off_t))) {
++    if (!lock_user_struct(VERIFY_READ, target_acl, target_addr, 1)) {
 +        return -TARGET_EFAULT;
-+    } else if (inofftp != 0) {
-+        inoff = tswap64(*(off_t *)g2h_untagged(inofftp));
-+        inp = &inoff;
 +    }
-+    if (outofftp != 0 && !access_ok(VERIFY_WRITE, outofftp, sizeof(off_t))) {
-+        return -TARGET_EFAULT;
-+    } else if (outofftp != 0) {
-+        outoff = tswap64(*(off_t *)g2h_untagged(outofftp));
-+        outp = &outoff;
++    __get_user(host_acl->acl_maxcnt, &target_acl->acl_maxcnt);
++    __get_user(host_acl->acl_cnt, &target_acl->acl_cnt);
++
++    if (host_acl->acl_maxcnt > ACL_MAX_ENTRIES ||
++        host_acl->acl_cnt > ACL_MAX_ENTRIES) {
++        unlock_user_struct(target_acl, target_addr, 0);
++        return -TARGET_EINVAL;
 +    }
 +
-+    ret = get_errno(safe_copy_file_range(infd, inp, outfd, outp, len,
-+        flags));
-+
-+    if (!is_error(ret)) {
-+        if (inofftp != 0) {
-+            *(off_t *)g2h_untagged(inofftp) = tswap64(inoff);
-+        }
-+        if (outofftp != 0) {
-+            *(off_t *)g2h_untagged(outofftp) = tswap64(outoff);
-+        }
++    for (i = 0; i < host_acl->acl_cnt; i++) {
++        __get_user(host_acl->acl_entry[i].ae_tag,
++            &target_acl->acl_entry[i].ae_tag);
++        __get_user(host_acl->acl_entry[i].ae_id,
++            &target_acl->acl_entry[i].ae_id);
++        __get_user(host_acl->acl_entry[i].ae_perm,
++            &target_acl->acl_entry[i].ae_perm);
++        __get_user(host_acl->acl_entry[i].ae_entry_type,
++            &target_acl->acl_entry[i].ae_entry_type);
++        __get_user(host_acl->acl_entry[i].ae_flags,
++            &target_acl->acl_entry[i].ae_flags);
 +    }
-+    return ret;
++
++    unlock_user_struct(target_acl, target_addr, 0);
++    return 0;
 +}
 +
-+static inline abi_long do_freebsd___specialfd(int type, abi_ulong req,
-+    size_t len)
++abi_long h2t_freebsd_acl(abi_ulong target_addr, struct acl *host_acl)
 +{
-+    abi_long ret;
++    uint32_t i;
++    struct target_freebsd_acl *target_acl;
 +
-+    ret = -TARGET_EINVAL;
-+    switch (type) {
-+    case TARGET_SPECIALFD_EVENT: {
-+        struct specialfd_eventfd evfd;
-+        struct target_specialfd_eventfd *target_eventfd;
++    if (host_acl->acl_maxcnt > ACL_MAX_ENTRIES ||
++        host_acl->acl_cnt > ACL_MAX_ENTRIES) {
++        return -TARGET_EINVAL;
++    }
 +
-+        if (!lock_user_struct(VERIFY_READ, target_eventfd, req, 1)) {
-+            return -TARGET_EFAULT;
-+        }
++    if (!lock_user_struct(VERIFY_WRITE, target_acl, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
 +
-+        evfd.initval = tswap32(target_eventfd->initval);
-+        evfd.flags = tswap32(target_eventfd->flags);
-+        ret = get_errno(syscall(SYS___specialfd, type, &evfd, sizeof(evfd)));
-+        unlock_user_struct(target_eventfd, req, 0);
++    __put_user(host_acl->acl_maxcnt, &target_acl->acl_maxcnt);
++    __put_user(host_acl->acl_cnt, &target_acl->acl_cnt);
++
++    for (i = 0; i < host_acl->acl_cnt; i++) {
++        __put_user(host_acl->acl_entry[i].ae_tag,
++            &target_acl->acl_entry[i].ae_tag);
++        __put_user(host_acl->acl_entry[i].ae_id,
++            &target_acl->acl_entry[i].ae_id);
++        __put_user(host_acl->acl_entry[i].ae_perm,
++            &target_acl->acl_entry[i].ae_perm);
++        __put_user(host_acl->acl_entry[i].ae_entry_type,
++            &target_acl->acl_entry[i].ae_entry_type);
++        __put_user(host_acl->acl_entry[i].ae_flags,
++            &target_acl->acl_entry[i].ae_flags);
++    }
++
++    unlock_user_struct(target_acl, target_addr, 1);
++    return 0;
++}
++
++abi_long t2h_freebsd_acl_type(acl_type_t *host_type, abi_long target_type)
++{
++
++    switch (target_type) {
++    case TARGET_FREEBSD_ACL_TYPE_ACCESS_OLD:
++        *host_type = ACL_TYPE_ACCESS_OLD;
 +        break;
-+    }
-+    }
 +
-+    return ret;
++    case TARGET_FREEBSD_ACL_TYPE_DEFAULT_OLD:
++        *host_type = ACL_TYPE_DEFAULT_OLD;
++        break;
++
++    case TARGET_FREEBSD_ACL_TYPE_ACCESS:
++        *host_type = ACL_TYPE_ACCESS;
++        break;
++
++    case TARGET_FREEBSD_ACL_TYPE_DEFAULT:
++        *host_type = ACL_TYPE_DEFAULT;
++        break;
++
++    case TARGET_FREEBSD_ACL_TYPE_NFS4:
++        *host_type = ACL_TYPE_NFS4;
++        break;
++
++    default:
++        return -TARGET_EINVAL;
++    }
++    return 0;
 +}
 +
-+#endif /* FREEBSD_OS_FILE_H */
 diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 06148fe3ce..4fc230e8e5 100644
+index 0c729da0ab..f385034a53 100644
 --- a/bsd-user/freebsd/os-syscall.c
 +++ b/bsd-user/freebsd/os-syscall.c
-@@ -44,6 +44,7 @@
+@@ -17,6 +17,7 @@
+  *  You should have received a copy of the GNU General Public License
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
++#define _ACL_PRIVATE
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+ #include "qemu/path.h"
+@@ -43,6 +44,7 @@
+ #include "bsd-socket.h"
+ 
+ /* BSD dependent syscall shims */
++#include "os-extattr.h"
  #include "os-stat.h"
  #include "os-proc.h"
  #include "os-signal.h"
-+#include "os-file.h"
- #include "os-misc.h"
- 
- /* I/O */
-@@ -65,6 +66,9 @@ safe_syscall3(ssize_t, writev, int, fd, const struct iovec *, iov, int, iovcnt);
- safe_syscall4(ssize_t, pwritev, int, fd, const struct iovec *, iov, int, iovcnt,
-     off_t, offset);
- 
-+safe_syscall6(ssize_t, copy_file_range, int, infd, off_t *, inoffp, int, outfd,
-+    off_t *, outoffp, size_t, len, unsigned int, flags);
-+
- /* used in os-proc */
- safe_syscall4(pid_t, wait4, pid_t, wpid, int *, status, int, options,
-     struct rusage *, rusage);
-@@ -692,6 +696,27 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_undelete(arg1);
-         break;
- 
-+    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
-+        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
-+        ret = do_freebsd_close_range(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___realpathat:
-+        /* __realpathat(2) (XXX no realpathat()) */
-+        ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_copy_file_range:
-+        ret = do_freebsd_copy_file_range(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___specialfd:
-+        ret = do_freebsd___specialfd(arg1, arg2, arg3);
-+        break;
-+
-         /*
-          * ioctl(2)
-          */
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 47aa01fbb5..88dd7a763a 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -418,6 +418,16 @@ struct target_freebsd_flock {
- /* user: vfork(2) semantics, clear signals */
- #define TARGET_RFSPAWN (1U << 31)
- 
-+/* sys/specialfd.h */
-+enum target_specialfd_type {
-+    TARGET_SPECIALFD_EVENT         = 1,
-+};
-+
-+struct target_specialfd_eventfd {
-+    unsigned int initval;
-+    int flags;
-+};
-+
- /*
-  *  sys/uuid.h
-  */
 -- 
 2.55.0
 
