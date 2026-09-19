@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C357C982D7
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F5CC982D7
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Sep 2026 16:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x7yEt-0002l4-LX; Sat, 19 Sep 2026 12:48:35 -0400
+	id 1x7yFt-0003mR-3R; Sat, 19 Sep 2026 12:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yEl-0002kM-8G
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:28 -0400
-Received: from mail-oo2-x0d.google.com ([2607:f8b0:4864:31::d])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFc-0003Hu-If
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:20 -0400
+Received: from mail-oo2-x2a.google.com ([2607:f8b0:4864:31::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yEj-00086Q-1G
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:48:27 -0400
-Received: by mail-oo2-x0d.google.com with SMTP id
- 006d021491bc7-6bc475ffcf6so809662eaf.1
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:48:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x7yFa-0008Mc-Ao
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 12:49:20 -0400
+Received: by mail-oo2-x2a.google.com with SMTP id
+ 006d021491bc7-6c901f4bfffso1001066eaf.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 09:49:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836503; x=1790441303;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789836557; x=1790441357;
  darn=nongnu.org; 
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7lB1+7btwxyBVuXCNR9un9F7lJLAjSla84MCAwtJbj8=;
- b=AQQOM/eJ9W8+W67b4wC5lwJBXzUEjTkmdKiKzNOyKDwgL+G+yZW8WRhc8xNDWFCUtM
- 2oMmR/hYIVxTsQAO8O/qC0YKMuXy1M0t3ejEHj7C0If1kisuTyvR3aGhBlNpnfMkD4JM
- a4lY06iYZ3A8ia2KyfhWwFmD+xph1oFli4OYe2rZ0FsgT6el1XLDMcEam82Q4N/aSGAH
- v3sCXMK0XggiVCwd1la1mMoMC9mQFpXeno/sEuZ+D2jPrP5u8FbsFg1EN+8MhstvD4K3
- 3i2CFe8AWzOi5GlkdnZV1kIMKv/D32JlJpgd/vTlev3leQUbo8mnBjG13fcyrNXtIVBL
- 4zLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789836503; x=1790441303;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=7lB1+7btwxyBVuXCNR9un9F7lJLAjSla84MCAwtJbj8=;
- b=DmoiBk5ljfcDy9zwfuQUPicRJpRkC+5jafaPYUxox2VerwBRsYpkO98kp4NL74ybKG
- EWnnflYfgwsTzv8sdFDlysy8nT3M8uohjlGfznMpmfPacjss5JsKC1LXsky7pYp0sudV
- fA3p5+WA+N/QmxNJMdQGXjaD81quiuGl5ASTxte9K4YkuiciykaDFCO9jjUl77Fen8JQ
- EQBo28MGsXfQDiRGMRzK39mf3aRuEC4SV0DtVo1fawpNaXDlEuzXmUiBnlYr/kHQhtpV
- rtc+r1lS+PTJ7LnGR5IgP4h8JNevZ76UbX21bDnl1Nlj45bWhmRpwNdA7JCIGPX9sAt3
- Ev2w==
-X-Gm-Message-State: AFuF++lLxa/1JW2lIV79/ZbPn6UB/kg9WTQLNfBSMODnlPxH0oYmn/xC
- IMIQWflGBgpy/mlpk2offJL5LC/XnA8Mq8KBCpYc7rGAGjAj/NfiUBOwdfVA8rTj/u1JirQtz5R
- 376kxOnw=
-X-Gm-Gg: AYBFou0DW8ShzHDdTwM2kNXn+6c0inVeZmbxFZH4FdycuoqN0gjxIqbc4/ZKwb2W4k+
- MIxt9o6osqkSfpJGuWOEgW7hWZhScO6i+Es2tqFoOui7WdnUlctpHwe55Wp870WXVSTdhxktDZa
- cXAh9uxos+Kbyb8/FXBGhd7nvlBo2W3XbYmtzvcD2nUpqFdANlUbbzkcp6jjYtE7KpKmF6yTLRX
- bLEZ8kChbJsHy7M1y6V2kwxMRvFS/I+lXPBJ5y72A0Bm1jIHf0VtOoJIsg9LGt9hFUC3tY9lJad
- QmT1we/f/bCG4MKp3OYMnhxUeXGCmlZErDY08jDfw0Vnnz6TqW9TOJ3P3x/UROopCBBgfGNfgNr
- 8tgu7j12YGqxb7lb2pKvnzpAavA9r4dAy/g01U9WuwkjBVaqKixJoap4K7WkVeaeMbWbhGXAYxA
- ybvUS3CuDODMrYXRLAWQGUzInnazOSa7rqx9Y+tCWFgoX23SJOiO4DnuUKTQ==
-X-Received: by 2002:a05:6820:6ae3:b0:6c7:af50:b2f4 with SMTP id
- 006d021491bc7-6ca9a027107mr5403301eaf.11.1789836502864; 
- Sat, 19 Sep 2026 09:48:22 -0700 (PDT)
+ bh=7dinv1Ids7MzQ5PXZfjAquIevvBnoK8Z7rCrc5mpfYI=;
+ b=zpi1JDZoszCLuVDvLBrUU0KeaIC0w6Md4MrhcuWcUJXJkeQFkjoQ/RukLbR8Am/GrB
+ PSuubn+VRTd0AXUS6nAHNcxLNZQ53u2q8d5Huqvh+oSJhXVvk0VWQR1emYl/OxntTsvu
+ a9egc80DL2TwW7P/9CfDqcN25AC1Go07qvTnqBxpqJC6o0W2w21aPHyWVFzH3H+E4UC/
+ Iyn9vFgCs3+SPNUF0dK58KWL4kvfphEKPvwJss0zTuGgiu6YFoIJ+iS8Zu4UHJ3XSfc2
+ KtCNloxkNOoM59twb5UMI9LfBWmHjqxdXZJW5/QkfEJZtr7xe0y3QeEwptr7bSv5jDB6
+ 0u3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789836557; x=1790441357;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=7dinv1Ids7MzQ5PXZfjAquIevvBnoK8Z7rCrc5mpfYI=;
+ b=UBxdYkFKyC5B4C+LE6mGf/Pgzp/PqfdbvEpF897JmOxGaKTOTqP5Qnu08arxdDqk7A
+ ltZwS6oWpnxZKuC1oToDcYn2yjViyOiAdtxvnEwnYjd+6gdfi48A7Mp1YaHNL6bvfr8e
+ 3IKNYNn7b4zTaiKJj2xmpDsKMVi362jOi9bybAgeH0M3/qFJK1pAzMab7q7AL2yGHESX
+ QI614wAaxhLRdOIsEEJeYY+jd9o4mB/gYlbAvWqbtUdP1pYksYqsrwf8MfL9vcjYHWPX
+ Fn29jq2NMJaCpcX6PT66bEO0sblMkYdVvny9P/I8ALYhNI2S5zN+dVHz7jiRhc9Gt0nq
+ ZnAQ==
+X-Gm-Message-State: AFuF++ma3woV44tFU1GeDbTN2nwK6i8QDS/hqcglLaYzYaKyKITovNtU
+ y965IQ7qTt7XsDKzhxc5FAtR094JMviQzGBOYmQemUDXwYUM8R6/qgsl6gTkrLASCFN4gJbB7s1
+ 9eQ1UU1M=
+X-Gm-Gg: AYBFou3NZi1hqsn3Ek57+s6ZNUYWu/e0Uzx1dLci2CfqNexDMyZYNGqyDNF5w/+u6QY
+ hhm7u3L0aKGD9R9SD8EpQFcckbELWvDo8TCd4gt3OJ7E3J+iYAGGHtp9b1TkoVXaHP9N9lGBYXl
+ vnHyZ+ZKfBv9i7EVmbMUR6upaBTpXrvB+siUCsiOPAKotRB8wopJTZRrnQHa1B2ON0+F4fmBOQp
+ /Goj8eNYKw6PDc0vEf+jjK9MyuvvXwU5HQQBuLku+urp5t9HTZP3UM/VxmnG1QbZQcCfaqLUVMY
+ vkQT2d2qnZaD6J5n0tASebKGUk1AgOSN5qrnMO/4PU2Zloz6YDq9QIOqI3xuV7q+6m6ezEz3yLy
+ /X9n97lZw8dVIg/nrOiAxEMQfWxJIZgVyobdDiH/pEHkEULROWJL8aGufaZqSCUA7f4CRftkytH
+ qRWvn+vFwtv7pLwpzAYxjo9KIiiQwx8i3IFCFzYWzMsq4MFKSBwxKplsAWw3398MjTIlj+mg==
+X-Received: by 2002:a05:6820:c90:b0:6ca:453c:affd with SMTP id
+ 006d021491bc7-6ca9d44ad06mr5353439eaf.57.1789836557288; 
+ Sat, 19 Sep 2026 09:49:17 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.48.21
+ 006d021491bc7-6cd35712c0csm3281927eaf.11.2026.09.19.09.49.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 09:48:21 -0700 (PDT)
+ Sat, 19 Sep 2026 09:49:15 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>,
-	Kyle Evans <kevans@freebsd.org>
-Subject: [PULL 00/41] Misc 2026q2 v4 patches
-Date: Sat, 19 Sep 2026 10:47:28 -0600
-Message-ID: <20260919164810.70151-1-imp@bsdimp.com>
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Stacey Son <sson@FreeBSD.org>,
+ =?UTF-8?q?Mika=C3=ABl=20Urankar?= <mikael.urankar@gmail.com>,
+ Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 25/41] bsd-user: Add kqueue and kevent functions to os-time.h
+Date: Sat, 19 Sep 2026 10:47:53 -0600
+Message-ID: <20260919164810.70151-26-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260919164810.70151-1-imp@bsdimp.com>
+References: <20260919164810.70151-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::d; envelope-from=imp@bsdimp.com;
- helo=mail-oo2-x0d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:31::2a;
+ envelope-from=imp@bsdimp.com; helo=mail-oo2-x2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,144 +104,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3b5d71cc3652fa7f5ecc449f05dae3ead2b718d7:
+Add event notification system call shims: kqueue, freebsd11_kevent
+(legacy 32-bit data field), and kevent (with 64-bit ext fields).
 
-  Merge tag 'pull-ufs-20260918' of https://gitlab.com/jeuk20.kim/qemu into staging (2026-09-17 15:18:09 -1000)
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/freebsd/os-time.h | 173 +++++++++++++++++++++++++++++++++++++
+ bsd-user/syscall_defs.h    |  22 +++++
+ 2 files changed, 195 insertions(+)
 
-are available in the Git repository at:
-
-  git@gitlab.com:bsdimp/qemu-from-official.git tags/misc-2026q2-v4-pull-request
-
-for you to fetch changes up to cec065d3f2e9b67bb2b4beaf03df07c45429fecf:
-
-  bsd-user Update random_seed on thread creation (2026-09-19 10:35:35 -0600)
-
-----------------------------------------------------------------
-Misc 2026q2 v4 patches
-
-V2: Fix build on FreeBSD 14
-
-bsd-user: Upstream most of the remaining system calls
-
-Upstream the file, thread, socket and remaining signal system calls (too
-numerous to list here).
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQJPBAABCgA5FiEEIDX4lLAKo898zeG3bBzRKH2wEQAFAmquvKUbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwzAAoJEGwc0Sh9sBEA0oMP/RIw/W+c+r0Gki0fejuk
-ysGI0BI9fpUc2y/1ZuDDODKFgkFjeFlWgrC1jbd+zvbe3ZtZ6nlrhwwWc8F47XCs
-VSHTQR5JkazC+WMdBDbWvjDpoxl3c3XHVx/l/gd8p+QUsRM9nf0LSK7jSfyrsI7g
-SO+7MTeYvFOlqee4vVre6ZcfbdL6Nbl+08BcS6T4uRKqudN09xF6dbS5cEltMVc6
-HM/mWq+KNf+cZxbUw9X1ZJeWzBJzn4VL9iDm4P1KdkR5T2uNqVN+TLY1QTy5FvJ8
-xJsPx4Mxr/uI2lBBtnSGiVydMsdDRY5z0c/gKO8vCjvr3wNQDaKokavnPkNNqGIl
-WGe2d0RTM7+giWHKrx/wj5DhYtHyhPf3+OVduPPqWHkuFY0fP2GT4roNp2F1ygc+
-BfW5Fxv3z12D2+DmuG81I5y3XZ/BMM1aG6aqlizix5uWoDPPFcMSrVFHsET20rey
-Tn9Q3RdDEDvWpbUjWeKF2SPugjI0U8yynmU08lR3Piu9GjB5KlQ9gLpgMU4cfTa2
-oM9hupTKjPqKPaMsxfooplfD8zOkSRU1AadWylZ8s98TbkyP8nn/VT2jM0riUwKZ
-U1ZgpCh7Qw3geLjEH6lx/TgwCXA61XjRL4msDN9eY+J95x4ETtIzdytDpnRM6mqm
-lbtqoP8P7ZH7A4nFdyI9UsCy
-=jBg1
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-
-Warner Losh (41):
-  bsd-user: Upstream most of the remaining system calls
-  bsd-user: Rename cpu_env to env throughout bsd-user
-  bsd-user: Fix copy direciton in preadv
-  bsd-user: Add bsd-signal.h with sigaction through sigreturn
-  bsd-user: Add signal shims sigwait through kill and os-signal.h
-  bsd-user: Add signal system call dispatch
-  bsd-user: move sys/shm.h lines
-  bsd-user: Remove mmap defines
-  bsd-user: Use target_suseconds_t
-  bsd-user: Move sys/uuid.h defines
-  bsd-user: Fix realpathat for FreeBSD 15.0 and newer
-  bsd-user: Add os-file.h with chflagsat, close_range, and more
-  bsd-user: Add poll, poll2, lseek, pipe, and swap system call shims
-  bsd-user: Add FreeBSD socket helpers and sockaddr conversion
-  bsd-user: Add bsd-socket.h with bind through getsockname
-  bsd-user: Add socket shims socketpair through shutdown
-  bsd-user: Commit the generated os-sockopt.h files
-  bsd-user: Implement both getsockopt and setsockopt
-  bsd-user: Add FreeBSD socket system calls
-  bsd-user: Add os-socket.[ch] sendmsg, recvmsg and cmsg
-  bsd-user: Add socket system call dispatch
-  bsd-user: Add os-time.h with clock and time-of-day functions
-  bsd-user: Add utimes, futimes, and ktimer functions to os-time.h
-  bsd-user: Add select, pselect, and ppoll to os-time.h
-  bsd-user: Add kqueue and kevent functions to os-time.h
-  bsd-user: Add sigtimedwait, itimer, and futimens to os-time.h
-  bsd-user: Add os-time.c and time-related type definitions
-  bsd-user: Add time system call dispatch
-  bsd-user: Add cpu_copy and make init_task_state non-static
-  bsd-user: Add os-thread.h with thr and context functions
-  bsd-user: Add do_freebsd__umtx_op to os-thread.h
-  bsd-user: Add thread system call dispatch
-  bsd-user: Add os-extattr.h with file and fd extattr functions
-  bsd-user: Add link and list extattr functions to os-extattr.h
-  bsd-user: Add ACL system call shims to os-extattr.h
-  bsd-user: Add os-extattr.c with ACL conversion functions
-  bsd-user: Add extended attribute and ACL system call dispatch
-  bsd-user: Add scheduler and cpuset functions to os-misc.h
-  bsd-user: Add scheduler, cpuset, kmod, and misc syscall dispatch
-  bsd-user: Move qemu_guest_random_seed_main to same as linux-user
-  bsd-user Update random_seed on thread creation
-
- bsd-user/aarch64/target.h     |    2 +-
- bsd-user/arm/target.h         |    2 +-
- bsd-user/bsd-file.h           |  168 +++-
- bsd-user/bsd-mem.h            |    4 +-
- bsd-user/bsd-proc.h           |   26 +-
- bsd-user/bsd-signal.h         |  231 +++++
- bsd-user/bsd-socket.c         |   98 ++
- bsd-user/bsd-socket.h         |  283 ++++++
- bsd-user/freebsd/meson.build  |    8 +-
- bsd-user/freebsd/os-extattr.c |  118 +++
- bsd-user/freebsd/os-extattr.h |  661 +++++++++++++
- bsd-user/freebsd/os-file.h    |  129 +++
- bsd-user/freebsd/os-misc.h    |  466 ++++++++-
- bsd-user/freebsd/os-proc.c    |    4 +-
- bsd-user/freebsd/os-proc.h    |   26 +-
- bsd-user/freebsd/os-signal.h  |   20 +
- bsd-user/freebsd/os-socket.c  |  239 +++++
- bsd-user/freebsd/os-socket.h  |  428 +++++++++
- bsd-user/freebsd/os-sockopt.h |  318 +++++++
- bsd-user/freebsd/os-stat.h    |    8 +-
- bsd-user/freebsd/os-sys.c     |    4 +-
- bsd-user/freebsd/os-syscall.c |  790 ++++++++++++++--
- bsd-user/freebsd/os-thread.c  | 1684 +++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-thread.h  |  596 ++++++++++++
- bsd-user/freebsd/os-time.c    |  347 +++++++
- bsd-user/freebsd/os-time.h    |  989 +++++++++++++++++++
- bsd-user/freebsd/qemu-os.h    |   48 +
- bsd-user/i386/target.h        |    2 +-
- bsd-user/main.c               |   38 +-
- bsd-user/meson.build          |    1 +
- bsd-user/qemu-bsd.h           |    8 +
- bsd-user/qemu.h               |   48 +-
- bsd-user/riscv/target.h       |    2 +-
- bsd-user/signal-common.h      |    4 +
- bsd-user/signal.c             |   67 ++
- bsd-user/syscall_defs.h       |  449 +++++++--
- bsd-user/x86_64/target.h      |    2 +-
- 37 files changed, 8112 insertions(+), 206 deletions(-)
- create mode 100644 bsd-user/bsd-signal.h
- create mode 100644 bsd-user/bsd-socket.c
- create mode 100644 bsd-user/bsd-socket.h
- create mode 100644 bsd-user/freebsd/os-extattr.c
- create mode 100644 bsd-user/freebsd/os-extattr.h
- create mode 100644 bsd-user/freebsd/os-file.h
- create mode 100644 bsd-user/freebsd/os-signal.h
- create mode 100644 bsd-user/freebsd/os-socket.c
- create mode 100644 bsd-user/freebsd/os-socket.h
- create mode 100644 bsd-user/freebsd/os-sockopt.h
- create mode 100644 bsd-user/freebsd/os-thread.c
- create mode 100644 bsd-user/freebsd/os-thread.h
- create mode 100644 bsd-user/freebsd/os-time.c
- create mode 100644 bsd-user/freebsd/os-time.h
-
+diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
+index 5f537fac40..302872dd8e 100644
+--- a/bsd-user/freebsd/os-time.h
++++ b/bsd-user/freebsd/os-time.h
+@@ -635,5 +635,178 @@ static inline abi_long do_freebsd_ppoll(CPUArchState *env, abi_long arg1,
+ }
+ 
+ /* kqueue(2) */
++static inline abi_long do_freebsd_kqueue(void)
++{
++
++    return get_errno(kqueue());
++}
++
++/* kevent(2) */
++/* XXX Maybe some day, consolidate these two... */
++static inline abi_long do_freebsd_freebsd11_kevent(abi_long arg1,
++    abi_ulong arg2, abi_long arg3, abi_ulong arg4, abi_long arg5, abi_long arg6)
++{
++    abi_long ret;
++    struct kevent *changelist = NULL, *eventlist = NULL;
++    struct target_freebsd11_kevent *target_changelist, *target_eventlist;
++    struct timespec ts;
++    int i;
++
++    if (arg3 != 0) {
++        target_changelist = lock_user(VERIFY_READ, arg2,
++                                      sizeof(*target_changelist) * arg3, 1);
++        if (target_changelist == NULL) {
++            return -TARGET_EFAULT;
++        }
++
++        changelist = alloca(sizeof(struct kevent) * arg3);
++        memset(changelist, '\0', sizeof(struct kevent) * arg3);
++        for (i = 0; i < arg3; i++) {
++            __get_user(changelist[i].ident, &target_changelist[i].ident);
++            __get_user(changelist[i].filter, &target_changelist[i].filter);
++            __get_user(changelist[i].flags, &target_changelist[i].flags);
++            __get_user(changelist[i].fflags, &target_changelist[i].fflags);
++            __get_user(changelist[i].data, &target_changelist[i].data);
++            /* __get_user(changelist[i].udata, &target_changelist[i].udata); */
++#if TARGET_ABI_BITS == 32
++            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
++            tswap32s((uint32_t *)&changelist[i].udata);
++#else
++            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
++            tswap64s((uint64_t *)&changelist[i].udata);
++#endif
++        }
++        unlock_user(target_changelist, arg2, 0);
++    }
++
++    if (arg5 != 0) {
++        eventlist = alloca(sizeof(struct kevent) * arg5);
++    }
++    if (arg6 != 0) {
++        if (t2h_freebsd_timespec(&ts, arg6)) {
++            return -TARGET_EFAULT;
++        }
++    }
++    ret = get_errno(safe_kevent(arg1, changelist, arg3, eventlist, arg5,
++                                arg6 != 0 ? &ts : NULL));
++
++    if (arg5 == 0) {
++        return ret;
++    }
++
++    if (!is_error(ret)) {
++        target_eventlist = lock_user(VERIFY_WRITE, arg4,
++                                     sizeof(*target_eventlist) * arg5, 0);
++        if (target_eventlist == NULL) {
++            return -TARGET_EFAULT;
++        }
++        for (i = 0; i < ret; i++) {
++            __put_user(eventlist[i].ident, &target_eventlist[i].ident);
++            __put_user(eventlist[i].filter, &target_eventlist[i].filter);
++            __put_user(eventlist[i].flags, &target_eventlist[i].flags);
++            __put_user(eventlist[i].fflags, &target_eventlist[i].fflags);
++            __put_user(eventlist[i].data, &target_eventlist[i].data);
++            /* __put_user(eventlist[i].udata, &target_eventlist[i].udata);*/
++#if TARGET_ABI_BITS == 32
++            tswap32s((uint32_t *)&eventlist[i].udata);
++            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
++#else
++            tswap64s((uint64_t *)&eventlist[i].udata);
++            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
++#endif
++        }
++        unlock_user(target_eventlist, arg4,
++                    sizeof(*target_eventlist) * ret);
++    }
++    return ret;
++}
++
++/* kevent(2) */
++static inline abi_long do_freebsd_kevent(abi_long arg1, abi_ulong arg2,
++        abi_long arg3, abi_ulong arg4, abi_long arg5, abi_long arg6)
++{
++    abi_long ret;
++    struct kevent *changelist = NULL, *eventlist = NULL;
++    struct target_freebsd_kevent *target_changelist, *target_eventlist;
++    struct timespec ts;
++    int i;
++
++    if (arg3 != 0) {
++        target_changelist = lock_user(VERIFY_READ, arg2,
++                sizeof(struct target_freebsd_kevent) * arg3, 1);
++        if (target_changelist == NULL) {
++            return -TARGET_EFAULT;
++        }
++
++        changelist = alloca(sizeof(struct kevent) * arg3);
++        for (i = 0; i < arg3; i++) {
++            __get_user(changelist[i].ident, &target_changelist[i].ident);
++            __get_user(changelist[i].filter, &target_changelist[i].filter);
++            __get_user(changelist[i].flags, &target_changelist[i].flags);
++            __get_user(changelist[i].fflags, &target_changelist[i].fflags);
++            __get_user(changelist[i].data, &target_changelist[i].data);
++            /* __get_user(changelist[i].udata, &target_changelist[i].udata); */
++#if TARGET_ABI_BITS == 32
++            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
++            tswap32s((uint32_t *)&changelist[i].udata);
++#else
++            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
++            tswap64s((uint64_t *)&changelist[i].udata);
++#endif
++            __get_user(changelist[i].ext[0], &target_changelist[i].ext[0]);
++            __get_user(changelist[i].ext[1], &target_changelist[i].ext[1]);
++            __get_user(changelist[i].ext[2], &target_changelist[i].ext[2]);
++            __get_user(changelist[i].ext[3], &target_changelist[i].ext[3]);
++        }
++        unlock_user(target_changelist, arg2, 0);
++    }
++
++    if (arg5 != 0) {
++        eventlist = alloca(sizeof(struct kevent) * arg5);
++    }
++    if (arg6 != 0) {
++        if (t2h_freebsd_timespec(&ts, arg6)) {
++            return -TARGET_EFAULT;
++        }
++    }
++    ret = get_errno(safe_kevent(arg1, changelist, arg3, eventlist, arg5,
++                                arg6 != 0 ? &ts : NULL));
++
++    if (arg5 == 0) {
++        return ret;
++    }
++
++    if (!is_error(ret)) {
++        target_eventlist = lock_user(VERIFY_WRITE, arg4,
++            sizeof(struct target_freebsd_kevent) * arg5, 0);
++        if (target_eventlist == NULL) {
++            return -TARGET_EFAULT;
++        }
++        for (i = 0; i < ret; i++) {
++            __put_user(eventlist[i].ident, &target_eventlist[i].ident);
++            __put_user(eventlist[i].filter, &target_eventlist[i].filter);
++            __put_user(eventlist[i].flags, &target_eventlist[i].flags);
++            __put_user(eventlist[i].fflags, &target_eventlist[i].fflags);
++            __put_user(eventlist[i].data, &target_eventlist[i].data);
++            /* __put_user(eventlist[i].udata, &target_eventlist[i].udata);*/
++#if TARGET_ABI_BITS == 32
++            tswap32s((uint32_t *)&eventlist[i].udata);
++            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
++#else
++            tswap64s((uint64_t *)&eventlist[i].udata);
++            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
++#endif
++            __put_user(eventlist[i].ext[0], &target_eventlist[i].ext[0]);
++            __put_user(eventlist[i].ext[1], &target_eventlist[i].ext[1]);
++            __put_user(eventlist[i].ext[2], &target_eventlist[i].ext[2]);
++            __put_user(eventlist[i].ext[3], &target_eventlist[i].ext[3]);
++        }
++        unlock_user(target_eventlist, arg4,
++                sizeof(struct target_freebsd_kevent) * ret);
++    }
++    return ret;
++}
++
++/* sigtimedwait(2) */
+ 
+ #endif /* FREEBSD_OS_TIME_H */
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 0d7002312f..f4bb687388 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -155,6 +155,28 @@ struct target_freebsd_timeval {
+ #endif
+ };
+ 
++/*
++ * sys/event.h
++ */
++struct target_freebsd11_kevent {
++    abi_ulong  ident;
++    int16_t    filter;
++    uint16_t   flags;
++    uint32_t   fflags;
++    abi_long   data;
++    abi_ulong  udata;
++};
++
++struct target_freebsd_kevent {
++    abi_ulong  ident;
++    int16_t    filter;
++    uint16_t   flags;
++    uint32_t   fflags;
++    int64_t data;
++    abi_ulong  udata;
++    uint64_t  ext[4];
++};
++
+ /*
+  *  sys/resource.h
+  */
 -- 
 2.55.0
 
