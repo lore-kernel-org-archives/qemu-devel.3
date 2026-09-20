@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8919C982CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 09:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E956C982D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 09:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8DdL-0005Qb-DR; Sun, 20 Sep 2026 05:14:51 -0400
+	id 1x8DpZ-0007JN-O0; Sun, 20 Sep 2026 05:27:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x8Dd6-0005OO-DR; Sun, 20 Sep 2026 05:14:36 -0400
-Received: from mgamail.intel.com ([192.198.163.5])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x8DpU-0007J8-LI
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 05:27:26 -0400
+Received: from ci-2001k-snip6-6.eps.apple.com ([2a01:b747:3005:205::6d]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1x8Dcu-00034B-Nu; Sun, 20 Sep 2026 05:14:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1789895665; x=1821431665;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=v2rtAa7OnoLGt7yC9nrc7236Ndj29tw5GLmsPQj3eMw=;
- b=bcm+Nn7bcA0PiBCT3jxjlfyGjyvL4LbJ7wf3QXIAjeyQFFyH/ZVITZY5
- zXNjuRyn68G+pIgxnkleIFtk02cgCcfJduMRrby7e/sZQZSd4Yg5aacCc
- edcyzMtG0K6SsOznF1TZH5DEMh5od/rw5MdxYkYkN0+T6UCOtBMKLDFco
- NmISkWiEDgA1tfAasoI1dhXF1ie827WvWgYhxYD7qVTMskK2z2mXfNLJK
- y2umqqoLuH9JTcptipWaCvk6qvR+YEWQyXdojF/NLOwi4Q1xoZY0j5TQQ
- olAgwWDEESJ/wGInq4lxcdyY0ubAqQbvARhS2Wwf+/L8BnVZhmSz3ktHg g==;
-X-CSE-ConnectionGUID: cCAFZ/cIRL6GdUxeO1R5aA==
-X-CSE-MsgGUID: twKwbfhtR3afDWYJAUTtDQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11910"; a="905944"
-X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; 
-   d="scan'208";a="905944"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa115.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2026 02:14:18 -0700
-X-CSE-ConnectionGUID: B+ViNU7pTSSOhzNDpcDBEw==
-X-CSE-MsgGUID: hekfD3bbTq+2qIGMHzRWvw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; d="scan'208";a="271357721"
-Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Sep 2026 02:14:12 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Manish Honap <mhonap@nvidia.com>
-Cc: alex@shazbot.org, ankita@nvidia.com, jic23@kernel.org,
- dave.jiang@intel.com, alejandro.lucero-palau@amd.com, smadhavan@nvidia.com,
- pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, pbonzini@redhat.com, eric.auger@redhat.com,
- peter.maydell@linaro.org, richard.henderson@linaro.org, clg@redhat.com,
- cohuck@redhat.com, kjaju@nvidia.com, vsethi@nvidia.com, zhiw@nvidia.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v2 07/10] hw/vfio/pci: Map the CXL memory on the guest
- decoder commit
-Date: Sun, 20 Sep 2026 17:14:03 +0800
-Message-ID: <20260920091403.716987-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260916184412.3825713-8-mhonap@nvidia.com>
-References: <20260916184412.3825713-8-mhonap@nvidia.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.5; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1x8DpS-0004p1-CD
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 05:27:24 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPS id
+ D37BC18000D3; Sun, 20 Sep 2026 09:27:13 +0000 (UTC)
+X-ICL-RepId: 01a0be24-2023-7d7a-9c73-819dad91c20b
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIPTHFacioAXX86AVQaXwJFAFUKLnYuH0MAPAZUDioLRHhOdS1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1789896434; x=1792488434;
+ bh=iEyBt6Nu1wrcjo/ror+dF8hn+n5mavu1nRmsRpxz/S8=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=EBenj5dmK3BmZYJ0xsAXuOR5kIKkVMiDxb5mQDprSWfVBbSw2Z2x5G3uUS0YzMjgtR1sWbhkM9nQf3SGwcYCJZCnWQKmdZ2dpzRNfVsha+f9vH3BVzLqwdN0BBdhJiTtQCpOA6yFgQ/ibRMoxUr9ToYR/PswkL5y6XCFoxgDYC/MeFmUkIhHuy2kqy/9K6NwHkJUlf8uJwjourjsBHtMYXNCXG9FKEekXTq3WnyK2xijmnvqHzXoaN6BtGi2HAVqh9AYiz5cqngnyXgg30vbxXbrWWWhCWHxmfX/kFLKx+cCbYfyOdmyLnrw14LW3rgm/XwEjAB/AjgAe3+5E1/TWQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPSA id
+ BF8FE18000CD; Sun, 20 Sep 2026 09:27:12 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH] whpx: i386: avoid updating hflags for vmexits
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260920020320.1466-1-bodenrandin1@gmail.com>
+Date: Sun, 20 Sep 2026 11:27:00 +0200
+Cc: qemu-devel@nongnu.org,
+ Pedro Barbuda <pbarbuda@microsoft.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <264B7EA2-FB29-4059-9CAE-39D599A94A6F@unpredictable.fr>
+References: <20260920020320.1466-1-bodenrandin1@gmail.com>
+To: Boden Randin <bodenrandin1@gmail.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Authority-Info-Out: v=2.4 cv=ddCNHHXe c=1 sm=1 tr=0 ts=6aafa6f2
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=DYtnV2cK7ZQKjr27wRUA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 7-YWNCSwqGRoOyjGzcKX0i6Z-Pd-Ncnb
+X-Proofpoint-ORIG-GUID: 7-YWNCSwqGRoOyjGzcKX0i6Z-Pd-Ncnb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIwMDEzNiBTYWx0ZWRfXxJCSo0MRRiEM
+ mr4yWPeySgKxM/T3jKifZhO76MjcGCGNScXJY9Z9g1+Ww+oc5GIHXoLK5tFAd/hZXPIX9TT+bO7
+ i+xKMGvs5ozlipxJN0HQx/Q2VCZKviGToj7vM2Re4m+3sVyjzZdewsgZdvLuEZiey5RUmpL1ymI
+ GeqZFReCB85NLb2tf1Oh0TQs5coE291QEgE41qUV+Dq6IeKGJmIGiUqPSHBZFE6CB7IQn0AO9E6
+ W166fphMtifrQnk9MQnzjxTOCRI8kBbbspJzaBPhKyB4zkEyPgVMOhEnz8oPt36WSnHKqyAKs5l
+ oUp6ul0ZNzM16jzUc8KpWhlYRXeEQH16B1VodJiF4GhzRlRzaTw7oSJP5jezj0=
+X-JNJ: AAAAAAABK2mkMtfwG7bQOY/4BZSXdm/sQ7IAljqCpcPcPRM2Osddyv9Qf68M1qXup1dobiJ5U3wTXqT73NdGtJwEvvOZ8qRMlGF//ZtGFUTXVg/T4j457CbQx9xr9h5F/Zw4C0g1n2pxuUFpQan7gBbv9+4bAsHL6eIHVBxckMCbfizforpTAKCr6Cw5R6j0TzmMRSfr9lvAtxsLhziGNRE2YVgaaav+Ez3DPodsOPZn8MtmeL3CBFcpvyZ5ZvJGsBtf/I+ZYoSCckmq/i60dG/iLlzwdYjSKRpf2SKlWzvrd5dVHyxHNaQklbIqgvM903vZHDRfTJaRNL/gZC5Pv7rhyyX2b/jFDiH+8gLZ+B9rmVH5zecogbiyA9YNys+URl010bKLSw9ou2GocXfl+d2SIwlie0YgJPLkzwoMHK+ClzMJo2vYIAg0fmt5KeLdAzKwkSjJBhDjY+8U+j2ldWL/0PMZEukH9RRAH82yWrPHEg6gshNgQwvKLoKhGd+bll3rcox3juj/DS75Jof1/vqxoUonV9DfX8aDeCGdtp28+Ta5nfAUnujLBgNy3DHsTv/zVhVcX1rWsZU/qk/qZnMulWwPj8ogpcx0TkAL6SB86MAC/m3GoVWLeTp5mlP/O8CzvaP/Mkqee5bdq8LY893tsyBDBpCvpORMFG4iyttT8ndyF0jnXXdDGWWzJIhbBe04NmwqJsFFyzqr8RFkdNlOkBTfHIDETMoz0Z7t8JPglFZEHqoQpQc3djHU+TRDiUoaAm4RKXURMfbRMqNjQCCqqyiOXJmwu13FYDMMQj2Wm6wmvxDT1l5eErRhmxrNqDwTPc7heNGTj/RRJAXj1UUcY/ITOggwKv3WzYaqxV+PHrNbcftGeC707lQt+2MNov8FKV4RWDVmtpl8nNFxzn9xO11P5cptjOWy24fm4yo9TLV086fW6VzFbPUsdxNIHnONGDeRw+d5+O0wUQoofGVdhI1e2Il
+ FjJFweOW4t3OlUH2Y0DHg2wxJ2gZ74Szptzf/ewmFgrfyvyjcfoTT/5WJj9xrk2kwcWL01KzZutr3kBbOuyGgBSf1wendcFDYmd7lLoYb/0bS4yU4jo7g6nndBKaY68clr/+AfbwZvJxLnRsmyAgIMNTyZ6CVTqbJgvnEcETE+EDMgmcZz2ecQXA5cP/31Gjb03ceurx8Ncz8OIo1bIB53LUrOw5/jlLxIx+hO3V7Y1+AfI4xpST+MqD3Tda2/PAifdwNPHgyR9/1VMQobrFO28Wu+jcoO2yN/m1XRbdOiQGuLu86fSxEBaiMSDnhCKu5gLX793xs1I6SzcVcSd+/c5/JeTu4C7yRWI0uL5xDWd6iWORGpzI1FltRpumclNAQO4sdj3Wh33AHV9PyiUzAOO4C82RP0IoLONnTym2Kt820ZTiM43U=
+Received-SPF: pass client-ip=2a01:b747:3005:205::6d;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +87,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 17 Sep 2026 00:14:09 +0530, Manish Honap wrote:
-> +     * Record the base the guest programs into a decoder so the commit handler
-> +     * can reject a base other than the device's CFMWS window. The base low
-[...]
-> +        vdev->cxl.guest_base_lo = (uint32_t)data & VFIO_CXL_HDM_BASE_LOW_MASK;
-> +        vdev->cxl.guest_base_written = true;
 
-This answered my v1 question for the kernel v4 FSM model.  With v5
-(20/27) the kernel gives a live read-only view and leaves any write
-virtualization to the VMM, and what QEMU shows the guest is a
-committed, locked decoder at the window base.  A locked decoder
-ignores a base write, but here it is recorded, and if it differs from
-the window base the next rescan unmaps while reads still return
-Committed at the window base.  That is the mismatch the check was
-meant to prevent.  A current Linux guest never writes a locked
-decoder, so it won't trip this.
 
-Is the guest-written base still meant to matter in this model?  If
-not, guest_base_{lo,hi,written} can go.
+> On 20. Sep 2026, at 04:03, Boden Randin <bodenrandin1@gmail.com> =
+wrote:
+>=20
+> whpx_get_registers_for_vmexit only refreshes GPRs, RIP and RFLAGS.
+>=20
+> x86_update_hflags() depends on state not refreshed here, while the =
+code
+> using the fast runtime state does not depend on the hflags it =
+recomputes.
+>=20
+> Signed-off-by: Boden Randin <bodenrandin1@gmail.com>
+> ---
+>=20
+> Notes:
+>    I opted to remove x86_update_hflags() in this patch instead of =
+changing whpx_get_registers_for_vmexit to refresh the registers it =
+requires because I couldn't find any code that depends on hflags after =
+it calls the whpx_get_registers fast path.
+>=20
+>    Please let me know if I missed something or if maintaining the =
+x86_update_hflags call would be preferable. This is my first open-source =
+contribution, so please also let me know if I made any mistakes in the =
+submission process.
+>=20
+> target/i386/whpx/whpx-all.c | 2 --
+> 1 file changed, 2 deletions(-)
+>=20
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index 113f79afb9..79a5256b20 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -744,8 +744,6 @@ static void whpx_get_registers_for_vmexit(CPUState =
+*cpu, WHPXStateLevel level)
+>     rflags_to_lflags(env);
+>=20
+>     assert(idx =3D=3D RTL_NUMBER_OF(whpx_register_names_for_vmexit));
+> -
+> -    x86_update_hflags(env);
+> }
 
-> +     * The kernel runs the lock-on-commit FSM in the write above, so the
-> +     * committed state is settled by now; a control write on any decoder can
+Hi,
 
-Stale now that the kernel no longer acts on the write?
+target/i386/emulate indeed doesn=E2=80=99t use hflags and we do a =
+partial
+register sync instead of a full one.=20
 
-Junjie
+The purpose of not syncing all the registers needed to compute hflags
+is to avoid some of them which aren=E2=80=99t covered by the shared =
+register page -
+thus affecting performance of MMIO accesses.
+
+For reference these are the registers that are safe to fetch without
+tanking performance as they=E2=80=99re part of the shared register page =
+between the
+VMM and the hypervisor as of recent Windows releases (Win11 era):
+
+    pub gp_registers: [u64; 16],
+    pub rip: u64,
+    pub rflags: u64,
+    pub reserved: u64,
+    pub xmm: [u128; 6],
+    pub segment: [u128; 6],
+    // Misc. control registers (cannot be set via this interface).
+    pub cr0: u64,
+    pub cr3: u64,
+    pub cr4: u64,
+    pub cr8: u64,
+    pub efer: u64,
+    pub dr7: u64,
+    pub pending_interruption: HvX64PendingInterruptionRegister,
+    pub interrupt_state: HvX64InterruptStateRegister,
+    pub instruction_emulation_hints: HvInstructionEmulatorHintsRegister,
+
+WHP documentation doesn=E2=80=99t highlight this (but it is documented =
+for
+using Linux as dom0/L1VH). Fetching anything not in that list will
+instantly go to the slow path of a hypercall and result in a major
+MMIO performance hit.
+
+That said, now that we=E2=80=99re properly rebuilding the segments from =
+the
+Hyper-V provided state instead of using TR/LDTR, it should be safe
+to sync all the state required for hflagsat least for Windows 11.
+
+For Windows 10, we=E2=80=99re still half as fast on some workloads than
+the prior winhvemulate path so I wouldn=E2=80=99t be so sure...
+
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>=20
+>=20
+> static void whpx_get_legacy_fp_registers(CPUState *cpu, WHPXStateLevel =
+level)
+> --=20
+> 2.53.0.windows.1
+>=20
+
 
