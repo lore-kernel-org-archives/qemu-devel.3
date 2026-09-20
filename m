@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302D2C982D8
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B12C982DA
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8Q67-0002UO-7h; Sun, 20 Sep 2026 18:33:23 -0400
+	id 1x8Q7R-0002s3-Qz; Sun, 20 Sep 2026 18:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8Q61-0002U4-Nz
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:33:17 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1x8Q7K-0002p3-Vu
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:34:39 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8Q5u-0006G0-Go
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:33:15 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2db22383fe8so14554345ad.2
- for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:33:08 -0700 (PDT)
+ id 1x8Q7I-0006QE-QB
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:34:38 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ d9443c01a7336-2d747f05ffdso16977115ad.1
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789943586; x=1790548386; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789943675; x=1790548475; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RwRDhWqnh663GSA5FiiDAEqm+JEW+GaOOIhiFuKAS6E=;
- b=Xfj8E3LAYbaIVTQr2Wd2xYJI80cltvBychDsMYR4L1HnunXUrXgxAggZGo6up5/gZn
- xoBpjZRR4LoqbGCKiKebjdcZaPPYI8dg0NW0DEDkDepea3FjeYjIetazc2ZLPWNh1QVB
- IK1zfnHM1CguSTHkoUKPBbUv4v6sUtVDrZVKB1rVLNX3ZXt4sCHzIzZDNEnQlBz36v2z
- NX03X4W/Zy+bgpdJpb+3iw+7pN96lsQ8VSdXPVjBqrBgIZKCAakqXpOTTHq1wndeFvRV
- KwBmIUus6xtk+TqZ3fx1Do9lDD9fE/tOgt3rUJ634z9YAzHB+z6osWwuHSHrI0q3PHQ3
- 45Qg==
+ bh=tHOkF4MkIIPtDg4jsEvkT2pptne2AyfaSmpdK12a1qI=;
+ b=ujRvcVFGyDr09nfml2tIorHG2woRpE3a2on/7Y2zOfqGN2IFhRQR98OT/2A1QOYVDk
+ hVTUbkHc+TA42fgvMjU0gSMj6+Jup+HodK52z39JHa3U4aPdrFkgVWBWadf04Cf9UqGP
+ R4WbCKKWUSEZKnXs7ozgnxsifUzJ0+W9rWZDYf0gT61ljwDvCxRf23B48slUslIbe+gp
+ GoFEOJ8/NZDT3Lzghbh4R7gtO18HcMrbiRWkP5NCiqOamSth7O+a7b6GuXxhSBJ0XB0s
+ N6p6UHY/djvLUC/mnXIl7TH/E+wvrKJgODTj2Y1oYSQonvVEYXsfKSHVqAuZeiOzsyop
+ TgTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789943586; x=1790548386;
+ d=1e100.net; s=20260707; t=1789943675; x=1790548475;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RwRDhWqnh663GSA5FiiDAEqm+JEW+GaOOIhiFuKAS6E=;
- b=jnN89iDcLYb+9DcELd812S9eBVOQAjg7Qx6Q5NkruFKJW/XjzSXmrj6zxlrD+RL2sL
- 1fq0m/keD2ZrlbRrCqXzCh8l9cTBmc3H+iPW0KDcbLAN12Sq9RknQc4vj5xdLW2rgS3H
- /Dfxa/IxtI+f0JnoicN68JH3sA3sQEnU/X5Rd0Y7x6HSdvlt6YMj4ScxZvDHd9+tRaM0
- b7va3iL3CCU+TtvJhmbZQpU0Zd/MBBYO7XRJDXrAdVzbs7+qzWnsYmcaOEFkm0T5GizW
- GVY6T2+GaRAf6ZBnkzp5wrui8xOIxtCMefckpBOAQmC8ktpGZrQxk1NotlUvPhlo46gC
- PN+w==
+ bh=tHOkF4MkIIPtDg4jsEvkT2pptne2AyfaSmpdK12a1qI=;
+ b=rkHcyqrQyOhL+jsWCMPXhqjSspwOyx06J+Ki8lv/vxmMlT4M7t4pEBl5t1UuxOIr8E
+ 5qNo7QkQLJ+EtkbMsfuFQS1MeXzulNeWzNpYyWKexAIaR1HCr6BNxzAaYcbbnthEbFF4
+ j1M3NCEfq1uIkw9wVQmmA3eVuZ8j4mpKdOIva5lt+4mme3kkDy9ED6uQs59UUz1ZupZg
+ kJ4JCdbSJ0Xh3I97N6y3dA55leddk7RURGIqJg86sGXcsBBIzgTnPKD8eBnAlGDKKQgq
+ ADH4mLUmhC/9OWRmeIw+VwMeVTkKHScUlUVn2KBXz8xHB7OGPB0N0z5008bjk6nqWoNk
+ UKHg==
 X-Forwarded-Encrypted: i=1;
- AKwUvByQfxX8AoAbsJczonV+NOrZMPmH+CiGoL/nadl/IzpQseC1xPH9/XNG+vHaP1FwMmb6k3wXheCywfuB@nongnu.org
-X-Gm-Message-State: AFuF++kD+gCkNluRsWwZy9Vhg1C8Jvo3Q21VUtcxQypEhOk1478Nb3mN
- qPiMo66hfvOfECesb/Cv3xIvaUHH2dAZHJSEBu24n9QoL4J7ZpIW9A9AZTrggVMjnQc=
-X-Gm-Gg: AYBFou2BV0HeJeBSKiwd0vqNRICAghR4OL7RQTkUf0r/MO9N9iRQYbLhwIg0O5Kbpb/
- NevRAUGUvB5ZtHgh0KtyhmzRaEcDUhv8k8KmRCeZ835R86EJReuhZGSYQDpkngjv/uFlNWxS0bX
- wbFpfKjcNXofQm9bL1PTQcxvObi4GY7F2smEfhFamdCOYAfMpr9hmWB3WJM8ANW9P8GyR4KBmel
- bGZl2HUrLuEfxeKCiQ3YJj+iUywtkBDF0z8DzqH9sznsoTElU6cyd0ncjXkStLg+XQi1h6+6Uex
- +iPMpbaiMHOHwbumnHQQ/078OOcPiF7TUTgP+5xb6+X7wuxeerQZKI8Xl1pwfJYMLFdwK8Cn2ic
- I6uzlelqJww+nthYF7YPXsILUcLRF6tLgB5ySkAdlytbWAAiOAdauYsmCriEk7m/bCGPvLqA2s3
- Cw9kXGCiEuaN7H9CrNPudzx45ZiI2J3MjHkLXr1VODAE7zydDRykjn2Fe2wrNCvM9Iv2rqRL18P
- EkOKPOpiOe1a5T88erwUk5/QQTh7epCzrgWKjymce4FYGHNlBENS+dHVWv5
-X-Received: by 2002:a17:902:d2cc:b0:2dd:ad73:c982 with SMTP id
- d9443c01a7336-2ddb1ba0faamr135446235ad.26.1789943586415; 
- Sun, 20 Sep 2026 15:33:06 -0700 (PDT)
+ AKwUvByq2sBhX/F9niyTd/nY5LzoKak40g7RaCTMDJ2CXrwLO+1ud8r7YbqiQkYZXfRf2kCqEk2ziw6oL7yX@nongnu.org
+X-Gm-Message-State: AFuF++nHCRbaF1cVrwp+dJb+lV/2I8Y9oYcVJ67rD1Qkd/e3AR76pN/4
+ 1Q3ju2ACFYKOgz8p4bxMswMLwmDH3ttqLoJjwZgbdaxN3Q1k4e+qevldgPT8gmH1/HU=
+X-Gm-Gg: AYBFou0t1ZJOw2CeFu0CjKS3cyEGIqNMNweVomSoD4L21yMckj2ee33YJ73XzT6dRo4
+ txIfckhmKsDWjXnfq2pWzKt6Krv0dZvPqAUZJBl8/EVKtcduTnbDSInV/jWMz3BcDDHqHeZbn73
+ lqBdj/ndMFUO1GbY9JIUWkVoi4DQfM3i1r0eeJEmJ40g2fvfxwZ6TDps5e9Q3EU5YyOiRJpY0wd
+ Ytw5tMgKeBDGnJuNSL7Pv00uJW7kyk80tiNjPuR8/28Id/pBWiylM2duQD4u6TZ/LFrWW11VgOn
+ HGewuP+DDaZtIA8qFneSOH4ZqWAV5IOx0mgBTIOJgiSM7HnKf+ht+IvHCb0LCNu1SqMPeAFHK0A
+ NvGDjUMrugBh6S8P309xd9LkdDYbEDqLmHyqHIC5tARJtfa4+7ua2TVw1NVNtR1UzBqaOxZ4+aW
+ mB5jbh9cuS7z1SydQizH09tegpX/JLPOR5LQsqVR0lBvvwCV7v/qTzRxFeWFyF3+ULeGk6tXaeT
+ hmEAVjuihOdEDkEsLBlCWxD+dRARge1wF5K+Ctv/ICIWpzhbdonRxpffJcdKjQ=
+X-Received: by 2002:a17:90b:1c88:b0:39e:6c6a:209c with SMTP id
+ 98e67ed59e1d1-39e6c6a2322mr8220474a91.61.1789943675321; 
+ Sun, 20 Sep 2026 15:34:35 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:e836:65a9:3e76:872e?
  ([2603:800c:7900:ed00:e836:65a9:3e76:872e])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33c3318763bsm13176287eec.19.2026.09.20.15.33.05
+ a92af1059eb24-144da432647sm22649880c88.5.2026.09.20.15.34.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Sep 2026 15:33:05 -0700 (PDT)
-Message-ID: <8b9b62d0-2cc7-4438-ad60-4cfbb4088bc8@linaro.org>
-Date: Sun, 20 Sep 2026 12:33:03 -1000
+ Sun, 20 Sep 2026 15:34:34 -0700 (PDT)
+Message-ID: <e9d99c1b-5722-48be-9393-3747de189be7@linaro.org>
+Date: Sun, 20 Sep 2026 12:34:32 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/14] bsd-user: Fix non-PIE binaries
+Subject: Re: [PATCH 14/14] bsd-user: Remove host-os.h
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Maksym Sobolyev <sobomax@sippysoft.com>
+Cc: Kyle Evans <kevans@freebsd.org>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
- <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
+ <20260919-misc-2025q4-v1-14-ebfa61049bd7@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
+In-Reply-To: <20260919-misc-2025q4-v1-14-ebfa61049bd7@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,68 +107,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/19/26 19:20, Warner Losh wrote:
-> diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-> index 295dad4643..eaa8676f5a 100644
-> --- a/bsd-user/elfload.c
-> +++ b/bsd-user/elfload.c
-> @@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
->               elf_prot |= PROT_EXEC;
->           }
->   
-> +        int flags = MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE;
-> +        if (rbase == 0) {
-> +            flags |= MAP_EXCL;
-> +        }
->           error = target_mmap(TARGET_ELF_PAGESTART(rbase + elf_ppnt->p_vaddr),
->                               (elf_ppnt->p_filesz +
->                                TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)),
-> -                            elf_prot,
-> -                            (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),
-> -                            fd,
-> +                            elf_prot, flags, fd,
-This is wrong, or at least very not ideal.
-
-What's missing no the freebsd side is a probe for the entire address 
-space for the guest program.
-
->     /*
->      * Reserve address space for all of this.
->      *
->      * In the case of ET_EXEC, we supply MAP_FIXED_NOREPLACE so that we get
->      * exactly the address range that is required.  Without reserved_va,
->      * the guest address space is not isolated.  We have attempted to avoid
->      * conflict with the host program itself via probe_guest_base, but using
->      * MAP_FIXED_NOREPLACE instead of MAP_FIXED provides an extra check.
->      *
->      * Otherwise this is ET_DYN, and we are searching for a location
->      * that can hold the memory space required.  If the image is
->      * pre-linked, LOAD_ADDR will be non-zero, and the kernel should
->      * honor that address if it happens to be free.
->      *
->      * In both cases, we will overwrite pages in this range with mappings
->      * from the executable.
->      */
->     reserve_size = range.hi - range.lo + 1;
->     align_size = reserve_size;
+> host-os.h was used to just set the default bsd flavor, but it's no
+> longer used. Retire it.
 > 
->     if (ehdr->e_type != ET_EXEC && align > qemu_real_host_page_size()) {
->         align_size += align - 1;
->     }
-> 
->     load_addr = target_mmap(load_addr, align_size, PROT_NONE,
->                             MAP_PRIVATE | MAP_ANON | MAP_NORESERVE |
->                             (ehdr->e_type == ET_EXEC ? MAP_FIXED_NOREPLACE : 0),
->                             -1, 0);
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
+> ---
+>   bsd-user/freebsd/host-os.h | 25 -------------------------
+>   bsd-user/main.c            |  2 --
+>   2 files changed, 27 deletions(-)
 
-which handles ET_DYN properly, which is missing from the freebsd side 
-entirely.  Afterward, elf sections are mapped onto this reserved range.
-
-I'll note that FreeBSD should be able to do better than Linux wrt the 
-alignment handling here, since you have MAP_ALIGNED().  So long as 
-guest_base is suitably aligned, anyway.
-
-
-r~
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
