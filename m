@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78881C982D7
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 02:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06A3C982CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 02:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x86tr-0001aq-VT; Sat, 19 Sep 2026 22:03:27 -0400
+	id 1x87Nq-0004tV-Fa; Sat, 19 Sep 2026 22:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bodenrandin1@gmail.com>)
- id 1x86tp-0001Wv-G1
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:03:25 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x87Nl-0004tI-76
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:34:21 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bodenrandin1@gmail.com>)
- id 1x86tn-0001A8-Pb
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:03:24 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85469b2e1d5so2047876b3a.1
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 19:03:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x87Nj-0004Wx-7i
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:34:20 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ d9443c01a7336-2d9004a1ac0so12335005ad.3
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 19:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789869802; x=1790474602; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=raiDdcZA37qcIE6HVnTuM2pGVhHDVcrzfWqB+myqDvM=;
- b=q2JHEupXz+7hLRWFEWp2XmLfUKjMRwbS33R4DdU5sO6gL6tuocGrlAJjD1wlofhQmr
- u0gFXdbp0FVb+jwrRU4Hbi5pmk8l26NlLUF4YGn/xOPeWaxMWVGmlrLjFGtXk8pslt4Y
- yauIookaRrRkWHzJXF/GDMZLisiQSZlw2F31JGx7VGzRi/+OloV2lB8HX0tgGN2o2RUo
- hW79BXI/syGjiA86uRcRX762k0GyL3+j09vgoH6tsemWaBq+xY7nocUQOrijyvcSgA7h
- yAeqmSa1nvvCWG/gwrOif03nyvee6ATdTi4iCAmnzbQXhYEOouFU8kkmSslswUht2x5h
- E0IA==
+ d=linaro.org; s=google; t=1789871657; x=1790476457; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MvhndkipY6bEKF1z9OoAb9Hd8PPnHJzSWElaNi2qrns=;
+ b=F6pNB03oRsoMXS9Q2MV4cS5U9LDgJZ+B1QPZqzBlL2wb7ELdx3WrVXMr7MQezHFS+T
+ lL9M1yNRZ0wocFEJFLNLAWGS1MMn3wn3znZvRxSHRZ6wmEd4vFyjJc2BsCrvtH1ybId/
+ gidwnG/fHuUOOtWU6ITOlvNt8fCsHEed3g5Q04ZLyUdqYcPQLZEIgMVPPM5iei9XKD0z
+ 33VNpy7hdQ7jrgwfwjVKizQ21Cks4wPNpwlCj1pRl31nfsfKv11IJm8Sy3fmBB1WNQFf
+ 6smLnFJVuqisBxhlkyCQxG/GXVgYfpL9Q2wKsp/70mC8vGf+/jA4UjcMBaYjI4WeSfnk
+ t6Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789869802; x=1790474602;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=raiDdcZA37qcIE6HVnTuM2pGVhHDVcrzfWqB+myqDvM=;
- b=pzK+/jGy9QRLRyFJOsiEAx3W1UP7pJpEbGNZCpg+ewYgTXGVe7nLfgdcbnNfbAdSao
- e66iPHhBILDqkJT1+Ce77jtLq5+LDoyB2KL3Zf4Kv3GFfzae02/0BY3o98fJNm7pWNnw
- Xrgib9AJv7GImcRkFzzIUMGk72RUFTwJMruo8FSETQ93QHmBbXJItX9rQ87+jYNUD6XU
- Hg+F952d4XzfxSuxwB6F8gtWejyb/kuPP3DTA4pxUFk1l7RJwuHO7lsbk9NRrKNLJYWT
- ygzxmoPK+AK9xJef3ym3rOgL7YpDeU4UKApsqinAV3jx55OtQrz/ey0xVrpqoXq5TH+9
- Walg==
-X-Gm-Message-State: AFuF++khLPKD0/UGq8BAT6iMJngdiezHsaJsdAI6YwH5CmdUjkO9L+8S
- zcXJttzqRXeq7znoAuMU4hc6W7wfPectcbO5vY7oQjtGFCgyIgJcZgjWtPy1eA==
-X-Gm-Gg: AYBFou2ni46W5RB/NcQ6gKrHSveXYvxDty3EvJcWHMj8EDOS7BhsVH2ZTXh7iphoDjq
- JgK7J4E/lhWSqrQmV1IVoKhWV4BQBWjfCQdpR6nuzjG/VhnaBpvPIneoObQwCicf0x7dlSMoqK2
- wkOrvcnezQA3ihu/UYjA1k+Z9sl8ltOtCVgJQX0AOo6ucpBxsuL5OjtAeOcso5VwV9mtKGBfwA8
- 8t0iTacWcBMT+TKp7MtvsvQZB2dudCVXGnif8b25RTLZCYcKlv43CsPZTV2YLhPvTS4+juwjXV+
- cE4hU/87WjrBcVPc4VYnFfpZUTDV7tFd6hggLSt2Guw/vOM+sPjfrjI1zhIsnJhNtObSHp3JRt9
- gZwe+zKTd21tTS130rnoqhbfwaO+yCcbkZEaHX35O4G5QLXugxUwcurw6H96dNmLzejgvzIrVXj
- UZqIXZV1qKpNGQXWFHKAgf9ogDZo/tSULF2aOuCYaATFAGx1audTAbTSfVjZIC7Owq+rr0COfKH
- 0DRMS/AC35BoI3huDwxhU/1nHxRew==
-X-Received: by 2002:a05:6a21:140a:b0:3dd:a197:cf32 with SMTP id
- adf61e73a8af0-3dda197d889mr4877860637.86.1789869801930; 
- Sat, 19 Sep 2026 19:03:21 -0700 (PDT)
-Received: from DESKTOP-D94CRUF ([47.153.23.114])
+ d=1e100.net; s=20260707; t=1789871657; x=1790476457;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=MvhndkipY6bEKF1z9OoAb9Hd8PPnHJzSWElaNi2qrns=;
+ b=1JbjE6z5cFy3GGbRI88eFi/yYqVAOdLrvuM0w9GFxElSLKrRuDmWuy7DgQMIzX8SHu
+ spYLKZk6TWIv4teeXeD+D0kcToH67pznj/O3oEbpymcey3PSyk8q3D968id7/VZNlemc
+ 002PeK68iE9i5W82FxSQxyon4WNAlrduPbTeBF0Y7BgyTqCo0UKxmM5leaVpKXvo1Xpn
+ iODCzGE+9MFRBTlVotKjihujsdJz/EuZq+szrC9uTtT3lxhFcMQadkDOSVAHFl/SrBNb
+ iiGhZAu/dLjuHtV1vA2lnqnE8AjlrAbAK7Fo5AJAu8M4T7IKj1tubfyIiEkka01du1Ki
+ +gRA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwTzU/wVq3FJu36+tvWRvHHZx+J6u0kqXPS3GHa9XxP4SvQN4sLZw8l2pDk0dSfyF7MsEPQAW4xSpNp@nongnu.org
+X-Gm-Message-State: AFuF++luTZ0HhKuMKkCNZnxTANiJRdwQ2UH/WMCZy3zcB5VeOYmcP+ji
+ d8tS7tldJ8KfVk//bsrsElpeDcoc89eF0gNNOJQZkBAcE9LGaDV2d2XhRZT6xYc65Bk=
+X-Gm-Gg: AYBFou2hnynMqGec93VywexhJsey+tKfQzObdxC7J0stEx+gCjDiDMhuChareKO/gSh
+ Q2b6J2Kqq+PJ3Lsvy/0cDaDBDBfGOFn9ZyFqPcDDKK2exzMXBaL2ruEh1/2q2IIblQ91E0Yf0KD
+ NSLqoHvA6ySEvrCcTjYv463geL/5UDBXdfqgU1tBaOgV1ftClOzAlFS+Ihk5z0r2D+pxODPbx5J
+ t3s6QWtRHGD1tJtYjH3EkOxBQ6BwX2eXvAD6tUs0iJLOCAbhrYCG1MuNs3JhRcft93eoeDc8l79
+ N0TiBLvuRCFOWWGDvf9ZCMPuiEg0dfcLbc+vCfO//ui8xADPg1wMTqefbTz5vhBXz/lnOrcrq8g
+ c3TRGTupkpxsDHPr/iNSJDCvWpX8oLr5uWAAaNBGLRYQJyUJ4s3b66xEFJFaynw5TVmB4B1kC4L
+ S79DUhzSs8C3XCoYCJTrmkGY3DYpBN5rsswSfGxSO+kJd/+M/p+5UbN1q79BP3qD7l2ipvqAwjG
+ 7kxKv9wRvobuCwv+LmUYwUkHuyrsUKMZ3oiXs0fkLvLoChe89x+aS7BJ1P+Dw==
+X-Received: by 2002:a17:902:ce0a:b0:2dd:c100:80b3 with SMTP id
+ d9443c01a7336-2ddc10081f3mr48491375ad.46.1789871657477; 
+ Sat, 19 Sep 2026 19:34:17 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:8758:b6a7:94be:427a?
+ ([2603:800c:7900:ed00:8758:b6a7:94be:427a])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144da432647sm11982242c88.5.2026.09.19.19.03.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 19:03:21 -0700 (PDT)
-From: Boden Randin <bodenrandin1@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Boden Randin <bodenrandin1@gmail.com>
-Subject: [PATCH] whpx: i386: avoid updating hflags for vmexits
-Date: Sat, 19 Sep 2026 19:03:20 -0700
-Message-ID: <20260920020320.1466-1-bodenrandin1@gmail.com>
-X-Mailer: git-send-email 2.53.0.windows.1
+ 5a478bee46e88-33c32f17d77sm9770528eec.3.2026.09.19.19.34.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 19 Sep 2026 19:34:17 -0700 (PDT)
+Message-ID: <ad1190ba-4169-4f33-a6ea-0c3d92bd31c6@linaro.org>
+Date: Sat, 19 Sep 2026 16:34:14 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=bodenrandin1@gmail.com; helo=mail-pz2-x10.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/10] virtio-sound migration
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+References: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,36 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-whpx_get_registers_for_vmexit only refreshes GPRs, RIP and RFLAGS.
+On 9/18/26 22:54, Manos Pitsidianakis wrote:
+> The following changes since commit
+> b36ad6a0510aee81ecf6087b59f412b9bccaa369:
+> 
+>    hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/epilys/qemu.git tags/virtio-snd-migrate-pr-v2
+> 
+> for you to fetch changes up to b36ad6a0510aee81ecf6087b59f412b9bccaa369:
+> 
+>    hw/audio/virtio-sound: add missing vmstate fields (2026-09-18 10:20:20 +0300)
+> 
+> ----------------------------------------------------------------
+> virtio-snd-migrate-pr-v2
 
-x86_update_hflags() depends on state not refreshed here, while the code
-using the fast runtime state does not depend on the hflags it recomputes.
+Applied, thanks.
 
-Signed-off-by: Boden Randin <bodenrandin1@gmail.com>
----
-
-Notes:
-    I opted to remove x86_update_hflags() in this patch instead of changing whpx_get_registers_for_vmexit to refresh the registers it requires because I couldn't find any code that depends on hflags after it calls the whpx_get_registers fast path.
-    
-    Please let me know if I missed something or if maintaining the x86_update_hflags call would be preferable. This is my first open-source contribution, so please also let me know if I made any mistakes in the submission process.
-
- target/i386/whpx/whpx-all.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 113f79afb9..79a5256b20 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -744,8 +744,6 @@ static void whpx_get_registers_for_vmexit(CPUState *cpu, WHPXStateLevel level)
-     rflags_to_lflags(env);
- 
-     assert(idx == RTL_NUMBER_OF(whpx_register_names_for_vmexit));
--
--    x86_update_hflags(env);
- }
- 
- static void whpx_get_legacy_fp_registers(CPUState *cpu, WHPXStateLevel level)
--- 
-2.53.0.windows.1
-
+r~
 
