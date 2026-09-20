@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7462BC982CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 03:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A63EC982CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 03:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x88QS-0004M9-E0; Sat, 19 Sep 2026 23:41:12 -0400
+	id 1x88YT-00057o-RY; Sat, 19 Sep 2026 23:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x88QQ-0004M0-GQ
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 23:41:10 -0400
+ id 1x88YR-00057Q-B5
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 23:49:27 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x88QL-0002qY-UL
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 23:41:08 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1x88YO-0002MQ-Jg
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 23:49:27 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cx+9HOVa9qENUNAA--.40676S3;
- Sun, 20 Sep 2026 11:41:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxC9K_V69qsNUNAA--.40538S3;
+ Sun, 20 Sep 2026 11:49:19 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxf8_MVa9qVdsiAA--.10299S2;
- Sun, 20 Sep 2026 11:41:01 +0800 (CST)
-Subject: Re: [PATCH RESEND] target/loongarch: add get_sys() helper
+ by front1 (Coremail) with SMTP id qMiowJAxFs28V69qTNwiAA--.16955S2;
+ Sun, 20 Sep 2026 11:49:18 +0800 (CST)
+Subject: Re: [PATCH v2 RESEND] tcg/loongarch: strip flag bits in lddir/ldpte
+ address calculation
 To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-References: <20260920024305.18296-1-prcups@krgm.moe>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ numpy1314 <xzj13@mail.ustc.edu.cn>
+References: <20260920024217.18116-1-prcups@krgm.moe>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <e3adaec7-48f3-2a3c-5270-e2a0a2dd3ded@loongson.cn>
-Date: Sun, 20 Sep 2026 11:40:37 +0800
+Message-ID: <7c9246fb-3a0d-268c-1540-ddc05a71a927@loongson.cn>
+Date: Sun, 20 Sep 2026 11:48:53 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260920024305.18296-1-prcups@krgm.moe>
+In-Reply-To: <20260920024217.18116-1-prcups@krgm.moe>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxf8_MVa9qVdsiAA--.10299S2
+X-CM-TRANSID: qMiowJAxFs28V69qTNwiAA--.16955S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxtF43Cw1kGF1rtFWfJr1UurX_yoW7Kr48pr
- 42yr9I9345GFW8AayfA3Z8t3Z8Xr4xCw1I93y0kwn7Z3s5Jr45XFWDWFs3GFn8A34Fkr4x
- uFn5JF4UJFsrX3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7Kry3CrWDWryDAr1rWrW8Zrc_yoW8tFyUpF
+ W7Cw43K3WrKryDAa4v9a4YvF1Uua4DGa1UXws2kryrCw15XFyxZr48t39xtF18Jw4fZr47
+ ZFsIv34UAFyUX3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
  14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
  AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x02
  67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8oG
- QDUUUUU==
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8P5
+ r7UUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -81,144 +84,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2026/9/20 上午10:43, SignKirigami wrote:
-> Add get_sys() to retrieve a CPUSysState by VM level. Use it to access
-> the host state in CPU initialization and reset paths, and name the
-> local pointer host to distinguish it from the currently selected state
-> returned by env_sys() or guest. There is no function change in this
-> patch.
+On 2026/9/20 上午10:42, SignKirigami wrote:
+> helper_lddir and helper_ldpte used TARGET_PHYS_MASK (bits 0-47) when
+> extracting the base address from a directory entry.  This retained flag
+> bits (V, D, PLV, MAT, etc.) at positions 0-11, which were then OR'd
+For LoongArch, what is scenery with DIR/PTE entry where bit0-bit11 such 
+as (V, D, PLV, MAT, etc.) is used, except Huge bit?
+
+Regards
+Bibo Mao
+> with the next-level index, producing a wrong physical address whenever
+> the directory entry carried non-zero flags.
 > 
+> Fix both helpers to extract only the PPN field (bits 12-47) before
+> computing the address of the next-level page table entry.
+> 
+> Signed-off-by: numpy1314 <xzj13@mail.ustc.edu.cn>
 > Signed-off-by: SignKirigami <prcups@krgm.moe>
 > ---
 > This patch is a resend of [1], Sorry for wrongly handling Signed-off-by.
 >   
-> [1]: https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg05969.html
-> 
->   target/loongarch/cpu.c | 45 +++++++++++++++++++++---------------------
->   target/loongarch/cpu.h |  5 +++++
->   2 files changed, 27 insertions(+), 23 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index f22f64efb8..c71531c1cf 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -142,12 +142,12 @@ static void loongarch_la464_init_csr(DeviceState *dev)
->       static bool initialized;
->       LoongArchCPU *cpu = LOONGARCH_CPU(dev);
->       CPULoongArchState *env = &cpu->env;
-> -    CPUSysState *sys = env_sys(env);
-> +    CPUSysState *host = get_sys(env, VM_LEVEL0);
-Why env_sys() need be replaced with get_sys() in CPU init stage?
-
-Regards
-Bibo Mao
->       int i, num;
+> [1]: https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg05581.html.
 >   
->       if (!initialized) {
->           initialized = true;
-> -        num = FIELD_EX64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
-> +        num = FIELD_EX64(host->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
->           for (i = num; i < 16; i++) {
->               set_csr_flag(LOONGARCH_CSR_SAVE(i), CSRFL_UNUSED);
+>   target/loongarch/tcg/tlb_helper.c | 7 ++-----
+>   1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 40cc076424..529b22347d 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -750,7 +750,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>       }
+>   
+>       badvaddr = sys->CSR_TLBRBADV;
+> -    base = base & palen_mask;
+> +    base = base & palen_mask & ~MAKE_64BIT_MASK(0, 12);
+>       get_dir_base_width(env, &dir_base, &dir_width, level);
+>       index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+>       phys = base | index << 3;
+> @@ -773,7 +773,6 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>       uint64_t dir_base, dir_width;
+>       uint8_t  ps;
+>   
+> -
+>       /*
+>        * The parameter "base" has only two types,
+>        * one is the page table base address,
+> @@ -815,9 +814,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
 >           }
-> @@ -300,7 +300,7 @@ static void loongarch_la464_initfn(Object *obj)
->   {
->       LoongArchCPU *cpu = LOONGARCH_CPU(obj);
->       CPULoongArchState *env = &cpu->env;
-> -    CPUSysState *sys;
-> +    CPUSysState *host = get_sys(env, VM_LEVEL0);
->       uint32_t data = 0, field;
->       int i;
->   
-> @@ -408,19 +408,18 @@ static void loongarch_la464_initfn(Object *obj)
->       data = FIELD_DP32(data, CPUCFG20, L3IU_SIZE, 6);
->       env->cpucfg[20] = data;
->   
-> -    sys = env_sys(env);
-> -    sys->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
-> +    host->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
->   
-> -    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
-> -    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
-> -    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
-> +    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
-> +    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
-> +    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
->   
-> -    sys->CSR_PRCFG2 = 0x3ffff000;
-> +    host->CSR_PRCFG2 = 0x3ffff000;
->   
-> -    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
-> -    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
-> -    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
-> -    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
-> +    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
-> +    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
-> +    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
-> +    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
->   
->       cpu->msgint = ON_OFF_AUTO_OFF;
->       cpu->ptw = ON_OFF_AUTO_OFF;
-> @@ -627,7 +626,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->       CPUState *cs = CPU(obj);
->       LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
->       CPULoongArchState *env = cpu_env(cs);
-> -    CPUSysState *sys = env_sys(env);
-> +    CPUSysState *host = get_sys(env, VM_LEVEL0);
->   
->       if (lacc->parent_phases.hold) {
->           lacc->parent_phases.hold(obj, type);
-> @@ -638,7 +637,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->        * its value is equal to zero for boot cpu, it causes reboot issue.
->        */
->       memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
-> -    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
-> +    memset(host, 0, offsetof(CPUSysState, end_reset_fields));
->   
->   #ifdef CONFIG_TCG
->       env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
-> @@ -655,17 +654,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->       }
->   #endif
->   
-> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
-> -    sys->CSR_CPUID = cs->cpu_index;
-> -    sys->CSR_TID = cs->cpu_index;
-> +    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, DA, 1);
-> +    host->CSR_CPUID = cs->cpu_index;
-> +    host->CSR_TID = cs->cpu_index;
->   
->       /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
-> -    if (sys->CSR_PRCFG2 == 0) {
-> -        sys->CSR_PRCFG2 = 0x3fffff000;
-> +    if (host->CSR_PRCFG2 == 0) {
-> +        host->CSR_PRCFG2 = 0x3fffff000;
->       }
-> -    tlb_ps = ctz32(sys->CSR_PRCFG2);
-> -    sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
-> -    sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
-> +    tlb_ps = ctz32(host->CSR_PRCFG2);
-> +    host->CSR_STLBPS = FIELD_DP64(host->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
-> +    host->CSR_PWCL = FIELD_DP64(host->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
->   
->   #ifndef CONFIG_USER_ONLY
->       env->pc = 0x1c000000;
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index c592f69885..477a5dee7d 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -512,6 +512,11 @@ static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
->       env->sys_state = sys;
->   }
->   
-> +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
-> +{
-> +    return &env->sys_states[vm_level];
-> +}
-> +
->   static inline CPUTimerState *env_timer(CPULoongArchState *env)
->   {
->       return &env->sys_states[0].timer_state;
+>       } else {
+>           badv = sys->CSR_TLBRBADV;
+> -
+> -        base = base & palen_mask;
+> -
+> +        base = base & palen_mask & ~MAKE_64BIT_MASK(0, 12);
+>           ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
+>           ptindex = ptindex & ~0x1;   /* clear bit 0 */
+>           ptoffset0 = ptindex << 3;
 > 
 
 
