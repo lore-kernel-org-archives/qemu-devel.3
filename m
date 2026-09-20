@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DDCC982CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FD4C982D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x89zN-0006VM-T3; Sun, 20 Sep 2026 01:21:21 -0400
+	id 1x89zN-0006Ut-2f; Sun, 20 Sep 2026 01:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zL-0006Ug-W4
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:20 -0400
-Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zJ-0006Td-Mx
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:17 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zK-0002DH-GD
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:19 -0400
-Received: by mail-oi2-x10.google.com with SMTP id
- 46e09a7af769-804f7045f3eso715408a34.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zH-0002CY-QY
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:17 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-6b9cb8883ecso1719819eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881677; x=1790486477;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881675; x=1790486475;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YvfLAYzdUMc/aXqc2ufYB8ivtZNCa2xy/qKq82+4GXU=;
- b=GLQaTkksxGd59YmSbTkAGzdGhunFGW393cSpL26WcLvkQD98XkWQZtczS9emhOKaWn
- k0mwuliGEvzQZ0f/HYSr0d43fmtoCtp/he++lOg2LP/Yjb7Dg8+jYO+QBIp++XUHsd0S
- P4xNcuqhTdi3dICs9tw3DYvryvP8cunC65BNHRIxyIAYEPrFknNPIp+J1vfC2aprFNGL
- BwlS/NEYE9F8RRSRKFdMhBHI1xa0GcFbTs01dDoKCGb1is+7G7ldPz4asfZmIXSG1wlv
- +UDcmUvOSICa8AVBsq/8U/XGIrHvUdxU6K/sQJvQLKd6YM3+N072bwbgJa9SGLpcDcFj
- aj2A==
+ bh=1zatXEJ5/HWhuX9eMKCpKoJSgdEmP3aYxWkf1E2+qLY=;
+ b=bQG9vBSiLJms+UrjUUv0WsT7DaZuHX5xl9b6/S2YCKvJzLW7FudYzz7KLjV09iQNUn
+ XL7UygCICmUk6rWWb754s7njHdb4JM9vfQ10inZ3Evg/FDxY4Lziyji8OUF735cwXmdS
+ L89tednrs4hC7PzyichMJHNnNJdyMgkRapFFzLCI9cgVQPG4GCg0x+cTCpB/BUYczlLx
+ BkGPKz8RhWcgAy7osXlJVc2TZtoK8GNw7UBFpOucThIRIjAKz2ziELOICIRO+G0XaFNK
+ ZIqclEawSeclcd+8zy7S7BkkrqXfeTFxRCeu4BVBm8gEOFVVijs9bbSDAGhNi11HM5HU
+ UHtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789881677; x=1790486477;
+ d=1e100.net; s=20260707; t=1789881675; x=1790486475;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YvfLAYzdUMc/aXqc2ufYB8ivtZNCa2xy/qKq82+4GXU=;
- b=KlphFl4ueXKZkcCy+jPcEWNpW4m7F7//hQwMtyxxhXhUuEg5uYDf81EgAOf6D/3oTu
- T/AuBgFkNxEk7BBCQONWV+ToO7aN/z/75xrH+e6WL3wrLamE571Pb+rJSmgk0MK5YHKo
- MLDI6qMuBGW9gwFmU+GckYnXxh1SbsNo14hp8COEEplYVIkMvlIj1TbBFyRmH6OKlrML
- oEfqlj5i6nXjQB4a5R2SXDC7fzRwMltTz+QEFT9ngnT2EmxnFeJSGVz57HyG2xAIxa8q
- Ag8hBP73UrGc6ocK6xyqYDTLuHLrWNc6+Tt4Pi+HjZb1GRczE3brwY2ptwoF3ly/X+cI
- ByvQ==
-X-Gm-Message-State: AFuF++nINIgRsqOs5ZXqnCB5spjfIkPMMS+SD7aaaIpxX5WLMGjrctBK
- P8WjffmMXGhJ9NKcUQUymj/qf+CaYq2Hc/VDBw/PLOG4TezX+MVPOFU5XXFlICNkIX6gytskmb4
- gC+p1GaQ=
-X-Gm-Gg: AYBFou3VWeJLdyrmg049kMEI9VGQXNtZ2PIJE63O4cQOWzNywgKGP4YplquPaRJ5dm0
- tiph4Wq6pYPjfnMXnHVxcRhyiBfhFn0UG6HuoQ16xC54bNSgUqVwBHdXIMH3BhCOxwa9TR2Mx5N
- DR+t5wGCgqjv9L2LEHIwgU78oXslx80PBh9qT5rMP70zeOgs6iHoSrA2c0NbP65pKpECDSn+Pdy
- iIqpD3EpKRm1dLIrDjBbZAOxRxtCTJbCQa6OnmzpD1+onOTJovzcDlxorbtLP7JYuPJFHpRZQy2
- mfzDZwGEAfYSF6r/+pS3KykFr8ViX7//bY3vEaMvaVWXIj1yHVkHgeMjUQQHm0I2SRG8m/cuwbl
- LD6cwyDTYZ7wItxiQaGsZPbqG/GLBF/s00etm1ffj51SQsQvdu9olPkR/kcCA0CXq/dUrs0j8jV
- uWVpC1YKPNIjD2+cCThQyuFwcMBXKiLJc3NdRhGw8d/+4p3DaEI3TUmsXrlg==
-X-Received: by 2002:a05:6820:222a:b0:6a3:8738:4106 with SMTP id
- 006d021491bc7-6ca9aa43f4dmr7332830eaf.26.1789881677400; 
- Sat, 19 Sep 2026 22:21:17 -0700 (PDT)
+ bh=1zatXEJ5/HWhuX9eMKCpKoJSgdEmP3aYxWkf1E2+qLY=;
+ b=b5uFLWERFgehSXMJsXKFcSvhU/q0XQKsWozBEqCmup9YRlJf29YfBMdrWoxMj3MNdp
+ TZBNgfsaiRbstIg35qvXZG4/b/l1IoIjqK2IFfPCySY/WvfZzxpEW2NVaBc2m+vzjCW0
+ 7WbzK3qj1bxpa8F0o3Vdf6VIfESB34zwuQ1EX80GeFTaSslV7z/X5/e5O1Ueh2BgCkMU
+ sy7fwPMkiq9lwRSjzF0kLQ+q05IhcvxwHLegHcNY62OSE+BEIf0P2Z/UfrtuFMV56iGv
+ C5tZ5TJvBLyApqYnJ9/JWDUUJjBuyufCWfHQ1QL86zqm1mbcgcPYC9YChGYKms2Yb+P+
+ i+xA==
+X-Gm-Message-State: AFuF++mpiuVdHlENeP69uEoGweVOSIq6wHCeRD30wtuJbgKb7U8l2Egx
+ dW3DdYS+uHFObJsgmyr68rrxDk6w/V6culo7qPYqg++0ugZJGgUV2fsgZxisH1iPQ4k=
+X-Gm-Gg: AYBFou2SCHkfiptXK10q6LBgm0YLDHHhOwocNjd7v5XZg1XjSeQ//sSlEd/+QDNPbFJ
+ 6TxTJ4mp3VnNiCf7owRMMFNelBDIxh5qImsjD3kK0vjB15zqZ8Y+DU/pv+6AFeO9977VdpQvPA4
+ EVLYsvYMIKmc8gtbC+9aAg/QJ4bWt9wqr8SdxfQCGoEuo2xUg/kRdru/TAxZPjI0gZ8k0JMj62F
+ gSBqWC5bkXSuyj1O4YT+aqoFhecLjmphzmbhLKoGnBDc/AyczK+/4beIOJ7WYqQUN2THKVmM0bB
+ lwEX78bmeLcr78ANx/SlekOZmHpWU2xkF7qo9BKDaSJgdNU0ajFsYAngEYMR6eRHipTxJpKCerY
+ vJupaKfU8+66ejM5ga1WYQis1R3NawCk9RwxAef7VIjVfxuFij8cPo7L14OdRWhFdnTbAjC3LXJ
+ Jek3cweRxIAizHmWiMrfiPGMmMJ3fm0WXurOpGCoX3JxBAh4XT8I/Mq1J6KQ==
+X-Received: by 2002:a05:6820:c93:b0:6c7:6c8c:148e with SMTP id
+ 006d021491bc7-6c8fe7cd3f0mr8371198eaf.30.1789881674696; 
+ Sat, 19 Sep 2026 22:21:14 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.16
+ 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 22:21:16 -0700 (PDT)
+ Sat, 19 Sep 2026 22:21:14 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 19 Sep 2026 23:20:49 -0600
-Subject: [PATCH 13/14] bsd-user: Fix non-PIE binaries
+Date: Sat, 19 Sep 2026 23:20:47 -0600
+Subject: [PATCH 11/14] bsd-user: Eliminate unused regs arg in load_elf_binary
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
+Message-Id: <20260919-misc-2025q4-v1-11-ebfa61049bd7@bsdimp.com>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 In-Reply-To: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
- Maksym Sobolyev <sobomax@sippysoft.com>
+Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2803; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=aKi+hp8N0vkEWYbWo/tfDhqS0kcZ6HksKo0mGdxawro=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20xuqS7FFClJZHPmAvPW1orCoJ5tX9He3Pfb
- +LL2ZCew/eJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBQ0BAAjbUHdUNH6gAmKlHNMLvPs3t9LgmGK8/
- 2S0PQTosWBObvpvLqqdblXcYtHO6JZeUJIqQfMEf0PVwhGbI1zBI9RokL16WUadOJI8TmVUZkE6
- 2wPGQ0TPJAxxi1Rg7cPPRLk3qrY0ZbRVB3dDovX8EfTR1Cc4TGxqe+9WTV3U+tL1W/12ItugvDE
- uuoBY1H3QGiJMvpGdXv2qIpBmfyCzOBkDlHF6T24TFgNA7ZL0/FbzaIM54zjBzR6ubjGPiCdTh8
- 7h21i8kje5KxNFq+pqt7Xb900gwj18//p/RstVPTUaEMo5eQ57MtJzctAjYKZCgUZiKkmAFXWbk
- vBVWX5f+NRMVNMOTuF2/asy6cgFxYzAVe50ZbYPrXYm8elUjerpgUiFpKf+7J6Sz5wQZ2XAB1o/
- K84xekWy9gieRWJysg2JeRmKhdUGwtphusjXWJUivEOgCR0D4a0gV6CBSVKMbT6/R6XOJEuPWTB
- PxaMpZ8JN0VeP2ZI0M3uZWzFPuCkkc5gLUz0P21ATuZj70wDvLk5oy2qKkdMdWdrHjS6vDU9u5R
- uTFhYNmj1CW8tDu8i9K8hr8nA0gowDj46+y5Syj8KxogNOQtcGoKySAbwI1kGf003KPU0Bu9Q7V
- nBY5sNiZqgn7fHYOAWtkJOGtxWCW4aQgml0jlQPNAQ3ogtAd0nWk=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1989; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=UVa2n9fM8fauFTHkE+KHPPWyhZsZOgXJnAV0xmE+tmk=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20xc9ugOpmuWVIn47U1EdQVvMSUkJm1NEsyp
+ Z69u0WRbvOJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQCveRAAvZ5okQazw4dguYXSSGwsmkJQgwKW6mE
+ CxaYJvI4I/Gk43OBvdkkxQitMWszEjQW3kMec3NgbVQz1G8JHRCJJGzaQ7O09UMdSKKuVUDO5uo
+ QweHPw43hvIQ19qqx0Zj5ka4WQaF3tw55+GOJiWoucUPbnqkUDTuSHihC5BLaxm0LmvzgvOsD+l
+ Wx8CqSe6Tlgo1OPSCmiO43ffQNoXzOfu4lxIxC2CFjo+ZV3iIsBMVPxUOToN4mwAyEK1Tv5uWL4
+ GTIyQXfvrnIJwLzja2V/Kbp8zhfLk9Fo1gKaVkYwTFwVY59lfGFEWcXyuVKg7QXwiyU9icWG/PP
+ Sfxdf1NkwY0TBJTIr/a5a2hAB9un940zBQ7HDXqgpvRCr/h65/BqMPnfLtEPy0jcN3o7L7cRhE7
+ kFYC3zNHaTiUfL0tqWrcmBMjAtcHXmCKMefOvjwFpyd8donZLHZAZQbjkjbacivfC/R6tJibKXa
+ r5d2osNUVZYr/dgPbjqEaE/yiNFm3qXUv8d/zq9i26rKcPn776e1f9/tzemNVtbTXVbJO9JbhA8
+ YokbhjN/VakJi7tngWQT7sL4TXlXozMJAnTxHHjF6NcJB9jZ1Cfa/SGkhrPGuNZgX84hFv8eDk7
+ VWNQrNavDsPq+xqUAo/231OmY8CDMdHKPsuXABq6uDUvym7OgbqI=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:32::10;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,66 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maksym Sobolyev <sobomax@sippysoft.com>
-
-When loading non-PIE binary (could be either static or dymanic),
-make sure to set MAP_EXCL while mapping the program text. Otherwise
-if qemu is also non-PIE it might be loaded at the very same
-address, effectively self-destructing after mapping target binary
-over its own text area.
-
-It is not a problem for fully dynamic binaries loading, as in
-that case the initial mapping is non-fixed, so the kernel would
-pick some non-conflicting area for us.
-
- 32625 qemu-x86_64 CALL  openat(AT_FDCWD,0x7fffffffe240,0<O_RDONLY>)
- 32625 qemu-x86_64 NAMI  "/usr/bin/cc"
- 32625 qemu-x86_64 RET   openat 3
-[...]
- 32625 qemu-x86_64 CALL  mmap(0x809222000,0x20001000,0x7<PROT_READ|PROT_WRITE|PROT_EXEC>,0x1012<MAP_PRIVATE|MAP_FIXED|MAP_ANON>,0xffffffff,0)
- 32625 qemu-x86_64 RET   mmap 34512969728/0x809222000
- 32625 qemu-x86_64 CALL  mprotect(0x809222000,0x1000,0<PROT_NONE>)
- 32625 qemu-x86_64 RET   mprotect 0
- 32625 qemu-x86_64 CALL  mmap(0,0x458,0x3<PROT_READ|PROT_WRITE>,0x1002<MAP_PRIVATE|MAP_ANON>,0xffffffff,0)
- 32625 qemu-x86_64 RET   mmap 35049844736/0x829223000
- 32625 qemu-x86_64 CALL  minherit(0x829223000,0x458,INHERIT_ZERO)
- 32625 qemu-x86_64 RET   minherit 0
- 32625 qemu-x86_64 CALL  getrandom(0x7fffffffde10,0x28,0)
- 32625 qemu-x86_64 RET   getrandom 40/0x28
- 32625 qemu-x86_64 CALL  mmap(0x200000,0x2053000,0x1<PROT_READ>,0x12<MAP_PRIVATE|MAP_FIXED>,0x3,0)
- 32625 qemu-x86_64 RET   mmap 2097152/0x200000
- 32625 qemu-x86_64 PSIG  SIGSEGV SIG_DFL code=SEGV_ACCERR
- 32625 qemu-x86_64 RET   nanosleep -1 errno 4 Interrupted system call
-
-Signed-off-by: Maksym Sobolyev <sobomax@sippysoft.com>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/elfload.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ bsd-user/bsdload.c | 2 +-
+ bsd-user/elfload.c | 3 +--
+ bsd-user/qemu.h    | 3 +--
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
+diff --git a/bsd-user/bsdload.c b/bsd-user/bsdload.c
+index 5b3c061a45..dcf3ca14fc 100644
+--- a/bsd-user/bsdload.c
++++ b/bsd-user/bsdload.c
+@@ -193,7 +193,7 @@ int loader_exec(const char *filename, char **argv, char **envp,
+                 && bprm->buf[1] == 'E'
+                 && bprm->buf[2] == 'L'
+                 && bprm->buf[3] == 'F') {
+-            retval = load_elf_binary(bprm, regs, infop);
++            retval = load_elf_binary(bprm, infop);
+         } else {
+             fprintf(stderr, "Unknown binary format\n");
+             return -1;
 diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index 295dad4643..eaa8676f5a 100644
+index a87a892eb8..295dad4643 100644
 --- a/bsd-user/elfload.c
 +++ b/bsd-user/elfload.c
-@@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
-             elf_prot |= PROT_EXEC;
-         }
+@@ -598,8 +598,7 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
+     return 0;
+ }
  
-+        int flags = MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE;
-+        if (rbase == 0) {
-+            flags |= MAP_EXCL;
-+        }
-         error = target_mmap(TARGET_ELF_PAGESTART(rbase + elf_ppnt->p_vaddr),
-                             (elf_ppnt->p_filesz +
-                              TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)),
--                            elf_prot,
--                            (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),
--                            fd,
-+                            elf_prot, flags, fd,
-                             (elf_ppnt->p_offset -
-                              TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)));
-         if (error == -1) {
+-int load_elf_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
+-                    struct image_info *info)
++int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info)
+ {
+     struct elfhdr elf_ex;
+     struct elfhdr interp_elf_ex;
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 851b0c2c5f..5baaa333ed 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -167,8 +167,7 @@ int loader_exec(const char *filename, char **argv, char **envp,
+                 struct target_pt_regs *regs, struct image_info *infop,
+                 struct bsd_binprm *bprm);
+ 
+-int load_elf_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
+-                    struct image_info *info);
++int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info);
+ int load_flt_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
+                     struct image_info *info);
+ int is_target_elf_binary(int fd);
 
 -- 
 2.55.0
