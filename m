@@ -4,66 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF89C982DA
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 15:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAE3C982DA
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 21:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8Jjq-0004hb-3B; Sun, 20 Sep 2026 11:45:58 -0400
+	id 1x8P85-0001oG-Ef; Sun, 20 Sep 2026 17:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x8Jjm-0004hL-Rm; Sun, 20 Sep 2026 11:45:55 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1x8Jjk-0003pn-Je; Sun, 20 Sep 2026 11:45:54 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwBHT1uq_69qJo4PAA--.6654S2;
- Sun, 20 Sep 2026 23:45:46 +0800 (CST)
-Received: from [192.168.2.11] (unknown [113.246.117.227])
- by mail (Coremail) with SMTP id AQAAf8Dw5HKo_69q5OTYAA--.36591S2;
- Sun, 20 Sep 2026 23:45:44 +0800 (CST)
-Message-ID: <81c3cac2-60b1-4f0b-b67f-e15c55e2120f@phytium.com.cn>
-Date: Sun, 20 Sep 2026 23:45:43 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x8P83-0001nx-Te
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 17:31:19 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x8P82-0003uK-6G
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 17:31:19 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-cbe6295f05bso2580108a12.1
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 14:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1789939876; x=1790544676; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Alt2boJfFpnGWQK7GEzim6rNbUuekPvfR7ZNFEaaT9Q=;
+ b=gHDj2I2vjGeARa2Xbm8Kj5KobH/I1d6aT6vBS3UAK270eIGUJq8n7exIM11dxOtHA3
+ +6Kk5EofdJ1CxwTU0ZShybtSRQqUKLWflJUFYQjy8I3+G1iQcrM1pplFAU5/c12g1Kyn
+ khqCARYSXTyQkTCW1hcjpvNNVt3et4VfN1v0k/rA/ta0RyDNa+OesLV1IG8pdYWbNTt5
+ Bfm/05QMfPuhZUlhwJ67IW5Fi2Ym+axKk/TSxQkW4jv7bF0E2BY4GJAhPgHnXaH7Yn/W
+ FXbcWHeZuqWr0GA8EHSXX4+NmRqKet3H87f1Dp9f9Ect8Jbu2pNY6FFNWeaw+aA0N4H5
+ AVBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789939876; x=1790544676;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Alt2boJfFpnGWQK7GEzim6rNbUuekPvfR7ZNFEaaT9Q=;
+ b=Pe4nS3SZaVw1ljHFvqoWn+iptcl7ifSn943eGxCCQZvwte9IwB5WJipEdLL2fFICfk
+ wU6/pFURmDR+Rmddc23PREMvfyouvGCoueVPCmd5FVkGJON5TnbpR9g2dd4kDa6tnaxv
+ rd9rvUVdnnfWDQnnAiMz3Yg3QuRHCeMX0JH96apIQkZ3zn7PEXXISNSF5XpG1StCNPSG
+ 1KCf5UTi/OUxUj3Im5MKKRKNTBNcvL+ZFDzyzFscy78NFu+edy9V5RmQdCE0LfOHd8iT
+ 6wsMRY6+0qUePMN2I1Aw2TsKNYfXfghpsTNifNeCXSbGzaGxfpXGonCNenCt+uuqNXNF
+ zNjQ==
+X-Gm-Message-State: AFuF++lr4+m4haA3x4izQhpdikmdOQPMhSRa3nYEDJgyjfMRZrMt24ih
+ cHHk8mi8qyOfnSQ5jpkmqH//yyiCIjOnx/73LkOnA+ngtUcGQJzNE8qPWdQzepmVDP8=
+X-Gm-Gg: AYBFou1rLBirAG526sK6LgRIXhTJzrfo8v+Zh0rUj1vAp3nYPSohOkUI0QyetdqI2Qk
+ L7sCil93A6aoiW2XQRAc8EJVmNhb5RkpiQ4YjbcSthG+eJ6SGYDckS3OJ0XCNJF8d6hM1r5FvKI
+ GPZAEwSD7PEjlfiBXptkvaEPcGHHhP1PayH5bGLXy5yto76M84KLxWZ3dox0NPEocZnafkIqu0f
+ AF6YjZI8wb23zvb82rB+SIxD29sIJOMA+0hIQf1yZ/E747RkaCioM/Ahx9mrmiodmPIDAQnjgPZ
+ MnfieDy3wZlBl1hq4LAhTctRw1OhmZFG3k0LotJ2R4HiqzLMKHsEVrJqquLc5Gxk1IFKLFqc370
+ oJaGCMNgqXZ8MD3ROc5yaPOTRzivNbaXQRNlDerPKVZ4rG4PX+G2C8L55o98+n8lMU+bsLgldwH
+ J0tANNnMI4Rr34ZH/xeD507fEoGYFL/puHbJHqEq/UxByVtBC5of0YlkQJsSifCBj/ZeW/JknSW
+ gb6RpY9BeavkroSlExU8oeKU3ksbTdJ7p/jLk2xIznN0ABIvJGvmggUUASpbw==
+X-Received: by 2002:a05:6a21:778a:b0:3d3:aed2:6f20 with SMTP id
+ adf61e73a8af0-3dd72684de5mr14643246637.20.1789939876184; 
+ Sun, 20 Sep 2026 14:31:16 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:5f56:e854:5df2:d786?
+ ([2603:800c:7900:ed00:5f56:e854:5df2:d786])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33c32f17dbdsm14935237eec.1.2026.09.20.14.31.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Sep 2026 14:31:15 -0700 (PDT)
+Message-ID: <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
+Date: Sun, 20 Sep 2026 11:31:12 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 27/28] hw/arm/smmuv3: Add secure bank migration and
- secure-impl property
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- Mostafa Saleh <smostafa@google.com>, Jim MacArthur
- <jim.macarthur@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162644.2810021-1-tangtao1634@phytium.com.cn>
- <f0dc00d6-c49b-4dc1-b6de-706142856089@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <f0dc00d6-c49b-4dc1-b6de-706142856089@redhat.com>
+Subject: Re: [PATCH] linux-user/sh4: fix race in atomic variables
+To: Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>
+Cc: qemu-devel@nongnu.org
+References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Dw5HKo_69q5OTYAA--.36591S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWqu4t8GyQACs0
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGFyfGrWxZw4fWryrXFy7Jrb_yoW5ZrWrpa
- 18GFn8KFWjgF13Jr1aqw1xuFyFk3yrWa1DArsrJw15Z3WUAr15Xw17C3yY9FWkur48Ja1I
- van7ua93Cr4jgFJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,98 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 9/20/26 01:46, Mikulas Patocka wrote:
+> I'm experiencing random deadlocks when running heavily multithreaded
+> workload in qemu-sh4 userspace emulation. This patch fixes them.
+> 
+> The sh4 architecture doesn't support multiprocessing, the processor
+> doesn't have atomic instructions and it uses a technique known as gUSA to
+> provide atomicity guarantees w.r.t. signals or thread scheduling (see the
+> commit 3b894b699c9a for a brief description of gUSA).
+> 
+> The function decode_gusa attempts to recognize several well-known gUSA
+> regions and turn them into atomic instructions. When it fails to
+> recognize a known gUSA pattern, it generates a call to helper_exclusive.
+> Qemu will attempt to stop all the other threads and execute a gUSA region
+> exclusively, so that it can't race with anything.
+> 
+> The problem is in the function cpu_exec_step_atomic - this function stops
+> all other threads with start_exclusive(), then it executes one
+> instruction and then it releases all other threads with end_exclusive().
+> This works for all the architectures except sh4. On sh4, executing one
+> instruction atomically is not enough - we must execute the full gUSA
+> region while the other threads are stopped.
+> 
+> This patch fixes cpu_exec_step_atomic - it adds two new per-architecture
+> functions: is_uninterruptible and revert_uninterruptible.
+> 
+> is_uninterruptible returns true if we are in a gUSA region and we should
+> continue executing code while the other threads are stopped.
+> 
+> If we got TB_EXIT_REQUESTED, we must stop executing code - in this case,
+> we call the function revert_uninterruptible that rolls back PC to the
+> beginning of the gUSA region.
+> 
+> Cc:qemu-stable@nongnu.org
+> Signed-off-by: Mikulas Patocka<mpatocka@redhat.com>
+> 
+> ---
+>   accel/tcg/cpu-exec.c        |   15 +++++++++++++++
+>   include/accel/tcg/cpu-ops.h |   20 ++++++++++++++++++++
+>   target/sh4/cpu.c            |   25 ++++++++++++++++++++++++-
+>   3 files changed, 59 insertions(+), 1 deletion(-)
 
-On 2026/8/31 16:51, Eric Auger wrote:
-> Hi Tao,
-> On 8/13/26 6:26 PM, Tao Tang wrote:
->> Add a secure-impl device property and advertise it through
->> S_IDR1.SECURE_IMPL. Reject secure-impl=on unless Secure memory is available
->> and stage-1 translation is supported.
-> please document why the auto mode is needed (dependency on virt secure
-> option)
->
-> May make sense to document it in system/arm/virt.rst too as it has a
-> dependency on the secure setup of the machine
-I'll document auto in the commit message and virt.rst.
->> Usage:
->>      -M virt,secure=on,iommu=smmuv3 \
->>      -global arm-smmuv3.secure-impl=on
-> does it work with arm-smmuv3 device too?
+I think this should be integrated into the sh4 translator instead.  We 
+should not be single-stepping through the atomic region, but generate 
+one TB that implements the entire region.
 
-Yes, it also works with user-created arm-smmuv3 devices. It'll be like:
-
-
--M virt,secure=on
--device arm-smmuv3,primary-bus=pcie.0,secure-impl=on
->> Add the smmuv3/bank_s migration subsection for the secure register bank.
->> Serialize secure bank state including GBPA, IRQ config, stream table and
->> queue state.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   hw/arm/smmuv3.c         | 93 +++++++++++++++++++++++++++++++++++++++++
->>   include/hw/arm/smmuv3.h |  2 +
->>   2 files changed, 95 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 7e7376c65e2..8e1de94fd17 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -348,6 +348,8 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
->>   
->>       sbank->idr[1] = FIELD_DP32(sbank->idr[1], S_IDR1, S_SIDSIZE,
->>                                  SMMU_IDR1_SIDSIZE);
->> +    sbank->idr[1] = FIELD_DP32(sbank->idr[1], S_IDR1, SECURE_IMPL,
->> +                               s->secure_impl == ON_OFF_AUTO_ON);
->>       smmuv3_accel_idr_override(s);
->>   }
->>   
->> @@ -2752,6 +2754,37 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->>       return true;
->>   }
->>   
->> +static bool smmuv3_resolve_secure_impl(SMMUv3State *s, Error **errp)
->> +{
->> +    SMMUState *bs = ARM_SMMU(s);
->> +    bool secure_as_available = bs->secure_memory &&
->> +                               bs->secure_memory_as.root != NULL;
->> +
->> +    if (s->secure_impl == ON_OFF_AUTO_AUTO) {
->> +        s->secure_impl = secure_as_available ? ON_OFF_AUTO_ON
->> +                                             : ON_OFF_AUTO_OFF;
->> +    }
->> +
->> +    if (s->secure_impl == ON_OFF_AUTO_ON && !secure_as_available) {
->> +        error_setg(errp,
->> +                   "secure-impl=on requires a secure-memory address space");
->> +        return false;
->> +    }
->> +
->> +    /*
->> +     * When SECURE_IMPL == 1, stage 1 must be supported according to
->> +     * (IHI 0070G.b) 6.3.53 SMMU_S_IDR1, Page 442.
->> +     */
->> +    if (s->secure_impl == ON_OFF_AUTO_ON &&
->> +        s->stage && !strcmp(s->stage, "2")) {
-> we already have smmu_validate_property(). Would be better located there
-> if possible. Otherwise please justify it.
->
-> Please split this patch into 2. The migration support on one end, which
-> only depends on OnOffAuto secure_impl;
-> and the rest
-
-Yes moving this checking code  into smmu_validate_property is a better 
-choice. I'll handle it in V6. Also this patch will be splitted as your 
-description.
+This may require some coordination with the translator loop.
 
 
-Thanks to everyone for your time and effort in reviewing this series. 
-I’ll send v6 in a few days.
-
-Best Regards,
-
-Tao
-
+r~
 
