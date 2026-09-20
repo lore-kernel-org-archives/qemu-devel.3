@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A6DC982DA
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302D2C982D8
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8Ppu-0008Fh-P7; Sun, 20 Sep 2026 18:16:38 -0400
+	id 1x8Q67-0002UO-7h; Sun, 20 Sep 2026 18:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8Pps-0008F9-EO
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:16:36 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ id 1x8Q61-0002U4-Nz
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:33:17 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8Ppq-0003jy-So
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:16:36 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-396ccb65437so1781161a91.3
- for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:16:34 -0700 (PDT)
+ id 1x8Q5u-0006G0-Go
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:33:15 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ d9443c01a7336-2db22383fe8so14554345ad.2
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789942593; x=1790547393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789943586; x=1790548386; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Ssobi2S5kqPLuVlsNtZkMYsJk+ojZRJu3bVO3/wAV8w=;
- b=SpbCjmcBTx9Lu59d0uX3enN0jJoxMnOt1sHyFyJjhCHZNU1qwuxqD4AgM0OHtZ3gVK
- MN04zY5sagopW14tjT8+tIyBEPD9Fs3LaRDG9ZW8Xp99U+iLFAZcI7b0auw/zZkD3uUo
- FIocmnZAONbGrunyzZLg4h3ZG4R+1O3KCyD1nOkC2ccf8SFC7j6iRabOgWPGWx5BWcwY
- YTuHZjJ2KW/zbzIol+KQOMvpA8EIYz4Mgh/LFRTq/2jHZplIZeIq+XuZ9+0Xao/0HD1T
- gJTPFHMFKS3bMwtKGIBwMqZuyWeB0CvBKL7JtwcLQmJt0tcwUUdOgCPXZZsRQ6XY8RFd
- ulwQ==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=RwRDhWqnh663GSA5FiiDAEqm+JEW+GaOOIhiFuKAS6E=;
+ b=Xfj8E3LAYbaIVTQr2Wd2xYJI80cltvBychDsMYR4L1HnunXUrXgxAggZGo6up5/gZn
+ xoBpjZRR4LoqbGCKiKebjdcZaPPYI8dg0NW0DEDkDepea3FjeYjIetazc2ZLPWNh1QVB
+ IK1zfnHM1CguSTHkoUKPBbUv4v6sUtVDrZVKB1rVLNX3ZXt4sCHzIzZDNEnQlBz36v2z
+ NX03X4W/Zy+bgpdJpb+3iw+7pN96lsQ8VSdXPVjBqrBgIZKCAakqXpOTTHq1wndeFvRV
+ KwBmIUus6xtk+TqZ3fx1Do9lDD9fE/tOgt3rUJ634z9YAzHB+z6osWwuHSHrI0q3PHQ3
+ 45Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789942593; x=1790547393;
+ d=1e100.net; s=20260707; t=1789943586; x=1790548386;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Ssobi2S5kqPLuVlsNtZkMYsJk+ojZRJu3bVO3/wAV8w=;
- b=az+9GoAlVS7Z4hHQKamUzBTBBraJxhziy5D4BmWnAzr0h7twRdqLP41WCoiYzl9gSv
- 9rlvAAqCEg4Xpaa7EIlhaTn3pJ0v2yQmCMjfnHKVVB0wVHo3b/hJ7dPfHEuRsYGbxu/4
- nSES8uxMwmWi2U20qyJBGA1yf59CX2spdPxEXomrKlxV6YO3tUKmvgqAxEqzuLrbXSMR
- tRG7b4n+l0Pw0wggb8E7WCMKgjM9HAhuLSoZnycTHVvUklWzbasjm/2TpAaMzB1yJs4f
- plnoF9bAH6u+i01bkOHwG2q72EEPq8+Km/n++wK3Hy9HbEZ0fZMVBj4nzLzWyH7Q4k/h
- Vuqg==
-X-Gm-Message-State: AFuF++kmt3HGXxhMQ4WJcLUGRYDdlIR5+lkd+2gO+RT7qvgR3IZwojyG
- X8vsFv1828XN3+gJqmhKgmVP1Fv6HJxXZmN7SN7zn4CRrBaLQkjiTZkfFXRXJHmYq/3vW+d/Bcs
- K3j4+iOA=
-X-Gm-Gg: AYBFou1NWtmcIy/BxKkn/DQH/w6g7jnEM/0oeWFJZyDzeJDosHNRYgx6CdK7rv7InLo
- Z0RcjedxPuVKQ1vDCnLjU5yt10E2n7Od3V2GTx4khqGz4t38pJ9hiaw0p0goSb4xEs75Blr/zCU
- myVgmdTNJNYBHfsZFtF2lDSx2AjZnHQy0qRwZGg2HVjEmIn9mI4xEPGAxQXLw5KQ5N544rKLBdU
- 3YXzepKHHMBgB+Th/VCcH+vuVurBT4uqzDp5lZ57UpdU+zul8rAeNsWIF5a9VMJSVpEw3JheOWg
- 2FdVdRxJEbULKRfjEC6hN9BmMDmbVirm7tBqZ3QLt7EHbnBAu+r7/u0GYGXdSNbzPNx0srmoBiU
- 18LVILr5rDEpzI+VwF/cAcTnJga5A2WjaygGjiN3vHLlODNqL2QlxA8kLJeg774CrtnvgYilW0F
- J+2d4wyertGl4PhoRD8E1tCAYLMVy2YBuFrWhQSDXG1PO8w4jgyLn0iUskfrZXpzenzvnEwcah4
- 8buy7XujrRITNg8ory16X6QVgWPFn/ef3YIFW57ymvzL/pxALZUWdNFMKZG
-X-Received: by 2002:a17:90b:1f90:b0:39e:4c7f:7306 with SMTP id
- 98e67ed59e1d1-39e5504d02emr14787166a91.29.1789942593259; 
- Sun, 20 Sep 2026 15:16:33 -0700 (PDT)
-Received: from ?IPV6:2603:800c:7900:ed00:5f56:e854:5df2:d786?
- ([2603:800c:7900:ed00:5f56:e854:5df2:d786])
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RwRDhWqnh663GSA5FiiDAEqm+JEW+GaOOIhiFuKAS6E=;
+ b=jnN89iDcLYb+9DcELd812S9eBVOQAjg7Qx6Q5NkruFKJW/XjzSXmrj6zxlrD+RL2sL
+ 1fq0m/keD2ZrlbRrCqXzCh8l9cTBmc3H+iPW0KDcbLAN12Sq9RknQc4vj5xdLW2rgS3H
+ /Dfxa/IxtI+f0JnoicN68JH3sA3sQEnU/X5Rd0Y7x6HSdvlt6YMj4ScxZvDHd9+tRaM0
+ b7va3iL3CCU+TtvJhmbZQpU0Zd/MBBYO7XRJDXrAdVzbs7+qzWnsYmcaOEFkm0T5GizW
+ GVY6T2+GaRAf6ZBnkzp5wrui8xOIxtCMefckpBOAQmC8ktpGZrQxk1NotlUvPhlo46gC
+ PN+w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByQfxX8AoAbsJczonV+NOrZMPmH+CiGoL/nadl/IzpQseC1xPH9/XNG+vHaP1FwMmb6k3wXheCywfuB@nongnu.org
+X-Gm-Message-State: AFuF++kD+gCkNluRsWwZy9Vhg1C8Jvo3Q21VUtcxQypEhOk1478Nb3mN
+ qPiMo66hfvOfECesb/Cv3xIvaUHH2dAZHJSEBu24n9QoL4J7ZpIW9A9AZTrggVMjnQc=
+X-Gm-Gg: AYBFou2BV0HeJeBSKiwd0vqNRICAghR4OL7RQTkUf0r/MO9N9iRQYbLhwIg0O5Kbpb/
+ NevRAUGUvB5ZtHgh0KtyhmzRaEcDUhv8k8KmRCeZ835R86EJReuhZGSYQDpkngjv/uFlNWxS0bX
+ wbFpfKjcNXofQm9bL1PTQcxvObi4GY7F2smEfhFamdCOYAfMpr9hmWB3WJM8ANW9P8GyR4KBmel
+ bGZl2HUrLuEfxeKCiQ3YJj+iUywtkBDF0z8DzqH9sznsoTElU6cyd0ncjXkStLg+XQi1h6+6Uex
+ +iPMpbaiMHOHwbumnHQQ/078OOcPiF7TUTgP+5xb6+X7wuxeerQZKI8Xl1pwfJYMLFdwK8Cn2ic
+ I6uzlelqJww+nthYF7YPXsILUcLRF6tLgB5ySkAdlytbWAAiOAdauYsmCriEk7m/bCGPvLqA2s3
+ Cw9kXGCiEuaN7H9CrNPudzx45ZiI2J3MjHkLXr1VODAE7zydDRykjn2Fe2wrNCvM9Iv2rqRL18P
+ EkOKPOpiOe1a5T88erwUk5/QQTh7epCzrgWKjymce4FYGHNlBENS+dHVWv5
+X-Received: by 2002:a17:902:d2cc:b0:2dd:ad73:c982 with SMTP id
+ d9443c01a7336-2ddb1ba0faamr135446235ad.26.1789943586415; 
+ Sun, 20 Sep 2026 15:33:06 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:e836:65a9:3e76:872e?
+ ([2603:800c:7900:ed00:e836:65a9:3e76:872e])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33c3313d907sm13753038eec.11.2026.09.20.15.16.32
- for <qemu-devel@nongnu.org>
+ 5a478bee46e88-33c3318763bsm13176287eec.19.2026.09.20.15.33.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Sep 2026 15:16:32 -0700 (PDT)
-Message-ID: <f38d17d4-f4cf-44e1-b606-68d6f4faec5b@linaro.org>
-Date: Sun, 20 Sep 2026 12:12:24 -1000
+ Sun, 20 Sep 2026 15:33:05 -0700 (PDT)
+Message-ID: <8b9b62d0-2cc7-4438-ad60-4cfbb4088bc8@linaro.org>
+Date: Sun, 20 Sep 2026 12:33:03 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/14] bsd-user: Fix MAP_TYPE definition.
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH 13/14] bsd-user: Fix non-PIE binaries
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Maksym Sobolyev <sobomax@sippysoft.com>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
- <20260919-misc-2025q4-v1-8-ebfa61049bd7@bsdimp.com>
+ <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260919-misc-2025q4-v1-8-ebfa61049bd7@bsdimp.com>
+In-Reply-To: <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,40 +108,68 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/19/26 19:20, Warner Losh wrote:
-> The 0xf I think was copied from the Linux headers a long time ago, since
-> BSD doesn't define this. In FreeBSD, there's only two bits of this low
-> nibble that are used for the sharing type (linux has 2 more types
-> encoded in these low bits). The kernel rejects bogus flags (0xc part of
-> 0xf mask), so it's better to have just these two bits here.
-> 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   bsd-user/syscall_defs.h | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-> index 506aea3e27..c4fd5f5589 100644
-> --- a/bsd-user/syscall_defs.h
-> +++ b/bsd-user/syscall_defs.h
-> @@ -121,7 +121,14 @@ struct target_msgbuf {
->   /*
->    *  sys/mman.h
->    */
-> -#define MAP_TYPE                        0xf
-> +/*
-> + * FreeBSD doesn't define this, but Linux does. In Linux, it's only MAP_PRIVATE
-> + * and MAP_SHARED and a few Linux-specific types (0xf). FreeBSD allows other
-> + * types of mapping with MAP_ANON, MAP_GUARD, and MAP_STACK. The mask on Linux
-> + * excludes these: They don't have MAP_GUARD, and MAP_STACK and MAP_ANON have
-> + * similar flags with different names that aren't in it's 0xf MAP_TYPE.
-> + */
-> +#define MAP_TYPE (MAP_PRIVATE | MAP_SHARED)
+> diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
+> index 295dad4643..eaa8676f5a 100644
+> --- a/bsd-user/elfload.c
+> +++ b/bsd-user/elfload.c
+> @@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
+>               elf_prot |= PROT_EXEC;
+>           }
 >   
->   /*
->    * sys/time.h
-> 
+> +        int flags = MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE;
+> +        if (rbase == 0) {
+> +            flags |= MAP_EXCL;
+> +        }
+>           error = target_mmap(TARGET_ELF_PAGESTART(rbase + elf_ppnt->p_vaddr),
+>                               (elf_ppnt->p_filesz +
+>                                TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)),
+> -                            elf_prot,
+> -                            (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),
+> -                            fd,
+> +                            elf_prot, flags, fd,
+This is wrong, or at least very not ideal.
 
-Needs to be merged with patch 6.
+What's missing no the freebsd side is a probe for the entire address 
+space for the guest program.
+
+>     /*
+>      * Reserve address space for all of this.
+>      *
+>      * In the case of ET_EXEC, we supply MAP_FIXED_NOREPLACE so that we get
+>      * exactly the address range that is required.  Without reserved_va,
+>      * the guest address space is not isolated.  We have attempted to avoid
+>      * conflict with the host program itself via probe_guest_base, but using
+>      * MAP_FIXED_NOREPLACE instead of MAP_FIXED provides an extra check.
+>      *
+>      * Otherwise this is ET_DYN, and we are searching for a location
+>      * that can hold the memory space required.  If the image is
+>      * pre-linked, LOAD_ADDR will be non-zero, and the kernel should
+>      * honor that address if it happens to be free.
+>      *
+>      * In both cases, we will overwrite pages in this range with mappings
+>      * from the executable.
+>      */
+>     reserve_size = range.hi - range.lo + 1;
+>     align_size = reserve_size;
+> 
+>     if (ehdr->e_type != ET_EXEC && align > qemu_real_host_page_size()) {
+>         align_size += align - 1;
+>     }
+> 
+>     load_addr = target_mmap(load_addr, align_size, PROT_NONE,
+>                             MAP_PRIVATE | MAP_ANON | MAP_NORESERVE |
+>                             (ehdr->e_type == ET_EXEC ? MAP_FIXED_NOREPLACE : 0),
+>                             -1, 0);
+
+which handles ET_DYN properly, which is missing from the freebsd side 
+entirely.  Afterward, elf sections are mapped onto this reserved range.
+
+I'll note that FreeBSD should be able to do better than Linux wrt the 
+alignment handling here, since you have MAP_ALIGNED().  So long as 
+guest_base is suitably aligned, anyway.
+
+
+r~
 
 r~
 
