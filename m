@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63191C982DA
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA32C982D8
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 22:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8Phd-0006bg-Mg; Sun, 20 Sep 2026 18:08:05 -0400
+	id 1x8PjN-0007EX-DN; Sun, 20 Sep 2026 18:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8PhL-0006YB-Gl
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:07:50 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
+ id 1x8PjL-0007EF-He
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:09:51 -0400
+Received: from mail-pz2-x0c.google.com ([2607:f8b0:4864:3b::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x8PhK-0002HL-1g
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:07:47 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc50bcf87b2so1408273a12.1
- for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:07:45 -0700 (PDT)
+ id 1x8PjJ-0002VK-Tn
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 18:09:51 -0400
+Received: by mail-pz2-x0c.google.com with SMTP id
+ 41be03b00d2f7-cc515bef69dso1519761a12.2
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 15:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1789942064; x=1790546864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1789942188; x=1790546988; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qajgS6QE9nYKZojJ7+7HA/0beX+XyFrCIXTsf/nXUII=;
- b=UAVf03I3C5gPuV/LT82PvUFuPGiF4+JhOinYrMuHDcV3bqC2q7anye2NV4z62fDn8a
- /BSXhnNgsv/nRlBt40ZgJMnWiqJVBess1rYrYi9Cgmj3w2OYWdOIUMwsgTkXBYpTJhfQ
- To8oWdrNobmi00eumt2/NexyHxdMsFn1otfi5SlgB+aZueTZHZLr3PWTQJnC+/p/jgX4
- kXvMk2/c92VSb5ENb3zKwAUGINa5Ni4eXgQRNBBA74P6uv0h1SdQt+zhI2vbfqsoM/bK
- I8XS7cwQbZ5WxpPLraOsqFzOrJqQ2t0Wuj8E0zvnUvX+6MaMAql0BmWmZNM5pQZccgFW
- NNSA==
+ bh=byIHC8VIw8D4F+l0gvKZRLM+i4Nv8AD3ptfnOWOvZsk=;
+ b=HmpTHoLB6fzi918wuZuZbqBB2j11xnxGspziT72Cs0S09GjInap7waAYITwTMjDadY
+ HSBSl+zPl9bGzvX2bNo7fmotlLIn3zgeI5tzJhLqe6ZBS0UVwqXLXbOfHqwZ52xKZfxq
+ gcSNy3s223ojVFe3K+qNO/oSqrHIZAlQdRneXE4l1sNQqzSA/JvoUSlPungBKT56isxf
+ RCpXO8AqRw1jpBngbxlAyzBkd3D/JBIim7tNtthsQzPs0dZvrGzuoqKKFDxSbZUw80u9
+ PgUJPzS0PfHReaPSvjhCH7mRtq7a26DpmoLYHf3dE6ESfdUDrAkc5E5CIGNbFLCHjy3F
+ iXUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789942064; x=1790546864;
+ d=1e100.net; s=20260707; t=1789942188; x=1790546988;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qajgS6QE9nYKZojJ7+7HA/0beX+XyFrCIXTsf/nXUII=;
- b=lmeG5zBGT0dZos8TVRN/Lme38K0M4CklfzjB+48ss68aOY+G7rwjaiB9/KKHYBlBJg
- GOnSURIE+4n7MGEkS3g7T8kPfLwe0HMTqg0Xhc9JxwaVP6arUHVQBuKfTvhSQyD7ueNJ
- +UEaZfJBsG8jxMv49VJl46BkoEvIh9HEN3kC8a27FhBWzdP5l8Y8Azcm7pxKM4oDZmt+
- jBWuigVgN3bA5R6DbLWXzQlPNPGHbdxz+ceZ5AIJROL7GVHsep9gkKgY8VTQx/5rlvlc
- ASIVj8XREjA1Db4eYSZJguOxTVLqFmafCswJW2UKoPKZewJRb4ntK4hBkzq8vLP4z6R2
- bi4w==
+ bh=byIHC8VIw8D4F+l0gvKZRLM+i4Nv8AD3ptfnOWOvZsk=;
+ b=EG9TznFP68UIZlGvXLIkANxAWXAdm7zUVZ7Sqhd7pQFWEHKVBEfs1ZqeIwvGCIs/vi
+ nxXCGnu/cOlTzTQdhRHngsBnEWim2gUeZiPyStj0STUJLiE0Y07AiFmVrWUl9NHgN6jz
+ dhfZbogOJbKJ8IhN3Gngnjb0TrKyXV8DH0uC2q0DFN+w4LpYOpqChCFPFt3S/3VjgJZ8
+ 4PVtobxyagxPvcFzmOrhmsR9LXEluSkVPDGLXCbnjS3cvG9oXkqONfzu47LPtapsnFcV
+ mDSJQhx6I1HvtLPkb73xxNYDghDXDT17Ak+eV8ib9zY3Q5YioAKiQVaAPLR4L/mZvTBa
+ oUrg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxQrQNzp2rKkB/6nsqQSqVtxVZsOzp5a5hSHj/NyVA+oqw0OYEgqF6ikFxfgHXKeRhOHeW7Yupf97bx@nongnu.org
-X-Gm-Message-State: AFuF++lCKLEmZW/rDuRz9uZ7i/pSW7F6UtaetGJpsfIUhQb9ZyEIQQbk
- diGoIgNOm4O93FDa+PBT+brloRrQRG+aqApaZtxZuttoXz/UBAVZDS0iiLBXKbX4XlM=
-X-Gm-Gg: AYBFou194+4c6SLmP4YLxyVfBrgsBMLj1hRQqDac4gWHR4ReJ7VpGnv6tpKmZ/dKJLU
- 7p6e0UN6atKVgB29jQiOWTL91ATaRVXs7GQUbb0u/GFXMXsPJMwa6OcIMC+N12rJLZt6yRWvdAW
- HNmmjovk+WcUPuN4kX8ldFmxGj+OOXrdr9NstvDoHZbhE57vfLeU6lANfwoQP3Mi2Re6oQqPmjB
- RP4V/3tv7sCNuuF+NaBEbcVFW/GogTHs20acAJXgpTcfJpxhurcVaKF9Hns4X8QKbPeJI6imL0x
- 9leuStKT4dCwcC19Ds9DS4vEwFgxi/Eisqm03UyuVqH3CXuymKaF7La0iwJkVS4DQK/1ProSFG8
- XTQGGbR1lY2FRBFh1OJNI+gje2Alel1AnqqL6TExbBx/XH2UlPwi7E0HuFK4+5fLYCInPtlMNYS
- P05hv43G4E/xMDCpoVe/e554ARUwel9JRP/FPZhUKhCiy+GZ7dZRSCsPG+mciIxl36ZH9JikoU6
- YPp/f9E2lPisyAZt1iTfk/B/BWdsF4eT96Ex2sWbJnP3hVPr4J4G2S1vLUUpA==
-X-Received: by 2002:a05:6a20:e212:b0:3dd:a196:30a6 with SMTP id
- adf61e73a8af0-3dda19633dcmr8076642637.86.1789942064260; 
- Sun, 20 Sep 2026 15:07:44 -0700 (PDT)
+ AKwUvBzXJy3yK6CBPtA2ZRuS1b6qoWB2I2gyRVAyYb9tXFRWH1/340vagbYJ7EIlTBKLzU5cZTNFhD9eIpHv@nongnu.org
+X-Gm-Message-State: AFuF++l9iUlyiynxN67PP1eywVVgDxDB/KNnOZ/n7ayyHnY9kXZ3Kk4x
+ 37akepy40cdSG61A0E0rLCdICY77VjBmB/E76jk7jDlkItg/8TlRh4vMu3ZEF5xU4Qw=
+X-Gm-Gg: AYBFou3e3ItKVSSwsYIzaIefjwAEU86Xz6OFGzOtmagrTD96g941u9IUi8GGBR4HjPE
+ BZXmls0UAcgyREDK4VT8wcGsH33CiJTVI2U3JozsKwtK+27mxqVKiG5rdlVIzi/o8wSFJt+/Hlu
+ xD+YBP9CLpSI/VQ8MwilNSwclPcm0d9Qbc6Z6NUCVd91615hiskSs9mQ4Kj+K51grBUh/v/neGa
+ Vj0jw5xACC9prsEqPE5jQOohcXHq5ucN3lZZ0ivu6s/9AzYvDYPemiREOzL9B+gsM3QEfUePKaX
+ Ruu2UMJk95i1zVFt1/4i/MFl27FnzWo4oJVHnPwttQ3Q/b3iiuWt3dtjZQfsK4Dgsk6NtUNqC4/
+ pdah3glinyphIt8xkJpTQpCf/jw0+JdQ2Y/2Pr339kNbd/w+iISKGs5K0dVvBjW89vkeRjDxVct
+ R6SNhmobA6Y8qRBSnpgPpSLLcriySxsL4soQtAmjElYV3apFvnXDpo8DdGLWyaSuMfca8Xp7WWG
+ mCUrPAlXzelDIecJ5DDOjBcYiQWjEA4z6NVf2y5FKBfEbXq865SBmDc2IpS1TrD59SGkyI=
+X-Received: by 2002:a17:90b:3a8e:b0:39e:14db:437b with SMTP id
+ 98e67ed59e1d1-39e54afe89fmr13531218a91.7.1789942188054; 
+ Sun, 20 Sep 2026 15:09:48 -0700 (PDT)
 Received: from ?IPV6:2603:800c:7900:ed00:5f56:e854:5df2:d786?
  ([2603:800c:7900:ed00:5f56:e854:5df2:d786])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144d55f299fsm26621657c88.15.2026.09.20.15.07.43
+ 5a478bee46e88-33c33186490sm12281331eec.18.2026.09.20.15.09.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Sep 2026 15:07:43 -0700 (PDT)
-Message-ID: <b4bc976a-dafa-466e-bbf5-a9fde46c8f91@linaro.org>
-Date: Sun, 20 Sep 2026 12:07:41 -1000
+ Sun, 20 Sep 2026 15:09:47 -0700 (PDT)
+Message-ID: <0b7b6ab1-5d55-42fe-8591-f67f8143c7ac@linaro.org>
+Date: Sun, 20 Sep 2026 12:09:45 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] bsd-user: Initialize per-arch child registers
+Subject: Re: [PATCH 06/14] bsd-user: Fix crazy bug with mmap
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
- <20260919-misc-2025q4-v1-5-ebfa61049bd7@bsdimp.com>
+ <20260919-misc-2025q4-v1-6-ebfa61049bd7@bsdimp.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260919-misc-2025q4-v1-5-ebfa61049bd7@bsdimp.com>
+In-Reply-To: <20260919-misc-2025q4-v1-6-ebfa61049bd7@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,26 +107,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/19/26 19:20, Warner Losh wrote:
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   bsd-user/freebsd/os-thread.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-> index 15872f03fd..eaab062d3d 100644
-> --- a/bsd-user/freebsd/os-thread.c
-> +++ b/bsd-user/freebsd/os-thread.c
-> @@ -1629,6 +1629,9 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
+> +++ b/bsd-user/mmap.c
+> @@ -215,10 +215,13 @@ static int mmap_frag(abi_ulong real_start,
 >   
->       new_env = cpu_copy(env);
+>       prot_new = prot | prot1;
+>       if (fd != -1) {
+> -        /* msync() won't work here, so we return an error if write is
+> -           possible while it is a shared mapping */
+> -        if ((flags & TARGET_BSD_MAP_FLAGMASK) == MAP_SHARED &&
+> -            (prot & PROT_WRITE))
+> +        /*
+> +         * msync() won't work here, so we return an error if write is
+> +         * possible while it is a shared mapping
+> +         */
+> +        if (!(flags & MAP_ANON)
+> +            && (flags & MAP_TYPE) == MAP_SHARED
+> +            && (prot & PROT_WRITE))
+>               return -1;
 >   
-> +    /* Init regs that differ from the parent. */
-> +    target_cpu_clone_regs(new_env, 0);
-> +
->       new_cpu = env_cpu(new_env);
->       new_cpu->opaque = ts;
->       ts->bprm = parent_ts->bprm;
-> 
+>           /* adjust protection to be able to read */
+
+Need braces, even if they were missing beforehand.  Otherwise,
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
