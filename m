@@ -4,68 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9071FC982DA
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 10:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5744C982E1
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 11:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8F9G-0007Kl-7i; Sun, 20 Sep 2026 06:51:54 -0400
+	id 1x8G1t-0005dv-2u; Sun, 20 Sep 2026 07:48:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x8F9D-0007KM-Aa; Sun, 20 Sep 2026 06:51:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x8G1n-0005dR-Rk
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 07:48:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1x8F99-0008L7-I5; Sun, 20 Sep 2026 06:51:50 -0400
-Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68KApAii096270
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 20 Sep 2026 19:51:32 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=NhBDs/uPg1cu8Czy08WkRZ35uPuDx9lgK2puUnlGdXE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1789901492; v=1;
- b=lOm7pmYMDayufBLcA+EYxdrD159Q5zgXsHbkKE+5I4Cl58nZl0w6asLm/8NdU3Z1
- NxvIAGwAXupaNLxYpPMhB9+nEpKEIWEwaAs8mhbdm60vh62qa/CX9vWhR8OJAn94
- Wj9SuaafJKNsRajCsG0wTzH/GhzeqrdlgDw4DuafQ3QcyrYMDZ7vFUsjqts8NOl9
- XOcWlDUS+HPgVWMxohHMZHvmHuUiu5E/qtuhXTrlLT5klwpmpWtFei5MSw3+wXSH
- r5zRcazBOzkFOcnaso8Ih1LPp/M5n6Glx0h+/X8J3nyUHhjizmMa93soZVkkp9s3
- JXGFuf/tuFz34TUBVhtFGQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 20 Sep 2026 19:51:00 +0900
-Subject: [PATCH] net/eth: Add missing L4/L5 header bound checks
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x8G1l-0000ji-N8
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 07:48:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789904892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=StQvymsY0z9ENMSOVcMGUAwN5MBkM1vh5XZmNJ2xZi0=;
+ b=ZWq8ak/Ob6/Xxp0eF0ZOUu5MsR58lRjqFOaVTdViB/fcg6yGEFxAgyhC8BsAbpkRGE2HLU
+ MadLHxiWNtCB7aUQRN3d1KdHxRYNiXvi1rlWQLaIuYT4+f+R+zlpNJBwNcGHCRG6pd606F
+ DU3GXB+WWuwsptJ7LvoY4OVm/7JghZI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-85-eyi9UPkHPRiig6w2JGkdrw-1; Sun,
+ 20 Sep 2026 07:47:03 -0400
+X-MC-Unique: eyi9UPkHPRiig6w2JGkdrw-1
+X-Mimecast-MFC-AGG-ID: eyi9UPkHPRiig6w2JGkdrw_1789904822
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F315180A8F7; Sun, 20 Sep 2026 11:47:02 +0000 (UTC)
+Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb (unknown [10.44.32.8])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix)
+ with ESMTPS id 20B961800370; Sun, 20 Sep 2026 11:47:00 +0000 (UTC)
+Date: Sun, 20 Sep 2026 13:46:58 +0200 (CEST)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
+ Richard Henderson <richard.henderson@linaro.org>
+cc: qemu-devel@nongnu.org
+Subject: [PATCH] linux-user/sh4: fix race in atomic variables
+Message-ID: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-eth-v1-1-ddd05ce24843@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDSyMD3dSSDF0DIyNjE8u0lEQj81QloMqCotS0zAqwKdGxEH5xaVJWanI
- JSKtSbS0AHzrZF2cAAAA=
-X-Change-ID: 20260920-eth-022349fda27e
-To: qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowangio@gmail.com>, qemu-stable@nongnu.org,
- Lazymio <mio@lazym.io>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6274;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=TJ7W9zbaA+RkHrQK94QOkKSm5ZgtVZrY89wbJliTYJg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ9b6XTPduPlsFezFMg+obTFO9vWuFDMz3LyoKG3mbYepV
- +Ye2OncUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBHvv4wMX6ZnVx1Zet5yllJn
- nrdKks2zmKUtJ/8eurNV3v4mv4XKXYa/cs/Vv15NZp6lrCbXf1SO63/Ih5/FxeZ+O6p8ONNuPlv
- OBgA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mpatocka@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,159 +79,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have some L4/L5 header bound checks but they were not
-comprehensive. Add the missing coverage.
+I'm experiencing random deadlocks when running heavily multithreaded
+workload in qemu-sh4 userspace emulation. This patch fixes them.
 
-The IPv6 header parser incorrectly derives L4 offsets greater than
-actual values. Adding a bound check without fixing it would reject
-valid packets while fixing it without adding a bound check can result
-in an out-of-bounds access, so fix it along with the bound check
-addition.
+The sh4 architecture doesn't support multiprocessing, the processor
+doesn't have atomic instructions and it uses a technique known as gUSA to
+provide atomicity guarantees w.r.t. signals or thread scheduling (see the
+commit 3b894b699c9a for a brief description of gUSA).
 
-One fixed problem of the IPv6 header parser is that extension header
-size is not properly computed for the Fragment Header and the IP
-Authentication Header.
+The function decode_gusa attempts to recognize several well-known gUSA
+regions and turn them into atomic instructions. When it fails to
+recognize a known gUSA pattern, it generates a call to helper_exclusive.
+Qemu will attempt to stop all the other threads and execute a gUSA region
+exclusively, so that it can't race with anything.
 
-RFC 8200 "Internet Protocol, Version 6 (IPv6) Specification" section
-4.5. "Fragment Header" says the Fragment Header has a fixed size.
-The byte represented by ext_hdr.ip6r_len is reserved and "ignored on
-reception".
+The problem is in the function cpu_exec_step_atomic - this function stops
+all other threads with start_exclusive(), then it executes one
+instruction and then it releases all other threads with end_exclusive().
+This works for all the architectures except sh4. On sh4, executing one
+instruction atomically is not enough - we must execute the full gUSA
+region while the other threads are stopped.
 
-RFC 4302 "IP Authentication Header" section 2.2. "Payload Length" says
-it specifies the length of AH in 32-bit words (4-byte units), minus "2".
+This patch fixes cpu_exec_step_atomic - it adds two new per-architecture
+functions: is_uninterruptible and revert_uninterruptible.
 
-Another fixed problem is that the parser continues parsing extensions in
-noninitial fragments.
+is_uninterruptible returns true if we are in a gUSA region and we should
+continue executing code while the other threads are stopped.
 
-RFC 8200 "Internet Protocol, Version 6 (IPv6) Specification" section
-4.5 "Fragment Header" says the noninitial fragment packets have the
-Fragment Header containing "the Next Header value that identifies the
-first header after the Per-Fragment headers of the original packet"
-followed by "the fragment itself."
+If we got TB_EXIT_REQUESTED, we must stop executing code - in this case,
+we call the function revert_uninterruptible that rolls back PC to the
+beginning of the gUSA region.
 
-Therefore, the data following the Fragment Header in the noninitial
-fragment packet must be treated as a fragment instead of another
-extension header, regardless of the Next Header value the Fragment
-Header contains.
-
-Fixes: eb700029c783 ("net_pkt: Extend packet abstraction as required by e1000e functionality")
-Fixes: 75020a702151 ("Common definitions for VMWARE devices")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4155
 Cc: qemu-stable@nongnu.org
-Reported-by: Lazymio <mio@lazym.io>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- net/eth.c | 47 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 7 deletions(-)
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 
-diff --git a/net/eth.c b/net/eth.c
-index 12ec316e240e..96d3f871f4bc 100644
---- a/net/eth.c
-+++ b/net/eth.c
-@@ -16,6 +16,7 @@
-  */
+---
+ accel/tcg/cpu-exec.c        |   15 +++++++++++++++
+ include/accel/tcg/cpu-ops.h |   20 ++++++++++++++++++++
+ target/sh4/cpu.c            |   25 ++++++++++++++++++++++++-
+ 3 files changed, 59 insertions(+), 1 deletion(-)
+
+Index: qemu/accel/tcg/cpu-exec.c
+===================================================================
+--- qemu.orig/accel/tcg/cpu-exec.c	2026-09-20 13:16:20.000000000 +0200
++++ qemu/accel/tcg/cpu-exec.c	2026-09-20 13:16:20.000000000 +0200
+@@ -560,6 +560,9 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         g_assert(!cpu->running);
+         cpu->running = true;
  
- #include "qemu/osdep.h"
-+#include "qemu/bitops.h"
- #include "qemu/log.h"
- #include "net/eth.h"
- #include "net/checksum.h"
-@@ -156,7 +157,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
++#ifdef CONFIG_USER_ONLY
++next_instr:
++#endif
+         TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
+         s.cflags = curr_cflags(cpu);
  
-         copied = iov_to_buf(iov, iovcnt, *l3hdr_off, iphdr, sizeof(*iphdr));
-         if (copied < sizeof(*iphdr) ||
--            IP_HEADER_VERSION(iphdr) != IP_HEADER_VERSION_4) {
-+            IP_HEADER_VERSION(iphdr) != IP_HEADER_VERSION_4 ||
-+            *l3hdr_off + IP_HDR_GET_LEN(iphdr) > input_size) {
-             return;
-         }
+@@ -586,7 +589,19 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         trace_exec_tb(tb, s.pc);
+         cpu_tb_exec(cpu, tb, &tb_exit);
+         cpu_exec_exit(cpu);
++#ifdef CONFIG_USER_ONLY
++        if (cpu->cc->tcg_ops->is_uninterruptible && cpu->cc->tcg_ops->is_uninterruptible(cpu)) {
++            if ((tb_exit & TB_EXIT_MASK) != TB_EXIT_REQUESTED)
++                goto next_instr;
++            if (cpu->cc->tcg_ops->revert_uninterruptible)
++                cpu->cc->tcg_ops->revert_uninterruptible(cpu);
++        }
++#endif
+     } else {
++#ifdef CONFIG_USER_ONLY
++        if (cpu->cc->tcg_ops->revert_uninterruptible)
++            cpu->cc->tcg_ops->revert_uninterruptible(cpu);
++#endif
+         cpu_exec_longjmp_cleanup(cpu);
+     }
  
-@@ -188,7 +190,8 @@ void eth_get_protocols(const struct iovec *iov, size_t iovcnt, size_t iovoff,
-         if (_eth_copy_chunk(input_size,
-                             iov, iovcnt,
-                             *l4hdr_off, sizeof(l4hdr_info->hdr.tcp),
--                            &l4hdr_info->hdr.tcp)) {
-+                            &l4hdr_info->hdr.tcp) &&
-+            *l4hdr_off + TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp) <= input_size) {
-             l4hdr_info->proto = ETH_L4_HDR_PROTO_TCP;
-             *l5hdr_off = *l4hdr_off +
-                 TCP_HEADER_DATA_OFFSET(&l4hdr_info->hdr.tcp);
-@@ -456,7 +459,9 @@ bool eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
-     struct ip6_ext_hdr ext_hdr;
-     size_t bytes_read;
-     uint8_t curr_ext_hdr_type;
-+    uint16_t buf;
-     size_t input_size = iov_size(pkt, pkt_frags);
-+    bool subsequent = false;
+Index: qemu/include/accel/tcg/cpu-ops.h
+===================================================================
+--- qemu.orig/include/accel/tcg/cpu-ops.h	2026-09-20 13:16:20.000000000 +0200
++++ qemu/include/accel/tcg/cpu-ops.h	2026-09-20 13:16:20.000000000 +0200
+@@ -168,6 +168,26 @@ struct TCGCPUOps {
+      * @addr: tagged guest address
+      */
+     vaddr (*untagged_addr)(CPUState *cs, vaddr addr);
++
++    /**
++     * is_uninterruptible:
++     * @cpu: cpu context
++     *
++     * Returns true if we are in the middle of the gUSA region and
++     * cpu_exec_step_atomic must keep on executing instructions without
++     * dropping the exclusive lock.
++     */
++    bool (*is_uninterruptible)(CPUState *cs);
++
++    /**
++     * revert_uninterruptible:
++     * @cpu: cpu context
++     *
++     * This function is called if cpu_exec_step_atomic needs to exit. It
++     * tests if we are in the gUSA region and rolls back PC to the
++     * beginning of it.
++     */
++    void (*revert_uninterruptible)(CPUState *cs);
+ #else
+     /** @do_interrupt: Callback for interrupt handling.  */
+     void (*do_interrupt)(CPUState *cpu);
+Index: qemu/target/sh4/cpu.c
+===================================================================
+--- qemu.orig/target/sh4/cpu.c	2026-09-20 13:16:20.000000000 +0200
++++ qemu/target/sh4/cpu.c	2026-09-20 13:16:20.000000000 +0200
+@@ -92,6 +92,26 @@ static void superh_restore_state_to_opc(
+      */
+ }
  
-     info->rss_ex_dst_valid = false;
-     info->rss_ex_src_valid = false;
-@@ -496,25 +501,53 @@ bool eth_parse_ipv6_hdr(const struct iovec *pkt, int pkt_frags,
-             return false;
-         }
- 
--        if (curr_ext_hdr_type == IP6_ROUTING) {
-+        switch (curr_ext_hdr_type) {
-+        case IP6_ROUTING:
-             if (ext_hdr.ip6r_len == sizeof(struct in6_address) / 8) {
-                 info->rss_ex_dst_valid =
-                     _eth_get_rss_ex_dst_addr(pkt, pkt_frags,
-                                              ip6hdr_off + info->full_hdr_len,
-                                              &ext_hdr, &info->rss_ex_dst);
-             }
--        } else if (curr_ext_hdr_type == IP6_DESTINATON) {
-+            info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
-+            break;
++#ifdef CONFIG_USER_ONLY
++static bool superh_cpu_is_uninterruptible(CPUState *cs)
++{
++    SuperHCPU *cpu = SUPERH_CPU(cs);
 +
-+        case IP6_DESTINATON:
-             info->rss_ex_src_valid =
-                 _eth_get_rss_ex_src_addr(pkt, pkt_frags,
-                                          ip6hdr_off + info->full_hdr_len,
-                                          &ext_hdr, &info->rss_ex_src);
--        } else if (curr_ext_hdr_type == IP6_FRAGMENT) {
-+            info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
-+            break;
++    return cpu->env.gregs[15] >= -128u;
++}
 +
-+        case IP6_FRAGMENT:
-+            bytes_read = iov_to_buf(pkt, pkt_frags,
-+                                    ip6hdr_off + info->full_hdr_len + 2,
-+                                    &buf, sizeof(buf));
-+            if (bytes_read < sizeof(buf)) {
-+                return false;
-+            }
++static void superh_cpu_revert_uninterruptible(CPUState *cs)
++{
++    SuperHCPU *cpu = SUPERH_CPU(cs);
 +
-+            info->full_hdr_len += 8;
-             info->fragment = true;
-+            subsequent = extract16(be16_to_cpu(buf), 3, 13);
-+            break;
-+
-+        case IP6_AUTHENTICATION:
-+            info->full_hdr_len += (ext_hdr.ip6r_len + 2) * 4;
-+            break;
-+
-+        default:
-+            info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
-         }
- 
--        info->full_hdr_len += (ext_hdr.ip6r_len + 1) * IP6_EXT_GRANULARITY;
-         curr_ext_hdr_type = ext_hdr.ip6r_nxt;
--    } while (eth_is_ip6_extension_header_type(curr_ext_hdr_type));
-+    } while (!subsequent &&
-+             eth_is_ip6_extension_header_type(curr_ext_hdr_type));
-+
-+    if (input_size < ip6hdr_off + info->full_hdr_len) {
-+        return false;
++    if (cpu->env.gregs[15] >= -128u && cpu->env.pc < cpu->env.gregs[0]) {
++        cpu->env.pc = cpu->env.gregs[0] + cpu->env.gregs[15] - 2;
++        cpu->env.gregs[15] = cpu->env.gregs[1];
++        cpu->env.flags &= ~(TB_FLAG_DELAY_SLOT_MASK | TB_FLAG_GUSA_MASK);
 +    }
++}
++#endif /* CONFIG_USER_ONLY */
++
+ #ifndef CONFIG_USER_ONLY
+ static bool superh_io_recompile_replay_branch(CPUState *cs,
+                                               const TranslationBlock *tb)
+@@ -308,7 +328,10 @@ static const TCGCPUOps superh_tcg_ops =
+     .restore_state_to_opc = superh_restore_state_to_opc,
+     .mmu_index = sh4_cpu_mmu_index,
  
-     info->l4proto = ext_hdr.ip6r_nxt;
-     return true;
-
----
-base-commit: 28e7aad52202c7e6210e0e05d4f60360aaf8d027
-change-id: 20260920-eth-022349fda27e
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-#ifndef CONFIG_USER_ONLY
++#ifdef CONFIG_USER_ONLY
++    .is_uninterruptible = superh_cpu_is_uninterruptible,
++    .revert_uninterruptible = superh_cpu_revert_uninterruptible,
++#else
+     .tlb_fill = superh_cpu_tlb_fill,
+     .pointer_wrap = cpu_pointer_wrap_notreached,
+     .cpu_exec_interrupt = superh_cpu_exec_interrupt,
 
 
