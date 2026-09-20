@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E92C982CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 02:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B59C982DF
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 02:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x87Q8-0005T6-CJ; Sat, 19 Sep 2026 22:36:48 -0400
+	id 1x87QD-0005TV-NF; Sat, 19 Sep 2026 22:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bodenrandin1@gmail.com>)
- id 1x87Q5-0005Sf-LP
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:36:46 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x87Q6-0005So-JF
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:36:47 -0400
 Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bodenrandin1@gmail.com>)
- id 1x87Q4-0004sR-6K
- for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:36:45 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x87Q5-0004sT-2T
+ for qemu-devel@nongnu.org; Sat, 19 Sep 2026 22:36:46 -0400
 Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-396ccd4f99cso2113518a91.0
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 19:36:43 -0700 (PDT)
+ 98e67ed59e1d1-398a1676000so1622070a91.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 19:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789871802; x=1790476602; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=vFJXdOILjbLHSng1Qb8DLuF7K2XWRE8xMgG3DJO/WJQ=;
- b=sa3qEiL419hDMBHO4XTl+GV6+ZzraYvsHVYnzYfMiqrx8PMDYP6OKat4CVgNA5U6n1
- hHXNHfTi0UU0dtUkkCPQhK5g7SALByYMWoLXj4Mai24BtzKVwxuV67z2IRdy1jRzb2Bo
- uJK3af2H+2iVRxmI/NPBmYXOcJTmLwMhv2towHn/FbD+k03A2WzQYwHMhCkL9XlZg49F
- QmdznScyZ5hbpvNABbP9EvRmLnv7In+a3Tgd6MSj6Sxc2+siurZt83D1xUWy4z3qHWnk
- ueq4Izq9Tq5AzBjDLwwIybcEep6TakBJTalz1OW+fBthwxNZ9dEaJpUgJLYuFAf3Mv7W
- ShsQ==
+ d=linaro.org; s=google; t=1789871803; x=1790476603; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=S4GfSX1+0XCG1xzUEHOD4fsHny0gcvWF1PEeYb7X7VY=;
+ b=A0dqpD0WzWJfiLQLUANu4MIIR47P+obXI4Rt4BKlHL/yH9jXj6GD63cK/Jdw7wuZhr
+ Ik14nlZXSOnU+CCEcvm2UPTDzhLv+O4V26g/kP8dRI5ZrMlhdhyx6V71Xp++VzrB8H5f
+ fxOn0zAd9W7V2n8CLzLR+qiklnE95gEHp1O6SGji+NYOiddKbR+DABtKzj1Myb2F2MBF
+ ieqxaoxmO8YOj/xFQ5RsECUd0mfJ9hR0kPNQPm276A7Gdqv3Kb72sH9AJLzVKD9/mqP8
+ 4IFfPigFCE7njkqTxtUUD4jnnN8MCJ26s20Cq3DUp55zweD1TfRs1EKrXpXwfo0PQTQX
+ xTHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789871802; x=1790476602;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1789871803; x=1790476603;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vFJXdOILjbLHSng1Qb8DLuF7K2XWRE8xMgG3DJO/WJQ=;
- b=OBLiwLV43RSb4o0R7pfSNeD5s9hRm5EoxcX9bxAItQU6/K6ypAh0V/j8DaaHN46CeY
- 2mF18dPJn5LXeALdogcswBZk1x23zKbCzo2g/4d8deCpzrZwGvksGajMNYqa8athrVSy
- KsPlNl9a92UNw9LobkphzVc3xoTtYCcE9Tpyecg8H0ipVVvaQf9UEA4ZWWlPSc08bd5g
- Oss1BG8uQLmwdvX5XhunREWwosW1rc3n+MBhUJ8+OdA62jG62eaoQ1jZINbg3m42Qq+n
- sz/QB1bKRQkpGm3K8D3HSgxken8lnRIOcpaUYbvH4YZgMToGHR7FwHiyBXlkSvL1AWq2
- MVJA==
-X-Gm-Message-State: AFuF++l2nTwoX1/DJy7uu3PItEb271EbXsDG5bsMe7iCraasAY4hJzQK
- CyCAddL1TsJMaJSpT/bbRV1Qv1Whu5nnk+DDhjn2/wbnGXCkFerBXOi07QOpTg==
-X-Gm-Gg: AYBFou2kOi3RQeMWbKeho13Tg13/waP9e1lWkIrqZY+cgqQt8QFq0tQ5cpMSienRb09
- OvsMq99OfbbujkToFU2tGYim7Za+6zOCS9lfMa++PGdrru00YIpGbJDcJDATVXVHrjJDnqhlyJA
- ZL2smxzmRzPY6GMyAPZ55LvbXm+joPHfkU4h6XewKMhsPtWf6qnWXjEi+KSaGE6TzvD0XzaONBj
- fcqU/jGp4ySk5S6Vx8r0dgGwq1uscnqsNnDvSQlOQwtruD/Ob9xlWnFjCJi+6e6j6nldgau7IBR
- FTWQcf3EBNsGElsI/LbZik6Kq/pHC9bj5now+aT6wZ7wKiINISY/LyFRBe5+8AteN/w1B5WzDre
- zZo3pYMWGo2OlMf5Veplb9LEO1x8ZSwWVPvnZrjw3BTh+RIsj0bJApHHcWGiAgtVZfMFzHuKZXZ
- ooFz9YG+aJ0i6fzfXiDe7+pF778bQYReMaVQegUy7Ju4ihHX/oA9+HTLPMvQt+zPTN2G9riVr0/
- J6R7iSDIUzdgiRC+tL9hUlFsYjpSg==
-X-Received: by 2002:a17:90b:580c:b0:39e:4c81:6c96 with SMTP id
- 98e67ed59e1d1-39e54f8a187mr12221803a91.28.1789871802427; 
- Sat, 19 Sep 2026 19:36:42 -0700 (PDT)
-Received: from DESKTOP-D94CRUF ([47.153.23.114])
+ bh=S4GfSX1+0XCG1xzUEHOD4fsHny0gcvWF1PEeYb7X7VY=;
+ b=vuD44snMcBiaNgq0KFtsWI5zubjMCHCbtA4TDlcp4NPbTYTiwMJYskrW0TVt8VY5Nq
+ B3iXCAnUbuHEUOPDHijI+NWaDAXa07g6ukqtMRVJTm1sSa9E0tRqCI4njT5SEFhtU7Kk
+ +1caMEzxtxvc/fFV1cqMQFTNBvp1B/kZ5hwcvht+AK7xq691QplRaEsaETv4HonlFtJ5
+ UHW749/sZ9IiYTzeyRcQCp6pRBuFngYWxIIujgFPEDxtGnDR5kfgJZM909NX0eEwnWOB
+ 76O9hKKlSYJd0KFz8wiRyAgbIYqtMV0099f2yBtqP7+kbRnmGfSzxqTHvJj7qyZ/w34V
+ 6k1w==
+X-Gm-Message-State: AFuF++kIJWNTPqAuj66FC9R/GuWrg9Op7pswPdMPr/FLpdaEwT/i2ZAO
+ Gfp0zaHGxcRjlVtkRqyykgjJ4NZ36CtSDxbeW3OOW4TRAl/hiZnMblSlQDeWnp44KWbpCTQEutM
+ t1FhUuGM=
+X-Gm-Gg: AYBFou3ixyFJ4y9BqOT8Z34KN2HtUdxkkIqU6omCWrVA4g6RdZoMRqe8vMqKpZY2jSv
+ 67pL64vRwgyBg5mWcW4Xcufl7Y7gFs8G3clwpnCritzI1OdHqJDTl0bCLOmzS2xQ9bEBroepcA0
+ 54OuDeCuKqnxA43iGIF+T9AyvWDzYtLXlo5jt//rPIcYFvKgSVE+UvXxvnIgWlgrLubbeF963TW
+ YbNqovkmAf5bS2582OB6CuPfM8hJJ6XhZwOEwYbftbvagtbziZgO6cplx7YYpjI+Sn286lF0IQ/
+ dN3QgGCxFOJIo3LRkRITVriKQcG5FgP8HLl/IiL8OsxRGeklemA5SjqZJPT5L+isN1/2Gp8WLpg
+ KvSGRjWYjrVITKXrP4yfft9hn5HYGnvfgHme7BEiseGVu/YwNqLbEG6MeSG86+B+wDFlaR/zHdF
+ ZCTiNh5K1rklAMaQKmU5AwZ33bJoTfd3vLhtQK4i9K1036iZvRzfSDQlmVRPs70TMpIGvH8F8HZ
+ tJm2Z2waMuqm+N6YupVAAVTpzh8/NWKIreb094twAZdomKQnewL/r+bwOfqvA==
+X-Received: by 2002:a17:90b:17c1:b0:398:e86b:ce14 with SMTP id
+ 98e67ed59e1d1-39e54e3f526mr11385728a91.20.1789871803295; 
+ Sat, 19 Sep 2026 19:36:43 -0700 (PDT)
+Received: from ?IPV6:2603:800c:7900:ed00:8758:b6a7:94be:427a?
+ ([2603:800c:7900:ed00:8758:b6a7:94be:427a])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33c32f15bb6sm7867254eec.4.2026.09.19.19.36.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ a92af1059eb24-144df9ad683sm1243931c88.6.2026.09.19.19.36.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Sat, 19 Sep 2026 19:36:42 -0700 (PDT)
-From: Boden Randin <bodenrandin1@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Boden Randin <bodenrandin1@gmail.com>
-Subject: [PATCH] gdbstub: synchronize state for individual 'p' register reads
-Date: Sat, 19 Sep 2026 19:36:40 -0700
-Message-ID: <20260920023640.1861-1-bodenrandin1@gmail.com>
-X-Mailer: git-send-email 2.53.0.windows.1
+Message-ID: <cf3951a3-0471-489f-abc9-94727321f4ce@linaro.org>
+Date: Sat, 19 Sep 2026 16:36:40 -1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/2] accel: Change AccelOpsClass.update_guest_debug to
+ void
+To: Matt Turner <mattst88@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20260917082618.1076988-1-richard.henderson@linaro.org>
+ <20260917082618.1076988-2-richard.henderson@linaro.org>
+ <CAEdQ38Er2whRT=rGW6gFrcCnnTUOMu5ubvpNd5HKD_q6hFjK6A@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAEdQ38Er2whRT=rGW6gFrcCnnTUOMu5ubvpNd5HKD_q6hFjK6A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=bodenrandin1@gmail.com; helo=mail-pj2-x11.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,37 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'p' does not call cpu_synchronize_state like 'g' does.
+On 9/19/26 10:46, Matt Turner wrote:
+> On Thu, Sep 17, 2026 at 4:26 AM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> The return value is never used, so drop it.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/accel/accel-cpu-ops.h | 2 +-
+>>   include/system/hvf_int.h      | 2 +-
+>>   accel/hvf/hvf-accel-ops.c     | 3 +--
+>>   accel/kvm/kvm-accel-ops.c     | 4 ++--
+>>   4 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> Two other places need updating:
+> 
+>    accel/hvf/hvf-accel-ops.c:266, in hvf_insert_gdbstub_breakpoint()
+>    accel/hvf/hvf-accel-ops.c:306, in hvf_remove_gdbstub_breakpoint()
+> 
+> With that fixed,
+No, those are separate callbacks.
 
-Accelerators may keep guest CPU state out of sync with QEMU while a
-vCPU is running. After a vCPU is stopped, an individual 'p' register
-read can therefore observe stale state until something updates the state.
 
-Signed-off-by: Boden Randin <bodenrandin1@gmail.com>
----
-
-Notes:
-    I found this while investigating why LLDB was showing the RIP truncated to 32 bits under WHPX. LLDB appears to use individual p register reads by default, while GDB primarily uses g, which is why I noticed the issue much more consistently with LLDB.
-    
-    This is my first open-source contribution, so please let me know if I missed anything in the patch or submission process.
-
- gdbstub/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 0a328b0dd4..31a845cfa7 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1246,7 +1246,7 @@ static void handle_get_reg(GArray *params, void *user_ctx)
-         gdb_put_packet("E14");
-         return;
-     }
--
-+    cpu_synchronize_state(gdbserver_state.g_cpu);
-     reg_size = gdb_read_register(gdbserver_state.g_cpu,
-                                  gdbserver_state.mem_buf,
-                                  gdb_get_cmd_param(params, 0)->val_ull);
--- 
-2.53.0.windows.1
-
+r~
 
