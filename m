@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A86C982EB
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B176DC982D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x89zP-0006WW-TA; Sun, 20 Sep 2026 01:21:23 -0400
+	id 1x89zF-0006Si-Q1; Sun, 20 Sep 2026 01:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zN-0006VO-Tk
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:21 -0400
-Received: from mail-oo2-x16.google.com ([2607:f8b0:4864:31::16])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zC-0006Rg-Pc
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:10 -0400
+Received: from mail-oa2-x17.google.com ([2607:f8b0:4864:30::17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zM-0002DS-6E
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:21 -0400
-Received: by mail-oo2-x16.google.com with SMTP id
- 006d021491bc7-6b390bcab0cso1111771eaf.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zB-0002Bc-7s
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:10 -0400
+Received: by mail-oa2-x17.google.com with SMTP id
+ 586e51a60fabf-47bc923fe6aso1503815fac.3
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881679; x=1790486479;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881668; x=1790486468;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nKe7LLTqkRkvtpxWs6z0GvFfhDsAnPyVD3zRaVIR3pc=;
- b=yrIIvBzRjZnVyAlCjANy7v5695zsDmUeLpUevcvdbn+wFuKzpZYOZP1mc3rPngYCD4
- iDdRxds92sNPyhL/biX0Z+PobLw9NjYxuJOk1xbu+ZQY+ucooxyFOOxvNTOKnPxLAPNl
- bnSijeYK+9L3JNBDYHW2cID+Bp4JXP6oTCrLRbUqQSX6icl7GTMsdd+gGiQeG3JmNIUM
- odCB/EFljS1wdzqUa2vQq6AkLilr2q1d5ojkkLKwfU8ri0anSkaLhxqXLCBeMLEhPO3J
- SGit1CoooVt0Fl0Tm/bU1W05s2kdSjKKh0BTskTDRk1b/3Sd7RQ9pTK0mWU4GKdrWmui
- PLmQ==
+ bh=eKoOczTx/GrJqhRZH+vapGFj7+X2g4mqcYzMG7VH2fY=;
+ b=ySayaiiwFkk7Q4BjmDofDcaTq+m396KbMrh2FkjZCgt7I0JNa/ytfZoTp8oOeUXAih
+ cOilnxqSqzxQOlrNDNn1FXhGFlMRv5LMtNQTbjUQAmf8Z7DOcrRPcNjC5+8OfLD8UL7S
+ jQQTgHuBHi7+ZnKCwd1AOuziKlbxOyhlRA6pM5rFfeH94+cdFQz3CG2nFA7arzIbHXJc
+ Kb6/2GTp0yf7KfT265aG5IzeWAzWcDfZgKgf1y5CZncYxGsRuqm5t88WtE6B5DL6NGax
+ jgwgoI5VPuoLFb0SXD+0qaEm6773TOVzfW7mvwrk8DkoKAQRte6LKsTIHeT98l34BxQ8
+ +BdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789881679; x=1790486479;
+ d=1e100.net; s=20260707; t=1789881668; x=1790486468;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=nKe7LLTqkRkvtpxWs6z0GvFfhDsAnPyVD3zRaVIR3pc=;
- b=EX3Fgpi3yOu711PAS+voRuE4vBt9rnl48ML4jobiLj7jUYn8uNYQmpeM+rVeh0W/Yu
- HlbpuMl4AV0h5bj63/j/Cv+8vTzqPnokM59HwJDL54eoqhfWu+CTBO+9D/44h50NBJCN
- zPCVJM9SnCsKucZ2vhffOxuYidiGcTMwo0NasC7xaRjlb+4Uk69UZJLdLbEI8YCeLqmB
- ndacgmDIHdWzhEfhbsIFXibycEKBBiSFe4EV6bfHXdZFxKerrBASq1aieaM1i14IEb/7
- fi/oF/mJhnV088VpXeuPwNGJar/n5wsodmoQFM16PYy0M9CkWcg0gH3xfbtq2jYLNn7B
- zVuw==
-X-Gm-Message-State: AFuF++kx7H3pGApFXkBwVKNtwHBU4HZ7BI2uvASITbe7h+mD4wcaDeQl
- Iwv0dQpWGw8pFbN47jx5rqyQPm9ypbpU2GY/VrDAJzGyA5jXlBCwucMPBxmKMIZ48tI=
-X-Gm-Gg: AYBFou0TVjrMKieFOhxb43UMJFSyX1AxGRqCHwDc7k7sWrv2S9PbB9N25n5xmA4on1k
- kR1XQXTtV1jAn8t254zQviCsltphT8VO3/KFBfHfUtBce9a9Po4NHnQhmUXQCAkRkHnal7/tuDX
- Y02PUK0W9aMnzhHOL9c+9Fh7WoIYPIwrUWd8pG2sCNZ3JB4zIKYMOXiMy0d2MvLunFdGlK3KK5Z
- +pfu/F7V/KL2Efcro99gxE0Lq9cTM7dotl0VcjPnFjJN9a4eesBFDRJHLXyczhsgVR5Kv0AHmzK
- VC1IQMOWV/oVsENmsSEdnab+3rWfvzIySax4W506WzWR/+0HU0F9JUxXj9mZcSHRx9n7CuC7t1H
- II4GNoQzcroBN3DHZoLCtGJYkmaY1jP8F3ufJTPn134LAvSbgwVWSunagVyINmIszBd9SxLx8Kg
- 2+5KN4HJ/23Rj8qel4bp74U6bgPUM6MEuM1kZIBC6MboSynJsbhUWIRg0WWw==
-X-Received: by 2002:a05:6820:198c:b0:6b7:46fc:1e6 with SMTP id
- 006d021491bc7-6ca9da68ae1mr6318571eaf.69.1789881678751; 
- Sat, 19 Sep 2026 22:21:18 -0700 (PDT)
+ bh=eKoOczTx/GrJqhRZH+vapGFj7+X2g4mqcYzMG7VH2fY=;
+ b=yormO0F1ixrnOXYjUFPWchxQGlWkfB/AhPq5HdE9Ni1RbKSFbUaxjuYcs/eYGfWx4m
+ hvrw5+Kip2236mBMkpwJoDLd7OuSOU7WCxyjHlHPC0rQhWAfXbYoFRMGf2irP7V6dvF0
+ yf3wfIt/hOVQMvnlJpthsZhOGJ6UYumyPQfAAB0pCmcMWtpoX104TcGWlcQe3v4pdhxW
+ d4b8Ga0ySHA0TwgRdDdPUOSuKr8UeeqUwTFSA0n0CH3VRQJwEYPDEgMbjnX01dmZWupE
+ 34Z/G4+qOwmcB1jBjb5kMDD9Vgq8ME8HqrOrYHcdgHXq7RcEUtBttYDIELrBdR7OJXe+
+ QZQw==
+X-Gm-Message-State: AFuF++nfffh8G3PIU5ORukJ8Zwh/PE5SMbeX48YNSF7qUI5m1yQHPDoJ
+ A5/SVZhnaAA+b5LyRZQ+ewyJNDgA7ao6e6mTyas7z3kqjEKIEodz7ZGIX9s4A9cfqys=
+X-Gm-Gg: AYBFou3fkSdbQBWyqVxvP2Z3EBCaNREqC+earkxEecU91ippVubsO5GP2/3UP85pAaE
+ EQ6XZVLUvKeFsiUkNCrzNGPPn69eo71zTHurAIssuOLT/JaEje63xpf5oMOS7msNB4QrRyAMLkd
+ hqAVjsUDJi9dXH97AWEs2E+dZ+I9lsFb50CBJWXeQJlhsupOonWY67Ki2sQCGs6D1fU1Y8R0Ih7
+ kPZQYO1vTDpZElEdiHdPHBPk6LbH0+NoxFApjhJyEqEsRzb/Nzkm6n1bNzjMyiGqOMmSS9QnBW8
+ HR6XGca4ERCBRWBsH3OySTG6yrE64GWCJKn751iqvaOY+1Rr76KMtNmGlznYiUEHMZTNm+7suUQ
+ pGAw2m/dd+WNv7ni+FzStB2mkEqi3nrKlou2wkEyllDQBlSJFIFRp/yLIRgdLg7wp50J4oaFVuw
+ 9sq3ZZU2/quye0iLcny4VhxgXz7jY1QABa6OHq1fy+Ouh/SO51CngN1w5xHg==
+X-Received: by 2002:a05:6870:212:b0:469:fb51:b351 with SMTP id
+ 586e51a60fabf-486e6392be7mr6828712fac.17.1789881668116; 
+ Sat, 19 Sep 2026 22:21:08 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.17
+ 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 22:21:18 -0700 (PDT)
+ Sat, 19 Sep 2026 22:21:07 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 19 Sep 2026 23:20:50 -0600
-Subject: [PATCH 14/14] bsd-user: Remove host-os.h
+Date: Sat, 19 Sep 2026 23:20:42 -0600
+Subject: [PATCH 06/14] bsd-user: Fix crazy bug with mmap
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260919-misc-2025q4-v1-14-ebfa61049bd7@bsdimp.com>
+Message-Id: <20260919-misc-2025q4-v1-6-ebfa61049bd7@bsdimp.com>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 In-Reply-To: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1752; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=rBzHaFcCT9FJegT2MRMI3bZoInYVHkTuEBvpgiGyEak=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20x1b8/KwT1BR05fr/Ofmo8TPtr3VNIGWQXp
- 6Ij5KoSfd+JAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQCN/g/5ATW3767Ds+14Sj7J5rGM/s4u/Kddx7c
- y+YiTotyA2fvJANI7kDv2HBLWVpkzT4Gdi+Yeo2tvE+Q4k13ZNFxxVMeZ92mM6LvOY47vPYKRU+
- xjqlNIEEAp2YsGo9pjLXejEBupGkaFVxlZbS9NTisAXL4ndbwi4Lwp63E91YxiXh4wtu0ZtEUBw
- F5ceUcDbTQ0YIBw1a2Os4rXikshw8j1+x9gOhJ8IPvE8WP0j9jNHfZKUlPD8LBvL5IfU8hIIofV
- n07nxlLG6IxIctRUC8IcMfK8Mzx7Za+MUD8Ry9qhsPJQMQN2D5oX3tWtPYfEHeU4jzfqFusc9gf
- hMWjQRDXJNWmye/2qZ0h3Kih+Hpvik3fkmNdadgt6FYRtQwnQyQICBWm5dEoO3Usp2gIPgDOPpY
- r34Ej89D0w/YNwa3n6r2ydtHITMjiYEfEhoZ6YXxiv1+tM/uDR6AoxoO+CSk4+dkB4NpXMyaAIh
- eaN7ovE7oGOcpHcW3jQenjRH3l89kUR/1G89HUjCYAC3SRDyc0Z2cwenK9BcNc6ZlqptaZDcjis
- xpaouXenFg5s3+2dRe/e6Fv6Zju4H6wwV3klRr1yrik+jABHG0H36oLSfrA0nGgvEheq7IM8H8d
- YVjLe3Lz8FwLJp57+cQU57maj6UFff0QXOK2SaQ0BAC8WHR7mSzA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2416; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=pLQUpu/k5A2SSgAi+2VpiqxQtxTxHRs0T2cFe2WQH2Q=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20wZzl60+0ybg1x627gULZT+7x800ngQw1sJ
+ i1jY70kYSGJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMBsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQAHoA//VORamT2fXWo856Ma6pOWvxMndUJ9TF9
+ E8TxUE96HZ9dTa7l3SHB+rtmHjdQX1Inyfe9iVj2MW5ud1fdhDjLs/SogvmgCg55AMrAte6aczE
+ j/1ZHVly9oStijrT8nVc368cYvx2B1iuE+UWujWLC063maNg6es7HTLSF+mZcA/XF9FUmo+/KUA
+ q8zoAp7MTXo5ejCqEXkuM+6SzDS9r7LgR/4CKjWk91jEIVPUpGiO6fk7xFao5IjeRGPOr90JJty
+ slV4wM/XgI2sDp75KgX3HUqT/Zi/4oh/31NoGiOUuNB9PQLQ8WCGR6DpDwdGM0aszx9KV4PedDS
+ 99Iya4YBmWuVSDmrit+7Ga8tqgTtjkm4/8YjFRoxOLcE3EzNXkg1GCGvf2S6g05JuhhqLM6haGz
+ fD3rI7ELaTwPhmeGZB1LZ48MFLHqgGy16fZpk00znB2Z52e8271qXgDTktfbx9yIy4TBMzJyOVO
+ eF4myx+arxkNg/YiV9SMv1TcHKAq+e1b2p/8XgT9zU00jrZpYErvkVt4PifbHSjldc7uXEWc7M8
+ jvJnbDnmbvi5llh7WjUp1kgdDRfxR+hBfO4P/hDIr0/YrAkJoZvzcnvQfeoZsS7L5eKl+tnk91j
+ XJLjJfYNkeAul8HjtK5+riiM5bhESjo3G46XO8qzaGb5yxXBuhSs=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:31::16;
- envelope-from=imp@bsdimp.com; helo=mail-oo2-x16.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:30::17;
+ envelope-from=imp@bsdimp.com; helo=mail-oa2-x17.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,61 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-host-os.h was used to just set the default bsd flavor, but it's no
-longer used. Retire it.
+So, for some crazy reason, we checked that only the SHARED bit was set
+out of all these bits. The only ones that were live was MAP_ANON and
+MAP_FIXED. We never called mmap with MAP_FIXED and MAP_SHARED. And the
+equivalent from linux-user tested that MAP_ANON was off, but MAP_SHARED
+was on. So incorporate the more direct approach from linux-user for
+testing this condition. Many of these bits haven't been actually used in
+FreeBSD since the very early days....
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/host-os.h | 25 -------------------------
- bsd-user/main.c            |  2 --
- 2 files changed, 27 deletions(-)
+ bsd-user/mmap.c         | 16 ++++++++++------
+ bsd-user/syscall_defs.h |  2 +-
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/bsd-user/freebsd/host-os.h b/bsd-user/freebsd/host-os.h
-deleted file mode 100644
-index 40cae72ec9..0000000000
---- a/bsd-user/freebsd/host-os.h
-+++ /dev/null
-@@ -1,25 +0,0 @@
--/*
-- *  FreeBSD host dependent code and definitions
-- *
-- *  Copyright (c) 2013 Stacey D. Son
-- *
-- *  This program is free software; you can redistribute it and/or modify
-- *  it under the terms of the GNU General Public License as published by
-- *  the Free Software Foundation; either version 2 of the License, or
-- *  (at your option) any later version.
-- *
-- *  This program is distributed in the hope that it will be useful,
-- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- *  GNU General Public License for more details.
-- *
-- *  You should have received a copy of the GNU General Public License
-- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-- */
--
--#ifndef HOST_OS_H
--#define HOST_OS_H
--
--#define HOST_DEFAULT_BSD_TYPE target_freebsd
--
--#endif /* HOST_OS_H */
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 13cd752b99..29ee59de2c 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -52,10 +52,8 @@
- #include "exec/page-vary.h"
- #include "exec/watchpoint.h"
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 548b4824df..76ac0340cb 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -215,10 +215,13 @@ static int mmap_frag(abi_ulong real_start,
  
--#include "host-os.h"
- #include "target_arch_cpu.h"
+     prot_new = prot | prot1;
+     if (fd != -1) {
+-        /* msync() won't work here, so we return an error if write is
+-           possible while it is a shared mapping */
+-        if ((flags & TARGET_BSD_MAP_FLAGMASK) == MAP_SHARED &&
+-            (prot & PROT_WRITE))
++        /*
++         * msync() won't work here, so we return an error if write is
++         * possible while it is a shared mapping
++         */
++        if (!(flags & MAP_ANON)
++            && (flags & MAP_TYPE) == MAP_SHARED
++            && (prot & PROT_WRITE))
+             return -1;
  
--
+         /* adjust protection to be able to read */
+@@ -586,8 +589,9 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
+              * msync() won't work here, so we return an error if write is
+              * possible while it is a shared mapping
+              */
+-            if ((flags & TARGET_BSD_MAP_FLAGMASK) == MAP_SHARED &&
+-                (prot & PROT_WRITE)) {
++            if (!(flags & MAP_ANON)
++                && (flags & MAP_TYPE) == MAP_SHARED
++                && (prot & PROT_WRITE)) {
+                 errno = EINVAL;
+                 goto fail;
+             }
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 9fa16e0863..506aea3e27 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -121,7 +121,7 @@ struct target_msgbuf {
  /*
-  * TODO: Remove these and rely only on qemu_real_host_page_size().
+  *  sys/mman.h
   */
+-#define TARGET_BSD_MAP_FLAGMASK         0x3ff7
++#define MAP_TYPE                        0xf
+ 
+ /*
+  * sys/time.h
 
 -- 
 2.55.0
