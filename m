@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF93C982DA
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 11:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF26C982E1
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 11:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8G8b-0006SD-L7; Sun, 20 Sep 2026 07:55:17 -0400
+	id 1x8G8f-0006Wx-6v; Sun, 20 Sep 2026 07:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1x8G8Z-0006NV-9l; Sun, 20 Sep 2026 07:55:15 -0400
+ id 1x8G8c-0006Vl-OR; Sun, 20 Sep 2026 07:55:18 -0400
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1x8G8X-0001ay-Kf; Sun, 20 Sep 2026 07:55:15 -0400
+ id 1x8G8a-0001bh-S7; Sun, 20 Sep 2026 07:55:18 -0400
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 290DC1A0021;
- Sun, 20 Sep 2026 13:55:12 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 663701A002E;
+ Sun, 20 Sep 2026 13:55:15 +0200 (CEST)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id E6DE31A0018;
- Sun, 20 Sep 2026 13:55:11 +0200 (CEST)
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 2E9131A0018;
+ Sun, 20 Sep 2026 13:55:15 +0200 (CEST)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id CB4C318000BE;
- Sun, 20 Sep 2026 19:55:09 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 402BA18000BA;
+ Sun, 20 Sep 2026 19:55:13 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, pbonzini@redhat.com, peter.maydell@linaro.org,
  shentey@gmail.com, pierrick.bouvier@oss.qualcomm.com,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCHv3 05/10] hw/misc: Extend i.MX8MP CCM with Cortex-M7 clock
- outputs
-Date: Sun, 20 Sep 2026 17:24:53 +0530
-Message-Id: <20260920115458.481605-6-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCHv3 07/10] hw/arm: Rename FSL_IMX8MP_NUM_CPUS to
+ FSL_IMX8MP_NUM_A53
+Date: Sun, 20 Sep 2026 17:24:55 +0530
+Message-Id: <20260920115458.481605-8-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260920115458.481605-1-gaurav.sharma_7@nxp.com>
 References: <20260920115458.481605-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
 Received-SPF: pass client-ip=92.121.34.13;
@@ -68,77 +66,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cm7_cpuclk (24 MHz) and cm7_refclk (32.768 kHz) clock outputs
-to the i.MX8MP CCM. These are required by the ARMv7M model to boot
-the Cortex-M7 core in an AMP configuration.
+The Cortex-M7 is not an A53 and is not part of the cpu[] array.
+Rename the constant to make the A53-only scope explicit, introduce
+FSL_IMX8MP_NUM_M7 for the single Cortex-M7 core, and remove the
+redundant local IMX8MP_NUM_A53 define from fsl-imx8mp.c
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/misc/imx8mp_ccm.c         | 9 +++++++++
- include/hw/misc/imx8mp_ccm.h | 3 +++
- 2 files changed, 12 insertions(+)
+ hw/arm/fsl-imx8mp.c         | 19 +++++++++----------
+ hw/arm/imx8mp-evk.c         |  5 +++--
+ include/hw/arm/fsl-imx8mp.h |  5 +++--
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/hw/misc/imx8mp_ccm.c b/hw/misc/imx8mp_ccm.c
-index 97d363e79d..41746e1eeb 100644
---- a/hw/misc/imx8mp_ccm.c
-+++ b/hw/misc/imx8mp_ccm.c
-@@ -12,17 +12,24 @@
- #include "qemu/log.h"
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index cea8be7b71..e7dafa2403 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -25,7 +25,6 @@
+ #include "qobject/qlist.h"
+ #include "target/arm/arm-powerctl.h"
  
- #include "hw/misc/imx8mp_ccm.h"
-+#include "hw/core/qdev-clock.h"
- #include "migration/vmstate.h"
+-#define IMX8MP_NUM_A53 4
  
- #include "trace.h"
+ static const struct {
+     hwaddr addr;
+@@ -289,15 +288,15 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+     int i;
  
- #define CKIH_FREQ 16000000 /* 16MHz crystal input */
+-    for (i = 0; i < IMX8MP_NUM_A53; i++) {
++    for (i = 0; i < FSL_IMX8MP_NUM_A53; i++) {
+         g_autofree char *name = g_strdup_printf("cpu%d", i);
+         object_initialize_child(OBJECT(dev), name, &s->cpu[i], cpu_type);
+     }
  
-+#define IMX8MP_CM7_CPUCLK_HZ 24000000ULL   /* osc_24m */
-+#define IMX8MP_CM7_REFCLK_HZ 32768ULL      /* osc_32k */
-+
- static void imx8mp_ccm_reset(DeviceState *dev)
- {
-     IMX8MPCCMState *s = IMX8MP_CCM(dev);
+     /* CPUs */
+-    for (i = 0; i < IMX8MP_NUM_A53; i++) {
++    for (i = 0; i < FSL_IMX8MP_NUM_A53; i++) {
+         /* On uniprocessor, the CBAR is set to 0 */
+-        if (IMX8MP_NUM_A53 > 1 &&
++        if (FSL_IMX8MP_NUM_A53 > 1 &&
+                 object_property_find(OBJECT(&s->cpu[i]), "reset-cbar")) {
+             object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+                                     fsl_imx8mp_memmap[FSL_IMX8MP_GIC_DIST].addr,
+@@ -340,11 +339,11 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         QList *redist_region_count;
+         bool pmu = object_property_get_bool(OBJECT(first_cpu), "pmu", NULL);
  
-     memset(s->ccm, 0, sizeof(s->ccm));
-+
-+    clock_set_hz(s->cm7_cpuclk, IMX8MP_CM7_CPUCLK_HZ);
-+    clock_set_hz(s->cm7_refclk, IMX8MP_CM7_REFCLK_HZ);
- }
+-        qdev_prop_set_uint32(gicdev, "num-cpu", IMX8MP_NUM_A53);
++        qdev_prop_set_uint32(gicdev, "num-cpu", FSL_IMX8MP_NUM_A53);
+         qdev_prop_set_uint32(gicdev, "num-irq",
+                              FSL_IMX8MP_NUM_IRQS + GIC_INTERNAL);
+         redist_region_count = qlist_new();
+-        qlist_append_int(redist_region_count, IMX8MP_NUM_A53);
++        qlist_append_int(redist_region_count, FSL_IMX8MP_NUM_A53);
+         qdev_prop_set_array(gicdev, "redist-region-count", redist_region_count);
+         object_property_set_link(OBJECT(&s->gic), "sysmem",
+                                  OBJECT(get_system_memory()), &error_fatal);
+@@ -359,7 +358,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+          * maintenance interrupt signal to the appropriate GIC PPI inputs, and
+          * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
+          */
+-        for (i = 0; i < IMX8MP_NUM_A53; i++) {
++        for (i = 0; i < FSL_IMX8MP_NUM_A53; i++) {
+             DeviceState *cpudev = DEVICE(&s->cpu[i]);
+             int intidbase = FSL_IMX8MP_NUM_IRQS + i * GIC_INTERNAL;
+             qemu_irq irq;
+@@ -389,11 +388,11 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
  
- #define CCM_INDEX(offset)   (((offset) & ~(hwaddr)0xF) / sizeof(uint32_t))
-@@ -88,6 +95,8 @@ static void imx8mp_ccm_init(Object *obj)
-     SysBusDevice *sd = SYS_BUS_DEVICE(obj);
-     IMX8MPCCMState *s = IMX8MP_CCM(obj);
+             sysbus_connect_irq(gicsbd, i,
+                                qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+-            sysbus_connect_irq(gicsbd, i + IMX8MP_NUM_A53,
++            sysbus_connect_irq(gicsbd, i + FSL_IMX8MP_NUM_A53,
+                                qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+-            sysbus_connect_irq(gicsbd, i + 2 * IMX8MP_NUM_A53,
++            sysbus_connect_irq(gicsbd, i + 2 * FSL_IMX8MP_NUM_A53,
+                                qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+-            sysbus_connect_irq(gicsbd, i + 3 * IMX8MP_NUM_A53,
++            sysbus_connect_irq(gicsbd, i + 3 * FSL_IMX8MP_NUM_A53,
+                                qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
  
-+    s->cm7_cpuclk = qdev_init_clock_out(DEVICE(obj), "cm7_cpuclk");
-+    s->cm7_refclk = qdev_init_clock_out(DEVICE(obj), "cm7_refclk");
-     memory_region_init_io(&s->iomem,
-                           obj,
-                           &imx8mp_set_clr_tog_ops,
-diff --git a/include/hw/misc/imx8mp_ccm.h b/include/hw/misc/imx8mp_ccm.h
-index 685c8582ff..c6ede6928c 100644
---- a/include/hw/misc/imx8mp_ccm.h
-+++ b/include/hw/misc/imx8mp_ccm.h
-@@ -9,6 +9,7 @@
- #ifndef IMX8MP_CCM_H
- #define IMX8MP_CCM_H
+             if (kvm_enabled()) {
+diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
+index 3f376f86d9..432a146efd 100644
+--- a/hw/arm/imx8mp-evk.c
++++ b/hw/arm/imx8mp-evk.c
+@@ -147,8 +147,9 @@ static void imx8mp_evk_machine_class_init(ObjectClass *oc, const void *data)
  
-+#include "hw/core/clock.h"
- #include "hw/misc/imx_ccm.h"
- #include "qom/object.h"
+     mc->desc = "NXP i.MX 8M Plus EVK Board";
+     mc->init = imx8mp_evk_init;
+-    mc->default_cpus = 4;
+-    mc->max_cpus = FSL_IMX8MP_NUM_CPUS;
++    mc->default_cpus = FSL_IMX8MP_NUM_A53 + FSL_IMX8MP_NUM_M7;
++    mc->min_cpus = FSL_IMX8MP_NUM_A53 + FSL_IMX8MP_NUM_M7;
++    mc->max_cpus = FSL_IMX8MP_NUM_A53 + FSL_IMX8MP_NUM_M7;
+     mc->default_ram_id = "imx8mp-evk.ram";
+     mc->default_ram_size = 6 * GiB;
+     mc->get_default_cpu_type = imx8mp_evk_get_default_cpu_type;
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 317e6a4576..e8d84f82b5 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -46,7 +46,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mpState, FSL_IMX8MP)
  
-@@ -25,6 +26,8 @@ struct IMX8MPCCMState {
-     MemoryRegion iomem;
+ enum FslImx8mpConfiguration {
+     FSL_IMX8MP_NUM_CANS         = 2,
+-    FSL_IMX8MP_NUM_CPUS         = 4,
++    FSL_IMX8MP_NUM_A53          = 4,
++    FSL_IMX8MP_NUM_M7           = 1,
+     FSL_IMX8MP_NUM_ECSPIS       = 3,
+     FSL_IMX8MP_NUM_GPIOS        = 5,
+     FSL_IMX8MP_NUM_GPTS         = 6,
+@@ -67,7 +68,7 @@ typedef struct IMX8MPMUPair {
+ struct FslImx8mpState {
+     SysBusDevice   parent_obj;
  
-     uint32_t ccm[CCM_MAX];
-+    Clock *cm7_cpuclk;
-+    Clock *cm7_refclk;
- };
- 
- #endif /* IMX8MP_CCM_H */
+-    ARMCPU             cpu[FSL_IMX8MP_NUM_CPUS];
++    ARMCPU             cpu[FSL_IMX8MP_NUM_A53];
+     ARMv7MState        cm7;
+     bool               enable_cm7;
+     uint32_t           cm7_vector_base;
 -- 
 2.34.1
 
