@@ -4,101 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECDCC982D0
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DDCC982CC
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 05:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x89zG-0006Sx-V6; Sun, 20 Sep 2026 01:21:15 -0400
+	id 1x89zN-0006VM-T3; Sun, 20 Sep 2026 01:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zF-0006SZ-JK
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:13 -0400
-Received: from mail-oi2-x21.google.com ([2607:f8b0:4864:32::21])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zL-0006Ug-W4
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:20 -0400
+Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zE-0002C1-1y
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:13 -0400
-Received: by mail-oi2-x21.google.com with SMTP id
- 46e09a7af769-7f65ebea805so1206578a34.2
- for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x89zK-0002DH-GD
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 01:21:19 -0400
+Received: by mail-oi2-x10.google.com with SMTP id
+ 46e09a7af769-804f7045f3eso715408a34.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Sep 2026 22:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881671; x=1790486471;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789881677; x=1790486477;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4S8ObIZ0ZdCK2DHrcD1SKXFh0ESjjLBn5wR6nr/jH30=;
- b=YdboXc5hiFA2ZBC0AR9vprorsQwLtxuepiu7CDMNX+i4S8trtaJozvYTknmG9l8zVQ
- tdpeZE0mc0Fb5qQnLha4TR+LMJh/Ri8b1fA7n5nGkGysuq3iPEnYKme4uwZn+yeb0U1B
- p1vy/TWHTg2ULdJfzpM5OF2wHeX485i83rp6ImBnbJu4g6G724x7D1zUAb1/ZDUhkJRK
- p6W/camCQmCRmMOnP3H1QFd0+EGlYi/RH6IAVyeNhEAEf7lewPlHCz/arkxCw5RWN1Uc
- cIkR+XrGj4cP8DSu0ZRnot1yXAWESsBCER0tS3oyxHNpR+8kC172X5HN8JMYh+7vJAzY
- m7CQ==
+ bh=YvfLAYzdUMc/aXqc2ufYB8ivtZNCa2xy/qKq82+4GXU=;
+ b=GLQaTkksxGd59YmSbTkAGzdGhunFGW393cSpL26WcLvkQD98XkWQZtczS9emhOKaWn
+ k0mwuliGEvzQZ0f/HYSr0d43fmtoCtp/he++lOg2LP/Yjb7Dg8+jYO+QBIp++XUHsd0S
+ P4xNcuqhTdi3dICs9tw3DYvryvP8cunC65BNHRIxyIAYEPrFknNPIp+J1vfC2aprFNGL
+ BwlS/NEYE9F8RRSRKFdMhBHI1xa0GcFbTs01dDoKCGb1is+7G7ldPz4asfZmIXSG1wlv
+ +UDcmUvOSICa8AVBsq/8U/XGIrHvUdxU6K/sQJvQLKd6YM3+N072bwbgJa9SGLpcDcFj
+ aj2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789881671; x=1790486471;
+ d=1e100.net; s=20260707; t=1789881677; x=1790486477;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=4S8ObIZ0ZdCK2DHrcD1SKXFh0ESjjLBn5wR6nr/jH30=;
- b=mgUSY636+uutTlXZ+THI/qptSHMvQ/YXJXrDz2Mt8Y4fMOjSRSC9JOrFaDmUgI6fOl
- o196lDr+fYsjuBVb/r6DTdjXNDnRF4BR3ubAuhFsF6es3ZTpHO+rwJ7xeZpIyyd4cTub
- HdJF6lDd7yqXL47771I2RlYibVSXirqmYySB52cyuu3l7qFhzHdFZo6hFSBkrwYVptvz
- O3T3frGDVg+UwqiMgyrP+ECAWQd422zmQp0KiJ3q+Xh/Qb1EIMX1+c8sswhOvnNDULRn
- rUjWIm742hEo0zzdCDdC8QolnaNzu8tDUQeMt6SwiwYglaCnK9gO9ULZ+RaoxL9rR5Ll
- t4KQ==
-X-Gm-Message-State: AFuF++muFkl9ngRwI2R2wCNZEHboDth34fO3VflChM2UOFqhgMfSvy7Q
- idZyYbPhIMuvY1vTcA5ucsmgudPFN8K+1Cl4Eyf6CG1vaHLa6LzNoIqQNNEU4L4xagU=
-X-Gm-Gg: AYBFou0jOXtufNA+0ZXe0foUWvq4o2Bzd0op17nOhR5hobPmYmgohxAtjloyIhodUN6
- QGKe+QLG6mRYo37ValpD6NObYSLE65YdpSPiq2B6B4bbE8yfTBom8aa1NYY7WWXdFNMoe+gmJ33
- zvJtZFXZcK79kvUXQ35fi3PfMAMoCHDb1sr3Opb3Vu/HX1DE3epECxqAUnC5THvW84amQBR3J1J
- Buvqnr9nMfNRV33bk6kKfR2JCr2W9LXVyrPW+d3sGxI143QRmL9hW7FTREUEGoToOm5t5G3IEKl
- tf/VEu2TMtFYtMHsLdE9iy4MX/HCcZqw2qoHsNrWuKPBrc33ZBOfuTY5hHnldF+uEVCj7BCE0+D
- BGxjB8yi2UT6gnnrJMFcMfroUp/NrN3W3nOIowEW+w7k93X3fTO6Qnz21rUrXxPfeitKookXfm0
- 8Th29oQ3VsgNPBfMmgPzfYI2XrndmnROYsLZbCvTAyT4TanJqGLwXTrYpO3Q==
-X-Received: by 2002:a05:6820:f021:b0:6c9:80d8:a205 with SMTP id
- 006d021491bc7-6ca9d554091mr7678724eaf.66.1789881670749; 
- Sat, 19 Sep 2026 22:21:10 -0700 (PDT)
+ bh=YvfLAYzdUMc/aXqc2ufYB8ivtZNCa2xy/qKq82+4GXU=;
+ b=KlphFl4ueXKZkcCy+jPcEWNpW4m7F7//hQwMtyxxhXhUuEg5uYDf81EgAOf6D/3oTu
+ T/AuBgFkNxEk7BBCQONWV+ToO7aN/z/75xrH+e6WL3wrLamE571Pb+rJSmgk0MK5YHKo
+ MLDI6qMuBGW9gwFmU+GckYnXxh1SbsNo14hp8COEEplYVIkMvlIj1TbBFyRmH6OKlrML
+ oEfqlj5i6nXjQB4a5R2SXDC7fzRwMltTz+QEFT9ngnT2EmxnFeJSGVz57HyG2xAIxa8q
+ Ag8hBP73UrGc6ocK6xyqYDTLuHLrWNc6+Tt4Pi+HjZb1GRczE3brwY2ptwoF3ly/X+cI
+ ByvQ==
+X-Gm-Message-State: AFuF++nINIgRsqOs5ZXqnCB5spjfIkPMMS+SD7aaaIpxX5WLMGjrctBK
+ P8WjffmMXGhJ9NKcUQUymj/qf+CaYq2Hc/VDBw/PLOG4TezX+MVPOFU5XXFlICNkIX6gytskmb4
+ gC+p1GaQ=
+X-Gm-Gg: AYBFou3VWeJLdyrmg049kMEI9VGQXNtZ2PIJE63O4cQOWzNywgKGP4YplquPaRJ5dm0
+ tiph4Wq6pYPjfnMXnHVxcRhyiBfhFn0UG6HuoQ16xC54bNSgUqVwBHdXIMH3BhCOxwa9TR2Mx5N
+ DR+t5wGCgqjv9L2LEHIwgU78oXslx80PBh9qT5rMP70zeOgs6iHoSrA2c0NbP65pKpECDSn+Pdy
+ iIqpD3EpKRm1dLIrDjBbZAOxRxtCTJbCQa6OnmzpD1+onOTJovzcDlxorbtLP7JYuPJFHpRZQy2
+ mfzDZwGEAfYSF6r/+pS3KykFr8ViX7//bY3vEaMvaVWXIj1yHVkHgeMjUQQHm0I2SRG8m/cuwbl
+ LD6cwyDTYZ7wItxiQaGsZPbqG/GLBF/s00etm1ffj51SQsQvdu9olPkR/kcCA0CXq/dUrs0j8jV
+ uWVpC1YKPNIjD2+cCThQyuFwcMBXKiLJc3NdRhGw8d/+4p3DaEI3TUmsXrlg==
+X-Received: by 2002:a05:6820:222a:b0:6a3:8738:4106 with SMTP id
+ 006d021491bc7-6ca9aa43f4dmr7332830eaf.26.1789881677400; 
+ Sat, 19 Sep 2026 22:21:17 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.09
+ 586e51a60fabf-48821db3b4bsm3936865fac.17.2026.09.19.22.21.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 19 Sep 2026 22:21:10 -0700 (PDT)
+ Sat, 19 Sep 2026 22:21:16 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 19 Sep 2026 23:20:44 -0600
-Subject: [PATCH 08/14] bsd-user: Fix MAP_TYPE definition.
+Date: Sat, 19 Sep 2026 23:20:49 -0600
+Subject: [PATCH 13/14] bsd-user: Fix non-PIE binaries
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260919-misc-2025q4-v1-8-ebfa61049bd7@bsdimp.com>
+Message-Id: <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
 References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 In-Reply-To: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
 To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>
+Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
+ Maksym Sobolyev <sobomax@sippysoft.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1264; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=Hz0H3RYGpbFw/VwjLCLVuaBzYOuoHfnxLIP6OvfwOos=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20wlkoUZhvwhxjVog6OIF8GkaKPsVir/rTgR
- zans/gDfWmJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQCVShAAzs3/frBYByYZ0dZUq+IRdartEeDwJw1
- pn5+crg5AAkwOjgP2G5ERMf1O/NM3D+CTlRaIdk2X+5thrAbZOzuAUOhat+Zt65M00jvZToKPRC
- 5Nwe/kbNM7H5CnNdwSq4OUM1lJH017lSA1fa/6/gTdlrSEFYX+bsn8nE53N9b3pFjSZmUgLzaPn
- 6xc/PYPqgkBb/lY0tooxAQbO83jhD93LyY6MgO+S6N6vFl/adKgBdMyJ1tWuAbhICMEATrTKDdr
- zH8VUplfh4brEoDVVAy8r2/WeqgMBVfCsfdP33Mb1GxgepTJyaAj6e0xevtRdIq0pkVEtLBjGB/
- 3cIQ4mVXmxWmejlAJ+frgjbvSmSFmzO0N9HbqvCP62bHKT9n0xv2Okhppe7F8uS32MPX3CUm18l
- Vl7wHy7X+fHjjeXGv+W2ZSYdhB9gqv6Ix6FSGSAPFW1Plz9pGjxmRh/1V5m4y0qmToa5d5SxTL8
- qHe+wt7Bph1xG46LmqtmFI3O7OhE6O5tkJ9GsPBU8k6kqCmXJAzAJhHMjHi9jFAPE11L9cimtxB
- M4cIsdsVhtE7NNaHCLTFqRdLokTEJAGSEmDki8pQc4sOPa4lQL2OYM2wKmXUa3r+EOE6AtU5QoI
- lMk1EYz/yWuABZx9anpYU/LzaI6YND1z0IfFgBKu9W4GY6dJhFMk=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2803; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=aKi+hp8N0vkEWYbWo/tfDhqS0kcZ6HksKo0mGdxawro=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqr20xuqS7FFClJZHPmAvPW1orCoJ5tX9He3Pfb
+ +LL2ZCew/eJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaq9tMRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBQ0BAAjbUHdUNH6gAmKlHNMLvPs3t9LgmGK8/
+ 2S0PQTosWBObvpvLqqdblXcYtHO6JZeUJIqQfMEf0PVwhGbI1zBI9RokL16WUadOJI8TmVUZkE6
+ 2wPGQ0TPJAxxi1Rg7cPPRLk3qrY0ZbRVB3dDovX8EfTR1Cc4TGxqe+9WTV3U+tL1W/12ItugvDE
+ uuoBY1H3QGiJMvpGdXv2qIpBmfyCzOBkDlHF6T24TFgNA7ZL0/FbzaIM54zjBzR6ubjGPiCdTh8
+ 7h21i8kje5KxNFq+pqt7Xb900gwj18//p/RstVPTUaEMo5eQ57MtJzctAjYKZCgUZiKkmAFXWbk
+ vBVWX5f+NRMVNMOTuF2/asy6cgFxYzAVe50ZbYPrXYm8elUjerpgUiFpKf+7J6Sz5wQZ2XAB1o/
+ K84xekWy9gieRWJysg2JeRmKhdUGwtphusjXWJUivEOgCR0D4a0gV6CBSVKMbT6/R6XOJEuPWTB
+ PxaMpZ8JN0VeP2ZI0M3uZWzFPuCkkc5gLUz0P21ATuZj70wDvLk5oy2qKkdMdWdrHjS6vDU9u5R
+ uTFhYNmj1CW8tDu8i9K8hr8nA0gowDj46+y5Syj8KxogNOQtcGoKySAbwI1kGf003KPU0Bu9Q7V
+ nBY5sNiZqgn7fHYOAWtkJOGtxWCW4aQgml0jlQPNAQ3ogtAd0nWk=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:32::21;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x21.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,37 +117,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 0xf I think was copied from the Linux headers a long time ago, since
-BSD doesn't define this. In FreeBSD, there's only two bits of this low
-nibble that are used for the sharing type (linux has 2 more types
-encoded in these low bits). The kernel rejects bogus flags (0xc part of
-0xf mask), so it's better to have just these two bits here.
+From: Maksym Sobolyev <sobomax@sippysoft.com>
 
+When loading non-PIE binary (could be either static or dymanic),
+make sure to set MAP_EXCL while mapping the program text. Otherwise
+if qemu is also non-PIE it might be loaded at the very same
+address, effectively self-destructing after mapping target binary
+over its own text area.
+
+It is not a problem for fully dynamic binaries loading, as in
+that case the initial mapping is non-fixed, so the kernel would
+pick some non-conflicting area for us.
+
+ 32625 qemu-x86_64 CALL  openat(AT_FDCWD,0x7fffffffe240,0<O_RDONLY>)
+ 32625 qemu-x86_64 NAMI  "/usr/bin/cc"
+ 32625 qemu-x86_64 RET   openat 3
+[...]
+ 32625 qemu-x86_64 CALL  mmap(0x809222000,0x20001000,0x7<PROT_READ|PROT_WRITE|PROT_EXEC>,0x1012<MAP_PRIVATE|MAP_FIXED|MAP_ANON>,0xffffffff,0)
+ 32625 qemu-x86_64 RET   mmap 34512969728/0x809222000
+ 32625 qemu-x86_64 CALL  mprotect(0x809222000,0x1000,0<PROT_NONE>)
+ 32625 qemu-x86_64 RET   mprotect 0
+ 32625 qemu-x86_64 CALL  mmap(0,0x458,0x3<PROT_READ|PROT_WRITE>,0x1002<MAP_PRIVATE|MAP_ANON>,0xffffffff,0)
+ 32625 qemu-x86_64 RET   mmap 35049844736/0x829223000
+ 32625 qemu-x86_64 CALL  minherit(0x829223000,0x458,INHERIT_ZERO)
+ 32625 qemu-x86_64 RET   minherit 0
+ 32625 qemu-x86_64 CALL  getrandom(0x7fffffffde10,0x28,0)
+ 32625 qemu-x86_64 RET   getrandom 40/0x28
+ 32625 qemu-x86_64 CALL  mmap(0x200000,0x2053000,0x1<PROT_READ>,0x12<MAP_PRIVATE|MAP_FIXED>,0x3,0)
+ 32625 qemu-x86_64 RET   mmap 2097152/0x200000
+ 32625 qemu-x86_64 PSIG  SIGSEGV SIG_DFL code=SEGV_ACCERR
+ 32625 qemu-x86_64 RET   nanosleep -1 errno 4 Interrupted system call
+
+Signed-off-by: Maksym Sobolyev <sobomax@sippysoft.com>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/syscall_defs.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ bsd-user/elfload.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 506aea3e27..c4fd5f5589 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -121,7 +121,14 @@ struct target_msgbuf {
- /*
-  *  sys/mman.h
-  */
--#define MAP_TYPE                        0xf
-+/*
-+ * FreeBSD doesn't define this, but Linux does. In Linux, it's only MAP_PRIVATE
-+ * and MAP_SHARED and a few Linux-specific types (0xf). FreeBSD allows other
-+ * types of mapping with MAP_ANON, MAP_GUARD, and MAP_STACK. The mask on Linux
-+ * excludes these: They don't have MAP_GUARD, and MAP_STACK and MAP_ANON have
-+ * similar flags with different names that aren't in it's 0xf MAP_TYPE.
-+ */
-+#define MAP_TYPE (MAP_PRIVATE | MAP_SHARED)
+diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
+index 295dad4643..eaa8676f5a 100644
+--- a/bsd-user/elfload.c
++++ b/bsd-user/elfload.c
+@@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
+             elf_prot |= PROT_EXEC;
+         }
  
- /*
-  * sys/time.h
++        int flags = MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE;
++        if (rbase == 0) {
++            flags |= MAP_EXCL;
++        }
+         error = target_mmap(TARGET_ELF_PAGESTART(rbase + elf_ppnt->p_vaddr),
+                             (elf_ppnt->p_filesz +
+                              TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)),
+-                            elf_prot,
+-                            (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),
+-                            fd,
++                            elf_prot, flags, fd,
+                             (elf_ppnt->p_offset -
+                              TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)));
+         if (error == -1) {
 
 -- 
 2.55.0
