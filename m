@@ -4,68 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95635C982CC
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 06:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1CFC982D0
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Sep 2026 09:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8BMd-0001iA-0G; Sun, 20 Sep 2026 02:49:28 -0400
+	id 1x8DdQ-0005SO-UT; Sun, 20 Sep 2026 05:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x8BMT-0001hw-K3
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 02:49:19 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x8BMO-0002U2-Mg
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 02:49:15 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxYdHfga9qjdwNAA--.41016S3;
- Sun, 20 Sep 2026 14:49:04 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAx1czXga9qheciAA--.46492S2;
- Sun, 20 Sep 2026 14:48:57 +0800 (CST)
-Subject: Re: [PATCH] linux-user/loongarch64: Detect vector stores in
- host_signal_write()
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Felix Yan <felixonmars@archlinux.org>
-References: <20260918103733.86966-1-prcups@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <eff6c44e-695e-f8ec-1215-c96477f5c43c@loongson.cn>
-Date: Sun, 20 Sep 2026 14:48:32 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1x8DdH-0005QB-1o; Sun, 20 Sep 2026 05:14:49 -0400
+Received: from mgamail.intel.com ([192.198.163.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1x8DdE-000392-8s; Sun, 20 Sep 2026 05:14:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1789895685; x=1821431685;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=wQEzCUSivGHJ8c3rd7iLCcihTRKZrEeJA/Gr+Ea5/sI=;
+ b=GWkqV/iHB7kCG5BLZyew+JHDr80IX5lczd3QoKYCzcgW8vlFSn6J7VXF
+ s4OjXywUIwRPYW8B6je3HKhgq+nhyKjNbcGH+nn2FGS5QDWrWKgJw6t5p
+ HMh7qt6kiSZbO0y6/MIDf3LR0QieybEbWSA1ljecGRK0p7v1RtGr4UMlF
+ Spz/0ew1kMKqBj5XOqIVueTs/KxBoqOu0Xj1VKf1W++/RDD7AeMT9MdYw
+ 2X/NNdRrJd93vVAtJq3DhPkVMIErII5VFn6p3hU8/ES24okpHVzy7imot
+ bDGerwtW2B+aGOzxmkGCEvPg6Y67mJ+Vx00C/PWiqL7GBLsdrxfd402/7 g==;
+X-CSE-ConnectionGUID: vSTSdE8JRzqxfUjixVrkJw==
+X-CSE-MsgGUID: T0AoOxQfSSGTL9FMWlZ6kA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11910"; a="905972"
+X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; 
+   d="scan'208";a="905972"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa115.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Sep 2026 02:14:42 -0700
+X-CSE-ConnectionGUID: 86mLZJSiR/W+KT04aN9mQA==
+X-CSE-MsgGUID: Zmx9090hSaSO9by6HGQ/Zw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; d="scan'208";a="271357757"
+Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Sep 2026 02:14:36 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: Manish Honap <mhonap@nvidia.com>
+Cc: alex@shazbot.org, ankita@nvidia.com, jic23@kernel.org,
+ dave.jiang@intel.com, alejandro.lucero-palau@amd.com, smadhavan@nvidia.com,
+ pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, pbonzini@redhat.com, eric.auger@redhat.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, clg@redhat.com,
+ cohuck@redhat.com, kjaju@nvidia.com, vsethi@nvidia.com, zhiw@nvidia.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, linux-cxl@vger.kernel.org,
+ skolothumtho@nvidia.com
+Subject: Re: [PATCH v2 10/10] hw/pci-host: Emit a _DSM on pxb-cxl to preserve
+ firmware PCI config
+Date: Sun, 20 Sep 2026 17:14:29 +0800
+Message-ID: <20260920091429.717003-1-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260916184412.3825713-11-mhonap@nvidia.com>
+References: <20260916184412.3825713-11-mhonap@nvidia.com>
 MIME-Version: 1.0
-In-Reply-To: <20260918103733.86966-1-prcups@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx1czXga9qheciAA--.46492S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7AFy5ZFyDXw1DWFW8Cw4UGFX_yoW8WF4fpF
- n3AFWxKrWkJF9rJrZrG34Yqry8Wan7CF109FWrKa1kuF1jg3Z5Xr98GrWUKFn8Xr4vvFyF
- gFyIqr1rWF4UtwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8oG
- QDUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.5; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,42 +87,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/9/18 下午6:37, SignKirigami wrote:
-> Recognize LSX/LASX stores in the LoongArch host signal handler to fix
-> internal QEMU crashes when RISC-V vector stores hit write-protected code
-> pages through host memcpy.
-> 
-> Signed-off-by: Felix Yan <felixonmars@archlinux.org>
-> Signed-off-by: SignKirigami <prcups@krgm.moe>
-> ---
->   linux-user/include/host/loongarch64/host-signal.h | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/linux-user/include/host/loongarch64/host-signal.h b/linux-user/include/host/loongarch64/host-signal.h
-> index d33c3fc03e..eb4308cf09 100644
-> --- a/linux-user/include/host/loongarch64/host-signal.h
-> +++ b/linux-user/include/host/loongarch64/host-signal.h
-> @@ -61,6 +61,10 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
->               return true;
->           }
->           break;
-> +    case 0b001011: /* v{ld,st}, xv{ld,st} */
-> +        return (insn >> 22) & 1;
-> +    case 0b001100: /* v{ldrepl,stelm}, xv{ldrepl,stelm} */
-> +        return (insn >> 24) & 1;
->       case 0b001110: /* indexed, atomic, bounds-checking memory operations */
->           switch ((insn >> 15) & 0b11111111111) {
->           case 0b00000100000: /* stx.b */
-> @@ -69,6 +73,8 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
->           case 0b00000111000: /* stx.d */
->           case 0b00001110000: /* fstx.s */
->           case 0b00001111000: /* fstx.d */
-> +        case 0b00010001000: /* vstx */
-> +        case 0b00010011000: /* xvstx */
->           case 0b00011101100: /* fstgt.s */
->           case 0b00011101101: /* fstgt.d */
->           case 0b00011101110: /* fstle.s */
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+On Thu, 17 Sep 2026 00:14:12 +0530, Manish Honap wrote:
+> under preserve_config, the _DSM. Gate the _DSM on preserve_config: x86 q35
+> passes false as it does not use the accelerated SMMU, so it emits no _DSM
+> and its ACPI tables stay byte for byte what they were.
 
+Confirmed: on 28e7aad522 plus the series bios-tables-test passes on
+x86_64 (q35/cxl and q35/acpihmat-genericx, the v1 failures, included),
+aarch64, riscv64 and loongarch64.
+
+accel=on is out of reach under TCG, so I forced preserve_config on virt
+locally and booted an arm64 guest (7.3-rc1 based, defconfig) with a
+cxl-type3 behind a cxl-rp.  With this patch Linux keeps the firmware
+BARs and bridge window under the pxb-cxl; on 09/10 with the same hack
+it releases and reassigns them.  No ACPI errors either way.
+
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+
+08/10 still says the x86 bridge "still emits the ``_DSM`` method, but
+its function 0 returns an empty support mask"; that was v1.
+
+Junjie
 
