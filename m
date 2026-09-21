@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B79C982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD2EC982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8d8A-0003l6-Fp; Mon, 21 Sep 2026 08:28:24 -0400
+	id 1x8d8f-000404-Ev; Mon, 21 Sep 2026 08:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1x8Yhu-0006aq-Na
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 03:44:58 -0400
-Received: from out-53.mta1.migadu.com ([95.215.58.53] helo=mta1.migadu.com)
+ id 1x8Yhv-0006b6-Qx
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 03:44:59 -0400
+Received: from out-131.mta0.migadu.com ([2001:41d0:1004:224b::83]
+ helo=mta0.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fuad.tabba@linux.dev>)
- id 1x8Yhs-00065g-KP
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 03:44:58 -0400
+ id 1x8Yht-000665-Vh
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 03:44:59 -0400
 X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=HPrcY/81vbNRkJxRpf4sM4FPQJUpqNi/n2xWmr9Iu8c=; 
+DKIM-Signature: a=rsa-sha256; bh=kPmJSsdV69w6Xb0zUY7kjI4w++wJtH7CYxl3NJK6p1g=; 
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789976691; v=1; x=1790581491;
- b=D1N0aGpt9qYCNumjYbnziGwoup6KYgtobbI/zcUgALBIcHMJ/3u3HlzFXihql1LzRZG75F2S
- rRi+ssG5vAqFGrAg4KGli6z9PYiVi2nunrSzqxV8y5Q3mEl8jLKDnVpsfl0FdI9uY6H+LbkWWLR
- lVvwqVPHAgvGkf521gqFWpZg=
+ t=1789976696; v=1; x=1790581496;
+ b=sdfsd7WY8KI4jsjUAsytMyX1TxL2z4sP4sESO88UTb/L9VxRVwb+eHad6cFVArBVwcI2W/Ot
+ O++YDIpedviAhEgQf554qc77gkeE1JHMIonA5jjwI7ESthT+MrWSUN1AjwAeuPvDCdD60gXwnGE
+ QyQNq9cmxBwauGIzxodW7LSQ=
 X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id 58338df02f784dc0;
- Mon, 21 Sep 2026 07:44:51 +0000
-X-Mizu-Trace-ID: 58338df02f784dc0
+Received: by smtp.migadu.com with ESMTPS id 7935730cc60c79cc;
+ Mon, 21 Sep 2026 07:44:56 +0000
+X-Mizu-Trace-ID: 7935730cc60c79cc
 X-Migadu-Flow: FLOW_OUT
 From: Fuad Tabba <fuad.tabba@linux.dev>
 To: Peter Maydell <peter.maydell@linaro.org>
@@ -39,15 +40,17 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Will Deacon <will@kernel.org>, Fuad Tabba <tabba@google.com>
-Subject: [PATCH 0/2] target/arm: Fix timer deadlines when the offset puts the
+Subject: [PATCH 1/2] target/arm: Fix next timer tick when the offset puts the
  count ahead
-Date: Mon, 21 Sep 2026 08:44:49 +0100
-Message-Id: <20260921074451.3158645-1-fuad.tabba@linux.dev>
+Date: Mon, 21 Sep 2026 08:44:50 +0100
+Message-Id: <20260921074451.3158645-2-fuad.tabba@linux.dev>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20260921074451.3158645-1-fuad.tabba@linux.dev>
+References: <20260921074451.3158645-1-fuad.tabba@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=95.215.58.53; envelope-from=fuad.tabba@linux.dev;
- helo=mta1.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::83;
+ envelope-from=fuad.tabba@linux.dev; helo=mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,44 +73,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
+gt_recalc_timer() arms the timer for the ISTATUS 0->1 transition at
+count == cval + offset, treating an overflow of that sum as "beyond
+the counter's wrap" and arming at INT64_MAX. That reading is valid
+only when offset <= count. When offset > count (a CNTVOFF_EL2 or
+CNTPOFF_EL2 that puts the timer's counter ahead of the physical
+count), the sum overflows for every cval still in the future and the
+wrapped value is the correct next tick, which is what the code used
+before commit 8d37a1425b99. The timer then never fires on its own.
 
-Two fixes for the same bug in three places: the next-tick calculation
-for the generic timers, WFIT and WFET each treat a 64-bit overflow of
-cval + offset (or timeout + offset) as a deadline beyond the counter's
-wrap. Once CNTVOFF_EL2 (or CNTPOFF_EL2 for the physical timer) puts
-the timer's view of the counter ahead of the physical count, that sum
-overflows for every deadline still in the future and QEMU arms the
-timer at INT64_MAX. The first site regressed in 8.2 (8d37a1425b99).
-The WFxT sites have the same overflow test.
+A KVM guest whose counter is set ahead of the host's, as the
+arch_timer_edge_cases selftest does via KVM_REG_ARM_TIMER_CNT, gets
+its timer interrupt only when the vCPU is next loaded and KVM
+rewrites the timer registers, so a guest polling for the interrupt
+hangs.
+Reproduced with VHE, nVHE and pKVM hosts on QEMU 11.0.0. The test
+passes on hardware.
 
-The KVM arch_timer_edge_cases selftest, which sets the guest counter
-to 2^59 - 1, hangs in every host mode on QEMU 11.0.0 and passes on
-hardware under an nVHE host. With patch 1 it completes under nVHE and
-pKVM hosts. Under a VHE host its physical-timer half still stops, on a
-KVM bug in the same arithmetic (KVM programs cval + offset where the
-timer compares unsigned). That fix goes to kvmarm separately.
+Test count + (cval - (count - offset)) for overflow instead, so only a
+physical count past 2^64 is "never", and add a vtimer test case with
+an offset that puts the count ahead.
 
-Each patch adds a tcg system test that fails before it and passes
-after.
+Fixes: 8d37a1425b99 ("target/arm: Handle overflow in calculation of next timer tick")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+---
+ target/arm/helper.c               |  9 +++++----
+ tests/tcg/aarch64/system/vtimer.c | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
-Based on master (3b5d71cc36).
-
-Cheers,
-/fuad
-
-Fuad Tabba (2):
-  target/arm: Fix next timer tick when the offset puts the count ahead
-  target/arm: Fix WFxT timeouts when the offset puts the count ahead
-
- target/arm/helper.c                  |   9 +-
- target/arm/tcg/op_helper.c           |   6 +-
- tests/tcg/aarch64/system/meson.build |   7 ++
- tests/tcg/aarch64/system/vtimer.c    |  28 +++++++
- tests/tcg/aarch64/system/wfxt.c      | 118 +++++++++++++++++++++++++++
- 5 files changed, 162 insertions(+), 6 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/wfxt.c
-
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c3f607e6d6..f89f41fe63 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1575,11 +1575,12 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+         } else {
+             /*
+              * Next transition is when (count - offset) == cval, i.e.
+-             * when count == (cval + offset).
+-             * If that would overflow, then again we set up the next interrupt
+-             * for "as far in the future as possible" for the code below.
++             * cval - (count - offset) ticks from now. If count plus that
++             * overflows, set up "as far in the future as possible" below.
+              */
+-            if (uadd64_overflow(gt->cval, offset, &nexttick)) {
++            uint64_t remaining = gt->cval - (count - offset);
++
++            if (uadd64_overflow(count, remaining, &nexttick)) {
+                 nexttick = UINT64_MAX;
+             }
+         }
+diff --git a/tests/tcg/aarch64/system/vtimer.c b/tests/tcg/aarch64/system/vtimer.c
+index 7d725eced3..e1cfad36be 100644
+--- a/tests/tcg/aarch64/system/vtimer.c
++++ b/tests/tcg/aarch64/system/vtimer.c
+@@ -27,6 +27,7 @@
+ 
+ int main(void)
+ {
++    uint64_t freq, now;
+     int i;
+ 
+     ml_printf("VTimer Test\n");
+@@ -44,5 +45,32 @@ int main(void)
+         ml_printf("%d: cntv_cval_el0=%lx\n", i, read_sysreg(cntv_cval_el0));
+     }
+ 
++    /*
++     * An offset that puts the virtual count ahead of the physical one,
++     * so cval + cntvoff wraps for every future cval. The timer must
++     * still fire. ISTATUS is set by the expiry, so poll it with a bound.
++     */
++    write_sysreg(cntv_ctl_el0, 0);
++    write_sysreg(cntvoff_el2, -(1ULL << 60));
++    asm volatile("isb");
++
++    freq = read_sysreg(cntfrq_el0);
++    now = read_sysreg(cntvct_el0);
++    write_sysreg(cntv_cval_el0, now + freq / 100);
++    write_sysreg(cntv_ctl_el0, 1);
++
++    ml_printf("cntvoff_el2=%lx\n", read_sysreg(cntvoff_el2));
++    ml_printf("cntvct_el0=%lx\n", now);
++    ml_printf("cntv_cval_el0=%lx\n", read_sysreg(cntv_cval_el0));
++
++    while (!(read_sysreg(cntv_ctl_el0) & 4)) {
++        if (read_sysreg(cntvct_el0) - now > freq) {
++            ml_printf("FAIL: ISTATUS not set within 1s: cntv_ctl_el0=%lx\n",
++                      read_sysreg(cntv_ctl_el0));
++            return 1;
++        }
++    }
++    ml_printf("ISTATUS set at cntvct_el0=%lx\n", read_sysreg(cntvct_el0));
++
+     return 0;
+ }
 -- 
 2.39.5
 
