@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F804C982F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EC7C982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8kKH-0006IF-Sh; Mon, 21 Sep 2026 16:09:22 -0400
+	id 1x8kK7-0005xa-DB; Mon, 21 Sep 2026 16:09:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kK9-00066l-Qt; Mon, 21 Sep 2026 16:09:13 -0400
+ id 1x8kJl-0005hc-Dp; Mon, 21 Sep 2026 16:08:50 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kK7-0005O8-A1; Mon, 21 Sep 2026 16:09:13 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x8kJh-0005Mm-MD; Mon, 21 Sep 2026 16:08:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8ZLt703577; Mon, 21 Sep 2026 20:08:48 GMT
+ 68LF8UM81903205; Mon, 21 Sep 2026 20:08:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=4Z38P4OupDQscBXCP
- AeMX+qM2B60MlQgO0RQFGt4TQ4=; b=EiLhdOjlFkKImDfujM9CMsxMvhZ14MxWe
- s3vodgb3T/U/496u42CGWaG92mp36B7UF94PURGIqv2YDKR4tZ39yIBLWlckyb9E
- O6wmw1IDJTm+3GjRPlqbLjAcyODWaSlxyY4qdpSZOuogQ55pAClWmdyEWW5YDN1h
- tAJM5CXxrm9DcTte03lrR8X4BNodV4iPQBWzDD4TIm2DETTbzfO1ROhGL/immHk8
- sY2ONQL2i/HAdXVCw1591Bm4JBoMP3dDFPh0SpNLT5LY1YfH/EoiGt36sm1JWCIT
- r3Uh9LzazWW52KScQrD+0aj/YvFxk/1Bcz4V+5pe3Si/LtlUp5kbg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqa9e0-1
+ :mime-version:references:subject:to; s=pp1; bh=1UCYjXCNSIerPgjjR
+ n5hMPxGprxeB7v6hxI3Zicenio=; b=YL+LLN9z5LU/7A3V00VFLGNYQ4JAzCKNz
+ TL7wDubTHafJUMcJevdyqmhkWIq+mTDWbPDr/tdHNkXq2VnT2KBHeG9X5WfV5cAP
+ QwaqNQ04DMyPuxCvHHs1HeDyo+f5/zDzkcM0PpgJx9anQE5562L7+morF/D+RNkN
+ ldS6SW01rz5ErMC77fVPXwZFYlk2mNJXr82LfSUgC+IJrVrYOzfllNnbmqUi4vXe
+ 5QBV+DtvTClerzFknbU8pdgDTCJ35dvZwQ8wmRpWN0vl/fx/Kr7qk/wvt81o65bG
+ TG1UbFW8hCRww09/k7MJXhHRYtKrU7jd72/YECGjkbr9UNIQZXBoA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdv2bdt-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:48 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LJSllt2399662; Mon, 21 Sep 2026 20:08:48 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt7dy6nbq-1
+ Mon, 21 Sep 2026 20:08:43 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LJUMaO1431717; Mon, 21 Sep 2026 20:08:42 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vf02f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:48 +0000 (GMT)
+ Mon, 21 Sep 2026 20:08:42 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LK8kjk53019066
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LK8fRP40173918
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 20:08:46 GMT
+ Mon, 21 Sep 2026 20:08:41 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 39CA25805E;
- Mon, 21 Sep 2026 20:08:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4928F58043;
+ Mon, 21 Sep 2026 20:08:41 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAE8E58055;
- Mon, 21 Sep 2026 20:08:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C5CD358055;
+ Mon, 21 Sep 2026 20:08:40 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.69.195]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Sep 2026 20:08:45 +0000 (GMT)
+ Mon, 21 Sep 2026 20:08:40 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 24/33] pc-bios/s390-ccw: Check if a PCI function is already
- enabled before trying to enable it
-Date: Mon, 21 Sep 2026 16:08:21 -0400
-Message-ID: <20260921200830.1302919-25-farman@linux.ibm.com>
+Subject: [PULL 16/33] target/s390x: Support protected key AES CTR for cpacf
+ kmctr instruction
+Date: Mon, 21 Sep 2026 16:08:13 -0400
+Message-ID: <20260921200830.1302919-17-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921200830.1302919-1-farman@linux.ibm.com>
 References: <20260921200830.1302919-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab18ed0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=rOHUGBc37_MNbdIC:21 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=NApzFvG8OdL9Xanj_wQA:9 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX35+oPeR6j03T
- Nw/R6jgrRwZl5e2mFYXWUPcXmF+P+7FLXAzLrV02AQ5NC/Sy5/A6yQbjElgT/qTZaMPky6AtwDX
- Lox0UTMsG5qnI1rq7ZrcWaWOtxxAgzowseScc6QtgRPdiFqnBiVgZUUpryV8a96Zex4B6qEGy4U
- Zcx4z1ubfud1LBPKtIluczB4YMMqFw9aIY9owi1gQrjH1ThqieAKugqhO7pcIf9jn+iGna2MMUZ
- IsLKunL8E7ZOBl5HxcWOHQ+LFPXMetYMxgu7/WMnaBtoEj2kkLZjXtuYBiDLWacFWtWa3vb8jSK
- /GMhPlggqhPztQHhmlpsdCHCyfQcapFGg+49emh+tSLAs5mgiX2HzSI5U/LmTXbstNvmqsvAZbE
- oCoY6bvUn84QwwikE/g3nj9KQB05h2PtEaa4KEUpV2WsXcL32Uc6cCtlnfmfA3Bkg9Y+woF9t78
- KaUVt9uFk351Msw1ggA==
-X-Proofpoint-ORIG-GUID: 3q5dNCWM83aAjZoVM_HnXbQA-kwITUHW
-X-Proofpoint-GUID: 3q5dNCWM83aAjZoVM_HnXbQA-kwITUHW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX79PGhWKaJb0U
- /9/8h6H8Qbk67I+TwXeVKxRpHN7K06v48GJrSLcsSTIGt+lrtyHmJIhDshDg8CTnXWd8z9LgwdW
- rL0VPpXtOZHL9LtEW3Igrl5nKkX9xvY=
+X-Proofpoint-ORIG-GUID: eCOdnQLvfoGGmcj5Jl9QVt7twfDUMoc4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX0V5ZJeh86z0i
+ EajwKYzM+GLgYeI9zpp+8Ky04HliRIet1F1kGbpO9CnN9/LCTXbRSpXSBA3XHuYhILn0sv97ro4
+ 8Zp3nYuUvWncLXHN+1lCjdhPDblp0g4=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab18ecb cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=s7YHn70HNGjeB9XmMgkA:9
+X-Proofpoint-GUID: eCOdnQLvfoGGmcj5Jl9QVt7twfDUMoc4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX+IppIdBw8uKp
+ BS7du/munQFC8TzbXAoYB7Pj8fa9fiPM4V28bGw02M5/9oX2szMDAer3YqctOA8YN1yW9P0R4sQ
+ utFu6wyr3Vae3AdO466jrjXZiOntR4iV5VxiU9Hz5tCSMQmmrJIn0LjzJB4oBUcH3gIDwELUndq
+ J+STFU+fAJWmWWiZM6CB/hv/W0WUh7xanE1ZixAYirfUpBmxZBJk8YLuTdAmARIRp0883oYqLQj
+ HZWcQGPBVCm1M2/MLDIXvSfHS83QRbkBoW14foAu9D3u3Noa/0mHrd6KwmNaTA1FFwFMvXi9JJk
+ b6vcCrOeBqBMa7dIKVcKcfnIzXSx9yBGBNa40LaCrZuLo+csZ2jWd3GVXfGCE/dYNWL/iyaDAJp
+ 3pXkux3zPWaQdPGbSL8MSMnkPEAkjJ/gojTXHk9DNAcxJ4/OPJM68YLE4o0eR5L1xbAIT6/9088
+ a7fz1hrwEdtOhjRDesQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210294
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609210294
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -122,53 +124,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-Enabling a PCI function that is already configured will result in an error.
-Simply check if the device has already been enabled, and if so, return
-without doing anything further; otherwise, enable it as usual.
+Support the subfunctions CPACF_KMCTR_PAES_128, CPACF_KMCTR_PAES_192
+and CPACF_KMCTR_PAES_256 for the cpacf kmctr instruction.
 
-Also, because enable_pci_function() prints its own message, let's remove
-the duplicate message emitted during the virtio PCI setup steps.
-
-Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260831194919.3830270-2-jrossi@linux.ibm.com
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260824083204.40877-17-freude@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- pc-bios/s390-ccw/clp.c        | 4 ++++
- pc-bios/s390-ccw/virtio-pci.c | 1 -
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ target/s390x/gen-features.c      |  3 ++
+ target/s390x/tcg/cpacf.h         |  5 ++
+ target/s390x/tcg/cpacf_aes.c     | 92 ++++++++++++++++++++++++++++++++
+ target/s390x/tcg/crypto_helper.c |  7 +++
+ 4 files changed, 107 insertions(+)
 
-diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
-index ca9565d8de..7917f13345 100644
---- a/pc-bios/s390-ccw/clp.c
-+++ b/pc-bios/s390-ccw/clp.c
-@@ -82,6 +82,10 @@ int enable_pci_function(uint32_t *fhandle)
- {
-     ClpReqRspSetPci rrb;
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index eb7c00a448..01149a04c5 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -946,6 +946,9 @@ static uint16_t qemu_MAX[] = {
+     S390_FEAT_KMCTR_AES_128,
+     S390_FEAT_KMCTR_AES_192,
+     S390_FEAT_KMCTR_AES_256,
++    S390_FEAT_KMCTR_EAES_128,
++    S390_FEAT_KMCTR_EAES_192,
++    S390_FEAT_KMCTR_EAES_256,
+     S390_FEAT_PCC_XTS_AES_128,
+     S390_FEAT_PCC_XTS_AES_256,
+     S390_FEAT_PCKMO_AES_128,
+diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
+index 73cb564c0b..15fd860e3a 100644
+--- a/target/s390x/tcg/cpacf.h
++++ b/target/s390x/tcg/cpacf.h
+@@ -48,5 +48,10 @@ int cpacf_paes_cbc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                    uint64_t param_addr, uint64_t *dst_ptr_reg,
+                    uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+                    uint32_t type, uint8_t fc, uint8_t mod);
++int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint64_t *ctr_ptr_reg, uint32_t type,
++                   uint8_t fc, uint8_t mod);
  
-+    if (*fhandle & CLP_FHLIST_MASK_CONFIG) {
-+        return 0;   /* already enabled */
+ #endif /* S390X_CPACF_H */
+diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
+index e155387fa8..52f8644468 100644
+--- a/target/s390x/tcg/cpacf_aes.c
++++ b/target/s390x/tcg/cpacf_aes.c
+@@ -723,3 +723,95 @@ int cpacf_paes_cbc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+     return !len ? 0 : 3;
+ }
++
++int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint64_t *ctr_ptr_reg, uint32_t type,
++                   uint8_t fc, uint8_t mod)
++{
++    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
++    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
++    uint8_t ctr[AES_BLOCK_SIZE], key[32], wkvp[32];
++    uint64_t len = *src_len_reg, done = 0;
++    int i, keysize, addr_reg_size;
++    AES_KEY exkey;
++
++    g_assert(type == S390_FEAT_TYPE_KMCTR);
++
++    switch (fc) {
++    case CPACF_KMCTR_PAES_128:
++        keysize = 16;
++        break;
++    case CPACF_KMCTR_PAES_192:
++        keysize = 24;
++        break;
++    case CPACF_KMCTR_PAES_256:
++        keysize = 32;
++        break;
++    default:
++        g_assert_not_reached();
 +    }
 +
-     rrb.request.hdr.len = sizeof(ClpReqSetPci);
-     rrb.request.hdr.cmd = 0x05;
-     rrb.request.fh = *fhandle;
-diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-index f501252c81..231ab6e04d 100644
---- a/pc-bios/s390-ccw/virtio-pci.c
-+++ b/pc-bios/s390-ccw/virtio-pci.c
-@@ -452,7 +452,6 @@ int virtio_pci_setup_device(void)
-     VDev *vdev = virtio_get_device();
- 
-     if (enable_pci_function(&vdev->pci_fh)) {
--        puts("Failed to enable PCI function");
-         return -ENODEV;
++    /* check addressing mode, raise exception if not supported here */
++    addr_reg_size = get_address_bitsize(env);
++    switch (addr_reg_size) {
++    case 64:
++        break;
++    case 32:
++        len = (uint32_t)len;
++        break;
++    default:
++        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++    }
++
++    /* early bail out if length is zero */
++    if (!len) {
++        return 0;
++    }
++
++    /* length has to be properly aligned. */
++    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
++        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++    }
++
++    /* fetch and check wkvp from param block */
++    read_guest_wrap_u8(env, mmu_idx, ra,
++                       param_addr + keysize, wkvp, sizeof(wkvp));
++    if (memcmp(wkvp, protkey_wkvp, sizeof(wkvp))) {
++        /* wkvp mismatch -> return with cc 1 */
++        return 1;
++    }
++
++    /* fetch protected key from param block */
++    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
++    /* decrypt the protected key */
++    decrypt_protkey(key, keysize);
++
++    /* expand key */
++    AES_set_encrypt_key(key, keysize * 8, &exkey);
++
++    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
++    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
++        /* read in nonce/ctr => ctr */
++        aes_read_block(env, mmu_idx, ra, *ctr_ptr_reg + done, ctr);
++        /* read in one block of input data => in */
++        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
++        /* encrypt ctr and xor with in => out */
++        AES_ctr_encrypt(in, out, ctr, &exkey);
++        /* write out the processed block */
++        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
++        len -= AES_BLOCK_SIZE;
++        done += AES_BLOCK_SIZE;
++    }
++
++    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
++                             *src_ptr_reg + done);
++    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
++                             *dst_ptr_reg + done);
++    *ctr_ptr_reg = deposit64(*ctr_ptr_reg, 0, addr_reg_size,
++                             *ctr_ptr_reg + done);
++    *src_len_reg -= done;
++
++    return !len ? 0 : 3;
++}
+diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
+index 8141f833a3..44fb7611cd 100644
+--- a/target/s390x/tcg/crypto_helper.c
++++ b/target/s390x/tcg/crypto_helper.c
+@@ -174,6 +174,13 @@ static int cpacf_kmctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
+                            &env->regs[r3], S390_FEAT_TYPE_KMCTR, fc, mod);
+         break;
++    case CPACF_KMCTR_PAES_128:
++    case CPACF_KMCTR_PAES_192:
++    case CPACF_KMCTR_PAES_256:
++        rc = cpacf_paes_ctr(env, mmu_idx, ra, env->regs[1],
++                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
++                            &env->regs[r3], S390_FEAT_TYPE_KMCTR, fc, mod);
++        break;
+     default:
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
      }
- 
 -- 
 2.55.0
 
