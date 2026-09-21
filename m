@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D69C982FB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7942AC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:52:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrZ-0006DV-5r; Mon, 21 Sep 2026 17:47:49 -0400
+	id 1x8lrX-0006CZ-H2; Mon, 21 Sep 2026 17:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrW-0006C2-W7
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:47 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrQ-00066u-HY
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:40 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrV-0000Fl-8N
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:46 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrO-00008v-6G
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:39 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49b912e4ad9so20228915e9.2
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:44 -0700 (PDT)
+ 5b1f17b1804b1-49e71cdb22bso25996725e9.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027264; x=1790632064; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790027257; x=1790632057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aCOuDUQQDEf2I7oG2JwN9ej8+crUFjuKJauRWBAbjB8=;
- b=P695PZYQin9nmgA9KGtqxtbcPveiSHTKb7GaNqNG7+/SU8XkiqXt6ZLq8j+OR/cd46
- GdwjEXYwrlB+GB7iRidEilYzzLbl3uOXPYkqMZKgP0quvNDxom4bmOfm7TtFvAE4DAC1
- UJNj2FBPSm+1xjU800v/KpB6QVhK16lG4AEYN0xVyIWRzBH1B9h1QIKoraTRGoYCijOW
- bYOJOzuuc2FSnJtdyoF7j8qV+60SMYwLHQMNZjQXMojY3zJ2IZywomXkl8oyFo09iAZG
- g5uvvxYayZZYuGOCaFsoiZm/3MO4H9x0RK1kJOIsKZcJK7XVMozzqaLdPE3r3H/g54nH
- zjWg==
+ bh=VBH9E99MFnB3gX4SExb6p8NPz5EDIV6xjZ4ICVmDV88=;
+ b=G7HdjaUEGFn/IyNcffjrDSfAVHn5Ck1B9PMMXuWbGsbfTsQh4nBQuBGZwjB1Yr/RPb
+ Kl3y83Hb3t+FVXb0XUx7eq8NUHkrZeX6VEfwM0mOGBMhy3ODdhXTzKfmmrbQCwAI5uVG
+ H/mprn2KK3jPmkYX6bKnP7iI/MaArXdnI0zz5e4/DhELRt7lsF3cBhAo1h4qa1zIbATn
+ W0JdIkwJW3iDGyUiVI5GIQtItHC9vikR9YnaNSsYTco4+emGfW/S2iZUqY437DL6sMGE
+ DMPh/BHBCmPA+zFsfS9q7sY/U15HRybJi75RpCZa7d8TN1JU/R0lnBTN4yZ0nEO7UJJm
+ GuiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027264; x=1790632064;
+ d=1e100.net; s=20260707; t=1790027257; x=1790632057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aCOuDUQQDEf2I7oG2JwN9ej8+crUFjuKJauRWBAbjB8=;
- b=mE9JEY+txj8MXGCdJbu4L//bCFJYtKpts5oQ3HeZ52gQnpFRHxVQrWKwKA062d7wUf
- xmcDMLnR19x/9j/MGL+sPizbaACGO59i1onKNGoThk9NPy+08wBNmCkjJoAEHr2cFmdn
- jSFpVEC+VEiZs1YlSuOIj3N1ZUVDO/lxV4pxfy4qH3IRNUpKjqC7KpLvrnP/SW7aMJ/Y
- Ia5aEwQv4zACARBtl+ksYjKobPBMWSgHELlq3O7WWxnaNg5KGFpVNceGdMrzap3he2Xf
- ZKbZ734DOkCLwD/ZMJkcblBx+mR9dFZuRdD2MTxuwzK0SxD1jAlBFCvHXPYF4n8UVxjh
- /ncQ==
-X-Gm-Message-State: AFuF++lUw9S7t1G9BpHdHMUx740rQCu5CFZVt8kw1/sTZ0pWoGoIolnk
- cS5mCD9gRbA+vPZKWqwjAnh/GVkKBUboR5B59K+TUvc2MPNyvbD6unvCE1gdFA==
-X-Gm-Gg: AYBFou0g3j3pMlz5uOq67KYZsGKAKz8ev3nmQrUd4P8hYdjTp9R2wAz7xIuam6C7B8e
- EvqDXL59yQ0HoPRrF+rxL5DxkloOgRLPMXpZyGQ2FRctvqAjYEPnpa5P2E1y5PraacYtzoLBKR1
- 2aXfoCItypON94tsbeIFgiL50LjWBaRv9WPhTXC9V4zVc9DiL6aLDFbsOHIgJVrLmLNWnSEcLGH
- R0XdlXnVPglVSZgGSAKiTfUpS8fNHX7vJV5HYcoQ5EJANmlVtWiYy6/DQ0MpqD52naOJ2qwCY2E
- nxiumE534JJZbFvahgLnYzDtigN1DhACcK39XeaFWhXPlKB8jKUhf+q5bezpwi7ZLF0nwm2riMX
- G+WaSxia/Y/by6aU9Z/dRvhO7U18pRcwGtmOcoW/5Pa2VnnJj8tQea4llEGCOCyEj7aALKehamA
- e+1+SBgp76JOjazhAvthPz3RKQQMti6Uu3PceiMjYzVhL68PWKsM6+rga4fjkhKMyDXrffG1GM+
- TKO5abpgmpJ0aeArSc8+Q4FjG7KivvthqpeJf1JOXK5rsHSYQaajTNkiw1vRsi7nWqzcPFT8kDh
- VOfDOkZoDuWrKw==
-X-Received: by 2002:a05:600c:4e0a:b0:49d:29ab:540b with SMTP id
- 5b1f17b1804b1-49fc5723f3cmr175548485e9.15.1790027263806; 
- Mon, 21 Sep 2026 14:47:43 -0700 (PDT)
+ bh=VBH9E99MFnB3gX4SExb6p8NPz5EDIV6xjZ4ICVmDV88=;
+ b=js9tI+HagV+jOmZZC3v4L4XGtPXTqfhUW2DbWvTvoC8mwzl+KiPi+UdHOac1faLQm+
+ CiToK1TuInqZ+7RtLpXqPeS+cKtfDBAN2En4J+2Z/mwFUhPFAZriCdy4+s7ZqeECCa+Y
+ 4Mfi/XmqDo3zg1XKcdkPnLlqhFhrbxsZCBaYCcWWtclR6VAlg6b8krX+P4mSZNRahE9n
+ 5rZCn9AMJ9AOTXzF5CA47Bn5oxTyb1q5bHEUmq935M51WUON/8U+lM+ZXwE4AuhXBkRg
+ niYMpJ4rQUYqCR+XXRMVjENZHZv2hOrusdiJtc1H3q/Ebj48Hq40CMfXNnc39EJAE6W8
+ 3ngQ==
+X-Gm-Message-State: AFuF++mXhU/PEzGbCWcWlq368JkiynThsN+Ld6CecbUSHaZb0M4U+hwr
+ YZxVjV4tAQpDhF676vUe5zpXCB7zXaxzasY0am463hpkUkfq6rC+TOhyD3uZ3Q==
+X-Gm-Gg: AYBFou3gPClkHM/fI+kzbK48QC5UY58Geh5rIO/apFHfu1LwH5+dt1J2Zy0ATtMhHbi
+ bCbWm5XPPl6mVUJDF40PEtq+WN4Ha0f+l/MIP3v2aTjNh/hCVuo5a+TAt21NA/YNHR/WMLxFCNA
+ DE5HXpenRflVIYD5F6TRbmv3ozJCpH1sovnXMTMm8/yOquA6f0y9comDSwv8is9E1cq8mI+VwHt
+ 5ywPVdFBT1fr6FGx4wHis+B+wv6venhsEkIINQV5sYNboZp+dr/yx+JTHmdqiq8TMrYzxfTWTNi
+ v+2Y+7h16OTZE3qRQvxiFlIdCX0zbH4KW84cdyuRdZTebtnQyaEF+yvoVbR3RlF8MUjRIX7Yp1/
+ klcj8h1GN6SUFu/0OS8na9PcAuoe2BnuLav+bOiL0uLvxuBq+JC6plm7Td7xDzwrFV6zvbUMOKf
+ dX1LHEf00MF3p/hm0wuKSzZTb3G3OSfpLYIRet13WHNK5J449aXUIuAjSXH5Enwe8GqrskqLJ5x
+ flFk53iHDN4aQtHKpW+KheUU7Q0A/z8BzWU32dvRJxBGnj5K7+3VyqeThMN5J7loumXP4nymgVJ
+ Q3ek
+X-Received: by 2002:a05:600c:a42:b0:49e:6683:d23c with SMTP id
+ 5b1f17b1804b1-49fc5594deemr167296465e9.0.1790027256415; 
+ Mon, 21 Sep 2026 14:47:36 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.42
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:42 -0700 (PDT)
+ Mon, 21 Sep 2026 14:47:35 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,9 +78,10 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 12/42] hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
-Date: Mon, 21 Sep 2026 23:46:40 +0200
-Message-ID: <20260921214710.29422-13-shentey@gmail.com>
+Subject: [PATCH 07/42] tests/functional/arm: Add console test for `sabrelite`
+ machine
+Date: Mon, 21 Sep 2026 23:46:35 +0200
+Message-ID: <20260921214710.29422-8-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
@@ -109,75 +110,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset upon
-machine reset.
-
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/arm/fsl-imx31.h | 5 ++---
- hw/arm/fsl-imx31.c         | 7 +------
- hw/arm/kzm.c               | 2 +-
- 3 files changed, 4 insertions(+), 10 deletions(-)
+ MAINTAINERS                            |  1 +
+ tests/functional/arm/meson.build       |  1 +
+ tests/functional/arm/test_sabrelite.py | 46 ++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+)
+ create mode 100755 tests/functional/arm/test_sabrelite.py
 
-diff --git a/include/hw/arm/fsl-imx31.h b/include/hw/arm/fsl-imx31.h
-index 41232a2237..ea916de15a 100644
---- a/include/hw/arm/fsl-imx31.h
-+++ b/include/hw/arm/fsl-imx31.h
-@@ -25,6 +25,7 @@
- #include "hw/i2c/imx_i2c.h"
- #include "hw/gpio/imx_gpio.h"
- #include "hw/watchdog/wdt_imx2.h"
-+#include "hw/core/sysbus.h"
- #include "system/memory.h"
- #include "target/arm/cpu.h"
- #include "qom/object.h"
-@@ -38,10 +39,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX31State, FSL_IMX31)
- #define FSL_IMX31_NUM_GPIOS 3
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6be9c5725b..7cc9e558f9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1051,6 +1051,7 @@ F: include/hw/usb/imx-usb-phy.h
+ F: include/hw/arm/fsl-imx6.h
+ F: include/hw/misc/imx6_*.h
+ F: include/hw/ssi/imx_spi.h
++F: tests/functional/arm/test_sabrelite.py
  
- struct FslIMX31State {
--    /*< private >*/
--    DeviceState parent_obj;
-+    SysBusDevice parent_obj;
- 
--    /*< public >*/
-     ARMCPU         cpu;
-     IMXAVICState   avic;
-     IMX31CCMState  ccm;
-diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
-index 190f863355..dd929c1085 100644
---- a/hw/arm/fsl-imx31.c
-+++ b/hw/arm/fsl-imx31.c
-@@ -224,16 +224,11 @@ static void fsl_imx31_class_init(ObjectClass *oc, const void *data)
- 
-     dc->realize = fsl_imx31_realize;
-     dc->desc = "i.MX31 SOC";
--    /*
--     * Reason: uses serial_hds in realize and the kzm board does not
--     * support multiple CPUs
--     */
--    dc->user_creatable = false;
+ SBSA-REF
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 61b00932db..761b371a8d 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -24,6 +24,7 @@ test_arm_timeouts = {
+   'quanta_gsj' : 240,
+   'raspi2' : 120,
+   'replay' : 240,
++  'sabrelite' : 240,
+   'tuxrun' : 240,
+   'sx1' : 360,
  }
- 
- static const TypeInfo fsl_imx31_type_info = {
-     .name = TYPE_FSL_IMX31,
--    .parent = TYPE_DEVICE,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(FslIMX31State),
-     .instance_init = fsl_imx31_init,
-     .class_init = fsl_imx31_class_init,
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 387bf54ced..1e139c2c1f 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -69,7 +69,7 @@ static void kzm_init(MachineState *machine)
- 
-     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX31);
- 
--    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
- 
-     /* Check the amount of memory is compatible with the SOC */
-     if (machine->ram_size > (FSL_IMX31_SDRAM0_SIZE + FSL_IMX31_SDRAM1_SIZE)) {
+diff --git a/tests/functional/arm/test_sabrelite.py b/tests/functional/arm/test_sabrelite.py
+new file mode 100755
+index 0000000000..31a0a49eac
+--- /dev/null
++++ b/tests/functional/arm/test_sabrelite.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest, Asset
++
++
++class SabreliteMachine(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/vmlinuz'),
++        '5851e9c61465a26db810796db671c4729e66e81c365b3ebb1a4b7f772737605b')
++
++    ASSET_INITRD = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/initrd.gz'),
++        'fe33f836232a9107716d34dc56d36dea81bab039243a2a42ea6583a50c9b92ca')
++
++    ASSET_DTB = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/device-tree/imx6q-sabrelite.dtb'),
++        '3ad637c8ea55ebd058a67f686e050b82ccb0d1327bc283623c133c48ad87db44')
++
++    def setUp(self):
++        super().setUp()
++
++        self.kernel_path = self.ASSET_KERNEL.fetch()
++        self.initrd_path = self.ASSET_INITRD.fetch()
++        self.dtb_path = self.ASSET_DTB.fetch()
++
++    def test_console(self):
++        self.require_accelerator("tcg")
++        self.set_machine('sabrelite')
++        self.vm.set_console(console_index=1)
++        self.vm.add_args('-kernel', self.kernel_path,
++                         '-initrd', self.initrd_path,
++                         '-dtb', self.dtb_path)
++
++        self.vm.launch()
++        self.wait_for_console_pattern('Starting system log daemon:')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.55.0
 
