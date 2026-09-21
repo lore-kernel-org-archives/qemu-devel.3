@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8C7C982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFB5C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:30:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f1s-0002Qj-9h; Mon, 21 Sep 2026 10:30:00 -0400
+	id 1x8f2B-0002sy-5d; Mon, 21 Sep 2026 10:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0v-0001xv-Ci; Mon, 21 Sep 2026 10:29:05 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1x8f19-00025f-RR; Mon, 21 Sep 2026 10:29:17 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0t-00009g-Ox; Mon, 21 Sep 2026 10:29:01 -0400
+ id 1x8f18-0000OM-93; Mon, 21 Sep 2026 10:29:15 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id B6103600D1;
- Mon, 21 Sep 2026 14:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DBE1F000FF;
- Mon, 21 Sep 2026 14:28:56 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 0FBBB418BC;
+ Mon, 21 Sep 2026 14:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170E41F000FF;
+ Mon, 21 Sep 2026 14:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790000938;
- bh=K/E7mfkyMsocMU2GeW0n4nAwhy2Ey6wmw7TpzmiJTl4=;
+ s=k20260515; t=1790000950;
+ bh=g6WpTBSiTmJrrvQy2krSoJd7Au0mqrGfUsep873fYPI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GoptpolYDnux9B6aLDHVS3i21VZgVzq8P1se4medbHluDatBkPzedepcWpsNkJhrj
- Cmup3wxE9dCM6G/LPRi172/WC5zirrE34UDwBa1ZbAAhLvIpaPhxL1BzZJ4jqoY/HD
- y2w0yUL7vWpAJ9ZI0YfCrsxo6kx45ye9zBvPI0dbZ8na7Bb9Q/EcU2MZyyLcTYHjNq
- p47mA0kl2RApWyOnELihVidEC2JWoIWVihePABr3re9Sd5S+iU4WN2/7TngVk4kmX9
- C4DQCrGLiCV0Rady6QUtnk5SRmcQm8TbQuDKXCPO+IOyrIEcnWM7q+YqLeiiK9hUZv
- gR7W9uClzB74w==
+ b=HUl0Wgpo+zd1TW7ZPVN97ZT5qZ/CFWrpsDvILu0cj3OQnMvsLnGOzLqxyLx/rerwe
+ HhnP8F7V6zDLw4QNuPZ5R3YoAgZcC3yA5mbd0z8khy36U7N40jUvxvrHDLKmSxhZGY
+ qtPewIY6psER7NUwCsbMq0ffHUcMmuiWDEkYaES++EM8ADxDKjsFmuWsbW5FOIQuuZ
+ jOdMOzlxeDT7/MTg0Q8kTlRT7RNTgYoWrEwQJSDt7gt0dNepGOxmmD08mbWtvVgGGt
+ HnynXvAg14ccet9SLGNK/BWY3pCCdLOxSu6ggZXkI1twLkRgiF4ep2rV4AbVTS/gYo
+ VaEzj6kNOw0ig==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
+ Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v6 08/15] block: reject zone appends that are not a multiple
- of the sector size
-Date: Mon, 21 Sep 2026 16:28:10 +0200
-Message-ID: <20260921142819.2916043-9-cassel@kernel.org>
+Subject: [PATCH v6 13/15] file-posix: reject a zone append past the device
+ capacity
+Date: Mon, 21 Sep 2026 16:28:15 +0200
+Message-ID: <20260921142819.2916043-14-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921142819.2916043-1-cassel@kernel.org>
 References: <20260921142819.2916043-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,60 +71,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zone write pointers are tracked and reported in units of
-BDRV_SECTOR_SIZE, so an append whose data size is not a multiple of it
-would leave a write pointer that cannot be represented, neither in a
-BlockZoneDescriptor nor in the virtio and NVMe zone reports derived from
-one.
+raw_co_zone_append() checks that the offset it is given is aligned to the
+zone size, but not that it names a zone of the device. raw_co_prw() then
+derives a zone index from it and reads that entry of the write pointer
+array, so an offset past the end of the device reads past the end of the
+array.
 
-Nothing states that invariant. file-posix, the only driver that carries
-out an append itself, does enforce it, but only as a side effect of
-checking each iovec against BlockLimits.write_granularity, which is never
-smaller than the sector size. That conflates two constraints: the sector
-granularity holds for every driver, whereas write_granularity describes a
-coarser requirement of the medium below a driver, and only a driver that
-has such a medium should express it.
+bdrv_co_zone_append() does not catch it either: bdrv_check_qiov_request()
+bounds the request against BDRV_MAX_LENGTH, which has nothing to do with
+the size of this device. A guest cannot reach it, because
+check_zoned_request() in virtio-blk rejects an out of range offset first,
+but qemu-io and any other caller of blk_co_zone_append() can:
 
-Check the invariant once in bdrv_co_zone_append(), so that it no longer
-rests on a driver that happens to have a granularity of its own to
-report.
+  $ qemu-io --image-opts -n driver=host_device,filename=/dev/nullb0 \
+        -c "zap -p 0x100000000000 0x1000"
+  Segmentation fault
 
-This is a lower bound, not the alignment that a guest has to observe. The
-block layer cannot know that one, because it also depends on the logical
-block size the device is configured with, which is a property of the
-frontend. The alignment that applies to a guest is the larger of the two,
-and it is the frontend that reports it, that validates requests against
-it, and that has to refuse a device whose write pointers do not satisfy
-it.
+On a null_blk device with 1000 zones of 256 MiB, that offset yields zone
+index 65536 and reads 512 KiB beyond an 8000 byte allocation.
 
+Reject an offset that lies outside the device. That also bounds the
+zone index that raw_co_prw() derives from it, so its write pointer
+lookup stays inside the array.
+
+Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/io.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ block/file-posix.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/block/io.c b/block/io.c
-index da61e641ac..b9d0b3fd7b 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3355,6 +3355,16 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
-         return ret;
-     }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 1a4ca9d942..e1e6a03b25 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -3587,8 +3587,15 @@ raw_co_zone_append(BlockDriverState *bs,
+                    QEMUIOVector *qiov,
+                    BdrvRequestFlags flags) {
+     assert(flags == 0);
++    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
+     int64_t zone_size_mask = bs->bl.zone_size - 1;
  
-+    /*
-+     * Zone write pointers are kept and reported in units of BDRV_SECTOR_SIZE,
-+     * so an append that would leave a write pointer at a finer granularity
-+     * cannot be represented. Drivers may impose a coarser granularity of their
-+     * own, see BlockLimits.write_granularity.
-+     */
-+    if (!QEMU_IS_ALIGNED(qiov->size, BDRV_SECTOR_SIZE)) {
-+        return -EINVAL;
++    if (*offset >= capacity) {
++        error_report("*offset %" PRId64 " is equal to or greater than the "
++                     "device capacity %" PRId64 "", *offset, capacity);
++        return -ENOSPC;
 +    }
 +
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
-         co.ret = -ENOTSUP;
+     if (*offset & zone_size_mask) {
+         error_report("sector offset %" PRId64 " is not aligned to zone size "
+                      "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
 -- 
 2.55.0
 
