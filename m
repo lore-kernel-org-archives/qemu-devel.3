@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7624DC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF889C982FB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8ls7-0006bI-Gv; Mon, 21 Sep 2026 17:48:23 -0400
+	id 1x8lrT-00068g-0j; Mon, 21 Sep 2026 17:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8ls2-0006Yc-AT
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:18 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrO-000666-2X
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:40 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8ls0-0000Mz-FU
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:18 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e8185e037so19943645e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:48:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrM-00007G-G5
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:37 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49cd5462b69so18798695e9.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027285; x=1790632085; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790027255; x=1790632055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YX7c4kfeBtd8JkNfRm3tqVIYX5haLTU6ibxGCkWt290=;
- b=BYxOgLMa8zgzoToeF578kTi3reKsmHRrdwlEyTdx4tcGThowxGomVAKWA8stXq9BV0
- JhXbxLIfTenk4edpb41iLZ2AxTX7XauvWB2EwGynF2WUqPLCSSMzIj2UY1CqJ9ZpcaJl
- RiMwi0qYFJv9aumDXEsPbT4QWcYyFi1KNKargM16sctxjTRIzOaMjT2HE9DPVMffdnf4
- SncDY4p1gs53986bNd6oFqG3TYdzZqW0puJTLHteS7NXQhao2EOVAeynpUVJIf7uXv0I
- mNaVqPRK7rahvCPpjGXpY9TQupxeGxTnGxOb5W39RIICqozpZyfNQ5Xjayk/T/vogarv
- PxCA==
+ bh=EKSAnmYv14gw5tUyYikFWhvF6ivlQzDp0mFzgIwqxlM=;
+ b=Z1Gojlg0LAEooacqPxpo9ssr8W/N+BxqcJRYby/+kmcDbciZ8V2O6X2dPs0uwO3gsn
+ 4pCpcpPhAtOsREB/aMCZDVr7enl8VmLWv6/UT4ieL57i/ddVG27qkAiarkguK/RbzGt3
+ NcIDpcmGoR6u2TQeLsLwa0uMdQNLY+Cwnz+GG0SkIyC1+pVH9ETH3sCygc9o5UQFjfqE
+ tqT7eyjoaTZI/b2HGGOG3SpgouRPBHc/1niA6oo08sGWkpuSMBKCtK2t9yePJdu5GYPf
+ Ju5lEqijxGCUPEka98vTLGIcVjhjn2DLiw/TumY+zCCXIXCRwH3Gbfb/YJQJKlBKZ+8L
+ eyvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027285; x=1790632085;
+ d=1e100.net; s=20260707; t=1790027255; x=1790632055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=YX7c4kfeBtd8JkNfRm3tqVIYX5haLTU6ibxGCkWt290=;
- b=DLwZVKN/eOeyGsfJ0xJWbxP4wu4yhwUDJGsFhlv4oxZkDZDoSu8jL4D8868MECI61U
- aUH486/MoZgodlOlMml/6amywNHAkHx3qu2XUPbb+88rg4/MSO2DvO/O8Mcj7VEsJdj0
- rEQWLW5by/fc3uDOjS+l+yBAUi2j7CSrbigw+JJX1METSJPtQJANM2GIECNBi5ew2DZc
- 2CrQFaR/zZWfdZnQpeHGTheurAl8aCU0sP1LGoEVwfX8bfSyc3X5S0XvYGlIJQMZzXzK
- h4N8pvpeWVMCclihoVQYauC/ZBdGuxHl2AlUufghsdsteGAuZ4kV5IXzNRUukFiro8Tz
- PABg==
-X-Gm-Message-State: AFuF++n9cK7baLTxhpt1KW1M8/BBJwYXELesZLXnErWML9Srnd5X3udg
- GdJ2Nw1RBX7MWa5X7MLfFLWeWKZZyABdl/LkZt2bXUh7HHRwpwf6l3wC++Aszw==
-X-Gm-Gg: AYBFou2rbb0mg+B8/4pfWTdt7JoKgyoacOgXgcraCsbZhARRkW+HuvXx35gykrPjniF
- Xfnd8Nb1iD31i0g/lln3D8XHa+5PBIU+fnROeZsjdXZ6N82Ogks+3ngdSwZ+XiLowMtYf1p0hAA
- 6Ut+1+Ph7yjJHhk1ZUBG/0ULx6CcvDjCtEPdwXKwB8nkzpGW0Es9EYShbaZrfS/Y1ocU9IDW50E
- lXtUG4NPGQ4Ko/P6OEMxH8RzDGtEPZPsPSKNfV1jxTO6QsHsI+ZBoVtjgOXid9kFqKWqumbr579
- QnO5V4Tv60pU2V05qxW/unorykfy/dUVzl64dM/S2jDtZge5rwA+XqdDxWF3bdsTsetIwwLXIWa
- gUWOiX7x0axGFFCcD3nAYQc9zgE4gCHJ0l1ywt0dtu0MpPNtZkA081j9jHOuXxIRDWGDgrw3Sls
- LMHFTngwSQn0ob9qZrdf3B1IpdtH8iXucPTFaDV4K4C5NqWnlnSwwslMBXfpasodqNZKAFyVhtc
- HSzDfPFrfEB54F3X3Uq2w9T4feA7hRawIu5BwOGHfPfmCGTHVNBJFfdWGa7toyURMCO+P+InZAG
- FNT+37LrqeLFwsg=
-X-Received: by 2002:a05:600c:1993:b0:49c:ffe3:2b3f with SMTP id
- 5b1f17b1804b1-49fc56dbc54mr170745205e9.3.1790027284830; 
- Mon, 21 Sep 2026 14:48:04 -0700 (PDT)
+ bh=EKSAnmYv14gw5tUyYikFWhvF6ivlQzDp0mFzgIwqxlM=;
+ b=YOCiCg9HGpKSgQlwXzT8CEOgtf0JVuBfEuN2zFMpX+YBMT4n0JrM18Ogf2nlrkiTP4
+ LG5+QvKopkvPUgTtRtucHTIUz0NgC7rvK6hv+VkcQhW6Ui3iB/mlkawO1qAr6U6M9L4i
+ T64lb3xZyJ/u+mZiLwWaRMu4TSaTnXE157Ksb/5CylLaShsIq6AEC4ng+hJPVOIksoNZ
+ Kz3ueHv+PktHqyYPilGD8PdrFlXTxtD1SxZ8V3dnkYl/4Q6G1SvYDCfc3R2jZMqDI4GQ
+ fnBc2yXOVLl1e6VTzRHsnTJge0VlWf5WDp5+JxMApy2r5uABAhklEuHsIes3VtjpJ7IN
+ F8ng==
+X-Gm-Message-State: AFuF++kcvxhT6XXeLxHqjn8/+Dnj4v/q7RVX8HZmVZfnB80bjfK0xrRc
+ M49fmHdkCxMGnPWoSBNj5ZgrMfSclha9D+NcR5VqOnvfXAqHRlScRN6KANmNpA==
+X-Gm-Gg: AYBFou2p/Jp/M8gXPE4mvaVwmu0HpyPqxILqp4ejkWONjcXap+qDWA76ROsn9Z8hkmf
+ HLQNZWvs4Tm/4J8Mz/Px7ZHQZfqmUZSiVSpVWkLXu7gal+h1Xak95j7AzUQlobbalMV9/hAS+PX
+ sUQG5gj//kNmiRzdBNzYpfPDxKbNBQy9+gRk27uEesCnt80FmCfLvAnFkhYRxYfkmyE3/sZlI1m
+ lzt9v6Tnm0CKdlXbXZ31YTwgOv45FfhmdIfHP5qW3+kwcsjNpuOZ6PAo1C0/RMXaE/uyC7AOpf2
+ QQdsS4uO2G/lMtvmi9NGPWJdo6DopAeCxNAYpjsUsLaEtitHl+4EDaWItri/FdBaBPkE8YYznCm
+ hJxsXa5tt2aem5lkvv+HZsQsz4FTaWQMg2GjKa6tHgG+XdzD0AkzIg1NTmZ3l5NATG4vy+gIPW7
+ M6dTQBj5Fxpjfjan9EifnDCfcHdVf99t2PjkN1hdYkbyU/RYh89p9P1MhEeh8naJRS9LweC1u8O
+ gkRrOjrOTGHvIOubNLHAJq+Qg6LqvEHIEmkV5EgSj5kIg7Ula+z60bedcEYlXYLHhF2Tsduogr3
+ VzQ=
+X-Received: by 2002:a05:600c:470d:b0:49f:ce78:356b with SMTP id
+ 5b1f17b1804b1-49fce7836bdmr110430645e9.28.1790027254687; 
+ Mon, 21 Sep 2026 14:47:34 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.48.03
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:48:04 -0700 (PDT)
+ Mon, 21 Sep 2026 14:47:34 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,22 +78,24 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 29/42] Kconfig: Extract config GPIO_IMX from config IMX
-Date: Mon, 21 Sep 2026 23:46:57 +0200
-Message-ID: <20260921214710.29422-30-shentey@gmail.com>
+Subject: [PATCH 06/42] hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by
+ default
+Date: Mon, 21 Sep 2026 23:46:34 +0200
+Message-ID: <20260921214710.29422-7-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,108 +111,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Over time, QEMU has grown a number of i.MX boards and the monolithic
-config IMX drags in unneeded dependencies into each SoC model. Extract
-config GPIO_IMX to eventually eliminate config IMX.
+Having four CPUs and 1 GiB of RAM matches real hardware. Fix the machine
+defaults to make its use more ergonomic and less error-prone. Also
+reflect this in the board documentation.
+
+To reproduce the old default behavior for e.g. migration purposes,
+`-smp 1 -m 128M` needs to be passed on the command line.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/Kconfig      | 7 +++++++
- hw/gpio/Kconfig     | 3 +++
- hw/gpio/meson.build | 2 +-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ docs/system/arm/sabrelite.rst | 4 ++--
+ hw/arm/sabrelite.c            | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index a2d94e238d..25eee42c52 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -479,6 +479,7 @@ config FSL_IMX25
-     depends on TCG && ARM
-     imply I2C_DEVICES
-     select FSL_IMX25_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_AVIC
-     select IMX_EPIT
-@@ -496,6 +497,7 @@ config FSL_IMX31
-     depends on TCG && ARM
-     imply I2C_DEVICES
-     select FSL_IMX31_CCM
-+    select GPIO_IMX
-     select SERIAL_MM
-     select IMX
-     select IMX_AVIC
-@@ -513,6 +515,7 @@ config FSL_IMX6
-     select FSL_IMX6_CCM
-     select FSL_IMX6_SRC
-     select FSL_IMX7_SNVS
-+    select GPIO_IMX
-     select IMX
-     select IMX_EPIT
-     select IMX_FEC
-@@ -593,6 +596,7 @@ config FSL_IMX7
-     select FSL_IMX7_GPR
-     select FSL_IMX7_SNVS
-     select FSL_IMX7_SRC
-+    select GPIO_IMX
-     select PCI
-     select IMX
-     select IMX_FEC
-@@ -615,6 +619,7 @@ config FSL_IMX8MP
-     select FSL_IMX7_SNVS
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_FEC
-     select IMX_GPT
-@@ -642,6 +647,7 @@ config FSL_IMX8MM
-     select FSL_IMX7_SNVS
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_FEC
-     select IMX_GPT
-@@ -683,6 +689,7 @@ config FSL_IMX6UL
-     select FSL_IMX6_SRC
-     select FSL_IMX6UL_CCM
-     select FSL_IMX7_SNVS
-+    select GPIO_IMX
-     select IMX
-     select IMX6UL_LCDIF
-     select IMX_EPIT
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index fcc7c70bd5..6911eafbb6 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -1,6 +1,9 @@
- config PL061
-     bool
+diff --git a/docs/system/arm/sabrelite.rst b/docs/system/arm/sabrelite.rst
+index d3a3c01dd6..b8ac9548f5 100644
+--- a/docs/system/arm/sabrelite.rst
++++ b/docs/system/arm/sabrelite.rst
+@@ -55,7 +55,7 @@ To boot the newly built Linux kernel in QEMU with the SABRE Lite machine, use:
  
-+config GPIO_IMX
-+    bool
-+
- config GPIO_KEY
-     bool
+ .. code-block:: bash
  
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 0555f44b6a..6d233826fc 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -1,3 +1,4 @@
-+system_ss.add(when: 'CONFIG_GPIO_IMX', if_true: files('imx_gpio.c'))
- system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
- system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
- system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
-@@ -6,7 +7,6 @@ system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
- system_ss.add(when: 'CONFIG_ZAURUS_SCOOP', if_true: files('zaurus.c'))
+-  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
++  $ qemu-system-arm -M sabrelite \
+       -display none -serial null -serial stdio \
+       -kernel arch/arm/boot/zImage \
+       -dtb arch/arm/boot/dts/imx6q-sabrelite.dtb \
+@@ -89,7 +89,7 @@ the -kernel argument, along with an SD card image with rootfs:
  
--system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpio.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_gpio.c'))
- system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_gpio.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gpio.c'))
+ .. code-block:: bash
+ 
+-  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
++  $ qemu-system-arm -M sabrelite \
+       -display none -serial null -serial stdio \
+       -kernel u-boot
+ 
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index 05dfabd937..34f302f83c 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -17,6 +17,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/core/qdev-properties.h"
+ #include "qemu/error-report.h"
++#include "qemu/units.h"
+ #include "system/qtest.h"
+ 
+ struct SabreliteMachineState {
+@@ -139,7 +140,9 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
+     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
+     mc->init = sabrelite_init;
+     mc->max_cpus = FSL_IMX6_NUM_CPUS;
++    mc->default_cpus = FSL_IMX6_NUM_CPUS;
+     mc->ignore_memory_transaction_failures = true;
++    mc->default_ram_size = 1 * GiB;
+     mc->default_ram_id = "sabrelite.ram";
+     mc->auto_create_sdcard = true;
+ }
 -- 
 2.55.0
 
