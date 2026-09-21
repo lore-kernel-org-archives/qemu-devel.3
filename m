@@ -4,60 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F4EC982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 16:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B8CC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 16:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8h8T-0002k1-Sg; Mon, 21 Sep 2026 12:44:57 -0400
+	id 1x8hGx-0004GO-6n; Mon, 21 Sep 2026 12:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x8h8S-0002jt-8G
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 12:44:56 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x8hGu-0004Fv-N4; Mon, 21 Sep 2026 12:53:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x8h8P-000732-1K
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 12:44:56 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 7788CC09AB;
- Mon, 21 Sep 2026 19:44:45 +0300 (MSK)
-Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:126::1:23])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id iidWON1XjeA0-C2hX9359; Mon, 21 Sep 2026 19:44:44 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1790009084;
- bh=ctlTJMRaGQ2Xv/+KT0Ox90raocjkW4/61p06QO57KEg=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=DlvsTD1IbUmE7xGfy9y1ZrTestMsXpClMi9Z43eTNqZyv+yyvijzmGunH+ln8Sfsh
- 1VpA1W/GzYow1X8t/KjYqzA4StoEBSYSVyu2KKTjPDN7+BEoaUktl4Nl1M6MRvKlP+
- MG7P0w1wJCJFF4IR0BfG/pe1itgCDa4EWwR0GRbA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org,
-	pbonzini@redhat.com,
-	vsementsov@yandex-team.ru
-Subject: [PATCH] kvm: turn fprintf into error_report
-Date: Mon, 21 Sep 2026 19:44:42 +0300
-Message-ID: <20260921164442.1137615-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x8hGs-0007t9-L1; Mon, 21 Sep 2026 12:53:40 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LF8HhH1902958; Mon, 21 Sep 2026 16:53:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YLsh4e
+ Kx584A5OS4tPFMuKsRU5gDP5hfG88Dj7fu1RE=; b=NYhPi0L4DDDy8C9F598b23
+ 4txexBrd19gouhnuu2dq38xP6dKFGFkXQDfxyPwyZCsbgA6ZJKpo4gg+dd7r5QWd
+ 4nM6lhMMM5cBRi3Qf9WTBu5MY+yk50S5jaoipzRIpAeR9e6Zjr8RIgnsMNjikPcg
+ 3kenooFwOvzJSq/q/5ka44M1TvBCt1HK8CBIM/6D2MFi8HnaPeGxyEqHXuS6BGB8
+ KTx1wVn4N97/NP/hhkfbR7c0GCPXIeSPLlbBJ3E+nPG9Z+ES0gtlFKtEiOsYZ8s5
+ Jg/hcPA69n0khlY5oiTsNhJmAX61vFSH0rm3Av5KIc7Bjyg0z/u9F7yE8th/4JWQ
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdv1js0-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 21 Sep 2026 16:53:32 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LFHT331489428; Mon, 21 Sep 2026 16:53:32 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qq6bey-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Sep 2026 16:53:32 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LGrV7q31130130
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Sep 2026 16:53:31 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 371F358056;
+ Mon, 21 Sep 2026 16:53:31 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 735E55803F;
+ Mon, 21 Sep 2026 16:53:30 +0000 (GMT)
+Received: from [9.61.240.58] (unknown [9.61.240.58])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Sep 2026 16:53:30 +0000 (GMT)
+Message-ID: <cfaf7d76-ef2c-4b9c-9e11-c94bfc99fdaa@linux.ibm.com>
+Date: Mon, 21 Sep 2026 09:53:30 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 15/16] s390x/pci: Implement migration for emulated
+ devices
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260911152137.676602-1-kshk@linux.ibm.com>
+ <20260911152137.676602-16-kshk@linux.ibm.com>
+ <7a2ec98c-6756-4c9f-8f86-1b0db94c8053@linux.ibm.com>
+ <aqwkyvY8mxIEqDyH@redhat.com>
+ <0e59d36a-4757-4dc6-a72d-a2f185db835c@linux.ibm.com>
+ <arFK6US5kWAMvDPp@redhat.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <arFK6US5kWAMvDPp@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: ytx4ymz_rnu7LztbC0tCL3mpbLaE9Wsd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI0MiBTYWx0ZWRfXxb+FU2lRZFqu
+ 7Y7MgPWESkWFssEaQjr1YAejS7HCi2Ll5g1RaMBf/uj919CHxkvLbcrQXvWEzNvmKwd6IHfkUqE
+ QKU0Q1Ij3gNAqBewLMZGF99S57rM78s=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab1610c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=OlAlvAjMd6YUtngKZocA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ytx4ymz_rnu7LztbC0tCL3mpbLaE9Wsd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI0MiBTYWx0ZWRfX+xzDSBGxQx4S
+ OWr7ehPvWAQSSh3kZjBs4jfzoKzcVmWlFPTxkEOf3BxIFM+mGly+0nbPd8KLsYH663HUSSRxUYS
+ sT+QBoMyEKPsY8hyEBaZAiUDb3lFisQJ5SKHnxujzqYv+ngyGWiEIzdU2fQJ2xTh2RRogL35o45
+ iuLZnWQVtHP7Hh5K8StJ7o8zbpQa12rva/28hCE2fHmcKax5clMrqJiRhhRsmxW2nMhMfTLHMhk
+ wFwA52Cz9ceALLtF1b5y+ex9OQnkiq+4yhOU+nVI8RMBR3Kc98dZDNyCZbrbqkFkMDEYlpkpecU
+ c6kEkfb2C5g7cMKraMaFrL6Z7D2qBZkHEy4AVT6s73w3ONq9y2n0c15MFuWaTfKcoYwW9if3LaA
+ Sq5Wov89EJfZkg6lysDiDnSDfxqDEmujKpHEumsVzysbtS1k0yucs89amgF9soNQrEflZc6K308
+ eFMxRfmRGCyRpr0XuGw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609210242
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,205 +133,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Main benefit: ability to print timestamps.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- accel/kvm/kvm-all.c | 64 ++++++++++++++++++++++-----------------------
- 1 file changed, 31 insertions(+), 33 deletions(-)
+On 9/21/2026 8:19 AM, Daniel P. Berrangé wrote:
+> On Mon, Sep 21, 2026 at 10:12:34AM -0500, Konstantin Shkolnyy wrote:
+>> On 260917 12:35, Daniel P. Berrangé wrote:
+>>> On Thu, Sep 17, 2026 at 10:25:32AM -0700, Farhan Ali wrote:
+>>>> On 9/11/2026 8:21 AM, Konstantin Shkolnyy wrote:
+>>>>> @@ -1303,11 +1380,22 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>>>>>             pbdev = S390_PCI_DEVICE(dev);
+>>>>>             pbdev->fid = 0;
+>>>>>             QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
+>>>>> -        g_hash_table_remove(s->zpci_table, &pbdev->idx);
+>>>>> +        /*
+>>>>> +         * If this QEMU is running a migrated guest, and was configured with
+>>>>> +         * more zpci devices than the source QEMU, extra zpci devices could be
+>>>>> +         * excluded from zpci_table and invisible to the guest and have
+>>>>> +         * pbdev->idx values duplicating those of active devices. If the
+>>>>> +         * pbdev being unplugged is such, the zpci_table entry for pbdev->idx
+>>>>> +         * can find a different pbdev which we must not remove.
+>>>>> +         */
+>>>>> +        if (g_hash_table_lookup(s->zpci_table, &pbdev->idx) == pbdev) {
+>>>>> +            g_hash_table_remove(s->zpci_table, &pbdev->idx);
+>>>>> +        }
+>>>> If we are migrating, won't we re-create the exact same state and devices on
+>>>> the target host? Is it possible that the target QEMU can have more devices
+>>>> than source?
+>>> It is expected that the source and dest QEMU processes have identical
+>>> virtual hardware configuration, and also no attempts should be made to
+>>> hot-add/remove devices while migration is running.
+>> Do you suggest to completely delete this hunk, or keep as "defensive tactic"
+>> and correct the comment?
+> I don't think it is worth trying to add defensive checks, as if the
+> config is not identical, the code may well not even be reached as
+> vmstate parsing/loading typically fails during migration.
+>
+>
+> With regards,
+> Daniel
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 83cbd120a84..d271699db87 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -300,7 +300,7 @@ static KVMSlot *kvm_alloc_slot(KVMMemoryListener *kml)
-         return slot;
-     }
- 
--    fprintf(stderr, "%s: no free slot available\n", __func__);
-+    error_report("%s: no free slot available", __func__);
-     abort();
- }
- 
-@@ -1702,8 +1702,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-             mem->flags = 0;
-             err = kvm_set_user_memory_region(kml, mem, false);
-             if (err) {
--                fprintf(stderr, "%s: error unregistering slot: %s\n",
--                        __func__, strerror(-err));
-+                error_report("%s: error unregistering slot: %s",
-+                             __func__, strerror(-err));
-                 abort();
-             }
-             start_addr += slot_size;
-@@ -1730,8 +1730,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-         kvm_slot_init_dirty_bitmap(mem);
-         err = kvm_set_user_memory_region(kml, mem, true);
-         if (err) {
--            fprintf(stderr, "%s: error registering slot: %s\n", __func__,
--                    strerror(-err));
-+            error_report("%s: error registering slot: %s", __func__,
-+                         strerror(-err));
-             abort();
-         }
- 
-@@ -2024,8 +2024,8 @@ static void kvm_mem_ioeventfd_add(MemoryListener *listener,
-                                data, true, int128_get64(section->size),
-                                match_data);
-     if (r < 0) {
--        fprintf(stderr, "%s: error adding ioeventfd: %s (%d)\n",
--                __func__, strerror(-r), -r);
-+        error_report("%s: error adding ioeventfd(%d): %s (%d)",
-+                     __func__, fd, strerror(-r), -r);
-         abort();
-     }
- }
-@@ -2042,8 +2042,8 @@ static void kvm_mem_ioeventfd_del(MemoryListener *listener,
-                                data, false, int128_get64(section->size),
-                                match_data);
-     if (r < 0) {
--        fprintf(stderr, "%s: error deleting ioeventfd: %s (%d)\n",
--                __func__, strerror(-r), -r);
-+        error_report("%s: error deleting ioeventfd(%d): %s (%d)",
-+                     __func__, fd, strerror(-r), -r);
-         abort();
-     }
- }
-@@ -2060,8 +2060,8 @@ static void kvm_io_ioeventfd_add(MemoryListener *listener,
-                               data, true, int128_get64(section->size),
-                               match_data);
-     if (r < 0) {
--        fprintf(stderr, "%s: error adding ioeventfd: %s (%d)\n",
--                __func__, strerror(-r), -r);
-+        error_report("%s: error adding ioeventfd(%d): %s (%d)",
-+                     __func__, fd, strerror(-r), -r);
-         abort();
-     }
- }
-@@ -2079,8 +2079,8 @@ static void kvm_io_ioeventfd_del(MemoryListener *listener,
-                               data, false, int128_get64(section->size),
-                               match_data);
-     if (r < 0) {
--        fprintf(stderr, "%s: error deleting ioeventfd: %s (%d)\n",
--                __func__, strerror(-r), -r);
-+        error_report("%s: error deleting ioeventfd(%d): %s (%d)",
-+                     __func__, fd, strerror(-r), -r);
-         abort();
-     }
- }
-@@ -2143,7 +2143,7 @@ int kvm_set_irq(KVMState *s, int irq, int level)
-     event.irq = irq;
-     ret = kvm_vm_ioctl(s, s->irq_set_ioctl, &event);
-     if (ret < 0) {
--        perror("kvm_set_irq");
-+        error_report("kvm_set_irq: %s", strerror(-ret));
-         abort();
-     }
- 
-@@ -2581,7 +2581,7 @@ static int do_kvm_irqchip_create(KVMState *s)
-     } else if (kvm_check_extension(s, KVM_CAP_S390_IRQCHIP)) {
-         ret = kvm_vm_enable_cap(s, KVM_CAP_S390_IRQCHIP, 0);
-         if (ret < 0) {
--            fprintf(stderr, "Enable kernel irqchip failed: %s\n", strerror(-ret));
-+            error_report("Enable kernel irqchip failed: %s", strerror(-ret));
-             exit(1);
-         }
-     } else {
-@@ -2589,7 +2589,7 @@ static int do_kvm_irqchip_create(KVMState *s)
-     }
- 
-     if (kvm_check_extension(s, KVM_CAP_IRQFD) <= 0) {
--        fprintf(stderr, "kvm: irqfd not implemented\n");
-+        error_report("kvm: irqfd not implemented");
-         exit(1);
-     }
- 
-@@ -2605,7 +2605,7 @@ static int do_kvm_irqchip_create(KVMState *s)
-         }
-     }
-     if (ret < 0) {
--        fprintf(stderr, "Create kernel irqchip failed: %s\n", strerror(-ret));
-+        error_report("Create kernel irqchip failed: %s", strerror(-ret));
-         exit(1);
-     }
- 
-@@ -3136,15 +3136,14 @@ static int kvm_handle_internal_error(CPUState *cpu, struct kvm_run *run)
- {
-     int i;
- 
--    fprintf(stderr, "KVM internal error. Suberror: %d\n",
--            run->internal.suberror);
-+    error_report("KVM internal error. Suberror: %d", run->internal.suberror);
- 
-     for (i = 0; i < run->internal.ndata; ++i) {
--        fprintf(stderr, "extra data[%d]: 0x%016"PRIx64"\n",
--                i, (uint64_t)run->internal.data[i]);
-+        error_printf("extra data[%d]: 0x%016"PRIx64"\n",
-+                     i, (uint64_t)run->internal.data[i]);
-     }
-     if (run->internal.suberror == KVM_INTERNAL_ERROR_EMULATION) {
--        fprintf(stderr, "emulation failure\n");
-+        error_printf("emulation failure\n");
-         if (!kvm_arch_stop_on_emulation_error(cpu)) {
-             cpu_dump_state(cpu, stderr, CPU_DUMP_CODE);
-             return EXCP_INTERRUPT;
-@@ -3315,13 +3314,13 @@ static void kvm_eat_signals(CPUState *cpu)
-     do {
-         r = sigtimedwait(&waitset, &siginfo, &ts);
-         if (r == -1 && !(errno == EAGAIN || errno == EINTR)) {
--            perror("sigtimedwait");
-+            error_report("sigtimedwait: %s", strerror(errno));
-             exit(1);
-         }
- 
-         r = sigpending(&chkset);
-         if (r == -1) {
--            perror("sigpending");
-+            error_report("sigpending: %s", strerror(errno));
-             exit(1);
-         }
-     } while (sigismember(&chkset, SIG_IPI));
-@@ -3490,14 +3489,13 @@ int kvm_cpu_exec(CPUState *cpu)
-                 break;
-             }
-             if (!(run_ret == -EFAULT && run->exit_reason == KVM_EXIT_MEMORY_FAULT)) {
--                fprintf(stderr, "error: kvm run failed %s\n",
--                        strerror(-run_ret));
-+                error_report("kvm run failed: %s", strerror(-run_ret));
- #ifdef TARGET_PPC
-                 if (run_ret == -EBUSY) {
--                    fprintf(stderr,
--                            "This is probably because your SMT is enabled.\n"
--                            "VCPU can only run on primary threads with all "
--                            "secondary threads offline.\n");
-+                    error_printf("This is probably because your SMT is "
-+                                 "enabled.\n"
-+                                 "VCPU can only run on primary threads with all "
-+                                 "secondary threads offline.\n");
-                 }
- #endif
-                 ret = -1;
-@@ -3533,8 +3531,8 @@ int kvm_cpu_exec(CPUState *cpu)
-             ret = EXCP_INTERRUPT;
-             break;
-         case KVM_EXIT_UNKNOWN:
--            fprintf(stderr, "KVM: unknown exit, hardware reason %" PRIx64 "\n",
--                    (uint64_t)run->hw.hardware_exit_reason);
-+            error_report("KVM: unknown exit, hardware reason %" PRIx64,
-+                         (uint64_t)run->hw.hardware_exit_reason);
-             ret = -1;
-             break;
-         case KVM_EXIT_INTERNAL_ERROR:
-@@ -3978,7 +3976,7 @@ void kvm_init_cpu_signals(CPUState *cpu)
-         r = kvm_set_signal_mask(cpu, &set);
-     }
-     if (r) {
--        fprintf(stderr, "kvm_set_signal_mask: %s\n", strerror(-r));
-+        error_report("kvm_set_signal_mask: %s", strerror(-r));
-         exit(1);
-     }
- }
--- 
-2.43.0
+I would agree to remove it, it was also a little confusing for me to 
+understand why we needed it.
+
+Thanks
+
+Farhan
 
 
