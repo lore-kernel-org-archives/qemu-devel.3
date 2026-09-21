@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9394AC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937AFC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrT-000699-Oj; Mon, 21 Sep 2026 17:47:43 -0400
+	id 1x8lrW-0006Bz-Qf; Mon, 21 Sep 2026 17:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrM-00065s-Tn
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:40 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrH-000654-4u
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:32 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrK-00005k-V0
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:36 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrF-0008Vt-2H
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:30 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b91369d18so26350425e9.0
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:34 -0700 (PDT)
+ 5b1f17b1804b1-49b912d3931so26169165e9.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027254; x=1790632054; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790027248; x=1790632048; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Uw/DMb2Uw5NZGDQy3g8IeeuOzOBZqBeZxwGT7qc8+Yc=;
- b=QOVDy+j/b/CynJhqdJ140qGox/StOXX488UvGiHWtGxRk4gkb1gCxQTWQof9rczdiz
- Oz5NYywMF8+rB9LOISMDUXql/pPAO18hd1EZhHWi+K3uki1qwqrF6TbNAeNPJymqebX8
- /g5kdptVC3bo7ZSC26qx0Ig55H7XJjhEKXS85VohnI/phIpTFZdDN7lTCcZsXHCzC4Uu
- JMZm4MmffxZfnyjyn4b54mds0PZ1Uwbe+nf/yk0NU9PL1aqa3pcXdn6FnVIvk4PspKbG
- 1nY8jSwrTIF2hWsUt7QggWfHReXC014Ot+EX/Ta9WGtgRo5hQimAIezGaf4myLvl18Js
- +e6A==
+ bh=J9CEIaPD2r/78EllzBYWRo7JKzGqzJJ/rogwaGuXtMQ=;
+ b=Hq/02M40JOrmfeMScwA38zQGcnVnbvOkCK5skIQGNhkQMlen1kuKDNqIr9SB9M1RWm
+ sHsJmrVXxfegUfjhlrmKeMX2ki5KEpPSds8kyjx3IrDLAg7bDKR15/hfC085FhIsHM4G
+ qS7+ACko2ubuAGwPhUnOFXg/cRErdL8HMXqYGcaDgBicqpbYyU/bThg80HSFGCcwHskH
+ ipwMXJZyFT1eoRXjs5oZPRBq/bGlz+fqTNxJHpdhsUbbteSN8d3jLPUCtr2vznwo5OIC
+ 2Z/YAHLD2sxuRBeeMd8l04iB3CtTQiCNlNsq5b/bfz7+sB8IEqZa4qE1yWG7Z1UbDYqD
+ FVtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027254; x=1790632054;
+ d=1e100.net; s=20260707; t=1790027248; x=1790632048;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Uw/DMb2Uw5NZGDQy3g8IeeuOzOBZqBeZxwGT7qc8+Yc=;
- b=UExjkP6Pnmlu2SX7oo2O17m1q83hHjypNICUDIotYCdHOvJp61Ojcus/+jhQRXE+ZP
- ZMwTXkHYYOSkLiFmTC8iU8DIIOPyffvNKke5VcHZ3O6mH4VEF0pESQplsrbOGt1Z6TKI
- XHeAZh546I0UWxEKeDm1lRJgrb/ggPb5C0kkYqArJBWXVvzBtOS4qPlmbha9o4Q9Jd0K
- O3CF6qbuTzCUs/61CpctZcgdGgkZZM/6Jr7+ZsmTbK5A1bo7+ZKb/jDR9ZfjR5VZJBN/
- x5EHldwwIN+tuLj07kN0SosE8ylSp58L3AOiFWDZ1XeNSurC1QX5pd1i2/ifh5mhuTUV
- k8nA==
-X-Gm-Message-State: AFuF++la/6ZeD0NisAgIwDKrMzaOeYYHnQuiqLt2vgXi49ElYvOCiON8
- RCa43ZMdjPHOoyBcLkL2NjCb0wWn9MZedp41Z8AZ5teARZTv9pufWwl35anpxw==
-X-Gm-Gg: AYBFou2Rr54sskYiEIlTi4guDyHe7oMO8kPTE82pPBARP72aBqt+5k+8VDmqLhMzebY
- YwhAOuX47Iy9MUoKuV60CbC9uXc1s53Zdny01Uby2wMj84on9N0HBAxaEw3g3lnBb0TiayWzD4O
- Wgn+2szDuzWyBY6iRB1CwN47ALDCq6Vt/ZHN5uVaZG5oc57S7xKzIP8JlYiKQercQx7FrCgyPFt
- YICCHuvzELIS78ZW/Jx/c4T68MWmUUtTVCasmEJcDKwAbfUO6f/2mpcDL7A9fs6tH6t9QuzJxrr
- 3n/nuIzu5adiaGD1qZgpMe98s/XU3KoeVyovqjvHNzF9UuRHkEx3vjUTRYWFAKkz2F3GaMrFKRL
- VjjeBO65yzWZa1s/TAtdrKKhN7MI47IZGMDZ9Dh93cRIzLCfuXcyM8SiqjibqfIV944W66dIulX
- p6n5FpvAis+w4aof8UlpGGKQw2uX6sDIlEDGjEDOFLRXinvGAdPbhhAh8x1DqPtqNJxroUJXMh8
- 1o8J03HamfkLrnq+wl/SVeNAQv8UzgUgPBTkCLuHo0FDtR3jEXBOspAcRCWSnVAsTW4ksWBU5fS
- td3ON48+SXBcPw==
-X-Received: by 2002:a05:600c:548d:b0:49e:816a:9bae with SMTP id
- 5b1f17b1804b1-49fc58500e5mr176131855e9.28.1790027253542; 
- Mon, 21 Sep 2026 14:47:33 -0700 (PDT)
+ bh=J9CEIaPD2r/78EllzBYWRo7JKzGqzJJ/rogwaGuXtMQ=;
+ b=1vZOK2FQecOYpRGyqRcyg+BZ89QAXXvr72oXdwTZZMDGK/PnvjNrgylmAs9tKC7/7F
+ hKVL79ToKYNV+93hemDSUIbT1ktZkQv+7sjSBEvWJqUdUrWT6ksRglQR8/i0Wholn0eJ
+ aBcePPVdNl2yQs1WWcArFjp3pJQPv3NHjF2KDwIil/NJMNNmyP0U/MOFIyaSXkQe6sPJ
+ oYIQH71XPr2lDNtRXhla6jFSxzhDqpL6yBF9lGUaDTXIS451CZdyYEjc+b7WclQdQssf
+ yM3w8BlHCvIKOd1/Fd9eMEyb+nf1PRubDgU+ZqHKB9JNCcgt8FHfjMF83cxL0WzHeR9e
+ WN8A==
+X-Gm-Message-State: AFuF++kBrZnps+FDAPVl/Gfm5+GBSFlHN4i1xUmHYvhaFTV2xWdX76DR
+ TVoM4NVoTvl6QsQ52z/wuBZKj3NkHJyipax0dz+pMlhDMFi/ZN+HDz00Jj+Mpw==
+X-Gm-Gg: AYBFou0go6ueA1hCgJ4medaFmBHIAGkucgmk1YkDjbvO0TmQuH3ShY1ez+0uy2ZLSah
+ N160RSPQVpfxv1d0qp+MTnvsQN7qqDiErMAs/aAZg1j8R9LJ01rcR3MpMELfS2YSXW3XEvsfXM9
+ DZPHqlD1ayFhBRSZsibCt/a/gaQGIbUqD4hNSe3VRhEBQC+RzcvRbZvhwi18VAGSScn7Tf5emr8
+ GvErAKv1zWznKqdLDC0s5eHL07EG3ee0KOetgastpGMtgBrNivl+/VWa0DpHyroXcAK7LczTQxC
+ rSmvtBINd0zqrrVDBNaANYcMyXTUXDkfNwYchU5AdLkO5NVfgV62ghHVNAuZTQpucZ3Lk6uT57g
+ 9iAGwTBt0P0IxmwBwDeS/A2e7Eob/voRdIQbMEJfMlCHIO1HKe4TdKDw9zxUXNUsOuLXBHo+xZg
+ QETUXuKnwXKK4ms1vjTtd0wtIWqB5u9gAaVqOz6lW3/NKQ6j0xTxzNi6IrhETtMbZNApCfDwjut
+ GMkWjc4CEJ2tw7LyINEYvnqqyNxVr3stTbPF+hypF7EGvzvK05FoCgHEbKeh5HSmFG6YbRg0DvK
+ fIk=
+X-Received: by 2002:a05:600c:34d0:b0:49c:eb16:9fd with SMTP id
+ 5b1f17b1804b1-49fc5671650mr169292315e9.3.1790027247683; 
+ Mon, 21 Sep 2026 14:47:27 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.32
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:33 -0700 (PDT)
+ Mon, 21 Sep 2026 14:47:27 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,11 +78,10 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 05/42] docs,
- tests/functional: Drop redundant CLI arguments in imx8m*-evk
- invocations
-Date: Mon, 21 Sep 2026 23:46:33 +0200
-Message-ID: <20260921214710.29422-6-shentey@gmail.com>
+Subject: [PATCH 01/42] hw/watchdog/wdt_imx2: Fix handling of write-once WCR
+ bits
+Date: Mon, 21 Sep 2026 23:46:29 +0200
+Message-ID: <20260921214710.29422-2-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
@@ -112,60 +111,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both boards provide defaults matching real hardware. No need to ask
-users to repeat these. Also, remove these redundant arguments from the
-functional tests such that the defaults get tested.
+Guests such as u-boot may experience inadvertant reboots when configuring
+the WCR register. Apparently there is a typo in the WCR locked bits
+handling: The locked values for s->wcr must come from itself rather than
+from s->wicr. While at it remove the redundant locked attributes for the
+bits which stick to one once written with one.
 
+Note that removing the locked attributes required a migration break. Defer
+that to a subsequent patch to help backporting.
+
+Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog
+support")
+cc: qemu-stable
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- docs/system/arm/imx8m.rst                   | 2 +-
- tests/functional/aarch64/test_imx8mm_evk.py | 4 +---
- tests/functional/aarch64/test_imx8mp_evk.py | 4 +---
- 3 files changed, 3 insertions(+), 7 deletions(-)
+ hw/watchdog/wdt_imx2.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/docs/system/arm/imx8m.rst b/docs/system/arm/imx8m.rst
-index 1bcb8255be..5348757089 100644
---- a/docs/system/arm/imx8m.rst
-+++ b/docs/system/arm/imx8m.rst
-@@ -79,7 +79,7 @@ For i.MX 8M Mini EVK:
+diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+index c83d4107c1..aaf4695db2 100644
+--- a/hw/watchdog/wdt_imx2.c
++++ b/hw/watchdog/wdt_imx2.c
+@@ -59,9 +59,8 @@ static void imx2_wdt_reset(DeviceState *dev)
  
- .. code-block:: bash
+     s->wicr_locked = false;
+     s->wcr_locked = false;
+-    s->wcr_wde_locked = false;
  
--  $ qemu-system-aarch64 -M imx8mm-evk -smp 4 -m 2G \
-+  $ qemu-system-aarch64 -M imx8mm-evk \
-       -display none -serial null -serial stdio \
-       -kernel Image \
-       -dtb imx8mm-evk.dtb \
-diff --git a/tests/functional/aarch64/test_imx8mm_evk.py b/tests/functional/aarch64/test_imx8mm_evk.py
-index 86725991f1..73d286167c 100755
---- a/tests/functional/aarch64/test_imx8mm_evk.py
-+++ b/tests/functional/aarch64/test_imx8mm_evk.py
-@@ -52,9 +52,7 @@ def test_aarch64_imx8mm_evk_usdhc(self):
-         self.require_accelerator("tcg")
-         self.set_machine('imx8mm-evk')
-         self.vm.set_console(console_index=1)
--        self.vm.add_args('-m', '2G',
--                         '-smp', '4',
--                         '-kernel', self.kernel_path,
-+        self.vm.add_args('-kernel', self.kernel_path,
-                          '-initrd', self.initrd_path,
-                          '-dtb', self.dtb_path,
-                          '-append', 'root=/dev/mmcblk2p1',
-diff --git a/tests/functional/aarch64/test_imx8mp_evk.py b/tests/functional/aarch64/test_imx8mp_evk.py
-index 99ddcdef83..2ec421c326 100755
---- a/tests/functional/aarch64/test_imx8mp_evk.py
-+++ b/tests/functional/aarch64/test_imx8mp_evk.py
-@@ -52,9 +52,7 @@ def test_aarch64_imx8mp_evk_usdhc(self):
-         self.require_accelerator("tcg")
-         self.set_machine('imx8mp-evk')
-         self.vm.set_console(console_index=1)
--        self.vm.add_args('-m', '2G',
--                         '-smp', '4',
--                         '-kernel', self.kernel_path,
-+        self.vm.add_args('-kernel', self.kernel_path,
-                          '-initrd', self.initrd_path,
-                          '-dtb', self.dtb_path,
-                          '-append', 'root=/dev/mmcblk2p1',
+-    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
++    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS | (s->wcr & IMX2_WDT_WCR_WDT);
+     s->wsr = 0;
+     s->wrsr &= ~(IMX2_WDT_WRSR_TOUT | IMX2_WDT_WRSR_SFTW);
+     s->wicr = IMX2_WDT_WICR_WICT_DEF;
+@@ -156,23 +155,11 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+     case IMX2_WDT_WCR:
+         if (s->wcr_locked) {
+             value &= ~IMX2_WDT_WCR_LOCK_MASK;
+-            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
++            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
+         }
+         s->wcr_locked = true;
+-        if (s->wcr_wde_locked) {
+-            value &= ~IMX2_WDT_WCR_WDE;
+-            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
+-        } else if (value & IMX2_WDT_WCR_WDE) {
+-            s->wcr_wde_locked = true;
+-        }
+-        if (s->wcr_wdt_locked) {
+-            value &= ~IMX2_WDT_WCR_WDT;
+-            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
+-        } else if (value & IMX2_WDT_WCR_WDT) {
+-            s->wcr_wdt_locked = true;
+-        }
+ 
+-        s->wcr = value;
++        s->wcr = value | (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
+         if (!(value & IMX2_WDT_WCR_SRS)) {
+             s->wrsr = IMX2_WDT_WRSR_SFTW;
+         }
 -- 
 2.55.0
 
