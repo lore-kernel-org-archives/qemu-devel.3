@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BB8C982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C017C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f2W-0004IU-29; Mon, 21 Sep 2026 10:30:40 -0400
+	id 1x8fLx-0002cp-Lv; Mon, 21 Sep 2026 10:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f1B-00025k-Fz; Mon, 21 Sep 2026 10:29:17 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x8fLm-0002ah-03
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:50:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f19-0000Oc-Gi; Mon, 21 Sep 2026 10:29:17 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id A713443C24;
- Mon, 21 Sep 2026 14:29:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1CF1F00893;
- Mon, 21 Sep 2026 14:29:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790000953;
- bh=9eUY+qoiMmI8f2wHw9jfnOrmp7TtMNfsRoJm1rEUDHQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Qlkq0qro4cW87Q1xh7Kc2t8MazZPrBP0SsQmjoZTTOLzMj8why1jICVcFo3zYrgAM
- HLwTSUanZaNSSdsN1M8YmL5xmpS4Lalx5mkr+VpkF7eHlg4mQNRyYoOo8XiEarQWAL
- nt1EeyvwXb0/BvMm/wtJyUWL2vjlgOIBZZg2ju2EkHj8Fo75ksv3zWzh4cnY3n3fvi
- oeXddvmLbIwHQtXBKsxIthI9tWPOpPVaqHKIKLgPM4WvpFwoYGDRI3NAvj+exLTv7G
- tgJCxbZXbMH6zj0OmXdNM6TQcS+F2l1hFWfPjBn7+4lQwF8/IaG66NBJFwHZbojfS6
- zYaHWqAxa4HRQ==
-From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>
-Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
- Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v6 14/15] file-posix: reject a zone append to a full or
- conventional zone
-Date: Mon, 21 Sep 2026 16:28:16 +0200
-Message-ID: <20260921142819.2916043-15-cassel@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260921142819.2916043-1-cassel@kernel.org>
-References: <20260921142819.2916043-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x8fLf-0002ju-JJ
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:50:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790002226;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=k8STZDtJX9UCZzAYVpoBReVORpfEdG9dzLI8F6Gx1Bw=;
+ b=VNYxAAkMrn5iopVCoowtCHHWe6eeNffl721JLdH1V0uvk/FRU5d8nfEse3H75zdCoSjvHF
+ JYysZ1MieVFkqF+Kf8Vm8zhMdwpMwLIc22F+CeTB5zAGgPYSjl2YQpX1dy4vPz7K+SpmhE
+ mUOCA63MXHMHrMV7SRuFt0LTPzV+0zs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-DsBjqwFFNC2tFZ9WNb59sQ-1; Mon,
+ 21 Sep 2026 10:50:21 -0400
+X-MC-Unique: DsBjqwFFNC2tFZ9WNb59sQ-1
+X-Mimecast-MFC-AGG-ID: DsBjqwFFNC2tFZ9WNb59sQ_1790002218
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C8C91828B19; Mon, 21 Sep 2026 14:50:17 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F2EE180057F; Mon, 21 Sep 2026 14:50:11 +0000 (UTC)
+Date: Mon, 21 Sep 2026 15:50:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>, Weiwei Li <liwei1518@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Stafford Horne <shorne@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <17746591750@163.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bibo Mao <maobibo@loongson.cn>, Chao Liu <chao.liu@processmission.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Max Filippov <jcmvbkbc@gmail.com>
+Subject: Re: [PATCH 1/8] machine: allow -M name to differ from QOM type
+Message-ID: <arFEIHf5YtRHP10c@redhat.com>
+References: <20260918000640.1001-1-luoyonggang@gmail.com>
+ <20260918000640.1001-2-luoyonggang@gmail.com>
+ <arE85G8MqlxMQQ7B@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+In-Reply-To: <arE85G8MqlxMQQ7B@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,120 +101,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raw_co_prw() replaces the offset of a zone append with the write pointer
-of the addressed zone, which assumes that the stored value names a
-position inside that zone. It does not in two cases.
+On Mon, Sep 21, 2026 at 03:19:16PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Sep 18, 2026 at 08:06:32AM +0800, Yonggang Luo wrote:
+> > - Add machine_class_set_name() so boards can keep a stable -M name
+> >   when the QOM type is uniquified. machine_class_base_init still
+> >   defaults the name to the QOM type without -machine.
+> > - Document that MachineClass::name is the -M name, not the QOM type.
+> > - Sort -M help by MachineClass::name so order matches the printed names
+> >   when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
+> > 
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >  hw/core/machine.c        |  6 ++++++
+> >  include/hw/core/boards.h | 12 +++++++++++-
+> >  system/vl.c              |  8 +++-----
+> >  3 files changed, 20 insertions(+), 6 deletions(-)
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-A full zone has its write pointer recorded at the end of the zone, since
-get_zones_wp() stores start + len for BLK_ZONE_COND_FULL. That is the
-first sector of the following zone, so the append is submitted there. The
-kernel accepts it whenever that zone is empty, because it is a legal
-write at its write pointer, and the completion path advances the wrong
-zone because it recomputes the zone index from the replaced offset. The
-data is written to a zone that was never addressed and success is
-returned:
+When I apply this series and test libvirt, libvirt crashes because
+it sees a machine name "virt-11.1" and then to introspect it, it
+calls
 
-  zone 2 finished, then a 4 KiB append to zone 2:
-  After zap done, the append sector is 0x180000     <- zone 3
-  zone 2: wptr 0x180000, zcond:14 (full)
-  zone 3: wptr 0x180008                             <- advanced
+  qom-list-properties type=virt-11.1-machine
 
-A conventional zone has no write pointer at all, and its array entry
-carries only the type marker in the top bit, so the offset becomes
-negative and the write fails with EINVAL. That is harmless but it reports
-nothing about the actual mistake.
+this doesn't work as the actual type name is
 
-Reject both while the write pointer lock is held, since the state has to
-be read and acted on atomically. check_zoned_request() in virtio-blk
-refuses an append to a conventional zone, so that case needs a caller
-that goes to the driver directly, but nothing there examines whether a
-zone is full, so a guest can reach the misdirected write.
+  qom-list-properties type=arm-virt-11.1-machine
 
-Fixes: 4751d09adcc3 ("block: introduce zone append write for zoned devices")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- block/file-posix.c       | 23 ++++++++++++++++++++++-
- block/io.c               |  9 +++++++++
- include/block/block-io.h |  6 ++++++
- 3 files changed, 37 insertions(+), 1 deletion(-)
+The problem we put ourselves in here is that 'query-machines' only
+returns the machine name, and not the typename, so mgmt apps have
+to infer that    typename==$machinename + "-machine".
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index e1e6a03b25..cd3c9f0fd0 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2555,7 +2555,28 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
-         bs->bl.zoned != BLK_Z_NONE) {
-         qemu_co_mutex_lock(&bs->wps->colock);
-         if (type & QEMU_AIO_ZONE_APPEND) {
--            int index = bdrv_zone_index(bs, offset);
-+            uint32_t index = bdrv_zone_index(bs, offset);
-+
-+            /*
-+             * The write pointer of the addressed zone becomes the offset of
-+             * the write, so it has to name a position inside that zone. A
-+             * conventional zone has no write pointer, and the pointer of a
-+             * full zone is reported at the end of the zone. Either would send
-+             * the data to a zone that was never addressed.
-+             */
-+            if (bdrv_zone_is_conv(bs, index)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "conventional zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -EINVAL;
-+            }
-+            if (bdrv_zone_is_full(bs, index)) {
-+                error_report("zone append at offset 0x%" PRIx64 " addresses a "
-+                             "full zone", offset);
-+                qemu_co_mutex_unlock(&bs->wps->colock);
-+                return -ENOSPC;
-+            }
-+
-             offset = bs->wps->wp[index];
-         }
-     }
-diff --git a/block/io.c b/block/io.c
-index d7c403bc08..a4fb56f799 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3402,6 +3402,15 @@ bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index)
-     return BDRV_ZT_IS_CONV(bs->wps->wp[index]);
- }
- 
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index)
-+{
-+    uint64_t zone_end = MIN((uint64_t)(index + 1) * bs->bl.zone_size,
-+                            (uint64_t)bs->total_sectors << BDRV_SECTOR_BITS);
-+    IO_CODE();
-+
-+    return bs->wps->wp[index] >= zone_end;
-+}
-+
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
- {
-     IO_CODE();
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index e469df7061..f671476f08 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -134,6 +134,12 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
-  * bdrv_zone_is_full() this does not need the write pointer lock.
-  */
- bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index);
-+/*
-+ * True when the write pointer of a zone has reached the end of the writable
-+ * part of that zone, so that nothing more can be written to it until it is
-+ * reset. The write pointer lock must be held when called.
-+ */
-+bool bdrv_zone_is_full(BlockDriverState *bs, uint32_t index);
- 
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
- 
+Libvirt shouldn't crash of course and the fix for the crash it
+"easy", but when fixing it, then libvirt simply won't be able to
+introspect the machine, as it doesn't name the naming convention to
+get the typename out.
+
+
+I think we probably need to extend 'query-machines' so that it
+includes a @typename field, so mgmt apps don't have to make the
+bad assumptions about naming conventions for types.
+
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
