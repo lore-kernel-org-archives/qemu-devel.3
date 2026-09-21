@@ -4,113 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441B8C982E1
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1149EC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f1F-00024u-7V; Mon, 21 Sep 2026 10:29:23 -0400
+	id 1x8f1s-0002Nt-44; Mon, 21 Sep 2026 10:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8f0h-0001v7-AB
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:28:53 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8f0c-00006K-Og
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:28:46 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 45DD021CD2;
- Mon, 21 Sep 2026 14:28:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790000915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
- b=CiyOxa5QdghbnKyJLPEDzZ6qWXCyDuqJpgJjJjkGr1l27cGkIYUrtjmRrk++/CQxCxrdc2
- nwGgvE+v+rUNO8fC1atq1w+jNpBNcYfsKHz0LHoLiJ/aLbJnyub5jlP+wPR1JmvZ+ZCTyg
- QnXbrm45qgWHjNj1GHeHqpc3qOuB1LY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790000915;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
- b=6m8jJkWtI8rJtc3nFrgudbsTyEHcHszG8OjP8ccXgitEVG9jKbkqHqMTWsi43u1VDPwqCi
- NQLZxjGagZSjnqDQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790000911; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
- b=vyq0fva9k1sY/BohGwJQxfuZbFI7Tk261ahUXUJVPQ3aEopJeXZUO8P9QHjUHW36EgsWfZ
- X6ZwnYO153KpIK60A6Ab/8QnbYIXUtT+rPyohXtgD0siimf70uDFKZp4p2cT9DBKptCYQg
- LhKJ7E63p2Q9Ov7k7UcG7dpjRkDsees=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790000911;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
- b=OMK8+OkfpM4HcVVAL8axJkgamXaqlD0PnH4z3vimIFG11Mv3/uu2w6Jl+yrVgjL1WjoFxU
- i5rq0t2bSNTZs6Aw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9BBEA1368D;
- Mon, 21 Sep 2026 14:28:30 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id VNlyEA4/sWqPQQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 21 Sep 2026 14:28:30 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Peter Xu
- <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, Kevin Wolf
- <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH] meson: Fix meson suites invocation from make check
-In-Reply-To: <arEMa6GTGGdIC1rZ@redhat.com>
-References: <20260918203153.3874488-1-farosas@suse.de>
- <arEMa6GTGGdIC1rZ@redhat.com>
-Date: Mon, 21 Sep 2026 11:28:24 -0300
-Message-ID: <874ifismpj.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x8f0k-0001vn-RF; Mon, 21 Sep 2026 10:28:53 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1x8f0h-00007M-7s; Mon, 21 Sep 2026 10:28:50 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id C036760120;
+ Mon, 21 Sep 2026 14:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416751F000FF;
+ Mon, 21 Sep 2026 14:28:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1790000924;
+ bh=0TseXxKZ6YAMQgEAEJHSB6EEf6dzHi76syAM7LVVolc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=E7FMqybQDJdZbkUnaKo+NXF3fjZ4EiZcw86OhzfIPYRBuCdDXFNt5iEUDCseAmzvu
+ mOxgiuQgDy/VOg3VOjN9Le2YzxVheE4Ac+gOAzYDjfxPLDD5HZ3d09Midm9BJ67ZpC
+ JJ3jfzcXqvPMzSx/9uSVuA/61PeYuyYLZYfZ12n5MuRha3zkOpHunt7XYk1Aq87OaS
+ KY2ulMqkJA9/4Sw2l6Q/iddZoqZ/kUz8UlKUJs5ZDl50VfLGs+RsJq0nWo2BV7QDYl
+ R+uCNuOcZJnNSUrWTjju4XgOqtBTlONnYGEg6ogKCIUbR3v2zm00O92qwo1TMyqzxF
+ b1NjA527jdnVg==
+From: Niklas Cassel <cassel@kernel.org>
+To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
+ Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 03/15] block: add a helper for the index of the zone an
+ offset falls in
+Date: Mon, 21 Sep 2026 16:28:05 +0200
+Message-ID: <20260921142819.2916043-4-cassel@kernel.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260921142819.2916043-1-cassel@kernel.org>
+References: <20260921142819.2916043-1-cassel@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[14]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[mtest2make.py:url, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, meson.build:url]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,91 +72,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Deriving the zone that an offset belongs to is open coded in five places,
+in two files, as a division of the offset by BlockLimits.zone_size.
 
-> On 18/09/2026 22.31, Fabiano Rosas wrote:
->> make check is currently by default running tests tagged
->> "slow".=20
-> That's a regression, it did not used to be that way. Thus could you pleas=
-e=20
-> add a "Fixes:" tag to your patch?
->
+The zone size of a zoned device is always a power of two. Linux requires
+that of every zoned device it accepts, in blk_revalidate_disk_zones() and
+in each of the drivers that report one, and qcow2 rejects an image whose
+header says otherwise. So the division is a shift, and the shift is worth
+deriving once rather than at every use: record it in BlockLimits as
+zone_size_bits, next to the size it comes from, and assert the property
+that it relies on where it is computed.
 
-So, in a sense, it's this commit:
+Add bdrv_zone_index() and use it. No functional change; the count of zones
+that a management operation spans stays a division, since it is a length
+rather than an offset.
 
-  f4b2607228 ("tests: tag slow tests with 'slow' suite for easy filtering").
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ block/file-posix.c               |  8 ++++----
+ block/io.c                       | 12 ++++++++++++
+ hw/block/virtio-blk.c            |  2 +-
+ include/block/block-io.h         |  2 ++
+ include/block/block_int-common.h |  7 +++++++
+ 5 files changed, 26 insertions(+), 5 deletions(-)
 
-It added some qtests to the 'slow' suite. But the problem actually has
-always existed, it's just that we usually put tests not only the 'slow'
-suite but also some 'foo-slow'. The mtest2make.py script then omits the
-'slow' suite...
-
-  def process_tests(test, targets, suites):
-              ...
-              if s =3D=3D 'slow' or s =3D=3D 'thorough':
-                  continue
-
-...while the filtering omits the foo-slow:
-
-  .speed.quick =3D $(foreach s,$(sort $(filter-out %-slow %-thorough,
-  $1)), --suite $s)
-
-But using the 'exclude_suites' in the main meson.build never did
-anything. So the 'slow' suite is actually useless aside from the fact
-that it carries the environment variables along.
-
-
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Fri, Sep 18, 2026 at 05:31:52PM -0300, Fabiano Rosas wrote:
->> make check is currently by default running tests tagged
->> "slow". Running make check with no SPEED variable set should be
->> equivalent to SPEED=3Dquick and run the meson 'quick' test setup, which
->> explicitly excludes slow tests:
->
-> Can you give an example of some tests that you think should not
-> be running.
->
-
-Sorry, I could have worded this patch a bit better. I'm aiming
-specifically at the (presumed) assumption that 'excluded_suites' in
-meson.build is sufficient to stop a test from running if that test is in
-one of the suites listed there.
-
-For instance, all tests listed in the tests/qtest/meson.build
-'slow_qtests' variable are affected:
-
-$ ../configure
---target-list=3Dx86_64-softmmu,i386-softmmu,x86_64-linux-user,aarch64-softm=
-mu,arm-softmmu,ppc64-softmmu,ppc-softmmu,s390x-softmmu,riscv64-softmmu,aarc=
-h64-linux-user,mips64-softmmu,loongarch64-softmmu
---enable-plugins --enable-modules --enable-werror --enable-debug
---disable-docs --enable-slirp --disable-containers
-
-$ make -j$(nproc) check | grep "+slow"
- 1/1100 qemu:qtest+qtest-s390x+slow / qtest-s390x/qom-test
- 2/1100 qemu:qtest+qtest-mips64+slow / qtest-mips64/qom-test
- 3/1100 qemu:qtest+qtest-loongarch64+slow / qtest-loongarch64/qom-test
- 4/1100 qemu:qtest+qtest-i386+slow / qtest-i386/qom-test
- <plus a bunch>
-
-> I just run 'make check' and looked at two examples
->
-> tests/unit/test-crypto-pbkdf.c  skips registering some tests
-> unless "SPEED=3Dslow" and that correctly skipped them.
->
-> tests/qemu-iotests/meson.build skips running 'raw' format tests
-> unless SPEED=3Dslow, and that appears to be correctly working,
-> only running qcow2 format tests by default.
->
-
-Right, make SPEED=3Dspeed check works in the sense that:
-
-1) it sets the SPEED properly
-2) it excludes 'foo-slow' and 'slow' tests ("manually" via mtest2make.py)
-
-however,
-
-3) it does not exclude _the same test_ if it's part of another suite.
+diff --git a/block/file-posix.c b/block/file-posix.c
+index c0d6ee30e4..00323f7a9f 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1359,7 +1359,7 @@ static int get_zones_wp(BlockDriverState *bs, int fd, int64_t offset,
+     size_t rep_size;
+     uint64_t sector = offset >> BDRV_SECTOR_BITS;
+     BlockZoneWps *wps = bs->wps;
+-    unsigned int j = offset / bs->bl.zone_size;
++    unsigned int j = bdrv_zone_index(bs, offset);
+     unsigned int n = 0, i = 0;
+     int ret;
+     rep_size = sizeof(struct blk_zone_report) + nrz * sizeof(struct blk_zone);
+@@ -2560,7 +2560,7 @@ raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr, uint64_t bytes,
+         bs->bl.zoned != BLK_Z_NONE) {
+         qemu_co_mutex_lock(&bs->wps->colock);
+         if (type & QEMU_AIO_ZONE_APPEND) {
+-            int index = offset / bs->bl.zone_size;
++            int index = bdrv_zone_index(bs, offset);
+             offset = bs->wps->wp[index];
+         }
+     }
+@@ -2615,7 +2615,7 @@ out:
+         bs->bl.zoned != BLK_Z_NONE) {
+         BlockZoneWps *wps = bs->wps;
+         if (ret == 0) {
+-            uint64_t *wp = &wps->wp[offset / bs->bl.zone_size];
++            uint64_t *wp = &wps->wp[bdrv_zone_index(bs, offset)];
+             if (!BDRV_ZT_IS_CONV(*wp)) {
+                 if (type & QEMU_AIO_ZONE_APPEND) {
+                     *offset_ptr = *wp;
+@@ -3513,7 +3513,7 @@ static int coroutine_fn raw_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
+         return -EINVAL;
+     }
+ 
+-    uint32_t i = offset / bs->bl.zone_size;
++    uint32_t i = bdrv_zone_index(bs, offset);
+     uint32_t nrz = len / bs->bl.zone_size;
+     uint64_t *wp = &wps->wp[i];
+     if (BDRV_ZT_IS_CONV(*wp) && len != capacity) {
+diff --git a/block/io.c b/block/io.c
+index a916b236c3..cef23ee5bc 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -227,6 +227,11 @@ void bdrv_refresh_limits(BlockDriverState *bs, Transaction *tran, Error **errp)
+         }
+     }
+ 
++    if (bs->bl.zone_size) {
++        assert(is_power_of_2(bs->bl.zone_size));
++        bs->bl.zone_size_bits = ctz64(bs->bl.zone_size);
++    }
++
+     if (bs->bl.request_alignment > BDRV_MAX_ALIGNMENT) {
+         error_setg(errp, "Driver requires too large request alignment");
+     }
+@@ -3361,6 +3366,13 @@ out:
+     return co.ret;
+ }
+ 
++uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
++{
++    IO_CODE();
++
++    return offset >> bs->bl.zone_size_bits;
++}
++
+ void *qemu_blockalign(BlockDriverState *bs, size_t size)
+ {
+     IO_CODE();
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 1b93364b24..6e4a7a4076 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -523,7 +523,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+             }
+         }
+ 
+-        index = offset / bs->bl.zone_size;
++        index = bdrv_zone_index(bs, offset);
+         if (BDRV_ZT_IS_CONV(bs->wps->wp[index])) {
+             *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
+             return false;
+diff --git a/include/block/block-io.h b/include/block/block-io.h
+index d34d846bb2..9d1c0eb7fb 100644
+--- a/include/block/block-io.h
++++ b/include/block/block-io.h
+@@ -126,6 +126,8 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
+                                                   int64_t *offset,
+                                                   QEMUIOVector *qiov,
+                                                   BdrvRequestFlags flags);
++/* The index of the zone that @offset falls in. */
++uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
+ 
+ bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
+ 
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 7571ed9968..82aa0c1a6e 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -903,6 +903,13 @@ typedef struct BlockLimits {
+     /* zone size expressed in bytes */
+     uint64_t zone_size;
+ 
++    /*
++     * log2 of zone_size, derived by bdrv_refresh_limits(). A zoned device
++     * always has a zone size that is a power of two, so the zone an offset
++     * falls in is a shift rather than a division. See bdrv_zone_index().
++     */
++    uint32_t zone_size_bits;
++
+     /* total number of zones */
+     uint32_t nr_zones;
+ 
+-- 
+2.55.0
 
 
