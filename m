@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D8CC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08913C982E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f2A-0002jf-FJ; Mon, 21 Sep 2026 10:30:18 -0400
+	id 1x8f2X-0004QW-VV; Mon, 21 Sep 2026 10:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0l-0001vu-Vq; Mon, 21 Sep 2026 10:28:55 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1x8f1D-00026m-Ao; Mon, 21 Sep 2026 10:29:21 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0j-00007k-5s; Mon, 21 Sep 2026 10:28:51 -0400
+ id 1x8f1B-0000T2-HS; Mon, 21 Sep 2026 10:29:19 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 65C9A43583;
- Mon, 21 Sep 2026 14:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FED41F000FF;
- Mon, 21 Sep 2026 14:28:44 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6BF9F600C8;
+ Mon, 21 Sep 2026 14:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5921F000FF;
+ Mon, 21 Sep 2026 14:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790000927;
- bh=PTZ+yrhR+/MJNKDSkwD+F+glze+MmD3SwdgrHQBQnJY=;
+ s=k20260515; t=1790000956;
+ bh=wkePXI2ZAhs57urNC3Xrzyj8N64ULkLTlQbeBh3xUWk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=K48At27Dad9lwj18HOVAIVwiNc+RQtvLkLX/NCVvKMV1KzHA4kNOY/4IfqhSfTXrl
- c2ARDgZscliOcmFp9t8bLJtXtS5rp5jveKcxIeNRnmIEP8xWn4THwYeFYtfLklDRXr
- w72xsx+dj1+LLTMSgx8KO9V4vAMCHd+nrhH+WRPNzK0KmoHF6+2oXkeLzQQfZ+uaxO
- Lu73NN2HoR/0+JdKnn+W4B4BS6sgeFSZThAhnKiAENr2fII1R7mJC/baTCBmgK8fZx
- +W77x2SOUoCOWHH8R4YFkCHslrXmFbB9CdlS8kBVqJJ7RGUMxhDkMXl614dzaOm1s2
- L2dB/UoBntPkw==
+ b=htW1jAUEvr6LWaEvGpkzZOyapKB+uQFs5VwOem2hqbhIdL2N8e9QXG6tp8ouBiIpF
+ 69evputjUSfuQkQzYybwDJYLKjFsfHa8TwjI+WIJN4HxIvTHJKqvhx5M4JIPiHZhuH
+ KKlEMUhRLqmfWJlOoaCi+EiXdNphCdzS+h+1GTvS5RupqEzmF2HlKDdbNEvPPWtsAY
+ TFV96tWy6mWK/2BeZV5aUl4OH1cl2eXuq2uvhAi77C7ZlkINx+seyWNDSqUnqjFXwQ
+ +uU+Qt7Trx8tKY52DB5VngweQwd/fc2TbSnqUrveohKHeywTc0vdiUIbM9zRhLd1Uu
+ EqN2eXLAcsg/g==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v6 04/15] block: add a helper to check if a zone is
- conventional
-Date: Mon, 21 Sep 2026 16:28:06 +0200
-Message-ID: <20260921142819.2916043-5-cassel@kernel.org>
+Subject: [PATCH v6 15/15] block: do not use CoroutineIOCompletion to hold a
+ return value
+Date: Mon, 21 Sep 2026 16:28:17 +0200
+Message-ID: <20260921142819.2916043-16-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921142819.2916043-1-cassel@kernel.org>
 References: <20260921142819.2916043-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,77 +71,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Whether a zone is conventional is encoded in the most significant bit of
-the write pointer that the block layer keeps for it, so a caller that
-wants to know has to reach into bs->wps->wp[] and apply BDRV_ZT_IS_CONV()
-to the raw value. virtio-blk does that, which means a device model both
-knows how a block driver stores its write pointers and knows what one of
-the bits of a write pointer means.
+bdrv_co_zone_report(), bdrv_co_zone_mgmt() and bdrv_co_zone_append() each
+declare a CoroutineIOCompletion in order to use its ret field, and never
+touch the coroutine field that the rest of the structure exists for.
 
-Add an accessor next to bdrv_zone_index() and use it there, so that the
-encoding stays with the code that chose it.
+That structure is for a request which completes through
+bdrv_co_io_em_complete(), where the callback has to store the result
+somewhere and wake the coroutine that is waiting for it. These three call
+into the driver directly and are already running in the coroutine that
+wants the result, so there is nothing to wake and nowhere else for the
+value to live.
 
-Unlike bdrv_zone_is_full(), this does not need the write pointer lock.
-get_zones_wp() only ever sets the bit for a conventional zone and never
-clears it, and a zone does not change type, so the answer cannot become
-stale. The rest of the word does change, on every write, which is what
-the lock is there for.
+Use a plain int. bdrv_co_zone_append() already has one.
 
+Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/io.c               | 7 +++++++
- hw/block/virtio-blk.c    | 2 +-
- include/block/block-io.h | 6 ++++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ block/io.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
 diff --git a/block/io.c b/block/io.c
-index cef23ee5bc..da61e641ac 100644
+index a4fb56f799..c62c3764d3 100644
 --- a/block/io.c
 +++ b/block/io.c
-@@ -3373,6 +3373,13 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
-     return offset >> bs->bl.zone_size_bits;
+@@ -3303,40 +3303,36 @@ int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offset,
+                         BlockZoneDescriptor *zones)
+ {
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
++    int ret;
+     IO_CODE();
+ 
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_report || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
++    ret = drv->bdrv_co_zone_report(bs, offset, nr_zones, zones);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
  }
  
-+bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index)
-+{
-+    IO_CODE();
-+
-+    return BDRV_ZT_IS_CONV(bs->wps->wp[index]);
-+}
-+
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
+ int coroutine_fn bdrv_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
+         int64_t offset, int64_t len)
  {
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
++    int ret;
      IO_CODE();
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 6e4a7a4076..dd69d81532 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -524,7 +524,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-         }
  
-         index = bdrv_zone_index(bs, offset);
--        if (BDRV_ZT_IS_CONV(bs->wps->wp[index])) {
-+        if (bdrv_zone_is_conv(bs, index)) {
-             *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-             return false;
-         }
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 9d1c0eb7fb..e469df7061 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -128,6 +128,12 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
-                                                   BdrvRequestFlags flags);
- /* The index of the zone that @offset falls in. */
- uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
-+/*
-+ * True if the zone at @index is a conventional zone, which can be written
-+ * anywhere in any order. The type of a zone does not change, so unlike
-+ * bdrv_zone_is_full() this does not need the write pointer lock.
-+ */
-+bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index);
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_mgmt || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
++    ret = drv->bdrv_co_zone_mgmt(bs, op, offset, len);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
+ }
  
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
+ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+@@ -3345,9 +3341,6 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+ {
+     int ret;
+     BlockDriver *drv = bs->drv;
+-    CoroutineIOCompletion co = {
+-            .coroutine = qemu_coroutine_self(),
+-    };
+     IO_CODE();
  
+     ret = bdrv_check_qiov_request(*offset, qiov->size, qiov, 0, NULL);
+@@ -3379,13 +3372,13 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
+ 
+     bdrv_inc_in_flight(bs);
+     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
+-        co.ret = -ENOTSUP;
++        ret = -ENOTSUP;
+         goto out;
+     }
+-    co.ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
++    ret = drv->bdrv_co_zone_append(bs, offset, qiov, flags);
+ out:
+     bdrv_dec_in_flight(bs);
+-    return co.ret;
++    return ret;
+ }
+ 
+ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
 -- 
 2.55.0
 
