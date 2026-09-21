@@ -4,148 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9198C982DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 09:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE59C982E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 10:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8agh-00056A-S2; Mon, 21 Sep 2026 05:51:51 -0400
+	id 1x8av6-0007IK-4r; Mon, 21 Sep 2026 06:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8agg-00055e-Gj
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 05:51:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8agf-0007Qz-2m
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 05:51:50 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68L8aNRs4146586
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 09:51:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- PSlMyHhWFrEhvJ5vne6Rj2f5NzUBG1S8FtzVxfY15aE=; b=WfmsD4qt/LDRHv8E
- TuwUGqlCheItGpgr5eU7rVoqaFDNQT7Ruw/of+x/5Ci73qen43cKQWZfQ6LjqxY4
- PdtzlNxQEQdjwjFBWbQJ4cevvlXYXi3dyCAVfoQ+iDmVY6lHJBLgjYq5rvNMqJoQ
- ky/GOGuYK/rc4AviGlP+KQ0JVOeZm3NzqCbQ+/UyXiq+/y35e9QWGVtpkdx03/e3
- gN/ycagy3RgKJid5/syxp+Y4hw/JymTrpKKNCpFbc2yTIPMJYFJg0gvybkvAYtXJ
- +l6cY0A1EAFHT3PLNA29GAmK+9pwlKiV46lloEPQLdV9c/Fyh+4zE5wlGvXZP/z6
- tC8XFA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gu17grath-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 09:51:47 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93a00c70d28so462576485a.0
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 02:51:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8av3-0007Hs-MD
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:06:41 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8av1-00016b-4C
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:06:41 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ d2e1a72fcca58-85469d249c4so2454782b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 03:06:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789985197; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g8IuOBvaK5SLV/HM0ro6xgeN01wsYAIHLBX8f1pY+YC7wD4xyri66BfqgeRbMrseIN
+ 7RR1y1ERlz1ONROynQdANGs1eHWyB0EKNcMWqhHCpDW+YFmFOpXez+ey+h2mr3q4gPpr
+ PpH76Eu8mpDIPgEkOsIHmb4vB/dAL1McrCdM1GYVZrT4Endnvc6wINvcQmkhhaJDjTZu
+ rE+V5gRx5wbAMrOPaWz5w0xgrD/NKTrlZtzrNWFNZ94yR+gZ2y+0dYBo1MBzTaxGtsbt
+ 419GgM/fiAiyCCDbBwG2gpC2ptR2VlcJ0V2e4WAcecAE6KaIX+PmB4fl5uxd3uPASI3l
+ vGJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=aKzi0k0CEruH+G5VSV9XiTbq/C3mWT7OmGv958n+p8o=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=rrJ9P+jg8MylzK4hJJQY4yAkVPjjPETH2XJ6W1uTJtz4jQi/bD/I33TsWXnYmhmIjY
+ 85jrYkGybvBceKqTKTtkN7HVaQS6rE8N0h32MSx6PqscNM9OKbwpdL1WlnEJSLIh2Er3
+ mOOTDPUpfZKi2WYLUi65bJ13kQ6Z06bj5LNTRyXm1RAwOkaAvdKz+cUiwD+aGi6jvdw3
+ +aVBqZEG5+ajjt1v7Ghr2llnF4HxBhHp5B8KhuByDVbJJg74uF7vs1Z6mDx0gx62tkUx
+ CA3yMVjvPBtg2utXSEBas43Hs8m0a4rSnw0y3oEBC6wtYLjj5sDytM4Z22sKiKWCr9mm
+ iu0A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789984306; x=1790589106; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=PSlMyHhWFrEhvJ5vne6Rj2f5NzUBG1S8FtzVxfY15aE=;
- b=P5ZY22Lie6MVtVPeHGxzXVuoKhTz4iFKMc7fZ/Fn0UTf8y3YeDRngXmAeDO7dN1idR
- tOQhIN2d4irEvoIJ3LHLRCgaJawa7S3yq3xzJBzSViR5SadVKCAij8ybBwQREV7Vgply
- +0JqvS3S7grKLLm5e1LD2ye8W0ynf1YStR3Bpo14fFdsJtIfiTjCRe4NYShwEngk3xsq
- 9bUZUni1J0RIo3PrdB4DMsxZEqSCXv+2qlYZmtoB3fqoEHaLMGYye9eopfcPHuVgYNYm
- K8oeUb/JH2p4qbXIWcIKZdDY4JwMl5MGSfb5YHh0CzNdnYtX4Tx9rndZc1mpnSsUKbwe
- AqPw==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789985197; x=1790589997;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=aKzi0k0CEruH+G5VSV9XiTbq/C3mWT7OmGv958n+p8o=;
+ b=aoCwJMOC5ivJMQFWA7Cl0hm2EqqP5Tb4IHvAtuqCdpQQtTe4bxXdgStU+XPzfnBU5N
+ qOoCsBjPe+n2wiw8tGBWRyapotKA+2UPEpmxol4lWGcjwWIpEwoh6NVQt+CoVSh8B4Ha
+ rK/HdD1JeIIWX0e42njQ/DSfhCY8vlyWt3eE/hddnRtx1spnndwyA/wimBibDXfnDObU
+ WF5qICYK8kjH9I4CCjMU9AGJ8JK+4tM8W0l/yW7SK53Dlwn9OX2EAjMoMQEyb66zqdwj
+ EagJpbWLx0kO0wAuOdKGQs1jqK75mCBiT1qvsm66hOCPjPFci08vp92PejyMBcWRhwQt
+ tkBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789984306; x=1790589106;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PSlMyHhWFrEhvJ5vne6Rj2f5NzUBG1S8FtzVxfY15aE=;
- b=PqL9DT4g73d4t5O+HR0j4hzxrDK9paZvWrzIYIdAuAc4o1MrJ/ktsMFaLFBCnqCYfg
- gE8G/B2Jk8YqG1EsmvvoRYj5LPBBKSAF3IXj3BcWtzpeRPXnZnf/viEWpkwr9F1ljMMi
- C8jfwjsowct+pMBqm9ojtDhgEWapF30QZy/l42fRILOFbv+XIyRhWtHwqqwrQVha8HTH
- PmU1XxDtSIbJhiwyG/dvQvQPICQT1FFQc/68IfKa0K5TOtW2zi5PDxNJCzMljwo0xejU
- q02MegYY3QIwXeUPpm5lTImSugDBPd+wsZcPvLjFtZcMS5snngqtvwthswRljCxYyuUt
- Jreg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwFtz+JnejADIVrZbt02z8EP3NuIU322rFy6k7kkkveMkbbtqsXlcLc9dJyQCkO+6QNxUlzCv4t8+1k@nongnu.org
-X-Gm-Message-State: AFuF++k7Fy0wuLbGB8yFq+ihHICKmmz92tG9XrBZhayoYSre2tuL1kLz
- YG/AjTX+vDPoNu7dR64xY/VtZRAxqqqLW/p0LFYj15oUTYvA3z2ZnWxS27VAvcJvKAN6KojNjFA
- 9zWCs9mO2LalYnebqd98W3RKwIUM1yTXfa1Nf8UZ1CP4lxC8sBiYfja/Kkw==
-X-Gm-Gg: AYBFou06BvbSM9qsPoJMpW3C0K+kZrQwUidN1Bj2KbjwgQl66mubR0zdMmCty7VPJZC
- Lit8RKgmTt5cYIsIUqZrJtW2f0VHObM5cYgZrUMObrE4Ym/dF3/RCIZw4bIiEav+enWwFYx+uZy
- AlhJWX41o5WPRXwcTTy8qoqd4EggfZiWd1ONT80ZuqCzoUg5yFiQElbwTDN+Ql3x84Rx8ld+CYm
- X9zEzkjAxzaM9IoOBBn5XgUibD750T6o5gh3z+ry3pmx2fM1PQgQqWMt6UoKD8kUrGAVHt9NYy3
- Fp0CsYnJ6aFk1RxC72OICuedmmm7O1QSKUd5GWAiMPUxfkrmlWGmT8lT7yCW+L87mPfHh3dWfJK
- TOHwclw7AKjmwfJ62Xk9gHmC0MZP1VKDIvg==
-X-Received: by 2002:a05:620a:198a:b0:939:b559:1e82 with SMTP id
- af79cd13be357-93bf56edb33mr916882785a.41.1789984306176; 
- Mon, 21 Sep 2026 02:51:46 -0700 (PDT)
-X-Received: by 2002:a05:620a:198a:b0:939:b559:1e82 with SMTP id
- af79cd13be357-93bf56edb33mr916880785a.41.1789984305745; 
- Mon, 21 Sep 2026 02:51:45 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fcd07411fsm226727635e9.7.2026.09.21.02.51.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Sep 2026 02:51:44 -0700 (PDT)
-Message-ID: <7f21b82c-9c3a-4075-84e4-e170c0b1accd@oss.qualcomm.com>
-Date: Mon, 21 Sep 2026 11:51:43 +0200
+ d=1e100.net; s=20260707; t=1789985197; x=1790589997;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=aKzi0k0CEruH+G5VSV9XiTbq/C3mWT7OmGv958n+p8o=;
+ b=FURlYr7rK7f0qB37R1+Dk15W74wSojHBkzFwOW7+TqVKs6cQAvz1IDCwstYLN6jVb+
+ idlKwjNHoGhCDQPF4VUnwuTC2N+3l2M/j7vv2KN+KBREkgJwYxEprvlt6TM6Vjyk6Rj+
+ vYlVZQCvfvumQnyFdMXNbtR9EGrNZyPMJ1pLYPwze/lYgoeH+hF1KjESN1VcRDj8nyjw
+ rsho/Vg3mNjL0aIs/Y5wJ+jJASoT2jIdKCXa6PcJtcUbkSWugRCQGNFqYbN7ej58jetr
+ Dzk3IqpgpKghDvzqRFfO44CTRr0LZUAisa/fb9xBsNwWfp/rV2a46ae3P9Ijh3xQFYyS
+ v/xg==
+X-Gm-Message-State: AFuF++kkPOFjJNvPx4KEHurpwgNy4MfsQ+reQKRiDHOq2OZ7Y7XT8CvS
+ zAz7W84cFh7fH9/GErBqid+cXM6mz/w/OpiihsgHBW0zXLE+Anqwk9aX4haZ+YNCwUWFjHtfpH8
+ XWee0wC6mPR6ACavmHpBX49jrneJaC2DaHT6SnrZAgQ==
+X-Gm-Gg: AYBFou1eeanUeJ1LhnFYgANOyeHe9rHmuTt0N6nv4shTpxzzhoXikffUspqbkwASWxT
+ WATWqx06t3pqjeQMtfC9JjuGKNsIHylsBzhIo0ujMVVWl6CjoVceaTT8XvsjCHExqFK5fjbvW5t
+ ggjpkFFNN5zIUcAHQkyiQC+uKQSdqEPLKQ8Em1PTj67aEFMOo5mYMN2NERCj+vxPA1TcqB4yzfa
+ im8H6CFlIgLnIic1aTqfVawK6mSc2HNkySz3yaUL+YCcGS2Jf99bVOeE7ecZCg6mrCInl0XRGjd
+ NOdtZp7V1NzgIUU+jb1ESGRAoj+P/gQgBgNbskPmxppUvGa0jbjIuC8=
+X-Received: by 2002:a05:6a00:3a0d:b0:878:37b2:df9e with SMTP id
+ d2e1a72fcca58-87837b2f981mr7056441b3a.56.1789985197190; Mon, 21 Sep 2026
+ 03:06:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/7] hw/isa/pc87560: Add main isa code for NS 87560 SuperIO
- chip
-Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>, Helge Deller <deller@gmx.de>,
- "Denis V. Lunev" <den@openvz.org>,
- Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-References: <20260918163829.2917-1-deller@kernel.org>
- <20260918163829.2917-3-deller@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260918163829.2917-3-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 8f3DvYU63E3EtqtojTnlvkvyrKOIivXh
-X-Authority-Analysis: v=2.4 cv=IewSymqa c=1 sm=1 tr=0 ts=6ab0fe33 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=pGLkceISAAAA:8 a=ThA4JjV-dTwqHUUXHCAA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE0MSBTYWx0ZWRfX0a7TCOHVmPKC
- AwctcEXL4DqVUgQZaefhmHSVJshQqtwsy5JmexhToUqai80tnKhcAN+vlHrJKzcsef67FU89VBw
- lDdbRIAuf6yU1BoBoUV3GeACWB6XjMnuaCxJ9D2mAfHqBaYCIHfyRDeM9lkvN0DecNJQ0E26+bx
- sSRqnHINNVcCvA++GE2og+1jq5gwpb84aNzR2B6rAMNE9qpuARShsJhI1DapfBr8bJ4FjLFJn75
- FwuFsQVvFgmnUoIQscuRmB9uTOp3hjg1KWduK7/C+WQ0MdPJa3L8vEGWtVhaT2A9tAU/3hreSKS
- Niia4tIQgM45m42DpATH1Ylpv0eoJdsGMatbYYBX5HDg7O5DS3uxuexAsz8V8IRt7ho51BkF1QF
- 0sGm1oThbXu3nOmelKoENrhoJuNZEBT0MSTe0UPsPB170oWjPCghZd++c8Jf9NAIFyRrGn7GsVR
- 328SyEl+kw1EpYWe0MA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE0MSBTYWx0ZWRfX/MKFJnEGJcZF
- 9ajtjG58wJjg+35pjnafOaNlBsn14/0eRu8n5lw7dBS9teaLK23rU33U5Qdu6s+0zaqBFKuiKo5
- fWtQaVQJdJugmRJRoBTrh5dJheD/Ml8=
-X-Proofpoint-ORIG-GUID: 8f3DvYU63E3EtqtojTnlvkvyrKOIivXh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609210141
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
+ <20260919-misc-2025q4-v1-4-ebfa61049bd7@bsdimp.com>
+ <7d368160-4182-4b60-9aea-11121fbff19e@linaro.org>
+In-Reply-To: <7d368160-4182-4b60-9aea-11121fbff19e@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Mon, 21 Sep 2026 04:06:25 -0600
+X-Gm-Features: AcwNN1Vg799wabYqbbOEes1MmpShoh7VFiw0fELfUtitn3iFdra7ylsbOPawjH8
+Message-ID: <CANCZdfpvpB=FWevTc9qja9YPXwNSxxKg-k9r=C0F8tQMzO2u_w@mail.gmail.com>
+Subject: Re: [PATCH 04/14] bsd-user: Add gdb for system calls
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000d4fea3065bfb67c9"
+Received-SPF: none client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pz2-x0f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,36 +113,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+--000000000000d4fea3065bfb67c9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 18/9/26 18:38, Helge Deller wrote:
-> From: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-> 
-> Add emulation of the core components (PCI function 1 aka I/O
-> Peripherals) of the National Semiconductor SuperIO chip which was
-> commonly used in HP PA-RISC B- and C-class workstations. This includes
-> the PIC interrupt controller, the floppy controller, serial and parallel
-> ports.
-> 
-> Signed-off-by: Abizer Lokhandwala <abizerlokhandwalastd10@gmail.com>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   MAINTAINERS              |   2 +
->   hw/isa/Kconfig           |  11 +
->   hw/isa/pc87560.c         | 510 +++++++++++++++++++++++++++++++++++++++
->   include/hw/isa/pc87560.h |  96 ++++++++
->   4 files changed, 619 insertions(+)
->   create mode 100644 hw/isa/pc87560.c
->   create mode 100644 include/hw/isa/pc87560.h
+On Sun, Sep 20, 2026 at 4:03=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
+> On 9/19/26 19:20, Warner Losh wrote:
+> > Mirror what linux-user does around system calls.
+> >
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > ---
+> >   bsd-user/freebsd/os-syscall.c | 8 +++++++-
+> >   1 file changed, 7 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/bsd-user/freebsd/os-syscall.c
+> b/bsd-user/freebsd/os-syscall.c
+> > index 7e400c89bc..38dc87f745 100644
+> > --- a/bsd-user/freebsd/os-syscall.c
+> > +++ b/bsd-user/freebsd/os-syscall.c
+> > @@ -29,7 +29,7 @@
+> >   #include <utime.h>
+> >   #include <poll.h>
+> >
+> > -#include "include/gdbstub/syscalls.h"
+> > +#include "gdbstub/user.h"
+> >
+> >   #include "qemu.h"
+> >   #include "signal-common.h"
+> > @@ -1622,14 +1622,20 @@ abi_long do_freebsd_syscall(CPUArchState *env,
+> int num, abi_long arg1,
+> >                               abi_long arg5, abi_long arg6, abi_long
+> arg7,
+> >                               abi_long arg8)
+> >   {
+> > +    CPUState *cpu =3D env_cpu(env);
+> >       abi_long ret;
+> >
+> >       if (do_strace) {
+> >           print_freebsd_syscall(num, arg1, arg2, arg3, arg4, arg5, arg6=
+);
+> >       }
+> >
+> > +    gdb_syscall_entry(cpu, num);
+> > +
+> >       ret =3D freebsd_syscall(env, num, arg1, arg2, arg3, arg4, arg5, a=
+rg6,
+> >                             arg7, arg8);
+> > +
+> > +    gdb_syscall_return(cpu, num);
+> > +
+> >       if (do_strace) {
+> >           print_freebsd_syscall_ret(num, ret);
+> >       }
+> >
+>
+> This isn't quite the same -- linux now has plugin support:
+>
+> static void record_syscall_start(CPUState *cpu, int num,
+>                                   abi_long arg1, abi_long arg2,
+>                                   abi_long arg3, abi_long arg4,
+>                                   abi_long arg5, abi_long arg6,
+>                                   abi_long arg7, abi_long arg8)
+> {
+>      qemu_plugin_vcpu_syscall(cpu, num,
+>                               arg1, arg2, arg3, arg4,
+>                               arg5, arg6, arg7, arg8);
+>      gdb_syscall_entry(cpu, num);
+> }
+>
+> static void record_syscall_return(CPUState *cpu, int num, abi_long ret)
+> {
+>      qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
+>      gdb_syscall_return(cpu, num);
+> }
+>
+> and they're strictly outside strace rather than interleaved.
+>
 
-> diff --git a/hw/isa/pc87560.c b/hw/isa/pc87560.c
-> new file mode 100644
-> index 0000000000..c13c54deb2
-> --- /dev/null
-> +++ b/hw/isa/pc87560.c
-> @@ -0,0 +1,510 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
+OK. I'm  going to drop this from the list, but create
+https://github.com/qemu-bsd-user/qemu-bsd-user/issues/72
+to track it and resubmit once I've had a chance to refactor it.
 
-Did we change the coding style to allow C++ comments?
+Warner
+
+--000000000000d4fea3065bfb67c9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep 20,=
+ 2026 at 4:03=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
+nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On 9/19/26 19:20, Warner Lo=
+sh wrote:<br>
+&gt; Mirror what linux-user does around system calls.<br>
+&gt; <br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/freebsd/os-syscall.c | 8 +++++++-<br>
+&gt;=C2=A0 =C2=A01 file changed, 7 insertions(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-sysca=
+ll.c<br>
+&gt; index 7e400c89bc..38dc87f745 100644<br>
+&gt; --- a/bsd-user/freebsd/os-syscall.c<br>
+&gt; +++ b/bsd-user/freebsd/os-syscall.c<br>
+&gt; @@ -29,7 +29,7 @@<br>
+&gt;=C2=A0 =C2=A0#include &lt;utime.h&gt;<br>
+&gt;=C2=A0 =C2=A0#include &lt;poll.h&gt;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -#include &quot;include/gdbstub/syscalls.h&quot;<br>
+&gt; +#include &quot;gdbstub/user.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#include &quot;qemu.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;signal-common.h&quot;<br>
+&gt; @@ -1622,14 +1622,20 @@ abi_long do_freebsd_syscall(CPUArchState *env,=
+ int num, abi_long arg1,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_long arg5, abi_long arg6, abi_=
+long arg7,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_long arg8)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; +=C2=A0 =C2=A0 CPUState *cpu =3D env_cpu(env);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0abi_long ret;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (do_strace) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print_freebsd_syscall(num, arg=
+1, arg2, arg3, arg4, arg5, arg6);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +=C2=A0 =C2=A0 gdb_syscall_entry(cpu, num);<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D freebsd_syscall(env, num, arg1, arg2=
+, arg3, arg4, arg5, arg6,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0arg7, arg8);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 gdb_syscall_return(cpu, num);<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (do_strace) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0print_freebsd_syscall_ret(num,=
+ ret);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; <br>
+<br>
+This isn&#39;t quite the same -- linux now has plugin support:<br>
+<br>
+static void record_syscall_start(CPUState *cpu, int num,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg1, abi_long arg2,=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3, abi_long arg4,=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg5, abi_long arg6,=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg7, abi_long arg8)=
+<br>
+{<br>
+=C2=A0 =C2=A0 =C2=A0qemu_plugin_vcpu_syscall(cpu, num,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arg1, arg2, arg3, arg4,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arg5, arg6, arg7, arg8);<br>
+=C2=A0 =C2=A0 =C2=A0gdb_syscall_entry(cpu, num);<br>
+}<br>
+<br>
+static void record_syscall_return(CPUState *cpu, int num, abi_long ret)<br>
+{<br>
+=C2=A0 =C2=A0 =C2=A0qemu_plugin_vcpu_syscall_ret(cpu, num, ret);<br>
+=C2=A0 =C2=A0 =C2=A0gdb_syscall_return(cpu, num);<br>
+}<br>
+<br>
+and they&#39;re strictly outside strace rather than interleaved.<br></block=
+quote><div><br></div><div>OK. I&#39;m=C2=A0 going to drop this from the lis=
+t, but create=C2=A0<a href=3D"https://github.com/qemu-bsd-user/qemu-bsd-use=
+r/issues/72">https://github.com/qemu-bsd-user/qemu-bsd-user/issues/72</a></=
+div><div>to track it and resubmit once I&#39;ve had a chance to refactor it=
+.</div><div><br></div><div>Warner</div></div></div>
+
+--000000000000d4fea3065bfb67c9--
 
