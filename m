@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07314C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4608CC982F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8kKM-0006S0-6U; Mon, 21 Sep 2026 16:09:26 -0400
+	id 1x8kKN-0006XO-DY; Mon, 21 Sep 2026 16:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kKC-0006Cx-N6; Mon, 21 Sep 2026 16:09:16 -0400
+ id 1x8kKD-0006Dq-08; Mon, 21 Sep 2026 16:09:17 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kKA-0005Pg-FX; Mon, 21 Sep 2026 16:09:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x8kKA-0005Pq-Hc; Mon, 21 Sep 2026 16:09:16 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8D9A1860555; Mon, 21 Sep 2026 20:08:51 GMT
+ 68LF8Zu61869974; Mon, 21 Sep 2026 20:08:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=xjqVqIPmym2GlI74z
- mW8Ff0A+CbToZFr9gKX2l/c5d8=; b=LUHo2Jd5PF2bwJiP2tNnDOhysGNREP2La
- 0jn98s6hJ2Elv21lZsyn6F8wT7BJkwqciybpHtJUX9vO0QhbkzxLoibbqVGW2kXJ
- oIASwVtKz82oAqttnbq3U0U+bhaF55N3+RLUxCmZ483O2n0dAu61Yg4RRtJejX3+
- PVB1KBt8W111ilNV+EEmhdS/lmHY3LBZAwOxI+51QvEOxA7C9ylIXcHbCVaO2VF8
- Hc4R9fNhLsJpLzxb9c30BHgIFpWTUDCPudKhU+eTdyULvbdqLld/meNpVGZEO63g
- 21S+g/T27C8o/WwMy06NQUgEjD+fJalRg2e5+JxFna66xPuQET7SQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ah52-1
+ :mime-version:references:subject:to; s=pp1; bh=3EaIYq8QwESfXJXRo
+ G9EGq4rgguZJ+sE14l8I5toFHo=; b=S5qSMM+caCAl1isuuXSoQSs3HsFzd6JXB
+ DAB9HQ54clJSA8MO9lbNerOBL3xsPyrkVP81O/RH1+fOl79+G55u6pfbHYMUnpCO
+ JTFhhydrgQbr2sTUc7oJcyPGX7cwtXLhP1OwZKFVGPXqymHm+5Ld5JkBp5Rv9TWo
+ RV7LmDhcDr8cF8j5NSwCe/x9zdZTc4v8Vcduh2+gHu7bwaNKE2CGrtDW410Cfmdj
+ DfwLaRDad4gblo322ZngAMG+WVX2zzx6KDX53rcwuGl+l6dTAZyTxQAHBEoq0W2e
+ GAaKEn3xHsJCJ9oDDC6TmkcAoHA1zB2S7mGDmA9HxoJ4/YE7JOTWQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs2h2y-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:51 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LJHhnx2399621; Mon, 21 Sep 2026 20:08:50 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt7dy6nby-1
+ Mon, 21 Sep 2026 20:08:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LJK2C21431700; Mon, 21 Sep 2026 20:08:51 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vf033-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:50 +0000 (GMT)
+ Mon, 21 Sep 2026 20:08:51 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LK8nun22610660
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LK8oWI4981344
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 21 Sep 2026 20:08:50 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D72045805D;
- Mon, 21 Sep 2026 20:08:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 83C6A5805D;
+ Mon, 21 Sep 2026 20:08:50 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6782F58059;
- Mon, 21 Sep 2026 20:08:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0BA0F58043;
+ Mon, 21 Sep 2026 20:08:50 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.69.195]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
  Mon, 21 Sep 2026 20:08:49 +0000 (GMT)
@@ -62,39 +62,40 @@ To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Jared Rossi <jrossi@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 30/33] s390x: Find scsi-pci boot device and build IPLB
-Date: Mon, 21 Sep 2026 16:08:27 -0400
-Message-ID: <20260921200830.1302919-31-farman@linux.ibm.com>
+Subject: [PULL 31/33] tests/qtest: Add s390x PCI SCSI fallback test to
+ cdrom-test.c
+Date: Mon, 21 Sep 2026 16:08:28 -0400
+Message-ID: <20260921200830.1302919-32-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921200830.1302919-1-farman@linux.ibm.com>
 References: <20260921200830.1302919-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: rMsbeefY-c-Q8J1RPmeQL8w7bmnV1PIx
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab18ed3 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab18ed4 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=GdLXXov1tT0adLAbiZYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfXzHMbYKl4DpQm
- USmDRpAtzqENQqNbc0B+enlwgNE/FHSvMpFxRphXd22Yji1wGEbCbgapiznpOielc2UkWLp1+YB
- lo4j06i2TfCDTPPwXPixhArDT1d8a+Amh4WZX9PZgYP6K2H7rws3mBUQxNxVPoY5H0v6vP3Y6Ty
- EoQwway2V4DqCTbqQJKdoXDpKMOf06x9y81L76IiHyddAWanB0w4zc1CuUV4t5KcBqKF1tWMOBl
- DvaudrSp3cxjk07UYQzGxaG4Wolds0RzpaGeVGc84c/+HpaaqQvBEV+hbbFD86VDwUlNTGqmFLF
- Dua+NiuGGtiIWkllg41MFNeHRw+Zh9oZtR1fjHkJjsCwMTedFgHq/Hm09Jk11z7RRFve6W4ZAwC
- Ql9ZWQkxfSJKrgNUbVMezec+V6GN8O5Ffe8SydnEGGYDzHK4xemajZ7FyUc1ezWvD18A5RMmwOr
- mad9DnlRHTcAhJ+zHQQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX7B2r0UauaBSu
- RmDx1DE/s0UEmv3glgUPcMx/h2X0+ddJN0sbWLIHtgV4XYjsZYuDWdk8dJyImv6v2D7EE+/mQyF
- N7304afOe4tDBlSs06U11o7QK6yCkVM=
-X-Proofpoint-GUID: rMsbeefY-c-Q8J1RPmeQL8w7bmnV1PIx
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=MvDj_lKWWGcuVSP3geIA:9
+X-Proofpoint-ORIG-GUID: pXqsVlFPtgOxwj9VELEVMA-xnHQg0mCD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX63W9P/5TsIHV
+ tnohdOcE27aU6zAf3QOmcts1vMAEtGW46U6Q4srQuIJ218m29KV6TrTb67/YiA1cr1D4oazEtQv
+ rsf0h4N6o942zY5jM4asEA6chSYvBVSeuCSm60omdKhTdGXFwxr8sb5LEakSaR5+0522Lwk8UGh
+ K3mmfnAkvHPxQnbBKlDpn8G7x0p+jldJ0TXaGsGMuMF7bfSsfOuQ36bm4b7cchIZrm3k97IdX9V
+ i/5Qk6JtrmPxNJkKb0P30m26rAQlpeqU3jjdMPoeA1MtdXtzgWjPCZ5Lo8dRQKjPXhfCebLSC9D
+ lr/KWUNnjok+QDI84PIwtnDZfUdmn0TZaKtLZ1ootSVSdiwaWBuhLNXt9y0A/5BbsC0xSbWpzbo
+ qw8rcm7h6AugnbKBXwKEctjy/dfsFJ49fZuN4RQGiLEhSRRnb4VjnJxU65jXf6UDawXBJ7Hcp1H
+ v8K5vEZBL8hE5iV78/g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX+IUQwmGMPYNW
+ 9+6v5eddIls7HKgC+6/8vf1A26ghvczy3qRstHlat+tv3kaSSaUgUcMWlm6AAbcZnw5oYrSToyr
+ eIJwvb3Dgxsdzx30rVKliPlyxZVIZ8A=
+X-Proofpoint-GUID: pXqsVlFPtgOxwj9VELEVMA-xnHQg0mCD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210294
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -123,98 +124,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Add logic to identify a virtio-pci scsi controller and target lun with
-assigned bootindex, then build IPLB for it.
-
-Unfence PCI case for scsi devices in BIOS.
+Add a test to verify that a guest can use a PCI controlled CD as a fallback boot
+device after a failed CCW IPL.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 Tested-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260831194919.3830270-8-jrossi@linux.ibm.com
+Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260831194919.3830270-9-jrossi@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/ipl.c          | 37 +++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/main.c |  3 +++
- 2 files changed, 40 insertions(+)
+ tests/qtest/cdrom-test.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 4fa8124f92..1add11ad7b 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -402,6 +402,7 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index bf997be6d6..9e725126cf 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -272,6 +272,14 @@ static void add_s390x_tests(void)
+                             "-drive if=none,id=d1,media=cdrom,file=",
+                             test_cdboot);
+     }
++    if (qtest_has_device("virtio-scsi-pci")) {
++        qtest_add_data_func("cdrom/boot/pci-scsi-fallback-from-blk-ccw",
++                            "-device virtio-scsi-pci -device virtio-serial "
++                            "-device virtio-blk-ccw,drive=d1,bootindex=1 "
++                            "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
++                            "-device scsi-cd,drive=d2,bootindex=2 "
++                            "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
++    }
  }
  
- #define PCI_DEVTYPE_VIRTIO       0x05
-+#define PCI_DEVTYPE_SCSI         0x06
- 
- static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
- {
-@@ -417,6 +418,26 @@ static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
-             if (pbdev) {
-                 tmp_dt = PCI_DEVTYPE_VIRTIO;
-             }
-+        } else {
-+            SCSIDevice *sd = (SCSIDevice *)
-+                object_dynamic_cast(OBJECT(dev_st), TYPE_SCSI_DEVICE);
-+            if (sd) {
-+                SCSIBus *sbus = scsi_bus_from_device(sd);
-+                VirtIODevice *vdev = (VirtIODevice *)
-+                    object_dynamic_cast(OBJECT(sbus->qbus.parent),
-+                                                TYPE_VIRTIO_DEVICE);
-+                if (vdev) {
-+                    pci_dev = (PCIDevice *)
-+                        object_dynamic_cast(OBJECT(qdev_get_parent_bus(DEVICE(vdev))->parent),
-+                                            TYPE_PCI_DEVICE);
-+                    if (pci_dev) {
-+                        pbdev = s390_pci_find_dev_by_pci(s390_get_phb(), pci_dev);
-+                        if (pbdev) {
-+                            tmp_dt = PCI_DEVTYPE_SCSI;
-+                        }
-+                    }
-+                }
-+            }
-         }
-     }
-     if (devtype) {
-@@ -616,6 +637,22 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-             iplb->pbt = S390_IPL_TYPE_PCI;
-             iplb->pci.fid = cpu_to_be32(pbdev->fid);
-             break;
-+        case PCI_DEVTYPE_SCSI:
-+            sd = SCSI_DEVICE(dev_st);
-+            scsi_lp = object_property_get_str(OBJECT(sd), "loadparm", NULL);
-+            if (scsi_lp && strlen(scsi_lp) > 0) {
-+                lp = scsi_lp;
-+            }
-+            iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-+            iplb->blk0_len =
-+                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
-+            iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-+            iplb->scsi.lun = cpu_to_be32(sd->lun);
-+            iplb->scsi.target = cpu_to_be16(sd->id);
-+            iplb->scsi.channel = cpu_to_be16(sd->channel);
-+            iplb->scsi.bus = S390_IPL_TYPE_PCI;
-+            iplb->scsi.fid = cpu_to_be32(pbdev->fid);
-+            break;
-         default:
-             return false;
-         }
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index a2a24b024f..d2a2ac3138 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -267,6 +267,9 @@ static bool find_boot_device(void)
-             blk_schid.ssid = iplb->scsi.ssid & 0x3;
-             found = find_subch(iplb->scsi.devno);
-             break;
-+        case S390_IPL_TYPE_PCI:
-+            found = find_fid(iplb->scsi.fid);
-+            break;
-         default:
-             puts("Unrecognized SCSI controller");
-             break;
+ int main(int argc, char **argv)
 -- 
 2.55.0
 
