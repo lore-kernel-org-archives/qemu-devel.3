@@ -4,104 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4413DC982DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 10:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD043C982DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 10:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8b8V-0002OC-5H; Mon, 21 Sep 2026 06:20:35 -0400
+	id 1x8bKj-0007MM-6k; Mon, 21 Sep 2026 06:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x8b8T-0002Mq-Ue
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:20:33 -0400
-Received: from mail-oi2-x11.google.com ([2607:f8b0:4864:32::11])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x8bKh-0007M0-Cj
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:33:11 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x8b8R-0002eY-PP
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:20:33 -0400
-Received: by mail-oi2-x11.google.com with SMTP id
- 5614622812f47-4c6b4783778so1520266b6e.0
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 03:20:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1x8bKf-0004Un-IJ
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:33:11 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-484366874b0so1600536f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 03:33:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789986787; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g1LZmlb3WXg8aFqaUrP2gvVPEMS6lUHaPlKLs8h/Ctrs5d4Zo3wur2+ZOhIQH4S5GG
+ FF/Z0EYK+c/KC/mSKktPcxAGi2Q9QTJGbsoCn+C/GE9rDOp9BAB7DiLQiY8IFRsHrvu9
+ /B6YliOcQM1rjxx3NtjbqONpQEr3+NPCEN8qU7KPUEFAgnubxvW1xO5fDzE5BTYbUePc
+ rLwn5kgIz0vgZF7H7sDL19ptXdafKlyfYmfoYCzqwOjpSJD7OZztMErtxxDO3PPoALus
+ o5rCwfA9GTMLVUvzPRegXrNA3kpp9MbfVcIXiXnX1UDOwXex4DPRWk/EVMsCNwX3QEdw
+ /DjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2rUYu4YSoIUAdgSWAhzt2zTe1zlevitFqFUxChhjulM=;
+ fh=zde/FCo2amAF6NGk8HNdLm8aB//qin1KEb2gDgenNdI=;
+ b=D+uWBehArKX99vJEo83QFTEO264abQjLXxUnKiWVjP7zvcprcDsNta910pqL6j9SEK
+ /AJuipuLuL31kE/DH1Sr6Y0Uw9HCLsY3gbDZqXE1zCAq/mw8NjPkfW5GjhnttwL3gHgF
+ jp+V5qrMg3/afRvNLOnzBPTaebrI/H0Cgk04DNpFqt3ZhZ1tCNR5idNNyPH4TusP8R75
+ y+Mh1go9LqyTpLWcT5FxAZaxC58FljKC8XH6hWIDqyRKqR6jleWfYgt2lEUEL5IKSJSt
+ rMhOYuVuTA45t6rJ/xEJtH5APiFj7o+tVweGohfCn3oCoa6V02+gzNgZTh2UcMxxgVfo
+ h6kg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789986030; x=1790590830;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=25LjOfeKTQcmMeCxITdAZ3CXvVbnOFuL7T38wF7gg2o=;
- b=pLtiA5ka79gvFQ3jLGNu+WSkC/X691i1FVoMokbiq8vcAoMSAn51zt+r7hf2Wv+1c0
- J0noo9zkVEiypmcOJfEJeWu8KCqbRNWFMnEl7Vco3kF4E7ZmGRWSlN0Vin0eaeojHbqG
- 09GaV9JKB6nINJkL3HuQBs/26CdyHWeiPEz0i1i1hn4Qn0sivjGvYJ4JewHIA++fDuXe
- JqfDO25R76UAIwnhUQLtCT1IdhUGQDvvSWiqnk6Lc4oUu6SvtfEE0JGcr3V/pnwQWTo3
- 4CSDw2wQVWFHbogI+8EDFTizoNmzmyqAwy2vNsfLoYTBv3Msus0V5bKi8BMk2Y2XnRt3
- YKPA==
+ d=linaro.org; s=google; t=1789986787; x=1790591587; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=2rUYu4YSoIUAdgSWAhzt2zTe1zlevitFqFUxChhjulM=;
+ b=hTeMTH0hsbaXUdc9wsUA2wpk9MalP33xZtg0npsYi6CMTcoD6DhtITCItxGHTJym1D
+ PcOR4TAxhQGO+FB8TlqUrlv6QNslrHLu1MBJeXEWlqJFu61/ExN1xdWeK9z2LZba4L4e
+ UwI6TecD0+9YI/H8cPr7Hor+w7ilEc5RBGhVm8jUOLbegprmR5cdM3grJqYZqtxGJfe5
+ sFogtHFEFR5XxdeeuLg1BD/wnNY17DYFsy44r5ATZFWkS42x7Xo94X3oL8+qNcyLgnMF
+ 9XHtDLAc84pbb4FzMZKjRYXoHoHxIF9aGyG1yqMYk/MevurhCg4Fdbgd24rKH2Nwe12c
+ cfeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789986030; x=1790590830;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1789986787; x=1790591587;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=25LjOfeKTQcmMeCxITdAZ3CXvVbnOFuL7T38wF7gg2o=;
- b=rsgy6lphNm86zIlvGDvwclNLFjoJCpnIQkbrS67z8+Gz1ZY7q/tJikCUeHsmVwGtSX
- x7CGFEUdBWg0C2osFM16CP0NR34LlCuuJTDAPDKj+4OKHkfQkOPhTAZP9wbZFXn9LF+T
- 7wnEvPHs1wYXYKuKoupDTEpK6Wt1lhdVZo0sjSVevwxb69zVQi6G/OWw2VNGN5MR4A5M
- ao7Eg1y5jxV9sL42vDk4tz7q3Rzk0vHMNSA747f5Uyy99m3VKo4VKdkTNNRzsatrEP1I
- 828q+hqVBrV/hnNKSErEYc86NrRr+v+PQzinufwiFCbB8Eo7uDkuQl7JHLySlPbxUVwu
- uWmA==
-X-Gm-Message-State: AFuF++nfFjSVJ0VZKauhj0dkOv2GqLDuyPEmHt9w7e3ZgpNAiOCe2fm4
- lruBe7Bc2gHVfthiH3Z4IctnC1EmbV3Yu3Q7K/vT7/94BqaDZ0+q/l/PiBckG8sQtb4=
-X-Gm-Gg: AYBFou1OHbqDbNWsCa/19eaLYfs/d5gjE6S8pkwnhJywdzdqOK9NMNRyCHmxmS0fKvG
- IdljQv636stAkq2HC/Z1zdk9NQOyQZbokjWZiGyKieEUZo1yUVIR35FVycOiLY0kL+9Wgd8JrCq
- Wf4nnuS1jPC77H9K+XCwR/o1CEWRcAwrrTseLFH+SJi2JzIrrtREMXMr6pVCrQ8YPEfA4lKV8mR
- iOBtGGeTW/AkuBcDXIBlfTxb1bXqhZu+DrbgV4Y1tzGUbCLFCt4qwDYmJFniXrlxNxA7vFXocdv
- L/+9Pj6Fyn6Ex/Bbp8NXd4YwvQ7jr6DADnJwnmJzU3OlgICyI6TNi9VZzE9WHSF8W0MSDXsGfV6
- 0iMDjLuUs/bHutd32pxf2HOOPjhlgaYkFhyGVTEsA8e+/E/WPYsKG2R8BFdWvfXhCkLDfcIJODS
- K9oJsA12MZ6cXkVlB/07p0pgckF6cUEADtaSg7usdpXi4k498Xe9VmXQ7fhA==
-X-Received: by 2002:a05:6808:3086:b0:4cb:f21c:a79d with SMTP id
- 5614622812f47-4ccf946feeemr12977537b6e.37.1789986030482; 
- Mon, 21 Sep 2026 03:20:30 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-8107dd8f425sm7613601a34.4.2026.09.21.03.20.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 03:20:29 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 21 Sep 2026 04:19:43 -0600
-Subject: [PATCH v2 01/11] bsd-user: HOST_BIG_ENDIAN and TARGET_BIG_ENDIAN
- are always
+ bh=2rUYu4YSoIUAdgSWAhzt2zTe1zlevitFqFUxChhjulM=;
+ b=ptSuVgAluwgKvb5TCnxx0EKSNh9xfYp0Aqjy7yM9pJdCNYCOS0rvIR8YMkw+1QRs0f
+ boBLYL7tFP8X3kvDwBJEmVDW4X++rVbxQAwsOpVH07mDkT3oHYWuzUa7/TPouEh5dx9a
+ pcCCQ04Tkvh3ZfyILlMP3LLZXFxcHUcYlrRLI3qFOFf4ZUwYjCsJ7dniJ18zAoHlAvm7
+ K/NKy5XcFnyR1xLFhXoG5Z12ddAWNDJ+9fmAW9ZxOUZUALsJmoGjxuAkJSo6PzHT+tcZ
+ ZpwkZGJchYfPUL+p13VTzgCrDr354fJXZ+n+w1ssMFOKU1ORPxlA+KSmwHT0Q+QCbZWo
+ RVXw==
+X-Gm-Message-State: AFuF++lf+OL1aESFDrWqd4UjQc03Zf2CcJV4i4ZVjDRfgKiq23D+P8/X
+ pamJ/9TdoxqOOM0ElDLtbHXUxgEGRuku8w7d4U4CVyEu7aqRerR/v8dKIo0hbPulLnd26BjlLUK
+ oH3GxCxPf3TxIf28qbOZ8i+/7IFenCqj6GOujXzBTsQ==
+X-Gm-Gg: AYBFou1c2blvuBL0OF+Fm3aqjTVx1xHGCKfI7ym1Flu+qans34cUh/yi3ExNbGFuHpX
+ NVAX4bHGCQnz/0tqtXNhzp6sSo+cfEL8LtVM7F0WfDYnLczuNH+Oj3qwFmEDOrBnJ3RT+zQsBHY
+ P3XqybgEjn0PkY00jaJNZ+5KFVbtPd4tEy1sdNh3I7D8ivI5aE4wxV9hbudUPwXU3tOcPkD7RB1
+ is3tZQXQH2z78PMv6i/v23y32j9Vw+DpTdPi4zKfZSkyfR2dgLscyTsTk5FP4b1I+gybEHTAaUi
+ yYT01zXWzX2WQEwRvikuIXyxonOrSI3ZL9HdG0gFPTSuTJYcJ+hO1iwJ8vzJ1O/2q89yamMUpu7
+ CJN+PZAzwS6qmLGZziGct3Xa+9mf/f7AHAgLFzUdMurmmWXWLTUFM0MaHgHBvjD2RKCtnamg3sj
+ xSrRjztFgsbLt7w3RBSxNfTflhOh74z+JFaA==
+X-Received: by 2002:adf:e185:0:b0:487:27f6:a4e0 with SMTP id
+ ffacd0b85a97d-48727f6a66amr8017096f8f.48.1789986787107; Mon, 21 Sep 2026
+ 03:33:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260921-misc-2025q4-v2-1-5eae157d31d3@bsdimp.com>
-References: <20260921-misc-2025q4-v2-0-5eae157d31d3@bsdimp.com>
-In-Reply-To: <20260921-misc-2025q4-v2-0-5eae157d31d3@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>, 
- Rick Richard <rick@sloservers.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7730; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=gBZ+A1c4KGglUwktvyfOghqJluuqvYjPT5k9ueBNReE=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqsQTdpdrv78xLRjECu5JWDURan6kthypcqeAYV
- PmSXzsHy16JAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCarEE3RsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBe5A/+N/gia7mkSM5B2JFOxBm39lkozCfJuQJ
- Sw/RbH0ELtr2qOV9p9fKSTKapWW8p0RlaZSfwRD/RQYRu3sD8oc+NxSZzCaZTGqKlHfupGgEicI
- YYkWPCpr/p35S9sTN3kCVttUAajk6BKGcqOMcr7Pf6C73FKleg9FOsvPvcJcI+MJvdUE+FNhH8h
- Wlcd3BUQCAN4yvZHHBAGZK8mvmRf4mDsJ4hAOipYv+dWIIi1l9SdCh1aYtW4mCFBqqrMrSqt+vC
- L46KazgG9o7HKd08MyFZkdpi2Kg1tjAnUasSnl0YjRvvL0SrQdYjlOCmvrAVDvdPreoN/7YjlX1
- nzCWENv1JbuYhuCNTFt/Ayf71WDYe8sqYcQedFF6/e/QdIsQEfvVjx1Fxdvztqz6x/QxqFnI+Jm
- F1KyVXnBIvd058yXaZXSCyiOYzVBgSOyPeHSJtRHDdU4kBbvP8q7cWALlqLj4yzuypO4bLT7jew
- qFSlSAm6Q09JY4zfq7Jq3ROw+YFUGqr9BTd/NeV1h+VEsbccFcbs6ZsBPMxLGOrO4WyLEKxmdoq
- HxwOcEi0SFQLGO2P50S3P9zOHP1WvE3scPQlgqGkYD5VaXMDMcpmYT/U8u3bH0g4N44pf9Bef/1
- fHxHh11cG/TVJgqW6cym8cdO7I4H+cMKtFPXMTI3DAQQAagTIGqc=
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:32::11;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x11.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20260803081159.91981-1-alexander@mihalicyn.com>
+In-Reply-To: <20260803081159.91981-1-alexander@mihalicyn.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 21 Sep 2026 13:32:41 +0300
+X-Gm-Features: AcwNN1WYcxY_3_4gWiPexolAAlJNu4M6n61j2dIGNfXtycyUT-iT15oi-soRP-8
+Message-ID: <CAAjaMXaxAXJcufXy--q9b1o9Kd68N4zvoLX9srrCuKsOB_XTkQ@mail.gmail.com>
+Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,250 +125,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rick Richard <rick@sloservers.com>
+Merged to master
+https://gitlab.com/qemu-project/qemu/-/commit/c1c18d1e640b64292859ce9f30f3c=
+344edfb0294
 
-TARGET_BIG_ENDIAN and HOST_BIG_ENDIAN are always defined.
-
-lseek and target_offset64() transpose upper and lower halves
-on 32-bit ABIs, -strace prints wrong off_t.
-
-Signed-off-by: Rick Richard <rick@sloservers.com>
-[ fixed defined() too and moved to C if() instead of ifdef ]
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/bsd-file.h          |  43 +++++++++---------
- bsd-user/freebsd/os-misc.h   | 105 +++++++++++++++++++++----------------------
- bsd-user/freebsd/os-thread.h |   2 +-
- 3 files changed, 74 insertions(+), 76 deletions(-)
-
-diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
-index 0fefc07232..5c32aa0396 100644
---- a/bsd-user/bsd-file.h
-+++ b/bsd-user/bsd-file.h
-@@ -973,30 +973,31 @@ static abi_long do_bsd_lseek(CPUArchState *env, abi_long arg1, abi_long arg2,
-         abi_long arg3, abi_long arg4, abi_long arg5)
- {
-     abi_long ret;
--#if TARGET_ABI_BITS == 32
--    int64_t res;
- 
--    /* 32-bit arch's use two 32 registers for 64 bit return value */
--    if (regpairs_aligned(env) != 0) {
--        res = lseek(arg1, target_arg64(arg3, arg4), arg5);
--    } else {
--        res = lseek(arg1, target_arg64(arg2, arg3), arg4);
--    }
--    if (res == -1) {
--        ret = get_errno(res);
--        set_second_rval(env, 0xFFFFFFFF);
-+    if (TARGET_ABI_BITS == 32) {
-+        /* 32-bit arch's use two 32 registers for 64 bit return value */
-+        int64_t res;
-+
-+        if (regpairs_aligned(env) != 0) {
-+            res = lseek(arg1, target_arg64(arg3, arg4), arg5);
-+        } else {
-+            res = lseek(arg1, target_arg64(arg2, arg3), arg4);
-+        }
-+        if (res == -1) {
-+            ret = get_errno(res);
-+            set_second_rval(env, 0xFFFFFFFF);
-+        } else {
-+            if (TARGET_BIG_ENDIAN) {
-+                ret = ((res >> 32) & 0xFFFFFFFF);
-+                set_second_rval(env, res & 0xFFFFFFFF);
-+            } else {
-+                ret = res & 0xFFFFFFFF;
-+                set_second_rval(env, (res >> 32) & 0xFFFFFFFF);
-+            }
-+        }
-     } else {
--#ifdef TARGET_BIG_ENDIAN
--        ret = ((res >> 32) & 0xFFFFFFFF);
--        set_second_rval(env, res & 0xFFFFFFFF);
--#else
--        ret = res & 0xFFFFFFFF;
--        set_second_rval(env, (res >> 32) & 0xFFFFFFFF);
--#endif
-+        ret = get_errno(lseek(arg1, arg2, arg3));
-     }
--#else
--    ret = get_errno(lseek(arg1, arg2, arg3));
--#endif
-     return ret;
- }
- 
-diff --git a/bsd-user/freebsd/os-misc.h b/bsd-user/freebsd/os-misc.h
-index 0f87b21cc8..be549c4bd9 100644
---- a/bsd-user/freebsd/os-misc.h
-+++ b/bsd-user/freebsd/os-misc.h
-@@ -106,19 +106,19 @@ static inline abi_long do_freebsd_cpuset_setid(CPUArchState *env, abi_long arg1,
-     cpuwhich_t which;
- 
-     target_to_host_cpuset_which(&which, arg1);
--#if TARGET_ABI_BITS == 32
--    /* See if we need to align the register pairs */
--    if (regpairs_aligned(env)) {
--        id = target_arg64(arg3, arg4);
--        setid = arg5;
-+    if (TARGET_ABI_BITS == 32) {
-+        /* See if we need to align the register pairs */
-+        if (regpairs_aligned(env)) {
-+            id = target_arg64(arg3, arg4);
-+            setid = arg5;
-+        } else {
-+            id = target_arg64(arg2, arg3);
-+            setid = arg4;
-+        }
-     } else {
--        id = target_arg64(arg2, arg3);
--        setid = arg4;
-+        id = arg2;
-+        setid = arg3;
-     }
--#else
--    id = arg2;
--    setid = arg3;
--#endif
-     return get_errno(cpuset_setid(which, id, setid));
- }
- 
-@@ -135,13 +135,13 @@ static inline abi_long do_freebsd_cpuset_getid(abi_long arg1, abi_ulong arg2,
- 
-     target_to_host_cpuset_which(&which, arg1);
-     target_to_host_cpuset_level(&level, arg2);
--#if TARGET_ABI_BITS == 32
--    id = target_arg64(arg3, arg4);
--    target_setid = arg5;
--#else
--    id = arg3;
--    target_setid = arg4;
--#endif
-+    if (TARGET_ABI_BITS == 32) {
-+        id = target_arg64(arg3, arg4);
-+        target_setid = arg5;
-+    } else {
-+        id = arg3;
-+        target_setid = arg4;
-+    }
-     ret = get_errno(cpuset_getid(level, which, id, &setid));
-     if (is_error(ret)) {
-         return ret;
-@@ -212,15 +212,15 @@ static inline abi_long do_freebsd_cpuset_getaffinity(cpulevel_t level,
-     id_t id;    /* 64-bit */
-     abi_ulong setsize, target_mask;
- 
--#if TARGET_ABI_BITS == 32
--    id = (id_t)target_arg64(arg3, arg4);
--    setsize = arg5;
--    target_mask = arg6;
--#else
--    id = (id_t)arg3;
--    setsize = arg4;
--    target_mask = arg5;
--#endif
-+    if (TARGET_ABI_BITS == 32) {
-+        id = (id_t)target_arg64(arg3, arg4);
-+        setsize = arg5;
-+        target_mask = arg6;
-+    } else {
-+        id = (id_t)arg3;
-+        setsize = arg4;
-+        target_mask = arg5;
-+    }
- 
-     ret = get_errno(cpuset_getaffinity(level, which, id, setsize, &mask));
-     if (ret == 0) {
-@@ -241,15 +241,15 @@ static inline abi_long do_freebsd_cpuset_setaffinity(cpulevel_t level,
-     id_t id; /* 64-bit */
-     abi_ulong setsize, target_mask;
- 
--#if TARGET_ABI_BITS == 32
--    id = (id_t)target_arg64(arg3, arg4);
--    setsize = arg5;
--    target_mask = arg6;
--#else
--    id = (id_t)arg3;
--    setsize = arg4;
--    target_mask = arg5;
--#endif
-+    if (TARGET_ABI_BITS == 32) {
-+        id = (id_t)target_arg64(arg3, arg4);
-+        setsize = arg5;
-+        target_mask = arg6;
-+    } else {
-+        id = (id_t)arg3;
-+        setsize = arg4;
-+        target_mask = arg5;
-+    }
- 
-     ret = copy_from_user_cpuset_mask(&mask, target_mask);
-     if (ret == 0) {
-@@ -333,33 +333,30 @@ static inline abi_long do_freebsd_kldsym(abi_long fileid, abi_long cmd,
-  * New posix calls
-  */
- 
--#if TARGET_ABI_BITS == 32
--static inline uint64_t target_offset64(uint32_t word0, uint32_t word1)
--{
--#ifdef TARGET_BIG_ENDIAN
--    return ((uint64_t)word0 << 32) | word1;
--#else
--    return ((uint64_t)word1 << 32) | word0;
--#endif
--}
--#else /* TARGET_ABI_BITS == 32 */
- static inline uint64_t target_offset64(uint64_t word0, uint64_t word1)
- {
--    return word0;
-+    if (TARGET_ABI_BITS == 32) {
-+        if (TARGET_BIG_ENDIAN) {
-+            return ((uint64_t)word0 << 32) | word1;
-+        } else {
-+            return ((uint64_t)word1 << 32) | word0;
-+        }
-+    } else {
-+        return word0;
-+    }
- }
--#endif /* TARGET_ABI_BITS != 32 */
- 
- /* posix_fallocate(2) */
- static inline abi_long do_freebsd_posix_fallocate(abi_long arg1, abi_long arg2,
-     abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
- {
- 
--#if TARGET_ABI_BITS == 32
--    return get_errno(posix_fallocate(arg1, target_offset64(arg3, arg4),
--        target_offset64(arg5, arg6)));
--#else
--    return get_errno(posix_fallocate(arg1, arg2, arg3));
--#endif
-+    if (TARGET_ABI_BITS == 32) {
-+        return get_errno(posix_fallocate(arg1, target_offset64(arg3, arg4),
-+            target_offset64(arg5, arg6)));
-+    } else {
-+        return get_errno(posix_fallocate(arg1, arg2, arg3));
-+    }
- }
- 
- /* posix_openpt(2) */
-diff --git a/bsd-user/freebsd/os-thread.h b/bsd-user/freebsd/os-thread.h
-index 4258b24095..6552c60337 100644
---- a/bsd-user/freebsd/os-thread.h
-+++ b/bsd-user/freebsd/os-thread.h
-@@ -18,7 +18,7 @@
- int safe_thr_suspend(struct timespec *timeout);
- int safe__umtx_op(void *, int, unsigned long, void *, void *);
- 
--#if defined(HOST_BIG_ENDIAN) == defined(TARGET_BIG_ENDIAN) && \
-+#if HOST_BIG_ENDIAN == TARGET_BIG_ENDIAN && \
-     (TARGET_ABI_BITS == HOST_LONG_BITS || defined(UMTX_OP__32BIT))
- #define _UMTX_OPTIMIZED
- #if defined(TARGET_ABI32)
-
--- 
-2.55.0
-
+On Mon, Aug 3, 2026 at 11:12=E2=80=AFAM Alexander Mikhalitsyn
+<alexander@mihalicyn.com> wrote:
+>
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Dear friends,
+>
+> This patchset is aimed to support virtio-sound live migration and based o=
+n
+> pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I t=
+ried
+> to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b8a=
+335fc53569.camel@mihalicyn.com/)
+> if Volker is going to continue his work on this, but received no reply so=
+ I
+> just decided to go forward: take his patches, rebase and resend. Of cours=
+e,
+> I kept all authorship/tags so I hope that it is fine.
+>
+> Testing.
+>
+> I manually validated this with Ubuntu 24.04 Desktop VM and found no issue=
+s.
+> Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pipel=
+ines/2626702088).
+>
+> Original patchset:
+> https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e@t=
+-online.de [1]
+>
+> Git tree:
+> https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
+>
+> Changelog for version 5:
+> - rebased
+> - added RWB tags
+>
+> Changelog for version 4:
+> - addressed review feedback from Marc-Andr=C3=A9 Lureau
+> - and from Manos Pitsidianakis
+> *there is a detailed changelog under each commit message*
+>
+> Changelog for version 3:
+> - addressed review feedback from Marc-Andr=C3=A9 Lureau:
+>         - drop VirtIOSoundPCMStream's id field (unused)
+>         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
+>         - fixes in "hw/audio/virtio-sound: add stream state variable"
+>           [ please, look in commit message for details ]
+>         - added "hw/audio/virtio-sound: remove channel positions field
+>           from VirtIOSoundPCMStream"
+>         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
+>           [ details in commit message ]
+>
+> Changelog for version 2:
+> - no code changes (only commit messages)
+>   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
+>   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
+>   and added some extra details about what I did with the original
+>   patches during rebase (for some of them it was simpler and less error
+>   prone to just drop changes and reimplement them by following the idea
+>   of the patch, cause base code has changed significantly).
+>
+> Changelog relative to the original Volker R=C3=BCmelin's submission:
+> - rebased:
+>         - "hw/audio/virtio-sound: return correct command response size"
+>                 was dropped as it was already merged
+>         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer ha=
+ndler"
+>                 was dropped as it seems to be replaced with another fix
+>                 https://github.com/qemu/qemu/commit/731655f87f319fd06f272=
+82c6cafbc2467ac8045
+>         - I had to drop all pre-existing Reviewed-by tags cause it was 2 =
+years since
+>           this patchset was sent and reviewed and I did a quite significa=
+nt code changes
+>           during rebase
+>
+> Kind regards,
+> Alex
+>
+> Alexander Mikhalitsyn (2):
+>   hw/audio/virtio-sound: remove channel positions field from
+>     VirtIOSoundPCMStream
+>   hw/audio/virtio-sound: drop unused struct
+>     VirtIOSoundPCMStream.flushing field
+>
+> Volker R=C3=BCmelin (8):
+>   hw/audio/virtio-sound: remove command and stream mutexes
+>   hw/audio/virtio-sound: allocate an array of streams
+>   hw/audio/virtio-sound: free all stream buffers on reset
+>   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+>   hw/audio/virtio-sound: add stream state variable
+>   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+>   hw/audio/virtio-sound: introduce virtio_snd_set_active()
+>   hw/audio/virtio-sound: add missing vmstate fields
+>
+>  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++--------------
+>  include/hw/audio/virtio-snd.h |  26 +-
+>  2 files changed, 414 insertions(+), 308 deletions(-)
+>
+> --
+> 2.47.3
+>
 
