@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB57C982FA
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23210C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8l2c-00032c-3d; Mon, 21 Sep 2026 16:55:10 -0400
+	id 1x8l2n-0003IJ-3N; Mon, 21 Sep 2026 16:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l2V-0002uh-RK
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:55:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l2d-000395-Ds
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:55:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l2U-0002so-9B
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:55:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l2b-00036J-CA
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:55:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790024101;
+ s=mimecast20190719; t=1790024108;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=CqNbtZDcgIqw5esq/ExHtfwHVEeZH6+LwnHFy+Cuw40=;
- b=ceZTtVeXrSNi9y1FjqPIZOT3qWGH7sTYd0p5BYM+bJghqWBTfMX+BNtF02wryHxUxjo6rW
- 5eZsmXHtR469Yu6rDBjCq6B0nhe8LgA6QoBHpQf8gwuc6KqwnYkXE74QeU4dYaZw/QpOB2
- 3NqXuquM/CiRL6z5mjBq2Q6QdXS3oCk=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CT6/gXNbFAojbYEnwwznDu12ElaNbWuWVrzBHmX1X2Y=;
+ b=cggYJuUTC6OtguUcZCpA2RdmyJO7PtZawbDUJIg34BjTVjxZ1wTst+wdSUz4o/x5Kz6Jan
+ ApYepRYe3qFCR5bKNY1fKm2akPuderPMZoR/li3BlvmBf/ACD6nMRU2ZvxzjD+f/9NQobs
+ Q3LwPMEF1EdWttv4IQdBfmuaJ8NJwz0=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-bX82P9vBMzOjdwbgw0GV4w-1; Mon,
- 21 Sep 2026 16:54:57 -0400
-X-MC-Unique: bX82P9vBMzOjdwbgw0GV4w-1
-X-Mimecast-MFC-AGG-ID: bX82P9vBMzOjdwbgw0GV4w_1790024095
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-5PlZonZvPCWC1cOLozgPgA-1; Mon,
+ 21 Sep 2026 16:55:06 -0400
+X-MC-Unique: 5PlZonZvPCWC1cOLozgPgA-1
+X-Mimecast-MFC-AGG-ID: 5PlZonZvPCWC1cOLozgPgA_1790024103
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48277195FCF8; Mon, 21 Sep 2026 20:54:55 +0000 (UTC)
+ id CC058195FD08; Mon, 21 Sep 2026 20:55:02 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD27F1800446; Mon, 21 Sep 2026 20:54:50 +0000 (UTC)
+ id E7CCD180034F; Mon, 21 Sep 2026 20:54:58 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,12 +60,14 @@ Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 00/10] qapi: convert/split remaining QAPI/QMP intro sections
-Date: Mon, 21 Sep 2026 16:54:39 -0400
-Message-ID: <20260921205449.1860694-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v2 02/10] qapi: convert/split intros for block-core.json
+ commands
+Date: Mon, 21 Sep 2026 16:54:41 -0400
+Message-ID: <20260921205449.1860694-3-jsnow@redhat.com>
+In-Reply-To: <20260921205449.1860694-1-jsnow@redhat.com>
+References: <20260921205449.1860694-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -91,72 +94,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Depending on what order you read these in, this series is either the=0D
-second-to-last batch or the very last batch.=0D
-=0D
-This series covers the trickiest bits of qapi/qapi-schema.json, ones=0D
-that involve multiple paragraphs and decisions over where exactly to=0D
-place the split. Currently there are only some very minor prose=0D
-rewrites the break apart intro statements from paragraphs where deemed=0D
-appropriate.=0D
-=0D
-If you are a non-QAPI maintainer, the TL:DR here is:=0D
-    Take a look at what is being indented here and what is=0D
-    not. Anything that gets indented is text that is not eligible for=0D
-    inlining: that is, the intro text is not copied into command/event=0D
-    documentation to replace "The members of ..." placeholders in our=0D
-    generated documentation.=0D
-=0D
-    If any text that you believe is important for end users to=0D
-    understand is in the indented section after these patches, please=0D
-    review and propose a different prose split.=0D
-=0D
-    (More info: The intro text is not guaranteed to be dropped from=0D
-    generated docs. For example, if a struct is used as a type for an=0D
-    argument in its own right, it is guaranteed to be included in the=0D
-    generated documentation. It is also always included for commands,=0D
-    events, and enums. It is only for structs which are *only* ever=0D
-    used as command/event arguments or as a branch type where this=0D
-    text is at risk of not being reproduced at all in the output=0D
-    documentation.)=0D
-=0D
-John Snow (10):=0D
-  qapi: split intro for HV_BALLOON_STATUS_REPORT=0D
-  qapi: convert/split intros for block-core.json commands=0D
-  qapi: convert/split intros for block commands=0D
-  qapi: convert/split intros for job.json commands=0D
-  qapi: convert/split intros for misc-i386.json commands=0D
-  qapi: convert/split intros for commands=0D
-  qapi: convert/split intros for enums=0D
-  qapi: split intro sections for events=0D
-  qapi: split intro sections for data structs=0D
-  qapi: split intro sections for inlinable structs=0D
-=0D
- qapi/acpi.json          |   3 +-=0D
- qapi/block-core.json    | 131 +++++++++++++++++-----------------------=0D
- qapi/block-export.json  |   8 +--=0D
- qapi/block.json         |  33 +++++-----=0D
- qapi/compat.json        |   3 +-=0D
- qapi/control.json       |   3 +-=0D
- qapi/crypto.json        |   3 +-=0D
- qapi/introspect.json    |  16 ++---=0D
- qapi/job.json           |  42 ++++++-------=0D
- qapi/machine-s390x.json |   3 +-=0D
- qapi/machine.json       |  78 +++++++++++-------------=0D
- qapi/migration.json     |  12 ++--=0D
- qapi/misc-arm.json      |   5 +-=0D
- qapi/misc-i386.json     |  22 +++----=0D
- qapi/misc.json          |   8 +--=0D
- qapi/net.json           |  37 +++++-------=0D
- qapi/qdev.json          |   9 ++-=0D
- qapi/qom.json           |   9 +--=0D
- qapi/stats.json         |   5 +-=0D
- qapi/transaction.json   |   6 +-=0D
- qapi/ui.json            |   8 +--=0D
- 21 files changed, 192 insertions(+), 252 deletions(-)=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ qapi/block-core.json | 126 +++++++++++++++++++------------------------
+ 1 file changed, 55 insertions(+), 71 deletions(-)
+
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 802a4af74ed..13981d7e69d 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -1556,8 +1556,7 @@
+ 
+ ##
+ # @block_resize:
+-#
+-# Resize a block image while a guest is running.
++#     Resize a block image while a guest is running.
+ #
+ # Either @device or @node-name must be set but not both.
+ #
+@@ -1812,13 +1811,12 @@
+ 
+ ##
+ # @blockdev-snapshot:
++#     Takes a snapshot of a block device.
+ #
+-# Takes a snapshot of a block device.
+-#
+-# Take a snapshot, by installing 'node' as the backing image of
+-# 'overlay'.  Additionally, if 'node' is associated with a block
+-# device, the block device changes to using 'overlay' as its new
+-# active image.
++#     Take a snapshot, by installing 'node' as the backing image of
++#     'overlay'.  Additionally, if 'node' is associated with a block
++#     device, the block device changes to using 'overlay' as its new
++#     active image.
+ #
+ # Features:
+ #
+@@ -1883,9 +1881,8 @@
+ 
+ ##
+ # @block-commit:
+-#
+-# Live commit of data from overlay image nodes into backing nodes -
+-# i.e., writes data between 'top' and 'base' into 'base'.
++#     Live commit of data from overlay image nodes into backing nodes
++#     - i.e., writes data between 'top' and 'base' into 'base'.
+ #
+ # If top == base, that is an error.  If top has no overlays on top of
+ # it, or if it is in use by a writer, the job will not be completed by
+@@ -2510,16 +2507,15 @@
+ 
+ ##
+ # @block-dirty-bitmap-merge:
++#     Merge dirty bitmaps listed in @bitmaps to the @target dirty
++#     bitmap.  Dirty bitmaps in @bitmaps will be unchanged, except if
++#     it also appears as the @target bitmap.  Any bits already set in
++#     @target will still be set after the merge, i.e., this operation
++#     does not clear the target.  On error, @target is unchanged.
+ #
+-# Merge dirty bitmaps listed in @bitmaps to the @target dirty bitmap.
+-# Dirty bitmaps in @bitmaps will be unchanged, except if it also
+-# appears as the @target bitmap.  Any bits already set in @target will
+-# still be set after the merge, i.e., this operation does not clear
+-# the target.  On error, @target is unchanged.
+-#
+-# The resulting bitmap will count as dirty any clusters that were
+-# dirty in any of the source bitmaps.  This can be used to achieve
+-# backup checkpoints, or in simpler usages, to copy bitmaps.
++#     The resulting bitmap will count as dirty any clusters that were
++#     dirty in any of the source bitmaps.  This can be used to achieve
++#     backup checkpoints, or in simpler usages, to copy bitmaps.
+ #
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+@@ -2865,8 +2861,7 @@
+ 
+ ##
+ # @block-stream:
+-#
+-# Copy data from a backing file into a block device.
++#     Copy data from a backing file into a block device.
+ #
+ # The block streaming operation is performed in the background until
+ # the entire backing file has been copied.  This command returns
+@@ -2977,8 +2972,7 @@
+ 
+ ##
+ # @block-job-set-speed:
+-#
+-# Set maximum speed for a background block operation.
++#     Set maximum speed for a background block operation.
+ #
+ # This command can only be issued when there is an active block job.
+ #
+@@ -3003,8 +2997,7 @@
+ 
+ ##
+ # @block-job-cancel:
+-#
+-# Stop an active background block operation.
++#     Stop an active background block operation.
+ #
+ # This command returns immediately after marking the active background
+ # block operation for cancellation.  It is an error to call this
+@@ -3046,8 +3039,7 @@
+ 
+ ##
+ # @block-job-pause:
+-#
+-# Pause an active background block operation.
++#     Pause an active background block operation.
+ #
+ # This command returns immediately after marking the active job for
+ # pausing.  Pausing an already paused job is an error.
+@@ -3079,8 +3071,7 @@
+ 
+ ##
+ # @block-job-resume:
+-#
+-# Resume an active background block operation.
++#     Resume an active background block operation.
+ #
+ # This command returns immediately after resuming a paused job.
+ # Resuming an already running job is an error.
+@@ -3108,9 +3099,9 @@
+ 
+ ##
+ # @block-job-complete:
+-#
+-# Manually trigger completion of an active job in the READY or STANDBY
+-# state.  Completing the job in any other state is an error.
++#     Manually trigger completion of an active job in the READY or
++#     STANDBY state.  Completing the job in any other state is an
++#     error.
+ #
+ # This is supported only for drive mirroring, where it also switches
+ # the device to write to the target path only.  Note that drive
+@@ -3148,14 +3139,13 @@
+ 
+ ##
+ # @block-job-dismiss:
+-#
+-# Deletes a job that is in the CONCLUDED state.  This command only
+-# needs to be run explicitly for jobs that don't have automatic
+-# dismiss enabled.  In turn, automatic dismiss may be enabled only for
+-# jobs that have @auto-dismiss option, which are `drive-backup`,
+-# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit`
+-# and `block-stream`.  @auto-dismiss is enabled by default for these
+-# jobs.
++#     Deletes a job that is in the CONCLUDED state.  This command only
++#     needs to be run explicitly for jobs that don't have automatic
++#     dismiss enabled.  In turn, automatic dismiss may be enabled only
++#     for jobs that have @auto-dismiss option, which are
++#     `drive-backup`, `blockdev-backup`, `drive-mirror`,
++#     `blockdev-mirror`, `block-commit` and `block-stream`.
++#     @auto-dismiss is enabled by default for these jobs.
+ #
+ # This command will refuse to operate on any job that has not yet
+ # reached its terminal state, CONCLUDED.  For jobs that make use of
+@@ -3177,11 +3167,10 @@
+ 
+ ##
+ # @block-job-finalize:
+-#
+-# Instructs all jobs in a transaction (or a single job if it is not
+-# part of any transaction) to finalize any graph changes and do any
+-# necessary cleanup.  This command requires that all involved jobs are
+-# in the PENDING state.
++#     Instructs all jobs in a transaction (or a single job if it is
++#     not part of any transaction) to finalize any graph changes and
++#     do any necessary cleanup.  This command requires that all
++#     involved jobs are in the PENDING state.
+ #
+ # For jobs in a transaction, instructing one job to finalize will
+ # force ALL jobs in the transaction to finalize, so it is only
+@@ -4917,14 +4906,13 @@
+ 
+ ##
+ # @blockdev-reopen:
+-#
+-# Reopens one or more block devices using the given set of options.
+-# Any option not specified will be reset to its default value
+-# regardless of its previous status.  If an option cannot be changed
+-# or a particular driver does not support reopening then the command
+-# will return an error.  All devices in the list are reopened in one
+-# transaction, so if one of them fails then the whole transaction is
+-# cancelled.
++#     Reopens one or more block devices using the given set of
++#     options.  Any option not specified will be reset to its default
++#     value regardless of its previous status.  If an option cannot be
++#     changed or a particular driver does not support reopening then
++#     the command will return an error.  All devices in the list are
++#     reopened in one transaction, so if one of them fails then the
++#     whole transaction is cancelled.
+ #
+ # The command receives a list of block devices to reopen.  For each
+ # one of them, the top-level @node-name option (from
+@@ -4996,9 +4984,8 @@
+ 
+ ##
+ # @blockdev-set-active:
+-#
+-# Activate or deactivate a block device.  Use this to manage the
+-# handover of block devices on migration with qemu-storage-daemon.
++#     Activate or deactivate a block device.  Use this to manage the
++#     handover of block devices on migration with qemu-storage-daemon.
+ #
+ # Activating a node automatically activates all of its child nodes
+ # first.  Deactivating a node automatically deactivates any of its
+@@ -5881,15 +5868,14 @@
+ 
+ ##
+ # @block-set-write-threshold:
++#     Change the write threshold for a block drive.  An event will be
++#     delivered if a write to this block drive crosses the configured
++#     threshold.  The threshold is an offset, thus must be
++#     non-negative.  Default is no write threshold.  Setting the
++#     threshold to zero disables it.
+ #
+-# Change the write threshold for a block drive.  An event will be
+-# delivered if a write to this block drive crosses the configured
+-# threshold.  The threshold is an offset, thus must be non-negative.
+-# Default is no write threshold.  Setting the threshold to zero
+-# disables it.
+-#
+-# This is useful to transparently resize thin-provisioned drives
+-# without the guest OS noticing.
++#     This is useful to transparently resize thin-provisioned drives
++#     without the guest OS noticing.
+ #
+ # @node-name: graph node name on which the threshold must be set.
+ #
+@@ -5911,8 +5897,7 @@
+ 
+ ##
+ # @x-blockdev-change:
+-#
+-# Dynamically reconfigure the block driver state graph.
++#     Dynamically reconfigure the block driver state graph.
+ #
+ # Currently only supports adding and deleting quorum children.  A
+ # child will be added at the end of the list of children.  Its
+@@ -5971,11 +5956,10 @@
+ 
+ ##
+ # @x-blockdev-set-iothread:
++#     Move @node and its children into the @iothread.  If @iothread is
++#     null then move @node and its children into the main loop.
+ #
+-# Move @node and its children into the @iothread.  If @iothread is
+-# null then move @node and its children into the main loop.
+-#
+-# The node must not be attached to a BlockBackend.
++#     The node must not be attached to a BlockBackend.
+ #
+ # @node-name: the name of the block driver node
+ #
+-- 
+2.55.0
 
 
