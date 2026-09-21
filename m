@@ -4,89 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA11C982DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 05:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82573C982DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 05:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8WI7-0000se-W5; Mon, 21 Sep 2026 01:10:12 -0400
+	id 1x8Wgc-00080C-5P; Mon, 21 Sep 2026 01:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jwhitakera@gmail.com>)
- id 1x8WI6-0000sL-30
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:10:10 -0400
-Received: from mail-pz2-x14.google.com ([2607:f8b0:4864:3b::14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jwhitakera@gmail.com>)
- id 1x8WI4-0007w5-F7
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:10:09 -0400
-Received: by mail-pz2-x14.google.com with SMTP id
- 41be03b00d2f7-cc4d2fe2056so1521125a12.2
- for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 22:10:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x8Wga-0007yS-O5
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:35:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x8WgZ-0002E5-5A
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:35:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789968924;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=V52oqNR4NVIAj9fgT+1WyLsSqNdVhDDDgwpiTasJDds=;
+ b=Y9zlCWIV5TQn73vOLdT+hyCh5Ij0fHYtQN0dqrP+2piJZSrSfxt3+u8uUuBClhHZUjKeKT
+ dJsEFgCQb6APB3GipraWzAjliSIviX6kh09+x3uQgcdLQOXAxM4kKMs7Pma0GrgfbgtsCT
+ Xo+KCJ1uRlsgvUwX8VdVkL3cBthu/vY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-251-2TWke6YUNCW3rsfal4WytA-1; Mon, 21 Sep 2026 01:35:22 -0400
+X-MC-Unique: 2TWke6YUNCW3rsfal4WytA-1
+X-Mimecast-MFC-AGG-ID: 2TWke6YUNCW3rsfal4WytA_1789968921
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49ccfbe060aso19062935e9.0
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 22:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1789967407; x=1790572207; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I4wjmqFESw16ZRfgVBKpX32/Ry6HBE5C3JIoH5S39pE=;
- b=sWfW+CcW7j2BJmVLnIG2pOs/LmH8YgWGqLIJSJCVC5DznbbBun3kUatlBZU/UthIur
- zvBIiyafn5zMiy6OrQajtkM85uIBalvbwN6QM7vZIZJDSrOm6v4+NUhZCNM2tD+mkTqH
- hLfnkpoxxx0jDmt7U18GMIeFLqNMQB8JUVyHzg7pRJDgQ6zEug9z16mHVfnybkbtqHu4
- ofDoZPMQoMOAeAURAX84zNMI+pj2GxK40RxzdSzsdG9m/om5KNTU0vr/2fzia5OPnzBY
- qkXgGR98xkSvM6yfFXDWTvHMFjXii+PQnXzYWuaPbmVGHKPDsfpgVApw+Gwqq/wTKKIH
- pWQQ==
+ d=redhat.com; s=google; t=1789968921; x=1790573721; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=V52oqNR4NVIAj9fgT+1WyLsSqNdVhDDDgwpiTasJDds=;
+ b=Jw4WN2IcUnStngt1RF30pX/a1iE117M5+x4fCF/dxr1uv/9XmK5vIU7O3KhBrPz0bz
+ eM15axKevLPkxPq+3JP2IpxVqu8X2ieJfZqabht7PwYtvJ+Vi4Wa4hG3TvStmMkn2tvO
+ YT7N00aCswiBcr0C3y1C3Nkk1Vhviwifl+MQI/SmYLpowDsdj6Wy2n4pr/TQsJCkC9YU
+ WohcoKlXA836mh9oWAI3BGDZwgXSM+w+cUdmZpTz28Q0XecwV0kBUfAmI08Cbjc0xorg
+ TtqR0f7dEb4Gy6U88PqfVrPkdqPSXzXZ31EsxLlKskXOSvKO5VVeXGhBpimZJCpHqCU0
+ +iTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789967407; x=1790572207;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1789968921; x=1790573721;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=I4wjmqFESw16ZRfgVBKpX32/Ry6HBE5C3JIoH5S39pE=;
- b=myrkb9Aa9O+1VKbv1/zgzQ9eun+NfE7CBjq6VnVAXREEEryQXin10jXFAf8gJIwfma
- 4UvK2XFYW/IeHnRzvu/0ECxBvF54JszvEh/PtMmWQirsg0RFOMVX9en9YUBlClLvHRJk
- LXqI74rd7lb8jHW1lTCN4Zvh8t/uP07y6CwPMjAcK06mJ7iSS/dibyk3Y6hu9DYRUBbT
- y3e/sD7KmWSP3EuZhtmV769apbduJebw9xAHm1eGk+la+2RwI7PpQjnBcMSu+BAhztSI
- Y9yIqlPP4otb5fXALJ2q2E3s4tidKYb0BnQti+abe2JfuZQN4k75BhDQt3+G5y80SDsR
- HaNA==
-X-Gm-Message-State: AFuF++netalIevZy8Q5pDzRxlLRpRoSmpO5eCh+m1oyyA9Gm/VyE+4XM
- vA502A8sE0g1EtX9OJbZGre5Es6uW2fHzHyalu4CJ9WTq9Wmhn7XhzzlN9KE5Gzd
-X-Gm-Gg: AYBFou2WCaWFl362LC4efuWroeTSpfbVcFe+WQMNm5hIclHlHgzgQ7463VbQPl1BmgN
- P1ZMqSfdXjKjydYizr4JoZA42gJXWfCAV3nlvlAycTRyvl6FsTp/JU1bw57AXfOBrriDp9Y91SD
- VMG7j3toXc8xGhBL+j6GSRdF3SjC91AmAUmoZfqkJyybIv9Q+xYDcXATwY4hF+3+RsM0hyD3L82
- 2D+rqlwD/cdt8hd/48+FoYnPZJ/e43vfm7IfBmWQAMKWrH3j+Dm/9xa5tGVmMa5glIYuI7RCqLL
- rUPttgcRrS7y3iHwK/xWxxGPrv9W3UfeZGnDY8GUcXxJZLUji2geX/BrNMqtGEt45AuAGje30sO
- bAnV7aPjARhCSAzUlm2/E1G60CekHmmXYUCjac2ESd0wHOhOO8aLHmmxgVbNUOiFlEtbFrO++ND
- zEUbNC02Cj0koW3WwUJvuTIdDuCi6u5FlTD4ZzmqXNXQ1k2gO9D+XsUu2AJ2GOLj3IJ+9cAXTze
- ciz4JipPJcmi0Dj3Q==
-X-Received: by 2002:a05:6a20:6a20:b0:3d3:adbf:7777 with SMTP id
- adf61e73a8af0-3dd8c49f29dmr16052707637.19.1789967406541; 
- Sun, 20 Sep 2026 22:10:06 -0700 (PDT)
-Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:a9ca:268c:17b3:ded])
+ bh=V52oqNR4NVIAj9fgT+1WyLsSqNdVhDDDgwpiTasJDds=;
+ b=HlwkAlIrEXygUybE09N/MGRnNhK5K0TZzBvLfI9W/XgNowcONgGy69iE4WCdiTbxu6
+ 4NcgooP2nC+FdofTIOWyQJr6zlYL/Qy0i2QsZErDvOHaulO/gM2FsRH47mgbdkppeXMZ
+ 4xvxITPnTQbslYxzKQ5yqFbujdxhjCdh00JRa9j7m8GzesyHWbAZd19TsU9p11T6jnim
+ FTbBZaD+GULg4KNGAfORIi+0Ne3ctUSHMNHOTCDH2BcvzFkf5PW5G4qO9qAD1AvuLRSX
+ Vndv0crqJCR1jWx8t728EjFoGBoHL1ZprgoqndbmbSwjteXm3aNpFU6lrIfTf78t280Z
+ sE1A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwqU6ycycCrUsGFmfKfHNQM/FqZNDYMlYdxWaYoEawHGwytG9GJDROiabbr1yYBeaXkHPnyIcF7Fbdw@nongnu.org
+X-Gm-Message-State: AFuF++natszzBxWayZqDUp3rzae81OByjomOkPyH3M9FMTpv7gxlKNJn
+ Vyml2jzNL5wz9HCyUxKzGxlLwiADls5Lcdd3jboGpH+ZCfnjJmCuTUzmM8T7L9Rk9SZ5tOFQUPB
+ 6kGKTe2TA+0BegAYUISgtqrzGCphPMMxcFBpjcue77fQ8dhYLUCnLfhYB
+X-Gm-Gg: AYBFou1cT44EGsdGXjhrMxDHGAM/h5fXbGrBoe8Dh0C2q5JLZMfSaI7OuYSB3ARi1vi
+ KJ2UMAExOt4t05Pq0hvoGI4Etxo/7Jj9kTDy2+XCm+0cffCnI2hpcdN8XiNk7EKOO1U2JtniiSf
+ X0yesDC1yHLHsIxVuiclZT7vS28MGOMZv2+8Lt3Ak5zLXXmqRtyZgGrDCpTnfFD/o2G1DMz3osN
+ j0ceq1EA2G+ajMePGpQUm9Ec19BPuO771WmGUeVFdBoGHOyVj6fK5wqA54F78csKsSwsgV8DwtZ
+ R5t/+Z9vfkX8LFKg76slneziF5RbBskjKCT6GsKzY1J9LUEU3GBzx9pVHIsw1pKebAI1w8Of
+X-Received: by 2002:a05:6000:186a:b0:487:958:795a with SMTP id
+ ffacd0b85a97d-4871e238019mr13584912f8f.25.1789968921419; 
+ Sun, 20 Sep 2026 22:35:21 -0700 (PDT)
+X-Received: by 2002:a05:6000:186a:b0:487:958:795a with SMTP id
+ ffacd0b85a97d-4871e238019mr13584885f8f.25.1789968921112; 
+ Sun, 20 Sep 2026 22:35:21 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.181])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144d54af4d5sm16625516c88.2.2026.09.20.22.10.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 20 Sep 2026 22:10:06 -0700 (PDT)
-From: Jacob Whitaker Abrams <jwhitakera@gmail.com>
-X-Google-Original-From: Jacob Whitaker Abrams <satur9nine@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Jacob Whitaker Abrams <satur9nine@gmail.com>,
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- qemu-arm@nongnu.org (open list:STM32L4x5 SoC Family)
-Subject: [PATCH v2] hw/char/stm32l4x5_usart.c: Support 16-bit writes
-Date: Sun, 20 Sep 2026 22:09:59 -0700
-Message-ID: <20260921050959.1876719-1-satur9nine@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ ffacd0b85a97d-487244229d5sm20737976f8f.2.2026.09.20.22.35.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Sep 2026 22:35:20 -0700 (PDT)
+Message-ID: <c923b372-728e-4561-855a-c363a907023e@redhat.com>
+Date: Mon, 21 Sep 2026 07:35:16 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::14;
- envelope-from=jwhitakera@gmail.com; helo=mail-pz2-x14.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: Fix meson suites invocation from make check
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20260918203153.3874488-1-farosas@suse.de>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260918203153.3874488-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,77 +169,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Official STM32CubeL4 drivers use and require support for 16-bit writes to
-UART registers for proper function despite datasheet claims.
+On 18/09/2026 22.31, Fabiano Rosas wrote:
+> make check is currently by default running tests tagged
+> "slow". 
+That's a regression, it did not used to be that way. Thus could you please 
+add a "Fixes:" tag to your patch?
 
-Signed-off-by: Jacob Whitaker Abrams <satur9nine@gmail.com>
----
-v2:
- - Remove all changes other than supporting 16-bit writes UART regs
-
- hw/char/stm32l4x5_usart.c          |  4 ++--
- tests/qtest/stm32l4x5_usart-test.c | 22 +++++++++++++++++++++-
- 2 files changed, 23 insertions(+), 3 deletions(-)
-
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index dd1b099195..3b9883bb23 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -521,12 +521,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .max_access_size = 4,
--        .min_access_size = 4,
-+        .min_access_size = 2,
-         .unaligned = false
-     },
-     .impl = {
-         .max_access_size = 4,
--        .min_access_size = 4,
-+        .min_access_size = 2,
-         .unaligned = false
-     },
- };
-diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-index a72c5a685d..3c6437e75d 100644
---- a/tests/qtest/stm32l4x5_usart-test.c
-+++ b/tests/qtest/stm32l4x5_usart-test.c
-@@ -332,6 +332,26 @@ static void test_ack(void)
-     qtest_quit(qts);
- }
- 
-+static void test_16bit_access(void)
-+{
-+    QTestState *qts = qtest_init("-M b-l475e-iot01a");
-+
-+    /* GTPR is declared uint16_t in the official STM driver. */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_GTPR, 0xABCD);
-+    uint16_t gtpr16 = qtest_readw(qts, USART1_BASE_ADDR + A_GTPR);
-+    g_assert_cmpuint(gtpr16, ==, 0xABCD);
-+
-+    /* TDR is uint16_t and r/w, register is 9-bits */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0x01CD);
-+    uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
-+    g_assert_cmpuint(tdr16, ==, 0x01CD);
-+
-+    /* RDR is uint16_t and read only, register is 9-bits */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_RDR, 0x01FA);
-+
-+    qtest_quit(qts);
-+}
-+
- static void check_clock(QTestState *qts, const char *path, uint32_t rcc_reg,
-                         uint32_t reg_offset)
- {
-@@ -370,6 +390,6 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
-     qtest_add_func("stm32l4x5/usart/ack", test_ack);
-     qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
-+    qtest_add_func("stm32l4x5/usart/16bit_access", test_16bit_access);
-     return g_test_run();
- }
--
--- 
-2.43.0
+  Thanks,
+   Thomas
 
 
