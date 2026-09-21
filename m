@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF889C982FB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC89C982ED
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrT-00068g-0j; Mon, 21 Sep 2026 17:47:43 -0400
+	id 1x8lru-0006To-5q; Mon, 21 Sep 2026 17:48:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrO-000666-2X
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:40 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrr-0006RY-VG
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:07 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrM-00007G-G5
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:37 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrq-0000Jq-9O
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:07 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49cd5462b69so18798695e9.1
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:35 -0700 (PDT)
+ 5b1f17b1804b1-49b912e64ccso25345725e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027255; x=1790632055; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790027275; x=1790632075; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=EKSAnmYv14gw5tUyYikFWhvF6ivlQzDp0mFzgIwqxlM=;
- b=Z1Gojlg0LAEooacqPxpo9ssr8W/N+BxqcJRYby/+kmcDbciZ8V2O6X2dPs0uwO3gsn
- 4pCpcpPhAtOsREB/aMCZDVr7enl8VmLWv6/UT4ieL57i/ddVG27qkAiarkguK/RbzGt3
- NcIDpcmGoR6u2TQeLsLwa0uMdQNLY+Cwnz+GG0SkIyC1+pVH9ETH3sCygc9o5UQFjfqE
- tqT7eyjoaTZI/b2HGGOG3SpgouRPBHc/1niA6oo08sGWkpuSMBKCtK2t9yePJdu5GYPf
- Ju5lEqijxGCUPEka98vTLGIcVjhjn2DLiw/TumY+zCCXIXCRwH3Gbfb/YJQJKlBKZ+8L
- eyvw==
+ bh=WFV6HbxHc7vgsxQTiWX5y7npoYO7KlRYRwxtn2DPwzk=;
+ b=Z6yvxA32aoWB90hepPEC1CIr07M/qmVH3qS85OVXdvPZjoO+pQRyIODKGkAWd+N/rU
+ dAtWbxEr3m4wspLHp+pL8TSY3WSG2eTUWpeZ8T6fR6LyiaEjLqjmMFeTgz0GcF0TUXsp
+ 9y8noMbgmHOO51SblSJtUMGrouGtuDqfyshiUdN1nk/nlWMr9t63+hb/InjXzXl+5KOn
+ J+Um4wiEbksGmZtYS7EUaM/WHES8uZLmUh3Ju0wpwibXSNGfaBM1xmgENwvzYVhTRQ8z
+ CcwXzOcx1xvJk3rraDFKtmiKlD7rRiXyIJSUtd2Ii90IPmTEBZKMKa0XKsONuxWmhojj
+ 7FfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027255; x=1790632055;
+ d=1e100.net; s=20260707; t=1790027275; x=1790632075;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=EKSAnmYv14gw5tUyYikFWhvF6ivlQzDp0mFzgIwqxlM=;
- b=YOCiCg9HGpKSgQlwXzT8CEOgtf0JVuBfEuN2zFMpX+YBMT4n0JrM18Ogf2nlrkiTP4
- LG5+QvKopkvPUgTtRtucHTIUz0NgC7rvK6hv+VkcQhW6Ui3iB/mlkawO1qAr6U6M9L4i
- T64lb3xZyJ/u+mZiLwWaRMu4TSaTnXE157Ksb/5CylLaShsIq6AEC4ng+hJPVOIksoNZ
- Kz3ueHv+PktHqyYPilGD8PdrFlXTxtD1SxZ8V3dnkYl/4Q6G1SvYDCfc3R2jZMqDI4GQ
- fnBc2yXOVLl1e6VTzRHsnTJge0VlWf5WDp5+JxMApy2r5uABAhklEuHsIes3VtjpJ7IN
- F8ng==
-X-Gm-Message-State: AFuF++kcvxhT6XXeLxHqjn8/+Dnj4v/q7RVX8HZmVZfnB80bjfK0xrRc
- M49fmHdkCxMGnPWoSBNj5ZgrMfSclha9D+NcR5VqOnvfXAqHRlScRN6KANmNpA==
-X-Gm-Gg: AYBFou2p/Jp/M8gXPE4mvaVwmu0HpyPqxILqp4ejkWONjcXap+qDWA76ROsn9Z8hkmf
- HLQNZWvs4Tm/4J8Mz/Px7ZHQZfqmUZSiVSpVWkLXu7gal+h1Xak95j7AzUQlobbalMV9/hAS+PX
- sUQG5gj//kNmiRzdBNzYpfPDxKbNBQy9+gRk27uEesCnt80FmCfLvAnFkhYRxYfkmyE3/sZlI1m
- lzt9v6Tnm0CKdlXbXZ31YTwgOv45FfhmdIfHP5qW3+kwcsjNpuOZ6PAo1C0/RMXaE/uyC7AOpf2
- QQdsS4uO2G/lMtvmi9NGPWJdo6DopAeCxNAYpjsUsLaEtitHl+4EDaWItri/FdBaBPkE8YYznCm
- hJxsXa5tt2aem5lkvv+HZsQsz4FTaWQMg2GjKa6tHgG+XdzD0AkzIg1NTmZ3l5NATG4vy+gIPW7
- M6dTQBj5Fxpjfjan9EifnDCfcHdVf99t2PjkN1hdYkbyU/RYh89p9P1MhEeh8naJRS9LweC1u8O
- gkRrOjrOTGHvIOubNLHAJq+Qg6LqvEHIEmkV5EgSj5kIg7Ula+z60bedcEYlXYLHhF2Tsduogr3
- VzQ=
-X-Received: by 2002:a05:600c:470d:b0:49f:ce78:356b with SMTP id
- 5b1f17b1804b1-49fce7836bdmr110430645e9.28.1790027254687; 
- Mon, 21 Sep 2026 14:47:34 -0700 (PDT)
+ bh=WFV6HbxHc7vgsxQTiWX5y7npoYO7KlRYRwxtn2DPwzk=;
+ b=PsZLHUecVf4+M8R3rWK9GlVj5MVNnxmja5f1su2fT6MGevUQAPm/Qz1SMKCVDe+liH
+ v0Zpb8+5Dxs4dAL9FDlqeAvubTiRFg4yQ6MTCRYZ8ShH2kZyaRj8Qc9qnxRvuHQh1Idp
+ tw9xvm6NRUUOtyjzswoXY1oOZkDSkLoAMEyGuP6wqrWHLHTfzwA3CwzvgaeJdfEOZ68p
+ Fz6MboFLpNcrc1FE/oVR2Nap5hqBfMJ27+6ktwwXMW/SR04nhoC/IBl7bdjGEZG5BQAR
+ DojC/2Yk8AEUcEYlXfw8oYhAnjZPQxyNfWswkGR6BayscWRZQgFNdUQb3lx7pz/yQTO5
+ aYUA==
+X-Gm-Message-State: AFuF++nlGIzgLCnDFU27vATbgO7H9cZncw8OtJ4luGmeouod6ZrxXB6x
+ p4erYMyV38dwvJ/R65ohj3h7wnNbQr4nes4pgSTuGJh544UVJcu1z3GUhP0q1g==
+X-Gm-Gg: AYBFou1zfMC23vbSIm+fQoqAHfKaY8Wk11ejnP3tfbci+TwhgE9puXtkPBTmBvYBfCm
+ CgncruGCx37oKwZjNlSflUTwNTfAaAAUpBiND/EqBtvJhSO4LBtJ4eHUWKEwgjIVaQJDC5bE1uN
+ 8Hk39iTS4590t0csr/ymqohzeNkZP83c56NOBwNIWwP80oQwZD1pWSh7WZBQIXRMLOJ2XTQHU93
+ oxhR5OI0OJRoO8Dq/Zl/lJmEqDYcwu6to0H/BJjZzwbN3izHjLdT1xSX/7vzZ+dPhhl9IExWWCu
+ 3CObRAlCn6jZEQy2T8dybJ5pm3lxbgOtWCl1JRZs6yXvg9Ig3ZVJ8CQKba9DYjTNEB5frVbZkZv
+ /3E318vx1jCxDKILVOCWSFG08830NOeLd0dW/TmtBoc2Iz4oal61ENphMYKYNRTojDedWwktbVP
+ O+M+0jempvgDY8tRi+x+x57wbx+Z5ZdhoG6jXtR31tMpX2XLlEtaAF/7MpvNxOaZ7REcbvCPTs3
+ leeynAhGwEzTTCcUHZ2Ab24QTuqUEOWdX2bVlUSnIJJdl3bairxkGeqzJiE1OGilKyIrzp6y0qo
+ 0uE9M7ffKIBQqA==
+X-Received: by 2002:a05:600c:1c20:b0:49f:bd3c:bc1c with SMTP id
+ 5b1f17b1804b1-49fc5739f3bmr188253705e9.23.1790027274892; 
+ Mon, 21 Sep 2026 14:47:54 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.33
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:34 -0700 (PDT)
+ Mon, 21 Sep 2026 14:47:54 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,10 +78,9 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 06/42] hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by
- default
-Date: Mon, 21 Sep 2026 23:46:34 +0200
-Message-ID: <20260921214710.29422-7-shentey@gmail.com>
+Subject: [PATCH 21/42] Kconfig: Extract config IMX_GPCV2 from config IMX
+Date: Mon, 21 Sep 2026 23:46:49 +0200
+Message-ID: <20260921214710.29422-22-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
@@ -111,63 +110,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having four CPUs and 1 GiB of RAM matches real hardware. Fix the machine
-defaults to make its use more ergonomic and less error-prone. Also
-reflect this in the board documentation.
-
-To reproduce the old default behavior for e.g. migration purposes,
-`-smp 1 -m 128M` needs to be passed on the command line.
+Over time, QEMU has grown a number of i.MX boards and the monolithic
+config IMX drags in unneeded dependencies into each SoC model. Extract
+config IMX_GPCV2 to eventually eliminate config IMX.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- docs/system/arm/sabrelite.rst | 4 ++--
- hw/arm/sabrelite.c            | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ hw/arm/Kconfig      | 2 ++
+ hw/intc/Kconfig     | 3 +++
+ hw/intc/meson.build | 2 +-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/sabrelite.rst b/docs/system/arm/sabrelite.rst
-index d3a3c01dd6..b8ac9548f5 100644
---- a/docs/system/arm/sabrelite.rst
-+++ b/docs/system/arm/sabrelite.rst
-@@ -55,7 +55,7 @@ To boot the newly built Linux kernel in QEMU with the SABRE Lite machine, use:
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 0b8414501c..1ea4210ccb 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -580,6 +580,7 @@ config FSL_IMX7
+     select PCI
+     select IMX
+     select IMX_FEC
++    select IMX_GPCV2
+     select IMX_I2C
+     select WDT_IMX2
+     select PCI_EXPRESS_DESIGNWARE
+@@ -661,6 +662,7 @@ config FSL_IMX6UL
+     select IMX
+     select IMX6UL_LCDIF
+     select IMX_FEC
++    select IMX_GPCV2
+     select IMX_I2C
+     select IMX_USBPHY
+     select WDT_IMX2
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index 97355f9df7..98dba7efb8 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -8,6 +8,9 @@ config I8259
+ config IMX_AVIC
+     bool
  
- .. code-block:: bash
++config IMX_GPCV2
++    bool
++
+ config PL190
+     bool
  
--  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
-+  $ qemu-system-arm -M sabrelite \
-       -display none -serial null -serial stdio \
-       -kernel arch/arm/boot/zImage \
-       -dtb arch/arm/boot/dts/imx6q-sabrelite.dtb \
-@@ -89,7 +89,7 @@ the -kernel argument, along with an SD card image with rootfs:
- 
- .. code-block:: bash
- 
--  $ qemu-system-arm -M sabrelite -smp 4 -m 1G \
-+  $ qemu-system-arm -M sabrelite \
-       -display none -serial null -serial stdio \
-       -kernel u-boot
- 
-diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-index 05dfabd937..34f302f83c 100644
---- a/hw/arm/sabrelite.c
-+++ b/hw/arm/sabrelite.c
-@@ -17,6 +17,7 @@
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "system/qtest.h"
- 
- struct SabreliteMachineState {
-@@ -139,7 +140,9 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
-     mc->init = sabrelite_init;
-     mc->max_cpus = FSL_IMX6_NUM_CPUS;
-+    mc->default_cpus = FSL_IMX6_NUM_CPUS;
-     mc->ignore_memory_transaction_failures = true;
-+    mc->default_ram_size = 1 * GiB;
-     mc->default_ram_id = "sabrelite.ram";
-     mc->auto_create_sdcard = true;
- }
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 74d84b8ddc..2ac575095f 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -24,7 +24,7 @@ system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
+ system_ss.add(when: 'CONFIG_HEATHROW_PIC', if_true: files('heathrow_pic.c'))
+ system_ss.add(when: 'CONFIG_I8259', if_true: files('i8259_common.c', 'i8259.c'))
+ system_ss.add(when: 'CONFIG_IMX_AVIC', if_true: files('imx_avic.c'))
+-system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpcv2.c'))
++system_ss.add(when: 'CONFIG_IMX_GPCV2', if_true: files('imx_gpcv2.c'))
+ system_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic_common.c'), if_false: files('ioapic-stub.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_intc.c'))
+ system_ss.add(when: 'CONFIG_OPENPIC', if_true: files('openpic.c'))
 -- 
 2.55.0
 
