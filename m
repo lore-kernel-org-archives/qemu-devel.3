@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A4BC982F7
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48C1C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f2E-00033K-1i; Mon, 21 Sep 2026 10:30:22 -0400
+	id 1x8f2C-0002yM-8r; Mon, 21 Sep 2026 10:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0k-0001vo-TP; Mon, 21 Sep 2026 10:28:55 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1x8f0p-0001wk-Ua; Mon, 21 Sep 2026 10:29:01 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1x8f0h-000073-7H; Mon, 21 Sep 2026 10:28:50 -0400
+ id 1x8f0l-00008C-M0; Mon, 21 Sep 2026 10:28:54 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id BFFB540803;
- Mon, 21 Sep 2026 14:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B771F000FF;
- Mon, 21 Sep 2026 14:28:39 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 65F1843C33;
+ Mon, 21 Sep 2026 14:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A341F00898;
+ Mon, 21 Sep 2026 14:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790000921;
- bh=73VXbOmIWKrxxbLYFyatApK8x2l7ryOhTMdeyx8DgzQ=;
+ s=k20260515; t=1790000930;
+ bh=BaGydPCSUAeNb0eWyHPI3N0R/c7Ye/3rI6LSXHt3/po=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XLKGWLoniOw/NENbRyFbzOXYD56qDSBXR39sfXBMaLOjr0tDzudmUaZvt4XUYIE7n
- Czq7bDP83/SBqXhclRXIx1R5vNoHCh0VVG2UN9Agip5SvWPQ7qrP4sBsUjMVP1RIbQ
- UKS25ID6jnaRE0yYyM5gVSbBjtYt0/6u2AewBRTtriagDHPkHccnwofQWK2xI+Dzlp
- z2EFJiiYbwHf/8+qIfVxGuFRx94AB2cu0uWi6HYu/IC6NArK2b37dhSUC/bKyJGhSK
- CEpjnKaHwF+soadlkqu3YV/tL8IkuMgHATABgk8/Lvbc5WIdTXTwty0cUbb+po0v6z
- GkKeNz+Eo/LUw==
+ b=L7qfATPe5BbDxhSN8gK04Nz9j++muofh+WKHGEGkG+aTRo5tJ++888mo1Sl1Uq9EB
+ FkjqA4MgMoM5hluoeYhqav0KFNXpPWvZ62+OXhtnwMp0fFDY5pUNL2R01DOpnj5Ps8
+ ncZerkQQEsess/7seQanlRcG3ikbi6z+naBwfLzKbyFI3VAwHo14TLEWvIcPZmI2d5
+ sbGE8vvUNMZ+OJc1by8OHPmG0SDkYS331XVQaghVvBNu5g9OIvOiPhzTBYdau/LEUn
+ tCMj5VjGyf5G7O9ge8gI4fYJFpYjUNlOwDEi9TGhq7ToigAo5RmoMVeRqbWSDqDFx2
+ +8jF2P5cEybBg==
 From: Niklas Cassel <cassel@kernel.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v6 02/15] virtio-blk: do not merge requests across a zone
- boundary
-Date: Mon, 21 Sep 2026 16:28:04 +0200
-Message-ID: <20260921142819.2916043-3-cassel@kernel.org>
+Subject: [PATCH v6 05/15] hw/block: derive the zone write granularity from the
+ block sizes
+Date: Mon, 21 Sep 2026 16:28:07 +0200
+Message-ID: <20260921142819.2916043-6-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921142819.2916043-1-cassel@kernel.org>
 References: <20260921142819.2916043-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,112 +72,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sam Li <faithilikerun@gmail.com>
+For ZBC/ZAC devices the write granularity is the physical block size, so
+a 512e SMR disk exposed through a host_device backend has a logical block
+size of 512 and a zone write granularity of 4096. We told the guest
+driver 512 while raw_co_zone_append() rejects anything that is not 4096
+byte aligned, so the driver saw a plain I/O error for a request it had
+been told was valid.
 
-virtio_blk_submit_multireq() fuses adjacent in-zone requests into a
-single request. On a zoned backend, a merged zone append request
-that straddles a zone boundary is rejected by the device because
-each write/read must stay within a single zone (virtio 1.4, 5.2.6.1).
+Report the larger of the logical and the physical block size instead.
+Both are properties of the device model, so the value that a guest is
+given does not change when it is migrated to a host whose disks differ,
+which a value taken from BlockLimits would. It is also what a guest
+derives for itself: blk_validate_zoned_limits() raises
+zone_write_granularity to the logical block size, and for a SCSI disk
+sd_zbc_read_zones() takes it from the physical block size.
 
-Add a bail condition to the merge coalescer: if combining the
-candidate request into the current batch would cross a zone
-boundary, flush the current batch and start a new one.
+blkconf_blocksizes() rejects a logical block size larger than the
+physical block size, so this is the physical block size in practice. It
+is expressed as the larger of the two because that is the constraint
+which applies: a guest cannot issue a write finer than the logical block
+size, and the medium cannot take one finer than the physical block size.
 
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Add it as a helper next to blkconf_blocksizes(), since it is derived from
+a BlockConf, and use it for the zone append offset check in
+check_zoned_request(), which validated against bs->bl.write_granularity.
+The value reported to the driver and the value that requests are
+validated against then cannot drift apart. The helper cannot return zero
+because blkconf_blocksizes() always leaves a logical block size behind,
+so the check no longer needs to guard against an unset granularity.
+
+Fixes: 4f7366506a96 ("virtio-blk: add zoned storage emulation for zoned devices")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/block-backend.c             | 11 +++++++++++
- hw/block/virtio-blk.c             | 22 +++++++++++++++++++++-
- include/system/block-backend-io.h |  1 +
- 3 files changed, 33 insertions(+), 1 deletion(-)
+ hw/block/block.c                 |  5 +++++
+ hw/block/virtio-blk.c            | 13 +++++++------
+ include/block/block_int-common.h |  7 +++++++
+ include/hw/block/block.h         | 13 +++++++++++++
+ 4 files changed, 32 insertions(+), 6 deletions(-)
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 37ba7e9fc4..049e70ddcb 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2326,6 +2326,17 @@ uint32_t blk_get_request_alignment(BlockBackend *blk)
-     return bs ? bs->bl.request_alignment : BDRV_SECTOR_SIZE;
+diff --git a/hw/block/block.c b/hw/block/block.c
+index f187fa025d..79b0a67cea 100644
+--- a/hw/block/block.c
++++ b/hw/block/block.c
+@@ -201,6 +201,11 @@ bool blkconf_blocksizes(BlockConf *conf, Error **errp)
+     return true;
  }
  
-+/*
-+ * Returns the zone size in bytes for a zoned backend, or 0 if @blk does
-+ * not present zoned geometry.
-+ */
-+uint64_t blk_get_zone_size(BlockBackend *blk)
++uint32_t blkconf_zone_write_granularity(BlockConf *conf)
 +{
-+    BlockDriverState *bs = blk_bs(blk);
-+    IO_CODE();
-+    return bs ? bs->bl.zone_size : 0;
++    return MAX(conf->logical_block_size, conf->physical_block_size);
 +}
 +
- /* Returns the optimal write zeroes alignment, in bytes; guaranteed nonzero */
- uint32_t blk_get_pwrite_zeroes_alignment(BlockBackend *blk)
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp)
  {
 diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 61c341ce2c..1b93364b24 100644
+index dd69d81532..6bf1049aea 100644
 --- a/hw/block/virtio-blk.c
 +++ b/hw/block/virtio-blk.c
-@@ -288,6 +288,9 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
-     int i = 0, start = 0, num_reqs = 0, niov = 0, nb_sectors = 0;
-     uint32_t max_transfer;
-     int64_t sector_num = 0;
-+    uint64_t zone_size = blk_get_zone_size(s->blk);
-+    bool zone_cross;
-+    int64_t zone_nr_sectors, end_sector;
+@@ -516,11 +516,11 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+     }
  
-     if (mrb->num_reqs == 1) {
-         submit_requests(s, mrb, 0, 1, -1);
-@@ -303,17 +306,34 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
-     for (i = 0; i < mrb->num_reqs; i++) {
-         VirtIOBlockReq *req = mrb->reqs[i];
-         if (num_reqs > 0) {
-+            /*
-+             * On zoned backends, a single backend write/read must not span
-+             * a zone boundary. Bail out of merging if combining req into
-+             * the current batch would straddle a zone.
-+             */
-+            if (zone_size > 0) {
-+                zone_nr_sectors = zone_size / BDRV_SECTOR_SIZE;
-+                end_sector = req->sector_num
-+                                + req->qiov.size / BDRV_SECTOR_SIZE - 1;
-+                zone_cross = (sector_num / zone_nr_sectors) !=
-+                             (end_sector / zone_nr_sectors);
-+            } else {
-+                zone_cross = false;
-+            }
+     if (append) {
+-        if (bs->bl.write_granularity) {
+-            if ((offset % bs->bl.write_granularity) != 0) {
+-                *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+-                return false;
+-            }
++        uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
 +
-             /*
-              * NOTE: We cannot merge the requests in below situations:
-              * 1. requests are not sequential
-              * 2. merge would exceed maximum number of IOVs
-              * 3. merge would exceed maximum transfer length of backend device
-+             * 4. merge would cross a zone boundary on a zoned backend
-              */
-             if (sector_num + nb_sectors != req->sector_num ||
-                 niov > blk_get_max_iov(s->blk) - req->qiov.niov ||
-                 req->qiov.size > max_transfer ||
-                 nb_sectors > (max_transfer -
--                              req->qiov.size) / BDRV_SECTOR_SIZE) {
-+                              req->qiov.size) / BDRV_SECTOR_SIZE ||
-+                zone_cross) {
-                 submit_requests(s, mrb, start, num_reqs, niov);
-                 num_reqs = 0;
-             }
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index fd84723d9d..78d410b8df 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -121,6 +121,7 @@ uint32_t blk_get_request_alignment(BlockBackend *blk);
- uint32_t blk_get_pwrite_zeroes_alignment(BlockBackend *blk);
- uint32_t blk_get_max_transfer(BlockBackend *blk);
- uint64_t blk_get_max_hw_transfer(BlockBackend *blk);
-+uint64_t blk_get_zone_size(BlockBackend *blk);
++        if (offset & wg_mask) {
++            *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
++            return false;
+         }
  
- int coroutine_fn blk_co_copy_range(BlockBackend *blk_in, int64_t off_in,
-                                    BlockBackend *blk_out, int64_t off_out,
+         index = bdrv_zone_index(bs, offset);
+@@ -1276,7 +1276,8 @@ static void virtio_blk_update_config(VirtIODevice *vdev, uint8_t *config)
+                      bs->bl.max_active_zones);
+         virtio_stl_p(vdev, &blkcfg.zoned.max_open_zones,
+                      bs->bl.max_open_zones);
+-        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity, blk_size);
++        virtio_stl_p(vdev, &blkcfg.zoned.write_granularity,
++                     blkconf_zone_write_granularity(conf));
+         virtio_stl_p(vdev, &blkcfg.zoned.max_append_sectors,
+                      bs->bl.max_append_sectors);
+     } else {
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 82aa0c1a6e..7abd2b12bb 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -922,6 +922,13 @@ typedef struct BlockLimits {
+     /* maximum number of active zones */
+     uint32_t max_active_zones;
+ 
++    /*
++     * The granularity that the backend requires of a write to a sequential
++     * zone, in bytes, or zero if it has none. This describes the host, so it
++     * must not be reported to a guest: a frontend reports
++     * blkconf_zone_write_granularity() and checks this against it when the
++     * device is realized.
++     */
+     uint32_t write_granularity;
+ } BlockLimits;
+ 
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index df941df19f..c769b1297d 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -114,6 +114,19 @@ bool blkconf_geometry(BlockConf *conf, int *trans,
+                       unsigned cyls_max, unsigned heads_max, unsigned secs_max,
+                       Error **errp);
+ bool blkconf_blocksizes(BlockConf *conf, Error **errp);
++/*
++ * The alignment constraint that applies to writes to a sequential zone. A guest
++ * cannot issue a write finer than the logical block size, and the medium cannot
++ * take one finer than the physical block size, so the constraint that applies
++ * is the larger of the two. A frontend must report this value to its guest and
++ * validate requests against it.
++ *
++ * It is derived from the configuration and not from the backend, so that a
++ * guest is not given a property of the host, which would differ after
++ * migration. blkconf_blocksizes() rejects a logical block size larger than the
++ * physical block size, so this is the physical block size in practice.
++ */
++uint32_t blkconf_zone_write_granularity(BlockConf *conf);
+ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
+                                    bool resizable, Error **errp);
+ 
 -- 
 2.55.0
 
