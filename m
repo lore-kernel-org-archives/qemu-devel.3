@@ -4,119 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B8CC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 16:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F357DC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 17:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8hGx-0004GO-6n; Mon, 21 Sep 2026 12:53:43 -0400
+	id 1x8hlF-0007NW-9o; Mon, 21 Sep 2026 13:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x8hGu-0004Fv-N4; Mon, 21 Sep 2026 12:53:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1x8hGs-0007t9-L1; Mon, 21 Sep 2026 12:53:40 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8HhH1902958; Mon, 21 Sep 2026 16:53:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YLsh4e
- Kx584A5OS4tPFMuKsRU5gDP5hfG88Dj7fu1RE=; b=NYhPi0L4DDDy8C9F598b23
- 4txexBrd19gouhnuu2dq38xP6dKFGFkXQDfxyPwyZCsbgA6ZJKpo4gg+dd7r5QWd
- 4nM6lhMMM5cBRi3Qf9WTBu5MY+yk50S5jaoipzRIpAeR9e6Zjr8RIgnsMNjikPcg
- 3kenooFwOvzJSq/q/5ka44M1TvBCt1HK8CBIM/6D2MFi8HnaPeGxyEqHXuS6BGB8
- KTx1wVn4N97/NP/hhkfbR7c0GCPXIeSPLlbBJ3E+nPG9Z+ES0gtlFKtEiOsYZ8s5
- Jg/hcPA69n0khlY5oiTsNhJmAX61vFSH0rm3Av5KIc7Bjyg0z/u9F7yE8th/4JWQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdv1js0-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 16:53:32 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LFHT331489428; Mon, 21 Sep 2026 16:53:32 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qq6bey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 16:53:32 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LGrV7q31130130
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 16:53:31 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 371F358056;
- Mon, 21 Sep 2026 16:53:31 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 735E55803F;
- Mon, 21 Sep 2026 16:53:30 +0000 (GMT)
-Received: from [9.61.240.58] (unknown [9.61.240.58])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Sep 2026 16:53:30 +0000 (GMT)
-Message-ID: <cfaf7d76-ef2c-4b9c-9e11-c94bfc99fdaa@linux.ibm.com>
-Date: Mon, 21 Sep 2026 09:53:30 -0700
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x8hlE-0007NO-6w
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 13:25:00 -0400
+Received: from mail-pj2-x00.google.com ([2607:f8b0:4864:39::])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1x8hlC-00031E-Bt
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 13:24:59 -0400
+Received: by mail-pj2-x00.google.com with SMTP id
+ 98e67ed59e1d1-39b2ad83680so1388101a91.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 10:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790011496; x=1790616296; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=UXflAh2RucVWJUi4MrFRr1Khjdw5VpbmcboKwc0RgOw=;
+ b=BMNQg4+AjAXK1eNWvlF3ncA2DXZcyKcprx/3Lr4/jxEHJ/oSycV9rYSx1XjXPSLWsc
+ jh5Hb3629aQfexbjJjg+wKi5c9UJftpD3q13uBOTKJPEfzJeWjVmLLEDMR5KTTWUTLbO
+ PuQ0OGjNLIOOg4DXyRqFcOwLezbWkYH1GzpN1tY+IOjlxGnCgLVsVRoWND0iKORPehcz
+ 21EeV9CDxdT7MLmRSTj0wI6Y6mxwNosbLGjFF97KgaaWfYOTtpHLev0TkXxdjk9FSU/P
+ HuJPOVRr9zvCcIdw4BEtgVER1La4GHjHoksYtXgur8XQc8BvNKtMfMv5vPWKngHSvqR6
+ DbBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790011496; x=1790616296;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=UXflAh2RucVWJUi4MrFRr1Khjdw5VpbmcboKwc0RgOw=;
+ b=QTWuigbBwldqKuDRTCijowH3t1flkv0WHJ+WoAd5I9KC28DXTEgY2/YKkawbSQN66f
+ XTtF65J2PAswwgJua+fe/yyRjoo9HUmRRM68g9VNn2O7tF1C5IO9agH9t8IzpW5TbPpg
+ IvMPcofwsdq8iiFqXBqkjj5wc293L/jWlUyQZF9YHdEzfK0w80RYqTuR+/UHoboOr8Ta
+ Zu7wHtWqZgV7uX+vYKeOM3cMf+q5m56tcXEGG0t4YFVdrOk2jV+gcyM5ZBG2FBMNqLl/
+ E3K8reHD0+BCyHACu9iBoZNYFqBunYwIT8v7+4qzPpGyULAB7EFjpcesDy2dMhfCOGNe
+ D3Kg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx5VBkpM8ZEZZqRUr+nBuyRfTzwD62RVGWEWwAaAhejgYQ2vEptdjucS+Dn/mWPhu3t/IALLtel7Lbj@nongnu.org
+X-Gm-Message-State: AFuF++l69wvFkQInpPUJlf/Zf+9temkxcX/qP2nqkkH68u05LprEQast
+ ReUXBsXhv2WrjVAl7xkm00wWMdFMNu0YNJAxex+7/JkNLXYzbHs7c7s=
+X-Gm-Gg: AYBFou3oaetQgO+2nK370uRj0uswTDinZuhiuomIqeM4e+uybww+8W7Kc7S9jtRuGtU
+ /VtSC2AFP4m5gSzb77YNAndbegnHnl0UuP9R3bolXn+g6VXA0DAVRSd2RIjWDCObJ2iT7ySxPTr
+ S9/YUxc28grawXdFrwRr9IZ39x1s8z2KlYC2aEM17242wtYzVERIHYjen0ZJjjNKI6fUR3RCKD0
+ yH4+j7+fitO4LCHg51knK3glA4gypwL3rmiwMGubq4SUZXgwHnD0LMgcVr0v5wUOZkL/WG2TASd
+ /7GlYm3KRi+FhNRpxXpx4KndtnsOdlmh8buyuuP64k8wC03sKVlV8jOFPEBCK18Wz9EXiK2E+L9
+ MtzFSMSA6PyrQbIxduaTpoTA0el/y9pUWU+inKQ3KrM1Gd8wYM71et2QyzzcO59wcnAY2OAWubG
+ aLTegT5AeHQ/DxIvZZvsb22BFBxzawcEha3dt74XJheQoWXwhUHw/aDCsDuo4OZSy2dNK/Ob9Er
+ 4qI0x0mJs82fmPhEUvgJNQO6RLHej8VZICFkvtx5QYF2tJZmiUzap4=
+X-Received: by 2002:a17:90a:c089:b0:39e:6c68:155a with SMTP id
+ 98e67ed59e1d1-39e6c683333mr9006779a91.34.1790011496316; 
+ Mon, 21 Sep 2026 10:24:56 -0700 (PDT)
+Received: from ?IPV6:2408:820c:8ffa:c0f0:2c98:278a:784b:d214?
+ ([2408:820c:8ffa:c0f0:2c98:278a:784b:d214])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a02625615dsm5386521a91.2.2026.09.21.10.24.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Sep 2026 10:24:55 -0700 (PDT)
+Message-ID: <8d0de268-e9ef-471e-9a32-ead628d75713@gmail.com>
+Date: Tue, 22 Sep 2026 01:24:51 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 15/16] s390x/pci: Implement migration for emulated
- devices
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260911152137.676602-1-kshk@linux.ibm.com>
- <20260911152137.676602-16-kshk@linux.ibm.com>
- <7a2ec98c-6756-4c9f-8f86-1b0db94c8053@linux.ibm.com>
- <aqwkyvY8mxIEqDyH@redhat.com>
- <0e59d36a-4757-4dc6-a72d-a2f185db835c@linux.ibm.com>
- <arFK6US5kWAMvDPp@redhat.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <arFK6US5kWAMvDPp@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ytx4ymz_rnu7LztbC0tCL3mpbLaE9Wsd
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI0MiBTYWx0ZWRfXxb+FU2lRZFqu
- 7Y7MgPWESkWFssEaQjr1YAejS7HCi2Ll5g1RaMBf/uj919CHxkvLbcrQXvWEzNvmKwd6IHfkUqE
- QKU0Q1Ij3gNAqBewLMZGF99S57rM78s=
-X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab1610c cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=OlAlvAjMd6YUtngKZocA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: ytx4ymz_rnu7LztbC0tCL3mpbLaE9Wsd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI0MiBTYWx0ZWRfX+xzDSBGxQx4S
- OWr7ehPvWAQSSh3kZjBs4jfzoKzcVmWlFPTxkEOf3BxIFM+mGly+0nbPd8KLsYH663HUSSRxUYS
- sT+QBoMyEKPsY8hyEBaZAiUDb3lFisQJ5SKHnxujzqYv+ngyGWiEIzdU2fQJ2xTh2RRogL35o45
- iuLZnWQVtHP7Hh5K8StJ7o8zbpQa12rva/28hCE2fHmcKax5clMrqJiRhhRsmxW2nMhMfTLHMhk
- wFwA52Cz9ceALLtF1b5y+ex9OQnkiq+4yhOU+nVI8RMBR3Kc98dZDNyCZbrbqkFkMDEYlpkpecU
- c6kEkfb2C5g7cMKraMaFrL6Z7D2qBZkHEy4AVT6s73w3ONq9y2n0c15MFuWaTfKcoYwW9if3LaA
- Sq5Wov89EJfZkg6lysDiDnSDfxqDEmujKpHEumsVzysbtS1k0yucs89amgF9soNQrEflZc6K308
- eFMxRfmRGCyRpr0XuGw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
- suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609210242
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Subject: Re: [PATCH v3] vfio/igd: Make MTL/ARL guests fall back to BAR-based
+ framebuffer access
+To: Yuan Wang <yuan1.wang@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, bosheng.xue@intel.com,
+ junjie.cao@intel.com
+References: <20260921073809.2658872-1-yuan1.wang@intel.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20260921073809.2658872-1-yuan1.wang@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pj2-x00.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,49 +107,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026-09-21 15:38, Yuan Wang wrote:
+> Meteor Lake and Arrow Lake GOP can read BAR0 MMIO offset 0x138914 to
+> detect whether direct framebuffer access via DSM is available.
+> 
+> In a VFIO passthrough VM, the guest cannot access the host DSM memory
+> region via such a pointer. If the guest GOP enables that path, it may
+> hand off a DSM-based framebuffer address that the guest cannot actually
+> use.
+> 
+> Intercept reads from the detection register and return 0 so the guest
+> does not enable the DSM-based path and instead keeps using the standard
+> BAR-based framebuffer address.
+> 
+> Suggested-by: Tomita Moeko <tomitamoeko@gmail.com>
+> Reviewed-by: Bosheng Xue <bosheng.xue@intel.com>
+> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+> Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
+> ---
+> Changes:
+> v3:
+> - Emulated register 0x138914 to return 0x0, which signals the guest
+>   GOP driver to fall back to BAR-based mapping since DSM is
+>   unavailable in the VM.
+> 
+> v2:
+> - Resending because the v1 patch was sent with an incorrect future
+>   system timestamp due to an unsynchronized local clock. No code
+>   changes.
+> 
+> Notes:
+> MTL/ARL device IDs remain in igd_gen().
+> This is required because vfio_probe_igd_bar0_quirk() checks the
+> generation before installing BAR0 quirks, and the 0x138914 quirk
+> is added afterward.
+> Meanwhile, we also plan to remove the bdsm-size check in the OVMF
+> offline patches.
+> ---
+>  hw/vfio/igd.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 42 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 413a49aae9..f6a2eab805 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -96,6 +96,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
+>      case 0x4C00:    /* Rocket Lake */
+>      case 0x4600:    /* Alder Lake */
+>      case 0xA700:    /* Raptor Lake */
+> +    case 0x7D00:    /* Meteor Lake / Arrow Lake */
+> +    case 0xB600:    /* Meteor Lake */
+>          return 12;
+>      }
+>  
 
-On 9/21/2026 8:19 AM, Daniel P. Berrangé wrote:
-> On Mon, Sep 21, 2026 at 10:12:34AM -0500, Konstantin Shkolnyy wrote:
->> On 260917 12:35, Daniel P. Berrangé wrote:
->>> On Thu, Sep 17, 2026 at 10:25:32AM -0700, Farhan Ali wrote:
->>>> On 9/11/2026 8:21 AM, Konstantin Shkolnyy wrote:
->>>>> @@ -1303,11 +1380,22 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
->>>>>             pbdev = S390_PCI_DEVICE(dev);
->>>>>             pbdev->fid = 0;
->>>>>             QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
->>>>> -        g_hash_table_remove(s->zpci_table, &pbdev->idx);
->>>>> +        /*
->>>>> +         * If this QEMU is running a migrated guest, and was configured with
->>>>> +         * more zpci devices than the source QEMU, extra zpci devices could be
->>>>> +         * excluded from zpci_table and invisible to the guest and have
->>>>> +         * pbdev->idx values duplicating those of active devices. If the
->>>>> +         * pbdev being unplugged is such, the zpci_table entry for pbdev->idx
->>>>> +         * can find a different pbdev which we must not remove.
->>>>> +         */
->>>>> +        if (g_hash_table_lookup(s->zpci_table, &pbdev->idx) == pbdev) {
->>>>> +            g_hash_table_remove(s->zpci_table, &pbdev->idx);
->>>>> +        }
->>>> If we are migrating, won't we re-create the exact same state and devices on
->>>> the target host? Is it possible that the target QEMU can have more devices
->>>> than source?
->>> It is expected that the source and dest QEMU processes have identical
->>> virtual hardware configuration, and also no attempts should be made to
->>> hot-add/remove devices while migration is running.
->> Do you suggest to completely delete this hunk, or keep as "defensive tactic"
->> and correct the comment?
-> I don't think it is worth trying to add defensive checks, as if the
-> config is not identical, the code may well not even be reached as
-> vmstate parsing/loading typically fails during migration.
->
->
-> With regards,
-> Daniel
+0xB600 is for Arrow Lake according to include/drm/intel/pciids.h.
 
-I would agree to remove it, it was also a little confusing for me to 
-understand why we needed it.
+    #define INTEL_ARL_S_IDS(MACRO__, ...) \
+        MACRO__(0x7D67, ## __VA_ARGS__), \
+        MACRO__(0xB640, ## __VA_ARGS__)
 
-Thanks
 
-Farhan
+Meteor Lake is Gen 12.70, while igd_gen() only tracks the major generation.
+Here Meteor/Arrow Lake and existing devices are all Gen 12, but different
+quirks are applied, making it look a bit awkward.
+
+Maybe the generation could be extended to 4 digits, or use flags instead.
+
+    case 0x4600:    /* Alder Lake */
+    case 0xA700:    /* Raptor Lake */
+        return 1200;
+        return IGD_FLAG_GMCH_GEN8 | IGD_FLAG_GMS_GEN9 | IGD_FLAG_QUIRK_BDSM_GEN11;
+    case 0x7D00:    /* Meteor Lake / Arrow Lake */
+    case 0xB600:    /* Arrow Lake */
+        return 1270;
+        return IGD_FLAG_QUIRK_MMIO_138914;
+
+Anyway, this is outside the scope of this patch, just a note for possible
+future cleanup.
+
+> @@ -454,10 +456,32 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
+>  
+>  #define IGD_GGC_MMIO_OFFSET     0x108040
+>  #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+> +#define IGD_BDSM_ACCESS         0x138914
+
+nit: perhaps rename this to IGD_MTL_PCODE_STOLEN_ACCESS to match i915.
+
+> +
+> +#define IGD_IS_MTL_OR_ARL(vdev) \
+> +    ((((vdev)->device_id & 0xff00) == 0x7d00) || \
+> +     (((vdev)->device_id & 0xff00) == 0xb600))
+> +
+> +static uint64_t vfio_igd_bdsm_access_read(void *opaque, hwaddr addr,
+> +                                          unsigned size)
+> +{
+> +    return 0;
+> +}
+> +
+> +static void vfio_igd_bdsm_access_write(void *opaque, hwaddr addr,
+> +                                       uint64_t data, unsigned size)
+> +{
+> +}
+> +
+> +static const MemoryRegionOps vfio_igd_bdsm_access_quirk = {
+> +    .read = vfio_igd_bdsm_access_read,
+> +    .write = vfio_igd_bdsm_access_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
+>  
+>  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>  {
+> -    VFIOQuirk *ggc_quirk, *bdsm_quirk;
+> +    VFIOQuirk *ggc_quirk, *bdsm_quirk, *bdsm_access_quirk;
+>      VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
+>      int gen;
+>  
+> @@ -472,6 +496,23 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>          return;
+>      }
+>  
+> +    /*
+> +     * MTL/ARL guests must keep using the BAR-based framebuffer address.
+> +     * Return 0 at 0x138914 so GOP stays on the standard access path in the VM.
+> +     */
+> +    if (IGD_IS_MTL_OR_ARL(vdev)) {
+> +        bdsm_access_quirk = vfio_quirk_alloc(1);
+> +        memory_region_init_io(bdsm_access_quirk->mem, OBJECT(vdev),
+> +                              &vfio_igd_bdsm_access_quirk, vdev,
+> +                              "vfio-igd-bdsm-access-quirk", 4);
+> +        memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
+> +                                            IGD_BDSM_ACCESS,
+> +                                            bdsm_access_quirk->mem,
+> +                                            1);
+> +
+> +        QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_access_quirk, next);
+> +    }
+> +
+>      if (vdev->igd_gms) {
+>          ggc_quirk = vfio_quirk_alloc(1);
+>          ggc_mirror = ggc_quirk->data = g_malloc0(sizeof(*ggc_mirror));
+
+Overall it looks good to me, with the minor nits above.
+
+Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
+
+Thanks,
+Moeko
+
 
 
