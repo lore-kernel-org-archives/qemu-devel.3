@@ -4,117 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0591DC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441B8C982E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 14:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8f0M-0001Rq-N1; Mon, 21 Sep 2026 10:28:26 -0400
+	id 1x8f1F-00024u-7V; Mon, 21 Sep 2026 10:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x8f0K-0001R6-Cr; Mon, 21 Sep 2026 10:28:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1x8f0I-0008TX-OV; Mon, 21 Sep 2026 10:28:24 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LE5STu569071; Mon, 21 Sep 2026 14:28:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=wWYT12yGRJMewJpr4L4YJ9SoIVM9Wo
- Ovm7fGfebVhEI=; b=eNmYUfcbJ2tL2EbTUDcu9cD9fh9t9BI3u3/ntXcon/LiM4
- LFqkpaGTVO3SZd58f3UBkEakCym45oDkQMKkVCu78mDLTqy0n8yXtzPpBPSudpvz
- Zb1Us023ZxdKTvrHxNSnnn2JGVRMAaTSysAbOC8iUUs5t2MrnZX/U6A+0GvOVyI5
- WU6M/Fu8x9kFeHve1y588+fIKzwq8nAEQRXdHn9RlSboq78AvFGjE2v1w2zaSK3r
- jno55y7/G39HOuVCFNdhsHMkllDJuQ0CpWYc9t+RsTuSIH675K3nhO9+uWiQ2Gzn
- qsiSYx1GvmzE4x7kG2unvoF25jrDQY3ptn09uCNw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgq8usd-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 14:28:18 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LEImPB085247; Mon, 21 Sep 2026 14:28:17 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bk882n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 14:28:17 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LESEXx48103890
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 14:28:14 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2129920043;
- Mon, 21 Sep 2026 14:28:14 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A2C220040;
- Mon, 21 Sep 2026 14:28:11 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 21 Sep 2026 14:28:11 +0000 (GMT)
-Date: Mon, 21 Sep 2026 20:05:58 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Aniket Sahu <asahu1x@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com,
- farosas@suse.de, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
- anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
- gautam@linux.ibm.com, thuth@redhat.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH v3 1/2] tests/functional/ppc64: extend pseries migration
- tests
-Message-ID: <20260921200424.d70a1a1a-d5-amachhiw@linux.ibm.com>
-Mail-Followup-To: Aniket Sahu <asahu1x@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com, farosas@suse.de,
- npiggin@gmail.com, adityag@linux.ibm.com, milesg@linux.ibm.com, 
- harshpb@linux.ibm.com, rathc@linux.ibm.com, anushree.mathur@linux.ibm.com, 
- misanjum@linux.ibm.com, gautam@linux.ibm.com, thuth@redhat.com
-References: <20260921081010.31778-1-asahu1x@linux.ibm.com>
- <20260921081010.31778-2-asahu1x@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8f0h-0001v7-AB
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:28:53 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8f0c-00006K-Og
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 10:28:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 45DD021CD2;
+ Mon, 21 Sep 2026 14:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790000915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
+ b=CiyOxa5QdghbnKyJLPEDzZ6qWXCyDuqJpgJjJjkGr1l27cGkIYUrtjmRrk++/CQxCxrdc2
+ nwGgvE+v+rUNO8fC1atq1w+jNpBNcYfsKHz0LHoLiJ/aLbJnyub5jlP+wPR1JmvZ+ZCTyg
+ QnXbrm45qgWHjNj1GHeHqpc3qOuB1LY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790000915;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
+ b=6m8jJkWtI8rJtc3nFrgudbsTyEHcHszG8OjP8ccXgitEVG9jKbkqHqMTWsi43u1VDPwqCi
+ NQLZxjGagZSjnqDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790000911; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
+ b=vyq0fva9k1sY/BohGwJQxfuZbFI7Tk261ahUXUJVPQ3aEopJeXZUO8P9QHjUHW36EgsWfZ
+ X6ZwnYO153KpIK60A6Ab/8QnbYIXUtT+rPyohXtgD0siimf70uDFKZp4p2cT9DBKptCYQg
+ LhKJ7E63p2Q9Ov7k7UcG7dpjRkDsees=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790000911;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hEH4QaKvFGPtJq74lNej8Rl21ud0D9kOPYSsl9p8Ip4=;
+ b=OMK8+OkfpM4HcVVAL8axJkgamXaqlD0PnH4z3vimIFG11Mv3/uu2w6Jl+yrVgjL1WjoFxU
+ i5rq0t2bSNTZs6Aw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9BBEA1368D;
+ Mon, 21 Sep 2026 14:28:30 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id VNlyEA4/sWqPQQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 21 Sep 2026 14:28:30 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH] meson: Fix meson suites invocation from make check
+In-Reply-To: <arEMa6GTGGdIC1rZ@redhat.com>
+References: <20260918203153.3874488-1-farosas@suse.de>
+ <arEMa6GTGGdIC1rZ@redhat.com>
+Date: Mon, 21 Sep 2026 11:28:24 -0300
+Message-ID: <874ifismpj.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260921081010.31778-2-asahu1x@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab13f02 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=MxYpeiGA4uIaQIGk4oIA:9 a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDIwNSBTYWx0ZWRfX6GEM2NxYcPHc
- UavAywinJn5UOv0mQL+Y95MxkselapOoqdUkO5wNc1RPKfFtQaeT1zA09D3BGs9I6DpBFV7d64z
- h8jYHgRJiKHds3BdkEek5X8E6+02Byc+Z7WyPaK0VkHvE8RMIXHYCuSYvwUL7vsNDBAdAA+nAyy
- 9ejU4kumkaIA7pEbLt87ZxObRxvZkU8apn3wCkNZcv6zEwERZn6xcdhz/JBHFrJlR8qR+kgvx/N
- B5MUe6IwzB8mMCrn0K4MKObZc4X86FVCtTVY198v8XqsrRXXcF0RbYl7j1PsV6ZNZI5YZh3KHul
- zE1lh96Hnol0F+G13x8khmUA0cJl+7+ln6WXLEtp2nr4bZ59IhWfbho2WdhYZQ2Dxx2XpA9oMzO
- 1oXJIqsvZs8WZxavuLqX+LuRZRZjJxIa6ueqaz0n0iR32uhxuGfja8sfxyxvhQ1t735ApGBpg/1
- /kyr8r33fUPLE7ORT9Q==
-X-Proofpoint-ORIG-GUID: Ho14F06c6zjArZ7r7KUKAaLCn_13e81k
-X-Proofpoint-GUID: bDEhimkmI45FlMNB8eVNVgyzSeuXZi8u
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDIwNSBTYWx0ZWRfXyX93sO0ZcmN5
- BkUDrpuREqt0eV0aIyiIDBwhxQU638v7FBsWjLYAzvndxY1PXEOMm7fitYOIld4vP2/sFM6ygGL
- K3XaDkeQAx/E7tKtyC1TOc1GaSrR8AA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_04,2026-09-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210205
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[14]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[mtest2make.py:url, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, meson.build:url]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,23 +126,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/21 01:40 PM, Aniket Sahu wrote:
-> The existing test_migration.py exercises all three migration transport
-> paths (TCP, UNIX, exec) but only against the mac99 machine type.
-> A regression in pseries-specific vmstate save/restore handlers would
-> not be caught by migrating a mac99 guest.
-> 
-> Switch the UNIX socket and exec (socat) migration tests from mac99 to
-> pseries so that these transport paths are exercised against the pseries
-> vmstate.  The TCP test is left on mac99 since pseries TCP migration is
-> already covered by test_ppc64_linux_migration in test_pseries.py.
-> 
-> Signed-off-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Thomas Huth <thuth@redhat.com> writes:
 
-Yes, this covers exactly what we intend to.
+> On 18/09/2026 22.31, Fabiano Rosas wrote:
+>> make check is currently by default running tests tagged
+>> "slow".=20
+> That's a regression, it did not used to be that way. Thus could you pleas=
+e=20
+> add a "Fixes:" tag to your patch?
+>
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+So, in a sense, it's this commit:
 
-Thanks,
-Amit
+  f4b2607228 ("tests: tag slow tests with 'slow' suite for easy filtering").
+
+It added some qtests to the 'slow' suite. But the problem actually has
+always existed, it's just that we usually put tests not only the 'slow'
+suite but also some 'foo-slow'. The mtest2make.py script then omits the
+'slow' suite...
+
+  def process_tests(test, targets, suites):
+              ...
+              if s =3D=3D 'slow' or s =3D=3D 'thorough':
+                  continue
+
+...while the filtering omits the foo-slow:
+
+  .speed.quick =3D $(foreach s,$(sort $(filter-out %-slow %-thorough,
+  $1)), --suite $s)
+
+But using the 'exclude_suites' in the main meson.build never did
+anything. So the 'slow' suite is actually useless aside from the fact
+that it carries the environment variables along.
+
+
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> On Fri, Sep 18, 2026 at 05:31:52PM -0300, Fabiano Rosas wrote:
+>> make check is currently by default running tests tagged
+>> "slow". Running make check with no SPEED variable set should be
+>> equivalent to SPEED=3Dquick and run the meson 'quick' test setup, which
+>> explicitly excludes slow tests:
+>
+> Can you give an example of some tests that you think should not
+> be running.
+>
+
+Sorry, I could have worded this patch a bit better. I'm aiming
+specifically at the (presumed) assumption that 'excluded_suites' in
+meson.build is sufficient to stop a test from running if that test is in
+one of the suites listed there.
+
+For instance, all tests listed in the tests/qtest/meson.build
+'slow_qtests' variable are affected:
+
+$ ../configure
+--target-list=3Dx86_64-softmmu,i386-softmmu,x86_64-linux-user,aarch64-softm=
+mu,arm-softmmu,ppc64-softmmu,ppc-softmmu,s390x-softmmu,riscv64-softmmu,aarc=
+h64-linux-user,mips64-softmmu,loongarch64-softmmu
+--enable-plugins --enable-modules --enable-werror --enable-debug
+--disable-docs --enable-slirp --disable-containers
+
+$ make -j$(nproc) check | grep "+slow"
+ 1/1100 qemu:qtest+qtest-s390x+slow / qtest-s390x/qom-test
+ 2/1100 qemu:qtest+qtest-mips64+slow / qtest-mips64/qom-test
+ 3/1100 qemu:qtest+qtest-loongarch64+slow / qtest-loongarch64/qom-test
+ 4/1100 qemu:qtest+qtest-i386+slow / qtest-i386/qom-test
+ <plus a bunch>
+
+> I just run 'make check' and looked at two examples
+>
+> tests/unit/test-crypto-pbkdf.c  skips registering some tests
+> unless "SPEED=3Dslow" and that correctly skipped them.
+>
+> tests/qemu-iotests/meson.build skips running 'raw' format tests
+> unless SPEED=3Dslow, and that appears to be correctly working,
+> only running qcow2 format tests by default.
+>
+
+Right, make SPEED=3Dspeed check works in the sense that:
+
+1) it sets the SPEED properly
+2) it excludes 'foo-slow' and 'slow' tests ("manually" via mtest2make.py)
+
+however,
+
+3) it does not exclude _the same test_ if it's part of another suite.
+
 
