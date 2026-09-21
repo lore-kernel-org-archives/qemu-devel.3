@@ -4,142 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C606C982DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 10:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CDF2C982DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 10:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8b9T-0004z7-7F; Mon, 21 Sep 2026 06:21:35 -0400
+	id 1x8b8g-0002WQ-D9; Mon, 21 Sep 2026 06:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8b9Q-0004y5-Rl
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:21:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8b9P-0002mS-8T
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:21:32 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68L79xsT607135
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 10:21:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F8VypULQf6CoxAXJPWP5hZ20a7WWOtjY26BByq6lpi0=; b=M6zrsJwMQ3pCADhS
- FFs3WidpSWNXdSVlfatTRh2uPUYsh/PMmXzhzS619s8GpBK7vby1KTIFqZvt/JWt
- Wwj93sjEbcVP+7LUn44o0VvjFA9d/WyXozU0y2aktZ/HtohwZZOLjL8GK6Hdv3vL
- 7RhRYOHM8f7yg5vMVn2VDjX8KpUxJPPz7Z1cgUaYcDFS/eaElwRlDwBynzXN86FA
- Q4ccDuCYfmK7Hi3rVcsRJMGwo6Kdd6bCXaDXMzW3eKPFP3g1BLz5vJkzlZmf5OuZ
- 1h0KYi/1FWJTDQsOFKSnAwwU9VMI25EkUyL6HmVbqzDBSe1HtRxHTCvO1jkYMy7A
- sUfCmw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gtu1eht0r-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 10:21:29 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-939062ecda9so458053885a.1
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 03:21:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x8b8d-0002SI-4j
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:20:43 -0400
+Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x8b8b-0002gg-Nb
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 06:20:42 -0400
+Received: by mail-oi2-x10.google.com with SMTP id
+ 46e09a7af769-801a8bf8112so989037a34.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 03:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789986088; x=1790590888; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=F8VypULQf6CoxAXJPWP5hZ20a7WWOtjY26BByq6lpi0=;
- b=UTnr0M39TsVnsKFEHvIS/q17mIPxpJTBDtRtScTFY1ganf0U047Zen2p4o4Vi4Ihm4
- 79NCM6WQFyVBx2Ti10gajAhxfRbAo3H/C/R6zelQlM5eUoRGfyd3ydczFdG/UABdmkwq
- 1M/4GY6c4Fm4IVY8FcehyrXn+7A9ZDU2Q1+B/a3gYQ5Bew7l4z0X9+AFZTjWwH9IDp0e
- DwVFtXFCOGjBiuKlDWGtsdZR4mlTFkRmAFPJ5Acj8pNSfJSxqwQi1qXEv02qi/RBhHf4
- wPs1wWeczmiSKcRQ0dtP9mHuqzmbnQCTrYtdsxfC0qd4RPU8BrPa0UAuGRIHr+P0hev8
- rQtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789986088; x=1790590888;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789986041; x=1790590841;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=F8VypULQf6CoxAXJPWP5hZ20a7WWOtjY26BByq6lpi0=;
- b=UH42X5QGKrXuZ5okjVB/NGii9JWvye+MKi8ZG3LGtl178cCJnNosVxY085zK8p4THQ
- JQV8xoGzNllATs0F1WrVZL+HaqRA84NHEOvgjMWEIvnbo0mGp8q+jXDYjkMmxGHh2Lk6
- 1uuvYUAvyERkuc9+xAIIOgRJqQnuxZqFRZB5ziK4on9tdiBZK0CHxn67oZhMbHDeSfx5
- ssAL4rUYf/C1jK0Akd7kzKOP1Kl13RblrI5R0mg6NwHlWRN02UjVh9Ssul/bQFg01188
- CmRqzQM7/MJhdYYuv52zjCxZ6Z7tCtxtzQQPdl/S+LXQ4glyvXMg7WwX/SLjWbelxqHB
- 7SZA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwAqE13X4uFsHPOUQbwFyVZp4coyqgL82zvp8/y0M2k6eyNa2klD5RM06gnTbUSkU12Ow8nPgXq/W02@nongnu.org
-X-Gm-Message-State: AFuF++kb7OApwkEnG93JqsVVRH6I+cbh3u1gWA1TJCzWIG7w2Jhrje+c
- QYNjWHXrehRYnKKPmzzppIdbTTMeP2f6HIyi1qZ8RaQ0pXvP15Ha+X7ZP/buFqAhtwZr7tubfgR
- mozvFUeN3BbqpaEItbaKhsHboD8lO12BHf3stzwSuwPBdHdnqiy0MGrOTNA==
-X-Gm-Gg: AYBFou1vkkfFJruzlz2fjxM+P5FHMo3565eX3qQETkLz9DrdDpEEp+nCqgJbmt8s0OW
- 8SY+v1u4kh6Rptnbms8/VuAxx6yox2ju9PQnYO73KZAa1aHxWy4KXc5hj6lC9fsrvyViaQjosXu
- Db+y9B8U+RIBlaHibW3jgm+BGHx6hTMDY6XccY0h+aE7s2sXga2DWMzinqGKDZanhq0BEOKIvAE
- skHWaM+blMPu1710QUPQ7QIRO9Cx/sUKT+VSqont5cGmbG10w5yMaKBE9j6FChASXNiTMZoCkIO
- AEft1mWiPWOrSUyx494TFtWAyFf/FNCOg80eCOgz+scE/hRZmxxzi2Kob2gKtZHiAbe3OCEgsF5
- zxe0jQ8YrZ7iuS7Ls2R5TEKDL5/0IwEW/Xg==
-X-Received: by 2002:a05:620a:6481:b0:939:2d94:667c with SMTP id
- af79cd13be357-93bf55564c6mr1018619985a.21.1789986088349; 
- Mon, 21 Sep 2026 03:21:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:6481:b0:939:2d94:667c with SMTP id
- af79cd13be357-93bf55564c6mr1018616085a.21.1789986087953; 
- Mon, 21 Sep 2026 03:21:27 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ bh=wkWH1ZE6wt9RwfiMkvGZiBnMh0Vi3XqmzfxwWeKEcvw=;
+ b=AKHjYOPfoP1kjv/3mu9w0WXRGyBgwrNTbljiQ+BBrus7hGnWdDUw8sophhUGitxKRY
+ il/ChxW+NzThUd+aOxW6iX9SquU+SwUx0mGtuwglNqn0IpPiw06cBxTvXTT2TIl2ffje
+ JHjcie5/ecYI2v93+JYlcrjA8nv9/13wcjA5I3ISpbV44JOPAsRvPbNVLGio+2VViYge
+ 9sXtlzAD49ID4c1stte/M8ak2U8kilAa6SIgrItExJ7anvMIPyS54zluT5e/WYmUPD1J
+ MMpVblkfgyYlWxsZmHdGHWElKI2wihpgSK8NVq9zJ+LNmxFo6FgZp0QiILzsM10Br0As
+ 7ieA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789986041; x=1790590841;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wkWH1ZE6wt9RwfiMkvGZiBnMh0Vi3XqmzfxwWeKEcvw=;
+ b=u1kx684QGHGg+4JqDcXIWlFoCZMGg+Ef7FT7prdPIBFgyWtO89PNsvcR9Z6AW4vUvx
+ Dzt9vNLMFc7+7oKow+/KrO0DY3QHGjbk9SWpdAGeWbBCkF+JptOfNxJvX+BPuadL3qBf
+ 9XMgni6JqKaFxNq247vlouPue16XRYLyDFe28MMmySPGSrYOlO2MXffjjVu+9ZmKTDmL
+ RZaTVuGNuyVixLs+gsx6mkBm9OepbZ4ZV36cwg1Fsi44T+5jW0W9qk88dBFNXY8SSe++
+ YE24RN4rJ300A9+0lc8F6SUoVtXno8neuUa8i3A5tgZB1NL8bnaYlkolzpHr+0WPbVjm
+ /z+w==
+X-Gm-Message-State: AFuF++kQ/NnRsnbk8cjNPV/coNcxKxzDBa+gCnfJI3PpCQWaaK+8tUn7
+ Lwm4DBxtCld6yPj9w42iSZfJylizMp6F7o7iNMyORgan9MnZxOjPFvHdGDPnXb0JoZoCv+FJzfP
+ BgEuEgtU=
+X-Gm-Gg: AYBFou2dkgpHo2tIEjojqcQCNlkJJdPp8jVfES91fbXVOoi1TqRSAgdPwuWjnzZ+/6s
+ STzESd6P1IhOgUcmWYNAPFo3vsVMlNQuETbEobd48l5oELc1C/TIX1yTdZ413ckCIJWtFenf2q4
+ BU4/nr4Be7rOophFBZE/VEARBaiStGNOOaw6lMk+zvZJBqSJS0SYXVFpoVnw3qwRZ8y64miKDba
+ vddzFUKykIEKC6NTFohNbiPRnJl09N0l4Z8FXDLwiJckuXL8EWsiRQRc6QkFQxilPElRlDJQ48q
+ kcYpAVnFPVSZDd2DT1Mah+XturxnoNtIfhUVl1NsbiiZuuZUsnjwFHsjm5van/tZfUW16yDndFW
+ lmmskhoOh4ywB5w3G2MHYEXSK4OTQAWEOHJxvL2Rb0JTmVlV2pTHmTLFu6JFDirrxYxGpz+fBFH
+ hYSFUjdvnu0u/XyT4ZpEVYQ0+GTk/aHdDojlD0/Hefe1KY4VSten8cdJARlSHeFSM84gXF
+X-Received: by 2002:a05:6830:660f:b0:805:6a93:d9ba with SMTP id
+ 46e09a7af769-80de33e9139mr10768123a34.15.1789986040666; 
+ Mon, 21 Sep 2026 03:20:40 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fcd10d174sm229278455e9.11.2026.09.21.03.21.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Sep 2026 03:21:27 -0700 (PDT)
-Message-ID: <8963eb68-7236-4874-a67b-f33b2cddfb41@oss.qualcomm.com>
-Date: Mon, 21 Sep 2026 12:21:26 +0200
+ 46e09a7af769-8107dd8f425sm7613601a34.4.2026.09.21.03.20.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Sep 2026 03:20:39 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+Date: Mon, 21 Sep 2026 04:19:50 -0600
+Subject: [PATCH v2 08/11] bsd-user: Implement sigfastblock
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] accel: Change AccelOpsClass.update_guest_debug to
- void
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-References: <20260917082618.1076988-1-richard.henderson@linaro.org>
- <20260917082618.1076988-2-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260917082618.1076988-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE0OSBTYWx0ZWRfX1t7lwFq75IcZ
- t/dg6MABAMJ5hCjWm0o540nN1z9nPP3srKiLWAJ2dZsoIuK+Zw8MysHVGq8zU3aI0BdliaVLP8+
- 3pu1njZcDEFRYVlnHZPsC1lSqmi2CZw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE0OSBTYWx0ZWRfX4m91S4Wsr1Qh
- JaevxplM5H2o6erG8imyHVIwp4Kzt48w1TH9rDMUGc9aVDSzprnEFPXYpP0y+zJhVg7UM+IEhR5
- rT2vAB8J9YCJAmL2pPup7uEO6FsxTouAmq3mbSU+me1vD0E82vcOhToelh2BPFlhBdO3gQU5p+n
- hbdM6G0ml2vxLMVlBYGtMlZWXf4pOgEk63XD6mb4+vR9W+n+mK823CabnkJ6tGgg/gmeIDWUYnQ
- Rj9eRCAWiPEWHndcQ3YIC1LeB7+g5F8/UUHkklxLBD6hfy8cJit5Ai67LCsRJQ7Ra6jM6MMSbwY
- s1y4MidWAui7EBjD0ve6+MaUHN0p9OMfzDGTuw4A+Jn0QxaJDB0gBzpoP6Z+KQzT4jwVNg3schK
- JuJOnPDduZS/LDF0kGXpx/57kpnhiAfZZtgj13YwCFRbu+AgBpENsKFsKyXsTXXRIlgfvwJbgPd
- 8RvDabhVd7C54OwYfEw==
-X-Proofpoint-ORIG-GUID: tJZNwUmtPAieMtEIDLe-pkgMHueU2_V6
-X-Proofpoint-GUID: tJZNwUmtPAieMtEIDLe-pkgMHueU2_V6
-X-Authority-Analysis: v=2.4 cv=A6r5rKWG c=1 sm=1 tr=0 ts=6ab10529 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_03,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210149
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260921-misc-2025q4-v2-8-5eae157d31d3@bsdimp.com>
+References: <20260921-misc-2025q4-v2-0-5eae157d31d3@bsdimp.com>
+In-Reply-To: <20260921-misc-2025q4-v2-0-5eae157d31d3@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2090; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=17Ryw/lxO2Pse8NV9o6To3pLR/TQx9He+lK8vRViddg=;
+ b=kA0DAAoBbBzRKH2wEQAByyZiAGqxBN6gmIRHkkTE0CL4y1ei1wn5fTWoKKmAlSclnLAjVUwxd
+ YkCTwQAAQoAORYhBCA1+JSwCqPPfM3ht2wc0Sh9sBEABQJqsQTeGxSAAAAAAAQADm1hbnUyLDIu
+ NSsxLjEyLDIsMwAKCRBsHNEofbARALHSD/wNxU+Zyb90FCrARi/92xsHoKqKDU7Z3paw8brtkdP
+ 1lR4qJIbTc9t8o3vT0es+LFkIX6NyaSIIR/ouuHLuI4HbN788+BQru/7qFxwIXRxxheOw2PgOXh
+ xw3zpGuUOji+lgodOGEUm3/Mrg2WmAwLDkUXyV90NEHEBG/Gms8Q6rrSCEbwGXkENVQR9cZaZ5k
+ UztEAl25Xwx6qcKnUMaHzMrb5d634GCFvnf7rxM3+Hugc4mXK0qg2whbpDH1tTBRu9rBJRytlZJ
+ Z0Z7zbnY2OMKY8dJr/E54sdv10KKiGB5zNyXL0alHM8Lq50FsZG5mPwUHfdMPs4dA8C+k783c9O
+ DVHcp48qflyaGo6+oqk0UTztjh1W5IEX8Me29TIm6QnjrxQm1eX5RB5KQgwl4aahZUtvSrawYtR
+ Y27QG8ccf0ZCB3OR580Sp4bMKd40NXSYD/IDNzcpGD8RUM0SKZjvdGvcNSZLKYCC9Xo/7NwSnxg
+ hgU+L8+xJLwyR61WFr3Q3C9wGfniaK0QVBUd0oq6Jr07LrXSrW2mGOf7eMaWxyRfpt0XRhw5eo5
+ 6eVFYxZxNhyWNVm1BAIY8UvXCQlUi0nxMYVw/O1B+8XQSrq0KcmuryTMg9PJa8gfPnzOjWZw3xl
+ Mo5s0I3e+9IbOaOsq4whR4wR/2tL9kMQVCGpxOFeiLw==
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2607:f8b0:4864:32::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,16 +116,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/9/26 10:26, Richard Henderson wrote:
-> The return value is never used, so drop it.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/accel/accel-cpu-ops.h | 2 +-
->   include/system/hvf_int.h      | 2 +-
->   accel/hvf/hvf-accel-ops.c     | 3 +--
->   accel/kvm/kvm-accel-ops.c     | 4 ++--
->   4 files changed, 5 insertions(+), 6 deletions(-)
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/freebsd/os-syscall.c |  5 +++++
+ bsd-user/freebsd/os-thread.h  | 11 +++++++++++
+ 2 files changed, 16 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index e87924fbb5..b5178f298e 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -97,6 +97,7 @@ safe_syscall3(ssize_t, sendmsg, int, s, const struct msghdr *, msg, int, flags);
+ safe_syscall1(int, thr_suspend, struct timespec *, timeout);
+ safe_syscall5(int, _umtx_op, void *, obj, int, op, unsigned long, val, void *,
+     uaddr, void *, uaddr2);
++safe_syscall2(int, sigfastblock, int, cmd, void *, ptr);
+ 
+ /* used in os-time */
+ safe_syscall2(int, nanosleep, const struct timespec *, rqtp, struct timespec *,
+@@ -1175,6 +1176,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd__umtx_op(arg1, arg2, arg3, arg4, arg5);
+         break;
+ 
++    case TARGET_FREEBSD_NR_sigfastblock: /* internal */
++        ret = do_freebsd_sigfastblock(arg1, arg2);
++        break;
++
+         /*
+          * ioctl(2)
+          */
+diff --git a/bsd-user/freebsd/os-thread.h b/bsd-user/freebsd/os-thread.h
+index 6552c60337..dfb22e7cc2 100644
+--- a/bsd-user/freebsd/os-thread.h
++++ b/bsd-user/freebsd/os-thread.h
+@@ -17,6 +17,7 @@
+ 
+ int safe_thr_suspend(struct timespec *timeout);
+ int safe__umtx_op(void *, int, unsigned long, void *, void *);
++int safe_sigfastblock(int, void *);
+ 
+ #if HOST_BIG_ENDIAN == TARGET_BIG_ENDIAN && \
+     (TARGET_ABI_BITS == HOST_LONG_BITS || defined(UMTX_OP__32BIT))
+@@ -593,4 +594,14 @@ static inline abi_long do_freebsd__umtx_op(abi_ulong obj, int op, abi_ulong val,
+     return ret;
+ }
+ 
++static inline abi_long do_freebsd_sigfastblock(abi_long cmd, abi_long ptr)
++{
++    void *hostptr = g2h_untagged(ptr);
++
++    if (hostptr == NULL) {
++        return -TARGET_EFAULT;
++    }
++    return get_errno(safe_sigfastblock(cmd, hostptr));
++}
++
+ #endif /* FREEBSD_OS_THREAD_H */
+
+-- 
+2.55.0
+
 
