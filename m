@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937AFC982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED984C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrW-0006Bz-Qf; Mon, 21 Sep 2026 17:47:46 -0400
+	id 1x8lrr-0006R9-GZ; Mon, 21 Sep 2026 17:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrH-000654-4u
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:32 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrm-0006J3-5y
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:02 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrF-0008Vt-2H
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:30 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3931so26169165e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrk-0000IX-2P
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:01 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49b912df756so24023245e9.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027248; x=1790632048; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=J9CEIaPD2r/78EllzBYWRo7JKzGqzJJ/rogwaGuXtMQ=;
- b=Hq/02M40JOrmfeMScwA38zQGcnVnbvOkCK5skIQGNhkQMlen1kuKDNqIr9SB9M1RWm
- sHsJmrVXxfegUfjhlrmKeMX2ki5KEpPSds8kyjx3IrDLAg7bDKR15/hfC085FhIsHM4G
- qS7+ACko2ubuAGwPhUnOFXg/cRErdL8HMXqYGcaDgBicqpbYyU/bThg80HSFGCcwHskH
- ipwMXJZyFT1eoRXjs5oZPRBq/bGlz+fqTNxJHpdhsUbbteSN8d3jLPUCtr2vznwo5OIC
- 2Z/YAHLD2sxuRBeeMd8l04iB3CtTQiCNlNsq5b/bfz7+sB8IEqZa4qE1yWG7Z1UbDYqD
- FVtA==
+ d=gmail.com; s=20251104; t=1790027269; x=1790632069; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=dQ+y+HOgk2flqhRgS2Cprok52hJaeXGfKUopI52BI5g=;
+ b=ICUwbzhg+vSGnAfOr63OVIXcLwCkMOcHnsyqMsnaXtOrBV7ZMkZkXF+MbacHp/2k59
+ +Kl3gYFiJ90b2FXaH0jzQVupQT1RCG4MxB82KvL85Lxt8McHq2hSNmABn+JfqBVC/BVN
+ DDBHCxx3G6ggl0fp4TiKaskVt8begj8lmNcUTo89hFB1sfkH/4b6T11Dmip5oFaUQum4
+ IoVtMppnIjxbG++ZgDWCN+LFIDPiv7vpwIvGlWdSoItiS9FZ1iPxPaAbeMB1+sHODRhN
+ mVpQdDpgxzsql3ZP5QRRzI8Ss+t3RmaTj/wB2D7W7wL6bdQMhyF8vxNNfeSVyvpBuq+x
+ gWhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027248; x=1790632048;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=J9CEIaPD2r/78EllzBYWRo7JKzGqzJJ/rogwaGuXtMQ=;
- b=1vZOK2FQecOYpRGyqRcyg+BZ89QAXXvr72oXdwTZZMDGK/PnvjNrgylmAs9tKC7/7F
- hKVL79ToKYNV+93hemDSUIbT1ktZkQv+7sjSBEvWJqUdUrWT6ksRglQR8/i0Wholn0eJ
- aBcePPVdNl2yQs1WWcArFjp3pJQPv3NHjF2KDwIil/NJMNNmyP0U/MOFIyaSXkQe6sPJ
- oYIQH71XPr2lDNtRXhla6jFSxzhDqpL6yBF9lGUaDTXIS451CZdyYEjc+b7WclQdQssf
- yM3w8BlHCvIKOd1/Fd9eMEyb+nf1PRubDgU+ZqHKB9JNCcgt8FHfjMF83cxL0WzHeR9e
- WN8A==
-X-Gm-Message-State: AFuF++kBrZnps+FDAPVl/Gfm5+GBSFlHN4i1xUmHYvhaFTV2xWdX76DR
- TVoM4NVoTvl6QsQ52z/wuBZKj3NkHJyipax0dz+pMlhDMFi/ZN+HDz00Jj+Mpw==
-X-Gm-Gg: AYBFou0go6ueA1hCgJ4medaFmBHIAGkucgmk1YkDjbvO0TmQuH3ShY1ez+0uy2ZLSah
- N160RSPQVpfxv1d0qp+MTnvsQN7qqDiErMAs/aAZg1j8R9LJ01rcR3MpMELfS2YSXW3XEvsfXM9
- DZPHqlD1ayFhBRSZsibCt/a/gaQGIbUqD4hNSe3VRhEBQC+RzcvRbZvhwi18VAGSScn7Tf5emr8
- GvErAKv1zWznKqdLDC0s5eHL07EG3ee0KOetgastpGMtgBrNivl+/VWa0DpHyroXcAK7LczTQxC
- rSmvtBINd0zqrrVDBNaANYcMyXTUXDkfNwYchU5AdLkO5NVfgV62ghHVNAuZTQpucZ3Lk6uT57g
- 9iAGwTBt0P0IxmwBwDeS/A2e7Eob/voRdIQbMEJfMlCHIO1HKe4TdKDw9zxUXNUsOuLXBHo+xZg
- QETUXuKnwXKK4ms1vjTtd0wtIWqB5u9gAaVqOz6lW3/NKQ6j0xTxzNi6IrhETtMbZNApCfDwjut
- GMkWjc4CEJ2tw7LyINEYvnqqyNxVr3stTbPF+hypF7EGvzvK05FoCgHEbKeh5HSmFG6YbRg0DvK
- fIk=
-X-Received: by 2002:a05:600c:34d0:b0:49c:eb16:9fd with SMTP id
- 5b1f17b1804b1-49fc5671650mr169292315e9.3.1790027247683; 
- Mon, 21 Sep 2026 14:47:27 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790027269; x=1790632069;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=dQ+y+HOgk2flqhRgS2Cprok52hJaeXGfKUopI52BI5g=;
+ b=kGb66LuKc8HiQqjp48hLayP4Yvxg5Gjsd4+mfePvQLj1iOWQCuCV94qRoipFThl9FZ
+ TU8nQBxxoXC5PG5c5rakovgPEPCyMEkiUU0AzueqH70Q3rz+4OSxywOu+bU2QH6KZTL+
+ PZWR5QFnyMv/5I4qn0AE9IKRyk6rxPDZHiPTW1ErH7Qh2kIn9lBe0GiVlPKZUg2rGD/V
+ zwENKhiwyYsH18CJsI+QQPIwvO6A05dS1Jz02qilW2UWE2IsA9CPbMNjvXgGnHpjXEi0
+ UCliF+ONb2A09Ztox+re2/HxHk7DIv+JWXcWMh+Tjm0ExwvC8XSLyw0G5lkV/DktvysQ
+ dRpQ==
+X-Gm-Message-State: AFuF++kRFCM3Vw00cu8eaXeuVvyWl/y+MfioPlmNy6BwncqOMbTFp9Qo
+ F5kCT/FZG5TiRPmJDubRJTL9YyqKI9U+ZLeLVu60LakuFgPfjg1HdeWDJmWmVQ==
+X-Gm-Gg: AYBFou1Mwh+aLCwfqyWEHhR0PUso1JxK99lLwXga+AHHd5fdNrhMUcH2+UNx8TwUjYA
+ i8zDf96qAS6rf7bjJV6lWB/+5gHkb479HXSXddFR2EUPolxsUsQjD2b+ELwD+vqSqj+ZlgDyFvS
+ YWqpbZ5EzV5EUZKw0onf4f8zyi+J/qVbUBRxdBiQOvjTfngrCa/k6IZQsMp4sY9m1+LovIAzOzA
+ 1l3ZE/1vDPQVuY6Zlb19cFJoop69yEa4mZsNnD7ezIXqsQXkouKOH9oDIA3VAhOpmh7rVCgsr1v
+ oAuGSJOjKMMSvVmNgjdsNU2R5Jd/2QtsHdvWCAde2pASmgfbxvVC3IfPPLQ5QN3oAz/pYjDbzNR
+ NKh3YHtD4S8NN8AGLO8yV6+M6QzPbEMl2HR4krzWJMXnWrH5ZvSzGQufn/IbYX7ZWmh0LRJwkhh
+ 9vFut7Ah/tCU2pjnHfk6EgPzJSPvsiruvsY9gtlZxoKhv4Bh5hhx8/89Bx+iriNCnDigaiu8i9X
+ a2QJ/Z0HRaaNnnMLAXrXSrziq2pASm8Mo4DPSDmGtF935r70hSoMcg1Nhuq9c7VoG2usTjJLGDS
+ na8=
+X-Received: by 2002:a05:600d:4453:10b0:49f:cbf1:e77b with SMTP id
+ 5b1f17b1804b1-49fcbf1e9eamr101288265e9.10.1790027268631; 
+ Mon, 21 Sep 2026 14:47:48 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.26
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:27 -0700 (PDT)
+ Mon, 21 Sep 2026 14:47:48 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -77,25 +78,26 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 01/42] hw/watchdog/wdt_imx2: Fix handling of write-once WCR
- bits
-Date: Mon, 21 Sep 2026 23:46:29 +0200
-Message-ID: <20260921214710.29422-2-shentey@gmail.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 16/42] hw/timer/imx_gpt: Wire clock control module via link
+ property
+Date: Mon, 21 Sep 2026 23:46:44 +0200
+Message-ID: <20260921214710.29422-17-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=shentey@gmail.com; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,64 +113,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guests such as u-boot may experience inadvertant reboots when configuring
-the WCR register. Apparently there is a typo in the WCR locked bits
-handling: The locked values for s->wcr must come from itself rather than
-from s->wicr. While at it remove the redundant locked attributes for the
-bits which stick to one once written with one.
+When wiring struct IMXGPTState to the clock control module, it is
+currently necessary to reach into its private data. Moreover, when
+forgetting to wire the clock control module, QEMU will crash after the
+guest has already started. Fix both by letting struct IMXGPTState
+expose a link property which is checked at realize time.
 
-Note that removing the locked attributes required a migration break. Defer
-that to a subsequent patch to help backporting.
-
-Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog
-support")
-cc: qemu-stable
+Inspired-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/watchdog/wdt_imx2.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ hw/arm/fsl-imx25.c  |  3 ++-
+ hw/arm/fsl-imx31.c  |  3 ++-
+ hw/arm/fsl-imx6.c   |  3 ++-
+ hw/arm/fsl-imx6ul.c |  3 ++-
+ hw/arm/fsl-imx7.c   |  3 ++-
+ hw/arm/fsl-imx8mm.c |  3 ++-
+ hw/arm/fsl-imx8mp.c |  3 ++-
+ hw/timer/imx_gpt.c  | 14 ++++++++++++++
+ 8 files changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index c83d4107c1..aaf4695db2 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -59,9 +59,8 @@ static void imx2_wdt_reset(DeviceState *dev)
+diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
+index efb22359c5..0840c2d86a 100644
+--- a/hw/arm/fsl-imx25.c
++++ b/hw/arm/fsl-imx25.c
+@@ -138,7 +138,8 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
+             { FSL_IMX25_GPT4_ADDR, FSL_IMX25_GPT4_IRQ }
+         };
  
-     s->wicr_locked = false;
-     s->wcr_locked = false;
--    s->wcr_wde_locked = false;
+-        s->gpt[i].ccm = IMX_CCM(&s->ccm);
++        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
  
--    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
-+    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS | (s->wcr & IMX2_WDT_WCR_WDT);
-     s->wsr = 0;
-     s->wrsr &= ~(IMX2_WDT_WRSR_TOUT | IMX2_WDT_WRSR_SFTW);
-     s->wicr = IMX2_WDT_WICR_WICT_DEF;
-@@ -156,23 +155,11 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
--            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
-+            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
--        if (s->wcr_wde_locked) {
--            value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
--        } else if (value & IMX2_WDT_WCR_WDE) {
--            s->wcr_wde_locked = true;
--        }
--        if (s->wcr_wdt_locked) {
--            value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
--        } else if (value & IMX2_WDT_WCR_WDT) {
--            s->wcr_wdt_locked = true;
--        }
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
+             return;
+diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
+index dd929c1085..b440ad6e28 100644
+--- a/hw/arm/fsl-imx31.c
++++ b/hw/arm/fsl-imx31.c
+@@ -105,7 +105,8 @@ static void fsl_imx31_realize(DeviceState *dev, Error **errp)
+                                             serial_table[i].irq));
+     }
  
--        s->wcr = value;
-+        s->wcr = value | (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
-         if (!(value & IMX2_WDT_WCR_SRS)) {
-             s->wrsr = IMX2_WDT_WRSR_SFTW;
-         }
+-    s->gpt.ccm = IMX_CCM(&s->ccm);
++    object_property_set_link(OBJECT(&s->gpt), "clock-control-module",
++                             OBJECT(&s->ccm), &error_abort);
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt), errp)) {
+         return;
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index 7ba9b85a2e..22deb72496 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -204,7 +204,8 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gic, serial_table[i].irq));
+     }
+ 
+-    s->gpt.ccm = IMX_CCM(&s->ccm);
++    object_property_set_link(OBJECT(&s->gpt), "clock-control-module",
++                             OBJECT(&s->ccm), &error_abort);
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt), errp)) {
+         return;
+diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
+index 84451c9909..2786889bda 100644
+--- a/hw/arm/fsl-imx6ul.c
++++ b/hw/arm/fsl-imx6ul.c
+@@ -245,7 +245,8 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
+             FSL_IMX6UL_GPT2_IRQ,
+         };
+ 
+-        s->gpt[i].ccm = IMX_CCM(&s->ccm);
++        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), &error_abort);
+ 
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0,
+diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
+index fc5d0efe06..9e206c59a1 100644
+--- a/hw/arm/fsl-imx7.c
++++ b/hw/arm/fsl-imx7.c
+@@ -250,7 +250,8 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+             FSL_IMX7_GPT4_IRQ,
+         };
+ 
+-        s->gpt[i].ccm = IMX_CCM(&s->ccm);
++        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), &error_abort);
+         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0, FSL_IMX7_GPTn_ADDR[i]);
+         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 875e92bb34..37934d2951 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -420,7 +420,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+             fsl_imx8mm_memmap[FSL_IMX8MM_GPT6].addr,
+         };
+ 
+-        s->gpt[i].ccm = IMX_CCM(&s->ccm);
++        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
+ 
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
+             return;
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index bcd91739d9..f855378dff 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -447,7 +447,8 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+             fsl_imx8mp_memmap[FSL_IMX8MP_GPT6].addr,
+         };
+ 
+-        s->gpt[i].ccm = IMX_CCM(&s->ccm);
++        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
++                                 OBJECT(&s->ccm), &error_abort);
+ 
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
+             return;
+diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
+index cdc0257126..22fc8203bf 100644
+--- a/hw/timer/imx_gpt.c
++++ b/hw/timer/imx_gpt.c
+@@ -15,8 +15,10 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
++#include "hw/core/qdev-properties.h"
+ #include "hw/timer/imx_gpt.h"
+ #include "migration/vmstate.h"
++#include "qapi/error.h"
+ #include "qemu/module.h"
+ #include "qemu/log.h"
+ #include "trace.h"
+@@ -522,6 +524,12 @@ static void imx_gpt_realize(DeviceState *dev, Error **errp)
+     IMXGPTState *s = IMX_GPT(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+ 
++    if (!s->ccm) {
++        error_setg(errp, "%s 'clock-control-module' link property not set",
++                   dev->canonical_path);
++        return;
++    }
++
+     sysbus_init_irq(sbd, &s->irq);
+     memory_region_init_io(&s->iomem, OBJECT(s), &imx_gpt_ops, s, TYPE_IMX_GPT,
+                           0x00001000);
+@@ -530,12 +538,18 @@ static void imx_gpt_realize(DeviceState *dev, Error **errp)
+     s->timer = ptimer_init(imx_gpt_timeout, s, PTIMER_POLICY_LEGACY);
+ }
+ 
++static const Property imx_timer_gpt_properties[] = {
++    DEFINE_PROP_LINK("clock-control-module", IMXGPTState, ccm, TYPE_IMX_CCM,
++                     IMXCCMState *),
++};
++
+ static void imx_gpt_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->realize = imx_gpt_realize;
+     device_class_set_legacy_reset(dc, imx_gpt_reset);
++    device_class_set_props(dc, imx_timer_gpt_properties);
+     dc->vmsd = &vmstate_imx_timer_gpt;
+     dc->desc = "i.MX general timer";
+ }
 -- 
 2.55.0
 
