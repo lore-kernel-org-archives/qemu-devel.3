@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC185C982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C405AC982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8dGX-0008S9-JJ; Mon, 21 Sep 2026 08:37:02 -0400
+	id 1x8dGY-000069-Jc; Mon, 21 Sep 2026 08:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1x8dDp-0006xR-Cp; Mon, 21 Sep 2026 08:34:24 -0400
+ id 1x8dDk-0006wa-8V; Mon, 21 Sep 2026 08:34:08 -0400
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1x8dDk-0002Av-B9; Mon, 21 Sep 2026 08:34:11 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ id 1x8dDb-00029s-RO; Mon, 21 Sep 2026 08:34:02 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LAiHke520340; Mon, 21 Sep 2026 05:33:37 -0700
+ 68LAhSBs932490; Mon, 21 Sep 2026 05:33:40 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=mZ21jKjDe60npy3R0Pt3Jg1g+hcsBOzExrkjaM5yH
- aU=; b=fkBpSbJTecFW6zo4OPgOqh+9CTPnybqu7HIoy0IMpJISqWb+Dv2fG37k/
- Od3yU+vZzPoUVqVNQwn6bGSDedEMoUT4HpYUsFE699V2UurIpHDfUCAGb/TY5Yr3
- MmLTxbzY1hGpLf17eVAs4w2yaPjXE4Qu/X+WOfGnCl9lPky7C/MbYUvyzw+YHbh/
- 5IpJhOpblSdaEGW4OH2A8e27FtvXUjNml0b1N/1ZbV4qluIHUXCPYmFl3tNhJNWF
- a7Z9SsH0LmhpCU1RYNVF5sZj6LdLPeKS/c/1/VbJOx+/9HudEwvFcyWEM2SpbYu/
- 9qHB0h5YS3bDhmy369eipFX+SCyig==
+ proofpoint20171006; bh=tpg4UfrkqHrIYs8+kzXIp2L9JVuzrbyVyG5fgyqp8
+ 4o=; b=b/xlTAgvkVwj9Rb4JAgLarOtWjUBUbzrKIzdH1WKW9xVKpn8d08zF1Weo
+ E+wmvrMReunYXoMq4rXhaSfCBONvxsG7liwt/uRwvIrOj/67VFKTqvOFj4Z2leT3
+ m5RmExJ2loB49Obe7PFBMysLMT/Y4gkd8bH/L38+r9u7/ZGNn3Wtxi6kq9yQMy4/
+ M6bOpD+4TTKpUr8F5m170jSm6OTylS4pI7OISTQx8rHVM9CZY0bZ51qKt1/ZHAWw
+ c3D+DqMkzXE+JOo00c3Oa93vclW0b8Tn4orr6zWwo7s7e9u0B6Uwpwl3esapHE7w
+ vwP2CN6Elo5p4rAY/wb30Wayd+eXg==
 Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazon11022131.outbound.protection.outlook.com [52.101.43.131])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4gspqsbhps-2
+ (mail-westusazon11022095.outbound.protection.outlook.com [52.101.43.95])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4gssxwkc93-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 05:33:36 -0700 (PDT)
+ Mon, 21 Sep 2026 05:33:39 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xiuy6WZ5Fg1Fl0tqCTg0nsZagkt9SMo8/v9rqDT3Y+L9QrbZBRwMTb47hgg73pIeW48XLEK5U1zIBH2+sqg8BqNn8IIwvm9qS4rE05JRcWUc1MG47TAxwyS2X1UcD/6um75uzdGiLs5qdIghf+Hga3CkbCh0w8Hg5yfTgr6byYgbpQ4yRhia7WxmehFXl7xpWx0HcQqZyvEqhdaWGTsPMb5V/zuMMpkrQu6Vp6IwAygY4mtql2mi43HpAFcOWD9s6/76030V/+oFWaA9nHagSBziAvqJ3SfQ3dM9YF8BX80pk69PV+qLyv4V1FydlRGT466DogQx2Il0wMlM2ddnnA==
+ b=fg47ily1TxfY13DlmlHTcmpmxCg4M9QsmZzJTnIZCxjFLkSUiEZ1MLlzpE6ur91pKVRaPnmDBqPSuMsiCWOicLgzmQSAjm3UKg149sTkL2DHfdhrxsQFkcpboElLle+94puBbgu3nbv9YIgNJLoGmofqnM1nYkJTT3f4rEz3qFnJKptJM24pAmCC1DDxrYVJPbcSyielAzP38/m/UJEu9U2Tin0dBRqABYbBl6C5KeTqW8t20tqCm8oEGq+B15GLxGQol67EAjty+xvYV1G22BGylsfWNGMZdB1g5nYSEDHEQoqWf7A7/iqdfNosBqsLOrE88tjtN4B2gzGS3EptvQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mZ21jKjDe60npy3R0Pt3Jg1g+hcsBOzExrkjaM5yHaU=;
- b=zJ+0+9lwsQ9L5UmTPD+HWR0wCOH8z47D6tRgHriOYcEgOv6TFh1eHbsT73Yfx3JE0PzUXRRf4r/hAGRz1xRbwizyajeuYItmEN1lup1P8nEjGY1e2EUJ67lzsdQsYeXAqAtp3VcGchJpg1/mcm+qrN8nwLV23H+9ipo+FipON2XT2FJYmSYpp80DP5IOUDD9n9k6zP/EXKqNceVyEWcYSMxPYsBkLRkRxo06dR8/EnG8+hle6CaLDxV660uRoR36+IGkdvKjKuMeL8fM4nEA1/mktPAP2+1ho/Pwzo5LZp6AHDwG5UjfMdxv5SHy66g7wy0l0mxqZEUehTYFpF4AAQ==
+ bh=tpg4UfrkqHrIYs8+kzXIp2L9JVuzrbyVyG5fgyqp84o=;
+ b=X10nK0TfujYJfPyDsCyYrbBzUTOHHbbMaI0OkRZzwy2BYxrQdcByPjUQ1aYCfUsYTxLgpuay0xvAAO1jHr8qaQ1aqc99X+nTZWvd3Gk9GflyNImpQLUKA42XEm7jC/eP++CkAeRKds5OIZkGwTktO0ni1RSz1GP/9OdABH2D3UgWreXOt36GbSEzomInBvivM9WIpP82L6SbvCwqC1+QNMyOOZB2a0PqAFosaiJF59mM3s7aBBSrkb+tGh8JvPxBJYiuLNlQCVu3fYcofW51Pc+9TYvyg89j7scF+T/32QzL/Z7bBpqYEqdAKAvic34l1RTvBSuvmd7e9F0NoIH5vQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mZ21jKjDe60npy3R0Pt3Jg1g+hcsBOzExrkjaM5yHaU=;
- b=fjOqmfkP1Nl2Wmnsycdf38Psd/wBlchDzWE5+xbxuSLx9Bh6UI8dmFg5QIMzuZnGLYPzMRlSLRZxOBK5UzxdDVDfCbcl1/CY4QPo2b+v2GD4oImASS3ColgL80mRULyplgB/6X4Dg/P9M1uVOY8FLTDYlvwDTgVj64mgRpEJuLF/krRwuVy0k7W2wWRUHioRyLNz6i6zt5YDWiY9LiIYKDhfMEylBTAFbo7Ja84CPwWCT5GMRbXJ+JNXVhkUk95/eDg8EDe38z9F2ZKbYszdt7Db82wSTFozPc5KXrUs8qXv3h0cnbTi9NYh08eumIrSJUpbwGjm+P+y1YhzaYjcSA==
+ bh=tpg4UfrkqHrIYs8+kzXIp2L9JVuzrbyVyG5fgyqp84o=;
+ b=L1Beays7lEVh7gb7ThfipqYGImrn5xmCFm1HWDUxScBFIzpy76A7tFKtb4Vg11Q+7kRr/DWvB1jS1cVhjadG4d9vEFvc0w8+OtoWTLVaZarDRD6fghQWyAkLPWZGltOzM3LeOAGn2WGF7XkSqRwCzBxf/RoalzZUxrxpXduXRNE0BzDOIZWwMKzTZypjIXIBSXEcn4JNSxukhhG1hnJl6lI+xG7X+sL5Wkj99qXQAg36GglOq4YxtMAQU38YYjS7d5EMuqKusFLmMgCvNsuy8smzgilzQjel/Ka6IiKWQAashTg2Z8PuCs2l8TOezhK2cyLT6K8lQwmaTxixGoVU3w==
 Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
  by BY5PR02MB6868.namprd02.prod.outlook.com (2603:10b6:a03:234::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Mon, 21 Sep
- 2026 12:33:34 +0000
+ 2026 12:33:38 +0000
 Received: from SA2PR02MB7564.namprd02.prod.outlook.com
  ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
  ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 12:33:34 +0000
+ 12:33:38 +0000
 From: Khushit Shah <khushit.shah@nutanix.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
  eric.auger@redhat.com
@@ -70,9 +70,10 @@ Cc: cohuck@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org,
  philmd@linaro.org, yangjinqian1@huawei.com, shaju.abraham@nutanix.com,
  mark.caveayland@nutanix.com, khushit.shah@nutanix.com,
  ping@khushitshah.com, sandesh.patel@nutanix.com
-Subject: [RFC PATCH v4 15/25] target/arm: add graviton4-v1 named CPU model
-Date: Mon, 21 Sep 2026 12:32:39 +0000
-Message-ID: <20260921123249.1708067-16-khushit.shah@nutanix.com>
+Subject: [RFC PATCH v4 20/25] target/arm/kvm: compute host-supported values
+ for ID register fields
+Date: Mon, 21 Sep 2026 12:32:44 +0000
+Message-ID: <20260921123249.1708067-21-khushit.shah@nutanix.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260921123249.1708067-1-khushit.shah@nutanix.com>
 References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
@@ -84,78 +85,78 @@ X-ClientProxiedBy: PH1PEPF0001330D.namprd07.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SA2PR02MB7564:EE_|BY5PR02MB6868:EE_
-X-MS-Office365-Filtering-Correlation-Id: a50ee468-5245-48a2-9c1d-08df17dc8d72
+X-MS-Office365-Filtering-Correlation-Id: 397cc356-9a5c-4766-519a-08df17dc8fde
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|23010399003|1800799024|10067099003|56012099006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: qST7DhP61AbOnurXxqGKxRjR8Kd4VIHWa6vWNjphzNQnPKSLflkfAbhn7A0C+FEOmyaADLBgzt7rlJixbwfAxVyf0+H89yEkF0XS1ij4puZaPh3oQBu/PdaiWfEBJEUtXZnNycALfl3ZiG1HCwTZBvUVtJSPQUAfwyjGFYAmpORN4fD+Cw8b2QO9dBAtfv1Z1Mvoq5CAufCzl1JrzrpmK4PR/aRNUHmqQsmzc0ZEFw60F1XVS4Hgtcp4BK302vT+wuiAzvpcdzb61ctal6SnGigRVC9krM14KstXS8cOLEZ9I5kvkqUecoO5pPjfWehczaJUrKGecmYXqrlDky1ovuw8AgUyAZK1vZqFHhiP5KxaxerPYU79TkcAyrmXBKCJVW2MBa2cdG4ZpFkYM+sjzXl6fEYE9Cm4brA4+i2YDfXwX27Jl63s0lXXrP9+71KNCVISTkMBEmLVZ051/oZ3cpqlovmN08+X6e/NsNToC8aSYyfoSDE+sJ0IoKqFtOpq+QIYksJ2NKgkkl+WivZb035uhJeUH60XFgQNS96Pv46UneWpj6PDXG+t2GUceE3MIiX0d141MUuIs8irI+7Y1oukbn8gg4410f0jIBekOmgr0UfTEoWQJAqw5ktzuxEFqO7qNXgr00B+YaOQGh1aWMv5Oagr1NCDOHL/g0Nsmm0=
+ ARA:13230040|366016|7416014|376014|23010399003|1800799024|10067099003|56012099006|3023799007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Z4xUpAp+1OwnlQgx/HW8OKfq6ZmoDd/PT+gC9Do7Fb9BPmuXLMlSixjxwRsOqxMWOnQczmqu/JuX7fA8skL0GnTbHnJbckw0vsTVevCdUnk1gwPx8rUMb/x0rrXeCJqAjdrerg4uyhudjsNTGv42+Xg7UGMNh9QqqVQog7o7r3g+Fe/a1tnzp1P0lOA8mwowr5H+DDfVaRcORgrshsXg29VAreJOf6MbPsnWuBDe/5bUBszBmeGIUVTSJwONWt2Me1tNkdZlx9ztpsyUy4ksdy2gnrSBZeOWzKMAXCMVsiH6qxFHOvAIP1Fy/59bvDPo4UD2fgZtVfsmjXnbhUczroNSS0tb0ShVlSfA3RcPlaFwMHMzS44zMzYh8O5R/6SThFuh9QDUKCee32E0ra+mKg0m9ycSflNXreIW0+mAaz+mZuqmj/a2BvLgd5rUvjkTDAUvZ2Hf/JVoq9Dv4iWDdU5g80EKbaDVWZLqH7coRKQxVcGXExC9gtNmaENv+dHfx4v3t2liGwHgrejM+3NSpQMOruwlEOfe/fC9Vl+9KcJIf0bduX805X8loX45UL9lhTD+lP+L5681eFr3+mZjOtE5ifoMm7JIFlGykSkFIjV9KiRjYQQzRGO+bQmbqsqltD7XueWU9coUi7nEAv3LhcWGgI4N1JG8GfV/DoAR5+A=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(23010399003)(1800799024)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);
+ SFS:(13230040)(366016)(7416014)(376014)(23010399003)(1800799024)(10067099003)(56012099006)(3023799007)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?GslQFghfsCqviiDAlQWv8rJfkkCyD0SZZz3VurHXTnZuZlo6VMkBxgKVjNjd?=
- =?us-ascii?Q?BFQTlQr633oAF4AoIF6xCr7KYOtMgMYO8iyXL/QhNj82sLlU2Ao6SvYnLEFk?=
- =?us-ascii?Q?7ke9/clfxgS7gA7UhFSjRriD9KGdDKKyBRCw2FznFqqNFsLCsP1PHhz5BGVd?=
- =?us-ascii?Q?x7bGTdVVzCKPl+socYBpOBv/Uo7bEvGIyPBSBNVa9pAIQ8HWdsM5i1zzVKOD?=
- =?us-ascii?Q?MIhZbw8eVUiWLSNDZB/4nbiGHD4aAiSGVq1rbaeQZK2z1J18RgeKBgTK9Bvt?=
- =?us-ascii?Q?OMecrPloEjIfy708y1Mw6hKvN+Z7d8MlqRMdRkTunDPCT3eaBh5Am7/ajk91?=
- =?us-ascii?Q?x+rQfA3tGet6ukuG0t5vQQFACj5C+kv1u8UAYPH3WAX10BQ2Oq2LbscMNNz3?=
- =?us-ascii?Q?NnJBs0hoZ2leQPvihNr1m3QRh8vpDJWlyUbVB5wv3kI/nNuZjfUCdqDjKhRI?=
- =?us-ascii?Q?va/sNkKn1jazwodfND3KNzhZxN2U2KVZcF+AY2vzucQsqpEm5N5Bxv0Crjgf?=
- =?us-ascii?Q?Jp37Wbv+vhEQhuIBCRqTY/4ZOFF/NoMUsSun5vadcAcBi7/45Op7ZPVbnscI?=
- =?us-ascii?Q?/hd+hMoFDQyRy2Kw5+7lu7yM8/KRAy0ajWYd5bU7XbeeilLk/MqGdJLWHNts?=
- =?us-ascii?Q?mykxzea+8VMQB6vvBSOWbkUZhg4+iLM/Ed7vN5vKHW2gmUBauBqo7wRaD3iJ?=
- =?us-ascii?Q?P+iEEhd3MCSbmG6uYDqnZOxEjjaS1IedUAwFUARG7sfacZNeF7zJ0Yy2ZFz3?=
- =?us-ascii?Q?V94l/G+pscx14yWDqBNeEsAiEbzfqEB+DHiTcem6xxjMmhB9kW8TgX4pYekz?=
- =?us-ascii?Q?VfmAbnJ4853aHJaHHFUxBbHoN9GOq0uu6hjI7NOy35PD6w8/k7ws5JH2MdzN?=
- =?us-ascii?Q?xOTJ7cgCehETK9l1iiE28nHsZMK4ahWgBRzaQX86RkUXhF3r9mg44lus4SML?=
- =?us-ascii?Q?Z8abrBuvfx1nHlrVn0mib8GtjpCKIsN8CAzzgQXRKpGC+Gi6OfuU5GGBSQX7?=
- =?us-ascii?Q?528DZMf+qKL7vRrxsVERrqiOVM5k5jtf1RWIFakgc72pvNvwabqPzkWrW3s4?=
- =?us-ascii?Q?JsR9W5GCjTGpyV+ZlzoCZ3+NSsL14c5UIqYseWEM4ntzYxTKpX3DqTB8x5gl?=
- =?us-ascii?Q?UfTUayZc7Vo4JdGKkQWRwtcPyaN0Rd3h6Q4g6EjJvkgd3ZbbQKruQMteYIV+?=
- =?us-ascii?Q?C4J1QHpicxyIDfxhVZ97uWTsUqwzka2Meiu73ZgBsf1kuxfwwywgu2DDgcPX?=
- =?us-ascii?Q?JXeWapiwiMkpuPzsStsNlaofqaDWpazgqZNdxZotJmVj57EsuJax1k2B0Z62?=
- =?us-ascii?Q?nVAOPRw88y3JJOQ/etxLTdrSdJFF0WSy2H2qpi9vMtukWlzVTTCbNW3bwg58?=
- =?us-ascii?Q?vflqQJdMRdHOyOg1vNrN8pTdm2OjS3CwVO0SXKeexRA9mAI02DaD5pdlJsxh?=
- =?us-ascii?Q?LEEtXNLecoHRhj07yZ/gfONgGEQ14x1MU5eHo2g3jKh/yGRguepR71EuGP5c?=
- =?us-ascii?Q?3RDW1SNgNBuaHV4BccUSpqHFKlpjbO98+MuSwBxF2VK34EQTp0W9JodbTxtx?=
- =?us-ascii?Q?8GjfJBJH3C9CxBmpO8LqKpOqUIRn4IXr53xhQSR1RL0SRRyZdSDSnWzlukZu?=
- =?us-ascii?Q?dWhj8AUKqfsQofyCI0vzaAX0vARSrVLmRCxDMGLSSBgknFLAgCc6smimGTyb?=
- =?us-ascii?Q?+4P1kl8TDlWhLCDJhyrUK+DqHKpUkqkoLNH5MbqfsGwHQIyii/o/hnuYxAfA?=
- =?us-ascii?Q?ZV2opcrEoqVjjttY9Lj9jLgE5CS4NIc=3D?=
-X-Exchange-RoutingPolicyChecked: Nst61Hw8XSHZY+ZYlrl0Dh6l+Umwe/FTkh/7p2dlxswpjJLd89M6YCVQHkLp7mNmYyYFslvEJEwYETl+g3LKyfTaJ7VwAnGyvcW2OEiEn7Djo8jqsGG3GJPLxueNlHVZbMrKviTyaYh2Qtx96P0oXggH+Cj40eBfe8O2j24LNN0d7drRhyElf44sh8xEDNjbbnr6W0YE7kNJj10Rjbz3SNUK1q0UgTHRie5FT8Y1zuU+TE4xMHMY9pMzEZ/ShEs/Qt28QkuSDmT+1fo1FQo8DZFc6qoAkP6YHrMt8xIG4aVFkYSrmZ1mJU/F9XMPVWO7y8KeiyE7me9dL/opwm9s7w==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3U2x9C6RgrvvVPD86g/x/yQQbGImJpgSNXqLD+rawlGMORczSDDGzimNU0Yx?=
+ =?us-ascii?Q?RAZ1dvpRepRL0Oiuj37P9Si4sSnUOEJpuX6apbyB1u53einE+qEF8tP/UCFf?=
+ =?us-ascii?Q?HDYRlfj5ssnqJs1og3md1cZ0JXnRoqOlLhHSZOpR2Y/PCrjMQMCS8U/2cyzO?=
+ =?us-ascii?Q?3hyzrIwEQ6JWT47vNmZeD4KgaZ04+GuJDDMqcuF6pYUl1iIRAetJUrlPMCR0?=
+ =?us-ascii?Q?CQWWzRVvzMuft8uT5On1AT7NZvZAH1eWGwopS8XYOi12Gj5K1xvxdMx4j6vq?=
+ =?us-ascii?Q?/nDBoQ1CDdTeVh3i8eD13Gt//KyEzzTbbSl5iDmXTPrL+qUcMzdX6AcKCttL?=
+ =?us-ascii?Q?iyAC505Bmo+B0/39yAndQLYbxUqmCsyvEFg3dRx+mleXjTv0H2TZptru1/t9?=
+ =?us-ascii?Q?saHh4JeAoQmpfwsvgMcq+kOA3o8RS+qwgJAfZLH87c9+bhkx9bQERSoCL/0H?=
+ =?us-ascii?Q?o30lnfJr8kxlPWPU8hCkBm6BRcm/rv09He30KLnTgEd1yN2VftZcgY6EQ34g?=
+ =?us-ascii?Q?/jdMm2dE5+HjeKeOPdNI5MpH51E3jnvL2AApEVZq4lpk2Vdf2QyUR0y7GkEu?=
+ =?us-ascii?Q?HNfVJ3e4s8DI9jYv/cZ3jf87uKKg0sLcuCRbT4IHlq1HQBgxmv3yWyWw2kv/?=
+ =?us-ascii?Q?mG4sPoBPlcawtwPH1R72xk3Pvy/4BuYkX3CJ9ywuCSQ1XmJKZl9Q1r7S3Q9I?=
+ =?us-ascii?Q?D4e8zEzj4k+QeMGmTJpfYrmpaYs2141R38KQhP1wHWsQf/ZNcMZtgWuiwvCy?=
+ =?us-ascii?Q?IcVGEoi2jebMuIkglyJXQD5C0YZEyZyY8RasVUtQzrOybNfcKCzmjLYlc6MO?=
+ =?us-ascii?Q?bl2bq+WWfT5Aew6wtBH0W907sSl8oGwpBwjrED05BmIy9v9IhBldb9FQF5o8?=
+ =?us-ascii?Q?C5zmpFCjE4Gc9bkcgyoGBGp3qUC5+V+QmrXIfyD5jM6k/muFoVlJ1QDOPmLD?=
+ =?us-ascii?Q?mCNwxWI3WSs1CdY+R3kuakkqFIsevzG5LzyF71nrfRCqy9MlcUh0aZWcyqjq?=
+ =?us-ascii?Q?lOzfBxbzGSn76QdMIhLKFHN/oU+na4gq9KsNZnIXyMbmh/EEQNu973vLzINS?=
+ =?us-ascii?Q?CQGC7k7c7663t4vJvPl3P9QGF2JH39uofHWD4TXm6W8leqgFVNRpDfh25N5p?=
+ =?us-ascii?Q?0gW3SyUM+C2aWspJWqjA9A8Jp8qcNxVsrRmmETh05BNLkhH4mCR8bQT1FGF2?=
+ =?us-ascii?Q?kLvc3cbJi4AORZ75yBhW+41jN/drLm4ons6g1rf4RSQg+GYyGfUKDr1MamiZ?=
+ =?us-ascii?Q?KoRDW/qGY06zvsErUPAmYr/kzUlAJ64zLY9HlZCWEEnjSSRWg0sWwCbSI/6X?=
+ =?us-ascii?Q?XEFhADQyfaJQ2wJ0tOyr88oOK0PaU4RO6XixUbw10pGjMvnDsS0w6fx3Orzo?=
+ =?us-ascii?Q?Z3IQaHwnaMFWK+vSkeAjwdA9s4cYipaP+MMWiK7ZVnh67aSvrOBon11Zu8M7?=
+ =?us-ascii?Q?odyT9bG/+sG7zr1padb9jLtM4OaEhrXzAjPs4s3TIH6p4KZOL9CTFVAcz/Kq?=
+ =?us-ascii?Q?rE8OK1U3zOu5rpmE2HmNJt0lecgw/JHai6w/ObPzBckhFkGeM0yqgd7rkKiG?=
+ =?us-ascii?Q?tZ6Wf9doEiRm+3B6/hZzcYolMHpksl7eTacP6zlEIGiJm0o0GkctsgOx0p8P?=
+ =?us-ascii?Q?Spo+YECnZhLYArHEfHKjN+4IuKFmSfdl14sS7XHc8jpUZJqYs9Cy01LjdZB7?=
+ =?us-ascii?Q?eKPR/c9vK0MFu7odhqa7b7FwKkTdtciidpEyN9yQnO2dWaWeBKfey19pD6Fo?=
+ =?us-ascii?Q?N5Y+LkcRucQywG6jMuCsERAla8d2aJE=3D?=
+X-Exchange-RoutingPolicyChecked: jVz+sUz412dZc8VQFgJg+c93w6Wwxwb6x5Wl3yJpNNu9J7VfyB+xz8NymxQbQRpPa7hfyCSY7hyFHq6N3sx0RPjPSZQHkt3sUqxR/TBeuzNmfu7+R5wZxxQFTyCd9AymdMbHEBAEkpRMBrZH0EYA4jFdcwJdZ38Yc2ADLoZIB8BReyOVFwx+MPLHOjma3NkN/qc3jEwayg0ldQiVCxQZrLzujLN4BZ8SeV+JNXMYa7NFxbY+N/U6GZjiV5fNwkSbMk2aaC52KST3qckZdG5QGBUSD8ad/tM9wveBTyj9re2p+R3ZaxEud18QQQSYA9k3/AJo+EbDbMfxsHwVFxvIWA==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a50ee468-5245-48a2-9c1d-08df17dc8d72
+X-MS-Exchange-CrossTenant-Network-Message-Id: 397cc356-9a5c-4766-519a-08df17dc8fde
 X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 12:33:34.4707 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 12:33:38.5375 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OKt3udgsX0HpeyrRCd4aPNoxswPXtN1Vng5P8l9VEzjkWRT/IunkBxrpLRHioEIPpwfSQuUyWwUvuVwoB7iXQw4wiKJOHQ6vDV2uibpF3F4=
+X-MS-Exchange-CrossTenant-UserPrincipalName: ANX1PM+3o8fO73Bs/oikEWm7nPf9bdChG7x1rJXFG2iPXpl3xUrlUaFxl+5xEuAaLuRLAqFapkmNZHfVsyE51VA7vLGqdNxQ3vGPOfOL4bU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6868
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX98ba38c3IXol
- PsperAnhDni64PhWaZdCfmcsN7bEiJo/kobznWRPTxVnXYzeKP9QaXyAd+241N7QLgCEetvI4Vd
- 97maF8ygKcKO3OvtC0yxwgNdCSI7IWKQGZnqxyqrzkFWK4lNny17e8zQqiB1BlcmQbrG+GLNXoD
- OwSy7HOBpihrqeQ2pJD/YJNKO4RhTu0sPm//vS7wZcN7kC3lxgE/lAsCEcOKrtf4gqZ0ucbuz98
- j9af8BLbGEvCqU29FQAlPM17I9GUJFoZ0h+zQtNQtadA6WDykQqbrf7VhC/UmtxG5cjBzhyBrkh
- XinI72nC9F769dsqycyLviwH8TxV0x2dy3kRbUKLtJ0prVx57qZX0XoDOB0OfHB3z9rwAsKcjcl
- baAQhLmNRSOw1w6NqQyTfFUg1wbv5dyJp4ai1w0VgwWdIIq8VDOPmzXXr5xY2eOlYLzQ0pZmt5/
- 5QhjxjZvnisY0oCo+4Q==
-X-Authority-Analysis: v=2.4 cv=E9BYNqdl c=1 sm=1 tr=0 ts=6ab12420 cx=c_pps
- a=WiodiXt0wH02q4ozJLtFAw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX3Ac+G29iMg05
+ jaR/IJZr3uZ4deicsjFp/6T4bd/R3Dh3fFAfvtBBJGVqdER4yvjPyyHW5NOuSInnYH2A75w/doQ
+ 9bCMRGs48dNU7gr9hV+Twnz3kVn3S2U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX8mVNz/R+LbE7
+ ajXmp+9woeKMqIQWG8bljxaTlpnIW0kY5ogNo0Oop0+ZrdULpHfHub3JTHjpJjshIsAl2yHbH0O
+ 7KQoSMM05ncxOo1c00XZFxLHJxvONASuh5AkpHNhALHC0ApD2OoCLAH+fAJEY/IEE+H03IV5tLv
+ CfgAMh5M0KAVbALHpZcGTqM8GdcYocFVKfIA+9nlQ4eIQW38qcu0zRdIjNw0TdyAhr9uMvBWj+g
+ 48hBFX+s/odm2OEThtGZu7gZ/pbyYqSG8WHfx6xm6bJ2DP1dUOm0Y8MrpTeanQALqfTwPnXxG4P
+ lnOnDGMH/RhMdrHeiugMzcN66dVbOaaobu/XoWtwqa6HNnT6ie4X1MSWNkZPGbsjWVvd9jk2aGa
+ JxZ329Xl1EJu9AZgRSdJnZlPIplvSkvOHHIgJjg17UwhWUHQT+Gr3GvkPPzEENVk1xjdI04FQci
+ fFYVKR5jwAxQ1tLMRaQ==
+X-Proofpoint-ORIG-GUID: Eq5is1XjvfqIrfBd3YNpqoAWjUaHVkBd
+X-Proofpoint-GUID: Eq5is1XjvfqIrfBd3YNpqoAWjUaHVkBd
+X-Authority-Analysis: v=2.4 cv=fphJ914f c=1 sm=1 tr=0 ts=6ab12423 cx=c_pps
+ a=kkxl9DAbGs3C2F6ePkv26A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
- a=64Cc0HZtAAAA:8 a=aUUaiw9hmEWJd_nZoTAA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX7KWeXrhCvbtO
- fn4XDz1t5X+UKyBlAEnMXZtqc4mvHpXSWoQ1GV4HEYR+/iCiAX8VuzoROWo9VvnC/zmihMsI7/g
- rQESi8FWQ51dhJNNhXIRsItSXjtKt94=
-X-Proofpoint-GUID: ONpa2itiZZ_6zc6XiCX7YG2NBmnU8eoV
-X-Proofpoint-ORIG-GUID: ONpa2itiZZ_6zc6XiCX7YG2NBmnU8eoV
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=64Cc0HZtAAAA:8 a=g3_KJovKdQ1qFWqhGEgA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_04,2026-09-16_02,2025-10-01_01
@@ -184,129 +185,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a KVM-only named CPU model for AWS Graviton4, inheriting from
-neoverse-v2-v2. Because there is no public Graviton4 TRM, this model is
-based on ID register dumps from actual Graviton4 systems, which appear
-to implement Neoverse V2 r0p1 with the SoC crypto and RNDR opt-ins
-enabled.
+Add kvm_arm_field_get_supported_values() which, for a given ID register
+field, builds the set of values KVM allows it to take on the given host.
 
-The extra properties are FEAT_RNG, SHA1/SHA2/SHA3/PMULL, the matching
-SVE AES/SHA3 bits, and CTR_EL0.DIC.
-
-Final ID register state requested from KVM for "graviton4-v1":
-[  0] AIDR_EL1                 = 0x0000000000000000
-[  1] CLIDR_EL1                = 0x0000000000000000
-[  2] CTR_EL0                  = 0x00000000b444c004
-[  3] DCZID_EL0                = 0x0000000000000004
-[  4] GMID_EL1                 = 0x0000000000000000
-[  5] ID_AA64AFR0_EL1          = 0x0000000000000000
-[  6] ID_AA64AFR1_EL1          = 0x0000000000000000
-[  7] ID_AA64DFR0_EL1          = 0x000000f010305009
-[  8] ID_AA64DFR1_EL1          = 0x0000000000000000
-[  9] ID_AA64DFR2_EL1          = 0x0000000000000000
-[ 10] ID_AA64FPFR0_EL1         = 0x0000000000000000
-[ 11] ID_AA64ISAR0_EL1         = 0x1221100110212120
-[ 12] ID_AA64ISAR1_EL1         = 0x0011111101211052
-[ 13] ID_AA64ISAR2_EL1         = 0x0000000000000000
-[ 14] ID_AA64ISAR3_EL1         = 0x0000000000000000
-[ 15] ID_AA64MMFR0_EL1         = 0x0000011100101125
-[ 16] ID_AA64MMFR1_EL1         = 0x1000000010312122
-[ 17] ID_AA64MMFR2_EL1         = 0x1221011110001011
-[ 18] ID_AA64MMFR3_EL1         = 0x0000000000000000
-[ 19] ID_AA64MMFR4_EL1         = 0x0000000000000000
-[ 20] ID_AA64PFR0_EL1          = 0x1101000120110011
-[ 21] ID_AA64PFR1_EL1          = 0x0000000000000021
-[ 22] ID_AA64PFR2_EL1          = 0x0000000000000000
-[ 23] ID_AA64SMFR0_EL1         = 0x0000000000000000
-[ 24] ID_AA64ZFR0_EL1          = 0x0000100100110021
-[ 25] ID_AFR0_EL1              = 0x0000000000000000
-[ 26] ID_DFR0_EL1              = 0x0000000000000000
-[ 27] ID_DFR1_EL1              = 0x0000000000000000
-[ 28] ID_ISAR0_EL1             = 0x0000000000000000
-[ 29] ID_ISAR1_EL1             = 0x0000000000000000
-[ 30] ID_ISAR2_EL1             = 0x0000000000000000
-[ 31] ID_ISAR3_EL1             = 0x0000000000000000
-[ 32] ID_ISAR4_EL1             = 0x0000000000000000
-[ 33] ID_ISAR5_EL1             = 0x0000000000000000
-[ 34] ID_ISAR6_EL1             = 0x0000000000000000
-[ 35] ID_MMFR0_EL1             = 0x0000000000000000
-[ 36] ID_MMFR1_EL1             = 0x0000000000000000
-[ 37] ID_MMFR2_EL1             = 0x0000000000000000
-[ 38] ID_MMFR3_EL1             = 0x0000000000000000
-[ 39] ID_MMFR4_EL1             = 0x0000000000000000
-[ 40] ID_MMFR5_EL1             = 0x0000000000000000
-[ 41] ID_PFR0_EL1              = 0x0000000000000000
-[ 42] ID_PFR1_EL1              = 0x0000000000000000
-[ 43] ID_PFR2_EL1              = 0x0000000000000000
-[ 44] MIDR_EL1                 = 0x00000000410fd4f1
-[ 45] MPIDR_EL1                = 0x0000000080000000
-[ 46] MVFR0_EL1                = 0x0000000000000000
-[ 47] MVFR1_EL1                = 0x0000000000000000
-[ 48] MVFR2_EL1                = 0x0000000000000000
-[ 49] REVIDR_EL1               = 0x0000000000000000
-[ 50] SMIDR_EL1                = 0x0000000000000000
+Non-writable fields are pinned to the host value. Writable fields follow
+their per-field constraints. This function must be updated when KVM
+starts exposing a new writable field that is not lower-safe; hence the
+special handling of TGranX_2/SpecSEI/L1Ip/MIDR/REVIDR/AIDR.
 
 Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
----
- hw/arm/virt.c           |  1 +
- target/arm/cpu-models.c | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 90e818690c..e514d167cd 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -4148,6 +4148,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("arm-v9.0-a-v1")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v2-v1")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v2-v2")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("graviton4-v1")));
-     }
-     if (target_aarch64()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-diff --git a/target/arm/cpu-models.c b/target/arm/cpu-models.c
-index af60924953..1a8913e619 100644
---- a/target/arm/cpu-models.c
-+++ b/target/arm/cpu-models.c
-@@ -17,6 +17,7 @@
-  * arm-v9.0-a-v1
-  *   neoverse-v2-v1 (r0p0)
-  *     neoverse-v2-v2 (r0p1)
-+ *       graviton4-v1
-  * SPDX-License-Identifier: GPL-2.0-or-later
+--------
+Note:
+- We should have an authoritative static list of "writable" fields in
+  QEMU.
+---
+ target/arm/kvm-stub.c |  7 +++
+ target/arm/kvm.c      | 99 +++++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm_arm.h  | 28 ++++++++++++
+ 3 files changed, 134 insertions(+)
+
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index d263adc921..c9cd47bf47 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -144,3 +144,10 @@ void kvm_arm_destroy_scratch_host_vcpu(int *fdarray)
+ {
+     g_assert_not_reached();
+ }
++
++void kvm_arm_field_get_supported_values(const ARM64SysRegField *field,
++                                        const ARMISARegisters *host_isar,
++                                        ArmFieldValueSet **value_set)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 6f704c0509..77b1bcdf55 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1324,6 +1324,105 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+     return true;
+ }
+ 
++static bool arm_field_is_signed(const ARM64SysRegField *field)
++{
++    return field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran4")    ||
++           field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran64")   ||
++           field_matches(field, ID_MMFR0_EL1_IDX, "InnerShr")      ||
++           field_matches(field, ID_MMFR0_EL1_IDX, "OuterShr")      ||
++           field_matches(field, ID_AA64DFR0_EL1_IDX, "DoubleLock") ||
++           field_matches(field, ID_AA64DFR0_EL1_IDX, "PMUVer")     ||
++           field_matches(field, ID_DFR0_EL1_IDX, "PerfMon")        ||
++           field_matches(field, ID_AA64PFR1_EL1_IDX, "MTE_frac")   ||
++           field_matches(field, ID_AA64MMFR4_EL1_IDX, "E2H0")      ||
++           field_matches(field, ID_DFR1_EL1_IDX, "MTPMU")          ||
++           field_matches(field, ID_AA64PFR0_EL1_IDX, "FP")         ||
++           field_matches(field, ID_AA64PFR0_EL1_IDX, "AdvSIMD");
++}
++
++static void ranges_add(GArray *ranges, uint64_t min, uint64_t max)
++{
++    ArmFieldRange r = { .min = min, .max = max };
++    g_array_append_val(ranges, r);
++}
++
++void kvm_arm_field_get_supported_values(const ARM64SysRegField *field,
++                                        const ARMISARegisters *host_isar,
++                                        ArmFieldValueSet **value_set)
++{
++    bool is_signed = arm_field_is_signed(field);
++    uint64_t host = extract64(host_isar->idregs[field->index],
++                              field->shift, field->length);
++    GArray *ranges = g_array_new(false, false, sizeof(ArmFieldRange));
++
++    /* A non-writable field can only ever hold the host value. */
++    if (!arm_field_is_writable(field)) {
++        ranges_add(ranges, host, host);
++        goto done;
++    }
++
++    if (field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran4_2")  ||
++        field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran16_2") ||
++        field_matches(field, ID_AA64MMFR0_EL1_IDX, "TGran64_2")) {
++        /* Either support the host value or the "off" value */
++        ranges_add(ranges, host, host);
++        if (host != 1) { /* 1 = "off" */
++            ranges_add(ranges, 1, 1);
++        }
++    } else if (field_matches(field, CTR_EL0_IDX, "L1Ip")) {
++        /* Only safe to downgrade to VIPT, other values are reserved. */
++        ranges_add(ranges, host, host);
++        if (host != 2) { /* 2 = "VIPT" */
++            ranges_add(ranges, 2, 2);
++        }
++    } else if (field_matches(field, ID_AA64MMFR1_EL1_IDX, "SpecSEI") ||
++               field_matches(field, ID_MMFR4_EL1_IDX, "SpecSEI")) {
++        /* It is safe to upgrade SpecSEI to 1, other values are reserved. */
++        ranges_add(ranges, host, host);
++        if (host != 1) {
++            ranges_add(ranges, 1, 1);
++        }
++    } else if (field->index == MIDR_EL1_IDX ||
++               field->index == REVIDR_EL1_IDX ||
++               field->index == AIDR_EL1_IDX) {
++        /*
++         * No restriction on value that can be set for implementation ID
++         * registers fields.
++         */
++        uint64_t max = 0;
++        if (field->length == 64) {
++            max = ~0ULL;
++        } else {
++            max = (1ULL << field->length) - 1;
++        }
++        ranges_add(ranges, 0, max);
++    } else {
++        /*
++         * After handling the special cases, other writable fields are
++         * either lower-safe or signed lower-safe.
++         */
++        if (field->arch_vals_count) {
++            for (uint32_t i = 0; i < field->arch_vals_count; i++) {
++                uint64_t av = field->arch_vals[i];
++                int64_t v = is_signed ?
++                    sextract64(av, 0, field->length) : (int64_t)av;
++                int64_t hv = is_signed ?
++                    sextract64(host, 0, field->length) : (int64_t)host;
++                if (v <= hv) {
++                    ranges_add(ranges, av, av);
++                }
++            }
++        } else {
++            g_assert(!is_signed); /* No signed field with no arch vals */
++            ranges_add(ranges, 0, host);
++        }
++    }
++done:
++    *value_set = g_new0(ArmFieldValueSet, 1);
++    (*value_set)->n_ranges = ranges->len;
++    (*value_set)->ranges = (ArmFieldRange *)g_array_free(ranges, false);
++}
++
+ static bool arm_field_skip_writeback_always(const ARM64SysRegField *field)
+ {
+     /*
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 4e563fab96..9481e56412 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -175,6 +175,34 @@ int kvm_arm_read_sys_reg64(int fd, uint64_t *val,
   */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
  
-@@ -224,10 +225,30 @@ static const ArmModelPropValue neoverse_v2_v2_props[] = {
-     MODEL_PROP_END,
- };
- 
-+/* Based on neoverse-v2-v2, with opt-in cryptographic features and RNDR. */
-+static const ArmModelPropValue graviton4_v1_props[] = {
-+    /* ID_AA64ISAR0_EL1 */
-+    MODEL_PROP("SYSREG_ID_AA64ISAR0_EL1_RNDR", NUM, 1), /* FEAT_RNDR */
-+    MODEL_PROP("SYSREG_ID_AA64ISAR0_EL1_SHA3", NUM, 1), /* FEAT_SHA3 */
-+    MODEL_PROP("SYSREG_ID_AA64ISAR0_EL1_SHA2", NUM, 2), /* FEAT_SHA256 */
-+    MODEL_PROP("SYSREG_ID_AA64ISAR0_EL1_SHA1", NUM, 1), /* FEAT_SHA1 */
-+    MODEL_PROP("SYSREG_ID_AA64ISAR0_EL1_AES", NUM, 2), /* FEAT_PMULL */
++typedef struct ARM64SysReg ARM64SysReg;
++typedef struct ARM64SysRegField ARM64SysRegField;
++typedef struct ARMISARegisters ARMISARegisters;
 +
-+    /* ID_AA64ZFR0_EL1 */
-+    MODEL_PROP("SYSREG_ID_AA64ZFR0_EL1_AES", NUM, 2), /* FEAT_SVE_PMULL128 */
-+    MODEL_PROP("SYSREG_ID_AA64ZFR0_EL1_SHA3", NUM, 1), /* FEAT_SVE_SHA3 */
++typedef struct ArmFieldRange {
++    uint64_t min;
++    uint64_t max;
++} ArmFieldRange;
 +
-+    /* CTR_EL0 */
-+    MODEL_PROP("SYSREG_CTR_EL0_DIC", NUM, 1),
++typedef struct ArmFieldValueSet {
++    ArmFieldRange *ranges;
++    size_t n_ranges;
++} ArmFieldValueSet;
 +
-+    MODEL_PROP_END,
-+};
++/**
++ * kvm_arm_field_get_supported_values:
++ * @field: The field to get the supported values for
++ * @host_isar: The host ISAR registers
++ * @value_set: The set of supported values for the @field
++ *
++ * Will be allocated and filled in with the supported values for the @field
++ * based on the host_isar and whether the field is writable or not.
++ * The caller must free the value_set.
++ */
++void kvm_arm_field_get_supported_values(const ARM64SysRegField *field,
++                                        const ARMISARegisters *host_isar,
++                                        ArmFieldValueSet **value_set);
 +
- static const ArmNamedCpuModel arm_cpu_models[] = {
-     {"arm-v9.0-a-v1", NULL, arm_v9_0_a_v1_props},
-     {"neoverse-v2-v1", "arm-v9.0-a-v1", neoverse_v2_v1_props},
-     {"neoverse-v2-v2", "neoverse-v2-v1", neoverse_v2_v2_props},
-+    {"graviton4-v1", "neoverse-v2-v2", graviton4_v1_props},
-     {NULL, NULL, NULL}
- };
- 
+ /**
+  * kvm_arm_steal_time_finalize:
+  * @cpu: ARMCPU for which to finalize kvm-steal-time
 -- 
 2.52.0
 
