@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED984C982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6975EC982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrr-0006R9-GZ; Mon, 21 Sep 2026 17:48:07 -0400
+	id 1x8lsJ-0006qp-3W; Mon, 21 Sep 2026 17:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrm-0006J3-5y
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:02 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lsA-0006hV-Uo
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:26 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrk-0000IX-2P
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:01 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8ls9-0000PZ-51
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:26 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49b912df756so24023245e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:49 -0700 (PDT)
+ 5b1f17b1804b1-49e71cdb22bso25999055e9.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027269; x=1790632069; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=dQ+y+HOgk2flqhRgS2Cprok52hJaeXGfKUopI52BI5g=;
- b=ICUwbzhg+vSGnAfOr63OVIXcLwCkMOcHnsyqMsnaXtOrBV7ZMkZkXF+MbacHp/2k59
- +Kl3gYFiJ90b2FXaH0jzQVupQT1RCG4MxB82KvL85Lxt8McHq2hSNmABn+JfqBVC/BVN
- DDBHCxx3G6ggl0fp4TiKaskVt8begj8lmNcUTo89hFB1sfkH/4b6T11Dmip5oFaUQum4
- IoVtMppnIjxbG++ZgDWCN+LFIDPiv7vpwIvGlWdSoItiS9FZ1iPxPaAbeMB1+sHODRhN
- mVpQdDpgxzsql3ZP5QRRzI8Ss+t3RmaTj/wB2D7W7wL6bdQMhyF8vxNNfeSVyvpBuq+x
- gWhQ==
+ d=gmail.com; s=20251104; t=1790027294; x=1790632094; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zV++aD4uHP4QG4HyYObNt6nmUUhVFuY4aARPX6yJf7c=;
+ b=ktuXPZqbxt9NjMfjypF9IAPDFm5c+jsaaYxeNdVMlb+Gy9dXGga76ATIwgiVevQiFW
+ KroRSDR3YGbQyMIBYGRrau20PgzXBvLwukdS15PeeAvFO+MK71ELD7QUXm8buLw50xGK
+ rDCyZRU/tVUWuQuIgrXwWo2K8a2EhUN8SsztTAqsWwDou6eOly+7MpHOy/w9PmxwJ2UL
+ k6/JXsRf4nTpqI6jsdtccCypcjgJsquwwcK6nOVXWxKt903tPdZbzHIYftPx9+FTEe70
+ n7V6JdP4yHzRkyG/9BuQHQu+vYhgSr3yNLDssJDeyGVoZIvarVccbkYRoiz61Ll8Wu1s
+ N9vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027269; x=1790632069;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=dQ+y+HOgk2flqhRgS2Cprok52hJaeXGfKUopI52BI5g=;
- b=kGb66LuKc8HiQqjp48hLayP4Yvxg5Gjsd4+mfePvQLj1iOWQCuCV94qRoipFThl9FZ
- TU8nQBxxoXC5PG5c5rakovgPEPCyMEkiUU0AzueqH70Q3rz+4OSxywOu+bU2QH6KZTL+
- PZWR5QFnyMv/5I4qn0AE9IKRyk6rxPDZHiPTW1ErH7Qh2kIn9lBe0GiVlPKZUg2rGD/V
- zwENKhiwyYsH18CJsI+QQPIwvO6A05dS1Jz02qilW2UWE2IsA9CPbMNjvXgGnHpjXEi0
- UCliF+ONb2A09Ztox+re2/HxHk7DIv+JWXcWMh+Tjm0ExwvC8XSLyw0G5lkV/DktvysQ
- dRpQ==
-X-Gm-Message-State: AFuF++kRFCM3Vw00cu8eaXeuVvyWl/y+MfioPlmNy6BwncqOMbTFp9Qo
- F5kCT/FZG5TiRPmJDubRJTL9YyqKI9U+ZLeLVu60LakuFgPfjg1HdeWDJmWmVQ==
-X-Gm-Gg: AYBFou1Mwh+aLCwfqyWEHhR0PUso1JxK99lLwXga+AHHd5fdNrhMUcH2+UNx8TwUjYA
- i8zDf96qAS6rf7bjJV6lWB/+5gHkb479HXSXddFR2EUPolxsUsQjD2b+ELwD+vqSqj+ZlgDyFvS
- YWqpbZ5EzV5EUZKw0onf4f8zyi+J/qVbUBRxdBiQOvjTfngrCa/k6IZQsMp4sY9m1+LovIAzOzA
- 1l3ZE/1vDPQVuY6Zlb19cFJoop69yEa4mZsNnD7ezIXqsQXkouKOH9oDIA3VAhOpmh7rVCgsr1v
- oAuGSJOjKMMSvVmNgjdsNU2R5Jd/2QtsHdvWCAde2pASmgfbxvVC3IfPPLQ5QN3oAz/pYjDbzNR
- NKh3YHtD4S8NN8AGLO8yV6+M6QzPbEMl2HR4krzWJMXnWrH5ZvSzGQufn/IbYX7ZWmh0LRJwkhh
- 9vFut7Ah/tCU2pjnHfk6EgPzJSPvsiruvsY9gtlZxoKhv4Bh5hhx8/89Bx+iriNCnDigaiu8i9X
- a2QJ/Z0HRaaNnnMLAXrXSrziq2pASm8Mo4DPSDmGtF935r70hSoMcg1Nhuq9c7VoG2usTjJLGDS
- na8=
-X-Received: by 2002:a05:600d:4453:10b0:49f:cbf1:e77b with SMTP id
- 5b1f17b1804b1-49fcbf1e9eamr101288265e9.10.1790027268631; 
- Mon, 21 Sep 2026 14:47:48 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790027294; x=1790632094;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zV++aD4uHP4QG4HyYObNt6nmUUhVFuY4aARPX6yJf7c=;
+ b=BdhHA+qb+ARjdB1ziJ1hMZlvDOhxChw7ZTiUtWFf3GqhH/LunZ2g7Qvt1pWdpaqzrY
+ BEDyeDGM8M3CB3ATYe+BXE068jD/03QHswXwHiNk9Sc0+g3hkoje8QSdNnLOzXfBmysn
+ yWgfZcn1EMUpCG9lueLsytkSZJEy/ZNomZyh6iY1P3IY8YHJleq1Gi4ZaauZ6cbr5Kwn
+ mw8EvHrRYkotczUxd/DkN0Pny7M/iO/so3S9kYN9e8DrOfvFVRhrzrqXT1vzqYJHewNn
+ 2NYxQIke3I0ptHPkcbetkJlxOAoXf4IfRzs5wgeCwr/81mc//C3FhV3cj4JcGJL6n4VA
+ nkiA==
+X-Gm-Message-State: AFuF++l+ZDg/LD4qD6QbKY7b8iWVGj8rXE2Wm3tia5nzYpL4qod6LWwM
+ H9H1R6V444lBi77zmicORd7stvHvihLKWgOqG6iQsONORhNOcdEL5LssglL1zA==
+X-Gm-Gg: AYBFou1t5WsaU3Is9UgeDuLvMEeclBSYjI18r/3AoZDxvsLXuDh4MEsylTIasw5vB8x
+ WBiAg+F5BKOgon5uSwHKwL32CeqkND66t3etN8FX41zdUsbIXpgY8/nhY7S+UyjbZRhA50EptJg
+ 8/+cDDTYo+4mP18GqyRRcqdXXJoiQTPy5ATkL+LWDG63qyPLxyE+76CKJcBeFI8AvsBy4QbZRYc
+ GNKZGhAF2eQK8lApqDupWsGdmO9Lns5ZxnJjYX3jvCNBZLxuF/zmzSORiRY5iVMaf41okGkJhCf
+ nqRftY/vtTbGKg9FJHtCM82lLTJK//stCb0hc/TNBqUatk47iIACKWGQrU7ieIdcprh4dVvnk8b
+ YTjKQFSY9bC3qXKLIv3Wag+7GojFNsJgtGfWh4nBqZ9XzdQtRBMScLFvYe/GW0CCQxZgosytoZA
+ c2BnAcYifpqhoMr2BRfG4vsS5PmKd3j5MO7UwQHFi2rd3nkqFuDe97gbtnPSW0pQylksKq3NOrJ
+ AMGe1sTcWztInxLYq1qqUR82iC+kbMinXfA0SFJ2fmmMRhYh+9XA/Ervz66hvFaWSLVhk0YvH3A
+ /iE=
+X-Received: by 2002:a05:600c:468d:b0:49e:69f8:e846 with SMTP id
+ 5b1f17b1804b1-49fc56862b6mr179989325e9.9.1790027293712; 
+ Mon, 21 Sep 2026 14:48:13 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.47
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.48.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:48 -0700 (PDT)
+ Mon, 21 Sep 2026 14:48:13 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,17 +77,14 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 16/42] hw/timer/imx_gpt: Wire clock control module via link
- property
-Date: Mon, 21 Sep 2026 23:46:44 +0200
-Message-ID: <20260921214710.29422-17-shentey@gmail.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: [PATCH 35/42] hw/misc/imx6_src: Avoid casting from void *
+Date: Mon, 21 Sep 2026 23:47:03 +0200
+Message-ID: <20260921214710.29422-36-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::11;
  envelope-from=shentey@gmail.com; helo=mail-wm2-x11.google.com
@@ -113,170 +109,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When wiring struct IMXGPTState to the clock control module, it is
-currently necessary to reach into its private data. Moreover, when
-forgetting to wire the clock control module, QEMU will crash after the
-guest has already started. Fix both by letting struct IMXGPTState
-expose a link property which is checked at realize time.
-
-Inspired-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/fsl-imx25.c  |  3 ++-
- hw/arm/fsl-imx31.c  |  3 ++-
- hw/arm/fsl-imx6.c   |  3 ++-
- hw/arm/fsl-imx6ul.c |  3 ++-
- hw/arm/fsl-imx7.c   |  3 ++-
- hw/arm/fsl-imx8mm.c |  3 ++-
- hw/arm/fsl-imx8mp.c |  3 ++-
- hw/timer/imx_gpt.c  | 14 ++++++++++++++
- 8 files changed, 28 insertions(+), 7 deletions(-)
+ hw/misc/imx6_src.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index efb22359c5..0840c2d86a 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -138,7 +138,8 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
-             { FSL_IMX25_GPT4_ADDR, FSL_IMX25_GPT4_IRQ }
-         };
- 
--        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
- 
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
-             return;
-diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
-index dd929c1085..b440ad6e28 100644
---- a/hw/arm/fsl-imx31.c
-+++ b/hw/arm/fsl-imx31.c
-@@ -105,7 +105,8 @@ static void fsl_imx31_realize(DeviceState *dev, Error **errp)
-                                             serial_table[i].irq));
-     }
- 
--    s->gpt.ccm = IMX_CCM(&s->ccm);
-+    object_property_set_link(OBJECT(&s->gpt), "clock-control-module",
-+                             OBJECT(&s->ccm), &error_abort);
- 
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt), errp)) {
-         return;
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index 7ba9b85a2e..22deb72496 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -204,7 +204,8 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gic, serial_table[i].irq));
-     }
- 
--    s->gpt.ccm = IMX_CCM(&s->ccm);
-+    object_property_set_link(OBJECT(&s->gpt), "clock-control-module",
-+                             OBJECT(&s->ccm), &error_abort);
- 
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt), errp)) {
-         return;
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index 84451c9909..2786889bda 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -245,7 +245,8 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-             FSL_IMX6UL_GPT2_IRQ,
-         };
- 
--        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), &error_abort);
- 
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0,
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index fc5d0efe06..9e206c59a1 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -250,7 +250,8 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-             FSL_IMX7_GPT4_IRQ,
-         };
- 
--        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
-         sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), &error_abort);
-         sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0, FSL_IMX7_GPTn_ADDR[i]);
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 875e92bb34..37934d2951 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -420,7 +420,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-             fsl_imx8mm_memmap[FSL_IMX8MM_GPT6].addr,
-         };
- 
--        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
- 
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
-             return;
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index bcd91739d9..f855378dff 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -447,7 +447,8 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-             fsl_imx8mp_memmap[FSL_IMX8MP_GPT6].addr,
-         };
- 
--        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+        object_property_set_link(OBJECT(&s->gpt[i]), "clock-control-module",
-+                                 OBJECT(&s->ccm), &error_abort);
- 
-         if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
-             return;
-diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
-index cdc0257126..22fc8203bf 100644
---- a/hw/timer/imx_gpt.c
-+++ b/hw/timer/imx_gpt.c
-@@ -15,8 +15,10 @@
- 
- #include "qemu/osdep.h"
- #include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
- #include "hw/timer/imx_gpt.h"
- #include "migration/vmstate.h"
-+#include "qapi/error.h"
- #include "qemu/module.h"
- #include "qemu/log.h"
- #include "trace.h"
-@@ -522,6 +524,12 @@ static void imx_gpt_realize(DeviceState *dev, Error **errp)
-     IMXGPTState *s = IMX_GPT(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
-+    if (!s->ccm) {
-+        error_setg(errp, "%s 'clock-control-module' link property not set",
-+                   dev->canonical_path);
-+        return;
-+    }
-+
-     sysbus_init_irq(sbd, &s->irq);
-     memory_region_init_io(&s->iomem, OBJECT(s), &imx_gpt_ops, s, TYPE_IMX_GPT,
-                           0x00001000);
-@@ -530,12 +538,18 @@ static void imx_gpt_realize(DeviceState *dev, Error **errp)
-     s->timer = ptimer_init(imx_gpt_timeout, s, PTIMER_POLICY_LEGACY);
- }
- 
-+static const Property imx_timer_gpt_properties[] = {
-+    DEFINE_PROP_LINK("clock-control-module", IMXGPTState, ccm, TYPE_IMX_CCM,
-+                     IMXCCMState *),
-+};
-+
- static void imx_gpt_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/misc/imx6_src.c b/hw/misc/imx6_src.c
+index 8d2c4175e4..5bc1318f9d 100644
+--- a/hw/misc/imx6_src.c
++++ b/hw/misc/imx6_src.c
+@@ -89,7 +89,7 @@ static void imx6_src_reset(DeviceState *dev)
+ static uint64_t imx6_src_read(void *opaque, hwaddr offset, unsigned size)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+     uint32_t value = 0;
+-    IMX6SRCState *s = (IMX6SRCState *)opaque;
++    IMX6SRCState *s = opaque;
+     uint32_t index = offset >> 2;
  
-     dc->realize = imx_gpt_realize;
-     device_class_set_legacy_reset(dc, imx_gpt_reset);
-+    device_class_set_props(dc, imx_timer_gpt_properties);
-     dc->vmsd = &vmstate_imx_timer_gpt;
-     dc->desc = "i.MX general timer";
- }
+     if (index < SRC_MAX) {
+@@ -150,7 +150,7 @@ static void imx6_defer_clear_reset_bit(int cpuid,
+ static void imx6_src_write(void *opaque, hwaddr offset, uint64_t value,
+                            unsigned size)
+ {
+-    IMX6SRCState *s = (IMX6SRCState *)opaque;
++    IMX6SRCState *s = opaque;
+     uint32_t index = offset >> 2;
+     unsigned long change_mask;
+     unsigned long current_value = value;
 -- 
 2.55.0
 
