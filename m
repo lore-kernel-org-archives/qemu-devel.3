@@ -4,62 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E53C982DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 02:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4483C982DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 02:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8TMN-00040u-Fl; Sun, 20 Sep 2026 22:02:23 -0400
+	id 1x8TvN-0006sW-0P; Sun, 20 Sep 2026 22:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1x8TML-00040b-CJ
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:02:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1x8TMI-0007a7-OP
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:02:21 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxQNEkkLBqWgsOAA--.41380S3;
- Mon, 21 Sep 2026 10:02:12 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJAxlMwikLBqhisjAA--.47516S2;
- Mon, 21 Sep 2026 10:02:10 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/loongarch: Add paravirt preempt feature
-Date: Mon, 21 Sep 2026 10:03:33 +0800
-Message-ID: <20260921020333.570784-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8TvL-0006sO-NA
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:38:31 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8TvJ-0002B5-CB
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:38:31 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ d2e1a72fcca58-85469a33c9cso3342911b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 19:38:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789958307; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BtG2Zb66vRor4K3jQn0bJRYOMTleARh1tRobHOdAOD21R17SwmlcbS5ZRhAkJFaTTH
+ EqONVnn4IYBmaqLWqabGZxvUeLLgTtuNQ5NaJO9emVkdg3KWkegXSPfugVIPAKtvz4pT
+ YkFQ81ZOS0UuvuuHCJ7A7wCRIezEMamn5GLZpHFedXIvDdeBxHVIV1IBeWd90KfoamSh
+ 9BTZvxnTH0ClCFmovrSQ/gvPXlPdwAxu0ynnUYARzGnE2vNEwfkQuiWZobLyhq3CnhPk
+ GMRJIhVJkf0ngOlCHx8yNKIw3bziFssmE0Cq7nWkm4SpSE1yisipwYvbjxFhsSETAQOY
+ dMVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7srmsyt5o7JS668pRrHZkL7pqB2sDob+W/Eq1beMSCA=;
+ fh=rlUQkUrV+2wvL97nNNwjCaJG84ej6IucOR2StcsJUgM=;
+ b=M06kbXRkqbfNaE6g9OuxHzkUCWGACLwq0xtZduHiZu/qwof9SzvtKSJWsQVABsJu2I
+ RSsbKpDh5Q7EKpgEMrvvQ18Wog8JMvnctlxTN65uJJGQh/TCbMSunk08E+9baygUEvPf
+ PdV5ODWbY/YNWKtWvGY+9uQ/kn4ZCDvpQkTL56fespvgBhXj1AnN4DhooPOfBelY6F6s
+ tIHwrJ5QpFIOVbLPAcvL3j806ybwOBPGqlhsLxe0qfj3pAMGD6xSf8lWv5GPlylmfdMc
+ bFQLA46VRHJ7yJBI+oyNhjaV/PZHpsYxOalDRzk+tygCH4PgZHb1iJyOAA2TnnhyRL+z
+ VxAA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789958307; x=1790563107;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7srmsyt5o7JS668pRrHZkL7pqB2sDob+W/Eq1beMSCA=;
+ b=O/DpOyqPGi517PyJWrFJGwLKugqH0TWwOQogZZWTzG+k0FCqotBi7WuI+1WdG5ZG6m
+ PpgZBCVOCG9oZvPqFqiV1xHjeZ6VEzKuzD/uuoWsC/5Xa01v/K6nC5/6LLTWq4gliEJP
+ 9rqZw94BthFhofpVZNsk1cLcUaIvNyyRdA+/lHEXqmskdJb7UKMWhqPmPZ9SURxT4xpJ
+ z92SsUL0D9jwON9SalPtlULhA2BsFTKT0V5QHY69eUppBkmrtXYCif807HlfPDilm1rZ
+ HNMK5G7DCeW5swNr6Rh8/5DAK6QtomT2GEYef27k/YUiQW86VBeDPyCa0doHwMvR+yJ/
+ +o8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789958307; x=1790563107;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7srmsyt5o7JS668pRrHZkL7pqB2sDob+W/Eq1beMSCA=;
+ b=pGqp/d8QEtauP3s9HiC9jsw4rXF1aJl2+kLpBrJ2V5ffH8Rnz6iyJW9kjsBh09yCT0
+ wy6/YraxbCzkHgP6askeFYjZEN2AV3GGH4kvDNglRlCSAS4N9WNCgyWnPd8qDadKO3b2
+ B709IiUwPzy2bT295lo96sHYCMe3U6BjTiDMMb87KKfIC1Lj6s0aV3fu5TqNolZ09FEx
+ meYo6eGUQBxIxU+I5BLhnrbyjEGFV9LXOkdKyaPSFgRm6lFHf5dBbB65qU8+KqfxW+WI
+ fjH6xuZ/6HxX25MMs09uRJUL6TnNJEQ/t6qUyGiMG0h8Q2CMvzVWa64RPIY8zGzc13Sn
+ Hezg==
+X-Gm-Message-State: AFuF++lL7xuiIurH+OnM4thJ3In9roPdfrg4SCcgRkJafUgrP+q//ePA
+ HDSL0I9IlAdJ9RFWPP3VbyFie6JKHbdWgASLVE6YVY4+AkngIcRu0L1j7mmHyPA82J1QiZSCtKE
+ 4BecwjOGxO5F2aX2O7gzLXUqcNRySUDDcTthDcxnI8g==
+X-Gm-Gg: AYBFou0TgwIjpQ27LJVj0+9wNa0DVsU/2rlCDkH93o5+7QC6I2jSuEVXAySxdyTe0Ns
+ V7k8PAyFvwkom+JKtASMsJmTj2hDP2Mg9agLOT+IbUcV1HVaAm5Z84HCBBcRFKprOgDK9Sl0yG6
+ 5gTmNzOT690wy1eZ8ea92C+VrLw0hSerCxaHNiNuXocP95OJpF4EN+kxwKxR2X4+/fEjdDnbUdO
+ orsnnvSgsOMFmHdJ3o7xzD7vELdlr4GawLes04nyTz800GDExSzZPmeh8S4F38oXfKlrlBtByhZ
+ zB6NZi3v0qxsCDXW6TfbyB2Whod2/UiutGGIKlsb1C28Ms/1KcvAkPYVKpm6GjAAyXGMotPI9Bs
+ XFDaJAXGCLw==
+X-Received: by 2002:a05:6a00:ad08:b0:857:726d:270e with SMTP id
+ d2e1a72fcca58-874dea02499mr13431928b3a.26.1789958307030; Sun, 20 Sep 2026
+ 19:38:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxlMwikLBqhisjAA--.47516S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAry3CF13Zr1kCw1xuw1fKrX_yoWrJFyrpF
- W7ArWSkrWUGwsakanxJ3Z5urn8GF4xGr4xXa43Ar4rAa1UGFWUZryIyF95KF1DX348XFyS
- qFn5Zr4q9F4fJabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
- vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
- jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
+References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
+ <20260919-misc-2025q4-v1-6-ebfa61049bd7@bsdimp.com>
+ <0b7b6ab1-5d55-42fe-8591-f67f8143c7ac@linaro.org>
+In-Reply-To: <0b7b6ab1-5d55-42fe-8591-f67f8143c7ac@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Sun, 20 Sep 2026 20:38:15 -0600
+X-Gm-Features: AcwNN1WQpGJsk11m4Oc8btba1ZJVoHw5EhwCkWTRvKtrVnIVaOXxr_tTTCb1cpE
+Message-ID: <CANCZdfqvUVbR77k8Py69JzGdqiCDs7YbRk5y8+111K7xWbZu-g@mail.gmail.com>
+Subject: Re: [PATCH 06/14] bsd-user: Fix crazy bug with mmap
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>
+Content-Type: multipart/alternative; boundary="0000000000000dba54065bf52557"
+Received-SPF: none client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,110 +114,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paravirt preempt feature is OnOffAuto type, it is disabled by default,
-also the feature detection is added to check whether it is supported
-on KVM host.
+--0000000000000dba54065bf52557
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.h     |  2 ++
- target/loongarch/kvm/kvm.c | 39 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+On Sun, Sep 20, 2026 at 4:09=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index c592f69885..c6dad2417c 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -302,6 +302,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_STEALTIME,
-     LOONGARCH_FEATURE_PTW,
-     LOONGARCH_FEATURE_MSGINT,
-+    LOONGARCH_FEATURE_PV_PREEMPT,
- };
- 
- typedef struct  LoongArchBT {
-@@ -464,6 +465,7 @@ struct ArchCPU {
-     OnOffAuto msgint;
-     OnOffAuto kvm_pv_ipi;
-     OnOffAuto kvm_steal_time;
-+    OnOffAuto kvm_pv_preempt;
-     int32_t socket_id;  /* socket-id of this CPU */
-     int32_t core_id;    /* core-id of this CPU */
-     int32_t thread_id;  /* thread-id of this CPU */
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 941142305e..7ca95181a1 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1039,6 +1039,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_PV_PREEMPT:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_PV_PREEMPT,
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     default:
-         return false;
-     }
-@@ -1203,6 +1209,21 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-         env->pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
-     }
- 
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_PREEMPT);
-+    if (cpu->kvm_pv_preempt == ON_OFF_AUTO_ON) {
-+        if (!kvm_supported) {
-+            error_setg(errp, "'pv preempt' feature not supported by KVM host");
-+            return -ENOTSUP;
-+        }
-+    } else if (cpu->kvm_pv_preempt != ON_OFF_AUTO_AUTO) {
-+        kvm_supported = false;
-+    }
-+
-+    /* Feature preempt_hint depends on steal_time */
-+    if (kvm_supported && (cpu->kvm_pv_preempt == ON_OFF_AUTO_ON)) {
-+        env->pv_features |= BIT(KVM_FEATURE_PREEMPT);
-+     }
-+
-     if (object_dynamic_cast(OBJECT(ms), TYPE_LOONGARCH_VIRT_MACHINE)) {
-         LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
- 
-@@ -1412,6 +1433,18 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
-     cpu->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
- }
- 
-+static bool kvm_pv_preempt_get(Object *obj, Error **errp)
-+{
-+    return LOONGARCH_CPU(obj)->kvm_pv_preempt != ON_OFF_AUTO_OFF;
-+}
-+
-+static void kvm_pv_preempt_set(Object *obj, bool value, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    cpu->kvm_pv_preempt = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+}
-+
- void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
- {
-     cpu->lbt = ON_OFF_AUTO_AUTO;
-@@ -1437,6 +1470,12 @@ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
-                              kvm_steal_time_set);
-     object_property_set_description(OBJECT(cpu), "kvm-steal-time",
-                                     "Set off to disable KVM steal time.");
-+
-+    cpu->kvm_pv_preempt = ON_OFF_AUTO_OFF;
-+    object_property_add_bool(OBJECT(cpu), "kvm-pv-preempt", kvm_pv_preempt_get,
-+                             kvm_pv_preempt_set);
-+    object_property_set_description(OBJECT(cpu), "kvm-pv-preempt",
-+                                    "Set off to disable KVM paravirt preempt.");
- }
- 
- int kvm_arch_destroy_vcpu(CPUState *cs)
+> On 9/19/26 19:20, Warner Losh wrote:
+> > +++ b/bsd-user/mmap.c
+> > @@ -215,10 +215,13 @@ static int mmap_frag(abi_ulong real_start,
+> >
+> >       prot_new =3D prot | prot1;
+> >       if (fd !=3D -1) {
+> > -        /* msync() won't work here, so we return an error if write is
+> > -           possible while it is a shared mapping */
+> > -        if ((flags & TARGET_BSD_MAP_FLAGMASK) =3D=3D MAP_SHARED &&
+> > -            (prot & PROT_WRITE))
+> > +        /*
+> > +         * msync() won't work here, so we return an error if write is
+> > +         * possible while it is a shared mapping
+> > +         */
+> > +        if (!(flags & MAP_ANON)
+> > +            && (flags & MAP_TYPE) =3D=3D MAP_SHARED
+> > +            && (prot & PROT_WRITE))
+> >               return -1;
+> >
+> >           /* adjust protection to be able to read */
+>
+> Need braces, even if they were missing beforehand.  Otherwise,
+>
 
-base-commit: c1c18d1e640b64292859ce9f30f3c344edfb0294
--- 
-2.54.0
+OK. I'll fix this for this series, but I'm tempted to land my 'fix all the
+style bugs in bsd-user' patches
+since this issue stubs my toe all the time.
 
+
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+
+Thanks!
+
+
+> r~
+>
+
+--0000000000000dba54065bf52557
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep 20,=
+ 2026 at 4:09=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
+nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On 9/19/26 19:20, Warner Lo=
+sh wrote:<br>
+&gt; +++ b/bsd-user/mmap.c<br>
+&gt; @@ -215,10 +215,13 @@ static int mmap_frag(abi_ulong real_start,<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0prot_new =3D prot | prot1;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (fd !=3D -1) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* msync() won&#39;t work here, so we ret=
+urn an error if write is<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0possible while it is a share=
+d mapping */<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((flags &amp; TARGET_BSD_MAP_FLAGMASK)=
+ =3D=3D MAP_SHARED &amp;&amp;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (prot &amp; PROT_WRITE))<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* msync() won&#39;t work here, so w=
+e return an error if write is<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* possible while it is a shared map=
+ping<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(flags &amp; MAP_ANON)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;&amp; (flags &amp; MAP=
+_TYPE) =3D=3D MAP_SHARED<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;&amp; (prot &amp; PROT=
+_WRITE))<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* adjust protection to be abl=
+e to read */<br>
+<br>
+Need braces, even if they were missing beforehand.=C2=A0 Otherwise,<br></bl=
+ockquote><div><br></div><div>OK. I&#39;ll fix this for this series, but I&#=
+39;m tempted to land my &#39;fix all the style bugs in bsd-user&#39; patche=
+s</div><div>since this issue stubs my toe all the time.</div><div>=C2=A0</d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br></blockqu=
+ote><div><br></div><div>Thanks!</div><div>=C2=A0</div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
+r~<br>
+</blockquote></div></div>
+
+--0000000000000dba54065bf52557--
 
