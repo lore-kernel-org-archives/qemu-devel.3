@@ -4,141 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A534C982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D438DC982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8cuR-0006KS-7U; Mon, 21 Sep 2026 08:14:11 -0400
+	id 1x8cuQ-0006KJ-Ah; Mon, 21 Sep 2026 08:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8cto-0006E3-8p
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:14:07 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x8ctE-0006Cs-Jx
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:13:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8ctm-0007L3-7r
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:13:32 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LAdnhD227909
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 12:13:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mspawvH0SVkypV9ky/EfH3/sSZLNgMemkEDDrFFIzCU=; b=L6Ayefly4zaqqLX0
- 28esryD/S0OylPVB5p08+JCBo5tnN+smML4+mBIwflMmjNDGv3nHqqV4S4jHlCB4
- F8tLKg1+w5x4ZsQpbkR+2RsIGAOJMnX7bBj9KoIfsGDBll9/hNhntAyc5nwdWxJc
- FC0xHMQYo86sQeUjiff0dB0dBhjCJFX25GAVNmFBCMaFbi5pLgUY4G73nZBe+mFb
- 1arru/LW/JyW0rLqhnvJ9Vjkm5IsgMV01Yr7h99EHSqjH3Js+a9KwtuCtDhiF+7o
- 7YRs+e3d9a1xHIatbaxABOxcnqCp/DVVZBXPAqBsP2hDXH+YFfWw5tnWQR0vuPXm
- nP8vXA==
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gu17grudy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 12:13:27 +0000 (GMT)
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-5c8487ce333so578797e0c.1
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 05:13:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x8ct9-0007JE-VE
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:12:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789992767;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7+JD3mTi86sGhaSBsgRZ6NB7AtTEF5bZ4v5vaNAjYtI=;
+ b=I3wygmee6aGMB5nOkSKzSu17QMB4ZJGsASc61Dd5gdxkv/PQ9cCrfmB9zlfVlwGeNGlJ0k
+ 3IEBq7LovYH8D2W2kGLi/9ep1icqBI00lJ95RGpuw9jDMrWZb1SkLe3Gsfj6o8JDKf3+xC
+ stHuUtqgPnKrgYwhhfLAvbp0j/ExTXw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-ZJ0XkTzKNpSP3PQVmEMeZA-1; Mon, 21 Sep 2026 08:12:45 -0400
+X-MC-Unique: ZJ0XkTzKNpSP3PQVmEMeZA-1
+X-Mimecast-MFC-AGG-ID: ZJ0XkTzKNpSP3PQVmEMeZA_1789992764
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4843227cfcfso2289458f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 05:12:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789992764; cv=none;
+ d=google.com; s=arc-20260327;
+ b=JH1RoYKp5DHPjqcCZVJ/Fgtb/kYWO6CLxgjVppRTYn8dU5DyqDixUgq0RAIQGlFoFy
+ FqnPWMYiGiqAP0W88pz0veXb/PGizwi9WZVmUeeNkkyBvdSlTH14gmQ9OylCOkgClvYH
+ eN3LZM+r6KlDPbLdPMr8XanE8d0xKUM2d6r6JxjGpZT+HSufYZaXrHxY6b0sf/wBGUqR
+ SOLjqPI9yP1Kb8XBe+vD9Scj+GwfNZ3SjV6jX/G2UbStgOpwF0nJ4MgoH2ufIgNA2CX/
+ 7RgJ4FzG1f/QTwqoqsENB/eI0AFyJZmxbcZbICIUknk8tH2t2V0YpKcDTYLWDADw5ZvB
+ +i1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7+JD3mTi86sGhaSBsgRZ6NB7AtTEF5bZ4v5vaNAjYtI=;
+ fh=4m7tIYVnUNdurO22ikN6uxqzC3ThfZyafZBO6DbVofw=;
+ b=kCfLpFpFZPORBwB84T8Xk6VXNdrgMmygtHavGJ4lAjxzPdDWd1eOlS9DovZKwSjnkw
+ zXWlcOzF9BX9JGSSKvOXCWH2xsE7YvmTpKesvfa6/RxIerHlz33dc4fyDkM1P+jn2Zof
+ Y9LZVmnK+IybQUlCTFPqZONbhmE9w+v7OKqUeZp4fJ1nluaQLa069s95MGNTTn+UFzAc
+ yxgo9NNTURlvnPhlAI9Ur/lgprZEC2XImH32j7kyaRTJNteLmP8DF3HtXOWAUuLWoCnP
+ ivYGyTXUdXTjELAxHhn7a4fzykrzWGKDpb+VV9bN4fZf5uIFbWQ2ajtb4XxpxEq+KZwA
+ t8tw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789992806; x=1790597606; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=mspawvH0SVkypV9ky/EfH3/sSZLNgMemkEDDrFFIzCU=;
- b=Ykz8dsVqHgvMCKpvQKTnZpqebCqWD13N23bM4k0s42z8Sj2/PaNFCImWfM2mDWaetl
- IkwQGgQblr3VKdEG682fdsoxgdhusqszmjPwseeBvFX29TYU7NFbBDCAYZZ2DC630sRv
- ryTRaPjA5f7184wK5Cupp7/aleflX+s4mYNXIxox6kpAFNPGta8tUse4suXgX/60k8ER
- VsOf4X8scSADp89RNHk2abjmuFO3hH27P+dqq6KWdP2kCLLsx4qkc39oLldbr3ywBFPO
- GZn1YJlOaju3bhorcb2fizWU1isqwDXJjS/jdax0kYxzxUOs5ymHN/M15umt8e1fbVgH
- bIbQ==
+ d=redhat.com; s=google; t=1789992764; x=1790597564; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7+JD3mTi86sGhaSBsgRZ6NB7AtTEF5bZ4v5vaNAjYtI=;
+ b=EJKSXGJTMH50uren/cgbYOCaIJbq7cjjGJ6QXhUAi4qMDEoQzFCve50TdWhkPyKW+q
+ kOuWAquJgZ+9LDqEsiKtI+fjEazUpxgn2UsYcOA+PzjRTcQ6FhrZkamF4j66hotBp9Ai
+ g+h3j/8MM6xeD4W+P5PZdW4CXBXjlebOeJ97qV/s6M4SkseLZdgu85ZpY5eBGIo8+6n6
+ 3nil5+kkNiABAV5Q14/40UpimQ595MDgAD/90tQWxOKnnxwB4Ky3gH0KUM5ZFMH5XfMA
+ 99B8jFNuDQqifkeCZYHD3Is80FW39iftAZPRWhFqnMdYUmiZUyhAdrg7c21UyuG08Koz
+ FbyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789992806; x=1790597606;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mspawvH0SVkypV9ky/EfH3/sSZLNgMemkEDDrFFIzCU=;
- b=VDCVl5vON0PXa1/87QSmvo6C/L3pg2zSBAfYDy+xlcAkZr4l43QoWY7c/CoZK1Y13b
- RAOoS52JeUGXxU5PBI7N/vMdJwlax6WVGev8dK+5Tbz9toYRzdWW96OoOweRB2qrTRFP
- s8eMnyXky5Kaw5nPK+XBK3nlTjKAGg3lXTV+9wQAgOxTU7k5D3AnKavyQZHKBmuWYYz6
- xh65DmWrUP5Dc/vKF90jvprqwHyMAlHi2d/Tfb2zllnWfzCez+Frk2ufCWbPYM/QgZZw
- XUzODhlZ/WowY2Q4p0PhAs5rRc+vOSNq58tbbG2XyrWihIRF2bYJNVlFE8sVsFPxzEC+
- MDJg==
+ d=1e100.net; s=20260707; t=1789992764; x=1790597564;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7+JD3mTi86sGhaSBsgRZ6NB7AtTEF5bZ4v5vaNAjYtI=;
+ b=fwtNU76wlKLhPNsfzPEmXwVmVFCw7JTAuZM6E2g5JvW9DlEjGhFU95ARRQ2h1x2TSr
+ 15vnQI5g1j5TAKUYZXK6lA82kVlpCnFZPW1hyREKDVO45r18hrc4Fvx6AbvbPvwjfS3f
+ aDK4ht3Om2nHzPUeqWfh2p/DbDiS4I1oHWlQn4HpyyESLc2fB7cAi2Dx3oSdDGSva9u9
+ CHOAA0eH8up2ffRGAZKaOGx/C89DDgGTKJ85wh3OZEMHyDeYQCgAls82z/NB1wxU/CUz
+ kAQz88lDO0mxE06CpF/ABN02BhUBaeOPojmrrbVNuXMXpcivHXsjJCeVafrnsDV+j0QD
+ wEsQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwyK6OaxKT22Su1S0RYVaMb1kKQPcgzRdyTzC9PEzDS7shYU2Kd4Bl7MER/vpYA2+sSm+vcaeo1I9Wi@nongnu.org
-X-Gm-Message-State: AFuF++nILfy2/oPF3Cd8vqc8NeVp6FqE+z2oHNvB54S3e1M1973vgL22
- IQyapj1sM/Twf0vWV944434FDhToVij1ts+0h0OtdTtel/r0BDp0kv8zrnWokogIvlrAnRFemXJ
- 9EAG6reKA8tjW825zVOo0XNyarEwOsMWL7q2yan3Pcy51IntWCTFzZ81pDQ==
-X-Gm-Gg: AYBFou2tSTL/egKb9UWGFuGecFb9Fovfi/dqT8qCP/fD46t4gNsFVo0R28LUrGHc8nl
- Fg/TJKy49haqTRQs9VkSRtPEM4F2Slri3vKvXm3skM/RtUxDDuQMy+nqIE/ooA04Gyy2Xt+ROei
- M6rTCAqu7aZht7pRBfxG+ubLhZJ/83MEZLgP3Vcy486qbe2J6tfESNc1J0wVwwVE7mhRgCTw/Cf
- ogbvPxJbTeo8U3fhIALKEEMUAJYYY8G7XWurhHHqFVKENcj2SjkjzEC7/G/STcls6J4u+W3YV6C
- eczYs45I/ATegahhJKaRIELP9ccS8GUlvwFZLagvhQTYfbhl4Tu1/H5gbnDY8olAxUPDZl6hlTb
- AhZw3pQMqEYZlHH+hdBx3jFw161BtzWuduw==
-X-Received: by 2002:a05:6122:1311:b0:5c9:a60d:327d with SMTP id
- 71dfb90a1353d-5c9b5a0213fmr4760927e0c.17.1789992806098; 
- Mon, 21 Sep 2026 05:13:26 -0700 (PDT)
-X-Received: by 2002:a05:6122:1311:b0:5c9:a60d:327d with SMTP id
- 71dfb90a1353d-5c9b5a0213fmr4760893e0c.17.1789992805659; 
- Mon, 21 Sep 2026 05:13:25 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48724593bbfsm20111247f8f.27.2026.09.21.05.13.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Sep 2026 05:13:24 -0700 (PDT)
-Message-ID: <3c73feb1-89bc-49ee-9001-a7ce0f7d839c@oss.qualcomm.com>
-Date: Mon, 21 Sep 2026 14:13:24 +0200
+ AKwUvByRJt5aumUJOyM5x7eAKahkesxhnG1Om3OeJkZyshZk9u9yi7DG2wzmuy3uynRbw4v77II9ySmYX6+5@nongnu.org
+X-Gm-Message-State: AFuF++lnxQs/67PR2Cx+/HcajhSrX7CaF3QhoftAdqegQSTa+Hp0cW2+
+ aYm/cFPZN1ThjEW02mtB7urjjyOmffqBq5nqfTPl//VaLb8AUX4bX3A+2AUjNTiN5Voy6ovhRBe
+ ddWKlROBwY0xs+AQHL/Ek5hVJLFPq6WAmhb7zNkGwtFK2UPpcAQJrV+cfNiKgxb7cSgCKUuPg82
+ mAjr8pnIdqDoBrKbMb1pZp9W7bN61EFEw=
+X-Gm-Gg: AYBFou1oyZiwshM10oNk2gVzEvPWUKDxpaoV5toPSfqBKYk4OoDIwR6c4bvZk+y4L/9
+ IUBcNS4cX6yCQDYeh5Cbxtip1RLK5LBDMh2ECK4GJD6AxMXrUiy2kh1CSJ17bg+RJeVN1qEjlhY
+ Pb87e1pPqXdZaMNz/5M2XpUPa87r7UNaMovGXDAKuV68ODoqczP6/XUSuOCQtMpZ2cNb9NB1GtD
+ AJfLbzxLXQUJ9e9XQjZKD0Eg7enXdZzHhnYUMEwW4iqTAZg1obHSuu3R+EgBQ==
+X-Received: by 2002:a05:6000:2083:b0:488:5468:c23a with SMTP id
+ ffacd0b85a97d-4885468c35amr9283598f8f.17.1789992764360; 
+ Mon, 21 Sep 2026 05:12:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:2083:b0:488:5468:c23a with SMTP id
+ ffacd0b85a97d-4885468c35amr9283498f8f.17.1789992763447; Mon, 21 Sep 2026
+ 05:12:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: Always initialize CCPrepare.reg
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-References: <20260914220000.1757165-1-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260914220000.1757165-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ZJVOzok8dAdj8Jzvnr5Vut-z8KO55IXy
-X-Authority-Analysis: v=2.4 cv=IewSymqa c=1 sm=1 tr=0 ts=6ab11f67 cx=c_pps
- a=wuOIiItHwq1biOnFUQQHKA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=XD7yVLdPMpWraOa8Un9W:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE3NiBTYWx0ZWRfX/33CJGzCAkBQ
- /h3uUKnNXZZEvg68Iy2h+VbUNZOb6A5tUPhzTJC7Rrm2H+9AYblMMD3Av+4Q3WdSX5l1BZdJyaP
- f7F9RBF9n7xorbbfndkv156fdRVr8t9Su2++3Uac9VC++3npeb7RFPc0CxYHsg+V61pjwOGVVjc
- wqPEVqglVYbJaF6f0HDApWELB8HxbkEvKDStA/DoFJQEEW5aa4SNt/U7lGBWTJ+/lOVsjZ/R3J7
- 2/Sm/5+bmcCRxyWZYswDim/RPBqYD1MbRC0QB4qA6DKPwak3GOM/lmsDOM+aAnbZ+win06Tqtuo
- TxYuAkEpkDnEUAJg5G4zhfKTvDXlEE/snr+MBl9Dq5rrdWYpWtszdfJtJVEz26Ef0EQlscwXi/5
- L0BLeFDJxp0s8mwppekyqTLXZsEML8Izo8XftTF2vgi2U+QIbstLMpTQeBNC9oNlmV9R4ZOu+RF
- dItzcdPwxr2qmpTq9bw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE3NiBTYWx0ZWRfXy1W5pVEvAEwN
- tTFlXnkxx4knyDh3dRLnIAI/njGpzUTvshOmuxU0uefoaDo26DNHssk58CcZdPA0Jhsi0el+r4G
- TYAzyNuWnVknyTUnJXT2aLFKxhTdtPE=
-X-Proofpoint-ORIG-GUID: ZJVOzok8dAdj8Jzvnr5Vut-z8KO55IXy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_04,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609210176
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260921075251.12831-1-pbonzini@redhat.com>
+ <20260921075251.12831-4-pbonzini@redhat.com>
+ <878q4v0wle.fsf@draig.linaro.org> <arEQ0knroQ3NDDBA@redhat.com>
+In-Reply-To: <arEQ0knroQ3NDDBA@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 21 Sep 2026 14:12:32 +0200
+X-Gm-Features: AcwNN1W2wWqM_M2qPSgNZW8msTGsT9c4OoGsf3KZPE3fDmtrTJQdQangeSUba7k
+Message-ID: <CABgObfanWMyrLnBzM=_c6HgKFXO9Stu5WR6YU6dpSCLjS6Nr2A@mail.gmail.com>
+Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
+ rules are
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000d0f98f065bfd2ad7"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,22 +143,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/9/26 00:00, Richard Henderson wrote:
-> Forthcoming tcg improvements will diagnose the passed
-> null pointer with --enable-ubsan:
-> 
-> ../src/target/i386/tcg/translate.c:1177:5: runtime error: null pointer passed as argument 3, which is declared to never be null
->      #0 ... in gen_setcc ../src/target/i386/tcg/translate.c:1177
->      #1 ... in gen_compute_eflags_c ../src/target/i386/tcg/translate.c:1182
->      #2 ... in prepare_update_cc_incdec ../src/target/i386/tcg/emit.c.inc:407
->      #3 ... in gen_INC ../src/target/i386/tcg/emit.c.inc:2213
->      #4 ... in disas_insn ../src/target/i386/tcg/decode-new.c.inc:3151
->      #5 ... in i386_tr_translate_insn ../src/target/i386/tcg/translate.c:3514
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/i386/tcg/translate.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+--000000000000d0f98f065bfd2ad7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Il lun 21 set 2026, 13:11 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
+scritto:
+
+> > > +### No automated posting
+> > > +
+> > > +Agents **must not** use any API, CLI, or web UI automation to:
+> > > +
+> > > +- Interact on the QEMU mailing lists
+> > > +- Create, edit, or close **issues ("work items")**
+> > > +- Post **comments** on merge requests, issues or commits
+> > > +- Open or update **merge requests (MRs)**.  QEMU does not use merge
+> requests anyway.
+> > > +
+> >
+> > Are we considering project agents (such as the stsquad-bot) exempt from
+> > this policy? I'm not sure what a normal agent can do via the API as it
+> > wouldn't have the project level access the stsquad-bot needs.
+>
+> At least a user's agent can likely bulk file work items without elevated
+> access privs, as we've seen by the several slop-bombs we've had.
+>
+> I'd add a footnote for that along the lines of:
+>
+>  'Official project agents whose code is maintained under
+> gitlab.com/qemu-project
+>   may be exempted from one or more of these rules, at the discretion of
+> the QEMU
+>   project maintainer(s)'
+>
+
+Sure.
+
+> > +### No AI-written text must reach maintainers
+> > > +
+> > > +These rules apply when publishing AI-assisted work to GitLab or the
+> mailing list:
+> > > +
+> > > +- **AI-written cover letters and commit messages are banned**.  Thes=
+e
+> are
+> > > +  easy to recognize and waste reviewers' time.
+> > > +- **AI-generated responses to reviewer comments are banned**. This
+> undermines
+> > > +  the human-to-human interaction fundamental to code review.
+> > > +- **AI-written issue ("work item") descriptions or comments are
+> banned**. These
+> > > +  are verbose and waste triagers' time.
+> > > +  - An exception is made for issues for defects detected by automate=
+d
+> or
+> > > +    semi-automated tooling, including fuzzers and LLM-assisted defec=
+t
+> > > +    detection.  Such issues must be reviewed by a human before
+> creation,
+> > > +    must be created by a human and communication with maintainers mu=
+st
+> > > +    be done by a human, but including the verbatim tool output in th=
+e
+> > > +    issue description is explicitly allowed.
+>
+> I kind of want to eliminate this exception. IMHO from the bugs we're
+> getting, I think human's are often putting very little effort into
+> reviewing the tools output, such that it is largely a box ticking
+> exercise to claim they've reviewed it.
+>
+> If we removed the exception, and required humans to write up the
+> finding of the fuzzer/detect detection in human language, that
+> may do a better job of getting people to engage in more critical
+> thinking rather than rubber stamping the tool output.
+>
+> It would limit the ability of people bulk file 50+ tickets in a day.
+>
+
+I think that's the problem, namely not realizing there's someone on the
+other side.
+
+LLM write-ups are essentially the same as patents, they look like English
+but they're not; and the verbosity of the write-ups is sometimes a curse
+and sometimes a blessing. There is a tension between having a simple
+description of the issue and an unopinionated one. The fix is not always
+trivially obvious, and sometimes the "executive summary" from the LLM
+points in the wrong direction=E2=80=94I have no expectation that human repo=
+rters
+will be any better at not misleading me.
+
+In fact I'd rather like us to introduce an explicit rule that a person/
+> tool must not file more than about 5 tickets in a single day, without
+> prior approval from maintainers, so we don't get bombarded at such a
+> high rate.
+>
+
+Sure, that's a good idea. Even 5 per month...
+
+Paolo
+
+
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
+
+--000000000000d0f98f065bfd2ad7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 21 set 2026, 13:11 Daniel=
+ P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redha=
+t.com</a>&gt; ha scritto:</div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">
+&gt; &gt; +### No automated posting<br>
+&gt; &gt; +<br>
+&gt; &gt; +Agents **must not** use any API, CLI, or web UI automation to:<b=
+r>
+&gt; &gt; +<br>
+&gt; &gt; +- Interact on the QEMU mailing lists<br>
+&gt; &gt; +- Create, edit, or close **issues (&quot;work items&quot;)**<br>
+&gt; &gt; +- Post **comments** on merge requests, issues or commits<br>
+&gt; &gt; +- Open or update **merge requests (MRs)**.=C2=A0 QEMU does not u=
+se merge requests anyway.<br>
+&gt; &gt; +<br>
+&gt; <br>
+&gt; Are we considering project agents (such as the stsquad-bot) exempt fro=
+m<br>
+&gt; this policy? I&#39;m not sure what a normal agent can do via the API a=
+s it<br>
+&gt; wouldn&#39;t have the project level access the stsquad-bot needs.<br>
+<br>
+At least a user&#39;s agent can likely bulk file work items without elevate=
+d<br>
+access privs, as we&#39;ve seen by the several slop-bombs we&#39;ve had.<br=
+>
+<br>
+I&#39;d add a footnote for that along the lines of:<br>
+<br>
+=C2=A0&#39;Official project agents whose code is maintained under <a href=
+=3D"http://gitlab.com/qemu-project" rel=3D"noreferrer noreferrer" target=3D=
+"_blank">gitlab.com/qemu-project</a><br>
+=C2=A0 may be exempted from one or more of these rules, at the discretion o=
+f the QEMU<br>
+=C2=A0 project maintainer(s)&#39;<br></blockquote></div></div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto">Sure.</div><div dir=3D"auto"><br></div><di=
+v dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+&gt; &gt; +### No AI-written text must reach maintainers<br>
+&gt; &gt; +<br>
+&gt; &gt; +These rules apply when publishing AI-assisted work to GitLab or =
+the mailing list:<br>
+&gt; &gt; +<br>
+&gt; &gt; +- **AI-written cover letters and commit messages are banned**.=
+=C2=A0 These are<br>
+&gt; &gt; +=C2=A0 easy to recognize and waste reviewers&#39; time.<br>
+&gt; &gt; +- **AI-generated responses to reviewer comments are banned**. Th=
+is undermines<br>
+&gt; &gt; +=C2=A0 the human-to-human interaction fundamental to code review=
+.<br>
+&gt; &gt; +- **AI-written issue (&quot;work item&quot;) descriptions or com=
+ments are banned**. These<br>
+&gt; &gt; +=C2=A0 are verbose and waste triagers&#39; time.<br>
+&gt; &gt; +=C2=A0 - An exception is made for issues for defects detected by=
+ automated or<br>
+&gt; &gt; +=C2=A0 =C2=A0 semi-automated tooling, including fuzzers and LLM-=
+assisted defect<br>
+&gt; &gt; +=C2=A0 =C2=A0 detection.=C2=A0 Such issues must be reviewed by a=
+ human before creation,<br>
+&gt; &gt; +=C2=A0 =C2=A0 must be created by a human and communication with =
+maintainers must<br>
+&gt; &gt; +=C2=A0 =C2=A0 be done by a human, but including the verbatim too=
+l output in the<br>
+&gt; &gt; +=C2=A0 =C2=A0 issue description is explicitly allowed.<br>
+<br>
+I kind of want to eliminate this exception. IMHO from the bugs we&#39;re<br=
+>
+getting, I think human&#39;s are often putting very little effort into<br>
+reviewing the tools output, such that it is largely a box ticking<br>
+exercise to claim they&#39;ve reviewed it.<br>
+<br>
+If we removed the exception, and required humans to write up the<br>
+finding of the fuzzer/detect detection in human language, that<br>
+may do a better job of getting people to engage in more critical<br>
+thinking rather than rubber stamping the tool output.<br>
+<br>
+It would limit the ability of people bulk file 50+ tickets in a day.<br></b=
+lockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I think=
+ that&#39;s the problem, namely not realizing there&#39;s someone on the ot=
+her side.</div><div dir=3D"auto"><br></div><div dir=3D"auto">LLM write-ups =
+are essentially the same as patents, they look like English but they&#39;re=
+ not; and the verbosity of the write-ups is sometimes a curse and sometimes=
+ a blessing. There is a tension between having a simple description of the =
+issue and an unopinionated one. The fix is not always trivially obvious, an=
+d sometimes the &quot;executive summary&quot; from the LLM points in the wr=
+ong direction=E2=80=94I have no expectation that human reporters will be an=
+y better at not misleading me.</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+In fact I&#39;d rather like us to introduce an explicit rule that a person/=
+<br>
+tool must not file more than about 5 tickets in a single day, without<br>
+prior approval from maintainers, so we don&#39;t get bombarded at such a<br=
+>
+high rate.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Sure, that&#39;s a good idea. Even 5 per month...</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container">=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
+"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer=
+ noreferrer" target=3D"_blank">https://hachyderm.io/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
+_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"n=
+oreferrer noreferrer" target=3D"_blank">https://entangle-photo.org</a> :|<b=
+r>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer noreferrer" =
+target=3D"_blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =
+=C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"noreferrer noreferr=
+er" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000d0f98f065bfd2ad7--
+
 
