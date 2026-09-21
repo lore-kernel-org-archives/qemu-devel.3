@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB58C982FA
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52FF6C982F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8kK1-0005tQ-0g; Mon, 21 Sep 2026 16:09:05 -0400
+	id 1x8kKB-0006B6-Uf; Mon, 21 Sep 2026 16:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kJq-0005l4-C5; Mon, 21 Sep 2026 16:08:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1x8kK5-0005w5-1z; Mon, 21 Sep 2026 16:09:10 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8kJl-0005Nu-Ec; Mon, 21 Sep 2026 16:08:52 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x8kK3-0005NV-4Q; Mon, 21 Sep 2026 16:09:08 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8UGv1860730; Mon, 21 Sep 2026 20:08:47 GMT
+ 68LF8aHr703753; Mon, 21 Sep 2026 20:08:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=IXQb1T0BseVH5ND5k
- A8soZ2S0NaNEA5/77jGxglATFI=; b=j2WStmqDmsLqZNlAwuTkjyfvwOb84qQEd
- AtJFHzwHxLntDmAX8cBpTtphtrue7Da7K/VB/k+OdIsEpimVJvKr5ZLNkSCf9M1T
- q4QrzbKd0AdeYnNpW7oWs09z4Y3zOORPPIZbBftkFRYg+UAvZ5jZIJRGZxlF2Tr+
- 47I7Yi8NQJQHho8bJDCqY2MqafTBBPEq+3t4M7OPghsCxcrzIUq5AbAPecqr/iEi
- K8Xz9yTzFC42HIbjxIV0S6KkdOBYx8qrcVdIKo5v1KVvpN1Rhr1n2da2jk6oHsW5
- TAI58F7z4Xaz4PFGStYzbXEGfrwOg/f/HLee+RbrFv1pg9Fbb0e8w==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ah4t-1
+ :mime-version:references:subject:to; s=pp1; bh=g3kkliMUIvnVzkGVP
+ 2iBBgQ2OSwdctir5MORf2jf5r8=; b=gPtHcdhrx2LZ7cgnM0BXSgw52jVHHxVJx
+ hAaiLLcYV8hCXBlb+DEMtqe0p+uiF+WlRXoggYy63E9wkwNEiLQZKpOP/hKCTR0+
+ 7juOXXCTkcdme4L3W+8APuKuVzFVotZcm6uRqIcIpfOgs3/mWZ35HGZq2Fg5tFFN
+ LB94OlBuQ1yQ1urlS17MM9r421tmI6udcXSGYBZWpLBJRRk4n6QnaH88zCSb/p49
+ mgxJ+SgrTeIVM9mwi9BDgakiwPL+BG/vS7P4ma9rhxR4d+WNHl2vdokLr+1rdFzh
+ kHdPzof6E0RkBSkF4tU7lO9J+XZCfBJusCM/Z7Nv6WH5oOlHWjtnQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqa9dv-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:47 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LJ0keQ1451434; Mon, 21 Sep 2026 20:08:46 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gpu55-1
+ Mon, 21 Sep 2026 20:08:45 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LJUGWn167295; Mon, 21 Sep 2026 20:08:45 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bk9f11-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 20:08:46 +0000 (GMT)
+ Mon, 21 Sep 2026 20:08:45 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LK8jcw25428550
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LK8hr163504782
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 20:08:45 GMT
+ Mon, 21 Sep 2026 20:08:43 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0A5A558043;
- Mon, 21 Sep 2026 20:08:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1CFA558043;
+ Mon, 21 Sep 2026 20:08:43 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 88E4D58055;
- Mon, 21 Sep 2026 20:08:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9AF1458059;
+ Mon, 21 Sep 2026 20:08:42 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.69.195]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Sep 2026 20:08:44 +0000 (GMT)
+ Mon, 21 Sep 2026 20:08:42 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Joshua Daley <jdaley@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 22/33] tests/functional/s390x/test_secure_ipl: Skip test if
- SIPL not supported by hypervisor
-Date: Mon, 21 Sep 2026 16:08:19 -0400
-Message-ID: <20260921200830.1302919-23-farman@linux.ibm.com>
+Subject: [PULL 19/33] docs/s390: Document CPACF instructions support
+Date: Mon, 21 Sep 2026 16:08:16 -0400
+Message-ID: <20260921200830.1302919-20-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921200830.1302919-1-farman@linux.ibm.com>
 References: <20260921200830.1302919-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Lt6hVkWlDLnDeYgd5lC58Uylr4V1N-rF
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab18ecf cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab18ecd cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=UZxYUTtkSsvthtqRCrcA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX5OzxFHXBVZT1
- ZmMs+c0Xev3fEkQ6h6FbYN75ka56Xwl83Dlvrh6OjSrlJZQL5b2TJA3oAirOQw36/VOxONtpxxA
- 6L0Q8bvBK0SuEWZVdA2+iy90kKQf35u1v86jOKEUfxNqWPAjsXEPhgswRw3IqTKaVn3rVOIcV15
- yV4f7iiumhhIQgaxoLY6SACAa4TCnCOLcoRU42lGV7xRdSjLy4YxrO/+3t2qaU+aPjQgjUEoaMK
- 3dqKKQSmGc6HHqUSdjBOujpIcyC+yLyvnaa1O7Pi0I2cBEqblzAH7PpliIUHTXI25h1AWuePl9K
- T216+9hwNl9T75Cw5h9Eo5HntnY4EK5KqvEx3WOiUhYgX8dXzyBRBExMpuF8h2DK8JBM5rVwJ8Q
- ZFHtQVSslgVpxUkQhq1zZIxmBvayVPLkEwE0jJNqTNcjDQ3vOfOsmuIPv042b52JnqoWokKxTQt
- GxWOaxCLR8X5Z2gv+8Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfXxFCM2zxCSkaP
- +mYFCN1GWKf+ESDszgytA3QOK/rT39uS+HZWqaGrlN5Uuon/M3kJpKzfJw+7291pfby5+9hndba
- GFHSXNZss8Dl109Oj4yt9K7COu2dQ+I=
-X-Proofpoint-GUID: Lt6hVkWlDLnDeYgd5lC58Uylr4V1N-rF
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=IlYB4z8HrC9mJJy16gAA:9 a=5wi_FRADO1KgGG3s:21 a=O8hF6Hzn-FEA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX7Mw0x++PGAqz
+ mr9BMkyT4P3CbngOfrv4PbePR2VUmQn/tqgOz2sPxq9wjpSS7GVlc8MSYc7au7KHWEvs4NXNT9a
+ IrDIicVJELuG6s8p8AnKW3NNzzUEa5wIjdJ3wJs8ADp90k6SGmFjohynE58xiNPLOW4Cs8r0SbA
+ OtPj1qaV3eoejhzEnN6LQLe7eTNR9S9xo0khGKR7TMA6Eu2xzNhUjpbsBJ56ywfTl5r7B3ZVhjL
+ /M8zz0WGwYddaKpqgoZcu9o4ZF/fqwuZbNCkJeBSWFiWBWyfO08x9KTGpoK1cQjdA/4BwdbpprR
+ o9FCx28u6dar0YhkzqWfPdCDXTE0SNrbAos7yOM15zRmEPGwIhk8CK6oIE2WIBDUDp2u8trVvu7
+ jbT0cumCA50kOT2HzXMzHXO9sWufpqwKQitZtSOnTu+X0QdX5lFn26xPJnWgZXmbyW3bllYSAaV
+ aPmGeRphedPCsR+gZKg==
+X-Proofpoint-ORIG-GUID: 5iLfxUI_H46s3FG5lLrntQLdzPlMisXc
+X-Proofpoint-GUID: 5iLfxUI_H46s3FG5lLrntQLdzPlMisXc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfX05dfJ8/oQbeg
+ 9uU09ZGBFhOeA5Uln9JFiNjV4hqpnzUFXNTRbENRCaLWlBPZn6hvtC+biJBkSEAfSwdCg+v0nzK
+ SGDwG9eaMb7D3EZv2h0TSPmMxiw/wjI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210294
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,61 +122,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-Currently, if secure IPL is not supported by the hypervisor, the test
-will fail because "Verified component" never appears. One must inspect
-the console log to observe the cause of the failure.
+Add a first document covering the Qemu s390 CPACF instructions
+and functions supported.
 
-Add a check that skips the test if the host CPU model is missing the
-secure IPL facilities.
-
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260903155805.1881366-3-jdaley@linux.ibm.com
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260824083204.40877-20-freude@linux.ibm.com
+[farman@linux.ibm.com: Resolve merge conflict in target-s390x.rst]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- tests/functional/s390x/test_secure_ipl.py | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ docs/system/s390x/cpacf.rst  | 143 +++++++++++++++++++++++++++++++++++
+ docs/system/target-s390x.rst |   1 +
+ 2 files changed, 144 insertions(+)
+ create mode 100644 docs/system/s390x/cpacf.rst
 
-diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
-index 06fc93e404..5af36b91d8 100755
---- a/tests/functional/s390x/test_secure_ipl.py
-+++ b/tests/functional/s390x/test_secure_ipl.py
-@@ -29,6 +29,22 @@ def __init__(self, *args, **kwargs):
-         self.cert_path = None
-         self.prompt = None
- 
-+    def _require_host_secure_ipl_support(self, vm):
-+        """
-+        Skip the test if the host CPU model does not expose the Secure IPL
-+        facilities (sipl, sclaf, cstore).
-+        """
-+        props = vm.cmd('query-cpu-model-expansion',
-+                       model={'name': 'host'},
-+                       type='full')['model']['props']
-+        missing = [f for f in ('sipl', 'sclaf', 'cstore')
-+                   if not props.get(f)]
-+        if missing:
-+            self.skipTest(
-+                f"Host CPU does not support Secure IPL: "
-+                f"missing feature(s): {', '.join(missing)}. "
-+                f"Secure IPL requires a z16+ host.")
+diff --git a/docs/system/s390x/cpacf.rst b/docs/system/s390x/cpacf.rst
+new file mode 100644
+index 0000000000..c68aa74abe
+--- /dev/null
++++ b/docs/system/s390x/cpacf.rst
+@@ -0,0 +1,143 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
 +
-     def _create_certificate(self, vm):
-         """Generate x509 certificate"""
-         exec_command_and_wait_for_pattern(self,
-@@ -107,6 +123,8 @@ def setup_s390x_secure_ipl(self):
-                          '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
-         temp_vm.launch()
- 
-+        self._require_host_secure_ipl_support(temp_vm)
++CPACF Support
++=============
 +
-         # Initial root account setup (Fedora first boot screen)
-         self.root_password = 'fedora40password'
-         wait_for_console_pattern(self, 'Please make a selection from the above',
++CPACF
++-----
++
++CP Assist for Cryptographic Function (CPACF) is a hardware-integrated
++coprocessor feature built into every  processor core of IBM Z and
++LinuxONE mainframes (s390x architecture). It provides high-speed,
++hardware-accelerated encryption and hashing directly on the CPU.
++
++CPACF provides a set of z/Architecture instructions (known as Message
++Security Assist or MSA) that execute cryptographic operations
++synchronously with the main processor.
++
++- Symmetric Encryption: Support for AES (128, 192, 256-bit), DES, and
++  Triple-DES (TDES).
++- Hashing: Acceleration for SHA-1, SHA-2 (up to SHA-512), SHA-3 and
++  SHAKE.
++- Random Number Generation: Pseudo Random Number Generator (PRNG) and
++  a hardware-based True Random Number Generator (TRNG).
++- Asymmetric Support: Elliptic Curve Cryptography (ECC) primitives
++  P-256, P-384, P-521, Montgomery/Edwards curves (e.g., Ed25519).
++
++Documentation about CPACF instructions is publicly available and
++can be found in the "z/Architecture Principles of Operation"
++accessible at the IBM documentation hub https://www.ibm.com/docs/en.
++For example the latest version as a pdf is available here:
++https://www.ibm.com/support/pages/zvm/library/other/22783214.pdf
++
++
++CPACF instructions
++------------------
++
++Here is a list of implemented CPACF instructions and the supported
++functions for each instruction:
++
++KDSA (COMPUTE DIGITAL SIGNATURE AUTHENTICATION)
++- Function code 0x00 - Function Query
++
++KIMD (COMPUTE INTERMEDIATE MESSAGE DIGEST)
++- Function code 0x00 - Function Query
++- Function code 0x02 - CPACF_KIMD_SHA_256
++- Function code 0x03 - CPACF_KIMD_SHA_512
++
++KLMD (COMPUTE LAST MESSAGE DIGEST)
++- Function code 0x00 - Function Query
++- Function code 0x02 - CPACF_KLMD_SHA_256
++- Function code 0x03 - CPACF_KLMD_SHA_512
++
++KM (CIPHER MESSAGE)
++- Function code 0x00 - Function Query
++- Function code 0x12 - CPACF_KM_AES_128
++- Function code 0x13 - CPACF_KM_AES_192
++- Function code 0x14 - CPACF_KM_AES_256
++- Function code 0x1a - CPACF_KM_PAES_128
++- Function code 0x1b - CPACF_KM_PAES_192
++- Function code 0x1c - CPACF_KM_PAES_256
++- Function code 0x32 - CPACF_KM_XTS_128
++- Function code 0x34 - CPACF_KM_XTS_256
++- Function code 0x3a - CPACF_KM_PXTS_128
++- Function code 0x3c - CPACF_KM_PXTS_256
++
++KMAC (COMPUTE MESSAGE AUTHENTICATION CODE)
++- Function code 0x00 - Function Query
++
++KMC (CIPHER MESSAGE WITH CHAINING)
++- Function code 0x00 - Function Query
++- Function code 0x12 - CPACF_KMC_AES_128
++- Function code 0x13 - CPACF_KMC_AES_192
++- Function code 0x14 - CPACF_KMC_AES_256
++- Function code 0x1a - CPACF_KMC_PAES_128
++- Function code 0x1b - CPACF_KMC_PAES_192
++- Function code 0x1c - CPACF_KMC_PAES_256
++
++KMCTR (CIPHER MESSAGE WITH COUNTER)
++- Function code 0x00 - Function Query
++- Function code 0x12 - CPACF_KMCTR_AES_128
++- Function code 0x13 - CPACF_KMCTR_AES_192
++- Function code 0x14 - CPACF_KMCTR_AES_256
++- Function code 0x1a - CPACF_KMCTR_PAES_128
++- Function code 0x1b - CPACF_KMCTR_PAES_192
++- Function code 0x1c - CPACF_KMCTR_PAES_256
++
++KMF (CIPHER MESSAGE WITH CIPHER FEEDBACK)
++- not supported
++
++KMO (CIPHER MESSAGE WITH OUTPUT FEEDBACK)
++- not supported
++
++PCC (PERFORM CRYPTOGRAPHIC COMPUTATION)
++- Function code 0x00 - Function Query
++- Function code 0x32 - compute XTS param AES-128
++- Function code 0x34 - compute XTS param AES-256
++- Function code 0x3a - compute XTS param Encrypted AES-128
++- Function code 0x3c - compute XTS param Encrypted AES-256
++
++PCKMO (PERFORM CRYPTOGRAPHIC KEY MANAGEMENT OPERATION)
++- Function code 0x00 - Function Query
++- Function code 0x12 - CPACF_PCKMO_ENC_AES_128_KEY
++- Function code 0x13 - CPACF_PCKMO_ENC_AES_192_KEY
++- Function code 0x14 - CPACF_PCKMO_ENC_AES_256_KEY
++
++PRNO (PERFORM RANDOM NUMBER OPERATION)
++- Function code 0x00 - Function Query
++- Function code 0x72 - CPACF_PRNO_TRNG
++
++Not listed CPACF instructions (KMA) cause an Operation Exception when
++used. Instructions with only query function support (KMF, KMO, KDSA)
++perform register validation and raise a Specification Exception for
++invalid registers or non-query function codes. The query function for
++these instructions will return a function status word with all but the
++query function bit set to 0.
++
++
++Protected key support
++---------------------
++
++The qemu version for protected key support is only a fake provided
++here for developing and testing purpose:
++
++- The protected key is _derived_ from the clear key by xoring the
++  fixed pattern 0xAAAA... onto the key value.
++- The AES Wrapping Key Verification Pattern is a fixed value of 32
++  bytes 0x0F0A0C0E0F0A0C0E...
++
++The PCKMO instruction implementation does exactly this - _derive_ a
++_protected_ key from the clear key given by xor 0xAAAA... and writing
++the fixed value for the WKVP of 0x0F0A0C0E0F0A0C0E... into the blob.
++The other subfunctions of the CPACF instructions dealing with
++protected key treat the protected key blob by first checking for the
++WKVP (against the fixed value of 0x0F0A0C0E0F0A0C0E...) and second
++_decrypting_ the key value by xoring 0xAAAA... and then execute the
++clear key operation with the decrypted key value.
++This is suitable for testing purpose but such keys are not for real
++production load and would open up a huge security breach!
++
++For more details about protected keys see the "z/Architecture
++Principles of Operation" document chapter "General Instructions"
++sub-chapter "Protection of Cryptographic Keys" and again the
++implementation here does NOT implement what is explained there.
+diff --git a/docs/system/target-s390x.rst b/docs/system/target-s390x.rst
+index 8938a13d10..1454dae48d 100644
+--- a/docs/system/target-s390x.rst
++++ b/docs/system/target-s390x.rst
+@@ -36,3 +36,4 @@ Architectural features
+    s390x/protvirt
+    s390x/cpu-topology
+    s390x/secure-ipl
++   s390x/cpacf
 -- 
 2.55.0
 
