@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FDAC982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E006C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8l4w-0005Fm-Qv; Mon, 21 Sep 2026 16:57:34 -0400
+	id 1x8l58-0005Of-RO; Mon, 21 Sep 2026 16:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l4v-0005Da-Bt
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l55-0005N0-KR
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l4s-0003VV-0t
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l53-0003Zr-IL
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790024249;
+ s=mimecast20190719; t=1790024261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CT6/gXNbFAojbYEnwwznDu12ElaNbWuWVrzBHmX1X2Y=;
- b=h1sPiipg1dfj35fqyoYc8KoC1Quj9U7ERobo5U1nZAOvGL/JqFhpGyttjOHf+X0mzS24Hc
- 5lF1/gP2zgvvMna4mhbHiAskm9aICAqPxbGahAXQbMNvo/u1JRJFAQ5wrCDlgXDfznuB7/
- mXa4HO807mqvSLeunEd8VcJ4B3t7mH4=
+ bh=akpMxJqY/YX3lbLfFuudMfj4hb9Ch6XjPL6Yh/mpVo8=;
+ b=OxuwZLxOMJY2itZg2fylygRW2TDrhaVJ3UUx7tyD8kOGJ18sCjwBMw6hjKJ5vtLvoSEFWW
+ QY1x9SK1Q5VJVXZhs0sjPrCvzmTGeDI/kUN/ub+h+szzb+k+xXb5ubkyGORIpwuRm9D8BB
+ K8yc7tYmyaYpWAP1g7JYr661byBHkYA=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-8Ff406DQP_W8q8tVNMLzUw-1; Mon,
- 21 Sep 2026 16:57:25 -0400
-X-MC-Unique: 8Ff406DQP_W8q8tVNMLzUw-1
-X-Mimecast-MFC-AGG-ID: 8Ff406DQP_W8q8tVNMLzUw_1790024244
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-ROCw8HI2Myq22v6owZ-fPQ-1; Mon,
+ 21 Sep 2026 16:57:39 -0400
+X-MC-Unique: ROCw8HI2Myq22v6owZ-fPQ-1
+X-Mimecast-MFC-AGG-ID: ROCw8HI2Myq22v6owZ-fPQ_1790024257
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F4441953976; Mon, 21 Sep 2026 20:57:24 +0000 (UTC)
+ id 54F161955D63; Mon, 21 Sep 2026 20:57:37 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E8491956047; Mon, 21 Sep 2026 20:57:21 +0000 (UTC)
+ id 99F1E1956042; Mon, 21 Sep 2026 20:57:34 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -60,24 +60,24 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 02/10] qapi: convert/split intros for block-core.json
- commands
-Date: Mon, 21 Sep 2026 16:57:04 -0400
-Message-ID: <20260921205712.1862167-3-jsnow@redhat.com>
+Subject: [PATCH v2 06/10] qapi: convert/split intros for commands
+Date: Mon, 21 Sep 2026 16:57:08 -0400
+Message-ID: <20260921205712.1862167-7-jsnow@redhat.com>
 In-Reply-To: <20260921205712.1862167-1-jsnow@redhat.com>
 References: <20260921205712.1862167-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,264 +93,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch converts or splits intro sections for commands with more
+than one paragraph of text.
+
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-core.json | 126 +++++++++++++++++++------------------------
- 1 file changed, 55 insertions(+), 71 deletions(-)
+ qapi/control.json     |  3 +--
+ qapi/introspect.json  | 16 ++++++++--------
+ qapi/machine.json     | 31 +++++++++++++++----------------
+ qapi/migration.json   | 12 +++++-------
+ qapi/misc-arm.json    |  5 ++---
+ qapi/misc.json        |  8 +++-----
+ qapi/net.json         |  3 +--
+ qapi/qdev.json        |  9 ++++-----
+ qapi/stats.json       |  5 ++---
+ qapi/transaction.json |  6 +++---
+ qapi/ui.json          |  3 +--
+ 11 files changed, 45 insertions(+), 56 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 802a4af74ed..13981d7e69d 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1556,8 +1556,7 @@
+diff --git a/qapi/control.json b/qapi/control.json
+index 2788ce32e2f..ef63a8a261b 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -152,8 +152,7 @@
  
  ##
- # @block_resize:
+ # @quit:
 -#
--# Resize a block image while a guest is running.
-+#     Resize a block image while a guest is running.
+-# Request graceful QEMU process termination.
++#     Request graceful QEMU process termination.
  #
- # Either @device or @node-name must be set but not both.
- #
-@@ -1812,13 +1811,12 @@
+ # While every attempt is made to send the QMP response before
+ # terminating, this is not guaranteed.  When using this interface, a
+diff --git a/qapi/introspect.json b/qapi/introspect.json
+index bd42aac3358..d579e5c8554 100644
+--- a/qapi/introspect.json
++++ b/qapi/introspect.json
+@@ -17,15 +17,15 @@
  
  ##
- # @blockdev-snapshot:
-+#     Takes a snapshot of a block device.
+ # @query-qmp-schema:
++#     Command `query-qmp-schema` exposes the QMP wire ABI as an array
++#     of `SchemaInfo`.  This lets QMP clients figure out what commands
++#     and events are available in this QEMU, and their parameters and
++#     results.
  #
--# Takes a snapshot of a block device.
+-# Command `query-qmp-schema` exposes the QMP wire ABI as an array of
+-# `SchemaInfo`.  This lets QMP clients figure out what commands and
+-# events are available in this QEMU, and their parameters and results.
 -#
--# Take a snapshot, by installing 'node' as the backing image of
--# 'overlay'.  Additionally, if 'node' is associated with a block
--# device, the block device changes to using 'overlay' as its new
--# active image.
-+#     Take a snapshot, by installing 'node' as the backing image of
-+#     'overlay'.  Additionally, if 'node' is associated with a block
-+#     device, the block device changes to using 'overlay' as its new
-+#     active image.
+-# However, the `SchemaInfo` can't reflect all the rules and
+-# restrictions that apply to QMP.  It's interface introspection
+-# (figuring out what's there), not interface specification.  The
+-# specification is in the QAPI schema.
++# The `SchemaInfo` can't reflect all the rules and restrictions that
++# apply to QMP.  It's interface introspection (figuring out what's
++# there), not interface specification.  The specification is in the
++# QAPI schema.
  #
- # Features:
- #
-@@ -1883,9 +1881,8 @@
+ # Furthermore, while we strive to keep the QMP wire format
+ # backwards-compatible across QEMU versions, the introspection output
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 276258d9e5c..2d5c7c36ad9 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -2002,13 +2002,13 @@
  
  ##
- # @block-commit:
--#
--# Live commit of data from overlay image nodes into backing nodes -
--# i.e., writes data between 'top' and 'base' into 'base'.
-+#     Live commit of data from overlay image nodes into backing nodes
-+#     - i.e., writes data between 'top' and 'base' into 'base'.
+ # @query-cpu-model-comparison:
++#     Compares two CPU models, @modela and @modelb, returning how they
++#     compare in a specific configuration.
  #
- # If top == base, that is an error.  If top has no overlays on top of
- # it, or if it is in use by a writer, the job will not be completed by
-@@ -2510,16 +2507,15 @@
+-# Compares two CPU models, @modela and @modelb, returning how they
+-# compare in a specific configuration.  The results indicates how both
+-# models compare regarding runnability.  This result can be used by
+-# tooling to make decisions if a certain CPU model will run in a
+-# certain configuration or if a compatible CPU model has to be created
+-# by baselining.
++# The results indicates how both models compare regarding runnability.
++# This result can be used by tooling to make decisions if a certain
++# CPU model will run in a certain configuration or if a compatible CPU
++# model has to be created by baselining.
+ #
+ # Usually, a CPU model is compared against the maximum possible CPU
+ # model of a certain configuration (e.g. the "host" model for KVM).
+@@ -2058,11 +2058,10 @@
  
  ##
- # @block-dirty-bitmap-merge:
-+#     Merge dirty bitmaps listed in @bitmaps to the @target dirty
-+#     bitmap.  Dirty bitmaps in @bitmaps will be unchanged, except if
-+#     it also appears as the @target bitmap.  Any bits already set in
-+#     @target will still be set after the merge, i.e., this operation
-+#     does not clear the target.  On error, @target is unchanged.
- #
--# Merge dirty bitmaps listed in @bitmaps to the @target dirty bitmap.
--# Dirty bitmaps in @bitmaps will be unchanged, except if it also
--# appears as the @target bitmap.  Any bits already set in @target will
--# still be set after the merge, i.e., this operation does not clear
--# the target.  On error, @target is unchanged.
+ # @query-cpu-model-baseline:
 -#
--# The resulting bitmap will count as dirty any clusters that were
--# dirty in any of the source bitmaps.  This can be used to achieve
--# backup checkpoints, or in simpler usages, to copy bitmaps.
-+#     The resulting bitmap will count as dirty any clusters that were
-+#     dirty in any of the source bitmaps.  This can be used to achieve
-+#     backup checkpoints, or in simpler usages, to copy bitmaps.
+-# Baseline two CPU models, @modela and @modelb, creating a compatible
+-# third model.  The created model will always be a static,
+-# migration-safe CPU model (see "static" CPU model expansion for
+-# details).
++#     Baseline two CPU models, @modela and @modelb, creating a
++#     compatible third model.  The created model will always be a
++#     static, migration-safe CPU model (see "static" CPU model
++#     expansion for details).
  #
- # Errors:
- #     - If @node is not a valid block device, DeviceNotFound
-@@ -2865,8 +2861,7 @@
+ # This interface can be used by tooling to create a compatible CPU
+ # model out two CPU models.  The created CPU model will be identical
+@@ -2130,11 +2129,11 @@
  
  ##
- # @block-stream:
+ # @query-cpu-model-expansion:
 -#
--# Copy data from a backing file into a block device.
-+#     Copy data from a backing file into a block device.
+-# Expands a given CPU model, @model, (or a combination of CPU model +
+-# additional options) to different granularities, specified by @type,
+-# allowing tooling to get an understanding what a specific CPU model
+-# looks like in QEMU under a certain configuration.
++#     Expands a given CPU model, @model, (or a combination of CPU
++#     model + additional options) to different granularities,
++#     specified by @type, allowing tooling to get an understanding
++#     what a specific CPU model looks like in QEMU under a certain
++#     configuration.
  #
- # The block streaming operation is performed in the background until
- # the entire backing file has been copied.  This command returns
-@@ -2977,8 +2972,7 @@
+ # This interface can be used to query the "host" CPU model.
+ #
+diff --git a/qapi/migration.json b/qapi/migration.json
+index a272e701385..8d3951ae429 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1826,9 +1826,9 @@
  
  ##
- # @block-job-set-speed:
+ # @calc-dirty-rate:
 -#
--# Set maximum speed for a background block operation.
-+#     Set maximum speed for a background block operation.
+-# Start measuring dirty page rate of the VM.  Results can be retrieved
+-# with `query-dirty-rate` after measurements are completed.
++#     Start measuring dirty page rate of the VM.  Results can be
++#     retrieved with `query-dirty-rate` after measurements are
++#     completed.
  #
- # This command can only be issued when there is an active block job.
- #
-@@ -3003,8 +2997,7 @@
+ # Dirty page rate is the number of pages changed in a given time
+ # period expressed in MiB/s.  The following methods of calculation are
+@@ -1945,8 +1945,7 @@
  
  ##
- # @block-job-cancel:
+ # @set-vcpu-dirty-limit:
 -#
--# Stop an active background block operation.
-+#     Stop an active background block operation.
+-# Set the upper limit of dirty page rate for virtual CPUs.
++#     Set the upper limit of dirty page rate for virtual CPUs.
  #
- # This command returns immediately after marking the active background
- # block operation for cancellation.  It is an error to call this
-@@ -3046,8 +3039,7 @@
+ # Requires KVM with accelerator property "dirty-ring-size" set.  A
+ # virtual CPU's dirty page rate is a measure of its memory load.  To
+@@ -1971,8 +1970,7 @@
  
  ##
- # @block-job-pause:
+ # @cancel-vcpu-dirty-limit:
 -#
--# Pause an active background block operation.
-+#     Pause an active background block operation.
+-# Cancel the upper limit of dirty page rate for virtual CPUs.
++#     Cancel the upper limit of dirty page rate for virtual CPUs.
  #
- # This command returns immediately after marking the active job for
- # pausing.  Pausing an already paused job is an error.
-@@ -3079,8 +3071,7 @@
+ # Cancel the dirty page limit for the vCPU which has been set with
+ # `set-vcpu-dirty-limit` command.  Note that this command requires
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+index 8cb2ea77951..9b018b29e2c 100644
+--- a/qapi/misc-arm.json
++++ b/qapi/misc-arm.json
+@@ -28,9 +28,8 @@
  
  ##
- # @block-job-resume:
+ # @query-gic-capabilities:
 -#
--# Resume an active background block operation.
-+#     Resume an active background block operation.
+-# It will return a list of `GICCapability` objects that describe its
+-# capability bits.
++#     Returns a list of `GICCapability` objects that describe its
++#     capability bits.
  #
- # This command returns immediately after resuming a paused job.
- # Resuming an already running job is an error.
-@@ -3108,9 +3099,9 @@
+ # On non-ARM targets this command will report an error as the GIC
+ # technology is not applicable.
+diff --git a/qapi/misc.json b/qapi/misc.json
+index b62cabc2b79..b4bb8a662e6 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -12,9 +12,8 @@
  
  ##
- # @block-job-complete:
+ # @add_client:
 -#
--# Manually trigger completion of an active job in the READY or STANDBY
--# state.  Completing the job in any other state is an error.
-+#     Manually trigger completion of an active job in the READY or
-+#     STANDBY state.  Completing the job in any other state is an
-+#     error.
+-# Allow client connections for VNC, Spice and socket based character
+-# devices to be passed in to QEMU via SCM_RIGHTS.
++#     Allow client connections for VNC, Spice and socket based
++#     character devices to be passed in to QEMU via SCM_RIGHTS.
  #
- # This is supported only for drive mirroring, where it also switches
- # the device to write to the target path only.  Note that drive
-@@ -3148,14 +3139,13 @@
+ # If the FD associated with @fdname is not a socket, the command will
+ # fail and the FD will be closed.
+@@ -185,8 +184,7 @@
  
  ##
- # @block-job-dismiss:
+ # @x-exit-preconfig:
 -#
--# Deletes a job that is in the CONCLUDED state.  This command only
--# needs to be run explicitly for jobs that don't have automatic
--# dismiss enabled.  In turn, automatic dismiss may be enabled only for
--# jobs that have @auto-dismiss option, which are `drive-backup`,
--# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit`
--# and `block-stream`.  @auto-dismiss is enabled by default for these
--# jobs.
-+#     Deletes a job that is in the CONCLUDED state.  This command only
-+#     needs to be run explicitly for jobs that don't have automatic
-+#     dismiss enabled.  In turn, automatic dismiss may be enabled only
-+#     for jobs that have @auto-dismiss option, which are
-+#     `drive-backup`, `blockdev-backup`, `drive-mirror`,
-+#     `blockdev-mirror`, `block-commit` and `block-stream`.
-+#     @auto-dismiss is enabled by default for these jobs.
+-# Exit from "preconfig" state
++#     Exit from "preconfig" state.
  #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, CONCLUDED.  For jobs that make use of
-@@ -3177,11 +3167,10 @@
+ # This command makes QEMU exit the preconfig state and proceed with VM
+ # initialization using configuration data provided on the command line
+diff --git a/qapi/net.json b/qapi/net.json
+index d0bacb4dcfe..b0a15fd53e2 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -37,8 +37,7 @@
  
  ##
- # @block-job-finalize:
+ # @netdev_add:
 -#
--# Instructs all jobs in a transaction (or a single job if it is not
--# part of any transaction) to finalize any graph changes and do any
--# necessary cleanup.  This command requires that all involved jobs are
--# in the PENDING state.
-+#     Instructs all jobs in a transaction (or a single job if it is
-+#     not part of any transaction) to finalize any graph changes and
-+#     do any necessary cleanup.  This command requires that all
-+#     involved jobs are in the PENDING state.
+-# Add a network backend.
++#     Add a network backend.
  #
- # For jobs in a transaction, instructing one job to finalize will
- # force ALL jobs in the transaction to finalize, so it is only
-@@ -4917,14 +4906,13 @@
+ # Additional arguments depend on the type.
+ #
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index a35321d2fd1..f390354d68e 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -162,11 +162,10 @@
  
  ##
- # @blockdev-reopen:
+ # @device-sync-config:
 -#
--# Reopens one or more block devices using the given set of options.
--# Any option not specified will be reset to its default value
--# regardless of its previous status.  If an option cannot be changed
--# or a particular driver does not support reopening then the command
--# will return an error.  All devices in the list are reopened in one
--# transaction, so if one of them fails then the whole transaction is
--# cancelled.
-+#     Reopens one or more block devices using the given set of
-+#     options.  Any option not specified will be reset to its default
-+#     value regardless of its previous status.  If an option cannot be
-+#     changed or a particular driver does not support reopening then
-+#     the command will return an error.  All devices in the list are
-+#     reopened in one transaction, so if one of them fails then the
-+#     whole transaction is cancelled.
+-# Synchronize device configuration from host to guest part.  First,
+-# copy the configuration from the host part (backend) to the guest
+-# part (frontend).  Then notify guest software that device
+-# configuration changed.
++#     Synchronize device configuration from host to guest part.
++#     First, copy the configuration from the host part (backend) to
++#     the guest part (frontend).  Then notify guest software that
++#     device configuration changed.
  #
- # The command receives a list of block devices to reopen.  For each
- # one of them, the top-level @node-name option (from
-@@ -4996,9 +4984,8 @@
+ # The command may be used to notify the guest about block device
+ # capacity change.  Currently only vhost-user-blk device supports
+diff --git a/qapi/stats.json b/qapi/stats.json
+index af57ec08546..e9d05390c31 100644
+--- a/qapi/stats.json
++++ b/qapi/stats.json
+@@ -175,9 +175,8 @@
  
  ##
- # @blockdev-set-active:
+ # @query-stats:
 -#
--# Activate or deactivate a block device.  Use this to manage the
--# handover of block devices on migration with qemu-storage-daemon.
-+#     Activate or deactivate a block device.  Use this to manage the
-+#     handover of block devices on migration with qemu-storage-daemon.
+-# Return runtime-collected statistics for objects such as the VM or
+-# its vCPUs.
++#     Return runtime-collected statistics for objects such as the VM
++#     or its vCPUs.
  #
- # Activating a node automatically activates all of its child nodes
- # first.  Deactivating a node automatically deactivates any of its
-@@ -5881,15 +5868,14 @@
+ # The arguments are a `StatsFilter` and specify the provider and
+ # objects to return statistics about.
+diff --git a/qapi/transaction.json b/qapi/transaction.json
+index c0dc811ba61..02e1d072c63 100644
+--- a/qapi/transaction.json
++++ b/qapi/transaction.json
+@@ -198,9 +198,9 @@
+ ##
+ # @transaction:
+ #
+-# Executes a number of transactionable QMP commands atomically.  If
+-# any operation fails, then the entire set of actions will be
+-# abandoned and the appropriate error returned.
++#     Executes a number of transactionable QMP commands atomically.
++#     If any operation fails, then the entire set of actions will be
++#     abandoned and the appropriate error returned.
+ #
+ # For external snapshots, the dictionary contains the device, the file
+ # to use for the new snapshot, and the format.  The default format, if
+diff --git a/qapi/ui.json b/qapi/ui.json
+index a59cd635774..73ee2cb2056 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1198,8 +1198,7 @@
  
  ##
- # @block-set-write-threshold:
-+#     Change the write threshold for a block drive.  An event will be
-+#     delivered if a write to this block drive crosses the configured
-+#     threshold.  The threshold is an offset, thus must be
-+#     non-negative.  Default is no write threshold.  Setting the
-+#     threshold to zero disables it.
- #
--# Change the write threshold for a block drive.  An event will be
--# delivered if a write to this block drive crosses the configured
--# threshold.  The threshold is an offset, thus must be non-negative.
--# Default is no write threshold.  Setting the threshold to zero
--# disables it.
+ # @input-send-event:
 -#
--# This is useful to transparently resize thin-provisioned drives
--# without the guest OS noticing.
-+#     This is useful to transparently resize thin-provisioned drives
-+#     without the guest OS noticing.
+-# Send input event(s) to guest.
++#     Send input event(s) to guest.
  #
- # @node-name: graph node name on which the threshold must be set.
- #
-@@ -5911,8 +5897,7 @@
- 
- ##
- # @x-blockdev-change:
--#
--# Dynamically reconfigure the block driver state graph.
-+#     Dynamically reconfigure the block driver state graph.
- #
- # Currently only supports adding and deleting quorum children.  A
- # child will be added at the end of the list of children.  Its
-@@ -5971,11 +5956,10 @@
- 
- ##
- # @x-blockdev-set-iothread:
-+#     Move @node and its children into the @iothread.  If @iothread is
-+#     null then move @node and its children into the main loop.
- #
--# Move @node and its children into the @iothread.  If @iothread is
--# null then move @node and its children into the main loop.
--#
--# The node must not be attached to a BlockBackend.
-+#     The node must not be attached to a BlockBackend.
- #
- # @node-name: the name of the block driver node
- #
+ # The @device and @head parameters can be used to send the input event
+ # to specific input devices in case (a) multiple input devices of the
 -- 
 2.55.0
 
