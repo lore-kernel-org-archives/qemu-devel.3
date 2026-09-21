@@ -4,172 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034C2C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07C0C982F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8dGj-0000oB-4x; Mon, 21 Sep 2026 08:37:13 -0400
+	id 1x8dOF-00017p-Fo; Mon, 21 Sep 2026 08:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1x8dDp-0006xQ-C6; Mon, 21 Sep 2026 08:34:24 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x8dNg-0000pr-KO
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:44:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1x8dDl-0002C2-6b; Mon, 21 Sep 2026 08:34:12 -0400
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LAflUG774316; Mon, 21 Sep 2026 05:33:39 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=108On4TGifilxBS3dCsewSVEjfked9itg+pM1qjq9
- x4=; b=TcmxkqFawSrY2AoQ8iLrQPgPGNsOcG81AHMwWCbqQ6PVWUW0xkoeZv7V/
- Z4WtkIUQJYLBUZcJn8d1dqgVJhkPtynBi/2qBjyu0dn2lwYX6pGNoJu5GPcbkUI3
- RR4IwPQuUFzZeXQzF/c7mJrx6San7JqU/+FLCaJJSd4B6qIdwg52Qbk7kXTacicl
- fZf9aZ5Cf1coiA5tpOg73yLzJc4JkemwdKCO6nGHYeSmkQ2E5rxRdiSbtsY99VJw
- 4cjyrPVp7blPQpuh74oZe124tLweXcDKDXY2H1iy9858KBtgoDHg0Lh2Vw4QQLrQ
- /OjrXAMDsLDKK7lXLiQ9Q3rP0uvVw==
-Received: from bn8pr05cu002.outbound.protection.outlook.com
- (mail-eastus2azon11021115.outbound.protection.outlook.com [52.101.57.115])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4gsqx831cb-3
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 05:33:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=astshh8HayoWV6qkGj+Iufi2V3fa4cRXeg0vlCfNx+UvZqeb695gH+L/2GzrQEaelYmC/B7DVVVJQuJmZy0I19vkMiyfV0bq7IWQby3IT01zymG1aVw6HFJ2te/2V2ZR6GiYBOWIcpsVPotnRI27+TLNQpOW/RKqZdb0F6fnMdrRITxfrDP/a06rzGcVtpPQcsQtbdLiQ8M2E5Hghk6Gtt9mZvaJrKWGQ4K7vRAfRIKvrnfH5hLtHvn4PP+JtECRvvnaxb2EaYJvM8l/h5To7Is2TaPMcpDrEMpH2lcMIZziG8GznbNT81Iyvmvqhi3ptQ4SvjREnfWVTJqt7JfPtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=108On4TGifilxBS3dCsewSVEjfked9itg+pM1qjq9x4=;
- b=U7Pws5Qfk3/HXgSuG/tc41MRT+0zNvAqO+MZjb9u2EVl/3LqNgHxpAUiB22+TxDhKG+mJSehH/CnS14ham+SKjlqi14DfJhCL0AZI67pbfdlHCPxyWISvDCfMYQ5iZCI810Ns6tTJMC9bh1N4+lfEd4mUhRCvXOK5iNpFWYWrIBlxUYR4PfgtLmhXdIqv3R2DsQIaSxzH+EEVeE9jhVePZSKHxONOvWnZAbADThxuyBNK1Q+2VDeiqOppZ8zpplJuYpmq8+YoctBnCyZdBtX6/uukGgbfcIA8mbTno+gOCXNZamOh3mlvm+4knmXgzD4wSJD8WHOZi3UYvRItatbeg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=108On4TGifilxBS3dCsewSVEjfked9itg+pM1qjq9x4=;
- b=SVdKgjXgY/hEMUGJpi4WiMV/bs4qyS6kP+DEHCA/hqbBBYPqWSiFcIDb2W3LYoIx0K0N0PAwU3tL1BXMtCLZQdb645IqewIQ4uBz74RF0NW2CTM6icz0iitQTxRvoZ1HWsjT9sIbYU/JWoRSMlRr0xPm0zp1JhgQvARr6Qq9zCknsswiWLr8T4uSHUzktYGHmG8qFBnkoLp10rooexgI9y6znDHijkB5Ll5lzs7LJ+5f8HCV+IIpzWV2hm/11GiBxv4IN5XANKec/Fjd1E+5IBG6MUZCqlk++K1TZ8/PBRGaDVyPsWY0qYQMuESLYHn4oqz/Id0Y3FXF7CKOJeaWwA==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by SJ0PR02MB7534.namprd02.prod.outlook.com (2603:10b6:a03:320::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.13; Mon, 21 Sep
- 2026 12:33:29 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 12:33:29 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- eric.auger@redhat.com
-Cc: cohuck@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org, 
- maz@kernel.org, oliver.upton@linux.dev, berrange@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, gshan@redhat.com,
- skolothumtho@nvidia.com, sebott@redhat.com, armbru@redhat.com,
- philmd@linaro.org, yangjinqian1@huawei.com, shaju.abraham@nutanix.com,
- mark.caveayland@nutanix.com, khushit.shah@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-Subject: [RFC PATCH v4 10/25] target/arm: fix SVE and PAuth finalize for named
- CPU models
-Date: Mon, 21 Sep 2026 12:32:34 +0000
-Message-ID: <20260921123249.1708067-11-khushit.shah@nutanix.com>
-X-Mailer: git-send-email 2.43.7
-In-Reply-To: <20260921123249.1708067-1-khushit.shah@nutanix.com>
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH1PEPF0001330D.namprd07.prod.outlook.com
- (2603:10b6:518:1::1c) To SA2PR02MB7564.namprd02.prod.outlook.com
- (2603:10b6:806:146::23)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x8dNe-0003rj-49
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:44:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789994659;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ieiJte86dJPr4H5nWBZJAfk2w7Y4dzXFX1S0YuFeB1w=;
+ b=RaUxqD/eJXLsWeV9vwxKhcHy+ow0oOSaFig+Swl1n6wms6QydDXsWVJBTSg3PrDTU3waCp
+ 5bDXtl32B5T1JR6jpBmN7sDNPjpcVBb3vACyHARkmG0eCHiZYte2KbR0pQT7qF0gODfFtk
+ byAaue57CczLUo2SYvBG5e31Zpq9Cas=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Mt_EcyUgMrqVoNYEQDOhKA-1; Mon,
+ 21 Sep 2026 08:44:17 -0400
+X-MC-Unique: Mt_EcyUgMrqVoNYEQDOhKA-1
+X-Mimecast-MFC-AGG-ID: Mt_EcyUgMrqVoNYEQDOhKA_1789994656
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92F2F1955EA0; Mon, 21 Sep 2026 12:44:15 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8B29300106B; Mon, 21 Sep 2026 12:44:12 +0000 (UTC)
+Date: Mon, 21 Sep 2026 13:44:09 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 3/4] AGENTS.md: let agents know what the participation
+ rules are
+Message-ID: <arEmmePx36txCWCS@redhat.com>
+References: <20260921075251.12831-1-pbonzini@redhat.com>
+ <20260921075251.12831-4-pbonzini@redhat.com>
+ <878q4v0wle.fsf@draig.linaro.org> <arEQ0knroQ3NDDBA@redhat.com>
+ <CABgObfanWMyrLnBzM=_c6HgKFXO9Stu5WR6YU6dpSCLjS6Nr2A@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PR02MB7564:EE_|SJ0PR02MB7534:EE_
-X-MS-Office365-Filtering-Correlation-Id: 373c99d7-67d1-4a54-a4b1-08df17dc8a75
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|7416014|366016|3023799007|56012099006|18002099003|22082099003|10067099003;
-X-Microsoft-Antispam-Message-Info: z5QVmbqorKrb0abHvUr3RARvsOblf98n2RAURd7MxvH9MJTVSkBjFiGdfY7W0AZ2IKcMws1BQnWNKFiFYKQ01Snc2+H+TwFJdY1OxWXba+qqqN9oF9Zqrhg1TC3XwTXtDRe/lgjY6LAGM0esu9w+ZTi0/UIpIAmbfZHn4zufd5sa6upjFIcQMGZOE+jxRffP2hgJUI0bk5/NuN600Y+f0+WZkSbJCsP421yTYt12jDCGzN7zjNylXRgMts+mA3IsEex9D3WEAm8s7si6gqd1GIRzp8+H7UKHPu1485+vf3Z+ProPx22PHmyOpBq8zHCbTzcKAwEvLRYRY9h/XKYPE2WVmZWSIuDUNNnqHCcqYRaBlvxJ4fi3ZM3Yz4pRFcU7pHgR/4dQMF2O5HBgmIjo9LPODuZRqt+3jKdeNGqCMUqOnX4VPFd6TlFaPp5TVdiQMvzy7xgDEIkBaPGTxNFLWXS9JGeEBwMzcC9g0zYtcZavUzPtUK+3pzp9m4LEMzRb4Btt3WN/CyyIMxHl7kT4vM68CgHpO1KW3n704vbXSKMsSE4FHUD+mURC5PasMM3/RATibFnuBFzCDgk77C/Dk15269yqex0PMEARvbicSKWvxmQCbYJrH7JUSnK4ldebg7flSDzFWDSl5ft5nfiUDsX5l9LbHS9ATe8JccOvGJs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(7416014)(366016)(3023799007)(56012099006)(18002099003)(22082099003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?fCOx2aYADpbB3qEnWYkLtUxxV+Ph1ItUy6/Pl4YQUjxjYl/z33o7agHWQ+QC?=
- =?us-ascii?Q?iwypPhP6+NsbJozNCZYVkXBpIatBnd/F6Gj6YjiFXjGf/TIv2L4FIqAE1bp/?=
- =?us-ascii?Q?ofs2Pblbg1oNN31BgQ05gaxqBcOdRM9Oz7PrHViTC9svYgLeDb1pczB2GHwW?=
- =?us-ascii?Q?praqB6AEev26C/3/CeuueGdCdFGPhe592krDi8W62p43/aAXoA7YCtotag5f?=
- =?us-ascii?Q?/H9hypg9N+vGneG1SFnwnY//LdwpMzJbkbD2L0/fyg6+W15+vkAlSqLfMWxm?=
- =?us-ascii?Q?Mwi/vYd1D8Pk1wavD0S5IL0An13zJMrOapMdlymzMteHqIoE/x48y3vUrS8S?=
- =?us-ascii?Q?KlRzMM6J6RSms8wmYje3m6asbjHZrdj1yNZmejCih/escW0iCB7RP573pu45?=
- =?us-ascii?Q?QLNSWfHptoMfNxvR60XC6qU/X3cXWH9H/G527OuRoda9makrwMGgnFPpmKpN?=
- =?us-ascii?Q?LOgWuz+ztjG0oeP9hKxoAbXSrSzx+ZtEI6wLdODV8MW8k8YYKJJMh/fC/HRe?=
- =?us-ascii?Q?NdMzMoQGeEiRlzvhN4EXskUCn9vzPbXSDelMzTrAOuS8ywOJuuZPflYqwZBQ?=
- =?us-ascii?Q?yblLE2mkjaQkRFqNunb1CawiFgYKm45cCEOFWz3eAlY1qGC0ym347Y/3EaNg?=
- =?us-ascii?Q?EERC/RId50UR3g1P8cfs5AVQWnuCc1Dte5NFKrCReDYOFyk2ke2CAYE0GMSR?=
- =?us-ascii?Q?faVNrRYKLXFNSQoXecqGf3OQFxdkEHmv+BqoQzC+6mu8qfV3Ybhpy69b2ObG?=
- =?us-ascii?Q?i78BFbavGzV6CNWmpLxweomkQ0gA06PzM4jz7UR+iG35DMOAbKCqEjnMcyIo?=
- =?us-ascii?Q?M5DWKXEYj1hspjdNQO6mIDfT0j15olTF8nxvKwf0MQf6D+zADbikbyaXt4MJ?=
- =?us-ascii?Q?AoyWWRrEuhRVMHn8mtBz4yPQQFJL7aDN/NdArHHqrlyITolBEqJbUcf1Jj/y?=
- =?us-ascii?Q?NXWE9hQeMdGTMzHraV1kRhXbdJNgMsImlbJ+3z2At7uvE4/GPpm9bVAk8PsS?=
- =?us-ascii?Q?/qJ0j5rQeix6Bk8RMsJjejZu0XYVoFwL4XCbP2TpBqpi555Wg1b3o2XpLmFv?=
- =?us-ascii?Q?SeQZgvUXOA8vsd00Esn2D8zx8lyBLrTbMucXyuOoRIOvL2qPeW4iSbx6PXwQ?=
- =?us-ascii?Q?Qh3koQehpMCMoQcsF1ILWle3/SCppwZsIG2X3Ja35hTlKSNLGjdb04tud5kl?=
- =?us-ascii?Q?LyrWXvDmn6P9Wf/jhkXeIBBtQY7DPxUitE/uE3cLktZzMeXAGNYll07jwkrs?=
- =?us-ascii?Q?2x9kv2ouucQfFrd1Pr+p4dxLtHCHcwNZCkk8hRRZmbTFoP90J46n9f5PxBvc?=
- =?us-ascii?Q?agakugol8dT98qxtzlhapqfczLTS6pRXuHuCXCs3OGBWlVasUHzC3cFDCwsZ?=
- =?us-ascii?Q?gDU1KIXc+i+DhKHyIV45MMXm3HQWTRbEzi/D5ghTgEmrCQdKKYgcRVOWumxx?=
- =?us-ascii?Q?IeeLrluAxdP9OeYbbcDMxlKSVOfTK2BfzfxEiF0CsvUXPDZOrYhCy9FpD5ER?=
- =?us-ascii?Q?sBnVVIQIgOdNFtlhPyqHnImylnTDOL05S5CWffW5L1P6g/oKGDpEth6qp+9p?=
- =?us-ascii?Q?Epecvv1JkWDNFicA4hPq7QdjncGDiPxnJMMNHxo8wK7oRFfeu6wVadoiQAQl?=
- =?us-ascii?Q?LKSG2K8wpO92yVsjrJyoSFTgsqBdiNx428E6cUrStb2ZSDz1iLVpkUk8OObp?=
- =?us-ascii?Q?s/f+NmpoJSj+dGsXtaDASlsoYcazJg5GbOdwI0u5at1KKt06Upy6kxu1NB9z?=
- =?us-ascii?Q?+qJmZTbvVr3XHOaJbX86ZAkYxbeBMU0=3D?=
-X-Exchange-RoutingPolicyChecked: Evwqzkye85vo1c05aUxPTQcVOuXTIjjqn8+/2jiu7/0TtcJSC2iDATUxMTWX9Em+YNHFJzVdoE16oOsR7rS6P97D3Db/rCKFS17F9RVR+ScJ1JKLejLQtQntd23mOmtvbKm8Fr1WWKtJr/YTirRqD3R58MRHGCU2B3f6D6GraoKiSEIVffoVDloWa5UYrvJp3Zt5r+QTo4CgeYTKDnwqq2UGY2pnVeAQmnFiDZYXCwJ+/hPA169Pys98DNYh62fIWSf7ER3hjL7lUMfa1+D5ud+PuBbz6iW1p5J/9x8LdNiB1H/KvmBS9yjcai9fCf+jIPVmQWHd2LDt0AHH+EAA6Q==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 373c99d7-67d1-4a54-a4b1-08df17dc8a75
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 12:33:29.6875 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: s0qEC0gP2se7Ogc0LadG34iN3ESTmTLTpOM13TXWlFpM0WaPGmjrwYNOYMZV4hrkGwu3QxfMaXSR0Q8oD9ygZiWU2OvA3vpAkIvSWcYat40=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7534
-X-Authority-Analysis: v=2.4 cv=KInPn1Fo c=1 sm=1 tr=0 ts=6ab12423 cx=c_pps
- a=jYOLmuRG9FCngycrw98U6Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22
- a=64Cc0HZtAAAA:8 a=eaKVySaVM5pmrxNhKe0A:9
-X-Proofpoint-ORIG-GUID: fBIuCFV_Vm5TyrTQ9oGXvtmsrEWJovkQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX0mONpLKAzx9c
- 6MmvlSSY3ptpHGZRE9cD4pUWcciQLfrRR83HJUgnNb3VQRH/1neJNg0u/Z5O9s9FDAtcKSZIbuX
- 5PuarHcoX4w8c49vuBineI9QrfUZ6dg=
-X-Proofpoint-GUID: fBIuCFV_Vm5TyrTQ9oGXvtmsrEWJovkQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDE4MiBTYWx0ZWRfX4Y2yjCO7jt8G
- PR5seMad1ytNp4ORcv/3pkPU28N+zS69LlLVisduIzYd2fySBIE/bxSM0lonbdB5ofe6YKPrRrR
- 7s3dDX1k3O/Y2739R/sk4Z2gKIo+gf94/uOWQq+KZmQLzvsjVfkkXmAIYCyILWxu2E/lrsfqkZW
- NiojwRfnFQubDtIfCaW4WYxcKYmw3HFt6TzuUKB77Ct+lcLIkdCX4wKNuIMMawU95SVTQ1b7Jhk
- F82AOImQZiPFrV5Vi00FEG7COYTDIsBaes4hpNiZKBK/dIAJHXAXxfCkMzI+BttDz2kxAoXd3Qv
- V1zuxZQEVjPsQKZ+Mo16M3wp7rcqB5SI2mogrdJl6Zp7hfxJc0wD3134ymTg+drsC/9P/xezq+F
- GR5Xi3nOs1iicjyhz8m+cFg6smJ8ytWW4a8l+jsSPCNJ2AM7Ze07ZcODA1knwPYGsBCwTo0wPfV
- cqcU/cdC4qm9FRDGH0g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_04,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfanWMyrLnBzM=_c6HgKFXO9Stu5WR6YU6dpSCLjS6Nr2A@mail.gmail.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,83 +95,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As named CPU models define their feature set explicitly, their SVE
-vector lengths and PAuth fields must not be derived from the host.
+On Mon, Sep 21, 2026 at 02:12:32PM +0200, Paolo Bonzini wrote:
+> Il lun 21 set 2026, 13:11 Daniel P. Berrangé <berrange@redhat.com> ha
+> scritto:
+> 
+> > > > +### No automated posting
+> > > > +
+> > > > +Agents **must not** use any API, CLI, or web UI automation to:
+> > > > +
+> > > > +- Interact on the QEMU mailing lists
+> > > > +- Create, edit, or close **issues ("work items")**
+> > > > +- Post **comments** on merge requests, issues or commits
+> > > > +- Open or update **merge requests (MRs)**.  QEMU does not use merge
+> > requests anyway.
+> > > > +
+> > >
+> > > Are we considering project agents (such as the stsquad-bot) exempt from
+> > > this policy? I'm not sure what a normal agent can do via the API as it
+> > > wouldn't have the project level access the stsquad-bot needs.
+> >
+> > At least a user's agent can likely bulk file work items without elevated
+> > access privs, as we've seen by the several slop-bombs we've had.
+> >
+> > I'd add a footnote for that along the lines of:
+> >
+> >  'Official project agents whose code is maintained under
+> > gitlab.com/qemu-project
+> >   may be exempted from one or more of these rules, at the discretion of
+> > the QEMU
+> >   project maintainer(s)'
+> >
+> 
+> Sure.
+> 
+> > > +### No AI-written text must reach maintainers
+> > > > +
+> > > > +These rules apply when publishing AI-assisted work to GitLab or the
+> > mailing list:
+> > > > +
+> > > > +- **AI-written cover letters and commit messages are banned**.  These
+> > are
+> > > > +  easy to recognize and waste reviewers' time.
+> > > > +- **AI-generated responses to reviewer comments are banned**. This
+> > undermines
+> > > > +  the human-to-human interaction fundamental to code review.
+> > > > +- **AI-written issue ("work item") descriptions or comments are
+> > banned**. These
+> > > > +  are verbose and waste triagers' time.
+> > > > +  - An exception is made for issues for defects detected by automated
+> > or
+> > > > +    semi-automated tooling, including fuzzers and LLM-assisted defect
+> > > > +    detection.  Such issues must be reviewed by a human before
+> > creation,
+> > > > +    must be created by a human and communication with maintainers must
+> > > > +    be done by a human, but including the verbatim tool output in the
+> > > > +    issue description is explicitly allowed.
+> >
+> > I kind of want to eliminate this exception. IMHO from the bugs we're
+> > getting, I think human's are often putting very little effort into
+> > reviewing the tools output, such that it is largely a box ticking
+> > exercise to claim they've reviewed it.
+> >
+> > If we removed the exception, and required humans to write up the
+> > finding of the fuzzer/detect detection in human language, that
+> > may do a better job of getting people to engage in more critical
+> > thinking rather than rubber stamping the tool output.
+> >
+> > It would limit the ability of people bulk file 50+ tickets in a day.
+> >
+> 
+> I think that's the problem, namely not realizing there's someone on the
+> other side.
+> 
+> LLM write-ups are essentially the same as patents, they look like English
+> but they're not; and the verbosity of the write-ups is sometimes a curse
+> and sometimes a blessing. There is a tension between having a simple
+> description of the issue and an unopinionated one. The fix is not always
+> trivially obvious, and sometimes the "executive summary" from the LLM
+> points in the wrong direction—I have no expectation that human reporters
+> will be any better at not misleading me.
 
-When SVE is enabled without an sve<N> setting, require the named model
-to specify its supported vector lengths rather than inheriting them from
-the host.
+The difference though is that when I put effort into responding to
+a wrong executive summary written by the human, it is still potentially
+a reasonable use of my time as they might learn something from the
+exchange.
 
-Named models set PAuth ID register fields directly through SYSREG_
-properties. Preserve these values in PAuth finalization.
+Responding to a wrong executive summary from the bot sucks the will to
+live as you know it won't improve things next time around.
 
-Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
----
- target/arm/cpu64.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 7487b48cc9..a0114b0fa2 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -38,6 +38,7 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "cpu-idregs.h"
-+#include "cpu-models.h"
- #include "trace.h"
- 
- /* convert between <register>_IDX and SYS_<register> */
-@@ -134,6 +135,21 @@ void aarch64_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
-             return;
-         }
- 
-+#ifndef CONFIG_USER_ONLY
-+        /*
-+         * If SVE is enabled but no vector lengths are specified, we must not
-+         * default to the host's supported lengths for named CPU models.
-+         */
-+        {
-+            ARMCPUClass *acc = ARM_CPU_GET_CLASS(cpu);
-+            if (acc->info && arm_find_model(acc->info->name)) {
-+                error_setg(errp,
-+                           "Named CPU models with SVE must set vector lengths");
-+                return;
-+            }
-+        }
-+#endif
-+
-         if (kvm_enabled()) {
-             /* Disabling a supported length disables all larger lengths. */
-             tmp = vq_init & vq_supported;
-@@ -556,6 +572,23 @@ void aarch64_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-     ARMISARegisters *isar = &cpu->isar;
-     uint64_t isar1, isar2;
- 
-+#ifndef CONFIG_USER_ONLY
-+    /*
-+     * For named CPU models the model props write the authoritative
-+     * APA/API/APA3/GPA/GPI/GPA3 values directly into cpu->isar through
-+     * SYSREG_ properties, so do not override them here. Since other code
-+     * relies on cpu->prop_pauth, mirror the resulting pauth state into
-+     * cpu->prop_pauth.
-+     */
-+    {
-+        ARMCPUClass *acc = ARM_CPU_GET_CLASS(cpu);
-+        if (acc->info && arm_find_model(acc->info->name)) {
-+            cpu->prop_pauth = cpu_isar_feature(aa64_pauth, cpu);
-+            return;
-+        }
-+    }
-+#endif
-+
-     /*
-      * These properties enable or disable Pauth as a whole, or change
-      * the pauth algorithm, but do not change the set of features that
+> In fact I'd rather like us to introduce an explicit rule that a person/
+> > tool must not file more than about 5 tickets in a single day, without
+> > prior approval from maintainers, so we don't get bombarded at such a
+> > high rate.
+> >
+> 
+> Sure, that's a good idea. Even 5 per month...
+
+I wouldn't want to limit organically found bugs quite that low, but
+for automated bug discovery we need to stem the flow, and set a
+stronger expectation for the contributor writing a patch and taking
+responsibility to submit it via qemu-devel.
+
+Ideally we would get people sending patches directly to the list
+without the bug tracker at all, except for security bugs - which
+needs the security classification work:
+
+  https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg03555.html
+
+With regards,
+Daniel
 -- 
-2.52.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
