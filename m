@@ -4,144 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B40C982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 13:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45672C982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 13:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8eQg-0000h7-QO; Mon, 21 Sep 2026 09:51:34 -0400
+	id 1x8eQZ-0000fh-CP; Mon, 21 Sep 2026 09:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8eQT-0000fZ-ED
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:51:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x8eQK-0000f0-Rd
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:51:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8eQP-0004aC-83
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:51:20 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LDollu1982611
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 13:51:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xGZCkUtaYFcoJk2o1TLez+CKrQoIlL0zIGYY8o070WY=; b=Uw6FAu8b7mqbL0PF
- OO9+0bUho5oF34f4cj3DzVxLLrSoOnoeHKQPOvbVAIFVN4doMpQggE39W61pxFyk
- P55/g0jqgknc3kX0NG+5KO2UV7n6GwjQUhOhAznUpNafcbcnEpzch9ZDP+VFqXHC
- jCudnXPdSUlptWOgEcRDnN3RqFrn9cv2wUClpNNSIJFE0o58OB2QqAI6Ze9D7sH2
- cYLrADyockkc836ixQYDJQCq7O/pcK5yGx99m/5IQLqw4hWs8+cl2FP2la+W5igr
- SPImNZSFOkw3xCUoYIAcB0760IrvPXS3bMFsoQIhlt7Yd4oExNH6EMJ9EIXwUBED
- u+XwJA==
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gtysw1jnm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 13:51:15 +0000 (GMT)
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-5c93c294214so1048593e0c.0
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 06:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1789998675; x=1790603475; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xGZCkUtaYFcoJk2o1TLez+CKrQoIlL0zIGYY8o070WY=;
- b=Oo3Ydc7qmRQs9UapRBvotGAWarWIYhvt9pK569d7MXmF7fWZck87SANMWRYqJR862Q
- K2/DA+eyhRN1n+eFi28BweHp5BZX1p95AxZ9hE0PrWjVmSeG4Pl+Iu7jGiXlTM5HfzKs
- e2La6nkHtsZTIxAIv3zDxAIVpw7Ul0vcCHLYf6Fk2Z4cugeHtHQXCiSD1Q1UhB6DwsuC
- f91vpy8RP/X19fPcsrI2BeWk2OCgX7pH3fPrL2oogya5dHIOB+irMICAVORPNwgIRD5Z
- vJtc1CJrwaMyj4TXR6v3DALW5i9e/Jf47OMbDvb3mDLSWN5ak1CAg4qhabbVaSrdSLnq
- U3Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789998675; x=1790603475;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xGZCkUtaYFcoJk2o1TLez+CKrQoIlL0zIGYY8o070WY=;
- b=CILotWtdlFKXL3EMhERQmu+QHWBh1bAAi92Hqkx6Pq1ydIYNRg7MXNwnrDPKOYErzy
- f/F7k8IHuTvM/XIMr9ncjBFA++Qy197UkAmXIoUWE4ht3LIO6IyLgf5tHgttpA/tMymr
- c6kMo63EbPe0ntcMrE7o15bqMI1qaZyoZoRGw3Sk3Yaffxe4OdwwiG4wYCmkeFdkaw9B
- 4pdd7ZAFXKy8BhxzvU2u7NC0Ncf6r+WI1SHnCErADKMbNnGw9FgiRlHNmRJcQdfsZrXE
- aa8OYj95KR+hTAhH71AzeFwoyPUPiOUdhVF24+9lczbRJ1e/g49QXAalqYxfxsz3P5Ll
- MGiQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwJ/SPL3fJTFiXbwYOQZljwrnzdT9335WRw8LR8TllVQSZuQ0TJbfQhmYSP0xoyjewj+1FQnDlFxqy7@nongnu.org
-X-Gm-Message-State: AFuF++mLRbQ+u6gWPB/pxGM7f/GcIjDFXFoqyMRBpyAHTMvfKo6HfatK
- y1Ea15K7jf665IXz4UNSH8HTCw4IZIETjBrRrK0gbXzl9XobR8Ct+zd5Ha6FBxHUwM2XQXnw+6r
- 4HLle31r9OYJa26ErBMNBsUIe6/RyOSX+mtPvM2PNSMAa1gx8E2bQE8e5jQ==
-X-Gm-Gg: AYBFou2OT4wgWH0GMWbr+oFLUFX0ZJZaYB56uHeXPjSka78dKij7DYpvjyaWCQlOIHt
- rDwkrZuE+5dX8+QOwY21pZ9SWGZJdtrZ+Q99GnHnzLinWIdz9blIk7DiyqfAlTWksp5s4LO7FU7
- Y3+HqGDZ24jaq3A22r9IJyRwpibYWIlYGm+/mCXKNJEIRraCW4hBceUpAuHbs6rNZHQEx5Ydk9I
- J9wJwRyrHRt39KUS9CxH7WeTQaMi0T5XzrKxqLebu28FKITpD0+2GnIBynFwYxuomrSyLglRtVb
- Ttt/P9FovwTSKp2335lY948bhQyzZszlH1PFypTXRI++axWPp4Wvm/vMNwZMhN51gIWvZfTOSVQ
- k67JE5PFteG7Dw2kPMQEt
-X-Received: by 2002:a05:6122:893:b0:5c9:c60a:e9af with SMTP id
- 71dfb90a1353d-5c9c60af4cdmr3049474e0c.21.1789998674950; 
- Mon, 21 Sep 2026 06:51:14 -0700 (PDT)
-X-Received: by 2002:a05:6122:893:b0:5c9:c60a:e9af with SMTP id
- 71dfb90a1353d-5c9c60af4cdmr3049413e0c.21.1789998674301; 
- Mon, 21 Sep 2026 06:51:14 -0700 (PDT)
-Received: from [192.168.0.4] ([79.127.134.47])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4872442263fsm23680973f8f.1.2026.09.21.06.51.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Sep 2026 06:51:13 -0700 (PDT)
-Message-ID: <a636e448-911e-437c-9d41-6c9187eeaa9c@oss.qualcomm.com>
-Date: Mon, 21 Sep 2026 15:51:11 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x8eQI-0004ZZ-Kb
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 09:51:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789998669;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KZxf5BzPvrbolEyf8rnvL4Vey5u4rTz/G3m1489/ttY=;
+ b=UqIP9l4f253p/AcmzQXx6uQ6FzOuKxjBthZ+90ylGIZXzaUF1OKUCwdt5RIQgIm2UkfwNF
+ FAXEoi+yxm7Wx4bwGjE+qzsxARvp67u7NpHBZceN15mKndY9PSHufnU6g2H3CoOTspnppz
+ zX7hVdNY7dd0PpyZOQjDeBhWg9/VZEg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-FZ4-BpzGMxCYx3a973JgRg-1; Mon,
+ 21 Sep 2026 09:51:04 -0400
+X-MC-Unique: FZ4-BpzGMxCYx3a973JgRg-1
+X-Mimecast-MFC-AGG-ID: FZ4-BpzGMxCYx3a973JgRg_1789998662
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7089E18454A4; Mon, 21 Sep 2026 13:51:02 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4ECFA41B; Mon, 21 Sep 2026 13:51:01 +0000 (UTC)
+Date: Mon, 21 Sep 2026 09:51:00 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH 09/14] qemu-options: Change qemu_opts_parse_noisily()
+ to take the group
+Message-ID: <20260921135100.GB90591@fedora>
+References: <20260918223002.1892021-1-farosas@suse.de>
+ <20260918223002.1892021-10-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/11] hw/riscv: Filter for 32- or 64-bit machine types
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com
-References: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
- <20260918-hw-riscv-cpu-int-v5-10-f98c5a244636@rev.ng>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260918-hw-riscv-cpu-int-v5-10-f98c5a244636@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDIwMSBTYWx0ZWRfXycc/XgQQSH23
- tBOi7wxLf4qRVlwe08sPTjsZZcfqybDRv+IfLKN9ldP07GPOOmRNeepHiMZwKNmA/mIWkysTlrE
- hXKFcXvcqmQuLO27INSuLBN/P+HtONsMtbSPyoB+BgH964XDQ2GNeLLd+LpX0WALwjA3c5GQqxO
- bksjE6//FPqP7CYvrS4KE5llyHydJjclUZ6oZnZ1tYB2oq8pntuKLhYvphOLwom2yo7mYxY8fCA
- TOGN4DlJgUUXMB249ZEKJKHeVGVDKE0hgVGU69VRGWX0PHGSRNtdr/qKQt8urDHJ1vdROCLbyCZ
- TILZC556wxvmS24m6i7XHJN2LFiyzIMaALPtS8FVB8QQb9sy+7LRAubIqC4kMssfuway+bOqQcC
- ojATquTaxv9w9ST9CvF3uDkmyziohUnyVKEyw/Sv2iC6AJ7IY68DqPrVsPPNWwyCXEQSqlm8MQM
- 9d3xUAInu7tC9CzBfCA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDIwMSBTYWx0ZWRfX+cyfO9GF9h5y
- QKdbNONRJI58Uk0ETYmaqGJXVPim4rTWc9w1+gxHesj2tpuwM6mjGEW+png/QOGaHLJta1YGJH4
- sNc882i4YimfSIBSqJAb+VsRjcJ8YLA=
-X-Proofpoint-ORIG-GUID: 5PXIcQpc4bUmMubZ1Vuxrsa28wq2qS2S
-X-Proofpoint-GUID: 5PXIcQpc4bUmMubZ1Vuxrsa28wq2qS2S
-X-Authority-Analysis: v=2.4 cv=W7etxhWk c=1 sm=1 tr=0 ts=6ab13653 cx=c_pps
- a=wuOIiItHwq1biOnFUQQHKA==:117 a=btlkdZlGvBFwkIDmIYSHuA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=YDJjWJwHATzlH2HiSMUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=XD7yVLdPMpWraOa8Un9W:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_04,2026-09-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609210201
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="stWh8AqMWtBjfz59"
+Content-Disposition: inline
+In-Reply-To: <20260918223002.1892021-10-farosas@suse.de>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,90 +93,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-18 0:05, Anton Johansson wrote:
-> Filters for 32- or 64-bit machine types using TypeInfo::is_available,
-> machines available for both 32-bit and 64-bit (amd-microblaze-v-generic,
-> sifive-[e|u], spike, virt) leave the field unset.  For boston-aia,
-> DEFINE_MACHINE() has been inlined to set is_available.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+--stWh8AqMWtBjfz59
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Sep 18, 2026 at 07:29:56PM -0300, Fabiano Rosas wrote:
+> Pass the group name as argument to qemu_opts_parse_noisily() to make
+> it simmetric with qemu_opts_parse().
+>=20
+> This change solves the issue of qemu_opts_parse_noisily() crashing on
+> a NULL return from qemu_find_opts(), which can happen when an option
+> is invoked for code in a module that is not loaded.
+>=20
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   hw/riscv/boston-aia.c      | 34 ++++++++++++++++++++--------------
->   hw/riscv/k230.c            |  3 +++
->   hw/riscv/microchip_pfsoc.c |  3 +++
->   hw/riscv/opentitan.c       |  3 +++
->   hw/riscv/shakti_c.c        |  3 +++
->   hw/riscv/tt_atlantis.c     |  3 +++
->   hw/riscv/xiangshan_kmh.c   |  3 +++
->   7 files changed, 38 insertions(+), 14 deletions(-)
-> 
-> diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
-> index b90da096ea..ba16b7dbc6 100644
-> --- a/hw/riscv/boston-aia.c
-> +++ b/hw/riscv/boston-aia.c
-> @@ -10,6 +10,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/target-info.h"
->   #include "qemu/units.h"
->   
->   #include "hw/core/boards.h"
-> @@ -263,18 +264,6 @@ static const MemoryRegionOps boston_platreg_ops = {
->       },
->   };
->   
-> -static const TypeInfo boston_device = {
-> -    .name          = TYPE_MIPS_BOSTON_AIA,
-> -    .parent        = TYPE_SYS_BUS_DEVICE,
-> -    .instance_size = sizeof(BostonState),
-> -};
-> -
-> -static void boston_register_types(void)
-> -{
-> -    type_register_static(&boston_device);
-> -}
-> -type_init(boston_register_types)
-> -
->   #define NUM_INSNS 6
->   static void gen_firmware(uint32_t *p)
->   {
-> @@ -462,8 +451,9 @@ static void boston_mach_init(MachineState *machine)
->       }
->   }
->   
-> -static void boston_mach_class_init(MachineClass *mc)
-> +static void boston_mach_class_init(ObjectClass *oc, const void *data)
->   {
-> +    MachineClass *mc = MACHINE_CLASS(oc);
->       mc->desc = "MIPS Boston-aia";
->       mc->init = boston_mach_init;
->       mc->block_default_type = IF_IDE;
-> @@ -473,4 +463,20 @@ static void boston_mach_class_init(MachineClass *mc)
->       mc->default_cpu_type = TYPE_RISCV_CPU_MIPS_P8700;
->   }
->   
-> -DEFINE_MACHINE("boston-aia", boston_mach_class_init)
-> +static const TypeInfo boston_types[] = {
-> +    {
-> +        .name          = TYPE_MIPS_BOSTON_AIA,
-> +        .parent        = TYPE_SYS_BUS_DEVICE,
-> +        .instance_size = sizeof(BostonState),
-> +        .is_available  = target_riscv64,
+>  block/monitor/block-hmp-cmds.c |  2 +-
+>  blockdev.c                     |  2 +-
+>  chardev/char-hmp-cmds.c        |  5 +--
+>  include/qemu/option.h          |  2 +-
+>  plugins/loader.c               |  2 +-
+>  qemu-img.c                     |  3 +-
+>  semihosting/config.c           |  4 +-
+>  system/vl.c                    | 75 ++++++++++++----------------------
+>  tests/unit/test-char.c         | 12 ++----
+>  tests/unit/test-seccomp.c      |  6 +--
+>  trace/control.c                |  3 +-
+>  ui/vnc.c                       |  3 +-
+>  util/qemu-option.c             | 14 ++++++-
+>  13 files changed, 54 insertions(+), 79 deletions(-)
 
-If you ever have to respin, please convert the device (not a
-machine) in a preliminary patch.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> +    },
-> +    {
-> +        .name          = MACHINE_TYPE_NAME("boston-aia"),
-> +        .parent        = TYPE_MACHINE,
-> +        .class_init    = boston_mach_class_init,
-> +        .instance_size = sizeof(MachineState),
-> +        .is_available  = target_riscv64,
-> +    },
-> +};
-> +
-> +DEFINE_TYPES(boston_types)
+--stWh8AqMWtBjfz59
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqxNkQACgkQnKSrs4Gr
+c8g35Af9Gw1vwEAT9baJxLJR5UBlJYy+JofNZwoRYHmrTLMVACocsdsJLjh5UC8a
+C4CTTWNQi21T9KSNjRO0p5OJAINqm3rjxTuxuPXrYOqs7bIylZNgu2xgg8+6KHHc
+Iv8uclCogDLTtZ/2bkKzN6HmUlFrKHMS9pyk/0SWV9RpfgSTvclPNPD2bQZw5zbh
+ZVWiz7ag3aNoG8wHymye5mp/8ETauzf558ziIwNfBmviH2VQtX47lKmW0eQG/feU
+h2z1vaF/OlgprHiJdIHwBzRvKm4iH3qFWbRCHTc++5ij/g6z3DV34htn1jpgl24G
+nDPW/Yyl9ZdTwcksNk+4YuIs6mIkjw==
+=y3JR
+-----END PGP SIGNATURE-----
+
+--stWh8AqMWtBjfz59--
+
 
