@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B87C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 18:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE8BC982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 19:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8izL-0005Mt-9o; Mon, 21 Sep 2026 14:43:39 -0400
+	id 1x8jJ2-0003RO-BZ; Mon, 21 Sep 2026 15:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz4-0005Gf-Kx; Mon, 21 Sep 2026 14:43:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz2-0005zv-0D; Mon, 21 Sep 2026 14:43:22 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8Er24193462; Mon, 21 Sep 2026 18:43:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=vRIXMRakBGJfbZE8Z
- DtYsNbMqHwAb87+JJN6vShZ2FI=; b=BmxgpMAa6EkBPy/6JCD5o7FC5HiNqbg+J
- TWeiBdvohYElKMPH/40sxWQCZii9KmhDXXKRYgsuU/nUqJ4bA8lCDJmGrgUOLSko
- D4k3E/tzx/CZCmseeatUZhhEyWsxpi392JcG5hTVjWRMUbc7oW0if1khaFHDjF2W
- LngbB9i/79w3Bns3Bm95sZYbiQbuLE+W2vy1Q/XyrvTcv9EartE4TJ3uyw5iA2Pq
- Vc78r1u11Kq5VshynXZOSZnWpaui3i3D8hCOfn0T03GSTTK4qIWsvBo30jCXi1gh
- GTWakZQp/4z50Z37I9pEXQqcsl8yLGZaxwzQN/l4Zqe4DkqxNXv4w==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1j78v-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 18:43:14 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LFHZe31451443; Mon, 21 Sep 2026 18:43:13 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gpjg0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 18:43:13 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LIh9Oi45351312
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 18:43:09 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCB252004E;
- Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADB952004B;
- Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with SMTP;
- Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
-Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 70774162260; Mon, 21 Sep 2026 20:43:09 +0200 (CEST)
-From: Eric Farman <farman@linux.ibm.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v2 5/9] vfio/ccw: Clear error object pointer after non-fatal
- errors
-Date: Mon, 21 Sep 2026 20:43:01 +0200
-Message-ID: <20260921184305.3791311-6-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260921184305.3791311-1-farman@linux.ibm.com>
-References: <20260921184305.3791311-1-farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x8jIz-0003Qy-Pj
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:03:57 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x8jIx-0001mX-Jt
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:03:57 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-485933b2522so2293828f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 12:03:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790017434; x=1790622234; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
+ b=bmr/U7IjcFfVWppcjG8krUerYCqRaDURBp08stbGl4wsI2MbAn2J5YZqyWcpHy4olR
+ r4vOhaP1e+VuqilJtAF0K1vIcnZj6CCWpfAUXyCRsjGdXEOFegBmv+pX5hXGeSI2GKfP
+ KKvqs/2AcQgySSDrJRHD+xPoSba39eNt8rVYZXNroN9QH/jcCQRUC7Drz5SFFaL0W/r/
+ qqwNcOpYl/D05lisgWrotorHWsDTEQ5EHzpKQBnbqAN3/uCUGvaAxyYUXUiqvkU3bDYG
+ MdphD8Q+znXiwLJhYC6T7mym1L+VMr038esUUNwVUrq2owcSRrQY145QicoiYl+VMX6X
+ W94w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790017434; x=1790622234;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
+ b=Assos59E8o/qUq26udbabDbTHDKcEf/5Ch3B/bdhe7dWqQ5jEATfB7Ek5iwzBqJEzq
+ pFfyW9kwMTzTbGVM47/CPp+7Zo/6aDhWnUUKucJyUcviNu8YJUQ5UoVnIjelJDZp8JUm
+ x5YacUacI3ng3oCOovT0lORbWGydPBgicI6b4cr04BWEbARynZxBtTPqzSAcPo+Dv+dB
+ cPct9v0JDgYL9bSyRxxq08TIJKEj8nHRmcAUreN7C4CXWD/TH170EaIVqsLxxw05n2je
+ gTOwnP5GhiL23Pa73tT453t42NIXr44AJLVuJn2XUKLPY3n0CUs5Br4I78o0BM6jp2mD
+ 5wmw==
+X-Gm-Message-State: AFuF++kamHoBGsTrs0uTB5H0mMH6eW41hQ+DJpKiW3T8+7e6u5UEHXgf
+ 2b79unJQUTO6im33+if4HCWHb7QYiww3zi9ojg8I1mt4T372W4LnFKK4wOhRsfj4/io=
+X-Gm-Gg: AYBFou2o5qvDmYFY1cTO+6+onYxngIbXfOXg8bEKEjbqDWUDL/xngs2EKvld6Ry6owZ
+ I+veHo8KoYZP1KCbuQdBbmKWtohd0fa4h2o0OsSDxnFF0vVhnFNeXe/LEDbsdoUNnOXtcNcEoKq
+ d5DeLLuQX8mbuNjsDuqzjNhh2ktrmGlwQknUhrsWCFZrmLtz3SL1EgujgbUHt7B4DZmZn9BP7i/
+ nrueYg2FgJ+gBpoiAuyMxMDRwxPMv62xUTAFZ0eAfs6F/8QnG03iG+2tvSLcfrA540BE062UCux
+ SdTBNhREuexwAK0dh4JT864iVYKCOaNPbE7go5d1r1cFYdQ2Ztu+YKFbz+uUGrz0RQHwv8JW+Fj
+ tIt8EeR04qNWDPHgCNRfSDDaEP6FqHMqDsZlj/QYf69oQix8Z8MknGcYLOvM/vagKJ7IBIoPvV9
+ cdZLDOZZ7ndacYOuEyVVJtNtce6WeDlpZddVuOIrAPmR/vWNQrhHhHwkp9ETQ19YfuBSwUKfBrV
+ N5CtPijdBCYrrpHP9V49Q==
+X-Received: by 2002:a05:6000:38f:b0:487:27f9:839 with SMTP id
+ ffacd0b85a97d-48727f90af1mr9585316f8f.46.1790017434021; 
+ Mon, 21 Sep 2026 12:03:54 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48724460978sm24315770f8f.11.2026.09.21.12.03.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Sep 2026 12:03:52 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B1BEA5F871;
+ Mon, 21 Sep 2026 20:03:51 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-block@nongnu.org (open list:nvme)
+Subject: [RFC PATCH] tests/functional: add migration diagnostics and pace nvme
+ activity (HACK!)
+Date: Mon, 21 Sep 2026 20:03:45 +0100
+Message-ID: <20260921190345.1709227-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: GdMdESW48vDzgt2Xj7eoXAUKzolVs_Zn
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab17ac2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=WuYEg3pJWr1ZmXxL5igA:9
- a=ZXulRonScM0A:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX20DCUwp/OjUm
- aqXwy5d+bi3DVODQzN3GaSQApKjxn4gna+VldUkeQSAeFztFEogZq6IE5P7CjplHg9Ev1RWttjN
- 64494B0Gj+VR2e3wqXvusrH2sZfvPXY=
-X-Proofpoint-GUID: GdMdESW48vDzgt2Xj7eoXAUKzolVs_Zn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX7U3t5eDRFd0E
- IwPJyU0irHUnjU5Mwu7s5WxegenAT6NofX8nQRslNr7uN+TXXqdD3YEnCjZvTxIfeOvPyL5DZ8f
- Nx0DW8pOMAjWwart4nxkspaxpr0xv9zQ9Ap1/Cfc90NXa/A1XGeKdTNqYMod77Y/pbOdEjG5ZID
- n3/jKoK1Zrv3TirTLixpD5i7T8QXOVNvop/rvl5aHVPvIE6CkeNV4EGqFV5KFsYpub9Bp07PDXb
- oeVRh+0s9hIZlId/nvlQHWTvpkJ61G2YyDAzA4yq4b1e2+wQg/Yhm3caw4yYz/YtBJBRMOnoFnN
- ZXcWssmy/FZhUWfrSC5N0Avml7FJV9ko2gkMqiXsgH0Tnxvwm7sqgbj96lCsnE0ZCs+C8noFm66
- eA5cZAmoeho396pNNYnID3yTbDg8uY4KNz5ivCcvA2kV6IEtehkfs1rR7KS03aXT7oOKN9eol2j
- tljb+Sf5Cm5bmlcFPtA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210272
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,36 +105,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just like in vfio/ap, there is a non-fatal message that could be
-generated, with a stale pointer in the error object variable.
+This is a hacky patch for comment but I've included the diagnostic
+hacks to the migration test as well as my workaround to get itworking.
 
-Unlike vfio/ap, there is no secondary message that could attempt
-to use it. Clear it in the same way, in case that ever changes.
+This test was failing on my KVM system. On investigation I found the
+nVME activity meant the migration never completed. I ended up
+inserting some sleeps into the workload script until I was able to
+get it to run.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+*NOTE*: obviously this can't be merged as is but I think we could
+certainly do with more tracking in the test to see when things aren't
+working with possibly the sleep as another patch.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/vfio/ccw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tests/functional/migration.py                 | 37 +++++++++++++++----
+ .../functional/x86_64/test_nvme_migration.py  |  1 +
+ 2 files changed, 31 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index c3dc7c1962..8e29a3ae61 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -604,8 +604,10 @@ static void vfio_ccw_realize(DeviceState *dev, Error=
- **errp)
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operatio=
-n.
-+         * Clear the pointer, since the warning will release it.
-          */
-         warn_report_err(err);
-+        err =3D NULL;
-     }
-=20
-     return;
---=20
-2.53.0
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index 8d2428efc24..e51a82c22f4 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
+     timeout = 10
+ 
+     @staticmethod
+-    def migration_finished(vm):
+-        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
++    def migration_finished(query):
++        return query['status'] in ('completed', 'failed')
+ 
+-    def assert_migration(self, src_vm, dst_vm):
++    def wait_for_vm(self, src_or_dst, vm):
++        "Track the state of one VM in the migration"
++        current_state = last_state = vm.cmd('query-migrate')
+ 
+-        end = time.monotonic() + self.timeout
+-        while time.monotonic() < end and not self.migration_finished(src_vm):
+-            time.sleep(0.1)
++        self.log.info(f"waiting for {src_or_dst} to complete")
+ 
+         end = time.monotonic() + self.timeout
+-        while time.monotonic() < end and not self.migration_finished(dst_vm):
++        while time.monotonic() < end:
++            if self.migration_finished(current_state):
++                break
++            else:
++                last_remain = last_state['remaining']
++                current_remain = current_state['remaining']
++
++                if current_remain > last_remain:
++                    self.log.warning(f"slow migration {current_remain} > {last_remain}")
++
+             time.sleep(0.1)
++            last_state = current_state
++            current_state = vm.cmd('query-migrate')
++
++
++    def assert_migration(self, src_vm, dst_vm):
++
++        self.wait_for_vm("src", src_vm)
++
++        # if we hit this we never completed...
++        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
++
++        self.wait_for_vm("dst", dst_vm)
++
++        self.log.info("checking everything is OK")
+ 
+         self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+         self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
+diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
+index 890f0aab6d6..58596f63cd3 100755
+--- a/tests/functional/x86_64/test_nvme_migration.py
++++ b/tests/functional/x86_64/test_nvme_migration.py
+@@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
+                 rm -f /tmp/test_nvme_mig_workload.iter_finished; \
+                 echo 3 > /proc/sys/vm/drop_caches; \
+                 find /usr/bin -type f -exec cksum {} \\;; \
++                sleep 0.3; \
+                 touch /tmp/test_nvme_mig_workload.iter_finished; \
+             done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &",
+             prompt, vm=vm)
+-- 
+2.47.3
 
 
