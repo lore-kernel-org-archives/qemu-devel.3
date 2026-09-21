@@ -4,110 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891A4C982FB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 18:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E0BC982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 18:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8izM-0005NX-AP; Mon, 21 Sep 2026 14:43:40 -0400
+	id 1x8izL-0005ND-HX; Mon, 21 Sep 2026 14:43:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz7-0005HX-6L; Mon, 21 Sep 2026 14:43:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1x8iz5-0005Gj-8s; Mon, 21 Sep 2026 14:43:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz2-0005zm-7J; Mon, 21 Sep 2026 14:43:23 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1x8iz2-0005zk-4S; Mon, 21 Sep 2026 14:43:22 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF89Wx4193292; Mon, 21 Sep 2026 18:43:14 GMT
+ 68LF8iii1903397; Mon, 21 Sep 2026 18:43:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=T+KQWmZPRoeO97lmd
- waFzeiVaV6RDKH5Tl5to6h1b7s=; b=O/0IB5Rt2d19kpakyfm4AfSss3gObiZuX
- hC8MmqtjVavPoJuh3JZB6brg+kih0vvkMywnzzJ3sHt/biQb8BNYb10DT1xuiXT2
- RFgiwe22ro8Gv3YGgU6z8jPhoWQ4+ysc1Hg0O8gDAjqUKeQwVlQJlNg9m6z13OSu
- 2XayslQ3Yw8exXVSUbLL+BLWqqcJPoL1hBuB1JmL7h3j8CRLVpxYnoUsIMALVC2j
- lD+UI66zBrNcxQq6ULv64WQBw35IcrXfRjDR4p+JsnrWQGor3BwQcHVuCvdNi4+G
- BGmdFhZg8YXTaZ9h4L09NmXx9GeJoTnCTzgJW/QPYepF+mx3Pb+TA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1j78u-1
+ :mime-version:references:subject:to; s=pp1; bh=myPHJlndDveNHp5qe
+ iGr3JnoVZa/YmVzGHgnnObBFos=; b=Pa5hN7t8AHf6AYkU3cvuurUDGS0e13dwc
+ Y4A6sWrnvT4B0MHevEBy34POTZhpMvCvSPWiShDIIbMrzOW9A0vWw8bMsay85Dq6
+ j7YLJi279q5U8KL+ySKDWEzOhGjx/+7gT1XtTQ1Z/Hb4keHp5wUIUWd6aYlNB5KM
+ Wy1RdsaLLZg5tBujv8YvqaAmvnyjqumfgtAQmnaWdc5NrKQE97TCXDn5XAbXvtmC
+ QYoEFZn5o2seCxmE0Ii1n+qHBOsVs9cMp23S3NEF5W3yrYRCDgb+BTNi45ApsP1E
+ nrQNdDcBr76sRfyKdTO5pHK+KLPf0XwhK5vWnA5rey4ycumQppsaA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdv21ss-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
  Mon, 21 Sep 2026 18:43:14 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LFHf0g2400058; Mon, 21 Sep 2026 18:43:13 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt7dy6cnp-1
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LFHkav167221; Mon, 21 Sep 2026 18:43:13 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bk96ac-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 21 Sep 2026 18:43:13 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LIh90K35717548
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LIh9do44892644
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Mon, 21 Sep 2026 18:43:10 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC37A2004B;
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFFCA2004F;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B59282005A;
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE2322004D;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with SMTP;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 786641624DF; Mon, 21 Sep 2026 20:43:09 +0200 (CEST)
+ id 74619162365; Mon, 21 Sep 2026 20:43:09 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2 9/9] s390x/sclp: Reject short headers in PV case
-Date: Mon, 21 Sep 2026 20:43:05 +0200
-Message-ID: <20260921184305.3791311-10-farman@linux.ibm.com>
+ qemu-stable@nongnu.org
+Subject: [PATCH v2 7/9] hw/intc/s390x: Fix check after g_try_realloc
+Date: Mon, 21 Sep 2026 20:43:03 +0200
+Message-ID: <20260921184305.3791311-8-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260921184305.3791311-1-farman@linux.ibm.com>
 References: <20260921184305.3791311-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ttWEbJkaDqaXvVGQDPtSVB1uHL1n6nE9
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab17ac2 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-ORIG-GUID: e8glU5yBvrWkuFRrNeb8jXzNDHhgITyF
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX831kSQZRe7TR
+ Q+8k5O7+ffJ85v0Gt2RMlqgkJpsV6/BVNob4bp2pNm+lS6Zj72/HhYTawW9uMr5QBToIrIHqaaE
+ Tho4iq6h8MYsnpaSERGKY8QPwkeoE7M=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab17ac2 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=pH6oLB8u_88KfPtTI8IA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX+CFTVMOAugtF
- lb2vbbePPfBKQLpJ2nWdc7RysKQ2RWYxXFk82XfTld3zVsNhs6LsErW4dfvRNHJRwFx7GHkXwnb
- gcPyrfax6P2jWqHLopQkj9qgAn4FFik=
-X-Proofpoint-GUID: ttWEbJkaDqaXvVGQDPtSVB1uHL1n6nE9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX+OYaILPyoVJu
- AE9Oy2r8KHRMiMlJckPoevlY4rCubavryQlWQ8BSY4mrYvFzWh4YLGBSVDpVvpShCBL4rB++XRR
- RmkmKJrSsZ2Esfc2kN84cMoQ124nspp/iNn0Dp2gxjF4QmvheSnvAwpcDd3Sy4CLMPWBQJC9+nW
- u3JS1RYff6/dVVRpMYCX5KlHqkZI74jHh7oz62Bw7BXP1mEfUWx7gldwhGQBk1cAGiOUjdiVO4y
- 0VxDfHCh/h3a3a/tOBctNISDXNQ/g/qzJ+Y6qci8Zzjn0504l7gw9hOxhgktzmuKX2jySDWTRxY
- DrcaKIvpd75GPZRqecS4LejWKxmx5voh/xNlJljULjNYm02Re+7lzuEhMQuRGNpR6afLo/W3PaF
- oOSi3DCsc9ls0qA5lV40xPdx1mhInLF2jCs2jH/sxeWQaJ1OF5qG9OB19ei9/Bxt0a2NQCNRuLv
- NCQG+AlQ2DuxL6nOJ8Q==
+ a=RzCfie-kr_QcCd8fBx8p:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=M8FnGKaJMcETolB0Q_gA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: e8glU5yBvrWkuFRrNeb8jXzNDHhgITyF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfXzksffGJCN9ty
+ Sxw+RQbSyYSZ7bXhuCTKNHvuU6j9fzcuslq5o7th8arZfxp2nmHpA+KuWOOS0eiBSGNMaYMBr0Z
+ 8K1vvEVodOIDc+nLkIrZnw/wQ219aUI4Gl3cD998Ru5Wxr0+gEvm+lmURd+k2zJ2SZ/NRZKx3Be
+ DjLiEtcoKKFUBcX7Stmkqm697bdP1LztY+Q0tc8lYatWZ/FII9PzhDv3g1TH4x44Dj4vdQoUTK5
+ smwd8VZlN8BoIsbtOOdLIRrMaQfQMWVxIq375MgGQyy5peNZkvP/RePsfQgV5yqgQgETL1NbcR8
+ qd5yHQCDBl4YwlkI1sBplM1VNK9uVekYon8nGYJwX5rsL8NKIwwYwO4OdtU2mNcgzy7kMhH270N
+ Hqss/SMopgfRr9AyIVmA7eIPoiP+uFCejuIG9TeslIcVFk4IbRS52lBoXBVXhs9Yv1Jpv36RJyC
+ J0gJk4H76GbtEy8Fz2A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210272
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609210272
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,51 +125,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An invalid length in an SCCB header correctly generates a specification
-exception for the regular (non-PV) codepath that processes an SCLP
-instruction intercept. The PV case doesn't, even though such a thing
-should already be sanitized. Since a short length will cause problems
-later down the line with the storage that will be allocated based on
-that size, put up a defensive check and return if it is too short.
+The loop to store pending IRQs uses g_try_realloc() to expand the
+buffer being used, but the returned address is stored in a
+pointer-to-pointer, thus the check is supposed to be examining
+the contents of the pointer, and not the pointer itself.
 
-Cc: Janosch Frank <frankja@linux.ibm.com>
+Define a temporary variable to catch and test the returned pointer.
+If it's NULL, return to the caller to perform the free on the
+unmodified buffer. If it's not NULL, store it in the caller's
+pointer and restart the loop against the new struct.
+
 Cc: qemu-stable@nongnu.org
-Fixes: c1db53a591 ("s390/sclp: read sccb from mem based on provided lengt=
-h")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: 3a553fc658 ("s390x/kvm: implement floating-interrupt controller de=
+vice")
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/sclp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/intc/s390_flic_kvm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index d8b655efcc..ad8129a5d8 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -277,6 +277,11 @@ int sclp_service_call_protected(S390CPU *cpu, uint64=
-_t sccb, uint32_t code)
+diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
+index 5e6d422fba..ebee6bca9c 100644
+--- a/hw/intc/s390_flic_kvm.c
++++ b/hw/intc/s390_flic_kvm.c
+@@ -254,6 +254,7 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+                           void **buf, int len)
+ {
+     int r;
++    void *realloc =3D NULL;
 =20
-     s390_cpu_pv_mem_read(env_archcpu(env), 0, &header, sizeof(SCCBHeader=
-));
+     do {
+         /* returns -ENOMEM if buffer is too small and number
+@@ -263,10 +264,11 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+             break;
+         }
+         len *=3D 2;
+-        *buf =3D g_try_realloc(*buf, len);
+-        if (!buf) {
++        realloc =3D g_try_realloc(*buf, len);
++        if (!realloc) {
+             return -ENOMEM;
+         }
++        *buf =3D realloc;
+     } while (r =3D=3D -ENOMEM && len <=3D KVM_S390_FLIC_MAX_BUFFER);
 =20
-+    /* Do nothing if the header appears malformed */
-+    if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
-+        goto out_no_write;
-+    }
-+
-     work_sccb =3D g_malloc0(be16_to_cpu(header.length));
-     s390_cpu_pv_mem_read(env_archcpu(env), 0, work_sccb,
-                          be16_to_cpu(header.length));
-@@ -290,6 +295,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_=
-t sccb, uint32_t code)
- out_write:
-     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
-                           be16_to_cpu(header.length));
-+out_no_write:
-     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
-     return 0;
- }
+     return r;
 --=20
 2.53.0
 
