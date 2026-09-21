@@ -4,79 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F934C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6210DC982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 12:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8d1i-0001rl-3I; Mon, 21 Sep 2026 08:21:42 -0400
+	id 1x8d3X-0002FV-QV; Mon, 21 Sep 2026 08:23:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x8d1W-0001rG-SD
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:21:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <2ecdcd9af56ca251fe689edf09d8029fd0feeed9@kylie.crudebyte.com>)
+ id 1x8d3U-0002FD-2X; Mon, 21 Sep 2026 08:23:32 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x8d1T-0000YG-8V
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 08:21:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1789993286;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b+0zBcLjirbPh00o9HYPxA/kZbVHtgTIrru/umcpedY=;
- b=evrgHlGAmBRBEhr7qc2TASZ7SaRjm92dG6DjdF2aWh2pznYxlBQU7/8b3JcjMj/DiF0btq
- c+OhfUSBcfi8EFtDWnT+GQ0GyS6ntsfrdyCFuUhfWCOpGVEEWbA4a8VMUpfkt+bV60nARB
- 2h8+dHHA3x9BrJr+NnG3ZyeJlDV2Dqs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-9IBjJBqrNdy1t0VxwSN7bQ-1; Mon,
- 21 Sep 2026 08:21:22 -0400
-X-MC-Unique: 9IBjJBqrNdy1t0VxwSN7bQ-1
-X-Mimecast-MFC-AGG-ID: 9IBjJBqrNdy1t0VxwSN7bQ_1789993281
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CBB719540DF; Mon, 21 Sep 2026 12:21:21 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D7F5300106B; Mon, 21 Sep 2026 12:21:19 +0000 (UTC)
-Date: Mon, 21 Sep 2026 13:21:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
- mtosatti@redhat.com, marcandre.lureau@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 3/9] qom/object.c: introduce
- object_class_property_add_alias()
-Message-ID: <arEhPOcXeaGgBGRD@redhat.com>
-References: <20260921113559.1299740-1-mark.caveayland@nutanix.com>
- <20260921113559.1299740-4-mark.caveayland@nutanix.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260921113559.1299740-4-mark.caveayland@nutanix.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <2ecdcd9af56ca251fe689edf09d8029fd0feeed9@kylie.crudebyte.com>)
+ id 1x8d3R-0000jR-RK; Mon, 21 Sep 2026 08:23:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=xRAjs31oYZHJT4KXgomXBio+IZsCVIU9k+xalIhBFOc=; b=CXlIt
+ CynFewY7G99g22mP1deW58kibTLszBV0+UVOSkAoSzsCMRcjJVkAxj996YOT3zBrOx4NlOF9EA4b4
+ Z4H9s4ydTUh0YNhGhX4d/1oT23Apg6RdsPWp8Di5hQIIUbcjoCojVG3rT6CXdKl1aOBvMekAl41GN
+ V8ktJbG9LwrlDnvAm8okq+VrEqhIV84lWwlhswcwZ/1Qg0AYcEw/rEEuV+dFKPpK3GWvSpqJMoVYk
+ aWtgPwKT9x+xCY0tyvTIhCOKewFpS3KOTUMxAih9DPoz4w41llaNkpv6YbH46IEO30W30XEyhOIGB
+ bomBD6Zxypk6exbOdNGOME2m0AK0QplneLFNhG6N7Ue6nFFbcqDTLXZiywnP4aa2x/A+fpXWXlYRs
+ wonWHzhDbODZXCr075DoNvQC/qfZ0kHwmPm9jIL9P0MkLlxXDRs2XLN2td4+3hio9i89v2bP/pVQZ
+ ZsfZJ7Uex8YAnGAPoQZs7Fs6bQdo+OJfF28QYwn98jXGoIVrAd316ZzViDc+p7cbLzYfzndp4jIqb
+ ktWnzfCZZYl8/fDxUiqeKy5K0qYt4XkBUse1gjK+a+hBSQVH7i+tIHPpKscHlscqOKYaeMlMxq0ci
+ ckQ0hvBgRAfHaT0gO1lTu4eZ1jUIDqJg4nmqLHf9PBNfbamOVn6VmCogPq3U8g=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Mon, 21 Sep 2026 14:18:58 +0200
+Subject: [PATCH] hw/9pfs: mutate FID path from main thread only
+ (CVE-2026-93834)
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+    Greg Kurz <groug@kaod.org>
+Message-Id: <E1x8d3N-003M3F-Pz@kylie.crudebyte.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=2ecdcd9af56ca251fe689edf09d8029fd0feeed9@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,37 +62,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 21, 2026 at 12:35:09PM +0100, Mark Cave-Ayland wrote:
-> This is eventually intended to be a replacement for object_property_add_alias()
-> which uses an object property instead of a class property.
-> 
-> With the advent of class properties, it is possible that QOM may attempt to
-> set or retrieve the value of an unset alias property. Update the existing
-> property_get_alias() function to use the null visitor if the alias target has
-> not been set, property_set_alias() to return an error, and
-> property_resolve_alias() to return NULL for the same case.
-> 
-> This ensures that unset class alias properties accessed e.g. via the monitor do
-> not cause QEMU to crash.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->  include/qom/object.h | 25 ++++++++++++
->  qom/object.c         | 97 ++++++++++++++++++++++++++++++++++++++------
->  2 files changed, 110 insertions(+), 12 deletions(-)
+v9fs_co_open2() is the only code that mutates a FID path from a worker
+thread: inside its v9fs_co_run_in_worker() block it frees fidp->path
+and copies in the new path under the held FID path write lock.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Every other FID path mutation in the 9p codebase happens on the main
+thread, so main thread readers (v9fs_walk(), v9fs_xattrwalk(),
+v9fs_stat(), v9fs_co_name_to_path()) rely on the same (main) thread
+atomicity and don't take the path read lock themselves on main thread.
 
+Fix this by making the worker thread block in v9fs_co_open2() read-only
+with respect to the FID: render the new path into the local 'path'
+variable only and copy it to fidp->path after the worker block returned
+back to the main thread and still under the held write lock of the FID,
+like every other FID path mutation does.
 
-With regards,
-Daniel
+Fixes: 02cb7f3a25 ("hw/9pfs: Use read-write lock for protecting fid path.")
+Fixes: CVE-2026-93834
+Reported-by: Milad Nasr <https://gitlab.com/sirkhezr>
+Suggested-by: Milad Nasr <https://gitlab.com/sirkhezr>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4491
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/cofile.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
+index 6e775c8e41..27fe5bfb20 100644
+--- a/hw/9pfs/cofile.c
++++ b/hw/9pfs/cofile.c
+@@ -144,10 +144,11 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
+     cred.fc_mode = mode & 07777;
+     cred.fc_uid = fidp->uid;
+     cred.fc_gid = gid;
++    v9fs_path_init(&path);
+     /*
+      * Hold the directory fid lock so that directory path name
+-     * don't change. Take the write lock to be sure this fid
+-     * cannot be used by another operation.
++     * don't change. Take the write lock since the fid path is
++     * mutated below on success.
+      */
+     v9fs_path_write_lock(s);
+     v9fs_co_run_in_worker(
+@@ -157,23 +158,30 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
+             if (err < 0) {
+                 err = -errno;
+             } else {
+-                v9fs_path_init(&path);
+                 err = v9fs_name_to_path(s, &fidp->path, name->data, &path);
+                 if (!err) {
+                     err = s->ops->lstat(&s->ctx, &path, stbuf);
+                     if (err < 0) {
+                         err = -errno;
+                         s->ops->close(&s->ctx, &fidp->fs);
+-                    } else {
+-                        v9fs_path_copy(&fidp->path, &path);
+                     }
+                 } else {
+                     s->ops->close(&s->ctx, &fidp->fs);
+                 }
+-                v9fs_path_free(&path);
+             }
+         });
++    /*
++     * The fid path must not be mutated from the worker thread: other
++     * requests may access the same fid on the main thread, and the main
++     * thread never takes the path lock for reads. Mutate the new path
++     * here, on the main thread and still under the held write lock, like
++     * every other mutation of a fid path.
++     */
++    if (!err) {
++        v9fs_path_copy(&fidp->path, &path);
++    }
+     v9fs_path_unlock(s);
++    v9fs_path_free(&path);
+     if (!err) {
+         total_open_fd++;
+         if (total_open_fd > open_fd_hw) {
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.47.3
 
 
