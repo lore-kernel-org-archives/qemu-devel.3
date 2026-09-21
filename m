@@ -4,102 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6CEC982DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 01:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E53C982DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 02:03:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8SUc-0007BC-QO; Sun, 20 Sep 2026 21:06:50 -0400
+	id 1x8TMN-00040u-Fl; Sun, 20 Sep 2026 22:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8SUb-0007Av-Fh
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 21:06:49 -0400
-Received: from mail-pj2-x27.google.com ([2607:f8b0:4864:39::27])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1x8SUZ-0002Vf-5f
- for qemu-devel@nongnu.org; Sun, 20 Sep 2026 21:06:49 -0400
-Received: by mail-pj2-x27.google.com with SMTP id
- d9443c01a7336-2dd77300825so24953075ad.1
- for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 18:06:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789952805; cv=none;
- d=google.com; s=arc-20260327;
- b=SapQywReJ2FT11Uf5+8GoWPOKPQgfkFLqD3yJIPtGpI3jJ0wX3stXMTsaIJnO+ZkYt
- UqgeDqYvwCkUfuG5PT/Dw3WHeDwTZGgxHwkxFeY6iHd+Q203juTo3s5CBnDBjJzFXTEq
- +34IU8Kc6wsPn4M+DjBZRUsEYoegNvs8/v4a4fEhRx0vpYj8ERw25b2SPoyq6szseCv5
- 1Vl4goyEQi1irNRJ8YsNei5jkJ6coDJnHs3j0i6P5jmVZcUhkz/tr5lcYAYOrlT+zAqh
- 3bPCWd4/hSCQH8MS67MJMSQ2LQR43CE4EssA6qwvjns4QX4nifVSp49+egg9dN0KTJh9
- uF/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cEoYHzdgNFuBMRr7KUQaB/DWlpJmbPtPkJj5XT0wSRg=;
- fh=E1ru50n755oas5DAMbqnaFB/4fE99klEr75rzIED//M=;
- b=o59TfQW8L0/gO6dJwsJ7Be+e/OjUKfwh70xTgrrJFAYM3FxuPRKMIbj25nNpeNFIse
- ANReuMf8gWTNGKTvY0ovJ6VmcR5E9BbEAA+MFAJdqRWAwfDGVUe5stGzwZp2jpN4whMf
- RiJmO1wmaie1cjGxW7gCTticGhUrIQmrLM2/rTCrTNMiQAaHbMyLWqnhoOn1n1hlnecd
- xhGs8nea4BYXkB6eFJZ2LoYWhEkG/m/BxdyEf1wn04+6c0VBCqX4uPPa58z6WJDKrgOC
- L5OgeeWkzzXVDVuT/3kXK+Ia1ilXWPuwtuBMMy8Z7Hs7OBXYi3y4n9Mll8A6iXlt5FYn
- Ln2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1789952805; x=1790557605;
- darn=nongnu.org; 
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=cEoYHzdgNFuBMRr7KUQaB/DWlpJmbPtPkJj5XT0wSRg=;
- b=WeCLic+LuE6CWrP8g2C0NwA2bZDxX/ckA1oahIIrHyqyDEFxLrz2S+3ziR59IOejgf
- giGcuT3Ju0i9W6h6lpjH04KM6l/DDk4GQcRmrQnS9T+vJzcJPzm9e/paZcAcFv3UP8FW
- L09p8GZTQdss3OwpjdpkL0J3TiJdDGkTwql+1zlPnYmHyeGycV385fWEt3j+wu2HRrih
- J53gMuLmo3EgmPfkebBe6RN4yclv45IYPKFfbowf7X6id+dMNlpTDiPBgN7RGIduXoaY
- whtEqqxazpElGwd8rYoIGofxg2vWA1nHTaPAPFu8RST+JNMrgqCIv8NRTgQ8lr4e+p6M
- EKQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1789952805; x=1790557605;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cEoYHzdgNFuBMRr7KUQaB/DWlpJmbPtPkJj5XT0wSRg=;
- b=Ewa2Go1I8EnYEsZU8/6a5F36Goq3oXblzIwI7heVGE6XlgpKfe67VtSB4i0AO8b2Yu
- 9apUoFBqvfkYxYyn3sSpUnMeRZYvbWhbDFfo+n3CG1Njpf6ThNWNkZERiwEC79atd1ht
- /h2ZrXXjLX7DCZEcgC1H2lKvsFBBMs5Egmy8us3i/o7imQTMuqitLqLfwPeqkyd+NnYU
- ivwekxQ0X+JOxRByrpNIHN8x2LZyjuJKkGtpeaY18WPtuScHeXgvDWxJ4i6eZZkbLIDK
- gIYL6JL1vP6AVjEgZOQ1jHTzFTMB14JZjsV37coO7qeJiCAw2iaR8QiuWqu3+Ilmh33v
- 1Arg==
-X-Gm-Message-State: AFuF++kpYbEgoExwlxIxTf4uS3Fur2Y36tQDxopa8jKJhHT96g+NkCg4
- zN69DvzHkbw+48iH/1bg64hU6DmiGBh9xbzh+qxJGJWqWj+4lS+f0bMed5Ziaa85dm9o7fdECON
- KckCc1dn3FkwujRdrxsDE3X2H94T5NGeaHGXtLL9Sdw==
-X-Gm-Gg: AYBFou0o5sj9deR2PweEnq4AL/LZVHL5lq4o78QRJR2Es1IN+23bTLEnioO4T6DrXS7
- /gXm8kEtziJKax7hLYBABXZuOhWkvKneZbM4yx5HXDmw3P9xCX3pWD9zKeogufexGw+9kxwWnBc
- /oBgsONyYHLrwvkYd5d7qrekRPsDFwV3pIrnGfhMdB5g3ziO7OAd1IlkFcj9ZJ75PLapDVQj4TA
- UMSAwUXUUZoRalJpEpzPS2/MU3/+9zovIebqB2omyqJBNStNSKshVKoMpBWVzVniR3uMgyz5uk/
- Q63g9iBTZNZupeBCvSYqODIGqtLFjXzWI+N/Pw9jYPzYhKBVAOI5a0Smswgg24DxIYjOub8bJoF
- pQHXdicF2Kg==
-X-Received: by 2002:a17:903:b47:b0:2dd:ad73:c938 with SMTP id
- d9443c01a7336-2ddb1bae01fmr139690905ad.25.1789952804798; Sun, 20 Sep 2026
- 18:06:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x8TML-00040b-CJ
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:02:21 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x8TMI-0007a7-OP
+ for qemu-devel@nongnu.org; Sun, 20 Sep 2026 22:02:21 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8CxQNEkkLBqWgsOAA--.41380S3;
+ Mon, 21 Sep 2026 10:02:12 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJAxlMwikLBqhisjAA--.47516S2;
+ Mon, 21 Sep 2026 10:02:10 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Add paravirt preempt feature
+Date: Mon, 21 Sep 2026 10:03:33 +0800
+Message-ID: <20260921020333.570784-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260919-misc-2025q4-v1-0-ebfa61049bd7@bsdimp.com>
- <20260919-misc-2025q4-v1-13-ebfa61049bd7@bsdimp.com>
- <8b9b62d0-2cc7-4438-ad60-4cfbb4088bc8@linaro.org>
-In-Reply-To: <8b9b62d0-2cc7-4438-ad60-4cfbb4088bc8@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 20 Sep 2026 19:06:33 -0600
-X-Gm-Features: AcwNN1Wkkhd-ks-AWbiyK_rym1jt6iZXuY9RVzLz4by6BN8BbVe3qSTLbXOqM40
-Message-ID: <CANCZdfpQf-qUdnbeEjVGY6N_rbau+CHCUo881prL=ZyHtZc+Ug@mail.gmail.com>
-Subject: Re: [PATCH 13/14] bsd-user: Fix non-PIE binaries
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Maksym Sobolyev <sobomax@sippysoft.com>
-Content-Type: multipart/alternative; boundary="000000000000185346065bf3dd5e"
-Received-SPF: none client-ip=2607:f8b0:4864:39::27;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj2-x27.google.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxlMwikLBqhisjAA--.47516S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAry3CF13Zr1kCw1xuw1fKrX_yoWrJFyrpF
+ W7ArWSkrWUGwsakanxJ3Z5urn8GF4xGr4xXa43Ar4rAa1UGFWUZryIyF95KF1DX348XFyS
+ qFn5Zr4q9F4fJabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,209 +75,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000185346065bf3dd5e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Paravirt preempt feature is OnOffAuto type, it is disabled by default,
+also the feature detection is added to check whether it is supported
+on KVM host.
 
-On Sun, Sep 20, 2026 at 4:33=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.h     |  2 ++
+ target/loongarch/kvm/kvm.c | 39 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-> On 9/19/26 19:20, Warner Losh wrote:
-> > diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-> > index 295dad4643..eaa8676f5a 100644
-> > --- a/bsd-user/elfload.c
-> > +++ b/bsd-user/elfload.c
-> > @@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, struc=
-t
-> elf_phdr *phdr, int fd,
-> >               elf_prot |=3D PROT_EXEC;
-> >           }
-> >
-> > +        int flags =3D MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE;
-> > +        if (rbase =3D=3D 0) {
-> > +            flags |=3D MAP_EXCL;
-> > +        }
-> >           error =3D target_mmap(TARGET_ELF_PAGESTART(rbase +
-> elf_ppnt->p_vaddr),
-> >                               (elf_ppnt->p_filesz +
-> >                                TARGET_ELF_PAGEOFFSET(elf_ppnt->p_vaddr)=
-),
-> > -                            elf_prot,
-> > -                            (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),
-> > -                            fd,
-> > +                            elf_prot, flags, fd,
-> This is wrong, or at least very not ideal.
->
-> What's missing no the freebsd side is a probe for the entire address
-> space for the guest program.
->
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index c592f69885..c6dad2417c 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -302,6 +302,7 @@ enum loongarch_features {
+     LOONGARCH_FEATURE_STEALTIME,
+     LOONGARCH_FEATURE_PTW,
+     LOONGARCH_FEATURE_MSGINT,
++    LOONGARCH_FEATURE_PV_PREEMPT,
+ };
+ 
+ typedef struct  LoongArchBT {
+@@ -464,6 +465,7 @@ struct ArchCPU {
+     OnOffAuto msgint;
+     OnOffAuto kvm_pv_ipi;
+     OnOffAuto kvm_steal_time;
++    OnOffAuto kvm_pv_preempt;
+     int32_t socket_id;  /* socket-id of this CPU */
+     int32_t core_id;    /* core-id of this CPU */
+     int32_t thread_id;  /* thread-id of this CPU */
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 941142305e..7ca95181a1 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -1039,6 +1039,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+         return (ret == 0);
+ 
++    case LOONGARCH_FEATURE_PV_PREEMPT:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_PV_PREEMPT,
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++
+     default:
+         return false;
+     }
+@@ -1203,6 +1209,21 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+         env->pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
+     }
+ 
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_PREEMPT);
++    if (cpu->kvm_pv_preempt == ON_OFF_AUTO_ON) {
++        if (!kvm_supported) {
++            error_setg(errp, "'pv preempt' feature not supported by KVM host");
++            return -ENOTSUP;
++        }
++    } else if (cpu->kvm_pv_preempt != ON_OFF_AUTO_AUTO) {
++        kvm_supported = false;
++    }
++
++    /* Feature preempt_hint depends on steal_time */
++    if (kvm_supported && (cpu->kvm_pv_preempt == ON_OFF_AUTO_ON)) {
++        env->pv_features |= BIT(KVM_FEATURE_PREEMPT);
++     }
++
+     if (object_dynamic_cast(OBJECT(ms), TYPE_LOONGARCH_VIRT_MACHINE)) {
+         LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+ 
+@@ -1412,6 +1433,18 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
+     cpu->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+ }
+ 
++static bool kvm_pv_preempt_get(Object *obj, Error **errp)
++{
++    return LOONGARCH_CPU(obj)->kvm_pv_preempt != ON_OFF_AUTO_OFF;
++}
++
++static void kvm_pv_preempt_set(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->kvm_pv_preempt = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++}
++
+ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
+ {
+     cpu->lbt = ON_OFF_AUTO_AUTO;
+@@ -1437,6 +1470,12 @@ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
+                              kvm_steal_time_set);
+     object_property_set_description(OBJECT(cpu), "kvm-steal-time",
+                                     "Set off to disable KVM steal time.");
++
++    cpu->kvm_pv_preempt = ON_OFF_AUTO_OFF;
++    object_property_add_bool(OBJECT(cpu), "kvm-pv-preempt", kvm_pv_preempt_get,
++                             kvm_pv_preempt_set);
++    object_property_set_description(OBJECT(cpu), "kvm-pv-preempt",
++                                    "Set off to disable KVM paravirt preempt.");
+ }
+ 
+ int kvm_arch_destroy_vcpu(CPUState *cs)
 
-I believe I have those missing pieces in the next round. I'll pull them
-forward into this round when I rework.
+base-commit: c1c18d1e640b64292859ce9f30f3c344edfb0294
+-- 
+2.54.0
 
-Warner
-
-
-> >     /*
-> >      * Reserve address space for all of this.
-> >      *
-> >      * In the case of ET_EXEC, we supply MAP_FIXED_NOREPLACE so that we
-> get
-> >      * exactly the address range that is required.  Without reserved_va=
-,
-> >      * the guest address space is not isolated.  We have attempted to
-> avoid
-> >      * conflict with the host program itself via probe_guest_base, but
-> using
-> >      * MAP_FIXED_NOREPLACE instead of MAP_FIXED provides an extra check=
-.
-> >      *
-> >      * Otherwise this is ET_DYN, and we are searching for a location
-> >      * that can hold the memory space required.  If the image is
-> >      * pre-linked, LOAD_ADDR will be non-zero, and the kernel should
-> >      * honor that address if it happens to be free.
-> >      *
-> >      * In both cases, we will overwrite pages in this range with mappin=
-gs
-> >      * from the executable.
-> >      */
-> >     reserve_size =3D range.hi - range.lo + 1;
-> >     align_size =3D reserve_size;
-> >
-> >     if (ehdr->e_type !=3D ET_EXEC && align > qemu_real_host_page_size()=
-) {
-> >         align_size +=3D align - 1;
-> >     }
-> >
-> >     load_addr =3D target_mmap(load_addr, align_size, PROT_NONE,
-> >                             MAP_PRIVATE | MAP_ANON | MAP_NORESERVE |
-> >                             (ehdr->e_type =3D=3D ET_EXEC ?
-> MAP_FIXED_NOREPLACE : 0),
-> >                             -1, 0);
->
-> which handles ET_DYN properly, which is missing from the freebsd side
-> entirely.  Afterward, elf sections are mapped onto this reserved range.
->
-> I'll note that FreeBSD should be able to do better than Linux wrt the
-> alignment handling here, since you have MAP_ALIGNED().  So long as
-> guest_base is suitably aligned, anyway.
->
->
-> r~
->
-> r~
->
-
---000000000000185346065bf3dd5e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep 20,=
- 2026 at 4:33=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
-nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On 9/19/26 19:20, Warner Lo=
-sh wrote:<br>
-&gt; diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c<br>
-&gt; index 295dad4643..eaa8676f5a 100644<br>
-&gt; --- a/bsd-user/elfload.c<br>
-&gt; +++ b/bsd-user/elfload.c<br>
-&gt; @@ -561,12 +561,14 @@ load_elf_sections(const struct elfhdr *hdr, stru=
-ct elf_phdr *phdr, int fd,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0elf_prot |=3D PR=
-OT_EXEC;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int flags =3D MAP_FIXED | MAP_PRIVATE | M=
-AP_DENYWRITE;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rbase =3D=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 flags |=3D MAP_EXCL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error =3D target_mmap(TARGET_E=
-LF_PAGESTART(rbase + elf_ppnt-&gt;p_vaddr),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(elf_ppnt-&gt;p_filesz +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TARGET_ELF_PAGEOFFSET(elf_ppnt-&g=
-t;p_vaddr)),<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 elf_prot,<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 (MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE),<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 fd,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 elf_prot, flags, fd,<br>
-This is wrong, or at least very not ideal.<br>
-<br>
-What&#39;s missing no the freebsd side is a probe for the entire address <b=
-r>
-space for the guest program.<br></blockquote><div><br></div><div>I believe =
-I have those missing pieces in the next round. I&#39;ll pull them</div><div=
->forward into this round when I rework.</div><div><br></div><div>Warner</di=
-v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0/*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * Reserve address space for all of this.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 *<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * In the case of ET_EXEC, we supply MAP_FIXED_NORE=
-PLACE so that we get<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * exactly the address range that is required.=C2=
-=A0 Without reserved_va,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * the guest address space is not isolated.=C2=A0 W=
-e have attempted to avoid<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * conflict with the host program itself via probe_=
-guest_base, but using<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * MAP_FIXED_NOREPLACE instead of MAP_FIXED provide=
-s an extra check.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 *<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * Otherwise this is ET_DYN, and we are searching f=
-or a location<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * that can hold the memory space required.=C2=A0 I=
-f the image is<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * pre-linked, LOAD_ADDR will be non-zero, and the =
-kernel should<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * honor that address if it happens to be free.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 *<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * In both cases, we will overwrite pages in this r=
-ange with mappings<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 * from the executable.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0reserve_size =3D range.hi - range.lo + 1;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0align_size =3D reserve_size;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0if (ehdr-&gt;e_type !=3D ET_EXEC &amp;&amp; align &=
-gt; qemu_real_host_page_size()) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0align_size +=3D align - 1;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0load_addr =3D target_mmap(load_addr, align_size, PR=
-OT_NONE,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MAP_PRIVATE | MAP_ANON | MAP_NORESERVE |<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(ehdr-&gt;e_type =3D=3D ET_EXEC ? MAP_FIX=
-ED_NOREPLACE : 0),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-1, 0);<br>
-<br>
-which handles ET_DYN properly, which is missing from the freebsd side <br>
-entirely.=C2=A0 Afterward, elf sections are mapped onto this reserved range=
-.<br>
-<br>
-I&#39;ll note that FreeBSD should be able to do better than Linux wrt the <=
-br>
-alignment handling here, since you have MAP_ALIGNED().=C2=A0 So long as <br=
->
-guest_base is suitably aligned, anyway.<br>
-<br>
-<br>
-r~<br>
-<br>
-r~<br>
-</blockquote></div></div>
-
---000000000000185346065bf3dd5e--
 
