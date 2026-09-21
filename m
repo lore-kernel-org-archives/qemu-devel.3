@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF4BC982E1
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 06:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4717DC982E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 06:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8XvE-0008G9-3J; Mon, 21 Sep 2026 02:54:40 -0400
+	id 1x8Xva-0008JB-Cv; Mon, 21 Sep 2026 02:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x8XvB-0008FC-E0; Mon, 21 Sep 2026 02:54:37 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x8XvW-0008Ip-Cc
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 02:54:58 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1x8Xv8-0000rq-V7; Mon, 21 Sep 2026 02:54:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1789973611; bh=j7IFDWTTGnuAz35k/ubT7zpIHJsC0779GTanXvpXXyw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=nGpKkT2/xabiiF/I835dI3F23iGz67tOInDI1rIYpohAeRH6Ni0msnnuasQUuxHot
- 7ptejRtmajiyzVMna/WEUzL9swr/w3URh0iGBhMPvOZGslZ4FCD1mArdC4l7XM+X4n
- smVSeafeJhuAHNodDMxuIvEYRP4BNRUQSY9dc7RqVVHzUTAlXCUK3QKHz4Kcs6l2Ks
- fSOzmT2MMOLunv0tbEsGK92g0T4KkC3sSSgoPcsZMMAgIgTscNef9r5zGvD3o0dftP
- RHqtvlaSYXXyuPTbsyNClXFC1b6CP1mLIyqjtcTAVY1OqpWmK0I5fIzf/V8qfjeWT3
- tUIUUex++aJjg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7EBBE1D6CD4;
- Mon, 21 Sep 2026 09:53:31 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E548342D5A8;
- Mon, 21 Sep 2026 09:54:23 +0300 (MSK)
-Message-ID: <a30acccc-448b-4bfb-8071-5c337a40b7f6@tls.msk.ru>
-Date: Mon, 21 Sep 2026 09:54:23 +0300
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1x8XvU-0000sc-5o
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 02:54:58 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68L6sh6k078652
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 21 Sep 2026 15:54:43 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=CMWibwiqLcahIZH7jxkqWhMI5NEeFJhq9b6664KEgBk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1789973683; v=1;
+ b=d5KqtC7V89Ukwcmm7FaaZLR1V3szR3QLGLmr+fNJAqE3kfxCuJDiNve5dnNapdgN
+ 4+ZSr/8gchK6/A+BjFl7o+lbe9Vt20LMjsPz2o9B0acxDGTd7WoRSxoyCLDs23zT
+ 5m3ZZQKuClfQkXy8ZCU4I4mOnLDPCVS93uWQMLS21MLZKquClsMU7nGraqjZKGWq
+ V3cui5nZFjIeHG7WZK93qk2aNdU4X1IKVompKZKvhzyphPAkOLBNFoTSm9vj3/Cw
+ IJXysC5hXP8WYMQIMgMKTZkXtFwTKi/WFlyXBESpKfc7dVbK2M9fkn+ZiewoCm6m
+ wpVPVwHSDi/LJt6yrvqkMg==
+Message-ID: <63b75f88-a771-4c7f-be16-0d174bf9bedb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 21 Sep 2026 15:54:42 +0900
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: [PULL 0/4] Linux user patches
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Weiwei Li <liwei1518@gmail.com>, Helge Deller <deller@gmx.de>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260918202947.5322-1-deller@kernel.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20260918202947.5322-1-deller@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pcie_sriov: Avoid capability structure overflow in PF
+ reset
+To: =?UTF-8?Q?Cl=C3=A9ment_MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "mst@redhat.com" <mst@redhat.com>
+References: <20260921055917.715685-1-clement.mathieu--drif@bull.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260921055917.715685-1-clement.mathieu--drif@bull.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -77,52 +74,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/18/26 23:29, Helge Deller wrote:
-
-> linux-user patches for mlock syscall and loongarch64 and riscv fixes
+On 2026/09/21 14:59, Clément MATHIEU--DRIF wrote:
+> The SR-IOV PCIe capability exposes 6 regions (no ROM), each with a
+> dedicated 32-bit configuration field. Fix the reset loop to write
+> 32 bits instead of 64 bits and stop after PCI_SRIOV_NUM_BARS iterations.
 > 
-> Add support for the mlock syscall, and some fixes for loongarch64 and riscv.
+> As a side effect of this change, update PCIESriovPF::vf_bar_type
+> to match the number of regions exposed by SR-IOV and rework the
+> associated assert statements.
 > 
-> ----------------------------------------------------------------
-> 
-> Michael Morrell (1):
->    linux-user: implement mlock2(2) syscall
-> 
-> SignKirigami (1):
->    linux-user/loongarch64: Detect vector stores in host_signal_write()
-> 
-> wangyang (2):
->    linux-user/riscv: honor zicntr=false for base counterCSRs
->    linux-user/riscv: invalidate reservations after stores
-> 
->   .../include/host/loongarch64/host-signal.h    |  6 +++
->   linux-user/riscv/target_cpu.h                 |  2 +
->   linux-user/syscall.c                          |  9 +++++
->   linux-user/syscall_defs.h                     |  4 ++
->   target/riscv/cpu.c                            |  3 ++
->   target/riscv/cpu.h                            |  3 ++
->   target/riscv/helper.h                         |  5 +++
->   target/riscv/tcg/csr.c                        | 11 ++++--
->   target/riscv/tcg/insn_trans/trans_rva.c.inc   | 24 ++++++++++++
->   target/riscv/tcg/insn_trans/trans_rvi.c.inc   | 11 ++++++
->   .../riscv/tcg/insn_trans/trans_rvzawrs.c.inc  |  3 ++
->   target/riscv/tcg/op_helper.c                  | 35 +++++++++++++++++
->   target/riscv/tcg/translate.c                  | 38 +++++++++++++++++++
->   13 files changed, 150 insertions(+), 4 deletions(-)
-I'm picking up this whole pull request for 11.1.x stable series, and
-3 out of 4 changes for 10.0.x and 11.0.x series:
+> Fixes: c8bc4db403e1 ("pcie_sriov: Reset SR-IOV extended capability")
+> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 
-     linux-user: implement mlock2(2) syscall
-     linux-user/riscv: honor zicntr=false for base counterCSRs
-     linux-user/loongarch64: Detect vector stores in host_signal_write()
-
-Please let me know if I should not.
-
-The "invalidate reservations" change requires quite some tweaking
-for older releases, so I'm skipping it for now.  Please tell me if
-I should try harder and pick it up for older series too.
-
-Thanks,
-
-/mjt
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
