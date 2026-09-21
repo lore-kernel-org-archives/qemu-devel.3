@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E006C982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4720DC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 20:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8l58-0005Of-RO; Mon, 21 Sep 2026 16:57:47 -0400
+	id 1x8l5g-0005jx-SF; Mon, 21 Sep 2026 16:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l55-0005N0-KR
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l5K-0005bn-3U
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:58:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l53-0003Zr-IL
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:43 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x8l5G-0003d5-0J
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 16:57:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790024261;
+ s=mimecast20190719; t=1790024272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=akpMxJqY/YX3lbLfFuudMfj4hb9Ch6XjPL6Yh/mpVo8=;
- b=OxuwZLxOMJY2itZg2fylygRW2TDrhaVJ3UUx7tyD8kOGJ18sCjwBMw6hjKJ5vtLvoSEFWW
- QY1x9SK1Q5VJVXZhs0sjPrCvzmTGeDI/kUN/ub+h+szzb+k+xXb5ubkyGORIpwuRm9D8BB
- K8yc7tYmyaYpWAP1g7JYr661byBHkYA=
+ bh=FhC9+EyQuQfdNCJkMIalX3nmZlPTjCLuc8ixrTiDyYU=;
+ b=NysDXK7KF1pjO8pvo+8D24ghxysVMFy43r+s0TUMgasTUUNxy1Jd9WmEh0bpV0jWliAWF+
+ o7GN3fTjs3JIKLhnDdIT7un+cn2YMmH20jleBULGZJP6Oyqly6sWzyvLtedtnjIEwHngdd
+ eZSFj5zGTL/wabr0A2Y96689tTFqGlM=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-ROCw8HI2Myq22v6owZ-fPQ-1; Mon,
- 21 Sep 2026 16:57:39 -0400
-X-MC-Unique: ROCw8HI2Myq22v6owZ-fPQ-1
-X-Mimecast-MFC-AGG-ID: ROCw8HI2Myq22v6owZ-fPQ_1790024257
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-YR8IM5GcPYy8eeg5TXudZg-1; Mon,
+ 21 Sep 2026 16:57:48 -0400
+X-MC-Unique: YR8IM5GcPYy8eeg5TXudZg-1
+X-Mimecast-MFC-AGG-ID: YR8IM5GcPYy8eeg5TXudZg_1790024266
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 54F161955D63; Mon, 21 Sep 2026 20:57:37 +0000 (UTC)
+ id A22AB1933E27; Mon, 21 Sep 2026 20:57:46 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99F1E1956042; Mon, 21 Sep 2026 20:57:34 +0000 (UTC)
+ id BE7921956042; Mon, 21 Sep 2026 20:57:43 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -60,24 +60,23 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 06/10] qapi: convert/split intros for commands
-Date: Mon, 21 Sep 2026 16:57:08 -0400
-Message-ID: <20260921205712.1862167-7-jsnow@redhat.com>
+Subject: [PATCH v2 09/10] qapi: split intro sections for data structs
+Date: Mon, 21 Sep 2026 16:57:11 -0400
+Message-ID: <20260921205712.1862167-10-jsnow@redhat.com>
 In-Reply-To: <20260921205712.1862167-1-jsnow@redhat.com>
 References: <20260921205712.1862167-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,283 +92,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch converts or splits intro sections for commands with more
-than one paragraph of text.
+The structs of concern in this patch are those for which no other QAPI
+definition uses as a data type to describe its own arguments or as a
+branch of a union: i.e. they are not currently inlined and as such the
+precise semantics of their intro/details split is *currently* of less
+concern.
+
+Of course, they could be inlined in the future, so the semantics of
+this split are still worth investigating.
+
+Review notes: Similar notes as previous patches in this series with
+respect to how splits were determined, and why details were not
+physically relocated.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/control.json     |  3 +--
- qapi/introspect.json  | 16 ++++++++--------
- qapi/machine.json     | 31 +++++++++++++++----------------
- qapi/migration.json   | 12 +++++-------
- qapi/misc-arm.json    |  5 ++---
- qapi/misc.json        |  8 +++-----
- qapi/net.json         |  3 +--
- qapi/qdev.json        |  9 ++++-----
- qapi/stats.json       |  5 ++---
- qapi/transaction.json |  6 +++---
- qapi/ui.json          |  3 +--
- 11 files changed, 45 insertions(+), 56 deletions(-)
+ qapi/acpi.json       | 3 +--
+ qapi/block-core.json | 5 ++---
+ qapi/compat.json     | 3 +--
+ qapi/machine.json    | 9 ++++-----
+ 4 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/control.json b/qapi/control.json
-index 2788ce32e2f..ef63a8a261b 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -152,8 +152,7 @@
+diff --git a/qapi/acpi.json b/qapi/acpi.json
+index 291a04a7ea4..82e82d7cf89 100644
+--- a/qapi/acpi.json
++++ b/qapi/acpi.json
+@@ -13,8 +13,7 @@
  
  ##
- # @quit:
+ # @AcpiTableOptions:
 -#
--# Request graceful QEMU process termination.
-+#     Request graceful QEMU process termination.
+-# Specify an ACPI table on the command line to load.
++#     Specify an ACPI table on the command line to load.
  #
- # While every attempt is made to send the QMP response before
- # terminating, this is not guaranteed.  When using this interface, a
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index bd42aac3358..d579e5c8554 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -17,15 +17,15 @@
+ # At most one of @file and @data can be specified.  The list of files
+ # specified by any one of them is loaded and concatenated in order.
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 13981d7e69d..741c8165c06 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -843,9 +843,8 @@
  
  ##
- # @query-qmp-schema:
-+#     Command `query-qmp-schema` exposes the QMP wire ABI as an array
-+#     of `SchemaInfo`.  This lets QMP clients figure out what commands
-+#     and events are available in this QEMU, and their parameters and
-+#     results.
- #
--# Command `query-qmp-schema` exposes the QMP wire ABI as an array of
--# `SchemaInfo`.  This lets QMP clients figure out what commands and
--# events are available in this QEMU, and their parameters and results.
+ # @BlockMeasureInfo:
 -#
--# However, the `SchemaInfo` can't reflect all the rules and
--# restrictions that apply to QMP.  It's interface introspection
--# (figuring out what's there), not interface specification.  The
--# specification is in the QAPI schema.
-+# The `SchemaInfo` can't reflect all the rules and restrictions that
-+# apply to QMP.  It's interface introspection (figuring out what's
-+# there), not interface specification.  The specification is in the
-+# QAPI schema.
+-# Image file size calculation information.  This structure describes
+-# the size requirements for creating a new image file.
++#     Image file size calculation information.  This structure
++#     describes the size requirements for creating a new image file.
  #
- # Furthermore, while we strive to keep the QMP wire format
- # backwards-compatible across QEMU versions, the introspection output
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 276258d9e5c..2d5c7c36ad9 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -2002,13 +2002,13 @@
- 
- ##
- # @query-cpu-model-comparison:
-+#     Compares two CPU models, @modela and @modelb, returning how they
-+#     compare in a specific configuration.
- #
--# Compares two CPU models, @modela and @modelb, returning how they
--# compare in a specific configuration.  The results indicates how both
--# models compare regarding runnability.  This result can be used by
--# tooling to make decisions if a certain CPU model will run in a
--# certain configuration or if a compatible CPU model has to be created
--# by baselining.
-+# The results indicates how both models compare regarding runnability.
-+# This result can be used by tooling to make decisions if a certain
-+# CPU model will run in a certain configuration or if a compatible CPU
-+# model has to be created by baselining.
- #
- # Usually, a CPU model is compared against the maximum possible CPU
- # model of a certain configuration (e.g. the "host" model for KVM).
-@@ -2058,11 +2058,10 @@
- 
- ##
- # @query-cpu-model-baseline:
--#
--# Baseline two CPU models, @modela and @modelb, creating a compatible
--# third model.  The created model will always be a static,
--# migration-safe CPU model (see "static" CPU model expansion for
--# details).
-+#     Baseline two CPU models, @modela and @modelb, creating a
-+#     compatible third model.  The created model will always be a
-+#     static, migration-safe CPU model (see "static" CPU model
-+#     expansion for details).
- #
- # This interface can be used by tooling to create a compatible CPU
- # model out two CPU models.  The created CPU model will be identical
-@@ -2130,11 +2129,11 @@
- 
- ##
- # @query-cpu-model-expansion:
--#
--# Expands a given CPU model, @model, (or a combination of CPU model +
--# additional options) to different granularities, specified by @type,
--# allowing tooling to get an understanding what a specific CPU model
--# looks like in QEMU under a certain configuration.
-+#     Expands a given CPU model, @model, (or a combination of CPU
-+#     model + additional options) to different granularities,
-+#     specified by @type, allowing tooling to get an understanding
-+#     what a specific CPU model looks like in QEMU under a certain
-+#     configuration.
- #
- # This interface can be used to query the "host" CPU model.
- #
-diff --git a/qapi/migration.json b/qapi/migration.json
-index a272e701385..8d3951ae429 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -1826,9 +1826,9 @@
- 
- ##
- # @calc-dirty-rate:
--#
--# Start measuring dirty page rate of the VM.  Results can be retrieved
--# with `query-dirty-rate` after measurements are completed.
-+#     Start measuring dirty page rate of the VM.  Results can be
-+#     retrieved with `query-dirty-rate` after measurements are
-+#     completed.
- #
- # Dirty page rate is the number of pages changed in a given time
- # period expressed in MiB/s.  The following methods of calculation are
-@@ -1945,8 +1945,7 @@
- 
- ##
- # @set-vcpu-dirty-limit:
--#
--# Set the upper limit of dirty page rate for virtual CPUs.
-+#     Set the upper limit of dirty page rate for virtual CPUs.
- #
- # Requires KVM with accelerator property "dirty-ring-size" set.  A
- # virtual CPU's dirty page rate is a measure of its memory load.  To
-@@ -1971,8 +1970,7 @@
- 
- ##
- # @cancel-vcpu-dirty-limit:
--#
--# Cancel the upper limit of dirty page rate for virtual CPUs.
-+#     Cancel the upper limit of dirty page rate for virtual CPUs.
- #
- # Cancel the dirty page limit for the vCPU which has been set with
- # `set-vcpu-dirty-limit` command.  Note that this command requires
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index 8cb2ea77951..9b018b29e2c 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -28,9 +28,8 @@
- 
- ##
- # @query-gic-capabilities:
--#
--# It will return a list of `GICCapability` objects that describe its
--# capability bits.
-+#     Returns a list of `GICCapability` objects that describe its
-+#     capability bits.
- #
- # On non-ARM targets this command will report an error as the GIC
- # technology is not applicable.
-diff --git a/qapi/misc.json b/qapi/misc.json
-index b62cabc2b79..b4bb8a662e6 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -12,9 +12,8 @@
- 
- ##
- # @add_client:
--#
--# Allow client connections for VNC, Spice and socket based character
--# devices to be passed in to QEMU via SCM_RIGHTS.
-+#     Allow client connections for VNC, Spice and socket based
-+#     character devices to be passed in to QEMU via SCM_RIGHTS.
- #
- # If the FD associated with @fdname is not a socket, the command will
- # fail and the FD will be closed.
-@@ -185,8 +184,7 @@
- 
- ##
- # @x-exit-preconfig:
--#
--# Exit from "preconfig" state
-+#     Exit from "preconfig" state.
- #
- # This command makes QEMU exit the preconfig state and proceed with VM
- # initialization using configuration data provided on the command line
-diff --git a/qapi/net.json b/qapi/net.json
-index d0bacb4dcfe..b0a15fd53e2 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
+ # The size requirements depend on the new image file format.  File
+ # size always equals virtual disk size for the 'raw' format, even for
+diff --git a/qapi/compat.json b/qapi/compat.json
+index ef1853b9acd..b42d142ddcc 100644
+--- a/qapi/compat.json
++++ b/qapi/compat.json
 @@ -37,8 +37,7 @@
  
  ##
- # @netdev_add:
+ # @CompatPolicy:
 -#
--# Add a network backend.
-+#     Add a network backend.
+-# Policy for handling deprecated management interfaces.
++#     Policy for handling deprecated management interfaces.
  #
- # Additional arguments depend on the type.
+ # This is intended for testing users of the management interfaces.
  #
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index a35321d2fd1..f390354d68e 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -162,11 +162,10 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 00a03e57b98..b18c6d94a38 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1629,9 +1629,9 @@
  
  ##
- # @device-sync-config:
+ # @SMPConfiguration:
 -#
--# Synchronize device configuration from host to guest part.  First,
--# copy the configuration from the host part (backend) to the guest
--# part (frontend).  Then notify guest software that device
--# configuration changed.
-+#     Synchronize device configuration from host to guest part.
-+#     First, copy the configuration from the host part (backend) to
-+#     the guest part (frontend).  Then notify guest software that
-+#     device configuration changed.
+-# Schema for CPU topology configuration.  A missing value lets QEMU
+-# figure out a suitable value based on the ones that are provided.
++#     Schema for CPU topology configuration.  A missing value lets
++#     QEMU figure out a suitable value based on the ones that are
++#     provided.
  #
- # The command may be used to notify the guest about block device
- # capacity change.  Currently only vhost-user-blk device supports
-diff --git a/qapi/stats.json b/qapi/stats.json
-index af57ec08546..e9d05390c31 100644
---- a/qapi/stats.json
-+++ b/qapi/stats.json
-@@ -175,9 +175,8 @@
+ # The members other than @cpus and @maxcpus define a topology of
+ # containers.
+@@ -1890,8 +1890,7 @@
  
  ##
- # @query-stats:
+ # @CpuModelInfo:
 -#
--# Return runtime-collected statistics for objects such as the VM or
--# its vCPUs.
-+#     Return runtime-collected statistics for objects such as the VM
-+#     or its vCPUs.
+-# Virtual CPU model.
++#     Virtual CPU model.
  #
- # The arguments are a `StatsFilter` and specify the provider and
- # objects to return statistics about.
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index c0dc811ba61..02e1d072c63 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -198,9 +198,9 @@
- ##
- # @transaction:
- #
--# Executes a number of transactionable QMP commands atomically.  If
--# any operation fails, then the entire set of actions will be
--# abandoned and the appropriate error returned.
-+#     Executes a number of transactionable QMP commands atomically.
-+#     If any operation fails, then the entire set of actions will be
-+#     abandoned and the appropriate error returned.
- #
- # For external snapshots, the dictionary contains the device, the file
- # to use for the new snapshot, and the format.  The default format, if
-diff --git a/qapi/ui.json b/qapi/ui.json
-index a59cd635774..73ee2cb2056 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1198,8 +1198,7 @@
- 
- ##
- # @input-send-event:
--#
--# Send input event(s) to guest.
-+#     Send input event(s) to guest.
- #
- # The @device and @head parameters can be used to send the input event
- # to specific input devices in case (a) multiple input devices of the
+ # A CPU model consists of the name of a CPU definition, to which delta
+ # changes are applied (e.g. features added/removed).  Most magic
 -- 
 2.55.0
 
