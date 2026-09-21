@@ -4,149 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3356BC982DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 05:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E73DC982E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 06:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8X40-0005YG-0N; Mon, 21 Sep 2026 01:59:40 -0400
+	id 1x8Xj4-0005oT-1d; Mon, 21 Sep 2026 02:42:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1x8X3w-0005Xv-Uo
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:59:37 -0400
-Received: from smarthost1.eviden.com ([80.78.11.82])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x8Xj1-0005o2-Q2
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 02:42:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1x8X3u-0004Qt-Ne
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 01:59:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=bull.com; i=@bull.com; q=dns/txt; s=mail;
- t=1789970374; x=1821506374;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
- bh=bLe4GEMoR/rCu1zOoLffRAls+mLqHEWGXIut4ASgCkc=;
- b=DjO/kq37+qUgUxvG9v2QbKQ+0GxxvWa4DDBNi82WEiBRCKbCXJf7/YeK
- I26oTfAjs+WRAu0b9GikuJaiSr8OgZiRaSTaqLseplnDXNhKUw78X51pw
- Yn63MQWCMSIdFSieTtpj7IEYVVZ48R/P0mwfAj1VtkhOFGeGVLT6ysWTh
- mw18OeA2JOmKTgkirt8a2t/dne0W/xlxZ9MpwXT8vhcskFuN7p9gUHM18
- enWaXKy/rLjTM78J6ulkDpky431QHuLzm5ochFt/zPLuqgSUeYC1UOp74
- GtqSADmWWa70aiCxSnNYXVTVx8tMOCk5jBfHsEar53YWq2oDVipPbY0D3 w==;
-X-CSE-ConnectionGUID: Z1wRLCk5QgCdew3kJxGBRQ==
-X-CSE-MsgGUID: F8SS1qcUQqCpYCvSoEPPlA==
-IronPort-SDR: 6ab0c7be_ADfshNMyFIUgLag7Fd+8s92ll7OjuceojPa92bffK7hqU92
- Q8GNvhk9OL4FFlZVOlRI/V0/0C8kn0guYluYq0w==
-X-IronPort-AV: E=Sophos;i="6.27,114,1787004000"; d="scan'208";a="48807223"
-X-MGA-submission: =?us-ascii?q?MDGX8bSAnm8k/CrWRgwxpM+NHBYksRugTGrLY5?=
- =?us-ascii?q?00ruRp/8t3LfrpwTdRrfhpL9maH1ril7ojZiF1Rswkfb7zrvXY4OcCA7?=
- =?us-ascii?q?rO+8RSCpVowsAW9Re1V8VRSYwKAp/cFRb059Oj1eLcl6F824j43mLuqS?=
- =?us-ascii?q?SjPvBKPijXdqvzqGFhomjtNg=3D=3D?=
-Received: from mail-norwayeastazon11013014.outbound.protection.outlook.com
- (HELO OSPPR02CU001.outbound.protection.outlook.com) ([40.107.159.14])
- by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 21 Sep 2026 07:59:25 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Dwyg5mSoS1N/P2mF6/YzhpbE7uu90emhUdt+JodT8h0kKauC0Th/0ydXTvu4gTCzUB5SZn0cajFLLHMApwGeidb1ZUiZj5rI6uwyYDcjiVHcbsjYScfu8HChP21DRH8ISUWpwMImHRR/VcPck8mR2SOZNO3k9hk7XxYLywElPZZb9KniDUqIW0AjX+awajqj/fh2OYxBxVeCh1wLrVc8eHQw/asjQ/jRK+N3XiQxHTh1mCpZxeXnRiCOsNqLnApc3u5SdS21sn8YG7S18WBmyVrrWEuju4ogTind7IOP0wSXWiXZ/bnyoGG2olkfR2IrusGcvmlSQ3mgiVd5iVpFnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5VpBdK+jqo2JfHOcrY8gSE5dDs6mXVeyOgFmhhR8Jns=;
- b=Nxi5SpwcscPaskxk76s2Bs4m6BOUq8VS8ixcID/kkPsnRtMTiTaz4pjqa5ND/gmhBFvxxfTAowjq+wTH/0icZD6Erb9wogWt0JrKqlNX9zFq2aF/KOp6KYRvy7rlNm8ZRoIZ0O86/ApYv92jFMfcr2d6gB+ZAqA/edKsWLGNNmL0HU9tZZRvtOB0rVXZFhoppWQAt8Wax8ZJrnj6IsXTnenfZ/xB14JHwhNrx0jiHUKFKhUfXVVpCHBeaMiHJgVO6/1g8FSbkrYRSsMbvr+xd3FGBxK63PkPBIgH6pdLNEPdPFzoCCvU0fmfgtNG++waXY8i/O6IOmz9RXdEuwQOqA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
- dkim=pass header.d=bull.com; arc=none
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by BR0PR07MB684783.eurprd07.prod.outlook.com (2603:10a6:2c8:50::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Mon, 21 Sep
- 2026 05:59:23 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 05:59:23 +0000
-From: =?iso-8859-1?Q?Cl=E9ment_MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "mst@redhat.com" <mst@redhat.com>, "odaki@rsg.ci.i.u-tokyo.ac.jp"
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?iso-8859-1?Q?Cl=E9ment_MATHIEU--DRIF?=
- <clement.mathieu--drif@bull.com>
-Subject: [PATCH] pcie_sriov: Avoid capability structure overflow in PF reset
-Thread-Topic: [PATCH] pcie_sriov: Avoid capability structure overflow in PF
- reset
-Thread-Index: AQHdSY5ZcmZDGZMVw0GjF8dGChIOEA==
-Date: Mon, 21 Sep 2026 05:59:23 +0000
-Message-ID: <20260921055917.715685-1-clement.mathieu--drif@bull.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bull.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|BR0PR07MB684783:EE_
-x-ms-office365-filtering-correlation-id: b37686e2-ee80-48cf-bc61-08df17a57c72
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|1800799024|376014|38070700021|6133799003|10067099003|56012099006|11063799006|18002099003;
-x-microsoft-antispam-message-info: BVvOhnYJd6KPkvnUsImWEkGOZD6unRu7vg8MGBerGw+ES2P4iU2cHZezYc4KBXvwnJns3jL+QkpKvn+37GRFZxvzT13h7DAlivR/uch2FZ8L+65E3/3+idXKksnteSkEaf51s11HV0fxUrYyHRA3REALUgaRSsMaNZRyiIROZyc+FFaSn+eFRPpCdptQM7p2vneef7L0LbSKBcpXrKyTYF6aego89TNoHS9x2Tr7ee4+6I3qFKOJfjG/hnbmMrbyJCHZCXmA3nuHrZdm05aZtwy6HmBR9Gjr8xTmslvhOX57a8q4W8JS1jV5GB+t+xqrnUH9EVrbrEe3mwGRSekQsS+xr/cj0w/TF7Ao+s87SFp67uXXJGxzRVqzTYyD6bBg68NX1oRgleQXDej6fcSnRpYy4KbfgwgIx8xMuzgbNfqNBe28NQUYNugcR92hJs3tr4nJ6VSPACmzi+5iRecDcHVEFp5XHQ2b/tsyIdvlOUllq6A6X0Fgqr0ys1fGOxeFE0bT4+zwcFAV7ar9XcwzyjnxWuOW11bf/AAp+DYGtibgPCKymPVhvIbV3tYMG7cG+VuFtaHX/d/BdLoOEY6sp7yj2SRsJItisOsAdn3390XClggsVyT9VZhoLF6OwwJZBjbBZZMZUEJr6xfhQ9X75MGm2UrqIKlDLE6Xz1KEXumSRqmQlaccJyxwot9hIf9iXhF9nlBbB0gH+gX7Yx00tyYhd8lYjP/nZAtpko0OC7E=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(38070700021)(6133799003)(10067099003)(56012099006)(11063799006)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Nxn4TzS6fwgvUjdSpKISxD7DUM17qAwBYR8RYovtCfnPT2OW9CtTesvGWq?=
- =?iso-8859-1?Q?6f8iwdiQIya84XwxzBunSAqOxFlxOh5z9NXfjaTPWD1uirhMXaob0i0B7F?=
- =?iso-8859-1?Q?dhDMa77jQ1OLh5NyEYQDCGKKQX7ZQivYFomNLyXbXq0Mn9N4OdQajFQ84A?=
- =?iso-8859-1?Q?mizb6WkECl4yiSlbB8HsRz3YoJFeYiAVjjBX7jNXn3RalXXseKB1mRwe9d?=
- =?iso-8859-1?Q?nEKwg+25LV+YdoY/6qLfFDCxHfq16wHA86B1Hwqswci9HQYSaz0ZwaBnNG?=
- =?iso-8859-1?Q?lwgT+B5wmq3U1lIGD6SadNTMsAe384YX0ANAaHvpl1LccVUdGh0/zmVNUB?=
- =?iso-8859-1?Q?OU9mQ4QU3GE5sij9u/Eqs9AEY+EU2k6f/JTYusmRHzqDXRF+npLguKpIJ2?=
- =?iso-8859-1?Q?fqRvZ7agEqEqT6s+6IABXQb1AWGq2wH+R6uFXWF5dfz7DFk5ubg69l5uWG?=
- =?iso-8859-1?Q?xPPG7FCYsvr6ng7s5Qx25TR+Vtj0ZsiG/LqbTuxkMmwXcQw9kt4E5+GMHk?=
- =?iso-8859-1?Q?Z0c4WQk1paV3KSMkd6NwEz2MqzasRbvFAaNXqvv02JJV4N6n1u38FHrqjK?=
- =?iso-8859-1?Q?fdWEdQ5aWUOL10zB6SCETbd9dfnF241R/8cmaPe5v8EjH96NUQTL+Y47vA?=
- =?iso-8859-1?Q?+GRFCJHmXRtgFNJqD7Rd8M+iiNikmf00cldiN1v2ziGRoFr/NT4Hp1UB4W?=
- =?iso-8859-1?Q?kX+hQMt0ArYZ1m0pDWkSTdevaF5eP4LkHyMi4bQpe5iEk0Jp3oYhU6WKQX?=
- =?iso-8859-1?Q?HE0h2tNPowpFVV8jKuV6vCzGMhVi3TcE1QfLtvnxp5QOXNRdy9JDves73X?=
- =?iso-8859-1?Q?KCUPSc9di96BRwk/W0T64dViOMW/d13WIWGHhbMHKzxEjAkfIdQMGsbadI?=
- =?iso-8859-1?Q?PG6Ca/3bn3bCmIE10/aHnqniCiU/Hk6vsl3M7UpJEeaftz5c42wp7Shea3?=
- =?iso-8859-1?Q?+GlpZ5PmEpgwO9oxDNnQA8BcHN8HurRC/xdh6B6sEsyqZWPyCOh2Tll30w?=
- =?iso-8859-1?Q?dKhG4nzDv5+vMATt49C6iSckDtDwRPAenyk7CrYLtSw0bvedk/BAjOhLvd?=
- =?iso-8859-1?Q?maZzh9Kzg1WBvG3C6KgMfVSDlKZCFSCSGAOSM2wGMWWPIO5m8QEURuVJGP?=
- =?iso-8859-1?Q?8WaaSiMF4EdIOXTdemhlEK+E3mSmmhtiSGis94LLCaPZfNGyURVvsNcfjU?=
- =?iso-8859-1?Q?YgxlpQgq5SIrRy+zMghXfwpsIUZk+feuDnUr5jDWRbbp92yqkd53hOzt8E?=
- =?iso-8859-1?Q?o5RtFM8ArDO3o77qE0w9hxAm+fBjj8In6bBkpRLUPDq1Bq+4NVOuiy2NS7?=
- =?iso-8859-1?Q?1CvdTkmSj739tXSaCQxZ4FiB5VrUgm9X3CjExMiCBxkb4/RrnbgMALpsqe?=
- =?iso-8859-1?Q?2YpMDORN0ZHKfgBQko9f+MstMOAh7DDsW5EGQhiByl//Fj5sKvowLJdbCz?=
- =?iso-8859-1?Q?1wrdBMPX3oxxPHhABVW74UEieneHtCtoHUMVsiL9loc1u+KRZCIGC/Ipvu?=
- =?iso-8859-1?Q?8BazCqg3szNTfWFhzFyecyf9l5UkcTozuXg5uQLCM6vuNa3hQ824AnaBRW?=
- =?iso-8859-1?Q?QiJEETX2aWzOQAi1j+pk3cV0zkAP2W+wge1Vd1BQgJ8Q0RsDTAobrjTiFi?=
- =?iso-8859-1?Q?guKkGNnaCMTebu1biTKrxZFvouw7YKoV9xefa8sKZ/Kg9iGfln6oBrF1tq?=
- =?iso-8859-1?Q?tCNYx4WquCN/WUGcw2AFnDFwX9ueN9uJ4KFQJ7UEdJwhP0+9e03SDJPP5F?=
- =?iso-8859-1?Q?W/IUPURnzZ8mKhGmlyLn2OOOjKx8+xoT6CJ98NFbix77Mgm7l6qg47+n3+?=
- =?iso-8859-1?Q?i4CN8Fn+VuJ9jYbUOA3PgpxQHfC/6FXfUorn8RxPcwiHbAblAUXc?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x8Xiz-000871-GR
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 02:42:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1789972919;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9z+AUuBPmcHYe5dsM7/1uRutYQMCmmY4UJbL2uQO2Wo=;
+ b=dm5ehAyGTdXvSb1dURCvBeMQSSKJFf2P0+68S4JR2YoxBtZcZlOz2Lcj+T3+7t7yp/kwF4
+ ljbQ4tHye54NpH0QtxHu/b+2CxBOxS0qV0+ApphsIZq9Bu3tofthv8mS6ZfUUu0KgszWOI
+ t26p7caw+I/NNcyzdZTOikX3SxzKGP0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-nd5i96KfOl-ksCHz2QcZ9A-1; Mon, 21 Sep 2026 02:41:57 -0400
+X-MC-Unique: nd5i96KfOl-ksCHz2QcZ9A-1
+X-Mimecast-MFC-AGG-ID: nd5i96KfOl-ksCHz2QcZ9A_1789972916
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-472c330e555so1023648f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 20 Sep 2026 23:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1789972916; x=1790577716; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=9z+AUuBPmcHYe5dsM7/1uRutYQMCmmY4UJbL2uQO2Wo=;
+ b=iYxwufh6/OR5EiF0tIjQSn4aPbfLFHCV+ZTpc4ZQydqBFMoNyFRKqYoVgoIEctTG3+
+ huks+uciYuyHNePcRC5LrriOywtWbPTJpknuX/GXKNxlJFbA4N3+RJ2pEcxKUxyJLjs3
+ Uva6wrTseFH8wbp7YuRdcTyAiIMfbG8ORi+N46c8HSVLVzmqN84FEcywHHuEkAvkztl+
+ NIXA6S6DizSgiJ5JfM0/1nga/TJZzANI6dnhGRwokxGz7KNDKv00KwnMpvF1a2BQ39Gy
+ EIGOPM6UjwsoI6yZ5uKgKksC8DjjGLmVfD+jxuMq6I0x+ranpfwjxnVwQwhVpol3uOHq
+ EpjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789972916; x=1790577716;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=9z+AUuBPmcHYe5dsM7/1uRutYQMCmmY4UJbL2uQO2Wo=;
+ b=NLBpVrZB05FvTdPlEyFgDNUwVFtuArkEA0j/ZIoQF4QLTgB97wSdtX0h5zZ3v6ExIO
+ STLDZ0ogcQllYlgR97eZuBdG1MUEmUSofBgw6bohRZSCtDbvlC/WFS7pbghCRtZ46wZX
+ ZGM97gvmYRz52RYG+jCSmqvk4vLalIN9x+URnn4yM1PSAG2Ud41XuJ1pvyw/1jLL5Rno
+ CI49eR4sKUvOimdW8rS3WK8upRXftPuW7EnCdfGIyQGKE6VIidvW0U+gcRp7Y/wW6+P4
+ gr+iHMAFNdlTjrLOF1ITB8k2pm7/YoV4JbekDX5tyAiHaebjx7Tu9BCYFdRDhNvx36l+
+ ffyQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwoIEUw30cPWAcWEZ60a8W3tROQ0R2CdUS1tc95N5AQGOGJS8jzRrgylICHpK5X2kalndSCob2BvxlW@nongnu.org
+X-Gm-Message-State: AFuF++nAmxUvFETWbOVZX+yglAdSrXWFnaA8A/pnYWcPP7AyWt5aFiO0
+ jGuQldbfUw0pxvOPzhf9uc/8Dg1wzdVBlW11gHkvkF3px3NhOF0/uWvWHpkFCr2kLgr9dgzeBDK
+ oHrqxxSwHzdL/4W0x8HyJuY3HQKt2ZHRzMwB+rfvX6g5bkqcmZ8cuA/h6
+X-Gm-Gg: AYBFou0zV4EgxbcoH70AqpNd4RG1FDk4i6C7xB7DQhmTWVM4NmD+X1S//nEANvmZ67r
+ M+RzR+fdugSvxIC6cJWfij5c2t3EsOzX9WqjG9FEUrNqHqMxORikUcSW/H4l065PtfldH3w2zpM
+ 5um8I3Irme0cpxdlesAAOe4+uvi6Wy6yPp/e7A9nnvCdz6ndFPC1bK6jbFXHG8wZAes59ACjlKt
+ MPpsWIVNH06yLkVdZ97G49zSkulEFlKVIX3hV3VjZbvhZNO6KfvMceZHH3uMaKZ9PKlUoS9a7p0
+ KHdSh0xN1iFFUD0xAT8XpZQhvqrhsWLeO4u4FatPkBLsZtsMZMQ5azlEZOMzgXg59NiF/WXk
+X-Received: by 2002:a05:6000:1885:b0:484:3317:a19 with SMTP id
+ ffacd0b85a97d-4871e261d35mr14056299f8f.26.1789972915957; 
+ Sun, 20 Sep 2026 23:41:55 -0700 (PDT)
+X-Received: by 2002:a05:6000:1885:b0:484:3317:a19 with SMTP id
+ ffacd0b85a97d-4871e261d35mr14056277f8f.26.1789972915582; 
+ Sun, 20 Sep 2026 23:41:55 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.181])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48724562bcbsm22257619f8f.16.2026.09.20.23.41.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 20 Sep 2026 23:41:54 -0700 (PDT)
+Message-ID: <6b96c87b-a1c5-4a84-818c-a56e847faaec@redhat.com>
+Date: Mon, 21 Sep 2026 08:41:53 +0200
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: t69BDD50zpPnbVYz3V2zibHgAamm50dk74KzpjNuJ2P0O7n+6heyslozgvfS+GVYUX9fKDP/LB0Ecku9suQI82nmccSDlJyTuLKDfygv+aJBvjkHwgR6uD36yu2bjhEbdhSLLaZ1WK/WsCgTuaEPezpKwwJP5dbVcUN/bpkSu3EADlvSji3iM2QC7vZS3DMkCcJI2xI2+wEJWFP61w9blWyoO1lLVv/4luUNm4KhieVAFIkwOk8FR6HzbgP/f+ZY2ea9CnUF0UEGeEcvSsKkVTsvnFN3Jm+EGIX3ocM3h+PMp9bqpqsOlap/iz8sFRNBgNYqnmGWkXjsQf6Cd56RpA==
-X-OriginatorOrg: bull.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b37686e2-ee80-48cf-bc61-08df17a57c72
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Sep 2026 05:59:23.4806 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qSFBSCNJ7YD0icIpuU9KdXs+Rt/u6jfnn9FLG4Y84mvIVZOw6mm5Jx9ywuX4qm32VVb217GOG96emtWGfz5PLcwiVFu3iONehAJJ4IBHGNY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR07MB684783
-Received-SPF: pass client-ip=80.78.11.82;
- envelope-from=clement.mathieu--drif@bull.com; helo=smarthost1.eviden.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] tests/functional/ppc64: extend pseries migration
+ tests
+To: Aniket Sahu <asahu1x@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com, rathc@linux.ibm.com,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, anushree.mathur@linux.ibm.com,
+ misanjum@linux.ibm.com, adityag@linux.ibm.com, gautam@linux.ibm.com
+References: <20260916103635.7797-1-asahu1x@linux.ibm.com>
+ <20260916103635.7797-2-asahu1x@linux.ibm.com>
+ <20260918235644.a26929da-e7-amachhiw@linux.ibm.com>
+ <5fd2c8fd-e4d7-4e4c-a6e4-95494c633951@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <5fd2c8fd-e4d7-4e4c-a6e4-95494c633951@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,72 +168,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SR-IOV PCIe capability exposes 6 regions (no ROM), each with a
-dedicated 32-bit configuration field. Fix the reset loop to write
-32 bits instead of 64 bits and stop after PCI_SRIOV_NUM_BARS iterations.
+On 21/09/2026 07.56, Aniket Sahu wrote:
+> 
+> On 19/09/26 12:15 AM, Amit Machhiwal wrote:
+>> Hi Aniket,
+>>
+>> Thanks for the patches.  Please find my comments inline below.
+>>
+>> On 2026/09/16 04:06 PM, Aniket Sahu wrote:
+>>> Made a few changes to test_pseries.py to extend the migration
+>>> tests to validate exec (socat) and UNIX paths.
+>>>
+>>> - Refactored test_ppc64_linux_migration to a private method
+>>> _do_linux_migration(dst_uri, src_uri=None).
+>>> - It is then called by three separate methods which exercise the
+>>> TCP, UNIX and exec paths via the migrate_vms method from
+>>> MigrationTest.
+>>> ---
+>>>   tests/functional/ppc64/test_pseries.py | 41 ++++++++++++++++++++++----
+>>>   1 file changed, 36 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ 
+>>> ppc64/test_pseries.py
+>>> index cb6d25dc81..19f31141b1 100755
+>>> --- a/tests/functional/ppc64/test_pseries.py
+>>> +++ b/tests/functional/ppc64/test_pseries.py
+>>> @@ -8,8 +8,9 @@
+>>>   # later.  See the COPYING file in the top-level directory.
+>>>   from qemu_test import Asset
+>>> -from qemu_test import wait_for_console_pattern
+>>> +from qemu_test import wait_for_console_pattern, which
+>>>   from migration import MigrationTest
+>>> +from qemu_test.ports import Ports
+>>>   class PseriesMachine(MigrationTest):
+>>> @@ -88,12 +89,20 @@ def test_ppc64_linux_big_boot(self):
+>>>           wait_for_console_pattern(self, console_pattern, 
+>>> self.panic_message)
+>>>           wait_for_console_pattern(self, self.good_message, 
+>>> self.panic_message)
+>>> -    def test_ppc64_linux_migration(self):
+>>> +    def _do_linux_migration(self, dst_uri, src_uri=None):
+>>> +        """
+>>> +        Boot a pseries kernel on a source VM, wait until Linux is up, then
+>>> +        migrate to a destination VM over the given URI(s) and verify the 
+>>> boot
+>>> +        continues on the destination.
+>>> +        """
+>>>           self.set_machine('pseries')
+>>>           kernel_path = self.ASSET_KERNEL.fetch()
+>>>           kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
+>>> +        if src_uri is None:
+>>> +            src_uri = dst_uri
+>> The default behavior of src_uri=None is non-obvious from the docstring.  
+>> Could
+>> you mention that it defaults to dst_uri, and that callers using transports 
+>> with
+>> different source and destination URIs (such as the exec: case below) need to
+>> provide src_uri explicitly?
+>>
+>>> +
+>>>           dest_vm = self.get_vm(name="dest-qemu")
+>>>           dest_vm.add_args('-incoming', 'defer')
+>>>           dest_vm.add_args('-smp', '4')
+>>> @@ -111,16 +120,38 @@ def test_ppc64_linux_migration(self):
+>>>           source_vm.set_console()
+>>>           source_vm.launch()
+>>> -        # ensure the boot has reached Linux
+>>> +        # ensure the boot has reached Linux before migrating
+>>>           console_pattern = 'smp: Brought up 1 node, 4 CPUs'
+>>>           wait_for_console_pattern(self, console_pattern, 
+>>> self.panic_message,
+>>>                                    vm=source_vm)
+>>> -        self.migration_with_tcp_localhost_vms(dest_vm, source_vm)
+>>> +        self.migrate_vms(dst_uri, src_uri, dest_vm, source_vm)
+>>> -        # ensure the boot proceeds after migration
+>>> +        # ensure the boot continues on the destination after migration
+>>>           wait_for_console_pattern(self, self.good_message, 
+>>> self.panic_message,
+>>>                                    vm=dest_vm)
+>>> +    def test_ppc64_linux_migration(self):
+>>> +        with Ports() as ports:
+>>> +            port = ports.find_free_port()
+>>> +            if port is None:
+>>> +                self.skipTest('Failed to find a free port')
+>>> +            self._do_linux_migration('tcp:localhost:%u' % port)
+>>> +
+>>> +    def test_ppc64_linux_migration_unix(self):
+>>> +        self._do_linux_migration(
+>>> +            'unix:%s/migration.sock' % self.socket_dir().name)
+>>> +
+>>> +    def test_ppc64_linux_migration_exec(self):
+>>> +        if not which('socat'):
+>>> +            self.skipTest('socat is not available')
+>>> +        with Ports() as ports:
+>>> +            port = ports.find_free_port()
+>>> +            if port is None:
+>>> +                self.skipTest('Failed to find a free port')
+>>> +            self._do_linux_migration(
+>>> +                'exec:socat TCP-LISTEN:%u -' % port,
+>>> +                'exec:socat - TCP:localhost:%u,forever' % port)
+>> I share Thomas's concern about CI cost.  With this patch, Linux is fully 
+>> booted
+>> three times — once per transport variant — which significantly increases the
+>> wall-clock time of the pseries migration test slot.
+>>
+>> The UNIX and exec transport paths are already covered on ppc64 in
+>> tests/functional/ppc64/test_migration.py, though against mac99 rather than
+>> pseries.  If the intent is specifically to validate these transports on the
+>> pseries machine, that is a reasonable goal — but does it require a full Linux
+>> boot?  The transport layer is independent of what the guest is running.  A
+>> firmware-only pseries migration (as was done in v1) would cover the
+>> pseries-specific migration path with substantially lower CI cost.
+>>
+>> Please clarify in the commit message why a full Linux boot is needed here, or
+>> consider using a firmware-only guest for the two new tests.\
+> 
+> Hi Amit, Thomas,
+> 
+> I do agree that full boot test cases might be unnecessary, however it was 
+> suggested by Harsh during offline discussions that if a full boot test 
+> already exists for TCP, so perhaps the best course of action here is to 
+> revert back to the firmware-only test cases from v1. I do need suggestions 
+> on if we should extend test_migration.py or make a new file for the ppc 
+> machines.
+I think I'd just turn "mac99" in test_migration_with_unix() and 
+test_migration_with_exec() in test_migration.py into "pseries", and keep the 
+"mac99" in the tcp test there. That should give enough test coverage for 
+both machines in quick test mode.
 
-As a side effect of this change, update PCIESriovPF::vf_bar_type
-to match the number of regions exposed by SR-IOV and rework the
-associated assert statements.
+  Thomas
 
-Fixes: c8bc4db403e1 ("pcie_sriov: Reset SR-IOV extended capability")
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
----
- hw/pci/pcie_sriov.c         | 9 +++++----
- include/hw/pci/pcie_sriov.h | 2 +-
- 2 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index c41ac95bee..df61f281ea 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -229,8 +229,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int regi=
-on_num,
-=20
-     assert(sriov_cap > 0);
-     assert(region_num >=3D 0);
--    assert(region_num < PCI_NUM_REGIONS);
--    assert(region_num !=3D PCI_ROM_SLOT);
-+    assert(region_num < PCI_SRIOV_NUM_BARS);
-=20
-     wmask =3D ~(size - 1);
-     addr =3D sriov_cap + PCI_SRIOV_BAR + region_num * 4;
-@@ -344,6 +343,8 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDev=
-ice *dev,
-     dev->exp.sriov_pf.vf =3D vfs;
-     dev->exp.sriov_pf.vf_user_created =3D true;
-=20
-+    assert(vfs[0]->io_regions[PCI_ROM_SLOT].size =3D=3D 0);
-+
-     for (i =3D 0; i < PCI_NUM_REGIONS; i++) {
-         PCIIORegion *region =3D &vfs[0]->io_regions[i];
-=20
-@@ -463,8 +464,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
-      */
-     pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
-=20
--    for (uint16_t i =3D 0; i < PCI_NUM_REGIONS; i++) {
--        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
-+    for (uint16_t i =3D 0; i < PCI_SRIOV_NUM_BARS; i++) {
-+        pci_set_long(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
-                      dev->exp.sriov_pf.vf_bar_type[i]);
-     }
- }
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index b0ea6a62c7..5f81e3b1bb 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -16,7 +16,7 @@
- #include "hw/pci/pci.h"
-=20
- typedef struct PCIESriovPF {
--    uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar =
-*/
-+    uint8_t vf_bar_type[PCI_SRIOV_NUM_BARS];   /* Store type for each VF b=
-ar */
-     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
-     bool vf_user_created; /* If VFs are created by user */
- } PCIESriovPF;
---=20
-2.55.0
 
