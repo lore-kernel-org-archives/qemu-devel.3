@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A69C982FB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED9DC982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 21:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8lrT-00068w-HV; Mon, 21 Sep 2026 17:47:43 -0400
+	id 1x8lsF-0006lC-0P; Mon, 21 Sep 2026 17:48:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrI-000658-4O
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:33 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8ls9-0006fS-MX
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:25 -0400
 Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8lrG-0008W8-CS
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:47:31 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x8ls8-0000PF-1a
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 17:48:25 -0400
 Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e8185e037so19942135e9.3
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:47:30 -0700 (PDT)
+ 5b1f17b1804b1-49b91369d18so26353435e9.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 14:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790027249; x=1790632049; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790027293; x=1790632093; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lVnjRdLc88bwkEOj1pcHpoR2nWaQoq8yYXYeFGKmXCc=;
- b=U0YDYoNdnGbyXq8yDzouDXsqQ7JvjGpmvD2t9QHcq/H1UoAuf2DSQXZ1Qgi58AV09V
- i+qf/Az5PrQzHwqV8qJMtIXkWhSHJoxM1vJ1Uk4PVkpEJgaHQBJPAh9AHzqE1jwQijaO
- uzIxZfkg0YV+BnhuHOLHEMQLgHYZJ+8VLsvuNtwAHl7WEOAq0rcfHqbJi97nSl7g1cEZ
- 4MhlJAU9ZGEwSKLHGgf/MWjCXPkcMGgxazqVQuT1VcXX5IfcqQ5IvyH99Dth/AaGTEgZ
- 0B4UHTP+ldPrMuSYFvkY8/HNP5nHlzGb8F5/rYosQZ4lOk1sggW/kpiSGJjOHmllKsjY
- jELg==
+ bh=0CSy0xMqZIb4P6bNwkb1VnPTSf9A/yfJ/dDXW/NabSk=;
+ b=TiAJfHsnTdJYJ0B/IdNY5yG/xkty/kZBAE/6mO979PKCQaujbVl6t2zpny7dIlRQca
+ 27Mm+w8XAFe2tO9hxQRwsnUtbtaGYb3xjtjbfQZhjwkbjTXGZ/LzAuOYNu3mVXQCcBkm
+ VytsPeFYtiBbI2aRdwoezhnvKEZtkWmrhv/xGWJzKJC9zszBRMAeCOCW+1jM9AC2iAcC
+ vZuf11x5riy6zKsLgagLYtuMQY7bMneEcysafXqfy9lzr0/ykt2sr1+b/WzJ6G+r3aSh
+ 0gaRL6f87KHTWix+DWmW5M91HhhRjnCwKJU5KPsSlSHY0AAxo4Xo9I/DmSIIvu2q/1LK
+ B4gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790027249; x=1790632049;
+ d=1e100.net; s=20260707; t=1790027293; x=1790632093;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lVnjRdLc88bwkEOj1pcHpoR2nWaQoq8yYXYeFGKmXCc=;
- b=DDi30iaK5lnyVZ5SM6eNo6fPnQmRgPCa6hiqpHTJBwe/f9gD0KTbdzxKqh7mTi4Djl
- A1nsxyQqvlnGTqtQPf3z7LT3szxT7BxvzA0phht4h6R97a/0MK6ufBILeSSwxXotNuCW
- rE9Uu1/VwsfxJoEfFpR6zJQl1jOCDx8XmRQCdNgEBNE046vj/oB0da+mF1nTP4oegNPc
- tLQ18cOR0uX/dZlLBF+Talhpy/dJ+761KVQC2EWf2NXv/+jOkPBDJAHmx3D5fps8wcXV
- Zfuj83/w2u9tWLaIIHGQmpVTcMq0BaDDUda7QOeL5zPPS67e6VWW5zO8wUYDwBUS02kE
- cdHg==
-X-Gm-Message-State: AFuF++nDOVcfjYAMXCZwCVSBi8qIlzbvsjRCgGHMvy2kCLEjW6hczyqw
- pLCPjq1NV2jp5xQem0UWvUtZj/U0Y1/t0JkoiBisV4YRhJrKwBQ3bUlWwDgPUw==
-X-Gm-Gg: AYBFou3+0B9NtKpyM03n33LRANmYzQve98VL7rPN8jHAbVRoDP+FdKU7V1UwfjcuMN/
- V64qsTDFHdtN7IoscKQfdngcomgKhxW9OuMp59G7IjuzE1ZllMtPiOiA501A0mBCmFT2e1+x8X5
- cLrnM51kUEqVOCqdL3p7QwtVZJAHIApJHPPRfHBgqK1sCjg2bW9fMNisDloVIsfdJZizl3nu7Rr
- KsEAgKP/mqW876opZeM9iXaQMLIF+RyYKWft7kzhXxhVyN9Wj2cZxotIVgePc2Scoj9EwTVnwWm
- a9hUEXZYDnEjiY3Au6PYXQz6eMH/QlgENhEN2g0pPqevouXUY/tuNgTzjDeOkMPFn5BZYm0Hjmj
- dRdG/GUT0InW5snUcWLTaXzqVMhsL2dFvkzRRmo0ybVXMV+chgryGC3TMWGgoztHSbP1gpbrLEe
- Hh6sStn1oiD9ODi+XSF/i467h0scNfkDvtKsIUg2R6DUpKwdwFasC4Obe11Cz9IQrimTKnLSTq8
- CHn3sAhr5KuQ3gcRHnqJD9gNhMK0R8zyVTakF7K6IsQPmbc4SDsP7SAy5dC2r9acYe7kwI+YGlE
- 0cW4Kq4WlHPM2Q==
-X-Received: by 2002:a05:600c:3588:b0:49c:d26a:cf70 with SMTP id
- 5b1f17b1804b1-49fcc3772bamr188370445e9.15.1790027248851; 
- Mon, 21 Sep 2026 14:47:28 -0700 (PDT)
+ bh=0CSy0xMqZIb4P6bNwkb1VnPTSf9A/yfJ/dDXW/NabSk=;
+ b=dGGrKTVf17DSnL4XFpUA/DezpmX6Q/kjJoO9F5KNU7viN2wG7L3hBlRp8u+cTOPRKO
+ 02QphqniCMCAdLRWKNV2ONVkIz6LTicLs6eZEGASqe43ENKc/xDLI0ZwhP7JhlxnuSQ9
+ SXvV8CiTgs0Pto+AaQ/SEacQ4hVMvKzar2QWQPBFWXPpO/8wj23+tt/6/7ka2Hvkqq1G
+ gkFwSkAuuj16WsLqSPlFSSVewkJtKdLUvhAmy0XwLqacNGefSDrFqKssmqPn0IBS9PHI
+ p1yrdGuTlrwrPrz0KblkKqJAxXy/hbPmZBcpFuuyf13v+KwjkljuTIXBPMsaQD+UHJoH
+ m/XQ==
+X-Gm-Message-State: AFuF++nic+86ATwhkb/PpUthnwzeSy3/yqjvuDK906Fe7/LSvt6XTijE
+ PH5Kjc1OxGYx0eA3oQVSWl47viHGXReFvmrL7l1NLBO15yTv2o6xDq4OqjR8Ig==
+X-Gm-Gg: AYBFou22dXpx1fuL+6dI4X6GgnMbQGb0kRycWfUI28ZNxVM2MTh56epYYnvOSsmO8LF
+ LnSMpcDQsO7r14ytGR0iAdJ2N8Cu7lwnpHIbV32QSr1OtwB6cBv1S/3l33v2Iky8Dn2e/5q3qYp
+ ++abj0kNXASb0GvvDpbWHp48kIKfcqXPke63WH1A9PZt1hAHVFHpwNZ9J4x3JG134TB6aFdQ85m
+ v2cma1RxxeFvzl51r6tqe3SpTbEZJlp0G7H5rJVcj5igehU89IhhMBvXOKbvRksYEOjC8i3vQAn
+ DwRV4eeCV3I9GIwgLcT1TiQ0gSEwlyL5kmnFl/EcFw3P9DjgCmIn62tOp9Bc/n5yKOrbcgXRJ0j
+ 2fhzWzo2zMDuGNhPcFz8x31OgCm5wSmrkgGbiJ3r/GsjXBiETP7sTdc6qL0hSnZFcOidG0KGnGZ
+ AuTYDWKuG8XL5YQWQWx6cN7QZRRuYFNkFz8/OgOrwUO+BLZXc3n0CS7xt3jIIZkSgv+3gHcZlIz
+ l7Z373d9Q/g3Eb1h3SKQRqOl4VhCXgExjrL34vYabVbi7QIUvz3zTDBJaVn7xDE8WXavG2ukk/A
+ E7ax9HUTx2ZsnQ==
+X-Received: by 2002:a05:600c:354e:b0:49c:fc6e:a3d8 with SMTP id
+ 5b1f17b1804b1-49fc584f854mr165207835e9.23.1790027292607; 
+ Mon, 21 Sep 2026 14:48:12 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-1c91-bf00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c91:bf00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.47.27
+ 5b1f17b1804b1-49fda0ce29fsm4986905e9.6.2026.09.21.14.48.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 14:47:28 -0700 (PDT)
+ Mon, 21 Sep 2026 14:48:12 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -78,9 +78,9 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 02/42] hw/watchdog/wdt_imx2: Remove unused attributes
-Date: Mon, 21 Sep 2026 23:46:30 +0200
-Message-ID: <20260921214710.29422-3-shentey@gmail.com>
+Subject: [PATCH 34/42] hw/arm/fsl-imx8m: Fix typo
+Date: Mon, 21 Sep 2026 23:47:02 +0200
+Message-ID: <20260921214710.29422-35-shentey@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260921214710.29422-1-shentey@gmail.com>
 References: <20260921214710.29422-1-shentey@gmail.com>
@@ -109,49 +109,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous change rendered the locked attributes unused but they were kept
-for migration compatibiliy when backporting. Remove the unneeded attributes
-and break migration compatibility since QEMU does not guarantee
-compatibility for i.MX devices between feature releases.
+This is IMX8MP and IMX8MM, not IMX6.
 
+Fixes: 0c105b261551 ("hw/arm/fsl-imx8mp: Add Ethernet controller")
+Fixes: 857670200c51 ("hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller")
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- include/hw/watchdog/wdt_imx2.h | 2 --
- hw/watchdog/wdt_imx2.c         | 3 +--
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ include/hw/arm/fsl-imx8mm.h | 4 ++--
+ include/hw/arm/fsl-imx8mp.h | 4 ++--
+ hw/arm/fsl-imx8mm.c         | 2 +-
+ hw/arm/fsl-imx8mp.c         | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
-index ad36b8820d..0bf2903959 100644
---- a/include/hw/watchdog/wdt_imx2.h
-+++ b/include/hw/watchdog/wdt_imx2.h
-@@ -84,8 +84,6 @@ struct IMX2WdtState {
-     uint16_t wmcr;
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 60d79a6e3c..1966fa505f 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -229,8 +229,8 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_WDOG2_IRQ    = 79,
+     FSL_IMX8MM_WDOG3_IRQ    = 10,
  
-     bool wcr_locked;            /* affects WDZST, WDBG, and WDW */
--    bool wcr_wde_locked;        /* affects WDE */
--    bool wcr_wdt_locked;        /* affects WDT (never cleared) */
- };
+-    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
+-    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
++    FSL_IMX8MM_ENET1_MAC_IRQ      = 118,
++    FSL_IMX8MM_ENET1_MAC_1588_IRQ = 121,
  
- #endif /* WDT_IMX2_H */
-diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index aaf4695db2..c8ea704aa3 100644
---- a/hw/watchdog/wdt_imx2.c
-+++ b/hw/watchdog/wdt_imx2.c
-@@ -220,13 +220,12 @@ static const MemoryRegionOps imx2_wdt_ops = {
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+diff --git a/include/hw/arm/fsl-imx8mp.h b/include/hw/arm/fsl-imx8mp.h
+index 2be3c51af5..3acfffd30f 100644
+--- a/include/hw/arm/fsl-imx8mp.h
++++ b/include/hw/arm/fsl-imx8mp.h
+@@ -276,8 +276,8 @@ enum FslImx8mpIrqs {
+     FSL_IMX8MP_WDOG2_IRQ    = 79,
+     FSL_IMX8MP_WDOG3_IRQ    = 10,
  
- static const VMStateDescription vmstate_imx2_wdt = {
-     .name = "imx2.wdt",
-+    .version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_PTIMER(timer, IMX2WdtState),
-         VMSTATE_PTIMER(itimer, IMX2WdtState),
-         VMSTATE_BOOL(wicr_locked, IMX2WdtState),
-         VMSTATE_BOOL(wcr_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wde_locked, IMX2WdtState),
--        VMSTATE_BOOL(wcr_wdt_locked, IMX2WdtState),
-         VMSTATE_UINT16(wcr, IMX2WdtState),
-         VMSTATE_UINT16(wsr, IMX2WdtState),
-         VMSTATE_UINT16(wrsr, IMX2WdtState),
+-    FSL_IMX8MP_ENET1_MAC_IRQ    = 118,
+-    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
++    FSL_IMX8MP_ENET1_MAC_IRQ      = 118,
++    FSL_IMX8MP_ENET1_MAC_1588_IRQ = 121,
+ 
+     FSL_IMX8MP_PCI_INTA_IRQ = 126,
+     FSL_IMX8MP_PCI_INTB_IRQ = 125,
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 37934d2951..90c1673461 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -590,7 +590,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
+                        qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_1588_IRQ));
+ 
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index f855378dff..fbc094b7db 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -620,7 +620,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
+                        qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_IRQ));
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
+-                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MP_ENET1_MAC_1588_IRQ));
+ 
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
 -- 
 2.55.0
 
