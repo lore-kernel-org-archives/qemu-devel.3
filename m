@@ -4,92 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BE8BC982EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 19:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F72C982EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 19:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8jJ2-0003RO-BZ; Mon, 21 Sep 2026 15:04:00 -0400
+	id 1x8jpx-0007HF-Fe; Mon, 21 Sep 2026 15:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x8jIz-0003Qy-Pj
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:03:57 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x8jIx-0001mX-Jt
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:03:57 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-485933b2522so2293828f8f.0
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 12:03:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x8jpv-0007Gx-LZ
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:37:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1x8jpt-0008Lh-JW
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 15:37:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790019475;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4jNXGbvKedPIxcUWLCIVqyMOqx1m+MeTI5Ycu/BTyus=;
+ b=D6VSt0/h1eBdqnitzTvTEdQPjR6ZdD4yQXaarTNxc+WNWskV+gjLRYaYamI0VS2MYLTTUz
+ 58oGIxd2wr12xjVtyG6AHvJzKfTkN5h8gLSXMr5lNsZ5g6qRnWpvmoiCQDXpdzyou4Hhn/
+ DaXJCpsDNIbzl34souz0a6x9dH4eXtE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-jovSZdIDOyidjIVK9oK8nA-1; Mon, 21 Sep 2026 15:37:53 -0400
+X-MC-Unique: jovSZdIDOyidjIVK9oK8nA-1
+X-Mimecast-MFC-AGG-ID: jovSZdIDOyidjIVK9oK8nA_1790019473
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cf9df1eadso29396935e9.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 12:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790017434; x=1790622234; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
- b=bmr/U7IjcFfVWppcjG8krUerYCqRaDURBp08stbGl4wsI2MbAn2J5YZqyWcpHy4olR
- r4vOhaP1e+VuqilJtAF0K1vIcnZj6CCWpfAUXyCRsjGdXEOFegBmv+pX5hXGeSI2GKfP
- KKvqs/2AcQgySSDrJRHD+xPoSba39eNt8rVYZXNroN9QH/jcCQRUC7Drz5SFFaL0W/r/
- qqwNcOpYl/D05lisgWrotorHWsDTEQ5EHzpKQBnbqAN3/uCUGvaAxyYUXUiqvkU3bDYG
- MdphD8Q+znXiwLJhYC6T7mym1L+VMr038esUUNwVUrq2owcSRrQY145QicoiYl+VMX6X
- W94w==
+ d=redhat.com; s=google; t=1790019472; x=1790624272; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4jNXGbvKedPIxcUWLCIVqyMOqx1m+MeTI5Ycu/BTyus=;
+ b=OmwoHLlpg4VqdGRbUipjBmDlm1YAsnCb+euhr1zYbFCBGsau3r3WWi4aaZKQ+Z0PsB
+ PBtfDvOxzAINHYJy7TnWOLSue6xagDUlpuudBYCqay92AkvVZis4mcU6+SU6sYfTKNph
+ YHmdlFEYs3whAYLxGkEczNcChDR44rms2KnXP+WSDnxyMRy5FMUWY3p6gvDMrtNz8czs
+ pTKcdIKL0e3vTU/p5Jy92kGUxjySBdWiotIKzqMZYW71aLYd31XVpaKulT5wwEu+6vp0
+ q/NTivf7Ro/5364m9Eq9jb9V0wXZqT9hMgofg662TUYEpDxjnxw1d/awdvryC1qpwIPH
+ LV3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790017434; x=1790622234;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
- b=Assos59E8o/qUq26udbabDbTHDKcEf/5Ch3B/bdhe7dWqQ5jEATfB7Ek5iwzBqJEzq
- pFfyW9kwMTzTbGVM47/CPp+7Zo/6aDhWnUUKucJyUcviNu8YJUQ5UoVnIjelJDZp8JUm
- x5YacUacI3ng3oCOovT0lORbWGydPBgicI6b4cr04BWEbARynZxBtTPqzSAcPo+Dv+dB
- cPct9v0JDgYL9bSyRxxq08TIJKEj8nHRmcAUreN7C4CXWD/TH170EaIVqsLxxw05n2je
- gTOwnP5GhiL23Pa73tT453t42NIXr44AJLVuJn2XUKLPY3n0CUs5Br4I78o0BM6jp2mD
- 5wmw==
-X-Gm-Message-State: AFuF++kamHoBGsTrs0uTB5H0mMH6eW41hQ+DJpKiW3T8+7e6u5UEHXgf
- 2b79unJQUTO6im33+if4HCWHb7QYiww3zi9ojg8I1mt4T372W4LnFKK4wOhRsfj4/io=
-X-Gm-Gg: AYBFou2o5qvDmYFY1cTO+6+onYxngIbXfOXg8bEKEjbqDWUDL/xngs2EKvld6Ry6owZ
- I+veHo8KoYZP1KCbuQdBbmKWtohd0fa4h2o0OsSDxnFF0vVhnFNeXe/LEDbsdoUNnOXtcNcEoKq
- d5DeLLuQX8mbuNjsDuqzjNhh2ktrmGlwQknUhrsWCFZrmLtz3SL1EgujgbUHt7B4DZmZn9BP7i/
- nrueYg2FgJ+gBpoiAuyMxMDRwxPMv62xUTAFZ0eAfs6F/8QnG03iG+2tvSLcfrA540BE062UCux
- SdTBNhREuexwAK0dh4JT864iVYKCOaNPbE7go5d1r1cFYdQ2Ztu+YKFbz+uUGrz0RQHwv8JW+Fj
- tIt8EeR04qNWDPHgCNRfSDDaEP6FqHMqDsZlj/QYf69oQix8Z8MknGcYLOvM/vagKJ7IBIoPvV9
- cdZLDOZZ7ndacYOuEyVVJtNtce6WeDlpZddVuOIrAPmR/vWNQrhHhHwkp9ETQ19YfuBSwUKfBrV
- N5CtPijdBCYrrpHP9V49Q==
-X-Received: by 2002:a05:6000:38f:b0:487:27f9:839 with SMTP id
- ffacd0b85a97d-48727f90af1mr9585316f8f.46.1790017434021; 
- Mon, 21 Sep 2026 12:03:54 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48724460978sm24315770f8f.11.2026.09.21.12.03.52
+ d=1e100.net; s=20260707; t=1790019472; x=1790624272;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=4jNXGbvKedPIxcUWLCIVqyMOqx1m+MeTI5Ycu/BTyus=;
+ b=p50EiG0Ap8nHcqC5b4kITcNSoxZpCxJnxjYrtsmN4vu7ce7iCG5KdesmfLzaHh+fJt
+ VEvz6BuGtXFAU9k+ZFHqLzkekbynPAzZhGhpMvQf98CV4KLIvYMB6ubGsPTU5EYQ/yRE
+ hFO6PR+3Wzu0b0D7V3CWETpt6ewer27fQIx1kQarEiHQ4wjgkKtCtRizaGD6svr2t7vd
+ 8QCLHdkWIQgiKRKl6hd/dVD1eRJgXBU/djNaq9oXcjYYFjdYz61kAZ0pKCU6kAGd363a
+ 9y4VnA7Qe0PrM5FeUjbXpZqf4vRAjlSTilVpIYOguKrX1LU+wMPp62j61rIkyvqIP/Ig
+ McqQ==
+X-Gm-Message-State: AFuF++ng8IG4TN5v/kYBBAdqoOQ9xCOa19BHclti4dOwU3YydJfzzE4n
+ nwzcdV+IgpRJUKT/KsyiYEHr34wqON5x7gouxje/aPKxvYfxtJ0rAIjdyqKXTPepYmnCbbK1A56
+ 38Pid59DpZEjCJqHPRkJ/u+yljoFMC+VVjrhIAxqKg1pJcxtkCDUR67D0
+X-Gm-Gg: AYBFou0gjlBLwVfgKEBQeYZMgvoNaAg7lGBNyotnlvgeCmATJ+kXay/EKe/QQTDFDin
+ jOjv4N5jOv8kaPn5qsu2kRgIdL9hlHfOcpelhxcVfIH6Hr4yd7VNUbPzc44cYvsaAdMBCHra05q
+ nAU5NCbtaTtlPekwGvyq+GCrKjwRNr6H3TiSbe2DWxnDdrKIFC3+W6I+jF6OxA6yzRkKiBGzrPC
+ abHsJ/0JTaGRFEbzUIUeN7Bwc7kvRjXU+xPghxRn3xgSJe2Hrwia4zMv9F07NT0nd0OP91Rpxn3
+ 6REVgvvAkzw548vLWCQiudlTOe8xTd6z9C+JjL6nmx1XKoh5i5jorxOD919nBf55znFKGOQ9KV3
+ EpdYRh8y6RgI+w8iWCBpPEUs=
+X-Received: by 2002:a05:600c:4712:b0:49d:34:420d with SMTP id
+ 5b1f17b1804b1-49fc573621emr162362435e9.20.1790019472540; 
+ Mon, 21 Sep 2026 12:37:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:4712:b0:49d:34:420d with SMTP id
+ 5b1f17b1804b1-49fc573621emr162362115e9.20.1790019472070; 
+ Mon, 21 Sep 2026 12:37:52 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-79-236.inter.net.il. [80.230.79.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fd8cc05e9sm13766475e9.5.2026.09.21.12.37.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 12:03:52 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B1BEA5F871;
- Mon, 21 Sep 2026 20:03:51 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-block@nongnu.org (open list:nvme)
-Subject: [RFC PATCH] tests/functional: add migration diagnostics and pace nvme
- activity (HACK!)
-Date: Mon, 21 Sep 2026 20:03:45 +0100
-Message-ID: <20260921190345.1709227-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ Mon, 21 Sep 2026 12:37:51 -0700 (PDT)
+Date: Mon, 21 Sep 2026 15:37:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Yodel Eldar <yodel.eldar@yodel.dev>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 0/2] vhost-user-bridge: Fix stdbuf and ASAN interaction
+Message-ID: <20260921153713-mutt-send-email-mst@kernel.org>
+References: <20260914165250.88382-1-yodel.eldar@yodel.dev>
+ <42c74a3c-5ac7-4af6-b06e-e3d8669f82ee@yodel.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+In-Reply-To: <42c74a3c-5ac7-4af6-b06e-e3d8669f82ee@yodel.dev>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,90 +120,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a hacky patch for comment but I've included the diagnostic
-hacks to the migration test as well as my workaround to get itworking.
+On Mon, Sep 21, 2026 at 12:57:30PM -0500, Yodel Eldar wrote:
+> Hi,
+> 
+> On 14/09/2026 11:52, Yodel Eldar wrote:
+> > From: Yodel Eldar <yodel.eldar@yodel.dev>
+> > 
+> > Hi,
+> > 
+> > As reported by Marc-AndrÈ in (1), the functional test of
+> > vhost-user-bridge (vubr) encounters a runtime error when
+> > vubr is built with ASAN, because the "ASan runtime does
+> > not come first in initial library list."
+> > 
+> > Upon Michael's suggestion, this series converts the DPRINT
+> > debug output macro in vubr to use stderr instead of stdout
+> > for output. With that change, the functional test no longer
+> > needs to invoke stdbuf, so it is removed.
+> > 
+> > Thanks,
+> > Yodel
+> > 
+> > (1) https://lore.kernel.org/qemu-devel/20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com/
+> > 
+> > Yodel Eldar (2):
+> >    contrib/vhost-user-bridge: Use stderr for debug output
+> >    tests/functional/x86_64/test_vhost_user_bridge: Eliminate stdbuf usage
+> > 
+> >   contrib/vhost-user-bridge/vhost-user-bridge.c     | 2 +-
+> >   tests/functional/x86_64/test_vhost_user_bridge.py | 6 ------
+> >   2 files changed, 1 insertion(+), 7 deletions(-)
+> > 
+> 
+> Ping?
+> 
+> Note: Series is fully reviewed (thanks Marc-AndrÈ).
+> 
+> Link:
+> https://lore.kernel.org/qemu-devel/20260914165250.88382-1-yodel.eldar@yodel.dev/
+> 
+> Thanks,
+> Yodel
 
-This test was failing on my KVM system. On investigation I found the
-nVME activity meant the migration never completed. I ended up
-inserting some sleeps into the workload script until I was able to
-get it to run.
-
-*NOTE*: obviously this can't be merged as is but I think we could
-certainly do with more tracking in the test to see when things aren't
-working with possibly the sleep as another patch.
-
-Signed-off-by: Alex Benn√©e <alex.bennee@linaro.org>
----
- tests/functional/migration.py                 | 37 +++++++++++++++----
- .../functional/x86_64/test_nvme_migration.py  |  1 +
- 2 files changed, 31 insertions(+), 7 deletions(-)
-
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 8d2428efc24..e51a82c22f4 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
-     timeout = 10
- 
-     @staticmethod
--    def migration_finished(vm):
--        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-+    def migration_finished(query):
-+        return query['status'] in ('completed', 'failed')
- 
--    def assert_migration(self, src_vm, dst_vm):
-+    def wait_for_vm(self, src_or_dst, vm):
-+        "Track the state of one VM in the migration"
-+        current_state = last_state = vm.cmd('query-migrate')
- 
--        end = time.monotonic() + self.timeout
--        while time.monotonic() < end and not self.migration_finished(src_vm):
--            time.sleep(0.1)
-+        self.log.info(f"waiting for {src_or_dst} to complete")
- 
-         end = time.monotonic() + self.timeout
--        while time.monotonic() < end and not self.migration_finished(dst_vm):
-+        while time.monotonic() < end:
-+            if self.migration_finished(current_state):
-+                break
-+            else:
-+                last_remain = last_state['remaining']
-+                current_remain = current_state['remaining']
-+
-+                if current_remain > last_remain:
-+                    self.log.warning(f"slow migration {current_remain} > {last_remain}")
-+
-             time.sleep(0.1)
-+            last_state = current_state
-+            current_state = vm.cmd('query-migrate')
-+
-+
-+    def assert_migration(self, src_vm, dst_vm):
-+
-+        self.wait_for_vm("src", src_vm)
-+
-+        # if we hit this we never completed...
-+        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-+
-+        self.wait_for_vm("dst", dst_vm)
-+
-+        self.log.info("checking everything is OK")
- 
-         self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-         self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
-index 890f0aab6d6..58596f63cd3 100755
---- a/tests/functional/x86_64/test_nvme_migration.py
-+++ b/tests/functional/x86_64/test_nvme_migration.py
-@@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
-                 rm -f /tmp/test_nvme_mig_workload.iter_finished; \
-                 echo 3 > /proc/sys/vm/drop_caches; \
-                 find /usr/bin -type f -exec cksum {} \\;; \
-+                sleep 0.3; \
-                 touch /tmp/test_nvme_mig_workload.iter_finished; \
-             done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &",
-             prompt, vm=vm)
--- 
-2.47.3
+Hi!
+Review delayed due to lots of holidays. I'll get back on the
+treadmill beginning of Oct. Sorry.
 
 
