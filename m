@@ -4,156 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA787C982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 15:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C60C982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 15:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8fgA-0006wk-Cc; Mon, 21 Sep 2026 11:11:39 -0400
+	id 1x8fhO-0007ME-0H; Mon, 21 Sep 2026 11:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8ffX-0006uX-Uk; Mon, 21 Sep 2026 11:11:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1x8fhE-0007Iz-4e; Mon, 21 Sep 2026 11:12:46 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8ffW-0005FG-9Y; Mon, 21 Sep 2026 11:10:59 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1x8fhC-0005Lj-Bv; Mon, 21 Sep 2026 11:12:43 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8VBA1711825; Mon, 21 Sep 2026 15:10:56 GMT
+ 68LF8ERn1869530; Mon, 21 Sep 2026 15:12:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5hEMxa
- Xr6j5y4z0MU9XeF8Lp6dvCjQlJO6NyQRgiTTM=; b=sltL8cOqIUunkko6SqYtAE
- /tUsl7Dd3/NrGpBGj0e1PjUdE1ejbGO26PXsuAfXis570aHD/nyrnxT/dBYKFewt
- 1AQ5N2qhjd2yVSPTMEozA1E/veRaz5VIs8WztlJ62i3eZvH3GR6vwudNPtn+i+vV
- XxDhVJ2pnvWBcCdwNDAbvHvNYgRAYv8MNSm1XYzLyAkxsbL4KmL9ONTYYyGG3okb
- eExL84HvGAXqgwd9qbFQmY1/6raSVOq5mZ8b5NLFozt9Wh0REqpncQ/aafJPyWbi
- /DF9h67k20HH7C6db0HrPoPCRejV+LGlgQeopFIggRPr+zMftuZnpyCdxTYkjl0A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=T9x7ho
+ IiPODg3K70CQ50jliDhrkk53SzD7DA5qMvEz0=; b=ibCSeLvZ0bz5CBsAvlQ7fY
+ uPJMoRTQ6tDC4OxVsHu+kfD8MFs9vjMUp54M/FMvlAaw5LZyfr3nykWENmqEq6/W
+ KRgQBbz01vIqzgGM/7H5oQ9Phok9ZGQhHrNMismXOEDO2pUxEX/ngez83XumPlok
+ xs1B0ZL9d8WBSX8tMS5baN6vTkM25Uf9sy2NyZvdgUTGgZJG4vdWsQaqVhMg4XAq
+ cpFy1deN02QVgwYoSYfB/j7J9yBVRqxvguQV4+Jl0DaQBL6tCseF+EkP/x+XUX/l
+ Uege6eULJFMgDb+Pwwy/Mwv1rnvBJn1cNXRvhwyel/s4lx8vb+lC/0N7Fzn89N2w
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske194eh-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs19as-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 15:10:56 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LEIlgL085084; Mon, 21 Sep 2026 15:10:55 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bk8d7q-1
+ Mon, 21 Sep 2026 15:12:36 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LEIrd71371085; Mon, 21 Sep 2026 15:12:35 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gns70-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Sep 2026 15:10:55 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LFAsIF50790842
+ Mon, 21 Sep 2026 15:12:35 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68LFCYvg25559660
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 15:10:54 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 41B7658054;
- Mon, 21 Sep 2026 15:10:54 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8225158062;
- Mon, 21 Sep 2026 15:10:53 +0000 (GMT)
-Received: from [9.61.69.195] (unknown [9.61.69.195])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Sep 2026 15:10:53 +0000 (GMT)
-Message-ID: <08465936-a9f0-43a8-be7d-49063ea82b14@linux.ibm.com>
-Date: Mon, 21 Sep 2026 11:10:53 -0400
+ Mon, 21 Sep 2026 15:12:34 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 778EF5805A;
+ Mon, 21 Sep 2026 15:12:34 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 477A358051;
+ Mon, 21 Sep 2026 15:12:34 +0000 (GMT)
+Received: from [9.16.60.171] (unknown [9.16.60.171])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Sep 2026 15:12:34 +0000 (GMT)
+Message-ID: <0e59d36a-4757-4dc6-a72d-a2f185db835c@linux.ibm.com>
+Date: Mon, 21 Sep 2026 10:12:34 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390x/pci: fix DMA slot leak on I/O TLB entry
- replacement
-To: Omar Elghoul <oelghoul@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mjrosato@linux.ibm.com, alifm@linux.ibm.com, cohuck@redhat.com,
- qemu-stable@nongnu.org
-References: <20260917140431.45343-1-oelghoul@linux.ibm.com>
+Subject: Re: [PATCH v8 15/16] s390x/pci: Implement migration for emulated
+ devices
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260917140431.45343-1-oelghoul@linux.ibm.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Farhan Ali <alifm@linux.ibm.com>
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260911152137.676602-1-kshk@linux.ibm.com>
+ <20260911152137.676602-16-kshk@linux.ibm.com>
+ <7a2ec98c-6756-4c9f-8f86-1b0db94c8053@linux.ibm.com>
+ <aqwkyvY8mxIEqDyH@redhat.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <aqwkyvY8mxIEqDyH@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -wXwbSFE_kHtQ5ELK1gGKsVQT2L9sga1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDIyMCBTYWx0ZWRfX6soQMHgOT33j
- V4JpT0q6flNr1aSApwZTUQjjS73kSxdkmGswa4AHP2XQPOqK8tENsCRbfgSgxF6bIr+Co8jIuva
- xZooc1UkXC2QzvHHNCCLbzgdYLZF0xfX5E4jnnx0/08vUIcKoLK57Ksdu1IAoF6featdT/ZuQWv
- gaA7j/suCauIh5oxJ3aZBIoa0ykvaZWZzKOXG8bFIAeuZ4nOlFn9HRKNS6JUeOhamHU01xCd+GL
- j42AHXK1tDh3gGJJJ75ZPfPibjgprdB3SpqaVRjW0Z4nSnl9tzneiq2CKChodv1kxompeTgAkav
- ikX3gIpLsa0p2m8GVhDBzsx3lEGZ+Ic1XaY170wTfqdO6uhuN6p0H+pDyjfZqJ8OprjOu+U6O6x
- nAwrmU9G8T8nlFdVphH/VxYHeudpf1TK+4mX4BmJCkzK5/5aYzFMLl5QBVnEARktgxtvFh3sM9o
- +6c1dUiRO411oo5jQQg==
-X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab14900 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab14964 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=AA6k15qpzy-B8keCYWsA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDIyMCBTYWx0ZWRfX2Aq2uQawaS6n
- uPQgq2ogXEEcaQPOk0Z5DJJ1HigP7MITewWtNnPwtXXmf7Ylmt5b6+CLEt5H7AOkVdQVuCRe4GE
- JYN8sL9C68ggDE4eUuNqxJUVyDo0LF8=
-X-Proofpoint-GUID: -wXwbSFE_kHtQ5ELK1gGKsVQT2L9sga1
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=Mfe6H1zzADjr63ZobY0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: f7kGE9NeZTBMmvlRU-sUOZFYxgZ2R-ty
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDIyMCBTYWx0ZWRfX6oaZI1jFz4sv
+ E2SCXr7ZC32zbOvQJgYu7AhDYPaouz/kSR/nQfUfOaZvtj0blpt95RMPkPJge7lzdUtw6l5DWCZ
+ 4Ucj9fz4CYi3berUfQjMhOPnAffcnigB19uabShce22/NPH3ZUuQy/Q5y2Oba0pPbp+rdsLbwK5
+ Cpnkx1SWFSCArE67d8T1seKNYY1PqmaDKTJrvVpPx+LPSmWlDk4gPndKzVaFyhrgH40rrzjT2aA
+ JpdL+XTZ617CMso91jGO2XHD6XhB4w+gJkqjZVKrR0CoBgvW1uyI5TOJygHJH2EkDxAAVAqbGPx
+ 5tyOlvP6MQZP6lpjQlfPIkl3LpydgLEhV9s2XA8wNp8SGGqoSgC5VkPG4ThzmErv2fj/ZurUYcY
+ uQCEiGGjSjnr9D9yv60t/2X6VpAnmyT+V7s4DWIrFbXL1/mzZnxxxM6c0MgFcgtyXf9Z81+M7MP
+ 2w3WSChpnZS3Co/o/RA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDIyMCBTYWx0ZWRfX6JpZy8gE4Gim
+ YUkL746ftAo/75p6ll3joALOrjopW83MSJp8FY+w2SXl87Yt8WdGOgdJA6aGU9PXdoCrHl1BeMG
+ G3RActBv9A9XsuvT6M0SPBBRcjKS7XM=
+X-Proofpoint-GUID: f7kGE9NeZTBMmvlRU-sUOZFYxgZ2R-ty
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1011 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210220
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -170,29 +130,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/17/26 10:04 AM, Omar Elghoul wrote:
-> When s390_pci_update_iotlb() does a mapping update for an IOVA that has
-> an already-existing TLB entry with different permissions or translated
-> address, it unmaps then remaps it. However, at the end of the map path,
-> it unconditionally decrements the available DMA slot counter without a
-> corresponding increment in the intermediate unmap branch.
+On 260917 12:35, Daniel P. Berrangé wrote:
+> On Thu, Sep 17, 2026 at 10:25:32AM -0700, Farhan Ali wrote:
+>>
+>> On 9/11/2026 8:21 AM, Konstantin Shkolnyy wrote:
+>>> @@ -1303,11 +1380,22 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>>>            pbdev = S390_PCI_DEVICE(dev);
+>>>            pbdev->fid = 0;
+>>>            QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
+>>> -        g_hash_table_remove(s->zpci_table, &pbdev->idx);
+>>> +        /*
+>>> +         * If this QEMU is running a migrated guest, and was configured with
+>>> +         * more zpci devices than the source QEMU, extra zpci devices could be
+>>> +         * excluded from zpci_table and invisible to the guest and have
+>>> +         * pbdev->idx values duplicating those of active devices. If the
+>>> +         * pbdev being unplugged is such, the zpci_table entry for pbdev->idx
+>>> +         * can find a different pbdev which we must not remove.
+>>> +         */
+>>> +        if (g_hash_table_lookup(s->zpci_table, &pbdev->idx) == pbdev) {
+>>> +            g_hash_table_remove(s->zpci_table, &pbdev->idx);
+>>> +        }
+>>
+>> If we are migrating, won't we re-create the exact same state and devices on
+>> the target host? Is it possible that the target QEMU can have more devices
+>> than source?
 > 
-> This causes the DMA slot count to be decremented on every remapping of
-> an active IOVA, leading to a permanent DMA slot leak. This remapping
-> without a prior invalidation and sync is not seen today in well-behaved
-> guests but is allowed by the architecture. Fix it by only decrementing
-> available DMA slots when inserting a brand new mapping.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
-> Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-inst.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> It is expected that the source and dest QEMU processes have identical
+> virtual hardware configuration, and also no attempts should be made to
+> hot-add/remove devices while migration is running.
 
-Thanks! Applied for 11.2
+Do you suggest to completely delete this hunk, or keep as "defensive 
+tactic" and correct the comment?
+
+> 
+>>
+>>
+>>>            if (pbdev->dma_limit) {
+>>>                s390_pci_end_dma_count(s, pbdev->dma_limit);
+>>>            }
+>>>            g_hash_table_destroy(pbdev->iotlb);
+>>> +        s390_clear_zpci_migration_blocker(pbdev);
+>>>            qdev_unrealize(dev);
+>>>        }
+>>
+> 
+> With regards,
+> Daniel
+
 
