@@ -4,128 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E16C982E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 23:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D51EC982E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 23:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8nEF-0008FQ-Uo; Mon, 21 Sep 2026 19:15:20 -0400
+	id 1x8nEG-0008FR-5w; Mon, 21 Sep 2026 19:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x8nEB-0008AO-Si
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 19:15:16 -0400
+ id 1x8nEB-0008AM-PK
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 19:15:15 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x8nE9-0000Ez-92
+ id 1x8nE8-0000En-86
  for qemu-devel@nongnu.org; Mon, 21 Sep 2026 19:15:15 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LKfvFA2412159
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 23:15:11 GMT
+ 68LKe5Xv3423689
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 23:15:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=fnZqnkVs/cX
- mvnGk5vW1MoKdT6ik2v77J2yaMJICc9k=; b=UojtfPjs73EDpP5DbteorIrkhtw
- r3uEytOaxBnt1T1V1BTmyTf2x2CfpHuDYnW4jN7vsnoz5gpHznuGEFCuVG3/7ZNZ
- FY23C7aPQseyKAwDMf2OAq4yXEIST9vZhflFO/7zRkwcoEwc+g/46MSYzDO8UagA
- Tz8WNtHSv6dM9nyN10+f1nea5jF5wZPRFM9oPpp0nE/VXhxu3lbdpBskOwD40Y7t
- 8x/O9ZkwB/f6zwvZOB8V9Xh1uqdTPXjO+KXZg6G3jYuqAe4V3c7g+UZRrdozszKv
- +NyEiLfpXaCCLGqAXESSQqsZ3UdeNcZWZQ6737TehhVkUpAuI7WKlmdWtoA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gu3csjtp4-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=GTBT5L5MPO+
+ dzfTLgH8DupafYr70UiGlJNtN2qQLuPI=; b=VRoxUy0YkTk0q8B9xFei+fAQ3yP
+ P71pE0r+WWzOPY3+YzwqNxRqoT6EVnvO+y75qwG/eYUKBGeVtbcYUMIBltM94wmH
+ 1+RtVWMlud3g8LEGuOCTbKO8+vk2JNX93kMVMh14SUbvfbGJ9FUPqC5Mm1vFdTav
+ 2WKDIcO+g5+RBrCg0DSf3xETcY1mbesHeK01Eor0m8wCWL754BMMa+50iG81fYhY
+ y0NmF/dvQSz7nDT6NDQB46+VdIX96RY7zBSihHBF9aGDXVMKhUc/wf4xW6MmVtOd
+ ydfZvGf6zrsh9KZY8wwmUENoCg4UADu3jqOzKQUa7VEa4PsjIMPS5Si/yLg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gu8v517t4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 23:15:11 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-39512608fb1so8403119a91.1
- for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 16:15:11 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 23:15:10 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-385d2703b64so336368a91.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 16:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790032511; x=1790637311; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790032510; x=1790637310; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fnZqnkVs/cXmvnGk5vW1MoKdT6ik2v77J2yaMJICc9k=;
- b=cfafG+lZcJ3XpF7Bd5Bbklx97wZWun3hMl+qACSWM4XFpwYdsjdq4Ap+SG+eI7IH7O
- PeGobBrrtlU2dQ1BI61DENi6GLkY+x7wvyNJCsKJGJI4deqF0CwSsOKhUJ2pl8ohRtbX
- voZdp9j1H3hWOYydZXgxTPsHHUwCEh+oyELOzc2YwC5MHbojl8vUqK0xTgxnx/ROk2RG
- Feh2tMNFAChp3L4dwMAO3mNnVQvtbonzakCJGVt6wnt5TJd945p44rHTSITpfY3Uqjis
- TjJVL9l56EKxTxfK/FVSgbF9HShflD2BIlh951ht68l8nMCtnqE4Lp+YEWi/d+8+/Xb4
- L4ow==
+ bh=GTBT5L5MPO+dzfTLgH8DupafYr70UiGlJNtN2qQLuPI=;
+ b=TVEH36Vr/G02qMBq+z+wNxn9ZbJhMEjC+dG2kQWjkbh5kCEjbIMAODQ99NG5c9+XyF
+ qVnMG081Hsg5gD1N61AAwdJJIzwjedptc8B+sI6h9rr9wYwOWYE5F1G1cAeK+0rhB+nQ
+ 6VXP4is6kQPM+qPTHnkW4CYVDVcZJN3UhUp1S8xNOmMrqKidiU0L5oyPgKh4u8ccSRR6
+ OjjuZGndIvFZDfHxfYleRNqs83Eyr5LHaWw6oixE4P9OJoOjp91IJaPsw2Sqp6TAwVd1
+ Jt5sqU5BmBug2L/t5B/3rHRkOX6Vi99CQGu8jDIf86iXwupl3soNmyQtEMvXdVO+j5HE
+ K9ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790032511; x=1790637311;
+ d=1e100.net; s=20260707; t=1790032510; x=1790637310;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fnZqnkVs/cXmvnGk5vW1MoKdT6ik2v77J2yaMJICc9k=;
- b=lMWLsxLHgn4BWn3COB2GHcyBz7xkZDR0Ak+egQ+S8Z7uSzd9l8riBPFco9r7BtsUUH
- ymYsoHW6wao2ftwosm8RADuczJIlKLLtrjoNtjfjHX5MFDDnAdpIAJl64vWsCazGbNay
- 54y7Nfp/531gp4X+++YV8iElaxJbSV3VWwT9KO3nUX7TxciaPk3b+1UvuwukoAlpVE5z
- xlFL7Bf3OCLo9guFrfWFKMltnN0DjlsUQe4RVrT/TjGD6XzqTt2pfKVeIRGnx7Dq+19G
- /lISv6Rj04QM3LpqZ9lWbAGuTWa8WsHao8+0m+wF9ZJNk6bgZPGuFJi7G2+5ncjhtyxA
- 8Y4w==
-X-Gm-Message-State: AFuF++kE1EWnKtSybovPF0e8iZ+DXswI1AaBBn/BnL/2zWIxTFZBMKAM
- I+2oMHn2FXgifxFvQ2xWMxi6eSbjVVzUlhEga80tK4Hrz9aLYNNRPzSFrM8kq9HWzO7wyDNqyEA
- 998MwGXmP5hy15AagJNwvUkZ5/DF7lxE4NdleSLEiMldXpauGJa6Uh1ACY2au9imDhQ==
-X-Gm-Gg: AYBFou0n+enzIucopsrZlcJHaihzlVZ2OrtsjIe8GXHTJ23TMu++A/ih8AhvMEtKqsN
- VUIYflVrqc7k7qWFG5iCCkD3DyyzzKhTxvM+Tm+zVkgVkaFyEeImBnd/zbBkpeKyxMbUM0Lumdq
- T68hFzov1RaPz+SlJJobGT7+DDVJeysmggW5hr+4tWCoQ+9aKgG72Tns/46JXxvv4TLWj6ZEhCQ
- bRmDy7VBlziiyJ7k53wpeFtZEfPktH2QSM4yxsQHYRJmp9Uer9kdm5J8bv+GIJHCn7FKL80Bscd
- 7bz5Vsst/f4R/8/TLjG99OAo3aMxP76axGEzbMdLfvmg1tKlfzCBc8PCYCSzZ6Sb9FnLsXWbw/l
- XmKa7iFU+9PgvlX9gL1IktWMIW8R8+QyExaf7X8xSSmn8Qtw/IdU9yckAhoW64w==
-X-Received: by 2002:a17:90b:5388:b0:39e:21a7:5dff with SMTP id
- 98e67ed59e1d1-39e54d1e037mr19306374a91.11.1790032510938; 
- Mon, 21 Sep 2026 16:15:10 -0700 (PDT)
-X-Received: by 2002:a17:90b:5388:b0:39e:21a7:5dff with SMTP id
- 98e67ed59e1d1-39e54d1e037mr19306346a91.11.1790032510407; 
- Mon, 21 Sep 2026 16:15:10 -0700 (PDT)
+ bh=GTBT5L5MPO+dzfTLgH8DupafYr70UiGlJNtN2qQLuPI=;
+ b=YvECXjSqQew50Z0F2s4a6rJln4J1oBWGoQUSL4A0ELRqDR1bomXUA6K2P9cylL3HLU
+ zNxT4WGjWYkKD2hK01hup3RdEUP1z5DAqYaqY3wxlG8gA8MA0CgYDKQ165gpkBaDsgQg
+ y7FedCkLYLlUYCz49Sm8MnQdogEdFasxcgdB2YQJ552NBCV/t2gkPGlmZJUaR8hKtWe1
+ l2jghlaVyA14MZif9m4AQIS+eFpn2KAuHVcXjk49qD1qIWOVqUMpBoK2wFck+sA4Pjc4
+ BF+N1JIChT1ivDyNvEAk/MfSdFKBPKDgHlXNQlxGO2VkbO64XHwvdvPr/V2u43KHTPil
+ mspQ==
+X-Gm-Message-State: AFuF++nii2ykKUzJALywFNtgg07TwZtnZoCoeotWDnTTq9dLrsCKldpS
+ FVFhWlF5ycI7e05++Ic2AKfMoo6xNdfn+2p46w+Vgy6L/qBK18IaSsSCZRTutJwRaPD1WkFBWXP
+ Ke3KIcT5B2xPpszosbKIZvnbkWNR8agcoJUdtf7wZ6qjgiExbyjGWwxntE3ap9QoqNA==
+X-Gm-Gg: AYBFou0IV6IE3VYke+qWBSPFTdCowdq9IK0dKdKegU2ByrCpaS6bHSkkvB2LEphwLt9
+ mGVPA7f/kQUYuDw6OQSqnSNr3T4NY1WomIzBJOEkSJFYzkmD89gfDPXH1gAbQWM0mN5juyncVVf
+ KdszCl+wN9BZrcsnUCZbeOCZUERDq17qslGeof1OsPDHe/9UmMj/Ik15pjCstWkkRjoAgkQHyu8
+ yiEgj2Kcz65TVmzcpaSAInP2fadU//6BYCd99T3IDm+TRZu+94UijH7kY+2ogqdVnAPj3Vhprr3
+ fImtNhwmUKnTZkdbKqCXDJgntu5UyzWj8qmfMO97DYnTKYgVh90SEmyxPunH09rg3cuRKXm2dGq
+ R2xu1CnOfmKBK5LY0cxWLnedZx0vW5CZakAc3peBFCV2cnsHhYuzXdfS/l+R/qg==
+X-Received: by 2002:a17:90b:1d83:b0:39e:6a7f:6186 with SMTP id
+ 98e67ed59e1d1-3a066ae2369mr757164a91.23.1790032509428; 
+ Mon, 21 Sep 2026 16:15:09 -0700 (PDT)
+X-Received: by 2002:a17:90b:1d83:b0:39e:6a7f:6186 with SMTP id
+ 98e67ed59e1d1-3a066ae2369mr757127a91.23.1790032508722; 
+ Mon, 21 Sep 2026 16:15:08 -0700 (PDT)
 Received: from localhost.localdomain (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0674c0b4bsm1295939a91.13.2026.09.21.16.15.09
+ 98e67ed59e1d1-3a0674c0b4bsm1295939a91.13.2026.09.21.16.15.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Sep 2026 16:15:09 -0700 (PDT)
+ Mon, 21 Sep 2026 16:15:08 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 3/7] tests/lci/refresh: add parameter to override container
- registry
-Date: Mon, 21 Sep 2026 23:14:54 +0000
-Message-ID: <20260921231458.3369-4-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 1/7] tests/tcg/meson.build: force use of linux/amd64 platform
+ for containers
+Date: Mon, 21 Sep 2026 23:14:52 +0000
+Message-ID: <20260921231458.3369-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDM0MCBTYWx0ZWRfX1HGjdndSETPT
- XuiFkfhlwf8vWLT8aIF/D1MpU0euVMFqnGR9l7qYR964G59EOE8N+LyKVOdFOSnh/q8v+cqT7A9
- Z8JkGOxZGztjSBP/ASbJKJqwWqVDy5I=
-X-Proofpoint-GUID: IZB3Q7zv7McwavRo5EVkNEaVI7R6NiQS
-X-Authority-Analysis: v=2.4 cv=QovLTlyd c=1 sm=1 tr=0 ts=6ab1ba7f cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-GUID: 5OdEjkB9ZQPiUWrEDkY6Tm4PdAqIOGHk
+X-Authority-Analysis: v=2.4 cv=B+0sQ+tM c=1 sm=1 tr=0 ts=6ab1ba7e cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
- a=4J3MZNeQsNbOYB5HGrwA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDM0MCBTYWx0ZWRfXy/OKNicqCLiK
- vwFpDP+vSBdF801/qRvUEf8dzj05ZW3UwiQlMqM+y0Q03lvrtAZADZjPc/3AMl0gaRNIf4oLZLO
- +khvMdiT0FhZoJ/18uTR8mH/yLSt7DW/i/jOaAJQtjka/H9stDSSYWwO7oGns5lqHECcYti9v94
- LSQwUjdH56VJcjogxqcNvhmog//PD6djVWQgToQlR0sOFrOHz+Ll2PGXtGv8YdQW6EhlomwEC+W
- eMLY2YCXP03KB4oS0qFfwQKcxqjC2MwWCHgerjjeX3z9450/FZX21qPuH6Zmeij4SDUn3iI401w
- 2u6O9qlfh/0M8rVHxtN8qfNZc3kdjnQ0pg69qhl/SJ/NygDZwowFdFzpph35E8fcnWdM3jd8Fvd
- QWijut3jwJHLmJx+aNjaOybaMifejIcQCgdxwN3te4QnJVeLMkQPalS3IY9mPrP12KZw17yX3Vz
- 9knrXWpDqGM0fO26wlQ==
-X-Proofpoint-ORIG-GUID: IZB3Q7zv7McwavRo5EVkNEaVI7R6NiQS
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=7d-bZuWUf30YydaP674A:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDM0MCBTYWx0ZWRfX5G8Q0kgNaCYE
+ 29HnGjIbR7FjCGYq/WlX6sLSQYNoKKssukLW1Weu+G0cPVs2wNZT9ZwnQdzVLqHwOLtF+mKPGLx
+ EQVhhiNK/uOn2g5FjKwLnGxn/BKR4d0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDM0MCBTYWx0ZWRfXzsJ254l61DnO
+ S17ijoZiJ0V7bu8LddE5a19OS2LKnCqUV1YkjFpddj6q1oYyo0vPSeyDGMCFNfLrIdFx4j1XFsC
+ fTvPGdVS8FAnDpTd6EgPjXfD5jGBIhrXnaZ6pWD5nj/kQQEIQPuoSupnrDsjoZPu7lTt4cjkvxx
+ oNHzrbTGuPpLI3Tdj3dnr94JEqPxZbTnUrdqDJNO34k6NRNI08xmnbvZGVFJqplq9ayOxkwU3pk
+ vCB24SSTd8YgBw1VMyO8uHkVBHUT8Uynl9PatWBE4lflrcXBm57fakmfJ+rEHDAdSdUGjNV/hR4
+ e29kN/4sWwBD0vAmppUNC6WaOolhbutvsoOP3fRs0wEzl5MvMESglPKjPp+tiT4hvSn1Xubd2Vf
+ vToWvJWjRkypytjsZsXTrZdrGYNOumQMzsrWjwDHUMJLQvjEGSp35TtrVJgxMsHMRLujAVjJGXe
+ GYc+yDrV4lroOqV9XpA==
+X-Proofpoint-ORIG-GUID: 5OdEjkB9ZQPiUWrEDkY6Tm4PdAqIOGHk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_06,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
- spamscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210340
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609210340
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -151,88 +152,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll use this in next patch to switch FROM docker.io/library to
-docker.io/amd64. It would not make sense to add a new target to
-libvirt-ci for this, since it's just a variant of an existing target.
-Simply replace container registry with arch specific one.
+On hosts != x64_64, we detect if host can run amd64 containers (usually
+through qemu-user-binfmt). If not, we deactivate container support.
+
+We could technically stop here and force container engine to use this
+platform. Since existing base image (docker.io/library/debian:13-slim)
+is multi platforms, container engine will enable this variant by
+default.
+
+Now the problem is that if user reuses this image for their own
+Dockerfiles, they will run into unpleasant surprise that now, their
+container engine is using x86_64 variant by default, on any host.
+
+So, in next commit, we'll change base image we use to x86_64 variant,
+which has a single platform: linux/amd64. This ensures we don't generate
+any unwanted side effect when building our images.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/lcitool/refresh | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ tests/tcg/meson.build | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 9a71af0e41d..4e3cbb81acf 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -12,6 +12,7 @@
- # or (at your option) any later version. See the COPYING file in
- # the top-level directory.
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 75f0a52fd22..4cf4865461e 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -81,6 +81,7 @@ tcg_tests_summary += {'gdb': gdb}
  
-+import re
- import sys
- import subprocess
- 
-@@ -41,7 +42,7 @@ def atomic_write(filename, content):
-         raise
- 
- 
--def generate(filename, cmd, trailer):
-+def generate(filename, cmd, trailer, registry_path):
-     print("Generate %s" % filename)
-     lcitool = subprocess.run(cmd, capture_output=True, encoding='utf8')
- 
-@@ -49,6 +50,10 @@ def generate(filename, cmd, trailer):
-         raise Exception("Failed to generate %s: %s" % (filename, lcitool.stderr))
- 
-     content = lcitool.stdout
+ docker_supported = false
+ container_command = false
++docker_platform = ['--platform', 'linux/amd64']
+ if get_option('containers')
+   if get_option('container_command') != ''
+     # make sure command is working
+@@ -99,6 +100,15 @@ if get_option('containers')
+                         container_command]
+     endif
+   endif
 +
-+    if registry_path is not None:
-+        content = re.sub("FROM.*/", "FROM " + registry_path + '/', content)
-+
-     if trailer is not None:
-         content += trailer
-     atomic_write(filename, content)
-@@ -64,7 +69,7 @@ add_user_mapping = [
- ]
++  if docker_supported
++    docker_supported = run_command([docker_wrapper, 'run', '--',
++                                    docker_platform,
++                                    'docker.io/amd64/debian:13-slim',
++                                    '/bin/true'],
++                                    check: false).returncode() == 0
++    tcg_tests_summary += {'x86_64 container support': docker_supported}
++  endif
+ endif
+ tcg_tests_summary += {'container command': container_command}
+ if get_option('container_registry') != ''
+@@ -253,13 +263,11 @@ foreach target, plan: tcg_tests
+               target + ' (possible: [' + ', '.join(allowed) + '])')
+       endif
+     endforeach
+-    docker_host_arch_supported = host_machine.cpu_family() in cc_docker_host_arch
+     dockerfile = files('..'/'docker'/'dockerfiles'/cc_dockerfile + '.docker')
+     image_name = 'image-' + cc_dockerfile
+-    has_docker = docker_host_arch_supported and docker_supported
+-    if cc_dockerfile not in image_targets and has_docker
++    if cc_dockerfile not in image_targets and docker_supported
+       cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile,
+-             '--add-current-user']
++             docker_platform, '--add-current-user']
+       if get_option('container_registry') != ''
+         cmd += ['--registry', get_option('container_registry')]
+       endif
+@@ -270,7 +278,7 @@ foreach target, plan: tcg_tests
+       image_targets += {cc_dockerfile: t}
+     endif
  
- def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
--                        enable_rust=True):
-+                        enable_rust=True, registry_path=None):
-     filename = Path(src_dir, "tests", "docker", "dockerfiles", host + ".docker")
-     cmd = lcitool_cmd + ["dockerfile"]
-     if cross is not None:
-@@ -79,26 +84,26 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
- 
-     if enable_rust:
-         trailer += "\nENV ENABLE_RUST=1\n"
--    generate(filename, cmd, trailer)
-+    generate(filename, cmd, trailer, registry_path)
- 
- 
- def generate_vars(target, trailer=None):
-     filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
-     cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
--    generate(filename, cmd, trailer)
-+    generate(filename, cmd, trailer, None)
- 
- 
- def generate_pkglist(vm, target, project="qemu"):
-     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
-     cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
--    generate(filename, cmd, None)
-+    generate(filename, cmd, None, None)
- 
- 
- def generate_yaml(os, target, arch, trailer=None):
-     filename = Path(src_dir, "scripts", "ci", "setup", os, f"{target}-{arch}.yaml")
-     cmd = lcitool_cmd + ["variables", "--format", "yaml", "-a",
-                          arch, target, "qemu"]
--    generate(filename, cmd, trailer)
-+    generate(filename, cmd, trailer, None)
- 
- 
- alpine_extras = r"""
+-    if not has_cc and has_docker
++    if not has_cc and docker_supported
+       build_test_depends += image_targets[cc_dockerfile]
+       build_test_depend_files += dockerfile
+       mount = meson.project_source_root()
+@@ -279,6 +287,7 @@ foreach target, plan: tcg_tests
+       cc = [docker_wrapper, 'run', '--run-as-current-user', '--',
+             # SELinux blocks modification of host fs by default
+             '--security-opt', 'label=disable',
++            docker_platform,
+             '-w', here, '-v', here + ':' + here, '-v', mount,
+             'qemu/' + cc_dockerfile, plan['cc']]
+       has_cc = true
 -- 
 2.43.0
 
