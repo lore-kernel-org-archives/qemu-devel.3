@@ -4,144 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20C9C982ED
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 11:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD3BC982ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 11:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8c4V-0002Lr-Rh; Mon, 21 Sep 2026 07:20:31 -0400
+	id 1x8c5d-0002v2-PF; Mon, 21 Sep 2026 07:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1x8c4T-0002JI-DP; Mon, 21 Sep 2026 07:20:29 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1x8c4Q-0003Li-Hy; Mon, 21 Sep 2026 07:20:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uT4sW031i0RUX0gZEG0okBredrSduo3/6ehhEmq1Kacdt0Lb5ke5vXodQScSIufpegTtyLYGTLbDYEzg40rY73bpM58wG8HwrZ0zhCS4vDU1Db7Inrz6vLWzdmom9x0xEGu4SdR8Hn3BD/8sfCjPMdMW+fKFB8ezkFDOZOP9ZP5mrLQ7D7RqikubMBPFe7IROwCuEh3PqHRJ8VtvBO/2h2o88a4iSim/ghwjRctx/jvipVXXEAHC4ogEJzfCcbk4Kth0QGvZ+UVMTkFtfcDT1d7UTHf7akiBatRlEGwmyDqPCTBTUt0qosOykHtGtokN8wPw9FX8ikuoZcdVqAKEdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yYyLK9kUnd0Fz3OgpfI3uV+Q3zgFQTWTT9qrl+wXXrM=;
- b=wkOD68AK5jvxM+A96LhEB6/oJwuwfr91s92uUOb0Zc6jKsxtKuydGO7YdyrVGl0vjKKSuBbSlwFZ6ml6Hroh12LRqvmzoWXOLYoS5jru65iG2spbZk/kryA9iyf6KUk54tNSMabIYh3BSPbWlGEf9Uw1u0tNXK/2JMiit/0D916g3TKResveNBaxpoz2huGdEoTRbcF7SQ6kc0EUqPTDrEM3ED7CyexyTpp/drRDAR3Nsp3MJ7MY0QyefDllw+8gPmXICcL0euM4uzPGJuWOidALF2QgUUYaUrTrNZG/xeVeCXZHIvqXf+f7MSXyYCmZ2R+t/5auPZHWW0/mHU1Njg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yYyLK9kUnd0Fz3OgpfI3uV+Q3zgFQTWTT9qrl+wXXrM=;
- b=lyrAz/9ofVp2PHMrsrMcE9WSuJ7MjCxT4P20d/hjS1srwDlKYNU/pGwmqDiRQNbsY3gulvynW7IZ6PhXLnHlCla34eUQoMUSwxtSOfTzq7ol9BIiPhbFYXg4ltB1lj/Zd8KB3thor9eN7EgXBa7UL3+8SAkmy6sTO4Msh8pO8AmSUXa0uu6Hqpd9YdPQnnu9HHgolIpjf6Wv4VoxeJ2tdbXeU7TkziMV4iiwdx/YyYul+8f5+0S8O1KZNX5z/qUAH/IUnaGXOSXG7B0xYLpPCeKQ0WYknlfTXU0b+3FGrj6bwZFa9Fu2osku8ecISt0niRBaF8Kzp/ql/kcbWpBL5A==
-Received: from IA1PR12MB9030.namprd12.prod.outlook.com (2603:10b6:208:3f2::22)
- by SN7PR12MB6715.namprd12.prod.outlook.com (2603:10b6:806:271::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.14; Mon, 21 Sep
- 2026 11:20:21 +0000
-Received: from IA1PR12MB9030.namprd12.prod.outlook.com
- ([fe80::2c1d:ed27:b53a:97d2]) by IA1PR12MB9030.namprd12.prod.outlook.com
- ([fe80::2c1d:ed27:b53a:97d2%7]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 11:20:21 +0000
-From: Manish Honap <mhonap@nvidia.com>
-To: Junjie Cao <junjie.cao@intel.com>
-CC: "alex@shazbot.org" <alex@shazbot.org>, Ankit Agrawal <ankita@nvidia.com>, 
- "jic23@kernel.org" <jic23@kernel.org>, "dave.jiang@intel.com"
- <dave.jiang@intel.com>, "alejandro.lucero-palau@amd.com"
- <alejandro.lucero-palau@amd.com>, Srirangan Madhavan <smadhavan@nvidia.com>,
- "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
- "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "clg@redhat.com" <clg@redhat.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>, Krishnakant Jaju <kjaju@nvidia.com>, 
- Vikram Sethi <vsethi@nvidia.com>, Zhi Wang <zhiw@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "linux-cxl@vger.kernel.org"
- <linux-cxl@vger.kernel.org>, Shameer Kolothum Thodi
- <skolothumtho@nvidia.com>, Manish Honap <mhonap@nvidia.com>
-Subject: RE: [PATCH v2 10/10] hw/pci-host: Emit a _DSM on pxb-cxl to preserve
- firmware PCI config
-Thread-Topic: [PATCH v2 10/10] hw/pci-host: Emit a _DSM on pxb-cxl to preserve
- firmware PCI config
-Thread-Index: AQHdRgusjCvcpjApBEmlZKJiGhQPPrbXNMmAgAG08zA=
-Date: Mon, 21 Sep 2026 11:20:20 +0000
-Message-ID: <IA1PR12MB9030CA9286783E104703456EBD842@IA1PR12MB9030.namprd12.prod.outlook.com>
-References: <20260916184412.3825713-11-mhonap@nvidia.com>
- <20260920091429.717003-1-junjie.cao@intel.com>
-In-Reply-To: <20260920091429.717003-1-junjie.cao@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA1PR12MB9030:EE_|SN7PR12MB6715:EE_
-x-ms-office365-filtering-correlation-id: 15c82fc7-8b0e-4fc0-eb2f-08df17d252d4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|7416014|376014|10067099003|11063799006|6133799003|22082099003|18002099003|56012099006|4143699003|38070700021;
-x-microsoft-antispam-message-info: tJ04Cr1qv7AFvIjij5Zhovpac92SiGQ+PROMOw26CInuW5KfAZBDpyo8b9RM0XpoHhXiucnFYPUZ1h8kUrQhsdb0bATaNJ95wDJPFbhpJmpaRo/Wv6bCu4b0yCiU98eRNZwG5/MdxvkppZGpyc11Uh8APJ5los5EjvkOyzYpJ7Y0pijCpjpl7bLEfPmNnJm21EHb7VjWb+rzDFC2UBC/DRP37ZI5X/V7qfzgLP37X9dLvdeL4wJb5h9W2UxGmAdcYNW2Ybc4y1d4YMqB1G5H/SwdEOgxHL5GtFlPHf9WqfU8EbtiVS2e8FrikmRn/GCyXhTXYBe6+d0FYAlSX40WdnnSyKXsvFaVnSSJIoqjT45Raf8w2CUvniieWSzwgPA7RvVvNQkQOyAUdzUsxHJjfs8S5pCVK0lvmgkxSEbTo03HWOfQ/wAS+syOAQwNhtAU+6jpGVzjo4soe1xDkEbZudEoRHeitHAAyL4pfVrlLx6OJaH7t+Z0XFnRCpUB3bxrC8Zq9FPxyh6l25YoSUJUtXYa8E4kiYg9H70+tC56n5XyU7DnmgNUsBS3cy2CWS510pc1xFDoW33+A555NBZ6Ve15Xqo0MxevSB0/DtA7jLkcBnouBNpJesEfL9QTOI+uIhyKPZV00ACYpyqd4r2Q9vD+vaw2SHAf6QT1aZOwPxCkSVh/E/bAV93jprgtgQ3qrXbZyR+pbnoDsezf4z1wMtUbeNE5Bi/De/5H0M5y5Rc=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB9030.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(10067099003)(11063799006)(6133799003)(22082099003)(18002099003)(56012099006)(4143699003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?4v0b0zEf6xenkPL9GQAanBz8bkhTn9nCDWDznmNn4HoboW5vi/9TAoLhwiGN?=
- =?us-ascii?Q?3/7x6nn4rELItcHSp5oKfGfDZJ5fNfInzlgMaKvRnOSylGjH7xEKE9Fl6o48?=
- =?us-ascii?Q?Uyc1bgFpvErBiYHhSwoIOVHyBax+KCj/RZXPWEmZ5L4Jgl+R/+oVjALpFuCK?=
- =?us-ascii?Q?jsr6EFjc82T/+3mbI5RdQ4hwJtaj4644B8RfSzvJYQZw+k0VL3yktySSfV7p?=
- =?us-ascii?Q?YT+uTTWuQrG1tWuGTh84uZzP6Qvtim7lapzmLRe4NUn7iiRmi5JTb5gFi7Cb?=
- =?us-ascii?Q?Z4XC/hrVMhvpAFEHD7gsbpcgixdQUYvdkN4IgweUjzG8jDNSs5IIcN91G6kC?=
- =?us-ascii?Q?3A22jeEDBcrVLII0f22bGp3hWDLKzXacZnMlumILGL8mJOPtRvBlaJq13hV2?=
- =?us-ascii?Q?sEo3x3A6UXa0gWQc6tH0/Ol4OboqdObNTgg0LuFwy7jYiVYEQRhssIb4jNRf?=
- =?us-ascii?Q?0ZHGE4Pncuyn9ChX66rgpq77yfFHFp95nJNjyJQXZPQ6FvwYudVF2msxdWqd?=
- =?us-ascii?Q?2ngo3gebJJU8OcnIk4wgxfPWrmNgFAIW5Kt1izosQP8A7GtQK6GBg4l4rJzC?=
- =?us-ascii?Q?BkYKIHK8gzRicgaTcpyQ2w++hHb8dhlpxFqYLfIljccyKefEn2jT5yfrYHL0?=
- =?us-ascii?Q?io5re8cgoTny+sHcSVInBETQ1tzzOfVC5obuapf+szJQTcmTr6fXjXXKTp3S?=
- =?us-ascii?Q?bIzxdb7/A1BSENQ0uIRC/EisftZxEMz8CdW2/vwmkNDgfLSWDKuCcdbN4aLH?=
- =?us-ascii?Q?VSQ1zsN5cl8yINWac9NXS0wXGRxC70x5DYUK0ZSS4Q9SJS0Aa9dnsROYwotk?=
- =?us-ascii?Q?yg8M0b0RSgs+ZdJKZvp2bKqbW76CdbXBMaCkly7enQSjnhdI3piKIXMtT0H0?=
- =?us-ascii?Q?pUUvJptypZOYBv8ECZaZBqn9kzfBmemGr0cfc5pDKMDvXVFaVXXKIYG0FRHN?=
- =?us-ascii?Q?C6ffZHCpvTLjDqxNgYuVlHV157bEdEWo8PfiAj722W+t2kzFzgwOp+ZHFpYs?=
- =?us-ascii?Q?rAwuk6RkwVF6dIdtlMV/IGhrQTmAQCIKmrM+Ikn3CldavCTRScEilyPL7S/7?=
- =?us-ascii?Q?lfXpAATbAq+p5zQ6xfbyLO13ntf+V5NX1Bkt6fU+rbZk4dHnSLYgXKqydU0l?=
- =?us-ascii?Q?BmHBub5x3g9FYaLNuJhia0jeKE0uSd3nZCUdFkrA/U5css6Hzys19otUuFsi?=
- =?us-ascii?Q?ALHDq/acaX2BqHtcsWFY3yR5UkNW6YDss8mHBtpEx0zhTri5QpSYHA0YABWd?=
- =?us-ascii?Q?J4SIkzl37YOoRWeeQfht6Q96zdwkx7rNFT69m4mY1oCC+ZUjUNFtlmecHtvy?=
- =?us-ascii?Q?GzaP3UCwL8MrIPqqjV+yxc2hVLym2huk708kyWJ5njAl2ztwC+uCVRb2IX0E?=
- =?us-ascii?Q?+n7p9pwrEyV+7x/Kd9t13nCXx/jNn6qra9C2qnSTU3PvbOTttH/0o8F9MuKZ?=
- =?us-ascii?Q?g6wStpcKCucTBLGD2QxzVvogCoiygwjgxU9TBGVhPwxjvLf7EXXdDdpx7OhE?=
- =?us-ascii?Q?eWZ9844O3dhXXow+M1DnLwdKCHf83SpQsOTcF4vq2DtoBeeZngnlSZXSwzO7?=
- =?us-ascii?Q?yvFyjzvpNzrUkscr4XuN/2rucyRJf6zI8sVZWui9eGGvxbwiCvMWsKNXRNqt?=
- =?us-ascii?Q?5GBD4C1oZKHH1Fox0cVt67cv6Z7pjZMgHfgruiqRFFbVZ7bONBbsK/+v6AEs?=
- =?us-ascii?Q?KJDQ9m9kZ0PAvecucwrGcvZe4Waw/ENxTd5W7NVtglnF8v7e?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1x8c5a-0002uk-Eb
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 07:21:38 -0400
+Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1x8c5K-0003sf-VR
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 07:21:34 -0400
+Received: by mail-ej2-x10.google.com with SMTP id
+ a640c23a62f3a-c2953a01240so405661166b.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 04:21:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789989673; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fY7CwvGkYLasvqhHLnxk2F7PUW38k5rN++1xhPjG1ZuTAj5cp0e1tSOfL7tRe2eJee
+ My2W+Fk0fgESUslq0zJzUFmsr7FMkca0m/1QzB2bm5ZNGcwAV8uuzOJke8deYzM96cWy
+ QI+IY0RuS+cMWL4IKgqhZ8Z7M8Kro3SVOCTlpMV9Zd34friedQyhdmrkQxTIjDBs4TV6
+ 3iVomkuq8tOYwZdHW9CmrInsbofQIPvnbTL9LVP3a/OnbYoDxvln96HFLUd/L8/G2anx
+ rhIoSb1MZlt7R7/1rrzS+gH7zhr66P5z4XRbL5kmiay3xCYOIebpJKT/KcY5LcNrc9pH
+ Ccgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HkY2Kp6Dq6xYVUqUFZ/2o1dghSee/9c+nLqlJzLVuQk=;
+ fh=+YY8Td6BzP/pG4PCbnufthTNhmxWwkmv9wr1dFxI/U4=;
+ b=swt+IWQREv+kuvg08B4ApLfZSWOlmsS4grdHR/HwLnWpSxBpNHH0LYQ30BGdWy4Il7
+ qa+Ecw0nc3jIFon44b9ndgQKRqWx2RTR3CbwgfYFuyWIkba2GzaF+dX/nDXS5u/9/P9/
+ y6v5ZRCgAjbwwQtWnNTeciffteXb5mcP6uYuwn8D6nX44e3+OZqXB1ka8P1K1w3kTVnj
+ hBQcdxjrrrUwz9394iCq6u9GDTAUScoo5NuKH/fdPIZMrUOiO4E8xEM+NcXqUXmOqU+Q
+ lvQd83Yxa8BS8+g9HUmEzeO/Ivdsk7ZrvOmwozhxsJKC2GynAZj5J8bmTGeD5y1M2lYt
+ nkgg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1789989673; x=1790594473; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HkY2Kp6Dq6xYVUqUFZ/2o1dghSee/9c+nLqlJzLVuQk=;
+ b=eSnouzuFPAuHCuqPMyFEw2xJ//6QtJkyma3wcB/9+wiO5Qr2celeYxRR525LKs7Pdl
+ 4t3djUd+ouVsqwisPcYocLEiSW1Teytq+0O0iwwIolV6wJjWDx8pr81YOCruHlFDEN6A
+ +TSh88KuqjBBKzx50PzzOvt/fWXGng7/iQaUk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1789989673; x=1790594473;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HkY2Kp6Dq6xYVUqUFZ/2o1dghSee/9c+nLqlJzLVuQk=;
+ b=P7fSNWFUhanF/HxBQV+24EHufY4/Y6orYfX+3XZ9Iv7NwYVZJAsKKom3PxtmM863bV
+ 52jGLc2dXJtqQ9Ig118Pu5wyTDeylyNpLOocbzBysyZ4nQzpl7ocKgaUQus2+WtS8qQ8
+ vEhGHaWexMUNCrU07xrsi+SPSYpQVvrGz/BMnnPIzT49T/7HFxui0exNfnsze4+gH26/
+ HnE4pksdeTGil/fBm6V+fclCmPB+BA417Cg+f3WUwMxO3SFP9THP4O62BCIFlGKBoz5w
+ 204M8PlEFyQCSl9t6+FNlBCLlJL+RQAO+A/TVTKnFTj3Y87LnK87/jxQucE9l7gJyF8p
+ LbuQ==
+X-Gm-Message-State: AFuF++m+FnoWEc+8xEYOE+cqpl4syoLbAKk/lap/HY/kDKFxGGeNDxCW
+ B8N6Z1PZifTCemwAHGlb3Lc76kzFeaGEAIJtmbwVseUplh7P3LRtk28HIBVh5HWAbzQH8h6W4ua
+ ZfWlvaxyyOGXemywTLLwOjHL38Dy69OTSDv/ERcUhBj6xCVRVOsG0
+X-Gm-Gg: AYBFou1Xk/rKUCj8k+SjjyDV3Mq+KiWIQt23NiHSELNLwxe6Q7a7qLw+h6scgYb8Y09
+ ZwEsu+eSNmwPeT9R97pXS9sFeJSzSc+/dG2xgdajTGQNuGavYxyLmWUYmQHsIkkKXoZJ0ZErJSP
+ KERcOy5pLxrnvkw6db2F2ybamhClmmGtrjDqR7Kvo01xstmFqMRAGCtch1Ae1YFceQSgZv634+s
+ bxtdfmemq2RpWmFv1Ae282xSUNF78CMgXMjKsiTg6CVPsZGS9UWm8aKpPYfVmKhKIRrBjdpBc8K
+ 1loDsrSQGi7RsqmwElsA3rmbKuNNPH35POJ8RXchyPo8fguaUyoj6QfJTU9ZL9Dnw0oqXB/s6ht
+ Uem7aT0FH6Zw=
+X-Received: by 2002:a17:906:f597:b0:c21:8c6a:c680 with SMTP id
+ a640c23a62f3a-c2a159adfdfmr853843066b.22.1789989673286; Mon, 21 Sep 2026
+ 04:21:13 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB9030.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 15c82fc7-8b0e-4fc0-eb2f-08df17d252d4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Sep 2026 11:20:20.9624 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XIDmJWqe2rJvZi0/ITpqwi6dRngCj+vynQu9zdAe6hv+0PgAdvMPC+PfmLEEr6IFGOZxvGYd3KuQ2BaVRLWDUg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6715
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=mhonap@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+References: <20260803081159.91981-1-alexander@mihalicyn.com>
+ <CAAjaMXaxAXJcufXy--q9b1o9Kd68N4zvoLX9srrCuKsOB_XTkQ@mail.gmail.com>
+In-Reply-To: <CAAjaMXaxAXJcufXy--q9b1o9Kd68N4zvoLX9srrCuKsOB_XTkQ@mail.gmail.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Mon, 21 Sep 2026 13:21:01 +0200
+X-Gm-Features: AcwNN1V3_keTvNaE3j5FqqBnMaw41VIknnglUwdAv2fr1Q4t5yP985Zaoc8m4oo
+Message-ID: <CAJqdLrpMQqfB1qXdcc3JnXm-_-tx2+aGAMXq70MxFVtHxPijsw@mail.gmail.com>
+Subject: Re: [PATCH v5 00/10] hw/audio/virtio-sound: basic migration support
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:34::10;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ej2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,59 +122,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Am Mo., 21. Sept. 2026 um 12:33 Uhr schrieb Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org>:
+>
+> Merged to master
+> https://gitlab.com/qemu-project/qemu/-/commit/c1c18d1e640b64292859ce9f30f=
+3c344edfb0294
 
+Great. Thank you very much again, Manos! ;-)
 
-> -----Original Message-----
-> From: Junjie Cao <junjie.cao@intel.com>
-> Sent: Sunday, September 20, 2026 2:44 PM
-> To: Manish Honap <mhonap@nvidia.com>
-> Cc: alex@shazbot.org; Ankit Agrawal <ankita@nvidia.com>; jic23@kernel.org=
-;
-> dave.jiang@intel.com; alejandro.lucero-palau@amd.com; Srirangan
-> Madhavan <smadhavan@nvidia.com>; pierrick.bouvier@oss.qualcomm.com;
-> mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com;
-> pbonzini@redhat.com; eric.auger@redhat.com; peter.maydell@linaro.org;
-> richard.henderson@linaro.org; clg@redhat.com; cohuck@redhat.com;
-> Krishnakant Jaju <kjaju@nvidia.com>; Vikram Sethi <vsethi@nvidia.com>; Zh=
-i
-> Wang <zhiw@nvidia.com>; qemu-devel@nongnu.org; qemu-
-> arm@nongnu.org; linux-cxl@vger.kernel.org; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>
-> Subject: Re: [PATCH v2 10/10] hw/pci-host: Emit a _DSM on pxb-cxl to
-> preserve firmware PCI config
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> On Thu, 17 Sep 2026 00:14:12 +0530, Manish Honap wrote:
-> > under preserve_config, the _DSM. Gate the _DSM on preserve_config: x86
-> > q35 passes false as it does not use the accelerated SMMU, so it emits
-> > no _DSM and its ACPI tables stay byte for byte what they were.
->=20
-> Confirmed: on 28e7aad522 plus the series bios-tables-test passes on
-> x86_64 (q35/cxl and q35/acpihmat-genericx, the v1 failures, included),
-> aarch64, riscv64 and loongarch64.
->=20
-> accel=3Don is out of reach under TCG, so I forced preserve_config on virt=
- locally
-> and booted an arm64 guest (7.3-rc1 based, defconfig) with a
-> cxl-type3 behind a cxl-rp.  With this patch Linux keeps the firmware BARs=
- and
-> bridge window under the pxb-cxl; on 09/10 with the same hack it releases =
-and
-> reassigns them.  No ACPI errors either way.
->=20
-> Tested-by: Junjie Cao <junjie.cao@intel.com>
->=20
-> 08/10 still says the x86 bridge "still emits the ``_DSM`` method, but its
-> function 0 returns an empty support mask"; that was v1.
+Kind regards,
+Alex
 
-Oops, I missed this line. In current v2, _DSM is gated on preserve_config, =
-so x86
-q35 emits no _DSM at all rather than an empty support mask.
-I will update this.
-
->=20
-> Junjie
-
+>
+> On Mon, Aug 3, 2026 at 11:12=E2=80=AFAM Alexander Mikhalitsyn
+> <alexander@mihalicyn.com> wrote:
+> >
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> >
+> > Dear friends,
+> >
+> > This patchset is aimed to support virtio-sound live migration and based=
+ on
+> > pre-existing Volker R=C3=BCmelin's patches from qemu-devel lists [1]. I=
+ tried
+> > to ask (https://lore.kernel.org/qemu-devel/9d7ea128c711c201688a4716f53b=
+8a335fc53569.camel@mihalicyn.com/)
+> > if Volker is going to continue his work on this, but received no reply =
+so I
+> > just decided to go forward: take his patches, rebase and resend. Of cou=
+rse,
+> > I kept all authorship/tags so I hope that it is fine.
+> >
+> > Testing.
+> >
+> > I manually validated this with Ubuntu 24.04 Desktop VM and found no iss=
+ues.
+> > Also, it was validated with CI (https://gitlab.com/mihalicyn/qemu/-/pip=
+elines/2626702088).
+> >
+> > Original patchset:
+> > https://lore.kernel.org/qemu-devel/a289a081-9a61-4bcb-b693-bf6cd7768c0e=
+@t-online.de [1]
+> >
+> > Git tree:
+> > https://gitlab.com/mihalicyn/qemu/-/commits/virtio-sound-migration
+> >
+> > Changelog for version 5:
+> > - rebased
+> > - added RWB tags
+> >
+> > Changelog for version 4:
+> > - addressed review feedback from Marc-Andr=C3=A9 Lureau
+> > - and from Manos Pitsidianakis
+> > *there is a detailed changelog under each commit message*
+> >
+> > Changelog for version 3:
+> > - addressed review feedback from Marc-Andr=C3=A9 Lureau:
+> >         - drop VirtIOSoundPCMStream's id field (unused)
+> >         - resurrected error_report(..) in virtio_snd_pcm_start_stop()
+> >         - fixes in "hw/audio/virtio-sound: add stream state variable"
+> >           [ please, look in commit message for details ]
+> >         - added "hw/audio/virtio-sound: remove channel positions field
+> >           from VirtIOSoundPCMStream"
+> >         - fixes in "hw/audio/virtio-sound: add missing vmstate fields"
+> >           [ details in commit message ]
+> >
+> > Changelog for version 2:
+> > - no code changes (only commit messages)
+> >   followed suggestions from Daniel P. Berrang=C3=A9 (thanks, Daniel!)
+> >   https://lore.kernel.org/qemu-devel/ajzoxZr4g0Xsr_4p@redhat.com/
+> >   and added some extra details about what I did with the original
+> >   patches during rebase (for some of them it was simpler and less error
+> >   prone to just drop changes and reimplement them by following the idea
+> >   of the patch, cause base code has changed significantly).
+> >
+> > Changelog relative to the original Volker R=C3=BCmelin's submission:
+> > - rebased:
+> >         - "hw/audio/virtio-sound: return correct command response size"
+> >                 was dropped as it was already merged
+> >         - "hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer =
+handler"
+> >                 was dropped as it seems to be replaced with another fix
+> >                 https://github.com/qemu/qemu/commit/731655f87f319fd06f2=
+7282c6cafbc2467ac8045
+> >         - I had to drop all pre-existing Reviewed-by tags cause it was =
+2 years since
+> >           this patchset was sent and reviewed and I did a quite signifi=
+cant code changes
+> >           during rebase
+> >
+> > Kind regards,
+> > Alex
+> >
+> > Alexander Mikhalitsyn (2):
+> >   hw/audio/virtio-sound: remove channel positions field from
+> >     VirtIOSoundPCMStream
+> >   hw/audio/virtio-sound: drop unused struct
+> >     VirtIOSoundPCMStream.flushing field
+> >
+> > Volker R=C3=BCmelin (8):
+> >   hw/audio/virtio-sound: remove command and stream mutexes
+> >   hw/audio/virtio-sound: allocate an array of streams
+> >   hw/audio/virtio-sound: free all stream buffers on reset
+> >   hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
+> >   hw/audio/virtio-sound: add stream state variable
+> >   hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
+> >   hw/audio/virtio-sound: introduce virtio_snd_set_active()
+> >   hw/audio/virtio-sound: add missing vmstate fields
+> >
+> >  hw/audio/virtio-snd.c         | 696 ++++++++++++++++++++--------------
+> >  include/hw/audio/virtio-snd.h |  26 +-
+> >  2 files changed, 414 insertions(+), 308 deletions(-)
+> >
+> > --
+> > 2.47.3
+> >
 
