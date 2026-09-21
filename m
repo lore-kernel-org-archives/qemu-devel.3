@@ -4,101 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051C3C982EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891A4C982FB
 	for <qemu-devel@archiver.kernel.org>; Mon, 21 Sep 2026 18:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8izM-0005NQ-8R; Mon, 21 Sep 2026 14:43:40 -0400
+	id 1x8izM-0005NX-AP; Mon, 21 Sep 2026 14:43:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz7-0005HZ-5z; Mon, 21 Sep 2026 14:43:25 -0400
+ id 1x8iz7-0005HX-6L; Mon, 21 Sep 2026 14:43:25 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x8iz2-0005zp-9s; Mon, 21 Sep 2026 14:43:23 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1x8iz2-0005zm-7J; Mon, 21 Sep 2026 14:43:23 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LF8B3v1869514; Mon, 21 Sep 2026 18:43:14 GMT
+ 68LF89Wx4193292; Mon, 21 Sep 2026 18:43:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=hbKLXDVe/JdietrQf
- g9C30EtOc49ilGcFKU3mWEKI0w=; b=SiaPMxcfZMlPgl2oO5PTiMkb0vLmTC4YP
- mTWx3TM3dKeQQ5VWrOLWKrCyUC9pTjDYGjI66f5iJMiuYf0mcwa4qRnPchNJNu5R
- vQO1viXY6xEfpZ/FhsXDi9Fc5Ok8CoQjmUJj+fSU5dVZ21Pe18qsGAZaOIMJQczZ
- hmzGt0aGYzpsk1RVLJmoHNxis5QOi29FM4mV+oTsp/cWzbZ7y7KM0vkvtzDWKydY
- B58iIYZl1rvs4FrifY4HL9Q7ONEnGnwchJEjzcDHnQJc9P2H3wT1j/UGiPXKCNH0
- DT93XrKWcXbrvneX3jYznVOVTBFK+A7Z6HeYipocX7ca+3o6oVRQA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs2721-1
+ :mime-version:references:subject:to; s=pp1; bh=T+KQWmZPRoeO97lmd
+ waFzeiVaV6RDKH5Tl5to6h1b7s=; b=O/0IB5Rt2d19kpakyfm4AfSss3gObiZuX
+ hC8MmqtjVavPoJuh3JZB6brg+kih0vvkMywnzzJ3sHt/biQb8BNYb10DT1xuiXT2
+ RFgiwe22ro8Gv3YGgU6z8jPhoWQ4+ysc1Hg0O8gDAjqUKeQwVlQJlNg9m6z13OSu
+ 2XayslQ3Yw8exXVSUbLL+BLWqqcJPoL1hBuB1JmL7h3j8CRLVpxYnoUsIMALVC2j
+ lD+UI66zBrNcxQq6ULv64WQBw35IcrXfRjDR4p+JsnrWQGor3BwQcHVuCvdNi4+G
+ BGmdFhZg8YXTaZ9h4L09NmXx9GeJoTnCTzgJW/QPYepF+mx3Pb+TA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1j78u-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
  Mon, 21 Sep 2026 18:43:14 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68LFHkhH167243; Mon, 21 Sep 2026 18:43:13 GMT
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68LFHf0g2400058; Mon, 21 Sep 2026 18:43:13 GMT
 Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bk96a9-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt7dy6cnp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 21 Sep 2026 18:43:13 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
  by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68LIh9P646727552
+ 68LIh90K35717548
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Sep 2026 18:43:09 GMT
+ Mon, 21 Sep 2026 18:43:10 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B33922004F;
+ by IMSVA (Postfix) with ESMTP id DC37A2004B;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 89B2D2004B;
+ by IMSVA (Postfix) with ESMTP id B59282005A;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
  Mon, 21 Sep 2026 18:43:09 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 6E8A5161DE2; Mon, 21 Sep 2026 20:43:09 +0200 (CEST)
+ id 786641624DF; Mon, 21 Sep 2026 20:43:09 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2 4/9] vfio/ap: Clear error object pointer after non-fatal
- errors
-Date: Mon, 21 Sep 2026 20:43:00 +0200
-Message-ID: <20260921184305.3791311-5-farman@linux.ibm.com>
+ Janosch Frank <frankja@linux.ibm.com>, qemu-stable@nongnu.org
+Subject: [PATCH v2 9/9] s390x/sclp: Reject short headers in PV case
+Date: Mon, 21 Sep 2026 20:43:05 +0200
+Message-ID: <20260921184305.3791311-10-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260921184305.3791311-1-farman@linux.ibm.com>
 References: <20260921184305.3791311-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab17ac2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: ttWEbJkaDqaXvVGQDPtSVB1uHL1n6nE9
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab17ac2 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=rlruftgHjx7kiOjKd_sA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: oGK8ntajq5wZYkur7l_mvT5EqDEQyhUM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX1l/wA93PhuZi
- RglJNBdPhRxJJNrbVed2PL7ONMCA7ok1HOzZZBtOibGenqWxJqSog+j1YpCZoezEaKte2i7+nIl
- /3vEC+adi7v6Oau4xdjqQt996qPkOKj604S3BXB9p/TqC2fhOGWrTohQr8VuA3viY1YE2VwXysM
- WvPLdizKk1X/eGN1Voi3iUGA6fPwKNR2HaAv0NOWZgDcYMv0venZ6zGEXvcflZM0p4EO6yjbU/7
- 3dHOKnOO3AQpw+oAtLEWq4QDCnMhlatVOxeC/2QLpAk0ruQyQW3kOjBghCTgMn8WLNZ5NCI/bi0
- 5YRbTIT0MPBKx5ciUg+g8aUnpBlg19k3Kx0TjXXPHpdBZdTHLDA0f5DVXREQvWgCXqg7aGoQcNf
- dE1D2qcHnWLgfS63ri3bCtAoTcW5YMjDScCWG3aMDIxdD47dX/IOt9e/DIR+AWX+uiLsZo7/m1Z
- DWqzQMdLuU+gI3cAYPQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX3QG/gCsSl33k
- 27947Puo/PXrr2PcwJ2OK8PfA0aMU2qFgv696dCIdmiYkHWAdRor6CMHiaJv9YDknAok7GVjhUZ
- C2uJcmRaOdqGCJwmdBjEVmFzhoeWNFQ=
-X-Proofpoint-GUID: oGK8ntajq5wZYkur7l_mvT5EqDEQyhUM
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=pH6oLB8u_88KfPtTI8IA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX+CFTVMOAugtF
+ lb2vbbePPfBKQLpJ2nWdc7RysKQ2RWYxXFk82XfTld3zVsNhs6LsErW4dfvRNHJRwFx7GHkXwnb
+ gcPyrfax6P2jWqHLopQkj9qgAn4FFik=
+X-Proofpoint-GUID: ttWEbJkaDqaXvVGQDPtSVB1uHL1n6nE9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI3MiBTYWx0ZWRfX+OYaILPyoVJu
+ AE9Oy2r8KHRMiMlJckPoevlY4rCubavryQlWQ8BSY4mrYvFzWh4YLGBSVDpVvpShCBL4rB++XRR
+ RmkmKJrSsZ2Esfc2kN84cMoQ124nspp/iNn0Dp2gxjF4QmvheSnvAwpcDd3Sy4CLMPWBQJC9+nW
+ u3JS1RYff6/dVVRpMYCX5KlHqkZI74jHh7oz62Bw7BXP1mEfUWx7gldwhGQBk1cAGiOUjdiVO4y
+ 0VxDfHCh/h3a3a/tOBctNISDXNQ/g/qzJ+Y6qci8Zzjn0504l7gw9hOxhgktzmuKX2jySDWTRxY
+ DrcaKIvpd75GPZRqecS4LejWKxmx5voh/xNlJljULjNYm02Re+7lzuEhMQuRGNpR6afLo/W3PaF
+ oOSi3DCsc9ls0qA5lV40xPdx1mhInLF2jCs2jH/sxeWQaJ1OF5qG9OB19ei9/Bxt0a2NQCNRuLv
+ NCQG+AlQ2DuxL6nOJ8Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210272
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -125,59 +124,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Registering a new IRQ notifier will allocate an error object if needed,
-and warn_report_err() will release that memory once it's finished.
-The pointer remains, however, so subsequent errors after the non-fatal
-errors in vfio_ap_realize() would cause an assertion failure for a
-non-NULL pointer.
+An invalid length in an SCCB header correctly generates a specification
+exception for the regular (non-PV) codepath that processes an SCLP
+instruction intercept. The PV case doesn't, even though such a thing
+should already be sanitized. Since a short length will cause problems
+later down the line with the storage that will be allocated based on
+that size, put up a defensive check and return if it is too short.
 
-Fix this by clearing the pointer once the warning has been reported,
-to reset the state of the error objects.
-
-Cc: Anthony Krowiak <akrowiak@linux.ibm.com>
+Cc: Janosch Frank <frankja@linux.ibm.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 1360b2ad1f ("s390x/ap: Wire up the device request notifier interfa=
-ce")
-Fixes: 0fb8a62fe4 ("hw/vfio/ap: notification handler for AP config change=
-d event")
+Fixes: c1db53a591 ("s390/sclp: read sccb from mem based on provided lengt=
+h")
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/vfio/ap.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/s390x/sclp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 6e2a1223ea..2926e04ad4 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -247,8 +247,10 @@ static void vfio_ap_realize(DeviceState *dev, Error =
-**errp)
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operatio=
-n.
-+         * Clear the pointer, since the warning will release it.
-          */
-         warn_report_err(err);
-+        err =3D NULL;
-     }
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index d8b655efcc..ad8129a5d8 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -277,6 +277,11 @@ int sclp_service_call_protected(S390CPU *cpu, uint64=
+_t sccb, uint32_t code)
 =20
-     if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_CFG_CHG_IRQ_INDEX=
-, &err))
-@@ -256,8 +258,10 @@ static void vfio_ap_realize(DeviceState *dev, Error =
-**errp)
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operatio=
-n.
-+         * Clear the pointer, since the warning will release it.
-          */
-         warn_report_err(err);
-+        err =3D NULL;
-     }
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, &header, sizeof(SCCBHeader=
+));
 =20
-     return;
++    /* Do nothing if the header appears malformed */
++    if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
++        goto out_no_write;
++    }
++
+     work_sccb =3D g_malloc0(be16_to_cpu(header.length));
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, work_sccb,
+                          be16_to_cpu(header.length));
+@@ -290,6 +295,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_=
+t sccb, uint32_t code)
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+                           be16_to_cpu(header.length));
++out_no_write:
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
+ }
 --=20
 2.53.0
 
