@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1A2C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F154C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96yN-00052X-0j; Tue, 22 Sep 2026 16:20:15 -0400
+	id 1x96yY-0005uI-Sl; Tue, 22 Sep 2026 16:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x96xn-0004GO-Rb
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x96yJ-0004pJ-E0
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:20:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x96xm-00083r-7H
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:39 -0400
+ id 1x96yG-00089B-Qj
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:20:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108377;
+ s=mimecast20190719; t=1790108407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zITn74UA8P4zpzsh9dZZf0zY8iFD58J6Rtd4+E08IZQ=;
- b=bNDVba6Zsmn+LmRd2bwkLkI9JC7mLhUF5bSZSvlUISqwvVmjaoZsGg6GdnTiHqCNAKS2Xi
- 1ENQ4+SxU8yxacIMmwv1gbr3jv5xRRxHKx6hHGZaDIBHIvuIcu5hI2fffHQTtWBJ7WQovx
- CHdu5R5+qjhdyYIoN9JVaYKTO4Si0zo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=4GLoY4Zw+LeT4iB/oODQsrJ/ijf7cxwJruvuL54ie/E=;
+ b=CrBU88B6dlFEOaojZefGH6fWJk8Pd5CZJpyWw7POLHy+vJlCL75vLHU4jaVqQNWHdcl/VF
+ LU3yVjwn/i4GO9XyV5DGMysQQMBGrwzYrHE7pULXbbZ0Gld9UA8Ua0Sx+Y5Fp2Btxv7u6I
+ my5SC1J0JZejTz2BacMcXBia0s5RvEM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-NinC_KgGPBqcDTom4EyGgQ-1; Tue,
- 22 Sep 2026 16:19:36 -0400
-X-MC-Unique: NinC_KgGPBqcDTom4EyGgQ-1
-X-Mimecast-MFC-AGG-ID: NinC_KgGPBqcDTom4EyGgQ_1790108375
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-HW1yJrEXOkSzSIHaTqM0ng-1; Tue,
+ 22 Sep 2026 16:20:04 -0400
+X-MC-Unique: HW1yJrEXOkSzSIHaTqM0ng-1
+X-Mimecast-MFC-AGG-ID: HW1yJrEXOkSzSIHaTqM0ng_1790108403
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A45318005A1; Tue, 22 Sep 2026 20:19:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16F141955F28; Tue, 22 Sep 2026 20:20:03 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 164521800446; Tue, 22 Sep 2026 20:19:33 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 46743766; Tue, 22 Sep 2026 20:20:01 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:17:14 +0400
-Subject: [PATCH 07/88] qemu-print: use monitor_puts() for any non-QMP monitor
+Date: Wed, 23 Sep 2026 00:17:22 +0400
+Subject: [PATCH 15/88] qemu-iotests/281: migrate away from HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-7-ebc029d4bd80@redhat.com>
+Message-Id: <20260923-nohmp-v1-15-ebc029d4bd80@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2591;
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1814;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=UGcbFthFg1o910LN1ITwHs7jzoQGUbuOX/XNgbfh37A=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKuQymoL8P3d/muMi7Pg8a1TBHjE80Q4Mffk
- u+VeTcSK76JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLirgAKCRDa6OEJdZac
- 5aoHD/9Uh4USghAPf5JqmiLtWKUzQ18nLGKdSpkrGZCo0igumLped3yS8MeUwvhzbP8hsN8+8hP
- ETuOlrAYKP8YTQPnx+EeeTgaPt3G4VgOgqY+VttAh/M/pS3d+VujvuPwO1ClPAkKHx1XogrwJAC
- gb9nyZz3SqI9efdgs6s1GhxmUD1+0DzTEQA01cngTADrLlz2ivAbgKUoyitE3One6AXt5Fd4OXZ
- YkqXIqr7ES4dVR3ghqe9pN4Da69GWSE3dFINkpSOJdlMiM8cJWPeIMH2HYf7oCWY4BNsyFK2270
- 9OhDA5EQqiHkbENuz3/QNBgIpT3D9IV5IC80ZEEEaXkbWiodMWJJEuDSd4mTb06DD3lVv2IKO2I
- 0dBrxnrkA0vJ1aRjMeiPDQReB8bTXzekLcxnrA4QcYNCLcpk1CSbv1/iTuD3oO5Z+DrqItksGOz
- 7cQzPvwvIfihkxKOyeiVlseKE6V6pjr1sem1hUsAP3RSwOSDVBAdG+YIub3Bk5JeG01EOEyjBUl
- KEreJ3AF17IoWRe1f/yjK/OAE4jQRkpRqCVKdTX+aiJfAyqE8wLJ0UTAGrY1I4ZEmrnVwCcB+dx
- 7LCUyR5sTY3hMXYQvMS9WgrO+2Vo+li79YRxp33ZgXV0cwRUFx3ItLTaAYCvXLW0m2PECiI5Ww/
- h+QT8h5WVDyeZOA==
+ bh=WbD4htSPwfv+XOHmp+8JUU8lEJZOKVWazxl8VoX/sgc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKvMUIgEUccnjbZxerqcx1rs/4KBJXOd7KEQ
+ orzbP9EM82JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLirwAKCRDa6OEJdZac
+ 5Zi9D/9UKC1DH8vcQRmqF87R8cV2Dh5ml1h0an6O7qh3e9oZhy3cVi6PCSxxW68JFsl7Lv3sn1C
+ s+LBzPzJPQ/3mYaCIUsryXxliVfcXdJ2JK1sJm/6Oig6QApcR7TBSvzTz50bThfVIkEub2EsJK3
+ Bim6QEFV5K7IzPAKbVA7kU1DGkjBTJ27pc8fZQNunOcBjuxznfGSOhg11DbOOENQJQQd0oBjDs6
+ vHWGqhQgfYWZffc01BbnnO1NrI5B41+UTBeP3YhGyIMSmVhEFw6xnhjyP/NWrLCcsEvG2fxiv+8
+ xxHDOzGl2dwkQaeko7Xs57bJ7sFUcXIdlqS4wYWJ6kc+SOr+79FE3nyJL4/z/etA1kc5B8DdetR
+ n2iHOPc0otq4dgO1sc1YafIp91kE5P3O7MqQT6nzW1QdaAEGC9jrpIM/mTw20PFTIJWpNuRrVkk
+ HuqcA1ulUT7rlTlDgLoVEDXW9eGpyykpNzWMZjlzJoCHc7LuaXWMjhk+RA1Tru6VNUHCAGI/hA4
+ h25F+/UG4iFfWOH40FTxw6lxS0stSVAKYLcj1cCGe0LC9ikxl8fCBDBjNy1nT0uVBf4H5uORRwc
+ UzO0MsxK8BYx5wY3mDy0MlmdEyT6bp4R3jjYzhemR8BVvJp1nRxOCBuxlJM2kIHZaGb2OI8og4R
+ HVS9ibsuIsmQnLA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,83 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of requiring a MonitorHMP and going through
-monitor_hmp_vprintf(), use monitor_puts() on the base Monitor class.
-This allows qemu_printf() to work with any monitor type that
-isn't QMP, which will be needed to capture output via a bare
-Monitor used as a buffer.
-
-Add monitor_puts() since qemu_printf() is in libqemuutil.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- stubs/meson.build    |  1 +
- stubs/monitor-puts.c |  9 +++++++++
- util/qemu-print.c    | 16 +++++-----------
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/281 | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 29b6644b2549..52c733e32a91 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -9,6 +9,7 @@ stub_ss.add(files('is-daemonized.c'))
- stub_ss.add(files('monitor-core.c'))
- stub_ss.add(files('monitor-cur.c'))
- stub_ss.add(files('monitor-hmp.c'))
-+stub_ss.add(files('monitor-puts.c'))
- stub_ss.add(files('qapi-event-emit.c'))
- stub_ss.add(files('replay-mode.c'))
- stub_ss.add(files('trace-control.c'))
-diff --git a/stubs/monitor-puts.c b/stubs/monitor-puts.c
-new file mode 100644
-index 000000000000..c4cf4f632845
---- /dev/null
-+++ b/stubs/monitor-puts.c
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/monitor.h"
-+
-+int monitor_puts(Monitor *mon, const char *str)
-+{
-+    abort();
-+}
-diff --git a/util/qemu-print.c b/util/qemu-print.c
-index ab09dd8600ec..323789f265f9 100644
---- a/util/qemu-print.c
-+++ b/util/qemu-print.c
-@@ -19,25 +19,19 @@
- /*
-  * Print like vprintf().
-  * Print to current monitor if we have one, else to stdout.
-- * (if the monitor is QMP, fail without printing anything)
-+ * QMP monitors are rejected (return -1) since they don't accept
-+ * free-form text output.
-  */
- int qemu_vprintf(const char *fmt, va_list ap)
- {
-     Monitor *cur_mon = monitor_cur();
+diff --git a/tests/qemu-iotests/281 b/tests/qemu-iotests/281
+index 5f3050f50d0b..65d34b427a43 100755
+--- a/tests/qemu-iotests/281
++++ b/tests/qemu-iotests/281
+@@ -273,9 +273,7 @@ class TestYieldingAndTimers(iotests.QMPTestCase):
+         self.stop_nbd_export()
+         self.create_nbd_export()
  
--    /* for all monitors: QMP & HMP */
-     if (cur_mon) {
--#ifdef CONFIG_HMP
--        /* don't use monitor_cur_hmp(), to avoid a second lookup */
--        MonitorHMP *hmp = (MonitorHMP *)
--            object_dynamic_cast(OBJECT(cur_mon), TYPE_MONITOR_HMP);
--        if (!hmp) {
-+        if (object_dynamic_cast(OBJECT(cur_mon), TYPE_MONITOR_QMP)) {
-             return -1;
-         }
--        return monitor_hmp_vprintf(hmp, fmt, ap);
--#else
--        return -1;
--#endif
-+        g_autofree char *buf = g_strdup_vprintf(fmt, ap);
-+        return monitor_puts(cur_mon, buf);
-     }
-     return vprintf(fmt, ap);
- }
+-        result = self.vm.qmp('human-monitor-command',
+-                             command_line='qemu-io nbd "write 0 512"')
+-        self.assert_qmp(result, 'return', '')
++        self.vm.qmp_qemu_io('nbd', 'write 0 512')
+ 
+         # Reconnect is done, so the reconnect delay timer should be gone.
+         # (This is similar to how the open timer should be gone after open,
+@@ -303,9 +301,7 @@ class TestYieldingAndTimers(iotests.QMPTestCase):
+         # Do some I/O that will be throttled by the QSD, so that the network
+         # connection hopefully will yield here.  When it is resumed, it must
+         # then be resumed in the I/O thread's AioContext.
+-        result = self.vm.qmp('human-monitor-command',
+-                             command_line='qemu-io nbd "read 0 128K"')
+-        self.assert_qmp(result, 'return', '')
++        self.vm.qmp_qemu_io('nbd', 'read 0 128K')
+ 
+     def create_nbd_export(self):
+         assert self.qsd is None
+@@ -336,5 +332,4 @@ class TestYieldingAndTimers(iotests.QMPTestCase):
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2'],
+                  supported_protocols=['file'],
+-                 unsupported_imgopts=['compat'],
+-                 require_hmp=True)
++                 unsupported_imgopts=['compat'])
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
