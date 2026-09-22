@@ -4,55 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5669CC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79955C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9299-00013K-JN; Tue, 22 Sep 2026 11:11:03 -0400
+	id 1x92AT-0001T4-1N; Tue, 22 Sep 2026 11:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1x9298-000135-Ho; Tue, 22 Sep 2026 11:11:02 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <anushree.mathur2@ibm.com>)
+ id 1x92AL-0001Sb-SE; Tue, 22 Sep 2026 11:12:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1x9296-0000xp-V5; Tue, 22 Sep 2026 11:11:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=VS1pYh26Ucsso/Fh7CZSSGHyw504gytKGzzopyqGhM4=; b=buoX4O2GA6eG0V5/Jnfb8zz4XO
- eUC5G3nqX42ofAEzuBW25WaS5Fbcea0vwmNkcvKX8DdEPHRE2FwvAJrzL8wsZUBfDxbtbAm8D+G+m
- SIKNtl1Yv4bQeLnOfZGyEKQvWTn9CTPnhkj6O3Wu1FdsY9LFve8aohSZLxQFD79V77eEfYJTM2nWF
- jKBVKH7bHFYl4ia1K6mFgJZwObIFV+1NQafmMJOQbsBooy0aKnNx6E5prP+nLT9TygDdX6619mOZM
- 0Hkdw3CJRUjtScHPSlwNaQSiI9rYA3aWYKeSDIYFIEjGK4HOe+0qGitTWJDwaBMTocs51sBG1fjk+
- rgaWYBdoOuq5GP8tXuaiFdpKTq0A4yICW5VpH12B291p6LF/xsnJ3/UwyOrzvYLvvu5xsaB0Rb1Ym
- OTgp6Dqp6pzquu4/gW8GD1ORcnj+zoaDNU3XRYi1Np/nWoXJrx4Mc4WRSx0X942dpZIFqJoPjO0Qe
- fGtzfyk6UaCtchriGq2fh6s8wuaHJ8RvKBa8S+8SRwYZuqFQLKTQ/uetT9grF+7yKuiiZG/b2Lzch
- uyw/edtNNe566ID3Hw6nHH1Q+vRwFOiwtFvUvMmTA7GACwHB8C+uoANEqby7SSWAvkFpISGBiy0WT
- HdN3kGAW1IhTo82s9NVmWPeHldM6K4td2w8agfNeM=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Greg Kurz <groug@kaod.org>, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Daniel =?UTF-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH] hw/9pfs: mutate FID path from main thread only
- (CVE-2026-93834)
-Date: Tue, 22 Sep 2026 17:10:58 +0200
-Message-ID: <3717038.iIbC2pHGDl@weasel>
-In-Reply-To: <arJ0_dq0W1Ah7NV_@redhat.com>
-References: <E1x8d3N-003M3F-Pz@kylie.crudebyte.com>
- <20260922081301.244e5524@bahia> <arJ0_dq0W1Ah7NV_@redhat.com>
+ (Exim 4.90_1) (envelope-from <anushree.mathur2@ibm.com>)
+ id 1x92AI-00010d-AN; Tue, 22 Sep 2026 11:12:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MF5mFI3071798; Tue, 22 Sep 2026 15:12:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dTEK+W
+ cvPHJJcUosEnh7j7hIb34kRKBZFOI5sYwSAcA=; b=OSZA4j0QHW5c1845NyScSe
+ OIYXpofYLr35DNaOstnqb0Scgn8rV/lSh8zay3dODOQQiHSDJzpkYtgjZQLKtjCT
+ XKvHIgaDGmFekFhKLepM9bsttmpiAo9BsGfMqUbEz8cuyB4RLjXcGAd259quChuU
+ 7sre2csrXinwd0gg6ATFzWPeW6pG1KHzpA1wcsNmsZLSLeqKjGEpw8i8og0bizCq
+ Tlh5RPqyVrq5zktyAcOx0VY6a1uqGTEDf9Uso/EslwzOOMfj5CywsXM5AF+g4yss
+ peWuYqmKLeM8kXq67lLRj/CNFd9uXC2KRrJ9cRlb2uTJm3BDe+If7z5NkzciZdLw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1pg96-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 15:12:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MElVLQ3046781; Tue, 22 Sep 2026 15:12:05 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqaf19-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 15:12:05 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MFC5p631261236
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 15:12:05 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0C92F58060;
+ Tue, 22 Sep 2026 15:12:05 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9BD7758056;
+ Tue, 22 Sep 2026 15:11:59 +0000 (GMT)
+Received: from [9.61.247.147] (unknown [9.61.247.147])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 22 Sep 2026 15:11:59 +0000 (GMT)
+Message-ID: <4f345c4b-bdd2-4605-a571-78d57c9d9509@ibm.com>
+Date: Tue, 22 Sep 2026 20:41:55 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] mac99: Boot OpenBSD/macppc
+From: Anushree Mathur <anushree.mathur2@ibm.com>
+To: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>
+References: <20260903115229.95811-1-kirill@korins.ky>
+ <7deeb331-9027-46bf-ae9d-088f048243e7@ibm.com>
+Content-Language: en-US
+In-Reply-To: <7deeb331-9027-46bf-ae9d-088f048243e7@ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: OegN5P0NzrZnMZvGj27yAJQZCRbQH8d9
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab29ac6 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=DuDDZcE7xSdUjtGOBSIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDIyMCBTYWx0ZWRfX9pFm11TQ2U9Z
+ eZLk1f18vp7Wtz3yBO01j9hUJ7MhzfJ7nTJlHw6hahZUncRE+J/8IWU2jhEcL3GrgMzthZ/ZdN3
+ ZxEf6qvFqlVa3b6MYa1zdssc4rk7QN0=
+X-Proofpoint-GUID: jJP4yfMFNYc-n1IRpYzJSenlVs-rODqx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDIyMCBTYWx0ZWRfX92kZllXRwTZp
+ y+kPf+iRCh0i3enLGbWa6R1GCXPP7Wmn5fgmbcb22D1J+sWkn3vy3Ha5OxmFxnQm2m9/lKz8bZ0
+ zGMQ7p3qNVZM0ba4KhApRz2jEIjywCmhNstRt2QSwtAz0sHAIqTFxePcZSFgEX/YuFtUjgyUBcU
+ EqnXDWsfRhBTc7wSnOYPv36/NrG6XhKqXwC6SvQw07xfB+FLb5r8ikWLrxp7yC/7QGa0ZJmCoQg
+ wyaCuAR3MC5mbKIbI6og8nIPz2+nJsydXxU1epGtKuM1SYTbC+EoEuoA2+zczJLcDKudnovBa0o
+ KZ7UU6SuxCvgI27wbgils27AJk3ou8Xm852tUQtdJtWif6m9Dx/KxlY9yhEMOR/LtAV8+hSz1+K
+ mtmlRByRTC2iFr44JVduztCeDsVV4XGVMSmLEt/2vtZAl+j+PMQJmrOvi9s3E89OrK+VpYHeejf
+ rJapLd1y7/yXJUZlUZQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220220
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=anushree.mathur2@ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,63 +129,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, 22 September 2026 14:30:53 CEST Daniel P. Berrang=C3=A9 wrote:
-> On Tue, Sep 22, 2026 at 08:13:01AM +0200, Greg Kurz wrote:
-> > On Mon, 21 Sep 2026 14:18:58 +0200
-> >=20
-> > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-> > > v9fs_co_open2() is the only code that mutates a FID path from a worker
-> > > thread: inside its v9fs_co_run_in_worker() block it frees fidp->path
-> > > and copies in the new path under the held FID path write lock.
-> > >=20
-> > > Every other FID path mutation in the 9p codebase happens on the main
-> > > thread, so main thread readers (v9fs_walk(), v9fs_xattrwalk(),
-> > > v9fs_stat(), v9fs_co_name_to_path()) rely on the same (main) thread
-> > > atomicity and don't take the path read lock themselves on main thread.
-> > >=20
-> > > Fix this by making the worker thread block in v9fs_co_open2() read-on=
-ly
-> > > with respect to the FID: render the new path into the local 'path'
-> > > variable only and copy it to fidp->path after the worker block return=
-ed
-> > > back to the main thread and still under the held write lock of the FI=
-D,
-> > > like every other FID path mutation does.
-> > >=20
-> > > Fixes: 02cb7f3a25 ("hw/9pfs: Use read-write lock for protecting fid
-> > > path.")
-> >=20
-> > Wow, it's a long standing issue ! ;-)
-> >=20
-> > > Fixes: CVE-2026-93834
-> >=20
-> > Cannot find it... embargoed ?
-> >=20
-> > > Reported-by: Milad Nasr <https://gitlab.com/sirkhezr>
-> > > Suggested-by: Milad Nasr <https://gitlab.com/sirkhezr>
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4491
-> >=20
-> > Cannot find that either...
->=20
-> Initially confidential, so only visible to maintainers with acccounts
-> added to the gitlab project. Bugs should be made public when their
-> patch is posted for review, so I've turned off the confidential flag
-> now.
 
-Strange policies. I would have:
+On 22/09/26 6:56 PM, Anushree Mathur wrote:
+>
+> On 03/09/26 5:20 PM, Kirill A. Korinsky wrote:
+>> Greetings,
+>>
+>> OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
+>> reassert an interrupt still masked by CTPR; the edge triggered
+>> decrementer does not raise on zero; successful CUDA ADB replies omit the
+>> original command; and the fixed CUDA shift register delay can stretch
+>> packet delivery past the guest timeout on hosts with coarse timers.
+>>
+>> This series corrects these four behaviours and adds a functional test
+>> which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
+>>
+>> P.S. this is second third to send the same patch because previous one
+>> had missed maintainers.
+>>
+>>
+> Hi Kirill,
+>
+> Thanks for working on this patch series. I applied this patch set and 
+> ran verification tests on a Power (ppc64le) host; everything worked as 
+> expected.
+>
+> Here is the detailed test summary:
+>
+> 1. Functional Test:
+>    Command:
+>    QEMU_TEST_QEMU_BINARY=./qemu-system-ppc64 ./run pyvenv/bin/python3 
+> ../tests/functional/ppc/test_openbsd.py
+>
+>    Result:
+>    TAP version 13
+>    ok 1 test_openbsd.OpenBSDMac99.test_openbsd_79_installer
+>    1..1
+>
+> 2. Manual OpenBSD Boot (TCG):
+>    Booted OpenBSD 7.9 RAMDISK image (cd79.iso) on mac99 with 
+> qemu-system-ppc64.
+>    Verified that OpenPIC, CPU decrementer calibration, and CUDA/ADB 
+> keyboard
+>    probing attached cleanly and reached the installer prompt:
+>
+>    "Bochs VGA" rev 0x02 at pci0 dev 13 function 0 not configured
+>    softraid0 at root
+>    scsibus1 at softraid0: 256 targets
+>    bootpath: 
+> /pci@f2000000/mac-io@c/ata-3@21000/cdrom@0:/7.9/macppc/bsd.rd
+>    root on rd0a swap on rd0b dump on rd0b
+>    WARNING: CHECK AND RESET THE DATE!
+>    erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+>
+>    Welcome to the OpenBSD/macppc 7.9 installation program.
+>    (I)nstall, (U)pgrade, (A)utoinstall or (S)hell?
+>
+> 3. Patch 2/5 (Decrementer Zero Write) A/B Check:
+>    - Positive check: Kernel boots through clock calibration into idle 
+> loops cleanly.
+>    - Negative check: Reverting the patch 2 change caused the guest to 
+> reliably stall
+>      during early boot right after CPU probe. Re-applying resolved the 
+> hang immediately.
+>
+> 4. Concurrency & Non-Regression:
+>    - Verified OpenBSD mac99 boot with both single-threaded 
+> (thread=single) and
+>      multi-threaded TCG.
+>    - Verified KVM/TCG guest bringup (pseries) on the ppc64le host with 
+> different thread
+>      configurations without any regressions.
+>
+Missed to add the space between Tested-by and name so resending tag in 
+correct format for b4 tool to pick it
 
-=2D Added Greg (reviewer and previous 9p maintainer for years) to the repor=
-t=20
-while it was still private. Instead I am the only one getting LLM generated=
-=20
-security reports thrown at me.
-
-=2D Considering the severeness of the vulnerability, I would have waited fo=
-r the=20
-patch been pushed through stable branches before making the full report=20
-public, or at least until merged on git.
-
-/Christian
-
-
+Please feel free to add:
+Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> Please feel free to add:
+> Tested-by: Anushree Mathur<anushree.mathur@linux.ibm.com>
+>
+> Thanks,
+> Anushree Mathur
 
