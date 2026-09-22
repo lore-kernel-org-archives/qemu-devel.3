@@ -4,116 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79955C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5EBC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x92AT-0001T4-1N; Tue, 22 Sep 2026 11:12:25 -0400
+	id 1x92Jk-0002gK-Ta; Tue, 22 Sep 2026 11:22:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur2@ibm.com>)
- id 1x92AL-0001Sb-SE; Tue, 22 Sep 2026 11:12:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x92Jk-0002fw-0w
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 11:22:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur2@ibm.com>)
- id 1x92AI-00010d-AN; Tue, 22 Sep 2026 11:12:16 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MF5mFI3071798; Tue, 22 Sep 2026 15:12:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dTEK+W
- cvPHJJcUosEnh7j7hIb34kRKBZFOI5sYwSAcA=; b=OSZA4j0QHW5c1845NyScSe
- OIYXpofYLr35DNaOstnqb0Scgn8rV/lSh8zay3dODOQQiHSDJzpkYtgjZQLKtjCT
- XKvHIgaDGmFekFhKLepM9bsttmpiAo9BsGfMqUbEz8cuyB4RLjXcGAd259quChuU
- 7sre2csrXinwd0gg6ATFzWPeW6pG1KHzpA1wcsNmsZLSLeqKjGEpw8i8og0bizCq
- Tlh5RPqyVrq5zktyAcOx0VY6a1uqGTEDf9Uso/EslwzOOMfj5CywsXM5AF+g4yss
- peWuYqmKLeM8kXq67lLRj/CNFd9uXC2KRrJ9cRlb2uTJm3BDe+If7z5NkzciZdLw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1pg96-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 15:12:06 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MElVLQ3046781; Tue, 22 Sep 2026 15:12:05 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqaf19-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 15:12:05 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MFC5p631261236
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 15:12:05 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0C92F58060;
- Tue, 22 Sep 2026 15:12:05 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9BD7758056;
- Tue, 22 Sep 2026 15:11:59 +0000 (GMT)
-Received: from [9.61.247.147] (unknown [9.61.247.147])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 22 Sep 2026 15:11:59 +0000 (GMT)
-Message-ID: <4f345c4b-bdd2-4605-a571-78d57c9d9509@ibm.com>
-Date: Tue, 22 Sep 2026 20:41:55 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x92Jh-00023p-I3
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 11:21:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790090516;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VIYHZArNfFwX+T5MM5k6jYfnlC7ChnSFULrG05SpifI=;
+ b=Wyh3AoYtLBK41ho5PwhhNTDQAlrgEZA8rZTlstZuy2v3NT8Dt4Jh9zrkWtVr7I9D1m0tQn
+ auYf9FyLFuvl01s/MqZVCBrHI8PaIwXKFH4sKQXc30nTc3j0O+5ThIbA1sflwNjzwDGYaR
+ u59g2y7FfRGIywJaDFEFDOYmOSpsxlU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-142-UbKa-tZVMUOnDEB_TNI-sw-1; Tue,
+ 22 Sep 2026 11:21:52 -0400
+X-MC-Unique: UbKa-tZVMUOnDEB_TNI-sw-1
+X-Mimecast-MFC-AGG-ID: UbKa-tZVMUOnDEB_TNI-sw_1790090511
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA31D18007FD; Tue, 22 Sep 2026 15:21:50 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77CEE180056E; Tue, 22 Sep 2026 15:21:49 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 24CDC21E6A04; Tue, 22 Sep 2026 17:21:47 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kashyap Chamarthy
+ <kchamart@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Hanna
+ Reitz <hreitz@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Da?=
+ =?utf-8?Q?ud=C3=A9?= <philmd@oss.qualcomm.com>,  qemu-block@nongnu.org,
+ qemu-trivial@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Eric Blake
+ <eblake@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 6/9] qapi: split intros for qga/qapi-schema.json
+In-Reply-To: <20260921205147.1857168-7-jsnow@redhat.com> (John Snow's message
+ of "Mon, 21 Sep 2026 16:51:44 -0400")
+References: <20260921205147.1857168-1-jsnow@redhat.com>
+ <20260921205147.1857168-7-jsnow@redhat.com>
+Date: Tue, 22 Sep 2026 17:21:47 +0200
+Message-ID: <87mrt92tx0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] mac99: Boot OpenBSD/macppc
-From: Anushree Mathur <anushree.mathur2@ibm.com>
-To: "Kirill A. Korinsky" <kirill@korins.ky>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-References: <20260903115229.95811-1-kirill@korins.ky>
- <7deeb331-9027-46bf-ae9d-088f048243e7@ibm.com>
-Content-Language: en-US
-In-Reply-To: <7deeb331-9027-46bf-ae9d-088f048243e7@ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: OegN5P0NzrZnMZvGj27yAJQZCRbQH8d9
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab29ac6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=DuDDZcE7xSdUjtGOBSIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDIyMCBTYWx0ZWRfX9pFm11TQ2U9Z
- eZLk1f18vp7Wtz3yBO01j9hUJ7MhzfJ7nTJlHw6hahZUncRE+J/8IWU2jhEcL3GrgMzthZ/ZdN3
- ZxEf6qvFqlVa3b6MYa1zdssc4rk7QN0=
-X-Proofpoint-GUID: jJP4yfMFNYc-n1IRpYzJSenlVs-rODqx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDIyMCBTYWx0ZWRfX92kZllXRwTZp
- y+kPf+iRCh0i3enLGbWa6R1GCXPP7Wmn5fgmbcb22D1J+sWkn3vy3Ha5OxmFxnQm2m9/lKz8bZ0
- zGMQ7p3qNVZM0ba4KhApRz2jEIjywCmhNstRt2QSwtAz0sHAIqTFxePcZSFgEX/YuFtUjgyUBcU
- EqnXDWsfRhBTc7wSnOYPv36/NrG6XhKqXwC6SvQw07xfB+FLb5r8ikWLrxp7yC/7QGa0ZJmCoQg
- wyaCuAR3MC5mbKIbI6og8nIPz2+nJsydXxU1epGtKuM1SYTbC+EoEuoA2+zczJLcDKudnovBa0o
- KZ7UU6SuxCvgI27wbgils27AJk3ou8Xm852tUQtdJtWif6m9Dx/KxlY9yhEMOR/LtAV8+hSz1+K
- mtmlRByRTC2iFr44JVduztCeDsVV4XGVMSmLEt/2vtZAl+j+PMQJmrOvi9s3E89OrK+VpYHeejf
- rJapLd1y7/yXJUZlUZQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220220
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=anushree.mathur2@ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,86 +94,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John Snow <jsnow@redhat.com> writes:
 
-On 22/09/26 6:56 PM, Anushree Mathur wrote:
+> These intro section conversions all create a new insertion point that
+> follow the introduction, but precede what now constitutes the details
+> text. Like other intro section conversions, the details text will be
+> moved en-masse in a later patch.
 >
-> On 03/09/26 5:20 PM, Kirill A. Korinsky wrote:
->> Greetings,
->>
->> OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
->> reassert an interrupt still masked by CTPR; the edge triggered
->> decrementer does not raise on zero; successful CUDA ADB replies omit the
->> original command; and the fixed CUDA shift register delay can stretch
->> packet delivery past the guest timeout on hosts with coarse timers.
->>
->> This series corrects these four behaviours and adds a functional test
->> which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
->>
->> P.S. this is second third to send the same patch because previous one
->> had missed maintainers.
->>
->>
-> Hi Kirill,
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  qga/qapi-schema.json | 61 +++++++++++++++++++-------------------------
+>  1 file changed, 26 insertions(+), 35 deletions(-)
 >
-> Thanks for working on this patch series. I applied this patch set and 
-> ran verification tests on a Power (ppc64le) host; everything worked as 
-> expected.
->
-> Here is the detailed test summary:
->
-> 1. Functional Test:
->    Command:
->    QEMU_TEST_QEMU_BINARY=./qemu-system-ppc64 ./run pyvenv/bin/python3 
-> ../tests/functional/ppc/test_openbsd.py
->
->    Result:
->    TAP version 13
->    ok 1 test_openbsd.OpenBSDMac99.test_openbsd_79_installer
->    1..1
->
-> 2. Manual OpenBSD Boot (TCG):
->    Booted OpenBSD 7.9 RAMDISK image (cd79.iso) on mac99 with 
-> qemu-system-ppc64.
->    Verified that OpenPIC, CPU decrementer calibration, and CUDA/ADB 
-> keyboard
->    probing attached cleanly and reached the installer prompt:
->
->    "Bochs VGA" rev 0x02 at pci0 dev 13 function 0 not configured
->    softraid0 at root
->    scsibus1 at softraid0: 256 targets
->    bootpath: 
-> /pci@f2000000/mac-io@c/ata-3@21000/cdrom@0:/7.9/macppc/bsd.rd
->    root on rd0a swap on rd0b dump on rd0b
->    WARNING: CHECK AND RESET THE DATE!
->    erase ^?, werase ^W, kill ^U, intr ^C, status ^T
->
->    Welcome to the OpenBSD/macppc 7.9 installation program.
->    (I)nstall, (U)pgrade, (A)utoinstall or (S)hell?
->
-> 3. Patch 2/5 (Decrementer Zero Write) A/B Check:
->    - Positive check: Kernel boots through clock calibration into idle 
-> loops cleanly.
->    - Negative check: Reverting the patch 2 change caused the guest to 
-> reliably stall
->      during early boot right after CPU probe. Re-applying resolved the 
-> hang immediately.
->
-> 4. Concurrency & Non-Regression:
->    - Verified OpenBSD mac99 boot with both single-threaded 
-> (thread=single) and
->      multi-threaded TCG.
->    - Verified KVM/TCG guest bringup (pseries) on the ppc64le host with 
-> different thread
->      configurations without any regressions.
->
-Missed to add the space between Tested-by and name so resending tag in 
-correct format for b4 tool to pick it
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 19b0958b84e..05fe4ea484d 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -48,9 +48,8 @@
+>  
+>  ##
+>  # @guest-sync-delimited:
+> -#
+> -# Echo back a unique integer value, and prepend to response a leading
+> -# sentinel byte (0xFF) the client can check scan for.
+> +#     Echo back a unique integer value, and prepend to response a
+> +#     leading sentinel byte (0xFF) the client can check scan for.
+>  #
+>  # This is used by clients talking to the guest agent over the wire to
+>  # ensure the stream is in sync and doesn't contain stale data from
+> @@ -83,8 +82,7 @@
+>  
+>  ##
+>  # @guest-sync:
+> -#
+> -# Echo back a unique integer value
+> +#     Echo back a unique integer value
+>  #
+>  # This is used by clients talking to the guest agent over the wire to
+>  # ensure the stream is in sync and doesn't contain stale data from
+> @@ -140,8 +138,7 @@
+>  
+>  ##
+>  # @guest-set-time:
+> -#
+> -# Set guest time.
+> +#     Set guest time.
+>  #
+>  # When a guest is paused or migrated to a file then loaded from that
+>  # file, the guest OS has no idea that there was a big gap in the time.
+> @@ -415,14 +412,14 @@
+>  
+>  ##
+>  # @guest-fsfreeze-freeze:
+> +#     Sync and freeze all freezable, local guest filesystems.  If this
+> +#     command succeeded, you may call `guest-fsfreeze-thaw` later to
+> +#     unfreeze.
+>  #
+> -# Sync and freeze all freezable, local guest filesystems.  If this
+> -# command succeeded, you may call `guest-fsfreeze-thaw` later to
+> -# unfreeze.
+> -#
+> -# On error, all filesystems will be thawed.  If no filesystems are
+> -# frozen as a result of this call, then `guest-fsfreeze-status` will
+> -# remain "thawed" and calling `guest-fsfreeze-thaw` is not necessary.
+> +#     On error, all filesystems will be thawed.  If no filesystems are
+> +#     frozen as a result of this call, then `guest-fsfreeze-status`
+> +#     will remain "thawed" and calling `guest-fsfreeze-thaw` is not
+> +#     necessary.
 
-Please feel free to add:
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> Please feel free to add:
-> Tested-by: Anushree Mathur<anushree.mathur@linux.ibm.com>
->
-> Thanks,
-> Anushree Mathur
+More of what I noted in earlier series:
+
+3. Review and improve doc comments where the intro talks about failure
+modes.
+
+Moving on.
+
+>  #
+>  # Returns: Number of file systems currently frozen.
+>  #
+> @@ -438,11 +435,10 @@
+>  
+>  ##
+>  # @guest-fsfreeze-freeze-list:
+> +#     Sync and freeze specified guest filesystems.  See also
+> +#     `guest-fsfreeze-freeze`.
+>  #
+> -# Sync and freeze specified guest filesystems.  See also
+> -# `guest-fsfreeze-freeze`.
+> -#
+> -# On error, all filesystems will be thawed.
+> +#     On error, all filesystems will be thawed.
+
+Likewise.
+
+>  #
+>  # @mountpoints: an array of mountpoints of filesystems to be frozen.
+>  #     If omitted, every mounted filesystem is frozen.  Invalid mount
+> @@ -528,8 +524,7 @@
+>  
+>  ##
+>  # @guest-suspend-disk:
+> -#
+> -# Suspend guest to disk.
+> +#     Suspend guest to disk.
+>  #
+>  # This command attempts to suspend the guest using three strategies,
+>  # in this order:
+> @@ -558,8 +553,7 @@
+>  
+>  ##
+>  # @guest-suspend-ram:
+> -#
+> -# Suspend guest to ram.
+> +#     Suspend guest to ram.
+>  #
+>  # This command attempts to suspend the guest using three strategies,
+>  # in this order:
+> @@ -595,8 +589,7 @@
+>  
+>  ##
+>  # @guest-suspend-hybrid:
+> -#
+> -# Save guest state to disk and suspend to ram.
+> +#     Save guest state to disk and suspend to ram.
+>  #
+>  # This command attempts to suspend the guest by executing, in this
+>  # order:
+> @@ -746,10 +739,9 @@
+>  
+>  ##
+>  # @guest-get-vcpus:
+> +#     Retrieve the list of the guest's logical processors.
+>  #
+> -# Retrieve the list of the guest's logical processors.
+> -#
+> -# This is a read-only operation.
+> +#     This is a read-only operation.
+
+If a command is called "get something", it's certainly not supposed to
+change something!
+
+Not this patch's problem, moving on...
+
+>  #
+>  # Returns: The list of all VCPUs the guest knows about.  Each VCPU is
+>  #     put on the list exactly once, but their order is unspecified.
+> @@ -1106,10 +1098,9 @@
+>  
+>  ##
+>  # @guest-get-memory-blocks:
+> +#     Retrieve the list of the guest's memory blocks.
+>  #
+> -# Retrieve the list of the guest's memory blocks.
+> -#
+> -# This is a read-only operation.
+> +#     This is a read-only operation.
+
+Likewise.
+
+>  #
+>  # Returns: The list of all memory blocks the guest knows about.  Each
+>  #     memory block is put on the list exactly once, but their order is
+> @@ -1346,12 +1337,12 @@
+>  
+>  ##
+>  # @guest-get-host-name:
+> +#     Return a name for the machine.
+>  #
+> -# Return a name for the machine.
+> -#
+> -# The returned name is not necessarily a fully-qualified domain name,
+> -# or even present in DNS or some other name service at all.  It need
+> -# not even be unique on your local network or site, but usually it is.
+> +#     The returned name is not necessarily a fully-qualified domain
+> +#     name, or even present in DNS or some other name service at all.
+> +#     It need not even be unique on your local network or site, but
+> +#     usually it is.
+
+This should perhaps be worked into Returns: ...  Not this patch's
+problem, moving on...
+
+>  #
+>  # Returns: the host name of the machine
+>  #
+
 
