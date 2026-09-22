@@ -4,68 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD0BC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4778AC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 15:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x92f3-0008W9-FA; Tue, 22 Sep 2026 11:44:01 -0400
+	id 1x92mO-0001Jt-LI; Tue, 22 Sep 2026 11:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x92f1-0008VT-Mz
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 11:43:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x92mM-0001Is-JT; Tue, 22 Sep 2026 11:51:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x92ez-0004GU-J9
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 11:43:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790091835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=a2cNSFKqB3BJbf/3RetPRBDFoS8WgoEIb8qKuxxH0iE=;
- b=JkY3ONQ4Us0HLTM62YP/yxLOpCd/LTQq7mc2qSlL5Kt77gPkwQsupFSHgA69tp8gvmGF9X
- 6LYvNeDzVc+Zf69JNSwiDYIq88K+nf1Y0AAXnLRlarfoZACO9gsSpwtSj2lxF+N+pbK+qh
- LjGf6wENhakwN3STKH6zRl/OYuHOg/k=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-EbJVJrqyPwWdhaiU4l9PcQ-1; Tue,
- 22 Sep 2026 11:43:54 -0400
-X-MC-Unique: EbJVJrqyPwWdhaiU4l9PcQ-1
-X-Mimecast-MFC-AGG-ID: EbJVJrqyPwWdhaiU4l9PcQ_1790091833
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FEA3185BEBE; Tue, 22 Sep 2026 15:43:53 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93AD5426; Tue, 22 Sep 2026 15:43:52 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, nsoffer@redhat.com,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Biggers <ebiggers@google.com>
-Subject: [PATCH] file-posix: add statx(STATX_DIOALIGN) support
-Date: Tue, 22 Sep 2026 11:43:51 -0400
-Message-ID: <20260922154351.226540-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1x92mK-0004zO-ND; Tue, 22 Sep 2026 11:51:34 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MF5inr752724; Tue, 22 Sep 2026 15:51:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wIxAe8
+ 5DlwPIb6wxKlZq/4du46PW6fHrwatoyutBPJQ=; b=mqGn6DgUiSXQm3IPzf1nOh
+ z8z6mkJBW8vx8TTvxOKcp3j7lFCMRd8ASO5J2rJ8G/h8ytJID4WjcsZdQy5oa/wF
+ AT2o3QML78NA4AvfY+quUJrN6lcZMmZlOY+Uo2xubM3ssByyq+FbJMACQbHPIijw
+ cteZLqWsTYyMzQT7pPoH2P+K34/k5O+ZAw3HjXTo52L4OicAugQUO5W/EYC3N0Ni
+ /7b75xze5ehEX5DP5B1TtRXijgkixKmxvjeJaXLRYBJQoazaH6yUcYWnvGjgR/Gb
+ GndWulwr5FwFzg3tZEZb6/BxReUjsG9fBAifRgVbiD6z5HY+7JTElFQYVbC00yzQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs6pw4-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 15:51:28 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MElgeh2988073; Tue, 22 Sep 2026 15:51:28 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vjjf9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 15:51:28 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MFpQix21561856
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 15:51:26 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 749BA58059;
+ Tue, 22 Sep 2026 15:51:26 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 48AEF58058;
+ Tue, 22 Sep 2026 15:51:25 +0000 (GMT)
+Received: from [9.12.79.241] (unknown [9.12.79.241])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 15:51:25 +0000 (GMT)
+Message-ID: <1b240379-9a84-4445-8cef-ee90c0518ba7@linux.ibm.com>
+Date: Tue, 22 Sep 2026 11:51:24 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/8] pc-bios/s390-ccw: Add support for virtio-net-pci
+ IPL
+To: Joshua Daley <jdaley@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
+ jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, pasic@linux.ibm.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com
+References: <20260914193438.526407-1-zycai@linux.ibm.com>
+ <20260914193438.526407-5-zycai@linux.ibm.com>
+ <775ca6a7-18b3-437e-992d-cc366daa84d9@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <775ca6a7-18b3-437e-992d-cc366daa84d9@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab2a401 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=ctsVLiZ_AAAA:8 a=OJOUDSZ1EHGthsF5biMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3VCIHQLkQthbvTRuo98s:22
+X-Proofpoint-ORIG-GUID: SpIKwdvpqsapSVCoTvcqvEEejKbPgzi1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDIyNyBTYWx0ZWRfX0I4uZh0AS1m1
+ FSAptFlrfep0WPmbtdKjvq4BqglPxW2tibkmfgEkIch7H7nKM44P28JRhwpeAOyoHpD6dbWOE94
+ efnlLCZzCMub9ny5hF+z4VZaS4tu4Tx2mjmCvby78ejzEfSxV1BbEDsqbXPwdvqW8QU+FzjI+Ah
+ hOJIaepQ1wZ29udxFM/wX+sRgNVJb5NRyLDQV2LcJuiZUZtXnlnLxIeaqlnOnv2HEnDbIj59tem
+ +s1Uhesv0n/EPRkMMeoF6NJEblbJCe+ZGdCQ7NzvsxXTtwifGSVPZ9dPoFIFzfiNM/sVtffk8SD
+ 2HJUh+SZAB5vOOvPPFG/9KizXtC/KnboeY1Lq+qtHFQS5wlyral2f62/KNT87fDwFAJcH90iZtC
+ kSqB58ZACPZSJBTo9k/J71ukvNywxjFymjE36luRHZrlxDzqIKhb7z2p1qvXvkFKqteZJ3ciTiF
+ afni74agO+WHnR68+gg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDIyNyBTYWx0ZWRfX/YsBEyCSp3FS
+ rTcsl7Av0mjOmec1H77wBoJSCeUaR8l+SXs84eo/pLiYK5xpBz7snmMHBunXLK4o2dru6lha/en
+ I30z/W8kgNRrwQXlxPak0WYgJChYXPY=
+X-Proofpoint-GUID: SpIKwdvpqsapSVCoTvcqvEEejKbPgzi1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220227
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,111 +130,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux v6.1 commit 825cf206ed51 ("statx: add direct I/O alignment
-information") added an interface to fetch O_DIRECT alignment values for
-block devices and file systems.
+On 9/22/26 11:35 AM, Joshua Daley wrote:
+> FYI, now that Jared's virtio-scsi-pci boot series is merged, this patch does not apply.
+>
 
-Prefer STATX_DIOALIGN to older interfaces and probing, but keep them as
-fallbacks in case STATX_DIOALIGN cannot provide the information.
+Thanks for the heads-up! I’ll update the patch accordingly in the next
+version.
 
-STATX_DIOALIGN support as of Linux 6.1:
-- btrfs: no
-- ext4: yes
-- XFS: yes
-- block devices: yes
-- dm-crypt: yes
-
-This change fixes #1290 ("IO alignment probing delivers incorrect
-results on Linux when used with e.g. dm-crypt") on Linux host kernel
-version 6.1 or later by avoiding the problematic probing code in
-raw_probe_alignment(). It would be nice to fix the probing code but I
-have not been able to reproduce it. Stable/LTS distros ship Linux 6.1+,
-so the number of users without STATX_DIOALIGN is becoming small.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1290
-Cc: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
-v3:
-- Rebase and update commit description
-v2:
-- Make sure that XFS_IOC_DIOINFO takes priority over logical blocksize [Eric Biggers]
----
- block/file-posix.c | 56 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 38 insertions(+), 18 deletions(-)
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9aad156aad4..0dedd090068 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -426,28 +426,48 @@ static void raw_probe_alignment(BlockDriverState *bs, int fd, Error **errp)
- 
-     bs->bl.request_alignment = 0;
-     s->buf_align = 0;
--    /* Let's try to use the logical blocksize for the alignment. */
--    if (probe_logical_blocksize(fd, &bs->bl.request_alignment) < 0) {
--        bs->bl.request_alignment = 0;
-+
-+#if defined(__linux__) && defined(STATX_DIOALIGN)
-+    struct statx stx;
-+
-+    /*
-+     * Linux 6.1 introduced an interface for both block devices and file
-+     * systems. The system call returns with the STATX_DIOALIGN bit cleared
-+     * when the information is unavailable.
-+     */
-+    if (statx(fd, "", AT_EMPTY_PATH, STATX_DIOALIGN, &stx) == 0 &&
-+        (stx.stx_mask & STATX_DIOALIGN)) {
-+        bs->bl.request_alignment = stx.stx_dio_offset_align;
-+        s->buf_align = stx.stx_dio_mem_align;
-     }
-+#endif /* defined(__linux__) && defined(STATX_DIOALIGN) */
- 
- #ifdef __linux__
--    /*
--     * The XFS ioctl definitions are shipped in extra packages that might
--     * not always be available. Since we just need the XFS_IOC_DIOINFO ioctl
--     * here, we simply use our own definition instead:
--     */
--    struct xfs_dioattr {
--        uint32_t d_mem;
--        uint32_t d_miniosz;
--        uint32_t d_maxiosz;
--    } da;
--    if (ioctl(fd, _IOR('X', 30, struct xfs_dioattr), &da) >= 0) {
--        bs->bl.request_alignment = da.d_miniosz;
--        /* The kernel returns wrong information for d_mem */
--        /* s->buf_align = da.d_mem; */
-+    if (!bs->bl.request_alignment) {
-+        /*
-+         * The XFS ioctl definitions are shipped in extra packages that might
-+         * not always be available. Since we just need the XFS_IOC_DIOINFO ioctl
-+         * here, we simply use our own definition instead:
-+         */
-+        struct xfs_dioattr {
-+            uint32_t d_mem;
-+            uint32_t d_miniosz;
-+            uint32_t d_maxiosz;
-+        } da;
-+        if (ioctl(fd, _IOR('X', 30, struct xfs_dioattr), &da) >= 0) {
-+            bs->bl.request_alignment = da.d_miniosz;
-+            /* The kernel returns wrong information for d_mem */
-+            /* s->buf_align = da.d_mem; */
-+        }
-+    }
-+#endif /* __linux__ */
-+
-+    /* Let's try to use the logical blocksize for the alignment. */
-+    if (!bs->bl.request_alignment) {
-+        if (probe_logical_blocksize(fd, &bs->bl.request_alignment) < 0) {
-+            bs->bl.request_alignment = 0;
-+        }
-     }
--#endif
- 
-     /*
-      * If we could not get the sizes so far, we can only guess them. First try
--- 
-2.55.0
+> On 9/14/2026 3:34 PM, Zhuoying Cai wrote:
+>> Enable network booting via virtio-net-pci by implementing PCI transport
+>> support for virtio-net.
+>>
+>> This patch also extends endianness handling for virtio PCI ring operations in
+>> little-endian to ensure correct behavior on s390x.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   pc-bios/s390-ccw/main.c       |  1 +
+>>   pc-bios/s390-ccw/netmain.c    |  9 +++++++-
+>>   pc-bios/s390-ccw/virtio-net.c | 41 ++++++++++++++++++++++++++++-------
+>>   pc-bios/s390-ccw/virtio-pci.c | 20 +++++++++++++++++
+>>   4 files changed, 62 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+>> index 8fc1cbf653..28cab3b411 100644
+>> --- a/pc-bios/s390-ccw/main.c
+>> +++ b/pc-bios/s390-ccw/main.c
+>> @@ -332,6 +332,7 @@ static void ipl_pci_device(void)
+>>       }
+>>   
+>>       switch (vdev->dev_type) {
+>> +    case VIRTIO_ID_NET:
+>>       case VIRTIO_ID_BLOCK:
+>>           if (virtio_setup() == 0) {
+>>               zipl_load(); /* only return on error */
+> case VIRTIO_ID_SCSI has been added here
+> 
+> ..snip...
+> 
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+>> index f501252c81..fd794bad8f 100644
+>> --- a/pc-bios/s390-ccw/virtio-pci.c
+>> +++ b/pc-bios/s390-ccw/virtio-pci.c
+>> @@ -52,6 +52,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+>>       case 0x1001:
+>>           vdev->dev_type = VIRTIO_ID_BLOCK;
+>>           break;
+>> +    case 0x1041:
+>> +    case 0x1000:
+>> +        vdev->dev_type = VIRTIO_ID_NET;
+>> +        break;
+>>       default:
+>>           vdev->dev_type = 0;
+>>       }
+> some new cases were added here also
+> 
+>> @@ -199,6 +203,17 @@ static int virtio_pci_get_blk_config(void)
+>>       return rc;
+>>   }
+>>   
+>> +static int virtio_pci_get_net_config(void)
+>> +{
+>> +    VirtioNetConfig *cfg = &virtio_get_device()->config.net;
+>> +
+>> +    /*
+>> +     * Byte-swapping is not needed as only the MAC address (byte array)
+>> +     * is used here. Byte-swap if other fields are added.
+>> +     */
+>> +    return vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioNetConfig));
+>> +}
+>> +
+>>   static int virtio_pci_negotiate(void)
+>>   {
+>>       int i, rc;
+>> @@ -330,6 +345,7 @@ bool virtio_pci_is_supported(VDev *vdev)
+>>       if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
+>>           switch (vdev->dev_type) {
+>>           case VIRTIO_ID_BLOCK:
+>> +        case VIRTIO_ID_NET:
+>>               return true;
+>>           default:
+>>               return false;
+> here also
+> 
+>> @@ -384,6 +400,10 @@ int virtio_pci_setup(VDev *vdev)
+>>           vdev->cmd_vr_idx = 0;
+>>           virtio_pci_get_blk_config();
+>>           break;
+>> +    case VIRTIO_ID_NET:
+>> +        vdev->nr_vqs = 2;
+>> +        virtio_pci_get_net_config();
+>> +        break;
+>>       default:
+>>           puts("Unsupported virtio device");
+>>           return -ENODEV;
+> here also
 
 
