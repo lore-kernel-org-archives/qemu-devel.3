@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 372D2C98304
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2472FC98302
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96vN-0000Ey-N9; Tue, 22 Sep 2026 16:17:09 -0400
+	id 1x96vC-0008O2-7C; Tue, 22 Sep 2026 16:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96tu-00081t-36; Tue, 22 Sep 2026 16:15:38 -0400
+ id 1x96tv-000826-AA; Tue, 22 Sep 2026 16:15:42 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96tr-0007fe-5u; Tue, 22 Sep 2026 16:15:37 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1x96tr-0007fw-64; Tue, 22 Sep 2026 16:15:39 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI7Rdx3447527; Tue, 22 Sep 2026 20:15:32 GMT
+ 68MI7HKo1129652; Tue, 22 Sep 2026 20:15:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=qyRP9gix4X7Wva7VD
- C0mSmWL3CSHNCxNFONlLaz7Krw=; b=oes62qCwtlH59yh+F//Gd9CD58wlsgIq9
- rCzmZCc7foMtAFpLRnUr1TGkmUxgAIzQRml/KMRKdiqvffC9ZEWmcWwcG6aXyAV1
- 2nljzmgO7Rz/JGDOVt8tp5LgVk39jwi/bXf/LewRMUdZ5QcxU6q2876C6P9d7RBu
- TzedfjdTNRb7EFTQGeNlRc6gquwBGy9insI+xHz5U8ITH4vdiZ27EQwViHzIDqDM
- 3SbOP2w0NZpSWjfrLnuKGx84qN0xzghhblIh36dgw4cl8Moxm8os8ucHR3ToQZOw
- GPMDMlQH+BY2Eq5sWWbz9k2Sgx1374z6CjjTFHgExV/qffpHa3Ieg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1qsh2-1
+ :mime-version:references:subject:to; s=pp1; bh=JMdkwqD9Zszzk7iBT
+ rGR4/pIMvEXuGW8BOWpT6++kFc=; b=QAkQaAPYjePZ25Wak7btQpNY0E6NH88nq
+ yJ6WoyUsLsTnxl67/ryGsYjPF/ThTqhEDTtGmtnGNk4vPxM4RSE40sgGNnCjFhsH
+ DprMEfFX0LobklIND/0R1GVfAouE10WlhfMk4CnjkA5GA5V5wIaiZJTMUaI/xuF0
+ 4//mXSsrd/y9wJk7ssDEaNKjlJ+k7cRgYjC4Xj+i7u0rveFxLabQqkfZMUDCRz4W
+ 5ixD90d4rh9//G86CkHkhMJzvdgxcDR1Hzt9aCJOH8uvl0k1ImkqFQZoKV+qfqP/
+ S1cyURu62UrwteDmy6/4nKCD355+Y91xtoJxwwjLDhXFp+KQrC2Og==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ftqx-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
  Tue, 22 Sep 2026 20:15:32 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHWEe1972713; Tue, 22 Sep 2026 20:15:31 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bkdw1f-1
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHY643220305; Tue, 22 Sep 2026 20:15:32 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vkdxd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 22 Sep 2026 20:15:31 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MKFR8C26935668
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MKFR4J47972798
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 22 Sep 2026 20:15:27 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 958EC2004D;
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BE3852004B;
  Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 791D62004B;
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A085D20049;
  Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
  Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 62E40161539; Tue, 22 Sep 2026 22:15:27 +0200 (CEST)
+ id 6C7E716162C; Tue, 22 Sep 2026 22:15:27 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
  qemu-stable@nongnu.org
-Subject: [PATCH v3 3/9] virtio-ccw: Fix rc check in read configuration path
-Date: Tue, 22 Sep 2026 22:15:19 +0200
-Message-ID: <20260922201526.2383047-4-farman@linux.ibm.com>
+Subject: [PATCH v3 7/9] hw/intc/s390x: Fix check after g_try_realloc
+Date: Tue, 22 Sep 2026 22:15:23 +0200
+Message-ID: <20260922201526.2383047-8-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260922201526.2383047-1-farman@linux.ibm.com>
 References: <20260922201526.2383047-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: fXkTB_ux423T4xZx6yWtY9rTa3fY6pdh
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab2e1e4 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: 77atNcqF2nOwGP3xTj4upL2QDml00iEy
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab2e1e4 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=uiMiztMkydEs4ieJCJEA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX+chpqejnXT3G
- P9TcRJQyGdQGGnxHyMewOpaRW3u7tyBu+AWyoRr3O63xHwlmDbwatcPvMk/aDytWGTIhf0BgsWe
- caFAfowCgieR87yUA8RPSNodX3F0uZ0=
-X-Proofpoint-GUID: fXkTB_ux423T4xZx6yWtY9rTa3fY6pdh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfXwTmNNKm/9FHE
- Z6OgCl9towVxO/SKaY0+JZ07sP6UL7dyd084l+4ZLuDLPVCofKSASzLFi32aXigFjB/S+8Nb32d
- ZjXruv725gkQAXzaEXdeSrXPuGRmPDiJ7ntt4XjajgfiMj3cIdeFTmuld2j1Ao7wfUrIoqwmvtD
- nXhl/7oWPjlleU3vIXXhTfvFoDv7ONFNJrCs96aRvNnJNKgqgKPG+IxF6nO0HYeyJpV1AS7gHM/
- Lc9Gn7owvWnO1bb3Yzwl9+PQ8K27/aVXEsMS0v+I+ztNlCjiU8xR0Hz55Q76g0DA+diDfRFx6yD
- DASt/ctmpjz6IrFP3krcDXBeUfnYLb8IfoR3oPfaUhXtzWzpgugM1Or49YXGPMSjUtvSCozRUD2
- dGn9azIsaUHdZ3biOxiCGrPrqYgB4iQs5LzwXxSOVOeLKesNQBswCF1LaY9ZQleoIF6ceUgDt+I
- BgOXmGu2EUw7Xr5JJQA==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=M8FnGKaJMcETolB0Q_gA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfXwg41jtBfXNmC
+ R3dRpw06EJHD4SJnMmNDM4RHHi25cEXR9fLPX+UcpcfmQWejqSqtvDfzqgoAyl4qtglV6RjBL9H
+ SDhWS/jtNTNs86q8QfGLl4229sX/Ju1UDUwNUWVjutUi1o2k3QVZX98Wit2fr3BbDID4YVYpM+1
+ z0Gn3Qy2RA2u61mbUwLHBI+7nykeq1WFEKWo+A/ViIBC7/ym4bQFxYwx2njqWihIevS0rXWwWCQ
+ PQOUU43m7UVhemIqRjwiR6Y1HzBjaEHGRrIIh+8hff43d76jGqGYQINHw3YlDuI6X/zw/im+ZYj
+ ri3lCwFZQMFDOWy326oFsI33otxJVuHxEPZNTXsC7hgHwRMgbIcPSp9Dle68ur2N1kuWug+CIpI
+ v3uNPrxcXAJIBZrP/Rdni3DefIpQLqZCjDEO6PfyDmURUUSdk4XDT4RWkxYRi158QxHmTjkU9yl
+ YWPwIqxeXYKryklGtTw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX0BRwt/2ul0be
+ G48gh4yKcw8sJFy/0DOPi7KY/PVOO0syqb5njDoW0BC55yCffaOKMrTc7pq8Cnlz5fxFmcYV2Iq
+ LkKFJILj92Lan0F7UAwIOiXExuXOG2g=
+X-Proofpoint-GUID: 77atNcqF2nOwGP3xTj4upL2QDml00iEy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220293
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -124,36 +124,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both the read and write config paths use wrappers around cds->op_handler,
-depending on the direction the I/O is flowing. But they expect opposite
-values in the returned variable to indicate success.
+The loop to store pending IRQs uses g_try_realloc() to expand the
+buffer being used, but the returned address is stored in a
+pointer-to-pointer, thus the check is supposed to be examining
+the contents of the pointer, and not the pointer itself.
 
-Fix this by unifying those checks, where CCW_CMD_READ_CONF needs to
-see !ret as success. The end result is some erroneous data in the
-SCSW response data, but the overall success/failure is correct.
+Define a temporary variable to catch and test the returned pointer.
+If it's NULL, return to the caller to perform the free on the
+unmodified buffer. If it's not NULL, store it in the caller's
+pointer and restart the loop against the new struct.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d895d25ae2 ("s390x: css: report errors from ccw_dstream_read/write=
-")
+Fixes: 3a553fc658 ("s390x/kvm: implement floating-interrupt controller de=
+vice")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/s390_flic_kvm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index f46f936150..11441e56c1 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -475,7 +475,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-         } else {
-             virtio_bus_get_vdev_config(&dev->bus, vdev->config);
-             ret =3D ccw_dstream_write_buf(&sch->cds, vdev->config, len);
--            if (ret) {
-+            if (!ret) {
-                 sch->curr_status.scsw.count =3D ccw.count - len;
-             }
+diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
+index 5e6d422fba..63c6ce81d9 100644
+--- a/hw/intc/s390_flic_kvm.c
++++ b/hw/intc/s390_flic_kvm.c
+@@ -254,6 +254,7 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+                           void **buf, int len)
+ {
+     int r;
++    void *new_buf =3D NULL;
+=20
+     do {
+         /* returns -ENOMEM if buffer is too small and number
+@@ -263,10 +264,11 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+             break;
          }
+         len *=3D 2;
+-        *buf =3D g_try_realloc(*buf, len);
+-        if (!buf) {
++        new_buf =3D g_try_realloc(*buf, len);
++        if (!new_buf) {
+             return -ENOMEM;
+         }
++        *buf =3D new_buf;
+     } while (r =3D=3D -ENOMEM && len <=3D KVM_S390_FLIC_MAX_BUFFER);
+=20
+     return r;
 --=20
 2.53.0
 
