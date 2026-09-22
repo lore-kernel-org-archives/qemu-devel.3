@@ -4,55 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91B3C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88903C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x97hI-0007CL-Hl; Tue, 22 Sep 2026 17:06:40 -0400
+	id 1x97hw-0007dx-0M; Tue, 22 Sep 2026 17:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x97hD-0007Bn-6I; Tue, 22 Sep 2026 17:06:36 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97ht-0007bq-Kt
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:07:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x97hA-0005EO-Vs; Tue, 22 Sep 2026 17:06:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=oCHdUhMh/QnUw6msFQr9ApVOKEaCtkEr0e5fKB06hjw=; b=AX5TC6fDds9WMsH
- QVKrYDoliT2quA6mpytsksZGc9HRrKCIRTYpKjxumu3msNNoAvqzlUnCll1gJa0V8aQx4noDEPRk8
- eZsiIPU5zRcJ4XMQOeb/gdkyERBNxprgi0s01qZrPjHA2OkxSiJq9udLuVWJEuWV4g9KKGd9Dus+U
- mg=;
-Date: Tue, 22 Sep 2026 23:12:00 +0200
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- daniel.barboza@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- palmer@dabbelt.com, alistair.francis@wdc.com
-Subject: Re: [PATCH v5 03/11] target/riscv: Replace TARGET_LONG_BITS in
- header exposed to common code
-Message-ID: <arLsea9pWtG-DQGG@hive.localdomain>
-References: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
- <20260918-hw-riscv-cpu-int-v5-3-f98c5a244636@rev.ng>
- <3539b4ac-aeda-4c90-935a-1c5e105713e7@oss.qualcomm.com>
- <5957fc53-99eb-4cad-89b6-0dae6e2a6d85@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97hs-0005GI-24
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:07:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790111235;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3T1a0uTgrtj1q08tU4l+fhE5cLikzJZ5N7DVyUsx7yk=;
+ b=gcLzAVR4tLoFwrzdRpV3pco+79DkCAkNffdTXXvKUfhCDp5wOPtH5JeHztMifhjiHVDNWt
+ FKj/2ncGvZoTwH/sh/INOcgihtRIzSJYRu0UO71tm1KYEga9F9lX9e4ZATCrvYkfnoXI9X
+ SFutJjt7MZfPxPCsAKrO70HxOD5Gmbo=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-fwJg53KWMqiTkWt6XtpThQ-1; Tue, 22 Sep 2026 17:07:11 -0400
+X-MC-Unique: fwJg53KWMqiTkWt6XtpThQ-1
+X-Mimecast-MFC-AGG-ID: fwJg53KWMqiTkWt6XtpThQ_1790111231
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-67149af6070so593699d50.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 14:07:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790111231; cv=none;
+ d=google.com; s=arc-20260327;
+ b=X8IaqMZLIv204z8GZTsvZPBz60KumJRUhPva6a8G5xkTkmrzTHBGXIhC/vR9nfrwt/
+ oXkF6X22Pn1kqnx23T0ffQeuVB/SoUilijqEEcZeQIkj3it0Q9B4607OYm34CRj8n6jM
+ +loGwlHAArSuXqUoMzEaJW4oFeUDMz1pL5ApZUBT/ZfDoShx6rnvt47Kw7BH5z7yYDMY
+ nSKawWd6cmCs6kvATVe/Kwt2dnVxo3tUtMjH9qi6loNFw/qXKJgepSGwP60x3gRQfI/i
+ Et6nhHFEbVUDliGMBIYnr3auU836BoIvTTI7nzFsBucP6mu1ykJ4C8vkXmGqnXJ4xGlf
+ yTtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3T1a0uTgrtj1q08tU4l+fhE5cLikzJZ5N7DVyUsx7yk=;
+ fh=HggjP/8GTcSTTJqWLQ4IKk3lBbpDDmOG4QVBwEsA1HQ=;
+ b=RlPCOmZ57ajWiSnpYVjhwnFSsHSjQxmMbuyiOSUDloYHvCmKBxbnchMBwB33E1lBAk
+ LgIRedytxcM7/zHhPz+fGxCM7PXCnYKwDiLS/FTDh8mqrDurBicyhA57hSpqyQusl+FN
+ HLuqVOD/xRb3OE/x398MoG5NqPgP8Fv799pduit1uW1HiaK9vLtk8xqW/Gq8a/x/Fh5h
+ 3+bi1QZe0mwXfOmK7Il+vqcqrzbDK0CJe12s605bBeQAalo8IezVHK5UCZPUhYBMzk5W
+ BTqj5LX1P3glHfwG+xgucwfXWGcGusZaaQzw1bKWQX9ikXaOLRgTlCoDGWK98o2f/VIi
+ PWkw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790111231; x=1790716031; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3T1a0uTgrtj1q08tU4l+fhE5cLikzJZ5N7DVyUsx7yk=;
+ b=KTDJI4s5wfu9OQKazcK1dsjgoAmC8rol8lGYDwhnh2RPqDu+/qt4YRw6FD2FQ1XJGs
+ ztyqbjlTI4yswARY0rdWBvSEqlsC/cWPE13VFklwE/I2hyjBSAnOfjfWSYt1HnyUCCaP
+ s9EVtU5yfm+HVEN9rmdawFuHdo6ngCcSsmX0Sq+F83rZKF3scnyDw7XOs46zslD5KhWP
+ G3iyiXlUWg6C7q6TXt1UmP542axDkI1aQ/BrYKuYP/9+eNax8z5gwvR/u1PgxkfhEk9x
+ 1HHXcQfRh8cxZlvHVLK8+PwM447w2uhhWpd0BJbJehXoYOqjjKcXirUC4tK913x/gkq5
+ sS2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790111231; x=1790716031;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3T1a0uTgrtj1q08tU4l+fhE5cLikzJZ5N7DVyUsx7yk=;
+ b=u8A/1Lp9LRf0uinlCVrwY5JcrDEufyllQRwyLi0m/+j0yU6pnzKGbhDuW6KhZzLP9z
+ txJFch7At695KLRCR8EI3JM8UDYkYQnEB9ExtNdjkNjueHKAm81olBVemKrwlXlIHWix
+ 9+XvO5+/ONYdPprDZnFoOV157udsvuw8NMgZpaKENdMdpTKt6noA4nPL24RbS6CihnGC
+ xriIh1h56EAKIwS7Fb7fwgUQL+vkksxps+OPDHX7NsViS16K1udEq8JfWkdmMp0ZMq5W
+ UrtgWfC8WMxR3UnD+0z9jE01Bso/tDnznf9+ApmMFi/lNZ6HI88vjLITm3Wr3pXlIUeX
+ 3dVg==
+X-Gm-Message-State: AFuF++mAxxvLMHJcm4tpm9bsAYUNbUOEAL4ixPLH48qN3j88kiFNJ6/G
+ q45vjr0EV2WFuwvERVibWtg6YCkOGhSGX7W5RDMfkXnxgs+lrMUlyKy5/+w7GMUsPCmkF+y8JjV
+ fe8Z1QNlGsnCjoiXkJFaayKgZ6Ee86AyW9IgF0Q8BoUOFNdqgeUjLEThj8hxdXGn2bEyE+EwpTo
+ I66xuBxfuoLsafF6EgtqZzk1R+vX58bN8=
+X-Gm-Gg: AYBFou0zpGUsaLOPxr8AKzqg5gIuQKxelUpb4+XAmbf2al8Xjmk5EGSeof8CughGUAW
+ fUw3dkt6eaVfeA7CCChsHKHon2HFyZYu35YUwH/1xSdeOChYoDOSy+EBJ++tA7svGyHhvzgVczu
+ DdJmOeemB/61KwWHrXOtGnWvR2EWhR0Ml7/VI9mv2Ro1rezSNLJJddo4Ohw83v7yaWBSC7vscJC
+ Y715DElUO64icVwXBFEKOcDz84=
+X-Received: by 2002:a05:690e:128a:b0:672:d1c8:d1e9 with SMTP id
+ 956f58d0204a3-672d5737077mr477703d50.7.1790111230707; 
+ Tue, 22 Sep 2026 14:07:10 -0700 (PDT)
+X-Received: by 2002:a05:690e:128a:b0:672:d1c8:d1e9 with SMTP id
+ 956f58d0204a3-672d5737077mr477692d50.7.1790111230344; Tue, 22 Sep 2026
+ 14:07:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5957fc53-99eb-4cad-89b6-0dae6e2a6d85@oss.qualcomm.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
+ <20260923-nohmp-v1-46-ebc029d4bd80@redhat.com>
+In-Reply-To: <20260923-nohmp-v1-46-ebc029d4bd80@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 22 Sep 2026 17:06:57 -0400
+X-Gm-Features: AcwNN1WirYFmWkdgZAmk4iAvmjFh_w7pisMZzZn4sOyzz2QDIkXlsAGkKVYOWno
+Message-ID: <CAFn=p-Z-K5i7B8f4Abo8RrnedW9r_MMMjKRDid_oexBm468w2w@mail.gmail.com>
+Subject: Re: [PATCH 46/88] qemu-iotests/045: remove HMP monitor dependency
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,160 +134,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/09/26, Philippe Mathieu-Daudé wrote:
-> On 21/9/26 16:02, Philippe Mathieu-DaudÃ© wrote:
-> > Hi Anton,
-> > 
-> > On 2026-09-18 0:04, Anton Johansson wrote:
-> > > IRQ_LOCAL_GUEST_MAX depends on TARGET_LONG_BITS and is used in
-> > > hw/intc/riscv_imsic.c.  The macro is replaced by a field in RISCVCPUDef
-> > > initialized in riscv_cpu_class_base_init().
-> > > 
-> > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> > > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > > ---
-> > >   target/riscv/cpu.h      |  5 ++++-
-> > >   target/riscv/cpu_bits.h |  2 --
-> > >   hw/intc/riscv_imsic.c   |  4 +++-
-> > >   target/riscv/cpu.c      | 16 ++++++++++++++--
-> > >   4 files changed, 21 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > > index e2e0547eef..a820ec2f6e 100644
-> > > --- a/target/riscv/cpu.h
-> > > +++ b/target/riscv/cpu.h
-> > > @@ -589,8 +589,11 @@ typedef struct RISCVCPUDef {
-> > >       int32_t vext_spec;
-> > >       RISCVCPUConfig cfg;
-> > >       bool bare;
-> > > -#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-> > > +#if !defined(CONFIG_USER_ONLY)
-> > > +#if defined(CONFIG_TCG)
-> > >       const RISCVCSR *custom_csrs;
-> > > +#endif
-> > > +    uint8_t irq_local_guest_max;
-> > 
-> > If it is variable, we shouldn't have it in the def. IMO we
-> > simply want a helper on the CPU class:
-> > 
-> >    uint8_t riscv_imsic_irq_local_guest_max(RISCVCPUClass *rcc);
-> 
-> Even uint8_t riscv_imsic_irq_local_guest_max(const RISCVCPUClass *rcc).
-> 
-> > 
-> > WDYT?
-> 
-> Pierrick told me this suggestion is not clear. See below...
-> 
-> > 
-> > >   #endif
-> > >       /* This is just a setter for env->num_triggers.  */
-> > >       uint32_t num_triggers;
-> > > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> > > index c01050ce2b..9c499e33f2 100644
-> > > --- a/target/riscv/cpu_bits.h
-> > > +++ b/target/riscv/cpu_bits.h
-> > > @@ -811,8 +811,6 @@ typedef enum RISCVException {
-> > >   #define IRQ_S_GEXT                         12
-> > >   #define IRQ_PMU_OVF                        13
-> > >   #define IRQ_LOCAL_MAX                      64
-> > > -/* -1 is due to bit zero of hgeip and hgeie being ROZ. */
-> > > -#define IRQ_LOCAL_GUEST_MAX                (TARGET_LONG_BITS - 1)
-> > >   /* RNMI causes */
-> > >   #define RNMI_MAX                           16
-> > > diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> > > index cb9ce9612c..bf0434e96f 100644
-> > > --- a/hw/intc/riscv_imsic.c
-> > > +++ b/hw/intc/riscv_imsic.c
-> > > @@ -501,13 +501,15 @@ DeviceState *riscv_imsic_create(MemoryRegion
-> > > *container, hwaddr addr,
-> > >   {
-> > >       DeviceState *dev = qdev_new(TYPE_RISCV_IMSIC);
-> > >       CPUState *cpu = cpu_by_arch_id(hartid);
-> > > +    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(RISCV_CPU(cpu));
-> > >       uint32_t i;
-> > >       assert(!(addr & (IMSIC_MMIO_PAGE_SZ - 1)));
-> > >       if (mmode) {
-> > >           assert(num_pages == 1);
-> > >       } else {
-> > > -        assert(num_pages >= 1 && num_pages <= (IRQ_LOCAL_GUEST_MAX
-> > > + 1));
-> > > +        assert(num_pages >= 1 &&
-> > > +               num_pages <= (mcc->def->irq_local_guest_max + 1));
-> > >       }
-> > >       assert(IMSIC_MIN_ID <= num_ids);
-> > >       assert(num_ids <= IMSIC_MAX_ID);
-> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > > index 5fff9d745e..4f58e91b62 100644
-> > > --- a/target/riscv/cpu.c
-> > > +++ b/target/riscv/cpu.c
-> > > @@ -1416,6 +1416,7 @@ void riscv_add_satp_mode_properties(Object *obj)
-> > >   static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-> > >   {
-> > > +    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(opaque);
-> > >       RISCVCPU *cpu = RISCV_CPU(opaque);
-> > >       CPURISCVState *env = &cpu->env;
-> > > @@ -1454,7 +1455,7 @@ static void riscv_cpu_set_irq(void *opaque,
-> > > int irq, int level)
-> > >           default:
-> > >               g_assert_not_reached();
-> > >           }
-> > > -    } else if (irq < (IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX)) {
-> > > +    } else if (irq < (IRQ_LOCAL_MAX + mcc->def->irq_local_guest_max)) {
-> > >           /* Require H-extension for handling guest local interrupts */
-> > >           if (!riscv_has_ext(env, RVH)) {
-> > >               g_assert_not_reached();
-> > > @@ -1501,7 +1502,7 @@ static void riscv_cpu_init(Object *obj)
-> > >   #ifndef CONFIG_USER_ONLY
-> > >       qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
-> > > -                      IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
-> > > +                      IRQ_LOCAL_MAX + mcc->def->irq_local_guest_max);
-> > >       if (mcc->def->num_triggers) {
-> > >           env->num_triggers = mcc->def->num_triggers;
-> > >       }
-> > > @@ -3092,6 +3093,17 @@ static void
-> > > riscv_cpu_class_base_init(ObjectClass *c, const void *data)
-> > >           mcc->def = g_new0(RISCVCPUDef, 1);
-> > >       }
-> > > +#ifndef CONFIG_USER_ONLY
-> > > +    /*
-> > > +     * RISCVCPUDef::irq_local_guest_max is initialized to
-> > > +     * `target_long_bits()-1` due to bit zero of hgeip and hgeie
-> > > +     * being ROZ.
-> > > +     *
-> > > +     * This value does not vary between CPU types.
-> > > +     */
-> > > +    mcc->def->irq_local_guest_max = target_long_bits() - 1;
-> 
-> ... here I'm worried this change the behavior of qemu-system-riscv32
-> vs qemu-system-riscv64, in particular when instantiating a RV32 with
-> the qemu-system-riscv64 binary. Maybe the change doesn't trigger any
-> bug, but this is a change and we committed to not do any when
-> introducing the single binary. Or at least we should mention the
-> change in the commit description. But again, introducing
-> riscv_imsic_irq_local_guest_max() then we don't need this RISCVCPUDef
-> field and no behavioral change at all.
+On Tue, Sep 22, 2026 at 4:21=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Test 045 (TestSCMFd) is adding a null HMP monitor via
+> add_monitor_null() to exercise fd operations with two monitors
+> present. With HMP disabled, -monitor null is no longer valid.
+>
+> Remove the add_monitor_null() call and the now-unused method
+> from the Python machine module.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  python/qemu/machine/machine.py | 7 -------
+>  tests/qemu-iotests/045         | 6 +-----
+>  2 files changed, 1 insertion(+), 12 deletions(-)
+>
+> diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine=
+.py
+> index 393750655589..71b4696227f6 100644
+> --- a/python/qemu/machine/machine.py
+> +++ b/python/qemu/machine/machine.py
+> @@ -202,13 +202,6 @@ def __exit__(self,
+>                   exc_tb: Optional[TracebackType]) -> None:
+>          self.shutdown()
+>
+> -    def add_monitor_null(self) -> None:
+> -        """
+> -        This can be used to add an unused monitor instance.
+> -        """
+> -        self._args.append('-monitor')
+> -        self._args.append('null')
+> -
+>      def add_fd(self: _T, fd: int, fdset: int,
+>                 opaque: str, opts: str =3D '') -> _T:
+>          """
 
-Hmm I'm not against introducing a helper function but I'm not 100% sure
-I see the problem.  The current patch retains irq_local_guest_max == 31
-for rv32 on qemu-riscv32, and irq_local_guest_max == 63 for rv32/64 on
-qemu-riscv64.  If we e.g. instead derive the field from def->misa_mxl_max,
-that would introduce a behavioural change.  Am I missing something
-here?
+Fine by me so long as block folks are okay with dropping that part of the t=
+est.
 
-> 
-> > > +#endif
-> > > +
-> > >       if (data) {
-> > >           const RISCVCPUDef *def = data;
-> > >           mcc->def->bare |= def->bare;
-> > > 
-> > 
-> > 
-> 
+ACK
+
+> diff --git a/tests/qemu-iotests/045 b/tests/qemu-iotests/045
+> index cd1b35edb17f..900bf85220f7 100755
+> --- a/tests/qemu-iotests/045
+> +++ b/tests/qemu-iotests/045
+> @@ -129,9 +129,6 @@ class TestSCMFd(iotests.QMPTestCase):
+>      def setUp(self):
+>          self.vm =3D iotests.VM()
+>          qemu_img('create', '-f', iotests.imgfmt, image0, '128K')
+> -        # Add an unused monitor, to verify it works fine when two monito=
+r
+> -        # instances present
+> -        self.vm.add_monitor_null()
+>          self.vm.launch()
+>
+>      def tearDown(self):
+> @@ -172,5 +169,4 @@ class TestSCMFd(iotests.QMPTestCase):
+>
+>  if __name__ =3D=3D '__main__':
+>      iotests.main(supported_fmts=3D['raw'],
+> -                 supported_protocols=3D['file'],
+> -                 require_hmp=3DTrue)
+> +                 supported_protocols=3D['file'])
+>
+> --
+> 2.56.0.rc0.29.g47ce80527c56
+>
+
 
