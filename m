@@ -4,46 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E8EC982FF
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B059C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 13:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x900t-0000lw-4T; Tue, 22 Sep 2026 08:54:23 -0400
+	id 1x90Ad-0002jj-M1; Tue, 22 Sep 2026 09:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m.carrara@proxmox.com>)
- id 1x900q-0000lf-TO; Tue, 22 Sep 2026 08:54:21 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x90AN-0002iD-T9
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 09:04:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m.carrara@proxmox.com>)
- id 1x900o-0003AP-Jt; Tue, 22 Sep 2026 08:54:20 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B0775421F0;
- Tue, 22 Sep 2026 14:54:07 +0200 (CEST)
-From: "Max R. Carrara" <m.carrara@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: Fiona Ebner <f.ebner@proxmox.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PATCH] block: vmdk: support raw device mappings in vmdk format
-Date: Tue, 22 Sep 2026 14:54:03 +0200
-Message-ID: <20260922-2026-09-support-rdm-import-from-esxi-v1-v1-1-2c8c8644d233@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x90AM-0004Hd-13
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 09:04:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790082248;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ag0DIPgnl+12xKq0XSsB0hUPWOojZLU4HMfyZ5bQn1Q=;
+ b=YxAK8Ef0LsjwbjAUX0P0zMt7ALRYuHh6XuUFU1bh4lnX+WOsTavKaYYpLWLDB4YnD4Cjtv
+ 1UefJsaVK9SVmuGTKQ1Xq8gbURYJk8fUGArYAGRH90uSi7C4W+aGTizihaQYmTgkvKtePj
+ 5lbRPB6AtqeqcLYy408JZ3bFtIu2gwc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658-12xD9ZO6O7Gb8Ynv1iW50g-1; Tue,
+ 22 Sep 2026 09:04:05 -0400
+X-MC-Unique: 12xD9ZO6O7Gb8Ynv1iW50g-1
+X-Mimecast-MFC-AGG-ID: 12xD9ZO6O7Gb8Ynv1iW50g_1790082244
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9666219772EB; Tue, 22 Sep 2026 13:04:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.148])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFFE41800446; Tue, 22 Sep 2026 13:03:59 +0000 (UTC)
+Date: Tue, 22 Sep 2026 15:03:56 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, berto@igalia.com
+Subject: Re: [PATCH 8/9] block/accounting: Move latency_ns override down
+Message-ID: <arJ8tNgp9tDtKkfO@redhat.com>
+References: <20260831135206.126184-1-hreitz@redhat.com>
+ <20260831135206.126184-9-hreitz@redhat.com>
+ <20260903150842.GF825275@fedora>
+ <292ff2f9-b3fe-423b-9b36-ada26904a617@redhat.com>
+ <20260921204237.GD115897@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20260922-2026-09-support-rdm-import-from-esxi-v1-7f601c111381
-X-Mailer: b4 0.14.2
-Content-Transfer-Encoding: quoted-printable
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1790081646394
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=m.carrara@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="8j9hOwVQ89UEnZ8x"
+Content-Disposition: inline
+In-Reply-To: <20260921204237.GD115897@fedora>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,187 +89,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement support for raw device mappings (RDMs) in QEMU's VMDK block=0D
-driver. Handle both virtual and physical compatibility modes. This=0D
-allows us to import RDM disks from ESXi through our FUSE layer without=0D
-any additional changes inside Proxmox VE.=0D
-=0D
-According to the vSphere docs, an RDM provides a mechanism for a VM to=0D
-have direct access to a LUN on physical storage [rdm]. What it really=0D
-does is simply pass through a block device to a VM. The VMDK for an=0D
-RDM will reference a so-called "pointer file" in its extent=0D
-description, with the type `VMFSRDM`, which is created alongide the=0D
-VMDK file. This pointer file then points to the block device, kind of=0D
-like a symlink.=0D
-=0D
-- Physical compatibility mode=0D
-=0D
-  In the "Disk DescriptorFile" section:=0D
-  `createType=3D"vmfsPassthroughRawDeviceMap"`=0D
-=0D
-  This is the simplest of the two modes; the block device is simply=0D
-  passed through to the VM. RDMs in this compat mode are excluded from=0D
-  snapshots.=0D
-=0D
-  On ESXi, such RDMs can be created with:=0D
-=0D
-    vmkfstools --createrdmpassthru \=0D
-      /vmfs/devices/disks/... [PATH TO NEW VMDK]=0D
-=0D
-- Virtual compatibility mode=0D
-=0D
-  In the "Disk DescriptorFile" section:=0D
-  `createType=3D"vmfsRawDeviceMap"`=0D
-=0D
-  This mode allows RDMs to be included in snapshots. When making a=0D
-  snapshot, the new delta is written to a SESPARSE file on the=0D
-  datastore instead, and the data on the passthrough disk will remain=0D
-  unmodified from that point onwards.=0D
-=0D
-  On ESXi, such RDMs can be created with:=0D
-=0D
-    vmkfstools --createrdm \=0D
-      /vmfs/devices/disks/... [PATH TO NEW VMDK]=0D
-=0D
-In order to support both of these modes, make the VMDK block driver=0D
-aware of the `vmfsPassthroughRawDeviceMap` and `vmfsRawDeviceMap`=0D
-createTypes. Then, handle the `VMFSRDM` extent type in the extents=0D
-parser.=0D
-=0D
-The `VMFSRDM` extent type works similar to the regular `VMFS` and=0D
-`FLAT` types. The entire extent's description consists of four fields;=0D
-the referenced file points to a raw block device and thus stores no=0D
-metadata. Therefore, this file can be treated just like a `FLAT`=0D
-extent and read directly.=0D
-=0D
-[rdm]: https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/7-0/v=
-sphere-storage/raw-device-mapping-in-vsphere.html=0D
-=0D
-Signed-off-by: Max R. Carrara <m.carrara@proxmox.com>=0D
----=0D
-=0D
-Hello!=0D
-=0D
-Some context: Our FUSE layer in Proxmox VE allows us to mount the VMware=0D
-filesystem on ESXi directly on our side, which makes migrating VMs from=0D
-ESXi to PVE possible using our import tools. However, we currently=0D
-cannot import RDM disks, since QEMU's VMDK driver does not support them.=0D
-=0D
-I was advised to upstream this here directly instead of patching our=0D
-downstream version. So, I'd appreciate any feedback! :)=0D
-=0D
-How I tested this:=0D
-=0D
-1. Create a physical and virtual RDM each on ESXi=0D
-=0D
-2. Assign the RDMs to a plain Debian VM=0D
-=0D
-3. Boot up the VM and write over the disks with /dev/urandom from inside=0D
-   the VM=0D
-=0D
-4. Run a `sha256sum` for each disk inside the VM and note down the=0D
-   checksums=0D
-=0D
-5. Configure the ESXi host on Proxmox VE=0D
-=0D
-6. Import the Debian VM with the two RDM disks=0D
-=0D
-7. Boot up the VM once the import has been completed (if doing a=0D
-   non-live import) and run the checksums again=0D
-=0D
-Alternatively, it is also possible to use our [tooling] directly; I can=0D
-provide the steps for that, if desired. That makes it possible to=0D
-convert images directly, run `qemu-img compare` w/ the mounted disks,=0D
-etc.=0D
-=0D
-FWIW, I did that as well and got matching images.=0D
-=0D
-Thanks a lot! :)=0D
-=0D
-Best regards,=0D
-Max R. Carrara=0D
-=0D
-[tooling]: https://git.proxmox.com/?p=3Dpve-esxi-import-tools.git;a=3Dtree;=
-h=3Drefs/heads/master;hb=3Drefs/heads/master=0D
-=0D
- block/vmdk.c | 13 ++++++++-----=0D
- 1 file changed, 8 insertions(+), 5 deletions(-)=0D
-=0D
-diff --git a/block/vmdk.c b/block/vmdk.c=0D
-index cd8b4ec7c88187188e79801bd71dd9da42223db0..22f67e351bee2582023653709fa=
-8c4859081b4c4 100644=0D
---- a/block/vmdk.c=0D
-+++ b/block/vmdk.c=0D
-@@ -1174,6 +1174,7 @@ vmdk_parse_extents(const char *desc, BlockDriverState=
- *bs, QDict *options,=0D
-          * RW [size in sectors] VMFS "file-name.vmdk"=0D
-          * RW [size in sectors] VMFSSPARSE "file-name.vmdk"=0D
-          * RW [size in sectors] SESPARSE "file-name.vmdk"=0D
-+         * RW [size in sectors] VMFSRDM "file-name.vmdk"=0D
-          */=0D
-         flat_offset =3D -1;=0D
-         matches =3D sscanf(p, "%10s %" SCNd64 " %10s \"%511[^\n\r\"]\" %" =
-SCNd64,=0D
-@@ -1184,7 +1185,7 @@ vmdk_parse_extents(const char *desc, BlockDriverState=
- *bs, QDict *options,=0D
-             if (matches !=3D 5 || flat_offset < 0) {=0D
-                 goto invalid;=0D
-             }=0D
--        } else if (!strcmp(type, "VMFS")) {=0D
-+        } else if (!strcmp(type, "VMFS") || !strcmp(type, "VMFSRDM")) {=0D
-             if (matches =3D=3D 4) {=0D
-                 flat_offset =3D 0;=0D
-             } else {=0D
-@@ -1197,7 +1198,7 @@ vmdk_parse_extents(const char *desc, BlockDriverState=
- *bs, QDict *options,=0D
-         if (sectors <=3D 0 ||=0D
-             (strcmp(type, "FLAT") && strcmp(type, "SPARSE") &&=0D
-              strcmp(type, "VMFS") && strcmp(type, "VMFSSPARSE") &&=0D
--             strcmp(type, "SESPARSE")) ||=0D
-+             strcmp(type, "SESPARSE") && strcmp(type, "VMFSRDM")) ||=0D
-             (strcmp(access, "RW"))) {=0D
-             continue;=0D
-         }=0D
-@@ -1224,7 +1225,7 @@ vmdk_parse_extents(const char *desc, BlockDriverState=
- *bs, QDict *options,=0D
-         assert(ret < 32);=0D
-=0D
-         extent_role =3D BDRV_CHILD_DATA;=0D
--        if (strcmp(type, "FLAT") !=3D 0 && strcmp(type, "VMFS") !=3D 0) {=
-=0D
-+        if (strcmp(type, "FLAT") !=3D 0 && strcmp(type, "VMFS") !=3D 0 && =
-strcmp(type, "VMFSRDM")) {=0D
-             /* non-flat extents have metadata */=0D
-             extent_role |=3D BDRV_CHILD_METADATA;=0D
-         }=0D
-@@ -1242,7 +1243,7 @@ vmdk_parse_extents(const char *desc, BlockDriverState=
- *bs, QDict *options,=0D
-         }=0D
-=0D
-         /* save to extents array */=0D
--        if (!strcmp(type, "FLAT") || !strcmp(type, "VMFS")) {=0D
-+        if (!strcmp(type, "FLAT") || !strcmp(type, "VMFS") || !strcmp(type=
-, "VMFSRDM")) {=0D
-             /* FLAT extent */=0D
-=0D
-             ret =3D vmdk_add_extent(bs, extent_file, true, sectors,=0D
-@@ -1334,7 +1335,9 @@ vmdk_open_desc_file(BlockDriverState *bs, int flags, =
-char *buf, QDict *options,=0D
-         strcmp(ct, "vmfsSparse") &&=0D
-         strcmp(ct, "seSparse") &&=0D
-         strcmp(ct, "twoGbMaxExtentSparse") &&=0D
--        strcmp(ct, "twoGbMaxExtentFlat")) {=0D
-+        strcmp(ct, "twoGbMaxExtentFlat") &&=0D
-+        strcmp(ct, "vmfsRawDeviceMap") &&=0D
-+        strcmp(ct, "vmfsPassthroughRawDeviceMap")) {=0D
-         error_setg(errp, "Unsupported image type '%s'", ct);=0D
-         ret =3D -ENOTSUP;=0D
-         goto exit;=0D
-=0D
----=0D
-base-commit: c3d48b7d1e89604920e5b81b91140c2ad39a1943=0D
-change-id: 20260922-2026-09-support-rdm-import-from-esxi-v1-7f601c111381=0D
---=0D
-=0D
+--8j9hOwVQ89UEnZ8x
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Am 21.09.2026 um 22:42 hat Stefan Hajnoczi geschrieben:
+> On Wed, Sep 16, 2026 at 10:21:22AM +0200, Hanna Czenczek wrote:
+> > On 03.09.26 17:08, Stefan Hajnoczi wrote:
+> > > On Mon, Aug 31, 2026 at 03:52:04PM +0200, Hanna Czenczek wrote:
+> > > > I am not quite sure why `latency_ns` is overridden by a fixed value=
+ in
+> > > > qtest mode because personally, I find it much better if I can
+> > > > individually change requests' latency by modifying the qtest clock.
+> > > It looks like tests/qemu-iotests/136 relies on a hardcoded constant so
+> > > it can check min/max/avg against known values.
+> > >=20
+> > > > But I'm not going to change existing behavior for the histogram and
+> > > > such, so I will just move this override after the latency has been
+> > > > evaluated regarding a potential BLOCK_IO_DELAY event.
+> > > That's fine if you aren't taking the same testing approach as
+> > > tests/qemu-iotests/136. I think the benefit of hardcoding the value f=
+or
+> > > testing is that it would become possible to trigger the latency
+> > > threshold without worrying about timing in the test environment.
+> >=20
+> > FWIW, as far as I understand, in qtest mode, `clock_type` is
+> > `QEMU_CLOCK_VIRTUAL`, so it is not dependent on the test environment an=
+yway,
+> > but on the qtest clock. That=E2=80=99s why I don=E2=80=99t understand t=
+he fixed latency
+> > value, but maybe it was just easier this way for 136 because this way it
+> > does not have to do a clock_step for each request.
+>=20
+> Yes, I think you're right. I'm not sure either. :/
+
+What's even stranger is that both things were introduced in the same
+commit. But it seems clearly related to 136 because the change was made
+right before the test was added.
+
+Berto, do you remember why you didn't rely just on clock_step?
+
+I suppose we could just try to change the behaviour and fix up 136.
+Behaviour under qtest is something I'd be okay with changing.
+
+Kevin
+
+--8j9hOwVQ89UEnZ8x
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmqyfLwACgkQfwmycsiP
+L9ZRHBAAjO4G867Cnuc8i9xUUsEBh6iuaVXtrSaBwC5IONXTAnqz8k0AGbM1iatV
+z20RjulJcCd1TemIlTJDdqwqplbK5qcux1FMVK9vC/t2k+Da5001Qe1XqiVR3uJy
+MUe3IzI82AUVj4g+kMIhuxBbercAy1zVmcj4LIn6T5Jhrk/TzrHT93B9w1wMKmQV
+020sqfzptBT8iS9Hmmzt0ZuNVJk9DHNqXKiG2aa1VW8QoMTVgDAkIjXNtPGIqx+y
+O4tXwmc1Kr3GB90fR0jZYOrarYUPpWrhQYdCwGZdHqBdOPBGpI7VSqozqfZTs/jK
+cSRwFSCZAF7bLUaeBWQaLgVNvQ3dSEnhRqDgUQamT/CuCDvO4Li14DkUy/1kVuL+
+IHCe9EEWcT7EFIG8dINFl9iV+RorwoY8BhVjea8hLhUAAoiC2xrESFJozZMdizf6
+cudC8YDh2fzMCaCIb4f3LPgNvLzObqNamOlGhMudMIZw8FE58KZL8HuL5O5uoE7i
+Ds2Lapbny17SF22h1yz9bAh8mCEciv3Xz+p0ZCgMLpYJV+hPqfIJBGIpaEu/osEc
+havnBorVI+gdZi/iD8JwD43DeFCom/6i4FI+NVsqQHTI9o6NBittihWlNnie7g4B
+c2p5OMfE2KjNu+03o6QHUzYWXH/cL0CR2azX5v50N6ve3cYI4wM=
+=RNVU
+-----END PGP SIGNATURE-----
+
+--8j9hOwVQ89UEnZ8x--
 
 
