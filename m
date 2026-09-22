@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669E1C982FF
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4623CC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8zhH-0002pu-KD; Tue, 22 Sep 2026 08:34:13 -0400
+	id 1x8zi3-0003Ah-LS; Tue, 22 Sep 2026 08:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zh2-0002mG-Vu
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:33:54 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zhf-00030n-EA
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:34:31 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zh1-0008SY-3e
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:33:52 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zhd-0008VM-R8
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:34:31 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 828EE1FEFC;
- Tue, 22 Sep 2026 12:33:41 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 485EE21BF8;
+ Tue, 22 Sep 2026 12:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790080425; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790080462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HFc5HV6CwAAmCTRHe1iZYbsFokiBsf0yWKeHeXNb3aA=;
- b=Vkie9FUu698Yp26x7Bj4o0pDqJUSzwG7TpUA26ONHGvi3AA1+IMSH6ReErBaUpU1W8BtxL
- rmefVosOLIgQowy3ncWXemTmnS0eJ7mfgEwjvQVqFPMn4ArH4U5CfJjDPqvi2TGw2c7xX4
- w5JSOqQYaB9C/zVb6AVedsWFN1K0b7Y=
+ bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
+ b=SW0mvJp47DLVaiKVo5jgbPlMyY5CpvPXwdRddOT18UDqMYzB2VRapdW3I2sZ8jlYy8ytIt
+ l6/tFNMmUiK6gIxW3O4SI3xrAYzLJeCwIN5qTWpr9jVgtL1MYOt3pTRTzcJuAgJYNeT8xm
+ QeU/Qj8BdEIn6uddqXuMF0rUDdIt+ak=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790080425;
+ s=susede2_ed25519; t=1790080462;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HFc5HV6CwAAmCTRHe1iZYbsFokiBsf0yWKeHeXNb3aA=;
- b=a6AQic7nFySD/NmDn8jC5u+ZRFoglPaLp5nkU7w21M826OZtecSiVyz/wG+BPLvTdCxrNi
- hDz4YHnbBi+eb0CA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=o3dBAvIN;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=B4r3JPtj
+ bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
+ b=DML+yGweak/QHTrw6ZGwIu2XXWnUbA1pE5e1D+kJdmFajYdB149dCS6fKyiV4c9Cu1CBev
+ bJr379RXHIB4DPBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="HOpgf/pl";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=p04ArP3l
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790080421; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790080458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HFc5HV6CwAAmCTRHe1iZYbsFokiBsf0yWKeHeXNb3aA=;
- b=o3dBAvINwipaTW8O9Nec8Tiq45g5eULrFXhxYN36k+lFzan/TK/IR/SqkeRj7Y99U6HIzh
- q7OP4MVOAeR2B2SticqXRBEYXM7yVFVIsuY34ATCRTMFwPw+Sfnk0Ug5aYQaMM+Qgq/2nE
- g6NpSOKedJ0dnHaBoIPGVvd30MSEQO8=
+ bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
+ b=HOpgf/plQLh/ZVDmpDF9/yMPUUDjyWgCI8B1yEWzQi0mSrq0Y/IVcHzrkoSIBcogldQQ4i
+ MM+hcnz5pqfsx6kCaYMl6xrE9ZNJsd/uZxtEzRBXj1Eu2Sjuy4LPtvsNH83C40p4ZPkYiR
+ fOAQWTxdWoxL87XcsPFYVJ9hog0VfDU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790080421;
+ s=susede2_ed25519; t=1790080458;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HFc5HV6CwAAmCTRHe1iZYbsFokiBsf0yWKeHeXNb3aA=;
- b=B4r3JPtjOSE/waYtpGzTHFOF7XeatIPLLSQQf1loAn9VHFCDayf+EWnHcoanbrJFKMektx
- ItK1kfXY8Ce1RcDA==
+ bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
+ b=p04ArP3l4VdFYeLy6fBy29pvIi/ch/QaTi3RWhECiHQFY3D0OeyhppdGfj5eeuljU/pmuB
+ XArq2iRbCuN13IAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B1D50136D9;
- Tue, 22 Sep 2026 12:33:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 951C213A01;
+ Tue, 22 Sep 2026 12:34:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 3ObDFaR1smr2NwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:33:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ox+iDsl1smosOQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:34:17 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, lizhijian@fujitsu.com, jinpu.wang@cloud.ionos.com,
- isyanfei.xu@gmail.com, Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: Re: [PATCH v3 0/3] migration/rdma: Misc RDMA migration fixes
-In-Reply-To: <20260823021657.2824542-1-yanfei.xu@bytedance.com>
-References: <20260823021657.2824542-1-yanfei.xu@bytedance.com>
-Date: Tue, 22 Sep 2026 09:33:34 -0300
-Message-ID: <877bkdbh41.fsf@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: vsementsov@yandex-team.ru, peterx@redhat.com, eblake@redhat.com
+Subject: Re: [PATCH] qapi/migration: Make migration parameter @local
+ consistently unstable
+In-Reply-To: <20260912045350.2139416-1-armbru@redhat.com>
+References: <20260912045350.2139416-1-armbru@redhat.com>
+Date: Tue, 22 Sep 2026 09:34:07 -0300
+Message-ID: <874ifhbh34.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 828EE1FEFC
+X-Rspamd-Queue-Id: 485EE21BF8
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,fujitsu.com,cloud.ionos.com,gmail.com,bytedance.com];
- DKIM_TRACE(0.00)[suse.de:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; MISSING_XM_UA(0.00)[];
+ MX_GOOD(-0.01)[]; MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,32 +122,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Yanfei Xu" <yanfei.xu@bytedance.com> writes:
+Markus Armbruster <armbru@redhat.com> writes:
 
-> This series fixes three RDMA migration issues.
+> @local is unstable in MigrationParameters, but not in
+> MigrationParameter.  Fix the latter.
 >
-> v2->v3:
->   - patch3: Change the type of return value to bool. And add an assert
->             check to unexpected WR type. (Peter)
+> Fixes: c9affb8e9b (qapi: add local migration parameter)
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qapi/migration.json | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> v1->v2:
->   - patch1/2: Collect Reviewed-by
->   - patch2: Add reproducation step and error logs in commit message
->   - patch3: Wrap the post-send op and retry logic into a helper, and
->             retry only once after draining a completion when the queue
->             is full. (I believe ENOMEM is only recoverable in the
->             queue-full case, so we retry once; it should succeed after
->             a completion is drained. Any further ENOMEM is treated as
->             non-recoverable.)
->
-> Yanfei Xu (3):
->   migration/rdma: Fix write-side shutdown
->   migration/rdma: Post initial receive before accepting
->   migration/rdma: Retry control sends on full queue
->
->  migration/rdma.c       | 89 +++++++++++++++++++++++++-----------------
->  migration/trace-events |  2 +-
->  2 files changed, 55 insertions(+), 36 deletions(-)
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index f7628b55e9..9a1cc7c4e5 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -804,8 +804,8 @@
+>  #
+>  # Features:
+>  #
+> -# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
+> -#     @x-vcpu-dirty-limit-period are experimental.
+> +# @unstable: Members @local, @x-checkpoint-delay, @x-rdma-chunk-size,
+> +#     and @x-vcpu-dirty-limit-period are experimental.
+>  #
+>  # Since: 2.4
+>  ##
+> @@ -831,7 +831,7 @@
+>             'direct-io',
+>             { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+>             'cpr-exec-command',
+> -           'local'] }
+> +           { 'name': 'local', 'features': [ 'unstable' ] } ] }
+>  
+>  ##
+>  # @migrate-set-parameters:
 
-Queued, thanks.
+Queued, thanks!
 
