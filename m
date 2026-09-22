@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42375C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2110CC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:57:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x98Tk-0004Um-Mc; Tue, 22 Sep 2026 17:56:44 -0400
+	id 1x98TH-0003KV-4N; Tue, 22 Sep 2026 17:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x98Td-0004Rb-IT
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:37 -0400
-Received: from mail-dl2-x0f.google.com ([2607:f8b0:4864:38::f])
+ id 1x98TE-0003H8-GX
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:13 -0400
+Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x98Tb-00010N-3j
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:37 -0400
-Received: by mail-dl2-x0f.google.com with SMTP id
- a92af1059eb24-142dd04edb4so296936c88.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 14:56:34 -0700 (PDT)
+ id 1x98TC-0000ww-5B
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:12 -0400
+Received: by mail-dy2-x10.google.com with SMTP id
+ 5a478bee46e88-328664c2da6so158350eec.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 14:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790114194; x=1790718994; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790114169; x=1790718969; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oBMRBBSVYhuVagEH9MTyYgooh4obneZYFeG93/UBHbo=;
- b=bVxRpQpERLcdEOCnU1xyAW4QzUxzqAnEZMAp0tNAiIkEOZEwYtangHcDWqwMDuZP08
- EKAqJEdwMDEiYENWuDT34MgyQNU0OfTYAWEPZEH9KhLBTCWmdwLfo87EHmo3yXdEb7iV
- kU6T2+zwWjgAydxT0FQpVfv+K2QfTSfVc4m1tHTFv7rdUTJpmAfttRGAoGuV/Hged83l
- 07hT3XciHpVvJSsBar23+OibW88h7l9lRmiOrL8d8GzMVOQC3gk/OSs4dSwuZ9zjlhVL
- PICe8gTOHjW0gMfdvvXi7eANibcwST0TW147Pi0kZ1qgQwjiclusfK3dylQb7pb5vOr0
- Gm/A==
+ bh=FFu1GWUOTl4gGw9oxLcpuVAdjKyzH7fM1wcdIhlx/50=;
+ b=rL1JGwkfncG8j2h4BX8+L2QbBhlfbLC6A/zEeeXEBU+M9NWrhKjGG4ESkpj/Mm1jwQ
+ XMXcSxpLLfnTM1JgptPjTIoSp+b6wI5SD+dhZDjYaz2c63XgD3Opn0npYGtGeshzS0oc
+ yJjnY/4ravYrn3VbuIZrujjnG6ZINk4C/t2rsE18l5pk7EYABhxWqeVYfigoNNlJOaBV
+ +tEcUJ27A5X5m3P0R3JbF/EmAb/cxNC1m6kGBRyJdA06FgVY9BhZsQmrF1/AxqhnT/Zy
+ 3NUdutUMymccRV631L3sn4A9LpgsJ48aBZk7aGS3Yje7cfPis9bMVZcJ27jLusrflxwX
+ z34Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790114194; x=1790718994;
+ d=1e100.net; s=20260707; t=1790114169; x=1790718969;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oBMRBBSVYhuVagEH9MTyYgooh4obneZYFeG93/UBHbo=;
- b=OAz5tblwrGN1PuhaXEMlAdE8fyQEiBbtdSfUt69eEKjXL5vR/EKm3c3wqB5zvwFQBp
- uTFLtE8CjHUpaT7JW5TlpE9RwyOP2FY9plW++xrH/Mcv6/S7QAwvgu+VY2tUlNYewRSd
- TUz/wOghtzdUNmUhbRtGn4tjmNX71sZdoi6tKNooHXZpw0aYYhEJ/IpKLS4Wb/45WXlG
- g/4l8XmhzIGk1KMc2fzcT3WjL4YIQi2txHrCrOXF4g5lMetsONrYID4AZjYbDonGYWpy
- ILpKucf3iudEPJGm4XOToNGlbmrkANvLQchwWvDcWqfwSt2kc0VzCtR6ZlfV0etg+Uw2
- mztQ==
-X-Gm-Message-State: AFuF++nNfzaPm9R43teGpZu0s1MVtuzy+KofkOIjwAW0QpWlGZQLf781
- dPnOogWETGu5ZDMODO030f3QqMi4dpE08yg/FU/879XcnoKQz5ADGHTxfchNfEkl8Wo=
-X-Gm-Gg: AYBFou2S5pIdEf+h+39RIbylQebROp/ZdDz8uO3939xeu47YCW9ko3hjgQ9j3eLpZke
- J8IDW+XhEXgad6ZPn9LAfN9J1dNdUK6QlODWs1oc6T0l+4lES/aDCiC1/ynzbq17c38EBXOnqUK
- FoVEV+cF96axkErXfGygeqzC+qLD1N31uAmaOpm+Km1qsooefmKSQLdGjzHP9KsKfPHp9spUwHQ
- axhn294hAfJKu9C3Mlnpi593ciNuc0/PIA/J4keqNtRZA+HXoOOICIUr++lMvte3V7tVyJ8GEH1
- M655OARbX6dX9wA6sM1rIdr/6AV9+LrAwPdb6+1OK7nXwgDSmu1EER+0YqO/jRJli65x4HjPccP
- Bo2LStWqa0YKnr3bZopjrPdYOu69UOSue+bukvMHf0iyCwhN6JRf/AA6hqTAjLmHQHePVe0Ouz2
- eZ2/WXSU+0ctS9PSSTIClqNVOxibCwmB/ukp+a62vLBvybgPtibmLo5jjWLvHlyYkh3MhRPPSUL
- qG1Njx24wBbdXGOfmPvpP0NlEnX4RVryDtrL6s7Gg==
-X-Received: by 2002:a05:701b:2919:b0:143:57c1:6233 with SMTP id
- a92af1059eb24-144f9154854mr658595c88.27.1790114193705; 
- Tue, 22 Sep 2026 14:56:33 -0700 (PDT)
+ bh=FFu1GWUOTl4gGw9oxLcpuVAdjKyzH7fM1wcdIhlx/50=;
+ b=H4xTev1j1rqyLNh+uHHZ1JfsVfilKKGgMm2O0mA/1xxVgBOWo3iE0bZY9uiybWQSMz
+ 5Ri5+mDQGoMEyeD8fYGZudeOenHmmWniJSASY4lHbjuUpo7y3zbkTzNiP21sNJnuDasl
+ OLtuKphg433abzofA0z0qYkGHq4Gi0mtZb9z3Vq89sGy78L1GGT3JJaDt2NSGUgsMepW
+ g4biqsa2FAY6hwdZQEy0guYm1GwdEd8lhKekKv/DwsM92WbC8VDAmRWicuOEP0rHde4n
+ VlnoQHJ7UgNXBucFRQVSe5yKftkrNfDhte20RfkbPHzFjTlm00oeI6ix3QBx3chwk6Nf
+ cJow==
+X-Gm-Message-State: AFuF++lZE1J66Dig88zTKEoZF4TQUgkf36eXTk0orF6jD+dSrjSzW4kw
+ eippkS5WgCIRNgq0RcIicTfIYpVpZ72UobHBdl90bS2QW7soxgVyQA7ZLwVXY0MWKgo=
+X-Gm-Gg: AYBFou22iI1sBC+QsX3bpJUw8c2+0S4R1Oxe/7Xxi8oIsaeBsyhOcwFy415cPwh4wy2
+ tOLQMkB7rQzcs9GwQLzyOfXYWs2/TCMOmz19Rl30c5OIs6c6iW4OwJ50mxCFdu4xU82Der51UVZ
+ xQwa+U7lIuDHn0PnwHpi3IF2rKoV23sLLtl+ZASVxYSatkFKU1zqMQtWXTn1C6t12AZuA2yJh8k
+ UeJ/Bel5v5I3eKBB5J1hAaXk4N8s1+5x4U7h5oJDMwhaWLMzfVf9DwblMZYcjlcEXEftuSNgzrq
+ ZjKYxMBuunD6Wjih4HX0WXiVqm6lgi/wX/fzaolO/qMPL9TsKCby9gswz+0n9AqAyNqIuw7H8M9
+ 6kJC3mmovPfEUbfbz7xlEud0GosS6i0Fs+1lNxfoZUXOtoVAjqHSk0c3Pq0ofD0Elcec0HTwe23
+ jXeyerjc6O1MBrO9r2mg4vNLjxkhXtEsuPzW29vVSYTFousYC9LqE2IzILdzv0Pk2CVk+HIQ4E/
+ uxBQtCbIetimnh6q6fVaAHfG1bJXto=
+X-Received: by 2002:a05:7022:fa9:b0:143:296a:4e57 with SMTP id
+ a92af1059eb24-144f915c8fcmr1037399c88.26.1790114168519; 
+ Tue, 22 Sep 2026 14:56:08 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-144f949e60dsm1001153c88.2.2026.09.22.14.56.28
+ a92af1059eb24-144f949e60dsm1001153c88.2.2026.09.22.14.56.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 14:56:32 -0700 (PDT)
+ Tue, 22 Sep 2026 14:56:07 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -86,16 +86,16 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Philippe Mathieu-Daude <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2 8/9] hw/xtensa/virt: use unique QOM name
-Date: Wed, 23 Sep 2026 05:55:31 +0800
-Message-ID: <20260922215533.641-9-luoyonggang@gmail.com>
+Subject: [PATCH v2 4/9] hw/or1k/virt: use unique QOM name
+Date: Wed, 23 Sep 2026 05:55:27 +0800
+Message-ID: <20260922215533.641-5-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260922215533.641-1-luoyonggang@gmail.com>
 References: <20260922215533.641-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,32 +117,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register the board as xtensa-virt so Xtensa virt no longer collides
-with other virt-machine types in one process. Keep the -M / help /
-migration name as virt via machine_class_set_name().
+Set TYPE_VIRT_MACHINE to MACHINE_TYPE_NAME("or1k-virt") so OpenRISC
+virt no longer collides with other virt-machine types in one process.
+Keep the -M / help / migration name as virt via
+machine_class_set_name().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/xtensa/virt.c | 3 ++-
+ hw/or1k/virt.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
-index 271f06e0953..dc5b255b9b1 100644
---- a/hw/xtensa/virt.c
-+++ b/hw/xtensa/virt.c
-@@ -118,10 +118,11 @@ static void xtensa_virt_init(MachineState *machine)
- static void xtensa_virt_machine_init(MachineClass *mc)
- {
-     mc->desc = "virt machine (" XTENSA_DEFAULT_CPU_MODEL ")";
-+    machine_class_set_name(mc, "virt");
-     mc->init = xtensa_virt_init;
-     mc->max_cpus = 32;
-     mc->default_cpu_type = XTENSA_DEFAULT_CPU_TYPE;
-     mc->default_nic = "virtio-net-pci";
- }
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index 2ff5c084a2b..35884252379 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -34,7 +34,7 @@
+ #define VIRT_CPUS_MAX 4
+ #define VIRT_CLK_MHZ 20000000
  
--DEFINE_MACHINE("virt", xtensa_virt_machine_init)
-+DEFINE_MACHINE("xtensa-virt", xtensa_virt_machine_init)
+-#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
++#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("or1k-virt")
+ #define VIRT_MACHINE(obj) \
+     OBJECT_CHECK(OR1KVirtState, (obj), TYPE_VIRT_MACHINE)
+ 
+@@ -548,6 +548,7 @@ static void openrisc_virt_machine_init(ObjectClass *oc, const void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "or1k virtual machine";
++    machine_class_set_name(mc, "virt");
+     mc->init = openrisc_virt_init;
+     mc->max_cpus = VIRT_CPUS_MAX;
+     mc->is_default = false;
 -- 
 2.52.0.windows.1
 
