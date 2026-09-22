@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EF9C98304
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2830C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:30:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x971d-0006sY-IL; Tue, 22 Sep 2026 16:23:37 -0400
+	id 1x972t-0002ID-RA; Tue, 22 Sep 2026 16:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970r-0002v6-8q
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x971j-0007gk-50
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970p-0000JS-KW
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:48 -0400
+ id 1x971h-0000RZ-5K
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108567;
+ s=mimecast20190719; t=1790108620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3bDmFYUs/x08CWZsQUX0w/mf6oNg/SybCHy3tyzihKU=;
- b=N/D8Y8uCwcZyg9uzNN0VDMPuR0tZ8SBxd/i11c2pxtV+lmQV319T9GVf8Jr4zVjvoCUopG
- mIXDUAmG20IdtZWIXA+XfLYpNildqmSIqepp65py/tle8+EWzVp+vVEDTW6CmPFw3Mv6eW
- OAg6w1sCotlz6DjwUX2eJ/yboetsRZc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+rKjJMz+aMh1Qy1H8vCbMANpylIxy65AnQsfSBm0aNs=;
+ b=YNBYMtuG5JSVUSTv7LT+XWNlmgvU9sCIrWcrs5wvRqnAvKp92FmF0+/S+wZlJEQo7/JcGb
+ MbjG5jOue2yRpFWz1p15gwte6fZIw/8gejzool2y1vtrtGgTau1eD7i9s2SgUo7uZpSt0D
+ wt+IZT81nK4zXh2gkJHZYHGeub4zpsQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-R_fPO-OJM865VgXp7jNyVw-1; Tue,
- 22 Sep 2026 16:22:45 -0400
-X-MC-Unique: R_fPO-OJM865VgXp7jNyVw-1
-X-Mimecast-MFC-AGG-ID: R_fPO-OJM865VgXp7jNyVw_1790108564
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-gu1_pmF2N_yfjC_urmPDKA-1; Tue,
+ 22 Sep 2026 16:23:39 -0400
+X-MC-Unique: gu1_pmF2N_yfjC_urmPDKA-1
+X-Mimecast-MFC-AGG-ID: gu1_pmF2N_yfjC_urmPDKA_1790108618
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87FE319772EE; Tue, 22 Sep 2026 20:22:44 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5246B1977587; Tue, 22 Sep 2026 20:23:38 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7E8623000223; Tue, 22 Sep 2026 20:22:43 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82CCF1800370; Tue, 22 Sep 2026 20:23:37 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:07 +0400
-Subject: [PATCH 60/88] qemu-iotests/102: migrate away from HMP
+Date: Wed, 23 Sep 2026 00:18:22 +0400
+Subject: [PATCH 75/88] qemu-iotests/153: migrate away from HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-60-ebc029d4bd80@redhat.com>
+Message-Id: <20260923-nohmp-v1-75-ebc029d4bd80@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2706;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7089;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=3yUAha34BoNWc8nsQWp4lnPh9BerL6wj9EeguM5KeGk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKyGyG06ta9BHUy0tNGk9XBr/Cg6BC375r5l
- 4KeC93pvFGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLisgAKCRDa6OEJdZac
- 5YSEEACOxXFNAI9cNwKMhEGwslRF63ONsjL4W8AO7nWCD/0+EqoBJacRb9uyhCmg0lPX6C6kxcB
- fxaHYTQCIwCzIW+wWjJJY95JYr4qGXtaV7+vuLfoIvtk0HC5d1fiFi3tt+CGFCiScIYVjzjl1bR
- rsYs4QtjaRO0K1lNxbV7CUOYLigICVim/+TGvvBYi4Zl8kfEqj49DOYMNwoKzdHn52bzy5ni851
- q4JJTAKre6Onb5Kw9EiN8ZUN+35oLKfSHzdQ+dX3JDuZWwVhdK3/5l+n2zulLYzv9vwYPHsiZ6s
- 6kMdF+ZUwBovxsdM2dRZkj60J7cEJ8vj7Aoxtpfr525IubWbsrcbDVAdYo0ipEACxZ1WIzs63UQ
- cB2xb95R6hhigpVj5YyJ9JtOyMAmjJ1+beINSKWavjUVJFxFeUCpEOR4zHX9ZtccFCy9smjJGuP
- WEkhHqCGx1kD0cvydXHmYVTXgLXrzagdm6jck4MaSjuDF27DTA9a1PQNi9pKpWMtvxs3uI4EqPj
- CTiwifmeEBxg6LD/JgnRP4JhSIpS8x8Vl4w3IEBs+TLFUhCkpiV9cNGSDhS5YPbFdHJUhH09J/H
- r8s4rrVEqlGdanPzuAPmrHRjWlpCfXGFJ8WOsOZzky5cY9nT7V5W7nqAIwu7//xHlINyw8sS+cH
- zFUpJmUgmBh8Hdg==
+ bh=wksABVwCBrRcsBjPGyVPTBIdEaRVbsmnl+BCoF7sNvs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKzCsCZft3907lmRUJuZ2tNS8ZTR14Z7E8vq
+ Vkc7URcKVaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLiswAKCRDa6OEJdZac
+ 5b9XD/9GDjkFobqwI/yaoD5WMCxAICr7Z2aeR3TxzIDccXiM1VVZJyErFA7Uak9hWEckQNA2p8c
+ Oa3FyYNU7Pxf6FbfHtRZq8f6gm/C2MzyNI1HEaGXmGDoPoMp9KBo4j/OTCU93WK35k8osa3GQhp
+ RyonyGX/1BB1efj+6DKd/TdN+nmFN1gA/BpWx68sUFsdCArNIY9cS+DFnWG0A6Figt7mVx0uYUl
+ K3INJTsxIqP1njA1B2Y7cacd4kG2UNbeceKKSvft9hb5bFKqMYZE/6jsvTq1cGH3w92HqEAQYr/
+ D1KAuLqjLt7ENEYynHt9Fiyt78ptG3IMnV8+1NMP5JJEWDs7m7T/l7vAbf/TDDrWkHi6WpH+Cj/
+ 3zX8l46btM84tmcEZbbbklrTbKk3cTB5JaDSbz5UNn19chFywEDxrXKzkBg649DlYCyZf081JvC
+ sT1wUXlp+ZznYRa6svUWWag3ib0LqyzQX6ax3xs6gWi6h/QA4SqA3oWtQaaCZBY1j1tevhlwDZx
+ pNXJo/G+g+GN/qotA3K7GY0xelHljcUDbMtjj2KxSQS0ia4CsGxU9eehtJJiUwWu4yuk7lKAhNB
+ U0zFWPTo40TrRwjkVGOxSV4eqbzt+3Bz7yl0bnd1LP4zxNv+J+P14N6kdgN6j01MsIJPQoykesq
+ PJxcK/W5Y5U4lxw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -87,9 +87,8 @@ X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,81 +104,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No need to substitute qemu-io command.
+Replace HMP drive_add/drive_del with QMP blockdev-add/blockdev-del.
+Convert pipe-based monitor to QMP.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/102     | 21 ++++++++++++++-------
- tests/qemu-iotests/102.out | 12 ++++++++----
- 2 files changed, 22 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/153     | 37 +++++++++++++++++++++----------------
+ tests/qemu-iotests/153.out | 44 ++++++++++++++++++++++++++------------------
+ 2 files changed, 47 insertions(+), 34 deletions(-)
 
-diff --git a/tests/qemu-iotests/102 b/tests/qemu-iotests/102
-index 5db8180d3bb7..b70053eee302 100755
---- a/tests/qemu-iotests/102
-+++ b/tests/qemu-iotests/102
-@@ -41,7 +41,6 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+diff --git a/tests/qemu-iotests/153 b/tests/qemu-iotests/153
+index def01d6f3ea4..12807c2cb5c1 100755
+--- a/tests/qemu-iotests/153
++++ b/tests/qemu-iotests/153
+@@ -59,7 +59,6 @@ _check_ofd || _notrun "OFD lock not available"
  
  _supported_fmt qcow2
- _supported_proto file fuse
+ _supported_proto file
 -_require_hmp
  
- IMG_SIZE=64K
+ _run_cmd()
+ {
+@@ -70,13 +69,14 @@ _run_cmd()
+ _do_run_qemu()
+ {
+     (
++        echo '{"execute":"qmp_capabilities"}'
+         if ! test -t 0; then
+             while read cmd; do
+-                echo $cmd
++                echo "$cmd"
+             done
+         fi
+-        echo quit
+-    ) | $QEMU -nographic -monitor stdio -serial none "$@" 1>/dev/null
++        echo '{"execute":"quit"}'
++    ) | $QEMU -nographic -qmp stdio -serial none "$@" 1>/dev/null
+ }
  
-@@ -67,18 +66,26 @@ echo
- _make_test_img $IMG_SIZE
- $QEMU_IO -c 'write 0 64k' "$TEST_IMG" | _filter_qemu_io
+ _run_qemu_with_images()
+@@ -106,8 +106,8 @@ for opts1 in "" "read-only=on" "read-only=on,force-share=on"; do
+     for opts2 in "" "read-only=on" "read-only=on,force-share=on"; do
+         echo
+         echo "== Launching another QEMU, opts: '$opts2' =="
+-        echo "quit" | \
+-            $QEMU -nographic -monitor stdio \
++        printf '%s\n' '{"execute":"qmp_capabilities"}' '{"execute":"quit"}' | \
++            $QEMU -nographic -qmp stdio \
+             -drive file="${TEST_IMG}",if=none,$opts2 2>&1 1>/dev/null | \
+             _filter_testdir | _filter_qemu
+     done
+@@ -213,8 +213,10 @@ _send_qemu_cmd $QEMU_HANDLE \
  
--qemu_comm_method=monitor _launch_qemu -drive if=none,file="$TEST_IMG",id=drv0
-+_launch_qemu -drive if=none,file="$TEST_IMG",id=drv0
+ echo "Adding drive"
+ _send_qemu_cmd $QEMU_HANDLE \
+-    "{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_add 0 if=none,id=d0,file=${TEST_IMG}' } }" \
++    "{ 'execute': 'blockdev-add',
++       'arguments': { 'driver': '$IMGFMT', 'node-name': 'd0',
++                      'file': { 'driver': 'file',
++                                'filename': '${TEST_IMG}' } } }" \
+     'return'
  
--# Wait for a prompt to appear (so we know qemu has opened the image)
--_send_qemu_cmd $QEMU_HANDLE '' '(qemu)'
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'qmp_capabilities' }" \
-+    'return'
+ _run_cmd $QEMU_IO "${TEST_IMG}" -c 'write 0 512'
+@@ -224,8 +226,8 @@ _run_cmd $QEMU_IMG create -f $IMGFMT -b "${TEST_IMG}" -F $IMGFMT "${TEST_IMG}.ov
  
- $QEMU_IMG resize --shrink --image-opts \
-     "driver=raw,file.driver=file,file.filename=$TEST_IMG,file.locking=off" \
-     $((5 * 64 * 1024))
+ echo "== Closing an image should unlock it =="
+ _send_qemu_cmd $QEMU_HANDLE \
+-    "{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d0' } }" \
++    "{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd0' } }" \
+     'return'
  
--_send_qemu_cmd $QEMU_HANDLE 'qemu-io drv0 map' 'allocated' \
--    | sed -e 's/^(qemu).*qemu-io drv0 map...$/(qemu) qemu-io drv0 map/'
--_send_qemu_cmd $QEMU_HANDLE 'quit' ''
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'x-qemu-io',
-+       'arguments': { 'device': 'drv0', 'command': 'map' } }" \
-+    'return'
-+
-+_send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'quit' }" \
-+    'return'
-+
-+wait=1 _cleanup_qemu
+ _run_cmd $QEMU_IO "${TEST_IMG}" -c 'write 0 512'
+@@ -233,24 +235,27 @@ _run_cmd $QEMU_IO "${TEST_IMG}" -c 'write 0 512'
+ echo "Adding two and closing one"
+ for d in d0 d1; do
+     _send_qemu_cmd $QEMU_HANDLE \
+-        "{ 'execute': 'human-monitor-command',
+-           'arguments': { 'command-line': 'drive_add 0 if=none,id=$d,file=${TEST_IMG},readonly=on' } }" \
++        "{ 'execute': 'blockdev-add',
++           'arguments': { 'driver': '$IMGFMT', 'node-name': '$d',
++                          'read-only': true,
++                          'file': { 'driver': 'file',
++                                    'filename': '${TEST_IMG}' } } }" \
+         'return'
+ done
  
- # success, all done
- echo '*** done'
-diff --git a/tests/qemu-iotests/102.out b/tests/qemu-iotests/102.out
-index 320ed5a52ba9..13dee5bdecd6 100644
---- a/tests/qemu-iotests/102.out
-+++ b/tests/qemu-iotests/102.out
-@@ -15,9 +15,13 @@ Offset          Length          File
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=65536
- wrote 65536/65536 bytes at offset 0
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu)
-+{ 'execute': 'qmp_capabilities' }
+ _run_cmd $QEMU_IMG info "${TEST_IMG}"
+ 
+ _send_qemu_cmd $QEMU_HANDLE \
+-    "{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d0' } }" \
++    "{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd0' } }" \
+     'return'
+ 
+ _run_cmd $QEMU_IO "${TEST_IMG}" -c 'write 0 512'
+ 
+ echo "Closing the other"
+ _send_qemu_cmd $QEMU_HANDLE \
+-    "{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d1' } }" \
++    "{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd1' } }" \
+     'return'
+ 
+ _run_cmd $QEMU_IO "${TEST_IMG}" -c 'write 0 512'
+diff --git a/tests/qemu-iotests/153.out b/tests/qemu-iotests/153.out
+index 1607a79b36b7..90d0ac660a1f 100644
+--- a/tests/qemu-iotests/153.out
++++ b/tests/qemu-iotests/153.out
+@@ -425,9 +425,11 @@ _qemu_img_wrapper commit -b TEST_DIR/t.qcow2.b TEST_DIR/t.qcow2.c
+ { 'execute': 'qmp_capabilities' }
+ {"return": {}}
+ Adding drive
+-{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_add 0 if=none,id=d0,file=TEST_DIR/t.IMGFMT' } }
+-{"return": "OKrn"}
++{ 'execute': 'blockdev-add',
++       'arguments': { 'driver': 'IMGFMT', 'node-name': 'd0',
++                      'file': { 'driver': 'file',
++                                'filename': 'TEST_DIR/t.IMGFMT' } } }
 +{"return": {}}
- Image resized.
--(qemu) qemu-io drv0 map
--64 KiB (0x10000) bytes     allocated at offset 0 bytes (0x0)
-+{ 'execute': 'x-qemu-io',
-+       'arguments': { 'device': 'drv0', 'command': 'map' } }
-+{"return": {"human-readable-text": "64 KiB (0x10000) bytes     allocated at offset 0 bytes (0x0)\n"}}
-+{ 'execute': 'quit' }
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+ 
+ _qemu_io_wrapper TEST_DIR/t.qcow2 -c write 0 512
+ can't open device TEST_DIR/t.qcow2: Failed to get "write" lock
+@@ -436,31 +438,37 @@ Creating overlay with qemu-img when the guest is running should be allowed
+ 
+ _qemu_img_wrapper create -f qcow2 -b TEST_DIR/t.qcow2 -F qcow2 TEST_DIR/t.qcow2.overlay
+ == Closing an image should unlock it ==
+-{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d0' } }
+-{"return": ""}
++{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd0' } }
 +{"return": {}}
- *** done
+ 
+ _qemu_io_wrapper TEST_DIR/t.qcow2 -c write 0 512
+ Adding two and closing one
+-{ 'execute': 'human-monitor-command',
+-           'arguments': { 'command-line': 'drive_add 0 if=none,id=d0,file=TEST_DIR/t.IMGFMT,readonly=on' } }
+-{"return": "OKrn"}
+-{ 'execute': 'human-monitor-command',
+-           'arguments': { 'command-line': 'drive_add 0 if=none,id=d1,file=TEST_DIR/t.IMGFMT,readonly=on' } }
+-{"return": "OKrn"}
++{ 'execute': 'blockdev-add',
++           'arguments': { 'driver': 'IMGFMT', 'node-name': 'd0',
++                          'read-only': true,
++                          'file': { 'driver': 'file',
++                                    'filename': 'TEST_DIR/t.IMGFMT' } } }
++{"return": {}}
++{ 'execute': 'blockdev-add',
++           'arguments': { 'driver': 'IMGFMT', 'node-name': 'd1',
++                          'read-only': true,
++                          'file': { 'driver': 'file',
++                                    'filename': 'TEST_DIR/t.IMGFMT' } } }
++{"return": {}}
+ 
+ _qemu_img_wrapper info TEST_DIR/t.qcow2
+-{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d0' } }
+-{"return": ""}
++{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd0' } }
++{"return": {}}
+ 
+ _qemu_io_wrapper TEST_DIR/t.qcow2 -c write 0 512
+ can't open device TEST_DIR/t.qcow2: Failed to get "write" lock
+ Is another process using the image [TEST_DIR/t.qcow2]?
+ Closing the other
+-{ 'execute': 'human-monitor-command',
+-       'arguments': { 'command-line': 'drive_del d1' } }
+-{"return": ""}
++{ 'execute': 'blockdev-del',
++       'arguments': { 'node-name': 'd1' } }
++{"return": {}}
+ 
+ _qemu_io_wrapper TEST_DIR/t.qcow2 -c write 0 512
+ 
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
