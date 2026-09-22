@@ -4,103 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB51C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E00C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x94iW-0004zR-4h; Tue, 22 Sep 2026 13:55:44 -0400
+	id 1x94iO-0004xK-0v; Tue, 22 Sep 2026 13:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x94iQ-0004xt-F4
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:55:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94iK-0004wf-2r
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:55:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x94iO-0000oj-Lr
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:55:38 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94iG-0000lq-Re
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:55:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790099735;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cZnRqHncLVVfl8P8B0+V36N7NmBKH5GqbT31wK4eedI=;
- b=J9MAK17hGqE4C+EEYY5CyxS9ndzcBRoTLWSz1x8SvkrWgg9EgyDRN9iyasNtMMVXw9Huso
- g8rwWlL6sKYX7RwAUfWGtb5AMAq9zGtXETisRglptLzUzv1dSoi1w/VIAdsADQ4zcfNfin
- 0Rl9Kp5EW2/w4bpFpL/M4bsnpMQwGzo=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-286-dlWCasQHPDCy3DtIJWTzPQ-1; Tue, 22 Sep 2026 13:55:34 -0400
-X-MC-Unique: dlWCasQHPDCy3DtIJWTzPQ-1
-X-Mimecast-MFC-AGG-ID: dlWCasQHPDCy3DtIJWTzPQ_1790099733
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93be1861d2dso35015585a.3
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 10:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790099733; x=1790704533; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=cZnRqHncLVVfl8P8B0+V36N7NmBKH5GqbT31wK4eedI=;
- b=Yg4WnVsZhqojOHpF1gm/xWjSPTHnOPAmn5s3s95MwZsqNmIrMYPxqGU/tvYQtAC8Dz
- S/9UHE2jO6J60eJGxypqIc/QKP3xwGaEzUijwU/wvVylqP/cOWgif2KSBrMJ5gPSzfm4
- Ig7V4hvdk8kCFfR0a0frtm0rc3c5/wwrDXZy2Mx0Yk8EqarbriS0nM436QowrtlPS5dT
- iUqkkTLB9k7fFzK39uQN69kECgcGZsp95SPHvGq2R9FjrUSN3DnFd1tiLN9a89dTTIgF
- +XrqdJFo/Ls/akEnvKl4GlL+D3Io51c8pFRJEssm+XCiwMdhE7VKb4nqy4mIzxQipuiS
- e3tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790099733; x=1790704533;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cZnRqHncLVVfl8P8B0+V36N7NmBKH5GqbT31wK4eedI=;
- b=XMrxrPHh6aqqdcjqJ3I+qdRA6F8C78IC14v2ZCXWaxtPgKB3FfGnItjg20xp49utHY
- myPdXAoQ1GqcSiuAMQkTYwA4vTXFa2c6M6D39ojvKBq5vwEGBbaofkGkjNM0xjPU9bqC
- 0F203mzYc+YICJapY0khw33TECEPuEAQWPbLnmIsjg1tYq8EH1ZP5BdQ+U1TVqMCRKrH
- jULGSER7ZlglbqhAINRPoK1t18zHcEZSAdo1XiZTPKm6kEhBeKyAEawVSFMan2sx7llh
- b87yZln3KDZlNsb69YPMjkGfqDBWRYlmOBTAKDm6TeHCPVtuuM/HzUrHBQqpjmRTOQL+
- 7gtA==
-X-Gm-Message-State: AFuF++leC9Ya1OBhO0kikbr3d34i1EaRmxlR83E1blDvaPd2hs03DOxT
- nYEUgnTFU/cmZUexbub48J7J1dEG9/4p9LFYmII5tHBSq8ASF47sqXIMnsABo831CCLc06epFSH
- rbXBC/4DzX80NVqcOHFuiEEmE8d9hIveIXO/HB1ZGAQSAEmQ8LDRysNTBvVp2NI73cmA=
-X-Gm-Gg: AYBFou0k3vC2nW3coNtctXUJvurTOpHuTtdjuft3PscgWmr9w+0HllXoyM/cXTOTif7
- dsV+cdZOy5AVenXGdKF/0zU3yvcVy1nH9jll15bDiZz/zJSx2d5tjhCx5GLss9E4UneVLzR3XR2
- 5542bvHQAFWwBw6HEJNhgOlfTEH4QEQ4MbibwWEXSUKjOuKKJFEeHha89VdIkn+5jOzFf2yk0Sf
- hUZUZQT/++MXaIyRV3ClCAMARziY69gVKGdnf3MNR9HHvSgXu9nQ0ULizm5uQ7Iyu66R9wyeUh6
- DELuiC/WKFMLvsSfjsw1DEWwjksFd3W7Y861VcIjGh8F6qlURNscP4U3SyDRAZg2O2OZApM=
-X-Received: by 2002:a05:620a:8089:b0:93b:b846:bfd6 with SMTP id
- af79cd13be357-93c2509718fmr26392285a.12.1790099733352; 
- Tue, 22 Sep 2026 10:55:33 -0700 (PDT)
-X-Received: by 2002:a05:620a:8089:b0:93b:b846:bfd6 with SMTP id
- af79cd13be357-93c2509718fmr26389085a.12.1790099732846; 
- Tue, 22 Sep 2026 10:55:32 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c248225c8sm28783985a.9.2026.09.22.10.55.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 10:55:31 -0700 (PDT)
-Date: Tue, 22 Sep 2026 13:55:30 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH 2/2] migration/postcopy: account faults taken by memory
- sharing processes
-Message-ID: <arLBEswPcm-Iu826@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260915063719.89031-1-guobin@linux.alibaba.com>
- <20260915063719.89031-3-guobin@linux.alibaba.com>
+ s=mimecast20190719; t=1790099727;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=0OTBXR67uNgzDd3AbnxlYqcSVuzRI6QWcIbkJauaiT4=;
+ b=HN8znksudn9qsKgzHCB0mzIT6TH6GWO+zXsgneUfO3ePefcL6utpnLqZrF/yuT5Fi0sR7X
+ RiMe4+754BC7utYnVoxfV38yhdc4Ec8jJL8o/JNgv5jViKAsqAOgxpx36p2cbd20k1z8Ii
+ pBsL5Ot0Ijmr68VTveZWN+1LrYkn41s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-IZYJ_oqmOGmxrEoQCLwTug-1; Tue,
+ 22 Sep 2026 13:55:23 -0400
+X-MC-Unique: IZYJ_oqmOGmxrEoQCLwTug-1
+X-Mimecast-MFC-AGG-ID: IZYJ_oqmOGmxrEoQCLwTug_1790099722
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 734DB1933B57; Tue, 22 Sep 2026 17:55:22 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F0E3F754; Tue, 22 Sep 2026 17:55:20 +0000 (UTC)
+Date: Tue, 22 Sep 2026 18:55:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 3/7] tests/lci/refresh: add parameter to override
+ container registry
+Message-ID: <arLBBjS_T40wBa3X@redhat.com>
+References: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260921231458.3369-4-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260915063719.89031-3-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260921231458.3369-4-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,58 +85,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 15, 2026 at 02:37:19PM +0800, Bin Guo wrote:
-> Page faults taken by a process that shares guest memory with us (e.g. a
-> vhost-user backend) are resolved over the migration stream just like our
-> own, but they are not accounted for, so they are missing from the latency
-> reports.  There is no thread id to report them with: the client's
-> userfaultfd is not required to enable UFFD_FEATURE_THREAD_ID, and
-> libvhost-user does not, so the ptid in the fault message stays zero.  Even
-> when the feature is enabled, the reported ids belong to another process
-> and can never match one of our vCPUs.  Passing zero would not work either,
-> as mark_postcopy_blocktime_begin() reads it as "no thread id" and returns
-> early.
+On Mon, Sep 21, 2026 at 11:14:54PM +0000, Pierrick Bouvier wrote:
+> We'll use this in next patch to switch FROM docker.io/library to
+> docker.io/amd64. It would not make sense to add a new target to
+> libvirt-ci for this, since it's just a variant of an existing target.
+> Simply replace container registry with arch specific one.
+
+We shouldn't need to add new targets to lcitool for this,
+rather it would be enhanced to include a list of arch
+specific container images.
+
+eg in
+
+https://gitlab.com/libvirt/libvirt-ci/-/blob/master/lcitool/facts/targets/debian-13.yml?ref_type=heads
+
+We would extend:
+
+  containers:
+    base: docker.io/library/debian:13-slim
+
+to allow for
+
+  containers:
+    base: docker.io/library/debian:13-slim
+    aarch64:  docker.io/amd64/debian:13-slim
+    ...more...
+
+such that we default to the 'base' image name, unless
+there is an arch specific name defined. That would be
+a fairly quick extension to impl in lcitool.
+
 > 
-> Report those faults with POSTCOPY_TID_FOREIGN instead, which takes the
-> same path as the faults of our own non-vCPU threads: no vCPU is involved,
-> so the vCPU blocktime reports are left alone and only the latency of the
-> fault is accounted.  This also resolves the "TODO: support blocktime
-> tracking" left in postcopy_request_shared_page().
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  tests/lcitool/refresh | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
 > 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+> index 9a71af0e41d..4e3cbb81acf 100755
+> --- a/tests/lcitool/refresh
+> +++ b/tests/lcitool/refresh
+> @@ -12,6 +12,7 @@
+>  # or (at your option) any later version. See the COPYING file in
+>  # the top-level directory.
+>  
+> +import re
+>  import sys
+>  import subprocess
+>  
+> @@ -41,7 +42,7 @@ def atomic_write(filename, content):
+>          raise
+>  
+>  
+> -def generate(filename, cmd, trailer):
+> +def generate(filename, cmd, trailer, registry_path):
+>      print("Generate %s" % filename)
+>      lcitool = subprocess.run(cmd, capture_output=True, encoding='utf8')
+>  
+> @@ -49,6 +50,10 @@ def generate(filename, cmd, trailer):
+>          raise Exception("Failed to generate %s: %s" % (filename, lcitool.stderr))
+>  
+>      content = lcitool.stdout
+> +
+> +    if registry_path is not None:
+> +        content = re.sub("FROM.*/", "FROM " + registry_path + '/', content)
+> +
+>      if trailer is not None:
+>          content += trailer
+>      atomic_write(filename, content)
+> @@ -64,7 +69,7 @@ add_user_mapping = [
+>  ]
+>  
+>  def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
+> -                        enable_rust=True):
+> +                        enable_rust=True, registry_path=None):
+>      filename = Path(src_dir, "tests", "docker", "dockerfiles", host + ".docker")
+>      cmd = lcitool_cmd + ["dockerfile"]
+>      if cross is not None:
+> @@ -79,26 +84,26 @@ def generate_dockerfile(host, target, project="qemu", cross=None, trailer=None,
+>  
+>      if enable_rust:
+>          trailer += "\nENV ENABLE_RUST=1\n"
+> -    generate(filename, cmd, trailer)
+> +    generate(filename, cmd, trailer, registry_path)
+>  
+>  
+>  def generate_vars(target, trailer=None):
+>      filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
+>      cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
+> -    generate(filename, cmd, trailer)
+> +    generate(filename, cmd, trailer, None)
+>  
+>  
+>  def generate_pkglist(vm, target, project="qemu"):
+>      filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
+>      cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
+> -    generate(filename, cmd, None)
+> +    generate(filename, cmd, None, None)
+>  
+>  
+>  def generate_yaml(os, target, arch, trailer=None):
+>      filename = Path(src_dir, "scripts", "ci", "setup", os, f"{target}-{arch}.yaml")
+>      cmd = lcitool_cmd + ["variables", "--format", "yaml", "-a",
+>                           arch, target, "qemu"]
+> -    generate(filename, cmd, trailer)
+> +    generate(filename, cmd, trailer, None)
+>  
+>  
+>  alpine_extras = r"""
+> -- 
+> 2.43.0
+> 
+> 
 
-This one looks fine in general, but I feel like POSTCOPY_TID_FOREIGN as a
-new flag didn't bring us anything, since the FOREIGN is treated the same as
-the main thread then.
-
-Logically, the vhost-user process will have its TID too, so it means if the
-vhost-user process open the userfaultfd with TID cap it'll work.  But I
-agree with your approach here that unfortunately we didn't have control
-over it, the pre-existing TID support was pretty much hard-coded to QEMU so
-far only.  Maybe it's not yet as helpful to make it formal to have
-vhost-user servers supporting it.
-
-But then, I think we can simply enable tid=0 rather than introducing
-POSTCOPY_TID_FOREIGN.  It means only vCPU threads are special, all the rest
-accounting will fall into non-vcpu category, and with tid=0,
-blocktime_get_vcpu() should already return -1, or we can move the tid=0
-check from mark_postcopy_blocktime_begin() to blocktime_get_vcpu() instead:
-returning -1 if tid=0, and it's safe as vcpu threads shouldn't have tid=0.
-
-Enabling tid=0 brings one more benefit: IIUC it'll also make blocktime work
-naturally on old kernels without UFFD_FEATURE_THREAD_ID defined: currently,
-ufd_check_and_apply() will simply bypass that feature, then tid will be
-reported as 0 on old kernels.  It means then blocktime will work on those
-kernels too now, except that all faults accounted into non-vcpu category,
-which makes sense, because kernel is too old to identify where it came
-from.
-
-Thanks,
-
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
