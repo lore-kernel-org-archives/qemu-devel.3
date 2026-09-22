@@ -4,92 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB43C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9864BC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:28:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x972W-0001bC-TZ; Tue, 22 Sep 2026 16:24:32 -0400
+	id 1x9763-00076z-K7; Tue, 22 Sep 2026 16:28:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x971f-0007Av-9r
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x974H-0004WR-0B; Tue, 22 Sep 2026 16:26:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x971d-0000Qs-Gp
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108616;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ArTgqVawGv6a/NtFiXaEVr9WEUB3GZtXsMYexCrpmms=;
- b=D5cJr8rS9i11txcTUoJvZi5RccoJaoo52+WfDC2HII2guBMa0sFz7ie0P0P9/31wSEqEnY
- iWs9l/B/xus3HhvmVvU+gJr/W+/pI2Vu3KQOHtqGI93GCqCPcinP1U7nHWGN067tLpDbkY
- mHGZpuFPdJkyuZknUQIeN3L2p0DCeZE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-X-8EnChCOae4PLtEvgolXw-1; Tue,
- 22 Sep 2026 16:23:35 -0400
-X-MC-Unique: X-8EnChCOae4PLtEvgolXw-1
-X-Mimecast-MFC-AGG-ID: X-8EnChCOae4PLtEvgolXw_1790108614
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A44A195FD11; Tue, 22 Sep 2026 20:23:34 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 610D31800370; Tue, 22 Sep 2026 20:23:33 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:21 +0400
-Subject: [PATCH 74/88] qemu-iotests/130: migrate away from HMP
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x974F-0000vG-FH; Tue, 22 Sep 2026 16:26:20 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MI76FI1129513; Tue, 22 Sep 2026 20:26:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=bW0Ekf
+ 0lWBuK50ZbUQZJei6dGBwAs437N7cXEcccyd8=; b=qpUPgNZ21ioQ6Oa8oimNc3
+ NEhFUlZgJs0U6BMKgkom/XNif7jFAO0KtxIyeXTZbdJl8htNEeKb8jWc+Mfn55lj
+ hm2s6ZTiiqA4XqvfkHAvlmvjpQcH/bpkjCcVr9W3Owh87qeJczD+/gQhYOD+u3JD
+ fDV+H4yBJwTm5xqxVTYnt4W/8WiF32xtU0oWvaQdKVPZduEXHNb0CTwx6dwKvW2V
+ oY6ebr8AWgNa45FdQL3vYvOQjeS4A5gbBbKeYeiU6S0uUy0Pl8JyilJxmhBwLZ9i
+ PLFbBPo04H15G68gyTQMFTH+xIz1CAU3A5QNoz441F4Z9ENUtJhLsO0XGmsrcGqQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2fv77-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 20:26:13 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHXCg3239748; Tue, 22 Sep 2026 20:26:12 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67guaby-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 20:26:12 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MKQBXY22807042
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 20:26:11 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3F9DC58065;
+ Tue, 22 Sep 2026 20:26:11 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EAEBE58059;
+ Tue, 22 Sep 2026 20:26:09 +0000 (GMT)
+Received: from [9.61.145.93] (unknown [9.61.145.93])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 20:26:09 +0000 (GMT)
+Message-ID: <d68f6e17-11b2-4029-959b-39706b7200d4@linux.ibm.com>
+Date: Tue, 22 Sep 2026 16:26:09 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/17] target/s390x: Make s390_cpu_set_state() return
+ void
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20260922164936.15189-1-philmd@oss.qualcomm.com>
+ <20260922164936.15189-4-philmd@oss.qualcomm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260922164936.15189-4-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-74-ebc029d4bd80@redhat.com>
-References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4274;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yRmZMtPGaLTkXb3jb5qSGcgOzjcAJVdxJQ3/weBLRPA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKzkv6qabSwo9SoMGJN6/o57+s223/ZsgKuL
- 9zzA/ad8gaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLiswAKCRDa6OEJdZac
- 5RqcD/42ehoesuVktPZuPVLo+E8NbugEcRcjYRoTRlgJVqv4bqfmfSThxrfCq0Egcchp7K01Gz0
- dGnJcz+G3KVUPn+GkFeWLNk0wEqkwP8xlSKGR8HH5nuYXZZgR++yufx08yb6JvGn7HyIqU3Mrcd
- kWEcxQ+DaeOEsIsBz4jwyvm7mKWjocTQXPClCQmgAGVzlQl7e2xQNI6WkHmDmnTMtyOqen6OEzx
- gaLOav9IzwPrqrPJNEkJH9WUVOzkdufxlFP9Kx4pzmlpqMNEv25z0CFntTn1b5Otb5puVym4/2H
- /OmbPxNKGNTRWmgjPXuQHobAZZFqNv3Uaxtp3ZsFkrBw2dL9bLnByj3t+LjtCJHWDNGBr5UnuDq
- YFG4djqNeI4dIaOWRiSa+Zr+V+1eCY0zUyrBAMVbgTiBvbyctLGmqjE2mnETcEHMDSrRWomZBxa
- LdiodZXWX2mXjXss8gwPxmpGXtckoUC7KdyRtwHlZcJyPyQKNQh9aEjiepdylx3dC8dl1CP3MJQ
- cfoYbpuPNtqWhYbEiS+TzBtuIXR2VHPqvhIEkKcslxLwHnHcjDyCg4/svcELVoZjcVu3oB9pISJ
- V0S7o6PpWgshdclKtArc8wwxQxHrrRiRud95/hqnHd4UPt5gSt3EEY4w1v8cJkBHaSkKed2iVFS
- CyzMltlescoAXgA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: gJDYCE6IQwKE5J0B2f-wufvT72cXBcX3
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab2e465 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=EUspDBNiAAAA:8
+ a=VnNF1IyMAAAA:8 a=m3-XfGE76G9waS810j8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX0AtB4/EGUgh+
+ GwMpRSEJUId4dYpENRLWUU7RsoUwFtdlecCO7r3VwqXh3s/lk+iINyB452YKFmaz3KZMFVCQ50L
+ DdNr7EIS/5MhzX9gzzBEB4wZbjOqkaYPE/Ec2EPFN4OWbrj/m4XO2H0h2PL19R3xG07EzpG6VaS
+ qbA/ualbhSDiNEmHCJE8gPE/LdG7oBGCtadqTfGF1yE4jnI6xGwqEhQYNZxU1K0/VQ3fyFD+1+v
+ CSHAYea/IaYSllSYnfBhlBg2O+U5x18GF0oV8xGXi6swhdNT6/CrKgzLypuNdajbxh7ceMcPeza
+ /UU7NlpIOTAC5bzoE2FDGXlDyHVCLFpSzMdEhUtYCIznu6Qr7dbDojNjS54hdR+ksY9+GFCfuua
+ Yf6RALyKvq5dXIYH7RTUscB6LXLQsoxMlcgsGiS33ga5A7KhTCR7G+tcmNuQ0LBZuQ3PzrGer3X
+ raLGS7cfIb3I1AxGFzg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX2QszQO11C2lc
+ oVYO49uYpZZe/8C9NWyaPhvPZgqIXSvn4zVSO90aN8U15FOftO3JRFeLB7pseJ+lCah1WH+A5Cb
+ y0WYQDti97H2gwXlSuTixak9WtjdDtU=
+X-Proofpoint-GUID: gJDYCE6IQwKE5J0B2f-wufvT72cXBcX3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220293
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,125 +175,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace HMP commit with QMP block-commit job-based API, using
-_run_qmp_job() helper for the complete/dismiss sequence. Silence
-all QMP output since the test validates backing file path
-preservation via _img_info, not the commit protocol itself.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- tests/qemu-iotests/130     | 53 +++++++++++++++++++++++++++++++++++++---------
- tests/qemu-iotests/130.out |  8 +------
- 2 files changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/tests/qemu-iotests/130 b/tests/qemu-iotests/130
-index 3d10aba2594e..beb5ef24c0f1 100755
---- a/tests/qemu-iotests/130
-+++ b/tests/qemu-iotests/130
-@@ -46,9 +46,6 @@ _supported_proto file
- _supported_os Linux
- # We are going to use lazy-refcounts
- _unsupported_imgopts 'compat=0.10'
--_require_hmp
--
--qemu_comm_method="monitor"
- 
- 
- TEST_IMG="$TEST_IMG.orig" _make_test_img 64M
-@@ -57,24 +54,60 @@ _make_test_img 64M
- _img_info | _filter_img_info
- 
- echo
--echo "=== HMP commit ==="
-+echo "=== commit ==="
- echo
- # bdrv_make_empty() involves a header update for qcow2
- 
- # Test that a backing file isn't written
- _launch_qemu -drive id=testdisk,file="$TEST_IMG",backing.file.filename="$TEST_IMG.base"
--_send_qemu_cmd $QEMU_HANDLE "commit testdisk" "(qemu)"
--_send_qemu_cmd $QEMU_HANDLE '' '(qemu)'
--_cleanup_qemu
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'qmp_capabilities' }" \
-+    'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'block-commit',
-+       'arguments': { 'device': 'testdisk',
-+                      'job-id': 'job0',
-+                      'auto-dismiss': false } }" \
-+    'BLOCK_JOB_READY'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'block-job-complete',
-+       'arguments': { 'device': 'job0' } }" \
-+    'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE '' '"concluded"'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'job-dismiss',
-+       'arguments': { 'id': 'job0' } }" 'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'quit' }" \
-+    'return'
-+wait=1 _cleanup_qemu
- _img_info | _filter_img_info
- 
- # Make sure that if there was a backing file that was just overridden on the
- # command line, that backing file is retained, with the right format
- _make_test_img -F raw -b "$TEST_IMG.orig" 64M
- _launch_qemu -drive id=testdisk,file="$TEST_IMG",backing.file.filename="$TEST_IMG.base",backing.driver=$IMGFMT
--_send_qemu_cmd $QEMU_HANDLE "commit testdisk" "(qemu)"
--_send_qemu_cmd $QEMU_HANDLE '' '(qemu)'
--_cleanup_qemu
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'qmp_capabilities' }" \
-+    'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'block-commit',
-+       'arguments': { 'device': 'testdisk',
-+                      'job-id': 'job0',
-+                      'auto-dismiss': false } }" \
-+    'BLOCK_JOB_READY'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'block-job-complete',
-+       'arguments': { 'device': 'job0' } }" \
-+    'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE '' '"concluded"'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'job-dismiss',
-+       'arguments': { 'id': 'job0' } }" 'return'
-+silent=yes _send_qemu_cmd $QEMU_HANDLE \
-+    "{ 'execute': 'quit' }" \
-+    'return'
-+wait=1 _cleanup_qemu
- _img_info | _filter_img_info
- 
- echo
-diff --git a/tests/qemu-iotests/130.out b/tests/qemu-iotests/130.out
-index e45285ccc311..f9109d6ed9db 100644
---- a/tests/qemu-iotests/130.out
-+++ b/tests/qemu-iotests/130.out
-@@ -6,18 +6,12 @@ image: TEST_DIR/t.IMGFMT
- file format: IMGFMT
- virtual size: 64 MiB (67108864 bytes)
- 
--=== HMP commit ===
-+=== commit ===
- 
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) commit testdisk
--(qemu) 
- image: TEST_DIR/t.IMGFMT
- file format: IMGFMT
- virtual size: 64 MiB (67108864 bytes)
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864 backing_file=TEST_DIR/t.IMGFMT.orig backing_fmt=raw
--QEMU X.Y.Z monitor - type 'help' for more information
--(qemu) commit testdisk
--(qemu) 
- image: TEST_DIR/t.IMGFMT
- file format: IMGFMT
- virtual size: 64 MiB (67108864 bytes)
+On 9/22/26 12:49 PM, Philippe Mathieu-Daudé wrote:
+> The return value of s390_cpu_set_state() is only used by the STOP
+> interrupt handler. Make the setter return void and count running
+> CPUs directly at that call site.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   target/s390x/cpu.h        | 5 ++---
+>   target/s390x/cpu-system.c | 4 +---
+>   target/s390x/sigp.c       | 3 ++-
+>   3 files changed, 5 insertions(+), 7 deletions(-)
 
--- 
-2.56.0.rc0.29.g47ce80527c56
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
