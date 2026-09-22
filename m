@@ -4,107 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DBD3C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D992C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x94Ir-00058s-Ks; Tue, 22 Sep 2026 13:29:13 -0400
+	id 1x94JH-0005G6-61; Tue, 22 Sep 2026 13:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x94Ip-000567-Ex
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:29:11 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x94J9-0005Ah-F7
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:29:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x94Im-0006KP-VQ
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:29:11 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x94J5-0006Ma-Cc
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:29:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790098147;
+ s=mimecast20190719; t=1790098166;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=up4a4u/vUQmBPGpEuPzmniDhqAY/8+jta5iAB4aNAzA=;
- b=d7vO+tzqRa+H+Gr8qPZkDrdaTspxJ5qHdlVPwRVPe14lFTycmXpTa84dxWmvCKtT0abExU
- mf0hUoD/50NS+Ef/h4yrn1rzGGxBdbax4sh9jODqbWP5hL4q/RRzNEgwU73//65viBn7QB
- aUDmaKwpz6ylwUpIgSzHPcZVpSw8JHU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IZkmkyZLtQRZlbDdg5kxl0/7JqUe3aN6Dowu+4nYfRo=;
+ b=bx1C5XVSEDGaHVaTef0fCjRLmFam2MVb5aSLiXDCyM6sf/sEvsYlw5JH2Xa4xDlP//AFiV
+ IrTNovKAW4x1yZ9NQP9NrmIhrQcskijXBw5W4/c1p9OCBMlBCJzcirBY8oBWAx+NAVTnoB
+ o7KBnsgululz8eedPEmANQuL3M+3apw=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-4JW7MiCIMxCioS2UIUn2cQ-1; Tue, 22 Sep 2026 13:29:05 -0400
-X-MC-Unique: 4JW7MiCIMxCioS2UIUn2cQ-1
-X-Mimecast-MFC-AGG-ID: 4JW7MiCIMxCioS2UIUn2cQ_1790098145
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-9104215fbdbso2137056d6.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 10:29:05 -0700 (PDT)
+ us-mta-510-KMml0JBtOgCrrwEcbVXZjA-1; Tue, 22 Sep 2026 13:29:25 -0400
+X-MC-Unique: KMml0JBtOgCrrwEcbVXZjA-1
+X-Mimecast-MFC-AGG-ID: KMml0JBtOgCrrwEcbVXZjA_1790098164
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-6714db09f55so70737d50.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 10:29:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790098164; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aDe/EeOvOs0oX476vaeAjvVXFFzn13bQdloO76F+qDGFIDPUYz1gmkTFEwuPcwsTQx
+ fAF/vGO2DlzQ4boSmW4THpBaN51tXVhVQvrwUGTmo7VVVbOcUG5OheoJarpbsHx52bio
+ x9BieEN3S47UByOTFuSuLW2e8xQ2RNQqev2nFO9lN80t16v+/codlL/8epOfA6thnNpl
+ P+xrDo8nXBh9FstzXIqJ3jKtG4Kf+6P3N0OS75XsQ20w/6a1YqS1mYKKOkDLx2zdZMSq
+ JGVHojS7/HuNubmDIltSFQXZZuZ9ysDvczj2oN1RuZU6HvdTD+GLhL+N+D+2hS92Yaan
+ t7Tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=IZkmkyZLtQRZlbDdg5kxl0/7JqUe3aN6Dowu+4nYfRo=;
+ fh=4SpBrKxBueTKlh2nVNOI1f4PgGJNaXa+zdI/ORe/sas=;
+ b=NdXWQzKCHmRCu4si2+cU3RO9NQm1oljwx/1nQDvoS6e1iKlS1XLd/gklfyaC9NPBr3
+ CYGhP9MGwEEo3Scz8DudJ5b3r/VNHLDJzJpWkbsqnCWSUypGwERxXs6ltc0maePxh8cB
+ MtxFHN+Yqi4sSWH/QvO4TEoMSH60J6k1HvYDHzHCdYDV9Mo0YA+Poct4yHm4B1TJ0XdI
+ bfQXKQKMC0jFBcoP2xHZOnbtVeq1ad91gqfHewpcjnwRNNLe1mfXXSlojBKNvYbotrVV
+ 6hqLGaB54EStc+7E7VdGt4LItRxA+o69V2fHZesMBIyPWeEVKEZgRmvf7+YBp9w0iiAt
+ 5frQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790098145; x=1790702945; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1790098164; x=1790702964; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=up4a4u/vUQmBPGpEuPzmniDhqAY/8+jta5iAB4aNAzA=;
- b=m+B/nXKg9J2/TyhjGJbMfyDkmi079eeKqAPVJZjg6Tx4wzpsyV0OPjUOXiFV8vs3ic
- w3xYZGX5AzwyKHT5i5tujjVUTt5xRXIQ1qnZAcskYF/e7Er+jW1/V9LRcygDtjZQc6aW
- w7neKCL9fEeIcACdWF2D1nd3mi9+yXJz8vjtj58BYDO39ctaDbUgkZXJ3nKDjxJSLIkl
- 9CWEvSar5WaKdQ80SGJtY5JjTKtjMF0k9FY78+M/5NKGAkzL/Qzi6k6WL0sutlpbYqYc
- kHpSNogaVC76HeJ21wWf9FqUba8xGQJsZ2ryjWUrK6dcNUYTQv2OmcvSYltG4GQlv7Y5
- S1fg==
+ bh=IZkmkyZLtQRZlbDdg5kxl0/7JqUe3aN6Dowu+4nYfRo=;
+ b=bv7QIlMZ5f8Rp1zNa1bmME9SV1HXbDuYz6fHVNanXWkWVKVx1G1zWozyJLHu19SpCF
+ tkMZlm21Y8Phc997vzChEXOCoGXJMRpFfBpUKinxj9ZmSrfYKbTLOQGf4Ac/kP7zVTzL
+ RR39lG8TgSpuoQYs8x/RphsmFa6LpPVmip083hds427mjIakgB0kCaHZ9qgzu3vuNebB
+ FkelYmwhceaV+O/Ox6y/KIrr5NPPwh2w8M21pBndwXWpxvRZTVi1OTJm/teamZGN1pie
+ aR/8GyqA6kMNvbHSRJnaTaDpI8DS+v8VIp4gKDON+Zl9TwnMh8tvkdBWhXqxu2/3ZZ0B
+ Zqww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790098145; x=1790702945;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20260707; t=1790098164; x=1790702964;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=up4a4u/vUQmBPGpEuPzmniDhqAY/8+jta5iAB4aNAzA=;
- b=Kjn5eUs4NAhEExO94b3SEzpkBQoRl8ylu2xSZOlqEoQll9bfSe2LNqDzZ8emNwqmaA
- zaDsfvkrnYXOkML7WV23n8FLHity4l2h4tOE0xEedg7Ha+E/OS0eoxfvuwdLFM2T//3B
- FY3p6e1vDE0G6kIdss20JTVo0O2f1mVbfR3FAtPEJ99cAZguzQuV+HDKuVaAkCibj7lp
- FSwLFUBz0xbhR/gEOCWBWdS6iqM7HxXxvpuaze7Iva9umaYuiM9z3oS7fFHim16q2jPa
- 40OJ6u7/wcbHofUjw0UUFD7XoDXy6k7Cs0cxoSkI9JKc2b8WYnkXmELtH5J8EzGg0Fid
- QXWw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwpAqL37LSMV26PMwEJ3Xv+D/yuswglm7WM6aEV3jnTkk8ymMyprZ3MUs9wRtO8fJWKoaBukl7pdkea@nongnu.org
-X-Gm-Message-State: AFuF++m4C85bCUlZb4L/jQ5knA278MkwDcZcLydu4chtlJcwaiYIBZQS
- O8PE6wsT8tQ8TXLWN4gL2o3RVS66y9p8qPKK3B4U7XzAhwYiHMrDSZesFznBDYbNHLf1/oE0c5n
- B35kjucgDq22xnTu8AFBe87rM3wmL+Sr0I9Yg4vstjKRC4Efs50M+rBF+
-X-Gm-Gg: AYBFou3WIGpj7z96OqLSUBWNhfKTmrpTtKmg4j5PUTkdn0CuqOo+7OT1H0X8/yzfD5x
- 9yfHo3yXWl4HSYtRxrvFt3/gCFHhryRXueTll3CzTjaUL08trYiL/1xq9RLkaYVUiuDY/JjkV3K
- 4yJSOhiOex154joN2SULL9BDXnpX0GDL83QEc7vMGGCU6Nx45h8Jg+zU0a4A6B8srpThR2lx4uZ
- yGBe2OrwzjDEKnd7/Hsw7hP6Ml53V7qp90aP0ycpEkI1eSUkaA6oOULLKZl3I9RQKX2fPGqaoGa
- kXz4sqRisnBDbAYEraN8QXMT9JF/sUUlDq4pnW/r6nx9KE/lobV8hB8a6G4qyX1fFWzQNYk=
-X-Received: by 2002:a05:622a:1f11:b0:532:ca19:afc1 with SMTP id
- d75a77b69052e-532eac94933mr4108041cf.29.1790098145014; 
- Tue, 22 Sep 2026 10:29:05 -0700 (PDT)
-X-Received: by 2002:a05:622a:1f11:b0:532:ca19:afc1 with SMTP id
- d75a77b69052e-532eac94933mr4107691cf.29.1790098144420; 
- Tue, 22 Sep 2026 10:29:04 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-532eb32f6aasm1536191cf.16.2026.09.22.10.29.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 10:29:03 -0700 (PDT)
-Date: Tue, 22 Sep 2026 13:29:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH 1/2] docs/migration: document that postcopy can be used
- with multifd
-Message-ID: <arK63C0Yw5fkDpwc@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260915063719.89031-1-guobin@linux.alibaba.com>
- <20260915063719.89031-2-guobin@linux.alibaba.com>
- <87se319wi4.fsf@suse.de>
+ bh=IZkmkyZLtQRZlbDdg5kxl0/7JqUe3aN6Dowu+4nYfRo=;
+ b=Xft+J4QPtaaFiBFI2RgLM5Ylm3YM2fV6Hi91auK8gGCdCbDuFkssKslNv6joXHEOZB
+ Km0JJ452gNMbBWMfoBRAmNf9whUUaEdXRmLvxgVq+T0fVa/m0iChLHYQ88aL6YTWNXs/
+ hlyEUN4O/NOiQiE9lj+zYvSmdtWgxWC4kS/7fRm6hCYqgEArQB+w8wyhgpBUxBeTUXYh
+ o5bPs5zr54FwLhcq5HMweZorKHlsx3ctn741+/+GJiZoPLGgiFA31vVpHKvYq/Bed3RR
+ X8yKFdTy0+Jtker/S/xNjrw4GrJaeErimoMNE1uf9S2xbr6EoqLOi6Q9SpPYA1y61W2f
+ jJ5A==
+X-Gm-Message-State: AFuF++l2fdjDCCFz1Wt0RhiNqhqD2Pdk+ivdjVoaQhsXSwwvU9rf8AGi
+ pyvanayTnMHn5we/AMfPDeTeTOIozC5gfcnwzqwrjZIqz/VpMo2IWc8AAJ3mapUQNFYInI7C1AK
+ JzrDtkzW/9OE4Myhu8nHKoil+A4Mb9Y2PQUbJinjXfeUDq1KxnpTMNNCWleIkI6DjlBF7WCXVoL
+ hzj6UrNk17Mq/YrtC5TW9cSb8VNscQpD8=
+X-Gm-Gg: AYBFou2X0zyElLivaKDna2Cr7j26Zg1siHNmdl89kFyziWHLHdZieU6JBPFp2sNvKGQ
+ wELItdNS+jFg1/hHaWD89Wa0HvbTEuVS3p+Jykn1TMnwIEcOltdY8l5RqDk1h1Io52wkUP/hJmq
+ NFEiD+oiZkYg8Y/Cvc8cnrgY3a1mBwbZx81uCsyuxyqxZFIm+1G9cdWAq294dAUSyjHiRAvlVb2
+ 4d7HUuLUUMAz6BT
+X-Received: by 2002:a05:690e:4507:20b0:671:54f1:b92a with SMTP id
+ 956f58d0204a3-672d574c0a5mr113528d50.29.1790098164362; 
+ Tue, 22 Sep 2026 10:29:24 -0700 (PDT)
+X-Received: by 2002:a05:690e:4507:20b0:671:54f1:b92a with SMTP id
+ 956f58d0204a3-672d574c0a5mr113517d50.29.1790098163925; Tue, 22 Sep 2026
+ 10:29:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87se319wi4.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20260921205147.1857168-1-jsnow@redhat.com>
+ <20260921205147.1857168-3-jsnow@redhat.com>
+ <87a4p92p3k.fsf@pond.sub.org>
+In-Reply-To: <87a4p92p3k.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 22 Sep 2026 13:29:12 -0400
+X-Gm-Features: AcwNN1Wiej_-uzE2D_vQBun2VWaKSLsrzpoAyOm58lRnA9ICEqhMf263Bw9m4AY
+Message-ID: <CAFn=p-Z1gTHSk1=G_eU=MRCT93j7kpcnub=O2o1vXL95kD9B=g@mail.gmail.com>
+Subject: Re: [PATCH 2/9] qapi: convert intro sections for unit tests
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kashyap Chamarthy <kchamart@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, 
+ Hanna Reitz <hreitz@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-block@nongnu.org, qemu-trivial@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Eric Blake <eblake@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,80 +147,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 22, 2026 at 11:44:03AM -0300, Fabiano Rosas wrote:
-> Bin Guo <guobin@linux.alibaba.com> writes:
-> 
-> > Since commit e27418861288 ("migration: enable multifd and postcopy
-> > together") in the 10.1 release, the multifd and postcopy-ram capabilities
-> > are no longer mutually exclusive, but the postcopy documentation does not
-> > mention multifd at all, leaving users unaware that the two features can be
-> > combined.
-> >
-> > Add a short section describing how they interact: multifd carries the
-> > pages of the precopy phase, the channels are flushed and synced before the
-> > switchover (because loading a page in a multifd receive thread is not
-> > atomic with regard to a running vCPU), and the postcopy phase itself does
-> > not use the multifd channels.
-> >
-> > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+On Tue, Sep 22, 2026 at 1:06=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
 > > ---
-> >  docs/devel/migration/postcopy.rst | 26 ++++++++++++++++++++++++++
-> >  1 file changed, 26 insertions(+)
+> >  tests/qapi-schema/doc-good.json                | 10 +++++-----
+> >  tests/qapi-schema/doc-good.out                 | 13 +++++--------
+> >  tests/qapi-schema/doc-interleaved-section.err  |  2 +-
+> >  tests/qapi-schema/doc-interleaved-section.json |  3 +--
+> >  4 files changed, 12 insertions(+), 16 deletions(-)
 > >
-> > diff --git a/docs/devel/migration/postcopy.rst b/docs/devel/migration/postcopy.rst
-> > index e319388d8f..570a3a1ce6 100644
-> > --- a/docs/devel/migration/postcopy.rst
-> > +++ b/docs/devel/migration/postcopy.rst
-> > @@ -294,6 +294,32 @@ the background migration channel.  Anyone who cares about latencies of page
-> >  faults during a postcopy migration should enable this feature.  By default,
-> >  it's not enabled.
-> >  
-> > +Postcopy with multifd
-> > +---------------------
-> > +
-> > +The ``multifd`` capability can be enabled together with ``postcopy-ram``
-> > +since the 10.1 QEMU release.  The two features apply to different phases of
-> > +the migration:
-> > +
-> > +  - During the precopy phase, guest pages are sent over the multifd channels
-> > +    as usual, so the initial RAM transfer can use all of them.
-> > +
-> > +  - Just before switching to postcopy, the source flushes and syncs the
-> > +    multifd channels.  This guarantees that all the pages already queued on
-> > +    those channels are loaded on the destination *before* the destination
-> > +    CPUs are started, which is required because loading a page in a multifd
-> > +    receive thread is not atomic with regard to a running vCPU.
-> > +
-> > +  - During the postcopy phase the multifd channels are no longer used for
-> > +    guest pages.  Both the background stream and the pages requested by the
-> > +    destination go through the background migration channel instead, or
-> > +    through the preempt channel for the requested pages when postcopy
-> > +    preemption is enabled.
-> > +
-> > +Consequently, multifd only speeds up the precopy phase of a postcopy
-> > +migration.  The bandwidth available once postcopy has started is the same as
-> > +without multifd.
-> > +
-> >  Postcopy blocktime statistics
-> >  -----------------------------
-> 
-> Looks good to me, I'll wait a bit to allow Peter to comment.
-> 
-> Acked-by: Fabiano Rosas <farosas@suse.de>
+> > diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-go=
+od.json
+> > index fac13425b72..00721d5c522 100644
+> > --- a/tests/qapi-schema/doc-good.json
+> > +++ b/tests/qapi-schema/doc-good.json
+> > @@ -94,12 +94,11 @@
+> >
+> >  ##
+> >  # @Variant1:
+> > +#     A paragraph
+> >  #
+> > -# A paragraph
+> > +#     Another paragraph
+> >  #
+> > -# Another paragraph
+> > -#
+> > -# @var1 is undocumented
+> > +#     @var1 is undocumented
+>
+> Let's keep '@var1 is undocumented' plain.  That way, it stays close to
+> "author forgot the colon after the member name", which I find useful.
 
-The updates look all reasonable,
+OK, but it will very soon be disallowed in that position; it will have
+to be moved below Features et al, eventually. Making this change, but
+heads up that it necessitates another patch in the order enforcement
+series.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> >  #
+> >  # Features:
+> >  # @variant1-feat: a feature
+> > @@ -206,7 +205,8 @@
+> >
+> >  ##
+> >  # @cmd-boxed:
+> > -# If you're bored enough to read this, go see a video of boxed cats
+> > +#     If you're bored enough to read this, go see a video of boxed
+> > +#     cats
+> >  #
+> >  # Features:
+> >  # @cmd-feat1: a feature
+> > diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-goo=
+d.out
+> > index 371dd25ffc7..8c0818a3f0d 100644
+> > --- a/tests/qapi-schema/doc-good.out
+> > +++ b/tests/qapi-schema/doc-good.out
+> > @@ -126,13 +126,11 @@ doc symbol=3DBase
+> >   minimally indented
+> >  doc symbol=3DVariant1
+> >      Intro
+> > +    A paragraph
+> >
+> > -    Plain
+> > -A paragraph
+> > +    Another paragraph
+> >
+> > -Another paragraph
+> > -
+> > -@var1 is undocumented
+> > +    @var1 is undocumented
+> >      Member=3Dvar1
+> >
+> >      Feature=3Dvariant1-feat
+> > @@ -213,9 +211,8 @@ Note::
+> >  2.10
+> >  doc symbol=3Dcmd-boxed
+> >      Intro
+> > -
+> > -    Plain
+> > -If you're bored enough to read this, go see a video of boxed cats
+> > +    If you're bored enough to read this, go see a video of boxed
+> > +    cats
+> >      Feature=3Dcmd-feat1
+> >  a feature
+> >      Feature=3Dcmd-feat2
+>
+> I'm mildly surprised that the intro's indentation isn't stripped.  Maybe
+> we discussed that already, and I forgot.  Anyway, it works, and changing
+> it is way out of scope right now.
 
-For Bin, just FYI in case it matters: there's a known bug for old machine
-types when both features enabled (with preempt, which libvirt enables by
-default), it's still during review upstream:
+*searching resident databanks*
 
-https://lore.kernel.org/all/20260916213558.587304-1-peterx@redhat.com/#t
+I think I was striving for minimal processing of the text prior to
+handoff to sphinx for reasons of preserving accurate source
+information.
 
-Thanks,
+qapidoc.py has this code:
+```
+    def visit_plaintext(self, section: QAPIDoc.Section) -> None:
+        # Squelch empty paragraphs.
+        if not section.text:
+            return
 
--- 
-Peter Xu
+        # Intro sections, which are indented in QAPI source, need to
+        # be dedented to avoid accidental block quotes in ReST syntax.
+        dedent =3D bool(section.kind =3D=3D QAPIDoc.Kind.INTRO)
+        self.ensure_blank_line()
+        self.add_lines(section.text, section.info, dedent)
+        self.ensure_blank_line()
+```
+
+As a result, the unit test plaintext versions retain that indentation.
+This actually matches how we treat indentation for member text, which
+is also preserved and represented in the plaintext test output!
+
+Granted, now that I have excised the backwards compatibility demon
+from qapidoc, it is possible we can conduct another audit on source
+information preservation and some things might be able to be
+simplified, but I think this is fine and good for now.
+
+>
+> > diff --git a/tests/qapi-schema/doc-interleaved-section.err b/tests/qapi=
+-schema/doc-interleaved-section.err
+> > index e5d1ef54c1b..85f01fa57a7 100644
+> > --- a/tests/qapi-schema/doc-interleaved-section.err
+> > +++ b/tests/qapi-schema/doc-interleaved-section.err
+> > @@ -1 +1 @@
+> > -doc-interleaved-section.json:15:1: description of '@foobar:' follows a=
+ section
+> > +doc-interleaved-section.json:14:1: description of '@foobar:' follows a=
+ section
+> > diff --git a/tests/qapi-schema/doc-interleaved-section.json b/tests/qap=
+i-schema/doc-interleaved-section.json
+> > index eec01ed5650..bc0937b8601 100644
+> > --- a/tests/qapi-schema/doc-interleaved-section.json
+> > +++ b/tests/qapi-schema/doc-interleaved-section.json
+> > @@ -2,8 +2,7 @@
+> >
+> >  ##
+> >  # @TestStruct:
+> > -#
+> > -# body
+> > +#     body
+> >  #
+> >  # @integer: foo
+> >  #           blah
+>
 
 
