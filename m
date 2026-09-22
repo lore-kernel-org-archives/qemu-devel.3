@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A293C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56484C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x972T-0001Nn-Eg; Tue, 22 Sep 2026 16:24:29 -0400
+	id 1x9715-00033e-1i; Tue, 22 Sep 2026 16:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x971V-00062c-3e
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1x9702-0000kl-VX
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x971T-0000PK-21
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:23:28 -0400
+ id 1x9701-0000Cy-Di
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:21:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108606;
+ s=mimecast20190719; t=1790108516;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mfbMgMV4azljAgltI1vhifC9l9nHWI+d3UI2pmdhqXs=;
- b=TcQv6RifeRafdwQN3IV5jDhNLHvIP0N2GinGDYDwaAR3/Au4RCFtSbSU13mYyvUVqcpimV
- B1o0vP7R3BTBPqxcsin+8M8TQJGXWqjdayIiaFhVyN4Kt2Oqf8KRZqpAepWPJ5geWA1GKJ
- qiPEaKUsYtahEipuxJEcL50eek/2tU0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=rQa6XhXtb1+ZMGZ4MhGugj32QXAj+5WVMmQLmGE8YHc=;
+ b=DV6smoooD/7vzxe+fZiob3Q7mBbwno52+prTPcI5GT73Op6JxKykIOrTehqAbVwgGddnMq
+ tOZKxuJ+BwjIHCMgz9pCucCSfty36j87FOMeaUWgd/oZkM4xCMDoA08Ur/tPXbLwkdd7eK
+ yRtnYlcLw8iddz8ZRgfjc087A1Ttw+c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-nr1abh7ON_KpI4rRfXCtMw-1; Tue,
- 22 Sep 2026 16:23:24 -0400
-X-MC-Unique: nr1abh7ON_KpI4rRfXCtMw-1
-X-Mimecast-MFC-AGG-ID: nr1abh7ON_KpI4rRfXCtMw_1790108604
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-vut-i7QeO0SYW_36wUy2gA-1; Tue,
+ 22 Sep 2026 16:21:55 -0400
+X-MC-Unique: vut-i7QeO0SYW_36wUy2gA-1
+X-Mimecast-MFC-AGG-ID: vut-i7QeO0SYW_36wUy2gA_1790108514
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 032BF195FCF9; Tue, 22 Sep 2026 20:23:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38C7A18052FB; Tue, 22 Sep 2026 20:21:54 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F39C01800446; Tue, 22 Sep 2026 20:23:22 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 48A4F1956086; Tue, 22 Sep 2026 20:21:52 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:18 +0400
-Subject: [PATCH 71/88] qemu-iotests/274: migrate away from HMP
+Date: Wed, 23 Sep 2026 00:17:53 +0400
+Subject: [PATCH 46/88] qemu-iotests/045: remove HMP monitor dependency
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-71-ebc029d4bd80@redhat.com>
+Message-Id: <20260923-nohmp-v1-46-ebc029d4bd80@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2900;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1994;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rzHiNLUbPaKLIpJuXfTIUWXUNuL24MxzcF3PDJ25jUE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKz0xasVDBeY9NXMkYBMTV8InNeR3pMQeejG
- UWTXKrCCe6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLiswAKCRDa6OEJdZac
- 5QZPD/9wMJsMSCQ4t0JZKMb+3WxVDcvBsG0NjZAfBKdzEYzbTprIxtoTNvSBFYi+/Y9/mu4Ukqc
- MQNfn9J5Xh4QKGCwVqxyOOj0BpnS6t+QKx49pK5haJWQ8dWoHj9qGiHkYQoymlgj+QoLQPjODrL
- A2cPpaZxVD+x7yald+y2ckhg7dpx/1YTE/upOCQR1sjUj4UCUvAvR6AEXihZrMGXnqOjlwy6L10
- kkLVlMrszBEoWxykeAYOhjnXX1PxETqLzCwfiekuOEChRDWV4Z8o6ZErU9W3945X6ZB68U6RrR6
- DQugavRpquTpZdzRCg4F1eR+m1uw2bmDeBEnuta+FMHWzPN87vm+sQ7MfEOsq8LvJZN2wEO/sZE
- K2ZRuIIFCputexPfiMjIGKJrx76tK90sk3zizPDgnD0ggI87AZcxBScgvp4nxl/pHe3OYTOgCVe
- iY9AZ8gQyuuw2RD/AY5hTdZ5kEtQpVzkKC7+CkiozAySOxij4PD5zdTxgB1rccHHu9+sVmBFICh
- 4lp1C1fnWF0JKtiUEiwl1P2kRG1f9MjAsNL569kXhMDmlFLQLI0XXMMwFS2egxOd33BDyDY1D6K
- +NTa5v8YpaPLThGgN2oKY1J1gBjcl22bvIhbbTNYi221M6UWm9vJQkUhvsEr19zz6GgtW9eBmjx
- 8BOhcSXeNx31QGw==
+ bh=vYFoYJohKePFv62rocApwamuDP/2pLkNn5nYJ8SnQeI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKxz5e8cfmwRs1YIaCLbDq70I59THWuICB08
+ FQ3UtzTZSuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLisQAKCRDa6OEJdZac
+ 5TJAD/44F7NAMZpDlc8Ub1iPSYeJM/4T/3lY3Bo9LPonMHtto3irpMDabA+uJ/NpQ5I6eYHvN7W
+ DjC6XmVDuUhS62tDUz/inkdI4PSp6vz7ex4qf4CRji28iDzot8SxDurBM25I8smMWavnH71T/OE
+ aDmWG8DegV1OkLRX5aOIuBQGq+NUEPPRc0kYhJ+XKOx51/3DYvJJF+o+uAhj9aJkjwUx/CA+VqD
+ Itllk18GrKxWI/fxICFosZP3WRFSw//WnavpIjtFk198tij1BugKrwVtxBEnbbObMYGFoMY/q1d
+ ApfUEkfMug7tcamKIkf0RLuualhXmlSSsYWU7DFjmFHtU2dVpn5Qt4T7mjhU7+12gWqqoOnABBd
+ V16+8KLceOlxSkCUcXJCmTFNKXblIo5Vi0cgLmhhMbS8QjyUqulvHqH1R/l10jYcK3fTGOkVVQV
+ 5ALMxPS1Hl/Fbq3IO+l35OEqVOrnNtEorPCZVmp0JM/5+QccBaB45EFfvyXAg2jb5XtBBBfJLaD
+ oUcmx1UMF9rsScZX8K7wsa5ScARM9T6zQnTBJrsZAE8i9cU2izCDruT+a21r69F+ZbvRHegzDMC
+ DFiVbP1h6ZfVLe1rVwwqrLWLx/DexT9vr4+/QN2i8Whs/sfHpo4q4/+Yd1l3Nz4Gb+JakDkea1+
+ h2iyrp2LI8hmX9g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,83 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the quite redundant HMP code path.
+Test 045 (TestSCMFd) is adding a null HMP monitor via
+add_monitor_null() to exercise fd operations with two monitors
+present. With HMP disabled, -monitor null is no longer valid.
+
+Remove the add_monitor_null() call and the now-unused method
+from the Python machine module.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/274     | 14 +-------------
- tests/qemu-iotests/274.out | 26 --------------------------
- 2 files changed, 1 insertion(+), 39 deletions(-)
+ python/qemu/machine/machine.py | 7 -------
+ tests/qemu-iotests/045         | 6 +-----
+ 2 files changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/tests/qemu-iotests/274 b/tests/qemu-iotests/274
-index d91c11c70d2e..917982ec63bf 100755
---- a/tests/qemu-iotests/274
-+++ b/tests/qemu-iotests/274
-@@ -24,8 +24,7 @@ import iotests
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 393750655589..71b4696227f6 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -202,13 +202,6 @@ def __exit__(self,
+                  exc_tb: Optional[TracebackType]) -> None:
+         self.shutdown()
  
- iotests.script_initialize(supported_fmts=['qcow2'],
-                           supported_platforms=['linux'],
--                          unsupported_imgopts=['refcount_bits', 'compat'],
--                          require_hmp=True)
-+                          unsupported_imgopts=['refcount_bits', 'compat'])
+-    def add_monitor_null(self) -> None:
+-        """
+-        This can be used to add an unused monitor instance.
+-        """
+-        self._args.append('-monitor')
+-        self._args.append('null')
+-
+     def add_fd(self: _T, fd: int, fdset: int,
+                opaque: str, opts: str = '') -> _T:
+         """
+diff --git a/tests/qemu-iotests/045 b/tests/qemu-iotests/045
+index cd1b35edb17f..900bf85220f7 100755
+--- a/tests/qemu-iotests/045
++++ b/tests/qemu-iotests/045
+@@ -129,9 +129,6 @@ class TestSCMFd(iotests.QMPTestCase):
+     def setUp(self):
+         self.vm = iotests.VM()
+         qemu_img('create', '-f', iotests.imgfmt, image0, '128K')
+-        # Add an unused monitor, to verify it works fine when two monitor
+-        # instances present
+-        self.vm.add_monitor_null()
+         self.vm.launch()
  
- size_short = 1 * 1024 * 1024
- size_long = 2 * 1024 * 1024
-@@ -93,17 +92,6 @@ with iotests.FilePath('base') as base, \
-     iotests.qemu_io_log('-c', 'read -P 1 0 %d' % size_short, mid)
-     iotests.qemu_io_log('-c', 'read -P 0 %d %d' % (size_short, size_diff), mid)
+     def tearDown(self):
+@@ -172,5 +169,4 @@ class TestSCMFd(iotests.QMPTestCase):
  
--    iotests.log('=== Testing HMP commit (top -> mid) ===')
--
--    create_chain()
--    with create_vm() as vm:
--        vm.launch()
--        vm.qmp_log('human-monitor-command', command_line='commit drive0')
--
--    iotests.img_info_log(mid)
--    iotests.qemu_io_log('-c', 'read -P 1 0 %d' % size_short, mid)
--    iotests.qemu_io_log('-c', 'read -P 0 %d %d' % (size_short, size_diff), mid)
--
-     iotests.log('=== Testing QMP active commit (top -> mid) ===')
- 
-     create_chain()
-diff --git a/tests/qemu-iotests/274.out b/tests/qemu-iotests/274.out
-index c2967335ca09..ef1d2d993c9f 100644
---- a/tests/qemu-iotests/274.out
-+++ b/tests/qemu-iotests/274.out
-@@ -59,32 +59,6 @@ read 1048576/1048576 bytes at offset 0
- read 1048576/1048576 bytes at offset 1048576
- 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
--=== Testing HMP commit (top -> mid) ===
--wrote 2097152/2097152 bytes at offset 0
--2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--
--{"execute": "human-monitor-command", "arguments": {"command-line": "commit drive0"}}
--{"return": ""}
--image: TEST_IMG
--file format: IMGFMT
--virtual size: 2 MiB (2097152 bytes)
--cluster_size: 65536
--backing file: TEST_DIR/PID-base
--backing file format: IMGFMT
--Format specific information:
--    compat: 1.1
--    compression type: COMPRESSION_TYPE
--    lazy refcounts: false
--    refcount bits: 16
--    corrupt: false
--    extended l2: false
--
--read 1048576/1048576 bytes at offset 0
--1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--
--read 1048576/1048576 bytes at offset 1048576
--1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--
- === Testing QMP active commit (top -> mid) ===
- wrote 2097152/2097152 bytes at offset 0
- 2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['raw'],
+-                 supported_protocols=['file'],
+-                 require_hmp=True)
++                 supported_protocols=['file'])
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
