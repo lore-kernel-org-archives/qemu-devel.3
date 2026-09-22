@@ -4,64 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F33C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C759C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x95nu-0004R1-11; Tue, 22 Sep 2026 15:05:22 -0400
+	id 1x95oU-0005UT-8L; Tue, 22 Sep 2026 15:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1x95nk-0004Iu-NP
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:05:13 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x95oO-0005QF-Ax; Tue, 22 Sep 2026 15:05:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1x95ni-0000Kh-23
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:05:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1790103911; x=1821639911;
- h=from:to:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=I10IjXrajxEoVnxsBoxWypiFCSvAVGXc2aq+h72n9S0=;
- b=Rc9jXX/NmDnfG/j7MYtsUhVqDVtHMqlghCnYhbNiz2CWv8uaTVTq7Qhd
- MVaV32GrZuqymy8MvK5ZNAlDQw1l+6ub2ZJ+I8IpGtjziI+3j+PrrrEqz
- dwQIAczAIggj8osZBDuWvU4oOeW7FJ6IIFWn3Sm4f/LawFDrPUj763u9K
- JJRorl3hfw+C1LCTczCbzBrYvYFPS/M6uc8fnOJeSPe3LHPlMX0ptC3y1
- P/xJuIdV8a22mTqzAfoV8RuNH+x1L9ID7FmXhsBDi/RNxNtHVi9Of+U6N
- 8M/sxyTuKE6R91FzkvJ61T4Tr0x0QR0IrTV9yzP/xPeAUz2EZRU+fWPKF Q==;
-X-CSE-ConnectionGUID: rU5fuSBXT/6OP5q48xBPSg==
-X-CSE-MsgGUID: C2kov0LiT7Cbhj3TxnNc9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="108239531"
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="108239531"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Sep 2026 12:05:08 -0700
-X-CSE-ConnectionGUID: bMaT9BJ4SZmgaGdWHoSgXg==
-X-CSE-MsgGUID: slthk4FkQ1W6L2/hFfWm6A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="299517251"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.80.113.172])
- by fmviesa002.fm.intel.com with ESMTP; 22 Sep 2026 12:05:07 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Subject: [PATCH] hw/usb/host-libusb: Avoid assertion on invalid altsetting
-Date: Wed, 12 Aug 2026 02:24:03 -0700
-Message-Id: <20260812092403.37511-1-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x95oL-0000aI-2P; Tue, 22 Sep 2026 15:05:52 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MI7nCo965282; Tue, 22 Sep 2026 19:05:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ad1dk2
+ U/z7L4zhvRw7Z7RkWDTqdHaWPpjTmzfVjgbjA=; b=jUBYBWIcLmgeVdLeIs8Cy3
+ w7LjbvITRu5nWea2JRsxjhNSTBeMdYLCTGuQY3qJqH+yGa1pUi2mGrAr91lPeuhF
+ iEoAn6rsMwHkr2hnmvRcg6iwyvP2Oc8Fu6p2dE7UySiZzSR3kyXKQ/iyvShOLoVP
+ tO3MtDXO0htS9P+vPiQxFVPga/5a7AXZWixb+fPINwvIHmcy9jMpc46okYyUd6OG
+ sg//EB+ieXAwWJKBtwRVnSlQr8+fc+ulsEo0hGy4rbD4ksepfwr9XEsSdaPdfoG2
+ WemKheywBRkPEMGuqs8BGwmH/+0DffKmsewwLxk1Rr4dcC8M3skNg7OsmteI3tHg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1f8d8-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:05:42 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHcQA3279464; Tue, 22 Sep 2026 19:05:41 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqb8f0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:05:41 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MJ5fbH33620546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 19:05:41 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EBF458055;
+ Tue, 22 Sep 2026 19:05:41 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C18E58043;
+ Tue, 22 Sep 2026 19:05:40 +0000 (GMT)
+Received: from [9.61.131.16] (unknown [9.61.131.16])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 19:05:40 +0000 (GMT)
+Message-ID: <03b1a9a9-dd35-4d0f-90c7-2d9eabcfc7b8@linux.ibm.com>
+Date: Tue, 22 Sep 2026 15:05:39 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 01/16] s390x/pci: implement IOMMU replay
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260922183654.798470-1-kshk@linux.ibm.com>
+ <20260922183654.798470-2-kshk@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260922183654.798470-2-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: _gtas_QGYMlNxlg9ldjsJkMuS9Wl5dLb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX19+51tUAxghx
+ +bdReUnwcQ8+7SaJ5BhlDVuXMbKC6B/luKiXr1RlUgrePU+9b0gwDhy/uptW4f08+ISOOVVCbdF
+ U1UASbUl1hZAsjkeIse88VAD4TurfwepH+c0dzKrewI5dsfOtjB5RFGbcunIv1HoUL4KRedE2vJ
+ IcS9XgdPWAbSSgt3LIGxnws/y+Fh9q0IikuvAIlikBdRxPxrWbaX5uCazQ/66aSTzC+oQLdxnBU
+ DZ3jcbAqk8DEVIvojWdOZQg8XnqcvaRVn2XP4JHoVzKMldYP5K/qz9fmL0WY3GDF4HcSGv9oh9Z
+ ayr5kyqbE5TOnNbRM8yM/kKXizfKvN8UTPOvPo+Z8VfqPMUxv4HXjmEC48ykxN6wTDKzFRPxCtH
+ uaEn/+a+GhoLeCw7m/pOmmHsXEh87ghWs6n56MzGrQVkuGWnTmIZpOpgSV2Ss5GaiPwWRVe5k7N
+ jaN2U1vPcahzyAk52Ag==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab2d186 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=vdUCz5xxhtyje57lxywA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfXz5gv/uEfGz0P
+ vjJ64cL5O4fvmTM+fgmB53I/c9tArVRgrW2D/Sjls6hWeTer3wFKE37WUyfWz44WRxK8DkZuH7D
+ qrCHWCUBCxvpb614NlB7/YAl6liXGTI=
+X-Proofpoint-GUID: _gtas_QGYMlNxlg9ldjsJkMuS9Wl5dLb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220280
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,81 +126,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Liang1 Yang <liang1.yang@intel.com>
+On 9/22/26 2:36 PM, Konstantin Shkolnyy wrote:
+> From: Matthew Rosato <mjrosato@linux.ibm.com>
+> 
+> There are a few scenarios where IOMMU replay can potentially be needed
+> for zPCI device, namely VFIO device reset scenarios where the guest
+> continues running and expects the contents of its IOMMU to be replayed
+> upon IOAT re-registration and migration scenarios where the destination
+> must reconstruct the IOMMU on the destination.
+> 
+> zPCI migration is not supported yet, but the IOMMU replay function is
+> implemented so that it can be called both from IOMMUMemoryRegionClass
+> now and migration post_load later.
+> 
+> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-Log warning and skip the interface instead of asserting in qemu
-host-libusb when there is invalid altsetting index during fast
-USB device hotplug/unplug.
+After some discussion with me on v8, Farhan gave his review for this
+patch, looks like it got missed.
 
-This is to prevent guest vm from crashing which is caused by
-QEMU task abort.
+I'm not aware of any changes to this patch for v9.
 
-Signed-off-by: Liang1 Yang <liang1.yang@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- hw/usb/host-libusb.c | 37 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 35 insertions(+), 2 deletions(-)
+@Farhan can you verify and reply explicitly to this patch if your review
+still holds?
 
-diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-index 629505c6d3..56cfc90f9b 100644
---- a/hw/usb/host-libusb.c
-+++ b/hw/usb/host-libusb.c
-@@ -884,10 +884,32 @@ static void usb_host_ep_update(USBHostDevice *s)
-     if (rc != 0) {
-         return;
-     }
-+
-+    /* Log and skip if configuration is NULL or has no interfaces */
-+    if (!conf || conf->bNumInterfaces == 0) {
-+        warn_report("usb-host: ignoring invalid configuration "
-+                    "for device %s (bus=%03d, addr=%03d)",
-+                    udev->product_desc, s->bus_num, s->addr);
-+
-+        if (conf) {
-+            libusb_free_config_descriptor(conf);
-+        }
-+
-+        return;
-+    }
-+
-     trace_usb_host_parse_config(s->bus_num, s->addr,
-                                 conf->bConfigurationValue, true);
- 
-     for (i = 0; i < conf->bNumInterfaces; i++) {
-+        if (conf->interface[i].num_altsetting == 0 ||
-+            !conf->interface[i].altsetting) {
-+            warn_report("usb-host: skipping interface (index %d) with no "
-+                        "alternate settings on %s (bus=%03d, addr=%03d)",
-+                        i, udev->product_desc, s->bus_num, s->addr);
-+            continue;
-+        }
-+
-         /*
-          * The udev->altsetting array indexes alternate settings
-          * by the interface number. Get the 0th alternate setting
-@@ -897,8 +919,19 @@ static void usb_host_ep_update(USBHostDevice *s)
-         intf = &conf->interface[i].altsetting[0];
-         alt = udev->altsetting[intf->bInterfaceNumber];
- 
--        if (alt != 0) {
--            assert(alt < conf->interface[i].num_altsetting);
-+        if (alt > 0) {
-+            if (alt >= conf->interface[i].num_altsetting) {
-+                /*
-+                 * libusb reports a temporary invalid altsetting index during
-+                 * fast hotplug/unplug. Instead of aborting, log a warning and
-+                 * skip the interface.
-+                 */
-+                warn_report("usb-host: ignoring out-of-bounds altsetting=%d "
-+                            "for interface %d (index %d) on %s (bus=%03d, addr=%03d)",
-+                            alt, intf->bInterfaceNumber, i,
-+                            udev->product_desc, s->bus_num, s->addr);
-+                continue;
-+            }
-             intf = &conf->interface[i].altsetting[alt];
-         }
- 
--- 
-2.43.0
+Thanks,
+Matt
 
 
