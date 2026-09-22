@@ -4,142 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FC3C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 16:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB0A7C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 16:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x93js-0006U8-DX; Tue, 22 Sep 2026 12:53:04 -0400
+	id 1x93mD-0002Fc-Ko; Tue, 22 Sep 2026 12:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x93hz-0004RN-OA
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:51:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x93lQ-0000on-QY
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:54:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x93hy-0002YP-8L
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:51:07 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MEjNCL318300
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 16:50:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kDFRggGBgd+2DtAqNLeUqcVcpYvkyK4ydCRh++BAI8w=; b=ZjSxuWWZhzYvfDsX
- Ba/AmxUDn6I7edwNCDrZkY19c4bXh0Iri2c9g5fI8mKgJpfB3Srt5qRZWvlHpxic
- A70GV0xTg1Nz84H27jUdZxhb8EHJzjZ1YXZoDDoJOeJIajzqTFpNtRqbACZWQ/NI
- Yk+QwdjhKIuu0rWDYxW2NQDC8pDx+qngsAHZq4+rZsG6EejOE4k1ew602OFDqG73
- y0eMO3PJrXWj+j6diamEfJpGnosYgsFPbHZd7fbcsC0/pzLWCTZ6OpkaY9W/B3VD
- B07jGsW5BtWQ3w8rgUlBV6SCR1oGlNUAqN176/Ufgh9MobAvU4x6gH2fEpfQFcBu
- RyeWZA==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gupbqj7j7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 16:50:54 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-97e768af628so3476862241.3
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 09:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790095854; x=1790700654; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=kDFRggGBgd+2DtAqNLeUqcVcpYvkyK4ydCRh++BAI8w=;
- b=dmSGtzKQ0l8E3G5erfLQctzNYEGMFuD/sRTegOFnUrYXUnbBxzIxAv2e6s5Ex8NyeX
- fj2F31PV/fo/WuOwrvO2b/M7OGLNcDfb4gCX6II+0GJJ4DX6NPxH8UqgZqTkkmE9GDka
- ZewrWHl4l/c6bvkeD1WEJkH0S+icfbDPkuLTSMcNZnVk1Ew3lwedrIZf7Iv3KYdIYC26
- MLPfhc4MhrIL9JgyUStF+5ZmqGNyw/wmEH/WGgVVUTiEZA2+UOi035h6XNevIH86+fgL
- q7Qi2zn6NocPC0PRMl5waajzwo13rro1RzlBEbecdSG2QVN7gqRB+LSIwRSLCOjefXtY
- +Xfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790095854; x=1790700654;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=kDFRggGBgd+2DtAqNLeUqcVcpYvkyK4ydCRh++BAI8w=;
- b=qwmQ8f//nAnRrnt8ZSADaiMrEQZRH6oRakAWYs3jXgqo/xa3kDW+foHN6reFFAgSXu
- UGHK2vvJhOPP7X1L6f1dxDmzIP6Rj3DHCo9dVx48mvzw0MhLtruqXjnF95dRDMUvw35q
- mbBcmT/asdMdHK0NXI3BtpGQBllEcCw6NYRDF5KdfefDntaIdXKMQdQ1fvMsP/QJpUQI
- 4ROx4hz6g3Ka9/9BJWDhseFxMbSTTV5YhHLTEBKDNS2X9E55Es1vxbuvA5Otkz1u3bG2
- 8Dur6fiCjFOyvs4nVZpduyfQ7uuzp7tFlNhMLsrBYv58uxZX8JO8F0w/Y0Y8VZLN53vy
- eCtw==
-X-Gm-Message-State: AFuF++lgKQPB6nJ5fWb1ruxzlJg1TGKu39pa6QU7bpEwSv50RERYAX0w
- 7gTq3Dl+/UtjEcecpbF7tzrgTS6RqGV0zvXe0K5EAQKpKGtw+F+GMM9YPOoanDSJHxFWRGYeeUh
- di5N1t9RqRAHbpni5h8r4MvoPduYSpDAcOpFha0o2zCrQkprEfvgJgIOE3tcCP5CVmw==
-X-Gm-Gg: AYBFou1li57T42Hok4zM6JBQix0uW9tMlrW4vSCZxjJJ1t/5Lbd17h8MDfjCdzNzBhc
- N4mExL18CbHjLhGBO5aN3aXR70tHUrMTNBoY5MS84SAi2oSObjh0Oe28bxELIdnqObkOmPlfJRx
- Od2rbYig8MIO6/Kw7fT5zhNy0jYi+gTh3mbLJod4vUdO7uEYk0J2OTrzTRGhbyAYqOX42fXYWG1
- zmD7X/eVCGLjIpPJk+U1vYuEX56sj//J/5p10CgazBSqc2Qxvs/oeGV/l1FgUv9zS9eI5Zoadx2
- Q0DJSnk/lEGluvj8iU52usmO64JH44gsUUYKsJRrlQJmLfzO4SEyFmm+BNJyvyfMcnIiuBNp/yi
- OCrfTZyjyBiImyI256wOVBPFO3HoZJfntV/V40+PC
-X-Received: by 2002:a05:6102:8552:10b0:7a7:ad9f:53e2 with SMTP id
- ada2fe7eead31-7a7ad9f8177mr5127613137.1.1790095853341; 
- Tue, 22 Sep 2026 09:50:53 -0700 (PDT)
-X-Received: by 2002:a05:6102:8552:10b0:7a7:ad9f:53e2 with SMTP id
- ada2fe7eead31-7a7ad9f8177mr5127568137.1.1790095852801; 
- Tue, 22 Sep 2026 09:50:52 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fdabe8a2asm68093685e9.4.2026.09.22.09.50.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 22 Sep 2026 09:50:52 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 10/17] accel/tcg: Refactor poll-while-halted flow in
- cpu_exec()
-Date: Tue, 22 Sep 2026 18:49:28 +0200
-Message-ID: <20260922164936.15189-11-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922164936.15189-1-philmd@oss.qualcomm.com>
-References: <20260922164936.15189-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x93lM-0002wG-Rq
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:54:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790096074;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=lkCQAeK7IEEO9iP5LA3uhiRp8OqiYKMEdHk2QKMfdyE=;
+ b=P8cnkYO4QYCFxBsV+dEo15GVSBHVUmHne19mcX31+HwGOq2cvq/TNlAUOmsxwE6ihiaqKa
+ Y8nG8I6+qZakfK7zxjAt0IB4JJRvSm67cIbwszdZhUWc4lVJYs4od3x1nuRvsROqKAkc7r
+ 8Uqqq2dD9JGqwRULbnJDtEYPKGsoTiw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-bzvj2fjgPiOzcusuz-_oTA-1; Tue,
+ 22 Sep 2026 12:54:32 -0400
+X-MC-Unique: bzvj2fjgPiOzcusuz-_oTA-1
+X-Mimecast-MFC-AGG-ID: bzvj2fjgPiOzcusuz-_oTA_1790096070
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E94C2195C247; Tue, 22 Sep 2026 16:54:29 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5738130001B9; Tue, 22 Sep 2026 16:54:28 +0000 (UTC)
+Date: Tue, 22 Sep 2026 17:54:25 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 2/7] tests/docker/dockerfiles: refresh images
+Message-ID: <arKywfq6YHXxN8Ch@redhat.com>
+References: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260921231458.3369-3-pierrick.bouvier@oss.qualcomm.com>
+ <4207d4f8-a452-417f-b240-77cef59b7d54@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI0NiBTYWx0ZWRfX8u32rO3IM6LL
- tZrwJGxyJUdlOIISvq9vesdniWGoIw01VD33df9ImvpdpHUhakggcv6YJD/7QTM9hzUmIWFJ0Q/
- VnYoeZug0NkdCDi0asBbNM/KESJ7a7JMcUsTZN+ZA7yDjlktzL4Ad4NxzTuWCDjMt7+HwJexaXX
- EbczAHVLpZg+bqvNArc40+G4iT+0jsLL4GI1W4ePgNqPsM8Cu0Vzy10FLwo0AlxJI1T3Ui3s7Uj
- qt/jfRE66muDkrrSR8eXGYrQM50veXN+ea5SQY1coF0+SX5grEKktf1PcND8Mk6em8rRKYRaZIp
- CGQYXwxMoPxtWVcHI7WGOqIvyHp7YG9qI3PnJWrLsz5kGal1riO+d/nusT80vY74QoLRMCLJ7ZS
- gSqJ9EhEpDDJZ+P4suP7ehAGXB4CUWtLHkymGXnBPASSKYfXV6nEDqJaOivTFqhOaRw9NUfpIUr
- GonUHqWmW9itUr/CqYw==
-X-Authority-Analysis: v=2.4 cv=FdaiV5+6 c=1 sm=1 tr=0 ts=6ab2b1ee cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=xF3Xt6V14tk6trZ56bgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=1WsBpfsz9X-RYQiigVTh:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: C1iOU-9Rqd_XQgTAvWzNJFLFrFZw096K
-X-Proofpoint-GUID: C1iOU-9Rqd_XQgTAvWzNJFLFrFZw096K
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI0NiBTYWx0ZWRfXwQH99Bq9NvEQ
- P5Ihj7vlITdpdjZntDyBd6GqXsmeZ9t7LzTgaRxyzvYFEDRadePqadR4zlcqTxQMrdTfLB6K6nv
- ubjq4BX8UYJ8Yz7OjdNUau0DI22gAuU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 spamscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220246
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4207d4f8-a452-417f-b240-77cef59b7d54@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,55 +85,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert cpu_handle_halt()'s logic to read in cpu_exec()
-as "if halted, poll for async events and find work; if
-no work, return". Rename as cpu_poll_while_halted().
+On Tue, Sep 22, 2026 at 09:15:02AM -0700, Pierrick Bouvier wrote:
+> On 9/21/2026 4:14 PM, Pierrick Bouvier wrote:
+> > latest update of libvirt-ci changed packages, but images were not
+> > refreshed.
+> > 
+> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> > ---
+> >  tests/docker/dockerfiles/debian.docker     | 1 -
+> >  tests/docker/dockerfiles/ubuntu2404.docker | 1 -
+> >  2 files changed, 2 deletions(-)
+> > 
+> > diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
+> > index 77869f71546..2d03ff03c8d 100644
+> > --- a/tests/docker/dockerfiles/debian.docker
+> > +++ b/tests/docker/dockerfiles/debian.docker
+> > @@ -73,7 +73,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+> >                        libpcre2-dev \
+> >                        libpipewire-0.3-dev \
+> >                        libpixman-1-dev \
+> > -                      libpmem-dev \
+> >                        libpng-dev \
+> >                        libpulse-dev \
+> >                        librbd-dev \
+> > diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
+> > index bb8f4e4e53f..440699a5005 100644
+> > --- a/tests/docker/dockerfiles/ubuntu2404.docker
+> > +++ b/tests/docker/dockerfiles/ubuntu2404.docker
+> > @@ -73,7 +73,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+> >                        libpcre2-dev \
+> >                        libpipewire-0.3-dev \
+> >                        libpixman-1-dev \
+> > -                      libpmem-dev \
+> >                        libpng-dev \
+> >                        libpulse-dev \
+> >                        librbd-dev \
+> 
+> Dropping this patch, as it's incorrect.
+> In libvirt-ci, libpmem-dev is a dependency of targets debian-13 and
+> ubuntu2404, so not sure why it removes it here. Seems like a bug in
+> libvirt-ci itself.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/cpu-exec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Most likely you ran invoked lcitool from an aarch64 host OS, so it
+filtered out libpmem-dev which is only valid on x86_64 targets.
+The non-cross containers we have defined here are assumed to be
+for x86_64 targets.
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 46b723cb734..76182803592 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -654,18 +654,18 @@ static inline void tb_add_jump(TranslationBlock *tb, int n,
- }
- 
- #ifndef CONFIG_USER_ONLY
--static inline bool cpu_handle_halt(CPUState *cpu)
-+static bool cpu_poll_while_halted(CPUState *cpu)
- {
-     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
-     bool leave_halt = tcg_ops->cpu_exec_halt(cpu);
- 
-     if (!leave_halt) {
--        return true;
-+        return false;
-     }
- 
-     cpu->halted = 0; /* allow execution */
- 
--    return false;
-+    return true;
- }
- #endif /* !CONFIG_USER_ONLY */
- 
-@@ -1027,7 +1027,7 @@ int cpu_exec(CPUState *cpu)
- 
- #ifndef CONFIG_USER_ONLY
-     if (cpu->halted) {
--        if (cpu_handle_halt(cpu)) {
-+        if (!cpu_poll_while_halted(cpu)) {
-             return EXCP_HALTED;
-         }
-         assert(!cpu->halted);
+We should change the tests/lcitool/refresh script in QEMU to pass
+'--host-arch x86_64' to lcitool, rather than defaulting to the
+developers' machine's arch.
+
+With regards,
+Daniel
 -- 
-2.53.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
