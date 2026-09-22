@@ -4,112 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C9EC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23DAC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96Hz-0008KE-Nx; Tue, 22 Sep 2026 15:36:27 -0400
+	id 1x96I2-0008LU-7j; Tue, 22 Sep 2026 15:36:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x96Ht-0008Fs-5e; Tue, 22 Sep 2026 15:36:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1x96I0-0008Ke-66; Tue, 22 Sep 2026 15:36:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x96Hr-0003sA-6Q; Tue, 22 Sep 2026 15:36:20 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x96Hy-0003sd-HM; Tue, 22 Sep 2026 15:36:27 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI7Sml4144249; Tue, 22 Sep 2026 19:36:17 GMT
+ 68MI7NoA3447412; Tue, 22 Sep 2026 19:36:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=mWWQj+
- XWjtcT7d7V2eNQIzFypip8ndMZtn+YCFFY87M=; b=mytFEDyyF9oNxtTN3WS0wY
- Ib/VVn41XuOGrCq3ruLs7tPaYnP32Jeae9eXzHf7phUyHxCO96uYlFW+1eKSUZiv
- 1Q+uuuFGZSFy1JF2HomA183hSpbn9Ru8SPVY4PwaRLTod9vNYPMSw5GZpdYcEDWl
- 60tIcbWoyokIkMmaqQZQnuRCbtTdmTQeJc8Y+Box0y6+eNQiy88cP3FZvnLJSjKM
- 2yOFhauCJpFr5nAmGh/R48nTKbTiB2EruGoDaBg5KWSnyriSVRVNZl65vGNlVgHI
- PNPbMCpNjRdLO8+JdstCGpvvAGVqoKky+JNQ7kvKMIY/Ht65LlPZOmoKjN9n4Vlg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PJRap+
+ a6/wYD2lXvgiihjowd5/NdvyU1U5dL5WLd2rk=; b=VSRypRg131l8CL/5tnLMe6
+ WDVwr842botDnrn8IdEA/W+MfUQ37NSzroXaHixUF9L8mHos3VoEQO2GIzBvJbjt
+ K6gmgp8icbIReyn3oIV99WtLzT0zd2/WOa1oiJautWnA31F2u0GloZXrP9vSJcOg
+ xq/53L1pQ/ykHIP8Hp8Xaewl238jbLhv+9Sm+v/DlV5vqGNe6KcliHGAYFsoyXrs
+ tTtoHLp4Qm/wVtxJEmo+V/4tDJD9yj+hhKTZck8tw+MS0XTTDJeZ+qEGN8GxHE1T
+ ukOG6hLeITXsF6RH1XAG2sNv7IrtfD/IH4rkQjWiC3kAMr174R31h1BGkMlrEJLQ
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqf8ux-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1qn3s-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:36:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHb6T3220323; Tue, 22 Sep 2026 19:36:17 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vka4v-1
+ Tue, 22 Sep 2026 19:36:24 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHWup3239737; Tue, 22 Sep 2026 19:36:23 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gu4ub-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:36:17 +0000 (GMT)
+ Tue, 22 Sep 2026 19:36:23 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MJaFlw31326814
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MJaM3q24052268
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 19:36:15 GMT
+ Tue, 22 Sep 2026 19:36:22 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A7A5E58055;
- Tue, 22 Sep 2026 19:36:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0F35758043;
+ Tue, 22 Sep 2026 19:36:22 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3458E58043;
- Tue, 22 Sep 2026 19:36:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 890CA58055;
+ Tue, 22 Sep 2026 19:36:21 +0000 (GMT)
 Received: from [9.61.131.16] (unknown [9.61.131.16])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Sep 2026 19:36:15 +0000 (GMT)
-Message-ID: <170bcc58-0bae-49c2-ae80-7a231f16cd0f@linux.ibm.com>
-Date: Tue, 22 Sep 2026 15:36:14 -0400
+ Tue, 22 Sep 2026 19:36:21 +0000 (GMT)
+Message-ID: <fa4e3ab3-c42f-49dc-8f19-37ee006aab24@linux.ibm.com>
+Date: Tue, 22 Sep 2026 15:36:21 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] virtio-ccw: Do not overwrite existing indicators
+Subject: Re: [PATCH v2 7/9] hw/intc/s390x: Fix check after g_try_realloc
 To: Eric Farman <farman@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, qemu-stable@nongnu.org
 References: <20260921184305.3791311-1-farman@linux.ibm.com>
- <20260921184305.3791311-3-farman@linux.ibm.com>
+ <20260921184305.3791311-8-farman@linux.ibm.com>
 Content-Language: en-US
 From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260921184305.3791311-3-farman@linux.ibm.com>
+In-Reply-To: <20260921184305.3791311-8-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab2d8b1 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: vh5sU-czgsu2ipr5e_09EnfLhMxKe8MU
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab2d8b8 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=uZfnXfx8t8SeaKmfT_AA:9 a=QEXdDO2ut3YA:10
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8
+ a=VnNF1IyMAAAA:8 a=DdrnoSRpkw2cHQbIOW4A:9 a=QEXdDO2ut3YA:10
  a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX5lyEdHSxtD+V
- SZNmiE/PvNnsAcDLtKAxbXN3P86ViUfau6EqzPvExLchJfTHk/2MaaY5KsWiq5vfvWMGPJOzv/9
- ffYrK7c/Vr7kpcIfEWxqHPeyQrWItc8W9Ehb1JTuKjAumemIaJfme7Y0dMxAhKtadJBFhX1tXzk
- YGCcICD26yQztd4/PYgmWyE651TFKIj5vhmWo00gmAJnTmnmXkPsnwRaHg2If0qbtV3IRxjjnxW
- 27oH+Bha7fOpRP7/KfofgTtHaG9fYiHAFhxdq/LBlnCIus+uZ55Qr7OJd41weJNwQfpDJmfgKSV
- YzQKIJx3oqOwCWfZzJpS+tpE5VfsAyUBetJyEHKyAAqF8G69MZkP/D2NQBIlCn2i5m22Gl4ZDAi
- /cgJkn8nZo8WJaFe8sNElaqXgq0TQltbBIuvJLsMvE9Bl3U7olkCv71KSa3E7BN3puGCgnmSKfQ
- ChuMYjdtZKVbK/wb1kA==
-X-Proofpoint-ORIG-GUID: XvzlpjX58Hebgce0Jh3g-OWxW4-Yp8f6
-X-Proofpoint-GUID: XvzlpjX58Hebgce0Jh3g-OWxW4-Yp8f6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX7zQZ3/JGjwxV
- bJ68dFDop4O1wqYPjvPXlU+5gsRWnjIf2PRwU7kQUM/hRtJBSB2d07T8OuIXxINuQVTekPMLBD2
- 0Bnjxp6GGPixqbJqgaeGZR7E0JcxLso=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX4EHMAHU1TZ14
+ 5v9L/nGjxqwNKSYA28GrOU4pxW9uikyKI8G/tgMG84W0PcjAaUNHyuo66Sr28oZxl5cW6c2H/od
+ tNdmqgPx1rfCL2Tf3IcUE8vNBLnag2g=
+X-Proofpoint-GUID: vh5sU-czgsu2ipr5e_09EnfLhMxKe8MU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX8+klsIu5B3Ha
+ kmXRoxlix9tm2kc1RXOiTZzKHrweojueHFG7NYWcqTqjKHgHqxyV9cbnrYrz21o7Q31wir4FgM/
+ CNtOqDPVJwjcQFfAo3MIsLzByXQ0w1ChhAkr4rknCTWAspYl9mrleKvvGtHgQOnLfZzp269oMXM
+ M34wuBbNC0+5JZqHRXIld/qzsk9bav4FMznGEZCZedocBMw3ATZle1XSOe1j8nZJRWwPK+Kkauv
+ 9+fs6hoNrK3duAwdldnLJ6yQYUk3hZsSHxfGKluHU4ftBKCOSBuUgx/CVaZex+IdX0rv52CDAPi
+ GCl7ozupC9VV/K/HblQnmJy6sytzinGnf5dVGcoMsEgdWqQGTH3Fen2RfVyTlS3dusOkHN8gnpa
+ oGduQEAKvhdrjegKWoDpFsuro5CUiRvpYHMJDv1HURIsYJzrnbpxKttmdNTqqwkjknt2vHHY8Lz
+ B2+XY1rudX56jCe5gHA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220287
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,21 +126,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/21/26 2:42 PM, Eric Farman wrote:
-> The various indicators pointers allow them to be overwritten,
-> but leak any existing structs that might be there. If indicators
-> exist, ensure that they are released before setting the new ones.
+On 9/21/26 2:43 PM, Eric Farman wrote:
+> The loop to store pending IRQs uses g_try_realloc() to expand the
+> buffer being used, but the returned address is stored in a
+> pointer-to-pointer, thus the check is supposed to be examining
+> the contents of the pointer, and not the pointer itself.
 > 
-> Both the regular and adapter interrupt paths check that they
-> aren't being asked to enable interrupts when the other one is
-> enabled, so just do this release once all the potential checks
-> are completed.
+> Define a temporary variable to catch and test the returned pointer.
+> If it's NULL, return to the caller to perform the free on the
+> unmodified buffer. If it's not NULL, store it in the caller's
+> pointer and restart the loop against the new struct.
 > 
 > Cc: qemu-stable@nongnu.org
-> Fixes: 7bca3892cb ("s390x/virtio-ccw: reference-counted indicators")
+> Fixes: 3a553fc658 ("s390x/kvm: implement floating-interrupt controller device")
 > Signed-off-by: Eric Farman <farman@linux.ibm.com>
+With Christian's suggestion addressed:
 
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-
 
