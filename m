@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEC2C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0E3C98304
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x97Yy-0000ys-6c; Tue, 22 Sep 2026 16:58:06 -0400
+	id 1x97Yw-0000yZ-Bn; Tue, 22 Sep 2026 16:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97Xj-0000P0-5N
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:48 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97Xg-0000Na-2S
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97Xf-00048B-4I
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97Xe-00047y-DA
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790110602;
+ s=mimecast20190719; t=1790110601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xwFyc4zFN9EYqJtZf8lGRUeeM53lUzuwAg5LTlqUuaA=;
- b=UAEQRTXcnn3eVOKD+x1ErBcBqf3orJZWcJA+9q6loeKRPWkPC0VY781QFDhlFhyxdJzY6b
- guI4SWMkm6wlcRS41rmt89sAhClip65P9xgjCD0LxY6A3Wx2TUXv+5vqtXfxdw2G8ZkakA
- Nlpo4QmfDzt9NkKitsMy6hR0pXU2pU4=
+ bh=e74AjzVYAvqbY//GzxliaSnz/JXsu67MDAvHJ55yQ7k=;
+ b=bwx1oq05u1yhEmI2ItqfOo/4PIyMZ5e5lfldZZq/lK4U55PR7R96P7i4gB21+iDcKtwZRj
+ jha+PGHp3hi/m110uPl/AuiJ8e6kLvIVbJLp2QW0O09sSb7AbjkYdEKipccxNmDqIJKaXG
+ 28H9GC9ysW5Q0qzZYsTat9PoZR0uNMQ=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-iWM0fvXSMx6fD6iVxogo5g-1; Tue,
- 22 Sep 2026 16:56:41 -0400
-X-MC-Unique: iWM0fvXSMx6fD6iVxogo5g-1
-X-Mimecast-MFC-AGG-ID: iWM0fvXSMx6fD6iVxogo5g_1790110599
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-60-d3KusHAeOIe10K8ZPyMs-w-1; Tue,
+ 22 Sep 2026 16:56:38 -0400
+X-MC-Unique: d3KusHAeOIe10K8ZPyMs-w-1
+X-Mimecast-MFC-AGG-ID: d3KusHAeOIe10K8ZPyMs-w_1790110596
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 609011956064; Tue, 22 Sep 2026 20:56:39 +0000 (UTC)
+ id 41035195DE23; Tue, 22 Sep 2026 20:56:36 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63BF71956086; Tue, 22 Sep 2026 20:56:36 +0000 (UTC)
+ id 254FB1956086; Tue, 22 Sep 2026 20:56:33 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -60,10 +60,9 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 7/8] qapi: convert intro sections for
- docs/interop/firmware.json
-Date: Tue, 22 Sep 2026 16:56:04 -0400
-Message-ID: <20260922205605.501602-8-jsnow@redhat.com>
+Subject: [PATCH v2 6/8] qapi: split intros for qga/qapi-schema.json
+Date: Tue, 22 Sep 2026 16:56:03 -0400
+Message-ID: <20260922205605.501602-7-jsnow@redhat.com>
 In-Reply-To: <20260922205605.501602-1-jsnow@redhat.com>
 References: <20260922205605.501602-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -94,199 +93,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All conversions in this patch do not create a new documentation
-insertion point, except for one at the very end.
+These intro section conversions all create a new insertion point that
+follow the introduction, but precede what now constitutes the details
+text. Like other intro section conversions, the details text will be
+moved en-masse in a later patch.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/interop/firmware.json | 76 ++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 45 deletions(-)
+ qga/qapi-schema.json | 61 +++++++++++++++++++-------------------------
+ 1 file changed, 26 insertions(+), 35 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 421bee0e5ed..1efd32c6315 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -23,9 +23,8 @@
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 19b0958b84e..05fe4ea484d 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -48,9 +48,8 @@
  
  ##
- # @FirmwareOSInterface:
+ # @guest-sync-delimited:
 -#
--# Lists the firmware-OS interface types provided by various firmware
--# that is commonly used with QEMU virtual machines.
-+#     Lists the firmware-OS interface types provided by various
-+#     firmware that is commonly used with QEMU virtual machines.
+-# Echo back a unique integer value, and prepend to response a leading
+-# sentinel byte (0xFF) the client can check scan for.
++#     Echo back a unique integer value, and prepend to response a
++#     leading sentinel byte (0xFF) the client can check scan for.
  #
- # @bios: Traditional x86 BIOS interface.  For example, firmware built
- #     from the SeaBIOS project usually provides this interface.
-@@ -49,8 +48,7 @@
+ # This is used by clients talking to the guest agent over the wire to
+ # ensure the stream is in sync and doesn't contain stale data from
+@@ -83,8 +82,7 @@
  
  ##
- # @FirmwareDevice:
+ # @guest-sync:
 -#
--# Defines the device types that firmware can be mapped into.
-+#     Defines the device types that firmware can be mapped into.
+-# Echo back a unique integer value
++#     Echo back a unique integer value
  #
- # @flash: The firmware executable and its accompanying NVRAM file are
- #     to be mapped into a pflash chip each.
-@@ -75,9 +73,8 @@
+ # This is used by clients talking to the guest agent over the wire to
+ # ensure the stream is in sync and doesn't contain stale data from
+@@ -140,8 +138,7 @@
  
  ##
- # @FirmwareArchitecture:
+ # @guest-set-time:
 -#
--# Enumeration of architectures for which Qemu uses additional firmware
--# files.
-+#     Enumeration of architectures for which Qemu uses additional
-+#     firmware files.
+-# Set guest time.
++#     Set guest time.
  #
- # @aarch64: 64-bit Arm.
- #
-@@ -98,8 +95,7 @@
+ # When a guest is paused or migrated to a file then loaded from that
+ # file, the guest OS has no idea that there was a big gap in the time.
+@@ -415,14 +412,14 @@
  
  ##
- # @FirmwareTarget:
--#
--# Defines the machine types that firmware may execute on.
-+#     Defines the machine types that firmware may execute on.
+ # @guest-fsfreeze-freeze:
++#     Sync and freeze all freezable, local guest filesystems.  If this
++#     command succeeded, you may call `guest-fsfreeze-thaw` later to
++#     unfreeze.
  #
- # @architecture: Determines the emulation target (the QEMU system
- #     emulator) that can execute the firmware.
-@@ -121,9 +117,8 @@
+-# Sync and freeze all freezable, local guest filesystems.  If this
+-# command succeeded, you may call `guest-fsfreeze-thaw` later to
+-# unfreeze.
+-#
+-# On error, all filesystems will be thawed.  If no filesystems are
+-# frozen as a result of this call, then `guest-fsfreeze-status` will
+-# remain "thawed" and calling `guest-fsfreeze-thaw` is not necessary.
++#     On error, all filesystems will be thawed.  If no filesystems are
++#     frozen as a result of this call, then `guest-fsfreeze-status`
++#     will remain "thawed" and calling `guest-fsfreeze-thaw` is not
++#     necessary.
+ #
+ # Returns: Number of file systems currently frozen.
+ #
+@@ -438,11 +435,10 @@
  
  ##
- # @FirmwareFeature:
--#
--# Defines the features that firmware may support, and the platform
--# requirements that firmware may present.
-+#     Defines the features that firmware may support, and the platform
-+#     requirements that firmware may present.
+ # @guest-fsfreeze-freeze-list:
++#     Sync and freeze specified guest filesystems.  See also
++#     `guest-fsfreeze-freeze`.
  #
- # @acpi-s3: The firmware supports S3 sleep (suspend to RAM), as
- #     defined in the ACPI specification.  On the "pc-i440fx-*" machine
-@@ -236,8 +231,7 @@
+-# Sync and freeze specified guest filesystems.  See also
+-# `guest-fsfreeze-freeze`.
+-#
+-# On error, all filesystems will be thawed.
++#     On error, all filesystems will be thawed.
+ #
+ # @mountpoints: an array of mountpoints of filesystems to be frozen.
+ #     If omitted, every mounted filesystem is frozen.  Invalid mount
+@@ -528,8 +524,7 @@
  
  ##
- # @FirmwareFormat:
+ # @guest-suspend-disk:
 -#
--# Formats that are supported for firmware images.
-+#     Formats that are supported for firmware images.
+-# Suspend guest to disk.
++#     Suspend guest to disk.
  #
- # @raw: Raw disk image format.
- #
-@@ -250,12 +244,11 @@
+ # This command attempts to suspend the guest using three strategies,
+ # in this order:
+@@ -558,8 +553,7 @@
  
  ##
- # @FirmwareFlashFile:
+ # @guest-suspend-ram:
 -#
--# Defines common properties that are necessary for loading a firmware
--# file into a pflash chip.  The corresponding QEMU command line option
--# is "-drive file=@filename,format=@format".  Note however that the
--# option-argument shown here is incomplete; it is completed under
--# @FirmwareMappingFlash.
-+#     Defines common properties that are necessary for loading a
-+#     firmware file into a pflash chip.  The corresponding QEMU
-+#     command line option is "-drive file=@filename,format=@format".
-+#     Note however that the option-argument shown here is incomplete;
-+#     it is completed under @FirmwareMappingFlash.
+-# Suspend guest to ram.
++#     Suspend guest to ram.
  #
- # @filename: Specifies the filename on the host filesystem where the
- #     firmware file can be found.
-@@ -272,9 +265,8 @@
+ # This command attempts to suspend the guest using three strategies,
+ # in this order:
+@@ -595,8 +589,7 @@
  
  ##
- # @FirmwareFlashMode:
+ # @guest-suspend-hybrid:
 -#
--# Describes how the firmware build handles code versus variable
--# persistence.
-+#     Describes how the firmware build handles code versus variable
-+#     persistence.
+-# Save guest state to disk and suspend to ram.
++#     Save guest state to disk and suspend to ram.
  #
- # @split: the executable file contains code while the NVRAM template
- #     provides variable storage.  The executable must be configured
-@@ -298,9 +290,9 @@
+ # This command attempts to suspend the guest by executing, in this
+ # order:
+@@ -746,10 +739,9 @@
  
  ##
- # @FirmwareMappingFlash:
--#
--# Describes loading and mapping properties for the firmware executable
--# and its accompanying NVRAM file, when @FirmwareDevice is @flash.
-+#     Describes loading and mapping properties for the firmware
-+#     executable and its accompanying NVRAM file, when @FirmwareDevice
-+#     is @flash.
+ # @guest-get-vcpus:
++#     Retrieve the list of the guest's logical processors.
  #
- # @mode: Describes how the firmware build handles code versus variable
- #     storage.  If not present, it must be treated as if it was
-@@ -357,9 +349,8 @@
+-# Retrieve the list of the guest's logical processors.
+-#
+-# This is a read-only operation.
++#     This is a read-only operation.
+ #
+ # Returns: The list of all VCPUs the guest knows about.  Each VCPU is
+ #     put on the list exactly once, but their order is unspecified.
+@@ -1106,10 +1098,9 @@
  
  ##
- # @FirmwareMappingKernel:
--#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @kernel.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @kernel.
+ # @guest-get-memory-blocks:
++#     Retrieve the list of the guest's memory blocks.
  #
- # @filename: Identifies the firmware executable.  The firmware
- #     executable may be shared by multiple virtual machine
-@@ -373,9 +364,8 @@
+-# Retrieve the list of the guest's memory blocks.
+-#
+-# This is a read-only operation.
++#     This is a read-only operation.
+ #
+ # Returns: The list of all memory blocks the guest knows about.  Each
+ #     memory block is put on the list exactly once, but their order is
+@@ -1346,12 +1337,12 @@
  
  ##
- # @FirmwareMemoryUefiVars:
--#
--# Contains information needed to set up the "uefi-vars" device
--# to provide UEFI variable store access to the firmware.
-+#     Contains information needed to set up the "uefi-vars" device to
-+#     provide UEFI variable store access to the firmware.
+ # @guest-get-host-name:
++#     Return a name for the machine.
  #
- # @template: The path to the UEFI JSON variable store template
- #     compatible with the firmware.  Management software instantiates
-@@ -406,9 +396,8 @@
- 
- ##
- # @FirmwareMappingMemory:
+-# Return a name for the machine.
 -#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @memory.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @memory.
+-# The returned name is not necessarily a fully-qualified domain name,
+-# or even present in DNS or some other name service at all.  It need
+-# not even be unique on your local network or site, but usually it is.
++#     The returned name is not necessarily a fully-qualified domain
++#     name, or even present in DNS or some other name service at all.
++#     It need not even be unique on your local network or site, but
++#     usually it is.
  #
- # @filename: Identifies the firmware executable.  The firmware
- #     executable may be shared by multiple virtual machine
-@@ -430,9 +419,8 @@
- 
- ##
- # @FirmwareMappingIgvm:
--#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @igvm.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @igvm.
+ # Returns: the host name of the machine
  #
- # @filename: Identifies the IGVM file containing the firmware
- #     executable along with other information used to configure the
-@@ -448,9 +436,8 @@
- 
- ##
- # @FirmwareMapping:
--#
--# Provides a discriminated structure for firmware to describe its
--# loading / mapping properties.
-+#     Provides a discriminated structure for firmware to describe its
-+#     loading / mapping properties.
- #
- # @device: Selects the device type that the firmware must be mapped
- #     into.
-@@ -467,9 +454,8 @@
- 
- ##
- # @Firmware:
--#
--# Describes a firmware (or a firmware use case) to management
--# software.
-+#     Describes a firmware (or a firmware use case) to management
-+#     software.
- #
- # It is possible for multiple @Firmware elements to match the search
- # criteria of management software.  Applications thus need rules to
 -- 
 2.55.0
 
