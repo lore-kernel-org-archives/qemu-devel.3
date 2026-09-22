@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4033C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 11:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1571C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8z6o-0000XR-BZ; Tue, 22 Sep 2026 07:56:27 -0400
+	id 1x8zER-00024u-GQ; Tue, 22 Sep 2026 08:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x8z6l-0000XD-Aa
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 07:56:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x8z6j-0003Mb-8p
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 07:56:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790078179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=pVCgw0wPygjBTIaqMmVrSbeA8amhWhBeh4imNY++Sng=;
- b=Nena1Sj4V4SwfC4bAP67rYN6PhslaoQU4D4cK9TeszsrUy3wwjnd788fA7clRFDNRkkSQW
- eaelkam4sDEe/74Gh7kFLzxOuRvV1x//JUXSiQqhM8q2CY1K0wI4pwhdsD9B5niwQi5IPO
- OPKbrq9G1p88MtXlZDkwVMzFY6VvAS8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-y08WbYFYOvWBzItFMoX9lA-1; Tue,
- 22 Sep 2026 07:56:17 -0400
-X-MC-Unique: y08WbYFYOvWBzItFMoX9lA-1
-X-Mimecast-MFC-AGG-ID: y08WbYFYOvWBzItFMoX9lA_1790078176
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zEP-00024O-UH
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:04:18 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zEN-0004VA-Vd
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:04:17 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 952C4195395D
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 11:56:16 +0000 (UTC)
-Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7CE92300106A; Tue, 22 Sep 2026 11:56:15 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hw/pci-bridge: honour CONFIG_CXL in PXB
-Date: Tue, 22 Sep 2026 12:56:13 +0100
-Message-ID: <20260922115613.1926083-1-berrange@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D77651F820;
+ Tue, 22 Sep 2026 12:04:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790078649; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
+ b=0igaLNpsfM+9PjHKSJ19VTyB1aDYLNzQu9zEK6Wv7n9zIZKLwpYvawI6/HYygwq7Bq5KYQ
+ y3buGFPOYzoAvY2zVid4xcq/y6sLZw+/+oMd8yZB3R8EqyiFFbUWi9JWYhWY8iOkvsZ4VJ
+ HgDfZ9IqWGRaBM4a74xNf+yyuGT7Aow=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790078649;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
+ b=MBC7VSHJUF6p/a3FvZ/Gfp4KBmnPIpJ4nJRf77pnUfStIg0Um8/IqY8ScsM+NA6DsRx0lh
+ pV6Kuzecj6cSt/Cg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790078644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
+ b=LzKilkXJXqvdLC+lEA7UzLgMIR4zkBVJgylDUR2A2LktNn2BEkQTqRDbigodzLyytseoen
+ tddOftq9tbLFqljoPo0yfFGvaEdelZZnFyxlz0aCBCnEofbobpeQKDAy6EAVu/HLbRyRzW
+ r0yTpOErNgC/pxLt8RCJF4ZHG7keXtw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790078644;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
+ b=oN9SdFf8uxkq5v3aC5oGh1Bi35sld1ytcqWjsPgVDyzgPuxwPqX96z0i3MGZRkzc8nxz3i
+ pqeWd51GBo61y8Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 56A25136D9;
+ Tue, 22 Sep 2026 12:04:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3V3gOrNusmp4FgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:04:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru
+Subject: Re: [PATCH 00/30] move to new migration APIs
+In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
+References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
+Date: Tue, 22 Sep 2026 09:03:57 -0300
+Message-ID: <87cxu5bihe.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,103 +112,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If CONFIG_CXL=n is added to the Kconfig, the build fails to link
-the PXB device:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-/usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_realize':
-/home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:202:(.text+0x330): undefined reference to `cxl_component_register_block_init'
-/usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_dev_reset':
-/home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:309:(.text+0x768): undefined reference to `cxl_component_register_init_common'
+> Hi all!
+>
+> That's a new version for old
+>
+> [RFC 00/22] migration: convert vmstate_load/save_state
+>
+> after the core patches converting migration code
+> are already merged into master.
+>
+> Let's now convert the whole code base.
+>
+> Vladimir Sementsov-Ogievskiy (30):
+>   tests/unit/test-vmstate: move to new migration APIs
+>   ui/vdagent: move to new migration APIs
+>   hw/virtio: extra state: move to new migration APIs
+>   hw/virtio: config save/load: move to new migration APIs
+>   hw/virtio: make virtio_save() and virtio_load() static
+>   hw/virtio: remaining: move to new migration APIs
+>   hw/s390x/virtio-ccw.c: move to new migration APIs
+>   hw/scsi/spapr_vscsi: move to new migration APIs
+>   hw/scsi/scsi-bus.c: use new migration APIs
+>   hw/vfio/pci: move to new migration APIs
+>   hw/pci/pci: move to new migration APIs
+>   hw/pci/msix.c: use new migration APIs
+>   hw/pci/shpc.c: use new migration APIs
+>   hw/display/virtio-gpu: move to new migration APIs
+>   hw/net/virtio-net.c: use new migration APIs
+>   hw/nvram/eeprom93xx.c: use new migration APIs
+>   hw/nvram/fw_cfg.c: use new migration APIs
+>   hw/usb/redirect.c: move to new migration APIs
+>   alpha/machine: move to new migration APIs
+>   avr/machine: move to new migration APIs
+>   or1k/machine: move to new migration APIs
+>   microblaze/machine: move to new migration APIs
+>   hppa/machine: move to new migration APIs
+>   sparc/machine: move to new migration APIs
+>   ppc/machine: move to new migration APIs
+>   mips/machine: move to new migration APIs
+>   arm/machine: move to new migration APIs
+>   migration/vmstate-types: convert vmstate_info_g_byte_array to new APIs
+>   migration: VMStateInfo: remove old .get / .set handlers
+>   migration: finally drop vmstate_save/load_state() functions
+>
+>  hw/display/virtio-gpu.c        |  99 +++++++++++----------
+>  hw/net/virtio-net.c            | 133 ++++++++++++++--------------
+>  hw/nvram/eeprom93xx.c          |  17 ++--
+>  hw/nvram/fw_cfg.c              |  24 ++---
+>  hw/pci/msix.c                  |  17 ++--
+>  hw/pci/pci.c                   |  85 +++++++++---------
+>  hw/pci/shpc.c                  |  20 +++--
+>  hw/s390x/virtio-ccw.c          |  40 ++++-----
+>  hw/scsi/scsi-bus.c             |  17 ++--
+>  hw/scsi/spapr_vscsi.c          |   9 +-
+>  hw/usb/redirect.c              |  59 +++++++------
+>  hw/vfio/pci.c                  |  14 ++-
+>  hw/virtio/vhost-user-fs.c      |  68 +++++++-------
+>  hw/virtio/virtio-mmio.c        |  31 +++----
+>  hw/virtio/virtio-pci.c         |  45 +++++-----
+>  hw/virtio/virtio.c             | 157 +++++++++++++++++----------------
+>  include/hw/pci/pci.h           |   4 +-
+>  include/hw/virtio/virtio-bus.h |   8 +-
+>  include/hw/virtio/virtio.h     |   4 -
+>  include/migration/vmstate.h    |  17 ----
+>  migration/vmstate-types.c      |  17 ++--
+>  migration/vmstate.c            |  32 +------
+>  target/alpha/machine.c         |  17 ++--
+>  target/arm/machine.c           | 107 +++++++++++-----------
+>  target/avr/machine.c           |  50 ++++++-----
+>  target/hppa/machine.c          |  34 +++----
+>  target/microblaze/machine.c    |  17 ++--
+>  target/mips/system/machine.c   |  49 +++++-----
+>  target/or1k/machine.c          |  17 ++--
+>  target/ppc/machine.c           |  80 ++++++++---------
+>  target/sparc/machine.c         |  68 +++++++-------
+>  tests/unit/test-vmstate.c      | 118 +++++++------------------
+>  ui/vdagent.c                   |  38 ++++----
+>  33 files changed, 710 insertions(+), 802 deletions(-)
 
-Fixes: 6e4e3ae936 (hw/cxl/component: Implement host bridge MMIO (8.2.5, table 142))
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- hw/pci-bridge/pci_expander_bridge.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 40ffbc4e082..8977243a804 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -123,12 +123,14 @@ static const TypeInfo pxb_pcie_bus_info = {
-     .class_init    = pxb_bus_class_init,
- };
- 
-+#ifdef CONFIG_CXL
- static const TypeInfo pxb_cxl_bus_info = {
-     .name          = TYPE_PXB_CXL_BUS,
-     .parent        = TYPE_CXL_BUS,
-     .instance_size = sizeof(PXBBus),
-     .class_init    = pxb_bus_class_init,
- };
-+#endif /* CONFIG_CXL */
- 
- static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
-                                           PCIBus *rootbus)
-@@ -192,6 +194,7 @@ static const TypeInfo pxb_host_info = {
-     .class_init    = pxb_host_class_init,
- };
- 
-+#ifdef CONFIG_CXL
- static void pxb_cxl_realize(DeviceState *dev, Error **errp)
- {
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-@@ -250,6 +253,7 @@ static const TypeInfo cxl_host_info = {
-     .instance_size = sizeof(CXLHost),
-     .class_init    = pxb_cxl_host_class_init,
- };
-+#endif /* CONFIG_CXL */
- 
- /*
-  * Registers the PXB bus as a child of pci host root bus.
-@@ -297,6 +301,7 @@ static int pxb_map_irq_fn(PCIDevice *pci_dev, int pin)
-     return pin - PCI_SLOT(pxb->devfn);
- }
- 
-+#ifdef CONFIG_CXL
- static void pxb_cxl_dev_reset(DeviceState *dev)
- {
-     CXLHost *cxl = PXB_CXL_DEV(dev)->cxl_host_bridge;
-@@ -324,6 +329,7 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
-                          8);
-     }
- }
-+#endif /* CONFIG_CXL */
- 
- static gint pxb_compare(gconstpointer a, gconstpointer b)
- {
-@@ -496,6 +502,7 @@ static const TypeInfo pxb_pcie_dev_info = {
-     },
- };
- 
-+#ifdef CONFIG_CXL
- static void pxb_cxl_dev_realize(PCIDevice *dev, Error **errp)
- {
-     /* A CXL PXB's parent bus is still PCIe */
-@@ -546,17 +553,20 @@ static const TypeInfo pxb_cxl_dev_info = {
-             {},
-         },
- };
-+#endif /* CONFIG_CXL */
- 
- static void pxb_register_types(void)
- {
-     type_register_static(&pxb_bus_info);
-     type_register_static(&pxb_pcie_bus_info);
--    type_register_static(&pxb_cxl_bus_info);
-     type_register_static(&pxb_host_info);
--    type_register_static(&cxl_host_info);
-     type_register_static(&pxb_dev_info);
-     type_register_static(&pxb_pcie_dev_info);
-+#ifdef CONFIG_CXL
-+    type_register_static(&pxb_cxl_bus_info);
-+    type_register_static(&cxl_host_info);
-     type_register_static(&pxb_cxl_dev_info);
-+#endif /* CONFIG_CXL */
- }
- 
- type_init(pxb_register_types)
--- 
-2.55.0
-
+Queued patches 1 and 28 for migration-next.
 
