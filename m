@@ -4,104 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B92C98304
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F65C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 22:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x98TI-0003M0-O1; Tue, 22 Sep 2026 17:56:16 -0400
+	id 1x98al-0000vL-SE; Tue, 22 Sep 2026 18:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x98T8-0003FJ-6y
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:12 -0400
-Received: from mail-dl2-x0e.google.com ([2607:f8b0:4864:38::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x98T6-0000wB-Dy
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:56:05 -0400
-Received: by mail-dl2-x0e.google.com with SMTP id
- a92af1059eb24-1437b77c274so166901c88.3
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 14:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790114163; x=1790718963; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZEMtFIfZNRZAXvmyI7lep73l5ReH37r60zcF9WOmkRg=;
- b=lVh6/5Q/QYPabqCECPPsC6Zmifhk65d1JPZXdfTTy/RAr7BlmXDRV0SE9wtFTvXXVS
- fz8GnPo6/C+94vdc3iqYZmQXPu8u1hkaJ9LlpR6bPgD9xupV7lePQE5sdHVTc0hCsVjc
- cbMC6MbOcPXXmyahn+GGNu8PBI0XpnDBlpVprjYNjuFwJSuvszffShfLCxveMfW9IVrl
- d+o4jPEMf3efS6pSsKviPWQL9Xw54jPYBHlw/H5gto62ors55u+T0zNVae5zzmcwngeO
- uHPhgSGs6yjWdn6XFUiH6lFE5bTn9/7pGkOOqjjuQFMDxBBOhCD8MJtowiN5RhjPXto7
- EnPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790114163; x=1790718963;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZEMtFIfZNRZAXvmyI7lep73l5ReH37r60zcF9WOmkRg=;
- b=s13ZO20rbjF5XYelkRKiZGw8Iu4RnnsLqem2R97l/yUQFjiB0pS1TNzFaX36FEAV/y
- hG5FkqaGMoHKsrowUONA5ixIehEdl6bjyYZT39bS9HQpsSWqSAKs1VpTQWuL1XjcA6Au
- dF7YJbC/50QiiSLQegHgYT9F2EaYZjN54rYIsGW78NXagN5hFwL+Be7+eA214yjD1ScK
- OIR4lruZfAO5wHjPCxhdsVIG7ZmjwlYPIJtrsl8tnYYdIjLjvygKz03fOdLi5qq4je9U
- 8BULN3RCl/SWvL2FFR5xeYL6TuffDu2vEkO+Jw6wCdExWfWdwZYSD9FFT5ZSMUGe3d3i
- nmfQ==
-X-Gm-Message-State: AFuF++mGmuYwfELzhMSO3cPnCnGLAVeunnqAy9e2/D9UKWmgYj8DkbkE
- EOgP/icy3nSlNz8c7pkqZwrXAZ8GO4xGUg9B1wRWcGkwCX90xdbz6/prkm6tLXhxYEE=
-X-Gm-Gg: AYBFou284Wi1nBaG/qOKetpst9MTiMvn2ul9owF2cI7rpQSaCR3DNRg8kOzWN2Hqzqr
- 4Et3JaVp/dgft0WyASi7+z7P7wpuPjYb+3OvBR8uuHxGTxntG72oatL2ceXHaYlUs4IBzm6lWeq
- x9ShI5fcsQyt23qw+BPvCJWASNKuL/rm518thlCABrWrb5eQIvTQ/QuHNRz2nUZKc6b3yAdpKxh
- EUNCoC/fTy0KRPM52a0EHCK5hZA3To01x2PngVy3h2jVk7BxIm6VG8QHF7Ebh5mDGsAP3Hnptl9
- K1TYWMQfDYstamWReD3218VM0ZGK6c7cpdelrECpfuvyQSpWnoXjI11YQYFgPfRUeFkcyi78Baw
- 8mQzeKygcs6ciSLQOqsZMAsjAuUmTk72WEYhvOHnx/Zvn5gGDj6/dzT7UonFYkLbGGsATgkIhpy
- MQM3GECdhZioxRwRWvLhNuBvZ1dcRxay6VsuLrVvg8FZTYWjJmdqocyINJUeb6t7NvI5MEu41T/
- u712GDrtWYL3uTW1NvkM1YSi9rAiFAd
-X-Received: by 2002:a05:7022:28e:10b0:143:2967:c0b1 with SMTP id
- a92af1059eb24-144f9c47315mr621949c88.25.1790114162558; 
- Tue, 22 Sep 2026 14:56:02 -0700 (PDT)
-Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
- by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-144f949e60dsm1001153c88.2.2026.09.22.14.55.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 14:56:01 -0700 (PDT)
-From: Yonggang Luo <luoyonggang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
- Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-arm@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Song Gao <17746591750@163.com>,
- Markus Armbruster <armbru@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Stafford Horne <shorne@gmail.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2 3/9] hw/arm/virt: use unique QOM name
-Date: Wed, 23 Sep 2026 05:55:26 +0800
-Message-ID: <20260922215533.641-4-luoyonggang@gmail.com>
-X-Mailer: git-send-email 2.52.0.windows.1
-In-Reply-To: <20260922215533.641-1-luoyonggang@gmail.com>
-References: <20260922215533.641-1-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x98aV-0000u3-00; Tue, 22 Sep 2026 18:03:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x98aS-0001eb-KH; Tue, 22 Sep 2026 18:03:42 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MI7GqF1129632; Tue, 22 Sep 2026 22:03:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=XSnt5b
+ gCEL69B+SbkVHxMW1SF2XxkjHBPwLW1wxGVFo=; b=dvsUO7lRW1Yvf7DXXp/Akj
+ zSUx1TaEPkbJDDCI430lgJHHXh8mjHKy+Y8F5iM425vQP+J/PpSnzRG8hXzAmn6b
+ Ccpf8+9mF/TSIukDiO29usnmc3Q9OHJY3o7g8OJ2n+AqKVUKQH5uAaObMo2VrT1n
+ IqY9L7rSI7m7VeNrMUYx1F4VJGu7V0rlqWpaxo6XfzFJUyo/fBzPwEP3OXETb9OA
+ 5Xr67fxrBvwspSw92DRsItrbuR250GRPf/nXBn8OTbHNsjewRwJXZcnCVx9S7LQk
+ ND7gzGVYjnqDENovUe96R6qYhpUHKuiG23+GiaRDW5t90pphDNbP4CDpuZ19E8NA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2g6hp-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 22:03:37 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHbar3220323; Tue, 22 Sep 2026 22:03:36 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vks25-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 22:03:36 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MM3ZWS17105526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 22:03:35 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4435058043;
+ Tue, 22 Sep 2026 22:03:35 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C9C158055;
+ Tue, 22 Sep 2026 22:03:34 +0000 (GMT)
+Received: from [9.61.131.16] (unknown [9.61.131.16])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 22:03:34 +0000 (GMT)
+Message-ID: <577d38ad-94a0-45fe-87f1-cb010f8cd279@linux.ibm.com>
+Date: Tue, 22 Sep 2026 18:03:33 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::e;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] hw/virtio: Add "loadparm" property to virtio net
+ PCI devices booting on s390x
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
+ jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
+ pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com, jdaley@linux.ibm.com
+References: <20260914193438.526407-1-zycai@linux.ibm.com>
+ <20260914193438.526407-6-zycai@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <20260914193438.526407-6-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: IRTYMF9ugIyApBnVZ_SDtdaurqQFu18q
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab2fb39 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=qN506RqINZ981zxnCPAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5OSBTYWx0ZWRfX3bnRuRf2SVKX
+ tP20FR9/QyO5PR2WTy3EcZIo2h31nHU++VsPYvT/NQA4IaVUqO7DRnz/D5He7Ve/IKNsiX5qPa3
+ 0p2nRxsZLUI5a1CsqZl63YMbcUtmpAhBMKYoj1ZA4z/XuubyPsfC4ErTVWqlegI12bTezAiQ7Hy
+ ZsEOEt2lylbnwgj/r/fOPmmX54snf84LAf824v8H57kIKtBsaoZ8HHOOd4zcOBoKyKcv0JUaESy
+ IAHzP1PIRi7RGoRAX7VaJGLZCqw+Ce29BpnexJUEmyDfiCcUBub5LbSrauTy0Vly0aQz5e7NubF
+ MgxQIqp9awoox7QnfTqlaIWV8hAWVwmQdqKkzkSks/cF9AB3D6KSbtb7vj1Lc4BYmtVGiaEElJF
+ UnlxMMMdqBRmnb4WifGgHWYaT4dXLFvefYL3qdx+VEwSrnR/wyqzlMCl4z7+0au7vd6VIC5zn+Z
+ xPIAD608zU6osubyvdA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5OSBTYWx0ZWRfX/Nvp25ERVREp
+ pCngg1muC418U8oo7bmdg4pylQW0qRWlvoM663LHwIB6ILvoQj69mpmM8+G0iza7y0Aiyjv+hCK
+ 61i8JZ98akkxjwS9lAACCuH9AAfT4eg=
+X-Proofpoint-GUID: IRTYMF9ugIyApBnVZ_SDtdaurqQFu18q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220299
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,51 +128,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set TYPE_VIRT_MACHINE to MACHINE_TYPE_NAME("arm-virt") so ARM virt
-no longer collides with other virt-machine types in one process.
-Keep the -M / help / migration name as virt-* via
-machine_class_set_name().
+On 9/14/26 3:34 PM, Zhuoying Cai wrote:
+> Add optional loadparm property to virtio-net-pci to allow boot entry
+> selection on s390x, consistent with virtio-blk-pci.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- hw/arm/virt.c         | 3 ++-
- include/hw/arm/virt.h | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3eecf094bcc..c8ffa1ceaf4 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -123,13 +123,14 @@ static void arm_virt_compat_default_set(MachineClass *mc)
-         MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-         mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " ARM Virtual Machine"; \
-         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-+        machine_class_set_name(mc, "virt-" MACHINE_VER_STR(__VA_ARGS__)); \
-         if (latest) { \
-             mc->alias = "virt"; \
-         } \
-     } \
-     static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-     { \
--        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+        .name = MACHINE_VER_TYPE_NAME("arm-virt", __VA_ARGS__), \
-         .parent = TYPE_VIRT_MACHINE, \
-         .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-     }; \
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 22e66d1a113..383ee320948 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -215,7 +215,7 @@ struct VirtMachineState {
- 
- #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
- 
--#define TYPE_VIRT_MACHINE   MACHINE_TYPE_NAME("virt")
-+#define TYPE_VIRT_MACHINE   MACHINE_TYPE_NAME("arm-virt")
- OBJECT_DECLARE_TYPE(VirtMachineState, VirtMachineClass, VIRT_MACHINE)
- 
- void virt_acpi_setup(VirtMachineState *vms);
--- 
-2.52.0.windows.1
+> ---
+>  hw/virtio/virtio-net-pci.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/virtio/virtio-net-pci.c b/hw/virtio/virtio-net-pci.c
+> index fd3e0303f5..893d1905a9 100644
+> --- a/hw/virtio/virtio-net-pci.c
+> +++ b/hw/virtio/virtio-net-pci.c
+> @@ -77,6 +77,7 @@ static void virtio_net_pci_class_init(ObjectClass *klass, const void *data)
+>      k->sriov_vf_user_creatable = true;
+>      set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
+>      device_class_set_props(dc, virtio_net_properties);
+> +    pci_qdev_property_add_specifics(dc);
+>      vpciklass->realize = virtio_net_pci_realize;
+>  }
+>  
 
 
