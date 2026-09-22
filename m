@@ -4,141 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4D2C98308
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 16:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E2FC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x93lF-0000bT-HU; Tue, 22 Sep 2026 12:54:31 -0400
+	id 1x93uy-0006XJ-5W; Tue, 22 Sep 2026 13:04:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x93ia-0004xL-5H
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:51:47 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x93us-0006X0-Qs
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:04:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x93iY-0002cv-LP
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 12:51:43 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MEjdSs898320
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 16:51:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NMMUYlRFOEu4Y+0NjhX8Ge/q9RoTfSWrF7SafoChtWc=; b=a9sDnEEWrb/dnNAd
- Snn8Ix/BsRS1Fn5Mq6hUVkHaQZ8kkozC9WFbv/hEJ1aiA8wndlfwN2CvaYDF0Sjm
- i8gEpmzUI99SeHccSOdZ+NUJzUGRUtC+569up8XbLQNET1nadDL8qtQ/l8N/BsDR
- Fi/vn6999YoD/EKcpjL/GY+6mumthjgZPm0rH1H1QMl6JPyHXWgvmItww5v9EhY+
- /2IOBKvKUimP/MOlOqNZUsfGKm/+88/107Ld4pOz4vgiPkcbtPgs825EAhGipeAy
- K3L4HbXW/62mmUiTAEzCftxcnB79DTbe0TViWaN6PLDdzp4CqyxqoNcOUHV/UGj1
- ChIq8Q==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gueybkw01-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 16:51:31 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-7a532e31dadso2450137.1
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 09:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790095891; x=1790700691; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NMMUYlRFOEu4Y+0NjhX8Ge/q9RoTfSWrF7SafoChtWc=;
- b=Znx+ShXCwf4t91rd/q2QJw68c4I8nc+6HP5PtIi5RdnPwZriz8WFsQYDqpDPehsxDA
- b6B4z5z3dbFO9bfEh2l4on1r8ypkYPam+Q6Q5rgntVFcdzWZ+/SG/jPMB1l0IUR+iXKR
- uvnQNDbhzeQMRSl982CUFdKOL34GZghIReOCsg2215VkorUJoarY6elwMs+7iej9UGds
- /bqv9o/aTh2bLtM+bVdlq8XJvbUwlG+WGdO9+hJR7JylQrWCgBLowGMCx5eZ6EgE4rAJ
- AC9TCfYpj/eulypvCOmSJLh43TbKhBvIFqS9OoksJ6QyRwjLKW65siubFkjg3tFh+I5A
- l3cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790095891; x=1790700691;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NMMUYlRFOEu4Y+0NjhX8Ge/q9RoTfSWrF7SafoChtWc=;
- b=Mu0dHW8Y/Tg9x62X17OxzL5e1RxBC6bKAigHGcAQEo/Ep7ruj8QY4HOgFGCww31o7n
- kgQ1WJdI1tqktSZY+WDQeXhqg1tWXCVeuhefT9kIdwUphFPNqo26rHZKH4mZyReY1ZSV
- 1Al+M5WDje55FzaWzzlmhVx/fymzs6JG9fyW90h2B1XL0MrYwlP+0OGED0RcpaG7lrkC
- /CzcJGqiwH1LSpKZfquHqSFvyqZDfDoIOnXaHaPZwb0kLLvJS39UyysikSam4CoKzN0l
- qEpNi71yC/kZA/nBy1tPSzYHUxm4YztiU2GSERSZGRmOoyGZkLaNAhzX9kokfLRIrUIh
- lGiA==
-X-Gm-Message-State: AFuF++la9riipQSGTCjjeIgI+tegPN47kfkxLcCKiJuxlWm5+NbMZJyH
- zawlcP0L7JYUI7W7vHXTWkaf3tdkRvqnEoEbGMN4vHSlGtroheg/Y7VdGu66t82+/wK/V8vnPDQ
- BlbYFGrummMg6KYta+lyj6rcusfDPQSp0BI9xfGOeFuIajdCernFiJjAuBpR9sRxxlg==
-X-Gm-Gg: AYBFou2LTH1CANTAHxijFrsPVOrlQ2whRQnJ5K2xTScsWqoEGjTdPv0xkYSjS1hh8qM
- mdmp6Nwy6td4RYWF2s10/heijld5Ai7VFApnuvjEC03x0qXjswaVvBojul3nZZvFJify8XQkdT5
- MyKEEhBaCrLiQOibKJuuS04YMBIPlq4KZVYZnUX83ERPn4xNT7V0oTmlUgcOuedzEEfntwQiUHo
- bBGmdMos2pYZMcBPG26g5DWMxfaCETB99Dw8KsedYdbHjDlDgnjvMcTSfHWCNNIYH1B2eHyviQO
- ETCvu52vhESZzOYxLo2n+9DjvC+nJf2zxFInEWOOjPhcY913raOyEpZuXILxn8s3/8dhoWvP8Nv
- gMIPVsji49/RcPYQTtOoNvhR1s32Qksj8pQBRH4K/
-X-Received: by 2002:a05:6102:6a83:b0:7a1:f7e2:aae3 with SMTP id
- ada2fe7eead31-7a55ca7b59bmr9262528137.21.1790095890841; 
- Tue, 22 Sep 2026 09:51:30 -0700 (PDT)
-X-Received: by 2002:a05:6102:6a83:b0:7a1:f7e2:aae3 with SMTP id
- ada2fe7eead31-7a55ca7b59bmr9262501137.21.1790095890377; 
- Tue, 22 Sep 2026 09:51:30 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fde17dab9sm5197455e9.2.2026.09.22.09.51.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 22 Sep 2026 09:51:29 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 15/17] target/i386: Split leaving-halt handling from
- x86_cpu_exec_halt()
-Date: Tue, 22 Sep 2026 18:49:33 +0200
-Message-ID: <20260922164936.15189-16-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922164936.15189-1-philmd@oss.qualcomm.com>
-References: <20260922164936.15189-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x93up-0003nO-KH
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:04:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790096661;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vbb7jUeTtG/7ImHZ6+jG7tOM26qYxy+7JWpU3m2VhPw=;
+ b=KVqFTgAwU4WhqqH+Q5HcZiyoqJGTL01vuf5AvtJLZoWf4NAXR9fZKBXJh1GJ5gRfnlFNVr
+ lMr8seAsliGCGzH8a8I+O65/JiQSJscmO1Fq4BMLXVkr5vcZV6p70e9GoUBtWcvbhoMqto
+ AOFC/bdT+bILeTWLhSbEYjU5QODMdK0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-r4EmIudhNZWVYpr34BOxFA-1; Tue,
+ 22 Sep 2026 13:04:17 -0400
+X-MC-Unique: r4EmIudhNZWVYpr34BOxFA-1
+X-Mimecast-MFC-AGG-ID: r4EmIudhNZWVYpr34BOxFA_1790096656
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27308197751C; Tue, 22 Sep 2026 17:04:16 +0000 (UTC)
+Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb
+ (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 627F130001B9; Tue, 22 Sep 2026 17:04:14 +0000 (UTC)
+Date: Tue, 22 Sep 2026 19:04:11 +0200 (CEST)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
+ qemu-devel@nongnu.org
+Subject: [PATCH v2] linux-user/sh4: fix race in atomic variables
+In-Reply-To: <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
+Message-ID: <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
+References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
+ <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=bP6Ds/+Z c=1 sm=1 tr=0 ts=6ab2b213 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=GiXQl85om2WzCxkx9rAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: g3UXi4l9BbB0c8D7BLxdwFOsra1MecpS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI0NiBTYWx0ZWRfX/dQHLBTQ+nJP
- 98BPvLFXAXH+XXe++hX/lJVi/5W69JhsEVm4lpLdrsrGQ9D7vAnt8m5ue7DVgleAOngj3yk6PQl
- UApy/zhprSrjeVmKIs9Ja9DJS8xIPgh5T13bDA8aH323BNG43HLn2HDi4S/vxIQl2i8m786jP4X
- 797fcrY1Fiw4tPTKoYsstXU9gFZR5yqzbWRojemPeOrPNHUEZnc8uZHuLBWkiVGukQ9IerP4QgL
- cQ07+a40a/PzAIYugPqPYgINegtJbl8uG3YTXvRvDrTZGPLc4RPfbcQKW5seGPB5ZBjooxcBDnB
- fgtsPWYNVYHct2WZOdoTrQBqhSQgdRUFLNNYzT2JfWBdlI2InpT/E/JlRb0AucmrpXbf0sl01j5
- VLcxi5qwKTjL8QuXKqWWHkTfRUHvf+sxWedm63bR9B6os2LbnW275PFpKVp2jLSTfMfBn2rOtwy
- BV4FGYEIMmZsT3eaFyw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI0NiBTYWx0ZWRfX0uytNJY5BXc2
- 1iYqMOK7+ZElifpYmT5QYYmU5T0DLhqcxBncLcK1FZG8rsji67GPvIdYdRywKJWLn0FEvLPhgtN
- AAWm67+PElL+Y2PGOZlscaoi9eJS+Hg=
-X-Proofpoint-GUID: g3UXi4l9BbB0c8D7BLxdwFOsra1MecpS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0 bulkscore=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220246
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mpatocka@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,77 +85,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move debug exception handling performed when leaving HLT into
-x86_cpu_leaving_halt(). Keep x86_cpu_exec_halt() responsible
-for checking whether the CPU can resume.
 
-Document that #DB IRQ delivery through do_interrupt_all() runs
-in the vCPU thread and does not require BQL protection.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Sun, 20 Sep 2026, Richard Henderson wrote:
+
+> On 9/20/26 01:46, Mikulas Patocka wrote:
+> > I'm experiencing random deadlocks when running heavily multithreaded
+> > workload in qemu-sh4 userspace emulation. This patch fixes them.
+> > 
+> > The sh4 architecture doesn't support multiprocessing, the processor
+> > doesn't have atomic instructions and it uses a technique known as gUSA to
+> > provide atomicity guarantees w.r.t. signals or thread scheduling (see the
+> > commit 3b894b699c9a for a brief description of gUSA).
+> > 
+> > The function decode_gusa attempts to recognize several well-known gUSA
+> > regions and turn them into atomic instructions. When it fails to
+> > recognize a known gUSA pattern, it generates a call to helper_exclusive.
+> > Qemu will attempt to stop all the other threads and execute a gUSA region
+> > exclusively, so that it can't race with anything.
+> > 
+> > The problem is in the function cpu_exec_step_atomic - this function stops
+> > all other threads with start_exclusive(), then it executes one
+> > instruction and then it releases all other threads with end_exclusive().
+> > This works for all the architectures except sh4. On sh4, executing one
+> > instruction atomically is not enough - we must execute the full gUSA
+> > region while the other threads are stopped.
+> > 
+> > This patch fixes cpu_exec_step_atomic - it adds two new per-architecture
+> > functions: is_uninterruptible and revert_uninterruptible.
+> > 
+> > is_uninterruptible returns true if we are in a gUSA region and we should
+> > continue executing code while the other threads are stopped.
+> > 
+> > If we got TB_EXIT_REQUESTED, we must stop executing code - in this case,
+> > we call the function revert_uninterruptible that rolls back PC to the
+> > beginning of the gUSA region.
+> > 
+> > Cc:qemu-stable@nongnu.org
+> > Signed-off-by: Mikulas Patocka<mpatocka@redhat.com>
+> > 
+> > ---
+> >   accel/tcg/cpu-exec.c        |   15 +++++++++++++++
+> >   include/accel/tcg/cpu-ops.h |   20 ++++++++++++++++++++
+> >   target/sh4/cpu.c            |   25 ++++++++++++++++++++++++-
+> >   3 files changed, 59 insertions(+), 1 deletion(-)
+> 
+> I think this should be integrated into the sh4 translator instead.  We should
+> not be single-stepping through the atomic region, but generate one TB that
+> implements the entire region.
+> 
+> This may require some coordination with the translator loop.
+> 
+> 
+> r~
+
+Hi
+
+I looked at the sh4 translator and it seems that it already tries to make 
+sure that the full gUSA region is translated into one TB - i.e. there is 
+"ctx->base.max_insns = max_insns" in sh4_tr_init_disas_context - that will 
+override the value "1" that is supplied by cpu_exec_step_atomic. The 
+comments suggest that the author is aware of the fact that the gUSA region 
+must be completed atomically.
+
+So, the code that single-steps through the gUSA region is not needed.
+
+It seems that the misbehavior is caused by the fact that if we exit from 
+the gUSA TB early, we execute the rest of the region in non-exclusive 
+context.
+
+I simplified the patch, so that it adds just one method - 
+revert_uninterruptible. It tests whether we are in the unfinished gUSA 
+region, and if we are, it reverts PC and SP back to the beginning.
+
+Here I'm sending the updated patch.
+
+Mikulas
+
+
+
+From: Mikulas Patocka <mpatocka@redhat.com>
+
+I'm experiencing random deadlocks when running heavily multithreaded
+workload in qemu-sh4 userspace emulation. This patch fixes them.
+
+The sh4 architecture doesn't support multiprocessing, the processor
+doesn't have atomic instructions and it uses a technique known as gUSA to
+provide atomicity guarantees w.r.t. signals or thread scheduling (see the
+commit 3b894b699c9a for a brief description of gUSA).
+
+The function decode_gusa attempts to recognize several well-known gUSA
+regions and turn them into atomic instructions. When it fails to
+recognize a known gUSA pattern, it generates a call to helper_exclusive.
+Qemu will attempt to stop all the other threads and execute a gUSA region
+exclusively, so that it can't race with anything.
+
+The problem is in the function cpu_exec_step_atomic - this function stops
+all other threads with start_exclusive(), then it executes one
+TB and then it releases all other threads with end_exclusive(). If the TB
+executing the gUSA region exited early, the exclusive lock is dropped and
+the execution continues without holding it - this is the root cause for
+this bug.
+
+This patch fixes cpu_exec_step_atomic - it adds a new per-architecture
+function: revert_uninterruptible. Its implementation
+superh_cpu_revert_uninterruptible tests if we are in an unfinished gUSA
+region and rolls back the PC to the beginning of the region.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+
 ---
- target/i386/tcg/helper-tcg.h        |  1 +
- target/i386/tcg/system/seg_helper.c | 25 +++++++++++++++++--------
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ accel/tcg/cpu-exec.c        |    5 +++++
+ include/accel/tcg/cpu-ops.h |   10 ++++++++++
+ target/sh4/cpu.c            |   25 ++++++++++++++++++++++++-
+ 3 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index 58e8ca0bc1b..96accb30a80 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -39,6 +39,7 @@ void x86_cpu_do_interrupt(CPUState *cpu);
- #ifndef CONFIG_USER_ONLY
- void x86_cpu_poll_during_halt(CPUState *cpu);
- bool x86_cpu_exec_halt(CPUState *cpu);
-+void x86_cpu_leaving_halt(CPUState *cpu);
- bool x86_need_replay_interrupt(int interrupt_request);
- bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
- #endif
-diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
-index 9ce608a0bb7..566b3d4d80c 100644
---- a/target/i386/tcg/system/seg_helper.c
-+++ b/target/i386/tcg/system/seg_helper.c
-@@ -140,22 +140,31 @@ void x86_cpu_poll_during_halt(CPUState *cpu)
+Index: qemu/accel/tcg/cpu-exec.c
+===================================================================
+--- qemu.orig/accel/tcg/cpu-exec.c	2026-09-22 18:31:48.000000000 +0200
++++ qemu/accel/tcg/cpu-exec.c	2026-09-22 18:31:48.000000000 +0200
+@@ -590,6 +590,11 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         cpu_exec_longjmp_cleanup(cpu);
      }
+ 
++#ifdef CONFIG_USER_ONLY
++    if (cpu->cc->tcg_ops->revert_uninterruptible)
++        cpu->cc->tcg_ops->revert_uninterruptible(cpu);
++#endif
++
+     /*
+      * As we start the exclusive region before codegen we must still
+      * be in the region if we longjump out of either the codegen or
+Index: qemu/include/accel/tcg/cpu-ops.h
+===================================================================
+--- qemu.orig/include/accel/tcg/cpu-ops.h	2026-09-22 18:31:48.000000000 +0200
++++ qemu/include/accel/tcg/cpu-ops.h	2026-09-22 18:31:48.000000000 +0200
+@@ -168,6 +168,16 @@ struct TCGCPUOps {
+      * @addr: tagged guest address
+      */
+     vaddr (*untagged_addr)(CPUState *cs, vaddr addr);
++
++    /**
++     * revert_uninterruptible:
++     * @cpu: cpu context
++     *
++     * This function is called if cpu_exec_step_atomic needs to exit. It
++     * tests if we are in the gUSA region and rolls back PC to the
++     * beginning of it.
++     */
++    void (*revert_uninterruptible)(CPUState *cs);
+ #else
+     /** @do_interrupt: Callback for interrupt handling.  */
+     void (*do_interrupt)(CPUState *cpu);
+Index: qemu/target/sh4/cpu.c
+===================================================================
+--- qemu.orig/target/sh4/cpu.c	2026-09-22 18:31:48.000000000 +0200
++++ qemu/target/sh4/cpu.c	2026-09-22 18:31:48.000000000 +0200
+@@ -92,6 +92,27 @@ static void superh_restore_state_to_opc(
+      */
  }
  
--bool x86_cpu_exec_halt(CPUState *cpu)
-+void x86_cpu_leaving_halt(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
--    CPUX86State *env = &x86_cpu->env;
--
--    x86_cpu_poll_during_halt(cpu);
--
--    if (!cpu_has_work(cpu)) {
--        return false;
--    }
-+    CPUX86State *env = cpu_env(cpu);
- 
-     /* Complete HLT instruction.  */
-     if (env->eflags & TF_MASK) {
-         env->dr[6] |= DR6_BS;
-+        /*
-+         * do_interrupt_all() is the normal TCG exception-delivery path
-+         * and runs in the same vCPU thread context, so #DB delivery does
-+         * not require BQL protection here.
-+         */
-         do_interrupt_all(x86_cpu, EXCP01_DB, 0, 0, env->eip, 0);
-     }
-+}
-+
-+bool x86_cpu_exec_halt(CPUState *cpu)
++#ifdef CONFIG_USER_ONLY
++static void superh_cpu_revert_uninterruptible(CPUState *cs)
 +{
-+    if (!cpu_has_work(cpu)) {
-+        return false;
++    SuperHCPU *cpu = SUPERH_CPU(cs);
++    /*
++     * If we are interrupted in the middle of the gUSA region, we must
++     * roll-back PC to the beginning of the region. Continuing halfway
++     * through the region would break atomicity guarantees.
++     *
++     * If we are interrupted after the final write instruction (i.e.
++     * cpu->env.pc == cpu->env.gregs[0]), we must not roll-back, because
++     * the atomic write is already committed in the memory.
++     */
++    if (cpu->env.gregs[15] >= -128u && cpu->env.pc < cpu->env.gregs[0]) {
++        cpu->env.pc = cpu->env.gregs[0] + cpu->env.gregs[15] - 2;
++        cpu->env.gregs[15] = cpu->env.gregs[1];
++        cpu->env.flags &= ~TB_FLAG_ENVFLAGS_MASK;
 +    }
++}
++#endif /* CONFIG_USER_ONLY */
 +
-+    x86_cpu_leaving_halt(cpu);
-+
-     return true;
- }
+ #ifndef CONFIG_USER_ONLY
+ static bool superh_io_recompile_replay_branch(CPUState *cs,
+                                               const TranslationBlock *tb)
+@@ -308,7 +329,9 @@ static const TCGCPUOps superh_tcg_ops =
+     .restore_state_to_opc = superh_restore_state_to_opc,
+     .mmu_index = sh4_cpu_mmu_index,
  
--- 
-2.53.0
+-#ifndef CONFIG_USER_ONLY
++#ifdef CONFIG_USER_ONLY
++    .revert_uninterruptible = superh_cpu_revert_uninterruptible,
++#else
+     .tlb_fill = superh_cpu_tlb_fill,
+     .pointer_wrap = cpu_pointer_wrap_notreached,
+     .cpu_exec_interrupt = superh_cpu_exec_interrupt,
 
 
