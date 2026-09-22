@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDF8C98308
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E85C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x965C-00032Z-Cw; Tue, 22 Sep 2026 15:23:14 -0400
+	id 1x964N-0000wD-P1; Tue, 22 Sep 2026 15:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x9658-0002oV-L1
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:23:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x9656-0002Wj-1X
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:23:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790104986;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hnLWYV1H3gnwlSMYPL6hp7+oSRKuOcXhRH6WavLuG/Q=;
- b=Jb1as5zCoyRlFrLIv1xe630Kw09NguEgBFI0hBdLaYUUpiFX/8lnSopL+cSqjw8hDy0pDU
- sQgEPPqT/svi5l7Z4nbPE+H7lz/mi8A0jFsqkFfF2CJkVh3n83UoD2J057sMcJkTIh6NWJ
- 05TfAqUGtCZSben+Zxr4W6UmzA04PrI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-Dd0API2gMhKMO1iTgRJ1Dg-1; Tue,
- 22 Sep 2026 15:23:02 -0400
-X-MC-Unique: Dd0API2gMhKMO1iTgRJ1Dg-1
-X-Mimecast-MFC-AGG-ID: Dd0API2gMhKMO1iTgRJ1Dg_1790104981
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A2D11954B2A; Tue, 22 Sep 2026 19:23:01 +0000 (UTC)
-Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb
- (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD9091800446; Tue, 22 Sep 2026 19:22:59 +0000 (UTC)
-Date: Tue, 22 Sep 2026 21:22:55 +0200 (CEST)
-From: Mikulas Patocka <mpatocka@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] linux-user/sh4: fix race in atomic variables
-In-Reply-To: <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
-Message-ID: <d1a29727-14c6-fe95-c01a-30fd63e3ec4e@redhat.com>
-References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
- <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
- <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
- <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
- <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
- <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963Z-0000Xl-3F
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:38 -0400
+Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963W-0002Nn-Nx
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:32 -0400
+Received: by mail-oi2-x10.google.com with SMTP id
+ 5614622812f47-4b37a2ffee6so139336b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 12:21:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790104888; x=1790709688;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=uNMOSXVtgc3pzLgkp96faXEoBkmyDPv6fjUHRCgcx+8=;
+ b=vQV4rGu2YwcTyqeu9ICTBPj3DcyPHIR9o59vbMWugN3V3/45qRN+6C9A077VmSiB8N
+ S0hmYgPzXvWjBWpXgMNK1zoxNJdbodI4LKgCiITe6hoB9c0IsRYfv4hXJvlbCE9jJaoE
+ BbjtWQbtx82EG4n4W9BrzaMWdMenq20o5p24FiHlDMifX31+5qJPn3269c9EmDqyVTur
+ 96VM6OIz9ctY2Fhs35CaBEAF/mE5i6PIjP2HGqL3ejM6oxAA3fzrAEpkv3HucbV63cJz
+ djBvpIBCnsc/Ilsq7W8r+F3S2x3LmwVZWFkCQt4+PreTRq9o91Ed0m1OCBPg5KEPmYu/
+ gOrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790104888; x=1790709688;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uNMOSXVtgc3pzLgkp96faXEoBkmyDPv6fjUHRCgcx+8=;
+ b=QZIpxH1D4CQxD11y8tYhXGgJmoNbFs406lbLiWB/sSSst5KocguPyldSwHfwlo+jE3
+ GKectX7QCNz426y4MJ8CQu+y5/XIatqO6WKxcox6CZN51xQ2JdarVDbWoQ4+dLQi4rDC
+ lrSTMvFzGGV/3ff1EBA7HVDvFNYHVZRseE5YOFLMRhUikImIVr3SljeXsszOsc/gPU3K
+ oBjIgVIviDCqsbEBGjfym9mXvilYOEMy5k2gRbVJRx92m17jjo8FzmxflbuOIPHXubtW
+ PRhQtP/CrhDXfMmqZAvyuaUN8TMKmdpn7rlC5QrhxW0E86OMPNSQrSAmnKovak/cTlQt
+ yp+g==
+X-Gm-Message-State: AFuF++k8/MBGgAxVCIazZZe4sD2UdipW5kWNrj50VSn+MBX8H+2/N9Ii
+ tQYfzav2g2jP9kHx164DsZD8iRrzxex7rGS5d6q86+5ZYlK8y/r9oUbVQvTURBXTxSGQ4T1oQlW
+ CzOFTjVs=
+X-Gm-Gg: AYBFou2D3Lo4HxwOV5S7wG/MrnmwuWJO/sZg/k/eonT9Gq4zvfVhjgUzPt1mIsH5/U4
+ dFNWZ4qc97sAZ0ebVF2doKVoXV91aoukef0VafUHjmRgTZ2ePrdgojAl2+7BKBNtlKGgdlVAoI1
+ YMarHwgg1FJamGN6Glha7SKqEDiYU9q/ncT3lCIkFNdBPZlj811wFsdN7tjK2Dz6AINkOb2M0Sd
+ ljW+AcAV50IeezkqEYkmmGXuaDVGM6N++Ak1b8uoDQyL2nv3lE+B7//nxkzkK2M8IsavycfeSMZ
+ 6xiItv3FUOccJ2wPIDP0no1I3a4biR3Ul3cAsNhQigBwrEFer5GDPp6lmo/RUHzHyrrG6B208DU
+ HsgKaQ7DazC8X7nhTcS9MT/TG7fESSrcpPuAM4quwZy28vQKL8A9+X7Mv5hbzvGtvOo/RN1djLC
+ aHLhaT/UcCvWR6f/j+fjcWSVdQyTbhJAmWTLYypF7FnfzV8Ekll/W2QMwTOy8jgC95uZj0
+X-Received: by 2002:a05:6820:1612:b0:6cd:3ffc:64d4 with SMTP id
+ 006d021491bc7-6d2d2b1fbc2mr346862eaf.79.1790104887601; 
+ Tue, 22 Sep 2026 12:21:27 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6d2ce763f72sm646776eaf.7.2026.09.22.12.21.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Sep 2026 12:21:27 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>,
+	Kyle Evans <kevans@freebsd.org>
+Subject: [PULL 00/11] Bsd user 2026q3 patches
+Date: Tue, 22 Sep 2026 13:20:58 -0600
+Message-ID: <20260922192109.98467-1-imp@bsdimp.com>
+X-Mailer: git-send-email 2.55.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mpatocka@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:32::10;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,109 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 7074591d7954876951f84c15b994a43251d5a3c1:
 
+  Merge tag 'qom-qdev-20260922' of https://gitlab.com/mcayland-ntx/qemu into staging (2026-09-22 07:56:00 -0700)
 
-On Tue, 22 Sep 2026, Richard Henderson wrote:
+are available in the Git repository at:
 
-> On 9/22/26 10:58, Mikulas Patocka wrote:
-> > 
-> > 
-> > On Tue, 22 Sep 2026, Richard Henderson wrote:
-> > 
-> >> On 9/22/26 10:04, Mikulas Patocka wrote:
-> >>> I looked at the sh4 translator and it seems that it already tries to make
-> >>> sure that the full gUSA region is translated into one TB - i.e. there is
-> >>> "ctx->base.max_insns = max_insns" in sh4_tr_init_disas_context - that will
-> >>> override the value "1" that is supplied by cpu_exec_step_atomic. The
-> >>> comments suggest that the author is aware of the fact that the gUSA region
-> >>> must be completed atomically.
-> >>>
-> >>> So, the code that single-steps through the gUSA region is not needed.
-> >>>
-> >>> It seems that the misbehavior is caused by the fact that if we exit from
-> >>> the gUSA TB early, we execute the rest of the region in non-exclusive
-> >>> context.
-> >>>
-> >>> I simplified the patch, so that it adds just one method -
-> >>> revert_uninterruptible. It tests whether we are in the unfinished gUSA
-> >>> region, and if we are, it reverts PC and SP back to the beginning.
-> >>
-> >> What good does that do?  You'll only restart the same block as before.
-> >>
-> >> Is this really the case where you're encountering
-> > 
-> > Without that patch, it deadlocks in 10-30 minutes. With the patch (either
-> > version 1 or version 2 that I sent), it stays running overnight.
-> > 
-> > Maybe the bug is somewhere else and the patch just papers over it.
-> 
-> Could well be.  Do you have a reliable reproducer?  Or is this a "run the
-> container and things eventually fail" sort of thing?
+  git@gitlab.com:bsdimp/qemu-from-official.git tags/bsd-user-2026q3-pull-request
 
-Download the Ajla programming language from
-git clone git://repo.or.cz/ajla.git
-(there is a mirror at https://www.github.com/mikulas-patocka/ajla.git)
-(see the homepage at https://www.ajla-lang.cz/ )
+for you to fetch changes up to c79adb04654bba3e505e5332b90b7ca2c639b044:
 
-Install the sh4 toolchain: gcc-sh4-linux-gnu (I use Debian Sid)
-Install autoconf, automake, ed, make
+  bsd-user: Remove host-os.h (2026-09-22 13:07:11 -0600)
 
-Compile Ajla:
-CC=sh4-linux-gnu-gcc CF="-DDEBUG_ENV" ./rebuild --disable-rwx-mappings
+----------------------------------------------------------------
+bsd-user: misc fixes
 
---disable-rwx-mappings is a workaround for another qemu bug - see
-https://gitlab.com/qemu-project/qemu/-/work_items/2998
+Catch up with a number of trivial differences between master and blitz branch:
 
-Download https://ajla-lang.cz/downloads/examples/advent-2023/18-2.ajla
+ - HOST_BIG_ENDIAN and TARGET_BIG_ENDIAN are always defined
+ - Drop support for FreeBSD 12
+ - Flag shared memory as needing atomics
+ - Initialize per-arch child registers
+ - mmap fix for flags from long ago
+ - Move tb_flush stuff to begin_parallel_context
+ - Implement exterrctl(2)
+ - Implement sigfastblock
+ - Eliminate unused regs arg in load_elf_binary
+ - #ifdef sockopt that aren't in 14
+ - Remove host-os.h
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
-Create an input file:
-cat >18-small.txt <<EOF
-R 6 (#70c710)
-D 5 (#0dc571)
-L 2 (#5713f0)
-D 2 (#d2c081)
-R 2 (#59c680)
-D 2 (#411b91)
-L 5 (#8ceee2)
-U 2 (#caa173)
-L 1 (#1b58a2)
-U 2 (#caa171)
-R 2 (#7807d2)
-U 3 (#a77fa3)
-L 2 (#015232)
-U 2 (#7a21e3)
-EOF
+iQJPBAABCgA5FiEEIDX4lLAKo898zeG3bBzRKH2wEQAFAmqy1REbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwzAAoJEGwc0Sh9sBEAQroQAJMmYV/REl8PlyGlqiD9
+uNLEiXTkO8erWUA33LbNxvbWi9oltoOHpyEF9u1i45vKChyV6SszGt9P9ev5MHjJ
+VEJTjeWnb0Nq/J+fS3cnxACJS234PEDOVcoVumj7/RyvLNO+lFdYv50ZsOpfEqYJ
+Pgkl/V0uyyLx4U3pWm5prxud0rt1fQMrJXoX1gnlJt55BOjLRc6iqHzTm/PIsnnE
+5VU7o+FWZXJo5jGNiaBsHJHdji6fX8VJc6Ot1m1rw4nFt0RhyrB6bCaPINLz3jjm
+j9gBfZNLhRG1rSyQkLBKITOV3mGgKaGTE2FsMQg/zx8j3fDuX4iht5DRtCUQwKST
+LQQOYD5WO/fFvFyoC8HVKV4+WHiaM2cyIRR1ANRR8aSRV7tFP4H4p8WdmsBKWJ+R
+mws2GMC4DgkDfELKpB1oVmLnLOvMB0+hFYY3LIsXVd4ytxAuSYGf+M2OCnaVBLxv
+Wlv51RaX8vIW4E3qSPOIAhbQxdptRHFGlpj9LYfArsf4nKbXCor5+sWHQfGuWAKY
+2JvaZvV5c6pJBFn9gfX5Jpa6JukrfmXfmrbiDm2tYmWFo0YbSkpXnnBfC+WPZ1DV
+H3SoA8uuJNKO/p5/jcdiIshCeo3U2QAQeHjPmR3Pj5iDR3ZE0aiQbc1WUcucyXqS
+TWhd1Ob6d6T5N/J0xGqwRiKr
+=xgLW
+-----END PGP SIGNATURE-----
 
-Run
-while time /usr/src/git/qemu/build/qemu-sh4 ./ajla --nosave --tick=100 --thread-tick 18-2.ajla <18-small.txt; do date; done 2>&1 | tee lockup.log
+----------------------------------------------------------------
 
-Wait for several tens of minutes - it deadlocks on exit, after printing 
-the output "952408144115"
+Rick Richard (1):
+  bsd-user: HOST_BIG_ENDIAN and TARGET_BIG_ENDIAN are always
 
-> Logging guest state at the point your revert hook fires could be
-> informative...
+Warner Losh (10):
+  bsd-user: Drop support for FreeBSD 12
+  bsd-user: Flag shared memory as needing atomics
+  bsd-user: Initialize per-arch child registers
+  bsd-user: Fix crazy bug with mmap
+  bsd-user: Move tb_flush stuff to begin_parallel_context
+  bsd-user: Implement exterrctl(2)
+  bsd-user: Implement sigfastblock
+  bsd-user: Eliminate unused regs arg in load_elf_binary
+  bsd-user: #ifdef sockopt that aren't in 14
+  bsd-user: Remove host-os.h
 
-Yes, I will look into it.
+ bsd-user/bsd-file.h               |  43 +++++------
+ bsd-user/bsd-mem.h                |   8 ++
+ bsd-user/bsdload.c                |   2 +-
+ bsd-user/elfload.c                |   3 +-
+ bsd-user/freebsd/host-os.h        |  25 ------
+ bsd-user/freebsd/os-misc.h        | 121 +++++++++++++++++-------------
+ bsd-user/freebsd/os-sockopt.h     |   2 +
+ bsd-user/freebsd/os-syscall.c     |  11 +++
+ bsd-user/freebsd/os-thread.c      |   9 +--
+ bsd-user/freebsd/os-thread.h      |  13 +++-
+ bsd-user/freebsd/target_os_user.h |   5 --
+ bsd-user/main.c                   |   2 -
+ bsd-user/mmap.c                   |  26 +++++--
+ bsd-user/qemu.h                   |  21 +++++-
+ bsd-user/syscall_defs.h           |   9 ++-
+ 15 files changed, 175 insertions(+), 125 deletions(-)
+ delete mode 100644 bsd-user/freebsd/host-os.h
 
-> > BTW. what happens with synchronous signals inside the TB? (i.e. SIGSEGV
-> > due to writing into a write-protected page)
->
-> Synchronous signals like that exit the translation block right away, leading
-> to the signal being delivered.
-
-So, the TB can exit halfway through?
-
-When I was analyzing the bug 2998, I found out that Qemu marks pages with 
-executed code as read-only. When the program writes into them, it 
-invalidates the translated code and marks the pages as read-write.
-
-How does this interact with TBs exits? What happens if we write into a 
-read-only page in the middle of the TB?
-
-Note that Ajla has JIT that generates sh4 code on the fly. But the option 
---disable-rwx-mappings makes it store the generated code in separate pages 
-and not on the heap. So, I don't know if it can cause these problems.
-
-Mikulas
+-- 
+2.55.0
 
 
