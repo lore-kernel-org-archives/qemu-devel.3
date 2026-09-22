@@ -4,124 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57072C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCF5C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x98SZ-0002sE-Ki; Tue, 22 Sep 2026 17:55:31 -0400
+	id 1x98Sy-0003Bu-Pv; Tue, 22 Sep 2026 17:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x98SU-0002ru-UI
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:55:27 -0400
-Received: from mail-westus3azon11010033.outbound.protection.outlook.com
- ([52.101.201.33] helo=PH7PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x98ST-0000sM-4g
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:55:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZU9Ps5CvQUL1xQHu14i4rV8vANhnvA06DwVyqkow67htcQIxNJlKC9psr8NZgpPFq8iQYNs0SFbPuq1Df0KdlxLs2HO03q+K9akfzL6LOO1CRy32wvxFiRWdHvtOyP1T7SiZcJQZgPpxhQIAys4bcP+1ODd7KTqH3FAxHL/WgW9ADVBPeMLbSjEnyITmgDJrahiUm016UaOtKGFqGevnY2iU1BuBrRVjWyko+PaG/fUaFRUV02lSxd5vwwM4pahT6Aiy80ExOU3k4JlUwenQMVo8y0g/M9PYyqM8HyiM7pAz/ZdXx84mO50VNJm+6F1sdjdtJV6FTfq3qQ76HMadJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f6pgzYhj+ITVu8Uqmq7OqfVpp3AW2blAsva8/2Dq1KA=;
- b=oRitLJ9TXQeHPdsV4pjl/X4I5cFwCHx1nTxDu1tMi0VWiecQyQbSTtk5WEg9RMU49AQXroDc+7q1jmbiiblrFLRWpRKEVKWuMUU/8yE9YHmIoY0DND+99IHo6bAnxjUupD1brgm9v/7Q8s2t/1HTBAZpgofWmCu9b/9SFmt5VNDO9uUGxEJHsDKU6cUXvg2lFu9N/dMuJfjhoDYzGuSpNqnBKyZV1BFENpV+KAYhO9zy6ZUTT4N5I0GMhwzdsEKiseSdJPJhKfkUqTLJ7mK61NaSbp9vns6SviEChDVqz7FIDYXirBPj9FOmg+5ilJvuiJhNFmBqjPpV2wAx3Bg8kA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f6pgzYhj+ITVu8Uqmq7OqfVpp3AW2blAsva8/2Dq1KA=;
- b=KNouRRNGPvYKFDCh2EyGXMXLZTauXIQnjp5Rubza0Teqla4YU4t7TpDi33+q49tz2NndtMKz3at/Wzt1iVCDXVu/sScoTTPjSdyVeVwcmW/3xhOVIwZHk875vgnHKXQZMmv4D4A0+F/kxQvs3ChJh3EFSZVHVmqEn4kZBVSxDAdZAqac/ERkBQpndzP09o+U6aWc3cHrpLCi2BjjEY2AQwcxj5D4IL6CF1b9RW50hiInyWoOKOz87XfDdETTLNaR6LnesosjVi2lIy2YPEDKYW2/ZcLdGkghieTnNEF/upRRBRBCyB5Si51gCSAazO+T/fLqV47NcNNBbcfq5OreZg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17) by PH0PR12MB8126.namprd12.prod.outlook.com
- (2603:10b6:510:299::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.15; Tue, 22 Sep
- 2026 21:50:17 +0000
-Received: from IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
- ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0451.012; Tue, 22 Sep 2026
- 21:50:17 +0000
-From: Tushar Dave <tdave@nvidia.com>
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x98Sw-000376-UC
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:55:54 -0400
+Received: from mail-dl2-x10.google.com ([2607:f8b0:4864:38::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x98St-0000uG-Vp
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 17:55:54 -0400
+Received: by mail-dl2-x10.google.com with SMTP id
+ a92af1059eb24-142dce6e235so212521c88.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 14:55:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790114150; x=1790718950; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=exZwZi6kUGYGpdAf583ubd0KYwWAqRs91Lhg3wPcRlQ=;
+ b=SYfokA+929SbB+XxLm/CsLiCarVBt0rBzH1VI+JpLnfZOlVt2mH+5nUdfGCvvbHeL+
+ oeibBoF8IbiT1/DsyGBbKplInFssB4M3mhHwHMxlZ1grnXBFvzMjg1Ys4XwtHx1EBj4B
+ nb4gBBjA37wsnY/3gHa8ZCYZkh4KVodC7R4MRJxRoiEE2VFPD814me4oaOOzbv8axok1
+ uxAGyaSxVSMiv4KwVH10HdSXDMdHVz24Ld2pZybT/z4R2ZkaAIjHagkwyE2MaSz0qS7C
+ QkG9/tut+559Dt+vCn0KEAGh5zQF+hc2hBlvQoytKCOFlIn/WjsJ4rp100U5F56M5HLs
+ WHrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790114150; x=1790718950;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=exZwZi6kUGYGpdAf583ubd0KYwWAqRs91Lhg3wPcRlQ=;
+ b=VckSh9PBBiFOmo8rmdSX+Xpc6tvFcfTwDnmw4D5xWqaMvMP5ZpKshotWAvozwcIvlT
+ 9M9tpE1kBMWNnAhPuzWtWDGGxxAmdCDhswVutjnUxk7Xi3awDaqf7ivX3zEM1uvZDGq9
+ XWC7/urznAcOYkia667FqCcSPzeyHgMy4lQWUJx8f0nleT30ewM0MQ9h7Dqb8zZRyEaD
+ 97igITFbWrbY1lCtEt+deAC7ENBdvR8++c1mENtfH7Dn6b5VOIR7VnE7PQK+JDG/CcCh
+ Q5lGySeoaBHsiUFZTys8pU1VMI2X/TA8WfQ4ZKtuRG1mjO2WEn9O0qz92D3fPNLyDRup
+ vcyA==
+X-Gm-Message-State: AFuF++nzi5Ql1rlBzA9vIPzFL2q6ndpSbRaWCZNboHqAB0Kc0tArDPb5
+ Z6mj8hRDhE8/bvrqdOA45Kfn8zAXxLWvfhobC/80n4H05iiZlTS5BTHRL7UcQlDR1b4=
+X-Gm-Gg: AYBFou2JYSj2udm5fZ8i7heSfD8rutPDhMN+qqUjHT5LtJ+obkd+I+uYQsoyDUAZRvq
+ Wf0u+EnPL59QynhKooTYGgMnTrreJgL0WZCK7PFQTGMkkFhHB7yu5/YtL2dzTIJpTZ/rD4t9TWf
+ qCmqImmXH7X3qU84TzLU683BUW9DPXJ8yqocYK44Crxzy7aQXJex5F5yZvEKBZL3NonbMP462Q8
+ N2Fiw6Ej8h0JKZ/PqX3kYhKH/TN5/mhDlY3wYdUEPpMLTIkX/hIMzn5j2++kYHaMw3onhp30Mf3
+ bP8SF4VDJTggXVD6B28wtyGlycPuEwmThrhBU4DOXARuQr0s0WVwmdEFgfi5VMzRPBoG+RR8hSO
+ eIK3w3oymf+qQ8cDheKGnSwMAFnSl4doI1uwDje9Sf/Avcrz0zZ7ODZe3Put3HBYUci1Onbs5ih
+ 6aalar57hbWpfxcb8RNX6S37+rzTAGYnBsi6JeMyMaHF8GiRzsdQFshfIMxdBXDHkYQXJhcm/1i
+ w31lc5GvMAtY9Px/hbxcN1XYoSKLORNSX7i/hzwow==
+X-Received: by 2002:a05:7022:3a08:b0:143:26f8:57e8 with SMTP id
+ a92af1059eb24-144f9193eebmr885797c88.35.1790114150311; 
+ Tue, 22 Sep 2026 14:55:50 -0700 (PDT)
+Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-144f949e60dsm1001153c88.2.2026.09.22.14.55.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Sep 2026 14:55:49 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, philmd@oss.qualcomm.com, zhao1.liu@intel.com,
- yishaih@nvidia.com, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com
-Subject: [PATCH 0/3] pcie/acs: configurable ACS capabilities for root and
- downstream ports
-Date: Tue, 22 Sep 2026 16:50:05 -0500
-Message-Id: <20260922215008.2554402-1-tdave@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH1PEPF000132EF.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:518:1::37) To IA3PR12MB923065.namprd12.prod.outlook.com
- (2603:10b6:208:627::17)
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>,
+ Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-arm@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Song Gao <17746591750@163.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Stafford Horne <shorne@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v2 1/9] machine: allow -M name to differ from QOM type
+Date: Wed, 23 Sep 2026 05:55:24 +0800
+Message-ID: <20260922215533.641-2-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.52.0.windows.1
+In-Reply-To: <20260922215533.641-1-luoyonggang@gmail.com>
+References: <20260922215533.641-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|PH0PR12MB8126:EE_
-X-MS-Office365-Filtering-Correlation-Id: 109dd20d-65b4-4030-ec61-08df18f37d61
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|1800799024|10067099003|56012099006|3023799007|6133799003|18002099003|11063799006;
-X-Microsoft-Antispam-Message-Info: w1MJDbbXsAjYhMgxGbZQ8mwKArAPgxbstg00waMlLGEnzogPeOz76Zc22e7kiD/aKkdIKnYRwVNl4NK7fTjO4uJA3mRtngxYB8kS8w/OLf4Ol4yGpCijtE5dDs9T4+P0Dar2FHE5hFaTo1Dqd2OZpE2RidH7tuOG9nnNYixIBXXVI5VZlsO7IsqmfFhXpus9P8LwEbtv0q3JxLt/33bPWNDg8HFOpinFkeJEFqIv3vS2w5RQb3LMNaz4UrRYOTfXjUrqXV6S1WvMC+Hn0IxMB73sGrzJ4qZ6ikpJ0jV8TDcth7P0exHLmJiU8MUKSbKqyBPym4qELiueDNBQADfSChXk9V9Aq3NJ5kmDj8ypashzJFzFbUn3NisWTQQSxYM/KmvCr77MyWp5pNUfQoOdi5NeBEN2Ipozz9hnPPIqID5T/YCezoUbCPYweAWtly6zIGjMX0bay/H6q1PiGOkGFVap5XoV0XoJAbGjxUgleW4XqtmYdnn5QXgPrwZmiS97ap0cbMucKJQ758EYUuWpiNQZfpKU53A58iQMsyimIIQOTF5Yj0HBJ522kB73EqLgB7ZLkFs+e5EHOB4HxjVF/DyjNSfhO+LkMJGe78bnWMy02PjVz7sTx86xxzDNVm81Tc/F6/fe9+QPGMQcPGoNtffLncCPSCzZQzfNqoADE5U=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(10067099003)(56012099006)(3023799007)(6133799003)(18002099003)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DrzaK9I0bGSs/8KuEeF0Q16GbChaSadsl3aLJOiMNO841O2Xthj/xDqk28kO?=
- =?us-ascii?Q?c+x+CeQCBMueb5kJh9+r7eN0+F+TzlBGWC7XJv2ZOGXvreW3xaT59/e5L8wF?=
- =?us-ascii?Q?Ut7p6poYD7fULMf/O52YXkhddOR7WVXx2iMvw5BvBn30Z3r1Oe6+ccOLULqQ?=
- =?us-ascii?Q?W1Hsxd1JhUOrfk5NDF+CVqd8QDy2EYhdTBnZyTIz2vHPqcvdEvY61rs8ap5g?=
- =?us-ascii?Q?5zwyQZntXmE+bs9/O/7qxEH23dGWiserc/wXpXPOng62lwzFdg0mmYgYkIQs?=
- =?us-ascii?Q?IkwiTAlYB4CeVB3anyYBiZQV1KZhq9QSNmaLNnaec5Z1KvD97t4NlR8t1609?=
- =?us-ascii?Q?HYJRzU6D3Q1WvrvBpCCc3PcqmFLs+Lfhtdp1yUYL2qBRzpV94TAddw+7wv+l?=
- =?us-ascii?Q?FBJWponzCY9bo5TltRlHOxYHPZ3vwYXQexgo/UUhX9imfcPV02icSksihf8F?=
- =?us-ascii?Q?27u74o38sqAqLbn1Hrudfv/0fbZbfIB4mLHXC3QAE//dpevUOVexica3qO06?=
- =?us-ascii?Q?UyXjyKxs/AjF+jtebbL0x+EnSPhBx8j/bIxlXnBaVLQHeqE7hq2pM2i6Jl3L?=
- =?us-ascii?Q?CWA+5tWbgGuayoeEVwxm+hBr+Z6ty4wl7Yj0uRmofQAcov1C5GANZRlT/nr2?=
- =?us-ascii?Q?1utFNNLnWjPV3GBl+jn01GO9+wF1v/S02XIBoMD8OksiL5zWOte1zXC5h4f2?=
- =?us-ascii?Q?tDn/SCN71S1WS9aqYfMZEJsRqF9jbL6WslGMlICT57p4l4Ib7OmRBy1KpiVG?=
- =?us-ascii?Q?8UCexHt7NyvQegAeW3JH8JwqPGFqfawmoD5vc/sITq0vEnWLaOC65bCuVAon?=
- =?us-ascii?Q?/qEJrl+rj2EhlZPQ8u+TyXuZJEojRcdngugyc/IMWSj1cJlnI6x125Vg1TvH?=
- =?us-ascii?Q?SF9jtmsuUrl08hUEl/9tL7cP9YauenBaW6OLiL0UNqdHrEleMusN1FnpI0GO?=
- =?us-ascii?Q?LuPW0FtgyZJs3MOaNPWNazRxckWQ4hUX1XNEynkbNiX6pyQvs4FNMl3bTtuQ?=
- =?us-ascii?Q?T6S1NwlRkgjvBFrnaDN3b43UqZc1b9krV7COIxd717FvyvPq750w5VNlCLfJ?=
- =?us-ascii?Q?HJ5cczWNOD5yu6KGgwAp+nShVMNA4gOZZr+mAwg40O8205hS/qPsZ38NalKa?=
- =?us-ascii?Q?SL9/8RNzJbxLtJWArvqm2qdG2Wk0hjL+qE3jqhuUKyUXFE9tDunURBj7Ytbn?=
- =?us-ascii?Q?o7MZGXpVuCcngHMri/wGbGBWwkuu+EBFNqpwH/24AjmvpqYOT587U93mVvoL?=
- =?us-ascii?Q?UoqNQ33UESQPpQSCPh3ptTgjitrobuyDE1C3oocIrsZK9yZARL69KiFKmtiE?=
- =?us-ascii?Q?Bpn0zVqldIxarXlPIraCUpk+KA4OqVWi6zuUWGtEjuYv+Ns2wp0sOFsUsDMe?=
- =?us-ascii?Q?OuCw4L+o6H0a2kC/s574/X2YK+3yxyPRT+wH/jsFoYdQWbsO6Z369G81EQ3d?=
- =?us-ascii?Q?Rpf/ed3mI2dXin/9emuy6Qw5pE1FVT98EM8T+p/LfZcOSRFeTQSX5KiVKX4w?=
- =?us-ascii?Q?kdV0vjueHJadU5NiWcQgVRB6vy8YjtR4fiPrqxI0GqOxnVV2zd3eNUMB9Kwz?=
- =?us-ascii?Q?BJ6pihzdBwEmoZrOsjwu/2GVmhzwsOvwUQasnSeb3mjL2j6H8qNAJagKuR+s?=
- =?us-ascii?Q?45uoZhGVKEOi/M2g98av0z73n5z8+l/CiG3tGVTgxahG6pr7xBPi0xadJaib?=
- =?us-ascii?Q?gtUYIGvGLLMyOpiKnnzW24ZnfSY0h8QxPgTLJKGUzXtXqZJd?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 109dd20d-65b4-4030-ec61-08df18f37d61
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 21:50:17.0109 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iul34cH6ohJnyBMq1kWMRZHUubU/fZhHiawpa6/Mn1nyptVu32QkMALvhSk1fQIesh45rT+QHMgemwelilpENg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8126
-Received-SPF: permerror client-ip=52.101.201.33; envelope-from=tdave@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:38::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,52 +119,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds an 'acs-ctrl' property to PCIe root ports and downstream
-ports, letting the hypervisor expose a specific PCIe ACS (Access Control
-Services) configuration to the guest instead of QEMU always advertising
-every ACS capability the port structurally supports.
+- Add machine_class_set_name() so boards can keep a stable -M name
+  when the QOM type is uniquified. machine_class_base_init still
+  defaults the name to the QOM type without -machine.
+- Document that MachineClass::name is the -M name, not the QOM type.
+- Sort -M help by MachineClass::name so order matches the printed names
+  when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
 
-This matters for P2P (peer-to-peer) topologies such as GPUDirect RDMA,
-where the actual ACS configuration in effect must match what the host
-side is doing -- otherwise the guest sees a topology/configuration that
-doesn't reflect reality, which is undefined behavior and can fail either
-in software or in hardware.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ hw/core/machine.c        |  6 ++++++
+ include/hw/core/boards.h | 12 +++++++++++-
+ system/vl.c              |  8 +++-----
+ 3 files changed, 20 insertions(+), 6 deletions(-)
 
-Patch 1 adds the missing ACS capability to xio3130 downstream ports
-(previously only root ports exposed one), gated behind a new
-'x-pcie-acs' property so older machine types can disable it via
-hw_compat and preserve migration compatibility.
-
-Patch 2 introduces the 'acs-ctrl' property itself on both root and
-downstream ports, so the configured value -- not just the maximal
-capability set -- is what gets exposed to the guest.
-
-Patch 3 makes the ACS Control register read-only to the guest once
-'acs-ctrl' has been explicitly configured, so a guest OS doing normal
-PCIe programming can't silently override the host-configured ACS
-state. An explicitly configured value of 0 is treated the same as any
-other configured value (locked), distinct from the property never
-being set at all (which stays guest-writable, unchanged from current
-behavior).
-
-Tushar Dave (2):
-  xio3130_downstream: Add ACS support for downstream PCIe ports
-  hw/pci: Make ACS Control read-only to guests
-
-Yishai Hadas (1):
-  hw/pci: Expose ACS ctrl on Guest as configured by the HYP
-
- hw/core/machine.c                  |  1 +
- hw/pci-bridge/pcie_root_port.c     | 11 +++++-
- hw/pci-bridge/xio3130_downstream.c | 14 +++++++
- hw/pci/pci.c                       |  2 +
- hw/pci/pcie.c                      | 61 ++++++++++++++++++++++++++++--
- include/hw/pci/pci.h               |  3 ++
- include/hw/pci/pcie.h              |  9 +++--
- include/hw/pci/pcie_port.h         |  2 +
- 8 files changed, 94 insertions(+), 9 deletions(-)
-
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 92f7be52a13..6b933f2302d 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1215,6 +1215,12 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+         "Memory size configuration");
+ }
+ 
++void machine_class_set_name(MachineClass *mc, const char *name)
++{
++    g_free(mc->name);
++    mc->name = g_strdup(name);
++}
++
+ static void machine_class_base_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 3b86724cf00..851140ad052 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -36,6 +36,16 @@ const char *machine_default_cpu_type(const MachineState *ms);
+  * @mc: Machine class
+  */
+ const char *machine_class_default_cpu_type(MachineClass *mc);
++/**
++ * machine_class_set_name: Set the -M name when it differs from the QOM type
++ * @mc: Machine class
++ * @name: Name used by -M lookup, help, and migration
++ *
++ * machine_class_base_init sets MachineClass::name from the QOM type with
++ * the -machine suffix removed. Call this from board class_init when the
++ * CLI name must stay stable after the QOM type is uniquified.
++ */
++void machine_class_set_name(MachineClass *mc, const char *name);
+ 
+ void machine_add_audiodev_property(MachineClass *mc);
+ void machine_run_board_init(MachineState *machine, const char *mem_path, Error **errp);
+@@ -269,7 +279,7 @@ struct MachineClass {
+     /*< public >*/
+ 
+     const char *family; /* NULL iff @name identifies a standalone machtype */
+-    char *name;
++    char *name; /* -M name; default is QOM type without -machine */
+     const char *alias;
+     const char *desc;
+     const char *deprecation_reason;
+diff --git a/system/vl.c b/system/vl.c
+index 468a9fc247a..0d52c5d0a46 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1538,10 +1538,9 @@ static gint machine_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
+     if (mc1->family == NULL) {
+         if (mc2->family == NULL) {
+             /* Compare standalone machine types against each other; they sort
+-             * in increasing order.
++             * in increasing order by the name shown in -M help.
+              */
+-            return strcmp(object_class_get_name(OBJECT_CLASS(mc1)),
+-                          object_class_get_name(OBJECT_CLASS(mc2)));
++            return strcmp(mc1->name, mc2->name);
+         }
+ 
+         /* Standalone machine types sort after families. */
+@@ -1560,8 +1559,7 @@ static gint machine_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
+     }
+ 
+     /* Within the same family, machine types sort in decreasing order. */
+-    return strcmp(object_class_get_name(OBJECT_CLASS(mc2)),
+-                  object_class_get_name(OBJECT_CLASS(mc1)));
++    return strcmp(mc2->name, mc1->name);
+ }
+ 
+ static void machine_help_func(const QDict *qdict)
 -- 
-2.34.1
+2.52.0.windows.1
 
 
