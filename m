@@ -4,113 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C759C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D067AC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x95oU-0005UT-8L; Tue, 22 Sep 2026 15:06:00 -0400
+	id 1x95xc-00078B-8G; Tue, 22 Sep 2026 15:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x95oO-0005QF-Ax; Tue, 22 Sep 2026 15:05:52 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x95xZ-00076H-CZ
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:15:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x95oL-0000aI-2P; Tue, 22 Sep 2026 15:05:52 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI7nCo965282; Tue, 22 Sep 2026 19:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ad1dk2
- U/z7L4zhvRw7Z7RkWDTqdHaWPpjTmzfVjgbjA=; b=jUBYBWIcLmgeVdLeIs8Cy3
- w7LjbvITRu5nWea2JRsxjhNSTBeMdYLCTGuQY3qJqH+yGa1pUi2mGrAr91lPeuhF
- iEoAn6rsMwHkr2hnmvRcg6iwyvP2Oc8Fu6p2dE7UySiZzSR3kyXKQ/iyvShOLoVP
- tO3MtDXO0htS9P+vPiQxFVPga/5a7AXZWixb+fPINwvIHmcy9jMpc46okYyUd6OG
- sg//EB+ieXAwWJKBtwRVnSlQr8+fc+ulsEo0hGy4rbD4ksepfwr9XEsSdaPdfoG2
- WemKheywBRkPEMGuqs8BGwmH/+0DffKmsewwLxk1Rr4dcC8M3skNg7OsmteI3tHg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1f8d8-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:05:42 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHcQA3279464; Tue, 22 Sep 2026 19:05:41 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqb8f0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:05:41 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MJ5fbH33620546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 19:05:41 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EBF458055;
- Tue, 22 Sep 2026 19:05:41 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C18E58043;
- Tue, 22 Sep 2026 19:05:40 +0000 (GMT)
-Received: from [9.61.131.16] (unknown [9.61.131.16])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Sep 2026 19:05:40 +0000 (GMT)
-Message-ID: <03b1a9a9-dd35-4d0f-90c7-2d9eabcfc7b8@linux.ibm.com>
-Date: Tue, 22 Sep 2026 15:05:39 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 01/16] s390x/pci: implement IOMMU replay
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1x95xX-0001ON-Fw
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:15:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790104511;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4/8YaSr8vTyFKmvNvJe5VBY7sfwZrl67iVdcSLDiyuY=;
+ b=igNPI1l1tKzMnDH2S3NNX2ivmNway+kaT/f9+9vqRNcwAEUL7yWdi4qyh/xTTPv9PoGNWc
+ 3pz1DAG1+wlEtXHyrJEQ+9kCoCNJTuXGCwE9vRRn7jcmNaV3t2r8fZEuUtilRa2gqRTLaN
+ FaTyK/7q/oVefRKXgMKrkKewX1CZZTw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-Nyc_Wbs_OricPZ-SDnJrGQ-1; Tue,
+ 22 Sep 2026 15:15:05 -0400
+X-MC-Unique: Nyc_Wbs_OricPZ-SDnJrGQ-1
+X-Mimecast-MFC-AGG-ID: Nyc_Wbs_OricPZ-SDnJrGQ_1790104504
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3FFE192527A; Tue, 22 Sep 2026 19:14:55 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ADB311956095; Tue, 22 Sep 2026 19:14:54 +0000 (UTC)
+Date: Tue, 22 Sep 2026 15:14:53 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Sam Li <faithilikerun@gmail.com>,
+ Damien Le Moal <dlemoal@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-References: <20260922183654.798470-1-kshk@linux.ibm.com>
- <20260922183654.798470-2-kshk@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260922183654.798470-2-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _gtas_QGYMlNxlg9ldjsJkMuS9Wl5dLb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX19+51tUAxghx
- +bdReUnwcQ8+7SaJ5BhlDVuXMbKC6B/luKiXr1RlUgrePU+9b0gwDhy/uptW4f08+ISOOVVCbdF
- U1UASbUl1hZAsjkeIse88VAD4TurfwepH+c0dzKrewI5dsfOtjB5RFGbcunIv1HoUL4KRedE2vJ
- IcS9XgdPWAbSSgt3LIGxnws/y+Fh9q0IikuvAIlikBdRxPxrWbaX5uCazQ/66aSTzC+oQLdxnBU
- DZ3jcbAqk8DEVIvojWdOZQg8XnqcvaRVn2XP4JHoVzKMldYP5K/qz9fmL0WY3GDF4HcSGv9oh9Z
- ayr5kyqbE5TOnNbRM8yM/kKXizfKvN8UTPOvPo+Z8VfqPMUxv4HXjmEC48ykxN6wTDKzFRPxCtH
- uaEn/+a+GhoLeCw7m/pOmmHsXEh87ghWs6n56MzGrQVkuGWnTmIZpOpgSV2Ss5GaiPwWRVe5k7N
- jaN2U1vPcahzyAk52Ag==
-X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab2d186 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=vdUCz5xxhtyje57lxywA:9 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfXz5gv/uEfGz0P
- vjJ64cL5O4fvmTM+fgmB53I/c9tArVRgrW2D/Sjls6hWeTer3wFKE37WUyfWz44WRxK8DkZuH7D
- qrCHWCUBCxvpb614NlB7/YAl6liXGTI=
-X-Proofpoint-GUID: _gtas_QGYMlNxlg9ldjsJkMuS9Wl5dLb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220280
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH v6 11/15] virtio-blk: add a max-append-sectors property
+Message-ID: <20260922191453.GE340123@fedora>
+References: <20260921142819.2916043-1-cassel@kernel.org>
+ <20260921142819.2916043-12-cassel@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="PWTSId3knXoTKx2Q"
+Content-Disposition: inline
+In-Reply-To: <20260921142819.2916043-12-cassel@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,31 +88,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/26 2:36 PM, Konstantin Shkolnyy wrote:
-> From: Matthew Rosato <mjrosato@linux.ibm.com>
-> 
-> There are a few scenarios where IOMMU replay can potentially be needed
-> for zPCI device, namely VFIO device reset scenarios where the guest
-> continues running and expects the contents of its IOMMU to be replayed
-> upon IOAT re-registration and migration scenarios where the destination
-> must reconstruct the IOMMU on the destination.
-> 
-> zPCI migration is not supported yet, but the IOMMU replay function is
-> implemented so that it can be called both from IOMMUMemoryRegionClass
-> now and migration post_load later.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+--PWTSId3knXoTKx2Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-After some discussion with me on v8, Farhan gave his review for this
-patch, looks like it got missed.
+On Mon, Sep 21, 2026 at 04:28:13PM +0200, Niklas Cassel wrote:
+> The maximum zone append size that the device reports to its driver was
+> taken from BlockLimits.max_append_sectors, a limit of the host disk that
+> the backend happens to sit on. A guest reads it out of the configuration
+> space, so it becomes part of what the guest has been told about its
+> device, and migrating that guest to a host whose disks report something
+> smaller leaves it appending more than the device accepts.
+>=20
+> Make it a property, as max-discard-sectors and max-write-zeroes-sectors
+> already are, so that the value a guest is given is part of the device
+> model and does not change under it. Nothing from BlockLimits reaches the
+> configuration space any more.
+>=20
+> Zero is a valid value here, unlike for those two. There is no feature bit
+> for zone append, and a maximum of zero is how the specification has a
+> device say that it does not support the operation (virtio 1.4, 5.2.5.2).
+> It is also what a ZBC or ZAC disk is: such a disk has no zone append
+> command at all, and Linux emulates one in its block layer.
+>=20
+> What is reported is capped by the size of a zone. The specification asks
+> for the largest append that can be carried out, and one larger than a
+> zone never can be, so the default would otherwise advertise a size that
+> the block layer refuses. The cap tells a guest nothing about the host
+> that zone_sectors has not already told it.
+>=20
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> ---
+>  hw/block/virtio-blk.c          | 67 ++++++++++++++++++++++++++++++----
+>  include/hw/virtio/virtio-blk.h |  1 +
+>  2 files changed, 61 insertions(+), 7 deletions(-)
 
-I'm not aware of any changes to this patch for v9.
+Before virtio-blk reported bs->bl.max_append_sectors to the guest. Now
+the default value is MAX_INT >> BDRV_SECTOR_BITS.
 
-@Farhan can you verify and reply explicitly to this patch if your review
-still holds?
+This is a guest-visible change (e.g. when upgrading QEMU versions) and
+we normally avoid that. In this case it's a bug that the host value was
+exposed in the first place and it is unlikely that anyone is using zoned
+storage emulation in a use case that involves migration. Therefore I
+think we can allow this change.
 
-Thanks,
-Matt
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--PWTSId3knXoTKx2Q
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqy060ACgkQnKSrs4Gr
+c8jtiQf/VGl3gAPvdeHeZSd5/rSgLmGIv/8gSnoKgJFrbS0OOO15nUZwg6sHEH0e
+JMvyvoyLfsgp32FMgUC5NSxoUjWuSAfNe+2NhWKXD5X/Iqc8hqBOdq+M11Rf2iu5
+n+SGbB6esbeK2prlUJARflB6dHni/Lf038toYzjPpnrl8u/3a2Den97m1c419fbc
+gJcnbVUrDmZEQXAfW1tPpTq0LVwVD30Hpwfj3hWvtaWjYkCo1Z1Nlud2jpIDT8Oj
+MWCCRSqAgP04vRekgiuS0xfITjCzmvLx3A51GIWBXkosueA6DD7ZmhSUblFwQyoE
+2dOkfolfjbp6COZLbT/BuI5+mNWC5A==
+=O02M
+-----END PGP SIGNATURE-----
+
+--PWTSId3knXoTKx2Q--
 
 
