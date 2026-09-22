@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4607DC98302
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EF9C98304
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x971S-0005nf-GD; Tue, 22 Sep 2026 16:23:26 -0400
+	id 1x971d-0006sY-IL; Tue, 22 Sep 2026 16:23:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970m-0002uu-0X
+ id 1x970r-0002v6-8q
  for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970k-0000It-EA
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:43 -0400
+ id 1x970p-0000JS-KW
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108561;
+ s=mimecast20190719; t=1790108567;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iLmncJkTuaO8OiV1Z6WGTW7ToYzktVHhyIoIa0hQkTY=;
- b=L8k4kBKSQyRf5ySrtqL83Btn3BIfc1gpFOWmke/V07IRtrUARZSzOhdPfkuNJE1DspLvOP
- KpkwzmWkX8IEXxV14VKapgJYBtoynWlIwYSURcuygoNnaNkT9+NnG4j88cWnSX7cVRQhFP
- ZJedaL+/XsKV8HO7pj5mkJ6UQZoJR8E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=3bDmFYUs/x08CWZsQUX0w/mf6oNg/SybCHy3tyzihKU=;
+ b=N/D8Y8uCwcZyg9uzNN0VDMPuR0tZ8SBxd/i11c2pxtV+lmQV319T9GVf8Jr4zVjvoCUopG
+ mIXDUAmG20IdtZWIXA+XfLYpNildqmSIqepp65py/tle8+EWzVp+vVEDTW6CmPFw3Mv6eW
+ OAg6w1sCotlz6DjwUX2eJ/yboetsRZc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-231-lzsKE4_nNveb8gyYcPELWw-1; Tue,
- 22 Sep 2026 16:22:38 -0400
-X-MC-Unique: lzsKE4_nNveb8gyYcPELWw-1
-X-Mimecast-MFC-AGG-ID: lzsKE4_nNveb8gyYcPELWw_1790108557
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-R_fPO-OJM865VgXp7jNyVw-1; Tue,
+ 22 Sep 2026 16:22:45 -0400
+X-MC-Unique: R_fPO-OJM865VgXp7jNyVw-1
+X-Mimecast-MFC-AGG-ID: R_fPO-OJM865VgXp7jNyVw_1790108564
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F9361828AC5; Tue, 22 Sep 2026 20:22:37 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87FE319772EE; Tue, 22 Sep 2026 20:22:44 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E6F881956095; Tue, 22 Sep 2026 20:22:35 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7E8623000223; Tue, 22 Sep 2026 20:22:43 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:05 +0400
-Subject: [PATCH 58/88] qemu-iotests/071: migrate away from HMP
+Date: Wed, 23 Sep 2026 00:18:07 +0400
+Subject: [PATCH 60/88] qemu-iotests/102: migrate away from HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-58-ebc029d4bd80@redhat.com>
+Message-Id: <20260923-nohmp-v1-60-ebc029d4bd80@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4015;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2706;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zMVUUohbio/jDSQJvutRU7usXRmpt1kSpc4NTAIWYds=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKy1mK/r+JHPQ3MkMcIfljgU/Bnu29FZAhCX
- hqeUZ9ZvaSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLisgAKCRDa6OEJdZac
- 5Y2JEACU3hLrXtintSHAMOp83bYnWuh6ebpJl2tPXT2tBvRnV60prkjzhomUoLGzMnSgf7jQbtN
- V+BjN+HtnJZpKVe2dQvsVTnkmPHOOraAJLrMfupEXWsLjouKlnGKQayZeCb7v9r2LWDA7rk2Lxf
- sXkf34KZKZeUKrh3/huU2UovmKnBr6DhE+FGEnbYRXt8F2ZaQqE7QBFxNbrFiAQV/2a0qnNBf7B
- u/9hZQKMFmMoTBOuwcwE1ZOj+5r131h5QtUdAyrB16+4xGqIZzcsZPA/KwxZ1+lQPs9+oe6MfUc
- JCh5HGyckWONcyAmu1nQS7jWhEJR8q9nwrSyZxwTnGuKl1kXEY5AZMIJhTg+zYzhbWpnIrZwnz9
- rywaqvLLfNuuTJ4Mv0Pw1lF32NkH8oeXLmvE3lToBEGBCQ5mSdTD+bYJ8vWB0IyLJDIaY1H6WxJ
- Y55mNkQeugiJX9khOeHW6H3gsK1w0MnvRTkkWjknkoVA+chJFZ2adIN9ZBYssgyJ7BoebAIfBG+
- C9pciiRyXmBni+V+PimKQ0dOgE6Uwd3GnjB6RRR1lQWEDOw+I4og5r0Qc2gj0IByLzjoOCqr/0N
- QXhSmPswOQTkQyVdgp3dv+FNFWVQzVGdjQAdwX6q2TMNaNwul26PaR+3Y2eTY7hDD+z+LJxcpXj
- WbjaD97sV5iCHLg==
+ bh=3yUAha34BoNWc8nsQWp4lnPh9BerL6wj9EeguM5KeGk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKyGyG06ta9BHUy0tNGk9XBr/Cg6BC375r5l
+ 4KeC93pvFGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLisgAKCRDa6OEJdZac
+ 5YSEEACOxXFNAI9cNwKMhEGwslRF63ONsjL4W8AO7nWCD/0+EqoBJacRb9uyhCmg0lPX6C6kxcB
+ fxaHYTQCIwCzIW+wWjJJY95JYr4qGXtaV7+vuLfoIvtk0HC5d1fiFi3tt+CGFCiScIYVjzjl1bR
+ rsYs4QtjaRO0K1lNxbV7CUOYLigICVim/+TGvvBYi4Zl8kfEqj49DOYMNwoKzdHn52bzy5ni851
+ q4JJTAKre6Onb5Kw9EiN8ZUN+35oLKfSHzdQ+dX3JDuZWwVhdK3/5l+n2zulLYzv9vwYPHsiZ6s
+ 6kMdF+ZUwBovxsdM2dRZkj60J7cEJ8vj7Aoxtpfr525IubWbsrcbDVAdYo0ipEACxZ1WIzs63UQ
+ cB2xb95R6hhigpVj5YyJ9JtOyMAmjJ1+beINSKWavjUVJFxFeUCpEOR4zHX9ZtccFCy9smjJGuP
+ WEkhHqCGx1kD0cvydXHmYVTXgLXrzagdm6jck4MaSjuDF27DTA9a1PQNi9pKpWMtvxs3uI4EqPj
+ CTiwifmeEBxg6LD/JgnRP4JhSIpS8x8Vl4w3IEBs+TLFUhCkpiV9cNGSDhS5YPbFdHJUhH09J/H
+ r8s4rrVEqlGdanPzuAPmrHRjWlpCfXGFJ8WOsOZzky5cY9nT7V5W7nqAIwu7//xHlINyw8sS+cH
+ zFUpJmUgmBh8Hdg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,122 +105,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+No need to substitute qemu-io command.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/071     | 31 ++++++++++++++++++-------------
- tests/qemu-iotests/071.out | 12 ++++--------
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ tests/qemu-iotests/102     | 21 ++++++++++++++-------
+ tests/qemu-iotests/102.out | 12 ++++++++----
+ 2 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/tests/qemu-iotests/071 b/tests/qemu-iotests/071
-index 83c4ce6314c5..463f5c02349c 100755
---- a/tests/qemu-iotests/071
-+++ b/tests/qemu-iotests/071
-@@ -43,7 +43,6 @@ _require_drivers blkdebug blkverify
- # blkdebug can only inject errors on bs->file, not on the data_file,
- # so this test does not work with external data files
- _unsupported_imgopts data_file
+diff --git a/tests/qemu-iotests/102 b/tests/qemu-iotests/102
+index 5db8180d3bb7..b70053eee302 100755
+--- a/tests/qemu-iotests/102
++++ b/tests/qemu-iotests/102
+@@ -41,7 +41,6 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+ 
+ _supported_fmt qcow2
+ _supported_proto file fuse
 -_require_hmp
  
- do_run_qemu()
- {
-@@ -140,9 +139,10 @@ run_qemu <<EOF
-         }
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-debug "read 0 512"'
-+        "device": "drive0-debug",
-+        "command": "read 0 512"
-     }
- }
- { "execute": "quit" }
-@@ -175,9 +175,10 @@ run_qemu <<EOF
-         }
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-verify "read 0 512"'
-+        "device": "drive0-verify",
-+        "command": "read 0 512"
-     }
- }
- { "execute": "quit" }
-@@ -210,9 +211,10 @@ run_qemu <<EOF
-         "raw": "drive0"
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-verify "read 0 512"'
-+        "device": "drive0-verify",
-+        "command": "read 0 512"
-     }
- }
- { "execute": "quit" }
-@@ -249,19 +251,22 @@ run_qemu <<EOF
-         }
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-debug "read 0 512"'
-+        "device": "drive0-debug",
-+        "command": "read 0 512"
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-debug "write 0 512"'
-+        "device": "drive0-debug",
-+        "command": "write 0 512"
-     }
- }
--{ "execute": "human-monitor-command",
-+{ "execute": "x-qemu-io",
-     "arguments": {
--        "command-line": 'qemu-io drive0-debug "read 0 512"'
-+        "device": "drive0-debug",
-+        "command": "read 0 512"
-     }
- }
- { "execute": "quit" }
-diff --git a/tests/qemu-iotests/071.out b/tests/qemu-iotests/071.out
-index 15353aba08b9..1e956d4bc1ec 100644
---- a/tests/qemu-iotests/071.out
-+++ b/tests/qemu-iotests/071.out
-@@ -43,7 +43,7 @@ QMP_VERSION
- {"return": {}}
- {"return": {}}
- {"return": {}}
--{"return": "Error: read failed: Input/output error\r\n"}
-+{"error": {"class": "GenericError", "desc": "read failed: Input/output error"}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
- {"return": {}}
+ IMG_SIZE=64K
  
-@@ -75,13 +75,9 @@ QMP_VERSION
- {"return": {}}
- {"return": {}}
- {"return": {}}
--read 512/512 bytes at offset 0
--512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--{"return": ""}
--wrote 512/512 bytes at offset 0
--512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--{"return": ""}
--{"return": "Error: read failed: Input/output error\r\n"}
-+{"return": {"human-readable-text": "read 512/512 bytes at offset 0\n512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)\n"}}
-+{"return": {"human-readable-text": "wrote 512/512 bytes at offset 0\n512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)\n"}}
-+{"error": {"class": "GenericError", "desc": "read failed: Input/output error"}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
- QEMU_PROG: Failed to flush the L2 table cache: Input/output error
- QEMU_PROG: Failed to flush the refcount block cache: Input/output error
+@@ -67,18 +66,26 @@ echo
+ _make_test_img $IMG_SIZE
+ $QEMU_IO -c 'write 0 64k' "$TEST_IMG" | _filter_qemu_io
+ 
+-qemu_comm_method=monitor _launch_qemu -drive if=none,file="$TEST_IMG",id=drv0
++_launch_qemu -drive if=none,file="$TEST_IMG",id=drv0
+ 
+-# Wait for a prompt to appear (so we know qemu has opened the image)
+-_send_qemu_cmd $QEMU_HANDLE '' '(qemu)'
++_send_qemu_cmd $QEMU_HANDLE \
++    "{ 'execute': 'qmp_capabilities' }" \
++    'return'
+ 
+ $QEMU_IMG resize --shrink --image-opts \
+     "driver=raw,file.driver=file,file.filename=$TEST_IMG,file.locking=off" \
+     $((5 * 64 * 1024))
+ 
+-_send_qemu_cmd $QEMU_HANDLE 'qemu-io drv0 map' 'allocated' \
+-    | sed -e 's/^(qemu).*qemu-io drv0 map...$/(qemu) qemu-io drv0 map/'
+-_send_qemu_cmd $QEMU_HANDLE 'quit' ''
++_send_qemu_cmd $QEMU_HANDLE \
++    "{ 'execute': 'x-qemu-io',
++       'arguments': { 'device': 'drv0', 'command': 'map' } }" \
++    'return'
++
++_send_qemu_cmd $QEMU_HANDLE \
++    "{ 'execute': 'quit' }" \
++    'return'
++
++wait=1 _cleanup_qemu
+ 
+ # success, all done
+ echo '*** done'
+diff --git a/tests/qemu-iotests/102.out b/tests/qemu-iotests/102.out
+index 320ed5a52ba9..13dee5bdecd6 100644
+--- a/tests/qemu-iotests/102.out
++++ b/tests/qemu-iotests/102.out
+@@ -15,9 +15,13 @@ Offset          Length          File
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=65536
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-QEMU X.Y.Z monitor - type 'help' for more information
+-(qemu)
++{ 'execute': 'qmp_capabilities' }
++{"return": {}}
+ Image resized.
+-(qemu) qemu-io drv0 map
+-64 KiB (0x10000) bytes     allocated at offset 0 bytes (0x0)
++{ 'execute': 'x-qemu-io',
++       'arguments': { 'device': 'drv0', 'command': 'map' } }
++{"return": {"human-readable-text": "64 KiB (0x10000) bytes     allocated at offset 0 bytes (0x0)\n"}}
++{ 'execute': 'quit' }
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
+ *** done
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
