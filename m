@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07E3C982FE
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 14:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389F5C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 14:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x91aL-00024b-8L; Tue, 22 Sep 2026 10:35:05 -0400
+	id 1x91jL-0004Gk-0l; Tue, 22 Sep 2026 10:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x91aJ-00023w-LH
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:35:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x91aH-0004vO-IF
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:35:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790087701;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0yIBs0EhSWG51Xo7KOe5igClSHIoH+7ZqR4piHgpV3U=;
- b=GxPa9dU3Vm9dNIoZdDj1AlSkun+CxDUlRAS6+K1C6Ptzzp1oM+UAXW0nN5VypIQKoyONNa
- Mp3AgEVNmiO3QgNYS9M+1CStBuuPVIMPDV+EmOZjkuQABpF8dUoynLY7v8kl02gF3pnFMW
- oi8tnirv2Z5HKsLb/m1HQjIv8bcU5ao=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-5TdOxV8mPqm6Naz_Nz1bFg-1; Tue,
- 22 Sep 2026 10:34:55 -0400
-X-MC-Unique: 5TdOxV8mPqm6Naz_Nz1bFg-1
-X-Mimecast-MFC-AGG-ID: 5TdOxV8mPqm6Naz_Nz1bFg_1790087694
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x91jJ-0004GT-5a
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:44:21 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x91jH-0006R0-49
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:44:20 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3175185BE99; Tue, 22 Sep 2026 14:34:52 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00CC91800446; Tue, 22 Sep 2026 14:34:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9809021E6A04; Tue, 22 Sep 2026 16:34:49 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kashyap Chamarthy
- <kchamart@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Hanna
- Reitz <hreitz@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,  Zhao Liu <zhao1.liu@intel.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Da?=
- =?utf-8?Q?ud=C3=A9?= <philmd@oss.qualcomm.com>,  qemu-block@nongnu.org,
- qemu-trivial@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Eric Blake
- <eblake@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH 1/9] qapi: convert remaining simple sections
-In-Reply-To: <20260921205147.1857168-2-jsnow@redhat.com> (John Snow's message
- of "Mon, 21 Sep 2026 16:51:39 -0400")
-References: <20260921205147.1857168-1-jsnow@redhat.com>
- <20260921205147.1857168-2-jsnow@redhat.com>
-Date: Tue, 22 Sep 2026 16:34:49 +0200
-Message-ID: <87ecel4anq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 5018C1FAC1;
+ Tue, 22 Sep 2026 14:44:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790088250; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pw8USIEt+QV7D5f0FohX0x87jI3XIAyNpk30JBzou8c=;
+ b=l+5XsRdvMzZPDZ9jqp+wHNqCeLyYF0hfifhzwo3ESyBEGkL9Om8jcaKCidoflLz3i7uCf+
+ JTWH4M9EMb0r8UpVsNH5l9yazN5bdChdvt+6u3rfRymNF7CcvcCl8Zr+Q7KMj6qe2IPvoO
+ PNdUq9LcXvM/tU4G6NWvCunmC60mEcc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790088250;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pw8USIEt+QV7D5f0FohX0x87jI3XIAyNpk30JBzou8c=;
+ b=kc9pmmThfbeN8Xay0BJLKpNjWRaOGHfNgE1ZOR4bsyEXkAJ6LXpxpz9k0GZuBZrI0hhAMJ
+ 09KLlUrXGTBakXBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790088246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pw8USIEt+QV7D5f0FohX0x87jI3XIAyNpk30JBzou8c=;
+ b=an4mUc0E5VmUBEMGREyZooptKptr1XZRaf3SlUIOIq04rDS9yJcaqCgqX//wSL7/cuLo1i
+ uefzxCkD16nbU/qWsl1MBT+a93MGsJ2PwBgevHGI6LBVhkBwWb56a5Hfe7EEgfHvXRHjd2
+ 3RKNQoodZiPXgVSGJmGkZpIKskVjOV8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790088246;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pw8USIEt+QV7D5f0FohX0x87jI3XIAyNpk30JBzou8c=;
+ b=GMxYbDU3KNsL9d/81MGu5CzwZXpY5894q0zygdNvxWn2p5WQGnjQIRGSKIvWzusK6PB6B/
+ D5hEkGFtJ9gziuDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C7A59136D9;
+ Tue, 22 Sep 2026 14:44:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cvvTGjWUsmqzSQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 14:44:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH 1/2] docs/migration: document that postcopy can be used
+ with multifd
+In-Reply-To: <20260915063719.89031-2-guobin@linux.alibaba.com>
+References: <20260915063719.89031-1-guobin@linux.alibaba.com>
+ <20260915063719.89031-2-guobin@linux.alibaba.com>
+Date: Tue, 22 Sep 2026 11:44:03 -0300
+Message-ID: <87se319wi4.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,39 +115,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Bin Guo <guobin@linux.alibaba.com> writes:
 
-> A few slipped in during the mass conversion, get those too.
+> Since commit e27418861288 ("migration: enable multifd and postcopy
+> together") in the 10.1 release, the multifd and postcopy-ram capabilities
+> are no longer mutually exclusive, but the postcopy documentation does not
+> mention multifd at all, leaving users unaware that the two features can be
+> combined.
 >
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Add a short section describing how they interact: multifd carries the
+> pages of the precopy phase, the channels are flushed and synced before the
+> switchover (because loading a page in a multifd receive thread is not
+> atomic with regard to a running vCPU), and the postcopy phase itself does
+> not use the multifd channels.
+>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
->  qapi/block.json         |  5 ++---
->  qapi/machine-s390x.json |  3 +--
->  qapi/machine.json       |  3 +--
->  qapi/net.json           | 24 ++++++++----------------
->  4 files changed, 12 insertions(+), 23 deletions(-)
+>  docs/devel/migration/postcopy.rst | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
 >
-> diff --git a/qapi/block.json b/qapi/block.json
-> index 13c47e1eb44..68d4e47d911 100644
-> --- a/qapi/block.json
-> +++ b/qapi/block.json
-> @@ -597,9 +597,8 @@
+> diff --git a/docs/devel/migration/postcopy.rst b/docs/devel/migration/postcopy.rst
+> index e319388d8f..570a3a1ce6 100644
+> --- a/docs/devel/migration/postcopy.rst
+> +++ b/docs/devel/migration/postcopy.rst
+> @@ -294,6 +294,32 @@ the background migration channel.  Anyone who cares about latencies of page
+>  faults during a postcopy migration should enable this feature.  By default,
+>  it's not enabled.
 >  
->  ##
->  # @x-qemu-io:
-> -#
-> -# Run a qemu-io command on a block device.  Take either a block
-> -# backend name or a qdev ID to identify the device.
-> +#     Run a qemu-io command on a block device.  Take either a block
-> +#     backend name or a qdev ID to identify the device.
+> +Postcopy with multifd
+> +---------------------
+> +
+> +The ``multifd`` capability can be enabled together with ``postcopy-ram``
+> +since the 10.1 QEMU release.  The two features apply to different phases of
+> +the migration:
+> +
+> +  - During the precopy phase, guest pages are sent over the multifd channels
+> +    as usual, so the initial RAM transfer can use all of them.
+> +
+> +  - Just before switching to postcopy, the source flushes and syncs the
+> +    multifd channels.  This guarantees that all the pages already queued on
+> +    those channels are loaded on the destination *before* the destination
+> +    CPUs are started, which is required because loading a page in a multifd
+> +    receive thread is not atomic with regard to a running vCPU.
+> +
+> +  - During the postcopy phase the multifd channels are no longer used for
+> +    guest pages.  Both the background stream and the pages requested by the
+> +    destination go through the background migration channel instead, or
+> +    through the preempt channel for the requested pages when postcopy
+> +    preemption is enabled.
+> +
+> +Consequently, multifd only speeds up the precopy phase of a postcopy
+> +migration.  The bandwidth available once postcopy has started is the same as
+> +without multifd.
+> +
+>  Postcopy blocktime statistics
+>  -----------------------------
 
-The second sentence is not intro, it's a constraint on arguments @device
-and @qdev.
+Looks good to me, I'll wait a bit to allow Peter to comment.
 
->  #
->  # @device: the block backend name, node-name to run the
->  #     command on.
-
-[...]
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
