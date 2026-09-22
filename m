@@ -4,91 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452EBC98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 22:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CEF6C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 23:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x991N-0004MW-NG; Tue, 22 Sep 2026 18:31:30 -0400
+	id 1x9A13-0005r5-1j; Tue, 22 Sep 2026 19:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1x991H-0004LN-Dn
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:24 -0400
-Received: from mail-ed2-x12.google.com ([2a00:1450:4864:33::12])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x9A0t-0005qg-5D
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 19:35:03 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1x991F-0004MQ-B4
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:23 -0400
-Received: by mail-ed2-x12.google.com with SMTP id
- 4fb4d7f45d1cf-6a9984f9a59so560045a12.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 15:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1790116280; x=1790721080;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=J7L62qwpJO3vGMxHxjmXF8JdEDxnZEQtw8mo5Q3M2Lc=;
- b=qiHATVIhvQZa2jt/vq/Iivb2KyrW7RyGo53YoV5RWFF2/ssJy6gHFTEETD4K493/dl
- iCOEdkjfaK7Nxfx+X7w0OjHtyb1YIxpQ6lgJ+TimFqSoJdQ29GUeDDlxIRosmbc5VP3/
- pd16JVNYCbO84IK7xdikmXsiASnKHyTiiB/xHXY5eP5wBdmza9hyhILnBguRI+6H7yQe
- XV+OJD3UV0BXMPW8FdYHKMfixopwEo5qkayejAln9JvQfT5rzjoFnKzyQ+EOXSWQ3pNN
- J5vKtMayAdh+mkwdUMtfjF4pNR/ACxabBq+F79W1w4swEK3XLxp6gAOjtivNq8pkd+2C
- Nn2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790116280; x=1790721080;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=J7L62qwpJO3vGMxHxjmXF8JdEDxnZEQtw8mo5Q3M2Lc=;
- b=E/yIXWc6OO4WbzG3YPHayET3/45BBcm+TO+ESGzhf/jCDuMX+vWRoioxKlvVYID9AZ
- J2HSzFvU4BaxsvBuU3i0cspg3qet/p6vJg52X+A+NqnUqaXsjXoN8RmfGWqApudzlFfB
- QtCWTN/NqvRAcHpHkhtJq/ckcr3dnLN7S9R8eFT2lf8TW7qh4pRDj5F+qkOl/3gaU7ad
- qDO597TRrZWrAMc2GYi8SCP3hUHhRpZ85L+ALkPbRyVL4Aa7k3Akw9bmbcPS0qAem+Qn
- 7fkuEST+nmjrN+oqhlxy3TgSnabjWOxSytb/66fTdFPlu1iDuLCezB0lBfFPsGMKPXVm
- cWog==
-X-Gm-Message-State: AFuF++k47qczq4C8ID/YBIET2FZu2JIzPxVS0CiSrPU68yt3qGYRF70C
- ULVchYkBKnbJvQlnmdJQyYIw9N2ZaOBOv37AN5tTZOxgfBZRQs/SCMbjBArE2N49bkFouK7jF7r
- Aiw1OGkY=
-X-Gm-Gg: AYBFou2XYdDAB4ZjXZZ8CJOrEqVCHMnoXnYqpN+H+HwTsMrNXUfCpg8GjCDFoNaUtV/
- hqbSuJXJ/fIxfgJlgw0ZMoPGF8gxbUnK7xsPi0cOj/pUBzmRfGZKUZQhPAxg1q4uRq5dzHH2ezC
- iPKqf+0m3HqsGDUdcGebOu+HwrAGtnvXL8L0jqt+P8+Bi9ZkWxFPEd7JnqL3Kw6KfXoWkSJYRUg
- GmkrCUs92JyzpYTwsQ+cdSazeldgmJWY9pmCc7M6cJKirWJo1I9brSv0R8+5HGm7S+Jczs7Bwhu
- ibRSMoRQhMz9bOMv33SUWStCJcsGQ+4XT6ljF/EXsKJjdJhjSfLTC8ScrE5Y+6Jk7xwC9JcrNhM
- IBs6ZcMglFAkr4jxEmzaZtd5O7zaEPb0K78V5/8+GTsO84IB4M13zCNga07VATRXO8MU03WrIDc
- nomUXtC7d4ELWp1vQ3ailwUn0BczxHB3+mMJVLYEqbz80AIuZbrS0f3+n1yPxacTxDWOEWL30Uv
- eExkgHRTnj4ISyxsAq4QR2VtH2ltsfswypUzMexz/esNzUGeJkFdTBdyA/LZXtz1Q==
-X-Received: by 2002:a05:6402:50c8:b0:6a9:b89f:7bb1 with SMTP id
- 4fb4d7f45d1cf-6aab3b0061emr638781a12.3.1790116279733; 
- Tue, 22 Sep 2026 15:31:19 -0700 (PDT)
-Received: from node-dev.home
- (86-45-19-184-dynamic.agg1.roc.bbh-prp.eircom.net. [86.45.19.184])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aab3883151sm411663a12.14.2026.09.22.15.31.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 15:31:19 -0700 (PDT)
-From: Weqaar Janjua <weqaar.janjua@packetfive.com>
-To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com, mst@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- jasowangio@gmail.com, pbonzini@redhat.com, farosas@suse.de,
- lvivier@redhat.com
-Subject: [PATCH v2 3/6] tests/qtest: Add Cnuas virtual network adapter tests
-Date: Tue, 22 Sep 2026 22:30:42 +0000
-Message-ID: <20260922223045.190062-4-weqaar.janjua@packetfive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260922223045.190062-1-weqaar.janjua@packetfive.com>
-References: <20260922223045.190062-1-weqaar.janjua@packetfive.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x9A0q-0001Do-Cm
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 19:35:02 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4022E1FF51;
+ Tue, 22 Sep 2026 23:34:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790120092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0iYZs8jOOdfWFKGJCwP9nuh2gjeObUP6twS6AHOAVDw=;
+ b=kGjvIwAHSVDLPq8/VviRSmIQDsBrpXwItJv/awH1GWMHhwvaSiJPu0UtGWbh7BG0Na7i6U
+ 8TwuHneDVbWNSHCMOpWhKbUznhR3TNSDj3weSSayqeJrZJdNCj1HNOM977NmJLCYq7a8CK
+ D8mZg9e7eLv3iS3/KQk8+jK6D4u7KeE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790120092;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0iYZs8jOOdfWFKGJCwP9nuh2gjeObUP6twS6AHOAVDw=;
+ b=g3O7vdWUJRABkJ4zL1aIGctrBXwA1kLFdUgkmL/6rqUvgUmVsiF8mpSGW5jkB40R+4HlWf
+ bya9tZnP9DBb4dDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790120088; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0iYZs8jOOdfWFKGJCwP9nuh2gjeObUP6twS6AHOAVDw=;
+ b=OROdP9sLTVNOOXKbfZFSpuybjAR/NR0yRmpApeISfCwyHjsxn1hMR3NAlSwgRlReuNBGBm
+ b8rprebtO7cpBl/4xLw3yDPPW2iV2Ko5jnhfeTuXdBKv+mfKBmBi+BECvaHKWOk4ZjOGwK
+ gV3YGdrXX90uZzAFyoHBs3ymhhqJ/jg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790120088;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0iYZs8jOOdfWFKGJCwP9nuh2gjeObUP6twS6AHOAVDw=;
+ b=fT1fCXvJps6QEpidf9gRWPpeCE1qlWh4A0tVuPrKkJ6j1tqOVfSTakafl57EIUFMC+EIHj
+ o5zK9r11wF4KazAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 905E9132D3;
+ Tue, 22 Sep 2026 23:34:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2hr5DJcQs2pueAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 23:34:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Akash Kulhalli <akulhall@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 7/7] migration: Postpone the outgoing preempt channel
+ for preempt_pre_7_2
+In-Reply-To: <20260916213558.587304-8-peterx@redhat.com>
+References: <20260916213558.587304-1-peterx@redhat.com>
+ <20260916213558.587304-8-peterx@redhat.com>
+Date: Tue, 22 Sep 2026 20:34:41 -0300
+Message-ID: <87o6doami6.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:33::12;
- envelope-from=weqaar.janjua@packetfive.com; helo=mail-ed2-x12.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,280 +115,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover PCI identity, register reset, DMA, and packet transport.
+Peter Xu <peterx@redhat.com> writes:
 
-Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
----
- MAINTAINERS                   |   1 +
- tests/qtest/cnuas-vnic-test.c | 233 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |   1 +
- 3 files changed, 235 insertions(+)
- create mode 100644 tests/qtest/cnuas-vnic-test.c
+> This is the corresponding outgoing fix for the same problem mentioned in
+> the previous patch.
+>
+> The idea is simple: either migration to an old QEMU or when TLS is enabled,
+> we rely on correct ordering of channels to make it work: first main, then
+> multifd, finally preempt.
+>
+> This patch re-orders multifd and postcopy preempt channel on outgoing side,
+> but only for the old machine types where preempt_pre_7_2 set, to make it
+> follow the right orders to create the channels.
+>
+> Keep the resume path alone because the resume path never involve multifd
+> channels, even if multifd is enabled.  For that, fun fact: when multifd is
+> enabled with postcopy preempt, network interruption will break all multifd
+> channels, but they're never re-connected, until they got recycled at the
+> end of postcopy migration.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5f9e8db723..408fc58611 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2777,6 +2777,7 @@ M: Weqaar Janjua <weqaar.janjua@packetfive.com>
- S: Maintained
- F: docs/specs/cnuas-vnic.rst
- F: hw/net/cnuas_vnic.c
-+F: tests/qtest/cnuas-vnic-test.c
- 
- VMware
- M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
-diff --git a/tests/qtest/cnuas-vnic-test.c b/tests/qtest/cnuas-vnic-test.c
-new file mode 100644
-index 0000000000..fc27b7fa8e
---- /dev/null
-+++ b/tests/qtest/cnuas-vnic-test.c
-@@ -0,0 +1,233 @@
-+/*
-+ * QTest for the Cnuas virtual network adapter
-+ *
-+ * Copyright (c) 2026 PacketFive
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_regs.h"
-+#include "libqos/pci.h"
-+#include "libqos/pci-pc.h"
-+#include "libqtest.h"
-+
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+
-+#define CNUAS_VNIC_DEVFN           QPCI_DEVFN(4, 0)
-+#define CNUAS_VNIC_BAR_SIZE        4096
-+#define CNUAS_VNIC_REG_TX_ADDR_LO  0x00
-+#define CNUAS_VNIC_REG_TX_ADDR_HI  0x04
-+#define CNUAS_VNIC_REG_TX_LEN      0x08
-+#define CNUAS_VNIC_REG_TX_DOORBELL 0x0c
-+#define CNUAS_VNIC_REG_RX_ADDR_LO  0x10
-+#define CNUAS_VNIC_REG_RX_ADDR_HI  0x14
-+#define CNUAS_VNIC_REG_RX_LEN      0x18
-+#define CNUAS_VNIC_REG_RX_STATUS   0x1c
-+#define CNUAS_VNIC_REG_IRQ_STATUS  0x20
-+#define CNUAS_VNIC_REG_IRQ_MASK    0x24
-+#define CNUAS_VNIC_REG_LINK_STATUS 0x28
-+#define CNUAS_VNIC_REG_MAC_LO      0x2c
-+#define CNUAS_VNIC_REG_MAC_HI      0x30
-+
-+typedef struct CnuasVnicTest {
-+    QTestState *qts;
-+    QPCIBus *bus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+} CnuasVnicTest;
-+
-+static void cnuas_vnic_test_start_with_args(CnuasVnicTest *test,
-+                                            const char *args)
-+{
-+    uint64_t bar_size;
-+
-+    test->qts = qtest_initf("-machine q35 "
-+                            "-device cnuas-vnic,addr=04.0,"
-+                            "mac=02:11:22:33:44:55%s", args);
-+    test->bus = qpci_new_pc(test->qts, NULL);
-+    test->dev = qpci_device_find(test->bus, CNUAS_VNIC_DEVFN);
-+    g_assert_nonnull(test->dev);
-+    qpci_device_enable(test->dev);
-+    test->bar = qpci_iomap(test->dev, 0, &bar_size);
-+    g_assert_cmpuint(bar_size, ==, CNUAS_VNIC_BAR_SIZE);
-+}
-+
-+static void cnuas_vnic_test_start(CnuasVnicTest *test)
-+{
-+    cnuas_vnic_test_start_with_args(test, "");
-+}
-+
-+static void cnuas_vnic_test_stop(CnuasVnicTest *test)
-+{
-+    g_free(test->dev);
-+    qpci_free_pc(test->bus);
-+    qtest_quit(test->qts);
-+}
-+
-+static void cnuas_vnic_test_pci_config(void)
-+{
-+    CnuasVnicTest test;
-+
-+    cnuas_vnic_test_start(&test);
-+
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_VENDOR_ID), ==,
-+                    PCI_VENDOR_ID_REDHAT);
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_DEVICE_ID), ==,
-+                    PCI_DEVICE_ID_REDHAT_CNUASNIC);
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_CLASS_DEVICE), ==,
-+                    PCI_CLASS_NETWORK_OTHER);
-+    g_assert_cmphex(qpci_config_readb(test.dev, PCI_REVISION_ID), ==, 1);
-+    g_assert_cmphex(qpci_find_capability(test.dev, PCI_CAP_ID_MSI, 0), !=, 0);
-+
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+static void cnuas_vnic_test_registers(void)
-+{
-+    CnuasVnicTest test;
-+
-+    cnuas_vnic_test_start(&test);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_LINK_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_MAC_LO), ==, 0x33221102);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_MAC_HI), ==, 0x5544);
-+
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_LO,
-+                   0x89abcdef);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_HI,
-+                   0x01234567);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_LEN, 4096);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_IRQ_MASK, 7);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_LO), ==,
-+                    0x89abcdef);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_HI), ==,
-+                    0x01234567);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_LEN), ==, 4096);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_MASK), ==, 7);
-+
-+    qtest_system_reset(test.qts);
-+    qpci_device_enable(test.dev);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_LO), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_HI), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_LEN), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_RX_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_MASK), ==, 0);
-+
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+static int cnuas_vnic_test_listen(char **path)
-+{
-+    struct sockaddr_un address = { .sun_family = AF_UNIX };
-+    int fd;
-+
-+    *path = g_strdup_printf("/tmp/cnuas-vnic-test-%u.sock", getpid());
-+    unlink(*path);
-+    g_strlcpy(address.sun_path, *path, sizeof(address.sun_path));
-+
-+    fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
-+    g_assert_cmpint(fd, >=, 0);
-+    g_assert_cmpint(bind(fd, (struct sockaddr *)&address, sizeof(address)),
-+                    ==, 0);
-+    g_assert_cmpint(listen(fd, 1), ==, 0);
-+    return fd;
-+}
-+
-+static void cnuas_vnic_test_transport(void)
-+{
-+    static const uint8_t tx_frame[] = {
-+        0x02, 0, 0, 0, 0, 2, 0x02, 0, 0, 0, 0, 1, 0x08, 0,
-+        'C', 'n', 'u', 'a', 's',
-+    };
-+    static const uint8_t rx_frame[] = {
-+        0x02, 0, 0, 0, 0, 1, 0x02, 0, 0, 0, 0, 2, 0x08, 0,
-+        'R', 'D', 'M', 'A',
-+    };
-+    uint8_t result[64] = { 0 };
-+    const uint64_t tx_address = 0x100000;
-+    const uint64_t rx_address = 0x101000;
-+    g_autofree char *path = NULL;
-+    g_autofree char *args = NULL;
-+    CnuasVnicTest test;
-+    int connection;
-+    int listener;
-+    unsigned int i;
-+
-+    listener = cnuas_vnic_test_listen(&path);
-+    args = g_strdup_printf(",socket_path=%s", path);
-+    cnuas_vnic_test_start_with_args(&test, args);
-+    connection = accept(listener, NULL, NULL);
-+    g_assert_cmpint(connection, >=, 0);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_LINK_STATUS), ==, 1);
-+
-+    qtest_memwrite(test.qts, tx_address, tx_frame, sizeof(tx_frame));
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_LO,
-+                   tx_address);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_HI,
-+                   tx_address >> 32);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_LEN,
-+                   sizeof(tx_frame));
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_DOORBELL, 1);
-+
-+    g_assert_cmpint(recv(connection, result, sizeof(result), 0), ==,
-+                    sizeof(tx_frame));
-+    g_assert_cmpmem(result, sizeof(tx_frame), tx_frame, sizeof(tx_frame));
-+
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_RX_ADDR_LO,
-+                   rx_address);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_RX_ADDR_HI,
-+                   rx_address >> 32);
-+    g_assert_cmpint(send(connection, rx_frame, sizeof(rx_frame), 0), ==,
-+                    sizeof(rx_frame));
-+
-+    for (i = 0; i < 1000; i++) {
-+        if (qpci_io_readl(test.dev, test.bar,
-+                          CNUAS_VNIC_REG_RX_STATUS) == 1) {
-+            break;
-+        }
-+        g_usleep(1000);
-+    }
-+    g_assert_cmpuint(i, <, 1000);
-+    g_assert_cmpuint(qpci_io_readl(test.dev, test.bar,
-+                                   CNUAS_VNIC_REG_RX_LEN), ==,
-+                     sizeof(rx_frame));
-+
-+    memset(result, 0, sizeof(result));
-+    qtest_memread(test.qts, rx_address, result, sizeof(rx_frame));
-+    g_assert_cmpmem(result, sizeof(rx_frame), rx_frame, sizeof(rx_frame));
-+
-+    close(connection);
-+    close(listener);
-+    unlink(path);
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/cnuas-vnic/pci-config", cnuas_vnic_test_pci_config);
-+    qtest_add_func("/cnuas-vnic/registers", cnuas_vnic_test_registers);
-+    qtest_add_func("/cnuas-vnic/transport", cnuas_vnic_test_transport);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 33f58b0e95..84d2fa702a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -59,6 +59,7 @@ qtests_filter = \
- qtests_i386 = \
-   (slirp.found() ? ['pxe-test'] : []) + \
-   qtests_filter + \
-+  (config_all_devices.has_key('CONFIG_CNUAS_VNIC') ? ['cnuas-vnic-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_ACPI_VMGENID') ? ['vmgenid-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_AHCI_ICH9') and have_tools ? ['ahci-test'] : []) +    \
-   (config_all_devices.has_key('CONFIG_AHCI_ICH9') ? ['tco-test'] : []) +                    \
--- 
-2.43.0
+Is this a separate bug? Do we need to add some cleanup?
 
+> OTOH, multifd_recv_all_channels_created()
+> reports true even after postcopy network down, as multifd_recv_state->count
+> is never decremented.
+>
+
+Seems normal to me. We're not even trying to reconnect multifd.
+
+> Fixes: e27418861288 ("migration: enable multifd and postcopy together")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration.c | 32 +++++++++++++++++++++++---------
+>  1 file changed, 23 insertions(+), 9 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 4cc4077a76..f8d664808f 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3733,6 +3733,20 @@ static void *migration_thread(void *opaque)
+>          goto out;
+>      }
+>  
+> +    /*
+> +     * Only for old 7.1/7.2 machine types running on new binaries (that
+> +     * supports multifd+postcopy+preempt).  Makes sure to initiate the
+> +     * connect() after multifd channels because the old (broken) binaries
+> +     * assumes the order of channels, which we cannot fix anymore.
+> +     *
+> +     * multifd_send_setup() will make sure all multifd channels will be
+> +     * connected first, then initiate preempt channel here guarantees the
+> +     * ordering to those old binaries.
+> +     */
+
+It's a bit confusing what's old binary, what's new binary here. Old/new
+don't really apply I think as there are more than two cases when we look
+at the global picture. There's before 7.1, before 7.2, before the
+preempt_pre_7_2 flag, before the multifd+postcopy support, before this
+series, etc. Specially since this code is exactly the same as the one
+under if (resume), but there we're talking about a different new/old.
+
+Also, maybe we should avoid framing the assumption on the order of
+channels as "broken", that's how it always worked and is just a case of
+unimaginative assumptions, i.e. not knowing multifd would ever run along
+preempt. The real bug is that v10.1 added a "new" channel to the mix
+without working on compatibility.
+
+In this series you're doing both: fixing the bug that v10.1 introduced
+and improving the code to not assume the order of channels.
+
+> +    if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
+> +        postcopy_preempt_setup(s);
+> +    }
+
+Don't you want to check for multifd as well and apply this fix only to
+the case that can actually trigger it? To avoid inadvertently changing
+the normal postcopy case.
+
+> +
+>      bql_lock();
+>      qemu_savevm_state_header(s->to_dst_file);
+>      bql_unlock();
+> @@ -4013,16 +4027,16 @@ void migration_start_outgoing(MigrationState *s)
+>          open_return_path_on_source(s);
+>      }
+>  
+> -    /*
+> -     * This needs to be done before resuming a postcopy.  Note: for newer
+> -     * QEMUs we will delay the channel creation until postcopy_start(), to
+> -     * avoid disorder of channel creations.
+> -     */
+> -    if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
+> -        postcopy_preempt_setup(s);
+> -    }
+> -
+
+Hm, this used to happen before qmp_migrate() returns. Now it's in the
+migration thread and after multifd channels connect, there's a big
+window there. We added a lot of code to ensure cleanup of multifd
+happens properly and without races with TLS thread creation, etc. Have
+you considered such issues?
+
+>      if (resume) {
+> +        /*
+> +         * This needs to be done before resuming a postcopy.  Note: for newer
+> +         * QEMUs we will delay the channel creation until postcopy_start(), to
+> +         * avoid disorder of channel creations.
+> +         */
+> +        if (migrate_postcopy_preempt() && s->preempt_pre_7_2) {
+> +            postcopy_preempt_setup(s);
+> +        }
+> +
+>          /* Wakeup the main migration thread to do the recovery */
+>          migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP,
+>                            MIGRATION_STATUS_POSTCOPY_RECOVER);
 
