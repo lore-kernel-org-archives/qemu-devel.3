@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4451C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 22:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6AE5C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 22:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x991b-0004OT-DP; Tue, 22 Sep 2026 18:31:43 -0400
+	id 1x991c-0004Pj-9Q; Tue, 22 Sep 2026 18:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1x991I-0004Lq-JT
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:24 -0400
+ id 1x991L-0004MU-2E
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:28 -0400
 Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1x991G-0004MV-LO
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:24 -0400
+ id 1x991I-0004Md-6N
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 18:31:26 -0400
 Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a99c5de614so451338a12.2
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 15:31:22 -0700 (PDT)
+ 4fb4d7f45d1cf-6a605c198fdso520832a12.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 15:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1790116281; x=1790721081;
+ d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1790116283; x=1790721083;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jPa+3krWwAcEd/vM14z9bDk3/+TaDzZgd+Vvv77ZvNc=;
- b=fVpOsgoLMJhAbKbf6qGvXmiHcT2Df3XRO1mtrENVaxzk9GtuPow8wBESdGAIy+yAuK
- eaMzONeHib7wsSgFB2equVhsvXzQuxOEuXHsaxbQqqh/4lWLOEY3LKWkrx02P5VIZaXt
- vxfHxyjEH8iQf4CAnEmRnTOkn3mVHYokd5EbZOb7ULLP/KAt/eHUOV581Xf4EuQvxbHV
- TYoqzvkqHZBbuBavsBQnqnDuGEw5GkTzyqMNK6UwtmWk/00UvacvL0cG9UnerpKbJN5U
- TfazVg+AHhD93uhYGtNnbUIcV2UlRBBL7dPFZzwIvoCuMMxKZcN+OdmRSJWcHXc9h38w
- bUQA==
+ bh=5Jz6crVFq/N77QW3ICnfGdhCdnADH4+4jelXJLVMzzk=;
+ b=oetUoC2Khrt9Bxd/jieiJ+mL0j6Xz1HOxYDcl1LkyVQOd/7CS+eI3UQEWG3ZKSjUTY
+ SoQ+8iuyvNC3ksGw8woLMbkIut3VuldI/rBsmeXjSWXFMClMUrisVa4gKv7TDrnSD1As
+ aN+uyxaw3YN4u5EJG2ZyKGXd5hCKT8kF/oIdZ3+/4nFt/hFcixwZScmn+Bz2AYj1ki3d
+ bdBogxuevZAYo8rmBFbGpxZmg9bro8mqHcWAeX7mdRaW+Zbw3RZBls1/i4PmQiNMxqrl
+ JCNE3mj/HVM3kbRQONY2OC0G/nwH0Gs/PhGIp77Ch2yByIelLPOvppAra0ZxRt78YfXb
+ dpBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790116281; x=1790721081;
+ d=1e100.net; s=20260707; t=1790116283; x=1790721083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jPa+3krWwAcEd/vM14z9bDk3/+TaDzZgd+Vvv77ZvNc=;
- b=cjW5edg5gVLVP2G93EdVHV4FYaKFlORpeAKhvmWSJtpFnJqTVsPn7qoqQbqYAz+HqJ
- ZRHoi4go8H8n6/S8FWyeOh3BoYc6sMY53BJV0R4YYab1UdBXQmiASN9OhnzXjhYHbGdC
- HaTUsYIH59KMmIAI0RDzlj1Ai3ymety4RdCkjOttfZeUzBsZwf0yo/y58LknDiJ+t2/V
- UDLZ75JYePWZrAwZ9dgz4gEekov84r8uXtsvU5Vx2hYwAmGH99lgj+zvaPhlzFPoKjNr
- Gj9QNTBz7VPabsctVZV1LemC8iLlRL0wYGBwzP0Ey2yzQ6M3GOerO7CVpvXGXVn2K9tt
- V+7Q==
-X-Gm-Message-State: AFuF++leAW4SPN5QQSIf48uQpfnos/HsZPIS0/McC3Xx9ww/UcwNNkLG
- 0WJInHLTq0PCAGtPtWYYUUXc8y2pOFq/fcrkqgHeQYBIYsPtiRIsH2+simeO3HDk03R1rRanZoa
- H4v4YeK0=
-X-Gm-Gg: AYBFou0+1SkR92ylD6I3Kmcxij8KnnzG8Btak5ksqW6S4Qx454qd2oiuD6nh6DeQ2d+
- cH0QTOhk4o+b06SPDf0vO46lfJix35ybw0zseghXjS1qN/yPsdCT6se3iJ6t5Cj6m/OZ1dROQW0
- v1xKPAY3A0eTCfiwzXcen8aVofwVyZwiTY3w5NM9eikgbbBYehb0qT9SSiZGr17iCWJF9s8BIO/
- lEM3sMi9Jz/dTGV/Tz3GPPMqnIUsaA/Qiqb/9r5dctafcmx1CQMNqsSK3lIUJxcf9G0E0fNEig4
- Qw1tXTEc1hV9dA26yAa9RkVEvXUx1JhXLYyjyCEJnTjcrNdTL67pXDsb+QWOUg9cFLa0MBHVx3d
- r1bk6UMwlszsow/ZsN5ik/14Epi3aU+sB3JJ84WeqTTnBdGkCn6gWhK+Jua/PNJG2HovBN17XFp
- NySeIBfW5hRhyluIQicvdzwUG5DfQKiKBjalukm9kF6R5c8djhb6cSRzTecX3BJ/M8ju5ZA1JlK
- x+o9ZzPP8QJFekwTkUgzuMQXyDLYPokTkY0SlTnPkb2OAacZWml8Dn7Lf2yA1ZymhILKguCubT8
-X-Received: by 2002:a05:6402:52c5:b0:6a9:d0f0:69a0 with SMTP id
- 4fb4d7f45d1cf-6aab3b0a3e2mr560926a12.11.1790116281332; 
- Tue, 22 Sep 2026 15:31:21 -0700 (PDT)
+ bh=5Jz6crVFq/N77QW3ICnfGdhCdnADH4+4jelXJLVMzzk=;
+ b=jCxoNZxS/lFrYzDC+qcVZrAfHYWWo8Xy4FgrZY3V7w+4DYQohf9FNSlA7THNoCI4G1
+ pMooQOEg4wgwdu2OrzH/hg4UUqErmnDqJL9wmNGXC/abk0ETJSveKh4gaSRZrmxk8ZHC
+ 2GD5nSMThXRrI/0jQSTr985ihr4BzZp2QypkWmeHPj4OQozJVMTKeLGeWzHk7v6HSWbd
+ PIajvrQCTTjvdlvECLXf7XCxnRKTGSb/BeC5DYBe9E0BC29dLO/J0BQBrAA3E/0MgkCQ
+ j9GkWyzh+R57lNbANpwTvK32OZWvzNMOVeTKNDlglD3XqSXavBIB+orq1CBzdoAw/58+
+ lqJg==
+X-Gm-Message-State: AFuF++kOnJS97/xRr7TLflKbFkFW/nZFqgARC7hlD2cpjH5VDIbUti4q
+ ++lm9ijjiUsoDbEN0+Lmuxz7GyFeOAxVI6hY1Xa3XTIxPfk0hNYer0TL4PEmM9+g3uBHMQSnR9t
+ hpQVc1yw=
+X-Gm-Gg: AYBFou3jugAghvnTSqFIkMu6Cz5xx5J2gSy86xxZaKNR6PemVUI/HUGylxbtplxBQ89
+ UQmRoke3lhWyhqPMIM9JPKU9iGCATLHPV1BR4Evf2Dtlp/H0EHzPjRJDp3lsMFkDRYJnBP9idRS
+ a4uIbFX6D8dUstlaKhaUWah+Kl1jsRkmwR7TnBT715/IwlJ5zaF/lsxF2ShEm1F3vJPIh1wU+Tb
+ +JaRzzR/QEwXJJuBqAwfHVq/oagcy59w1pGw9iDffY0Loe/tNq9eb5ogIqRqLfpyp/yUmvfKRWj
+ x/KZxlthhHv/HHFkGMwzB5ikZHbec3d5yR6Vps5LM5pWoh/DZF5Z9PqyTGBq55uZxg4aZNPsu1n
+ qoxQ4BpMlMTcd1dzZXG+7JtjuOXMPIh9kjVu2ruSPG6iB2V+zVBfx/f+X5OuRj/cNb56Vy4Ay3U
+ 6Gafl+IKdBd2NUkDvrgc4wMW+7wUeyrmJdIWfIaJvY/8RfpSwbMJr/ArXSwkU8ANCF8UMDC1lhs
+ oikt7QMFQyX95visUjn0lbtbMAhKFQHH9t8kHo83GqqjakcvHWpGjyHqJCgKRqCh2vtUC98RKh2
+X-Received: by 2002:a05:6402:274c:b0:6a9:dc6a:689c with SMTP id
+ 4fb4d7f45d1cf-6aab3b56a43mr599522a12.22.1790116282181; 
+ Tue, 22 Sep 2026 15:31:22 -0700 (PDT)
 Received: from node-dev.home
  (86-45-19-184-dynamic.agg1.roc.bbh-prp.eircom.net. [86.45.19.184])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aab3883151sm411663a12.14.2026.09.22.15.31.19
+ 4fb4d7f45d1cf-6aab3883151sm411663a12.14.2026.09.22.15.31.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 15:31:20 -0700 (PDT)
+ Tue, 22 Sep 2026 15:31:21 -0700 (PDT)
 From: Weqaar Janjua <weqaar.janjua@packetfive.com>
 To: qemu-devel@nongnu.org
 Cc: kraxel@redhat.com, mst@redhat.com, pierrick.bouvier@oss.qualcomm.com,
  jasowangio@gmail.com, pbonzini@redhat.com, farosas@suse.de,
  lvivier@redhat.com
-Subject: [PATCH v2 4/6] pci: Add device ID for CnuasGPU
-Date: Tue, 22 Sep 2026 22:30:43 +0000
-Message-ID: <20260922223045.190062-5-weqaar.janjua@packetfive.com>
+Subject: [PATCH v2 5/6] hw/misc: Add CnuasGPU virtual accelerator
+Date: Tue, 22 Sep 2026 22:30:44 +0000
+Message-ID: <20260922223045.190062-6-weqaar.janjua@packetfive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260922223045.190062-1-weqaar.janjua@packetfive.com>
 References: <20260922223045.190062-1-weqaar.janjua@packetfive.com>
@@ -104,39 +104,733 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reserve device ID 0016 for the CnuasGPU virtual accelerator.
+Add device memory, interrupt state, and link transport.
 
 Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
 ---
- docs/specs/pci-ids.rst | 2 ++
- include/hw/pci/pci.h   | 1 +
- 2 files changed, 3 insertions(+)
+ MAINTAINERS             |   2 +
+ docs/specs/cnuasgpu.rst |  91 +++++++
+ docs/specs/index.rst    |   1 +
+ hw/misc/Kconfig         |   5 +
+ hw/misc/cnuasgpu.c      | 557 ++++++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build     |   1 +
+ 6 files changed, 657 insertions(+)
+ create mode 100644 docs/specs/cnuasgpu.rst
+ create mode 100644 hw/misc/cnuasgpu.c
 
-diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 3f3825bfe5..bda59c20cb 100644
---- a/docs/specs/pci-ids.rst
-+++ b/docs/specs/pci-ids.rst
-@@ -102,6 +102,8 @@ PCI devices (other than virtio):
-   PCI RISC-V IOMMU device
- 1b36:0015
-   Cnuas virtual RDMA network adapter (:doc:`cnuas-vnic`)
-+1b36:0016
-+  CnuasGPU virtual accelerator (:doc:`cnuasgpu`)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 408fc58611..d11ea29ff9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2776,6 +2776,8 @@ Cnuas virtual devices
+ M: Weqaar Janjua <weqaar.janjua@packetfive.com>
+ S: Maintained
+ F: docs/specs/cnuas-vnic.rst
++F: docs/specs/cnuasgpu.rst
++F: hw/misc/cnuasgpu.c
+ F: hw/net/cnuas_vnic.c
+ F: tests/qtest/cnuas-vnic-test.c
  
- All these devices are documented in :doc:`index`.
+diff --git a/docs/specs/cnuasgpu.rst b/docs/specs/cnuasgpu.rst
+new file mode 100644
+index 0000000000..8c8241b505
+--- /dev/null
++++ b/docs/specs/cnuasgpu.rst
+@@ -0,0 +1,91 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
++
++============================
++CnuasGPU virtual accelerator
++============================
++
++``cnuasgpu`` is the PCIe device model for the Cnuas virtual AI/ML
++accelerator. It emulates the guest-visible control, device-memory, interrupt,
++and peer-fabric interfaces. Compute kernels are executed by Cnuas runtime
++backends rather than by a cycle-accurate GPU pipeline inside QEMU. Its
++optional ``SOCK_SEQPACKET`` transport currently requires a Linux host.
++
++PCI interface
++-------------
++
++===================== ==================
++Vendor ID             1b36
++Device ID             0016
++Revision              1
++Class                 0b40, co-processor
++===================== ==================
++
++======  ======================================================
++BAR     Contents
++======  ======================================================
++0       64 KiB MMIO register region
++1       64-bit prefetchable device memory, 256 MiB by default
++======  ======================================================
++
++The device supports one MSI vector and INTx.
++
++Properties
++----------
++
++``gpu_id``
++  Guest-visible accelerator identifier.
++
++``sm_count``, ``lanes_per_sm``, ``tensor_size``
++  Guest-visible geometry values. They do not control a compute engine.
++
++``devmem_size``
++  BAR 1 size. It must be a power of two from 16 MiB through 1 TiB.
++
++``cnuaslink_socket``
++  Optional ``AF_UNIX`` ``SOCK_SEQPACKET`` endpoint for CnuasLink frames.
++
++``x-speed``, ``x-width``
++  PCIe link speed and width reported through PCIe configuration space.
++
++Register map
++------------
++
++All registers require 32-bit little-endian accesses.
++
++======  ==================  =========================================
++Offset  Name                Meaning
++======  ==================  =========================================
++0x000   VENDOR_ID           0x1b36, read only
++0x004   DEVICE_ID           0x0016, read only
++0x008   REVISION            0x01, read only
++0x00c   FW_VERSION          0x00010000, read only
++0x010   GPU_ID              ``gpu_id`` property, read only
++0x014   SM_COUNT            ``sm_count`` property, read only
++0x018   LANES_PER_SM        ``lanes_per_sm`` property, read only
++0x01c   TENSOR_SIZE         ``tensor_size`` property, read only
++0x020   DEVMEM_SIZE_LO      BAR 1 size, low 32 bits, read only
++0x024   DEVMEM_SIZE_HI      BAR 1 size, high 32 bits, read only
++0x100   IRQ_STATUS          Interrupt status; write one bits to clear
++0x104   IRQ_MASK            Interrupt enable mask
++0x200   LINK_STATUS         Bit 0 link up, bit 1 receive ready
++0x204   TX_OFFSET_LO        BAR 1 transmit offset, low 32 bits
++0x208   TX_OFFSET_HI        BAR 1 transmit offset, high 32 bits
++0x20c   TX_LEN              Transmit length from 1 through 65536 bytes
++0x210   TX_DOORBELL         Write nonzero to transmit
++0x214   RX_OFFSET_LO        BAR 1 receive offset, low 32 bits
++0x218   RX_OFFSET_HI        BAR 1 receive offset, high 32 bits
++0x21c   RX_BUF_SIZE         Maximum accepted receive length
++0x220   RX_LEN              Last receive length, read only
++0x224   RX_CONSUME          Write nonzero to release the receive buffer
++======  ==================  =========================================
++
++Interrupt bit 0 reports transmit completion and bit 1 reports an available
++receive frame.
++
++CnuasLink
++---------
++
++The optional socket transports one frame per message. A transmit reads from
++BAR 1. A receive writes to BAR 1 and pauses socket monitoring until the guest
++writes ``RX_CONSUME``. Offsets and lengths are checked against BAR 1 before
++the model accesses device memory.
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index 0fd5da2aa8..e674d76da6 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -27,6 +27,7 @@ guest hardware that is specific to QEMU.
+    fsi
+    vmw_pvscsi-spec
+    cnuas-vnic
++   cnuasgpu
+    edu
+    ivshmem-spec
+    pvpanic
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 46e3c03cc8..39d52674e0 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -35,6 +35,11 @@ config EDU
+     default y if TEST_DEVICES
+     depends on PCI && MSI_NONBROKEN
  
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 51b3f83514..ad74f5456e 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -122,6 +122,7 @@ extern bool pci_available;
- #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
- #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
- #define PCI_DEVICE_ID_REDHAT_CNUASNIC    0x0015
-+#define PCI_DEVICE_ID_REDHAT_CNUASGPU    0x0016
- #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
++config CNUAS_GPU
++    bool
++    default y if PCI_DEVICES || PCIE_DEVICES
++    depends on LINUX && PCI_EXPRESS && MSI_NONBROKEN
++
+ config I2C_ECHO
+     bool
+     default y if TEST_DEVICES
+diff --git a/hw/misc/cnuasgpu.c b/hw/misc/cnuasgpu.c
+new file mode 100644
+index 0000000000..38ac1bdb42
+--- /dev/null
++++ b/hw/misc/cnuasgpu.c
+@@ -0,0 +1,557 @@
++/*
++ * CnuasGPU virtual accelerator
++ *
++ * Copyright (c) 2026 PacketFive
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/main-loop.h"
++#include "qemu/module.h"
++#include "qemu/units.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev-properties-system.h"
++#include "hw/pci/msi.h"
++#include "hw/pci/pci.h"
++#include "hw/pci/pcie.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++#include "qom/object.h"
++
++#include <fcntl.h>
++#include <sys/socket.h>
++#include <sys/un.h>
++
++#define TYPE_CNUAS_GPU "cnuasgpu"
++OBJECT_DECLARE_SIMPLE_TYPE(CnuasGpuState, CNUAS_GPU)
++
++#define CNUAS_GPU_BAR0_SIZE          (64 * KiB)
++#define CNUAS_GPU_DEVMEM_DEFAULT     (256 * MiB)
++#define CNUAS_GPU_DEVMEM_MIN         (16 * MiB)
++#define CNUAS_GPU_DEVMEM_MAX         (1024ULL * GiB)
++#define CNUAS_GPU_LINK_MAX_FRAME     (64 * KiB)
++
++#define CNUAS_GPU_REG_VENDOR_ID      0x000
++#define CNUAS_GPU_REG_DEVICE_ID      0x004
++#define CNUAS_GPU_REG_REVISION       0x008
++#define CNUAS_GPU_REG_FW_VERSION     0x00c
++#define CNUAS_GPU_REG_GPU_ID         0x010
++#define CNUAS_GPU_REG_SM_COUNT       0x014
++#define CNUAS_GPU_REG_LANES_PER_SM   0x018
++#define CNUAS_GPU_REG_TENSOR_SIZE    0x01c
++#define CNUAS_GPU_REG_DEVMEM_SIZE_LO 0x020
++#define CNUAS_GPU_REG_DEVMEM_SIZE_HI 0x024
++#define CNUAS_GPU_REG_IRQ_STATUS     0x100
++#define CNUAS_GPU_REG_IRQ_MASK       0x104
++#define CNUAS_GPU_REG_LINK_STATUS    0x200
++#define CNUAS_GPU_REG_TX_OFFSET_LO   0x204
++#define CNUAS_GPU_REG_TX_OFFSET_HI   0x208
++#define CNUAS_GPU_REG_TX_LEN         0x20c
++#define CNUAS_GPU_REG_TX_DOORBELL    0x210
++#define CNUAS_GPU_REG_RX_OFFSET_LO   0x214
++#define CNUAS_GPU_REG_RX_OFFSET_HI   0x218
++#define CNUAS_GPU_REG_RX_BUF_SIZE    0x21c
++#define CNUAS_GPU_REG_RX_LEN         0x220
++#define CNUAS_GPU_REG_RX_CONSUME     0x224
++
++#define CNUAS_GPU_FW_VERSION         0x00010000
++#define CNUAS_GPU_REVISION           1
++
++#define CNUAS_GPU_IRQ_TX_DONE        BIT(0)
++#define CNUAS_GPU_IRQ_RX_AVAILABLE   BIT(1)
++
++#define CNUAS_GPU_LINK_UP            BIT(0)
++#define CNUAS_GPU_LINK_RX_READY      BIT(1)
++
++struct CnuasGpuState {
++    PCIDevice parent_obj;
++    MemoryRegion bar0;
++    MemoryRegion bar1;
++
++    uint32_t gpu_id;
++    uint32_t sm_count;
++    uint32_t lanes_per_sm;
++    uint32_t tensor_size;
++    uint64_t devmem_size;
++    PCIExpLinkSpeed pcie_speed;
++    PCIExpLinkWidth pcie_width;
++
++    uint32_t irq_status;
++    uint32_t irq_mask;
++
++    char *link_socket;
++    int socket_fd;
++    bool link_up;
++    uint32_t tx_offset_lo;
++    uint32_t tx_offset_hi;
++    uint32_t tx_len;
++    uint32_t rx_offset_lo;
++    uint32_t rx_offset_hi;
++    uint32_t rx_buf_size;
++    uint32_t rx_len;
++    bool rx_ready;
++};
++
++static void cnuas_gpu_update_irq(CnuasGpuState *s)
++{
++    bool pending = s->irq_status & s->irq_mask;
++
++    if (msi_enabled(&s->parent_obj)) {
++        if (pending) {
++            msi_notify(&s->parent_obj, 0);
++        }
++    } else {
++        pci_set_irq(&s->parent_obj, pending);
++    }
++}
++
++static void *cnuas_gpu_devmem_ptr(CnuasGpuState *s, uint64_t offset,
++                                  size_t length)
++{
++    if (offset > s->devmem_size || length > s->devmem_size - offset) {
++        return NULL;
++    }
++
++    return memory_region_get_ram_ptr(&s->bar1) + offset;
++}
++
++static void cnuas_gpu_disconnect(CnuasGpuState *s)
++{
++    if (s->socket_fd >= 0) {
++        qemu_set_fd_handler(s->socket_fd, NULL, NULL, NULL);
++        close(s->socket_fd);
++        s->socket_fd = -1;
++    }
++    s->link_up = false;
++    s->rx_ready = false;
++    s->rx_len = 0;
++}
++
++static void cnuas_gpu_receive_ready(void *opaque)
++{
++    CnuasGpuState *s = opaque;
++    uint8_t frame[CNUAS_GPU_LINK_MAX_FRAME];
++    uint64_t offset;
++    void *destination;
++    ssize_t length;
++
++    if (s->rx_ready) {
++        qemu_set_fd_handler(s->socket_fd, NULL, NULL, NULL);
++        return;
++    }
++
++    length = recv(s->socket_fd, frame, sizeof(frame), MSG_DONTWAIT);
++    if (length == 0) {
++        cnuas_gpu_disconnect(s);
++        return;
++    }
++    if (length < 0) {
++        if (errno != EAGAIN && errno != EWOULDBLOCK && errno != EINTR) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "cnuasgpu: link receive failed: %s\n",
++                          strerror(errno));
++            cnuas_gpu_disconnect(s);
++        }
++        return;
++    }
++
++    if (!s->rx_buf_size || length > s->rx_buf_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: RX frame does not fit guest buffer\n");
++        return;
++    }
++
++    offset = ((uint64_t)s->rx_offset_hi << 32) | s->rx_offset_lo;
++    destination = cnuas_gpu_devmem_ptr(s, offset, length);
++    if (!destination) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: RX range exceeds device memory\n");
++        return;
++    }
++
++    memcpy(destination, frame, length);
++    s->rx_len = length;
++    s->rx_ready = true;
++    s->irq_status |= CNUAS_GPU_IRQ_RX_AVAILABLE;
++    cnuas_gpu_update_irq(s);
++    qemu_set_fd_handler(s->socket_fd, NULL, NULL, NULL);
++}
++
++static void cnuas_gpu_connect(CnuasGpuState *s)
++{
++    struct sockaddr_un address = { .sun_family = AF_UNIX };
++    int flags;
++    int fd;
++
++    if (!s->link_socket || !s->link_socket[0]) {
++        return;
++    }
++    if (strlen(s->link_socket) >= sizeof(address.sun_path)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: link socket path is too long\n");
++        return;
++    }
++
++    fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
++    if (fd < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: link socket creation failed: %s\n",
++                      strerror(errno));
++        return;
++    }
++
++    g_strlcpy(address.sun_path, s->link_socket, sizeof(address.sun_path));
++    if (connect(fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
++        qemu_log_mask(LOG_UNIMP,
++                      "cnuasgpu: cannot connect to %s: %s\n",
++                      s->link_socket, strerror(errno));
++        close(fd);
++        return;
++    }
++
++    flags = fcntl(fd, F_GETFL);
++    if (flags < 0 || fcntl(fd, F_SETFL, flags | O_NONBLOCK) < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: cannot make socket nonblocking: %s\n",
++                      strerror(errno));
++        close(fd);
++        return;
++    }
++
++    s->socket_fd = fd;
++    s->link_up = true;
++    qemu_set_fd_handler(fd, cnuas_gpu_receive_ready, NULL, s);
++}
++
++static void cnuas_gpu_transmit(CnuasGpuState *s)
++{
++    uint64_t offset;
++    void *source;
++    ssize_t sent;
++
++    if (!s->link_up || s->socket_fd < 0) {
++        return;
++    }
++    if (!s->tx_len || s->tx_len > CNUAS_GPU_LINK_MAX_FRAME) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: invalid TX length %u\n", s->tx_len);
++        return;
++    }
++
++    offset = ((uint64_t)s->tx_offset_hi << 32) | s->tx_offset_lo;
++    source = cnuas_gpu_devmem_ptr(s, offset, s->tx_len);
++    if (!source) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: TX range exceeds device memory\n");
++        return;
++    }
++
++    sent = send(s->socket_fd, source, s->tx_len, MSG_NOSIGNAL);
++    if (sent < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: link transmit failed: %s\n",
++                      strerror(errno));
++        if (errno != EAGAIN && errno != EWOULDBLOCK) {
++            cnuas_gpu_disconnect(s);
++        }
++        return;
++    }
++    if (sent != s->tx_len) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: short TX (%zd of %u bytes)\n",
++                      sent, s->tx_len);
++        return;
++    }
++
++    s->irq_status |= CNUAS_GPU_IRQ_TX_DONE;
++    cnuas_gpu_update_irq(s);
++}
++
++static uint64_t cnuas_gpu_bar0_read(void *opaque, hwaddr addr,
++                                    unsigned size)
++{
++    CnuasGpuState *s = opaque;
++
++    switch (addr) {
++    case CNUAS_GPU_REG_VENDOR_ID:
++        return PCI_VENDOR_ID_REDHAT;
++    case CNUAS_GPU_REG_DEVICE_ID:
++        return PCI_DEVICE_ID_REDHAT_CNUASGPU;
++    case CNUAS_GPU_REG_REVISION:
++        return CNUAS_GPU_REVISION;
++    case CNUAS_GPU_REG_FW_VERSION:
++        return CNUAS_GPU_FW_VERSION;
++    case CNUAS_GPU_REG_GPU_ID:
++        return s->gpu_id;
++    case CNUAS_GPU_REG_SM_COUNT:
++        return s->sm_count;
++    case CNUAS_GPU_REG_LANES_PER_SM:
++        return s->lanes_per_sm;
++    case CNUAS_GPU_REG_TENSOR_SIZE:
++        return s->tensor_size;
++    case CNUAS_GPU_REG_DEVMEM_SIZE_LO:
++        return s->devmem_size;
++    case CNUAS_GPU_REG_DEVMEM_SIZE_HI:
++        return s->devmem_size >> 32;
++    case CNUAS_GPU_REG_IRQ_STATUS:
++        return s->irq_status;
++    case CNUAS_GPU_REG_IRQ_MASK:
++        return s->irq_mask;
++    case CNUAS_GPU_REG_LINK_STATUS:
++        return (s->link_up ? CNUAS_GPU_LINK_UP : 0) |
++               (s->rx_ready ? CNUAS_GPU_LINK_RX_READY : 0);
++    case CNUAS_GPU_REG_TX_OFFSET_LO:
++        return s->tx_offset_lo;
++    case CNUAS_GPU_REG_TX_OFFSET_HI:
++        return s->tx_offset_hi;
++    case CNUAS_GPU_REG_TX_LEN:
++        return s->tx_len;
++    case CNUAS_GPU_REG_RX_OFFSET_LO:
++        return s->rx_offset_lo;
++    case CNUAS_GPU_REG_RX_OFFSET_HI:
++        return s->rx_offset_hi;
++    case CNUAS_GPU_REG_RX_BUF_SIZE:
++        return s->rx_buf_size;
++    case CNUAS_GPU_REG_RX_LEN:
++        return s->rx_len;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: read from unknown register 0x%"
++                      HWADDR_PRIx "\n", addr);
++        return 0;
++    }
++}
++
++static void cnuas_gpu_bar0_write(void *opaque, hwaddr addr,
++                                 uint64_t value, unsigned size)
++{
++    CnuasGpuState *s = opaque;
++
++    switch (addr) {
++    case CNUAS_GPU_REG_IRQ_STATUS:
++        s->irq_status &= ~value;
++        cnuas_gpu_update_irq(s);
++        break;
++    case CNUAS_GPU_REG_IRQ_MASK:
++        s->irq_mask = value;
++        cnuas_gpu_update_irq(s);
++        break;
++    case CNUAS_GPU_REG_TX_OFFSET_LO:
++        s->tx_offset_lo = value;
++        break;
++    case CNUAS_GPU_REG_TX_OFFSET_HI:
++        s->tx_offset_hi = value;
++        break;
++    case CNUAS_GPU_REG_TX_LEN:
++        s->tx_len = value;
++        break;
++    case CNUAS_GPU_REG_TX_DOORBELL:
++        if (value) {
++            cnuas_gpu_transmit(s);
++        }
++        break;
++    case CNUAS_GPU_REG_RX_OFFSET_LO:
++        s->rx_offset_lo = value;
++        break;
++    case CNUAS_GPU_REG_RX_OFFSET_HI:
++        s->rx_offset_hi = value;
++        break;
++    case CNUAS_GPU_REG_RX_BUF_SIZE:
++        s->rx_buf_size = value;
++        break;
++    case CNUAS_GPU_REG_RX_CONSUME:
++        if (value && s->rx_ready) {
++            s->rx_ready = false;
++            s->rx_len = 0;
++            if (s->socket_fd >= 0) {
++                qemu_set_fd_handler(s->socket_fd,
++                                    cnuas_gpu_receive_ready, NULL, s);
++            }
++        }
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "cnuasgpu: write to unknown register 0x%"
++                      HWADDR_PRIx "\n", addr);
++        break;
++    }
++}
++
++static const MemoryRegionOps cnuas_gpu_bar0_ops = {
++    .read = cnuas_gpu_bar0_read,
++    .write = cnuas_gpu_bar0_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void cnuas_gpu_reset_hold(Object *obj, ResetType type)
++{
++    CnuasGpuState *s = CNUAS_GPU(obj);
++
++    s->irq_status = 0;
++    s->irq_mask = 0;
++    s->tx_offset_lo = 0;
++    s->tx_offset_hi = 0;
++    s->tx_len = 0;
++    s->rx_offset_lo = 0;
++    s->rx_offset_hi = 0;
++    s->rx_buf_size = 0;
++    s->rx_len = 0;
++    s->rx_ready = false;
++    pci_set_irq(&s->parent_obj, 0);
++
++    if (s->socket_fd >= 0) {
++        qemu_set_fd_handler(s->socket_fd, cnuas_gpu_receive_ready, NULL, s);
++    }
++}
++
++static int cnuas_gpu_post_load(void *opaque, int version_id)
++{
++    CnuasGpuState *s = opaque;
++
++    if (s->socket_fd >= 0) {
++        qemu_set_fd_handler(s->socket_fd,
++                            s->rx_ready ? NULL : cnuas_gpu_receive_ready,
++                            NULL, s);
++    }
++    cnuas_gpu_update_irq(s);
++    return 0;
++}
++
++static const VMStateDescription vmstate_cnuas_gpu = {
++    .name = TYPE_CNUAS_GPU,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = cnuas_gpu_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PCI_DEVICE(parent_obj, CnuasGpuState),
++        VMSTATE_UINT32(irq_status, CnuasGpuState),
++        VMSTATE_UINT32(irq_mask, CnuasGpuState),
++        VMSTATE_UINT32(tx_offset_lo, CnuasGpuState),
++        VMSTATE_UINT32(tx_offset_hi, CnuasGpuState),
++        VMSTATE_UINT32(tx_len, CnuasGpuState),
++        VMSTATE_UINT32(rx_offset_lo, CnuasGpuState),
++        VMSTATE_UINT32(rx_offset_hi, CnuasGpuState),
++        VMSTATE_UINT32(rx_buf_size, CnuasGpuState),
++        VMSTATE_UINT32(rx_len, CnuasGpuState),
++        VMSTATE_BOOL(rx_ready, CnuasGpuState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void cnuas_gpu_realize(PCIDevice *pdev, Error **errp)
++{
++    CnuasGpuState *s = CNUAS_GPU(pdev);
++
++    if (s->devmem_size < CNUAS_GPU_DEVMEM_MIN ||
++        s->devmem_size > CNUAS_GPU_DEVMEM_MAX ||
++        !is_power_of_2(s->devmem_size)) {
++        error_setg(errp,
++                   "cnuasgpu: devmem_size must be a power of two from "
++                   "%llu to %llu bytes",
++                   (unsigned long long)CNUAS_GPU_DEVMEM_MIN,
++                   (unsigned long long)CNUAS_GPU_DEVMEM_MAX);
++        return;
++    }
++
++    pci_config_set_interrupt_pin(pdev->config, 1);
++    if (msi_init(pdev, 0, 1, true, false, errp)) {
++        return;
++    }
++    if (pcie_endpoint_cap_init(pdev, 0x80) < 0) {
++        error_setg(errp, "cnuasgpu: cannot initialize PCIe capability");
++        msi_uninit(pdev);
++        return;
++    }
++    pcie_cap_fill_link_ep_usp(pdev, s->pcie_width, s->pcie_speed, false);
++
++    memory_region_init_io(&s->bar0, OBJECT(s), &cnuas_gpu_bar0_ops, s,
++                          "cnuasgpu-bar0", CNUAS_GPU_BAR0_SIZE);
++    pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->bar0);
++
++    memory_region_init_ram(&s->bar1, OBJECT(s), "cnuasgpu-devmem",
++                           s->devmem_size, errp);
++    if (*errp) {
++        pcie_cap_exit(pdev);
++        msi_uninit(pdev);
++        return;
++    }
++    pci_register_bar(pdev, 1,
++                     PCI_BASE_ADDRESS_SPACE_MEMORY |
++                     PCI_BASE_ADDRESS_MEM_PREFETCH |
++                     PCI_BASE_ADDRESS_MEM_TYPE_64,
++                     &s->bar1);
++
++    s->socket_fd = -1;
++    cnuas_gpu_connect(s);
++}
++
++static void cnuas_gpu_exit(PCIDevice *pdev)
++{
++    CnuasGpuState *s = CNUAS_GPU(pdev);
++
++    cnuas_gpu_disconnect(s);
++    pcie_cap_exit(pdev);
++    msi_uninit(pdev);
++}
++
++static const Property cnuas_gpu_properties[] = {
++    DEFINE_PROP_UINT32("gpu_id", CnuasGpuState, gpu_id, 0),
++    DEFINE_PROP_UINT32("sm_count", CnuasGpuState, sm_count, 16),
++    DEFINE_PROP_UINT32("lanes_per_sm", CnuasGpuState, lanes_per_sm, 32),
++    DEFINE_PROP_UINT32("tensor_size", CnuasGpuState, tensor_size, 16),
++    DEFINE_PROP_SIZE("devmem_size", CnuasGpuState, devmem_size,
++                     CNUAS_GPU_DEVMEM_DEFAULT),
++    DEFINE_PROP_STRING("cnuaslink_socket", CnuasGpuState, link_socket),
++    DEFINE_PROP_PCIE_LINK_SPEED("x-speed", CnuasGpuState, pcie_speed,
++                                PCIE_LINK_SPEED_32),
++    DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CnuasGpuState, pcie_width,
++                                PCIE_LINK_WIDTH_16),
++};
++
++static void cnuas_gpu_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PCIDeviceClass *pc = PCI_DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    pc->realize = cnuas_gpu_realize;
++    pc->exit = cnuas_gpu_exit;
++    pc->vendor_id = PCI_VENDOR_ID_REDHAT;
++    pc->device_id = PCI_DEVICE_ID_REDHAT_CNUASGPU;
++    pc->class_id = PCI_CLASS_PROCESSOR_CO;
++    pc->revision = CNUAS_GPU_REVISION;
++
++    rc->phases.hold = cnuas_gpu_reset_hold;
++    dc->desc = "CnuasGPU virtual accelerator";
++    dc->vmsd = &vmstate_cnuas_gpu;
++    device_class_set_props(dc, cnuas_gpu_properties);
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++}
++
++static const TypeInfo cnuas_gpu_info = {
++    .name = TYPE_CNUAS_GPU,
++    .parent = TYPE_PCI_DEVICE,
++    .instance_size = sizeof(CnuasGpuState),
++    .class_init = cnuas_gpu_class_init,
++    .interfaces = (const InterfaceInfo[]) {
++        { INTERFACE_PCIE_DEVICE },
++        { },
++    },
++};
++
++static void cnuas_gpu_register_types(void)
++{
++    type_register_static(&cnuas_gpu_info);
++}
++
++type_init(cnuas_gpu_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 9790afa104..beb3a678a5 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -1,6 +1,7 @@
+ system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
  
- #define FMT_PCIBUS                      PRIx64
+ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
++system_ss.add(when: 'CONFIG_CNUAS_GPU', if_true: files('cnuasgpu.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+ system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
 -- 
 2.43.0
 
