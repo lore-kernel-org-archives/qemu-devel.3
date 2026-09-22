@@ -4,86 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5B7C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8D9C98306
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x964K-0000sQ-0y; Tue, 22 Sep 2026 15:22:20 -0400
+	id 1x964H-0000mt-Vy; Tue, 22 Sep 2026 15:22:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963g-0000YX-QI
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:41 -0400
-Received: from mail-oi2-x10.google.com ([2607:f8b0:4864:32::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963e-0002Oy-FL
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:40 -0400
-Received: by mail-oi2-x10.google.com with SMTP id
- 5614622812f47-4b37a2c0356so179166b6e.2
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 12:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790104897; x=1790709697;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/gahCdwhNyoj1EzcQ2l7HrXiy+uDLWpRnTZHx44GnwI=;
- b=N7YOLcUBg/Xvu/cJXrmEDbBJ9ptubb50V1yPzSTDSF4QZiKXFwC3gPejJqIeQT6wBt
- 1Je6MRGbmU1ljw8fHvS1UtwYSEWjco7oxBd7E1VyuyFOmirBO7aJJ52uxqC7gAcABKzW
- P0U0zv5JnFwTP2v8OILykeodiCk/Ka4Y6I3ARie/jkXzg+lDrJrGZI3ZkRgry2cNCKn/
- QIVq8ePPnnzSTfKKBpqya6Bu/psp8pce/7LUqzt4PwakBF7bR494DUqibEMycqZUuy00
- 1icMyXZKQgFWGvo8vTcZg+13THxUc90dOZnXIQO6DygvUW+GVZeC7R79L3vv8QQAbAtH
- p74A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790104897; x=1790709697;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/gahCdwhNyoj1EzcQ2l7HrXiy+uDLWpRnTZHx44GnwI=;
- b=GwZJhighXb65umnutlsId5Xl2i5QeTtA8k6INLp5yWT+EKzdym6OK++QKuV6X9SPSK
- Lj+eh/LBjDi8PM+64TqwtciKVEcm7wSSspKaPEsfTAuOjotqLgrqp5yZW8EXkoy4gb/m
- cFZYLsyT5Mc0Qn9Y5x6s+s+vmtzZHdv1PEdMpmOtuqQ+tv7pPR5qxHH6R5nzAeMjbqE5
- IcTa84UseYchYesO+uNJYe31BkPnP7Gm9Dss8rGatkQOCCeLVJ3w7i43uv2A/AycJlih
- SzqAQSSUYWMa2miKEeb0q32UvjYc7GmKfp7tJnJwQhGcCC7rt0bFnLqNeQoM0gdCRt/S
- vyJQ==
-X-Gm-Message-State: AFuF++li5pEN+77Nu3/cAAPs66orUl9TZF+zVQOoCaY8aaKOgmNEVqTq
- dCXhWBCQRgMQXLwcZwV2G8l0bnnBogjSkERNkHhdKKcifNSP1tKfSggt+zbLYrmqeudWWNaafQH
- GfQ1M4z8=
-X-Gm-Gg: AYBFou1V7GbmOvlUOFuUELw7jvfAtvmQagqYxxjq5dvgjk1/oj8wM8jiNNlroTJawup
- t2lExA98eJJ1lSNddKU8T2XcPwC98ZH7p/ghXGjavcQa8RwElFnk9JadEI4cQAE6sEAu3mCfRy5
- YSsuJUzCKupL2s1MjoHeufuGb2+L/aHHmeRdALMAXGZD8dzR4q0KVlZ/Gm5gT5JUpHnKX+gtH6w
- Ywen21Unn0bNTE7Xjk4NfIFJdAHix2pLF6rGKZ4fPBNhpZHgNiMGujbwouxcNHXkAAbp/Hnp5gP
- eITwl16DYFRmd/0UxzNoRB8+Q590jIpV8USwOUqI18rvkN36smFE1L5PR/sz3aSrtfgRljXDb5c
- WGCWISiLEaQwMfTk/mG7/YxAD/UHhAMibqm8UiwNN7wmXsgFD50eRdcarvPCjx/Ti+93Oif/02g
- 0JOOf4iPM7v5JVsccYweQAUMYyGUmv/HZQiZZ2/d6hVGH9y5cBxO/cJgi/HA==
-X-Received: by 2002:a05:6820:290b:b0:6d2:8d32:be45 with SMTP id
- 006d021491bc7-6d2cff42f47mr403781eaf.19.1790104897333; 
- Tue, 22 Sep 2026 12:21:37 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6d2ce763f72sm646776eaf.7.2026.09.22.12.21.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 12:21:36 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/11] bsd-user: Eliminate unused regs arg in load_elf_binary
-Date: Tue, 22 Sep 2026 13:21:07 -0600
-Message-ID: <20260922192109.98467-10-imp@bsdimp.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260922192109.98467-1-imp@bsdimp.com>
-References: <20260922192109.98467-1-imp@bsdimp.com>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x963w-0000aK-PU; Tue, 22 Sep 2026 15:21:59 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1x963u-0002Qa-Tn; Tue, 22 Sep 2026 15:21:56 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MI7VaH964939; Tue, 22 Sep 2026 19:21:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wuubP1
+ 0h95L76QIfUwgSB/zzBFF12AJ5dcMI7rLodLk=; b=ACrHrGBMO9L0USNDL1QTDI
+ hJm+Yz5yxhP1Sb69oloVji/omq+zhPadqJBiH8ZS0nDksmcD3Qc0E0qgIOc1S4A4
+ Jk/yNJ1+0mLYRpHEuu6yif4AHqFltHroXm3g9aozD3B6jCDmCsWCqsu8jb8Y9FNN
+ HtecG2/6USQwZlHgdOn8KiWWPVamGyEX0KOJKmtxPNErVi7/fWEbmb6qQy4Ri2Pg
+ 4uFPcNBJKtB5PELG7oIXINHCkyOeBmF61aRBSG9EVaw1wNl9ZFueiQDnwZXJgXRZ
+ u+rF/Vu4DkYZShj/2YdtpN8qTu3duZDz2LyXQ+ky6VwysCaUUXQKWKO6rVhP4Kcg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1faf7-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:21:51 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHYSp3220300; Tue, 22 Sep 2026 19:21:50 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vk8ky-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:21:50 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MJLnHo20382226
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 19:21:49 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4E6BD58055;
+ Tue, 22 Sep 2026 19:21:49 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 354B05804B;
+ Tue, 22 Sep 2026 19:21:48 +0000 (GMT)
+Received: from [9.61.245.87] (unknown [9.61.245.87])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 19:21:48 +0000 (GMT)
+Message-ID: <cbc89fcf-a681-4301-8f0e-f6eec652fe94@linux.ibm.com>
+Date: Tue, 22 Sep 2026 12:21:47 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:32::10;
- envelope-from=imp@bsdimp.com; helo=mail-oi2-x10.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 01/16] s390x/pci: implement IOMMU replay
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260922183654.798470-1-kshk@linux.ibm.com>
+ <20260922183654.798470-2-kshk@linux.ibm.com>
+ <03b1a9a9-dd35-4d0f-90c7-2d9eabcfc7b8@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <03b1a9a9-dd35-4d0f-90c7-2d9eabcfc7b8@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: oGwOl5TgD86dYMGNxDMvuDR5V1zjTeFU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfXzIKnvviFTCLB
+ pP0mm646cuQv6W/8OSG8bsfcm7fFNDYLRAqyPQlcyYjdgXX8ikJWjOan62PcucAcPgpy+WoLtfA
+ Ew6Pj91wUzQBO/VG9cpIa8DTfB6V3gsUhFkg4GNM8jnBl3WgZ+s5XX4gIZBLNi0ZIHW6kZyLdJm
+ Pqc3FS0tQGfPHJTD6MNkFFe6iuVQ9btxN/bXc0aatZ3q/gt93bWcLAYSMLW/Cpuad5x80mwqm53
+ 891OEOWl3GfD3c8lFRbO9cRzFL/pbXbCM+NkJDVUWMYme0bOlGwKeICA7gMOiQ6kNyTj8WWMohP
+ vemqI0UzyHzcz+IYra89d9I48iMEItUCn5r5QlatKpEqgXfHFruzXhXVNcWIcX5BVRvwRC86yD4
+ ZNa1ycA7higmsCOuG/2BdtfBoest1mBEpgp/D98A7PCAqbNTcorUrPXP64lgc8ljq6SnayIWyMr
+ HUtIoJilMQqfUd1/kOQ==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab2d54f cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=o2LAkmTLU-qFTlt2caAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX94EWSNouOgyv
+ i3tHtckuT493i3oZEHftwsY5qv/TdZqgR3mLqP6lWty9z03fbKmLQxA6bJBTRalB5+RTxmOxASm
+ YJr+uzoKznUfi3pPRumhGcq1bH5/DHY=
+X-Proofpoint-GUID: oGwOl5TgD86dYMGNxDMvuDR5V1zjTeFU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220280
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,56 +127,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/bsdload.c | 2 +-
- bsd-user/elfload.c | 3 +--
- bsd-user/qemu.h    | 3 +--
- 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/bsd-user/bsdload.c b/bsd-user/bsdload.c
-index 5b3c061a45..dcf3ca14fc 100644
---- a/bsd-user/bsdload.c
-+++ b/bsd-user/bsdload.c
-@@ -193,7 +193,7 @@ int loader_exec(const char *filename, char **argv, char **envp,
-                 && bprm->buf[1] == 'E'
-                 && bprm->buf[2] == 'L'
-                 && bprm->buf[3] == 'F') {
--            retval = load_elf_binary(bprm, regs, infop);
-+            retval = load_elf_binary(bprm, infop);
-         } else {
-             fprintf(stderr, "Unknown binary format\n");
-             return -1;
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index a87a892eb8..295dad4643 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -598,8 +598,7 @@ load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
-     return 0;
- }
- 
--int load_elf_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
--                    struct image_info *info)
-+int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info)
- {
-     struct elfhdr elf_ex;
-     struct elfhdr interp_elf_ex;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 851b0c2c5f..5baaa333ed 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -167,8 +167,7 @@ int loader_exec(const char *filename, char **argv, char **envp,
-                 struct target_pt_regs *regs, struct image_info *infop,
-                 struct bsd_binprm *bprm);
- 
--int load_elf_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
--                    struct image_info *info);
-+int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info);
- int load_flt_binary(struct bsd_binprm *bprm, struct target_pt_regs *regs,
-                     struct image_info *info);
- int is_target_elf_binary(int fd);
--- 
-2.55.0
+On 9/22/2026 12:05 PM, Matthew Rosato wrote:
+> On 9/22/26 2:36 PM, Konstantin Shkolnyy wrote:
+>> From: Matthew Rosato <mjrosato@linux.ibm.com>
+>>
+>> There are a few scenarios where IOMMU replay can potentially be needed
+>> for zPCI device, namely VFIO device reset scenarios where the guest
+>> continues running and expects the contents of its IOMMU to be replayed
+>> upon IOAT re-registration and migration scenarios where the destination
+>> must reconstruct the IOMMU on the destination.
+>>
+>> zPCI migration is not supported yet, but the IOMMU replay function is
+>> implemented so that it can be called both from IOMMUMemoryRegionClass
+>> now and migration post_load later.
+>>
+>> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+> After some discussion with me on v8, Farhan gave his review for this
+> patch, looks like it got missed.
+>
+> I'm not aware of any changes to this patch for v9.
+>
+> @Farhan can you verify and reply explicitly to this patch if your review
+> still holds?
+>
+> Thanks,
+> Matt
+
+Yeah, looks like it was missed. I replied to patch as my r-b tag still 
+holds for this and there were no changes from last revision [1].
+
+[1] 
+https://lore.kernel.org/all/1a755a8a-2615-49c1-b9ef-508f3245c497@linux.ibm.com/
+
+Thanks
+
+Farhan
+
 
 
