@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B07C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB5CC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 21:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x986E-0004wu-Ah; Tue, 22 Sep 2026 17:32:26 -0400
+	id 1x986A-0004tP-Qm; Tue, 22 Sep 2026 17:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x986A-0004tQ-MK; Tue, 22 Sep 2026 17:32:22 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1x9869-0004sl-NJ; Tue, 22 Sep 2026 17:32:21 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1x9866-0007Ek-9i; Tue, 22 Sep 2026 17:32:22 -0400
+ id 1x9866-0007Ee-9j; Tue, 22 Sep 2026 17:32:21 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c23:1224:0:640:741a:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 9327780892;
- Wed, 23 Sep 2026 00:32:15 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id C843080908;
+ Wed, 23 Sep 2026 00:32:14 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:126::1:23])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id BWjvhxGXtiE0-ehkC0chY; Wed, 23 Sep 2026 00:32:15 +0300
+ id BWjvhxGXtiE0-TCD7XwHe; Wed, 23 Sep 2026 00:32:14 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1790112735;
- bh=FvqVXcBKgWH+uWCBinN65HrAd3xMQ6F5Q3jF9ezgjS0=;
+ s=default; t=1790112734;
+ bh=tzYE8XD4llxLxWjfhOS1JgAPPaMrLBLyZ19/qcfhhsE=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=VW+xt3h+F8UsWtzkpt7FrSFdyG5OrrCp73OI4v+85TWutFK5lqagsmuomf5UNIGvH
- ClUXGiOQyST2XuQqFUqi29Q0QlU89HJDRwbIWE/yt/Zc8P15g7Tw8W6VTWbgP5hPV1
- bq6RpeXgSujXMse6VArTdlFq4pIeIE/PtVQkiidI=
+ b=zuxOI05hH3XLR1vtI8hE1ivZXCkJsHdSrb80q2ieDTHZ8L5N4b4Y3+TXJw8CEh+B9
+ S1AnVz4Q57Cf3y0xlIxuNdzpEhDdzaQnD2aFRgzLbIwBUYayIgO6lI8nPOThivo6fo
+ AywW1z0mCO5EptshRvYFAe4SoJLiAdReq+NKCrpU=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -42,16 +41,17 @@ To: mst@redhat.com
 Cc: eblake@redhat.com, armbru@redhat.com, th.huth+qemu@posteo.eu,
  philmd@oss.qualcomm.com, berrange@redhat.com, pbonzini@redhat.com,
  zhao1.liu@intel.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- qemu-stable@nongnu.org, Nikolay Kuratov <kniv@yandex-team.ru>
-Subject: [PATCH 3/3] qapi/monitor: Handle missing vhost-user protocol features
-Date: Wed, 23 Sep 2026 00:32:10 +0300
-Message-ID: <20260922213210.1429435-4-vsementsov@yandex-team.ru>
+ qemu-stable@nongnu.org
+Subject: [PATCH 2/3] qapi/virtio: Restore backend features in
+ x-query-virtio-status
+Date: Wed, 23 Sep 2026 00:32:09 +0300
+Message-ID: <20260922213210.1429435-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260922213210.1429435-1-vsementsov@yandex-team.ru>
 References: <20260922213210.1429435-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -74,82 +74,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit f9a8f5812607 moved protocol_features to the vhost-user backend.
-As a result, VhostStatus.protocol_features is only populated for
-vhost-user devices.
+Commit 1ee0bc0c9bf0 removed vhost_dev.backend_features and its
+representation in VhostStatus. It also removed the assignment to
+VirtioStatus.backend_features, although both that field and its source,
+VirtIODevice.backend_features_ex, still exist.
 
-For an active kernel vhost device, HMP info virtio-status and QMP
-x-query-virtio-status crashes now because of unset protocol-features.
+The resulting NULL pointer causes HMP info virtio-status and QMP
+x-query-virtio-status to crash. This affects virtio devices even without
+an active vhost backend.
 
-Make protocol-features optional in VhostStatus and skip dumping a
-missing object in HMP.
+Restore the assignment from VirtIODevice.backend_features_ex and
+enable corresponding test, which becomes fixed.
 
-For QMP we can change the x-query-virtio-status command semantics
-because it is unstable.
-
-Enable corresponding test, it works now.
-
-Fixes: f9a8f5812607 ("vhost: move protocol_features to vhost_user")
-Co-authored-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Fixes: 1ee0bc0c9bf0 ("vhost: drop backend_features field")
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-hmp-cmds.c                   | 6 ++++--
- qapi/virtio.json                              | 5 +++--
+ hw/virtio/virtio-qmp.c                        | 2 ++
  tests/functional/x86_64/test_virtio_status.py | 1 -
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index e5da6f00699..5b08a06ec42 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -176,8 +176,10 @@ void hmp_virtio_status(MonitorHMP *hmp, const QDict *qdict)
-         hmp_virtio_dump_features(hmp, s->vhost_dev->features);
-         monitor_hmp_printf(hmp, "    Acked features:\n");
-         hmp_virtio_dump_features(hmp, s->vhost_dev->acked_features);
--        monitor_hmp_printf(hmp, "    Protocol features:\n");
--        hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-+        if (s->vhost_dev->protocol_features) {
-+            monitor_hmp_printf(hmp, "    Protocol features:\n");
-+            hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-+        }
-     }
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 5aaeebdd96a..8b7cd7a3106 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -713,6 +713,8 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+                                                  vdev->guest_features_ex);
+     status->host_features = qmp_decode_features(vdev->device_id,
+                                                 vdev->host_features_ex);
++    status->backend_features = qmp_decode_features(vdev->device_id,
++                                                   vdev->backend_features_ex);
  
-     qapi_free_VirtioStatus(s);
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 1fc4e38a44d..f8e699a0e4e 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -85,7 +85,8 @@
- #
- # @acked-features: vhost_dev acked_features
- #
--# @protocol-features: vhost_dev protocol_features
-+# @protocol-features: vhost-user protocol features.  Present only for
-+#     vhost-user devices.
- #
- # @max-queues: vhost_dev max_queues
- #
-@@ -104,7 +105,7 @@
-             'vq-index': 'int',
-             'features': 'VirtioDeviceFeatures',
-             'acked-features': 'VirtioDeviceFeatures',
--            'protocol-features': 'VhostDeviceProtocols',
-+            '*protocol-features': 'VhostDeviceProtocols',
-             'max-queues': 'uint64',
-             'backend-cap': 'uint64',
-             'log-enabled': 'bool',
+     switch (vdev->device_endian) {
+     case VIRTIO_DEVICE_ENDIAN_LITTLE:
 diff --git a/tests/functional/x86_64/test_virtio_status.py b/tests/functional/x86_64/test_virtio_status.py
-index 1e72c713cc6..a88823004f8 100755
+index c8cbdf7c42e..1e72c713cc6 100755
 --- a/tests/functional/x86_64/test_virtio_status.py
 +++ b/tests/functional/x86_64/test_virtio_status.py
-@@ -45,7 +45,6 @@ def check_commands(self, vm):
-         vm.cmd("x-query-virtio-status", path=self.VIRTIO_PATH)
+@@ -84,7 +84,6 @@ def test_vhost(self):
  
-     @skipIfMissingCommands("unshare")
+         self.check_commands(vm)
+ 
 -    @skipIfMissingEnv("QEMU_FAILING_TESTS")
-     def test_vhost(self):
-         self.require_netdev("tap")
-         for device in ("/dev/net/tun", "/dev/vhost-net"):
+     def test_no_vhost(self):
+         self.vm.add_args("-accel", "kvm",
+                          "-S", "-net", "none", "-device",
 -- 
 2.43.0
 
