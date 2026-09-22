@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03ACC98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CDDC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x972u-0002LP-7F; Tue, 22 Sep 2026 16:24:56 -0400
+	id 1x97Cm-0004aK-HA; Tue, 22 Sep 2026 16:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x972C-0000tN-RB
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:24:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <louis.naude@icloud.com>)
+ id 1x95jh-0002oV-QA
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:01:03 -0400
+Received: from pv-2006h-snip6-3.eps.apple.com ([2a01:b747:3003:204::53]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x9728-0000Zf-0h
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:24:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108647;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zOMxDRs4e6kbwdqK+UcD+rHmrn1BkQESsCiR2mUNx1w=;
- b=EbFYfI98Edfr91zf3Y3GKioDXg4qpGJDe8boEWxBitqJAWeuHfEflcdDK+4HxSdq+D0boP
- srXaaSLYbnEklwHfAs9ftUO2+Idu5keDwmYB9+R5O/9HazrPZXC1xGLpwXk1aD3kTDwGSs
- L5Ju/4PmyiJb/ikcgifXNfHctc3fmQw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-DwKapS4-PN6kA5s465ClEQ-1; Tue,
- 22 Sep 2026 16:24:03 -0400
-X-MC-Unique: DwKapS4-PN6kA5s465ClEQ-1
-X-Mimecast-MFC-AGG-ID: DwKapS4-PN6kA5s465ClEQ_1790108643
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F81F195C244; Tue, 22 Sep 2026 20:24:03 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3B9D61800446; Tue, 22 Sep 2026 20:24:01 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:29 +0400
-Subject: [PATCH 82/88] qemu-iotests/232: migrate away from HMP
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-82-ebc029d4bd80@redhat.com>
-References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=29499;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=vUlKTxQY8qRfH+BvWfnVX+8fPYcmZls7c+OQK7ViFgA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuK0cUc/i4rDpDb1PNFk8RMC+8XLBWzyGITqI
- /UEU7ptcpKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLitAAKCRDa6OEJdZac
- 5WdSD/4pWtLpfgVAHYcc7zwu1zsI81Ml1KOJWSdRaqo+UXwmihI27iHclgzn0u5AKAMDcbfXzto
- n5q7gAlJwozuTK0IjfmAXgRh3XcxrpXwxe2NUeL6GoaRfx56QfkGZPiT0Sl+NrZ3VjlkwRtkyFO
- IM92vJgMUbJ+sepFwBGOLFsiDZ5H8zdkellLwcEeFQMZ/bBkqdBFT1iLComuJP0ZBoW6D2v8Z/s
- Hw6siXF5EqtsJTX329iWgysXb2mp+eyg5yTRtGgmJet7lbUMc92kjx7Blaqc7oo4z3U92LhNBa8
- cfxqLtcOh4RX9CsonrQ3Cbw0V4le/wTsMAOcuRB121sbBFxTvHuvUdyhyq7H/egrgMvI2fJBMeN
- b8VB0mM6rS1gjAx+cwM4Kw5L5DwEEweiZmv3pWD7UxIv74viMzb9zxCVDAnRT0NRGsm0aWwDBgv
- HwakgoJ8IW94IRWTw9vxco/JwWchxYcbx2FGT/lkFSsOPG6CjwTFsAMUEg2DvPof9T9ZdsiQlts
- vxiuGBVn633SObPdT17MoVMuo2XxmycB6Baf6jbHHRdeuo9xPrKKSEgHZgpUs6C7PzS+y9MyuT/
- Io8esjQ7KibGb1BVswt1S4bWhvysqQSE7YPndnjhaobI66PS/XQvSulCT5s/S9TLd2clF9QB5EO
- ojWqSYk+9L4DQNw==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <louis.naude@icloud.com>)
+ id 1x95jd-0008Uw-Mp
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:01:01 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-9 (Postfix) with ESMTPS id
+ 791491800CAE; Tue, 22 Sep 2026 19:00:51 +0000 (UTC)
+X-ICL-RepId: 01a0ca7e-0444-7d74-bb2e-5941963ca10c
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQhIAUMFWgpeD08dXwNTEhVdRV8CQgJBXlcZRglSK1sTVRdGCRkIXR0ZHldQXgheH0wcHQ5YBhICWkUBTV8OXh8EF0YZVQRHHl1WQxsZAlEcVg1XQ1QEX1BJDEFQbFoARxdIHV0ZWW9QXRwOBFQHXQVdVlACWktfGV1FD1sOLwBADUkHQAYuATIUTHVUAEZzRA0+Hi9zLQNJCE8EWwFYBjBQG18CQg8cE1YVDU1DEkIVBBFQAVgeVg==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai;
+ t=1790103652; x=1792695652; bh=+7bQJw3QRot5/5bMsWUTDHkvt5IzkZ3N5wuNDP6+1mA=;
+ h=Date:Subject:From:To:Message-ID:Mime-version:Content-type:x-icloud-hme;
+ b=IabhFDIY6VC1VPsWpe20HZfRlMOw8WOOiSSkT9Xd4nF0GVuEEQ+h2ys0n28oPdcY1c9synoLO8ZGlgmqbq/LA1PNOYioW1lFbJdxZCLMUufSjavysNu8rok0ckk8vzvPHwdpfFul+pjragCV39xYSJBl52LM2qzg9gOrRCgDjgNPcXB3/Rz2ayIlMxj9zSsjdLs6EYzzB7w+zpdCV7sa9pJKtzuFcm+6+BVBQmvRUdozukXCxNi82TPrgX0FXFwTb3q5H/7UAkzPN8C1CZJTtclqcgzlz4T4n+Vj8LXtOmM+QFGjzQF2wul1b5Hw2ofnnrLds+9pDSV7Q3CITYjudg==
+Received: from [192.168.0.116] (unknown [17.156.192.29])
+ by p00-icloudmta-asmtp-us-west-1a-100-percent-9 (Postfix) with ESMTPSA id
+ 64CB518001C4; Tue, 22 Sep 2026 19:00:49 +0000 (UTC)
+User-Agent: Microsoft-MacOutlook/16.113.26091740
+Date: Tue, 22 Sep 2026 21:00:35 +0200
+Subject: QEMU 11.1.1 release-signing key expiry =?UTF-8?B?4oCU?= request for
+ authoritative updated key
+From: LOUIS NAUDE <louis.naude@icloud.com>
+To: <qemu-devel@nongnu.org>
+CC: "michael.roth@amd.com" <michael.roth@amd.com>
+Message-ID: <69D20414-1E3B-4F97-A44F-BDF191776634@icloud.com>
+Thread-Topic: QEMU 11.1.1 release-signing key expiry =?UTF-8?B?4oCU?= request
+ for authoritative updated key
+X-Priority: 2
+Mime-version: 1.0
+X-Priority: 2
+Content-type: multipart/alternative;
+	boundary="B_3872955649_2435728390"
+X-Proofpoint-ORIG-GUID: Js2xamOZumyNPNZf6lj4jINE_6CJniG8
+X-Proofpoint-GUID: Js2xamOZumyNPNZf6lj4jINE_6CJniG8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI3OSBTYWx0ZWRfXwTGcrWTkJjxx
+ NBVhIKEs9x4RR6gdfhWzmHpxYzAgd1Mw+knpqxpp5La/JJ7QnlexCHqPPJ4LIW7tgXasA1VECUU
+ TiRiyM7Kx4y+0ubroMwm7GLURFSap7IGZIrwog2JjNZ3m5FqRZASxqebDVHoKpCLY9ktOzT3hm2
+ IZKM8TwkeBCrIw3qevXvA8Zxb12lsiW8luWPJBoKEanLGWCJOIGf2BAmjFobCW894YIsl0nGXrd
+ V20UDhjW4LGz43gxIIuBCWDYSsvM4NQx85JNe6KKkd5jEDZOicsGLWCFVVmFt4ZBROF/tDERKyY
+ xUuNki1BRr5awTKwUhdi+amUwYGe0aaF0d2jbfgYQWQYvD9YQFX4q7joX9ItZ8=
+X-Authority-Info-Out: v=2.4 cv=ZOzaWH7b c=1 sm=1 tr=0 ts=6ab2d063
+ cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
+ a=aW9mcIavGNWWFvFFKOxBSA==:17 a=VdqzKS8jKosA:10 a=5KLPUuaC_9wA:10
+ a=x7bEGLp0ZPQA:10 a=yyb_qwCxGnIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=PeFO9FbFhS32YxYntvkA:9 a=MhXkjPSaMg3pM3CBmcsA:9 a=QEXdDO2ut3YA:10
+ a=yMhMjlubAAAA:8 a=SSmOFEACAAAA:8 a=usO9gNg61Tdg9hO6Tg8A:9
+ a=8Sl-nX0hNBCWTOgm:21 a=gKO2Hq4RSVkA:10 a=UiCQ7L4-1S4A:10 a=hTZeC7Yk6K0A:10
+ a=frz4AuCg-hUA:10
+X-JNJ: AAAAAAABCL0/WaK8ravRSMGofZZT4OQ11bHJageDKP3UPu0k5qbYQZCPtHxceE4ni9LNXzr/klD6i7BSadxP2l4ujYRLUrnj3v38ywm+pMGjE41nvOgCwvcgQdCWfU8HDjtzA8wOra5AM2e5ludbTxvbIHA6vYZkoy5xfyMchHFbObkZo1vp7VySf/u7MNalghuEccodD/i7rtxDmW6TRhqRYrqnqmXrvoaWIYemYqvuctbcqMm2ZjLWoZXUATcJ8qVD6sCqhIckU7HwRZ/i/cZSvEMehOv05eRuu6dY56ac+Qa/d8kSi/vCKBVG2hpSiIkHSHrUe07LurK4qkhIgc9Ywq/74Dq10RRD7vUiSh1VZYWitJ7ksR562Qk2Fyi1J28GcWsLbG/Yj0Ux+htWpK/75J1U0ikJVeWsm7v2NsGOAwq6KmoZUPU7t3KTeCDF0Wcehrs4qWmErMNlj0tJDiGp7hljCnzU56UEydEvnj1TU8qPLE0ObHeXlbjyTV49a34Ah0uGc30mLPFSBq9koO8C7uwMHubJWWTboAW01HDXs6sbZCyoVVQekQDGQrIsmcgJkue1EQRftxF2muwmkZPyJEUKdcGRIsWGJj43L6bJjuDrfBcNAVgeBMVB0ENDeGS+5qiL/hrW6XXkFKFEE7cUsRVYutOWLDqYU8sths0xVKLtez3fNjQrsA64Y8lV/id4w8pYbjdIEK3qOkaX+PjU6wIjCm5uXi6NL7bfAoHCssedy3F7t0QOouufsli2KHpQkVUfksCtBPsam2sKctMNZTJBgcUj45/urPziQ9vKDDcjZ1Koei5tYJA+kOvRCFtxZ2l/2JiOVIiAh3fTxbJahtYbY1UTmh1KraWUtxuaV7SKAAOCirrDMwX+g97HEuuLjPDowCHEBdG2ADndJe1iZp/58BT/+vuUA1ICui7uV4zkl4TU36HVErJHYZb3XS3fV6AGLMZSNN8hpSlCfDbXnX9hf+n
+ JBmoNPgtmN1m91odXbfsQqIorQ1VyB64zu2Fw84sB87VtCk9MNpCbSBjBCO1G3BqgUzMgxfYGc7lLJRuX2REfW9IWTASWuAa2h59PQj7NtDBsTId2LC4fUE6tTQ3NgU/Y3wxiEI0OsdLt2jMxrRV4cXXl4c5sMZTIOlejZ+gLiGkREeEVXogIELt7S+i14YgXE300aYxQXrGKR8cqNLtu4YF39yRGmscLYSwYBMilJrk=
+Received-SPF: pass client-ip=2a01:b747:3003:204::53;
+ envelope-from=louis.naude@icloud.com; helo=outbound.pv.icloud.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, MIME_QP_LONG_LINE=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, TRACKER_ID=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 22 Sep 2026 16:34:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,310 +91,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace pipe-based HMP info block -n with QMP query-named-block-nodes.
+> This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- tests/qemu-iotests/232     |  32 +++----
- tests/qemu-iotests/232.out | 216 ++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 196 insertions(+), 52 deletions(-)
+--B_3872955649_2435728390
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: 7bit
 
-diff --git a/tests/qemu-iotests/232 b/tests/qemu-iotests/232
-index 1ee0aae481d4..05eb4688772b 100755
---- a/tests/qemu-iotests/232
-+++ b/tests/qemu-iotests/232
-@@ -43,31 +43,19 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt generic
- _supported_proto file
- _supported_os Linux
--_require_hmp
--
--do_run_qemu()
--{
--    echo Testing: "$@"
--    (
--        if ! test -t 0; then
--            while read cmd; do
--                echo $cmd
--            done
--        fi
--        echo quit
--    ) | $QEMU -nographic -monitor stdio -nodefaults "$@"
--    echo
--}
--
--run_qemu()
--{
--    do_run_qemu "$@" 2>&1 | _filter_testdir | _filter_qemu | _filter_hmp |
--        _filter_generated_node_ids | _filter_imgfmt
--}
- 
- run_qemu_info_block()
- {
--    echo "info block -n" | run_qemu "$@" | grep -e "(file" -e "QEMU_PROG"
-+    (
-+        printf '%s\n' '{"execute":"qmp_capabilities"}' \
-+                      '{"execute":"query-named-block-nodes"}' \
-+                      '{"execute":"quit"}'
-+    ) | $QEMU -nographic -qmp stdio -nodefaults "$@" 2>&1 |
-+    _filter_testdir | _filter_qemu | _filter_qmp |
-+    _filter_generated_node_ids | _filter_imgfmt |
-+    _filter_actual_image_size |
-+    gsed -e 's/\("virtual-size":\s*\)[0-9]\+/\1VSIZE/g'
-+    echo
- }
- 
- size=128M
-diff --git a/tests/qemu-iotests/232.out b/tests/qemu-iotests/232.out
-index 3bd1a920afc9..3c7716914e84 100644
---- a/tests/qemu-iotests/232.out
-+++ b/tests/qemu-iotests/232.out
-@@ -3,57 +3,213 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- 
- === -drive with read-write image: read-only/auto-read-only combinations ===
- 
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- 
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- 
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
- 
- === -drive with read-only image: read-only/auto-read-only combinations ===
- 
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
--NODE_NAME: TEST_DIR/t.IMGFMT (file, read-only)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- 
- QEMU_PROG: -drive driver=file,file=TEST_DIR/t.IMGFMT,if=none,read-only=off,auto-read-only=off: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- 
- QEMU_PROG: -drive driver=file,file=TEST_DIR/t.IMGFMT,if=none,auto-read-only=off: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
--NODE_NAME: TEST_DIR/t.IMGFMT (file)
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "NODE_NAME", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- 
- === -blockdev with read-write image: read-only/auto-read-only combinations ===
- 
--node0: TEST_DIR/t.IMGFMT (file, read-only)
--node0: TEST_DIR/t.IMGFMT (file, read-only)
--node0: TEST_DIR/t.IMGFMT (file, read-only)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- 
--node0: TEST_DIR/t.IMGFMT (file)
--node0: TEST_DIR/t.IMGFMT (file)
--node0: TEST_DIR/t.IMGFMT (file)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- 
--node0: TEST_DIR/t.IMGFMT (file)
--node0: TEST_DIR/t.IMGFMT (file)
--node0: TEST_DIR/t.IMGFMT (file)
- 
- === -blockdev with read-only image: read-only/auto-read-only combinations ===
- 
--node0: TEST_DIR/t.IMGFMT (file, read-only)
--node0: TEST_DIR/t.IMGFMT (file, read-only)
--node0: TEST_DIR/t.IMGFMT (file, read-only)
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": true, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- 
- QEMU_PROG: -blockdev driver=file,filename=TEST_DIR/t.IMGFMT,node-name=node0,read-only=off,auto-read-only=off: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
--node0: TEST_DIR/t.IMGFMT (file)
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- QEMU_PROG: -blockdev driver=file,filename=TEST_DIR/t.IMGFMT,node-name=node0,read-only=off: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
- 
-+
- QEMU_PROG: -blockdev driver=file,filename=TEST_DIR/t.IMGFMT,node-name=node0,auto-read-only=off: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
--node0: TEST_DIR/t.IMGFMT (file)
-+
-+QMP_VERSION
-+{"return": {}}
-+{"return": [{"iops_rd": 0, "detect_zeroes": "off", "active": true, "image": {"limits": {"request-alignment": 1, "min-mem-alignment": 1, "opt-mem-alignment": 4096, "max-iov": 1024}, "virtual-size": VSIZE, "filename": "TEST_DIR/t.IMGFMT", "format": "file", "actual-size": SIZE, "format-specific": {"type": "file", "data": {}}, "dirty-flag": false}, "iops_wr": 0, "ro": false, "children": [], "node-name": "node0", "backing_file_depth": 0, "drv": "file", "iops": 0, "bps_wr": 0, "write_threshold": 0, "encrypted": false, "bps": 0, "bps_rd": 0, "cache": {"no-flush": false, "direct": false, "writeback": true}, "file": "TEST_DIR/t.IMGFMT"}]}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+
- QEMU_PROG: -blockdev driver=file,filename=TEST_DIR/t.IMGFMT,node-name=node0: Could not open 'TEST_DIR/t.IMGFMT': Permission denied
-+
- *** done
+Hello QEMU maintainers,
 
--- 
-2.56.0.rc0.29.g47ce80527c56
+I contacted Michael directly yesterday and am widening this question to the project list in case another maintainer can help.
+
+We are preparing to verify qemu-11.1.1.tar.xz before using it. The QEMU download page identifies this release-signing fingerprint:
+
+CEACC9E15534EBABB82D3FA03353C9CEF108B584
+
+The keyserver copy retrieved on 21 September 2026 reports expiry on 11 May 2026 at 15:13:07 UTC.
+
+The detached signature qemu-11.1.1.tar.xz.sig records a creation time of 27 August 2026 at 14:16:47 UTC. We have inspected that packet metadata but have not yet verified the signature against the source archive, so we are not treating the timestamp as authenticated.
+
+Could you please confirm:
+Is an updated copy of the same signing key, containing an authenticated expiry extension, available from an authoritative location?
+If not, what is the intended verification procedure for this release?
+Is another release maintainer available to help resolve this?
+This is blocking our verification step. We are not seeking to bypass signature checks; we need the correct verification material and procedure.
+
+Thank you for your assistance.
+
+Kind regards,
+Louis Naude
+
+ 
+
+
+--B_3872955649_2435728390
+Content-type: text/html;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:schema=
+s-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/office/20=
+04/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta http-equiv=3DC=
+ontent-Type content=3D"text/html; charset=3Dutf-8"><meta name=3DGenerator content=3D=
+"Microsoft Word 15 (filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;
+	panose-1:2 11 0 4 2 2 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:11.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;
+	mso-fareast-language:EN-US;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Aptos",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:11.0pt;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:1265842886;
+	mso-list-template-ids:289558804;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style></head><body lang=3DEN-ZA link=3D"#467886" vlink=3D"#96607D" style=3D'wo=
+rd-wrap:break-word'><div class=3DWordSection1><p>Hello QEMU maintainers,<o:p><=
+/o:p></p><p>I contacted Michael directly yesterday and am widening this ques=
+tion to the project list in case another maintainer can help.<o:p></o:p></p>=
+<p>We are preparing to verify qemu-11.1.1.tar.xz before using it. The QEMU d=
+ownload page identifies this release-signing fingerprint:<o:p></o:p></p><p>C=
+EACC9E15534EBABB82D3FA03353C9CEF108B584<o:p></o:p></p><p>The keyserver copy =
+retrieved on 21 September 2026 reports expiry on 11 May 2026 at 15:13:07 UTC=
+.<o:p></o:p></p><p>The detached signature qemu-11.1.1.tar.xz.sig records a c=
+reation time of 27 August 2026 at 14:16:47 UTC. We have inspected that packe=
+t metadata but have not yet verified the signature against the source archiv=
+e, so we are not treating the timestamp as authenticated.<o:p></o:p></p><p>C=
+ould you please confirm:<o:p></o:p></p><ol start=3D1 type=3D1><li style=3D'mso-lis=
+t:l0 level1 lfo1'>Is an updated copy of the same signing key, containing an =
+authenticated expiry extension, available from an authoritative location?<o:=
+p></o:p></li><li style=3D'mso-list:l0 level1 lfo1'>If not, what is the intende=
+d verification procedure for this release?<o:p></o:p></li><li style=3D'mso-lis=
+t:l0 level1 lfo1'>Is another release maintainer available to help resolve th=
+is?<o:p></o:p></li></ol><p>This is blocking our verification step. We are no=
+t seeking to bypass signature checks; we need the correct verification mater=
+ial and procedure.<o:p></o:p></p><p>Thank you for your assistance.<o:p></o:p=
+></p><p>Kind regards,<br>Louis Naude<o:p></o:p></p><p class=3DMsoNormal><o:p>&=
+nbsp;</o:p></p></div></body></html>
+
+--B_3872955649_2435728390--
+
 
 
