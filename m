@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046EFC98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73446C98306
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x964B-0000bL-Bu; Tue, 22 Sep 2026 15:22:11 -0400
+	id 1x964B-0000bZ-DX; Tue, 22 Sep 2026 15:22:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963e-0000Y6-Jk
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963a-0000Xn-8L
  for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:40 -0400
-Received: from mail-oa2-x0f.google.com ([2607:f8b0:4864:30::f])
+Received: from mail-oi2-x11.google.com ([2607:f8b0:4864:32::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963a-0002OY-U7
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:36 -0400
-Received: by mail-oa2-x0f.google.com with SMTP id
- 586e51a60fabf-4906fabf6deso213964fac.1
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 12:21:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963X-0002Nw-GP
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:34 -0400
+Received: by mail-oi2-x11.google.com with SMTP id
+ 5614622812f47-4c6ed1de994so202049b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 12:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790104894; x=1790709694;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790104890; x=1790709690;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=704xuYPyiwsoafO937XvJT++dS2Ej1acSlls9slbXsg=;
- b=0YW+Ub5drr+es/bFAubeAn1XqrkLawTe5qPPPbUkM8S79oC08Hp6EpBWWPH0dbaeFk
- 2WNDR6AzQU4YlbAehHKs4+hxMPimNa6vfEt7sLEtkgbqYPgGwBnvGX07VKRuQBm3x1Kb
- 93NeaBCMmYRpBsJf5qcBmJbX4WzQxn1gDe1PL+WI56xs+ntq27AVYfdqdCFPOOIk0/Bs
- DtTlyRwCjAUwP0HDGShwpvKmI05F8Rpn4/IHdFr0XSuekGAq4aMGAsfDfFlZst3SGa2u
- qxAt7MeUvpyk4lFjjcbzblhG4jLxD4zLJt4dwP0hgH29v8GyTN4P8ZE00uWg3u1HsjMY
- iZoA==
+ bh=WCbS/CXY/RTWtQaFnNbXhvG/7hN5jeg2nC9MHaPKqJQ=;
+ b=u6Z57iTPsl1Yb+VTxtGu00fesCWLvuGR+9hcZbbXRGLD79p9ZxOEUQoY9ir68dJq4O
+ 7ngvupwZU67B8yEw3ztVFPd3wuJoe3zzK8lAcgBqXjyOQ4fTRydzzxSTYa0TOoLefu69
+ noAmDz/Ejjg3CSC5Yj5hHITFvUui6drSmgAfJseyF/2yu+Nk21yAbfcDaPvH2O9glcZe
+ nbkwejA5fdHqXdl7NQy4wA8CwTdVi8rItN1KlAywtvVO4odCiAIrWlUoC7AA8fSqrZMw
+ JhxAZBumct6NtCjmpIVMCttElSAVzMQEedxZPV3iejy54K/C5ftCTqt2m8Tx3jft/QSG
+ 1qMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790104894; x=1790709694;
+ d=1e100.net; s=20260707; t=1790104890; x=1790709690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=704xuYPyiwsoafO937XvJT++dS2Ej1acSlls9slbXsg=;
- b=f4+oXiWUMBrkHf5XMp6mxI0ff4SJXS26Mr1uuULNmPli4YRcWa+DaWQs63CYmuWQh8
- oGNBVlHI7DMqfwIc2Sdcvq+PqquZ4IADgcK2edyeOS6BvwAVrrt1dwOUbrsY/luiMMZ5
- p1eP+rnSbqWJtB/joWtRt15qjkEtJOczJSa0dqUBjgMcoAReEPYwXCAfWbDOctbMfT3M
- tQiIhefyjjRvJs5JZ9wxGLecUD2+bug9oxBlBt/jtjKoEYx182hANoIt4bCqQZBtZnHP
- RZDTHIPOiyJeFXYBjnyKBd3XO6s30FUyDNULWPpv4Y62e0SzRua6ZMw9BEIkthPcdqGx
- m2EA==
-X-Gm-Message-State: AFuF++kbZpWCJBQxIHo7Xipt54cfyfhr75u5wHkhGZrJyuhpx0IQFfe2
- SNbExkPFDLWDBuzr04/6rH8IND0KPVR3Yvr8cwOcQiPj0qMZSB83HTQADNqozdY2xemHQKA0Jl/
- HJ49lK9w=
-X-Gm-Gg: AYBFou2cG2zIIthiHOOWmVB8LmsXbCiMCyQ8QIHD9upCBihWLaCbwcovIayjNtlUbAH
- 0+ZI8qa4hfoYzfxfd1RQTYJG2efTRKIreH29lmos7WZsyxxq1U3wcBC5rhfvzURisU74UnqIb5O
- qT9TPHXQA2YyEco8V+KWjlq+LuMgU7pXT532cHW7FH00kEXhXgM0eWWN8WhSfa2fghY0Cqk8xUe
- Jt0S20/rDvxuNGaGzJCEpjsG2E72I1JKAJKIpJ01n296i3HjW6AdxH7eFIAu9p/SG+gjI+gb9SB
- yda83NKC/1waBw7ri0iTKU1e4qpEJm7sRpMPC8V2q/m2BEcyULlWyOrJ8/KkwHLpuCGtqj2RuoD
- n7k2rq4uKtRwTJ+h9LwEX5E9I++zfftwPXQvOq0MuX5slK8n8eft93dipCozxVVVWqQp0adB5eC
- q+fzzltC1Av2uBwgx9SGL3z9x78PwEfP+55f5jnr6iEHTo5Jdxyk70JiinJhVe21ONQpEr
-X-Received: by 2002:a05:6820:809:b0:6cd:3fec:de79 with SMTP id
- 006d021491bc7-6d2d3702994mr301504eaf.79.1790104893577; 
- Tue, 22 Sep 2026 12:21:33 -0700 (PDT)
+ bh=WCbS/CXY/RTWtQaFnNbXhvG/7hN5jeg2nC9MHaPKqJQ=;
+ b=DvXx4IoeCZ8k0bQI6mphymtMJgDeovN7HWvV+E8Xh5b8b1HZIoIw1w94wa3yw9ZF2b
+ spaGDAHwNYDUDLPaxgr2WNEvG+/h8SP21t+4dWTGeATXLyJMAwmMKykZJ6MG/FKFaNCv
+ JMwPL3T70mWgGNtNx3kwwT+idP4BUlfazVyOfB+qwR6kVfhS8+1rb9+VnAhagZoKKkFY
+ l9z3icNXPMyXm6+8SeqrN9k1nrhzz8DWt9wGAsmMT1YDG2cb70CpH0zxP+ScL+pIO3XL
+ kVbba2ks3HkTDKfkMmJEFG+qWWoQDW+VlTqwhUIqQp7iGUt63zbe073Cfaa9MAxxY2hN
+ kHnA==
+X-Gm-Message-State: AFuF++nkNPLIu4naSshtbjSpJ3qWMTwG0Q9nq6l++/pddYg/ASdwvBsF
+ dfLJo9C6SDbanOht2ncdPfMln7ExpXr0R4CpL0T6RPWDRJU3rzB2eQ37KKi+0qUb+aOPKszyeD6
+ 8Uvhx12c=
+X-Gm-Gg: AYBFou38D/eqzcHEEf0HgOe6HU+WG7IIJ2NPRf1vpiRUL1K+/rWqCOTu3bAvDmwvCKm
+ pQ/HfTicaHRN6c0SfRElsAmk6NRUvZP0iMR1JBC4ktH1AhIMM8VVrmWOsZfyyvcVyAIjE70cC9m
+ 5kUFX4MApu/3RbHOgQ0zJ4f8KlsA9oxQu4uiB88eNTLg5MUluBt3nuaS0+VFkem9vTWlSRrPrte
+ pVPjZnPsK7jNx2EVizPo+GfHKepPZg1R1/pcD+vmu3nrIkZ7MBXtisFO2yf/dZpzcCewB4Phdps
+ J7S13obpNZDm467/XF6yFyo5QMLS2Woj1+umaLpjtKRq2jt9GZtLp3iSfV7wVvRFGjHQ61LrZ84
+ 9UVw7jFT6Z42u4gIayPxxJmFMG012/kcgZiGf4s/fv82PuP+dnodBGRA2pOIjlHxgVKEBUm3m4J
+ G/Ys7zm3050rn5ph+iNRn8cBpFsXZFDSWl5GMZKjQPwU67k9J6SnPjjIK8P+yV9YSXeC0U
+X-Received: by 2002:a05:6820:1ca9:b0:6b3:1874:6f21 with SMTP id
+ 006d021491bc7-6d2cd07afedmr441952eaf.0.1790104890213; 
+ Tue, 22 Sep 2026 12:21:30 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6d2ce763f72sm646776eaf.7.2026.09.22.12.21.32
+ 006d021491bc7-6d2ce763f72sm646776eaf.7.2026.09.22.12.21.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 12:21:32 -0700 (PDT)
+ Tue, 22 Sep 2026 12:21:29 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/11] bsd-user: Fix crazy bug with mmap
-Date: Tue, 22 Sep 2026 13:21:03 -0600
-Message-ID: <20260922192109.98467-6-imp@bsdimp.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 02/11] bsd-user: Drop support for FreeBSD 12
+Date: Tue, 22 Sep 2026 13:21:00 -0600
+Message-ID: <20260922192109.98467-3-imp@bsdimp.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260922192109.98467-1-imp@bsdimp.com>
 References: <20260922192109.98467-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:30::f; envelope-from=imp@bsdimp.com;
- helo=mail-oa2-x0f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:32::11;
+ envelope-from=imp@bsdimp.com; helo=mail-oi2-x11.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,84 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So, for some crazy reason, we checked that only the SHARED bit was set
-out of all these bits. The only ones that were live was MAP_ANON and
-MAP_FIXED. We never called mmap with MAP_FIXED and MAP_SHARED. And the
-equivalent from linux-user tested that MAP_ANON was off, but MAP_SHARED
-was on. So incorporate the more direct approach from linux-user for
-testing this condition. Many of these bits haven't been actually used in
-FreeBSD since the very early days....
+All supported branches have these, so we don't need ifdefs anymore.
 
-Also fix MAP_TYPE definition. The 0xf I think was copied from the Linux
-headers a long time ago, since BSD doesn't define this. In FreeBSD,
-there's only two bits of this low nibble that are used for the sharing
-type (linux has 2 more types encoded in these low bits). The kernel
-rejects bogus flags (0xc part of 0xf mask), so it's better to have just
-these two bits here.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/mmap.c         | 17 +++++++++++------
- bsd-user/syscall_defs.h |  9 ++++++++-
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ bsd-user/freebsd/target_os_user.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 548b4824df..5068e5c3b7 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -215,11 +215,15 @@ static int mmap_frag(abi_ulong real_start,
- 
-     prot_new = prot | prot1;
-     if (fd != -1) {
--        /* msync() won't work here, so we return an error if write is
--           possible while it is a shared mapping */
--        if ((flags & TARGET_BSD_MAP_FLAGMASK) == MAP_SHARED &&
--            (prot & PROT_WRITE))
-+        /*
-+         * msync() won't work here, so we return an error if write is
-+         * possible while it is a shared mapping
-+         */
-+        if (!(flags & MAP_ANON)
-+            && (flags & MAP_TYPE) == MAP_SHARED
-+            && (prot & PROT_WRITE)) {
-             return -1;
-+        }
- 
-         /* adjust protection to be able to read */
-         if (!(prot1 & PROT_WRITE))
-@@ -586,8 +590,9 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int prot,
-              * msync() won't work here, so we return an error if write is
-              * possible while it is a shared mapping
-              */
--            if ((flags & TARGET_BSD_MAP_FLAGMASK) == MAP_SHARED &&
--                (prot & PROT_WRITE)) {
-+            if (!(flags & MAP_ANON)
-+                && (flags & MAP_TYPE) == MAP_SHARED
-+                && (prot & PROT_WRITE)) {
-                 errno = EINVAL;
-                 goto fail;
-             }
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 9fa16e0863..c4fd5f5589 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -121,7 +121,14 @@ struct target_msgbuf {
- /*
-  *  sys/mman.h
-  */
--#define TARGET_BSD_MAP_FLAGMASK         0x3ff7
-+/*
-+ * FreeBSD doesn't define this, but Linux does. In Linux, it's only MAP_PRIVATE
-+ * and MAP_SHARED and a few Linux-specific types (0xf). FreeBSD allows other
-+ * types of mapping with MAP_ANON, MAP_GUARD, and MAP_STACK. The mask on Linux
-+ * excludes these: They don't have MAP_GUARD, and MAP_STACK and MAP_ANON have
-+ * similar flags with different names that aren't in it's 0xf MAP_TYPE.
-+ */
-+#define MAP_TYPE (MAP_PRIVATE | MAP_SHARED)
- 
- /*
-  * sys/time.h
+diff --git a/bsd-user/freebsd/target_os_user.h b/bsd-user/freebsd/target_os_user.h
+index 9703b9a61a..688da6c81a 100644
+--- a/bsd-user/freebsd/target_os_user.h
++++ b/bsd-user/freebsd/target_os_user.h
+@@ -297,17 +297,12 @@ struct target_kinfo_vmentry {
+     uint32_t kve_vn_rdev_freebsd11;  /* Device id if device. */
+     uint16_t kve_vn_mode;   /* File mode. */
+     uint16_t kve_status;   /* Status flags. */
+-#if (__FreeBSD_version >= 1300501 && __FreeBSD_version < 1400000) ||    \
+-    __FreeBSD_version >= 1400009
+     union {
+         uint64_t _kve_vn_fsid;  /* dev_t of vnode location */
+         uint64_t _kve_obj;  /* handle of anon obj */
+     } kve_type_spec;
+ #define kve_vn_fsid kve_type_spec._kve_vn_fsid
+ #define kve_obj  kve_type_spec._kve_obj
+-#else
+-    uint64_t kve_vn_fsid;   /* dev_t of vnode location */
+-#endif
+     uint64_t kve_vn_rdev;   /* Device id if device. */
+     int  _kve_ispare[8];  /* Space for more stuff. */
+     /* Truncated before copyout in sysctl */
 -- 
 2.55.0
 
