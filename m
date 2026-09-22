@@ -4,99 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1571C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E088C982FF
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8zER-00024u-GQ; Tue, 22 Sep 2026 08:04:19 -0400
+	id 1x8zOd-0003wf-HN; Tue, 22 Sep 2026 08:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zEP-00024O-UH
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:04:18 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zEN-0004VA-Vd
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:04:17 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x8zOb-0003vu-0P
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:14:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x8zOZ-0005rE-3G
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:14:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790079285;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=A+Mk2JltUEQDL6dp2YlvMvHa/FyTMrM9ab++wpt6ctE=;
+ b=YMX270YKNWANjgSxfV+h/p+eq1kLlXAdXJs3Nlk9VSLQtILxGtUlDS1HLfIC3RRqxqKn3X
+ 9uM/32v4pe2QmxPRd/5Ox+105yAFrBhDwkISnA7Siy1WzjroLEsylr28Bmq2uhpUYR22Sj
+ 84ZV/sPhqKWyWlJVq+hMxvShP6x6yt8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-EuvQ02NkNAGR2iO8AeDTuA-1; Tue,
+ 22 Sep 2026 08:14:41 -0400
+X-MC-Unique: EuvQ02NkNAGR2iO8AeDTuA-1
+X-Mimecast-MFC-AGG-ID: EuvQ02NkNAGR2iO8AeDTuA_1790079280
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D77651F820;
- Tue, 22 Sep 2026 12:04:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790078649; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
- b=0igaLNpsfM+9PjHKSJ19VTyB1aDYLNzQu9zEK6Wv7n9zIZKLwpYvawI6/HYygwq7Bq5KYQ
- y3buGFPOYzoAvY2zVid4xcq/y6sLZw+/+oMd8yZB3R8EqyiFFbUWi9JWYhWY8iOkvsZ4VJ
- HgDfZ9IqWGRaBM4a74xNf+yyuGT7Aow=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790078649;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
- b=MBC7VSHJUF6p/a3FvZ/Gfp4KBmnPIpJ4nJRf77pnUfStIg0Um8/IqY8ScsM+NA6DsRx0lh
- pV6Kuzecj6cSt/Cg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790078644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
- b=LzKilkXJXqvdLC+lEA7UzLgMIR4zkBVJgylDUR2A2LktNn2BEkQTqRDbigodzLyytseoen
- tddOftq9tbLFqljoPo0yfFGvaEdelZZnFyxlz0aCBCnEofbobpeQKDAy6EAVu/HLbRyRzW
- r0yTpOErNgC/pxLt8RCJF4ZHG7keXtw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790078644;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jCzFw8OBfOH5FVqNvRFYUUuGNi6XY9GdXxvsz7nkQ/8=;
- b=oN9SdFf8uxkq5v3aC5oGh1Bi35sld1ytcqWjsPgVDyzgPuxwPqX96z0i3MGZRkzc8nxz3i
- pqeWd51GBo61y8Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 56A25136D9;
- Tue, 22 Sep 2026 12:04:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 3V3gOrNusmp4FgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:04:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru
-Subject: Re: [PATCH 00/30] move to new migration APIs
-In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
-References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
-Date: Tue, 22 Sep 2026 09:03:57 -0300
-Message-ID: <87cxu5bihe.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 09617195422E; Tue, 22 Sep 2026 12:14:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.148])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3F0D11800586; Tue, 22 Sep 2026 12:14:37 +0000 (UTC)
+Date: Tue, 22 Sep 2026 14:14:34 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ John Snow <jsnow@redhat.com>, "Denis V . Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH 5/9] block/accounting: Add BB field to latency checker
+Message-ID: <arJxKg7414J7WnRD@redhat.com>
+References: <20260831135206.126184-1-hreitz@redhat.com>
+ <20260831135206.126184-6-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260831135206.126184-6-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,85 +85,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Am 31.08.2026 um 15:52 hat Hanna Czenczek geschrieben:
+> The BlockBackend reference is required to be able to generate the QOM
+> path as part of emitted events.
+> 
+> A weak reference is enough because BlockAcctStats is tied directly to
+> one BlockBackend, and will be deleted via block_acct_cleanup() before
+> the BlockBackend is truly deleted.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 
-> Hi all!
->
-> That's a new version for old
->
-> [RFC 00/22] migration: convert vmstate_load/save_state
->
-> after the core patches converting migration code
-> are already merged into master.
->
-> Let's now convert the whole code base.
->
-> Vladimir Sementsov-Ogievskiy (30):
->   tests/unit/test-vmstate: move to new migration APIs
->   ui/vdagent: move to new migration APIs
->   hw/virtio: extra state: move to new migration APIs
->   hw/virtio: config save/load: move to new migration APIs
->   hw/virtio: make virtio_save() and virtio_load() static
->   hw/virtio: remaining: move to new migration APIs
->   hw/s390x/virtio-ccw.c: move to new migration APIs
->   hw/scsi/spapr_vscsi: move to new migration APIs
->   hw/scsi/scsi-bus.c: use new migration APIs
->   hw/vfio/pci: move to new migration APIs
->   hw/pci/pci: move to new migration APIs
->   hw/pci/msix.c: use new migration APIs
->   hw/pci/shpc.c: use new migration APIs
->   hw/display/virtio-gpu: move to new migration APIs
->   hw/net/virtio-net.c: use new migration APIs
->   hw/nvram/eeprom93xx.c: use new migration APIs
->   hw/nvram/fw_cfg.c: use new migration APIs
->   hw/usb/redirect.c: move to new migration APIs
->   alpha/machine: move to new migration APIs
->   avr/machine: move to new migration APIs
->   or1k/machine: move to new migration APIs
->   microblaze/machine: move to new migration APIs
->   hppa/machine: move to new migration APIs
->   sparc/machine: move to new migration APIs
->   ppc/machine: move to new migration APIs
->   mips/machine: move to new migration APIs
->   arm/machine: move to new migration APIs
->   migration/vmstate-types: convert vmstate_info_g_byte_array to new APIs
->   migration: VMStateInfo: remove old .get / .set handlers
->   migration: finally drop vmstate_save/load_state() functions
->
->  hw/display/virtio-gpu.c        |  99 +++++++++++----------
->  hw/net/virtio-net.c            | 133 ++++++++++++++--------------
->  hw/nvram/eeprom93xx.c          |  17 ++--
->  hw/nvram/fw_cfg.c              |  24 ++---
->  hw/pci/msix.c                  |  17 ++--
->  hw/pci/pci.c                   |  85 +++++++++---------
->  hw/pci/shpc.c                  |  20 +++--
->  hw/s390x/virtio-ccw.c          |  40 ++++-----
->  hw/scsi/scsi-bus.c             |  17 ++--
->  hw/scsi/spapr_vscsi.c          |   9 +-
->  hw/usb/redirect.c              |  59 +++++++------
->  hw/vfio/pci.c                  |  14 ++-
->  hw/virtio/vhost-user-fs.c      |  68 +++++++-------
->  hw/virtio/virtio-mmio.c        |  31 +++----
->  hw/virtio/virtio-pci.c         |  45 +++++-----
->  hw/virtio/virtio.c             | 157 +++++++++++++++++----------------
->  include/hw/pci/pci.h           |   4 +-
->  include/hw/virtio/virtio-bus.h |   8 +-
->  include/hw/virtio/virtio.h     |   4 -
->  include/migration/vmstate.h    |  17 ----
->  migration/vmstate-types.c      |  17 ++--
->  migration/vmstate.c            |  32 +------
->  target/alpha/machine.c         |  17 ++--
->  target/arm/machine.c           | 107 +++++++++++-----------
->  target/avr/machine.c           |  50 ++++++-----
->  target/hppa/machine.c          |  34 +++----
->  target/microblaze/machine.c    |  17 ++--
->  target/mips/system/machine.c   |  49 +++++-----
->  target/or1k/machine.c          |  17 ++--
->  target/ppc/machine.c           |  80 ++++++++---------
->  target/sparc/machine.c         |  68 +++++++-------
->  tests/unit/test-vmstate.c      | 118 +++++++------------------
->  ui/vdagent.c                   |  38 ++++----
->  33 files changed, 710 insertions(+), 802 deletions(-)
+The subject line is a bit confusing as there is no latency checker yet.
+Should it say "to BlockAcctStats"?
 
-Queued patches 1 and 28 for migration-next.
+>  include/block/accounting.h | 3 ++-
+>  block/accounting.c         | 7 ++++++-
+>  block/block-backend.c      | 2 +-
+>  3 files changed, 9 insertions(+), 3 deletions(-)
+
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index 164bda846f4..ca091a8bf5d 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -369,7 +369,7 @@ BlockBackend *blk_new(AioContext *ctx, uint64_t perm, uint64_t shared_perm)
+>      blk->on_read_error = BLOCKDEV_ON_ERROR_REPORT;
+>      blk->on_write_error = BLOCKDEV_ON_ERROR_ENOSPC;
+>  
+> -    block_acct_init(&blk->stats);
+> +    block_acct_init(blk, &blk->stats);
+
+This is the only caller. I'm not sure what other callers could look
+like, but now that a BlockBackend is required for it, could the second
+parameter ever give any useful additional information (as opposed to
+block_acct_init() just accessing blk->stats internally now that it has
+blk)?
+
+Kevin
+
 
