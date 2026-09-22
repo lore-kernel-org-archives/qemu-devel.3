@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75815C98304
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 866CBC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x97Xb-0000Iw-7i; Tue, 22 Sep 2026 16:56:39 -0400
+	id 1x97Xf-0000KP-0W; Tue, 22 Sep 2026 16:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XT-0000Gi-Qn
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XP-0000Fs-UT
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XS-00045l-CQ
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:31 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XO-00045D-EJ
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790110589;
+ s=mimecast20190719; t=1790110585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XK1aSGSt1xTWF7/Prx8zJTaU+O+Uyrct5dy+1HkNSpU=;
- b=CzB3fo+orkxLKqKwtHxFK1CDWfj0N8NOPBFfOM9xD7c77vKj0BxlvgxZ9hw1OZJTPdiYjw
- h8JI5aJ9l4e18m9Ux4lw3oU1RYq8wRabT9x/3KSdi2BTPb3v5ibYjFHCXCZu9HwebUkZE8
- SO9Rsh4yeYA+vXdbJY7VETJnhk/Zm6c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=hO6U0r43tcwIk1YxVH+Jad9U+KcRDjTIv+P59ADGJEo=;
+ b=LQf2oY0QY9MkvaeDBtXCrEzriKdO/WR66brcdXVn1IVMJPe6XrIYJa2Ia7NeDSRzu1mQ74
+ E09PD7bKfgh8nFpYRcaysxzUdU5SSdd4yryznN/sMMR/ygMajKoAC4tfV5bFhk8iyvnEWl
+ zL2S+Y3PgLPDcqfGTEX4/lNYQP91SBE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-MvC125T2PFWCF9OmYGe4Bw-1; Tue,
- 22 Sep 2026 16:56:24 -0400
-X-MC-Unique: MvC125T2PFWCF9OmYGe4Bw-1
-X-Mimecast-MFC-AGG-ID: MvC125T2PFWCF9OmYGe4Bw_1790110583
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-xlp_FLPXNHGSAHfsHoZIAA-1; Tue,
+ 22 Sep 2026 16:56:21 -0400
+X-MC-Unique: xlp_FLPXNHGSAHfsHoZIAA-1
+X-Mimecast-MFC-AGG-ID: xlp_FLPXNHGSAHfsHoZIAA_1790110579
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8621B1800BCE; Tue, 22 Sep 2026 20:56:22 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EE7F1944A85; Tue, 22 Sep 2026 20:56:19 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5CF421956086; Tue, 22 Sep 2026 20:56:19 +0000 (UTC)
+ id EA3E41956087; Tue, 22 Sep 2026 20:56:15 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -60,23 +60,23 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 2/8] qapi: convert intro sections for unit tests
-Date: Tue, 22 Sep 2026 16:55:59 -0400
-Message-ID: <20260922205605.501602-3-jsnow@redhat.com>
+Subject: [PATCH v2 1/8] qapi: convert/split remaining qapi/qmp intro sections
+Date: Tue, 22 Sep 2026 16:55:58 -0400
+Message-ID: <20260922205605.501602-2-jsnow@redhat.com>
 In-Reply-To: <20260922205605.501602-1-jsnow@redhat.com>
 References: <20260922205605.501602-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,98 +92,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+A few slipped in during the mass conversion, get those too. Mostly
+trivial conversion, with the exception of @x-qemu-io which introduces
+a new split.
+
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/qapi-schema/doc-good.json                |  8 ++++----
- tests/qapi-schema/doc-good.out                 | 15 ++++++---------
- tests/qapi-schema/doc-interleaved-section.err  |  2 +-
- tests/qapi-schema/doc-interleaved-section.json |  3 +--
- 4 files changed, 12 insertions(+), 16 deletions(-)
+ qapi/block.json         |  5 +++--
+ qapi/machine-s390x.json |  3 +--
+ qapi/machine.json       |  3 +--
+ qapi/net.json           | 24 ++++++++----------------
+ 4 files changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
-index fac13425b72..d9a84ccd729 100644
---- a/tests/qapi-schema/doc-good.json
-+++ b/tests/qapi-schema/doc-good.json
-@@ -94,10 +94,9 @@
+diff --git a/qapi/block.json b/qapi/block.json
+index 13c47e1eb44..0a88d405a26 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -597,9 +597,10 @@
  
  ##
- # @Variant1:
-+#     A paragraph
+ # @x-qemu-io:
++#     Run a qemu-io command on a block device.
  #
--# A paragraph
+-# Run a qemu-io command on a block device.  Take either a block
+-# backend name or a qdev ID to identify the device.
++# Take either a block backend name or a qdev ID to identify the
++# device.
+ #
+ # @device: the block backend name, node-name to run the
+ #     command on.
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index 670a1f9d926..8d8cbe2fb75 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -138,8 +138,7 @@
+ 
+ ##
+ # @BootCertificates:
 -#
--# Another paragraph
-+#     Another paragraph
+-# Boot certificates for secure IPL.
++#     Boot certificates for secure IPL.
  #
- # @var1 is undocumented
- #
-@@ -206,7 +205,8 @@
+ # @path: path to an X.509 certificate file or a directory containing
+ #      certificate files.
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 1220116bf7d..6eb14c62851 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1390,8 +1390,7 @@
  
  ##
- # @cmd-boxed:
--# If you're bored enough to read this, go see a video of boxed cats
-+#     If you're bored enough to read this, go see a video of boxed
-+#     cats
+ # @SpMemDeviceInfo:
+-#
+-# sp-mem device state information
++#     sp-mem device state information
+ #
+ # @id: device's ID
+ #
+diff --git a/qapi/net.json b/qapi/net.json
+index 2a186a71b93..f0312dfb714 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -1275,8 +1275,7 @@
+ 
+ ##
+ # @UsernetInfo:
+-#
+-# Information about a user-mode network stack (slirp).
++#     Information about a user-mode network stack (slirp).
+ #
+ # @hub-id: The hub id, if available.
+ #
+@@ -1295,8 +1294,7 @@
+ 
+ ##
+ # @x-query-usernet:
+-#
+-# Query user-mode network stack connection states.
++#     Query user-mode network stack connection states.
  #
  # Features:
- # @cmd-feat1: a feature
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 371dd25ffc7..eaaf119dea8 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -126,15 +126,13 @@ doc symbol=Base
-  minimally indented
- doc symbol=Variant1
-     Intro
-+    A paragraph
- 
--    Plain
--A paragraph
--
--Another paragraph
--
--@var1 is undocumented
-+    Another paragraph
-     Member=var1
- 
-+    Plain
-+@var1 is undocumented
-     Feature=variant1-feat
- a feature
-     Feature=member-feat
-@@ -213,9 +211,8 @@ Note::
- 2.10
- doc symbol=cmd-boxed
-     Intro
--
--    Plain
--If you're bored enough to read this, go see a video of boxed cats
-+    If you're bored enough to read this, go see a video of boxed
-+    cats
-     Feature=cmd-feat1
- a feature
-     Feature=cmd-feat2
-diff --git a/tests/qapi-schema/doc-interleaved-section.err b/tests/qapi-schema/doc-interleaved-section.err
-index e5d1ef54c1b..85f01fa57a7 100644
---- a/tests/qapi-schema/doc-interleaved-section.err
-+++ b/tests/qapi-schema/doc-interleaved-section.err
-@@ -1 +1 @@
--doc-interleaved-section.json:15:1: description of '@foobar:' follows a section
-+doc-interleaved-section.json:14:1: description of '@foobar:' follows a section
-diff --git a/tests/qapi-schema/doc-interleaved-section.json b/tests/qapi-schema/doc-interleaved-section.json
-index eec01ed5650..bc0937b8601 100644
---- a/tests/qapi-schema/doc-interleaved-section.json
-+++ b/tests/qapi-schema/doc-interleaved-section.json
-@@ -2,8 +2,7 @@
+ #
+@@ -1319,8 +1317,7 @@
  
  ##
- # @TestStruct:
+ # @NetFilterInfo:
 -#
--# body
-+#     body
+-# Information about a netfilter attached to a network client.
++#     Information about a netfilter attached to a network client.
  #
- # @integer: foo
- #           blah
+ # @name: filter object name (QOM path component)
+ #
+@@ -1339,8 +1336,7 @@
+ 
+ ##
+ # @NetworkClientInfo:
+-#
+-# Information about a network client.
++#     Information about a network client.
+ #
+ # @name: unique network client identifier
+ #
+@@ -1369,8 +1365,7 @@
+ 
+ ##
+ # @NetHubPortInfo:
+-#
+-# Information about a hub port.
++#     Information about a hub port.
+ #
+ # @name: hub port identifier
+ #
+@@ -1385,8 +1380,7 @@
+ 
+ ##
+ # @NetHubInfo:
+-#
+-# Information about a network hub.
++#     Information about a network hub.
+ #
+ # @id: hub identifier
+ #
+@@ -1401,8 +1395,7 @@
+ 
+ ##
+ # @NetworkInfo:
+-#
+-# Information about the network configuration.
++#     Information about the network configuration.
+ #
+ # @hubs: network hubs and their ports
+ #
+@@ -1417,8 +1410,7 @@
+ 
+ ##
+ # @x-query-network:
+-#
+-# Query the network configuration including hubs and clients.
++#     Query the network configuration including hubs and clients.
+ #
+ # Features:
+ #
 -- 
 2.55.0
 
