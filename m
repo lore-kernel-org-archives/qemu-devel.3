@@ -4,141 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D297C982F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 09:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89C9C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 09:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8wMn-00075S-SM; Tue, 22 Sep 2026 05:00:45 -0400
+	id 1x8wOb-0007iw-Ds; Tue, 22 Sep 2026 05:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8wMl-00075A-Pj
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 05:00:43 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x8wOY-0007gn-00; Tue, 22 Sep 2026 05:02:34 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x8wMk-000296-3V
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 05:00:43 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68M7C1jv1980018
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 09:00:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Uhg2O7qhe9O36AaqOJA09J7WioVPkLA66QzmU0rHPQ4=; b=d4qG+QSJdasXgkyU
- temmHLRHGd58Ltjpd1O/Gs7Os7YftpKdOLWKb9zXbvCVs1MzNHjv0tQMv1Igjirb
- OapIZIbVAUNhuI6QFDnr/uWVb87q3rlT9/n7sYbNL+6Ddl3xDZjJjH6xwW/NB/ZW
- 24kLNHf7Qv51HWEizIHtAYTMoqEKbZHwTcpO1CQvvH22NjRPfm5zplOpTcJNT9on
- C33Gl2kflsM6gRZWXwcqrsV7f1vPUnPaU2ZVQ05JKGc7R8O8DrIZSP+v7WTbLNWu
- 8KWj2isSgyGoDitTQJt3lStNMHDE0Q1c1zAd9As1GXnHjmX4Z22kMjSwdQXV6r05
- Nek8eQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gudw0j0e2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 09:00:39 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9393ac4961fso525279585a.2
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 02:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790067639; x=1790672439; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Uhg2O7qhe9O36AaqOJA09J7WioVPkLA66QzmU0rHPQ4=;
- b=d9CC3OdP3ADybq2gZXUWHMwIu9QARhNo9DQHGVSYCzDN2dVwhn6NTL4hN6k+dhPka8
- EReg0IZ6aR0ofJvX2BW0dMIS+e+qYo27J6ei+0ovS3o1VwKqwUz73E/nN4nRL9Ef+KQa
- 6qzR0P85cZ7VfA1Au7HFt4hJJ2FqzBeUavOMGY3zgGEA/xVGPdDupjEm5ov+t2dMxnIr
- NbA84lHfe6d5p8nI29PZ9Zs2XiUYDBaPg24q631CBdnY5cdVdn9iFI/PrMurrRsgC6W8
- slM1ZkdiPH/Neay+d4Z0cMEAWn8eScFEMRBoVMiGIAlRHwzOdUj9Bl+cv7PzfZfvEhKE
- w86g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790067639; x=1790672439;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Uhg2O7qhe9O36AaqOJA09J7WioVPkLA66QzmU0rHPQ4=;
- b=HsT/SnjXHmc3/lZnahE2Alkt3IJlb1bKRxUNt/Bmojt0/6U34zO37PbCKZlQ8U/0OD
- xmqVkVU2gMF3XHWs0VSS4S8eGdduWKMcxwOAVR9lHzbLVIH9E1KVIxpykfRta04gz8bF
- E4BaZ0krwmuhs7f9Ohw3mVEhnZqNosgp4EpgU6H3Emh0mr4BNWEuz7dwYTFkZR3b5vsj
- zkCJlutEYdQLQ1yNimzq5hrJGQSHFBunZgVaXxIhANOI5t+e3Bvg1Y6b8YWYp8NPXaJY
- o5TAoeVDArYTNUWI26tdj5yGNvVBbvl9aSCH6gZb55rF+XkGWhLK/ZWkXJ3sBYKGr4ha
- usRQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwZkvHKWoiH6Xlmw1/mZDtULbFOu6ZO95NH6MwMr9kFItSx+ON2/kDmLOGtcrBbwOo3lJ2JNFO81wWD@nongnu.org
-X-Gm-Message-State: AFuF++k6aP8d/h6KjiwEHcEaR2hrrU49+oNbz3OxT1NSXB8BUCjKMn+A
- +Tq7i3/tf0tnsi//oXac9zdihuohaZ9vKs40q+Ou6irw0o5Lx2yFrGj15X5tt3gCjgnY2zWU+qM
- 8okAnyFMjF4zAsU9gRWJ77M2QRtuJpzz79QkXz7D4JzHZ6VyvK17vnpbXUg==
-X-Gm-Gg: AYBFou2A8HGT+X3prxVOaHWHs4VTan/WI6TE2/7FcMECpDQedROBwRMEGHFrFeRN7n8
- PdH+sqzkTXmf/ns8dLQrLZ5mIzK968pHb4ozuX2Bh+7tVaBQPTPA1YDFIFEHKvD4CbKP5sECHWM
- g11F7/xN7A1LiDlGL0uc3VTvCAhVYIVdRMLcv0VszLz55LxQv7tIPetqn7LBT7+UFsIY5sVzRLZ
- WvGm+cIsliRR5tlrSDcRQaXKmuPqxoDG1yNI6Rc5LNKT+LpQMadfyIEQg84g27AitBzQ8Xpx8m/
- tsHuvAvoz4xcXQpf+iavNb+zEekVf4UefIUlyFu4zJ5pKlE500WGPlOP405oto96xcPuOt3LRpc
- GcQUtb03mdieIvzh7TbqvzM1bujvyQG0jZw==
-X-Received: by 2002:a05:620a:4588:b0:939:85e4:44dd with SMTP id
- af79cd13be357-93c15e577c6mr460610385a.36.1790067638993; 
- Tue, 22 Sep 2026 02:00:38 -0700 (PDT)
-X-Received: by 2002:a05:620a:4588:b0:939:85e4:44dd with SMTP id
- af79cd13be357-93c15e577c6mr460604585a.36.1790067638544; 
- Tue, 22 Sep 2026 02:00:38 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fdace7941sm42530635e9.2.2026.09.22.02.00.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Sep 2026 02:00:37 -0700 (PDT)
-Message-ID: <0690255e-020d-4c11-ae46-d0968b630ffa@oss.qualcomm.com>
-Date: Tue, 22 Sep 2026 11:00:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/functional: test_acpi_bits requires TCG
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1x8wOW-0002C2-5j; Tue, 22 Sep 2026 05:02:33 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hq4fHjzSNQ6l/p6UuzyDNm/WkEbwLbZo7zAQxxxYYetABQouFJzgQJfVjnnA2h/wpP2Vxja53mG5uOhgJJS6ZV3BW6X+OUJHTFSsV4cmwEhdIizY+BKd/at6LNf5l1XubR5o8foq8IJWH5XFkqPlOzzhCEfXK3mC8hnXjmb9ySro2zsQ3hnHFcEOvJ84rR6WHA9qv/niw+4xHB9p+p5RHPPCil+ofnaM9hKWWm1jSJbSVOAEv5z0BzVQZ7gq3R5Q1YNB9QrVynsnVd1w/2Do73C91qVnyY4QgBJVXZBc5eTcszMks5KUT2MR41PmUiij19ICgSr2hJFfzPv6VN2ipA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1/x/oDfZOgXCh6jMRafjWduMNrsHyu4OG8lf9qexVfA=;
+ b=J1H6Y1WpvKAZHpElxl5cuFnvLYAShuATx8qNuufN0Gy7XH1qdliSWnumuRYcBFvpcUerGaStTfU2pOix4d5UClB6M4M4xNayaXOkiVbpx77PoMSPl4t3OhmCMVoTxd2shH0O/dEo94ZAyBEQhpjr+ylIgMMqg9relSt/QUk7urEVeniV6ATG24VzsAy/6pGYGbPkvOWW9RN8OwCFOHdz54xXdblj+u5dJOp/W0pp09g6F5gRFlcnTLVIHM92+TaH6X/BeqRXOFzf/sRqPa2VpUkaJZAHdsbtDi7sWGeMTi31FgC3OGRmSgnDy65j6wv8pgHaVZoW+V7IIQUMucr7Vg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1/x/oDfZOgXCh6jMRafjWduMNrsHyu4OG8lf9qexVfA=;
+ b=bmqPmRfyTAcc5tpU/gqOYJeGap6/h8r0Gp7J0AClb2boHuJe5Gjk8gb3/qMjwFXHBUC5XpFfFuutPmwa3bffUsyPQ53xMxUDoXFTAP9YoBl7sQyr3xsT1NdlwiJiLg6nKmf0bJ+Lo92qqOZwLHFIs4cP03e2ZRSAS3NbD1InQkJM69zXV7YwZvmc7LiCocTFF85zb70l4Foz+aENDiDTX8QaPj56GBLj+zr24q8eX3Dq154htERMkYSwr3HGbHItUXEoMlo7nQl+3NZvPOJhAbIM1EKCJBTZ391Rk6OsjgRbUqXHJunirO+w/WWFUAZTsmwdE+J0O089R+ir6JaCmA==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by TY1PPFFE5B965AC.apcprd06.prod.outlook.com (2603:1096:408::933)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Tue, 22 Sep
+ 2026 09:02:19 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
+ 09:02:19 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 19/19] tests/functional/arm/test_aspeed_ast1030: Test the
+ usbredir server transport
+Thread-Topic: [PATCH v1 19/19] tests/functional/arm/test_aspeed_ast1030: Test
+ the usbredir server transport
+Thread-Index: AQHdSnESvaoOW9LDRE6jBve2Ld0n9Q==
+Date: Tue, 22 Sep 2026 09:02:19 +0000
+Message-ID: <20260922090154.1792077-20-jamin_lin@aspeedtech.com>
+References: <20260922090154.1792077-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260922090154.1792077-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260921160815.1623803-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260921160815.1623803-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: tkP5pWZ99rgNKCFlBUKLyEloep2bZkCr
-X-Proofpoint-GUID: tkP5pWZ99rgNKCFlBUKLyEloep2bZkCr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDEyOSBTYWx0ZWRfX8/wMg+r2doqm
- ObQAC3qezYo2YTZWySSv2xeoA1Ws9gmHsMTXJO1WSxuhLOpf6UPT3GfTvI3d7YyCcaAAObSh4Yv
- X0fbm0Yp0BPW3iMzMWtK0vkppqVJ1dytFEEIp3nQ8Tr5bCRBILWTqzPI7zaEa0tNklOBnGhKaSw
- yRHNYuDYWJBTBTotkKQ7rXU21NVg9UtX9i8dzlSazulyyz73j3txTR3Oi52Pc5vp4BVmJXsYLRb
- aYCHuZZAHYuIxDvuT5Op010bDzK9PG6D+bk+Vu/GT58ATcVSsuZ9QdQgTjTKmgFPK2XaQVYBkq4
- lZadfY3eWp58OW/cxJiy2EmH4WvdQHJLD/AsxxSRHJ6wxtwLIlIWCeNpZXn16Oss6pTdvQtisV1
- El5cfq4I/UBe+d5n4nZrVd6vP7QdT3UXjONhX9BiylWWKYblaVMaBmEUXFABheQOAsqfyi3bICY
- auzuuOct83y24L1/Zkw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDEyOSBTYWx0ZWRfX6mVpqmYLCVTd
- awKFvks+zBJ8lAF5Y9UjDKLXQXN0c/fXrFtHK11aF3zruzWDTeP8dytBYmcI+HyAcFMX2gwncsU
- 9j+J1YNbhENzmpPTjUpFvzaqvFJ8t6M=
-X-Authority-Analysis: v=2.4 cv=TvFzFzXh c=1 sm=1 tr=0 ts=6ab243b8 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=wytsGZFW8zzu6hiwPI4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_07,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220129
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TY1PPFFE5B965AC:EE_
+x-ms-office365-filtering-correlation-id: babdb6e5-4e89-4d25-e244-08df1888350e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|23010399003|366016|1800799024|22082099003|18002099003|38070700021|56012099006|10067099003|3023799007;
+x-microsoft-antispam-message-info: 8ny58op4CZOCaQATWZoJqZXdBm/vopmifFPgsOFRoiWfkUfr47D3Tabb1df0vJZ/ifedpQ8IJyB5AtDMfBmmUO4xtus5QFfiLMe5VrX5RGgaaHQz/YQpDtDiAN/L2Pu5pqQVsq09v2VtQCg1/ZBBCM8XAqxkd4MbgYnYZMldk/1TgExJMAGhOW31aPtLizSYILFTAhPfmvgCSNeOEKUe7AuhAQxIrK/Ne24ZiQZzCges1kS4iBHGmaJXgWe+JXIUZ/2P1e39AcCdmOo7SkETIjvsyMJG7AnQ3RAtPpeQLVKdIV9tIR7JpVY/78NfEKOqi4en/jF83HtH/1eRXvTVMRzXdZ8ZzkVwy1Pm2Lb7SabNh63PIe8HB4Rr+whAt+cwGK0XUtRtXnrYFh4X1bZbfQjdoMAjNOPU4M9UmY90Cx9x+QbgvprR8jAtaB83vg0g6XsyPXIvFgjx9Twf6QQYakUaUE5SqYwVMgGepNyiowfXox2wYpGsF2s62wc3gh4uDQeDZUQUJ151kGmPZ0FdfUOHu2Fmrw5uoaVEgwhaHEpKZ3k35SeBpxIzWWA2Jhjnw4vO6fepr7D4Cs9fpKOAyC4x3FCSyPO9WBlqEExUbyhK4cqb8rr3rl7pNw9Btg673Cps0xDa/jPrJe3WG+3CfwgfP4A2fXgmbc9GfxqE3lSSu6YX6aIRONKeiVZi1q/T
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(22082099003)(18002099003)(38070700021)(56012099006)(10067099003)(3023799007);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?gEVx1UuL2BLAjC+iLGaM7hcdg1wE+MM47lD0wFddrDO32bYnCkZctvy5pq?=
+ =?iso-8859-1?Q?J/MFVeBFGw1N5UvKCak2Gon8A8tHB3l4p3r+FvraZGTL7PydAebipaOJbH?=
+ =?iso-8859-1?Q?RCWfByE9ziNwhHXqISm1mxEMigvu7P1qOM3gS24t3LLXv6TEsfs2P8VpE6?=
+ =?iso-8859-1?Q?5GkQsWvRM+4J1EDwMELGyT1jkfOLjFhC7w/GT5amihioxliXb5Y2LZ/Trt?=
+ =?iso-8859-1?Q?SkHRaJ3sgiVlXYRgSaQT/FzLFUotr7AVPxfkPbfJWXoX7b75J7sRSobbwy?=
+ =?iso-8859-1?Q?MyzDyyiRY75Ed5VirnletXV3EZZiqcovRpwlxygBBagf+fcs98qplJUOyL?=
+ =?iso-8859-1?Q?mm8SDZXBnLxAe1cG3nmicib0NLwA1oMouHitLxsP1X1g0/0ThW7lq1hbHJ?=
+ =?iso-8859-1?Q?LYSHIxeXOn02ZSVQ4IsvyiAPvxNB+EztHOC46EaAv45H5leM+KEqLvjz7m?=
+ =?iso-8859-1?Q?WlPbl86+X7nAWloPlCuTExf7NH7FOdy78ugTjvvQw3tvevesqlDyMpnZzT?=
+ =?iso-8859-1?Q?PzJ8LRqNUoKdGnRK3JsFqbn5EJcIm7eVNCsCoUF4+3xsU2nPvSMxIC8SdF?=
+ =?iso-8859-1?Q?DxGweyY3I3t1dU+J1Fd0VuWjRIMTkfgIyih8XjtWa3He0wEf+9CIdO10Gp?=
+ =?iso-8859-1?Q?TL75lov6kkeZqaiXIchU2hdSD7MTTWg+Ny22+XUqDjl7R73tQVZrEWNbU+?=
+ =?iso-8859-1?Q?+Idwkv6/y8WCoL3jeudymXNPLH6itEWhUMtp/cuVJPQIb4ODSkgxd4rwKI?=
+ =?iso-8859-1?Q?hGBMigIggqFGWbmt7Q8eM57GGBqEMTNAZJpb1y4/E3j6weFQRSGBRI0yP6?=
+ =?iso-8859-1?Q?i60e3wqF+CKQlNxbnVASQDctK1VmApq1H5wBAATS6U/qx8h6nme/Nr3z88?=
+ =?iso-8859-1?Q?NyQLdp95R30mDzOTqicObi4kHY/+YL7BDLlr3HKVGmAJR6mEMPluItJaek?=
+ =?iso-8859-1?Q?64IcqcKBIyzfUcoz+EAyg5dfCz2lFYr4USLDJUMphyRBdIOFl6Y3XIrXCS?=
+ =?iso-8859-1?Q?QBe6pPPOwXXN13HrRb1/T1LuLgPtPachvtxY5xSnxkLoVqYdp0fdV33nxX?=
+ =?iso-8859-1?Q?+ctZ9j8kjJtMfBcOIfbhm5DFQ6JL9WCPB3PFr79jgLm/1TMMteUd8cVdy4?=
+ =?iso-8859-1?Q?aGxF90PK9cJuZH1lPYgUNaxaakDxr8G6jPdbs+mMm7aReoAvp62cQfKqbf?=
+ =?iso-8859-1?Q?uzRsrGUPmgsyiBuipDGfV+pCD2q1fYlSpaoOgwmkCarPNSwSUxh3pqudd5?=
+ =?iso-8859-1?Q?Tn/dHcrGo8uD6LJiiiNWco6v+ehbP+01U3+P1hXm/1NcmRohEkleyKfyZr?=
+ =?iso-8859-1?Q?6C/MK66stV10FjsZ27/tKQAP03XNnmItJmRratxlpmdgCEYjJ5rovhQOjY?=
+ =?iso-8859-1?Q?SlMCV9y46yj6S9iVoNI6b0gk3hkq79lnZ2I7fclplSLfUdTP4s42DZwm2o?=
+ =?iso-8859-1?Q?uQa14JyYvFBHgHHbu4NrzYDpHmIu+h6D9PvjvNhJzLQ7PoBq8y61bNlBYt?=
+ =?iso-8859-1?Q?jliRIHBGkV0UmeRlANUMK67XKXCZxvRVhxjiq/UGjDyguF7JrDEXU3EjRQ?=
+ =?iso-8859-1?Q?ULME0Ybs4nq6vgK2SHtGAM6yGH55bvyvY4z18VVakE7oRwCP28W7scIoQh?=
+ =?iso-8859-1?Q?1uK0uQfV6OC6FyBahaLkmAkN5aTABSw3G3immKnGTrK9tqgUhYyJi49l/j?=
+ =?iso-8859-1?Q?uia0J8B2A9QcrAbaVii1NlOcQzrQFXrW7DophjI4WVQwXUo99XVaram9dF?=
+ =?iso-8859-1?Q?ED0D9Q0VF0pmgjWipeyoInFDLcUZ9A3DxV57SK7Yy4YqNnGjwiuu/up53U?=
+ =?iso-8859-1?Q?yNjm2FxIOA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: t78XAvjAp9j3g26zjbS1PVViuFZ+/oI/ZwGYQVf0s+GBjrMcv8flNbQiX8mWzpollTIXQ0JfU84CedYqfQsmPFWCCNXXKmadzofLg1Eyg2EoyzNYUTeF44/fIEcdMsPv04Pv3o92vXd4B5rmkefqNb88qerYtNOZDq2exEdh1kDdGVkPendGUyrGkiJdolca3fEK/PqLhWRcuXyEyKdR9lpwUldI/PVFrG/Bthqe7hR0rSaqfMoms1jHEo5XeJK6VZLWLMqdPbqvKGBpyFekn05L8iYX9ilAtzTzJQirGT1ZFKmxXjnH7FRmlSMt5rAhmX6sKVylLwVNBgQQYLLZmA==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: babdb6e5-4e89-4d25-e244-08df1888350e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2026 09:02:19.4343 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xuaN3kvOyX2MGk4fuDY2A3+btbbRcdVrCmia9wcPnrAKsgUK7nlxYLMGkqAN/xcGqMu17UK7UaTa2vSEAkbe5k/VobL2bFLsV8k21zLsDzA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPFFE5B965AC
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,35 +148,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/9/26 18:08, Alex BennÃ©e wrote:
-> Running a full thorough test suite on a KVM-only build fails due to
-> acpi bits needing icount, therefor tcg. Declare the restriction so the
-
-"therefore"
-
-> test harness can skip it.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/functional/x86_64/test_acpi_bits.py | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/tests/functional/x86_64/test_acpi_bits.py b/tests/functional/x86_64/test_acpi_bits.py
-> index ec716d643bf..62c57d23f6c 100755
-> --- a/tests/functional/x86_64/test_acpi_bits.py
-> +++ b/tests/functional/x86_64/test_acpi_bits.py
-> @@ -303,6 +303,8 @@ def test_acpi_smbios_bits(self):
->           """The main test case implementation."""
->   
->           self.set_machine('pc')
-> +        self.require_accelerator('tcg')
-
-Could you add a "# see icount comment below" comment? With that:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-> +
->           iso_file = self.scratch_file('bits-%d.iso' % self.BITS_INTERNAL_VER)
->   
->           self.assertTrue(os.access(iso_file, os.R_OK))
-
+Export the AST1030 UDC gadget with usb-redir-server and import it on an=0A=
+AST2600 with usb-redir, then check that the AST2600 enumerates it. That=0A=
+covers the announce, control and enumeration paths of the transport, and=0A=
+the UDC model behind it.=0A=
+=0A=
+The two machines have to come from the same QEMU binary, because a=0A=
+functional test gets only one. ast1030-evb and ast2600-evb are both in=0A=
+qemu-system-arm.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ tests/functional/arm/meson.build            |  1 +=0A=
+ tests/functional/arm/test_aspeed_ast1030.py | 52 +++++++++++++++++++++=0A=
+ 2 files changed, 53 insertions(+)=0A=
+=0A=
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.=
+build=0A=
+index 61b00932db..cfbd376b0d 100644=0A=
+--- a/tests/functional/arm/meson.build=0A=
++++ b/tests/functional/arm/meson.build=0A=
+@@ -1,6 +1,7 @@=0A=
+ # SPDX-License-Identifier: GPL-2.0-or-later=0A=
+ =0A=
+ test_arm_timeouts =3D {=0A=
++  'aspeed_ast1030' : 720,=0A=
+   'aspeed_palmetto' : 120,=0A=
+   'aspeed_romulus' : 120,=0A=
+   'aspeed_witherspoon' : 120,=0A=
+diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional=
+/arm/test_aspeed_ast1030.py=0A=
+index 83a96ec322..d1d059c83e 100755=0A=
+--- a/tests/functional/arm/test_aspeed_ast1030.py=0A=
++++ b/tests/functional/arm/test_aspeed_ast1030.py=0A=
+@@ -6,6 +6,8 @@=0A=
+ #=0A=
+ # SPDX-License-Identifier: GPL-2.0-or-later=0A=
+ =0A=
++import os=0A=
++=0A=
+ from aspeed import AspeedTest=0A=
+ from qemu_test import Asset, exec_command_and_wait_for_pattern=0A=
+ =0A=
+@@ -68,6 +70,56 @@ def test_arm_ast1030_zephyros_1_07(self):=0A=
+                 'kernel uptime',=0A=
+         ]: exec_command_and_wait_for_pattern(self, shell_cmd, "uart:~$")=
+=0A=
+ =0A=
++    ASSET_SDK_V1103_AST2600 =3D Asset(=0A=
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.0=
+3/ast2600-default-image.tar.gz',=0A=
++        '47e3656a14bf7a4de28d3dfbf48bc2325443bc42d270f3bc82646f92f6dea165'=
+)=0A=
++=0A=
++    def test_arm_ast1030_usbredir_to_ast2600(self):=0A=
++        self.require_device('usb-redir-server')=0A=
++        self.require_device('usb-redir')=0A=
++        self.set_machine('ast2600-evb')=0A=
++        self.set_machine('ast1030-evb')=0A=
++=0A=
++        ast1030_kernel_file =3D self.archive_extract(=0A=
++            self.ASSET_ZEPHYR_3_08, member=3D"ast1030-evb-demo/zephyr.elf"=
+)=0A=
++=0A=
++        ast2600_image_file =3D self.archive_extract(=0A=
++            self.ASSET_SDK_V1103_AST2600,=0A=
++            member=3D"ast2600-default-image/image-bmc")=0A=
++        sock =3D os.path.join(self.socket_dir().name, 'usbredir.sock')=0A=
++=0A=
++        udc =3D self.get_vm(name=3D'udc')=0A=
++        udc.set_console()=0A=
++        udc.add_args('-kernel', ast1030_kernel_file, '-nographic',=0A=
++                     '-chardev',=0A=
++                     f'socket,id=3Dusbredir0,path=3D{sock},server=3Don,wai=
+t=3Doff',=0A=
++                     '-device',=0A=
++                     'usb-redir-server,id=3Dudcredir,chardev=3Dusbredir0',=
+=0A=
++                     '-device', 'aspeed.udc-gadget,bus=3Dudcredir.0,'=0A=
++                                'udc=3D/machine/soc/udc')=0A=
++        udc.launch()=0A=
++        self.wait_for_console_pattern('Booting Zephyr OS', vm=3Dudc)=0A=
++        exec_command_and_wait_for_pattern(self, 'usb enable', 'uart:~$',=
+=0A=
++                                          vm=3Dudc)=0A=
++=0A=
++        host =3D self.get_vm(name=3D'host')=0A=
++        host.set_machine('ast2600-evb')=0A=
++        host.set_console()=0A=
++        host.add_args('-drive',=0A=
++                      f'file=3D{ast2600_image_file},if=3Dmtd,format=3Draw'=
+,=0A=
++                      '-snapshot',=0A=
++                      '-chardev', f'socket,id=3Dusbredir0,path=3D{sock}',=
+=0A=
++                      '-device', 'usb-redir,chardev=3Dusbredir0,bus=3Dusb-=
+bus.1')=0A=
++        host.launch()=0A=
++        self.wait_for_console_pattern('Starting kernel ...', vm=3Dhost)=0A=
++        self.wait_for_console_pattern('login:', vm=3Dhost)=0A=
++        exec_command_and_wait_for_pattern(self, 'root', 'Password:', vm=3D=
+host)=0A=
++        exec_command_and_wait_for_pattern(self, '0penBmc',=0A=
++                                          'root@ast2600-default:~#', vm=3D=
+host)=0A=
++        exec_command_and_wait_for_pattern(self, 'lsusb',=0A=
++                                          'ZEPHYR Zephyr DFU sample',=0A=
++                                          vm=3Dhost)=0A=
++=0A=
+     def test_arm_ast1030_otp_blockdev_device(self):=0A=
+         self.vm.set_machine("ast1030-evb")=0A=
+ =0A=
+-- =0A=
+2.53.0=0A=
 
