@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C95C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 18:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EABCC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 18:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x95ev-0001Lj-Fp; Tue, 22 Sep 2026 14:56:05 -0400
+	id 1x95hg-00021n-QB; Tue, 22 Sep 2026 14:58:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x95ei-0001K9-V6
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:55:56 -0400
+ id 1x95hJ-0001zK-37
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:58:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1x95ef-00080O-UA
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:55:51 -0400
+ id 1x95hG-00089r-Vl
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:58:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790103347;
+ s=mimecast20190719; t=1790103508;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Umie0JWj14NlmSGDgMBZ3r1wJElkGN8tC0XZyyve+Ms=;
- b=FB5Si1vM8bRDMY2LZCinvHjX3ku4weLmk3P3sveaOgrmQnQsoYr+KHFKxqDRm9ZdBxMbhR
- lZk1fmynhMCcCe75LfbJTWxUmmVDI5YCNJWLVimP8CJwLCy2Sa0XAw/k1lA4Kg8GglG8wu
- d5hJaW6bgtzmr5V+COzXcJpW2Ws0cic=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UfEL5GEn9vEFI9yqtEcnhMHBgKRYMRsJQCuZtJWl3Ls=;
+ b=e6sK4OaUlAXzrDlxYR+YKHoBtqESgBrVW5gqu5DcwAZZ5kmN314MqbHXtIu27M9VPwAsxX
+ x7ht0OWZjrOSHDP+vd7H0JJl/fxs0OjyQ3nc/+Ex5e/ZkltItwUuek91hMKKpoaXG/T7rU
+ uJdTb2g43lx1zfVyjrlviiOunExGV30=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-dnzW_g77NAKgEd6rt_xOrQ-1; Tue,
- 22 Sep 2026 14:55:44 -0400
-X-MC-Unique: dnzW_g77NAKgEd6rt_xOrQ-1
-X-Mimecast-MFC-AGG-ID: dnzW_g77NAKgEd6rt_xOrQ_1790103342
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-Ob5J_uCqPz64LDDQdP9cog-1; Tue,
+ 22 Sep 2026 14:58:23 -0400
+X-MC-Unique: Ob5J_uCqPz64LDDQdP9cog-1
+X-Mimecast-MFC-AGG-ID: Ob5J_uCqPz64LDDQdP9cog_1790103501
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31D5D195422F; Tue, 22 Sep 2026 18:55:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B069019539B5; Tue, 22 Sep 2026 18:58:21 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E547C180057F; Tue, 22 Sep 2026 18:55:40 +0000 (UTC)
-Date: Tue, 22 Sep 2026 14:55:39 -0400
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C028741B; Tue, 22 Sep 2026 18:58:20 +0000 (UTC)
+Date: Tue, 22 Sep 2026 14:58:19 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Niklas Cassel <cassel@kernel.org>
-Cc: Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Sam Li <faithilikerun@gmail.com>,
+Cc: Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Sam Li <faithilikerun@gmail.com>,
  Damien Le Moal <dlemoal@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 04/15] block: add a helper to check if a zone is
- conventional
-Message-ID: <20260922185539.GA340123@fedora>
+Subject: Re: [PATCH v6 05/15] hw/block: derive the zone write granularity
+ from the block sizes
+Message-ID: <20260922185819.GB340123@fedora>
 References: <20260921142819.2916043-1-cassel@kernel.org>
- <20260921142819.2916043-5-cassel@kernel.org>
+ <20260921142819.2916043-6-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="w4nkjRT/XvSFQ8MB"
+ protocol="application/pgp-signature"; boundary="obe6NLHSlNOQgMdP"
 Content-Disposition: inline
-In-Reply-To: <20260921142819.2916043-5-cassel@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <20260921142819.2916043-6-cassel@kernel.org>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -90,52 +90,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---w4nkjRT/XvSFQ8MB
+--obe6NLHSlNOQgMdP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 21, 2026 at 04:28:06PM +0200, Niklas Cassel wrote:
-> Whether a zone is conventional is encoded in the most significant bit of
-> the write pointer that the block layer keeps for it, so a caller that
-> wants to know has to reach into bs->wps->wp[] and apply BDRV_ZT_IS_CONV()
-> to the raw value. virtio-blk does that, which means a device model both
-> knows how a block driver stores its write pointers and knows what one of
-> the bits of a write pointer means.
+On Mon, Sep 21, 2026 at 04:28:07PM +0200, Niklas Cassel wrote:
+> For ZBC/ZAC devices the write granularity is the physical block size, so
+> a 512e SMR disk exposed through a host_device backend has a logical block
+> size of 512 and a zone write granularity of 4096. We told the guest
+> driver 512 while raw_co_zone_append() rejects anything that is not 4096
+> byte aligned, so the driver saw a plain I/O error for a request it had
+> been told was valid.
 >=20
-> Add an accessor next to bdrv_zone_index() and use it there, so that the
-> encoding stays with the code that chose it.
+> Report the larger of the logical and the physical block size instead.
+> Both are properties of the device model, so the value that a guest is
+> given does not change when it is migrated to a host whose disks differ,
+> which a value taken from BlockLimits would. It is also what a guest
+> derives for itself: blk_validate_zoned_limits() raises
+> zone_write_granularity to the logical block size, and for a SCSI disk
+> sd_zbc_read_zones() takes it from the physical block size.
 >=20
-> Unlike bdrv_zone_is_full(), this does not need the write pointer lock.
-> get_zones_wp() only ever sets the bit for a conventional zone and never
-> clears it, and a zone does not change type, so the answer cannot become
-> stale. The rest of the word does change, on every write, which is what
-> the lock is there for.
+> blkconf_blocksizes() rejects a logical block size larger than the
+> physical block size, so this is the physical block size in practice. It
+> is expressed as the larger of the two because that is the constraint
+> which applies: a guest cannot issue a write finer than the logical block
+> size, and the medium cannot take one finer than the physical block size.
 >=20
+> Add it as a helper next to blkconf_blocksizes(), since it is derived from
+> a BlockConf, and use it for the zone append offset check in
+> check_zoned_request(), which validated against bs->bl.write_granularity.
+> The value reported to the driver and the value that requests are
+> validated against then cannot drift apart. The helper cannot return zero
+> because blkconf_blocksizes() always leaves a logical block size behind,
+> so the check no longer needs to guard against an unset granularity.
+>=20
+> Fixes: 4f7366506a96 ("virtio-blk: add zoned storage emulation for zoned d=
+evices")
 > Signed-off-by: Niklas Cassel <cassel@kernel.org>
 > ---
->  block/io.c               | 7 +++++++
->  hw/block/virtio-blk.c    | 2 +-
->  include/block/block-io.h | 6 ++++++
->  3 files changed, 14 insertions(+), 1 deletion(-)
+>  hw/block/block.c                 |  5 +++++
+>  hw/block/virtio-blk.c            | 13 +++++++------
+>  include/block/block_int-common.h |  7 +++++++
+>  include/hw/block/block.h         | 13 +++++++++++++
+>  4 files changed, 32 insertions(+), 6 deletions(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---w4nkjRT/XvSFQ8MB
+--obe6NLHSlNOQgMdP
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqyzysACgkQnKSrs4Gr
-c8i0bAf/V9tM2o/UXXIslGlvuXYY93X8etVUmFkBMdHVsJ5/dTJZQ4OLBQrMHxKv
-2M80ywkcIgk5gd3OkxYdlD3IiReoYpZMHrLcB+36owgHd3OmviB8Sk+SVpuioIUE
-P1qxL//zgj6O1s3OOc6Vz7g1p23sBuK4Wa9sOmWz/ezqeYYH61lxiTVDm9HVxUn7
-Eixxo6GITbT2v+u0v/Y846BqtePVscvcLaPyptNCVDvLPEm4rf+4egVU94wxeaUZ
-/nLSghKZEEHwtfQgCGKK+jmq14MlHahHOAnkdeH/oi9C6qxIF6MVnMnlfmXvLlYX
-VfMV0wZj3w9QpP5lugxL1kI9X0QjXw==
-=ZW7I
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqyz8sACgkQnKSrs4Gr
+c8iK0wf+KGQGe26gGGAgwnjDfl+8UM7s55jTW0TSkz6siY15Q43FAP60sSdI6l3J
+LCwf0g274W8Kd2v1GzYNa//1XsvLb1UrJOe6eGjNAzVcp9UyS7VOfm383zrA7YPI
+SuCZJkLoq/lFAWAxolGP5SZYIar1iYhqQiDxreF0GfLfGKCFPQkzxEd4H8ICgTTz
+RWmua8M358CK/qABatos7ywRTcKZbuhCd8LYHI+W3h6n7sDEerTcZfubxq06yR07
+h+71vVwNzDnvNPMSgpPp71Na5Un+krfbfCyAIinnUlJQ8+aDwaNIzpjc9scdojay
+e1n5S3Vrs6z28xOMM5NnQ3ST0WMuWg==
+=z20z
 -----END PGP SIGNATURE-----
 
---w4nkjRT/XvSFQ8MB--
+--obe6NLHSlNOQgMdP--
 
 
