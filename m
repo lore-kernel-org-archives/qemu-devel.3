@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EC0C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1A2C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96xf-0003rS-8u; Tue, 22 Sep 2026 16:19:31 -0400
+	id 1x96yN-00052X-0j; Tue, 22 Sep 2026 16:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x96xY-0003dE-AN
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:24 -0400
+ id 1x96xn-0004GO-Rb
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x96xV-00080l-Hk
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:24 -0400
+ id 1x96xm-00083r-7H
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108360;
+ s=mimecast20190719; t=1790108377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U7QZsC7/FrFYicux7l6y28QFROmIc8OD1R4x8lHt55U=;
- b=DDqtd6etdYMTqn5W5amCsuCqVvS88sPESJqV8EKyzbRTCoeg7U0cvywvG5KT1OJu9nDtHp
- zXfgpcGICT8ASLoOBLcGDQ3rfP4464hZzZLiVQyGKDH1OJ4eepyXItrN3weFTblULP6tti
- dW03RSIkHDnv5DiHSQNcQOXEui8bd+U=
+ bh=zITn74UA8P4zpzsh9dZZf0zY8iFD58J6Rtd4+E08IZQ=;
+ b=bNDVba6Zsmn+LmRd2bwkLkI9JC7mLhUF5bSZSvlUISqwvVmjaoZsGg6GdnTiHqCNAKS2Xi
+ 1ENQ4+SxU8yxacIMmwv1gbr3jv5xRRxHKx6hHGZaDIBHIvuIcu5hI2fffHQTtWBJ7WQovx
+ CHdu5R5+qjhdyYIoN9JVaYKTO4Si0zo=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-foUvt0-OO22oB1akfLawSg-1; Tue,
- 22 Sep 2026 16:19:18 -0400
-X-MC-Unique: foUvt0-OO22oB1akfLawSg-1
-X-Mimecast-MFC-AGG-ID: foUvt0-OO22oB1akfLawSg_1790108358
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-NinC_KgGPBqcDTom4EyGgQ-1; Tue,
+ 22 Sep 2026 16:19:36 -0400
+X-MC-Unique: NinC_KgGPBqcDTom4EyGgQ-1
+X-Mimecast-MFC-AGG-ID: NinC_KgGPBqcDTom4EyGgQ_1790108375
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E41818009DB; Tue, 22 Sep 2026 20:19:18 +0000 (UTC)
+ id 1A45318005A1; Tue, 22 Sep 2026 20:19:35 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF4F93000223; Tue, 22 Sep 2026 20:19:16 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 164521800446; Tue, 22 Sep 2026 20:19:33 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:17:10 +0400
-Subject: [PATCH 03/88] docs/devel: minor fix in qom documentation
+Date: Wed, 23 Sep 2026 00:17:14 +0400
+Subject: [PATCH 07/88] qemu-print: use monitor_puts() for any non-QMP monitor
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-3-ebc029d4bd80@redhat.com>
+Message-Id: <20260923-nohmp-v1-7-ebc029d4bd80@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=762;
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2591;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=4VznpQu3OqPi02T77SauoDwaSYF4Nnw6+ZHTkCNBZd4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKuGhUVyIxNFQUA7gyUHkkq0+4a7K8ke/G+x
- Z4VEpqAHeWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLirgAKCRDa6OEJdZac
- 5Z5hD/9yw5DrV7XUuZz8EHEJuTDSoe5xtqzKaOuE4Ix1KccpIylf4+64wXQX08aINUUtPjM6/3x
- DacS6f9I8U9kfwGicWWf4Vc1aQUEaWl5mcIySS22DjSyocnV7o2HEFO2acfljokG5/cghdnCR4o
- jk0fDlFpz9FdHVxJQlrv2G/a5IwfJdL4qmknhAIyNfWeJA78jVw/o4BAlnhUHCWIP/VojaasaSD
- 0nl5x0DSYezEZodE+0z9uuj2UdO+xJi6dSNDMcaInblTzU7KjC/xtfHPw8A5PP9Z+k7LAcp/S3F
- czDSmoiZBLiZ+NRZPAQ/Ly8ILpLdxu76NqC0WGafGjJV6+0/ucEWgSXOY9WywjUFvWhy11Q/JXB
- 2TBzuTfl5EUyLJN7uUCEjhgQI4BxnX1PRI1vfBT94shG851OFswltBaWTcpTpBN+kX5L0jlyOl/
- LQd9vzSrvdeglfZZRU0KLT2mANX/3qwkMlR1zNGwqn0pqpL7RMTDxJKhv4R8CznPI9Dd3WM22Vs
- cLyp5R2SEz1BdbymsFFuwkuqAHqFd4puwMIkJ9PhtoliA7BdJwHL8B2cMEq2SzQW+ypdCR86daC
- z4XW5BpVBcsM17SAimxure8+60DiYXHkbzs1uJqi3STZfVrYHKmlZX0+LxMq6ZLv7Cwb626aJgH
- WMH57PA6/M+6gvQ==
+ bh=UGcbFthFg1o910LN1ITwHs7jzoQGUbuOX/XNgbfh37A=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKuQymoL8P3d/muMi7Pg8a1TBHjE80Q4Mffk
+ u+VeTcSK76JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLirgAKCRDa6OEJdZac
+ 5aoHD/9Uh4USghAPf5JqmiLtWKUzQ18nLGKdSpkrGZCo0igumLped3yS8MeUwvhzbP8hsN8+8hP
+ ETuOlrAYKP8YTQPnx+EeeTgaPt3G4VgOgqY+VttAh/M/pS3d+VujvuPwO1ClPAkKHx1XogrwJAC
+ gb9nyZz3SqI9efdgs6s1GhxmUD1+0DzTEQA01cngTADrLlz2ivAbgKUoyitE3One6AXt5Fd4OXZ
+ YkqXIqr7ES4dVR3ghqe9pN4Da69GWSE3dFINkpSOJdlMiM8cJWPeIMH2HYf7oCWY4BNsyFK2270
+ 9OhDA5EQqiHkbENuz3/QNBgIpT3D9IV5IC80ZEEEaXkbWiodMWJJEuDSd4mTb06DD3lVv2IKO2I
+ 0dBrxnrkA0vJ1aRjMeiPDQReB8bTXzekLcxnrA4QcYNCLcpk1CSbv1/iTuD3oO5Z+DrqItksGOz
+ 7cQzPvwvIfihkxKOyeiVlseKE6V6pjr1sem1hUsAP3RSwOSDVBAdG+YIub3Bk5JeG01EOEyjBUl
+ KEreJ3AF17IoWRe1f/yjK/OAE4jQRkpRqCVKdTX+aiJfAyqE8wLJ0UTAGrY1I4ZEmrnVwCcB+dx
+ 7LCUyR5sTY3hMXYQvMS9WgrO+2Vo+li79YRxp33ZgXV0cwRUFx3ItLTaAYCvXLW0m2PECiI5Ww/
+ h+QT8h5WVDyeZOA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,26 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It declares an autoptr for the instance.
+Instead of requiring a MonitorHMP and going through
+monitor_hmp_vprintf(), use monitor_puts() on the base Monitor class.
+This allows qemu_printf() to work with any monitor type that
+isn't QMP, which will be needed to capture output via a bare
+Monitor used as a buffer.
+
+Add monitor_puts() since qemu_printf() is in libqemuutil.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- docs/devel/qom.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ stubs/meson.build    |  1 +
+ stubs/monitor-puts.c |  9 +++++++++
+ util/qemu-print.c    | 16 +++++-----------
+ 3 files changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
-index 935bb1004a78..9e467b6df857 100644
---- a/docs/devel/qom.rst
-+++ b/docs/devel/qom.rst
-@@ -328,7 +328,7 @@ This is equivalent to the following:
-    typedef struct MyDevice MyDevice;
-    typedef struct MyDeviceClass MyDeviceClass;
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 29b6644b2549..52c733e32a91 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -9,6 +9,7 @@ stub_ss.add(files('is-daemonized.c'))
+ stub_ss.add(files('monitor-core.c'))
+ stub_ss.add(files('monitor-cur.c'))
+ stub_ss.add(files('monitor-hmp.c'))
++stub_ss.add(files('monitor-puts.c'))
+ stub_ss.add(files('qapi-event-emit.c'))
+ stub_ss.add(files('replay-mode.c'))
+ stub_ss.add(files('trace-control.c'))
+diff --git a/stubs/monitor-puts.c b/stubs/monitor-puts.c
+new file mode 100644
+index 000000000000..c4cf4f632845
+--- /dev/null
++++ b/stubs/monitor-puts.c
+@@ -0,0 +1,9 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "monitor/monitor.h"
++
++int monitor_puts(Monitor *mon, const char *str)
++{
++    abort();
++}
+diff --git a/util/qemu-print.c b/util/qemu-print.c
+index ab09dd8600ec..323789f265f9 100644
+--- a/util/qemu-print.c
++++ b/util/qemu-print.c
+@@ -19,25 +19,19 @@
+ /*
+  * Print like vprintf().
+  * Print to current monitor if we have one, else to stdout.
+- * (if the monitor is QMP, fail without printing anything)
++ * QMP monitors are rejected (return -1) since they don't accept
++ * free-form text output.
+  */
+ int qemu_vprintf(const char *fmt, va_list ap)
+ {
+     Monitor *cur_mon = monitor_cur();
  
--   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDeviceClass, object_unref)
-+   G_DEFINE_AUTOPTR_CLEANUP_FUNC(MyDevice, object_unref)
- 
-    #define MY_DEVICE_GET_CLASS(void *obj) \
-            OBJECT_GET_CLASS(MyDeviceClass, obj, TYPE_MY_DEVICE)
+-    /* for all monitors: QMP & HMP */
+     if (cur_mon) {
+-#ifdef CONFIG_HMP
+-        /* don't use monitor_cur_hmp(), to avoid a second lookup */
+-        MonitorHMP *hmp = (MonitorHMP *)
+-            object_dynamic_cast(OBJECT(cur_mon), TYPE_MONITOR_HMP);
+-        if (!hmp) {
++        if (object_dynamic_cast(OBJECT(cur_mon), TYPE_MONITOR_QMP)) {
+             return -1;
+         }
+-        return monitor_hmp_vprintf(hmp, fmt, ap);
+-#else
+-        return -1;
+-#endif
++        g_autofree char *buf = g_strdup_vprintf(fmt, ap);
++        return monitor_puts(cur_mon, buf);
+     }
+     return vprintf(fmt, ap);
+ }
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
