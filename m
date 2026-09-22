@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445BFC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 14:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69585C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 14:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x91Nn-0006nC-U7; Tue, 22 Sep 2026 10:22:07 -0400
+	id 1x91Nr-0006no-4o; Tue, 22 Sep 2026 10:22:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1x91Nl-0006n4-Ql
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:22:06 -0400
+ id 1x91No-0006nS-IJ
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:22:09 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1x91Nk-0003sh-Ab
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:22:05 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1x91Nm-0003sq-Pa
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 10:22:08 -0400
 Received: from laptop.localdomain (unknown [81.196.141.38])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9441320B7167;
- Tue, 22 Sep 2026 07:21:13 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9441320B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id E097F20B7168;
+ Tue, 22 Sep 2026 07:21:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E097F20B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790086875;
- bh=GXl0OrpIHo70OFSunlyUzuZ4meTqDA4hxDgNoUZInIk=;
- h=From:To:Cc:Subject:Date:From;
- b=MEhvB9XgHjXpIVjOd4348s74ow2eInpa9SOJuVFNMl+5fqxWT4XV9RP00t/NPd4Xg
- w6JWvOHbyvyJBKjHZZJ4R8QFPrTtqaXc3C+OPt1BjA9KwVRh+0eWW3ArnNOkLZfZak
- deoKw6KGOnP9WOqb54nqYUrywSyxS6n6wzHUsB44=
+ s=default; t=1790086877;
+ bh=iCzV8EMCPTTVCSQXAxcWR4vFRF3sbv5u/XHGZnAHxf4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pPFlY27g3+jv8OdXwiaq41oCy5WaDPJKbyaV6hxZoVPzuOb6gJVasb+H0a4q1mWpM
+ 38FVjPM+WHRTZp4p46nercJAbZvhjNb68+MgyqJjtnQLlrZ/T5+ODLYgBKoWfthi+/
+ Nu8N+rHRkr3z5L5ud6rRSch6btK3DW+efdN9lLaE=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@microsoft.com>,
@@ -38,12 +38,14 @@ Cc: Magnus Kulke <magnuskulke@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Wei Liu <liuwe@microsoft.com>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@microsoft.com>
-Subject: [PATCH v2 0/2] acce/mshv: size XSAVE buffers from the hypervisor
-Date: Tue, 22 Sep 2026 17:21:54 +0300
-Message-ID: <20260922142156.89306-1-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v2 1/2] accel/mshv: size XSAVE buffers from the hypervisor
+Date: Tue, 22 Sep 2026 17:21:55 +0300
+Message-ID: <20260922142156.89306-2-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260922142156.89306-1-dblanzeanu@linux.microsoft.com>
+References: <20260922142156.89306-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -68,35 +70,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series allows Qemu to dynamically size the xsave area from the
-hypervisor by reading the property HV_PARTITION_PROPERTY_MAX_XSAVE_DATA_SIZE.
+Query MAX_XSAVE_DATA_SIZE at vcpu creation and cache it in MshvState.
+Introduce a new trace event for the xsave area size reported by the
+hypervisor.
 
-Previously, the xsave area size was set to 4kB and as a consequence AMX Tiles
-feature couldn't be enabled because it needs more than the 4kB allocated.
-With this change, Qemu enables all the xsave features in the partition, and it
-queries the hypervisor to retrieve the maximum size of xsave.
-The size is cached in `MshvState` at vCPU arch initialization time to be used
-later for MSHV_{GET/SET}_VP_XSAVE.
+Also fixes a leak of xsavec_buf on the get error path and switches
+qemu_memalign() buffers to qemu_vfree().
+No functional change on hosts reporting under 4 KiB.
 
-To correctly advertise AMX support, we remove the logic disabling the AMX at
-CPUID and partition level.
-
-Changes from v1:
-- change max xsave area size retrieval to be done only the first vcpu by
-  checking against the `first_cpu` global
-- change error handling for `mshv_get_max_xsave_size` and instead add assert for
-  the return value to signal something broken in case of failure
-
-Doru Blânzeanu (2):
-  accel/mshv: size XSAVE buffers from the hypervisor
-  accel/mshv: enable amx tiles support for guests
-
- accel/mshv/mshv-all.c       | 39 ++++++++++++++++++++++++------------
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ accel/mshv/mshv-all.c       | 21 +++++++++++++++++++++
  accel/mshv/trace-events     |  2 ++
  include/system/mshv_int.h   |  3 +++
- target/i386/mshv/mshv-cpu.c | 40 ++++++++++++++-----------------------
- 4 files changed, 46 insertions(+), 38 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 24 +++++++++++++++---------
+ 4 files changed, 41 insertions(+), 9 deletions(-)
 
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 5921ce693e..725ccd0511 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -162,6 +162,27 @@ static int get_proc_features(int vm_fd,
+     return 0;
+ }
+ 
++int mshv_get_max_xsave_size(int vm_fd, uint32_t *size)
++{
++    uint64_t value = 0;
++    int ret;
++
++    ret = get_partition_property(vm_fd,
++                                 HV_PARTITION_PROPERTY_MAX_XSAVE_DATA_SIZE,
++                                 &value);
++    if (ret < 0) {
++        error_report("Failed to get partition property MAX_XSAVE_DATA_SIZE");
++        return -1;
++    }
++
++    /* round up to page size */
++    *size = ROUND_UP(value, HV_HYP_PAGE_SIZE);
++
++    trace_mshv_xsave_data_size(value, *size);
++
++    return 0;
++}
++
+ static int create_partition(int mshv_fd, int *vm_fd)
+ {
+     int ret;
+diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
+index 859e8bfb0f..9473530140 100644
+--- a/accel/mshv/trace-events
++++ b/accel/mshv/trace-events
+@@ -12,6 +12,8 @@ mshv_mem_ioeventfd_del(uint64_t addr, uint32_t size, uint32_t data) "addr=0x%" P
+ 
+ mshv_hvcall_args(const char* hvcall, uint16_t code, uint16_t in_sz) "built args for '%s' code: %d in_sz: %d"
+ 
++mshv_xsave_data_size(uint64_t required, uint32_t allocated) "required=%" PRIu64 " allocated=%u"
++
+ mshv_handle_interrupt(uint32_t cpu, int mask) "cpu_index=%d mask=0x%x"
+ mshv_set_msi_routing(uint32_t gsi, uint64_t addr, uint32_t data) "gsi=%d addr=0x%" PRIx64 " data=0x%x"
+ mshv_remove_msi_routing(uint32_t gsi) "gsi=%d"
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 3dffe3c5fb..38b7525ef3 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -70,6 +70,8 @@ struct MshvState {
+     unsigned long *used_gsi_bitmap;
+     unsigned int gsi_count;
+     union hv_partition_processor_features processor_features;
++    /* compacted xsave area size rounded up to the page size */
++    uint32_t xsavec_data_size;
+ };
+ 
+ typedef struct MshvMsiControl {
+@@ -107,6 +109,7 @@ void mshv_arch_amend_proc_features(
+ void mshv_arch_disable_partition_proc_features(
+      union hv_partition_processor_features *disabled_features);
+ int mshv_arch_post_init_vm(int vm_fd);
++int mshv_get_max_xsave_size(int vm_fd, uint32_t *size);
+ int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
+ int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index f528dd2b9a..5b845b3e4e 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -157,9 +157,8 @@ static int get_xsave_state(CPUState *cpu)
+     int ret;
+     void *xsavec_buf;
+     const size_t page = HV_HYP_PAGE_SIZE;
+-    size_t xsavec_buf_len = page;
++    size_t xsavec_buf_len = mshv_state->xsavec_data_size;
+ 
+-    /* TODO: should properly determine xsavec size based on CPUID */
+     xsavec_buf = qemu_memalign(page, xsavec_buf_len);
+     memset(xsavec_buf, 0, xsavec_buf_len);
+ 
+@@ -172,11 +171,12 @@ static int get_xsave_state(CPUState *cpu)
+     ret = ioctl(cpu_fd, MSHV_GET_VP_STATE, &args);
+     if (ret < 0) {
+         error_report("failed to get xsave state: %s", strerror(errno));
++        qemu_vfree(xsavec_buf);
+         return -errno;
+     }
+ 
+     ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
+-    g_free(xsavec_buf);
++    qemu_vfree(xsavec_buf);
+     if (ret < 0) {
+         error_report("failed to decompact xsave area");
+         return ret;
+@@ -196,8 +196,8 @@ static int set_xsave_state(const CPUState *cpu)
+     size_t page = HV_HYP_PAGE_SIZE, xsavec_buf_len;
+ 
+     /* allocate and populate compacted buffer */
+-    xsavec_buf = qemu_memalign(page, page);
+-    xsavec_buf_len = page;
++    xsavec_buf_len = mshv_state->xsavec_data_size;
++    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
+ 
+     /* save registers to standard format buffer */
+     x86_cpu_xsave_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
+@@ -212,7 +212,7 @@ static int set_xsave_state(const CPUState *cpu)
+     };
+ 
+     ret = ioctl(cpu_fd, MSHV_SET_VP_STATE, &args);
+-    g_free(xsavec_buf);
++    qemu_vfree(xsavec_buf);
+     if (ret < 0) {
+         error_report("failed to set xsave state: %s", strerror(errno));
+         return -errno;
+@@ -2125,6 +2125,14 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     int ret;
+     X86XSaveHeader *header;
+ 
++    /* get the xsave data size */
++    if (cpu == first_cpu) {
++        ret = mshv_get_max_xsave_size(mshv_state->vm,
++                                      &mshv_state->xsavec_data_size);
++        /* If this fails, something is broken */
++        assert(ret == 0);
++    }
++
+     /* sanity check, to make sure we don't overflow the page */
+     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
+                       * sizeof(hv_register_assoc)
+@@ -2149,9 +2157,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+ 
+     env->emu_mmio_buf = g_new(char, 4096);
+ 
+-    /* Initialize XSAVE buffer page-aligned */
+-    /* TODO: pick proper size based on CPUID */
+-    xsave_len = page;
++    xsave_len = mshv_state->xsavec_data_size;
+     env->xsave_buf = qemu_memalign(page, xsave_len);
+     env->xsave_buf_len = xsave_len;
+     memset(env->xsave_buf, 0, env->xsave_buf_len);
 -- 
 2.53.0
 
