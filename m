@@ -4,42 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC0FC982FE
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 02:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D946C982F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 03:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8qUQ-0000A1-DB; Mon, 21 Sep 2026 22:44:14 -0400
+	id 1x8r0q-0004u8-AC; Mon, 21 Sep 2026 23:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1x8qUM-00009k-VG
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 22:44:11 -0400
-Received: from krgm.moe ([103.47.186.116])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1x8qUK-0000Hy-4v
- for qemu-devel@nongnu.org; Mon, 21 Sep 2026 22:44:10 -0400
-Received: from yuno-loong.localnet (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id ABAF2DFDB;
- Tue, 22 Sep 2026 08:14:04 +0530 (IST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org, Bibo Mao <maobibo@loongson.cn>
-Subject: Re: [PATCH RESEND] target/loongarch: add get_sys() helper
-Date: Tue, 22 Sep 2026 10:44:02 +0800
-Message-ID: <c2uZ6KRGTR2PC5qjJs95fA@krgm.moe>
-In-Reply-To: <250b3838-aec2-33fb-93d8-c84847168fae@loongson.cn>
-References: <20260920024305.18296-1-prcups@krgm.moe>
- <u3zKTxIUQm662wDx7NaOSA@krgm.moe>
- <250b3838-aec2-33fb-93d8-c84847168fae@loongson.cn>
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x8r0m-0004u0-4w
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 23:17:40 -0400
+Received: from mail-ed2-x0f.google.com ([2a00:1450:4864:33::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1x8r0k-0004AW-3V
+ for qemu-devel@nongnu.org; Mon, 21 Sep 2026 23:17:39 -0400
+Received: by mail-ed2-x0f.google.com with SMTP id
+ 4fb4d7f45d1cf-6aa22408406so5597086a12.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Sep 2026 20:17:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790047055; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bo5frz89jrBmF+VlNclIAHJCOCmbc4P136Z67m4rRrpZBFOsjeLEUnZKLLPJ0XDLzk
+ 3uiuZL5cyWr2HN5SshHTXVvzU6frOoHbbeXNeI/DcEjacLPPAThFuNZx43o9cPjyvq0H
+ pJmfixRXZcxKItIm3UqMtFrSh/xWxzeib9AimagMurRpcshgOgg5r/IebOxFoegRR4eT
+ Iva3ruo9rTserXU5Io7ImfXNLgyOcgHBppqnPG4h4cfh00nCnS8WUiaeACgigOJy9Cmy
+ pwNsNoYF1AZ57K3v6SjvZahNTDFsIuO6+QfndV6aJLkr4zwU0jUJvDQtYdCiQiOsUox3
+ ZcEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PqidSGbYfULF2f0+23lF1D4k6r5s90tgz70/QD5cl48=;
+ fh=oR6KT4T9R4DzEe393lAnUFWLAI2XD1MXqDS3E+1BJZc=;
+ b=WJpkSwdgET2xthxNDu9noFga6mh1lHDZFQEYy+puoQR5+VGV/d7AAW1aCT0Qd10wVO
+ ef2btSld6OlpnbtqE+aaR66lJ7pNo29CDK6T02sbsldpXSUZJzgGT01Dfglr9dw8SEMs
+ /T57+/4/sovTF8P8Suz2MJZrJSmzWnT9q1/EYnOHtYR1aPByy9FW9vM4jsiaqgcacFRZ
+ kY81ea25ENsVFj8gJyNH36uhcBqQC0aXU9C4ABkKnV6CNCyvbnBBEXmdTweeaLvWjhjR
+ vD84oMiGFl6kYCpBn/wUsCnzp6UhqRCe8pMsZAC0KWAHEG1spahjD7QmRVYx5019B+Qa
+ 9V8Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790047055; x=1790651855; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PqidSGbYfULF2f0+23lF1D4k6r5s90tgz70/QD5cl48=;
+ b=GIc3ZWUXs2ITRNX7rWz7RfVXMKUXwrra8PHz9YWBkZZzMITq/zKfXE6KaozwYUri+N
+ PlsC5mhzEazwQ55j84ky56Q55IXwxR3Oe5TTI30rVJU8KGBGJra8p+aMiMGS6ebRCLjM
+ cXd60UZN3As4lSaN5PkM9Iup8lauoTBdj+EAQACwYFsqBjVvMx+0kz3algxBqzvLn/wH
+ JBcShy1NHjyLGeC8dVlvAGTC8yoZRnMhQ4e57RFvJsurjjinwdUWYJzSr+fwcOx0AjFD
+ dX5sYnePZZsK3Zk6hzedjnZckTY6OwyH2jd5z0slPACzTLteJa28tk3cUHu8bmVJ+L2R
+ 60Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790047055; x=1790651855;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PqidSGbYfULF2f0+23lF1D4k6r5s90tgz70/QD5cl48=;
+ b=OQqVrmh3opsjpilWhu+J9CgZeMjC27UggdquvCd0HFIsUv56ppXPQ67kJ9nSR05kMR
+ +PgBVDylZH0kMcWIJXasVTlI0pr6VsOyrX+osPYHZF/O9Cbh9yKJNXM0140uhclqMrRC
+ R8OBjRwYkvPHNcrctg8PYjFd3yWtafqtUHQ3Xewzm50o48OXPy6At/mub8orMpEzTI4n
+ cToY4I7y6RsNLScottbG+S4XzX3dnyzxfXdh/1lr9mM9Y6CmUHSnF1DB9C9cDqg6QjCb
+ j6G8lSoYPyDU0HY0YrOnPUmSYgMxbWYbombC7vgGw6Dri32Ct9/N54AS+tOoWKFdRffv
+ w5MA==
+X-Gm-Message-State: AFuF++mWr07fWwF+9jTPPWeDlhnDTh1ZqrCVtXt7q2moBoBrGzw8Wvyg
+ NMNWlhwOrvgWNLQQSpJP+d2HUgjgQHyckdibgLsNTezxg78HAIWPFJSSzmAt0kP01HzoIGbDNIm
+ f6N1BIys05Yb5inRLjJVceOurmdK2owE=
+X-Gm-Gg: AYBFou3YRqWkpvsL7rcbTqDGwAwkeICg46vKK9urZ5dro9YLNcu/n3XT89mtodMZr2U
+ KrgtQO+LCl8F5kHQ98omxxhklp4L8rD5WUwjb6kVP4PWrS5DiNxMXHgvh/Cpm0yuiSzyyMy23YH
+ SRViQx5PaRtbgaY3nXtXItDtu5skPsa/gWs4Mg3jokHB3Vpam7K2qUf8NEhYJiPeAfx0BvddbxE
+ tskwsEYTRMqSwPgzlM1pcryB4IiyqUHEVsQ+oR/hSqP6HOKT5Pjy2L+T7rCCL0XpyZx/APTbZKu
+ kzZufwdDg9hGMCVZ807xCg4iH0F1ul5PTILIRIPR0k7iplFH4RbInJlw
+X-Received: by 2002:a05:6402:3785:b0:6a7:ee56:814d with SMTP id
+ 4fb4d7f45d1cf-6aa5798162fmr10875059a12.27.1790047055321; Mon, 21 Sep 2026
+ 20:17:35 -0700 (PDT)
 MIME-Version: 1.0
+References: <20260915101655.3216101-1-zhangckid@gmail.com>
+ <20260915101655.3216101-8-zhangckid@gmail.com>
+ <20260916194725.GD162769@fedora>
+In-Reply-To: <20260916194725.GD162769@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 22 Sep 2026 11:16:58 +0800
+X-Gm-Features: AcwNN1UgHQniBMSd_fmFh5js32hVdlyL8o2CuffZmSkWuZPqswSiHme6uczOf-Y
+Message-ID: <CAK3tnv+OCV5c=+13bVbg8XxTGf5EWTOJcXTry9+QVvWZF_4R+w@mail.gmail.com>
+Subject: Re: [PATCH V17 07/13] net/colo: track IOThread references using
+ path-based holder
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=103.47.186.116; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:33::f;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -55,216 +122,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026=E5=B9=B49=E6=9C=8822=E6=97=A5=E6=98=9F=E6=9C=9F=E4=BA=8C =E4=B8=AD=
-=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 09:30:53=EF=BC=8CBibo Mao wro=
-te=EF=BC=9A
->=20
-> On 2026/9/21 =E4=B8=8B=E5=8D=8812:20, SignKirigami wrote:
-> > On 2026=E5=B9=B49=E6=9C=8820=E6=97=A5=E6=98=9F=E6=9C=9F=E6=97=A5 =E4=B8=
-=AD=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 11:40:37=EF=BC=8CBibo Mao =
-wrote=EF=BC=9A
-> >>
-> >> On 2026/9/20 =E4=B8=8A=E5=8D=8810:43, SignKirigami wrote:
-> >>> Add get_sys() to retrieve a CPUSysState by VM level. Use it to access
-> >>> the host state in CPU initialization and reset paths, and name the
-> >>> local pointer host to distinguish it from the currently selected state
-> >>> returned by env_sys() or guest. There is no function change in this
-> >>> patch.
-> >>>
-> >>> Signed-off-by: SignKirigami <prcups@krgm.moe>
-> >>> ---
-> >>> This patch is a resend of [1], Sorry for wrongly handling Signed-off-=
-by.
-> >>>   =20
-> >>> [1]: https://lists.gnu.org/archive/html/qemu-devel/2026-09/msg05969.h=
-tml
-> >>>
-> >>>    target/loongarch/cpu.c | 45 +++++++++++++++++++++-----------------=
-=2D---
-> >>>    target/loongarch/cpu.h |  5 +++++
-> >>>    2 files changed, 27 insertions(+), 23 deletions(-)
-> >>>
-> >>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> >>> index f22f64efb8..c71531c1cf 100644
-> >>> --- a/target/loongarch/cpu.c
-> >>> +++ b/target/loongarch/cpu.c
-> >>> @@ -142,12 +142,12 @@ static void loongarch_la464_init_csr(DeviceStat=
-e *dev)
-> >>>        static bool initialized;
-> >>>        LoongArchCPU *cpu =3D LOONGARCH_CPU(dev);
-> >>>        CPULoongArchState *env =3D &cpu->env;
-> >>> -    CPUSysState *sys =3D env_sys(env);
-> >>> +    CPUSysState *host =3D get_sys(env, VM_LEVEL0);
-> >> Why env_sys() need be replaced with get_sys() in CPU init stage?
-> >>
-> >> Regards
-> >> Bibo Mao
-> > It needs to be distinguished from CPUSysState* which is gotten from
-> > VM_LEVEL1, and from current vm_level after LVZ is imported.
-> By my understanding, with loongarch_la464_init_csr(), its default level=20
-> is VM_LEVEL0 even if LVZ is supported. VMM hypervisor will set CSR=20
-> registers when start VM. Is that right?
->=20
-> With loongarch_cpu_reset_hold(), when vCPU is running in VM mode, there=20
-> may be reset/shutdown request.
->=20
-> Regards
-> Bibo Mao
-Sure, in loongarch_la464_init_csr(), the default level is VM_LEVEL0, and en=
-v_sys()
-is same as get_sys(VM_LEVEL0). Using host is to claim that host csrs are in=
-itialized,
-as there will be an initialization to guest CSR_ASID in this function. And =
-I think it will
-make things more clear to use env_sys() for situation which vm_level may ch=
-ange.
-Regards
-SignKirigami
->=20
-> > Regards
-> > SignKirigami
-> >>>        int i, num;
-> >>>   =20
-> >>>        if (!initialized) {
-> >>>            initialized =3D true;
-> >>> -        num =3D FIELD_EX64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
-> >>> +        num =3D FIELD_EX64(host->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
-> >>>            for (i =3D num; i < 16; i++) {
-> >>>                set_csr_flag(LOONGARCH_CSR_SAVE(i), CSRFL_UNUSED);
-> >>>            }
-> >>> @@ -300,7 +300,7 @@ static void loongarch_la464_initfn(Object *obj)
-> >>>    {
-> >>>        LoongArchCPU *cpu =3D LOONGARCH_CPU(obj);
-> >>>        CPULoongArchState *env =3D &cpu->env;
-> >>> -    CPUSysState *sys;
-> >>> +    CPUSysState *host =3D get_sys(env, VM_LEVEL0);
-> >>>        uint32_t data =3D 0, field;
-> >>>        int i;
-> >>>   =20
-> >>> @@ -408,19 +408,18 @@ static void loongarch_la464_initfn(Object *obj)
-> >>>        data =3D FIELD_DP32(data, CPUCFG20, L3IU_SIZE, 6);
-> >>>        env->cpucfg[20] =3D data;
-> >>>   =20
-> >>> -    sys =3D env_sys(env);
-> >>> -    sys->CSR_ASID =3D FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
-> >>> +    host->CSR_ASID =3D FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
-> >>>   =20
-> >>> -    sys->CSR_PRCFG1 =3D FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE=
-_NUM, 8);
-> >>> -    sys->CSR_PRCFG1 =3D FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, TIME=
-R_BITS, 0x2f);
-> >>> -    sys->CSR_PRCFG1 =3D FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, VSMA=
-X, 7);
-> >>> +    host->CSR_PRCFG1 =3D FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, SA=
-VE_NUM, 8);
-> >>> +    host->CSR_PRCFG1 =3D FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, TI=
-MER_BITS, 0x2f);
-> >>> +    host->CSR_PRCFG1 =3D FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, VS=
-MAX, 7);
-> >>>   =20
-> >>> -    sys->CSR_PRCFG2 =3D 0x3ffff000;
-> >>> +    host->CSR_PRCFG2 =3D 0x3ffff000;
-> >>>   =20
-> >>> -    sys->CSR_PRCFG3 =3D FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, TLB_=
-TYPE, 2);
-> >>> -    sys->CSR_PRCFG3 =3D FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, MTLB=
-_ENTRY, 63);
-> >>> -    sys->CSR_PRCFG3 =3D FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB=
-_WAYS, 7);
-> >>> -    sys->CSR_PRCFG3 =3D FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB=
-_SETS, 8);
-> >>> +    host->CSR_PRCFG3 =3D FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, TL=
-B_TYPE, 2);
-> >>> +    host->CSR_PRCFG3 =3D FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, MT=
-LB_ENTRY, 63);
-> >>> +    host->CSR_PRCFG3 =3D FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, ST=
-LB_WAYS, 7);
-> >>> +    host->CSR_PRCFG3 =3D FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, ST=
-LB_SETS, 8);
-> >>>   =20
-> >>>        cpu->msgint =3D ON_OFF_AUTO_OFF;
-> >>>        cpu->ptw =3D ON_OFF_AUTO_OFF;
-> >>> @@ -627,7 +626,7 @@ static void loongarch_cpu_reset_hold(Object *obj,=
- ResetType type)
-> >>>        CPUState *cs =3D CPU(obj);
-> >>>        LoongArchCPUClass *lacc =3D LOONGARCH_CPU_GET_CLASS(obj);
-> >>>        CPULoongArchState *env =3D cpu_env(cs);
-> >>> -    CPUSysState *sys =3D env_sys(env);
-> >>> +    CPUSysState *host =3D get_sys(env, VM_LEVEL0);
-> >>>   =20
-> >>>        if (lacc->parent_phases.hold) {
-> >>>            lacc->parent_phases.hold(obj, type);
-> >>> @@ -638,7 +637,7 @@ static void loongarch_cpu_reset_hold(Object *obj,=
- ResetType type)
-> >>>         * its value is equal to zero for boot cpu, it causes reboot i=
-ssue.
-> >>>         */
-> >>>        memset(env, 0, offsetof(CPULoongArchState, end_reset_fields));
-> >>> -    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
-> >>> +    memset(host, 0, offsetof(CPUSysState, end_reset_fields));
-> >>>   =20
-> >>>    #ifdef CONFIG_TCG
-> >>>        env->fcsr0_mask =3D FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
-> >>> @@ -655,17 +654,17 @@ static void loongarch_cpu_reset_hold(Object *ob=
-j, ResetType type)
-> >>>        }
-> >>>    #endif
-> >>>   =20
-> >>> -    sys->CSR_CRMD =3D FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
-> >>> -    sys->CSR_CPUID =3D cs->cpu_index;
-> >>> -    sys->CSR_TID =3D cs->cpu_index;
-> >>> +    host->CSR_CRMD =3D FIELD_DP64(host->CSR_CRMD, CSR_CRMD, DA, 1);
-> >>> +    host->CSR_CPUID =3D cs->cpu_index;
-> >>> +    host->CSR_TID =3D cs->cpu_index;
-> >>>   =20
-> >>>        /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 =
-*/
-> >>> -    if (sys->CSR_PRCFG2 =3D=3D 0) {
-> >>> -        sys->CSR_PRCFG2 =3D 0x3fffff000;
-> >>> +    if (host->CSR_PRCFG2 =3D=3D 0) {
-> >>> +        host->CSR_PRCFG2 =3D 0x3fffff000;
-> >>>        }
-> >>> -    tlb_ps =3D ctz32(sys->CSR_PRCFG2);
-> >>> -    sys->CSR_STLBPS =3D FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, =
-tlb_ps);
-> >>> -    sys->CSR_PWCL =3D FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tl=
-b_ps);
-> >>> +    tlb_ps =3D ctz32(host->CSR_PRCFG2);
-> >>> +    host->CSR_STLBPS =3D FIELD_DP64(host->CSR_STLBPS, CSR_STLBPS, PS=
-, tlb_ps);
-> >>> +    host->CSR_PWCL =3D FIELD_DP64(host->CSR_PWCL, CSR_PWCL, PTBASE, =
-tlb_ps);
-> >>>   =20
-> >>>    #ifndef CONFIG_USER_ONLY
-> >>>        env->pc =3D 0x1c000000;
-> >>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> >>> index c592f69885..477a5dee7d 100644
-> >>> --- a/target/loongarch/cpu.h
-> >>> +++ b/target/loongarch/cpu.h
-> >>> @@ -512,6 +512,11 @@ static inline void set_sys_state(CPULoongArchSta=
-te *env, CPUSysState *sys)
-> >>>        env->sys_state =3D sys;
-> >>>    }
-> >>>   =20
-> >>> +static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_le=
-vel)
-> >>> +{
-> >>> +    return &env->sys_states[vm_level];
-> >>> +}
-> >>> +
-> >>>    static inline CPUTimerState *env_timer(CPULoongArchState *env)
-> >>>    {
-> >>>        return &env->sys_states[0].timer_state;
-> >>>
-> >>
-> >>
-> >=20
-> >=20
-> >=20
->=20
->=20
+On Mon, Sep 21, 2026 at 9:37=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Tue, Sep 15, 2026 at 06:16:49PM +0800, Zhang Chen wrote:
+> > @@ -1404,6 +1410,7 @@ static void colo_compare_finalize(Object *obj)
+> >  {
+> >      CompareState *s =3D COLO_COMPARE(obj);
+> >      CompareState *tmp;
+> > +    g_autofree char *path =3D object_get_canonical_path(OBJECT(s));
+>
+> Did you test this? I think object_get_canonical_path() doesn't work here
+> because the object's ->parent link is already NULL:
+>
+>   static void object_finalize_child_property(Object *obj, const char *nam=
+e,
+>                                              void *opaque)
+>   {
+>       Object *child =3D opaque;
+>
+>       if (child->class->unparent) {
+>           (child->class->unparent)(child);
+>       }
+>       child->parent =3D NULL;
+>       ^^^^^^^^^^^^^^^^^^^^^
+>       object_unref(child);
+>       ^^   we are here  ^^
+>   }
+>
 
+Thanks for catching this. You're right =E2=80=94 the canonical path is no l=
+onger
+available in finalize().
 
+The local fix saves the path(like the monitor parts we discussed) when
+registering
+the holder and reuses it in finalize(). I've verified object-del, quit, and
+initialization-failure cleanup with the fix. Will update it in the next ver=
+sion.
 
+Thanks
+Chen
 
+> Stefan
 
