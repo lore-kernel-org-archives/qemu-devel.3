@@ -4,113 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4A1C98304
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75815C98304
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x97OJ-00079g-8M; Tue, 22 Sep 2026 16:47:03 -0400
+	id 1x97Xb-0000Iw-7i; Tue, 22 Sep 2026 16:56:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1x97OH-00079G-FW; Tue, 22 Sep 2026 16:47:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XT-0000Gi-Qn
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1x97OF-0003Bm-VQ; Tue, 22 Sep 2026 16:47:01 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI7NEE4144223; Tue, 22 Sep 2026 20:46:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Q5DSeZ
- b4lKDqgkz+ZLWUIhUElYi4dlCgP5f4JVXt8DE=; b=PiWTSaLpiPnCVsXdja/AAD
- RBcd2x/8JlfVoS+RvM1g2EuayNzAElJ/RJwzjCTxUhyHKtWV0bh9bfRK+GoSXCIB
- 5ExhCwTIFZ3mLf7p5boSJ5orJoR5QAP49BMIrONrlKl2EZn5TN+/7F1526Sz+ytP
- 33YSEBHgLHz3klahkTfgvH7+s7ITDPWtuBuMbGGpAq3n3Mk48sSSESCpuTn2j5WV
- /bMk8o3O2cq4GmMMPqx/xwtpxDWL4gSQfkh+ymvg/AYbuHWccalkJveG/Au6mBzb
- qCOicRxKrDCp76scuZKit4H06RRAAPEAkj3g1zSkwQsftcfBHhrm+LOW1FLyp0ug
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqfgkq-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 20:46:55 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHeTX3279519; Tue, 22 Sep 2026 20:46:55 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqbk1k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 20:46:55 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MKkpG435455274
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 20:46:51 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 836742004D;
- Tue, 22 Sep 2026 20:46:51 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0DF0A20043;
- Tue, 22 Sep 2026 20:46:51 +0000 (GMT)
-Received: from [9.111.77.23] (unknown [9.111.77.23])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Sep 2026 20:46:50 +0000 (GMT)
-Message-ID: <3b919775-621e-445a-afd8-59afc7a5014f@linux.ibm.com>
-Date: Tue, 22 Sep 2026 22:46:50 +0200
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XS-00045l-CQ
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790110589;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XK1aSGSt1xTWF7/Prx8zJTaU+O+Uyrct5dy+1HkNSpU=;
+ b=CzB3fo+orkxLKqKwtHxFK1CDWfj0N8NOPBFfOM9xD7c77vKj0BxlvgxZ9hw1OZJTPdiYjw
+ h8JI5aJ9l4e18m9Ux4lw3oU1RYq8wRabT9x/3KSdi2BTPb3v5ibYjFHCXCZu9HwebUkZE8
+ SO9Rsh4yeYA+vXdbJY7VETJnhk/Zm6c=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-MvC125T2PFWCF9OmYGe4Bw-1; Tue,
+ 22 Sep 2026 16:56:24 -0400
+X-MC-Unique: MvC125T2PFWCF9OmYGe4Bw-1
+X-Mimecast-MFC-AGG-ID: MvC125T2PFWCF9OmYGe4Bw_1790110583
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8621B1800BCE; Tue, 22 Sep 2026 20:56:22 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CF421956086; Tue, 22 Sep 2026 20:56:19 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, qemu-trivial@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>, John Snow <jsnow@redhat.com>
+Subject: [PATCH v2 2/8] qapi: convert intro sections for unit tests
+Date: Tue, 22 Sep 2026 16:55:59 -0400
+Message-ID: <20260922205605.501602-3-jsnow@redhat.com>
+In-Reply-To: <20260922205605.501602-1-jsnow@redhat.com>
+References: <20260922205605.501602-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 15/16] s390x/pci: Implement migration for emulated
- devices
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260922183654.798470-1-kshk@linux.ibm.com>
- <20260922183654.798470-16-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20260922183654.798470-16-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab2e93f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=Cw-iWatwN-UAAQttplEA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5NSBTYWx0ZWRfXx6zIS3eCiRYb
- 5hrGq0VU+Wl7kxHML84/8ncaCmO0BTJGmbY1BaJjqLb3sK6Me54tEDFdmOrqgdcN1Y29fLb9rEq
- h0Ev3I3uYpWZFI10cZYgJDl6+4YWs2aPdYjrg9nSLoe4APO523aZRSQz2mbjnkfIbtT9Z/DTGvE
- dnZy6SgBGGd6hYh8s59IWuAUC+eldc7i7o29QF5B2H7q2h38BmLxSBDwkDeAxZKb+hf5eJ96oPN
- sNiiPL/UDT/QS69eyQhAJ5CLspmLPcHFdDOpChqI2OjyTXsSvA37k0RaoYO1ooAKJ+nQIfRj7Kq
- 0DjDaSRVPeaXrJbR2IIqGiXQq7SPTqG1WiHcCLhieLBFmYOAGEm9nz6heyDFkruuRdI27AGWrN2
- g8vObr06EV3MOke2aShEF9FHl/lMzOOUAaXy0rRx+VdP0WrMGj+T8OjmgrmudEyrLNL4AQfsU+v
- dfl8GlmvS4wLaRUveGA==
-X-Proofpoint-ORIG-GUID: Ir8prSVWBFvw5WR4A7MOLtc0juST_Q1c
-X-Proofpoint-GUID: Ir8prSVWBFvw5WR4A7MOLtc0juST_Q1c
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5NSBTYWx0ZWRfX2VByC38zaEW7
- /WJETJksXE2Goq2a1/fx6eYD6to97vw0cd23oSd+qHXCJgFLkge4Zbllrlms8vuY6WP4u/iGB8T
- sQPZHKaIp3ehJeqIz582pxAEdwHB5jI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220295
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,30 +92,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ tests/qapi-schema/doc-good.json                |  8 ++++----
+ tests/qapi-schema/doc-good.out                 | 15 ++++++---------
+ tests/qapi-schema/doc-interleaved-section.err  |  2 +-
+ tests/qapi-schema/doc-interleaved-section.json |  3 +--
+ 4 files changed, 12 insertions(+), 16 deletions(-)
 
-
-Am 22.09.26 um 20:36 schrieb Konstantin Shkolnyy:
-
-> +static const VMStateDescription vmstate_s390_pcihost = {
-> +    .name = TYPE_S390_PCI_HOST_BRIDGE,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_s390_pcihost_pending_sei,
-> +        NULL
-> +    }
-> +};
-
-This section is registered and emitted unconditionally as far as I can
-see so new -> old migration breaks for EVERY s390x VM on machine types
-  <= 11.1 (tested).
-
-vmstate_s390_pcihost has no top-level .needed; only the pending_sei
-subsection is gated (x-zpci-migr-enabled && !empty).
-
-Simply add a .needed as well, for example "return s->zpci_migr_enabled",
+diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
+index fac13425b72..d9a84ccd729 100644
+--- a/tests/qapi-schema/doc-good.json
++++ b/tests/qapi-schema/doc-good.json
+@@ -94,10 +94,9 @@
+ 
+ ##
+ # @Variant1:
++#     A paragraph
+ #
+-# A paragraph
+-#
+-# Another paragraph
++#     Another paragraph
+ #
+ # @var1 is undocumented
+ #
+@@ -206,7 +205,8 @@
+ 
+ ##
+ # @cmd-boxed:
+-# If you're bored enough to read this, go see a video of boxed cats
++#     If you're bored enough to read this, go see a video of boxed
++#     cats
+ #
+ # Features:
+ # @cmd-feat1: a feature
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 371dd25ffc7..eaaf119dea8 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -126,15 +126,13 @@ doc symbol=Base
+  minimally indented
+ doc symbol=Variant1
+     Intro
++    A paragraph
+ 
+-    Plain
+-A paragraph
+-
+-Another paragraph
+-
+-@var1 is undocumented
++    Another paragraph
+     Member=var1
+ 
++    Plain
++@var1 is undocumented
+     Feature=variant1-feat
+ a feature
+     Feature=member-feat
+@@ -213,9 +211,8 @@ Note::
+ 2.10
+ doc symbol=cmd-boxed
+     Intro
+-
+-    Plain
+-If you're bored enough to read this, go see a video of boxed cats
++    If you're bored enough to read this, go see a video of boxed
++    cats
+     Feature=cmd-feat1
+ a feature
+     Feature=cmd-feat2
+diff --git a/tests/qapi-schema/doc-interleaved-section.err b/tests/qapi-schema/doc-interleaved-section.err
+index e5d1ef54c1b..85f01fa57a7 100644
+--- a/tests/qapi-schema/doc-interleaved-section.err
++++ b/tests/qapi-schema/doc-interleaved-section.err
+@@ -1 +1 @@
+-doc-interleaved-section.json:15:1: description of '@foobar:' follows a section
++doc-interleaved-section.json:14:1: description of '@foobar:' follows a section
+diff --git a/tests/qapi-schema/doc-interleaved-section.json b/tests/qapi-schema/doc-interleaved-section.json
+index eec01ed5650..bc0937b8601 100644
+--- a/tests/qapi-schema/doc-interleaved-section.json
++++ b/tests/qapi-schema/doc-interleaved-section.json
+@@ -2,8 +2,7 @@
+ 
+ ##
+ # @TestStruct:
+-#
+-# body
++#     body
+ #
+ # @integer: foo
+ #           blah
+-- 
+2.55.0
 
 
