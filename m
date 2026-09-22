@@ -4,86 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236CCC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED04C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x964I-0000qK-Li; Tue, 22 Sep 2026 15:22:18 -0400
+	id 1x96Ge-0007TP-UC; Tue, 22 Sep 2026 15:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963b-0000Xv-1i
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:40 -0400
-Received: from mail-oo2-x1b.google.com ([2607:f8b0:4864:31::1b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1x963Z-0002OB-H3
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 15:21:34 -0400
-Received: by mail-oo2-x1b.google.com with SMTP id
- 006d021491bc7-6c72bd8a02fso112465eaf.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 12:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790104892; x=1790709692;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CccOh/rw39PcDyv2TBNp+uDQws9Pq5eD14ZTcp8m9SY=;
- b=rJUr2zInGhwLdBtFMkVnGL9XQmBvBrp2DsC2ESy+J4egilkMwStmGxb83FbuJ7Lh8b
- HGfNybqCwkZeIQ4W7+r0udim39G+/oexlc68QZVFR+zI+qPISjtrTACrUBfqso9HlKXI
- LgioViRcoJVoIs54sQIFwru3NKCpGIE+AzLsJStwxi5IWAblcccTHHWd8QRrzLaMINkD
- 3V+LdykDjDeR2vE0lT4UI4cmPKGuZ/DebO75YFbiuGWR4FYi0XOZZBMtMAeQ3/0i9GFP
- 1ApfIMANXAb6QgfdkyQwcHOOmM5gkp9sGvmDg7yvQdemB8+syGBizLgplh4lPPMJ4K3v
- l41g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790104892; x=1790709692;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CccOh/rw39PcDyv2TBNp+uDQws9Pq5eD14ZTcp8m9SY=;
- b=CMm3fXvYb84sIbBO9p3gcTVMbbgUD7yPqSK8eUGyPIf0zaR6bM3tE3Yr1jzGHDQfJM
- 3fq+sm0zMagdQAlbdVOrwk3JERwUF07wA5ZyiLwydISk6cGM/mntbObyT3MQlSUHlMwF
- RuE5tCEqd431EgMqP01E9DyfMdUIJTbLOkldBn2zHFhDJw6Aj/I+1r6mNz6KNyceOTW2
- kVN1kXeOYdx5a+TVmeno1cPlK7o2DP4HG/f339JpxnsIiHF/0Xp6swt1fZBhWFN/DmN/
- X+p2QW3j0YxnV7x+7VqRz7bsRZZN5byF3Y7AE4G+tofr9J+jBsuDRYhG0WJe90GW04Tu
- DHog==
-X-Gm-Message-State: AFuF++mnjCmaw9+cKzkjvL2Srl1wo6Wi9JMEc2qHPddxbjnxGzdntcHi
- dY9wJ02cUjuDTxqB7JuIUxe/bhAgKfDKG1648RV5PIqOVfWTa1iHC+Q6S8D7Cmbjt80X3IVAihl
- 1REdgHxY=
-X-Gm-Gg: AYBFou27RCnPPEsbFrL4nQuyOpVFz/E5hKxpdR8zTvFHvKI7S4vC3UD587JIPOXtdGQ
- 1hWRFl2Sf5qExS30xDDgAviJxA/92OaQiscAfqMxzXEtwVp+0ZwLXU4Y7hd+loHRSfdNxETS8Qm
- ZztD1UrDlhbXTaGt1DOTS/4peXJP/cZFY5Us13OljB8Pr2RXpSrzNIXWbI1LwLe7PKuSIrfAIHP
- ZB/btY6KOWVCzx1Hg89gyUEmAhQcb3AhjdilneI/aaAsSSa/B+8HpF2ZmJDBrTTEmUdXFuxgbsw
- 2W2a6Tn/9EnKERG3D2kH0iWmU2bxxQivgI2Jc2JX83/N774U6FJMZL/xbkcYHSkxEzeW2BzOzof
- UJ+1WFNMFcvgzqRVi51FPxRluJD/fQuJ1EcJjR1UnX+Yv6aIy2kWQnCn+Lh/JqwDWrodmZdmVH4
- bWQd9c4KkOyUx3bgy1XSQTvx5jOkvnQx+rJFfz4PzafdcVtJcQMtHr8s0HVblSt68daJzb
-X-Received: by 2002:a05:6820:1507:b0:6c9:80d8:a1fd with SMTP id
- 006d021491bc7-6d2d230abb6mr401015eaf.58.1790104892409; 
- Tue, 22 Sep 2026 12:21:32 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6d2ce763f72sm646776eaf.7.2026.09.22.12.21.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 12:21:31 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/11] bsd-user: Initialize per-arch child registers
-Date: Tue, 22 Sep 2026 13:21:02 -0600
-Message-ID: <20260922192109.98467-5-imp@bsdimp.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260922192109.98467-1-imp@bsdimp.com>
-References: <20260922192109.98467-1-imp@bsdimp.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1x96Ga-0007Rx-Hk; Tue, 22 Sep 2026 15:35:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1x96GW-0003dW-F2; Tue, 22 Sep 2026 15:34:58 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MI78SQ3447122; Tue, 22 Sep 2026 19:34:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZFd3IY
+ k8Ut0aD0xMInuvxRJJAA+ByXFN6vpK4+Km8rc=; b=XQ+XEBZQEMaHgJD6c24GbW
+ 1cXP+VkYDq+gFugEuEN3sZlYYGMKPg7iYRYxa2x78Th4JDSermrFV0w0pkawvRP7
+ l/K69ekNxggUgpYX796KeMqAvX+Z8jxAr9tCby0K6cUluj0m8vkqzeZlOuo0TvdY
+ Ufg+tCt1FskrzbvGEVe4jMDIulGlaMNXTdb6qN79kF8F4TBnk3Y6gujlk6CDWrp8
+ IzGcjHFw6UQP6WJAMsxhU9+0U6UMUYQIrsIZRX65l/Zys3UCoGIiW1wkbjx7XnWv
+ 9mq/cieNmI4oOp6+ySwVmAyzQcc8bD1dht5icYsbORPaX8xrowMn4kJ16ZCeiJCw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1qmxt-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:34:47 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHi9f3198696; Tue, 22 Sep 2026 19:34:46 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt5qju7cc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Sep 2026 19:34:46 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MJYgAX31588620
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Sep 2026 19:34:42 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 908ED20043;
+ Tue, 22 Sep 2026 19:34:42 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D638620040;
+ Tue, 22 Sep 2026 19:34:40 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 22 Sep 2026 19:34:40 +0000 (GMT)
+Date: Wed, 23 Sep 2026 01:12:27 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: "Kirill A. Korinsky" <kirill@korins.ky>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
+Message-ID: <20260923002139.9c3d31d4-37-amachhiw@linux.ibm.com>
+Mail-Followup-To: "Kirill A. Korinsky" <kirill@korins.ky>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20260903115229.95811-1-kirill@korins.ky>
+ <20260903115229.95811-3-kirill@korins.ky>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:31::1b;
- envelope-from=imp@bsdimp.com; helo=mail-oo2-x1b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260903115229.95811-3-kirill@korins.ky>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: a_WLhGZnS1She4yF9y4HcypSZ-WSCXu-
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab2d858 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=zhRxUEseYeHzHtkwLcAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfXyzI3tB5AneUx
+ cDDCzZP/LpmQL7CCtIQ807t1InriwaoL3EFF6YOxdDotLwFnD2PKDmfxecy8kCkz1MSv4v9jVYY
+ WKmtb7XQPx2x4a6yzMtZuGujYJxDui8=
+X-Proofpoint-GUID: EWAK_LL5VPz99uE27jhdOnT1WGaO8go4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX9/P7Hs0fhjVx
+ UWI+fXFLTXXLCNttgGeBGNHUoIYQVCsqvTqHBnqz6uwu9GYFtTIjxHE6DM3b0Ob7/2RFQxVs3VU
+ azhe9XY8UxhOGn/wT2EGPwhf8iaUODhE186IEMh0ALqzfL4kR1u6f0gdnzd0qC6TTkeu2d8k8Yn
+ FEu7hemTta1fAcEk+/fjcV5AxXOJvIpk2r/BI1WyQctD3BdC0tqLqeKV4Q2J+t9dDT/EAawGfTc
+ K13yzw8id3pXC6GQTA9oicJOg8qUYWLMT+SbK/TYPdTKkr0iM4Bzq+Zqyz+wfJgJpvybIm5HWoC
+ m252INx6cSK38/c8+fzciXQjirW+c5rSirI81+SKdlnVA/X/JIFeqW7GyP47WZt71RuXZHZYX7J
+ zXC+5v4VCPi4W8TayW8ZGtWTs81M8VloDYPtKyGuAQGw8FzSuNSr5T7qR5SoauO7MZ9OxBdq/jm
+ GEqIbl+h6YleGkoJSwA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220280
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,27 +133,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/freebsd/os-thread.c | 3 +++
- 1 file changed, 3 insertions(+)
+On 2026/09/03 01:50 PM, Kirill A. Korinsky wrote:
+> OpenBSD writes zero to an edge triggered decrementer, then enters idle
+> expecting its interrupt. QEMU defers the already due edge to a timer at
+> the current virtual time, leaving the guest stalled.
+> 
+> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> ---
+>  hw/ppc/ppc.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> index b123b4cc1c..d99e47d532 100644
+> --- a/hw/ppc/ppc.c
+> +++ b/hw/ppc/ppc.c
+> @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+>       * an edge interrupt, so raise it here too.
+>       */
+>      if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> +        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
 
-diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-index 15872f03fd..eaab062d3d 100644
---- a/bsd-user/freebsd/os-thread.c
-+++ b/bsd-user/freebsd/os-thread.c
-@@ -1629,6 +1629,9 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
- 
-     new_env = cpu_copy(env);
- 
-+    /* Init regs that differ from the parent. */
-+    target_cpu_clone_regs(new_env, 0);
-+
-     new_cpu = env_cpu(new_env);
-     new_cpu->opaque = ts;
-     ts->bprm = parent_ts->bprm;
--- 
-2.55.0
+The fix is correct for mac99/G3/G4, but the guard flag is too broad and
+introduces a regression on PPE42.
 
+Commit 17dd1354c1d1 ("target/ppc: Decrementer fix BookE semantics") explicitly
+removed the immediate raise on value==0 with the rationale: "BookE says a
+decrementer interrupt should not be raised on a store of 0, only of a decrement
+from 1."
+
+The new clause:
+
+    ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0)
+
+also fires for PPE42, which goes through ppc_booke_timers_init() with
+PPC_TIMER_PPE and gets PPC_DECR_UNDERFLOW_TRIGGERED set - introduced by commit
+7197f6f7baf2 ("hw/ppc: Support for an IBM PPE42 CPU decrementer").  That commit
+explicitly documents that PPE42 raises an interrupt when DEC[0] transitions from
+0 to -1 (non-negative to negative) — not on a store of zero.  The new clause
+contradicts this.
+
+Note that __cpu_ppc_store_decr() is reached by BookE machines too — both on
+direct guest writes to SPR_DECR and via the auto-reload path in booke_decr_cb()
+(which calls cpu_ppc_store_decr(env, DECAR) when TCR_ARE is set; the existing
+DECAR != 0 guard there already prevents a zero value from arriving via that
+route).  So the safety of normal BookE targets (e500, sam460ex, bamboo, virtex)
+is flag-based: they have PPC_DECR_ZERO_TRIGGERED set but not
+PPC_DECR_UNDERFLOW_TRIGGERED, so neither the old clause nor the new one fires
+for a guest write of zero.  That is the correct BookE behaviour per the
+architecture.
+
+PPC_DECR_ZERO_TRIGGERED already exists in ppc.h (defined as "Decr interrupt
+triggered when the decrementer reaches zero") but is never checked in
+__cpu_ppc_store_decr().  I think the minimal fix is to set it in
+cpu_ppc_tb_init() for the non-64-bit path and guard the new clause on it:
+
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index b123b4cc1cce..6f99b61a2876 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+      * an edge interrupt, so raise it here too.
+      */
+     if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
++        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
+         ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+           && signed_decr >= 0)) {
+         (*raise_excp)(cpu);
+@@ -1104,6 +1105,12 @@ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq)
+     if (is_book3s_arch2x(env)) {
+         /* All Book3S 64bit CPUs implement level based DEC logic */
+         tb_env->flags |= PPC_DECR_UNDERFLOW_LEVEL;
++    } else {
++        /*
++         * Classic 32-bit edge-triggered decrementer: zero write fires
++         * immediately
++         */
++        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
+     }
+     /* Create new timer */
+     tb_env->decr_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+
+
+All callers of cpu_ppc_tb_init() that use a 32-bit classic CPU (mac99 with 7400,
+mac_oldworld/750, prep/604, pegasos/7457, amigaone/7457) take the else branch
+and get PPC_DECR_ZERO_TRIGGERED.  64-bit Book3S machines (spapr, pnv, mac99 with
+970fx) take the if branch and are unchanged.  PPE42 goes through
+ppc_booke_timers_init() and never gets PPC_DECR_ZERO_TRIGGERED, so the new
+clause does not fire for it.
+
+This scopes the fix to the classic 32-bit edge-triggered path (mac99, pegasos,
+prep, mac_oldworld, amigaone) and leaves PPE42 behaviour unchanged.  What do you
+think?
+
+Thanks,
+Amit
 
