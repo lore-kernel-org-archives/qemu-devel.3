@@ -4,108 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4623CC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91CEC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 12:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x8zi3-0003Ah-LS; Tue, 22 Sep 2026 08:34:57 -0400
+	id 1x8zlJ-0004d7-Nc; Tue, 22 Sep 2026 08:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zhf-00030n-EA
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:34:31 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zl8-0004Z8-Rj
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:38:07 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zhd-0008VM-R8
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:34:31 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x8zl3-0000dg-2y
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 08:38:04 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 485EE21BF8;
- Tue, 22 Sep 2026 12:34:18 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 268E21F848;
+ Tue, 22 Sep 2026 12:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790080462; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790080675; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
- b=SW0mvJp47DLVaiKVo5jgbPlMyY5CpvPXwdRddOT18UDqMYzB2VRapdW3I2sZ8jlYy8ytIt
- l6/tFNMmUiK6gIxW3O4SI3xrAYzLJeCwIN5qTWpr9jVgtL1MYOt3pTRTzcJuAgJYNeT8xm
- QeU/Qj8BdEIn6uddqXuMF0rUDdIt+ak=
+ bh=IksqAk/UYz7CDnCB3k/8pkzHgBwXeHt0ttSyc06TZnE=;
+ b=J9LMgL3fDgzajkelDGbv4MQUu61II0o/gwrfvefs6CXghBjLVF8S1OTTG5BUH+XNpQVe1d
+ XhePfxnKkFH7cTBAVn80DTkGk+G45oPjXVzsc3espnde1koK19wNhGRVfTe8QFuhuqTDcR
+ qxvaMcELW0xF0ep9NJCkhq6LUGr2zD0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790080462;
+ s=susede2_ed25519; t=1790080675;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
- b=DML+yGweak/QHTrw6ZGwIu2XXWnUbA1pE5e1D+kJdmFajYdB149dCS6fKyiV4c9Cu1CBev
- bJr379RXHIB4DPBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="HOpgf/pl";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=p04ArP3l
+ bh=IksqAk/UYz7CDnCB3k/8pkzHgBwXeHt0ttSyc06TZnE=;
+ b=+AAjXomqsC53+w1X19QiwXgS+RiaRrZbFO06NhwyiIOYe7S4FS+3eq2K3ZsSpws2X4LVjx
+ UHI8aVANH0qkfVBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790080458; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790080671; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
- b=HOpgf/plQLh/ZVDmpDF9/yMPUUDjyWgCI8B1yEWzQi0mSrq0Y/IVcHzrkoSIBcogldQQ4i
- MM+hcnz5pqfsx6kCaYMl6xrE9ZNJsd/uZxtEzRBXj1Eu2Sjuy4LPtvsNH83C40p4ZPkYiR
- fOAQWTxdWoxL87XcsPFYVJ9hog0VfDU=
+ bh=IksqAk/UYz7CDnCB3k/8pkzHgBwXeHt0ttSyc06TZnE=;
+ b=yhSNcF9FhX0CKCMyXV1nSJI1gV3FM7N3Rm8x4nbwNX07snDIGDs1naQ7U5JIe4gsUdE4sc
+ cg4X/2h+hNYS2ya57KOKFJv0f9+wSQF1jS2AQGQ0T9rr0C3Mcj+AoKWfXwaMLIzaHtdfR6
+ g2ijie4Tw5KTnah9uXmC+Z1Lqo+Nmh8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790080458;
+ s=susede2_ed25519; t=1790080671;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=o7TTJYBTCwIG7sMMiYYCQI0T7Grnfbgncxmzt1Ufwos=;
- b=p04ArP3l4VdFYeLy6fBy29pvIi/ch/QaTi3RWhECiHQFY3D0OeyhppdGfj5eeuljU/pmuB
- XArq2iRbCuN13IAA==
+ bh=IksqAk/UYz7CDnCB3k/8pkzHgBwXeHt0ttSyc06TZnE=;
+ b=qS6zli7HFl1LZJRj4KO0zWI43Z4Ua3vI63T1FEe1M18QADHxOcIa/PpPXlHi/ebrHESTUa
+ qA/bM68nXaIrYCBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 951C213A01;
- Tue, 22 Sep 2026 12:34:17 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C063136D9;
+ Tue, 22 Sep 2026 12:37:50 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ox+iDsl1smosOQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:34:17 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SK8/EJ52smoUPQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 22 Sep 2026 12:37:50 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: vsementsov@yandex-team.ru, peterx@redhat.com, eblake@redhat.com
-Subject: Re: [PATCH] qapi/migration: Make migration parameter @local
- consistently unstable
-In-Reply-To: <20260912045350.2139416-1-armbru@redhat.com>
-References: <20260912045350.2139416-1-armbru@redhat.com>
-Date: Tue, 22 Sep 2026 09:34:07 -0300
-Message-ID: <874ifhbh34.fsf@suse.de>
+To: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org,
+ peterx@redhat.com
+Cc: lizhijian@fujitsu.com, isyanfei.xu@gmail.com,
+ jinpu.wang@cloud.ionos.com, Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: Re: [PATCH v3 0/4] migration/rdma: Allow multiple writes per chunk
+In-Reply-To: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+References: <20260913062455.940447-1-yanfei.xu@bytedance.com>
+Date: Tue, 22 Sep 2026 09:37:44 -0300
+Message-ID: <871palbgx3.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 485EE21BF8
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_TLS_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[fujitsu.com,gmail.com,cloud.ionos.com,bytedance.com];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,41 +116,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+"Yanfei Xu" <yanfei.xu@bytedance.com> writes:
 
-> @local is unstable in MigrationParameters, but not in
-> MigrationParameter.  Fix the latter.
+> This series improves RDMA migration throughput during iterative precopy
+> and the iterable stop-copy phase by allowing multiple writes to be in
+> flight for the same registration chunk.
 >
-> Fixes: c9affb8e9b (qapi: add local migration parameter)
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qapi/migration.json | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> RDMA tracks RAM in registration chunks.  During the final iterable
+> transfer, workloads can leave many scattered 4 KiB dirty pages, with
+> multiple pages falling into the same chunk.  The current code waits for
+> an earlier write to a chunk to complete before posting the next one.
+> These serial completion waits can leave send queue capacity unused and
+> limit RDMA bandwidth, increasing downtime.
 >
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index f7628b55e9..9a1cc7c4e5 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -804,8 +804,8 @@
->  #
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
-> -#     @x-vcpu-dirty-limit-period are experimental.
-> +# @unstable: Members @local, @x-checkpoint-delay, @x-rdma-chunk-size,
-> +#     and @x-vcpu-dirty-limit-period are experimental.
->  #
->  # Since: 2.4
->  ##
-> @@ -831,7 +831,7 @@
->             'direct-io',
->             { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->             'cpr-exec-command',
-> -           'local'] }
-> +           { 'name': 'local', 'features': [ 'unstable' ] } ] }
->  
->  ##
->  # @migrate-set-parameters:
+> A ram_save_iterate() call can stop due to rate limiting before the RAM
+> scanner completes a full round.  Therefore, it is not the correct
+> boundary for ordering page versions.
+>
+> Add a return-valued notifier at the point where the RAM scanner wraps to
+> the first RAMBlock.  Convert multifd's existing per-round
+> synchronization to use this notifier, and register an RDMA notifier that
+> flushes buffered writes and drains outstanding completions at the same
+> boundary.
+>
+> This provides the explicit completion barrier before a newer version of
+> a page can be sent.  The per-chunk wait is therefore unnecessary and is
+> removed, together with the now-unused transit bitmap.
+>
+> The test configuration is:
+>
+>   RDMA chunk size:       32 MiB
+>   Guest:                 32 vCPUs, 128 GiB RAM
+>   Test runs:             10
+>   Maximum HCA bandwidth: 100 Gbps
+>   Workload:              idle
+>
+>
+> Average result(pin-all=true)    Before       After
+>   pin-all is true
+>   Downtime                      396.7 ms     345.7 ms        ~12.9% improve
+>   Final iterable bandwidth      9952.0 MiB/s 11639.10 MiB/s  ~17.0% improve
+>
+>
+> Average results(pin-all=false)  Before       After
+>   pin-all is false
+>   Downtime                      248.7 ms     191.1 ms        ~23.2% improve
+>   Final iterable bandwidth      5605.1 MiB/s 9826.0 MiB/s    ~75.3% improve
+>
+> "Final iterable bandwidth" is the bandwidth measured during
+> qemu_savevm_state_complete_precopy_iterable().  Non-iterable data is
+> not transferred using RDMA Write.
+>
+>
+> Changes in v3:
+>
+>   - Optimze comments about RAMRoundNotifyData in patch1
+>   - Collect Reviewed-by tags
+>
+> Changes in v2 (Suggested by Peter):
+>
+>   - Add a generic RAM round synchronization notifier.
+>   - Drain RDMA writes at the RAM scan-round boundary.
+>   - Remove the per-chunk wait and the unused transit bitmap.
+>
+> Yanfei Xu (4):
+>   migration/ram: Add RAM round synchronization notifiers
+>   migration/rdma: Drain writes at RAM round boundaries
+>   migration/rdma: Allow multiple in-flight writes per chunk
+>   migration/rdma: Remove unused transit bitmap
+>
+>  migration/multifd-nocomp.c | 24 ++++++++++
+>  migration/ram.c            | 45 +++++++++++++++---
+>  migration/ram.h            | 12 +++++
+>  migration/rdma.c           | 97 ++++++++++++++++++++------------------
+>  migration/trace-events     |  5 +-
+>  5 files changed, 128 insertions(+), 55 deletions(-)
 
 Queued, thanks!
 
