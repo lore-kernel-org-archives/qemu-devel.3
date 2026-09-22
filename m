@@ -4,65 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC89C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9824C98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 18:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x94lZ-0006d2-Pv; Tue, 22 Sep 2026 13:58:53 -0400
+	id 1x94rb-0007gp-EQ; Tue, 22 Sep 2026 14:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x94lU-0006cn-Bz
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:58:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94rX-0007fX-Qr
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:05:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x94lP-00010b-7d
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:58:45 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94rV-0001ZL-Kl
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:05:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790099921;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1790100300;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aC9Rwr83/IJN6Vh8wZqZgO8cFsxbYZyXxc5Bs5kbZ5k=;
- b=ITgJpXFBiuj6bTs/mJxSq76PYoknVNijjvqgNInPsXoudFsAJRBQ5xXEnt2yNIPN1YxTyh
- KnPKHH6jDiQwu95CuBdyPYLvDQzg2wp3XaYepSzk6lHiMX82ry3RpfgqkHko+qjyTDRnj7
- a4R4alsN8aYbb0KmvVr09FFdMJVv4WE=
+ bh=SzrG+FQl7AKDKznvYDFs/DqTuWA0DHaID/nk5/XL2qQ=;
+ b=O6wjU0eopEbNYpFM4EFvhAV0L20EGrweti+2hjyHkd1rmqNq0vP7RAiNpGGYGmveuIkGq0
+ FYAdGFjWUPcdgIuPzQNU2/UNVaq0nxPmcwUaJtK8u3zq334Gn64vnNjk4xLnm6TPQUP/c1
+ Wp3qpkGEa2CtGYxehdBeFR5Ed6uFAKI=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-_hu7dkQiPDWjLwAMKvLLjQ-1; Tue,
- 22 Sep 2026 13:58:38 -0400
-X-MC-Unique: _hu7dkQiPDWjLwAMKvLLjQ-1
-X-Mimecast-MFC-AGG-ID: _hu7dkQiPDWjLwAMKvLLjQ_1790099917
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-fNOq_RW5PSa5leF5ygTiJQ-1; Tue,
+ 22 Sep 2026 14:04:54 -0400
+X-MC-Unique: fNOq_RW5PSa5leF5ygTiJQ-1
+X-Mimecast-MFC-AGG-ID: fNOq_RW5PSa5leF5ygTiJQ_1790100293
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E83F418052F8; Tue, 22 Sep 2026 17:58:36 +0000 (UTC)
-Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb
- (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
+ id 0DC2418052DF; Tue, 22 Sep 2026 18:04:53 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 360EF30001B9; Tue, 22 Sep 2026 17:58:34 +0000 (UTC)
-Date: Tue, 22 Sep 2026 19:58:32 +0200 (CEST)
-From: Mikulas Patocka <mpatocka@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] linux-user/sh4: fix race in atomic variables
-In-Reply-To: <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
-Message-ID: <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
-References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
- <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
- <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
- <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
+ id 8F8A630001B9; Tue, 22 Sep 2026 18:04:51 +0000 (UTC)
+Date: Tue, 22 Sep 2026 19:04:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 3/7] tests/lci/refresh: add parameter to override
+ container registry
+Message-ID: <arLDQHOSRX-xcJum@redhat.com>
+References: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260921231458.3369-4-pierrick.bouvier@oss.qualcomm.com>
+ <arLBBjS_T40wBa3X@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <arLBBjS_T40wBa3X@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mpatocka@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -83,68 +89,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On Tue, 22 Sep 2026, Richard Henderson wrote:
-
-> On 9/22/26 10:04, Mikulas Patocka wrote:
-> > I looked at the sh4 translator and it seems that it already tries to make
-> > sure that the full gUSA region is translated into one TB - i.e. there is
-> > "ctx->base.max_insns = max_insns" in sh4_tr_init_disas_context - that will
-> > override the value "1" that is supplied by cpu_exec_step_atomic. The
-> > comments suggest that the author is aware of the fact that the gUSA region
-> > must be completed atomically.
-> > 
-> > So, the code that single-steps through the gUSA region is not needed.
-> > 
-> > It seems that the misbehavior is caused by the fact that if we exit from
-> > the gUSA TB early, we execute the rest of the region in non-exclusive
-> > context.
-> > 
-> > I simplified the patch, so that it adds just one method -
-> > revert_uninterruptible. It tests whether we are in the unfinished gUSA
-> > region, and if we are, it reverts PC and SP back to the beginning.
+On Tue, Sep 22, 2026 at 06:55:18PM +0100, Daniel P. Berrangé wrote:
+> On Mon, Sep 21, 2026 at 11:14:54PM +0000, Pierrick Bouvier wrote:
+> > We'll use this in next patch to switch FROM docker.io/library to
+> > docker.io/amd64. It would not make sense to add a new target to
+> > libvirt-ci for this, since it's just a variant of an existing target.
+> > Simply replace container registry with arch specific one.
 > 
-> What good does that do?  You'll only restart the same block as before.
+> We shouldn't need to add new targets to lcitool for this,
+> rather it would be enhanced to include a list of arch
+> specific container images.
 > 
-> Is this really the case where you're encountering
-
-Without that patch, it deadlocks in 10-30 minutes. With the patch (either 
-version 1 or version 2 that I sent), it stays running overnight.
-
-Maybe the bug is somewhere else and the patch just papers over it.
-
-> >         if (pc != pc_end + backup || max_insns < 2) {
-> >             /* This is a malformed gUSA region.  Don't do anything special,
-> >                since the interpreter is likely to get confused.  */
-> >             ctx->envflags &= ~TB_FLAG_GUSA_MASK;
+> eg in
 > 
-> If you add an abort here, does it trigger?
-
-I added the abort(). It deadlocked in 25 minutes, but didn't trigger it.
-
-> > +    /*
-> > +     * If we are interrupted in the middle of the gUSA region, we must
-> > +     * roll-back PC to the beginning of the region. Continuing halfway
-> > +     * through the region would break atomicity guarantees.
-> > +     *
-> > +     * If we are interrupted after the final write instruction (i.e.
-> > +     * cpu->env.pc == cpu->env.gregs[0]), we must not roll-back, because
-> > +     * the atomic write is already committed in the memory.
-> > +     */
-> Just know that you *can't* be interrupted in the middle of a gUSA region.
-> Signals will always be delayed until the end of the TranslationBlock.
+> https://gitlab.com/libvirt/libvirt-ci/-/blob/master/lcitool/facts/targets/debian-13.yml?ref_type=heads
 > 
-> So this text is misleading at best.
+> We would extend:
+> 
+>   containers:
+>     base: docker.io/library/debian:13-slim
+> 
+> to allow for
+> 
+>   containers:
+>     base: docker.io/library/debian:13-slim
+>     aarch64:  docker.io/amd64/debian:13-slim
+>     ...more...
+> 
+> such that we default to the 'base' image name, unless
+> there is an arch specific name defined. That would be
+> a fairly quick extension to impl in lcitool.
 
-Yes, I am not qemu expert.
+Quicker than I thought.... take a look at this, which
+I think will enable you to drop this patch and the
+next one and get the same end result:
 
-BTW. what happens with synchronous signals inside the TB? (i.e. SIGSEGV 
-due to writing into a write-protected page)
+  https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/588
 
-Mikulas
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
