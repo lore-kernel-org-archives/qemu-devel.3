@@ -4,161 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A02C98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5BBC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 19:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96Iy-0000jX-NT; Tue, 22 Sep 2026 15:37:28 -0400
+	id 1x96JG-0000oC-5W; Tue, 22 Sep 2026 15:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96Iv-0000if-4j; Tue, 22 Sep 2026 15:37:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x96JD-0000mk-IP; Tue, 22 Sep 2026 15:37:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96Ir-0003w1-GA; Tue, 22 Sep 2026 15:37:24 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
+ id 1x96JC-0003xk-0M; Tue, 22 Sep 2026 15:37:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI6vML1128351; Tue, 22 Sep 2026 19:37:14 GMT
+ 68MI7Z8h965132; Tue, 22 Sep 2026 19:37:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6Kx8yJ
- ZEXKQVd9qPjvg9toIPH5CGY2BJzNY8KwIkreY=; b=pFUwt9sy0Sc+W+3smLYcRU
- pNLlz1BXEeD4FKsmDUaDma3R53DuDlB8YJVNBJoM+a9XYS1DJk4EgYHYP8XFwNGM
- e+m8gSO7R9xLW4C4Q47qqPWss4upllWh5uf5ilbZjCdMlQzi7SA2LGaOzCJEnCoB
- FAaVQRm0Kkr644ZpGA2JJnaUZm4fjlzMnd0RtvdaWyjVRF2bdUGHKEsUu/kk9fH0
- zV5gyjkEBIZhSB4lnQlCPvYkvhTsGAsVeoILVOUf0EQgRmHDfnuQuEjRe4j1d0eQ
- OMJrSXLxg44lSXn4tbIWpnVTKiyX39xB9cJqkMP6bXpqTaNzwKMOx3f/q1WhKrYQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uNvIyp
+ kbaZ4MwmTZNFsAMNd/d72KsmJlTQWQi+AjhIg=; b=MUbCSE2xFHDaLkjsl1KcDO
+ viqfJpuE7y5gVkkMtqiw5vyPP2/T/k6D11zIxAyfJ504n9M7IlNLo6VNnA3Mvuk5
+ YPRDdURNRCiDqBORtMDjmu3t/kFjzTi5rG4DucjnhY9y7hSAggMSV93hgW0eW+z6
+ 0+VoOPrY7gvuKzeHKFk+CyX/adJLeOgjRuHe9up0muFzgTZjFFeZCuwrenlJ3ioK
+ I02UndAhJux7qRks4/h7S1kwT9OhXBzIPWB5YfroEc4o0cAkfKA3RRP8ly52vZ2l
+ Woo+BJyDWA4echZXrWGiEKVHxGdfR8o0wd/tV8S0PBfPUgcxgt/r7ODCW6jQQYCQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs7n35-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1fc6y-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:37:14 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHcCN3240060; Tue, 22 Sep 2026 19:37:13 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gu4wh-1
+ Tue, 22 Sep 2026 19:37:40 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68MIHb6d3220323; Tue, 22 Sep 2026 19:37:40 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vka86-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 19:37:13 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MJbBwe15794906
+ Tue, 22 Sep 2026 19:37:40 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68MJbcKD13107724
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 19:37:12 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABD7358059;
- Tue, 22 Sep 2026 19:37:11 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37DB058055;
- Tue, 22 Sep 2026 19:37:10 +0000 (GMT)
-Received: from [9.61.145.93] (unknown [9.61.145.93])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Sep 2026 19:37:10 +0000 (GMT)
-Message-ID: <3fce93ae-2623-4675-8052-654d26c35cf4@linux.ibm.com>
-Date: Tue, 22 Sep 2026 15:37:09 -0400
+ Tue, 22 Sep 2026 19:37:39 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9186F5805C;
+ Tue, 22 Sep 2026 19:37:38 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FCF458058;
+ Tue, 22 Sep 2026 19:37:37 +0000 (GMT)
+Received: from [9.57.45.223] (unknown [9.57.45.223])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Sep 2026 19:37:37 +0000 (GMT)
+Message-ID: <774c684d-edff-4771-90ac-58bd21aaab4a@linux.ibm.com>
+Date: Tue, 22 Sep 2026 15:37:36 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/17] target/s390x: Use s390_cpu_get_state()
- consistently
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20260922164936.15189-1-philmd@oss.qualcomm.com>
- <20260922164936.15189-3-philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v3 7/8] tests/qtest: Add s390x virtio net PCI test to
+ pxe-test.c
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
+ jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, pasic@linux.ibm.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com
+References: <20260914193438.526407-1-zycai@linux.ibm.com>
+ <20260914193438.526407-8-zycai@linux.ibm.com>
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260922164936.15189-3-philmd@oss.qualcomm.com>
+From: Joshua Daley <jdaley@linux.ibm.com>
+In-Reply-To: <20260914193438.526407-8-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab2d8ea cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: -rOIwfBySJzlw_zT-yY_ba869KThWhbX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX7+CYCzwIdP0b
+ gO5wG6IGZ9CyN7qq0ox+r0f3vpL9CJBMf5C6w1zZKPf00uXO05+ujzFvreF7KfGAPh/QXCzthuf
+ EBcA13vRGDP1i1BgmtddeEW5mFr7YtaVmutSF7QW1PFQE3CHwnWFHM6dvZR7np+zMnbkbYKS+YG
+ nIfsEmVHmRHIVTLNYW7xu/8wwfVV2UmH2E0gjJo9jDl/0r7W5wSeq7pryXYgMFgDkbPcpfjggHa
+ POmuRsh4Gr1xj4l3/Mkb59OqaNS37qbEBxCU2ENW1xV+x3A1IbDUH/KKNDYV5gDN/ZR8leMp6vA
+ m/mT+YtfRB7gWoW0ALHIQ+pY60fBUnHkgn/Lbk3dWZxTXdWoNxZ8fZRukW6mpzheJ+n4s7/4Hri
+ 4edoZ9BWY8r+aaG8abU0rZDupqStyWj9MajOjZibsoczhyd1F9QBaPoK7DqECAd6j80IRL58Y5B
+ fLLHeNplnJuH0Ci3e3Q==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab2d904 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=uzQzD8XDcWILtCPewv0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: PCBasGHnwCpwhllFzefUPGgkUNHAMUlw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX32XG/JqM2SMA
- 0eZginOGtrN0WFqPfjHFTOJfG2Wkvh+lOPFYRD2Pyc7bgLFkdQeQnCycPFT9mpAtYIu93Ca8rKP
- m+G9OmATBw54jp+/oszwTTdVobleo8WOb0N93CiEc1uajPIBTeMErOzzb5+pCki5VvhOlK9x+jC
- ck2X2+MdD8GH7ymprBhDBlfpPDLOcU+94EJAh64OVg/PrJXJx4qSCeU7UShS6zqP2+YR/9ctfoK
- NDgQ8AA/uQmM878gdQQeg1NccMM2rrwFazUqNaTLpb3+H6rINEqnxE6MOLjuygp19k/6z2Wic8h
- Qy2UWkTeAZvhwet3Jpk6xuNISIr1HAsVysM1yd1KstjZ4RXWUbknE6pVMsqD3pyAGH+U47l6ugU
- cFDsBPV1pPxLUv+4hBzsXdJQ8PGJfMiN+0M9xx8lzOYYuoL1NBT91rmY7MpPaK4rE+qfrq9kQ8y
- jkFoQGO+nR8ujhSChwQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX11eB6jek9Ynx
- J4kuJZywpFOuGWbDIkG+dkkgXg5xyvmjyNtVAzgY0zzDMCGcF23RXcDiGBUOg30d0J7SsQ88+q7
- sFPC3hdoyyPITDk3bjV66A/dXEeMGaM=
-X-Proofpoint-GUID: PCBasGHnwCpwhllFzefUPGgkUNHAMUlw
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=IRfdFlLoIuNrUPaBy-QA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4NyBTYWx0ZWRfX+6g7EpT54BlT
+ 5F2evhL7mfx451DUH6SB69lgHGHVfGia0t45+T/EhiaKQ32E4om9nSQzyGtNRUWy3lqZnSeMLYY
+ P4mY0Luj08ogKCPKQopjpXnRQraPvr4=
+X-Proofpoint-GUID: -rOIwfBySJzlw_zT-yY_ba869KThWhbX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220287
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -175,19 +128,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 9/22/26 12:49 PM, Philippe Mathieu-Daudé wrote:
-> Replace direct reads of env::cpu_state with s390_cpu_get_state().
-> This keeps CPU state reads consistent across CPU transitions.
+On 9/14/2026 3:34 PM, Zhuoying Cai wrote:
+> Add test coverage for virtio-net-pci network booting on s390x by
+> including it in the PXE test suite. The test verifies that PXE
+> network booting works correctly with virtio-net-pci devices.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   target/s390x/cpu-system.c | 2 +-
->   target/s390x/cpu.c        | 2 +-
->   target/s390x/kvm/kvm.c    | 2 +-
->   target/s390x/machine.c    | 2 +-
->   4 files changed, 4 insertions(+), 4 deletions(-)
+>   tests/qtest/pxe-test.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
+> index 8b6015b6cd..c29386ed4b 100644
+> --- a/tests/qtest/pxe-test.c
+> +++ b/tests/qtest/pxe-test.c
+> @@ -129,9 +129,16 @@ static bool s390_bios_has_net_ccw(void)
+>       return s390_bios_has_string("Network boot starting...");
+>   }
+>   
+> +static bool s390_bios_has_net_pci(void)
+> +{
+> +    return s390_bios_has_string("Setup failed for virtio-net-pci");
+> +}
+> +
+>   static testdef_t s390x_tests[] = {
+>       { "s390-ccw-virtio", "virtio-net-ccw",
+>         .boot_dev_support = s390_bios_has_net_ccw },
+> +    { "s390-ccw-virtio", "virtio-net-pci",
+> +      .boot_dev_support = s390_bios_has_net_pci },
+>       { NULL },
+>   };
+>   
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+
+make check-qtest-s390x MTESTARGS="--setup=thorough qtest-s390x/pxe-test"
+
+Bios with the string:
+
+# Setup failed for virtio-net-pci found
+# starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/qtest-57259.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-57259.qmp,id=char0 -object monitor-qmp,id=qmp0,chardev=char0 -display none -audio none -run-with exit-with-parent=on -accel kvm -accel tcg -machine s390-ccw-virtio -nodefaults -boot order=n -netdev user,id=net0,tftp=./,bootfile=tests/pxe-test-disk-u0HvTJ,ipv4=on,ipv6=off -device virtio-net-pci,bootindex=1,netdev=net0   -accel qtest
+ok 2 /s390x/pxe/ipv4/s390-ccw-virtio/virtio-net-pci
+...
+# Setup failed for virtio-net-pci found
+# starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/qtest-57259.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-57259.qmp,id=char0 -object monitor-qmp,id=qmp0,chardev=char0 -display none -audio none -run-with exit-with-parent=on -accel kvm -accel tcg -machine s390-ccw-virtio -nodefaults -boot order=n -netdev user,id=net0,tftp=./,bootfile=tests/pxe-test-disk-u0HvTJ,ipv4=off,ipv6=on -device virtio-net-pci,bootindex=1,netdev=net0   -accel qtest
+ok 4 /s390x/pxe/ipv6/s390-ccw-virtio/virtio-net-pci
+
+Bios without the string:
+
+# Setup failed for virtio-net-pci not found
+ok 2 /s390x/pxe/ipv4/s390-ccw-virtio/virtio-net-pci # SKIP The bios does not support booting this device
+...
+# Setup failed for virtio-net-pci not found
+ok 4 /s390x/pxe/ipv6/s390-ccw-virtio/virtio-net-pci # SKIP The bios does not support booting this device
+
 
