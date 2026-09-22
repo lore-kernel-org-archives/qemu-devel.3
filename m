@@ -4,114 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F9BC98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D2BC982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 17:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x94ZL-0001nK-D9; Tue, 22 Sep 2026 13:46:17 -0400
+	id 1x94aH-000221-7l; Tue, 22 Sep 2026 13:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1x94Yx-0001m9-TZ; Tue, 22 Sep 2026 13:45:52 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x94ZU-0001p1-0M
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:46:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1x94Yv-0008Db-3i; Tue, 22 Sep 2026 13:45:51 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MF5lh03071299; Tue, 22 Sep 2026 17:45:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=cfWTvP1T+ZiohLpYQyROc/5n1O6+av
- 9Ju5lf8O7Zhf8=; b=HS0mUkdB3hsBJvYgDVni+3DJjkd1pUSmXqFJrmCpuHQmC1
- up/+M5msUaEI4oB87Q8dbVp+tx0jR7TfUfzHtposaG5nffZRHqENUUblOIkIaiQp
- ixKFJBli4oFFIelCkrPX0OTcgw6vUMM6+uORuOy99wiQmEzus2X8mb5b2B+p0sgm
- 6X07grShA7f/u7ck1ZDZpnyQuSdd++TwKunzKMgpxaCoNvV4zAvAx3gsXRUkg89g
- g0MVkzG4EJJCQrPGzqRJ29vedHJehg6meMuIulDR4d53ETUp9z6zt/sZFHvOGomt
- FrD/3h7CGr/Vt5jWKxfcv+h4rJe+3UG31Fuqck2w==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1q7h2-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 17:45:45 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MEm5kR1738260; Tue, 22 Sep 2026 17:45:44 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bkddru-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 17:45:44 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MHjeTL38994194
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 17:45:40 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CBA3D20043;
- Tue, 22 Sep 2026 17:45:40 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D4DF20040;
- Tue, 22 Sep 2026 17:45:37 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.111.70.254])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 22 Sep 2026 17:45:36 +0000 (GMT)
-Date: Tue, 22 Sep 2026 23:15:34 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Aniket Sahu <asahu1x@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, peterx@redhat.com,
- farosas@suse.de, npiggin@gmail.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, rathc@linux.ibm.com,
- anushree.mathur@linux.ibm.com, misanjum@linux.ibm.com,
- gautam@linux.ibm.com, thuth@redhat.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH v3 2/2] tests/functional/ppc64: extend ppc64 powernv net
- device tests
-Message-ID: <arK-kW-11OlcDBRY@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260921081010.31778-1-asahu1x@linux.ibm.com>
- <20260921081010.31778-3-asahu1x@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x94ZR-0008Fn-UY
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 13:46:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790099181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xB0VdGjmuHuXZmi+LIdPZNLU9gjo6gQ/lH1Fp/WLkM8=;
+ b=Ioz0GY6JU+86DZfQDo1ULOoiPeuHfkzAL7DfeUkPVy6rSIFDW8MkOe0oUmSZ4pS5DfxT0H
+ 7OiFrAtg13nmDJfolXuvyvvZ0xFmV9yhpr5p4i5/+knb+elaK8/FQvDuh5sQLE9tNf/h8n
+ bwDRfoXhB7Juk5fcAm0V7LZtp/zaSBQ=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-210-Ls52dlGdMx-Ec5qInXbwkA-1; Tue, 22 Sep 2026 13:46:19 -0400
+X-MC-Unique: Ls52dlGdMx-Ec5qInXbwkA-1
+X-Mimecast-MFC-AGG-ID: Ls52dlGdMx-Ec5qInXbwkA_1790099179
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-66fae2bc827so61115d50.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 10:46:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790099179; cv=none;
+ d=google.com; s=arc-20260327;
+ b=m9FwS2sBTilJst2hC15mYBIRZL6mGY2c98JTaeDU3t84s9m5vss6JaUCz5f4leh3pJ
+ jp5L0talh8wvBFsv9UIXyxKDiyTqfnCEHJh4pO//pzKnD0dIwNdZSYMePl1EFXnlZ6Yh
+ 6A3XmBakht2lU6L37TL/cEuthEIojEyUMKs69r0ocBE2hSpvp0llWu+b+d+qZgGVznQ1
+ 9kkZNeqYc41EQ9j7wU4kagMt75nWbFVfuLgO6EQX4eYqrIdp1/X8KmB1DDoPFgWsowFf
+ Hhr2Tr78c6jLjMnPMICSGmzAnp7B8D3+I/hOMjqIifJwGWnVx6FXgIscOK3GKXM2ccm4
+ 2Dfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xB0VdGjmuHuXZmi+LIdPZNLU9gjo6gQ/lH1Fp/WLkM8=;
+ fh=4SpBrKxBueTKlh2nVNOI1f4PgGJNaXa+zdI/ORe/sas=;
+ b=SSSLKmaPQ5cOERCLfHdMGE6oM6aFdHdrcDjXObBnyDkEOR2ROmr3hhxCrbmNXrp4Jg
+ rr16075B7p210QQeG88k8UyrMcPkymr4K2NQz/xLxs+wyPXT1LCh7Emw91rB8IiCSBxm
+ IbEAH28RpogAZFC9mmo6u1bkwetUUQawmRlbwnS9DtWAYL/TMWQJrszYgI2BKyitPM6p
+ ZTuD2o4PSuIBCEF7LSoCvI10NO7o127sI/OIeFXwAUQA3qoNS768tnAlGuExYGij0WC/
+ 3IhnGSDgpcnL4wu9w3jmAiWcmXEdpSQj4SYq4ZtUY3x2urhlqrNVAhXq/BrRmXzIMMyN
+ hLVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790099179; x=1790703979; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xB0VdGjmuHuXZmi+LIdPZNLU9gjo6gQ/lH1Fp/WLkM8=;
+ b=R5yBSxcIeyFk599Er0SxnsDGB44HHdigpfDbJ4cFI7osuc6c6v5yneFt8o9+afacqA
+ h/6tHtRjtu9APD1jvzXDG1amH03JJnDe3WMNfqZ96oDPHhW7fFOTAC0+yTDqinG+8HSk
+ gEvUgdzwlzXsFato6TtZDEqApyFbcW6igIea4SXlIH9t9dac1sOYMX/LbupfQTZjY50J
+ zfLk/EX0K1VeqO5fr21zgqR5pdGpAgBw9+/43s9QWkuU80RTVZDJOFb5yim4LS4QSVGV
+ 6amO8o0ICkhFpyWpblip0V++m5GzFUR9fmmUG3x/+MtG53vP/ZRx1BQDn6YdaAVvGJhj
+ /u8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790099179; x=1790703979;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xB0VdGjmuHuXZmi+LIdPZNLU9gjo6gQ/lH1Fp/WLkM8=;
+ b=Us53UUWnvSN+HYEEg2FHCZdLkXZsZGQwe8UVF3R7OKEzr9dQyZWfjcr0doesModnM+
+ JfSsRAxCjN8V0LpgGlUeROTXfv93XOcTkbRtcP6G6tHQDVvn6bQTr13hMb0uz9gRxbwK
+ YclU7Tz0LOUkC3bGhvvDI+RC8mgyJr45hhJke0QI9gCXbvtzB5gZzYweGvQVqwLL1R2i
+ ZhqIUY2oq4bwdYJneKK5tCRWx3A+WtbvbqGQa8+iuXVxv1lEOZRvM0ixFrijqUgBUNJ+
+ D6wrecy2XHvuxYK565vUjMMw7uYLl2+R8hz0ki1rvG7EwKXV3uWJ9EdMN5mZ1jC+3qg9
+ /zDQ==
+X-Gm-Message-State: AFuF++lz++XmZsJcvoQ+iI/Rt3tm8uIyeu5OATzdcKqu0wLcSP8qf3zF
+ wA1P1ktoWI6H2h+KWFs34ulwW7cnMWPqabf8xGBAOEGzV2XevuiamIhC2U3RZjMtcvOv5c+sVJ3
+ hun+nCpNEzp9G4y0CAOAlT0xjvNf9B8eQawExZjr9hn+cLE1g/JpknpfFuI1+lbbsWjirFvThTa
+ Y/EL0+Nc0KT78HbsKAKDIeYlLcS8KdNkI=
+X-Gm-Gg: AYBFou2rHXk64ibUWm/vOBOazRRuRGImDeikKk/UyHeAl+4fO21se/zyJ3fBZ2e9K+3
+ G3e7cKCFOzySsZu+oio95qnCwgPMzNmWP+kR5u9ohf87j1s2A+4AEy9QT9BT6ibN/MvNd7C5skn
+ ut3AaurfsOAlTfxeTRnjoMbEm9Ui65rfQKzHnZU41CLCzXnYx+jSdj7Qj/hwqztDl/f+3icCSrS
+ FkGYjGknpZsI3eD
+X-Received: by 2002:a05:690e:458a:20b0:670:f743:6ec2 with SMTP id
+ 956f58d0204a3-672d5897536mr98769d50.60.1790099178566; 
+ Tue, 22 Sep 2026 10:46:18 -0700 (PDT)
+X-Received: by 2002:a05:690e:458a:20b0:670:f743:6ec2 with SMTP id
+ 956f58d0204a3-672d5897536mr98760d50.60.1790099178154; Tue, 22 Sep 2026
+ 10:46:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260921081010.31778-3-asahu1x@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: eKcni0eyCbhW3G2U3G9BsxSJk7vaAM_o
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab2bec9 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=gbOv8vlnZcgnT89JuzEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI1OCBTYWx0ZWRfX+vAnrT8WGhuZ
- IvF1Qt5DgCgMeiKanQDiOaIVi9R2kA+PXXtpdP/jefR0rRos1I1ksQHXqPDzIHdAdtRjlpFwHxn
- MbEy/11x1xM3N69lP4zEEPBzHbrnErQ=
-X-Proofpoint-GUID: tf5MUEe2EnWKmf0jdHRYmoPugX-LpH4v
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI1OCBTYWx0ZWRfX1uvyEjza3Ivj
- X9Zu5YMmfxgRbq0961AvYO6uQMiistfy3G/zYaRnMWfqQbFg894ncsLagwMobOahuWBAwKfVKnW
- EUhxA/Ptvu9NBD60Dga5P3aIZmbpT6JXQtwmL8UWoJWFyp+5Q9DyCiw4D0trNwKjAQxvBYLG9rq
- FsEeE39/vZgU6kG0BIrghElKzsdR67heehk/Xwuexg+JQwMEWvWPzbWqIkpmdgeLZ8nfoc9zvWV
- qMx2SAD/EhfQAXsISx59ZXSF+OcXqrU/8AjlGNHtoV+1MS5hboQtWEo9pKTULj0jDx9U9fh+FjX
- YW1gy3BuYHEFR9F72TYiNcZe2yAIeyRyetTO7U1wIDk3JkBQq7koWZsH43vTh+r6HBrv5d66k85
- Zp6sRQBBGgqqtVEAacER5erbjPSxnS9n9vl4cpz4wNdhJMitil/THKuWzlam29HtSEvaA0bmQzG
- 2Kdxe2Plg7mlv/mHh2A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220258
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260921205147.1857168-1-jsnow@redhat.com>
+ <20260921205147.1857168-10-jsnow@redhat.com>
+ <875wzx2ovl.fsf@pond.sub.org>
+In-Reply-To: <875wzx2ovl.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 22 Sep 2026 13:46:05 -0400
+X-Gm-Features: AcwNN1X3clkubVPauZPhIEb3CKA1FY04S8lLG-_q_3Twr1zVAF7I0w5qamCIzHo
+Message-ID: <CAFn=p-bhYcWQq8qxi-STh4wDwvNigKWYpZ2Ac+apU27s-89c0g@mail.gmail.com>
+Subject: Re: [PATCH 9/9] tests/qapi: generate output in source order
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kashyap Chamarthy <kchamart@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, 
+ Hanna Reitz <hreitz@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-block@nongnu.org, qemu-trivial@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Eric Blake <eblake@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,40 +147,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/09/21 01:40PM, Aniket Sahu wrote:
-> Added console checks as the probe log lines will appear before the
-> S14Silence-console init scripts.
-> 
-> Signed-off-by: Aniket Sahu <asahu1x@linux.ibm.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+On Tue, Sep 22, 2026 at 1:10=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Rewrite the test doc generator to produce output in source order,
+> > instead of arbitrarily.
+>
+> Really?  As far as I can tell, the patch changes format, but not order.
+>
+> Dig, dig, ...  you already switched it to source order in commit
+> 9606414d46 (tests/qapi: generate output in source order, 2026-06-11).
 
-> ---
->  tests/functional/ppc64/test_powernv.py | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-> index f3e05e4d38..200fd2c894 100755
-> --- a/tests/functional/ppc64/test_powernv.py
-> +++ b/tests/functional/ppc64/test_powernv.py
-> @@ -201,9 +201,12 @@ def do_test_ppc64_powernv(self, proc):
->  
->          self.wait_for_console_pattern("CPU: " + proc + " generation processor")
->          self.wait_for_console_pattern("INIT: Starting kernel at ")
-> +        # NVMe, e1000e, and xHCI are probed synchronously by the kernel
-> +        # during PCI enumeration, after OPAL hands off to Linux.
-> +        self.wait_for_console_pattern("nvme nvme0")
-> +        self.wait_for_console_pattern("e1000e")
-> +        self.wait_for_console_pattern("xhci_hcd")
->          self.wait_for_console_pattern("Run /sbin/init as init process")
-> -        # Device detection output driven by udev probing is sometimes cut off
-> -        # from console output, suspect S14silence-console init script.
+Ah, funny! This is probably the leftover bits we didn't agree on at
+the time and I didn't notice that this patch became anemic. Well, this
+is just a preference patch now and not really strictly necessary. I
+like seeing the "section=3D" text because it's a clue for me as I read
+the text, but it's not really important, I'll scrap it unless you also
+like the formatting change.
 
-Verified the probe order is correct.
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-Thanks,
-- Aditya G
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
 
 
