@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7520C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2230C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x96vN-0000Ce-3H; Tue, 22 Sep 2026 16:17:09 -0400
+	id 1x96xX-0003ad-Uh; Tue, 22 Sep 2026 16:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96tu-00081u-3p; Tue, 22 Sep 2026 16:15:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x96xQ-0003Tn-GJ
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x96tr-0007fi-76; Tue, 22 Sep 2026 16:15:37 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MI75pd1129420; Tue, 22 Sep 2026 20:15:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=aJBAKsAe03AT8vnFU
- rBRwGAoE1EpNeTqykTgXnfAVKk=; b=dNaV3zQBDVdqhYT/Nhf/OWIeSBFbzS6ZU
- QUdSvkRWNNbwjuHPQVCwsrNto3pfmbObzFgrBcoyQyOM97p+o6eD9/iHn9MZ6Bhq
- hOcuuwAbY2s7+CvwiXvFSCgzfR6H/cFLghjtErnzcZHSZ/XA5/R1jkjm/BnBuYoK
- C6qQPE8te2oj4be8K4mE8MESEAvoBqlTTA4oP1zqcjXFtWF3/F48PjdapUx39jvK
- GEPQzzdImAley5Q9rlRD/GL1nkMACW9xBxTwNn4RWjvn2Ehr+Gh8l8/WYJHODmHX
- zlyaMPXBdAL0EE67fRFgQU2ep3lNW+He4V+BSXEh8Bsvm/f/Nr75w==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ftqw-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 20:15:32 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68MIHbEN3220323; Tue, 22 Sep 2026 20:15:31 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vkdxc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Sep 2026 20:15:31 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68MKFRx252166936
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Sep 2026 20:15:27 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A4692004F;
- Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 78BD12004B;
- Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
- Tue, 22 Sep 2026 20:15:27 +0000 (GMT)
-Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 5E8F816142E; Tue, 22 Sep 2026 22:15:27 +0200 (CEST)
-From: Eric Farman <farman@linux.ibm.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH v3 1/9] virtio-ccw: Limit ISC to MAX_ISC
-Date: Tue, 22 Sep 2026 22:15:17 +0200
-Message-ID: <20260922201526.2383047-2-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922201526.2383047-1-farman@linux.ibm.com>
-References: <20260922201526.2383047-1-farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x96xM-00080E-2W
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:19:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790108351;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=69y9HyL13lSknhbAxE4hbmWgv5ZVHGP2g+fYLGQQEkA=;
+ b=I48w7o0ghziiA19phmolAJg4EqFhUb+eHJ0WlUYGPcYb2jeRKQ2yCnS0bzoNC47i4XWKYw
+ TuFBLR5xhmHmw/mOz7GBo/URhvB2je566qfBqkyRcKHZuuBbb1pCA98bCBoALV197kjwOE
+ M8beJQ0D8bCBLInt/pyndGabJujeK5o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-9AaZk9M_NFC1lD1pg3sgRg-1; Tue,
+ 22 Sep 2026 16:19:09 -0400
+X-MC-Unique: 9AaZk9M_NFC1lD1pg3sgRg-1
+X-Mimecast-MFC-AGG-ID: 9AaZk9M_NFC1lD1pg3sgRg_1790108348
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26464193E884; Tue, 22 Sep 2026 20:19:08 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E2AC41800446; Tue, 22 Sep 2026 20:19:06 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Wed, 23 Sep 2026 00:17:08 +0400
+Subject: [PATCH 01/88] scripts/checkpatch: skip trailer checks inside patch
+ diff
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: m-biI9B_e6ZKapVdyB7NTuikANb767hi
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab2e1e4 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=o2FE-jkhVZ_mc2e-VYYA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX4bH9Q/N9tuQQ
- aug2CQS493PLzuGOgK4xR12ua/QORGYTzD/wj2vEzDJt3X18PoHjLIPbxVTP6Ee9WdG/wRGwW34
- wfrX4ThYSU16riGbXOOXf+mfUrjdBnhGU/NkTnvZgWOtJi32X8iYNw3UeLFncOhW74c79cSH1E6
- 2gWd6+Fip5tDzBFmo8n6bS2yTDhAdQlIZDzi/Yyfos16CKfnliy5fVWVYBO0LRqD7R3Ru+vT2ql
- 8/aBITwTcFSXYufZTrg8Js03FG0Lnp3EJtu9q5ecxmunGG6TK2GzoqMou8WOu0l0nUB4OTIGeA/
- mAIXC2wlaGsHhAKrYCrJxJe0dvqGrjZWH72QkyWJTQK1Nkna7rEO8f/Gb8RoP2F8TFQDv1TEfJw
- zC+p2kWIs2DD0ZHxuxTgvn1/ARTdJNMHTV0tl8BVGqj1VrpBRT0T7FxIryREc37kvYItk053sFR
- lc4K1t9+FlmIbTzJVvA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI5MyBTYWx0ZWRfX+QmTzGzxPFxw
- 4IwQkNJydASoc0I9SKIXcVjETj/Ie4DLNCdgbsdAM9HOzhWa/SgW/yHZhI7egV6MlUckcm9+mIP
- E9PL1p6GG49C9rNe9Dsb160nJ8UByD4=
-X-Proofpoint-GUID: m-biI9B_e6ZKapVdyB7NTuikANb767hi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220293
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260923-nohmp-v1-1-ebc029d4bd80@redhat.com>
+References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
+In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Chao Liu <chao.liu@processmission.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=923;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=qrLUe2DgABzIRe9O7ucC6nnmE7YYrgIhHXKXGq9YC6M=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKtJVfTtcJ9IGw0dOU8em/IuhlgCO/+siZKf
+ 94vwddYRkiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLirQAKCRDa6OEJdZac
+ 5X8qEACBzIdoEDQdOKlM2DgsDFG/K3BJrtaVzC9xfFgcQsxA19vON2zX1Opp+Sn3+kFNlZsY4cW
+ pDxQ5Kb4Q0wp6Lm/iDVFxMYP3todAQF9S3JXcDookybn/Td7Zwp45cXgftl7/KMmogodKX2ZoZz
+ GHCHzQJ/WaTRNldrgNFiYhRSboY3+VQmIz6vczRCW+yF5DTC2Nm+3btlTJS4fIJqPRYozK/NYUg
+ HdJR88V/7Z5s8obXIe92HasTa9kjjQBvj/HDKhx7RYARh2FIj8ba94A/U/4wkYMdDrR/JpqkxMt
+ zCQrkzM+Z1jXW89PBcfU38uS1oDapa+xK23mXC/spJMhAXH2pG2kDXTRUHkqVu8WyKINJ45OP+X
+ xWjzS28IAVPP3EzpHbTIsdON5NDEa4dMEFZurxtQgcTrdbWQPKIuk8zTz1NxOUd2d2GuqAOne2a
+ bJiIaPI0WUGjZWYcq9nX2wwBaKmnn1BibmML4kQ3G0BDQZsI1T5W9lgdMKvHNzjJ5KwNxH36lfq
+ 4omDEeGNUn92E4PY4S6MO9zxJrY+Wg3VU2C9rgyxRqWnPbThoaGiY92mWUykN2fL+g301EFDYkc
+ owrpPc/Wvx0Sc9sjtnCEXrLas0aQTG5VqjWoo2PYbATDOdSCwCllWKlNq+QM1IIzPrDnIhb6N+C
+ bQjA4NwoJlEhbXQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,66 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The interrupt subclass is often defined as a uint8, though in practice
-it will be within the range of just 0-7. Ensure that a guest-supplied
-subclass does not extend beyond its expected range, especially when
-used as an array index.
+The duplicate-trailer and self-review checks matched trailer-like
+lines inside the diff body, not just in the commit message. Gate
+the check on !$is_patch so it only runs before the diff starts.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 25a08b8ded ("s390x/css: update css_adapter_interrupt")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Fixes: c3db8e70451 ("scripts/checkpatch: warn on duplicate trailers and self-review")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/s390x/css.c        | 7 ++++++-
- hw/s390x/virtio-ccw.c | 6 ++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ scripts/checkpatch.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 76dbca3bb9..9da9128d88 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, ui=
-nt8_t isc)
-     S390FLICState *fs =3D s390_get_flic();
-     S390FLICStateClass *fsc =3D s390_get_flic_class(fs);
-     uint32_t io_int_word =3D (isc << 27) | IO_INT_WORD_AI;
--    IoAdapter *adapter =3D channel_subsys.io_adapters[type][isc];
-+    IoAdapter *adapter;
-+
-+    if (type >=3D CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
-+        return;
-+    }
-=20
-+    adapter =3D channel_subsys.io_adapters[type][isc];
-     if (!adapter) {
-         return;
-     }
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index 30fb2c0681..eb6378ea4c 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -46,6 +46,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int =
-version_id)
-     CcwDevice *ccw_dev =3D CCW_DEVICE(dev);
-     CCWDeviceClass *ck =3D CCW_DEVICE_GET_CLASS(ccw_dev);
-=20
-+    if (dev->thinint_isc > MAX_ISC) {
-+        return -EINVAL;
-+    }
-+
-     ccw_dev->sch->driver_data =3D dev;
-     if (ccw_dev->sch->thinint_active) {
-         dev->routes.adapter.adapter_id =3D css_get_adapter_id(
-@@ -659,6 +663,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-         } else {
-             if (ccw_dstream_read(&sch->cds, thinint)) {
-                 ret =3D -EFAULT;
-+            } else if (thinint.isc > MAX_ISC) {
-+                ret =3D -ENOSYS;
-             } else {
-                 thinint.ind_bit =3D be64_to_cpu(thinint.ind_bit);
-                 thinint.summary_indicator =3D
---=20
-2.53.0
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 9838a6417851..c023767f9670 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1834,7 +1834,7 @@ sub process {
+ 		}
+ 
+ # Check for duplicate trailers and self-review
+-		if (!$in_header_lines &&
++		if (!$in_header_lines && !$is_patch &&
+ 		    $line =~ /^\s*([A-Z][a-zA-Z]*(?:-[a-zA-Z]+)*):\s*(.+)/) {
+ 			my $trailer_type = $1;
+ 			my $trailer_value = $2;
+
+-- 
+2.56.0.rc0.29.g47ce80527c56
 
 
