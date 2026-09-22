@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 866CBC98302
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65EBDC98302
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x97Xf-0000KP-0W; Tue, 22 Sep 2026 16:56:43 -0400
+	id 1x97Xk-0000Oz-Uk; Tue, 22 Sep 2026 16:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XP-0000Fs-UT
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97Xb-0000JG-Aj
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XO-00045D-EJ
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:27 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x97XY-00046e-Fz
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:56:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790110585;
+ s=mimecast20190719; t=1790110595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hO6U0r43tcwIk1YxVH+Jad9U+KcRDjTIv+P59ADGJEo=;
- b=LQf2oY0QY9MkvaeDBtXCrEzriKdO/WR66brcdXVn1IVMJPe6XrIYJa2Ia7NeDSRzu1mQ74
- E09PD7bKfgh8nFpYRcaysxzUdU5SSdd4yryznN/sMMR/ygMajKoAC4tfV5bFhk8iyvnEWl
- zL2S+Y3PgLPDcqfGTEX4/lNYQP91SBE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jiuQzypKOo2UN4XSnEnDQmXYroFTjnqbNw1e7bjBSrs=;
+ b=SDejb2cAdhMn6ZSTKBRAxrzAyEg3C0kWVSBEax/AMtgkGeDr/oDWO74JZJ4uCNRuheGnXo
+ EsuysVlgis2ddoUR3MtQlvVOOLHkWQ8sPm1bSYxicwYruVkbET14JEP/tWTdg8OCtB0ZSK
+ 4S+rbjnlzhcQBjoRMS9i17pILaEVHZ0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-xlp_FLPXNHGSAHfsHoZIAA-1; Tue,
- 22 Sep 2026 16:56:21 -0400
-X-MC-Unique: xlp_FLPXNHGSAHfsHoZIAA-1
-X-Mimecast-MFC-AGG-ID: xlp_FLPXNHGSAHfsHoZIAA_1790110579
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-209-8ByOnC5vP6WeKUPZWXEW7w-1; Tue,
+ 22 Sep 2026 16:56:31 -0400
+X-MC-Unique: 8ByOnC5vP6WeKUPZWXEW7w-1
+X-Mimecast-MFC-AGG-ID: 8ByOnC5vP6WeKUPZWXEW7w_1790110589
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EE7F1944A85; Tue, 22 Sep 2026 20:56:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AE8519560BB; Tue, 22 Sep 2026 20:56:29 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.125])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA3E41956087; Tue, 22 Sep 2026 20:56:15 +0000 (UTC)
+ id 62ED21956086; Tue, 22 Sep 2026 20:56:26 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
@@ -60,9 +60,9 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Hanna Reitz <hreitz@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 1/8] qapi: convert/split remaining qapi/qmp intro sections
-Date: Tue, 22 Sep 2026 16:55:58 -0400
-Message-ID: <20260922205605.501602-2-jsnow@redhat.com>
+Subject: [PATCH v2 4/8] qapi: convert simple intros for qga/qapi-schema.json
+Date: Tue, 22 Sep 2026 16:56:01 -0400
+Message-ID: <20260922205605.501602-5-jsnow@redhat.com>
 In-Reply-To: <20260922205605.501602-1-jsnow@redhat.com>
 References: <20260922205605.501602-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -92,147 +92,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few slipped in during the mass conversion, get those too. Mostly
-trivial conversion, with the exception of @x-qemu-io which introduces
-a new split.
+These are all single-paragraph introductions immediately followed by a
+non-plaintext section, so no new insertion point is created by this
+conversion.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block.json         |  5 +++--
- qapi/machine-s390x.json |  3 +--
- qapi/machine.json       |  3 +--
- qapi/net.json           | 24 ++++++++----------------
- 4 files changed, 13 insertions(+), 22 deletions(-)
+ qga/qapi-schema.json | 40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/qapi/block.json b/qapi/block.json
-index 13c47e1eb44..0a88d405a26 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -597,9 +597,10 @@
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 90110af5730..b592b14a011 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -205,9 +205,9 @@
  
  ##
- # @x-qemu-io:
-+#     Run a qemu-io command on a block device.
- #
--# Run a qemu-io command on a block device.  Take either a block
--# backend name or a qdev ID to identify the device.
-+# Take either a block backend name or a qdev ID to identify the
-+# device.
- #
- # @device: the block backend name, node-name to run the
- #     command on.
-diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
-index 670a1f9d926..8d8cbe2fb75 100644
---- a/qapi/machine-s390x.json
-+++ b/qapi/machine-s390x.json
-@@ -138,8 +138,7 @@
- 
- ##
- # @BootCertificates:
+ # @guest-shutdown:
 -#
--# Boot certificates for secure IPL.
-+#     Boot certificates for secure IPL.
+-# Initiate guest-activated shutdown.  Note: this is an asynchronous
+-# shutdown request, with no guarantee of successful shutdown.
++#     Initiate guest-activated shutdown.  Note: this is an
++#     asynchronous shutdown request, with no guarantee of successful
++#     shutdown.
  #
- # @path: path to an X.509 certificate file or a directory containing
- #      certificate files.
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 1220116bf7d..6eb14c62851 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1390,8 +1390,7 @@
+ # @mode: "halt", "powerdown" (default), or "reboot"
+ #
+@@ -266,10 +266,10 @@
  
  ##
- # @SpMemDeviceInfo:
+ # @guest-file-read:
 -#
--# sp-mem device state information
-+#     sp-mem device state information
+-# Read from an open file in the guest.  Data will be base64-encoded.
+-# As this command is just for limited, ad-hoc debugging, such as log
+-# file access, the number of bytes to read is limited to 48 MB.
++#     Read from an open file in the guest.  Data will be
++#     base64-encoded.  As this command is just for limited, ad-hoc
++#     debugging, such as log file access, the number of bytes to read
++#     is limited to 48 MB.
  #
- # @id: device's ID
+ # @handle: filehandle returned by `guest-file-open`
  #
-diff --git a/qapi/net.json b/qapi/net.json
-index 2a186a71b93..f0312dfb714 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1275,8 +1275,7 @@
+@@ -357,10 +357,9 @@
  
  ##
- # @UsernetInfo:
+ # @guest-file-seek:
 -#
--# Information about a user-mode network stack (slirp).
-+#     Information about a user-mode network stack (slirp).
+-# Seek to a position in the file, as with fseek(), and return the
+-# current file position afterward.  Also encapsulates ftell()'s
+-# functionality, with offset=0 and whence=1.
++#     Seek to a position in the file, as with fseek(), and return the
++#     current file position afterward.  Also encapsulates ftell()'s
++#     functionality, with offset=0 and whence=1.
  #
- # @hub-id: The hub id, if available.
+ # @handle: filehandle returned by `guest-file-open`
  #
-@@ -1295,8 +1294,7 @@
+@@ -1254,10 +1253,9 @@
  
  ##
- # @x-query-usernet:
+ # @guest-exec-status:
 -#
--# Query user-mode network stack connection states.
-+#     Query user-mode network stack connection states.
+-# Check status of process associated with PID retrieved via
+-# `guest-exec`.  Reap the process and associated metadata if it has
+-# exited.
++#     Check status of process associated with PID retrieved via
++#     `guest-exec`.  Reap the process and associated metadata if it
++#     has exited.
  #
- # Features:
+ # @pid: pid returned from `guest-exec`
  #
-@@ -1319,8 +1317,7 @@
+@@ -1605,10 +1603,9 @@
  
  ##
- # @NetFilterInfo:
+ # @guest-ssh-remove-authorized-keys:
 -#
--# Information about a netfilter attached to a network client.
-+#     Information about a netfilter attached to a network client.
+-# Remove public keys from the user .ssh/authorized_keys on Unix
+-# systems (not implemented for other systems).  It's not an error if
+-# the key is already missing.
++#     Remove public keys from the user .ssh/authorized_keys on Unix
++#     systems (not implemented for other systems).  It's not an error
++#     if the key is already missing.
  #
- # @name: filter object name (QOM path component)
+ # @username: the user account to remove the authorized keys
  #
-@@ -1339,8 +1336,7 @@
+@@ -1838,9 +1835,8 @@
  
  ##
- # @NetworkClientInfo:
+ # @GuestNetworkRoute:
 -#
--# Information about a network client.
-+#     Information about a network client.
+-# Route information.  Supported on Linux (since 9.1) and Windows
+-# (since 11.0).
++#     Route information.  Supported on Linux (since 9.1) and Windows
++#     (since 11.0).
  #
- # @name: unique network client identifier
- #
-@@ -1369,8 +1365,7 @@
- 
- ##
- # @NetHubPortInfo:
--#
--# Information about a hub port.
-+#     Information about a hub port.
- #
- # @name: hub port identifier
- #
-@@ -1385,8 +1380,7 @@
- 
- ##
- # @NetHubInfo:
--#
--# Information about a network hub.
-+#     Information about a network hub.
- #
- # @id: hub identifier
- #
-@@ -1401,8 +1395,7 @@
- 
- ##
- # @NetworkInfo:
--#
--# Information about the network configuration.
-+#     Information about the network configuration.
- #
- # @hubs: network hubs and their ports
- #
-@@ -1417,8 +1410,7 @@
- 
- ##
- # @x-query-network:
--#
--# Query the network configuration including hubs and clients.
-+#     Query the network configuration including hubs and clients.
- #
- # Features:
- #
+ # @iface: The destination network or host's egress network interface
+ #     in the routing table
 -- 
 2.55.0
 
