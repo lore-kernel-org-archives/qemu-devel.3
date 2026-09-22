@@ -4,96 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028ABC982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 18:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83792C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 18:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x94tR-0008B0-8h; Tue, 22 Sep 2026 14:07:01 -0400
+	id 1x94xA-0000NC-Ac; Tue, 22 Sep 2026 14:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x94tP-0008Al-Jm
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:06:59 -0400
-Received: from mail-pz2-x0c.google.com ([2607:f8b0:4864:3b::c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x94tN-00020Q-M4
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:06:59 -0400
-Received: by mail-pz2-x0c.google.com with SMTP id
- d2e1a72fcca58-87c90648f99so208634b3a.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 11:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790100416; x=1790705216; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7phQY1AVnxbwQGyEIf0s0KkUEMF1qyH+fHQWZkw0bv4=;
- b=Euyhrz3Z8CvGgByvPD+1EiYBst/GWsnmlCgLDO5BRG1QSxP5U7ATPtTa1X29FHzowE
- 3EZrv1fd7CSUnu+GvI4QKSxFozdLxmYYI1SvdLQ4PHCvpjqk7ADrGkwDu5F+Od2J7Tn6
- OoSGaGG108qGNRl1AoM1bx0LobyciFqEdv47EFIpUWa2pYNpqLtD4FbVo+evy9OU1FDy
- QRoWQ1f7mjei6D/ydw4vOdKfYAijr/vWv61WAjPkqYBgUBIkA8FwTI0BJgEMmMBSjp+B
- 5Hl2Ev8tlkrPPmB6PtDKUaPP7LmPzIQ40CECb4i9w23byJsAxMTupn02WzQBQv9BSz66
- eQig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790100416; x=1790705216;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7phQY1AVnxbwQGyEIf0s0KkUEMF1qyH+fHQWZkw0bv4=;
- b=E2z5Hw+/cfSpZjbIBfgj5lmwfpGzzBLpECqcdFgZzPoxxZtAaeUstMefxOO1Cwsx1p
- uFYJp52DIhrYmZVBhDqNGTdq1y/976q0A/y8bdQ7WPdRYs1oSDivChvmgLhvJKqKHYDU
- H0Y/06F/4WgQ5mqQEDn1l0b245kxI1l4cSX3v+3RXB2/SJlYpFEwR4tJRuIWz4msA/GN
- k9/ZuUohj2ltX/hC+Q66aayMk8lxcoIaWEMM8YQzkT60WWdIjMx85B0+S0gWMzk0xh+a
- +egNuRcolKUS+XH5/HC6lghyXHMN91UJBVc1A5PX3t1Q3S28RfZRXgwoAkBMEeYHpxC7
- WR8g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx72mthxHBWdsBGAFmRo88XoCVGNGIhHOxqHXpLachcs9JNIpW+FqMFY/qiObUwBnjR8gzAbhNBhWQ5@nongnu.org
-X-Gm-Message-State: AFuF++l1yIBTCesgFd2zz/rEJidNRTYK4cvmTICPmnt1LGsS7xXd9QSA
- LmC2e4RsETkLWJq5+bJ5y0gs4cyu4D8rIyGTm5nhb4K7oPHGKDTkJVeAvx76mkm8m20=
-X-Gm-Gg: AYBFou1LJCyzrAPmG/nb0QQeF2YCPYBCqUo7AAFhEdUYVcl+nRZDv4MZjbhcctGoHWx
- XZZebeTgh8h+OhadABAhbedrK1TEv4IEH1rQBRB15wsYFrfyWtpx9VOaATOZ4eNxI0JoKlq9uaQ
- xe5JGwz/zt8c8WkyWPjVQlOGe3iGLU/g76hr/U6avDDjY6rwqF1jVcbIaEigQqsiUfVp2r/yv12
- UcYo5/VjYFie6VLsGF3hMXa64RZbCYv6U2eiF47gzh61V3/8ra8XqoY99HRLP+Cc7LFYsRr7roI
- USlkQSRnPcDFCiYqIbcsJW+vq/QAw7ZwoxwYg15HOyepaHAkNhdlKNM2E1n04NbCPSLzoVJt2wn
- W6fyX2ptGxYBndh4edQe3YweAIBcaoHmXfeScHdP+6M8xR6b4JCXD8QUdURWDUABhZwL4GviRyc
- dJQpIsFnfoYvRkOxgUFiM3NQ3FM9f1GjuGYIO77XiKHDKxfalnyRLkrM7kxMdQCN94NfKiXgOZP
- XhdKGSnEyngXoQ/vxuwampR84nwTBYgZ8lAlYJk
-X-Received: by 2002:a05:6a21:39b:b0:3dd:a197:ede4 with SMTP id
- adf61e73a8af0-3ddf8304ad8mr265641637.51.1790100415752; 
- Tue, 22 Sep 2026 11:06:55 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc75f3ba829sm3852a12.11.2026.09.22.11.06.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Sep 2026 11:06:55 -0700 (PDT)
-Message-ID: <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
-Date: Tue, 22 Sep 2026 11:06:53 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94x1-0000MX-Nh
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:10:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1x94wy-0002fp-Hb
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 14:10:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790100639;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QWHJlCIUOotW1IdR8C8AeFjCPJeBPSms1ipvi6lN0Xg=;
+ b=XOphWHwmJVVykLR2BCseaJ/NfEZrcTL7P3wU0dy2HEV19VNC/mEs5XQBGi/+acFh/nbdJ/
+ kksAHREy64SCOWHRssD9WFG3ZdYXYA2q8kTsZCJYuPW77NpYjt1LbtbO2GhKGV/gmj6GjP
+ DDTCnhszcxjle25egfQxPPxh+5oSkA4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-qUNfgcWXMei7ny-DOQNUbg-1; Tue,
+ 22 Sep 2026 14:10:35 -0400
+X-MC-Unique: qUNfgcWXMei7ny-DOQNUbg-1
+X-Mimecast-MFC-AGG-ID: qUNfgcWXMei7ny-DOQNUbg_1790100634
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CCD21954229; Tue, 22 Sep 2026 18:10:34 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 975F8418; Tue, 22 Sep 2026 18:10:32 +0000 (UTC)
+Date: Tue, 22 Sep 2026 19:10:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH 1/7] tests/tcg/meson.build: force use of linux/amd64
+ platform for containers
+Message-ID: <arLElaXA4vLEPL6h@redhat.com>
+References: <20260921231458.3369-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260921231458.3369-2-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user/sh4: fix race in atomic variables
-To: Mikulas Patocka <mpatocka@redhat.com>
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
- qemu-devel@nongnu.org
-References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
- <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
- <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
- <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
- <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260921231458.3369-2-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,52 +89,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/26 10:58, Mikulas Patocka wrote:
+On Mon, Sep 21, 2026 at 11:14:52PM +0000, Pierrick Bouvier wrote:
+> On hosts != x64_64, we detect if host can run amd64 containers (usually
+> through qemu-user-binfmt). If not, we deactivate container support.
 > 
+> We could technically stop here and force container engine to use this
+> platform. Since existing base image (docker.io/library/debian:13-slim)
+> is multi platforms, container engine will enable this variant by
+> default.
 > 
-> On Tue, 22 Sep 2026, Richard Henderson wrote:
+> Now the problem is that if user reuses this image for their own
+> Dockerfiles, they will run into unpleasant surprise that now, their
+> container engine is using x86_64 variant by default, on any host.
 > 
->> On 9/22/26 10:04, Mikulas Patocka wrote:
->>> I looked at the sh4 translator and it seems that it already tries to make
->>> sure that the full gUSA region is translated into one TB - i.e. there is
->>> "ctx->base.max_insns = max_insns" in sh4_tr_init_disas_context - that will
->>> override the value "1" that is supplied by cpu_exec_step_atomic. The
->>> comments suggest that the author is aware of the fact that the gUSA region
->>> must be completed atomically.
->>>
->>> So, the code that single-steps through the gUSA region is not needed.
->>>
->>> It seems that the misbehavior is caused by the fact that if we exit from
->>> the gUSA TB early, we execute the rest of the region in non-exclusive
->>> context.
->>>
->>> I simplified the patch, so that it adds just one method -
->>> revert_uninterruptible. It tests whether we are in the unfinished gUSA
->>> region, and if we are, it reverts PC and SP back to the beginning.
->>
->> What good does that do?  You'll only restart the same block as before.
->>
->> Is this really the case where you're encountering
+> So, in next commit, we'll change base image we use to x86_64 variant,
+> which has a single platform: linux/amd64. This ensures we don't generate
+> any unwanted side effect when building our images.
 > 
-> Without that patch, it deadlocks in 10-30 minutes. With the patch (either
-> version 1 or version 2 that I sent), it stays running overnight.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  tests/tcg/meson.build | 19 ++++++++++++++-----
+>  1 file changed, 14 insertions(+), 5 deletions(-)
+
 > 
-> Maybe the bug is somewhere else and the patch just papers over it.
+> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+> index 75f0a52fd22..4cf4865461e 100644
+> --- a/tests/tcg/meson.build
+> +++ b/tests/tcg/meson.build
+> @@ -81,6 +81,7 @@ tcg_tests_summary += {'gdb': gdb}
+>  
+>  docker_supported = false
+>  container_command = false
+> +docker_platform = ['--platform', 'linux/amd64']
+>  if get_option('containers')
+>    if get_option('container_command') != ''
+>      # make sure command is working
+> @@ -99,6 +100,15 @@ if get_option('containers')
+>                          container_command]
+>      endif
+>    endif
+> +
+> +  if docker_supported
+> +    docker_supported = run_command([docker_wrapper, 'run', '--',
+> +                                    docker_platform,
+> +                                    'docker.io/amd64/debian:13-slim',
+> +                                    '/bin/true'],
+> +                                    check: false).returncode() == 0
 
-Could well be.  Do you have a reliable reproducer?  Or is this a "run 
-the container and things eventually fail" sort of thing?
+IIUC, this is checking that  podman/docker is capable of running
+(potentially)  foreign-arch containers ? ie that qemu-user is
+setup on the host.  If so, would be worth a short comment here.
 
-Logging guest state at the point your revert hook fires could be 
-informative...
+> +    tcg_tests_summary += {'x86_64 container support': docker_supported}
+> +  endif
+>  endif
+>  tcg_tests_summary += {'container command': container_command}
+>  if get_option('container_registry') != ''
 
-> BTW. what happens with synchronous signals inside the TB? (i.e. SIGSEGV
-> due to writing into a write-protected page)
-Synchronous signals like that exit the translation block right away, 
-leading to the signal being delivered.
+None the less:
+
+  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-r~
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
