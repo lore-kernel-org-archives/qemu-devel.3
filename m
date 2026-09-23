@@ -4,121 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C63BC98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5EFC98302
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9O0f-0000HS-Uf; Wed, 23 Sep 2026 10:31:45 -0400
+	id 1x9O57-0001Gm-DK; Wed, 23 Sep 2026 10:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x9O0e-0000H0-9m
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:31:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9O53-0001Gd-Rd
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:36:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x9O0c-0007ly-Kz
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:31:43 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9O51-0008GL-WD
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:36:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790173901;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1790174174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oxDyo6wS9tLNRj9z6xsNaM4tf77SpHmeasoP+i9z6qY=;
- b=drnUbDZLX2WUpsQBWYTI4h/07vx7KYmGZ0kUi+FrR9Xm2gvzDMsfwreeuIvnx03xV6/xvJ
- P9lh5nXe5pAGKQb5oY5Wtt5PCUTmim/REapGChZenv9u7q12LQMEgBexu07zk9Ak4vRjUW
- 3yNGT9uQJf5gYhK1abSkCNeJDjKv5pk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-V3ktUzCcOhyyyhAf0cBDFQ-1; Wed, 23 Sep 2026 10:31:39 -0400
-X-MC-Unique: V3ktUzCcOhyyyhAf0cBDFQ-1
-X-Mimecast-MFC-AGG-ID: V3ktUzCcOhyyyhAf0cBDFQ_1790173898
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-485866e0066so493337f8f.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:31:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790173898; x=1790778698;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oxDyo6wS9tLNRj9z6xsNaM4tf77SpHmeasoP+i9z6qY=;
- b=wVKLfWr1JvyajClWzFFhO3F6UHJKXaG2AgWi4G+84dhA5BIzAYtoB4s8SS5rOhVTBf
- JxEabACmL1ikjGbu/UyS3ASbtr+89ln7Po40nSamWBXJHjXA8VlMu/6vNGOHtimoz5mE
- nc2KMHMEk2l0xNIJly8zTBF2G9KyMBEKkyDykGWNh6n1NZ4V4haAW84jvRnGwhyjuSqk
- BiHXK0xQab3WWggdeqEcifDRa2O06txkhMwgMNC3pZuy8cBRT3Ps6ElEqPYdy3poi80N
- 5YvdTJ3+9oc0MTeq8JARejO4oMMepSabkha6re0tCQ/QDX3HO34hNtEOls1QSkNRWaA5
- CjdQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvByDFC/1uvux6wMrx2OZ/2Uv9QjlRwltxLOHgivQQ6fz83hxnaTMplUDrt2V1Knlb4j8Q048sxSJVeiS@nongnu.org
-X-Gm-Message-State: AFuF++k/Jb7J6lY6dWK71Ku2oQQjox4dJbbGExOR9SM0SxT+reAL/7t2
- Agp+knwxqOeFiOV9FiNPraCscSSzzj0Iy5jZuJp2+EQYEetfHkbUlngUwE6ICKGr1xesl9R8RjL
- BR61CyfgcjnSo45hrz6yB6C+3dA0XSkb3atJlgiFmzbRGa3TCHIBH4G5V
-X-Gm-Gg: AYBFou1u47IrgET56BkNA8ih7wL3L1ibLvDDWyWBydLH9oKWxYWThXx1hJCzoo9Z1K5
- dOZ2sabnOxnsWPvM01cWJCjF07o4VWluTn52eqzcYBrqnMi+zVmP8cYSmTBY1DdFuVbZ96rpw8J
- TfhRebHQy1jFWHUbwykoEP7rcoRR5JoIVgnbnrB3Y6xlzwoFMurVkdMyYAsi0yuh2W+up3JFtZ5
- c4I0G4el06DWLx8uH1BbJ6c3mslfZTPTrWBhLEzB05B7Ea5vzNUHVEibIG/r6j4fovVsWrNhX+S
- MojfjG8p2dW1nR0qrcE3BjlMg9OSxRzWC9cWtFsemxVXpD2kUKYOcOdRrtUhQmo/IAYBj6/ETYq
- NSJSbmxAWhjBwPzlFFEt1O0oaLLxg/5v2kkqpn/DOwU8obpjaX0DdaTxx7Vc=
-X-Received: by 2002:a5d:5f88:0:b0:485:8a46:b3cc with SMTP id
- ffacd0b85a97d-488670c51fcmr4871178f8f.52.1790173898232; 
- Wed, 23 Sep 2026 07:31:38 -0700 (PDT)
-X-Received: by 2002:a5d:5f88:0:b0:485:8a46:b3cc with SMTP id
- ffacd0b85a97d-488670c51fcmr4871097f8f.52.1790173897738; 
- Wed, 23 Sep 2026 07:31:37 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-488682673bdsm7322098f8f.2.2026.09.23.07.31.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 07:31:37 -0700 (PDT)
-Message-ID: <1ccea6d2-418c-481a-85ff-072d3dd837b3@redhat.com>
-Date: Wed, 23 Sep 2026 16:31:35 +0200
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kXsTFyVenB5D7Qw1SWqDyBXF+hebPL3PMuNIqmvpVkg=;
+ b=akDeKn6ItbJdD/WpyCgVBQTpSyl2D8bRgZWUNdB8kMiLW7MOsG8mkmxast6o7Q3eMWYbaz
+ VkNY9bYKuNNsL+2CLDOc7rvZhQq9Lsf6dcHBeo22in/CqJCRkXtwzYFZE1AFUy3rQCyxxn
+ XalXcWSebUvsLWRH3JRTkAHU7J358b0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-97S1VOWCMByoDuifesr-dw-1; Wed,
+ 23 Sep 2026 10:36:11 -0400
+X-MC-Unique: 97S1VOWCMByoDuifesr-dw-1
+X-Mimecast-MFC-AGG-ID: 97S1VOWCMByoDuifesr-dw_1790174170
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 680B7196C43B; Wed, 23 Sep 2026 14:36:10 +0000 (UTC)
+Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 128CE3000218; Wed, 23 Sep 2026 14:36:08 +0000 (UTC)
+Message-ID: <d92766bd-b542-477f-9caa-c09978080858@redhat.com>
+Date: Wed, 23 Sep 2026 16:36:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 03/26] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
+Subject: Re: [PATCH] system: fix buffer overflow in tdx_parse_panic_message
+To: Maxim Levitsky <mlevitsk@redhat.com>, qemu-devel@nongnu.org
+Cc: Mauro Matteo Cascella <mcascell@redhat.com>,
+ Jordy Zomer <jordyzomer@google.com>
+References: <20260923004553.100732-1-mlevitsk@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260916144721.751810-1-eric.auger@redhat.com>
- <20260916144721.751810-4-eric.auger@redhat.com>
- <ECC98331-BFD5-4630-ADBC-FEDA0B32F889@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <ECC98331-BFD5-4630-ADBC-FEDA0B32F889@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260923004553.100732-1-mlevitsk@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,79 +119,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/23/26 02:45, Maxim Levitsky wrote:
+> tdx_parse_panic_message has code that detects if the guest supplied
+> message contains some unprintable characters and in this case prints a hex dump.
+> 
+> The code has a bug: it allocates 3 bytes for 'sprintf("%02x ")',
+> but sprintf in this case actually writes 4 bytes, because it adds the NULL
+> terminator.
+> 
+> To fix this, just use qemu_hexdump_line instead.
+> This patch was only compile tested.
+> 
+> Reported-by: Jordy Zomer <jordyzomer@google.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3905
+> Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+> ---
+>   system/runstate.c | 35 +++++++----------------------------
+>   1 file changed, 7 insertions(+), 28 deletions(-)
+> 
+> diff --git a/system/runstate.c b/system/runstate.c
+> index d3e64d2b6258..ebf09b192b4e 100644
+> --- a/system/runstate.c
+> +++ b/system/runstate.c
+> @@ -50,6 +50,7 @@
+>   #include "qemu/sockets.h"
+>   #include "qemu/timer.h"
+>   #include "qemu/thread.h"
+> +#include "qemu/cutils.h"
+>   #include "qom/object.h"
+>   #include "qom/object_interfaces.h"
+>   #include "system/cpu-timers.h"
+> @@ -760,10 +761,9 @@ static void qemu_system_wakeup(void)
+>       }
+>   }
+>   
+> -static char *tdx_parse_panic_message(char *message)
+> +static GString *tdx_parse_panic_message(char *message)
+>   {
+>       bool printable = false;
+> -    char *buf = NULL;
+>       int len = 0, i;
+>   
+>       /*
+> @@ -784,32 +784,11 @@ static char *tdx_parse_panic_message(char *message)
+>           }
+>       }
+>   
+> -    if (len == 0) {
+> -        buf = g_malloc(1);
+> -        buf[0] = '\0';
+> +    if (printable) {
+> +        return g_string_new(message);
+>       } else {
+> -        if (!printable) {
+> -            /* 3 = length of "%02x " */
+> -            buf = g_malloc(len * 3);
+> -            for (i = 0; i < len; i++) {
+> -                if (message[i] == '\0') {
+> -                    break;
+> -                } else {
+> -                    sprintf(buf + 3 * i, "%02x ", message[i]);
+> -                }
+> -            }
+> -            if (i > 0) {
+> -                /* replace the last ' '(space) to NULL */
+> -                buf[i * 3 - 1] = '\0';
+> -            } else {
+> -                buf[0] = '\0';
+> -            }
+> -        } else {
+> -            buf = g_strdup(message);
+> -        }
+> +        return qemu_hexdump_line(NULL, message, len, 1, 0);
+>       }
+> -
+> -    return buf;
+>   }
+>   
+>   void qemu_system_guest_panicked(GuestPanicInformation *info)
+> @@ -854,11 +833,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
+>                             info->u.s390.psw_mask,
+>                             info->u.s390.psw_addr);
+>           } else if (info->type == GUEST_PANIC_INFORMATION_TYPE_TDX) {
+> -            char *message = tdx_parse_panic_message(info->u.tdx.message);
+> +            GString *message = tdx_parse_panic_message(info->u.tdx.message);
+>               qemu_log_mask(LOG_GUEST_ERROR,
+>                             "\nTDX guest reports fatal error."
+>                             " error code: 0x%" PRIx32 " error message:\"%s\"\n",
+> -                          info->u.tdx.error_code, message);
+> +                          info->u.tdx.error_code, message->str);
+>               g_free(message);
 
+Freeing the GString* leaks message->str.
 
-On 9/23/26 11:13 AM, Khushit Shah wrote:
->
->> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
->> based on "AARCHMRS containing the JSON files for Arm A-profile
->> architecture (2026-03)" Registers.json file.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> ---
->> target/arm/cpu-sysregs.h.inc | 11 +++++++++++
->> 1 file changed, 11 insertions(+)
->>
->> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
->> index ec5a12b0f4..8b77c490d4 100644
->> --- a/target/arm/cpu-sysregs.h.inc
->> +++ b/target/arm/cpu-sysregs.h.inc
->> @@ -1,11 +1,18 @@
->> /* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +/* This file is autogenerated by scripts/update-aarch64-cpu-sysregs-header.py */
->> +/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */
->> +
->> +DEF(AIDR_EL1, 3, 1, 0, 0, 7)
->> DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->> DEF(CTR_EL0, 3, 3, 0, 0, 1)
->> DEF(DCZID_EL0, 3, 3, 0, 0, 7)
->> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
->> DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
->> DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
->> DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
->> DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
->> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
->> DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
->> DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
->> DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
->> @@ -40,6 +47,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->> DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->> DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->> DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
->> +DEF(MIDR_EL1, 3, 0, 0, 0, 0)
->> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
->> DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
->> DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
->> DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
->> +DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
->> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
-> After this, we should probably refactor cpu->midr/revidr/mp_affinity into the idregs[]?
+The easiest way to do it, which I have squashed on top of your patch, is
 
-Hum yes. We can now rely on MIDR, REVIDR and MPIDR storage in
-isar.idregs[]. I will handle that in v10
+    g_autoptr(GString) message = ...
 
-Thanks
+and dropping the g_free(message) line.  See for example sdbus_write_dump().
 
-Eric
->
-> Warm Regards,
-> Khushit
->> -- 
->> 2.53.0
->>
+Paolo
 
 
