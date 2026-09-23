@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEF1C98310
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AECC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9T6U-0000FC-1F; Wed, 23 Sep 2026 15:58:06 -0400
+	id 1x9T6p-0000Kr-18; Wed, 23 Sep 2026 15:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9T6Q-0000Ey-BT
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:03 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9T6O-0001KT-S6
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:02 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc4c08393dfso942191a12.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790193478; x=1790798278; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AbFu2F1cuKRTvVldvcuaJ8hCnmjTiQs0Zqf93ICFLXA=;
- b=w48yAstV5DPp1ZuxfnMbfwEGCW0pZdbEMdMjrA3qrUA3KvOvTLJcyWAmfsMSJAYAd9
- CFC9Ralqbo1Hpf4L53W1YZG9da2iQQOahe9RDaDFcnOk9FEU4AUVtTbUtiBbBcJ0wA9A
- kJYtNf+X6RJcUW9QpQtI2FDqPj8mHb+8SF7yT3sOcFoka0+fIOfwwRAlvdbt3adn1rNI
- WI+wVg50UqsGW/PcBXfGqugBeG259yVhiGBJcVRFaOxzToFoMLzVPIzP6HjWeu2yakiw
- WdkMfoHgC+TGVuwXo864LPqtdkJ6yGL97Syc60llGCpbI9jGkIRSIcXF4ZrFnIxuxjuF
- GYQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790193478; x=1790798278;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AbFu2F1cuKRTvVldvcuaJ8hCnmjTiQs0Zqf93ICFLXA=;
- b=OV+uSBph/FAx5GUCkYhx248Lmd7fUSPFPnDjWCUiOnTHBgoZXs+JQ/bm2wByasP1gl
- VM/h4u3XSfZYmyBWOoU1otbEQgORjP8HJcmxexPtbJaKtnoZGHtnqxaRyAC6j2oVRKJZ
- ECa5q+hvjVAjKTYAHFiETyLIBsq4NCaHZWwVgKeHgUXcpOilxvyrG6EIbhh3UB9g3HeG
- 3ozIBkBLSoGs3i4y85zXYtaZBgIxtN+rdqsqJXjy1RryF+9xPFLrjqe48GCeeKgedxLX
- AdHPcVsPtuQtreczcE9nnevn9CQ1ClW2dQvbEwvTaoGxRxRt0aWJFyZyfmxxFfweJsN8
- xG2w==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzQ7OFG0X6WL6mSNL72OMYNV8FgnSUtc+qwzqryG44b3xZzaya2HaizIHCX4HwqOoabhRChBYz3dfsG@nongnu.org
-X-Gm-Message-State: AFuF++njjAbzPGceD2Ln1lJYMg0NtSWRVXCoNFOChK80NbaMxCE7BvVs
- IKxsBGLmZxccdjw/zUph1doVYryLrK9q8pcHq0iVCbEujPTtFlr8pQK3GPY0QfbawkU=
-X-Gm-Gg: AYBFou3990p5LBhtFMjwFT+qYJJhNjxy1HBg3O2LvNkPKgfVop6VAgzybx7X9AnchcX
- 75Fozkmk8o+DPRqMtBWzKnWoRFyruRUoQY9qZ3ri/gwxkvzYx5qhqeM3KivLKl1AKN2epGciOcH
- fwQoUTdojvur0nNxu1cFH0WofuZn12VwWq3buDiikuiDnntiomKy17HMiuiQQg9iBbgBgyMpAER
- cPDLtmt1+9RKXNsQQhqFUNaPilClAZxLHLBgi5HH3dxaiF0lghhnrJNtRGOcerYV3YdkirJI9x0
- bQEVQOsyl9CEOsGVZ8Tr/RyYDUwW/JBQyh9ZTVoQkowAzVTHpSVGxky2PUUswJUlIrr25ra2TLM
- +jm4vcRU5WfQ5LYDfZFQUTKdt+Dwjb/VFwBDISzhAybIm7ayNp28o1i9xuPFsffAiRbJ1Gmfjlm
- kkx8I75ETJTJmG8Jn9f3oyJ6hf4Gwm93uVcUQrPZ6zkB1rt+RriMNy+26yZDRCgic2Bjb7lfFg+
- 5RQyGA4RKEAcoRA19dBJC76D8XBa1sVtwrfBDKFsyBqUtctteA=
-X-Received: by 2002:a17:90b:390e:b0:3a0:2ffd:1a51 with SMTP id
- 98e67ed59e1d1-3a0985663c0mr186640a91.10.1790193478342; 
- Wed, 23 Sep 2026 12:57:58 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a08f120ee7sm1078801a91.1.2026.09.23.12.57.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 12:57:57 -0700 (PDT)
-Message-ID: <9141c0ba-d2d8-420a-98be-e8fc168a6c03@linaro.org>
-Date: Wed, 23 Sep 2026 12:57:56 -0700
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x9T6n-0000KM-Oc
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
+ id 1x9T6m-0001O2-5i
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790193502;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qaVBTnkp0GIcsLjmloJK0bgo8E8q4y+sIZEaz9UXqHo=;
+ b=IsQOyEqwDNn/eibFw1A0YhZh8TrldXqjSq42Mm9Kt77of34UMaDW7Q/zllBfV9G69v7Dz6
+ F5RDpI+MQoq3kP4a/huuj2Jm37r3ctJjAxJR5LgGFUTxrQANxybjgdVeCb8jiP/u2gk83b
+ j2JGHSB6K/4JREd6EjtAUJAZxFuQ2WY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-OiiiWIYtPXOEXCD8OwcGJA-1; Wed,
+ 23 Sep 2026 15:58:19 -0400
+X-MC-Unique: OiiiWIYtPXOEXCD8OwcGJA-1
+X-Mimecast-MFC-AGG-ID: OiiiWIYtPXOEXCD8OwcGJA_1790193498
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD4BD180028B; Wed, 23 Sep 2026 19:58:17 +0000 (UTC)
+Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb
+ (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 253821953948; Wed, 23 Sep 2026 19:58:15 +0000 (UTC)
+Date: Wed, 23 Sep 2026 21:58:13 +0200 (CEST)
+From: Mikulas Patocka <mpatocka@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
+ qemu-devel@nongnu.org
+Subject: [PATCH v3] linux-user/sh4: fix race in atomic variables
+In-Reply-To: <991e9427-bc5a-7226-453b-70de8825e4b4@redhat.com>
+Message-ID: <4799ff0f-a198-36a3-0ec5-fa41cc7337f2@redhat.com>
+References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
+ <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
+ <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
+ <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
+ <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
+ <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
+ <d1a29727-14c6-fe95-c01a-30fd63e3ec4e@redhat.com>
+ <991e9427-bc5a-7226-453b-70de8825e4b4@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/17] target/i386/tcg: decode REX2 prefix
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
-References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-10-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260923173021.317809-10-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mpatocka@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,24 +90,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 10:30, Paolo Bonzini wrote:
-> The REX2 prefix has two main complications: it does not apply
-> to vector registers, and it disables or mutates some opcodes
-> (thus needing separate decoding functions instead of decode_root
-> and decode_0F).  Otherwise, all it does is extend s->rex_r,
-> s->rex_w and s->rex_b to two bits.
-> 
-> Since REX2 provides the ability to access r16...r31, extend
-> cpu_regs[] to CPU_NB_EREGS elements.
-> 
-> Reviewed-by: Chang S. Bae<chang.seok.bae@intel.com>
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/translate.c      |  22 +++++-
->   target/i386/tcg/decode-new.c.inc | 114 +++++++++++++++++++++++++++++--
->   2 files changed, 126 insertions(+), 10 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+On Tue, 22 Sep 2026, Mikulas Patocka wrote:
+
+> 
+> 
+> On Tue, 22 Sep 2026, Mikulas Patocka wrote:
+> 
+> > > Logging guest state at the point your revert hook fires could be
+> > > informative...
+> > 
+> > Yes, I will look into it.
+> 
+> So, I tried, and got a hit right away:
+> 
+> superh_cpu_revert_uninterruptible
+> pc: 45be9e
+> r0: 45bea4
+> r1: 55d55e40
+> r15: fffffffa
+> flags: 1fa0
+> 
+>   45be94:       10 89           bt      45beb8 <afree+0x84>
+>   45be96:       03 c7           mova    45bea4 <afree+0x70>,r0
+>   45be98:       f3 61           mov     r15,r1
+>   45be9a:       09 00           nop
+>   45be9c:       fa ef           mov     #-6,r15
+>   45be9e:       21 57           mov.l   @(4,r2),r7
+>   45bea0:       3b 27           or      r3,r7
+>   45bea2:       71 12           mov.l   r7,@(4,r2)
+>   45bea4:       13 6f           mov     r1,r15
+>   45bea6:       0b 00           rts
+
+So, after putting debugging prints into the code, I think I have found
+out what happens there:
+
+* decode_gusa calls gen_restart_exclusive
+* gen_restart_exclusive generates code that sets TB_FLAG_GUSA_EXCLUSIVE
+  and generates a call to helper_exclusive
+
+* when the code is executed, TB_FLAG_GUSA_EXCLUSIVE is set
+* helper_exclusive calls cpu_loop_exit_atomic, this makes cpu_exec exit
+  with EXCP_ATOMIC
+* we go to cpu_loop, we execute cpu_exec_step_atomic
+* suppose that exit request is set, cpu_exec_step_atomic does nothing, it
+  leaves the CPU in the same state as it was before
+* we go back to cpu_loop
+* suppose that no signal is delivered, so the gUSA is not rewound
+* cpu_loop goes to cpu_exec
+* there is one difference - now, TB_FLAG_GUSA_EXCLUSIVE is set and it was
+  clear before - so cpu_exec will not use the TB that calls
+  helper_exclusive, it will instead use the TB that performs the atomic
+  operation (both of these TBs have the same PC, they only differ in
+  flags)
+* the TB that performs the atomic operation is executed inside cpu_exec
+  => race condition
+
+So, I fixed this by clearing TB_FLAG_GUSA_EXCLUSIVE after
+cpu_exec_step_atomic - to make sure that cpu_exec will find the TB that
+calls helper_exclusive and not the TB that performs the atomic operation.
+
+I tested it and the deadlock is gone. Does this seem reasonable? Or, do 
+you think that we should fix it somewhere else?
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: qemu-stable@nongnu.org
+
+---
+ linux-user/sh4/cpu_loop.c |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+Index: qemu/linux-user/sh4/cpu_loop.c
+===================================================================
+--- qemu.orig/linux-user/sh4/cpu_loop.c	2026-09-23 21:20:08.000000000 +0200
++++ qemu/linux-user/sh4/cpu_loop.c	2026-09-23 21:20:08.000000000 +0200
+@@ -62,6 +62,11 @@ void cpu_loop(CPUSH4State *env)
+             break;
+         case EXCP_ATOMIC:
+             cpu_exec_step_atomic(cs);
++            /* If cpu_exec_step_atomic exits due to exit request, we must make
++               sure that cpu_exec will execute the TB that contains a call to
++               helper_atomic and not the TB that contains the atomic operation
++               itself - therefore, we clear TB_FLAG_GUSA_EXCLUSIVE.  */
++            env->flags &= ~TB_FLAG_GUSA_EXCLUSIVE;
+             arch_interrupt = false;
+             break;
+         case 0x180:
+
 
