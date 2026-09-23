@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE46C98314
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E7FC98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Nls-000840-SG; Wed, 23 Sep 2026 10:16:28 -0400
+	id 1x9Nkx-0007en-8S; Wed, 23 Sep 2026 10:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1x9Nlf-0007pD-HK; Wed, 23 Sep 2026 10:16:16 -0400
+ id 1x9Nkv-0007dz-CX; Wed, 23 Sep 2026 10:15:29 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1x9NlX-0005xc-Ac; Wed, 23 Sep 2026 10:16:12 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1x9Nkt-0005uu-AY; Wed, 23 Sep 2026 10:15:29 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68N8ZbfK2907160; Wed, 23 Sep 2026 14:15:37 GMT
+ 68N8ZOGx1030586; Wed, 23 Sep 2026 14:15:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=KZG0KHk12S7Gvb99N
- DfJFN90RI0bwPR8TMA8vJ86XeI=; b=Xf95k5sjBdRRyM1Haf4FCU/M0KMK8IPfQ
- bgna15juQGY06tJq6HKzkmFgn2g6CrmQFMsjQ/jSiVINTA0fi0yGqkO/yswfDEcf
- /Z7dxJIso9zmztFbAgvoP3XRRwSUd3nC7h+U7aGbK3eq+QXM1KFOJUYWd6lk1B3w
- Z6sbrTXSjKQugPqkis6jt43b4oDun/H1SG+MOO5GVZio1jI4O9IED1hfq7rPMxl0
- QJJD5ukJhq8D0ou02mFLTUMpluG7xt0aJEgI5GU5Y0QXVMSHwaZt6BsXJ3hFxZUK
- NmtqOhZNOUiKWywYtpmRuCLcgvQF2MglSCN664h6vQ71lozez7n5A==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsbrqe-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=QL9NIIdesF0Wejw9fbmWitHJEEHHlUyQBvRAzueCz
+ a0=; b=Gff5Lpfx9nbWPXFBj+tp7itSb339hvGg3r4Y8H6uuTHG9xcvnQI5u6/wh
+ R3tJfKNv/dvF9JVh8H/xdpbujLkao/A51AhwQwW2WYH+c/k/juW1CcS6sgom7cSD
+ l8MOIl653ezCQgPrutHKT6rUmjccwQKWxnIuIgpWechJl4hS1Ybt6bFZCZAq4OJ5
+ RNfV8SWx7I1jgBdAQL9qeCHDWe+Gw1LzGLwriesH1C99O36z0QFjOiIKM58XQ2/b
+ YS7r2CT/+7q52V7caTOGYC7PgnG2xrtysY6oiu020c3haX5cQ14zOke9bdl11nJO
+ cj643FM2MbYP+cAkQeRXs5V7pYF1w==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1urx8-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 14:15:36 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NCLbOg008030; Wed, 23 Sep 2026 14:15:35 GMT
+ Wed, 23 Sep 2026 14:15:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NCSZ8S008421; Wed, 23 Sep 2026 14:15:22 GMT
 Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1sb2q-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jsbeu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 14:15:35 +0000 (GMT)
+ Wed, 23 Sep 2026 14:15:22 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
  by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68NEFYgj51052896
+ 68NEFLPE27918912
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Sep 2026 14:15:34 GMT
+ Wed, 23 Sep 2026 14:15:21 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 279FC58059;
- Wed, 23 Sep 2026 14:15:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6CAB25805B;
+ Wed, 23 Sep 2026 14:15:21 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D76758058;
- Wed, 23 Sep 2026 14:15:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B878E58059;
+ Wed, 23 Sep 2026 14:15:20 +0000 (GMT)
 Received: from WIN-DU0DFC9G5VV.atx-us.ibm.com (unknown [9.16.60.171])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Sep 2026 14:15:33 +0000 (GMT)
+ Wed, 23 Sep 2026 14:15:20 +0000 (GMT)
 From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 To: mjrosato@linux.ibm.com
 Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
  iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v10 15/16] s390x/pci: Implement migration for emulated devices
-Date: Wed, 23 Sep 2026 09:15:17 -0500
-Message-Id: <20260923141518.960364-16-kshk@linux.ibm.com>
+Subject: [PATCH v10 00/16] s390x/pci: Implement migration for emulated devices
+Date: Wed, 23 Sep 2026 09:15:02 -0500
+Message-Id: <20260923141518.960364-1-kshk@linux.ibm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260923141518.960364-1-kshk@linux.ibm.com>
-References: <20260923141518.960364-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab3df08 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: xNmqjRxgMeOywhcAHFanXQBWxm47kWH3
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab3defb cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=waVumpEa8DGoQk7sNJYA:9
-X-Proofpoint-ORIG-GUID: py3fNrRErbk3nLAfL9grV7BRZ01h21Dd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX5qhVYvCLam1q
- 6zY3a5fXxd3uXb1+60Q8A8NVZchXjNvHq9SFhyovrMNLPeUx+BoFYEma21upZEM2/DRUItm1UD9
- PWbBqlKEwoXoRoTjfu73NmDfBi6ExcHElJvLIDfcPRDlycbZ0AOiG5eOOjMP6qyChlGQA4Nq9rN
- U2cQl+oXhyqMUFlYsRJdHG3o2Q8TZ2uayVKm9oj0U4RhXSw7b7KkBPjssF3Oaatizvd8ndWbdwM
- i2jxSrRL1qZVSuZPL2vzw7OweOEOpJKvuHKIHoWrjAEfqijjLzuUAtH4mSh17Z0p2Z4AkRD2SCq
- wkJy660PZv0arvG0jAruMHvM4xe3o6OL60BdTyXWlqWlLoI1sv2qgU/MOqHT8QajmfBN//mrxlV
- rZOpTx1sNBX5UUu9s+Z4lur0P80IlixLw+glD4m/SyyWhvq8EBS0skDi5aKK4xcU8r5PvLvXRxN
- MfPhefxWz0eG5h6gdbA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX6m4yqE6/R+B1
- hxiogt8trB+M6fCPpMjLDMtSy8ucM3R/iaUfiFqEm+OR4N3aOYuMfgQlfOiRLPXFj0aoBUp+cu9
- g2rURhBcFT4U129RekU94mMRqs6EfuI=
-X-Proofpoint-GUID: py3fNrRErbk3nLAfL9grV7BRZ01h21Dd
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=Ao2d2QTnYvyA5xfeocEA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX9sqYe2kE0IRu
+ S1a6Z2Da7LBzRg7b614Wg1xM8VSIqXoPE4W1FrnHYmyj9OC8E5QvNJkVe7MqqqpEy0BWKEVDFX3
+ VVaJIIZM6mfLfEItCMPwI8QKV6jngwc=
+X-Proofpoint-GUID: xNmqjRxgMeOywhcAHFanXQBWxm47kWH3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX5PCYym15b1Nl
+ 2cR9igVkZkHDwnsjV217G51K7Dzjm0ldYxzlX7fnBgVhq4ApHq3znEX8TN4gwrhmwYAMFAZ0+NV
+ ndqPzw2zDfUuMmalVIs7ecFy0kqAE4bVgf1ujA2tAe+jiWeKqxU/XqhzWeuZ3GYDJTCybNFHEsY
+ NKNyxbP8Xxm31Gg4jcHznh6myxLmh6gpfmNV7VIBOM/trD6PjncK2O5LY9mSNjpU8NAOs0zR29q
+ ZpMBKKOm8gfNWRGNRYXS8MBjBmC06BzPdiSTuQsLnRnhcIkhqWYNK9dTGoIB5acp0eBg49N0Rbc
+ I4VwW22IkMP3zT9dYNN1/c3TZJMjd7NdKhINzai/AoSF4mwWyS6Ge7Ybrz8XSE9IPVWXewKnjIJ
+ BnwRbsdERf7QET/E5V1E5ySI8Bn905LYPOSjGH2T8xy1vo/V81wFNZbB2RbFTTTr0ULpS5r3FAU
+ 61Guuf1JrWc7E+F16Og==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230056
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
@@ -121,537 +119,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement zPCI device state migration, consequently enabling migration
-of VMs that have emulated PCI devices, whether virtio or not.
-Migration is allowed for devices whose function handle has the
-FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
-state of its zPCI emulator.
+Up until now QEMU marked any zPCI device as "unmigratable."
 
-This will enable emulated PCI migration starting with s390-ccw-virtio-11.2.
+This patch series adds support for migrating emulated devices, which are
+simpler to migrate. It leaves VFIO devices still unmigratable.
 
-Passthrough devices will continue to block migration.
+To enable migration, the device state needs to be saved/restored to/from
+the migration stream.
 
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
----
- hw/s390x/s390-pci-bus.c          | 307 ++++++++++++++++++++++++++++++-
- hw/s390x/s390-pci-inst.c         |   2 +-
+There are 2 kinds of emulated devices - those that use the zPCI IOMMU page
+table emulation in QEMU (e.g., Intel IGB NIC), and those that don't (virtio).
+This is important to note for testing purposes.
+
+This change was tested on IGB, virtio-net and virtio-blk devices by running
+I/O on them while performing "virsh managedsave, virsh start" and also live
+migration to another host and back.
+
+Changes in v9:
+ - patch 1: update "Reviewed-by".
+ - patch 14: Fix NULL dereference on error path after s390_pci_ioat_validate().
+ - patch 15:
+   - add .needed to vmstate_s390_pcihost,
+   - add missing destruction steps after err_unlink_pbdev label.
+
+Konstantin Shkolnyy (15):
+  s390x/pci: Create function to contain translation status check
+  s390x/pci: Move iommu_mr from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move dm_mr from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move iotlb from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Remove a ptr to S390PCIBusDevice from S390PCIIOMMU
+  s390x/pci: Move/rename enabled from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move dma_limit from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move g_iota from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move pba from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move pal from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Move max_dma_limit from S390PCIIOMMU to S390PCIBusDevice
+  s390x/pci: Add a comment explaining S390PCIIOMMU purpose
+  s390x/pci: Factor ioat sanity checks into a separate function
+  s390x/pci: Implement migration for emulated devices
+  s390x/pci: Create function to contain fmb_timer start
+
+Matthew Rosato (1):
+  s390x/pci: implement IOMMU replay
+
+ hw/s390x/s390-pci-bus.c          | 463 +++++++++++++++++++++++++++----
+ hw/s390x/s390-pci-inst.c         | 164 ++++++-----
+ hw/s390x/s390-pci-vfio.c         |   4 +-
  hw/s390x/s390-virtio-ccw.c       |   4 +
- include/hw/s390x/s390-pci-bus.h  |  13 ++
- include/hw/s390x/s390-pci-inst.h |   1 +
- 5 files changed, 319 insertions(+), 8 deletions(-)
+ include/hw/s390x/s390-pci-bus.h  |  47 +++-
+ include/hw/s390x/s390-pci-inst.h |   7 +-
+ 6 files changed, 546 insertions(+), 143 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 79bef96c4d..41d43974cf 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -26,6 +26,8 @@
- #include "hw/pci/pci_bridge.h"
- #include "hw/pci/msi.h"
- #include "exec/cpu-common.h"
-+#include "migration/blocker.h"
-+#include "migration/vmstate.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "system/physmem.h"
-@@ -922,6 +924,8 @@ static void set_pbdev_info(S390PCIBusDevice *pbdev)
-     pbdev->pci_group = s390_group_find(ZPCI_DEFAULT_FN_GRP);
- }
- 
-+static const VMStateDescription vmstate_s390_pcihost;
-+
- static void s390_pcihost_realize(DeviceState *dev, Error **errp)
- {
-     PCIBus *b;
-@@ -956,6 +960,7 @@ static void s390_pcihost_realize(DeviceState *dev, Error **errp)
-     s390_pci_init_default_group();
-     css_register_io_adapters(CSS_IO_ADAPTER_PCI, true, false,
-                              S390_ADAPTER_SUPPRESSIBLE, errp);
-+    vmstate_register(VMSTATE_IF(dev), 0, &vmstate_s390_pcihost, s);
-     s390_pcihost_kvm_realize();
- }
- 
-@@ -1134,12 +1139,47 @@ static int s390_pci_interp_plug(S390pciState *s, S390PCIBusDevice *pbdev)
-     return 0;
- }
- 
-+static int s390_set_zpci_migration_blocker(S390PCIBusDevice *pbdev,
-+        S390pciState *s, Error **errp)
-+{
-+    if (s->zpci_migr_enabled) {
-+        return 0;
-+    }
-+    error_setg(&pbdev->zpci_migr_blocker,
-+               "Migration blocked on this machine type by zPCI device "
-+               "uid %d", pbdev->uid);
-+    return migrate_add_blocker(&pbdev->zpci_migr_blocker, errp);
-+}
-+
-+static void s390_clear_zpci_migration_blocker(S390PCIBusDevice *pbdev)
-+{
-+    migrate_del_blocker(&pbdev->zpci_migr_blocker);
-+}
-+
-+static int s390_set_passthrough_migration_blocker(S390PCIBusDevice *pbdev,
-+                                            Error **errp)
-+{
-+    if (pbdev->fh & FH_SHM_EMUL) {
-+        return 0;
-+    }
-+    error_setg(&pbdev->passthrough_migr_blocker,
-+               "Migration blocked by passthrough zPCI device uid %d",
-+               pbdev->uid);
-+    return migrate_add_blocker(&pbdev->passthrough_migr_blocker, errp);
-+}
-+
-+static void s390_clear_passthrough_migration_blocker(S390PCIBusDevice *pbdev)
-+{
-+    migrate_del_blocker(&pbdev->passthrough_migr_blocker);
-+}
-+
- static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                               Error **errp)
- {
-     S390pciState *s = S390_PCI_HOST_BRIDGE(hotplug_dev);
-     PCIDevice *pdev = NULL;
-     S390PCIBusDevice *pbdev = NULL;
-+    bool auto_pbdev = false;
-     int rc;
- 
-     if (object_dynamic_cast(OBJECT(dev), TYPE_PCI_BRIDGE)) {
-@@ -1199,6 +1239,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-             if (!pbdev) {
-                 return;
-             }
-+            auto_pbdev = true;
-         }
- 
-         pbdev->pdev = pdev;
-@@ -1218,7 +1259,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                     if (rc) {
-                         error_setg(errp, "Plug failed for zPCI device in "
-                                    "interpretation mode: %d", rc);
--                        return;
-+                        goto err_unlink_pbdev;
-                     }
-                 } else {
-                     trace_s390_pcihost("zPCI interpretation missing");
-@@ -1247,16 +1288,46 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-             pbdev->rtr_avail = false;
-         }
- 
-+        if (s390_set_passthrough_migration_blocker(pbdev, errp) != 0) {
-+            goto err_unlink_pbdev;
-+        }
-+
-         if (s390_pci_msix_init(pbdev) && !pbdev->interp) {
-             error_setg(errp, "MSI-X support is mandatory "
-                        "in the S390 architecture");
--            return;
-+            s390_clear_passthrough_migration_blocker(pbdev);
-+            goto err_unlink_pbdev;
-         }
- 
-         if (dev->hotplugged) {
-             s390_pci_generate_plug_event(HP_EVENT_TO_CONFIGURED ,
-                                          pbdev->fh, pbdev->fid);
-         }
-+        return;
-+
-+err_unlink_pbdev:
-+        if (pbdev->pft == ZPCI_PFT_ISM) {
-+            notifier_remove(&pbdev->shutdown_notifier);
-+        }
-+        if (pbdev->dma_limit) {
-+            s390_pci_end_dma_count(s, pbdev->dma_limit);
-+            pbdev->dma_limit = NULL;
-+        }
-+        pbdev->fh &= ~FH_MASK_SHM;
-+        pbdev->iommu = NULL;
-+        pbdev->pdev = NULL;
-+        pbdev->state = ZPCI_FS_RESERVED;
-+        if (auto_pbdev) {
-+            QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
-+            if (g_hash_table_lookup(s->zpci_table, &pbdev->idx) == pbdev) {
-+                g_hash_table_remove(s->zpci_table, &pbdev->idx);
-+            }
-+            g_hash_table_destroy(pbdev->iotlb);
-+            s390_clear_zpci_migration_blocker(pbdev);
-+            qdev_unrealize(DEVICE(pbdev));
-+            object_unparent(OBJECT(pbdev));
-+        }
-+        return;
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
-         pbdev = S390_PCI_DEVICE(dev);
- 
-@@ -1267,6 +1338,12 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                              NULL, g_free);
-         QTAILQ_INSERT_TAIL(&s->zpci_devs, pbdev, link);
-         g_hash_table_insert(s->zpci_table, &pbdev->idx, pbdev);
-+        if (s390_set_zpci_migration_blocker(pbdev, s, errp) != 0) {
-+            g_hash_table_remove(s->zpci_table, &pbdev->idx);
-+            QTAILQ_REMOVE(&s->zpci_devs, pbdev, link);
-+            g_hash_table_destroy(pbdev->iotlb);
-+            return;
-+        }
-     } else {
-         g_assert_not_reached();
-     }
-@@ -1289,6 +1366,8 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-             return;
-         }
- 
-+        s390_clear_passthrough_migration_blocker(pbdev);
-+
-         s390_pci_generate_plug_event(HP_EVENT_STANDBY_TO_RESERVED,
-                                      pbdev->fh, pbdev->fid);
-         bus = pci_get_bus(pci_dev);
-@@ -1308,6 +1387,7 @@ static void s390_pcihost_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-             s390_pci_end_dma_count(s, pbdev->dma_limit);
-         }
-         g_hash_table_destroy(pbdev->iotlb);
-+        s390_clear_zpci_migration_blocker(pbdev);
-         qdev_unrealize(dev);
-     }
- }
-@@ -1443,6 +1523,72 @@ static void s390_pcihost_reset(DeviceState *dev)
-     pci_for_each_device_under_bus(bus, s390_pci_enumerate_bridge, s);
- }
- 
-+/*
-+ * TYPE_S390_PCI_HOST_BRIDGE device state migration is registered via
-+ * vmstate_register() rather than dc->vmsd because dc->vmsd is already assigned
-+ * by our base, TYPE_PCI_HOST_BRIDGE, to &vmstate_pcihost which migrates
-+ * PCIHostState.config_reg. There is no mechanism to add a subclass vmsd to the
-+ * parent's.
-+ */
-+static bool vmstate_s390_pcihost_needed(void *opaque)
-+{
-+    S390pciState *s = S390_PCI_HOST_BRIDGE(opaque);
-+    return s->zpci_migr_enabled;
-+}
-+
-+static bool vmstate_s390_pcihost_pending_sei_needed(void *opaque)
-+{
-+    S390pciState *s = S390_PCI_HOST_BRIDGE(opaque);
-+    return s->zpci_migr_enabled && !QTAILQ_EMPTY(&s->pending_sei);
-+}
-+
-+/* Per-element descriptor for pending_sei list */
-+static const VMStateDescription vmstate_sei_container = {
-+    .name = "s390_sei_container",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(fid, SeiContainer),
-+        VMSTATE_UINT32(fh, SeiContainer),
-+        VMSTATE_UINT8(cc, SeiContainer),
-+        VMSTATE_UINT16(pec, SeiContainer),
-+        VMSTATE_UINT64(faddr, SeiContainer),
-+        VMSTATE_UINT32(e, SeiContainer),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_s390_pcihost_pending_sei = {
-+    .name = TYPE_S390_PCI_HOST_BRIDGE "/pending-sei",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = vmstate_s390_pcihost_pending_sei_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_QTAILQ_V(pending_sei, S390pciState, 1,
-+                         vmstate_sei_container, SeiContainer, link),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_s390_pcihost = {
-+    .name = TYPE_S390_PCI_HOST_BRIDGE,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = vmstate_s390_pcihost_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_s390_pcihost_pending_sei,
-+        NULL
-+    }
-+};
-+
-+static const Property phb_props[] = {
-+    DEFINE_PROP_BOOL("x-zpci-migr-enabled", S390pciState,
-+                     zpci_migr_enabled, true),
-+};
-+
- static void s390_pcihost_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -1456,6 +1602,7 @@ static void s390_pcihost_class_init(ObjectClass *klass, const void *data)
-     hc->unplug_request = s390_pcihost_unplug_request;
-     hc->unplug = s390_pcihost_unplug;
-     msi_nonbroken = true;
-+    device_class_set_props(dc, phb_props);
- }
- 
- static const TypeInfo s390_pcihost_info = {
-@@ -1469,10 +1616,33 @@ static const TypeInfo s390_pcihost_info = {
-     }
- };
- 
-+/* Return a unique bus "path" for zpci device */
-+static char *s390_pci_bus_get_dev_path(DeviceState *dev)
-+{
-+    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(dev);
-+    return g_strdup_printf("uid-%04x", pbdev->uid);
-+}
-+
-+static void s390_pcibus_class_init(ObjectClass *oc, const void *data)
-+{
-+    BusClass *bc = BUS_CLASS(oc);
-+    bc->get_dev_path = s390_pci_bus_get_dev_path;
-+}
-+
- static const TypeInfo s390_pcibus_info = {
-     .name = TYPE_S390_PCI_BUS,
-     .parent = TYPE_BUS,
-     .instance_size = sizeof(S390PCIBus),
-+    /*
-+     * Implement get_dev_path() to provide each zpci device with a unique
-+     * stable UID-based bus "path". The "path" is used as part of idstr in the
-+     * migration stream, making idstr unique and instance_id always 0.
-+     * For migration to succeed, (idstr+instance_id) must match those generated
-+     * during QEMU start. Without unique idstr, QEMU will generate variable
-+     * instance_id to distinguish devices, and that instance_id can change
-+     * if a device is unplugged and plugged back, preventing migration.
-+     */
-+    .class_init = s390_pcibus_class_init,
- };
- 
- static uint16_t s390_pci_generate_uid(S390pciState *s)
-@@ -1618,13 +1788,136 @@ static const Property s390_pci_device_properties[] = {
-                      true),
- };
- 
--static const VMStateDescription s390_pci_device_vmstate = {
--    .name = TYPE_S390_PCI_DEVICE,
-+static int s390_pci_device_pre_load(void *opaque)
-+{
-+    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
-+    S390PCIBusDevice *found_pbdev;
-+
-     /*
--     * TODO: add state handling here, so migration works at least with
--     * emulated pci devices on s390x
-+     * Because state loading can change pbdev->idx make sure pbdev is removed
-+     * from the table before that happens. The table type used stores a pointer
-+     * to pbdev->idx and becomes corrupt if idx is changed from outside. But be
-+     * careful to not remove instead another pbdev whose state might have been
-+     * loaded earlier and that got assigned this idx value and had therefore
-+     * already replaced our pbdev in the table. post_load() will reinsert our
-+     * pbdev into the table. (found_pbdev could even be 0 if a previous
-+     * vmstate_load_vmsd() on this device failed before reaching post_load().)
-      */
--    .unmigratable = 1,
-+    found_pbdev = g_hash_table_lookup(s390_get_phb()->zpci_table, &pbdev->idx);
-+    if (found_pbdev == pbdev) {
-+        g_hash_table_remove(s390_get_phb()->zpci_table, &pbdev->idx);
-+    }
-+
-+    return 0;
-+}
-+
-+static bool s390_pci_device_post_load_errp(void *opaque, int version_id,
-+                                           Error **errp)
-+{
-+    S390PCIBusDevice *pbdev = S390_PCI_DEVICE(opaque);
-+
-+    pbdev->zpci_fn.fid = pbdev->fid;
-+    pbdev->zpci_fn.uid = pbdev->uid;
-+
-+    /*
-+     * Now that pbdev->idx has been loaded, use it to place pbdev back into
-+     * the table. This may replace a different not-yet-state-loaded pbdev,
-+     * but pre_load() handles this case.
-+     */
-+    g_hash_table_replace(s390_get_phb()->zpci_table, &pbdev->idx, pbdev);
-+
-+    /*
-+     * Regenerate IOMMU state, including IOTLB contents and QEMU memory regions.
-+     */
-+    if (pbdev->iommu_enabled) {
-+        if (!pbdev->iommu) {
-+            error_setg(errp, "iommu is NULL");
-+            return false;
-+        }
-+        if (!s390_pci_ioat_validate(pbdev, pbdev->pba, pbdev->pal,
-+                                    pbdev->g_iota, errp)) {
-+            if (*errp) {
-+                error_prepend(errp, "invalid pba, pal or g_iota in migration stream: ");
-+            } else {
-+                error_setg(errp, "invalid pba, pal or g_iota in migration stream");
-+            }
-+            return false;
-+        }
-+        if (s390_pci_is_translation_enabled(pbdev->g_iota)) {
-+            s390_pci_iommu_enable(pbdev);
-+            s390_pci_ioat_replay(pbdev);
-+        } else {
-+            /* TODO: unreachable until vfio passthrough migration is enabled */
-+            s390_pci_iommu_direct_map_enable(pbdev);
-+        }
-+    }
-+
-+    /*
-+     * Guest sets fmb_addr by mpcifc.ZPCI_MOD_FC_SET_MEASURE instruction,
-+     * whose handler consequently starts fmb_timer. We may need to restart it.
-+     */
-+    if (pbdev->fmb_addr) {
-+        if (pbdev->fmb_timer) {
-+            error_setg(errp, "fmb_timer is not NULL");
-+            return false;
-+        }
-+        if (!pbdev->pci_group) {
-+            error_setg(errp, "pci_group is NULL");
-+            return false;
-+        }
-+        pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-+                                        fmb_update, pbdev);
-+        timer_mod(pbdev->fmb_timer,
-+                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
-+                                    pbdev->pci_group->zpci_group.mui);
-+    }
-+    return true;
-+}
-+
-+static const VMStateDescription s390_pci_device_vmstate = {
-+    .name = TYPE_S390_PCI_DEVICE,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .priority = MIG_PRI_IOMMU,
-+    .pre_load = s390_pci_device_pre_load,
-+    .post_load_errp = s390_pci_device_post_load_errp,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(state, S390PCIBusDevice),
-+        VMSTATE_UINT16(uid, S390PCIBusDevice),
-+        VMSTATE_UINT32(idx, S390PCIBusDevice),
-+        VMSTATE_UINT32(fh, S390PCIBusDevice),
-+        VMSTATE_UINT32(fid, S390PCIBusDevice),
-+        VMSTATE_BOOL(fid_defined, S390PCIBusDevice),
-+        VMSTATE_UINT64(fmb_addr, S390PCIBusDevice),
-+        VMSTATE_UINT32(fmb.format, S390PCIBusDevice),
-+        VMSTATE_UINT32(fmb.sample, S390PCIBusDevice),
-+        VMSTATE_UINT64(fmb.last_update, S390PCIBusDevice),
-+        VMSTATE_UINT64_ARRAY(fmb.counter, S390PCIBusDevice,
-+                ARRAY_SIZE(((S390PCIBusDevice *)0)->fmb.counter)),
-+        VMSTATE_UINT64(fmb.fmt0.dma_rbytes, S390PCIBusDevice),
-+        VMSTATE_UINT64(fmb.fmt0.dma_wbytes, S390PCIBusDevice),
-+        VMSTATE_UINT8(isc, S390PCIBusDevice),
-+        VMSTATE_UINT16(noi, S390PCIBusDevice),
-+        VMSTATE_UINT8(sum, S390PCIBusDevice),
-+        VMSTATE_UINT8(pft, S390PCIBusDevice),
-+        VMSTATE_UINT64(routes.adapter.ind_addr, S390PCIBusDevice),
-+        VMSTATE_UINT64(routes.adapter.summary_addr, S390PCIBusDevice),
-+        VMSTATE_UINT64(routes.adapter.ind_offset, S390PCIBusDevice),
-+        VMSTATE_UINT32(routes.adapter.summary_offset, S390PCIBusDevice),
-+        VMSTATE_UINT32(routes.adapter.adapter_id, S390PCIBusDevice),
-+        VMSTATE_BOOL(iommu_enabled, S390PCIBusDevice),
-+        VMSTATE_UINT64(g_iota, S390PCIBusDevice),
-+        VMSTATE_UINT64(pba, S390PCIBusDevice),
-+        VMSTATE_UINT64(pal, S390PCIBusDevice),
-+        VMSTATE_PTR_TO_IND_ADDR(summary_ind, S390PCIBusDevice),
-+        VMSTATE_PTR_TO_IND_ADDR(indicator, S390PCIBusDevice),
-+        VMSTATE_BOOL(unplug_requested, S390PCIBusDevice),
-+        VMSTATE_BOOL(interp, S390PCIBusDevice),
-+        VMSTATE_BOOL(forwarding_assist, S390PCIBusDevice),
-+        VMSTATE_BOOL(aif, S390PCIBusDevice),
-+        VMSTATE_BOOL(rtr_avail, S390PCIBusDevice),
-+        VMSTATE_END_OF_LIST()
-+    }
- };
- 
- static void s390_pci_device_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index cc55804473..962910327b 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1138,7 +1138,7 @@ static int fmb_do_update(S390PCIBusDevice *pbdev, int offset, uint64_t val,
-     return ret;
- }
- 
--static void fmb_update(void *opaque)
-+void fmb_update(void *opaque)
- {
-     S390PCIBusDevice *pbdev = opaque;
-     int64_t t = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 17266779a6..db0b49375e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1005,12 +1005,16 @@ static void ccw_machine_11_1_instance_options(MachineState *machine)
- static void ccw_machine_11_1_class_options(MachineClass *mc)
- {
-     S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
-+    static GlobalProperty compat[] = {
-+        { TYPE_S390_PCI_HOST_BRIDGE, "x-zpci-migr-enabled", "off" },
-+    };
- 
-     s390mc->use_certs = false;
-     s390mc->use_secure = false;
- 
-     ccw_machine_11_2_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
-+    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
- }
- DEFINE_CCW_MACHINE(11, 1);
- 
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index 0a59be1fd0..d310a46e8f 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -337,6 +337,8 @@ struct S390PCIBusDevice {
-     uint16_t uid;
-     uint32_t idx;
-     uint32_t fh;
-+    Error *zpci_migr_blocker; /* machines 11.1 or older */
-+    Error *passthrough_migr_blocker;
-     uint32_t fid;
-     bool fid_defined;
-     uint64_t fmb_addr;
-@@ -385,11 +387,22 @@ struct S390pciState {
-     S390PCIBus *bus;
-     GHashTable *iommu_table;
-     GHashTable *zpci_table;
-+    /*
-+     * pending_sei is the zPCI payload queue drained by CHSC SEI (one
-+     * SeiContainer per instruction execution).  It is the zPCI-layer
-+     * counterpart of ChannelSubSys.pending_crws, which carries the
-+     * architectural CRW notifications that prompt the guest to issue
-+     * CHSC SEI in the first place.  pending_crws is migrated by
-+     * vmstate_css; pending_sei is migrated by vmstate_s390_pcihost_pending_sei
-+     * in s390-pci-bus.c so that the two queues remain consistent on the
-+     * destination.
-+     */
-     QTAILQ_HEAD(, SeiContainer) pending_sei;
-     QTAILQ_HEAD(, S390PCIBusDevice) zpci_devs;
-     QTAILQ_HEAD(, S390PCIDMACount) zpci_dma_limit;
-     QTAILQ_HEAD(, S390PCIGroup) zpci_groups;
-     uint8_t next_sim_grp;
-+    bool zpci_migr_enabled;
- };
- 
- S390pciState *s390_get_phb(void);
-diff --git a/include/hw/s390x/s390-pci-inst.h b/include/hw/s390x/s390-pci-inst.h
-index 3493d2ced0..e31497069b 100644
---- a/include/hw/s390x/s390-pci-inst.h
-+++ b/include/hw/s390x/s390-pci-inst.h
-@@ -113,6 +113,7 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
- int stpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-                          uintptr_t ra);
- void fmb_timer_free(S390PCIBusDevice *pbdev);
-+void fmb_update(void *opaque);
- uint32_t s390_pci_update_iotlb(S390PCIBusDevice *pbdev, S390IOTLBEntry *entry);
- 
- #define ZPCI_IO_BAR_MIN 0
 -- 
 2.34.1
 
