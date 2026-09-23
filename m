@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84676C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32053C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Th3-0008WA-2f; Wed, 23 Sep 2026 16:35:56 -0400
+	id 1x9ThI-0000Fj-Qk; Wed, 23 Sep 2026 16:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TgD-0008Bw-I5
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:06 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
+ id 1x9Tg5-00089n-Rg
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:56 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TgA-00051y-Tj
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:01 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc50bcf87b2so713638a12.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:58 -0700 (PDT)
+ id 1x9Tg1-0004zc-IA
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:53 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ d2e1a72fcca58-85469f204f6so729952b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195697; x=1790800497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790195688; x=1790800488; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jLp6ahCU93BTd2BLkEfZzfIJIRR9NWTXSUP87yd1ubw=;
- b=Qhr6ZtNJaUiaWhaQrjhlaFfHyrAMRsnKJuKXuOU2B7I1l/8gO06b5QuO8+xAxMO3Uw
- ciF1nj7xnJbBzeF/9c19l8E/wMZtqZkFfvWuZZJ5SMoGVTNY3ot4bzSTAstxk0I8p/Z5
- JEWj6/y4GJ0iPl+wDLyvVc8ArpAWwFULBXeiTiwkqE5I8bQgP8yOKOMYLGQuX5cS8Ji4
- nMemFt4nFyj1D/ck8Vy2iRQPFUFJFvsvPcSUH2Nak9kFNJux/ZhG2p261b7LIT2eULGs
- eT/S/t0lxd9orIyAP8xzToQIpA8nzhNMzcYNTOL32uz5tZy1k4AUoyc7IjewO8TrcvrJ
- HbnQ==
+ bh=/vignENIEkthU0rUkkomMduDGfwUZLI5agjrp6DrhWE=;
+ b=ub5r4VR37a78+HPZyzr+fKWa5+8gyIWblqRk9y8WwYa3V9AouSr7ks665csP3H6m4y
+ /9v9elXiOadE9aLBwG77OLwwMLP32ZGCGNKq9sFDFh6GIPSl5UMtstVTxNeOyZpfhW6h
+ rWUSWDZfM8I1WkXOvkISNUyPZ8rZI6cMKVpm9fA3MA5GXgzbWOZWN8F0dE6BgW7+z7Kt
+ quJDTx9iin6gJ6yGkNcljOq26CCVWUV/+WcPecnMHxzrIhpj3o78V+vhwLVrlgikcG7W
+ nmE3H5lJdpbE3hb9Cb4JNoTjrByxsHphbyFFG9w7MzG28Vk+jrPbH+UiR7KvD+zCXWye
+ u2ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195697; x=1790800497;
+ d=1e100.net; s=20260707; t=1790195688; x=1790800488;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jLp6ahCU93BTd2BLkEfZzfIJIRR9NWTXSUP87yd1ubw=;
- b=1z4UMc4P2Lg/WXCc5WNOcQUqmJQCZNRwJhrTQJY5ZFWJmwYbZwa+gWaY9oZL3a1NBX
- 2CbIzRechJBWtaivzd+n+83JtUBO4mv0NoxMWLL9F+oKZ1tc4bUyrGZcrLMzRpQCgnJ4
- N2pJnoy+5vLne8gKcYePgzgAlJNu2HtKOLcHwfZH51FAyio3YAlDng7FNaOT6hCgoaQh
- P0BV27QYSqqWLXdMFtAKLpwUsdLqCGB88mzclfWMskic7cWljS7u/P4Jz4UEfxsdb96h
- 6/eW5Osc45SL1rCStPoTlNoC8G4/c9HmPdKKaWJZtmXDwy4OYajH/goGRIayLevkhSxI
- Tk7A==
-X-Gm-Message-State: AFuF++mmM5QvhclRlGG10KMeoy4guEId+p7WC9rmLvqagmphSdVDsuZB
- q2pwbvCrE6idjwM90FSzv6Q4n09AVQtfc8pKI2fTrsmt8zGbkZr7t9/sA66xSDE1bd4mW0Ba5P9
- oCRcL
-X-Gm-Gg: AYBFou0lXAb8HFEPz+N9D77wteIRr9gAwie6pJevqk+1t7pZU80MPIfLPEgsLFVqwRV
- TkrS82opB2CYLilHV8/EyAi2L6m/oiPv0f4NtcbfDX+idRwX/YVkpHANPhPTM652kVSlEVJ9f/o
- d4T9I0octgAxdR8Yhj9Tq/JHG1YWXfVU7Qxz6lGEQswvMUum4XC8cz+yfN4G5nzKMJLaBPRLzLl
- sW53O1Ap5mlJNoMoPuOFZ8ytXQBxf7dJNsrcAbv6A1XuNFRe1NnjTUoLw/509n7oxb+R2qr9Lvt
- fn8hzZWCsznKAmyIn7vSskF6H6TjDeH9FLl3SaPjriXEa14bLdC9vmbiBbVTea/ZgSpvbAjrpZN
- niKaKXyZERUpQxrNxDQ0bUMZQ7rHrUaf736Lp1wm9Atc5TPPYaRNyDQDUW49hyaqhgZGOvVLPUp
- 0XiAbe2h/o+pKnIoCWcCIWj4X5N95OO7C777EeXXArsO8n5J5RHs1xoBL2cl32rgkxXnVmM2cQP
- bDzFg6CPhixiUThxBCl1ON5LXRLJw==
-X-Received: by 2002:a05:6a20:d704:b0:3dd:a196:30a9 with SMTP id
- adf61e73a8af0-3de0e9bafa6mr268650637.89.1790195697259; 
- Wed, 23 Sep 2026 13:34:57 -0700 (PDT)
+ bh=/vignENIEkthU0rUkkomMduDGfwUZLI5agjrp6DrhWE=;
+ b=UZjb5z2l+GKaukuhV81zw0GKCevzY0RYTR9kOPzDJijev/6iw45P/BYhvT3OcgEcxu
+ 0r5nq2vFzntD620wUbhKtXxaYChNONdF8SDOI98Esqwq+2Ff6umbWUtzsJgps0QwAHGh
+ H48N+tAlO4OK8bDfCaPFM6nRyimWX2MenbppikIcGs3Oi4pIjzkgbJhoj1zQESMqYDL0
+ NAKuyFPsap43AjmuVEX19/I3klBXNYPzuqSWNpvcmuFfeuvTp00KFV6TGiBNags+krz0
+ ENXLEQYdhQWQYc8sOAKJPbsBzDkomxljbTPzK4iiUyxg+N89sf6Fx6/x+fNiWBgWogaz
+ RhjQ==
+X-Gm-Message-State: AFuF++mKfsXsgdSggB9oWaMLvrugN1xhw+f+xdDUvcyQhBEyl3kABSUF
+ smxh+1QtUvZn/lRJuWNwwX/k1Ao1eAvJg0JKL/7HB41Y5ynPp41OP3Ep2XY+gD7wUF49D88Efic
+ 1wBV3
+X-Gm-Gg: AYBFou16VJXV6ZNmXEz0Sxd4S2e5tSgMuYFcO4sL99h/FXrqrhLB8PZWHzywU53kjwK
+ Xg7Xj/DVpel0UvRlQz1nsvQCNbV5QljaSR6a6uq70nkJSLZ9tpVOg4CkOaf4yzVuzM28cedSKh8
+ xTqOrr4w+5k4RZYAGS/mGVSuQCydukjhuRs6i1xSvvLt2g9zoScEa3FPrIcILJjBnWYfcKUTSmK
+ Rr53zA7s5cZVEA70nTF+bwFpCdg0Lj+XP7caktvkSZzxLURTLSKts1Vh3UyPUU9TR2DxCljyK9l
+ CN51uklNe2V3sXapYeWfYz3J+CILZcbtBKniEwRrLbRRRKgFkTd4JAoAJtpe99idy6yHwMWQSvI
+ 0KvdeqFm9FPZHFRoTjFk7+YVAEXRM5XwHJQ9KECypYYk2xL9V+xHgAUv0a9j/VPCaofPEf92j1G
+ yWHtxkvs0fkUQ6bdMhV6ZzwDhhj1cC2h2LMBVqj7H5f+48XOSL9YlxCPhF2QeeddmveG2jM2pCT
+ gZpugqvDJxAyaJnlYrQB7J88QnZXA==
+X-Received: by 2002:a05:6a00:4fd5:b0:84e:909:ac03 with SMTP id
+ d2e1a72fcca58-87e9899499amr254404b3a.10.1790195687909; 
+ Wed, 23 Sep 2026 13:34:47 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.56
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>
-Subject: [PULL 16/16] accel/tcg: fold the dynamic cflags into
- CPUState::tcg_cflags
-Date: Wed, 23 Sep 2026 13:34:41 -0700
-Message-ID: <20260923203441.31276-17-richard.henderson@linaro.org>
+Subject: [PULL 05/16] accel/tcg: Allow cross-page goto_tb chaining in
+ user-only builds
+Date: Wed, 23 Sep 2026 13:34:30 -0700
+Message-ID: <20260923203441.31276-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,338 +104,627 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr()
-and from the cpu_exec() loop. It recomputes the same value every time:
+translator_use_goto_tb() refuses to chain unless the destination is on the
+same page as the start of the TB.  For guests whose text is much larger than
+a page this is expensive: an emulated alpha gcc compiling a 255k line
+translation unit takes the indirect dispatch path for 8.4 billion of its
+34.2 billion TB exits, and a large share of those are ordinary direct
+branches that simply crossed an 8 KiB page boundary.
 
-    uint32_t cflags = cpu->tcg_cflags;
-    if (unlikely(cpu_single_stepping(cpu))) { ... }
-    else if (qatomic_read(&one_insn_per_tb)) { ... }
-    else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
+The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
+Introduce translator_use_goto_tb"), whose rationale was:
 
-That is three loads and three branches on the hottest path in the
-interpreter, for state that changes only when gdb enables single-step,
-when one-insn-per-tb is toggled, or when the log mask changes.
+    Various targets avoid the page crossing test for CONFIG_USER_ONLY,
+    but that is wrong: mmap and mprotect can change page permissions.
 
-None of the three has to be sampled at dispatch time. Fold each into
-CPUState::tcg_cflags where it changes and curr_cflags() becomes a single
-load of a field that TB lookup has to read anyway.
+That is true, but in user-only builds the invalidation path already covers
+it.  There are no page tables: every mmap, mprotect and munmap reaches
+page_set_flags(), which calls tb_invalidate_phys_range() whenever the flags
+actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to reset
+incoming jumps.  A chained cross-page jump is therefore broken whenever the
+destination page's permissions change. This is not true in system mode,
+where TBs are keyed by physical address and a page table change invalidates
+nothing, so the restriction is kept there.
 
-The derived bits -- CF_COUNT_MASK, CF_NO_GOTO_TB, CF_NO_GOTO_PTR and
-CF_SINGLE_STEP -- are never set by tcg_cflags_set(), so tcg_update_cflags()
-can recompute them in place without disturbing the rest, and conversely
-tcg_cflags_set() ORs in its bits without disturbing them.
+The rule protects one more thing, which the original rationale does not
+mention: it guarantees that execution cannot enter a page without a TB
+lookup, and so without check_for_breakpoints().  That is what makes a
+breakpoint set after a block was translated take effect, since insertion
+deliberately invalidates nothing. A link established before the breakpoint
+was set would jump straight over it.
 
-There are three places to call it:
+So the chaining is only enabled for a run that can never acquire a
+breakpoint. In user-only mode every breakpoint comes from gdb -- BP_CPU is
+g_assert_not_reached() there, and the guest cannot ask for one -- and gdb
+has to be requested with -g before the first block is translated, even
+though with suspend=n it may connect later. gdb_may_set_breakpoints()
+reports whether it was, and is fixed for the lifetime of the process.
 
-  - tcg_exec_realizefn(), so that a CPU created after the command line has
-    been parsed starts out with the right value. This covers user-only,
-    where tcg_cpu_init_cflags() is not reached. linux-user's cpu_copy()
-    copies tcg_cflags wholesale, so a cloned thread inherits it.
+Add tests/tcg/multiarch/test-xpage-chain.c to cover both hazards directly.
+It writes the last instruction of one page and the first of the next, so
+that the fall-through between them is a cross-page goto_tb, runs it 200000
+times so the chain is established, then checks that mprotect(PROT_NONE)
+makes the next call fault, and that different code written into the page
+once it is mapped back runs rather than a stale translation.
 
-  - cpu_single_step(), which changes one CPU.  gdb is the only caller that
-    matters; in system mode it runs with the vCPUs stopped, and in user mode
-    gdb_continue_partial() can reach a thread that is still running, because
-    gdb_handlesig() stops only the thread that trapped. That is exactly the
-    plain cross-thread store to another CPU's CPUState that
-    cpu->singlestep_flags already was, read back by that CPU through
-    cpu_single_stepping() in curr_cflags(). This patch changes which field
-    carries it, not who writes it or how.
+The two instructions -- set the return value register, and return -- are
+all the architecture specific code there is; thirteen architectures supply
+them and the rest skip.
 
-  - hmp_one_insn_per_tb() and hmp_log(), which change every CPU while the
-    vCPUs are running, so the update is queued with async_run_on_cpu() and
-    each CPU writes its own cflags from its own thread. The command line
-    spellings of those two settings need nothing: they are parsed before
-    any CPU is realized, so tcg_exec_realizefn() picks them up.
+The test detects the hazard it is meant to detect: with the
+tb_invalidate_phys_range() call in page_set_flags() commented out,
+it fails both phases, executing page B after PROT_NONE and returning
+the stale result.
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, in a
-build configured with --enable-lto:
-
-    before: 1,646,994,254,249 instructions
-    after:  1,562,204,796,597 instructions   -5.15%
-
-That workload issues 8.4 billion dispatches, so the per-call saving is
-small but the aggregate is not. The emulated compiler produces
-byte-identical output before and after.
-
-Wall clock does not move: 133.19s to 132.58s, a 0.46% difference against a
-run-to-run spread larger than that. The removed work is a few predictable
-loads and branches that the host executes largely in parallel with the
-surrounding dispatch, so this patch is worth taking for the instruction
-count and for what it enables, not for a time saving that can be measured
-on its own.
-
-v4: Update the cflags from the HMP handlers for 'log' and 'one-insn-per-tb'
-    rather than from qemu_set_log_internal() and the accelerator property
-    setter. Those are the paths that reach a running vCPU, and the monitor
-    is the only thing that does. Suggested by Richard Henderson.
-
-v4: Queue the per-CPU update with async_run_on_cpu() rather than
-    async_safe_run_on_cpu(). Halting the other vCPUs buys nothing: the
-    queued work already runs on the owning CPU's own thread. Suggested by
-    Alex Bennee, who also asked whether there are cross-vCPU updates of
-    tcg_cflags at all. With this change the monitor path has none: the
-    only remaining writer from another thread is cpu_single_step(), above,
-    which is neither new nor made worse here.
-
-v4: Move the stub to accel/stubs/, which is where the other accelerator
-    stubs live.
+Run with -b, the same binary stops once the chain is established and
+lets tests/tcg/multiarch/gdbstub/xpage-bp.py set a breakpoint on the
+far side of it, which the next call has to stop on.
+With gdb_may_set_breakpoints() forced to false so that the chaining
+stays on under gdb, that breakpoint is missed and the test fails,
+which is what makes it a test of the gate rather than of gdb.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[rth: Update for meson test infrastructure]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260901034808.3524945-2-mattst88@gmail.com>
+Message-ID: <20260901034808.3524945-8-mattst88@gmail.com>
 ---
- accel/tcg/internal-common.h | 11 +++++++++--
- include/system/tcg.h        | 12 ++++++++++++
- accel/tcg/cpu-exec-common.c | 37 ++++++++++++++++++++++++++++++++++---
- accel/tcg/cpu-exec.c        |  3 +++
- accel/tcg/tcg-accel-ops.c   |  1 +
- cpu-target.c                |  5 ++++-
- monitor/hmp-cmds.c          |  7 +++++++
- system/runstate-hmp-cmds.c  | 18 ++++++++++++------
- 8 files changed, 82 insertions(+), 12 deletions(-)
+ include/gdbstub/user.h                  |  11 +
+ accel/tcg/translator.c                  |  33 ++-
+ gdbstub/user.c                          |  14 +
+ tests/tcg/multiarch/test-xpage-chain.c  | 360 ++++++++++++++++++++++++
+ tests/tcg/multiarch/gdbstub/xpage-bp.py |  37 +++
+ tests/tcg/multiarch/meson.build         |   7 +
+ 6 files changed, 461 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/multiarch/test-xpage-chain.c
+ create mode 100644 tests/tcg/multiarch/gdbstub/xpage-bp.py
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 9e7be2d78df..853d1b51eeb 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -69,8 +69,15 @@ void tlb_destroy(CPUState *cpu);
- bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
- void tcg_exec_unrealizefn(CPUState *cpu);
+diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+index 654986d483b..c091cd97586 100644
+--- a/include/gdbstub/user.h
++++ b/include/gdbstub/user.h
+@@ -11,6 +11,17 @@
  
--/* current cflags for hashing/comparison */
--uint32_t curr_cflags(CPUState *cpu);
-+/*
-+ * Current cflags for hashing/comparison.  Everything that feeds into the
-+ * value is folded into CPUState::tcg_cflags when it changes, by
-+ * tcg_update_cflags(), so that TB dispatch only has to load it.
-+ */
-+static inline uint32_t curr_cflags(CPUState *cpu)
-+{
-+    return cpu->tcg_cflags;
-+}
+ #define MAX_SIGINFO_LENGTH 128
  
- void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
- 
-diff --git a/include/system/tcg.h b/include/system/tcg.h
-index 7622dcea302..2c2dbc753b3 100644
---- a/include/system/tcg.h
-+++ b/include/system/tcg.h
-@@ -17,6 +17,18 @@ extern bool tcg_allowed;
- #define tcg_enabled() 0
- #endif
- 
-+/*
-+ * Recompute the parts of CPUState::tcg_cflags that TB dispatch consumes but
-+ * tcg_cflags_set() does not provide: gdb single-step, one-insn-per-tb and
-+ * the CPU_LOG_TB_NOCHAIN log flag.  Call whenever one of those changes.
++/**
++ * gdb_may_set_breakpoints() - whether a breakpoint can ever be inserted
 + *
-+ * tcg_update_cflags() updates one CPU and must be called from that CPU's
-+ * thread, or with it stopped.  tcg_update_all_cflags() updates every CPU
-+ * and is safe to call from the monitor while the vCPUs run.
++ * In user-only mode every breakpoint comes from gdb, and gdb is only ever
++ * reachable if -g was given at startup, before the guest ran a single
++ * instruction.  A run that has no gdbstub can therefore never acquire a
++ * breakpoint, which lets translation take shortcuts that a breakpoint
++ * would invalidate.  Stays true once true, even if gdb detaches.
 + */
-+void tcg_update_cflags(CPUState *cpu);
-+void tcg_update_all_cflags(void);
++bool gdb_may_set_breakpoints(void);
 +
  /**
-  * qemu_tcg_mttcg_enabled:
-  * Check whether we are running MultiThread TCG or not.
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index 44e84344f3b..68077c8fd9d 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -21,11 +21,19 @@
- #include "exec/log.h"
- #include "system/tcg.h"
- #include "qemu/plugin.h"
-+#include "qemu/main-loop.h"
- #include "accel/tcg/cpu-loop.h"
+  * gdb_handlesig() - yield control to gdb
+  * @cpu: CPU
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index e9943006947..3f08c1c15c7 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -15,6 +15,9 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "exec/target_page.h"
+ #include "exec/translator.h"
++#ifdef CONFIG_USER_ONLY
++#include "gdbstub/user.h"
++#endif
+ #include "exec/plugin-gen.h"
+ #include "tcg/tcg-op-common.h"
  #include "internal-common.h"
- 
- bool tcg_allowed;
+@@ -110,6 +113,34 @@ bool translator_is_same_page(const DisasContextBase *db, vaddr addr)
+     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
+ }
  
 +/*
-+ * The bits of CPUState::tcg_cflags that tcg_cflags_set() never sets, because
-+ * they are derived from gdb single-step, one-insn-per-tb and -d nochain.
++ * Whether a direct jump may be chained to a destination outside the page
++ * the TB started in.
++ *
++ * In user-only mode there are no page tables.  Every mmap, mprotect and
++ * munmap goes through page_set_flags(), which calls tb_invalidate_phys_range()
++ * whenever a change in flags so warrants, and tb_phys_invalidate() unlinks
++ * incoming jumps.  A cross-page link is therefore broken whenever the
++ * destination page's permissions change.
++ *
++ * What the same-page rule also provides is that execution cannot enter a page
++ * without a TB lookup, and so without check_for_breakpoints(), which is what
++ * makes a breakpoint set after a block was translated take effect.  Nothing
++ * invalidates on breakpoint insertion, so a link established beforehand would
++ * jump straight over it.  In user-only mode breakpoints only ever come from
++ * gdb -- BP_CPU is g_assert_not_reached() there and the guest has no way to
++ * ask for one -- and gdb has to be requested with -g before the first block
++ * is translated, so a run that has no gdbstub can never acquire a breakpoint.
 + */
-+#define CF_DERIVED  (CF_COUNT_MASK | CF_NO_GOTO_TB | CF_NO_GOTO_PTR | \
-+                     CF_SINGLE_STEP)
++static bool use_cross_page_goto_tb(void)
++{
++#ifdef CONFIG_USER_ONLY
++    return !gdb_may_set_breakpoints();
++#else
++    return false;
++#endif
++}
 +
- bool tcg_cflags_has(CPUState *cpu, uint32_t flags)
+ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
  {
-     return cpu->tcg_cflags & flags;
-@@ -33,12 +41,13 @@ bool tcg_cflags_has(CPUState *cpu, uint32_t flags)
- 
- void tcg_cflags_set(CPUState *cpu, uint32_t flags)
- {
-+    assert((flags & CF_DERIVED) == 0);
-     cpu->tcg_cflags |= flags;
- }
- 
--uint32_t curr_cflags(CPUState *cpu)
-+void tcg_update_cflags(CPUState *cpu)
- {
--    uint32_t cflags = cpu->tcg_cflags;
-+    uint32_t cflags = cpu->tcg_cflags & ~CF_DERIVED;
- 
-     /*
-      * Record gdb single-step.  We should be exiting the TB by raising
-@@ -55,7 +64,29 @@ uint32_t curr_cflags(CPUState *cpu)
-         cflags |= CF_NO_GOTO_TB;
+     /* Suppress goto_tb if requested. */
+@@ -118,7 +149,7 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
      }
  
--    return cflags;
-+    cpu->tcg_cflags = cflags;
+     /* Check for the dest on the same page as the start of the TB.  */
+-    return translator_is_same_page(db, dest);
++    return use_cross_page_goto_tb() || translator_is_same_page(db, dest);
+ }
+ 
+ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 9e6f9a6f376..d810f0f38c3 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -470,6 +470,18 @@ static void *gdbserver_accept_thread(void *arg)
+ 
+ #define USAGE "\nUsage: -g {port|path}[,suspend={y|n}]"
+ 
++/*
++ * Set before the guest runs and never cleared, so that code translated at
++ * any point can rely on it: with suspend=n gdb may connect long after
++ * startup, and once connected it can insert a breakpoint at any time.
++ */
++static bool gdbserver_requested;
++
++bool gdb_may_set_breakpoints(void)
++{
++    return gdbserver_requested;
 +}
 +
-+static void tcg_update_cflags_work(CPUState *cpu, run_on_cpu_data data)
+ bool gdbserver_start(const char *args, Error **errp)
+ {
+     g_auto(GStrv) argv = g_strsplit(args, ",", 0);
+@@ -513,6 +525,8 @@ bool gdbserver_start(const char *args, Error **errp)
+         return false;
+     }
+ 
++    gdbserver_requested = true;
++
+     if (suspend) {
+         if (gdbserver_accept(port, gdb_fd, port_or_path)) {
+             gdb_handlesig(first_cpu, 0, NULL, NULL, 0);
+diff --git a/tests/tcg/multiarch/test-xpage-chain.c b/tests/tcg/multiarch/test-xpage-chain.c
+new file mode 100644
+index 00000000000..8e60692d157
+--- /dev/null
++++ b/tests/tcg/multiarch/test-xpage-chain.c
+@@ -0,0 +1,360 @@
++/*
++ * Cross-page TB chaining hazard test.
++ *
++ * Two adjacent pages of hand-written code.  The last instruction of page A
++ * sets the return value and falls through into page B, which returns; a TB
++ * always ends at a page boundary, so page A reaches page B through a
++ * cross-page goto_tb.
++ *
++ * Phase 1: run it enough times that QEMU chains TB_A -> TB_B.
++ * Phase 2: mprotect page B away. Re-running must fault.
++ * Phase 3: map it back and write different code into it. Re-running must
++ *          execute the NEW code, not a stale chained translation.
++ *
++ * With -b, phases 2 and 3 are replaced by a stop at break_here(), where the
++ * gdbstub test sets a breakpoint on page B -- after the chain exists -- and
++ * checks that re-running the chain still stops on it.  See
++ * tests/tcg/multiarch/gdbstub/xpage-bp.py.
++ *
++ * The code the two pages hold is architecture specific, so each
++ * architecture supplies two emitters:
++ *
++ *   emit_set_ret(p, val) - set the integer return value register to val
++ *   emit_ret(p)          - return to the caller
++ *
++ * both writing at @p and returning the number of bytes written.  Neither
++ * may contain a branch: the fall-through from page A into page B is the
++ * whole point, and a delay slot must not straddle the boundary.  An
++ * architecture that supplies neither skips the test.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <stdbool.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <setjmp.h>
++#include <signal.h>
++#include <stdint.h>
++#include <sys/mman.h>
++#include <unistd.h>
++
++
++#if defined(__aarch64__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
 +{
-+    tcg_update_cflags(cpu);
++    /* movz w0, #val */
++    *p = 0x52800000u | val << 5;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* ret */
++    *p = 0xd65f03c0u;
++    return 4;
++}
++#elif defined(__alpha__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* lda $0, val($31) */
++    *p = 0x201f0000u | val;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* ret */
++    *p = 0x6bfa8001u;
++    return 4;
++}
++#elif defined(__arm__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* mov r0, #val */
++    *p = 0xe3a00000u | val;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* bx lr */
++    *p = 0xe12fff1eu;
++    return 4;
++}
++#elif defined(__hppa__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* ldi val, %ret0 */
++    *p = 0x341c0000u | val << 1;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    p[0] = 0xe840c000u;  /* bv %r0(%rp) */
++    p[1] = 0x08000240u;  /* nop (delay slot) */
++    return 8;
++}
++#elif defined(__i386__) || defined(__x86_64__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(void *p, int val)
++{
++    /* mov $val, %eax */
++    *(unsigned char *)p = 0xb8;
++    *(int *)(p + 1) = val;
++    return 5;
++}
++static size_t emit_ret(void *p)
++{
++    /* ret */
++    *(unsigned char *)p = 0xc3;
++    return 1;
++}
++#elif defined(__loongarch64)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* ori $a0, $zero, val */
++    *p = 0x03800004u | val << 10;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* jr $ra */
++    *p = 0x4c000020u;
++    return 4;
++}
++#elif defined(__m68k__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(void *p, int val)
++{
++    /* moveq #val, %d0 */
++    *(uint16_t *)p = 0x7000u | val;
++    return 2;
++}
++static size_t emit_ret(void *p)
++{
++    /* rts */
++    *(uint16_t *)p = 0x4e75u;
++    return 2;
++}
++#elif defined(__mips__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* li $v0, val */
++    *p = 0x24020000u | val;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    p[0] = 0x03e00008u;  /* jr $ra */
++    p[1] = 0x00000000u;  /* nop (delay slot) */
++    return 8;
++}
++/*
++ * ELFv1 function pointers are descriptors rather than code addresses, so
++ * there is nothing to call the raw code through.
++ */
++#elif defined(__powerpc__) && \
++      (!defined(__powerpc64__) || (defined(_CALL_ELF) && _CALL_ELF == 2))
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* li r3, val */
++    *p = 0x38600000u | val;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* blr */
++    *p = 0x4e800020u;
++    return 4;
++}
++#elif defined(__riscv)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* addi a0, zero, val -- the 4 byte form */
++    *p = 0x00000513u | val << 20;
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    /* jalr zero, 0(ra) */
++    *p = 0x00008067u;
++    return 4;
++}
++#elif defined(__s390x__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(void *p, int val)
++{
++    /* lghi %r2, val */
++    uint16_t *p2 = p;
++    p2[0] = 0xa729u;
++    p2[1] = val;
++    return 4;
++}
++static size_t emit_ret(void *p)
++{
++    /* br %r14 */
++    *(uint16_t *)p = 0x07feu;
++    return 2;
++}
++#elif defined(__sh__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(void *p, int val)
++{
++    /* mov #val, r0 */
++    *(uint16_t *)p = 0xe000u | val;
++    return 2;
++}
++static size_t emit_ret(void *p)
++{
++    uint16_t *p2 = p;
++    p2[0] = 0x000bu;  /* rts */
++    p2[1] = 0x0009u;  /* nop (delay slot) */
++    return 4;
++}
++#elif defined(__sparc__)
++#define HAVE_EMITTERS
++static size_t emit_set_ret(uint32_t *p, int val)
++{
++    /* mov val, %o0 */
++    *p = 0x90102000u | (val & 0x1fff);
++    return 4;
++}
++static size_t emit_ret(uint32_t *p)
++{
++    p[0] = 0x81c3e008u;  /* retl */
++    p[1] = 0x01000000u;  /* nop (delay slot) */
++    return 8;
++}
++#endif
++
++/* Where the fall-through lands, for the gdbstub test to breakpoint on. */
++void *page_b_entry;
++
++/* Somewhere for the gdbstub test to stop once the chain is established. */
++void __attribute__((noinline)) break_here(void)
++{
++    asm volatile("");
 +}
 +
-+void tcg_update_all_cflags(void)
-+{
-+    CPUState *cpu;
++#ifdef HAVE_EMITTERS
++static sigjmp_buf jb;
++/*
++ * Written by the SIGSEGV handler and read by main(), so it must not be
++ * cached in a register across the faulting call.
++ */
++static volatile sig_atomic_t caught;
 +
-+    g_assert(bql_locked());
++static void segv(int sig)
++{
++    caught = 1;
++    siglongjmp(jb, 1);
++}
++#endif
++
++int main(int argc, char **argv)
++{
++    bool bp_mode = argc > 1 && strcmp(argv[1], "-b") == 0;
++#ifndef HAVE_EMITTERS
++    printf("SKIP: no code emitters for this architecture\n");
++    if (bp_mode) {
++        break_here();
++    }
++    return 0;
++#else
++    uint32_t tmp[4];
++    struct sigaction sa;
++    long (*fn)(void);
++    size_t setlen, n;
++    long ps = sysconf(_SC_PAGESIZE);
++    int rc = 0;
++    unsigned char *m = mmap(NULL, 2 * ps, PROT_READ | PROT_WRITE | PROT_EXEC,
++                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    if (m == MAP_FAILED) {
++        perror("mmap");
++        return 2;
++    }
++
++    void *pb = m + ps;
 +
 +    /*
-+     * one-insn-per-tb and -d nochain can both be changed from the monitor
-+     * while the vCPUs are running.  Queue the update onto each CPU rather
-+     * than writing tcg_cflags from here, so that the field is only ever
-+     * written by the CPU that owns it.
++     * Page A ends with the store to the return value register, so that the
++     * next instruction executed is the first one on page B.
 +     */
-+    CPU_FOREACH(cpu) {
-+        async_run_on_cpu(cpu, tcg_update_cflags_work, RUN_ON_CPU_NULL);
-+    }
- }
- 
- /* exit the current TB, but without causing any exception to be raised */
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 46b723cb734..5226cfb7650 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -1071,6 +1071,9 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-         tcg_target_initialized = true;
-     }
- 
-+    /* Pick up one-insn-per-tb and -d nochain from the command line. */
-+    tcg_update_cflags(cpu);
++    setlen = emit_set_ret(tmp, 1);
++    memcpy(pb - setlen, tmp, setlen);
++    emit_ret(pb);
++    __builtin___clear_cache((char *)m, (char *)m + 2 * ps);
 +
-     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
-     tlb_init(cpu);
- #ifndef CONFIG_USER_ONLY
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 9c3d2214162..61e0051b53b 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -222,6 +222,7 @@ static void tcg_accel_ops_init(AccelClass *ac)
-     ops->insert_gdbstub_breakpoint = tcg_insert_gdbstub_breakpoint;
-     ops->remove_gdbstub_breakpoint = tcg_remove_gdbstub_breakpoint;
-     ops->remove_all_gdbstub_breakpoints = tcg_remove_all_gdbstub_breakpoints;
-+    ops->update_guest_debug = tcg_update_cflags;
- }
- 
- static void tcg_accel_ops_class_init(ObjectClass *oc, const void *data)
-diff --git a/cpu-target.c b/cpu-target.c
-index 4783845c9bf..9bd1605e831 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -24,6 +24,7 @@
- #include "exec/replay-core.h"
- #include "exec/log.h"
- #include "hw/core/cpu.h"
-+#include "system/tcg.h"
- #include "trace/trace-root.h"
- 
- /* enable or disable single step mode. EXCP_DEBUG is returned by the
-@@ -35,7 +36,9 @@ void cpu_single_step(CPUState *cpu, unsigned flags)
-                                           cpu->singlestep_flags, flags);
-         cpu->singlestep_flags = flags;
- 
--#if !defined(CONFIG_USER_ONLY)
-+#ifdef CONFIG_USER_ONLY
-+        tcg_update_cflags(cpu);
-+#else
-         const AccelOpsClass *ops = cpus_get_accel();
-         if (ops->update_guest_debug) {
-             ops->update_guest_debug(cpu);
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 91701ddf331..9b1b94f8ea9 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -40,6 +40,7 @@
- #include "system/hw_accel.h"
- #include "system/memory.h"
- #include "system/system.h"
-+#include "system/tcg.h"
- #include "disas/disas.h"
- 
- /* Please update hmp-commands.hx when adding or changing commands */
-@@ -340,6 +341,12 @@ void hmp_log(MonitorHMP *hmp, const QDict *qdict)
- 
-     if (!qemu_set_log(mask, &err)) {
-         error_report_err(err);
-+        return;
++    page_b_entry = pb;
++    fn = (long (*)(void))(pb - setlen);
++
++    for (int i = 0; i < 200000; i++) {
++        if (fn() != 1) {
++            printf("FAIL: phase 1 wrong result\n");
++            return 1;
++        }
++    }
++    printf("phase 1 ok (chained)\n");
++
++    if (bp_mode) {
++        /*
++         * The chain from page A to page B now exists.  gdb puts a breakpoint
++         * on page_b_entry here; the call below has to stop on it rather than
++         * jump over it.
++         */
++        break_here();
++        if (fn() != 1) {
++            printf("FAIL: bp phase wrong result\n");
++            return 1;
++        }
++        printf("bp phase ok\n");
++        return 0;
 +    }
 +
-+    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
-+    if (tcg_enabled()) {
-+        tcg_update_all_cflags();
-     }
- }
- 
-diff --git a/system/runstate-hmp-cmds.c b/system/runstate-hmp-cmds.c
-index ad70b53f8ab..eb34d14d062 100644
---- a/system/runstate-hmp-cmds.c
-+++ b/system/runstate-hmp-cmds.c
-@@ -22,6 +22,7 @@
- #include "qapi/qapi-commands-run-state.h"
- #include "qobject/qdict.h"
- #include "qemu/accel.h"
-+#include "system/tcg.h"
- 
- void hmp_info_status(MonitorHMP *hmp, const QDict *qdict)
- {
-@@ -43,16 +44,17 @@ void hmp_info_status(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_one_insn_per_tb(MonitorHMP *hmp, const QDict *qdict)
- {
--    const char *option = qdict_get_try_str(qdict, "option");
--    AccelState *accel = current_accel();
-+    const char *option;
-+    AccelState *accel;
-     bool newval;
- 
--    if (!object_property_find(OBJECT(accel), "one-insn-per-tb")) {
--        monitor_hmp_printf(hmp,
--                           "This accelerator does not support setting one-insn-per-tb\n");
-+    if (!tcg_enabled()) {
-+        monitor_hmp_printf(hmp, "This accelerator does not support "
-+                           "setting one-insn-per-tb\n");
-         return;
-     }
- 
-+    option = qdict_get_try_str(qdict, "option");
-     if (!option || !strcmp(option, "on")) {
-         newval = true;
-     } else if (!strcmp(option, "off")) {
-@@ -61,9 +63,13 @@ void hmp_one_insn_per_tb(MonitorHMP *hmp, const QDict *qdict)
-         monitor_hmp_printf(hmp, "unexpected option %s\n", option);
-         return;
-     }
--    /* If the property exists then setting it can never fail */
++    memset(&sa, 0, sizeof(sa));
++    sa.sa_handler = segv;
++    sigemptyset(&sa.sa_mask);
++    if (sigaction(SIGSEGV, &sa, NULL) != 0) {
++        perror("sigaction");
++        return 2;
++    }
++    if (mprotect(pb, ps, PROT_NONE) != 0) {
++        perror("mprotect");
++        return 2;
++    }
++    if (sigsetjmp(jb, 1) == 0) {
++        fn();
++        printf("FAIL: phase 2 executed page B after mprotect(PROT_NONE)\n");
++        rc = 1;
++    } else if (!caught) {
++        printf("FAIL: phase 2 longjmp without entering the handler\n");
++        rc = 1;
++    } else {
++        printf("phase 2 ok (faulted)\n");
++    }
 +
-+    accel = current_accel();
-     object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
-                              newval, &error_abort);
++    /* Phase 3: map back, overwrite, expect the new code to run. */
++    if (mprotect(pb, ps, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
++        perror("mprotect back");
++        return 2;
++    }
++    n = emit_set_ret(pb, 2);
++    emit_ret(pb + n);
++    __builtin___clear_cache((char *)pb, (char *)pb + ps);
 +
-+    /* one-insn-per-tb feeds into the per-CPU cflags. */
-+    tcg_update_all_cflags();
++    long r = fn();
++    if (r != 2) {
++        printf("FAIL: phase 3 returned %ld, expected 2 (stale chain)\n", r);
++        rc = 1;
++    } else {
++        printf("phase 3 ok (new code ran)\n");
++    }
++    return rc;
++#endif
++}
+diff --git a/tests/tcg/multiarch/gdbstub/xpage-bp.py b/tests/tcg/multiarch/gdbstub/xpage-bp.py
+new file mode 100644
+index 00000000000..f40024f16de
+--- /dev/null
++++ b/tests/tcg/multiarch/gdbstub/xpage-bp.py
+@@ -0,0 +1,37 @@
++"""Test that a breakpoint set after a cross-page chain is established is hit.
++
++translator_use_goto_tb() lets a direct branch chain to another page in
++user-only builds, which is only safe because a run with no gdbstub can never
++acquire a breakpoint.  This runs with one, so the chaining must be off and
++the breakpoint must still be reached.
++
++This runs as a sourced script (via -x, via run-test.py).
++
++SPDX-License-Identifier: GPL-2.0-or-later
++"""
++from test_gdbstub import main, report
++
++
++def run_test():
++    """Run through the tests one by one"""
++    gdb.Breakpoint("break_here")
++    gdb.execute("continue")
++
++    # The chain exists by now; put a breakpoint on the far side of it.
++    target = int(gdb.parse_and_eval("(unsigned long)page_b_entry"))
++    if target == 0:
++        report(True, "no code emitters for this architecture, skipped")
++        return
++    gdb.execute("break *{}".format(target))
++    gdb.execute("continue")
++
++    pc = int(gdb.parse_and_eval("(unsigned long)$pc"))
++    report(pc == target, "stopped at {:#x}, expected {:#x}".format(pc, target))
++
++    gdb.execute("delete")
++    gdb.execute("continue")
++    exitcode = int(gdb.parse_and_eval("$_exitcode"))
++    report(exitcode == 0, "{} == 0".format(exitcode))
++
++
++main(run_test)
+diff --git a/tests/tcg/multiarch/meson.build b/tests/tcg/multiarch/meson.build
+index 508fdb585b7..c3816d3a218 100644
+--- a/tests/tcg/multiarch/meson.build
++++ b/tests/tcg/multiarch/meson.build
+@@ -48,6 +48,7 @@ tests += {
+   multiarch/'sigreturn-sigmask.c': {'cflags': ['-lpthread']},
+   multiarch/'tb-link.c': {'cflags': ['-lpthread']},
+   multiarch/'test-mmap.c': {},
++  multiarch/'test-xpage-chain.c': {'cflags': ['-lpthread']},
+   multiarch/'testthread.c': {'cflags': ['-lpthread']},
+   multiarch/'threadcount.c': {'cflags': ['-lpthread']},
  }
+@@ -118,6 +119,12 @@ tests += {
+     'gdb_test': ['--test', files('gdbstub/follow-fork-mode-parent.py')],
+   },
+ }
++tests += {
++  multiarch/'test-xpage-chain.c': {
++    'test_name': 'xpage-chain',
++    'gdb_test': ['--test', files('gdbstub/xpage-bp.py'), '--pargs=-b'],
++  },
++}
  
- void hmp_watchdog_action(MonitorHMP *hmp, const QDict *qdict)
+ # Specific plugin tests
+ # Test plugin memory access instrumentation
 -- 
 2.53.0
 
