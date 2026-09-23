@@ -4,109 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE96C98307
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41DEC98307
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KaS-0003ix-Nm; Wed, 23 Sep 2026 06:52:28 -0400
+	id 1x9KfX-0004Xm-UI; Wed, 23 Sep 2026 06:57:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KaR-0003iN-8A
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:52:27 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x9KfI-0004VO-IZ
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:57:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KaP-0001Ax-4C
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:52:26 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1x9Kf9-0002Ka-A3
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:57:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790160743;
+ s=mimecast20190719; t=1790161023;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
- b=ORvmHwHg9Avk6Ji9gGypBBqKmw4DBEyY/uerKqaqYqRO5dR51m0KhudS8WmPWVKLut9VYW
- 0+uC1eIltUo9+gLEo1atJJw5SNMvqikbKAnv717NJ92ORlCO6G6hgpjOcbwVoNRXNIiEoc
- xKFxmwzJ/VDz2oBlPlVwJcTXgF2yNNg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-rj2PNZ5iNVy8WG7gOPhlfg-1; Wed, 23 Sep 2026 06:52:22 -0400
-X-MC-Unique: rj2PNZ5iNVy8WG7gOPhlfg-1
-X-Mimecast-MFC-AGG-ID: rj2PNZ5iNVy8WG7gOPhlfg_1790160741
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-485866e0066so344161f8f.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790160741; x=1790765541; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
- b=Wx8FT9psPevs4rNX6ATaWg6N7G10c0Wc1jOXcKGjn/bsaQN3cEFTINMnK51Ay8ey/r
- mJE2Rbk8BaWRzYcF7YWUHX2XgkVUSvz5qNEFamzXrU01wIVVDubimU0TrR/8PU5dd/ao
- 8qPNP9M5uPpkyCsTXrDZrVSGswxhcwIHUVCrrZMhVqhK0x9Is3gRoXWBcypeRkYfd5In
- z36esiOKzMmAPHNWGzp6jlI1QSMVpmpkntLdhHLbDppe9ODnV363KMj2c+5Jsl0e1OYT
- ISGwIPngcpYA27o9aafVex/eRr5KV6Ew6oSQbFxQ9HkANuikRqOSdAe7V6kh61GyBxyc
- mkIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790160741; x=1790765541;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
- b=PXMlCG+YGWOmltvGWusW23vEaKxgKSakt/DuQsNf1n7bsu2lfkXMUmYPmxTZr69wbZ
- 7sYu3g/1NIz8MCv7mMmgcoE3nrmx21JzGDnQQn08/REsUYfQ7U9tZfKXoCgoHcs0/eNI
- fMRaKnBnHeXDngH8/nQwm/3tVUyN9uFgIz2/4NjZnsxxZg5XHRfX6f1ttA3IpjWkWtq4
- Ykfd8WhO1IT8zIeb9kNZiLTzhzyn9LFL19BzVoHVTxe5c6UnKM65c0km7nLmXkcDlija
- 6cLPXwNQzQwkKT81Y+VP/ZoiiqY2LN3psDOOqkYIgZvkVYiPQK94SaK5nBNfyqsxcwxt
- eFtQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy7Jo1vp6ZcY79ZbR0kEDKEoXY49x++k2aS//7o4eEny9121N3DsXW+1MUlYxohj2w0Ty4okvq5fl6Q@nongnu.org
-X-Gm-Message-State: AFuF++lwf19xaeGJmjcNtppSla44EZPxS8E8hBevljV7K2PCpZVdrG2O
- cEYEKn3K2Oc2jB/yeGC27m3e0Ul0vwuYEcSQtJHV/3F4+mhHa8HkyJtQY/sN4TFfCvwWdtCriNu
- PRoHO4cU/vji5S/ty3f+9zjWGuttXQdH9zuVZOQwGAsPl8fbIi9oHoDJf
-X-Gm-Gg: AYBFou3esLv9YjObDbXZDxRmpq1fYl2eGRrA57rvhRiam2hRNGotzHKCCGbJV/Szndq
- pj62TatHKBv+SJu1jawBrarYDPqmKj70EDZfYGSyIGDqZyHDMyrwHaoB+iuPhlOjRS2uGYP/zkJ
- XS5MNgb0Cw+OVAHDftPq+3OyacVF98R/EgnfkBnsOWHTV6+9XoMsBAGcAWPefI1cht5QuxQueyp
- lDq+x44LACZFfqs5ycEqp8nLZrpwao5vgF10MMoyLFfQLkMKaUoa6ai50KMSlJlrrmpcvomLQuW
- 3Ho0w1YkhhWwGD8SL/WzyKoE+lGvwFzrs6XAVDUKzkjjIWW2xZ7/Z8QbIb4jRWfJMSZOdIjSRlU
- 7kucIXlWjamJfjQKuRCrSF3I5iOZXAmCzyti2i7gmGfYyE2rcD3V3yVBSuNR/xMCKrWZg1ozLmi
- uUpl8y09X0MqaIeUJKIbyMwq75CDbeLQ==
-X-Received: by 2002:a05:6000:420c:b0:486:f9ea:796f with SMTP id
- ffacd0b85a97d-488670b6fccmr3791150f8f.41.1790160741278; 
- Wed, 23 Sep 2026 03:52:21 -0700 (PDT)
-X-Received: by 2002:a05:6000:420c:b0:486:f9ea:796f with SMTP id
- ffacd0b85a97d-488670b6fccmr3791117f8f.41.1790160740949; 
- Wed, 23 Sep 2026 03:52:20 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d749:526e:3864:2ce3:24f2:e6d4?
- (p200300cfd749526e38642ce324f2e6d4.dip0.t-ipconnect.de.
- [2003:cf:d749:526e:3864:2ce3:24f2:e6d4])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-488682673bdsm6091331f8f.2.2026.09.23.03.52.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 03:52:19 -0700 (PDT)
-Message-ID: <2c3712c9-24ba-4657-9ef3-f835fec48afb@redhat.com>
-Date: Wed, 23 Sep 2026 12:52:17 +0200
+ bh=Bn+Z8YRnUMYZfp76Gs9Pi2qRErlj91PTtObbshez4KE=;
+ b=NXUcBDCTTmJkqQg7NwoTjWzIoJmdr2U8E6ur5P/28oSEUsdteOVr1TM2R3LSRnhAggW5ow
+ NyFVYsS6wXo1DoJsY6V12BW2uL+aIAiTrLqQhWS967AeR4PoZknIt56q7YG9+cVr/RRojS
+ zrpzi8jPi1NuzcyFyKBzHZrEyT4vUWs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-KawlLCo5O7i6cEw4D8-PyQ-1; Wed,
+ 23 Sep 2026 06:56:58 -0400
+X-MC-Unique: KawlLCo5O7i6cEw4D8-PyQ-1
+X-Mimecast-MFC-AGG-ID: KawlLCo5O7i6cEw4D8-PyQ_1790161015
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 953D91801310; Wed, 23 Sep 2026 10:56:54 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5657B1800603; Wed, 23 Sep 2026 10:56:51 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] block: BLOCK_IO_DELAY event
-To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, John Snow
- <jsnow@redhat.com>, "Denis V . Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260903140815.GC825275@fedora>
- <8592119d-665d-482e-9502-8f4a1a69c10d@redhat.com>
- <20260921204126.GC115897@fedora> <arKDQRZ7q7k0JvG1@redhat.com>
- <20260922171838.GA231912@fedora>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260922171838.GA231912@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 1/9] machine: allow -M name to differ from QOM type
+From: marcandre.lureau@redhat.com
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>, 
+ Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Laurent Vivier <lvivier@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Song Gao <17746591750@163.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Stafford Horne <shorne@gmail.com>, Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
+In-Reply-To: <20260922215533.641-2-luoyonggang@gmail.com>
+References: <20260922215533.641-1-luoyonggang@gmail.com>
+ <20260922215533.641-2-luoyonggang@gmail.com>
+Date: Wed, 23 Sep 2026 14:56:45 +0400
+Message-Id: <179016100537.1396491.4846812267578164568.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2399;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=JvBEFlDyT/Gw17oCZYFjUrc5CNqLyJSfuaFPRSQqseQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqs7Bw16tQ1WhXZOTGvE7HBcXlKPbUqOOdtIlA8
+ BAfl426OEiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarOwcAAKCRDa6OEJdZac
+ 5fMLD/wKq8wmnDYnpEPL/3wLIxbWjyXED1f/YxTnuiH8LSpo17DX1eK40lMPgMEWUVOYMb9401q
+ OU6+xbGs2uyUd8FyCPnYQFvJzwTqUT9u8uFOIIx1ZCLUO/OqB+3wFhU/KmkJPOphWcBaGf/O/JX
+ EN5xodGifP7e7SQyUyciGLtU6G3RlHkZ3mNCHrGkTgW6N+p5ueO2GGLcoPzEywbYXMilIH2xgET
+ W9IipG5goEiBAxAhIidVOqSIlZ46FD57nXf/6YGyRsUdNCTcfGrqrrlgg0H5rxRDAKTy2/3WU1h
+ MsqS/0mpQalsDgnY+7ThEyzc2HVOkfZIqQru1dhF6jE5Gfhbr0SkEVcVUc9UeugERs4GFq9GJXl
+ jfqfsO0+/ZPJoEP2pjqwqZCubMZ3/VdOe4ZchSV075mFTBnOzCAwnuR0vOtQ+wi9qABwWZsY91f
+ y7/nW9HyjTCluPxnn5Ytieyyv6bUSxLth0b0E+kXiYzGw5uyXhOEE9BVmCGBcWnkn7q2/zMQXI7
+ worJ2UwIca7sUe2k30UI70s48BpyoCxEvoLNG3wAzluLD5CKRgESRPYt0E/30Ie/IaEknXALUNv
+ eABdb8NnkuFXNLZ46ZPJ/BpTDnu5DfLVWgSCwrF3C2YUezZXDhvJnqJWUSLAcI47ozZOi507xsG
+ kOy1FIjFPT7xFlA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -130,45 +121,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.09.26 19:18, Stefan Hajnoczi wrote:
-> On Tue, Sep 22, 2026 at 03:31:49PM +0200, Kevin Wolf wrote:
->> Am 21.09.2026 um 22:41 hat Stefan Hajnoczi geschrieben:
->>> On Wed, Sep 16, 2026 at 10:04:51AM +0200, Hanna Czenczek wrote:
->>>> On 03.09.26 16:08, Stefan Hajnoczi wrote:
->>>>> On Mon, Aug 31, 2026 at 03:51:56PM +0200, Hanna Czenczek wrote:
->>>> The problem is that if the destructor has to be called explicitly, we may
->>>> forget to do so; and accounting is done on the device emulation level, so
->>>> there is no central place where the pairing of constructor and destructor
->>>> would be obvious and trivial to verify.
->>> This is the part I'm asking about: can accounting be done by the block
->>> layer? There might be cases that are purely handled in device emulation
->>> code without a call into the block layer. In that case the accounting
->>> still needs to be done in device emulation code. But when device
->>> emulation calls blk_aio_*(), it should not do accounting itself.
->> Apart from cases where requests are completed entirely within the
->> device (like for all block_acct_invalid() callers), there are also cases
->> where a single device-level requests involves multiple backend-level
->> requests. I was thinking of IDE TRIM initially, but actually I think
->> splitting can happen for any request that uses the DMA helpers.
->>
->> Conversely, virtio-blk can merge requests, so you get a single request
->> in the backend that covers multiple requests in the device.
-> Sticking to the requests as seen by the device seems like the cleanest
-> solution rather than cheating and counting host requests in some places.
+> - Add machine_class_set_name() so boards can keep a stable -M name
+>   when the QOM type is uniquified. machine_class_base_init still
+>   defaults the name to the QOM type without -machine.
+> - Document that MachineClass::name is the -M name, not the QOM type.
+> - Sort -M help by MachineClass::name so order matches the printed names
+>   when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
+> 
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Message-ID: <20260922215533.641-2-luoyonggang@gmail.com>
 >
-> The idea to move the accounting into blk_aio_*() doesn't work well in
-> light of this.
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 92f7be52a13f..6b933f2302d5 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1215,6 +1215,12 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+>          "Memory size configuration");
+>  }
+>  
+> +void machine_class_set_name(MachineClass *mc, const char *name)
+> +{
+> +    g_free(mc->name);
+> +    mc->name = g_strdup(name);
+> +}
+> +
+>  static void machine_class_base_init(ObjectClass *oc, const void *data)
+>  {
+>      MachineClass *mc = MACHINE_CLASS(oc);
+> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+> index 3b86724cf007..851140ad0520 100644
+> --- a/include/hw/core/boards.h
+> +++ b/include/hw/core/boards.h
+> @@ -36,6 +36,16 @@ const char *machine_default_cpu_type(const MachineState *ms);
+>   * @mc: Machine class
+>   */
+>  const char *machine_class_default_cpu_type(MachineClass *mc);
+> +/**
+> + * machine_class_set_name: Set the -M name when it differs from the QOM type
+> + * @mc: Machine class
+> + * @name: Name used by -M lookup, help, and migration
+> + *
+> + * machine_class_base_init sets MachineClass::name from the QOM type with
+> + * the -machine suffix removed. Call this from board class_init when the
+> + * CLI name must stay stable after the QOM type is uniquified.
+> + */
+> +void machine_class_set_name(MachineClass *mc, const char *name);
 
-Does this mean you would be against separating delay monitoring from the 
-rest of accounting?
+add machine_class_set_name() to the comment example around line 484:
 
-Because to me that still sounds reasonable: To do delay monitoring in 
-the BB layer, separate from accounting cookies, to have a simple 
-lifecycle and timely reporting.
+Add after the existing mc->desc line in the example:
+ *          machine_class_set_name(mc, "virt-" MACHINE_VER_STR(__VA_ARGS__)); \
 
-(And as you did say, if one wants the guest-device-request-level delay 
-information, the histogram is there O:) )
+And update the example's type name from "virt" to show a prefixed name like
+"arm-virt" so it matches the real usage pattern.
 
-Hanna
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
