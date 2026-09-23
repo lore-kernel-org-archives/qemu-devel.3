@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85008C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CEAFC982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MwB-0004gX-M9; Wed, 23 Sep 2026 09:23:03 -0400
+	id 1x9MwH-0005Rh-Rr; Wed, 23 Sep 2026 09:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mrj-0000P2-6E
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:37 -0400
-Received: from mail-dl2-x10.google.com ([2607:f8b0:4864:38::10])
+ id 1x9Ms3-0000YE-47
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:49 -0400
+Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mrf-0006v4-VQ
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:26 -0400
-Received: by mail-dl2-x10.google.com with SMTP id
- a92af1059eb24-142dd04edb5so1431137c88.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:18:23 -0700 (PDT)
+ id 1x9Ms0-0006yo-0A
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:46 -0400
+Received: by mail-dy2-x0f.google.com with SMTP id
+ 5a478bee46e88-33c24422d4dso1025635eec.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169502; x=1790774302; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169523; x=1790774323; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yqkLIHs8nht5THiWcj2P453LN93rHp/TnF9wI3rp1V4=;
- b=ommQnWUpcJDJiR6l56NFITObmh5aqsyWTpAQWWfZNH27p6HUD8qgpznivXTzyx9lqk
- EFbc4tLbMLO38106wDCoL6vOal81n1W6H2FVtoqPClYWDBapKYF0a+/mwyPMmGMISrPw
- 3eDvVe+MI2qd6Wo93eeaEWOhEBzvL5txi/CBUIQlrPb0NTERCvO0qOLoDugfUypundg2
- 0sWYqXPpK3Kym9EH3JH1O3Dy3CszziYo3SUb9c6b/viUKwu5AMo1/6RNDEkqCULYGifr
- zoJyezPxpk374r54k7v30s2MOZBqJwuEaBGeotlaVs4jY9vmsdLlvz+uwiCTVUAEToqi
- 1btA==
+ bh=gvdLUze2sQ9rH6tf9YWuWP18ipAcGMhXKG5e40lFeJk=;
+ b=WcdnkKCXRl9bB0JISgctzLVRVNPgVP4Gt2zDtaH6wZ5NUknhajSF0v0jfCmY5OM8kj
+ 1kSnANlH5gtbL98EUwXa0sde0POt1uVjVwVBHQYsQtXZ3wL9uiFSy+fPkHeL7W//VHS7
+ HA5n2ONpMPd5mWXh7X0prDqBeqYp2nszLhEF73PY5OrDbCMDvx9jkVyWapP+JCWdb/S6
+ kOQxXHYpqckX/uO175mWpo2MltGtZ6AJ48dxg2+hIeni7n8LUdT2ZHGPqMhrbpgyIqFK
+ yawlvoJTVzE2W482NSYTXTGpRi72OiMf4nxQLqBR2vbRvr2YP/E6zJDPLIVNswDTjjUM
+ Ynqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169502; x=1790774302;
+ d=1e100.net; s=20260707; t=1790169523; x=1790774323;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yqkLIHs8nht5THiWcj2P453LN93rHp/TnF9wI3rp1V4=;
- b=c8AqBg21PgME5ii6lMQvvcDdD3GAtAz0qC89ajeF54flMWKdHJcH/jARwJ0cdHI7re
- TOGqp1u2a3PlXzWvpk9M9NLIYBZbbSWEi0nz7llMYSyg+K+BzNLTkwznDUaQa/XtOw2e
- TgrnGFR26nb2pjETW0FYmfdrH016mWhY8QWKM5bRhuWqLuYpkqE3MWOK/XONkVXTOLJJ
- xxygyOUdqmQAOl2deilCWwoCvryslSDv7LsMmy2d990jYP6KorzftXEnBN9yYRmTftTI
- C/Y0hFT9ARFNu8/x3r+ImHKcZPzhsMxGDk+x2Vhtxt4YGSEm5hpEhii22GoQs5vMf9UA
- 0xQQ==
-X-Gm-Message-State: AFuF++mTN+yS+ITbG5hrVhWDBA9kOEegVta/xu2H3FXw7t8bBDoWwEG3
- 3gOWdQPwbtJCKV40q6xm7Le37gzyawLlEkrC3eGBXlqihcBex1QZXZrDm65m8n5a7Ts=
-X-Gm-Gg: AYBFou2XlKjoHmAfeZJ+KrpMB1uqVXs7orPO9FJiOctRTFby2B6EtklJQ0gRJhebZ1m
- +QzdmFM/D3XTOVaFxl0l0V7uacWC85R8fhJ0JT3JKoL7f5ZHIM35aiLJcyGnEaf/QjVX7Ji7OjQ
- FcpSpMuw3uH89DBdMb8nZw8fBDs2DmBobFg+4mGYyEbQIh1+xgPI43a2zIWrXNbbU/5Ftd9ktEV
- naaAFYUJiNc2VCPrhrJFqSrKn2THpIqzCivWT5H7PrxjrA66vvVpDS/3A7LA0BsCOZMqWEAtGXB
- J8bvPeVpjUioRIk+GsJwdmF1Ny8SVI6E1LzVvpkuL6PbT2m/3+zRkBKIqr/nlENV6GnZ103ogF9
- Q0VlBwcZ3KeMvuuMRQfcEmNicxIj77Tw31mk2lmFYZIo0+MKkphAC3ngYle9579YTZTHxCkr2fL
- IipOBxt5f6N4LebRFgEtg69eKL4PQyrU7LAQPhFIbCGmbuCtwOH/L6NpNnW26z4VNidXte8a9KI
- AmU25bC7Xr4qUrJbigePqNmxm5HbVGLbLeYJ7fi9Q==
-X-Received: by 2002:a05:7022:fa9:b0:143:2719:a501 with SMTP id
- a92af1059eb24-144f9173969mr4195539c88.40.1790169493859; 
- Wed, 23 Sep 2026 06:18:13 -0700 (PDT)
+ bh=gvdLUze2sQ9rH6tf9YWuWP18ipAcGMhXKG5e40lFeJk=;
+ b=Ba1yksGzg70DRZ3zJBTKxhnHghDEf0VPnluYiWc3YkuCZ28ejzsO8RELst/cCffGAK
+ clH4UfoJtp5WWAXK0IhC+30ac1SqJVWUP8ePR1ke/7p2mFncl5OHQJM7xOTuoZpieIfI
+ SGKLr3xnWd5Ud1uqmjEDO4qK61jaMwuKOBSaPO61VzqPIZHwdFJ2jt9hK1f7OkO6aGxF
+ qJm2LLgZh5mwSttey4pK89FhXXTQelq6nS0OcBBwVJNxmzYmzhbN5x8K72oV7NsBaVty
+ cUUS/pJyNTfmFk9miaCxYGVE8ZstXjsPfVGzpYnS9MoN2rwUAWT+1E1/RHgjyKqsToQw
+ bJpA==
+X-Gm-Message-State: AFuF++mUNSps9e04B2BxA2rzlRvYQLNwjsSDnO3gDS4q3DuQfI8E6CmA
+ XCOurL9LrBnuw70aDZTvRPG6vw1gdeKsLAlyiZRZRxLlVFmTWYIZjlZYkpqb+CYY2LY=
+X-Gm-Gg: AYBFou1NzORyDwOc10IJypA6CaiyVe1OiqiLZ8qGCjqQQYhXB1KVC/qH2c83Or9ZZAA
+ F9r/oNsOMU0nna2dYnSi/kYbB16nt+oUuxXfv9bNMl1v6corJ29k3xth+XBBma2zRoWDId2sAT/
+ A9XqwNHnlAEIVKC1G0ohokOjjxwMXomETpPe9oaPNs/rrEtwGeTYGIk2c7yXXXdnfYYpIZKR9zf
+ ggoq3oomGTlnpDoj3S/TBlKRb9WgA7Bg/r5ixtZtvMVR3bmcR/3ElmhoPxUEo54ZoJ6HTwsr+u9
+ wDVm1Mi5dOecfPKV85zFzsbz84Om8DaPsSSxhkzRl6p/RxqoBFFVCT37Ixh+iONucPkDgFeCP6O
+ ZCDafd+dNIuDzd5e9BIvI81GTJOsR6sla2Uf4JyxRm+yy4owIvIrdhUwpTg+eRO5rEsysCSO9Hk
+ ZFwqDSAzltZIZHRgM/iCxnj0mCaN9dFVkGYLm6IOJ9fdrrpiU0SIu/w2OqjJrBMaTv2sFQvtfIu
+ 7s22uDAiU0dhY/b9v38d4d/nqVJkH8=
+X-Received: by 2002:a05:7301:3a99:b0:30f:1e28:fb5d with SMTP id
+ 5a478bee46e88-33e8d6d03a4mr2458825eec.20.1790169522434; 
+ Wed, 23 Sep 2026 06:18:42 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.18.05
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.18.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:18:12 -0700 (PDT)
+ Wed, 23 Sep 2026 06:18:38 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,16 +95,16 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 009/114] tests/unit: add test-target-info
-Date: Wed, 23 Sep 2026 21:14:43 +0800
-Message-ID: <20260923131635.1894-10-luoyonggang@gmail.com>
+Subject: [PATCH v3 011/114] kconfig: rename REGISTER to HW_REGISTER
+Date: Wed, 23 Sep 2026 21:14:45 +0800
+Message-ID: <20260923131635.1894-12-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,109 +126,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Collect each target-info-def.c object in target_info_def_objects,
-keyed by target dir. Link every value so constructors fill the
-list. Assert target_info() is not NULL and target_info_list() has
-one entry per linked object.
+Rename config REGISTER to HW_REGISTER. register is a C keyword, and a
+later TargetKconfig commit will use it as a struct member.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- meson.build                   |  6 +++++-
- tests/unit/meson.build        |  4 ++++
- tests/unit/test-target-info.c | 38 +++++++++++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 1 deletion(-)
- create mode 100644 tests/unit/test-target-info.c
+ hw/Kconfig          | 2 +-
+ hw/core/Kconfig     | 2 +-
+ hw/core/meson.build | 2 +-
+ hw/dma/Kconfig      | 4 ++--
+ hw/i2c/Kconfig      | 2 +-
+ hw/usb/Kconfig      | 2 +-
+ 6 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 9a6a80fd0c8..776d38c5afd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4260,6 +4260,8 @@ endif
+diff --git a/hw/Kconfig b/hw/Kconfig
+index c92ca2b13a3..94f963f2944 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -85,7 +85,7 @@ config XILINX_AXI
  
- traceable = []
- emulators = {}
-+target_info_def = files('target-info-def.c')
-+target_info_def_objects = {}
- foreach target : target_dirs
-   config_target = config_target_mak[target]
-   target_name = config_target['TARGET_NAME']
-@@ -4331,7 +4333,7 @@ foreach target : target_dirs
-     endif
-   endif
+ config XLNX_ZYNQMP
+     bool
+-    select REGISTER
++    select HW_REGISTER
+     select CAN_BUS
+     select PTIMER
+     select XLNX_BBRAM
+diff --git a/hw/core/Kconfig b/hw/core/Kconfig
+index d1bdf765ee8..839e249b9d0 100644
+--- a/hw/core/Kconfig
++++ b/hw/core/Kconfig
+@@ -29,7 +29,7 @@ config PLATFORM_BUS
+     bool
+     depends on DEVICE_TREE
  
--  arch_srcs += files('target-info-def.c')
-+  arch_srcs += target_info_def
+-config REGISTER
++config HW_REGISTER
+     bool
  
-   if target_base_arch in target_arch
-     t = target_arch[target_base_arch].apply(config_target, strict: false)
-@@ -4409,6 +4411,8 @@ foreach target : target_dirs
-                  c_args: c_args,
-                  build_by_default: false)
+ config SPLIT_IRQ
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 8fe776d2c86..1c645d7041d 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -21,7 +21,7 @@ system_ss.add(when: 'CONFIG_GUEST_LOADER', if_true: files('guest-loader.c'))
+ system_ss.add(when: 'CONFIG_OR_IRQ', if_true: files('or-irq.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
+ system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
+-system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
++system_ss.add(when: 'CONFIG_HW_REGISTER', if_true: files('register.c'))
+ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+diff --git a/hw/dma/Kconfig b/hw/dma/Kconfig
+index 0a23e7d7b87..8f221b20634 100644
+--- a/hw/dma/Kconfig
++++ b/hw/dma/Kconfig
+@@ -16,7 +16,7 @@ config I8257
  
-+  target_info_def_objects += {target: lib.extract_objects(target_info_def)}
-+
-   if target.endswith('-softmmu')
-     execs = [{
-       'name': 'qemu-system-' + target_name,
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index e47bc7225ab..dc980a35955 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -43,6 +43,10 @@ tests = {
-   'test-qgraph': ['../qtest/libqos/qgraph.c'],
-   'check-qom-interface': [qom],
-   'check-qom-proplist': [qom],
-+  'test-target-info': [qom, declare_dependency(
-+    objects: target_info_def_objects.values(),
-+    compile_args: ['-DTARGET_INFO_DEF_COUNT=@0@'.format(
-+      target_info_def_objects.values().length())])],
-   'test-qemu-opts': [],
-   'test-keyval': [testqapi],
-   'test-logging': [],
-diff --git a/tests/unit/test-target-info.c b/tests/unit/test-target-info.c
-new file mode 100644
-index 00000000000..e6de9b259e8
---- /dev/null
-+++ b/tests/unit/test-target-info.c
-@@ -0,0 +1,38 @@
-+/*
-+ * TargetInfo unit tests
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target-info.h"
-+#include "qemu/target-info-def.h"
-+
-+static int target_info_list_count(void)
-+{
-+    TargetInfoNode *node;
-+    int n = 0;
-+
-+    QLIST_FOREACH(node, target_info_list(), next) {
-+        n++;
-+    }
-+    return n;
-+}
-+
-+static void test_target_info_not_null(void)
-+{
-+    g_assert_nonnull(target_info());
-+}
-+
-+static void test_target_info_list_count(void)
-+{
-+    g_assert_cmpint(target_info_list_count(), ==, TARGET_INFO_DEF_COUNT);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/target-info/not-null", test_target_info_not_null);
-+    g_test_add_func("/target-info/list-count", test_target_info_list_count);
-+    return g_test_run();
-+}
+ config ZYNQ_DEVCFG
+     bool
+-    select REGISTER
++    select HW_REGISTER
+ 
+ config XLNX_ZDMA
+     bool
+@@ -29,7 +29,7 @@ config SIFIVE_PDMA
+ 
+ config XLNX_CSU_DMA
+     bool
+-    select REGISTER
++    select HW_REGISTER
+ 
+ config K230_GSDMA
+     bool
+\ No newline at end of file
+diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
+index 0766130b596..3482f475cf9 100644
+--- a/hw/i2c/Kconfig
++++ b/hw/i2c/Kconfig
+@@ -20,7 +20,7 @@ config ARM_SBCON_I2C
+ 
+ config DESIGNWARE_I2C
+     bool
+-    select REGISTER
++    select HW_REGISTER
+     select I2C
+ 
+ config ACPI_SMBUS
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index e8c00f813a6..43771291a06 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -137,7 +137,7 @@ config IMX_USBPHY
+ config USB_DWC3
+     bool
+     select USB_XHCI_SYSBUS
+-    select REGISTER
++    select HW_REGISTER
+ 
+ config XLNX_USB_SUBSYS
+     bool
 -- 
 2.52.0.windows.1
 
