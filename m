@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB220C98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C84C98302
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MxT-0007sG-MA; Wed, 23 Sep 2026 09:24:25 -0400
+	id 1x9N0s-00066p-Ck; Wed, 23 Sep 2026 09:27:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mst-0000yZ-Pu
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:19:43 -0400
+ id 1x9Mw3-0004VN-M5
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:23:00 -0400
 Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Msr-00074f-8R
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:19:39 -0400
+ id 1x9Mw0-0007mZ-6U
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:55 -0400
 Received: by mail-dy2-x10.google.com with SMTP id
- 5a478bee46e88-328664c1479so586044eec.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:19:26 -0700 (PDT)
+ 5a478bee46e88-328664ef783so545454eec.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:22:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169566; x=1790774366; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169760; x=1790774560; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wwD9DuwZG4f9q5/deLy+Fa9fAvUmV5QMi6qQxOTBcxg=;
- b=JNC0dUK0+rX5/zmFOGxabz/hUcn0C/M+wreq+GZKFOZhMvB2pOs99IpKPLF9a7u1dI
- peLulM9uYxuF5Xb2OVglPTVCfSJ3K9yEe1dIt+2VxhlLkTadespWdRiEhtm/37hQEavX
- vEQrpvEMnBuv3PJXPZw5HOCwx3OQvyumPw6QIzjwuhDB6CeHPuQPxf+9Nc80x0YI+9DR
- ysDj7AowAt+Im2sTxwwyVD+7pt4d/LH4++LEVETnkqIoITKZ/dKqwAgZ7ZtFHPaUJo64
- RSb2g8Qj4/RW8mjzv1VZg0kP+Zi4cFt+F+ZNs700uYc3fnvv7kouo6p6hsjnVBzSH+03
- 8S8g==
+ bh=sbxGSR1jQ3mjsiUMVexNy6mEJBAK/pzPmYIAHajWfls=;
+ b=WOLb50X38OEXFZS0zhxfaTQFCOMgnBi11AucXTQe+a7BcU4HcjzVyC2i/fim/WSnfy
+ Zn5LcnEFh6oZiN5No2REcjYgaJYIGW9qtnl0+6+tJIdfnZod1jk3V0e5ERYEALxyACFG
+ BbLQ7qTSfQFn4U1AqdgKo0g3da19L5Otlw09L5voieD3Dl3ovCTmUAardACNbdciBVx7
+ wZexwBxkuUsie9Cx3pvFcseL5P7+qKsQuY73cF2GtAHluuKa+Femxom6STQs7cABqSmu
+ OkuSHsa3mqmxa1cp8x+QILIwz1mzVncfCVf6GJRDllao/3yHFB0oy1ajwzBAz9un0/Vx
+ nr4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169566; x=1790774366;
+ d=1e100.net; s=20260707; t=1790169760; x=1790774560;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=wwD9DuwZG4f9q5/deLy+Fa9fAvUmV5QMi6qQxOTBcxg=;
- b=2o6huYHkn5I2naHGN75eLk9qM9dcPn64eDw8dLGUoJpPhs7nwfSeyWm6MHnmG0QDjA
- rfNLshtCIC1a2LcrxqEdQ7HVwKhUqbYF6wpdfqPbLoWrlqqzcB4ueZCqlPDkcidYpkWC
- cbzmJ3PlLOBQQcRVa6yeabQ4XuA7wgmSmeDIetlfFHdERyQBj9jIGc+pLyLIv6CY7YLC
- GvlVUpZbAfTtkZ9ELoVFWeDgJ3Wp4GVnSHJlIoT015vsyQPyec/eMbnzJKmR7TGZQxtj
- csg3ml2KB3+N1E1eD6SsxeYhILEvbinvYJ0GYPTHvospduUU0JyayjUCa4OB5IS9jGda
- tOYA==
-X-Gm-Message-State: AFuF++mX4aVhMk7fidT2x4AbeLvOWrCU3or9SBnIweiIzkADuwiEfktE
- QUpTiWb1+chw8NTYd/MKFkpHfcJooWDHH/T4zGdbQBaGHaVYjtZT5RDCt0Jh2Mu99AE=
-X-Gm-Gg: AYBFou0oelyi0EeRWM2RB7XGcBJti1vel5rCMzA+7vnUNRM5130pzx9bTs1Z5JFECTB
- +JIlcfCs17vC/dUgQv36EaVztneShS2Svp3CQGDANh5Q2x5VphM/gHphqCd0Bm1j9GxPgqXRsuN
- ESx9y0rnUmlcUicB1F9PQF0eacx2B0yqJULr0m0y5F3LccmagG2m178CRFwbwT9hCChd/EjKtCK
- kDmDFzpXGBYOgz5LV/EVAUFHl/kdJlEHBbhfQCW6dRmOUt07buuDj01jT0emfR56esTh5+jAmO9
- kqp9FDtvDAyYTANcPKFgtSJZQTaG+9bihB1DYawVRRnIqi4U4DGI9SO21+fZ+VggWd/akhHPvW0
- tJT4U25lPvovPTdtsddxGF25tIBROWyenSphXUKNJq2yN6YCHxcBa413ExYYtsOJpW/1AJqjkqc
- tg0au5MpCoWcm2mHw/n/uvvyK9SWMUy8CySdg1ZfqI7UkZgahZa8j3+k7ze6y3o/1b6MFFnZXfk
- lzU4Fx/KVyGBMHDIIKzeqJGf7yPHcI=
-X-Received: by 2002:a05:693c:638c:10b0:33e:6a54:b3ef with SMTP id
- 5a478bee46e88-33e8c05f69amr2514746eec.18.1790169565697; 
- Wed, 23 Sep 2026 06:19:25 -0700 (PDT)
+ bh=sbxGSR1jQ3mjsiUMVexNy6mEJBAK/pzPmYIAHajWfls=;
+ b=KYRwW7B8OMDpkVOXveIT7fivS+Yh9cpUlVNxqfR4ZSRECfMuDBa0cONMZuCEfwOlIB
+ z3ICh6Fd8RIyeWUzp3SFviTSdLdQ6QjID54UxlLluKVEc530gf3bChQevI8JIgnD5Dzr
+ bC40oNNMHfpqGWXC/Txzfl9CVF3EgmJ+yBBHX7lLAMHo6YZUPdZePPWxIT96lNCelrXK
+ Qgu/oIbGtFcqK+UrCKACPW3M9KvVM46VSJRBd/+FAJukFtruESbbOeA4kV0l6x9kxLRh
+ EKVJbwpuCkfr/cZaAvENmBU3Oi9NMcnBrjP6y6thZob+MzVhDzFJ8+oiOaoSQQWx6d7d
+ ZqGw==
+X-Gm-Message-State: AFuF++lc0w19XYgI8pvnWug91CsHq8ddw3FGHIz/QufR+PdUIXwDWLS9
+ obBGLXi/aPHXi4WQD8gzG1eh1miMcCgYpb/GKxUR8J0Rd0uYNl7ykQm/otdy/POWI48=
+X-Gm-Gg: AYBFou395PJgFzQgjBQDzzW89+IxkS0U2GsXYBgxLTjpJnUEjW5/6KPeG5zP21axRgy
+ MsFGJwfWgW1DkdfbVc3VBSKM7qt0/BPBQd2W0K+w1mbl6mHlcArtPz6KXa6RhSwc+Q8Fq1teXV9
+ fjoUq4BEckkwr22j+W1RhpWEc+PQFKZQKy5cSdI+oUcrPkE8JSnWIDLxZv8CbPZPFEM0jChjQpe
+ fXC+aQMDwD5IuSZZr+EaXYiD9Cgv8Yg7VbefUhkAA2fivheZiLBbYYgqNPSoj7QjVxKxCW0IxhJ
+ DWewLG5CVMN9rDQEApMSHoqj0a575dLChRAWdydcjJozqKdhROeMljSbrwNK11t9Ks9mDZicgls
+ E3hTtNKw8YBCww90c2w/BkJ4T9PQD816I1Y5yn5P2bmeoV/LfDtVSnTR5FZjvU1Olt/en7/+Bqs
+ x4aKo6kHXssBLs34hSyA+g/yC/0hBLxkgeNn19/oOPTWDGGrawxcTq8IrkM9rmlhy0fyHxLObcS
+ K/Mr/zTfWNocQ69PLI54IxGJWoaJoE=
+X-Received: by 2002:a05:7300:fb0a:b0:339:66ff:51b3 with SMTP id
+ 5a478bee46e88-33e8e2b67b8mr2443005eec.37.1790169759593; 
+ Wed, 23 Sep 2026 06:22:39 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.19.17
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.22.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:19:24 -0700 (PDT)
+ Wed, 23 Sep 2026 06:22:38 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,9 +95,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 015/114] qom: pass TargetInfo to is_available
-Date: Wed, 23 Sep 2026 21:14:49 +0800
-Message-ID: <20260923131635.1894-16-luoyonggang@gmail.com>
+Subject: [PATCH v3 035/114] target/riscv: gate CPU types with TargetInfo
+Date: Wed, 23 Sep 2026 21:15:09 +0800
+Message-ID: <20260923131635.1894-36-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
@@ -126,359 +126,371 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change TypeInfo.is_available to TypeIsAvailable taking const
-TargetInfo *. Store the callback on TypeImpl and add
-object_class_get_is_available. ARM and RISC-V machines use
-target_is_aarch64(), target_is_riscv32(), and target_is_riscv64().
-object.h includes target-info.h.
+- Gate CPU types with TypeInfo.is_available instead of
+  TARGET_RISCV32/64: DEFINE_RISCV_CPU_AVAIL, DEFINE_RISCV64_CPU,
+  and DEFINE_RISCV_CPU_32_64SYS.
+- Add RISCVCPUDef.target_init. max and bare keep RV64/SV57 in
+  the TypeInfo; on riscv32 the callbacks set RV32/SV32 after
+  merge. Do not inherit the parent pointer.
+- Validate RV64/128 misa_mxl_max only when not target_riscv32().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/arm/aspeed_ast27x0-fc.c  |  2 +-
- hw/arm/aspeed_ast27x0_evb.c |  4 ++--
- hw/arm/raspi.c              |  4 ++--
- hw/arm/raspi4b.c            |  2 +-
- hw/riscv/boston-aia.c       |  4 ++--
- hw/riscv/k230.c             |  4 ++--
- hw/riscv/microchip_pfsoc.c  |  4 ++--
- hw/riscv/opentitan.c        |  4 ++--
- hw/riscv/shakti_c.c         |  4 ++--
- hw/riscv/tt_atlantis.c      |  4 ++--
- hw/riscv/xiangshan_kmh.c    |  4 ++--
- include/qom/object.h        | 27 ++++++++++++++++++++++++---
- qom/object.c                | 11 ++++++++++-
- 13 files changed, 54 insertions(+), 24 deletions(-)
+ target/riscv/cpu.c | 128 ++++++++++++++++++++++++++++++---------------
+ target/riscv/cpu.h |   7 +++
+ 2 files changed, 93 insertions(+), 42 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 73362b60d2a..8a7c6a116ac 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -234,7 +234,7 @@ static const TypeInfo ast2700fc_types[] = {
-         .parent         = TYPE_MACHINE,
-         .class_init     = ast2700fc_class_init,
-         .instance_size  = sizeof(Ast2700FCState),
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     },
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index c6f17390755..4343f431d62 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1586,18 +1586,37 @@ static const MISAExtInfo misa_ext_info_arr[] = {
+     MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)")
  };
  
-diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
-index 460c9ff0d2e..02a8cff1d9d 100644
---- a/hw/arm/aspeed_ast27x0_evb.c
-+++ b/hw/arm/aspeed_ast27x0_evb.c
-@@ -75,13 +75,13 @@ static const TypeInfo aspeed_ast27x0_evb_types[] = {
-         .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2700a1_evb_class_init,
--        .is_available  = target_aarch64,
-+        .is_available  = target_is_aarch64,
-     },
-     {
-         .name          = MACHINE_TYPE_NAME("ast2700a2-evb"),
-         .parent        = TYPE_ASPEED_MACHINE,
-         .class_init    = aspeed_machine_ast2700a2_evb_class_init,
--        .is_available  = target_aarch64,
-+        .is_available  = target_is_aarch64,
-     }
- };
- 
-diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
-index fadbacb2534..22b06c6ca22 100644
---- a/hw/arm/raspi.c
-+++ b/hw/arm/raspi.c
-@@ -403,12 +403,12 @@ static const TypeInfo raspi_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("raspi3ap"),
-         .parent         = TYPE_RASPI_MACHINE,
-         .class_init     = raspi3ap_machine_class_init,
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     }, {
-         .name           = MACHINE_TYPE_NAME("raspi3b"),
-         .parent         = TYPE_RASPI_MACHINE,
-         .class_init     = raspi3b_machine_class_init,
--        .is_available   = target_aarch64,
-+        .is_available   = target_is_aarch64,
-     }, {
-         .name           = TYPE_RASPI_MACHINE,
-         .parent         = TYPE_RASPI_BASE_MACHINE,
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 566d64572db..a1dc477f25e 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -121,7 +121,7 @@ static const TypeInfo raspi4b_machine_type = {
-     .parent         = TYPE_RASPI_BASE_MACHINE,
-     .instance_size  = sizeof(Raspi4bMachineState),
-     .class_init     = raspi4b_machine_class_init,
--    .is_available   = target_aarch64,
-+    .is_available   = target_is_aarch64,
- };
- 
- static void raspi4b_machine_register_type(void)
-diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
-index ba16b7dbc69..2618b424efe 100644
---- a/hw/riscv/boston-aia.c
-+++ b/hw/riscv/boston-aia.c
-@@ -468,14 +468,14 @@ static const TypeInfo boston_types[] = {
-         .name          = TYPE_MIPS_BOSTON_AIA,
-         .parent        = TYPE_SYS_BUS_DEVICE,
-         .instance_size = sizeof(BostonState),
--        .is_available  = target_riscv64,
-+        .is_available  = target_is_riscv64,
-     },
-     {
-         .name          = MACHINE_TYPE_NAME("boston-aia"),
-         .parent        = TYPE_MACHINE,
-         .class_init    = boston_mach_class_init,
-         .instance_size = sizeof(MachineState),
--        .is_available  = target_riscv64,
-+        .is_available  = target_is_riscv64,
-     },
- };
- 
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 43b6ae6d2f2..79715265da6 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -421,7 +421,7 @@ static const TypeInfo k230_soc_type_info = {
-     .instance_size = sizeof(K230SoCState),
-     .instance_init = k230_soc_init,
-     .class_init = k230_soc_class_init,
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void k230_soc_register_types(void)
-@@ -560,7 +560,7 @@ static const TypeInfo k230_machine_typeinfo = {
-     .class_init = k230_machine_class_init,
-     .instance_init = k230_machine_instance_init,
-     .instance_size = sizeof(K230MachineState),
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void k230_machine_init_register_types(void)
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index b2991e5a710..cc4b6bc3529 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -505,7 +505,7 @@ static const TypeInfo microchip_pfsoc_soc_type_info = {
-     .instance_size = sizeof(MicrochipPFSoCState),
-     .instance_init = microchip_pfsoc_soc_instance_init,
-     .class_init = microchip_pfsoc_soc_class_init,
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void microchip_pfsoc_soc_register_types(void)
-@@ -759,7 +759,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
-     .class_init = microchip_icicle_kit_machine_class_init,
-     .instance_init = microchip_icicle_kit_machine_instance_init,
-     .instance_size = sizeof(MicrochipIcicleKitState),
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void microchip_icicle_kit_machine_init_register_types(void)
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index c3a563db926..9e3db34eed9 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -333,13 +333,13 @@ static const TypeInfo open_titan_types[] = {
-         .instance_size  = sizeof(LowRISCIbexSoCState),
-         .instance_init  = lowrisc_ibex_soc_init,
-         .class_init     = lowrisc_ibex_soc_class_init,
--        .is_available   = target_riscv32,
-+        .is_available   = target_is_riscv32,
-     }, {
-         .name           = TYPE_OPENTITAN_MACHINE,
-         .parent         = TYPE_MACHINE,
-         .instance_size  = sizeof(OpenTitanState),
-         .class_init     = opentitan_machine_class_init,
--        .is_available   = target_riscv32,
-+        .is_available   = target_is_riscv32,
-     }
- };
- 
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 76cfe30918a..0f96258b764 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -98,7 +98,7 @@ static const TypeInfo shakti_c_machine_type_info = {
-     .class_init = shakti_c_machine_class_init,
-     .instance_init = shakti_c_machine_instance_init,
-     .instance_size = sizeof(ShaktiCMachineState),
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void shakti_c_machine_type_info_register(void)
-@@ -188,7 +188,7 @@ static const TypeInfo shakti_c_type_info = {
-     .class_init = shakti_c_soc_class_init,
-     .instance_init = shakti_c_soc_instance_init,
-     .instance_size = sizeof(ShaktiCSoCState),
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void shakti_c_type_info_register(void)
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index f54eb942f37..086e95bd2d1 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -695,13 +695,13 @@ static const TypeInfo tt_atlantis_types[] = {
-         .instance_size = sizeof(TTAtlantisSoCState),
-         .instance_init = tt_atlantis_soc_init,
-         .class_init = tt_atlantis_soc_class_init,
--        .is_available = target_riscv64,
-+        .is_available = target_is_riscv64,
-     }, {
-         .name       = MACHINE_TYPE_NAME("tt-atlantis"),
-         .parent     = TYPE_MACHINE,
-         .class_init = tt_atlantis_machine_class_init,
-         .instance_size = sizeof(TTAtlantisState),
--        .is_available = target_riscv64,
-+        .is_available = target_is_riscv64,
-     },
- };
- 
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index f2383c53993..6bc669421fe 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -158,7 +158,7 @@ static const TypeInfo xiangshan_kmh_soc_info = {
-     .instance_size = sizeof(XiangshanKmhSoCState),
-     .instance_init = xiangshan_kmh_soc_instance_init,
-     .class_init = xiangshan_kmh_soc_class_init,
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void xiangshan_kmh_soc_register_types(void)
-@@ -222,7 +222,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
-     .parent = TYPE_MACHINE,
-     .instance_size = sizeof(XiangshanKmhState),
-     .class_init = xiangshan_kmh_machine_class_init,
--    .is_available = target_riscv64,
-+    .is_available = target_is_riscv64,
- };
- 
- static void xiangshan_kmh_machine_register_types(void)
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 4c0645817a5..f2dc22f0eb0 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -16,6 +16,7 @@
- 
- #include "qapi/qapi-builtin-types.h"
- #include "qemu/module.h"
-+#include "qemu/target-info.h"
- 
- struct TypeImpl;
- typedef struct TypeImpl *Type;
-@@ -117,6 +118,15 @@ typedef void (ObjectUnparent)(Object *obj);
-  */
- typedef void (ObjectFree)(void *obj);
- 
-+/**
-+ * typedef TypeIsAvailable:
-+ * @ti: TargetInfo to test.
-+ *
-+ * Returns whether a type is available for @ti. Typical implementations
-+ * are target_is_*().
-+ */
-+typedef bool (TypeIsAvailable)(const TargetInfo *ti);
-+
- #define OBJECT_CLASS_CAST_CACHE 4
- 
- /**
-@@ -473,8 +483,10 @@ struct Object
-  * @class_data: Data to pass to the @class_init,
-  *   @class_base_init. This can be useful when building dynamic
-  *   classes.
-- * @is_available: callback invoked at registration time, to dynamically check if
-- *   this type should be available or not.
-+ * @is_available: Optional callback. Unset inherits the parent type's
-+ *   callback in the MODULE_INIT_QOM after pass (parents are not all
-+ *   registered at type_register time). After inherit the callback is
-+ *   never NULL. Callers may also invoke it with a chosen TargetInfo.
-  * @interfaces: The list of interfaces associated with this type.  This
-  *   should point to a static array that's terminated with a zero filled
-  *   element.
-@@ -498,7 +510,7 @@ struct TypeInfo
-     void (*class_base_init)(ObjectClass *klass, const void *data);
-     const void *class_data;
- 
--    bool (*is_available)(void);
-+    TypeIsAvailable *is_available;
-     const InterfaceInfo *interfaces;
- };
- 
-@@ -1087,6 +1099,15 @@ bool object_class_is_abstract(ObjectClass *klass);
-  */
- bool object_class_is_secure(ObjectClass *klass);
- 
-+/**
-+ * object_class_get_is_available:
-+ * @klass: The class to obtain TypeInfo.is_available for.
-+ *
-+ * Returns: The availability callback (own or inherited from a parent).
-+ * Never %NULL after MODULE_INIT_QOM inherit.
-+ */
-+TypeIsAvailable *object_class_get_is_available(ObjectClass *klass);
-+
- /**
-  * object_class_by_name:
-  * @typename: The QOM typename to obtain the class for.
-diff --git a/qom/object.c b/qom/object.c
-index 96498f3d001..a3e75927e82 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -15,6 +15,7 @@
- #include "qom/compat-properties.h"
- #include "qom/object.h"
- #include "qom/object_interfaces.h"
-+#include "qemu/target-info-qapi.h"
- #include "qemu/cutils.h"
- #include "qemu/memalign.h"
- #include "qapi/visitor.h"
-@@ -71,6 +72,8 @@ struct TypeImpl
-     bool abstract;
-     bool secure;
- 
-+    TypeIsAvailable *is_available;
-+
-     const char *parent;
-     TypeImpl *parent_type;
- 
-@@ -126,6 +129,7 @@ static TypeImpl *type_new(const TypeInfo *info)
- 
-     ti->abstract = info->abstract;
-     ti->secure = info->secure;
-+    ti->is_available = info->is_available;
- 
-     for (i = 0; info->interfaces && info->interfaces[i].type; i++) {
-         ti->interfaces[i].typename = g_strdup(info->interfaces[i].type);
-@@ -167,7 +171,7 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
-         abort();
-     }
- 
--    if (info->is_available && !info->is_available()) {
-+    if (info->is_available && !info->is_available(target_info())) {
-         return NULL;
-     }
- 
-@@ -1153,6 +1157,11 @@ bool object_class_is_secure(ObjectClass *klass)
-     return klass->type->secure;
- }
- 
-+TypeIsAvailable *object_class_get_is_available(ObjectClass *klass)
++static void riscv_max_target_init(RISCVCPUClass *mcc)
 +{
-+    return klass->type->is_available;
++    if (!target_riscv32()) {
++        return;
++    }
++    mcc->def->misa_mxl_max = MXL_RV32;
++    mcc->def->cfg.max_satp_mode = VM_1_10_SV32;
 +}
 +
- const char *object_class_get_name(ObjectClass *klass)
++static void riscv_bare_target_init(RISCVCPUClass *mcc)
++{
++    if (!target_riscv32()) {
++        return;
++    }
++    /* BARE has no misa_mxl_max, so the class_base_init satp clamp skips it. */
++    mcc->def->cfg.max_satp_mode = VM_1_10_SV32;
++}
++
+ static void riscv_cpu_validate_misa_mxl(RISCVCPUClass *mcc)
  {
-     return klass->type->name;
+     CPUClass *cc = CPU_CLASS(mcc);
+ 
+     /* Validate that MISA_MXL is set properly. */
+     switch (mcc->def->misa_mxl_max) {
+-#ifdef TARGET_RISCV64
+     case MXL_RV64:
+     case MXL_RV128:
++        if (target_riscv32()) {
++            g_assert_not_reached();
++        }
+         cc->gdb_core_xml_file = "riscv-64bit-cpu.xml";
+         break;
+-#endif
+     case MXL_RV32:
+         cc->gdb_core_xml_file = "riscv-32bit-cpu.xml";
+         break;
+@@ -3092,6 +3111,8 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+ 
+     if (pcc->def) {
+         mcc->def = g_memdup2(pcc->def, sizeof(*pcc->def));
++        /* TypeInfo supplies target_init; do not inherit the parent pointer. */
++        mcc->def->target_init = NULL;
+     } else {
+         mcc->def = g_new0(RISCVCPUDef, 1);
+     }
+@@ -3152,6 +3173,9 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+             mcc->def->custom_csrs = def->custom_csrs;
+         }
+ #endif
++        if (def->target_init) {
++            def->target_init(mcc);
++        }
+     }
+ 
+     if (!object_class_is_abstract(c)) {
+@@ -3262,6 +3286,7 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
+         .name = (type_name),                                \
+         .parent = (parent_type_name),                       \
+         .abstract = true,                                   \
++        .is_available = target_is_base_riscv,               \
+         .class_data = &(const RISCVCPUDef) {                \
+              .priv_spec = RISCV_PROFILE_ATTR_UNUSED,        \
+              .vext_spec = RISCV_PROFILE_ATTR_UNUSED,        \
+@@ -3270,10 +3295,11 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
+         },                                                  \
+     }
+ 
+-#define DEFINE_RISCV_CPU(type_name, parent_type_name, ...)  \
++#define DEFINE_RISCV_CPU_AVAIL(type_name, parent_type_name, avail, ...) \
+     {                                                       \
+         .name = (type_name),                                \
+         .parent = (parent_type_name),                       \
++        .is_available = (avail),                            \
+         .class_data = &(const RISCVCPUDef) {                \
+              .priv_spec = RISCV_PROFILE_ATTR_UNUSED,        \
+              .vext_spec = RISCV_PROFILE_ATTR_UNUSED,        \
+@@ -3282,8 +3308,37 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
+         },                                                  \
+     }
+ 
++#define DEFINE_RISCV_CPU(type_name, parent_type_name, ...)  \
++    DEFINE_RISCV_CPU_AVAIL(type_name, parent_type_name,     \
++                           target_is_base_riscv, __VA_ARGS__)
++
++#define DEFINE_RISCV64_CPU(type_name, parent_type_name, ...) \
++    DEFINE_RISCV_CPU_AVAIL(type_name, parent_type_name,     \
++                           target_is_riscv64, __VA_ARGS__)
++
++/*
++ * Original:
++ *   #if defined(TARGET_RISCV32) || \
++ *       (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
++ *
++ * RV32 models on every riscv32 binary, and on system riscv64
++ * (-cpu rv32 / e31 / ibex). Not linux-user riscv64.
++ */
++static bool riscv32_64sys_available(const TargetInfo *ti)
++{
++#ifdef CONFIG_USER_ONLY
++    return target_is_riscv32(ti);
++#else
++    return target_is_base_riscv(ti);
++#endif
++}
++
++#define DEFINE_RISCV_CPU_32_64SYS(type_name, parent_type_name, ...) \
++    DEFINE_RISCV_CPU_AVAIL(type_name, parent_type_name,     \
++                           riscv32_64sys_available, __VA_ARGS__)
++
+ #define DEFINE_PROFILE_CPU(type_name, parent_type_name, profile_)    \
+-    DEFINE_RISCV_CPU(type_name, parent_type_name,             \
++    DEFINE_RISCV64_CPU(type_name, parent_type_name,             \
+         .profile = &(profile_))
+ 
+ static void riscv_cpu_instance_finalize(Object *obj)
+@@ -3311,6 +3366,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .class_size = sizeof(RISCVCPUClass),
+         .class_init = riscv_cpu_common_class_init,
+         .class_base_init = riscv_cpu_class_base_init,
++        .is_available = target_is_base_riscv,
+     },
+ 
+     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU,
+@@ -3339,21 +3395,14 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+          * only MBARE will be available if the user doesn't enable
+          * a mode manually (see riscv_cpu_satp_mode_finalize()).
+          */
+-#ifdef TARGET_RISCV32
+-        .cfg.max_satp_mode = VM_1_10_SV32,
+-#else
+         .cfg.max_satp_mode = VM_1_10_SV57,
+-#endif
++        .target_init = riscv_bare_target_init,
+     ),
+ 
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
+-#if defined(TARGET_RISCV32)
+-        .misa_mxl_max = MXL_RV32,
+-        .cfg.max_satp_mode = VM_1_10_SV32,
+-#elif defined(TARGET_RISCV64)
+         .misa_mxl_max = MXL_RV64,
+         .cfg.max_satp_mode = VM_1_10_SV57,
+-#endif
++        .target_init = riscv_max_target_init,
+     ),
+ 
+     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E, TYPE_RISCV_VENDOR_CPU,
+@@ -3378,9 +3427,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.pmp_regions = 8
+     ),
+ 
+-#if defined(TARGET_RISCV32) || \
+-    (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_BASE32, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV32,
+         .misa_mxl_max = MXL_RV32,
+ 
+@@ -3406,7 +3453,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_svvptc = true,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_IBEX, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_IBEX, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV32,
+         .misa_ext = RVI | RVM | RVC | RVU,
+         .priv_spec = PRIV_VERSION_1_12_0,
+@@ -3423,37 +3470,35 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_xlrbr = true
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+         .misa_mxl_max = MXL_RV32
+     ),
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E34, TYPE_RISCV_CPU_SIFIVE_E,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_SIFIVE_E34, TYPE_RISCV_CPU_SIFIVE_E,
+         .misa_mxl_max = MXL_RV32,
+         .misa_ext = RVF,  /* IMAFCU */
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U34, TYPE_RISCV_CPU_SIFIVE_U,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_SIFIVE_U34, TYPE_RISCV_CPU_SIFIVE_U,
+         .misa_mxl_max = MXL_RV32,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV32I, TYPE_RISCV_BARE_CPU,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_RV32I, TYPE_RISCV_BARE_CPU,
+         .misa_mxl_max = MXL_RV32,
+         .misa_ext = RVI
+     ),
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV32E, TYPE_RISCV_BARE_CPU,
++    DEFINE_RISCV_CPU_32_64SYS(TYPE_RISCV_CPU_RV32E, TYPE_RISCV_BARE_CPU,
+         .misa_mxl_max = MXL_RV32,
+         .misa_ext = RVE
+     ),
+-#endif
+ 
+-#if (defined(TARGET_RISCV64) && !defined(CONFIG_USER_ONLY))
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX32, TYPE_RISCV_DYNAMIC_CPU,
++#ifndef CONFIG_USER_ONLY
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_MAX32, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV32,
+         .misa_mxl_max = MXL_RV32,
+     ),
+ #endif
+ 
+-#if defined(TARGET_RISCV64)
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE64, TYPE_RISCV_DYNAMIC_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_BASE64, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV57,
+         .misa_mxl_max = MXL_RV64,
+ 
+@@ -3479,19 +3524,19 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_svvptc = true,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
+         .misa_mxl_max = MXL_RV64
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U54, TYPE_RISCV_CPU_SIFIVE_U,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_SIFIVE_U54, TYPE_RISCV_CPU_SIFIVE_U,
+         .misa_mxl_max = MXL_RV64,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SHAKTI_C, TYPE_RISCV_CPU_SIFIVE_U,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_SHAKTI_C, TYPE_RISCV_CPU_SIFIVE_U,
+         .misa_mxl_max = MXL_RV64,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVG | RVC | RVS | RVU,
+         .priv_spec = PRIV_VERSION_1_11_0,
+@@ -3519,7 +3564,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ #endif
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
+         .priv_spec = PRIV_VERSION_1_12_0,
+@@ -3566,12 +3611,12 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ #endif
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C908,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C908,
+         .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RVV,
+         .vext_spec = VEXT_VERSION_1_00_0,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVG | RVC | RVS | RVU | RVH | RVV,
+         .priv_spec = PRIV_VERSION_1_13_0,
+@@ -3635,7 +3680,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV57,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_VEYRON_V1, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_VEYRON_V1, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVG | RVC | RVS | RVU | RVH,
+         .priv_spec = PRIV_VERSION_1_12_0,
+@@ -3671,7 +3716,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV48,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVG | RVC | RVB | RVS | RVU,
+         .priv_spec = PRIV_VERSION_1_12_0,
+@@ -3694,7 +3739,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV39,
+     ),
+ 
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_XIANGSHAN_KMH, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_XIANGSHAN_KMH, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVG | RVC | RVB | RVS | RVU | RVH | RVV,
+         .priv_spec = PRIV_VERSION_1_13_0,
+@@ -3754,7 +3799,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     ),
+ 
+     /* https://mips.com/products/hardware/p8700/ */
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MIPS_P8700, TYPE_RISCV_VENDOR_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_MIPS_P8700, TYPE_RISCV_VENDOR_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
+         .priv_spec = PRIV_VERSION_1_12_0,
+@@ -3777,16 +3822,16 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     ),
+ 
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV57,
+         .misa_mxl_max = MXL_RV128,
+     ),
+ #endif /* CONFIG_TCG */
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV64I, TYPE_RISCV_BARE_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_RV64I, TYPE_RISCV_BARE_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVI
+     ),
+-    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RV64E, TYPE_RISCV_BARE_CPU,
++    DEFINE_RISCV64_CPU(TYPE_RISCV_CPU_RV64E, TYPE_RISCV_BARE_CPU,
+         .misa_mxl_max = MXL_RV64,
+         .misa_ext = RVE
+     ),
+@@ -3795,7 +3840,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  TYPE_RISCV_CPU_RV64I,  RVA22S64),
+     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23U64,  TYPE_RISCV_CPU_RV64I,  RVA23U64),
+     DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA23S64,  TYPE_RISCV_CPU_RV64I,  RVA23S64),
+-#endif /* TARGET_RISCV64 */
+ };
+ 
+ DEFINE_TYPES(riscv_cpu_type_infos)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 034d7e96c49..265c6322067 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -597,6 +597,13 @@ typedef struct RISCVCPUDef {
+ #endif
+     /* This is just a setter for env->num_triggers.  */
+     uint32_t num_triggers;
++
++    /*
++     * Optional per-CPU callback run from riscv_cpu_class_base_init
++     * after the static def is merged. Use it to adjust fields that
++     * depend on the build target (e.g. clamp misa_mxl_max for RV32).
++     */
++    void (*target_init)(struct RISCVCPUClass *mcc);
+ } RISCVCPUDef;
+ 
+ /**
 -- 
 2.52.0.windows.1
 
