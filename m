@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0580FC98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 22:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAAFBC98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 22:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9V7F-0007R4-J2; Wed, 23 Sep 2026 18:07:01 -0400
+	id 1x9V7G-0007Ro-O1; Wed, 23 Sep 2026 18:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9V7E-0007Ql-As
+ id 1x9V7E-0007Qm-CS
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 18:07:00 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9V7C-0005n4-Re
+ id 1x9V7C-0005n2-SF
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 18:07:00 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-39dbdfaef3cso821112a91.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 15:06:58 -0700 (PDT)
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccd5cf02so829073a91.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 15:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1790201217; x=1790806017; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=efWz7OdQaqAQdK5HW4y/FLS8uU0/npBVJT/aN6EFP1U=;
- b=u/kXTPd9wprhSWsacJeianNaa8RE+fYkIJIHnN9NwANOYPrVZjUpINwPbmUYMNq8KT
- Ydjz91LrFsgMy9GuGwIno+HrGpNfBBvM2OkqcFsi9skM1AUz7fsOQPIE+DTSp1yqHsZe
- F5enpZMIE2RnkQxKSkAo4OpEUMw9FI7k1XcL5BvQVvtcUzAsgUCm+hhXAb3UxifHXbxm
- 3jG2qmPb+5v8WjLkCWrzh6Ogr9SB4E0z6n0l3k8yzFMFFZlSemvZ7xGs6afALSmih1Nr
- QQcHw7U4jiQYR/XrJyQ+ln6SYmGaSuObhEywLHlj5NxDb4u5sCZgP7gAkWbmgwLzPSCq
- hFHg==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QkBAKee2nD0WSOYQ5toltyB4oGViiXvUZONSqN9WusM=;
+ b=IZ8O7SZRYXbzKjWhUe3abnnW9f+Lxe4eHKTuKrkAsQ0Vvc5I6p+oLbWDnGzMDqY0la
+ 5Zaacmeo3DuTT3tliGUzxarUWm3DNjo6LyJ1eCDyXsjc/Mf/o7Brrhh7Tp94JRcGguQr
+ uApQabHTlfWCJsLBjm2zOuf3GwUcOh/eQTlc6mJmuoKp1j+7uAL1jg5YtvwgONzA9irx
+ hA7PcLECnweRFkb6EDF5ErA4cUHWTEJzzv0uyqdHgaUBmv1t5XrxrtaD2aSDfjrDWRQA
+ n8YxoqLOzvCHEdGQdG2JBUMSWRpp7XggWMSVAmMrk5IBjtMUp8G0te8FK6WsbT9pU0yz
+ XDmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1790201217; x=1790806017;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=efWz7OdQaqAQdK5HW4y/FLS8uU0/npBVJT/aN6EFP1U=;
- b=mHe5UXy2BQ5kO5vwbicXC6JyvtN3/cCrHXz7ZH+jf4HR5DvlSeyrcSqw0WfFwbY/PW
- YP8bAVKltWSE0KURC/qyEC6NBSqJINxackorQvT85onzwk9vvltqc3j/G8YO6VulVOy1
- I2gqwjHqp3QWLmNFyWuOHLeI42mVgHVL+FWrEPhdkC96Y6PpbXdABOEUR4vNl/oZnF2G
- rSbkdz2sKiG/rY1pguIv5oTCyQqyOPzdVdXSfekcbGa+tHYKWgnITmfMYuDGtA3JRI8T
- j0P8VJYF0ytyq6Vox+Dy3Aeyn3OBcHbfFlQEfFDiEuhj4h+ZtZeLbB39jLH3g5dRCBfC
- iAqA==
-X-Gm-Message-State: AFuF++lmpMw3O6FX64KPLHfvQCvBHvgAn/qzQLqha+FUqpy8XpUAO6/o
- KNc6Els8cRyw/9TDS9eCq9zFSXifajJSyD7gVdNQ2mqS8cB+beQkYIM5N1IPizLWWckQZjRBhXo
- 8YrtQ
-X-Gm-Gg: AYBFou0oMo+cIe4srj7ACXr8PVrrYsEQXTCfWP0VLwAobFx3y06ScuuoNRYkAX1pen4
- 11vSNxJWd70TuWYBzBbuKOafX9u/Sn68JZXE7pqarUK0f6EH9DQhT7XPBUCbIk5oS7XnjdSvNAg
- d0hek+7Gz/sh+tcqvMKq7Rx88LY/7/ikjV3A4y3tOaQ1VfVkqkBLrzGNs6AwfzHoiNxRQs48dz9
- C8PuH1ARC149OwdYF3z/9TTdTl2uIzoASmJjS1fKGRoFOozMVXsOsrR7tUFDjefbamcuVK04irh
- 34JacGxBVtnl7WvPSVTg8/8lKAXfkcKOJstK9zbJt2519wy+Pj/qmUxEQd5c4SParEt3E+pyFRV
- KzjwlSU76FrJTz350zijDaosGS7dpgEo9ohs9qoiujhcfeMbiEUPOLLguELbgHla5cMFjnsucet
- mluK+ZQ8rYbYJJAved2VCPLQuv0MTcY3EArzOglkwEkj14CD1A3chjmx4AX7IpZnrmAn+zHf8p1
- piAxFGnYEKCBc3LFOvyDSPhCbdYkQLYgE8JwZPr
-X-Received: by 2002:a17:90b:52d0:b0:3a0:903b:f254 with SMTP id
- 98e67ed59e1d1-3a0985e68a2mr385262a91.15.1790201217324; 
- Wed, 23 Sep 2026 15:06:57 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QkBAKee2nD0WSOYQ5toltyB4oGViiXvUZONSqN9WusM=;
+ b=ahcf0TNX1v1/V/GVWoO8zDwnhzKw0JagVoBAuqiQBLyNigMAzLtQ3/Nnl+W+br+sxl
+ HwVm2yoqd3LDc4WU18s9rrmooR+g5VVhKRqVKq5+8nLbOGlUALoirP6Ocx53wx1HWAQb
+ 4FYzv7gIatkv+r+Hcl4CQeCAjbjn0GdTba7h8mtl7mdoKr1CEDx9a1WW4E4PS40S2rMG
+ 5dm2RU1Zy05nlmo1Fs9bafh7PTW/qUo3+m++En8WuupV8xk3WK6IvwVWLcCcyOqWhREH
+ uV6ioxhGYRkUVZKiIp0NCI+gHj7jLji3eC47aAz4CDLFXSiJIFWMPujdsRjZsIIPCwQP
+ jx2g==
+X-Gm-Message-State: AFuF++knw0SK+8YlfN5CgrkTxiFdInwodTyDBmWWThg/ZeqaSj0VqutF
+ Lytcv21FW49V4NbZLqvIYAyPqRg6lfrvlarwicPkKzYel5x/o49eM/Z+0vo/f0N7ufRP9Xp6v0u
+ fmSjq
+X-Gm-Gg: AYBFou0919u/EovApROMCH9lcFGNScAyidbmtm1H02uWvWLI+S4hVWUvqSNTZnn1jOS
+ VXwi5e7gjY3ZH7Z9DB8B7LB/fRniv8BR+OO4egL/6Pcvrs0JA9yvSoJaCkxVqHT1pyqfd/eMfnZ
+ +3Pm5E+TyVSKPDCCZeosYsBlpLhzxp2x70CX3SR/408zbU7MKovPBFI6mNZ/PEvKYcQZs8cyvzA
+ IxlkPcfFi2yS/KEJ3aBOs/fOoWgNEAl6BRUViC8Ru+ilQxsGDqLtbJo8xk7NElJU42FexAtRAcI
+ ZXafhTvW9dsDd9PaPDCPBJ8wGSUJe3lWg4DpXgX6e7k27C/h2PRGquSmSFAQb50dZoX0Fv/r7Cx
+ 2cuwrfZZzc5W3IgRLEnAS3Fjxryqb9FanyNDaqMCdD0TWecccQi1sVWh165+FuatY4TLne9omOc
+ zQrCP66+8IYS+OnfVbGFVUZvGZqKChjq8K8XbAKOufLwowES/dlM04QUI9zg5JaUXa+823sJKP9
+ 3nA0iLnCXzNHDzNRMg+BUOSefsjPA==
+X-Received: by 2002:a17:90b:5404:b0:3a0:8050:2ec9 with SMTP id
+ 98e67ed59e1d1-3a09875d75emr336964a91.16.1790201216496; 
+ Wed, 23 Sep 2026 15:06:56 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0976ca5f9sm998322a91.14.2026.09.23.15.06.56
+ 98e67ed59e1d1-3a0976ca5f9sm998322a91.14.2026.09.23.15.06.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 15:06:56 -0700 (PDT)
+ Wed, 23 Sep 2026 15:06:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mpatocka@redhat.com,
-	qemu-stable@nongnu.org
-Subject: [PATCH v4 1/3] accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
-Date: Wed, 23 Sep 2026 15:06:52 -0700
-Message-ID: <20260923220654.127167-2-richard.henderson@linaro.org>
+Cc: mpatocka@redhat.com
+Subject: [PATCH v4 0/3] linux-user/sh4: fix race in atomic variables
+Date: Wed, 23 Sep 2026 15:06:51 -0700
+Message-ID: <20260923220654.127167-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260923220654.127167-1-richard.henderson@linaro.org>
-References: <20260923220654.127167-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,29 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not go through the effort of grabbing the exclusive lock
-only to check for interrupts and exit without making progress.
+Fix the race detailed in patch 2 in a more generic fashion.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- accel/tcg/cpu-exec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Squash the silly loop that was part of the problem by suppressing
+interrupts within cpu_exec_step_atomic.
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 5226cfb7650..f4428e9f7b7 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -566,7 +566,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
-         /* Execute in a serial context. */
-         s.cflags &= ~CF_PARALLEL;
-         /* After 1 insn, return and release the exclusive lock. */
--        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | 1;
-+        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
-+
-         /*
-          * No need to check_for_breakpoints here.
-          * We only arrive in cpu_exec_step_atomic after beginning execution
+
+r~
+
+
+Richard Henderson (3):
+  accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
+  target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE with CF_STEP_ATOMIC
+  target/sh4: Drop use_exit_tb
+
+ include/exec/translation-block.h |  1 +
+ target/sh4/cpu.h                 |  6 ++--
+ accel/tcg/cpu-exec.c             |  4 ++-
+ target/sh4/translate.c           | 48 +++++++++++++++-----------------
+ 4 files changed, 28 insertions(+), 31 deletions(-)
+
 -- 
 2.53.0
 
