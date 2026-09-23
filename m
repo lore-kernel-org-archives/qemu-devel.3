@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0947EC9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 23:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93323C98311
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 23:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9W1h-0000J4-3G; Wed, 23 Sep 2026 19:05:21 -0400
+	id 1x9W1c-0000HL-GL; Wed, 23 Sep 2026 19:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x9W1c-0000Ht-SW; Wed, 23 Sep 2026 19:05:16 -0400
+ id 1x9W1a-0000FG-9U; Wed, 23 Sep 2026 19:05:14 -0400
 Received: from mx2.catap.net ([2a01:4f9:3b:5410::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1x9W1b-0002Uj-4r; Wed, 23 Sep 2026 19:05:16 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=ks7wy88
- 9ZzVOpVTZoF2kRIDukXOej0Qa5GFZ0aR+X6X+5X7kaRedU8dgpuxBqQ3pF82ClTBMeQxMZ
- k88tDpv0mtKZ6WxJwPNRxS3weiFhW/11TBPcR+G5oD7PL92MVOAWb+/vC4HHH8LuFy61O2
- xZqktT9ltsmKQkNo9fvDMl92APzKLmzBMjhvUow/9NERE82nDNugXq0JkRdc7uChfRz8qx
- svvLZTnkrjaEHBUEM8qpZRL2+MxnqX/Kh6M9AggPvHuYVw37yubXABCAL4XKpo6a70638j
- hXbhx/ICeBzVwyH3pF0YNWb05tbr18LO6up9oSMcP/9xtiysvtQoi8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=j
- mhdMfhDq60vgJ+jMlgvi0rNRY/D0fggYG4fvks+BTc=;
+ id 1x9W1X-0002Uj-6c; Wed, 23 Sep 2026 19:05:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=WjW/ToS
+ /XSOJkO/LdpmjueEfc7A0P9Klen3W18ZFFRVfN7leJ6LSiEgA2FzlROBoDjaQ7LKXN+OPz
+ NXTFHWly97K0gRw2xaS9VNSG+0UxRhN6yddes6IwGKGCt9vTR6YoxDuC/z0EXDS5UXeh1r
+ shuN1+1CesINjUI/f1ZGYPb7RTAf1ejZX/PSa6s7iIIGBwSKTHRiVs02EkXoqtYDWgX7LG
+ ye/+9zAnJnUDlwtultv39b3UafAKxRKsDpvRg9/YnZ4pnh57czjrjE+mf9NnQD6dDmLOdX
+ k5stA+3laDQiRATKZ0EwI+vjltcHJb2kWtvEE+pQ2XkR08JNj4fgIGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=0
+ ERyRb6mMZLjjAVoNWZHwoNrm9+FPGn+a7XsywChKAY=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=N/+UvV/B6WyysgIUpkftRIOtIXf+EBayiUZs1NU0eR1gggB0C0ixWrG3WSrGiCBh8FDB
- iKo8nLI8sqTcIQ2+RtbZ2E8pyAxWEp1B8dZmUkE8jKOAx6nfatytMiZ0JNhAmL3kI8rs7h
- 26laOpv4aTyImrzLdwDw9IAL8F2Wn2g+2rCkFEzJAgneWJhn5cR+89idQ/poQkKaVIzVtM
- oWVHY7EM6k/+tJB1Gw14Fv1aLC74Pe2Fc2rsHJiMxj4QvJgAYVq1jRcGKcLdtj1iUN+02L
- xdO8Kzpp60epincYXNoEincX35DY73KS+NzRDA2suP5nrqMe0UkNvKXTGmEWSgIw==
+ b=kT+0Hsi5/tVc4zG0VELiYPbvXjh296I8AiP7ImoQoislC9z3RLyATN73Ra8HrYumjfiT
+ Lu53hXoaUxjSn28s/sS958227vrP/iQaYtbxZOKJjmnwParE8lJlCM2I6VDZ9jHJZp2yxx
+ E8RQU8xoTTg1bkarQfhhPj2wKZsu14xXgYsaNCmrFdVtOXyPgJ7gEuVHQF0JLUgTh1tbtR
+ ii16QcRJ25oq1C6KElCxL5iJm1q85Jsm6LRLFZ4jhWiAqF8Bbbvc6UGJP4GlNGywaKpC/G
+ Lpteye32tuoUlicNDxF8lqUnJoL+ZQ/25IPUU2/ojGiGdZJKVqi2Vd/JTmsRrUJQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=baI4sjaT; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=3916D7o7;
+ header.b=V7N5z46L; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=siHZmRGE;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=jmhdMfhD
- q60vgJ+jMlgvi0rNRY/D0fggYG4fvks+BTc=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=0ERyRb6m
+ MZLjjAVoNWZHwoNrm9+FPGn+a7XsywChKAY=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=baI4sjaTtnQe9LH9cfqWZZb1oF+Z/0y1Zsc
- D9il1MHS6zkgBSIll5GGVdzxh7M0Wf4qSlB52R9+RtsFm37lBJAt5NtwmWjmYD3KUSbfvz
- QeSZ3ebd7R0gox8Vs8AHayxBk1FKpyTseXTC4kzqv8sMV7UuT8agPdIoYDuJ1q3GDmaPBN
- XFVYGVtAXC5WyEGFJOP38upg53aHLhXk+j8rIxYS69auHjIr09g9rnmalFL4XcokF0HA2z
- oWZhq2WznqmBCsvLh6kQXqkKMRPxeH/6j7Rcy/6Il3aA1ssS4z1cGU2IpvrS+CKPLhQ17Q
- S2NNIhcSipOdO8tilvD/evVU6Ww==
+ subject:cc:to:from; d=korins.ky; b=V7N5z46Lsxg+6D1v7aK/PTW4J4vqUWHA423
+ KHE6/Zxag2gCQL/dO9c1sERMS3eQL9vRUCF1ad3Sgn0Y68/If8094Q5dhIRGbCco8HCSXm
+ m4IANO3iqAgzjpfQzfUK7g1g++PKmo0+pqnO51nH1STkPHohMh+C3G1M4GuoMuIKqbIi+z
+ zmT6kCwyeUWs2qgCvyVwA00Z2E46nJ2z766DRk1pWBuxI4bvkr+9wRWddILLCy3tw8qeQv
+ KJGLKNbZamHT9cG3BgEXvTd1NgDI/IISO/++7q2t+eolU+CJx0GJ0K4E8qvEtI4LjyrVT1
+ zkUqpKCEDnPVpPQLPKo/2zVHsGQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=jmhdMfhDq60vgJ+jMlgvi0rNRY/D0fggYG4fvks+BTc=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=3916D7o75d3MOFVj7n
- IS6Bp1KIQo4s+AXTfR8eMvwhRwqXiD+WAQBzKRjLn7Tc4thGDV77zHJ3Zpqqp4IzAgBQ==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 14b57557
+ bh=0ERyRb6mMZLjjAVoNWZHwoNrm9+FPGn+a7XsywChKAY=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=siHZmRGE1IoS0d8/oY
+ DwOAecNZoLdhIjedOfBBbAUNT9ozerdXxGAj5fLq3UVwLZWW19P63YeEzCa5koZ1y0DQ==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 339829b8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 24 Sep 2026 01:05:07 +0200 (CEST)
+ Thu, 24 Sep 2026 01:05:06 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 9395963f;
- Thu, 24 Sep 2026 01:05:04 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id da2a7629;
+ Thu, 24 Sep 2026 01:05:03 +0200 (CEST)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
@@ -66,10 +66,11 @@ To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-Subject: [PATCH v2 4/5] cuda: Make shift register delay configurable
-Date: Thu, 24 Sep 2026 01:03:10 +0200
-Message-ID: <20260923230452.3765-5-kirill@korins.ky>
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PATCH v2 1/5] openpic: Preserve IRQs masked by CTPR
+Date: Thu, 24 Sep 2026 01:03:07 +0200
+Message-ID: <20260923230452.3765-2-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923230452.3765-1-kirill@korins.ky>
 References: <20260923230452.3765-1-kirill@korins.ky>
@@ -100,38 +101,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-The CUDA model assumes a 20 microsecond delay before each shift
-register interrupt. OpenBSD times out during device discovery with that
-timing, so retain the existing default but allow an override.
+OpenBSD exposes this by raising CTPR while handling interrupts. If an
+edge remains pending when EOI lowers the servicing priority, QEMU
+reasserts INT without checking CTPR; IACK then returns the spurious
+vector and consumes the masked edge before CTPR permits delivery.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
 Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/misc/macio/cuda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/intc/openpic.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-index ccb3e1d74b..f06583377a 100644
---- a/hw/misc/macio/cuda.c
-+++ b/hw/misc/macio/cuda.c
-@@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
-     s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
+diff --git a/hw/intc/openpic.c b/hw/intc/openpic.c
+index 99d2a1e65e..6f9a562163 100644
+--- a/hw/intc/openpic.c
++++ b/hw/intc/openpic.c
+@@ -1033,8 +1033,9 @@ static void openpic_cpu_write_internal(void *opaque, hwaddr addr,
+         n_IRQ = IRQ_get_next(opp, &dst->raised);
+         if (n_IRQ != -1) {
+             src = &opp->src[n_IRQ];
+-            if (s_IRQ == -1 ||
+-                IVPR_PRIORITY(src->ivpr) > dst->servicing.priority) {
++            if (IVPR_PRIORITY(src->ivpr) > dst->ctpr &&
++                (s_IRQ == -1 ||
++                 IVPR_PRIORITY(src->ivpr) > dst->servicing.priority)) {
+                 DPRINTF("Raise OpenPIC INT output cpu %d irq %d",
+                         idx, n_IRQ);
+                 qemu_irq_raise(opp->dst[idx].irqs[OPENPIC_OUTPUT_INT]);
+@@ -1070,12 +1071,13 @@ static uint32_t openpic_iack(OpenPICState *opp, IRQDest *dst, int cpu)
+     }
  
-     s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
--    s->sr_delay_ns = 20 * SCALE_US;
- 
-     adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
- }
-@@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
- 
- static const Property cuda_properties[] = {
-     DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
-+    DEFINE_PROP_UINT64("x-sr-delay-ns", CUDAState, sr_delay_ns,
-+                       20 * SCALE_US),
- };
- 
- static void cuda_class_init(ObjectClass *oc, const void *data)
+     src = &opp->src[irq];
+-    if (!(src->ivpr & IVPR_ACTIVITY_MASK) ||
+-            !(IVPR_PRIORITY(src->ivpr) > dst->ctpr)) {
++    if (!(src->ivpr & IVPR_ACTIVITY_MASK)) {
+         error_report("%s: bad raised IRQ %d ctpr %d ivpr 0x%08x",
+                 __func__, irq, dst->ctpr, src->ivpr);
+         openpic_update_irq(opp, irq);
+         retval = opp->spve;
++    } else if (IVPR_PRIORITY(src->ivpr) <= dst->ctpr) {
++        return opp->spve;
+     } else {
+         /* IRQ enter servicing state */
+         IRQ_setbit(&dst->servicing, irq);
 -- 
 2.55.0
 
