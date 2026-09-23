@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1794C9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85816C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9TiE-0001I6-Su; Wed, 23 Sep 2026 16:37:06 -0400
+	id 1x9Tgn-0008JO-Fh; Wed, 23 Sep 2026 16:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg9-0008AL-7E
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:57 -0400
+ id 1x9TgA-0008B0-LL
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:00 -0400
 Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg6-00050m-DH
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:56 -0400
+ id 1x9Tg9-00051P-0M
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:58 -0400
 Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85469e25187so600541b3a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
+ d2e1a72fcca58-8674704dab1so1284536b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195693; x=1790800493; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790195695; x=1790800495; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DgAprjmUded0KXGxt7eIheLbb6J1qxtmQvcnaMR2XbY=;
- b=GgVVHRrSIaOoEB4XcEIia/nkFT/sJu7sOipCWSzFOdsLYyqybD6/qETK0rVDTdhXCZ
- C2I8mSajOE/SkfPUA+FwUWd4qRdby07PhwPoKSCcM1oo+FMCQsOO8xvJQj76/N61KHJW
- 6Wr5B5Uqsc+QbTInuuOPirau98dGCNP8VVI0FCyRL0jk8xE7zkPgb/lDT4X6jIUpPs4i
- 74nEHAaeXmI0xslnADuNSxGXMQhOCh/t9fikxrmvto3TLeV+RgSiGVb40lNGBTnipS+p
- e3JktNyZrJUTFeA57M3umngK0PLg6Wf3nlyGzWga+JMrkRi+0O8agjswcYnqh8AXomjH
- u2yg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=PsKFn4pRALYWaoNgjaJtEuJl3huqiCPhAS0dlA5jb+M=;
+ b=Xo0PT5PshtghWCteUDXzchdj5YfARYFGi1NsdBH4qlCN2kttmmb1SrzZ7DdAQylr7J
+ cCMpLtvVulmY8badoDeTmLxEW4FTJf0NXEDuL1q8/tlTZA+MyCzet4kwANgSsjx/gjx2
+ 3+YSJgGND/EuTWl+9qoLNMsiC+iFdZwTiWBskxYzfl7Yj+gbFznnpNqulASS9iGfl4l2
+ ULyipZKYlrzqyVY/OJ7qtBZtQY4+uNrAy6BMvFd+xiar7j7/ksOdPf1H7iUbSpsyAzx8
+ Sd3/ReRuBTZPoDdhCnMbutMKYXYKt2jAxTzcjnLvVKfLiJ8HsSHJyc/jIcJIGwMbHIuz
+ 6jhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195693; x=1790800493;
+ d=1e100.net; s=20260707; t=1790195695; x=1790800495;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=DgAprjmUded0KXGxt7eIheLbb6J1qxtmQvcnaMR2XbY=;
- b=BuUsQ0ve9qzg2dtYkeyDNuYZSGEt7YFopAJejMPz+OHyqU0qMvU77j3awfJFpC3kT3
- wSIgbXWQ/VKOkUlXoisr7i0eB3PTSqXgdTSui2e6zn3hwSO62phNZtQ6dR0ezP1jNrrJ
- 8YeFXGI/xWKy7l8uz//Qu3sz0nCCYhC6yfemJPeyYkqrWMZBoX/Tfefr+pWH8rOVYOn3
- PvozaZkbolUGDI3eVd4ZNk+6695nvrgPDRSnoplI2/YlaBNIIGy9YPhQACaagPCmOFBt
- nTs4Zvcq2waP0H8KDsqjU4kD1+/1RE3jKpB7dVxLQNNAUtTtRuqRosquRXUPjvVnNeFa
- OxiQ==
-X-Gm-Message-State: AFuF++mvs0TQLb0Y87ab1QCFihfdoMyz3VmsXJM3aOHXI0Q8Sr0E5bhL
- ooesXvYSUOB4Y1FvvJu+APY3nCKq1LR81qS5+AnCx6/qrFwF+7/imKAQKTdfAxbRDFBPLg1lJZg
- 8p3aU
-X-Gm-Gg: AYBFou3bXK4F7nrKk7LD0bSGdAQ0AzF5O9RiA6eFJDnx/EQ7QLo9Og2LK7M3u1AXNCz
- UZLMQgmx/iIiid57LBHWnVPdIHF7lJ2P0s9RddGJw/+DfKL7zPmWm/O6ll9auM7iLTKqPvjtF1J
- TQ+jslveleeDW5mThGhWegWAI+t6cfH9FqroVUjQI/zSymkw9uLw5RhpwaPsvSXraS/uadqHbDH
- sRzrBOW5ghHID4cU8Ro9V3jVRjydz/Bq19ijuPSoGRslAe3iMOj/Af9tEfeYav0rGGZtUKabJMw
- L2I/VrunmjDBQiBhPBaQogZeY9ZBwa/bV9NunsAjZZhGc2QdIEedahHI4mhuhnv3djms/ksTwsa
- fEMiM7mfSfhHj+lHjs9s3G9QtSEdZ2qodxKRAHL5Be1YkY5goh0dnlI6bEyITIgLRlnNO5p0bgP
- +94szdCLAQpj95WKElGudHFjOzOMzskdBMflI+bRRFwM22Uwnwfa3010as+ONhhVIVyzKNCjx92
- xPQRJAyS1iZ+mDqIB8MhT1dAjWFwg==
-X-Received: by 2002:a05:6a00:4004:b0:870:c2db:da31 with SMTP id
- d2e1a72fcca58-87e996729e7mr197599b3a.20.1790195692983; 
- Wed, 23 Sep 2026 13:34:52 -0700 (PDT)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=PsKFn4pRALYWaoNgjaJtEuJl3huqiCPhAS0dlA5jb+M=;
+ b=YHELgafXGi1NXrCot/6iNRAsdLIFruZ11KhTdUTXkA/FOLVW3K9yvq54oyoINqHaB/
+ T+8G2TcGh8kdBsFRl81aft2EccJfAxLKbRSEBjcVjrcsw0OKD+8idGkEdP/TJz54851R
+ 1VvF2QdPdab8voglm38qjBrR75QBuWJUIV63eB57JZ2u6hMtkZfO7As3GKehTqrkpDR3
+ ajgOaKUG6ndxd8OarUsk/OCedUpSbOSSWJgvsSttKa4y+WN4u+oM6h2yGbRkvYA9R7Pj
+ k+zcPTl/6G1bb6J07+BjqHcreIbiVfmnRo/DrFP9jadscVgtLoD0cSKK7gBdd5H3tTZi
+ oeSA==
+X-Gm-Message-State: AFuF++mtIEb5s4bqsBbts2+na2CifKr59F3OgbI3K7x4AT1gr5biaNjl
+ TkWe47LTn8mJtTwjrJ793ftRewZEWPRCUq4KVxBDA6t1jvmys+IcZiWRWXxYv3buFm+Pe3OWVki
+ EAB4d
+X-Gm-Gg: AYBFou3T7RtrMzmn5RLkCcqnzXYRIntBP3UxwzToSr7DPxRd91fsuKIs8/827fA+7Qi
+ IbJDSRX7Zv5WyBLvXD2I6HCSOEyK9DJVuFKrBUHLsKrAh68HnxpqccEdpVqQ12J2QHq463lAzIB
+ 9rpn03oG3XtmSfUSJGXimgmUIjksIZc88XmlweEp0pypKHadMPn2skD8a/DgwDwjUISPWE1E9do
+ oCTkcCGSYhuL8RRmvD5GBZojVAhu9LdtI+ReAz8EtKAOt20v2YrYfeFwD39IYrJGpcwB8Oi7j2p
+ U/i9yY4J9oW2rAglDLE2EbubrtByA1DFShcw0P+KHpR5wgnAxGytF94D0Fp/Hbz0DrLxziooA16
+ wM9jqUI3oG0Mp4Xldm9TFJrJCh+l6BbElF8FeNh48v/8+FclsEcfQyD74sqW89tXsvFIasFW1+E
+ ZV3YQkAG9DuGA7JrIuNuvlKjDtBsl+EEesVcZ29NAF+tag97b4qQLru/JzMjW4rPgjZiDINCL4w
+ dbyZpiZVeKOXMjJpFStodqFYwOQ9FY=
+X-Received: by 2002:a05:6a00:3d0a:b0:874:32d1:d3db with SMTP id
+ d2e1a72fcca58-87e9c543f70mr237263b3a.10.1790195695163; 
+ Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.52
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.54
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:52 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Tao Cui <cui.tao@linux.dev>,
-	Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PULL 10/16] accel/tcg: Allow some address space wraparound during
- translation
-Date: Wed, 23 Sep 2026 13:34:35 -0700
-Message-ID: <20260923203441.31276-11-richard.henderson@linaro.org>
+Subject: [PULL 13/16] tcg/x86_64: Use the mulx insn from the bmi2 isa
+Date: Wed, 23 Sep 2026 13:34:38 -0700
+Message-ID: <20260923203441.31276-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
@@ -103,114 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the two pages of translation to be non-contiguous.
-As long as the target translator wraps pc properly, this
-allows address space wraparound to function correctly.
+This vex encoded instruction can be used or either mulu2 or muluh.
+This replaces the highly constrained mul insn from the base x86 isa.
 
-This avoids an assert on a valid i386 system-mode test case.
-
-Reported-by: Tao Cui <cui.tao@linux.dev>
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h |  3 +++
- accel/tcg/translator.c    | 45 ++++++++++++++++++++++++---------------
- 2 files changed, 31 insertions(+), 17 deletions(-)
+ tcg/x86_64/tcg-target-con-set.h |  2 ++
+ tcg/x86_64/tcg-target.c.inc     | 36 ++++++++++++++++++++++++++++++---
+ 2 files changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 978dee25add..104e6d4f361 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -55,6 +55,8 @@ typedef enum DisasJumpType {
-  * @pc_first: Address of first guest instruction in this TB.
-  * @pc_next: Address of next guest instruction in this TB (current during
-  *           disassembly).
-+ * @pc_second_page: Address of the beginning of the second page of this TB,
-+ *                  or -1 if the TB does not yet extend to a second page.
-  * @is_jmp: What instruction to disassemble next.
-  * @num_insns: Number of translated instructions (including current).
-  * @max_insns: Maximum number of instructions to be translated in this TB.
-@@ -69,6 +71,7 @@ struct DisasContextBase {
-     TranslationBlock *tb;
-     vaddr pc_first;
-     vaddr pc_next;
-+    vaddr pc_second_page;
-     DisasJumpType is_jmp;
-     int num_insns;
-     int max_insns;
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index 3f08c1c15c7..2083f4285a2 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -169,6 +169,7 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-     db->tb = tb;
-     db->pc_first = pc;
-     db->pc_next = pc;
-+    db->pc_second_page = -1;
-     db->is_jmp = DISAS_NEXT;
-     db->num_insns = 0;
-     db->max_insns = *max_insns;
-@@ -328,16 +329,18 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
-     /*
-      * The read must conclude on the second page and not extend to a third.
-      *
--     * TODO: We could allow the two pages to be virtually discontiguous,
--     * since we already allow the two pages to be physically discontiguous.
--     * The only reasonable use case would be executing an insn at the end
--     * of the address space wrapping around to the beginning.  For that,
--     * we would need to know the current width of the address space.
--     * In the meantime, assert.
-+     * TODO: This doesn't handle address space wraparound properly for
-+     * multi-byte reads, as we don't know the size of the address space here.
-+     * But if the target translator wraps pc to 0 itself, and issues aligned
-+     * reads, then this can work.
-      */
--    base = (base & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
--    assert(((base ^ pc) & TARGET_PAGE_MASK) == 0);
--    assert(((base ^ last) & TARGET_PAGE_MASK) == 0);
-+    if (db->pc_second_page == -1) {
-+        db->pc_second_page = pc & TARGET_PAGE_MASK;
-+    } else {
-+        assert((pc & TARGET_PAGE_MASK) == db->pc_second_page);
-+    }
-+    assert((last & TARGET_PAGE_MASK) == db->pc_second_page);
-+    base = db->pc_second_page;
-     host = db->host_addr[1];
+diff --git a/tcg/x86_64/tcg-target-con-set.h b/tcg/x86_64/tcg-target-con-set.h
+index 458d69c3c07..7df9bf49177 100644
+--- a/tcg/x86_64/tcg-target-con-set.h
++++ b/tcg/x86_64/tcg-target-con-set.h
+@@ -42,6 +42,7 @@ C_O1_I2(r, 0, reZ)
+ C_O1_I2(r, 0, ri)
+ C_O1_I2(r, 0, rI)
+ C_O1_I2(r, L, L)
++C_O1_I2(r, r, d)
+ C_O1_I2(r, r, r)
+ C_O1_I2(r, r, re)
+ C_O1_I2(r, r, ri)
+@@ -56,5 +57,6 @@ C_O1_I4(r, r, reT, r, 0)
+ C_O1_I4(r, r, r, ri, ri)
+ C_O2_I1(r, r, L)
+ C_O2_I2(a, d, a, r)
++C_O2_I2(r, r, r, d)
+ C_O2_I2(r, r, L, L)
+ C_O2_I3(a, d, 0, 1, r)
+diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
+index 2c8f1f3e580..590c9c24020 100644
+--- a/tcg/x86_64/tcg-target.c.inc
++++ b/tcg/x86_64/tcg-target.c.inc
+@@ -274,6 +274,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
+ #define OPC_MOVSLQ	(0x63 | P_REXW)
+ #define OPC_MOVZBL	(0xb6 | P_EXT)
+ #define OPC_MOVZWL	(0xb7 | P_EXT)
++#define OPC_MULX        (0xf6 | P_SIMDF2 | P_EXT38)
+ #define OPC_PABSB       (0x1c | P_EXT38 | P_DATA16)
+ #define OPC_PABSW       (0x1d | P_EXT38 | P_DATA16)
+ #define OPC_PABSD       (0x1e | P_EXT38 | P_DATA16)
+@@ -2732,19 +2733,48 @@ static const TCGOutOpBinary outop_mulsh = {
+     .base.static_constraint = C_NotImplemented,
+ };
  
-     if (host == NULL) {
-@@ -415,16 +418,24 @@ static void record_save(DisasContextBase *db, vaddr pc,
++static void tgen_muluh(TCGContext *s, TCGType type,
++                       TCGReg a0, TCGReg a1, TCGReg a2)
++{
++    /*
++     * Note from the architecture manual:
++     * If the first and second operand are identical,
++     * it will contain the high half of the multiplication result.
++     */
++    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
++    tcg_out_vex_modrm(s, OPC_MULX + rexw, a0, a0, a1);
++}
++
++static TCGConstraintSetIndex cset_muluh(TCGType type, unsigned flags)
++{
++    return have_bmi2 ? C_O1_I2(r, r, d) : C_NotImplemented;
++}
++
+ static const TCGOutOpBinary outop_muluh = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_muluh,
++    .out_rrr = tgen_muluh,
+ };
+ 
+ static void tgen_mulu2(TCGContext *s, TCGType type,
+                        TCGReg a0, TCGReg a1, TCGReg a2, TCGReg a3)
  {
-     int offset;
- 
--    /* Do not record probes before the start of TB. */
--    if (pc < db->pc_first) {
--        return;
--    }
--
-     /*
--     * In translator_access, we verified that pc is within 2 pages
--     * of pc_first, thus this will never overflow.
-+     * In translator_ld, we verified that we touched no more than 2 pages,
-+     * but we did not verify that they were virtually contiguous.
-+     * Here, reimagine the two pages as virtually contiguous.
-      */
--    offset = pc - db->pc_first;
-+    if (likely(((db->pc_first ^ pc) & TARGET_PAGE_MASK) == 0)) {
-+        /* first page */
-+        /* Do not record probes before the start of TB. */
-+        if (pc < db->pc_first) {
-+            return;
-+        }
-+        offset = pc - db->pc_first;
+     int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
+-    tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_MUL, a3);
++    if (have_bmi2) {
++        tcg_out_vex_modrm(s, OPC_MULX + rexw, a1, a0, a2);
 +    } else {
-+        int first_page_end_offset = -(db->pc_first | TARGET_PAGE_MASK);
-+        assert(db->pc_second_page != -1);
-+        assert((pc & TARGET_PAGE_MASK) == db->pc_second_page);
-+        offset = pc - db->pc_second_page + first_page_end_offset;
++        tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_MUL, a3);
 +    }
++}
++
++static TCGConstraintSetIndex cset_mulu2(TCGType type, unsigned flags)
++{
++    return have_bmi2 ? C_O2_I2(r, r, r, d) : C_O2_I2(a, d, a, r);
+ }
  
-     /*
-      * Either the first or second page may be I/O.  If it is the second,
+ static const TCGOutOpMul2 outop_mulu2 = {
+-    .base.static_constraint = C_O2_I2(a, d, a, r),
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_mulu2,
+     .out_rrrr = tgen_mulu2,
+ };
+ 
 -- 
 2.53.0
 
