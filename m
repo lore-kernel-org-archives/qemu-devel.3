@@ -4,120 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10586C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEF1C98310
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9T4S-0008Is-Bs; Wed, 23 Sep 2026 15:56:00 -0400
+	id 1x9T6U-0000FC-1F; Wed, 23 Sep 2026 15:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9T4P-0008IV-Pe
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:55:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9T4N-0000zb-TL
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:55:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790193354;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vtaIywSRVxBVjS7BBsdtwMbMt24uxiBCXAZIu0FntKQ=;
- b=YR8Vk5FEmqdx6OFBbn4ljP3JedFW6oO5dtQ3M+tt5Z6D4Q2bWIdTYWPRnuuajRwNHEs5Yo
- bpqz8Ww3ij+hxRSLhNyvz85eAtK35S3XWj7N8uTPpb+45MEGh4nJoXd78EviWaESBy7CMo
- gRskVs8/mrxe+iWIu8XtrA6UeZSA9vU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-1iAgvomYMQWIEIDpue4JMg-1; Wed,
- 23 Sep 2026 15:55:48 -0400
-X-MC-Unique: 1iAgvomYMQWIEIDpue4JMg-1
-X-Mimecast-MFC-AGG-ID: 1iAgvomYMQWIEIDpue4JMg_1790193345
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A16F1955D98; Wed, 23 Sep 2026 19:55:44 +0000 (UTC)
-Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F41D1800351; Wed, 23 Sep 2026 19:55:39 +0000 (UTC)
-Message-ID: <935e6ab6-5f86-4f1b-80ae-42c7219eec46@redhat.com>
-Date: Wed, 23 Sep 2026 21:55:37 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9T6Q-0000Ey-BT
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:03 -0400
+Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9T6O-0001KT-S6
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:02 -0400
+Received: by mail-pz2-x10.google.com with SMTP id
+ 41be03b00d2f7-cc4c08393dfso942191a12.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:57:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790193478; x=1790798278; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AbFu2F1cuKRTvVldvcuaJ8hCnmjTiQs0Zqf93ICFLXA=;
+ b=w48yAstV5DPp1ZuxfnMbfwEGCW0pZdbEMdMjrA3qrUA3KvOvTLJcyWAmfsMSJAYAd9
+ CFC9Ralqbo1Hpf4L53W1YZG9da2iQQOahe9RDaDFcnOk9FEU4AUVtTbUtiBbBcJ0wA9A
+ kJYtNf+X6RJcUW9QpQtI2FDqPj8mHb+8SF7yT3sOcFoka0+fIOfwwRAlvdbt3adn1rNI
+ WI+wVg50UqsGW/PcBXfGqugBeG259yVhiGBJcVRFaOxzToFoMLzVPIzP6HjWeu2yakiw
+ WdkMfoHgC+TGVuwXo864LPqtdkJ6yGL97Syc60llGCpbI9jGkIRSIcXF4ZrFnIxuxjuF
+ GYQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790193478; x=1790798278;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AbFu2F1cuKRTvVldvcuaJ8hCnmjTiQs0Zqf93ICFLXA=;
+ b=OV+uSBph/FAx5GUCkYhx248Lmd7fUSPFPnDjWCUiOnTHBgoZXs+JQ/bm2wByasP1gl
+ VM/h4u3XSfZYmyBWOoU1otbEQgORjP8HJcmxexPtbJaKtnoZGHtnqxaRyAC6j2oVRKJZ
+ ECa5q+hvjVAjKTYAHFiETyLIBsq4NCaHZWwVgKeHgUXcpOilxvyrG6EIbhh3UB9g3HeG
+ 3ozIBkBLSoGs3i4y85zXYtaZBgIxtN+rdqsqJXjy1RryF+9xPFLrjqe48GCeeKgedxLX
+ AdHPcVsPtuQtreczcE9nnevn9CQ1ClW2dQvbEwvTaoGxRxRt0aWJFyZyfmxxFfweJsN8
+ xG2w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzQ7OFG0X6WL6mSNL72OMYNV8FgnSUtc+qwzqryG44b3xZzaya2HaizIHCX4HwqOoabhRChBYz3dfsG@nongnu.org
+X-Gm-Message-State: AFuF++njjAbzPGceD2Ln1lJYMg0NtSWRVXCoNFOChK80NbaMxCE7BvVs
+ IKxsBGLmZxccdjw/zUph1doVYryLrK9q8pcHq0iVCbEujPTtFlr8pQK3GPY0QfbawkU=
+X-Gm-Gg: AYBFou3990p5LBhtFMjwFT+qYJJhNjxy1HBg3O2LvNkPKgfVop6VAgzybx7X9AnchcX
+ 75Fozkmk8o+DPRqMtBWzKnWoRFyruRUoQY9qZ3ri/gwxkvzYx5qhqeM3KivLKl1AKN2epGciOcH
+ fwQoUTdojvur0nNxu1cFH0WofuZn12VwWq3buDiikuiDnntiomKy17HMiuiQQg9iBbgBgyMpAER
+ cPDLtmt1+9RKXNsQQhqFUNaPilClAZxLHLBgi5HH3dxaiF0lghhnrJNtRGOcerYV3YdkirJI9x0
+ bQEVQOsyl9CEOsGVZ8Tr/RyYDUwW/JBQyh9ZTVoQkowAzVTHpSVGxky2PUUswJUlIrr25ra2TLM
+ +jm4vcRU5WfQ5LYDfZFQUTKdt+Dwjb/VFwBDISzhAybIm7ayNp28o1i9xuPFsffAiRbJ1Gmfjlm
+ kkx8I75ETJTJmG8Jn9f3oyJ6hf4Gwm93uVcUQrPZ6zkB1rt+RriMNy+26yZDRCgic2Bjb7lfFg+
+ 5RQyGA4RKEAcoRA19dBJC76D8XBa1sVtwrfBDKFsyBqUtctteA=
+X-Received: by 2002:a17:90b:390e:b0:3a0:2ffd:1a51 with SMTP id
+ 98e67ed59e1d1-3a0985663c0mr186640a91.10.1790193478342; 
+ Wed, 23 Sep 2026 12:57:58 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a08f120ee7sm1078801a91.1.2026.09.23.12.57.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 12:57:57 -0700 (PDT)
+Message-ID: <9141c0ba-d2d8-420a-98be-e8fc168a6c03@linaro.org>
+Date: Wed, 23 Sep 2026 12:57:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 091/105] tests/tcg/x86_64: user tests
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Stafford Horne <shorne@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <17746591750@163.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Laurent Vivier
- <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>
-References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
- <20260827221506.91574-92-pierrick.bouvier@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 09/17] target/i386/tcg: decode REX2 prefix
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
+References: <20260923173021.317809-1-pbonzini@redhat.com>
+ <20260923173021.317809-10-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260827221506.91574-92-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260923173021.317809-10-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,31 +106,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/28/26 00:14, Pierrick Bouvier wrote:
-> diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-> new file mode 100644
-> index 00000000000..2607a1cbcf4
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/meson.build
-> @@ -0,0 +1,82 @@
-> +cc = 'x86_64-linux-gnu-gcc'
-> +cc_dockerfile = 'debian-amd64-cross'
-> +cc_docker_host_arch = ['x86_64']
+On 9/23/26 10:30, Paolo Bonzini wrote:
+> The REX2 prefix has two main complications: it does not apply
+> to vector registers, and it disables or mutates some opcodes
+> (thus needing separate decoding functions instead of decode_root
+> and decode_0F).  Otherwise, all it does is extend s->rex_r,
+> s->rex_w and s->rex_b to two bits.
+> 
+> Since REX2 provides the ability to access r16...r31, extend
+> cpu_regs[] to CPU_NB_EREGS elements.
+> 
+> Reviewed-by: Chang S. Bae<chang.seok.bae@intel.com>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/translate.c      |  22 +++++-
+>   target/i386/tcg/decode-new.c.inc | 114 +++++++++++++++++++++++++++++--
+>   2 files changed, 126 insertions(+), 10 deletions(-)
 
-Configure was able to reuse the local compiler instead of requiring docker:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-   if [ "${1%softmmu}" != "$1" ] || test "$target_arch" = "$cpu"; then
-       case "$target_arch:$cpu" in
-         aarch64_be:aarch64 | \
-         armeb:arm | \
-         i386:x86_64 | \
-         ppc*:ppc64 | \
-         sparc:sparc64 | \
-         "$cpu:$cpu")
-         try='native cross' ;;
-       esac
-   fi
-
-Paolo
-
+r~
 
