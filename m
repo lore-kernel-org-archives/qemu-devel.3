@@ -4,52 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFA1C9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0580FC98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 22:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9UyD-0004UT-8u; Wed, 23 Sep 2026 17:57:41 -0400
+	id 1x9V7F-0007R4-J2; Wed, 23 Sep 2026 18:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
- id 1x9Um1-0001a7-1T; Wed, 23 Sep 2026 17:45:06 -0400
-Received: from [82.84.137.98] (helo=Manueles-MacBook-Pro.local)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
- id 1x9Ulx-0003bB-IW; Wed, 23 Sep 2026 17:45:04 -0400
-Received: by Manueles-MacBook-Pro.local (Postfix, from userid 501)
- id 120A499837A3; Wed, 23 Sep 2026 22:27:41 +0200 (CEST)
-From: Manuele Conti <manuele.conti@archimede-energia.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9V7E-0007Ql-As
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 18:07:00 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9V7C-0005n4-Re
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 18:07:00 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-39dbdfaef3cso821112a91.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 15:06:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790201217; x=1790806017; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=efWz7OdQaqAQdK5HW4y/FLS8uU0/npBVJT/aN6EFP1U=;
+ b=u/kXTPd9wprhSWsacJeianNaa8RE+fYkIJIHnN9NwANOYPrVZjUpINwPbmUYMNq8KT
+ Ydjz91LrFsgMy9GuGwIno+HrGpNfBBvM2OkqcFsi9skM1AUz7fsOQPIE+DTSp1yqHsZe
+ F5enpZMIE2RnkQxKSkAo4OpEUMw9FI7k1XcL5BvQVvtcUzAsgUCm+hhXAb3UxifHXbxm
+ 3jG2qmPb+5v8WjLkCWrzh6Ogr9SB4E0z6n0l3k8yzFMFFZlSemvZ7xGs6afALSmih1Nr
+ QQcHw7U4jiQYR/XrJyQ+ln6SYmGaSuObhEywLHlj5NxDb4u5sCZgP7gAkWbmgwLzPSCq
+ hFHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790201217; x=1790806017;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=efWz7OdQaqAQdK5HW4y/FLS8uU0/npBVJT/aN6EFP1U=;
+ b=mHe5UXy2BQ5kO5vwbicXC6JyvtN3/cCrHXz7ZH+jf4HR5DvlSeyrcSqw0WfFwbY/PW
+ YP8bAVKltWSE0KURC/qyEC6NBSqJINxackorQvT85onzwk9vvltqc3j/G8YO6VulVOy1
+ I2gqwjHqp3QWLmNFyWuOHLeI42mVgHVL+FWrEPhdkC96Y6PpbXdABOEUR4vNl/oZnF2G
+ rSbkdz2sKiG/rY1pguIv5oTCyQqyOPzdVdXSfekcbGa+tHYKWgnITmfMYuDGtA3JRI8T
+ j0P8VJYF0ytyq6Vox+Dy3Aeyn3OBcHbfFlQEfFDiEuhj4h+ZtZeLbB39jLH3g5dRCBfC
+ iAqA==
+X-Gm-Message-State: AFuF++lmpMw3O6FX64KPLHfvQCvBHvgAn/qzQLqha+FUqpy8XpUAO6/o
+ KNc6Els8cRyw/9TDS9eCq9zFSXifajJSyD7gVdNQ2mqS8cB+beQkYIM5N1IPizLWWckQZjRBhXo
+ 8YrtQ
+X-Gm-Gg: AYBFou0oMo+cIe4srj7ACXr8PVrrYsEQXTCfWP0VLwAobFx3y06ScuuoNRYkAX1pen4
+ 11vSNxJWd70TuWYBzBbuKOafX9u/Sn68JZXE7pqarUK0f6EH9DQhT7XPBUCbIk5oS7XnjdSvNAg
+ d0hek+7Gz/sh+tcqvMKq7Rx88LY/7/ikjV3A4y3tOaQ1VfVkqkBLrzGNs6AwfzHoiNxRQs48dz9
+ C8PuH1ARC149OwdYF3z/9TTdTl2uIzoASmJjS1fKGRoFOozMVXsOsrR7tUFDjefbamcuVK04irh
+ 34JacGxBVtnl7WvPSVTg8/8lKAXfkcKOJstK9zbJt2519wy+Pj/qmUxEQd5c4SParEt3E+pyFRV
+ KzjwlSU76FrJTz350zijDaosGS7dpgEo9ohs9qoiujhcfeMbiEUPOLLguELbgHla5cMFjnsucet
+ mluK+ZQ8rYbYJJAved2VCPLQuv0MTcY3EArzOglkwEkj14CD1A3chjmx4AX7IpZnrmAn+zHf8p1
+ piAxFGnYEKCBc3LFOvyDSPhCbdYkQLYgE8JwZPr
+X-Received: by 2002:a17:90b:52d0:b0:3a0:903b:f254 with SMTP id
+ 98e67ed59e1d1-3a0985e68a2mr385262a91.15.1790201217324; 
+ Wed, 23 Sep 2026 15:06:57 -0700 (PDT)
+Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0976ca5f9sm998322a91.14.2026.09.23.15.06.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Sep 2026 15:06:56 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manuele Conti <manuele.conti@archimede-energia.com>
-Subject: [PATCH 2/2] hw/misc/stm32_rcc: mirror oscillator ready and system
- clock status
-Date: Wed, 23 Sep 2026 22:27:33 +0200
-Message-ID: <20260923202733.24933-3-manuele.conti@archimede-energia.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20260923202733.24933-1-manuele.conti@archimede-energia.com>
-References: <20260923202733.24933-1-manuele.conti@archimede-energia.com>
+Cc: mpatocka@redhat.com,
+	qemu-stable@nongnu.org
+Subject: [PATCH v4 1/3] accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
+Date: Wed, 23 Sep 2026 15:06:52 -0700
+Message-ID: <20260923220654.127167-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260923220654.127167-1-richard.henderson@linaro.org>
+References: <20260923220654.127167-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 82.84.137.98 (failed)
-Received-SPF: none client-ip=82.84.137.98;
- envelope-from=manueleconti@Manueles-MacBook-Pro.local;
- helo=Manueles-MacBook-Pro.local
-X-Spam_score_int: 25
-X-Spam_score: 2.5
-X-Spam_bar: ++
-X-Spam_report: (2.5 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, NO_DNS_FOR_FROM=0.001, RCVD_IN_PBL=3.335,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 23 Sep 2026 17:56:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,132 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RM0090 7.3.1/7.3.3: HSERDY follows HSEON, PLLRDY follows PLLON and
-SWS follows SW. Upstream stored raw values, so firmware polling for
-ready or checking SWS never saw the expected state.
+Do not go through the effort of grabbing the exclusive lock
+only to check for interrupts and exit without making progress.
 
-Mirror enable bits into ready bits on CR writes and SW into SWS on
-CFGR writes. Clock switching is instantaneous in QEMU. No oscillator
-startup or PLL lock delay is modelled.
-
-Add qtest writing HSEON/PLLON/SW and checking HSERDY/PLLRDY/SWS,
-including clearing again on HSEOFF/PLLOFF.
-
-Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/stm32_rcc.c              | 18 ++++++++++
- tests/qtest/meson.build          |  3 +-
- tests/qtest/stm32f405-rcc-test.c | 57 ++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/stm32f405-rcc-test.c
+ accel/tcg/cpu-exec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
-index 5cfb39e560..ba64a87bdd 100644
---- a/hw/misc/stm32_rcc.c
-+++ b/hw/misc/stm32_rcc.c
-@@ -90,6 +90,24 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
-     }
- 
-     switch (addr) {
-+    case STM32_RCC_CR:
-+        /*
-+         * Oscillators become ready immediately in QEMU.
-+         * Mirror enable bits into ready bits: HSEON->HSERDY,
-+         * PLLON->PLLRDY. See RM0090 7.3.1.
-+         */
-+        value = deposit32(value, 17, 1, extract32(value, 16, 1));
-+        value = deposit32(value, 25, 1, extract32(value, 24, 1));
-+        s->regs[addr >> 2] = value;
-+        return;
-+    case STM32_RCC_CFGR:
-+        /*
-+         * System clock switch is instantaneous in QEMU.
-+         * Mirror SW[1:0] into SWS[3:2]. See RM0090 7.3.3.
-+         */
-+        value = deposit32(value, 2, 2, extract32(value, 0, 2));
-+        s->regs[addr >> 2] = value;
-+        return;
-     case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
-     case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
-         prev_value = s->regs[addr / 4];
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 51dbe63411..c26e510b0b 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -250,7 +250,8 @@ qtests_stm32l4x5 = \
-    'stm32l4x5_usart-test']
- 
- qtests_stm32f405 = \
--  ['stm32f405-timer-test']
-+  ['stm32f405-timer-test',
-+   'stm32f405-rcc-test']
- 
- qtests_arm = \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-diff --git a/tests/qtest/stm32f405-rcc-test.c b/tests/qtest/stm32f405-rcc-test.c
-new file mode 100644
-index 0000000000..75c0291ed1
---- /dev/null
-+++ b/tests/qtest/stm32f405-rcc-test.c
-@@ -0,0 +1,57 @@
-+/*
-+ * QTest for STM32 RCC clock-ready mirroring (STM32F405 SoC).
-+ *
-+ * RM0090 7.3.1/7.3.3: HSEON->HSERDY, PLLON->PLLRDY, SW->SWS.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 5226cfb7650..f4428e9f7b7 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -566,7 +566,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         /* Execute in a serial context. */
+         s.cflags &= ~CF_PARALLEL;
+         /* After 1 insn, return and release the exclusive lock. */
+-        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | 1;
++        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define RCC_BASE 0x40023800ULL
-+#define RCC_CR   0x00
-+#define RCC_CFGR 0x08
-+
-+#define RCC_CR_HSEON  (1U << 16)
-+#define RCC_CR_HSERDY (1U << 17)
-+#define RCC_CR_PLLON  (1U << 24)
-+#define RCC_CR_PLLRDY (1U << 25)
-+
-+static void test_ready(void)
-+{
-+    QTestState *qts = qtest_init("-M netduinoplus2");
-+    uint32_t val;
-+
-+    val = qtest_readl(qts, RCC_BASE + RCC_CR);
-+    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_HSEON);
-+    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
-+
-+    val = qtest_readl(qts, RCC_BASE + RCC_CR);
-+    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_HSEON);
-+    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
-+
-+    val = qtest_readl(qts, RCC_BASE + RCC_CR);
-+    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_PLLON);
-+    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
-+
-+    val = qtest_readl(qts, RCC_BASE + RCC_CR);
-+    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_PLLON);
-+    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
-+
-+    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x2);
-+    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
-+                     ==, 0x2);
-+    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x1);
-+    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
-+                     ==, 0x1);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("stm32f405/rcc/ready", test_ready);
-+    return g_test_run();
-+}
+         /*
+          * No need to check_for_breakpoints here.
+          * We only arrive in cpu_exec_step_atomic after beginning execution
 -- 
-2.41.0
+2.53.0
 
 
