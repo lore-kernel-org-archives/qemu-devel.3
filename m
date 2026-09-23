@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82BEC98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4B7C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9OEe-0004d7-Cx; Wed, 23 Sep 2026 10:46:12 -0400
+	id 1x9OEe-0004f8-PC; Wed, 23 Sep 2026 10:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3HOazagoKChUDEv86zJ42F19916z.x97Bz7F-yzGz689818F.9C1@flex--stanleyjhu.bounces.google.com>)
- id 1x9OER-0004OJ-Di
+ <3GuazagoKChMBCt64xH20Dz77z4x.v759x5D-wxEx4676z6D.7Az@flex--stanleyjhu.bounces.google.com>)
+ id 1x9OER-0004OK-Dg
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:46:02 -0400
-Received: from mail-pl1-x645.google.com ([2607:f8b0:4864:20::645])
+Received: from mail-pj1-x1046.google.com ([2607:f8b0:4864:20::1046])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3HOazagoKChUDEv86zJ42F19916z.x97Bz7F-yzGz689818F.9C1@flex--stanleyjhu.bounces.google.com>)
- id 1x9OEN-0000vE-Eo
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:45:57 -0400
-Received: by mail-pl1-x645.google.com with SMTP id
- d9443c01a7336-2dd753a52bbso15260615ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:45:49 -0700 (PDT)
+ <3GuazagoKChMBCt64xH20Dz77z4x.v759x5D-wxEx4676z6D.7Az@flex--stanleyjhu.bounces.google.com>)
+ id 1x9OEN-0000v4-Dq
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:45:56 -0400
+Received: by mail-pj1-x1046.google.com with SMTP id
+ 98e67ed59e1d1-39deb05ef51so1074394a91.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1790174749; x=1790779549; darn=nongnu.org;
+ d=google.com; s=20251104; t=1790174747; x=1790779547; darn=nongnu.org;
  h=content-type:cc:to:from:subject:date:message-id:references
  :in-reply-to:mime-version:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=eZIsXV7APNY0/LNrIPkmT3SkKNqmaGTb59jjgIpzWRo=;
- b=l9mnUTlsTikgSGdiBYHOeYrgHtvnxrhWdEFxsCfw99O7H3pmOhcYDPymUzRAoVhUL6
- /z3Gp6xtjQjbUVHL9aBhQ5OmBgGQJXoYJt5HB45DaQiE9jiN11hFj/tVrcacSNw3FDAt
- /iliXElRacS7/4EJsVsCPPw78j4w1Vb7IzXOhoTqQEsxxS1p05Lyx8mkHtNGisvrPUnM
- rfGohYX1ZyQI/9DAKAgIZLw2bf6A5Zt6zrEOdrvUhsFL89ZpU6KJw/kIJg1kYoZlaXfL
- pqdR1R3Ff0CVUJU+8oyUDEqNVPVwlCrsRysWzuEtTGVZLGzwiBXVzOlJdtiRT5gX+g6n
- F78A==
+ bh=BZEgnHFYjL9Mxvpmoi/S4k6U75jXGsS+g1CGHQoADY8=;
+ b=lLPl1pQYCaOm3rZImaYrLTFI0OvbA9ZNtO4bBj+vBlVWnY9PSC9SLzAAW8F7zkXeeR
+ I8LZY1lPN5mG1n+qhyKguIqrxWGeUzV3bkNU4Ye6kcQCJ90xCDUbT+ZyBv4Za2XAOECe
+ jzYvKFuqT+0l8gxRrX+wlO1zDsPzmovHQYmIXGft7vCUntScoLQCyWFXhO09BUWWZhRB
+ l9AwBJ8W3uMmEBaqfbUV7TGmX6F6v1jFgzD70+l5MmHH7luoObp46DlN1qYL7398JorE
+ StokPWDVDeMD0OK95p1KbA/ibSJJRTUlm3rMY3yNlRqDa3P81iC3ClnHmyd0hCmuFB6V
+ r6Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790174749; x=1790779549;
+ d=1e100.net; s=20260707; t=1790174747; x=1790779547;
  h=content-type:cc:to:from:subject:date:message-id:references
  :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eZIsXV7APNY0/LNrIPkmT3SkKNqmaGTb59jjgIpzWRo=;
- b=fVpEXiTnxbBzhEEYYPmJVZb5Fr18x9CSCLOhW+QHpRJelCQlmBMgcriRxR+HuoHZpG
- 0Qvcibh7n/BnTRrOi3KxMdJ4VFcDCUWZdCHDvtnlW/uO7rBEq0Rc7ExTHq8jOeW+C7yK
- jVvyjzn2ml+YlPhKNhR0gjK+YGr2J4G1Usf4HhMnvcOs/33T+KmqANk3jS4n8suoFRor
- OZ81qA+mlBw0fkSQpEj5Ejier8MpyEEswFkjmVIJHDuZaDYFk1KnEzsoTdq524f09lZ5
- uWkRKoy9W5Kb1E1I4KyNIt6DZ7OdsIgYP8RSNuSyVD72qzHg+ADigpcJAA/4bgORyD2q
- 2w1g==
-X-Gm-Message-State: AFuF++mmKv/ydn0Vg5kgQd8aNLXUBQwQJlDjZQrSGMR+wu9OPVAW9emd
- yfmICBfz7gJVkMmmgOwrKgeXmdbGU+9ZawrSp1zlDXAQOYzgtwKzporP5DIdZ14D5eEdBwUBY5C
- sOSILjoZl7tFK/0OAgLx/NA==
+ bh=BZEgnHFYjL9Mxvpmoi/S4k6U75jXGsS+g1CGHQoADY8=;
+ b=Oo3SvYPBbn+hvRn6f1X41eBFQOHhENunMEVEhkQRNhAO6oAxGAfU+XOs3UkQBwOwIC
+ VUv2GOUsSoeaHS2wTdv5viknQZgDQdfNxHUVYvq3qqElMDxw6PEqiRnvaY9SEkmtkvtT
+ F29cSozyoHckX6kfudfMybsv+4f3p1iEhhGx3n2xk/TokB70QeeNUeJYYGojODb1yGOi
+ KiV7sbtTQrnji5/Ya+SPR3yYiHXN1d8izAZ+8kfMZX4A1zesYx5RpgzuDlHDMe2qvfPT
+ FId4SbhpfhHpwBy+mDBrAd8vXhnepZzbHifVk5F5VK9z/pbd6qPnV7iqLuOQSNbyEyWr
+ 8BwQ==
+X-Gm-Message-State: AFuF++kirBE1zaFmazrwHrKPegi7g5HKPQX/znOP6bccNxgrFywq9YnH
+ OXTXttp8BM17Bga/QDx2RNzJ9hDT0vomkXksckx+2zQ06lOum/2nfHd6ScRUKQlNgQ5qrYAuCnK
+ efZULi7n03+9v6SU8j6uXIQ==
 MIME-Version: 1.0
-X-Received: from plat13.prod.google.com ([2002:a17:902:e1cd:b0:2df:5c69:498c])
+X-Received: from pjzc22.prod.google.com ([2002:a17:90a:e116:b0:3a0:6f00:2a50])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:f549:b0:2db:8019:847a with SMTP id
- d9443c01a7336-2df69d24336mr25769755ad.9.1790174748576; 
- Wed, 23 Sep 2026 07:45:48 -0700 (PDT)
-In-Reply-To: <179012898121.22786.2441732317511194041.b4-review@b4>
+ 2002:a17:90b:1346:b0:398:a145:5d3d with SMTP id
+ 98e67ed59e1d1-3a07e4ee828mr2509133a91.6.1790174746756; 
+ Wed, 23 Sep 2026 07:45:46 -0700 (PDT)
+In-Reply-To: <179012898120.22786.2623487845191822676.b4-review@b4>
 References: <20260909031146.1646684-1-stanleyjhu@google.com>
- <20260909031146.1646684-4-stanleyjhu@google.com>
- <179012898121.22786.2441732317511194041.b4-review@b4>
-Message-ID: <18d7fa72f2e6781c.3137322e31362e3131332e313435.2bcce3.0000sendgmr@google.com>
-Date: Wed, 23 Sep 2026 14:45:48 +0000
-Subject: Re: [PATCH v2 3/3] hw/ufs: Implement Task Management Request (TMR)
- handling
+ <20260909031146.1646684-3-stanleyjhu@google.com>
+ <179012898120.22786.2623487845191822676.b4-review@b4>
+Message-ID: <18d7fa72867e0326.3137322e31362e3131332e313435.2bcc0b.0000sendgmr@google.com>
+Date: Wed, 23 Sep 2026 14:45:46 +0000
+Subject: Re: [PATCH v2 2/3] hw/ufs: Support MCQ runtime interrupt and queue
+ status registers
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@gmail.com>, Jeuk Kim <jeuk20.kim@samsung.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Jinyoung Choi <j-young.choi@samsung.com>, Stanley Jhu <stanleyjhu@google.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
-Received-SPF: pass client-ip=2607:f8b0:4864:20::645;
- envelope-from=3HOazagoKChUDEv86zJ42F19916z.x97Bz7F-yzGz689818F.9C1@flex--stanleyjhu.bounces.google.com;
- helo=mail-pl1-x645.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1046;
+ envelope-from=3GuazagoKChMBCt64xH20Dz77z4x.v759x5D-wxEx4676z6D.7Az@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pj1-x1046.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,29 +98,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 23 Sep 2026 11:03:01 +0900, Jeuk Kim <jeuk20.kim@gmail.com> wrote:
-> > +                if (req) {
-> > +                    ufs_clear_req(req);
-> > +                    req->state = UFS_REQUEST_IDLE;
-> > +                    if (ufs_mcq_req(req)) {
-> > +                        QTAILQ_INSERT_TAIL(&req->sq->req_list, req,  
-> entry);
+> > - Store queue configuration for interrupt aggregation (CQnIACR) and  
+> completion
+> >   timeout intervals (SQnCTI).
 
-> A successful UFS_ABORT_TASK does not complete MCQ host-side cleanup.
-> The host driver will next issue SQRTCy.ICU, which must post an OCS =  
-> ABORTED CQE.
-> Please do not clear and recycle the request before that cleanup completes.
-
-Agreed. In v3, `UFS_ABORT_TASK` in MCQ mode cancels the underlying
-`SCSIRequest` and marks the request `UFS_REQUEST_ERROR`, deferring CQE
-posting (`OCS = UFS_OCS_ABORTED`) and slot recycling to `SQRTC.ICU`.
-
-> >      case A_UTMRLCLR:
-> > +        u->reg.utmrldbr &= ~data;
-
-> UTMRLCLR is clear-on-zero, so this has the polarity backwards: zero  
-> clears the
-> corresponding UTMRLDBR bit and one leaves it unchanged.  This should be
-> `u->reg.utmrldbr &= data`.
+> SQnCTI is Submission Queue Cleanup Task Information, not a completion
+> timeout interval.
 
 Fixed in v3.
+
+> > +    case offsetof(UfsMcqOpReg, sq.rtc):
+> > +        opr->sq.rtc = data;
+> > +        if (FIELD_EX32(data, SQRTC, ICU)) {
+> > +            /* SQ_ICU: Initiate Cleanup (SQ_CUS = 1, RTC = 0) */
+> > +            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, CUS, 1);
+> > +            opr->sq.rts = FIELD_DP32(opr->sq.rts, SQRTS, RTC, 0);
+
+> SQRTC.ICU reports successful cleanup without using SQCTI or changing any
+> request state. Is the actual cleanup expected to be handled by the TMR  
+> path?
+
+Implemented actual cleanup in v3: `SQRTC.ICU` now matches the target
+request via `SQCTI`, cancels any pending `SCSIRequest`, posts a CQE
+with `OCS = UFS_OCS_ABORTED`, and recycles the request slot.
 
