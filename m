@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120E9C982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 12:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57738C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 12:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MGc-0007iq-Nu; Wed, 23 Sep 2026 08:40:06 -0400
+	id 1x9MOG-0002e0-A6; Wed, 23 Sep 2026 08:48:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxv-0004F6-Fe
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:20:49 -0400
-Received: from mail-lf2-x11.google.com ([2a00:1450:4864:36::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxs-00079l-Cg
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:20:47 -0400
-Received: by mail-lf2-x11.google.com with SMTP id
- 2adb3069b0e04-5b8cbb7b9cfso668236e87.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 05:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9MOD-0002dk-Am
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:47:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9MOB-00037b-OS
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:47:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790167673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
+ b=Z/YQ+p0aK9MXYoQdJVxTHWnLw3s1UMBA2AhxmD26iBXCwt16iD+KRt+zsx53iDj77DuEA4
+ ZORh/GnpxK561EUFSFqEiePHQL8G3yeWoA6QB82dOlRBqzzXsuoKhQM3nKdOWEBQ0m3FQY
+ HY0YdXPrrY8buZB2imAAD6MACVq/d0U=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-414-qlwBd1i0OayP3pXyXvoEKQ-1; Wed, 23 Sep 2026 08:47:52 -0400
+X-MC-Unique: qlwBd1i0OayP3pXyXvoEKQ-1
+X-Mimecast-MFC-AGG-ID: qlwBd1i0OayP3pXyXvoEKQ_1790167671
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-486f3dbf7d2so909580f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 05:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790166031; x=1790770831; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RQ7LqL6uIN2+w3MFU8dOf51u0da7idHTXofvzCxA5W0=;
- b=mXlm0/ZZFxg/M9xy/r+sizheOwDUYKFCFgxqIn/BVpxnf7esH6zQPObMqa9hrn7dau
- l5UPpDB3RL7CGFrnmkYzOdZLg2E/dwghS6yx1On9OKB5Z0DOTz6glSXuMQ3YYUExWQhT
- iljK4I+9msp1mJ6ZaXuePLuWGg3GJecDE860G/OvEEl31kvosyvl5dUEXce6KBChUMZv
- wt0jUtqp/dGqxIKrQuR8rBV37EleWlbgtLyty59E03OtOLD7jQIl17P+ZR7GrpTgy/30
- ZP4PtOAYTjscTXWIZUSjl/UuQ2FvL3/frcapDpEWG0jju7vZt+BLfmJ2LsnE78rIk7Sf
- fOvQ==
+ d=redhat.com; s=google; t=1790167671; x=1790772471; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
+ b=nYXZZdk/nsSjCzuWhLkdFCTQWS0wz2ZjGoJAopT+dC5h5vK3O2sDRoZ+kFz/jY5uK2
+ yMMUelGDqzHCpXRqoVulngh9nqFrpIM01YI1w1aKmC6KASNU0Ie5iM2vbCFwHvvwCoaJ
+ r73SAT5za8urQQegE4dq0u2UTDXKGZT0DIv3JdBjB/yeY/4Y1EEcdMNkM8l31AasHZyA
+ RFQP09+KQa9HpEoySreQHicswaALxIh6tzLOhuOXFI0tDl22EVukSmgLdLwWOLJWJboV
+ ObGbK4Emp4YFEC5UbRy8NCVH4IRD3kswcuDAuypzZlKs/krj+BeszwV8GzTvC/dKWJxn
+ cLGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790166031; x=1790770831;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=RQ7LqL6uIN2+w3MFU8dOf51u0da7idHTXofvzCxA5W0=;
- b=W5D4g3nDmf8QeZRLUVYxOD0oLTFzFd3E6CCPKYWJBiC2wqlN3nVWBD4rxZuR9MYg8P
- 2IWfi5lwLu15y+dDbdMhAIudimoLPDXicqfRUUUlpzo5dvKiLrilJnPrOiDfKy9ql2qZ
- DNWZ53xAzxIAf9Yyw7Ub9WAyYsVxToGCyz6eGOt27Zahi7GW3cBbaQiPuezqakcyVpxO
- mZshwVmZZzKts8cfLFlcInqBj2iluphzaXlqrDRGo3xEQqtqmfjKHhR8pRcW6VS6opeH
- q2ndcBkR2Q1Y6oeRSJuBduWZ9D70+9+NbeTNao7J89hCvbEqlLUGOfP/sXZaifv6ddk6
- kRhg==
-X-Gm-Message-State: AFuF++l6+/yQr7L5LJRTr/VBQHuBcsKWQDbrF0cihiGVEq781GYtzdqr
- DN7PYqNJtpoDUBXlPH3IVClv0wdIPfEpF6jDnsP93FS6jVGZWN8ZqLgJ
-X-Gm-Gg: AYBFou0c38c3eAtQETJWz+x1DTmt4lusqgM2A5G9GtsI99c12dzE9IZ01anTpZczEJp
- 5ELe+44VXDpc3kr0WSOj+j+4NBkB5nppIXGzHxGGIQRo+rIiSq4mbi+47mgwrnXSnhLmdHNIaBI
- jwU5H76eC/3XEJ9siALtP6Ce5vvIJlvAg416UjZHHIX4r41cmW/IgHbitBfd+tBT/l0YfFPMt6Y
- MHoWGlfMSd8bs0YDPEiBm8tSedZ5Za7ZptquBvUFfYzx9exkV8kTG4XMLoVpisAS3MA6muJWDhE
- uLUdxk52wfMLZ18JB4rX/KI+5e/Rd9It6LhEcVrRiR4PK2sekV9EpfgbKWBUnxWp9RNakCLC6V1
- 9SDTu1BnP15JMKoMWBkAjhMR75mszsVCs2PMdQeLC2r5iRbfVnaqcs4as/DLdUkWw+Q4EZ2bfnJ
- 7euzVOd63zsaNsZOK9ZAaJWeerHYFBQAs9Ipaaa/k4YvJOAk2ceKkCyAtgLBBCcNCtZsMG9mjPJ
- cMLSPKCDnhm8vAUogRozQ==
-X-Received: by 2002:a05:6512:3d0c:b0:5a8:757b:80ee with SMTP id
- 2adb3069b0e04-5b8d8978b32mr899492e87.17.1790166030275; 
- Wed, 23 Sep 2026 05:20:30 -0700 (PDT)
-Received: from [127.0.0.2] (109-204-139-9.dhcp.ossk.fi. [109.204.139.9])
+ d=1e100.net; s=20260707; t=1790167671; x=1790772471;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
+ b=KsDY4Q+h6e1HIsXpyxs2r/EmhhK9IUyGPhnksrwABuCrXPkv2Ksmb5vApMHKd3fsmw
+ lKvyJaKunb6c1Nm8zASqLAk0ef2D7z2AekhJjnQXTx+2KTkEhe0/qKuw/z5yCzwpJr3Q
+ EigZBtC4TXaeGAtEuQtKAK6CeeZXDIrwKPUEA1Z1NYrwPI2kzJDWzhfUUcNIspdBbKbp
+ 2TlPa6qQdGHzinAkWGlxibsIwuuFi2wLgELXw1Wg2oZgn6BRhYKjcUuVGcA8eO4qIm7U
+ jpou7o62e44ueK9lwRYbIzp8EhrhOy8tZP28kCgWu7kzaAwyW/uaw2Q48t6LRlyzmINJ
+ IHGw==
+X-Gm-Message-State: AFuF++nfoXO9GfG46XmMQRMSomGwWdQRvfpMpF3NBmlIcGmjqzLq92l9
+ ksPCkoekKQ3zgTTwuOQmK+AB2Iw630RNPvuZt2BhpfOtAyflEcgQgvIiHs61q/lUYsRSnGmb4A6
+ wYl5jh1CkmBNi3+aP2EuneIB8MDnWePE3UBmtZueCFBjzIamTjG6HCJxrqCc4/+5qI6S4OUrL4a
+ twEsoQW6CN1cxRqb3BFff/FB6suIvWLHhoC4bb6FRo
+X-Gm-Gg: AYBFou1VEGgMVCD8IWtdWwG1YjJf1YdVROd0KsPsNFO+Tkmbs8jjeE5Am4ieVeup0lu
+ xlQHHQ6W58fy1wfoAZIzGpGaZqFydJt5PPB3QXBwcEp79AhNVdE0ztYSRoM32dWXvLMefAuXR50
+ xkKUVMQrPfPC/v1EgDlJtDiiqihfMTcbeA7o9H78kNEgwMOkpuYc5Z5dMQF/7t5c9YpSx1ilNu0
+ Q7M4RKx58AMnYpdagMjNtZ1ZLJg/Pdd8qp7ZmyA2FFB461doE8zE1O6mi7nJV6UnN/2BzVpeRv1
+ gFjvXmzkKY64IaVO+8XOUEyck14k6QD+Tk7qbQnc6NA8NWsgPTuSUhacOouavDaLJXHM2NE8vfb
+ WrbTkIJY2buBnZcZ9SM4aw+PHuaPv/B279CIGQSWM9x29lzJ+hj3t3CFVihOQ2xNgAlE/tHFtmy
+ zMd+G1
+X-Received: by 2002:a05:6000:41cd:b0:487:342:d143 with SMTP id
+ ffacd0b85a97d-488670a0390mr4151889f8f.33.1790167670964; 
+ Wed, 23 Sep 2026 05:47:50 -0700 (PDT)
+X-Received: by 2002:a05:6000:41cd:b0:487:342:d143 with SMTP id
+ ffacd0b85a97d-488670a0390mr4151840f8f.33.1790167670486; 
+ Wed, 23 Sep 2026 05:47:50 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b8d85897aesm552138e87.50.2026.09.23.05.20.29
+ ffacd0b85a97d-488682668e7sm7958890f8f.4.2026.09.23.05.47.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 05:20:29 -0700 (PDT)
-From: =?utf-8?q?Markku_Ahvenj=C3=A4rvi?= <mankku@gmail.com>
-Date: Wed, 23 Sep 2026 15:20:02 +0300
-Subject: [PATCH 1/3] hw/nvme: prevent cq_pending underflow
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nvme-intx-fixes-v1-1-fbf0e4e567a5@gmail.com>
-References: <20260923-nvme-intx-fixes-v1-0-fbf0e4e567a5@gmail.com>
-In-Reply-To: <20260923-nvme-intx-fixes-v1-0-fbf0e4e567a5@gmail.com>
+ Wed, 23 Sep 2026 05:47:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
- =?utf-8?q?Markku_Ahvenj=C3=A4rvi?= <mankku@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1790166028; l=2083;
- i=mankku@gmail.com; s=20260923; h=from:subject:message-id;
- bh=L8d3cJ/s2+GgYwMG8LU0QUz+WFUIGxrwJZfFwvTOOKw=;
- b=tzUMhqcEYF7tf1ubewmn2NGfGwXCH8T/b1Ud7zVR71RN5fn8EOdfBsMWvy6TcZPfgT4J7YEED
- hXX78r7oNZmB6yr23kTHzPiHPu1dsRj2yVdL0kVPrek+7Y3y2tMGaHV
-X-Developer-Key: i=mankku@gmail.com; a=ed25519;
- pk=vdAiS3IZFixKCwRmc+wfwUSPQWpEMkFYPH8m9evJZPc=
-Received-SPF: pass client-ip=2a00:1450:4864:36::11;
- envelope-from=mankku@gmail.com; helo=mail-lf2-x11.google.com
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] target/i386/tcg: fix REPScalar with memory operand
+Date: Wed, 23 Sep 2026 14:47:49 +0200
+Message-ID: <20260923124749.273446-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 23 Sep 2026 08:40:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,66 +116,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cq_pending counts interrupt-enabled completion queues with unconsumed
-entries. nvme_cq_notifier() and nvme_process_db() decrement it whenever
-a CQ becomes empty, but they may also process a notification or doorbell
-write for a CQ that was already empty.
+By the time validate_vex() runs, e->s2 is not used anymore and
+decode->op[2].ot has already been filled in by decode_size().
+So it's the latter that has to be adjusted, just like before
+commit b7d4ec4832d ("target/i386/tcg: move VEX validation early",
+2026-08-26).
 
-Decrement cq_pending only when the CQ contained pending completions
-before its head update. Otherwise cq_pending may underflow and
-prevent legacy INTx from being deasserted.
-
-Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
+Fixes: b7d4ec4832d ("target/i386/tcg: move VEX validation early", 2026-08-26)
+Reported-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/nvme/ctrl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index c641226e27ad..2be4bab7eb5a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4782,6 +4782,7 @@ static void nvme_cq_notifier(EventNotifier *e)
- {
-     NvmeCQueue *cq = container_of(e, NvmeCQueue, notifier);
-     NvmeCtrl *n = cq->ctrl;
-+    bool pending = cq->tail != cq->head;
- 
-     if (!event_notifier_test_and_clear(e)) {
-         return;
-@@ -4790,7 +4791,7 @@ static void nvme_cq_notifier(EventNotifier *e)
-     nvme_update_cq_head(cq);
- 
-     if (cq->tail == cq->head) {
--        if (cq->irq_enabled) {
-+        if (cq->irq_enabled && pending) {
-             n->cq_pending--;
-         }
- 
-@@ -8555,6 +8556,7 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
- 
-         uint16_t new_head = val & 0xffff;
-         NvmeCQueue *cq;
-+        bool pending;
- 
-         qid = (addr - (0x1000 + (1 << 2))) >> 3;
-         if (unlikely(nvme_check_cqid(n, qid))) {
-@@ -8609,13 +8611,14 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
-             qemu_bh_schedule(cq->bh);
-         }
- 
-+        pending = cq->tail != cq->head;
-         cq->head = new_head;
-         if (!qid && n->dbbuf_enabled) {
-             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
-         }
- 
-         if (cq->tail == cq->head) {
--            if (cq->irq_enabled) {
-+            if (cq->irq_enabled && pending) {
-                 n->cq_pending--;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 8d1e581cfde..26f6d6277be 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2671,7 +2671,7 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
              }
- 
-
+             assert(e->op2 == X86_TYPE_W && e->s2 == X86_SIZE_x);
+             if ((s->modrm >> 6) != 3) {
+-                e->s2 = s->prefix & PREFIX_REPNZ ? X86_SIZE_sd : X86_SIZE_ss;
++                decode->op[2].ot = s->prefix & PREFIX_REPNZ ? MO_64 : MO_32;
+             }
+         }
+         break;
 -- 
 2.55.0
 
