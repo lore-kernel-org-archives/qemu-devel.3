@@ -4,82 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8D8C982EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 06:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7959C98309
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 06:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9GQX-0000ww-Vt; Wed, 23 Sep 2026 02:25:58 -0400
+	id 1x9GTU-0001yG-5I; Wed, 23 Sep 2026 02:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9GQW-0000wa-Ml
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:25:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9GQU-0001XP-3d
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:25:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790144752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=H6+F4+jUQoClXz48M732OtJ/zHWlIztkbGrIr7jsg7Q=;
- b=CsPud1EkQKBoOH7t1XWZY2zaH2iCFa2fnU25qRO6l5iqnSBGSk4EYlhgo/FORURgyOkSng
- HtnxSsDTV49m0JRpSciePue1fLkny1/COr7H4BEQAvJ6PwzvJ3JJ+oZDCgsnPkywg7A1/K
- aNG5tT5mes4Pk6PEdVYW/HKZQ3AOLnA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-ajqx_LPgN1GDDogCIJ-BHQ-1; Wed,
- 23 Sep 2026 02:25:45 -0400
-X-MC-Unique: ajqx_LPgN1GDDogCIJ-BHQ-1
-X-Mimecast-MFC-AGG-ID: ajqx_LPgN1GDDogCIJ-BHQ_1790144744
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2114A180130E; Wed, 23 Sep 2026 06:25:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20B7318002B7; Wed, 23 Sep 2026 06:25:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AACC721E6A04; Wed, 23 Sep 2026 08:25:40 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Kostiantyn
- Kostiuk <kkostiuk@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
- qemu-trivial@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Stefano Garzarella <sgarzare@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,  Eric Blake <eblake@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v2 5/8] qapi: split intros at natural cutoff points for
- qga/qapi-schema.json
-In-Reply-To: <20260922205605.501602-6-jsnow@redhat.com> (John Snow's message
- of "Tue, 22 Sep 2026 16:56:02 -0400")
-References: <20260922205605.501602-1-jsnow@redhat.com>
- <20260922205605.501602-6-jsnow@redhat.com>
-Date: Wed, 23 Sep 2026 08:25:40 +0200
-Message-ID: <87h5jgzdp7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1)
+ (envelope-from <prvs=md1720B46088=lizhaoxin04@baidu.com>)
+ id 1x9GTR-0001y6-L7
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:28:57 -0400
+Received: from mx20.baidu.com ([111.202.115.85] helo=outbound.baidu.com)
+ by eggs.gnu.org with smtp (Exim 4.90_1)
+ (envelope-from <prvs=md1720B46088=lizhaoxin04@baidu.com>)
+ id 1x9GTM-0001eY-Lc
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:28:57 -0400
+X-MD-Sfrom: lizhaoxin04@baidu.com
+X-MD-SrcIP: 172.31.4.16
+From: Li Zhaoxin <lizhaoxin04@baidu.com>
+To: <qemu-devel@nongnu.org>
+CC: "Michael S . Tsirkin" <mst@redhat.com>, Longpeng <longpeng2@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Li Zhaoxin <lizhaoxin04@baidu.com>
+Subject: Re: [PATCH] vdpa-dev: implement guest_notifier_mask/pending
+Date: Wed, 23 Sep 2026 14:28:34 +0800
+Message-ID: <20260923062834.35973-1-lizhaoxin04@baidu.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20260909155042.34186-1-lizhaoxin04@baidu.com>
+References: <20260909155042.34186-1-lizhaoxin04@baidu.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Originating-IP: [10.127.73.8]
+X-ClientProxiedBy: bjkjy-exc10.internal.baidu.com (172.31.50.20) To
+ bjhj-exc18.internal.baidu.com (172.31.4.16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
+ s=selector1; t=1790144923;
+ bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+ h=From:To:CC:Subject:Date:Message-ID:Content-Type;
+ b=JlMpi7IY2U0Xda2ajdJQPSaVwfAKRzYmMRLK0QlVK2a/riY5dflvhgQHH3IkXIwiB
+ Pz0PGMhGBs4n1shUc9NCSFxtL2rvMJL3xzaWqZAnavnGavI2C+IE4SZkZ+oyeVKOnM
+ A5I2iyQPdJ+F7zD+9cV4lZl301FcEqunT2owel5IHwlFsK62HyCum1+t4SD6ypiq8S
+ dOtpBhBGK5ut7fcMA7J440+N0YXRcnhe8OnXrlohZ5A47OrhCxGXxbEqlSppsudTeS
+ ngzXfhdA9ykB9muY4Ov4MavaUKHj+DkTtdHwfViw5z+CVk/KcNWWZkG16v1gJllQgZ
+ McFUio03RYOOA==
+Received-SPF: pass client-ip=111.202.115.85;
+ envelope-from=prvs=md1720B46088=lizhaoxin04@baidu.com; helo=outbound.baidu.com
+X-Spam_score_int: 16
+X-Spam_score: 1.6
+X-Spam_bar: +
+X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, EMPTY_MESSAGE=2.32, PYZOR_CHECK=1.392,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,24 +72,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-
-John Snow <jsnow@redhat.com> writes:
-
-> Note that these intro conversions introduce a new intro/details split
-> point. This new split point may or may not change the rendered output
-> depending on if any documentation is auto-generated and inserted for
-> this definition.
->
-> This has tangible effects on how @guest-fsfreeze-status documentation
-> is rendered, while the other two appear unchanged.
-
-Doesn't say how it changes, and it's not visible in the patch.  Suggest
-
-  How @guest-fsfreeze-status documentation is rendered improves
-  slightly: "Note:" moves from above "Return" to below.  The other
-  conversions don't change rendered documentation.
-
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
 
 
