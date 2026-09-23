@@ -4,142 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3397C98307
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B640C982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KwW-00076b-Ae; Wed, 23 Sep 2026 07:15:16 -0400
+	id 1x9L2M-0008Jo-N2; Wed, 23 Sep 2026 07:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x9KwC-00075J-5V
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:14:59 -0400
-Received: from mail-northeuropeazon11020083.outbound.protection.outlook.com
- ([52.101.84.83] helo=DB3PR0202CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x9Kw8-00074B-37
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:14:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BbZ7yh+hkVMeFRAU8HFlFhSxX+QIgSX7zAFvqA1yxghKvo5Dqy/wjwb5URmVsnzoWoiSQyJhfX161SrShn1/kMXb9DYcdubdJOXKWNXiCUKhdd7VFQUBYgiRrANdHuEBG6ONPMroaBckIT0pIALcyslu5B9qOfWwZiuDI9JU1zh/HSUwtYq2h0+CUcqAzaaWz0OFIcAK3x9FZdxkxJ4tf1Ry8A1QrpTKPFiu7bOXNlwOQKwY4dCntZoB8tQkV3Js+p01abuHa8Nf68Vuq3K8dULkU6k4Ah6vSCcrfijwqZ60XtsmgXB4yODyU/MHjtvinw+EjWzpNPJT4yE8F4XMdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9ndH/18FzUHrzhOPEk4A9R2DdeYlpbENFEYqGtavUMM=;
- b=hSRJbJUWU94aqnXKmFuzDxSlpPMLYlMjtIeTf4bM9b3Gb/OTz5eGyMjBZUCQcSjp1HN6WilKukBuUUwC+P7ttUbzpYtPSq/tvadB+S1q5p+moWZjsbM20D+BduOAPJo5mf/fcXPpelIPXHN9LSQ8wd27Vi8pv1eESShU4HulDzqvvRjjcHmQPS/jFQGPTasvh0FTiHR6Ezw9zXI1nKmqAa0LJfwdnFQjlBfnp2cTzMTQcF93mY9cwLsA1zPW7lW8ZkIcdGXEjPVogfqn5Z5BSlILuH1qp3LfKLTl4rNlW6/6/+jGCj5ZLlv1BsLZ2OqU/WiF5YdpDzjHxI7A3YAmIA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9ndH/18FzUHrzhOPEk4A9R2DdeYlpbENFEYqGtavUMM=;
- b=PgGvBDrMdMNKVXrU7coH+ZRUWGSYzc+fVRCo8zWnwoILVOjRvtDbGp6QgQdeE6j/uNGAz/yWGHXa30teEGgJI6GKcCCjSuFTDIRxxR9Uh7xI7uMyV/GuZ63yybq77NoQS4sDxz+s4kw+vGPhsT43jo6oLLxdgfNnJEWHDWF/8uMhY2eg+rbKL7W5iyENBilSiOYK/JEhTVBrO80rPST4sdOasJNhvx0TEia1INKnZxcBUVzTicGvP8HaEJDKuO5kQ5loCesgYCMfAugqx0x53dH62A7PFGmIHXlseKGxXhMLNDjoRNb+O4uGOJAk5Xr9Ssc7O6qjqbEhmBX6hXkb1w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS2PR08MB9810.eurprd08.prod.outlook.com
- (2603:10a6:20b:605::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.5; Wed, 23 Sep
- 2026 11:09:42 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
- 11:09:41 +0000
-Message-ID: <a23f83f6-fa39-47e9-9537-5f9cbaa476b0@virtuozzo.com>
-Date: Wed, 23 Sep 2026 14:09:40 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 14/16] vhost-vsock: hand off device ownership across CPR
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, bchaney@akamai.com,
- mark.kanda@oracle.com, philmd@oss.qualcomm.com, vsementsov@yandex-team.ru,
- maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, mst@redhat.com,
- clg@redhat.com, peterx@redhat.com, den@openvz.org
-References: <20260918-up-vsock-vhost-v5-v7-0-6ef9ef033c35@virtuozzo.com>
- <20260918-up-vsock-vhost-v5-v7-14-6ef9ef033c35@virtuozzo.com>
- <arJGNRq8UC-XSEpW@sgarzare-redhat>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <arJGNRq8UC-XSEpW@sgarzare-redhat>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR3P281CA0186.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a4::13) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1x9L2A-0008JO-6H
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:21:07 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1x9L27-0007vp-Ii
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:21:05 -0400
+Received: from example.com (unknown [167.220.208.66])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 7100920B7167;
+ Wed, 23 Sep 2026 04:20:10 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7100920B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1790162411;
+ bh=VHimXAkJdBMUadd4WxfWKh6waiyBVHDTpz5DjOWyZ2A=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=DNE5GpQs9CJhwKOpHuRZZaM8Lfu5SyyId6xAoAVo/x5tBge2diHOtKD2TzxDvPpiC
+ sRY8olibDznq24iPe1d0eEEqnhPtRTXGdxFCRFZiG2kBeyK8zeUEDo3kujROM2FhJP
+ NuLWhq+QrGcmr5JaorRMjsaNNmU4sXDCuwaLLIpA=
+Date: Wed, 23 Sep 2026 13:20:55 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@microsoft.com>
+Subject: Re: [PATCH v2 2/4] accel/mshv: add gdbstub software breakpoint support
+Message-ID: <arO2F1+iwQhCt2f3@example.com>
+References: <20260731184643.89604-1-dblanzeanu@linux.microsoft.com>
+ <20260731184643.89604-3-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS2PR08MB9810:EE_
-X-MS-Office365-Filtering-Correlation-Id: af805e79-b705-4472-d16f-08df19632a8a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|366016|1800799024|23010399003|10067099003|56012099006|22082099003|18002099003|4143699003;
-X-Microsoft-Antispam-Message-Info: xchdSiIVA8v0bQUfmbymZBiGalZWl72lMhPQrZLCIqhCw9M19y9ItLStqJFZWX56QmZyo67w/N2pI2DoXKrie8aVRhdCFt3BL0J6zUL9G5X2Y7M5Hd9e8CQXgwMcEFgUQ6nbEEE+0yo7pmQl7WAUfIaVFgAjaSZ7BmQ0ZlllKmz4KDDw4otKNuDedwCzLR5+8y7uf4zj6eVKeuQc+zrIgFEXoYJ7T82yiAxF7ECZOtcpGlx2aUR/b4UdIZgMvF1A2wJtyecttSv6Qg9os/6q+ySjgWC55dCAtZePrilNhlZu2xoYxbY545zef7vkHeJnSPzlcfuepMlwoiqUXENF/gCk1LCgSvPUZLLYgj5Ur832+Na7u+fp9yhyOXN3Gpm+Rg+HS9f3Fwv0OimOvCKrOfD3v6xeZk1ZZ7t/K+oyQrDJsoBVYhQV8E9i+sNKLUAh3cA+e5PlftiJVhbzO6s+oZQywcS61IJpTZER13WrXbdtjovlLVAyORTq+6GTXqIn9xYgaOD51+Zpsl5MLQ5ZyH3tMD+asaqqFdTwWNFdf5mfAC5ZmfCLgfQ3R40SSY9b9L/097LTnfCzNVlHkIdNCo5TGZoqghghHbdCtIb464EWYAE84jBZ9+oM+6Dw8cgeycUo18qy+eMxOpv3TXakUBO3iFbCcsnp3J1H4/q/CcE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(366016)(1800799024)(23010399003)(10067099003)(56012099006)(22082099003)(18002099003)(4143699003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eGtGK0dJNmNVQTBSelE1cGtSVjhWc1Z1NGVFL3NKQ2NZK3N4blpuamVqQ2ZW?=
- =?utf-8?B?eG5iU1J4YkI4MVd6eDlzSWlpMEpCMXZhc0J6R2ExbWcvQnJ1Q0tlQkRmOXVz?=
- =?utf-8?B?UkFxWXMwbVM4OVN2NG1KOHY3ZVdiUk9MRlVTMmMyeGgzSlVLY0NPM3NLaHJa?=
- =?utf-8?B?K2I0clFWeUl6NFhHdGlJMzZJQmpRRzlOazZWeFIxakFLMnZ3TFZ3MUxuNTNt?=
- =?utf-8?B?K0ZmRUlmWkVNbFE2TlZjZGxHZHRlcHg4S1dBdlFqS1VvNVpmd3cvcGJzaDdU?=
- =?utf-8?B?MkhKaXlwUGs4L2JTSjB5d1RTZnhDQVBlMW8vVWRYMDUvUU5IZjFrbVYzclJq?=
- =?utf-8?B?VUo2cVVsenU3WkNKQUZ0RENvZmlTRW9mMVFPeFZaZ0RoZlFJN01Mdllpb3NK?=
- =?utf-8?B?c0VlVXpDTDl3MUh3Z21RTEhjYnRkRS9vdEovK1NuT1dncml3YVg5N25SSVpU?=
- =?utf-8?B?ZVdOeFlFNXNtcVRHRzE2MXFNRDg5YzVMZ0xGenlZMU1pNng3cjJlM2VWOWVU?=
- =?utf-8?B?MDd1WC9SaDUxM3FUeHpJUjVKU0xseEVvSDJ4Y2kvU3NuWEpiQ0FtK241SzU4?=
- =?utf-8?B?WGlQY3FmRUNHSk1KN0xzWGZpLzlnRC9vUEdGVjhVaXc3QWNDTDBYU3ZwM0NE?=
- =?utf-8?B?cFByajBuVk5zaDNCYTJFVU9HSHQzSGNteEYvRkIwYW1BRVA5WmM2Y05GbGF4?=
- =?utf-8?B?SXV4Ky91SWhZMThvdGFIRVRsNkd1bkdvbFcycHcvZ1ZBaUpOOVJpbkxKeTVJ?=
- =?utf-8?B?RHgzTVM2QlM1RHJkci9rRlRIaE5tTitEU2xtVTlFL2RqcWdTelhKTmp0NGtX?=
- =?utf-8?B?Skdrc3FCSUFRb3ZrSFZ6d05DbGxWL2NJRGJTaHJUdGhFSVluQitGUlhHM04v?=
- =?utf-8?B?KyswS01NbkpTbzA0MEhaMTBSaEdMaUNUUGhUbExtOEcxRGxKUDJtSE54Qkdq?=
- =?utf-8?B?dmF4aFZmYzZZTk9qeVVWR1ZFZkZnUlQ5VjZSeW53WjJVb3FFRmZsdWJ3L1Zv?=
- =?utf-8?B?b3ZIbTNIdFp1WE9DZU5ndWRBMW8vNFFUVTNwc3VWMy9lN2s2azFpN3hESWt5?=
- =?utf-8?B?S3Z1ZGhGMm9oVHM2ZnVFRENPV3FlQlNmOTZ2UFNPcjVYOEFzZk9EWnE1bFl2?=
- =?utf-8?B?Z2xBUWE4Vlp2WksxUzdUOFNpclk2ZmQwditGeVFHbVpEM3RDR1JPMWE3a2lK?=
- =?utf-8?B?cHh3WmV2SVJsSnJQbU5jeXJpTjdxaWVWYmVKU28reld3YXoxNWhxbnA4enBH?=
- =?utf-8?B?WXl1b01HUmNJT3llWVIxVDhEWW93RjR0a28yY002VnVXUnljVE5JZHo1bEZ6?=
- =?utf-8?B?R2V3OUt5OS9nRll1eTRhRVJORHQ5WmJoeE1JUkp3S00rQnM4YWU4WlZaQmw1?=
- =?utf-8?B?NzloZ2h2a2ZnMGNhNnVWd1NCbDhDQ0p0WVlQNUdVVVZUZTY5UHYyemc4azJo?=
- =?utf-8?B?b2hLdjcwN3I4aVpORmZtZC9MV1ppSlRMWTRPUlY5ck1OT1YzRzBOTVlsVXdl?=
- =?utf-8?B?eFR5ZzFkQTdTMjhyTGVYQTBzdE9QTEdpci9nTVhIRGErS2FudVZESzh0S0FG?=
- =?utf-8?B?QXFycktxOWlMU01NUlBUVHRhQXpCUlgzUy9nbER4SWlnbWhTREpxYTdTMVdP?=
- =?utf-8?B?dHROWWQ2NDNHVjE2YTNqWmRzT2JJUnRwajlZZWwyMnNyelN1U241a0FZd0pw?=
- =?utf-8?B?MjArN2l6NGxzNzhMTHNxNWNRMHloNkQ1bXRUNUtXcDFrWER1Y3AvcTdZWmFC?=
- =?utf-8?B?SGErd0xPcGVaZmx3QmpIdkZwRTc5cFNNUU5NcllJZE53MmhYL3o2b1VLTTVK?=
- =?utf-8?B?MkZGNFNPS2xWSXZTNWY4NlJJRnQxSHkzOHhrT0tQcklKVDErbXM0RHF5ZFRY?=
- =?utf-8?B?bVZWUTlLV2hHMktZUW5haHVCeFdZLzdJSC9ZWDBhMkU1UUF6UlNLZElyZ2Ny?=
- =?utf-8?B?WERibTg0UU1JSlhvb0o3VmgyMUkycnZTSzBQWXFmVDdMU0tXNmFKYzI0bHcr?=
- =?utf-8?B?aVNsRjVPOWszOVVHcUlFVlRUcUxkVm1PWVJyS2x0c2xGOHcyVFhYNERiWDNN?=
- =?utf-8?B?VkxGelR3YVpiNEI5YkVNZVFyWUN5Y3hHZnRSVml6UFZBTEphVGpDMUllbjJn?=
- =?utf-8?B?dE9hRERuWCtJR3hFR01VdE43WkxYRzZmYVhnc1JFUFUreXBzcmc5TDRlU21Z?=
- =?utf-8?B?UjFFQkoyVlBWVzRQc0drLzJuWDd4bGxidDQ5bDBhdjJrSkFGL2JBY1gwTVc5?=
- =?utf-8?B?bnJKWEpyNkM1NW9SbFQwN3d4QzA3YTJTM3NvaUFBbDJyK2dhNWlrcUw5R0c3?=
- =?utf-8?B?QS9GYXRPTGZuT3RQN2dXOFk4aEZhdzkzMnFXbERxN1JpZWlCbHh4cW9GM3VR?=
- =?utf-8?Q?TRdz2wUhpPIHb5VM=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: af805e79-b705-4472-d16f-08df19632a8a
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 11:09:41.8165 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Ffo+iqTariJG9IzXZz4oJSJ0y2rssGUhxuppfFBm2ZoQbuGMmeUz5Ht7WXDexv88YKnBXGHSuIh0TiOX53E0X8cFJZZVCxcSFdY4g0UDnJ8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB9810
-Received-SPF: pass client-ip=52.101.84.83;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260731184643.89604-3-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,197 +68,437 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/22/26 12:26 PM, Stefano Garzarella wrote:
-> On Fri, Sep 18, 2026 at 04:47:05PM +0300, Andrey Drobyshev wrote:
->> The previous patches reuse the source vhost FD on the destination,
->> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
->> in realize().  For cpr-transfer the destination realizes while the source
->> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
->> handed over explicitly.
->>
->> Do this through the device's CPR vmstate hooks.  Namely, release device
->> ownership in pre_save, reclaim in post_load, re-acquire on restart:
->>
->>  - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
->>    the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
->>    cpr-exec).
->>
->>  - .realize(), for an incoming CPR, only sets up the virtio device and
->>    queries the backend features by calling vhost_dev_init_backend().
->>    It doesn't take device ownership and doesn't touch the VQs which
->>    still-running source might use.  The full init is deferred to
->>    .post_load().
->>
->>  - .post_load() reclaims it on the destination: the full vhost_dev_init()
->>    (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
->>    the device is started at vm_start.
->>
->>  - .set_status() refuses to start a device whose init hasn't completed
->>    yet (incoming CPR before post_load).
->>
->>  - .set_status() re-acquires ownership before starting the device if
->>    pre_save released it and this QEMU is about to run the guest again:
->>    the migration failed, or it completed and the management resumed the
->>    source (e.g. cpr-transfer target died).
->>
->> With the handoff in place, lift the CPR blocker.
->>
->> Note: this requires kernel side support of VHOST_RESET_OWNER operation
->> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
->>
->> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
->> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> ---
->> hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
->> include/hw/virtio/vhost-vsock.h |   2 +-
->> 2 files changed, 128 insertions(+), 31 deletions(-)
->>
->> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
->> index 6e89007b2ce..65ba573da4d 100644
->> --- a/hw/virtio/vhost-vsock.c
->> +++ b/hw/virtio/vhost-vsock.c
->> @@ -21,7 +21,6 @@
->> #include "hw/virtio/vhost-vsock.h"
->> #include "monitor/monitor.h"
->> #include "migration/cpr.h"
->> -#include "migration/blocker.h"
->> #include "migration/misc.h"
->>
->> static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
->> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
->> static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
->> {
->>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
->> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
->>     bool should_start = virtio_device_should_start(vdev, status);
->>     int ret;
->>
->> +    /*
->> +     * During CPR, on target the full vhost_dev_init() is deferred to
->> +     * post_load.  Refuse to start a half-initialised device rather than
->> +     * issue vhost ioctls on it.
->> +     */
->> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
->> +        error_report("vhost-vsock: refusing to start, device init incomplete");
->> +        return 0;
->> +    }
->> +
->>     if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->>         return 0;
->>     }
->>
->>     if (should_start) {
->> +        /*
->> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
->> +         * source, after a successful RESET_OWNER op.  If we end up here
->> +         * with this flag set - that means that either CPR migration failed,
->> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
->> +         * target died).  In either case, we need to re-acquire device
->> +         * ownership.
->> +         *
->> +         * On failure leave the device stopped.  The next start attempt
->> +         * (guest driver reset, VM stop/cont) retries.
->> +         */
->> +        if (vsock->owner_reset) {
->> +            ret = vhost_dev_set_owner(&vvc->vhost_dev);
->> +            if (ret < 0) {
->> +                error_report("vhost-vsock: cannot re-acquire device "
->> +                             "ownership: %s", strerror(-ret));
->> +                return 0;
->> +            }
->> +            vsock->owner_reset = false;
->> +        }
->> +
->>         ret = vhost_vsock_common_start(vdev);
->>         if (ret < 0) {
->>             return 0;
->> @@ -123,8 +154,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
->>     return vhost_vsock_common_get_features(vdev, requested_features, errp);
->> }
->>
->> +static int vhost_vsock_pre_save(void *opaque)
->> +{
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
->> +    int ret;
->> +
->> +    ret = vhost_vsock_common_pre_save(opaque);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> +
->> +    /*
->> +     * Release the device ownership now for CPR migration.  The device is
->> +     * already stopped at pre_save, and destination reclaims it by calling
->> +     * VHOST_SET_OWNER in post_load.
->> +     */
->> +    if (cpr_incoming_needed(NULL) && migration_is_running() &&
->> +        !vsock->owner_reset) {
->> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
->> +        if (ret < 0) {
->> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
->> +                         strerror(-ret));
->> +            return ret;
->> +        }
->> +        vsock->owner_reset = true;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> static int vhost_vsock_post_load(void *opaque, int version_id)
->> {
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
->> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(DEVICE(opaque));
->> +    Error *local_err = NULL;
->> +    int vhostfd, ret;
->> +
->>     /*
->>      * Only reset vsock connections for non-CPR migration.  For CPR the
->>      * guest cid is unchanged, and the cid-change reset would otherwise
->> @@ -134,6 +201,35 @@ static int vhost_vsock_post_load(void *opaque, int version_id)
->>         return vhost_vsock_common_post_load(opaque, version_id);
->>     }
->>
->> +    /*
->> +     * CPR restore case.  The source released device ownership in its
->> +     * pre_save.  Complete the handoff here, before the device is started
->> +     * at vm_start.  Init vhost device on preserved FD, issue
->> +     * VHOST_SET_OWNER on it, and restore the guest cid.
->> +     */
->> +    vhostfd = cpr_find_fd(cpr_name, 0);
->> +    if (vhostfd < 0) {
->> +        error_report("vhost-vsock: could not find restored vhost FD");
->> +        return -1;
->> +    }
->> +
->> +    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
->> +                         VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
->> +    if (ret < 0) {
->> +        error_report_err(local_err);
->> +        cpr_delete_fd(cpr_name, 0);
->> +        return ret;
->> +    }
->> +
->> +    ret = vhost_vsock_set_guest_cid(vdev);
+On Fri, Jul 31, 2026 at 09:46:40PM +0300, Doru Blânzeanu wrote:
+> Implement software breakpoint based guest debugging for the MSHV
+> accelerator, modeled on the WHPX backend. The guest-visible debug
+> registers are not used: a breakpoint is an INT1 (opcode 0xf1)
+> patched into guest memory, which raises a #DB when executed.
 > 
-> Why we need to set the CID? Isn't it preserved?
+> A partition-wide intercept on #DB is installed the first time a
+> breakpoint (or single step) is requested. The intercept is not uninstalled,
+> so it stays for the lifetime of the VM and every vmexit mshv_handle_debug()
+> decides whether the #DB belongs to gdb (it hit one of our INT1 breakpoints) or
+> to the guest; a guest-owned #DB is handed back through a pending exception
+> event so the guest takes it through its own IDT.
+> Guest INT3 (#BP) is deliberately left to the guest's own IDT and is never
+> intercepted.
 > 
-> That said, I don't think it is wrong, it seems just superfluous, but 
-> maybe there is a reason.
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+> ---
+>  accel/mshv/mshv-all.c       | 165 +++++++++++++++++++++++++++++++++++-
+>  include/system/mshv_int.h   |  14 +++
+>  target/i386/mshv/mshv-cpu.c | 104 +++++++++++++++++++++++
+>  3 files changed, 282 insertions(+), 1 deletion(-)
 > 
-> The rest LGTM:
-> 
-> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index 72721d0f0d..afcb87b3b8 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -29,6 +29,7 @@
+>  
+>  #include "qemu/accel.h"
+>  #include "qemu/guest-random.h"
+> +#include "gdbstub/enums.h"
+>  #include "accel/accel-ops.h"
+>  #include "accel/accel-cpu-ops.h"
+>  #include "exec/cpu-common.h"
+> @@ -583,6 +584,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>      s->nr_as = 1;
+>      s->as = g_new0(MshvAddressSpace, s->nr_as);
+>  
+> +    QTAILQ_INIT(&s->sw_breakpoints);
+> +
+> +    as->gdbstub.sstep_flags = SSTEP_ENABLE;
+> +
+>      mshv_state = s;
+>  
+>      mshv_init_irq_routing(s);
+> @@ -607,6 +612,153 @@ static int mshv_destroy_vcpu(CPUState *cpu)
+>      return 0;
+>  }
+>  
+> +struct MshvSwBreakpoint *mshv_find_sw_breakpoint(CPUState *cpu, vaddr pc)
+> +{
+> +    struct MshvSwBreakpoint *bp;
+> +
+> +    QTAILQ_FOREACH(bp, &mshv_state->sw_breakpoints, entry) {
+> +        if (bp->pc == pc) {
+> +            return bp;
+> +        }
+> +    }
+> +    return NULL;
+> +}
+> +
+> +static int mshv_install_exception_intercept(int vm_fd, uint16_t vector)
+> +{
+> +    struct hv_input_install_intercept in = {0};
+> +    struct mshv_root_hvcall args = {0};
+> +    int ret;
+> +
+> +    in.access_type = 1 << HV_X64_INTERCEPT_ACCESS_TYPE_EXECUTE;
+> +    in.intercept_type = HV_INTERCEPT_TYPE_EXCEPTION;
+> +    in.intercept_parameter.as_uint64 = vector;
+> +
+> +    args.code = HVCALL_INSTALL_INTERCEPT;
+> +    args.in_sz = sizeof(in);
+> +    args.in_ptr = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to install exception intercept for vector %u",
+> +                     vector);
+> +    }
+> +    return ret;
+> +}
+> +
+> +/*
+> + * Install the #DB intercept. This is a permanent, partition-wide latch: it is
+> + * installed once on the first debug use and stays for the lifetime of the VM.
+> + */
+> +static int mshv_init_exception_intercept(void)
+> +{
+> +    int ret;
+> +
+> +    if (mshv_state->exception_intercepts_installed) {
+> +        return 0;
+> +    }
+> +
+> +    /* Only #DB is needed: gdb breakpoints are INT1 (0xf1) */
+> +    ret = mshv_install_exception_intercept(mshv_state->vm, 1); /* #DB */
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    mshv_state->exception_intercepts_installed = true;
+> +    return 0;
+> +}
+> +
+> +static int mshv_update_guest_debug(CPUState *cpu)
+> +{
+> +    if (cpu_single_stepping(cpu)) {
+> +        /* Installs exception intercept only on the first call */
+> +        return mshv_init_exception_intercept();
+> +    }
+> +    return 0;
+> +}
+> +
+> +static int mshv_insert_gdbstub_breakpoint(CPUState *cpu, GdbBreakpointType type,
+> +                                          vaddr addr, vaddr len)
+> +{
+> +    struct MshvSwBreakpoint *bp;
+> +    int err;
+> +
+> +    /* We don't use the guest's debug registers. */
+> +    if (type != GDB_BREAKPOINT_SW) {
+> +        return -ENOSYS;
+> +    }
+> +
+> +    bp = mshv_find_sw_breakpoint(cpu, addr);
+> +    if (bp) {
+> +        bp->use_count++;
+> +        return 0;
+> +    }
+> +
+> +    bp = g_new(struct MshvSwBreakpoint, 1);
+> +    bp->pc = addr;
+> +    bp->use_count = 1;
+> +    err = mshv_arch_insert_sw_breakpoint(cpu, bp);
+> +    if (err) {
+> +        g_free(bp);
+> +        return err;
+> +    }
+> +
+> +    QTAILQ_INSERT_HEAD(&mshv_state->sw_breakpoints, bp, entry);
+> +
+> +    /* Installs exception intercept only on the first call */
+> +    return mshv_init_exception_intercept();
+> +}
+> +
+> +static int mshv_remove_gdbstub_breakpoint(CPUState *cpu, GdbBreakpointType type,
+> +                                          vaddr addr, vaddr len)
+> +{
+> +    struct MshvSwBreakpoint *bp;
+> +    int err;
+> +
+> +    if (type != GDB_BREAKPOINT_SW) {
+> +        return -ENOSYS;
+> +    }
+> +
+> +    bp = mshv_find_sw_breakpoint(cpu, addr);
+> +    if (!bp) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    if (bp->use_count > 1) {
+> +        bp->use_count--;
+> +        return 0;
+> +    }
+> +
+> +    err = mshv_arch_remove_sw_breakpoint(cpu, bp);
+> +    if (err) {
+> +        return err;
+> +    }
+> +
+> +    QTAILQ_REMOVE(&mshv_state->sw_breakpoints, bp, entry);
+> +    g_free(bp);
+> +
+> +    return 0;
+> +}
+> +
+> +static void mshv_remove_all_gdbstub_breakpoints(CPUState *cpu)
+> +{
+> +    struct MshvSwBreakpoint *bp, *next;
+> +    CPUState *tmpcpu;
+> +
+> +    QTAILQ_FOREACH_SAFE(bp, &mshv_state->sw_breakpoints, entry, next) {
+> +        if (mshv_arch_remove_sw_breakpoint(cpu, bp) != 0) {
+> +            /* Fall back to whichever CPU still has it mapped. */
+> +            CPU_FOREACH(tmpcpu) {
+> +                if (mshv_arch_remove_sw_breakpoint(tmpcpu, bp) == 0) {
+> +                    break;
+> +                }
+> +            }
+> +        }
+> +        QTAILQ_REMOVE(&mshv_state->sw_breakpoints, bp, entry);
+> +        g_free(bp);
+> +    }
+> +}
+> +
+>  static int mshv_cpu_exec(CPUState *cpu)
+>  {
+>      hv_message mshv_msg;
+> @@ -637,6 +789,9 @@ static int mshv_cpu_exec(CPUState *cpu)
+>          switch (exit_reason) {
+>          case MshvVmExitIgnore:
+>              break;
+> +        case MshvVmExitDebug:
+> +            ret = EXCP_DEBUG;
+> +            break;
+>          default:
+>              ret = EXCP_INTERRUPT;
+>              break;
+> @@ -708,7 +863,10 @@ static void *mshv_vcpu_thread(void *arg)
+>      do {
+>          qemu_process_cpu_events(cpu);
+>          if (cpu_can_run(cpu)) {
+> -            mshv_cpu_exec(cpu);
+> +            ret = mshv_cpu_exec(cpu);
+> +            if (ret == EXCP_DEBUG) {
+> +                cpu_handle_guest_debug(cpu);
+> +            }
+>          }
+>      } while (!cpu->unplug || cpu_can_run(cpu));
+>  
+> @@ -852,6 +1010,11 @@ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
+>      ops->synchronize_pre_loadvm = mshv_cpu_synchronize_pre_loadvm;
+>      ops->cpus_are_resettable = mshv_cpus_are_resettable;
+>      ops->handle_interrupt = generic_handle_interrupt;
+> +
+> +    ops->update_guest_debug = mshv_update_guest_debug;
+> +    ops->insert_gdbstub_breakpoint = mshv_insert_gdbstub_breakpoint;
+> +    ops->remove_gdbstub_breakpoint = mshv_remove_gdbstub_breakpoint;
+> +    ops->remove_all_gdbstub_breakpoints = mshv_remove_all_gdbstub_breakpoints;
+>  }
+>  
+>  static const TypeInfo mshv_accel_ops_type = {
+> diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+> index b91c4d661a..9244915eb6 100644
+> --- a/include/system/mshv_int.h
+> +++ b/include/system/mshv_int.h
+> @@ -15,6 +15,7 @@
+>  #define QEMU_MSHV_INT_H
+>  
+>  #include "hw/hyperv/hvhdk.h"
+> +#include "exec/vaddr.h"
+>  
+>  #define MSHV_MSR_ENTRIES_COUNT 64
+>  
+> @@ -56,6 +57,13 @@ typedef struct MshvAddressSpace {
+>      AddressSpace *as;
+>  } MshvAddressSpace;
+>  
+> +struct MshvSwBreakpoint {
+> +    vaddr pc;
+> +    vaddr saved_insn;
+> +    int use_count;
+> +    QTAILQ_ENTRY(MshvSwBreakpoint) entry;
+> +};
+> +
+>  struct MshvState {
+>      AccelState parent_obj;
+>      int vm;
+> @@ -70,6 +78,8 @@ struct MshvState {
+>      unsigned long *used_gsi_bitmap;
+>      unsigned int gsi_count;
+>      union hv_partition_processor_features processor_features;
+> +    QTAILQ_HEAD(, MshvSwBreakpoint) sw_breakpoints;
+> +    bool exception_intercepts_installed;
+>  };
+>  
+>  typedef struct MshvMsiControl {
+> @@ -85,6 +95,7 @@ typedef enum MshvVmExit {
+>      MshvVmExitIgnore   = 0,
+>      MshvVmExitShutdown = 1,
+>      MshvVmExitSpecial  = 2,
+> +    MshvVmExitDebug    = 3,
+>  } MshvVmExit;
+>  
+>  void mshv_init_mmio_emu(void);
+> @@ -98,6 +109,9 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+>                            size_t n_regs);
+>  int mshv_arch_store_vcpu_state(const CPUState *cpu);
+>  int mshv_arch_load_vcpu_state(CPUState *cpu);
+> +int mshv_arch_insert_sw_breakpoint(CPUState *cpu, struct MshvSwBreakpoint *bp);
+> +int mshv_arch_remove_sw_breakpoint(CPUState *cpu, struct MshvSwBreakpoint *bp);
+> +struct MshvSwBreakpoint *mshv_find_sw_breakpoint(CPUState *cpu, vaddr pc);
+>  void mshv_arch_init_vcpu(CPUState *cpu);
+>  void mshv_arch_destroy_vcpu(CPUState *cpu);
+>  void mshv_arch_amend_proc_features(
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 1c433c408c..b15776b9bd 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -12,6 +12,7 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qemu/error-report.h"
+> +#include "qemu/main-loop.h"
+>  #include "qemu/memalign.h"
+>  
+>  #include "system/mshv.h"
+> @@ -28,6 +29,7 @@
+>  #include "emulate/x86_decode.h"
+>  #include "emulate/x86_emu.h"
+>  #include "emulate/x86_flags.h"
+> +#include "gdbstub/enums.h"
+>  
+>  #include "accel/accel-cpu-target.h"
+>  
+> @@ -1932,6 +1934,72 @@ static int handle_pio(CPUState *cpu, const struct hyperv_message *msg)
+>      return handle_pio_non_str(cpu, &info);
+>  }
+>  
+> +/* Re-inject a guest-owned #DB via a pending event */
+> +static int reinject_exception(CPUState *cpu,
+> +    const struct hv_x64_exception_intercept_message *info)
+> +{
+> +    hv_register_assoc assoc = { .name = HV_REGISTER_PENDING_EVENT0 };
+> +
+> +    assoc.value.pending_exception_event.event_pending = 1;
+> +    assoc.value.pending_exception_event.event_type =
+> +        HV_X64_PENDING_EVENT_EXCEPTION;
+> +    assoc.value.pending_exception_event.exception_parameter =
+> +        info->exception_parameter;
+> +    assoc.value.pending_exception_event.vector = info->exception_vector;
+> +
+> +    return mshv_set_generic_regs(cpu, &assoc, 1);
+> +}
+> +
+> +/* Check if the intercepted #DB has been set by gdb. */
+> +static bool is_debug_exception(CPUState *cpu, const hv_message *msg)
+> +{
+> +    struct hv_x64_exception_intercept_message *info = (void *)msg->payload;
+> +
+> +    /* Only #DB is intercepted */
+> +    if (info->exception_vector != EXCP01_DB) {
+> +        return false;
+> +    }
+> +
+> +    /* INT1 hit: RIP points at the breakpoint */
+> +    if (mshv_find_sw_breakpoint(cpu, info->header.rip) != NULL) {
+> +        return true;
+> +    }
+> +
+> +    /* Check if single stepping */
+> +    if (cpu_single_stepping(cpu)) {
+> +        return true;
+> +    }
+> +
+> +    /* The guest's own #DB; caller re-injects it. */
+> +    return false;
+> +}
+> +
+> +static int handle_exception_interrupt(CPUState *cpu,
+> +                                       const struct hyperv_message *msg,
+> +                                       MshvVmExit *exit_reason)
+> +{
+> +    int ret;
+> +
+> +    if (is_debug_exception(cpu, msg)) {
+> +        /* Exit early reporting debug exception */
+> +        *exit_reason = MshvVmExitDebug;
+> +        return 0;
+> +    }
+> +
+> +    /* Not ours - hand the #DB back to the guest and keep running. */
+> +    ret = reinject_exception(cpu,
+> +        (struct hv_x64_exception_intercept_message *) msg->payload);
+> +    if (ret < 0) {
+> +        error_report("failed to reinject exception on vcpu %d",
+> +                     cpu->cpu_index);
+> +        return -1;
+> +    }
+> +
+> +    *exit_reason = MshvVmExitIgnore;
+> +
+> +    return 0;
+> +}
+> +
+>  int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+>  {
+>      int ret;
+> @@ -1960,6 +2028,16 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+>              return MshvVmExitSpecial;
+>          }
+>          return MshvVmExitIgnore;
+> +    case HVMSG_X64_EXCEPTION_INTERCEPT:
+> +        bql_lock();
+> +        ret = handle_exception_interrupt(cpu, msg, &exit_reason);
+> +        bql_unlock();
+> +        if (ret < 0) {
+> +            error_report("failed to handle exception intercept");
+> +            return -1;
+> +        }
+> +        *exit = exit_reason;
+> +        return exit_reason;
+>      default:
+>          break;
+>      }
+> @@ -1973,6 +2051,32 @@ void mshv_remove_vcpu(int vm_fd, int cpu_fd)
+>      close(cpu_fd);
+>  }
+>  
+> +int mshv_arch_insert_sw_breakpoint(CPUState *cpu, struct MshvSwBreakpoint *bp)
+> +{
+> +    static const uint8_t int1 = 0xf1;
+> +
+> +    if (cpu_memory_rw_debug(cpu, bp->pc, (uint8_t *)&bp->saved_insn, 1, 0) ||
+> +        cpu_memory_rw_debug(cpu, bp->pc, (uint8_t *)&int1, 1, 1)) {
+> +        return -EINVAL;
+> +    }
+> +    return 0;
+> +}
+> +
+> +int mshv_arch_remove_sw_breakpoint(CPUState *cpu, struct MshvSwBreakpoint *bp)
+> +{
+> +    uint8_t int1;
+> +
+> +    if (cpu_memory_rw_debug(cpu, bp->pc, &int1, 1, 0)) {
+> +        return -EINVAL;
+> +    }
+> +    if (int1 != 0xf1) {
+> +        return 0;
+> +    }
+> +    if (cpu_memory_rw_debug(cpu, bp->pc, (uint8_t *)&bp->saved_insn, 1, 1)) {
+> +        return -EINVAL;
+> +    }
+> +    return 0;
+> +}
+>  
+>  int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
+>  {
+> -- 
+> 2.53.0
 
-You're right that the CID itself is preserved across CPR, the kernel
-keeps it hashed.  But the ownership of the device is NOT preserved.  The
-ownership must be claimed by the new QEMU.  After we issue RESET_OWNER
-in .pre_save() (old QEMU), it must be followed by SET_OWNER in
-.post_load() (new QEMU).  So setting the same CID value in this call is
-indeed redundant, but that's not the main goal here.
-
-Thanks,
-Andrey
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
