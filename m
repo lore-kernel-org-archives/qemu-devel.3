@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5734CC98310
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07167C9830D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Mxu-0001UC-DL; Wed, 23 Sep 2026 09:24:50 -0400
+	id 1x9My2-00024l-Qo; Wed, 23 Sep 2026 09:24:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mub-0002Z2-Va
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:28 -0400
+ id 1x9Mv5-00037l-9m
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:00 -0400
 Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9MuZ-0007Wm-7d
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:25 -0400
+ id 1x9Mv2-0007d4-FB
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:55 -0400
 Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-33e630052ebso1068563eec.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:21:22 -0700 (PDT)
+ 5a478bee46e88-328664d3421so561262eec.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169682; x=1790774482; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169710; x=1790774510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Xe2eD+AiZP/2qt9dfiB6B/fVlOtPvZaEy5H5CusisPI=;
- b=ISDxkOYTPDaASlcP4zOcoY8de5QeJmxKf5mMO5xam3lfBn1l6QnVf3iCD6zpj1xyS0
- yrGM/jRk3xhG4WijwB9og7rluwDNea8y1P2YHaeHIaKXQhdQoCHEWUdKdJlAURP1U0aq
- MDg7unAAPYKEB4dyoFZxO5D1/jKIKPsqfZKQgQn8DQWsm78PnTkuadNkcFM+VoJXtyIs
- sIVlLhx46jKpA5YvD7rAs+AsD9WSqd8xuIP4UVTzueVQZHEOkw0MpzJIyfKL6yM3Cl3M
- v2NtDt+nFeo4VzqpZBFGzqy2tANC8cFYmAbI96fzYPwZup7pPcddpC3sNxWztwrmnYsH
- B3Tg==
+ bh=RGdh00utr6Q+OpO6+8fa0s0hS8SKHylDK/Tx/Y6cmu0=;
+ b=cDDfpBCySBH32oiRMbbc3wET7+qAmSUbgRgPbREKfLnwc8Zx+7WVgGLof5BQPPrZxI
+ eU98aNmX3P9/z5jzjdUjnfMB60sSF2uu1Wb4jmf0xj+7zPNuVdKKqspWUc+JSvIDvk7n
+ dDlZHS8+M/3PLQNkysmhzIB0QL/dODTpTWZJdNgV1OQ2hrBaq/mvYR90hcSKPQK6vGV+
+ YcQsaQVj+V3o6z8TdOlxBj8M0GGDZjvocOA50pZA/X0XVA89hHcVrCvX/SKVzZflQQCf
+ BuG8y1akNEzv4pHoJAJz52vSR4ESpsNwTlj9ij/W4FWKI/EGG2s+GeecRznq2642U1XX
+ GlQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169682; x=1790774482;
+ d=1e100.net; s=20260707; t=1790169710; x=1790774510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Xe2eD+AiZP/2qt9dfiB6B/fVlOtPvZaEy5H5CusisPI=;
- b=cpMHu6rY8LrU03aieq56w4HMx5KlWr+MqnxP3Bx48HBLCKiZ140KvvLDhH6ysm2l6n
- 6p8EigqMEGtUcfpPAVJ6kfXwsgttBPKLQKKEqaKRvTnNJhzHtvH4d7iwP1Bh7732gQjX
- 3kAc8V7avZw1Q91nXmoyC4mOebOegZmuwvFJV2dPZBTKiw7irkBLlos+TuymcempHGI0
- MXxPaesEYtaivulMJZewDiUKsrCfhAJsbXvPH+C0sa2VhBVyNhNPR4N3SzGlxq2NRC7m
- REP9XdKMhue+QPuPUafTK4m8h1fcpYFajV6Y+3rw/qGj9TKV29LRURwaCc5AdgcEmmmR
- xkaw==
-X-Gm-Message-State: AFuF++kSqshsHdI+TG6ZuhxDkiCle3wGInCl5AVPZVR++Lzz+Pwa5/pm
- CVcmoWPhseFrb9epsGWMT4hd62PFFJpFm4d4ny/fG1vcQssWjb3uuBhE8jX9hvjpz2c=
-X-Gm-Gg: AYBFou06jhsJy6/f8TJoH/gR0RJVFa79TN8wdGBj0X/3wT0Pp5cqqz0EE3eQmDahur4
- joMoZr3bKeCr1Gmhzta5SAilkvYHjfwjIW9jq2jnNvGUXM+DoUAgCl/pG9cJQmvyA8RrFioyvM4
- TXvKae6MzvYk1cXnP53OtDg1eTe812bmNHBy4XPtQbkcxUnHmnWWxXpC1Gc/DVjQAT0/FJK5R43
- YikBzPeqPpxBU0FcLZ0jJVQ4Nhr3H6SxBonMsR9YtH1Ztzxa5hD6liveWuIOSW+55GMrx6iQU8l
- DLrp85QZpV2HTib+u32Ni9JDtohQ6S8oVTc84HH5V39OI3AVDf2j2bPP8lK6jrU8ciVtAOoI+0g
- US5E6YR/LVdwIYhyOGHbV4EndnoOAJZFPQzrXouGV8VigB9robv1MeW8OzgeyPO1eXMzs13dhwA
- LLemRV7v/6GIGDzpfZkyhRaaQn3prOEmLy86SRISoncOsdbgcmTvWslIFdHs5aaEZ5hmq1MobbL
- en2shFD/f1ZWdjp6L8kWYBrKfjPwq63SfB657sPMg==
-X-Received: by 2002:a05:7300:8242:b0:339:7909:9782 with SMTP id
- 5a478bee46e88-33e8d9ce7f9mr2561360eec.21.1790169681656; 
- Wed, 23 Sep 2026 06:21:21 -0700 (PDT)
+ bh=RGdh00utr6Q+OpO6+8fa0s0hS8SKHylDK/Tx/Y6cmu0=;
+ b=Gy2QHFOYWoNGuJDngk7VWIkdocelFN4vHJTB1UaHCNyDf/mATsz3Vw0F+/xy34MKuL
+ 7+77kfUC7SduQNazx2xaLLhyv938t+paXz2d1xiUROtUxtEigsgU6Pg6d/dsPsNWmXxP
+ 8vH2bstecJSf072dj4HaI3ojNgmdYxshVaOWiAQDEEE5PRlrBLPUv0WNwKkoKtXxTDAm
+ y6+rB4MqafprjgqzLkRdczEv27ICscHXIQWvlpZ43y08y0yYs2ESZ2/toDNlI498Usfr
+ 8TafIywKAoAQgceUEY/dhWitEIsV4y2SVk8lD+LXxf6JX8H7C3xjx3ow2ql7eKjAkzu6
+ xTxw==
+X-Gm-Message-State: AFuF++khyA6CDZb+/4d3mw0G6n6WPw09dwdSy7wYAuHVA77cnJdLusSw
+ Z4huJ3OXSauOcBr2Z59Lqy72u2459vtJ0kW9wR2kiRUvQ3MUDT87n7sik6NuQqe2RZQ=
+X-Gm-Gg: AYBFou17ZvAuZs4deGz3D3SU9xjn27WfMrxItOX6xczPiRc6ls5dDygFkiCWLlQLEqu
+ KRFpi2huuogRq3WZuIJdIE1VSR87c54moVxJn3BY209kXJhhY5YZIIVUIHzTH4VKjFy9V3zpSyz
+ Vt8CpLEwNOm90Tk9+/UdQ5REGW/USDTZqKkX8R1nNR3RVicBNIUEzz4QHKwCc0tcGbwsEUvIQBm
+ l2jskhPP4dDDCkwFPqMEBZP2BazFb0SsWWSOWcwDQ9mQkknmuOebn9FVPsUF2bVHGzIODHljyie
+ v0ZS8XmqY6iDDsfX2i7ZEVS8c00gGTnxNnmTnRPkTLbueocc2EbcPKTaFwezFbvv2bKBx4vCaKa
+ s74sEcA/nMuuStiimI+i4xdxOY73hPcYpgjKXgqz0PfaMQPqVQ/oLeZtQgI2OIx/CVFdYlTDsVU
+ AWvOuKFt8c+e0tmeVwQWxBYFHb0cPfACjN/5smaDN9tTZgPhHY0PgQ1ak8JLVR7l20h1yx25gjz
+ PynMs3KYQBsIEak4xACSoN3oUKrvG8=
+X-Received: by 2002:a05:693c:88d4:10b0:33b:dcbc:6046 with SMTP id
+ 5a478bee46e88-33e8bc70ee6mr2596067eec.7.1790169709341; 
+ Wed, 23 Sep 2026 06:21:49 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.21.13
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.21.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:21:19 -0700 (PDT)
+ Wed, 23 Sep 2026 06:21:48 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,9 +95,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 026/114] hw/intc: use target_long_bits in IMSIC geilen
-Date: Wed, 23 Sep 2026 21:15:00 +0800
-Message-ID: <20260923131635.1894-27-luoyonggang@gmail.com>
+Subject: [PATCH v3 029/114] hw/intc: send IMSIC MSI via kvm_irqchip_send_msi()
+Date: Wed, 23 Sep 2026 21:15:03 +0800
+Message-ID: <20260923131635.1894-30-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
@@ -126,25 +126,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Compare geilen to target_long_bits() instead of TARGET_LONG_BITS so
-  the check works when TARGET_* is poisoned.
+- Drop the CONFIG_KVM ioctl path and call kvm_irqchip_send_msi() when
+  KVM and an in-kernel irqchip are enabled.
 ---
- hw/intc/riscv_imsic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/riscv_imsic.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index bf0434e96fd..30fb60cc312 100644
+index 30fb60cc312..033b7813060 100644
 --- a/hw/intc/riscv_imsic.c
 +++ b/hw/intc/riscv_imsic.c
-@@ -52,7 +52,7 @@ static void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
-         return;
+@@ -311,19 +311,15 @@ static void riscv_imsic_write(void *opaque, hwaddr addr, uint64_t value,
+         goto err;
      }
  
--    if (geilen > (TARGET_LONG_BITS - 1)) {
-+    if (geilen > (target_long_bits() - 1)) {
+-#if defined(CONFIG_KVM)
+-    if (kvm_irqchip_in_kernel()) {
+-        struct kvm_msi msi;
+-
+-        msi.address_lo = extract64(imsic->mmio.addr + addr, 0, 32);
+-        msi.address_hi = extract64(imsic->mmio.addr + addr, 32, 32);
+-        msi.data = le32_to_cpu(value);
+-
+-        kvm_vm_ioctl(kvm_state, KVM_SIGNAL_MSI, &msi);
++    if (kvm_enabled() && kvm_irqchip_in_kernel()) {
++        MSIMessage msg = {
++            .address = imsic->mmio.addr + addr,
++            .data = (uint32_t)value,
++        };
+ 
++        kvm_irqchip_send_msi(kvm_state, msg);
          return;
      }
+-#endif
  
+     /* Writes only supported for MSI little-endian registers */
+     page = addr >> IMSIC_MMIO_PAGE_SHIFT;
 -- 
 2.52.0.windows.1
 
