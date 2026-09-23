@@ -4,92 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06546C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C641DC98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Sjr-0001wV-FD; Wed, 23 Sep 2026 15:34:43 -0400
+	id 1x9Ska-0002BD-DO; Wed, 23 Sep 2026 15:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Sjp-0001wJ-FT
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:34:41 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Sjn-0007Kr-Mo
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:34:41 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- 41be03b00d2f7-cc50d1b048eso887989a12.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:34:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9SkY-0002Az-LA
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:35:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9SkX-0007Xq-AN
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:35:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790192124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
+ b=R48JPBw/Jfrm0kI01lOmNBaZIYQKRfUUlsUEZ/fkG1in5jQ8zL7a85G+VtjQ1LZwar8Iee
+ z5pYUHHXy71LHs0kh6PjpOq87raQg1BLg1pnAXKRn28elvOWeQmJ5D1iaJEoNW3fqHM+Gd
+ XnvSj0LwWVhj84XA2Z0TKKyZlO397a8=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-410-SN0RkbtQOv2z7Cvz7PweAg-1; Wed, 23 Sep 2026 15:35:20 -0400
+X-MC-Unique: SN0RkbtQOv2z7Cvz7PweAg-1
+X-Mimecast-MFC-AGG-ID: SN0RkbtQOv2z7Cvz7PweAg_1790192120
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-67156f9bad0so1624135d50.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:35:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790192120; cv=none;
+ d=google.com; s=arc-20260327;
+ b=kb28mlzHlnyH+SiSzxOfWLndV7Id4IgAT70HcaVLUQzVnrwrSktl3o27YfpkRvIxT6
+ 9fNSJPVS2z2m4T/7EP8CjisMEh7hb8s6VSqK2LS26MAptB8v1hCwkPds2t+6f2NQBa2n
+ INX+DsB4YZi+NVIX0iE+1UVddyvirc0QjdMjHNc9HZ2BlE1GBtUH7XwI0vPcmA4Nr+JT
+ 4gtx+MXsf92cWOFdSLXcJyPGy7v9IJ6qyIZOH8xHb22LavkNP702ja7ou9xwolS/rKj+
+ 5+PHAlglmgkM+ErbyiFjpOXWxObiEqQO2LFzAP2b9Z5gfeHMfGXZWXBRQldizgb4q1rC
+ cs6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
+ fh=b0Z3lWGcCo1hESi6SCJ0YxnP/BPVR7A0V6Qykw4FH5U=;
+ b=sww+F0p8F79lUDlBi4nvLZXj2SGS0Lh82ZRXjzfjgsl7BE+JBsw64bGSzLTjYCOLdw
+ 6/Rn/pH/a9h2LrE10/bQDl378mo1zvRkxpOGYFqcpegC45CHKebTGN2GnOCbjubNlkNF
+ EtNjZZPmZr4QxbVJSWSh6+WZyJKPG27NHhH/RFBo7ZvDko8FwOYaz5WoYXDNaYBZZLk+
+ hmKfqs3JYiW2uRkra133pj3hpPjS9gE+5j0nZP6DMSyyMJWSNO7LVY+dexqBN32R3v4B
+ a+OB/m0hMd09LCS2He1IHxNreKz+QoSSAeLLoWwepAACLKZxYofeOX4/2HlPzn2tQsyV
+ 0mcw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790192078; x=1790796878; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hEgSGzK6cjPLrC55T/iVzxgRppVKvyJHNQ/RF1g6mAY=;
- b=D4a2Cb8GwGXjq3MnGnqKDP4rdhBrQepm0MzgtqgytrGy3uNfWKrqX48Sn4WJ4mOvbm
- nXfE5xjhm+AL/ytyg/j1gTirEN/CL9tidvOM8mrASPlHS+5gJ9lxbl+3kuVOKvPOKVxl
- vMLhEIz+icJb783LiRyZRC3cYzBkRtg4dLhkXNqDAARdrrqhNzh18xlphexkzQDJIclX
- LdHhFHvLbuRYwEC8NL5Uax2vV9XGutJnaFs61YRCNmnfUQGrodVHHGyg0uHvBz3nl22v
- neCfvkrufYyZ9cuFh0FMdUZbK/x6c0xBetiOqel+pkvl69yNMAw1NoJQXiw73iqiHcqk
- U0Mw==
+ d=redhat.com; s=google; t=1790192120; x=1790796920; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
+ b=spnm18vqa2r5+63G2p3v4kMNVLwKVaFKLyH8JHPnsVDLH/bLqagg0d0fov4T3XIP8d
+ AUxvK8vv5L8QR2KmT3XjfakfFRR9JfsSKMeI9gf2PvYWjHCUA1kIe7K3fH3a59wqa5ab
+ scf7d9dhQQEbZjopwC4UyKM/vbEXHj5FFk6CZ3GG16/tTU/mzw5lgiPj2O91lD3hYuUP
+ DyvIonm6JSar8RI8+hn62TljDT5WVxeENj0NBhHbbUa0I/eMMLnfXtn4/x17GIlhpoxD
+ MGbPlnNi0Vrf3DabG68mgQJR041K5UxgvmhS5bRf64/BH8QGXk3mzsVDS06JwwEmOpWp
+ CBXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790192078; x=1790796878;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hEgSGzK6cjPLrC55T/iVzxgRppVKvyJHNQ/RF1g6mAY=;
- b=npKOiPviisKYDkVizRliksX65JWmaS86hbe4kDpyMzNc5Vqbr7hNfxkQB4ixNRcl3E
- Y2D474eH7We4gKHbP1ICyhbP2J9xU8x6VwSE22HC1NRoxVmG0tExx864qPRGj6rjAWLc
- POO9RVUref84E8Q9fLRv9JZXrT3Nxu7OYYCLELfhMeuhnirYJHtuhsmGyWaKJHcWrLfj
- vLAurYodDjQQqVob9suQdqKDfEobwZJOIHzDezkM1mbx7EauFE1tk7AsoHpbShYAsMTZ
- 8FskKb3PCpEZkiYs6URFXirCVQ1W9VnL+E3uOKd4qDx2x1v7f86UJfZllWGJUfiiNMzn
- fXlw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByGd9KfQpgIMxgiUD9uihJQJc8p3NkalM939evESbhWC27keUyy4ViWVkFjpRezIxX0PBKAZ7uHN7pZ@nongnu.org
-X-Gm-Message-State: AFuF++lRRICydiM3NKb+I85I/CHAPSjtjGlu26DL9W/z/Wlw9Ze6e0KJ
- fONOQ5fzutQ6+dKQm6w3k3MBvV3F7qWaSbDTzYNiNFEn6BATmekJLsKTQCljjIuPRtM=
-X-Gm-Gg: AYBFou1K9AMKOSdwdtIQWgudkq2B54zPHsP5m7xOsmjb9vNPoY9r4MGQ5yrhzPUiGal
- ZYCIoW2YJfJkgh9lQ/2tEXvakQr5bIKNcc0Ip/rOkXZnpsVAXZM1CEsdcF5n+ZFrcac7Sfwhx1P
- BUjB4MvXY5u/fVRcu/VBvMWDKs5VnGlmoJt39NWHKo6Xr0vuMh77GNaIAU42TGq3ikjDXf95rJb
- lunL4SlCZ3qV1U9xykJfVQAaEzhqlY/83A0FhkxPb3FK8jV7B3s83tt6+vt5T7SwW0jQpKa8WHU
- 9eQbsi1XO7zJ3TBSgwEl75S+79A4BMewNCMfHJCsCJJ95ztJtb03JzPF34JrujajwJhmDgi3Pea
- BfdSLKowEq+W7aac49nVrK2skTu8fwM+naGtaOqy99/Ur9z1xy0D3b4d0XOqemtAKCTuNnb+WvQ
- yAs3e2TIDzbOlAa1vJaAWDFsPuU+kX6Q6Pwv70p/6ByDBO48+nDJDc0yyO1D0WOdMHUTkLwfTDb
- qDla0D8ZrL+piA8Op4Pahy+QLftqOleYPTWPvlp
-X-Received: by 2002:a05:6a21:ed0e:b0:3dd:5831:ef58 with SMTP id
- adf61e73a8af0-3de0e7f9e2bmr193070637.15.1790192077530; 
- Wed, 23 Sep 2026 12:34:37 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc75f3ba8b6sm1580821a12.5.2026.09.23.12.34.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 12:34:37 -0700 (PDT)
-Message-ID: <081f23de-f665-4659-bb64-b6efba9024b2@linaro.org>
-Date: Wed, 23 Sep 2026 12:34:35 -0700
+ d=1e100.net; s=20260707; t=1790192120; x=1790796920;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
+ b=FRGm3ZnOjLkeZZeaNNZ+XgyYUJ+5zWgQtrbCoJkXODmc1VN8CRoKmmG7UOXM2ifytY
+ cXyJLASf9qL+fW08ZzPckzpYj/GVzjTMdo7JKjd/bJ1x6rMDaSMT1s4KMI+c2gtlOP0f
+ ntyF8zlhrRANzjTHCxGv/QdN7KsAx2AKeg7gnt5/fg/FZFLtgIkr6WIXAQVSTO7Og8ke
+ Z5jvndOyRi4RGMVRXDXKIM9iAfw09kqOFsrtasjdzVhYwbaQWsms7sWCp/zxae9QIclm
+ xomBOm+eDUVqn80gcvEGchOEqsIXqwc6lWihM0S13iQ8IbLpoY/FpRtaPqdAAU/AroND
+ zDxw==
+X-Gm-Message-State: AFuF++moHAGLhaVy83XrVpjLXFht2PlYW/8aB8otWOfZ/fA/P1EdxkQ/
+ hNn7T+KV/f+qCgtsz5bBoC7Jtcca6K3uipDx/LNlF9AFOxjhZ1CzwSOS1/uFASMDNPAOvyrwDCs
+ fE+FOXsFDcly2rczcstOYp5PY2DSC8Tvsd/v8AOHmo+Hvs8FfiTcJtV+JXZZsVxUCp8lkfsLHI8
+ gSzWgM9e2QdGRo+EAWLOEYoioJmRKSD1s=
+X-Gm-Gg: AYBFou0tXeBWpDB28ool10EKXMTENZ97/mnQlGQMjLDHSYbhA3JLE0BRMDKxSSf5moI
+ zQyF77WBk4dPgslYntDAT2UhP8h5a3I5Q5gXS/VkSD6NeKqo4v1eTHb5WFXGJLF2GGuNfBBVARl
+ qPpc70YjkBz2mGGNZ3znjHfY3evL8RXPgwCjvSWndWK+YrliciN23JwE8tttbxgEkwy7bYxvHgn
+ uRJliKqH7Qevd00
+X-Received: by 2002:a05:690e:b83:b0:66e:54a0:cdca with SMTP id
+ 956f58d0204a3-672ed3b2f75mr175175d50.49.1790192120235; 
+ Wed, 23 Sep 2026 12:35:20 -0700 (PDT)
+X-Received: by 2002:a05:690e:b83:b0:66e:54a0:cdca with SMTP id
+ 956f58d0204a3-672ed3b2f75mr175153d50.49.1790192119773; Wed, 23 Sep 2026
+ 12:35:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/17] target/i386/tcg: generalize zero- and sign-extension
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
-References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-2-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260923173021.317809-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0d.google.com
+References: <20260921205712.1862167-1-jsnow@redhat.com>
+ <20260921205712.1862167-5-jsnow@redhat.com>
+ <8733v0wchg.fsf@pond.sub.org>
+In-Reply-To: <8733v0wchg.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 23 Sep 2026 15:35:08 -0400
+X-Gm-Features: AcwNN1Wr7rGQAPJ3Yenh4qA3hkyZd8LMMh_nJ-xzyxoIM6yRtDiCnhIuPf6_N3w
+Message-ID: <CAFn=p-ZFsNZfGvRoYiV2GXRUninwyxgyjkNF8A8DwtBc8LQVnQ@mail.gmail.com>
+Subject: Re: [PATCH v2 04/10] qapi: convert/split intros for job.json commands
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, 
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,104 +147,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 10:30, Paolo Bonzini wrote:
-> Allow applying sign and zero extension to T1 load and T0 writeback.
-> T1 load is useful for some cases where the tables are hacked to
-> put the sign extended operand in T0; T0 writeback is used for APX ZU
-> instructions.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.h     | 15 +++++++++++----
->   target/i386/tcg/decode-new.c.inc | 21 +++++++++++----------
->   target/i386/tcg/emit.c.inc       | 16 ++++++++++------
->   3 files changed, 32 insertions(+), 20 deletions(-)
-> 
-> diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-> index 25f7d2215ee..a3702b00614 100644
-> --- a/target/i386/tcg/decode-new.h
-> +++ b/target/i386/tcg/decode-new.h
-> @@ -148,6 +148,12 @@ typedef enum X86OpUnit {
->       X86_OP_MMX,     /* address in either s->ptrX or s->A0 depending on has_ea */
->   } X86OpUnit;
->   
-> +typedef enum X86OpExt {
-> +    X86_EXT_None,
-> +    X86_EXT_Signed,
-> +    X86_EXT_Unsigned,
-> +} X86OpExt;
-> +
->   typedef enum X86InsnCheck {
->       /* Illegal or exclusive to 64-bit mode */
->       X86_CHECK_i64 = 1,
-> @@ -226,10 +232,6 @@ typedef enum X86InsnSpecial {
->        */
->       X86_SPECIAL_MMX,
->   
-> -    /* When loaded into s->T0, register operand 1 is zero/sign extended.  */
-> -    X86_SPECIAL_SExtT0,
-> -    X86_SPECIAL_ZExtT0,
-> -
->       /* Memory operand size of MOV from segment register is MO_16 */
->       X86_SPECIAL_Op0_Mw,
->   } X86InsnSpecial;
-> @@ -300,6 +302,10 @@ struct X86OpEntry {
->       X86OpSize    s3:8;
->   
->       X86InsnSpecial special:8;
-> +    unsigned     ext0:2;
-> +    unsigned     ext1:2;
-> +    unsigned     ext2:2;
+On Wed, Sep 23, 2026 at 5:20=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> Consider mentioning how this affects rendered documentation: first
+> paragraph of job-dismiss splits.
 
-Use the enum.  With that,
+ACK
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-I did wonder about using a bool here, and
-
-> +    unsigned     :2;
->       X86CPUIDFeature cpuid:8;
->       unsigned     vex_class:8;
->       X86VEXSpecial vex_special:8;
-> @@ -314,6 +320,7 @@ typedef struct X86DecodedOp {
->       int8_t n;
->       MemOp ot;     /* For b/c/d/p/s/q/v/w/y/z */
->       X86OpUnit unit;
-> +    X86OpExt ext;
-
-... MemOp sign here ...
-
-> diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-> index c83ab809408..54dc23ca624 100644
-> --- a/target/i386/tcg/emit.c.inc
-> +++ b/target/i386/tcg/emit.c.inc
-> @@ -266,23 +266,21 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
->   #endif
->       case X86_OP_INT:
->           if (op->has_ea) {
-> -            if (v == s->T0 && decode->e.special == X86_SPECIAL_SExtT0) {
-> +            if (op->ext == X86_EXT_Signed) {
->                   gen_op_ld_v(s, op->ot | MO_SIGN, v, s->A0);
->               } else {
->                   gen_op_ld_v(s, op->ot, v, s->A0);
->               }
-
-... so that the uses here become e.g.
-
-     gen_op_ld_v(s, op->ot | op->sign, v, s->A0);
-
-> @@ -347,6 +345,12 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
->       case X86_OP_INT:
->           if (op->has_ea) {
->               gen_op_st_v(s, op->ot, v, s->A0);
-> +        } else if (op->ot < MO_TL && op->ext != X86_EXT_None) {
-> +            if (op->ext == X86_EXT_Signed) {
-> +                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot | MO_SIGN);
-> +            } else {
-> +                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot);
-> +            }
-... but I can't see how to fit this new case into that scheme easily.
-
-
-r~
 
