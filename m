@@ -4,109 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5EFC98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A941C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9O57-0001Gm-DK; Wed, 23 Sep 2026 10:36:21 -0400
+	id 1x9O7u-0001s4-HU; Wed, 23 Sep 2026 10:39:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9O53-0001Gd-Rd
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:36:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x9O7p-0001rH-0U
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:39:11 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9O51-0008GL-WD
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:36:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790174174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kXsTFyVenB5D7Qw1SWqDyBXF+hebPL3PMuNIqmvpVkg=;
- b=akDeKn6ItbJdD/WpyCgVBQTpSyl2D8bRgZWUNdB8kMiLW7MOsG8mkmxast6o7Q3eMWYbaz
- VkNY9bYKuNNsL+2CLDOc7rvZhQq9Lsf6dcHBeo22in/CqJCRkXtwzYFZE1AFUy3rQCyxxn
- XalXcWSebUvsLWRH3JRTkAHU7J358b0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-97S1VOWCMByoDuifesr-dw-1; Wed,
- 23 Sep 2026 10:36:11 -0400
-X-MC-Unique: 97S1VOWCMByoDuifesr-dw-1
-X-Mimecast-MFC-AGG-ID: 97S1VOWCMByoDuifesr-dw_1790174170
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 680B7196C43B; Wed, 23 Sep 2026 14:36:10 +0000 (UTC)
-Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 128CE3000218; Wed, 23 Sep 2026 14:36:08 +0000 (UTC)
-Message-ID: <d92766bd-b542-477f-9caa-c09978080858@redhat.com>
-Date: Wed, 23 Sep 2026 16:36:06 +0200
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x9O7k-0008No-GF
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:39:06 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NDKfEI322165
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 14:38:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ QAPNeVaRXknRyms4HxR2TnjgMeCvlo5g9U21YYAAeco=; b=DiXhunMos4Mm+QMd
+ vDYmQB2k8FlbBj9hbq4d39Hl7D/YYq1zHCwarWmtfticPsx4U7rMuu+USwj/RN2I
+ r9Dsm4zns3S+QyMmlhJyWnX06WlKMIwAxVRcyJ3jMhpxBg7hLuvg27hqLC1tpWrc
+ lx42PDWopGo7cuCaPDmg5ieC3TkSbMp0KCM9k1xivJiSzAUSER6ld7BbR4NadH+7
+ 5+nXS4WlE0k5yVlMhWaF9PCoM3twESyeRayvYzhua/6/FLnKmtvsnP32gRJKggRI
+ zzjNoU2qe9CD8ZIL0+71jeOs10xDf7LK36mSUVN/CIx9EEi6N9Of5U3lgIQ9IysW
+ XvMggQ==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvfjsgb50-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 14:38:54 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-7a5ed2517b7so295300137.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:38:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790174333; x=1790779133; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QAPNeVaRXknRyms4HxR2TnjgMeCvlo5g9U21YYAAeco=;
+ b=PGLJOB1n23T3Yu+nuvH2dLmTM3OtWQeAbb8kzde5bFhvlZanoNo4yWUX/qLY+GQ/6y
+ h40Q+hbO3IXO9gtMPa4tcZATMYHweYZnfCJlf/LDq1EwOXhPkoDADvAFwa8DwymtQiW9
+ gXqE3kiCAdGSRy/OR/tCCBOTTKrNDEIjgjRULgIhXRFCqz7i2ri6gWlFIcIXKzBZasR9
+ lHZZHjp18XNnZuyyFV8zgRtJfozBvt68glR+8tGkbNKs6HoCSoL1KPvoiaT19LSn3mLd
+ ItviL0glyb5DF9jN+/a3+rdF3thUeYZJLjTGd2G+3EuB0/V5Inh9762ozXwCrZG1hYIA
+ 40uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790174333; x=1790779133;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QAPNeVaRXknRyms4HxR2TnjgMeCvlo5g9U21YYAAeco=;
+ b=JoDRKUB6HBQgUyKsl7jfx4U4zxXAuaRYj5P9yRDxXRfbXDWlJNYkT/EBd0KHXa8BqW
+ KxTG5sFHsokb+9Wy5q3eM1zVeb71LVPbx8bclDZWox9sQKLzGdeG9LHc1oI8ODPlZafP
+ mQGzeF+Llgm0zmzpogGQ+vLQ0t2Xx5RqmXWgM5huhbU+nJZzqBFZvrd924gMfHjicuNX
+ wzlhY9lQi0NK79qm9KpkYR7pMk4KDuH2T638qT7B5iXvc8l2i87LvTgv/T5UwXI8JILa
+ ux+FtptVl8ckI2X+VMn3rJTmLbnCKix2ZLHa/FJnwHJVv7a12U4+Y0yBOsWl++NF4p+G
+ paDg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwjI5feKH8r01l4lo/aNqLlYSbFJJMfYFJzq9NbXF3ZfhYZrEnTwZeUx8ft3RXOBnBpwPzln35ULTq6@nongnu.org
+X-Gm-Message-State: AFuF++n/1RuQT6NLeNVvO1B9xOfX6o5/Q+69TdZwI/FdPL1UIoYTMRZq
+ ofDNYkEtgIMTyoH5vDGbWDm1N6XWDp2QYeGNnLuYZMqENVqqRWlmtaEj77H5SigUXmsGqCOA92G
+ iXT7/evzRRljq6dVF9lwp3O/3rqaeimJ5x4kmyy8yD9QuQDy1d5E9zhUEmA==
+X-Gm-Gg: AYBFou2qe84Wh0+cAyGYF+fzgF6cKsh71fg/sAqPPXXkl6fnJwnMlFRZ65vFrNT9BKz
+ jH2O+DLZK9A1Qj4yVWan2gtptZgQe4fAfEkyr/i1tiqC34l0lU68qlya5+yVp8dUFnClBmUvlNz
+ dfkiTH85lDvycRW1mz131r0Jz0qx2IdBYqvyzDwiWiuk0roiZcJ94YO7ZrBYCjnpai/gTvBnlnr
+ 153qvYsiW5pVKIZVWbsL/tBndLynZV1zciAABTn0y56m5mpRrlL1KOzMhLCEl88dei5P6e/sQ/0
+ guxTQJrsRbKQYhmP86z20hfMBtIAqepU2sbsHyjdulHrt6usZM2Z4ni8ie4zRpkFXaM7eJDrqT5
+ 4vC+M/Leyh81s8rYr6c+4SHMQcYytss2LTJhnhXJJFKsqaNE=
+X-Received: by 2002:a05:6102:f85:b0:7a7:198a:c2c4 with SMTP id
+ ada2fe7eead31-7ac1ea9919bmr2646810137.34.1790174333604; 
+ Wed, 23 Sep 2026 07:38:53 -0700 (PDT)
+X-Received: by 2002:a05:6102:f85:b0:7a7:198a:c2c4 with SMTP id
+ ada2fe7eead31-7ac1ea9919bmr2646789137.34.1790174333130; 
+ Wed, 23 Sep 2026 07:38:53 -0700 (PDT)
+Received: from [10.21.17.122] (161.170.88.92.rev.sfr.net. [92.88.170.161])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-488684863d9sm7433840f8f.12.2026.09.23.07.38.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 07:38:52 -0700 (PDT)
+Message-ID: <f890177a-4322-4207-93a0-7f690cae6b2d@oss.qualcomm.com>
+Date: Wed, 23 Sep 2026 16:38:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system: fix buffer overflow in tdx_parse_panic_message
-To: Maxim Levitsky <mlevitsk@redhat.com>, qemu-devel@nongnu.org
-Cc: Mauro Matteo Cascella <mcascell@redhat.com>,
- Jordy Zomer <jordyzomer@google.com>
-References: <20260923004553.100732-1-mlevitsk@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v10 3/3] target/riscv: Add vstimecmp support
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260923004553.100732-1-mlevitsk@redhat.com>
+To: Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ Bin Meng <bin.meng@processmission.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+References: <20220824221357.41070-1-atishp@rivosinc.com>
+ <20220824221357.41070-4-atishp@rivosinc.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20220824221357.41070-4-atishp@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA1OCBTYWx0ZWRfX/gtEkwQ9pqEU
+ 0oV6sL/0Yfo2Rx7RO6W8goE/o7b7G4rqQ7EzPIcoywQ131mG92kgMD9S6j4viK2hOXmAquuWFQ4
+ 03hUlOQwP8FKsA/6c1dylHYhRLotaqq5rXVoIX9HdaCv4sjNvEX8OuENKhJC0DQvDpmVMQGob/C
+ eqLgG9ro9VZ/Idmd1R7JIxWJZvBvwqxi5V6B+TqWtC+RKb14LPd3vkqtjJVzIkLsdyNMh2eG4oO
+ mm+WaTCPqVqX8/9KX8ThjY69lBbfcVB+47o3OlelWAY74h3pUP84Q21PwFRmWYTH8v/k+ZHisSZ
+ FMjLojY8pCBGUAhIQTa+JyT9xshrWTGULbqwmg5kEquHbrPwc6wuTUYq5PSi/oqG9NX9OCYwf2w
+ 1Wk4zDjkYaGP2BHJzBVNyvyTLH1bdwzhQ1OQez12nVApg6X6UtvauyxdXB1ybZ8GgsPkE711JUq
+ t2mGLlhv1ZdR9kGzMxQ==
+X-Proofpoint-GUID: uOvpviAdnMijyZIlSIvH--QBWGcBP4gf
+X-Proofpoint-ORIG-GUID: uOvpviAdnMijyZIlSIvH--QBWGcBP4gf
+X-Authority-Analysis: v=2.4 cv=K4+3jCWI c=1 sm=1 tr=0 ts=6ab3e47e cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=XFFLIW5kwC1urAZS/mNkYQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=JF9118EUAAAA:8 a=h0uksLzaAAAA:8 a=8eR_iU2aUeOL-paLwokA:9 a=QEXdDO2ut3YA:10
+ a=-aSRE8QhW-JAV6biHavz:22 a=xVlTc564ipvMDusKsbsT:22 a=MSi_79tMYmZZG2gvAgS0:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA1OCBTYWx0ZWRfX36F5qFo9U7LN
+ BZBr22lajtftZcLKW2mv4XPAfDiT31c09Hm+MCAaFfG/QJU9xWyN0HIS8AYdLx42oCVTWc/vhpw
+ VnZwq2IXWeq+HdGEbUGZN1ZswbS34ao=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230058
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,105 +157,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 02:45, Maxim Levitsky wrote:
-> tdx_parse_panic_message has code that detects if the guest supplied
-> message contains some unprintable characters and in this case prints a hex dump.
+Hi,
+
+(now committed as 3ec0fe18a31fabfe999b480e4c21847ac0d51560)
+
+On 25/8/22 00:13, Atish Patra wrote:
+> vstimecmp CSR allows the guest OS or to program the next guest timer
+> interrupt directly. Thus, hypervisor no longer need to inject the
+> timer interrupt to the guest if vstimecmp is used. This was ratified
+> as a part of the Sstc extension.
 > 
-> The code has a bug: it allocates 3 bytes for 'sprintf("%02x ")',
-> but sprintf in this case actually writes 4 bytes, because it adds the NULL
-> terminator.
-> 
-> To fix this, just use qemu_hexdump_line instead.
-> This patch was only compile tested.
-> 
-> Reported-by: Jordy Zomer <jordyzomer@google.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3905
-> Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
 > ---
->   system/runstate.c | 35 +++++++----------------------------
->   1 file changed, 7 insertions(+), 28 deletions(-)
+>   target/riscv/cpu.h         |  4 ++
+>   target/riscv/cpu_bits.h    |  4 ++
+>   target/riscv/cpu_helper.c  | 11 +++--
+>   target/riscv/csr.c         | 88 ++++++++++++++++++++++++++++++++++++--
+>   target/riscv/machine.c     |  1 +
+>   target/riscv/time_helper.c | 16 +++++++
+>   6 files changed, 118 insertions(+), 6 deletions(-)
 > 
-> diff --git a/system/runstate.c b/system/runstate.c
-> index d3e64d2b6258..ebf09b192b4e 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -50,6 +50,7 @@
->   #include "qemu/sockets.h"
->   #include "qemu/timer.h"
->   #include "qemu/thread.h"
-> +#include "qemu/cutils.h"
->   #include "qom/object.h"
->   #include "qom/object_interfaces.h"
->   #include "system/cpu-timers.h"
-> @@ -760,10 +761,9 @@ static void qemu_system_wakeup(void)
->       }
->   }
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index d2529b757aab..d895a0af2c6d 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -311,6 +311,8 @@ struct CPUArchState {
+>       /* Sstc CSRs */
+>       uint64_t stimecmp;
 >   
-> -static char *tdx_parse_panic_message(char *message)
-> +static GString *tdx_parse_panic_message(char *message)
->   {
->       bool printable = false;
-> -    char *buf = NULL;
->       int len = 0, i;
+> +    uint64_t vstimecmp;
+> +
+>       /* physical memory protection */
+>       pmp_table_t pmp_state;
+>       target_ulong mseccfg;
+> @@ -365,6 +367,8 @@ struct CPUArchState {
 >   
->       /*
-> @@ -784,32 +784,11 @@ static char *tdx_parse_panic_message(char *message)
->           }
->       }
+>       /* Fields from here on are preserved across CPU reset. */
+
+         ^^^
+
+>       QEMUTimer *stimer; /* Internal timer for S-mode interrupt */
+> +    QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
+> +    bool vstime_irq;
+
+Shouldn't vstime_irq be reset upon vCPU reset?
+
 >   
-> -    if (len == 0) {
-> -        buf = g_malloc(1);
-> -        buf[0] = '\0';
-> +    if (printable) {
-> +        return g_string_new(message);
->       } else {
-> -        if (!printable) {
-> -            /* 3 = length of "%02x " */
-> -            buf = g_malloc(len * 3);
-> -            for (i = 0; i < len; i++) {
-> -                if (message[i] == '\0') {
-> -                    break;
-> -                } else {
-> -                    sprintf(buf + 3 * i, "%02x ", message[i]);
-> -                }
-> -            }
-> -            if (i > 0) {
-> -                /* replace the last ' '(space) to NULL */
-> -                buf[i * 3 - 1] = '\0';
-> -            } else {
-> -                buf[0] = '\0';
-> -            }
-> -        } else {
-> -            buf = g_strdup(message);
-> -        }
-> +        return qemu_hexdump_line(NULL, message, len, 1, 0);
->       }
-> -
-> -    return buf;
->   }
->   
->   void qemu_system_guest_panicked(GuestPanicInformation *info)
-> @@ -854,11 +833,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
->                             info->u.s390.psw_mask,
->                             info->u.s390.psw_addr);
->           } else if (info->type == GUEST_PANIC_INFORMATION_TYPE_TDX) {
-> -            char *message = tdx_parse_panic_message(info->u.tdx.message);
-> +            GString *message = tdx_parse_panic_message(info->u.tdx.message);
->               qemu_log_mask(LOG_GUEST_ERROR,
->                             "\nTDX guest reports fatal error."
->                             " error code: 0x%" PRIx32 " error message:\"%s\"\n",
-> -                          info->u.tdx.error_code, message);
-> +                          info->u.tdx.error_code, message->str);
->               g_free(message);
-
-Freeing the GString* leaks message->str.
-
-The easiest way to do it, which I have squashed on top of your patch, is
-
-    g_autoptr(GString) message = ...
-
-and dropping the g_free(message) line.  See for example sdbus_write_dump().
-
-Paolo
-
+>       hwaddr kernel_addr;
+>       hwaddr fdt_addr;
 
