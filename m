@@ -4,61 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B221C98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 05:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D9C982EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 05:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9FUC-0006VB-0S; Wed, 23 Sep 2026 01:25:40 -0400
+	id 1x9FY8-0006wL-H2; Wed, 23 Sep 2026 01:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1x9FU8-0006Us-6q
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:25:36 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1x9FY6-0006wD-GU
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:29:42 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1x9FU2-0004nA-Rp
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:25:35 -0400
+ id 1x9FY4-00059t-Iu
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:29:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1790141131; x=1821677131;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=GzdQ80VZCVhN3GNc9qsUbkA22r7r/Fl0uUBh6XnR5Lc=;
- b=Bocp47/PHsr4E2ArNsRFR5A/stf5ynZxiT1AOOTqpM+e7MH5qJySsiHf
- MvRTJxhQ8rqYkH71Pgj5VQQgtJNW009XgSe6AS4ozGm/u5xYQ/bhtczmO
- OHAfh5Hl2p2CDpt59rmS4e3ZQbt1ffoQ0YxchmCJZiX0uYzQGcmtKx61k
- Dn5AbdCzAsTmBrafah1PnkGHJaT8Hw3I52QFmhSa3oXCXHrb0B3pawEHs
- PKCxa9emKlbPmg6gU+l1EkH/QKId5fi0Xm6HeruFm8qAKKYUTjdw3hxMN
- WuXnJiyYLlGXeRLPrp7a7wYCH2Ef8iRIVUca9ORvhukgo8Q2aTYsh0Cb6 g==;
-X-CSE-ConnectionGUID: buuO3wfERn+o1uLg3bZrFg==
-X-CSE-MsgGUID: BK/gcwJHTaC/ADMeUHWYuA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="78354572"
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="78354572"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Sep 2026 22:25:18 -0700
-X-CSE-ConnectionGUID: gVN6XDQWSJ6JA/OLsYBCZg==
-X-CSE-MsgGUID: y99kgHvyQBe5eh0l2J1P4w==
+ t=1790141381; x=1821677381;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=q1FbG124FQieIySUvIorwonK3t1kSXGhKTW22fRM9hk=;
+ b=dsacvsokCnTBD7Z9eDvYz8AMKsiKMjg2la27JZJcjVMEs0GRAOqiS7qN
+ RlDb7QHT/J+gJB7Bhxn4zTynIuWRPJhrZWJI2J9pqJhyz6Uk4ZdwkZsGV
+ nWHCRnPfJhwfGzl67pD2WPtgJSI65cKRgJFADPELG6OENHHD43Zr04A4Z
+ EetV/DZkMD14lZcN6Ca5CWyMGu/ZTeKGooQmtxcghsqXHmvnME1w4HOok
+ YxgusmC5rHEIOwHB2zlNGODy19mMsEko5ih1XHrBBDbwxztkNMzidtbui
+ DP5wx5NvqFYyYkAmrg7G8cgkJImTpT5SENolGoux0qzDQ4R8KVyP3oYb9 Q==;
+X-CSE-ConnectionGUID: EcHtLktORDeq9GowvQiVMA==
+X-CSE-MsgGUID: 8Ju+lLAgTSK1LRe0L3PdDw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="90672691"
+X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="90672691"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Sep 2026 22:29:38 -0700
+X-CSE-ConnectionGUID: A12GGOp7TDShnSEiUDYCVg==
+X-CSE-MsgGUID: de4jA+aBRl2q8FG+9NBTow==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="273629384"
-Received: from qat-wangyuan-17e.sh.intel.com ([10.239.92.81])
- by fmviesa008.fm.intel.com with ESMTP; 22 Sep 2026 22:25:14 -0700
-From: Yuan Wang <yuan1.wang@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, tomitamoeko@gmail.com,
- bosheng.xue@intel.com, junjie.cao@intel.com,
- Yuan Wang <yuan1.wang@intel.com>
-Subject: [PATCH v5] vfio/igd: Make MTL/ARL guests fall back to BAR-based
+X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="281527242"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Sep 2026 22:29:38 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 22 Sep 2026 22:29:37 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Tue, 22 Sep 2026 22:29:37 -0700
+Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.59) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 22 Sep 2026 22:29:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rVbZmPJYZXQNt0XhTp1D2luQ2Mx3FmgI/tToKg6nq7LBgLENmsc0E4vAUoAdkX1H/G0EzS2TO0pbs2H1/LaTJQ9Td1+rrsVxDDqZavQz1haPeB0JrQn1LMCCORZcaPEuPjAakuvKnc9PrV7XsNxL1OIw1W9L5tZDxxF05h575SU71w2/fHAg6xnZTvFd81tWNH+P7paWHUw3JoQimmIcdcf+sAw2AyNnhHpaQdS0giGN8ABfqRiRorF8AD6ndCtAb0ONZ+fV2m21tXNOybW2z+y5SPYnUv0GsmFSsL5qJw+cjtKtsR+iW/QwHTI8ssXRnR0baW1s9MXYIysSNj9aDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=q1FbG124FQieIySUvIorwonK3t1kSXGhKTW22fRM9hk=;
+ b=NRckBZsSXEGkWea89cNuVJuD32TBm8HW923Z5Rj+uovYS8tkQrofKUsKJSPsbMWEFQK4Q22AssPEGsQFlOk1/Xc3v/KWlh2XBR3bnDkk+2ZzANQ7nwdy5xzmeAIYav59aEFl8RSYm1HehXql4Cf2tcFGd0Ku5DtXZ8lKEGQQ/g4WfbxxCu755RzNbJjHVqHHLHJF+zBAMg9c9LsjjqGYozZTmESuu9F2EEdgHXDRDEMl6WSeATBigwgVG2UVmZgvCfTI9YdTjlhgExF0Ib2mpNLwRhukBMjmVqrqjBYjeT14PG6dLHNFnoRTiMoFU/x7lsyUxfuAopXW9UQkdE4hww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ5PPFC295640A5.namprd11.prod.outlook.com
+ (2603:10b6:a0f:fc02::852) by PH8PR11MB9831.namprd11.prod.outlook.com
+ (2603:10b6:510:3c4::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Wed, 23 Sep
+ 2026 05:29:35 +0000
+Received: from SJ5PPFC295640A5.namprd11.prod.outlook.com
+ ([fe80::80bb:e0b8:a9ae:716d]) by SJ5PPFC295640A5.namprd11.prod.outlook.com
+ ([fe80::80bb:e0b8:a9ae:716d%6]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 05:29:35 +0000
+Message-ID: <5beb6876-f523-4a40-bfc5-313c1e025bd1@intel.com>
+Date: Wed, 23 Sep 2026 13:29:28 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] vfio/igd: Make MTL/ARL guests fall back to BAR-based
  framebuffer access
-Date: Wed, 23 Sep 2026 13:25:11 +0800
-Message-Id: <20260923052511.2842596-1-yuan1.wang@intel.com>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
+CC: <alex@shazbot.org>, <tomitamoeko@gmail.com>, <bosheng.xue@intel.com>,
+ <junjie.cao@intel.com>
+References: <20260922053658.2758332-1-yuan1.wang@intel.com>
+ <9e8167d0-3072-49b5-b4c3-7f56c2121424@redhat.com>
+Content-Language: en-US
+From: "Wang, Yuan1" <yuan1.wang@intel.com>
+In-Reply-To: <9e8167d0-3072-49b5-b4c3-7f56c2121424@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=yuan1.wang@intel.com;
+X-ClientProxiedBy: KUZPR03CA0002.apcprd03.prod.outlook.com
+ (2603:1096:d10:2a::17) To SJ5PPFC295640A5.namprd11.prod.outlook.com
+ (2603:10b6:a0f:fc02::852)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PPFC295640A5:EE_|PH8PR11MB9831:EE_
+X-MS-Office365-Filtering-Correlation-Id: 319c87f1-a92f-445b-5c6a-08df1933a736
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|23010399003|10063799003|18002099003|22082099003|11063799006|10067099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info: Ze+EgJ8tfGwQqMmrjH/n5b7ZRE2CK35yCNGhtuqa7j83wwMUbKv9JC5KACTn42m5aiJRfemnaiJgJP+PockIIg1T7RbNKPfFW6eBnDYR/ZT1anYuyDwuzCqIIoGtEExoxvUnmr0RFw12xgz9hvlB+FpnbQPVduBVYEXuNl/o9Ge7xQTDpW6PHBSUh6vkZSn+chId/Ti3o0yQ1i1yHgi63Vu3hniAJBRMDQvyoQTyaxZbQxr8InZFZgfnOPEh73ou74aEx7L1loM70DZzNimVkeKv2N/MaFxO1hJwIzyW4Ry7hCvVsHF5rbS+OyH+41grIwmaY+sxeCiXekOELfGIa4clW3o8bUJLLVa6Rdnen1qFhcQNbZlmmLrYjxu+jFcJsNz7Vf5dXp622poGehdkr9EC3ayIezPVS5fpPz0QYOBFoK+Xtfxa/Pq3gc1sRctgicOVq0O/gaNXxiGta1O+WGVpeY8JgjS58j2lKPGrzZEizoNPRHzQnzTwpqfAflpiQTny5WiFZmG+0Fnj+2I8aRlpnWa29AfngiYEl8kR9ZuuYYu+KndRLW9F+X6OqmkbwIjzWVxCDDifXdmL0+uB0Wjmi/FPtsEeR5atrZPc0amj0vQX5tbpQMuyD5TE5lUNsi5Ll7bt/L/MlhlKROAshm/bTU03T32ARVUrzJIMUjA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ5PPFC295640A5.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10063799003)(18002099003)(22082099003)(11063799006)(10067099003)(56012099006)(4143699003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YW8xMGFDeGwzQmE2T3F2RnlIV2xpZy9sNGNkcjc4T1NBWDdsSlAzdmNEQjg3?=
+ =?utf-8?B?RjZ5czI3L2hmOXMwaWNpaEFFWEhJZU9oU0dSRnlwS29qTTJ3TU1TTEFZQTVV?=
+ =?utf-8?B?UG5HQVI1b0pYeU5NMk4wTWRBY0VoSWlvYWs2V1J4dmRYMC9rdENoc2NITlZV?=
+ =?utf-8?B?Z1kzclFVY1FTWk5Qa3pqd3VENjBIU2pFN2FQZGVrZy9oOFg0Q25SMUd2S0dG?=
+ =?utf-8?B?OFB1dGpZdjVFTi9DR3FTN242RVdtSzh0YnZsbFB4eWFvdmIybDN4UnZRaWlI?=
+ =?utf-8?B?TFdvRS9FS3hPeXk4SS95clFuZmVUWi83SVAvT0NpVURBQ0RTR3dTcFYzRHNQ?=
+ =?utf-8?B?UURDWkx3SzdLTnFZUDJRMXZ6UTlXajlGU1JzZzJBSUNEU2xXRk43VEhmMnRk?=
+ =?utf-8?B?aituRTZvSmtPN3N0TW5YWTk0eU92QmFweERsZkRaODlCdXl5Y3ZFNTBnckN3?=
+ =?utf-8?B?MDRJQ0tOd1pMU1RxRTRTWjFjNVNxVEx6RURwTXdtNExVUU1jUGQzZWpqeUNZ?=
+ =?utf-8?B?emR3RXZGd0pZaWFyczNEM2xwMVJuTVRraEpWWDVUN0ZUNDdOYlJKdXNCQ0Zt?=
+ =?utf-8?B?ekpFNndQQU51UHVjVDIxMS9KTlpRQXV6OFRKaEJjVXBoLzUyMzJBUVNiTy9J?=
+ =?utf-8?B?R2NtWDh3d00zU21JRFltWnNvdVpkeWZRa3hDRmJtdlBJbDJaUC9WcWpvN3Ey?=
+ =?utf-8?B?YmtvKzg3OHFJclZoREhYSHQ3d1RVVExUdzM5Z3d0Qkx4NjVsb0xFK1FlRFFV?=
+ =?utf-8?B?Q05GeE0xQ0J5RmQvWEo1TSs5NVRVVEM1aFg2enhGTmRJWG15Y3FLc2V3RjNm?=
+ =?utf-8?B?UUpCOEVCN09iMWtBdGVrMHFXTkl4azduek1kNEpjdExQUzZEU2lyMU9jdTZp?=
+ =?utf-8?B?V2Q5Z2tZdmU3dUJZVVkyalhPcG5qd2U3ZGZZMzFCS0paUkxjaTJzWi9nVEs0?=
+ =?utf-8?B?Q0ltQXNXRkR5TGFxNDhIeEtCTnZNU1Q3TjRwWHF0bnpoSWtjQThwV2VRait6?=
+ =?utf-8?B?K0lsOFQrTGdSMmJ4Vy9EdzV3YUNaWDhjaGdXSUZJS2N0VG5kUDRDMHJEUjJX?=
+ =?utf-8?B?VEdIeVdLTlFZQjNmUHV4RXFHOWVkVzBJUTFlQVpKallPVnc5UlkvUlI2WlVh?=
+ =?utf-8?B?MmFlQzdTbWIxaFZtOHNlMjdBQXU5UEhDbEhwTnV4Qm9Ea0dHNmQ1ZUpNZlVv?=
+ =?utf-8?B?NnIrVC9xMW5GemdrWGZCM2JHb1pnam1taGZnRlRBK2JlTUhySWRrSUVrRUVk?=
+ =?utf-8?B?dXdsRmZDenZjalQ1UFNWNU1tT2ZQNFVxUW9SeFJOS1VpZjZjU0c4TS9oWi9N?=
+ =?utf-8?B?ekFTeFE2QU1uelBDV25XYktRWUlTQU84b05lNWZTNFJ0dFpiTXRXWFZRV0dZ?=
+ =?utf-8?B?RHV6L3V1d0Z4a0M3bXBtZHJaaUdqMVhEYUJkV3RWSmxXOFYySmhWSWdlbytP?=
+ =?utf-8?B?aXcyWVpKd2YwaU56WHVEakdaN2p5L0ZWaFRxV2NOUkN3cDJVOVFQazZLMkRL?=
+ =?utf-8?B?SG4zTUZpcHFlSytuRFBBb3Q0NGVpTG1EWG9TRzJXUkcvSElweTlXWHVTbStE?=
+ =?utf-8?B?MXllS1I4d216akRzdjFsUHRLaEMyZGRVb1QrOHlOVXNqeTJtakVDTERSYXNQ?=
+ =?utf-8?B?dmtZUFZlcFpwd2dZVU9acXcwOEo4Y2wyek9qWnMxKzR4UGRySXNaNGtzb3Zj?=
+ =?utf-8?B?RzhVUGYvMWhoempObXh2bnF4elFuL2Irbmc5d2ExTWcwSWtrdnFvWjh3L1Jh?=
+ =?utf-8?B?dUlDZDNNNyswOXhmZzBIemRkeENLM0l1eGFUVDVKcTkzejl0U3Z5VWJQU0JQ?=
+ =?utf-8?B?R0NIOW90ZEt1dk0zaUNmRytCN3BGMUNDdzRhcmp6RG9nbFJoRFhCOU5PNDhm?=
+ =?utf-8?B?NWFNZlVIYXQ0b1dkUkVjZkc5SUVPbC9SejNoMGZJZ3NkZCtjQzNKQWgwaEhu?=
+ =?utf-8?B?UTFVa1VGbU10dmRZRUU1cTVYaTJ3QWhOQng4TXlWejZ3L1RMbHZNTFhlSnhl?=
+ =?utf-8?B?N1RZcnV2b3BXbGdmcEFJY3F6b2NvUnVJSXVRanFTeUxwaWxXNUZKNHlLaVpx?=
+ =?utf-8?B?bUNPQUNaVUV5K2FBdEE5b2pScjIyeXdhVVVhbFVDN0NHYzdTeGpLQ3dicXFq?=
+ =?utf-8?B?ODJvTDhPcHF6WXk3N3NNL0w1cG9RcFkyWE9WSHdRSXNkdjRCYkd0Z0dUNERI?=
+ =?utf-8?B?TGRaNHYvZnN0MHFwcmQ4MHJPSUxuRmVhZlVIeC9GQkVuRTZGQzJrRUhvRzYz?=
+ =?utf-8?B?OE9vMzFJZVhrUUtNWExCVHRibkJzNkVLNisyeC9PWHBRWURkMzVQVFZHVkRx?=
+ =?utf-8?B?VkRZbXNxKzljYzlsOGNTZVV2bTk4VGNzOFBSZkVJR1YvN3AzWnUzZz09?=
+X-Exchange-RoutingPolicyChecked: B2vVh152b2gO6e0fJN3EFmoL+dEatiTD9mxaORSeOqUZglX/1pabtOlwX2qvhBZ8y+P42+uPZztKYWwOtLyl5DfXcy3jBv7qI6qfmjti94W8Z3brdMCkNTfFbVvF3SM+eig6056AaXGHHexwLaOTPcbRuOen1tPdffxoOEGmjtYFBKSe2yJXZWsmElGUY2MQEbOMXaazBnr3PmSOQVtNdhDE1xwtQcXEs/Xt87mVcqnDyG4Tb27v/FPheHlH1JHGdgx/T8xfDs9u9gtiT8i1eJQt5ApkOYm3+qmvf2Esd6x3gN356cmt13QNgR8ExOdUHzlSy/fMAV6ODwSCd8Imww==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 319c87f1-a92f-445b-5c6a-08df1933a736
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PPFC295640A5.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 05:29:35.5503 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iGmQngxFzVf3biQCy/oF2unOiNlHxyKYQsplOdEwViAoPob4qP1ELzyJH4SPcnsoKYi7ENLg5UBfQaR4GA2WNQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB9831
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=yuan1.wang@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -82,138 +185,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Meteor Lake and Arrow Lake GOP can read BAR0 MMIO offset 0x138914 to
-detect whether direct framebuffer access via DSM is available.
 
-In a VFIO passthrough VM, the guest cannot access the host DSM memory
-region via such a pointer. If the guest GOP enables that path, it may
-hand off a DSM-based framebuffer address that the guest cannot actually
-use.
+On 9/22/2026 5:56 PM, Cédric Le Goater wrote:
+> Hello Yuan
+>
+> On 9/22/26 07:36, Yuan Wang wrote:
+>> Meteor Lake and Arrow Lake GOP can read BAR0 MMIO offset 0x138914 to
+>> detect whether direct framebuffer access via DSM is available.
+>>
+>> In a VFIO passthrough VM, the guest cannot access the host DSM memory
+>> region via such a pointer. If the guest GOP enables that path, it may
+>> hand off a DSM-based framebuffer address that the guest cannot actually
+>> use.
+>>
+>> Intercept reads from the detection register and return 0 so the guest
+>> does not enable the DSM-based path and instead keeps using the standard
+>> BAR-based framebuffer address.
+>>
+>> Suggested-by: Tomita Moeko <tomitamoeko@gmail.com>
+>> Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
+>> Reviewed-by: Bosheng Xue <bosheng.xue@intel.com>
+>> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>> Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
+>> ---
+>> Changes:
+>> v4:
+>> - Address review comments from Tomita Moeko (update macro/variable
+>>    names and comments).
+>> - Pick up Reviewed-by tags from Tomita Moeko and Cédric Le Goater.
+>>
+>> v3:
+>> - Emulated register 0x138914 to return 0x0, which signals the guest
+>>    GOP driver to fall back to BAR-based mapping since DSM is
+>>    unavailable in the VM.
+>>
+>> v2:
+>> - Resending because the v1 patch was sent with an incorrect future
+>>    system timestamp due to an unsynchronized local clock. No code
+>>    changes.
+>>
+>> Notes:
+>> MTL/ARL device IDs remain in igd_gen().
+>> This is required because vfio_probe_igd_bar0_quirk() checks the
+>> generation before installing BAR0 quirks, and the 0x138914 quirk
+>> is added afterward.
+>> Meanwhile, we also plan to remove the bdsm-size check in the OVMF
+>> offline patches.
+>> ---
+>>   hw/vfio/igd.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
+>>   1 file changed, 46 insertions(+), 3 deletions(-)
+>
+>
+> This change does not apply cleanly on :
+>
+>     https://github.com/legoater/qemu vfio-next
+>
+> because of :
+>
+> https://lore.kernel.org/qemu-devel/20260724102959.1043264-1-mike.malyshev@gmail.com/
+>
+> Could you please resend on top ?
+>
+>
+Sure! I have rebased the patch on top of your vfio-next branch and sent out v5.
 
-Intercept reads from the detection register and return 0 so the guest
-does not enable the DSM-based path and instead keeps using the standard
-BAR-based framebuffer address.
+Please kindly review the v5.
 
-Suggested-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Bosheng Xue <bosheng.xue@intel.com>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
----
-Changes:
-v5:
-- Rebased on top of Cédric's vfio-next branch to resolve conflicts
-  with Mike's commit.
-
-v4:
-- Address review comments from Tomita Moeko (update macro/variable
-  names and comments).
-- Pick up Reviewed-by tags from Tomita Moeko and Cédric Le Goater.
-
-v3:
-- Emulated register 0x138914 to return 0x0, which signals the guest
-  GOP driver to fall back to BAR-based mapping since DSM is
-  unavailable in the VM.
-
-v2:
-- Resending because the v1 patch was sent with an incorrect future
-  system timestamp due to an unsynchronized local clock. No code
-  changes.
-
-Notes:
-MTL/ARL device IDs remain in igd_gen().
-This is required because vfio_probe_igd_bar0_quirk() checks the
-generation before installing BAR0 quirks, and the 0x138914 quirk
-is added afterward.
-Meanwhile, we also plan to remove the bdsm-size check in the OVMF
-offline patches.
----
- hw/vfio/igd.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 46 insertions(+), 3 deletions(-)
-
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 5e6160763c..4c7d654592 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -96,6 +96,8 @@ static int igd_gen(VFIOPCIDevice *vdev)
-     case 0x4C00:    /* Rocket Lake */
-     case 0x4600:    /* Alder Lake */
-     case 0xA700:    /* Raptor Lake */
-+    case 0x7D00:    /* Meteor Lake / Arrow Lake */
-+    case 0xB600:    /* Arrow Lake */
-         return 12;
-     }
- 
-@@ -452,8 +454,30 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
-     return ret;
- }
- 
--#define IGD_GGC_MMIO_OFFSET     0x108040
--#define IGD_BDSM_MMIO_OFFSET    0x1080C0
-+#define IGD_GGC_MMIO_OFFSET         0x108040
-+#define IGD_BDSM_MMIO_OFFSET        0x1080C0
-+#define IGD_MTL_PCODE_STOLEN_ACCESS 0x138914
-+
-+#define IGD_IS_MTL_OR_ARL(vdev) \
-+    ((((vdev)->device_id & 0xff00) == 0x7d00) || \
-+     (((vdev)->device_id & 0xff00) == 0xb600))
-+
-+static uint64_t vfio_igd_pcode_stolen_access_read(void *opaque, hwaddr addr,
-+                                                  unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void vfio_igd_pcode_stolen_access_write(void *opaque, hwaddr addr,
-+                                               uint64_t data, unsigned size)
-+{
-+}
-+
-+static const MemoryRegionOps vfio_igd_pcode_stolen_access_quirk = {
-+    .read = vfio_igd_pcode_stolen_access_read,
-+    .write = vfio_igd_pcode_stolen_access_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
- 
- /*
-  * IGD BAR0 DBUF_CTL sanitize quirk.
-@@ -547,7 +571,7 @@ static const MemoryRegionOps igd_dbuf_ctl_ops = {
- 
- void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
- {
--    VFIOQuirk *ggc_quirk, *bdsm_quirk;
-+    VFIOQuirk *ggc_quirk, *bdsm_quirk, *pcode_stolen_access_quirk;
-     VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
-     int gen;
- 
-@@ -562,6 +586,25 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-         return;
-     }
- 
-+    /*
-+     * MTL/ARL guests must keep using the BAR-based framebuffer address.
-+     * Return 0 for PCODE stolen memory access detection (0x138914) so GOP
-+     * stays on the standard access path in the VM.
-+     */
-+    if (IGD_IS_MTL_OR_ARL(vdev)) {
-+        pcode_stolen_access_quirk = vfio_quirk_alloc(1);
-+        memory_region_init_io(pcode_stolen_access_quirk->mem, OBJECT(vdev),
-+                              &vfio_igd_pcode_stolen_access_quirk, vdev,
-+                              "vfio-igd-pcode-stolen-access-quirk", 4);
-+        memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
-+                                            IGD_MTL_PCODE_STOLEN_ACCESS,
-+                                            pcode_stolen_access_quirk->mem,
-+                                            1);
-+
-+        QLIST_INSERT_HEAD(&vdev->bars[nr].quirks,
-+                          pcode_stolen_access_quirk, next);
-+    }
-+
-     if (vdev->igd_gms) {
-         ggc_quirk = vfio_quirk_alloc(1);
-         ggc_mirror = ggc_quirk->data = g_malloc0(sizeof(*ggc_mirror));
--- 
-2.34.1
-
+Thanks,
+Yuan
 
