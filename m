@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044FCC98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BD6C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Tgn-0008JK-3J; Wed, 23 Sep 2026 16:35:37 -0400
+	id 1x9Tgn-0008JP-FY; Wed, 23 Sep 2026 16:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg4-00089d-Up
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:55 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
+ id 1x9TgB-0008BZ-Tl
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:04 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg2-0004zq-5N
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:52 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- d2e1a72fcca58-85469e25400so740458b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:49 -0700 (PDT)
+ id 1x9Tg9-00051U-81
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:59 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ d2e1a72fcca58-85469f20513so815991b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195689; x=1790800489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790195696; x=1790800496; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=j6QG31ddBAoXf5XbCARtw7hjYTU4SqCkiNBwOj5mBjs=;
- b=eYS6yS7UFJ4mR5knmO3YhbNrwCUoW2+VkxG8Fn0iqORNdEconBmH5tDT+p7kGefWqg
- ZZDkPIOIZHY61yM6SeFAkiIV5wDWf3PqP/XPVoeglEfHQm08/Rfz4tfCwf5k9T4bfSo0
- RU6ZFmcg5hzejfUK3ZSlnmDhsG4rh2pmbBjTnHbbqPz5UYwPGkr9qJXSvCikjlgbRVLm
- avhpydrJkl5+qQNFZ0eGoE8Hhz10tFPj05LwLV3UDQMx8bQkIy3NJ1qeGKo032omYB4p
- dcnTIgL4mT+3mHvwaUryjEY2pxGsi+Jfm+heseSXc6ZQT2gxJL39XPZ/XRoyEJoqTqyW
- zDMg==
+ bh=iu9gCM+s0VdQe0NL+JCl/IZq6aTzQsY0y78oZAVciM8=;
+ b=FVrIitesFuzMcM/fqWziMO0HNWRddcotfDZZ1Kx+bODmaNvPUTn2/71JhX3W0PSAQv
+ Px5Z4/Nab1WAqwjZ/omuJvkv8+2YdCnUVFJMpXr+h3IMNqERUYke3SA0njTkwoT+epyi
+ 7AGSnrkig9ucKmZK94izFoIKR9n0Rd8M+mC4b8uBjiwWXG3gSXdCecTPzuvj7JHsQgkf
+ kfLbf2EFloOZ7bU3hZ5L4eQxvm79rbKFyNrqCUsIEXiShTFZyutwAt+5GuK96Hse6oCs
+ 7rd5Vx9G234mfhvdbPUKyrZKqTgK+WEqqTthYdOc0q2zrOm+hZXjMVIjKDtd2NQGBawE
+ Rayw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195689; x=1790800489;
+ d=1e100.net; s=20260707; t=1790195696; x=1790800496;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=j6QG31ddBAoXf5XbCARtw7hjYTU4SqCkiNBwOj5mBjs=;
- b=pIngyMelZ4XopUi0JL3Kb242RY7Q+BM8fFXdcBwB5uBI5gSqh4np7OBcNpBP4x1VjH
- UHcV7HeQmU6U7PWlgOB+/Btg/gyQ7lU6tFUDmOZpVntSLmYhR4GK6iLrsOPY7M3b2MYr
- Q7sZBmsRyS9oSRtRyILNi5oE+qIe7igYXba5TkOzeye5veoNkuc/+9F9TbZTYfUuYKvg
- BJ+311J5wRyvL2il8hk91Eyop0xpSO7BzEQuJ7GkmFoOVbpwqhm+7MCDPaIo+hR+6qR7
- CyjEwRX6SQ7M1kl7M915S9b1qoct/8QMgSkNPGZ91edymqJ7FwG5H4bN2iNV92m81O4r
- VgRA==
-X-Gm-Message-State: AFuF++kP0GbIBsBlKh1WjxemjA6ROrM8t3yx7mqvHhvWgmccZI6/7pgU
- zUd8IyBcmrpy0WieCRp6kAX+mcuah0BP5pLqU9e2GqLP42GbQDll4yftie8R1CNn2yZpwwfjFux
- O6W5a
-X-Gm-Gg: AYBFou3GUz+rYOCrhT7Niq+nHAJ8uobd/PXOfy9Vtem4fBVgR1Dl8BygXmzY2afv0qP
- taRBNJjBX3kEifXNSVT8K/Dye1oZEt/5Ouy5yg6rHA6rVLpkH2Dwxkk3olbvohnDRD7p+Waw2fc
- GbofNM3BU5DTBuNeBqiHWub1znzR4IqEPqce5cajiWwvlnraOjBHKt8/FxM9mPT1yuEUna8eRXj
- tWQIzP2f3vEcMfG9dCcS0U14R34o98D/8tk+ZiPGIr7d58z4SYAvxAKTvuNeNRKT1pkHUtn/RGp
- N70g1IemzPQbRRYIXvrDto4UmqwkuEfEzKdZ8IhyF9VQWF4hcVGn2r3Axwb7m//QDUhGxZw//8Q
- Hk2E7ND13OuX/QxQx2OkZgMXW+z0Wx7Rc/DLaRuZDvGqEtOEW1prZGIZhoR3DZGUD/YogQfbo7I
- 8bY1gj4BKuzbjoigDbRiA0fZae35JCH+nCmqzatmfb3qL3y8k0mzGr9zl9eAMlfLWFT7r6H+281
- qZV/EbUtjU3ECy85G5IVi7CbT6dsQ==
-X-Received: by 2002:a05:6a00:4b4f:b0:87d:d1bc:334d with SMTP id
- d2e1a72fcca58-87e9be77eafmr222447b3a.40.1790195688699; 
- Wed, 23 Sep 2026 13:34:48 -0700 (PDT)
+ bh=iu9gCM+s0VdQe0NL+JCl/IZq6aTzQsY0y78oZAVciM8=;
+ b=IhRMXtmXv+4viDGfholYZBPNiHBNgf5er2XdTT9KbS3zjYUzckAqQ3KLi6EeRvQj1T
+ ZDORsy3Gd6v5pHUi7ooTT4oo9WHQVFlfoGE+ynGVdSt2tOtMM9B5rVeNy+ffbri3sNxE
+ Ry12QjsS0a+MkA/JJ94wHgvxyRQrMb92hXyu6C5jJ1FXYueJfc76gBvYzTsecJ+aulko
+ seZihy/d2bLLnsZomul4ZxV1FAiPhbkrBMtm1/wycoHUPOFPDvyBHxwdb74BZwJmnW7V
+ GA9y1qIMczxOKbID7QGA1tAakm3WV0jP1whrre/7G0NzqiH71+pZ3ObZyKNL+oyxluuk
+ z5jg==
+X-Gm-Message-State: AFuF++nD4YA4R5NLQNtN3ZRJrMUrsMsRnbYMsXlPo/CWZrcQ4HQowMD0
+ B0iU5j9Q1rjVhn9W1E/rSazXcoFHfgzo1Se8mHrEQ8JaNkp8kmOr4v5aVBx830IXtJA+JpVJ/s9
+ 62oCE
+X-Gm-Gg: AYBFou1QjhWfyhyXffS3Q+NjviM+SqssBmjNhweyaQe+akVgmRJ903VdWWMq4DSeWny
+ KymEaV2CoGy1H8ZI6GT+yChvSwQAuy92OkAfN955KwJ7CiaAaCbJXvDJf14kjCcpkKEymVb+i+K
+ X5V1Cj7Ki203XENpcy4DMiPnUKJdacUJDME67AGRTImpdTBDRIgo7DVY8+M8QjXghVSHYuCERQ+
+ w9f3jXT18v2ktH0+05GeUKy5qTHXokHj9ejEYfwTZ2wqvzg7AwuFY1JSRjqr2JANQk9W4+X3FDb
+ YP1NircdVnsV0PGdxW4CE/eiW3jQ2nNiZhwUdG5uhY012WV1EC9yAXtEQAlykCfv1hraXYig/qr
+ JDgToaWzT//LIGuiMyhFXt6dAVWGUhXMhStMmLwYFMTPWM5N5xiTyVd0R5d0EOB6bikCvO2yc9/
+ i/HXAwad8hcvpQCCe4b8f9yy9yRqd5sTDDXJMQxDfDI3dOc9pq9/hXFQ/SaXsmEHf2wVNM5500W
+ eJgJ0ZJdj/Sy1DYYEy2bjo2fOmZrw==
+X-Received: by 2002:a05:6a00:9084:b0:860:507d:503e with SMTP id
+ d2e1a72fcca58-87e9956817cmr226726b3a.20.1790195695827; 
+ Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.48
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:48 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PULL 06/16] tcg/optimize: Fix fold_multiply2 vs 1
-Date: Wed, 23 Sep 2026 13:34:31 -0700
-Message-ID: <20260923203441.31276-7-richard.henderson@linaro.org>
+Cc: Max Chou <max.chou@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PULL 14/16] tcg/riscv64: Set vtype before whole-register vector loads
+Date: Wed, 23 Sep 2026 13:34:39 -0700
+Message-ID: <20260923203441.31276-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,78 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For muls2, we returned from fold_multiply2 without finish_folding
-or any other mechanism to update value tracking for the rh output.
-We might as well do this via fold_shift, which will also mark rh
-as having all copies of the sign bit.
+With vtype uninitialized, VILL might be set, leading to SIGILL.
+Also, assert vtype initialized for whole-register stores and moves.
 
-For the movi paths of multiply vs 0 or mulu2, we're better off tail
-calling to tcg_opt_gen_movi rather than explicitly returning true.
-
-Cc: qemu-stable@nongnu.org
-Fixes: c9349965ce4 ("tcg: Optimize INDEX_op_mul[us]2 for 0 and 1")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4448
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
+Reported-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index d291c844ca8..bd91220650b 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2213,6 +2213,7 @@ static bool fold_mul_highpart(OptContext *ctx, TCGOp *op)
-     return finish_folding(ctx, op);
- }
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 2ce9d47a633..de9a3570b23 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -775,6 +775,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         {
+             int lmul = type - riscv_lg2_vlenb;
+             int nf = 1 << MAX(lmul, 0);
+@@ -1014,6 +1015,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+             unsigned idx = type - riscv_lg2_vlenb;
  
-+static bool fold_shift(OptContext *ctx, TCGOp *op);
- static bool fold_multiply2(OptContext *ctx, TCGOp *op)
- {
-     swap_commutative(op->args[0], &op->args[2], &op->args[3]);
-@@ -2253,15 +2254,13 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
-             /* The proper opcode is supplied by tcg_opt_gen_mov. */
-             op2 = opt_insert_before(ctx, op, 0, 2);
-             tcg_opt_gen_movi(ctx, op, rl, l);
--            tcg_opt_gen_movi(ctx, op2, rh, h);
--            return true;
-+            return tcg_opt_gen_movi(ctx, op2, rh, h);
-         }
- 
-         if (b == 0) {
-             op2 = opt_insert_before(ctx, op, 0, 2);
-             tcg_opt_gen_movi(ctx, op2, rl, 0);
--            tcg_opt_gen_movi(ctx, op, rh, 0);
--            return true;
-+            return tcg_opt_gen_movi(ctx, op, rh, 0);
-         }
-         if (b == 1) {
-             op2 = opt_insert_before(ctx, op, 0, 2);
-@@ -2269,20 +2268,18 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
- 
-             switch (op->opc) {
-             case INDEX_op_mulu2:
--                tcg_opt_gen_movi(ctx, op, rh, 0);
--                break;
-+                return tcg_opt_gen_movi(ctx, op, rh, 0);
-             case INDEX_op_muls2:
-                 op->opc = INDEX_op_sar;
-                 op->args[0] = rh;
-                 op->args[1] = rl;
-                 op->args[2] =
-                     arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
--                break;
-+                return fold_shift(ctx, op);
-             default:
--                g_assert_not_reached();
-+                break;
-             }
--
--            return true;
-+            g_assert_not_reached();
-         }
-     }
-     return finish_folding(ctx, op);
+             tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
++            /* We must initialize vtype to something to avoid VILL. */
++            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
++                set_vtype(s, type, MO_8);
++            }
+             insn = whole_reg_ld[idx];
+         } else {
+             static const RISCVInsn unit_stride_ld[] = {
+@@ -1046,6 +1051,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         if (type >= riscv_lg2_vlenb) {
+             static const RISCVInsn whole_reg_st[] = {
+                 OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
 -- 
 2.53.0
 
