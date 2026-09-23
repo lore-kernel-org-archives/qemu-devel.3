@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 131EEC98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D915C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Sp1-0003zj-7v; Wed, 23 Sep 2026 15:40:03 -0400
+	id 1x9SqN-0004hR-Bk; Wed, 23 Sep 2026 15:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Soz-0003xH-4L
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:40:01 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x9SqL-0004gv-Nz
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:41:25 -0400
+Received: from mail-pz2-x0c.google.com ([2607:f8b0:4864:3b::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Sox-0007if-Gh
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:40:00 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85469e2254dso216826b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:39:59 -0700 (PDT)
+ id 1x9SqK-00084z-1x
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:41:25 -0400
+Received: by mail-pz2-x0c.google.com with SMTP id
+ d2e1a72fcca58-87c90648f99so1013767b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790192398; x=1790797198; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790192482; x=1790797282; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1qnECVgX0O0SwwzUh2wLEJspk7VLrc0D2r9ifxHANcQ=;
- b=Dg4eGT+mZLVXFRxcChMq4ZBqt+o0aTnntlsyE+eILO7G7TotQbjfC9DanlPMFPLPVr
- rgiFjXcuUVhKqrwkInjDhFfT4wgDuKPrjmr9E6hWrk+ZXpny6x1+yrMOmAAEGHipmkYq
- fgmiK9gZhaK9XJED1rHJaCMKT+FPh9X9HmlqHCygMdfuQqAoy1gjVdownUvufZ/KHpAY
- uf+fwdP2WwCI1+3V+kusFHeIXm+GXRhIUVZ9wRcf6uEsjYRr/smY2acGLryXNfOIZEcn
- E7Nm/ssjt9kBxVB5MirWHDJg0eddAjr9tfYIJruEBKpg+YmJqb8vcsjJ2qeL5zQw20E0
- yRYA==
+ bh=+miv+ox5jZmztK0PfoVxdCMhgrBMuhhL9IbukJyafUM=;
+ b=fF2PcJ6NfT0HI3EImN/VP3hMldom+D73Qbug8GaE+kZaLBCHrG0X3KLKvKS3mWhKGg
+ krC5gDHtGg+fEPsWrIdNZZDrczLqNLEcijYy1BwXJms2RZOn45ZbgYwgetKcrIDjzjwb
+ V8vD12zD8qFpR/x36PFMOphWcd22dwvLu/R/e5AwpJd6gImVj92UcK/4wUAtTSfnczlZ
+ FSVNxyablZrmANdQx3VWpk/QU646PhYgk8Y1UCab6jgZ3XsCNsMN+kAtZo4YwE++CFN4
+ WbC2Rys0vCHeo1BCPgIeoYToAY1qzHhGT85ZdkaMNiLhhdNU6Eq1Nmkb5gsH57uKLqdR
+ hYvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790192398; x=1790797198;
+ d=1e100.net; s=20260707; t=1790192482; x=1790797282;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1qnECVgX0O0SwwzUh2wLEJspk7VLrc0D2r9ifxHANcQ=;
- b=Ia3wzQa5vlBYWeSn+0nnXsMCs1KUXqBOsVZOyF7SjlJr4b8bJMjIunrADqTtDeeQ1t
- d7bnl58XmSygiaeSDgiuXPc1O+vZZbFt9zhAEOs/Hpy/lQQKKGw2kiLMqy2uiQOqZ2Z5
- l/9U8Fz7kTZLdrxeGsH8pP99BAdaXk0qNhS8BsV1d2Gkz2H80uvXexec/Keu55acncYt
- cM3vIN3tu7gEHek4qHzooPGidJkMrQPyREG1tu2iBxNceR7K5Ni2PCrzF1BPr6Ry2Ylq
- XGttcU26BbEfhWHQTjh/7rToQMXeuks4nHax3jy7vCHHauBsXENUznBYySW7auh5nMYM
- z4UQ==
+ bh=+miv+ox5jZmztK0PfoVxdCMhgrBMuhhL9IbukJyafUM=;
+ b=GkTnf3myBT0oFzrU36m9agU7u7oMDYIVe/riVbi70u0ngdM85k0vCJt5mu2OYezq4T
+ QDDTmOk10HoJQ+Zfipj4sZuaBGLvM60eCULaXfl79HopbPbKSgQh+TPW2nBRqVX4vlMR
+ Y+/Pz6AAMtCAG6PXNo6CsTcb+texx+GRzxLLDqo+6Aa7WQV7bHNGbE8rQXbc4H1TGlIa
+ JpbsI1x1bT/aOUov0VLkYVaLGT92g7+plfUtkndvDh2YrNAb3Cs3ucbq5uOQgTSX4GIr
+ qoV0sDN4lxoC99jWRFVTJSqb+2VBGbygpEcWtSHLhw59s+IF7Z9GHPmwuEUTBtcpTdgV
+ aFdQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzTxFeDTTNaVqhg8I/uacAAuh28G09z43oWOYkxkyYv3cSMUCK0Qq5CqvSbDftcIAxzuiYdQ2l+rsjE@nongnu.org
-X-Gm-Message-State: AFuF++kCxLu9jg+TumHYr8PFIXYDFT3pk8MNaKyrfhS+39TJGaEXQ7ZR
- D2aza8CAFeeCsBDw/txPiH4Wv9xMDnluUYpmSBQMst+dUn3DDsmcNZo1eQtm6VbIROQ=
-X-Gm-Gg: AYBFou3mkOwcGyh88wwNRz6gmGSAZgMa01bV5q/AG9xBGIBjkWzIvVNJhDRLuKhrgGR
- 1E7VCKOfE6pmqe897K1RuTzyRPWXdjd+nsCJtJQ/aMCjuSCWE8ateMSixLppB05+EsZ+X9Z0X55
- AieeSBh2LtnRavTfss/H4qmk/ylMHQB6lyZlUOhDa92HlzBOT8TKs6wZLKpjxLbb0PDuVsejXZz
- 6vj8VVvXkXZstd0VCXt3tarGlCdZOekhbktWfI5R0qaEUD6mKeOb//18wgm5aLBCJl2yH4FbNTx
- p9xPczxgIkmESLpzpjmPOzZ4g/4mwuOEr6OHad0Fi/pAs6MVk99OZtLVpXDx/K8Zn2OOc7EI7sp
- 9yr+CtmUJYGX3ojcT9AaXRCyXbwHEGWgHw5RUUVc5Zpl235wSk3VgHEW/jMVj24RF1OpinmVqFm
- 3ZYdQYoqslw5uuGz2sw3KAKxNp7yDsk5cNq7aQxyeYYLvte4x8n+yjN1o7fqtja5y/fJPRzOolX
- 6GPkuR7rn7lDifQM5m2ESz9fQ181pusZH8sj12rmA==
-X-Received: by 2002:a05:6a00:1255:b0:878:3704:e0f0 with SMTP id
- d2e1a72fcca58-87ea0103044mr75848b3a.22.1790192397939; 
- Wed, 23 Sep 2026 12:39:57 -0700 (PDT)
+ AKwUvBzoVmd5WyUZXaKJosR6kjmVE/yWi+YGCCs0mqfNyBH+BouYTDBvXdb9lgU+3pUQMyS6qjONeSL1J4HP@nongnu.org
+X-Gm-Message-State: AFuF++nF2pL1boLYAWImm+XmnZmSeDrqRkpdT6RnI2QElFrII4qCzQuD
+ yoln8ceAZLR6Up4yrnrVpuPALZOlKjRjSLA0Nd7co4qjLllrGbmVLs+2Ocodxn55Yh0=
+X-Gm-Gg: AYBFou1z29AdRiErSqthgbd+3Ogts4Py8kY0/PWmFMFZpqYur/5dRBoFHobDEEP21Ih
+ ftixNfE0ZWM6EIO0x5NIwIzaMC+5XFE+LBrM3EmoG00PVht4Mf3BMOupqbtTo+dtxsc69IZ10fF
+ uiIhKijEpvpJw0cuVL/ZrMxgQMbE2YiOO1RB663KqKeBdKlJq89ejEpOdfpKWLxv5CTl54Ykkf8
+ sflHB/vtWxdMash7sGx0aD6JR+S6ryz1Ba+36ZH0CDn/MQqlVoWtT5272cPDkl7+/nHZzAn3LJD
+ jX5M3JKNlwjX8OrguCoXq/OXrVFm7n5tpxn9UZVhTkCqPNbNN0Pg5W3AnM8ftqB3t5VRnbgoImo
+ RaXq4o3M1NgjbIOqb+IKyLPYArM5HM824R7gMOYxwJmR43MiJQjr2jvDWUSk65Lb96/OOjunyhp
+ LqfWByJRx6Y/9pGmQrqhvgUj7ZnLXOhWUjN7oR3nzE/7CykdAyfu6s0QRpftx50+dJ/qZDE7UTE
+ K5txjwqkyrxhnxiD/J1nOHmj8OqBLsraIAdQKTse1yKaiHOmhg=
+X-Received: by 2002:a05:6a00:981:b0:87d:d4e5:c56b with SMTP id
+ d2e1a72fcca58-87e9f631f8cmr123869b3a.55.1790192481700; 
+ Wed, 23 Sep 2026 12:41:21 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d1837b594sm1810680b3a.0.2026.09.23.12.39.57
+ d2e1a72fcca58-87d1cfbfd11sm1860778b3a.11.2026.09.23.12.41.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 12:39:57 -0700 (PDT)
-Message-ID: <469e0994-68f9-43d0-aad4-e96564e04f5d@linaro.org>
-Date: Wed, 23 Sep 2026 12:39:56 -0700
+ Wed, 23 Sep 2026 12:41:21 -0700 (PDT)
+Message-ID: <4d152653-1ddf-44b1-9bf5-e49469492f94@linaro.org>
+Date: Wed, 23 Sep 2026 12:41:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] target/i386/tcg: unify MOVBE and BSWAP generators
+Subject: Re: [PATCH 06/17] target/i386/tcg: add definition for REX2 prefix
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
 References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-5-pbonzini@redhat.com>
+ <20260923173021.317809-7-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260923173021.317809-5-pbonzini@redhat.com>
+In-Reply-To: <20260923173021.317809-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,14 +106,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/23/26 10:30, Paolo Bonzini wrote:
-> APX allows register-to-register MOVBE, which is normally done by BSWAP
-> (except 16-bit is also allowed).  Modify gen_MOVBE to also handle
-> BSWAP.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/tcg/emit.c.inc | 22 ++++++++++------------
->   1 file changed, 10 insertions(+), 12 deletions(-)
+>   target/i386/tcg/translate.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 3cdc458f95b..b8e8991163f 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -50,6 +50,7 @@
+>   #define PREFIX_ADR    0x10
+>   #define PREFIX_VEX    0x20
+>   #define PREFIX_REX    0x40
+> +#define PREFIX_REX2   0x80
+>   
+>   #ifdef TARGET_X86_64
+>   # define ctztl  ctz64
+> @@ -208,7 +209,7 @@ typedef struct DisasContext {
+>   #endif
+>   
+>   #ifdef TARGET_X86_64
+> -#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_VEX)) != 0)
+> +#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_REX2 | PREFIX_VEX)) != 0)
+>   #define REX_W(S)       ((S)->vex_w)
+>   #define REX_R(S)       ((S)->rex_r + 0)
+>   #define REX_X(S)       ((S)->rex_x + 0)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
