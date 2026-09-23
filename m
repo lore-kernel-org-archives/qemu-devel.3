@@ -4,106 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F27C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D01C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9U9W-0003Ck-KF; Wed, 23 Sep 2026 17:05:18 -0400
+	id 1x9UDQ-0003wD-HU; Wed, 23 Sep 2026 17:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x9U9R-0003Bq-Tn
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 17:05:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9UDE-0003ua-Fr
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 17:09:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1x9U9N-00084P-8d
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 17:05:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790197505;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5yd/9HZc4/l6Y/h2H8cSsj4cn/CFKCB/3R4DoyG2Zlw=;
- b=Ydm71/h3AhsGwSOa9Gfl8efWmP994Qy4y7WeoFr3xP3jAFtTd7VVHCR2pIAKD+JYnoaCWy
- Ho8oYfigfOVYR33VgPtcW9AZSsi1qXOjCCMXLn9Ib2HmSpIKnl0JUzdMI0NmgFV2lT+csE
- fiyE//S72cH4MXlum9ooFOzy2+GYgZ8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646--NrIfGldNPC4vOJBjhrbTQ-1; Wed, 23 Sep 2026 17:05:03 -0400
-X-MC-Unique: -NrIfGldNPC4vOJBjhrbTQ-1
-X-Mimecast-MFC-AGG-ID: -NrIfGldNPC4vOJBjhrbTQ_1790197503
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93a3f673221so315119085a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 14:05:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9UDC-0008OD-R3
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 17:09:08 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NL89uu663773
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 21:09:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ HEyZVvdbaYgiJ8rzxnwYB1x47sZyvErVH/rIu+XkOvs=; b=W6FMChoWvKkx/guT
+ bIGkhqLCZGZ8aDI+qRV0ZKDzWg29Tus2keFiK9Zz+OUvrVD4s7T29mhggR3EPRYy
+ Ft3voLryEL/e2PcXBjwaf/omi5gAyqC7zWKj1+LbngskQI9Xp8N6lcyQGLugaj1D
+ WcQQv4z7yqLIYug8CdMqlLJymPR8MH1VQGmBCpnbdaqpZpWFEqya++RaxbrxGeLE
+ bYndCnasnGW9oyKuGTnqxw2YQYzk7MTGlDTTPIjE9Xd+z27K4enTXKwkpWCLJ5+I
+ BKc7X3LKFgSxO6GtaErDX7vBbJkbvmL1mD6dmnbeQVyHKM4C8Ft61mPfk9GUtXvZ
+ 1x3uRA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvfkbj0bn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 21:09:04 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-33713e5e6daso1721856eec.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 14:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790197503; x=1790802303; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5yd/9HZc4/l6Y/h2H8cSsj4cn/CFKCB/3R4DoyG2Zlw=;
- b=SGifRHj8tay8T+NUMqTo7KXk43EEGlNGF86GkrygpJD273rIAvz0MZaB0rn5YZhFfy
- DaZJm+7/OB6BH5q9REqI347HgWyc5K/rOErZYpY9xwN+NMlMF9iV8hAwlsiRX3iJbsPj
- +T7NpveCUlHBzXAgjA63FaVvlxAjo46PJVuF8eOIpx/+/LLUvV94WTBQJ4mHD59xXQSh
- gM/kyRbnpCQfNrPjbISNnmI/Mk8Cf4DoALLamxr7WOQhhfiusZPK8PI4PgnUIKJ6+Glx
- cGBmFPycNW5ZW/qdZNwwWEqKzJb/+HpsRW0TFCe6btgSB54u5D1hRjVnzgHVGsniYclo
- H/yg==
+ d=oss.qualcomm.com; s=google; t=1790197744; x=1790802544; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HEyZVvdbaYgiJ8rzxnwYB1x47sZyvErVH/rIu+XkOvs=;
+ b=hb5zB7M/Xwlm6P2imMmLm8XjRl167mxGw0hpHidofQg33IVFzd94O6DYLl3jF0Agps
+ rNYvkhjjAY44tGAIDKQbPaK8knnVDEjHIzq0Rj5iFDxkVEVZnKRfNjVWc1MotO2HUhmc
+ a5eMYcH4DBZtQR9JXULEOMrjqgsZvfR9/vZDZXAXVECI2OIbX7ETcqacO8egRmUhWOPk
+ ujzgpxH/gqsKBxuov6ck/842jTLrN24+mOmpZjshGA2MGLgg8kT1u/uJZo+XQXxg8NGA
+ hjz/b6v1g7EqB2YKmObEchU1iTFw0+v/cnlsb/MNPxRORh9T3PXl8eFnhQ+zSTjQQqYp
+ QFRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790197503; x=1790802303;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5yd/9HZc4/l6Y/h2H8cSsj4cn/CFKCB/3R4DoyG2Zlw=;
- b=T6XHydoVXDPmYZ6W6ElL/ywRxtiuhkYJIC8SRA3IPokhXjEJxPQQWZxZ+kZdh5BPn7
- f4EKtZ/LKOzfNOduya4dHhtt55t9ZkKQVNwvez4b1W7Zip5FEKcChQLrxqQFBvbXR2Fb
- fuziFYA3B7bACjCT7gVQhm00jON1UlrUvU7aIry7s5DSgLvixbknZVKdo8TMmWOrnJKC
- qWG4S6GYft4t7FPwpaSHiXvYLcQBtkMSu/lmo9+QKipQJwW3WjBM3L7qEZn4pfa2FF/7
- w30PtZuCP/6o1A1kKpsrgSw9bMwI3gUiJhdAalTxlIwoa725WIUHsMvCUhakIuydqovD
- OHDw==
-X-Gm-Message-State: AFuF++no0B8pZzUV+FGe/NUnszHmcy3Gc6Lnl9+yYiclMpZQxy/XDoOy
- YtBHL1pCm3De/QbXgmBTBidStmkEvWR6at5uITjRp3RznRzSIgRbKDva/UbpuvKL32u5aBZrI4x
- Z9sIzxa7ALkkXnXFa5RCfyBlOPOWVFyNFfuHMsJDZ0wzcYcBQEFa+Soa4
-X-Gm-Gg: AYBFou1U55kH8h2lS+KoleH0ggsKCVpbVLseT4nQ/nhBPv+YGsykU2I37zKNuYZn4iT
- G/0QEW7mrm5rqSpoET0DYKX3mvQeIYlrvwbTy4T2oDanztBr/nGHyFOCrDz4iIFVWqzY6kn1wWi
- kPMCEjMzjIBhU8kYeSfx9t6ZxGb56TkaSFlxlhOXvMqSZzGnnRyIxEw+jrHihuyrqnM6ANtwdyQ
- yxFc2Nnhv02LpVOqIbwU1nnnwSeZoJEFSQzmQU5yDcqWyCnCLXLBZgwZfnGHTbDqve0rIH446tI
- Ma5ufRK4hGwj4Xopg1acKzl+rVsLG/fCt9UybmYyBgPw4QAk9STpXJjYWWe3f+7RFKt4OeLnhoT
- TZpBYmA==
-X-Received: by 2002:a05:620a:269b:b0:939:6de8:43d8 with SMTP id
- af79cd13be357-93c3469c671mr68044985a.44.1790197502538; 
- Wed, 23 Sep 2026 14:05:02 -0700 (PDT)
-X-Received: by 2002:a05:620a:269b:b0:939:6de8:43d8 with SMTP id
- af79cd13be357-93c3469c671mr68035485a.44.1790197501752; 
- Wed, 23 Sep 2026 14:05:01 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c2488d223sm309815685a.32.2026.09.23.14.05.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 14:05:00 -0700 (PDT)
-Date: Wed, 23 Sep 2026 17:04:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Akash Kulhalli <akulhall@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 6/7] migration: Fix incoming channel race with multifd
- and preempt_pre_7_2
-Message-ID: <arQ--2rmvQsX-DzE@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260916213558.587304-1-peterx@redhat.com>
- <20260916213558.587304-7-peterx@redhat.com>
- <87ik3w9d5s.fsf@suse.de>
+ d=1e100.net; s=20260707; t=1790197744; x=1790802544;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HEyZVvdbaYgiJ8rzxnwYB1x47sZyvErVH/rIu+XkOvs=;
+ b=dHRw2oBcUrSF/3nrx1JioofQk17flWo6olyXoCRcD5tgvT6CMo7fOl+lI/ou9ckfwg
+ iPT7cEtXH58CobFkufQ2zVJd8GkTyyJWXt2oKAftMIWHP+JKF0x7XPr3bu3ZFGfz0p2i
+ yrnD0u9w9NCWC9z/2UNt48/uXxg0fUUVcclu5tsOymVwLiB5EunCYZNBd6sxIkVJkyjX
+ OuUBp4PDpEM6h5L/ZGWPu4ONIpd1DENBmq9NG4N3PftGCpy/of1LNoLL8NNqWTPZUatt
+ 5lwmg7ZgcJI6nhaNBXvia5scLoct1PcnR2HoDdAywBtKA6kRd4HXgybgj8wHJzHEnnNl
+ Erlg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzMnc2p2A8VjHofrq/9obnXRJioF6wlmeyB69wKy7MR6Zge0HRsUWDv75Sw6YHL54ZT+67RC3Kbg2pj@nongnu.org
+X-Gm-Message-State: AFuF++lqP7UpNcBgyZwq6CLNIkA0f0DuXeuLUi/Tj+OYzseC2iRm6iIb
+ tS1niPQuFpGi0bszEbkI+4mPk6GcXL+UFF1j3RdEH1/Nq1fA/89lXw6Iizf7lJXGMULyK60UGo1
+ xg/TN7ZYwIKoLl16FCZQe1LLac3XagQ34sZY9M7I+Vo1hzQ3cRLW2ugDoBw==
+X-Gm-Gg: AYBFou0AX083oLjikVBGeG6T9eUZ7dyAKm0xPZCBRFLnX7LXDZbxnikQrMRZA50PwOi
+ z4MaKYsLQCwiwFvIR5ZaM4001qVQsIcfTRlwHv1o7TYjSlL7JoZ/NTGv2Sdful/MdoY98xHGo+q
+ A/ApoGKZ8EO2FjdAY6/Zwaf8I8LAroOJGMHH0kVjzZWFSg/jNB0H/bj3ltcWpXSr0thdcBP27I0
+ Y1ooxmeQeRlmjZhjJb3WbpHodxy/DH1ztMc7zBgMben7vcE6/nGjxRMhYB5MmlUfXraoRbI3Ilm
+ 2CvvcqwuDLkvTp3tWPO/xHemdZd74YDGOIBX5MRBPZeR8+R5W6C0BpJnuepPwroORZySZTS2iHm
+ 7U8zZPJpaMZrIKrTFF/pl+ub06z3X7SBwD87KnxV9qf/c6kahLSlEljlvPS8E5VqKi+c=
+X-Received: by 2002:a05:7300:d115:b0:33c:e82:70c6 with SMTP id
+ 5a478bee46e88-34000b32287mr281798eec.29.1790197743865; 
+ Wed, 23 Sep 2026 14:09:03 -0700 (PDT)
+X-Received: by 2002:a05:7300:d115:b0:33c:e82:70c6 with SMTP id
+ 5a478bee46e88-34000b32287mr281456eec.29.1790197730895; 
+ Wed, 23 Sep 2026 14:08:50 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-33e96e48e3esm9202303eec.26.2026.09.23.14.08.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 14:08:50 -0700 (PDT)
+Message-ID: <5f719ab6-442a-4eb2-90cc-0475016a816b@oss.qualcomm.com>
+Date: Wed, 23 Sep 2026 14:08:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87ik3w9d5s.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 091/105] tests/tcg/x86_64: user tests
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Stafford Horne <shorne@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bibo Mao <maobibo@loongson.cn>, Helge Deller <deller@gmx.de>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Song Gao <17746591750@163.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Laurent Vivier
+ <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>
+References: <20260827221506.91574-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260827221506.91574-92-pierrick.bouvier@oss.qualcomm.com>
+ <935e6ab6-5f86-4f1b-80ae-42c7219eec46@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <935e6ab6-5f86-4f1b-80ae-42c7219eec46@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA4NCBTYWx0ZWRfX1J0OUPbILfBN
+ aH+wOxlY8NqSdCjGxw4ikn97oilu1YzC7uGxeacr10ZdRoOSzcnyuU+NP3s1jL6prWFeP93srPT
+ M/Fdgu+G/ETu2FdBogglCZwxKccNOb0=
+X-Proofpoint-GUID: 6hZmgVmqvXL6MBaAKHYSVQU5SR1c4391
+X-Authority-Analysis: v=2.4 cv=RYMFmFtv c=1 sm=1 tr=0 ts=6ab43ff0 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=r0D9N_VWEkQcCGcx1eQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA4NCBTYWx0ZWRfX6+ljJP2ucnEo
+ 3C8NFpJRIcFSQMx01NDlVRg73b1v9IdjkFbxlsu6i1cSgL54gD0etidmI0mXyCj6H0A+TsFQrZW
+ mFWbkL3CG3xnZBuyn8M+Z+4UMit0Fa1Ey8etRomS+LhEqxwI/bWdfz7j2VfLHwBpvoqrm4+Y4m1
+ Ke48khNxwOq+Apbpd1D8e2KoCWg2y59QvYwGdBoACr/NVVZRy2oo9n1cQe0hLSDesp/rAKCxe4f
+ 5qJg8J+xBSgQp/DNQPy7QNVBQ3tG8Aajb9mS/a8OTuLxA1PRvaKQtpG6kn6pNpbrFFcXB5fV1DW
+ xll5R4EhC6q1nsW9tXIWHohRhhpxYcMkLrPW6Jsbp9vbMMVO89LatPFTuBZuC2GLMgTcehrBcb8
+ mt2JazevAfC4LtUu/cEf7Ua50650PkFj43qkLMvsLp8lFbR8cNCV0UZ4ZWHZXc08u3yW8cRNNf/
+ 3eeYWsj7QUIfFWlDKqA==
+X-Proofpoint-ORIG-GUID: 6hZmgVmqvXL6MBaAKHYSVQU5SR1c4391
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_07,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230084
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,388 +168,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 23, 2026 at 12:54:07PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 9/23/2026 12:55 PM, Paolo Bonzini wrote:
+> On 8/28/26 00:14, Pierrick Bouvier wrote:
+>> diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
+>> new file mode 100644
+>> index 00000000000..2607a1cbcf4
+>> --- /dev/null
+>> +++ b/tests/tcg/x86_64/meson.build
+>> @@ -0,0 +1,82 @@
+>> +cc = 'x86_64-linux-gnu-gcc'
+>> +cc_dockerfile = 'debian-amd64-cross'
+>> +cc_docker_host_arch = ['x86_64']
 > 
-> > PROBLEM
-> > =======
-> >
-> > Migration reliably hangs with old machine types (7.2-) when these migration
-> > capabilities are enabled: multifd, postcopy-ram, postcopy-preempt.
+> Configure was able to reuse the local compiler instead of requiring docker:
 > 
-> Is there a way to make this patch unrelated to the 7.2 issue? I think
-> this muddles the discussion a bit. This is a real improvement despite
-> any bug.
-
-I agree this change will make the channel mgmt also more flexible, but
-logically we almost don't need it if there's no such bug [*]..  at very
-minimum, I can add some paragraph before the problem describing this too.
-Would that help?
-
-[*] NOTE: I still agree iowatch is in general always good, but then after
-we have handshake feature ready, we don't need iowatch anymore because we
-can simply attach header for all channels including preempt channel, then
-it's readable too (not only peekable).  I plan to work on handshake feature
-after I came back from kvm forum.  If that can land, after 6 years we
-should be able to revert this whole thing include old channel mgmt.  No
-peek / iowatch / ... needed here for channel establishments.
-
+>   if [ "${1%softmmu}" != "$1" ] || test "$target_arch" = "$cpu"; then
+>       case "$target_arch:$cpu" in
+>         aarch64_be:aarch64 | \
+>         armeb:arm | \
+>         i386:x86_64 | \
+>         ppc*:ppc64 | \
+>         sparc:sparc64 | \
+>         "$cpu:$cpu")
+>         try='native cross' ;;
+>       esac
+>   fi
 > 
-> >
-> > Simplest reproducer :
-> >
-> >   $ QTEST_QEMU_MACHINE_TYPE=pc-q35-7.2 \
-> >       QTEST_QEMU_BINARY=./qemu-system-x86_64 \
-> >       ./tests/qtest/migration-test --full \
-> >       -r /x86_64/migration/multifd+postcopy/preempt/plain
-> >
-> > Current workaround is to kill destination QEMU, cancel the migration on
-> > source (with/without yank), disable one or more of the features, and retry.
-> >
-> > The hang is caused by receiving preempt channel before most of the multifd
-> > channels, the peek buffer operation will stuck forever.
-> >
-> > Incoming side QEMU hang (with relevant tracepoints enabled):
-> >
-> >   migrate_set_state new state setup
-> >   migration_socket_incoming_accepted
-> >   migration_set_incoming_channel ioc=0x557d82c1caa0 ioctype=qio-channel-socket
-> >   migration_socket_incoming_accepted
-> >   migration_set_incoming_channel ioc=0x557d83023840 ioctype=qio-channel-socket
-> >   multifd_recv_new_channel channel 1
-> >   migration_socket_incoming_accepted
-> >   migration_set_incoming_channel ioc=0x557d830c08c0 ioctype=qio-channel-socket
-> >   multifd_recv_new_channel channel 0
-> >   multifd_recv_thread_start 1
-> >   migration_socket_incoming_accepted
-> >   migration_set_incoming_channel ioc=0x557d8284a010 ioctype=qio-channel-socket
-> >   multifd_recv_thread_start 0
-> >   multifd_recv_unfill channel 0 packet_num 0 flags 0x1 next packet size 0
-> >   multifd_recv_unfill channel 1 packet_num 1 flags 0x1 next packet size 0
-> >   [dest qemu hangs here]
-> >
-> > Incoming side backtrace:
-> >
-> >   __syscall_cancel_arch
-> >   __internal_syscall_cancel
-> >   __syscall_cancel
-> >   recvmsg
-> >   qio_channel_socket_readv
-> >   qio_channel_readv_full
-> >   migration_channel_read_peek
-> >   migration_channel_identify
-> >   migration_channel_process_incoming
-> >   socket_accept_incoming_migration
-> >   qio_net_listener_channel_func
-> >   qio_channel_fd_source_dispatch
-> >   g_main_context_dispatch_unlocked.lto_priv
-> >   g_main_context_dispatch
-> >   glib_pollfds_poll
-> >   os_host_main_loop_wait
-> >   main_loop_wait
-> >   qemu_main_loop
-> >   qemu_default_main
-> >   main
-> >
-> > This patch tries to fix it, from incoming side first.  This patch alone
-> > should enable single-direction migration to this new QEMU.  The next patch
-> > will propose a fix for the outgoing path, fixing new->old migrations.
-> >
-> > BACKGROUND
-> > ==========
-> >
-> > preempt_pre_7_2 used to be a flag marking QEMU releases 7.1/7.2 only
-> > because they have a flaw on channel establishment on preempt channel.
-> >
-> > Now, after we have multifd + postcopy support, new QEMU binaries can
-> > migrate old machine types with both features enabled.  Juraj reported
-> > constant migration hang at the very beginning for those old machine types
-> > in our downstream systems with such setup.  Juraj found it's because of
-> > this flag.
-> >
-> > QEMU source initiates channels in this order on current master when both
-> > features enabled with postcopy-preempt mode:
-> >
-> >   - First, main channel connect() happens,
-> >   - Second, postcopy_preempt_setup() invokes connect() for preempt channel,
-> >   - Last, in migration_thread(), multifd_send_setup() invokes connect()s
-> >     for all the multifd channels
+> Paolo
 > 
-> Other way around, no?
-> 
-> (master/11.1/src) only starts preempt when postcopy starts.
-> (master/11.1/dst) peeks main, peeks multifd, preempt comes when main and
-> multifd have already been found, so it is assumed to be preempt.
 
-Yes, only when with newer machine types (8.0+).  The statement here should
-be correct for machine type 7.2, which is what this bug is about.  How
-about I update the previous sentence to be this instead?
+On debian, gcc automatically comes with ${arch}-linux-gnu-gcc variant,
+so I didn't replicate this mechanism.
+Maybe it's different with fedora?
 
-  QEMU source initiates channels in this order on current master when both
-  features enabled with postcopy-preempt mode (machine type 7.2, implies
-  preempt_pre_7_2=on):
+In all cases, I can see to restore this behavior at configure level by
+setting --cross-cc-${arch} automatically based on host arch, and if gcc
+is installed. Would that work for you?
 
-> 
-> >
-> > However on an old QEMU, it expect the channels arrive in order of
-> > "main"->"multifd"->"preempt".  Even on a new QEMU, the destination expects
-> > the same order of arrival on the channels when the channels are not
-> > peekable.
-> >
-> 
-> (master/7.2/src) starts main, then preempt, then multifd.
-> (master/7.2 or 11.1/dst) peeks main, peeks multifd then hangs because preempt is
-> peekable but doesn't send data right away.
-
-Yes.
-
-> 
-> > For peekable channels (non-tls sockets), this time we'll likely see preempt
-> > channel appearing very soon, peeking at it causing main thread hang, like
-> > mentioned in the PROBLEM section above.
-> >
-> 
-> Yes.
-> 
-> > SOLUTION
-> > ========
-> >
-> > One major problem of current hang is we try to peek at preempt channel,
-> > which offers nothing at the beginning.
-> >
-> > Since we'll need to accept stream from old binaries, arrival of preempt
-> > channel early is unavoidable.
-> >
-> 
-> No, because old binary doesn't support multifd+postcopy, so there's only
-> either main + multifd or main + preempt.
-> 
-> New binary with old machine type is the only one that can send preempt
-> early.
-
-I'll update this sentence to be:
-
-  Since we'll need to accept stream from old binaries (QEMU 10.1 to 11.1),
-  arrival of preempt channel early is unavoidable.
-
-> 
-> > What we can do, though, is to allow concurrent monitoring of all channels
-> > rather than one.  Meanwhile, we shouldn't peek at anything that has no
-> > data.
-> >
-> 
-> I wonder why do we need to peek at all. Can't we start n threads and
-> recv() a data chunk of fixed size (smaller than the preempt request) on
-> every channel that comes up? Each thread puts the (data chunk + ioc) on
-> a list and exits. The channels that don't send data would just sit there
-> until something comes up.
-> 
-> Most channels would have data with a magic value right away so we'd
-> empty the list before the preempt request comes up. But having a list
-> means we can just iterate it when a consumer that has not yet received a
-> channel asks for a piece of data.
-> 
-> We could also check that the data in the supposed preempt channel is a
-> page request.
-
-I'm not sure I fully get your proposal here, just to mention: preempt
-channel has no data, recv() on it hangs like what already happens with this
-bug.  Then, how do we recycle a hanged recv() thread with its ioc?
-
-The other question is, anything else that wants to read from any migration
-channel will need to take this (data chunk, ioc) info, because it needs to
-read from "data chunk" first until depleted.  That's awkward.
-
-Actually, since this solution doesn't work for TLS, I wanted to do
-something like this and make TLS iochannel peekable (basically we can keep
-that data chunk inside ioc for tls only), then as long as peekable this
-solution will work too for TLS.  But I thought about it and I think it's
-not worth it.  It'll pollute tls code.
-
-> 
-> > migration_channel_read_peek() almost does the wait, but it's too late.
-> > This patch proposes to watch all channels from the start without reading at
-> > them at all, relying on an IO watch attached.  This will make sure (1) for
-> > preempt channel, we never read on it (watch can be gracefully disarmed when
-> > we know it's preempt channel later) (2) since we have one IO watch for each
-> > channel, then we can allow accept() to happen in almost any order, process
-> > only when there's some header to read.
-> >
-> > To maintain these watches, a new GArray @channels_early is introduced, with
-> > each element to be a (ioc, GSource) tuple (@MigEarlyIncomingChannel), so
-> > that QEMU can manage all the IO watches later with it.  Here I used GSource
-> > rather than io_tag because the GSource may or may not be attached to the
-> > default main thread gcontext: when OOB is used, it may be the iothread
-> > context instead.  IOW, g_source_remove() on io_tags stops working, which
-> > only works for default main context.
-> >
-> > The trick this patch used is when we have the ability to wait on all
-> > channel headers at the same time, we pick one by one from main and multifd
-> > channels (since both of the types will contain headers dumped right at the
-> > very beginning), leave preempt channel alone.  It means, after dest QEMU
-> > finds all main and multifd channels, there are three possibilities:
-> >
-> >   - If preempt not enabled, we finished full channel establishment, done.
-> >
-> 
-> I don't see why we need "channel establishment" at all. We're simply
-> taking iochannels and putting them into named QEMUFiles, this means
-> nothing. We could keep a list of unknown channels around indefinitely
-> and fetch them lazily when the data is needed. By that point, the
-> channels that have magic values would have already been identified and
-> what's left is the unindentified channel.
-
-Isn't that kind of what this iowatch does?   It puts channels into the
-MigEarlyIncomingChannel, until it has something to read.  The only
-difference is, this patch will wait for all magics arrived to continue
-rather than continue then wait randomly at later points: I don't see how to
-achieve that without modifying code later.
-
-> 
-> This would allow us add new channels with a proper header without
-> interfering with the old channels. As long as the new channels are not
-> to be consumed too soon.
-
-I hope we don't introduce new channels until we have the handshake feature
-ready.  Again, I'll prioritize that feature.
-
-> 
-> >   - If preempt enabled,
-> >
-> >     - If we have one registered IO watch with the IOC, it must be the
-> >       preempt channel,
-> >
-> >     - If we have no further IO watch, wait for the next accept(), which
-> >       must be the preempt channel.
-> >
-> 
-> Ok, so watch all connections concurrently and pick the last one as
-> preempt.
-
-Right.
-
-> 
-> > This will make channel establish work on incoming side even with the old
-> > QEMU binaries.
-> >
-> > While working on it, I managed to refactor the peeking logic quite a bit:
-> > we used to have a very convoluted migration_channel_identify() function,
-> > taking care of two different cases:
-> >
-> > (1) when the channel is peekable (like normal socket channels),
-> > (2) when the channel is not peekable (like TLS or file migrations).
-> >
-> > This patch refactored that part to make it crystal clear on how we make
-> > decisions on which channel is which, and split the peek/identify paths.
-> >
-> 
-> I'm still bothered about the peek. The data is all intended for the
-> destination machine, it owns it all, it can just consume it and put it
-> in the pocket.
-
-With MSG_PEEK, such buffer doesn't help.
-
-Without MSG_PEEK (TLS's case) it may help, but again, I decided to not go
-with it, and I'll just prioritize the handshake feature instead.
-
-> 
-> > One example incoming migration from pc-q35-7.2 after this patch applied,
-> > and with relevant tracepoints set (8 multifd channels, 1 preempt channel):
-> >
-> >   migrate_set_state new state setup
-> >   migration_channel_process_incoming ioc=0x557dc8af4e20 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc8af4e20 ioctype=qio-channel-socket
-> >   migration_channel_process_incoming ioc=0x557dc8abc5d0 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc8abc5d0 ioctype=qio-channel-socket
-> >   migration_channel_process_incoming ioc=0x557dc953d680 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc953d680 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc8abc5d0 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc898a820 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc898a820 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc953d680 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc919bd70 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc919bd70 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc898a820 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc8734b20 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc8734b20 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc919bd70 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc898bdf0 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc898bdf0 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc8734b20 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc968cfd0 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc968cfd0 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc898bdf0 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_channel_process_incoming ioc=0x557dc8c31810 ioctype=qio-channel-socket
-> >   migration_incoming_channel_watch ioc=0x557dc8c31810 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc968cfd0 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_set_incoming_channel ioc=0x557dc8c31810 ioctype=qio-channel-socket type=MULTIFD
-> >   migration_set_incoming_channel ioc=0x557dc8af4e20 ioctype=qio-channel-socket type=MAIN
-> 
-> Hm, multifd came first? Have you registered watches in reverse order or
-> something? Not sure if it matters much.
-
-This is after the patchset applied.  Multifd channels should come first
-because I changed preempt channel to be after multifd in the next patch.
-So this is expected behavior.
-
-> 
-> >   migration_start_incoming
-> >   migrate_set_state new state active
-> >   migration_channel_process_incoming ioc=0x557dc8966160 ioctype=qio-channel-socket
-> >   migration_set_incoming_channel ioc=0x557dc8966160 ioctype=qio-channel-socket type=PREEMPT
-> >
-> > While at it, I renamed the four channel incoming/outgoing tracepoints, make
-> > all to follow migration_[incoming|outgoing]_channel_*().  Especially for
-> > incoming, then we can enable migration_incoming_channel* for incoming
-> > channel debuggings.
-> >
-> > FINAL NOTE ON TLS
-> > =================
-> >
-> > Note that this solution isn't a magic bullet fixing everything.  TLS is not
-> > fixable with this approach because TLS isn't peekable channel, hence the
-> > watch won't help.
-> >
-> > We can have other ways to hack it to make it work, e.g. we can make TLS
-> > channels peekable too, but I don't want to pollute the TLS iochannel only
-> > for this: let's hope handshake will arrive soon so we can drop these code.
-> >
-> > For now, when TLS is involved with such old machine type (7.2-), one needs
-> > to migrate it out with any combination of features except enabling all
-> > four (multifd + TLS + postcopy + preempt) to a patched binary, after that,
-> > all combinations will start working.
-> >
-> 
-> I don't understand where TLS comes into this. You mean TLS is not
-> peekable so if we use TLS for the multifd channels, then we cannot
-> tell them apart from preempt?
-
-Yep.  TLS channels doesn't set QIO_CHANNEL_FEATURE_READ_MSG_PEEK, so it's
-not peekable.  Internally, it's simply because there's no simple MSG_PEEK
-equivalent for gnutls facilities, IIUC.
-
-> 
-> > BugLink: https://redhat.atlassian.net/browse/RHEL-254933
-> > Fixes: e27418861288 ("migration: enable multifd and postcopy together")
-> > Reported-by: Juraj Marcin <jmarcin@redhat.com>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/channel.h    |   3 +
-> >  migration/migration.h  |  35 ++++
-> >  migration/channel.c    | 414 +++++++++++++++++++++++++++++++++++------
-> >  migration/migration.c  |  23 ++-
-> >  migration/trace-events |   7 +-
-> >  5 files changed, 421 insertions(+), 61 deletions(-)
-> >
-> 
-> I'll wait for your replies before reviewing the code in detail.
-
-Sure, the change is slightly involved indeed, it makes more sense we
-clarify problems and high level things before going into details if there's
-anything unclear.  Let me know if there're more things you'd ask, or things
-I overlooked.
-
--- 
-Peter Xu
-
+Regards,
+Pierrick
 
