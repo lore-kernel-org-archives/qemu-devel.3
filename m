@@ -4,134 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB6FC9830E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 18:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3327C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 18:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9SA0-000154-P2; Wed, 23 Sep 2026 14:57:40 -0400
+	id 1x9SA6-00016G-2S; Wed, 23 Sep 2026 14:57:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x9S9z-00014b-Sf
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 14:57:39 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1x9SA1-00015M-CQ
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 14:57:41 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1x9S9x-0003Xd-C6
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 14:57:39 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1x9S9z-0003YT-QG
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 14:57:41 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NGTqDS3082027
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 18:57:36 GMT
+ 68NGTwDe3665925
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 18:57:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FmJAhf+mYrfd8vHVOlHWMxKPDDBFKpRbCQu4Tnfom1s=; b=CTwO3L/gf/d/riz6
- vrV160PcJ9cbi0FKq/vAT7ARBKCAcsfSWTPhlohp4lDbDYEKtu9NFCrBmDseQhan
- R8rhtYoAlInOqmlnViBX746Rf1FQze5IUOp2mtIS0LbyzmI9bA2oQDfYnJEuhLoh
- A3CeGhs6AanXJhvzReR1WYnKgpG8oKUvVpqCu3KrYvHJ942db55f90bpMz7AYOn5
- 3g44wQrszN9F8HqnQoEY/Smxo7KKFISFhRa2g+ZE5fV1/+i7J+V8vy845psIiuUy
- mN0zsMFBlXgSS+mVnnwmVSD6v7OMNrY037Hz20n4JWEgKjXPY8w38LsaipYTuHIo
- eTgVTg==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvbx7jgfq-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=cEHdBSPicj8
+ 2wJE0dJMVUeI54oHu8lauzuULAdotmCo=; b=QXYKWpHJFaLHxJg+x4vMeWO6Jyi
+ Qf0kbsFSJNNJROOLt32GOKN8FQDKYokqpwGlEIjec2VSj4wIOFaX+UCD7OKwfE7T
+ bizhtttAuRTsIXI7OQxKzKqPtvoEz3UhvXVTmDKa2fZqcAfXKXUXZ2Wbqi2CQN9F
+ te7eq1hpQ4/rec73pqM2zG/isUShGeVtBytlw+OZebZySrF1F0oWoIBitLlrdjd6
+ yyhSMl2du/u2SOTwHXt3MNmVecn5NMagFmi5lg0JKWjM/c1tNmAlMe0GRPLcIvUN
+ NmJCzUTQ1ixXSo9bVoifYBlUX81h3JlcI74zpVGP4BW1jbSpYkjuYSZzI5A==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvbwatfxq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 18:57:35 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1416f32fe11so966735c88.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 11:57:35 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 18:57:38 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-32b8c2b30c4so1876939eec.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 11:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790189855; x=1790794655; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FmJAhf+mYrfd8vHVOlHWMxKPDDBFKpRbCQu4Tnfom1s=;
- b=AK4mSpTWDFemB3tRFa8IZ1eihmHvQuaSnHhw3BrcNqvx7XW8XvI29xt6krvDM8ZBdL
- 18D1SX0xXnF7aycQfD0ypqpAMIncd7NiCzJaFzfodiD/LJxfsikSy3BYobUegiaTM3gR
- VAEGftr6RvXOtoj4BV1cP9rSEkQNYYG+8IOg0eAVuJLUdUV3FFJGJbB9JZcgiUBqYPGr
- ifHb7oiNLjAZoo8FoeQ91clgzWgIw/oKfocQKJ/r40CohuoY7fo2Y/RMtONm5otY1o69
- 3oswrwelb/qSDAqQgXrEhANRGGVOSJ8/n49CD55MnQxwidUCh08DoYgc1bM48CGRORtq
- 10iQ==
+ d=oss.qualcomm.com; s=google; t=1790189858; x=1790794658; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cEHdBSPicj82wJE0dJMVUeI54oHu8lauzuULAdotmCo=;
+ b=jmfWgOYpSIZvkXrFjPPixu1D7Mqw3Q25aE+sAQ/wk1qGVr7f5mAedEpiJRaup6UgTm
+ ayXWB3LX6Mo+iTeGyzAanE0gDhaqETyHYib+DZFr1OaJFFZwf7S1L8g91Z/JGwqC2Lh2
+ mi24aNEkL5gNqMcxtO1O9HtV16wKTtqLyAGlKMc6t9Lxvi9mW2U2RZTJoME0MDMejHog
+ zC15iBNMefeFXXH4WqOQHfbzLb32j0aeJRK4P/hdD/DDrORnBSOMTRj+NCXWzmsDzYXc
+ DfFR6NFP/u+/iWgFqglB91ZU1oPLpka4aYiIYWcM9m3Z1xS3D8zIH7Vy/vElvhXzOD4K
+ DutQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790189855; x=1790794655;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=FmJAhf+mYrfd8vHVOlHWMxKPDDBFKpRbCQu4Tnfom1s=;
- b=Eeu5j14qFP+rJng/UwIbV5ntfyllS+znmTqZzR4gY5j5zQEMar6U9qL8EsdgXsLVYO
- 9CBoyTuK7vpdwvIgWDSqELcQ/19mQr+M3gafKEC8o2xF+Ec0tXNdRLOGBiRsOmGXCzX0
- jG0cc2w2IiZeK+FSayBsUdEpKKFX08/WP2EvmVdFDzcvZZgz9QMH50n9fk2FtpLS5Y/O
- B3tgQxpOfHQ+47+3GHx3fEJwQpqjNDMev71YWrbNrG8MzGWRXcUB0y5udz8StcBugtsW
- p5aMxJUKUVysArNkdE2shAaV8xsnpLOW+qZGB9y5jK6pMD3uToCzZFq0wq59DFbXEQU2
- 2qoA==
-X-Gm-Message-State: AFuF++mPDMF+qVVrgxvCXnRUzUIaZgpFe1jOgzkOvvDQQJX4PtgTTSPk
- K6MlsDc3NfDCNcHo+gdaiKcaaV2viKKzcgbuqH8pfQ698yvS9gT2cH44FYlg6q/hV9synXNwtU8
- IgmJLS7nradaS3VzqN4vxFrFCRqkyT4+oyEwdyXfCt97PLOCwh4tk04U0YgnA2uvPcg==
-X-Gm-Gg: AYBFou3khPJl9yFCfl+GDYK35R+MJH/9hseAQ49ERgRAaJva5zzSPCkn0GRG0FQL8aw
- avCSefO33DgGqBdNbnBYspayHVgXj0MEsXGhzo88F5roZENHBpz6ZxdWK9zyiKY2/Sgj7tzHiYn
- AC7oL8lh5MvdVFXxwTuvR+1HsQjK6/YPgrU1b/U9vFUVDeaipyAL2kD2WADa99YVYjnN+KEWnFP
- gP8NkS14iqg3ohJ/++uYhEcyja79JWhoUF6N9fQM7awkrVAua1mHciYOeC4r1VbkqXqEBVq04EQ
- Y8j9wUoKH25u1TR5UoZbFLmIv+bp0uWPY6a/8oo9v/tN6NrDSaLF66QdUBn2morxM5IdGmeqtG1
- RwSpi0YvzKw6r9t9+EPzFD/gO0mgSsscyQ4FqgsGS+flH9xeCi2X2kcozeA==
-X-Received: by 2002:a05:701b:4184:20b0:138:3613:dbb with SMTP id
- a92af1059eb24-14503fc11ebmr68856c88.5.1790189855166; 
- Wed, 23 Sep 2026 11:57:35 -0700 (PDT)
-X-Received: by 2002:a05:701b:4184:20b0:138:3613:dbb with SMTP id
- a92af1059eb24-14503fc11ebmr68830c88.5.1790189854444; 
- Wed, 23 Sep 2026 11:57:34 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790189858; x=1790794658;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cEHdBSPicj82wJE0dJMVUeI54oHu8lauzuULAdotmCo=;
+ b=CEqqvJA8M0KXtvGGCkQopRFsLpw9IC78MnBky8w3ATSAKiGXgLtwlQms+RvMwnlcWR
+ rDFSw8tjoOa/Ub4Y406NnosZjSZTSD6ArLc2pJ9NObRO97rjmKIXOfTMk3/BKo6Zzkr/
+ bnJY0u+B+wSE9jbwfwiab0mgellxm0YLPIUtzavOiC6rfBKm71qhkzv5uDP8tYGx/fLc
+ 1W4WYzMLcka7CMAiGApyOcz58OxBz8a7xnR9dCSIrwmG5m3yq0hPVcJw9+nPNUnW/uf5
+ edyHEnHPJdSurGnORsjrVl5zl4sG/BeSN3WsQcae20OQE9dsutPtcm+zvnk+HTd+cudv
+ 9few==
+X-Gm-Message-State: AFuF++kLIFwi2Jt1QgBJsFvWgm+8gdPGAW2v5i/N7loEzthrYULhT2/Q
+ 5QLgJSM8Y+k0C2a1oV1u1z/ksexZr//8QWmleYqOiBftmeWRNYP45o5k/Jw+IvwBxMePPWwi3Ni
+ 7KC0Bn+MgnFanSLLlP11sMdowhjy3knPxujMZXZ3iyey0X/qJV0vsKeQyPkd3cHMWJg==
+X-Gm-Gg: AYBFou26sbgYKbP5A9QqM9HV6Usv7RuMR1qYTekhndSPU3tcemOxUY2MIKHNRiwlk36
+ a0aCQrFaDhDxZul1VVWrT7jTBlWhjN8SuaIwfH9U5ooOWFdR3GcPPsLQQV6mdgceyzCmbpg+GD0
+ eIrOZ1TCCom8qrViPANSfQ7yyolv8jp4OOuRmh8n0zvsvTTeohn8j5vJ2CxXnkwTCYYjvGFpsSt
+ EWxIP//nNPZS3Q1+f1PhoJVp83L3bnRKx3bXrypySPgcAz7qLuc3JxAKYOPFu7PZVUZ63cUmTVw
+ v5cLFyXsEyY2n4nTFmi4w+Oi/0Edenm1QSJmJC28gUC41ud93x5Yxr/70X2bxyaAjlqrpBE8s/u
+ XOnJ0PbF6tKm0cih6QG27q/XzYeySXz6kFMkgoTxHnh/t3OziEXDYUIfWcA==
+X-Received: by 2002:a05:701b:458e:20b0:137:5b9d:cf87 with SMTP id
+ a92af1059eb24-14503e31631mr89300c88.0.1790189857526; 
+ Wed, 23 Sep 2026 11:57:37 -0700 (PDT)
+X-Received: by 2002:a05:701b:458e:20b0:137:5b9d:cf87 with SMTP id
+ a92af1059eb24-14503e31631mr89287c88.0.1790189856893; 
+ Wed, 23 Sep 2026 11:57:36 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-144f9820ca5sm8154931c88.3.2026.09.23.11.57.33
+ a92af1059eb24-144f9820ca5sm8154931c88.3.2026.09.23.11.57.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 11:57:33 -0700 (PDT)
+ Wed, 23 Sep 2026 11:57:36 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, philmd@oss.qualcomm.com, 
  berrange@redhat.com, alex.bennee@linaro.org,
  pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH v2 3/6] tests/docker/dockerfiles/debian-all-test: remove arch
- specific bits
-Date: Wed, 23 Sep 2026 11:57:22 -0700
-Message-ID: <20260923185725.863311-4-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 5/6] tests/tcg/loongarch64/system: deactivate
+ loongarch64-softmmu-memory (hang on aarch64 host)
+Date: Wed, 23 Sep 2026 11:57:24 -0700
+Message-ID: <20260923185725.863311-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260923185725.863311-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260923185725.863311-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: fO1I0pxdQvgQHV6ts_KjHKV8SAlyC3SW
-X-Authority-Analysis: v=2.4 cv=J4s/fwnS c=1 sm=1 tr=0 ts=6ab42120 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=TNSyY6zQAAAA:8 a=3B-k7g5EAAAA:20 a=EUspDBNiAAAA:8 a=-iYKgs8SGnXLXrbbk7oA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
- a=01gnQneks5i7xkQX6LlV:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA3NSBTYWx0ZWRfX94L5CaorrPQF
- Fh05EGBXxdKmpCGZGVpG02xJ3wM9ns788ijM/XXfN6vUywqt1t89mZ4Tbm8w9JO3Ynp3ZX71YiH
- V1q7iqrHz8bNpdrRc0NUXjxAG/jGTzMuoXG/f29F2OPlgPNSeW0HipfRUL8g5s+PwnrvB0e3onG
- k3VwoQW6Zmu0WUS6yvDVsymF6oZh9DsSHLfTYbUG5eAQI2ZXRvtUVyQ3ZWM1Ls4gxXmC3cRpG08
- 0oNV89Mph0FkkH06EucLru/938y1iGXHwpWw4gXnMGhyxZ5cz99PDseUMAfrhBDnQTuKbHJjjr5
- KFmRhZT/JSUDYB2W5gGXQyIPdChAuagHRmGgCqzblbuFmVgwISDxcFLmtyPE2Tq7Ft23tmfXMwj
- Xk8ba8exQPKlOevARqON2iaxFDa0FR+K6Iu5wZwjY3NBOxLyndc93qevFHoJeCykvMAfMDEUhyX
- iCsuq9LLL2kcZPY1K9Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA3NSBTYWx0ZWRfX8KNq/3PZ9QQg
- EcyrF3l5NukhDKFY/jOvxMlN3d4MId+RvOke9G3b5/FgmezDkvAEOIG1aCAz/RkXHHzdjAgycSs
- 0egoGidhhSO6KQsDra/quZ06I6oij+k=
-X-Proofpoint-GUID: fO1I0pxdQvgQHV6ts_KjHKV8SAlyC3SW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA3NSBTYWx0ZWRfX9TDXvpexq3K5
+ 2fXodOH4LXgIbfryaub7IUqhXeL4eGsThvKmch4wE0pS9te/VAlyOv+tpjcoGDAwtN1qvUKjZxy
+ VD+lpB7RQNA/FtWZNmaUiB/V7XNCo7ZO2Y5wxhlzldxrv2ze+7fIAP8iY3dpSJyp/BhWR+6dF9V
+ p0ldj4H03a6g7yUddzG0l4qv3GYBVSnc3hKcbu3rtulqb4f2nDTTv73YlwS3SjU+foALeon2S5K
+ YSZ/j1vWWgMHD3L881Z4EpMTYR5uOiKZqoY8eZy4wxHwp5tMKkPDMGmiE/5h7NlIodYG8LlX9TC
+ VYm5bdZnUmMP+u4eJkm9Tc/Q6kGRM2isgs51AHdfu37bQ8XENVor/Nnqclqf/tKa36+YeWqjvgr
+ 2NPDkp0FZVY3G40D05HXngmJzM72EtIgAAAQhP9XpmqsjJdZNHv7/uCdQ7zfDRBj2aU26lCgxtl
+ exa71IZkMNlflGKyvlQ==
+X-Authority-Analysis: v=2.4 cv=HfuB3SE8 c=1 sm=1 tr=0 ts=6ab42122 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=Tik54YSiwzO2kUiBZWMA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-GUID: 5p3EOMSgsWiaERYTz2ysliydwLvmvkln
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA3NSBTYWx0ZWRfX8W7bRQRWFotP
+ S9kiyje7YJ7n/TyIyJPemqU9vl8rrI3uxCVAXCNlvfN6ZMoT6z0DWszjHFTKxT5q2zpAyDPk0hO
+ +6xa+CkCvN1nAOAJZdBRnV3tBr8S8V4=
+X-Proofpoint-ORIG-GUID: 5p3EOMSgsWiaERYTz2ysliydwLvmvkln
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-23_06,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501
- phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230075
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,129 +150,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that this image is amd64 only, we don't need those ifs anymore.
+Created associated issue:
+https://gitlab.com/qemu-project/qemu/-/work_items/4567
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- .../dockerfiles/debian-all-test-cross.docker  | 35 +++++++++----------
- tests/lcitool/refresh                         | 35 +++++++++----------
- 2 files changed, 34 insertions(+), 36 deletions(-)
+ tests/tcg/loongarch64/system/meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index 45edba38e92..97d3dae6d7f 100644
---- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -66,15 +66,15 @@ RUN apt update && \
-   rsync
- 
- # https://openrisc.io/2025/04/20/toolchainrootfsbins
--RUN if dpkg-architecture -e amd64; then \
--cd /tmp && \
-+RUN cd /tmp && \
-   wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
-   tar --no-same-owner -xf *.tar.xz && \
-   rsync -a or1k-none-linux-musl/ /usr/ && \
--  rm -rf /tmp/*; \
--fi
-+  rm -rf /tmp/*
- 
--ENV AVAILABLE_COMPILERS="\
-+RUN apt update && \
-+  DEBIAN_FRONTEND=noninteractive eatmydata \
-+  apt install -y --no-install-recommends \
-   gcc-aarch64-linux-gnu \
-   libc6-dev-arm64-cross \
-   gcc-arm-linux-gnueabihf \
-@@ -97,19 +97,18 @@ ENV AVAILABLE_COMPILERS="\
-   libc6-dev-s390x-cross\
-   gcc-sh4-linux-gnu \
-   libc6-dev-sh4-cross \
--  "
--RUN if dpkg-architecture -e amd64; then \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
--fi && \
--apt update && \
--DEBIAN_FRONTEND=noninteractive eatmydata \
--apt install -y --no-install-recommends \
--${AVAILABLE_COMPILERS} && \
--dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
-+  gcc-hppa-linux-gnu \
-+  libc6-dev-hppa-cross \
-+  gcc-m68k-linux-gnu \
-+  libc6-dev-m68k-cross \
-+  gcc-powerpc-linux-gnu \
-+  libc6-dev-powerpc-cross \
-+  gcc-powerpc64-linux-gnu \
-+  libc6-dev-ppc64-cross \
-+  gcc-sparc64-linux-gnu \
-+  libc6-dev-sparc64-cross \
-+  && \
-+  dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
- ENV QEMU_CONFIGURE_OPTS=--disable-docs
- ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 002ab11270f..31c06734879 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -177,15 +177,15 @@ RUN apt update && \
-   rsync
- 
- # https://openrisc.io/2025/04/20/toolchainrootfsbins
--RUN if dpkg-architecture -e amd64; then \
--cd /tmp && \
-+RUN cd /tmp && \
-   wget -q https://github.com/stffrdhrn/or1k-toolchain-build/releases/download/or1k-16.1.0-20260614/or1k-none-linux-musl-16.1.0-20260614.tar.xz && \
-   tar --no-same-owner -xf *.tar.xz && \
-   rsync -a or1k-none-linux-musl/ /usr/ && \
--  rm -rf /tmp/*; \
--fi
-+  rm -rf /tmp/*
- 
--ENV AVAILABLE_COMPILERS="\
-+RUN apt update && \
-+  DEBIAN_FRONTEND=noninteractive eatmydata \
-+  apt install -y --no-install-recommends \
-   gcc-aarch64-linux-gnu \
-   libc6-dev-arm64-cross \
-   gcc-arm-linux-gnueabihf \
-@@ -208,19 +208,18 @@ ENV AVAILABLE_COMPILERS="\
-   libc6-dev-s390x-cross\
-   gcc-sh4-linux-gnu \
-   libc6-dev-sh4-cross \
--  "
--RUN if dpkg-architecture -e amd64; then \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
--  export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
--fi && \
--apt update && \
--DEBIAN_FRONTEND=noninteractive eatmydata \
--apt install -y --no-install-recommends \
--${AVAILABLE_COMPILERS} && \
--dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
-+  gcc-hppa-linux-gnu \
-+  libc6-dev-hppa-cross \
-+  gcc-m68k-linux-gnu \
-+  libc6-dev-m68k-cross \
-+  gcc-powerpc-linux-gnu \
-+  libc6-dev-powerpc-cross \
-+  gcc-powerpc64-linux-gnu \
-+  libc6-dev-ppc64-cross \
-+  gcc-sparc64-linux-gnu \
-+  libc6-dev-sparc64-cross \
-+  && \
-+  dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
- ENV QEMU_CONFIGURE_OPTS=--disable-docs
- ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
- """
+diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
+index 035dd5f85fb..d1ee3986b62 100644
+--- a/tests/tcg/loongarch64/system/meson.build
++++ b/tests/tcg/loongarch64/system/meson.build
+@@ -24,6 +24,11 @@ foreach t: tcg_tests['multiarch-softmmu']['tests']
+     new_cflags = cflags
+     if fs.stem(src) == 'memory'
+       new_cflags += '-DCHECK_UNALIGNED=0'
++      # TODO: memory test hangs on aarch64 host
++      # https://gitlab.com/qemu-project/qemu/-/work_items/4567
++      if host_machine.cpu_family() == 'aarch64' and 'gdb_test' in setup
++        continue
++      endif
+     endif
+     if src not in multi_src
+       setup += {'cflags': [new_cflags]}
 -- 
 2.47.3
 
