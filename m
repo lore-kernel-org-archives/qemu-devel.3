@@ -4,94 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AA0C98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 02:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D842DC982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 03:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9CKV-0006x2-LU; Tue, 22 Sep 2026 22:03:27 -0400
+	id 1x9DMM-00050R-7R; Tue, 22 Sep 2026 23:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1x9CKT-0006wV-Vy
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 22:03:26 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1x9CKS-0005QD-7u
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 22:03:25 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- d2e1a72fcca58-86e6d007703so288832b3a.0
- for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 19:03:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790129002; x=1790733802; darn=nongnu.org;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=tT3XcpteHL1qFMRKmef4INGwugBufELoSPJJ4W9iP9w=;
- b=KLkPuo1yPZQiLtyHFFygiq+7VYVTNvv8trP5R4Ubugk9qBX5psMQ67rrVGXd1fUAAs
- Gm4zTyTK5jw27dj14QX37kYvrL5d83IeNIHyqE3GdiWRxygHGDinlslGeEeZaep2cUng
- IJcKSP4Ix0KyeTzW/EVACFwubOC0D9mU9m096LPl6d6twYT6nxAJ6yi6TLaet9DY6IBU
- T3SSnIN1EhF2nzM+GL0TD+ZS+AjjkIWUVnxElFDQnxuFSaoRABhWRggP34Zo7H7p7WIY
- /6T5lYaU9FenI+jBKsCNJBuW2MXRDbh6Ydjjxft+rMrFTnjZ2VWxHaM0OIRid+eDfYkQ
- +zIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790129002; x=1790733802;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tT3XcpteHL1qFMRKmef4INGwugBufELoSPJJ4W9iP9w=;
- b=g/pL/Hs0y5jzWdfkMoU3ZNHwKK1/NMBdHKwE9BEFYtf1oNN2hNLfEP15zyCcP9T0K2
- RTlrAvrjrNlwe/WqO4YJltutOfDbRBOoJWBTUlzdKUXuPNhGiDwZxSC/Z1tQviSOnxy1
- MnqnitjxwA3z2MaP1D8fVP4maBwxUh0QZdKkVemckHGC9r1VPC5+TKxI0pFrpS2e/9SF
- Hba+az4NL927/HQuIrJ515xRobj2+WG2IJwwz/FfOaVpX1AOpgYKpIXrkf35KdmPIEwF
- J6ASxIlaAxalTdVxZ+/BLGFldefgGx24GNgVHKiTRi9wKrGH1EpibP9iCxgKTldKR9PB
- zHRg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzfOMHLwCch3HZ2EQATbs8bmdPB/jCqhvycmOe2NX/q+hnDjzV1yR0UMPUogKQDX0d3Bhtozc5qz34m@nongnu.org
-X-Gm-Message-State: AFuF++kPSvz97X1nguLe3RMTctAuD32YYWeYKzywaKz9MXYCxk0wYLPd
- rYwW0pujvloMQFWUqFFkeHL/Qthyj5m2J1E4P2rqhiIEHkmB/1GprMVO
-X-Gm-Gg: AYBFou2J6MPJtami6uqi3K3JXsuYFAfOMGaC29xIbOaO4WXkgINafR7quYJlF++UPjy
- eCdL3FOUNWVHam5GXUKJYz1Xx2QGXaciH4YiuF2IA5PdLoDd07OYJnqNVNWtD8ZTbHEnnwJORPv
- EdrU/xYiKNMOAVNoyEft5tb+VJph8rflVEF6TaA+DWv+TpeREgB7J7L49Ef7jw0t463wlaYnU+X
- 6TBrGmcHl9vFEJZt8DD9+8IVyvN6+In52Flcm+N1vHAT7W87FxNPCvKgXkMKF92u1RbzC2TMnsU
- 1i8NW3Hd0P0qWUIHtViP3qwfAgewuky5c4lyqyFg77Hw9S7WvLOF+ZJoY3QGCs9rgoS6SLKp+W2
- 8HO/FIHrZHq0+zIzxaOWwUCeAMtbVuYSH2Js5SA0NN30cCRgfyJEjmOHJ7kpLnS05u2XNzdVhbO
- TpkC57DVy8rqLpkjz8PH6NfPCDy6TjPJ/B7wIq2cqx8EzOUPBcxh+9rgOD3jN7S+TVV3hF+MunY
- A==
-X-Received: by 2002:a05:6a20:914b:b0:3b2:a809:1000 with SMTP id
- adf61e73a8af0-3ddf7cfc09cmr1324054637.3.1790129002060; 
- Tue, 22 Sep 2026 19:03:22 -0700 (PDT)
-Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc75f3f0915sm299988a12.21.2026.09.22.19.03.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Sep 2026 19:03:20 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1x9DMK-00050E-K0
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 23:09:24 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1x9DMH-0001yJ-4w
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 23:09:23 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8Axj9HVQrNqF+QOAA--.43771S3;
+ Wed, 23 Sep 2026 11:09:10 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJDxxMzTQrNqLgokAA--.49521S2;
+ Wed, 23 Sep 2026 11:09:07 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Set CPU_INTERRUPT_HARD unless no pending irq
+Date: Wed, 23 Sep 2026 11:10:29 +0800
+Message-ID: <20260923031029.127490-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2 1/3] hw/ufs: Track SCSIRequest and cancel pending
- requests in ufs_clear_req
-To: Jeuk Kim <jeuk20.kim@samsung.com>, qemu-devel@nongnu.org, 
- Stanley Jhu <stanleyjhu@google.com>
-Cc: Brian Kao <powenkao@google.com>, jeuk20.kim@gmail.com, 
- j-young.choi@samsung.com
-In-Reply-To: <20260909031146.1646684-2-stanleyjhu@google.com>
-References: <20260909031146.1646684-1-stanleyjhu@google.com>
- <20260909031146.1646684-2-stanleyjhu@google.com>
-Date: Wed, 23 Sep 2026 11:03:01 +0900
-Message-Id: <179012898120.22786.14112595690493270605.b4-review@b4>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pz2-x0e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxxMzTQrNqLgokAA--.49521S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZw1DZrW7uF1DWF4fGw4xXwc_yoW5urW7pr
+ W7uF12qw48KrWDZa4Dtas8Wr1DZr17Ww129an3K34fCF45Xryjqr1kt39F9F4DG3s8WrWj
+ qF4Fyw1UZa1xZFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07URa0PUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +75,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 09 Sep 2026 11:11:44 +0800, Stanley Jhu <stanleyjhu@google.com> wrote:
-> In the UFS emulator, outstanding SCSI requests are dispatched asynchronously
-> to the block layer via scsi_req_enqueue(). When requests are cleared or
-> aborted (e.g. during HCE reset or TMR aborts), ufs_clear_req() releases the
-> scatter-gather list without cancelling the pending SCSIRequest. If an
-> asynchronous AIO callback completes afterwards, ufs_scsi_command_complete()
-> dereferences stale or freed request state, resulting in use-after-free
-> hazards.
+On LoongArch CPU_INTERRUPT_HARD is set only when interrupt is injected
+at the first time. Function cpu_interrupt() is not called if there is
+pending irq already, this will not set CPU_INTERRUPT_HARD bit, however
+QEMU TCG framework will clear CPU_INTERRUPT_HARD bit when handling IRQ
+flow. There will be new interrupt lost issue when handling old one,
+the similar with other architectures set CPU_INTERRUPT_HARD bit always if
+there is pending interrupt.
 
-ufs_clear_req() currently releases request resources; it is not responsible
-for cancelling in-flight SCSI requests. Its existing callers ensure that
-the request is no longer in flight, so the current code does not have the
-UAF described here. Please describe this as preparation for TMF support.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.c            | 14 ++++----------
+ target/loongarch/internals.h      |  2 +-
+ target/loongarch/tcg/csr_helper.c |  2 +-
+ 3 files changed, 6 insertions(+), 12 deletions(-)
 
->
->
-> diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-> index bdb1650851..a62ebb51fd 100644
-> --- a/hw/ufs/lu.c
-> +++ b/hw/ufs/lu.c
-> @@ -173,6 +173,12 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
->      int16_t status = scsi_req->status;
->      uint32_t transfered_len = scsi_req->cmd.xfer - resid;
->  
-> +    if (!req) {
-> +        return;
-> +    }
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index f22f64efb8..54c2699897 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -58,20 +58,16 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/loongarch/virt.h"
+ 
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
++void loongarch_cpu_update_irq(LoongArchCPU *cpu)
+ {
+     CPULoongArchState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
+     CPUSysState *sys = env_sys(env);
+ 
+     if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+-        if (!FIELD_EX64(old, CSR_ESTAT, IS)) {
+-            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+-        }
++        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+     } else {
+-        if (FIELD_EX64(old, CSR_ESTAT, IS)) {
+-            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+-        }
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+     }
+ }
+ 
+@@ -81,13 +77,11 @@ static void loongarch_cpu_self_set_irq(CPUState *cs, run_on_cpu_data data)
+     CPULoongArchState *env = cpu_env(cs);
+     CPUSysState *sys = env_sys(env);
+     int irq, level;
+-    uint64_t old;
+ 
+     irq = data.host_int & ~BIT(31);
+     level = (data.host_int >> 31) & 1;
+-    old = sys->CSR_ESTAT;
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+-    loongarch_cpu_update_irq(cpu, old);
++    loongarch_cpu_update_irq(cpu);
+ }
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index f9a0680fe0..ff956823fd 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -31,7 +31,7 @@ void restore_fp_status(CPULoongArchState *env);
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
++void loongarch_cpu_update_irq(LoongArchCPU *cpu);
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+ 
+ void cpu_loongarch_timer_cb(void *opaque);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 88656b5344..1a6919417f 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -111,7 +111,7 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+      */
+     if (sys->CSR_ESTAT != old_v) {
+         bql_lock();
+-        loongarch_cpu_update_irq(env_archcpu(env), old_v);
++        loongarch_cpu_update_irq(env_archcpu(env));
+         bql_unlock();
+     }
+ 
 
-Can we use assert(req != NULL) here? We only clear hba_private in the
-completion and cancellation callbacks, so req should not be NULL here.
-If that invariant is broken, it would be better to catch the bug with
-an assertion than to silently return.
-
-> @@ -190,6 +196,11 @@ static void ufs_scsi_command_complete(SCSIRequest *scsi_req, size_t resid)
->  
->  static void ufs_scsi_command_cancelled(SCSIRequest *scsi_req)
->  {
-> +    UfsRequest *req = scsi_req->hba_private;
-> +
-> +    if (req) {
-
-Same here: can we use assert(req != NULL)?
-
+base-commit: 7074591d7954876951f84c15b994a43251d5a3c1
 -- 
-Jeuk Kim <jeuk20.kim@samsung.com>
+2.54.0
+
 
