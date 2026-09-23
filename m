@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB080C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF485C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9TdO-0006vH-V7; Wed, 23 Sep 2026 16:32:07 -0400
+	id 1x9TdW-0006wo-LC; Wed, 23 Sep 2026 16:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x9TdJ-0006ts-Ev; Wed, 23 Sep 2026 16:32:02 -0400
+ id 1x9Td2-0006rr-Nh; Wed, 23 Sep 2026 16:31:49 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x9TdI-0004sI-3K; Wed, 23 Sep 2026 16:32:01 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1x9Td0-0004rU-P0; Wed, 23 Sep 2026 16:31:44 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NK5kQD190854; Wed, 23 Sep 2026 20:31:56 GMT
+ 68NK5utT4192278; Wed, 23 Sep 2026 20:31:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/syZZb
- uaIj6tXmYbo340a72sR9n9lqg65YN1rzPI1Xk=; b=WCfb/2tQvjt8i3ewyUVV5X
- hUOcsnx1NT32w3uuho0SLpnB6Hmd2qbu091S8iMiI2cW/fSHjdQKt4s97Zigr5wf
- stMR4yUfMe32pkONckHep1Hmr+TmfYLMh7ICcX3G+faW+DDsmF3MYK+zapa2Yj9E
- pR+QWfgjLz4/W9BW/+8Q3rohqY3KH35Cb2cg0B7S41LfgSQUuHQVqHChf9iMewQd
- puSvyRdO+/BJ4pao3OaCr8aDS03mJRpqe1PFkZp3w9Bk33VJxmBYPy5EqHW5o0/q
- KCAdu4dCGZl2CxVsGVGdQbH25vh2QzslWZe/jJ2/PRhP2qQF8TCT2lRBp56J7M5Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Ys6uzH
+ c9pqmrpPl4F4sx0NHs7zll48Fz8rkmvpxxDyU=; b=BR3VrJmbMiJ9atmvD9xbLj
+ vlj9hJv2utETVWi94PcQgROduU0kuUtkMizceeEQMMNVcBc+NyEdY5JYzy86od24
+ KD+PYwCInbsLaxWPVRz3HZntrt1kwtUx4i+IHG6touuDbrSQxqu0SYxFi8lHmP/s
+ pENKNnUEaEpHLYfiu7FwArtCIKLAmsRNGCUImieEx76FImcti5XTtkXXBS2qQEMj
+ WnRsABcpIYe6NVF/WQJSg0Q1NQEMxploV5HSMas0IBYUGAkZzasEIMYZl7ZdttWO
+ mKL19vkAalbBLsu5IFuT2+CmQ8hKDkbpzvSiORbpFXOURM/D1TAemtFCAQedIU+A
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvcx1d-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1n058-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 20:31:56 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NJmPEt843427; Wed, 23 Sep 2026 20:31:55 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbu8tjyq-1
+ Wed, 23 Sep 2026 20:31:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NJmX4r886122; Wed, 23 Sep 2026 20:31:36 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1tpyu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 20:31:55 +0000 (GMT)
+ Wed, 23 Sep 2026 20:31:36 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68NKVsxv22807140
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68NKVYMj11076328
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Sep 2026 20:31:54 GMT
+ Wed, 23 Sep 2026 20:31:35 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 61D6D58055;
- Wed, 23 Sep 2026 20:31:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DF1AC58043;
+ Wed, 23 Sep 2026 20:31:34 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE5F558059;
- Wed, 23 Sep 2026 20:31:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 16FCE58055;
+ Wed, 23 Sep 2026 20:31:34 +0000 (GMT)
 Received: from [9.61.145.93] (unknown [9.61.145.93])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Sep 2026 20:31:53 +0000 (GMT)
-Message-ID: <f85c208e-34c7-4fd7-998a-bedf5a031945@linux.ibm.com>
-Date: Wed, 23 Sep 2026 16:31:53 -0400
+ Wed, 23 Sep 2026 20:31:33 +0000 (GMT)
+Message-ID: <dff7802b-0b89-4d68-8494-428cff6c58ee@linux.ibm.com>
+Date: Wed, 23 Sep 2026 16:31:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x: Expose pv attribute in QOM
+Subject: Re: [PATCH] s390x: Extend comment about PV cpu load state
 To: Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, brueckner@linux.ibm.com, borntraeger@de.ibm.com,
+Cc: qemu-s390x@nongnu.org, philmd@oss.qualcomm.com, borntraeger@de.ibm.com,
  cohuck@redhat.com, david@kernel.org, iii@linux.ibm.com,
  richard.henderson@linaro.org
-References: <20260923083406.64128-1-frankja@linux.ibm.com>
+References: <20260923082146.62803-1-frankja@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -114,37 +114,36 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260923083406.64128-1-frankja@linux.ibm.com>
+In-Reply-To: <20260923082146.62803-1-frankja@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: O9zJ5CbbepEM7q1s0R5d8sosGTbebKsU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA4MCBTYWx0ZWRfX7zzomRY+Kobl
- r07xnFVlt7ECd6xbtlb4taS+W+2uQWXMyG5mJ2pGputr3ED87EwKpDcxKJJzv9N81Z1gbW5VuVt
- pT4xsvq0LGiRx0Tsx+vRrIUlSbhWrOU=
-X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab4373c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: 1ReFIONNGUHc6YLmrkpobO-L5Owi3r4I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA4MCBTYWx0ZWRfX11G1P6NH+t4W
+ NL0XLuhuCy6foY58xSaSkBxI2fw91glR0WBoCYPHmy6vnU655vunQyBGNnlxFG3kliRLTzQRA8t
+ yv/Oeu7GtFIcprlMWD9oCWAqcfNKOhjZ9i00dnNfQ3nBHUgbeyQ9xw+0VVdVhOBU8lTPHeU8g9R
+ 58WPp/FRwpotjC5zmEU5/Esr65agNdktlXoaYYEhEV38XA8o5FQrfmEMcDJDXvsx2M1u9pTy+0k
+ b9yeqWXl06t0BS5kjUK5CpD2zOBLSGdULV0gY7aqDp8biAFWz4xbXhN48SYdZL0cFe8SkpNBqwk
+ RqQFcyQU2vMnai3OiHky/d/ue5050vggKA6Qeeoh3uhkMF7Cbj6g6PcmgWa6F59YFmt6KVQYibE
+ j/htVFCqxcRTS30diiqP5ffV46aK0OkzlOahZKUXjrq9jE4p0KE89sChErpKXci3GzfkbKzvWqF
+ mFk0Cex6BXD6yxnB8zQ==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab43729 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=liHgGNntfId0TKjn6_cA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
-X-Proofpoint-GUID: O9zJ5CbbepEM7q1s0R5d8sosGTbebKsU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA4MCBTYWx0ZWRfX+k0RQAYQldEh
- cwJ8DY4jcuT8Myn8KMhUxSiqLCnY7xCulbQ/oBWWj8X08XE8O/VlBNe+zYzyMtCPxLiyJQHDJbm
- R+TFZM/BNomOOpP1Zc4Y0/fM7SxWE/LyRrkWe+AaURTl6RqhU/nwLCuguy6JBT4sryrqOh1M2Uk
- CFnDSZJwQnryuNd1mHpEksy5cTgF0LtRI8SH5n4884A+Z6YOR5G2uOEJUfJWM9ULLppNH/aSUbr
- n8im2Ihr5lmo9Obl2+mAVBQZYJ91E/BPLg72Ve6r5buUMvhVD+AOEy+fhScL1LkpyPNaX2vVRzb
- mqcuAWtTrNoJfACHo0flQ5ATCPBKbePEffHEnZTDq95ng0+229fn3xxlGdAI2DQXsslAuD8HGYC
- PgEhPYwCKILcirPJIDiRS2i9T4SaXIXAIfAMJzIrepFzl7KVaCWai5VqNEq23lQ47aB7n7kE4tR
- Ke40tcYrtC4IdfaFwuQ==
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=lRyusxPUYzjeSrJwpx0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA4MCBTYWx0ZWRfXx3Ke0dm4ox23
+ fvZd8k8lYuKzXv+T+aEmTww64neax7l+CzEpzbbIcJwSacf+2DZrgHjik16ZC6qy42jYWh6P6A1
+ PjnPGBwkOOOU1BwOWPZ05GmG7TCzez8=
+X-Proofpoint-GUID: 1ReFIONNGUHc6YLmrkpobO-L5Owi3r4I
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-23_07,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
- suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609230080
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230080
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -171,16 +170,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/23/26 4:33 AM, Janosch Frank wrote:
-> People doing VM management requested a way to query if a VM is in PV
-> or not. This of course does never replace attestation, it's merely
-> QEMU's view of the situation.
+On 9/23/26 4:20 AM, Janosch Frank wrote:
+> When implementing PV in KVM we chose to add the cpu load state to the
+> mp state solely to have a way to keep the UV happy. The UV requires us
+> to set that state before running the boot cpu since entering that
+> state sets the initial PSW.
+> 
+> Since entering that state in KVM only sets off the UV call which
+> causes the initial PSW load and does not set the KVM tracking to
+> operating, we need a second set mp state to reach operating state.
 > 
 > Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-> CC: Hendrik Brueckner <brueckner@linux.ibm.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
+>   target/s390x/cpu-system.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
