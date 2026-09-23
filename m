@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A0BC982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 09:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F63C982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 09:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9JPe-0008IT-BQ; Wed, 23 Sep 2026 05:37:14 -0400
+	id 1x9JSX-0000b4-Dq; Wed, 23 Sep 2026 05:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9JPc-0008Hw-Bu
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 05:37:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9JSV-0000ab-TH
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 05:40:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9JPW-0006I0-PE
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 05:37:12 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9JSU-00072n-E9
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 05:40:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790156224;
+ s=mimecast20190719; t=1790156409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6ZjAkEeZAbhZxdljbETtqvpPguwxO3XhtgFUUOV5LIY=;
- b=Cb4QxwhpR6tWddRV/pYeJTQoGFNt7d9XOGVH5K1PMLTZWvVI8gOE5gLaRvRctrv6Kh/Hom
- DiUEZqk0WTo/PVQb7Km67S6g2hnAUR+Id0BL86fzEl+SWJJuCFCqRCKHOM7eJW+cldxj9E
- JX/eB8Fb0V152eK4DO2wISz1/Hfnn5U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=k/I/CjmEii6JbsbaeawTl3H5SP8kcmfqxA5XbW7i9kA=;
+ b=Y7QpUJlIKgsU0gBs3ZE8S9nJBV5nQ+XxBjIn3JW65/8cKB+YAyTIRkJmOW2Joqu4a9ozHS
+ y1HPIFYW+4GSCQ6tHHsU7AnprevD/IDD+bGLINcPOaBbeM2+ivgPpY1lrnRQrzXYko2p4+
+ XktcPwfM/pv80u5OaQmT/Z4dKYxyoQU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-Af3FHIDtPQmLF-81uP9l3Q-1; Wed,
- 23 Sep 2026 05:37:02 -0400
-X-MC-Unique: Af3FHIDtPQmLF-81uP9l3Q-1
-X-Mimecast-MFC-AGG-ID: Af3FHIDtPQmLF-81uP9l3Q_1790156221
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-ydnQAWpzN-KMnMDFYYtFSg-1; Wed,
+ 23 Sep 2026 05:40:07 -0400
+X-MC-Unique: ydnQAWpzN-KMnMDFYYtFSg-1
+X-Mimecast-MFC-AGG-ID: ydnQAWpzN-KMnMDFYYtFSg_1790156407
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AE6C18E4C06
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 09:37:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8FFB1944AAB; Wed, 23 Sep 2026 09:40:06 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.48.191])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE2B6300106E; Wed, 23 Sep 2026 09:36:59 +0000 (UTC)
-Date: Wed, 23 Sep 2026 11:36:51 +0200
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BC5019539A7; Wed, 23 Sep 2026 09:40:04 +0000 (UTC)
+Date: Wed, 23 Sep 2026 11:40:01 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, stefanha@redhat.com,
+ hreitz@redhat.com
 Subject: Re: [PATCH 00/88] qemu-iotests: migrate away from HMP ("make HMP
  optional" follow-up)
-Message-ID: <arOdsxWtfLiZ6Y80@redhat.com>
+Message-ID: <arOecUpHWrEI5xI6@redhat.com>
 References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,28 +91,22 @@ Am 22.09.2026 um 22:17 hat Marc-André Lureau geschrieben:
 > framework no longer depends on it and can execute with --disable-hmp.
 > This can simplify the tests, as they don't need to check/grep on stdout,
 > HMP & QMP but can rely increasingly on QMP alone.
+> 
+> The series is organized as follows: preparatory patches, monitor
+> infrastructure, test infrastructure, test migrations, cleanup.
+> 
+> x-query-qtree (info qtree) is introduced to make test 172 migration
+> easier, but arguably, qom-list could be extended instead.
+> 
+> All migrated tests have been verified to pass.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Hm... Doesn't this mean that HMP loses all of its test coverage? I don't
-feel that's a good idea.
+Argh, noticed only now that the Cc: list is a bit short. Everyone seeing
+only this email, please check the series and my reply on qemu-devel (and
+add the necessary CCs when replying).
 
-Most tests are based on diffing stdout anyway, so I don't expect this
-removal simplifies them much. I'll have to look at the individual
-patches, but I'd rather expect that their output becomes harder to read
-instead.
-
-What are the general plans with HMP? Are we expecting most builds to
-have HMP disabled in the future? (Why? It's useful for human users.)
-
-I think most tests probably combine testing the HMP interface with
-testing the backend functionality. If we really expect missing HMP to be
-a relevant case in the future, these parts need to be separated so that
-the backend test can run with QMP only while the HMP interface tests run
-only when HMP is available.
-
-Not sure how this is best done without effectively running all tests
-twice. Maybe there is a middle ground of converting some tests to QMP
-and making other tests explicitgly depend on HMP (i.e. they are skipped
-if HMP isn't available).
+Please don't forget to CC at least qemu-block for v2.
 
 Kevin
 
