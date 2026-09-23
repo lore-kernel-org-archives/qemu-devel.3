@@ -4,101 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A92C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8618C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9TYM-0005aw-NB; Wed, 23 Sep 2026 16:26:54 -0400
+	id 1x9TZl-0005z0-AZ; Wed, 23 Sep 2026 16:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TYK-0005af-8f
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:26:52 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TYI-0004M1-Gm
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:26:51 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d747f05ffcso7541925ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:26:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195209; x=1790800009; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tCgSRMxPtrL9Efg0MA69wITdbo89EcOJ1sxvafvsnt4=;
- b=vttu9Xu79+snQGOm3d6fbufiTCC74o1CVgePCOMtMo/Gw1G+My0hmZT15148i7/Ocv
- sNlWHDDRhbVj5pyD2BLTXNPit0Vg0WHtdSpIO+rPzEJtSpE3tn9Tp2XgQsGh45e6Hmxv
- lNwF8MdG7bTfvoOLQ0GA7YazfuHAoYoJ3BGSV000ued9T6T/j00RJaEutJSVmX8nNarC
- esazirzkiYEGEcdeNDvMTc6V5lW+JGIPiTSxVFr9rrKscThS53kom9Rm+qk7ojxxKL7w
- BaRFCGcr1NmIxxaTDrAitFoJPprjpMtMN/T95NfwFjNooe/o+frtg5p1g1yZ15X4DFx8
- kkVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195209; x=1790800009;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tCgSRMxPtrL9Efg0MA69wITdbo89EcOJ1sxvafvsnt4=;
- b=xSwXGn4Zs7XHHZkaG1j38YOFxbCsecYvT0OBjouZfJ0cDUJhdcLbKgEBuQn2D9XYp8
- bbTLaZH3R9FV5qc/5bNNsT39p3YZM57K8y7jxp2ZJ8ujl5tmi7L+UQfgIbG/ELG/M+LO
- JUPu0TOJxBd5I79a/737mQ+7jLdCYBp0eGpbd8sq2VhOwgJNaRZbPndXC5eUuv92iiYO
- Y8ypNANfUlMm2sLjoGZlrIo8uFxrKYW8YNafpZcNhlA9ppxYup8KDNwrC58lEeoYePU7
- PqQctA3p+J9JGOpWJbsYKFoxyLbtyln3gX4SqSmhAW4JzvfwvLJfNl3mzhhABEAhncq2
- uoLA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwpwsjKSzTCDtWjb368stnGPvkqAlEO/HbWVBcRoOg8IrhggbbT0kID+ER4SkJ3elE0gWXQwq4OM38Z@nongnu.org
-X-Gm-Message-State: AFuF++nFsjV4UxAVY+iK7Zp9cETn1UpwXgaB4wwObqSQZib/gOPtIFp6
- 4AG4rX7HfqQd4dM69z+lji61AZeGtNkQnKL5ujodpjWIqJZM51P92y1ChqnbSWZ5S/s=
-X-Gm-Gg: AYBFou38zMZl0YUPNG6+BnrphjILOC+xM/7gWu5u24UipLqFjchtq1ajoFCi3FS1USz
- ypkhtoUhB/BUcHBXPGYB6l1c3ETMyp7O6Fm6Mj7r4B3l/KKPonep7QQGEuozW2JL5AYtjnJR+kk
- EkFUfeMq9tZq2uiZ4oVTgPisaaii/3o4qhzQJ5i0vS4/EgPzMtYbPtQyTwE7YJxsJG9s2few9K9
- rj4XtXHqc5+dv/bEfKkiNObCP+DGVqn4AMw/t6QO4Y/kz/cE+yIUPviN5fhmho4GB+7nghtFf5G
- lN+AEJkHm3ELSvMnpfHpXtZNWGfMdCavt566Hh2f1Ut2qXb8ABp8JBplOtgnxCaVcqEQQPRGVaD
- Et87yWoJCYeC3aH9tjo50NUGZnverIFonoGlJsuFnbB+EF1GZlJqXLH9XH39aNR2qbZSQY6Sj+R
- rJvp44zSL9X74Cz5SUQKxrF5vSWrNRGnuqUtYWsp+idlNdSMTM6xH6vQuN0sSamK0AlXvp3+kki
- RoFZM3k8u6SDZpka+iQFZhxK6ufiIGiOtjPI3lvYCWhceO5wFe3
-X-Received: by 2002:a17:903:1843:b0:2d8:d4ce:9f32 with SMTP id
- d9443c01a7336-2df7e287b85mr1791975ad.16.1790195208864; 
- Wed, 23 Sep 2026 13:26:48 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2df6a5c3733sm16220105ad.41.2026.09.23.13.26.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 13:26:48 -0700 (PDT)
-Message-ID: <f91d5aa8-6ee1-40f9-98f2-eddee7e6ae8c@linaro.org>
-Date: Wed, 23 Sep 2026 13:26:47 -0700
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x9TZi-0005yh-FH
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:28:18 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>) id 1x9TZg-0004PZ-BA
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:28:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xjhyuc9ynZiTCpB/npC22Mt/FMrCAftVub34meM95MMVoRTDfXghAki1/vO9YikPC1A1El1b+buGc5v9I3FD7LmcTMg0w6aEGFFEsrhILona252Z2j5Umr/vT8F5LEzwWwXRMg0hy3mO1XZtByL2CT7ngUoJRpr96MzotWNC/QlNx5w4icdfcDn7Y4PtJq2VXSdTcvKz/AYG9tO/NiOYMVkmSaWRyG/zT1q2k1HnocJ/0GTl6O4cR8ulSBbe9/EDkl5rcu5YevHmqlyx5pondUSZWVhFMU5p8NkTwu5pK7/ERA09P6wNc70kmfIIvSmvPrvaoyJflknEBczWEYbLeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QK6YW/TP6vmAAGUHs4KwcIa7L4lOHi8ZQnNZNOuBezA=;
+ b=Aelc2vSPBh/5nyI4RhykkPUGSi4l2S2+3Rzn5BWHKgUjCts64lHLGmfmG7B+f43g1FfRwSKUxbm+aamirjXNEoBXGKTV6pV18o+5zG1q+xMotm/cTG8OJpfXfZT5OyaHDQ4bFLHSA86g723MJYvrZx09369tyfO406zfxZecC/7gzffX0ysKv3nr2g+nbmQ89cHyXHJlDNDpVSY5oAb06POdgqprwAZhaoSqjykJwteJLx/FUhYlDlndcU7TR/kX6SEPblxsdDr+RB5MHu0b/bz0qOOU0iOrz3yIGPXoU9KKS38J712SiBaG6m3mvnWh0lykC7cNmI9UuYwGl6ex8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QK6YW/TP6vmAAGUHs4KwcIa7L4lOHi8ZQnNZNOuBezA=;
+ b=FSVRA4A1/QZJkkC192XIqiicua3rGpncwrovjSA3lEp6AgtG1aTqjvvZN7tbQzveWmvq9ig7Clt/WNMjiKN7qNT/rzLQ12KMiDgRFCzRoCuqydC5Wu2VnApbaYd1ajQxG7aNjc/EnUavOz6eF7uBgQyZkxlnbUB6IeWklPH2VIvDAW1tY61VRn0y4pOBiFY7FXybTv53zHh8YqVt5wx8ZtY2QbNWM0byh1rSzs0usI1dsRmCXPge/cv3tU49Wa2mRDVkihrp72IOau4sjFucxr5uedE8yYuVOi0dCpBxzzgDLUOlMzWwkZAmpryUg7LJ1IYDQ9lulooL1qKOBMPHow==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17) by LV0PR12MB980390.namprd12.prod.outlook.com
+ (2603:10b6:408:3ef::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.17; Wed, 23 Sep
+ 2026 20:28:11 +0000
+Received: from IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1]) by IA3PR12MB923065.namprd12.prod.outlook.com
+ ([fe80::1c83:bf47:4202:50b1%5]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 20:28:11 +0000
+Message-ID: <5f83de55-0bd5-48f8-92c7-95f5d40dc00f@nvidia.com>
+Date: Wed, 23 Sep 2026 15:28:07 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] linux-user/sh4: fix race in atomic variables
-To: Mikulas Patocka <mpatocka@redhat.com>
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
- qemu-devel@nongnu.org
-References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
- <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
- <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
- <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
- <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
- <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
- <d1a29727-14c6-fe95-c01a-30fd63e3ec4e@redhat.com>
- <991e9427-bc5a-7226-453b-70de8825e4b4@redhat.com>
- <4799ff0f-a198-36a3-0ec5-fa41cc7337f2@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/3] MdeModulePkg, ArmVirtPkg, OvmfPkg: fixed PCI BAR
+ placement
+From: Tushar Dave <tdave@nvidia.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: devel@edk2.groups.io, gaoliming@byosoft.com.cn,
+ ardb+tianocore@kernel.org, sami.mujawar@arm.com, jiewen.yao@intel.com,
+ qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
+ skolothumtho@nvidia.com
+References: <20260916192408.928411-1-tdave@nvidia.com>
+ <aq06JQWs6KszJI9w@nucbdw.ghoffman.csb.home.kraxel.org>
+ <7c826624-113a-40b9-841b-1bd8c375a9bc@nvidia.com>
 Content-Language: en-US
-In-Reply-To: <4799ff0f-a198-36a3-0ec5-fa41cc7337f2@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <7c826624-113a-40b9-841b-1bd8c375a9bc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR13CA0161.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::16) To IA3PR12MB923065.namprd12.prod.outlook.com
+ (2603:10b6:208:627::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA3PR12MB923065:EE_|LV0PR12MB980390:EE_
+X-MS-Office365-Filtering-Correlation-Id: e1eaa06c-a9b8-4f61-14c3-08df19b13003
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|366016|1800799024|10067099003|56012099006|6133799003|22082099003|18002099003|5023799004|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info: 0qZJ6z/Pj8E1p0a5Q/oHnTlCaCIEIAbq+GZiHuzPT0AD+duDugtogCE6UuMbLGUkWpj5z8LSbu45kZ5rGELdMlJZRHhDI5NPj6pncPotiwfcRyoB7+zD+t2h+PNnsZz7YyJWGCKJF9BOZBfUXYru8Mz5ruiFrXK2z75YW2MSN4CqlOtVMSRMZxJkwcjUlSOZG+7uU17GMMgd4cHSK9r3neTASYnsMjyyFf6aG3QP3JyiQakLlkKLgqJIVdF1dLX9+TqrSa5K8WwKo1DFwmRd4m8yxk3zuTfbNIZWaPgikBfaqfavciNmXGKDkh/s0S4n8KbyR5tfkQQ2h4sBoYpdfvxy8ZdQ+5nKDzJgENX6+IKEBmWZJrodAFAZIjGNwFo+PjupfDm5Rg7ySVGRvWw7QGxqGqht7jFtFjtVf4KxWyQ6Iq+x0SGS3EGGTAfpqeqH0YVkF/5haoMal4lvG4zJKKqTr3z/FFbqtWYjr4zsTKd+cF32Xcozj7VI6TFBc3UoyIjSbobLTsUPRa1GvcGp45K5bU8wsJq6R3d4kqcG2gIK03X33JiMQJBr8N5wSjN+H7zNcYlmcil7p4VlZc5itSIFQo64LbtuJQU+VuK4WhkDNSOwP1efPhxo0VWxREVSnfG6f65uXfjvtAnSIbu/6feoVePGMTdVYQikNRiL/tI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR12MB923065.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003)(5023799004)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OWJFUzVWbU5IV2RxYTJxMXN5MDhEWThIb3ZGcGVyYW9penc3M3NySFRmbGhS?=
+ =?utf-8?B?Ukl0bDdRMFFSdzIvRDFDcDRmdy84ZzRTcjVNem5iRjJXNjcyVUN6bWtBSEhq?=
+ =?utf-8?B?UmE2c2pxTnVQdWx4STF4a2JVc0poeE0zWEtHK3Vob0dpN0szd3k0ZDlaeVhl?=
+ =?utf-8?B?LzBvVlFCYUVUSHJld0ZaMkd0d0tpcDNUTm9OUkNONlEzZERFRC8zbnNUR1N0?=
+ =?utf-8?B?OE0wZFRvcitmelNsS0ZCUVRzdHYyUGpkSndTeDZhVzFMRXNYT3ZmRlhmMEhZ?=
+ =?utf-8?B?Vm81ajFOS2VGM2VjSnhYL3Z1NGl2NURHK3BLY01ib1pDM0ZnT1VuYmI0YUhr?=
+ =?utf-8?B?Yi84dkhSUmdRekFEaThxanV5SkhXYVh1VG9WQkt1d0R2bm11U1BsQVZ5ayt2?=
+ =?utf-8?B?L3Q1bWpYQW1XTFRXOCtqRW5yakk2K04vNkgzL2o4Vk9QcXhSOFJiOFpBMi9o?=
+ =?utf-8?B?TC9uc05jb1c4S1c3OWtyQmxOZVpMRjdVWHYrNjVrWFREZUNaMHJjcTFSREZj?=
+ =?utf-8?B?YitFL1VzanlUVWorY3ZGZ1dOWElXU1VEdWRYeGl6dXBZK3M0ZlVvSzFxZVBP?=
+ =?utf-8?B?UzJYVE40YVhGRFJqcTV4VVlQVjdsWFhqcnJtL0ZxNTV5Si9JUGFTSk5hRjVP?=
+ =?utf-8?B?eTRqcEsvaXhTU08xbWYwWDErY1J6VUpyVXpCV2huY2hUdU5rMWZnL3VCNTNQ?=
+ =?utf-8?B?aW9ydFJNL0xxMFYySWh4N3AzWXdhdHRYMGQ1NWdqYUZ4dnU4clJDQm5HY3Vs?=
+ =?utf-8?B?OUp0SWp5Um85Yk56VHZ4UzJOYUNEbk5FU1lyZTFEcFhrclo5K0tDb2tXcFFP?=
+ =?utf-8?B?QnMrUFdVcnlPWWRScDl3RHFVS1JZZmhxZWQyN1hQUlAxK21DWDdSenBkK0VG?=
+ =?utf-8?B?UUNyK2ZpNHZUUmlLWDRwTzMxRURnWTlCQUhUclJqd2N4QmkvUk1UbHBiREpU?=
+ =?utf-8?B?YkVOZC94dVJxN3ZLUmRzK3RiRTVFV2xGRkNWcldNMEs5MEFSZmZ6VFdQUGoz?=
+ =?utf-8?B?cEVHZmlOdXo4bFY2TG5IWVlMbFdVTmRSdkQrR1hwcWdPSU9kZC9Bdlp1UmJn?=
+ =?utf-8?B?eXc2QUw2UTlTdFozUklNVXBaMUpuSjEwNjRiczJzMFQyZDZ4NGxHRndBaHo5?=
+ =?utf-8?B?Mkp1cUpCWDFBK2NqY01XalAraGpEQlhHa1hkUHdRMytqYTJqZ2FjOU82WU00?=
+ =?utf-8?B?cHd2WWVXV3Flb05mNzlBV0xLd3Y0YXMyQ2RncGZzN3hNaTA3Q1lmMTY0cEpM?=
+ =?utf-8?B?R01MWFE1RHBTcVJET1RzTVZTU0tQcjFFOW10NURGT2JFbUNlMittQ3BuTUVF?=
+ =?utf-8?B?WDlhWGd2bGlsMXFrY3VwVUU5TWxBSVlzSTE5OGtxVkpFZzE1UjR1ZTA3YkZV?=
+ =?utf-8?B?VDBYVko5b2FFNER1RmpOTDIzYlhXNmNtNFU4ekFRZjVya0VnVmo3YTNaVFM0?=
+ =?utf-8?B?S3FtQ2YxN1o3Q09jYmxvd2d5YXRoNkxoTTlDMElDUlNaMTcwMkp1MlJQU0RT?=
+ =?utf-8?B?NVRZQ0pPYmw1STRscURXUytJSjdhZW5QS0tqNmFzVTZYTzdjNEQ4SEhZeW1P?=
+ =?utf-8?B?YXVrSHR1UVZseUxyVEI0dU0yVUVET0NaU0p0bnZNT3FxUUkxWGNVMVAzWTFx?=
+ =?utf-8?B?SXhrMWNub1dLanNkOVJ1eG41R0svWXNySDNhbk9mMGszSlJvNFViZzIwUmNq?=
+ =?utf-8?B?ekRRK0lhbHNuRWxCQ2c2YWxTT3hLSHZXTFRZVFBwY1pQYnROUWwvVnBjVlRN?=
+ =?utf-8?B?bVBaWlpkLzFoUk5qaWppcUo4QklWdWUwNUl3cHZKUUc3L2htOExVekJhZ0dT?=
+ =?utf-8?B?d0EzbStMb2ZFL2JOVVdkWnB6UUxVNmFYelRobjJYajNWRmtYUlQ0bFAvWnZ4?=
+ =?utf-8?B?Nnl5WTMrSVdZTEJ4Vy85Z3BBMjlvZ2o4UGVwNWJoYUtHWm02Snk2WDNlaFdW?=
+ =?utf-8?B?ekZLZkZzbEJTVVRmTTFNWFFSQ2V5V2hCdG1FWnRYVTNlU0kvTlVYbzFRMVJs?=
+ =?utf-8?B?N3J5eVNpM29sRlFGNDE2SzlKbzFJK2dUeTNGMmEwcEd5czJtelRGMU1MNU9G?=
+ =?utf-8?B?T3RkMnFJUENMZFJrWUczRG9jWkRtUVNWaThqbW1wVlJGSHNMc3laNFVtTEJL?=
+ =?utf-8?B?c0RTM2QrZ3IrU2RwK0pySVV5NmdSZ1dzeUp4eU5JRGdtNXBNdXNjTVkwSEZq?=
+ =?utf-8?B?ZGQ2K3ZEdVBhZWF5VFBHWTZHWm1ESG51R3dhSElWSjNTOWRWTUl1dWI3dU5o?=
+ =?utf-8?B?SExMc1RLUzlMTTBpeHd4MmNkQ1RaREpvOFY2N1ZVaWdqREluWXBMc3BpMkdE?=
+ =?utf-8?B?UDFCOW1KTnRQc3gyMjhRUktTWnJXc1Jialc1eEppdllYUWN3UkphQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1eaa06c-a9b8-4f61-14c3-08df19b13003
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR12MB923065.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 20:28:11.6858 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: c22AatGOlRDyTGEELbrXb1IodpWhtgAQ+4UAvepAMZlqQQ//nCLkQIg7RdCqz0OK3/rjWHSnqR+IJtfIJIM3wQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR12MB980390
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=tdave@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,48 +154,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 12:58, Mikulas Patocka wrote:
-> So, after putting debugging prints into the code, I think I have found
-> out what happens there:
+
+
+On 9/18/2026 1:22 PM, Tushar Dave wrote:
 > 
-> * decode_gusa calls gen_restart_exclusive
-> * gen_restart_exclusive generates code that sets TB_FLAG_GUSA_EXCLUSIVE
->    and generates a call to helper_exclusive
 > 
-> * when the code is executed, TB_FLAG_GUSA_EXCLUSIVE is set
-> * helper_exclusive calls cpu_loop_exit_atomic, this makes cpu_exec exit
->    with EXCP_ATOMIC
-> * we go to cpu_loop, we execute cpu_exec_step_atomic
-> * suppose that exit request is set, cpu_exec_step_atomic does nothing, it
->    leaves the CPU in the same state as it was before
-> * we go back to cpu_loop
-> * suppose that no signal is delivered, so the gUSA is not rewound
-> * cpu_loop goes to cpu_exec
-> * there is one difference - now, TB_FLAG_GUSA_EXCLUSIVE is set and it was
->    clear before - so cpu_exec will not use the TB that calls
->    helper_exclusive, it will instead use the TB that performs the atomic
->    operation (both of these TBs have the same PC, they only differ in
->    flags)
-> * the TB that performs the atomic operation is executed inside cpu_exec
->    => race condition
+> On 9/18/2026 8:24 AM, Gerd Hoffmann wrote:
+>>   Hi,
+>>
+>>> The series was tested together with the QEMU companion patches on the
+>>> AArch64 virt machine across a range of PCIe topologies: emulated devices,
+>>> VFIO passthrough devices, PCIe switches, single and multiple fixed-BAR
+>>> endpoints under a shared root port, and fixed BARs behind nested bridges.
+>>
+>> Given this is active for both aarch64 and x86_64:  Any testing with OVMF
+>> on x86_64?
 > 
-> So, I fixed this by clearing TB_FLAG_GUSA_EXCLUSIVE after
-> cpu_exec_step_atomic - to make sure that cpu_exec will find the TB that
-> calls helper_exclusive and not the TB that performs the atomic operation.
+> Gerd,
 > 
-> I tested it and the deadlock is gone. Does this seem reasonable? Or, do
-> you think that we should fix it somewhere else?
+> Thank you for the review.
+> 
+> Yes — tested on x86_64 OVMF (OvmfPkgX64, q35). There's no fixed-BAR
+> placement to actually exercise on x86 since nothing on the QEMU side
+> populates the fw_cfg blob there, so this was really a check that the
+> fixed-BAR addition to IncompatiblePciDeviceSupportDxe is a correct no-op
+> when that blob is absent. And it is — existing behavior is unchanged,
+> without any regressions.
+> 
+>>
+>> Overall this looks good to me.  edk2 has switched to github PRs, so
+>> please open a PR there.  edk2 has a policy that patches should not touch
+>> multiple packages, so patch #2 should be split into two for ArmVirtPkg
+>> and OvmfPkg.
+> 
+> Sure, I'll open a GitHub PR for this series and split patch #2 into
+> ArmVirtPkg and OvmfPkg patches.
 
-Thanks for the excellent analysis.
+PR submitted https://github.com/tianocore/edk2/pull/13183
 
-While I believe your fix is correct, I think the problem might be more 
-general.  I think that the condition "running under atomic step" should 
-be promoted to a general cflag.  I also think that the exit check could 
-be suppressed for the single-step.  That way we go round the loop fewer 
-times.
+Thanks.
+-Tushar
 
-I'll prepare a patch.
+> 
+>>
+>> take care,
+>>   Gerd
+> 
+> Thanks.
+> -Tushar
 
-
-r~
 
