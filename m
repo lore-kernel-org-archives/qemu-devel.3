@@ -4,95 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35711C98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 17:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD74BC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 17:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Qmm-0005mC-MW; Wed, 23 Sep 2026 13:29:36 -0400
+	id 1x9Qms-0005nV-Jo; Wed, 23 Sep 2026 13:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Qmk-0005l0-9F
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:29:34 -0400
-Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Qmh-0003ND-RF
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:29:33 -0400
-Received: by mail-pz2-x0f.google.com with SMTP id
- d2e1a72fcca58-85469d249c6so851233b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 10:29:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9Qmr-0005nG-G1
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:29:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9Qmp-0003Od-Hh
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:29:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790184578;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QyDJ8VVCPCCDUHE+c0FpJpfW60EQLN0F2T2Jte4kmBc=;
+ b=SQ29s+VG2940fVwY8bdVf0QaDlvYX+t9ZG2ldNP9ZBDRaSgSJLRIAmUeLrlXsOxNa8HUTM
+ ktnyszvczA9Lnet2GJFwoBZQU7nM/hu7O9VBgoGgo9CFiXRk28d2Y8O8bzvDG6r6LGpGZr
+ kcABiou5L90WCeq/dM5v7SrTuYuwnJw=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-LlOt2xKyNX2N9wqQDwhPZQ-1; Wed, 23 Sep 2026 13:29:36 -0400
+X-MC-Unique: LlOt2xKyNX2N9wqQDwhPZQ-1
+X-Mimecast-MFC-AGG-ID: LlOt2xKyNX2N9wqQDwhPZQ_1790184576
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-66c70bf18a1so1629678d50.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 10:29:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790184576; cv=none;
+ d=google.com; s=arc-20260327;
+ b=NufOeZZLSQOIpoRzmGRg+Tc0K8vpeAGEcfzY/nDii7EbPinVrjjOhwW2+Fd+aFBCVE
+ Z3M7/eX9bboz42jVPCcQec69JxeomN7IlB2QOtjUd0DOLBGMBxbanbiupEW6aqxe0dwt
+ j1e0l/og1W3N1y4YZ3IiJsCiriRcEUSykdpMcTE/W8QsHLPTpB5PIElsB9PZDpbMO4CI
+ ItY1NeRAT3qF9pzsDxHO8K19EpCdVeUhqaE6UeQ55lWm+0Cp6KfnYZoLzAIKWl6JwBQI
+ rP8lnvmYlbOkjLYLa29Fw0FwCry/5wNl/nx6fR9MDq+1S76GA9HcrYwqXvdWSw0uMov0
+ rfJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QyDJ8VVCPCCDUHE+c0FpJpfW60EQLN0F2T2Jte4kmBc=;
+ fh=efRD72j90xG4W9da5AhqhuaTclpdW0BT0ucrSh4Idro=;
+ b=ji/34HUZJE++dpN9o0gEL6NZPzEuk3SDEw2j7zH9X2Ful1ZXhrPvGYfYlDOzIdgqA1
+ u44sVfXmJ2/MI0yqWUAFN42i36ceb4FDX8jjuldOYDFXq3ZZ2ELMQv83ZP9BLbRLqcAP
+ M5ZEce4hZ8OWNA4xQcIirmFHbNDWDHQ5C562WjcsuMQC3lFCHbXV+bG4s1j7lqdxnD57
+ 4dSj+sUIj820IohhLkMIuGYxXPTTqgyhJOF5jR9WIpRlaT4aaeoDKon4tJcR5ROF+US6
+ 705pg8LBB3dXpzkK8jlpEzahL8Chw1Ls167V/ynz5RKLolDOdZTGjcoji7hlqACEiWfd
+ ABGg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790184570; x=1790789370; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ziEWh6Dg+Ckid0U+Ykz1atD92kwnbf3RzQPVPp1TOUA=;
- b=aUUpa2CVaNHWWAai3SrrwRGn4O/V2WLUD73coQk/EkhJIZS7B9SJeyrJBtSyxVfDjj
- Wh08EN2y2NYiT0VdV4YFPcGWZvT+n08f+MkkIFioBdEhrw+xHJA1Ns0qw8P+Vw9F4t1K
- VzZJViiHy4pQAmCjbSzFaGpd+X+hzX7T+d/l7yYms0OVMiY1MJvG/ryqq7y8s4NePQNo
- p9hqSeaPdP/U9TmK/lquj22OvValUygf6B3dMx6eD+JEXM55a/JGgdrbF+Emufe+XcbJ
- V1wbSZdRttIIs/w6c4yiR71uGdxdop9b40CyCtT6MQm2lDlRqZIt0t8P5joSKoaMDdPb
- xf+w==
+ d=redhat.com; s=google; t=1790184576; x=1790789376; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QyDJ8VVCPCCDUHE+c0FpJpfW60EQLN0F2T2Jte4kmBc=;
+ b=FJ+7Df9Xi1jZgNHx/tvPerpPMe2rH9HXY1B5UA0h5QYv7zln/nBojTUWw3eYmDswi0
+ oRc1+pITubBQe3es/SrPVNh0yHW/olm9ZSSJy1qKR24Tg/1oLlFVxiSQssBbRInlnq2t
+ rJ37fnR3GUxnBMrIDH53t1f/uLTNGrVS+DUgDUA4PY6tjJWte4EjRCxKAgvUhUzMbyNk
+ whdc6jy0EkCil676TbnebW4RDs1nWX34TKypuYpcV8+YsCHomzuiyrGXXpQPcrAeRNFM
+ RM/hOc5izOE/lx/TYxC25w8Rcr589GeMcXkbk1qxxTDLO81yRjFA0pTVoPLcdXRZbW/c
+ SbIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790184570; x=1790789370;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ziEWh6Dg+Ckid0U+Ykz1atD92kwnbf3RzQPVPp1TOUA=;
- b=NRWfaXtWYd5T0PBbbrG2z9SF12mQAADZO/zai38Gg8XGZ1HkAgh8Iwy/zdRG0v7xfB
- Hr8ftvoyRwrzH6GEFQe7lYeZw4oF2OhhlupmUWNooQ+mUE+p351lxoZ570pGppqteSYe
- eD/rYdW7+mZCHdmsdZhTE7PgzZ/bUtibBfgEcnk5X3Rta10bNYqr/SMwwNHp3cD2qeEL
- PQBn/WqSVtHFTbBmmeaTI0iM65VoCeh66gqcFdHY+/MRVVaWZcRUvakOoG9AO3Ik1rcj
- iM6ihoeo3Hk86vRFpCOH/Gqs8fgkw86gxBhqHTMY32tLJtuUej56neByF73BJAMt615p
- CHZg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzfo9QaHuDVadcegXPWCyh4OAuZV5v9UXhRvldshM2yC3e7Wc2VTb3M3WNPec4cwD8SwUZOyzasYL1N@nongnu.org
-X-Gm-Message-State: AFuF++nyG+jMczI5oQ6F7HNCrQUFIsSkrWGDeHkXIJy4YbVLlvuVADhy
- xtUDCIU8YsDaXvpkNY1Je/+wQangIf333aqLM7tfSkhEdSEAbypPZMB6DOy6cZaF0WU=
-X-Gm-Gg: AYBFou2hgmQ1aadTErq2pA4P9WWgLASyDLrNOvtN4Xw/nN5SUv5kikj/zTw2ATUosn5
- rZ27rtW+/Xz/tNfOHIrTARF9c9StU3n0CiuEnclaTAWwyjHU1RXFgjony4e83LmW76SXZ2+f3XJ
- mI2CmHJn7RrnDjDh6k1062+9iaf5qus1vlslPT/Ua3MEAsP/E0ZGbMQgUfu7GZzQd44oghflXIX
- qjP7BLYsmEQ7luGpbNzxqFE42cIfo//i3dR1Bil4rXt7aMSw0xjgGRZw/758zQFkgaP+TZ/GscD
- LjycrgXmU74IK4oXd9TQJTJI2zT8Ety1tRhCIq+rgd2c/Mhi6SxhvQu6yoY7gfeoi1Ewh7UR5/B
- ffT6P92Urq8sRPrZwNfIqW2jMfZKOPSJLbNFmb3iXiLZ4zKmi0pVeZrCKKnwztTQAHR69yLNlFC
- hn6WI7R8OfyLX67Q7uyEcNChW6kkis93nc24GlgF1maTP/G1Sgk815VhJM4+xq595it87w4e4XB
- MjsyzZngJcVQ5MmrIv21M62VG52/F/Jy870eWP9
-X-Received: by 2002:a05:6a00:3c86:b0:871:2152:980e with SMTP id
- d2e1a72fcca58-87d1abb5128mr2637011b3a.23.1790184569673; 
- Wed, 23 Sep 2026 10:29:29 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d1d4c483asm1695227b3a.21.2026.09.23.10.29.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 10:29:29 -0700 (PDT)
-Message-ID: <70b6f5e2-44cc-4ab7-a279-ee8c5c51f43b@linaro.org>
-Date: Wed, 23 Sep 2026 10:29:27 -0700
+ d=1e100.net; s=20260707; t=1790184576; x=1790789376;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QyDJ8VVCPCCDUHE+c0FpJpfW60EQLN0F2T2Jte4kmBc=;
+ b=cXchxQgqLSg5QqTLiqHEcQkY+V4pPjc4n5dU9LJgzXrY9N9PLO7Tfp+VoyAn8KUeu+
+ mcBWAbw/8CnDXqhcxDiZbPyU3rLoCQbcvYewk3OFHu8pCjS1LTqWku8oSI8jhD7f0kmj
+ +4G4BHAHG+Nq1UZax5h7iebYYP8rqPLk6damY2Y1CzKWyKuoZk/LWASjSCz/U3wGOBqD
+ be6NMGFG4Z/j7Ww73gmc3OG+VUqkma7kKiHVSM5yYwhKTswLhuG+5ie1DJY2zPTFqbq+
+ gYWIO//jyKV6vh1okWtJdCcK9aOtiGBzprT6fqE0S0V6yG9XK6be8lRPjVgNjPadfrPh
+ 1W6Q==
+X-Gm-Message-State: AFuF++lMOHjhk2qDsNZ3/IvSjZBkLeVN+QkoUhbUWGPxCuA8Mj2SSmtX
+ F1B7/SJc/wo2Zb/4yvrPq8oZi/Qsf7w46iGf5zZMst2UWt75aaPGKr+QhJ10yINvLun5G+FqSw9
+ uipbGhwN5SNDBXMNM4+eBtg3gKe9xwVGIH9e67eGzbxsyIwufSpJ+IXhSczcAkkb4buzEZ9HsJp
+ c9igub7dSMsf9B2xeJh+2GH+uYwm6PcHM=
+X-Gm-Gg: AYBFou2XOZpbknQ2P8QSUKR0a//JME0VmkBm7G+IWhhFxaskQpVsveKZTDLpf3E+Y3E
+ Hel866BDfd/vuX2ksy2zJHM65buQmuwYKWFMjQsDpdDP7NlLy/QfS1VnK7mv6X5uDOj/SvmkCVE
+ X6GFn53GktxobmrB4oZ5LnR6OIi4OzkHJGJkkhtfWfBKW1hm5SdqXRrHGHwgX6iNcQByBtqlxV1
+ vCW30eHZSS5kdaZ
+X-Received: by 2002:a05:690e:b4a:b0:672:a52c:daf4 with SMTP id
+ 956f58d0204a3-672d5976331mr1958704d50.103.1790184575982; 
+ Wed, 23 Sep 2026 10:29:35 -0700 (PDT)
+X-Received: by 2002:a05:690e:b4a:b0:672:a52c:daf4 with SMTP id
+ 956f58d0204a3-672d5976331mr1958689d50.103.1790184575546; Wed, 23 Sep 2026
+ 10:29:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/21] target/arm: Access halt state atomically
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260923171116.31276-1-philmd@oss.qualcomm.com>
- <20260923171116.31276-10-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260923171116.31276-10-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260923070351.855246-1-armbru@redhat.com>
+In-Reply-To: <20260923070351.855246-1-armbru@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 23 Sep 2026 13:29:24 -0400
+X-Gm-Features: AcwNN1VK-h2Fsk_3mUKrKR-uj9SS9Fg-mKEijB02qWAAGSxY36vOgEy53ITdtNo
+Message-ID: <CAFn=p-aKeFKh9tmKmzXaFW_0_FppH0z-z8wrNMuTd8J1m0yywg@mail.gmail.com>
+Subject: Re: [PATCH] qga/qapi-schema: Deemphasize numeric @whence in
+ guest-file-seek
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com, 
+ kkostiuk@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,25 +136,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 10:11, Philippe Mathieu-Daudé wrote:
-> arm_cpu_has_work() runs without the BQL held and can inspect
-> halt_reason and event_register while other CPU contexts update
-> them. The WFxT timer may also consume HALT_WFE asynchronously.
-> 
-> Use atomic accesses for the halt state, including the WFI/WFE
-> and halt-exit stores. This keeps the halt/wakeup protocol
-> race-free and matches the atomic state transitions used by the
-> asynchronous wake-up paths.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
-> v3: Dropped rth's R-b because of HELPER()s call also updated
-> ---
->   target/arm/cpu.c           | 7 ++++---
->   target/arm/tcg/op_helper.c | 8 ++++----
->   2 files changed, 8 insertions(+), 7 deletions(-)
+On Wed, Sep 23, 2026 at 3:03=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> guest-file-seek accepts both symbolic and numeric @whence values, but
+> the former is documented as "preferred interface".  Remove or replace
+> mentions of numeric values by symbolic ones.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Sure. The equivalences are still documented in `GuestFileWhence`, so
+this seems fine. If the symbolic names are preferred, it seems fine
+that looking up the symbol doesn't give you a crappier, non-preferred
+way to specify it. By contrast, if you look up the numbers, it should
+tell you what the equivalent preferred enum is.
 
-r~
+(make "upgrading" easy, make "downgrading" hard.)
+
+yadda yadda
+
+Reviewed-by: John Snow <jsnow@redhat.com>
+
+> ---
+>  qga/qapi-schema.json | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 040c932310..576ce7fea8 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -342,11 +342,11 @@
+>  #
+>  # Symbolic names for use in `guest-file-seek`
+>  #
+> -# @set: Set to the specified offset (same effect as 'whence':0)
+> +# @set: Set to the specified offset
+>  #
+> -# @cur: Add offset to the current location (same effect as 'whence':1)
+> +# @cur: Add offset to the current location
+>  #
+> -# @end: Add offset to the end of the file (same effect as 'whence':2)
+> +# @end: Add offset to the end of the file
+>  #
+>  # Since: 2.6
+>  ##
+> @@ -373,7 +373,7 @@
+>  #
+>  # Seek to a position in the file, as with fseek(), and return the
+>  # current file position afterward.  Also encapsulates ftell()'s
+> -# functionality, with offset=3D0 and whence=3D1.
+> +# functionality, with offset=3D0 and whence=3D"cur".
+>  #
+>  # @handle: filehandle returned by `guest-file-open`
+>  #
+> --
+> 2.55.0
+>
+
 
