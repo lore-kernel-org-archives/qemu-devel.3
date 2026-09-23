@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AFBC9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F28FEC9830E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Mzw-0003hN-6l; Wed, 23 Sep 2026 09:26:56 -0400
+	id 1x9Mxv-0001aF-Ob; Wed, 23 Sep 2026 09:24:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mvl-0004HW-Dw
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:45 -0400
-Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
+ id 1x9Mu1-00027p-5H
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:57 -0400
+Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mvj-0007jT-GQ
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:37 -0400
-Received: by mail-dy2-x10.google.com with SMTP id
- 5a478bee46e88-32ba4885063so579992eec.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:22:24 -0700 (PDT)
+ id 1x9Mty-0007Qm-3J
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:48 -0400
+Received: by mail-dy2-x0f.google.com with SMTP id
+ 5a478bee46e88-3396cec93b6so974312eec.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169743; x=1790774543; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gZLlHjgFKGd97ZAl0jDOPJ4J/L8M7/uJxBZfNAi1MwY=;
- b=pYDVamWjKU9mFRVaoshoVZzxslMzVtSC/VY7u9aDjmjTALt8ZfhEQMoQOwlubIT+on
- FhtF6UX7VuaHu3p0LkE37XipfXjSvDvNJ8PQqp3FPEwZKpai5h2TAn4Vv1zEhx6Su5g1
- 46S1Inssnd/upUPE8U2Ij43YsiW1kxTLqIiap3kLlwGm++qO/7gGWHWU5R1yag/xuaqc
- U336iZ+4Zdhvq9lFLKWGCmiLrLHj7evAAzlrIGpEqsl0fUHQqLp6OihkXsQhXPxIZjqp
- ZDzqBtJyyotmgW+nEyRWgGSnxYE28qhxPAkd5+50AVgHwR96Vsf6rWvPlUSD79IwhHtq
- FyKg==
+ d=gmail.com; s=20251104; t=1790169642; x=1790774442; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=F3AfQfrqvQe4UOX8IvAjiJQ3WGlTiTKTbcrqm5A18SE=;
+ b=B173eR+Hp7JKa1Q+OFMwg+IK02VOp4eeSmM+IrbkRsypVf/lADy81PqlodI02v+SvY
+ F+90RaKCRhdFQc62JSP3cS0AQ8MQX+8Cw72lmYR/d8og/lX8AHPFXVNtg3/aq9tHRzo0
+ 3WG6UxlxQoqhWU1Y090nKTtP9MMAHEAhGHojxA8DUroszximtArEGofjtbqtde+52Wdu
+ D+YUhhUBLrKD6xK98332ts6UyLZeME8Eoxho0bWfjpQEWHCVzN7Yi4nSD0EkKdYH24AX
+ Tgm9sdHc/lCbm7/p68NALeofjbmD+zPR0tPXM7XAW35VQ6iMJOj0uKcSCEDcF2swhV+a
+ yDJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169743; x=1790774543;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gZLlHjgFKGd97ZAl0jDOPJ4J/L8M7/uJxBZfNAi1MwY=;
- b=Ioll+HBQ6hysxBouEUY4Cn5T5+wuo3Pq+YI4t+v7FkSmAlHgooNjFuzEnDUnGgb6ZV
- K+5+cs4x96RkNtfnxSKegAtGaw9Qhw/dW/CLuLcMYRB68OTJByE0VMEXRa3BJFyqCDoq
- T0i3drxq8SPJbOB9soOn2ADf16XA1Wds5gSpTjXTqMLM3/pL+Y8nUanJz/1KB25V/uUU
- mFRTzgfbp5gyTp+nTL93o3IWlMKWba7pgRfJdIeSE+AAK3OQATSszpF2jt5Ctm9uAABN
- ilanBA7riVtBxRDRmbyNrwbfdnlLcBr9DrCVqcneQupMxXX3/UIvFDuZ06wNFyOv30W2
- O0zQ==
-X-Gm-Message-State: AFuF++k3l/VLDxENldAk1ieYqeshck6O5uwXptxvcef63HoB6bUM1Z+v
- H4j9Fvb+YqcSfeRLIzZR5WVt96NXk8HD1p+TRuyD/AYwO/1UijgqVayNyY8Xxu+SdXs=
-X-Gm-Gg: AYBFou0WQuwro+6/5s01tViX4Waq5NZCD7g+f0Ip7bl+lXOjMWtc/S3Rmi5j/QTPypE
- jDrMYTEc0FXF9jX59LlXrzaHxPXSRfAf4sFHZ/Ki1/BkpDHhTxfy0vtlfuTY937HuSFRgqeR6j1
- KyrczJ8zk6CoxnPZBgdSCEYTu1VYWorBHNUprvVKrwZLS6bqiBKP1XmoY5noW/9SForwiq4SZMb
- GkMUVpBZYn0j8ixnFGfttOTXFEtWuCQaPo2eSNKYDT95UFqM8914YI3hgVWn00N9uZbMpo2+RHn
- I+3zqATDv7Mo1liOGcqbq509vxsmQAd7hP7MLnAutAKCMAGJBp9K9ufR4vJd4fcstRR1WjyN+T3
- FaZgt6XgWvzqn+h/EPHLTsu8/yFS3EuM8PZnv6rYPvwsa9h7BSoTSKc71AtjWbUAyL66m9NboN1
- gFqDpmO1qFTA06kUSoAk7LWEbkzVgF+dWWanCSBAS6jj442esv8JIdefdmJQfLNfpl7/CzJO/+X
- aRkGunLRfkRqkQdGkrWBNZzbJ0hBgmwj3L1sU8+Kg==
-X-Received: by 2002:a05:7301:c016:b0:33b:d4c9:561f with SMTP id
- 5a478bee46e88-33e8bb7c1ffmr2536095eec.5.1790169742689; 
- Wed, 23 Sep 2026 06:22:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790169642; x=1790774442;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=F3AfQfrqvQe4UOX8IvAjiJQ3WGlTiTKTbcrqm5A18SE=;
+ b=pvbJoHYNuQw5NNq+2TukI+P2XvttxoiyRou7vf4rE2ugKzGeGFq5LZgrN/dCd/w6wO
+ 1Ba6XB3kz+zTAdq2Ue8iltA52DJqVtWQNXxxupApqhpu9aJhTli22KE4g7NxtMKzykb4
+ YMB15f7nJ0zw8JNMvyhDq+OiBDh+QfOMHfhhuR4huzUxTJpXwqedc7PLBR6HGg1EST4w
+ RlD//7l3GoAp/KvsKq1zTp9C83IN+7ugYnG4QVBLghd/73DGBRgolRsH/eH7WpWVJDg0
+ IskeNy0+oHm2h/Be/WLX1ayRSthvDpRqz2jnFQAUQhDv9tYhkIxY71QOo3BiK5II8c0z
+ MPpA==
+X-Gm-Message-State: AFuF++lIRONntpbcoobQ1uwWCXa23AdTH4rq21mdiUSwe6uZqF1AyhLs
+ VSKzFPmJ/vv1Fg5fnEO25XFwWMjpjYgoV/G7U2I4WcuNQDlXADXvllUGLaGUgkvkgOE=
+X-Gm-Gg: AYBFou385T/oQK4GwGRnlR+OuvW5jy4+FOCS3HR1wB4TRDE7Ua48dTTG9MydR8DfcJg
+ rQXNPvPPCSM7s1SvJZyrZI4BcYPjPnZlQz22eOgNlOzDAc+Y1NMquVNQ9rRNgjNy19YUhgxfg4f
+ 9FY7AOxgClK/j7/IY1qlMlnR2TAR7KIwaQrk78xQdwL8Idjy7wfGhZfa/iJtB6/GG0Vjl9ZidZV
+ nAzfQSKy62for0DfWwy8yj7m0NdJfY9hkvPnEU5Kk8zHsBy9dCIbRPgnkrJiha7aVWDxarXPbjc
+ rs6aGqgcLDsKA675uFe2FgNbmuRbCM5fj4uhc4Xss+3uDbaCMf4R1WAy9RrWhwb2hhVc3y0tsHr
+ QD6U/QiSdpzwgbVoMh79PfrTo5VbC/MSPTeRZGOSGg3xV5O45dAd4mmqVUyKKj/BPeTYdrzy0jb
+ yV0luTj9azw+JDwIOBvq9QQltaP8AFERUNctbnCL9/Z2WhZZn/H8+pvDsIGMZ7VKlVJ1c293Xn+
+ 0FkY6nWGjmO9IG+0xidxitVhTQ9tR2jX0QaCjYVYA==
+X-Received: by 2002:a05:693c:638c:20b0:339:7da3:a4f8 with SMTP id
+ 5a478bee46e88-33e8d6d1242mr2659932eec.19.1790169641572; 
+ Wed, 23 Sep 2026 06:20:41 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.22.15
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.20.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:22:21 -0700 (PDT)
+ Wed, 23 Sep 2026 06:20:39 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,23 +96,23 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 033/114] hw/riscv: expand boston-aia and
- microblaze-v-generic to TypeInfo
-Date: Wed, 23 Sep 2026 21:15:07 +0800
-Message-ID: <20260923131635.1894-34-luoyonggang@gmail.com>
+Subject: [PATCH v3 022/114] hw/riscv/virt: prefix ACPI helpers with riscv_virt_
+Date: Wed, 23 Sep 2026 21:14:56 +0800
+Message-ID: <20260923131635.1894-23-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,56 +128,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace DEFINE_MACHINE with TypeInfo on boston-aia and
-amd-microblaze-v-generic. Set is_available to target_is_base_riscv.
+- virt_acpi_setup and virt_is_acpi_enabled collide with ARM virt when
+  both architectures are linked into one qemu-system binary.
+- Rename the RISC-V helpers to riscv_virt_acpi_setup and
+  riscv_virt_is_acpi_enabled. Leave file-local virt_acpi_build* names
+  unchanged.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/riscv/microblaze-v-generic.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ hw/riscv/virt-acpi-build.c | 2 +-
+ hw/riscv/virt.c            | 6 +++---
+ include/hw/riscv/virt.h    | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index 3f07ab21328..9b60a955152 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -14,6 +14,7 @@
-  */
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 8e516ec1148..de47631852f 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -1021,7 +1021,7 @@ static const VMStateDescription vmstate_virt_acpi_build = {
+     },
+ };
  
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "qemu/target-info.h"
- #include "qapi/error.h"
-@@ -177,8 +178,10 @@ static void mb_v_generic_init(MachineState *machine)
-     create_unimplemented_device("qspi", QSPI_BASEADDR, 0x10000);
- }
- 
--static void mb_v_generic_machine_init(MachineClass *mc)
-+static void mb_v_generic_machine_class_init(ObjectClass *oc, const void *data)
+-void virt_acpi_setup(RISCVVirtState *s)
++void riscv_virt_acpi_setup(RISCVVirtState *s)
  {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "AMD Microblaze-V generic platform";
-     mc->init = mb_v_generic_init;
-     mc->min_cpus = 1;
-@@ -188,4 +191,16 @@ static void mb_v_generic_machine_init(MachineClass *mc)
-     mc->default_cpus = 1;
+     AcpiBuildTables tables;
+     AcpiBuildState *build_state;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 686222fa0da..0edf75fefc3 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -706,8 +706,8 @@ static void virt_machine_done(Notifier *notifier, void *data)
+ 
+     virt_build_smbios(s);
+ 
+-    if (virt_is_acpi_enabled(s)) {
+-        virt_acpi_setup(s);
++    if (riscv_virt_is_acpi_enabled(s)) {
++        riscv_virt_acpi_setup(s);
+     }
  }
  
--DEFINE_MACHINE("amd-microblaze-v-generic", mb_v_generic_machine_init)
-+static const TypeInfo mb_v_generic_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("amd-microblaze-v-generic"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = mb_v_generic_machine_class_init,
-+    .is_available = target_is_base_riscv,
-+};
-+
-+static void mb_v_generic_machine_class_init_register_types(void)
-+{
-+    type_register_static(&mb_v_generic_machine_class_init_typeinfo);
-+}
-+
-+type_init(mb_v_generic_machine_class_init_register_types)
+@@ -1067,7 +1067,7 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
+     visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
+ }
+ 
+-bool virt_is_acpi_enabled(RISCVVirtState *s)
++bool riscv_virt_is_acpi_enabled(RISCVVirtState *s)
+ {
+     return s->acpi != ON_OFF_AUTO_OFF;
+ }
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 969aa5866ee..1cdc5840b7a 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -121,9 +121,9 @@ enum {
+ #define VIRT_PLIC_SIZE(__num_context) \
+     (VIRT_PLIC_CONTEXT_BASE + (__num_context) * VIRT_PLIC_CONTEXT_STRIDE)
+ 
+-bool virt_is_acpi_enabled(RISCVVirtState *s);
++bool riscv_virt_is_acpi_enabled(RISCVVirtState *s);
+ bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
+-void virt_acpi_setup(RISCVVirtState *vms);
++void riscv_virt_acpi_setup(RISCVVirtState *vms);
+ 
+ /*
+  * The virt machine physical address space used by some of the devices
 -- 
 2.52.0.windows.1
 
