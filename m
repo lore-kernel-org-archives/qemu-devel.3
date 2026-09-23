@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF81BC982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DA4C9830D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MyI-0002lZ-2Z; Wed, 23 Sep 2026 09:25:14 -0400
+	id 1x9My8-0002SV-6P; Wed, 23 Sep 2026 09:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9MvB-0003CF-8p
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:04 -0400
+ id 1x9Mun-0002ia-5M
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:39 -0400
 Received: from mail-dy2-x21.google.com ([2607:f8b0:4864:36::21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mv9-0007ef-8E
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:22:01 -0400
+ id 1x9Muj-0007Zc-Q3
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:36 -0400
 Received: by mail-dy2-x21.google.com with SMTP id
- 5a478bee46e88-33bebf0aab6so436558eec.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:21:58 -0700 (PDT)
+ 5a478bee46e88-33bebf0aab6so436267eec.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169718; x=1790774518; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169692; x=1790774492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=20fmaOno77HQJxryAkVKJDwkjIsA6lPsyx3HFEs6GYM=;
- b=PMEkrb/Ri/F4T5LjCFoieBle/ToHgeQB+JQeO6a9z2TYc5AiaS04dnO7AgHRuEyp4V
- 2o5LimxbInUl+xJpmYdfprqfL759qSkv5v49hCMgvG8PNwTDy8ZbXkDvu/UNzUuAzTk7
- Vz5Iq4BM4TwNrwM2Oa6ND/OdcsZ7bRAmWmWlA3YbcfiGzaVv6kVmmA6Zkq/PYxnn7NE1
- ZO3Q9fYq8SpKg+LcBF3TCIAsPJ1hlA5uanbH69WvVzY4xV7h3DeauB5SbpglSiJGimUY
- RQ8DUhmrqEKQXz7/GezZD5IqPG1DH3V7sP1pvoW0E8XSEaOQPtSGEmIQa8f0SbiDNAGh
- 3/0Q==
+ bh=huS4A6FsKFDWrrXfwa21/vS+oZaWC4wTWSJg3SCD6Do=;
+ b=erRSj/rX2rqG8nciCcPtkXy2+oUmsJhg3N1Ihc4JEe/C1cynFVovl1Xg/ZhkedyfB5
+ HfQr7KgEI80u4g7aAQ5tzz5m3k5cEtho1H1hLQBunJ5CX+5xO3ds3CEeKs2bBNpi10Pe
+ oItRVb4ptpTWKDhiGVxHjFEXBfsAYg7qYVTGrAkPsHGChLZTsgWGrW8k/Cep06J0NRtP
+ 5F1WGafNyDJnN+8WbsCna2J95HaUHa6sqWrVBoFwCnXoFaKrrYpVjxG+aK7GPIDJF5Pi
+ 6ghOm/PzKhWtxzmV5swibUhSF7UTFiijSHaAStMsoBR6YZiWwFQyHQ09J9CyzmH+4/b2
+ N8IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169718; x=1790774518;
+ d=1e100.net; s=20260707; t=1790169692; x=1790774492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=20fmaOno77HQJxryAkVKJDwkjIsA6lPsyx3HFEs6GYM=;
- b=BkdhVB3dMQq5oHnCe0aQS2mlOAFBOzXa+MLmEauwgSZOYmsoubKE8t9yLIfU8eWMHE
- uXO4x7jVkHfu3fHqNNqPQe9aN+p/Ln9bILr/X2d5kedbW9X/krXd40X6s2RqciSyjD4A
- wj8h6qMOJLlWkFwA7jBM4u3PHyg1XbBW1U5Y8/wg7V0nFoTI0wHUl4q5hfRwH8hNl6Zb
- bqug+ugI6IEqE+T8nhIe1hF4rAVqSy6nitNC/gA5ABTjVI+g70mCxS8Y1ajRQ+gRF6CW
- nZaT0kM4U3FliV+6v6v98XtcXQ7F0mUcp1mETE2hs8lgFVjPVg6+M4ErOeXOFc/BjJLv
- NkEQ==
-X-Gm-Message-State: AFuF++nYYwLxL9448iH0+VmPsbmGLustXDYhO8wklP8urRovE8r5YlYw
- 8WktLPQcAvwK32RxKYuJFLy6oMW7wFR+P+tVbYi6gzCGtkcX/zjIAe0CJCqja2wph+o=
-X-Gm-Gg: AYBFou2ySkzMwbdOFyGqAz3OMt0I8nPk8lbGj7QCQ/U0Tvt9xkME2J9WImwxaGeViex
- Amj/efxiqTuLL0r9oeAW4oiV5QT07Dvh+j5eWow/+3jZB00n5CxZMnIPoR2DbB/e+6ZOK+bLFHx
- bd/nT2UkxgZfAIYgmHxVsILNfJL/jpxiAuAdSg5VmRSfahQ+zDObaOIjxgokczQgaCxRL8K6W3D
- TKX3VAPAU/1gKhfyC5qr1vLozm8KRQ1aCHkcJQLZIGTulMTbkcNn+s742XqKZPUsXk5C51JBX4z
- vCAsjLQ+Zn+KF5eSAJV0fhclsCBf4mhPLrT0mQLMzkZXP31AVMDtRkipNbcM2VjBfme/vraG5Xy
- rqQH58owcoMOP3Rj5z0guvB46T/toddUt6gRqtZcWnuJ8i3OtjqqAiO7ULIxoTjMeCF9lnEutT+
- rRnY0vd8QWimQV4fVrY7DdFoKmoXJ8MqUWtUrXIlXMSV+1iCrZB1O6kT3MgRnZJDD2TpJdCW5Pk
- VZQb2r842MO4AiKpo7XNaTETVtOKVqWdV8IqOu/UQ==
-X-Received: by 2002:a05:7301:db0c:b0:33b:96b8:3818 with SMTP id
- 5a478bee46e88-33e8ddbe14cmr1962518eec.32.1790169717553; 
- Wed, 23 Sep 2026 06:21:57 -0700 (PDT)
+ bh=huS4A6FsKFDWrrXfwa21/vS+oZaWC4wTWSJg3SCD6Do=;
+ b=smXi0+ABBAn6fy6pVatmF+/hBCMuW25zLgZOzm5PQSOkHFIx/dNN6QGKtfK0O5d7Jq
+ sgQEd0ALWOveWuBH4kGhlf6U7uq+9OvFMc0Oflt/ogB8D7Gey3EoqdhG3E/cH+vo2cXO
+ Df8rblBPbHQi9n7IHP6kghWCp4mofljn3sJjzSdrCJIimbGJuG6BN1rF12hG1ZuCVNWR
+ m5EI1P+fP1hdR0DT0edfOrjY1bvtVNS4r9vNYRI1yE4bqRrXxF/WVNGuD2Xd6NHo6oM2
+ mPkq3yUUKyn/3znm7nDNLBhiSDim77UJ5wT/s+qhRXS/PUUZbz+kUNvCm00ciZQ5ayXT
+ l7gA==
+X-Gm-Message-State: AFuF++krRrgDtSPcNgJ90wjSj/IUn/TwvnJIf1zboUtXHRw0K5jcv+zr
+ PJAICbI/gsrHXdCXRWVsymWA5eL29jYOc7w6xcdEPCY+ONbJ9N51I9myR3VsvrYVbPY=
+X-Gm-Gg: AYBFou0GcPe5damkwU9w+yT6qX5isAloWBYlUp2Z4ag1MT1t1tiXvdNx9O2yb8a9x1R
+ 2lRuPgcREq2lpW5+ROoebpCi8S8WUPuJkFgE3OhFi+PX0B1fm/WrrQxDgY3ywFxIAqnjM27Fbbz
+ 3Un4sJ5LYmvjL3NWXwMfIQMx31YOpzLukFKkdtVSEfAgtpD3dc2TpyuqlK0n9IN7ZK1v+bGRZRC
+ WRsrcmTQKts5vQ9jC7ZU9E64tq9b2JyaFJ50xQJrRWupt9bsrjetFVbrL0/WXCUiTT8Ss9fyyOd
+ 9etBpt85079mubrSLmS8oph3TuFza6t1yITKDbEKKF51ftyW3/Xqy+84xxIpdM7K63KQXYGm9/I
+ fM0TakPHBRUU9B1osLPVm5XQ1+xYqoTZWMYUZjw6i2dUwJaSP6C6Mv8fy4ksBABFs/SczTmBchx
+ dcxOG8ShKA+axgPHPjWYRLv34PA0CywaGSjSikNR+v7vpbECX8nVyH0eYilzaKa8GeIu+G/UbYW
+ 6lDd3HwTOvdgCkS5uoS2LLllPYm30VIRez/p0qUSw==
+X-Received: by 2002:a05:693c:42d9:b0:33b:e75b:cc42 with SMTP id
+ 5a478bee46e88-33e8d7d8b7bmr2063395eec.19.1790169691801; 
+ Wed, 23 Sep 2026 06:21:31 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.21.50
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.21.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:21:56 -0700 (PDT)
+ Wed, 23 Sep 2026 06:21:29 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,9 +95,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 030/114] target/riscv: add kvm stubs source set
-Date: Wed, 23 Sep 2026 21:15:04 +0800
-Message-ID: <20260923131635.1894-31-luoyonggang@gmail.com>
+Subject: [PATCH v3 027/114] hw/misc/riscv_cmgcr: replace target_ulong with
+ uint64_t
+Date: Wed, 23 Sep 2026 21:15:01 +0800
+Message-ID: <20260923131635.1894-28-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
@@ -126,68 +127,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Add riscv_stubs_ss and kvm-stub.c, matching the ARM target_stubs_arch
-  pattern (has_mp_state returns false; other entry points are
-  g_assert_not_reached).
-- Register target_stubs_arch += {'riscv': riscv_stubs_ss}.
-- Leave target_arch / target_system_arch in place; next change can
-  move RISC-V onto target_common_system_arch.
-
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+- Change get_exception_base() to return uint64_t so the GCR model
+  compiles in libsystem_riscv with -DCPU_DEFS_H.
+- Match reset_base and cpu_set_exception_base(), which already use
+  uint64_t.
 ---
- target/riscv/kvm/kvm-stub.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ hw/misc/riscv_cmgcr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
-index 64e39c96d89..1c8c324cd44 100644
---- a/target/riscv/kvm/kvm-stub.c
-+++ b/target/riscv/kvm/kvm-stub.c
-@@ -9,6 +9,37 @@
- #include "qemu/osdep.h"
- #include "target/riscv/kvm/kvm_riscv.h"
- 
-+/*
-+ * Safe to call without KVM. Return "not supported".
-+ */
-+bool kvm_riscv_has_mp_state(void)
-+{
-+    return false;
-+}
-+
-+/*
-+ * These functions should never actually be called without KVM support.
-+ */
-+void kvm_riscv_reset_vcpu(RISCVCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
- void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-                           uint64_t aia_irq_num, uint64_t aia_msi_num,
-                           uint64_t aplic_base, uint64_t imsic_base,
-@@ -17,7 +48,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-     g_assert_not_reached();
+diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
+index 0390996f78b..2086a33f08e 100644
+--- a/hw/misc/riscv_cmgcr.c
++++ b/hw/misc/riscv_cmgcr.c
+@@ -110,7 +110,7 @@ static uint64_t gcr_read(void *opaque, hwaddr addr, unsigned size)
+     return 0;
  }
  
--uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu)
-+void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+-static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
++static inline uint64_t get_exception_base(RISCVGCRVPState *vps)
  {
-     g_assert_not_reached();
+     return vps->reset_base & GCR_CL_RESET_BASE_RESETBASE_MSK;
  }
 -- 
 2.52.0.windows.1
