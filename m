@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2290C982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672B9C982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KL2-0000F8-1Y; Wed, 23 Sep 2026 06:36:32 -0400
+	id 1x9KNT-0000e1-Me; Wed, 23 Sep 2026 06:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x9KKv-0000Em-B4
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:36:25 -0400
-Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
+ id 1x9KNR-0000dc-9H
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:39:01 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1x9KKt-00080r-Oa
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:36:25 -0400
-Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254fa663bfso120388666b.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:36:23 -0700 (PDT)
+ id 1x9KNP-00086z-Is
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:39:00 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6aa8d04fcddso1505396a12.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790159782; x=1790764582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790159938; x=1790764738; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=BGDcKiJNUvfcjNCgFV7XGVUXBYKHwfNOY0NhwgTQgeY=;
- b=pPXkluX2wjrqh7pwcBW/yFS0YMdoWTXgdoBQ2UD7mJBnpaxcv9z5BOz8FBqQMzpndN
- AA1APoXHQJyhtxLLw8Qc3l6ojJTfuAd+XUS4PwYch2G2l3DaBqDpHikyvv8BqZDD2P24
- 8KHrMY1udTx2HjtUBFeFF7Ilax/ySoQYDsu80Elpf9ZVCbzftPprN1lc7vYAf/wvOgzL
- TgwojgQZd2z26aj+t2Nu+eJXtCCgXbkIZhHQ+SHThmP4EMDfIiTVKA70rZDUSD5UFt5F
- WrWhYI29c+2Acazj+or+xVpm1PqbGBfO5u72WW8Bsg7I33i7z0LPTvwe5jdpZxeET7MZ
- hHnw==
+ bh=Rgk7+V3j4anuXaBEpk6h2W+cHmZP3BLwzml0Lhr2cWQ=;
+ b=Mbzs3dyjLXRimVEL56rpXcxHWEM3v8hE5mLP07ViBhmywBxHCuPg1ApPerEvkg+sfY
+ cxuWQrKBe6PRC9bAq2i9UPClhwXYeck8HwsuJA75SYt0zNLGU7ss4yW9NEoWgqCMTmf4
+ BI9FicdWqiARp4vlR1arxw1+EUwylF9ruDcLF0WYY9Xef13Ee+GIX47RhIniCcLQv8Y/
+ xe1nZ8QGNslYSMLDQ73htjW7UQHE25LfFC431Rfdwvu8XxOPV28hhn8HbVZFcNPt+Jzf
+ GnL3GG0RYIY9rP9BSmwbu8A/rXAxVchTP3exVdRqiwSSEtHnZwprF7/NEZmKngXizDuD
+ V9rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790159782; x=1790764582;
+ d=1e100.net; s=20260707; t=1790159938; x=1790764738;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=BGDcKiJNUvfcjNCgFV7XGVUXBYKHwfNOY0NhwgTQgeY=;
- b=k0gvBGGBiWKku4ozRAhKKsSjD9ZPes4AAC2FZ8XCRSW3wpY/k6qW4dnWoeUmf30gCc
- PFUUYsFZbDL8x2PTmvoWkvOWSCzcEil9sx0EoxrjGQPW/CiY8ODbIiSvfoep1M0kPxlK
- Kr9uQM3GZQsbXErKxzWOAumPsL0Tnz01efhEuKuwisz6h64hV8bJmngSSWkj/UPc58z9
- RYqLlJbdfuX0MQoaEnVcWwUd5Bybsc2nVeLb3cC4jPvQyoNFmNJ6F3W1RIbN18uRW7w6
- RrrhL8ex54eIKlWIyNS0b26io35T0mBkI/hu5PnxDMbwTCfs1K21BTVP7Zt6NDZKWfqi
- 1Saw==
-X-Gm-Message-State: AFuF++ncIWPcxlMV2o8GwQKsMalEUoNh1N4ye6zvMe7/hwdEl/WOAKHY
- AT4lQGeHIzuLNCEY+eMrA/owXTCBJYv/uey2CFAUs7yfP7sxl3wgwCLMkRXvSc6/o47jgAUNmH/
- F+3TL61k=
-X-Gm-Gg: AYBFou3eU5UxHS34zcHFsw3BCTI5OpOn4tHNC5bDEulRb4lrVMISsWAm67D4D156luF
- 94A4oodvSCann9uIuhwk8hF+RmjzBAlhiPGtwHJ1DQhVtjOjl4zkvUx1FNc5UGMrrKIS5lMTsMT
- E49wNB5ZO/h+UsOnAQwPj2vcccrEwSIq9Vg5FK3tf6KR2TLpAbYZGRBdqVuSaUm/ePEIMbz9NJX
- CgT7vPH5yY4pKdsB8mTxc9jMLxKjZSwEzkMnXnYZn73vOPy2ib+Fj+iBVbypR7FdNxFkT1LQkay
- Ep6b1UftZDtEKyYreBXl5pqgLeGCT1LYH4AoluW2lsnmV7pU4j5hmokM1mkVbfzm33EGA9KpJ/m
- lDhNx0Yu/OiYyYSe/Kx6hjTCFyJoYA+8yV4OF6Ict9/1SdK2mt8FmyWSBWauih3XSEWwzzRB1MU
- 8JjCLGP27/cMHnrbJyXGTR6msxO85GsgX9bm/fT06Qc0qlZYJmm5r+Xsy5D8vWJYYCuW1N8Zup
-X-Received: by 2002:a17:906:478f:b0:c20:9447:bd5e with SMTP id
- a640c23a62f3a-c2aadeab4c9mr155720866b.9.1790159781952; 
- Wed, 23 Sep 2026 03:36:21 -0700 (PDT)
+ bh=Rgk7+V3j4anuXaBEpk6h2W+cHmZP3BLwzml0Lhr2cWQ=;
+ b=mJ8zOAHqhXUM90q+vemW0FHUwWuGW0LRlHzjF9zEmZHsGFRkCdNnfY7SMMHk3UaxUB
+ k0jn1m6IZ5ZlLO1ZIHXoRmu/ZMRX50bty1uZmEg3VXrfuUQjXYfC2N7T1YnrJrBL2Hso
+ qBZvP+efIatLPHTlWe2SzC9oc1lGlD8LjwazorjPVO1FE81BhshTAgxHLzUXHODt2tgC
+ KMZf/1gqoNAhXIxnJD4VulVSzujzE0M12/BPQmjirJvSiYSi5MHafeuk7RDEjJjeTXzb
+ HTcyMQtVXYVd5o4sAqU4at2BLJpY2R8jYOYa8eNgmplIfyNL57xPOlYKycrSYAWPnfsi
+ PqXg==
+X-Gm-Message-State: AFuF++nn521yvdfuACrlQ1gu9/CdZQ8neqAlNZR7QPlITOGUn0DQC3dn
+ Zqdkv5Ye/BeFDvvVSr2ffu5iK3yIvybP/0xDqyoulbVbhG4VBa2upbWIe5mDHFc0poSpZldnvrf
+ MTb5Ua8o=
+X-Gm-Gg: AYBFou2pspefE0RPabG51GHeCUyEYEV3roIcpYX26gWk+Hv4mheCJqZHdAOuo1k4UCd
+ P8z8ZLhzyPssVbdxfl1hrImziwg/XkLgvLRYaJt2Mh4UMd13FE0KWssHPsHIXhgF63JzV2IyRe2
+ Qn1qfwTGRofUuc8y3yvkHuX5NyzJL7zCWBHQRtWBUXjXTRsr7O8PNg4A0ljXrDNlpn5V+rAcWRa
+ aX1GtQ7ErujCSX+0aO89V1BpX59uy5dH4JsclFm7daPP72Hjrcv9cKmXpeL08UJqYEMniuzG38a
+ bdOvE9PJhrwubWmjBbti8L2GQ6LmOScXOrGOk7nu60A73MnyBCT5NZR8NDdMcViUsDYTYWLS764
+ jmDf+K2guhz0s0ojUfx2/F5UivnQnYoB27uPuy1tYwMIomjv1Zr0DiviMlCUh/RtHqZB097DjUG
+ skxjxGJKLuRlGcm/HC7Q7GASyRPX+bDbgQTCkfacBNbt33JV1YIHSInRxCnklxYyQEy99C+Tfgh
+ MoiJph+iVE=
+X-Received: by 2002:a05:6402:c2d2:b0:6a8:151b:4f8b with SMTP id
+ 4fb4d7f45d1cf-6aa9feca206mr3601842a12.9.1790159937847; 
+ Wed, 23 Sep 2026 03:38:57 -0700 (PDT)
 Received: from linaro.org ([2a10:d582:31e:0:805c:5b2c:d225:9d51])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2aae6c14acsm93914966b.52.2026.09.23.03.36.19
+ 4fb4d7f45d1cf-6aab386e596sm1402745a12.7.2026.09.23.03.38.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 03:36:20 -0700 (PDT)
-Date: Wed, 23 Sep 2026 11:36:17 +0100
+ Wed, 23 Sep 2026 03:38:56 -0700 (PDT)
+Date: Wed, 23 Sep 2026 11:38:52 +0100
 From: Jim MacArthur <jim.macarthur@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: Re: [PATCH 2/2] tests/tcg/arm: Add regression test for #4448
-Message-ID: <arOroV0yRdESzLTu@linaro.org>
+Subject: Re: [PATCH 1/2] tcg/optimize: Fix fold_multiply2 vs 1
+Message-ID: <arOsPDpJxK_eRaZE@linaro.org>
 References: <20260915014115.1809286-1-richard.henderson@linaro.org>
- <20260915014115.1809286-3-richard.henderson@linaro.org>
+ <20260915014115.1809286-2-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260915014115.1809286-3-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:34::10;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ej2-x10.google.com
+In-Reply-To: <20260915014115.1809286-2-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 14, 2026 at 03:41:15PM -1000, Richard Henderson wrote:
+On Mon, Sep 14, 2026 at 03:41:14PM -1000, Richard Henderson wrote:
+> For muls2, we returned from fold_multiply2 without finish_folding
+> or any other mechanism to update value tracking for the rh output.
+> We might as well do this via fold_shift, which will also mark rh
+> as having all copies of the sign bit.
+> 
+> For the movi paths of multiply vs 0 or mulu2, we're better off tail
+> calling to tcg_opt_gen_movi rather than explicitly returning true.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: c9349965ce4 ("tcg: Optimize INDEX_op_mul[us]2 for 0 and 1")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4448
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tests/tcg/arm/issue4448.c | 51 +++++++++++++++++++++++++++++++++++++++
->  tests/tcg/arm/meson.build |  1 +
->  2 files changed, 52 insertions(+)
->  create mode 100644 tests/tcg/arm/issue4448.c
+>  tcg/optimize.c | 17 +++++++----------
+>  1 file changed, 7 insertions(+), 10 deletions(-)
 > 
-> diff --git a/tests/tcg/arm/issue4448.c b/tests/tcg/arm/issue4448.c
-> new file mode 100644
-> index 00000000000..180ff4029a2
-> --- /dev/null
-> +++ b/tests/tcg/arm/issue4448.c
 
 Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 
