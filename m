@@ -4,117 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B760C982EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA56C982EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KWu-00023l-OZ; Wed, 23 Sep 2026 06:48:48 -0400
+	id 1x9KYE-00031l-8C; Wed, 23 Sep 2026 06:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KWs-00023U-Vs
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:48:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KYC-00031U-R6
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:50:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KWq-0000RF-5q
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:48:46 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KYA-0000lZ-Va
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:50:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790160523;
+ s=mimecast20190719; t=1790160606;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=50zyYwWICmXqtQOKsK87UzDvNjhw1MP7aqsBsNiUgbY=;
- b=ScqomIjd2OsVuXowP0iMk1jeiw5W2n8szdzCUntX6RJNw8EMKqr3Ufqm61apNM5ei5q0Pw
- 7xguxfhE3EOXutUsJ2GIJgzxBC0WDhK1L1DocSNTKr7Dl2wA9IYKijBNFBfPRv7NASgYkY
- pzrutv5NvJBh/0ZYOnX9op+dZOoQeQg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
+ b=hA/as3uqsJJaU6aLIHHPGmvpi3jhTce5F7paYLZUQDix/1TmqEpw15pjVQgAwo7UA3gu7P
+ Qgv5JA9q81i5Jw7VFsby5uH3WudAaVH7vfK1w7rVt16mVcc7pvpDnpjwMNL9SXG3Iz/lh5
+ OAGarMZxuvqojLehOuQHcOi5oohzPxA=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-Fenrt2ctPASbkcvwBgQhFg-1; Wed, 23 Sep 2026 06:48:40 -0400
-X-MC-Unique: Fenrt2ctPASbkcvwBgQhFg-1
-X-Mimecast-MFC-AGG-ID: Fenrt2ctPASbkcvwBgQhFg_1790160519
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4870a0fe60fso548154f8f.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:48:40 -0700 (PDT)
+ us-mta-82-bEfhYjyqMr2CwekUryWgSg-1; Wed, 23 Sep 2026 06:50:04 -0400
+X-MC-Unique: bEfhYjyqMr2CwekUryWgSg-1
+X-Mimecast-MFC-AGG-ID: bEfhYjyqMr2CwekUryWgSg_1790160604
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-6a125f5b317so1082406a12.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790160519; x=1790765319; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790160603; x=1790765403; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=50zyYwWICmXqtQOKsK87UzDvNjhw1MP7aqsBsNiUgbY=;
- b=H+JE3SfoPDpDI4jdkZjObn/oYiZp/sA/BGE96lJuYJwZy3HuYTYnnr32sE+3RWV1q2
- hh4oZXVMRQJQThVkwtt4Iy5elzOVTa7/Dnm2N7ZJmDYpcc2DdIc5afi9FTWhI1FAeWc8
- 4u5aNUimrwOdwWmBlN41kx2k//JTY3+q9NWU1hdyHGM2giqFYGD6hd/PZWjOozYkldku
- 3ZjiQ08R1gN+wdEEqX2gFydKM8vCrdoXnlW2X4YEbsLitQaKkdM8kSJ4Uihe0yT04bvi
- rFEP0jCpNdbeNboMceaJTkhbhd8OZFKzJPLhmtAidMNst1BQFQx3GlD30dRrMx6q7xlC
- /9dQ==
+ :content-type; bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
+ b=Eo43qlq0jFarfwfrzzvU2uN+rgmqKNQx5WkKX3CkbfcGiRHERsNzANelNFET9x7eJh
+ rRS654MgZpetZIPmcyyVD90A3SflhmbFtzr0rLREF1CtRJb09u8heTy8V3BYKRJuc47L
+ Ej5tkfXAo8K7Md7JhkE0hp4yiJK0zzpyORQvyOKmmE4K8s6h+A/LWGjyVNiMtab5CQCA
+ lUzM/wUBJ07NT0C5aq/g8RkkPkULSgm4a5yXvKzFrd4cUZJGgn78zlJop3nfy73nmfyX
+ 6wWQVD54z8dv6kuIPa/nDRfHW+v2CHWsy1oXlkTNvjhGkdL8wBR/Dq9o94Kj5dwejCt6
+ PoEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790160519; x=1790765319;
+ d=1e100.net; s=20260707; t=1790160603; x=1790765403;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=50zyYwWICmXqtQOKsK87UzDvNjhw1MP7aqsBsNiUgbY=;
- b=lsCh5YDTRl+8POO90w0CGJWPS1oU6tzVaEqDLi3bOOXlc8uVkitUCCBORYwEES3S7q
- fN39ElncFs3vWhNZ8WYjVt4HbvKkIlQw8vJc/9+GXjxPQzWAMExylhKj5NeVEcJ2b51t
- SU1DrtXlN8YVsFu/x2XA8UKvIi2Fo1aYI+GEsacvG32Ndvv8Hw/cYG+UTIdupzAhEhVw
- QNs4B1JEDaNhZPu09AWUKTOXPQSnZkNsKDZQOiraeeKiDSB4ZbTa4cm5+FGeqK6Xwi77
- OgFRnHedQD08QBiMle0XeSuAa1QBTp6BhlmQ77fN4T08lkT2FMRoZqtBsFkECm2PlT9a
- jcKA==
+ bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
+ b=ltkvw4mWtOegJhrz3qbY7KqkyHvpZn+01aBWlWt3OYUAPEsxfIVKEXWxsRgyLhi7+h
+ VUwjsRNK0N6hcxFfPV+MEBvXXKes530LqjlxzJGyiTsEHcaXqlHGQvWjtWDgQbGWH3Gk
+ Z5ZxIaXhAiIGZsGI9wEdQaQy1kMRhTHJo1lKevwwBRJVbkcjhuvQsFHT/7kszTsB8m8U
+ 9fK1WXNhrelbgu/a+bKdgJ+5pjQBhhpWU6FD3Z/HO10vbT5StxQ0eLFDH2dEcqSkWpfI
+ EhbaU/Op8N+XUvWICBWNGj6BwcQZjZkGlKpofi5HInItFTqRA8tZWrvJC6pAYPMibYbg
+ 4d0A==
 X-Forwarded-Encrypted: i=1;
- AKwUvBz9ZMQiFS0u5DyKv+o9hjNWgy3QN3eOasJwyCuw1NWdWg/DhKAC4jBBGLrAS/bShmdkespzMnQlE2ay@nongnu.org
-X-Gm-Message-State: AFuF++mbQ6rPt4MUpFg8IQWrlprP9siyuR3KKYGQ2LAo91evI4gtESSL
- 9JnZeDch7J3vdoZdb0PTHP7yeWLMVaf1SC2If5x0xXhkueXAzusJ0yFHdR0kmx4WfcGJyY8K4d1
- 0R+zGaG8GePd6qL9Ydg8zNo0tLL9x+EDvKwnlcAnGt/52yqBHbwh9Pfdr
-X-Gm-Gg: AYBFou1AwnP0m/0AA2v5zPiDumZroUt8AJN+raZZIISjU1lpybaWoDKAgIlTWD6gw3x
- +YSDXkk0APxrkZJxZk0leJb8W97OBBqOus9o5KBcKgPjruXorq0VHc5AUk4JCDFKxXxrvotRBLf
- h4ZvOvcGCKFsdhFpzc2te5vzkDqxcSWl10ABsJbOCbKf1Bl5/HGVjnQ4Bf5p3TgzdoHhltvaSEW
- Pzx5L23YYugcHod6JnQiGNd0T7pyQaQRclPJUOnm+E8xSaXqIbdxdVx25G9kDyH+G45WHsScGrB
- TrVnTZtIH8o4r3YUVMq1rPYlTr/d/T7+MLtINrBAaEBHZOZa5G6JlNybYWXDKdBFHDjVL+l3+G7
- Xo+adRqxmY+zb80FnM4tUBllk6dR9gsEE6fU3u7AacEJqTUfLurxD1W+Fjusy4Htp5MjoIGK+6V
- u/8BkvURlccF4O/dXu2SJ/zLWsLTsBvQ==
-X-Received: by 2002:a05:6000:250c:b0:487:35f:f0f0 with SMTP id
- ffacd0b85a97d-488670891femr4084262f8f.14.1790160518892; 
- Wed, 23 Sep 2026 03:48:38 -0700 (PDT)
-X-Received: by 2002:a05:6000:250c:b0:487:35f:f0f0 with SMTP id
- ffacd0b85a97d-488670891femr4084226f8f.14.1790160518461; 
- Wed, 23 Sep 2026 03:48:38 -0700 (PDT)
+ AKwUvBzJ3Ictxlqw0tQWfFXEdZBLr51Dmc/Ib6Ux8GVz9ufrHt93ZuEdPZ7VegbDgaexz1KBObUrIP6xXCwA@nongnu.org
+X-Gm-Message-State: AFuF++mouqYfvXMsjdvEPMq5pAwuIXOLYcLrzYvNLMnQN62egqo7Hz54
+ kBAs/rcWZ/uIzLCVBw3JTlgsxxRs+a+X5okO6LvmEOwyc2HFgK/nB72EiDz6LrEl+ZXrv+pn/Dy
+ heiOiYo5ct9coJBlmveiq6PULUw3RnmlCcs/jgUc9dq6+Ud8wnz8vYaTI
+X-Gm-Gg: AYBFou2sOf+Ny1sW4dLSztW74WJoj3Mvf60M+9mPZIenqXS9tUbRn+H4O64hRLScr3g
+ TNS75tHZ76dVcLJpq/P1A7L1VqPiehIsWl4KX+Ex6AF+MLp7fX2TvR0TVmF8MwFFzdC1Lnsk3KX
+ umS9rkOjIfi9NU5NyGVjU1wh6uIMQeVk8O7BbLXo3fqjOh1Dqypo8U9eAIWX7xuqdBx2chIYjA1
+ SrUlOKgqnI6Rj4xOhf12tZ1ScY1+26Es7StMg7vnIn5SVVdBfVDjXBj0GwMRTtpqEFhzeA56xSr
+ 1RNaQwiqR49PFQuGtDSJWXYtgTTSQhFUKzvb57/pntU5z9KLHtJCwyKY+l0ugQY3G8j/fVobLxq
+ PYuDm7r6ROVhl5qWYvW2gx/u39j4W/iIM+mdaBZCP7t8hfIT/gXtGTU5ViKSb/hvAQ8/M6ijGT8
+ HzekgzjstkXcXKiS4revAqKN7/x+oRmQ==
+X-Received: by 2002:a05:6402:5514:b0:6aa:129a:1f70 with SMTP id
+ 4fb4d7f45d1cf-6aab3b647e8mr1868526a12.43.1790160603533; 
+ Wed, 23 Sep 2026 03:50:03 -0700 (PDT)
+X-Received: by 2002:a05:6402:5514:b0:6aa:129a:1f70 with SMTP id
+ 4fb4d7f45d1cf-6aab3b647e8mr1868509a12.43.1790160603015; 
+ Wed, 23 Sep 2026 03:50:03 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d749:526e:3864:2ce3:24f2:e6d4?
  (p200300cfd749526e38642ce324f2e6d4.dip0.t-ipconnect.de.
  [2003:cf:d749:526e:3864:2ce3:24f2:e6d4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4886876c64dsm6190760f8f.21.2026.09.23.03.48.37
+ 4fb4d7f45d1cf-6aab38bd31bsm1367972a12.31.2026.09.23.03.50.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 03:48:37 -0700 (PDT)
-Message-ID: <6a6a77e9-8acb-4312-aa38-e06f81ac882e@redhat.com>
-Date: Wed, 23 Sep 2026 12:48:36 +0200
+ Wed, 23 Sep 2026 03:50:02 -0700 (PDT)
+Message-ID: <d95d1349-277e-4f4e-b7f9-4946e7fca643@redhat.com>
+Date: Wed, 23 Sep 2026 12:50:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] block: BLOCK_IO_DELAY event
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+Subject: Re: [PATCH 8/9] block/accounting: Move latency_ns override down
+To: Kevin Wolf <kwolf@redhat.com>, Alberto Garcia <berto@igalia.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260903140815.GC825275@fedora>
- <8592119d-665d-482e-9502-8f4a1a69c10d@redhat.com>
- <20260921204126.GC115897@fedora>
+ <20260831135206.126184-9-hreitz@redhat.com> <20260903150842.GF825275@fedora>
+ <292ff2f9-b3fe-423b-9b36-ada26904a617@redhat.com>
+ <20260921204237.GD115897@fedora> <arJ8tNgp9tDtKkfO@redhat.com>
+ <w51mrt9tn76.fsf@igalia.com> <arKIHIneJEkNNjRM@redhat.com>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260921204126.GC115897@fedora>
+In-Reply-To: <arKIHIneJEkNNjRM@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,168 +131,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.09.26 22:41, Stefan Hajnoczi wrote:
-> On Wed, Sep 16, 2026 at 10:04:51AM +0200, Hanna Czenczek wrote:
->> On 03.09.26 16:08, Stefan Hajnoczi wrote:
->>> On Mon, Aug 31, 2026 at 03:51:56PM +0200, Hanna Czenczek wrote:
->>>> Based-on:<20260724152315.234183-1-hreitz@redhat.com>
->>>>             [PATCH 0/6] hw/[block]: Fix missing accounting
->>>>             Fri, 24 Jul 2026 17:23:09 +0200
->>>>
->>>> Hi,
->>>>
->>>> I’m told there are installations where storage is very slow, and some
->>>> would like the VM stack to report this proactively.  To do so, we should
->>>> (via QAPI events) report on extremely slow I/O requests.
->>>>
->>>> We already have the latency histogram, but this is not deemed sufficient
->>>> because it is not proactively reporting and would require repeated
->>>> querying.  Therefore, this series introduces the event still.
->>>>
->>>> Now, from a user's perspective, it would be nice if this event could be
->>>> raised exactly when an I/O request crosses the user-defined threshold,
->>>> but this would require keeping all active requests in a list and
->>>> checking it periodically.  Now, if we used latency cookies for this
->>> Did you consider a per-request timer? The QEMUTimerList active_timers
->>> sorted list does not support efficient insertion, but improving it would
->>> benefit all timer API users.
->> I'm not sure how that would address the problem. Does that not just move the
->> list elsewhere?
->>
->> I.e. it still has the problem that every request needs to be put into a list
->> (starting a timer), and be removed when the request is done, or the timer
->> will fire and the below problems would occur if the request is done but we
->> failed to remove it (either use-after-free; or spurious events plus memory
->> leaks on top of a heap allocation per request).
-> I wasn't thinking about the lifecycle here, but about the current
-> limitation that users aren't notified until request completion. Requests
-> can be stuck for a very long time or forever. Using a timer solves the
-> timeliness problem.
-
-I still don’t follow. The lifecycle *is* the problem if the timeliness. 
-How to implement repeated querying is not the problem.
-
-FWIW, the series that I had with timely waking did use a timer. But the 
-timer is just not the problem.
-
->>>> (which makes sense), then that would require that every cookie set up is
->>>> also finalized when the request is done, because if we don't, results
->>>> could well be catastrophic:
->>>> - Either we use cookies as-is, which are often allocated on the stack or
->>>>     in some other structure managed by the device; then this would result
->>>>     in use-after-free,
->>>> - Or we allocate something specifically for this checking, so lingering
->>>>     requests would at most create spurious latency events and memory
->>>>     leaks, but this would require an additional heap allocation per
->>>>     request that we would probably want to avoid.
->>>>
->>>> So ideally we could use latency cookies and could statically verify that
->>>> they are always finalized when the request is done, but doing this in C
->>>> may well be impossible.
->>> I think you are saying that the cookie API is unsafe because cookie
->>> lifetime is not bounded by the request lifetime?
->> Yes, because it is not statically proven to be so.
->>
->>> Maybe the block_acct_*() API can be integrated into the actual request
->>> so there is no way to leak the cookie. In other words, directly
->>> associate requests with a BlockAcctStats and stop requiring the user to
->>> manually manage a separate BlockAcctCookie.
->> I don't follow what you mean concretely. If you are suggesting a list of
->> requests in BlockAcctStats, then that is exactly what I had.
-> I meant that each I/O request should contain its own cookie and there is
-> never a need to create a cookie separately from the request. That way
-> the lifetime issue is solved.
-
-Okay, I understood with your other email, because to me, “I/O request” 
-sounded like some kind of object and I couldn’t think of any. My mind 
-did not jump to the fact that you meant the actual execution thread of 
-the request, i.e. code, not structure.
-
-> This would require API changes because device emulation code currently
-> has some of the logic for cookies. Devices would no longer call
-> block_acct_done() once they have called blk_aio_pwritev(), for
-> example. I haven't looked in detail and am not sure if it's feasible.
-
-As said in the other email, doing this would most likely change behavior 
-because we can’t or don’t want to reproduce all currently existing 
-quirks. Which may be good or bad. Bad for me in any case because it 
-would be more work, but, well…
-
->> The problem is that if the destructor has to be called explicitly, we may
->> forget to do so; and accounting is done on the device emulation level, so
->> there is no central place where the pairing of constructor and destructor
->> would be obvious and trivial to verify.
-> This is the part I'm asking about: can accounting be done by the block
-> layer? There might be cases that are purely handled in device emulation
-> code without a call into the block layer. In that case the accounting
-> still needs to be done in device emulation code. But when device
-> emulation calls blk_aio_*(), it should not do accounting itself.
+On 22.09.26 15:52, Kevin Wolf wrote:
+> Am 22.09.2026 um 15:44 hat Alberto Garcia geschrieben:
+>> On Tue 22 Sep 2026 03:03:56 PM +02, Kevin Wolf wrote:
+>>> Am 21.09.2026 um 22:42 hat Stefan Hajnoczi geschrieben:
+>>>> On Wed, Sep 16, 2026 at 10:21:22AM +0200, Hanna Czenczek wrote:
+>>> What's even stranger is that both things were introduced in the same
+>>> commit. But it seems clearly related to 136 because the change was made
+>>> right before the test was added.
+>>>
+>>> Berto, do you remember why you didn't rely just on clock_step?
+>> No, sorry, I don't remember :-/ I guess I wasn't familiar with that
+>> function? 136 was one of the first tests that I wrote.
+> I thought so at first, too, but then I saw that other places in the same
+> test do use it.
 >
->> I.e. it’s not like our functions current look like
->>
->> ````
->> run_co_ide_request() {
->>      start_cookie();
->>      run_co_request();
->>      finalize_cookie();
->> }
->> ```
->>
->> Where the pairing of start and finalize are obvious; instead, start and stop
->> are in very different parts of the code, in all device emulation code.
->>
->>> The API is already weird because devices use:
->>>
->>>     block_acct_failed(blk_get_stats(s->blk), &req->acct);
->>>
->>> i.e. why does the device have to reach into s->blk to access the stats?
->>> If the stats belong to s->blk, then s->blk should do the accounting
->>> during the request lifetime.
->>>
->>> This would require a redesign of not just the cookie API, but also the
->>> error policy API. There is also a wrinkle in that virtio-blk merges I/O
->>> requests and accounts the merges.
->>>
->>>> So, because it is basically impossible (or at least it would be very
->>>> hard, and presumably require a large refactoring) to guarantee, without
->>>> additional heap allocations, that a list of active requests won’t run
->>>> into catastrophic use-after-frees, this series does the much simpler
->>>> version first, which is to just raise an event when a request *finishes*
->>>> and took more than a user-defined latency threshold.
->>> Does this achieve the goal of warning when requests exceed a threshold?
->> According to
->> https://redhat.atlassian.net/browse/RHEL-141617?focusedCommentId=18127333
->> (and the following two comments), yes.
-> The issue says one purpose of this feature is to pause the guest to
-> avoid BSODs. This won't work if the request has to finish first, because
-> the BSOD occurs sometime after the treshold is reached but before QEMU
-> or any other component can react to the QMP event.
+> Anyway, thanks for the quick reply. Then let's just try out what breaks
+> if we change it. :-)
 
-I know. I linked to a specific comment chain that says it is enough for now.
+Yup, I’ll take a look.
 
-Whether the pausing is something anyone actually would ever want is a 
-completely different story, honestly. It is an idea I had for the 
-original design, but nothing that has actually ever been requested.
-
->>> When an I/O request hangs for a long time, the management tool will be
->>> unable to detect that the threshold has been exceeded in a timely
->>> manner.
->> Yes. But why would that be a real problem?
->>
->> Given the request so far is only to notify users of their storage block
->> showing problematic latencies at all, there is no need to provide the alerts
->> in actual real time.
-> What does the current approach solve that is not already possible with
-> the block latency histogram?
-
-See what I linked above. Apparently having to repeatedly query the 
-histogram repeatedly is not deemed nice enough.
+(Thanks for chiming in, Berto!)
 
 Hanna
-
-> Libvirt could add an API to notify when a particular threshold is
-> reached without any QEMU changes.
->
-> Stefan
 
 
