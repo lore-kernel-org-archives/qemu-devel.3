@@ -4,134 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C641DC98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E47BC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Ska-0002BD-DO; Wed, 23 Sep 2026 15:35:28 -0400
+	id 1x9Slc-0002fd-E8; Wed, 23 Sep 2026 15:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9SkY-0002Az-LA
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:35:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1x9SkX-0007Xq-AN
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:35:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790192124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
- b=R48JPBw/Jfrm0kI01lOmNBaZIYQKRfUUlsUEZ/fkG1in5jQ8zL7a85G+VtjQ1LZwar8Iee
- z5pYUHHXy71LHs0kh6PjpOq87raQg1BLg1pnAXKRn28elvOWeQmJ5D1iaJEoNW3fqHM+Gd
- XnvSj0LwWVhj84XA2Z0TKKyZlO397a8=
-Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
- [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-SN0RkbtQOv2z7Cvz7PweAg-1; Wed, 23 Sep 2026 15:35:20 -0400
-X-MC-Unique: SN0RkbtQOv2z7Cvz7PweAg-1
-X-Mimecast-MFC-AGG-ID: SN0RkbtQOv2z7Cvz7PweAg_1790192120
-Received: by mail-yx1-f70.google.com with SMTP id
- 956f58d0204a3-67156f9bad0so1624135d50.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:35:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790192120; cv=none;
- d=google.com; s=arc-20260327;
- b=kb28mlzHlnyH+SiSzxOfWLndV7Id4IgAT70HcaVLUQzVnrwrSktl3o27YfpkRvIxT6
- 9fNSJPVS2z2m4T/7EP8CjisMEh7hb8s6VSqK2LS26MAptB8v1hCwkPds2t+6f2NQBa2n
- INX+DsB4YZi+NVIX0iE+1UVddyvirc0QjdMjHNc9HZ2BlE1GBtUH7XwI0vPcmA4Nr+JT
- 4gtx+MXsf92cWOFdSLXcJyPGy7v9IJ6qyIZOH8xHb22LavkNP702ja7ou9xwolS/rKj+
- 5+PHAlglmgkM+ErbyiFjpOXWxObiEqQO2LFzAP2b9Z5gfeHMfGXZWXBRQldizgb4q1rC
- cs6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
- fh=b0Z3lWGcCo1hESi6SCJ0YxnP/BPVR7A0V6Qykw4FH5U=;
- b=sww+F0p8F79lUDlBi4nvLZXj2SGS0Lh82ZRXjzfjgsl7BE+JBsw64bGSzLTjYCOLdw
- 6/Rn/pH/a9h2LrE10/bQDl378mo1zvRkxpOGYFqcpegC45CHKebTGN2GnOCbjubNlkNF
- EtNjZZPmZr4QxbVJSWSh6+WZyJKPG27NHhH/RFBo7ZvDko8FwOYaz5WoYXDNaYBZZLk+
- hmKfqs3JYiW2uRkra133pj3hpPjS9gE+5j0nZP6DMSyyMJWSNO7LVY+dexqBN32R3v4B
- a+OB/m0hMd09LCS2He1IHxNreKz+QoSSAeLLoWwepAACLKZxYofeOX4/2HlPzn2tQsyV
- 0mcw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9SlD-0002bl-Bn
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:14 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9SlA-0007ZW-Sz
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:06 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-396ccafb751so802594a91.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790192120; x=1790796920; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
- b=spnm18vqa2r5+63G2p3v4kMNVLwKVaFKLyH8JHPnsVDLH/bLqagg0d0fov4T3XIP8d
- AUxvK8vv5L8QR2KmT3XjfakfFRR9JfsSKMeI9gf2PvYWjHCUA1kIe7K3fH3a59wqa5ab
- scf7d9dhQQEbZjopwC4UyKM/vbEXHj5FFk6CZ3GG16/tTU/mzw5lgiPj2O91lD3hYuUP
- DyvIonm6JSar8RI8+hn62TljDT5WVxeENj0NBhHbbUa0I/eMMLnfXtn4/x17GIlhpoxD
- MGbPlnNi0Vrf3DabG68mgQJR041K5UxgvmhS5bRf64/BH8QGXk3mzsVDS06JwwEmOpWp
- CBXA==
+ d=linaro.org; s=google; t=1790192163; x=1790796963; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YTZsQlU4OWS4X6Id75A+gNq07hKmNaBDfT08SJENRVs=;
+ b=njfFxzZ8FocF4ssZbjbVxB8QAv2rbPYhBgVOkZYos7znLzOPWH7uovViVeVDrbegTv
+ EmXr/xq9W1HDy0DMi5ZoHPK8N2vX8t5RYzsl12jk2l1glIHnRVxvzUJw4/e7MsdLeXgH
+ fTL/pQKH/FSPi+uvMMPTmEKlx/KdrP3wIdMLjZuTNIFAiQufcI7OuSe9Jg0ABmWb9TdY
+ pdMX8djqpXmk4egJjuPf9oC5a4o8ZRxo/pgLfCxd0mttJprb4+IyOwuK/FwV1Cl0twXa
+ 5WMg2etDRtmsLzSfStZBup5zz0Fsah27CiBx57VTpngBgWc4odeN/ya1sq38iYu/mbiY
+ CrPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790192120; x=1790796920;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3aYdA549TNlaOOcBA7l/ow6qYaT62YUcLnPjiorub8g=;
- b=FRGm3ZnOjLkeZZeaNNZ+XgyYUJ+5zWgQtrbCoJkXODmc1VN8CRoKmmG7UOXM2ifytY
- cXyJLASf9qL+fW08ZzPckzpYj/GVzjTMdo7JKjd/bJ1x6rMDaSMT1s4KMI+c2gtlOP0f
- ntyF8zlhrRANzjTHCxGv/QdN7KsAx2AKeg7gnt5/fg/FZFLtgIkr6WIXAQVSTO7Og8ke
- Z5jvndOyRi4RGMVRXDXKIM9iAfw09kqOFsrtasjdzVhYwbaQWsms7sWCp/zxae9QIclm
- xomBOm+eDUVqn80gcvEGchOEqsIXqwc6lWihM0S13iQ8IbLpoY/FpRtaPqdAAU/AroND
- zDxw==
-X-Gm-Message-State: AFuF++moHAGLhaVy83XrVpjLXFht2PlYW/8aB8otWOfZ/fA/P1EdxkQ/
- hNn7T+KV/f+qCgtsz5bBoC7Jtcca6K3uipDx/LNlF9AFOxjhZ1CzwSOS1/uFASMDNPAOvyrwDCs
- fE+FOXsFDcly2rczcstOYp5PY2DSC8Tvsd/v8AOHmo+Hvs8FfiTcJtV+JXZZsVxUCp8lkfsLHI8
- gSzWgM9e2QdGRo+EAWLOEYoioJmRKSD1s=
-X-Gm-Gg: AYBFou0tXeBWpDB28ool10EKXMTENZ97/mnQlGQMjLDHSYbhA3JLE0BRMDKxSSf5moI
- zQyF77WBk4dPgslYntDAT2UhP8h5a3I5Q5gXS/VkSD6NeKqo4v1eTHb5WFXGJLF2GGuNfBBVARl
- qPpc70YjkBz2mGGNZ3znjHfY3evL8RXPgwCjvSWndWK+YrliciN23JwE8tttbxgEkwy7bYxvHgn
- uRJliKqH7Qevd00
-X-Received: by 2002:a05:690e:b83:b0:66e:54a0:cdca with SMTP id
- 956f58d0204a3-672ed3b2f75mr175175d50.49.1790192120235; 
- Wed, 23 Sep 2026 12:35:20 -0700 (PDT)
-X-Received: by 2002:a05:690e:b83:b0:66e:54a0:cdca with SMTP id
- 956f58d0204a3-672ed3b2f75mr175153d50.49.1790192119773; Wed, 23 Sep 2026
- 12:35:19 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790192163; x=1790796963;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YTZsQlU4OWS4X6Id75A+gNq07hKmNaBDfT08SJENRVs=;
+ b=d9mqu+y07gCadwiaRE3mVJAv8BPGE6if+KfKCh46bvi07bE7t9MKdL0PBZfoU/k2t0
+ eSmywMOLqExx3nqx3tDa2lDiix695wWrZrzwQLY9Elo5wfqP9np3sQ3vyeZ1Smpl8N50
+ /zC3ZN6GA5QUsd8jKV8QqCM6B/9zZX3ih1Fq0kHTrXmdb6xoxeyDXVdu7hcx5VRAJ6lL
+ T53Wb03xFy6M5/zuF258KpQDc4v18lnJugfTAUF3m39yGs2UvkMIkFwGNTlrMlmyOcWw
+ 4yCVHOnyTw9rAjIjsGJ1yAeszOTWvYyOHPPO/c7GhEJBRoz3Xpl4/08iv204Forzyf9I
+ VrYQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw0M4wur02HFAOqDNmd4Ks2z9QVuumF/JaiinrfC+0BpNW6PZhV+gdoXhzPRu7mw/WLFZi1ORizmQJy@nongnu.org
+X-Gm-Message-State: AFuF++ni20yGMYtWfsb+Gjq6JH+Jn1BaD5zeImD/Crk6C2rBpuExjbpf
+ SxmpLhZKC+7NIrUXZMQSZlxNaOqrmB7ZrvvZDzXR4ueau5NgHMtbYPkpbwu+OEUFhK4=
+X-Gm-Gg: AYBFou3iu74Ct2cK18HWV/wGjs2xg3u3vLSgEIboR1EFJG6qMrVKzZfbD+qIOJPw3ID
+ Hd5KQaIRA1uEIkOaZ5L5XC2iR1UW/KbF0hVzonDGlmZBhfTn1nBXTbXn2JaWbUTEHR/elkAUUAp
+ Ufr3kG1O1PGxD65I0AbJZ3XOcR0VDqqYrQrn2W66olcBbJTvtkAYdwzTUVB7sUmvqLPSsn9uVem
+ uaZNIIyA7V9xLwdTZb9evKi/svI/ugdt6/9XndEVj+JifnXIJ0T19RG9x+GXY7RbSMkiVwOH1N2
+ FykBMT/BpuJgG9V+nKCHzv7ainyzsy+ieJwMLgrhZNgOVhtx4KiAHFWUOxmznzz4VWccmdy/HjF
+ d/zeCR0Oh1/b2rvmrbbkHIs1R5l69Rx7OKzlQo/7lQECKuOBncAXox+DUFrATuEqL5iv87ZBvdF
+ yPuVlHK4Cwb1V1GJ/EZW6M1n2d13AXMpHla2TInQOJluVX/MzfUSeX7ypHIeC+hDG/WT3Je5tvK
+ QeFcDkWN5TNP/GHtjM10cRVsHW2OSO5dHCRxUhB
+X-Received: by 2002:a17:90b:2ccb:b0:39e:6a7f:eeef with SMTP id
+ 98e67ed59e1d1-3a0986eda5bmr111270a91.20.1790192162311; 
+ Wed, 23 Sep 2026 12:36:02 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0972f2cddsm603225a91.1.2026.09.23.12.36.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 12:36:01 -0700 (PDT)
+Message-ID: <921a3a2e-e3d0-4130-9a2e-dd47a7ec52c5@linaro.org>
+Date: Wed, 23 Sep 2026 12:36:00 -0700
 MIME-Version: 1.0
-References: <20260921205712.1862167-1-jsnow@redhat.com>
- <20260921205712.1862167-5-jsnow@redhat.com>
- <8733v0wchg.fsf@pond.sub.org>
-In-Reply-To: <8733v0wchg.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 23 Sep 2026 15:35:08 -0400
-X-Gm-Features: AcwNN1Wr7rGQAPJ3Yenh4qA3hkyZd8LMMh_nJ-xzyxoIM6yRtDiCnhIuPf6_N3w
-Message-ID: <CAFn=p-ZFsNZfGvRoYiV2GXRUninwyxgyjkNF8A8DwtBc8LQVnQ@mail.gmail.com>
-Subject: Re: [PATCH v2 04/10] qapi: convert/split intros for job.json commands
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/17] target/i386/tcg: use standard operand order for BSF
+ and BSR
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
+References: <20260923173021.317809-1-pbonzini@redhat.com>
+ <20260923173021.317809-3-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260923173021.317809-3-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,16 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 23, 2026 at 5:20=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> Consider mentioning how this affects rendered documentation: first
-> paragraph of job-dismiss splits.
+On 9/23/26 10:30, Paolo Bonzini wrote:
+> BSF and BSR currently pass their source as operand 0 and the old
+> destination as operand 2.  This nonstandard order was needed so that the
+> source could use zextT0.
+> 
+> Per-operand extensions now let operand 2 use zextT1, so that BSF and BSR
+> can use the normal X86_OP_ENTRY2.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/decode-new.c.inc | 18 ++++++++----------
+>   target/i386/tcg/emit.c.inc       | 12 +++++-------
+>   2 files changed, 13 insertions(+), 17 deletions(-)
 
-ACK
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
