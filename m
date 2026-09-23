@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85816C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A32BC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Tgn-0008JO-Fh; Wed, 23 Sep 2026 16:35:37 -0400
+	id 1x9Tgm-0008IP-Cl; Wed, 23 Sep 2026 16:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TgA-0008B0-LL
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:00 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ id 1x9TgD-0008Br-4g
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:04 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg9-00051P-0M
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:58 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-8674704dab1so1284536b3a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
+ id 1x9TgA-00051p-Bv
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:59 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ d2e1a72fcca58-8692a856865so648775b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195695; x=1790800495; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=PsKFn4pRALYWaoNgjaJtEuJl3huqiCPhAS0dlA5jb+M=;
- b=Xo0PT5PshtghWCteUDXzchdj5YfARYFGi1NsdBH4qlCN2kttmmb1SrzZ7DdAQylr7J
- cCMpLtvVulmY8badoDeTmLxEW4FTJf0NXEDuL1q8/tlTZA+MyCzet4kwANgSsjx/gjx2
- 3+YSJgGND/EuTWl+9qoLNMsiC+iFdZwTiWBskxYzfl7Yj+gbFznnpNqulASS9iGfl4l2
- ULyipZKYlrzqyVY/OJ7qtBZtQY4+uNrAy6BMvFd+xiar7j7/ksOdPf1H7iUbSpsyAzx8
- Sd3/ReRuBTZPoDdhCnMbutMKYXYKt2jAxTzcjnLvVKfLiJ8HsSHJyc/jIcJIGwMbHIuz
- 6jhg==
+ d=linaro.org; s=google; t=1790195697; x=1790800497; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=z0hFSulIzG2frxbzSf/EGXrp3EDo/qS7TjkfOkfAqlY=;
+ b=bO5+NjGoBqgEhlEqk+kdRg61c5Jmn5Fy6m1D42RyN6vG7AKwkfQ+zXXO6Loa9zPB+k
+ K99B7JC74B5A6KlXCfO5N3crKHRBCUb50xKHiBBhKBLHPpIpp4Bx9/HfZSsZ1hBqoOPv
+ DgK+lZvrXOwYjvZvObBjpViu8sEESi24803hUC9iWqZJV2kYW/3Ualj0qb4Ibm6qX6dg
+ Xy1ht5anEm9/mjAww2ZvE+evfybK+mWbnLjQaMDSeJcZQa5WNVxzTDH6WJ6f3KBcol2l
+ 0CevYvWMobuZWg03AJ1wVqI/yc2eBNVDLQ+hKB7IJJBdKe5RYNx7LPmwGYPhYlmjoEhy
+ LCTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195695; x=1790800495;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=PsKFn4pRALYWaoNgjaJtEuJl3huqiCPhAS0dlA5jb+M=;
- b=YHELgafXGi1NXrCot/6iNRAsdLIFruZ11KhTdUTXkA/FOLVW3K9yvq54oyoINqHaB/
- T+8G2TcGh8kdBsFRl81aft2EccJfAxLKbRSEBjcVjrcsw0OKD+8idGkEdP/TJz54851R
- 1VvF2QdPdab8voglm38qjBrR75QBuWJUIV63eB57JZ2u6hMtkZfO7As3GKehTqrkpDR3
- ajgOaKUG6ndxd8OarUsk/OCedUpSbOSSWJgvsSttKa4y+WN4u+oM6h2yGbRkvYA9R7Pj
- k+zcPTl/6G1bb6J07+BjqHcreIbiVfmnRo/DrFP9jadscVgtLoD0cSKK7gBdd5H3tTZi
- oeSA==
-X-Gm-Message-State: AFuF++mtIEb5s4bqsBbts2+na2CifKr59F3OgbI3K7x4AT1gr5biaNjl
- TkWe47LTn8mJtTwjrJ793ftRewZEWPRCUq4KVxBDA6t1jvmys+IcZiWRWXxYv3buFm+Pe3OWVki
- EAB4d
-X-Gm-Gg: AYBFou3T7RtrMzmn5RLkCcqnzXYRIntBP3UxwzToSr7DPxRd91fsuKIs8/827fA+7Qi
- IbJDSRX7Zv5WyBLvXD2I6HCSOEyK9DJVuFKrBUHLsKrAh68HnxpqccEdpVqQ12J2QHq463lAzIB
- 9rpn03oG3XtmSfUSJGXimgmUIjksIZc88XmlweEp0pypKHadMPn2skD8a/DgwDwjUISPWE1E9do
- oCTkcCGSYhuL8RRmvD5GBZojVAhu9LdtI+ReAz8EtKAOt20v2YrYfeFwD39IYrJGpcwB8Oi7j2p
- U/i9yY4J9oW2rAglDLE2EbubrtByA1DFShcw0P+KHpR5wgnAxGytF94D0Fp/Hbz0DrLxziooA16
- wM9jqUI3oG0Mp4Xldm9TFJrJCh+l6BbElF8FeNh48v/8+FclsEcfQyD74sqW89tXsvFIasFW1+E
- ZV3YQkAG9DuGA7JrIuNuvlKjDtBsl+EEesVcZ29NAF+tag97b4qQLru/JzMjW4rPgjZiDINCL4w
- dbyZpiZVeKOXMjJpFStodqFYwOQ9FY=
-X-Received: by 2002:a05:6a00:3d0a:b0:874:32d1:d3db with SMTP id
- d2e1a72fcca58-87e9c543f70mr237263b3a.10.1790195695163; 
- Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790195697; x=1790800497;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=z0hFSulIzG2frxbzSf/EGXrp3EDo/qS7TjkfOkfAqlY=;
+ b=NkGCfl6YiniJtx27/S59kxx18OtImaELjIwcd7D5+Gj8xCwygy7I1rPXFkfkqX6RMl
+ sst/8LVDKFM8to4JUOwt6YKgf3jr/GgGXPqyB6gpdzLIuMAde+zC6J7IKe+6Q52e4/YV
+ fg86N4h88LzPthNIyvAlnCK+YN4l5qUdLJhEJvvqjnGk7O9Udu6DFYkrOXX/mmXISATk
+ Z/gG0joFwXhIdcYbNovQhD5dwPmnoLPIWLCVmxeRFMEPahq0Y4iz4Oler96Gqj6/i+m/
+ KbRZeGr3KJLQLJzSWcvGIt9u4b3Hpd8CCSU421sIUDAcfWDqlNzYo7NzrOUxdNm0vZVy
+ ZhFQ==
+X-Gm-Message-State: AFuF++kMJAdmTjwGcUlYp+QDx08uDPNHF0aWtjJ6G3kSLqFDqEeg8whO
+ lI0LCWAQCncSVdinAEkJed+k4oW6mwJhfo64KCb1ERflNzAGNn8778lXHqIV+AWGEsd9y219gAN
+ u6V7H
+X-Gm-Gg: AYBFou0DObofWo9ob7EyGZqi4vtvGb38hmWU+TxrFveJwX3gra6Y7ZxazykCrDwtoB6
+ T1Yk/cunlZM3jrdEKF1sGSMvbADovH8PT+70brHV81bET3RrCLDWfZotX8jUQV/WwHPyTtj4UUb
+ 0l1dJLk+hdeffADlQ3Ayf6AGnxEYs31AEFn9y5lAZgRPPdY5UhakjwP7wcZGIKlje+j70E7cYXc
+ 7MyBFPwA47Nb8uWQvFMW+tlu1t1AZU9C1SLD1YUDHuf/cxNwjwYI6f5fdVkQevUsugaC4B3ba9N
+ ULhffme0usKNkP2phbaynApWqaJfYrzMLfh67ePUsfi/Dc3DjPnLZpYghJIhqZLlW99vmNwRt5m
+ Wf6KkWJEi5TE7PHDPHtc36LnFSv/sO1+hor2KcRPdnQiZtMS9x5pxyLCA0VWjAD6GJ8rBXlWDz4
+ omkyChsUyWotgF8fix61KP26BqclYeuo10OoYITM8hrBxxUyJMA13N88sCWP253iUDXkXxU6u3k
+ AtqnJDvF7Ar/iThONeVacxZnmsuvA==
+X-Received: by 2002:a05:6a00:a228:b0:87d:dc3c:1b5e with SMTP id
+ d2e1a72fcca58-87e9956d39amr244060b3a.26.1790195696573; 
+ Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.54
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/16] tcg/x86_64: Use the mulx insn from the bmi2 isa
-Date: Wed, 23 Sep 2026 13:34:38 -0700
-Message-ID: <20260923203441.31276-14-richard.henderson@linaro.org>
+Cc: Matt Turner <mattst88@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 15/16] accel: Change AccelOpsClass.update_guest_debug to void
+Date: Wed, 23 Sep 2026 13:34:40 -0700
+Message-ID: <20260923203441.31276-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,97 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This vex encoded instruction can be used or either mulu2 or muluh.
-This replaces the highly constrained mul insn from the base x86 isa.
+The return value is never used, so drop it.
 
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/x86_64/tcg-target-con-set.h |  2 ++
- tcg/x86_64/tcg-target.c.inc     | 36 ++++++++++++++++++++++++++++++---
- 2 files changed, 35 insertions(+), 3 deletions(-)
+ include/accel/accel-cpu-ops.h | 2 +-
+ include/system/hvf_int.h      | 2 +-
+ accel/hvf/hvf-accel-ops.c     | 3 +--
+ accel/kvm/kvm-accel-ops.c     | 4 ++--
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/tcg/x86_64/tcg-target-con-set.h b/tcg/x86_64/tcg-target-con-set.h
-index 458d69c3c07..7df9bf49177 100644
---- a/tcg/x86_64/tcg-target-con-set.h
-+++ b/tcg/x86_64/tcg-target-con-set.h
-@@ -42,6 +42,7 @@ C_O1_I2(r, 0, reZ)
- C_O1_I2(r, 0, ri)
- C_O1_I2(r, 0, rI)
- C_O1_I2(r, L, L)
-+C_O1_I2(r, r, d)
- C_O1_I2(r, r, r)
- C_O1_I2(r, r, re)
- C_O1_I2(r, r, ri)
-@@ -56,5 +57,6 @@ C_O1_I4(r, r, reT, r, 0)
- C_O1_I4(r, r, r, ri, ri)
- C_O2_I1(r, r, L)
- C_O2_I2(a, d, a, r)
-+C_O2_I2(r, r, r, d)
- C_O2_I2(r, r, L, L)
- C_O2_I3(a, d, 0, 1, r)
-diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
-index 2c8f1f3e580..590c9c24020 100644
---- a/tcg/x86_64/tcg-target.c.inc
-+++ b/tcg/x86_64/tcg-target.c.inc
-@@ -274,6 +274,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
- #define OPC_MOVSLQ	(0x63 | P_REXW)
- #define OPC_MOVZBL	(0xb6 | P_EXT)
- #define OPC_MOVZWL	(0xb7 | P_EXT)
-+#define OPC_MULX        (0xf6 | P_SIMDF2 | P_EXT38)
- #define OPC_PABSB       (0x1c | P_EXT38 | P_DATA16)
- #define OPC_PABSW       (0x1d | P_EXT38 | P_DATA16)
- #define OPC_PABSD       (0x1e | P_EXT38 | P_DATA16)
-@@ -2732,19 +2733,48 @@ static const TCGOutOpBinary outop_mulsh = {
-     .base.static_constraint = C_NotImplemented,
- };
+diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
+index f0c7ee7542c..af71fd9ab34 100644
+--- a/include/accel/accel-cpu-ops.h
++++ b/include/accel/accel-cpu-ops.h
+@@ -85,7 +85,7 @@ struct AccelOpsClass {
+     int64_t (*get_elapsed_ticks)(void);
  
-+static void tgen_muluh(TCGContext *s, TCGType type,
-+                       TCGReg a0, TCGReg a1, TCGReg a2)
-+{
-+    /*
-+     * Note from the architecture manual:
-+     * If the first and second operand are identical,
-+     * it will contain the high half of the multiplication result.
-+     */
-+    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
-+    tcg_out_vex_modrm(s, OPC_MULX + rexw, a0, a0, a1);
-+}
-+
-+static TCGConstraintSetIndex cset_muluh(TCGType type, unsigned flags)
-+{
-+    return have_bmi2 ? C_O1_I2(r, r, d) : C_NotImplemented;
-+}
-+
- static const TCGOutOpBinary outop_muluh = {
--    .base.static_constraint = C_NotImplemented,
-+    .base.static_constraint = C_Dynamic,
-+    .base.dynamic_constraint = cset_muluh,
-+    .out_rrr = tgen_muluh,
- };
+     /* gdbstub hooks */
+-    int (*update_guest_debug)(CPUState *cpu);
++    void (*update_guest_debug)(CPUState *cpu);
+     int (*insert_gdbstub_breakpoint)(CPUState *cpu, GdbBreakpointType type,
+                                      vaddr addr, vaddr len);
+     int (*remove_gdbstub_breakpoint)(CPUState *cpu, GdbBreakpointType type,
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index a01691ce172..1b419b5428a 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -105,7 +105,7 @@ void hvf_arch_remove_all_gdbstub_hw_breakpoints(void);
+  * Update guest to enable or disable debugging. Per-arch specifics will be
+  * handled by calling down to hvf_arch_update_guest_debug.
+  */
+-int hvf_update_guest_debug(CPUState *cpu);
++void hvf_update_guest_debug(CPUState *cpu);
  
- static void tgen_mulu2(TCGContext *s, TCGType type,
-                        TCGReg a0, TCGReg a1, TCGReg a2, TCGReg a3)
- {
-     int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
--    tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_MUL, a3);
-+    if (have_bmi2) {
-+        tcg_out_vex_modrm(s, OPC_MULX + rexw, a1, a0, a2);
-+    } else {
-+        tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_MUL, a3);
-+    }
-+}
-+
-+static TCGConstraintSetIndex cset_mulu2(TCGType type, unsigned flags)
-+{
-+    return have_bmi2 ? C_O2_I2(r, r, r, d) : C_O2_I2(a, d, a, r);
+ bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
+ uint32_t hvf_arch_get_default_ipa_bit_size(void);
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index d2276d8513e..6491a109ba4 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -227,10 +227,9 @@ static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
+     hvf_arch_update_guest_debug(cpu);
  }
  
- static const TCGOutOpMul2 outop_mulu2 = {
--    .base.static_constraint = C_O2_I2(a, d, a, r),
-+    .base.static_constraint = C_Dynamic,
-+    .base.dynamic_constraint = cset_mulu2,
-     .out_rrrr = tgen_mulu2,
- };
+-int hvf_update_guest_debug(CPUState *cpu)
++void hvf_update_guest_debug(CPUState *cpu)
+ {
+     run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
+-    return 0;
+ }
+ 
+ static int hvf_insert_gdbstub_breakpoint(CPUState *cpu, GdbBreakpointType type,
+diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
+index c8e7aa38709..47244d33f7d 100644
+--- a/accel/kvm/kvm-accel-ops.c
++++ b/accel/kvm/kvm-accel-ops.c
+@@ -86,9 +86,9 @@ static bool kvm_cpus_are_resettable(void)
+ }
+ 
+ #ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+-static int kvm_update_guest_debug_ops(CPUState *cpu)
++static void kvm_update_guest_debug_ops(CPUState *cpu)
+ {
+-    return kvm_update_guest_debug(cpu, 0);
++    kvm_update_guest_debug(cpu, 0);
+ }
+ #endif
  
 -- 
 2.53.0
