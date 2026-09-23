@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E47BC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3818DC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Slc-0002fd-E8; Wed, 23 Sep 2026 15:36:33 -0400
+	id 1x9Slu-0002lF-2f; Wed, 23 Sep 2026 15:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9SlD-0002bl-Bn
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:14 -0400
+ id 1x9Slk-0002iD-PQ
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:40 -0400
 Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9SlA-0007ZW-Sz
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:06 -0400
+ id 1x9Slj-0007an-AJ
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:36:40 -0400
 Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-396ccafb751so802594a91.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:36:04 -0700 (PDT)
+ d9443c01a7336-2db1ca069c8so7172905ad.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 12:36:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790192163; x=1790796963; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790192198; x=1790796998; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YTZsQlU4OWS4X6Id75A+gNq07hKmNaBDfT08SJENRVs=;
- b=njfFxzZ8FocF4ssZbjbVxB8QAv2rbPYhBgVOkZYos7znLzOPWH7uovViVeVDrbegTv
- EmXr/xq9W1HDy0DMi5ZoHPK8N2vX8t5RYzsl12jk2l1glIHnRVxvzUJw4/e7MsdLeXgH
- fTL/pQKH/FSPi+uvMMPTmEKlx/KdrP3wIdMLjZuTNIFAiQufcI7OuSe9Jg0ABmWb9TdY
- pdMX8djqpXmk4egJjuPf9oC5a4o8ZRxo/pgLfCxd0mttJprb4+IyOwuK/FwV1Cl0twXa
- 5WMg2etDRtmsLzSfStZBup5zz0Fsah27CiBx57VTpngBgWc4odeN/ya1sq38iYu/mbiY
- CrPA==
+ bh=JYnMhGcxLeFLBbIpqmWyiSIzp8Ux9QDLAE46+vmDAL4=;
+ b=y2rvDy5Yun3djWzwMJtgrQpCh5oAvKpRmEtiEyLHBesxpekb+RCRmJetcpnoLVGWvK
+ tdB1tgiQ9AN9gW43rwCV2pRnGmiOJov4sRwCfP/w5Nd+zAzxCEfnkj2dVvw9M+16FwSx
+ y3WP3m12Eymv8TF/Z4GM7RRCH7wlFzZ0vGKnpt7GL/7OQ0pgxjgmFm5v25sBImfrbBUu
+ r0s2YrQvyLCPzWDZhb34370VhmZc9/nmt02u5sXUOZs/3rocxEFCDO5QbmGQ8L+5xdtp
+ qX2OCpNI6ecRA1f/CO6Jic+YLhcwwK7R4ksrtwHcAsgOWyMP/nynaX8xfPHJj0BWAK2C
+ 6pmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790192163; x=1790796963;
+ d=1e100.net; s=20260707; t=1790192198; x=1790796998;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YTZsQlU4OWS4X6Id75A+gNq07hKmNaBDfT08SJENRVs=;
- b=d9mqu+y07gCadwiaRE3mVJAv8BPGE6if+KfKCh46bvi07bE7t9MKdL0PBZfoU/k2t0
- eSmywMOLqExx3nqx3tDa2lDiix695wWrZrzwQLY9Elo5wfqP9np3sQ3vyeZ1Smpl8N50
- /zC3ZN6GA5QUsd8jKV8QqCM6B/9zZX3ih1Fq0kHTrXmdb6xoxeyDXVdu7hcx5VRAJ6lL
- T53Wb03xFy6M5/zuF258KpQDc4v18lnJugfTAUF3m39yGs2UvkMIkFwGNTlrMlmyOcWw
- 4yCVHOnyTw9rAjIjsGJ1yAeszOTWvYyOHPPO/c7GhEJBRoz3Xpl4/08iv204Forzyf9I
- VrYQ==
+ bh=JYnMhGcxLeFLBbIpqmWyiSIzp8Ux9QDLAE46+vmDAL4=;
+ b=VnOqW+bzGk5ECZbCubyDgIrCeqe3E1cfCLGoNywzQWkcJf9xCQsDFtz8spThQOIySN
+ QAiM4qvYKv0scJ8+TvdJVhh2Ad6V5JvBA/FsiKmv+EAWu9eUcPd73JSe+2Jw8C/p//AE
+ /i4kJxvqvW5nSpzczSQ5zoX0SQ018vZCsN5c4iqgoxSD2y4hfosMMU//p2ZNTZNJZYTq
+ xxygcUVNO0/pEhplN37tr7IeA0MV3jgqH0PzczIBpGtWSYAtBR1ZBTnMtJTaGjESWF9c
+ w0ZmYH6ibifKka+fp8cZ9BNJz6lDfaFayAGFLXR5WTxLKHkgqT8S310bF/cMlbZd9Ads
+ bmww==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw0M4wur02HFAOqDNmd4Ks2z9QVuumF/JaiinrfC+0BpNW6PZhV+gdoXhzPRu7mw/WLFZi1ORizmQJy@nongnu.org
-X-Gm-Message-State: AFuF++ni20yGMYtWfsb+Gjq6JH+Jn1BaD5zeImD/Crk6C2rBpuExjbpf
- SxmpLhZKC+7NIrUXZMQSZlxNaOqrmB7ZrvvZDzXR4ueau5NgHMtbYPkpbwu+OEUFhK4=
-X-Gm-Gg: AYBFou3iu74Ct2cK18HWV/wGjs2xg3u3vLSgEIboR1EFJG6qMrVKzZfbD+qIOJPw3ID
- Hd5KQaIRA1uEIkOaZ5L5XC2iR1UW/KbF0hVzonDGlmZBhfTn1nBXTbXn2JaWbUTEHR/elkAUUAp
- Ufr3kG1O1PGxD65I0AbJZ3XOcR0VDqqYrQrn2W66olcBbJTvtkAYdwzTUVB7sUmvqLPSsn9uVem
- uaZNIIyA7V9xLwdTZb9evKi/svI/ugdt6/9XndEVj+JifnXIJ0T19RG9x+GXY7RbSMkiVwOH1N2
- FykBMT/BpuJgG9V+nKCHzv7ainyzsy+ieJwMLgrhZNgOVhtx4KiAHFWUOxmznzz4VWccmdy/HjF
- d/zeCR0Oh1/b2rvmrbbkHIs1R5l69Rx7OKzlQo/7lQECKuOBncAXox+DUFrATuEqL5iv87ZBvdF
- yPuVlHK4Cwb1V1GJ/EZW6M1n2d13AXMpHla2TInQOJluVX/MzfUSeX7ypHIeC+hDG/WT3Je5tvK
- QeFcDkWN5TNP/GHtjM10cRVsHW2OSO5dHCRxUhB
-X-Received: by 2002:a17:90b:2ccb:b0:39e:6a7f:eeef with SMTP id
- 98e67ed59e1d1-3a0986eda5bmr111270a91.20.1790192162311; 
- Wed, 23 Sep 2026 12:36:02 -0700 (PDT)
+ AKwUvBwxV8u9O1EwM3E5JX45bzoNLIcynTLknIIO/vwrKwgH3KhAFZojuRC8noq6Eht5uKbYoafBA3j1ky1u@nongnu.org
+X-Gm-Message-State: AFuF++nO14vcsoJ75cBUSymbP1PpX4BxWaLaAcZRmfQ+p9G0j/Z0BoLW
+ X+oahXauNvR/vKvhaVyjJnEf9oW292km+O8VzsZ05D8rdQ9dbkYV/ikn+UN1GYo7MH4hgwWmFKU
+ OkFcx
+X-Gm-Gg: AYBFou1LzhKFG7O8LfhduDdeoUXwgB+2V2HM6kR7dDl17ZD3VocyJ6Ek8AuDj5VdQkL
+ ZH4lJM7xuu3YwKp7glrOo55Q6zK+boIyOyJpIjECPUJ3faMPinIqgoy0Nyzj5Fpp+MWJPoDcWy6
+ f+q6aHCxiE/d4nG4Rx+dPrXXJYwObM5CWUAP8kcCcVwC0T6ukj9jDMzUYbBkG8DtNpuXBH0je1l
+ /EggXogZz/pQiEFzkoPa0Qil6wvqXDe8ncCS+3Fy0IF92cEKalSZLetTHwcw57KQFY6YVpCVVjX
+ EDkCK3qjl3SKOlAtYRY0JUNbAcKI3s9Nvmm/daR+ksNhXtPBV2Qh2KNfU8TV1WDA9mTowiS616/
+ 2vtMx7G6ETCvjUbJlbEgrPJuRjlFKnlu4Xllx3M2eegVqurv26VB6HVuuu3kqDxGlCz7PdGm+SY
+ acxNebazOp3AyC9u8/dr9qUXj0Qj192wptj+snLEXAvsXFBPG8JsNc8Vl6kFVjIGLexYdPZ/0Ik
+ MikHe+5QfMvX9K55ESejwJKM7pcMOuqUYC+SSuQ
+X-Received: by 2002:a17:903:903:b0:2dd:c100:b2cd with SMTP id
+ d9443c01a7336-2df7dd6114emr1467715ad.56.1790192197725; 
+ Wed, 23 Sep 2026 12:36:37 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0972f2cddsm603225a91.1.2026.09.23.12.36.01
+ d9443c01a7336-2df6a60c485sm15587525ad.82.2026.09.23.12.36.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 12:36:01 -0700 (PDT)
-Message-ID: <921a3a2e-e3d0-4130-9a2e-dd47a7ec52c5@linaro.org>
-Date: Wed, 23 Sep 2026 12:36:00 -0700
+ Wed, 23 Sep 2026 12:36:37 -0700 (PDT)
+Message-ID: <1434224f-4e1b-4ac9-a2f4-aa9429304256@linaro.org>
+Date: Wed, 23 Sep 2026 12:36:35 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/17] target/i386/tcg: use standard operand order for BSF
- and BSR
+Subject: Re: [PATCH 03/17] target/i386/tcg: use zextT1 for CMPXCHG
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
 References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-3-pbonzini@redhat.com>
+ <20260923173021.317809-4-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260923173021.317809-3-pbonzini@redhat.com>
+In-Reply-To: <20260923173021.317809-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
@@ -108,18 +108,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/23/26 10:30, Paolo Bonzini wrote:
-> BSF and BSR currently pass their source as operand 0 and the old
-> destination as operand 2.  This nonstandard order was needed so that the
-> source could use zextT0.
-> 
-> Per-operand extensions now let operand 2 use zextT1, so that BSF and BSR
-> can use the normal X86_OP_ENTRY2.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/tcg/decode-new.c.inc | 18 ++++++++----------
->   target/i386/tcg/emit.c.inc       | 12 +++++-------
->   2 files changed, 13 insertions(+), 17 deletions(-)
+>   target/i386/tcg/decode-new.c.inc | 4 ++--
+>   target/i386/tcg/emit.c.inc       | 5 ++---
+>   2 files changed, 4 insertions(+), 5 deletions(-)
+> 
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
