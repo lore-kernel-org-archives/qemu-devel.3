@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5835FC982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74B7C98309
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9LRt-00046H-8S; Wed, 23 Sep 2026 07:47:44 -0400
+	id 1x9LX9-0005ce-N7; Wed, 23 Sep 2026 07:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x9LRN-00044g-MN; Wed, 23 Sep 2026 07:47:11 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1x9Ho5-0000Oh-VB
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 03:54:22 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1x9LRK-0002Ns-Oq; Wed, 23 Sep 2026 07:47:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=6GnjRlmf2e18XObWxLVlw/bfiPGdR7DecSb4FuWUfT4=; b=GVktuz/Ok8NJYgf
- 03Qz4O0U5NK8WoKFDsavOlnvOkwHB3U4E+gMTznWPM9YXwBt9tZytMwIkCdadqhmuuoW7dAqjCF+/
- RTAkDGraNKPt2HN9fXz7NnfWUsVJmRwIiH2HqURVCjKATrsUaKdIo53faq/HiAERxI9VxifEineYu
- 1I=;
-Date: Wed, 23 Sep 2026 13:52:34 +0200
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- daniel.barboza@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- palmer@dabbelt.com, 
- alistair.francis@wdc.com, Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [PATCH v5 01/11] target/riscv: Replace TYPE_RISCV_CPU_BASE
-Message-ID: <arO88UKvkxwKn28B@hive.localdomain>
-References: <20260918-hw-riscv-cpu-int-v5-0-f98c5a244636@rev.ng>
- <20260918-hw-riscv-cpu-int-v5-1-f98c5a244636@rev.ng>
- <3c8a82f3-6f48-416a-94d7-64f4f65d12b5@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1x9Ho3-0001Z7-IL
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 03:54:21 -0400
+DKIM-Signature: a=rsa-sha256; bh=td1wyQTGWPmJNGy5yxEP23OcZe5RL2NEaHyYik6KcOs=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1790150054; v=1;
+ b=AjidBCqqhxn+7WIiHPuTgqBlg8HqfW2qfGL+H4SRxDV0nusR24IELjJjKx4oFCPHkCGCDQYu
+ nZRE1p4aA3UO3oMRHH5zh1KDgMbWyofSNByrttktLT8idX/L0fIQLWZANbEg+MspRDFsz0KdNf8
+ xqHtus6YJrvGVmwJ5ApD8ucWZmrhaNDFbFznK7IP1GriQb+hpjQdeckTQVDV8dpt4BunNvb+L39
+ Kkm4xwS/+gnujZ78g3AXPTb5btpbtHlSyQL05oaLpUdtmJFNKtlXOT4vgkY4Nz5snTgyMlmqldq
+ yyd8ln5aoTQr+8Fb1HPGGtR8qikfyGD0u3CkYvoMasJJQ==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id BF760224F6;
+ Wed, 23 Sep 2026 07:54:14 +0000 (UTC)
+From: ~oyasan2-ba2 <oyasan2-ba2@git.sr.ht>
+Date: Wed, 23 Sep 2026 07:54:14 +0000
+Subject: [PATCH qemu 0/1] hw/net/e1000e: make PHY power-management match a
+ real 82574L
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3c8a82f3-6f48-416a-94d7-64f4f65d12b5@oss.qualcomm.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <179015005471.1471.12638559665582988999-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-devel@nongnu.org
+Cc: dmitry.fleytman@gmail.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ jasowangio@gmail.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 6
+X-Spam_score: 0.6
+X-Spam_bar: /
+X-Spam_report: (0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
+ FREEMAIL_REPLYTO_END_DIGIT=0.25, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 23 Sep 2026 07:53:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,29 +65,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
+Reply-To: ~oyasan2-ba2 <oyasan.ba2@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/09/26, Philippe Mathieu-Daudé wrote:
-> On 2026-09-18 0:04, Anton Johansson wrote:
-> > TYPE_RISCV_CPU_BASE is used only to initialize the correct default
-> > machine for 2 machines. Replace it with a runtime check.
-> > 
-> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > --
-> > Note, this patch is to be replaced by: 20260526095731.63525-1-philmd@linaro.org
-> 
-> I don't remember, do we need the whole series or only
-> https://lore.kernel.org/qemu-devel/20260526095731.63525-5-philmd@linaro.org/
+This series brings e1000e's PHY power-management handling (BMCR.PDOWN,
+CTRL.RST vs CTRL.PHY_RST, and the PCI D3hot -> D0 transition) in line
+with the 82574 datasheet (Order 317694-016, Rev 2.5) and with what I
+measured on a real 82574L NIC (8086:10d3, via direct MDIC register
+access, bypassing the guest driver so the link-down and power-down
+states could actually be observed).
 
-We need the microblaze patch as well
+Currently the model:
+- ignores BMCR.PDOWN entirely for the link (patch 1);
+- resets the PHY on every CTRL.RST (a software/MAC reset) but not on
+  CTRL.PHY_RST (backwards from the datasheet and from what I measured
+  on real hardware) (patch 2);
+- does nothing on a D3hot -> D0 PCI power-state transition, although
+  the datasheet says the device performs an internal reset that
+  includes the PHY (patch 3).
 
-  https://lore.kernel.org/qemu-devel/20260526095731.63525-4-philmd@linaro.org/
+Patch 2 depends on patch 1 (e1000e_phy_powered_down()), and patch 3
+depends on patch 2 (e1000e_phy_reset()). Each patch adds its own qtest
+(phy_power_down, phy_reset_semantics, phy_d3hot_reset); I verified each
+new test fails without its patch and passes with it, and that the
+existing e1000e qtests (init, tx, rx, multiple_transfers, hotplug)
+still pass throughout. The series applies to and builds cleanly against
+current master.
 
-the only real change between the remaining patches in your series and
-this one, is that in yours microblaze defaults to TYPE_RISCV_CPU_RV[32|64]I.
+I found this while implementing a fault-injection test harness for the
+e1000e driver (suspend/resume and RX-buffer fault scenarios) - the
+model's link/PHY state didn't behave like the real 82574L it emulates,
+which made some of those scenarios impossible to exercise faithfully.
+
+oyasan2-ba2 (1):
+  hw/net/e1000e: reset the PHY on a D3hot to D0 transition
+
+ hw/net/e1000e.c           | 14 ++++++++++++++
+ hw/net/e1000e_core.c      | 15 +++++++++++++++
+ hw/net/e1000e_core.h      |  3 +++
+ tests/qtest/e1000e-test.c | 40 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 72 insertions(+)
+
+-- 
+2.49.1
 
