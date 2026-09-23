@@ -4,57 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15AAC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E96C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9O8V-00021o-RU; Wed, 23 Sep 2026 10:39:51 -0400
+	id 1x9O8b-000294-WF; Wed, 23 Sep 2026 10:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1x9O8L-0001xs-0N; Wed, 23 Sep 2026 10:39:41 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9O8X-00024x-4W
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:39:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1x9O8J-0008Qa-Ji; Wed, 23 Sep 2026 10:39:40 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id AE9DB41466;
- Wed, 23 Sep 2026 14:39:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DE81F00893;
- Wed, 23 Sep 2026 14:39:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790174370;
- bh=TK8VChsg1YSiYK3mE4qp91eSZZFQ48vKD4wOK86PQFo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=FCW5ly9nE0zCoykssxAqCRmbK6Quqt6wQ5yIpgEM6fPCrem34jb7fRxB1PUSQTDnq
- y8SpqUDSKcx3MWeWYAVIvHRetYeKA8rAZQ8X6UFV0+xv3xcqidj8mUvwqqA7fy+0Mj
- bvQ4/97td3CBre9vU0kNGO+HPAq6FqnuZR+IUavqGdGjIhc510YEk74MtdIO3VpgXX
- D3FkXsid0+GKhiN03VUX50205ic4xLZnoM42/gqCplULZ9nrr37ZFrfGv9PgjI8OIf
- nNqpVlFC/OSWtbDm8AzIImnkDqXFIC6gtz9OXS77LOdTlw/VZtimh+m0fPmwGvoSlI
- TyB8FoTKA36uQ==
-Date: Wed, 23 Sep 2026 08:39:28 -0600
-From: Keith Busch <kbusch@kernel.org>
-To: Markku =?iso-8859-1?Q?Ahvenj=E4rvi?= <mankku@gmail.com>
-Cc: qemu-devel@nongnu.org, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: Re: [PATCH 1/3] hw/nvme: prevent cq_pending underflow
-Message-ID: <arPkoItGqH5MY7TQ@kbusch-mbp>
-References: <20260923-nvme-intx-fixes-v1-0-fbf0e4e567a5@gmail.com>
- <20260923-nvme-intx-fixes-v1-1-fbf0e4e567a5@gmail.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9O8V-0008Rn-O9
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:39:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790174390;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Lap8L83OrynZd3UWczMwXAe2AAT0B/reteLCdO/cZGVzr9aktWqOBThKucCW0Z6uVAMGxL
+ sZZaeoDu3bb6WVW9pX+xKNrKi9plMso8smXVXwrxK0rB5UaxjJqW1P7DOCOUsDziKn+aCh
+ 5PMYGnm3320kCojMmYJdNnsN7Vppuc4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-5bR3-ysaNtO29-Qg2LuCKQ-1; Wed, 23 Sep 2026 10:39:49 -0400
+X-MC-Unique: 5bR3-ysaNtO29-Qg2LuCKQ-1
+X-Mimecast-MFC-AGG-ID: 5bR3-ysaNtO29-Qg2LuCKQ_1790174388
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-486e90b59a6so630105f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790174388; x=1790779188; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=BLRvDH3tG6tsUjA64o4cwBcqjLL5afIQ1Rr3Exm6UNwIm9TEF+qQH/BrlPbYO1NxYp
+ gJKLj4Ux63Hg7B+k6Zi1D8Wy+4bfH9MnmzNt1HlVILCQVwNsV4tv5I9z/ipvAR2qTeax
+ PE8JvtqwziYGJGzVfPYZq0QHyo+j36m20DY0dFeUXoEOQPGeDRVLBny2udA6R5KoIf1j
+ v1seSus7bXXKSZtoHKPr0/DIbTmOdlsV5up8uj8jmvU+5TmtvvIo7kTC8HRfeNXMRpbo
+ U9WW5u5ND0CmAmqfLMlLB5IxSHZ9jy9GWdwXhBH8vNfF3yws4jS3K+8xPQuaWDKFLiYe
+ 08yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790174388; x=1790779188;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=xPk/v127N+UNHcyT8ynXbIFyeVi7vrNM6hn1WcyUME52TqsdZGDAifTKDKPJopcjMG
+ dApZl82Bl+AAL1lvhkqYMpfRIxLeRWTS11M+5vM8YnQaxthggkZw3u2673pAmvgDR7VE
+ GBrZCLUe5C9gi31k3khaGC7Toigees8FGg5jt0Tsd90kpi3Ud2xfPl518xu7BUTNIHcc
+ DO8+NfHyWU/kBL3jy7y+jisa6BUSotsvT9TTr9CFXjyXoKO8XOOfcQe4kG/BwsNOvT+I
+ u99K1x1I8XQpEPqkEaC8o+tAvz18SMzmO1E0Uq3zC8o3qtt2tl1sWLGWAc1HjbzzKzbW
+ hOjA==
+X-Gm-Message-State: AFuF++l15yopXb017i62MUbTVxhN4wKEyJkQNpOmKVmz6La6s7MZqq9/
+ R87jXr4cCkIbq0CQ+EYbH1ITTkSXI8uqaemsN0zP/cOmV6oG0COvkNnEWKPoMSzMa69RUTQRgA4
+ +eFE/kAQjl62Uz0vOdP7pn7VU5758inG5junPcXvfHpa0M5f/tTBYQslB
+X-Gm-Gg: AYBFou3IjeHhye2Tvov8aCppp3ovZ0JJFg/w1+jE199coW/+QQoK458BZqBfXqirLnL
+ jjk69rsvwWO3bXXNwiSFfsg8bwK8cjMLVVMXPyf/mf5cEY4gE5GaXSsfErwGUAl1118BFvLWYrz
+ o30np1MXKzL60l+kQC34ctGi+B/j/D2d+ynmN8G2/DXTciI6mEmkgW+VvXDboz9GWU/7f3wDGHo
+ paEgxQaIkGc/8XdTOj+qHeeWVYeGsJl2CnV9aur4wM2dRAnZevrSQNRLT08YIw0l3eMBEaGMaXB
+ /GMxMJAytgzDrqJs22EhU9B+QHq8NSIJuHpl/BKBs5bBqS/y4J5kv+KzzxrWHZM2Bv88jkrhGgg
+ vKqN6ZfN7QVtc69pyHWuTqE6fDaSObfXC+XeDKge8sExjJOrnZgGP3+88Lcf5ZJa3J6KJddOLfp
+ AcIrMV
+X-Received: by 2002:a05:600c:3b04:b0:49e:6778:c2bd with SMTP id
+ 5b1f17b1804b1-49fdee0a9e4mr38250365e9.6.1790174387860; 
+ Wed, 23 Sep 2026 07:39:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b04:b0:49e:6778:c2bd with SMTP id
+ 5b1f17b1804b1-49fdee0a9e4mr38249955e9.6.1790174387241; 
+ Wed, 23 Sep 2026 07:39:47 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fde1ccccfsm77893535e9.7.2026.09.23.07.39.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Sep 2026 07:39:46 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>,
+ Vulnerability Report <vr@darknavy.com>
+Subject: Re: [PATCH] accel/kvm: protect kvm_resample_fd_list with a mutex
+Date: Wed, 23 Sep 2026 16:39:42 +0200
+Message-ID: <20260923143942.289538-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260923004651.101197-1-mlevitsk@redhat.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260923-nvme-intx-fixes-v1-1-fbf0e4e567a5@gmail.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=kbusch@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,15 +120,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 23, 2026 at 03:20:02PM +0300, Markku Ahvenjärvi wrote:
-> cq_pending counts interrupt-enabled completion queues with unconsumed
-> entries. nvme_cq_notifier() and nvme_process_db() decrement it whenever
-> a CQ becomes empty, but they may also process a notification or doorbell
-> write for a CQ that was already empty.
+Queued, thanks.
 
-Is there a host actually doing this? If the host writes a doorbell
-register to an empty queue, that is a spec violation on the host and the
-controller should fail the queue. If it's not the admin queue, then the
-controller should to send the Invalid Doorbell Write Value AEN
-completion.
+Paolo
+
 
