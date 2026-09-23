@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65980C9830B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941B6C98304
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Tgm-0008IZ-HN; Wed, 23 Sep 2026 16:35:36 -0400
+	id 1x9Tgm-0008Hy-2Q; Wed, 23 Sep 2026 16:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg9-0008AK-78
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:57 -0400
+ id 1x9Tg4-00089e-Uz
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:55 -0400
 Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg7-00050w-7z
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:56 -0400
+ id 1x9Tg3-000501-1H
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:52 -0400
 Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85469a3490bso1212407b3a.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
+ d2e1a72fcca58-85469a34908so963822b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195694; x=1790800494; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790195690; x=1790800490; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=toBKJm1UUMfIsNta6626Tkm+3elU4o/5FcJSbCSkipM=;
- b=FaWWL57GvthkX06uuldzCPPM9q7rszqiXgqwg/LCYUTYhTLPDbKP/I4TLjdjqhoeHz
- Sd/F8oizKxEs/KRWPxywhCf/PaMeeglMZwf0/QE8QQhnLvPDuuAU1fepThP/P1MWzzyt
- SPWRZk5K6aCmMXVyQMaldQBbnbMB7TrhMmNwGWd51IBDP2SS1M/kIXbmhEZZH5Qlyy05
- 5dMOIyXQ+ac3H17MVRDSieTVAz+w6+IBii/gpu+RV5Gl65U9s33fASdIuWhBwDzf0h5Q
- PN9rugKGBVbPPLtTPZW1dBCAHR6AQ2YjMx7cORrFAZlTs6OwQvk50yOq/BFN5lAbge+1
- r4kg==
+ bh=MnLKuFltvc/Rg1zMvwUFOIX89Pj2+SfPG/1M0nyAyh0=;
+ b=BMyeARjRoHCfyC59pWyR5zay2eYuGMfw4H++JxZgLh33o7ORfPCeQn+AnxmrGCTcGF
+ WE7xtNvQDkbmDIIgb169pgAsWi09KJPtEhKuKY0m5Ya2NeNHsGuHkCeZwwNsjajO4Gd7
+ FGfHARwaZj3IC0nqXchwADO3o3sdToaQmZrrBB6uEnZK4gibopUsZ6i/2CjmIPqszLAl
+ AK8qctcnje1oum1jN4RDZSleecVShhKp236iCA4l5uqA6qIYmmfAYLCSOcxKURAj8B9z
+ 3ddjYmNYnnj27iDg2IjwXY20BSle7MGQAo/HQOgHmYUMUyTynEy3dISNvnYsMg8VcEus
+ c8kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195694; x=1790800494;
+ d=1e100.net; s=20260707; t=1790195690; x=1790800490;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=toBKJm1UUMfIsNta6626Tkm+3elU4o/5FcJSbCSkipM=;
- b=gYIORzAT9qZxMODNo2n08BlnGb/lyFtJjv8kP56RE6CIGEGHAiSJlYPSU1VlzTHGZ5
- CLvvB7Oohww1Y8SMPlGm7C8WnlvsKrYkLa4hGACyY2t/3YxLmbs5QnepinwpLXmymUuA
- rWiuLy+qxlDz1XRwEfxAPH2IpSIdtLA5laQYf64sS882PQKaNhpdQYgCAIK2E30lDVoO
- l58tBVNoy05c+sulGTjKM3SPVsvRuqDZlA+BFgDCvIPHL3DLmxU933xU2G/uKO68Cqdq
- iL38S4zK9y+m9Nt72VQy69TrRDcsyJfh5J5/5ngQ9IGkwbpx4PsmGPwO+DuoqKXG8/Nb
- 3Nzw==
-X-Gm-Message-State: AFuF++kicfVcOChLyjNuwhNSiHiawRzhlWrqs14KvxcF3i55PDZNPtC3
- E06l/njUvsHWkDP+syTDuzUDKp69B6c2kjWSna2+L1QZKOpi7JQJlS51xjVKW4VzZODqouIzlBd
- a8/xA
-X-Gm-Gg: AYBFou0xpCovk/hh6BcH7tSGcQMiHRA8QybOmcMWhReE/wnlAqi7MipvIfHBWLRcGWq
- ks+3heJbCa47XQNGVHuh2KeJ21tuPZZ+lkov9ufwepeQUj5+Bfy0jvGzl4xbThvgkxut+zEmAfy
- U+BqFLwply6eZWb4VJhxGTBYASbYAfK3gi/5iWpNenMsbTAh1gaIFQx1CFW+W/tDwsODpOBKOB3
- u9fpPkCsBkyILxJK/ihYembCXJ+LYIMYTo+iHfC5v6RH3HoSB1hy1Yb8or87GVbXLiRrwHI8U8t
- 7vJvdfAg68Wnfr2lxQ2ap2pwwypVlsv4/CDcYqdAjFGhpZcv5Q0944ZzAland7Z3yJzOFgWLVAQ
- k27vS4sXRIE8vlC6Ci9aJm9rLQ7SGGxbZj25xvI82Xco0eGY89aagorXn/62NpZGEF/cmRVuCDF
- GjGqIXZVJTMIjqL/ZvAlQDVlSqO8D7CZ7FAUqgDDf5cGbMykr2e/9DYvtuv+ylpGZd1YD8KX28I
- ptwBIDLvuxnFqaHVKFjuYlG3YTK4Ac=
-X-Received: by 2002:a05:6a00:27a4:b0:878:34d7:6984 with SMTP id
- d2e1a72fcca58-87ea0cbdfcfmr183011b3a.50.1790195693847; 
- Wed, 23 Sep 2026 13:34:53 -0700 (PDT)
+ bh=MnLKuFltvc/Rg1zMvwUFOIX89Pj2+SfPG/1M0nyAyh0=;
+ b=s4F5gTGOMWxAbTLRGHO2wTOTqzGZP6ALTogRpN3p4cFHjHt8FhjC95sTtrX5x1wqn/
+ p9KCGAtiraHBEtMhK2P3kIzT5LnMi1oTpO2p7xFdlfuawAxl9m956KssIqRKoBfSAlTn
+ n60IEVoLAI5NBINhVpOMkCN5lRrWcfcGfAbFD+/761dKZQoY0i0w2fYq+3+545vi2keq
+ RJS79Pww6vMU5jsCbMJhJmWTZw1qr+J9ZrKESOiAghNVuKWgS8V+H5xgK2n+Ubl+qMlA
+ PylR/sG5ASWt8Gzffmt0Zj4Usi3kAvlNRPz7ZfUcCv1zlxeWBpMCBCDNDCqs03dlxg2I
+ elNw==
+X-Gm-Message-State: AFuF++kTazmGJG9tGNvAwqFHO9fVwevwujMJBrxHnUH94c5NBUD2hnfx
+ SRmL1rPzQujWiqe1Mo5YR472Lv8Zd4r6d5pOhxCL4McOXNalj6HLq0ECv2laMRYb/3wxKzdsl66
+ WV0rp
+X-Gm-Gg: AYBFou2VXOSpe398Q9azv8uJMGsB3ZE1r7zxdbqXLBVHa0qLwligKdsWgdGm9i0806F
+ EI41ys3osZ64DX+HRH0c/adTYXX5K/DTQQvd6c7vdVdK84k19KSB+v69ZaNMhzvUIWE/IMsq2me
+ hmdYhN4s+A3g56mBdl4caAzVaQXkECkWhXT5plftKmfmW1OkMTXCsx/CnMr66VOlMIe/WMHqzda
+ avCiJ/P28SYTGb+dL5RsTjeOLGM7o69pzFxpMrTUThKPlKJdS2Asf7exV0hJys6LVPSY7OJh5Oy
+ DYBmjaJykEf/Ra6J8AEpmSvZ+pg8oqn9E6P5P7YySmDtuEsxcpWIyheF1qjvBtOfk0dsUOUSuvM
+ CmtcUH1y09Gm1A7q1FfYY2PzN0YOfMiP2AmsDrsRq/Ijzzh/TyI6v8CaWbcFY6MlE5R0g1k8p1d
+ Hj3tA27OgYAndJdBo4suYD/8UeoF71jKIn0AdwU3HGyQujOTK0IbpLbK4dDR2j139lx6AjgecMH
+ nokEbhzZMhKRSEC40ldMVCKN9MoAHje4YnxX+rC
+X-Received: by 2002:a05:6a00:808a:b0:848:62ab:7b7 with SMTP id
+ d2e1a72fcca58-87e9ea63d38mr222600b3a.16.1790195689501; 
+ Wed, 23 Sep 2026 13:34:49 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.53
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:53 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Tao Cui <cuitao@kylinos.cn>,
-	Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PULL 11/16] tests/tcg/i386/system: Add regression test for
- translator_ld wraparound
-Date: Wed, 23 Sep 2026 13:34:36 -0700
-Message-ID: <20260923203441.31276-12-richard.henderson@linaro.org>
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PULL 07/16] tests/tcg/arm: Add regression test for #4448
+Date: Wed, 23 Sep 2026 13:34:32 -0700
+Message-ID: <20260923203441.31276-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
@@ -103,83 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Cui <cuitao@kylinos.cn>
-
-Add a test case that reaches an instruction straddling the end of the 32-bit
-address space (0xfffffffe).
-
-The top page (0xfffff000) is SeaBIOS ROM, so the cross-boundary byte is
-the ROM's own 0x00 (add r/m8, r8) at 0xffffffff, whose modrm is fetched
-from [0x0]. A short exit stub is placed there.  The case runs on
-qemu-system-i386 since the bug is 32-bit only.
-
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Message-ID: <20260709020529.126652-3-cui.tao@linux.dev>
-[rth: Simplify and convert to meson test harness]
 Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/i386/system/meson.build  |  4 ++++
- tests/tcg/i386/system/wraparound.S | 35 ++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
- create mode 100644 tests/tcg/i386/system/wraparound.S
+ tests/tcg/arm/issue4448.c | 51 +++++++++++++++++++++++++++++++++++++++
+ tests/tcg/arm/meson.build |  1 +
+ 2 files changed, 52 insertions(+)
+ create mode 100644 tests/tcg/arm/issue4448.c
 
-diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
-index d3f73997c7f..c08563d0ab5 100644
---- a/tests/tcg/i386/system/meson.build
-+++ b/tests/tcg/i386/system/meson.build
-@@ -34,6 +34,10 @@ foreach t: tcg_tests['multiarch-softmmu']['tests']
-   endforeach
- endforeach
- 
-+tests += {
-+  'wraparound.S': { 'cflags': cflags, 'qemu_args': ['-m', '4G'] + qemu_def_args }
+diff --git a/tests/tcg/arm/issue4448.c b/tests/tcg/arm/issue4448.c
+new file mode 100644
+index 00000000000..0a498373a89
+--- /dev/null
++++ b/tests/tcg/arm/issue4448.c
+@@ -0,0 +1,51 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <assert.h>
++#include <stdint.h>
++
++/* Signed 64-bit product, constant operand first then second. */
++#define SMULL_CONST_LHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tsmull %0, %1, r0, %2" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++#define SMULL_CONST_RHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tsmull %0, %1, %2, r0" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++/* Unsigned 64-bit product, for contrast: this one is folded correctly. */
++#define UMULL_CONST_LHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tumull %0, %1, r0, %2" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++static int64_t s64(int32_t hi, int32_t lo)
++{
++    return ((int64_t)hi << 32) | (uint32_t)lo;
 +}
 +
- if 'qemu-system-i386' in emulators
-   tcg_tests += {
-     'i386-softmmu': {
-diff --git a/tests/tcg/i386/system/wraparound.S b/tests/tcg/i386/system/wraparound.S
-new file mode 100644
-index 00000000000..9c77b3a8468
---- /dev/null
-+++ b/tests/tcg/i386/system/wraparound.S
-@@ -0,0 +1,35 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Regression test for the translator_ld crash when an instruction
-+ * straddles the end of the 32-bit address space (i386).
-+ */
++static uint64_t u64(int32_t hi, int32_t lo)
++{
++    return ((uint64_t)(uint32_t)hi << 32) | (uint32_t)lo;
++}
 +
-+        .code32
-+        .section .text
++int main(void)
++{
++    static const int32_t values[] = { 1961612, -1479053948, -7, 0 };
 +
-+main:
-+        /*
-+         * The top page (0xfffff000) is SeaBIOS ROM and cannot be written.
-+         * Its byte at 0xffffffff (0x00 = "add r/m8, r8") already crosses the
-+         * page boundary into page1 at 0x0, which is exactly the case
-+         * translator_ld must handle without aborting.  Reaching 0xfffffffe
-+         * runs the ROM's cld, then that add; the add's modrm is fetched from
-+         * [0x0], which is RAM, so build a short exit stub there:
-+         *
-+         *   [0x0] c0                 modrm -> "add al, al" (reg; EIP -> 1)
-+         *   [0x1] c3                 ret
-+         *
-+         * Note: this relies on the SeaBIOS byte at 0xffffffff being 0x00
-+         * (add r/m8, r8); if that ever changes, the stub below must move.
-+         *
-+         * Note that eax = 0 before and after the stub, so this becomes
-+         * the exit code of the test.
-+         */
-+        xor     %eax, %eax
-+        movw    $0xc3c0, (%eax)
-+        movl    $0xfffffffe, %ecx
-+        jmp     *%ecx
++    for (unsigned i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
++        int32_t x = values[i];
++        int32_t lo, hi;
 +
-+        .globl  main
-+        .type   main, @function
-+        .size   main, . - main
++        SMULL_CONST_LHS(1, x, lo, hi);
++        assert(x == s64(hi, lo));
++
++        SMULL_CONST_RHS(1, x, lo, hi);
++        assert(x == s64(hi, lo));
++
++        UMULL_CONST_LHS(1, x, lo, hi);
++        assert((uint32_t)x == u64(hi, lo));
++
++        SMULL_CONST_LHS(0, x, lo, hi);
++        assert(0 == u64(hi, lo));
++    }
++    return 0;
++}
+diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
+index 1b491cea026..5c2af2189c5 100644
+--- a/tests/tcg/arm/meson.build
++++ b/tests/tcg/arm/meson.build
+@@ -39,6 +39,7 @@ tests += {
+     'expected_output': 'fcvt.ref',
+   },
+   'pcalign-a32.c': {'cflags': ['-marm']},
++  'issue4448.c': {},
+ }
+ 
+ # Vector SHA1
 -- 
 2.53.0
 
