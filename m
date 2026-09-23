@@ -4,118 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA56C982EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE96C98307
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 10:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KYE-00031l-8C; Wed, 23 Sep 2026 06:50:10 -0400
+	id 1x9KaS-0003ix-Nm; Wed, 23 Sep 2026 06:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KYC-00031U-R6
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:50:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KaR-0003iN-8A
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:52:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KYA-0000lZ-Va
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:50:08 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9KaP-0001Ax-4C
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:52:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790160606;
+ s=mimecast20190719; t=1790160743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
- b=hA/as3uqsJJaU6aLIHHPGmvpi3jhTce5F7paYLZUQDix/1TmqEpw15pjVQgAwo7UA3gu7P
- Qgv5JA9q81i5Jw7VFsby5uH3WudAaVH7vfK1w7rVt16mVcc7pvpDnpjwMNL9SXG3Iz/lh5
- OAGarMZxuvqojLehOuQHcOi5oohzPxA=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
+ b=ORvmHwHg9Avk6Ji9gGypBBqKmw4DBEyY/uerKqaqYqRO5dR51m0KhudS8WmPWVKLut9VYW
+ 0+uC1eIltUo9+gLEo1atJJw5SNMvqikbKAnv717NJ92ORlCO6G6hgpjOcbwVoNRXNIiEoc
+ xKFxmwzJ/VDz2oBlPlVwJcTXgF2yNNg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-bEfhYjyqMr2CwekUryWgSg-1; Wed, 23 Sep 2026 06:50:04 -0400
-X-MC-Unique: bEfhYjyqMr2CwekUryWgSg-1
-X-Mimecast-MFC-AGG-ID: bEfhYjyqMr2CwekUryWgSg_1790160604
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-6a125f5b317so1082406a12.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:50:04 -0700 (PDT)
+ us-mta-443-rj2PNZ5iNVy8WG7gOPhlfg-1; Wed, 23 Sep 2026 06:52:22 -0400
+X-MC-Unique: rj2PNZ5iNVy8WG7gOPhlfg-1
+X-Mimecast-MFC-AGG-ID: rj2PNZ5iNVy8WG7gOPhlfg_1790160741
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-485866e0066so344161f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 03:52:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790160603; x=1790765403; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790160741; x=1790765541; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
- b=Eo43qlq0jFarfwfrzzvU2uN+rgmqKNQx5WkKX3CkbfcGiRHERsNzANelNFET9x7eJh
- rRS654MgZpetZIPmcyyVD90A3SflhmbFtzr0rLREF1CtRJb09u8heTy8V3BYKRJuc47L
- Ej5tkfXAo8K7Md7JhkE0hp4yiJK0zzpyORQvyOKmmE4K8s6h+A/LWGjyVNiMtab5CQCA
- lUzM/wUBJ07NT0C5aq/g8RkkPkULSgm4a5yXvKzFrd4cUZJGgn78zlJop3nfy73nmfyX
- 6wWQVD54z8dv6kuIPa/nDRfHW+v2CHWsy1oXlkTNvjhGkdL8wBR/Dq9o94Kj5dwejCt6
- PoEQ==
+ :content-type; bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
+ b=Wx8FT9psPevs4rNX6ATaWg6N7G10c0Wc1jOXcKGjn/bsaQN3cEFTINMnK51Ay8ey/r
+ mJE2Rbk8BaWRzYcF7YWUHX2XgkVUSvz5qNEFamzXrU01wIVVDubimU0TrR/8PU5dd/ao
+ 8qPNP9M5uPpkyCsTXrDZrVSGswxhcwIHUVCrrZMhVqhK0x9Is3gRoXWBcypeRkYfd5In
+ z36esiOKzMmAPHNWGzp6jlI1QSMVpmpkntLdhHLbDppe9ODnV363KMj2c+5Jsl0e1OYT
+ ISGwIPngcpYA27o9aafVex/eRr5KV6Ew6oSQbFxQ9HkANuikRqOSdAe7V6kh61GyBxyc
+ mkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790160603; x=1790765403;
+ d=1e100.net; s=20260707; t=1790160741; x=1790765541;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Nnii+uTnwTDNMmy4AkThStrLEsYMRKsHw4FY/I/9oWU=;
- b=ltkvw4mWtOegJhrz3qbY7KqkyHvpZn+01aBWlWt3OYUAPEsxfIVKEXWxsRgyLhi7+h
- VUwjsRNK0N6hcxFfPV+MEBvXXKes530LqjlxzJGyiTsEHcaXqlHGQvWjtWDgQbGWH3Gk
- Z5ZxIaXhAiIGZsGI9wEdQaQy1kMRhTHJo1lKevwwBRJVbkcjhuvQsFHT/7kszTsB8m8U
- 9fK1WXNhrelbgu/a+bKdgJ+5pjQBhhpWU6FD3Z/HO10vbT5StxQ0eLFDH2dEcqSkWpfI
- EhbaU/Op8N+XUvWICBWNGj6BwcQZjZkGlKpofi5HInItFTqRA8tZWrvJC6pAYPMibYbg
- 4d0A==
+ bh=h7vrrf8bMt4CnzPaEK76AE1JPIq1XxXJmo33XhIVtRo=;
+ b=PXMlCG+YGWOmltvGWusW23vEaKxgKSakt/DuQsNf1n7bsu2lfkXMUmYPmxTZr69wbZ
+ 7sYu3g/1NIz8MCv7mMmgcoE3nrmx21JzGDnQQn08/REsUYfQ7U9tZfKXoCgoHcs0/eNI
+ fMRaKnBnHeXDngH8/nQwm/3tVUyN9uFgIz2/4NjZnsxxZg5XHRfX6f1ttA3IpjWkWtq4
+ Ykfd8WhO1IT8zIeb9kNZiLTzhzyn9LFL19BzVoHVTxe5c6UnKM65c0km7nLmXkcDlija
+ 6cLPXwNQzQwkKT81Y+VP/ZoiiqY2LN3psDOOqkYIgZvkVYiPQK94SaK5nBNfyqsxcwxt
+ eFtQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzJ3Ictxlqw0tQWfFXEdZBLr51Dmc/Ib6Ux8GVz9ufrHt93ZuEdPZ7VegbDgaexz1KBObUrIP6xXCwA@nongnu.org
-X-Gm-Message-State: AFuF++mouqYfvXMsjdvEPMq5pAwuIXOLYcLrzYvNLMnQN62egqo7Hz54
- kBAs/rcWZ/uIzLCVBw3JTlgsxxRs+a+X5okO6LvmEOwyc2HFgK/nB72EiDz6LrEl+ZXrv+pn/Dy
- heiOiYo5ct9coJBlmveiq6PULUw3RnmlCcs/jgUc9dq6+Ud8wnz8vYaTI
-X-Gm-Gg: AYBFou2sOf+Ny1sW4dLSztW74WJoj3Mvf60M+9mPZIenqXS9tUbRn+H4O64hRLScr3g
- TNS75tHZ76dVcLJpq/P1A7L1VqPiehIsWl4KX+Ex6AF+MLp7fX2TvR0TVmF8MwFFzdC1Lnsk3KX
- umS9rkOjIfi9NU5NyGVjU1wh6uIMQeVk8O7BbLXo3fqjOh1Dqypo8U9eAIWX7xuqdBx2chIYjA1
- SrUlOKgqnI6Rj4xOhf12tZ1ScY1+26Es7StMg7vnIn5SVVdBfVDjXBj0GwMRTtpqEFhzeA56xSr
- 1RNaQwiqR49PFQuGtDSJWXYtgTTSQhFUKzvb57/pntU5z9KLHtJCwyKY+l0ugQY3G8j/fVobLxq
- PYuDm7r6ROVhl5qWYvW2gx/u39j4W/iIM+mdaBZCP7t8hfIT/gXtGTU5ViKSb/hvAQ8/M6ijGT8
- HzekgzjstkXcXKiS4revAqKN7/x+oRmQ==
-X-Received: by 2002:a05:6402:5514:b0:6aa:129a:1f70 with SMTP id
- 4fb4d7f45d1cf-6aab3b647e8mr1868526a12.43.1790160603533; 
- Wed, 23 Sep 2026 03:50:03 -0700 (PDT)
-X-Received: by 2002:a05:6402:5514:b0:6aa:129a:1f70 with SMTP id
- 4fb4d7f45d1cf-6aab3b647e8mr1868509a12.43.1790160603015; 
- Wed, 23 Sep 2026 03:50:03 -0700 (PDT)
+ AKwUvBy7Jo1vp6ZcY79ZbR0kEDKEoXY49x++k2aS//7o4eEny9121N3DsXW+1MUlYxohj2w0Ty4okvq5fl6Q@nongnu.org
+X-Gm-Message-State: AFuF++lwf19xaeGJmjcNtppSla44EZPxS8E8hBevljV7K2PCpZVdrG2O
+ cEYEKn3K2Oc2jB/yeGC27m3e0Ul0vwuYEcSQtJHV/3F4+mhHa8HkyJtQY/sN4TFfCvwWdtCriNu
+ PRoHO4cU/vji5S/ty3f+9zjWGuttXQdH9zuVZOQwGAsPl8fbIi9oHoDJf
+X-Gm-Gg: AYBFou3esLv9YjObDbXZDxRmpq1fYl2eGRrA57rvhRiam2hRNGotzHKCCGbJV/Szndq
+ pj62TatHKBv+SJu1jawBrarYDPqmKj70EDZfYGSyIGDqZyHDMyrwHaoB+iuPhlOjRS2uGYP/zkJ
+ XS5MNgb0Cw+OVAHDftPq+3OyacVF98R/EgnfkBnsOWHTV6+9XoMsBAGcAWPefI1cht5QuxQueyp
+ lDq+x44LACZFfqs5ycEqp8nLZrpwao5vgF10MMoyLFfQLkMKaUoa6ai50KMSlJlrrmpcvomLQuW
+ 3Ho0w1YkhhWwGD8SL/WzyKoE+lGvwFzrs6XAVDUKzkjjIWW2xZ7/Z8QbIb4jRWfJMSZOdIjSRlU
+ 7kucIXlWjamJfjQKuRCrSF3I5iOZXAmCzyti2i7gmGfYyE2rcD3V3yVBSuNR/xMCKrWZg1ozLmi
+ uUpl8y09X0MqaIeUJKIbyMwq75CDbeLQ==
+X-Received: by 2002:a05:6000:420c:b0:486:f9ea:796f with SMTP id
+ ffacd0b85a97d-488670b6fccmr3791150f8f.41.1790160741278; 
+ Wed, 23 Sep 2026 03:52:21 -0700 (PDT)
+X-Received: by 2002:a05:6000:420c:b0:486:f9ea:796f with SMTP id
+ ffacd0b85a97d-488670b6fccmr3791117f8f.41.1790160740949; 
+ Wed, 23 Sep 2026 03:52:20 -0700 (PDT)
 Received: from ?IPV6:2003:cf:d749:526e:3864:2ce3:24f2:e6d4?
  (p200300cfd749526e38642ce324f2e6d4.dip0.t-ipconnect.de.
  [2003:cf:d749:526e:3864:2ce3:24f2:e6d4])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aab38bd31bsm1367972a12.31.2026.09.23.03.50.01
+ ffacd0b85a97d-488682673bdsm6091331f8f.2.2026.09.23.03.52.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 03:50:02 -0700 (PDT)
-Message-ID: <d95d1349-277e-4f4e-b7f9-4946e7fca643@redhat.com>
-Date: Wed, 23 Sep 2026 12:50:00 +0200
+ Wed, 23 Sep 2026 03:52:19 -0700 (PDT)
+Message-ID: <2c3712c9-24ba-4657-9ef3-f835fec48afb@redhat.com>
+Date: Wed, 23 Sep 2026 12:52:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] block/accounting: Move latency_ns override down
-To: Kevin Wolf <kwolf@redhat.com>, Alberto Garcia <berto@igalia.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 0/9] block: BLOCK_IO_DELAY event
+To: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, John Snow
+ <jsnow@redhat.com>, "Denis V . Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260831135206.126184-9-hreitz@redhat.com> <20260903150842.GF825275@fedora>
- <292ff2f9-b3fe-423b-9b36-ada26904a617@redhat.com>
- <20260921204237.GD115897@fedora> <arJ8tNgp9tDtKkfO@redhat.com>
- <w51mrt9tn76.fsf@igalia.com> <arKIHIneJEkNNjRM@redhat.com>
+ <20260903140815.GC825275@fedora>
+ <8592119d-665d-482e-9502-8f4a1a69c10d@redhat.com>
+ <20260921204126.GC115897@fedora> <arKDQRZ7q7k0JvG1@redhat.com>
+ <20260922171838.GA231912@fedora>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <arKIHIneJEkNNjRM@redhat.com>
+In-Reply-To: <20260922171838.GA231912@fedora>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,27 +130,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.09.26 15:52, Kevin Wolf wrote:
-> Am 22.09.2026 um 15:44 hat Alberto Garcia geschrieben:
->> On Tue 22 Sep 2026 03:03:56 PM +02, Kevin Wolf wrote:
->>> Am 21.09.2026 um 22:42 hat Stefan Hajnoczi geschrieben:
->>>> On Wed, Sep 16, 2026 at 10:21:22AM +0200, Hanna Czenczek wrote:
->>> What's even stranger is that both things were introduced in the same
->>> commit. But it seems clearly related to 136 because the change was made
->>> right before the test was added.
->>>
->>> Berto, do you remember why you didn't rely just on clock_step?
->> No, sorry, I don't remember :-/ I guess I wasn't familiar with that
->> function? 136 was one of the first tests that I wrote.
-> I thought so at first, too, but then I saw that other places in the same
-> test do use it.
+On 22.09.26 19:18, Stefan Hajnoczi wrote:
+> On Tue, Sep 22, 2026 at 03:31:49PM +0200, Kevin Wolf wrote:
+>> Am 21.09.2026 um 22:41 hat Stefan Hajnoczi geschrieben:
+>>> On Wed, Sep 16, 2026 at 10:04:51AM +0200, Hanna Czenczek wrote:
+>>>> On 03.09.26 16:08, Stefan Hajnoczi wrote:
+>>>>> On Mon, Aug 31, 2026 at 03:51:56PM +0200, Hanna Czenczek wrote:
+>>>> The problem is that if the destructor has to be called explicitly, we may
+>>>> forget to do so; and accounting is done on the device emulation level, so
+>>>> there is no central place where the pairing of constructor and destructor
+>>>> would be obvious and trivial to verify.
+>>> This is the part I'm asking about: can accounting be done by the block
+>>> layer? There might be cases that are purely handled in device emulation
+>>> code without a call into the block layer. In that case the accounting
+>>> still needs to be done in device emulation code. But when device
+>>> emulation calls blk_aio_*(), it should not do accounting itself.
+>> Apart from cases where requests are completed entirely within the
+>> device (like for all block_acct_invalid() callers), there are also cases
+>> where a single device-level requests involves multiple backend-level
+>> requests. I was thinking of IDE TRIM initially, but actually I think
+>> splitting can happen for any request that uses the DMA helpers.
+>>
+>> Conversely, virtio-blk can merge requests, so you get a single request
+>> in the backend that covers multiple requests in the device.
+> Sticking to the requests as seen by the device seems like the cleanest
+> solution rather than cheating and counting host requests in some places.
 >
-> Anyway, thanks for the quick reply. Then let's just try out what breaks
-> if we change it. :-)
+> The idea to move the accounting into blk_aio_*() doesn't work well in
+> light of this.
 
-Yup, I’ll take a look.
+Does this mean you would be against separating delay monitoring from the 
+rest of accounting?
 
-(Thanks for chiming in, Berto!)
+Because to me that still sounds reasonable: To do delay monitoring in 
+the BB layer, separate from accounting cookies, to have a simple 
+lifecycle and timely reporting.
+
+(And as you did say, if one wants the guest-device-request-level delay 
+information, the histogram is there O:) )
 
 Hanna
 
