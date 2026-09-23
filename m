@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518D5C982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:24:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E41CC9830C
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MxM-0007dD-BB; Wed, 23 Sep 2026 09:24:17 -0400
+	id 1x9Mxf-0008HH-Mq; Wed, 23 Sep 2026 09:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9MtI-0001BX-Dj
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:06 -0400
-Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
+ id 1x9MtT-0001ZA-Jb
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:15 -0400
+Received: from mail-dl2-x10.google.com ([2607:f8b0:4864:38::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9MtF-00077I-Oc
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:04 -0400
-Received: by mail-dy2-x10.google.com with SMTP id
- 5a478bee46e88-33bb1a50f6fso374060eec.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:19:51 -0700 (PDT)
+ id 1x9MtP-0007AU-1a
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:15 -0400
+Received: by mail-dl2-x10.google.com with SMTP id
+ a92af1059eb24-142dd04f7f2so1046254c88.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169590; x=1790774390; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169609; x=1790774409; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kG8T0B41yOsfKs7+mPQWY4VwYoc5DWh5xeT8YOfa6ig=;
- b=Rf+Yvq5nO4FU9KCawZnU1bXk+W2sDuvRonTLklOJPhlu2FuHmCP+r2uM/IQoD3iLiX
- ivx5jk2oJC1eabEg7QFKaZCnaceZLuzx2XMICjp0yZ64tBH+U4YnBlKOj0tBzxmtho7c
- i9dH1ZN+4FJXV58dOxW9mMm/DjOKJNh2R+6XyL/x0N3IBGaFiymTUhpIfV+Urk1Xu0sI
- yiZT6JTW7jOG/cuC2Wzn+9WTa5LGd+W8+7WqwYhOgA5oRUHzJgj3V3tNtgHsf6gwuNSN
- svEjsxPHwvBvSEmLnhjMMs/1xyoRvUs3M93Ng8FBXo8P43894feI7ONvEpaR2R3WMSOu
- JL0A==
+ bh=R0NEODEUKGZurnafAxCJE2mvY+onJpkfc8axTrsuyg4=;
+ b=N4PgMxnHCgixIYJ1dOhVrAeLsx8E4uF1+xPqxwkY/8p5VhxuBqCjOqEhIzKseDSep6
+ gaSzfu0ecTfbzVILJD4ZnfD+5vJBd7/wQDmfFrG5nKrlqB6+cuBtRWTvdvxM0sgCsOiM
+ 6eSMnz3chuHJAH0seal+HhqONwinWbZSVDn280OnLVXWQoIDgQIsRvFVc0W1RjU8wNFH
+ royAG8Cvwks901A6hQoLjfVLn0C1K0Vs3/eLmEkJFdL9DT61YldOYHx5YWp9evQN0L8F
+ bv/GEEomE/YMTzX2EPOqUVZUIaIFtyp6DLvwLy+eh1IG9OFJWt90j9Yv5rbagSMmECOh
+ Ye5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169590; x=1790774390;
+ d=1e100.net; s=20260707; t=1790169609; x=1790774409;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kG8T0B41yOsfKs7+mPQWY4VwYoc5DWh5xeT8YOfa6ig=;
- b=g6BDdlKKMKnb3paQG2LiLb/fj1iJhHyNiFlgYsGCxc8g3ug3X9JPEZ6IecGH5R+EP9
- dn15Tazy/86u4jF2J4biAvPjBY+zv0ramWtqINRO2nAdcFgT1gjphyg86TKmFrqFiKgM
- d4/qBWhZqchYBZnWiPd6xbFhaEA9Tqyl/hSeVSBvJLroc7wyVrXxPcyuWp+3BI/G/dYQ
- RQwx1x2yAca2FOeqYEc2xV1R6sVUPWxj77SAVqv+nR9wx14OWJX58DZBNm+QoR6TJzlh
- M7dY2mw6jemDggwIRz7iEQKe6s4z2wLDuzFQKYvfNxuhkH2ODrcOlCDMNwyPe/oVwFE2
- MF4A==
-X-Gm-Message-State: AFuF++lx9smIbRoGqLzyF99cYjmKxjQwyEJyuK2tZuCc53bM5vOVX131
- 7+QaCkfJZkMl1FeP39NfbakbgvCWb+OR/bjzzEA4DcB/arO7k+YSQ4zycDq6BpWvV50=
-X-Gm-Gg: AYBFou0i6FLCl90z2sMti177VPW1jAv6MkHwvHJUYpt1KiDar90rz5Po20tqzYtaaBU
- mmGIQtD5vq5gXbUMhjeBuWSLvcn26srQ1JIUD5iuRnuiUbk3Z9Ik/2G6qUYtQ9/MJzRvQmkhq0n
- yzer4S22YtR6kJMKu3/6WfiEdISVt2z0TwetkWIZhd/R3tWaH7AAOeobMG2InUEzDIgR/1J5T5N
- 9Uljo8bSx9pwGjTOiQMQBpynn/SC3qTvrUfKuTMDL+dp7bBwaveORrgI8sKT+FtWVfMo1r+Xskn
- vgzS79wquaKe2h5y/JlRsN4vP0JxVDEU8pza7SXYt3n7B680EXP9Bk3LlrvzAc8upBgWGTPSRGb
- x59teN/UOzDcmgN/CikemGK4xBm4Gg/KXb8ASOtpI4zO0fSUnjORyEa7OdvNt6WRgQ3hRTPM9QV
- oRzT86fOJkDz+VKzhbJvbcpxgcTk0dKeYMh1mUdeaLTu8L3XPZv0WjedSvFJd3CNAZrisaCuFxC
- tg28kIkD/1Rc1jEoqY1jk/NKwirCEM=
-X-Received: by 2002:a05:693c:87ce:20b0:33e:5cb6:249e with SMTP id
- 5a478bee46e88-33e8ddc761cmr2337090eec.39.1790169589850; 
- Wed, 23 Sep 2026 06:19:49 -0700 (PDT)
+ bh=R0NEODEUKGZurnafAxCJE2mvY+onJpkfc8axTrsuyg4=;
+ b=rM8T52DLjWT2Wb6PKwRES72lRB0asTyr0wLyluSR1fsoRTn/B4MBqbgZYPh9nQOUqp
+ 8SUdEhALeb8yCA3edQQVdye3GVOpjsRQOq2Jt0kL50yAq6rcL8ZIgF3GcWYJz4C1xTQ4
+ PCchJT9hA4mK2AERc5kwNRoNI+NZU8NJFhjb3fefE8YpK2L3STuuOjOUNJSAnGnBtfJa
+ mUfl2YkFKDSkxohHtDwYElgsZ/LVMxFb1tv6FUVxkxPG7l1CUzvGbi/5hb5iPXEG3lfu
+ FmITNTByOAupAT0mScNANWRF577m9Wbq0XtEAFSLVMHRr05yU9CconJT4OBrIkkg1JP1
+ tJfg==
+X-Gm-Message-State: AFuF++kYQH83k7JHJmHguBfbTxX3vvhvlISHow3igjJ0XJPpJB1Tc0u3
+ 41mKJyqEXip+msIZanHUs0XiyqIncvQPG4OiKh8+BlDhM8aVeOwk014XeVNu3ehmWeA=
+X-Gm-Gg: AYBFou1O9xT9xBe6le7OgqD7SjzfW8vCPh3jM1SlNWbkGu856TJXn7qpOL3OEBWuBhN
+ yPLRTzbb+OPwTK4Rh7osg4zZjNiWJcemt+KwYk59iLMckQl+G6SXNrkiOXbEoFb7ierJw51Txyh
+ HKoUnt1Ouaymo4WAUQb6f5eb3mia3jZU2TjgfdM7giASBOCETi2nrINHzsiWHenG+69Z6IsDj5g
+ /LpkpiZhQE1bx3+kjdmd/JmDq53hnhw+OJO/GQdyX7e8bBMqbk8QXr1+ZcUKPNpmFsS1MH7Mscx
+ e4g2hDHwhS8ar75akiqe1hpJAIlXyiV5M6WDaBqYJpq3DJO53z2c+yDV4rRRX4NZvEZKbAXCPBs
+ 4AWqyOl4ocR0jsZjWo5oOPGiQNNUKp2f9SlRKR523s0UxY0tOGKszZH0y4R7NdulLJ9Jmf/G565
+ HFzEsid635K01x+CF6ShBQ26iHqgNxakHwY4ZMKAPKxaRBZrM4FVGnEm9dWN7OEf9Fl9ZJxOtt5
+ eLGY7aPzTNcRZoFtivZ77MZH3ogr74=
+X-Received: by 2002:a05:693c:60cd:b0:33b:e306:2e27 with SMTP id
+ 5a478bee46e88-33ea3eb055bmr2839410eec.5.1790169609054; 
+ Wed, 23 Sep 2026 06:20:09 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.19.38
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.19.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:19:44 -0700 (PDT)
+ Wed, 23 Sep 2026 06:20:06 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,23 +95,23 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 017/114] module: add before/after hooks and
- module_call_init_fn
-Date: Wed, 23 Sep 2026 21:14:51 +0800
-Message-ID: <20260923131635.1894-18-luoyonggang@gmail.com>
+Subject: [PATCH v3 019/114] qom: inherit is_available and filter after
+ MODULE_INIT_QOM
+Date: Wed, 23 Sep 2026 21:14:53 +0800
+Message-ID: <20260923131635.1894-20-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:38::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,168 +127,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-module_call_init just walks the list. Add register_module_hooks
-so one init type can wrap that walk with before and after
-ModuleInitHook callbacks, and add module_call_init_fn so a single
-function takes the same path.
+Parents are not all registered at type_register time, so a type
+cannot inherit is_available then.
 
-module_call_init passes MODULE_INIT_PHASE_ON. A DSO or
-module_call_init_fn passes DSO_BEFORE until module_call_init
-finishes, then DSO_AFTER.
+After MODULE_INIT_QOM, and after a late DSO, inherit the callback
+from the parent, drop types that fail target_info(), and report a
+missing parent. Skip that filter for MODULE_INIT_PHASE_DSO_BEFORE.
+The inherit walk colors each type once, so it is O(N) in the number
+of types. TYPE_INTERFACE and TYPE_OBJECT use target_is_any().
+type_register_static aborts if it runs outside the QOM before/after
+hooks.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/qemu/module.h | 18 +++++++++++
- util/module.c         | 70 ++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 84 insertions(+), 4 deletions(-)
+ include/qemu/target-info.h |   9 +++
+ qom/object.c               | 134 +++++++++++++++++++++++++++++++++++--
+ target-info.c              |   6 ++
+ 3 files changed, 145 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/module.h b/include/qemu/module.h
-index 34e05c75348..c10e32731fa 100644
---- a/include/qemu/module.h
-+++ b/include/qemu/module.h
-@@ -60,6 +60,20 @@ typedef enum {
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 440da63e6cf..790fc74e9d3 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -53,6 +53,15 @@ const char *target_cpu_type(void);
+  */
+ bool target_big_endian(void);
  
- typedef void (ModuleInitFn)(void);
- 
-+/*
-+ * Where one module_init_run sits relative to module_call_init().
-+ * DSO_BEFORE: a DSO or module_call_init_fn before module_call_init().
-+ * ON: module_call_init() itself.
-+ * DSO_AFTER: a DSO or module_call_init_fn after module_call_init().
-+ */
-+typedef enum ModuleInitPhase {
-+    MODULE_INIT_PHASE_DSO_BEFORE,
-+    MODULE_INIT_PHASE_ON,
-+    MODULE_INIT_PHASE_DSO_AFTER,
-+} ModuleInitPhase;
-+
-+typedef bool (ModuleInitHook)(ModuleInitPhase phase, Error **errp);
-+
- typedef struct ModuleEntry {
-     ModuleInitFn *init;
-     QTAILQ_ENTRY(ModuleEntry) node;
-@@ -82,6 +96,10 @@ void register_module_init(ModuleEntry *e, module_init_type type);
- void register_dso_module_init(ModuleEntry *e, module_init_type type);
- 
- void module_call_init(module_init_type type);
-+void module_call_init_fn(module_init_type type, ModuleInitFn *init, Error **errp);
-+
-+void register_module_hooks(module_init_type type,
-+                           ModuleInitHook *before, ModuleInitHook *after);
- 
- /*
-  * module_load: attempt to load a module from a set of directories
-diff --git a/util/module.c b/util/module.c
-index 6c5980542f6..a007ecb53a6 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -32,6 +32,8 @@ typedef QTAILQ_HEAD(, ModuleEntry) ModuleEntryList;
- typedef struct ModuleInit
- {
-     module_init_type type;
-+    ModuleInitHook *before;
-+    ModuleInitHook *after;
-     ModuleEntryList list;
-     ModuleEntryList dso_list;
-     bool done;
-@@ -88,14 +90,54 @@ void register_dso_module_init(ModuleEntry *e, module_init_type type)
-     module_init_add(&find_type(type)->dso_list, e);
- }
- 
--static void module_init_run(ModuleInit *m, ModuleEntryList *list)
 +/**
-+ * register_module_hooks:
-+ * @type: init list
-+ * @before: runs before every registered init for @type
-+ * @after: runs after every registered init for @type
++ * target_is_any:
++ * @ti: TargetInfo to inspect
 + *
-+ * One ModuleInit holds both callbacks so before and after stay 1:1.
-+ * module_call_init(@type) passes MODULE_INIT_PHASE_ON. A DSO or
-+ * module_call_init_fn passes DSO_BEFORE if module_call_init() has not
-+ * finished, otherwise DSO_AFTER.
++ * Returns true for every TargetInfo. Usable as TypeInfo.is_available
++ * for types that are not target-scoped (TYPE_OBJECT).
 + */
-+void register_module_hooks(module_init_type type,
-+                           ModuleInitHook *before, ModuleInitHook *after)
++bool target_is_any(const TargetInfo *ti);
++
+ /**
+  * target_is_base_arm:
+  * @ti: TargetInfo to inspect
+diff --git a/qom/object.c b/qom/object.c
+index a3e75927e82..d0f9242ac99 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -14,6 +14,7 @@
+ #include "qapi/error.h"
+ #include "qom/compat-properties.h"
+ #include "qom/object.h"
++#include "qemu/module.h"
+ #include "qom/object_interfaces.h"
+ #include "qemu/target-info-qapi.h"
+ #include "qemu/cutils.h"
+@@ -40,6 +41,7 @@
+ #include "qobject/qnum.h"
+ #include "qobject/qstring.h"
+ #include "qemu/error-report.h"
++#include "qemu/queue.h"
+ 
+ #define MAX_INTERFACES 32
+ 
+@@ -81,11 +83,16 @@ struct TypeImpl
+ 
+     int num_interfaces;
+     InterfaceImpl interfaces[MAX_INTERFACES];
++
++    QTAILQ_ENTRY(TypeImpl) register_node;
+ };
+ 
+ static Type type_interface;
+ 
+ static GHashTable *type_table;
++static QTAILQ_HEAD(, TypeImpl) type_register_list =
++    QTAILQ_HEAD_INITIALIZER(type_register_list);
++static bool type_qom_registering;
+ 
+ static bool enumerating_types;
+ 
+@@ -95,6 +102,21 @@ static void type_table_add(TypeImpl *ti)
+     g_hash_table_insert(type_table, (void *)ti->name, ti);
+ }
+ 
++static void type_table_remove(TypeImpl *ti)
 +{
-+    ModuleInit *m = find_type(type);
++    int i;
 +
-+    g_assert(before);
-+    g_assert(after);
-+    g_assert(!m->before && !m->after);
-+
-+    m->before = before;
-+    m->after = after;
++    assert(!enumerating_types);
++    g_hash_table_remove(type_table, (void *)ti->name);
++    QTAILQ_REMOVE(&type_register_list, ti, register_node);
++    g_free((char *)ti->name);
++    g_free((char *)ti->parent);
++    for (i = 0; i < ti->num_interfaces; i++) {
++        g_free((char *)ti->interfaces[i].typename);
++    }
++    g_free(ti);
 +}
 +
-+static bool module_init_run(ModuleInit *m, ModuleEntryList *list, bool is_dso,
-+                            Error **errp)
+ static TypeImpl *type_table_lookup(const char *name)
  {
-     ModuleEntry *e;
-+    ModuleInitPhase phase;
-+
-+    if (!is_dso) {
-+        phase = MODULE_INIT_PHASE_ON;
-+    } else if (m->done) {
-+        phase = MODULE_INIT_PHASE_DSO_AFTER;
-+    } else {
-+        phase = MODULE_INIT_PHASE_DSO_BEFORE;
-+    }
- 
--    (void)m;
-+    if (m->before && !m->before(phase, errp)) {
-+        return false;
-+    }
-     QTAILQ_FOREACH(e, list, node) {
-         e->init();
-     }
-+    if (m->after && !m->after(phase, errp)) {
-+        return false;
-+    }
-+    return true;
- }
- 
- void module_call_init(module_init_type type)
-@@ -106,10 +148,27 @@ void module_call_init(module_init_type type)
-         return;
+     return g_hash_table_lookup(type_table, name);
+@@ -171,18 +193,20 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+         abort();
      }
  
--    module_init_run(m, &m->list);
-+    module_init_run(m, &m->list, false, &error_abort);
-     m->done = true;
+-    if (info->is_available && !info->is_available(target_info())) {
+-        return NULL;
+-    }
+-
+     ti = type_new(info);
+ 
+     type_table_add(ti);
++    QTAILQ_INSERT_TAIL(&type_register_list, ti, register_node);
+     return ti;
  }
  
-+/*
-+ * Run a single init through @type's before/after hooks with is_dso=true.
-+ * May run before or after module_call_init.
-+ */
-+void module_call_init_fn(module_init_type type, ModuleInitFn *init, Error **errp)
+ TypeImpl *type_register_static(const TypeInfo *info)
+ {
++    if (!type_qom_registering) {
++        fprintf(stderr, "Registering '%s' outside QOM before/after\n",
++                info->name);
++        abort();
++    }
+     assert(info->parent);
+     return type_register_internal(info);
+ }
+@@ -316,6 +340,8 @@ static void type_initialize_interface(TypeImpl *ti, TypeImpl *interface_type,
+ 
+     iface_impl = type_new(&info);
+     iface_impl->parent_type = parent_type;
++    g_assert(interface_type->is_available);
++    iface_impl->is_available = interface_type->is_available;
+     type_initialize(iface_impl);
+     g_free((char *)info.name);
+ 
+@@ -1159,6 +1185,7 @@ bool object_class_is_secure(ObjectClass *klass)
+ 
+ TypeIsAvailable *object_class_get_is_available(ObjectClass *klass)
+ {
++    g_assert(klass->type->is_available);
+     return klass->type->is_available;
+ }
+ 
+@@ -3297,12 +3324,109 @@ static void object_class_init(ObjectClass *klass, const void *data)
+                                   NULL);
+ }
+ 
++static bool type_qom_before(ModuleInitPhase phase, Error **errp)
 +{
-+    ModuleInit *m = find_type(type);
-+    ModuleEntry e = {
-+        .init = init,
-+    };
-+    ModuleEntryList list;
++    (void)errp;
++    (void)phase;
 +
-+    QTAILQ_INIT(&list);
-+    QTAILQ_INSERT_TAIL(&list, &e, node);
-+    module_init_run(m, &list, true, errp);
++    type_qom_registering = true;
++    return true;
 +}
 +
- #ifdef CONFIG_MODULES
- 
- static const QemuModinfo module_info_stub[] = { {
-@@ -201,7 +260,10 @@ static bool module_load_dso(const char *fname, bool export_symbols,
-             continue;
-         }
- 
--        module_init_run(m, &m->dso_list);
-+        if (!module_init_run(m, &m->dso_list, true, errp)) {
-+            empty_dso_lists();
++enum TypeVisitColor {
++    TYPE_VISIT_GRAY = 1,
++    TYPE_VISIT_BLACK,
++};
++
++static bool type_update_is_available(TypeImpl *type, GHashTable *visit,
++                                     Error **errp)
++{
++    TypeImpl *parent;
++    gpointer color;
++
++    color = g_hash_table_lookup(visit, type);
++    if (color == GINT_TO_POINTER(TYPE_VISIT_BLACK)) {
++        return true;
++    }
++    if (color == GINT_TO_POINTER(TYPE_VISIT_GRAY)) {
++        error_setg(errp, "Type '%s' has a cyclic parent chain",
++                   type->name);
++        return false;
++    }
++
++    g_hash_table_insert(visit, type, GINT_TO_POINTER(TYPE_VISIT_GRAY));
++
++    parent = type_get_parent(type);
++    if (!parent) {
++        if (strcmp(type->name, TYPE_OBJECT) != 0 &&
++            strcmp(type->name, TYPE_INTERFACE) != 0) {
++            error_setg(errp,
++                       "Type '%s' does not inherit from %s or %s",
++                       type->name, TYPE_OBJECT, TYPE_INTERFACE);
 +            return false;
 +        }
-     }
-     trace_module_load_module(fname);
-     empty_dso_lists();
++    } else {
++        if (!type_update_is_available(parent, visit, errp)) {
++            return false;
++        }
++        if (!type->is_available) {
++            type->is_available = parent->is_available;
++        }
++    }
++
++    g_hash_table_insert(visit, type, GINT_TO_POINTER(TYPE_VISIT_BLACK));
++    return true;
++}
++
++static bool type_qom_after(ModuleInitPhase phase, Error **errp)
++{
++    TypeImpl *type, *next;
++    GHashTable *visit;
++    Error *local_err = NULL;
++
++    type_qom_registering = false;
++    if (phase == MODULE_INIT_PHASE_DSO_BEFORE) {
++        return true;
++    }
++
++    visit = g_hash_table_new(NULL, NULL);
++    QTAILQ_FOREACH(type, &type_register_list, register_node) {
++        if (!type_update_is_available(type, visit, &local_err)) {
++            break;
++        }
++    }
++    g_hash_table_destroy(visit);
++
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return false;
++    }
++
++    QTAILQ_FOREACH_SAFE(type, &type_register_list, register_node, next) {
++        g_assert(type->is_available);
++        if (!type->is_available(target_info())) {
++            type_table_remove(type);
++        }
++    }
++
++    QTAILQ_FOREACH(type, &type_register_list, register_node) {
++        if (type->parent && !type_table_lookup(type->parent)) {
++            error_setg(errp, "Type '%s' is missing its parent '%s'",
++                       type->name, type->parent);
++            return false;
++        }
++    }
++
++    return true;
++}
++
+ static void __attribute__((constructor)) register_types(void)
+ {
+     static const TypeInfo interface_info = {
+         .name = TYPE_INTERFACE,
+         .class_size = sizeof(InterfaceClass),
+         .abstract = true,
++        .is_available = target_is_any,
+     };
+ 
+     static const TypeInfo object_info = {
+@@ -3310,9 +3434,11 @@ static void __attribute__((constructor)) register_types(void)
+         .instance_size = sizeof(Object),
+         .class_init = object_class_init,
+         .abstract = true,
++        .is_available = target_is_any,
+     };
+ 
+     type_table = g_hash_table_new(g_str_hash, g_str_equal);
+     type_interface = type_register_internal(&interface_info);
+     type_register_internal(&object_info);
++    register_module_hooks(MODULE_INIT_QOM, type_qom_before, type_qom_after);
+ }
+diff --git a/target-info.c b/target-info.c
+index 36f75ece36f..a9ab4b465d3 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -96,6 +96,12 @@ bool target_big_endian(void)
+     return target_endian_mode() == ENDIAN_MODE_BIG;
+ }
+ 
++bool target_is_any(const TargetInfo *ti)
++{
++    (void)ti;
++    return true;
++}
++
+ bool target_is_base_arm(const TargetInfo *ti)
+ {
+     switch (ti->target_arch) {
 -- 
 2.52.0.windows.1
 
