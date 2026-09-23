@@ -4,109 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB508C9830E
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805DDC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9PjX-0000rx-UH; Wed, 23 Sep 2026 12:22:11 -0400
+	id 1x9Pk5-0001M9-FN; Wed, 23 Sep 2026 12:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x9PjW-0000qt-7O
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:22:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x9Pk3-0001E7-3r; Wed, 23 Sep 2026 12:22:43 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1x9PjU-0004LO-L5
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:22:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790180527;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H4D47+Kf84D/M5AvyLwBNOHI4bu1uWl4MXTV5Y9W2XM=;
- b=EmfFWbT1uSnybtncyvEC7BHamgDrRlgTeZUOOAdl4WtoXRhHvcbW1ST/ZpjAZwLHqQjMnV
- cAeH3K61B4OIL/QvJzuxsPkkQgciggGtOL3vsx0i97qpktvGUB89YodnhQ+KNPhEQe7L5p
- xLzf+hpoEzYsCXSABI/yCVnjEuZmkuI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-360-kX70Z55JOoS4hyRpMyc7Ow-1; Wed, 23 Sep 2026 12:22:05 -0400
-X-MC-Unique: kX70Z55JOoS4hyRpMyc7Ow-1
-X-Mimecast-MFC-AGG-ID: kX70Z55JOoS4hyRpMyc7Ow_1790180525
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48706ee8fbaso826562f8f.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 09:22:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790180524; x=1790785324;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=H4D47+Kf84D/M5AvyLwBNOHI4bu1uWl4MXTV5Y9W2XM=;
- b=ZD6u7s2cjP4dWQ+MPENvghks40FAvXkJ/E0hiaebwxTRCQNYpLMcPAhWYTBsOIETjY
- pStmZaCfuFWWvffRQaD9D8CjL0dmMg8wGoTiW1FjMJK5k+Vz9ew7EgMpKqqSENNQXFbl
- vfrmnFvyHGkHvv0KpdHRIi1Hhzlic19OMEH8x6V4z9THCUAhyWwHP9z2tty/D8RhZY7X
- HAWJ5izSjd/oRmDZ0Gz5o9lcNP6Xbvs45b/kQMcZvp11gVtunruDY5TlAMHisbLTuSg5
- oOhsZDiSqw7MSUIKmiEfDbzNrv07uSkYux5wNszSiAgMPebyMjCD+PVhJTB9i8bZ4fSy
- VcfQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxOaB1qm2XqroIXs4DyCTNyNsmkpZMy8pIwV32Y6Fz6GxgIpDrwGp8ZPlTJeFYF2YcZLKGU7qErvC3S@nongnu.org
-X-Gm-Message-State: AFuF++l7urDrupVtNC4zJd4okUZ7W+LK9OZ3Fa6FyidWkKE49zwOi415
- stpDxBhxTSSroXoIJaIxAVNqe9GCVj7eeUK14sTYy6mfQ8pNvldrgSAa8UKdWLQRTH0ifr8RAco
- mItkXWMLW2cGp2tKVyyJIbmGdMCDpFM9FISuT+vmZ3dkE/wYUGm41S3l5Kfrr3feJ
-X-Gm-Gg: AYBFou2PlMG2Ziupn0uhBAkFfWEjA+RelrZIQBII7oEukXRAdtsCtvFgGVDqxBXbfsh
- DMgiqYpGERLYSffsz3dhdONx7otaz+dRD8buRZtZPunEOAEgCsPO9C7VJDup9FUeDXRy7db8aSF
- edGM+xsXeGenEn3WYmfzSqP9z7E29fQCPZsmSPwtnAnAMOhxHgJtZTeBPIXOt62T8tCpSm8wvU2
- B0in8aQ76ozEO1AIZnqvwPFLI7CkWrL8T3CYEsmN5OY1p0qJFLopS8p6RW43J224OBSvzCoa+dF
- 0bDqlCGumZjchUcCKnJiQjknZjpjYSni5n8HxXJ/subuPJeN6Ki/X0nhX/RO3Rs6/vvZq1qgbG8
- x1HAA+PRmuhia6Ug4JA39dbt2l07ELtjREp1cta5GsyEEl3pb
-X-Received: by 2002:a05:600c:1f8c:b0:49c:fc6e:a3d2 with SMTP id
- 5b1f17b1804b1-49fdf12f2b5mr49459805e9.17.1790180524567; 
- Wed, 23 Sep 2026 09:22:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:1f8c:b0:49c:fc6e:a3d2 with SMTP id
- 5b1f17b1804b1-49fdf12f2b5mr49459355e9.17.1790180524146; 
- Wed, 23 Sep 2026 09:22:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fde18555bsm91240255e9.2.2026.09.23.09.22.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 09:22:03 -0700 (PDT)
-Message-ID: <59aff568-9101-4f0a-ae62-61a32b8c1935@redhat.com>
-Date: Wed, 23 Sep 2026 18:22:01 +0200
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x9Pk1-0004Nz-7b; Wed, 23 Sep 2026 12:22:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cLJipVWnT2xOI68rnibkukUhsq+O04kGnytHnxiQpMM+grH1lpUax5LfDgtyhhsgBM8rYQaUn5yLt+7zk4WCQfEkQlP95QFkks85ujMbJ6N+UBqic0OfTXzb2A0TQlHey0n+tiaQ6wZB+q8ZVSZv5/b+O0Vib5DaSMCaKVem0nRER8WAaD5DUrWUXQ7ZNhjiiJaaE1CNp+M9UcKapnbCKmgGI1c27yROLoj/fI7LUhJiOEZQCleuzDmIq+pYgXcPk6j4IQFkDZ1fEXBfiXQtEEfQT95S+Hp4GMSYPsg2YK/WB1N48WPLSyGww0/FMW1Ku99DqSmRj7SEfli3VcEWAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rdBVVSL2OTfpKUgWBqjglmbAnUZ8M9bLPGg1lP1xKMU=;
+ b=LQqc2FYgfcCSBvPt9++bZlzlOlze1aEkFWMMPsYKyiH5fKYSQ3UNYSWfeypC1np34v1VVEU34egcFsEOiLutd3An1Ae8AXjo4BLxvajqglhc7BBpqTc0x/LWxdeGO7klN0cuqfx2yFAOeZFrTbg5KOey0FTZIckBtXH6t8vQa+r9xnfhuSsnF2d/XI/7jKmepKuUyQmAvXzSb5EP3Jx+ZaKzb1NbMaB3PlHW7iFyITEq0Qjv8WicyWiI+iU5qx+SaK6yENg8RBXmrX5YweK3ndV33vAHkvq+XePiYaVc3ssxLnE4Eyn4MkeAmBqJpHBsdneA9arSmwIcUo54WjVQiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rdBVVSL2OTfpKUgWBqjglmbAnUZ8M9bLPGg1lP1xKMU=;
+ b=ZWMOXovonF3azpTRJEcKJJ2QJGqHtRT2OAYog48C5AvOh/I+4aT2z//RPj0h2/PaIKUAZOdONdNUjhdjwST3QvZE2+fF2TSZxw5lbP/pMEJJmfbdUACg1bB9K6KqIA1b140fGC4F3pMqlyFied3iY8qtviivLqV+xpuNdfhtcVoMhv+anuXzwyp05BLLeLg8kTh02UjI/CSr+JryoMAF5IAhMAt6MAUwtSOvEcSAULrFQ7YrCaMRWNbPaoGajDS/SkEGYl2gF7fBS7B9d7lFGj1NSba6zgqhHYhJ45d0ESv7v9ipI+658QS4eH203dfBGmgpE3cIUyieSbSkYM40vQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by DB9PR08MB6635.eurprd08.prod.outlook.com
+ (2603:10a6:10:254::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.17; Wed, 23 Sep
+ 2026 16:22:35 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 16:22:35 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ vsementsov@yandex-team.ru, den@openvz.org, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH v2] block: allocate aligned write buffer for 'truncate -m full'
+Date: Wed, 23 Sep 2026 19:22:24 +0300
+Message-ID: <20260923162224.34946-1-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR07CA0287.eurprd07.prod.outlook.com
+ (2603:10a6:800:130::15) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 01/25] target/arm: expose SYSREG_ props for
- REVIDR_EL1 and AIDR_EL1
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev
-Cc: cohuck@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
- armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
- shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-2-khushit.shah@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260921123249.1708067-2-khushit.shah@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB6635:EE_
+X-MS-Office365-Filtering-Correlation-Id: 458db3e1-400d-443a-6a56-08df198ee079
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|376014|52116014|1800799024|38350700014|10067099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: 03udcEvBtCmFMohmbIkiCgBHIqauUtPVaPDBICcd0/LDB48AMVdJJWfNh4MQAIdNiKqnC4c9TGstFioZ6A21LGvxeJ51IVdmkdJHPthHquTdqY9M7PaFzSy4zUvwNeM1GAF4YoaCexhtfCkci3cIRoVwl9rqw+E32TSKTp8KvKFoh/thfkk8QRP+MnJLltGlRrALhiEmT/q6fQZzknBBp6kjaP6UtUwN7WUzQrn42NO8L0/btUgD/cwKN/4Rlt9YhOQGD6V3vtpmfmArRUIcOgtubBMVJQPPduR0GluyM2ddkk+yixRq/9pQVnlEnyJGEbHgCOueaOUoXlK46KrgxLfW9AqdPcHokTlpMV3wics4neMzzC0+2r56pwlGEeLwfzSWYSreNF8kJM15gpNEP1H4HDfE+/nGe7I/w3hlbW12eJ67LlaMV91M6tURmud62WTgf1UIyg0tbsgJety0UHtIGKesFOqVQ319k6ziRtlmGPxEdxvqGnD8+1VfJQGEoI941LeFLtOC3Jf1Zic4vr+R5Cwhcl4zCYTuq/8c8Nyx66KeAi3gGjMuuP71NWQjPKBOcosmstssbxPAbwzQz67Q2UQOHjua42fAxJEZIdRjHsaLrth4qHXskayWsnzF5l74nzI1rcu8nwnHVtt0Mw8Dyx7SL4M4e6ZWh6ygTBQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(376014)(52116014)(1800799024)(38350700014)(10067099003)(56012099006)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3nHfg6PmAZfbnzH+xRqigKJh0a31J9CUkhnVozoX9g9bg/Rst1KVidoUUf5m?=
+ =?us-ascii?Q?LF2qQGQzUuTTP0MqHw7/Fn10xOAFrT12QcGSSqXEouYplaprVX8Skuc1Ood8?=
+ =?us-ascii?Q?8JfvWEwic3lNgUrDyGiRF2KorM3un7skoFzDHRwx2HiGSnS4KRNpANay1Z/7?=
+ =?us-ascii?Q?nkUIgIkwo/pmDflnSscb/av/yRMbTuFTY8aIrCqZ55trQ6P1Rj8ep8OtCWap?=
+ =?us-ascii?Q?WL/pgmglras4DrCk/jBUsuEi7qzR5qrJy0JPuc1tn1FDKs3sUpPlrwSTvxOB?=
+ =?us-ascii?Q?I3S1AZBSu7ggUgJOPCRZ+J18YbPBrLS9/eTQggg4XLygtgnZ/2pKLIVxOtUo?=
+ =?us-ascii?Q?nXalj7LsqNK/+b/legBzVmG44uA7tk+pNvYg03UdiOKi+hCiEwl2lzUS0iio?=
+ =?us-ascii?Q?kGK0/xHYxcCPKdxBgWIrzZ3IX/wnnVHKXqC67EZhuZIPFd4Kxk5iptXowJCH?=
+ =?us-ascii?Q?NitOu/Q5P1kyP0SqDUITNF/Y3bWmM+ay4RLw7r3mt4gEBRnu/M9VcQquhbVY?=
+ =?us-ascii?Q?TTyr5TGRSdBoCnM+CuqznEG7tr8jKvZ4KpGu9A3rhVASBmdE/0X1XVEF5SUo?=
+ =?us-ascii?Q?1zJfyME4wcVXyXI28qzIX030DUOD4TtH/T8pGag0l3Qvvm9HCidFGMmt5zWH?=
+ =?us-ascii?Q?u1PxY5LN7R9xF6bjolmXkS8p7/7ZMp5PZlmpot+0gARxKJNu9e6RNzkJIJIY?=
+ =?us-ascii?Q?Flg4MooAOdJrxMcPGbUVA6eASXGUoXgHDYqxT3Nc/Slt9FrvKr6cv70ytHMT?=
+ =?us-ascii?Q?1Rt3+onUbjmgoh5wtyFerqrlu5l10CJR8bv/nOOEuMN4Vt25wmdk8O9JPqKa?=
+ =?us-ascii?Q?tDhqMzmmBGEAYYcLNM/xaZe7YBUTlQ/Bpf4HVldXTP7DgstXrUJJz2KBJaYU?=
+ =?us-ascii?Q?hoLnrAdeAwZ1nqbeyXchEPtljlU+duMNCExLlwQueXS4wCKrMCHB39/r+Dxe?=
+ =?us-ascii?Q?qt5b6+1ln6gigqrRbf35eg6iHTtHQi4uzBgEZNc/yp9Fd2QUYxz5TWeeXjbB?=
+ =?us-ascii?Q?6Ruiu21ZdBJGlVwZO7SHRHXRPBuphwBgkBEWY7EueWfg6xIlbaB2PU2L93JN?=
+ =?us-ascii?Q?4ZQfqqP7/1jrJ7faNC3IyuZzFnQMOVHvyS2l1bhytw9XZVwHWg1FF0lg0ukB?=
+ =?us-ascii?Q?t6NIEfqa4YoQvmg4DYaVbIWYVnPfKiweMBP1gt2w8NtvX69Ohc0TuX+u8IRt?=
+ =?us-ascii?Q?RYCPXpcz6ht0zhUA50evEx23DK88Sq+b51FoYX5Twc+D3HLNK+kPRw/JOq+E?=
+ =?us-ascii?Q?x/r4TJdQYP06qK1PNAfOOWUz8FkhLKnn6lIi69RLw/2gjxZsPNg+ewGTQyJt?=
+ =?us-ascii?Q?Coig/FAKswMvoSWI6S3maRkxC8RznaJKngFKoVfALmbsN9vvqgPslJ1nj9rx?=
+ =?us-ascii?Q?GwXiiF/eiFCsCEanOuvzSTw+suR7+Zih6+ETIZrixHRx/X94u3/sR5KE+YdI?=
+ =?us-ascii?Q?HHYTvDMj3LMpKbwUMbeqw8/ypsMU3UThpKeWcwhO/DSEOLejNZzjyYdyz3aK?=
+ =?us-ascii?Q?nsVW2NN0g5JkntlH2n7xrlOJAHo8Dcrimka6+487dDItbMPU3sWlNRumLqBm?=
+ =?us-ascii?Q?0JkHZiuDwXUyePhrXeyHaHVtu81yxo+3HfzU8HMCGAwI1nPOaHg/JBv7r5Ic?=
+ =?us-ascii?Q?98aAx8xTMNY9U/KAI7XTxWJ0jA1/tyQEu5576e+OeR7+KeSpLzpPR7NkQ91T?=
+ =?us-ascii?Q?biANhGBFIJjrozcfGKkwtRsJxsMjuNgziqp3txbppTrFSREgm5KLioum1wMk?=
+ =?us-ascii?Q?BcEbC7cItLMz1/DTqaqg+AE3nNrGaOc=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 458db3e1-400d-443a-6a56-08df198ee079
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 16:22:35.4875 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: w9C4KYNTJqY+vgruMTrLbzw4zpWlrx33WkwuqZ4PDdanunuKkf8BRSahdkP5EBwZP1AQIlVtyaJMM0MupniWK6aPbxXdFaIqI6eB10eKj9c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6635
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,94 +134,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
+In case we're truncating an image opened with O_DIRECT, we might get
+-EINVAL on write with unaligned buffer.  In particular, when running
+iotests/298 with '-nocache' we get:
 
-On 9/21/26 2:32 PM, Khushit Shah wrote:
-> REVIDR_EL1 and AIDR_EL1 are implementation-defined and have no named
-> fields in Registers.json.
->
-> Emit dummy VAL fields covering the full register for these registers
-> in scripts/update-aarch64-cpu-sysreg-properties.py, then remove the
-> special case for these in kvm_arm_expose_idreg_properties(), exposing
-> them as SYSREG_ props.
->
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-> ---
->  scripts/update-aarch64-cpu-sysreg-properties.py |  9 +++++++++
->  target/arm/cpu-idregs.h.inc                     |  2 ++
->  target/arm/kvm.c                                | 10 +---------
->  3 files changed, 12 insertions(+), 9 deletions(-)
->
-> diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
-> index 0b4e4d3e0c..2269063408 100644
-> --- a/scripts/update-aarch64-cpu-sysreg-properties.py
-> +++ b/scripts/update-aarch64-cpu-sysreg-properties.py
-> @@ -246,6 +246,15 @@ def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
->          # Sort decreasing lsbs
->          sorted_fields = sorted(unique_fields.items(),
->                                 key=lambda x: x[1]['lsb'], reverse=True)
-> +        if len(sorted_fields) == 0:
-> +            # For cases like REVIDR_EL1, add a dummy field covering the
-> +            # full register.
-> +            sorted_fields.append(('VAL', {
-though I think it is important the property name stays SYSREG_REVIDR_EL1
-and not SYSREG_REVIDR_EL1_VAL so I guess we need either a property alias
-or a special handling for those regs (better as alias were not really
-meant for that purpose I think).
+qemu-io: Failed to resize underlying file: Could not write zeros for
+preallocation: Invalid argument
 
-Eric
-> +                'lsb': 0,
-> +                'msb': 63,
-> +                'width': 64,
-> +                'enums': []
-> +            }))
->  
->          for unique_key, bits in sorted_fields:
->              enums_list = bits.get('enums', [])
-> diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
-> index c7e93c48b7..bc52112430 100644
-> --- a/target/arm/cpu-idregs.h.inc
-> +++ b/target/arm/cpu-idregs.h.inc
-> @@ -12,6 +12,7 @@
->  /* IDREG_END(REG) */
->  
->  IDREG_START(AIDR_EL1)
-> +    IDREG_FIELD(AIDR_EL1, VAL, 0, 64)
->  IDREG_END(AIDR_EL1)
->  
->  IDREG_START(CLIDR_EL1)
-> @@ -2438,6 +2439,7 @@ IDREG_START(MVFR2_EL1)
->  IDREG_END(MVFR2_EL1)
->  
->  IDREG_START(REVIDR_EL1)
-> +    IDREG_FIELD(REVIDR_EL1, VAL, 0, 64)
->  IDREG_END(REVIDR_EL1)
->  
->  IDREG_START(SMIDR_EL1)
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index e3a0dc07de..8a823d0324 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -554,15 +554,7 @@ void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
->          ARM64SysReg *sysregdesc = &regs[i];
->  
->          if (sysregdesc->writable_mask) {
-> -            /*
-> -             * special case REVIDR_EL1 and AIDR_EL1 which are writable but
-> -             * do not expose named fields. They will need to be handled
-> -             * separately
-> -             */
-> -            if (strcmp(sysregdesc->name, "REVIDR_EL1") &&
-> -                strcmp(sysregdesc->name, "AIDR_EL1")) {
-> -                decode_idreg_writemap(obj, sysregdesc);
-> -            }
-> +            decode_idreg_writemap(obj, sysregdesc);
->          }
->      }
->  }
+Let's just allocate the buffer using qemu_blockalign0() instead.
+
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+
+iotests/298 with '-nocache' is still failing, so sending this once more.
+
+v1 -> v2: use QEMU_AUTO_VFREE (Vladimir)
+
+v1: https://lore.kernel.org/qemu-devel/20231211105559.316897-1-andrey.drobyshev@virtuozzo.com/
+
+ block/file-posix.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 9aad156aad4..39d6a34456c 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -2366,7 +2366,7 @@ static int handle_aiocb_truncate(void *opaque)
+     RawPosixAIOData *aiocb = opaque;
+     int result = 0;
+     int64_t current_length = 0;
+-    char *buf = NULL;
++    QEMU_AUTO_VFREE char *buf = NULL;
+     struct stat st;
+     int fd = aiocb->aio_fildes;
+     int64_t offset = aiocb->aio_offset;
+@@ -2433,7 +2433,7 @@ static int handle_aiocb_truncate(void *opaque)
+             goto out;
+         }
+ 
+-        buf = g_malloc0(65536);
++        buf = qemu_blockalign0(aiocb->bs, 65536);
+ 
+         seek_result = lseek(fd, current_length, SEEK_SET);
+         if (seek_result < 0) {
+@@ -2492,7 +2492,6 @@ out:
+         }
+     }
+ 
+-    g_free(buf);
+     return result;
+ }
+ 
+-- 
+2.47.1
 
 
