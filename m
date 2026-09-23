@@ -4,92 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67A7C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 15:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27179C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 15:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9P6u-0005w1-Vx; Wed, 23 Sep 2026 11:42:18 -0400
+	id 1x9PFv-0008Bm-Bl; Wed, 23 Sep 2026 11:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9P6s-0005vo-KF
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 11:42:14 -0400
-Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9P6q-0008Kb-8C
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 11:42:14 -0400
-Received: by mail-ej2-x10.google.com with SMTP id
- a640c23a62f3a-c254fa4c24cso169873066b.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 08:42:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790178129; x=1790782929; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fa6raYUBVSEFVnAsw5R339WmgTTXl3BZylIoJtApnDA=;
- b=egdFN23sHU3Tre8KzkTlMrO/vHXIjzisNS3uzdyvJIZ2LMpfZ6r24qwTcsBmylCKvm
- Rj7N8bmVblqHt9NPKyrsZhnz5RsgdHasRK5kB38akpczWw6gdGHMW/AIHTyZ09D4NSLM
- yOwHJDYXGS0AB1BmA+lgnYrPY2Fggj0RbkGExJTJWwQypsbh8K3c+TNaCvar80k9TN3I
- jY86ss9sj4ce/lugOQR2UsEihOzOgnnhWTsFxo/gp/NjF4CALobSZ4KQt5Cpsxxoergr
- LRc3TWJ5bPYAYXjX5JiPh2kaRpUlUMbDcogzZVflzDHAIX1IRPS+m9RbsXKpoGmwnIO7
- xQkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790178129; x=1790782929;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=fa6raYUBVSEFVnAsw5R339WmgTTXl3BZylIoJtApnDA=;
- b=UF+i+85GDy4aT9S1UDIB1+LUkekTDhVu8raZArz3LBB2JJAM0SLqV6W7t/Bm3AmTZr
- XMAVVZUctL8NsWA8gXh18e+k7VeynKp/0D3hROCwkt8Em7rnRexTC56vNtxjjTTsWBeg
- 6PFZXgnZu0nVEFsvn6q6Q+M3pnyvMdrFzWpBEGWy3WkHCM51chFVlb95f41Xu41sHGkO
- Lf+Qowr0gmTGgBF/JHJZGkYlk830Wxvspqpq+OewT2huF9CVz7I5oPLSBbGo2kCzDs33
- q99hlZemz6CrneWOWBZlKrpG+ThPCeMbmsEFQHng/HPWiRD/aw5LrEMWPvqg5XK4VyFO
- VAXg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx9mOvyRIbhVHr1YelGu6Oed6UP2sOJeL5ImqSajT/pxCeVjs3RjR03d3JCc5YekQfxFSk8JHbrBrRd@nongnu.org
-X-Gm-Message-State: AFuF++kaxf8XjcENHL7q+Yzqv1WDOTSerUdJMD9RLC0Ez+uPlG3imexv
- pYAopkEIQO48mLOT0Ukz3xQ0pMQr+miuIcRqg13uXB4RGv7amQyja5g0QtFiKQ2aXOQ=
-X-Gm-Gg: AYBFou0ajVxxoEkYdkMKHDkpkUV1yJxkfsZfcLKda5iZez5URrcx+4v6GL7vg0lXTtz
- tRgiZ2dvPhL/uX+SeRd8kMP1d+tUCghx41c0hFhnq48jQ2eWDajJRZ4sozPHnXnX3YpnhFxK9H9
- bG8qEqZz+D73CCArJ3Ju0H9Tm/fQKNmv4eBEHrYaJL8ZA+TfQD/HYxuBrewAxWx9/Hc1i5KL0Lh
- KjzDQy23HGGfKal3OPQu27hRuhQFgy/hBN/Qz7BD79c/7UG8vjUzplgQd8ya6nR/opeJ4Q9/JKF
- qRxYYTmlPzW7kBJ2AM+dqt76I+U6VifccadmTJK1T0RBZW9wBw5jGuj3DnZKkFa58z/cHHb3/Pm
- 0qfF62IvA2DUwWjZt7FxdXAsV+nxyCmHifquLWB8i1uqH15cxYP5QKE0q4nA+o3MH0c8RC+fMgt
- v6IxaOIETzYGCohTMauj7JFzFpFBBI6Enor+lOysqsEljtZQajBejeFmCJY4RRptkZK2MPXxE+P
- 4q1yM20bpKY1ek95HWMySnKA0II2pCxsG1WB7i8
-X-Received: by 2002:a17:907:9405:b0:c29:22cf:b0f5 with SMTP id
- a640c23a62f3a-c2aae0e4639mr236419766b.33.1790178129480; 
- Wed, 23 Sep 2026 08:42:09 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2aae63dc17sm143256466b.33.2026.09.23.08.42.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 08:42:08 -0700 (PDT)
-Message-ID: <a78097cd-0a54-468c-b999-4b37d5f92032@linaro.org>
-Date: Wed, 23 Sep 2026 08:42:05 -0700
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x9PFu-0008Ba-9f; Wed, 23 Sep 2026 11:51:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1x9PFs-0000uB-0r; Wed, 23 Sep 2026 11:51:34 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68N8ZQWb1030599; Wed, 23 Sep 2026 15:51:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0d4v25
+ U54GbpfPv1JTGUZOXIaltqz/GjcDtG2RFE3Fw=; b=OarCV/7B4psjTGoI9zVJ33
+ DALoM84tYtHVm0C5DExwJaQvkT1QJOCdujTfxLDxP/TG0SGaV3qHp//iCy9BDM9E
+ tUoYPJRjFMatTd9VatmP3NBKm2OWzTPmnIPMszfjTvD0QxXI1uluQkf3oRhdzUQE
+ c//+z9IrMOSXQa5rQXVMppTA3L+ew6s1kSC+PWO+NL09WdY31SOJsOx4D3q/FytJ
+ 1E4xa0BEPyKvqnNMgc4TpFry3Pvq8BX3ZTr6LMf3/sy9JBTmFxVC5hbPhwSXEILy
+ osbcNSMw6QXl9xw4STRAmdEWXTHu0vttn/n/wtRZVCflInxj/MJdeju7+2ClP8Fw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1v86e-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 23 Sep 2026 15:51:29 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NCSP0n008222; Wed, 23 Sep 2026 15:51:28 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jspmc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Sep 2026 15:51:28 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68NFpRZ950004298
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Sep 2026 15:51:27 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 691E558055;
+ Wed, 23 Sep 2026 15:51:27 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E467358043;
+ Wed, 23 Sep 2026 15:51:26 +0000 (GMT)
+Received: from [9.61.145.93] (unknown [9.61.145.93])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 23 Sep 2026 15:51:26 +0000 (GMT)
+Message-ID: <18d15293-3f11-4005-aa2a-295f0b702283@linux.ibm.com>
+Date: Wed, 23 Sep 2026 11:51:26 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: buffer_is_zero() constant optimisation not always applied
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: tejus.gk@nutanix.com
-References: <06a98356-20c4-479a-a8f7-392ce5b941b5@nutanix.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 0/4] iotests fixes
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260813183740.3503107-1-farman@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <06a98356-20c4-479a-a8f7-392ce5b941b5@nutanix.com>
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260813183740.3503107-1-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:34::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 5v9f48StOSE5Lu90k3fp-O7cMJ_pHmkf
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab3f581 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=vsWxD45MzCohxjpAad0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA2MiBTYWx0ZWRfXyH2AtaYUoqrP
+ KBJw9s3s9FjR9D8da6wpJ3KAnlN3tkaFJeuO8KgAjEVRTA7Q6qsFHr6Kj3Poo8zSDGsw9yLX+LR
+ 7p1HRq09vOVrP85xK/hpY/R3DnOUU7M=
+X-Proofpoint-GUID: 5v9f48StOSE5Lu90k3fp-O7cMJ_pHmkf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA2MiBTYWx0ZWRfXxMLazaHgASxY
+ 69f2Z/er+G78O7TAoTEmNMhksFqqdJ+4sdwaJ5EJ6CzLIYTSoeVyPYJ3mx6VupBwOU+NCXdEDp5
+ H6Esee2xcyoGs+0GKbd1zQlbho1NqHTRUvQvMLLrOpbzBK3KzmcUCYRZrIhMdmebuUosSWz5IYS
+ eiO/j9sgPdqObFexELerpS8wxlh+5ux/USLqnUzmGJ9CVzYnBsdQoLBI8gzCqpMEj3JUdcs8eHw
+ bYLKx3/sPA6TKl0oum44Ib5m0g0xdDdksMij04JNboiqtcdD5kaSWs+sZHRN39WremiYZ+EGium
+ 8OCMEUplK9eGA9dlovj6IXfhcpqm80DSpEDJdXHbr/p81olr1OhTxCfPzWWGQxINZvqI95qtusL
+ iSf3r7iKQElsxuTWuUGv1OG7Ruji62J4PkUqEk/yXU6FvqJPILTQhqlajB/V06h3mGp2IwcLDHM
+ Ei4WT633v5N/EZAEGbA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230062
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,42 +167,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 04:55, Mark Cave-Ayland wrote:
-> Hi Richard,
-> 
-> One of our engineers, Tejus, reported an interesting observation that 
-> during multifd migration the zero-page detection logic was falling back 
-> to use the out-of-line buffer_is_zero_ool() implementation instead of 
-> calling the accelerated implementation directly.
-> 
-> What we discovered is that the optimisation was not being applied to the 
-> buffer_is_zero() call in multifd_send_zero_page_detect(), even though 
-> multifd_ram_page_size() is effectively a wrapper around 
-> qemu_target_page_size().
-> 
-> Digging a bit deeper we found that migration/multifd-zero-page.c is not 
-> being built with COMPILING_PER_TARGET and so we fall back to the 
-> TargetPageBits logic for qemu_target_page_size(). On a local x86 host 
-> here the expansion for qemu_target_page_size() becomes:
-> 
-> static inline size_t qemu_target_page_size(void)
-> {
->      return (-(int)((int)target_page.mask));
-> }
-> 
-> which isn't considered to be constant at compile time. Given that we are 
-> building a fixed x86 target, is it still possible to get the 
-> optimisation applied at least for the migration use-case?
-Mm.  And we certainly won't want to build migration/ with 
-COMPILING_PER_TARGET anymore either.  We should probably just drop the 
-__builtin_constant_p test these days, since it'll basically never be true.
-
-The question is whether buffer_is_zero_ool is good enough or if the 
-inline buffer_is_zero_sample3 to (potentially) avoid the function call 
-still has value.
-
-Anyone willing to do some microbenchmarking to find out what's best?
 
 
-r~
+On 8/13/26 2:37 PM, Eric Farman wrote:
+> Hi Kevin, Hanna,
+> 
+> Here is a third version of iotests fixes from our s390x systems.
+> They aren't related, just came up walking through the failures.
+
+Hi Kevin, Hanna,
+
+Just bumping this up the list. Any thoughts?
+
+This series applies cleanly to today's master, and without this I can 
+still reproduce the errors described within.
+
+Thanks,
+Eric
+
+> 
+> In fact, only patch 4 has existed in the previous versions of this "series",
+> as it remains stubborn for me (hence me putting it at the end). This time,
+> I added a check against the qemu-storage-daemon to try to do a mount against
+> a null device (similar to the test_fuse_support() routine in fuse-mmap-shared),
+> to bail out of the test earlier than failing on the "real" command later on.
+> 
+> I look forward to your feedback...
+> 
+> v1: https://lore.kernel.org/r/20260725125651.3896151-1-farman@linux.ibm.com/
+> v2: https://lore.kernel.org/r/20260728192644.2879028-1-farman@linux.ibm.com/
+> v2->v3:
+>   - [EF] Add two fixes for NBD tests, and one (new) fix for another FUSE test
+>   - [HC] Rework the fix to 108, and perform a dummy mount to see if fuse works
+> 
+> Eric Farman (4):
+>    iotests/nbd-in-qcow2-chain: use default machine
+>    iotests/nbd-tls-iothread: skip on non-x86 hardware
+>    iotests/fuse-truncate: skip if FUSE is not usable
+>    iotests/108: skip if fuse is unsuable
+> 
+>   tests/qemu-iotests/108                      | 17 +++++++++++++++++
+>   tests/qemu-iotests/tests/fuse-truncate      |  9 ++++++---
+>   tests/qemu-iotests/tests/nbd-in-qcow2-chain |  2 +-
+>   tests/qemu-iotests/tests/nbd-tls-iothread   |  4 ++++
+>   4 files changed, 28 insertions(+), 4 deletions(-)
+> 
+
 
