@@ -4,123 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805DDC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891D3C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Pk5-0001M9-FN; Wed, 23 Sep 2026 12:22:45 -0400
+	id 1x9PyR-0003Zb-7C; Wed, 23 Sep 2026 12:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x9Pk3-0001E7-3r; Wed, 23 Sep 2026 12:22:43 -0400
-Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9PyP-0003Z8-KS
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:37:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1x9Pk1-0004Nz-7b; Wed, 23 Sep 2026 12:22:42 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cLJipVWnT2xOI68rnibkukUhsq+O04kGnytHnxiQpMM+grH1lpUax5LfDgtyhhsgBM8rYQaUn5yLt+7zk4WCQfEkQlP95QFkks85ujMbJ6N+UBqic0OfTXzb2A0TQlHey0n+tiaQ6wZB+q8ZVSZv5/b+O0Vib5DaSMCaKVem0nRER8WAaD5DUrWUXQ7ZNhjiiJaaE1CNp+M9UcKapnbCKmgGI1c27yROLoj/fI7LUhJiOEZQCleuzDmIq+pYgXcPk6j4IQFkDZ1fEXBfiXQtEEfQT95S+Hp4GMSYPsg2YK/WB1N48WPLSyGww0/FMW1Ku99DqSmRj7SEfli3VcEWAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rdBVVSL2OTfpKUgWBqjglmbAnUZ8M9bLPGg1lP1xKMU=;
- b=LQqc2FYgfcCSBvPt9++bZlzlOlze1aEkFWMMPsYKyiH5fKYSQ3UNYSWfeypC1np34v1VVEU34egcFsEOiLutd3An1Ae8AXjo4BLxvajqglhc7BBpqTc0x/LWxdeGO7klN0cuqfx2yFAOeZFrTbg5KOey0FTZIckBtXH6t8vQa+r9xnfhuSsnF2d/XI/7jKmepKuUyQmAvXzSb5EP3Jx+ZaKzb1NbMaB3PlHW7iFyITEq0Qjv8WicyWiI+iU5qx+SaK6yENg8RBXmrX5YweK3ndV33vAHkvq+XePiYaVc3ssxLnE4Eyn4MkeAmBqJpHBsdneA9arSmwIcUo54WjVQiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rdBVVSL2OTfpKUgWBqjglmbAnUZ8M9bLPGg1lP1xKMU=;
- b=ZWMOXovonF3azpTRJEcKJJ2QJGqHtRT2OAYog48C5AvOh/I+4aT2z//RPj0h2/PaIKUAZOdONdNUjhdjwST3QvZE2+fF2TSZxw5lbP/pMEJJmfbdUACg1bB9K6KqIA1b140fGC4F3pMqlyFied3iY8qtviivLqV+xpuNdfhtcVoMhv+anuXzwyp05BLLeLg8kTh02UjI/CSr+JryoMAF5IAhMAt6MAUwtSOvEcSAULrFQ7YrCaMRWNbPaoGajDS/SkEGYl2gF7fBS7B9d7lFGj1NSba6zgqhHYhJ45d0ESv7v9ipI+658QS4eH203dfBGmgpE3cIUyieSbSkYM40vQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by DB9PR08MB6635.eurprd08.prod.outlook.com
- (2603:10a6:10:254::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.17; Wed, 23 Sep
- 2026 16:22:35 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
- 16:22:35 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- vsementsov@yandex-team.ru, den@openvz.org, andrey.drobyshev@virtuozzo.com
-Subject: [PATCH v2] block: allocate aligned write buffer for 'truncate -m full'
-Date: Wed, 23 Sep 2026 19:22:24 +0300
-Message-ID: <20260923162224.34946-1-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.47.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VI1PR07CA0287.eurprd07.prod.outlook.com
- (2603:10a6:800:130::15) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9PyN-0005ld-9K
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:37:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790181450;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NQPxre5nfjVyJIkyz9ju4nrdHW/OB8SsTX3UAIiJ8qc=;
+ b=P0myLSEJyijGOYP445+nK+Ae5A9yvyVkUbmv0hpYi5ri0qMFVCFb9omIlMFC3CdXcbEiBY
+ mimmKHEC8dMGVJL1uzVouEGUTH6cUY3OD+sBHbUVTub/wwptLHcJHSBh4rwMM40K5aH/OO
+ HAfULFrEEJBhRt3fF4Ddb3rBm1ix9TE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-n2H6LgPQPm2D_JCLu5La0w-1; Wed, 23 Sep 2026 12:37:28 -0400
+X-MC-Unique: n2H6LgPQPm2D_JCLu5La0w-1
+X-Mimecast-MFC-AGG-ID: n2H6LgPQPm2D_JCLu5La0w_1790181447
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49e65bee41aso460895e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 09:37:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790181447; x=1790786247;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=NQPxre5nfjVyJIkyz9ju4nrdHW/OB8SsTX3UAIiJ8qc=;
+ b=yxllSAyADgdLttoGIRh5aEF9lZw6GctnC6B2IDWroISh/1SAn6j2MTt692wTqwnbpS
+ +wLFNQ69+4I1oj4JOy3NmZjxHcA/uEB18bMyiJbhLLPdXoDim7g31yIYesgl8Mpnqb3G
+ avlRVz2vDbWk8TUVvg2QsfWkQKw6h9vcV33DBb40xWgDv8uZHVea1Jt4f3+VXFeY5oYX
+ vzgwPxs64EEleGGmDO3NtVsvAetlhYpxLTyvruUkn5d318p34mlAaWWwBIhWnooi9Fjc
+ HeHHoTSfSiZSpV+8vMIqHuuRWVHfYEUrM5U5zLWSaHGASo0iiJeG96I+0kjxTP3Bm3kB
+ Q8+g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxF6YkBNQ2U/G10DS4ja5D7nvKR+kpg+s6qLuKiy6C9UqGDVIKnU/Ro83C2kG6v11h6FpmExSGlXh7b@nongnu.org
+X-Gm-Message-State: AFuF++lnC7OUNfL2FDz6PMgj22SHoNw/7s4CNbya7JaG9EloKzaFo6o+
+ 36L6Jpu8mbtjc5fav3XIUQDwcDdiuohR0mVTomHLWcOse+WK59p0DKQjQqeO0hyp+t1ln0Lj1Bl
+ TdHyF7f9CIePIb63WyqcybqqQWp/bvmKy2Pa43kecLQ8Kf+O2hF/iyX13
+X-Gm-Gg: AYBFou0ctMNMo7G5MU/RJOIKXCxvwOgy0EVcNlD7NqxBjApBUAxrHweUk9MRO6zHuwr
+ qR8kxbd3txkxBgXAByco1jC4hgd4IfCmwN2Ek3lQdVGj6oO22X5oLx/WrirF6WBFe9HokmCLuG0
+ +AzMqSuN36Z3Eh+snJ1/HkK3lzBuCRMqfaJBlDdpKnzmpRMC7dPCZMKHEk3MZDf8IJxbHddbYlB
+ JwJ2UBAhqeLN5wg2j8WOvJ8yCF61foiBxkZRF9OjnabOSnrJTcM+h5nzR7KNaFJBLFOc/pHsEZt
+ +Qek81y7U5PAvX4X/q7YH26H4eHT8zrfLiavmyJeLeIyrFR4VpazvIsqG3aztH/RtFpOm9MNcTu
+ 2UmMSk1Jx9b3qEnsOK8mJDcsfDklKkBc0dU5T3ZJwGtgeQYqL
+X-Received: by 2002:a05:600c:1910:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-49fde374f6cmr52414315e9.8.1790181447153; 
+ Wed, 23 Sep 2026 09:37:27 -0700 (PDT)
+X-Received: by 2002:a05:600c:1910:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-49fde374f6cmr52413865e9.8.1790181446641; 
+ Wed, 23 Sep 2026 09:37:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fde18093csm101614415e9.3.2026.09.23.09.37.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 09:37:26 -0700 (PDT)
+Message-ID: <3cd4f5c9-dc40-47ae-b008-c5dc2c60e0ec@redhat.com>
+Date: Wed, 23 Sep 2026 18:37:24 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB6635:EE_
-X-MS-Office365-Filtering-Correlation-Id: 458db3e1-400d-443a-6a56-08df198ee079
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|52116014|1800799024|38350700014|10067099003|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info: 03udcEvBtCmFMohmbIkiCgBHIqauUtPVaPDBICcd0/LDB48AMVdJJWfNh4MQAIdNiKqnC4c9TGstFioZ6A21LGvxeJ51IVdmkdJHPthHquTdqY9M7PaFzSy4zUvwNeM1GAF4YoaCexhtfCkci3cIRoVwl9rqw+E32TSKTp8KvKFoh/thfkk8QRP+MnJLltGlRrALhiEmT/q6fQZzknBBp6kjaP6UtUwN7WUzQrn42NO8L0/btUgD/cwKN/4Rlt9YhOQGD6V3vtpmfmArRUIcOgtubBMVJQPPduR0GluyM2ddkk+yixRq/9pQVnlEnyJGEbHgCOueaOUoXlK46KrgxLfW9AqdPcHokTlpMV3wics4neMzzC0+2r56pwlGEeLwfzSWYSreNF8kJM15gpNEP1H4HDfE+/nGe7I/w3hlbW12eJ67LlaMV91M6tURmud62WTgf1UIyg0tbsgJety0UHtIGKesFOqVQ319k6ziRtlmGPxEdxvqGnD8+1VfJQGEoI941LeFLtOC3Jf1Zic4vr+R5Cwhcl4zCYTuq/8c8Nyx66KeAi3gGjMuuP71NWQjPKBOcosmstssbxPAbwzQz67Q2UQOHjua42fAxJEZIdRjHsaLrth4qHXskayWsnzF5l74nzI1rcu8nwnHVtt0Mw8Dyx7SL4M4e6ZWh6ygTBQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(52116014)(1800799024)(38350700014)(10067099003)(56012099006)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3nHfg6PmAZfbnzH+xRqigKJh0a31J9CUkhnVozoX9g9bg/Rst1KVidoUUf5m?=
- =?us-ascii?Q?LF2qQGQzUuTTP0MqHw7/Fn10xOAFrT12QcGSSqXEouYplaprVX8Skuc1Ood8?=
- =?us-ascii?Q?8JfvWEwic3lNgUrDyGiRF2KorM3un7skoFzDHRwx2HiGSnS4KRNpANay1Z/7?=
- =?us-ascii?Q?nkUIgIkwo/pmDflnSscb/av/yRMbTuFTY8aIrCqZ55trQ6P1Rj8ep8OtCWap?=
- =?us-ascii?Q?WL/pgmglras4DrCk/jBUsuEi7qzR5qrJy0JPuc1tn1FDKs3sUpPlrwSTvxOB?=
- =?us-ascii?Q?I3S1AZBSu7ggUgJOPCRZ+J18YbPBrLS9/eTQggg4XLygtgnZ/2pKLIVxOtUo?=
- =?us-ascii?Q?nXalj7LsqNK/+b/legBzVmG44uA7tk+pNvYg03UdiOKi+hCiEwl2lzUS0iio?=
- =?us-ascii?Q?kGK0/xHYxcCPKdxBgWIrzZ3IX/wnnVHKXqC67EZhuZIPFd4Kxk5iptXowJCH?=
- =?us-ascii?Q?NitOu/Q5P1kyP0SqDUITNF/Y3bWmM+ay4RLw7r3mt4gEBRnu/M9VcQquhbVY?=
- =?us-ascii?Q?TTyr5TGRSdBoCnM+CuqznEG7tr8jKvZ4KpGu9A3rhVASBmdE/0X1XVEF5SUo?=
- =?us-ascii?Q?1zJfyME4wcVXyXI28qzIX030DUOD4TtH/T8pGag0l3Qvvm9HCidFGMmt5zWH?=
- =?us-ascii?Q?u1PxY5LN7R9xF6bjolmXkS8p7/7ZMp5PZlmpot+0gARxKJNu9e6RNzkJIJIY?=
- =?us-ascii?Q?Flg4MooAOdJrxMcPGbUVA6eASXGUoXgHDYqxT3Nc/Slt9FrvKr6cv70ytHMT?=
- =?us-ascii?Q?1Rt3+onUbjmgoh5wtyFerqrlu5l10CJR8bv/nOOEuMN4Vt25wmdk8O9JPqKa?=
- =?us-ascii?Q?tDhqMzmmBGEAYYcLNM/xaZe7YBUTlQ/Bpf4HVldXTP7DgstXrUJJz2KBJaYU?=
- =?us-ascii?Q?hoLnrAdeAwZ1nqbeyXchEPtljlU+duMNCExLlwQueXS4wCKrMCHB39/r+Dxe?=
- =?us-ascii?Q?qt5b6+1ln6gigqrRbf35eg6iHTtHQi4uzBgEZNc/yp9Fd2QUYxz5TWeeXjbB?=
- =?us-ascii?Q?6Ruiu21ZdBJGlVwZO7SHRHXRPBuphwBgkBEWY7EueWfg6xIlbaB2PU2L93JN?=
- =?us-ascii?Q?4ZQfqqP7/1jrJ7faNC3IyuZzFnQMOVHvyS2l1bhytw9XZVwHWg1FF0lg0ukB?=
- =?us-ascii?Q?t6NIEfqa4YoQvmg4DYaVbIWYVnPfKiweMBP1gt2w8NtvX69Ohc0TuX+u8IRt?=
- =?us-ascii?Q?RYCPXpcz6ht0zhUA50evEx23DK88Sq+b51FoYX5Twc+D3HLNK+kPRw/JOq+E?=
- =?us-ascii?Q?x/r4TJdQYP06qK1PNAfOOWUz8FkhLKnn6lIi69RLw/2gjxZsPNg+ewGTQyJt?=
- =?us-ascii?Q?Coig/FAKswMvoSWI6S3maRkxC8RznaJKngFKoVfALmbsN9vvqgPslJ1nj9rx?=
- =?us-ascii?Q?GwXiiF/eiFCsCEanOuvzSTw+suR7+Zih6+ETIZrixHRx/X94u3/sR5KE+YdI?=
- =?us-ascii?Q?HHYTvDMj3LMpKbwUMbeqw8/ypsMU3UThpKeWcwhO/DSEOLejNZzjyYdyz3aK?=
- =?us-ascii?Q?nsVW2NN0g5JkntlH2n7xrlOJAHo8Dcrimka6+487dDItbMPU3sWlNRumLqBm?=
- =?us-ascii?Q?0JkHZiuDwXUyePhrXeyHaHVtu81yxo+3HfzU8HMCGAwI1nPOaHg/JBv7r5Ic?=
- =?us-ascii?Q?98aAx8xTMNY9U/KAI7XTxWJ0jA1/tyQEu5576e+OeR7+KeSpLzpPR7NkQ91T?=
- =?us-ascii?Q?biANhGBFIJjrozcfGKkwtRsJxsMjuNgziqp3txbppTrFSREgm5KLioum1wMk?=
- =?us-ascii?Q?BcEbC7cItLMz1/DTqaqg+AE3nNrGaOc=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 458db3e1-400d-443a-6a56-08df198ee079
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 16:22:35.4875 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: w9C4KYNTJqY+vgruMTrLbzw4zpWlrx33WkwuqZ4PDdanunuKkf8BRSahdkP5EBwZP1AQIlVtyaJMM0MupniWK6aPbxXdFaIqI6eB10eKj9c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6635
-Received-SPF: pass client-ip=2a01:111:f403:c201::3;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 02/25] target/arm: expose all non-res ID reg fields
+ as properties
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ ping@khushitshah.com, sandesh.patel@nutanix.com
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-3-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260921123249.1708067-3-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,63 +119,244 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case we're truncating an image opened with O_DIRECT, we might get
--EINVAL on write with unaligned buffer.  In particular, when running
-iotests/298 with '-nocache' we get:
 
-qemu-io: Failed to resize underlying file: Could not write zeros for
-preallocation: Invalid argument
 
-Let's just allocate the buffer using qemu_blockalign0() instead.
+On 9/21/26 2:32 PM, Khushit Shah wrote:
+> Upcoming named CPU model layer will require exposing all the ID register
+> fields as properties.
+>
+> Furthermore, this exposes the host values of all ID register fields
+> to the management stack, which can use them to infer migration
+> compatibility constraints between different hosts.
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  docs/system/arm/cpu-features.rst | 34 +++++++--------
+>  target/arm/cpu64.c               |  2 +-
+>  target/arm/kvm.c                 | 71 +++++++-------------------------
+>  target/arm/trace-events          |  2 -
+>  4 files changed, 31 insertions(+), 78 deletions(-)
+>
+> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+> index 3a07a87bc3..62bb2bd999 100644
+> --- a/docs/system/arm/cpu-features.rst
+> +++ b/docs/system/arm/cpu-features.rst
+> @@ -34,17 +34,15 @@ running guests in AArch32.
+>  CPU features that are inherently specific to KVM are
+>  prefixed with "kvm-" and are described in "KVM VCPU Features".
+>  
+> -2. Additionally, the ``host`` CPU model on KVM allows to configure optional
+> -CPU features via the corresponding ID registers. The host kernel allows
+> -to write a subset of ID register fields. The host model exposes
+Rewording/corrections not related to the actual functional change in
+this patch should be suggested on the prerequisite series and applied
+there instead.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+Besides after our discussions I understand you need to expose all ID reg
+named fields for *named* vcpu models. This allows to relax the value
+required by this named vcpu model to the host one. but to me this shall
+only apply to derived named cpu models and not to the base host model.
+Iif you expose non writable props on the host model, this latter won't
+be able to apply any other value than the current one anyway. So it just
+brings noise for the end user.
+> -properties for each writable ID register field. Those options are named
+> -SYSREG_<IDREG>_<FIELD>. IDREG and FIELD names are those used in the
+> -ARM Architecture Reference Manual. Their availability depend on the host
+> -capability to let the userspace write those fields. Values set with those
+> -properties override the initial values retrieved from the host. They are
+> -written back to KVM and the eventual value applied by KVM depends on whether
+> -the value is sanitized or not by the host kernel. Then those field values
+> -are likely to be overriden again by legacy CPU options which apply at the end.
+> +2. Additionally, the ``host`` CPU model on KVM allows configuring optional
+> +CPU features through the corresponding ID registers. The host model exposes
+> +properties for every non-reserved ID register field known to QEMU. Those
+> +properties are named SYSREG_<IDREG>_<FIELD>. IDREG and FIELD names are those
+> +used in the Arm Architecture Reference Manual. Values set with those
+> +properties override the initial values retrieved from the host. Whether a
+> +value that differs from the host value can be applied depends on KVM support
+> +and any field-specific handling in QEMU. Legacy CPU options applied later may
+> +override those field values.
+>  
+>  CPU Feature Probing
+>  ===================
+> @@ -534,12 +532,10 @@ Note that this is currently only supported under KVM, and with the
+>  Querying available ID register fields
+>  -------------------------------------
+>  
+> -QEMU will create properties for all ID register fields that are
+> -reported as being writable by the kernel, and that are known to the
+> -QEMU instance. Therefore, the same QEMU binary may expose different
+> -properties when run under a different kernel.
+> +QEMU creates properties for all non-reserved ID register fields known to
+> +the QEMU instance.
+>  
+> -To find out all available writable ID register fields, use the
+> +To find out all available ID register fields, use the
+>  ``query-cpu-model-expansion`` QMP command::
+>  
+>    (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+> @@ -554,8 +550,10 @@ To find out all available writable ID register fields, use the
+>     "SYSREG_ID_AA64ISAR0_EL1_DP": 1, (...)
+>     }}}}
+>  
+> -If a certain field in an ID register does not show up in this list, it
+> -is not writable with the specific host kernel.
+> +The presence of a property does not imply that every value is supported.
+> +Non-writable fields must retain their host value, while writable fields are
+> +limited to the values supported by KVM. A configuration requesting an
+> +unsupported value is rejected.
+>  
+>  A note on compatibility
+>  -----------------------
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index e04062e848..3d522bf20d 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -809,7 +809,7 @@ void aarch64_host_initfn(Object *obj)
+>      kvm_arm_set_cpu_features_from_host(cpu);
+>      aarch64_add_sve_properties(obj);
+>  
+> -    /* generate SYSREG properties according to writable masks */
+> +    /* generate SYSREG properties */
+>      kvm_arm_expose_idreg_properties(cpu, arm64_id_regs);
+To me exposing non writable fields shall only happen for derived named
+models.
+>  
+>  #elif defined(CONFIG_HVF)
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 8a823d0324..2f6c090e43 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -365,19 +365,6 @@ static int get_host_cpu_idregs(int fd, ARMHostCPUFeatures *ahcf)
+>      return err;
+>  }
+>  
+> -static ARM64SysRegField *get_field(int i, ARM64SysReg *reg)
+> -{
+> -    for (int f = 0; f < reg->fields_count; f++) {
+> -        struct ARM64SysRegField *field = &reg->fields[f];
+> -        int upper = field->shift + field->length - 1;
+> -
+> -        if (i >= field->shift && i <= upper) {
+> -            return field;
+> -        }
+> -    }
+> -    return NULL;
+> -}
+> -
+>  bool kvm_idreg_write_scratch_vcpu(int cpufd, Visitor *v, const char *name,
+>                                    void *opaque, Error **errp)
+>  {
+> @@ -493,69 +480,39 @@ static void get_sysreg_prop(Object *obj, Visitor *v,
+>      trace_get_sysreg_prop(name, value);
+>  }
+>  
+> -/*
+> - * decode_idreg_writemap: Generate props for writable fields
+> - *
+> - * @obj: CPU object
+> - * @reg: description of the sysreg
+> - */
+> -static int
+> -decode_idreg_writemap(Object *obj, ARM64SysReg *reg)
+> +static void
+> +add_idreg_field_properties(Object *obj, ARM64SysReg *reg)
+>  {
+> -    uint64_t map = reg->writable_mask;
+> -    int i = ctz64(map);
+>      int nb_sysreg_props = 0;
+>  
+> -    while (map) {
+> -        ARM64SysRegField *field = get_field(i, reg);
+Same here. If changes are not related to the functional change, the
+right way to converge is to comment on the prerequisite series.
+As I understand those changes are unrelated and can easily be retrofitted
 
-iotests/298 with '-nocache' is still failing, so sending this once more.
+> -        int lower, upper;
+> -        char *prop_name;
+> -        uint64_t field_mask;
+> -
+> -        if (!field) {
+> -            warn_report("%s bit %d of %s is writable but no named field "
+> -                        "in target/arm/cpu-idregs.h.inc",
+> -                        __func__, i, reg->name);
+> -            map =  map & ~BIT_ULL(i);
+> -            i = ctz64(map);
+> -            continue;
+> -        }
+> -        lower = field->shift;
+> -        upper = field->shift + field->length - 1;
+> -
+> -        /* Sanity check the field is not a reserved field */
+> -        if (strstr(field->name, "RES0") || strstr(field->name, "RES1") ||
+> -            strstr(field->name, "RAZ")) {
+> -            trace_unexpected_writable_reserved_field(reg->name, field->name,
+> -                                                     lower, upper);
+> +    for (int i = 0; i < reg->fields_count; i++) {
+> +        ARM64SysRegField *field = &reg->fields[i];
+> +
+> +        /* skip reserved fields */
+> +        if (g_str_equal(field->name, "RES0") ||
+> +            g_str_equal(field->name, "RES1") ||
+> +            g_str_equal(field->name, "RAZ")) {
+>              continue;
+>          }
+> -        prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name, field->name);
+> -        trace_decode_idreg_writemap(field->name, lower, upper, prop_name);
+> +
+> +        char *prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name,
+> +                                          field->name);
+>          object_property_add(obj, prop_name, "uint64",
+>                              get_sysreg_prop, set_sysreg_prop, NULL, field);
+>          g_free(prop_name);
+>          nb_sysreg_props++;
+> -
+> -        field_mask = MAKE_64BIT_MASK(lower, field->length);
+> -        map = map & ~field_mask;
+> -        i = ctz64(map);
+>      }
+> +
+>      trace_nb_sysreg_props(reg->name, nb_sysreg_props);
+> -    return 0;
+>  }
+>  
+> -/* analyze the writable mask and generate properties for writable fields */
+>  void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
+>  {
+>      Object *obj = OBJECT(cpu);
+>  
+>      for (int i = 0; i < NUM_ID_IDX; i++) {
+>          ARM64SysReg *sysregdesc = &regs[i];
+> -
+> -        if (sysregdesc->writable_mask) {
+> -            decode_idreg_writemap(obj, sysregdesc);
+> -        }
+> +        add_idreg_field_properties(obj, sysregdesc);
+>      }
+>  }
+>  
+> diff --git a/target/arm/trace-events b/target/arm/trace-events
+> index 71a2f5770c..7696a8ed40 100644
+> --- a/target/arm/trace-events
+> +++ b/target/arm/trace-events
+> @@ -15,11 +15,9 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+>  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+>  get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+>  kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
+> -decode_idreg_writemap(const char* name, int lower, int upper, char *prop_name) "%s [%d:%d] is writable (prop %s)"
+>  get_sysreg_prop(const char *name, uint64_t value) "%s 0x%"PRIx64
+>  set_sysreg_prop(const char *name, uint64_t old, uint64_t mask, uint64_t field_value, uint64_t new) "%s old reg value=0x%"PRIx64" mask=0x%"PRIx64" new field value=0x%"PRIx64" new reg value=0x%"PRIx64
+>  nb_sysreg_props(const char *name, int count) "%s: %d SYSREG properties"
+> -unexpected_writable_reserved_field(const char *reg_name, const char *field_name, int lower, int upper) "Unexpected writable reserved field: %s.%s [%d,%d], skip it ..."
+why those removals
+>  kvm_idreg_write_scratch_vcpu(const char *name, uint64_t oldfv, uint64_t newfv, uint64_t actualfv) "successful dry-run for %s old=0x%"PRIx64" new=0x%"PRIx64" actual=0x%"PRIx64
+>  
+>  # cpu.c
 
-v1 -> v2: use QEMU_AUTO_VFREE (Vladimir)
-
-v1: https://lore.kernel.org/qemu-devel/20231211105559.316897-1-andrey.drobyshev@virtuozzo.com/
-
- block/file-posix.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 9aad156aad4..39d6a34456c 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2366,7 +2366,7 @@ static int handle_aiocb_truncate(void *opaque)
-     RawPosixAIOData *aiocb = opaque;
-     int result = 0;
-     int64_t current_length = 0;
--    char *buf = NULL;
-+    QEMU_AUTO_VFREE char *buf = NULL;
-     struct stat st;
-     int fd = aiocb->aio_fildes;
-     int64_t offset = aiocb->aio_offset;
-@@ -2433,7 +2433,7 @@ static int handle_aiocb_truncate(void *opaque)
-             goto out;
-         }
- 
--        buf = g_malloc0(65536);
-+        buf = qemu_blockalign0(aiocb->bs, 65536);
- 
-         seek_result = lseek(fd, current_length, SEEK_SET);
-         if (seek_result < 0) {
-@@ -2492,7 +2492,6 @@ out:
-         }
-     }
- 
--    g_free(buf);
-     return result;
- }
- 
--- 
-2.47.1
+Eric
 
 
