@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AABEC982EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 06:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7F9C982EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 06:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Gli-0005m2-GG; Wed, 23 Sep 2026 02:47:50 -0400
+	id 1x9Gno-0006IB-4j; Wed, 23 Sep 2026 02:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9Glg-0005lQ-Fs
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:47:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9Gnk-0006H4-05
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:49:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9Gle-0003jn-Dt
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:47:47 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1x9Gnh-0003sC-4G
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 02:49:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790146064;
+ s=mimecast20190719; t=1790146192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vWov/L9cslgVOMVieEo1JHzJMx3Y0tpPX0cMoNd9lWk=;
- b=axh6DgzQALfvjjz1WV+NydbiP12QMQVevsdTA1Wz5Hf5HrwoLohPtIDkRfRB4pt2uV/b45
- bip1PTyZ4ELYX8TG144IyZP2Xyf973fw+rm3rTHheOoYKVlgOITzLymWQl38YdWt68cEtI
- HUPdmwl88lI9TdBdyDVGVYt95p8crws=
+ bh=RukGA7/eptk4hlE3nq6/h6PGdx/f4D5FvVzgE4r979o=;
+ b=GXNdeB075AHVHeuO5VKeVtc2WTjltJ6xvUHDMysBBcOpdV4qLd0bUe0CjzpUMzC+i7gU9l
+ cvmvtEupeljtdGu88AY0QDMydKooFnL+LIHnX/onI3IIp4aklrFPYBcwEP+egAPwD3eJRQ
+ IzYGpq90LwD5lxrGcmWDGvOQlEC6qYE=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-c72J0fhSMjK9zJ9WwCOCsg-1; Wed,
- 23 Sep 2026 02:47:42 -0400
-X-MC-Unique: c72J0fhSMjK9zJ9WwCOCsg-1
-X-Mimecast-MFC-AGG-ID: c72J0fhSMjK9zJ9WwCOCsg_1790146061
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-tio-qnPVP5-mZzEniYw2OQ-1; Wed,
+ 23 Sep 2026 02:49:47 -0400
+X-MC-Unique: tio-qnPVP5-mZzEniYw2OQ-1
+X-Mimecast-MFC-AGG-ID: tio-qnPVP5-mZzEniYw2OQ_1790146186
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9945195605B; Wed, 23 Sep 2026 06:47:40 +0000 (UTC)
+ id E196F1979203; Wed, 23 Sep 2026 06:49:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 349FA18005B8; Wed, 23 Sep 2026 06:47:40 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 857881800370; Wed, 23 Sep 2026 06:49:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D547B21E6A04; Wed, 23 Sep 2026 08:47:37 +0200 (CEST)
+ id 1C99221E6A04; Wed, 23 Sep 2026 08:49:42 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kashyap Chamarthy
- <kchamart@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>,  Hanna
- Reitz <hreitz@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,  Zhao Liu <zhao1.liu@intel.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Da?=
- =?utf-8?Q?ud=C3=A9?= <philmd@oss.qualcomm.com>,  qemu-block@nongnu.org,
- qemu-trivial@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Eric Blake
- <eblake@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH 4/9] qapi: convert simple intros for qga/qapi-schema.json
-In-Reply-To: <20260921205147.1857168-5-jsnow@redhat.com> (John Snow's message
- of "Mon, 21 Sep 2026 16:51:42 -0400")
-References: <20260921205147.1857168-1-jsnow@redhat.com>
- <20260921205147.1857168-5-jsnow@redhat.com>
-Date: Wed, 23 Sep 2026 08:47:37 +0200
-Message-ID: <87ld8sxy46.fsf@pond.sub.org>
+Cc: qemu-devel@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  Kostiantyn
+ Kostiuk <kkostiuk@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,  Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Jason Wang <jasowangio@gmail.com>,
+ qemu-trivial@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Stefano Garzarella <sgarzare@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org,  Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH v2 0/8] qapi: convert intros for qga, firmware, etc
+In-Reply-To: <8733v0zcsm.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Wed, 23 Sep 2026 08:45:13 +0200")
+References: <20260922205605.501602-1-jsnow@redhat.com>
+ <8733v0zcsm.fsf@pond.sub.org>
+Date: Wed, 23 Sep 2026 08:49:42 +0200
+Message-ID: <87jyocxy0p.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -94,74 +94,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Markus Armbruster <armbru@redhat.com> writes:
 
-> These are all single-paragraph introductions immediately followed by a
-> non-plaintext section, so no new insertion point is created by this
-> conversion.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qga/qapi-schema.json | 40 ++++++++++++++++++----------------------
->  1 file changed, 18 insertions(+), 22 deletions(-)
->
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index 90110af5730..b592b14a011 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -205,9 +205,9 @@
->  
->  ##
->  # @guest-shutdown:
-> -#
-> -# Initiate guest-activated shutdown.  Note: this is an asynchronous
-> -# shutdown request, with no guarantee of successful shutdown.
-> +#     Initiate guest-activated shutdown.  Note: this is an
-> +#     asynchronous shutdown request, with no guarantee of successful
-> +#     shutdown.
+> Series
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-Taking note of future work:
-
-10. Review doc where the intro contains (variations of) "Note:".
-
->  #
->  # @mode: "halt", "powerdown" (default), or "reboot"
->  #
-> @@ -266,10 +266,10 @@
->  
->  ##
->  # @guest-file-read:
-> -#
-> -# Read from an open file in the guest.  Data will be base64-encoded.
-> -# As this command is just for limited, ad-hoc debugging, such as log
-> -# file access, the number of bytes to read is limited to 48 MB.
-> +#     Read from an open file in the guest.  Data will be
-> +#     base64-encoded.  As this command is just for limited, ad-hoc
-> +#     debugging, such as log file access, the number of bytes to read
-> +#     is limited to 48 MB.
->  #
->  # @handle: filehandle returned by `guest-file-open`
->  #
-> @@ -357,10 +357,9 @@
->  
->  ##
->  # @guest-file-seek:
-> -#
-> -# Seek to a position in the file, as with fseek(), and return the
-> -# current file position afterward.  Also encapsulates ftell()'s
-> -# functionality, with offset=0 and whence=1.
-> +#     Seek to a position in the file, as with fseek(), and return the
-> +#     current file position afterward.  Also encapsulates ftell()'s
-> +#     functionality, with offset=0 and whence=1.
-
-Not this patch's problem, but here goes anyway: numeric @whence values
-like 1 are "available for historical reasons", the preferred value is
-"cur".
-
->  #
->  # @handle: filehandle returned by `guest-file-open`
->  #
-
-[...]
+With the update to tests/qapi-schema/doc-good.txt squashed into PATCH 2,
+of course.  I'll also make the commit message tweak for PATCH 5 if you
+like it.
 
 
