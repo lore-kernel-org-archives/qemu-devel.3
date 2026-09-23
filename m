@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BD6C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E5BC98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Tgn-0008JP-FY; Wed, 23 Sep 2026 16:35:37 -0400
+	id 1x9TiG-0001Ur-Jr; Wed, 23 Sep 2026 16:37:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9TgB-0008BZ-Tl
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:04 -0400
+ id 1x9TgA-0008B1-PK
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:35:00 -0400
 Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9Tg9-00051U-81
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:59 -0400
+ id 1x9Tg9-00051D-03
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:34:58 -0400
 Received: by mail-pz2-x0f.google.com with SMTP id
- d2e1a72fcca58-85469f20513so815991b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:56 -0700 (PDT)
+ d2e1a72fcca58-85a4329731cso811609b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790195696; x=1790800496; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iu9gCM+s0VdQe0NL+JCl/IZq6aTzQsY0y78oZAVciM8=;
- b=FVrIitesFuzMcM/fqWziMO0HNWRddcotfDZZ1Kx+bODmaNvPUTn2/71JhX3W0PSAQv
- Px5Z4/Nab1WAqwjZ/omuJvkv8+2YdCnUVFJMpXr+h3IMNqERUYke3SA0njTkwoT+epyi
- 7AGSnrkig9ucKmZK94izFoIKR9n0Rd8M+mC4b8uBjiwWXG3gSXdCecTPzuvj7JHsQgkf
- kfLbf2EFloOZ7bU3hZ5L4eQxvm79rbKFyNrqCUsIEXiShTFZyutwAt+5GuK96Hse6oCs
- 7rd5Vx9G234mfhvdbPUKyrZKqTgK+WEqqTthYdOc0q2zrOm+hZXjMVIjKDtd2NQGBawE
- Rayw==
+ d=linaro.org; s=google; t=1790195695; x=1790800495; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=iw6NmWPUmuvdUzCnsYRZeVRMe166tP0/X361NQb/yjU=;
+ b=Ox/F2EukL3d9G+izHyLPT6SwweElwAPL0bDcqMSyCYOQtVOJfJ2dqjC9n2W44Ypa4Z
+ eTBJHqQ+C4OlCm1xsUxUZtDNDTvvQglqD1xO05qgaXVtkaU6yFcfdnamU/rlweDk/Lp/
+ QxO6voQ5FRE/YlCjD51aMyOEkNoRCXGem0mWnZCeyKsV50D7RsDXgL4GkFqFgHFNx35m
+ n/ObJp/KHD4YWZIb6S2guAnKfqX5fSIWAlvgWK46LTRy6GAb5/6H4gEZkW9bjaa8Gf8U
+ vwCX0I+S5e19UVAziD+4W09h60DLZWbn/zXf998YGN4WG+BbOn1AsEM5E2hClLmmnDcs
+ +5Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790195696; x=1790800496;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iu9gCM+s0VdQe0NL+JCl/IZq6aTzQsY0y78oZAVciM8=;
- b=IhRMXtmXv+4viDGfholYZBPNiHBNgf5er2XdTT9KbS3zjYUzckAqQ3KLi6EeRvQj1T
- ZDORsy3Gd6v5pHUi7ooTT4oo9WHQVFlfoGE+ynGVdSt2tOtMM9B5rVeNy+ffbri3sNxE
- Ry12QjsS0a+MkA/JJ94wHgvxyRQrMb92hXyu6C5jJ1FXYueJfc76gBvYzTsecJ+aulko
- seZihy/d2bLLnsZomul4ZxV1FAiPhbkrBMtm1/wycoHUPOFPDvyBHxwdb74BZwJmnW7V
- GA9y1qIMczxOKbID7QGA1tAakm3WV0jP1whrre/7G0NzqiH71+pZ3ObZyKNL+oyxluuk
- z5jg==
-X-Gm-Message-State: AFuF++nD4YA4R5NLQNtN3ZRJrMUrsMsRnbYMsXlPo/CWZrcQ4HQowMD0
- B0iU5j9Q1rjVhn9W1E/rSazXcoFHfgzo1Se8mHrEQ8JaNkp8kmOr4v5aVBx830IXtJA+JpVJ/s9
- 62oCE
-X-Gm-Gg: AYBFou1QjhWfyhyXffS3Q+NjviM+SqssBmjNhweyaQe+akVgmRJ903VdWWMq4DSeWny
- KymEaV2CoGy1H8ZI6GT+yChvSwQAuy92OkAfN955KwJ7CiaAaCbJXvDJf14kjCcpkKEymVb+i+K
- X5V1Cj7Ki203XENpcy4DMiPnUKJdacUJDME67AGRTImpdTBDRIgo7DVY8+M8QjXghVSHYuCERQ+
- w9f3jXT18v2ktH0+05GeUKy5qTHXokHj9ejEYfwTZ2wqvzg7AwuFY1JSRjqr2JANQk9W4+X3FDb
- YP1NircdVnsV0PGdxW4CE/eiW3jQ2nNiZhwUdG5uhY012WV1EC9yAXtEQAlykCfv1hraXYig/qr
- JDgToaWzT//LIGuiMyhFXt6dAVWGUhXMhStMmLwYFMTPWM5N5xiTyVd0R5d0EOB6bikCvO2yc9/
- i/HXAwad8hcvpQCCe4b8f9yy9yRqd5sTDDXJMQxDfDI3dOc9pq9/hXFQ/SaXsmEHf2wVNM5500W
- eJgJ0ZJdj/Sy1DYYEy2bjo2fOmZrw==
-X-Received: by 2002:a05:6a00:9084:b0:860:507d:503e with SMTP id
- d2e1a72fcca58-87e9956817cmr226726b3a.20.1790195695827; 
- Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790195695; x=1790800495;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=iw6NmWPUmuvdUzCnsYRZeVRMe166tP0/X361NQb/yjU=;
+ b=UAK1RZ2uh29sm6jysK7x0990a/8tVhqa+pcVIZnIuYHjA8glfnga/hB71t5zZQ03Xn
+ YR7NLxaOfe750z2ULtzYp2fmLI1DW3CMlreQ6RB1u30ysIJW5xu5nP6eUeekpPP9zCau
+ ylrfLtrSqpdz1rlCV7LheFuKYMj2CHC11IrCZscE+d5Wir4LkPe5RYDTvS7Shbk3Gjlv
+ lepjX637KUkATaJmoe1STZT0LZ/X0WjOLRE5k7YU2cLAtV2KuXyRNKVOo8s8rEEgNRwb
+ RRaMDX/ussH7w47vK46sr3/QURVQ5zo2hBiimm/5Eq9CU9T14WDRBK6rzQI8jDCHz817
+ 0MPA==
+X-Gm-Message-State: AFuF++nTIRNnQKweisqUNpS2FiE04+iMJ9e2bjc15yp1C1MWmJjEtB5F
+ P4MoRRD8oRbGR6s9iYfGgFNA+dW4hokAqnORQrxEHSkYnvJI7y+7R3B6TkkBBO5a5NWdIn0zvfO
+ v+7zC
+X-Gm-Gg: AYBFou01c9ALYzuRPvyrYHBea1fB5BnDXMiI1NYdhchvesJjjya6xB5Z5pliifhpFed
+ +zrnlJTduZd1QJrcXwKTLjwiWY98bCKEeTPkxS2fg/6dcSmpAPdXexTiyLZMFv0efHjSYgrauHA
+ g8/aScMZHf6WbwQXYNXStQXAy9ZcuX6XzZvEhF97a5abnJ4FBvzntizRnNlsPRajHC+AresoNXl
+ 0QRjjfLyWXiM6unYIE9+NjDSCtDwCGReCpshYu5TqMPQgPFvYBFKGH68dXibZjPKwPOOaarnqXy
+ gUP8Nx+x+nMx0is8J4lFzzabHkmHeu+qDE50LgYWNPv3HQMBi74t0/EX1absgKKUDFAzdhuiFyn
+ /cU7+7GpWeMjR5NslgUYMHIQ1sqYTH+x5kYcF2X8PbEeU5KcFAmJz8Ol50Fl7WuPJQwQxME97Pt
+ de5Cr3a2TbXfo8JjizGg25Yvsx4t+p1y7caZi3eYNnsj79HM4Cu+AvL1duxBWni8/m53EEZ70YD
+ +rtdgDVOuWy3sQgZlCKbkmr2/EC5Q==
+X-Received: by 2002:a05:6a00:4fd5:b0:87c:9094:b72d with SMTP id
+ d2e1a72fcca58-87e98994aa5mr236145b3a.6.1790195694536; 
+ Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.55
+ d2e1a72fcca58-87d3894211asm1678638b3a.36.2026.09.23.13.34.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 13:34:55 -0700 (PDT)
+ Wed, 23 Sep 2026 13:34:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PULL 14/16] tcg/riscv64: Set vtype before whole-register vector loads
-Date: Wed, 23 Sep 2026 13:34:39 -0700
-Message-ID: <20260923203441.31276-15-richard.henderson@linaro.org>
+Cc: Matt Turner <mattst88@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 12/16] tcg: Sort all_outop[] by INDEX name
+Date: Wed, 23 Sep 2026 13:34:37 -0700
+Message-ID: <20260923203441.31276-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 References: <20260923203441.31276-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
  envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
@@ -101,48 +103,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With vtype uninitialized, VILL might be set, leading to SIGILL.
-Also, assert vtype initialized for whole-register stores and moves.
+Most of the opcodes were already sorted, but then there were
+a set at the bottom that were left over from the split
+between 32 and 64-bit hosts.
 
-Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
-Reported-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv64/tcg-target.c.inc | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tcg/tcg.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 2ce9d47a633..de9a3570b23 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -775,6 +775,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
-     case TCG_TYPE_V64:
-     case TCG_TYPE_V128:
-     case TCG_TYPE_V256:
-+        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
-         {
-             int lmul = type - riscv_lg2_vlenb;
-             int nf = 1 << MAX(lmul, 0);
-@@ -1014,6 +1015,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
-             unsigned idx = type - riscv_lg2_vlenb;
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 489df0e7386..ecc1f54c1bf 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1158,32 +1158,39 @@ static const TCGOutOpLoad outop_ld = {
+ /* Register allocation descriptions for every TCGOpcode. */
+ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_add, TCGOutOpBinary, outop_add),
++    /* addc1o is implemented with set_carry + addcio */
++    OUTOP(INDEX_op_addc1o, TCGOutOpBinary, outop_addcio),
+     OUTOP(INDEX_op_addci, TCGOutOpAddSubCarry, outop_addci),
+     OUTOP(INDEX_op_addcio, TCGOutOpBinary, outop_addcio),
+     OUTOP(INDEX_op_addco, TCGOutOpBinary, outop_addco),
+-    /* addc1o is implemented with set_carry + addcio */
+-    OUTOP(INDEX_op_addc1o, TCGOutOpBinary, outop_addcio),
+     OUTOP(INDEX_op_and, TCGOutOpBinary, outop_and),
+     OUTOP(INDEX_op_andc, TCGOutOpBinary, outop_andc),
+     OUTOP(INDEX_op_brcond, TCGOutOpBrcond, outop_brcond),
+     OUTOP(INDEX_op_bswap16, TCGOutOpBswap, outop_bswap16),
+     OUTOP(INDEX_op_bswap32, TCGOutOpBswap, outop_bswap32),
++    OUTOP(INDEX_op_bswap64, TCGOutOpUnary, outop_bswap64),
+     OUTOP(INDEX_op_clz, TCGOutOpBinary, outop_clz),
+     OUTOP(INDEX_op_ctpop, TCGOutOpUnary, outop_ctpop),
+     OUTOP(INDEX_op_ctz, TCGOutOpBinary, outop_ctz),
+     OUTOP(INDEX_op_deposit, TCGOutOpDeposit, outop_deposit),
+     OUTOP(INDEX_op_divs, TCGOutOpBinary, outop_divs),
+-    OUTOP(INDEX_op_divu, TCGOutOpBinary, outop_divu),
+     OUTOP(INDEX_op_divs2, TCGOutOpDivRem, outop_divs2),
++    OUTOP(INDEX_op_divu, TCGOutOpBinary, outop_divu),
+     OUTOP(INDEX_op_divu2, TCGOutOpDivRem, outop_divu2),
+     OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
+     OUTOP(INDEX_op_extract, TCGOutOpExtract, outop_extract),
+     OUTOP(INDEX_op_extract2, TCGOutOpExtract2, outop_extract2),
+-    OUTOP(INDEX_op_ld8u, TCGOutOpLoad, outop_ld8u),
+-    OUTOP(INDEX_op_ld8s, TCGOutOpLoad, outop_ld8s),
+-    OUTOP(INDEX_op_ld16u, TCGOutOpLoad, outop_ld16u),
+-    OUTOP(INDEX_op_ld16s, TCGOutOpLoad, outop_ld16s),
++    OUTOP(INDEX_op_ext_i32_i64, TCGOutOpUnary, outop_exts_i32_i64),
++    OUTOP(INDEX_op_extrh_i64_i32, TCGOutOpUnary, outop_extrh_i64_i32),
++    OUTOP(INDEX_op_extrl_i64_i32, TCGOutOpUnary, outop_extrl_i64_i32),
++    OUTOP(INDEX_op_extu_i32_i64, TCGOutOpUnary, outop_extu_i32_i64),
+     OUTOP(INDEX_op_ld, TCGOutOpLoad, outop_ld),
++    OUTOP(INDEX_op_ld8s, TCGOutOpLoad, outop_ld8s),
++    OUTOP(INDEX_op_ld8u, TCGOutOpLoad, outop_ld8u),
++    OUTOP(INDEX_op_ld16s, TCGOutOpLoad, outop_ld16s),
++    OUTOP(INDEX_op_ld16u, TCGOutOpLoad, outop_ld16u),
++    OUTOP(INDEX_op_ld32s, TCGOutOpLoad, outop_ld32s),
++    OUTOP(INDEX_op_ld32u, TCGOutOpLoad, outop_ld32u),
+     OUTOP(INDEX_op_movcond, TCGOutOpMovcond, outop_movcond),
+     OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
+     OUTOP(INDEX_op_muls2, TCGOutOpMul2, outop_muls2),
+@@ -1203,7 +1210,9 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_qemu_st2, TCGOutOpQemuLdSt2, outop_qemu_st2),
+     OUTOP(INDEX_op_rems, TCGOutOpBinary, outop_rems),
+     OUTOP(INDEX_op_remu, TCGOutOpBinary, outop_remu),
++    OUTOP(INDEX_op_revbit8, TCGOutOpUnary, outop_revbit8),
+     OUTOP(INDEX_op_revbit32, TCGOutOpBswap, outop_revbit32),
++    OUTOP(INDEX_op_revbit64, TCGOutOpUnary, outop_revbit64),
+     OUTOP(INDEX_op_rotl, TCGOutOpBinary, outop_rotl),
+     OUTOP(INDEX_op_rotr, TCGOutOpBinary, outop_rotr),
+     OUTOP(INDEX_op_sar, TCGOutOpBinary, outop_sar),
+@@ -1216,28 +1225,18 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_st, TCGOutOpStore, outop_st),
+     OUTOP(INDEX_op_st8, TCGOutOpStore, outop_st8),
+     OUTOP(INDEX_op_st16, TCGOutOpStore, outop_st16),
++    OUTOP(INDEX_op_st32, TCGOutOpStore, outop_st),
+     OUTOP(INDEX_op_sub, TCGOutOpSubtract, outop_sub),
++    /* subb1o is implemented with set_borrow + subbio */
++    OUTOP(INDEX_op_subb1o, TCGOutOpAddSubCarry, outop_subbio),
+     OUTOP(INDEX_op_subbi, TCGOutOpAddSubCarry, outop_subbi),
+     OUTOP(INDEX_op_subbio, TCGOutOpAddSubCarry, outop_subbio),
+     OUTOP(INDEX_op_subbo, TCGOutOpAddSubCarry, outop_subbo),
+-    /* subb1o is implemented with set_borrow + subbio */
+-    OUTOP(INDEX_op_subb1o, TCGOutOpAddSubCarry, outop_subbio),
+     OUTOP(INDEX_op_umax, TCGOutOpBinary, outop_umax),
+     OUTOP(INDEX_op_umin, TCGOutOpBinary, outop_umin),
+     OUTOP(INDEX_op_xor, TCGOutOpBinary, outop_xor),
  
-             tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
-+            /* We must initialize vtype to something to avoid VILL. */
-+            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
-+                set_vtype(s, type, MO_8);
-+            }
-             insn = whole_reg_ld[idx];
-         } else {
-             static const RISCVInsn unit_stride_ld[] = {
-@@ -1046,6 +1051,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
-     case TCG_TYPE_V64:
-     case TCG_TYPE_V128:
-     case TCG_TYPE_V256:
-+        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
-         if (type >= riscv_lg2_vlenb) {
-             static const RISCVInsn whole_reg_st[] = {
-                 OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
+     [INDEX_op_goto_ptr] = &outop_goto_ptr,
+-
+-    OUTOP(INDEX_op_bswap64, TCGOutOpUnary, outop_bswap64),
+-    OUTOP(INDEX_op_ext_i32_i64, TCGOutOpUnary, outop_exts_i32_i64),
+-    OUTOP(INDEX_op_extu_i32_i64, TCGOutOpUnary, outop_extu_i32_i64),
+-    OUTOP(INDEX_op_extrl_i64_i32, TCGOutOpUnary, outop_extrl_i64_i32),
+-    OUTOP(INDEX_op_extrh_i64_i32, TCGOutOpUnary, outop_extrh_i64_i32),
+-    OUTOP(INDEX_op_ld32u, TCGOutOpLoad, outop_ld32u),
+-    OUTOP(INDEX_op_ld32s, TCGOutOpLoad, outop_ld32s),
+-    OUTOP(INDEX_op_revbit8, TCGOutOpUnary, outop_revbit8),
+-    OUTOP(INDEX_op_revbit64, TCGOutOpUnary, outop_revbit64),
+-    OUTOP(INDEX_op_st32, TCGOutOpStore, outop_st),
+ };
+ 
+ #undef OUTOP
 -- 
 2.53.0
 
