@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8B7C982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 12:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120E9C982FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 12:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MGc-0007jM-Ti; Wed, 23 Sep 2026 08:40:06 -0400
+	id 1x9MGc-0007iq-Nu; Wed, 23 Sep 2026 08:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxv-0004F4-9E
+ (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxv-0004F6-Fe
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:20:49 -0400
-Received: from mail-lf2-x10.google.com ([2a00:1450:4864:36::10])
+Received: from mail-lf2-x11.google.com ([2a00:1450:4864:36::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxr-0007A2-UU
+ (Exim 4.90_1) (envelope-from <mankku@gmail.com>) id 1x9Lxs-00079l-Cg
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:20:47 -0400
-Received: by mail-lf2-x10.google.com with SMTP id
- 2adb3069b0e04-5b5e4f13d76so759496e87.3
+Received: by mail-lf2-x11.google.com with SMTP id
+ 2adb3069b0e04-5b8cbb7b9cfso668236e87.0
  for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 05:20:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20251104; t=1790166031; x=1790770831; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ixAl6sKVptNbY5W9wtErOjtS2ajVLYqJQO6XYGsZnSY=;
- b=iFEJGH5/vSJfYI4FRd9yiPOPkmRxiEkPlNNP6Bjoip9lqti+92mJ4wg/tjeAc36f0A
- wbV4U27ugOLxc+wRe1beDQ4o5W2Zp8QDSRKkC9GEWF/RkwJARjgfg+kAd9+VAHNr1LlA
- pzkibMqjfRa3o6OB6SwEnDRrHL+AmxIsIG84eUhtpYwBKF6I+yS1imeJ0EcFhkZqSqab
- 1/Rg/8pxUNqDAfyRCCAG6a4cRgfRnYHUSb5mcWVsktFjyw+i3JleGwFu5x5DZmMj71NF
- vB8gpb83Y+LXK6nClgLdmZQ2Tz/j3DffUsd84O1QRugGbVwcIR2l54Vdgu3ypF4osMHf
- HZ2g==
+ bh=RQ7LqL6uIN2+w3MFU8dOf51u0da7idHTXofvzCxA5W0=;
+ b=mXlm0/ZZFxg/M9xy/r+sizheOwDUYKFCFgxqIn/BVpxnf7esH6zQPObMqa9hrn7dau
+ l5UPpDB3RL7CGFrnmkYzOdZLg2E/dwghS6yx1On9OKB5Z0DOTz6glSXuMQ3YYUExWQhT
+ iljK4I+9msp1mJ6ZaXuePLuWGg3GJecDE860G/OvEEl31kvosyvl5dUEXce6KBChUMZv
+ wt0jUtqp/dGqxIKrQuR8rBV37EleWlbgtLyty59E03OtOLD7jQIl17P+ZR7GrpTgy/30
+ ZP4PtOAYTjscTXWIZUSjl/UuQ2FvL3/frcapDpEWG0jju7vZt+BLfmJ2LsnE78rIk7Sf
+ fOvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1790166031; x=1790770831;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ixAl6sKVptNbY5W9wtErOjtS2ajVLYqJQO6XYGsZnSY=;
- b=WEjc6hym1Tm7vUTOHriY1SNHwaIG+ixmfoLWX+LaxMz2nloL3eWS7/PjWgrKmfon4h
- kA7rUD7Y0eOAfEOGqpw4GqQwWyIDF2HJ8Q32mrLtcGHvnilRr5QobgvZzGUl9sb90XUB
- 6hd1+kzkDuYGHP+Y4Npj60JTFD3TZIUR3i9uk1o5SGQJe6m16wpPBkbOT50S0KntkKiJ
- LifabBMy6Ddzh2fNKi8MTyGfrEoAaZicf0rrnrUrnnqdKEDLaZwOYH++m91uxEp20LBL
- JdMYp0Y9vXmC742UTxN3zD7JrNX4u/j25F19jwhk9YkTZ4r2dSMou19GTGy5LmnSbgb+
- yhvQ==
-X-Gm-Message-State: AFuF++nq/qBDoYO9dTvrWVQXvYj4U8pifFmQfIF6CSNs4koM221wJVwB
- anMGoBl170avYA2UiMyGO00UepM7UdsMRRnCSLejlOfIDTBvjMHaSFXS
-X-Gm-Gg: AYBFou0BjEE5Ggsdwy8WZOnsuqlsQzL/iRVRq7ZzvCengB03SZrQyfR4YffzeuMxUx7
- fhYDNpxv83003+BV7YGhl+Xw6SzqfmPmQpoTFTwozLpXdpZSZckoBBgz/66lasFLfVO08Jpo7aL
- FaSOn9pHigsilgObAvXCT9/XVramsYLU9U2UvBM7CcrtsPor8mbyj8GGIt/6x1sWFkWfPFmUU5w
- K6ukGQ5xbqOu5Zjz6rOG8iGZTtD7igBPQofaBjaZu82FNVEJlksfFwMe5bxWs2hJrR3l5ZR6n28
- ypOP/WmAFAOcDtL7xlj/wyQRuyWCDj3niaMotfgEF53VL/fU3cudDF2wGmlFOElM00w5fHt8JKB
- SMff6gxyRj4VYeA2eyGFntA8i1iLgmc9TbBiEBAmP7BOdQSnhY0QkxLxsYAAfy6FukMAB2EdP87
- h8+SCTS1piSV8hjwj3ZZXywVWxRwze74AwjKafoHB7TPqAJVe37WdKlz04UZy5LNY97jRw6tYY6
- M+UFVElf8nGiyjVl81T
-X-Received: by 2002:a05:6512:3f26:b0:5b6:4ae:5b83 with SMTP id
- 2adb3069b0e04-5b8d89b6f07mr793983e87.33.1790166031229; 
- Wed, 23 Sep 2026 05:20:31 -0700 (PDT)
+ bh=RQ7LqL6uIN2+w3MFU8dOf51u0da7idHTXofvzCxA5W0=;
+ b=W5D4g3nDmf8QeZRLUVYxOD0oLTFzFd3E6CCPKYWJBiC2wqlN3nVWBD4rxZuR9MYg8P
+ 2IWfi5lwLu15y+dDbdMhAIudimoLPDXicqfRUUUlpzo5dvKiLrilJnPrOiDfKy9ql2qZ
+ DNWZ53xAzxIAf9Yyw7Ub9WAyYsVxToGCyz6eGOt27Zahi7GW3cBbaQiPuezqakcyVpxO
+ mZshwVmZZzKts8cfLFlcInqBj2iluphzaXlqrDRGo3xEQqtqmfjKHhR8pRcW6VS6opeH
+ q2ndcBkR2Q1Y6oeRSJuBduWZ9D70+9+NbeTNao7J89hCvbEqlLUGOfP/sXZaifv6ddk6
+ kRhg==
+X-Gm-Message-State: AFuF++l6+/yQr7L5LJRTr/VBQHuBcsKWQDbrF0cihiGVEq781GYtzdqr
+ DN7PYqNJtpoDUBXlPH3IVClv0wdIPfEpF6jDnsP93FS6jVGZWN8ZqLgJ
+X-Gm-Gg: AYBFou0c38c3eAtQETJWz+x1DTmt4lusqgM2A5G9GtsI99c12dzE9IZ01anTpZczEJp
+ 5ELe+44VXDpc3kr0WSOj+j+4NBkB5nppIXGzHxGGIQRo+rIiSq4mbi+47mgwrnXSnhLmdHNIaBI
+ jwU5H76eC/3XEJ9siALtP6Ce5vvIJlvAg416UjZHHIX4r41cmW/IgHbitBfd+tBT/l0YfFPMt6Y
+ MHoWGlfMSd8bs0YDPEiBm8tSedZ5Za7ZptquBvUFfYzx9exkV8kTG4XMLoVpisAS3MA6muJWDhE
+ uLUdxk52wfMLZ18JB4rX/KI+5e/Rd9It6LhEcVrRiR4PK2sekV9EpfgbKWBUnxWp9RNakCLC6V1
+ 9SDTu1BnP15JMKoMWBkAjhMR75mszsVCs2PMdQeLC2r5iRbfVnaqcs4as/DLdUkWw+Q4EZ2bfnJ
+ 7euzVOd63zsaNsZOK9ZAaJWeerHYFBQAs9Ipaaa/k4YvJOAk2ceKkCyAtgLBBCcNCtZsMG9mjPJ
+ cMLSPKCDnhm8vAUogRozQ==
+X-Received: by 2002:a05:6512:3d0c:b0:5a8:757b:80ee with SMTP id
+ 2adb3069b0e04-5b8d8978b32mr899492e87.17.1790166030275; 
+ Wed, 23 Sep 2026 05:20:30 -0700 (PDT)
 Received: from [127.0.0.2] (109-204-139-9.dhcp.ossk.fi. [109.204.139.9])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b8d85897aesm552138e87.50.2026.09.23.05.20.30
+ 2adb3069b0e04-5b8d85897aesm552138e87.50.2026.09.23.05.20.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 05:20:31 -0700 (PDT)
+ Wed, 23 Sep 2026 05:20:29 -0700 (PDT)
 From: =?utf-8?q?Markku_Ahvenj=C3=A4rvi?= <mankku@gmail.com>
-Date: Wed, 23 Sep 2026 15:20:04 +0300
-Subject: [PATCH 3/3] hw/nvme: clear interrupts on controller reset
+Date: Wed, 23 Sep 2026 15:20:02 +0300
+Subject: [PATCH 1/3] hw/nvme: prevent cq_pending underflow
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nvme-intx-fixes-v1-3-fbf0e4e567a5@gmail.com>
+Message-Id: <20260923-nvme-intx-fixes-v1-1-fbf0e4e567a5@gmail.com>
 References: <20260923-nvme-intx-fixes-v1-0-fbf0e4e567a5@gmail.com>
 In-Reply-To: <20260923-nvme-intx-fixes-v1-0-fbf0e4e567a5@gmail.com>
 To: qemu-devel@nongnu.org
@@ -78,22 +78,21 @@ Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
  =?utf-8?q?Markku_Ahvenj=C3=A4rvi?= <mankku@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1790166028; l=757;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1790166028; l=2083;
  i=mankku@gmail.com; s=20260923; h=from:subject:message-id;
- bh=qeH6QjBMRyEEjSqLx4JYFMxOLGBoKhwW7m8WsHv+XdA=;
- b=A+Kc81TYHeLJr0GFrzXLS1Pncl9Y0blMDerrllcybStRef+b1F9z9NyjavMZbrOqpRrNLG4Ip
- yXyLYcMO7J0Bo8Tm4Dh4KCZAM1Ybg3ouR1G4+c9qXJaEnWW3i+RWXwo
+ bh=L8d3cJ/s2+GgYwMG8LU0QUz+WFUIGxrwJZfFwvTOOKw=;
+ b=tzUMhqcEYF7tf1ubewmn2NGfGwXCH8T/b1Ud7zVR71RN5fn8EOdfBsMWvy6TcZPfgT4J7YEED
+ hXX78r7oNZmB6yr23kTHzPiHPu1dsRj2yVdL0kVPrek+7Y3y2tMGaHV
 X-Developer-Key: i=mankku@gmail.com; a=ed25519;
  pk=vdAiS3IZFixKCwRmc+wfwUSPQWpEMkFYPH8m9evJZPc=
-Received-SPF: pass client-ip=2a00:1450:4864:36::10;
- envelope-from=mankku@gmail.com; helo=mail-lf2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:36::11;
+ envelope-from=mankku@gmail.com; helo=mail-lf2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 23 Sep 2026 08:40:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,30 +109,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clear stale CQ interrupt state and ensure the interrupt line is
-deasserted when resetting an NVMe controller.
+cq_pending counts interrupt-enabled completion queues with unconsumed
+entries. nvme_cq_notifier() and nvme_process_db() decrement it whenever
+a CQ becomes empty, but they may also process a notification or doorbell
+write for a CQ that was already empty.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4142
+Decrement cq_pending only when the CQ contained pending completions
+before its head update. Otherwise cq_pending may underflow and
+prevent legacy INTx from being deasserted.
+
 Signed-off-by: Markku Ahvenjärvi <mankku@gmail.com>
 ---
- hw/nvme/ctrl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/nvme/ctrl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 3545a3de236d..1de6a0e7f487 100644
+index c641226e27ad..2be4bab7eb5a 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -8126,6 +8126,10 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-     stl_le_p(&n->bar.intmc, 0);
-     stl_le_p(&n->bar.cc, 0);
+@@ -4782,6 +4782,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+ {
+     NvmeCQueue *cq = container_of(e, NvmeCQueue, notifier);
+     NvmeCtrl *n = cq->ctrl;
++    bool pending = cq->tail != cq->head;
  
-+    n->cq_pending = 0;
-+    n->irq_status = 0;
-+    nvme_irq_check(n);
-+
-     n->dbbuf_dbs = 0;
-     n->dbbuf_eis = 0;
-     n->dbbuf_enabled = false;
+     if (!event_notifier_test_and_clear(e)) {
+         return;
+@@ -4790,7 +4791,7 @@ static void nvme_cq_notifier(EventNotifier *e)
+     nvme_update_cq_head(cq);
+ 
+     if (cq->tail == cq->head) {
+-        if (cq->irq_enabled) {
++        if (cq->irq_enabled && pending) {
+             n->cq_pending--;
+         }
+ 
+@@ -8555,6 +8556,7 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+ 
+         uint16_t new_head = val & 0xffff;
+         NvmeCQueue *cq;
++        bool pending;
+ 
+         qid = (addr - (0x1000 + (1 << 2))) >> 3;
+         if (unlikely(nvme_check_cqid(n, qid))) {
+@@ -8609,13 +8611,14 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
+             qemu_bh_schedule(cq->bh);
+         }
+ 
++        pending = cq->tail != cq->head;
+         cq->head = new_head;
+         if (!qid && n->dbbuf_enabled) {
+             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
+         }
+ 
+         if (cq->tail == cq->head) {
+-            if (cq->irq_enabled) {
++            if (cq->irq_enabled && pending) {
+                 n->cq_pending--;
+             }
+ 
 
 -- 
 2.55.0
