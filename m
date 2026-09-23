@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851B8C98309
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80915C98307
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Kfi-0004cd-3n; Wed, 23 Sep 2026 06:57:54 -0400
+	id 1x9Kfg-0004bV-GY; Wed, 23 Sep 2026 06:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x9KfN-0004WS-0j
+ id 1x9KfM-0004WN-LK
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:57:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x9KfH-0002Nl-FD
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:57:31 -0400
+ id 1x9KfH-0002Mq-EL
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 06:57:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790161045;
+ s=mimecast20190719; t=1790161039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K7sxbCLPYjCGc+vT8TBpOiTfp6JTc9Z0uSN7ivbU46c=;
- b=AJWCn0ecogKQoN3imHu52PUlxG1Zs1FykxmUNUHSJSqb4oNzPC8aQ5bvrB4B2migtM7xcT
- uDchBQ8Cr4Pwm5b8wCzKEmz1M0NXeV3jlrea3Dw+I0cfJwtPvdK0nzrvrQN9/CcJZlQfG6
- Ef3mDUmWaJYuxObb6Dgy2O5vQrOplcU=
+ bh=HHUjMfAp7Vt+VQeII9fRYcKtGzZ8TVh4zPfDFi2sJCY=;
+ b=Jtuf/h4clvuIKP68fHwmnW/Ie8lMsHZHAmlKR6UPhH3EkOMaX2Vw64HAhW+O3NOrruN9XW
+ tml2hwBiYZSY3+GmbJRC8y+zmwplZwvETGWNL2sK3T0SiV30EgqA8g/sYxsozc4lgRrAg5
+ AxXqEeBpKOkkf1LqMuF7zXrvyoAB0cI=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-2C63sN-BNUG8mW2WBwSVCQ-1; Wed,
- 23 Sep 2026 06:57:22 -0400
-X-MC-Unique: 2C63sN-BNUG8mW2WBwSVCQ-1
-X-Mimecast-MFC-AGG-ID: 2C63sN-BNUG8mW2WBwSVCQ_1790161039
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-191-hXHzcdYNNQeKyXazoNewAQ-1; Wed,
+ 23 Sep 2026 06:57:15 -0400
+X-MC-Unique: hXHzcdYNNQeKyXazoNewAQ-1
+X-Mimecast-MFC-AGG-ID: hXHzcdYNNQeKyXazoNewAQ_1790161032
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97AC0195DBB1; Wed, 23 Sep 2026 10:57:19 +0000 (UTC)
+ id 423AE1945102; Wed, 23 Sep 2026 10:57:12 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E9AE300106E; Wed, 23 Sep 2026 10:57:18 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 98BE11800261; Wed, 23 Sep 2026 10:57:10 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 7/9] hw/m68k/virt: use unique QOM name
+Subject: Re: [PATCH v2 5/9] hw/hexagon/virt: use unique QOM name
 From: marcandre.lureau@redhat.com
 To: Yonggang Luo <luoyonggang@gmail.com>
 Cc: qemu-devel@nongnu.org, 
@@ -73,29 +73,29 @@ Cc: qemu-devel@nongnu.org,
  Philippe Mathieu-Daude <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
-In-Reply-To: <20260922215533.641-8-luoyonggang@gmail.com>
+In-Reply-To: <20260922215533.641-6-luoyonggang@gmail.com>
 References: <20260922215533.641-1-luoyonggang@gmail.com>
- <20260922215533.641-8-luoyonggang@gmail.com>
+ <20260922215533.641-6-luoyonggang@gmail.com>
 Date: Wed, 23 Sep 2026 14:56:45 +0400
-Message-Id: <179016100547.1396491.3279653117271344611.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=421;
+Message-Id: <179016100544.1396491.7027342796637781071.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=437;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7ireRDcN/WoctDlcufuabiOnZSde9lm6lXDMY7uUTxo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqs7BxeCPTncp/ahsNrabb54cvxUeyKgf/v59rs
- 0YE3MgeRaSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarOwcQAKCRDa6OEJdZac
- 5d1AEACZE9CRq6c2O5EP1mfQN2qxd2OSKSWeEFevCeqrgVkzT8J+qmrYgpxooeefSuZjSEx9Gk0
- 9TYQJQRW8n4dC5uET0M2PAmWwWHD4ZoqifIeydQtJ9ue8jUE45T1VwEAG4KvB0SUkNml2x96A2Y
- cLg8OZ8l6wtPB++CoQCSYkoQLsAZcYNOmyy1guo/RPJB9Wp7hGn7f8NAplHxsjUi6dusj7lqhFS
- hrSS9/7/EWofF4wP/LLEstUqSVn/XrxYeJGjlmTB3DQraDzf8yNBmEKiUXqgHiO7iM1WK++cRNP
- XcMd3VP72kaRLGduOuWRX0SOMhNPny/VfIpMgw1cExVUvClFH/W3dlz09kmGtJDk/ZWB5kySIrv
- sekigB+p+A9DInn4mmkbkSXNSD5nmZnVzE/8ou5q0CoJqWTZRT6/ul4vx45nBhLqhHQj09XcscS
- ZqP7Afqpzbios6ifxdpVFMkKQlDofenHQhbqUWNPMec1Lq7VmTCeHxG+l2i7saqpUj2A7f9AV5H
- 4TL0VX6uA1hh0ZPNWdkMq4ne7nhsGUa3QwWcUz8QMBVET/VHUGkn8rQ58bLD+8F14fbc8HFkVLo
- V/Kr/D8IkPYtgVK2XdG1XUDMGAJt96UWRv/CQvRCXzdNoTXH8m0yKeC41j83Avnl6y/brjYlcnM
- OoQmS7ml/juUvqw==
+ bh=5T6ENy54y80K/pB9kfZYq0bbSZ9F/4mwbmxTC1ebs6Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqs7BxR40rtIXfreG2etUCo0KGQuX2phUBPpRn8
+ HenVVVgOimJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarOwcQAKCRDa6OEJdZac
+ 5VSbD/9MAMK78cgK2KNHc0L6wURlxc0qh6FsnWV9/kNIc2yiL5HLbWdbsTDaWijsWsn2CiB41g4
+ D8lIZEARBlvjFuXxPgm+k+tIMApcvQpmV3+PV/eQhs6xXIbFb9MKCtvLEgBmnuzIXZuq8Tf55ZB
+ 1KTBAJv01zzMil93Lvh3JakWrHDd7rliDJIcmWSFHEkVkA+LtTlC5QB/lETum97zrUicVGxE5Df
+ hIX7pUcqciP+GwLCIUFLf9Ekm9avJ6ovVOcrCXR5WoxdAy70+PztHBQih1qsHTXqoOOfJ5qRInZ
+ LDVghYARtFKpYb7XIEabBMFAJi6axvfYNOsYa+/xf0oPioJolInN3AA1YkbA6AAzLEd3ESG8Qsh
+ mpZxigd+qRNvY2bRvajx3u3dUba/sZS6V1xo3XOfMRFlG/QxE+lwTdZ9Yia592J61TKYPpXWpk9
+ 8Q7AGBixKE+GFlAJ6y+Kau2TEorQ2hBJ0XOrAtecGdXYhUHi+eQnZEsPE2F/tTBOD87BSObVszk
+ KgHOYzaZciwc2teCZQk2tS2+IjP3HCk34Yvaxm6ePZAs/Y0IIl1ErlsHpeRwEDG88kc5aw12wLB
+ 5BM4KzWNY7WvGAj/3qc6vyMvS4TtEC2PhDpN0wQGAisMlaTHbOAX14Elp6DWpCit/KtdXUZw6xr
+ CJZ0X7q12LkLjhA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -121,10 +121,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Sep 2026 05:55:30 +0800, Yonggang Luo <luoyonggang@gmail.com> wrote:
-> Set the parent and versioned QOM types to m68k-virt so M68K virt no
-> longer collides with other virt-machine types in one process. Keep
-> the -M / help / migration name as virt-* via
+On Wed, 23 Sep 2026 05:55:28 +0800, Yonggang Luo <luoyonggang@gmail.com> wrote:
+> Set TYPE_HEXAGON_VIRT_MACHINE to MACHINE_TYPE_NAME("hexagon-virt") so
+> Hexagon virt no longer collides with other virt-machine types in one
+> process. Keep the -M / help / migration name as virt via
 > machine_class_set_name().
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
