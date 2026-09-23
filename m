@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BFAC9830D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A625C98310
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MtV-0001hL-LQ; Wed, 23 Sep 2026 09:20:17 -0400
+	id 1x9MuS-0002Ld-Bm; Wed, 23 Sep 2026 09:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9MrA-00008c-Lf
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:00 -0400
+ id 1x9MrC-00009Z-Tt
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:18:02 -0400
 Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mqy-0006p0-I9
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:17:52 -0400
+ id 1x9Mr8-0006pk-UK
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:17:54 -0400
 Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-328664ef78fso552450eec.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:17:37 -0700 (PDT)
+ 5a478bee46e88-33c3735125bso408264eec.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169456; x=1790774256; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169465; x=1790774265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ElUpYvhknnIwSPfbcSK8wY490g/9t35RPhM2WyomKNg=;
- b=lbK/NVRk36tdEvYYVWBEm6GNOgkZwMj1jUVOI86Dl51L3KyvNgcfAwaoLc6tetQ3pG
- C4AobTIEw4yciB9FakFGgaMLUboVuAUClB1H2psQiOywZDw43gxeoa9xyGWFm5H69jif
- YnYwT1qqR1JBKkBcRL74V8vUNT99LwIhMhDfV5XrJOk0VbjUC+/Yog+M8t8vnzvmzQva
- fy+ydk174CoezTBHL5knhCXmPpWcmYscIaQLtWRynfomf/fLFl9cY2ehPTWNH7hlw/Nz
- qUBaeUZUqOvqUuq76gbaUq4DfVlP9ViB60JIe2dRWfa7MKFP++jxMBgpOz+Hbx8BpoD1
- +qbw==
+ bh=VyGOeMM6N9WmW/Btrmx0VVv+jU00kmaZZ+J9OFmIWlc=;
+ b=LV7OtYWRiNVOYlPfqVBK/+vv95RO+/04Pk6IokeqHkkO7WX+umH42XHB8/31nd9wfQ
+ Tac7Egu6E228kWQd9SS4AP86dTYw0Vc3mkh7ZmM12wQvDm07H8DflBwG4h9+AqkVCjJL
+ YFYa34CVWDokDn3Zz0M68qBtfgpirHxy4lh9DXyL09hnbquJJZFPYvsNgAEEAFDrHIb1
+ jjS/dnNHpgwbVLsswbaCQwrxuEuRieHNqHBWyq1EIIGKL6O7ksc2INgHvhq4qlK9U6yn
+ nKalxWqm102ep7rKE0VZJFpGgmjNfD6EUwiM+70P646+s/JKVRqMAGTKwWMBvVK4NyBU
+ DjLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169456; x=1790774256;
+ d=1e100.net; s=20260707; t=1790169465; x=1790774265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ElUpYvhknnIwSPfbcSK8wY490g/9t35RPhM2WyomKNg=;
- b=ptk4ajjbpNJXBNe6bqlvSwF9u/75msRvxy3yaO9Yw8PgjMzbUl2TmHozDMmrc4Bn3C
- 8nREAxJ98289DLU9NhKc+gH8FNIn2Aw5uiqXCjv6jssfM41QFjs0EBEWdTCH3X6TfsJC
- 8ygSF+xHy0KQSV8NM4BD1Ms/xD51WOkgtWMhbZEijLTKtFrmYqXlnG8yeVQzOqzxY0GE
- 3wRPJ02PhYTUMYcaEpxeSna0MxK9o0EhEc4OCly7feR0ZlZA6igRd3oZn6AKAumu7IsV
- 765Stwpslp3ejA4MQwYouFtjsTKtFxdnCsGMoBp24fJOAJzX7sZVc6I6a+GjE4dFcTi6
- lrDA==
-X-Gm-Message-State: AFuF++mOyEPu2BIND+zOJkab1gtp5fMDCNCcIE5c7IiKdhExKZrQtPag
- el3yQ7PBXvzejcYzeokfHSpDvLhVokMl9/ty0e7K68hWVXu14pPfIT7kZ6JDNmc9q2g=
-X-Gm-Gg: AYBFou3KwdAZxPjyeK+ScOxSWdwqRV8GL9mdg6C50ovWBgbqptD3oKbQZxobBLssZ4V
- 6uYOLcxN4FgJlW0awUwPBUbUs5RebBLigM5EA3MoLocoIkTH39PLwnO14eWMwM/4wJVQNG7NnTC
- nkZ0fIwdquWFvYS9/rT7qulnESUYF4fSPQi7NuprPek/a5TpvT4cbNmtrmvOrwXMS92/ENTgcRf
- QQy+xsQ6YCkHyVOLpnhiUzxu/ITH0PwnDKJ0bRkZAR0CHwBD6/KRDsIPbm7J4hnBQKorUQFJlsU
- H8c76fvHSc3b2H0xiyPFTDlPCKY0aihx9WXOM3slZx8RW225DuIzgBebdgJJvVyv55i7Q7+2B2B
- WI+fVw/Ub8bDAejAFd6H25OFxd7pknbLT7/5ylINqEura9N2yzuiTmerKJP/AbFsBMTLmwtyXu7
- T12MsyHGm+VzFu2myMXKEx4S8+hbmxo8MWFnXRPxvWckrdUPc8B05F+azNKH7CSECWNqcGoaDpk
- TTGxh3+bUOYZ9LdYr5BUh/gdySJZjaRQwBMzscu0A==
-X-Received: by 2002:a05:7300:b286:b0:30e:f0a5:8762 with SMTP id
- 5a478bee46e88-33e8d9ca3c8mr2607807eec.19.1790169455486; 
- Wed, 23 Sep 2026 06:17:35 -0700 (PDT)
+ bh=VyGOeMM6N9WmW/Btrmx0VVv+jU00kmaZZ+J9OFmIWlc=;
+ b=uy3e9mxnaz3Fuu5gI6Mkh6KgKwLUlSeK0upw6QSWEPbxBEyX8M2vp2+901bds2I8RU
+ CmjEW7YsDPfK7GAF03NwZRuwpDsFaZlja3D+rIr9hnIzhyoFXw1Z5fAJsb90QZLlOCgJ
+ ZCGqRLTe4PfQLlC1zbwV89BJ5hlC69L5qtq02dPJ9m6AAo930E6N0vxa0pfhkj3kjwhx
+ AGkbrBdOCkm20WZIsynAvjspq2u9+a4Gk9wQ/I9CLeuAUpTl6W4ZDlYKou6GSS7K+qoE
+ j2zkhXWkYn4FoHVnnJxcKMmZKCTw5Y52ng/AFFNyBMNHeTSjFSxeHW2YiBWHaTrHYXne
+ 5BKA==
+X-Gm-Message-State: AFuF++lbWxBUyoSIoFi7Sqj4HxQ7w0tTPxRAsRTyzBSzYQuVlYRI38Qf
+ nqwArv1PlZyu1S4m2aYfi1QPW4Ho3FU1fvu1y6wGVn3vGp2KNIc93hsHV8EZCwiBlGk=
+X-Gm-Gg: AYBFou3k8mosTKFLyLlN8sDkOouDAOsH4WAIg9stHEmbAjg9tT/06DzSU7ONBLjrxII
+ 4mQD3z4RbB78FGt6M/STQSbqoa1b8KOqS79orZy99+uMFAOkn4x692+G2FEhze9WrKbZ2usd5nO
+ TKFkvrQ1mcBgtXKmWAp24Yl3or8l3Kr8bzLFKvd4Da+DWA7v7INPKKODbIovOOB/3nXgMTmE3BE
+ j/5zTjYYLL6QEqTVHLtFuo0xjQMrGs5ALPAG3KZob5yDBxf+WnAqs6TOl9i+YoWwc0qJrH+XoOm
+ qb83j3lplg3rlU8ZdRkR6nubknXpFGqqTArEW4mvxNbzdWPlO0tYmoDtbVkkc9atUlp3BYUnZMM
+ vNxm/YHfaQHeq7g1lJx7lpoKcRXgaiofldNLdfqsPPeqfmalQn6Ue2cuW2Izw3mypTcuqmrAKRZ
+ Sq8LXup7bQSMyKI/qxPZtJ0MfCFAWjsU/R4w3dECS1Ulfpnki0qeAv3AjV+JsHW88rGvr4sbgTc
+ QSroNqCsOcRB3ZUVFLtL6kHkAKQGB8=
+X-Received: by 2002:a05:693c:6394:20b0:339:8343:a1a with SMTP id
+ 5a478bee46e88-33e8e1b7329mr2469431eec.41.1790169464712; 
+ Wed, 23 Sep 2026 06:17:44 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.17.27
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.17.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:17:33 -0700 (PDT)
+ Wed, 23 Sep 2026 06:17:42 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,9 +95,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 005/114] target-info: set cpu_type from TARGET_BASE_ARCH
-Date: Wed, 23 Sep 2026 21:14:39 +0800
-Message-ID: <20260923131635.1894-6-luoyonggang@gmail.com>
+Subject: [PATCH v3 006/114] target: remove CPU_RESOLVING_TYPE
+Date: Wed, 23 Sep 2026 21:14:40 +0800
+Message-ID: <20260923131635.1894-7-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
@@ -110,7 +110,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,144 +126,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target-info-def.c no longer includes cpu.h, so CPU_RESOLVING_TYPE
-is unavailable. Emit TARGET_BASE_ARCH as an uppercase identifier in
-config-target.h and set cpu_type to TYPE_${TARGET_BASE_ARCH}_CPU.
-
-Alias the base-arch tokens whose QOM name differs: TYPE_I386_CPU,
-TYPE_OR1K_CPU, TYPE_PPC_CPU, TYPE_S390X_CPU, and TYPE_SH4_CPU.
-
-Drop the ArchCPU parent_obj and env offsetof checks with the cpu.h
-include. Page-size checks stay, via cpu-param.h.
+cpu_type is TYPE_${TARGET_BASE_ARCH}_CPU, so the per-target
+CPU_RESOLVING_TYPE macros are unused. Drop them from every
+target cpu.h.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/qemu/target-info-def.h |  2 +-
- meson.build                    |  1 +
- target-info-def.c              | 11 +++--------
- target/i386/cpu-qom.h          |  1 +
- target/or1k/cpu-qom.h          |  1 +
- target/ppc/cpu-qom.h           |  1 +
- target/s390x/cpu-qom.h         |  1 +
- target/sh4/cpu-qom.h           |  1 +
- 8 files changed, 10 insertions(+), 9 deletions(-)
+ target/alpha/cpu.h      | 2 --
+ target/arm/cpu.h        | 2 --
+ target/avr/cpu.h        | 2 --
+ target/hexagon/cpu.h    | 1 -
+ target/hppa/cpu.h       | 2 --
+ target/i386/cpu.h       | 2 --
+ target/loongarch/cpu.h  | 2 --
+ target/m68k/cpu.h       | 2 --
+ target/microblaze/cpu.h | 2 --
+ target/mips/cpu.h       | 2 --
+ target/or1k/cpu.h       | 2 --
+ target/ppc/cpu.h        | 2 --
+ target/riscv/cpu.h      | 2 --
+ target/rx/cpu.h         | 2 --
+ target/s390x/cpu.h      | 3 ---
+ target/sh4/cpu.h        | 2 --
+ target/sparc/cpu.h      | 2 --
+ target/tricore/cpu.h    | 2 --
+ target/xtensa/cpu.h     | 2 --
+ 19 files changed, 38 deletions(-)
 
-diff --git a/include/qemu/target-info-def.h b/include/qemu/target-info-def.h
-index 8019d2c7196..ebd88463aea 100644
---- a/include/qemu/target-info-def.h
-+++ b/include/qemu/target-info-def.h
-@@ -19,7 +19,7 @@ typedef struct TargetInfo {
-     SysEmuTarget target_arch;
-     /* runtime equivalent of TARGET_LONG_BITS definition */
-     unsigned long_bits;
--    /* runtime equivalent of CPU_RESOLVING_TYPE definition */
-+    /* runtime equivalent of TYPE_${TARGET_BASE_ARCH}_CPU definition */
-     const char *cpu_type;
-     /* related to TARGET_BIG_ENDIAN definition */
-     EndianMode endianness;
-diff --git a/meson.build b/meson.build
-index 8bd2d725ca0..20345860c9f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3378,6 +3378,7 @@ foreach target : target_dirs
-       # Note that TARGET_BASE_ARCH ends up in config-target.h but it is
-       # not used to select files from sourcesets.
-       config_target_data.set('TARGET_' + v.to_upper(), 1)
-+      config_target_data.set(k, v.to_upper())
-     elif k == 'TARGET_NAME' or k == 'CONFIG_QEMU_INTERP_PREFIX'
-       config_target_data.set_quoted(k, v)
-     elif v == 'y'
-diff --git a/target-info-def.c b/target-info-def.c
-index fa19cabc55f..f167f5f2ac1 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -10,15 +10,10 @@
- #include "qemu/target-info.h"
- #include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
--#include "hw/core/boards.h"
--#include "cpu.h"
--#include "exec/cpu-defs.h"
-+#include "cpu-qom.h"
-+#include "cpu-param.h"
- #include "exec/page-vary.h"
+diff --git a/target/alpha/cpu.h b/target/alpha/cpu.h
+index 378bd96d941..a6ffe7eec29 100644
+--- a/target/alpha/cpu.h
++++ b/target/alpha/cpu.h
+@@ -433,8 +433,6 @@ void alpha_translate_init(void);
+ void alpha_translate_code(CPUState *cs, TranslationBlock *tb,
+                           int *max_insns, vaddr pc, void *host_pc);
  
--/* Validate correct placement of CPUArchState. */
--QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
--QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
+-#define CPU_RESOLVING_TYPE TYPE_ALPHA_CPU
 -
- /* Validate target page size, if invariant. */
- #ifndef TARGET_PAGE_BITS_VARY
- QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
-@@ -28,7 +23,7 @@ static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
-     .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
-     .long_bits = TARGET_LONG_BITS,
--    .cpu_type = CPU_RESOLVING_TYPE,
-+    .cpu_type = glue(TYPE_, glue(TARGET_BASE_ARCH, _CPU)),
-     .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
- #ifdef TARGET_PAGE_BITS_VARY
-     .page_bits_vary = true,
-diff --git a/target/i386/cpu-qom.h b/target/i386/cpu-qom.h
-index d4e216d000c..7619c4a4826 100644
---- a/target/i386/cpu-qom.h
-+++ b/target/i386/cpu-qom.h
-@@ -27,6 +27,7 @@
- #else
- #define TYPE_X86_CPU "i386-cpu"
+ G_NORETURN void dynamic_excp(CPUAlphaState *, uintptr_t, int, int);
+ G_NORETURN void arith_excp(CPUAlphaState *, uintptr_t, int, uint64_t);
+ 
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e3f931dba26..359d86e2c37 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2395,8 +2395,6 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+ #define ARM_CPUID_TI915T      0x54029152
+ #define ARM_CPUID_TI925T      0x54029252
+ 
+-#define CPU_RESOLVING_TYPE TYPE_ARM_CPU
+-
+ #define TYPE_ARM_HOST_CPU "host-" TYPE_ARM_CPU
+ 
+ /* Indexes used when registering address spaces with cpu_address_space_init */
+diff --git a/target/avr/cpu.h b/target/avr/cpu.h
+index 1e4e839bd83..747655543d4 100644
+--- a/target/avr/cpu.h
++++ b/target/avr/cpu.h
+@@ -30,8 +30,6 @@
+ #error "AVR 8-bit does not support user mode"
  #endif
-+#define TYPE_I386_CPU TYPE_X86_CPU
  
- OBJECT_DECLARE_CPU_TYPE(X86CPU, X86CPUClass, X86_CPU)
+-#define CPU_RESOLVING_TYPE TYPE_AVR_CPU
+-
+ /*
+  * AVR has two memory spaces, data & code.
+  * e.g. both have 0 address
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index e79d8000304..54b0d69a827 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -52,7 +52,6 @@ typedef struct HexagonGlobalRegState HexagonGlobalRegState;
+ #define MAX_TLB_ENTRIES 1024
+ #define THREADS_MAX 16
  
-diff --git a/target/or1k/cpu-qom.h b/target/or1k/cpu-qom.h
-index 14bac33312e..c0d5e9e81ba 100644
---- a/target/or1k/cpu-qom.h
-+++ b/target/or1k/cpu-qom.h
-@@ -12,6 +12,7 @@
- #include "hw/core/cpu.h"
+-#define CPU_RESOLVING_TYPE TYPE_HEXAGON_CPU
+ #ifndef CONFIG_USER_ONLY
+ #define CPU_INTERRUPT_SWI      CPU_INTERRUPT_TGT_INT_0
+ #define CPU_INTERRUPT_K0_UNLOCK CPU_INTERRUPT_TGT_INT_1
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index f453444d7f9..35b6b8af82a 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -339,8 +339,6 @@ void hppa_translate_init(void);
+ void hppa_translate_code(CPUState *cs, TranslationBlock *tb,
+                          int *max_insns, vaddr pc, void *host_pc);
  
- #define TYPE_OPENRISC_CPU "or1k-cpu"
-+#define TYPE_OR1K_CPU TYPE_OPENRISC_CPU
+-#define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
+-
+ static inline vaddr hppa_form_gva_mask(uint64_t gva_offset_mask,
+                                        uint64_t spc, target_ulong off)
+ {
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 786957fadd0..eba184035d4 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2813,8 +2813,6 @@ void cpu_x86_update_dr7(CPUX86State *env, uint32_t new_dr7);
+ /* hw/pc.c */
+ uint64_t cpu_get_tsc(CPUX86State *env);
  
- OBJECT_DECLARE_CPU_TYPE(OpenRISCCPU, OpenRISCCPUClass, OPENRISC_CPU)
- 
-diff --git a/target/ppc/cpu-qom.h b/target/ppc/cpu-qom.h
-index 8247fa23367..428cdc85488 100644
---- a/target/ppc/cpu-qom.h
-+++ b/target/ppc/cpu-qom.h
-@@ -28,6 +28,7 @@
+-#define CPU_RESOLVING_TYPE TYPE_X86_CPU
+-
+ #ifdef TARGET_X86_64
+ #define TARGET_DEFAULT_CPU_TYPE X86_CPU_TYPE_NAME("qemu64")
  #else
- #define TYPE_POWERPC_CPU "powerpc-cpu"
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index c592f698853..5d79ea836bf 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -553,6 +553,4 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
+ #define HW_FLAGS_VA32       0x20
+ #define HW_FLAGS_EUEN_ASXE  0x40
+ 
+-#define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+-
+ #endif /* LOONGARCH_CPU_H */
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 7cf3791108c..b3962910ad1 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -579,8 +579,6 @@ enum {
+     ACCESS_DATA  = 0x20, /* Data load/store access        */
+ };
+ 
+-#define CPU_RESOLVING_TYPE TYPE_M68K_CPU
+-
+ /* MMU modes definitions */
+ #define MMU_KERNEL_IDX 0
+ #define MMU_USER_IDX 1
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index b9602f72b94..00ceaf1acf7 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -401,8 +401,6 @@ void mb_tcg_init(void);
+ void mb_translate_code(CPUState *cs, TranslationBlock *tb,
+                        int *max_insns, vaddr pc, void *host_pc);
+ 
+-#define CPU_RESOLVING_TYPE TYPE_MICROBLAZE_CPU
+-
+ /* MMU modes definitions */
+ #define MMU_NOMMU_IDX   0
+ #define MMU_KERNEL_IDX  1
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 32549791a18..0d2846eaf58 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1359,8 +1359,6 @@ enum {
+  */
+ #define CPU_INTERRUPT_WAKE CPU_INTERRUPT_TGT_INT_0
+ 
+-#define CPU_RESOLVING_TYPE TYPE_MIPS_CPU
+-
+ bool cpu_type_supports_cps_smp(const char *cpu_type);
+ bool cpu_supports_isa(const CPUMIPSState *env, uint64_t isa_mask);
+ bool cpu_type_supports_isa(const char *cpu_type, uint64_t isa);
+diff --git a/target/or1k/cpu.h b/target/or1k/cpu.h
+index fc4387ce7ae..34586755baf 100644
+--- a/target/or1k/cpu.h
++++ b/target/or1k/cpu.h
+@@ -320,8 +320,6 @@ void cpu_openrisc_count_start(OpenRISCCPU *cpu);
+ void cpu_openrisc_count_stop(OpenRISCCPU *cpu);
  #endif
-+#define TYPE_PPC_CPU TYPE_POWERPC_CPU
  
- OBJECT_DECLARE_CPU_TYPE(PowerPCCPU, PowerPCCPUClass, POWERPC_CPU)
+-#define CPU_RESOLVING_TYPE TYPE_OPENRISC_CPU
+-
+ #define TB_FLAGS_SM    SR_SM
+ #define TB_FLAGS_DME   SR_DME
+ #define TB_FLAGS_IME   SR_IME
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 217b4f334e5..c11d64677df 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -29,8 +29,6 @@
+ #include "qom/object.h"
+ #include "hw/core/registerfields.h"
  
-diff --git a/target/s390x/cpu-qom.h b/target/s390x/cpu-qom.h
-index c59bb1eab15..07a8c881fe5 100644
---- a/target/s390x/cpu-qom.h
-+++ b/target/s390x/cpu-qom.h
-@@ -23,6 +23,7 @@
- #include "hw/core/cpu.h"
+-#define CPU_RESOLVING_TYPE TYPE_POWERPC_CPU
+-
+ #define TARGET_PAGE_BITS_64K 16
+ #define TARGET_PAGE_BITS_16M 24
  
- #define TYPE_S390_CPU "s390x-cpu"
-+#define TYPE_S390X_CPU TYPE_S390_CPU
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index a97f30793b9..034d7e96c49 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -36,8 +36,6 @@
  
- OBJECT_DECLARE_CPU_TYPE(S390CPU, S390CPUClass, S390_CPU)
+ typedef struct CPUArchState CPURISCVState;
  
-diff --git a/target/sh4/cpu-qom.h b/target/sh4/cpu-qom.h
-index 6cf5fbb0745..08fa92106e9 100644
---- a/target/sh4/cpu-qom.h
-+++ b/target/sh4/cpu-qom.h
-@@ -23,6 +23,7 @@
- #include "hw/core/cpu.h"
+-#define CPU_RESOLVING_TYPE TYPE_RISCV_CPU
+-
+ /*
+  * b0: Whether a instruction always raise a store AMO or not.
+  */
+diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+index 233615c32dc..49188c36c57 100644
+--- a/target/rx/cpu.h
++++ b/target/rx/cpu.h
+@@ -144,8 +144,6 @@ struct RXCPUClass {
+     ResettablePhases parent_phases;
+ };
  
- #define TYPE_SUPERH_CPU "superh-cpu"
-+#define TYPE_SH4_CPU TYPE_SUPERH_CPU
+-#define CPU_RESOLVING_TYPE TYPE_RX_CPU
+-
+ const char *rx_crname(uint8_t cr);
+ void rx_cpu_do_interrupt(CPUState *cpu);
+ bool rx_cpu_exec_interrupt(CPUState *cpu, int int_req);
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 998bbb0d7ff..c77b297a26a 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -860,9 +860,6 @@ static inline uint8_t s390_cpu_get_state(const S390CPU *cpu)
+ }
  
- #define TYPE_SH7750R_CPU SUPERH_CPU_TYPE_NAME("sh7750r")
- #define TYPE_SH7751R_CPU SUPERH_CPU_TYPE_NAME("sh7751r")
+ 
+-/* helper.c */
+-#define CPU_RESOLVING_TYPE TYPE_S390_CPU
+-
+ /* interrupt.c */
+ #define RA_IGNORED                  0
+ void s390_program_interrupt(CPUS390XState *env, uint32_t code, uintptr_t ra);
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index d440aa6dbe7..eaf67fe8e6a 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -304,8 +304,6 @@ int cpu_sh4_is_cached(CPUSH4State *env, uint32_t addr);
+ 
+ void cpu_load_tlb(CPUSH4State * env);
+ 
+-#define CPU_RESOLVING_TYPE TYPE_SUPERH_CPU
+-
+ /* MMU modes definitions */
+ #define MMU_USER_IDX 1
+ 
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 31a16c2af03..fd409e74948 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -663,8 +663,6 @@ hwaddr cpu_get_phys_page_nofault(CPUSPARCState *env, target_ulong addr,
+ #endif
+ #endif
+ 
+-#define CPU_RESOLVING_TYPE TYPE_SPARC_CPU
+-
+ /* MMU modes definitions */
+ #if defined (TARGET_SPARC64)
+ #define MMU_USER_IDX   0
+diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
+index 12e497d2a7a..346b0e1f3f3 100644
+--- a/target/tricore/cpu.h
++++ b/target/tricore/cpu.h
+@@ -257,8 +257,6 @@ void tricore_tcg_init(void);
+ void tricore_translate_code(CPUState *cs, TranslationBlock *tb,
+                             int *max_insns, vaddr pc, void *host_pc);
+ 
+-#define CPU_RESOLVING_TYPE TYPE_TRICORE_CPU
+-
+ /* helpers.c */
+ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                           MMUAccessType access_type, int mmu_idx,
+diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+index 0b2cb5a250d..ee8d9c10b16 100644
+--- a/target/xtensa/cpu.h
++++ b/target/xtensa/cpu.h
+@@ -603,8 +603,6 @@ G_NORETURN void xtensa_cpu_do_unaligned_access(CPUState *cpu, vaddr addr,
+                                                uintptr_t retaddr);
+ G_NORETURN void xtensa_exception(CPUXtensaState *env, uint32_t excp);
+ 
+-#define CPU_RESOLVING_TYPE TYPE_XTENSA_CPU
+-
+ #if TARGET_BIG_ENDIAN
+ #define XTENSA_DEFAULT_CPU_MODEL "fsf"
+ #define XTENSA_DEFAULT_CPU_NOMMU_MODEL "fsf"
 -- 
 2.52.0.windows.1
 
