@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD294C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFA1C9830D
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9UyP-0004ng-0h; Wed, 23 Sep 2026 17:57:54 -0400
+	id 1x9UyD-0004UT-8u; Wed, 23 Sep 2026 17:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
- id 1x9Ulz-0001ZK-HI; Wed, 23 Sep 2026 17:45:06 -0400
+ id 1x9Um1-0001a7-1T; Wed, 23 Sep 2026 17:45:06 -0400
 Received: from [82.84.137.98] (helo=Manueles-MacBook-Pro.local)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
- id 1x9Ulx-0003bC-Hl; Wed, 23 Sep 2026 17:45:03 -0400
+ id 1x9Ulx-0003bB-IW; Wed, 23 Sep 2026 17:45:04 -0400
 Received: by Manueles-MacBook-Pro.local (Postfix, from userid 501)
- id A8BA79983791; Wed, 23 Sep 2026 22:27:38 +0200 (CEST)
+ id 120A499837A3; Wed, 23 Sep 2026 22:27:41 +0200 (CEST)
 From: Manuele Conti <manuele.conti@archimede-energia.com>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair@alistair23.me>,
@@ -28,10 +28,13 @@ Cc: Alistair Francis <alistair@alistair23.me>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Manuele Conti <manuele.conti@archimede-energia.com>
-Subject: [PATCH 0/2] stm32f405: timer periodic/CEN fixes + RCC ready mirroring
-Date: Wed, 23 Sep 2026 22:27:31 +0200
-Message-ID: <20260923202733.24933-1-manuele.conti@archimede-energia.com>
+Subject: [PATCH 2/2] hw/misc/stm32_rcc: mirror oscillator ready and system
+ clock status
+Date: Wed, 23 Sep 2026 22:27:33 +0200
+Message-ID: <20260923202733.24933-3-manuele.conti@archimede-energia.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20260923202733.24933-1-manuele.conti@archimede-energia.com>
+References: <20260923202733.24933-1-manuele.conti@archimede-energia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 82.84.137.98 (failed)
@@ -46,7 +49,7 @@ X-Spam_report: (2.5 / 5.0 requ) BAYES_00=-1.9,
  RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 23 Sep 2026 17:56:32 -0400
+X-Mailman-Approved-At: Wed, 23 Sep 2026 17:56:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,35 +64,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two independent STM32F405 fixes with qtests on netduinoplus2.
+RM0090 7.3.1/7.3.3: HSERDY follows HSEON, PLLRDY follows PLLON and
+SWS follows SW. Upstream stored raw values, so firmware polling for
+ready or checking SWS never saw the expected state.
 
-Patch 1 fixes the stm32f2xx timer periodic mode: period ARR + 1
-including ARR == 0, CNT wrap, CNT freeze/preset across CEN via a new
-stopped_cnt (VMState v2), and reset cancelling a pending timer event.
+Mirror enable bits into ready bits on CR writes and SW into SWS on
+CFGR writes. Clock switching is instantaneous in QEMU. No oscillator
+startup or PLL lock delay is modelled.
 
-Patch 2 mirrors RCC oscillator-ready and system-clock status
-(HSERDY=HSEON, PLLRDY=PLLON, SWS=SW) as an instantaneous simplified
-model.
+Add qtest writing HSEON/PLLON/SW and checking HSERDY/PLLRDY/SWS,
+including clearing again on HSEOFF/PLLOFF.
 
-USART IDLE line detection is intentionally excluded here and will
-follow as a separate series once baud-derived timing, VMState and a
-dynamic qtest are in place.
-
-Manuele Conti (2):
-  hw/timer/stm32f2xx_timer: fix periodic mode, CNT wrap and CEN handling
-  hw/misc/stm32_rcc: mirror oscillator ready and system clock status
-
- MAINTAINERS                        |   1 +
- hw/misc/stm32_rcc.c                |  18 ++++
- hw/timer/stm32f2xx_timer.c         | 101 ++++++++++++++++----
- include/hw/timer/stm32f2xx_timer.h |   7 ++
- tests/qtest/meson.build            |   5 +
- tests/qtest/stm32f405-rcc-test.c   |  57 ++++++++++++
- tests/qtest/stm32f405-timer-test.c | 142 +++++++++++++++++++++++++++++
- 7 files changed, 312 insertions(+), 19 deletions(-)
+Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
+---
+ hw/misc/stm32_rcc.c              | 18 ++++++++++
+ tests/qtest/meson.build          |  3 +-
+ tests/qtest/stm32f405-rcc-test.c | 57 ++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 1 deletion(-)
  create mode 100644 tests/qtest/stm32f405-rcc-test.c
- create mode 100644 tests/qtest/stm32f405-timer-test.c
 
+diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+index 5cfb39e560..ba64a87bdd 100644
+--- a/hw/misc/stm32_rcc.c
++++ b/hw/misc/stm32_rcc.c
+@@ -90,6 +90,24 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+     }
+ 
+     switch (addr) {
++    case STM32_RCC_CR:
++        /*
++         * Oscillators become ready immediately in QEMU.
++         * Mirror enable bits into ready bits: HSEON->HSERDY,
++         * PLLON->PLLRDY. See RM0090 7.3.1.
++         */
++        value = deposit32(value, 17, 1, extract32(value, 16, 1));
++        value = deposit32(value, 25, 1, extract32(value, 24, 1));
++        s->regs[addr >> 2] = value;
++        return;
++    case STM32_RCC_CFGR:
++        /*
++         * System clock switch is instantaneous in QEMU.
++         * Mirror SW[1:0] into SWS[3:2]. See RM0090 7.3.3.
++         */
++        value = deposit32(value, 2, 2, extract32(value, 0, 2));
++        s->regs[addr >> 2] = value;
++        return;
+     case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+     case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+         prev_value = s->regs[addr / 4];
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 51dbe63411..c26e510b0b 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -250,7 +250,8 @@ qtests_stm32l4x5 = \
+    'stm32l4x5_usart-test']
+ 
+ qtests_stm32f405 = \
+-  ['stm32f405-timer-test']
++  ['stm32f405-timer-test',
++   'stm32f405-rcc-test']
+ 
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+diff --git a/tests/qtest/stm32f405-rcc-test.c b/tests/qtest/stm32f405-rcc-test.c
+new file mode 100644
+index 0000000000..75c0291ed1
+--- /dev/null
++++ b/tests/qtest/stm32f405-rcc-test.c
+@@ -0,0 +1,57 @@
++/*
++ * QTest for STM32 RCC clock-ready mirroring (STM32F405 SoC).
++ *
++ * RM0090 7.3.1/7.3.3: HSEON->HSERDY, PLLON->PLLRDY, SW->SWS.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define RCC_BASE 0x40023800ULL
++#define RCC_CR   0x00
++#define RCC_CFGR 0x08
++
++#define RCC_CR_HSEON  (1U << 16)
++#define RCC_CR_HSERDY (1U << 17)
++#define RCC_CR_PLLON  (1U << 24)
++#define RCC_CR_PLLRDY (1U << 25)
++
++static void test_ready(void)
++{
++    QTestState *qts = qtest_init("-M netduinoplus2");
++    uint32_t val;
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_HSEON);
++    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_HSEON);
++    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_PLLON);
++    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_PLLON);
++    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
++
++    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x2);
++    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
++                     ==, 0x2);
++    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x1);
++    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
++                     ==, 0x1);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("stm32f405/rcc/ready", test_ready);
++    return g_test_run();
++}
 -- 
 2.41.0
 
