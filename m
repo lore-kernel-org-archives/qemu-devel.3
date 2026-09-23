@@ -4,77 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AECC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 19:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9373C98312
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9T6p-0000Kr-18; Wed, 23 Sep 2026 15:58:27 -0400
+	id 1x9TUq-0003pl-Gy; Wed, 23 Sep 2026 16:23:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x9T6n-0000KM-Oc
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1x9TUp-0003p1-0D; Wed, 23 Sep 2026 16:23:15 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mpatocka@redhat.com>)
- id 1x9T6m-0001O2-5i
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 15:58:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790193502;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qaVBTnkp0GIcsLjmloJK0bgo8E8q4y+sIZEaz9UXqHo=;
- b=IsQOyEqwDNn/eibFw1A0YhZh8TrldXqjSq42Mm9Kt77of34UMaDW7Q/zllBfV9G69v7Dz6
- F5RDpI+MQoq3kP4a/huuj2Jm37r3ctJjAxJR5LgGFUTxrQANxybjgdVeCb8jiP/u2gk83b
- j2JGHSB6K/4JREd6EjtAUJAZxFuQ2WY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-OiiiWIYtPXOEXCD8OwcGJA-1; Wed,
- 23 Sep 2026 15:58:19 -0400
-X-MC-Unique: OiiiWIYtPXOEXCD8OwcGJA-1
-X-Mimecast-MFC-AGG-ID: OiiiWIYtPXOEXCD8OwcGJA_1790193498
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD4BD180028B; Wed, 23 Sep 2026 19:58:17 +0000 (UTC)
-Received: from mpatocka-thinkpadx1carbongen12.rmtcz.csb
- (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 253821953948; Wed, 23 Sep 2026 19:58:15 +0000 (UTC)
-Date: Wed, 23 Sep 2026 21:58:13 +0200 (CEST)
-From: Mikulas Patocka <mpatocka@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
- qemu-devel@nongnu.org
-Subject: [PATCH v3] linux-user/sh4: fix race in atomic variables
-In-Reply-To: <991e9427-bc5a-7226-453b-70de8825e4b4@redhat.com>
-Message-ID: <4799ff0f-a198-36a3-0ec5-fa41cc7337f2@redhat.com>
-References: <ae75af55-eb9a-5ac2-9288-aa116a3c4000@redhat.com>
- <dfa3b2ca-b87b-4581-9769-2f90aba86c56@linaro.org>
- <2845945d-4d46-3ae9-8182-7d2288ff06ac@redhat.com>
- <a435c784-849c-4a0b-95bb-182068d4abfa@linaro.org>
- <f5f389df-3865-b0de-4b91-da40a5a05256@redhat.com>
- <c621f948-add2-4e9a-9871-344906c7b662@linaro.org>
- <d1a29727-14c6-fe95-c01a-30fd63e3ec4e@redhat.com>
- <991e9427-bc5a-7226-453b-70de8825e4b4@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1x9TUn-00042G-EF; Wed, 23 Sep 2026 16:23:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=AWszdhNscdtrj4UAGp+nwiNXDzOk+Qqv7jM3T+042IQ=; b=yCBTnmh8aJuqdsyZMWKCsATT8l
+ 8DKxr9itwDZejI9ui0cwa2FbOTHVHgwKTr8h2IH3rH8x6e1rBu3wa477Y2vnIGIaqYDDbJDP0sUMl
+ hEn8ZaywfpxjF3h0nKubjLqWbgSYui9fNePe7n7lYXPAG2WUSp4njaNJAIk7jDTsCIS5VWISkYIKp
+ LriwBphjn7mRueIhsmrTxC3UyYBkQsbk5p7+U4AjX+b2aQGBCgwRChHVDJjVgyTr45YQn/yoVBV+C
+ GbOvX/Bacv2TPKAXtRRJ0k9z5tJtvbLRrOck6NL2YuJWLIXHlenlIP6ywmMBD7mOb6hvvcGVqRXkp
+ OPM2mc0uGexfD62LS6X8ZBGwjoKqipy1KoOlvFqKiQJ9trA0Yrs78g4e6aoFqO//mqPUccUrPjEUU
+ ii2yKtsS6NU51x7C+ZyRuzNUD9M7hSfVDGhiXkL0W4A+c2oDnQoDJsM1+NVKKGPfur4m34zljL5yH
+ geS0ytXEBieDvve/D3hUqPO9hEARjEY7sJb75Bpji2DUhwHEy7PAjGkVeOJXDvipybvip5Aug3xqz
+ j5UTIyjKaJUdzoO3FGjMyK5ch3S4ZwAcruuA3cXqUio/8UKAY9kwiTo3vaVgOLxIxd6yZwlzT9Csx
+ DssmxjxZRa29OjdPH7xPadrvMxhO1mCPoyMqTDKr4=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1x9TUC-00FQWv-96; Wed, 23 Sep 2026 21:22:36 +0100
+Message-ID: <48a6f19b-525d-487c-a40b-b9f4120e51ab@ilande.co.uk>
+Date: Wed, 23 Sep 2026 21:23:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mpatocka@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+To: rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
+ harshpb@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ "Kirill A. Korinsky" <kirill@korins.ky>
+References: <20260903115229.95811-1-kirill@korins.ky>
+ <20260903115229.95811-5-kirill@korins.ky>
+ <71fb85ee-3cb8-4201-b470-d481a5b24fb4@ilande.co.uk>
+ <87fqz6uyb6.wl-kirill@korins.ky>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <87fqz6uyb6.wl-kirill@korins.ky>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 4/5] cuda: Make shift register delay configurable
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,92 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/09/2026 20:58, Kirill A. Korinsky wrote:
 
-
-On Tue, 22 Sep 2026, Mikulas Patocka wrote:
-
+> On Fri, 18 Sep 2026 15:27:09 +0200,
+> Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk> wrote:
+>>
+>> On 03/09/2026 12:50, Kirill A. Korinsky wrote:
+>>
+>>> The CUDA model assumes a 20 microsecond delay before each shift
+>>> register interrupt. OpenBSD times out during device discovery with that
+>>> timing, so retain the existing default but allow an override.
+>>
+>> This is curious: 20us is effectively nothing, but we need a slight delay
+>> otherwise MacOS 9 fails to read from the CUDA device (maybe one day I
+>> will analyse the code to understand why this is the case).
+>>
+>> Can you explain a bit more why 20us is enough to cause a timeout but only for OpenBSD?
+>>
 > 
+> If I recall right it right, it ends that I run Qemu on OpenBSD host and here
+> hz=100 and ppoll() sleep in host's timeout between ticks. What makes it that
+> sleep something like 10 or 20 ms.
 > 
-> On Tue, 22 Sep 2026, Mikulas Patocka wrote:
+> so, 20us is nothing, but on OpenBSD host it turns to larger value 20-40 ms,
+> and it was enough to reach a timeout.
 > 
-> > > Logging guest state at the point your revert hook fires could be
-> > > informative...
-> > 
-> > Yes, I will look into it.
-> 
-> So, I tried, and got a hit right away:
-> 
-> superh_cpu_revert_uninterruptible
-> pc: 45be9e
-> r0: 45bea4
-> r1: 55d55e40
-> r15: fffffffa
-> flags: 1fa0
-> 
->   45be94:       10 89           bt      45beb8 <afree+0x84>
->   45be96:       03 c7           mova    45bea4 <afree+0x70>,r0
->   45be98:       f3 61           mov     r15,r1
->   45be9a:       09 00           nop
->   45be9c:       fa ef           mov     #-6,r15
->   45be9e:       21 57           mov.l   @(4,r2),r7
->   45bea0:       3b 27           or      r3,r7
->   45bea2:       71 12           mov.l   r7,@(4,r2)
->   45bea4:       13 6f           mov     r1,r15
->   45bea6:       0b 00           rts
+> This is why I added a way to switch off that delay.
 
-So, after putting debugging prints into the code, I think I have found
-out what happens there:
+I'm still surprised why this only occurs on an OpenBSD host, but I think the way 
+forward is to mark the property name as experimental by adding an x- prefix so people 
+are aware that it may disappear in future when we really figure out what is going on.
 
-* decode_gusa calls gen_restart_exclusive
-* gen_restart_exclusive generates code that sets TB_FLAG_GUSA_EXCLUSIVE
-  and generates a call to helper_exclusive
+I see that Anushree has a comment and a suggested change for your decrementer patch: 
+if that works, please send out a v2 series and if it looks good, I'll queue it via my 
+qemu-macppc branch.
 
-* when the code is executed, TB_FLAG_GUSA_EXCLUSIVE is set
-* helper_exclusive calls cpu_loop_exit_atomic, this makes cpu_exec exit
-  with EXCP_ATOMIC
-* we go to cpu_loop, we execute cpu_exec_step_atomic
-* suppose that exit request is set, cpu_exec_step_atomic does nothing, it
-  leaves the CPU in the same state as it was before
-* we go back to cpu_loop
-* suppose that no signal is delivered, so the gUSA is not rewound
-* cpu_loop goes to cpu_exec
-* there is one difference - now, TB_FLAG_GUSA_EXCLUSIVE is set and it was
-  clear before - so cpu_exec will not use the TB that calls
-  helper_exclusive, it will instead use the TB that performs the atomic
-  operation (both of these TBs have the same PC, they only differ in
-  flags)
-* the TB that performs the atomic operation is executed inside cpu_exec
-  => race condition
 
-So, I fixed this by clearing TB_FLAG_GUSA_EXCLUSIVE after
-cpu_exec_step_atomic - to make sure that cpu_exec will find the TB that
-calls helper_exclusive and not the TB that performs the atomic operation.
+ATB,
 
-I tested it and the deadlock is gone. Does this seem reasonable? Or, do 
-you think that we should fix it somewhere else?
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: qemu-stable@nongnu.org
-
----
- linux-user/sh4/cpu_loop.c |    5 +++++
- 1 file changed, 5 insertions(+)
-
-Index: qemu/linux-user/sh4/cpu_loop.c
-===================================================================
---- qemu.orig/linux-user/sh4/cpu_loop.c	2026-09-23 21:20:08.000000000 +0200
-+++ qemu/linux-user/sh4/cpu_loop.c	2026-09-23 21:20:08.000000000 +0200
-@@ -62,6 +62,11 @@ void cpu_loop(CPUSH4State *env)
-             break;
-         case EXCP_ATOMIC:
-             cpu_exec_step_atomic(cs);
-+            /* If cpu_exec_step_atomic exits due to exit request, we must make
-+               sure that cpu_exec will execute the TB that contains a call to
-+               helper_atomic and not the TB that contains the atomic operation
-+               itself - therefore, we clear TB_FLAG_GUSA_EXCLUSIVE.  */
-+            env->flags &= ~TB_FLAG_GUSA_EXCLUSIVE;
-             arch_interrupt = false;
-             break;
-         case 0x180:
+Mark.
 
 
