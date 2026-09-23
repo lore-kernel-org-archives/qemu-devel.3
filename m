@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F11CC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C82FC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 20:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9ToP-0006XJ-TV; Wed, 23 Sep 2026 16:43:29 -0400
+	id 1x9Ty6-0008GR-0M; Wed, 23 Sep 2026 16:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9ToI-0006T1-Rc
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:43:24 -0400
-Received: from mail-pj2-x0e.google.com ([2607:f8b0:4864:39::e])
+ id 1x9Ty3-0008F7-Fk
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:53:27 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9ToG-0005uU-Ll
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:43:22 -0400
-Received: by mail-pj2-x0e.google.com with SMTP id
- d9443c01a7336-2df4c9d14b8so4706125ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:43:20 -0700 (PDT)
+ id 1x9Ty2-0006vI-0j
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 16:53:27 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ d9443c01a7336-2d747eb79f6so6702365ad.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 13:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790196199; x=1790800999; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790196804; x=1790801604; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=iyzhEMBBzMvhA0XBPE9gikrEaYd0EZoc57vRVprWaas=;
- b=HuCeyf7niuuHc3b2i8hWVU++/JgTQQQGoO36Ke+Kk+ICmYgb1ewJfEgyoLVK9bbKJ8
- Toeg35ceeH69cQoWlPYidm5ajqcjXactGhHqBcwo9eQ6I780kU4uzwsIW6jc7QO8jotY
- eIp5zEvs3AtJpBGSp+CbdotixygYTB0jfz93988maw+BWB+6aQDYo39y7xRTx+KmrmOC
- Z1xWsLH/Ru65/hg9s4HNdgHutJ6bRL2zMbLK2Se3KGZYPXAMqLDLGWIrPc5rNB6VI4rr
- xvZjKEfsQaeM1Rv9eA8AZfX4lzkuJ18S1blVdkqopJCL4oE4ASuy543yYhBAc4Y+cYJK
- bPAQ==
+ bh=CHy1VLFHOQRUzgi9M34jWG7yjVB5sBh8F33ParmNj8w=;
+ b=AxRGv6PXF6XGcmp6T+tq+0pRIs8ob12/ADaOgVMrtYpz6KmRYofamHZ1EmiiPlTeKZ
+ A7N8o61iaVcgN39+6bfsn8FWhnptEB/NT2cSU2lhXZ95uwWYRybh0ecFoIWtZaE37q6Q
+ KQsL8g3Nccfl+CfCdLfbzZgnH/wftlUJoZDSMFAEm1LYzq8fjDHjWfqUOniGZsKyZwiQ
+ qY3AluBAblCf6Gb3KJ3Opcm09d7jMeYw7PXIXjVvsXJaEAV+gHdhix/CU4GQSxICMI3z
+ qn3NKAR1W9avy34Ez4/bhKygV8ct7z9pL3LFCjq2yJlrFkkmPZXR1raE9OpGmoHGAuDg
+ DYnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790196199; x=1790800999;
+ d=1e100.net; s=20260707; t=1790196804; x=1790801604;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=iyzhEMBBzMvhA0XBPE9gikrEaYd0EZoc57vRVprWaas=;
- b=oC5xwoYLZZGIqzGQQd6LBODN3cNSciEorP1BKFtbisolOj0Atcku+0NR2i4MjKRkr7
- IGKWoA5AnjTPmheg0N5cSqjMLOrqHDIRpRBSRIph42Jk7eY0uHLJBpW/alOT820I0WTZ
- YqzYFkXcQhjLk4lJGEpDOxAVnVYOD/ALAZnsi+9Omv7dvZgKjD3mITk/DqO1J/FsP/kf
- nR/3HZf6YW8jOep5H9/27amZgFEVSM+xium1O/bwgEu1BIF9Cq52A4Nu4S0sjqHg4Cwe
- ND4Gi3stB0v4JeGbazgXEvA0XVSDUySgkXiFRZyCoJQdK1YesH4MeIKXQGPUZ6Xbf7OI
- y5Aw==
+ bh=CHy1VLFHOQRUzgi9M34jWG7yjVB5sBh8F33ParmNj8w=;
+ b=orlK0Ny02UPYPBQZUsxb2tTbMJyLIdmwNp6A/Z0No5oJoa6rcFMYd1z4AO4YTqGbva
+ S0Cy/N6vmDUU1cS0SC8mhnFnr6/I36wsUa0g0OAI17ylwE0vosvrWGAWSwZMNQbDgcXj
+ HbnpFXcqjqpBhnAlU70gDiDxpOCWXxf2Ma82IsaqtTQ2l+3tLSjaIKIIqxbwCfUSgmmK
+ yVdkert1+OMY9QtIFde5jQRFcYPMaKNOdVK+NZ2ENqC9LzvUsdpEob/xCKe/o6ptPYEA
+ QH/7kNv0gT+iw8RQiQN+f/6DAklVdDfmgMS0oJBMeXcJO2WvC6gAfhr9TyQRpZ2Fi9kO
+ vFNg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzr1X/4T2YQQirSqBEH8jxSl6C/k48CorSHCd+jYbitBIRGAWmsM6B+ymySXFBdmeeCz0WtYeVCEW/7@nongnu.org
-X-Gm-Message-State: AFuF++m+5Vb5OlzEN2cR3jNfi4+YnlHu2YWIgL0gZBHu9lJYlzzWwcv0
- FJWV5emuiQOrbujaampEkFGs6WR+bS/Daebt0OAi5lygwc8W83f52qX71cfA5N4KjtI=
-X-Gm-Gg: AYBFou08MSwcWFUPh7W/nlJJFor+Ht0IVWJc8vqYojy3Gsd/DvCxl/E+ybrIhpm9xlP
- /7FQJxul2FLXumajEdb/RDLjaERfl0VuLZDL4xk8ybowYNwAmXDJGEsepKBzr3ngowRXG9J1xua
- fV0lnR4LFuNai0yh2xu4PAza5OTyT5Jmv0XRz4xMZ29zdEVq88rN5T86spfWVlD6leLVNjhNnDQ
- BCOWren37KoO99kOxegfPj4o8EEbARQ5u4H7tVpl/D/acHZhLGMVX2sVReP03aYqST1OOgGFtLc
- cPsA3K91sMfphoCDa+ZRIvgENcu/Xvb4i0uD7H/I9Hz6GI70myVR8uUPAwPUQ7N84HwRJecqiOr
- wxowHQ6dCxrWEACvaNW688cH5/zA21pIqoG5Vscjr3spkV2rGABEQu+NmeI1CUNDBzUGd27bPpz
- tdLcXZ5IhJLrcLrE6dffr4RlW1dpWuNLtLofxPtXKDWlqklBAzMFvsUjr2ubjmdjlPis4TnbTTw
- iPBXF9nbtdgTP86hXuU8gGWrWzorqi87Ly8PZ5j
-X-Received: by 2002:a17:903:2cd:b0:2dd:c100:2518 with SMTP id
- d9443c01a7336-2df7e28ad18mr1509905ad.33.1790196198789; 
- Wed, 23 Sep 2026 13:43:18 -0700 (PDT)
+ AKwUvBw+FTxstw+ZgqGsfEiX1lBu9uePWEkMePhDGVijwDRZSPGcds3LOZZHoZ7F0H7KPtyZq9Kipr0KwH/+@nongnu.org
+X-Gm-Message-State: AFuF++kS6aBNlSyCuH/aBodi4bYHWDGadIjvCjQrsx8SkMeeiT0QWwLj
+ DoVqNsII/DL4CUnRPfVKkKr/dUOdyPcqKXeIStTJM9VdQvVDjuGLEl9R2ddSXRF9F0g=
+X-Gm-Gg: AYBFou0JN8HzKtgty5IE2VMj0OT9kl4VK9H5BcminPry8vzS4tjGZJ9bTskYJSxOtnG
+ RQFTJWAAbm3nNG9wsMtWvMaH+WBRrtdIz/IhksWQep5esyxw/oYnP9CwiF0dJ0c89xHLegUgD0U
+ /T5kIVC1MRxoQjzxLBltAp2XE+xBQIq83DYLYqUFH/rLx1lsY7mp1h5MR/uydEdQanPS4BKI9Qt
+ g9Ku9tW3LRogMpT3SYXp7pGzr37v86ar+QCN/UJ4PJ/X0G18WRg2oKz4MoN+/+t8cfiGy4kdod+
+ X5xHLuvbFY1S+YRdTbpfKWN4QpOjm59aAJgssKcIBAahucxNCN1xsA3zq7x9n56Uy0DOFPmnzcw
+ apEIxx7XdeFSmMCH+myhbuAvT4JGSAU1mNHaUmyrjdREE4uAncB8Nc9AYQVz/Yv1qDMrP/Ee1fb
+ rmVAj5PHkMLgj2RMv36MXT79VAY5xAu8Fu1mX9aqx8enQsJjTyY6OFI1Pd57NaSJxvlKaqhzeCH
+ Ejqe2VHVO0YNmDUEPMLMUOpKU18rbFEIz2fpxMc
+X-Received: by 2002:a17:902:c40e:b0:2dd:c0ff:e72e with SMTP id
+ d9443c01a7336-2df7e0069ecmr2072105ad.64.1790196803818; 
+ Wed, 23 Sep 2026 13:53:23 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2df6a5a4a72sm16422785ad.17.2026.09.23.13.43.18
+ d9443c01a7336-2df6a5c7d82sm16422855ad.46.2026.09.23.13.53.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 13:43:18 -0700 (PDT)
-Message-ID: <85cfb9a1-11dd-4a0b-9a01-892479c74ae5@linaro.org>
-Date: Wed, 23 Sep 2026 13:43:16 -0700
+ Wed, 23 Sep 2026 13:53:23 -0700 (PDT)
+Message-ID: <4ca64731-2491-410c-b746-72f928630742@linaro.org>
+Date: Wed, 23 Sep 2026 13:53:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] target/arm: Don't assume secure-banked registers are
- migrated by 64-bit regs
+Subject: Re: [PATCH 3/8] target/arm: Drop uses of reset_ignore for banked
+ AArch32 registers
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Tao Ding <dingtao0430@163.com>
 References: <20260907130223.3148989-1-peter.maydell@linaro.org>
- <20260907130223.3148989-3-peter.maydell@linaro.org>
+ <20260907130223.3148989-4-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260907130223.3148989-3-peter.maydell@linaro.org>
+In-Reply-To: <20260907130223.3148989-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,80 +108,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/7/26 06:02, Peter Maydell wrote:
-> In add_cpreg_to_hashtable() we have some code that automatically
-> marks the secure version of an AArch32 banked cpreg as ARM_CP_ALIAS
-> under two conditions:
+> Some banked AArch32 cpregs set up a resetfn of arm_cp_reset_ignore.
+> This is presumably in an expectation that some other AArch64
+> register will handle resetting the underlying state. However
+> this isn't true for some of them:
 > 
->   1) If the register has both 32-bit and 64-bit instances then we can
->      count on the 64-bit instance taking care of the non-secure bank.
+>   * TPIDRURO's S bank is in cp15.tpidruro_s and this isn't shared
+>     with any AArch64 register
+>   * TPIDRURW's S bank similarly is in cp15.tpidrurw_s, not shared
+>     with any AArch64 register
 > 
->   2) If ARMv8 is enabled then we can count on a 64-bit version taking
->      care of the secure bank.  This requires that separate 32 and
->      64-bit definitions are provided.
+> Remove the use of arm_cp_reset_ignore here; this means that the state
+> for the NS versions of these registers will be reset twice, but that
+> is fine because it will always be to the same value (and the
+> cp_reg_check_reset() code will assert if we introduce a bug where the
+> AArch64 and AArch32 regs disagree about the reset value).
 > 
-> Item 1 is correct: if the ARMCPRegInfo has ARM_CP_STATE_BOTH then we
-> will always add it as an AA32 entry (which then splits into an S
-> entry with bank_fieldoffsets[0] and an NS entry with
-> bank_fieldoffsets[1]) and as an AA64 entry (which uses
-> bank_fieldoffsets[1]), so the AA64 entry will always be present to
-> cover the NS banked AA32 entry.
+> For the MAIR0 and MAIR1 banked registers, doing nothing on reset is
+> OK because they are backed by state that is always covered by the
+> MAIR_EL1 and MAIR_EL3 AArch64 registers that will always be present
+> if the AArch32 registers are.  But it's not consistent with how we
+> handle all the other banked regs, so drop it here too.  Again, the
+> cp_reg_check_reset() checks will catch any mismatches in what the
+> reset value should be.
 > 
-> Item 2 is not correct: the idea was that because typically AArch32
-> Secure banked registers are (non-architecturally) mapped to EL3
-> AArch64 registers, the AArch64 EL3 register would handle things
-> (and that we would be adding the AArch64 register to the hashtable
-> even if the CPU didn't have AArch64).
-> 
-> However, this fails in several cases:
->   (a) registers like CSSELR, where there is only a CSSELR_EL1, and
->       no _EL3 version. CSSELR_S's underlying state isn't migrated
->   (b) registers like TPIDRURW, where the secure banked register
->       isn't mapped to any AArch64 register, so the state isn't
->       migrated
->   (c) IFAR_S and DFAR_S are odd special cases, because they map to
->       AArch32 HIFAR and HDFAR, which in turn map to AArch64 FAR_EL2.
->       If the CPU doesn't have EL2, we don't register FAR_EL2 and
->       the IFAR_S and DFAR_S registers don't get migrated.
-> 
-> More generally, the architecture dropped the concept of documenting
-> secure AArch32 registers as being "non-architecturally mapped" to EL3
-> AArch64 registers and relegated it to an implementation detail, which
-> is why TPIDRURW and friends got mishandled.
-> 
-> It also conflates "has 64-bit registers" with "is ARMv8", which is
-> wrong for the qemu-system-arm "max" type and for any AArch64 CPU
-> started with "aarch64=off".
-> 
-> Instead of marking the S-banked register as an alias if
-> ARM_FEATURE_V8, don't put it into the hashtable at all if
-> ARM_FEATURE_AARCH64 is present.
-> 
-> There are not all that many banked registers, and they're easy to
-> find by searching for regdefs that set bank_fieldoffsets:
->   DACR, IFAR, DFAR, IFSR, DFSR, CSSELR, MAIR0, MAIR1,
->   TPIDRURW, TPIDRURO, TPIDRPRW, TTBR0, TTBR1, TTBCR, TTBCR2,
->   PAR, VBAR, SCTLR
-> 
-> None of these do complicated things on reset, so having both an
-> AArch64 view and an AArch32 view reset the same register state to the
-> same value and migrate the same data twice is harmless.  This is
-> better than sometimes not migrating or resetting it at all.
-> 
-> This changes the set of cpregs we will try to migrate for CPUs with
-> ARM_FEATURE_V8 but not ARM_FEATURE_AARCH64, and is a migration break
-> there.  However, the only such CPUs are the qemu-system-aarch32 "max"
-> CPU and AArch64 CPUs with "aarch64=off".
-> 
-> In an ideal world we would also not bother putting the S cpreg into
-> the hashtable if the CPU is AArch32 without EL3 (i.e.  it doesn't
-> implement Secure state at all), because nothing will ever look up the
-> S version of the register (access_secure_reg() always returns false).
-> But that would be a migration compat break for those CPUs.
+> The lack of reset-to-zero for the S banked versions of TPIDRURO and
+> TPIDRURW is very unlikely to have had any guest visible consquences,
+> because these registers are architecturally UNKNOWN at reset and so
+> guest code should be initializing them itself regardless.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/helper.c | 35 +++++++++++++++++++++++++----------
->   1 file changed, 25 insertions(+), 10 deletions(-)
+>   target/arm/helper.c | 12 ++++--------
+>   1 file changed, 4 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
