@@ -4,154 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27179C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 15:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8905BC9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 15:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9PFv-0008Bm-Bl; Wed, 23 Sep 2026 11:51:35 -0400
+	id 1x9PGq-0000FB-SH; Wed, 23 Sep 2026 11:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x9PFu-0008Ba-9f; Wed, 23 Sep 2026 11:51:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9PGp-0000AC-9T
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 11:52:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1x9PFs-0000uB-0r; Wed, 23 Sep 2026 11:51:34 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68N8ZQWb1030599; Wed, 23 Sep 2026 15:51:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0d4v25
- U54GbpfPv1JTGUZOXIaltqz/GjcDtG2RFE3Fw=; b=OarCV/7B4psjTGoI9zVJ33
- DALoM84tYtHVm0C5DExwJaQvkT1QJOCdujTfxLDxP/TG0SGaV3qHp//iCy9BDM9E
- tUoYPJRjFMatTd9VatmP3NBKm2OWzTPmnIPMszfjTvD0QxXI1uluQkf3oRhdzUQE
- c//+z9IrMOSXQa5rQXVMppTA3L+ew6s1kSC+PWO+NL09WdY31SOJsOx4D3q/FytJ
- 1E4xa0BEPyKvqnNMgc4TpFry3Pvq8BX3ZTr6LMf3/sy9JBTmFxVC5hbPhwSXEILy
- osbcNSMw6QXl9xw4STRAmdEWXTHu0vttn/n/wtRZVCflInxj/MJdeju7+2ClP8Fw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1v86e-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 15:51:29 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NCSP0n008222; Wed, 23 Sep 2026 15:51:28 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jspmc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 15:51:28 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68NFpRZ950004298
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Sep 2026 15:51:27 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 691E558055;
- Wed, 23 Sep 2026 15:51:27 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E467358043;
- Wed, 23 Sep 2026 15:51:26 +0000 (GMT)
-Received: from [9.61.145.93] (unknown [9.61.145.93])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Sep 2026 15:51:26 +0000 (GMT)
-Message-ID: <18d15293-3f11-4005-aa2a-295f0b702283@linux.ibm.com>
-Date: Wed, 23 Sep 2026 11:51:26 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9PGn-000107-Is
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 11:52:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790178747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w7JAv1yfMeIHP4umHuje27v+JmlYoyUvqMf0XuefKyc=;
+ b=VS91KtUQAx0M8/wU87mNORryHOV/lfAOC2ojZGs7X8GWouUpOVYDrt0tQWdnQoyfgQnmdg
+ NHtqraRQToRRFyvRuRdY/5usHbbDQfBR2vZ1JvVXKOZtYHSs8B9eAgKn5A9jN5ctxqGHIo
+ RLLmgua+1B/cYAZlwQnYhpGrFVb4DFA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-smvVcwWlNemJc0d91aR89Q-1; Wed,
+ 23 Sep 2026 11:52:24 -0400
+X-MC-Unique: smvVcwWlNemJc0d91aR89Q-1
+X-Mimecast-MFC-AGG-ID: smvVcwWlNemJc0d91aR89Q_1790178743
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7367E18301D3; Wed, 23 Sep 2026 15:52:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.191])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 779FC19539A7; Wed, 23 Sep 2026 15:52:18 +0000 (UTC)
+Date: Wed, 23 Sep 2026 17:52:16 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Warner Losh <imp@bsdimp.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+Message-ID: <arP1sJTXU7pZGRiI@redhat.com>
+References: <20260921075251.12831-1-pbonzini@redhat.com>
+ <20260921075251.12831-2-pbonzini@redhat.com>
+ <87jyof0xij.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] iotests fixes
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260813183740.3503107-1-farman@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260813183740.3503107-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 5v9f48StOSE5Lu90k3fp-O7cMJ_pHmkf
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab3f581 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=vsWxD45MzCohxjpAad0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA2MiBTYWx0ZWRfXyH2AtaYUoqrP
- KBJw9s3s9FjR9D8da6wpJ3KAnlN3tkaFJeuO8KgAjEVRTA7Q6qsFHr6Kj3Poo8zSDGsw9yLX+LR
- 7p1HRq09vOVrP85xK/hpY/R3DnOUU7M=
-X-Proofpoint-GUID: 5v9f48StOSE5Lu90k3fp-O7cMJ_pHmkf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA2MiBTYWx0ZWRfXxMLazaHgASxY
- 69f2Z/er+G78O7TAoTEmNMhksFqqdJ+4sdwaJ5EJ6CzLIYTSoeVyPYJ3mx6VupBwOU+NCXdEDp5
- H6Esee2xcyoGs+0GKbd1zQlbho1NqHTRUvQvMLLrOpbzBK3KzmcUCYRZrIhMdmebuUosSWz5IYS
- eiO/j9sgPdqObFexELerpS8wxlh+5ux/USLqnUzmGJ9CVzYnBsdQoLBI8gzCqpMEj3JUdcs8eHw
- bYLKx3/sPA6TKl0oum44Ib5m0g0xdDdksMij04JNboiqtcdD5kaSWs+sZHRN39WremiYZ+EGium
- 8OCMEUplK9eGA9dlovj6IXfhcpqm80DSpEDJdXHbr/p81olr1OhTxCfPzWWGQxINZvqI95qtusL
- iSf3r7iKQElsxuTWuUGv1OG7Ruji62J4PkUqEk/yXU6FvqJPILTQhqlajB/V06h3mGp2IwcLDHM
- Ei4WT633v5N/EZAEGbA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230062
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jyof0xij.fsf@draig.linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,50 +91,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/13/26 2:37 PM, Eric Farman wrote:
-> Hi Kevin, Hanna,
+Am 21.09.2026 um 11:22 hat Alex Bennée geschrieben:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
 > 
-> Here is a third version of iotests fixes from our s390x systems.
-> They aren't related, just came up walking through the failures.
+> > Until now QEMU's code provenance policy declined any contribution
+> > believed to include or derive from AI-generated content.  A blanket ban
+> > was easy to maintain while LLM output was rarely usable on its own, but
+> > as the tools improved an absolute prohibition has become harder to
+> > justify and enforce.
+> <snip>
+> > +Commit messages for AI-assisted changes
+> > +'''''''''''''''''''''''''''''''''''''''
+> > +
+> > +In order to disclose your usage of AI/LLM tools, add an ``AI-used-for:``
+> > +line before the :ref:`Signed-off-by <code-provenance>` line.  The trailer
+> > +is both a reminder of your DCO obligations and a guide to reviewers.  The
+> > +text is one or more of ``code``, ``tests``, ``docs``, ``research``, possibly
+> > +followed by an explanation in parentheses:
+> > +
+> > +.. code-block:: none
+> > +
+> > +     AI-used-for: tests, docs
+> > +     AI-used-for: code
+> > +     AI-used-for: code (refactoring)
+> > +     AI-used-for: code (prototype)
+> > +     AI-used-for: research
+> > +
+> > +``AI-used-for`` should not be included for "background" usage such as
+> > +autocomplete or obtaining a pre-review of the patch.
+> 
+> While experimenting with these tags I had done a patches with:
+> 
+>   AI-used-for: created qtest boilerplate based on bug report
+>   AI-used-for: importing and validating test case
+>   AI-used-for: initial prototype changes
+>   AI-used-for: initial draft of test
+>   AI-used-for: fetch issue, apply proposed patch, verify build and qtests
 
-Hi Kevin, Hanna,
+I feel this is way too verbose. It almost looks like a version history
+of the work submitted in the patch. I'm not interested in this at all,
+I'm only interested in the final result and which parts I have to assume
+to contain AI generated content.
 
-Just bumping this up the list. Any thoughts?
+> Of the last one I expect "fetch issue, apply proposed patch, verify
+> build" is superfluous as its really just automation but the converting a
+> bug test case into a proper qtest case is worth flagging as it is a
+> transformation worth getting called out?
 
-This series applies cleanly to today's master, and without this I can 
-still reproduce the errors described within.
+If I understand correctly what really happened there, it could be:
 
-Thanks,
-Eric
+    AI-used-for: tests (based on bug #1234)
 
-> 
-> In fact, only patch 4 has existed in the previous versions of this "series",
-> as it remains stubborn for me (hence me putting it at the end). This time,
-> I added a check against the qemu-storage-daemon to try to do a mount against
-> a null device (similar to the test_fuse_support() routine in fuse-mmap-shared),
-> to bail out of the test earlier than failing on the "real" command later on.
-> 
-> I look forward to your feedback...
-> 
-> v1: https://lore.kernel.org/r/20260725125651.3896151-1-farman@linux.ibm.com/
-> v2: https://lore.kernel.org/r/20260728192644.2879028-1-farman@linux.ibm.com/
-> v2->v3:
->   - [EF] Add two fixes for NBD tests, and one (new) fix for another FUSE test
->   - [HC] Rework the fix to 108, and perform a dummy mount to see if fuse works
-> 
-> Eric Farman (4):
->    iotests/nbd-in-qcow2-chain: use default machine
->    iotests/nbd-tls-iothread: skip on non-x86 hardware
->    iotests/fuse-truncate: skip if FUSE is not usable
->    iotests/108: skip if fuse is unsuable
-> 
->   tests/qemu-iotests/108                      | 17 +++++++++++++++++
->   tests/qemu-iotests/tests/fuse-truncate      |  9 ++++++---
->   tests/qemu-iotests/tests/nbd-in-qcow2-chain |  2 +-
->   tests/qemu-iotests/tests/nbd-tls-iothread   |  4 ++++
->   4 files changed, 28 insertions(+), 4 deletions(-)
-> 
+With the wordy, but unspecific tags above, I'm not completely sure if
+"code" ought to be included, too. It gives a lot of irrelevant
+information that I have to filter out when reading, but it missed the
+important part.
+
+Kevin
 
 
