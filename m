@@ -4,115 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AEAC982FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3397C98307
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 11:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9KtX-0006OV-0l; Wed, 23 Sep 2026 07:12:14 -0400
+	id 1x9KwW-00076b-Ae; Wed, 23 Sep 2026 07:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9Ksy-0006JH-Eb
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:11:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x9KwC-00075J-5V
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:14:59 -0400
+Received: from mail-northeuropeazon11020083.outbound.protection.outlook.com
+ ([52.101.84.83] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1x9Kst-0006kV-8u
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:11:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790161890;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aAOjAbLMGaPpT/mKSm9iJH+rjaejUaHaT45fFTr3rYY=;
- b=HS7Fj10Fi/S4kGoEpnql1yyqGUGu/899FkLldg2lbzkVUR3F8uD3G97Jdt7fB2WdfB/ip8
- ImdeeMiI+ONo3Vm+ZcqHBO179DklHKyA1t1knrH3cvYcq4o8yv9uMr0oeCTPFqgN61kz9s
- iD4np4MyvSd4g4Oxujo+G8BHj6t36g0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154-e4hPMrgHN9CFhfHIziYSbg-1; Wed, 23 Sep 2026 07:11:28 -0400
-X-MC-Unique: e4hPMrgHN9CFhfHIziYSbg-1
-X-Mimecast-MFC-AGG-ID: e4hPMrgHN9CFhfHIziYSbg_1790161887
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4957287363bso5092705e9.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 04:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790161887; x=1790766687; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=aAOjAbLMGaPpT/mKSm9iJH+rjaejUaHaT45fFTr3rYY=;
- b=BxPfzTpJgno+ShNFGXqXjwg6kSCqtv5pWuTxWXD8dvNw2LC1XnKM6f9C72JSjMepvo
- 6UBR9zyS1cSkYluTd+GEvCXaHPR77u64Ds9/9zttwTFi+k+z3IYbvvNTmXtDYKDR/ZD/
- 57t0sCukzNBwwODbJOFv6iwhB9zqn4ca/KmSY1GckxM7n6Jzf9FU9x11t84h8mmzH03t
- zIFeX92i9tuxwphihpflPelDD7I0fUlFqKqwkVLtUKGb/nJYOKz5md+muADPCTM2zkD4
- tRBTv/YRFaliJCHTfWi5Oj/tHHSSIT2qGyW3kWtJC8JVKkWaq2hoNaG1dIaYvBmhy0nV
- Mgzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790161887; x=1790766687;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aAOjAbLMGaPpT/mKSm9iJH+rjaejUaHaT45fFTr3rYY=;
- b=bxrDwLgBrFIjjK0AlfXt+0fIenzkqHb+YKWg9/EU/BZBkybZgFGgrzir1dLEOsKVwJ
- xTqLvEcJklJ+WLwER6+ConK9H997w5LiXrCddfDFkoypvEW6K7yL083pukRR43pMcMVF
- r18ySlKM0W8zXSRdcNmXWWZHP53ZOjXr3OYOCwGX91LweeyYVDBSOrTSnk3P5eY5se/6
- 2CuvZ3NIakGBobRzypsf3a/Vw00ZYfqxQqAK4qGmq53UwXZwaA5N7vPSEJ3UuWDoFLmH
- 7/qXsh1KmyISycKenGuf7NHXBG8XdjCvd97N66x1gOLSKl2nW8AVSPISLWjKatbBnxCy
- yO+A==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzfEpd3tHAGV2GcMfNqmnNpJ0MBOQcCsI/bzdQfzIFCXyQm6BOX92uva/NeJgPBPXfbnOQ37w/KBMy0@nongnu.org
-X-Gm-Message-State: AFuF++kbCp6pC8twxnOaFz1VyYDp1wT1lz6Ypyhgc77rE8ERrgP5TULu
- OiKcdUgPhycrnnsi5I2qkXDK6mVavQGBUulw3wHQqXPaQWl1B1kFUKlt+dRrP6N85NZsA9wgmEh
- /J53aWcNNOzu7Q0qxQu/pQFjI/N2WPE8NrfY6F4e0cR2DIs9VyYyf+eko
-X-Gm-Gg: AYBFou2tPTLw9gZoorrs7/X3PXwfycHlxNt6BBS+VXct58QJ4uZR7vmM8zQuqSJurmf
- YoyUU5VcSyGi6CJKwEChUwqsvzr7s6jkhVTt61knXiX1QG+P3mISBZ+2evfbIYncPmBAI76W1kV
- JvdABRfVX9XoEjPWt/7hyrznVP9KfN9iZbauhyERTukV6SwmfKMGsoflFllc6COjWdzMwWutC2s
- O35Y43dCLiSnerHRDrAYVqkWjra0khPueamUtQFtDHElyfqYnE/+rjH+aEy+Y4xspzkJqyH/gZT
- OKpIpgiUI3L0NbDnstB35BK2bmKHvEPDg5U4v+SfGx2qjPQBSHiFRbyu9FvBmByOOf2rRvcqw32
- WAhbKl3+RARDJEeE+ppAb+9FG/r6zOHrDmPQNV01ANoT1836Gkrm9b3j1Y3mlwpDXzc/oC+EIKs
- MRhPbH1Oxm+jVL2OD40pyk91Byc87l9f8w2Qz0Pdkl
-X-Received: by 2002:a05:600c:c16d:b0:49c:ff9f:f6b6 with SMTP id
- 5b1f17b1804b1-49fdee0b7f2mr28002805e9.6.1790161887137; 
- Wed, 23 Sep 2026 04:11:27 -0700 (PDT)
-X-Received: by 2002:a05:600c:c16d:b0:49c:ff9f:f6b6 with SMTP id
- 5b1f17b1804b1-49fdee0b7f2mr28002315e9.6.1790161886739; 
- Wed, 23 Sep 2026 04:11:26 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d749:526e:3864:2ce3:24f2:e6d4?
- (p200300cfd749526e38642ce324f2e6d4.dip0.t-ipconnect.de.
- [2003:cf:d749:526e:3864:2ce3:24f2:e6d4])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fde1ccccfsm66358435e9.7.2026.09.23.04.11.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 04:11:25 -0700 (PDT)
-Message-ID: <47928b1a-7bc4-4194-a623-b8113e419dda@redhat.com>
-Date: Wed, 23 Sep 2026 13:11:24 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1x9Kw8-00074B-37
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 07:14:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BbZ7yh+hkVMeFRAU8HFlFhSxX+QIgSX7zAFvqA1yxghKvo5Dqy/wjwb5URmVsnzoWoiSQyJhfX161SrShn1/kMXb9DYcdubdJOXKWNXiCUKhdd7VFQUBYgiRrANdHuEBG6ONPMroaBckIT0pIALcyslu5B9qOfWwZiuDI9JU1zh/HSUwtYq2h0+CUcqAzaaWz0OFIcAK3x9FZdxkxJ4tf1Ry8A1QrpTKPFiu7bOXNlwOQKwY4dCntZoB8tQkV3Js+p01abuHa8Nf68Vuq3K8dULkU6k4Ah6vSCcrfijwqZ60XtsmgXB4yODyU/MHjtvinw+EjWzpNPJT4yE8F4XMdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9ndH/18FzUHrzhOPEk4A9R2DdeYlpbENFEYqGtavUMM=;
+ b=hSRJbJUWU94aqnXKmFuzDxSlpPMLYlMjtIeTf4bM9b3Gb/OTz5eGyMjBZUCQcSjp1HN6WilKukBuUUwC+P7ttUbzpYtPSq/tvadB+S1q5p+moWZjsbM20D+BduOAPJo5mf/fcXPpelIPXHN9LSQ8wd27Vi8pv1eESShU4HulDzqvvRjjcHmQPS/jFQGPTasvh0FTiHR6Ezw9zXI1nKmqAa0LJfwdnFQjlBfnp2cTzMTQcF93mY9cwLsA1zPW7lW8ZkIcdGXEjPVogfqn5Z5BSlILuH1qp3LfKLTl4rNlW6/6/+jGCj5ZLlv1BsLZ2OqU/WiF5YdpDzjHxI7A3YAmIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9ndH/18FzUHrzhOPEk4A9R2DdeYlpbENFEYqGtavUMM=;
+ b=PgGvBDrMdMNKVXrU7coH+ZRUWGSYzc+fVRCo8zWnwoILVOjRvtDbGp6QgQdeE6j/uNGAz/yWGHXa30teEGgJI6GKcCCjSuFTDIRxxR9Uh7xI7uMyV/GuZ63yybq77NoQS4sDxz+s4kw+vGPhsT43jo6oLLxdgfNnJEWHDWF/8uMhY2eg+rbKL7W5iyENBilSiOYK/JEhTVBrO80rPST4sdOasJNhvx0TEia1INKnZxcBUVzTicGvP8HaEJDKuO5kQ5loCesgYCMfAugqx0x53dH62A7PFGmIHXlseKGxXhMLNDjoRNb+O4uGOJAk5Xr9Ssc7O6qjqbEhmBX6hXkb1w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by AS2PR08MB9810.eurprd08.prod.outlook.com
+ (2603:10a6:20b:605::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.5; Wed, 23 Sep
+ 2026 11:09:42 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 11:09:41 +0000
+Message-ID: <a23f83f6-fa39-47e9-9537-5f9cbaa476b0@virtuozzo.com>
+Date: Wed, 23 Sep 2026 14:09:40 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] block/accounting: Emit BLOCK_IO_DELAY event
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, John Snow
- <jsnow@redhat.com>, "Denis V . Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260831135206.126184-7-hreitz@redhat.com> <arJ4JzSmzTO1GMin@redhat.com>
+Subject: Re: [PATCH v7 14/16] vhost-vsock: hand off device ownership across CPR
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, bchaney@akamai.com,
+ mark.kanda@oracle.com, philmd@oss.qualcomm.com, vsementsov@yandex-team.ru,
+ maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, mst@redhat.com,
+ clg@redhat.com, peterx@redhat.com, den@openvz.org
+References: <20260918-up-vsock-vhost-v5-v7-0-6ef9ef033c35@virtuozzo.com>
+ <20260918-up-vsock-vhost-v5-v7-14-6ef9ef033c35@virtuozzo.com>
+ <arJGNRq8UC-XSEpW@sgarzare-redhat>
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <arJ4JzSmzTO1GMin@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <arJGNRq8UC-XSEpW@sgarzare-redhat>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR3P281CA0186.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a4::13) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS2PR08MB9810:EE_
+X-MS-Office365-Filtering-Correlation-Id: af805e79-b705-4472-d16f-08df19632a8a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|366016|1800799024|23010399003|10067099003|56012099006|22082099003|18002099003|4143699003;
+X-Microsoft-Antispam-Message-Info: xchdSiIVA8v0bQUfmbymZBiGalZWl72lMhPQrZLCIqhCw9M19y9ItLStqJFZWX56QmZyo67w/N2pI2DoXKrie8aVRhdCFt3BL0J6zUL9G5X2Y7M5Hd9e8CQXgwMcEFgUQ6nbEEE+0yo7pmQl7WAUfIaVFgAjaSZ7BmQ0ZlllKmz4KDDw4otKNuDedwCzLR5+8y7uf4zj6eVKeuQc+zrIgFEXoYJ7T82yiAxF7ECZOtcpGlx2aUR/b4UdIZgMvF1A2wJtyecttSv6Qg9os/6q+ySjgWC55dCAtZePrilNhlZu2xoYxbY545zef7vkHeJnSPzlcfuepMlwoiqUXENF/gCk1LCgSvPUZLLYgj5Ur832+Na7u+fp9yhyOXN3Gpm+Rg+HS9f3Fwv0OimOvCKrOfD3v6xeZk1ZZ7t/K+oyQrDJsoBVYhQV8E9i+sNKLUAh3cA+e5PlftiJVhbzO6s+oZQywcS61IJpTZER13WrXbdtjovlLVAyORTq+6GTXqIn9xYgaOD51+Zpsl5MLQ5ZyH3tMD+asaqqFdTwWNFdf5mfAC5ZmfCLgfQ3R40SSY9b9L/097LTnfCzNVlHkIdNCo5TGZoqghghHbdCtIb464EWYAE84jBZ9+oM+6Dw8cgeycUo18qy+eMxOpv3TXakUBO3iFbCcsnp3J1H4/q/CcE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024)(23010399003)(10067099003)(56012099006)(22082099003)(18002099003)(4143699003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eGtGK0dJNmNVQTBSelE1cGtSVjhWc1Z1NGVFL3NKQ2NZK3N4blpuamVqQ2ZW?=
+ =?utf-8?B?eG5iU1J4YkI4MVd6eDlzSWlpMEpCMXZhc0J6R2ExbWcvQnJ1Q0tlQkRmOXVz?=
+ =?utf-8?B?UkFxWXMwbVM4OVN2NG1KOHY3ZVdiUk9MRlVTMmMyeGgzSlVLY0NPM3NLaHJa?=
+ =?utf-8?B?K2I0clFWeUl6NFhHdGlJMzZJQmpRRzlOazZWeFIxakFLMnZ3TFZ3MUxuNTNt?=
+ =?utf-8?B?K0ZmRUlmWkVNbFE2TlZjZGxHZHRlcHg4S1dBdlFqS1VvNVpmd3cvcGJzaDdU?=
+ =?utf-8?B?MkhKaXlwUGs4L2JTSjB5d1RTZnhDQVBlMW8vVWRYMDUvUU5IZjFrbVYzclJq?=
+ =?utf-8?B?VUo2cVVsenU3WkNKQUZ0RENvZmlTRW9mMVFPeFZaZ0RoZlFJN01Mdllpb3NK?=
+ =?utf-8?B?c0VlVXpDTDl3MUh3Z21RTEhjYnRkRS9vdEovK1NuT1dncml3YVg5N25SSVpU?=
+ =?utf-8?B?ZVdOeFlFNXNtcVRHRzE2MXFNRDg5YzVMZ0xGenlZMU1pNng3cjJlM2VWOWVU?=
+ =?utf-8?B?MDd1WC9SaDUxM3FUeHpJUjVKU0xseEVvSDJ4Y2kvU3NuWEpiQ0FtK241SzU4?=
+ =?utf-8?B?WGlQY3FmRUNHSk1KN0xzWGZpLzlnRC9vUEdGVjhVaXc3QWNDTDBYU3ZwM0NE?=
+ =?utf-8?B?cFByajBuVk5zaDNCYTJFVU9HSHQzSGNteEYvRkIwYW1BRVA5WmM2Y05GbGF4?=
+ =?utf-8?B?SXV4Ky91SWhZMThvdGFIRVRsNkd1bkdvbFcycHcvZ1ZBaUpOOVJpbkxKeTVJ?=
+ =?utf-8?B?RHgzTVM2QlM1RHJkci9rRlRIaE5tTitEU2xtVTlFL2RqcWdTelhKTmp0NGtX?=
+ =?utf-8?B?Skdrc3FCSUFRb3ZrSFZ6d05DbGxWL2NJRGJTaHJUdGhFSVluQitGUlhHM04v?=
+ =?utf-8?B?KyswS01NbkpTbzA0MEhaMTBSaEdMaUNUUGhUbExtOEcxRGxKUDJtSE54Qkdq?=
+ =?utf-8?B?dmF4aFZmYzZZTk9qeVVWR1ZFZkZnUlQ5VjZSeW53WjJVb3FFRmZsdWJ3L1Zv?=
+ =?utf-8?B?b3ZIbTNIdFp1WE9DZU5ndWRBMW8vNFFUVTNwc3VWMy9lN2s2azFpN3hESWt5?=
+ =?utf-8?B?S3Z1ZGhGMm9oVHM2ZnVFRENPV3FlQlNmOTZ2UFNPcjVYOEFzZk9EWnE1bFl2?=
+ =?utf-8?B?Z2xBUWE4Vlp2WksxUzdUOFNpclk2ZmQwditGeVFHbVpEM3RDR1JPMWE3a2lK?=
+ =?utf-8?B?cHh3WmV2SVJsSnJQbU5jeXJpTjdxaWVWYmVKU28reld3YXoxNWhxbnA4enBH?=
+ =?utf-8?B?WXl1b01HUmNJT3llWVIxVDhEWW93RjR0a28yY002VnVXUnljVE5JZHo1bEZ6?=
+ =?utf-8?B?R2V3OUt5OS9nRll1eTRhRVJORHQ5WmJoeE1JUkp3S00rQnM4YWU4WlZaQmw1?=
+ =?utf-8?B?NzloZ2h2a2ZnMGNhNnVWd1NCbDhDQ0p0WVlQNUdVVVZUZTY5UHYyemc4azJo?=
+ =?utf-8?B?b2hLdjcwN3I4aVpORmZtZC9MV1ppSlRMWTRPUlY5ck1OT1YzRzBOTVlsVXdl?=
+ =?utf-8?B?eFR5ZzFkQTdTMjhyTGVYQTBzdE9QTEdpci9nTVhIRGErS2FudVZESzh0S0FG?=
+ =?utf-8?B?QXFycktxOWlMU01NUlBUVHRhQXpCUlgzUy9nbER4SWlnbWhTREpxYTdTMVdP?=
+ =?utf-8?B?dHROWWQ2NDNHVjE2YTNqWmRzT2JJUnRwajlZZWwyMnNyelN1U241a0FZd0pw?=
+ =?utf-8?B?MjArN2l6NGxzNzhMTHNxNWNRMHloNkQ1bXRUNUtXcDFrWER1Y3AvcTdZWmFC?=
+ =?utf-8?B?SGErd0xPcGVaZmx3QmpIdkZwRTc5cFNNUU5NcllJZE53MmhYL3o2b1VLTTVK?=
+ =?utf-8?B?MkZGNFNPS2xWSXZTNWY4NlJJRnQxSHkzOHhrT0tQcklKVDErbXM0RHF5ZFRY?=
+ =?utf-8?B?bVZWUTlLV2hHMktZUW5haHVCeFdZLzdJSC9ZWDBhMkU1UUF6UlNLZElyZ2Ny?=
+ =?utf-8?B?WERibTg0UU1JSlhvb0o3VmgyMUkycnZTSzBQWXFmVDdMU0tXNmFKYzI0bHcr?=
+ =?utf-8?B?aVNsRjVPOWszOVVHcUlFVlRUcUxkVm1PWVJyS2x0c2xGOHcyVFhYNERiWDNN?=
+ =?utf-8?B?VkxGelR3YVpiNEI5YkVNZVFyWUN5Y3hHZnRSVml6UFZBTEphVGpDMUllbjJn?=
+ =?utf-8?B?dE9hRERuWCtJR3hFR01VdE43WkxYRzZmYVhnc1JFUFUreXBzcmc5TDRlU21Z?=
+ =?utf-8?B?UjFFQkoyVlBWVzRQc0drLzJuWDd4bGxidDQ5bDBhdjJrSkFGL2JBY1gwTVc5?=
+ =?utf-8?B?bnJKWEpyNkM1NW9SbFQwN3d4QzA3YTJTM3NvaUFBbDJyK2dhNWlrcUw5R0c3?=
+ =?utf-8?B?QS9GYXRPTGZuT3RQN2dXOFk4aEZhdzkzMnFXbERxN1JpZWlCbHh4cW9GM3VR?=
+ =?utf-8?Q?TRdz2wUhpPIHb5VM=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: af805e79-b705-4472-d16f-08df19632a8a
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 11:09:41.8165 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ffo+iqTariJG9IzXZz4oJSJ0y2rssGUhxuppfFBm2ZoQbuGMmeUz5Ht7WXDexv88YKnBXGHSuIh0TiOX53E0X8cFJZZVCxcSFdY4g0UDnJ8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB9810
+Received-SPF: pass client-ip=52.101.84.83;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,193 +156,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.09.26 14:44, Kevin Wolf wrote:
-> Am 31.08.2026 um 15:52 hat Hanna Czenczek geschrieben:
->> When a request finishes with a higher latency than a predefined
->> threshold, emit the BLOCK_IO_DELAY event.
+On 9/22/26 12:26 PM, Stefano Garzarella wrote:
+> On Fri, Sep 18, 2026 at 04:47:05PM +0300, Andrey Drobyshev wrote:
+>> The previous patches reuse the source vhost FD on the destination,
+>> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
+>> in realize().  For cpr-transfer the destination realizes while the source
+>> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
+>> handed over explicitly.
 >>
->> Note there would be an alternative, more precise solution: We could keep
->> all active cookies per BlockBackend in a list and repeatedly iterate
->> over it in a background coroutine (woken on a timer so it would wake
->> always exactly when the next request would time out, so it generally
->> stays asleep until there is actually a timeout). This way, we could emit
->> the event exactly when a request crosses the delay threshold, while it
->> is still running; and we could hypothetically even take actions like
->> pausing the VM until the request is done so the guest operating system
->> is shielded from extreme latency spikes.
+>> Do this through the device's CPR vmstate hooks.  Namely, release device
+>> ownership in pre_save, reclaim in post_load, re-acquire on restart:
 >>
->> In practice, this is very complicated because latency cookies are
->> created and finalized all over the place, so it is very hard to
->> guarantee that every `block_acct_start()` is matched by the right
->> finalization to ensure that cookies are properly removed from the list
->> when they are done. Even if we fix all non-matching places now, there is
->> hardly a guarantee this will be kept in order in the future.
+>>  - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
+>>    the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
+>>    cpr-exec).
 >>
->> So, for now, just implement the simpler solution of only notifying the
->> management layer when the request does complete, so VMs with high
->> latency spikes can at least be identified when they happen without
->> having to regularly check the latency histogram.
+>>  - .realize(), for an incoming CPR, only sets up the virtio device and
+>>    queries the backend features by calling vhost_dev_init_backend().
+>>    It doesn't take device ownership and doesn't touch the VQs which
+>>    still-running source might use.  The full init is deferred to
+>>    .post_load().
 >>
->> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> Checking only at request completion for now is fine with me; however,
-> the documentation the previous patches added (And possibly their commit
-> messages? Not sure any more.) suggests that the event is emitted while
-> the request is still in flight. So these description need to change to
-> be consistent with the actual behaviour.
-
-I tried being a little bit ambiguous so that behavior could change in 
-the future.
-
-But now that you make me think about it, that was a terrible idea. I 
-should fix it to reflect the current behavior and explicitly state that 
-it might do something else, too, in the future. (*If* we think changing 
-behavior is OK, then it should at least be explicit now.)
-
->>   include/block/accounting.h | 10 ++++++++-
->>   block/accounting.c         | 42 +++++++++++++++++++++++++++++++++++++-
->>   blockdev.c                 |  2 +-
->>   hw/block/block.c           |  2 +-
->>   4 files changed, 52 insertions(+), 4 deletions(-)
+>>  - .post_load() reclaims it on the destination: the full vhost_dev_init()
+>>    (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
+>>    the device is started at vm_start.
 >>
->> diff --git a/include/block/accounting.h b/include/block/accounting.h
->> index 025536239e6..ba3a6859cf4 100644
->> --- a/include/block/accounting.h
->> +++ b/include/block/accounting.h
->> @@ -92,6 +92,7 @@ struct BlockAcctStats {
->>       QSLIST_HEAD(, BlockAcctTimedStats) intervals;
->>       bool account_invalid;
->>       bool account_failed;
->> +    int64_t delay_threshold_ns;
-> Why signed?
-
-Because block/accounting.c uses int64_t for all latency values (except 
-for block_acct_queue_depth()).
-
->>       BlockLatencyHistogram latency_histogram[BLOCK_MAX_IOTYPE];
->>   };
->>   
->> @@ -103,9 +104,16 @@ typedef struct BlockAcctCookie {
->>   } BlockAcctCookie;
->>   
->>   void block_acct_init(BlockBackend *blk, BlockAcctStats *stats);
->> +/**
->> + * Set up accounting for a block device in @stats.
->> + * @alert_ns specifies a latency so that if any request takes longer than that
->> + * threshold, a BLOCK_IO_DELAY event will be generated (when that request
->> + * completes). Pass 0 to disable.
->> + */
->>   bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
->>                         enum OnOffAuto account_failed, uint32_t *stats_intervals,
->> -                      uint32_t num_stats_intervals, Error **errp);
->> +                      uint32_t num_stats_intervals, int64_t alert_ns,
->> +                      Error **errp);
->>   void block_acct_cleanup(BlockAcctStats *stats);
->>   void block_acct_add_interval(BlockAcctStats *stats, unsigned interval_length);
->>   BlockAcctTimedStats *block_acct_interval_next(BlockAcctStats *stats,
->> diff --git a/block/accounting.c b/block/accounting.c
->> index a74551d41f2..debf1924455 100644
->> --- a/block/accounting.c
->> +++ b/block/accounting.c
->> @@ -27,8 +27,10 @@
->>   #include "block/accounting.h"
->>   #include "block/block_int.h"
->>   #include "qemu/timer.h"
->> +#include "system/block-backend.h"
->>   #include "system/qtest.h"
->>   #include "qapi/error.h"
->> +#include "qapi/qapi-events-block.h"
->>   
->>   static QEMUClockType clock_type = QEMU_CLOCK_REALTIME;
->>   static const int qtest_latency_ns = NANOSECONDS_PER_SECOND / 1000;
->> @@ -62,9 +64,35 @@ static bool bool_from_onoffauto(OnOffAuto val, bool def)
->>       }
->>   }
->>   
->> +/**
->> + * Convert a BlockAcctType into its QAPI equivalent IoAccountingOperation.
->> + *
->> + * Must only be called for valid BlockAcctType values, i.e. specifically not for
->> + * `BLOCK_ACCT_NONE`.
->> + */
->> +static IoAccountingOperation block_acct_qapi_type(enum BlockAcctType type)
->> +{
->> +    switch (type) {
->> +    case BLOCK_ACCT_READ:
->> +        return IO_ACCOUNTING_OPERATION_READ;
->> +    case BLOCK_ACCT_WRITE:
->> +        return IO_ACCOUNTING_OPERATION_WRITE;
->> +    case BLOCK_ACCT_FLUSH:
->> +        return IO_ACCOUNTING_OPERATION_FLUSH;
->> +    case BLOCK_ACCT_ZONE_APPEND:
->> +        return IO_ACCOUNTING_OPERATION_ZONE_APPEND;
->> +    case BLOCK_ACCT_UNMAP:
->> +        return IO_ACCOUNTING_OPERATION_UNMAP;
->> +    case BLOCK_ACCT_NONE:
->> +    default:
->> +        g_assert_not_reached();
->> +    }
->> +}
-> Wouldn't it be nice if QAPI could generate the shorter BlockAcctType
-> with BLOCK_ACCT_* on the C side while still keeping the nicer
-> IoAccountingOperation name externally? :-)
->
-> (Not a request to change it now, but a wishlist item for Markus.)
->
-> Though actually BLOCK_ACCT_* seems to already be possible with 'prefix'.
-> Maybe we could live with the longer IoAccountingOperation type name
-> everywhere and avoid having two separate enums?
-
-Probably.
-
-(If not, then IoAccountingOperation were not doing what it’s supposed to 
-be doing.)
-
-I’ll take a look.
-
->>   bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
->>                         enum OnOffAuto account_failed, uint32_t *stats_intervals,
->> -                      uint32_t num_stats_intervals, Error **errp)
->> +                      uint32_t num_stats_intervals, int64_t alert_ns,
->> +                      Error **errp)
->>   {
->>       stats->account_invalid = bool_from_onoffauto(account_invalid,
->>                                                    stats->account_invalid);
->> @@ -79,6 +107,7 @@ bool block_acct_setup(BlockAcctStats *stats, enum OnOffAuto account_invalid,
->>               block_acct_add_interval(stats, stats_intervals[i]);
->>           }
->>       }
->> +    stats->delay_threshold_ns = alert_ns;
->>       return true;
->>   }
->>   
->> @@ -252,6 +281,17 @@ static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
->>           return;
->>       }
->>   
->> +    if (stats->delay_threshold_ns && latency_ns > stats->delay_threshold_ns) {
->> +        g_autofree char *dev_path = blk_get_attached_dev_path(stats->blk);
->> +        double latency = latency_ns / (double)NANOSECONDS_PER_SECOND;
-> Wouldn't it be both easier and more reliable to just expose an integer
-> latency-ns in QAPI? I think all other time related values in the block
-> layer interfaces work this way, too.
-
-Yup, noted to use nanoseconds exclusively.
-
->> +        qapi_event_send_block_io_delay(dev_path,
->> +                                       block_acct_qapi_type(cookie->type),
->> +                                       latency,
->> +                                       cookie->offset >= 0, cookie->offset,
->> +                                       cookie->bytes);
+>>  - .set_status() refuses to start a device whose init hasn't completed
+>>    yet (incoming CPR before post_load).
+>>
+>>  - .set_status() re-acquires ownership before starting the device if
+>>    pre_save released it and this QEMU is about to run the guest again:
+>>    the migration failed, or it completed and the management resumed the
+>>    source (e.g. cpr-transfer target died).
+>>
+>> With the handoff in place, lift the CPR blocker.
+>>
+>> Note: this requires kernel side support of VHOST_RESET_OWNER operation
+>> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
+>>
+>> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
+>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>> ---
+>> hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
+>> include/hw/virtio/vhost-vsock.h |   2 +-
+>> 2 files changed, 128 insertions(+), 31 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+>> index 6e89007b2ce..65ba573da4d 100644
+>> --- a/hw/virtio/vhost-vsock.c
+>> +++ b/hw/virtio/vhost-vsock.c
+>> @@ -21,7 +21,6 @@
+>> #include "hw/virtio/vhost-vsock.h"
+>> #include "monitor/monitor.h"
+>> #include "migration/cpr.h"
+>> -#include "migration/blocker.h"
+>> #include "migration/misc.h"
+>>
+>> static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
+>> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
+>> static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+>> {
+>>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
+>> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
+>>     bool should_start = virtio_device_should_start(vdev, status);
+>>     int ret;
+>>
+>> +    /*
+>> +     * During CPR, on target the full vhost_dev_init() is deferred to
+>> +     * post_load.  Refuse to start a half-initialised device rather than
+>> +     * issue vhost ioctls on it.
+>> +     */
+>> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
+>> +        error_report("vhost-vsock: refusing to start, device init incomplete");
+>> +        return 0;
 >> +    }
 >> +
->>       WITH_QEMU_LOCK_GUARD(&stats->lock) {
->>           if (failed) {
->>               stats->failed_ops[cookie->type]++;
-> Kevin
->
+>>     if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+>>         return 0;
+>>     }
+>>
+>>     if (should_start) {
+>> +        /*
+>> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
+>> +         * source, after a successful RESET_OWNER op.  If we end up here
+>> +         * with this flag set - that means that either CPR migration failed,
+>> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
+>> +         * target died).  In either case, we need to re-acquire device
+>> +         * ownership.
+>> +         *
+>> +         * On failure leave the device stopped.  The next start attempt
+>> +         * (guest driver reset, VM stop/cont) retries.
+>> +         */
+>> +        if (vsock->owner_reset) {
+>> +            ret = vhost_dev_set_owner(&vvc->vhost_dev);
+>> +            if (ret < 0) {
+>> +                error_report("vhost-vsock: cannot re-acquire device "
+>> +                             "ownership: %s", strerror(-ret));
+>> +                return 0;
+>> +            }
+>> +            vsock->owner_reset = false;
+>> +        }
+>> +
+>>         ret = vhost_vsock_common_start(vdev);
+>>         if (ret < 0) {
+>>             return 0;
+>> @@ -123,8 +154,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+>>     return vhost_vsock_common_get_features(vdev, requested_features, errp);
+>> }
+>>
+>> +static int vhost_vsock_pre_save(void *opaque)
+>> +{
+>> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
+>> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
+>> +    int ret;
+>> +
+>> +    ret = vhost_vsock_common_pre_save(opaque);
+>> +    if (ret) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    /*
+>> +     * Release the device ownership now for CPR migration.  The device is
+>> +     * already stopped at pre_save, and destination reclaims it by calling
+>> +     * VHOST_SET_OWNER in post_load.
+>> +     */
+>> +    if (cpr_incoming_needed(NULL) && migration_is_running() &&
+>> +        !vsock->owner_reset) {
+>> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
+>> +        if (ret < 0) {
+>> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
+>> +                         strerror(-ret));
+>> +            return ret;
+>> +        }
+>> +        vsock->owner_reset = true;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> static int vhost_vsock_post_load(void *opaque, int version_id)
+>> {
+>> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
+>> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
+>> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(DEVICE(opaque));
+>> +    Error *local_err = NULL;
+>> +    int vhostfd, ret;
+>> +
+>>     /*
+>>      * Only reset vsock connections for non-CPR migration.  For CPR the
+>>      * guest cid is unchanged, and the cid-change reset would otherwise
+>> @@ -134,6 +201,35 @@ static int vhost_vsock_post_load(void *opaque, int version_id)
+>>         return vhost_vsock_common_post_load(opaque, version_id);
+>>     }
+>>
+>> +    /*
+>> +     * CPR restore case.  The source released device ownership in its
+>> +     * pre_save.  Complete the handoff here, before the device is started
+>> +     * at vm_start.  Init vhost device on preserved FD, issue
+>> +     * VHOST_SET_OWNER on it, and restore the guest cid.
+>> +     */
+>> +    vhostfd = cpr_find_fd(cpr_name, 0);
+>> +    if (vhostfd < 0) {
+>> +        error_report("vhost-vsock: could not find restored vhost FD");
+>> +        return -1;
+>> +    }
+>> +
+>> +    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
+>> +                         VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
+>> +    if (ret < 0) {
+>> +        error_report_err(local_err);
+>> +        cpr_delete_fd(cpr_name, 0);
+>> +        return ret;
+>> +    }
+>> +
+>> +    ret = vhost_vsock_set_guest_cid(vdev);
+> 
+> Why we need to set the CID? Isn't it preserved?
+> 
+> That said, I don't think it is wrong, it seems just superfluous, but 
+> maybe there is a reason.
+> 
+> The rest LGTM:
+> 
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Thanks for reviewing!
+You're right that the CID itself is preserved across CPR, the kernel
+keeps it hashed.  But the ownership of the device is NOT preserved.  The
+ownership must be claimed by the new QEMU.  After we issue RESET_OWNER
+in .pre_save() (old QEMU), it must be followed by SET_OWNER in
+.post_load() (new QEMU).  So setting the same CID value in this call is
+indeed redundant, but that's not the main goal here.
 
-Hanna
-
+Thanks,
+Andrey
 
