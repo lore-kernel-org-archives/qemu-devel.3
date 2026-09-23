@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DBBC98302
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 17:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 340A5C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 17:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Qpx-0008Tm-II; Wed, 23 Sep 2026 13:32:53 -0400
+	id 1x9Qq9-0000Rj-SR; Wed, 23 Sep 2026 13:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9QoB-0006sm-Sl
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:31:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1x9QoP-0006yB-Uq
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:31:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9Qo9-0003lF-MQ
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:31:03 -0400
+ id 1x9QoM-0003mN-42
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 13:31:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790184660;
+ s=mimecast20190719; t=1790184671;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jgOMb7SjXuk3u4/2YZ1h0BpaB3cHG3WQBao057QStLA=;
- b=IImzkS1d8+MhkVFvB5wUnoSo3YaM+Et/RjbklRTfpqd8vbaBLsRwy2UB8S+BoUj26rlFuF
- RYegEZoOayFqBGwYacpnV97bx/t8/lFOWkOryKcVH5KVgmUtSM/lKKMAswgx7iJbgaOF3t
- aLJvgrWUM6Jqx8bYYooUlezxn5JNhcE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F3LJcrFsY6gDI05Rg2w/j7BQ0U1fMQIzC7scyP9KnJQ=;
+ b=JvY5j43sUqp0NuM/3nL/1uylvg+6z/wojKu5uNjfArBxCH4Wr+1tRZQqsfGQzMPkStxuDD
+ DN4gNESdF/cDvlaqbM5MZ+mloCWXMDRax0S68k7e+kMj6q6+RNWge/H0b6s2lE/4FtHuri
+ LWPxCVzi5O4K+1r9mCjGbuI2YSL0B14=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-tk7Qd-nnNA6pvndv_tKnVQ-1; Wed, 23 Sep 2026 13:30:58 -0400
-X-MC-Unique: tk7Qd-nnNA6pvndv_tKnVQ-1
-X-Mimecast-MFC-AGG-ID: tk7Qd-nnNA6pvndv_tKnVQ_1790184657
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48701401090so1039312f8f.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 10:30:58 -0700 (PDT)
+ us-mta-380-obfeThjvN0qo-C7Aj0ihPQ-1; Wed, 23 Sep 2026 13:31:10 -0400
+X-MC-Unique: obfeThjvN0qo-C7Aj0ihPQ-1
+X-Mimecast-MFC-AGG-ID: obfeThjvN0qo-C7Aj0ihPQ_1790184669
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49cf4cc2125so5528925e9.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 10:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790184657; x=1790789457; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790184669; x=1790789469; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jgOMb7SjXuk3u4/2YZ1h0BpaB3cHG3WQBao057QStLA=;
- b=a1w93VxGgcUPnzuDqR4sAM7dbXxeo6XCPXucc28M/QrVEEAeq8LK9T90ueSA/TKZho
- +OLWx4EstHqpR3yFz5R8jTVqFF+F6sz2Y4xXYbTGhDbu1I83HNg6Xl3eYaXG56ulGVz4
- Hl5gCz5YUuDbusHssBJYwiLaXqLPnrdRHEuONhk8yagaG3C653mx63sZILEB/ZFpG87Z
- zYs3MF3/R+h9Emagn0M5C7tLhMv1iHh8yYvoDqdz+/t3twY9DSn+pQkZRIun9tTHpnBg
- GmKdpeVHLn80GRVCoN204Na1S3MIZF/LRGDMVTMq+JX08ek64TPy7UUIIhgcRK2lksw3
- 3Vvg==
+ bh=F3LJcrFsY6gDI05Rg2w/j7BQ0U1fMQIzC7scyP9KnJQ=;
+ b=AgjTrJF52du9Nwd74/pAQDhhRtj/3LLwXZfEVbrAoKqDB/bhdu5JvgaAvUYTDIbT9a
+ EOQp8Sj3qAuTXnF90/58YsF64L38fF4lLaAGNdz533u8LaFYR2VnR/jIsyH3SBfhcPSt
+ fq+D+muXU5zmih0/Hzc4x7U73VlR5/JmfGyorrw+COrLkjgn0ZUz6GfXyWSZc+OJvM73
+ c2/uM1cmoZO7TlQvRUPuzwGst9xcFn2zFOr1FTKFboX0if9Hg9VVMxS/qJM6cQ7ZQCE2
+ 75hhLu0yA5ggZMcpVyyvYWu4wvyvheNsO7GgjPu9W64ap3AYkIWKsqAx1VWaIdtxsIsM
+ /lcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790184657; x=1790789457;
+ d=1e100.net; s=20260707; t=1790184669; x=1790789469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jgOMb7SjXuk3u4/2YZ1h0BpaB3cHG3WQBao057QStLA=;
- b=MFFYH8JSKSVW7KhZQKX+hd6WRo32lVE7mzmFbKhmX78jXnfkpT8iy7+DzJRgOX6/nE
- YdPRP+clqVlQ3mjek7F5dWMY9SGKnhk47WtWfmOLT6Kmezx36gTH/+X3HiDfuLIannKG
- xbOxSX3zQabB42cz9qmyAAQcEh+rSOuWRc+X8t0lvuuifBLv15sZvHZbcPMzcCTsjI+6
- Hjov2bQVEXcERqC/nioffYtOTSwQf9GbO6BczGWio8YfeTCI4TKGJ6PUOoF82znKJNR5
- BaUu1KXsBKbL7u5jNd7KL0LjnJ/ptc3pttunMV7g2H7jWJ1vKx6Uqtevr/TPCOHxdyk4
- mllQ==
-X-Gm-Message-State: AFuF++lO7j8UwF8x0IZIhF+sjQm9KW3jzoQ8YdxXt/qmMy+P4D/3anjO
- Oxu9ONBIqdeq+noWIoOP/BnhZ22uN/kVsD7LxcEu3D5XBApTePTlNEhYQL9XIQQC8JFmzrVOgv/
- cumZiNpGAdo39CMu+05zzz96R0+FbHOmV63h4rIe3A5H6MDrKKtry9CVUsMbRS/W9OdRyceCoH8
- xJ22sXm3pB3pmM4DqDT3+jA/cwmm5wfq3dEaprOmlC
-X-Gm-Gg: AYBFou0RH0U+YkhR+NVwr/YEKKKqLgVzRln8iiyRr7b+Gr1tw4FfC85oZ/JB2SHZe1g
- c9dNYK34SvTU6A8Y6xZ1shHPTdpBtEKq2nXGz7aiii3rBxI3Y7WAwjqp8Q2EYa38Cu/E3TrwIOa
- wZGTog6//CLA/f5Eq1h8i/fW2FdXnG1Yyqw8tT0pwGPvgWTfPQ8njvR6FWErEkoVCYh3kqFLEVq
- leueEjDnqYzJOf14aYzRcOHnvfoHdUEEzaQtNWY4mv/Z+QXAU1y9ESBwjfgP6dBHThX+Jjyn+5l
- 6o3towz1udFIScDqCwkjK4TUH45CSN6h5DWTnj5hfd0/esBUjc/I44jNxSYvZBdRHA1ckMeHCfY
- mXZGXW59KOu7+7rPplfyeGyKjCoJ6hPkP817w2XWyfy9jEBXUH6Pbp14zDzlzv6HCZN8PnTfUZ2
- S06mL3JxrO7YsIlhw=
-X-Received: by 2002:a05:6000:710:b0:487:27f9:840 with SMTP id
- ffacd0b85a97d-488670a09d6mr6102010f8f.53.1790184657108; 
- Wed, 23 Sep 2026 10:30:57 -0700 (PDT)
-X-Received: by 2002:a05:6000:710:b0:487:27f9:840 with SMTP id
- ffacd0b85a97d-488670a09d6mr6101960f8f.53.1790184656570; 
- Wed, 23 Sep 2026 10:30:56 -0700 (PDT)
+ bh=F3LJcrFsY6gDI05Rg2w/j7BQ0U1fMQIzC7scyP9KnJQ=;
+ b=HNC0+2K6Y+MHONsd11xbUX2KbqR62MZTTQeZohjKwHM6y4I/sfaQf7V/bpycW+fhnZ
+ rABBnwbjp8Qb4J9BaGMKV3QhctUlmSlX72UVG+DRGgvzm83FvRBRDA5MFvCsLNO3FyxN
+ 0tCsvxz6lepYhYGPw2SPdJBHDmz0re3eelcvAkno6GLJJoBK2kLOOKL5lnFlEECroYX8
+ HHAs+JtFqx/u9YD3OznE13c4Zek9L+uHNaVYst+Vj6qa2WzZGf7e1epDDgcUqMao5SrG
+ 75mSoqQWuDNnS+QVb/G0nFHnclcYwmsXSEAcXKau2YgUtKlFA7S6CVkJJQjE2VeU25BV
+ Vyjg==
+X-Gm-Message-State: AFuF++m8gFi6+Rt6ydSzT3Qhc3kw8I39QdIc5YK39fekb/QIVRcumHN9
+ oOpAsXR5rEkXarJmnEpEo+y1lwCTzJTZHvA5b4es7GFzIgqigTxax4ie8IG1qT2fZ14XmqTHr+H
+ wb/zVgWFg8yYEO0ZH1TDFllsmeWSuXxWB8PF3RC8c7rkNgW8y6i2dmgY4NhCHgFkA7OsTBFZSB8
+ iRscp3d4Uka5q2u9VjS/EA/cC4hE7Fb2CGS8cgzax9
+X-Gm-Gg: AYBFou26pQRb6Kylyh9LJ0soavyKABrj1Fxitf8Bt06FhqAgdX8JfPrL+MFGo/2QiED
+ NBLXN5p8By8ew6Y6QtLt+n4ymeJcX8rRSXcZIpGyQX0xE/u4hlizWIvY9NOqrOjGmAu/snCVXKC
+ Xp2sXAkMhu74sSSy9POTtUdRFVp6ZNJeXNr+SpdzK1u0GG0TKaIVT/8vqBg8ZrgwY17cDlwXKwe
+ QNpb6ujhYUq95nalAy1CmPpI9DwPhiYDmNfKDb1lrYNnpPikfqYXywv3nHVeZzSwByzUHEf7KuW
+ 5LoL88bd36/xDO13s8CbRGa5LoXIxc1q4OySwTba67dAH2vNcTRRdmLN5qhE2GaiDX70FouQOq6
+ yTcTyPUFjJ07uEuNZSyfge6HbsCtuiEhCCpZQzgDXjg9oSJJ+jQU47JAAmyJ9nGsoHIt2jZ5TzG
+ wUkpcj
+X-Received: by 2002:a05:600c:4ece:b0:49e:6050:9fbe with SMTP id
+ 5b1f17b1804b1-49fdece7b76mr52890495e9.15.1790184668932; 
+ Wed, 23 Sep 2026 10:31:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ece:b0:49e:6050:9fbe with SMTP id
+ 5b1f17b1804b1-49fdece7b76mr52889935e9.15.1790184668326; 
+ Wed, 23 Sep 2026 10:31:08 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4886876c64dsm8470023f8f.21.2026.09.23.10.30.55
+ 5b1f17b1804b1-49fe5bae53dsm1954355e9.4.2026.09.23.10.31.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 10:30:56 -0700 (PDT)
+ Wed, 23 Sep 2026 10:31:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: chang.seok.bae@intel.com,
 	zhao1.liu@intel.com
-Subject: [PATCH 13/17] target/i386/tcg: add decode functionality for APX
-Date: Wed, 23 Sep 2026 19:30:17 +0200
-Message-ID: <20260923173021.317809-14-pbonzini@redhat.com>
+Subject: [PATCH 17/17] target/i386/tcg: mark APX as supported
+Date: Wed, 23 Sep 2026 19:30:21 +0200
+Message-ID: <20260923173021.317809-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260923173021.317809-1-pbonzini@redhat.com>
 References: <20260923173021.317809-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,317 +121,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle the EVEX formats for APX (including the extension of BMI and CMPccXADD
-instructions that already supported VEX) and add their validation to
-validate_vex().  Exit disas_insn() early if the NF field is set.
+Finally allow TCG to set the CPUID bit for the APXF feature.  The effect
+of APX is about 0.5% larger binaries and about 1% less TCG ops.
+QEMU seems to produce about 1% *more* assembly instructions, because
+the optimizer could already produce roughly the same ops as NDD or
+NF instructions, and the new PUSH2/POP2 instructions include a stack
+alignment check that isn't there in non-APX code.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     |  10 ++
- target/i386/tcg/translate.c      |  11 +-
- target/i386/tcg/decode-new.c.inc | 168 ++++++++++++++++++++++++++++++-
- 3 files changed, 181 insertions(+), 8 deletions(-)
+ configs/targets/x86_64-bsd-user.mak   |  2 +-
+ configs/targets/x86_64-linux-user.mak |  2 +-
+ target/i386/cpu.c                     | 34 ++++++++++++++++++++++++---
+ 3 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index cbc85498a1c..ec65ae5d75b 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -193,6 +193,9 @@ typedef enum X86InsnCheck {
+diff --git a/configs/targets/x86_64-bsd-user.mak b/configs/targets/x86_64-bsd-user.mak
+index d754186347f..26b7cfad4e2 100644
+--- a/configs/targets/x86_64-bsd-user.mak
++++ b/configs/targets/x86_64-bsd-user.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+-TARGET_XML_FILES= i386-64bit.xml
++TARGET_XML_FILES= i386-64bit.xml i386-64bit-apx.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/x86_64-linux-user.mak b/configs/targets/x86_64-linux-user.mak
+index 7f9527fd1de..cad68746bdb 100644
+--- a/configs/targets/x86_64-linux-user.mak
++++ b/configs/targets/x86_64-linux-user.mak
+@@ -2,5 +2,5 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall_64.tbl
+-TARGET_XML_FILES= i386-64bit.xml i386-64bit-linux.xml
++TARGET_XML_FILES= i386-64bit.xml i386-64bit-linux.xml i386-64bit-apx.xml
+ TARGET_LONG_BITS=64
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b6ad69d5047..62cce7d3105 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1005,7 +1005,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ #define TCG_7_1_EAX_FEATURES (CPUID_7_1_EAX_FZRM | CPUID_7_1_EAX_FSRS | \
+           CPUID_7_1_EAX_FSRC | CPUID_7_1_EAX_CMPCCXADD)
+ #define TCG_7_1_ECX_FEATURES 0
+-#define TCG_7_1_EDX_FEATURES 0
++#define TCG_7_1_EDX_FEATURES CPUID_7_1_EDX_APXF
+ #define TCG_7_2_EDX_FEATURES 0
+ #define TCG_APM_FEATURES 0
+ #define TCG_6_EAX_FEATURES CPUID_6_EAX_ARAT
+@@ -1017,7 +1017,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ #define TCG_SGX_12_0_EBX_FEATURES 0
+ #define TCG_SGX_12_1_EAX_FEATURES 0
+ #define TCG_24_0_EBX_FEATURES 0
+-#define TCG_29_0_EBX_FEATURES 0
++#define TCG_29_0_EBX_FEATURES CPUID_29_0_EBX_APX_NCI_NDD_NF
+ #define TCG_1E_1_EAX_FEATURES 0
+ #define TCG_24_1_ECX_FEATURES 0
  
-     /* No 0x67 prefix allowed */
-     X86_CHECK_no_adr = 16384,
-+
-+    /* EVEX.NF bit not allowed */
-+    X86_CHECK_nf0 = 32768,
- } X86InsnCheck;
- 
- typedef enum X86InsnSpecial {
-@@ -279,6 +282,13 @@ typedef enum X86VEXSpecial {
-     X86_VEX_LIG,
- } X86VEXSpecial;
- 
-+typedef enum X86EVEXClass {
-+    /* Non-vector instruction that can use APX EGPRs.  */
-+    X86_EVEX_APX = 128,
-+    X86_EVEX_APX_cmp = 129,
-+    X86_EVEX_APX_pp2 = 130,
-+    X86_EVEX_APX_zu = 131,
-+} X86EVEXClass;
- 
- typedef struct X86OpEntry  X86OpEntry;
- typedef struct X86DecodedInsn X86DecodedInsn;
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index c28cd9809e9..c35869ab500 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -107,18 +107,17 @@ typedef struct DisasContext {
-     uint8_t vex_l;  /* vex vector length */
-     uint8_t vex_v;  /* vex vvvv register, without 1's complement.  */
-     bool vex_ndd; /* is this a 3-operand instruction? */
-+    bool vex_w; /* used by AVX even on 32-bit processors */
-     uint8_t popl_esp_hack; /* for correct popl with esp base handling */
-     uint8_t rip_offset; /* only used in x86_64, but left for simplicity */
- 
--#ifdef TARGET_X86_64
--    uint8_t rex_r;
-+    uint8_t rex_r; /* 0 for i386, but left for simplicity */
-     uint8_t rex_x;
-     uint8_t rex_b;
--#endif
-+
-     uint8_t evex2;
-     uint8_t evex3;
-     uint8_t evex4;
--    bool vex_w; /* used by AVX even on 32-bit processors */
-     bool jmp_opt; /* use direct block chaining for direct jumps */
-     bool cc_op_dirty;
- 
-@@ -219,12 +218,16 @@ typedef struct DisasContext {
- #define REX_R(S)       ((S)->rex_r + 0)
- #define REX_X(S)       ((S)->rex_x + 0)
- #define REX_B(S)       ((S)->rex_b + 0)
-+#define EVEX_APX_ND(S) (((S)->evex4 & 0x10) != 0)
-+#define EVEX_APX_NF(S) (((S)->evex4 & 0x04) != 0)
- #else
- #define REX_PREFIX(S)  false
- #define REX_W(S)       false
- #define REX_R(S)       0
- #define REX_X(S)       0
- #define REX_B(S)       0
-+#define EVEX_APX_ND(S) 0
-+#define EVEX_APX_NF(S) 0
- #endif
- 
- /*
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 10c6833bb3c..b2e6dd3a488 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -257,6 +257,10 @@
- #define vex11 .vex_class = 11,
- #define vex12 .vex_class = 12,
- #define vex13 .vex_class = 13,
-+#define evex_apx .vex_class = X86_EVEX_APX,
-+#define evex_apx_cmp .vex_class = X86_EVEX_APX_cmp,
-+#define evex_apx_pp2 .vex_class = X86_EVEX_APX_pp2,
-+#define evex_apx_zu .vex_class = X86_EVEX_APX_zu,
- 
- #define chk(a) .check = X86_CHECK_##a,
- #define chk2(a, b) .check = X86_CHECK_##a | X86_CHECK_##b,
-@@ -2531,9 +2535,23 @@ static bool validate_sse_prefix(DisasContext *s, X86OpEntry *e)
- {
-     uint16_t sse_prefixes;
- 
--    if (!e->valid_prefix) {
--        return true;
-+    switch (e->vex_class) {
-+    case X86_EVEX_APX:
-+    case X86_EVEX_APX_cmp:
-+    case X86_EVEX_APX_pp2:
-+    case X86_EVEX_APX_zu:
-+        /* For APX-extended instructions, only EVEX versions check the prefix.  */
-+        if (!(s->prefix & PREFIX_EVEX)) {
-+            return true;
-+        }
-+
-+        /* fallthrough */
-+    default:
-+        if (!e->valid_prefix) {
-+            return true;
-+        }
-     }
-+
-     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
-         /* In SSE instructions, 0xF3 and 0xF2 cancel 0x66.  */
-         s->prefix &= ~PREFIX_DATA;
-@@ -2608,7 +2626,35 @@ static bool extract_evex_params(DisasContext *s, X86DecodedInsn *decode)
-      * Here, the position of RXB and (for AVX512) displacement multiplier
-      * should be known.
+@@ -1554,7 +1554,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         },
+         .tcg_features = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+-            XSTATE_PKRU_MASK,
++            XSTATE_PKRU_MASK | XSTATE_APX_MASK,
+         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+@@ -9722,9 +9722,37 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+      * inside x86_cpu_parse_featurestr() too.
       */
--    return false;
-+    X86OpEntry *e = &decode->e;
-+    uint8_t rex_r, rex_x, rex_b;
-+
-+    switch (e->vex_class) {
-+    case 13:
-+    case X86_EVEX_APX:
-+    case X86_EVEX_APX_cmp:
-+    case X86_EVEX_APX_pp2:
-+    case X86_EVEX_APX_zu:
-+        /* Only reached through EVEX map 4.  */
-+        rex_r = (~s->evex2 & 0x10) | ((~s->evex2 >> 4) & 8);
-+        rex_x = ((~s->evex3 << 2) & 0x10) | ((~s->evex2 >> 3) & 8);
-+        rex_b = ((s->evex2 << 1) & 0x10) | ((~s->evex2 >> 2) & 8);
-+        s->vex_v = ((~s->evex4 << 1) & 0x10) | ((~s->evex3 >> 3) & 15);
-+        break;
-+    default:
-+        return false;
-+    }
-+
-+#ifdef TARGET_X86_64
-+    s->rex_r = rex_r;
-+    s->rex_x = rex_x;
-+    s->rex_b = rex_b;
-+#else
-+    (void)rex_r;
-+    (void)rex_x;
-+    (void)rex_b;
-+#endif
-+    return true;
- }
- 
- static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-@@ -2738,6 +2784,87 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
-     g_assert_not_reached();
- }
- 
-+static bool validate_evex_apx(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    X86OpEntry *e = &decode->e;
-+    uint8_t evex4_mask = 0;
-+
-+    assert(s->has_modrm);
-+    switch (e->vex_class) {
-+    case 13:
+     if (xcc->max_features) {
 +        /*
-+         * APX-EVEX-BMI and APX-EVEX-CMPCCXADD do not define EVEX.ND.
-+         * They only differ for checks on NF, which happen elsewhere.
++         * TCG supports both MPX and APX.  Since they they cannot be enabled together,
++         * disable one---prefer APX if none was chosen explicitly.
 +         */
-+        if (!CODE64(s) || !(s->flags & HF_APX_EN_MASK)) {
-+            goto illegal;
-+        }
-+        evex4_mask = 0x0C;
-+        break;
++        uint64_t feat7_1_edx = env->user_features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF
++            ? env->features[FEAT_7_1_EDX]
++            : x86_cpu_get_supported_feature_word(cpu, FEAT_7_1_EDX);
++        uint64_t feat7_0_ebx = env->user_features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX
++            ? env->features[FEAT_7_0_EBX]
++            : x86_cpu_get_supported_feature_word(cpu, FEAT_7_0_EBX);
 +
-+    case X86_EVEX_APX:
-+        /* APX-EVEX-INT.  Checks on NF happen elsewhere.  */
-+        assert(e->op0 == X86_TYPE_None || e->s0 == e->s1);
-+        if (!CODE64(s) || !(s->flags & HF_APX_EN_MASK)) {
-+            goto illegal;
-+        }
-+        if (!EVEX_APX_ND(s)) {
-+            s->vex_ndd = false;
-+        } else if (!s->vex_ndd) {
-+            goto illegal;
-+        }
-+        evex4_mask = 0x1C;
-+        break;
-+
-+    case X86_EVEX_APX_zu:
-+        /* APX-EVEX-INT, with ZU bit defined.  Checks on NF happen elsewhere.  */
-+        assert(decode->e.ext0 == X86_EXT_None && !s->vex_ndd);
-+        if (!CODE64(s) || !(s->flags & HF_APX_EN_MASK)) {
-+            goto illegal;
-+        }
-+        if (s->vex_v != 0) {
-+            goto illegal;
-+        }
-+        if (EVEX_APX_ND(s)) {
-+            decode->op[0].ext = X86_EXT_Unsigned;
-+        }
-+        evex4_mask = 0x1C;
-+        break;
-+
-+    case X86_EVEX_APX_pp2:
-+        if (!CODE64(s) || !(s->flags & HF_APX_EN_MASK) ||
-+            !EVEX_APX_ND(s) ||
-+            (e->op0 != X86_TYPE_None && s->vex_v == ((s->modrm & 7) | REX_B(s))) ||
-+            ((s->modrm & 7) | REX_B(s)) == 4 ||
-+            s->vex_v == 4) {
-+            goto illegal;
-+        }
-+        evex4_mask = 0x18;
-+        break;
-+
-+    case X86_EVEX_APX_cmp:
-+        if (!CODE64(s) || !(s->flags & HF_APX_EN_MASK)) {
-+            goto illegal;
-+        }
-+        evex4_mask = 0x0F;
-+        break;
-+    }
-+
-+    if (s->evex4 & ~evex4_mask) {
-+        goto illegal;
-+    }
-+
-+    /* r/m == 11b requires X4=0 (that is, EVEX.U is 1)  */
-+    if ((s->modrm >> 6) == 3 && (s->rex_x & 16)) {
-+        goto illegal;
-+    }
-+    return true;
-+
-+illegal:
-+    gen_illegal_opcode(s);
-+    return false;
-+}
-+
- static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
- {
-     X86OpEntry *e = &decode->e;
-@@ -2834,14 +2961,32 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-         }
-         break;
-     case 13:
--        if (!(s->prefix & PREFIX_VEX)) {
-+        if (!(s->prefix & (PREFIX_VEX | PREFIX_EVEX))) {
-             goto illegal;
-         }
-         if (s->vex_l) {
-             goto illegal;
-         }
-+        if (s->prefix & PREFIX_EVEX) {
-+            if (!validate_evex_apx(s, decode)) {
-+                return false;
++        bool apx = feat7_1_edx & CPUID_7_1_EDX_APXF;
++        bool mpx = feat7_0_ebx & CPUID_7_0_EBX_MPX;
++        if (apx && mpx) {
++            if (env->user_features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APXF
++                || !(env->user_features[FEAT_7_0_EBX] & CPUID_7_0_EBX_MPX)) {
++                mpx = false;
++            } else {
++                apx = false;
 +            }
 +        }
-         /* All integer instructions use VEX.vvvv, so exit.  */
-         return true;
-+    case X86_EVEX_APX:
-+    case X86_EVEX_APX_cmp:
-+    case X86_EVEX_APX_pp2:
-+    case X86_EVEX_APX_zu:
-+        /* Only reached through EVEX map 4.  */
-+        assert(!(s->prefix & PREFIX_VEX));
-+        if (s->vex_l) {
-+            goto illegal;
-+        }
-+        if ((s->prefix & PREFIX_EVEX) && !validate_evex_apx(s, decode)) {
-+            return false;
-+        }
-+        return true;
-     }
- 
-     if (s->vex_v != 0 && !s->vex_ndd) {
-@@ -3217,6 +3362,9 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         if ((decode.e.check & X86_CHECK_W1) && !s->vex_w) {
-             goto illegal_op;
-         }
-+        if ((decode.e.check & X86_CHECK_nf0) && EVEX_APX_NF(s)) {
-+            goto illegal_op;
-+        }
-     }
- 
-     if (op_has_modrm(decode.e.op0) || op_has_modrm(decode.e.op1) ||
-@@ -3352,6 +3500,18 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-      * cause incorrect tracking of CC_OP for instructions that write to both memory
-      * and flags.
-      */
-+    switch (decode.e.vex_class) {
-+    case 13:
-+    case X86_EVEX_APX:
-+    case X86_EVEX_APX_zu:
-+        if (EVEX_APX_NF(s)) {
-+            return;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
 +
-     if (decode.cc_op != -1) {
-         if (decode.cc_dst) {
-             tcg_gen_mov_tl(cpu_cc_dst, decode.cc_dst);
+         for (w = 0; w < FEATURE_WORDS; w++) {
+             /* Override only features that weren't set explicitly by the user.  */
+             uint64_t no_autoenable_flags = env->user_features[w] | feature_word_info[w].no_autoenable_flags;
++            if (w == FEAT_7_1_EDX && mpx) {
++                no_autoenable_flags |= CPUID_7_1_EDX_APXF;
++            }
++            if (w == FEAT_7_0_EBX && apx) {
++                no_autoenable_flags |= CPUID_7_0_EBX_MPX;
++            }
+ 
+             env->features[w] |= x86_cpu_get_supported_feature_word(cpu, w) & ~no_autoenable_flags;
+         }
 -- 
 2.55.0
 
