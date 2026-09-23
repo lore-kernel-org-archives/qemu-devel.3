@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC0AC9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B32CC9830E
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9N0A-0004hm-MW; Wed, 23 Sep 2026 09:27:18 -0400
+	id 1x9My7-0002Pd-6f; Wed, 23 Sep 2026 09:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mwq-0006Pb-CL
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:23:46 -0400
-Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
+ id 1x9Muw-000315-MH
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:52 -0400
+Received: from mail-dl2-x10.google.com ([2607:f8b0:4864:38::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mwl-0007xB-RD
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:23:41 -0400
-Received: by mail-dy2-x10.google.com with SMTP id
- 5a478bee46e88-33bf5a1c4d9so904281eec.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:23:29 -0700 (PDT)
+ id 1x9Mus-0007av-Bb
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:21:45 -0400
+Received: by mail-dl2-x10.google.com with SMTP id
+ a92af1059eb24-142dd04edb5so1438860c88.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169808; x=1790774608; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790169701; x=1790774501; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=F+o5KblLu0GyQgfzLlM1cTvsfq0uChm3NLiJCLhEk08=;
- b=OkZ1MQ1H1VBlEo/MpillvCXkCU/BkGeO53qD8Mjtts8LioeEUEzFNfs01y3Nts1HVH
- CaIAvjAvvuIeLqRgni5tf5/uq/15z9E4gjVBE/ObAu38htGUxECpIMbKncgaMNBMokgg
- tMCuhvGzA2yv6bch49uTfco/loO4UbWKeb/6dRh0qKtEYCvcX+GsaRcfgErW/G/AMOMQ
- w84z0QbHbRuEN2IeHWdQaYYZVuQrBY3Wnjp6oUT3JniTYNfBnLvu7SxelBP3CRm2cJPt
- 864IlwmE/PHJEg6O/EZ1tKyIgpPcaaUsRnVukdU1/8793EbbPtFHBRZujxxBCwgz1DNJ
- K3Xw==
+ bh=BQcT2TCunpJ4XJOGDsLRORw+wafc2yMdlkK9/vuTXoQ=;
+ b=OdDA58sqjAYv0kiOVtJ9vfzQQws+8/0BbFX/eNIxkhMNnhjkjA77LFqLFMDYzNzb3/
+ dsJ2DtR+kRz8ynfItiX7J30zL9JHVOa0u0Uhsy6vVrg77Vfk4H/YK/EVYBjLn84Ki/8R
+ e2AEiEyyVUHSdrv4qR8IO/fpYIoPavOmne104tmzsNSYMk34LJy04WbTWelXdznNWNiA
+ CscdzKH/ok9DEYDyQCSMeuS5uMFeyiZzxsnlV1pK7SJbaxz8b2HeLtaTfTCv22QfU/5N
+ vm7Av3CV2uz9XWVeiRRxg2RmzYjhRo8lED5vJo962dzQVTS2B/IcywiqjpBNiY+HP+b7
+ oW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169808; x=1790774608;
+ d=1e100.net; s=20260707; t=1790169701; x=1790774501;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=F+o5KblLu0GyQgfzLlM1cTvsfq0uChm3NLiJCLhEk08=;
- b=A+KsbWYNqScLNdR/qSyOeOAmpG3kCaCSY/Swqeggmu9iE2Kf6xonzt6kz6zg7ufqpb
- oEPII4JCwvyrAUdS0Fgl27u9hvKoMw+Yb/qNFYN//ljjl6/qMQZn6l2ATXGuIofSkurg
- 6YhWu0mmBWfgIAP/3zWMXV2UWIAfuZIT0/ZzKFQybniFS7LG8FlJL2hpbittrZ2sKyt7
- ukS+c7JNckw6+B1FGC9Dz6jjVAwFhLi7HJ83J0aVm7awDhEaPuF91/2U9x4I22qj+HYy
- D0bif7msiNuYv26M7OfhJtVeg7J4AApLp9u7IUdeQ3dVydWyd9w55fxKGjyJI+RHgdSo
- FkNA==
-X-Gm-Message-State: AFuF++mXu+ND35krJj48GyhhG2gAzOB6fUrwqeAIzN9fhkKoW+jeh/Ay
- gdIhTdVFs58N/8J09UqxUS8wRPsfFHI7ikvuL9ARYVoBVFGdWWX7cfdcWOlARGXnJHU=
-X-Gm-Gg: AYBFou2yL7ufKJ3R0rtvpydPtnUUOHHq6+jqnlJ8OdsVvACVlIna+yDxOoa91yhLz7t
- f6XyRNoJQCEbrbV1Uxt65to3cJQW/9wKnaf9wXJlyFBz8I1hxecnlx/NDoSbygsTGyHOOFhMd8j
- s1wmeqh34A6vJcwEXcuxsCynWHhzxFk0nJvscnTBzIvUQ1FimaW/8G5lBEEut4wb2lc9A8PvVxn
- Of8dpqyeLjW3kAipkYPTCKaGC/5Svm8Tq4O9OKCVYdetTbQ+cTxQnvtYAeZIPpy8VhmaYstzbkC
- 4ZoCT5Qjb42Ej1WoVe53LA7zaNYvtgMm0MLVMTyE6cJtPwcNMOLDrfzUBWymwQ+5jmZqS8Ui9Xw
- ZmvzyF/jNoRgnyCY9gF3ne210wn2UgP11HEbOK4SHwTc2eaVBU24E3AYbTiuqwKdZOD12xJVH3Q
- 3XbHimxlncCP3h/3AATUk2cBLifXkVOI0ZRSfsrcTK1eeynfzpeOxyB7MeBvoHbzTuMAmcY2VWb
- w3ZO8k2OQuwZVffRfOvryItdHMvQDchOCa4/A38ZQ==
-X-Received: by 2002:a05:7300:7b27:b0:33b:eec0:eefc with SMTP id
- 5a478bee46e88-33e8e88ea29mr2331973eec.40.1790169802984; 
- Wed, 23 Sep 2026 06:23:22 -0700 (PDT)
+ bh=BQcT2TCunpJ4XJOGDsLRORw+wafc2yMdlkK9/vuTXoQ=;
+ b=uoFmu11PE7o3hDyKSc2dEid6fZZ0WzxA7FajR5dUlzCvOH+l6WRrCI20MwHzTfWfuM
+ JHhlarniYGfsA3LngSIV+0EZpBCrxwj+Jvbbh783kjjx11xECrfRZhET0xezHthDDBHr
+ IQehdfbOAUjtMqmHb22u6TGxLBX8ul/ElipbuILXb5fAX+DzwCk+nK6jFCLMCmzdpWZQ
+ M3Q/8WQ5oD/GHZSpqklLkqMTyWP6yethbapk2NehyfGuD19N+Ein8DqdwMITKOiPln6c
+ QIf0sOZvD+S0vHTy2vDefaZd1ne+mVvkaqjFNnCGDEDbXcQv38+v4Q0Q5kV5HPMWc9nU
+ nLkw==
+X-Gm-Message-State: AFuF++n+lSFd7NCrXiUZ5jINSM1VwD1Jtq3sPaCD0UzRT2C8dzFhd+FX
+ cPWyw6a381KCeO/UWOfijM5sHOi8zqKzTAReIRPHJw/q804bMZBLxl72Pv8MzP7O1T4=
+X-Gm-Gg: AYBFou0fU2vfVeUiVfoV0iJ8ED0oWeFL+ChaK/V2aWKols7IlVx9qeiUPKomKvU2AR0
+ 7VBHrIm6f6UFxA+kXBnR9XrDFNCJXCwu2GsEDA2rnPXyZFxEySh/3GbgTsX+U+jZQ6Kn6zteS5B
+ /G8joo2jmDe13qN+RVqIcD9sMbcLFYzAQBoX3f1hmrrBiH8sL9N5JzVNSG5kYn/5Q6Jst6gfSqV
+ beiZeh8GlmQ74cMn//wDJEYYjlNulqoB08h+J/FDQm5F4eAQFc5bp/+8j0ZvUDCLTUoO6VsnHjZ
+ jNUtkyIRvX6sIBa+9WfXfvGLWwwoy4SSX5W9sc8hWaFwIUWYuCURZyvcuRWV2Z0GpuWUGp5kEuI
+ EHi7am2A2VELidsRJ8fw5pHm0G+LfDd+VLSdThmu53oUaftpVn2X7wUxDXndQ0g4HmkLZydtDNF
+ iu93AWgh1toSSlBAVOYdFVfQT0qVxarCj+hwhbSahI2reP7sEI49EvAYDblsIYwpDUWUu0N6slV
+ ZjBN5sNaHyPCIIfwksOcyg5pNA8aGLhv1flqVVTsVA=
+X-Received: by 2002:a05:701b:4551:10b0:144:fd7c:84f4 with SMTP id
+ a92af1059eb24-144fd7c8641mr1564469c88.5.1790169700288; 
+ Wed, 23 Sep 2026 06:21:40 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.23.15
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.21.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:23:22 -0700 (PDT)
+ Wed, 23 Sep 2026 06:21:39 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,16 +95,16 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 040/114] target/riscv: replace leftover TARGET_LONG_BITS
-Date: Wed, 23 Sep 2026 21:15:14 +0800
-Message-ID: <20260923131635.1894-41-luoyonggang@gmail.com>
+Subject: [PATCH v3 028/114] hw/intc: use kvm_enabled() in APLIC AIA helpers
+Date: Wed, 23 Sep 2026 21:15:02 +0800
+Message-ID: <20260923131635.1894-29-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:38::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,68 +126,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Use target_long_bits() in bitmanip clmul/clmulr/xperm loops and in
-  the m128 signed-div overflow check.
-- Compare xperm element positions to target_long_bits() instead of
-  sizeof(target_ulong), which is always 8 in common-system.
-- Leave translate.c and insn_trans TARGET_LONG_BITS for riscv-tcg-tl.
-
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+- Replace CONFIG_KVM ifdefs in riscv_use_emulated_aplic and
+  riscv_aplic_set_kvm_msicfgaddr with kvm_enabled().
 ---
- target/riscv/tcg/bitmanip_helper.c | 10 +++++-----
- target/riscv/tcg/m128_helper.c     |  2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ hw/intc/riscv_aplic.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/tcg/bitmanip_helper.c b/target/riscv/tcg/bitmanip_helper.c
-index 5af3efe194d..db226146054 100644
---- a/target/riscv/tcg/bitmanip_helper.c
-+++ b/target/riscv/tcg/bitmanip_helper.c
-@@ -30,7 +30,7 @@ target_ulong HELPER(clmul)(target_ulong rs1, target_ulong rs2)
- {
-     target_ulong result = 0;
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index d8e25bfda14..03a0852b8b8 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -167,7 +167,10 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimode)
  
--    for (int i = 0; i < TARGET_LONG_BITS; i++) {
-+    for (int i = 0; i < target_long_bits(); i++) {
-         if ((rs2 >> i) & 1) {
-             result ^= (rs1 << i);
-         }
-@@ -43,9 +43,9 @@ target_ulong HELPER(clmulr)(target_ulong rs1, target_ulong rs2)
+ bool riscv_use_emulated_aplic(bool msimode)
  {
-     target_ulong result = 0;
- 
--    for (int i = 0; i < TARGET_LONG_BITS; i++) {
-+    for (int i = 0; i < target_long_bits(); i++) {
-         if ((rs2 >> i) & 1) {
--            result ^= (rs1 >> (TARGET_LONG_BITS - i - 1));
-+            result ^= (rs1 >> (target_long_bits() - i - 1));
-         }
+-#ifdef CONFIG_KVM
++    if (!kvm_enabled()) {
++        return true;
++    }
++
+     if (tcg_enabled()) {
+         return true;
+     }
+@@ -177,21 +180,20 @@ bool riscv_use_emulated_aplic(bool msimode)
      }
  
-@@ -98,9 +98,9 @@ static inline target_ulong do_xperm(target_ulong rs1, target_ulong rs2,
-     target_ulong mask = (1LL << sz) - 1;
-     target_ulong pos;
+     return kvm_kernel_irqchip_split();
+-#else
+-    return true;
+-#endif
+ }
  
--    for (int i = 0; i < TARGET_LONG_BITS; i += sz) {
-+    for (int i = 0; i < target_long_bits(); i += sz) {
-         pos = ((rs2 >> i) & mask) << sz_log2;
--        if (pos < sizeof(target_ulong) * 8) {
-+        if (pos < target_long_bits()) {
-             r |= ((rs1 >> pos) & mask) << i;
-         }
+ void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
+ {
+-#ifdef CONFIG_KVM
++    if (!kvm_enabled()) {
++        return;
++    }
++
+     if (riscv_use_emulated_aplic(aplic->msimode)) {
+         addr >>= APLIC_xMSICFGADDR_PPN_SHIFT;
+         aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
+         aplic->kvm_msicfgaddrH = extract64(addr, 32, 32) &
+                                  APLIC_MMSICFGADDRH_VALID_MASK;
      }
-diff --git a/target/riscv/tcg/m128_helper.c b/target/riscv/tcg/m128_helper.c
-index 7d9b83b1b2c..e59a1ffd7a7 100644
---- a/target/riscv/tcg/m128_helper.c
-+++ b/target/riscv/tcg/m128_helper.c
-@@ -71,7 +71,7 @@ target_ulong HELPER(divs_i128)(CPURISCVState *env,
-     if (vl == 0 && vh == 0) { /* Div by zero check */
-         ql = ~0x0;
-         qh = ~0x0;
--    } else if (uh == (1ULL << (TARGET_LONG_BITS - 1)) && ul == 0 &&
-+    } else if (uh == (1ULL << (target_long_bits() - 1)) && ul == 0 &&
-                vh == ~0x0 && vl == ~0x0) {
-         /* Signed div overflow check (-2**127 / -1) */
-         ql = ul;
+-#endif
+ }
+ 
+ /*
 -- 
 2.52.0.windows.1
 
