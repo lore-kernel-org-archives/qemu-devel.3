@@ -4,112 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7A9C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A14C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 21:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Utg-000371-Tx; Wed, 23 Sep 2026 17:53:02 -0400
+	id 1x9Uxs-0004GU-7W; Wed, 23 Sep 2026 17:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9Uta-00036B-1U; Wed, 23 Sep 2026 17:52:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9UtY-0004Qq-5P; Wed, 23 Sep 2026 17:52:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NK5iZ2158282; Wed, 23 Sep 2026 21:52:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SiaCQa
- VHjMcdCU4YpLxFtP5mIleVtvc/3FbOjCQTIvQ=; b=e6TWU8AkJAU2gglXWd9L99
- VmYjgaVjyaA4utejThZC/ioTdBo7e/Nu0pC6OUeI9Hh+MHpBnYvSCzokOsiDsJTi
- XcaK7e+IPoTe781kQV/K3SsO70gENPStZSlsj1EnOzV9D8LYbL4F0NGB8aHEKxY+
- BAKQdngC8r0qb85+/U7pqAbOheJBF0wWbZWwN4yQh3g2p2wfNSYaggIfJiG6y40n
- MlAKDP3b0aBXjXCn27g/svkw3D6oOwHt12QqKk7WGOkT9P3BV59RDj3I4poTjq2O
- Mvy6ZZs81KpdfSD1JmkdabbTwySdDoX4dnI02jsTqeMtCRlPhLqZ6YtP92IsWmHA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ntk1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 21:52:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NJmjZo901734; Wed, 23 Sep 2026 21:52:46 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jtyj6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 23 Sep 2026 21:52:46 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68NLqiLP28181198
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 23 Sep 2026 21:52:44 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5DB0958065;
- Wed, 23 Sep 2026 21:52:44 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB00B58052;
- Wed, 23 Sep 2026 21:52:43 +0000 (GMT)
-Received: from [9.61.7.131] (unknown [9.61.7.131])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 23 Sep 2026 21:52:43 +0000 (GMT)
-Message-ID: <d8a0b367-42cd-4887-a2ae-cf7f389e7af7@linux.ibm.com>
-Date: Wed, 23 Sep 2026 17:52:43 -0400
+ (Exim 4.90_1)
+ (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
+ id 1x9Um1-0001a8-20; Wed, 23 Sep 2026 17:45:06 -0400
+Received: from [2a01:7d0:d20e:1100:ed13:e0b7:e950:9bd7]
+ (helo=Manueles-MacBook-Pro.local)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <manueleconti@Manueles-MacBook-Pro.local>)
+ id 1x9Uly-0003bT-8I; Wed, 23 Sep 2026 17:45:04 -0400
+Received: by Manueles-MacBook-Pro.local (Postfix, from userid 501)
+ id BDC00998E85B; Wed, 23 Sep 2026 23:44:58 +0200 (CEST)
+From: Manuele Conti <manuele.conti@archimede-energia.com>
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Manuele Conti <manuele.conti@archimede-energia.com>
+Subject: [PATCH 2/2] hw/misc/stm32_rcc: mirror oscillator ready and system
+ clock status
+Date: Wed, 23 Sep 2026 23:44:53 +0200
+Message-ID: <20260923214453.45335-3-manuele.conti@archimede-energia.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20260923214453.45335-1-manuele.conti@archimede-energia.com>
+References: <20260923214453.45335-1-manuele.conti@archimede-energia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x: Extend comment about PV cpu load state
-To: Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, philmd@oss.qualcomm.com, borntraeger@de.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, david@kernel.org,
- iii@linux.ibm.com, richard.henderson@linaro.org
-References: <20260923082146.62803-1-frankja@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260923082146.62803-1-frankja@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: LtKOJW9joWidVxNOcy5CgC0KqOL3OL3M
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab44a2f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=lRyusxPUYzjeSrJwpx0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA4NiBTYWx0ZWRfX1YC0TcFqBM2r
- yGKYDcg04ss2HSHbWa7KE0BH42YUu3DyXneNDOR/sMYy/HVFiWT/s35Z9hyeB6ok4rI7zUbBxyy
- zktN7WmYqBi/RFQGNknq4c0k/bh/+AlTdFDackLgwOKN0h1+vFk80v57G0FkSC1QsXAvoqvDNr8
- Mr1Zdq7Fw9Z9KUdYkNRDRPHFdaYO3lrWsmhrV+xsW5oyVpe7bwS44i0O7qylX64F9bqen7Gyz95
- iEwzBAL6U8exYysd2Rf1e3F9Ntf1Qe/CszA6ZvXp666ZlSABayIBswn9Pj2H31mUq+48Pni09nv
- 1Rn0lfaOLD7QfN9IuuBniYmtmJzuZxG3B6yONDo9c5wVhX0Ydr0ELeHhAR9EvUJU76vp8KyVd8K
- W00OJguItEDDQyAsC+F+AdEUAviW7fMTFstddRfXVhPafTZd9dl1Yrpa1VztCUuj+pQFadgDaa/
- WEXHWiLn072jVhmgjNA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA4NiBTYWx0ZWRfXwhNunNjNsKny
- Yoq+zYSjnm+9a7X+aBqgs1kDt38prISpTq648lTwkxEAF8ui5fb2Y/IR2ozchVwfLwtQbRJr3/d
- GEWpDUob6HJtTGL7NsMGuCxOj79CuwE=
-X-Proofpoint-GUID: LtKOJW9joWidVxNOcy5CgC0KqOL3OL3M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-23_07,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230086
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for
+ 2a01:7d0:d20e:1100:ed13:e0b7:e950:9bd7 (failed)
+Received-SPF: none client-ip=2a01:7d0:d20e:1100:ed13:e0b7:e950:9bd7;
+ envelope-from=manueleconti@Manueles-MacBook-Pro.local;
+ helo=Manueles-MacBook-Pro.local
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, NO_DNS_FOR_FROM=0.001, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 23 Sep 2026 17:56:36 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,18 +65,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 4:20 AM, Janosch Frank wrote:
-> When implementing PV in KVM we chose to add the cpu load state to the
-> mp state solely to have a way to keep the UV happy. The UV requires us
-> to set that state before running the boot cpu since entering that
-> state sets the initial PSW.
-> 
-> Since entering that state in KVM only sets off the UV call which
-> causes the initial PSW load and does not set the KVM tracking to
-> operating, we need a second set mp state to reach operating state.
-> 
-> Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+RM0090 7.3.1/7.3.3: HSERDY follows HSEON, PLLRDY follows PLLON and
+SWS follows SW. Upstream stored raw values, so firmware polling for
+ready or checking SWS never saw the expected state.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Mirror enable bits into ready bits on CR writes and SW into SWS on
+CFGR writes. Clock switching is instantaneous in QEMU. No oscillator
+startup or PLL lock delay is modelled.
+
+Add qtest writing HSEON/PLLON/SW and checking HSERDY/PLLRDY/SWS,
+including clearing again on HSEOFF/PLLOFF.
+
+Signed-off-by: Manuele Conti <manuele.conti@archimede-energia.com>
+---
+ hw/misc/stm32_rcc.c              | 18 ++++++++++
+ tests/qtest/meson.build          |  3 +-
+ tests/qtest/stm32f405-rcc-test.c | 57 ++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/stm32f405-rcc-test.c
+
+diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+index 5cfb39e560..ba64a87bdd 100644
+--- a/hw/misc/stm32_rcc.c
++++ b/hw/misc/stm32_rcc.c
+@@ -90,6 +90,24 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
+     }
+ 
+     switch (addr) {
++    case STM32_RCC_CR:
++        /*
++         * Oscillators become ready immediately in QEMU.
++         * Mirror enable bits into ready bits: HSEON->HSERDY,
++         * PLLON->PLLRDY. See RM0090 7.3.1.
++         */
++        value = deposit32(value, 17, 1, extract32(value, 16, 1));
++        value = deposit32(value, 25, 1, extract32(value, 24, 1));
++        s->regs[addr >> 2] = value;
++        return;
++    case STM32_RCC_CFGR:
++        /*
++         * System clock switch is instantaneous in QEMU.
++         * Mirror SW[1:0] into SWS[3:2]. See RM0090 7.3.3.
++         */
++        value = deposit32(value, 2, 2, extract32(value, 0, 2));
++        s->regs[addr >> 2] = value;
++        return;
+     case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+     case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+         prev_value = s->regs[addr / 4];
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 51dbe63411..c26e510b0b 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -250,7 +250,8 @@ qtests_stm32l4x5 = \
+    'stm32l4x5_usart-test']
+ 
+ qtests_stm32f405 = \
+-  ['stm32f405-timer-test']
++  ['stm32f405-timer-test',
++   'stm32f405-rcc-test']
+ 
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+diff --git a/tests/qtest/stm32f405-rcc-test.c b/tests/qtest/stm32f405-rcc-test.c
+new file mode 100644
+index 0000000000..75c0291ed1
+--- /dev/null
++++ b/tests/qtest/stm32f405-rcc-test.c
+@@ -0,0 +1,57 @@
++/*
++ * QTest for STM32 RCC clock-ready mirroring (STM32F405 SoC).
++ *
++ * RM0090 7.3.1/7.3.3: HSEON->HSERDY, PLLON->PLLRDY, SW->SWS.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define RCC_BASE 0x40023800ULL
++#define RCC_CR   0x00
++#define RCC_CFGR 0x08
++
++#define RCC_CR_HSEON  (1U << 16)
++#define RCC_CR_HSERDY (1U << 17)
++#define RCC_CR_PLLON  (1U << 24)
++#define RCC_CR_PLLRDY (1U << 25)
++
++static void test_ready(void)
++{
++    QTestState *qts = qtest_init("-M netduinoplus2");
++    uint32_t val;
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_HSEON);
++    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_HSEON);
++    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_HSERDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val | RCC_CR_PLLON);
++    g_assert_true(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
++
++    val = qtest_readl(qts, RCC_BASE + RCC_CR);
++    qtest_writel(qts, RCC_BASE + RCC_CR, val & ~RCC_CR_PLLON);
++    g_assert_false(qtest_readl(qts, RCC_BASE + RCC_CR) & RCC_CR_PLLRDY);
++
++    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x2);
++    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
++                     ==, 0x2);
++    qtest_writel(qts, RCC_BASE + RCC_CFGR, 0x1);
++    g_assert_cmpuint((qtest_readl(qts, RCC_BASE + RCC_CFGR) >> 2) & 0x3,
++                     ==, 0x1);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("stm32f405/rcc/ready", test_ready);
++    return g_test_run();
++}
+-- 
+2.41.0
 
 
