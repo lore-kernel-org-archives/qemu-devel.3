@@ -4,149 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44329C98304
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD51C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Ndx-0006Yr-Ao; Wed, 23 Sep 2026 10:08:17 -0400
+	id 1x9Nkz-0007gF-FB; Wed, 23 Sep 2026 10:15:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9Ndv-0006YU-Fs
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:08:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1x9Nkw-0007eV-Nf; Wed, 23 Sep 2026 10:15:30 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9Ndt-00054S-TT
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 10:08:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790172491;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yfcqSFnXiciCOo4CRLRZgOmIJYVaYNwuxhVDpQOB0Ew=;
- b=NUhZvIKw3GwCH2dLQxs+2uMDGd8JJogGUmqGEp1XuCTPgPiwebvbCB0Hk0TjIYVDcX6i2U
- 0y2Z9q4nG8ztQNmcbb+C9c44EPFz6tJEzjcYJ/Ze+R1dFltEm0zkzo9wdb6emYE3fSqyQ+
- 62KK+a/QZiHNw75TJCYcyUvvl0rnf8w=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-5Zd5fJuXOraySKBfUyia6w-1; Wed, 23 Sep 2026 10:08:09 -0400
-X-MC-Unique: 5Zd5fJuXOraySKBfUyia6w-1
-X-Mimecast-MFC-AGG-ID: 5Zd5fJuXOraySKBfUyia6w_1790172488
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c25edb54d22so110634566b.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 07:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790172488; x=1790777288; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=yfcqSFnXiciCOo4CRLRZgOmIJYVaYNwuxhVDpQOB0Ew=;
- b=jmdy4zleoonScVmRT+ZLzqlD+iuDIOUHJ4hj7Zlk5xP5MKi/FGhX1txW5nfJbjE4NE
- xZ/Ulmdo18g/C+55WSU53upQ3YrUNsa1cVxf6F2n2JIyWtL/FdgYmFpGwFfXHfsS4Jcq
- NjQNXahnzfmYjYUKLMLGTXjcsX0n0icjFRZgHZAhrvzHnm0QRF/moj5uqiCnOVuQqoNw
- sis+IpkMk1/trq/Vks8HVe8JzIgG742DiiID8AHIJa1XFeH3Nk+WBPmXdvdXfZzD5EVg
- VcHt++NDEpn8BzmK9NMP68DB0758fKHX3VnYoM+b1uAvXx9vFAQt+MB5dThmN1X+daCO
- CDaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790172488; x=1790777288;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yfcqSFnXiciCOo4CRLRZgOmIJYVaYNwuxhVDpQOB0Ew=;
- b=AG79W48wn+zXZiBOB6oUby72lRbpBx/3H6x94Vpi38luM8u4tx+iJ5AiUpGuX4X+9h
- oFj822E4zuXxPw4OGLXgPMcyQR8E73X2g23SeObntH2dC/HCF+5Vz4eryn8E4hEJ9mQ+
- MeL9a2CczEqM/t+pQ5w/+MLXzEFJ7DbnkUE6t6WqnoU8cPe0425C27upyx6wm5aU26ty
- 98fhbhHWrtHUPV4sPZC/gDuyP3YRcLzCI94mg7oawO/XcCx3Wx2GxwvpShLRJad1KDTP
- Y1zGuUPyWeTl5KRE3xEN26preNk+78EeNMi+Y4TbsUu8bZ904YvTZfUyUX6ZzNM78vMU
- RrPA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwZY7HOBPg5ek6N8E6qygwDfvQOabQn3tWOPo0JiwCcX4VRDtcI6A7cqB3qI/yES2yFKOOyJWz3JEHT@nongnu.org
-X-Gm-Message-State: AFuF++kWlbIlaJGRv3f9vZpLspd6ZsZiapsEIonqK+8MKNyqhr+3X9Hl
- VYjvzoLRcTJ9JbI/bCLm8JinNQIknPaX0ZCkuy2YCCxRaiyanSIXbNY0q1ClW1oP84TdtsJ1JdM
- vlYeEcucHAEg5IVw3U4QBU4IE2nA0cY9S2krGMbW49Slc9TtK3EhOZwqp
-X-Gm-Gg: AYBFou0gHw+B7GqcDcup+mRdiRDOE1YD2MKtuYyG9C0YRVZ8lbzYJPVkpYZCmFIuhQA
- IexqUkyrMDumz4EHXuVjI9ejtoAy0OcRxgASfOVNCs7xsC5v1fLZI64ny34ihA4/jH0ctL603sn
- 5bfKv/H75hNQqWsxiK68eiNPiQQtPzNPXeVDvMb+12U8FFBnPRyxuCwUbW+rg1Jv4INP3ILrETX
- 1sTp/Ih8dxnL3E2fl6OFHriTvEAzlg2+7c33SfQLRpX8eea+PzyakhAo7Ocf2xzFGQWikKVC82/
- r3uhPmCFYjVFMHQo3BD0opRGOHNQS1NQQf1VpILM0hcgSBUSydrCHij82I9IR2rtrBgiy6Tw
-X-Received: by 2002:a05:6402:23c7:b0:6aa:9fd4:987a with SMTP id
- 4fb4d7f45d1cf-6aab3b985dcmr2275809a12.20.1790172488439; 
- Wed, 23 Sep 2026 07:08:08 -0700 (PDT)
-X-Received: by 2002:a05:6402:23c7:b0:6aa:9fd4:987a with SMTP id
- 4fb4d7f45d1cf-6aab3b985dcmr2275792a12.20.1790172488026; 
- Wed, 23 Sep 2026 07:08:08 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.141])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aab3896ba1sm1835002a12.19.2026.09.23.07.08.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 07:08:06 -0700 (PDT)
-Message-ID: <965837a0-0ddd-4796-8eca-e7f18d808471@redhat.com>
-Date: Wed, 23 Sep 2026 16:08:06 +0200
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1x9Nku-0005v1-ME; Wed, 23 Sep 2026 10:15:30 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68N8ZNff2908705; Wed, 23 Sep 2026 14:15:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=dztpV4sHbP6jXWmT6
+ PTrhJ71EXX91O3F0lfOYDQfLz8=; b=WV3nmUHcvcC67jeWxRQkp/hXeVdDDxmDV
+ bPK41GKltf+QnfUUOLAk7Q/HXFcMGYXfc9yvanErQIozDH77l9YqN1JrBOyeCA7J
+ 3VRTjgkBihzFD9pp74OoJe6FcsuBAac9qLX0/g7bqUo9nkh5WU0/Z/qYPHAoglq5
+ ObEUAlaWjFFPPt04m8YL8SaXFc9V0IMBJRQnxygg0zvYkn9fK1nGK4WttwnTVzug
+ NrRfvpW9n+W99F7xKZXbLyZOwPF4kA9Y6OSPRF/IP4vUTNlJzZRFkTyhoLtqMROL
+ d2cir+fIqPkAq4WXyNw41RtKklzmW4X4js30QZkN+bT1I2JRBFIlg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2kts2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 23 Sep 2026 14:15:24 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NCFq4A2891629; Wed, 23 Sep 2026 14:15:24 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bkhawy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Sep 2026 14:15:24 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68NEFNRB11993616
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Sep 2026 14:15:23 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECF7A5805C;
+ Wed, 23 Sep 2026 14:15:22 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 48D7B58058;
+ Wed, 23 Sep 2026 14:15:22 +0000 (GMT)
+Received: from WIN-DU0DFC9G5VV.atx-us.ibm.com (unknown [9.16.60.171])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 23 Sep 2026 14:15:22 +0000 (GMT)
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: mjrosato@linux.ibm.com
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
+Subject: [PATCH v10 02/16] s390x/pci: Create function to contain translation
+ status check
+Date: Wed, 23 Sep 2026 09:15:04 -0500
+Message-Id: <20260923141518.960364-3-kshk@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260923141518.960364-1-kshk@linux.ibm.com>
+References: <20260923141518.960364-1-kshk@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [qemu-web PATCH v4] blog post: some notes on the bugpocalypse
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: yodel.eldar@yodel.dev, pbonzini@redhat.com
-References: <20260923132619.2835622-1-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260923132619.2835622-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: MwcGE19ZsAXCfxPmFF7ALgff5Jvro9u5
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab3defc cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=aCv-BzsnQx_gTHabB28A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfXw7iW6bELodXV
+ Nghn3LqbIght+KIvZjtUCXYerMDI1ybtbvMZpcACQHqowfsN/5YRrsWNa0gqda8n1TS5eIqOfUI
+ XqkfuWarFM4kuX32RaAu5sGu+ojFevuGch68xOiL0F7pBlaAqv3jA8lNDukWb53bpL/NasvtBA3
+ ko0jgr8aaJ1Dnm14MPrPSSpzsXwcx4khraMp7Got+vvaLqM8WAEzoyaM2uqve9V/OblRPrObw3t
+ sBZkXmx1/+yj5bRbGposMfp+eSLdngPwAwAtG+PvxJlucNHp0OnIgEAsBb8XKq1XUtPEfb5vqjH
+ 0RXdQloInsBoQzrzeLWUCsKszYfzkrnDu5i9TNRLc+QbtdY5trEv9k6XNGQuCp53Rvxx2VEky4V
+ DIAPokeek8T/7pkqXXIcJ1lWR9rogAcUgXCgrtA0EegN2XNnLmAXoIOdDPqTI5YRa6kbMUfNjfe
+ 1Zx+GbwUKB/f3QnhTVw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfXznAE9PRJzsi0
+ 3KZKqrqxeybnYeh+AN5KyIRKfd2bS6F3TbJsK2XziBdTDI5DDhTSIdbOXnY6hsDCid6ki/igtnc
+ XK1NMVc7fVnxAS/GMRtjrPiGJ2gCf58=
+X-Proofpoint-GUID: MwcGE19ZsAXCfxPmFF7ALgff5Jvro9u5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230056
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,18 +122,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/09/2026 15.26, Alex Bennée wrote:
-> As we've been going through the growing pains of AI bug bots I thought
-> it might be worth addressing in a blog post. I'm mainly just trying to
-> outline the challenges and maybe dissuade people from spam bombing the
-> bug tracker with lots of low value bugs in the more dusty corners of
-> the codebase.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Thanks, article has been pushed to the blog:
+Make it more clear what the bit means, and the new function will be called
+from yet another place in the future.
 
-  https://www.qemu.org/2026/09/23/bugs/
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+---
+ hw/s390x/s390-pci-inst.c        | 7 ++++++-
+ include/hw/s390x/s390-pci-bus.h | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-  Thomas
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index 37ca70dcf1..00a847f493 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -1021,6 +1021,11 @@ int pci_dereg_irqs(S390PCIBusDevice *pbdev)
+     return 0;
+ }
+ 
++bool s390_pci_is_translation_enabled(uint64_t g_iota)
++{
++    return ((g_iota >> 11) & 0x1) != 0; /* "T" bit */
++}
++
+ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+                     uintptr_t ra)
+ {
+@@ -1029,7 +1034,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+     uint64_t pal = ldq_be_p(&fib.pal);
+     uint64_t g_iota = ldq_be_p(&fib.iota);
+     uint8_t dt = (g_iota >> 2) & 0x7;
+-    uint8_t t = (g_iota >> 11) & 0x1;
++    bool t = s390_pci_is_translation_enabled(g_iota);
+ 
+     pba &= ~0xfff;
+     pal |= 0xfff;
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 9228523ce8..eb15cb8b2d 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -390,6 +390,7 @@ int pci_chsc_sei_nt2_get_event(void *res);
+ int pci_chsc_sei_nt2_have_event(void);
+ void s390_pci_sclp_configure(SCCB *sccb);
+ void s390_pci_sclp_deconfigure(SCCB *sccb);
++bool s390_pci_is_translation_enabled(uint64_t g_iota);
+ void s390_pci_iommu_enable(S390PCIIOMMU *iommu);
+ void s390_pci_iommu_direct_map_enable(S390PCIIOMMU *iommu);
+ void s390_pci_iommu_disable(S390PCIIOMMU *iommu);
+-- 
+2.34.1
 
 
