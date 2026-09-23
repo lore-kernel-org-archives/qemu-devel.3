@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D9FC9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412B9C9830B
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Mxj-0000Of-UU; Wed, 23 Sep 2026 09:24:40 -0400
+	id 1x9Mxv-0001Xe-6j; Wed, 23 Sep 2026 09:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Msx-000110-Ur
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:19:45 -0400
-Received: from mail-dy2-x1a.google.com ([2607:f8b0:4864:36::1a])
+ id 1x9Mtr-000254-93
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:57 -0400
+Received: from mail-dl2-x15.google.com ([2607:f8b0:4864:38::15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1x9Mst-00075m-PR
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:19:43 -0400
-Received: by mail-dy2-x1a.google.com with SMTP id
- 5a478bee46e88-33bf5a1c4d9so899842eec.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:19:38 -0700 (PDT)
+ id 1x9Mtn-0007PZ-Eo
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:20:38 -0400
+Received: by mail-dl2-x15.google.com with SMTP id
+ a92af1059eb24-143859f5737so1241023c88.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 06:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790169578; x=1790774378; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XCBFYSF9Q0sqUJeK2F1X4ZcpeRW05ELn0GxDHlBCHlc=;
- b=IBM8417DKQrBTYbwPgGeSdTjNk2cOenj8tNLbw+vjTgdrQZSkqGef6e3IbjXIcHyBD
- X1GzuCiHnwBqTV9CR1t92PzPBmJzgJB8m7JFsF2rQKhTVqjdKY6Rw1q6gdMVnXUnHtGr
- G5Q8SLgAfz0axb1nIwzRP0WftkUJJYtSL1z2JkXmNS3yxLB4pWCWGtYu8P+8NipymnN7
- 4+prPsCSuL5mKZoNOXTeBBLGKtRJItMSQEWcb2EZZpnh5nFau4nJucXhroR46rMJUnX4
- MfLZKJhemzoedX9JKil+EEX6onhbW0e1KwjJmkaSB+LTCLR9fUdjHsCEah9pnjEFsICC
- te+Q==
+ d=gmail.com; s=20251104; t=1790169633; x=1790774433; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=yfDI7d67qBZp7NF6DoFzOD4nojzBBuGOhVVy0hvKz60=;
+ b=H1Dz4ZC7GT+5VJ3f4zZ/2YA2dVIXHRYrxdWMOO3lIUfr2Dn2w9jTKYBMB4n/nyMKgf
+ MqD+SKRjxHu7CsbW50yDRJYCwaIIDXgntd27Xc+nIS2pGg30v+CK/0kVvGOkGFRLSr1k
+ YSLhQIUZ0bf47uYi6RmDZqQxKBL+Sqoer6SCSSK+wob9HJAE70cyabd0RIvBYqGsyNwK
+ X43vH8U2R3aHWE2n7xucgg+hiIf6OYMnubG7xPxEwReH0TfgMMgPmhQaczn4NXUpxYZ5
+ kK6PMPcBGyNl8vdpqM0/3gDYo5EnhSvPJ74b0Nzs7AmxgJ3oG5iFUWt2VkOXAVOGP9+7
+ JSyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790169578; x=1790774378;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XCBFYSF9Q0sqUJeK2F1X4ZcpeRW05ELn0GxDHlBCHlc=;
- b=w+bx/yqEu7nAgL1df1RNt+wbwBQrG4R7jqWknyH0Kfg3SzaDTjm0Kr3QHCl+P7/cP7
- hFPNAyF1fXjSpMJi9/JH/NJ7DznmKYKW6zt6t7I56LYU6MbEzHuNZr/SWg2mVU2WW09V
- m66Xkp7LGwe0A2pS26YXqqbxUpJ67DiTgFDEgEaALphyJ/RpaDgwvv6d40sldyUvVwhe
- IgBnsrJv3jEAFFlTrCEnFQsWrZxOMBiufJ2uhbkxSO8vFGnfoBGNXVArr1M6WhF4VPTV
- TuOeajJrItSzircntFAERIgElGOCfuKTwZ90WeCPP1Byc2dEO3m+UkYv/1aQ40rMRZ6U
- Vg6g==
-X-Gm-Message-State: AFuF++m9XK93Ws7XU/2K6jFne0l6TsM1qKqMkMSver0ryldpPxXUxPhx
- NjPodGcsCoFbOSDTZ0z/EsT/jjsOxUFG/U1sR3cLN3pKrorZPH9zrW1xsDPiuxV4yHw=
-X-Gm-Gg: AYBFou2xksHoCa7hD+fgSrbViP3ElL7YoZ0Qn7a5s9gcg+5XG/kPcXhuzb0gzgkCHDZ
- lwBuGC8wSAGaHoCYZkB7gwhoHE/8SSLoMY8i1/E8B2Gbnv7gqoMXexhboFjnOPBDHkpswq+zsUn
- Mmcun68zxkNmxSPciJm3s0zbMmco4NWl7bkg+5ktM+cM+tEdoK6fmixKNPXyF76BFHCs6lbEY1O
- glrXSGVGvO3CVRd4Xf2iEmOObhhosfS8rP50AkIrV0kYATdWJNwguEJ7ZwFGls2iJKcRk3DzY7T
- tejQDmZL5Ll3xOXzM5w+2gwVqOaQeHIWGrOMEygbH8RjIEbGzYAlP+qqT8tqYfmOCmBSZpmDSCn
- /5yXSzJO0r4scap7mmNp8iTFoBWH/JKERoSvnV03ECZA+NvkCbKmCinJl8oHwtCLLBnu+fY4UTl
- IHZsWZEBrRHRXQQh2yglLYGHvS5Vg8+Mfj96DWoys1Oj1jS5ujvm9vKlXyIZKjtCgVl1+uyjUqi
- PNOvTZMFjR2fmJcjkCxsydF1zDoFQlBygHmkK05Xw==
-X-Received: by 2002:a05:693c:41c1:10b0:33e:84c3:a05b with SMTP id
- 5a478bee46e88-33e8ddc79bcmr2415216eec.30.1790169577497; 
- Wed, 23 Sep 2026 06:19:37 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790169633; x=1790774433;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=yfDI7d67qBZp7NF6DoFzOD4nojzBBuGOhVVy0hvKz60=;
+ b=aTxW02KSu8Ujzgjv0laBxYYMikuRVl+SWh1H7xI6JGSKhvR3SYmRdKjPh2ENFrJAtJ
+ PcO+K5qNdLqKDogcbDBD2nFqSU63spItni2jajNHEERiiRqcNBNXbEAmLj+7jTHRI/P4
+ 6R9WAaFHlVcUvyLfO88pzj6aAS1+MWhmmc7P+kTkT994alaDLjGp/hdg9QIvyHCIXV/r
+ Q99j+iQiofVKibAvKDfo/Bw+RkoPMq3hD+zrfJbB8Z7cMchnnE1VktyRx3ZrRsNUd0iq
+ 5P7V6KMkXy+jKaL+8RVIKR4OjytNTsp5ZluI1QD8Mv64Gn7nsgTvaIblTOcDZ06OMXyd
+ zA/w==
+X-Gm-Message-State: AFuF++k2luoHYPnTYHDZRmKriTqgGccrmy8NS7/LS3rfr/k9TZi/Tbd+
+ qPKfFPSl7Dkjc2egGpVhxGzqlkuggm8TKE2YQFps3KLpnnxF1scWALm9KXUeLRWY5K0=
+X-Gm-Gg: AYBFou0iJB+8oRvHv+9lvVjRPC5qjW6cYqn7ZXikaj6yQ1OnODU4N8nbDgz6dmaGDrZ
+ mHFT6eqsSJXYYB9fBx5CDhPJFyMzZA/phE53tCibcF3FkMIkOOrbCMbHu/HYPtOql1415SQOZty
+ B8JLtK8tjAkNbaX351b9RNllvrMHG0QeqJfki3JflGyd5dQ8XaaYT1TKJ4DhygYkV9zNXGaxnjw
+ Zv3ZTRjmYpcSsEjTwoNKaWPPu1ubEfBdaLhrghcE3EXwm4M7vuHEI7HKreN/iLHGekrcBFRM2O4
+ vkBEL1JNiYjLgQXH9Pl8b2bLK9+NoNlnfSz82yRwGPvgcPLkh9Csze1RivmzdVthnsh3G3lPw3w
+ G1ysNsRff0F5wKHx2OaUXI8bz7T6t42GYcu1UW7+yRcWbu2wDovL7dLnq7iti9bAu031N5ZqwIe
+ y7f6C9rn3Ypra5i+dk30W6dJJsNXheJ5QvB4C9724NPCS100RZPOKEv7pHFT/UIwYHZ9qb6OMZ9
+ 4tSg+rr928LdMM68M2t2dvoUh2JjFrInF/X2Bzi2Q==
+X-Received: by 2002:a05:7022:3f81:b0:144:c113:77bb with SMTP id
+ a92af1059eb24-144f9179520mr3177544c88.26.1790169632575; 
+ Wed, 23 Sep 2026 06:20:32 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.19.26
+ 5a478bee46e88-33e97236754sm5553695eec.29.2026.09.23.06.20.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 06:19:33 -0700 (PDT)
+ Wed, 23 Sep 2026 06:20:31 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
@@ -95,17 +96,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, xen-devel@lists.xenproject.org,
  Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Song Gao <17746591750@163.com>, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH v3 016/114] module: use static ModuleEntry and per-type DSO
- lists
-Date: Wed, 23 Sep 2026 21:14:50 +0800
-Message-ID: <20260923131635.1894-17-luoyonggang@gmail.com>
+Subject: [PATCH v3 021/114] hw/arm/virt: prefix ACPI helpers with arm_virt_
+Date: Wed, 23 Sep 2026 21:14:55 +0800
+Message-ID: <20260923131635.1894-22-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260923131635.1894-1-luoyonggang@gmail.com>
 References: <20260923131635.1894-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::1a;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x1a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:38::15;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x15.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,320 +128,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-register_module_init malloc'd a ModuleEntry and a late DSO ran
-from one shared list. Store each module_init in a static
-ModuleEntry and keep a dso_list per init type. Concatenate a late
-DSO onto the builtin list when that type is not done yet,
-otherwise run it immediately.
+- virt_acpi_setup and virt_is_acpi_enabled are generic names also used
+  by RISC-V and LoongArch virt. A combined binary cannot export two
+  functions with the same C symbol.
+- Rename the ARM helpers to arm_virt_acpi_setup and
+  arm_virt_is_acpi_enabled. Leave the trace event virt_acpi_setup
+  unchanged; it is a separate identifier.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/qemu/module.h   |  22 ++++++--
- include/qemu/queue.h    |  10 ++++
- rust/util/src/module.rs |  16 ++++--
- util/module.c           | 109 ++++++++++++++++++++++------------------
- 4 files changed, 98 insertions(+), 59 deletions(-)
+ hw/arm/virt-acpi-build.c |  4 ++--
+ hw/arm/virt.c            | 12 ++++++------
+ include/hw/arm/virt.h    |  4 ++--
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/qemu/module.h b/include/qemu/module.h
-index 9885ac9afb3..34e05c75348 100644
---- a/include/qemu/module.h
-+++ b/include/qemu/module.h
-@@ -14,6 +14,7 @@
- #ifndef QEMU_MODULE_H
- #define QEMU_MODULE_H
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index d368913e766..5737c3a8fa4 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -1559,7 +1559,7 @@ static const VMStateDescription vmstate_virt_acpi_build = {
+     },
+ };
  
-+#include "qemu/queue.h"
- 
- #define DSO_STAMP_FUN         glue(qemu_stamp, CONFIG_STAMP)
- #define DSO_STAMP_FUN_STR     stringify(DSO_STAMP_FUN)
-@@ -26,16 +27,22 @@ void DSO_STAMP_FUN(void);
- void qemu_module_dummy(void);
- 
- #define module_init(function, type)                                         \
-+static ModuleEntry glue(qemu_module_entry_, function) = {                   \
-+    .init = function,                                                       \
-+};                                                                          \
- static void __attribute__((constructor)) do_qemu_init_ ## function(void)    \
- {                                                                           \
--    register_dso_module_init(function, type);                               \
-+    register_dso_module_init(&glue(qemu_module_entry_, function), type);    \
- }
- #else
- /* This should not be used directly.  Use block_init etc. instead.  */
- #define module_init(function, type)                                         \
-+static ModuleEntry glue(qemu_module_entry_, function) = {                   \
-+    .init = function,                                                       \
-+};                                                                          \
- static void __attribute__((constructor)) do_qemu_init_ ## function(void)    \
- {                                                                           \
--    register_module_init(function, type);                                   \
-+    register_module_init(&glue(qemu_module_entry_, function), type);        \
- }
- #endif
- 
-@@ -51,6 +58,13 @@ typedef enum {
-     MODULE_INIT_MAX
- } module_init_type;
- 
-+typedef void (ModuleInitFn)(void);
-+
-+typedef struct ModuleEntry {
-+    ModuleInitFn *init;
-+    QTAILQ_ENTRY(ModuleEntry) node;
-+} ModuleEntry;
-+
- #define block_init(function) module_init(function, MODULE_INIT_BLOCK)
- #define opts_init(function) module_init(function, MODULE_INIT_OPTS)
- #define type_init(function) module_init(function, MODULE_INIT_QOM)
-@@ -64,8 +78,8 @@ typedef enum {
- #define block_module_load(lib, errp) module_load("block-", lib, errp)
- #define ui_module_load(lib, errp) module_load("ui-", lib, errp)
- 
--void register_module_init(void (*fn)(void), module_init_type type);
--void register_dso_module_init(void (*fn)(void), module_init_type type);
-+void register_module_init(ModuleEntry *e, module_init_type type);
-+void register_dso_module_init(ModuleEntry *e, module_init_type type);
- 
- void module_call_init(module_init_type type);
- 
-diff --git a/include/qemu/queue.h b/include/qemu/queue.h
-index e029e7bf669..06ebe8b1dfc 100644
---- a/include/qemu/queue.h
-+++ b/include/qemu/queue.h
-@@ -470,6 +470,16 @@ union {                                                                 \
-         (left)->field.tqe_circ.tql_prev->tql_next = (right)->field.tqe_next; \
-     } while (/*CONSTCOND*/0)
- 
-+#define QTAILQ_CONCAT(head1, head2, field) do {                         \
-+        if (!QTAILQ_EMPTY(head2)) {                                     \
-+            (head1)->tqh_circ.tql_prev->tql_next = (head2)->tqh_first;  \
-+            (head2)->tqh_first->field.tqe_circ.tql_prev =               \
-+                (head1)->tqh_circ.tql_prev;                             \
-+            (head1)->tqh_circ.tql_prev = (head2)->tqh_circ.tql_prev;    \
-+            QTAILQ_INIT(head2);                                         \
-+        }                                                               \
-+} while (/*CONSTCOND*/0)
-+
- #define QTAILQ_FOREACH(var, head, field)                                \
-         for ((var) = ((head)->tqh_first);                               \
-                 (var);                                                  \
-diff --git a/rust/util/src/module.rs b/rust/util/src/module.rs
-index 06c45fc142b..45d8b67d6dc 100644
---- a/rust/util/src/module.rs
-+++ b/rust/util/src/module.rs
-@@ -8,6 +8,16 @@
- macro_rules! module_init {
-     ($type:ident => $body:block) => {
-         const _: () = {
-+            extern "C" fn init_fn() {
-+                $body
-+            }
-+
-+            static mut ENTRY: $crate::bindings::ModuleEntry =
-+                $crate::bindings::ModuleEntry {
-+                    init: Some(init_fn),
-+                    ..unsafe { ::core::mem::zeroed() }
-+                };
-+
-             #[used]
-             #[cfg_attr(
-                 not(any(target_vendor = "apple", target_os = "windows")),
-@@ -16,14 +26,10 @@ macro_rules! module_init {
-             #[cfg_attr(target_vendor = "apple", link_section = "__DATA,__mod_init_func")]
-             #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU")]
-             pub static LOAD_MODULE: extern "C" fn() = {
--                extern "C" fn init_fn() {
--                    $body
--                }
--
-                 extern "C" fn ctor_fn() {
-                     unsafe {
-                         $crate::bindings::register_module_init(
--                            Some(init_fn),
-+                            ::core::ptr::addr_of_mut!(ENTRY),
-                             $crate::bindings::module_init_type::$type,
-                         );
-                     }
-diff --git a/util/module.c b/util/module.c
-index 8f8e6994f11..6c5980542f6 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -27,19 +27,26 @@
- #endif
- #include "trace.h"
- 
--typedef struct ModuleEntry
-+typedef QTAILQ_HEAD(, ModuleEntry) ModuleEntryList;
-+
-+typedef struct ModuleInit
+-void virt_acpi_setup(VirtMachineState *vms)
++void arm_virt_acpi_setup(VirtMachineState *vms)
  {
--    void (*init)(void);
--    QTAILQ_ENTRY(ModuleEntry) node;
-     module_init_type type;
--} ModuleEntry;
-+    ModuleEntryList list;
-+    ModuleEntryList dso_list;
-+    bool done;
-+} ModuleInit;
- 
--typedef QTAILQ_HEAD(, ModuleEntry) ModuleTypeList;
-+static ModuleInit module_inits[MODULE_INIT_MAX];
- 
--static ModuleTypeList init_type_list[MODULE_INIT_MAX];
--static bool modules_init_done[MODULE_INIT_MAX];
-+static void empty_dso_lists(void)
-+{
-+    int i;
- 
--static ModuleTypeList dso_init_list;
-+    for (i = 0; i < MODULE_INIT_MAX; i++) {
-+        QTAILQ_INIT(&module_inits[i].dso_list);
-+    }
-+}
- 
- static void init_lists(void)
- {
-@@ -51,65 +58,56 @@ static void init_lists(void)
-     }
- 
-     for (i = 0; i < MODULE_INIT_MAX; i++) {
--        QTAILQ_INIT(&init_type_list[i]);
-+        module_inits[i].type = i;
-+        QTAILQ_INIT(&module_inits[i].list);
-     }
--
--    QTAILQ_INIT(&dso_init_list);
-+    empty_dso_lists();
- 
-     inited = 1;
- }
- 
--
--static ModuleTypeList *find_type(module_init_type type)
-+static ModuleInit *find_type(module_init_type type)
- {
-     init_lists();
- 
--    return &init_type_list[type];
-+    return &module_inits[type];
- }
- 
--void register_module_init(void (*fn)(void), module_init_type type)
-+static void module_init_add(ModuleEntryList *list, ModuleEntry *e)
- {
--    ModuleEntry *e;
--    ModuleTypeList *l;
--
--    e = g_malloc0(sizeof(*e));
--    e->init = fn;
--    e->type = type;
-+    QTAILQ_INSERT_TAIL(list, e, node);
-+}
- 
--    l = find_type(type);
-+void register_module_init(ModuleEntry *e, module_init_type type)
-+{
-+    module_init_add(&find_type(type)->list, e);
-+}
- 
--    QTAILQ_INSERT_TAIL(l, e, node);
-+void register_dso_module_init(ModuleEntry *e, module_init_type type)
-+{
-+    module_init_add(&find_type(type)->dso_list, e);
- }
- 
--void register_dso_module_init(void (*fn)(void), module_init_type type)
-+static void module_init_run(ModuleInit *m, ModuleEntryList *list)
- {
-     ModuleEntry *e;
- 
--    init_lists();
--
--    e = g_malloc0(sizeof(*e));
--    e->init = fn;
--    e->type = type;
--
--    QTAILQ_INSERT_TAIL(&dso_init_list, e, node);
-+    (void)m;
-+    QTAILQ_FOREACH(e, list, node) {
-+        e->init();
-+    }
- }
- 
- void module_call_init(module_init_type type)
- {
--    ModuleTypeList *l;
--    ModuleEntry *e;
-+    ModuleInit *m = find_type(type);
- 
--    if (modules_init_done[type]) {
-+    if (m->done) {
+     AcpiBuildTables tables;
+     AcpiBuildState *build_state;
+@@ -1570,7 +1570,7 @@ void virt_acpi_setup(VirtMachineState *vms)
          return;
      }
  
--    l = find_type(type);
--
--    QTAILQ_FOREACH(e, l, node) {
--        e->init();
--    }
--
--    modules_init_done[type] = true;
-+    module_init_run(m, &m->list);
-+    m->done = true;
+-    if (!virt_is_acpi_enabled(vms)) {
++    if (!arm_virt_is_acpi_enabled(vms)) {
+         trace_virt_acpi_setup();
+         return;
+     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index c8ffa1ceaf4..331fae883c7 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -769,7 +769,7 @@ static void fdt_add_cpu_nodes(VirtMachineState *vms)
+                     &bottom_node,
+                     CPU_TOPOLOGY_LEVEL_SOCKET);
+             if (cache_at_topo_level) {
+-                if (bottom_node == 1 && !virt_is_acpi_enabled(vms))
++                if (bottom_node == 1 && !arm_virt_is_acpi_enabled(vms))
+                     error_setg(
+                         &error_fatal,
+                         "Cannot share L1 at socket_id %d."
+@@ -809,7 +809,7 @@ static void fdt_add_cpu_nodes(VirtMachineState *vms)
+                                                         top_cluster,
+                                                         bottom_cluster, cpu,
+                                                         &cluster_offset);
+-                if (bottom_cluster == 1 && !virt_is_acpi_enabled(vms)) {
++                if (bottom_cluster == 1 && !arm_virt_is_acpi_enabled(vms)) {
+                     error_setg(&error_fatal,
+                         "Cannot share L1 at socket_id %d, cluster_id %d. "
+                         "DT limitation on sharing at cache level = 1.",
+@@ -2036,7 +2036,7 @@ static void create_smmuv3_dev_dtb(VirtMachineState *vms, DeviceState *dev,
+     hwaddr base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+     MachineState *ms = MACHINE(vms);
+ 
+-    if (!(vms->bootinfo.firmware_loaded && virt_is_acpi_enabled(vms))) {
++    if (!(vms->bootinfo.firmware_loaded && arm_virt_is_acpi_enabled(vms))) {
+         if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
+             error_setg(errp, "SMMUv3 with accel=on not supported for DT");
+             return;
+@@ -2446,7 +2446,7 @@ void virt_machine_done(Notifier *notifier, void *data)
+     pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
+                                        &error_abort);
+ 
+-    virt_acpi_setup(vms);
++    arm_virt_acpi_setup(vms);
+     virt_build_smbios(vms);
  }
  
- #ifdef CONFIG_MODULES
-@@ -159,10 +157,13 @@ static bool module_load_dso(const char *fname, bool export_symbols,
+@@ -3210,7 +3210,7 @@ static void machvirt_init(MachineState *machine)
+     create_pcie(vms);
+     create_cxl_host_reg_region(vms);
+ 
+-    if (aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
++    if (aarch64 && firmware_loaded && arm_virt_is_acpi_enabled(vms)) {
+         vms->acpi_dev = create_acpi_ged(vms);
+         vms->generic_error_notifier.notify = virt_generic_error_req;
+         notifier_list_add(&acpi_generic_error_notifiers,
+@@ -3560,7 +3560,7 @@ static void virt_set_oem_table_id(Object *obj, const char *value,
+ }
+ 
+ 
+-bool virt_is_acpi_enabled(const VirtMachineState *vms)
++bool arm_virt_is_acpi_enabled(const VirtMachineState *vms)
  {
-     GModule *g_module;
-     void (*sym)(void);
--    ModuleEntry *e, *next;
-+    int i;
-     int flags;
- 
--    assert(QTAILQ_EMPTY(&dso_init_list));
-+    init_lists();
-+    for (i = 0; i < MODULE_INIT_MAX; i++) {
-+        assert(QTAILQ_EMPTY(&module_inits[i].dso_list));
-+    }
- 
-     flags = 0;
-     if (!export_symbols) {
-@@ -183,19 +184,27 @@ static bool module_load_dso(const char *fname, bool export_symbols,
-             error_append_hint(errp,
-                 "Only modules from the same build can be loaded.\n");
-         }
-+        empty_dso_lists();
-         g_module_close(g_module);
+     if (vms->acpi == ON_OFF_AUTO_OFF) {
          return false;
-     }
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 383ee320948..2ee61cc5a06 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -218,8 +218,8 @@ struct VirtMachineState {
+ #define TYPE_VIRT_MACHINE   MACHINE_TYPE_NAME("arm-virt")
+ OBJECT_DECLARE_TYPE(VirtMachineState, VirtMachineClass, VIRT_MACHINE)
  
--    QTAILQ_FOREACH(e, &dso_init_list, node) {
--        e->init();
--        register_module_init(e->init, e->type);
-+    for (i = 0; i < MODULE_INIT_MAX; i++) {
-+        ModuleInit *m = &module_inits[i];
-+
-+        if (QTAILQ_EMPTY(&m->dso_list)) {
-+            continue;
-+        }
-+
-+        if (!m->done) {
-+            QTAILQ_CONCAT(&m->list, &m->dso_list, node);
-+            continue;
-+        }
-+
-+        module_init_run(m, &m->dso_list);
-     }
-     trace_module_load_module(fname);
--    QTAILQ_FOREACH_SAFE(e, &dso_init_list, node, next) {
--        QTAILQ_REMOVE(&dso_init_list, e, node);
--        g_free(e);
--    }
-+    empty_dso_lists();
-     return true;
- }
+-void virt_acpi_setup(VirtMachineState *vms);
+-bool virt_is_acpi_enabled(const VirtMachineState *vms);
++void arm_virt_acpi_setup(VirtMachineState *vms);
++bool arm_virt_is_acpi_enabled(const VirtMachineState *vms);
  
+ #define CLIDR_CTYPE_NO_CACHE 0x00
+ #define CLIDR_CTYPE_I_CACHE 0x01
 -- 
 2.52.0.windows.1
 
