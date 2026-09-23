@@ -4,77 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7C8C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FA4C98304
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 16:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Pe1-0007Tn-Ju; Wed, 23 Sep 2026 12:16:29 -0400
+	id 1x9PiZ-0000IB-RT; Wed, 23 Sep 2026 12:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9Pe0-0007Td-6E
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:16:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x9PiT-0000HR-5W
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:21:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9Pdy-0003hf-E0
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:16:27 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1x9PiR-0004Hk-8L
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 12:21:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790180184;
+ s=mimecast20190719; t=1790180461;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6ICqM+S022EIe6oxaWs4EOYGV+pkThE1kGyKEKfbgpo=;
- b=N4lFQI0WpmtTtJp1QInazNoq6cIUy1V8cOlUDmbnSzDgsupO9lHqyqGasQSEMCC/A+0PnU
- p5vJhtnxgxrH+u7EJMdxyRlA67sELsaIkJf8uvhSMX0KZoc8uxyg0+dGflv5LSpn/LpikO
- gLS13Bn5nAH1T7PDeY5+02+yH4DM2Yg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-wwm-CHEaNOqccL2hHtiSRw-1; Wed,
- 23 Sep 2026 12:16:20 -0400
-X-MC-Unique: wwm-CHEaNOqccL2hHtiSRw-1
-X-Mimecast-MFC-AGG-ID: wwm-CHEaNOqccL2hHtiSRw_1790180178
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BA271809CBB; Wed, 23 Sep 2026 16:16:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.191])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD9CB19539A7; Wed, 23 Sep 2026 16:16:14 +0000 (UTC)
-Date: Wed, 23 Sep 2026 18:16:12 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-Message-ID: <arP7TDfz7lz699KJ@redhat.com>
-References: <20260921075251.12831-1-pbonzini@redhat.com>
- <20260921075251.12831-2-pbonzini@redhat.com>
- <arEvLLYK9A5MKNdE@redhat.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3I9anFPmeXYs/o8y2MrpmiObvFljkGA/1STuIm8SMko=;
+ b=VU8QefMZMVNZzJOtt7ckLC1DLodhg8nRYRCfTkuFuLsdUtUoXGYTtQFgThejwXVdL8R3YV
+ aeiOA7X5UdELvXAuRndu5VoYrfvqgzXQRLqayTqntvieNwJrIyMcOfjJVOE3ESnGfi/t2P
+ LOxfW3ycIJefVDO84khowyp8Ft5Tcto=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-R824mAV5M327HTLlw_o_aw-1; Wed, 23 Sep 2026 12:21:00 -0400
+X-MC-Unique: R824mAV5M327HTLlw_o_aw-1
+X-Mimecast-MFC-AGG-ID: R824mAV5M327HTLlw_o_aw_1790180459
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49e6683d48fso10938085e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 09:21:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790180459; x=1790785259; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=3I9anFPmeXYs/o8y2MrpmiObvFljkGA/1STuIm8SMko=;
+ b=dLOk7cXlWmKcsrcjNiI1ccnriYPI0pEGhkb+bCF7SMbqBv0WiCj5dKuuWc+rqIJEc9
+ SA+KdGHFHMRM9vWZn95dKXSTnGPpdkeIxV3dzfjvbitRKRXDEpsttuU83nZHB9nYRHdV
+ 5hEbyyxW0953e5nXFCLaqJ96H/oYWTFe6lgLF7oAkRpBciKRBaVNYIP09ol2qOvOae2B
+ r26pBTMRGlqVnCXH41a+wah8LfgeIOj/VycL1aOECBqiil3+Hf0fCyQz0J1WTffX8NC6
+ eqHKNwxoC32p8BNFIpvJjt1DXfy07yv1B46+U6j8mFgWLxqhHOLcQOtmPgFvDWjbL//Q
+ x82w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790180459; x=1790785259;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=3I9anFPmeXYs/o8y2MrpmiObvFljkGA/1STuIm8SMko=;
+ b=VdqjsQNHcE5gXcqLqz/4ssu3FkzMg4XksmHiPCY8NGeMz9tP2unOZMMNJQFFZ4e5j2
+ s4bXsO1eSRsjfhoddq7rIe/0mcAfMtgYP+RVrzzAcBL1h58OoizoKIjPSQz8XG8oe1ZQ
+ D5/6q94FXmt4YaOIbqutgj43E33hKQeXhph7E6JXAH8d9ZZZXfw3P9jrhHfxmrViPm1F
+ AmfsZn0gF+arTQer+UIwg39O90X7qpfDZUhH7O58/123lcPvSKMQlADT6Z1sLR8gd6pA
+ iMlIraMqQDo9FRL7z7kL+6H81URhpHnXTgiHy3IcESC1ou2EB6josZAbrJPnKTOT1FDp
+ urzQ==
+X-Gm-Message-State: AFuF++mM0WC84z7/xWsMCdsSxf9YisAbMNGRgmnJ+Hn0bB92sNtGBprh
+ dbqOHorJuRfy7NrkpJtlFCwK0sD/+0NAUJEiug4CRzrP5ta2rIbrvZ77FDuNsi1T3E2tzTvM8Ny
+ KYVAUvkNuVuJbYKCPp6QOhmfsRqvigO+DKVtMTadhvXNxGdD+6gxhrSSI
+X-Gm-Gg: AYBFou0/kwZwO5tgvJZQUvdsRUB4iwD1P0cX5toxo0sE6K1GQY1gOBr/G3CyGwi+NT9
+ piL7Gwqpbgl7zMWch15EZW5q5yvqQwwnU0ljG+qtxTehnlnlFrIF6bxDkZOV+XeD3mGD5ry8m+P
+ mo+d6NuB3mFZjLabyUmURzeSOpC9WYZ42d0r+T8+c6/J7nC752p9KZ0lQ00chM5EjGouHTYEASF
+ Mrd5unmoLeWqVmh5qLrDY2t3hVn9t2xChfQau0/fXgTXOKtufu9b6AY4fcU0YS3z9zrjstRRuug
+ J/QaNamIKqoe7VSVEkyrXFAtnK6r+XCtbOccKmiB9On9Dr43WjvnVhTvuW4CgLwEqC0U4P2NBfT
+ Wiadsy5fA4IHqkSOP5T7hlNwyAtSDtonKBw4rJuxBdR0LF4zLbcW8UKLRGZTHAPMUTcNx
+X-Received: by 2002:a05:600c:4e0b:b0:49e:84bf:6136 with SMTP id
+ 5b1f17b1804b1-49fdeffdfc0mr60119115e9.11.1790180458983; 
+ Wed, 23 Sep 2026 09:20:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e0b:b0:49e:84bf:6136 with SMTP id
+ 5b1f17b1804b1-49fdeffdfc0mr60118665e9.11.1790180458530; 
+ Wed, 23 Sep 2026 09:20:58 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.41.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fe1432362sm39560075e9.1.2026.09.23.09.20.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Sep 2026 09:20:57 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Wed, 23 Sep 2026 18:20:55 +0200
+Subject: [PATCH] backends/igvm: supply an empty device tree when the
+ machine has none
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <arEvLLYK9A5MKNdE@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260923-relax_dt-v1-1-ff40f2a06acd@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDSyNj3aLUnMSK+JQS3SRDs9SUZKPkVMM0QyWg8oKi1LTMCrBR0bG1tQA
+ KAZ9jWgAAAA==
+X-Change-ID: 20260923-relax_dt-b16edc2ce1f1
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Oliver Steffen <osteffen@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,59 +123,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.09.2026 um 15:20 hat Daniel P. Berrangé geschrieben:
-> On Mon, Sep 21, 2026 at 09:52:48AM +0200, Paolo Bonzini wrote:
-> > +.. note:: **Use of AI does not remove the need for authors to comply
-> > +          with all other requirements for contribution.**  In particular,
-> > +          the ``Signed-off-by`` label in a patch submission is a statement
-> > +          that the author takes responsibility for the entire contents of
-> > +          the patch, certifying that their patch submission is made in
-> > +          accordance with the rules of the :ref:`Developer's Certificate of
-> > +          Origin (DCO) <dco>`.
-> > +
-> > +          Since a submitter cannot audit LLM output against its training
-> > +          data, the DCO is paired with :ref:`metadata in the commit message
-> > +          <ai-used-for>` about AI-generated parts.  The DCO still certifies
-> > +          that the contributor has the legal right to submit code in general.
-> 
-> I'm not a fan of this second paragraph, as that feels like it is undermining
-> the DCO. That first sentence in particular is somewhat saying that the
-> contributor does not have to think about plagarism and thed project is ok
-> with that, and also implying that the DCO doesn't apply to the LLM output.
-> This is both not OK in its implication of the project accepting some
-> liability, and then also contradicted by the next sentence.
-> 
-> IMHO this paragraph should just be removed.  The first paragraph clearly
-> states the DCO applies to the submission as a whole, and leaves all liability
-> for infringement on the contributor.
+Commit 1c4bd8f13c ("igvm: add device tree parameter support") added
+handling for the IGVM device tree parameter directive. The handler
+fails when the machine has not built a device tree of its own, so an
+IGVM file carrying that directive cannot be booted on such a machine,
+for example q35.
 
-I don't think making this the individual contributor's problem is great.
-It's rather unfriendly towards contributors to expect them to certify
-something that we all know they can't honestly certify.
+An empty tree satisfies the IGVM file's request, so build and supply
+one instead of rejecting the whole file.
 
-Our current AI policy was built on the assertion that it's impossible to
-sign the DCO for AI output, and I think that's still right. A developer
-can't certify the origin of something when they don't really know where
-it comes from.
+While at it, rename fdt_packed to fdt, which better reflects the
+content of the variable, as it does not always hold a packed fdt.
 
-If we decide that we don't care as much about the legal risks any more
-and that we're willing to accept them to some extent, that should be
-explicitly reflected in the policy.
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+ backends/igvm.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-It seems to me that the cleanest way to do it is to exempt correctly
-advertised (with 'AI-used-for:') AI output from the DCO requirement and
-instead add to the 'AI-used-for:' definition some relaxed version of it,
-e.g. "I have reviewed the contribution for potential licensing issues
-and haven't found a reason to doubt that I have the rights to submit
-this AI generated content under the open source license indicated in the
-file". This is something that could realistically be certified by
-contributors in good faith and also isn't just "anything goes", but of
-course it still is weaker than the DCO.
+diff --git a/backends/igvm.c b/backends/igvm.c
+index ec7bee428b..e982bab06a 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -29,6 +29,9 @@
+ 
+ #ifdef CONFIG_FDT
+ #include <libfdt.h>
++
++/* Enough for the header, the memory reservation block and an empty root node */
++#define EMPTY_FDT_SIZE 256
+ #endif
+ 
+ #ifndef IGVM_VHT_OPTIONAL_BIT
+@@ -856,7 +859,7 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+                                        Error **errp)
+ {
+     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+-    g_autofree void *fdt_packed = NULL;
++    g_autofree void *fdt = NULL;
+     uint8_t *param_data;
+     uint32_t param_size;
+     uint32_t fdt_size;
+@@ -866,20 +869,27 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+         return -1;
+     }
+ 
+-    if (ctx->machine_state->fdt == NULL) {
+-        error_setg(errp, "IGVM: device tree not available");
+-        return -1;
++    if (ctx->machine_state->fdt) {
++        fdt = g_memdup2(ctx->machine_state->fdt,
++                        fdt_totalsize(ctx->machine_state->fdt));
++    } else {
++        /*
++         * The machine doesn't build a device tree of its own.
++         * Supply an empty tree rather than rejecting the IGVM file.
++         */
++        fdt = g_malloc0(EMPTY_FDT_SIZE);
++        if (fdt_create_empty_tree(fdt, EMPTY_FDT_SIZE)) {
++            error_setg(errp, "IGVM: failed to create an empty device tree");
++            return -1;
++        }
+     }
+ 
+-    fdt_size = fdt_totalsize(ctx->machine_state->fdt);
+-    fdt_packed = g_memdup2(ctx->machine_state->fdt, fdt_size);
+-
+-    if (fdt_pack(fdt_packed)) {
++    if (fdt_pack(fdt)) {
+         error_setg(errp, "IGVM: failed to pack device tree");
+         return -1;
+     }
+ 
+-    fdt_size = fdt_totalsize(fdt_packed);
++    fdt_size = fdt_totalsize(fdt);
+     if (fdt_size > param_size) {
+         error_setg(errp,
+                    "IGVM: device tree size exceeds parameter area"
+@@ -887,7 +897,7 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+         return -1;
+     }
+ 
+-    memcpy(param_data, fdt_packed, fdt_size);
++    memcpy(param_data, fdt, fdt_size);
+ 
+     return 0;
+ }
 
-If we're not willing to take the legal risk from this, we should
-probably leave the current AI policy unchanged instead of telling
-contributors that they have to work in a legal grey area.
+---
+base-commit: 67166d97a3269285aa68c489f85c9ccdf78495e1
+change-id: 20260923-relax_dt-b16edc2ce1f1
 
-Kevin
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
 
 
