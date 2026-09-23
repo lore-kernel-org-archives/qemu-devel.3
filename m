@@ -4,172 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D9C982EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 05:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C4F3C982EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 05:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9FY8-0006wL-H2; Wed, 23 Sep 2026 01:29:44 -0400
+	id 1x9Fyp-0002Rp-Rf; Wed, 23 Sep 2026 01:57:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1x9FY6-0006wD-GU
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:29:42 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1x9FY4-00059t-Iu
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:29:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1790141381; x=1821677381;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=q1FbG124FQieIySUvIorwonK3t1kSXGhKTW22fRM9hk=;
- b=dsacvsokCnTBD7Z9eDvYz8AMKsiKMjg2la27JZJcjVMEs0GRAOqiS7qN
- RlDb7QHT/J+gJB7Bhxn4zTynIuWRPJhrZWJI2J9pqJhyz6Uk4ZdwkZsGV
- nWHCRnPfJhwfGzl67pD2WPtgJSI65cKRgJFADPELG6OENHHD43Zr04A4Z
- EetV/DZkMD14lZcN6Ca5CWyMGu/ZTeKGooQmtxcghsqXHmvnME1w4HOok
- YxgusmC5rHEIOwHB2zlNGODy19mMsEko5ih1XHrBBDbwxztkNMzidtbui
- DP5wx5NvqFYyYkAmrg7G8cgkJImTpT5SENolGoux0qzDQ4R8KVyP3oYb9 Q==;
-X-CSE-ConnectionGUID: EcHtLktORDeq9GowvQiVMA==
-X-CSE-MsgGUID: 8Ju+lLAgTSK1LRe0L3PdDw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="90672691"
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="90672691"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Sep 2026 22:29:38 -0700
-X-CSE-ConnectionGUID: A12GGOp7TDShnSEiUDYCVg==
-X-CSE-MsgGUID: de4jA+aBRl2q8FG+9NBTow==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="281527242"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Sep 2026 22:29:38 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 22 Sep 2026 22:29:37 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Tue, 22 Sep 2026 22:29:37 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.59) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 22 Sep 2026 22:29:37 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rVbZmPJYZXQNt0XhTp1D2luQ2Mx3FmgI/tToKg6nq7LBgLENmsc0E4vAUoAdkX1H/G0EzS2TO0pbs2H1/LaTJQ9Td1+rrsVxDDqZavQz1haPeB0JrQn1LMCCORZcaPEuPjAakuvKnc9PrV7XsNxL1OIw1W9L5tZDxxF05h575SU71w2/fHAg6xnZTvFd81tWNH+P7paWHUw3JoQimmIcdcf+sAw2AyNnhHpaQdS0giGN8ABfqRiRorF8AD6ndCtAb0ONZ+fV2m21tXNOybW2z+y5SPYnUv0GsmFSsL5qJw+cjtKtsR+iW/QwHTI8ssXRnR0baW1s9MXYIysSNj9aDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q1FbG124FQieIySUvIorwonK3t1kSXGhKTW22fRM9hk=;
- b=NRckBZsSXEGkWea89cNuVJuD32TBm8HW923Z5Rj+uovYS8tkQrofKUsKJSPsbMWEFQK4Q22AssPEGsQFlOk1/Xc3v/KWlh2XBR3bnDkk+2ZzANQ7nwdy5xzmeAIYav59aEFl8RSYm1HehXql4Cf2tcFGd0Ku5DtXZ8lKEGQQ/g4WfbxxCu755RzNbJjHVqHHLHJF+zBAMg9c9LsjjqGYozZTmESuu9F2EEdgHXDRDEMl6WSeATBigwgVG2UVmZgvCfTI9YdTjlhgExF0Ib2mpNLwRhukBMjmVqrqjBYjeT14PG6dLHNFnoRTiMoFU/x7lsyUxfuAopXW9UQkdE4hww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ5PPFC295640A5.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::852) by PH8PR11MB9831.namprd11.prod.outlook.com
- (2603:10b6:510:3c4::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Wed, 23 Sep
- 2026 05:29:35 +0000
-Received: from SJ5PPFC295640A5.namprd11.prod.outlook.com
- ([fe80::80bb:e0b8:a9ae:716d]) by SJ5PPFC295640A5.namprd11.prod.outlook.com
- ([fe80::80bb:e0b8:a9ae:716d%6]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
- 05:29:35 +0000
-Message-ID: <5beb6876-f523-4a40-bfc5-313c1e025bd1@intel.com>
-Date: Wed, 23 Sep 2026 13:29:28 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] vfio/igd: Make MTL/ARL guests fall back to BAR-based
- framebuffer access
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
-CC: <alex@shazbot.org>, <tomitamoeko@gmail.com>, <bosheng.xue@intel.com>,
- <junjie.cao@intel.com>
-References: <20260922053658.2758332-1-yuan1.wang@intel.com>
- <9e8167d0-3072-49b5-b4c3-7f56c2121424@redhat.com>
-Content-Language: en-US
-From: "Wang, Yuan1" <yuan1.wang@intel.com>
-In-Reply-To: <9e8167d0-3072-49b5-b4c3-7f56c2121424@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: KUZPR03CA0002.apcprd03.prod.outlook.com
- (2603:1096:d10:2a::17) To SJ5PPFC295640A5.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::852)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x9Fyl-0002RO-Qk
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:57:16 -0400
+Received: from mail-ed2-x15.google.com ([2a00:1450:4864:33::15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1x9Fyi-0007Xd-P8
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 01:57:15 -0400
+Received: by mail-ed2-x15.google.com with SMTP id
+ 4fb4d7f45d1cf-6a60590a85cso1164485a12.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Sep 2026 22:57:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790143031; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Jgxv/fUrdjVqyjnDwzf9RWNBkHa030ex3IuWrfe2DJ7pGEWw6I7Pb1ne9wIgakkkgu
+ GZ/J7kF5QMhQ6RBzXppfQpKav9dkPPbl9+On/4y6XY9CmMJAwuFki6UqXcEXzcLN4nmv
+ N03r1OsslEY8P7jzK52rH/iyFsT+lTdwLOT84uJgdVLU/2j4YyebRf+3Bw/IGVUZxIGN
+ W+ZL2Tk9joFWijTOJ494VnUZX1wI9jGkfTQ3niXxPW82y8htLX7Ju6DVUUoZ6uDaY51S
+ DUykUyqpMk75VF4bmVn75wVNkDSCh/m4jzDQ0lkxa6Otw8SePtq/hrsZLXPN6r1tzucy
+ alag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=P6Kl0f1VUK2svuDgbEWk+b/FJveOKRfnruyud2X7jk8=;
+ fh=OeBhxQk/zTRe8nFWB+oy7u9njVmuJ5IAqpOoJljk7AA=;
+ b=nDhxV0pZy1qouAPrP4M5oMH284vjhXjl6irz38cA6NgJTHFeZAY478DFuC1+A1AkCo
+ ymDgmDHX3i4ISNS6rinLLPnlaZeW6z7lICh1DeOoF+/x/Me+RW1hxuPWDsmIN72VnqX0
+ 69wuYHcSGzs//7C3RH+tgy8IU8mDHDg7lC8HYDkc5fk22Pb0gc2FQFcHzkeKFWJNS4WD
+ OpMRFPJGrXBtPprak7FC4NGPpbJQr24MlpHk5glwFXRuiu1FQHtAiGC/LmRf9gJxCqY/
+ b7B5yI5zz9p6e827mCr74Ru4DRxuF5I0RBkH+/EaUCODmUhSMOJpX4SswhVhbEWV5qe3
+ YD+w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790143031; x=1790747831; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=P6Kl0f1VUK2svuDgbEWk+b/FJveOKRfnruyud2X7jk8=;
+ b=dm1QJlqT69X/lkxNuADtGPkKAjwnz9sXbJllZSar0YrzVBCeIksjaZmGHrYgaTgP81
+ aN68loSxq/W0OozUsMLYwSagmEn+ODepH5kYdUR6hAYZtxCv+9gtnmQfqZVo6Rw8WA6P
+ BfCHGTqFLvlA3K1vlhrixxqzoWXeErz/uKmftNo7bi2ztwqiZ/dGVvw1EQ7fW4VE+CxB
+ IBX8WpcxD5HtIT9dPw7kHyj6JxZoWzNQMymvYJuPrg4qLMBQEHKTPp2VVUgvZpAMWFku
+ MoI/YhrDPq0iA4c09mPCZEBKyQ6P2Vg2AQ4qos6KJHvtC0+IhPU8ubQDoHAV9jJd5ADs
+ 3Z4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790143031; x=1790747831;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=P6Kl0f1VUK2svuDgbEWk+b/FJveOKRfnruyud2X7jk8=;
+ b=sJd06ZLQBV/IcUOIxYZ1AwS8r2U2TLLAtguTutczf2vVQjcEZxcvpA5Yu1gtr5j8KR
+ WQLM2Rg4vYefb5sL6OtEq5SGr9qyOQqEFkMRU2j7vEXDZhinE2tazv+vPVqNlzSYbGjQ
+ TqMGqsAlZVpm6gvKayQEwzavFfz0R2Oy/7VfKMXplR9yHP2udH2YgFkLFdadVl1faRBO
+ vFJG3p/3nRiZhRCK5NNt7XZZRBviKFx2UOqQF4aGnVsqEb6RoWOxxrUgZiS5eBp2Lu7f
+ vdKjRxpaq5X/4qebE+iUmup6ZoDkp5vEHw8achAsbAbMkhIpdLTo8rxF2OFLGqKxpEQn
+ bayQ==
+X-Gm-Message-State: AFuF++lc8CO7gCKleZbZqrkBgpEg7AM6qRKtm9szZtL3ZfgZZzK8HFSo
+ KtT2Jps49sZql0rx7L6Ny7ZYD8bxojkp3KfVJTLREJNvrorNLXAf7iGk+EGOzxlkorIMx360CKZ
+ ayVh7T3H7E1jCiZ9YEHWDUchIfRahPjo=
+X-Gm-Gg: AYBFou1hAcIAYn8kZugto/6pltLHY76pHPD3cYK66yPV0Scliav3i66U8D2cJuMv4dI
+ 2MNnmJD7xFaE6TXW9NnhHywHQ4gtu1cCgk2agTCR72wsMIxqTVIeqcU/nWr2k36suMX7Ic2QgtL
+ mFb4vhCGbzJRtLMNClXo4+9Bzu0xVIoou+TWkvLQ8eCObZ2Yx9YoAcYPC1lHnlb2nTZEmM/Nzdj
+ 5JoXo8Pe874sV+R8FHFI6ka1P7beEZi+6ZP2QDvyIkBCHHuzFcf6U4pkzL/8Yp0L10M5trGrCAc
+ 5uLiiz4mEQcTtRLXT7gxzRDWzDr27cblRmtz5vrXLQTt0afATuUCtNk=
+X-Received: by 2002:a05:6402:3508:b0:6a9:cb55:c594 with SMTP id
+ 4fb4d7f45d1cf-6aab3b7fc01mr1222699a12.37.1790143030851; Tue, 22 Sep 2026
+ 22:57:10 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PPFC295640A5:EE_|PH8PR11MB9831:EE_
-X-MS-Office365-Filtering-Correlation-Id: 319c87f1-a92f-445b-5c6a-08df1933a736
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|23010399003|10063799003|18002099003|22082099003|11063799006|10067099003|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info: Ze+EgJ8tfGwQqMmrjH/n5b7ZRE2CK35yCNGhtuqa7j83wwMUbKv9JC5KACTn42m5aiJRfemnaiJgJP+PockIIg1T7RbNKPfFW6eBnDYR/ZT1anYuyDwuzCqIIoGtEExoxvUnmr0RFw12xgz9hvlB+FpnbQPVduBVYEXuNl/o9Ge7xQTDpW6PHBSUh6vkZSn+chId/Ti3o0yQ1i1yHgi63Vu3hniAJBRMDQvyoQTyaxZbQxr8InZFZgfnOPEh73ou74aEx7L1loM70DZzNimVkeKv2N/MaFxO1hJwIzyW4Ry7hCvVsHF5rbS+OyH+41grIwmaY+sxeCiXekOELfGIa4clW3o8bUJLLVa6Rdnen1qFhcQNbZlmmLrYjxu+jFcJsNz7Vf5dXp622poGehdkr9EC3ayIezPVS5fpPz0QYOBFoK+Xtfxa/Pq3gc1sRctgicOVq0O/gaNXxiGta1O+WGVpeY8JgjS58j2lKPGrzZEizoNPRHzQnzTwpqfAflpiQTny5WiFZmG+0Fnj+2I8aRlpnWa29AfngiYEl8kR9ZuuYYu+KndRLW9F+X6OqmkbwIjzWVxCDDifXdmL0+uB0Wjmi/FPtsEeR5atrZPc0amj0vQX5tbpQMuyD5TE5lUNsi5Ll7bt/L/MlhlKROAshm/bTU03T32ARVUrzJIMUjA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ5PPFC295640A5.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10063799003)(18002099003)(22082099003)(11063799006)(10067099003)(56012099006)(4143699003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YW8xMGFDeGwzQmE2T3F2RnlIV2xpZy9sNGNkcjc4T1NBWDdsSlAzdmNEQjg3?=
- =?utf-8?B?RjZ5czI3L2hmOXMwaWNpaEFFWEhJZU9oU0dSRnlwS29qTTJ3TU1TTEFZQTVV?=
- =?utf-8?B?UG5HQVI1b0pYeU5NMk4wTWRBY0VoSWlvYWs2V1J4dmRYMC9rdENoc2NITlZV?=
- =?utf-8?B?Z1kzclFVY1FTWk5Qa3pqd3VENjBIU2pFN2FQZGVrZy9oOFg0Q25SMUd2S0dG?=
- =?utf-8?B?OFB1dGpZdjVFTi9DR3FTN242RVdtSzh0YnZsbFB4eWFvdmIybDN4UnZRaWlI?=
- =?utf-8?B?TFdvRS9FS3hPeXk4SS95clFuZmVUWi83SVAvT0NpVURBQ0RTR3dTcFYzRHNQ?=
- =?utf-8?B?UURDWkx3SzdLTnFZUDJRMXZ6UTlXajlGU1JzZzJBSUNEU2xXRk43VEhmMnRk?=
- =?utf-8?B?aituRTZvSmtPN3N0TW5YWTk0eU92QmFweERsZkRaODlCdXl5Y3ZFNTBnckN3?=
- =?utf-8?B?MDRJQ0tOd1pMU1RxRTRTWjFjNVNxVEx6RURwTXdtNExVUU1jUGQzZWpqeUNZ?=
- =?utf-8?B?emR3RXZGd0pZaWFyczNEM2xwMVJuTVRraEpWWDVUN0ZUNDdOYlJKdXNCQ0Zt?=
- =?utf-8?B?ekpFNndQQU51UHVjVDIxMS9KTlpRQXV6OFRKaEJjVXBoLzUyMzJBUVNiTy9J?=
- =?utf-8?B?R2NtWDh3d00zU21JRFltWnNvdVpkeWZRa3hDRmJtdlBJbDJaUC9WcWpvN3Ey?=
- =?utf-8?B?YmtvKzg3OHFJclZoREhYSHQ3d1RVVExUdzM5Z3d0Qkx4NjVsb0xFK1FlRFFV?=
- =?utf-8?B?Q05GeE0xQ0J5RmQvWEo1TSs5NVRVVEM1aFg2enhGTmRJWG15Y3FLc2V3RjNm?=
- =?utf-8?B?UUpCOEVCN09iMWtBdGVrMHFXTkl4azduek1kNEpjdExQUzZEU2lyMU9jdTZp?=
- =?utf-8?B?V2Q5Z2tZdmU3dUJZVVkyalhPcG5qd2U3ZGZZMzFCS0paUkxjaTJzWi9nVEs0?=
- =?utf-8?B?Q0ltQXNXRkR5TGFxNDhIeEtCTnZNU1Q3TjRwWHF0bnpoSWtjQThwV2VRait6?=
- =?utf-8?B?K0lsOFQrTGdSMmJ4Vy9EdzV3YUNaWDhjaGdXSUZJS2N0VG5kUDRDMHJEUjJX?=
- =?utf-8?B?VEdIeVdLTlFZQjNmUHV4RXFHOWVkVzBJUTFlQVpKallPVnc5UlkvUlI2WlVh?=
- =?utf-8?B?MmFlQzdTbWIxaFZtOHNlMjdBQXU5UEhDbEhwTnV4Qm9Ea0dHNmQ1ZUpNZlVv?=
- =?utf-8?B?NnIrVC9xMW5GemdrWGZCM2JHb1pnam1taGZnRlRBK2JlTUhySWRrSUVrRUVk?=
- =?utf-8?B?dXdsRmZDenZjalQ1UFNWNU1tT2ZQNFVxUW9SeFJOS1VpZjZjU0c4TS9oWi9N?=
- =?utf-8?B?ekFTeFE2QU1uelBDV25XYktRWUlTQU84b05lNWZTNFJ0dFpiTXRXWFZRV0dZ?=
- =?utf-8?B?RHV6L3V1d0Z4a0M3bXBtZHJaaUdqMVhEYUJkV3RWSmxXOFYySmhWSWdlbytP?=
- =?utf-8?B?aXcyWVpKd2YwaU56WHVEakdaN2p5L0ZWaFRxV2NOUkN3cDJVOVFQazZLMkRL?=
- =?utf-8?B?SG4zTUZpcHFlSytuRFBBb3Q0NGVpTG1EWG9TRzJXUkcvSElweTlXWHVTbStE?=
- =?utf-8?B?MXllS1I4d216akRzdjFsUHRLaEMyZGRVb1QrOHlOVXNqeTJtakVDTERSYXNQ?=
- =?utf-8?B?dmtZUFZlcFpwd2dZVU9acXcwOEo4Y2wyek9qWnMxKzR4UGRySXNaNGtzb3Zj?=
- =?utf-8?B?RzhVUGYvMWhoempObXh2bnF4elFuL2Irbmc5d2ExTWcwSWtrdnFvWjh3L1Jh?=
- =?utf-8?B?dUlDZDNNNyswOXhmZzBIemRkeENLM0l1eGFUVDVKcTkzejl0U3Z5VWJQU0JQ?=
- =?utf-8?B?R0NIOW90ZEt1dk0zaUNmRytCN3BGMUNDdzRhcmp6RG9nbFJoRFhCOU5PNDhm?=
- =?utf-8?B?NWFNZlVIYXQ0b1dkUkVjZkc5SUVPbC9SejNoMGZJZ3NkZCtjQzNKQWgwaEhu?=
- =?utf-8?B?UTFVa1VGbU10dmRZRUU1cTVYaTJ3QWhOQng4TXlWejZ3L1RMbHZNTFhlSnhl?=
- =?utf-8?B?N1RZcnV2b3BXbGdmcEFJY3F6b2NvUnVJSXVRanFTeUxwaWxXNUZKNHlLaVpx?=
- =?utf-8?B?bUNPQUNaVUV5K2FBdEE5b2pScjIyeXdhVVVhbFVDN0NHYzdTeGpLQ3dicXFq?=
- =?utf-8?B?ODJvTDhPcHF6WXk3N3NNL0w1cG9RcFkyWE9WSHdRSXNkdjRCYkd0Z0dUNERI?=
- =?utf-8?B?TGRaNHYvZnN0MHFwcmQ4MHJPSUxuRmVhZlVIeC9GQkVuRTZGQzJrRUhvRzYz?=
- =?utf-8?B?OE9vMzFJZVhrUUtNWExCVHRibkJzNkVLNisyeC9PWHBRWURkMzVQVFZHVkRx?=
- =?utf-8?B?VkRZbXNxKzljYzlsOGNTZVV2bTk4VGNzOFBSZkVJR1YvN3AzWnUzZz09?=
-X-Exchange-RoutingPolicyChecked: B2vVh152b2gO6e0fJN3EFmoL+dEatiTD9mxaORSeOqUZglX/1pabtOlwX2qvhBZ8y+P42+uPZztKYWwOtLyl5DfXcy3jBv7qI6qfmjti94W8Z3brdMCkNTfFbVvF3SM+eig6056AaXGHHexwLaOTPcbRuOen1tPdffxoOEGmjtYFBKSe2yJXZWsmElGUY2MQEbOMXaazBnr3PmSOQVtNdhDE1xwtQcXEs/Xt87mVcqnDyG4Tb27v/FPheHlH1JHGdgx/T8xfDs9u9gtiT8i1eJQt5ApkOYm3+qmvf2Esd6x3gN356cmt13QNgR8ExOdUHzlSy/fMAV6ODwSCd8Imww==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 319c87f1-a92f-445b-5c6a-08df1933a736
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PPFC295640A5.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 05:29:35.5503 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iGmQngxFzVf3biQCy/oF2unOiNlHxyKYQsplOdEwViAoPob4qP1ELzyJH4SPcnsoKYi7ENLg5UBfQaR4GA2WNQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB9831
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=yuan1.wang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20260922215533.641-1-luoyonggang@gmail.com>
+ <20260922215533.641-2-luoyonggang@gmail.com>
+ <5e3818d6-c2c8-4450-a5dd-8ac8ce1d6cdd@oss.qualcomm.com>
+In-Reply-To: <5e3818d6-c2c8-4450-a5dd-8ac8ce1d6cdd@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 23 Sep 2026 13:56:57 +0800
+X-Gm-Features: AcwNN1X4-hX5qNXbZdXK_AEGqMd-iBYuFYFlUBxCX90w7ygF_5eKx5RSbcjhcIw
+Message-ID: <CAE2XoE-HztrQY2=0tsjO82OpXcKkubQBVo4FGvgwHRUQcyFj9A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/9] machine: allow -M name to differ from QOM type
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Bibo Mao <maobibo@loongson.cn>, Xianglai Li <lixianglai@loongson.cn>, 
+ Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Laurent Vivier <lvivier@redhat.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>, 
+ Song Gao <17746591750@163.com>, Markus Armbruster <armbru@redhat.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Stafford Horne <shorne@gmail.com>, Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000737f72065c2027c1"
+Received-SPF: pass client-ip=2a00:1450:4864:33::15;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x15.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,76 +129,294 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000737f72065c2027c1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/22/2026 5:56 PM, Cédric Le Goater wrote:
-> Hello Yuan
+On Wed, Sep 23, 2026 at 1:01=E2=80=AFPM Pierrick Bouvier <
+pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> On 9/22/26 07:36, Yuan Wang wrote:
->> Meteor Lake and Arrow Lake GOP can read BAR0 MMIO offset 0x138914 to
->> detect whether direct framebuffer access via DSM is available.
->>
->> In a VFIO passthrough VM, the guest cannot access the host DSM memory
->> region via such a pointer. If the guest GOP enables that path, it may
->> hand off a DSM-based framebuffer address that the guest cannot actually
->> use.
->>
->> Intercept reads from the detection register and return 0 so the guest
->> does not enable the DSM-based path and instead keeps using the standard
->> BAR-based framebuffer address.
->>
->> Suggested-by: Tomita Moeko <tomitamoeko@gmail.com>
->> Reviewed-by: Tomita Moeko <tomitamoeko@gmail.com>
->> Reviewed-by: Bosheng Xue <bosheng.xue@intel.com>
->> Reviewed-by: Junjie Cao <junjie.cao@intel.com>
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->> Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
->> ---
->> Changes:
->> v4:
->> - Address review comments from Tomita Moeko (update macro/variable
->>    names and comments).
->> - Pick up Reviewed-by tags from Tomita Moeko and Cédric Le Goater.
->>
->> v3:
->> - Emulated register 0x138914 to return 0x0, which signals the guest
->>    GOP driver to fall back to BAR-based mapping since DSM is
->>    unavailable in the VM.
->>
->> v2:
->> - Resending because the v1 patch was sent with an incorrect future
->>    system timestamp due to an unsynchronized local clock. No code
->>    changes.
->>
->> Notes:
->> MTL/ARL device IDs remain in igd_gen().
->> This is required because vfio_probe_igd_bar0_quirk() checks the
->> generation before installing BAR0 quirks, and the 0x138914 quirk
->> is added afterward.
->> Meanwhile, we also plan to remove the bdsm-size check in the OVMF
->> offline patches.
->> ---
->>   hw/vfio/igd.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++---
->>   1 file changed, 46 insertions(+), 3 deletions(-)
+> this indeed allows QOM types to coexist in same binary.
+> In such binary, how are we now supposed to differentiate two virt
+> machines from -M <name>, given they both have same alias name?
 >
->
-> This change does not apply cleanly on :
->
->     https://github.com/legoater/qemu vfio-next
->
-> because of :
->
-> https://lore.kernel.org/qemu-devel/20260724102959.1043264-1-mike.malyshev@gmail.com/
->
-> Could you please resend on top ?
->
->
-Sure! I have rebased the patch on top of your vfio-next branch and sent out v5.
+> Regards,
+> Pierrick
 
-Please kindly review the v5.
 
-Thanks,
-Yuan
+# Machine option demos
+
+Intended design for combined `qemu-system`. Implement to match these
+rows. Last `-M` / `-machine` / `-readconfig` wins. `qemu.conf` is
+applied first.
+
+`arch:name` binds `arch` and picks `name`. `arch:` binds `arch`.
+`x86_64:` and `i386:` then run that target's default machine.
+`aarch64:` and `riscv64:` have no default and exit with
+`No machine specified, and there is no default`. A later bare
+`name` keeps the last prefix. Help / `?` after `arch:` lists that
+target; it does not leave the target at `none`.
+
+Single-target rows are historic `qemu-system-<arch>` and stay as they
+are.
+
+## Bind and run
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M aarch64:virt` | Bind `aarch64`, run `virt`. |
+| `qemu-system -M x86_64:q35` | Bind `x86_64`, run `q35`. |
+| `qemu-system -M riscv64:virt` | Bind `riscv64`, run `virt`. |
+| `qemu-system -M type=3Daarch64:virt` | Same as `-M aarch64:virt`. |
+| `qemu-system -machine aarch64:virt` | Same as `-M`. |
+| `qemu-system-aarch64 -M virt` | Historic. No `arch:` bind. |
+| `qemu-system-x86_64` | Single-target default (`pc` / `q35`). |
+
+## Default machine (`arch:`)
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M x86_64:` | Bind `x86_64`, run that target's default. |
+| `qemu-system -M i386:` | Bind `i386`, run that target's default. |
+| `qemu-system -M aarch64:` | Bind `aarch64`, then `No machine specified,
+and there is no default`. |
+| `qemu-system -M riscv64:` | Bind `riscv64`, then the same error. |
+| `qemu-system -M none:` | Target `none`, empty `none` machine. |
+
+## List
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M help` | Grouped list. `none:` first, then each target. |
+| `qemu-system -M ?` | Same as `-M help`. |
+| `qemu-system -M aarch64:help` | Flat list for `aarch64` only. |
+| `qemu-system -M aarch64:?` | Same as `-M aarch64:help`. |
+| `qemu-system -M riscv64:help` | Flat list for `riscv64` only. |
+| `qemu-system -M none:help` | `none` and `empty machine`. No other target
+group. |
+| `qemu-system-aarch64 -M help` | Flat list for that target only. |
+
+## Empty machine
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system` | Target `none`, empty `none` machine. |
+| `qemu-system -M none` | Empty `none` machine. |
+| `qemu-system -M none:none` | Same. |
+| `qemu-system -M aarch64:none` | Target `aarch64`, empty `none` machine. |
+| `qemu-system -M aarch64:virt -M none` | Empty `none` machine. Target
+stays `aarch64`. |
+
+## Properties
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M aarch64:virt,help` | Bind `aarch64`, dump `virt`
+properties. |
+| `qemu-system -M aarch64:,help` | `No machine specified, and there is no
+default`. |
+| `qemu-system -M virt,help` | `machine type "virt" needs an arch: prefix`.
+|
+| `qemu-system -M none,help` | Dump empty `none` machine properties. |
+| `qemu-system-aarch64 -M virt,help` | Historic property dump for `virt`. |
+
+## Last `-M` wins
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M aarch64:virt -M x86_64:q35` | Target `x86_64`, machine
+`q35`. |
+| `qemu-system -M aarch64:virt -M virt` | Last name is `virt`. Keep prefix
+`aarch64`, run `virt`. |
+| `qemu-system -M virt -M aarch64:virt` | Target `aarch64`, machine `virt`.
+|
+| `qemu-system -M aarch64: -M virt` | Bind `aarch64`, then bare `virt` runs
+`virt`. |
+| `qemu-system -M aarch64:virt -M riscv64:` | Bind `riscv64`, then `No
+machine specified, and there is no default`. |
+| `qemu-system -M aarch64:virt -M riscv64:virt` | Target `riscv64`, machine
+`virt`. |
+| `qemu-system -M help -M aarch64:virt` | Help is not last; run
+`aarch64:virt`. |
+| `qemu-system -M aarch64:virt -M help` | Keep prefix `aarch64`. List has
+`virt`, not `q35`. |
+
+## `-readconfig`
+
+A `[machine] type =3D "..."` file is another machine option. The last
+of `-M`, `-machine`, and `-readconfig` wins.
+
+| Command | Shows |
+|---------|-------|
+| `-readconfig` with `type =3D "aarch64:virt"` | Bind `aarch64`, run `virt`=
+. |
+| that file, then `-M none` | Machine `none`. Target stays `aarch64`. |
+| `-readconfig` with `type =3D "none:"` | Target `none`, empty `none`
+machine. |
+| `-M aarch64:virt`, then `-readconfig` `type =3D "riscv64:virt"` | Target
+`riscv64`, machine `virt`. |
+
+## Wrong target or machine
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M virt` | `machine type "virt" needs an arch: prefix` |
+| `qemu-system -M riscv64` | Same. Bare `riscv64` is a machine name, not a
+target. |
+| `qemu-system -M aarch64` | Same. Bare `aarch64` is a machine name, not a
+target. |
+| `qemu-system -M aarch64:q35` | Target `aarch64`, then `unsupported
+machine type: "aarch64:q35"` |
+| `qemu-system -M arm:sbsa-ref` | Target `arm`, then unsupported
+(`sbsa-ref` is `aarch64` only). |
+| `qemu-system -M aarch64:no-such` | Target `aarch64`, then `unsupported
+machine type: "aarch64:no-such"` |
+| `qemu-system -M no-such:virt` | `target 'no-such' is not available` |
+| `qemu-system -M AARCH64:virt` | `target 'AARCH64' is not available`
+(names are lowercase). |
+| `qemu-system -M none:virt` | `machine type "none:virt" is not available
+for target none` |
+
+## Odd strings
+
+| Command | Shows |
+|---------|-------|
+| `qemu-system -M :virt` | Not a prefix. Same as bare `virt`: needs
+`arch:`. |
+| `qemu-system -M :` | Not a prefix. Unsupported machine `:` / needs
+`arch:`. |
+| `qemu-system -M aarch64:virt:extra` | First colon only. Name is
+`virt:extra`. Unsupported machine. |
+| `qemu-system-x86_64 -M aarch64:virt` | Prefix `aarch64` !=3D `x86_64`. No=
+t
+available for this target. |
+| `qemu-system-aarch64 -M aarch64:virt` | Prefix matches. Run `virt`. |
+
+## Intended grouped `-M help` (no target)
+
+| Group | Contents |
+|-------|----------|
+| `none:` | only `none` |
+| `i386:` and `x86_64:` | pc / q35 / isapc / microvm / xen / nitro |
+| `arm:` and `aarch64:` | `virt-*` and 32-bit ARM boards |
+| `aarch64:` only | sbsa-ref, versal, zcu102, imx8, npcm845, raspi3/4,
+ast2700 |
+| `riscv32:` and `riscv64:` | RISC-V boards |
+| `microblaze:` | petalogix and xlnx-zynqmp-pmu |
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--000000000000737f72065c2027c1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Wed, Sep 23, 2026 at 1:01=E2=80=AFPM Pierrick B=
+ouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.bo=
+uvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; this indeed allows QO=
+M types to coexist in same binary.<br>&gt; In such binary, how are we now s=
+upposed to differentiate two virt<br>&gt; machines from -M &lt;name&gt;, gi=
+ven they both have same alias name?<br>&gt;<br>&gt; Regards,<br>&gt; Pierri=
+ck<br><br><br># Machine option demos<br><br>Intended design for combined `q=
+emu-system`. Implement to match these<br>rows. Last `-M` / `-machine` / `-r=
+eadconfig` wins. `qemu.conf` is<br>applied first.<br><br>`arch:name` binds =
+`arch` and picks `name`. `arch:` binds `arch`.<br>`x86_64:` and `i386:` the=
+n run that target&#39;s default machine.<br>`aarch64:` and `riscv64:` have =
+no default and exit with<br>`No machine specified, and there is no default`=
+. A later bare<br>`name` keeps the last prefix. Help / `?` after `arch:` li=
+sts that<br>target; it does not leave the target at `none`.<br><br>Single-t=
+arget rows are historic `qemu-system-&lt;arch&gt;` and stay as they<br>are.=
+<br><br>## Bind and run<br><br>| Command | Shows |<br>|---------|-------|<b=
+r>| `qemu-system -M aarch64:virt` | Bind `aarch64`, run `virt`. |<br>| `qem=
+u-system -M x86_64:q35` | Bind `x86_64`, run `q35`. |<br>| `qemu-system -M =
+riscv64:virt` | Bind `riscv64`, run `virt`. |<br>| `qemu-system -M type=3Da=
+arch64:virt` | Same as `-M aarch64:virt`. |<br>| `qemu-system -machine aarc=
+h64:virt` | Same as `-M`. |<br>| `qemu-system-aarch64 -M virt` | Historic. =
+No `arch:` bind. |<br>| `qemu-system-x86_64` | Single-target default (`pc` =
+/ `q35`). |<br><br>## Default machine (`arch:`)<br><br>| Command | Shows |<=
+br>|---------|-------|<br>| `qemu-system -M x86_64:` | Bind `x86_64`, run t=
+hat target&#39;s default. |<br>| `qemu-system -M i386:` | Bind `i386`, run =
+that target&#39;s default. |<br>| `qemu-system -M aarch64:` | Bind `aarch64=
+`, then `No machine specified, and there is no default`. |<br>| `qemu-syste=
+m -M riscv64:` | Bind `riscv64`, then the same error. |<br>| `qemu-system -=
+M none:` | Target `none`, empty `none` machine. |<br><br>## List<br><br>| C=
+ommand | Shows |<br>|---------|-------|<br>| `qemu-system -M help` | Groupe=
+d list. `none:` first, then each target. |<br>| `qemu-system -M ?` | Same a=
+s `-M help`. |<br>| `qemu-system -M aarch64:help` | Flat list for `aarch64`=
+ only. |<br>| `qemu-system -M aarch64:?` | Same as `-M aarch64:help`. |<br>=
+| `qemu-system -M riscv64:help` | Flat list for `riscv64` only. |<br>| `qem=
+u-system -M none:help` | `none` and `empty machine`. No other target group.=
+ |<br>| `qemu-system-aarch64 -M help` | Flat list for that target only. |<b=
+r><br>## Empty machine<br><br>| Command | Shows |<br>|---------|-------|<br=
+>| `qemu-system` | Target `none`, empty `none` machine. |<br>| `qemu-system=
+ -M none` | Empty `none` machine. |<br>| `qemu-system -M none:none` | Same.=
+ |<br>| `qemu-system -M aarch64:none` | Target `aarch64`, empty `none` mach=
+ine. |<br>| `qemu-system -M aarch64:virt -M none` | Empty `none` machine. T=
+arget stays `aarch64`. |<br><br>## Properties<br><br>| Command | Shows |<br=
+>|---------|-------|<br>| `qemu-system -M aarch64:virt,help` | Bind `aarch6=
+4`, dump `virt` properties. |<br>| `qemu-system -M aarch64:,help` | `No mac=
+hine specified, and there is no default`. |<br>| `qemu-system -M virt,help`=
+ | `machine type &quot;virt&quot; needs an arch: prefix`. |<br>| `qemu-syst=
+em -M none,help` | Dump empty `none` machine properties. |<br>| `qemu-syste=
+m-aarch64 -M virt,help` | Historic property dump for `virt`. |<br><br>## La=
+st `-M` wins<br><br>| Command | Shows |<br>|---------|-------|<br>| `qemu-s=
+ystem -M aarch64:virt -M x86_64:q35` | Target `x86_64`, machine `q35`. |<br=
+>| `qemu-system -M aarch64:virt -M virt` | Last name is `virt`. Keep prefix=
+ `aarch64`, run `virt`. |<br>| `qemu-system -M virt -M aarch64:virt` | Targ=
+et `aarch64`, machine `virt`. |<br>| `qemu-system -M aarch64: -M virt` | Bi=
+nd `aarch64`, then bare `virt` runs `virt`. |<br>| `qemu-system -M aarch64:=
+virt -M riscv64:` | Bind `riscv64`, then `No machine specified, and there i=
+s no default`. |<br>| `qemu-system -M aarch64:virt -M riscv64:virt` | Targe=
+t `riscv64`, machine `virt`. |<br>| `qemu-system -M help -M aarch64:virt` |=
+ Help is not last; run `aarch64:virt`. |<br>| `qemu-system -M aarch64:virt =
+-M help` | Keep prefix `aarch64`. List has `virt`, not `q35`. |<br><br>## `=
+-readconfig`<br><br>A `[machine] type =3D &quot;...&quot;` file is another =
+machine option. The last<br>of `-M`, `-machine`, and `-readconfig` wins.<br=
+><br>| Command | Shows |<br>|---------|-------|<br>| `-readconfig` with `ty=
+pe =3D &quot;aarch64:virt&quot;` | Bind `aarch64`, run `virt`. |<br>| that =
+file, then `-M none` | Machine `none`. Target stays `aarch64`. |<br>| `-rea=
+dconfig` with `type =3D &quot;none:&quot;` | Target `none`, empty `none` ma=
+chine. |<br>| `-M aarch64:virt`, then `-readconfig` `type =3D &quot;riscv64=
+:virt&quot;` | Target `riscv64`, machine `virt`. |<br><br>## Wrong target o=
+r machine<br><br>| Command | Shows |<br>|---------|-------|<br>| `qemu-syst=
+em -M virt` | `machine type &quot;virt&quot; needs an arch: prefix` |<br>| =
+`qemu-system -M riscv64` | Same. Bare `riscv64` is a machine name, not a ta=
+rget. |<br>| `qemu-system -M aarch64` | Same. Bare `aarch64` is a machine n=
+ame, not a target. |<br>| `qemu-system -M aarch64:q35` | Target `aarch64`, =
+then `unsupported machine type: &quot;aarch64:q35&quot;` |<br>| `qemu-syste=
+m -M arm:sbsa-ref` | Target `arm`, then unsupported (`sbsa-ref` is `aarch64=
+` only). |<br>| `qemu-system -M aarch64:no-such` | Target `aarch64`, then `=
+unsupported machine type: &quot;aarch64:no-such&quot;` |<br>| `qemu-system =
+-M no-such:virt` | `target &#39;no-such&#39; is not available` |<br>| `qemu=
+-system -M AARCH64:virt` | `target &#39;AARCH64&#39; is not available` (nam=
+es are lowercase). |<br>| `qemu-system -M none:virt` | `machine type &quot;=
+none:virt&quot; is not available for target none` |<br><br>## Odd strings<b=
+r><br>| Command | Shows |<br>|---------|-------|<br>| `qemu-system -M :virt=
+` | Not a prefix. Same as bare `virt`: needs `arch:`. |<br>| `qemu-system -=
+M :` | Not a prefix. Unsupported machine `:` / needs `arch:`. |<br>| `qemu-=
+system -M aarch64:virt:extra` | First colon only. Name is `virt:extra`. Uns=
+upported machine. |<br>| `qemu-system-x86_64 -M aarch64:virt` | Prefix `aar=
+ch64` !=3D `x86_64`. Not available for this target. |<br>| `qemu-system-aar=
+ch64 -M aarch64:virt` | Prefix matches. Run `virt`. |<br><br>## Intended gr=
+ouped `-M help` (no target)<br><br>| Group | Contents |<br>|-------|-------=
+---|<br>| `none:` | only `none` |<br>| `i386:` and `x86_64:` | pc / q35 / i=
+sapc / microvm / xen / nitro |<br>| `arm:` and `aarch64:` | `virt-*` and 32=
+-bit ARM boards |<br>| `aarch64:` only | sbsa-ref, versal, zcu102, imx8, np=
+cm845, raspi3/4, ast2700 |<br>| `riscv32:` and `riscv64:` | RISC-V boards |=
+<br>| `microblaze:` | petalogix and xlnx-zynqmp-pmu |<br><br><br>--<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=
+=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</di=
+v>
+
+--000000000000737f72065c2027c1--
 
