@@ -4,103 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57738C9830B
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 12:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4823AC9830C
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 13:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9MOG-0002e0-A6; Wed, 23 Sep 2026 08:48:00 -0400
+	id 1x9Mfe-0005zo-MG; Wed, 23 Sep 2026 09:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9MOD-0002dk-Am
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:47:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1x9MOB-00037b-OS
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 08:47:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790167673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
- b=Z/YQ+p0aK9MXYoQdJVxTHWnLw3s1UMBA2AhxmD26iBXCwt16iD+KRt+zsx53iDj77DuEA4
- ZORh/GnpxK561EUFSFqEiePHQL8G3yeWoA6QB82dOlRBqzzXsuoKhQM3nKdOWEBQ0m3FQY
- HY0YdXPrrY8buZB2imAAD6MACVq/d0U=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-qlwBd1i0OayP3pXyXvoEKQ-1; Wed, 23 Sep 2026 08:47:52 -0400
-X-MC-Unique: qlwBd1i0OayP3pXyXvoEKQ-1
-X-Mimecast-MFC-AGG-ID: qlwBd1i0OayP3pXyXvoEKQ_1790167671
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-486f3dbf7d2so909580f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 05:47:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790167671; x=1790772471; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
- b=nYXZZdk/nsSjCzuWhLkdFCTQWS0wz2ZjGoJAopT+dC5h5vK3O2sDRoZ+kFz/jY5uK2
- yMMUelGDqzHCpXRqoVulngh9nqFrpIM01YI1w1aKmC6KASNU0Ie5iM2vbCFwHvvwCoaJ
- r73SAT5za8urQQegE4dq0u2UTDXKGZT0DIv3JdBjB/yeY/4Y1EEcdMNkM8l31AasHZyA
- RFQP09+KQa9HpEoySreQHicswaALxIh6tzLOhuOXFI0tDl22EVukSmgLdLwWOLJWJboV
- ObGbK4Emp4YFEC5UbRy8NCVH4IRD3kswcuDAuypzZlKs/krj+BeszwV8GzTvC/dKWJxn
- cLGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790167671; x=1790772471;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=paF8CjpgDLCoqjf2gPrt4hqs+WsAj0bpqYw16w1K67U=;
- b=KsDY4Q+h6e1HIsXpyxs2r/EmhhK9IUyGPhnksrwABuCrXPkv2Ksmb5vApMHKd3fsmw
- lKvyJaKunb6c1Nm8zASqLAk0ef2D7z2AekhJjnQXTx+2KTkEhe0/qKuw/z5yCzwpJr3Q
- EigZBtC4TXaeGAtEuQtKAK6CeeZXDIrwKPUEA1Z1NYrwPI2kzJDWzhfUUcNIspdBbKbp
- 2TlPa6qQdGHzinAkWGlxibsIwuuFi2wLgELXw1Wg2oZgn6BRhYKjcUuVGcA8eO4qIm7U
- jpou7o62e44ueK9lwRYbIzp8EhrhOy8tZP28kCgWu7kzaAwyW/uaw2Q48t6LRlyzmINJ
- IHGw==
-X-Gm-Message-State: AFuF++nfoXO9GfG46XmMQRMSomGwWdQRvfpMpF3NBmlIcGmjqzLq92l9
- ksPCkoekKQ3zgTTwuOQmK+AB2Iw630RNPvuZt2BhpfOtAyflEcgQgvIiHs61q/lUYsRSnGmb4A6
- wYl5jh1CkmBNi3+aP2EuneIB8MDnWePE3UBmtZueCFBjzIamTjG6HCJxrqCc4/+5qI6S4OUrL4a
- twEsoQW6CN1cxRqb3BFff/FB6suIvWLHhoC4bb6FRo
-X-Gm-Gg: AYBFou1VEGgMVCD8IWtdWwG1YjJf1YdVROd0KsPsNFO+Tkmbs8jjeE5Am4ieVeup0lu
- xlQHHQ6W58fy1wfoAZIzGpGaZqFydJt5PPB3QXBwcEp79AhNVdE0ztYSRoM32dWXvLMefAuXR50
- xkKUVMQrPfPC/v1EgDlJtDiiqihfMTcbeA7o9H78kNEgwMOkpuYc5Z5dMQF/7t5c9YpSx1ilNu0
- Q7M4RKx58AMnYpdagMjNtZ1ZLJg/Pdd8qp7ZmyA2FFB461doE8zE1O6mi7nJV6UnN/2BzVpeRv1
- gFjvXmzkKY64IaVO+8XOUEyck14k6QD+Tk7qbQnc6NA8NWsgPTuSUhacOouavDaLJXHM2NE8vfb
- WrbTkIJY2buBnZcZ9SM4aw+PHuaPv/B279CIGQSWM9x29lzJ+hj3t3CFVihOQ2xNgAlE/tHFtmy
- zMd+G1
-X-Received: by 2002:a05:6000:41cd:b0:487:342:d143 with SMTP id
- ffacd0b85a97d-488670a0390mr4151889f8f.33.1790167670964; 
- Wed, 23 Sep 2026 05:47:50 -0700 (PDT)
-X-Received: by 2002:a05:6000:41cd:b0:487:342:d143 with SMTP id
- ffacd0b85a97d-488670a0390mr4151840f8f.33.1790167670486; 
- Wed, 23 Sep 2026 05:47:50 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.232.249])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-488682668e7sm7958890f8f.4.2026.09.23.05.47.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 05:47:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x9MfQ-0005yy-Sa
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:05:46 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1x9MfN-0005le-3c
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 09:05:44 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 303EC21B0F;
+ Wed, 23 Sep 2026 13:05:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790168733; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+O15SXI4V8AbygwSjXTNDmq7kvRn4gtEmkHVLbM0oXU=;
+ b=FQRHvWgjXXWutuJltFv1fGRagzMos4cRb+HOjsqUZXyBe0bUTKspYbTPUbKzmC/VjCfSfN
+ vxlqiY2CuPSr8UEhk3E7VcEGltfdFxDsPfP0Pt2fCQgkvmGjYNCD0Az7T9+HQlKWTXjvA0
+ zDrlc3+7m97VQDirCX7Oz4GI4S+j2rw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790168733;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+O15SXI4V8AbygwSjXTNDmq7kvRn4gtEmkHVLbM0oXU=;
+ b=K9W23yGnesPPcV74fZNs6J/4e/gWYqSxvLQuIp7Dwi0cY2jJHscI4/0GNtHFf7DAaBbQe2
+ 1PcaCcqZeMdLakCg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790168729; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+O15SXI4V8AbygwSjXTNDmq7kvRn4gtEmkHVLbM0oXU=;
+ b=VxEi8VxkfeHYkG40xg1wBIwWvVeYpw1YGWCaKfXrTFFh3lmglOWmE7dqMXU9bNYkIMTwSh
+ 3e1SE2FSsmatB1t5tzLyZUegwzhnHoTjvVGiWS6pJUSS6lrolWFrSwDtjH5eAxtGMXzGxM
+ 50e7kfeDWmb8iFhHxKRw6qXmnMsJEzA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790168729;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+O15SXI4V8AbygwSjXTNDmq7kvRn4gtEmkHVLbM0oXU=;
+ b=H1ZjdhQraPeboKdSziNnvkXmOY9PYJHM2Y9aUmfaeHh8Q1RqBT/3NZ5ejK3u3XJ8AlgpxR
+ mHJStrWUnrHfCoBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A3D5213A6B;
+ Wed, 23 Sep 2026 13:05:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cQhuEpjOs2oXDQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 23 Sep 2026 13:05:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] target/i386/tcg: fix REPScalar with memory operand
-Date: Wed, 23 Sep 2026 14:47:49 +0200
-Message-ID: <20260923124749.273446-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Doru =?utf-8?Q?Bl=C3=A2nzeanu?=
+ <dblanzeanu@linux.microsoft.com>, Magnus Kulke
+ <magnuskulke@linux.microsoft.com>
+Subject: Re: [PATCH] accel: Fix qtest deadlock during unplug
+In-Reply-To: <20260918140037.3082357-1-farosas@suse.de>
+References: <20260918140037.3082357-1-farosas@suse.de>
+Date: Wed, 23 Sep 2026 10:05:22 -0300
+Message-ID: <87ld8s9kz1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ URIBL_BLOCKED(0.00)[gitlab.com:url,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,32 +119,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By the time validate_vex() runs, e->s2 is not used anymore and
-decode->op[2].ot has already been filled in by decode_size().
-So it's the latter that has to be adjusted, just like before
-commit b7d4ec4832d ("target/i386/tcg: move VEX validation early",
-2026-08-26).
+Fabiano Rosas <farosas@suse.de> writes:
 
-Fixes: b7d4ec4832d ("target/i386/tcg: move VEX validation early", 2026-08-26)
-Reported-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/tcg/decode-new.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> This is a revert of one hunk of commit d5e33b5f8f ("accel: make all
+> calls to qemu_process_cpu_events look the same"). It regressed
+> device-plug-test on ppc64. Run this in a loop and it deadlocks before
+> 50 iterations:
+>
+> QTEST_QEMU_BINARY=./qemu-system-ppc64 ./tests/qtest/device-plug-test -p
+> /ppc64/device-plug/spapr-cpu-unplug-request
+>
+> The deadlocked stacks are:
+> T0:
+>  #0  in sigtimedwait
+>  #1  in sigwait
+>  #2  in dummy_cpu_thread_fn (arg=0x558ed4db8eb0) at ../accel/dummy-cpus.c:52
+>
+> T1:
+>  #2  in qemu_thread_join (thread=0x55e3803dfc60) at ../util/qemu-thread-posix.c:554
+>  #3  in cpu_remove_sync (cpu=0x558ed4db8eb0) at ../system/cpus.c:633
+>  #4  in ppc_cpu_unrealize (dev=0x558ed4db8eb0) at ../target/ppc/cpu_init.c:6967
+>
+> What the test does is to queue a cpu unplug request to be executed
+> during system reset. So we end up with two cpu_exit() calls affecting
+> the dummy loop, one via pause_all_cpus() and another via
+> cpu_remove_sync().
+>
+> Moving qemu_process_cpu_events() to the top of the loop has made the
+> release of the halt_cond + the read of cpu->unplug not happen
+> atomically regarding the BQL anymore.
+>
+> One cpu_exit() call will cause qemu_process_cpu_events() to make
+> progress, the BQL be release and the pending SIG_IPI to be consumed by
+> sigwait(). But since the BQL is unlocked, the second qemu_cpu_kick()
+> invocation can execute entirely while the BQL is unlocked and issue:
+>
+> i) another broadcast on halt_cond, which will be queued and,
+> ii) another signal, which will be discarded
+>
+> After the sigwait() returns and qemu_process_cpu_events() executes
+> again in the next loop iteration, it exits right away due to the cond
+> already being posted, but the sigwait() call for that loop won't see
+> any signal. The thread cannot be joined at this point so there's a
+> deadlock.
+>
+> Since the dummy_cpu loop is so simple, I think the best way to fix
+> this is to revert that part of the change and move
+> qemu_process_cpu_events() back to the end of the loop, where it will
+> be within the same BQL locking window as the cpu->unplug check.
+>
+> Fixes: d5e33b5f8f ("accel: make all calls to qemu_process_cpu_events look the same")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2861429046
+> ---
+>  accel/dummy-cpus.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/accel/dummy-cpus.c b/accel/dummy-cpus.c
+> index 5752f6302c..225a47c31f 100644
+> --- a/accel/dummy-cpus.c
+> +++ b/accel/dummy-cpus.c
+> @@ -43,7 +43,6 @@ static void *dummy_cpu_thread_fn(void *arg)
+>      qemu_guest_random_seed_thread_part2(cpu->random_seed);
+>  
+>      do {
+> -        qemu_process_cpu_events(cpu);
+>          bql_unlock();
+>  #ifndef _WIN32
+>          do {
+> @@ -58,6 +57,7 @@ static void *dummy_cpu_thread_fn(void *arg)
+>          qemu_sem_wait(&cpu->sem);
+>  #endif
+>          bql_lock();
+> +        qemu_process_cpu_events(cpu);
+>      } while (!cpu->unplug);
+>  
+>      bql_unlock();
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 8d1e581cfde..26f6d6277be 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2671,7 +2671,7 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-             }
-             assert(e->op2 == X86_TYPE_W && e->s2 == X86_SIZE_x);
-             if ((s->modrm >> 6) != 3) {
--                e->s2 = s->prefix & PREFIX_REPNZ ? X86_SIZE_sd : X86_SIZE_ss;
-+                decode->op[2].ot = s->prefix & PREFIX_REPNZ ? MO_64 : MO_32;
-             }
-         }
-         break;
--- 
-2.55.0
++ppc and mshv folks
 
+@Chinmay, just to make you aware that there's a broken test for ppc
+
+@Shivang, we're discussing about cpu_remove_sync() down in this thread,
+maybe that's of interest to you. Philippe is suggesting we could maybe
+move the call up a layer.
+
+@Doru, Magnus, for your awareness. This bug is about the dummy
+cpu thread that qtest and xen use, but the pattern of coming out of
+qemu_process_cpu_events() and unlocking the BQL is present in mshv as
+well.
 
