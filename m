@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2832DC9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C84C98315
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9kdK-0003k2-Pa; Thu, 24 Sep 2026 10:41:11 -0400
+	id 1x9kdI-0003iG-Pw; Thu, 24 Sep 2026 10:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9kct-0003Sw-8z
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:45 -0400
+ id 1x9kcp-0003Qd-Ij
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:40 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9kcq-0004Yu-KL
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:43 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x9kco-0004YA-0F
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:39 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OC6F1N1009604; Thu, 24 Sep 2026 14:40:39 GMT
+ 68OC6QAn2028664; Thu, 24 Sep 2026 14:40:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6obO0Y
- 0/nzKyGLLRCIa7C7WxFCgkgaTn097GJOWAVig=; b=SLzug00Y7M2954XIErebZb
- 7KDo+Xpoc1PWpKBfodeV2hCTDPcNM9ZD9qnyltGzoZ1ltshgifKKm2kWUKY73VGQ
- +p1Y0Fi7XdtfKlLh8Yh6skLE2eGEcMqxl0voeFQIvqjxc8D/rLbo4e6MVVJWMSIq
- +cqPsFqKASF9BJySE99ZSW5odPUQ4YofUtAbVHtzc0K03f2YDc0DV9eUKE06p1sh
- 9knqVPoW231PrRVzMolgviFfmAqJEeP8rZ/E35YiDNQm372//GDCQt+/24B0xg8B
- TFUmMV/IBTAnxsGATO1QhuAPgPewMtY+Ruv1+YFi1dz+DDu5i1amNp6+jt9Xklbg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=9bDV08
+ Jmwh6JRh6rrYAlnyokrdxAuIEUpc1OuGF7CUw=; b=pDC5t/Gz0UlM0PT4R7Vzo0
+ n5xNdTXFtJxxZP3hp+mVk6U7Fo8q8tUcHBcQHuXoUVYTZdJ6NtpPcq0qYbFcIqZc
+ VC3Dcyi8i8zx4CN+L/d4G6qqc9ySjD36GU3d0++WuDjN5m5wdg+fbtsGMxEFwCId
+ dId9X2FVzJRuSFSzo+fQUqpGxFNNONjaWmE2JEMpnspqWwcnGiCf9cfb1N5Bhu+J
+ ls76HPLdDE2rKeNVKWw/T7HIxFCTaSIf4UzwgHmHFyDZg9MOdxz+qXnU0L7yAFN6
+ /M0AZ7IWyQgw0WqdheZiZdVrgFLcvtFYgirWxWm1K4Gwo7+4oUA+M2X21LHmKoMg
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqrx4b-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1s2vv-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 14:40:39 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OENmYT2245773; Thu, 24 Sep 2026 14:40:38 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jx9sr-1
+ Thu, 24 Sep 2026 14:40:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OEOoY02194320; Thu, 24 Sep 2026 14:40:36 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt2x5t7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 14:40:38 +0000 (GMT)
+ Thu, 24 Sep 2026 14:40:36 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68OEebHG31982328
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68OEeZFj17826450
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 14:40:38 GMT
+ Thu, 24 Sep 2026 14:40:35 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B893B58058;
- Thu, 24 Sep 2026 14:40:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ACE8358059;
+ Thu, 24 Sep 2026 14:40:35 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 308275805D;
- Thu, 24 Sep 2026 14:40:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1B43658058;
+ Thu, 24 Sep 2026 14:40:35 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 14:40:37 +0000 (GMT)
+ Thu, 24 Sep 2026 14:40:34 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: armenon@redhat.com, marcandre.lureau@gmail.com,
  Stefan Berger <stefanb@linux.ibm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 09/10] hw/tpm: crb: Consider response_buffer->len of
- received response
-Date: Thu, 24 Sep 2026 10:40:25 -0400
-Message-ID: <20260924144026.953360-10-stefanb@linux.ibm.com>
+Subject: [PATCH v2 06/10] hw/tpm: crb: Do not clear internal buffers when
+ backend is busy
+Date: Thu, 24 Sep 2026 10:40:22 -0400
+Message-ID: <20260924144026.953360-7-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260924144026.953360-1-stefanb@linux.ibm.com>
 References: <20260924144026.953360-1-stefanb@linux.ibm.com>
@@ -77,30 +77,30 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab53667 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: xggpW3WY5_hgcreYM31QC2hMV1A5tziA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfX5xQSM5t7e9mr
+ NTn+qRkz/raTmnYTxmnr+7iG/5YZEAQz3l0TyB8wEJKQrE4WDuziD9EA1mhZSuR7nLN71mYj259
+ tnYROrsEJuaiS8McVCkGpKuFQc1Zi9xN8U9IR8bO3oGRUfoZxdSJR/8mgQWjYY5YUnojk7gRTVd
+ qpMJzlMrFSyO4he8cxrdVUqXrkRBPoje4EWkphVdwV1j1BR/el81S6L/W01B6514sc0G6HXRzZ9
+ OkEzBEBT9V2X5fy2idw7jnT4Z+15BDMjj4kQLVriRT8PGiK9N9YkcTPjgPPXvp05ZUZka99uG8k
+ 93NpKtrGpp25SpsZzfk0nG6LxLnnTx1O4IVsDcF7xI8t9DVEGLS6zD2FEwZP2QKB0EpI58gqsyu
+ o0aKjx012Ht6G/U2iSzwE6Dh6U9eXQ6RWBzf4LqtvRIuB97ZSruI2k6YB41ApjopyY6oMZvQd2l
+ zH7E/Z9hO4Uglfu6yjA==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab53664 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=rD1lyLEvv5Bxigb_1PMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfX+wTQLBiYP4ej
- so8V+eowAvkhJKC2XaNFkdGRIPbaeKYWpryr0s2C/DS0v2u3claGsyrQzygnqSP4MVTrjDBBo7e
- s4pIb10LwVuFWhFKLee80YcqhGNaCOqaq5v2piaDsL62C+xJE+tK/lG0lVclZ6K2z3r0+CT4rXN
- 3om4MFyFjgE7/9kB0MciX0hhNBI/+OFvu7rFGfn9h+lFhKG/d3g7Vx/OaTcXvmaEm6H2GGm5raX
- tD2BHl5LRekebqRfXVgk1+uAWU/2dpnlOmRWCSocZnigdKY3g8X+v+XMkYF7hwH8VAzATJiGIsm
- 7Z8QzMBmL7PeGjGe4c9Fn7kWImOt/kZTI2UXTpoeO57Np51Ofnc+YkqDZ0t6844gT60wLdRq9rE
- UUaq0y3N/5ODOjOg9UADu6DbYVKHjDsufTlOlQazXyYSQVkAd1ypav/uQQ2KhOKo9B8yRpMO1UX
- Sr9onIIWmOtSltz8fgw==
-X-Proofpoint-ORIG-GUID: HoWNwsBBNuaGEiUsbtHX39aC0xiBlZJ9
-X-Proofpoint-GUID: OE2gRIX2WpN-i0AOpzzesvsWMaybVb-S
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfXwGjP3aF5xDpa
- 8dl1g1GYDYpCdKsj0+QbBoI4J6bf11MQXASTOhMr4XSf2L4V9Yd7U57PwjcJZOzMNivU2Hmsg5B
- 7LB/Gh6dBG7Nz6DAFXKj6TejW1PuZ2k=
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=BuBLyuNp-ztxktVGuZUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfX/OW32f6A9ihy
+ z0PAj86OLg3MLDoZ51qwvkxWxCD5MXtkf3q8iEVR7rhyPqqaCMYB0ZxKEJdQtQ4+pFvXA8Ppf3N
+ WqWbZaZ1WDtn7Yn5YkuzMQciRDKsj/k=
+X-Proofpoint-GUID: PCNljNAddMhqEnX9zvBTzejvrgqfSdFx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240060
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
@@ -127,40 +127,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the CRB receives a TPM reponse from the backend, then reject responses
-that are shorter than the TPM_HEADER_SIZE. When determining the size of the
-reponse, also consider the length of the response_buffer as being possibly
-shorter than the negotiated backend buffer size or the size indicated in
-the response itself.
+While the backend (thread) is accessing the request and response buffers,
+do not clear those buffers upon a command cancellation. Still clear them
+in all other cases, though.
 
-Fixes: 2a660ad67d15 ("hw/tpm: Implement TPM CRB chunking logic")
+Fixes: 29315d22b259 ("hw/tpm: Add internal buffer state for chunking")
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- hw/tpm/tpm_crb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/tpm/tpm_crb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 92d36608d0..5c6965f447 100644
+index 54fa2042b5..e5e33a3a2f 100644
 --- a/hw/tpm/tpm_crb.c
 +++ b/hw/tpm/tpm_crb.c
-@@ -325,13 +325,15 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
-     CRBState *s = CRB(ti);
- 
-     ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 0);
--    if (ret != 0) {
-+    if (ret != 0 || s->response_buffer->len < TPM_HEADER_SIZE) {
-         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
-                          tpmSts, 1); /* fatal error */
-         tpm_crb_clear_internal_buffers(s);
-     } else {
-         uint32_t actual_resp_size = tpm_cmd_get_size(s->response_buffer->data);
-         uint32_t total_resp_size = MIN(actual_resp_size, s->be_buffer_size);
-+
-+        total_resp_size = MIN(total_resp_size, s->response_buffer->len);
-         g_byte_array_set_size(s->response_buffer, total_resp_size);
-         s->response_offset = 0;
-     }
+@@ -218,8 +218,9 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+         if (val == CRB_CANCEL_INVOKE) {
+             if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+                 tpm_backend_cancel_cmd(s->tpmbe);
++            } else {
++                tpm_crb_clear_internal_buffers(s);
+             }
+-            tpm_crb_clear_internal_buffers(s);
+         }
+         break;
+     case A_CRB_CTRL_START:
 -- 
 2.55.0
 
