@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B22C9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 15:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B203C9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 15:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9l7X-0007PP-FV; Thu, 24 Sep 2026 11:12:23 -0400
+	id 1x9lCd-00082w-AQ; Thu, 24 Sep 2026 11:17:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x9l7N-0007P0-U4
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 11:12:15 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9lCN-00082H-HE
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 11:17:24 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1x9l7L-0007Zc-TA
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 11:12:13 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4843f22dcb8so1742228f8f.0
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 08:12:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9lCL-00085B-PT
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 11:17:23 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ d9443c01a7336-2d747eb79f7so10767625ad.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 08:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790262729; x=1790867529; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=+PQR+eqxcVamVNTap4NHUqqpbuQIVUPJcDXrPqwwpbA=;
- b=afNQsE1+jaH26Hv+fZyzYeWcE6ahD1Tg9xbFr1SK80BGguP2J3gk9Br7MZsOvYaNfI
- SZRePxolwF/CdLxT6SUZCb7ooMRpUpDRIoA1KBeMl7bqu7+9Xze6bzOK1P2V0ACBXEpj
- Es75fNyKWiE7HfgWuVWqI8EwWC/jwJStnHPMFuE7SgksLPf8DJ/Wh9AyoYaTLtyf/sWg
- 0aqAchljVSZ0NN7nkv8Z6hh/WMXGYyfh0EP4IaZO5AV8yFpnu67cquBq9LINVyFX3Ewl
- o2lnmB9R6qs60HTt0DX3wZLlWR1nuBTNc/CtJ+3GrODxHe0YzEnxX5XAY/umjVIBn9H9
- C8AQ==
+ d=linaro.org; s=google; t=1790263040; x=1790867840; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZDyAbh2k4zuANURvukD7Ar/quf5F8yQoKNnpcLV2qsc=;
+ b=KtfbH/BYuVNHxpIa6tnQklj962Jiu9ufGXjPqQaHKQxlA4ksLayClVJ4OdiHRlBpIX
+ L9vbLm9tKJ+NiemM4HbY+XMHWs9HuYVbrRLwZzwFB2f0HtzhJX158oEGMzGatDTwqckv
+ fLFfutn6ZtSygYRz1gI2vXbxj9/jqajj+oK1abshyjE55xUFUyOf4wD8mlzrflzqOxik
+ +ytEF619fxrL0kyQ6rStWg6vWMwcXrDT09OxrX9lJMQKzn6Hhqu3KiX1KZFNDCGGjdYB
+ HnIE7cw+zXQzZOzimxyTXWAUQERBWegeQLoIkNSFJ2Z0Uq3yuXyAT6/3FKZqPLD6a6pr
+ DREg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790262729; x=1790867529;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+PQR+eqxcVamVNTap4NHUqqpbuQIVUPJcDXrPqwwpbA=;
- b=X8Noinj6nCEF6GIjs/G9B/vlF419o8DvuKmvepIcvBNTeFiT6/A2RzLJJ9Mbr76+H2
- oR31I400MKiDbE3HFOGt0EFtyQqIUZxQx1b/1JTgSCPBwP5xVexA5ckm5iDocJxfdejC
- 79EOcnL3cSQkzzmEvRchVhgyDlHqr21C6PZYMrJVKyRYT4ir282WYPrGs7urJpBANNZE
- XhctcCb2rfAv7Kc9NTAzbh6ra6RtkM8rJkttN//FgOgF546QUXaz6qjjiHwDsGargnOd
- /8Qe8JdHSADtMgDzYzHmcwmoGKHxsRuLasjnTqTnOC0zfB+HjotNcBr9Dbah+nMxudcQ
- D+og==
-X-Gm-Message-State: AFuF++lKiy/E5yz7lNz3UgYvp/vvr/Y8Qpb64x7agEbogNCRPOnhzmhN
- yKWFipEmRdB0WeNgtjTbkEVcKJosaHosChkqAuV8+/zzGwHw8p3pt/zrzHbKEdLV15hO52odzny
- p0hdd/DQ=
-X-Gm-Gg: AYBFou1fcgLdgFkwGMK+7hh63C7qoLhuD1g093RMqrOzaYuzIt36XNVDgd51Zp9lTgA
- 3eZldpVS1vlvbJrCcKn2tYq857ksAdUZNk6IWhvjX+TRf2dnrwYvymgDZe5r31GW9MV9JzNqqBv
- 1TlERIoK8XbwIEsdISESi/If6V+RQQh+VEkz0puuwobG3S16drc184YVtbXnN/Kys+dvPiWho4W
- bnLRnHaN5CpNtl8m4TCjwmIj8FcKKmBVE6QnNBmRzAq+UvmYXSjZd5gE0R6udNYiwQX7KfoVc8A
- wNpdEX02+c8xm4MNL6FCbPBJqkz1X44Ft7J2r622fyLNlA0nbGl1CVva9Xfz6Oj9focq0PC2oVL
- JR55Vw32lzHA+oWCUl3PbEWxl+nLIh1Vgl6DkxxvpfoxZfPdaaawm0clQNYyC8KS6tgHehnJJ5U
- C/mZXmHKBIMay5mw68XaiHrA2Qb5NDjR4S9XnO64skwqK7JJSjNlrSvOHDAoUkriQ6h2mN4w==
-X-Received: by 2002:a5d:5f8e:0:b0:486:e737:d94b with SMTP id
- ffacd0b85a97d-48871974c2fmr4649174f8f.51.1790262728797; 
- Thu, 24 Sep 2026 08:12:08 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-488688893a0sm16171123f8f.32.2026.09.24.08.12.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Sep 2026 08:12:04 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D0BEE5F832;
- Thu, 24 Sep 2026 16:12:02 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Thomas
- Huth <thuth@redhat.com>
-Subject: Re: [qemu-web PATCH] contribute: define clear limits on bug report
- volume
-In-Reply-To: <20260924135634.2626603-1-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 24 Sep 2026 14:56:34
- +0100")
-References: <20260924135634.2626603-1-berrange@redhat.com>
-User-Agent: mu4e 1.14.4-pre4; emacs 30.1
-Date: Thu, 24 Sep 2026 16:12:02 +0100
-Message-ID: <877bkaznst.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1790263040; x=1790867840;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZDyAbh2k4zuANURvukD7Ar/quf5F8yQoKNnpcLV2qsc=;
+ b=y4HnCG7SvaVioIYv14ryI/14Yf8NY/IIhG3jvArXRx/KSTGVnmMrkfa8l890yM8g6R
+ KVDVn+xRKyfBqdJnWfu97ffnSLmDVnQpDZX7Ia1UBrQJxIDdrWiOJA0mU4bNRng1CFDg
+ KV6hk0Q7lT1WcOWwBGoCjkzyTxYt0LTrfVQZ0RHiOncFdG8yZi8BDcYMOdX6ZE36SJQ6
+ BuEZuLdcllIMVt00GQlLc5yLcTmE+VKEBRAUZdIusFxkUPqt/K4A1bp3xWaAr4w9kcgX
+ Os97d5t8Cp/Al9efor4jNl/Mv7RLE6/77/qMxCZYvk2H+OfEVUBHKu0HfskmVuPYdlIW
+ j5Ww==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzKvOaTHyEpng3G1AHJbiIrdnGnAgtqPwS3Aehuis23szL2hnGdtcsiG0lto8NAYX0JvzQXZ/hlMG9v@nongnu.org
+X-Gm-Message-State: AFuF++lHYRTdjTba6fhKtMqGtwHlj0vmHDWrhcvrntdNfINJkpmKPFei
+ cM4kvdeojvy5pLJkDnwb5TP9Sje0WifVG0ovDP7GvsVhEl+xlwKEjEnIvt0WpWH4KkI=
+X-Gm-Gg: AYBFou1+IgIBdbU1iXJ6l4erqqp7206ITQOKbmNRpy+K/JuLBocAjYQ0RAVoekC4Xv8
+ zzO+j53ccZD5mQq/GPZmrYSDjCbRV1bVc4xIrDaYWC85hdBjzaXoFrgBrLcJ0R9xLTxLm8bQOV1
+ 7r/mOLfw5uN79vQQ+M7O29JlUWNALiyIu3p24eJYnadXM0jTEv4xtpzqLxLYowlgRBHVr1+4TYv
+ vBJjv/UvG8KxuE3qQTzwmneIyzW/31fAI+y9aJkdV2UzXY2VyMhPdrlrRSUrTsFD5ZUUJ5neRQW
+ wyhJM/xQd6YZAEr6JwJ5gWgdrBtYLq+8gHy4ut0fCeQU5wkZDSF/XjYDKjBDbrlL+j0L97pw0/R
+ 0fNWsfNODBjmdf6wLsKV7eeqxcIuRmiqVavyaKWPLG6GaaG0IRukrL+TAiMa92lvYWuGr6E7PX1
+ Ls/ouxANaxQ0kUcf0POYvIw51OfBB7RG24icocFoyvp0JKGSIFCg8NEbAe71FW0+y3BFMuGA5Rt
+ b8KuGzGl4oUuUk7F7gQY71icCeuRDIpu+uP9AiG
+X-Received: by 2002:a17:902:db05:b0:2df:5f26:16dd with SMTP id
+ d9443c01a7336-2df7dfd4646mr24333325ad.51.1790263039734; 
+ Thu, 24 Sep 2026 08:17:19 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2df6a6022ddsm29100705ad.76.2026.09.24.08.17.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Sep 2026 08:17:19 -0700 (PDT)
+Message-ID: <58073b08-9f64-400c-b8a2-acd0baa4add5@linaro.org>
+Date: Thu, 24 Sep 2026 08:17:17 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/17] target/i386/tcg: add decode functionality for APX
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
+References: <20260923173021.317809-1-pbonzini@redhat.com>
+ <20260923173021.317809-14-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260923173021.317809-14-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,95 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 9/23/26 10:30, Paolo Bonzini wrote:
+> +    case X86_EVEX_APX:
+> +    case X86_EVEX_APX_cmp:
+> +    case X86_EVEX_APX_pp2:
+> +    case X86_EVEX_APX_zu:
+> +        /* Only reached through EVEX map 4.  */
+> +        assert(!(s->prefix & PREFIX_VEX));
+> +        if (s->vex_l) {
+> +            goto illegal;
+> +        }
+> +        if ((s->prefix & PREFIX_EVEX) && !validate_evex_apx(s, decode)) {
+> +            return false;
+> +        }
 
-> Recently QEMU has received a denial of service attack on
-> its bug tracker in the form of 120 reports in 10 minutes,
-> and now repeated by another reporter in the form of 50
-> reports in the same day.
->
-> Prior to switching security disclosures to the bug tracker,
-> single reporters have submited 18, 22, and 114 bug reports.
->
-> None of this is sustainable. It is an effective denial of
-> service attack on the project maintainers' time. Every bug
-> report is a TODO item added to someone's workload.
->
-> It is time to put hard limits on how many bugs, discovered
-> with assitance of automated tools, we are willing to accept
-> in a givenm time frame.
->
-> This patch proposal suggests
->
->  * No more than 5 bugs per week, per reporter
->  * No more than 10 bugs are permitted to be open at any
->    time, per reporter.
->
-> This is explicitly scoped to bugs discovered with the assistance
-> of automated tools. Bugs where a human puts in exclusively
-> personal time / effort to discover a problem are not limited.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  contribute/report-a-bug.md | 37 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
->
-> diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
-> index b506f9f..8fb7b0b 100644
-> --- a/contribute/report-a-bug.md
-> +++ b/contribute/report-a-bug.md
-> @@ -32,6 +32,43 @@ on GitLab, taking into account the following guidance.
->    triage of their output to validate all findings and reproducer
->    scenarios prior to submitting a bug report.
->=20=20
-> +* QEMU policy forbids the bulk filing of large numbers of
-> +  bug disclosures that were generated with automated tools
-> +  (AI/LLM, static analysis, fuzers). Such actions are not
-> +  a benefit to the project, placing an unsustainable burden
-> +  on maintainers.
-> +
-> +  * **No more than 5 bug/security reports, discovered
-> +    with assistance of automated tools, are permitted
-> +    to be filed per week, per reporter.**
-> +  * **No more than 10 bug/security reports, discovered
-> +    with assistance of automated tools are permitted
-> +    to be open at any time, per reporter.**
-> +  * Reporters must refrain from filing any reports
-> +    that would cause these thresholds to be exceeded
-> +    without first obtaining explicit prior permission
-> +    from project maintainers.
-> +  * Reporters are **required** to respond to triage
-> +    comments from maintainers on bugs related to
-> +    automated tools on a timely basis.
-> +  * If at any time, the project maintainers request
-> +    the reporter to stop filing bug reports discovered
-> +    with assistance of automated tools, this must be
-> +    honoured.
-> +
-> +  Ignoring any of the above rules may lead to the bugs being
-> +  mass closed without further triage, even if valid reports.
-> +  In cases where the filing limits are grossly exceeded,
-> +  the reporter's GitLab account may be reported for abuse
-> +  (spam), potentially leading to termination.
-> +
-> +  If intending to file large numbers of bug disclosures
-> +  in aggregate, reporters are expected to invest their
-> +  time in writing patches, providing the patches for
-> +  review, and then further responding to feedback and
-> +  iterating on the patches until a maintainer accepts
-> +  them for it.
-> +
->  * Reproduce the problem directly with a QEMU command-line. Avoid
->    frontends and management stacks, to ensure that the bug is in
->    QEMU itself and not in a frontend and make it easier for
+They're only reached by map4, so surely
 
-It comes across as quite a draconian limit but to be honest after a 6
-months of dealing with this flood I'm less inclined to be polite about
-it:
+     assert(s->prefix & PREFIX_EVEX);
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+is more appropriate, and the subsequent test for evex moot.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
