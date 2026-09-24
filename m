@@ -4,113 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B3CC9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89D4C98324
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9kd8-0003Yi-CV; Thu, 24 Sep 2026 10:40:59 -0400
+	id 1x9klx-0008VT-To; Thu, 24 Sep 2026 10:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9kcp-0003Qe-Oh
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:40 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9kcn-0004Xs-W8
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:40:39 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OC65HV2190525; Thu, 24 Sep 2026 14:40:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DxcENW
- 3KcCsWxsl4uaYUZg4pvpzJWSU7O7BBPrbv1Ng=; b=GULzLUhKS2oxgRWggWTz6g
- kVfhGF05pHAnPun6uWqyWKp86JSxGGx5Es3e2Hi0UadsQ0a6NHwjiP5UkpGCyHIE
- bAJ9BIwR+UW6z5rw+sJUA61B+/ZAY5549yUtR/GLsppYm+L6zYaXlC6PynIfI3xP
- yNL/o09oVqt81YTFbfo1BmemBY9+c0934a8dL4grDr+730f7FJ7PQG8f5i+ACkpv
- Ujp8qC37g2pkKMUZMoMg19lp1Zgwq3gAdTD6tQqBXYC9IGk/gto0fMoT4u6n/J0B
- GhM0wxsw3PCu6c+BMvNPl7BtWwqDIfcWonmjyy52w/7O8J26uNQM3ep/pjOHSyDA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2sshq-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 14:40:34 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OENs592244447; Thu, 24 Sep 2026 14:40:34 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb6qp9u9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 14:40:34 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68OEeX0X25231996
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 14:40:33 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D7E358059;
- Thu, 24 Sep 2026 14:40:33 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF1BF58058;
- Thu, 24 Sep 2026 14:40:32 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 14:40:32 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9klb-0008Kx-1f
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:49:46 -0400
+Received: from mail-pz2-x0f.google.com ([2607:f8b0:4864:3b::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9klY-0005Ek-3E
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:49:42 -0400
+Received: by mail-pz2-x0f.google.com with SMTP id
+ 41be03b00d2f7-cc4c08393dfso1445428a12.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 07:49:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790261378; x=1790866178; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qDKqNNDlYfK6wn6XYvmytKMy0kJCAXt7Th72dC2Gd9E=;
+ b=vQtHFOSBxlfqvgvikcSoV9CR6mjt8DYxzY69ULq2oYw/rYSS5arL836jJxaS+uT1oq
+ bYESnVfKZkGMcFWJajKpqaL4K16nhy3WbtdycFb2sHP5pk1K7ceMelQEo1K0l3GAXuN4
+ DHdtteKCnw9YYKjd6GJsp0tH7Q0+LKlUfIEX05RpEnKia+t+b88iK604GQhw+WfueBsT
+ 8iDLf6GM+VBdTUjVZhPknpHO5/P9/NPaHeZIyZkqQXgXpA42qm6y+aq7aAGS04l95dBQ
+ snZX2NU9eK8tfyGW9EW3hHrgVjQCWvn9DFBpWBobpEuUHtQnGn3w1V9rZkwatqdrkWIb
+ aKBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790261378; x=1790866178;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=qDKqNNDlYfK6wn6XYvmytKMy0kJCAXt7Th72dC2Gd9E=;
+ b=N61LyUKETsuJykXL1C8dIWe9Ccn8Guy+qTk0vRcitx0dS02zY64vNMNGyYoifZuVHv
+ Luqwm/m8bdx8Gd/7vsdYoG+EYkBlInTpiEmXP9yPtnATJQdMYm5GvnfUIszM4MV72OIG
+ OpuuqmCQ1b9ZOMGA5hDIVf4nXNltvwXIgRMRPpZHkKwK9yiWCYVUk3sd3Z151VfYYKvZ
+ CQVhf7qDoZMWu+kSzDZ9yo9XKoXZ7XD03W+NRRh20jZw4LeyzAnDYQTcbd3uD/Wb6X84
+ Fz6EmqSfg6RONkRZgU8Tlne+Vfx/FDBR/sQSrTaMEhBgp+Nkmdjkb4vAxlevZaRKTWVN
+ AB8Q==
+X-Gm-Message-State: AFuF++m/98ydBOu8ik2e1ZuX9VyHTsCmYN1e9AAgwhFNxhA8xVaOSOUl
+ MPMiiODIP1PshdLNMdAbGk9lYi0h6d5WBJeK76tsK9nRER6z1ALjRHqZQrQRXA7oIK8PK+U3rv3
+ nIO4Y
+X-Gm-Gg: AYBFou207oLQ43SakWlKJKNPjQTMOqersSXzQU8JO8bfdZiB2Pur4QaeU0p6SKwq1iH
+ Kbehlv8KHwm0mGb75OG+C0TGm87X3pwmrKx8MqOYtlCcJWT+4veG+E9yJB8y1Ban+80EICHvCNR
+ zVAEZJAw77s8m3+Rtg8jm+XjBwgcSBOIBlNBtmSO8dXpdiLzVnul7V/Mi4pGdG5IPPkrfiqteXf
+ 4G49PNZEicTnBlfpJKRikRMYv9nCaa0iQ9PEuFRxYinCSnWg+KTz9zmOQfMHsIawgXMbrEgqRjl
+ oGFoJ9f1muhPDm+WVEvXLPMi22B5EJyLLe+rdrk7UtmWyHy0iL+IveEqjcP1c76m3FIzogFGOQq
+ tbheJbdJ/99vLEuCps/XbXihuWqMG8F4i1c6sy3xHCHSgBBXgHzpzvVZN/mjQJdXIG61Lz8as+y
+ atDWie1NpeHr7hn3jj+RFl+uQ0z354qrmjEYrEUH/QskQsMCqGCgVr+U2R6r0PVrdNrcNWGZH4f
+ EtUjl65Ck/YEoFNPUq63hrSR21OXg==
+X-Received: by 2002:a05:6a21:9198:b0:3dd:a007:cb2b with SMTP id
+ adf61e73a8af0-3de0e9bd6c6mr2540121637.39.1790261377769; 
+ Thu, 24 Sep 2026 07:49:37 -0700 (PDT)
+Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-87d1dad3978sm3209818b3a.34.2026.09.24.07.49.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Sep 2026 07:49:37 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: armenon@redhat.com, marcandre.lureau@gmail.com,
- Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 03/10] tpm_emulator: Reject sending commands smaller than
- the request header
-Date: Thu, 24 Sep 2026 10:40:19 -0400
-Message-ID: <20260924144026.953360-4-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260924144026.953360-1-stefanb@linux.ibm.com>
-References: <20260924144026.953360-1-stefanb@linux.ibm.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 6/8] target/mips/tcg: Use gen_mxu_logic for gen_mxu_S32SLT
+Date: Thu, 24 Sep 2026 07:49:29 -0700
+Message-ID: <20260924144931.161335-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260924144931.161335-1-richard.henderson@linaro.org>
+References: <20260924144931.161335-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 1WND5G0vL0rEfZZMwUqIZRWU4CUgcZT8
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab53663 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=-V7DfVYgi2RuJlZc1c0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfX1mQuiIQ2XYwd
- 9DFi/rIhUExYSF8xwY9La75pKLA948r2eMfIyiqNJ4Qhqe6dg0rxJoPgE8AO0Z+C68tVMMTT5ac
- pweegTIfUUrobwtD9Ln+zrhw4Ig5rNj3iIOln2RDJieT9S4A5LLXLv4qxsX225SfjQHNmunpX73
- 4XhU+CH7LDvWLjKXzKtbA5gnJf5ONga8mKHWcIFmP/zNnSmJb/X9ULicmWWSnXrAIGnuhQG4Xm8
- ix968cTC7QZuvCnmIi1H7hsc+R/WjLGV1DYjMd9V8xP5kY2fqCTpUEcwo6B4B9uccDcgXFziJKq
- sAn0tiyGvgWZczv+RDuR6GkXmdIdW4IFgvWniX/AXWK3RSTemNJLuKMsq3BegT78HF6R/5jdBxv
- JN89cJb9vNZq3h+890Wu/ynmKvQBz9ol/EI6ATFFUrbUk/pSC37P2iUCRXhbkBXTqVkmVODNCJd
- T9mrnK5SzVNLx8QWd3Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA2MCBTYWx0ZWRfX4iBg+vmpO+ll
- IcybYKj/SLSERCMhjId8KToYXrXuJaF4B4BJT+iUEiEgEEDfskhCSJ9LM1MBx3jjK8y+sJ2emFX
- k1v2sVentUSj+DMMEmC4uVU3t8wkBss=
-X-Proofpoint-GUID: -NF9kFCsbl8YqfAcFDyOGgEEMrS8bnvZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240060
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,33 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reject any TPM request from being sent to the TPM emulator that is shorter
-than the size of the request header.
-
-Fixes: f4ede81eed29 ("tpm: Added support for TPM emulator")
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- backends/tpm/tpm_emulator.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/mips/tcg/mxu_translate.c | 33 +++++++--------------------------
+ 1 file changed, 7 insertions(+), 26 deletions(-)
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 9c95b4d878..0c9e32f36a 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -181,6 +181,11 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
-     uint32_t to_read;
-     ssize_t ret;
- 
-+    if (in_len < sizeof(struct tpm_req_hdr)) {
-+        error_setg(errp, "tpm-emulator: invalid request size %u", in_len);
-+        return -1;
-+    }
+diff --git a/target/mips/tcg/mxu_translate.c b/target/mips/tcg/mxu_translate.c
+index 4b2c264f031..293eeb46c23 100644
+--- a/target/mips/tcg/mxu_translate.c
++++ b/target/mips/tcg/mxu_translate.c
+@@ -2313,34 +2313,15 @@ static void gen_mxu_q8slt(DisasContext *ctx, bool sltu)
+  *    Update XRa with the signed "set less than" comparison of XRb and XRc.
+  *    a.k.a. XRa = XRb < XRc ? 1 : 0;
+  */
 +
-     if (selftest_done) {
-         *selftest_done = false;
-         is_selftest = tpm_util_is_selftest(in, in_len);
++static void gen_setcond_lt_i32(TCGv_i32 d, TCGv_i32 s1, TCGv_i32 s2)
++{
++    tcg_gen_setcond_i32(TCG_COND_LT, d, s1, s2);
++}
++
+ static void gen_mxu_S32SLT(DisasContext *ctx)
+ {
+-    uint32_t pad, XRc, XRb, XRa;
+-
+-    pad = extract32(ctx->opcode, 21, 5);
+-    XRc = extract32(ctx->opcode, 14, 4);
+-    XRb = extract32(ctx->opcode, 10, 4);
+-    XRa = extract32(ctx->opcode,  6, 4);
+-
+-    if (unlikely(pad != 0)) {
+-        /* opcode padding incorrect -> do nothing */
+-    } else if (unlikely(XRa == 0)) {
+-        /* destination is zero register -> do nothing */
+-    } else if (unlikely((XRb == 0) && (XRc == 0))) {
+-        /* both operands zero registers -> just set destination to zero */
+-        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+-    } else if (unlikely(XRb == XRc)) {
+-        /* both operands same registers -> just set destination to zero */
+-        tcg_gen_movi_i32(mxu_gpr[XRa - 1], 0);
+-    } else {
+-        /* the most general case */
+-        TCGv_i32 t0 = tcg_temp_new_i32();
+-        TCGv_i32 t1 = tcg_temp_new_i32();
+-
+-        gen_load_mxu_gpr(t0, XRb);
+-        gen_load_mxu_gpr(t1, XRc);
+-        tcg_gen_setcond_i32(TCG_COND_LT, mxu_gpr[XRa - 1], t0, t1);
+-    }
++    gen_mxu_logic(ctx, gen_setcond_lt_i32);
+ }
+ 
+ /*
 -- 
-2.55.0
+2.53.0
 
 
