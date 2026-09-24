@@ -4,78 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F87C98311
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37150C9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9fxx-0008Gy-9M; Thu, 24 Sep 2026 05:42:09 -0400
+	id 1x9gCn-0004Of-CD; Thu, 24 Sep 2026 05:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9fxw-0008Gl-5b
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:42:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9gCl-0004Ns-Fj
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:57:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9fxu-00044P-Go
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:42:07 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9gCh-0005WG-Hx
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:57:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790242925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1790243842;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7ofisL8Z2XuZ5bHF10xXwu+SeNb/Lu9VAdKqc9FMqyk=;
- b=ELXKxSNCUGqLNqC3AGGNjYh3gIiNE5FPNZffFczZcXAH1PB3KNrRJOzjPo9u/VACkzwVEm
- xvFAjRiUVonVKerecAQcsl8hiIibHQB6QT3XoN7VgNrPCez+pp48Zk5ayawIzNF2B6bajF
- nGl8i7YGjZe6Qbrme21dlg7y2nKHv4c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-TNvKtmJdPzODGgzQQFyXLw-1; Thu,
- 24 Sep 2026 05:42:02 -0400
-X-MC-Unique: TNvKtmJdPzODGgzQQFyXLw-1
-X-Mimecast-MFC-AGG-ID: TNvKtmJdPzODGgzQQFyXLw_1790242921
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 749B01979067; Thu, 24 Sep 2026 09:42:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.118])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 268583000229; Thu, 24 Sep 2026 09:41:56 +0000 (UTC)
-Date: Thu, 24 Sep 2026 11:41:54 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-Message-ID: <arTwYindIekU9URW@redhat.com>
-References: <20260921075251.12831-1-pbonzini@redhat.com>
- <20260921075251.12831-2-pbonzini@redhat.com>
- <arEvLLYK9A5MKNdE@redhat.com> <arP7TDfz7lz699KJ@redhat.com>
- <20260923220502-mutt-send-email-mst@kernel.org>
+ bh=XPDUYn2sNH+tuYff9vyFITqIs0ucy3tacjD7MAHGCvo=;
+ b=Nf/8oCnHeACcdpJoVKdN3mGN1ZKXNuwIPQsBzeoqIcEq3CQN1B6e392GLDYf/ROz2su6Fh
+ QRWdIsHOT9aZG5fnCXQ3TDxbwFJWZ3F0R6VzBU//JI+8aVC3+/oM3qRf1e1E8CUc9ahJU3
+ L/jsp8GETl9Xj1kaAnBq9VSx+gDsVmU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-212-6-TGx29fNqWFaBt2VM9UJg-1; Thu, 24 Sep 2026 05:57:20 -0400
+X-MC-Unique: 6-TGx29fNqWFaBt2VM9UJg-1
+X-Mimecast-MFC-AGG-ID: 6-TGx29fNqWFaBt2VM9UJg_1790243839
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-486e8fb7d75so769936f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 02:57:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790243839; x=1790848639;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XPDUYn2sNH+tuYff9vyFITqIs0ucy3tacjD7MAHGCvo=;
+ b=2nbePefUmky4x9p49yOdMzbbcEeOMXcY/ndBeTN4FsUICuxgyQLLZFsVBSnPiMMTWz
+ tzHhLlDPq5rI3Aqx81FvPQ2y7iAyFKYijtx0Uk8srsh2vh3u2HTNBXdC9fDz0E0PP9C6
+ HvQZetbkkmErFQ9x+320uZG1n4XR8FUtYOCI7o7lhmSNX4grjEBJDI7hfJKMbTegdoR2
+ 18TgWc4jiQ8rMK0TESyDLKBbsFTYRKTws0VfIxCUBgxVpqrKUa8iuONX2xO3K6bA82Lg
+ uuK070RnSKzb15/PqqhufCJmjhhVkUBIT0NlPHjDHe9zO2PI0TuNG1CcamNV2TBVmk/5
+ 9TIA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzclCMnZC3/oG/KQTNEEGB4FSTn0o1YdogPXgiK05GOG+RJNeje/wFBgHIpyoB+3BYuc0XO8nwqrpDM@nongnu.org
+X-Gm-Message-State: AFuF++mZCtTO/mcRA3iVldt4hmxIt+9w8/Dj2ns4342qP17Rl6uAbLTJ
+ RRt8C0BlgydpHo9V5zdeEdDumdpm3+FYZG6R3vYfe4b+2UA9kvOS6j2d3+ioTrTtxU6iN1Ap7v4
+ neFp8yG29iByT/9OLEXcaDgX3OBMLrLK2DkCHQNA1e5A8hkfhyC5pcMKQ
+X-Gm-Gg: AYBFou0DfsVqEsO7SBvujB3zLu05oM6Y9jRZW53OF/X7lumhokjKiAkQhcxjcZoEOjq
+ rK//N4kzfODMvWWf3RD3YUcCghvMipUQvi7PgAKh99/g8TTRm0MJlr0I0EJWhk/xGecNX+VOrG3
+ zWbT4cYpZgrcn29cPKywvpCzLn0+d+i7NTkbULT754W6wou1MnpLF+keiyJ+J5X9gkeWhME3ju5
+ 2cIF2EgqMivaMfREJNAPPpI1zn2y2UKl5qu7+JrhelT1HvbnBNdOJyOT9x2LthTps9YZAWHqBYl
+ XCoCP//YMiWmz+8Bt9ZvHCGcmkUxU0ZIqW2h82FPvutD8WDNElXEPtMCu4MsDF0+/sMlMzjS+39
+ MDrsqg5wPxzDL0CWKCj5LGCeXXDflgjgdNWnAuA+Se+MbTZyC
+X-Received: by 2002:a05:6000:2913:b0:488:6078:8aef with SMTP id
+ ffacd0b85a97d-48871725c5fmr3067143f8f.20.1790243839459; 
+ Thu, 24 Sep 2026 02:57:19 -0700 (PDT)
+X-Received: by 2002:a05:6000:2913:b0:488:6078:8aef with SMTP id
+ ffacd0b85a97d-48871725c5fmr3067097f8f.20.1790243838957; 
+ Thu, 24 Sep 2026 02:57:18 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48868889337sm13769957f8f.34.2026.09.24.02.57.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Sep 2026 02:57:18 -0700 (PDT)
+Message-ID: <aabcb61b-8341-423f-b113-e7ab2b34c2ac@redhat.com>
+Date: Thu, 24 Sep 2026 11:57:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 08/25] target/arm/kvm: handle writeback for special
+ ID register fields
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ ping@khushitshah.com, sandesh.patel@nutanix.com
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-9-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260921123249.1708067-9-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260923220502-mutt-send-email-mst@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,112 +119,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 24.09.2026 um 04:23 hat Michael S. Tsirkin geschrieben:
-> On Wed, Sep 23, 2026 at 06:16:12PM +0200, Kevin Wolf wrote:
-> > Am 21.09.2026 um 15:20 hat Daniel P. Berrangé geschrieben:
-> > > On Mon, Sep 21, 2026 at 09:52:48AM +0200, Paolo Bonzini wrote:
-> > > > +.. note:: **Use of AI does not remove the need for authors to comply
-> > > > +          with all other requirements for contribution.**  In particular,
-> > > > +          the ``Signed-off-by`` label in a patch submission is a statement
-> > > > +          that the author takes responsibility for the entire contents of
-> > > > +          the patch, certifying that their patch submission is made in
-> > > > +          accordance with the rules of the :ref:`Developer's Certificate of
-> > > > +          Origin (DCO) <dco>`.
-> > > > +
-> > > > +          Since a submitter cannot audit LLM output against its training
-> > > > +          data, the DCO is paired with :ref:`metadata in the commit message
-> > > > +          <ai-used-for>` about AI-generated parts.  The DCO still certifies
-> > > > +          that the contributor has the legal right to submit code in general.
-> > > 
-> > > I'm not a fan of this second paragraph, as that feels like it is undermining
-> > > the DCO. That first sentence in particular is somewhat saying that the
-> > > contributor does not have to think about plagarism and thed project is ok
-> > > with that, and also implying that the DCO doesn't apply to the LLM output.
-> > > This is both not OK in its implication of the project accepting some
-> > > liability, and then also contradicted by the next sentence.
-> > > 
-> > > IMHO this paragraph should just be removed.  The first paragraph clearly
-> > > states the DCO applies to the submission as a whole, and leaves all liability
-> > > for infringement on the contributor.
-> > 
-> > I don't think making this the individual contributor's problem is great.
-> > It's rather unfriendly towards contributors to expect them to certify
-> > something that we all know they can't honestly certify.
-> > 
-> > Our current AI policy was built on the assertion that it's impossible to
-> > sign the DCO for AI output, and I think that's still right. A developer
-> > can't certify the origin of something when they don't really know where
-> > it comes from.
-> > 
-> > If we decide that we don't care as much about the legal risks any more
-> > and that we're willing to accept them to some extent, that should be
-> > explicitly reflected in the policy.
-> > 
-> > It seems to me that the cleanest way to do it is to exempt correctly
-> > advertised (with 'AI-used-for:') AI output from the DCO requirement and
-> > instead add to the 'AI-used-for:' definition some relaxed version of it,
-> > e.g. "I have reviewed the contribution for potential licensing issues
-> > and haven't found a reason to doubt that I have the rights to submit
-> > this AI generated content under the open source license indicated in the
-> > file". This is something that could realistically be certified by
-> > contributors in good faith and also isn't just "anything goes", but of
-> > course it still is weaker than the DCO.
-> > 
-> > If we're not willing to take the legal risk from this, we should
-> > probably leave the current AI policy unchanged instead of telling
-> > contributors that they have to work in a legal grey area.
-> > 
-> > Kevin
-> 
-> Which risk precisely? That a judge will close all LLMs overnight
-> declaring their output a derivative of the internet and so illegal to
-> use? Please.
 
-I mean, at least morally that would be the right thing to do. If what
-they did isn't illegal, that's a bug in the law.
 
-But no, I don't expect this to happen, but am referring to the more
-commonly talked about case of LLMs occasionally reproducing a single
-source more or less verbatim, which is what could give you legal trouble
-even practically speaking.
+On 9/21/26 2:32 PM, Khushit Shah wrote:
+> Some fields should not be written back to KVM for various reasons:
+>  - ID_AA64PFR0_EL1.GIC / ID_PFR1_EL1.GIC are fabricated by KVM based on
+>    the gic-version property.
+>  - KVM does not allow writing 0 to ID_DFR0_EL1.CopDbg, which breaks
+>    booting an AArch64-only guest on a host that also supports AArch32.
+>  - ID_DFR0_EL1.PerfMon is populated by KVM even for AArch64-only guests
+>    but is not writable there.
+>  - MPIDR_EL1 is managed by KVM based on vCPU index.
+>  - Hold off writing back CLIDR_EL1 until we properly support exposing
+>    cache topology to a KVM guest.
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  target/arm/cpu-idregs.c |  6 ++++++
+>  target/arm/cpu-idregs.h |  2 ++
+>  target/arm/kvm.c        | 40 +++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 47 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/arm/cpu-idregs.c b/target/arm/cpu-idregs.c
+> index d58b8ed063..1f7ebfe9bb 100644
+> --- a/target/arm/cpu-idregs.c
+> +++ b/target/arm/cpu-idregs.c
+> @@ -107,3 +107,9 @@ bool arm_field_is_writable(const ARM64SysRegField *field)
+>      return (arm64_id_regs[field->index].writable_mask & field_mask)
+>             == field_mask;
+>  }
+> +
+> +bool field_matches(const ARM64SysRegField *field, ARMIDRegisterIdx index,
+> +                   const char *name)
+> +{
+> +    return field->index == index && !strcmp(field->name, name);
+> +}
+> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+> index aab1a79db1..8ef3f9350e 100644
+> --- a/target/arm/cpu-idregs.h
+> +++ b/target/arm/cpu-idregs.h
+> @@ -35,4 +35,6 @@ extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
+>  
+>  uint64_t arm_get_field_mask(const ARM64SysRegField *field);
+>  bool arm_field_is_writable(const ARM64SysRegField *field);
+> +bool field_matches(const ARM64SysRegField *field, ARMIDRegisterIdx index,
+> +                   const char *name);
+>  #endif
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 2d94b3a884..70d9a07580 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -1317,10 +1317,40 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+>      return true;
+>  }
+>  
+> +static bool arm_field_skip_writeback_always(const ARM64SysRegField *field)
+> +{
+> +    /*
+> +     * GIC is controlled by the gic-version property and fabricated by KVM
+> +     * when the vGIC device is created, so a named CPU model must not touch
+> +     * it. KVM also rejects writing 0 to ID_DFR0_EL1.CopDbg, which breaks
+> +     * booting a model that lacks AArch32 support on a host that supports
+> +     * it. MPIDR_EL1 is managed by KVM based on vCPU index, skip writing it
+> +     * back. Similarly, skip writing back CLIDR_EL1 till we properly
+> +     * support exposing cache for KVM guest.
+> +     */
+> +    return field_matches(field, ID_AA64PFR0_EL1_IDX, "GIC")
+> +        || field_matches(field, ID_PFR1_EL1_IDX, "GIC")
+> +        || field_matches(field, ID_DFR0_EL1_IDX, "CopDbg")
+> +        || field->index == MPIDR_EL1_IDX
+> +        || field->index == CLIDR_EL1_IDX;
 
-You can't know for sure if this happens, so I don't think you could sign
-the DCO (you really can't know for sure if you have "right to submit it
-under the open source license indicated in the file"), but you can check
-for suspicious things and if you don't find any, say it's probably okay.
+what does happen forÂ SMIDR_EL1 and GMID_EL1 whose value could not be
+initialized from host. The setter for any of their field shall fail.
+> +}
+> +
+> +static bool
+> +arm_field_skip_writeback_if_not_writable(const ARM64SysRegField *field)
+> +{
+> +    /*
+> +     * KVM populates ID_DFR0_EL1.PerfMon even for AArch64-only guests but
+> +     * does not expose it as writable there, so skip it when it is not
+> +     * writable.
+> +     */
+> +    return field_matches(field, ID_DFR0_EL1_IDX, "PerfMon");
+> +}
+> +
+>  /*
+>   * Copy writable ID reg fields from isar.idregs[] into the KVM cpreg list,
+>   * so the subsequent write_list_to_kvmstate() pushes them to KVM.
+> - * Only writable fields are copied.
+> + * Only writable fields are copied; fields that must not be written back
+> + * (see arm_field_skip_writeback_*) are skipped.
+>   * Returns -1 if any vCPU's ID reg value differs from the host value and the
+>   * field is not writable.
+>   */
+> @@ -1357,6 +1387,14 @@ static int kvm_arm_write_idregs_to_cpreg_list(ARMCPU *cpu)
+>                  continue;
+>              }
+>  
+> +            if (arm_field_skip_writeback_always(field) ||
+> +                (!arm_field_is_writable(field) &&
+> +                 arm_field_skip_writeback_if_not_writable(field))) {
+> +                /* Never write this field back; keep KVM's value. */
+> +                writable_mask &= ~field_mask;
+> +                continue;
+> +            }
+> +
+>              if (!arm_field_is_writable(field)) {
+>                  error_report("%s.%s is not writable: host=0x%" PRIx64
+>                               ", requested=0x%" PRIx64,
+v9 has changed the way new field values are stored. writable field props
+and non writable field props could have different setters. A non
+writable field setter just needs to check the new value is the same as
+the current host value. No need to record the new value in the hashtable
+for further commitment.
 
-You seem to be saying that it's not only probably okay, but definitely
-okay, but then that's even less of a problem.
-
-> But just like "AI" does not mean "illegal" it does not mean "legal".
-> 
-> For example, if I give an LLM a chunk of code and say "adopt this to qemu" then
-> an argument can be made that it is a derivative of the code I supplied.
-> 
-> Whether to give an LLM web access so it can pull in random bits of code
-> and create derivatives of that is entirely under developer's control.
-> 
-> Whether AI output is a derivative of LLM weights is also an open
-> question, mitigated by the fact that many LLM vendors will assign
-> copyright to their users. Whether to use an LLM where that is the case
-> is also under developer's control.
-> 
-> I'm not sure why we need to get into so much detail, though.
-
-See, you bring up uncertainties yourself that nobody can answer today.
-This is exactly why I wouldn't want to make people lie and say "I know
-this is definitely okay", but accept "I tried to be careful and to the
-best of my knowledge there is no problem" instead for the licensing of
-LLM output.
-
-This seems reasonable enough to me. I'm just saying that if others
-disagree and we're not willing to accept the weaker assertion that
-people actually can make in good faith, then we should stay out of LLM
-generated content entirely instead of making people lie.
-
-Kevin
+Eric
 
 
