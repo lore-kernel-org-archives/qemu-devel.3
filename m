@@ -4,76 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034AEC9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 18:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D6AC98318
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 19:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9oEQ-0000dN-4t; Thu, 24 Sep 2026 14:31:42 -0400
+	id 1x9onr-00050O-AI; Thu, 24 Sep 2026 15:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9oEN-0000be-Ru
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:31:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9onj-00050A-T7
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:08:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1x9oEJ-00010y-SZ
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790274694;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jm562vhUglO6ST/v8yTZ2+tI5aHN7domCJjbFi7t1b4=;
- b=A/fxC2zZWnF0h/gGMFiyzO0ZAO8n1nWIcP/3aloBb2BzIFDuXduPRfBojkE2suf6FUK1Zb
- zXnkRMS4RPtLsGudVaiFmPj+8+kXjI8Qbs88FWA5NqhHeMRwdKYLDG7mHAEPNSlbngslxm
- fgqACckb+L0EFoJlhn/vZWf78YqlnEs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-mPWJEs5oNFWH8TaLx2MlvA-1; Thu,
- 24 Sep 2026 14:31:30 -0400
-X-MC-Unique: mPWJEs5oNFWH8TaLx2MlvA-1
-X-Mimecast-MFC-AGG-ID: mPWJEs5oNFWH8TaLx2MlvA_1790274689
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72CBB1802565; Thu, 24 Sep 2026 18:31:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.118])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9E99426; Thu, 24 Sep 2026 18:31:26 +0000 (UTC)
-Date: Thu, 24 Sep 2026 20:31:24 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 0/9] block: BLOCK_IO_DELAY event
-Message-ID: <arVsedIxGVp7Y-Us@redhat.com>
-References: <20260831135206.126184-1-hreitz@redhat.com>
- <20260903140815.GC825275@fedora>
- <8592119d-665d-482e-9502-8f4a1a69c10d@redhat.com>
- <20260921204126.GC115897@fedora>
- <6a6a77e9-8acb-4312-aa38-e06f81ac882e@redhat.com>
- <20260924151754.GC2966180@fedora>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9onh-0004MU-UD
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:08:11 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OIeL842997612
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 19:08:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mBX4pmgTgF6OuExfMusCvCaOl9ELByMLjsvLiUyvwAU=; b=n1V+BmLH481ntDH1
+ BY8qAgf0gI0Bj3XMSphTLt0YLPxDvYgdckJC+iMyG358zAv/fBd3BMPgQDs4ZUDS
+ hO7tdJd22KEyXtQHbgcJTj1P2ek1S9fXMyfyjgMD2UjLq/aWDq+faL8HEQNaA5xq
+ Ub61Yhi+ttyY3MN7J76AnGFN5SNFAxMNKLAKPZRECJ4k1GML1aSKodJPCLe/nBbA
+ PeW89EgwHhFa60azFTQQZXz8+Kq5rsR6tooPuDYhuYuPOMIld8CCOGa9ieyJtSOT
+ I84F7S/8aOEQHHreqMm20GyNnVYIUgNLTOu2x4ORsMf3uQYVWPoCzwb6wj3gwKaI
+ P7q0YA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gw4651p53-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 19:08:05 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-338c2e27430so97103eec.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 12:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790276884; x=1790881684; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mBX4pmgTgF6OuExfMusCvCaOl9ELByMLjsvLiUyvwAU=;
+ b=VaA+GvmlEi2lIR3JLaecJHf5Ti8WFFim7FHUUoYbqqQUZuy3TOk9xDi+FZB6m4E0iG
+ 0q2Ywlg7snLE9xaPWF1QFJI3E4fJUK2FjIKnZRLsuCzCcznDO/vQyOkY5n03O62Xl3hj
+ bNUX7ieWUDRYM9w77nL7XOPwohev8eZooGi0wIqLKOkucvWLJ/o+He57HOWwvZfV0thc
+ 4zxGZC9HzNdesHOQ6HScuwRozRPY+q4HFAEOqHfFbVwGxDXbHKrP2HWfgixSsadd8OiM
+ Ol+0dmSQh40uEm/frRE+v2wIOk/KW67zKlGc19V88/1i6nTS8Ds2UkC0Erld8xBqjAwz
+ Q+Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790276884; x=1790881684;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mBX4pmgTgF6OuExfMusCvCaOl9ELByMLjsvLiUyvwAU=;
+ b=NdZvzb9uVX3IwIU6TP1ibwCR4Ho/G7uQtKJ8FjOnRcxcJisYh9DlDsn6f4mmDJQm2q
+ EcaIClYOjGRcft9XKrWevEU914TNgIbFrVxo6ROx6IZBIaHa7yVzLTtPhyu2OG1+Q1MH
+ TvjnnX1hMbwY6ckTWvZ2H0g/2n8au4jTa6M8STqqs+vct5O9So68fdwNwUMzRP5ViZe1
+ W9VBt2iOzSroHb0Qv+6r2pmmCDKIOWsh2vqUQ1lMm2TAwE5Mb/bNJZ2Vo5u4uqC0/Jb5
+ j64dnJ9bVyB9t1FNc4sAdSrEJPwigcUfqZvFyx8+i8urbGBvuLBeAQD5MrmNEvG5zL/q
+ 5NRQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzq+/4ZY+fmLGlgvhU2H+yTFqadTlG8rBJxkDOSWyDfWSCNQPRJ/qEF/3T4zQUbygcPPPFCsUVPN72L@nongnu.org
+X-Gm-Message-State: AFuF++k3Djz6F2S+7nKaL8Hn5nWLno5ZU8eFpno0jMyuAXA5obspc2/5
+ PfzS11Y7VGy+j/2ydADqUcqH7zUP70d/5HCVVKC/9nFM0hB3fW5l5NetY9LKwrir4Kbw/juJIQ3
+ KLKPNqL3tCMi1SgpzHiY/zlQVKi3/tQbZimGNV10Ql7kk5ENhj6M7Td0JVA==
+X-Gm-Gg: AYBFou3m/NGxJAa4YtXjPKfyphTrwV3brsbbnma/id/kpB8a8aXNXwKcM37y1YZWGKI
+ L51KiZSy0vVVPej+JmBzbMmGxuzMiT4Tv/pm2ywpeQMS8gboAWG7OEZxsdG1l1nQY6IeKXUuPWd
+ TNwjmQG1GymiewdC12d1p+blAGB4nSIW0sB4lwfHxaxL4i4eCX8uaZIyv/WSkItlIZTODjTEhnE
+ 0psAWtiVW7QK7ApaJJoiSpVjAv+guQl0w6hHKPlTVyx1tOFQTRw5X/GIR0NnuVwOpvFDSq3sv3M
+ FhSzKwQ6OQUwwrDN2Wrughshu4Hiv/3E9ZKLRVvBPTO9DgJZ5c6aw8SvIkcmgBsjgip0EZJ24zf
+ BY3kth6KVWHn4IWmoptOnJIFngYOzABOsU8UgWwbwOjk8SFQxAdPOKQuMwh4rhtkuoVY=
+X-Received: by 2002:a05:7301:1445:b0:33c:719:f1aa with SMTP id
+ 5a478bee46e88-33ffe746729mr2403069eec.8.1790276884250; 
+ Thu, 24 Sep 2026 12:08:04 -0700 (PDT)
+X-Received: by 2002:a05:7301:1445:b0:33c:719:f1aa with SMTP id
+ 5a478bee46e88-33ffe746729mr2403044eec.8.1790276883456; 
+ Thu, 24 Sep 2026 12:08:03 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-34144757747sm597617eec.13.2026.09.24.12.08.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Sep 2026 12:08:02 -0700 (PDT)
+Message-ID: <353ea82d-9227-4482-80f2-d78788e36e2a@oss.qualcomm.com>
+Date: Thu, 24 Sep 2026 12:08:01 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZbFU2h1B9dJfqt32"
-Content-Disposition: inline
-In-Reply-To: <20260924151754.GC2966180@fedora>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 092/105] tests/tcg/x86_64: system tests
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: Bernhard Beschow <shentey@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: Aniket Sahu <asahu1x@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260904124604.2207440-1-alex.bennee@linaro.org>
+ <20260904124604.2207440-93-alex.bennee@linaro.org>
+ <cae2d17b-571c-421d-98c8-fbc467134141@gmail.com>
+ <6b37b050-9d5a-40a1-ac65-4126fa725342@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <6b37b050-9d5a-40a1-ac65-4126fa725342@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Wrq+otfv c=1 sm=1 tr=0 ts=6ab57515 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=IFlH_9TGYeQF7RgDkE4A:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: G1CublB7p1OU3rwNxjZ_Brnzx-Qijv9M
+X-Proofpoint-GUID: G1CublB7p1OU3rwNxjZ_Brnzx-Qijv9M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA3OCBTYWx0ZWRfX34nmHyXBRzUh
+ Pjx53pKP9wLV2JxGlFbAb9Vb8GVZCDwfpEexSpTbZ2RC+PepZqYiynchYOeNDODVS2H9XKUIqvC
+ mLtiJCtq5I8n+xTcuijk5ypiDmsGXGIU/nA731vckaFlagb3zoHJoEMnwZoiSRXOP+087TX6l0D
+ 2cnyMPINmksYqQSLJNOEXKWPl5590d1INvtc3XfnFz7X9D8hkIXfbKUK9BPXA8nDleGsRhbI+6R
+ K6Si+7dWskIiB5WYeigkwK+YzuYRgQW63Cj3Fd9nhX2a1EHr3Dfz2ijyHdjPFGG4o5r0FvwEBA9
+ LEpAOdSr5uwJpc76Z6UltC6FMbHApCEavRxaoYrlwgRvrJP5dg3pX3HRWiE/1HgD6QtL6I9N2dl
+ UJ9WuyWr7pw9SAxS6E9ROviBfdbdkzC5fFnHzaG1C/UF+sWtaqYr32ydAhnZMuZtXv1ygnbx3lW
+ g+uyCrm6k5qOgXOb9ZQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA3OCBTYWx0ZWRfX+xl2+pE99C3b
+ jGvMxVEpVYq98dYQXZBd9Z9wYaQ/yRFbPsbF37qp0zOe7jrr98+Lm2SHUdSv+ik6CosxYN1dSex
+ efVu7yw0WMGOpXHUIN2pesKMbcBgK8g=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-24_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240078
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,178 +158,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---ZbFU2h1B9dJfqt32
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/24/2026 11:30 AM, Pierrick Bouvier wrote:
+> Hi Bernard,
+> 
+> On 9/24/2026 11:18 AM, Bernhard Beschow wrote:
+> 
+>> With this patch I get under Archlinux:
+>>
+>> $ make tests/tcg/x86_64-softmmu-hello.test
+>> [1/1] Generating tests/tcg/x86_64-softmmu-hello with a custom command
+>> FAILED: [code=1] tests/tcg/x86_64-softmmu-hello.test
+>> /usr/bin/x86_64-linux-gnu-gcc qemu/src/tests/tcg/multiarch/system/
+>> hello.c -o tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF tests/
+>> tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g -fno-strict-aliasing -
+>> nostdlib -ffreestanding -Wa,--noexecstack -I qemu/src/tests/tcg/x86_64/
+>> system/../../minilib qemu/src/tests/tcg/x86_64/system/../../minilib/
+>> printf.c ../src/tests/tcg/x86_64/system/boot.S -Wl,-T ../src/tests/tcg/
+>> x86_64/system/kernel.ld -Wl,-melf_x86_64 -Wl,--no-warn-rwx-segments -
+>> Wl,--build-id=none -lgcc
+>> /usr/bin/ld: /tmp/ccRh6mPz.o: in function `print_num':
+>> qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:45:(.text+0xec):
+>> undefined reference to `__stack_chk_fail'
+>> /usr/bin/ld: /tmp/ccRh6mPz.o: in function `ml_printf':
+>> qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:136:
+>> (.text+0x549): undefined reference to `__stack_chk_fail'
+>> collect2: error: ld returned 1 exit status
+>> ninja: build stopped: subcommand failed.
+>> make: *** [Makefile:170: run-ninja] Error 1
+>>
+>> Reverting this patch I'm able to run `make check` successfully again.
+>> Any idea what might be causing this?
+>>
+> 
+> Thanks for the report.
+> Tests were previously compiled with -fno-stack-protector, and it was
+> unclear which distro/setup required this, so we removed it to find what
+> requires it. It seems like archlinux is one of them.
+> 
+> I'll re-add the flag by default.
+> 
+> Can you please confirm the command above (x86_64-linux-gcc ...) works
+> with -fno-stack-protector added?
+>
 
-Am 24.09.2026 um 17:17 hat Stefan Hajnoczi geschrieben:
-> On Wed, Sep 23, 2026 at 12:48:36PM +0200, Hanna Czenczek wrote:
-> > On 21.09.26 22:41, Stefan Hajnoczi wrote:
-> > > On Wed, Sep 16, 2026 at 10:04:51AM +0200, Hanna Czenczek wrote:
-> > > > On 03.09.26 16:08, Stefan Hajnoczi wrote:
-> > > > > On Mon, Aug 31, 2026 at 03:51:56PM +0200, Hanna Czenczek wrote:
-> > > > > > Based-on:<20260724152315.234183-1-hreitz@redhat.com>
-> > > > > >             [PATCH 0/6] hw/[block]: Fix missing accounting
-> > > > > >             Fri, 24 Jul 2026 17:23:09 +0200
-> > > > > >=20
-> > > > > > Hi,
-> > > > > >=20
-> > > > > > I=E2=80=99m told there are installations where storage is very =
-slow, and some
-> > > > > > would like the VM stack to report this proactively.  To do so, =
-we should
-> > > > > > (via QAPI events) report on extremely slow I/O requests.
-> > > > > >=20
-> > > > > > We already have the latency histogram, but this is not deemed s=
-ufficient
-> > > > > > because it is not proactively reporting and would require repea=
-ted
-> > > > > > querying.  Therefore, this series introduces the event still.
-> > > > > >=20
-> > > > > > Now, from a user's perspective, it would be nice if this event =
-could be
-> > > > > > raised exactly when an I/O request crosses the user-defined thr=
-eshold,
-> > > > > > but this would require keeping all active requests in a list and
-> > > > > > checking it periodically.  Now, if we used latency cookies for =
-this
-> > > > > Did you consider a per-request timer? The QEMUTimerList active_ti=
-mers
-> > > > > sorted list does not support efficient insertion, but improving i=
-t would
-> > > > > benefit all timer API users.
-> > > > I'm not sure how that would address the problem. Does that not just=
- move the
-> > > > list elsewhere?
-> > > >=20
-> > > > I.e. it still has the problem that every request needs to be put in=
-to a list
-> > > > (starting a timer), and be removed when the request is done, or the=
- timer
-> > > > will fire and the below problems would occur if the request is done=
- but we
-> > > > failed to remove it (either use-after-free; or spurious events plus=
- memory
-> > > > leaks on top of a heap allocation per request).
-> > > I wasn't thinking about the lifecycle here, but about the current
-> > > limitation that users aren't notified until request completion. Reque=
-sts
-> > > can be stuck for a very long time or forever. Using a timer solves the
-> > > timeliness problem.
-> >=20
-> > I still don=E2=80=99t follow. The lifecycle *is* the problem if the tim=
-eliness. How
-> > to implement repeated querying is not the problem.
-> >=20
-> > FWIW, the series that I had with timely waking did use a timer. But the
-> > timer is just not the problem.
->=20
-> Regarding the lifecycle, I don't see a fundamental problem. It's
-> possible to add a timer to block layer I/O requests and know for certain
-> that leaks, use-after-free, etc are not possible because the caller
-> doesn't need to juggle anything. Even if the caller has to juggle
-> something, this is a C codebase where APIs are not always safe. That's
-> not a blocker as long as they API design allows disciplined users to use
-> it correctly. If I misunderstood your concerns and there is a
-> fundamental reason why the lifetime cannot be made correct, maybe you
-> can explain?
+After testing in a archlinux container,
+I confirm that's the right fix.
+Patch is coming after CI end up running.
 
-I don't think there is a fundamental reason other than that humans are
-bad at writing correct C code, but that this is based more on Hanna's
-finding that our existing code has bugs in this respect and she isn't
-sure if she caught all of them.
-
-The current consequence of missing the end of a request is that it isn't
-accounted for, and that's it. After the change, it means that a timer
-callback will fire long after the request is gone, and therefore work on
-a stale pointer, so it may turn into memory corruption and crashes.
-
-Maybe this can be mitigated by not referencing data bound to the request
-lifetime, but just keeping a copy of type/offset/length or whatever is
-needed for emitting the QAPI event, at the cost of a heap allocation as
-Hanna explained in the cover letter. It would still mean that a bogus
-timeout is reported.
-
-So I agree that we'd want to have those cases fixed before depending on
-correct block_acct_start()/block_account_one_io() pairing.
-
-And I'm afraid that Hanna is also right that it might be impossible to
-get this done by static analysis in our callback-heavy device
-implementations. If the full request control flow were in a coroutine,
-TSA could probably do it, but I don't think it can work with our actual
-code. Maybe simple cases like virtio-blk could be covered with the
-latest TSA improvements coming from the kernel (I would have to check if
-they cover callbacks well enough), but the scsi-disk state machine looks
-too complicated for this.
-
-> > > > > When an I/O request hangs for a long time, the management tool wi=
-ll be
-> > > > > unable to detect that the threshold has been exceeded in a timely
-> > > > > manner.
-> > > > Yes. But why would that be a real problem?
-> > > >=20
-> > > > Given the request so far is only to notify users of their storage b=
-lock
-> > > > showing problematic latencies at all, there is no need to provide t=
-he alerts
-> > > > in actual real time.
-> > > What does the current approach solve that is not already possible with
-> > > the block latency histogram?
-> >=20
-> > See what I linked above. Apparently having to repeatedly query the hist=
-ogram
-> > repeatedly is not deemed nice enough.
->=20
-> Why at the QEMU level though? Libvirt can offer an event based on the
-> block histogram.
-
-At what intervals should libvirt poll QEMU? And why should polling be
-better than using an event?
-
-> The utility of this new feature is not clear to me. How is this QMP
-> event actually going to be used? Usually a feature has a clear use case
-> and the cost of committing to the QMP API and maintaining backwards
-> compatibility is easy to justify. In this case I'm not sure what the
-> real use case is or whether this is something someone thought might be
-> nice to have but may never use - we'll have to maintain it forever
-> either way.
-
-The idea is to show a warning to the user that their storage has latency
-issues and they need to look into that. Ideally before the latency
-reaches critical values that result in errors.
-
-> (Timeliness makes the need for this feature clear to me. QEMU has to be
-> involved either by pausing the guest itself or by emitting a QMP event.
-> This is why I'm particularly interested in timeliness.)
-
-If you want to prevent a in-flight request from timing out in the guest,
-then yes, QEMU would have pause the guest. I think emitting a QMP event
-alone wouldn't be good enough for this. (Even more so considering that a
-'stop' command actually involves draining all requests.)
-
-Kevin
-
---ZbFU2h1B9dJfqt32
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmq1bHwACgkQfwmycsiP
-L9ZdQQ/+LsP8OuENCwQHqyBTcDhmF+F/gDP9PEJS1ax6aAdELTtcRou9fyKSqavx
-dC7so1HzVoF6j5FfS1hH8Ovk2EQZsMk0THEl8KR7K6V1YcOq6+gJ5pKioBnKQiIi
-Msdz+0tssbfQnyHE9aCqljw1wwAttD3WAnfKrMOe0kZ3bSY19gBVo5zD8i1CliLl
-I36OCJjgwLBXK0c0QGP/1S67p5ZxeddFH6rAnBH+vaTGbV6Slecdhgyezu8OV/LY
-D1B17NdqFiM8lOT5xXvkOR2awXWHHkdcTc3/3nZEMDQLFqcs2gSqkUe25R9k15Vu
-ZwxN64zk00pLOHPQBAHDq2D4kG+yfnFkC+T9XrW71ThBjgakOwcVcFdqXM/5n/OW
-rmrZ9+vQuDTLgSdXabWdL4Zvhr7+muOBNT89kfcdO9kuR2PsRReYK0MAj/TyyyOg
-XalyLfygXodyyRh/cVaLTfC5u5iOwTlSK/0C7qZa0gceDQ/QQWHPwX9CiS6MJDwo
-Dc8pXeNa9FDWscKo13YiAuXgt2XYwonaqxnn6j3vraZ4tPUVyWMYDGA5mb6vE1k/
-nwbrL801++WJp7oMgGSQeJa9b3R4+Rf/run80WEZqx7TAJ+/uYGUT5yooyxdBe3Y
-FA3InEFayeF2j7+k1kxNTH5+NXNzrOsYZSJNHNMEYk5OGg15s+o=
-=6evD
------END PGP SIGNATURE-----
-
---ZbFU2h1B9dJfqt32--
+>> Best regards,
+>>
+>> Bernhard
+>>
+> 
+> Regards,
+> Pierrick
 
 
