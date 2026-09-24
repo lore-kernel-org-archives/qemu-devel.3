@@ -4,109 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C05C9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 08:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC02C9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 08:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9ee7-0008Pu-Vl; Thu, 24 Sep 2026 04:17:36 -0400
+	id 1x9evm-0003dA-Hm; Thu, 24 Sep 2026 04:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x9ee5-0008PE-BL
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 04:17:33 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1x9ee3-0004Uf-6k
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 04:17:33 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e4aa8d882so1860907d50.0
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 01:17:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790237849; cv=none;
- d=google.com; s=arc-20260327;
- b=MGgu3BPyKuNJsHnUtw+CqYjO64G3dRRh7g9cfY08u2KBkK94bc25FPt9eJm+lz+KnL
- DzsxMJTCsyQY/JpagwmYrMdKUhojHSBerUNRuGfjhiP1JBLcHRcoDGQvmTCgMl94vYSh
- 4MZ/y9uCZpw1v/8x7ohNHn6ob1P7OJD+D5d85TD0wzvAJfynWr9KyQvH8qHawcNXNFa3
- R1QDs3tPTzLQgiE/cV4EDHzWrhngRX6tnbqB0X2vLvh3sshqdUk+jbkXjx7fQzFyoq3W
- 1D2PKTN5vc6Hboj7+4SVnakx/GdyMGb8v2GMpH0DF7eCDusf3pogcN5H1MGEKTo2hKTb
- G4vA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=WMDPFUIAwhcXLRMFQptmFPCdBjYlqmtypgRwhRDY7VE=;
- fh=Ar68mZRnY0T1Wf4TtQ8wXGIYrj3PsRi97Ktui9R4nSs=;
- b=EDto4wNTHkjquxeppWmwYO4YJRx7WNs3j/3H7A0ZWkx5gx6sxWJ0z0D/fs/qh5o33M
- tMHF92et8HAYpCroKV/4jGyyXUJN9l2AxmT6i3Lz/y3DZPsTiUFjvRRDx5s5XOy5f//t
- UWShSxFlKGOMfyvqqH+BZT88BKbzubmDlsJ8rr+3swyVhs56/alF6Im1HJVlnxA3tKod
- SHWw/NpwKH6jMwMCI+JXEDbiwHiETNSYCtiEgyHh1vKv0IhkByh+lW+bYGutVFylgtZM
- lmhshuTazIVSNGIgvN3AEaCqAnqpImqd+95OKT+49IcL6YQ3ag/3NfJKWtdMpaLmpoSV
- ibKA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790237849; x=1790842649; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=WMDPFUIAwhcXLRMFQptmFPCdBjYlqmtypgRwhRDY7VE=;
- b=hjhnpX4sAHrZ3abHW8ji9QT7Wy8HIKiVajMRKlkHo8OK9BtYTxzQLqk5P6sjXPyQFU
- d44tA+f6e8eTLHpkKIS4MfkHQE+VChKCUx+P1jy3aC9wHyHerXOSFJBhaFywCOpI79LM
- pPX532rtR7tRoMeq9GkeUnAlYXipuCr+xxxTnE8K5YDFd+BbIpccVcoCi3NExW++H/tw
- F/vUzEhkxS/vP5OaXnp27W8IBbAIC4yBvhYLi8u87FWH8opouUClW70FkdYPB/+nXHp9
- XVkeZdd3wA9zV4uy1Bv5JoWVZsub8rl+Dgf+iL0HmEpcTzcWzpWSF/iLcw1Xfldwyv6z
- ihNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790237849; x=1790842649;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=WMDPFUIAwhcXLRMFQptmFPCdBjYlqmtypgRwhRDY7VE=;
- b=TYOXq/FpmhVgC3NG4UptHZ4q5CP0QD7faoM6wecozI7yDUEMe/KUW8gL5vefUMM8vq
- 8GyekmvKS4C2semAMaBO1x0Se0gvBHdR6vlcIvv5oZkJ7vj1HHHqyZWuewv8oMdsTs95
- Dnc1Noh7wvBHf8/vviZp3DWMT7S1fStO1ENQqdb7rEmUof/Qwye2woEPCIkIca623W35
- fP3An90aOnlVcJ2M8gBPHTf9LXDmz/sMQbIeq3fouWQ1PuGcJmAKufvfolG3ipI3gucm
- JCgDhtehGfMOqEvvXxkuK4GIMhjqheq9YhsuH7EuRuzOEMIJfe7JKZRUtsgYimD9o5/y
- B+SQ==
-X-Gm-Message-State: AFuF++mnWUSKIVhsly0rD/G0mmiTUxJvGhdxFHL08mSFTCILkkTbwnEH
- fQ519e7nyQlb/RWvSicPn7w5gKVTJASfg3U8cmxTtqs1y9Y9swwXHskKb89Ew4uWZKM9hD6fn1v
- lqpinsdGDaulEhACDUMokVudgqv/Eoc4=
-X-Gm-Gg: AYBFou2PJNf6osG6gHn5ffxxbGip0rdB2MR7mPtr4lgj2MsGFRy6QizE7HKXxbvF9uB
- l8xZWoyhL3stMHw6+p5XuMgiexLV9/ggaM6VJrhd9fKV6U4uEY+RvMAEGbqRbgR8HW2oDi6QIdq
- KuGxGEsT+o/sHcdarKtiBH46BeDLObNlUej75xS34KkvQ762ZG1R1R/qxsnLnzYdgXizLnwifGE
- JtC+5FJ6aB16x4QgC9ITbInXKkJa6ems6p19v/dMct2MkH3FGIn+cO5mxU5T1Oc3qwjWnD+ZRkc
- YElOj4rFhhq/QCVHt67ZZxJw9cTnKYke57ULPHf3V2YMpag0uj9q5euf
-X-Received: by 2002:a05:690e:4889:20b0:66e:61c8:33f2 with SMTP id
- 956f58d0204a3-672ed25f1a8mr687858d50.18.1790237849200; Thu, 24 Sep 2026
- 01:17:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
+ id 1x9evk-0003cQ-1R; Thu, 24 Sep 2026 04:35:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
+ id 1x9evh-0006Ay-09; Thu, 24 Sep 2026 04:35:47 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68O5boCk1372994; Thu, 24 Sep 2026 08:35:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wmjI0E
+ 1AbNpex7NtDDZPyh09c461TxrCgdHN6ITDgQA=; b=LiqDGPrWoMsAnKDVMw7HES
+ 6me48AcVSpC8K8a/8s0n8Udj8vi0cKsMcwsd0YByRpAMDbLYOSiXo9d0JuBy27is
+ P0agC3Khw+7UBAQzSM6p/6vmPJU2gp0qp63vyzmTsGN/5Isa4MyDKXf1tePNnml2
+ aMxUVxm64c/IvqZHYtOATJDBVqq5Y6PhO3zgMB1X18pSUnHO6dqCOynwKolao9/V
+ 7r795Li2OOKlVI80eaYVnmdEoGzL8nGSzMi6VHmejmi0dm40O8XztU27LpBdM34W
+ LSRdxQGeahj8w5tOndGLiStyuP+dTScdKDFGf+hHxxFClIvO65auJ8/CubBPD1Zw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvf8bs-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 24 Sep 2026 08:35:39 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68O5lUQT1539500; Thu, 24 Sep 2026 08:35:39 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1vu3n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Sep 2026 08:35:39 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68O8ZWWU29753626
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 24 Sep 2026 08:35:32 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3CD0620043;
+ Thu, 24 Sep 2026 08:35:32 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F214E20040;
+ Thu, 24 Sep 2026 08:35:31 +0000 (GMT)
+Received: from [9.111.22.143] (unknown [9.111.22.143])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Sep 2026 08:35:31 +0000 (GMT)
+Message-ID: <a871af1d-4f1f-426a-b7f8-5d7217edf36d@linux.ibm.com>
+Date: Thu, 24 Sep 2026 10:35:31 +0200
 MIME-Version: 1.0
-References: <20260908104159.1621764-1-bin.meng@processmission.com>
-In-Reply-To: <20260908104159.1621764-1-bin.meng@processmission.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Thu, 24 Sep 2026 16:17:16 +0800
-X-Gm-Features: AclHuK_3ab5DDHVGNFLlPel-dFmXix1n-nhSunxxwN4bj0jSOL9kA_S60zZjybQ
-Message-ID: <CAEUhbmVH_=Q6NjhU2f5oqZwD3i1FQRQyvngvMcBsf9nKJYq02Q@mail.gmail.com>
-Subject: Re: [PATCH v2 00/32] hw/arm: Add Phytium E2000Q SoC and board support
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
- Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx2-x11.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390x: Expose pv attribute in QOM
+To: Christian Borntraeger <borntraeger@de.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, brueckner@linux.ibm.com, cohuck@redhat.com,
+ farman@linux.ibm.com, david@kernel.org, iii@linux.ibm.com,
+ richard.henderson@linaro.org
+References: <20260923083406.64128-1-frankja@linux.ibm.com>
+ <17016443-d6e4-4b64-9f6e-52f1413bc099@de.ibm.com>
+Content-Language: en-US
+From: Janosch Frank <frankja@linux.ibm.com>
+Autocrypt: addr=frankja@linux.ibm.com; keydata=
+ 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
+In-Reply-To: <17016443-d6e4-4b64-9f6e-52f1413bc099@de.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: bySvXGO9XVPit4vwov7zBtuclsSoXzdV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAzNiBTYWx0ZWRfXzltVSXSyz5I6
+ x66bfUd7r0J/IYfHSLoLrWtad+p5RidmmmNGxRE05ZoNWDnpKlwv7UUmKcvMrrfzvsGyVfyscgU
+ uOUDdac/JL2m1vQYBz9ZIqm1ULc5sAM=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab4e0db cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=dpsumrQSPbuwYy20ZNMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: bySvXGO9XVPit4vwov7zBtuclsSoXzdV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAzNiBTYWx0ZWRfXxkmaetea4JJv
+ sZito9XFfUe9Oc9xDiBe4HZCDjwTd5eirLlNLAGXPOoS6PcIyu7cACU6t8IUiqepT2fm9JJYIum
+ Rf4wciGGLbT4QdHfPMt3OMxxjsjIWKf8w9ZS1wSq6ICsKxGWnKWadv4lqqLUXdzl2Bnpv99jcfr
+ rJX63q0R27anHKkIMqJ2DyYm4NXI83F1PVjeiD4rZf9Psj0eqGHyW8M/QdzTIm/IUWEcBk9POsu
+ MUhGsv1hXBZkDWh7g7o43PZzqyFh82ZOGgzDPUPPbxb2aQPlxoumwQnRh5i+FU7kJtWxkK7/YbM
+ kuoPQEIoxjgewzziy3fh17g5nxbHNyKVZkMPRgVxr0sgvoeaeH86gcTjRUgYUJXeDR8muGGzwoV
+ M67Me4Uc4Zd9hbnbcCgzvUhQ96oIcWiEWmrEplMN4kefF12mlR+Suw675vSER3Z8AU9epCxJjD1
+ 9qsz57MqFL8BlRFGnoQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-24_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609240036
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,145 +168,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 8, 2026 at 6:42=E2=80=AFPM Bin Meng <bin.meng@processmission.co=
-m> wrote:
->
->
-> The Phytium E2000Q is a heterogeneous Armv8 SoC with two FTC664 cores
-> and two FTC310 cores. This series adds a reusable E2000Q SoC QOM
-> device which owns Cortex-A72 CPU children and applies the FTC core
-> configuration locally. Two board machines embed the SoC:
->
->   - phytium-pi, with firmware and Linux on SD0
->   - phytium-e2000-come, with firmware in QSPI NOR and Linux on an
->     AHCI1 SATA disk
->
-> The machines support the vendor firmware path from the on-chip
-> Phytium Boot ROM (PBR) handoff through Processor Base Firmware (PBF),
-> TF-A, OP-TEE, U-Boot, and Linux. They can also directly boot SDK Linux
-> kernels when supplied with matching board device trees.
->
-> The PBR model does not execute undocumented ROM code. It parses the
-> selected fip-all.bin, validates the PBF, TF-A FIP, and platform
-> parameter records, and reconstructs the observed handoff state. The
-> MHU model handles the private SCMI power-domain requests needed to
-> release secondary CPUs and exposes a separate Base-protocol channel
-> to Linux.
->
-> The E2000Q SoC provides GICv3/ITS, UARTs, GPEX PCIe, SMMUv3, four
-> Cadence GEM controllers, two DesignWare-derived MCI controllers, QSPI,
-> I2C, xHCI, AHCI, a random generator, and the firmware-facing DDR and
-> control regions. Board machines retain RAM, firmware media, and
-> storage backend attachment. Unimplemented register windows remain
-> visible to firmware without claiming unsupported behavior.
->
-> Functional tests exercise both firmware and direct Linux boot on the
-> Phytium Pi with an SDK Buildroot image. Manual testing covers Phytium
-> Pi SD boot, COMe QSPI-to-SATA boot, all four CPUs, and network access.
->
-> Known limitations are documented. In particular, the PBR handoff is
-> a behavioral model validated against the available SDK firmware
-> samples.
->
-> Changes in v2:
-> - Use scripts/git.orderfile when generating the series
-> - Configure FTC cores as SoC-owned Cortex-A72 CPU children
-> - Keep Phytium CPU configuration out of the global ARM CPU list
-> - Explain why the Phytium machines are restricted to TCG
-> - Reduce the DesignWare MCI register migration state to 96 words
->
-> Bin Meng (32):
->   hw/arm: Add Phytium E2000 SoC and Phytium Pi machine
->   hw/arm: phytium: Add Phytium E2000 PCIe host
->   hw/sd: Add Synopsys DesignWare MCI controller
->   hw/sd: Add Phytium E2000 MCI controller
->   hw/arm: phytium: Connect Phytium E2000 MCI controllers
->   tests/qtest: Add Synopsys DesignWare MCI coverage
->   hw/arm: phytium: Connect Phytium E2000 GEM controllers
->   hw/misc: Add Phytium E2000 DDR controller
->   hw/arm: phytium: Connect the Phytium E2000 DDR controller
->   hw/misc: Add Phytium E2000 MHU doorbell
->   hw/arm: phytium: Connect the Phytium E2000 MHU
->   hw/ssi: Add Phytium E2000 QSPI controller
->   hw/arm: phytium: Connect the Phytium E2000 QSPI controller
->   hw/misc: Add Phytium E2000 PBR model
->   hw/arm: phytium: Integrate the Phytium E2000 PBR
->   hw/arm: phytium: Add Phytium E2000 control region placeholders
->   hw/misc: Support Phytium E2000 SCMI CPU power control
->   hw/arm: phytium: Select the Phytium E2000 PBR boot medium
->   hw/arm: phytium: Connect the Phytium E2000 I2C controller
->   hw/arm: phytium: Add Phytium E2000 xHCI controllers
->   hw/misc: Model the Phytium E2000 random generator
->   hw/arm: phytium: Connect the Phytium E2000 random generator
->   hw/arm: phytium: Support Phytium E2000 direct Linux boot
->   hw/arm: phytium: Add Phytium E2000Q COMe machine
->   hw/block: m25p80: Add GigaDevice GD25Q128 flash
->   hw/arm: phytium: Connect the Phytium E2000Q COMe QSPI flash
->   hw/arm: phytium: Add Phytium E2000 AHCI controllers
->   hw/arm: Add Phytium E2000 Linux SCMI channel
->   hw/arm: phytium: Connect the Phytium E2000 SMMUv3
->   docs/system/arm: Document Phytium E2000 machines
->   tests/functional/aarch64: Add Phytium Pi boot tests
->   MAINTAINERS: Add Phytium E2000Q machines
->
->  MAINTAINERS                                 |   18 +
->  docs/system/arm/phytium_e2000.rst           |  422 ++++++
->  docs/system/target-arm.rst                  |    1 +
->  include/hw/arm/phytium_e2000.h              |  120 ++
->  include/hw/misc/phytium_e2000_ddr.h         |   23 +
->  include/hw/misc/phytium_e2000_mhu.h         |   34 +
->  include/hw/misc/phytium_e2000_pbr.h         |   62 +
->  include/hw/misc/phytium_e2000_rng.h         |   23 +
->  include/hw/sd/dw_mci.h                      |   75 +
->  include/hw/sd/phytium_e2000_mci.h           |   21 +
->  include/hw/ssi/phytium_qspi.h               |   23 +
->  hw/arm/phytium_e2000.c                      |  958 +++++++++++++
->  hw/arm/phytium_e2000_machine.c              |  388 ++++++
->  hw/block/m25p80.c                           |    1 +
->  hw/misc/phytium_e2000_ddr.c                 |  197 +++
->  hw/misc/phytium_e2000_mhu.c                 |  818 +++++++++++
->  hw/misc/phytium_e2000_pbr.c                 | 1366 ++++++++++++++++++
->  hw/misc/phytium_e2000_rng.c                 |  182 +++
->  hw/sd/dw_mci.c                              | 1382 +++++++++++++++++++
->  hw/sd/phytium_e2000_mci.c                   |   95 ++
->  hw/ssi/phytium_qspi.c                       |  398 ++++++
->  tests/qtest/dw_mci-test.c                   |  417 ++++++
->  hw/arm/Kconfig                              |   22 +
->  hw/arm/meson.build                          |    4 +
->  hw/misc/meson.build                         |    4 +
->  hw/sd/Kconfig                               |    5 +
->  hw/sd/meson.build                           |    2 +
->  hw/ssi/Kconfig                              |    5 +
->  hw/ssi/meson.build                          |    1 +
->  tests/functional/aarch64/meson.build        |    2 +
->  tests/functional/aarch64/test_phytium_pi.py |   77 ++
->  tests/qtest/meson.build                     |    1 +
->  32 files changed, 7147 insertions(+)
->  create mode 100644 docs/system/arm/phytium_e2000.rst
->  create mode 100644 include/hw/arm/phytium_e2000.h
->  create mode 100644 include/hw/misc/phytium_e2000_ddr.h
->  create mode 100644 include/hw/misc/phytium_e2000_mhu.h
->  create mode 100644 include/hw/misc/phytium_e2000_pbr.h
->  create mode 100644 include/hw/misc/phytium_e2000_rng.h
->  create mode 100644 include/hw/sd/dw_mci.h
->  create mode 100644 include/hw/sd/phytium_e2000_mci.h
->  create mode 100644 include/hw/ssi/phytium_qspi.h
->  create mode 100644 hw/arm/phytium_e2000.c
->  create mode 100644 hw/arm/phytium_e2000_machine.c
->  create mode 100644 hw/misc/phytium_e2000_ddr.c
->  create mode 100644 hw/misc/phytium_e2000_mhu.c
->  create mode 100644 hw/misc/phytium_e2000_pbr.c
->  create mode 100644 hw/misc/phytium_e2000_rng.c
->  create mode 100644 hw/sd/dw_mci.c
->  create mode 100644 hw/sd/phytium_e2000_mci.c
->  create mode 100644 hw/ssi/phytium_qspi.c
->  create mode 100644 tests/qtest/dw_mci-test.c
->  create mode 100644 tests/functional/aarch64/test_phytium_pi.py
->
-> ---
-> base-commit: 35500e5c41aec76cde59befe750600dac7a9e37a
-> branch: phytium
->
+On 9/24/26 9:19 AM, Christian Borntraeger wrote:
+> 
+> 
+> Am 23.09.26 um 10:33 schrieb Janosch Frank:
+>> People doing VM management requested a way to query if a VM is in PV
+>> or not. This of course does never replace attestation, it's merely
+>> QEMU's view of the situation.
+> 
+> 
+> Maybe make it more obvious that this is really about the runtime property
+> (has the guest switched into secure and yet yet switched back via reboot).
+> 
+> Same for set_description, maybe something like "true while the guest runs
+> in protected virtualization mode (read-only)", plus one line in
+> docs/system/s390x/protvirt.rst. The docs line matters because read-only
+> properties don't appear in -M s390-ccw-virtio,help
+> 
+> 
+> In any case
+> Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+> 
 
-Ping for review?
+Something like this for the docs?
+
+PV property
+-----------
+
+The s390x-ccw machine exposes the read-only runtime "pv"
+property. This property is true if a guest successfully made the
+transition into PV mode as reported by KVM and hasn't yet exited PV
+mode via a reboot. This does not replace PV attestation which is the
+only authoritative way to get a definitive answer if a guest is truly
+protected.
+
 
