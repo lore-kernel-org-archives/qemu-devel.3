@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E022C98304
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 05:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C035BC98304
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 05:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9bqG-00055P-4k; Thu, 24 Sep 2026 01:17:56 -0400
+	id 1x9brb-0005TS-8z; Thu, 24 Sep 2026 01:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x9bqF-00055D-AO; Thu, 24 Sep 2026 01:17:55 -0400
+ id 1x9brQ-0005T4-G0; Thu, 24 Sep 2026 01:19:10 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x9bqD-0001E2-K8; Thu, 24 Sep 2026 01:17:55 -0400
+ id 1x9brO-0001GY-U0; Thu, 24 Sep 2026 01:19:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=112LuYUY1jz/6nhZ4Gzrau2WXry5p+x9GgkH3VM36l0=; b=yd+hdjASMyVSWgDsHmmrLEy2HY
- 5jgepW59lIxjudd8AeMWCNOGdbk1tOBCDGA3sbVpZYI8l8bLigk8iJmFXcM3+KCVM38cO/KkiVnjy
- othSjcJFsHLlqj0/4Ynjit7rWU3xt/2s4qvThKXHLid4TMOpWKLp1VpsZSaYt1H+Nt5F7uHAWZPkt
- ALpMSeCOjWObuD0pMtjxgcTfGhuwcFAkQp0JA2cgjflxvBfzfmJdhs+uRM+YPXsUPbZ7qpL2kghgp
- 4+6CQnGJhG5fTwAyAaLMgTn7Khu7gXNM9eWVwWjlWU/R7WSE1ZP8KMkMgE1s27EFEujvqDEgX63ip
- 9A2EAeHj7FoFfspT0T8FD5psxkMXjjWF/7InUHLUkwNaWpXvLU5TUxem+SMG11o8DSFfgzAKUxt9n
- f/yliuYASmYBQzOWXAADKrIgBDraiWMCctNoZkLnHkPJQLLog+ZlzI/N/yJeIZQZHcu3c6VOP/Pa3
- 5umRkUAueY2bI1MKyR9e1cwCt2rvStBSfD43M3hJUTJvh+bPIcFNKLXUYcticgbPy7z9bQ+yLavsU
- 2fiXy30TKL2H4bDCv7AB7MAiZG5Yqls7o3PPN9T7kzwkSaMG454IsYOGlPiZSc1YEXXlIWEirlVzy
- 7FB5ezf6PKbkx3fCS57YiG7xcZ5JdArNzDPGJIs3o=;
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=Gmf8K6iXqjCkMLIk2LzYwCobM0kJm5bN5OhHlrGjgCY=; b=T8gbF6SCs+oCB5QDz3llv0hWwm
+ 6Tb2djfIiokoINTVhU1eQWLIk3CqxKolFWQAeN1e0C1BVvbYMUgLEb/4NwaCd19b4OwEnNYwnDP38
+ qmOpyQhDmXx0yPnERRNaEjcKvFEgIjP2R4JkRx/+FQVY5lDboyqDQGC3XpqBeG7lvJU8IN+7w8Dk7
+ qcFoPQU0q2A+O1hflBzFqcSWPNDisw8fIxKe5BYbojBq7vKpzqvE9QtEg+hsRZuK/ykNsy3/Vha6e
+ 0Pv800BscEmuasWe85fsFdkjd6k3mRd3tq1tZi5Ox3QZw4xjh/XmuxVYPD536fBLXUrh1IXHH/mLZ
+ BF3jzllrwxL/IrSXcegEnX+rDtCWEs4QcRYRpKO46vzwWihlpfJDu93S0BBbEhYg9o7Jb1JK21bcw
+ MJMbIdkxz0K2pw3aHpJzou3TSk088v8N8pFvTIj8n9ADc1YjT9u2xgxdKcQrgC1CM8EeFAOynBRTk
+ d1QY6IFBE1KG5qsTj2eo8oqvZzQcNyb3DyrUn2DqwKNWYhySVwxA1F1Ux2wGqVVf5FsEgaLfrPr3n
+ X7uaiUIuTNZLiV4qvCCCbyVj321oYmpZcEPZdpmquvYh0gQXck4zFV53zbxJW2aJ1fChjn/G4Lujq
+ QbAl0NdGJtEAIgEXVBtKIv1986C5ouPrnzkU2XiFc=;
 Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1x9bpe-00FUyL-2x; Thu, 24 Sep 2026 06:17:18 +0100
-Message-ID: <e6f1816d-354d-445c-8658-cd76778bcd98@ilande.co.uk>
-Date: Thu, 24 Sep 2026 06:17:44 +0100
+ id 1x9bqp-00FUzH-Il; Thu, 24 Sep 2026 06:18:31 +0100
+Message-ID: <eb835b6a-a1df-4f61-b2ed-4b7bf1d9b772@ilande.co.uk>
+Date: Thu, 24 Sep 2026 06:19:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Kirill A. Korinsky" <kirill@korins.ky>, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Amit Machhiwal <amachhiw@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-3-kirill@korins.ky>
- <3cc35c1e-febf-4ea7-94d2-e9191bc4acb8@ilande.co.uk>
- <a5355ab8-bafe-4c1e-989b-dcb05ec1fca3@linux.ibm.com>
+To: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Anushree Mathur <anushree.mathur@linux.ibm.com>
+References: <20260923230452.3765-1-kirill@korins.ky>
+ <20260923230452.3765-5-kirill@korins.ky>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -78,12 +76,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <a5355ab8-bafe-4c1e-989b-dcb05ec1fca3@linux.ibm.com>
+In-Reply-To: <20260923230452.3765-5-kirill@korins.ky>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
+Subject: Re: [PATCH v2 4/5] cuda: Make shift register delay configurable
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,56 +107,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/09/2026 05:19, Harsh Prateek Bora wrote:
+On 24/09/2026 00:03, Kirill A. Korinsky wrote:
 
-> Hi Mark,
+> From: "Kirill A. Korinsky" <kirill@korins.ky>
 > 
-> On 18/09/26 6:49 pm, Mark Cave-Ayland wrote:
->> On 03/09/2026 12:50, Kirill A. Korinsky wrote:
->>
->>> OpenBSD writes zero to an edge triggered decrementer, then enters idle
->>> expecting its interrupt. QEMU defers the already due edge to a timer at
->>> the current virtual time, leaving the guest stalled.
->>>
->>> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
->>> ---
->>>   hw/ppc/ppc.c | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
->>> index b123b4cc1c..d99e47d532 100644
->>> --- a/hw/ppc/ppc.c
->>> +++ b/hw/ppc/ppc.c
->>> @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, 
->>> uint64_t *nextp,
->>>        * an edge interrupt, so raise it here too.
->>>        */
->>>       if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
->>> +        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
->>>           ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
->>>             && signed_decr >= 0)) {
->>>           (*raise_excp)(cpu);
->>
->> LGTM, however since this is core PPC code I'd like a R-B tag from the main PPC 
->> maintainers above. Chinmay/Harsh?
+> The CUDA model assumes a 20 microsecond delay before each shift
+> register interrupt. OpenBSD times out during device discovery with that
+> timing, so retain the existing default but allow an override.
 > 
-> Thanks for your review feedback on this series.
-> Chinmay is on vacation till next week and I had asked Amit and Anushree
-> offline to provide their review/test feedback on this (considering this
-> 2/5 generic change). I see Kirill has posted v2 based on Amit's review
-> feedback now. Since it is going to land in 11.2, I think we can give it
-> a little more time for review feedback (if any), before pulling it in
-> along with other PPC patches. Let me know if any other concerns? Thanks!
+> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   hw/misc/macio/cuda.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> regards,
-> Harsh
+> diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
+> index ccb3e1d74b..f06583377a 100644
+> --- a/hw/misc/macio/cuda.c
+> +++ b/hw/misc/macio/cuda.c
+> @@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
+>       s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
+>   
+>       s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
+> -    s->sr_delay_ns = 20 * SCALE_US;
+>   
+>       adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
+>   }
+> @@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
+>   
+>   static const Property cuda_properties[] = {
+>       DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
+> +    DEFINE_PROP_UINT64("x-sr-delay-ns", CUDAState, sr_delay_ns,
+> +                       20 * SCALE_US),
+>   };
+>   
+>   static void cuda_class_init(ObjectClass *oc, const void *data)
 
-Hi Harsh,
-
-I didn't realise we were still waiting for a response from Chinmay, no problem to 
-wait for their return. Assuming everyone is satisfied, I'm still happy to take these 
-through my qemu-macppc branch - let me know if that works for you, or if you'd like 
-to take this patch separately as it's part of the core PPC code.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
