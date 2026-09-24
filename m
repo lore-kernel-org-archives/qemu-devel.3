@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70840C9830D
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Sep 2026 23:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4392AC9830D
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 00:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9WNm-00056t-Gb; Wed, 23 Sep 2026 19:28:10 -0400
+	id 1x9XQo-0004of-97; Wed, 23 Sep 2026 20:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9WNl-00056S-7f
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 19:28:09 -0400
-Received: from mail-pj2-x0e.google.com ([2607:f8b0:4864:39::e])
+ id 1x9XQV-0004eW-S1
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 20:35:09 -0400
+Received: from mail-pj2-x20.google.com ([2607:f8b0:4864:39::20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9WNj-0005Pq-IV
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 19:28:09 -0400
-Received: by mail-pj2-x0e.google.com with SMTP id
- 98e67ed59e1d1-396ccda24afso860237a91.3
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 16:28:07 -0700 (PDT)
+ id 1x9XQT-0002Lu-RK
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 20:35:03 -0400
+Received: by mail-pj2-x20.google.com with SMTP id
+ d9443c01a7336-2d91c22d27dso5993045ad.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 17:35:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790206086; x=1790810886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790210100; x=1790814900; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/yU4xueCjupV/9XC+Njyo4ezokpJitLj6DKT4/uwjpg=;
- b=bbcgUdv2mje4VPsC17TjYbUzMCaJE+fP0cwLzV76bCQCPxIqV9XOg6u8HhohZL9YnZ
- C2S3MVSzRMcgxamipEr3BKJPmauPbiFU6OF9+fy0S1XCrpM+9SAz1uCaYmLyUODn1Wha
- AjZ8kokb8nRRSDp/IOA7XeRaL8OYCpgs/Ra9OC1wWqrfXPibYJHcpBUTxDIexIVNzLYd
- WyCaHb5Q44Nd22XhjIJH+NLxJ/XcWbhwIympyctMGY9kuLC64yB73Kw1DSQIJrEsoRAb
- AYL5dUHE7snnodIA+z2YDmb5cuZ6K5wtzKtFRnLAx6DGbwhLw/DJ+jcHYSPvmnCXnvO2
- IB+A==
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=axqAhD5m+QBTZyPZivJFhfKKQyxrbfvrpPcZAjLmpQA=;
+ b=N6e8FBvz/dq3bDFTcDlNYyis41xpOIyRQQkgTBaGmC662cUwFZ0wbaZ4u7r4I1tRnT
+ dzm+V2HcWQIp5lsFfPXfQrFWtsXUmtgedZ7nW31CoXjm1gHnInfFy3xv0H+ja0InuFBd
+ Mhh/v3+sfqjcijiivN6J7j1rW1f2rN+z5yOcCRism159iebjf/+mqB+BzIumxhW/w7bJ
+ xGhWzrEmQkkdMXAVQXAqWMO8MGZeUH2X5RW9zrt5b9y9JQjmVQbbiDEjOE3dbiTpWChs
+ MkLlXUM5X79Fb0Pf2K2rW3UMi48CHUC67AIJhDU5OfmdZAzxBYlFasGV+jZx5HpltpL7
+ E05w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790206086; x=1790810886;
+ d=1e100.net; s=20260707; t=1790210100; x=1790814900;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/yU4xueCjupV/9XC+Njyo4ezokpJitLj6DKT4/uwjpg=;
- b=IRshDrHQQN1QAJzyotyEZwJ7cYoFDKPSBRygrOaFERq0D2foalwc+IUu1n0fMTwZnB
- CV2xqGx0lpoNvhbPiac4Mj17eE1zc1MDfJ6mUEDkQgD6TUeQf7qD3txBSjKAx4b+sz2g
- BQhyOwON0Rf6mlsC6vKaIryx4eEtHq/yx6N36Rnuip/KlJ8tDKaBpyxd6lpbrFAvlzaT
- 3agWYJFMrDOxmy0TvFpnfTw/ka3SRRgIAgL53Ldb0wZBXfXPVNwzEwO0XvFkylCX6eHl
- zmZZ9lmLFPizkg5p8ci3E65l/lpqu3MKy3OOLTda+9G70PSREIcwtjoYLeEgvWP272I7
- hKhg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzOCnjDxR40buctkDkyG+QbEUYpDMXyw5mpDbSF9RTfCSwwg719H8ZhaeWCWJG+/6HWRG0Bxb0fFrZx@nongnu.org
-X-Gm-Message-State: AFuF++nYfUq1al0XAbLi0kb6pdJ14R3H11d7idtSmK+gbdi19h7VBpCK
- ftCOERlZKUogmmgvY5seIDTvuhQdYCSsDPDakL2+Bf3x1we8dY6zo8bhZGtIbPtCwko=
-X-Gm-Gg: AYBFou1kbrdPoJlp6LoiXZpQgruykAutY7UVB9nt0zcI9rjlLZddi6WQOVJWWdoMAVJ
- veQ10pp25e/Ch3yrqjE8hpiFZxVgWL5XtAkM0OUzHvrsJPOzSJA/mSB4h2y98bb3SxWZEb3POXq
- bazKM2VvhXmEwFth+bpIoiUEbkuB2MjdbsJZe1GeoR3HkqE3txNCgNueYzsKDXMKHCx1JAIwsSh
- cb+DKz7oRk6gMyu2/3rEnLLcdNYLxOJjPL0D4/0dQMsk/wmtMazRRlDD3GWd12EDb2Vls8PXbWH
- 9X5GDWZCdyl9D1g0uGbbkCo5I6OAeNKwH4t7V7nxEkZA21gZkaLqnI3Kaq0W8SO1Dd+kEqOAeEo
- qcpyBIKvTIVZAorBZO7ii0e1Wx31wh7gGlH7RCjOF3Z2+VisJNrRnkaF/nTpSXSilH8y/jnKN9n
- v6y9wrmWuZ5UnWA7IPPF2YRkWiud+JpIn5kSa3SXt6mhMtLb+4L72R9JuvlfR30CdOBXShXZTgL
- nWWfB4x1EAB926xOgrzJhh41+xHH668Dt5EG+8p5uZQfLQYZBY=
-X-Received: by 2002:a17:90b:4a0a:b0:3a0:7dea:6dcc with SMTP id
- 98e67ed59e1d1-3a09897055cmr546410a91.29.1790206085594; 
- Wed, 23 Sep 2026 16:28:05 -0700 (PDT)
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=axqAhD5m+QBTZyPZivJFhfKKQyxrbfvrpPcZAjLmpQA=;
+ b=YX2K/Zx/f3+sL4yz4O+sPSr7u/NOel1+QBNTumpXnQAvhQ/OdTfem0YNdFZdMlNzWJ
+ aNc9skmiUIDQesgGGTfbx8KBWxdahrE1hrrhkK/RmWHyxLUbu+SrY2rJ4b3VHbKlb/q+
+ oyjT9CKjR0XHCAwYKxHRdtG8Jb6C9Tzrn/HFcRJRsM+y3AKW67UWCABM3IXZQzEYLBmP
+ D6pWyiT8Ro/pgrwgeAtnkhJ2CLZt5pucS9NK6gO9/WItKSiZ+9fx7suwgy052D1l5fbU
+ xPh7PU3uQviR2sTHC6tHBOGedrlqwZ9am3nsnmCbU11zGwRwcYh9U3qZzvoJKUfCNLBw
+ zOuw==
+X-Gm-Message-State: AFuF++mtY4a64YDN5l3Kj0TnIDV1qQ5vIb5B5IIkKDfTvqS6TVV0h4Q6
+ 5iXRKmT0Z1HSmS2vJ/ci0h1YiZeCqHgLmm2BTZ9nrFc4oc5EnLmchRoopUCRM52HKSMtGwbfodp
+ dmCgW
+X-Gm-Gg: AYBFou0KMiE5uBHNBnwDCLFa277Td7j0mTrYDiKr+AsgQ5bxC1zclsdRrCUz7hhkVwi
+ xpwVct3A/rM9ih7B5MGbZCrpSGqoTA7LS7G45cYjcPxer7oBKfOiPknLPqp8/Pnc0RgPakCNC3J
+ UjwGo7HadZwScxCaHnpcPr5o1CUmittZJ75tEgKIWQfnRyqvNYLOSfcZWnB44ui+ZH+E/CxfOFm
+ mdFxafmbgQxZ4WM5/vWXGU1gfzBiEkVvAhqO7JBSAC7FEOdZwWcJpqZNlv530zjMHmQhJjYkSw4
+ 6QeEupesdhDl+OLdzj1mk4BTnwR1MT0mj63EPvp4xuv1jr6l0C4Syd3o9SSqxbj3R1HJCOGGbvn
+ /IZ9a9IeKfx4DqGOC2BxMlddNIQkR8xzt5OMTBtDe60uA/fJ4v+LjZgsmif+xPZxonNLCHkph9S
+ g6Rk8adHokNMZANj0aLr7QL+DZ++OIZwvRzEsxmIDSATak4nSuD9mtNEmGHkvzA0ib+LJHmOTh4
+ rUU2Qzb8lpcl/RSMjXlx3pCVQb0fHow8mQbv/sF3g==
+X-Received: by 2002:a17:903:244b:b0:2dd:c100:4b80 with SMTP id
+ d9443c01a7336-2df7dd77203mr6586655ad.55.1790210099416; 
+ Wed, 23 Sep 2026 17:34:59 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0972b15f1sm1255130a91.2.2026.09.23.16.28.04
+ d9443c01a7336-2df6a5c03b9sm17818105ad.31.2026.09.23.17.34.58
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 16:28:05 -0700 (PDT)
-Message-ID: <99f13bc5-dc26-42f2-bbb0-b744e161a611@linaro.org>
-Date: Wed, 23 Sep 2026 16:28:03 -0700
+ Wed, 23 Sep 2026 17:34:58 -0700 (PDT)
+Message-ID: <48e19b68-2dbf-4567-96ee-2a3e723212c9@linaro.org>
+Date: Wed, 23 Sep 2026 17:34:46 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/17] target/i386/tcg: decode EVEX prefix
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: chang.seok.bae@intel.com, zhao1.liu@intel.com
-References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-13-pbonzini@redhat.com>
+Subject: Re: [PULL 00/16] tcg patch queue 20260923
 From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20260923203441.31276-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260923173021.317809-13-pbonzini@redhat.com>
+In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::20;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x20.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 10:30, Paolo Bonzini wrote:
-> EVEX is really messy and the exact position of the fields is spread all
-> over the place.  For now store the three data bytes of the prefix in
-> DisasContext, later the EVEX instruction classes for APX will be added
-> to extract_evex_params and validate_vex.
+On 9/23/26 13:34, Richard Henderson wrote:
+> The following changes since commit 014b1f730c0faa08067f8e9b5829e62ea3d4b177:
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/translate.c      |  8 ++-
->   target/i386/tcg/decode-new.c.inc | 89 +++++++++++++++++++++++++++++---
->   2 files changed, 87 insertions(+), 10 deletions(-)
+>    Merge tag 'pull-9p-20260923' ofhttps://github.com/cschoenebeck/qemu into staging (2026-09-23 07:36:52 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20260923-v2
+> 
+> for you to fetch changes up to 666879d5477ec41ab46fc10a27d18cbc13e8789e:
+> 
+>    accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags (2026-09-23 13:28:00 -0700)
+> 
+> ----------------------------------------------------------------
+> accel: Change AccelOpsClass.update_guest_debug to void
+> accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
+> accel/tcg: Skip the can_do_io stores in user-only builds
+> accel/tcg: Allow cross-page goto_tb chaining in user-only builds
+> accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
+> accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for system plugins
+> accel/tcg: Allow some address space wraparound during translation
+> tcg/optimize: Fix fold_multiply2 vs 1
+> tcg/optimize: Fix expansion/simplification of deposit
+> tcg/x86_64: Use the mulx insn from the bmi2 isa
+> tcg/riscv64: Set vtype before whole-register vector loads
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Applied, thanks.
 
 r~
 
