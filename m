@@ -4,104 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F1FC9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 13:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D627C9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 13:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9jgl-0006rD-Ij; Thu, 24 Sep 2026 09:40:39 -0400
+	id 1x9jnI-0000EQ-Lu; Thu, 24 Sep 2026 09:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9jgj-0006qq-NO; Thu, 24 Sep 2026 09:40:37 -0400
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1x9jmz-0008SY-F3; Thu, 24 Sep 2026 09:47:15 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9jgh-0006UG-EH; Thu, 24 Sep 2026 09:40:37 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1x9jmx-0007D4-T2; Thu, 24 Sep 2026 09:47:05 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OC6XBd2183891; Thu, 24 Sep 2026 13:40:28 GMT
+ 68OC64jo2190518; Thu, 24 Sep 2026 13:46:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+ked7D
- y/hV5jIGdJTYODvtSe7WqS7LTaBdg7sqheiYM=; b=QD0O3EZfaGVNfXNkYdKA25
- 8prLEsjOURNsg9mufyPKdIH6GwvC7EGJlLOTywzX6Y0KfdVCxfBunSashMzyWeQ3
- Wjaq943304qwvGpY/rU7QxKtHmcfI+26rZ+oFyKbVP6577Qcxvq9cQ+39umpxvWX
- LKyr6eRB855itDJ9cdmVXdk+PTgyDWnbXY678xaKlWbvoa4WWfFUK1yhjZkrCljM
- LxTYgkpXd61p1rrziMSpwYePlTyFmDrTQtA9wcQb/x5BG3OSCPIQ/bvtHzbDAR9e
- LzrYRUPxKGU6HHgLbPIhzDtQL6Hpvw1I5FVRiKuvXu3o+JfcmZrkYGQPvKsjCD0A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0CD/1t
+ ViWzwTxKWfN4MuA5w6F8byN1lymKZJcarEBdw=; b=YW6PY26vgRbAbiWwWvp3b8
+ CQdlGgUNgPF78n1ZvC5bzU9C4c/SRjqnQNskQLWaI6YFzohWp1m8+EyDwNEB2hYp
+ H5y3Ohkat4x3fju2xUIqJ0YAChSjLi63b0UCmCNbT7ptl1aqI9BVIyChs/qz3REc
+ 9AoQveviDdELIfykuLzP82Ra3ez2r3lnzw8NetiNgkIFbLx0qm2DRswzHagVSWOZ
+ BYlGdTlWJoeN+SWvQnR4Nu13QDpLIpMLrHkY8QyiUfWbyPAHZKEzqZ0EmBfyBBdT
+ +bAPZC/bxyg+/ABCmAi5Mw/5nx5rhOkZZLumzDsDD4U7aztupn3R4BJQ3L94n80Q
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgshcaf-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2sgpx-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 13:40:27 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OCHcxU2046912; Thu, 24 Sep 2026 13:40:26 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1x2gb-1
+ Thu, 24 Sep 2026 13:46:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OCHn3O2061821; Thu, 24 Sep 2026 13:46:57 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jx3uv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 13:40:26 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68ODeO2h17236556
+ Thu, 24 Sep 2026 13:46:57 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68ODkrbL44892582
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 13:40:24 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 888B058052;
- Thu, 24 Sep 2026 13:40:24 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D19C258056;
- Thu, 24 Sep 2026 13:40:23 +0000 (GMT)
-Received: from [9.61.7.131] (unknown [9.61.7.131])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 13:40:23 +0000 (GMT)
-Message-ID: <7e2ce224-3cef-4d15-872b-e06a67dcc923@linux.ibm.com>
-Date: Thu, 24 Sep 2026 09:40:23 -0400
+ Thu, 24 Sep 2026 13:46:54 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CAAA420040;
+ Thu, 24 Sep 2026 13:46:53 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3B44820043;
+ Thu, 24 Sep 2026 13:46:50 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.39.19.125])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Sep 2026 13:46:49 +0000 (GMT)
+Message-ID: <338d8c4bd54ce8e39c6b4a04b4092d01b55f9faa.camel@linux.ibm.com>
+Subject: Re: [PATCH] target/ppc: Stop vCPU thread before calling
+ parent_unrealize
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: sourabhjain@linux.ibm.com, rathc@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, adityag@linux.ibm.com,
+ richard.henderson@linaro.org, mkchauras@gmail.com,
+ sshegde@linux.ibm.com, srikar@linux.ibm.com, amachhiw@linux.ibm.com
+Date: Thu, 24 Sep 2026 19:16:49 +0530
+In-Reply-To: <bb91d62a-f15a-42e5-813d-5ec7e6d92479@oss.qualcomm.com>
+References: <20260923121444.154175-1-shivangu@linux.ibm.com>
+ <bb91d62a-f15a-42e5-813d-5ec7e6d92479@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390x: Expose pv attribute in QOM
-To: Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, brueckner@linux.ibm.com, borntraeger@de.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, david@kernel.org,
- iii@linux.ibm.com, richard.henderson@linaro.org
-References: <20260924110909.146831-1-frankja@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260924110909.146831-1-frankja@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab5284b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: ngpUx1z8neyj2AMJ9leCYrCmvqZMZoiA
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab529d2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=PnuIWlBC_-zf_FTQ8uQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: P94bNnuIaWVnzKnKHXzx19cShJyvQmmz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfXzKu4+5hMA3Rt
- xSwiCL8gV/d6uCa2DTd6McEiSLuMn8wZZ9Qd7sLWdP8/KD6PIVS8fWCWkocUf3vKhYOk8q9bLw4
- yHEQLyoq54O6w6wwnLzIzcV/00fmfcJq8s4Rq16g8D0uMr8nLluKnn6KnbH2JeOrbVTTqEmrqMk
- OzHoqMCwe6ZMI5yuaObGS4WayCmateslz/hDYsWwn3Z4WrV6xIwIflvbjRAbuwB+70gxlUQMxmp
- ilR//bmBVTygxohtMU5g8p6HtgKeXgIkaI9T4DxXO/DXXUjFxTBS23RkzKa+aYI/1xM0zNv1W4J
- jnTbopoR1htISTCz7/vcIGRxilhA4HDd8YMNLbh3TmAbsOYVrDh9hCqx1RfcJj290UJw4bQKyUc
- qN2Kmoq4NNgqvIycUnOJl76KABqdtpXP/U12YFoiYfXjme5FqT6ee+0un4Hkr+Aa72wjM6ITFze
- 4Ht0topqfn6vY46sp4w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfX1UYr/n/eQM/3
- FQvd+SDJ7AupW1rxUPEh/BSBj362Z5CZNsvUM0lhq51lR9DqfvFw0dGRe4jYy53Rt4PgpEar1Ks
- rYBGdH9P0XsF+KP1AIpWPF+SrxbtxrM=
-X-Proofpoint-GUID: P94bNnuIaWVnzKnKHXzx19cShJyvQmmz
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=iqso5IhQRuI9CBSb_mEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfX0AxFDsm0UL/z
+ XXUKgG9Q4t+6h9uE1zn3x69t5rGDYVYbR3QJkwdCdPvTSyrPQAndlCXZ4ygRD3n5kI3OC+y6Vwh
+ qpjv6vU9y3u8G85Hx2xbsB+7oaoNOEM8BhBoAsbrn2zrW6RYOYsgMMSo6j2EETgCiaJzE49yLmH
+ lcYSq5RQSTrhXFR2i7gHGSxjKENd64votQ/vbjedOI+29E+wgHnkVW6eHrMYdLgZfsmjaMbBEpx
+ pN9SQhrw2ZzPAmAi65Tg/ao3heuPN6855MvcxuC3arBLid2oAnxIXuW6WWwFp31CRLFilJbxl/C
+ BWqxJFJLRnjLsXxKK/RQSvo+4l9wBgD3wUhMY7eyfKZ9ugcoLwzBhvpUj+6DQbh7JtaO4MjKsTj
+ dOnUkEu35cBgJaHvom1fGxKlWLg0SI1KUkTtECn6ue6a27VFOSwGv46JeGRQxzCGlfQx8+z+DCI
+ ZyAnPhY6WvBgwkJGFzA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfX73ihH2Tb8lgq
+ bvxMIcbVf1TpM+AfBT139fTDmqs772VLqRhsJEFsXB27Gx5Dvc7W/oLTnQDHP+vpwCVsXHNm74f
+ vbxQIwbFJVnwCYgHpNp7eCz6f2W/WB8=
+X-Proofpoint-GUID: 85K5WgHe-3y-RYy99p6bvWlrRY_0ZASZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240056
 Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -124,49 +128,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/26 7:09 AM, Janosch Frank wrote:
-> People doing VM management requested a way to query if a VM is in PV
-> or not. So this patch exposes the runtime PV atrribute which is true
+On Wed, 2026-09-23 at 15:39 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> > ---
+> > =C2=A0=C2=A0 target/ppc/cpu_init.c | 4 ++--
+> > =C2=A0=C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> Good enough for now:
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+>=20
+Thanks Philippe.
 
-typo: attribute
+> But long term we should move the call to cpu_common_unrealize() IMO,
+> it shouldn't be called per-target.
 
-> once the VM sucessfully made the switch into PV mode (according to
+Good suggestion, As this should be same for all archs.
 
-typo: successfully
-
-> KVM) and did not yet reboot to drop out of it.
-> 
-> This of course does never replace attestation, it's merely QEMU's view
-> of the situation.
-> 
-> Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-> CC: Hendrik Brueckner <brueckner@linux.ibm.com>
-> Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-> Reviewed-by: Eric Farman <farman@linux.ibm.com>
-> ---
->  docs/system/s390x/protvirt.rst | 11 +++++++++++
->  hw/s390x/s390-virtio-ccw.c     | 13 +++++++++++++
->  2 files changed, 24 insertions(+)
-> 
-> diff --git a/docs/system/s390x/protvirt.rst b/docs/system/s390x/protvirt.rst
-> index aee63ed7ec..f4d25b5ae3 100644
-> --- a/docs/system/s390x/protvirt.rst
-> +++ b/docs/system/s390x/protvirt.rst
-> @@ -65,3 +65,14 @@ metadata. In case this boot method is used, the command line
->  options -initrd and -cmdline are ineffective. The preparation of a PVM
->  image is done via the ``genprotimg`` tool from the s390-tools
->  collection.
-> +
-> +
-> +PV property
-> +-----------
-> +
-> +The s390x-ccw machine exposes the read-only runtime "pv"
-> +property. This property is true if a guest sucessfully made the
-
-typo: successfully
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-
+~Shivang.
 
