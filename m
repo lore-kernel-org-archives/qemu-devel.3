@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E705BC98321
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 19:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DC5C98321
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 19:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9pAj-00010t-1c; Thu, 24 Sep 2026 15:31:57 -0400
+	id 1x9pCU-0001U4-00; Thu, 24 Sep 2026 15:33:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
- id 1x9pAh-00010k-9e
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:31:55 -0400
+ id 1x9pCS-0001Tm-Qp
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:33:44 -0400
 Received: from mxa.tachyum.com ([66.160.133.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mmorrell@tachyum.com>)
- id 1x9pAf-0006m4-Ou
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:31:55 -0400
+ id 1x9pCR-0006px-D4
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 15:33:44 -0400
 Received: from mxa.tachyum.com (localhost.localdomain [127.0.0.1])
- by mxa.tachyum.com (Proxmox) with ESMTP id 2D5D61E267D;
- Thu, 24 Sep 2026 12:31:44 -0700 (PDT)
+ by mxa.tachyum.com (Proxmox) with ESMTP id 2C0901E267D;
+ Thu, 24 Sep 2026 12:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tachyum.com; h=
  cc:cc:content-transfer-encoding:date:from:from:message-id
- :mime-version:reply-to:subject:subject:to:to; s=dkim; bh=1Nt/0Fl
- jGm5mDWhohruSEr958TFWudjl79VZnSSYC2Q=; b=dcNy3kJFS0lvrwl7O/zUmtk
- woaexS5UXsJSsk3TuvS/z4yK0ybSoDOZdILr3/YYX7q5Dm2HcTiwg7GSJBp7j+fa
- tmgVKE/M3iyzVYMBULW7T7dn8GJ1yOve3bR3yMkbjvOPr2CV5MfCVyWVg00WrTHR
- 6aZjFKi/4ZQy8HDhg42qMpMo4G6X3uCgm2tuTHgQTxVy4z685qelhXPftSebvc/x
- u85BtIKJR4vItflvwss4BNFEoFoFUMv5lVt2hpmy/QO2yzGqkLQh9V9KedSQpzzY
- 24CpJtbw3zxYNaY2TFqfumgPQG6tmwFsd1jedwk8rH0XcSET8vGXivTp7edS2jw=
+ :mime-version:reply-to:subject:subject:to:to; s=dkim; bh=Bni5hAp
+ ZSUlHuI5RUtVwa+xm0lbn5oYYIQstJA8iXuI=; b=fs0ORz632PxIBgnja4daOhi
+ DwP68+Qe6C7HMRX+dHDZDueABmhwll+O41cin265kvm8LHq9H08vNfzKQaqxGh1X
+ MNBp1o/1Y36RNisq2yeotMcG60dU/Zpg+T9onUcZk/yVD8Lm/Sh5bpXppr97hTL2
+ rCxWAhJKybTFpqM4PnO/XdSfAcjAei9uHRsj75lMKoGIDedudFL5MElAzAkXh9LB
+ oj131HCQcrsPx7Ix4gzVsQ/YeWAX8kXLdRVemUzQ1mJmMCUS50iT0JdxbV6CDsGO
+ HlUN2s1FLvvGdEsd6keGc/+hhKApm2F3UZu9JFa4pYcggdasbCd21P6HmfGlPNA=
  =
 From: Michael Morrell <mmorrell@tachyum.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Igor Shevlyakov <igor@tachyum.com>
-Subject: [PATCH] linux-user: report EINVAL for a misaligned mincore() start
-Date: Thu, 24 Sep 2026 12:31:43 -0700
-Message-ID: <20260924193143.2062533-1-mmorrell@tachyum.com>
+Subject: [PATCH] linux-user: report EBADF for setsockopt()/getsockopt() on a
+ bad fd
+Date: Thu, 24 Sep 2026 12:33:41 -0700
+Message-ID: <20260924193341.2064665-1-mmorrell@tachyum.com>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -69,44 +70,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Igor Shevlyakov <igor@tachyum.com>
 
-mincore(2) rejects a misaligned start address before it looks the range
-up, so a start that is both misaligned and unmapped is EINVAL.  Here
-lock_user() runs first and fails, and the call reports ENOMEM instead.
+The kernel looks the fd up before validating the rest of the call, so a
+negative fd is EBADF whatever else is wrong with the arguments.  Several
+arms of do_setsockopt()/do_getsockopt() reject optlen or optname and
+return without ever reaching the host syscall, so the host never gets to
+supply that EBADF and the guest sees the argument error instead:
 
-When the range is mapped this changes nothing -- the host syscall
-receives the misaligned pointer and answers EINVAL by itself -- which is
-why only the unmapped case is visibly wrong.
+    setsockopt(-1, SOL_TCP, TCP_NODELAY, ptr, 0)    EINVAL, want EBADF
+    setsockopt(-1, 0x4321, 1, ptr, sizeof(int))     ENOPROTOOPT
+    getsockopt(-1, 0x4321, 1, ptr, &len)            EOPNOTSUPP
 
-Caught by glibc's misc/test-errno-linux.
+Caught by glibc's posix/test-errno.
 
 Signed-off-by: Igor Shevlyakov <igor@tachyum.com>
 ---
- linux-user/syscall.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ linux-user/syscall.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9f454502cb..a878feedf2 100644
+index 9f454502cb..e7c9fb33a3 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -13051,7 +13051,17 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_mincore
-     case TARGET_NR_mincore:
-         {
--            void *a = lock_user(VERIFY_NONE, arg1, arg2, 0);
-+            void *a;
-+
-+            /*
-+             * The kernel rejects a misaligned start before it looks the range
-+             * up, so a start that is both misaligned and unmapped is EINVAL,
-+             * not the ENOMEM that a failing lock_user() would report.
-+             */
-+            if (arg1 & ~TARGET_PAGE_MASK) {
-+                return -TARGET_EINVAL;
-+            }
-+            a = lock_user(VERIFY_NONE, arg1, arg2, 0);
-             if (!a) {
-                 return -TARGET_ENOMEM;
-             }
+@@ -2119,6 +2119,15 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+     abi_long ret;
+     int val;
+ 
++    /*
++     * The kernel looks the fd up before it validates anything else, so a bad
++     * fd is EBADF even when the rest of the call is also wrong.  Several arms
++     * below reject optlen or optname without ever reaching the host syscall,
++     * and would report that instead.
++     */
++    if (sockfd < 0) {
++        return -TARGET_EBADF;
++    }
+     switch(level) {
+     case SOL_TCP:
+     case SOL_UDP:
+@@ -2623,6 +2632,10 @@ static abi_long do_getsockopt(int sockfd, int level, int optname,
+     int len, val;
+     socklen_t lv;
+ 
++    /* EBADF wins over the argument checks below; see do_setsockopt(). */
++    if (sockfd < 0) {
++        return -TARGET_EBADF;
++    }
+     switch(level) {
+     case TARGET_SOL_SOCKET:
+         level = SOL_SOCKET;
 -- 
 2.43.0
 
