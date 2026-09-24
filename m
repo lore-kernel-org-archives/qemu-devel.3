@@ -4,93 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647D8C98318
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 18:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099EEC9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 18:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9o1y-0006M9-JM; Thu, 24 Sep 2026 14:18:50 -0400
+	id 1x9oDc-0000Wn-07; Thu, 24 Sep 2026 14:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x9o1x-0006Lu-18
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:18:49 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1x9o1u-00089h-W1
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:18:48 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-4834977ae75so54298f8f.3
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 11:18:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9oDI-0000Vk-Kk
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:30:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1x9oDG-0000tV-Qb
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 14:30:32 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OFeUrp3064799
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 18:30:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5xHYCcs7DHjUHNY/6J7s++5vpNKqVAbch5+w0lVs0gk=; b=S1a7Kx7jRQkPuOYS
+ O9oS9O6C6/6SO9bbgJGwTzWPHAaTeBuwyZEcPpwZBLs7lvwEG5qrTSgIHqO9E3nX
+ I9WhVzzJfrhWS6sPy9mIatTg3NnxffFEZEWir6gW8akn4bxYR8KBs/AnXatl+XYv
+ nyoIaZIwiihIabLI+Q5oU4G1da8yOm5NnTRRYzzJHdFqxhwIuQsWhtuWBkdR4dJS
+ 6lrQacA8L4BQoM4ngeHtXlZt4COEmuQeIapcsMr9dq1rwdFE+h/HhXktlYKHlvAt
+ u1ZWFAnPmYWRyYhaEuom6MaK6y1JuycUc3pUl6tw+/xnxPbXN+qN91zyEJyr4MLf
+ EJwQyA==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gw1tjj54y-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 18:30:26 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-139b62317d0so443428c88.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 11:30:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790273925; x=1790878725; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=U+EB0Wj9BQa2gLO7kJ9YcQzjvzL9fprWoGiN//cAhfM=;
- b=boYyzR53FbJ8YomBMkHs7ggDbO90XDBV6GzERq5St0Q26aL2XFpSTnaheiAqvv8NM+
- SIUJR5UfKK/U7WqTqtV3Vt6zeP/DBeMYIRdEhowB1xWBFduCj3LvSERhtlLlyKIQLmCa
- +tcpXXXh9OO1n7H6WpSaj9zMVXzsjwdqjIhcDZHmAq0cMzaIlH6DYkZlifc1CGrc8n8f
- 06gRis24/s+Ktcpql1QXMzLN+hiLEs/LwOBqWp/A76UUU9/HLnWGhKxiU8eRlt+Os9Qg
- H16GDZQvn0tnBETOA1MhxBIoU0i5Bvxq/2tP2wiQ2bePcY2lGFwF2u5bJI5rIm/NBlou
- ejWQ==
+ d=oss.qualcomm.com; s=google; t=1790274626; x=1790879426; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5xHYCcs7DHjUHNY/6J7s++5vpNKqVAbch5+w0lVs0gk=;
+ b=ZnltpP+gx+tztydZC3jTfW7d3Y3kWaDj1guoddArQhz1VL+vyeRIVNcE8P+88FhN7k
+ J9ZWQfLlgxxZ5twf/8sCXYkvktnItF/HrrvqVgrGxnQ/Gt9hbu+9v8I7yBuKNSpS+jZa
+ v1rNAhBj5QuCmfKnamPSIoaRcZLzx1i14CRrnDRg4U8TUleUzssvP5dQ2yrOPMRlU0SX
+ EW1llhxmCGxxl2ySFAJmwrWI/pv1djZx51gc+dBP0UHjK3xT0diIPOIfnQMQfk7DaJyz
+ hx74o3NqgqdYlzpsHYEFWgh9sxS26lWatSf0cxufWnHNhB18At3vu6UtcBAJd5781Wpi
+ S/Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790273925; x=1790878725;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1790274626; x=1790879426;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=U+EB0Wj9BQa2gLO7kJ9YcQzjvzL9fprWoGiN//cAhfM=;
- b=yAhW/XAcetn0wG/OIup60z4kuNdfMn0nsSBvgwvt3S6rVz6bGeYxDUJs8X5KHgN3vr
- egHFijfSGoJuHknwOSj9zBKxOJOJ+Cd1UKCi8eI2ff8k0R+bbqQMhMbwTIpomxLb4089
- ZXhBkbcpxeWUQ6lYsDp/tBMZL2lu69t/egfHbfzMT9o5L0vsS8IuWUe3YtVO10g/JnlK
- wAFO3ICYKDam6WUcZt+AxckAzGAk1X1XmKp4gXq1SKc7pgNBfZAHOIZAeqWAdkU2agt4
- irqehPhAKJBZdmE0jdUes7/erHVswq7ayGyx+MWp0jxZymKQDl4V9faw5kjqIT2POUWt
- z5Ug==
+ bh=5xHYCcs7DHjUHNY/6J7s++5vpNKqVAbch5+w0lVs0gk=;
+ b=nCO1QI9Oj8g+ht6X+1BuqW+XNn8DyH+nMGSGQUcJtQFQpwwL2Js86I+dFgTlTinKj/
+ QlvHAyMkQAfrDMrFCwUDvTvu+J9XA0y1UJdqNVdsnvGEJgmOLxrJF/xj+lRcW/YvkSD+
+ gD5rPtEv+TttzIPGWJyPg12hDbu9pQQ785TKp45QXYLDAv6TgIylgxxdyFcT1VSTHzrY
+ FvCyjaoPI3Dzrz552bJWkjXM4j1JmMoTYlT/AP+tu/PBp/Hr/7mQJnrnoFp6A6vzQqkQ
+ 6oYRJMTA19LvfwAEKbH2vqMFBIUGMOMJOcyqwnmb7W2r+/rz1lJB6/FuWnY078FiNwEv
+ onkA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBytTZeZ7MkvdX4TzBBYPbEg2rYDoxuHWR+f4jdrAb6opxZhpfULGFhlJIb7fpDEPWqFqDUeH1mzf/nJ@nongnu.org
-X-Gm-Message-State: AFuF++n4RyfUm6bI3BplzuXK4lFmMdA0iDVh7+pUs5Fyx6LcFWrqGyPb
- pEM3WryUTPpHIabT30Dq1giXpDgu+C09ofJYhJlF3MtvQ0hrhK3J6Mdd
-X-Gm-Gg: AYBFou3Dg1qrWtEifW1Bz3rxFteLxa8Q7TqJx/n4cRjYY8Lq/ZtceYMac4LgSnLcVrB
- fBPfn8uDZ9eqNocHjzyNDHmsZNH+0y+TPBhSdXiWEidHwtthF1tmbx3z4c9xCEWHWPlCz7EWWSl
- mLXHAK+OJGFIRiPh1pd0vxmGLWLuE1QEd9omlMy23ij7inFT5HmrTtXCRfIyjLpKksfrUOixp0c
- 5xOpGNrFKf12LYklyx5+4pphP4WDrYOAy5ycECafRMFNsloxFPE2h6DBkDSCRLaOWjOw8N9UMVJ
- +upkTjd5knmaIjjsX2JFDm+cnYm1IfKJCSSeugvh9bWuuYfkzf1XTwaZvYnLkFNYjppUTttNcEA
- wdbWDgGIDFrix7GikJG5OmPFeVaQKjh+PoZICjlSwVIC7svYZCCueEMdm0qil3bqx7NnP3k3ZiB
- T/h2Z3MHbkM5I4e5Uz+CHp0e59CfFN4PpxnBvUUWBf22FUBOAH67mR322Dc6KtcGb6BUYDLA9mu
- OuctXxQgjA24kCMDrycuYdBjQfu2vuHVjzrKFO5brFd0Aoua4vvllmA518oPyCgnw==
-X-Received: by 2002:a05:600c:c1c8:10b0:49f:e69d:9df9 with SMTP id
- 5b1f17b1804b1-49fe69d9dffmr40931425e9.10.1790273925024; 
- Thu, 24 Sep 2026 11:18:45 -0700 (PDT)
-Received: from [10.0.2.15] (dynamic-077-191-033-034.77.191.pool.telefonica.de.
- [77.191.33.34]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fee6cc7d3sm5355525e9.0.2026.09.24.11.18.43
+ AKwUvBwWyPZiTCjjf6+D5/ogI1chkdSYPUZHRienDbXLO3vDd6mIc8UUMUtC4brQ2RBVXh1aWEBF1dVVL4aC@nongnu.org
+X-Gm-Message-State: AFuF++lJI2s0klSiFRDgyg05hmdkiwCSGnOvzWdaSlTS1WVE0U+mkNxu
+ aki/VcCDfb2uV64HK+wGUz8KgPMlIMapUBd12bK/iXwi+fWwA7GnLcyDnSUKvoNG2pyN3ZCGh52
+ w6D1li1wSacWAYz6311F00BXLKMj/h9bX3ZCWsPSQfYotGF6Zx7PMXb+2jQ==
+X-Gm-Gg: AYBFou0Lo010iL82Nk4m7ZLk0ntEq2jkrPrQSB8cqaCxiNH5xzYxK/BJEVRFzzxBuxX
+ 53M+AgkpI8llVXdwPqqD2e0j5WBsJRiig5cE72daJLPuA5rWZ80n0f0qD7HwQHjF+4il9sPBxTF
+ pbYefkI6lc8ZxMeZ+ZsClozVDEgpI8yV+owjHr8ttGoAZbf/5j5Qiskq/9wdsCHKKlZs9mOva1Z
+ 7RVeE5bd2H8FMeKus+Jf0lKXO2tmZN7xqyXv5o0lui4bUf2Gl6cj4BLfVUBie/sBL5p4Lxc+WuG
+ pu+8LqzdnXSvjDwuS5dVFFNyoQA+TRR6C4CkeZRUdG6xHaA1/PjwTWYDiG8OeLxGVmxaF4C6z9v
+ k5OumkEPK8p31xVKy/RxCe2LvWNqhxcI3Rj9ubO+dUA54GHQJajU6+9sN+Me0M1isNYM=
+X-Received: by 2002:a05:701b:420c:20b0:141:b2c3:d868 with SMTP id
+ a92af1059eb24-14503f85054mr2958974c88.3.1790274625723; 
+ Thu, 24 Sep 2026 11:30:25 -0700 (PDT)
+X-Received: by 2002:a05:701b:420c:20b0:141:b2c3:d868 with SMTP id
+ a92af1059eb24-14503f85054mr2958951c88.3.1790274625088; 
+ Thu, 24 Sep 2026 11:30:25 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-145acd3d8eesm393163c88.8.2026.09.24.11.30.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Sep 2026 11:18:43 -0700 (PDT)
-Message-ID: <cae2d17b-571c-421d-98c8-fbc467134141@gmail.com>
-Date: Thu, 24 Sep 2026 20:18:42 +0200
+ Thu, 24 Sep 2026 11:30:24 -0700 (PDT)
+Message-ID: <6b37b050-9d5a-40a1-ac65-4126fa725342@oss.qualcomm.com>
+Date: Thu, 24 Sep 2026 11:30:23 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 092/105] tests/tcg/x86_64: system tests
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+To: Bernhard Beschow <shentey@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: Aniket Sahu <asahu1x@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260904124604.2207440-1-alex.bennee@linaro.org>
  <20260904124604.2207440-93-alex.bennee@linaro.org>
+ <cae2d17b-571c-421d-98c8-fbc467134141@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Bernhard Beschow <shentey@gmail.com>
-In-Reply-To: <20260904124604.2207440-93-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::10;
- envelope-from=shentey@gmail.com; helo=mail-wr2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <cae2d17b-571c-421d-98c8-fbc467134141@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: w3orenMoQNNbDFCaM0gGDAg5Q01md8g4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA3NSBTYWx0ZWRfX3tPW8Qit5xzI
+ Q1p4bvHiE7vK5nHEs9p+5U47EEJrDI5yLDlaP2f9xWmG/Kw6qGTPKCRRLparpR/MyZkI/CekKEN
+ emlzE/lCg55tMzSC+gJilI7DILXxI7MKlhTuvnih07b03e/RwpEBpdC5VX+U6ME0zU5POvSY+WW
+ PsJfKGDpwJvHr6hw4SXYdVDQ9QuJCUjqAGe8CX+S0haXO13k4yxlrzFpF9cEmodgljKA6QvBp0L
+ OajkXjeM3nThyuOFwio9UYmbB4/sYeTeYNl3wxLwzZAjiP6BUx0go0NZIVQiDJDkUu0CdVo/2jh
+ dB4qGxqMQIF4+4zMdfU/KZe21jN+DUEwVcr9kootTjDp3sioytKzIPT86R1yfzSQ963dVFWFBG6
+ gubkJyUVjQ7oppbkol7claiNcEXmEQqY+bOBIspEJMtMg5P5fCk7rmav9WBhNVWErup4c+lxCNX
+ 0X6H1N5hSJeTJ3R+aww==
+X-Authority-Analysis: v=2.4 cv=cK11IVeN c=1 sm=1 tr=0 ts=6ab56c42 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=FcFjeIISVmiBXUcpFZoA:9 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-GUID: w3orenMoQNNbDFCaM0gGDAg5Q01md8g4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA3NSBTYWx0ZWRfXwbp+qIpyXmMs
+ Rx2vF2cTBeA8YNRCkT2DGR2RDLgQvBxBFWH4VdKrIGN7lE2CGznuxkC+Hum4bJrWBiCKczS64mV
+ wfwQ27s24PmbctppBmAhWCYyGtMuqk4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-24_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 malwarescore=0 phishscore=0 adultscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609240075
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,178 +157,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Bernard,
 
-On 9/4/26 14:45, Alex Bennée wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 9/24/2026 11:18 AM, Bernhard Beschow wrote:
+
+> With this patch I get under Archlinux:
+> 
+> $ make tests/tcg/x86_64-softmmu-hello.test
+> [1/1] Generating tests/tcg/x86_64-softmmu-hello with a custom command
+> FAILED: [code=1] tests/tcg/x86_64-softmmu-hello.test
+> /usr/bin/x86_64-linux-gnu-gcc qemu/src/tests/tcg/multiarch/system/
+> hello.c -o tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF tests/
+> tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g -fno-strict-aliasing -
+> nostdlib -ffreestanding -Wa,--noexecstack -I qemu/src/tests/tcg/x86_64/
+> system/../../minilib qemu/src/tests/tcg/x86_64/system/../../minilib/
+> printf.c ../src/tests/tcg/x86_64/system/boot.S -Wl,-T ../src/tests/tcg/
+> x86_64/system/kernel.ld -Wl,-melf_x86_64 -Wl,--no-warn-rwx-segments -
+> Wl,--build-id=none -lgcc
+> /usr/bin/ld: /tmp/ccRh6mPz.o: in function `print_num':
+> qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:45:(.text+0xec):
+> undefined reference to `__stack_chk_fail'
+> /usr/bin/ld: /tmp/ccRh6mPz.o: in function `ml_printf':
+> qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:136:
+> (.text+0x549): undefined reference to `__stack_chk_fail'
+> collect2: error: ld returned 1 exit status
+> ninja: build stopped: subcommand failed.
+> make: *** [Makefile:170: run-ninja] Error 1
+> 
+> Reverting this patch I'm able to run `make check` successfully again.
+> Any idea what might be causing this?
 >
-> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Message-ID: <20260827221506.91574-93-pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->
-> diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
-> deleted file mode 100644
-> index 4e65f58b570..00000000000
-> --- a/tests/tcg/x86_64/Makefile.softmmu-target
-> +++ /dev/null
-> @@ -1,44 +0,0 @@
-> -#
-> -# x86_64 system tests
-> -#
-> -
-> -X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
-> -X64_SYSTEM_TESTS=$(patsubst $(X64_SYSTEM_SRC)/%.c, %, $(wildcard $(X64_SYSTEM_SRC)/*.c))
-> -
-> -VPATH+=$(X64_SYSTEM_SRC)
-> -
-> -# These objects provide the basic boot code and helper functions for all tests
-> -CRT_OBJS=boot.o
-> -
-> -CRT_PATH=$(X64_SYSTEM_SRC)
-> -LINK_SCRIPT=$(X64_SYSTEM_SRC)/kernel.ld
-> -LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_x86_64
-> -CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
-> -LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
-> -
-> -TESTS+=$(MULTIARCH_TESTS) $(X64_SYSTEM_TESTS)
-> -EXTRA_RUNS+=$(MULTIARCH_RUNS)
-> -
-> -# building head blobs
-> -.PRECIOUS: $(CRT_OBJS)
-> -
-> -%.o: $(CRT_PATH)/%.S
-> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
-> -
-> -# Build and link the tests
-> -%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-> -
-> -memory: CFLAGS+=-DCHECK_UNALIGNED=1
-> -
-> -# Running
-> -QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
-> -
-> -ifeq ($(CONFIG_PLUGIN),y)
-> -run-plugin-patch-target-with-libpatch.so:		\
-> -	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true
-> -run-plugin-patch-target-with-libpatch.so:		\
-> -	CHECK_PLUGIN_OUTPUT_COMMAND=$(X64_SYSTEM_SRC)/validate-patch.py $@.out
-> -run-plugin-patch-target-with-libpatch.so: patch-target libpatch.so
-> -EXTRA_RUNS_WITH_PLUGIN+=run-plugin-patch-target-with-libpatch.so
-> -endif
-> diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-> index 2607a1cbcf4..ab336eca9b2 100644
-> --- a/tests/tcg/x86_64/meson.build
-> +++ b/tests/tcg/x86_64/meson.build
-> @@ -2,6 +2,8 @@ cc = 'x86_64-linux-gnu-gcc'
->   cc_dockerfile = 'debian-amd64-cross'
->   cc_docker_host_arch = ['x86_64']
->   
-> +subdir('system')
-> +
->   tests = []
->   
->   tests += tcg_tests['multiarch-linux-user']['tests']
-> diff --git a/tests/tcg/x86_64/system/meson.build b/tests/tcg/x86_64/system/meson.build
-> new file mode 100644
-> index 00000000000..80110d0ae57
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/system/meson.build
-> @@ -0,0 +1,63 @@
-> +tests = []
-> +
-> +minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-> +minilib_printf = files(minilib_dir / 'printf.c')[0]
-> +link_script = files('kernel.ld')[0]
-> +boot = files('boot.S')[0]
-> +cflags = ['-nostdlib',
-> +          '-ffreestanding',
-> +          '-Wa,--noexecstack',
-> +          '-I', minilib_dir, minilib_printf, boot,
-> +          '-Wl,-T', link_script,
-> +          '-Wl,-melf_x86_64',
-> +          '-Wl,--no-warn-rwx-segments',
-> +          '-Wl,--build-id=none',
-> +          '-lgcc']
-> +qemu_def_args = ['-display', 'none',
-> +                 '-device', 'isa-debugcon,chardev=stdio',
-> +                 '-chardev', 'stdio,id=stdio',
-> +                 '-device', 'isa-debug-exit,iobase=0xf4,iosize=0x4',
-> +                 '-kernel']
-> +
-> +# Multi arch tests
-> +multi_src = []
-> +foreach t: tcg_tests['multiarch-softmmu']['tests']
-> +  foreach src, setup: t
-> +    new_cflags = cflags
-> +    if fs.stem(src) == 'memory'
-> +      new_cflags += '-DCHECK_UNALIGNED=1'
-> +    endif
-> +    if src not in multi_src
-> +      setup += {'cflags': [new_cflags]}
-> +      multi_src += src
-> +    endif
-> +    tests += {src: setup + {'qemu_args': qemu_def_args}}
-> +  endforeach
-> +endforeach
-> +
-> +tests += {
-> +  'patch-target.c': {
-> +    'cflags': cflags,
-> +    'qemu_args': qemu_def_args,
-> +    'plugin_test': {
-> +      'plugin': 'patch',
-> +      'args': ['target=ffc0', 'patch=9090', 'use_hwaddr=true'],
-> +    },
-> +    'wrapper': [prog_check_plugin_output,
-> +                find_program('./validate-patch.py')]
-> +  }
-> +}
-> +
-> +if 'qemu-system-x86_64' in emulators
-> +  tcg_tests += {
-> +    'x86_64-softmmu': {
-> +      'cc': cc,
-> +      'cc_dockerfile': cc_dockerfile,
-> +      'cc_docker_host_arch': cc_docker_host_arch,
-> +      'folder': 'x86_64/system',
-> +      'gdb_arch': 'x86_64',
-> +      'qemu': emulators['qemu-system-x86_64'],
-> +      'tests': tests,
-> +    }
-> +  }
-> +endif
 
-With this patch I get under Archlinux:
+Thanks for the report.
+Tests were previously compiled with -fno-stack-protector, and it was
+unclear which distro/setup required this, so we removed it to find what
+requires it. It seems like archlinux is one of them.
 
-$ make tests/tcg/x86_64-softmmu-hello.test
-[1/1] Generating tests/tcg/x86_64-softmmu-hello with a custom command
-FAILED: [code=1] tests/tcg/x86_64-softmmu-hello.test
-/usr/bin/x86_64-linux-gnu-gcc 
-qemu/src/tests/tcg/multiarch/system/hello.c -o 
-tests/tcg/x86_64-softmmu-hello.test -static -MMD -MF 
-tests/tcg/x86_64-softmmu-hello.d -Wall -Werror -O0 -g 
--fno-strict-aliasing -nostdlib -ffreestanding -Wa,--noexecstack -I 
-qemu/src/tests/tcg/x86_64/system/../../minilib 
-qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c 
-../src/tests/tcg/x86_64/system/boot.S -Wl,-T 
-../src/tests/tcg/x86_64/system/kernel.ld -Wl,-melf_x86_64 
--Wl,--no-warn-rwx-segments -Wl,--build-id=none -lgcc
-/usr/bin/ld: /tmp/ccRh6mPz.o: in function `print_num':
-qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:45:(.text+0xec): 
-undefined reference to `__stack_chk_fail'
-/usr/bin/ld: /tmp/ccRh6mPz.o: in function `ml_printf':
-qemu/src/tests/tcg/x86_64/system/../../minilib/printf.c:136:(.text+0x549): 
-undefined reference to `__stack_chk_fail'
-collect2: error: ld returned 1 exit status
-ninja: build stopped: subcommand failed.
-make: *** [Makefile:170: run-ninja] Error 1
+I'll re-add the flag by default.
 
-Reverting this patch I'm able to run `make check` successfully again. 
-Any idea what might be causing this?
+Can you please confirm the command above (x86_64-linux-gcc ...) works
+with -fno-stack-protector added?
 
-Best regards,
+> Best regards,
+> 
+> Bernhard
+> 
 
-Bernhard
-
+Regards,
+Pierrick
 
