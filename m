@@ -4,141 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ABAC98310
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 06:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD332C98314
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 06:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9d0z-0003La-Pq; Thu, 24 Sep 2026 02:33:05 -0400
+	id 1x9dAn-0005T0-DP; Thu, 24 Sep 2026 02:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x9d0y-0003LQ-7N
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 02:33:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9dAY-0005NO-P1
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 02:43:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1x9d0w-00088A-C2
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 02:33:03 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68O62MAM1475893
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 06:33:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pOV0DRkJ3z0+F16G9KLp+0zcRdpiv+nDLlnu7RmmIO4=; b=RRgLepzggy2/bTvH
- Wo3a/ueQxl71CnlgPx4ARChLbbICyWh44P0IAS9lKsjCH0QFXv3dn0vSlGPw73tl
- AOsB/QIp2DRBXi+Aavd1qjHxXBaRvSZ7V8kUgUNSAtvI3sib3t2CQHZpYFFN8pD4
- j1OJJbCCQfjOWyQ6eHEdlXTbe6N5Il3m0ir0CxNtHE428ltvPtcgPx8xPvfvq6Nq
- PQW8x1iMVZHtT1JzpZhJd1gzHuD3K0Ah3VD0jO+/QXwM1cO47/BDxjUQI2VQvoL+
- o2+ErNKAKvNmiMBBvrPbx5EouOHz7aZEfMSJq4SECruYH0HoTZYCa2REyctk6CTG
- LxL9kw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvx8ag41v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 06:32:59 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93a08ff8451so271020485a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 23:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790231579; x=1790836379; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pOV0DRkJ3z0+F16G9KLp+0zcRdpiv+nDLlnu7RmmIO4=;
- b=QvLTrOTcp9zQkxRzJFH4gMhh5Ri8SyUQ0K5TZ9LaR+J66vQCPmgZgcQw9EDU7RfQPy
- bTuKVZ6XBfb8muIsuM96uYKnxjifTsR3FR6XtDkLtX/OZwe4r4SVqqKjuWDMT0PFyX/J
- 6QR4sXyYHBmMiELjncZSTw/8z3mNMNAMhNp4zG/kQjWnZYDOBwbnws0Y87OnWgW3d+K+
- T6qUxJ+V1yA5km9vBqmQBsxXWOpOYI3P6YSgYwYbuCcu89x3roUmoHNsUO9YuMF6lF6W
- Edk9FG/Vwov7Mx+95KZnq5eAtIAntjewGGJ7JL89n/K3Sj+rr7kV6KIjJMGPOECp+GZd
- e9rA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1x9dAX-0001K1-4I
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 02:42:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790232175;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xix05AhKt/VlngQg3Kkr8TZMZqtmCdybbbxgv1lqsHA=;
+ b=Hcv5N+0ul1JvgPzN+5l976v16vE9fy98mCnbdFaH3Gi71wDBqkg4fx60fmx5Gk1/xAVuKt
+ kIt388m2BJPXUkR8WgCJkYVVz1gkvskNMTgKResb6GcDu9ghrm9UyfChWgQBd6lU2/6WMe
+ aJIDbIQL9pRV+NgKfqnnI/JVwS3p494=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-271-CpsSrg0FMHSOhd7Re8VnmA-1; Thu, 24 Sep 2026 02:42:54 -0400
+X-MC-Unique: CpsSrg0FMHSOhd7Re8VnmA-1
+X-Mimecast-MFC-AGG-ID: CpsSrg0FMHSOhd7Re8VnmA_1790232173
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-49fce60a8d4so9545165e9.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 23:42:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790231579; x=1790836379;
+ d=1e100.net; s=20260707; t=1790232173; x=1790836973;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=pOV0DRkJ3z0+F16G9KLp+0zcRdpiv+nDLlnu7RmmIO4=;
- b=DQcDKvK60pTmflalAOPlRADCnz8ms+t3+wQNbqpxMIBOP8ITNyQcNQ22yS1f6LXB7f
- bc24p+7L6JaiKHsvrndlUR6/WY9Q69QBl+Mm8Yp8GJO5fBeTA7sKqdPOk/9qghAWXzP9
- eIJS838n9h4Hm4uyrJr5ycq7n1LHYKHUY5RUYZJRBQBzaQpytDyJSFYgIkY35kqIha8N
- 8YOP2c2VYQpne+wJExHrur9IvmrD9q8A7ak3Fcz1E7iIoRx/nI+yG49Lweog3KatmBPj
- JzhAFjRUn8bK/4e8bQNBTOoToXSUgk3RBQ624D9x9Vlig65YFGzp9qgsH4eKsC9rCBSG
- xYXA==
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Xix05AhKt/VlngQg3Kkr8TZMZqtmCdybbbxgv1lqsHA=;
+ b=iV2zs9nk8KlrO25W3wf3kTP6Xb9CEJKN9n5TZtGzzA7FI3fMt92VAXhvlq7ZX0IWUr
+ CD04wE+vVGeisiQ0jXWAcKVZM6eezTf46SxbHmaHfy14cFHJ/SiNbauNGU4My57m2zII
+ 3gKKTXHAEVbMUUuUe/ZdY8WLmYdE4e5Suj2xvi3oOqf3Dqj4TVkoj/VyACrEAyeiQbdT
+ f/f7ENtbyaJ1a4eU9lmiixJan1aS5I+ha99hbWLIlqtMbKMySi82pHryx8lmwrzCT0bB
+ O3ICW0/chbxmdEOkNC1vy+lkEOnVo507tOmtWY1RnpWV0SouNEegRD07CxAJyd0gcf+k
+ pyug==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwPQmUYuO7Ka1OwdpUjjOgJdCawtvPi0LKWHKFRBcslzPvRMOL6k2+sHZjmyon1BZj4ieITbO+AxD+l@nongnu.org
-X-Gm-Message-State: AFuF++krdX8wv0ghbjr59k+mZpcv5dozirtvqkLWqitmCOxf/vPeX5QG
- fQhtfpTPCvpxspRg8pV4OdhsFsqNgyFQ3KW+hj4yYFCxn224FdAsLCB7AEqKvm4ykbCpQtBD+nY
- rWRJM6+6tnDf61Og0j1aORIbWBIgtNHtd3xPCCVSPrVBtP2cCMVO1IJve/A==
-X-Gm-Gg: AYBFou2xbkGyhO9EGegJpCSWVlTzfomNsQQVxJPPDAJYOvtWLJdSJ256SqhDNvc8SRM
- cXjCO0rOErc3p1kkH++RlbGF4u5qh/OfpI1ZlaoISUA04lDg/3Jo+ewdxhJu2n6FxF6Qu5eNyBT
- FEjcpzWondtjmbQ+MAx1PYzvzzJ/T96V9oInNTVdWJCO/FgmgPofss4lKLBTTMSyY9DoQYmIi5y
- QUQn8cwjW71uODK8pi4WaImhl0ffHrJOpc9khqpPvOBcexA+MSlNWIYjHkkm7h/ldJo+NbeoQMA
- stPBzfbznUYK/EbXtsg98RGKlkN6UYFlBtafnS3DpB4OsqoNVmxl2+NvSQRswWQ9to2Sqm3Gfqw
- H3+1x+GK6OiMMrO7MREA4SgJdrETH5iVpgQ==
-X-Received: by 2002:a05:620a:700f:b0:93a:1101:a21c with SMTP id
- af79cd13be357-93c362d19femr160029285a.25.1790231578901; 
- Wed, 23 Sep 2026 23:32:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:700f:b0:93a:1101:a21c with SMTP id
- af79cd13be357-93c362d19femr160027785a.25.1790231578363; 
- Wed, 23 Sep 2026 23:32:58 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ AKwUvBxHkOeAgDg5wRTOGakBkPzakTVQruCvuRZk2mzTPgOjvc9mXEdv58tKSlMOTCcTL5YxvSy7glpjGyJV@nongnu.org
+X-Gm-Message-State: AFuF++lBlQIm1WP7S2q4d3PsZyuFZG37ezGM8XolpM7gRC4e8lof2WqD
+ Y5a1le+LRHrsJmo2Htbdt7D3pVft3gv1geXY72PPZStF22Myt5J0KjvscRFhR9BS+LcmUNrUnb+
+ qH6g7ZCJypgR/lFLcuyL/gj2zqlzgGbFr87TJ7oCTNlBen5uV7yRy+P1X
+X-Gm-Gg: AYBFou2DaOX9fTBj8KYWNhyhHCzLR8J3NjTr61cA+Pe/wIRDcLDl0JsaaOUlglS5RBR
+ 23vihPy5xpXxHJi4qHjIcUN9pWuVSu0nwfeUV1HFJpR41cmprLyYlLJI8vUWqs0ZcimKDT3nxdQ
+ OgeNcHExJZ+oe5bov76nbljf+KGiS93bKGOzoe2Z9j9d+5z1g5txolpX5coPOBBhGJIewDqRivR
+ j9SfBQXTvfxYXS+/8SkSs7jIMk+tOIexSgeA/Pwgl5TMlWDxoIrCmLo+agc5BwcbN5w+e9v4R8e
+ xr0kiaQZhQ3JYh5jCPVq7/L7GcCo1CYh9EF3wKRIu/vaHV70ExYX2qVj/fGbqj8V1bziJDnlIce
+ LAAw05m6z6hRmpbPOCfhJy4ZLeWLOFtfWgkT9yt4+gtgzchEV
+X-Received: by 2002:a05:600c:1c16:b0:49c:ff3c:973f with SMTP id
+ 5b1f17b1804b1-49fe7bba7c1mr16937485e9.24.1790232172995; 
+ Wed, 23 Sep 2026 23:42:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c16:b0:49c:ff3c:973f with SMTP id
+ 5b1f17b1804b1-49fe7bba7c1mr16937215e9.24.1790232172662; 
+ Wed, 23 Sep 2026 23:42:52 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fe5cc9a37sm47606665e9.11.2026.09.23.23.32.57
+ 5b1f17b1804b1-49fe5de4de4sm45838335e9.8.2026.09.23.23.42.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 23:32:57 -0700 (PDT)
-Message-ID: <ea1f2059-4b7a-4d7e-8077-7c261803c516@oss.qualcomm.com>
-Date: Thu, 24 Sep 2026 08:32:56 +0200
+ Wed, 23 Sep 2026 23:42:52 -0700 (PDT)
+Message-ID: <b8bcd28e-3e4a-4b87-8775-3d994396ddbe@redhat.com>
+Date: Thu, 24 Sep 2026 08:42:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] target/mips/tcg: Split out gen_mxu_logic
+Subject: Re: [PATCH v9 13/26] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260914230901.1781309-1-richard.henderson@linaro.org>
- <20260914230901.1781309-4-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260914230901.1781309-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260916144721.751810-1-eric.auger@redhat.com>
+ <20260916144721.751810-14-eric.auger@redhat.com>
+ <67EB28E9-F8CE-4BE1-8712-88583DEFF24E@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <67EB28E9-F8CE-4BE1-8712-88583DEFF24E@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAyNyBTYWx0ZWRfX7GoGV6LWV03h
- Ukve3048mfXMgwbMMjbwBI8Mm2n8Fp3XVpJbeHreOtlBzatsbUPXBxkhhe/JqarKK+Ojbb9lPNO
- HjZZRCxjcAZuMH5EqU6RP7e8kt6BlR8=
-X-Proofpoint-ORIG-GUID: 6_-M-O9aCiMKp4czOYU71yFiKc97lUpe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAyNyBTYWx0ZWRfXz10/LiGYnEjT
- sAYXfl7E8RBAsiGBT7cxtTARgTv6L2uBh3G6Gh+7qkEbuI1Cyro7uqZ2f7B53HDx7JIwUkMSSKT
- HDMgz1oxZlKpDzqrnjKd+O7UYoNQqcwmg4mvWKVoPlbC7aj7vLQqGoF2p4w6FWLSAIObQa6fxJO
- Bt7bKQfhNFIGWfSwar2t6T+5OSYfTWIPIUGre5aVLWo/juxA7sD90ayWZOCyftavuJyF/yQ6Bof
- fJ1ypVirhtYgOGAm+AnNFAel5ZmZVL4/ODKSTzAqCslVjwtxErg5yjN8zAXlwMdYyBaLxcUpYYZ
- ptzHDWVQsJOKw6Vxi9MLqvdpUHYT4aQg+6pt8pQxePcgsEJxQ75jDWwY99A4xUtXdBvzzlBIftQ
- wMgXKBuIWCiHwAo5nJvSEbMMjTwvCZdBbIMiNwO2y955WDNujjFcSAnWFL0QnYoPeU3OPcCugFb
- AijAeM4JRGop3hbqSxg==
-X-Authority-Analysis: v=2.4 cv=a6SlZkSF c=1 sm=1 tr=0 ts=6ab4c41b cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 6_-M-O9aCiMKp4czOYU71yFiKc97lUpe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609240027
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,17 +131,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/9/26 01:08, Richard Henderson wrote:
-> Split out a helper for common expansion of a 3-operand insns.
-> Drop all the special cases for 0 and let the optimizer handle them.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/mips/tcg/mxu_translate.c | 122 +++++++-------------------------
->   1 file changed, 24 insertions(+), 98 deletions(-)
+Hi Khushit,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On 9/24/26 8:26 AM, Khushit Shah wrote:
+>
+>> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> +
+>> +/*
+>> + * decode_idreg_writemap: Generate props for writable fields
+>> + *
+>> + * @obj: CPU object
+>> + * @reg: description of the sysreg
+>> + */
+>> +static int
+>> +decode_idreg_writemap(Object *obj, ARM64SysReg *reg)
+>> +{
+>> +    uint64_t map = reg->writable_mask;
+>> +    int i = ctz64(map);
+>> +    int nb_sysreg_props = 0;
+>> +
+>> +    while (map) {
+>> +        ARM64SysRegField *field = get_field(i, reg);
+>> +        int lower, upper;
+>> +        char *prop_name;
+>> +        uint64_t field_mask;
+>> +
+>> +        if (!field) {
+>> +            warn_report("%s bit %d of %s is writable but no named field "
+>> +                        "in target/arm/cpu-idregs.h.inc",
+>> +                        __func__, i, reg->name);
+>> +            map =  map & ~BIT_ULL(i);
+>> +            i = ctz64(map);
+>> +            continue;
+>> +        }
+>> +        lower = field->shift;
+>> +        upper = field->shift + field->length - 1;
+>> +        prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name, field->name);
+>> +        trace_decode_idreg_writemap(field->name, lower, upper, prop_name);
+>> +        object_property_add(obj, prop_name, "uint64",
+>> +                            get_sysreg_prop, set_sysreg_prop, NULL, field);
+>> +        g_free(prop_name);
+>> +        nb_sysreg_props++;
+>> +
+>> +        field_mask = MAKE_64BIT_MASK(lower, field->length);
+>> +        map = map & ~field_mask;
+>> +        i = ctz64(map);
+>> +    }
+>> +    trace_nb_sysreg_props(reg->name, nb_sysreg_props);
+>> +    return 0;
+>> +}
+>> +
+> We can try field based handling, it is more elegant.
+> - for each field, check if not RES and writable.
+
+I guess you refer to what you did in 
+
+[RFC PATCH v4 02/25] target/arm: expose all non-res ID reg fields as
+properties
+ie. enumerate through all reg->fields[] array instead of parsing the
+writable bitmask. Yes I agree your implementation is simpler.
+We can still implement checks against writable masks if wanted.
+>
+> <Though I will argue that all fields should be present not just writable :)>
+Let's discuss that separately. This function could be enhanced to
+support both modes anyway.
+
+Thanks
+
+Eric
+>
+>
+>
+
 
