@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59852C98314
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 13:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474BDC9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 13:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9jLK-0001Cx-0s; Thu, 24 Sep 2026 09:18:30 -0400
+	id 1x9jQj-0002sL-Re; Thu, 24 Sep 2026 09:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1x9jLF-0001Aj-07; Thu, 24 Sep 2026 09:18:25 -0400
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x9jQh-0002rD-Dt
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 09:24:03 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1x9jLC-0003te-TT; Thu, 24 Sep 2026 09:18:24 -0400
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x9jQe-0004O5-Jd
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 09:24:03 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OC68wr2221127; Thu, 24 Sep 2026 13:18:20 GMT
+ 68OC66A32221035; Thu, 24 Sep 2026 13:23:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FuMcox
- NgBqJ4PhHpEtTppPhvo2E3JjnKuShe1ptx/MU=; b=gWoLPNVK7n8tc9aAFIehhy
- 8pePQMTDQRzAS8FD3edyDWYAFDPb/2gzNqnfyK947zmnCzYPKYBSo6Ergnd+bGFc
- 5hG2gZHRjdA2E64JOA/zm0rGjlKMozkVzjzNw2rulPIFJzy4xSebMYR60iPOmLvO
- dCZyepVEJFA6vIWuksbwnHBPL0pqxmRUqj9slGiLwRHyg4BFZ8OpiAWm+oMMZcRi
- Rc4EuOybzEzMVHU6wgN7KYHKdkvOX0g+mzmm9mZtgsU4BxITTz8/vbjDiJ9H7uom
- slnnzen9k9bVuC/Qzi/l3V69Ga+um7ZD2dzXHRUcC9K/1PKhMeS64qDappb8SHdg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DtnfmB
+ QKPsYfTylGtCC7KRhOEC75fJbWfwlkLiKHXMY=; b=REOMIx+YcND+WEn3qbguLi
+ Ix7MkRXPinoXR1HcodoHmHcz8YtGKamFQpdqxs67au5FOpzn0GvdfE2QR7a1wHJF
+ txzByAyab2eeJl4YGvhpf1s8yN2l0E6PpaFMR7YpRmQMYxBnkDUUAS1y3n/8TSWh
+ wqJ7EZLY2xsZOxSp0EG/ltbSy1dmT1VYjKRSaFRr15tAjxffzGVauUI26Zv5BNZG
+ 7qvP0wqFTxtEVIwvk/PiGB3TvDwL+duNg9T4vLOltRLb6zVNO/T96jrRbLkjr3Qh
+ H4bQvsTWoafudAr12GQNaeA2uGocRsK+B1KuOHSDgCPQXX6RIEn46qbgP8ujlKvQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvgjrg-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvgkkq-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 13:18:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OCHnGh2047307; Thu, 24 Sep 2026 13:18:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1x081-1
+ Thu, 24 Sep 2026 13:23:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OCHblY2060536; Thu, 24 Sep 2026 13:23:58 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb6qp1ex-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 13:18:19 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68ODIFpc46006642
+ Thu, 24 Sep 2026 13:23:58 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68ODNvgL32244280
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 13:18:15 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A0D920043;
- Thu, 24 Sep 2026 13:18:15 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E7F6720040;
- Thu, 24 Sep 2026 13:18:11 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.19.125])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 13:18:11 +0000 (GMT)
-Message-ID: <3f6eab78009d96f7eca3e3e8657c8b804dcd3714.camel@linux.ibm.com>
-Subject: Re: [PATCH] target/ppc: Stop vCPU thread before calling
- parent_unrealize
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, sourabhjain@linux.ibm.com,
- rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com,
- richard.henderson@linaro.org, sshegde@linux.ibm.com,
- srikar@linux.ibm.com, amachhiw@linux.ibm.com
-Date: Thu, 24 Sep 2026 18:48:10 +0530
-In-Reply-To: <arTpfPWGBLa2YlXF@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
-References: <20260923121444.154175-1-shivangu@linux.ibm.com>
- <arTpfPWGBLa2YlXF@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ Thu, 24 Sep 2026 13:23:57 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C12B958060;
+ Thu, 24 Sep 2026 13:23:57 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D5EF58056;
+ Thu, 24 Sep 2026 13:23:57 +0000 (GMT)
+Received: from [9.47.158.153] (unknown [9.47.158.153])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Sep 2026 13:23:57 +0000 (GMT)
+Message-ID: <96c5ceac-4e74-4db3-81b0-d15b77d7e378@linux.ibm.com>
+Date: Thu, 24 Sep 2026 09:23:57 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] tpm_util: Pass TPMVersion to function writing fatal
+ error response
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, armenon@redhat.com, marcandre.lureau@gmail.com
+References: <20260924012527.858527-1-stefanb@linux.ibm.com>
+ <20260924012527.858527-2-stefanb@linux.ibm.com>
+ <179023566484.1794827.7857065416987116127.b4-review@b4>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <179023566484.1794827.7857065416987116127.b4-review@b4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: jjkcg8b4n0yBqrS5Q2RkodCFwlpPnr6K
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA1NCBTYWx0ZWRfXzYGRt+uv9diN
- mOt0KVi0cXCjrjGl3izBWQA2/DFxfbfnXw/YvM7TfvWEE3m1C/ed7EmdqtRkei/2V1wVHkflctV
- YD4PYZJPEgoxouuU7/hmrstRAZTNx4c=
-X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab5231c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: x0kP-B8WYCKWx42UOIsBeQlW8PwcmeaA
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA1NCBTYWx0ZWRfX8QA+uZjNOVZz
+ eKK4zmIOwtu+pfrpHmrTCiRjZpNoBmK20oCki5b28w2IZjU4wESmU5WqmkEr/ku4CCRoMnyt19I
+ WVMdty9NvQC47C7+TWbWYUSbdwIADco=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab5246f cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=pGLkceISAAAA:8
- a=SY9DgSKdxip53Jy9IuwA:9 a=QEXdDO2ut3YA:10 a=jbrNdEKIzwoA:10
-X-Proofpoint-GUID: pvapHIYI-jfMK9Exsagj4SFxj9k9OtqX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA1NCBTYWx0ZWRfX+bq2Hym4hWa1
- pi4unjA9PYVJ16Lsr1RoHUUoyMsVmHIowWvB6r5rAjyLOnybVa4DEbSM1QGD+jF5+LnnWEljfdi
- 3vD6HMouvFSwcVMYKGWroXakEzFUiu9YVnlwvF4WXzzyQi3m7hr+/UVqZMBx6w1yYxfyRqJyFEX
- Bq9aml5ZZ1MSf0UgiapMMkH6julA+ObvaYIb/98WLukG3kUtYgtTgwGgAJ7Y0SZJWFor8JTIEFy
- rQlY31VKyk3TpIyl6IOCvLwhTdCJ432RHWNWUcdfR0vY9aELZly8y3Wz4L7xUCWso01/ZVCwoXA
- iXpzZ/TK6UDATTiJePnhk+oPOwNFgOJmpTmR0l/k2puenU9OXrqnnd4p8v6UZQBtUpMcU/8ScuB
- rXDZsrGDPPf14shMzUukgfD/T0YDoP+Wim0ol8w1BTaDzp7vAYwdNSsok3bTac+KOSpu2F7+azQ
- zF3XyWsEu+OakAQMjSg==
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=IK8IUtuwpHpVJ6zup8IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Vbc5m6zvXCmKv2DeGyPJugSSQjqNVblh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA1NCBTYWx0ZWRfX4DG56vK5VxgV
+ NLXfUGyRtGeSECcQmc+kE2z/KwsXE9lJE7yiPf7UzDOt1QdXm6OYU2RVhTRrsdP/rquMo0AxUCI
+ eqnAVhyuHg5sJ1Os0VD1oeKBnUqfo518LRkt9Lfd+MZN4+L3aHpIWJwY2oAOrXF68zA8bV5qWBY
+ 9w/LpDBQpLJ0iYBuuxWaMAS4tq8zSx0nQqrWc55xPicPneiqA7yZ8fvMkwmbnSrc9sLpJZvwUOK
+ fK+/AamtIIJLIWlG9qxVxEXqVU9apbdpIWP9wBLBt2fK4bNplNLPzn/G3aHZJ1aAvdvyr9aN6so
+ VvpiKphzyMvvj5jIDrfvv3aAf6zt3wdDTXYQhZNd+FDRBigEBO6TEIvuE+0gggsCxPrh7h8RN8H
+ XYuKQ2M3uuLxOrWXPcXGSEgW2dTsaLZQ/kJet/8HLm8NysuM24JS3m0HJFFz/uTfoiJKXKnd3YZ
+ 2uXW/XjNmsGkVvpDZeQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
@@ -105,8 +105,8 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
  definitions=main-2609240054
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,11 +129,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-09-24 at 14:42 +0530, Mukesh Kumar Chaurasiya wrote:
-> Makes Sense.
->=20
-> Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Thanks for your review Mukesh :)
 
-~Shivang.
+
+On 9/24/26 3:41 AM, marcandre.lureau@redhat.com wrote:
+>> Have tpm_util_write_fatal_error_response write a TPM version specific
+>> error response with error code TPM_FAIL for a TPM 1.2 and TPM_RC_FAILURE
+>> for a TPM 2. Adjust the callers.
+>>
+>> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+>> Message-ID: <20260924012527.858527-2-stefanb@linux.ibm.com>
+>>
+>> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+>> index 95d2de2f48b8..16ae44c8d722 100644
+>> --- a/backends/tpm/tpm_emulator.c
+>> +++ b/backends/tpm/tpm_emulator.c
+>> @@ -270,7 +270,8 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
+>>           tpm_emulator_unix_tx_bufs(tpm_emu, cmd->in, cmd->in_len,
+>>                                     cmd->out, cmd->out_len,
+>>                                     &cmd->selftest_done, errp) < 0) {
+>> -        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len);
+>> +        tpm_util_write_fatal_error_response(cmd->out, cmd->out_len,
+>> +                                            TPM_EMULATOR(tb)->tpm_version);
+>>       }
+>>   }
+>>   
+>> diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
+>> index a9f35ab7d606..8a4f8183c7c9 100644
+>> --- a/backends/tpm/tpm_passthrough.c
+>> +++ b/backends/tpm/tpm_passthrough.c
+>> @@ -118,7 +118,7 @@ static void tpm_passthrough_unix_tx_bufs(TPMPassthruState *tpm_pt,
+>>   
+>>   err_exit:
+>>       if (ret < 0) {
+>> -        tpm_util_write_fatal_error_response(out, out_len);
+>> +        tpm_util_write_fatal_error_response(out, out_len, tpm_pt->tpm_version);
+>>       }
+>>   
+>>       tpm_pt->tpm_executing = false;
+>> diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
+>> index 264bff22a91a..cdb7a4886104 100644
+>> --- a/backends/tpm/tpm_util.c
+>> +++ b/backends/tpm/tpm_util.c
+>> @@ -87,12 +87,18 @@ const PropertyInfo qdev_prop_tpm = {
+>>   /*
+>>    * Write an error message in the given output buffer.
+>>    */
+>> -void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len)
+>> +void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len,
+>> +                                         TPMVersion tpm_version)
+>>   {
+>>       if (out_len >= sizeof(struct tpm_resp_hdr)) {
+>> -        tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
+>> +        if (tpm_version == TPM_VERSION_1_2) {
+>> +            tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
+>> +            tpm_cmd_set_error(out, TPM_FAIL);
+>> +        } else {
+> 
+> I would rather use a switch/case than fallback
+
+Will change for v2.
+
 
