@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B2EC9831E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 22:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B647CC98318
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 22:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9rx5-0000Ni-3b; Thu, 24 Sep 2026 18:30:03 -0400
+	id 1x9rxJ-0000Vf-9B; Thu, 24 Sep 2026 18:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x9rx3-0000Ml-DK; Thu, 24 Sep 2026 18:30:01 -0400
+ id 1x9rxF-0000Tf-VK; Thu, 24 Sep 2026 18:30:13 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x9rx0-0005EC-Tq; Thu, 24 Sep 2026 18:30:01 -0400
+ id 1x9rxD-0005HW-LY; Thu, 24 Sep 2026 18:30:13 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OJ5TUG1201903; Thu, 24 Sep 2026 22:29:56 GMT
+ 68OJ5eA61202115; Thu, 24 Sep 2026 22:30:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=R3gddBglGETatuZHY/PrHfG9cbHZWsm2N41jS6RIq
- RU=; b=cYZU7NknyJ94+akELXDGCSMAzSG5IzMMbsGWI3pSiibLvJeIvef1sEVCG
- yoG1bkBlwPVmNzXWmYnY4sjvmtvT5f4WPSpFMUvJbhZA3yo3PrDeSH5gMvwgw+6/
- 1USzlFJbQuEiMsQ6oaQsaUW5I4a4hS6lQmKa5yeOKUSGdjKoUxodJOxcG+hI0Cju
- c9uY9Pg6ZyLUIMSi5NDOo3OV2CFUmizy1eAkpE547dOQl3jpagzyXBjafmH6+f0r
- kttS24YtXj/V+jSv2jQF3MABUDaXzgeMSayUoiJ75/rT3bucwApyF8RzaCetR9HH
- bDJ+T50dRQNL1SJohiJwbgE18VnHA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske23xqp-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=cQR+DsEFuiIdDK4Xa
+ DmeCs6vX4161X/idAu68Z0x0R4=; b=jlCFKA8uAw9e3sPYsXakOHnQNisy7W+th
+ k6bDyRLTX5iE2vdq4Ibd1bV0jdNZ6e7aJL9oHf5Nkue1UFbkEPAm6b+AsP2Z9+G2
+ TkIWTHpYiGwZRjvBan6HgbNBWlTnheSYjaM+XyrGgFW37snoicH2HoscnFu5bFLl
+ /uo7Oxblw7e3AE9yb/DAEjmFQxfigQ3i334uXKHBcBvFICBX1sJ0lB1jsqJ1kOc9
+ B3zP9hnTTzywUroN6YOsmf063w3eVkJD49G8EwDQwtAGjBe1G/mIx/pX8Dc4s1Ju
+ tr9GaT2pZDtyh5eo7mz5qYhv4Dhe7JbE7v9Cjl26mghq0lcnAGMIA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske23xs4-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 22:29:56 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OIlV051233757; Thu, 24 Sep 2026 22:29:55 GMT
+ Thu, 24 Sep 2026 22:30:09 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OIlc562569930; Thu, 24 Sep 2026 22:30:09 GMT
 Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvu7ec7tx-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb6qr1e8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 22:29:55 +0000 (GMT)
+ Thu, 24 Sep 2026 22:30:08 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
  by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68OMTsXV2490930
+ 68OMU72N24707712
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 22:29:54 GMT
+ Thu, 24 Sep 2026 22:30:08 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2708758054;
- Thu, 24 Sep 2026 22:29:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B6BFA58054;
+ Thu, 24 Sep 2026 22:30:07 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 910B658050;
- Thu, 24 Sep 2026 22:29:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 041705805E;
+ Thu, 24 Sep 2026 22:30:06 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.83.151])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 22:29:52 +0000 (GMT)
+ Thu, 24 Sep 2026 22:30:05 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
@@ -64,30 +64,33 @@ Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
  farman@linux.ibm.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
  farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
  jdaley@linux.ibm.com
-Subject: [PATCH v5 0/8] s390x: Add support for virtio-net-pci boot device
-Date: Thu, 24 Sep 2026 18:29:41 -0400
-Message-ID: <20260924222949.147720-1-zycai@linux.ibm.com>
+Subject: [PATCH v5 8/8] tests/functional/s390x: Add tests for virtio net PCI
+ in test_pxelinux.py
+Date: Thu, 24 Sep 2026 18:29:49 -0400
+Message-ID: <20260924222949.147720-9-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260924222949.147720-1-zycai@linux.ibm.com>
+References: <20260924222949.147720-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: MDkvkiX_di-nna9be5yq7eCKE6Q8M4-w
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab5a464 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-ORIG-GUID: pRj2-tIZH8IWeOlPa6vtCkpBqwoXYbg_
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab5a471 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=jvtsDTf-sTvT3j20TSIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfXwbslk5rOFBKp
- gbDya4BCiZ30B/7tNftWjwRdC6wkWRjFsO5UAKVp37oTL2QKxdXsrVrvO9K1ckd0Qk1cHW4YDHa
- QvVZpjcqs21UO4RkSBPfQ41dtTnduEY=
-X-Proofpoint-GUID: MDkvkiX_di-nna9be5yq7eCKE6Q8M4-w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX9QqiBSuuc5sy
- 4DVXrkUm3BQohruVxUhKBXi4uckTXtyz2eLhN6fmALqLLqjPhgdkCOnW8QDPQmN61KIIokmTOKU
- FN+o7BU52uLjMqCcaL8p6j3hgHE8u+WqlesFxLvlmnoThY4ElB7e3O1qLqQXlZWMDFiIvL5PR56
- Tkwr5++iLds4PLynoNL5jU4/VRVM1Djg6GtetBCBJH/4yUJjMWpVxY1IdceuyUjUuNCNcT1Krv6
- pzkdhcCR8vt92bDn7Pmbw8gv0peJ2bLfJv++QP8FDXfpOeA8QhzqKZeU3UHW3bXgzVrdkVYYbsD
- 7P0hBmwktMbMF0uPuXpS4tv4hAhP5Y9K9MbOGDbdWt7vOj7zDa0GsyYAP9sw6HsYuuPoaGdkwsX
- d0juA+STpzVIbSzcCzXHplOifByIqeXHiv4Zy5kND2iraFKYUOOjMKO+gP6vzqtDDmPR69xmnW8
- Tek01nreRegAdFUxmbA==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=Z6bpV0tWmYslb40Kif8A:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX752usSf98beR
+ DenVfgtCPsDsbfuiyEPt+vkiz+t+2iKsB6ajix1sXF9ikBsKaAP17em5WbfB0Td4FHk5Ql+3/lB
+ GpoLXuQQQprpcTNWIeeLXBpBHdwMEms=
+X-Proofpoint-GUID: pRj2-tIZH8IWeOlPa6vtCkpBqwoXYbg_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX1LObPKRCAheL
+ SHuuk9Y5rq6X9wGqvH2UKhT2bsoPVRxgUmu9FBx5U0d0OfEy7ivbhnlP72jX+CJPrLOlWzzGwlq
+ /1xRjOka4XB/GgS+vmH6JNQUBq3/T5RZQI+YYncecTlkLbHaq+7SI+Rnwy9ULVSkBV4tGNlwb3q
+ pfBDEnADqrnC3atCZ92bRMvJDxoInOO6ow3f4FdJkirehNnrpnl04VEuIQwTH0AF8fMAn/8Wwct
+ 4HL+oYRhIlqz92QUaad1T5I15y4lSPZ13ehouEq1tCtIMt6QhlhIkOEMPwUMzgDf54uDTlDTszz
+ YEc3SUXUCWlEZtX9DKsyfXlD4QHhcGJmuxVTQ9Wiwexkr8r+eXio+TfboFMIG4JvNp+rReHLF/0
+ hCG8JQAxwHu8cZmjaXlThDvlx+dJF1M422tj9Bt80fJnZH6jorI4MCkR7xFxspkkzR0rY5W0PZ+
+ OncEEOOoN696K0/xypg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_05,2026-09-21_02,2025-10-01_01
@@ -120,159 +123,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-changelog v4->v5
+Add test coverage for virtio-net-pci network booting on s390x by
+extending the pxelinux functional tests.
 
-[PATCH v4 4/8] pc-bios/s390-ccw: Add support for virtio-net-pci IPL
-- Fixed rebase errors
+This patch adds PCI variants of all existing pxelinux tests to verify
+that virtio-net-pci devices work correctly for network booting.
 
-[PATCH v4 6/8] tests/qtest: Check s390x boot device support in pxe-test.c
-- Reworded the log message for strings found in the BIOS
-- Added a comment explaining the assumption that netboot support always
-  includes virtio-net-ccw support
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+---
+ tests/functional/s390x/test_pxelinux.py | 71 ++++++++++++++++++++-----
+ 1 file changed, 59 insertions(+), 12 deletions(-)
 
-[PATCH v4 7/8] tests/qtest: Add s390x virtio net PCI test to pxe-test.c
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-----------------------------------------------------------------------
-
-This series enables network booting via virtio-net-pci on s390x.
-
-Refactor virtio-net to separate virtio-ccw specific logic and add 
-support for booting from virtio-net-pci devices with proper endianness
-handling. Add support for the loadparm property during network boot.
-
-Add corresponding test coverage to verify correct network boot
-functionality with virtio-net-pci devices.
-
-----------------------------------------------------------------------
-
-changelog v3->v4
-
-[PATCH v3 2/8] pc-bios/s390-ccw: Add dynamic net header size handling
-- Fixed the UAPI path in the commit message
-- Removed the commented-out num_buffers field from VirtioNetHdr
-- Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-- Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-[PATCH v3 4/8] pc-bios/s390-ccw: Add support for virtio-net-pci IPL
-- Resolved merge conflicts
-- Added a comment in ipl_pci_device() clarifying that all PCI devices
-  use the same shared setup
-- Updated the comment in netmain() to clarify that PCI devices do not
-  need specific network setup
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-[PATCH v3 5/8] hw/virtio: Add "loadparm" property to virtio net PCI
-devices booting on s390x
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-[PATCH v3 6/8] tests/qtest: Check s390x boot device support in pxe-test.c
-- Reworded the log message for strings found in the BIOS
-- Removed the comment from s390_bios_has_net_ccw() that assumes
-  virtio-net-ccw is present
-- Tested-by: Joshua Daley <jdaley@linux.ibm.com>
-
-[PATCH v3 7/8] tests/qtest: Add s390x virtio net PCI test to pxe-test.c
-- Added a comment clarifying that the presence of the string indicates
-  virtio-net-pci support
-- Tested-by: Joshua Daley <jdaley@linux.ibm.com>
-
-[PATCH v3 8/8] tests/functional/s390x: Add tests for virtio net PCI in
-test_pxelinux.py
-- Added "_ccw" to the existing virtio-net-ccw test names
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-changelog v2->v3
-
-Added a new patch, "tests/qtest: Check s390x boot device support in
-pxe-test.c", which gracefully skips the test when the network boot
-device is not supported by the bios.
-
-[PATCH v2 1/7] pc-bios/s390-ccw: Move CCW net setup to virtio-ccw
-- Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-- Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-[PATCH v2 2/7] pc-bios/s390-ccw: Add dynamic net header size handling
-- Removed VIRTIO_NET_F_MRG_RXBUF_BIT, as it is never negotiated.
-- Updated the commit message to note that the same structure mappings
-  are replicated as defined in the UAPI.
-
-Re: [PATCH v2 3/7] pc-bios/s390-ccw: Introduce virtio_tswap helpers
-- Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-
-[PATCH v2 4/7] pc-bios/s390-ccw: Add support for virtio-net-pci IPL
-- Simplified virtio_pci_get_net_config().
-- Removed cmd_vr_idx initialization for net devices.
-- Added a comment indicating that byte swapping is required when other
-  fields are used in the net config.
-- Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-
-[PATCH v2 5/7] hw/virtio: Add "loadparm" property to virtio net PCI
-devices booting on s390x
-- Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-- Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-
-changlog v1->v2
-
-pc-bios/s390-ccw: Move CCW net setup to virtio-ccw
-- Removed the virtio_net_setup() dispatcher; netmain.c now calls
-  virtio_ccw_net_setup() directly
-- Improved the error message to be CCW-specific
-
-pc-bios/s390-ccw: Add dynamic net header size handling
-- Defined VirtioNetHdrMrgRxbuf, which includes VirtioNetHdr and a
-  num_buffers field
-- Defined header size constants using the sizeof() each struct
-
-pc-bios/s390-ccw: Introduce virtio_tswap helpers
-- Edited the commit message to mention that only 16-bit helper function
-  is used in this commit
-- Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-- Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-pc-bios/s390-ccw: Add support for virtio-net-pci IPL
-- Updated the commit message to change "adds" to "extends" when
-  describing endianness handling
-- Removed net specific setup/find for PCI device
-- Checked for virtio initialization failures during network device
-  initialization
-
-hw/virtio: Add "loadparm" property to virtio net PCI devices booting on s390x
-- Edited the commit message to avoid implying that PCI netboot will fail
-  if a valid loadparm is not provided.
-
-tests/qtest: Add s390x virtio net PCI test to pxe-test.c
-tests/functional/s390x: Add tests for virtio net PCI in test_pxelinux.py
-- Tested-by: Joshua Daley <jdaley@linux.ibm.com>
-
-Zhuoying Cai (8):
-  pc-bios/s390-ccw: Move CCW net setup to virtio-ccw
-  pc-bios/s390-ccw: Add dynamic net header size handling
-  pc-bios/s390-ccw: Introduce virtio_tswap helpers
-  pc-bios/s390-ccw: Add support for virtio-net-pci IPL
-  hw/virtio: Add "loadparm" property to virtio net PCI devices booting
-    on s390x
-  tests/qtest: Check s390x boot device support in pxe-test.c
-  tests/qtest: Add s390x virtio net PCI test to pxe-test.c
-  tests/functional/s390x: Add tests for virtio net PCI in
-    test_pxelinux.py
-
- hw/virtio/virtio-net-pci.c              |  1 +
- pc-bios/s390-ccw/main.c                 |  2 +
- pc-bios/s390-ccw/netmain.c              | 73 +++----------------
- pc-bios/s390-ccw/virtio-ccw.c           | 62 ++++++++++++++++
- pc-bios/s390-ccw/virtio-ccw.h           |  1 +
- pc-bios/s390-ccw/virtio-net.c           | 66 +++++++++++++----
- pc-bios/s390-ccw/virtio-pci.c           | 20 ++++++
- pc-bios/s390-ccw/virtio.c               | 27 +++++--
- pc-bios/s390-ccw/virtio.h               |  4 ++
- tests/functional/s390x/test_pxelinux.py | 71 ++++++++++++++----
- tests/qtest/meson.build                 |  1 +
- tests/qtest/pxe-test.c                  | 96 ++++++++++++++++++++++++-
- 12 files changed, 328 insertions(+), 96 deletions(-)
-
+diff --git a/tests/functional/s390x/test_pxelinux.py b/tests/functional/s390x/test_pxelinux.py
+index c00cce6a5a..5ce42aa074 100755
+--- a/tests/functional/s390x/test_pxelinux.py
++++ b/tests/functional/s390x/test_pxelinux.py
+@@ -50,7 +50,8 @@ class S390PxeLinux(QemuSystemTest):
+          '/images/kernel.img'),
+         '480859574f3f44caa6cd35c62d70e1ac0609134e22ce2a954bbed9b110c06e0b')
+ 
+-    def pxelinux_launch(self, pl_name='default', extra_opts=None):
++    def pxelinux_launch(self, pl_name='default', extra_opts=None,
++                        dev='virtio-net-ccw'):
+         '''Create a pxelinux.cfg file in the right location and launch QEMU'''
+         self.require_netdev('user')
+         self.set_machine('s390-ccw-virtio')
+@@ -74,7 +75,7 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
+         with open(cfg_fname, 'w', encoding='utf-8') as f:
+             f.write(PXELINUX_CFG_CONTENTS)
+ 
+-        virtio_net_dev = 'virtio-net-ccw,netdev=n1,bootindex=1'
++        virtio_net_dev = f'{dev},netdev=n1,bootindex=1'
+         if extra_opts:
+             virtio_net_dev += ',' + extra_opts
+ 
+@@ -85,9 +86,9 @@ def pxelinux_launch(self, pl_name='default', extra_opts=None):
+         self.vm.launch()
+ 
+ 
+-    def test_default(self):
++    def do_test_default(self, dev):
+         '''Check whether the guest uses the "default" file name'''
+-        self.pxelinux_launch()
++        self.pxelinux_launch(dev=dev)
+         # The kernel prints its arguments to the console, so we can use
+         # this to check whether the kernel parameters are correctly handled:
+         wait_for_console_pattern(self, 'testoption=teststring')
+@@ -95,36 +96,82 @@ def test_default(self):
+         wait_for_console_pattern(self, 'Unpacking initramfs...')
+         wait_for_console_pattern(self, 'Run /init as init process')
+ 
+-    def test_mac(self):
++    def do_test_mac(self, dev):
+         '''Check whether the guest uses file name based on its MAC address'''
+         self.pxelinux_launch(pl_name='01-02-ca-fe-ba-be-42',
+-                             extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3')
++                             extra_opts='mac=02:ca:fe:ba:be:42,loadparm=3',
++                             dev=dev)
+         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
+ 
+-    def test_uuid(self):
++    def do_test_uuid(self, dev):
+         '''Check whether the guest uses file name based on its UUID'''
+         # Also add a non-bootable disk to check the fallback to network boot:
+         self.vm.add_args('-blockdev', 'null-co,size=65536,node-name=d1',
+                          '-device', 'virtio-blk,drive=d1,bootindex=0,loadparm=1',
+                          '-uuid', '550e8400-e29b-11d4-a716-446655441234')
+-        self.pxelinux_launch(pl_name='550e8400-e29b-11d4-a716-446655441234')
++        self.pxelinux_launch(pl_name='550e8400-e29b-11d4-a716-446655441234',
++                             dev=dev)
+         wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
+ 
+-    def test_ip(self):
++    def do_test_ip(self, dev):
+         '''Check whether the guest uses file name based on its IP address'''
+         self.vm.add_args('-M', 'loadparm=3')
+-        self.pxelinux_launch(pl_name='0A00020F')
++        self.pxelinux_launch(pl_name='0A00020F', dev=dev)
+         wait_for_console_pattern(self, 'Linux version 5.3.7-301.fc31.s390x')
+ 
+-    def test_menu(self):
++    def do_test_menu(self, dev):
+         '''Check whether the boot menu works for pxelinux.cfg booting'''
+         self.vm.add_args('-boot', 'menu=on,splash-time=10')
+-        self.pxelinux_launch(pl_name='0A00')
++        self.pxelinux_launch(pl_name='0A00', dev=dev)
+         wait_for_console_pattern(self, '[1] Nonexisting')
+         wait_for_console_pattern(self, '[2] Debian')
+         wait_for_console_pattern(self, '[3] Fedora')
+         wait_for_console_pattern(self, 'Debian 4.19.146-1 (2020-09-17)')
+ 
++    def test_default_ccw(self):
++        '''pxelinux.cfg "default" lookup via virtio-net-ccw'''
++        self.do_test_default('virtio-net-ccw')
++
++    def test_default_pci(self):
++        '''pxelinux.cfg "default" lookup via virtio-net-pci'''
++        self.require_device('virtio-net-pci')
++        self.do_test_default('virtio-net-pci')
++
++    def test_mac_ccw(self):
++        '''pxelinux.cfg MAC-address-based file lookup via virtio-net-ccw'''
++        self.do_test_mac('virtio-net-ccw')
++
++    def test_mac_pci(self):
++        '''pxelinux.cfg MAC-address-based file lookup via virtio-net-pci'''
++        self.require_device('virtio-net-pci')
++        self.do_test_mac('virtio-net-pci')
++
++    def test_uuid_ccw(self):
++        '''pxelinux.cfg UUID-based file lookup via virtio-net-ccw'''
++        self.do_test_uuid('virtio-net-ccw')
++
++    def test_uuid_pci(self):
++        '''pxelinux.cfg UUID-based file lookup via virtio-net-pci'''
++        self.require_device('virtio-net-pci')
++        self.do_test_uuid('virtio-net-pci')
++
++    def test_ip_ccw(self):
++        '''pxelinux.cfg IP-address-based file lookup via virtio-net-ccw'''
++        self.do_test_ip('virtio-net-ccw')
++
++    def test_ip_pci(self):
++        '''pxelinux.cfg IP-address-based file lookup via virtio-net-pci'''
++        self.require_device('virtio-net-pci')
++        self.do_test_ip('virtio-net-pci')
++
++    def test_menu_ccw(self):
++        '''pxelinux.cfg interactive boot menu via virtio-net-ccw'''
++        self.do_test_menu('virtio-net-ccw')
++
++    def test_menu_pci(self):
++        '''pxelinux.cfg interactive boot menu via virtio-net-pci'''
++        self.require_device('virtio-net-pci')
++        self.do_test_menu('virtio-net-pci')
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.55.0
 
