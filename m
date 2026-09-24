@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD58C98325
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 22:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EC4C9831E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 22:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9rxG-0000TO-4g; Thu, 24 Sep 2026 18:30:14 -0400
+	id 1x9rxC-0000Rl-Pr; Thu, 24 Sep 2026 18:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x9rxC-0000RS-79; Thu, 24 Sep 2026 18:30:10 -0400
+ id 1x9rx9-0000QE-A9; Thu, 24 Sep 2026 18:30:07 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1x9rxA-0005Gm-3G; Thu, 24 Sep 2026 18:30:09 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1x9rx7-0005GE-7x; Thu, 24 Sep 2026 18:30:06 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OJ5jR03079484; Thu, 24 Sep 2026 22:30:06 GMT
+ 68OJ5Vn91201917; Thu, 24 Sep 2026 22:30:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=zccov/aqvkVKwzqMF
- rG44/iDnccBJN4KVKdjFmsBSCo=; b=c4R4yqooyPsmYRTM6/mwZk8W9hSFvtaP3
- x7WyiML+iB4ZTepkGAeLNrJozi8xCvKFXgfGHKx/a3qjmVwhKcMGCqzOU8Md8rhG
- +jaMw+Oh7efFAtW7SkfjnfC2PlHPeCrcYqMXWY5ye01cPglZF+izXUy74qf4gPIc
- SKF+j4ET+cXZEGLVRgCXLbaBN/Bv3zi0dinYgl//0tX+3t/8gMzK6kgdOsIuDUbP
- Uv8Xms+N/2sXlINXP6lM/qj8dMhQcUptnYM0upHrgt74V9DqrP3bYJEJFQr2ew7m
- II9+7s5TC4Sfu2hs/ZUbboYcJlLaBCt/ANSrIdTw9W2/utzbdhMHg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2v1pa-1
+ :mime-version:references:subject:to; s=pp1; bh=AzO8g3G7d2J5+RCHQ
+ z7DuaWf/NBS+CeNBU/Y/7HMVUc=; b=LqjTYE/OX7lt2VPCU1C9MnLFSnWi4u6Em
+ DZmYEcqNtWrujXL8iQgVDz4OWRAeqfH/VlFkj9A+kMTdmJ0Ch9GLNoco9BOHFAlL
+ oRrTfJ5oPMXUuAYNmrAr8WxF/XEAr83YYyjUeovzkHOZQDITCazTOXTXgNDKw7sj
+ jQzkqz36Df6bS/yNGaHi6UyqvO8c4UwHl3RcRB0tLSAvzLkLJDZx7aWZnL2xDNVZ
+ qDL3ePYbRDx1kmLEr7Eyb9ULyoukeSc8PYO+dKXgYLfpYib0IeYb0Xz4T5xIh6Lm
+ jRO+xaNkvFlO38wiRxVzyC56O2lnKsFlXikfFzu8MMe4HRORCg5pA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske23xr7-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 22:30:06 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OIlbjd2516022; Thu, 24 Sep 2026 22:30:05 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbu8ywb1-1
+ Thu, 24 Sep 2026 22:30:03 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68OIlXfp1233805; Thu, 24 Sep 2026 22:30:02 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvu7ec7u5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 22:30:05 +0000 (GMT)
+ Thu, 24 Sep 2026 22:30:02 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68OMU46n12321534
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68OMU05c52887874
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 22:30:04 GMT
+ Thu, 24 Sep 2026 22:30:01 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24BF158054;
- Thu, 24 Sep 2026 22:30:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C872558050;
+ Thu, 24 Sep 2026 22:30:00 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A50BF58045;
- Thu, 24 Sep 2026 22:30:02 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5D13258045;
+ Thu, 24 Sep 2026 22:29:59 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.83.151])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 22:30:02 +0000 (GMT)
+ Thu, 24 Sep 2026 22:29:59 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
@@ -64,39 +64,39 @@ Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
  farman@linux.ibm.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
  farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
  jdaley@linux.ibm.com
-Subject: [PATCH v5 6/8] tests/qtest: Check s390x boot device support in
- pxe-test.c
-Date: Thu, 24 Sep 2026 18:29:47 -0400
-Message-ID: <20260924222949.147720-7-zycai@linux.ibm.com>
+Subject: [PATCH v5 4/8] pc-bios/s390-ccw: Add support for virtio-net-pci IPL
+Date: Thu, 24 Sep 2026 18:29:45 -0400
+Message-ID: <20260924222949.147720-5-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260924222949.147720-1-zycai@linux.ibm.com>
 References: <20260924222949.147720-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: n-QSIO0x8noGglAWFXRPUgHQRuUhjz25
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab5a46e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: V_t2fCJaeS8SfxjuDMAzBO7hkYgzU1l5
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab5a46b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=uBPJ6fAX7Dlw_A6SEmQA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX4KQfVpbYV5Ml
- jeMldErSKCpccLvbk6m8LKG4i4GGwwfyZrqH2anTTVr2yrBhTAzQ7XxqIB1iiagie0nGfbWl649
- ikl2L/ifon5OosGVs1zZqQqtbcIbJckWZO6CDFr7Npnu4vq+VsJbdqmlQM/kwM1dfIPIo3iCOqj
- ZlBWQAYd88lvB3BJz0OTq+QXnvz294rIu0VZBU01PGzKQNbAp7oRE9cDy+ypC5GyKhSQP5pWIiN
- JQl0iIaHVmgcL7hShJ4PPOxmdE+vIXwPYjhKVEhgDx+52x8DS2d/Wqbh5KRkk1nPjhCCGW6k5Uu
- abcA6HAoKIjAEiyvO1KYxfggnwXUhKaATQX8BJTlwmEerpi9IeymJVFfdNGoPYxwrD2E6NSqYAf
- C2HhzXnfhxeSTRo8LFjhjS2uYN6rmi5IOvUXzIGIUjv0nJGsoRXh9Zw3mp6T8i3EKhNIVZvG8zU
- IZiqPgvlGcPZGRqNz/w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfXzbZV9EwwpG3C
- qdbYlwo1JtQoh9eh3Ew5BaIhusslRwH5n1LrwznU1Nqv5gWQ1iKhw3o8k9zz4NBWJzCgIgEu6se
- bTh40DGfVJNHJlvEY8YBR5GC/c7CE8w=
-X-Proofpoint-GUID: n-QSIO0x8noGglAWFXRPUgHQRuUhjz25
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=ctsVLiZ_AAAA:8
+ a=Iu4lfvU6lRjo1WYjJIoA:9 a=3VCIHQLkQthbvTRuo98s:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX6/eT0eSwoNv/
+ omf7+ScWnMrhHX3CC+G0DrCKPYjSsUZrOG24oyZ4+Up+w5EuK06h7dmM3nOLZveyGwu4KN/TB5g
+ dL5BC7zvA+Okrjlf2yNUca10s0k34GE=
+X-Proofpoint-GUID: V_t2fCJaeS8SfxjuDMAzBO7hkYgzU1l5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA5MCBTYWx0ZWRfX0E+RimakV6ln
+ BGxp6ZHkqTbSlF8FT/5zj7tVDK87a83SU4Q6mGZKvsERuannBWhZwjUC5VeDvbtv1CpYxr5aVPC
+ DcITpmsAmVeZCvzSgkIEGWOOWTzC/uN5XNVvQax8b3mo/VHgAO1i3x3X0C6u+ba6QaUftjALWr0
+ hxVSyNRimanhB3EoYMFm4smWUfGA0TKpRVYoMbXtbvDTNqeIxyeFZuqes2PhSZ0k8ghNX69A4ie
+ pSdrsHQynrvKQaV1mDStKAKdgtT/wOz/Vnf1SypRk1KDa4hqJzyOeO0WVXODqyBOPyA422mHbLX
+ U1PpOznu3ZtFBkrnjKfkdHUZAAVIrJone3H/Q4YVdvVgL1WwBGnZFdWKfG6MF6DlTf4iFiDVP/D
+ KcntIljLYFjW2pTD7cye7dfZqJ3MloTt8MRXdvgmgfhggf1Pk2ojfHCZ5HqN41lW6Ol0hJECduV
+ KFRzQBLU2+sxlrUxZSQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240090
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
@@ -123,153 +123,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pxe test for a net device does not fail gracefully when the
-s390-ccw.img in use was built without support for booting that device.
+Enable network booting via virtio-net-pci by implementing PCI transport
+support for virtio-net.
 
-Add a boot_dev_support check that searches for a known string in the
-bios image to confirm boot support. If absent, the test is skipped
-gracefully instead of failing.
-
-Also re-enable pxe-test in qtests_s390x, which was accidentally
-removed by commit 973d97feca93.
+This patch also extends endianness handling for virtio PCI ring operations in
+little-endian to ensure correct behavior on s390x.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 ---
- tests/qtest/meson.build |  1 +
- tests/qtest/pxe-test.c  | 85 ++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 85 insertions(+), 1 deletion(-)
+ pc-bios/s390-ccw/main.c       |  2 ++
+ pc-bios/s390-ccw/netmain.c    |  8 ++++++-
+ pc-bios/s390-ccw/virtio-net.c | 41 ++++++++++++++++++++++++++++-------
+ pc-bios/s390-ccw/virtio-pci.c | 20 +++++++++++++++++
+ 4 files changed, 62 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 33f58b0e95..341f6ad1ba 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -292,6 +292,7 @@ qtests_aarch64 = \
-    'migration-test']
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index d2a2ac3138..b06d67c563 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -342,7 +342,9 @@ static void ipl_pci_device(void)
+         return;
+     }
  
- qtests_s390x = \
-+  (slirp.found() ? ['pxe-test'] : []) + \
-   qtests_filter + \
-   ['boot-serial-test',
-    'drive_del-test',
-diff --git a/tests/qtest/pxe-test.c b/tests/qtest/pxe-test.c
-index e85dec5a4e..5c6415b936 100644
---- a/tests/qtest/pxe-test.c
-+++ b/tests/qtest/pxe-test.c
-@@ -26,6 +26,7 @@ typedef struct testdef {
-     const char *machine;    /* Machine type */
-     const char *model;      /* NIC device model */
-     const char *extra;      /* Any additional parameters */
-+    bool (*boot_dev_support)(void); /* optional: boot device support check */
- } testdef_t;
++    /* net, scsi, and block all intentionally use the same shared boot setup */
+     switch (vdev->dev_type) {
++    case VIRTIO_ID_NET:
+     case VIRTIO_ID_SCSI:
+     case VIRTIO_ID_BLOCK:
+         if (virtio_setup() == 0) {
+diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+index bcb62bf6ca..dd02c5c71f 100644
+--- a/pc-bios/s390-ccw/netmain.c
++++ b/pc-bios/s390-ccw/netmain.c
+@@ -498,7 +498,13 @@ int netmain(void)
+     sclp_setup();
+     puts("Network boot starting...");
  
- static testdef_t x86_tests[] = {
-@@ -58,8 +59,80 @@ static testdef_t ppc64_tests_slow[] = {
-     { NULL },
- };
- 
-+static const char *s390_bios_load(gsize *len)
-+{
-+    static char *cached_contents;
-+    static gsize cached_len;
-+    const char *qemu_bin;
-+    g_autofree char *cmd = NULL;
-+    char dir[PATH_MAX];
-+    char *found = NULL;
-+    char *path = NULL;
-+    FILE *fp;
-+
-+    if (cached_contents) {
-+        g_test_message("Using cached bios contents");
-+        goto out;
-+    }
-+
-+    /* search the qemu binary's data directories for s390-ccw.img */
-+    qemu_bin = qtest_qemu_binary(NULL);
-+    cmd = g_strdup_printf("%s -L help", qemu_bin);
-+    fp = popen(cmd, "r");
-+
-+    if (!fp) {
-+        g_error("Failed to run '%s'", cmd);
-+    }
-+
-+    while (fgets(dir, sizeof(dir), fp) && !found) {
-+        dir[strcspn(dir, "\n")] = '\0';
-+        path = g_build_filename(dir, "s390-ccw.img", NULL);
-+        if (g_file_get_contents(path, &cached_contents, &cached_len, NULL)) {
-+            found = path;
-+        } else {
-+            g_free(path);
-+        }
-+    }
-+    pclose(fp);
-+
-+    if (!found) {
-+        g_error("s390-ccw.img not found");
-+    }
-+
-+    g_test_message("Loaded %s", found);
-+    g_free(found);
-+
-+out:
-+    *len = cached_len;
-+    return cached_contents;
-+}
-+
-+static bool s390_bios_has_string(const char *needle)
-+{
-+    const char *contents;
-+    gsize len;
-+    bool found;
-+
-+    contents = s390_bios_load(&len);
-+    found = memmem(contents, len, needle, strlen(needle)) != NULL;
-+
-+    g_test_message("\"%s\" %s in bios", needle, found ? "found" : "not found");
-+    return found;
-+}
-+
-+static bool s390_bios_has_net_ccw(void)
-+{
+-    if (!virtio_ccw_net_setup()) {
 +    /*
-+     * Assume that netboot support always includes virtio-net-ccw support.
-+     * Check only that netboot code exists, rather than probing virtio-net-ccw
-+     * support directly.
++     * CCW devices require subchannel enumeration here.
++     * PCI devices don't need specific net setup; the virtio-net-pci devices
++     * still follow the regular Virtio, PCI, and generic network setup.
 +     */
-+    return s390_bios_has_string("Network boot starting...");
++    if (virtio_get_device()->ipl_type == S390_IPL_TYPE_CCW &&
++        !virtio_ccw_net_setup()) {
+         puts("No valid virtio ccw net device found.");
+         return -1;
+     }
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index 7bb3f8f551..632ce059d6 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -66,7 +66,22 @@ int virtio_net_init(void *mac_addr)
+     rx_last_idx = 0;
+ 
+     vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+-    virtio_ccw_setup(vdev);
++    switch (virtio_get_device()->ipl_type) {
++    case S390_IPL_TYPE_CCW:
++        if (virtio_ccw_setup(vdev)) {
++            puts("Setup failed for virtio-net-ccw");
++            return -1;
++        }
++        break;
++    case S390_IPL_TYPE_PCI:
++        if (virtio_pci_setup(vdev)) {
++            puts("Setup failed for virtio-net-pci");
++            return -1;
++        }
++        break;
++    default:
++        return -1;
++    }
+ 
+     if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
+         puts("virtio-net device does not support the MAC address feature");
+@@ -118,22 +133,30 @@ int recv(int fd, void *buf, int maxlen, int flags)
+     VRing *rxvq = &vdev->vrings[VQ_RX];
+     int len, id;
+     uint8_t *pkt;
++    uint16_t rx_used_idx, rx_avail_idx;
++    uint32_t rx_used_len, rx_used_id;
++    uint64_t rx_desc_addr;
+ 
+-    if (rx_last_idx == rxvq->used->idx) {
++    rx_used_idx = virtio_tswap16(rxvq->used->idx);
++    if (rx_last_idx == rx_used_idx) {
+         return 0;
+     }
+ 
+-    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
++    rx_used_len = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].len);
++    rx_used_id = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].id);
++
++    len = rx_used_len - virtio_net_hdr_size;
+     if (len > maxlen) {
+         puts("virtio-net: Receive buffer too small");
+         len = maxlen;
+     }
+-    id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
+-    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
++    id = rx_used_id % rxvq->num;
++    rx_desc_addr = virtio_tswap64(rxvq->desc[id].addr);
++    pkt = (uint8_t *)(rx_desc_addr + virtio_net_hdr_size);
+ 
+ #if DEBUG_VIRTIO_NET   /* Dump packet */
+     int i;
+-    printf("\nbuf %p: len=%i\n", (void *)rxvq->desc[id].addr, len);
++    printf("\nbuf %p: len=%i\n", (void *)rx_desc_addr, len);
+     for (i = 0; i < 64; i++) {
+         printf(" %02x", pkt[i]);
+         if ((i % 16) == 15) {
+@@ -147,8 +170,10 @@ int recv(int fd, void *buf, int maxlen, int flags)
+     memcpy(buf, pkt, len);
+ 
+     /* Mark buffer as available to the host again */
+-    rxvq->avail->ring[rxvq->avail->idx % rxvq->num] = id;
+-    rxvq->avail->idx = rxvq->avail->idx + 1;
++    rx_avail_idx = virtio_tswap16(rxvq->avail->idx);
++    rxvq->avail->ring[rx_avail_idx % rxvq->num] = virtio_tswap16(id);
++    rx_avail_idx++;
++    rxvq->avail->idx = virtio_tswap16(rx_avail_idx);
+     vring_notify(rxvq);
+ 
+     /* Move index to next entry */
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index 277c3ea68d..eb47e7c534 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -56,6 +56,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+     case 0x1004:
+         vdev->dev_type = VIRTIO_ID_SCSI;
+         break;
++    case 0x1041:
++    case 0x1000:
++        vdev->dev_type = VIRTIO_ID_NET;
++        break;
+     default:
+         vdev->dev_type = 0;
+     }
+@@ -223,6 +227,17 @@ static int virtio_pci_get_scsi_config(void)
+     return rc;
+ }
+ 
++static int virtio_pci_get_net_config(void)
++{
++    VirtioNetConfig *cfg = &virtio_get_device()->config.net;
++
++    /*
++     * Byte-swapping is not needed as only the MAC address (byte array)
++     * is used here. Byte-swap if other fields are added.
++     */
++    return vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioNetConfig));
 +}
 +
- static testdef_t s390x_tests[] = {
--    { "s390-ccw-virtio", "virtio-net-ccw" },
-+    { "s390-ccw-virtio", "virtio-net-ccw",
-+      .boot_dev_support = s390_bios_has_net_ccw },
-     { NULL },
- };
- 
-@@ -90,6 +163,11 @@ static void test_pxe_ipv4(gconstpointer data)
+ static int virtio_pci_negotiate(void)
  {
-     const testdef_t *test = data;
- 
-+    if (test->boot_dev_support && !test->boot_dev_support()) {
-+        g_test_skip("The bios does not support booting this device");
-+        return;
-+    }
-+
-     test_pxe_one(test, false);
- }
- 
-@@ -97,6 +175,11 @@ static void test_pxe_ipv6(gconstpointer data)
- {
-     const testdef_t *test = data;
- 
-+    if (test->boot_dev_support && !test->boot_dev_support()) {
-+        g_test_skip("The bios does not support booting this device");
-+        return;
-+    }
-+
-     test_pxe_one(test, true);
- }
- 
+     int i, rc;
+@@ -355,6 +370,7 @@ bool virtio_pci_is_supported(VDev *vdev)
+         switch (vdev->dev_type) {
+         case VIRTIO_ID_BLOCK:
+         case VIRTIO_ID_SCSI:
++        case VIRTIO_ID_NET:
+             return true;
+         default:
+             return false;
+@@ -414,6 +430,10 @@ int virtio_pci_setup(VDev *vdev)
+         vdev->cmd_vr_idx = 2;
+         virtio_pci_get_scsi_config();
+         break;
++    case VIRTIO_ID_NET:
++        vdev->nr_vqs = 2;
++        virtio_pci_get_net_config();
++        break;
+     default:
+         puts("Unsupported virtio device");
+         return -ENODEV;
 -- 
 2.55.0
 
