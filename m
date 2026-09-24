@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCF2C9830D
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 02:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB5DC98312
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 02:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9Z4g-00022h-7J; Wed, 23 Sep 2026 22:20:38 -0400
+	id 1x9Z4k-00025m-Ao; Wed, 23 Sep 2026 22:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x9Z4Y-00022A-Fm
+ id 1x9Z4Y-000227-05
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 22:20:30 -0400
-Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
+Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1x9Z4X-0003S7-3w
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 22:20:30 -0400
-Received: by mail-yx2-x0e.google.com with SMTP id
- 00721157ae682-89666eea29cso18835547b3.2
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 19:20:28 -0700 (PDT)
+ id 1x9Z4W-0003S3-8J
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 22:20:29 -0400
+Received: by mail-yx2-x10.google.com with SMTP id
+ 00721157ae682-85d43da99easo22240367b3.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 19:20:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790216428; x=1790821228; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AW1GkBPywgZoEStu2MNuXL0xW0ldvsctKuy25GvzewU=;
- b=Sb5VW8Osy9ENe60wB7WR9CQmWX/fJ65gmTi6GMfJIE1z1bQrTkJZkS22yzABWjfp0/
- A6vPNEZor25spxopINTAGVOxMVYUP9Wqg3SUa8gimnUSMcCIi1hjY0144njsYyMaWHcP
- IWRAybu9wM9ZvfvN/tEoXkKuhGGYKk51qkP10MKP56xCX9GNrtSjjEhrXMpUCwVbKoK0
- MMQE0E8yhOmBEp+EEY8v0Xoffcypt4c0Z9QvQezDwuMlbUg1h7anekp1jcBd+HN77vSe
- hErf39DEhNgqf7yj6qq88qIkovwiUD6rGtk4wjRHvZw2PmnmHq0Z4FbtoEkYTHPNWWvW
- +lwg==
+ d=gmail.com; s=20251104; t=1790216426; x=1790821226; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AeRTNlYoFQKj0WyuA5nvHcdNS/8lp3g2uXsLNvswZPo=;
+ b=b0XqyDfQ0Y/vmITbO4r0CWBnViCLAWLOUSnOt96GK1t4TJ1TlGmub1qGAXKynJ+kPv
+ 8BOkgdOo6L9ExDojQIflWeALOiSrvd9bl48k26X5Chs+TWaPbYCeoYD+vy+HniX+VfUo
+ YIl7i213e3nNoTq0BiO82taPnYk1nfpjIaIqHywCyww611q4MnD9JBnMlnl6lrfR9nfw
+ 7RcjIKJst+6b/a9mAfAdrqUJ3cajc2A7j/+/p0/tyZOVNJ2cGTCYZLYkYloN4cTyDsnT
+ C3H3rQPKosYaIpq8acU5JD5Z/kK7yVYa44yZEF7M/U0+xN/4E/H1s9Y+berNZEEcBeFW
+ 11qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790216428; x=1790821228;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AW1GkBPywgZoEStu2MNuXL0xW0ldvsctKuy25GvzewU=;
- b=m4gJOWPPy3jjeGCYdxu0CAITLiDKmGYcVUtsjMMVQ0p90sf/lDlKDSjFXUJsDr1s5p
- AZB6NuPfNy4g5/RARtGPA9x8fLy4/aR4OrzJr/3KXC0nyhaPOCIITq8K3I1FjhmW691m
- W1iuQBd//Jak25caxtTBOEyQ2EqLL8FHwaD+ZTBvvkk3egm359qzIP4y6DlxaNmN9AHl
- oPMBgOhgDyqHn2umg3gwjuuhjcaAemr/6SZiaq0J97m8osKkFyHAKsXNqWZIjSS9qilk
- ATwMg1Jf/fJ9oJMc4LqqAu5KHyxCgqZ+QcmQw23oXhcdyj1ufiVPOkfVymvG19T11as8
- gGyA==
-X-Gm-Message-State: AFuF++nHaR9ME1JYykt7ZotxVpoTka1XCLMsZ6I8qZkW72U8TRtgmOqe
- fThHX5/exO1IM3qUwh04GuO6ATEHmSVzpwJkUXfdYjRhM5ECDqhmy2ihQ/4TPA==
-X-Gm-Gg: AYBFou0seMl/4JpMB6oVbEvVGm/hl3BEeqY+RCF6PqPgKDreRBGMRjka3IUM0TuZ8Bj
- PC0IEBYQQMnWAAKPwKkUuX856mBecC2dNcDZ8ld+3TIjMWaQZ9QWvmiwqvPVVDXRQRn3dGjn3yN
- wC7tYzG5LypcyzFtuk7vTy/kNyBbFsvF8dhSjfaRIs+BdeuVSDdnROfRATOBpupV2j9+ePJXnwU
- BBG773EOa6MLLYd+Pvy8KeeCCp+nnUkRH9sYrAOE6qalG7nkbK6RJLGGoZFxUZW109bs0xgLps9
- DCQ8zyACiAVNBjXJvDcdH0iIuh+ko6nqQ63QCPm2hvM2/jNZYbE/2Xbnd7ag5YJOYV7S98k9UZV
- behDObKqk9J1qw34qXmahaR8GmZeRMKooJnJOQ2fLNKzicfWFNDTudXDUI/7rKMW0AG0iuLYmST
- 25l5K0xMXCMpFtsirTHlAWJLwyO7NngaIivFMALjoVQtrz6uUmfuFPvLtNqysqu770udQKgVNOz
- l72CPoPIw==
-X-Received: by 2002:a05:690c:c513:b0:8a4:cc7b:fdb with SMTP id
- 00721157ae682-8a64e5bf0b9mr5014177b3.37.1790216427864; 
- Wed, 23 Sep 2026 19:20:27 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790216426; x=1790821226;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AeRTNlYoFQKj0WyuA5nvHcdNS/8lp3g2uXsLNvswZPo=;
+ b=I2U0PBR2A8/x0TodXc++G6lcrjYKV+mgQjBjnIHhSCwgWJcQ7HXCv3tBXehIYJSOsR
+ Z3YKJujlX+n/4g+r1FXvw+qj8z2BI2Jz4kvjFCkTFBydrU9JhU3m1IG+gKzvcWCr8ePO
+ t8KC/Wopz1XbiHTFJc7D5Rvp2Dx9gdcWUsaDzeyBnBPybH4DU95rwG/DjC2zEvtayNN5
+ VsBKWaVbIoguqOEEk8A6uE9wxYME/tevyIEDooen5kHKPRpIsLgg0hqqtwvuiMQUKIoN
+ 4On1UiIuKolECI+32TWbBzg5dhraaqpPZmSK+Wfwyb+Tlm9goR5sfoWlrJh7vj4pKgEt
+ LXIw==
+X-Gm-Message-State: AFuF++nLobHULoXl/N7iAYoufjH6oWtd3eH4ubT7lgBbFWJK4oSriaqf
+ AGR/HRr6VYUZJfdlPIR6Jrr4MB3kc6v/+TIgPbJs792zS1epC7QcwRkNE/4ggA==
+X-Gm-Gg: AYBFou2BLeItVHeCeqyrHPP1i5RQEp2inmIPJXQmYCMhP2pfchBbvGHYPvIesr4MSpG
+ LjdQccMedsNyPt3UiqxEP9MaIC8K3e+fRTZFbHqP3iNk+h727nJGzAZH4JxezKJZoWDuCYPxFjP
+ mx7FpjarMcEGwuPOBLVD85EJmW758tQ2oe16EuWWhRJ/xeCCu04PALlcxajtvRu0/3fXJAR8qbp
+ rm/oyeKMIXZOmXt7oZFI4NtmDPD3F0XAWpZWvNaXXXCBUHKFeJnkyeU7J8jqkGHQz7qeml1kh1M
+ dxBksPkP4OJ1s+snMAjGvQwUX31ILSZ4YTFBHvmDnNCeKLcq9//icjPXT+K3AsTFOWGC8tliJSj
+ cMJV9iKYdy77/p2003vcUETtD1AYwh4u231wHvERoyp/4+eBetveS6MwG2lKme7D+G0E6RSKMpa
+ fYlPqQ52u3EnAdbIlNkt08wHUbdUfmRuVqdalFrhVk2GGEX4saNB+3cv4WFxahdpSsnbvCAAI=
+X-Received: by 2002:a05:690c:e686:10b0:8a4:a988:3e9f with SMTP id
+ 00721157ae682-8a64c93aba1mr4066637b3.21.1790216426366; 
+ Wed, 23 Sep 2026 19:20:26 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8a6520d6225sm3420017b3.22.2026.09.23.19.20.27
+ 00721157ae682-8a6516163fasm3446247b3.14.2026.09.23.19.20.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Sep 2026 19:20:27 -0700 (PDT)
+ Wed, 23 Sep 2026 19:20:24 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
-Cc: Matt Turner <mattst88@gmail.com>
-Subject: [PATCH qemu-palcode 2/3] console-low: Fix $8/$19 stack slot collision
+Cc: Iain Nicol <git@iainnicol.com>,
+	Matt Turner <mattst88@gmail.com>
+Subject: [PATCH qemu-palcode 1/3] console-low: Fix off-by-one stack corruption
  in entInt
-Date: Wed, 23 Sep 2026 22:20:21 -0400
-Message-ID: <20260924022022.2414514-2-mattst88@gmail.com>
+Date: Wed, 23 Sep 2026 22:20:20 -0400
+Message-ID: <20260924022022.2414514-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260924022022.2414514-1-mattst88@gmail.com>
-References: <20260924022022.2414514-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
- envelope-from=mattst88@gmail.com; helo=mail-yx2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
+ envelope-from=mattst88@gmail.com; helo=mail-yx2-x10.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,38 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-$8 and $19 were both stored to 9*8($sp), so $19 overwrote $8's saved
-value and the interrupted context got $19's value back in $8.
+From: Iain Nicol <git@iainnicol.com>
 
-Store $8 at 8*8($sp) instead, matching its .cfi_rel_offset.
+entInt stores nineteen registers, not eighteen.
 
+The corruption would sometimes manifest as a memory fault. The
+STACK_FRAME macro saves the internal PS register to 0($sp). The same
+location would later be overwritten by entInt storing $at. Later, the
+wrong PS register value would be restored. This would sometimes cause
+a switch from kernel to user mode, which can cause memory permission
+checks to fail.
+
+Closes: https://github.com/rth7680/qemu-palcode/pull/1
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- console-low.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ console-low.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/console-low.S b/console-low.S
-index 1f61cbc..83adb2a 100644
+index a03f4ed..1f61cbc 100644
 --- a/console-low.S
 +++ b/console-low.S
-@@ -46,7 +46,7 @@ entInt:
- 	stq	$5, 5*8($sp)
- 	stq	$6, 6*8($sp)
- 	stq	$7, 7*8($sp)
--	stq	$8, 9*8($sp)
-+	stq	$8, 8*8($sp)
- 	stq	$19, 9*8($sp)
- 	stq	$20, 10*8($sp)
- 	stq	$21, 11*8($sp)
-@@ -87,7 +87,7 @@ entInt:
- 	ldq	$5, 5*8($sp)
- 	ldq	$6, 6*8($sp)
- 	ldq	$7, 7*8($sp)
--	ldq	$8, 9*8($sp)
-+	ldq	$8, 8*8($sp)
- 	ldq	$19, 9*8($sp)
- 	ldq	$20, 10*8($sp)
- 	ldq	$21, 11*8($sp)
+@@ -23,7 +23,7 @@
+ 	.text
+ 	.cfi_sections .debug_frame
+ 
+-#define SAVE_ALL_SIZE	(18*8)
++#define SAVE_ALL_SIZE	((18+1)*8)
+ 
+ 	.globl	entInt
+ 	.type	entInt, @function
 -- 
 2.54.0
 
