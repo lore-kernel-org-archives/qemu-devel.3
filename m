@@ -4,72 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF3AC9831E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18E7C9830E
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 14:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9kBv-0006KM-8t; Thu, 24 Sep 2026 10:12:53 -0400
+	id 1x9kIF-0007MG-41; Thu, 24 Sep 2026 10:19:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x9kBm-0006II-0u
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:12:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9kID-0007Ls-Jn
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:19:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x9kBj-0001Y8-Gq
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:12:41 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1x9kIB-0002bu-RV
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 10:19:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790259157;
+ s=mimecast20190719; t=1790259558;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=C7ay93/LysMPfHP9EG4vAuH2W4K4fmSCc/2tKI8g+PY=;
- b=W9zw1BicHdlSKIJDDBHUbL12rDaoVX7T+nmJXzm+FEVK+6kS6foXK/imfoXrwuPQC3xTyx
- 9c+9tPlKjM4/pQNaGTNJcWJlcuags5x9uI4W2Z/jBn7advM0+Hr9uIfsayoeFSUYA2lywm
- 3qN6WH5FbVucFKI4Yc55EIB9tshmvhw=
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1PKgU02kEO+h3taw9zWZiEASxC0BUttg7Hh6vCiQFHE=;
+ b=Hdi6+LqQlwRcxwrcggRzyIVMMTG4DXKq+uQbTiP+tL7Pk33KFlz/zqzbakQTyL2Sc1zGaQ
+ tsymqgzeYVPnCyeZi6AxqbfCxd2S6QGXtqXgrPlDMq9mDvsDCoXaO4vCX2oJMSRloAlMQp
+ HsD3jraw1O/5oNZiV0WT83E1cRh85mk=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-yKVAxFmTMeSVR5G9REc-IA-1; Thu,
- 24 Sep 2026 10:12:34 -0400
-X-MC-Unique: yKVAxFmTMeSVR5G9REc-IA-1
-X-Mimecast-MFC-AGG-ID: yKVAxFmTMeSVR5G9REc-IA_1790259153
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-yM8ZMNvKP0ObIJqOhjo6zA-1; Thu,
+ 24 Sep 2026 10:19:16 -0400
+X-MC-Unique: yM8ZMNvKP0ObIJqOhjo6zA-1
+X-Mimecast-MFC-AGG-ID: yM8ZMNvKP0ObIJqOhjo6zA_1790259555
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AADB197753D
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 14:12:33 +0000 (UTC)
-Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 923B43000239; Thu, 24 Sep 2026 14:12:32 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] .claude: delete as Claude Code now honours AGENTS.MD by
- default
-Date: Thu, 24 Sep 2026 15:12:31 +0100
-Message-ID: <20260924141231.2632941-1-berrange@redhat.com>
+ id 91A411944EAA
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 14:19:15 +0000 (UTC)
+Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BEBB218004D4; Thu, 24 Sep 2026 14:19:14 +0000 (UTC)
+Message-ID: <2669dbd9-c7c0-470f-9bf3-59efa42e3953@redhat.com>
+Date: Thu, 24 Sep 2026 16:19:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] .claude: delete as Claude Code now honours AGENTS.MD by
+ default
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260924141231.2632941-1-berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260924141231.2632941-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,46 +123,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From the release notes for Claude Code 2.1.77:
+On 9/24/26 16:12, Daniel P. Berrangé wrote:
+>>From the release notes for Claude Code 2.1.77:
+> 
+>    https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+> 
+>    "Added AGENTS.md support: in a project with no CLAUDE.md,
+>     Claude Code reads AGENTS.md instead"
+> 
+> If we assume people will keep their Claude Code updated, then the
+> .claude rules we added to link to AGENTS.md are now redundant, or
+> very soon will be.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> 
+> How quickly should we remove this ? We only just added it very recently
+> so it is barely a regression to remove it, but we could wait some $small
+> months for people to upgrade >= 2.1.77 ?
 
-  https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+We could even do it now, but we would only be removing the .claude/rules 
+directory because we will still need to symlink .claude/skills to 
+.agents/skills soon; and if the directory is present then the .gitignore 
+file might stay there anyway.
 
-  "Added AGENTS.md support: in a project with no CLAUDE.md,
-   Claude Code reads AGENTS.md instead"
-
-If we assume people will keep their Claude Code updated, then the
-.claude rules we added to link to AGENTS.md are now redundant, or
-very soon will be.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
-
-How quickly should we remove this ? We only just added it very recently
-so it is barely a regression to remove it, but we could wait some $small
-months for people to upgrade >= 2.1.77 ?
-
- .claude/.gitignore         | 2 --
- .claude/rules/agents-md.md | 1 -
- 2 files changed, 3 deletions(-)
- delete mode 100644 .claude/.gitignore
- delete mode 100644 .claude/rules/agents-md.md
-
-diff --git a/.claude/.gitignore b/.claude/.gitignore
-deleted file mode 100644
-index b0a57a19c01..00000000000
---- a/.claude/.gitignore
-+++ /dev/null
-@@ -1,2 +0,0 @@
--# reserved for the user to add their own per-project rules
--/CLAUDE.md
-diff --git a/.claude/rules/agents-md.md b/.claude/rules/agents-md.md
-deleted file mode 100644
-index 43c994c2d36..00000000000
---- a/.claude/rules/agents-md.md
-+++ /dev/null
-@@ -1 +0,0 @@
--@AGENTS.md
--- 
-2.55.0
+Paolo
 
 
