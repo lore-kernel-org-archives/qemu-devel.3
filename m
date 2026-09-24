@@ -4,89 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4392AC9830D
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 00:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B66CDC9830D
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 01:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9XQo-0004of-97; Wed, 23 Sep 2026 20:35:22 -0400
+	id 1x9YDd-00018w-4g; Wed, 23 Sep 2026 21:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9XQV-0004eW-S1
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 20:35:09 -0400
-Received: from mail-pj2-x20.google.com ([2607:f8b0:4864:39::20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9XQT-0002Lu-RK
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 20:35:03 -0400
-Received: by mail-pj2-x20.google.com with SMTP id
- d9443c01a7336-2d91c22d27dso5993045ad.1
- for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 17:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790210100; x=1790814900; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=axqAhD5m+QBTZyPZivJFhfKKQyxrbfvrpPcZAjLmpQA=;
- b=N6e8FBvz/dq3bDFTcDlNYyis41xpOIyRQQkgTBaGmC662cUwFZ0wbaZ4u7r4I1tRnT
- dzm+V2HcWQIp5lsFfPXfQrFWtsXUmtgedZ7nW31CoXjm1gHnInfFy3xv0H+ja0InuFBd
- Mhh/v3+sfqjcijiivN6J7j1rW1f2rN+z5yOcCRism159iebjf/+mqB+BzIumxhW/w7bJ
- xGhWzrEmQkkdMXAVQXAqWMO8MGZeUH2X5RW9zrt5b9y9JQjmVQbbiDEjOE3dbiTpWChs
- MkLlXUM5X79Fb0Pf2K2rW3UMi48CHUC67AIJhDU5OfmdZAzxBYlFasGV+jZx5HpltpL7
- E05w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790210100; x=1790814900;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=axqAhD5m+QBTZyPZivJFhfKKQyxrbfvrpPcZAjLmpQA=;
- b=YX2K/Zx/f3+sL4yz4O+sPSr7u/NOel1+QBNTumpXnQAvhQ/OdTfem0YNdFZdMlNzWJ
- aNc9skmiUIDQesgGGTfbx8KBWxdahrE1hrrhkK/RmWHyxLUbu+SrY2rJ4b3VHbKlb/q+
- oyjT9CKjR0XHCAwYKxHRdtG8Jb6C9Tzrn/HFcRJRsM+y3AKW67UWCABM3IXZQzEYLBmP
- D6pWyiT8Ro/pgrwgeAtnkhJ2CLZt5pucS9NK6gO9/WItKSiZ+9fx7suwgy052D1l5fbU
- xPh7PU3uQviR2sTHC6tHBOGedrlqwZ9am3nsnmCbU11zGwRwcYh9U3qZzvoJKUfCNLBw
- zOuw==
-X-Gm-Message-State: AFuF++mtY4a64YDN5l3Kj0TnIDV1qQ5vIb5B5IIkKDfTvqS6TVV0h4Q6
- 5iXRKmT0Z1HSmS2vJ/ci0h1YiZeCqHgLmm2BTZ9nrFc4oc5EnLmchRoopUCRM52HKSMtGwbfodp
- dmCgW
-X-Gm-Gg: AYBFou0KMiE5uBHNBnwDCLFa277Td7j0mTrYDiKr+AsgQ5bxC1zclsdRrCUz7hhkVwi
- xpwVct3A/rM9ih7B5MGbZCrpSGqoTA7LS7G45cYjcPxer7oBKfOiPknLPqp8/Pnc0RgPakCNC3J
- UjwGo7HadZwScxCaHnpcPr5o1CUmittZJ75tEgKIWQfnRyqvNYLOSfcZWnB44ui+ZH+E/CxfOFm
- mdFxafmbgQxZ4WM5/vWXGU1gfzBiEkVvAhqO7JBSAC7FEOdZwWcJpqZNlv530zjMHmQhJjYkSw4
- 6QeEupesdhDl+OLdzj1mk4BTnwR1MT0mj63EPvp4xuv1jr6l0C4Syd3o9SSqxbj3R1HJCOGGbvn
- /IZ9a9IeKfx4DqGOC2BxMlddNIQkR8xzt5OMTBtDe60uA/fJ4v+LjZgsmif+xPZxonNLCHkph9S
- g6Rk8adHokNMZANj0aLr7QL+DZ++OIZwvRzEsxmIDSATak4nSuD9mtNEmGHkvzA0ib+LJHmOTh4
- rUU2Qzb8lpcl/RSMjXlx3pCVQb0fHow8mQbv/sF3g==
-X-Received: by 2002:a17:903:244b:b0:2dd:c100:4b80 with SMTP id
- d9443c01a7336-2df7dd77203mr6586655ad.55.1790210099416; 
- Wed, 23 Sep 2026 17:34:59 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2df6a5c03b9sm17818105ad.31.2026.09.23.17.34.58
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2026 17:34:58 -0700 (PDT)
-Message-ID: <48e19b68-2dbf-4567-96ee-2a3e723212c9@linaro.org>
-Date: Wed, 23 Sep 2026 17:34:46 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] tcg patch queue 20260923
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x9YDa-00017D-05
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 21:25:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1x9YDY-0007Mp-JG
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 21:25:45 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NNZlTT414704; Thu, 24 Sep 2026 01:25:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=tLYEIblOzEmNHQuh3
+ qn99Lmn7xhBPAFY8WYRwUa2fu4=; b=O6O8Qoee53RvIz6wJPadTbwXFZoSSPwod
+ yjFSjtRUY0/Hic6NfTzo1ctHatefe0UZUQihhjAf8oZhDmBJ9F8tcW7KoXITWjm7
+ AMIXso/alep+fGLDuvvfgv0WKd6th9uS3VUivqtziB7MYVMQ9Kgmq5NOibsOF+11
+ wzbHcjDQQBf2AEBPmt3IE/RwZGqVkNGKb61QBjaZmluhuGsZqssQ0Ic/+0S7kCYz
+ DeiRlL1oxHFdnx31KQ7XfljB+vqvuYM0w/xtPtPbYEcFucuO4bQvDN1A1K0ruu6e
+ SPnBapeDb9AlsNwomvL6TT4amas7Zfn1wRy4/krDWUV1jTMnK43MA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1nvqd-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 24 Sep 2026 01:25:43 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NNHlD14029827; Thu, 24 Sep 2026 01:25:42 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gu5bkkka7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Sep 2026 01:25:42 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68O1Pf0165732924
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 24 Sep 2026 01:25:42 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9CD658059;
+ Thu, 24 Sep 2026 01:25:41 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63D1D5805F;
+ Thu, 24 Sep 2026 01:25:41 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Sep 2026 01:25:41 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-References: <20260923203441.31276-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260923203441.31276-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::20;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x20.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: armenon@redhat.com, marcandre.lureau@gmail.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH 09/10] hw/tpm: crb: Consider response_buffer->len of received
+ response
+Date: Wed, 23 Sep 2026 21:25:26 -0400
+Message-ID: <20260924012527.858527-10-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260924012527.858527-1-stefanb@linux.ibm.com>
+References: <20260924012527.858527-1-stefanb@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: RN2Pe6-yrt5HGEKwRAoCjHO37SlfzhKO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfX69ce0Dq+sED8
+ E8y98VhtEbZREh62Cm/T4awC9a0wxTFHoW9MKBrC+tPV3sarMxhs4/gtsd5Xsu0utjcEo+6hI9v
+ GlOb2nTBs1QHodHcRjwZz83in5/TADRKQ52LB5ANN4/TTvU9gzz/WV9gOUvARiCQjjqwYhQHgYB
+ 0pQFXpBXRBrlHDxWSUQUa9f03+PB3ht73tbiGcetdrCd2SdlZqWM+EkFV6l8WVeosCDNENu1nR3
+ 6Z6yEW+bk8L+L/7pygkv+9G1TAL3YixXT+pTX/ipgBVlRv7/7WTiMlEW9aDEGnrN4QDm62l2ggg
+ zwXyEzs+y/VOEM2w1uSUtYrhwkRlzczCKl1CeCt8i/jR4iNEB7D/LjNOvifwv7uEHH6p1JIE9I1
+ IDtWDj+XW9SUkAmh+1/X8p1M96xIWzSswdzziXDsHpj2kWzXR0LYZ9ERRev7pcg6NuYmHCOuQIv
+ eFi2N9D83F+CaV6RKng==
+X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab47c17 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=rD1lyLEvv5Bxigb_1PMA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfXxbc4AI4P+DAj
+ kCjDsGu+SaoTBfmlcpt/9VGYUur0tLWF1wE3Ne86OKwNJLwXOjBUiigs550evrI2NKxDoTXUPag
+ /3cpSNlkBVC61C7dAMAFeSYez9MiALs=
+X-Proofpoint-GUID: xnIrTVGTHE_4jppvxA3CX992bpWzh9NB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_08,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240006
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,33 +123,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 13:34, Richard Henderson wrote:
-> The following changes since commit 014b1f730c0faa08067f8e9b5829e62ea3d4b177:
-> 
->    Merge tag 'pull-9p-20260923' ofhttps://github.com/cschoenebeck/qemu into staging (2026-09-23 07:36:52 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20260923-v2
-> 
-> for you to fetch changes up to 666879d5477ec41ab46fc10a27d18cbc13e8789e:
-> 
->    accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags (2026-09-23 13:28:00 -0700)
-> 
-> ----------------------------------------------------------------
-> accel: Change AccelOpsClass.update_guest_debug to void
-> accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
-> accel/tcg: Skip the can_do_io stores in user-only builds
-> accel/tcg: Allow cross-page goto_tb chaining in user-only builds
-> accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
-> accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for system plugins
-> accel/tcg: Allow some address space wraparound during translation
-> tcg/optimize: Fix fold_multiply2 vs 1
-> tcg/optimize: Fix expansion/simplification of deposit
-> tcg/x86_64: Use the mulx insn from the bmi2 isa
-> tcg/riscv64: Set vtype before whole-register vector loads
+When the CRB receives a TPM reponse from the backend, then reject responses
+that are shorter than the TPM_HEADER_SIZE. When determining the size of the
+reponse, also consider the length of the response_buffer as being possibly
+shorter than the negotiated backend buffer size or the size indicated in
+the response itself.
 
-Applied, thanks.
+Fixes: 2a660ad67d15 ("hw/tpm: Implement TPM CRB chunking logic")
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ hw/tpm/tpm_crb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 4bd1919952..6ae2261b43 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -325,13 +325,15 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+     CRBState *s = CRB(ti);
+ 
+     ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 0);
+-    if (ret != 0) {
++    if (ret != 0 || s->response_buffer->len < TPM_HEADER_SIZE) {
+         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+                          tpmSts, 1); /* fatal error */
+         tpm_crb_clear_internal_buffers(s);
+     } else {
+         uint32_t actual_resp_size = tpm_cmd_get_size(s->response_buffer->data);
+         uint32_t total_resp_size = MIN(actual_resp_size, s->be_buffer_size);
++
++        total_resp_size = MIN(total_resp_size, s->response_buffer->len);
+         g_byte_array_set_size(s->response_buffer, total_resp_size);
+         s->response_offset = 0;
+     }
+-- 
+2.55.0
+
 
