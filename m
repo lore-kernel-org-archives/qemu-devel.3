@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59FDC98311
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84BFC98314
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9fPB-0008Du-Gj; Thu, 24 Sep 2026 05:06:15 -0400
+	id 1x9fPH-0008F0-Hv; Thu, 24 Sep 2026 05:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fP5-0008D9-SF
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fPA-0008Dw-Cg
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fP4-0000iT-4U
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fP8-0000iv-IT
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790240765;
+ s=mimecast20190719; t=1790240769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RgjsTVF6YPcLBBYzsKri/GP8jiY61+tzms6P3IEX53Y=;
- b=TCU9O0QBN/opgjcIi977QfZLLd+SGfyhhDHqK9eYjrAGwLKZKtVMzjcK7OsRdUeyCv7CHe
- yHiG9NZC4Yey+1tl/FPFFjiuf/57Hy8dfZgN7W/7jTTHq1b5fABbLzw8N/e411/dvS2P8k
- Vj75tIeMsdOa4jFFomUNqRzWXOsEloA=
+ bh=VCksZb64QNAQ2XaTcvhw+Dk+I6GAyFAGd2ZIk3fydX8=;
+ b=OKrYzemTxuJRQ/8xCnWum1VDqMzfTKDzXZmvLVOPp0yI40zNseQtX7q4gPq/A0NVyAKKzi
+ My5FAXypzO0Z8+9EANrYI5cTOjHEizJZcBT/TGz4KQ+Nu3EWDvwDTPNsFagtniXKI5V2kV
+ NE4vy13FrwwZvjxsF3h7U8shiR6XwfY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-ReQXyg4hNVCw_4ZjGj1qBQ-1; Thu,
- 24 Sep 2026 05:06:03 -0400
-X-MC-Unique: ReQXyg4hNVCw_4ZjGj1qBQ-1
-X-Mimecast-MFC-AGG-ID: ReQXyg4hNVCw_4ZjGj1qBQ_1790240762
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-ilczWVVOPhKtbJm1mbwzZg-1; Thu,
+ 24 Sep 2026 05:06:05 -0400
+X-MC-Unique: ilczWVVOPhKtbJm1mbwzZg-1
+X-Mimecast-MFC-AGG-ID: ilczWVVOPhKtbJm1mbwzZg_1790240765
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 34EFC1883057; Thu, 24 Sep 2026 09:06:02 +0000 (UTC)
+ id D80641805A07; Thu, 24 Sep 2026 09:06:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.corp
  (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F310C195604C; Thu, 24 Sep 2026 09:06:00 +0000 (UTC)
+ id D52BD195604C; Thu, 24 Sep 2026 09:06:03 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>
-Subject: [PULL 1/7] hw/usb/hcd-xhci: Set reentrancy guard in timer functions
- (CVE-2026-17588)
-Date: Thu, 24 Sep 2026 11:05:52 +0200
-Message-ID: <20260924090558.801845-2-thuth@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 3/7] tests/vm: Drop the broken Haiku VM
+Date: Thu, 24 Sep 2026 11:05:54 +0200
+Message-ID: <20260924090558.801845-4-thuth@redhat.com>
 In-Reply-To: <20260924090558.801845-1-thuth@redhat.com>
 References: <20260924090558.801845-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -83,76 +83,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The xHCI controller processes USB events from timer callbacks
-(xhci_mfwrap_timer and xhci_ep_kick_timer) outside of any MMIO handler
-context. The device's mem_reentrancy_guard is therefore not engaged
-during this processing.
+The Haiku VM has bitrotted again: At least since Haiku r1beta6 has
+been released, the image does not work anymore. I tried to update
+the script to use the r1beta6 repositories instead, but after the
+update, the Haiku kernel only crashes during reboot.
 
-A malicious guest can exploit this by pointing the event ring base
-address (er_start) at the xHCI doorbell MMIO region. When
-xhci_write_event() performs a DMA write to deliver a transfer
-completion event, the write lands on doorbell register 0. If the
-written value is 0, this triggers xhci_process_commands() reentrantly.
-A CR_DISABLE_SLOT command prepared on the command ring then frees
-endpoint and transfer objects via xhci_disable_ep() / g_free() while
-the outer call stack still holds references to them, causing a
-heap use-after-free.
+Given the fact that hardly anybody seems to use this image and
+that it is more often broken than working, let's stop wasting our
+time here and simply remove it.
 
-Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
-around the processing in these non-MMIO entry points. This mirrors
-the protection that EHCI, DWC2, and UHCI already have via
-qemu_bh_new_guarded(). With the guard active, the memory subsystem's
-automatic reentrancy check (system/memory.c) blocks DMA writes that
-would dispatch into the device's own MMIO handlers.
-
-CVE: CVE-2026-17588
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3926
-Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
-    Guannan Wang <wgnbuaa@gmail.com>, Zhanpeng Liu <pkugenuine@gmail.com>,
-    Jiashuo Liang <761232680@qq.com>, Guancheng Li <lgcpku@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4195
-Reported By: Ken Hsu and Royce Lu of Palo Alto Networks
-Message-ID: <20260915112213.525283-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260917062615.783485-1-thuth@redhat.com>
 ---
- hw/usb/hcd-xhci.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tests/vm/haiku.x86_64 | 124 ------------------------------------------
+ 1 file changed, 124 deletions(-)
+ delete mode 100755 tests/vm/haiku.x86_64
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index d342aa2739e..12f8ffece0f 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -456,9 +456,15 @@ static void xhci_mfwrap_timer(void *opaque)
- {
-     XHCIState *xhci = opaque;
-     XHCIEvent wrap = { ER_MFINDEX_WRAP, CC_SUCCESS };
-+    MemReentrancyGuard *guard = &xhci->parent.mem_reentrancy_guard;
-+
-+    assert(!guard->engaged_in_io);
-+    guard->engaged_in_io = true;
- 
-     xhci_event(xhci, &wrap, 0);
-     xhci_mfwrap_update(xhci);
-+
-+    guard->engaged_in_io = false;
- }
- 
- static void xhci_die(XHCIState *xhci)
-@@ -1086,7 +1092,14 @@ static void xhci_set_ep_state(XHCIState *xhci, XHCIEPContext *epctx,
- static void xhci_ep_kick_timer(void *opaque)
- {
-     XHCIEPContext *epctx = opaque;
-+    MemReentrancyGuard *guard = &epctx->xhci->parent.mem_reentrancy_guard;
-+
-+    assert(!guard->engaged_in_io);
-+    guard->engaged_in_io = true;
-+
-     xhci_kick_epctx(epctx, 0);
-+
-+    guard->engaged_in_io = false;
- }
- 
- static XHCIEPContext *xhci_alloc_epctx(XHCIState *xhci,
+diff --git a/tests/vm/haiku.x86_64 b/tests/vm/haiku.x86_64
+deleted file mode 100755
+index 3ea48dc38a1..00000000000
+--- a/tests/vm/haiku.x86_64
++++ /dev/null
+@@ -1,124 +0,0 @@
+-#!/usr/bin/env python3
+-#
+-# Haiku VM image
+-#
+-# Copyright 2020-2022 Haiku, Inc.
+-#
+-# Authors:
+-#  Alexander von Gluck IV <kallisti5@unixzen.com>
+-#
+-# This code is licensed under the GPL version 2 or later.  See
+-# the COPYING file in the top-level directory.
+-#
+-
+-import os
+-import re
+-import sys
+-import time
+-import socket
+-import subprocess
+-import basevm
+-
+-VAGRANT_KEY_FILE = os.path.join(os.path.dirname(__file__),
+-    "..", "keys", "vagrant")
+-
+-VAGRANT_PUB_KEY_FILE = os.path.join(os.path.dirname(__file__),
+-    "..", "keys", "vagrant.pub")
+-
+-HAIKU_CONFIG = {
+-    'cpu'             : "max",
+-    'machine'         : 'pc',
+-    'guest_user'      : "vagrant",
+-    'guest_pass'      : "",
+-    'root_user'       : "vagrant",
+-    'root_pass'       : "",
+-    'ssh_key_file'    : VAGRANT_KEY_FILE,
+-    'ssh_pub_key_file': VAGRANT_PUB_KEY_FILE,
+-    'memory'          : "4G",
+-    'extra_args'      : [],
+-    'qemu_args'       : "-device VGA",
+-    'dns'             : "",
+-    'ssh_port'        : 0,
+-    'install_cmds'    : "",
+-    'boot_dev_type'   : "block",
+-    'ssh_timeout'     : 1,
+-}
+-
+-class HaikuVM(basevm.BaseVM):
+-    name = "haiku"
+-    arch = "x86_64"
+-
+-    link = "https://app.vagrantup.com/haiku-os/boxes/r1beta4-x86_64/versions/20230114/providers/libvirt.box"
+-    csum = "6e72a2a470e03dbc3c5e808664e057bb4022b390dca88e4c7da6188f26f6a3c9"
+-
+-    poweroff = "shutdown"
+-
+-    requirements = [
+-        "devel:libbz2",
+-        "devel:libcapstone",
+-        "devel:libcurl",
+-        "devel:libfdt",
+-        "devel:libgcrypt",
+-        "devel:libgl",
+-        "devel:libglib_2.0",
+-        "devel:libgnutls",
+-        "devel:libgpg_error",
+-        "devel:libintl",
+-        "devel:libjpeg",
+-        "devel:liblzo2",
+-        "devel:libncursesw",
+-        "devel:libnettle",
+-        "devel:libpixman_1",
+-        "devel:libpng16",
+-        "devel:libsdl2_2.0",
+-        "devel:libslirp",
+-        "devel:libsnappy",
+-        "devel:libssh2",
+-        "devel:libtasn1",
+-        "devel:libusb_1.0",
+-        "devel:libz",
+-        "ninja",
+-        "pip",
+-        "tomli_python310",
+-        "wheel_python310",
+-        "setuptools_python310",
+-    ]
+-
+-    BUILD_SCRIPT = """
+-        set -e;
+-        rm -rf /tmp/qemu-test.*
+-        cd $(mktemp -d /tmp/qemu-test.XXXXXX);
+-        mkdir src build; cd src;
+-        tar -xf /dev/disk/virtual/virtio_block/1/raw;
+-        mkdir -p /usr/bin
+-        ln -s /boot/system/bin/env /usr/bin/env
+-        cd ../build
+-        ../src/configure {configure_opts};
+-        make --output-sync -j{jobs} {target} {verbose};
+-    """
+-
+-    def build_image(self, img):
+-        self.print_step("Downloading disk image")
+-        tarball = self._download_with_cache(self.link, sha256sum=self.csum)
+-
+-        self.print_step("Extracting disk image")
+-
+-        subprocess.check_call(["tar", "xzf", tarball, "box.img", "-O"],
+-                              stdout=open(img, 'wb'))
+-
+-        self.print_step("Preparing disk image")
+-        self.boot(img)
+-
+-        # Wait for ssh to be available.
+-        self.wait_ssh(wait_root=True, cmd="exit 0")
+-
+-        # Install packages
+-        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/r1beta5/$(getarch)/current")
+-        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/r1beta5/$(getarch)/current")
+-        self.ssh_root("pkgman install -y %s" % " ".join(self.requirements))
+-        self.graceful_shutdown()
+-
+-        self.print_step("All done")
+-
+-if __name__ == "__main__":
+-    sys.exit(basevm.main(HaikuVM, config=HAIKU_CONFIG))
 -- 
 2.55.0
 
