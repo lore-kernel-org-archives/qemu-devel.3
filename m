@@ -4,149 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF13C9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02242C98311
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9fdr-0004be-7N; Thu, 24 Sep 2026 05:21:23 -0400
+	id 1x9flk-0006bo-Rc; Thu, 24 Sep 2026 05:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fdk-0004bL-QP
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:21:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fdj-000297-09
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:21:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790241672;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BSaxgX1QQ1A6glHUNf5Eoky8ZcwdCI3ONt9HJto076Q=;
- b=YfsGjA/fAZ11zAt6j3JCoT/ekJYYKVp+dlI9WqohX1Ac+ffvHFn0f5gmmPrxyll66XcG/r
- OmiUwYgH8V3M/xF/FAPDZNYU0sGSm9jHMg+8IOfqFVmwB50S016keW6XL1jVTqcfU8Mq4w
- f8iz8t1LIwmxqwAAa5QOoudNlPXTmOs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-451-EkTW3z89NrSLtGs2n2cwKA-1; Thu, 24 Sep 2026 05:21:11 -0400
-X-MC-Unique: EkTW3z89NrSLtGs2n2cwKA-1
-X-Mimecast-MFC-AGG-ID: EkTW3z89NrSLtGs2n2cwKA_1790241670
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49e735659b7so13829655e9.3
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 02:21:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x9flg-0006be-FR
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:29:28 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1x9fle-0002lW-F2
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:29:28 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-482f6350f91so1151982f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 02:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790241670; x=1790846470; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=BSaxgX1QQ1A6glHUNf5Eoky8ZcwdCI3ONt9HJto076Q=;
- b=Naw0NfxgvLfnuhcHP03X6R5E9uS6Y6aJC/VXH28QJKkTofBtqLw54iNLLo9IcorWNJ
- xCjRHxQgw8EHZywdCwL9htTXNCoGT91eFhuhjoAmAhsGA0wAqYwPwB+PNRXEc8O3DYPz
- rbxpEW9rgXRv1pC2jxlLpW07n6X2LOSoXa36LafyhnwXFI5Kaf23tNJLaGSaI0IDVzBf
- 8mfq7dstiCSpKqv2llEgrhYX/059r2xlEHMU1Xma0GMYIEyNhX4G0xgdUD8RRggUpBDy
- 7StVHyOga1LB3CQgl1mAxK4XU55CG4EtMADz0Pxd7oBP5iytLrCHYO8OoKLGy6hMBEXQ
- Krkg==
+ d=linaro.org; s=google; t=1790242164; x=1790846964; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=3zKw6U8uqu30EP0WgeA1iiXi6lkOdizIoK74JjKzmCg=;
+ b=xC7fyyRd5upHry/VQ2+g6K+uwTiuSK9rZnGOz4lBxnt7D+eqC0BPaHqf9FL459qp3R
+ Pu0pYJfaNfRlvS/lkPFbvynU2TfH6Av9OSitLXPMLrAojEz3yPplVnV21CHUNTARveO6
+ jkkussb1Z+j6w1mrMME7AYDeJkrxOowCF2r59Z50gAYxEczNjDqDKs1C3c75Du+/nvU/
+ tXleq+GPgEnGo7wBGY1B70FhfmEv0SppVUFjufeJyGY2o094PVLvf0VMjbRwG5b5vLm6
+ RdaCEl4IhQQeyF6HNPe5xZ5VbdZwzSIRCF+VjY5Mev7mBbI/1KdVUiErbmyCVts7t6dX
+ eUNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790241670; x=1790846470;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BSaxgX1QQ1A6glHUNf5Eoky8ZcwdCI3ONt9HJto076Q=;
- b=gL9di7M+HS675/4t0OeNC6xbvdxJmDr6Xv1mMdWjN039nZ9rsruOuXemYng2I+mPAj
- tZB7K23nNqGBc9J2YN8fRCv62SQcvqDcoK3GOEfMmZs3kh3HlSQxANg/xuRcLAPjt1jZ
- hTN4ZQbTKcfW5W2yKzVi/8G3gEhGnd73Odw1gXogLmceBqHhwX+JCN+f5j4Yzlmktpcj
- NBD8M9qi43B9bpjR3BAcdrSyz7MefA0onEPysM34vX3hfDHptUjj1SPJH68CPOi6YbwY
- 3A0Wk6t8wYPPbOGYL+XOyBqho2Y33hEdgjIIOkgrh2Tg6UgMr1x14N+EVZGfhf0HTeIY
- lfzg==
+ d=1e100.net; s=20260707; t=1790242164; x=1790846964;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3zKw6U8uqu30EP0WgeA1iiXi6lkOdizIoK74JjKzmCg=;
+ b=GCPgWDHjxFdnpAmgeCFt4ja54h7ngvvMRnVt5+66JpvZFdNN0U3F+VLoYNeRrOWLv/
+ nje4wCOyRvOO3p3Ps5MUgXATMIu/CGSZxMcHwdgRD+OiLfGfZcD5VkXsOkLGYzjovV5S
+ lFx5lxg/J8cec2WJyjxiArsfwWIMcRugpD/475YcPHbJsTmvIQE9llvZyUeN7E+QFd+E
+ pXjWYJ+mpUMbujqAIeDcNuKi/ZjDGfLjw1PBl736p0A7MnX6AtaO7Z9QiYv4yK+YHNim
+ NgTqaeTBEdocvhHSzlxkX5UvYA3rtJXN6Vt2D70cKuPSWacVCSgktIENxNbybSH3UEl/
+ WKcA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByTybPROdxk0gLlRD50f84WAjN7T+f4XaUPqAFifyNFcoctz/YmKaPkQCMvicFIi5mWi9PCEoCFA9Qi@nongnu.org
-X-Gm-Message-State: AFuF++nCC+qwuLAK3aSJMdZ345NarQR8seuMKMUDZ4bEc/BCwyVmn0P5
- h71Oy/cC9hpTRhNCJHx75RxysHVgjzzRHzUgXXh3/B8LQ6XAXuMhXLSg6+FkHa/T3zCi1YnrQNa
- l/mDpXnZONh3afufKPLPMQab+09HWCQmulBWJPnCCnEwCKjdJ5OkhxMxx
-X-Gm-Gg: AYBFou1JCnxcd96AXHMQ2dggsjFd+me7u0nHyVFvrfXSbGloznpnTpV94wTQz4ji9jz
- pDSgfNZ8fbkYGO6Xs/ygc5bTbZNmXEhjiZkw3XLeSFaV9Gl6Q3DQTTuJ20D9l3GHoYOnZrmwJHq
- BT1KP+R4Cs4ThpRXILdKqKc+GCAoHOQTWKV5bCOJwa1JEzXJ4oVGyGf1BCJ/nRV0wCsKjA1dbI4
- umrdb0Soe41DNxC6FxdSG0Kg0EBvsghEKmvukAZTkrMzMrszVumLhPmetpKRmv3c7wH+wq55T8A
- ED8TjjXFvP0TP3wFVyHGK4vZu8E3YJ9uw3PkrAjU9awD7WcwUwxAJenh0xKhKrMLC0g4+w==
-X-Received: by 2002:a05:600c:1546:b0:49e:7a00:b9a5 with SMTP id
- 5b1f17b1804b1-49fe66bdee6mr32108975e9.4.1790241669944; 
- Thu, 24 Sep 2026 02:21:09 -0700 (PDT)
-X-Received: by 2002:a05:600c:1546:b0:49e:7a00:b9a5 with SMTP id
- 5b1f17b1804b1-49fe66bdee6mr32108775e9.4.1790241669611; 
- Thu, 24 Sep 2026 02:21:09 -0700 (PDT)
-Received: from [10.22.3.85] ([91.26.127.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fdf158147sm105014965e9.0.2026.09.24.02.21.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Sep 2026 02:21:08 -0700 (PDT)
-Message-ID: <a024357b-4142-4323-b5ee-b45fd3a36249@redhat.com>
-Date: Thu, 24 Sep 2026 11:21:07 +0200
+ AKwUvBzG6QzC3suzxC0HbzA0UHSRqaI1phXb6RJbhiY1iLVKGh05JvXj3eDvjyQnILAcJm9ZWtZNOAdkblhN@nongnu.org
+X-Gm-Message-State: AFuF++lyY4Kb6gtTc6DTHPS5TTz/+bEeVDQ0aIjohzpl2YZbeIk6XGBR
+ +9Aj+/WV6dXWKPMYpKq68xHnOrqJWxxxZpjSMnmvWfcVyJIxUWpaMddLpsr7/3hLxQs=
+X-Gm-Gg: AYBFou07CihGfGXONlsKmQwd5UNTfPaREeaPcnioSE1YnvEQTp0ct9mE1bSnstfUE76
+ J2iRxwPNJEBcdfqKI7dIJtci5c5pxIr5BVLnbg60zk+k7zaTso3EkWddAOcuGPPg4X71G9O/7bP
+ mIyffOnL1ZBG2K9n/WrFdCznMdfyEPrVk/tvmERWzl1UKiPop6OEhTUn+pnVR473oJtBsJWbvk0
+ 9yJqOckcDvukKkcYi2L2h4INyfXfWojyUXcvts3/iZsfhFOAezQHHB9vdaVMxG6fqYNOvA7T0Nq
+ vnG5zkNRqXvHVs8lvtP/Elk6MDFRxEw4vInWEg+Nj3Nz7IvqtvlRfxMN7zAfEMxD/WWCTvlDA7l
+ YwpeQ+7wICiYbNrSCGgyOcLyf5+DPuLNpUnsssYhipDr3BamOuUNaFk2sVIkMFMLchfE0nWqSPy
+ B9aLiyQCrYTapTlcbipEXePflfE6O1oNRHDqvMpcOmeoWPyeIXij/v1BpoqHoMRAIdtA3pAA==
+X-Received: by 2002:a05:6000:238a:b0:487:84:96d7 with SMTP id
+ ffacd0b85a97d-48871974f03mr2861357f8f.53.1790242164143; 
+ Thu, 24 Sep 2026 02:29:24 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4886876c500sm13770442f8f.19.2026.09.24.02.29.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Sep 2026 02:29:22 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B41F05F8E1;
+ Thu, 24 Sep 2026 10:29:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  Alistair Francis <alistair.francis@wdc.com>,  BALATON
+ Zoltan <balaton@eik.bme.hu>,  Fabiano Rosas <farosas@suse.de>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <arP7TDfz7lz699KJ@redhat.com> (Kevin Wolf's message of "Wed, 23
+ Sep 2026 18:16:12 +0200")
+References: <20260921075251.12831-1-pbonzini@redhat.com>
+ <20260921075251.12831-2-pbonzini@redhat.com>
+ <arEvLLYK9A5MKNdE@redhat.com> <arP7TDfz7lz699KJ@redhat.com>
+User-Agent: mu4e 1.14.4-pre4; emacs 30.1
+Date: Thu, 24 Sep 2026 10:29:21 +0100
+Message-ID: <87ik3vyp3i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/7] hw/usb/hcd-xhci: Limit DMA transfers to plain memory
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20260924090558.801845-1-thuth@redhat.com>
- <20260924090558.801845-3-thuth@redhat.com>
- <563a8d0b-02a3-49f0-a349-557a4e29fb32@oss.qualcomm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <563a8d0b-02a3-49f0-a349-557a4e29fb32@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,32 +113,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/09/2026 11.12, Philippe Mathieu-Daudé wrote:
-> On 24/9/26 11:05, Thomas Huth wrote:
->> XHCI is a complex controller, involving lots of descriptors that
->> are written and read via DMA transfers. As some recent bugs like
->> https://gitlab.com/qemu-project/qemu/-/work_items/3926 revealed,
->> this can sometimes be exploited from the guest side to crash or
->> stall QEMU.
->>
->> The code currently does DMA writes with the MEMTXATTRS_UNSPECIFIED
->> attribute, i.e. the controller is allowed to write to other MMIO
->> regions, too. However, in normal operation, this should not be
->> necessary, all descriptors should reside in normal memory. So let's
->> decrease the attack surface a little bit and limit the DMA writes
->> to normal memory here.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> Message-ID: <20260915123242.549150-1-thuth@redhat.com>
-> 
-> I had this tagged to review but low priority since RFC, anyhow LGTM.
-Thanks for your plans! ... I already assumed there would be nobody looking 
-at this. Anyhow, I think we likely won't find out whether there is any valid 
-scenario where the USB controller could write to MMIO space if we don't try 
-to include this, thus I added it to this PR to include it rather early than 
-late in this development cycle, so it gets enough testing coverage. If it 
-breaks anything, we can simply revert it again.
+Kevin Wolf <kwolf@redhat.com> writes:
 
-  Thomas
+> Am 21.09.2026 um 15:20 hat Daniel P. Berrang=C3=A9 geschrieben:
+>> On Mon, Sep 21, 2026 at 09:52:48AM +0200, Paolo Bonzini wrote:
+>> > +.. note:: **Use of AI does not remove the need for authors to comply
+>> > +          with all other requirements for contribution.**  In particu=
+lar,
+>> > +          the ``Signed-off-by`` label in a patch submission is a stat=
+ement
+>> > +          that the author takes responsibility for the entire content=
+s of
+>> > +          the patch, certifying that their patch submission is made in
+>> > +          accordance with the rules of the :ref:`Developer's Certific=
+ate of
+>> > +          Origin (DCO) <dco>`.
+>> > +
+>> > +          Since a submitter cannot audit LLM output against its train=
+ing
+>> > +          data, the DCO is paired with :ref:`metadata in the commit m=
+essage
+>> > +          <ai-used-for>` about AI-generated parts.  The DCO still cer=
+tifies
+>> > +          that the contributor has the legal right to submit code in =
+general.
+>>=20
+>> I'm not a fan of this second paragraph, as that feels like it is undermi=
+ning
+>> the DCO. That first sentence in particular is somewhat saying that the
+>> contributor does not have to think about plagarism and thed project is ok
+>> with that, and also implying that the DCO doesn't apply to the LLM outpu=
+t.
+>> This is both not OK in its implication of the project accepting some
+>> liability, and then also contradicted by the next sentence.
+>>=20
+>> IMHO this paragraph should just be removed.  The first paragraph clearly
+>> states the DCO applies to the submission as a whole, and leaves all liab=
+ility
+>> for infringement on the contributor.
+>
+> I don't think making this the individual contributor's problem is great.
+> It's rather unfriendly towards contributors to expect them to certify
+> something that we all know they can't honestly certify.
 
+This is the current position with the DCO anyway. If the contributor has
+copy and pasted (and maybe adapted) from Stack Overflow they are still
+realistically the only person that can make that judgement.
+
+> Our current AI policy was built on the assertion that it's impossible to
+> sign the DCO for AI output, and I think that's still right. A developer
+> can't certify the origin of something when they don't really know where
+> it comes from.
+
+It's certainly possible for LLMs to replicate copyright material but by
+far the biggest influence is the code *in the project* that shapes the
+output. It is basically pattern matching and predicting after all.
+
+What level of reassurance the submitter needs to be able to certify with
+their DCO is up to them. We can't police it, like every other submission
+we rely in the submitters good faith representation of what they have
+done.
+
+> If we decide that we don't care as much about the legal risks any more
+> and that we're willing to accept them to some extent, that should be
+> explicitly reflected in the policy.
+>
+> It seems to me that the cleanest way to do it is to exempt correctly
+> advertised (with 'AI-used-for:') AI output from the DCO requirement and
+> instead add to the 'AI-used-for:' definition some relaxed version of it,
+> e.g. "I have reviewed the contribution for potential licensing issues
+> and haven't found a reason to doubt that I have the rights to submit
+> this AI generated content under the open source license indicated in the
+> file". This is something that could realistically be certified by
+> contributors in good faith and also isn't just "anything goes", but of
+> course it still is weaker than the DCO.
+>
+> If we're not willing to take the legal risk from this, we should
+> probably leave the current AI policy unchanged instead of telling
+> contributors that they have to work in a legal grey area.
+
+I don't think we are asking them to work in a legally grey area, we are
+insisting they are confident there is no legal risk in what they submit.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
