@@ -4,96 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8812C98312
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 01:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD6C5C9830D
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 01:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9YDc-00018U-4D; Wed, 23 Sep 2026 21:25:48 -0400
+	id 1x9YDb-00017g-AY; Wed, 23 Sep 2026 21:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9YDX-00015d-VD
+ id 1x9YDY-000161-S2
  for qemu-devel@nongnu.org; Wed, 23 Sep 2026 21:25:44 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1x9YDV-0007Kv-Bf
- for qemu-devel@nongnu.org; Wed, 23 Sep 2026 21:25:43 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1x9YDX-0007Lf-28
+ for qemu-devel@nongnu.org; Wed, 23 Sep 2026 21:25:44 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NNZSWh2891570; Thu, 24 Sep 2026 01:25:37 GMT
+ 68NNZmji569262; Thu, 24 Sep 2026 01:25:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=gbSeMPqjIwMw6u1rXjIA5OETNdiAflfpHgOuQCqa3
- LE=; b=QUbhmg9k8Bylxp4eJJ66xBJIP52Oh8VikVD+i8BdbT3Tq0AJOr9hKxpCH
- vNwR4qfTQP+iY4rAx9vjJKYvSS4imAdgK3ge8+IXHMpp87Q849hQiZVZa/FcaYb5
- jVcJJ2I/jAWEu1YAVvDPuIAj+SQ8sENTgnVbIkZKiWkT/j6mKPBrvdNosCcMC6k8
- E0x+yFh9lbs86MM/h9xSn6kZRMEGsax5C7AUgHZuL4f74uIa/D3Kav3Y1M7W/16f
- iitSpu+BTHKjPKfj53B6lBEbdrnG5azFcgeG8DWE0oRSByFKZedk86W+Ueyp7bvf
- 8wI3E4HJbziSQOtcEqbKzDuWLuIxw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1xdxy-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=KZJnzYue7WWe7Vi2S
+ kaJjrYjVg+Wm0wS1eF999/2WzE=; b=Vg9AXGaxFnWOtPUZJ0wm4tieFb8Wyescp
+ /B6I+SHiBgxwfIFGHYz67qNc7Tz4CsOSEcW+CkpZBuyTeloRAr6Gbme5m4aCVWDT
+ 5xiOLR+GAxGb2Ne5ZjPA5SrilagIGMYGzkxZ6VwbpnioRGsGsTGV2Iw4Ux5ijUnh
+ rjdB9S/g+VPZKsd/IS5f/xlrejnugR5aWfbW/R/ADlyRgwOTDFPuQpu5G0aD1MdM
+ tHtvobZdipVQ5zV/uM8rkCN1+P/2JQAjVkZMBNfcc2uqyw8sWnH2WuvdfrngMhdK
+ X9Ze7SY+xX0/8seyyjcYwFzC23sepUA9PvGIeyNHnBsFC2MVuvmUQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsecv1-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 01:25:37 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68NNHaIZ1132960; Thu, 24 Sep 2026 01:25:36 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8jukm0-1
+ Thu, 24 Sep 2026 01:25:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68NNHSdq1079959; Thu, 24 Sep 2026 01:25:40 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt2uf3a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 01:25:36 +0000 (GMT)
+ Thu, 24 Sep 2026 01:25:40 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68O1Pa7j47448518
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68O1PdLZ65601918
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 01:25:36 GMT
+ Thu, 24 Sep 2026 01:25:39 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E786E5805D;
- Thu, 24 Sep 2026 01:25:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 44E0D58061;
+ Thu, 24 Sep 2026 01:25:39 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6743358053;
- Thu, 24 Sep 2026 01:25:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B91C758059;
+ Thu, 24 Sep 2026 01:25:38 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 01:25:34 +0000 (GMT)
+ Thu, 24 Sep 2026 01:25:38 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: armenon@redhat.com, marcandre.lureau@gmail.com,
  Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 00/10] Fix a couple of issues in TPM related code
-Date: Wed, 23 Sep 2026 21:25:17 -0400
-Message-ID: <20260924012527.858527-1-stefanb@linux.ibm.com>
+Subject: [PATCH 05/10] hw/tpm: tis: Use uint32_t for len to avoid truncating
+ size of command
+Date: Wed, 23 Sep 2026 21:25:22 -0400
+Message-ID: <20260924012527.858527-6-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260924012527.858527-1-stefanb@linux.ibm.com>
+References: <20260924012527.858527-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: QLnA4ZBwI_FeUOVWbhitVuKKcD0G1n_C
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab47c11 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=nOQdVPWBrISVqpPLdNYA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfX/UOuZicmbcKe
- /gl4zpzfUNAy/crv8BBaB4EAVVXs+x27kmuCNlmTVnVYJGwurVryDtsR73Xr0CnJVU6iWsV6Ao7
- 5LhOxqlwZspEFqkxA4Xtg06vNXD4i6Y=
-X-Proofpoint-GUID: RaedgCzwx3VlaT_QxJXK5p55RDgzbK12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfX1J+0aVItfQf3
- 2omtFPG8Q91Uv8a1NJM7O8AQlsRiXHUkFqU8vcheB7k8Y6tmGvY8nvcWt3cT+trQi3A4LLZ52OR
- /g3UHvLF74+f43obQ6pgHjDFZEPKyWTxEXZSmBNqKtGCgCk8x8YzB7/hmejnqN8Hj56zeTD8b5Q
- pUD99pNOn3Leqf60c74Zf5vdtYVZ1A9smJGTgm4g8OYRJOPyQiGZBTTqVxuaseGw4KszRRCWa5q
- 2V/bSSCIQi2HBzDo3cLHbqbdPs1W0nfy5p8IyqJ3uee0eSiO4lnuQ8NULdMCqaEOATOyDoAM4vp
- lLUPm14nqjcg3+0Luw1Xhr+9OnYlCRnwhjcl6rTwkQaErNFhgVq9IO+sHOPBDOWaK0yuEBDYSrQ
- ftUnvPt09iP5v62CyozgFrhJ//1Vww13l56yEMqG6C7CLodGLmtfM8wFB3d+C2UvW8rjNevtxvB
- aBnVhP9s4VJF60B+qvw==
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab47c15 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=RY3EVia8NYhRY2h5:21 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=Q9dn6whS7C7IXuWMxioA:9 a=zZCYzV9kfG8A:10
+X-Proofpoint-ORIG-GUID: xRA97vmJgKbVd82JXMtSA9-38aL4d897
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfX9Qjw5qbR8iQP
+ 941sSd1U0TKFEM0XRB4mFX/7X++MgljLxbDbRXOaiUtSeuZM/lAooUG3tyTQqxJcubZbJaqj1Ls
+ 6o+22MGFpoio7ManOzbYSsOXPr86AeBNGqOxsZhWJomzg/2jvybeJPa/isxxPhq9NjD7g8uSGBv
+ oib3Q5zIV6uvf71asCGkhYRUVLrRMW8GspUBuRVtZKmMdP+vphFyaa3v14VMEmDQPCYzAE6Rfs3
+ jDGpwpj2anhFN+ru80za4O7nuqSGvgmXkdTC+6bzbsQ18ccigZ19MeYhvvNe5/yXfV+GOvnlnLS
+ eBH4h5l69qz2Dclgfs8ZnbfdQT22gijaj6UbvM6IOTNJabW+eZjgNOuHkeaU+AitrvI5raz+t6f
+ YRnUWOy4sOwVHkcXEj6P6u/KI29VmBC96tU9XThk8LfcwVCX4czIKcL2VBFMi4r0Tv6lqox8rU9
+ 1JMNxCKtrOIW4za5+Bw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAwNiBTYWx0ZWRfX6n2OzxHwcDrI
+ TIISsw+rmfWTT/ytxHkSsaD/c4fN1bN1gzGJBtUDWrg4KIPQTaYwwmSQiWkLwqiYqMmUPz81Y27
+ 2SIVhjbYPewJ6tsNo5wLtbjZB2FakUo=
+X-Proofpoint-GUID: 25qADrRBje_zAHLzo4qVgklnteF8b53B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-23_08,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240006
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
@@ -120,40 +124,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series of patches fixes various issues in TPM-related code, such as
-memory leaks, potential integer underflows, clearing of buffers while they
-are in use, and the proper handling of sizes of commands or responses.
+To avoid truncating the uint32_t return value from tpm_cmd_get_size()
+declare len as uint32_t rather than uint16_t.
 
-Regards,
- Stefan
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ hw/tpm/tpm_tis_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Stefan Berger (10):
-  tpm_util: Pass TPMVersion to function writing fatal error response
-  tpm_emulator: Reject TPM responses whose size is too small
-  tpm_emulator: Reject sending commands smaller than the request header
-  hw/tpm: tis: Only read from response buffer if rw_offset < len
-  hw/tpm: tis: Use uint32_t for len to avoid truncating size of command
-  hw/tpm: crb: Do not clear internal buffers when backend is busy
-  hw/tpm: crb: Avoid potential integer underflow
-  hw/tpm: crb: Free ppi.buf in tpm_crb_unrealize
-  hw/tpm: crb: Consider response_buffer->len of received response
-  tests: Add tests with commands with bad length
-
- backends/tpm/tpm_emulator.c             | 12 ++++--
- backends/tpm/tpm_passthrough.c          |  2 +-
- backends/tpm/tpm_util.c                 | 12 ++++--
- hw/tpm/tpm_crb.c                        | 23 +++++++---
- hw/tpm/tpm_tis_common.c                 |  8 ++--
- include/system/tpm_util.h               |  3 +-
- tests/qtest/tpm-crb-swtpm-test.c        | 10 +++++
- tests/qtest/tpm-tests.c                 | 56 +++++++++++++++++++++++++
- tests/qtest/tpm-tests.h                 |  8 ++++
- tests/qtest/tpm-tis-device-swtpm-test.c | 10 +++++
- tests/qtest/tpm-tis-swtpm-test.c        | 10 +++++
- tests/qtest/tpm-util.c                  | 55 ++++++++++++++++++++++++
- tests/qtest/tpm-util.h                  |  3 ++
- 13 files changed, 196 insertions(+), 16 deletions(-)
-
+diff --git a/hw/tpm/tpm_tis_common.c b/hw/tpm/tpm_tis_common.c
+index 4ba228116b..8fa1bee771 100644
+--- a/hw/tpm/tpm_tis_common.c
++++ b/hw/tpm/tpm_tis_common.c
+@@ -481,7 +481,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
+     uint8_t locty = tpm_tis_locality_from_addr(addr);
+     uint8_t active_locty, l;
+     int c, set_new_locty = 1;
+-    uint16_t len;
++    uint32_t len;
+     uint32_t mask = (size == 1) ? 0xff : ((size == 2) ? 0xffff : ~0);
+ 
+     trace_tpm_tis_mmio_write(size, addr, val);
 -- 
 2.55.0
 
