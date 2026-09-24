@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0917C9830E
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 20:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CF6C9831F
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 20:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9q16-0005Ok-Od; Thu, 24 Sep 2026 16:26:06 -0400
+	id 1x9q4K-0006Cg-Kd; Thu, 24 Sep 2026 16:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9q0x-0005N2-BV; Thu, 24 Sep 2026 16:25:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1x9q0u-000384-Ra; Thu, 24 Sep 2026 16:25:54 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OJ5euY3079295; Thu, 24 Sep 2026 20:25:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WBMX1K
- xwJXZSEe7TXf9UvPXsNZsOytTDAkN7e8LMnVc=; b=YDEiSI+h3D8FLg1DZ7Xllp
- vyI94tIkiKH0vrIeoQgut9SUsl+n19VRsIY5Pcfab3bZB6gyLBYm6n8qoXBWLVNZ
- LPFgcNyzn1mTpacbOyaSeRs8W/W+5hEfDGzKwjViwpNs+55U+En1XiZH9MuuV1Pv
- IQTebAquAsaNMXMxGc12ZWtnkxKBim4qSg4N5XueDzKY4+iUB4u7LSOwYWp0SxRH
- aQ19SE6ezkOtClMyBMppKZPk36gcvl4rkbbGsdIOXnHZMSOSd6oSNSGrC2DYKikT
- OmF5Ex83HPxlQPLT+zTa4jfZZ6rF+gq9CqQJqu56/6tfwyUdZrPLEkdzZZGa9lug
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2ujeb-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 20:25:50 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68OIlXCU2559301; Thu, 24 Sep 2026 20:25:49 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1ymhf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 20:25:49 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68OKPmTg29426348
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 20:25:48 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0602A5803F;
- Thu, 24 Sep 2026 20:25:48 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 691FA5804E;
- Thu, 24 Sep 2026 20:25:45 +0000 (GMT)
-Received: from [9.61.7.131] (unknown [9.61.7.131])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 20:25:45 +0000 (GMT)
-Message-ID: <d38eaf1a-2b72-462b-a4d1-db1d5e531532@linux.ibm.com>
-Date: Thu, 24 Sep 2026 16:25:44 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9q3r-00068H-5L
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 16:29:01 -0400
+Received: from mail-pz2-x0c.google.com ([2607:f8b0:4864:3b::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1x9q3o-0003Iz-7d
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 16:28:54 -0400
+Received: by mail-pz2-x0c.google.com with SMTP id
+ d2e1a72fcca58-87c90648f99so249870b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 13:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790281729; x=1790886529; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=upyDFWsf8NcSsuDhronNYZbyKMAvF5U/xx9LzmEYmq4=;
+ b=c3ksiANtnels8NHWeh7bqk0g55IkFuVWY/swZtEJXFxKu3/64hiQVDmkPITRVNUZce
+ bontmIshZTyFyAi//6TOMYF38Y6hd7DgYytwV2bVR/2I2vrYJDmE9wLXQ/AVGep2Kbri
+ fOl3+CbuLzh62aaaNMUz4nRJjiyPjia0VBviVmCP4IVAxkTk1GI4+q/gN25Cjn5BuLQc
+ PhHZ9S7dcDPHnm3q7ShtuuHQoBE7nMynZzrnlNPIZC+ru7nHAAR1po9TsGHdxtaEtyVb
+ RgyNCoTc6KOdgRHgxfouhtRCy1gsFilzC+eLy1VxsGQJiFK0mdUiYelp5MEY7yRE3llR
+ 5Raw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790281729; x=1790886529;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=upyDFWsf8NcSsuDhronNYZbyKMAvF5U/xx9LzmEYmq4=;
+ b=b2Wsvzg3d2nAKOR65pNBGJ93oWKjgw6Ridb+Z4Xm84VIVivrLomgOc7y2A2A8nDdAn
+ QFGCAsxFqlDcThRWhQCUWaGTcMZ8iokrEw9qHFQglZmMCIvTjYVh9r7W9vgb96GCO7re
+ ieE3uve7EI9Bb2VeUEY72G1EzONzLcWQ2M1fhbT7FbL//jG9E+NPKHV2ibYhJ1ZKjMWE
+ 4oMr1jwKhKbfDiqyYH0uDCPP+XsKGvxC9YgPXKkLzPWNHWKjnUiucYHyATvKE50Rl43D
+ ZcX7gCVS20E+226UvE6ser0s4azzxKP8WVD7b5kOl80PbHssEFMvzgKLB4pWdvCMwMtV
+ ReGA==
+X-Gm-Message-State: AFuF++nflWkvoGkQxddjBnvXIcl4aipdxvvX8q/zd442zXrtVww8yc6q
+ ZkO4b7qxqp+kZ9BmqO15A9aoCOyxDZGQWFmGIjKzNgegi44ows6bJeQpjbqdxALe7M6nAnht1Rv
+ DyYvv
+X-Gm-Gg: AYBFou0nEbQVSxnXJTVnurdzRah0jbBMhXnRFFSJGPTRauI5JbG1UKDCMgyxNc06laz
+ Y//dM6//tu+BvTP8wjqamhSUIW5ClQHSHw3+4dPJ9l9OjgyY6s3gjrHVgDgqKjUho25CbMJHQ+8
+ oSDqVrCQVhO+rRAAJHwtKC9HHGlgxcuJi3iB4subuhpj6c6Pstna6EkA6cK1fJpqLV18m1Lj3gb
+ noAHyzvOIWbGS7nYWRvu3JUh6JZ5p0LKAceyl9k2ZJDgVACl5TGjQj2viagR55vNVhNJxmmjR8g
+ rR+iAQOYk8x02jnaEkSuZA/nwNx9GusoCXM/5NR/ep2OfzC0VJtAlbmmsVhTxcXSerMAptici8v
+ GT5xkr56A6b2LF5aFhT8kO5qq5/ACNWJ0hoZ8aVB8w2lGlFJNziJDPCP/nNDazR8s+Ul18WFz7c
+ SUWtZ5fJywQT1sr+87fSa7T/Fglt71VS7kC7awxLhguRgYKwtPUeLEfFEksdkFL/9rdr/1Im+Zb
+ 0itLPdmuUwfofoEZX/vWkWFchSRYp6SnaJ4pzmw
+X-Received: by 2002:a05:6a00:808a:b0:874:708d:b640 with SMTP id
+ d2e1a72fcca58-87e9e96dc18mr3068746b3a.33.1790281729337; 
+ Thu, 24 Sep 2026 13:28:49 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-87fea18f49csm160569b3a.20.2026.09.24.13.28.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Sep 2026 13:28:48 -0700 (PDT)
+Message-ID: <22252c4a-3958-4227-91dc-5c0ef6b86651@linaro.org>
+Date: Thu, 24 Sep 2026 13:28:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/8] tests/qtest: Check s390x boot device support in
- pxe-test.c
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
- pasic@linux.ibm.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com, jdaley@linux.ibm.com
-References: <20260924194837.80732-1-zycai@linux.ibm.com>
- <20260924194837.80732-7-zycai@linux.ibm.com>
+Subject: Re: [PULL 0/8] tcg patch queue 20260924
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20260924144931.161335-1-richard.henderson@linaro.org>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260924194837.80732-7-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260924144931.161335-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: iIwqa9sysXXsRnxSc7rX8Wmk2n6vPW2s
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab5874e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=GSR41NrXoBGxaPTtKDsA:9
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA4MiBTYWx0ZWRfX0DzNz7oA0xwM
- b1ofzwHrBNx44jvCblzxx4jnh+a4OMlutiNns0EsKje6eHkRYTrNoJ6g19x8HZxUsQkkhvurFZT
- B1Qec8p58Uj2lvrlQRsDsgWvorJCGsR3jBM8m8IysZh5ERnf3VTRlReJH77cA/rRBZl7L+dmwvD
- y3/dtr3Sz2kaA8tm9pq0A6F3+qRcBhT1+/7TUd7a7GPivYUZZU3jWhwNUa4bg+0H/GH4B6B1ctS
- YZoTwvhsRl4RpgMq5nqIpU6V8tU7B/SOVt1M7CXFWhObCOKSTOGn5deAEILggjO3YxaymckvFkp
- GBjVFZm2gYVej1HBUz8o2XUNivVNT7pl1k5Oga4RWWmCFT7+TmZvTqvv2KsabvghBSglX6j7Iud
- vev/cZIKwqcDSDVvRydh9SQt+yqbMx4D6nWAoCQOxcCBK2cBCNi9cN9CXs2U3/R+rc6WZ/6Kl17
- qBRs0hg2DWB9vFpxxFg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA4MiBTYWx0ZWRfX0aR0HwujrJZv
- X3lgaTTCaK183lBOIFLftxUMjx7FUleFUhNofqzATJ8LqRwfyYiAZCHIjjYpeT3AcGivbCZ7OG7
- g0B7XeRH7ONRvef56Q2vhVqR+RFhurk=
-X-Proofpoint-GUID: iIwqa9sysXXsRnxSc7rX8Wmk2n6vPW2s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240082
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,34 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 9/24/26 07:49, Richard Henderson wrote:
+> The following changes since commit 942229961efea74b153c44c59188eb08375f10f1:
+> 
+>    Merge tag 'pull-tcg-20260923-v2' ofhttps://gitlab.com/rth7680/qemu into staging (2026-09-23 15:14:55 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20260924
+> 
+> for you to fetch changes up to b9bf2135a7e4adbc1c7a1a64818ec7e2d3ceca66:
+> 
+>    target/hppa/tcg: Always initialize DisasCond.{a0,a1} (2026-09-24 07:29:58 -0700)
+> 
+> ----------------------------------------------------------------
+> Never pass NULL to tcg expansion functions.
 
-> +
-> +static bool s390_bios_has_net_ccw(void)
-> +{
+Applied, thanks.
 
-Since you'll need to respin anyway...
-
-Sorry, I think there was some confusion about what I asked for here.
-
-AFAIU checking for this string is going to unconditionally work as long
-as we enter netboot code, before we even decide if -ccw- or -pci support
-is actually available.  That's why you don't use this test for
-virtio-net-pci.
-
-Your old comment block said virtio-net-ccw support has always been there
-(that's not strictly true)
-
-So rather than removing the comment block, just reword it to explain
-that the test just assumes virtio-net-ccw support is always available
-and only checks that netboot started, it doesn't try to verify ccw support.
-
-> +    return s390_bios_has_string("Network boot starting...");
-> +}
-> +
->  static testdef_t s390x_tests[] = {
-> -    { "s390-ccw-virtio", "virtio-net-ccw" },
-> +    { "s390-ccw-virtio", "virtio-net-ccw",
-> +      .boot_dev_support = s390_bios_has_net_ccw },
->      { NULL },
->  };
+r~
 
