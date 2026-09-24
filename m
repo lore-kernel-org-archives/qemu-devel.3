@@ -4,116 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05458C98304
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 04:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CDA4C982FD
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 04:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9awY-0002Aa-QR; Thu, 24 Sep 2026 00:20:22 -0400
+	id 1x9bCB-0005ZA-1y; Thu, 24 Sep 2026 00:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1x9awT-00029E-K1; Thu, 24 Sep 2026 00:20:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x9bC7-0005Yt-VG
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 00:36:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1x9awP-0004L4-SL; Thu, 24 Sep 2026 00:20:16 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68O2aAMn976694; Thu, 24 Sep 2026 04:19:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YUdzT6
- 4n65fr8vMqpMInufP4ueXVSv3Zb7b0W9/pXf8=; b=qFDQluc+250xDmFkyo4miN
- Yva7Odkioq8yzEtyM0uzr1kJifKapIaKwO9pc5CWRLTvKd0eRDcRc1737daD/Ux8
- I8xZvuqvSmCPYRXCWg6vkpAFJCJT7o5ooNk5uT69mIJ1vXLMYUkFTo4YNb7on9oC
- vY+CAyLGaiQ0i5q2LB1B3LKRT5hVpyHztGxj8Rg88lKXJvjDhlmDfaaTcqUf+wuk
- yvzGJU02wOxQrUR0yzNhLQFnHMRfJ2p6byRuvhHRtJyUsunMtvgT9cvEhkqgay4t
- nAULsjFjBmDuWkcnC2bVP6bOmfuI6gY6Jcqa3tth+BEgN/h12kryVGvFCLIQeLLg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdveapp-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 04:19:58 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68O2IVJs1317730; Thu, 24 Sep 2026 04:19:58 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe1v1xj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Sep 2026 04:19:58 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68O4JunH15205114
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Sep 2026 04:19:57 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3DC55805A;
- Thu, 24 Sep 2026 04:19:56 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 063045803F;
- Thu, 24 Sep 2026 04:19:54 +0000 (GMT)
-Received: from [9.123.9.22] (unknown [9.123.9.22])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Sep 2026 04:19:53 +0000 (GMT)
-Message-ID: <a5355ab8-bafe-4c1e-989b-dcb05ec1fca3@linux.ibm.com>
-Date: Thu, 24 Sep 2026 09:49:52 +0530
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1x9bC6-0006KY-2R
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 00:36:27 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68O36kwY445905
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 04:36:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 401Ehn69pZR5WU+a8Ow41kpser1p0tewRluDaixMfWA=; b=kAAXDdZeygUNJQsz
+ 3z+jzGs2XFaVbiGRCpcsypcQdkDLkzyeVxGzdpaFsJ5mvV5RL/Hi/FSwYpwWc1xo
+ CJnpDgMb3ZACTBTkP3x2zbhrF8c7Li8JZ+jwTyvPMNLEafzC73Y7GkCRccwiYLwP
+ F6G7oq/5yX/kGsVY4yOBcXzZ7zR/iM9kMoGNFXcD1/30f0LNqIkiaAapRGtjXVZr
+ dZC54on0kXpDCIFXHITOsHT6FGx0wiJJFFMG0dAnAhqdE4D6bFludWbr2zIn85zb
+ N9RCfEUCG4svX77SG+khe52/XSbOLdSjjmN6tXY1ohopx06gLBjYXsm7xA6/iQso
+ ZcGDdA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gvr908xgp-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 04:36:22 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93903622880so98233685a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Sep 2026 21:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790224582; x=1790829382; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=401Ehn69pZR5WU+a8Ow41kpser1p0tewRluDaixMfWA=;
+ b=LLNyOa9lURe6reejnlH3GJSZu4okMsA170e2rRNL07gVPRp0xCeK4ouHpmBCGDarfy
+ aUAorufYzZANjBFaIvxz5JNwZeJsV8Drozll78c4cJH5YWSuNZowkXa3wRCzrC/WIWiE
+ /ceAaEolv3Kl1ytmLsJ1xIXDPIdgXIv6hfhawnZQ9phYenlYeiWs/lZTpCrwX7V7Rlk/
+ cJhH+uNU8OFgrwAQFotM8ptapdpRR7XKI7qKUBeYbAIVaWc2D+5wEVppnw4KuwpML7z7
+ kzJn471AsPgx1s1yZiL7y7ZK/juoxujz4+mb/sTnk3eP2BJuRqDkOFiyPvxbAlLFyKwd
+ wXWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790224582; x=1790829382;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=401Ehn69pZR5WU+a8Ow41kpser1p0tewRluDaixMfWA=;
+ b=IFZBDFbL7FOzxXo8g5yso+HyAZ6vQGNsXsx3WGUFU7Zpd8Hc11HcD4cGv3+T/5diHc
+ vjT2Wkfac+edcTjG9MG0+UdFH9tps4DWn+OPd1qwmkVUEtPpt7X8BJ5kCsTGrA1/bPtp
+ oNuHCnq6zqiKsUBQ+GFpM5GwyxCnXhg9kU8G44Ie+TUdkBRwmIyYiW4B7SCKJQpqMuB9
+ C60gia/uXMUcYck5huzhj9ZALm+b7XPgKIBsDF01uesk3BwKCRIMX9/RNVM+3THWB3eR
+ l4N9CT6GMU2MHxemQ+6dvohGahwIHQCs0Rx54tkywTro+jNd4sVB4X1aX74oqwk64t6Q
+ /VZw==
+X-Gm-Message-State: AFuF++ltQeqBLNMyMJJ7NX1xa22LyMX8BtlWVfN7hVJpdkHFzTQ7MXj/
+ RELIjON5d6GE/jCXhBEoDfdLmPo0ou4De3Eq+7RuAuYnD6KwHcpBbM73ZweK+DcFU3bgA0H+BgM
+ aR+ADrAzYY17ZbWfItLtAoMCHmL3OWCO+qQ6OwV4beiPFVECw5w/GPvEVVA==
+X-Gm-Gg: AYBFou1I87x+sHD6QiFxgB82uTsNeYS8gIT7pHqlPu7P5/AL4BvI/wYieod9HXYt0uT
+ ba6QZ88aerfHV9asKPK/X5NbTttXdS8CcuH5HUFtMfMOLtV8GNeucpQCKW96D17MfISFZ+rdc/A
+ rR0GHzbbb6Cc2M5S9ICD+h/ewzE43SQlz+iZfFhxsxw4f25bFCvI17scpgnlhGXilddbnGRB2i0
+ yqv7VsAwj9RmVN87v7VBMGdnsN5Xn3td12VkUAW48KKUVKsCkIqf6LVrevKAilWJ404xuODH1o3
+ Kdl32DnUwxavpUCoVL0zLtF+lDY7kT/xfTl12XveN2vXL0s+rrxTewuHqd6OoOicLpZxoQYno7G
+ dn44hOiczMTszCkduTtmHIKexhubi2hxtfw==
+X-Received: by 2002:a05:620a:271d:b0:939:a095:e458 with SMTP id
+ af79cd13be357-93c3661d870mr104901685a.3.1790224581833; 
+ Wed, 23 Sep 2026 21:36:21 -0700 (PDT)
+X-Received: by 2002:a05:620a:271d:b0:939:a095:e458 with SMTP id
+ af79cd13be357-93c3661d870mr104899185a.3.1790224581333; 
+ Wed, 23 Sep 2026 21:36:21 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fe5bb9891sm32407085e9.6.2026.09.23.21.36.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Sep 2026 21:36:20 -0700 (PDT)
+Message-ID: <3d89eb19-ced1-4bdb-9f2a-fa6eddecce49@oss.qualcomm.com>
+Date: Thu, 24 Sep 2026 06:36:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] ppc: Raise decrementer IRQ on zero write
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Kirill A. Korinsky" <kirill@korins.ky>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>
-References: <20260903115229.95811-1-kirill@korins.ky>
- <20260903115229.95811-3-kirill@korins.ky>
- <3cc35c1e-febf-4ea7-94d2-e9191bc4acb8@ilande.co.uk>
-Content-Language: en-GB
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <3cc35c1e-febf-4ea7-94d2-e9191bc4acb8@ilande.co.uk>
+Subject: Re: [PATCH] accel/kvm: coalesced mmio: check lenght of the MMIO write
+ entry
+To: Paolo Bonzini <pbonzini@redhat.com>, Maxim Levitsky <mlevitsk@redhat.com>
+Cc: qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>
+References: <20260923164631.306314-2-pbonzini@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260923164631.306314-2-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: z6OEzBHXycuvl-IfCwUVssm6wDx0Y2tS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAxOCBTYWx0ZWRfX/OQnL0Q/waZ/
- zbtEi1ft8zuolzt0Tt0G4DBLRZRDU/G9YGY6on4r79erK3TR1J1QC3rtkUOJNJiCVd/HhD1hrHE
- bp1hnNtJrBbHGL79/rrdzIn7WbYZlcU=
-X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab4a4ef cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
- a=ug1x1TSWlDlFpk69nW4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: NMEYJ8DE7MgG3Y2rsOqfZJJtj3Xc-Dzs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAxOCBTYWx0ZWRfX8b5hyW4hWVPG
- Tvtm9Meo67yN4RIymXUL8CT9pAUeS9kO4w4vgzoMT1/GF0XUcEb+juCuMQ6pDmICW7YY+t759yX
- JZ2Y8u2COMcXVClVsJTuUqARpvgM6Y4SDl+5scNh3P0jlu6sz4VxFXLtw5/rJGFi4Fx1BTYGS8U
- dEBEDKXcboDNPIGSGFsuPOBZ95+J3RDdLx1XXAU8TKCWYENB3sTrd2JONfPVBBvIlAM2Q/Hv4la
- 1Pd9xOgbQkmRoUSr/OMM4T4qhuiyQ4GTXEJVvaltguaJNc+sfZ2as++q0atQaJiFVWmcuNaghts
- GBQsoUNxSCPNzpaC62ksV4gXQa91VdEYWuBuQVW2aT0SvIP6RS89FmoyUOZQFOIGiXbqn4sfRbi
- nFHwT/yEOyd/qtL4mYlWR++eQeuLJIrQVeFFFmcWZtVBtCSYVovwYgqq/R+NhrBcNHSY1eZAkXI
- pRWIfGTG/iYqujt0+pw==
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAyMCBTYWx0ZWRfX4oQnj6asqMyU
+ QP1GiM03yXY0A2G94t+mHKEQrnZf1w69vcNTYLozBLmf4wCw0IsjK+Is/N50g9GC8xtal8W6mLN
+ CYNwJTjEjBMZm4lp6ljF5zNrbIxCl8I=
+X-Proofpoint-GUID: _csAALqMpnvR0tik-7SwqKDCzl2AR-JA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAyMCBTYWx0ZWRfX3quWPTY6xtaq
+ HGEf7cnQgtvhLV2YJE+u0cLTlSGrkT3YWicphy/kcaIw6I+/CMsCKNbOLuFetgUvaxLR5QWBM6N
+ ynnsZ3CWPGZ6/ai0y/xdWE73NA8HJINFQQT+4ennNV8+uiSJdfibJJgVTeUNISBzXDOPEVst3HI
+ ZeRMkccul78KvWwf3cSyOTaZQW4C6y+3/SOUah5ciyNH3yGA4cyCFdUt/5Tj03TyFlK5x5OeH9K
+ Eyu+YK0FmINvz4IP4J3dOelhig18EmH4eN3Kto3UkoFEf1TdMi8++CgPzUktG9LBiMpKX5+e35l
+ Ue24O5TAM34GBto4OKiFRnZ0k5jLmXstcOuxWXKQ0/e9UI/+ViEks3K2g98rdlHj6pneRiEPumw
+ Fu8y2SPX6UEnjXTn5J6z6WilvJr9T7Cgn9VgmWNBlilecU8+z5xD9Kj8t3+6om2R0UtyEiWmvA3
+ d0bQz8qn9QX3lPU7TAA==
+X-Proofpoint-ORIG-GUID: _csAALqMpnvR0tik-7SwqKDCzl2AR-JA
+X-Authority-Analysis: v=2.4 cv=fMusTpae c=1 sm=1 tr=0 ts=6ab4a8c6 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=_M0NCwPjLKdnwxl479UA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-24_01,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1011
- suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609240018
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ suspectscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240020
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,51 +151,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mark,
-
-On 18/09/26 6:49 pm, Mark Cave-Ayland wrote:
-> On 03/09/2026 12:50, Kirill A. Korinsky wrote:
+On 23/9/26 18:46, Paolo Bonzini wrote:
+> Queued, thanks.  I changed the code to what Philippe suggested:
 > 
->> OpenBSD writes zero to an edge triggered decrementer, then enters idle
->> expecting its interrupt. QEMU defers the already due edge to a timer at
->> the current virtual time, leaving the guest stalled.
->>
->> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
->> ---
->>   hw/ppc/ppc.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
->> index b123b4cc1c..d99e47d532 100644
->> --- a/hw/ppc/ppc.c
->> +++ b/hw/ppc/ppc.c
->> @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, 
->> int64_t now, uint64_t *nextp,
->>        * an edge interrupt, so raise it here too.
->>        */
->>       if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
->> +        ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && value == 0) ||
->>           ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
->>             && signed_decr >= 0)) {
->>           (*raise_excp)(cpu);
-> 
-> LGTM, however since this is core PPC code I'd like a R-B tag from the 
-> main PPC maintainers above. Chinmay/Harsh?
-
-Thanks for your review feedback on this series.
-Chinmay is on vacation till next week and I had asked Amit and Anushree
-offline to provide their review/test feedback on this (considering this
-2/5 generic change). I see Kirill has posted v2 based on Amit's review
-feedback now. Since it is going to land in 11.2, I think we can give it
-a little more time for review feedback (if any), before pulling it in
-along with other PPC patches. Let me know if any other concerns? Thanks!
-
-regards,
-Harsh
-> 
-> 
-> ATB,
-> 
-> Mark.
-
+>              ent = &ring->coalesced_mmio[ring->first];
+>              if (ent->len > sizeof(ent->data)) {
+>                  warn_report("coalesced MMIO entry has invalid len %u",
+>                              ent->len);
+>              } else {
+>                  as = ent->pio == 1 ? &address_space_io : &address_space_memory;
+>                  address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
+>                                      ent->data, ent->len);
+>              }
+Thank you!
 
