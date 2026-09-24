@@ -4,96 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50916C98317
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 11:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264A5C98317
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 11:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9i1U-00016Z-WA; Thu, 24 Sep 2026 07:53:57 -0400
+	id 1x9i3p-00028L-GO; Thu, 24 Sep 2026 07:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mkchauras@gmail.com>)
- id 1x9fVj-0003Dd-Ps
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:12:59 -0400
-Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x9i3n-00026O-RP
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 07:56:19 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mkchauras@gmail.com>)
- id 1x9fVg-0001O1-Do
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:12:59 -0400
-Received: by mail-dy2-x10.google.com with SMTP id
- 5a478bee46e88-328664e061cso1991591eec.2
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 02:12:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1x9i3l-0003NA-0K
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 07:56:19 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-485933b24c3so1301451f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 04:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790241174; x=1790845974; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=RUkgpIVqjvvd2FdfWd3eWDKdITOOkIynbwVYUmSXt+k=;
- b=aRL17UvOYdIwxB0a57FaJYeIJrl65HNXGvw9nYBfWX2eXPmyaoM5diq4gi4lGESsZL
- T9IYNMPTNt8LHf94O3hzMmVTI4d69qamNmBsoh5m8P0TeIqBWmocv37xNLGubBbsSb+U
- 7vVCZldgxtsmr8X7SqpaoTNz2zI9buCSIwyP8leKniDz1iM17XgeKLzd1Idvm9o1t6AY
- Zvz81cPJulsqpAJXcjfgzS1GZJ89ZhBaBqsKKgxV70lB36FuzH4RfTovGWB4a0S5/gdY
- OliBECT/Jg6juBueCP0fhfcvUty0UIoZPKVQtmBhBDTZ6WrfW7n/dD1KEdHHZ/Zyn8Y2
- SqAw==
+ d=openvz.org; s=google; t=1790250975; x=1790855775; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8ewZB0A+0FkfTeWavSCcxgb0CTdPDsDCGV16o07Ck9c=;
+ b=gcjyoIzOUk+zQIgFq9Oswmd92e1awCGM+Yzd04uUk8PjlEX+gAW1qrk6THtAtxbcXu
+ zYuAl0OdV1/fuP9u3CmK44lo/iUmqUtuiAA4tn8Lsq++rneHBAvLl18z5qtZSsbZ+Dhc
+ 4l0JyZIvBT8oq2CBbM+bv/9zep8lzPHZ9CzVHy7CflmTUDyY1U07odEUU219L34tK5Jo
+ vEWefqv8wLe3KnXuoIue2xqhM4/iyWq2eseGLuCyU1BEybAxLpMRAg8Ks8BG7Qd1v8ql
+ PYRKHQwcGnLCqM0GzAE+MW2tmniMxZo9HoIezxf+BWjN+wX+3mjpOQEDVAC9akiMoCjn
+ jV7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790241174; x=1790845974;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=RUkgpIVqjvvd2FdfWd3eWDKdITOOkIynbwVYUmSXt+k=;
- b=I6u7BepRjKfB9t+O/vrKJi6ym/HOAt+2QlUuN2QKW8wjmqe1kPMJAYdOWSvnjgOSt3
- jQ+AF6M0cE7ZWzvpYwNQgHCqBJRGruQG2oUc/SiiWClpdgMLtP1QQZgC5CzZGnYV6nJS
- ccV/hBTFKOOAfYLoazubAayztQnLMTbjREVLahg2mu49Z3phLRkgKR652hTha2a5EhOJ
- c4xej8fq3U8mLx8n12uQKBAbwEDA1rsIXRwZxw8Dw1uV4NmiJ+3YEaT5zeddHZBSwBUq
- QoYF6fBtl7WFzSO5LLptKk9trUx0UqGv7NdiYU4HelzNi+mjR8d3nrnr6u/j3TDCI2Mn
- gnTg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBylLxYCh0YTGWgvCXfFAp4v829XWaVHFD/eRxxbvyZeUCjS60S9Syglmch84jH9z6kvQHICPPQdT5t9@nongnu.org
-X-Gm-Message-State: AFuF++kkkfq6vuwE70lA4WzMxPiqMFkyaFsnjjtbSmO38GwZcIn3Vs6X
- 5yS31HlcYnZ0Ho6iEMHRSLlp8Zrt2wHMock2OIIwkMx0rFUFxpH5Atf4
-X-Gm-Gg: AYBFou2U0H570DrGGIt0jYXyc7MbNQh7lYGXtOAuedWWt8isjxsUHC7n2FH/11PXxKK
- 7hlAqZ8TKBZ3zQK74jnQCZYSJJTAKEMGmXzchEvSmXkLQXz+ABQBswa7/q5vOjlasf90d2sNkjw
- lYsDz09TrO/ZIULzUCEKwhQNBMzUPAnjhwUCnkjeF0shudHCm9lYG0wpIGqan/2c96Q5xNPsv8y
- DWaLaMJtKdfuMlmytpvYvRf0Mu+lfa3XlwBJ+WouBnUPlEUER5vBq2zeiahz3Qy6NyLxZyCSWi0
- IZMC5lwYEeBEzREbgQrTJ7nJzuzvcHiygFagZwCVfaOVUMap9rdkdztz1vzaf1amyQNUjiaOPIm
- dGkg0cJIhp4eXvZt+x0lrVYTHTzNxCScPB2GTtSNazvbmQwkEz14CFkBYismMhkhMn1W1Enxr08
- yKqNhAnSgWmwzCRHOQtnGydJCwG1fJvgEkkv6JOf+63sM8p1pE/4JkZQ75wMxqpKoN58lvT64YF
- RzTQi1qtykH37h83bEkskmHYR/YdBryHZiCzcyuwH21SxUNe29uByw=
-X-Received: by 2002:a05:7301:4208:b0:33f:f57:c516 with SMTP id
- 5a478bee46e88-34001c14d7fmr1452957eec.10.1790241174006; 
- Thu, 24 Sep 2026 02:12:54 -0700 (PDT)
-Received: from li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com
- ([106.51.165.23]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-33e95c7c23asm11364035eec.6.2026.09.24.02.12.49
+ d=1e100.net; s=20260707; t=1790250975; x=1790855775;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8ewZB0A+0FkfTeWavSCcxgb0CTdPDsDCGV16o07Ck9c=;
+ b=Mgt9Yz1fD8+x8ADJdQgB1SviiB06/KNCPbkoq/vCfXlfdFLBCz8mVMshlpfpE5pjhZ
+ O2A0viEhCLhRTF/C5pTM69InASK4Y/gofKDhrTkWJ7mOXeIFDib8PHub2uyxX3yY/fSy
+ EO76uAjifVQfXccAWhnKl+dTU/kWexEQZzukvsdiZGcDkslZk0iEMT36IfOZagFe5vlr
+ myJ4xDZoUxYNCBE/8MJXavYFI9DrCiDwVP4O3Nq+FiLRGvAoTJnatnPKNSxjN/OEYok9
+ qpCd8/5PRhHwVpUje15Uer4whPbs55vzApK7EOiy2MyoQ9pgxFE2fGJHzCZxjo9LEBIY
+ TXrw==
+X-Gm-Message-State: AFuF++mM1e4wDlAz/wozrPftMVEnlY8VhA6FmMISjRMkHL8P/OzBCmNn
+ CUPkHIZfyzq7/esZ/Lzb1pOSpBk0GNk4EjVEUUmLhTG++j5dGolZ4FW6Plf9g62DhE0+jbkZpvg
+ mD+J5
+X-Gm-Gg: AYBFou2OH3+seHRgZIkkyZDXzqrb7LU7pB6VmL8rdYOcphFLhTPpelPuEZETm/cgxdR
+ 9NMrFIffvgtrv0bHCENoqo7NjGZUgI2dybAtcvqtnNMJu9EsB6LrsnLZoiRVZC+EMT8l8+tv+XI
+ dh6jwZ/bS3aT/3dY0cG+QfX6PA1Wh1vNYRFlRgUKAAPmHCpayJsp84mr/YBnH2jNOOBXXyAvsQI
+ IXye+ZRY+nLKltsc4RckWiy7+zvnF03JtcpH8Nxs2wKjLexIXc2+EMoW8eCw96EXfMZxUQa0WuP
+ qxWadQSCbl6LHUTrXxx0YKeQnYRplMwGEtSQGguB8dgKtpE0kob+FT/xKe0yLFuAdUZ+Vz6HZLd
+ XRqWIWoor7Wu559q1n7jsiq46S8Djzz6OZC4qfegJ/RV2qQnkaZlCtsUTWOOF0xFvwtfyQZmSWq
+ uESKPJ2oXOdsEp/QzFsw1lQLOPQBvQDo6nDzWfDjMQEetMdMWhsueXTAuYG375kMCK+qpB
+X-Received: by 2002:a05:600c:8719:b0:49d:15b9:2a2a with SMTP id
+ 5b1f17b1804b1-49fe66c6373mr40126925e9.10.1790250975061; 
+ Thu, 24 Sep 2026 04:56:15 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:f9ec:9c2f:7d67:4ad8])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49fe5cca160sm58870135e9.12.2026.09.24.04.56.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Sep 2026 02:12:53 -0700 (PDT)
-Date: Thu, 24 Sep 2026 14:42:46 +0530
-From: Mukesh Kumar Chaurasiya <mkchauras@gmail.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, sourabhjain@linux.ibm.com, 
- rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, 
- adityag@linux.ibm.com, richard.henderson@linaro.org, sshegde@linux.ibm.com, 
- srikar@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH] target/ppc: Stop vCPU thread before calling
- parent_unrealize
-Message-ID: <arTpfPWGBLa2YlXF@li-1a3e774c-28e4-11b2-a85c-acc9f2883e29.ibm.com>
-References: <20260923121444.154175-1-shivangu@linux.ibm.com>
+ Thu, 24 Sep 2026 04:56:14 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH 0/2] migration/block-dirty-bitmap: fix postcopy abort with
+ bitmaps on several nodes
+Date: Thu, 24 Sep 2026 13:56:09 +0200
+Message-ID: <20260924115611.4098417-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260923121444.154175-1-shivangu@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
- envelope-from=mkchauras@gmail.com; helo=mail-dy2-x10.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 24 Sep 2026 07:53:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,84 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 23, 2026 at 05:44:44PM +0530, Shivang Upadhyay wrote:
-> During CPU hot-unplug (e.g. via dynamic reconfiguration unplug),
-> ppc_cpu_unrealize() invoked pcc->parent_unrealize(dev) before calling
-> cpu_remove_sync(CPU(cpu)).
-> 
-> pcc->parent_unrealize() calls cpu_common_unrealize(), which triggers
-> accel_cpu_common_unrealize() -> tcg_exec_unrealizefn() -> tlb_destroy().
-> This immediately frees the CPU's TLB tables and structures. Because the
-> vCPU thread had not yet been stopped and joined via cpu_remove_sync(),
-> the vCPU thread was still actively running its event loop and processing
-> queued CPU work (such as tcg_commit_cpu / tlb_flush).
-> 
-> This resulted in a race where the running vCPU thread accessed and freed
-> already-destroyed TLB tables concurrently with tlb_destroy(), leading to
-> Segfault (due to heap corruption).
-> 
-> AddressSanitizer build reported a double-free:
-> 
-> =================================================================
-> ==121930==ERROR: AddressSanitizer: attempting double-free on 0x7ef8f3438800 in thread T14:
->     #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
->     #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
->     #2 0x558bf6a391b1 in tlb_mmu_resize_locked accel/tcg/cputlb.c:249
->     #3 0x558bf6a396b5 in tlb_flush_one_mmuidx_locked accel/tcg/cputlb.c:296
->     #4 0x558bf6a39f91 in tlb_flush_by_mmuidx_async_work accel/tcg/cputlb.c:390
->     #5 0x558bf6a3a200 in tlb_flush_by_mmuidx accel/tcg/cputlb.c:417
->     #6 0x558bf6a3a22a in tlb_flush accel/tcg/cputlb.c:422
->     #7 0x558bf73f31ac in tcg_commit_cpu system/physmem.c:3068
->     #8 0x558bf6987c55 in process_queued_cpu_work cpu-common.c:378
->     #9 0x558bf73a9913 in qemu_process_cpu_events_common system/cpus.c:402
->     #10 0x558bf73a9a46 in qemu_process_cpu_events system/cpus.c:421
->     #11 0x558bf6a65974 in mttcg_cpu_thread_fn accel/tcg/tcg-accel-ops-mttcg.c:90
-> 
-> 0x7ef8f3438800 is located 0 bytes inside of 65536-byte region [0x7ef8f3438800,0x7ef8f3448800)
-> freed by thread T9 here:
->     #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
->     #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
->     #2 0x558bf6a39a91 in tlb_destroy accel/tcg/cputlb.c:345
->     #3 0x558bf6a16354 in tcg_exec_unrealizefn accel/tcg/cpu-exec.c:1094
->     #4 0x558bf693d073 in accel_cpu_common_unrealize accel/accel-common.c:117
->     #5 0x558bf6980e37 in cpu_common_unrealize hw/core/cpu-common.c:279
->     #6 0x558bf6980dfa in cpu_common_unrealizefn hw/core/cpu-common.c:267
->     #7 0x558bf763ef65 in ppc_cpu_unrealize target/ppc/cpu_init.c:6965
->     #8 0x558bf7872199 in device_set_realized hw/core/qdev.c:618
->     #14 0x558bf756068f in spapr_unrealize_vcpu hw/ppc/spapr_cpu_core.c:209
-> 
-> Fix this by moving cpu_remove_sync() before pcc->parent_unrealize(dev)
-> in ppc_cpu_unrealize(), ensuring the vCPU thread is stopped, has
-> finished processing its events, and is joined before CPU resources
-> and accelerator state are destroyed.
-> 
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> ---
->  target/ppc/cpu_init.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 6c626843c9..b711f9c0a8 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6962,10 +6962,10 @@ static void ppc_cpu_unrealize(DeviceState *dev)
->      PowerPCCPU *cpu = POWERPC_CPU(dev);
->      PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
->  
-> -    pcc->parent_unrealize(dev);
-> -
->      cpu_remove_sync(CPU(cpu));
->  
-> +    pcc->parent_unrealize(dev);
-> +
->      destroy_ppc_opcodes(cpu);
->  }
->  
-> -- 
-> 2.54.0
-> 
-Makes Sense.
+Postcopy migration of dirty bitmaps kills the destination as soon as
+bitmaps live on more than one node:
 
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-> 
+  qemu-system-x86_64: ../block.c:6400: bdrv_lookup_bs: Assertion
+  `qemu_in_main_thread()' failed.
+
+The postcopy listen thread resolves node names with bdrv_lookup_bs()
+without the BQL. With a single node the name is sent only during setup,
+which runs in the main thread, so the existing test never gets there.
+
+We hit it in production with libvirt: a CBT backup leaves a persistent
+bitmap on every disk, libvirt enables the dirty-bitmaps capability, and
+the next live migration of any VM with more than one disk aborts the
+destination after the guest has already been switched over to it.
+
+Patch 1 resolves every chunk but START from the bitmaps that START set
+up, instead of from the block graph. Patch 2 extends
+migrate-bitmaps-postcopy-test with a bitmap on a second node, and it
+fails without patch 1.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+Denis V. Lunev (2):
+  migration/block-dirty-bitmap: fix postcopy abort with bitmaps on
+    several nodes
+  iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
+
+ migration/block-dirty-bitmap.c                | 59 +++++++++++++++++--
+ .../tests/migrate-bitmaps-postcopy-test       | 19 ++++++
+ 2 files changed, 74 insertions(+), 4 deletions(-)
+
+
+base-commit: 942229961efea74b153c44c59188eb08375f10f1
+-- 
+2.53.0
+
 
