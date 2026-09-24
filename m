@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67F5C98311
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 08:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59FDC98311
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Sep 2026 09:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9fGZ-00071l-L8; Thu, 24 Sep 2026 04:57:19 -0400
+	id 1x9fPB-0008Du-Gj; Thu, 24 Sep 2026 05:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x9fGX-00071N-S4
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 04:57:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fP5-0008D9-SF
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1x9fGW-0008Ee-4Y
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 04:57:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1x9fP4-0000iT-4U
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 05:06:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790240234;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1790240765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ucZvTJfxlED+A400UR1dT82ILDT8r+iwF+YnwooPwZM=;
- b=EUZAIjt/bq1KacooW0HTaGbJ4bbebGmrPYflQS6iGOoa1mO9l4a55VaipfHbrZh6NL2Rle
- VfjNGXb9038ZdWKH1KdyiaFBaOed/vvbDbUUhGzOx+UDy0Ee8+LXbnD2+6uNTiW15SDVfX
- C3mRzpbDk8vXDFXy9+3MG5ODg00+yjI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RgjsTVF6YPcLBBYzsKri/GP8jiY61+tzms6P3IEX53Y=;
+ b=TCU9O0QBN/opgjcIi977QfZLLd+SGfyhhDHqK9eYjrAGwLKZKtVMzjcK7OsRdUeyCv7CHe
+ yHiG9NZC4Yey+1tl/FPFFjiuf/57Hy8dfZgN7W/7jTTHq1b5fABbLzw8N/e411/dvS2P8k
+ Vj75tIeMsdOa4jFFomUNqRzWXOsEloA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-37DdVdeoM6ar3bSakMa1wA-1; Thu,
- 24 Sep 2026 04:57:10 -0400
-X-MC-Unique: 37DdVdeoM6ar3bSakMa1wA-1
-X-Mimecast-MFC-AGG-ID: 37DdVdeoM6ar3bSakMa1wA_1790240228
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-ReQXyg4hNVCw_4ZjGj1qBQ-1; Thu,
+ 24 Sep 2026 05:06:03 -0400
+X-MC-Unique: ReQXyg4hNVCw_4ZjGj1qBQ-1
+X-Mimecast-MFC-AGG-ID: ReQXyg4hNVCw_4ZjGj1qBQ_1790240762
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 973431955DD0; Thu, 24 Sep 2026 08:57:08 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 350EA3000229; Thu, 24 Sep 2026 08:57:07 +0000 (UTC)
-Date: Thu, 24 Sep 2026 09:57:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- philmd@oss.qualcomm.com, alex.bennee@linaro.org
-Subject: Re: [PATCH v2 2/6] tests/lcitool/refresh: generate dockerfiles using
- --host-arch x86_64
-Message-ID: <arTl4BnGkCAKiXWR@redhat.com>
-References: <20260923185725.863311-1-pierrick.bouvier@oss.qualcomm.com>
- <20260923185725.863311-3-pierrick.bouvier@oss.qualcomm.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34EFC1883057; Thu, 24 Sep 2026 09:06:02 +0000 (UTC)
+Received: from thuth-p1g4.redhat.corp
+ (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F310C195604C; Thu, 24 Sep 2026 09:06:00 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Cc: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>
+Subject: [PULL 1/7] hw/usb/hcd-xhci: Set reentrancy guard in timer functions
+ (CVE-2026-17588)
+Date: Thu, 24 Sep 2026 11:05:52 +0200
+Message-ID: <20260924090558.801845-2-thuth@redhat.com>
+In-Reply-To: <20260924090558.801845-1-thuth@redhat.com>
+References: <20260924090558.801845-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260923185725.863311-3-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,52 +80,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 23, 2026 at 11:57:21AM -0700, Pierrick Bouvier wrote:
-> To ensure refresh output is consistent on any host architecture, we need
-> to specify which host arch it's supposed to target.
-> Indeed, by default, package list will depend on host architecture, which
-> means that output will depend on which machine runs refresh command.
-> For example, on aarch64 host, refresh removes libpmem-dev package since
-> it's not available.
-> 
-> Also, update lcitool submodule: It now uses arch specific images by
-> default. Thus we update all images at the same time.
-> https://gitlab.com/libvirt/libvirt-ci/-/commit/f34cd57eb892259c26600187bc35cc4152f932cf
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  tests/docker/dockerfiles/alpine.docker                | 2 +-
->  tests/docker/dockerfiles/centos9.docker               | 2 +-
->  tests/docker/dockerfiles/debian-all-test-cross.docker | 4 ++--
->  tests/docker/dockerfiles/debian-amd64-cross.docker    | 4 ++--
->  tests/docker/dockerfiles/debian-arm64-cross.docker    | 4 ++--
->  tests/docker/dockerfiles/debian-armhf-cross.docker    | 4 ++--
->  tests/docker/dockerfiles/debian-i686-cross.docker     | 4 ++--
->  tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 4 ++--
->  tests/docker/dockerfiles/debian-riscv64-cross.docker  | 4 ++--
->  tests/docker/dockerfiles/debian-s390x-cross.docker    | 4 ++--
->  tests/docker/dockerfiles/debian.docker                | 4 ++--
->  tests/docker/dockerfiles/fedora-rust-nightly.docker   | 2 +-
->  tests/docker/dockerfiles/fedora-win64-cross.docker    | 2 +-
->  tests/docker/dockerfiles/fedora.docker                | 2 +-
->  tests/docker/dockerfiles/opensuse-leap.docker         | 2 +-
->  tests/docker/dockerfiles/ubuntu2404.docker            | 2 +-
->  tests/lcitool/libvirt-ci                              | 2 +-
->  tests/lcitool/refresh                                 | 2 +-
->  18 files changed, 27 insertions(+), 27 deletions(-)
+The xHCI controller processes USB events from timer callbacks
+(xhci_mfwrap_timer and xhci_ep_kick_timer) outside of any MMIO handler
+context. The device's mem_reentrancy_guard is therefore not engaged
+during this processing.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+A malicious guest can exploit this by pointing the event ring base
+address (er_start) at the xHCI doorbell MMIO region. When
+xhci_write_event() performs a DMA write to deliver a transfer
+completion event, the write lands on doorbell register 0. If the
+written value is 0, this triggers xhci_process_commands() reentrantly.
+A CR_DISABLE_SLOT command prepared on the command ring then frees
+endpoint and transfer objects via xhci_disable_ep() / g_free() while
+the outer call stack still holds references to them, causing a
+heap use-after-free.
 
+Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
+around the processing in these non-MMIO entry points. This mirrors
+the protection that EHCI, DWC2, and UHCI already have via
+qemu_bh_new_guarded(). With the guard active, the memory subsystem's
+automatic reentrancy check (system/memory.c) blocks DMA writes that
+would dispatch into the device's own MMIO handlers.
 
-With regards,
-Daniel
+CVE: CVE-2026-17588
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3926
+Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
+    Guannan Wang <wgnbuaa@gmail.com>, Zhanpeng Liu <pkugenuine@gmail.com>,
+    Jiashuo Liang <761232680@qq.com>, Guancheng Li <lgcpku@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4195
+Reported By: Ken Hsu and Royce Lu of Palo Alto Networks
+Message-ID: <20260915112213.525283-1-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/usb/hcd-xhci.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index d342aa2739e..12f8ffece0f 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -456,9 +456,15 @@ static void xhci_mfwrap_timer(void *opaque)
+ {
+     XHCIState *xhci = opaque;
+     XHCIEvent wrap = { ER_MFINDEX_WRAP, CC_SUCCESS };
++    MemReentrancyGuard *guard = &xhci->parent.mem_reentrancy_guard;
++
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
+ 
+     xhci_event(xhci, &wrap, 0);
+     xhci_mfwrap_update(xhci);
++
++    guard->engaged_in_io = false;
+ }
+ 
+ static void xhci_die(XHCIState *xhci)
+@@ -1086,7 +1092,14 @@ static void xhci_set_ep_state(XHCIState *xhci, XHCIEPContext *epctx,
+ static void xhci_ep_kick_timer(void *opaque)
+ {
+     XHCIEPContext *epctx = opaque;
++    MemReentrancyGuard *guard = &epctx->xhci->parent.mem_reentrancy_guard;
++
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
++
+     xhci_kick_epctx(epctx, 0);
++
++    guard->engaged_in_io = false;
+ }
+ 
+ static XHCIEPContext *xhci_alloc_epctx(XHCIState *xhci,
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.55.0
 
 
