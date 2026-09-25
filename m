@@ -4,56 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 516A9C9830E
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 00:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED89C9830E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 00:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAFsi-0002Sw-GA; Fri, 25 Sep 2026 20:03:08 -0400
+	id 1xAG42-0003T7-7L; Fri, 25 Sep 2026 20:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xAFsh-0002Sn-EM
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 20:03:07 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1xAFsf-0001bn-J6
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 20:03:06 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 3DA4B60136;
- Sat, 26 Sep 2026 00:02:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0436F1F000FF;
- Sat, 26 Sep 2026 00:02:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790380976;
- bh=KU4PWy0mBJokvr4s3BV1IMevw+IlOh139vlSdWolPiA=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=fCmrxWFPntnmrUrxfSLmlWcnWk8h4nombku6cEZvzQEYHjpCL2QIE6CHyuvtJ29Kn
- fQWoXbTn47/I0b84E/Uo8xNRl4wzTBA6kDwMXXo7fDTJcG2GE3yckWuZ0BO4b8EUNG
- hDbMctFpvPqGL5d56ZOS64wCSmslT9W8SLizVXlC8nIE6J5HHpSnc8frbGSprfMy6O
- nafA3UdsilDyZ9V7T5Yu/BSt9cI+CPuU9UDhZq/4fSn/R4SVGWDqKL4Y+SWuUP3b2T
- kme4+23UZh/aU2N56r5qkzAtZWj4aa++Oer5xKDzdNoKqsw/GqG/NNvNjZ2kLknelD
- TM6dPI4HiF3iw==
-Date: Sat, 26 Sep 2026 01:02:51 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] hw/pci-bridge: honour CONFIG_CXL in PXB
-Message-ID: <20260926010251.4b02f4e0@jic23-hlaptop>
-In-Reply-To: <20260922115613.1926083-1-berrange@redhat.com>
-References: <20260922115613.1926083-1-berrange@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <jeff@borto.fr>)
+ id 1xAFnY-000278-Eo; Fri, 25 Sep 2026 19:57:48 -0400
+Received: from relay.wiredblade.com ([168.235.95.80])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeff@borto.fr>)
+ id 1xAFnV-0001Hm-1S; Fri, 25 Sep 2026 19:57:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; cv=none; d=dynu.com; s=mail;
+ b=yKVIijcOi6Tf6xPhxfu+UwW3s4sH7vWI0DFDpcO0eqbEQprxyLqX0+pvFQEJnJSo1PT/ZYS1XhrVbQb4Ir5TTck9OdZ1grU1uP2jKlZJMsvHzo3OnYbAYt/6+ui+1nfE+YfkUSMO0Pjffgyk9hxuOBBpZF1gkoyqCmbUndJiP9Wp+C+OM9FZ4QhVvZuwTqeog825pAdPC+DUZXl5mKJdJVxDTI/StNAtEKIm2jnvq0ZsmMbxIuHmb6Ee4a
+ cQ9UNs/WBbp2qOCzF03sg8NUMlfJdblwghShfL4CwMOlHKbL5emE7eFeS1zjH4YArsSLuNkmIGZRPxIdt1wz91kIxI0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=dynu.com; s=mail;
+ h=From:Subject:Date:Message-ID:To:CC:MIME-Version:Content-Transfer-Encoding;
+ bh=tVxOMaCxaD+dYMmOZTK75JKtzBRDQuT1liae3kU6+0w=;
+ b=yT4JqNW0OUZu5vPybYOGk6/H3n+3Vozjk3oaBpFh8Il5/VNB0V4QtcrtoafQGDKXvn38KYZ3j41ARbKFAlnGpZN87Y0ZufCcb1XB3enlPnfol+IyyVLViExHfwSUBKZDpXTbBtZDJeMhBQSEV2LzBNAhAdBhomeNOFYtx1nHiktmR9qWvyn+Tfnj/ztE/g8A4S4F0jaYZtEa7soNko/t5cLcZMEpMGkx8ynHQyFx16b3/VRDGUgf5lKcMY
+ pshHGhd897TMwsgdR95axT7hK56c7IqG6eBxydwcT19GjyfyRF5sb7RKKybEkaSecxLmiiYNVpD0XIyJTdGEzUTk0MRA==
+ARC-Authentication-Results: i=1; mx.dynu.com;
+	dkim=pass;
+	dmarc=pass
+Received: from borto.fr (lfbn-tou-1-1061-139.w90-76.abo.wanadoo.fr
+ [90.76.130.139]) by relay.wiredblade.com with ESMTPSA
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256)
+ ; Fri, 25 Sep 2026 23:42:10 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=borto.fr; s=mail;
+ t=1790379727; bh=6QoBM2Q+2htXMJeWNC4OsA0vxD8yomEVCrzi9Xhr3Ic=;
+ h=From:To:Cc:Subject:Date:From;
+ b=e55udqTeK10pG5DDocFqCAB9BPNKUJa/Mp8EeLSp8djiohS6mVfj8weH3cjjTHhNi
+ lStjftlbJDj29zvoYPTbB816BIcTNzQznDmUh56pT0rBULpBsFCVcUM6wMB05pxwc9
+ k24JDFWLtCpX6495kM4UMS00Wg9LolfLQtac0TBU=
+From: Jean-Francois Bortolotti <jeff@borto.fr>
+To: qemu-devel@nongnu.org
+Cc: Jean-Francois Bortolotti <jeff@borto.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH] target/arm: Fix PMSAv8 shareability decode for R-profile MPU
+ regions
+Date: Sat, 26 Sep 2026 01:41:36 +0200
+Message-Id: <20260925234136.1182108-1-jeff@borto.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
+Content-Transfer-Encoding: 8bit
+Authentication-Results: mx.dynu.com;
+	dkim=pass;
+	dmarc=pass
+Received-SPF: pass client-ip=168.235.95.80; envelope-from=jeff@borto.fr;
+ helo=relay.wiredblade.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 25 Sep 2026 20:14:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,26 +78,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 22 Sep 2026 12:56:13 +0100
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+In Armv8-R AArch32 the shareability field of an MPU region lives in
+PRBAR, not PRLAR:
 
-> If CONFIG_CXL=3Dn is added to the Kconfig, the build fails to link
-> the PXB device:
->=20
-> /usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in =
-function `pxb_cxl_realize':
-> /home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c=
-:202:(.text+0x330): undefined reference to `cxl_component_register_block_in=
-it'
-> /usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in =
-function `pxb_cxl_dev_reset':
-> /home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c=
-:309:(.text+0x768): undefined reference to `cxl_component_register_init_com=
-mon'
->=20
-> Fixes: 6e4e3ae936 (hw/cxl/component: Implement host bridge MMIO (8.2.5, t=
-able 142))
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+  PRBAR: [31:6] BASE  [5] RES0  [4:3] SH  [2:1] AP  [0] XN
+  PRLAR: [31:6] LIMIT [5:4] RES0  [3:1] AttrIndx  [0] EN
 
-Acked-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+(Arm Cortex-R52 TRM 100026_0103_00_en: Tables 3-80 and 3-83 for
+HPRBAR/HPRLAR, Tables 3-124 and 3-127 for PRBAR/PRLAR.)
+
+Without this fix, address translation instructions like ATS1HR
+will return wrong value for PAR.SH.
+
+Signed-off-by: Jean-Francois Bortolotti <jeff@borto.fr>
+---
+ target/arm/ptw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index a29de0385f..663a4862a4 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3085,7 +3085,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+         if (!arm_feature(env, ARM_FEATURE_M)) {
+             uint8_t attrindx = extract32(matched_rlar, 1, 3);
+             uint64_t mair = env->cp15.mair_el[regime_el(mmu_idx)];
+-            uint8_t sh = extract32(matched_rlar, 3, 2);
++            uint8_t sh = extract32(matched_rbar, 3, 2);
+ 
+             if (regime_sctlr(env, mmu_idx) & SCTLR_WXN &&
+                 result->f.prot & PAGE_WRITE && mmu_idx != ARMMMUIdx_Stage2) {
+-- 
+2.34.1
+
 
