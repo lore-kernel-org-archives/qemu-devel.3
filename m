@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F5E7C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 10:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0211BC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 10:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA2qC-0006my-Ty; Fri, 25 Sep 2026 06:07:40 -0400
+	id 1xA2u3-0007YY-OP; Fri, 25 Sep 2026 06:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xA2qB-0006mM-ER
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 06:07:39 -0400
+ id 1xA2u2-0007YO-Vv
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 06:11:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xA2q9-0000HQ-UY
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 06:07:39 -0400
+ id 1xA2u1-0000ez-7O
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 06:11:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790330857;
+ s=mimecast20190719; t=1790331095;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bH3RVzmPbtUMiBVeUnk9CVI4mGAkDx5PZ+15DxKeTI0=;
- b=fLBEB2yrHB7reLdLAGwx+UYqHb/Iw7jH3KvcPiUCWV1p/SORZhAFM3P8IyhhCBNFv+rF7y
- ssRNH90ix7A77LXTa/pcdWEvzEB4C6wq5Sv9oZek50jkJ90Vlos1zcTxsGyChgifkze3vb
- LZZd1BjDQZ5Kfi0VrCQdxWwAtZSRlrc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=sgcoTU1cf9FTfuBse1SUG3f6Oj4n4O8WrqLqpX8OoI4=;
+ b=Jkl47u2ZMzGfxwpbsPS6mbL3i64cPFVIWTLqofvhPQoPxFjdT1Z47Eso1ny9gmkD0VFJBF
+ XPHFbwQJpj94G9Ndi9HKykgax620JppzCtPNPasHa8AuJ+Lek23HafKN9cJrs++1J/c+JX
+ 3HCdBDd4pFgoIQWPoL+v4MsiFexdkho=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-ZV0oid2-Mhyf0hK19ldMVg-1; Fri,
- 25 Sep 2026 06:07:32 -0400
-X-MC-Unique: ZV0oid2-Mhyf0hK19ldMVg-1
-X-Mimecast-MFC-AGG-ID: ZV0oid2-Mhyf0hK19ldMVg_1790330851
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-lnq0eXGoM0qAxoKo2OGY8A-1; Fri,
+ 25 Sep 2026 06:11:32 -0400
+X-MC-Unique: lnq0eXGoM0qAxoKo2OGY8A-1
+X-Mimecast-MFC-AGG-ID: lnq0eXGoM0qAxoKo2OGY8A_1790331091
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A40291977309; Fri, 25 Sep 2026 10:07:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED7A41956077; Fri, 25 Sep 2026 10:11:30 +0000 (UTC)
 Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5BD21956086; Fri, 25 Sep 2026 10:07:30 +0000 (UTC)
-Date: Fri, 25 Sep 2026 11:07:27 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 756EF1800473; Fri, 25 Sep 2026 10:11:29 +0000 (UTC)
+Date: Fri, 25 Sep 2026 11:11:26 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH 03/14] qemu-options: Consolidate branches in opts_parse
-Message-ID: <arZH3xM9i3EPK__y@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: Re: [RFC PATCH 05/14] qemu-options: Change qemu_parse_opts() to take
+ the group name
+Message-ID: <arZIzjj6-mh1OTeu@redhat.com>
 References: <20260918223002.1892021-1-farosas@suse.de>
- <20260918223002.1892021-4-farosas@suse.de>
+ <20260918223002.1892021-6-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918223002.1892021-4-farosas@suse.de>
+In-Reply-To: <20260918223002.1892021-6-farosas@suse.de>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -89,16 +91,20 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 18, 2026 at 07:29:50PM -0300, Fabiano Rosas wrote:
-> The two branches that return NULL can be put under a single branch
-> because the qemu_opts_del function can take a NULL opt. The next patch
-> will add common cleanup code to the error path so change this now to
-> avoid code duplication.
+On Fri, Sep 18, 2026 at 07:29:52PM -0300, Fabiano Rosas wrote:
+> Get rid of the pattern qemu_parse_opts(qemu_find_opts("some-opt")) by
+> passing the string directly to qemu_parse_opts().
+> 
+> Don't check for NULL list at this time to preserve the old behavior. A
+> subsequent patch will correct that.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  util/qemu-option.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+>  include/qemu/option.h          |  2 +-
+>  system/vl.c                    |  5 ++---
+>  tests/unit/test-opts-visitor.c | 12 ++++--------
+>  util/qemu-option.c             | 19 +++++++++++--------
+>  4 files changed, 18 insertions(+), 20 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
