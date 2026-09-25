@@ -4,130 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D7DC98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 17:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16601C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 17:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAA7t-00089g-4r; Fri, 25 Sep 2026 13:54:25 -0400
+	id 1xAA7t-00089X-2W; Fri, 25 Sep 2026 13:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAA7p-00086e-Aj
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:22 -0400
+ id 1xAA7r-00087Z-5S
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:23 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAA7m-0000dc-9U
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:21 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xAA7m-0000dI-DN
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:22 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PG5L4U1759227
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:13 GMT
+ 68PG0KYd1363024
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ohEbYbvIHAyUhNO/Wn1+ptkHAfi9vmkdvfLyTUoixF4=; b=Tuns+w/L1u+zhH0y
- OuhmvyQxeWvNO1s1zJNLZ7/WPcU1D8GKFMRn+wlGZoxOYXrsNpfirPJbICKFULHe
- 3SRnWrnjRBXm0QRIP+MLM2cE+bik8KWRXg68n515Y44wte+uaGWPmyLCQyLhVYfi
- Rnlvqw4H6LG+uxP6ycj+1lWS8lPqGaszI1bVJXcJlXmtWAg0xhU6UrMtYZPKYJ7m
- /E92X2CHr99kgJqeExAILC+256JhNrpW7eNasMotwql9V2MW9wP8P7PG16NALdkj
- LnTcTZSnfA1sqQ7/EGLGTPYofc7g5eu8Dah3xVOb2Cdv0cPjaRhk1zAEMpjVLUnA
- KbBguA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwv5yrctj-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=8TGxjYWUh4LT+rbGbg5Y+a
+ tFspa+7gaHfuxBJQXQEDQ=; b=Icfa2yVQ1FrQ1PuBMH4Cy3unbkQ/1pvG5MCfMA
+ b8jrxKD4fWTJm+d/4NpXZLtv2J4cfiEqw08FaGTbYDOQ5duKYwPDAhHCNB/uG81v
+ 0Fg5LyuuUpRgtKpFeuKWoD5WGzXd1I+eYJSObvEoPiFzduxmPzR8PL9ohZW14DAU
+ PuseQwlj5k7WD2p2pFMexFnRqFJA3G4eAbkN1x2CIoyJ+Ca88vr5mbUpDUvvEM82
+ NSQLcMgwsrVtbGv3zETMD4sSJ+bng40P/C5YMzXvUXVz12e3H6i0QjTRWNxUmbca
+ nKpY8ggF4UX9emwUcX63YAZEOeGiZolIVkuhxUgBfEs0HRCA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwpvnsmkd-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:13 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-342b66c0b06so101341eec.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 10:54:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:08 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-32b8c2b30c4so2050624eec.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 10:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790358852; x=1790963652; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ohEbYbvIHAyUhNO/Wn1+ptkHAfi9vmkdvfLyTUoixF4=;
- b=ToKnYJHiR0pbGTiATmh99xMTbMgF3UtecGAeB2/tS+BJQLE8pBxoCcGNe7jLiDAfTm
- Nzqa6vGfmiNmtrB7YsfIrwC0o2ZuUZJPE26Ssr1szd2N6Abh9RIR7Pr3K18u+DHu51Aw
- R2wTvwosgSLnZiUXdTV5i/hcsaqyIupuHm962t/PbcitK9P2XBRq1lMDH441rwggBzXP
- ajMTzjxlQjlWoPxjGYlk5gHog38LixzAKrnhLvHy7S4H8ALAmocaD2DB/P1pl0od2uMH
- FQjcqucFxTJkVvbROYWfWPGBVyQq+PBkFbhsEDH5+x1cU4TyxPlaeoeAmBW0RB1ECrxU
- K6Og==
+ d=oss.qualcomm.com; s=google; t=1790358847; x=1790963647; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=8TGxjYWUh4LT+rbGbg5Y+atFspa+7gaHfuxBJQXQEDQ=;
+ b=OcQbrgUxFz5EotNIwULW0A0rbkmSrhNzndlDMf8G/5Qg8LwuL+iXsrgv/bquhtN9UA
+ UjZIjk66LYmgHCkZ+c5M18q3QGbOeeMkhVte9rXmU0D2rJz/jlWZg6J+oj/MlHmA9Pxc
+ uxaEK9y0ljC9/vbem7F4VaPv10pDlASlYHZdHJKkXIC2eQUwkLhx0REmTRxhj8k34Thn
+ Euqe5QWPncx9fv/qxF0ihkbLJFUliHfrgSP8dzWUUblNEOU2nCJzhGZe2qvfzr7mSdd4
+ S+W9PWfLXngFfbXuVIAjOHQT26F/HX4imQhZbHFnzktqpBbCdsMVndgmJSeX4pujdpcM
+ pn0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790358852; x=1790963652;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ohEbYbvIHAyUhNO/Wn1+ptkHAfi9vmkdvfLyTUoixF4=;
- b=nd9FNiD6Hu4dYhx/M5wQ5RPfBS1JhuRj70o0S71O3MN/AgcfiilwMB0ULYqsw5aA1h
- Hoij3QdT0W/wfnpWPuxp3ChqmOmIVYHtwczIfE2OcZaW0Hh2q35fvM8+6y8I3d3slkOj
- kowV/eiC2vPjJqQWKMjn9j24gz/7Rx/ZdHHvXLGnS4nBp44jXhjlUJnuZ99cWIb6Khk6
- AefVNQVpGyEsoAIOZKXtp6sZWJ69XQk1JDg0S/ogdanJscAx85fDP2rUOiVBQ1YB6bNr
- Jv/0gsoPeCJ56HKhIWnQD9jLEv3J1ksWo1Y1ukTYIA7uPMOEgS5RU/IyrzyQcK3NXdLf
- hcpA==
-X-Gm-Message-State: AFuF++mvb8Rtbu69ZJTOljC7auUJgL3IqaAleZ7UEr1sCLPBGuLGngVN
- uGL3tdZ/F2rVcB0PfIiHE/95U/1j+FLJG9CnH7mPibI7WLqqGWtjzD6Kgdr4Iuf8UPd7gbCzROz
- sM5I9Yu1su/iuXiMhow8B6WllyUbTMF0bmI6ifkJtXHPm9swRhzaUtN8Drmc6Mz0oOA==
-X-Gm-Gg: AYBFou1fHotDJLmXgfr3UNQROdqw/mFIT/5Qs1dTVYmTGnRdJ9XcQo7uD4WLcU4/cDp
- aULMP/lbMYmRPVHuVUtflUx4h+g424maKN4wFIaSkKi7litq5pXsAk1GtrVOMLTT8Chv+aNb5zX
- sXanAMlfIZM5TCDg+bpfSftof3y/WGj7XVFZ/1p5YWZD2kJyApTCvViQB4eKo0Dz/ayM4uXWrqz
- XPqceRUCOhej1SK8UlebOlXJU05InRzy/GYX8IOYPg6rF87gFfbG9z2tSYBpO2pEhjNMkRNikBt
- 5xwXEUr7jLi4A7OF8ylSkat7eysQUkrOVR5OO6O/BDV6Sb5Q8cpXLhU/a5vbraNkr20781HhZqZ
- sAWM+huKrYM0fWL3B23TfFWhJhD92FsUvsldcPfTjOAG1/0qkFRBwaw7vDg==
-X-Received: by 2002:a05:693c:42db:b0:342:6575:c9ca with SMTP id
- 5a478bee46e88-342721805e2mr687915eec.15.1790358851876; 
- Fri, 25 Sep 2026 10:54:11 -0700 (PDT)
-X-Received: by 2002:a05:693c:42db:b0:342:6575:c9ca with SMTP id
- 5a478bee46e88-342721805e2mr687891eec.15.1790358851214; 
- Fri, 25 Sep 2026 10:54:11 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790358847; x=1790963647;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8TGxjYWUh4LT+rbGbg5Y+atFspa+7gaHfuxBJQXQEDQ=;
+ b=troYJotMowjnMMPw+dnG7j6q0In2snK+bF/g78JflyBRHUdjqcxR3naFBORdLtX9pN
+ pjkRA4USJx317ZLIuQGWyQcD7LB0fLA5u4WZ9f+C0aDGVuWrh4UQvAvkK2MQWKSBglEc
+ Pi4Jlpb8baDtn0H3demTg3P+DWWFk5fTwz2dzCMJOwztRmlZZ+3f0NFLOz66WlFrnCah
+ ga1YiZP82v31Gzojhx34uMPK4UCQk8JPdFTRswbZVPQezmA1Pgq3i/fTI7wehdoHCuaI
+ PVKvghHLjpZ0YHkx0xRF7KWEqcVx8BckECGxiUmOiBAZBNr7HhVwcAA9pZbUjC1wYGKn
+ fF4w==
+X-Gm-Message-State: AFuF++lyvmhNETzXV9OgYQlhtriZdT1hUhz5BwRwZd49fa5M6dRaJiyg
+ sJcAKmq8j/Q2AH+mgcSIrL3XnW09VCjGwDpuixxHJ6eqOO2KHFGS7CaNgZCufUzzFj8OfrGGMI3
+ UbSdoOXm2W7if1AG7EO7A7u+gVUv2LQDOkDypCDcGrIe7NGHn+XGupuCulLg4RvveAA==
+X-Gm-Gg: AYBFou2/oNYulCOag9CEmMayfxCj2Ea2sF0nMftOZkibCmB4GHxd4C32/RuFqja0sqf
+ wvbTL1GGQa4R92xHoE91ZeIlIev9EE7MNhr2mFUG+HCBa3AQ2A7NX4KzpqY4pBs0dygY55uBM97
+ JLId4smEbTbSN9Wrd1Cmq+0kwIUJOArcRj7M/04G3T5E3MUBj5GBHUS5qP2Moa0YLbeT31EnvQf
+ EA0j08xxjhkqZEoUfrdFH6x6rECrmRHySaJGda525rNR0IDFRncYNiwhpchcmiPHHZhKZA2p4Gx
+ NlV5hEWlNMXcbzbQtSpy+vTf4/IpMWbFeq7l7HkJ7snTXOQ6rdjM+H/G9RRusCjiFNGK3okv0R5
+ bbifEXdgcEhkqcFtW+OfkO70thvPm+rarcpNL73NQlGg9FSaVqeqUhrCR9A==
+X-Received: by 2002:a05:7301:1448:b0:342:6595:d750 with SMTP id
+ 5a478bee46e88-342711aadcdmr843242eec.2.1790358847088; 
+ Fri, 25 Sep 2026 10:54:07 -0700 (PDT)
+X-Received: by 2002:a05:7301:1448:b0:342:6595:d750 with SMTP id
+ 5a478bee46e88-342711aadcdmr843219eec.2.1790358846429; 
+ Fri, 25 Sep 2026 10:54:06 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-34144172de6sm11055128eec.9.2026.09.25.10.54.10
+ 5a478bee46e88-34144172de6sm11055128eec.9.2026.09.25.10.54.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 10:54:10 -0700 (PDT)
+ Fri, 25 Sep 2026 10:54:06 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 04/13] tests/tcg/meson.build: force use of linux/amd64 platform
- for containers
-Date: Fri, 25 Sep 2026 10:53:51 -0700
-Message-ID: <20260925175400.1897574-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 00/13] tcg tests 20260925
+Date: Fri, 25 Sep 2026 10:53:47 -0700
+Message-ID: <20260925175400.1897574-1-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260925175400.1897574-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260925175400.1897574-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfX/9WjQJWBLRCr
- SjSwdE7Ggffj4gId5tfarVxQ7bNQc1D70wFRKE4rxnhvBU/J5RyckanBZUDZkANMn9d6+EqdevV
- 0WN+U5nfjtQeXhUe9GJjOapGB2tRLgDMaoqscrHFuVFRGghw1ODAXLvCncuYdlSaSMrN847Hi9U
- a2JB9HVeal4q7a515mIn9BZ4ERu7oXikGtwF/SMqbQCyumCPjUp08kHbOoZ+RleT2ACrCx6jNr2
- j8KNipRVSEOv6PvBBvZXOMG8ugqS+LPuQN1eWA5dk4tPv3eGlL6YBM2Y5ObCvlCMMd7lYIvLbIX
- yoLcgtVZqUc+8prNyiyQANIg0XqVcXAKJkRkioxVsNXqJwmuiRXa8Wf+p1+SFoSwtadnFN5/TAM
- 7uEN6UhsW3CH2ku9NC/EvLWpOCF8FVTHKO7u5fNDmGIj7uRFujBKGoZEI9DYA6tY47cBmCgHKQ7
- 5ZRZ5U4+iBf1jjLhclQ==
-X-Proofpoint-ORIG-GUID: SnCFRtQYImZxwOPF7oar_bsI5oV_oaQ1
-X-Authority-Analysis: v=2.4 cv=EoRHPicA c=1 sm=1 tr=0 ts=6ab6b545 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: hk8J3gh9C3WOYgwG1IMRFnUImqBftIZt
+X-Proofpoint-GUID: hk8J3gh9C3WOYgwG1IMRFnUImqBftIZt
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfX/PxAzCYU59nn
+ hu30uctVW64ncJENAHb3om6V3C/8V9ZzpS14InDZYlsuQ4VbmkDIp8qQXaOsBUmQUx1qaTl5Ijq
+ AKLsNBJSnn1DhCKBbFBRHm3FlZKRWiU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfXyHES5KnwwZAT
+ O6SgnHSf9QIS6zP6SOaVJ8BHvu0xAKtBhBiva03/annT4ue5DAetH5Vu/8zn6Mi60eV+Ghy2zzf
+ lTCpxrb84KeuZu2BjgONshHhFIvVt47dcHXd2qEOuqri2T9guXJQTBsveCsOSuSu7uCGs9BtUiH
+ JtwQn0B9uV82VhW4dj3de7Dvczt2tq3hJFMqjd6XWdnlaxOdu5uh72qbZDbFYJBzQZjoMQ4848T
+ a02pxQAE+qHhHifN7YE2VoyJ6StT69YpKrXlAgn1/JttappwykBz2m5pYjdyJOofX/LIMPSRz0A
+ /XHIvUKkVKr6i1ZXZm0eRVWDAf+U3OEvH5Ch/YcnkUL6XA0SzYdLogOIyW0QeJK3I5prVSwn+eR
+ 0lE4irsEIEFXY5wrk2HQHmjHXbuVbsvUg77gR8Ti9GtuDvCCMpIbfDffUo167xqjEFv5jSWBWLf
+ l9Oy3CZkCThgzJ8yiQQ==
+X-Authority-Analysis: v=2.4 cv=eNmGH3p1 c=1 sm=1 tr=0 ts=6ab6b540 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=7d-bZuWUf30YydaP674A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfX6MNUr9xZwxIw
- W6FVRuRg8DBEnjtY32EYHjxPPgMPGBDs1lNWxxOCmfmZ8Hp0AtDIEJ53+j2iQuQPE28EvPzUAdn
- lwprkhNVkLQRVpKmbSdZK4x2k2yTb6A=
-X-Proofpoint-GUID: SnCFRtQYImZxwOPF7oar_bsI5oV_oaQ1
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=NFqucfQ7s-eWkH41LbIA:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 impostorscore=0
- adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250071
+ priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609250071
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -153,95 +148,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On hosts != x64_64, we detect if host can run amd64 containers (usually
-through qemu-user-binfmt). If not, we deactivate container support.
+The following changes since commit 80c1d80c10a0676728d65874a9641eb578626d7c:
 
-We could technically stop here and force container engine to use this
-platform. Since existing base image (docker.io/library/debian:13-slim)
-is multi platforms, container engine will enable this variant by
-default.
+  Merge tag 'pull-hex-20260924' of https://github.com/qualcomm/qemu into staging (2026-09-24 19:35:55 -0700)
 
-Now the problem is that if user reuses this image for their own
-Dockerfiles, they will run into unpleasant surprise that now, their
-container engine is using x86_64 variant by default, on any host.
+are available in the Git repository at:
 
-So, in next commit, we'll change base image we use to x86_64 variant,
-which has a single platform: linux/amd64. This ensures we don't generate
-any unwanted side effect when building our images.
+  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/tcg-tests-20260925
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260923185725.863311-2-pierrick.bouvier@oss.qualcomm.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- tests/tcg/meson.build | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+for you to fetch changes up to 2ed098a7f2549781fc06e5228bf1fddcaf402db1:
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 7a3f06ddcfd..3a6339c2a12 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -81,6 +81,7 @@ tcg_tests_summary += {'gdb': gdb}
- 
- docker_supported = false
- container_command = false
-+docker_platform = ['--platform', 'linux/amd64']
- if get_option('containers')
-   if get_option('container_command') != ''
-     # make sure command is working
-@@ -99,6 +100,18 @@ if get_option('containers')
-                         container_command]
-     endif
-   endif
-+
-+  if docker_supported
-+    # Check that x86_64 containers can be executed. It implies xthat 86_64
-+    # binaries can be executed. On host with a different architecture,
-+    # this is usually achieved with qemu-user-binfmt.
-+    docker_supported = run_command([docker_wrapper, 'run', '--',
-+                                    docker_platform,
-+                                    'docker.io/amd64/debian:13-slim',
-+                                    '/bin/true'],
-+                                    check: false).returncode() == 0
-+    tcg_tests_summary += {'x86_64 container support': docker_supported}
-+  endif
- endif
- tcg_tests_summary += {'container command': container_command}
- if get_option('container_registry') != ''
-@@ -253,13 +266,11 @@ foreach target, plan: tcg_tests
-               target + ' (possible: [' + ', '.join(allowed) + '])')
-       endif
-     endforeach
--    docker_host_arch_supported = host_machine.cpu_family() in cc_docker_host_arch
-     dockerfile = files('..'/'docker'/'dockerfiles'/cc_dockerfile + '.docker')
-     image_name = 'image-' + cc_dockerfile
--    has_docker = docker_host_arch_supported and docker_supported
--    if cc_dockerfile not in image_targets and has_docker
-+    if cc_dockerfile not in image_targets and docker_supported
-       cmd = [docker_wrapper, 'build', '-f', dockerfile, '-t', 'qemu/' + cc_dockerfile,
--             '--add-current-user']
-+             docker_platform, '--add-current-user']
-       if get_option('container_registry') != ''
-         cmd += ['--registry', get_option('container_registry')]
-       endif
-@@ -270,7 +281,7 @@ foreach target, plan: tcg_tests
-       image_targets += {cc_dockerfile: t}
-     endif
- 
--    if not has_cc and has_docker
-+    if not has_cc and docker_supported
-       build_test_depends += image_targets[cc_dockerfile]
-       build_test_depend_files += dockerfile
-       mount = meson.project_source_root()
-@@ -279,6 +290,7 @@ foreach target, plan: tcg_tests
-       cc = [docker_wrapper, 'run', '--run-as-current-user', '--',
-             # SELinux blocks modification of host fs by default
-             '--security-opt', 'label=disable',
-+            docker_platform,
-             '-w', here, '-v', here + ':' + here, '-v', mount,
-             'qemu/' + cc_dockerfile, plan['cc']]
-       has_cc = true
--- 
-2.47.3
+  tests/tcg: add alternative cross-compilers for macos (homebrew) (2026-09-25 17:04:17 +0000)
 
+----------------------------------------------------------------
+Changes:
+- [PATCH] tests/tcg/meson.build: reintroduce build-tcg target (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260918202704.9790-1-pierrick.bouvier@oss.qualcomm.com
+- [PATCH] tests/docker/dockerfiles/debian-loongarch-cross: update (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260923000510.218473-1-pierrick.bouvier@oss.qualcomm.com
+- [PATCH] tests/tcg/meson.build: compile test with -fno-stack-protector (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260924202012.2465-1-pierrick.bouvier@oss.qualcomm.com
+- [PATCH v2 0/6] tests/tcg: use x86_64 cross containers on all host (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260923185725.863311-1-pierrick.bouvier@oss.qualcomm.com
+- [PATCH 0/4] tests/tcg/meson.build: detect additional cross compilers (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260924213942.26491-1-pierrick.bouvier@oss.qualcomm.com
+
+----------------------------------------------------------------
+Pierrick Bouvier (13):
+      tests/tcg/meson.build: reintroduce build-tcg target
+      tests/docker/dockerfiles/debian-loongarch-cross: update toolchain
+      tests/tcg/meson.build: compile test with -fno-stack-protector by default
+      tests/tcg/meson.build: force use of linux/amd64 platform for containers
+      tests/lcitool/refresh: generate dockerfiles using --host-arch x86_64
+      tests/docker/dockerfiles/debian-all-test: remove arch specific bits
+      tests/tcg/meson.build: remove cc_docker_host_arch
+      tests/tcg/loongarch64/system: deactivate loongarch64-softmmu-memory (hang on aarch64 host)
+      tests/tcg/x86_64: speed up compilation of avx, mmx and 3dnow tests
+      tests/tcg/meson.build: report correct cc in summary
+      tests/tcg/meson.build: introduce cc_alt (alternative cross compiler)
+      tests/tcg: add alternative cross-compilers for fedora
+      tests/tcg: add alternative cross-compilers for macos (homebrew)
+
+ .gitlab-ci.d/macos.yml                             |  7 --
+ tests/docker/dockerfiles/alpine.docker             |  2 +-
+ tests/docker/dockerfiles/centos9.docker            |  2 +-
+ .../dockerfiles/debian-all-test-cross.docker       | 39 +++++----
+ tests/docker/dockerfiles/debian-amd64-cross.docker |  4 +-
+ tests/docker/dockerfiles/debian-arm64-cross.docker |  4 +-
+ tests/docker/dockerfiles/debian-armhf-cross.docker |  4 +-
+ tests/docker/dockerfiles/debian-i686-cross.docker  |  4 +-
+ .../dockerfiles/debian-loongarch-cross.docker      |  2 +-
+ .../docker/dockerfiles/debian-ppc64el-cross.docker |  4 +-
+ .../docker/dockerfiles/debian-riscv64-cross.docker |  4 +-
+ tests/docker/dockerfiles/debian-s390x-cross.docker |  4 +-
+ tests/docker/dockerfiles/debian.docker             |  4 +-
+ .../docker/dockerfiles/fedora-rust-nightly.docker  |  2 +-
+ tests/docker/dockerfiles/fedora-win64-cross.docker |  2 +-
+ tests/docker/dockerfiles/fedora.docker             |  2 +-
+ tests/docker/dockerfiles/opensuse-leap.docker      |  2 +-
+ tests/docker/dockerfiles/ubuntu2404.docker         |  2 +-
+ tests/lcitool/libvirt-ci                           |  2 +-
+ tests/lcitool/refresh                              | 37 +++++----
+ tests/tcg/aarch64/meson.build                      |  4 +-
+ tests/tcg/aarch64/system/meson.build               |  2 +-
+ tests/tcg/aarch64_be/meson.build                   |  2 +-
+ tests/tcg/alpha/meson.build                        |  2 -
+ tests/tcg/alpha/system/meson.build                 |  1 -
+ tests/tcg/arm/meson.build                          |  2 -
+ tests/tcg/arm/system/meson.build                   |  2 +-
+ tests/tcg/hexagon/meson.build                      |  1 -
+ tests/tcg/hppa/meson.build                         |  1 -
+ tests/tcg/i386/meson.build                         |  2 -
+ tests/tcg/i386/system/meson.build                  |  2 +-
+ tests/tcg/loongarch64/meson.build                  |  2 -
+ tests/tcg/loongarch64/system/meson.build           |  6 +-
+ tests/tcg/m68k/meson.build                         |  1 -
+ tests/tcg/meson.build                              | 92 +++++++++++++---------
+ tests/tcg/mips/meson.build                         |  1 -
+ tests/tcg/mips64/meson.build                       |  1 -
+ tests/tcg/mips64el/meson.build                     |  1 -
+ tests/tcg/or1k/meson.build                         |  1 -
+ tests/tcg/ppc64/meson.build                        |  1 -
+ tests/tcg/ppc64le/meson.build                      |  2 +-
+ tests/tcg/riscv64/meson.build                      |  4 +-
+ tests/tcg/riscv64/system/meson.build               |  2 +-
+ tests/tcg/s390x/meson.build                        |  4 +-
+ tests/tcg/s390x/system/meson.build                 |  2 +-
+ tests/tcg/sh4/meson.build                          |  1 -
+ tests/tcg/tricore/meson.build                      |  1 -
+ tests/tcg/x86_64/meson.build                       | 10 +--
+ tests/tcg/x86_64/system/meson.build                |  2 +-
+ tests/tcg/xtensa/meson.build                       |  3 -
+ 50 files changed, 142 insertions(+), 149 deletions(-)
 
