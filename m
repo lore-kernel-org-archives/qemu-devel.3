@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF912C98306
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 06:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF9BC98306
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 06:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9zN9-0002z8-0a; Fri, 25 Sep 2026 02:25:27 -0400
+	id 1x9zQb-0004Mn-1U; Fri, 25 Sep 2026 02:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1x9zN6-0002u6-4O; Fri, 25 Sep 2026 02:25:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1x9zQT-0004MS-F0; Fri, 25 Sep 2026 02:28:54 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1x9zN2-0006Wm-ES; Fri, 25 Sep 2026 02:25:23 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1x9zQQ-0007OO-AQ; Fri, 25 Sep 2026 02:28:53 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4aRJV4104970; Fri, 25 Sep 2026 06:25:08 GMT
+ 68P4aThl075561; Fri, 25 Sep 2026 06:28:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ibgyVx
- QydzR/Ypr/SQyajxtF4JNG49tS8eZA2HzjgoY=; b=nRurrhbcLLW86vML3UVRTB
- KlzTXjVIlN+sYmtb8VRShorvHqayHt5vE61m7zf2hN9lZfoLgjVx+XetJ4li3ALv
- OaZ6P5GYXkPddFD7GijM++ult4MxKNGpEpA4cJhSZSFjYn1hiy3EerSo5GX7EnB6
- igMwkp6ZtM3i1GmUPXyLSjlv8YXD1Tx90kTF82RShpWkWHm25Q3pa9Q+Yxho5hho
- BmVHdP3UBp327a16EM5s5u9NRovPSbfl+ZLvANf/Rq1v1q2vEpuRmGklU2/9z7QK
- Axn/wOahn2oP1K1588zjW/7sL/MTo1lpH8ZBFoXuYL3byfYSZPmjy6iWoYTFIBYQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EY8D1X
+ zxkrY4drBHhu5g5nA+P0vnEpCUlsaoTNaJO48=; b=oX1keQ8+tF4oUXjaYvrEYF
+ Yx1h3LMpJ8WxmEzYKJpIHUOlWOWAUe0Hk+mSBec8Uce68yu3Iqw6ULYQZG0G3X8r
+ gIsVVRc9lb6NNlEfZEIHbOxB13TuHGqaUtHrmKoXGhkEplSHz6FGatYQBg9MXTAU
+ ek/N66aBRM2EPPpey5fnePBXE59ogjoNhytnnP5SXhvjhvg3+jLNUW8KeXMcEVMk
+ M1Rn7h8ZqWdNVTkioajNAliC/gyTpTcPRN4DIJeEBxaeUq2QmFlsgdhNDTLAQsxN
+ FjellAGK9OVlECeexcJ5OytIfYEP+rSnT5G2j8COXPfQ98DuPWJlhvFsFNRuL8XA
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1vqwh-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2wn3m-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 06:25:07 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4m3nx3245755; Fri, 25 Sep 2026 06:25:07 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbu917xh-1
+ Fri, 25 Sep 2026 06:28:45 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P4lVv53296986; Fri, 25 Sep 2026 06:28:44 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb6qsc21-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 06:25:07 +0000 (GMT)
+ Fri, 25 Sep 2026 06:28:44 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68P6P6V211338276
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68P6Sgp27209572
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Sep 2026 06:25:06 GMT
+ Fri, 25 Sep 2026 06:28:42 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEBD158053;
- Fri, 25 Sep 2026 06:25:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C274558059;
+ Fri, 25 Sep 2026 06:28:42 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D258D58059;
- Fri, 25 Sep 2026 06:24:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BD84658043;
+ Fri, 25 Sep 2026 06:28:34 +0000 (GMT)
 Received: from [9.43.103.81] (unknown [9.43.103.81])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Sep 2026 06:24:57 +0000 (GMT)
-Message-ID: <04fe1a9a-a4fd-43a3-9832-fe7a5d0a7874@linux.ibm.com>
-Date: Fri, 25 Sep 2026 11:54:55 +0530
+ Fri, 25 Sep 2026 06:28:34 +0000 (GMT)
+Message-ID: <bfaef03d-8fe9-460e-b6c5-d9a3691c3073@linux.ibm.com>
+Date: Fri, 25 Sep 2026 11:58:32 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/8] hw/loader: add load_elf_ram_sym_buf() for
- in-memory ELF loading
+Subject: Re: [RFC PATCH 3/8] ppc/spapr: add baseline VOF disk boot support
 To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org, aik@ozlabs.ru
 Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
@@ -71,49 +70,49 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
  balaton@eik.bme.hu, philmd@oss.qualcomm.com, npiggin@gmail.com,
  marcandre.lureau@redhat.com, fam@euphon.net, avnish@linux.ibm.com
 References: <20260817102733.605346-1-uverma@linux.ibm.com>
- <20260817102733.605346-3-uverma@linux.ibm.com>
- <b8a2b482-412f-49b2-84e4-2b289743bfa2@linux.ibm.com>
+ <20260817102733.605346-4-uverma@linux.ibm.com>
+ <50158801-d888-4e75-890b-3c54c29bb484@linux.ibm.com>
 Content-Language: en-US, en-ZM
 From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <b8a2b482-412f-49b2-84e4-2b289743bfa2@linux.ibm.com>
+In-Reply-To: <50158801-d888-4e75-890b-3c54c29bb484@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 2LaVPIff1mJjnpoeG2BFeEWBkR7fEgQI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfX07ZP8hH7D1dN
- MdVlVubk06UJzjv7KPaHrcNGnF8kke8UGTFgBweJ4lEK+/6TQpHl1eUkvNIYe2vIeTIMu6nfwGl
- sbkYN88Su3t3Qrov0s7lLLSIuovRpj+0bgfP3I1EFaEZ+hArcN7ij7avbz+jd+oc36isF/5OT6Z
- TbW5wYRtObcOOIaFb8TjlFzukUgiJhdnUrsg+k7XooX72F9Quw2JmkUH40knE+3CSGOVODB5+T0
- ZHh3VNLmcwk2FpmJ8K0y86+yi4S/FCdzbSJXqlW+O6Dty9D1q95rbB2qH9Du1zOUApR0ZbgDF7/
- IrpG9Q8f/wtjiHLj0k01Cy6Lorxz+rFAHdC0+sV4K0g5czxVEiZYEIMbkQR2l2AYmeDSZjLZq/a
- rx8qY6l9/ulb7FuWWouCOF6JGS1No1VcrJ7fGJI77GYHWbU7+SVR64yZi1aKuKHdfFTBBY+NeAl
- iyV9eBYNupZ836+NLYw==
-X-Authority-Analysis: v=2.4 cv=O/KsLx9W c=1 sm=1 tr=0 ts=6ab613c4 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: Lt0bGye25a22YiBTcdSprucitxQQH1dj
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab6149d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=214RS82Pe00LaO1stXEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfX9eH8khAfx6Os
- 7RnIF5aIaP8gEhpeExGTUhOIYOi4q29ct13cgEkkI5T8U5ZoN85yWjHpWJJH/itALMhWtKRfcaa
- kjZMtj0L6RzewylBuEVQlZFv4JPTLOo=
-X-Proofpoint-GUID: OHlWpCEFiWLJsQ_HARgQdAr4-NmE9SwV
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=eW0sz4pM0ASWS_Q1l_oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfXwBb3IeC3038P
+ oMKQPuFkipmTHWaPBiM5NAQvtGc0mlByIyuFCVkozXYNcHSbU/glLSiK4x77n31RTXQQ8veLK1F
+ VM2Z9az9T+FIKVnLlb+oIEaNM5UitCUnuGJspDtggs90a4Bn2xkAy5Lgbs4EJIdWATuXDH6Rnhe
+ lrhKuNZCfgp/boyfCWEQP2oEIh7PWYO50AM4RrNH9EK71ozZQT6Wo/v4TYmZfA3wbxrwAZhGvyV
+ L5dbdJJbkVPtp3EPJ+FkDzrUu5coS4z0zXo3MT5PAzTOc+LxtZMzF64MO83YsYBjw5mjqh3nDN8
+ vkZ8i74ZLvlPhsWycaDQ6BcQSp2ed1wx60vH0KqhazhNo5z+deMV7SwU9I53zRxY2lWInN2KNHG
+ h+qceCFZlCr3ARQ4TCGjawMu5/xzmZA6SH9JaP4o2AgNQexdmAkS9CW6ClmDXarRs8JQu4dhJEG
+ XIheCwrKxmuu60e7y7Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfX8fLrLyky3ecu
+ ea7ZqF5aUE2UCQ6KgsCPhQSWDO04sTT+vgD8ghjXsDWP8BccELNhKFV/L2UOrEt0fn8/Yk7dH9x
+ yGlb2sWo6GDvRPn1S23uwgFL4tjCAY8=
+X-Proofpoint-GUID: 25dK-mJAyu1-GF6bd69RxaskzoiQZED2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 spamscore=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250024
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,270 +131,287 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/17/26 10:44 PM, Narayana Murty N wrote:
+On 9/17/26 11:03 PM, Narayana Murty N wrote:
 > 
 > 
 > On 17/08/26 3:57 PM, uverma@linux.ibm.com wrote:
 >> From: Utkarsh Verma <uverma@linux.ibm.com>
 >>
->> Add a new public API load_elf_ram_sym_buf() that loads an ELF
->> image from a caller-supplied memory buffer rather than a file path.
->> The implementation writes the buffer to an anonymous memfd, then
->> reuses the existing load_elf32/load_elf64 paths.
->>
->> To support per-segment inspection by callers (e.g. detecting VoF
->> firmware segments), extend the internal load_elf{32,64} template
->> (elf_ops.h.inc) with an optional segment_fn_t callback that is
->> invoked once for every PT_LOAD segment after its load address is
->> resolved. Returning false from the callback aborts the load with
->> ELF_LOAD_FAILED.
+>> Add initial support for disk boot via VOF.
+>> Scan all the block devices, and for each device search for PReP 
+>> partition,
+>> load the ELF payload (GRUB), and set the '/chosen' node in FDT with 
+>> boot kernel
+>> and bootpath properties.
 >>
 >> AI-used-for: code
 >> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 >> ---
->>   hw/core/loader.c         | 77 ++++++++++++++++++++++++++++++++++++++--
->>   include/hw/core/loader.h | 30 ++++++++++++++++
->>   include/hw/elf_ops.h.inc | 12 ++++++-
->>   3 files changed, 116 insertions(+), 3 deletions(-)
+>>   hw/ppc/spapr_vof.c   | 142 ++++++++++++++++++++++++++++++++++++++++---
+>>   hw/ppc/vof.c         |   3 +
+>>   include/hw/ppc/vof.h |   2 +
+>>   3 files changed, 139 insertions(+), 8 deletions(-)
 >>
->> diff --git a/hw/core/loader.c b/hw/core/loader.c
->> index 5cbfba0a86..4e4e9764a3 100644
->> --- a/hw/core/loader.c
->> +++ b/hw/core/loader.c
->> @@ -43,6 +43,7 @@
->>    */
->>   #include "qemu/osdep.h"
->> +#include "qemu/memfd.h"
->>   #include "qemu/datadir.h"
->>   #include "qemu/error-report.h"
->>   #include "qapi/error.h"
->> @@ -510,12 +511,14 @@ ssize_t load_elf_ram_sym(const char *filename,
->>           ret = load_elf64(filename, fd, elf_note_fn,
->>                            translate_fn, translate_opaque, must_swab,
->>                            pentry, lowaddr, highaddr, pflags, 
->> elf_machine,
->> -                         clear_lsb, data_swab, as, load_rom, sym_cb);
->> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
->> +                         NULL, NULL);
->>       } else {
->>           ret = load_elf32(filename, fd, elf_note_fn,
->>                            translate_fn, translate_opaque, must_swab,
->>                            pentry, lowaddr, highaddr, pflags, 
->> elf_machine,
->> -                         clear_lsb, data_swab, as, load_rom, sym_cb);
->> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
->> +                         NULL, NULL);
+>> diff --git a/hw/ppc/spapr_vof.c b/hw/ppc/spapr_vof.c
+>> index 46d78756e6..5bf9613005 100644
+>> --- a/hw/ppc/spapr_vof.c
+>> +++ b/hw/ppc/spapr_vof.c
+>> @@ -10,8 +10,15 @@
+>>   #include "hw/ppc/spapr_cpu_core.h"
+>>   #include "hw/ppc/fdt.h"
+>>   #include "hw/ppc/vof.h"
+>> +#include "hw/ppc/spapr_vof.h"
+>> +#include "hw/core/qdev.h"
+>> +#include "hw/core/loader.h"
+>>   #include "system/system.h"
+>> +#include "system/block-backend.h"
+>> +#include "system/block-backend-global-state.h"
+>>   #include "qom/qom-qobject.h"
+>> +#include "target/ppc/cpu.h"
+>> +#include "elf.h"
+>>   #include "trace.h"
+>>   target_ulong spapr_h_vof_client(PowerPCCPU *cpu, SpaprMachineState 
+>> *spapr,
+>> @@ -32,10 +39,10 @@ void 
+>> spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
+>>       vof_build_dt(fdt, spapr->vof);
+>> -    if (spapr->vof->bootargs) {
+>> -        int chosen;
+>> +    int chosen;
+>> +    _FDT(chosen = fdt_path_offset(fdt, "/chosen"));
+>> -        _FDT(chosen = fdt_path_offset(fdt, "/chosen"));
+>> +    if (spapr->vof->bootargs) {
+>>           /*
+>>            * If the client did not change "bootargs", 
+>> spapr_dt_chosen() must have
+>>            * stored machine->kernel_cmdline in it before getting here.
+>> @@ -43,6 +50,22 @@ void spapr_vof_client_dt_finalize(SpaprMachineState 
+>> *spapr, void *fdt)
+>>           _FDT(fdt_setprop_string(fdt, chosen, "bootargs", spapr->vof- 
+>> >bootargs));
 >>       }
->>       if (ret > 0) {
->> @@ -527,6 +530,76 @@ ssize_t load_elf_ram_sym(const char *filename,
->>       return ret;
+>> +    if (spapr->vof->disk_boot) {
+>> +        /*
+>> +         * If disk boot is detected change the "qemu,boot-kernel" to 
+>> hold
+>> +         * kernel_addr/kernel_size which contain the GRUB entry point 
+>> and size
+>> +         */
+>> +        uint64_t kern[2];
+>> +        kern[0] = cpu_to_be64(spapr->kernel_addr);
+>> +        kern[1] = cpu_to_be64(spapr->kernel_size);
+>> +        _FDT(fdt_setprop(fdt, chosen, "qemu,boot-kernel", &kern, 
+>> sizeof(kern)));
+>> +
+>> +        if (spapr->vof->bootpath) {
+>> +            _FDT(fdt_setprop_string(fdt, chosen, "bootpath",
+>> +                                    spapr->vof->bootpath));
+>> +        }
+>> +    }
+>> +
+>>       /*
+>>        * SLOF-less setup requires an open instance of stdout for early
+>>        * kernel printk. By now all phandles are settled so we can open
+>> @@ -54,11 +77,100 @@ void 
+>> spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
+>>       }
 >>   }
->> +ssize_t load_elf_ram_sym_buf(const uint8_t *buf, size_t buflen,
->> +                              uint64_t (*elf_note_fn)(void *, void *, 
->> bool),
->> +                              uint64_t (*translate_fn)(void *, 
->> uint64_t),
->> +                              void *translate_opaque, uint64_t *pentry,
->> +                              uint64_t *lowaddr, uint64_t *highaddr,
->> +                              uint32_t *pflags, int elf_data_order,
->> +                              int elf_machine, int clear_lsb, int 
->> data_swab,
->> +                              AddressSpace *as, bool load_rom,
->> +                              symbol_fn_t sym_cb,
->> +                              segment_fn_t segment_fn, void 
->> *segment_opaque)
+>> +static bool vof_elf_segment_cb(void *opaque,
+>> +                                uint64_t paddr, uint64_t vaddr,
+>> +                                uint64_t filesz, uint64_t memsz)
 >> +{
->> +    const int host_data_order = HOST_BIG_ENDIAN ? ELFDATA2MSB : 
->> ELFDATA2LSB;
->> +    int fd, must_swab;
->> +    ssize_t ret = ELF_LOAD_FAILED;
->> +    uint8_t e_ident[EI_NIDENT];
+>> +    Vof *vof = opaque;
 >> +
->> +    fd = memfd_create("qemu-elf-buf", MFD_CLOEXEC);
-> 
-> The memfd_create() is Linux-specific.
-> 
-> qemu/memfd.h only exposes the direct memfd_create() declaration for 
-> Linux configurations, so this also appears to break non-Linux system 
-> builds.
-> 
-> Could this use an existing portable QEMU temporary-fd abstraction, or 
-> alternatively could the ELF loader be factored so the common parser 
-> accepts an fd/buffer directly?
-> 
-> It seems undesirable for a generic loader API to require Linux memfd 
-> support.
-> 
-> OR
-> 
-> If it is an arch specific design decision, then we need to document it.
-> 
-Yes, it breaks the non-Linux builds, I tried exploring the QEMU 
-temporary-fd options, but all the approaches will make multiple copies 
-of the same buffer. So, instead will add the logic to directly work on 
-the buffer avoiding any fd, tempfile or extra copies. Though this will 
-require new templates load_elf_buf32 and load_elf_buf64 implementation 
-in elf_ops.h.inc. Will implement in v2.
-
->> +    if (fd < 0) {
->> +        error_report("load_elf_ram_sym_buf: memfd_create: %s", 
->> strerror(errno));
->> +        return ELF_LOAD_FAILED;
+>> +    if (memsz == 0) {
+>> +        return true;
 >> +    }
 >> +
->> +    if (write(fd, buf, buflen) != (ssize_t)buflen) {
-> 
-> A single write() is not guaranteed to consume the whole buffer and can 
-> be interrupted.
-> 
-> Also, if buflen > SSIZE_MAX, the cast used for comparison is problematic.
-> 
-> Please use the appropriate QEMU full-write helper (or loop handling 
-> short writes/EINTR).
-> 
-This write won't be required in v2 with the direct buffer approach.
-
->> +        error_report("load_elf_ram_sym_buf: write: %s", 
->> strerror(errno));
->> +        goto fail;
+>> +    if (paddr != vaddr) {
+>> +        error_report("spapr_vof_load_elf: segment paddr/vaddr mismatch "
+>> +                     "(paddr=0x%" PRIx64 " vaddr=0x%" PRIx64 ")",
+>> +                     paddr, vaddr);
+>> +        return false;
 >> +    }
 >> +
->> +    lseek(fd, 0, SEEK_SET);
->> +    if (read(fd, e_ident, sizeof(e_ident)) != sizeof(e_ident)) {
->> +        goto fail;
->> +    }
->> +    if (e_ident[0] != ELFMAG0 ||
->> +        e_ident[1] != ELFMAG1 ||
->> +        e_ident[2] != ELFMAG2 ||
->> +        e_ident[3] != ELFMAG3) {
->> +        ret = ELF_LOAD_NOT_ELF;
->> +        goto fail;
+>> +    if (vof_claim(vof, paddr, memsz, 0) == -1) {
+>> +        error_report("spapr_vof_load_elf: vof_claim failed for "
+>> +                     "paddr=0x%" PRIx64 " size=0x%" PRIx64, paddr, 
+>> memsz);
+>> +        return false;
 >> +    }
 >> +
->> +    if (elf_data_order != ELFDATANONE && elf_data_order != 
->> e_ident[EI_DATA]) {
->> +        ret = ELF_LOAD_WRONG_ENDIAN;
->> +        goto fail;
->> +    }
->> +
->> +    must_swab = host_data_order != e_ident[EI_DATA];
->> +
->> +    lseek(fd, 0, SEEK_SET);
-> 
-> both lseek call errors need to be handled.
-> 
-Actually all this logic was copied from the load_elf_ram_sym function. 
-After creating the fd in this function, all the logic is taken as-is 
-from the load_elf_ram_sym() and this unchecked lseek in load_elf_ram_sym 
-has been there since the beginning. This lseek is done after 
-successfully calling the open and read, so I don't think this could 
-fail, which is why the load_elf_ram_sym also has this unchecked. But 
-anyhow will add a sanity check in this load_elf_ram_sym_buf in v2.
-
->> +    if (e_ident[EI_CLASS] == ELFCLASS64) {
->> +        ret = load_elf64("(buffer)", fd, elf_note_fn,
->> +                         translate_fn, translate_opaque, must_swab,
->> +                         pentry, lowaddr, highaddr, pflags, elf_machine,
->> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
->> +                         segment_fn, segment_opaque);
->> +    } else {
->> +        ret = load_elf32("(buffer)", fd, elf_note_fn,
->> +                         translate_fn, translate_opaque, must_swab,
->> +                         pentry, lowaddr, highaddr, pflags, elf_machine,
->> +                         clear_lsb, data_swab, as, load_rom, sym_cb,
->> +                         segment_fn, segment_opaque);
->> +    }
->> +
->> +    if (ret > 0) {
->> +        debuginfo_report_elf("(buffer)", fd, 0);
->> +    }
->> +
->> + fail:
->> +    close(fd);
->> +    return ret;
+>> +    return true;
 >> +}
 >> +
->>   static void bswap_uboot_header(uboot_image_header_t *hdr)
->>   {
->>   #if !HOST_BIG_ENDIAN
->> diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
->> index d9431e8a8d..b67b2ca013 100644
->> --- a/include/hw/core/loader.h
->> +++ b/include/hw/core/loader.h
->> @@ -156,6 +156,36 @@ ssize_t load_elf_ram_sym(const char *filename,
->>                            int clear_lsb, int data_swab,
->>                            AddressSpace *as, bool load_rom, 
->> symbol_fn_t sym_cb);
->> +/*
->> + * segment_fn_t:
->> + * Per-PT_LOAD segment callback for load_elf_ram_sym_buf().
->> + */
->> +typedef bool (*segment_fn_t)(void *opaque,
->> +                             uint64_t paddr, uint64_t vaddr,
->> +                             uint64_t filesz, uint64_t memsz);
+>> +static bool spapr_vof_try_prep_boot(SpaprMachineState *spapr, Vof *vof)
+>> +{
+>> +    BlockBackend *blk;
+>> +    DeviceState *dev;
+>> +    uint64_t partition_offset;
+>> +    uint64_t partition_size;
+>> +    uint8_t *prep_data;
+>> +    uint64_t entry_point;
+>> +    uint64_t load_size;
 >> +
->> +/*
->> + * load_elf_ram_sym_buf:
->> + * @buf: pointer to an in-memory ELF image
->> + * @buflen: size of @buf in bytes
->> + * @segment_fn: optional per-PT_LOAD callback
->> + * @segment_opaque: opaque data passed to @segment_fn
->> + *
->> + * Identical to load_elf_ram_sym() but loads from a caller-supplied
->> + * memory buffer instead of a file.  All other parameters have the
->> + * same meaning as load_elf_ram_sym().
->> + */
->> +ssize_t load_elf_ram_sym_buf(const uint8_t *buf, size_t buflen,
->> +                             uint64_t (*elf_note_fn)(void *, void *, 
->> bool),
->> +                             uint64_t (*translate_fn)(void *, uint64_t),
->> +                             void *translate_opaque, uint64_t *pentry,
->> +                             uint64_t *lowaddr, uint64_t *highaddr,
->> +                             uint32_t *pflags, int elf_data_order,
->> +                             int elf_machine, int clear_lsb, int 
->> data_swab,
->> +                             AddressSpace *as, bool load_rom,
->> +                             symbol_fn_t sym_cb,
->> +                             segment_fn_t segment_fn, void 
->> *segment_opaque);
+>> +    for (blk = blk_next(NULL); blk; blk = blk_next(blk)) {
 >> +
->>   /** load_elf_as:
->>    * Same as load_elf_ram_sym(), but always loads the elf as ROM
->>    */
->> diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
->> index 044e72de2a..a2c9b52bf9 100644
->> --- a/include/hw/elf_ops.h.inc
->> +++ b/include/hw/elf_ops.h.inc
->> @@ -321,7 +321,9 @@ static ssize_t glue(load_elf, SZ)(const char 
->> *name, int fd,
->>                                     uint32_t *pflags, int elf_machine,
->>                                     int clear_lsb, int data_swab,
->>                                     AddressSpace *as, bool load_rom,
->> -                                  symbol_fn_t sym_cb)
->> +                                  symbol_fn_t sym_cb,
->> +                                  segment_fn_t segment_fn,
->> +                                  void *segment_opaque)
->>   {
->>       struct elfhdr ehdr;
->>       struct elf_phdr *phdr = NULL, *ph;
->> @@ -504,6 +506,14 @@ static ssize_t glue(load_elf, SZ)(const char 
->> *name, int fd,
->>                   addr = ph->p_paddr;
->>               }
->> +            if (segment_fn) {
->> +                if (!segment_fn(segment_opaque, addr, ph->p_vaddr,
->> +                                file_size, mem_size)) {
->> +                    ret = ELF_LOAD_FAILED;
->> +                    goto fail;
->> +                }
->> +            }
+>> +        if (!blk_is_inserted(blk)) {
+>> +            continue;
+>> +        }
 >> +
->>               if (data_swab) {
->>                   elf_word j;
->>                   for (j = 0; j < file_size; j += (1 << data_swab)) {
+>> +        partition_offset = 0;
+>> +        partition_size   = 0;
+>> +
+>> +        if (!spapr_vof_find_prep_partition(blk, &partition_offset,
+>> +                                           &partition_size)) {
+>> +            continue;
+>> +        }
+>> +
+>> +        prep_data = g_malloc(partition_size);
+> partition_size is derived directly from MBR/GPT data.
+> Before allocating this buffer, validate using overflow-safe arithmetic.
 > 
+Will add a sanity check in v2. Something like:
+partition_size > 0 && \
+partition_size <= 10 MB (PReP partition is usually 4–8 MB) && \
+partition_size <= blk_getlength(blk)
+
+>> +        if (blk_pread(blk, partition_offset, partition_size,
+>> +                      prep_data, 0) < 0) {
+>> +            g_free(prep_data);
+>> +            continue;
+>> +        }
+>> +
+>> +        uint64_t lowaddr = UINT64_MAX, highaddr = 0;
+>> +        entry_point = 0;
+>> +        ssize_t ret = load_elf_ram_sym_buf(prep_data, partition_size,
+>> +                                           NULL, NULL, NULL,
+>> +                                           &entry_point, &lowaddr, 
+>> &highaddr,
+>> +                                           NULL, ELFDATA2MSB,
+>> +                                           PPC_ELF_MACHINE, 0, 0,
+>> +                                           NULL, false, NULL,
+>> +                                           vof_elf_segment_cb, vof);
+>> +        if (ret <= 0) {
+>> +            error_report("spapr_vof_try_prep_boot: %s", 
+>> load_elf_strerror(ret));
+>> +            g_free(prep_data);
+>> +            continue;
+>> +        }
+>> +        load_size = highaddr - lowaddr;
+>> +
+>> +        g_free(prep_data);
+>> +
+>> +        spapr->kernel_addr = entry_point;
+>> +        spapr->kernel_size = load_size;
+>> +
+>> +        vof->disk_boot = true;
+>> +        dev = blk_get_attached_dev(blk);
+>> +        if (dev) {
+>> +            vof->bootpath = qdev_get_fw_dev_path(dev);
+>> +        }
+>> +        return true;
+>> +    }
+> In the above loop if partially PT_LOAD( blk 1, blk 2 succeeded but blk 3 
+> failed)
+> spapr_vof_try_prep_boot() then continues and tries the next 
+> BlockBackend, but I don't see anything undoing the first two claims.
+> 
+> Could a malformed first boot disk therefore poison the VOF allocation 
+> map and make a valid second disk fail to boot?
+> 
+> This probably needs either a validation-first/commit-second model or 
+> explicit claim rollback.
+> 
+Will fix in v2. I will add vof_release() which will free the entries in 
+the vof->claimed map added during a failed attempt.
+
 > Thanks,
 > Narayana Murty N
+>> +    return false;
+>> +}
+>> +
+>>   void spapr_vof_reset(SpaprMachineState *spapr, void *fdt, Error **errp)
+>>   {
+>>       target_ulong stack_ptr;
+>>       Vof *vof = spapr->vof;
+>>       PowerPCCPU *first_ppc_cpu = POWERPC_CPU(first_cpu);
+>> +    MachineState *machine = MACHINE(spapr);
+>>       vof_init(vof, spapr->rma_size, errp);
+>> @@ -70,7 +182,7 @@ void spapr_vof_reset(SpaprMachineState *spapr, void 
+>> *fdt, Error **errp)
+>>       /* Stack grows downwards plus reserve space for the minimum 
+>> stack frame */
+>>       stack_ptr += VOF_STACK_SIZE - 0x20;
+>> -    if (spapr->kernel_size &&
+>> +    if (machine->kernel_filename && spapr->kernel_size &&
+>>           vof_claim(vof, spapr->kernel_addr, spapr->kernel_size, 0) == 
+>> -1) {
+>>           error_setg(errp, "Memory for kernel is in use");
+>>           return;
+>> @@ -82,6 +194,14 @@ void spapr_vof_reset(SpaprMachineState *spapr, 
+>> void *fdt, Error **errp)
+>>           return;
+>>       }
+>> +    /*
+>> +     * Disk boot: load GRUB from the PReP boot partition on the block 
+>> device, if
+>> +     * no kernel/initrd are provided
+>> +     */
+>> +    if (!machine->kernel_filename) {
+>> +        spapr_vof_try_prep_boot(spapr, vof);
+>> +    }
+>> +
+>>       spapr_vof_client_dt_finalize(spapr, fdt);
+>>       spapr_cpu_set_entry_state(first_ppc_cpu, SPAPR_ENTRY_POINT,
+>> @@ -91,10 +211,16 @@ void spapr_vof_reset(SpaprMachineState *spapr, 
+>> void *fdt, Error **errp)
+>>       /*
+>>        * At this point the expected allocation map is:
+>>        *
+>> -     * 0..c38 - the initial firmware
+>> -     * 8000..10000 - stack
+>> -     * 400000.. - kernel
+>> -     * 3ea0000.. - initramdisk
+>> +     * Kernel + initrd boot:
+>> +     *   0..c38      - the initial firmware
+>> +     *   8000..10000 - stack
+>> +     *   400000..    - kernel
+>> +     *   3ea0000..   - initramdisk
+>> +     *
+>> +     * Disk (GRUB) boot:
+>> +     *   0..c38      - the initial firmware
+>> +     *   8000..10000 - stack
+>> +     *   400000..    - GRUB (loaded from PReP partition)
+>>        *
+>>        * We skip writing FDT as nothing expects it; OF client 
+>> interface is
+>>        * going to be used for reading the device tree.
+>> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+>> index fa7b73159a..a78bb1f116 100644
+>> --- a/hw/ppc/vof.c
+>> +++ b/hw/ppc/vof.c
+>> @@ -1041,6 +1041,9 @@ void vof_cleanup(Vof *vof)
+>>       vof->of_instances = NULL;
+>>       vof->of_instance_last = 0;
+>>       vof->claimed_base = 0;
+>> +    g_free(vof->bootpath);
+>> +    vof->bootpath = NULL;
+>> +    vof->disk_boot = false;
+>>   }
+>>   void vof_build_dt(void *fdt, Vof *vof)
+>> diff --git a/include/hw/ppc/vof.h b/include/hw/ppc/vof.h
+>> index 3a0fbffe54..e17779ee8a 100644
+>> --- a/include/hw/ppc/vof.h
+>> +++ b/include/hw/ppc/vof.h
+>> @@ -18,6 +18,8 @@ typedef struct Vof {
+>>       GHashTable *of_instances; /* ihandle -> SpaprOfInstance */
+>>       uint32_t of_instance_last;
+>>       char *bootargs;
+>> +    char *bootpath;
+>> +    bool disk_boot;
+>>       long fw_size;
+>>   } Vof;
 > 
 > 
 
