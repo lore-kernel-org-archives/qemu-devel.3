@@ -4,91 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3703C9831E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C780C9831E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9vmi-0000FE-94; Thu, 24 Sep 2026 22:35:36 -0400
+	id 1x9vto-0001OA-Nr; Thu, 24 Sep 2026 22:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9vmX-0000CX-NC
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:35:27 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1x9vmV-0000nm-3A
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:35:25 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-85469e25400so225611b3a.0
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 19:35:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790303721; x=1790908521; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=f+5VH8IgSfeMp+c9gHYFSXAJlGksosw1y2MpO0QWq9g=;
- b=IFDxaKR271hSA/f4msWavl8UPV0Be29BLfBX6HiiCed7sRcmKBwmIbjNf8Yw3OhDxL
- nlfueDJtd/i6OjHCqKPZVE/kjKHtZrhrkeh5b89hypRNl+IaVSbNYRYJ0uSasSS0DxrB
- bTMk36SbydYEanTHkbWy0HLOESCB34wTvphC6JIVu9p1WtuKCEYQVQGrB8BjAbh0UQlP
- kMByRghHsVdjIIui9c0gsGD8WKt3zv3LjKUW0Xco7vnK7DvkrQqAB1ZdqctNhnm6IOXS
- KK3ydtXPYXYTxmrIhIGb9yExEh+wEDy5Px5vnP00946gRXjvzetsBYkhZM/qkl1u+M/c
- iycQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790303721; x=1790908521;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=f+5VH8IgSfeMp+c9gHYFSXAJlGksosw1y2MpO0QWq9g=;
- b=1kTq0KUYpKeac68lgm7Ln8e5EECMpxWyscwKVlqFVd/lCq3u6zaOdzoVUMiC0HZnVT
- rKvGloUqtDpQe2D0V3Ie72DF/V7DjgRUMJezmxtAWD3KXHqw7avbtQDyqPfa2FMXMuDs
- 8i0DbL2F1FetP+pTZKXNa/kwoa7iNL85bShFscfCyXGV3tuE0iJ3mEScBgP8pV7v4H/6
- i/oNW4gU++IzQIcwZxGU9wgV2JpmBJFpbAC0MEmL3TlPH5YkCdIVwZI540OVGg/cgEpS
- Iwd7zFZz/mHgTvZ5YMAd7S0X+Cms/JNu7i3P6a6YwpfrA9XZCayJECyNTgSb0LeNy/sb
- svkA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxCjVosq2tmIDKZzP43iv9FVq4j1w9xXoFlf9ART7A7VCewLbSIczTRTASH1r7KW3YCvHVwnO0wCsBR@nongnu.org
-X-Gm-Message-State: AFuF++khnnMozGWGAUm3pxxP+ieVZwq2+u33wGR2UZztb6Qn1P/H/7Ls
- AcXJsc3+eJ9TLYcdFiitDOXMB4CZTM+Td2kS2zo6fDRadA2i/rtAs0vbU35qxVTLtv0=
-X-Gm-Gg: AYBFou2KYBHB4+ilVQ9j+PJAxjB0K8CTILmMW9B07PLj//EEX+BjjiRdnPKu22s+gHY
- dQXFJnosOsi7LajsYtSLfbfH2ceLpTicqxz+qJSt8H9z0xpwYIttrAHEW9dsqKtviItuibfbFWE
- Gio4dvbB/ZuzC25Hl48dVzE8Z1ZuBQCOM7D/3YAWEMRAxbMXtKESluBZtgXtL2V+kfe7jK27VjD
- p9jBOaAN9GV2+Y+sP/M+zSpd/Az6WJqVL49OkCbqRws1z9jmZmY2namIH17VR0XES2KXD7TFGmz
- adr/UDx5FmenLHgrXw/wtjR8ppEfzXr8SBIMgrSGA0izaGX6SzYA2734RpcB6+D5u+Z35/RjiQM
- g+oJGa58qW44WO/A2XfM/qq5Rao4BeCny0PGNHlOPlDhcCJzWNWEDTRyPGzkzmE2k3jldnExqvH
- rv3RPFGHkHhRGidK+Cx3/ikXIcmQm8nGJuehRDB8BdvTDarpo5FGQTs2FqkC2Dt8uMG1eiy3Q1K
- SHqHHTuClcpADFUHIiBf7mZa8I/rM0IK/Cn5meC
-X-Received: by 2002:a05:6a20:748f:b0:3dd:a196:30a5 with SMTP id
- adf61e73a8af0-3de0e9b3197mr3995069637.85.1790303721038; 
- Thu, 24 Sep 2026 19:35:21 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc78794381bsm468034a12.23.2026.09.24.19.35.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Sep 2026 19:35:20 -0700 (PDT)
-Message-ID: <52fbb587-3406-47d2-887b-52f1cc634976@linaro.org>
-Date: Thu, 24 Sep 2026 19:35:18 -0700
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x9vtl-0001Nb-Eb; Thu, 24 Sep 2026 22:42:53 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1x9vti-0001G8-EX; Thu, 24 Sep 2026 22:42:53 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P25N473911028; Fri, 25 Sep 2026 02:42:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=L2yRcH
+ 4x5xFmDkZXN+TtsLPd65F+bXVZUjMEO6GLAUI=; b=Y2ATTK2egIC5esNcladxIb
+ 8EvJz4GRgFWKfg2+pvMsujcXhfKb7GyHyloxdup7iQbXiADahXyvi0mVC9cJgvrR
+ cbL6dL0+vsNLiScEptmGkJFia890Rp4MDiB/jx1LlQ/td2GLnpQB/AVb62zOOims
+ EL1edyx/ZWJTic7DHrYFCswiIPkeIF026B6G0k0TLEkOS0AvpZrYcO5ty1VvN5cz
+ EBtgHetIVU9lGsxmsYOJ4rlg5tmFLRjUllC2D659rJ42RMPmawuL+aUud/8XzImN
+ Ji/H7DPKz/7kqgKwXY/6luJfCEZ/3npkHi1s7QLBrsM4p/YLRObMkNlqnGFb8PUA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsmq00-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 02:42:35 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P1lUsC3040611; Fri, 25 Sep 2026 02:42:34 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb6qrr8j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 02:42:34 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68P2gXih9306734
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Sep 2026 02:42:33 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E5D715803F;
+ Fri, 25 Sep 2026 02:42:32 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D80958054;
+ Fri, 25 Sep 2026 02:42:30 +0000 (GMT)
+Received: from [9.61.7.131] (unknown [9.61.7.131])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 25 Sep 2026 02:42:30 +0000 (GMT)
+Message-ID: <831a1dbd-b48c-4430-8444-a1d3a5c1135e@linux.ibm.com>
+Date: Thu, 24 Sep 2026 22:42:29 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/18] Misc target/ patches for 2026-09-24
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-References: <20260924152353.36209-1-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] s390x/sclpconsole: implement resizing for vt220 consoles
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, filip.hejsek@gmail.com
+Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
+ eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
+ pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ qemu-s390x@nongnu.org, brueckner@linux.ibm.com, farman@linux.ibm.com,
+ cohuck@redhat.com, maximilian.immanuel.brandtner@protonmail.com
+References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+ <20260921121641.1354712-1-maxbr@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260924152353.36209-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260921121641.1354712-1-maxbr@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab5df9b cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=d8_TefNUAm8_ZYuZkFIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: A8Py_6GWDQ-qJp9-7Y6kkX5Qe0yFjQJa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAxMCBTYWx0ZWRfX8FJmTkb6FLdi
+ 8KAYNuFaZ0rwGInfavf61v5A5+Kjvj0dNMHaucgCunl02m6gRc7l+JMEaRa9kVqP6QXsWUVVoH0
+ qeJOSRkbkX3ZWiowWvyjFFzWnWMCb0Jk/1TeNyqoo3gVxnVnRKQiHpeyjnwo6bTrTZiPpu6mt0V
+ NfcbkCjJTcyfYkyJp4AtltIhHFu35J4u1LTdRf/ngoJbfQqTimVS9Nkq14RzCk1WZnUxFy4kR/l
+ 6WmmKhtCe7/gADUp3V4sYcjId6Ap7VDfzhZyw5syHegWkptHfKc0wx2KwC7Lkwb1sBjvU8eHFW1
+ cUyrEKb9RmVpp4CvmfKRkaq39Dns33gj+reSa3h/AgrnvBeWz685C3p/LxYoYbYk+sj1xEvIFMu
+ 4EciDMdyFaFyPHENkNvDMuV6/P3F9e8DKobtyxj7s2RI4eENh2XA8rWEKlSU8hF2WZOwPglAc0C
+ uDlzwnHC7ivV2ub1+wA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAxMCBTYWx0ZWRfXxUQ61PWZeWHi
+ zaYz94y0PZEERcWzgGpPn41HB2dAQ16p0HPMkGVs6LhPnSWrNCik0FZv/Of3pDzbDtkGPrxPa9x
+ /KvvgnnRhVJ30G8R0FDRPC/2d8UJ4Dw=
+X-Proofpoint-GUID: 3-T5njCrg0RX9ym_k-jthw03JCokYb6X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_01,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1011 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250010
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,30 +131,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/24/26 08:23, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 942229961efea74b153c44c59188eb08375f10f1:
+On 9/21/26 8:16 AM, Maximilian Immanuel Brandtner wrote:
+> Adds a tty code to indicate a resize frame. The body contains two big
+> endian 16-bit integers rows and columns.
 > 
->    Merge tag 'pull-tcg-20260923-v2' ofhttps://gitlab.com/rth7680/qemu into staging (2026-09-23 15:14:55 -0700)
+> Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+> ---
+> Requires the following pre-req:
+>     [PATCH v7 00/12] virtio-console: notify about the terminal size
+>     (https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c550fdcec15@gmail.com/)
 > 
-> are available in the Git repository at:
+> Testing:
+> - Tested on QEMU: commit 38879a667f with the following patches applied:
+>     [PATCH v7 00/12] virtio-console: notify about the terminal size
+> - Tested on linux-next (commit c1f49dea2b8f) with the following patches
+>   applied:
+>     [PATCH 0/2] s390/sclp: Resize for sclp-vt220 console
+> ---
+>  hw/char/sclpconsole.c | 52 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 51 insertions(+), 1 deletion(-)
 > 
->    https://github.com/philmd/qemu.git tags/target-misc-20260924
-> 
-> for you to fetch changes up to cbbd4d74eb298e2b407018185a40cb813435527e:
-> 
->    target/ppc: Stop vCPU thread before calling parent_unrealize (2026-09-24 17:22:06 +0200)
-> 
-> ----------------------------------------------------------------
-> Misc target patches queue
-> 
-> - DOC: Improve SysemuCPUOps::has_work docstring
-> - MIPS: Let TCG middle-end optimize MXU opcodes (not front-end)
-> - S390x: Access S390CpuState atomically
-> - ARM: Access halt/PSCI states atomically
-> - X86: Access interrupt_request atomically
-> - PPC: Fix double-free in ppc_cpu_unrealize()
+> diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
+> index 179d12745c..acf1fea6b5 100644
+> --- a/hw/char/sclpconsole.c
+> +++ b/hw/char/sclpconsole.c
+> @@ -42,6 +42,7 @@ struct SCLPConsole {
+>      uint32_t iov_data_len;  /* length of byte stream in buffer             */
+>      uint32_t iov_sclp_rest; /* length of byte stream not read via SCLP     */
+>      bool notify;            /* qemu_notify_event() req'd if true           */
+> +    bool resize;
 
-Applied, thanks.
+Does this need to be in vmstate_sclpconsole / included in migration so
+we don't miss pending resize events during a migration?
 
-r~
+Also, should the resize value be explicitly set to false during
+console_reset()?
+
+[...]
+
+> @@ -105,6 +128,28 @@ static void get_console_data(SCLPEvent *event, uint8_t *buf, size_t *size,
+>                               int avail)
+>  {
+>      SCLPConsole *cons = SCLP_CONSOLE(event);
+> +    uint16_t be_rows, be_cols, rows, cols;
+> +
+> +    if (cons->resize) {
+> +        if (avail < 5) {
+
+I dislike the use of a magic number here, when it's tied directly to the
+combined sizes of a few structures.  Can you derive the size instead e.g.
+sizeof(*buf) + sizeof(be_rows) + sizeof(be_cols);
+
+> +            *size = 0;
+> +            return;
+> +        }
+> +
+> +        qemu_chr_fe_get_winsize(&cons->chr, &cols, &rows);
+> +        be_rows = cpu_to_be16(rows);
+> +        be_cols = cpu_to_be16(cols);
+> +
+> +        /* first byte hex 0x08 indicates a new terminal size follows */
+> +        *buf++ = 0x08;
+> +        memcpy(buf, &be_rows, sizeof(be_rows));
+> +        memcpy(buf + 2, &be_cols, sizeof(be_cols));
+> +        *size = 5;
+
+Ditto
+
+
 
