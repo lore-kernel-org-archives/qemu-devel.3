@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36109C9830D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381D5C98324
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 09:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA2ON-0000NN-Bz; Fri, 25 Sep 2026 05:38:55 -0400
+	id 1xA2OV-0000Ov-MH; Fri, 25 Sep 2026 05:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OK-0000Mx-B8
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:53 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OP-0000Nz-1N
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:57 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OI-0006D7-Ky
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:52 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2ON-0006Dy-Ea
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:56 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 0828D6022E;
- Fri, 25 Sep 2026 09:38:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AA71F000FF;
- Fri, 25 Sep 2026 09:38:46 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B44B743AA2;
+ Fri, 25 Sep 2026 09:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3901F000FF;
+ Fri, 25 Sep 2026 09:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790329127;
- bh=LktQ6GVJUIbiPEm7EQOkG6Jr/QJ2GZ5f7GYEouqjFtY=;
- h=From:To:Cc:Subject:Date;
- b=CK+B49SNCX00orUeCcjS5gnHxE9UDM7n9Mz3Ee3odaHe96BJ9ztkA4NZIyiA/BJjA
- OWQ4KUcRYCXXUFgX4PsSQV+MKH3KGrGNICoa18a0hYwhDCBRSN0AdamQKQ1eZO2iWl
- MsmLQjGuu/DaPACtLg+8EM/mwxdUWeHKirYEfx6Gc0LI5Ep48EYTyCyt+okK93SiLc
- +Ly0P5QjdDulEY9XONAMnw6/z0dQRxXtbPY4oFWLcziei3gIuFv8VuBhuMh+3fqPKb
- lTEkDKCOMW04fQh8yy6ReIvL0NipQeUdPPZlC0bN+tcVTfY8JJiJGMn5hVpfxybnhW
- gu99fAyZyFGaA==
+ s=k20260515; t=1790329133;
+ bh=rukc2QXxQ5m9wxhcv1mTkjBTk1ApN+E5byqZCiijtZI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=fTXnobhumsXoT/jb8rpe/xF1FvOpG9NJvYya97jWIYdoXXTgMxGY3SWTXA8Pj6pc3
+ sdakYRCCYbz7Rz/yHbdBZxAcpXHKh9xxc/T4QK8KQNmOpLUua2V++vvc8zeceU3Skz
+ u9M6Nfx0h2PkO92wdkZpiFmgM7Yp/v26fTrJy09xH4CNX9OgRQb0rfo7dl1aT6jjSJ
+ 7kbZmcGP46dHTryPz6HXdrc3AY//xmb10XaQ0zakl4HKTs7wEkCH7LFgGlzi39pyBr
+ hA45VH3Fl1ZcaZ15ldAlSixHJQ/yOn/BN1kM6t4vmaXchPxSz185cImRlWMDG7/St6
+ /vV91TJXLksaw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -40,15 +40,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 0/8] Linux user next patches
-Date: Fri, 25 Sep 2026 11:38:36 +0200
-Message-ID: <20260925093844.5685-1-deller@kernel.org>
+Subject: [PULL 3/8] linux-user/sh4: align the vdso sigreturn trampolines
+Date: Fri, 25 Sep 2026 11:38:39 +0200
+Message-ID: <20260925093844.5685-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260925093844.5685-1-deller@kernel.org>
+References: <20260925093844.5685-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,56 +72,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-The following changes since commit a97f90fcf8029af253a2ba274b9bda9acabc5b23:
+libunwind's unw_is_signal_frame() reads the trampoline as 32-bit words,
+but __kernel_sigreturn is only 2-byte aligned. Align both trampolines
+to 4 bytes, as the kernel's vsyscall-sigreturn.S does (with .balign 32).
 
-  Merge tag 'pull-tcg-20260924' of https://gitlab.com/rth7680/qemu into staging (2026-09-24 08:24:59 -0700)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/sh4/vdso-be.so | Bin 2720 -> 2724 bytes
+ linux-user/sh4/vdso-le.so | Bin 2720 -> 2724 bytes
+ linux-user/sh4/vdso.S     |   2 ++
+ 3 files changed, 2 insertions(+)
 
-are available in the Git repository at:
+diff --git a/linux-user/sh4/vdso-be.so b/linux-user/sh4/vdso-be.so
+index df9fa22efab46bffbb9957af078199639998ea43..d74a2d78e869d7bc6c531c36d82d6c2b1315287b 100755
+GIT binary patch
+delta 192
+zcmZ1=x<qt>GNZ~w6=&8z3=AxPCgxO#9C@_r)US}NFAa~om)?|aoD?HG|JB4F*9C7d
+zFfa%RF);8jFfe2=FtEJY{D5&c6SD?`*W`ID79tFslUWZ7C~(6dLpcNI<Yz2D!TLY|
+zq)!=S$>a~L`HXKSC$QNIA<RrpPBe)yOw8N7ku8mxF=Da=monp@$u?Z-jB6&RaH)&V
+PWnf@v0h<E>j35dCBc3ya
 
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
+delta 172
+zcmZ1?x<GV-GNZyo6=&8T3=AwkCgxO#M6Q#1zh>Q;(|ew7YO+;`jbwinsW|b+b-`;4
+z3=9H73=BLB3=A0z3@k4;KVaO=#H_;LIe8w7g}`Li!vYH2Fvw6o`4!7gupSTq=}`t*
+zF!>8>KI4nYDQxya2=kJY{d_D<{hT*%WlLjb44Ev$rOfzavICbo<BG`{T<VN7Cr{uK
+F0RTQaF{c0k
 
-for you to fetch changes up to 926d6cf4036102e3e0bc9e7f92291ee2277c3215:
+diff --git a/linux-user/sh4/vdso-le.so b/linux-user/sh4/vdso-le.so
+index decd674202260f045b646b318ebb0b6daf416651..a59c9e5244dbebd709f187028831f0a51a8b0706 100755
+GIT binary patch
+delta 200
+zcmZ1=x<qt>0;9@AMQ7GOEDQ{PCT3QPWaXVH&gBv-40~8xYBG;6g<=1u`xAd$5xl{|
+zz#zcDz#zoH!;rzi!0=}CUB=x^Y#Iy<3=CeA=doA_b26|_7C6kU0E6WWoRgojd<W}<
+z03HTq1_p*dli#xDGrpM|%VsZ%Y$`)?a%6;mVNk~Ajcm!xj1iMXxs)0IOt$1wXIwKm
+TkxN}-E;|E53)CnOV1%*(2DmUT
 
-  target/sh4: Drop use_exit_tb (2026-09-25 11:23:44 +0200)
+delta 193
+zcmZ1?x<GV-0;9r2MQ7F@EDQ`kCT3QP{0T|D+C1g@<*pwKXS>-y?_bLI+hO95D}vWp
+z7#IW?7#M^Yco;Gm7#Ln`zRS3qiA{xpfq}tu@;nv`e%8qXhq)DCuzd1MmhWI)5WvHr
+z%)r3#WAaDVe8v}(6WQ!VkxgVsPA-e^_Xzgiyp=7PnK5K?B8Tu~9WDXJACqml)LB=s
+YF))0b9LOm=xrR%CbtXFlLkoxp030MX^8f$<
 
-----------------------------------------------------------------
-linux user patches
-
-A series of patches, which
-- fix a race in atomic variables on sh4 guest
-- fix unwinding through vdso signal trampolines on sh4 guests
-- improve the parameter checks for setsockopt()/getsockopt() syscalls
-- improves the parameter checks for the mincore() syscall
-
-----------------------------------------------------------------
-
-Igor Shevlyakov (2):
-  linux-user: report EBADF for setsockopt()/getsockopt() on a bad fd
-  linux-user: report EINVAL for a misaligned mincore() start
-
-Matt Turner (3):
-  linux-user/sh4: use the kernel's sigreturn trampoline sequence in the
-    vdso
-  linux-user/sh4: fix vdso CFA for rt_sigreturn frames
-  linux-user/sh4: align the vdso sigreturn trampolines
-
-Richard Henderson (3):
-  accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
-  target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE with CF_STEP_ATOMIC
-  target/sh4: Drop use_exit_tb
-
- accel/tcg/cpu-exec.c             |   4 ++-
- include/exec/translation-block.h |   1 +
- linux-user/sh4/vdso-be.so        | Bin 2704 -> 2724 bytes
- linux-user/sh4/vdso-le.so        | Bin 2704 -> 2724 bytes
- linux-user/sh4/vdso.S            |  31 ++++++++++++++------
- linux-user/syscall.c             |  25 +++++++++++++++-
- target/sh4/cpu.h                 |   6 ++--
- target/sh4/translate.c           |  48 ++++++++++++++-----------------
- 8 files changed, 74 insertions(+), 41 deletions(-)
-
+diff --git a/linux-user/sh4/vdso.S b/linux-user/sh4/vdso.S
+index 290eb498ae..a66cac7439 100644
+--- a/linux-user/sh4/vdso.S
++++ b/linux-user/sh4/vdso.S
+@@ -135,6 +135,7 @@ vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
+ 	.cfi_offset		24, SC_FPSCR
+ 
+ 	nop
++	.balign	4
+ 
+ sigreturn_region_start:
+ __kernel_sigreturn:
+@@ -144,6 +145,7 @@ endf __kernel_sigreturn
+ 	/* rt_sigreturn frame layout; nop for the same reason as above. */
+ 	.cfi_def_cfa_offset	RT_SIGFRAME_SC_OFFSET
+ 	nop
++	.balign	4
+ 
+ __kernel_rt_sigreturn:
+ 	sigreturn_tramp __NR_rt_sigreturn
 -- 
 2.54.0
 
