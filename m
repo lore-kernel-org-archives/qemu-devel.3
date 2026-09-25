@@ -4,155 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB12DC9830D
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 12:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6941C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 13:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA5Rk-0003AK-4O; Fri, 25 Sep 2026 08:54:36 -0400
+	id 1xA5bI-0004fQ-Gq; Fri, 25 Sep 2026 09:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xA5RL-00038m-TN; Fri, 25 Sep 2026 08:54:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xA5bG-0004fC-2e
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 09:04:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xA5RI-0001ZI-Pk; Fri, 25 Sep 2026 08:54:11 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4b1rE2394514; Fri, 25 Sep 2026 12:54:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LsYoee
- uRYmsVubOpDay85OJ0SNCz58EMXEEXlsweGa4=; b=R/4aP2qOWRkq4gky+IOn0O
- 8dnr5qeq0lNYAlwMgmzumg8R5zBtOfALu5JQ60fBHCpG4PCQ2q/Ci+RK7xjp0hQp
- 9EiHLv9O3tk+smdGm1W6xSMXraaEoxRImJmgVpzCB2grStamoNBxC60CwA3ErEis
- oyJtdN+DupHqQGHfemhV40SRx9XYH+QZu7ffO7bhXnk07Mc4UbuEHtc4093HJmm0
- PwbLPzNSmB66/eeGielk137KKVDYsIVYrZGqS3Un/gMkupm4EEbhVDBOeeuvfU+7
- Ln4Yyuk8Sx+Xn+qCOABOrliTRJPnofpdGPcjvqcrSYS5IZMfohp6j5hsjuX+wTow
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske273n5-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 12:54:06 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PA0AkV3288179; Fri, 25 Sep 2026 12:54:05 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe22f4e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 12:54:05 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68PCs46d43385310
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Sep 2026 12:54:04 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 289D158057;
- Fri, 25 Sep 2026 12:54:04 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B354A58058;
- Fri, 25 Sep 2026 12:54:03 +0000 (GMT)
-Received: from [9.61.145.93] (unknown [9.61.145.93])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Sep 2026 12:54:03 +0000 (GMT)
-Message-ID: <fa67229c-4250-41b3-991b-bfdae96c93cc@linux.ibm.com>
-Date: Fri, 25 Sep 2026 08:54:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xA5bD-0002kr-LW
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 09:04:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790341461;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1GWq4pH4lflyk01hzi8zwbTm0ieRfdyoL7WRzAlbvJk=;
+ b=Ntg5UqjJWL2r8yfgj2mQShfS25U713/Hh8fd7PBqyq/eEDhT98AvIccs3hUmtvKIl2/lGQ
+ S4CV//HYdoQz4NapuJAIEMOgqXMZGYKfiaTIvPeINjo0PMCwUy5NZs8mt52H2zRJFze3ih
+ aXGP0H94/ed25P0oT/HPJXAuqmzFUv4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-524-Iqaou8pMN7GuflL1Q-Ds3Q-1; Fri, 25 Sep 2026 09:04:20 -0400
+X-MC-Unique: Iqaou8pMN7GuflL1Q-Ds3Q-1
+X-Mimecast-MFC-AGG-ID: Iqaou8pMN7GuflL1Q-Ds3Q_1790341460
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-939062ecda9so167069885a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 06:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790341460; x=1790946260; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=1GWq4pH4lflyk01hzi8zwbTm0ieRfdyoL7WRzAlbvJk=;
+ b=QrByyCZOxLwP72hgG5Kj+bq20nDrG2LZdC8VwtocX9V5wcPEI0draXiPYGL0hBGv/9
+ k5UEeDDuPAt/l6D1LkTsOaZxWv+5kgSODX+DlyXMuA+tEHonoQrywTr1EMgEmzuoLEnB
+ PH74erdCgRJdqTKXUE1vAfNeefMQ3tSNP4HXM1wUiWTKkejS0QP/cXZPjftLa+Af0GsX
+ ueulPLyTleD80bp3kt1vuUfatdjtQHtTKQf+RH3QMakB6iqkd7poAitvqf4r5OC9IuWm
+ wxJBahL7+G+7VLhTPnEWP2K6JT+qjG36jTFufuAS08A9/Mk4ICkFpjhE1i0uEwPvSVpt
+ KHQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790341460; x=1790946260;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=1GWq4pH4lflyk01hzi8zwbTm0ieRfdyoL7WRzAlbvJk=;
+ b=JzfadxQknwNlo5bhE6x6nc8KxhYyiN9XGc7qg7hhrg/faQE8Mo4IlZnoDemQxeg3NZ
+ a+fsDBm2xf+6U7GY1PhC4160Tf2TeFRbZ7mKRWFT3td0E8SqN+yLEgBvqYB2BKm2L+XK
+ Eaahi6+jp8hyJhT5udWLz+BwQLCEV8t9QuULktgSiN5qpXnJIGLmSQ1751dRPre2EKt1
+ tMXd46WP+8vzQi4sACz7Mf7hNjcEMQ6smKNxOyidvIuqSC3EMWNoTG7PJwhA6cD4tTsb
+ vnxrUDCEVG8G3B2GFmxNrhePSfOXCLLUVGaHSuL913uF5NrxMv8DpPVD1MC0x0wxMus/
+ CNuA==
+X-Gm-Message-State: AFuF++lc0BkIPHFAzDPgDfPQUSJVmxxC2UsAP5upcONOwk+Aih5gL4dI
+ NyCG9QyCmIpcOLakP3ym8GptLS/E7MjPEY8FMqTcPrRuvm23gmtpS1IjBqDNbdsSj4ac6ZJMtug
+ 4IpFcOgpxiwYqJ+vnkUJXF0Z80XvITXU027c3Ou1Tj5effol8u2h2zSIa
+X-Gm-Gg: AYBFou3HQbpkQMZ8jP5BdUaNT478y4GXOrIVzL/EcAMDaEg5AhwUTfN+vKsaBbM7Iov
+ 46jNjtKSq0ozw3O2pWG59/R+1NBWEMQbYCjLZJKH8fLhB8A/dJwjb9C99FrhBdnmulQRpEc+iDD
+ 5XM/0IGfIK2sqdyjr0UJ3RJkwEXp/fAWw8bqnaqMLuItZU2e9B6H2efWWt0XdzQ1HcD96YOh6jb
+ UwIAJU/tfTY7kj5/BN17j+Us3pTdwjJ50X/Ts7iPH9O+d1X3O9ua7DUvvE9SVIjZfE09BN70ydb
+ F06K4j9SpYXW3kUjKDn+tf0BJ76aAWAFSycp3xzsxJJm8gg3wx8H1LnnxscOoq/FNKmVD2I=
+X-Received: by 2002:a05:620a:4050:b0:937:5ab5:53f7 with SMTP id
+ af79cd13be357-93c43dc8b4fmr422729485a.43.1790341459362; 
+ Fri, 25 Sep 2026 06:04:19 -0700 (PDT)
+X-Received: by 2002:a05:620a:4050:b0:937:5ab5:53f7 with SMTP id
+ af79cd13be357-93c43dc8b4fmr422719585a.43.1790341458651; 
+ Fri, 25 Sep 2026 06:04:18 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93c448b0cdesm177547185a.14.2026.09.25.06.04.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Sep 2026 06:04:17 -0700 (PDT)
+Date: Fri, 25 Sep 2026 09:04:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, david@kernel.org, pbonzini@redhat.com,
+ xiaoyao.li@intel.com, berrange@redhat.com, armbru@redhat.com,
+ pankaj.gupta@amd.com, chao.p.peng@linux.intel.com
+Subject: Re: [PATCH v6 00/12] KVM/hostmem: Support init-shared guest-memfd as
+ VM backends
+Message-ID: <arZxTrbF9ElYuVNu@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260925015700.1260501-1-michael.roth@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] s390x: even more hardening fixes
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260922201526.2383047-1-farman@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260922201526.2383047-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: bBcAjwH01Qd9wVlzJZ-FHIGjx9986Nq9
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab66eee cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=_1U8H7b8OK_dZt-XgggA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfX0P+tD1T9GrqR
- EaY6uvTCw1zlUNZ4zXl9J70mljdz0UjVGR5lKQ6C8olReICAyGS8veUPl7SV6WexwV9lx7uexE0
- OSnREkKAAaFu68KVNTp4o95kFrK9m0E=
-X-Proofpoint-GUID: bBcAjwH01Qd9wVlzJZ-FHIGjx9986Nq9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfXwK/e7eOf0qV9
- BvYrtMVQDhSjA9ZAvo3tAWwWcXD+Ca5zzM9CeplcSc22+297SJ83lCcxQl22Jc4KiEcYFxLHaMI
- F/O7LL8BGo6ZKQs6f6G+umPVFh1FHKaWq83RmZZhzgBqOepPhktNM5kpQaUlqERxqXQ31hW11+1
- FdUFbHLr++L877E/LiU8yni/cre3v0mqtCX+xAoeV8MlgLMmiRwP/y5VyUkwT2cPJUyAmGbV417
- aNkZYbSkAs4LbK+CoDjOtvZqCQoA/9nv9jAwxTss7AokpJe6qeiz7etmileMdjkkdbsu+erlIRY
- T5HuyphRCHWj3oI9aqJ5q/tFoFrQMsrwRPbgKweMtvwJ8YOxeMpZZQtgvYBNTLMIiLZ75bgJpTS
- 1/u/rkBdtFBI9azcw3aeLbQAoKPw4o73hXp10d2+98xvQFQTdkyMNfiA3oNPfk3MGDpFAagFsIs
- pu7EL7uN9c7J2ykP34w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260925015700.1260501-1-michael.roth@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,45 +117,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Sep 24, 2026 at 08:43:06PM -0500, Michael Roth wrote:
+> v1: https://lore.kernel.org/r/20251023185913.2923322-1-peterx@redhat.com
+> v2: https://lore.kernel.org/r/20251119172913.577392-1-peterx@redhat.com
+> v3: https://lore.kernel.org/r/20251215205203.1185099-1-peterx@redhat.com/
+> v4: https://lore.kernel.org/qemu-devel/20260812201938.198915-1-michael.roth@amd.com/
+> v5: https://lore.kernel.org/qemu-devel/20260908133151.836685-1-michael.roth@amd.com/
+> v6:
+> - Rename the hostmem property to 'x-guest-memfd' since initial users
+>   are expected to be developers or early enablers (Markus)
+> - Introduce accompanying 'guest-memfd' RST doc and reference it in
+>   the QAPI schema documentation for x-guest-memfd (Markus)
+> - Move all renaming patches toward beginning of the series for
+>   consistency (David)
+> - Fix mispellings in commit messages (David)
+> - Drop ramlist lock in new ram_block_add() error path
+> - Collect Reviewed-by's
+> - Rebase on QEMU master
+
+Michael,
+
+Sorry, I missed your very last discussion with Markus..  only notice until
+I saw the repost.  I agree we can mark it experimental, but just to mention
+we should have moved to use "unstable" rather than prefix "x-", then we
+don't need to bother with the ABI change, see:
+
+    commit a3c45b3e62962f99338716b1347cfb0d427cea44
+    Author: Markus Armbruster <armbru@redhat.com>
+    Date:   Thu Oct 28 12:25:12 2021 +0200
+
+    qapi: New special feature flag "unstable"
+
+No need for another repost, I can manage that with two fixups when queue,
+please shoot if there's any objections.  Attached at the end.
+
+Thanks,
+
+===8<===
+From 94884f136d9d42044e3f4cfcf440df8016ad3e99 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Fri, 25 Sep 2026 08:51:13 -0400
+Subject: [PATCH 1/2] fixup! hostmem: Support fully shared guest memfd to back
+ a VM
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ docs/system/guest-memfd.rst |  4 ++--
+ qapi/qom.json               |  9 +++++++--
+ backends/hostmem-memfd.c    | 10 +++++-----
+ 3 files changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/docs/system/guest-memfd.rst b/docs/system/guest-memfd.rst
+index f7cef19283..d62a214a91 100644
+--- a/docs/system/guest-memfd.rst
++++ b/docs/system/guest-memfd.rst
+@@ -38,10 +38,10 @@ exposed by QEMU command-line options.
+ For non-Confidential guests, guest-memfd can be used in a manner that
+ is somewhat interchangeable with a normal memfd. Currently, this is
+ handled by using the same memory-backend implementation as memfd, but
+-with an additional 'x-guest-memfd=on' option. E.g.::
++with an additional 'guest-memfd=on' option. E.g.::
+ 
+     qemu ... \
+-      -object memory-backend-memfd,id=ID,size=SIZE,share=on,x-guest-memfd=on
++      -object memory-backend-memfd,id=ID,size=SIZE,share=on,guest-memfd=on
+ 
+ Note that the share=on option is required for guest-memfd, since it
+ does not support anonymous memory allocations or COW-like semantics.
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 602b17ad83..7423acea8f 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -780,10 +780,14 @@
+ # @seal: if true, create a sealed-file, which will block further
+ #     resizing of the memory (default: true)
+ #
+-# @x-guest-memfd: if 'on', use guest-memfd to back the memory region.
++# @guest-memfd: if 'on', use guest-memfd to back the memory region.
+ #     See the "guest-memfd" QEMU documentation for more details.
+ #     (default: auto, since: 11.2)
+ #
++# Features:
++#
++# @unstable: Member @guest-memfd is experimental.
++#
+ # Since: 2.12
+ ##
+ { 'struct': 'MemoryBackendMemfdProperties',
+@@ -791,7 +795,8 @@
+   'data': { '*hugetlb': 'bool',
+             '*hugetlbsize': 'size',
+             '*seal': 'bool',
+-            '*x-guest-memfd': 'OnOffAuto' },
++            '*guest-memfd': { 'type': 'OnOffAuto',
++                              'features': [ 'unstable' ] } },
+   'if': 'CONFIG_LINUX' }
+ 
+ ##
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index a164bb659f..666593ff6c 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -59,14 +59,14 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+ 
+     if (m->guest_memfd == ON_OFF_AUTO_ON) {
+         /*
+-         * NOTE: x-guest-memfd ignores seal=on/off because it always
++         * NOTE: guest-memfd ignores seal=on/off because it always
+          * implicitly seals the FD by definition.
+          */
+         if (!backend->share) {
+-            error_setg(errp, "x-guest-memfd=on must be used with share=on");
++            error_setg(errp, "guest-memfd=on must be used with share=on");
+             return false;
+         } else if (m->hugetlb) {
+-            error_setg(errp, "x-guest-memfd=on doesn't support hugetlb=on");
++            error_setg(errp, "guest-memfd=on doesn't support hugetlb=on");
+             return false;
+         }
+ 
+@@ -203,10 +203,10 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+                                               "Huge pages size (ex: 2M, 1G)");
+     }
+ 
+-    object_class_property_add(oc, "x-guest-memfd", "OnOffAuto",
++    object_class_property_add(oc, "guest-memfd", "OnOffAuto",
+                               memfd_backend_get_guest_memfd,
+                               memfd_backend_set_guest_memfd, NULL, NULL);
+-    object_class_property_set_description(oc, "x-guest-memfd",
++    object_class_property_set_description(oc, "guest-memfd",
+                                           "Use guest memfd");
+ 
+     object_class_property_add_bool(oc, "seal",
+-- 
+2.55.0
 
 
-On 9/22/26 4:15 PM, Eric Farman wrote:
-> A small pile of additional hardening fixes.
-> 
-> v2->v3:
->   - Collect reviews/acks (Thanks Christian, Matt!)
->   - [CB] Patch 7: Rename realloc variable to new_buf
->   - [CB] Patch 8: Move check of at_byte before check of command chaining flag
-> 
-> v1->v2: https://lore.kernel.org/qemu-devel/20260921184305.3791311-1-farman@linux.ibm.com/
->   - Collect reviews/acks (Thanks Matt, Christian, Tony!)
->   - [MR] Add fixes/stable tags to patches 1, 2, 8
->   - [CB, MR] Drop fixes/stable tags from patches 5, 6
->   - [CB] Patch 2: Unwind indicators upon re-set, instead of rejecting it
->   - [MR] Patch 7: Use a temporary variable on g_try_realloc() call
->   - [MR] Patch 8: Use CCW datastream to increment no-data count
-> 
-> v1: https://lore.kernel.org/qemu-devel/20260916203242.2509787-1-farman@linux.ibm.com/
-> 
-> Eric Farman (9):
->    virtio-ccw: Limit ISC to MAX_ISC
->    virtio-ccw: Do not overwrite existing indicators
->    virtio-ccw: Fix rc check in read configuration path
->    vfio/ap: Clear error object pointer after non-fatal errors
->    vfio/ccw: Clear error object pointer after non-fatal errors
->    hw/intc/s390x: Fix payload to KVM_HAS_DEVICE_ATTR ioctl
->    hw/intc/s390x: Fix check after g_try_realloc
->    s390x/css: Use datastream pointer for checking no-data CCWs
->    s390x/sclp: Reject short headers in PV case
-> 
->   hw/intc/s390_flic_kvm.c |  8 +++++---
->   hw/s390x/css.c          | 28 ++++++++++++++++++++--------
->   hw/s390x/sclp.c         |  6 ++++++
->   hw/s390x/virtio-ccw.c   | 29 ++++++++++++++++++++++++++++-
->   hw/vfio/ap.c            |  4 ++++
->   hw/vfio/ccw.c           |  2 ++
->   6 files changed, 65 insertions(+), 12 deletions(-)
-> 
+From efb5a9d33373e0dcedbfec3dce28844164ccb8c8 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Fri, 25 Sep 2026 08:51:26 -0400
+Subject: [PATCH 2/2] fixup! tests/migration-test: Support guest-memfd init
+ shared mem type
 
-Applied for 11.2; thank you!
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/qtest/migration/framework.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 93225e3720..b7aef6b21c 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -301,7 +301,7 @@ static char *migrate_mem_type_get_opts(MemType type, const char *memory_size)
+         backend = g_strdup("-object memory-backend-memfd");
+         break;
+     case MEM_TYPE_GUEST_MEMFD:
+-        backend = g_strdup("-object memory-backend-memfd,x-guest-memfd=on");
++        backend = g_strdup("-object memory-backend-memfd,guest-memfd=on");
+         break;
+     default:
+         g_assert_not_reached();
+-- 
+2.55.0
+
+
+
+-- 
+Peter Xu
+
 
