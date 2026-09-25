@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC57C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0576C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82e-0006o0-Qa; Fri, 25 Sep 2026 11:40:52 -0400
+	id 1xA82e-0006nx-Gb; Fri, 25 Sep 2026 11:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82b-0006ma-G6
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:49 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82b-0006mp-Vh
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:50 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Z-0004dw-E0
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82a-0004eC-BJ
  for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:49 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B9E1521FBE;
- Fri, 25 Sep 2026 15:40:37 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CD61F21E7C;
+ Fri, 25 Sep 2026 15:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350842; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
- b=FaqsKy/9FiwEEXDeMitizaRgLa7sUrgvmFifXUVPUy1uK4YB58pDmhCvCZgFMh0Wmfabuj
- qhaF0NF6jNW8GM5+uREGbyygJLLcoCr73AvqVUT9xV/gNOwYXH8gvpdPtNPIUh+OmfEE9l
- 8cP5QdDI+Ez87imManl9viqGHkK666k=
+ bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
+ b=QI5prsAIhRA+9cn3PJPu3x3aevMhNM4zmzJ6mqJwauvMae1gPKCoycrCfQkZJenPmrLCDo
+ wC46l7xFNWIajBGbQUCdhLVm4FnGQLTxY2THuYdeQxOwxPX09n4eJpk23JsEyzrKpjcN9q
+ RNe841dUu3T7pX50pgJY/GAxQV743Lg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350841;
+ s=susede2_ed25519; t=1790350842;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
- b=OQfs7VhwP/cwvDT0nCQfRlcl5kQx6iTnMYvLC8JLnZC44iYGhOtlH2XB36ZzqrH0kOGwGu
- A9V0eWSc4jMfbyDA==
+ bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
+ b=X9k7bHlAI/Jhm81i1N28LrThSx/PaFlKaoZuGf1Ek3vZjnBVE/UvKiAQw0ImORV1xxZ4eQ
+ 045GPmbTTSTgJbBw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350837; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350838; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
- b=W+6mt2ydGk9g9xZEx00KuxOoBqRaQNO4hVqhDvzh4qzp2w2c6HoD4OVbtjfpYSHnc9EaVT
- l8O3BnhvbVK6vhX1cpaOJDueCkaDykfVJVkStt9WNti+YhhjG6QCzfGsTSpLEDTSjzDazP
- EQm75iSnUPJtiCl9JeWlHiCbtPxbyo0=
+ bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
+ b=hLLGjQkMpy/bGyNTREXCpwdpZEeG1pADcaIMX6wnl+Iur+t/qhymoNX09gFJDk3bV3i01Q
+ +b9xOCjT8gurpawOlwoiKqTnyHNRc2H00svVHLEWcPCujdOvrmskVo3U/ZSQUHBlYxR7Ob
+ lZnRVjtpIvHANqDkmQhJ7HCNSGnM2Eg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350837;
+ s=susede2_ed25519; t=1790350838;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
- b=mbY7Gi/vWSXsBoSGZnny+8xSIZxhMuU4onzzGKDHVYhhUI8i6twg/Q0WmV/5MneIOkH5zr
- rfxTzQWtXmd61tAQ==
+ bh=HKs/esBlOFAbBPmBNeIq0MYqcwqzt+NV/Ybw4pONbyc=;
+ b=hIu4fjWbOaJ8YYZA5S7ExpGlHfCPv0ZLJ2Lamp5uXAGpQzSVtqQMfLli5FNwKS0hsD3/fj
+ gNSQUWMxG+1bglBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D051A13310;
- Fri, 25 Sep 2026 15:40:36 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8DE71333B;
+ Fri, 25 Sep 2026 15:40:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T18
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:36 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T19
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:37 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 17/19] migration: Stop freeing s->parameters members
- individually
-Date: Fri, 25 Sep 2026 12:40:08 -0300
-Message-ID: <20260925154010.599247-18-farosas@suse.de>
+Subject: [PULL 18/19] migration: Use migrate_params_free during finalize
+Date: Fri, 25 Sep 2026 12:40:09 -0300
+Message-ID: <20260925154010.599247-19-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
@@ -118,67 +117,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expecting every pointer member from s->parameters to be freed
-individually is prone to leave some fields forgotten when the code is
-eventually updated. Use a dealloc visitor to free them all at once.
+Use the recently introduced migrate_params_free routine at
+migration_instance_finalize() so that newly added pointers are already
+freed by default.
+
+Special case: The TLS options are currently the only pointers that
+also have a qdev property implementation, so they will be freed by
+qdev using the .release method. Update the method so that a second
+invocation of qapi_free_StrOrNull doesn't assert.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ migration/migration.c | 3 +--
+ migration/options.c   | 7 ++++---
+ migration/options.h   | 1 +
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
+diff --git a/migration/migration.c b/migration/migration.c
+index d14beb5d22..fab7949fe1 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -4052,8 +4052,7 @@ static void migration_instance_finalize(Object *obj)
+ {
+     MigrationState *ms = MIGRATION(obj);
+ 
+-    qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
+-    qapi_free_strList(ms->parameters.cpr_exec_command);
++    migrate_params_free(&ms->parameters, NULL);
+     qemu_mutex_destroy(&ms->error_mutex);
+     qemu_mutex_destroy(&ms->qemu_file_lock);
+     qemu_sem_destroy(&ms->wait_unplug_sem);
 diff --git a/migration/options.c b/migration/options.c
-index 12f884caa4..bdcff002db 100644
+index bdcff002db..46d040fc3f 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -17,6 +17,7 @@
- #include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
-+#include "qapi/dealloc-visitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
-@@ -1066,11 +1067,21 @@ AnnounceParameters *migrate_announce_params(void)
+@@ -273,8 +273,9 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
+ 
+ static void release_StrOrNull(Object *obj, const char *name, void *opaque)
+ {
+-    const Property *prop = opaque;
+-    qapi_free_StrOrNull(*(StrOrNull **)object_field_prop_ptr(obj, prop));
++    StrOrNull **ptr = object_field_prop_ptr(obj, opaque);
++
++    g_clear_pointer(ptr, qapi_free_StrOrNull);
+ }
+ 
+ static void set_default_value_tls_opt(ObjectProperty *op, const Property *prop)
+@@ -1067,7 +1068,7 @@ AnnounceParameters *migrate_announce_params(void)
      return &ap;
  }
  
--static void migrate_tls_opts_free(MigrationParameters *params)
-+static bool migrate_params_free(MigrationParameters *params, Error **errp)
+-static bool migrate_params_free(MigrationParameters *params, Error **errp)
++bool migrate_params_free(MigrationParameters *params, Error **errp)
  {
--    qapi_free_StrOrNull(params->tls_creds);
--    qapi_free_StrOrNull(params->tls_hostname);
--    qapi_free_StrOrNull(params->tls_authz);
-+    Visitor *v = qapi_dealloc_visitor_new();
-+    bool ret;
-+
-+    /*
-+     * qapi_free_MigrationParameters can't be used here because
-+     * MigrationParameters is embedded in MigrationState due to qdev
-+     * needing to access the offset of the migration properties inside
-+     * the migration object.
-+     */
-+    ret = visit_type_MigrationParameters_members(v, params, errp);
-+    visit_free(v);
-+
-+    return ret;
- }
+     Visitor *v = qapi_dealloc_visitor_new();
+     bool ret;
+diff --git a/migration/options.h b/migration/options.h
+index c272eb6208..c7da2d0b5b 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -93,4 +93,5 @@ uint64_t migrate_rdma_chunk_size(void);
  
- /* normalize QTYPE_QNULL to QTYPE_QSTRING "" */
-@@ -1419,9 +1430,9 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
-         return;
-     }
- 
--    migrate_tls_opts_free(cur);
--    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
--    qapi_free_strList(cur->cpr_exec_command);
-+    if (!migrate_params_free(cur, errp)) {
-+        return;
-+    }
- 
-     QAPI_CLONE_MEMBERS(MigrationParameters, cur, new);
- 
+ bool migrate_params_check(MigrationParameters *params, Error **errp);
+ void migrate_params_init(MigrationParameters *params);
++bool migrate_params_free(MigrationParameters *params, Error **errp);
+ #endif
 -- 
 2.53.0
 
