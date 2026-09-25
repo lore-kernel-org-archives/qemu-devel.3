@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6EEC9832F
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73654C9832E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 22:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xADox-0008Pu-SH; Fri, 25 Sep 2026 17:51:08 -0400
+	id 1xAEBc-00072C-9y; Fri, 25 Sep 2026 18:14:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoI-0007mz-7U
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:27 -0400
-Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
+ id 1xAEBa-000721-0Y
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 18:14:30 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoE-0007o2-C1
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:23 -0400
-Received: by mail-pz2-x2b.google.com with SMTP id
- d2e1a72fcca58-88098db8dcdso470456b3a.3
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:19 -0700 (PDT)
+ id 1xAEBY-0001Di-Eo
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 18:14:29 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-cc147d86bebso993024a12.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 15:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790373019; x=1790977819; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=XtGPsasgp0HyndARAiz1kRlvHdn/laykPbN7JXONAq0=;
- b=ZeexUcZVqB0BX/sdEIx9oAJdWNol9KDYJ6GGXNwGQ2l2yhAWklY7dI9ZaBRWh50eE2
- U0CUpsi2uESkXDL8ySOYVYP7sNs5Uw0Ka+YQ+1vpg4YuY0VwMPHEL3KSvvDfXtb9nqNt
- 3BdTALCsCjZsHf70fLIYfzrqI8vsHqoZ1nyxyul8hfhlZZP13dZQScuTrnbI2F8NVIza
- cH7TKSrJm1Q8BToJj6zwoOwCRJlOq0tqMQR5cXKzogAFA82bidAyayd07oy2zrIoAYxU
- TwZumpuy3a8LBoUfaRGZKgkzfbyZAJYXZJAz3KvIQivhx/I/OxxKf6XYVxUc5zpLjlP9
- zWCA==
+ d=linaro.org; s=google; t=1790374466; x=1790979266; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=wyYwLYnGRUj/yzNYaYPtMbhVnZpriID0rxEN4oji/LU=;
+ b=LcV07Jdxr+ILgytpgFm6/BLCl8++SMh+5XrhCyDdr20KrW6tI+Fc3/hMun7GhjhwPq
+ Xa8SKh3WQlYVr613vZrQwFBDWgW0f5jTtl0sL/2iBlqw6XZaY/uDRmnii8SuVt66h84A
+ XJ+KbFh0j7dCuvzfindnngIw/4ifQN66pJaosUgZU5LJleKQfCkAVtXNL8nCXaapsbOs
+ KopYRs+wZQigwPIG0PRmIOL0k5NqINk3bTbLzPANX/O7wt7v+fo+f6eKxrUV8+875++L
+ k7TR0PH/J1Sa5aDkequQFy6e8i8QEnhQprShnNOBSMzaaxBw/Dtu6ngC3xW60IjZdD2F
+ QBCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790373019; x=1790977819;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XtGPsasgp0HyndARAiz1kRlvHdn/laykPbN7JXONAq0=;
- b=0f0qN0ESh5VIF2WOcEH8OEl9++7spCuhnnP2HuED8s+SyyrWS5YDu1gVk0Y8I6JEjj
- HSRTCunC9hXKr0shOI2GLYHvdWV7vZbUf5XuIJPoTAXDyFneh0pIkcbLAhXKnaRuMPIU
- 7DJrdH4AZFgaZ67oxDpcYliJId98h+IxwyD1zAm1cHq4+CwwuDDFTr/OxjTDgdHl/FuZ
- n7s6Lt/bNkhNLfFpqqMkkMxVetPW6etWr67oMzesCMENjHUUSX+O7nqnxm1qsv+0xSTY
- NQfJVjSUOEb9zPuoTmWM1MxRIlcMOqczTbVC6058/jVVD/MAdnW2VDJl0yDVCb0+bBEr
- 3PgA==
-X-Gm-Message-State: AFuF++mTZWiLhRwYYaLePeT/MS6nt4it/XA12IIMjwjmlxT+yyfktpNz
- OAGaUdqiAbbnaKjiDZTXLXsjOar10391JCYT9N6TFQqwfLTSxx8/1xx41y0X/jiwKbP5pzw3ZtT
- 74j7/
-X-Gm-Gg: AYBFou3+M4NtOK8Vzflg+AfqNL58Mr/h1oC+Ve3tWNOFv9j4Nu9SKDyXBrsi2u6MdDz
- H+on/PgWHYDR3zLsdBDwi0QMFWA6Z/J9oQhuY84rEJ4nCwLt5N3Yfv4gSyNt8qX98n1sg/usaTV
- bQ4yEJh1pknG0kqA0atS0zR8Fw3RDnlJbeRxpKNIEC5i2BOpRK/+V2G/kxfAwY7dXWxpxPX4+Qk
- 2SMsgGanbJ5DD3r4t79n3g6bfpXArc8lyNInQq28QhcA0aG3Q0TAF6YwvUq4fAvJFw++qDjxbcA
- sRiGM9KobvH1Xs2Hw/4lbOgWNHtB0taG5z2GymOQMDCLVr8AXB8LiDeZvJmioB8iYbyPQaHYLky
- kThhRZ6lzhYkkoi11lyyuGTkvjQDVbC5/K6WAJXUN42dk2ZjLbnlmHXs/hwphspaOSorrSkL65w
- eJ+VL2h3Wjoc8lGO5fAR3pQIlwFFyqx8CwTX9P7UwNBEvFnujDA8nL/Aq7AdQ9zOIi0bALFM1oC
- B1buSuf3vbucwED1W4F149F8+LbFmRL/YaSi9vu
-X-Received: by 2002:a05:6a00:b70f:b0:87c:e6aa:30ec with SMTP id
- d2e1a72fcca58-87e9dfafebamr5408839b3a.49.1790373018749; 
- Fri, 25 Sep 2026 14:50:18 -0700 (PDT)
-Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ d=1e100.net; s=20260707; t=1790374466; x=1790979266;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=wyYwLYnGRUj/yzNYaYPtMbhVnZpriID0rxEN4oji/LU=;
+ b=UvRs+MnZXI9m1xC78qX8w1pQSJszq/YAfolJMqeH5aJc2erl0kqgsynF9c+/QUYkoE
+ DguHS4+gcp/0IsTnP+5WvjhfafPqBl/RYLnNB+mXJEbvAi+1jgpbb51qcoruOqLmJAh0
+ UzSf+K33IY8/uITfAexTaLk1En351d25fEbPIBFcjlG3lnbzGU/RaXQPw6XCYflssdAP
+ yznRsyFdjUpCVbKjR9gEQWwfFMw/Cgsrab/qUJ4Ob+AJHoZ1SdnLF32ebjDvYmEVvOx6
+ XclSVs4xslZJmr84sOX4Kn+gTTRY4FRyGZDdQeWF6I1aDRBLFbATTVDmATHvp8MfZGOG
+ iHew==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz6UIfX6KdpYdagvOcG/lSvY7A3Jax7HdQl7mBddimNhXHtJcCV8Hv32MuV0QSal9gqXgnomftof8+g@nongnu.org
+X-Gm-Message-State: AFuF++ltBC/+YoKNWz5IHXuAcAhPYswaOPu7Bbf1peumO/TfE6d8L5i8
+ kUrw1DIE9to28FGI2xRVnDvdy8ZeZD+OROp6BPvHj0s6lHzDzScwikIMRSJmZwipOzw=
+X-Gm-Gg: AYBFou0YUmR5GS78UtUbjXC2bNbsWyxyDUX4nfV4p+FKtdEX0u3Awah5GBF8Q8B9qoz
+ OqCAu4QOloSK9cZTBWl5s1fbEgJmWbYHvL3bXY8Qluj5JzuJsKZkF13zLS7eYIgBRjYiDrNPLFO
+ bspqhQURTB+WQRdmBxwlgRQ+W7pxA4W2CtC0GGc2VdS8sg155g0mwc5Ic5JwNW215e83llgl1wW
+ XghlUto1VrBS6ODe3q7I4rYLw0x0Gn3wLimlruPpKDXHTBuff2/eQ5m6NrH6eKwb6+uE/nG9R+J
+ it1eojQHihn18fyF3dAA9z1XQsjS5zI4yfsVN/YC8SMGlMSFTkpCckMcrQMIeo4PFaGglTBLhnC
+ 8hJsJY3jeTMP4ktwNU+1t0HqfywWvBHBH+7avUR6/Sn/OGoBVFDhwDQEyjVUcRt8EuP10cNds0k
+ 26iwDnQTVXmwdb1Jj10xZLY+rXIkt1RGGvtSEPdyEQy6E2Asvh7nggHzf49omC9rq0kYcu5UbDa
+ HliNVN9XXXXlhlbFs+qn0mLk/e6y2IlYv6bV15w
+X-Received: by 2002:a05:6a21:3408:b0:3db:421b:2afa with SMTP id
+ adf61e73a8af0-3de0e72a49bmr4650762637.10.1790374466220; 
+ Fri, 25 Sep 2026 15:14:26 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 14:50:18 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 12/14] target/arm: Split out check_il
-Date: Fri, 25 Sep 2026 14:50:02 -0700
-Message-ID: <20260925215004.456336-13-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260925215004.456336-1-richard.henderson@linaro.org>
-References: <20260925215004.456336-1-richard.henderson@linaro.org>
+ 41be03b00d2f7-cc787929977sm1868742a12.18.2026.09.25.15.14.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Sep 2026 15:14:25 -0700 (PDT)
+Message-ID: <075fb406-a183-42c6-811b-d5c2d09b1663@linaro.org>
+Date: Fri, 25 Sep 2026 15:14:23 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x2b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/19] Migration patches for 2026-09-25
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20260925154010.599247-1-farosas@suse.de>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,97 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate.h     |  1 +
- target/arm/tcg/translate-a64.c |  7 +------
- target/arm/tcg/translate.c     | 28 ++++++++++++++++------------
- 3 files changed, 18 insertions(+), 18 deletions(-)
+On 9/25/26 08:39, Fabiano Rosas wrote:
+> The following changes since commit 3876503faff51ce3a132dbbd0ab42c10f2269319:
+> 
+>    Merge tag 'target-misc-20260924' ofhttps://github.com/philmd/qemu into staging (2026-09-24 13:30:19 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/farosas/qemu.git tags/migration-20260925-pull-request
+> 
+> for you to fetch changes up to bf8156b03d263a66c00707d38b3f852bd9560fb0:
+> 
+>    docs/migration: document that postcopy can be used with multifd (2026-09-25 11:29:14 -0300)
+> 
+> ----------------------------------------------------------------
+> Migration pull request
+> 
+> - RDMA migration fixes and performance improvements
+> - Updates of call sites to new vmstate APIs (bool+errp)
+> - Removal of open-coded handling of QAPI structures
+> - Documentation updates and other minor fixes
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index f633aa265f0..7eba9b764ce 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -382,6 +382,7 @@ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
- void arm_gen_test_cc(int cc, TCGLabel *label);
- MemOp pow2_align(unsigned i);
- void unallocated_encoding(DisasContext *s);
-+bool check_il(DisasContext *s);
- void gen_exception_internal(int excp);
- void gen_exception_insn_el(DisasContext *s, int64_t pc_diff, int excp,
-                            uint32_t syn, uint32_t target_el);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b3438235828..7f858654c43 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -11174,12 +11174,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     s->fp_access_checked = 0;
-     s->sve_access_checked = 0;
- 
--    if (s->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(s)) {
-         return;
-     }
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f32200cc47e..fbacc3b7574 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -1159,6 +1159,20 @@ void unallocated_encoding(DisasContext *s)
-     gen_exception_insn(s, 0, EXCP_UDEF, syn_uncategorized());
- }
- 
-+/*
-+ * These conditions have less priority than instruction abort, and thus
-+ * must be checked after reading the instruction.  They have more priority
-+ * than the AArch64 BTI exception.
-+ */
-+bool check_il(DisasContext *s)
-+{
-+    if (s->pstate_il) {
-+        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+        return true;
-+    }
-+    return false;
-+}
-+
- /* Force a TB lookup after an instruction that changes the CPU state.  */
- void gen_lookup_tb(DisasContext *s)
- {
-@@ -6153,12 +6167,7 @@ static void disas_arm_insn(DisasContext *s, unsigned int insn)
-         return;
-     }
- 
--    if (s->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(s)) {
-         return;
-     }
- 
-@@ -6728,12 +6737,7 @@ static void thumb_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     dc->base.pc_next = pc;
-     dc->insn = insn;
- 
--    if (dc->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(dc, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(dc)) {
-         return;
-     }
- 
--- 
-2.53.0
+Applied, thanks.
 
+r~
 
