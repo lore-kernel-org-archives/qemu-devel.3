@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EEBC9832E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C95C9832A
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xADox-0008PI-II; Fri, 25 Sep 2026 17:51:07 -0400
+	id 1xADox-0008NM-9a; Fri, 25 Sep 2026 17:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoE-0007lr-N0
+ id 1xADoE-0007ld-9Z
  for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:27 -0400
 Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoA-0007nA-5x
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:21 -0400
+ id 1xADo8-0007m3-B7
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:19 -0400
 Received: by mail-pz2-x10.google.com with SMTP id
- d2e1a72fcca58-86b90133ae8so738062b3a.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:17 -0700 (PDT)
+ d2e1a72fcca58-86b90133ae8so738048b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790373016; x=1790977816; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tQfq9b5gBx/LgSnqN5kSQmZ7qxJt+3ELV+MU7inlpJI=;
- b=xqQf/+m6nt9v1mUlD6mXbZm7SCObMH5SjuVT8UMwK7+RoPljnipZjs0Gk9sewEiYUj
- iQZkg16d6T/2SpQN5BhKQS/zXw1W47kPLDUgdvP4i+iBr24ZuFnhrtssO88vK4KTLpyF
- A+5TYPq6yEHZhFesoTgvxl2UHG2t+9zAJGAph0iqBMMqY7guZuw1ryB1U4vbHAI5/IIy
- SlKHE0i8Pqa/7Oq+wxAgHN72qTAVhvBsEjG7SN9+Kjad7Q9W14aPqW5qQzW6fXDvlF9x
- M8C1psVjCB2LMcRnDrgV0igSTfvjxCZX1gt4Q2CGnZVj8iCdjUn3+6ebboNWy0352Jx/
- G+5w==
+ d=linaro.org; s=google; t=1790373012; x=1790977812; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=KidwwYkf1WwMwb3GYWA2PIDAyv2awOr01ocgLXZNEGU=;
+ b=Dcc+jE4G6nOMk2eYPFmAuXJxjhQRsRhUgXXMakyX001Bg8UnTOnCvyfburkZRhtuMk
+ rFoImd5pqo327wuzGjXHsXFpoTDomtw1MTci32NjNtT+RDGvrhjBHjc/grfe8Hc/ejyv
+ 2QZz5mO8hvjpkqr2hKVBsOdwKASQ95IOK3K2nRt1mCQQmO7ogirifNoF2LwvnJpw79DU
+ 5gEqdee77EpA5lH3bvtFgDILGYCR0y0kz3SCDFh2CsBEziGVGv5bkPBk9PzvcUPjNCwR
+ P67FQ7yjUyOtzwBZy69wpMf9g4WPWZ8aCQag+OVrvzejGOfQsjopF5KADv54aVL6N278
+ 4ZsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790373016; x=1790977816;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tQfq9b5gBx/LgSnqN5kSQmZ7qxJt+3ELV+MU7inlpJI=;
- b=sLiSmLcjr5tSVbZbRPVgRX1G/khPIy1aZPUqzIwgEt1INLDcgY2+ulVuJ0v4sCylca
- De8hzhHdfMuGwc0yxi4T9LLCxJcd4y/wYR2bhihkczXs49v+yiylh/GBeOFLrDoh2+cq
- ImQ2KH4UCzGjr0EHIW4cSDyWGlihJ9LFpTiMVJVkvbk3mq0JQIhvVvmXul2GndGxaSRH
- 2IBOFCLhGUN6zlGlRfsq5o8/NJGX8hrWk3vC561X73zuOK1vc4rBMaV6+vDmxCwvndA9
- cYzErkb6NEYbB7dTLT7VkM7HFPHzregnOxcwcna363R+fXntEVs6UxqED7bnaFcVKWa4
- t/GQ==
-X-Gm-Message-State: AFuF++mODO8s2yxp6rfHHnMAmuD8z7oyUoyfAot//HOO5kCtnwFr/JVe
- zP3W/s8ugJO/bAkBOWqiyRcIWV7fwwl13fk5szkWubiqRJ6+d0Hx/ufHdP1FQpTYSjYwljGjGt3
- 5CwTF
-X-Gm-Gg: AYBFou3/7yQMdT6PBTUgjAg3ncloDhR/gmoxuKTKYZ+1lEbpr2aWbvaR3CPQbpHgd4H
- NXeENeH3uSN5qK0yHdI2wBfq1P0XKEhRa02JouCGtgNaDMJ4M95giro1fg8PUDjHNBNq5i9PSqy
- bfyQcVzUxMjTHcjtb6+/NVucuA9FOv+z4PQ0pw2YqUkUZD+Q8qsEkIwzvh6/CZF5jNAoLo8MKM1
- aK0jLx/CbhaOBeb5lhZ6YvHvEGG4MWtDPkl8itBcFJiE4xyg7rtE0qgvA+c0HDTmKzLKJxz0aXF
- 4q1Ee3TtBMwh/EsqvYSxPApTaSCXmlLt1PVQ010llTav+3kdtkLkHXxUxlKunqxmPOv2jjn1eoZ
- IhJY1e2GH6ImtW2NDnbF1AZOKQM80erEPzYzKbzDPAVZ9UyJ++zWElzgTfnJw9iG5M59p11j+nQ
- 1g7AlRbpZz2WWowzQDOgu5fLSPm8wYdXeJx249rm/y9zmqJxI22YB8oBWE6n3h6zxVVdorBcd9L
- XvELFRE/CYUcvBUobzIBM40ZFgA8+zdfbatQ7wJ
-X-Received: by 2002:a05:6a00:2a0f:b0:874:705d:f63e with SMTP id
- d2e1a72fcca58-87e9b896643mr5303369b3a.32.1790373016444; 
- Fri, 25 Sep 2026 14:50:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790373012; x=1790977812;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=KidwwYkf1WwMwb3GYWA2PIDAyv2awOr01ocgLXZNEGU=;
+ b=ZWOprR/t8A1vdCrTJt0LxK6JSFNboQg9cUvRLOplISzNqxmnLvGNndI9ixMzS7iQ+B
+ OpDW8mxKzI/NZRV2HJJD1L0ArWR3BHzJnTRfDko1QM4lhwIZ1ydm47oNzGCqJiA2kl5A
+ QZl271PPt9ZIxK31idGJo6iUdO8y4R6W6BJbNvBVvEshsNLrnU3xlXRBqLA/EGQ66+7C
+ SkFHozvpOlUXP6HmtUS8Df2bIOn2kBv5rnKC0q2TOveghGS4GuUv3j15MqKo5iKIs8qR
+ jaXbTYXLeh6mR67kx1G6FRrSAudQ8Vwq0XO2UtyDA4pH+jPcKHLDJAET8TGDI/Ecbxv8
+ /MNw==
+X-Gm-Message-State: AFuF++lZPyMNzgBsKW9GHDot8VVO4VcV6dtb74ZhpgXG9VijoMOCk2Ew
+ TiG4UXPbaoZh1kNCZQAPFgYx2pioXlVlbezSt2aamx4jyqJdbJJIyVzqXW5Kv1qa3kqqZt0iMIK
+ 1ElSo
+X-Gm-Gg: AYBFou3HInflZU2aDwTVXqcoVD52oE0I63YSjuzv4asndTw7pGTMxmkcKxuBvAMY/Qj
+ 8ZpQbRd6Eva4zSHcIcO7eKNuz1i40FcQejanL+wCv/VkziztGlfvySwUkaoDDc5lfCBrF93Kum4
+ jbdMN381QdX4c1L2muyaK0kJZKsjdqQIvwLGnrQhXs0FxaSjXV7z/zOslwxgv3Ylf2OcquP0d1w
+ MxLnNHY0LMCxo/UpO48+4iSfz8RqVMFnUu8d1rTMQUS9GJ+icqxh1lCsDl8Affs3RTTzc4X5ZNl
+ MZfH3/c2hQJY+pCQgtZD8VlvrigG/iuWSTskjJdqAzFoGlGbtS7NLSxJq+f8VF8medPeznlDo5Y
+ NMLksAWhNfE5VJ3xgBHAmJbfp2LlzVOWADts6x9iigPjivlv0laKS0hW95fVjUF8D+9cUQcsv9H
+ ocraeSJ3i4+M2z0gf74JeFu+2hU4giSkMDqzj29rJ3PGsayeXM9Ho3IH/q1vrj/Xm02Rgh9dvlK
+ RZVyKF6lafTUje2Wkm/JFhwGIydilzr1ZoQsw7d
+X-Received: by 2002:a05:6a00:6c88:b0:857:7384:b5f6 with SMTP id
+ d2e1a72fcca58-87e9946e383mr5936783b3a.18.1790373012446; 
+ Fri, 25 Sep 2026 14:50:12 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.15
+ d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 14:50:16 -0700 (PDT)
+ Fri, 25 Sep 2026 14:50:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 10/14] target/arm: Read and write PSTATE.UINJ
-Date: Fri, 25 Sep 2026 14:50:00 -0700
-Message-ID: <20260925215004.456336-11-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 07/14] target/arm: Drop U from most PSTATE bits
+Date: Fri, 25 Sep 2026 14:49:57 -0700
+Message-ID: <20260925215004.456336-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925215004.456336-1-richard.henderson@linaro.org>
 References: <20260925215004.456336-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
  envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
@@ -102,61 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With FEAT_UINJ, allow PSTATE.UINJ to be set from aa64 and aa32 modes.
-Read the value back for SPSR_ELx from aa32 mode.
+PSTATE is already 64-bit, but many bits are defined
+such that ~PSTATE_FOO accidentally clears the high bits.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Except for PSTATE_N, we can just drop the qualifier.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h |  3 +++
- target/arm/helper.c    | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ target/arm/cpu.h | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 843e12487ec..c41fa5225c7 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1392,6 +1392,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
-     if (isar_feature_aa64_nmi(id)) {
-         valid |= PSTATE_ALLINT;
-     }
-+    if (isar_feature_aa64_uinj(id)) {
-+        valid |= PSTATE_UINJ;
-+    }
- 
-     return valid;
- }
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 2034f1d1f17..ee48442383c 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9385,8 +9385,9 @@ uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
-         ret &= ~CPSR_DIT;
-         ret |= PSTATE_DIT;
-     }
--    /* Merge PSTATE.SS into SPSR_ELx */
--    ret |= env->pstate & PSTATE_SS;
-+
-+    /* Merge PSTATE.{SS,UINJ} into SPSR_ELx */
-+    ret |= env->pstate & (PSTATE_SS | PSTATE_UINJ);
- 
-     return ret;
- }
-@@ -9395,6 +9396,14 @@ void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
- {
-     uint32_t mask;
- 
-+    /* Save SPSR_ELx.UINJ into PSTATE. */
-+    if (unlikely(val & PSTATE_UINJ)
-+        && arm_feature(env, ARM_FEATURE_AARCH64)
-+        && cpu_isar_feature(aa64_uinj, env_archcpu(env))) {
-+        env->pstate |= PSTATE_UINJ;
-+        val &= ~PSTATE_UINJ;
-+    }
-+
-     /* Save SPSR_ELx.SS into PSTATE. */
-     env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
-     val &= ~PSTATE_SS;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 8c50e91004d..d36611e04a5 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1558,26 +1558,26 @@ void pmu_init(ARMCPU *cpu);
+  * Only these are valid when in AArch64 mode; in
+  * AArch32 mode SPSRs are basically CPSR-format.
+  */
+-#define PSTATE_SP (1U)
+-#define PSTATE_M (0xFU)
+-#define PSTATE_nRW (1U << 4)
+-#define PSTATE_F (1U << 6)
+-#define PSTATE_I (1U << 7)
+-#define PSTATE_A (1U << 8)
+-#define PSTATE_D (1U << 9)
+-#define PSTATE_BTYPE (3U << 10)
+-#define PSTATE_SSBS (1U << 12)
+-#define PSTATE_ALLINT (1U << 13)
+-#define PSTATE_IL (1U << 20)
+-#define PSTATE_SS (1U << 21)
+-#define PSTATE_PAN (1U << 22)
+-#define PSTATE_UAO (1U << 23)
+-#define PSTATE_DIT (1U << 24)
+-#define PSTATE_TCO (1U << 25)
+-#define PSTATE_V (1U << 28)
+-#define PSTATE_C (1U << 29)
+-#define PSTATE_Z (1U << 30)
+-#define PSTATE_N (1U << 31)
++#define PSTATE_SP (1)
++#define PSTATE_M (0xF)
++#define PSTATE_nRW (1 << 4)
++#define PSTATE_F (1 << 6)
++#define PSTATE_I (1 << 7)
++#define PSTATE_A (1 << 8)
++#define PSTATE_D (1 << 9)
++#define PSTATE_BTYPE (3 << 10)
++#define PSTATE_SSBS (1 << 12)
++#define PSTATE_ALLINT (1 << 13)
++#define PSTATE_IL (1 << 20)
++#define PSTATE_SS (1 << 21)
++#define PSTATE_PAN (1 << 22)
++#define PSTATE_UAO (1 << 23)
++#define PSTATE_DIT (1 << 24)
++#define PSTATE_TCO (1 << 25)
++#define PSTATE_V (1 << 28)
++#define PSTATE_C (1 << 29)
++#define PSTATE_Z (1 << 30)
++#define PSTATE_N (1ULL << 31)
+ #define PSTATE_EXLOCK (1ULL << 34)
+ #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
+ #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
 -- 
 2.53.0
 
