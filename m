@@ -4,139 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6C1C98318
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 01:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A04C9831E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 01:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9vAE-0005z7-Kz; Thu, 24 Sep 2026 21:55:50 -0400
+	id 1x9vCR-0004WX-29; Thu, 24 Sep 2026 21:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x9vAC-0005rp-GZ
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:55:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x9vCN-0004RY-Hi
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:58:03 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1x9vAA-0006BK-Dq
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:55:48 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P1lNaJ3187737
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 01:55:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Qw03TSUT4OFuqkn9z9ic+yAik6QSC2p4Ukr6ZgQrJHY=; b=JilH/S4du62Lgcsn
- 60EFhzJ6yIkUlOQHIi+AYR17yNEj244dHJOVCqG5Wf3N1FwrCD5tL3j2v3NFzRJ4
- GMLHrti4N+KuIsRmXM+bK6aticF9PXHkG2vTi669ml7xgsFegBbZ+4Pm/U9YDsq/
- I1nXWh0kaO7OOq18EUyFXLQuar7XcwO0WF3d0M3SE1yYURvV4CuzpNsvwZ/PZkC0
- HT9dUlXE06unuKnAGFsU4f5kBcRe2Eb4cy4OD64aFrJ1X9uVdfTBFrzfFdM/b9CZ
- TdE+DM0YLIbPdsDWpXsrDVbUlzug7Ddnbr4jiVmBeK8WfWpydb8hZw9P7xDo1mPM
- CBKUOA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gw1t7ucr8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 01:55:35 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30c0d568830so723271eec.1
- for <qemu-devel@nongnu.org>; Thu, 24 Sep 2026 18:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790301334; x=1790906134; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Qw03TSUT4OFuqkn9z9ic+yAik6QSC2p4Ukr6ZgQrJHY=;
- b=PA/RY7Wl2HYn2YnR983UleQuk5nfwkC86nIjION8HnV6D9CynwDi2YFr8nttXpTmuF
- +W79p6uh2Q4QrbWfemz4b9VseeZQlnRWAuYb/Euzk+k4qWlzbhufMO3PWQrpvZTC8je5
- Ed4p4fK6EBheSa1ii4CeGkI2Aa+67VslgG3sHsLR5ZbOn7pv278v/g0z8lx9AfHduvSO
- RWZ7ge7vFKiTgu6gi2yUup2/kUWHV7acXrV0hx204ZYk6NGh4fUwtBHRVa2CPJ/QUiPF
- ienv0CV0Gy371HrciJbFVtQD8+J71FgFDtgHKaT7YKNNJYgDagDki37ZFjnobf+6GHZx
- MZhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790301334; x=1790906134;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Qw03TSUT4OFuqkn9z9ic+yAik6QSC2p4Ukr6ZgQrJHY=;
- b=X8byiH6tP4w1OX6p5haDIXmq6SqAJKOYOWw+QAxaE2KheV7OB1rXgCf8xo44iWH9+f
- vgBRZIZDeyhrGhFT0e+hXo5sSocY76/jdhwE2v4E0ZcHjZtiqaNmQMDyf8qPVFJAoqZi
- PclHmQDXjnCad1A6HgfBrg7+/wc49PusTIlAySEEovfFsthVuHpWunFYuBM5mb5QptXo
- Ro9BcMJiBqN7vt4J118It0I/Yp/OxV4KXFQAPlrYo4coFQlg886J7qCULlrcxVlttDU8
- 9HyFgJ5zAXTFKRIQEK7S4FXJipZAcqLH8SC5pt0lEkF78Cn9rg6HIrdn4RVElhB0Vjzj
- v+hg==
-X-Gm-Message-State: AFuF++k/fESsp+ELBJNByurlCjw4GjoQqfPCaV361er/hUWyr6IK9XLi
- Lal/aYB+E3Ri8Y0wX39Lnv6+j3MMhPz+XJwz5ieU2JO1amsNzu4QLYalsN9+yTKQySTe+HIldZ1
- MCmBYpDMD7Dfkw1HLHEHngVhjte7kko5zS03eXuLdKmxKRYjGFdCs+g1UK7u/wS774A==
-X-Gm-Gg: AYBFou3HO2GjL8rbyvwe9d9jOPhXZ54DdC8ZQkc/BL75IialkYZMHkChRqIXMnzSG+q
- sAEd4Qea2wYatIXjmQYBDIe0ICTImQ9LV67LLApQ5ZlWd6ZeY3HVqUg9k4cjKeBHl/AKrVbV8+G
- zUu7Xg/7PznNRmK6a2wPsUMCo3139pklSR6Gknvem8enVjUl5RhnDBTIRZ7C2df04lEyQRcuc0F
- KmXLkUSdYFvsGJ2i4O1XDi5eL1mGsaJ6d1nYOUtjLONd0Vr66I/HmO2z5N2sb6OynX4ZB/QCzLC
- VOVAcKg9yGeKVtab1B3zblmXHlQKfMSRWtHdV73WphXM2HHMq0X85t2R688XlXEwCbA+AL4CqXZ
- GQL7ctw50gae4xbkaabzdcRHuAIMVhVAOHS1eL+opbRUHvJk=
-X-Received: by 2002:a05:7301:fc07:b0:341:9040:8ec6 with SMTP id
- 5a478bee46e88-3419040924bmr484261eec.41.1790301334150; 
- Thu, 24 Sep 2026 18:55:34 -0700 (PDT)
-X-Received: by 2002:a05:7301:fc07:b0:341:9040:8ec6 with SMTP id
- 5a478bee46e88-3419040924bmr484250eec.41.1790301333633; 
- Thu, 24 Sep 2026 18:55:33 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3416e4c2f50sm1873720eec.27.2026.09.24.18.55.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Sep 2026 18:55:33 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com, Marco Liebel <marco.liebel@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 31/40] target/hexagon: raise an exception for HVX with SSR:XE
- clear
-Date: Thu, 24 Sep 2026 18:54:20 -0700
-Message-Id: <20260925015429.2579174-32-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260925015429.2579174-1-brian.cain@oss.qualcomm.com>
-References: <20260925015429.2579174-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1x9vCJ-0006Lj-Te
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:58:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nUUMP4fdoQNhIWbrE8xVOJtKXALNcQtVRUiLdVrtHLBEy9AzCsijgj97VkfRZ13lZmvBJf8IvMGcEe+at5hTY2dqmAoXaNhyjIpko73prea5g8Mp9Zz2EWIeoatR6hbXanAXPmxIPxmwXlax+/VlC9lF8Q8coNDamJa+a8+jbpD9UIJmQOe8wVYyFsbOQKzFyzDWDFtJlpxL2VHBpivvA5bu4O6/Bo5ZvpBlHmuoB/W3UxzSJMQdr7zfRmvZTAfMZ3Bjpt76I4gPBOfpSWm5UMCf5quqSwgzNjbU9gcQ1N1bqpN/OSuJ8vXKEVpK0EGgvplhkdibLnc6rLAbniQwpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TxsrZcmZDsQTiSmN44Erkta9rx/Yp2yW8Xpaom/wmOM=;
+ b=mLkdGxlfzRAbIyAU+BuA18ga+OirxB+vY23pTkkQG3yKp+SOVkseqe8noG75iSKcEvGP85DTQZHpdjWth+StA/0PUyK6pKyrFd1vPJ1qVOtqp/w1UTw+CnIL+9o2ik4neVfzei4lXZXINH3I5W22b1gZ5akMZBiXk1bOenGgFCCGI2nVWodcf4tu4XQfQAWd+HIUFrXDMTnWuFhGZt0O5o61i6Z5QdGFmX9dvj2EvCn03B+jzWVnZDQu0K/uzuMmeVulJA6BBoBrT5PHi3nvASfW7zY5smr19qh2aHqcviUQMFaR0tVzKJVE+Y3hlOcTdyq3PIYJOG/XghQMKMcLMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TxsrZcmZDsQTiSmN44Erkta9rx/Yp2yW8Xpaom/wmOM=;
+ b=w0QL+Y6wO4SB9WqQhU6Tr1Xz7nUYkWktwq7kiBjrne9LoRTRW/BgL6eA7UFfwef3prF8eh+MFHkeDQv5qp11QwLZzxUquZLBTi2myM6yNs9lAa+R8ikUieobRmxuOPQtNflsxakkwJwBsFeegm1hkxbMrMsMYxRWOQxszoN21KU=
+Received: from BY3PR04CA0016.namprd04.prod.outlook.com (2603:10b6:a03:217::21)
+ by LV2PR12MB5870.namprd12.prod.outlook.com (2603:10b6:408:175::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Fri, 25 Sep
+ 2026 01:57:54 +0000
+Received: from BY1PEPF000264B6.namprd02.prod.outlook.com
+ (2603:10b6:a03:217:cafe::93) by BY3PR04CA0016.outlook.office365.com
+ (2603:10b6:a03:217::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.18 via Frontend Transport; Fri,
+ 25 Sep 2026 01:57:53 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BY1PEPF000264B6.mail.protection.outlook.com (10.167.242.123) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 01:57:53 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 24 Sep
+ 2026 20:57:52 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <david@kernel.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
+ <xiaoyao.li@intel.com>, <berrange@redhat.com>, <armbru@redhat.com>,
+ <pankaj.gupta@amd.com>, <chao.p.peng@linux.intel.com>, Fabiano Rosas
+ <farosas@suse.de>
+Subject: [PATCH v6 10/12] hostmem: Support fully shared guest memfd to back a
+ VM
+Date: Thu, 24 Sep 2026 20:43:16 -0500
+Message-ID: <20260925015700.1260501-11-michael.roth@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260925015700.1260501-1-michael.roth@amd.com>
+References: <20260925015700.1260501-1-michael.roth@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: wHCMIOgBHNO1zwf_MyXIJy56m6PfRP16
-X-Authority-Analysis: v=2.4 cv=U/MHnuru c=1 sm=1 tr=0 ts=6ab5d497 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=zEVancPc-5b3c_FCZogA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAwNyBTYWx0ZWRfXwddeZGXmmpUB
- 5Y2pvgCicO5Rv5Ej7y0mp0pypWl4LeWW2Xf++avor9eva417H4ofWCwMN8/X39Jc7zpXPv7MyS1
- J2Ib2cS6Us0MXhlCTN74f/4o1AjCQgvSxxwCEZ8NXfZahgdRpmXc6xp/SJcUb+5x0inAl9PodGX
- A7rCHCoI0E4+A++uoMgJA7ElKvt+53KGPMarx7I0qmGaKDGQA6BC/JSYYZRsSYxDZH21ctvqDR0
- d0WBCqqUJEuzWNwvolwgFSVTSircJwO/z/C1mffusKxNodxdh1zhAsFycy5BRy90tQArj9hIHFW
- 63N4vSSSBeGp3DfdCP7ULmrt2gFcaPwSyyQ7r2ualOByOweUcqDDGvNlmKb//DWjcEatEsErprD
- LhlXorfoP4o3HF348/ioyHsyUNjvKG+S3WgjbLPID6thjz4Von9mLxgpee40XGQXKDrz/4E2rIu
- deSm4giqiP9vQa5A6Uw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAwNyBTYWx0ZWRfX4h23hLslv5J2
- exUZfKf9hPXwECne1wEc4F5d9qHC4tlitCFKBkLsmXpjEfKXJs86zoxybhJThS2GkbHleo2UN3v
- Dqxrc+bMl9k0vrJIkEnZDZNtscXZ88U=
-X-Proofpoint-ORIG-GUID: wHCMIOgBHNO1zwf_MyXIJy56m6PfRP16
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-25_01,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250007
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B6:EE_|LV2PR12MB5870:EE_
+X-MS-Office365-Filtering-Correlation-Id: 04c36e74-baa6-4ff6-dbcd-08df1aa86980
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|1800799024|376014|82310400026|23010399003|10067099003|56012099006|11063799006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: zF/dFiet0pyGJI2NQEsqIDnvZkd3tedrXDOjzgVq+W+vDONieJnhZTRmQlM7MgrI7ApI62SjkFQTRsORmapDanRTBItu6ArfAwwqu9tPBlflmvwu6Z4QkeK0BGB9v9OmYyS+fYtCXCiF173UIC8MdT7vaqxsrrBL9aY4DN14MLN6uueNvJN97Idm76m/3DGcWchY2FnhVuEJJskl6X5iosuFYeeT1WPTI7XKn+r/lx/a5C2nvOkzMQF0Us81YreTr70Cy5s9HrllKoykwDaub3XawxmzTCpW6nhfORaXriT/LdFy577ejJR2bZWpuYeHZbQvn6+JGGrgQpoJBJSspFGkSoyPALe/wMnD31ELv7uLvFkwQU39O1+pjbDawvfveJ2uFKu06O7xtWRLWjvkHcBR58J8ApS+OdeI/Y1U/idvqTDO0mJj3XBE0y08pZHbmJqNeuscmPemb09CyUf6/S06FtfAcB7M2U2/aFv19bnCYrgi8kh2V9mrIKzsChtqDFfw0kMjgvIu36Hy/lM70JsOYm1odRG/vr66r+9fk30TT6Meb/FzG7bQRZSa/NhoAfkB+T+SgouzJkmm3zHrcLxdybzFmi5dc1wzdoxH40mF8sKnT1o2zdOvA8ssgnIgYqDNhnMQD7+ysxQm7lmuKgZNtbVoF0EPlAl0Qm6tT/e6lJTwgnMf0WI6xrvW2Ddunlwkvnm0Ya4i08HbXLMwaQ==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(1800799024)(376014)(82310400026)(23010399003)(10067099003)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: zrTMdZ7tDGLOgz1+ERG94lzdCqMFVsDVrUdzmpgIcrSf8AtVfo1fCZrAVzm3+oOctRx61qNYeDtRGfDrRYnxNjv9KIxKnc03y1LWRCkIxUZlKYZUTn5R96DooIijUHTJAfwtmAo4wnyd5Zk1dmaaJxz6GEIvzxJ8w5rm9TR/WcvIWCP8t/r1+ZcVJFIvRYnjN1xpZhmVUzNzpVMnfahc7ca7lcGBdDYPpJcSImQrwiqMGFsewvpVeVN1iF82+tyfA57Vi8b/qH5dbhIJufCQGToxzNXcgbXkh0Sjh/BFboTuOWxdOmDHlozKVXMZB9Kv5x40g4iRCEb3f4LJ+IPGzvlq6Ae+nyltXo6MLCCzLl+0JEJKzDQu0OftBpDZa9DchZbVBwZxw8+27QypWIBW71GdnrQLfqwJ8VbDv2H+XgmZELGQFS9bklEoYeYTmmXj
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 01:57:53.5535 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04c36e74-baa6-4ff6-dbcd-08df1aa86980
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B6.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5870
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,59 +130,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-U1NSOlhFIGdhdGVzIGFjY2VzcyB0byB0aGUgSFZYIGNvcHJvY2Vzc29yOiBleGVjdXRpbmcgYW4g
-SFZYIGluc3RydWN0aW9uCndoaWxlIGl0IGlzIGNsZWFyIG11c3QgcmFpc2UgYSBwcmVjaXNlIGV4
-Y2VwdGlvbiB3aXRoIGNhdXNlIDB4MTYsCk5PX0NPUFJPQ19FTkFCTEUuCgpDYXJyeSBTU1I6WEUg
-aW4gYSBUQiBmbGFnIGFuZCBlbWl0IHRoZSBleGNlcHRpb24gZm9yIHRoZQpmaXJzdCBIVlggcGFj
-a2V0IG9mIGEgVEIgd2hlbiB0aGUgY29wcm9jZXNzb3IgaXMgZGlzYWJsZWQuCgpSZXZpZXdlZC1i
-eTogTWFyY28gTGllYmVsIDxtYXJjby5saWViZWxAb3NzLnF1YWxjb21tLmNvbT4KU2lnbmVkLW9m
-Zi1ieTogQnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIHRhcmdl
-dC9oZXhhZ29uL2NwdS5oICAgICAgIHwgIDEgKwogdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmgg
-fCAgMiArKwogdGFyZ2V0L2hleGFnb24vY3B1LmMgICAgICAgfCAgMiArKwogdGFyZ2V0L2hleGFn
-b24vdHJhbnNsYXRlLmMgfCAxMSArKysrKysrKysrKwogNCBmaWxlcyBjaGFuZ2VkLCAxNiBpbnNl
-cnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vY3B1LmggYi90YXJnZXQvaGV4
-YWdvbi9jcHUuaAppbmRleCBiMTUzMzY4MGJkNy4uOTdmNjg5ZmRhMjIgMTAwNjQ0Ci0tLSBhL3Rh
-cmdldC9oZXhhZ29uL2NwdS5oCisrKyBiL3RhcmdldC9oZXhhZ29uL2NwdS5oCkBAIC0yMDcsNiAr
-MjA3LDcgQEAgc3RydWN0IEFyY2hDUFUgewogRklFTEQoVEJfRkxBR1MsIElTX1RJR0hUX0xPT1As
-IDAsIDEpCiBGSUVMRChUQl9GTEFHUywgTU1VX0lOREVYLCAxLCAzKQogRklFTEQoVEJfRkxBR1Ms
-IFBDWUNMRV9FTkFCTEVELCA0LCAxKQorRklFTEQoVEJfRkxBR1MsIEhWWF9DT1BST0NfRU5BQkxF
-RCwgNSwgMSkKIAogR19OT1JFVFVSTiB2b2lkIGhleGFnb25fcmFpc2VfZXhjZXB0aW9uX2VycihD
-UFVIZXhhZ29uU3RhdGUgKmVudiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgdWludDMyX3QgZXhjZXB0aW9uLApkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24v
-dHJhbnNsYXRlLmggYi90YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaAppbmRleCBiOTBmN2ZmZjFj
-MS4uYjMzZDVkYmRiZTggMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5oCisr
-KyBiL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5oCkBAIC05OCw2ICs5OCw4IEBAIHR5cGVkZWYg
-c3RydWN0IERpc2FzQ29udGV4dCB7CiAgICAgVENHdiBicmFuY2hfdGFrZW47CiAgICAgVENHdiBk
-Y3plcm9fYWRkcjsKICAgICBib29sIHBjeWNsZV9lbmFibGVkOworICAgIGJvb2wgaHZ4X2NvcHJv
-Y19lbmFibGVkOworICAgIGJvb2wgaHZ4X2NoZWNrX2VtaXR0ZWQ7CiAgICAgdWludDMyX3QgbnVt
-X2N5Y2xlczsKIH0gRGlzYXNDb250ZXh0OwogCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9j
-cHUuYyBiL3RhcmdldC9oZXhhZ29uL2NwdS5jCmluZGV4IGZhZDUyNmNjZmI1Li4xOTQ4NmUwZjc0
-MSAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vY3B1LmMKKysrIGIvdGFyZ2V0L2hleGFnb24v
-Y3B1LmMKQEAgLTM0MCw2ICszNDAsOCBAQCBzdGF0aWMgVENHVEJDUFVTdGF0ZSBoZXhhZ29uX2dl
-dF90Yl9jcHVfc3RhdGUoQ1BVU3RhdGUgKmNzKQogICAgIGhleF9mbGFncyA9IEZJRUxEX0RQMzIo
-aGV4X2ZsYWdzLCBUQl9GTEFHUywgTU1VX0lOREVYLAogICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgY3B1X21tdV9pbmRleChlbnZfY3B1KGVudiksIGZhbHNlKSk7CiAgICAgaGV4X2ZsYWdzID0g
-RklFTERfRFAzMihoZXhfZmxhZ3MsIFRCX0ZMQUdTLCBQQ1lDTEVfRU5BQkxFRCwgMSk7CisgICAg
-aGV4X2ZsYWdzID0gRklFTERfRFAzMihoZXhfZmxhZ3MsIFRCX0ZMQUdTLCBIVlhfQ09QUk9DX0VO
-QUJMRUQsCisgICAgICAgICAgICAgICAgICAgICAgICAgICBHRVRfU1NSX0ZJRUxEKFNTUl9YRSwg
-ZW52LT50X3NyZWdbSEVYX1NSRUdfU1NSXSkpOwogI2Vsc2UKICAgICBoZXhfZmxhZ3MgPSBGSUVM
-RF9EUDMyKGhleF9mbGFncywgVEJfRkxBR1MsIE1NVV9JTkRFWCwgTU1VX1VTRVJfSURYKTsKICNl
-bmRpZgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmMgYi90YXJnZXQvaGV4
-YWdvbi90cmFuc2xhdGUuYwppbmRleCA4NTYxY2VjNGU0MS4uYmY5MjE2NmUwZmQgMTAwNjQ0Ci0t
-LSBhL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jCisrKyBiL3RhcmdldC9oZXhhZ29uL3RyYW5z
-bGF0ZS5jCkBAIC03NjYsNiArNzY2LDE0IEBAIHN0YXRpYyB2b2lkIGdlbl9zdGFydF9wYWNrZXQo
-RGlzYXNDb250ZXh0ICpjdHgpCiAgICAgICAgICAgICBpID0gZmluZF9uZXh0X2JpdChjdHgtPnBy
-ZWRpY2F0ZWRfdG1wX3ZyZWdzLCBOVU1fVlJFR1MsIGkgKyAxKTsKICAgICAgICAgfQogICAgIH0K
-KworI2lmbmRlZiBDT05GSUdfVVNFUl9PTkxZCisgICAgaWYgKGN0eC0+cGt0LnBrdF9oYXNfaHZ4
-ICYmICFjdHgtPmh2eF9jb3Byb2NfZW5hYmxlZCAmJgorICAgICAgICAhY3R4LT5odnhfY2hlY2tf
-ZW1pdHRlZCkgeworICAgICAgICBnZW5fcHJlY2lzZV9leGNlcHRpb24oSEVYX0NBVVNFX05PX0NP
-UFJPQ19FTkFCTEUsIGN0eC0+cGt0LnBjKTsKKyAgICAgICAgY3R4LT5odnhfY2hlY2tfZW1pdHRl
-ZCA9IHRydWU7CisgICAgfQorI2VuZGlmCiB9CiAKIGJvb2wgaXNfZ2F0aGVyX3N0b3JlX2luc24o
-RGlzYXNDb250ZXh0ICpjdHgpCkBAIC0xMjg5LDYgKzEyOTcsOSBAQCBzdGF0aWMgdm9pZCBoZXhh
-Z29uX3RyX2luaXRfZGlzYXNfY29udGV4dChEaXNhc0NvbnRleHRCYXNlICpkY2Jhc2UsCiAjaWZu
-ZGVmIENPTkZJR19VU0VSX09OTFkKICAgICBjdHgtPm51bV9jeWNsZXMgPSAwOwogICAgIGN0eC0+
-cGN5Y2xlX2VuYWJsZWQgPSBGSUVMRF9FWDMyKGhleF9mbGFncywgVEJfRkxBR1MsIFBDWUNMRV9F
-TkFCTEVEKTsKKyAgICBjdHgtPmh2eF9jb3Byb2NfZW5hYmxlZCA9CisgICAgICAgIEZJRUxEX0VY
-MzIoaGV4X2ZsYWdzLCBUQl9GTEFHUywgSFZYX0NPUFJPQ19FTkFCTEVEKTsKKyAgICBjdHgtPmh2
-eF9jaGVja19lbWl0dGVkID0gZmFsc2U7CiAjZW5kaWYKIH0KIAotLSAKMi4zNC4xCgo=
+From: Peter Xu <peterx@redhat.com>
+
+Host backends supports guest-memfd now by detecting whether it's a
+confidential VM.  There's no way to choose it yet from the memory level to
+use it fully shared.  If we use guest-memfd, it so far always implies we
+need two layers of memory backends, while the guest-memfd only provides the
+private set of pages.
+
+This patch introduces a way so that QEMU can consume guest memfd as the
+only source of memory to back the object (aka, fully shared).
+
+To use the fully shared guest-memfd, one can add a memfd object with:
+
+  -object memory-backend-memfd,x-guest-memfd=on,share=on
+
+Note that share=on is required with fully shared guest_memfd.
+
+Since guest-memfd is not yet a drop-in replacement for memfd (e.g. lack
+of hugepage support), the option is tagged as experimental for now so
+that it can be made available for early enablement/testing without
+causing any surprises for other users.
+
+PS: there's a trivial touch-up on fd<0 check, because the stub to create
+guest-memfd may return negative but not -1.
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: David Hildenbrand <david@kernel.org>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+[mdr: add accompanying guest-memfd doc, mark as experimental]
+Co-developed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ backends/hostmem-memfd.c                   | 67 ++++++++++++++++++++--
+ docs/system/confidential-guest-support.rst |  2 +
+ docs/system/guest-memfd.rst                | 60 +++++++++++++++++++
+ docs/system/index.rst                      |  1 +
+ qapi/qom.json                              |  7 ++-
+ 5 files changed, 131 insertions(+), 6 deletions(-)
+ create mode 100644 docs/system/guest-memfd.rst
+
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 7a7855aaab..a164bb659f 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -18,6 +18,9 @@
+ #include "qapi/error.h"
+ #include "qom/object.h"
+ #include "migration/cpr.h"
++#include "system/kvm.h"
++#include <linux/kvm.h>
++#include "qapi/qapi-visit-common.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+@@ -28,6 +31,13 @@ struct HostMemoryBackendMemfd {
+     bool hugetlb;
+     uint64_t hugetlbsize;
+     bool seal;
++    /*
++     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
++     * which represents an internally private guest-memfd that only backs
++     * private pages.  Instead, this flag marks the memory backend will
++     * 100% use the guest-memfd pages in-place.
++     */
++    OnOffAuto guest_memfd;
+ };
+ 
+ static bool
+@@ -47,11 +57,31 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+         goto have_fd;
+     }
+ 
+-    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+-                           m->hugetlb, m->hugetlbsize, m->seal ?
+-                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+-                           errp);
+-    if (fd == -1) {
++    if (m->guest_memfd == ON_OFF_AUTO_ON) {
++        /*
++         * NOTE: x-guest-memfd ignores seal=on/off because it always
++         * implicitly seals the FD by definition.
++         */
++        if (!backend->share) {
++            error_setg(errp, "x-guest-memfd=on must be used with share=on");
++            return false;
++        } else if (m->hugetlb) {
++            error_setg(errp, "x-guest-memfd=on doesn't support hugetlb=on");
++            return false;
++        }
++
++        fd = kvm_create_guest_memfd(backend->size,
++                                    GUEST_MEMFD_FLAG_MMAP |
++                                    GUEST_MEMFD_FLAG_INIT_SHARED,
++                                    errp);
++    } else {
++        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
++                               m->hugetlb, m->hugetlbsize, m->seal ?
++                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
++                               errp);
++    }
++
++    if (fd < 0) {
+         return false;
+     }
+     cpr_save_fd(name, 0, fd);
+@@ -65,6 +95,26 @@ have_fd:
+                                           backend->size, ram_flags, fd, 0, errp);
+ }
+ 
++static void
++memfd_backend_get_guest_memfd(Object *o, Visitor *v,
++                              const char *value, void *opaque,
++                              Error **errp)
++{
++    HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(o);
++
++    visit_type_OnOffAuto(v, value, &m->guest_memfd, errp);
++}
++
++static void
++memfd_backend_set_guest_memfd(Object *o, Visitor *v,
++                              const char *value, void *opaque,
++                              Error **errp)
++{
++    HostMemoryBackendMemfd *m = MEMORY_BACKEND_MEMFD(o);
++
++    visit_type_OnOffAuto(v, value, &m->guest_memfd, errp);
++}
++
+ static bool
+ memfd_backend_get_hugetlb(Object *o, Error **errp)
+ {
+@@ -152,6 +202,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+         object_class_property_set_description(oc, "hugetlbsize",
+                                               "Huge pages size (ex: 2M, 1G)");
+     }
++
++    object_class_property_add(oc, "x-guest-memfd", "OnOffAuto",
++                              memfd_backend_get_guest_memfd,
++                              memfd_backend_set_guest_memfd, NULL, NULL);
++    object_class_property_set_description(oc, "x-guest-memfd",
++                                          "Use guest memfd");
++
+     object_class_property_add_bool(oc, "seal",
+                                    memfd_backend_get_seal,
+                                    memfd_backend_set_seal);
+diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
+index 562a7c3c28..58732d658f 100644
+--- a/docs/system/confidential-guest-support.rst
++++ b/docs/system/confidential-guest-support.rst
+@@ -1,3 +1,5 @@
++.. _confidential-guest-support:
++
+ Confidential Guest Support
+ ==========================
+ 
+diff --git a/docs/system/guest-memfd.rst b/docs/system/guest-memfd.rst
+new file mode 100644
+index 0000000000..f7cef19283
+--- /dev/null
++++ b/docs/system/guest-memfd.rst
+@@ -0,0 +1,60 @@
++.. _guest-memfd:
++
++guest-memfd support
++===================
++
++Recent kernels allow for the creation of a guest-memfd file
++descriptor, which can be used to back VMs in a similar manner as a
++memfd file descriptor, but is intended specifically for this purpose
++and allows for closer coordination between KVM and the management of
++this memory to enable more advanced/VM-specific use-cases.
++
++Initially this additional functionality centered around providing a
++common/centralized place for managing kernel-side memory handing
++requirements for various Confidential Guest architectures. (For more
++on Confidential Guests, see :ref:`confidential-guest-support`).
++
++guest_memfd has since evolved to become a more general-purpose way to
++allocate/manage guest memory and potentially allow for things like
++providing additional memory isolation within the kernel[1] and support
++for persisting a guest's state across kexec to allow for live-updating
++the host kernel with minimal guest downtime[2].
++
++Usage
++-----
++
++For Confidential Guests, guest-memfd is currently utilized internally
++by QEMU to handle private guest memory, independently of whatever
++memory backend the user has configured for normal/non-private/shared
++guest memory. To avoid doubling memory, QEMU discards memory in
++response to the guest converting GPA ranges between shared/private.
++(e.g. if GPA X is converted from private to shared, the guest-memfd FD
++offset corresponding to GPA x will be truncated since the memory will
++be provided by the memory backend the user configured for shared
++memory, and vice-versa). This is handled automatically/internally for
++Confidential Guests that rely on this handling and is not directly
++exposed by QEMU command-line options.
++
++For non-Confidential guests, guest-memfd can be used in a manner that
++is somewhat interchangeable with a normal memfd. Currently, this is
++handled by using the same memory-backend implementation as memfd, but
++with an additional 'x-guest-memfd=on' option. E.g.::
++
++    qemu ... \
++      -object memory-backend-memfd,id=ID,size=SIZE,share=on,x-guest-memfd=on
++
++Note that the share=on option is required for guest-memfd, since it
++does not support anonymous memory allocations or COW-like semantics.
++
++Also note that there are a couple of limitations in using guest_memfd
++in this way compared to a normal memfd, which is why the option is
++exposed as an experimental for the time being:
++
++ * guest_memfd does not currently support the hugetlb=on option
++ * guest_memfd does not currently support Transparent Huge Pages
++
++References
++----------
++
++- `[1] directmap removal <https://lore.kernel.org/kvm/20260317141031.514-1-kalyazin@amazon.com/>`__
++- `[2] LUO <https://lore.kernel.org/kvm/20260728121138.1103610-1-tarunsahu@google.com/>`__
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index 4509630fa4..060850a739 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -44,3 +44,4 @@ or Hypervisor.Framework.
+    vm-templating
+    sriov
+    qemu-colo
++   guest-memfd
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 5895c97750..602b17ad83 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -780,13 +780,18 @@
+ # @seal: if true, create a sealed-file, which will block further
+ #     resizing of the memory (default: true)
+ #
++# @x-guest-memfd: if 'on', use guest-memfd to back the memory region.
++#     See the "guest-memfd" QEMU documentation for more details.
++#     (default: auto, since: 11.2)
++#
+ # Since: 2.12
+ ##
+ { 'struct': 'MemoryBackendMemfdProperties',
+   'base': 'MemoryBackendProperties',
+   'data': { '*hugetlb': 'bool',
+             '*hugetlbsize': 'size',
+-            '*seal': 'bool' },
++            '*seal': 'bool',
++            '*x-guest-memfd': 'OnOffAuto' },
+   'if': 'CONFIG_LINUX' }
+ 
+ ##
+-- 
+2.43.0
+
 
