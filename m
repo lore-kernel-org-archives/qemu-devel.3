@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C99CC9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA6AC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xADot-0008E1-Kw; Fri, 25 Sep 2026 17:51:03 -0400
+	id 1xADpE-0000CX-Pd; Fri, 25 Sep 2026 17:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoE-0007lq-Mi
+ id 1xADoI-0007n1-7T
  for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:27 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
+Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADo9-0007md-CQ
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:19 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc797656e69so280463a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:16 -0700 (PDT)
+ id 1xADoC-0007ng-Hj
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:23 -0400
+Received: by mail-pz2-x2b.google.com with SMTP id
+ d2e1a72fcca58-88098dbba5fso192930b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790373016; x=1790977816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790373018; x=1790977818; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HjvMgLvn6RxvJ1HkJmkAi10BB8HJCknUmwx4RHgl8vg=;
- b=fbU0Kuci2iiv9SU6dXBtN26l8xGI0j5+vwwjTvSq9FGE86JiSD9QTcJ2+L9ttkcfsp
- q8BaZINTHLPjClYewlYXz8LdtYY8tncl5X0ENLTBuUdbFFMo/aqzEl6m4Q8CTZyRTR6n
- iOYe47VNHvt2w+h8k8OUiD3Vv1F1LBpOf/MtRguxEL6DdlbBCbeb3/k+6X2e7ysqfnDO
- uobVmL5SXu4YRWobbFqakLQyW230VHdG2pwnF7NFLCENmxWUxoD6pvIxhYQxyQidOQIB
- JI0IlGZgDdwxK4KdbTH0Natt3grxJ+pQAv59JxUQo17n0LtziWnZ8q2loIdKwBQbPefk
- +cZA==
+ bh=DgcW59+pyp3+kc3Gq1uovvoNZ6RuVzP0QLBQ3UuY5fU=;
+ b=HpZQLiPA0YZ4zTpblzejDOKDBMoHOGjrM6g2SYxa8lQ3RQL3rF+vys4NVtWb6ECQ74
+ ilERqbayHqrpdwh+1NTeKmpqO5Pr/KDbhOhlXOKmCYX2tC8KSx/IxpQAANPnJmB9Mbi5
+ If7Exl/L17PMwFWQmFPmRKzo9zxdl+ykfAgx2zrpwwu6OYFwULe3zlasqzU7vsYajSmR
+ OC7ck/oEkG0v2tDCvdtBNnxxfEBfpjDrkYvv20Vpf+jViqAkL2tDegymVYamXJK6IDO/
+ OkSNjc/rLv6XLg7RASseL+f6iWp9hkG2S7fjGoI97HIFCw6dpZ8Hken+n0bhheozMn1B
+ 6NvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790373016; x=1790977816;
+ d=1e100.net; s=20260707; t=1790373018; x=1790977818;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HjvMgLvn6RxvJ1HkJmkAi10BB8HJCknUmwx4RHgl8vg=;
- b=U6y8BKHoKQ2Pm5HkUWz6YxvgRBdkX6tz+VjFEl8/kBEcfJFNn4Vczjrswxmz18BNX9
- x24VwJ+r/QLV/XwT1dDdk4xuihpnEcruxPM9XGol32FX174MNtSEul9HE6BqAn4SNTL7
- 8mcRqrbu0Bc/nFtesSMKAm3C8O6T0pxOU6B3eeNKbdi2vM8+Dox2lTxWeRNtvpPdcgUt
- cDqLEjg0XEt+XI9yHPzhd0sNavjW2fqRwpMMSSm8dL5SfLeFv+7yz3zsPgcyman4LGhL
- 9aZyKdZ/QayoX/icmIGWZkxvImgbmPrrS1XR0K/Vto79iE9mjlKmwfXl9ceIaWs4T7dQ
- NpnQ==
-X-Gm-Message-State: AFuF++kSXXbONgYjvklGirDrQ2zfpd5Vkl97zR4ddOi3dOK3L+7zz3WP
- mkOmvTfveIA9W7+ThyCMBcB6K20v6Im9G3Da6A8ARQ4DNd9NTKidRMRVxYggPd6AF0nn8O7tDN9
- fTR7k
-X-Gm-Gg: AYBFou3p/4waEIbSgr2HLTDePR/luMA86/BCNHd7LFGQhFFLz7raeVeRSLjxK8YhLue
- XrAkF3JnHs8qg1NZDLXfgEARdl++xoUmWmOhcJB+HTgkFy+3hB30h3yCzpmmQi8m0cPwg/GBXQj
- LLK1JCJtdo5cgTQQ4aki3vU0sL3hc8i4nQ++lpCNNPq7ETkM8xoDIfvOjD/RsBRWGhYFjsrlMJb
- 9m1BvDVOHJtgQBkqwWPsT7OsWyuPxVGfpiiA9cP6eN9qMYK0UAT89MhdbL/OlYpy3KEVPMrzyjn
- 8Hzpt2BePjZjsexz3aLDHDpzrIgPkWy8OFdKzFcFbiHo0WcP6lPKX9FWbKd52iecWVwd0g12cTk
- ujmbPlps8M3sa5xcE7ZlcT/tfwW/UzhJV1yTRKKof1D+cejwEZZbBsgnWkOsfWb50B7BVDYOH7I
- dGPKhKXOyjYMu2juMVTpYI3ZivLJRs75R7ljSRHfdW0PGV22nOpYGcaty7vZVQ28uVCyR6fcfEA
- wQPe1jAqrbn5a6pA7+92DDAKwQ8bg==
-X-Received: by 2002:a05:6300:8053:b0:3de:1b92:a4dd with SMTP id
- adf61e73a8af0-3de1b92c673mr4038503637.18.1790373013703; 
- Fri, 25 Sep 2026 14:50:13 -0700 (PDT)
+ bh=DgcW59+pyp3+kc3Gq1uovvoNZ6RuVzP0QLBQ3UuY5fU=;
+ b=zXE8n+ckpy5ll3d3gXCNeoWBvQWdnYS2/zi6yTVpkE0VhXlIe9BdlYS9pUi88Awpae
+ 2jdBlOADrSK4N4ee/+ZD81LOVOVC7KExpqQTdU7WQkIZF4XbttWgBXUOPC72s3Fn+6zY
+ 7ItxQydx5gk7JGkdhULlN9W38mXO/TNEeManx30yJMkfNK7Kmt/noR1Iy0okr0Ve8BUc
+ nQ6zQAxGEvGdxF7YtawxQXxr9tsnuubn0zFaJ2ttItt0VAWrF/eaZVsVEFUgXKi+Ot7E
+ wEF3hOjAOYzrulcwgT39UonIltOruLhWkyCXfPiVe1WiC8g5dl9n3FUdgUUMdyYBnIUs
+ PcRg==
+X-Gm-Message-State: AFuF++kUziJ/GTfUCVY6Vo8ONRZwdWqCTKgYbbtjQ8KsAiI7vycZft5I
+ hsUQ2dfu3zq5pnbsVdIP/OyDC30B12cyid5MOxhHS54EcCBkHwGdrJhI8L8jcwdkERzCx+x9c0q
+ 1A7wF
+X-Gm-Gg: AYBFou3AsKrlpZqRH8pJMSwlFXRf1I46WOjTaMLi80zi2edZtge5kJ1eT0MuR77AQoh
+ 7EfScUTGD3h7LZgAUrtRCM+fSIl9Cvy8eWin7ILqvAF5ngXRcem/hAur8xPIv+vDxiwENRrZFLB
+ ucnEG4TlY8AyKtUR9derXZ928nyBBcdtIAqB2edPAwJl9CBm6Kn1uOTdPUhxWKqUU3Gl1nnFh3q
+ RxYfmrFKFXf69jehDKzLHW0dzXPQNEsLS6acp/wrcjFU2YeQjBDF1nlK8l+a1KWi1lJ+CWYMMCZ
+ JqHF6pq3yWhdW2P+aYFq0vqMShgjGsVcchC+HijUSRp9JWlR0Ss4PnJ+8QWsKz8/vfpAz0ITZFM
+ K0iJlUeOnE2zghR4CzHBSntnZlj6JMBzd/Nrd1XLaKr7xBV3NRAC75Gy04Lnkvnm16XLYloUzaU
+ PDREGGsYFT06//RqcNNGXXhpd1ARFe9ki6Z9uoMgEToZk5Nb1yL8SLct/eLQ/Bz9mkXtZQqLlZS
+ aCF/LhRfOC9MT6zRNrcNyzE1iuSVQ==
+X-Received: by 2002:a05:6a00:3a06:b0:878:3704:e0f1 with SMTP id
+ d2e1a72fcca58-87ea07d0e7fmr3855395b3a.23.1790373017912; 
+ Fri, 25 Sep 2026 14:50:17 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.12
+ d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 14:50:12 -0700 (PDT)
+ Fri, 25 Sep 2026 14:50:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 08/14] target/arm: Clear PSTATE.UINJ when taking exceptions
-Date: Fri, 25 Sep 2026 14:49:58 -0700
-Message-ID: <20260925215004.456336-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 11/14] target/arm: Add PSTATE.UINJ to tbflags
+Date: Fri, 25 Sep 2026 14:50:01 -0700
+Message-ID: <20260925215004.456336-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925215004.456336-1-richard.henderson@linaro.org>
 References: <20260925215004.456336-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,69 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clear UINJ when taking an exception.
-Clear UINJ when exception return is invalid.
-
-In both cases, perform the clear without feature check,
-since the bit is otherwise RES0.
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h            | 1 +
- target/arm/helper.c         | 9 +++++++++
- target/arm/tcg/helper-a64.c | 2 ++
- 3 files changed, 12 insertions(+)
+ target/arm/cpu.h               | 1 +
+ target/arm/tcg/translate.h     | 2 ++
+ target/arm/tcg/hflags.c        | 3 +++
+ target/arm/tcg/translate-a64.c | 1 +
+ target/arm/tcg/translate.c     | 1 +
+ 5 files changed, 8 insertions(+)
 
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d36611e04a5..735e777d103 100644
+index 735e777d103..4e8a472ee71 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -1579,6 +1579,7 @@ void pmu_init(ARMCPU *cpu);
- #define PSTATE_Z (1 << 30)
- #define PSTATE_N (1ULL << 31)
- #define PSTATE_EXLOCK (1ULL << 34)
-+#define PSTATE_UINJ (1ULL << 36)
- #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
- #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
- #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index c3f607e6d6b..0111cbeac03 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9606,6 +9606,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+@@ -2483,6 +2483,7 @@ FIELD(TBFLAG_ANY, ALIGN_MEM, 10, 1)
+ FIELD(TBFLAG_ANY, PSTATE__IL, 11, 1)
+ FIELD(TBFLAG_ANY, FGT_ACTIVE, 12, 1)
+ FIELD(TBFLAG_ANY, FGT_SVC, 13, 1)
++FIELD(TBFLAG_ANY, PSTATE__UINJ, 14, 1)
  
-         env->condexec_bits = 0;
+ /*
+  * Bit usage when in AArch32 state, both A- and M-profile.
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 31f52a34a68..f633aa265f0 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -155,6 +155,8 @@ typedef struct DisasContext {
+     bool align_mem;
+     /* True if PSTATE.IL is set */
+     bool pstate_il;
++    /* True if PSTATE.UINJ is set */
++    bool pstate_uinj;
+     /* True if PSTATE.SM is set. */
+     bool pstate_sm;
+     /* True if PSTATE.ZA is set. */
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index cf7d49be908..c0b47f484e6 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -121,6 +121,9 @@ static void rebuild_hflags_common_aprofile(CPUARMTBFlags *flags,
+     if (il) {
+         DP_TBFLAG_ANY(*flags, PSTATE__IL, 1);
      }
-+
-+    /*
-+     * R_XKSNJ: If FEAT_UINJ, PSTATE.UINJ is set to 0 *and* the resulting
-+     * value stored in SPSR_ELx is 0.  The new PSTATE is automatically
-+     * handled by construction of a new value from 0; clear it from the
-+     * old state and as UINJ is RES0 otherwise, skip the feature check.
-+     */
-+    old_mode &= ~PSTATE_UINJ;
-+
-     env->banked_spsr[aarch64_banked_spsr_index(new_el)] = old_mode;
++    if (env->pstate & PSTATE_UINJ) {
++        DP_TBFLAG_ANY(*flags, PSTATE__UINJ, 1);
++    }
+     if (aprofile_require_alignment(env, el, sctlr)) {
+         DP_TBFLAG_ANY(*flags, ALIGN_MEM, 1);
+     }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index c60f4c4103d..b3438235828 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -11028,6 +11028,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
+     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
+     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
++    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
+     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
+     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
+     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 8c56348a665..f32200cc47e 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6418,6 +6418,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
+     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
+     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
++    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
+     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
+     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
  
-     qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%" PRIx64 "\n", old_mode);
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index 9d805231a08..f76d89990c3 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -764,10 +764,12 @@ illegal_return:
-      * mandated behaviour:
-      * restore NZCV and DAIF from SPSR_ELx
-      * set PSTATE.IL
-+     * reset PSTATE.UINJ
-      * restore PC from ELR_ELx
-      * no change to exception level, execution state or stack pointer
-      */
-     env->pstate |= PSTATE_IL;
-+    env->pstate &= ~PSTATE_UINJ;
-     env->pc = new_pc;
-     spsr &= PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT;
-     spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT);
 -- 
 2.53.0
 
