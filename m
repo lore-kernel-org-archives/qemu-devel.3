@@ -4,94 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439EEC98328
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 18:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFC0C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 18:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAB1o-00042p-2R; Fri, 25 Sep 2026 14:52:13 -0400
+	id 1xAB33-0004Sn-MK; Fri, 25 Sep 2026 14:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAB1k-00042X-Hl
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:52:08 -0400
-Received: from mail-pj2-x0d.google.com ([2607:f8b0:4864:39::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAB1j-0005rC-3I
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:52:08 -0400
-Received: by mail-pj2-x0d.google.com with SMTP id
- 98e67ed59e1d1-3a0bec20a6fso389795a91.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 11:52:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790362326; x=1790967126; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=a63BQxOTv38gXPQxH43AV5/ZEUdcU2uyUGXC6HBrzBo=;
- b=SN5WX2XsTG4IPUgIdZtJHmSXlG8nMUAqCWYsCQPqagvAJOHqijsHCCXFQ5nXzPTJph
- 5mUaCUXeH7YTHYiY0kdu1GiFCbINr8o2tZMo6wAQHtpO1GAuwfXyBYLtegsTXEls+daf
- rFV00fSxiYoLSkIVzmWsp0DX8ETHVDnsxeOCkFQr5CJjjzuLO5VOWT7lOse3V1MfrAE5
- V5cC/5BrPH/QLquBwW2Wx1MMMp7ODF572/15B8GMHRyKiZvoWemzOeKXySE6Ro72MMsa
- OYsQmUlb3t4neGy6WW9Ms+HLdGGaw6p5VS/qwJpoG/5Xh6s7Io9uF0ShfC9BoPVQOsgW
- 4iIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790362326; x=1790967126;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=a63BQxOTv38gXPQxH43AV5/ZEUdcU2uyUGXC6HBrzBo=;
- b=HdyGL29o80rucozLAOAfDC6GzPOPcvw6k91QjERLfv5QGM3dohhZpfgSV5yWa3aL6Q
- 1C+oYOAdei7WmH3FyGS6/2+2MX6svLfec28SV6Ah2GyHxLWmC8+BUEtqflS5wqdnBuMt
- kTJ6drAShjzbOXR/Vb8aiXRyiycrDnvbj5u6dccYEy250LUfphfwHC9ocoLjjcu01sPF
- Zy9isHUOC7w4qkpCgZCJsYGS+lebRX/IHIyISsGRQMe17TsGtDY5gY+0k5xv/1PXQiYD
- we9LwjZSpMs5kDJwt6PX02/SkF+deV+4EtWEw7EIOJt5N+kpC1/sk5tcTolKylgqpASM
- W/Qg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxP5tauxEDAJrehA5yrwL3mGy7Ba9/7tLu3j9L688MtB1II5viJzT0F6CQxUXX657iS2GvxBLER8ZzL@nongnu.org
-X-Gm-Message-State: AFuF++nxfJYQWgt6+hNpD0CJWwCVGU3cJ8lPFR83Lxq3KeVnl+YrTXTP
- j4qvNgvzgg0CjLqnF+rv8abieGBRoB6WmiWo2iOk/kK5ZC4TMboluiRhnHf80yCKeT0=
-X-Gm-Gg: AYBFou21ipCKG5CRFOKl8XVW00XzD3F3WdkPmtE54VxEGtUkWHybU6DT9Xm4m2oLsb8
- Z1g/ZVxywXRgV1ao2Sx0bYIJ8UU/7N2ww+O5Bqj9UqhENfYHO56xc00eiBao6/3PJLjNnPqQPZK
- FFwNID4WU8Jyj+/fpm+YtfuX+tmSw5anbTRB0kiWoiMPc4tSWXeKUS+4faRyxohDogXlWwWTV2B
- E3YAWwIvIfAsCVo6l7XLvpQf/YXg+KvEalBqCANgT0juhYsXrKFaLbo4SQI8x41HGtPnEwyvwRT
- omrSDYR6FblVbqD2iBWNXbDU1yAO32FYP3BUsE3LgcFuy9wnYBRA0w3fAY3vmM10fQHMI8QiNSr
- onSFSSxPnaNxmqdSi19QCApTimtIClc3LgRsHz71ldo+hbPSYDNCt1ewYnzH/V00B30l6WK7pz0
- 7AhyTI4vC1huL/uVLbeohYiZpUGtKB0jIUHgatwWBwNeoqe5rniOU6J8devFna+vhR3mODWPCaB
- zXYuvAIBv8pGqvX7WNQtV7qtitun/uc0oyy2yg6
-X-Received: by 2002:a17:90b:3c87:b0:39e:4c7e:bc6 with SMTP id
- 98e67ed59e1d1-3a098ac641emr3329546a91.20.1790362325486; 
- Fri, 25 Sep 2026 11:52:05 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0bda430b3sm5064902a91.0.2026.09.25.11.52.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Sep 2026 11:52:05 -0700 (PDT)
-Message-ID: <1aaf0379-ffb0-4742-a638-9b2f869c9034@linaro.org>
-Date: Fri, 25 Sep 2026 11:52:03 -0700
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1xAB2z-0004SC-Nf; Fri, 25 Sep 2026 14:53:26 -0400
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1xAB2y-0005tu-2B; Fri, 25 Sep 2026 14:53:25 -0400
+Received: from pps.filterd (m0409408.ppops.net [127.0.0.1])
+ by m0409408.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PIrG61290702; Fri, 25 Sep 2026 19:53:16 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=apr2026.eng; bh=eqBIAl38M
+ /OEu4eO1Fj8LDUOJqq6C8DkO4bcTvRYIjE=; b=JoWcXijtZJ+QVwgiezu1b4IC4
+ A+oSDiIRWk79eYnKCSi9FBsn21LkoMnSpmIctoFyroyMjRV5QfMEiv/I/EFyh77H
+ NjqqFVjReJAFrQ7n3j3kQw1K2Rsna2ZfXf53PNBIj1RewDlY6qW35kS5kgrqPH7D
+ uQnvi02lhT1l5RMf1E1OvXnXzxJ8jXo/wJ+PPpPZoBwa+LYUSaPMFzHs3PRU1eMl
+ kTJZVRTWS4txhjfCMib/KGNHAEjbvbmMWuKGj5B5llErFNXrsmgOt0aHRNg+xW5F
+ Ef8xBZ5nDZWWfFzhfYq+b+N4HSCRTM6mlmV0jPTKAri8rRdWo2pNgKkb9rlKg==
+Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18])
+ by m0409408.ppops.net-00190b01. (PPS) with ESMTPS id 4gwqgnmc61-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 19:53:16 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
+ by prod-mail-ppoint1.akamai.com (8.18.1.7/8.18.1.7) with ESMTP id
+ 68PIqFk7015744; Fri, 25 Sep 2026 14:53:14 -0400
+Received: from prod-mail-relay01.akamai.com ([172.27.118.31])
+ by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 4guw1qdwpr-1;
+ Fri, 25 Sep 2026 14:53:14 -0400 (EDT)
+Received: from bos-lhvkhf.bos01.corp.akamai.com
+ (bos-lhvkhf.bos01.corp.akamai.com [172.28.220.254])
+ by prod-mail-relay01.akamai.com (Postfix) with ESMTP id 8AD7397;
+ Fri, 25 Sep 2026 18:53:14 +0000 (UTC)
+From: Ben Chaney <bchaney@akamai.com>
+To: stefanha@redhat.com
+Cc: ebiggers@google.com, hreitz@redhat.com, kwolf@redhat.com,
+ nsoffer@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Ben Chaney <bchaney@akamai.com>
+Subject: Re: [PATCH] file-posix: add statx(STATX_DIOALIGN) support
+Date: Fri, 25 Sep 2026 14:53:03 -0400
+Message-Id: <20260925185303.2218703-1-bchaney@akamai.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260922154351.226540-1-stefanha@redhat.com>
+References: <20260922154351.226540-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] Linux user next patches
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260925093844.5685-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260925093844.5685-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2609040000
+ definitions=main-2609250075
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3NSBTYWx0ZWRfX1SWKYDM0t9wP
+ Jr2silk5OTlkuHW3RG5XzlZwQuSF2umImsKOTp3foZo44E/73iTyD3E/+5TJELUZJScn7ZxTwMM
+ YBiasMMI2fSTMxAulurcUwvj3VPdE5I6NEmiC1jDNMcCwbL8bSPuU53lmBmkj5j6tIlTFIrWKiF
+ D35OAzKPWbXvz/586jXd5NcprdB7kd5a23R+M465BFLNC1hMDXDwev90hW8ewQvqZ3zmZQhHN5y
+ cLfgkp+RS5xSDx6ixwoOlz7xBYbefxwKeDDaRm8dLxwv9WQ4SEKT3eilwyz/kOOMC66kS94AGtQ
+ iC3GdbBofWtaDnBSOvDECg0l+5vZOu4WqRi1bEU9LFkwAze2RzfdzhEFkKK8zck37IYwDv1nm0c
+ zGuim/y4d4kSrDrynlmzRn/mt2noSwgh7BI/E1Tm66yvcHU52dbgsGuD7xyvpz3U5l0/cCgNFBD
+ JwoTdIKGTr54pGib7tw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3NSBTYWx0ZWRfX2yvr6RRaL6Uc
+ nmym1caqRvuY7PUHEcysOx9xDx/2gu8j2LLqn9fD5ToJpHC3EBwE0mSZftm1GjgPJie50jWkBwj
+ jhOqwqM34EsVH5mOyPbJmZosISGsnnY=
+X-Authority-Analysis: v=2.4 cv=AbckjHXG c=1 sm=1 tr=0 ts=6ab6c31c cx=c_pps
+ a=StLZT/nZ0R8Xs+spdojYmg==:117 a=StLZT/nZ0R8Xs+spdojYmg==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Ifg-1AOnLHOf1gn6spyb:22
+ a=BYUV7c42er6_Rx9bq0XK:22 a=p0WdMEafAAAA:8 a=X7Ea-ya5AAAA:8
+ a=G1GFQtNWi_rV8_KDm_YA:9 a=jgk2pzAlstkA:10
+X-Proofpoint-ORIG-GUID: 5xOFQFxUolonWM50mnF2wLM-ch4OEIyG
+X-Proofpoint-GUID: 5xOFQFxUolonWM50mnF2wLM-ch4OEIyG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 impostorscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1011 spamscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250075
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=bchaney@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,31 +116,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/25/26 02:38, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
-> 
-> The following changes since commit a97f90fcf8029af253a2ba274b9bda9acabc5b23:
-> 
->    Merge tag 'pull-tcg-20260924' ofhttps://gitlab.com/rth7680/qemu into staging (2026-09-24 08:24:59 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-> 
-> for you to fetch changes up to 926d6cf4036102e3e0bc9e7f92291ee2277c3215:
-> 
->    target/sh4: Drop use_exit_tb (2026-09-25 11:23:44 +0200)
-> 
-> ----------------------------------------------------------------
-> linux user patches
-> 
-> A series of patches, which
-> - fix a race in atomic variables on sh4 guest
-> - fix unwinding through vdso signal trampolines on sh4 guests
-> - improve the parameter checks for setsockopt()/getsockopt() syscalls
-> - improves the parameter checks for the mincore() syscall
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1290
 
-Applied, thanks.
+We encountered a similar issue and this patch resolves it for us.
 
-r~
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 
