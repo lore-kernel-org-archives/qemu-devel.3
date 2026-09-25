@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F287CC9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 19:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4D9C9832C
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 19:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xABqJ-0005O4-El; Fri, 25 Sep 2026 15:44:23 -0400
+	id 1xABqI-0005Mh-AH; Fri, 25 Sep 2026 15:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xABqG-0005LD-9E; Fri, 25 Sep 2026 15:44:20 -0400
+ id 1xABqG-0005LL-Cd; Fri, 25 Sep 2026 15:44:20 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xABqE-0002Mv-5P; Fri, 25 Sep 2026 15:44:19 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1xABqE-0002My-5O; Fri, 25 Sep 2026 15:44:20 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PJ5Pv91882976; Fri, 25 Sep 2026 19:44:15 GMT
+ 68PJ5wnN1899757; Fri, 25 Sep 2026 19:44:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=36Pvord78sVh1Ydsn
- 1vR0RRQAGzm5eTC9SA+SyJTD1c=; b=tYsTW3Rmy5EhfXfXXYGyqyufwXI3v1xzx
- iKe+3gAIH/WoeDGzWySVifIl5Owf4v+2sRhL3f2sF6DpU5qf607sIHn9Q5oK6l0f
- qTvmHTN6g2qiiEE/mFpxs+l3btf9l5174ocDppmYaUA73KOSoo92NNAt3YCwFIdO
- 0E9arny/eYSef3sR4sihfeY3zrBJLhPYjKE7Xzjr593ZjhWKtr94+fg2dkgNxGzH
- fRfTFiUsucu/oaAbL9a41rwutsMKfqSfnrmgDz71kDNmrPhE9Px8vIBPMHZB9EG/
- xbbanYie2sPFmsqiZiCqZ9ubekHtRQ/PIqBu3n/uyvbBalUlh9+Ug==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsrw7p-1
+ :mime-version:references:subject:to; s=pp1; bh=TS3SB6PFD4hCLWCbL
+ BgW+H8Im7wIqQY6gwS23F5/5vM=; b=pnUZO3vNV3OgSgkk+0kOJ2VzLxh+bZI14
+ ZOiks3nVGeVRwL0hrEa4WVRR7StdHfqg9ZgS642qpmeOQnSnN503SH2V8v0PCWML
+ L6SVOO3bg66BKao+TjgYCkgi1eJJmsOnImxsVR/6WuP1HiM7IepLPvcrQo9JTqVU
+ 5u7VWXmGXobXhiVWNPjtC9RrkiaGbXGbzabuVGasGAdlSUCiqLO35NnNil5OuEo7
+ rEGQl8Mr9YpKUF0taUHULVczjyGtZ3biT/kILlkTiuvwf+woiYAomvSLW///f3FS
+ THHOmkOphw8ILtOS8nFFhbkvNt/5RQ82+IWC0Dheyb2z0EsEUvcdA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg312rx-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 19:44:15 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PJMNxi214715; Fri, 25 Sep 2026 19:44:15 GMT
+ Fri, 25 Sep 2026 19:44:16 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PIlxgW132229; Fri, 25 Sep 2026 19:44:15 GMT
 Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gwy27825d-1
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gwwsfrcus-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 19:44:14 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
+ Fri, 25 Sep 2026 19:44:15 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
  by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68PJiBEX37945824
+ 68PJiBT036700542
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Fri, 25 Sep 2026 19:44:11 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 110192004D;
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3031320040;
  Fri, 25 Sep 2026 19:44:11 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DFF3320043;
- Fri, 25 Sep 2026 19:44:10 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EA0D2004B;
+ Fri, 25 Sep 2026 19:44:11 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
- Fri, 25 Sep 2026 19:44:10 +0000 (GMT)
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 25 Sep 2026 19:44:11 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id C36A6161DB6; Fri, 25 Sep 2026 21:44:10 +0200 (CEST)
+ id C98B4162303; Fri, 25 Sep 2026 21:44:10 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Matthew Rosato <mjrosato@linux.ibm.com>, eblake@redhat.com,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH v4 2/5] iotests/nbd-tls-iothread: skip on non-x86 hardware
-Date: Fri, 25 Sep 2026 21:44:06 +0200
-Message-ID: <20260925194409.716498-3-farman@linux.ibm.com>
+Subject: [PATCH v4 5/5] iotests/iothreads-nbd-export: Skip on s390
+Date: Fri, 25 Sep 2026 21:44:09 +0200
+Message-ID: <20260925194409.716498-6-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925194409.716498-1-farman@linux.ibm.com>
 References: <20260925194409.716498-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab6cf0f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-ORIG-GUID: ICmmUhe4fbEtKq1xVeaTUQGBBWWH8-mR
+X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab6cf10 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=x8aU6ZPjE2doOINR9VcA:9
-X-Proofpoint-ORIG-GUID: xa5gMAqkzLGZPE1wRTc0l1jiKYmJzqNH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3OCBTYWx0ZWRfX/zEARbG8Hopn
- twOx1iapB69pAGYxcXLvYH9QJIdCAJLU2xk9SxznpBT2Wu+5TW0iiPBUo9FfO1/wmG0JwFDhl2l
- ftcx0isxEbyIzoLcNMo4/dajfrQ6FYp6ivoAClbVP7QtCb6OuXR1sDUzfYVew3REX9tTMNfgOVL
- yQjXqwqpO9Way25kLjQnnpGtO7INrhTTQzSovQIeUz36xiuqcVK7Ln3l9YHWsQLA4jFMig/T0MU
- tX2OVUybSxdaHr/x4T0LLAayo+FYF9fOToobkUAqnU9snaMa5eMKON07MJaiHH3UK4KI+KVY8J6
- Zkn53fLkJx69EijaSDd5aZOHDd4eOQ6IYOKTsDRSDRogP2GsGOA52bB2yKQ0JW83U8UbfY6C6q/
- IJWUoh19obhPZoWzueBYBJaLMu7qiMXFA6tw7hg9vZHkuODTM8CQlvhmUY1R6PUOcidtqW6zMgj
- kuSQ8wPZyDOcLhmL8dw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3OCBTYWx0ZWRfXwk5mFQz4nzHC
- MeGSidHDzDz9AikZmvB52ty/lN3YcWH49CPVMo9qoPYSWWBQFp6T1J8ncIZJl6XhmQf8qCoHi5Z
- JI7omMyjinu18X1jdd8xZnnnakZddZQ=
-X-Proofpoint-GUID: xa5gMAqkzLGZPE1wRTc0l1jiKYmJzqNH
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=uhQAi5MUBj_ZaE3ncFsA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3OCBTYWx0ZWRfX9CEU/SHfymT5
+ PQKQq+MTqBRECG0mi/ZLslZ6Sf18/2E22vZHn1Pxyj7qW7Is5POVWLbs7kEpnTrEd7UiBjzAQG+
+ lSJPlqk2ukXoKTOE0Qtu5ChCEAQyFNjDIURnfdDooANegycrINmsv43QHOcOW+Q/J/D9tZCeD7o
+ DMF3AbdGLdPt1XbZQqxkcWjBbQrSUq5yLqq1/awV6z/7T7I0HRnkNMoOOY7Sb2bWJphkxBB2TW2
+ 9Bql4DIrCiFslOMZWhmHmrINdUW2vu7nJ7v0sntjGArg3g6j4LniHZszgtDZhpPVTieISfd2qB5
+ hfbxYfK4ud8mT5VC3XB8FYhmPq6ld4hk9oTLskAnzcZiG/rxfshgJ+96XN3OLtlWbYrrLOIG8Pk
+ ejlYRHuxOJcsYHQvGJy8g5kqaVote9yMhR4ilzGQOzZI4TcAFOekkl6oeGxIOsebFZDaQ6RXKjV
+ Pcd3aBNTuLBlIXyyjaw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3OCBTYWx0ZWRfX5Glkv/oSRAvm
+ rXe5vN4ajBME/t59AbD1qLDfpk95Oy1jRmNI07i3uDVPLI8Plhx209r5H57TGsWO6QbVbbkjdfw
+ z+OOaK03DIovmAh92Wrn14sjfLY2oTE=
+X-Proofpoint-GUID: ICmmUhe4fbEtKq1xVeaTUQGBBWWH8-mR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250078
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -122,32 +122,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like nbd-in-qcow2-chain, this test assumes a q35 machine is
-present, which might not be available on other hosts.
-Unlike that test, simply allowing it to run with the default machine
-still throws an errors. Fence this to PC-only machines for now.
+Running this test on s390 causes long python exception tracebacks
+at the beginning of the system_reset loop. The problem appears to
+be the same one described by commit ad302b21aab6, in that QEMU
+will exit on s390 without any kernel or boot disk.
+
+In other tests, this is addressed by adding -no-shutdown to the
+command line, and that does create a clean failure instead of a
+long line of python exceptions:
+
+  --- /home/farman/git/qemu/tests/qemu-iotests/tests/iothreads-nbd-export=
+.out
+  +++ /home/farman/git/qemu/build/scratch/qcow2-file-iothreads-nbd-export=
+/iothreads-nbd-export.out.bad
+  @@ -16,4 +16,4 @@
+   {"return": {}}
+   {"return": {}}
+   Checking that it is still alive...
+  -{"return": {"running": true, "status": "running"}}
+  +{"return": {"running": false, "status": "prelaunch"}}
+  Failures: iothreads-nbd-export
+  Failed 1 of 1 iotests
+
+...but obviously this isn't still a successful test, since it is
+expected that the guest will be still be usable after the reset loop.
+So, barring a solution to that, just skip this test on s390.
 
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- tests/qemu-iotests/tests/nbd-tls-iothread | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/qemu-iotests/tests/iothreads-nbd-export | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread b/tests/qemu-iotes=
-ts/tests/nbd-tls-iothread
-index a2fb07206e5..4326e2d3e5c 100755
---- a/tests/qemu-iotests/tests/nbd-tls-iothread
-+++ b/tests/qemu-iotests/tests/nbd-tls-iothread
-@@ -47,6 +47,10 @@ cd ..
- _supported_fmt qcow2  # Hardcoded to qcow2 command line and QMP below
- _supported_proto file
+diff --git a/tests/qemu-iotests/tests/iothreads-nbd-export b/tests/qemu-i=
+otests/tests/iothreads-nbd-export
+index 037260729c7..72493ad2279 100755
+--- a/tests/qemu-iotests/tests/iothreads-nbd-export
++++ b/tests/qemu-iotests/tests/iothreads-nbd-export
+@@ -25,6 +25,11 @@ import iotests
+ iotests.script_initialize(supported_fmts=3D['qcow2'],
+                           supported_platforms=3D['linux'])
 =20
-+if [ "$QEMU_DEFAULT_MACHINE" !=3D "pc" ]; then
-+    _notrun "Requires a PC machine"
-+fi
++# QEMU on s390 will exit without any sort of backing disk,
++# so the reset loop requested by this test will fail.
++if iotests.qemu_default_machine =3D=3D 's390-ccw-virtio':
++    iotests.notrun('Cannot run test on s390')
 +
- # pick_unused_port
- #
- # Picks and returns an "unused" port, setting the global variable
+ with iotests.FilePath('disk1.img') as path, \
+      iotests.FilePath('nbd.sock', base_dir=3Diotests.sock_dir) as nbd_so=
+ck, \
+      qemu.machine.QEMUMachine(iotests.qemu_prog) as vm:
 --=20
 2.53.0
 
