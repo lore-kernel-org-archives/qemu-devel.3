@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC882C9831E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B6BC9831E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:00:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9vES-0007hg-9q; Thu, 24 Sep 2026 22:00:13 -0400
+	id 1x9vD1-00069h-Fn; Thu, 24 Sep 2026 21:58:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x9vE2-0007UT-Mv
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:59:47 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ id 1x9vCz-00062l-0P
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:58:41 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x9vE0-0006R9-SI
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:59:46 -0400
+ id 1x9vCx-0006OA-1w
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 21:58:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YWw14wvusIudRUcOeDDqJN2JyxekH+hnd0Ii54OWPVDBEDLMRoda9wCvMuWSarEJ8PQAHVCTO6uhgBTxEL+h9MhX9JxoNmIMA+fC9BsnLG4+XsH3WMc9iRUTnW2dTJGAZxQWa/OGkfwskWpND6jiygKisF/OtkC7YejdUAebI4F7nPrlZBbAQ17yiQ9sVlmS+2CUjQfoAqrfpGNna9gl1pLldqntDesaqXM/+mz3mtVhAZ8YAPWieM2CJpJQTwfNOd+72784W+J4pxc9UQlDIBBzcoGK8+lTEVwKCsndq06/I/rGyauf+u5gp8erVMQn4IusPXc1LnKEGfJ7WJZ/CA==
+ b=m2Rge6FJxjGkd7En5PUogRtRkAV8L6Zh5lL/JErpjekaceSgOivCAXjQ0zd9h0qgoD6ZHGZC/rfadShdctq+elGyPn54ks7pXnNsOXMiiVpEdgzQ3cMpR4xQCKFMY9cHslpAbRKgsz4PzXoJrXAAKKTDqaviQ0O9TDQmysF470spfWwTccqlXG+QxA9qYb7t5jxgXmWxO6t7P3/8eUHkFVBISLYk0lXBL/hYD0HJvQsgtypWgViLpZMlRZsM3GkQtWI6lmS44XyDCYGsBN1JohLh56tgpBqhV7ykcZBte0k93jUX3l1drPlhwTaWc+7PMO/gVrnfU6v4VN54/ojJmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oRj3zg+9itdYyS6z7QNXQBDIItCdYPar+DU2LFF/qUc=;
- b=fm7crNVSKv111uxwhUo9ETfz4lJGTsXslQhEsTb+2rPneiVHBxxstlhh/RtQgv22dsR6jK7RumwoTvdiPr5o6T1WcoXDqj+X167n/fUQrXiJuCq7CfXjEJJ8g9pJuPbL4ri+GZ4eMf/RxCW3WaT8n+xG2T8yDRHR6YmyQBi09PrWmCZhqdj0+OWhdwq4qKGpAQ4Ah3U+z6/jtFULNDnGHC0mcXd5vpUuYyYX01FLb54JqFAa7zKeeu0xfJzrXEHE9L5dGUCswFrGfrEimJixNo5xKOMLuIJzQQqhlTBZ5HYKRJ3eYH2tj75nJXch95OA/lKdOIuazxP8cMpR8HeIkA==
+ bh=D9OYJPTL/BO7s6n1zQrdhhnt47uw+t9+pZvpGlU6Lr4=;
+ b=iW1s2bLMd0q24kDB8J3PGphAhNkHlJStMPsdBfbx+Xm4U8ks7spJ3SRgeOEOotjF1pz1poR7yh3XhpGVeGPUolMiJTESDncpKH/lVsFFf4ftFnYW6+LxvEI/Bc55UWkli1RTz0tsaRPdzAMZJmmVAHHEGIg8RBU7mWgU8jaeW8hyeh77JEr/mp7HCUiQHVzWcpe3v+i2ct4qhyftrh4I3cC7gd1CwuS33zaOnNCkZebjwL++g1qAj+miDGjlU+f2fXQnddhM92gudHRsWJ0wqytOEKtjuCBhrjkDSYtRKbvMMpA8LInRnkQWzwKn2iSuwDTEPD9rsBQn8zXiQ5q8kA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oRj3zg+9itdYyS6z7QNXQBDIItCdYPar+DU2LFF/qUc=;
- b=M7GEPxVfGEhDCFO41hQCph6wJ/wOTHOlh3aOSk3sL+hK4+omuy8Gjnz8R4RyOPaRdcN0lNs//V5q39u2StyEXMDCWhl29UuhxKOiiGxx2/r/PLDxjFnpKa6PuSDptqYbJq54gIoSHhiqGqXcnLPEfKdO5tCW7fX7Axnfr+hlMT4=
-Received: from SJ0PR03CA0380.namprd03.prod.outlook.com (2603:10b6:a03:3a1::25)
- by SJ2PR12MB8928.namprd12.prod.outlook.com (2603:10b6:a03:53e::17)
+ bh=D9OYJPTL/BO7s6n1zQrdhhnt47uw+t9+pZvpGlU6Lr4=;
+ b=Cjgf16aQEcFJ4wuFiNkfopBEhbZ49ieMlC+cOVFFxlerEP1u/G7ifRqpDzDHnQ+nDtDIWQoHjzwHykH9GQCjRqAT12YC8gs1LF/aSy9t25Ij40Ri2J/zZktMT4kHrpTi3k1i0YZVLbvt6fmqmny4ATVgh5juwINR/oSQAuXlP+Y=
+Received: from MW4PR02CA0012.namprd02.prod.outlook.com (2603:10b6:303:16d::35)
+ by CY1PR12MB9674.namprd12.prod.outlook.com (2603:10b6:930:106::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Fri, 25 Sep
- 2026 01:59:38 +0000
-Received: from MWH0EPF000A6735.namprd04.prod.outlook.com
- (2603:10b6:a03:3a1:cafe::65) by SJ0PR03CA0380.outlook.office365.com
- (2603:10b6:a03:3a1::25) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 01:58:35 +0000
+Received: from BY1PEPF000264B0.namprd02.prod.outlook.com
+ (2603:10b6:303:16d:cafe::23) by MW4PR02CA0012.outlook.office365.com
+ (2603:10b6:303:16d::35) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.18 via Frontend Transport; Fri,
- 25 Sep 2026 01:59:37 +0000
+ 25 Sep 2026 01:58:35 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,22 +54,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A6735.mail.protection.outlook.com (10.167.249.27) with Microsoft
+ BY1PEPF000264B0.mail.protection.outlook.com (10.167.242.119) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 01:59:37 +0000
+ 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 01:58:34 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 24 Sep
- 2026 20:59:36 -0500
+ 2026 20:58:34 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <david@kernel.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
  <xiaoyao.li@intel.com>, <berrange@redhat.com>, <armbru@redhat.com>,
- <pankaj.gupta@amd.com>, <chao.p.peng@linux.intel.com>, Fabiano Rosas
- <farosas@suse.de>
-Subject: [PATCH v6 02/12] kvm: Detect guest-memfd flags supported
-Date: Thu, 24 Sep 2026 20:43:08 -0500
-Message-ID: <20260925015700.1260501-3-michael.roth@amd.com>
+ <pankaj.gupta@amd.com>, <chao.p.peng@linux.intel.com>
+Subject: [PATCH v6 11/12] tests/migration-test: Support guest-memfd init
+ shared mem type
+Date: Thu, 24 Sep 2026 20:43:17 -0500
+Message-ID: <20260925015700.1260501-12-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260925015700.1260501-1-michael.roth@amd.com>
 References: <20260925015700.1260501-1-michael.roth@amd.com>
@@ -81,38 +81,39 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6735:EE_|SJ2PR12MB8928:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9fafb3ec-901f-4be4-a4c7-08df1aa8a782
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264B0:EE_|CY1PR12MB9674:EE_
+X-MS-Office365-Filtering-Correlation-Id: b12d2c10-2740-4c89-fa0e-08df1aa8822b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|82310400026|376014|1800799024|36860700016|10067099003|56012099006|11063799006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: U2kuLGQHGXEiAt171MZGMMbPWKQd6sPUIuhTir0PmvRned6kIDP0XxD3rt7Fn0AL9TDj+PdvrV1KphCDLGQURjrxoQVKw8amDGIkclN8mmF4k6nIDykHI5c/C5crBZvoPJr23T3L3z3Sm8T/yxH38+5xhduiqk3tHTZYmQDYCVXbizNr3Oij90jHslp14JSMgh6DX8fBSR5y9JrL0do24gp85+CFitSboA2gVg6MzWuBu4ABWeTvsdAjUI2ah48rznWfEqOMksWsfReRWb5hqLcbl0NY66RRT6PG+Dx6DqrX8KmU7q1xxJB9/qmdkrMLVdutOpEbDgboxlA/EWDQ8mBDCpNEZi2XogMg5AfmSViwBr4rroQ2qkaUtCWBtDWpgOpR2eFw87T+Kqhm7IpEsFNJi55kjHsFhpLlmaLW8t4KxjxITcH3jO8dehoidPq3LOWNz0j3brap0Rox/5tmpr1pDX7sLicy4ca6YzoKQwjMxWhZv/MimHDMbodpUVKrJikaNrvUI77Ys/jkGUYMkgohaZKF/RmKif/O4rjklNTniI27BpulPQil/WPh0M3VPIiQm1RzqoZoOfeAvKiijOjl9TFOeG+sJ3BPGUJiXVOCaXG9wT5burjaKCXsOT/uzQ4HZMqkaUQnx7x40UbJEE/Cgb1GXC2YMMxSeg6M1EdO9GZDqG7+0uIjpzWRZ3dOz+wkJl1W4NPwp0EMAZSfZA==
+ ARA:13230040|36860700016|82310400026|376014|1800799024|23010399003|10067099003|11063799006|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: IMDYwQEdIkHx0HoDhpmDNu/2diMlt0S5q7BJsHYRqF/jF4TMsSttlJM7kYHHiHjy/XhsjQEvbGYXJg+hFs+cgkMJjean15BV00YdjWUfpTWuWF+Mdag0V8/D3kM4v1bFTDqYE0jdk4BsKVKwVQy81oReswluW0o251cTDkI9MjZ1ITsi/AxhpVx5cNtrBuWimmKc8jW4cN7Q5Vc5Kum6y9z7KhPqQmOSaMi5H/OWM/P3/5+iMGa9Uh/hrkEFhWkyh6vAxMk6s4ycf/+3A+Rawhs9d1fj239FIhZoPHmWk1uVigCytjpg1A3FLRsjT00AQ0YajOLllL9cmiMv1qhMZWFT2UT4pIiUC4Q/dt8Z4VDcmCW8N8W1RTFHsGbxTtkWeRcGRLmk4xqIaVaAPvVKf0bcn1o3VHY6yBvwjazJG0PheYjZc0m8fscn9Uyi8YeTZCsljXhMKDGeqj31AvWKYSXJoo5Up69Ae75E/nrO9pujWI/DZCP8qf7DyXyS3pykiEebfgARlyQV71d7ZCFJllN+P5ui9BvXh8XFQ9j9jImwKoxTKJWTBv+thsWT1iyILeBZEzoZ8nC7dzPuPBWq46yelL7uVwDk2XTrn8l8CbCeqGmaA1HXCj1j3S3zrhzdH5h9Wu3OXq0cWGiy3sTAG+7hNODe3ZX5Ew0J0BLinLbLJGNCm72kVck7dKDRdrTF/DEXd+XCHuJ9F/jzR37Dzg==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(82310400026)(376014)(1800799024)(36860700016)(10067099003)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003);
+ SFS:(13230040)(36860700016)(82310400026)(376014)(1800799024)(23010399003)(10067099003)(11063799006)(18002099003)(22082099003)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: EB5obDVUYlcn4fgwFCfpSdqJIpcwIf48Bypl1fnbs/IaNAHGAh0boYa1sBZD1qOJgdt6O1+dm0rOdtwoMw4JVDs39zA4pnZ1g3PrgD2cpAORmSr6CN5UrmWowkg0HtP7OEbVtecTOAV8Bhs6ON+2GxTW8TOsL2wnYlWMUzWmqbf8BjyuXplQbzwqlxn+xIaU8gcoi5/I3CSu+n2wUsyn5q+ZejuZGmqYYS711QHoIxK2ExQsZBAuYbjzLH8pMxWD4TwXZOEgify0hsV49iiQBnQwyG6znd/Yk7YGHn5KsaRCAl+EQ/RWhPhlzUSTDANFzCKPOAn5pBVmfyTTTY2aHjcnLZ4hqCyjJMK9iDU/BUggQCwUxRmBwtHLRCFAR4jBu86SfppgllI0EZnPrhj/mWFIn6i8X/RlWu03wIX8OUQ6Tg5J7r66yhfDKBpj/BmH
+X-MS-Exchange-AntiSpam-MessageData-0: V3tZncnMsgTEBwhb3sY+xk+wNmm+FFJ6KzC+BK61b2oW0rjr1MoVwq6L0eBmuBrT4uYFZmyzT4aFVaqFbEneCtRmrjGI7xsBNATLYIyAhGRqo/fH6vAuuaMXG6koRK492Wm4re/tbFw+/5q+5xTwqqoKv8xlIKTJHu6arGWlOj/xysY8GUy3DbC4iVRSPZRExBHZ6rAqmkeFVSOlNeAHlHfzrmpMwzPWpG7nXAYoCdH3ewd6BeVmC59MldC/MfAhfKP4Qt6jpS1K8dATFR1O6afEZmlY0SLiuIS/IzS+4jNRhVibu9PEZbkrYMuKXsIf7vQV3AvcK7Xnp35uJ0yJwz8gMLodosa6dJmqKgSPiLXXsyfTN29PI8X40BEy1D9rKA0P75k+cAhTM5UjuYI5SISo36wvnBm2N/W+WdjWGGwn2KsWOwB9I7NeOjGz9PYZ
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 01:59:37.5736 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9fafb3ec-901f-4be4-a4c7-08df1aa8a782
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 01:58:34.9340 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b12d2c10-2740-4c89-fa0e-08df1aa8822b
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6735.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264B0.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8928
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9674
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
  envelope-from=Michael.Roth@amd.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
+ helo=BN1PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,54 +131,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-Detect supported guest-memfd flags by the current kernel, and reject
-creations of guest-memfd using invalid flags.  When the cap isn't
-available, then no flag is supported.
+Support the guest-memfd type when the fd has init share enabled.  It
+means the gmemfd can be used similarly to memfd.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tests/qtest/migration/framework.c | 60 +++++++++++++++++++++++++++++++
+ tests/qtest/migration/framework.h |  4 +++
+ 2 files changed, 64 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index cdc7554082..120cab1e22 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -107,6 +107,7 @@ bool kvm_pre_fault_memory_supported;
- static bool kvm_immediate_exit;
- static uint64_t kvm_supported_memory_attributes;
- static bool kvm_guest_memfd_supported;
-+static uint64_t kvm_guest_memfd_flags_supported;
- static hwaddr kvm_max_slot_size = ~0;
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index a830b96f41..93225e3720 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -26,6 +26,10 @@
+ #include "qemu/range.h"
+ #include "qemu/sockets.h"
  
- static const KVMCapabilityInfo kvm_required_capabilities[] = {
-@@ -3065,6 +3066,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
-         kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-         kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-     kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
-+    kvm_guest_memfd_flags_supported =
-+        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
++#ifdef CONFIG_LINUX
++#include <linux/kvm.h>
++#include <sys/ioctl.h>
++#endif
  
-     if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-@@ -4760,6 +4763,13 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
-         return -1;
-     }
+ #define QEMU_VM_FILE_MAGIC 0x5145564d
+ #define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
+@@ -296,6 +300,9 @@ static char *migrate_mem_type_get_opts(MemType type, const char *memory_size)
+     case MEM_TYPE_MEMFD:
+         backend = g_strdup("-object memory-backend-memfd");
+         break;
++    case MEM_TYPE_GUEST_MEMFD:
++        backend = g_strdup("-object memory-backend-memfd,x-guest-memfd=on");
++        break;
+     default:
+         g_assert_not_reached();
+         break;
+@@ -444,8 +451,55 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+     return 0;
+ }
  
-+    if (flags & ~kvm_guest_memfd_flags_supported) {
-+        error_setg(errp, "Current KVM instance does not support "
-+                   "guest-memfd flag: 0x%"PRIx64,
-+                   flags & ~kvm_guest_memfd_flags_supported);
-+        return -1;
++static bool kvm_guest_memfd_init_shared_supported(const char **reason)
++{
++    assert(*reason == NULL);
++
++#ifdef CONFIG_LINUX
++    int ret, fd = -1;
++
++    if (!migration_get_env()->has_kvm) {
++        *reason = "KVM is not enabled in the current QEMU build";
++        goto out;
 +    }
 +
-     fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
-     if (fd < 0) {
-         error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
++    fd = open("/dev/kvm", O_RDWR);
++    if (fd < 0) {
++        *reason = "KVM module isn't available or missing permission";
++        goto out;
++    }
++
++    ret = ioctl(fd, KVM_CHECK_EXTENSION, KVM_CAP_GUEST_MEMFD);
++    if (!ret) {
++        *reason = "KVM module doesn't support guest-memfd";
++        goto out;
++    }
++
++    ret = ioctl(fd, KVM_CHECK_EXTENSION, KVM_CAP_GUEST_MEMFD_FLAGS);
++    if (ret < 0) {
++        *reason = "KVM doesn't support KVM_CAP_GUEST_MEMFD_FLAGS";
++        goto out;
++    }
++
++    if (!(ret & GUEST_MEMFD_FLAG_INIT_SHARED)) {
++        *reason = "KVM doesn't support GUEST_MEMFD_FLAG_INIT_SHARED";
++        goto out;
++    }
++out:
++    if (fd >= 0) {
++        close(fd);
++    }
++#else
++    *reason = "KVM not supported on non-Linux OS";
++#endif
++
++    return !*reason;
++}
++
+ static bool migrate_mem_type_prepare(MemType type)
+ {
++    const char *reason = NULL;
++
+     switch (type) {
+     case MEM_TYPE_SHMEM:
+         if (!g_file_test("/dev/shm", G_FILE_TEST_IS_DIR)) {
+@@ -453,6 +507,12 @@ static bool migrate_mem_type_prepare(MemType type)
+             return false;
+         }
+         break;
++    case MEM_TYPE_GUEST_MEMFD:
++        if (!kvm_guest_memfd_init_shared_supported(&reason)) {
++            g_test_skip(reason);
++            return false;
++        }
++        break;
+     default:
+         break;
+     }
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 941cbd7102..10761f6e28 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -34,6 +34,10 @@ typedef enum {
+      * but only anonymously allocated.
+      */
+     MEM_TYPE_MEMFD,
++    /*
++     * Use guest-memfd, shared mappings.
++     */
++    MEM_TYPE_GUEST_MEMFD,
+     MEM_TYPE_NUM,
+ } MemType;
+ 
 -- 
 2.43.0
 
