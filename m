@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C01C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1083C98325
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82I-0006fQ-6p; Fri, 25 Sep 2026 11:40:30 -0400
+	id 1xA82b-0006mZ-EE; Fri, 25 Sep 2026 11:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82G-0006ej-0R
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:28 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Z-0006ls-MV
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:47 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82D-0004at-JQ
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:27 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Y-0004dc-3K
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:47 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0BA781FF56;
- Fri, 25 Sep 2026 15:40:16 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 98AB01F7B9;
+ Fri, 25 Sep 2026 15:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350820; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0PvDJtK0Au5m6THwZSUrV3hnLp8mzvhlIr0lT/cf6R4=;
- b=Ha8VQP5vJJmCzufYZaKSJIUrvi2P25jHMAT6IhZ9K3pfB8/DArsvZtzJaBEQmDZjB97xKX
- +ISbvBei61rM1vAeuw7j3UgHf8DVHdoovZhA1m8UDSPe7SC6Q8gSHZKXIBBWeuWL9VHgwz
- 7Uiw3wSuOFc9C3AiuaUXs4ypkyiQQEM=
+ bh=ZXM6n2K9OZ73m3J3n6F63FRlHXCPIFdAsdyaQqGrOOw=;
+ b=IXb+gnmQbofmt44Xo0X2nqZMpIjBlB2z8FT/VmVXfrxz+J1XWov6yb1mT3O/dDS8fjEsRy
+ oQ9K9r4jkJbaxCUHJbaMSUx/zyTzAOSjNpGJ0x3amqyvEygCEBjxueD7I14vD4MsGXoZuS
+ xduLxzAyXaW6e8XlLUlG/hKdK5b1TX8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350820;
+ s=susede2_ed25519; t=1790350840;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0PvDJtK0Au5m6THwZSUrV3hnLp8mzvhlIr0lT/cf6R4=;
- b=iA1K5Q5e+1QiMBJLA1vduywOFMTa260meq+YykZnTS2T2r56xX/zWEHAGzL5cW2WhRffsh
- ks4QXHYvm1uciNBg==
+ bh=ZXM6n2K9OZ73m3J3n6F63FRlHXCPIFdAsdyaQqGrOOw=;
+ b=U2IY8tOvz2ztoIwmyOj0vqs+lLuQYfztdLN3c7WNmAqw4JhOn4DD1OwPC8Z62xAUanPzUm
+ ruqxSVIJVOPDIhBg==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350816; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0PvDJtK0Au5m6THwZSUrV3hnLp8mzvhlIr0lT/cf6R4=;
- b=OMYxi1T5N14d+NHH+6NthREWfv09OyjCNKWJUOV6DMwArEfYg7aDafriQHAfX70VNYIqCo
- BqUYt/pcPi2vqXyEGtsJNknVub3UTEEyAShwqhqGmytoPgsO62TwOFv7a6q0gc2se85tPn
- JZa7rnr7dPgbnepj092/n3gD3L9keas=
+ bh=ZXM6n2K9OZ73m3J3n6F63FRlHXCPIFdAsdyaQqGrOOw=;
+ b=cGtRVYWC3+4R/+v2X8A4A5YTuZzmTxggWoXgpAC05WIOR2/n7H05kren5RCasfgW3ZyDXa
+ R0nBHEXoNCkK9GuNmZduRdVnb7uzKIoUArgllQTRy1mrp8NRKVRFdNoQleytJQe2bl04SC
+ nAxwzbhUgxxr61pFy/poMv2WpPWFb5o=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350816;
+ s=susede2_ed25519; t=1790350836;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0PvDJtK0Au5m6THwZSUrV3hnLp8mzvhlIr0lT/cf6R4=;
- b=GJ8iAmBh5LWaAJw6GMbwsO3CquM9KAFDvX7FNDIqfeXt+tyUEhTxYPyzg98d9Smv7UOJLr
- yJHN9Bu/fhaEglBA==
+ bh=ZXM6n2K9OZ73m3J3n6F63FRlHXCPIFdAsdyaQqGrOOw=;
+ b=3GMVy6nhU574R1dsWOLn6TYm8FOdAnjQJ5l38iF2XnowsIXy5SJNmMjr+C9Mh9CqHlHuWh
+ s1rgVaiWxWSMtaAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C806132DD;
- Fri, 25 Sep 2026 15:40:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8A977132DD;
+ Fri, 25 Sep 2026 15:40:35 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T2
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T17
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:35 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 01/19] tests/unit/test-vmstate: move to new migration APIs
-Date: Fri, 25 Sep 2026 12:39:52 -0300
-Message-ID: <20260925154010.599247-2-farosas@suse.de>
+	Prasad Pandit <ppandit@redhat.com>
+Subject: [PULL 16/19] migration: Open code migrate_params_apply
+Date: Fri, 25 Sep 2026 12:40:07 -0300
+Message-ID: <20260925154010.599247-17-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
@@ -88,20 +87,21 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
  MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_THREE(0.00)[3]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,355 +118,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Remove migrate_params_apply so the logic of setting migration
+parameters is all in one spot.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Suggested-by: Prasad Pandit <ppandit@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/unit/test-vmstate.c | 118 ++++++++++----------------------------
- 1 file changed, 30 insertions(+), 88 deletions(-)
+ migration/options.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
-index df1fb4c778..23f3173070 100644
---- a/tests/unit/test-vmstate.c
-+++ b/tests/unit/test-vmstate.c
-@@ -67,14 +67,9 @@ static QEMUFile *open_test_file(bool write)
- static void save_vmstate(const VMStateDescription *desc, void *obj)
+diff --git a/migration/options.c b/migration/options.c
+index 0f7478aa6a..12f884caa4 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1393,21 +1393,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+     return true;
+ }
+ 
+-/*
+- * Caller must ensure the has_* fields of @params are true so they all
+- * get copied and the pointer members don't dangle.
+- */
+-static void migrate_params_apply(MigrationParameters *params)
+-{
+-    MigrationState *s = migrate_get_current();
+-    MigrationParameters *cur = &s->parameters;
+-
+-    migrate_tls_opts_free(cur);
+-    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
+-    qapi_free_strList(cur->cpr_exec_command);
+-    QAPI_CLONE_MEMBERS(MigrationParameters, cur, params);
+-}
+-
+ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
  {
-     QEMUFile *f = open_test_file(true);
--    Error *local_err = NULL;
+     MigrationParameters *cur = &migrate_get_current()->parameters;
+@@ -1430,8 +1415,15 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
+         return;
+     }
  
-     /* Save file with vmstate */
--    int ret = vmstate_save_state(f, desc, obj, NULL, &local_err);
--    if (ret) {
--        error_report_err(local_err);
--    }
--    g_assert(!ret);
-+    vmstate_save_vmsd(f, desc, obj, NULL, &error_abort);
-     qemu_put_byte(f, QEMU_VM_EOF);
-     g_assert(!qemu_file_get_error(f));
-     qemu_fclose(f);
-@@ -112,7 +107,6 @@ static int load_vmstate_one(const VMStateDescription *desc, void *obj,
-                             int version, const uint8_t *wire, size_t size)
- {
-     QEMUFile *f;
--    int ret;
-     Error *local_err = NULL;
- 
-     f = open_test_file(true);
-@@ -120,15 +114,16 @@ static int load_vmstate_one(const VMStateDescription *desc, void *obj,
-     qemu_fclose(f);
- 
-     f = open_test_file(false);
--    ret = vmstate_load_state(f, desc, obj, version, &local_err);
--    if (ret) {
-+    if (!vmstate_load_vmsd(f, desc, obj, version, &local_err)) {
-         error_report_err(local_err);
-         g_assert(qemu_file_get_error(f));
--    } else{
--        g_assert(!qemu_file_get_error(f));
-+        qemu_fclose(f);
-+        return -EINVAL;
+-    if (migrate_params_check(new, errp)) {
+-        migrate_params_apply(new);
+-        migrate_post_update_params(input, errp);
++    if (!migrate_params_check(new, errp)) {
++        return;
      }
 +
-+    g_assert(!qemu_file_get_error(f));
-     qemu_fclose(f);
--    return ret;
-+    return 0;
++    migrate_tls_opts_free(cur);
++    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
++    qapi_free_strList(cur->cpr_exec_command);
++
++    QAPI_CLONE_MEMBERS(MigrationParameters, cur, new);
++
++    migrate_post_update_params(input, errp);
  }
- 
- 
-@@ -362,8 +357,6 @@ static const VMStateDescription vmstate_versioned = {
- 
- static void test_load_v1(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     uint8_t buf[] = {
-         0, 0, 0, 10,             /* a */
-         0, 0, 0, 30,             /* c */
-@@ -374,10 +367,7 @@ static void test_load_v1(void)
- 
-     QEMUFile *loading = open_test_file(false);
-     TestStruct obj = { .b = 200, .e = 500, .f = 600 };
--    ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 1, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(loading, &vmstate_versioned, &obj, 1, &error_abort);
-     g_assert(!qemu_file_get_error(loading));
-     g_assert_cmpint(obj.a, ==, 10);
-     g_assert_cmpint(obj.b, ==, 200);
-@@ -390,8 +380,6 @@ static void test_load_v1(void)
- 
- static void test_load_v2(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     uint8_t buf[] = {
-         0, 0, 0, 10,             /* a */
-         0, 0, 0, 20,             /* b */
-@@ -405,10 +393,7 @@ static void test_load_v2(void)
- 
-     QEMUFile *loading = open_test_file(false);
-     TestStruct obj;
--    ret = vmstate_load_state(loading, &vmstate_versioned, &obj, 2, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(loading, &vmstate_versioned, &obj, 2, &error_abort);
-     g_assert_cmpint(obj.a, ==, 10);
-     g_assert_cmpint(obj.b, ==, 20);
-     g_assert_cmpint(obj.c, ==, 30);
-@@ -442,16 +427,10 @@ static const VMStateDescription vmstate_skipping = {
- 
- static void test_save_noskip(void)
- {
--    Error *local_err = NULL;
-     QEMUFile *fsave = open_test_file(true);
-     TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
-                        .skip_c_e = false };
--    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
--                                 &local_err);
--    if (ret) {
--        error_report_err(local_err);
--    }
--    g_assert(!ret);
-+    vmstate_save_vmsd(fsave, &vmstate_skipping, &obj, NULL, &error_abort);
-     g_assert(!qemu_file_get_error(fsave));
- 
-     uint8_t expected[] = {
-@@ -469,16 +448,10 @@ static void test_save_noskip(void)
- 
- static void test_save_skip(void)
- {
--    Error *local_err = NULL;
-     QEMUFile *fsave = open_test_file(true);
-     TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
-                        .skip_c_e = true };
--    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
--                                 &local_err);
--    if (ret) {
--        error_report_err(local_err);
--    }
--    g_assert(!ret);
-+    vmstate_save_vmsd(fsave, &vmstate_skipping, &obj, NULL, &error_abort);
-     g_assert(!qemu_file_get_error(fsave));
- 
-     uint8_t expected[] = {
-@@ -494,8 +467,6 @@ static void test_save_skip(void)
- 
- static void test_load_noskip(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     uint8_t buf[] = {
-         0, 0, 0, 10,             /* a */
-         0, 0, 0, 20,             /* b */
-@@ -509,10 +480,7 @@ static void test_load_noskip(void)
- 
-     QEMUFile *loading = open_test_file(false);
-     TestStruct obj = { .skip_c_e = false };
--    ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(loading, &vmstate_skipping, &obj, 2, &error_abort);
-     g_assert(!qemu_file_get_error(loading));
-     g_assert_cmpint(obj.a, ==, 10);
-     g_assert_cmpint(obj.b, ==, 20);
-@@ -525,8 +493,6 @@ static void test_load_noskip(void)
- 
- static void test_load_skip(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     uint8_t buf[] = {
-         0, 0, 0, 10,             /* a */
-         0, 0, 0, 20,             /* b */
-@@ -538,10 +504,7 @@ static void test_load_skip(void)
- 
-     QEMUFile *loading = open_test_file(false);
-     TestStruct obj = { .skip_c_e = true, .c = 300, .e = 500 };
--    ret = vmstate_load_state(loading, &vmstate_skipping, &obj, 2, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(loading, &vmstate_skipping, &obj, 2, &error_abort);
-     g_assert(!qemu_file_get_error(loading));
-     g_assert_cmpint(obj.a, ==, 10);
-     g_assert_cmpint(obj.b, ==, 20);
-@@ -863,8 +826,6 @@ static void test_save_q(void)
- 
- static void test_load_q(void)
- {
--    int ret;
--    Error *local_err = NULL;
-     TestQtailq obj_q = {
-         .i16 = -512,
-         .i32 = 70000,
-@@ -894,10 +855,7 @@ static void test_load_q(void)
-     TestQtailq tgt;
- 
-     QTAILQ_INIT(&tgt.q);
--    ret = vmstate_load_state(fload, &vmstate_q, &tgt, 1, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(fload, &vmstate_q, &tgt, 1, &error_abort);
-     char eof = qemu_get_byte(fload);
-     g_assert(!qemu_file_get_error(fload));
-     g_assert_cmpint(tgt.i16, ==, obj_q.i16);
-@@ -1015,29 +973,29 @@ static void destroy_domain(gpointer data)
-     g_free(domain);
- }
- 
--static int domain_preload(void *opaque)
-+static bool domain_preload(void *opaque, Error **errp)
- {
-     TestGTreeDomain *domain = opaque;
- 
-     domain->mappings = g_tree_new_full((GCompareDataFunc)interval_cmp,
-                                        NULL, g_free, g_free);
--    return 0;
-+    return true;
- }
- 
--static int iommu_preload(void *opaque)
-+static bool iommu_preload(void *opaque, Error **errp)
- {
-     TestGTreeIOMMU *iommu = opaque;
- 
-     iommu->domains = g_tree_new_full((GCompareDataFunc)int_cmp,
-                                      NULL, NULL, destroy_domain);
--    return 0;
-+    return true;
- }
- 
- static const VMStateDescription vmstate_domain = {
-     .name = "domain",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .pre_load = domain_preload,
-+    .pre_load_errp = domain_preload,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32(id, TestGTreeDomain),
-         VMSTATE_GTREE_V(mappings, TestGTreeDomain, 1,
-@@ -1073,7 +1031,7 @@ static const VMStateDescription vmstate_iommu = {
-     .name = "iommu",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .pre_load = iommu_preload,
-+    .pre_load_errp = iommu_preload,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32(id, TestGTreeIOMMU),
-         VMSTATE_GTREE_DIRECT_KEY_V(domains, TestGTreeIOMMU, 1,
-@@ -1239,8 +1197,6 @@ static void diff_iommu(TestGTreeIOMMU *iommu1, TestGTreeIOMMU *iommu2)
- 
- static void test_gtree_load_domain(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     TestGTreeDomain *dest_domain = g_new0(TestGTreeDomain, 1);
-     TestGTreeDomain *orig_domain = create_first_domain();
-     QEMUFile *fload, *fsave;
-@@ -1253,11 +1209,7 @@ static void test_gtree_load_domain(void)
- 
-     fload = open_test_file(false);
- 
--    ret = vmstate_load_state(fload, &vmstate_domain, dest_domain, 1,
--                             &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(fload, &vmstate_domain, dest_domain, 1, &error_abort);
-     eof = qemu_get_byte(fload);
-     g_assert(!qemu_file_get_error(fload));
-     g_assert_cmpint(orig_domain->id, ==, dest_domain->id);
-@@ -1360,8 +1312,6 @@ static void test_gtree_save_iommu(void)
- 
- static void test_gtree_load_iommu(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     TestGTreeIOMMU *dest_iommu = g_new0(TestGTreeIOMMU, 1);
-     TestGTreeIOMMU *orig_iommu = create_iommu();
-     QEMUFile *fsave, *fload;
-@@ -1373,10 +1323,7 @@ static void test_gtree_load_iommu(void)
-     qemu_fclose(fsave);
- 
-     fload = open_test_file(false);
--    ret = vmstate_load_state(fload, &vmstate_iommu, dest_iommu, 1, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(fload, &vmstate_iommu, dest_iommu, 1, &error_abort);
-     eof = qemu_get_byte(fload);
-     g_assert(!qemu_file_get_error(fload));
-     g_assert_cmpint(orig_iommu->id, ==, dest_iommu->id);
-@@ -1498,8 +1445,6 @@ static void test_save_qlist(void)
- 
- static void test_load_qlist(void)
- {
--    Error *local_err = NULL;
--    int ret;
-     QEMUFile *fsave, *fload;
-     TestQListContainer *orig_container = alloc_container();
-     TestQListContainer *dest_container = g_new0(TestQListContainer, 1);
-@@ -1513,11 +1458,8 @@ static void test_load_qlist(void)
-     qemu_fclose(fsave);
- 
-     fload = open_test_file(false);
--    ret = vmstate_load_state(fload, &vmstate_container, dest_container, 1,
--                             &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
-+    vmstate_load_vmsd(fload, &vmstate_container, dest_container, 1,
-+                      &error_abort);
-     eof = qemu_get_byte(fload);
-     g_assert(!qemu_file_get_error(fload));
-     g_assert_cmpint(eof, ==, QEMU_VM_EOF);
-@@ -1534,22 +1476,22 @@ typedef struct TmpTestStruct {
-     int64_t diff;
- } TmpTestStruct;
- 
--static int tmp_child_pre_save(void *opaque)
-+static bool tmp_child_pre_save(void *opaque, Error **errp)
- {
-     struct TmpTestStruct *tts = opaque;
- 
-     tts->diff = tts->parent->b - tts->parent->a;
- 
--    return 0;
-+    return true;
- }
- 
--static int tmp_child_post_load(void *opaque, int version_id)
-+static bool tmp_child_post_load(void *opaque, int version_id, Error **errp)
- {
-     struct TmpTestStruct *tts = opaque;
- 
-     tts->parent->b = tts->parent->a + tts->diff;
- 
--    return 0;
-+    return true;
- }
- 
- static const VMStateDescription vmstate_tmp_back_to_parent = {
-@@ -1562,8 +1504,8 @@ static const VMStateDescription vmstate_tmp_back_to_parent = {
- 
- static const VMStateDescription vmstate_tmp_child = {
-     .name = "test/tmp_child",
--    .pre_save = tmp_child_pre_save,
--    .post_load = tmp_child_post_load,
-+    .pre_save_errp = tmp_child_pre_save,
-+    .post_load_errp = tmp_child_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT64(diff, TmpTestStruct),
-         VMSTATE_STRUCT_POINTER(parent, TmpTestStruct,
 -- 
 2.53.0
 
