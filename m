@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A79EC98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 12:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB12DC9830D
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 12:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA5Kp-0001k7-Sp; Fri, 25 Sep 2026 08:47:27 -0400
+	id 1xA5Rk-0003AK-4O; Fri, 25 Sep 2026 08:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xA5Kn-0001dM-La; Fri, 25 Sep 2026 08:47:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xA5RL-00038m-TN; Fri, 25 Sep 2026 08:54:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xA5Kl-0000j2-Et; Fri, 25 Sep 2026 08:47:25 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xA5RI-0001ZI-Pk; Fri, 25 Sep 2026 08:54:11 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4a48e102387; Fri, 25 Sep 2026 12:47:20 GMT
+ 68P4b1rE2394514; Fri, 25 Sep 2026 12:54:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XJ7GYp
- Ae2yaMLzGAUwxBQIQCw85x7PLqIDJH3DlD49c=; b=hMAx/7GcYYB2mscf7rx/hJ
- vaPIMrJ0dXaiLBolPgg2sMOMSTEiJX06Nk/J5jkLEDIq4zM2M5k9aBru7Y1mUY/p
- 6jPiuOac8nYXMNHhWpPB8cXl32PDg+VcPsWi+9EigDeMmO5xGD7D+nM6QkzZ9iDs
- glISb++lo6HS7novGsUfBbshHGPF1G5EaZ3BI5Qo+NkHGPG81I5yieffKJAuVL7l
- gqiehqwNOiLnvmP+mldoyCYiLDdsqp5td6nkRnO7S0/7e8WSZ74tWt50eBv10GM7
- j9ffiuj9NmmncTm97Wxo46gw5yUYST29/dxPWZaTliEsABoiNY2MqIkc1ATv5I5A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=LsYoee
+ uRYmsVubOpDay85OJ0SNCz58EMXEEXlsweGa4=; b=R/4aP2qOWRkq4gky+IOn0O
+ 8dnr5qeq0lNYAlwMgmzumg8R5zBtOfALu5JQ60fBHCpG4PCQ2q/Ci+RK7xjp0hQp
+ 9EiHLv9O3tk+smdGm1W6xSMXraaEoxRImJmgVpzCB2grStamoNBxC60CwA3ErEis
+ oyJtdN+DupHqQGHfemhV40SRx9XYH+QZu7ffO7bhXnk07Mc4UbuEHtc4093HJmm0
+ PwbLPzNSmB66/eeGielk137KKVDYsIVYrZGqS3Un/gMkupm4EEbhVDBOeeuvfU+7
+ Ln4Yyuk8Sx+Xn+qCOABOrliTRJPnofpdGPcjvqcrSYS5IZMfohp6j5hsjuX+wTow
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvp2wq-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske273n5-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 12:47:19 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P9v56c3245755; Fri, 25 Sep 2026 12:47:19 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbu92akd-1
+ Fri, 25 Sep 2026 12:54:06 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PA0AkV3288179; Fri, 25 Sep 2026 12:54:05 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe22f4e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 12:47:19 +0000 (GMT)
+ Fri, 25 Sep 2026 12:54:05 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68PCkYib27656890
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68PCs46d43385310
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Sep 2026 12:46:34 GMT
+ Fri, 25 Sep 2026 12:54:04 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8D2158057;
- Fri, 25 Sep 2026 12:47:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 289D158057;
+ Fri, 25 Sep 2026 12:54:04 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A73F158058;
- Fri, 25 Sep 2026 12:47:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B354A58058;
+ Fri, 25 Sep 2026 12:54:03 +0000 (GMT)
 Received: from [9.61.145.93] (unknown [9.61.145.93])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Sep 2026 12:47:16 +0000 (GMT)
-Message-ID: <e331d4bb-12be-4c1b-8d7a-9e246a77c283@linux.ibm.com>
-Date: Fri, 25 Sep 2026 08:47:16 -0400
+ Fri, 25 Sep 2026 12:54:03 +0000 (GMT)
+Message-ID: <fa67229c-4250-41b3-991b-bfdae96c93cc@linux.ibm.com>
+Date: Fri, 25 Sep 2026 08:54:03 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x: Extend comment about PV cpu load state
-To: Janosch Frank <frankja@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, philmd@oss.qualcomm.com, borntraeger@de.ibm.com,
- cohuck@redhat.com, david@kernel.org, iii@linux.ibm.com,
- richard.henderson@linaro.org
-References: <20260923082146.62803-1-frankja@linux.ibm.com>
+Subject: Re: [PATCH v3 0/9] s390x: even more hardening fixes
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260922201526.2383047-1-farman@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -114,45 +114,44 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260923082146.62803-1-frankja@linux.ibm.com>
+In-Reply-To: <20260922201526.2383047-1-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: V_pf6CPjaTAv4mo-9qmz4wR4jyekuGCN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfX2KB+Avd9fou/
- vC+p/iqnbSD5isRNVBTsPE0uK/JuPQyHZyA0a1QlHPehyP+erS5fRHKVILkkr/nGE0Li1dRH5ey
- /8jHJIji1b/EBSbYtAN97dSGwb2QcA4=
-X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab66d57 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-ORIG-GUID: bBcAjwH01Qd9wVlzJZ-FHIGjx9986Nq9
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab66eee cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=lRyusxPUYzjeSrJwpx0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: V_pf6CPjaTAv4mo-9qmz4wR4jyekuGCN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfX3hb+27SZR0B7
- wiBzpHUw35g6ZyzwJAP7dovp0h1mGc7osqqwCu3JOxYmDiDCdTJ1rQyqmapxpqSEQYQW0jV+DRY
- sN6UgCiYoYtYkeaCxQTfER480wvRRS5m2NnQdiWh1PcxPOiANlXkgDnLhT8Df6Umi8W52MdTwS2
- BxaKhu6zjp2MrfseP90SGjcCGEgkbuEJdLJHZJLUKCP7ylzSYDSfPcvubebf1DHI63bXytEGEUo
- uSQWwoFlb+1ClB/ARDxQrR3i5zi+J2SOn7fhCwTF4+qMTB01ZXebAUwa9Bkk99V9F9HqyT3A+0+
- tegUQ0kZ+iFHeWLuZ85Fa7klti2XBUqFqfZFsStbXqLiTlQmevzg/OlHjwVSECUFzO5/OjTuhGT
- 49Ai0j6aD7UapNJ+keHgiRY0lXuftPNkoONWhB+zsfPQpz+wbfHNfy1zmOBfIQnR78HPo1BiGfv
- 1y1kFvvyivHX0ciL9Ew==
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=_1U8H7b8OK_dZt-XgggA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfX0P+tD1T9GrqR
+ EaY6uvTCw1zlUNZ4zXl9J70mljdz0UjVGR5lKQ6C8olReICAyGS8veUPl7SV6WexwV9lx7uexE0
+ OSnREkKAAaFu68KVNTp4o95kFrK9m0E=
+X-Proofpoint-GUID: bBcAjwH01Qd9wVlzJZ-FHIGjx9986Nq9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA1MCBTYWx0ZWRfXwK/e7eOf0qV9
+ BvYrtMVQDhSjA9ZAvo3tAWwWcXD+Ca5zzM9CeplcSc22+297SJ83lCcxQl22Jc4KiEcYFxLHaMI
+ F/O7LL8BGo6ZKQs6f6G+umPVFh1FHKaWq83RmZZhzgBqOepPhktNM5kpQaUlqERxqXQ31hW11+1
+ FdUFbHLr++L877E/LiU8yni/cre3v0mqtCX+xAoeV8MlgLMmiRwP/y5VyUkwT2cPJUyAmGbV417
+ aNkZYbSkAs4LbK+CoDjOtvZqCQoA/9nv9jAwxTss7AokpJe6qeiz7etmileMdjkkdbsu+erlIRY
+ T5HuyphRCHWj3oI9aqJ5q/tFoFrQMsrwRPbgKweMtvwJ8YOxeMpZZQtgvYBNTLMIiLZ75bgJpTS
+ 1/u/rkBdtFBI9azcw3aeLbQAoKPw4o73hXp10d2+98xvQFQTdkyMNfiA3oNPfk3MGDpFAagFsIs
+ pu7EL7uN9c7J2ykP34w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
- suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609250050
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250050
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,22 +170,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/23/26 4:20 AM, Janosch Frank wrote:
-> When implementing PV in KVM we chose to add the cpu load state to the
-> mp state solely to have a way to keep the UV happy. The UV requires us
-> to set that state before running the boot cpu since entering that
-> state sets the initial PSW.
+On 9/22/26 4:15 PM, Eric Farman wrote:
+> A small pile of additional hardening fixes.
 > 
-> Since entering that state in KVM only sets off the UV call which
-> causes the initial PSW load and does not set the KVM tracking to
-> operating, we need a second set mp state to reach operating state.
+> v2->v3:
+>   - Collect reviews/acks (Thanks Christian, Matt!)
+>   - [CB] Patch 7: Rename realloc variable to new_buf
+>   - [CB] Patch 8: Move check of at_byte before check of command chaining flag
 > 
-> Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+> v1->v2: https://lore.kernel.org/qemu-devel/20260921184305.3791311-1-farman@linux.ibm.com/
+>   - Collect reviews/acks (Thanks Matt, Christian, Tony!)
+>   - [MR] Add fixes/stable tags to patches 1, 2, 8
+>   - [CB, MR] Drop fixes/stable tags from patches 5, 6
+>   - [CB] Patch 2: Unwind indicators upon re-set, instead of rejecting it
+>   - [MR] Patch 7: Use a temporary variable on g_try_realloc() call
+>   - [MR] Patch 8: Use CCW datastream to increment no-data count
+> 
+> v1: https://lore.kernel.org/qemu-devel/20260916203242.2509787-1-farman@linux.ibm.com/
+> 
+> Eric Farman (9):
+>    virtio-ccw: Limit ISC to MAX_ISC
+>    virtio-ccw: Do not overwrite existing indicators
+>    virtio-ccw: Fix rc check in read configuration path
+>    vfio/ap: Clear error object pointer after non-fatal errors
+>    vfio/ccw: Clear error object pointer after non-fatal errors
+>    hw/intc/s390x: Fix payload to KVM_HAS_DEVICE_ATTR ioctl
+>    hw/intc/s390x: Fix check after g_try_realloc
+>    s390x/css: Use datastream pointer for checking no-data CCWs
+>    s390x/sclp: Reject short headers in PV case
+> 
+>   hw/intc/s390_flic_kvm.c |  8 +++++---
+>   hw/s390x/css.c          | 28 ++++++++++++++++++++--------
+>   hw/s390x/sclp.c         |  6 ++++++
+>   hw/s390x/virtio-ccw.c   | 29 ++++++++++++++++++++++++++++-
+>   hw/vfio/ap.c            |  4 ++++
+>   hw/vfio/ccw.c           |  2 ++
+>   6 files changed, 65 insertions(+), 12 deletions(-)
+> 
 
-I was puzzled that this was applying as an empty commit. Philippe 
-already picked this up [*], committed as 
-bb495851c6744ede99b457d50255964a61249221 yesterday
-
-[*] 
-https://lore.kernel.org/qemu-devel/20260924152353.36209-11-philmd@oss.qualcomm.com/
+Applied for 11.2; thank you!
 
