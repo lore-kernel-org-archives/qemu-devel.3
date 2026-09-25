@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C2BEC98318
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FFD2C98318
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 02:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9vGC-0004IO-Ht; Thu, 24 Sep 2026 22:02:00 -0400
+	id 1x9vGu-0004ef-TN; Thu, 24 Sep 2026 22:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x9vGB-0004Hi-ND
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:01:59 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ id 1x9vGs-0004eI-Px
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:02:42 -0400
+Received: from mail-northcentralusazon11013013.outbound.protection.outlook.com
+ ([40.107.201.13] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1x9vG9-0006mD-8H
- for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:01:59 -0400
+ id 1x9vGq-0006pc-Jf
+ for qemu-devel@nongnu.org; Thu, 24 Sep 2026 22:02:42 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tPxhHHYSfmu8j9AdMbxbItnK7HEI/sbRpFxgukCXHWvA6Em6Xc7rTyQvxmFIKCM2wU0e/m+RiH7BWGlaqldS6H9E9PUKER9u9f2k21QcEHHaIf666eGZChV55z9d4Sti9R7SZDeCIPnzXubAyBmRd4Uj22iXB4FiCd6FMfcDlyv6ZAJVSO8evSwOMtlTVikIu2aKrwZU30kWtjY5ldzdce0dC6IG7H0zCgy04qB6gxy0QmxKv1y9Xk43kPfJfH6S7z52ptXUCoKlD4OhSpdJXh+d7GfwhtaC2F4iiWMhP37mW+Tr6p6bv2m5wdMZ8HK1VJqSfEAp+q2CO8SU/uHnXw==
+ b=jr1YiR4nSYbQ+wzDLhPZIqk18Z5oBIjr5tGLcvjCYMeUNoY1ZkWgjI0zm8ncep/pFWe5Gt1PX5X3XPSwqIarcVyBcRqNRjzF7vZnWFFuLc1xOiHL9fjx1mqSTs1VhbFtkN23GOoKtlkApnS73/9XGZzTj05Evnz6K7GF/e1WU7YOKSxsrYkf5qn5DQo96OIeHG2dYacWj/RoACrYkJwUFmbV+zQ4s/FYQEK8M6zLfxY6EaG2o5bDk52JPgwWT94iPtNaMBVVnetzp5hLEoUm6Hq1Guvc9aCKbXWMQVyuC3/zeKCOe4/ix9jQqIG0Th1VLTDjjn2hFBHGzzCpoTrf7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zMK0sSQeYcJ2SpZUHsUEOIHNVrbe+TOzK1ACkBFcx98=;
- b=FJW2120OfA6Zh9MG5b2FaUsVtwu5+gZs/9kKn0lFFv4L9ysg5h/5TZLHHM5ZhKgkIgftlmDJGSBHsKyH3s0L7UjoqHd5FabVFkybAxVyvUXWu/Yko+PzGWuO2hPwZ0zlebudfn6NXSkbnawv38SClYiRY1MbUgbrEk3QML7+c71OKru0TOKqjUhnaM+YBv/I4hrCw64JCBeX03DhlvqcQu9dOB7TEB4RRsu5EMCfRHOyGjI9AD1TinHvjfNr48O5tBIy58MOAqDeTdWMUq6cK5QOj2WPhN45TG7CJgjo4gRMy9XzgNyiviCJAaMR+QZNYk77mSljTlwFktBVm/OkIA==
+ bh=BECacQwit5Mgcm4ZB2gEjUe7RJhqbuPwWcOYNchuMdQ=;
+ b=Ocdtbdm5riEvAmpiLnvc9NfU8HUZ7e2SdaP8SRjdxJCBh/d84BHAOraFVZBM0LJyZSWBqhJlSQ+2tGTH3VdbbZxBw8NkEQddUKV3FlxpAMDtQFS6u7NeLIWoKVZwycNPt++Q3fCMopmZnZeidYMY00Xbf86HpwWxju0v0xQpxsAAo2r2Qm+/jnZkyrO8hp2HW6Ft2VBNhX71NTOdx2xs3RfMBPMSOgmcIMoY+LiIaUw09Yw9Ez70WEhKFtgvhbPbQle9JnjaPwAqcYH5xNPS98d4Ex+q8gk+iQnmxknx7l6VkbBA7Y/M9A/R6pOfURGaQ3p9wNbwBPgBX+ueuliQIg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zMK0sSQeYcJ2SpZUHsUEOIHNVrbe+TOzK1ACkBFcx98=;
- b=A7qkF+jLv2Eg4VOvYHN00o7IHCXuEJrxqPhzwOd2VNlc57RWFhS82FHIb/2pdXhM4MqBd8GfjCsWsv04s5Q9TfIYydYllldVL04gDV7E2pVHH5gVFTL4GdJk3ikScd+XfVjXzwT4opSuKs8Z1r9TfSg/EYWGNVrmVfVytyPyaBY=
-Received: from MW4P220CA0001.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:115::6)
- by SA3PR12MB7878.namprd12.prod.outlook.com (2603:10b6:806:31e::10) with
+ bh=BECacQwit5Mgcm4ZB2gEjUe7RJhqbuPwWcOYNchuMdQ=;
+ b=oCj9VBMIjr5A8Pixf+gfOWPeiWOiapv4NhmvQ/+/rOBTNPkUk7oTlsbA0b0rBEYq7UHOEVVIl489XwnjgU44wwuNm9VRXe5kRCtnrTrafIE9c9dWDjQFL/Jw2M6RGe88MbEVAl3FmpwxMptG3qZXpAiaB1Ez/SoL+3PnC3BGQtc=
+Received: from MW4PR03CA0265.namprd03.prod.outlook.com (2603:10b6:303:b4::30)
+ by DM4PR12MB6495.namprd12.prod.outlook.com (2603:10b6:8:bc::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.22; Fri, 25 Sep
- 2026 02:01:52 +0000
-Received: from MWH0EPF000A6734.namprd04.prod.outlook.com
- (2603:10b6:303:115:cafe::42) by MW4P220CA0001.outlook.office365.com
- (2603:10b6:303:115::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.14 via Frontend Transport; Fri,
- 25 Sep 2026 02:01:51 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Fri, 25 Sep
+ 2026 01:57:33 +0000
+Received: from BY1PEPF000264AF.namprd02.prod.outlook.com
+ (2603:10b6:303:b4:cafe::22) by MW4PR03CA0265.outlook.office365.com
+ (2603:10b6:303:b4::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.406.9 via Frontend Transport; Fri, 25
+ Sep 2026 01:57:33 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -54,22 +54,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A6734.mail.protection.outlook.com (10.167.249.26) with Microsoft
+ BY1PEPF000264AF.mail.protection.outlook.com (10.167.242.116) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 02:01:51 +0000
+ 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 01:57:32 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 24 Sep
- 2026 21:01:51 -0500
+ 2026 20:57:31 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <david@kernel.org>, <pbonzini@redhat.com>, <peterx@redhat.com>,
  <xiaoyao.li@intel.com>, <berrange@redhat.com>, <armbru@redhat.com>,
  <pankaj.gupta@amd.com>, <chao.p.peng@linux.intel.com>
-Subject: [PATCH v6 08/12] machine: Rename machine_require_guest_memfd() to
- *_private()
-Date: Thu, 24 Sep 2026 20:43:14 -0500
-Message-ID: <20260925015700.1260501-9-michael.roth@amd.com>
+Subject: [PATCH v6 09/12] memory: Rename memory_region_init_ram_guest_memfd()
+ to *_private()
+Date: Thu, 24 Sep 2026 20:43:15 -0500
+Message-ID: <20260925015700.1260501-10-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260925015700.1260501-1-michael.roth@amd.com>
 References: <20260925015700.1260501-1-michael.roth@amd.com>
@@ -81,38 +81,38 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6734:EE_|SA3PR12MB7878:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b579063-6ae9-47e2-3b12-08df1aa8f77d
+X-MS-TrafficTypeDiagnostic: BY1PEPF000264AF:EE_|DM4PR12MB6495:EE_
+X-MS-Office365-Filtering-Correlation-Id: fe65c1e3-1173-4300-e695-08df1aa85d19
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|6133799003|22082099003|18002099003|10067099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: yHvnErQOM7SkpJ44qLNGx2XBNm/3/vF+XY7A1ShrmzJgpD0DERz43Ow6XuML94dHQ7FXtwbVGgTLs5NScaeYB+Xqqw+gJKnPSpo/S+Q8Z/ep4QlgKzdXEqEE5nTmRTmAkwzLlOnarKPwb0CkUhBZpj2r6xXEmQhg1hch4BLXjPPFb1Hb0dK/7hAayhRf8q0IwNMTjQUQXWXM8QL08dCr4PKwGlFKz1Y+tEhd6B3dhA9WkUxgk6Ru6tNyeeRPD5qkt9ZuxnbvtOq0Xj70cUJ7t08XDB79AVb2TSg9HeLgdGK2ojGl85d5bxnGaQEYFx3c51/+T90j++QByioQTLbszZ3GO8z8LoPtaJpT41PIIbHsGNv/CXKzPmOrOEXh0jLlPclq7xq+/pGT+yJVWFyg1Moli14P5u+cDGMRU3ulEAwyxqzr5PXnADvxx9wav49ynRzJaknu9IFzttA2lGO1H3QysUnDRz57r//x2QCFuEINgBvdcCXnYewdEaORwtoxSyWn1RwsfdYj86FDljpLoZENGBRMQAb7mAzgPC22u507bj0vJjNnBIwIuGQpCV0XS9Me+WsW//7zRw9J37bsrG2nDJ/x4M3c+9yWR283wsA2aB6r0Fsv7AJCxc5TcEKF7Z+f7ffvMYHOHq4nyAw9jQhtcMn5lEE+U8IO7blsH2/bsWZL9sAg3/smKk23WQOloPi6SH1ZSBG5R2hONueYnQ==
+ ARA:13230040|23010399003|376014|36860700016|82310400026|1800799024|11063799006|10067099003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: VcPp59FG3GJqA+0GF5De79gGbHuGzALuI6rNsJD09c5qeWBay9xb71OQ9VbtsY+gMInSVSGchQ7FrQGhU64wctuR7D4Di5NtZhlmfvIFZ3vT5pr/vvtq+jjzOLoW2DnToEwG7E6vMwMuRbo/lnQZ7wshEUWeJDkneM1fH3B33xBtdX+yozFxIiOlw3/2170gR2a7nTM3CorazCbv7giufpcujkqbLsj5kSr2tWDyPzAfbFlANY6/U7WeS/XmM81f+QXQxhReaYFUQRz+psXiBy8aOhQd6oi4parO/mVLf4lV5I5SRoEELI5e+tsXA0AymZakLnRPBQOOZQcJcKgmw72bPTOFdA0gOcZ/ODgj8Ldigv4G7j/WVxUN6g6vTU7MtN/bK9/6KWETI8OEYAbkgkdiB+4Cl3OFHKTmanGcF63JpedIHRMwBiuI5/OOgxXO/IL19B6Is+8CuGPrlgIwgehiYPyaFnoXGMruNhDoa25BVVNOU8+24KTup/JAxSTjlEksVG34JrwjLyE6buLMFRI8An/YvOCB5w9QWRhQSSgiqRJm1bOWwumukmrXtNeW3gc4IHIKOaEXKkXI3HuOhgrhbdcRO1wg2QkUfhEEskKBQzD59S2erPwu4TzJe2Ep3roQZIZf8EnK6kAcnv2jl2oiUUBSifSSr67saQbWGIeDY/8caiPPvpX/Ljsqbu7nMfDGMJgU9tctBLanZeF6gw==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(6133799003)(22082099003)(18002099003)(10067099003)(11063799006)(56012099006);
+ SFS:(13230040)(23010399003)(376014)(36860700016)(82310400026)(1800799024)(11063799006)(10067099003)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 0lZ4QwVQSXYBahwSL0AS/xF2zVANzCuKdgwPegoIGOfmNlPwD6M8zWk6cFaBApPfAka/ZgfSQMqgRv2Culzza9jOQadZxGFvysjKmfGV7xTOVaYry9XA9o5k2pAZTTLh0mfpFYZdZKmWPtWOn8qDVH0YEp1/P9XsMh5gJokZgUOa8nOlCGKe1Onz/Dju1CTQquB5qbY8q3y/Q9lcJ0dpJtOw1w2n7ZCAdak9JLV1lt21O17Weic+rdXUp33LqBXj3bM89368eQ+UlvHy6WT67lWJeg/KDuIAJzrpkQbaKr663PhqVUnu21NeLU/qLKnHzh1mzKFA1N6GgQodN27hgrfCdBFMOjpYQ+DlFI6qGiQfWCUYy9lo71dLGA0wceehZdpXGu1DDrZOULfnZOEjhduv6rT6mSsRHxXtpC7E+GlZgF5WFncrJERWdbCcyuCh
+X-MS-Exchange-AntiSpam-MessageData-0: TwQNKRPiaK5qqO6B81YdVAjm5OjFy/taz9fx5eMKCkH5hFzFtCbC7EYRDyNdhG5Xb2hms9+8tg+pXWG2yFUVSgtTJgO37hosVLUCbQZkiA2f+dgacrJGTqR0qrGlv5dxnqNOXlM9kGb106bJPiJljXKIfxLNyF+iO5A7drwA5qwkXiac/kfxhOVFZdfErDslk+JTij/TotqaoTcUK7lISMLrrmK6mTnPHIH1aWNLDkNZiATB5vIVGbh8WXubfqj8eubq/Ye0ZMtli/JQjCmn8PFRtH042Emp+GDtHPYyR2GoqWg/euT9KFdASSikzq25SaKzcYYFBRi0mKtjPNdsOoEcNuKNzfEyLv6ZNJgQrlAI0PBxoMGyjvl3xua9yVInsi5jQnSX3VyKodFAVOgDtVOiNMs9bECLMczSIQ8tj0/R66SwYzxBgHHBwF11W9dq
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 02:01:51.8108 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b579063-6ae9-47e2-3b12-08df1aa8f77d
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 01:57:32.7407 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe65c1e3-1173-4300-e695-08df1aa85d19
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6734.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF000264AF.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7878
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6495
+Received-SPF: permerror client-ip=40.107.201.13;
  envelope-from=Michael.Roth@amd.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
+ helo=CH4PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,9 +133,6 @@ From: Peter Xu <peterx@redhat.com>
 
 Differentiate it from fully shared guest-memfd use cases.
 
-When at it, add proper brackets in kvm_handle_hc_map_gpa_range()
-otherwise checkpatch may complain.
-
 Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
@@ -143,126 +140,114 @@ Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: David Hildenbrand <david@kernel.org>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- backends/hostmem.c       | 2 +-
- hw/core/machine.c        | 2 +-
- hw/i386/pc.c             | 2 +-
- hw/i386/pc_sysfw.c       | 4 ++--
- hw/i386/x86-common.c     | 4 ++--
- include/hw/core/boards.h | 2 +-
- target/i386/kvm/kvm.c    | 3 ++-
- 7 files changed, 10 insertions(+), 9 deletions(-)
+ backends/igvm.c         |  4 ++--
+ hw/i386/pc.c            |  4 ++--
+ hw/i386/pc_sysfw.c      |  4 ++--
+ hw/i386/x86-common.c    |  4 ++--
+ include/system/memory.h | 10 +++++-----
+ system/memory.c         |  8 +++++---
+ 6 files changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index a41540d50d..8782c8b1ea 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -290,7 +290,7 @@ static void host_memory_backend_init(Object *obj)
-     /* TODO: convert access to globals to compat properties */
-     backend->merge = machine_mem_merge(machine);
-     backend->dump = machine_dump_guest_core(machine);
--    backend->guest_memfd_private = machine_require_guest_memfd(machine);
-+    backend->guest_memfd_private = machine_require_guest_memfd_private(machine);
-     backend->reserve = true;
-     backend->prealloc_threads = machine->smp.cpus;
- }
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 92f7be52a1..438624ece3 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1337,7 +1337,7 @@ bool machine_mem_merge(MachineState *machine)
-     return machine->mem_merge;
- }
- 
--bool machine_require_guest_memfd(MachineState *machine)
-+bool machine_require_guest_memfd_private(MachineState *machine)
- {
-     return machine->cgs && machine->cgs->require_guest_memfd;
- }
+diff --git a/backends/igvm.c b/backends/igvm.c
+index ec7bee428b..58f3097e85 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -291,8 +291,8 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+         imr->mr = g_new0(MemoryRegion, 1);
+         if (ctx->machine_state->cgs &&
+             ctx->machine_state->cgs->require_guest_memfd) {
+-            if (!memory_region_init_ram_guest_memfd(imr->mr, NULL,
+-                                                    region_name, size, errp)) {
++            if (!memory_region_init_ram_guest_memfd_private(
++                    imr->mr, NULL, region_name, size, errp)) {
+                 g_free(imr->mr);
+                 g_free(imr);
+                 return NULL;
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index b649f184de..2fd90fa739 100644
+index 2fd90fa739..1ae0c4f614 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -873,7 +873,7 @@ void pc_memory_init(PCMachineState *pcms,
- 
+@@ -874,8 +874,8 @@ void pc_memory_init(PCMachineState *pcms,
      if (!is_tdx_vm()) {
          option_rom_mr = g_malloc(sizeof(*option_rom_mr));
--        if (machine_require_guest_memfd(machine)) {
-+        if (machine_require_guest_memfd_private(machine)) {
-             memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
-                                             PC_ROM_SIZE, &error_fatal);
+         if (machine_require_guest_memfd_private(machine)) {
+-            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+-                                            PC_ROM_SIZE, &error_fatal);
++            memory_region_init_ram_guest_memfd_private(
++                option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE, &error_fatal);
          } else {
+             memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+                                 &error_fatal);
 diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 441e777191..b6a56ef1fd 100644
+index b6a56ef1fd..6ff0b9baae 100644
 --- a/hw/i386/pc_sysfw.c
 +++ b/hw/i386/pc_sysfw.c
-@@ -51,7 +51,7 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
- 
+@@ -52,8 +52,8 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
      /* map the last 128KB of the BIOS in ISA space */
      isa_bios_size = MIN(flash_size, 128 * KiB);
--    if (machine_require_guest_memfd(MACHINE(pcms))) {
-+    if (machine_require_guest_memfd_private(MACHINE(pcms))) {
-         memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
-                                            isa_bios_size, &error_fatal);
+     if (machine_require_guest_memfd_private(MACHINE(pcms))) {
+-        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
+-                                           isa_bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            isa_bios, NULL, "isa-bios", isa_bios_size, &error_fatal);
      } else {
-@@ -70,7 +70,7 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
-            ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
-            isa_bios_size);
- 
--    if (!machine_require_guest_memfd(current_machine)) {
-+    if (!machine_require_guest_memfd_private(current_machine)) {
-         memory_region_set_readonly(isa_bios, true);
-     }
- }
+         memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+                                &error_fatal);
 diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index ae58352760..59e92b1a1b 100644
+index 59e92b1a1b..fa18bf1aec 100644
 --- a/hw/i386/x86-common.c
 +++ b/hw/i386/x86-common.c
-@@ -1036,7 +1036,7 @@ static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
-     ssize_t ret;
+@@ -1037,8 +1037,8 @@ static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
  
      /* BIOS load */
--    if (machine_require_guest_memfd(MACHINE(x86ms))) {
-+    if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
-         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
-                                            bios_size, &error_fatal);
+     if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+-                                           bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
          if (is_tdx_vm()) {
-@@ -1106,7 +1106,7 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-     bios_size = get_bios_size(x86ms, bios_name, filename);
-     load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
+             tdx_set_tdvf_region(&x86ms->bios);
+         }
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 96ab920e7d..027ca81bd2 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1358,11 +1358,11 @@ bool memory_region_init_ram(MemoryRegion *mr,
+                             uint64_t size,
+                             Error **errp);
  
--    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-+    if (!machine_require_guest_memfd_private(MACHINE(x86ms))) {
-         /* map the last 128KB of the BIOS in ISA space */
-         x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
-                           !isapc_ram_fw);
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index 3b86724cf0..d0e4ad9820 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -43,7 +43,7 @@ bool machine_usb(MachineState *machine);
- int machine_phandle_start(MachineState *machine);
- bool machine_dump_guest_core(MachineState *machine);
- bool machine_mem_merge(MachineState *machine);
--bool machine_require_guest_memfd(MachineState *machine);
-+bool machine_require_guest_memfd_private(MachineState *machine);
- HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
- void machine_set_cpu_numa_node(MachineState *machine,
-                                const CpuInstanceProperties *props,
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 1eeadb99ad..a72b6e6b74 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6488,8 +6488,9 @@ static int kvm_handle_hc_map_gpa_range(X86CPU *cpu, struct kvm_run *run)
-     uint64_t gpa, size, attributes;
-     int ret;
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+-                                        Object *owner,
+-                                        const char *name,
+-                                        uint64_t size,
+-                                        Error **errp);
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp);
  
--    if (!machine_require_guest_memfd(current_machine))
-+    if (!machine_require_guest_memfd_private(current_machine)) {
-         return -EINVAL;
-+    }
+ /**
+  * memory_region_init_rom: Initialize a ROM memory region.
+diff --git a/system/memory.c b/system/memory.c
+index fa0a2cf563..f1910af8a0 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3592,9 +3592,11 @@ bool memory_region_init_ram(MemoryRegion *mr, Object *owner,
+     return true;
+ }
  
-     gpa = run->hypercall.args[0];
-     size = run->hypercall.args[1] * TARGET_PAGE_SIZE;
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr, Object *owner,
+-                                        const char *name, uint64_t size,
+-                                        Error **errp)
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp)
+ {
+     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
+                                                 RAM_GUEST_MEMFD_PRIVATE, errp)) {
 -- 
 2.43.0
 
