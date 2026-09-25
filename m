@@ -4,68 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D97C9830D
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23494C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA7YM-0000H5-JA; Fri, 25 Sep 2026 11:09:34 -0400
+	id 1xA7fn-0001rt-2G; Fri, 25 Sep 2026 11:17:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xA7YK-0000GO-JR
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:09:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xA7fk-0001rA-BC
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:17:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xA7YI-0001Mg-J3
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790348969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3kZ3KiyS6g3PynDQfawPhQdd55pp7R8FUVSyiOB2Rck=;
- b=KOT/9OlLeBSim1kHidC7JW0Xfktqv8yFYgoVjJ1ma8iDsVY7Mf8Sze2ZsXL15H4KHd3m+v
- ckiNzE8aQnGsyeiT3ifAIAGtAmu9oK89X9hJbA5WS+nF0hU1WK6x+ZPLAK6EcX21710qvM
- SqRhqK+uW4n+4bIBl9DEWYt6YwNYw7g=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-9vqtT9BqM5ee3c21knB0-Q-1; Fri,
- 25 Sep 2026 11:09:27 -0400
-X-MC-Unique: 9vqtT9BqM5ee3c21knB0-Q-1
-X-Mimecast-MFC-AGG-ID: 9vqtT9BqM5ee3c21knB0-Q_1790348966
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA575194A21C; Fri, 25 Sep 2026 15:09:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.175])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE12518004D4; Fri, 25 Sep 2026 15:09:07 +0000 (UTC)
-Date: Fri, 25 Sep 2026 17:09:05 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Jorge Merlino <jorge.merlino@canonical.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH] block: add debug when block operations finish
-Message-ID: <araOkUxn0agKKJrJ@redhat.com>
-References: <20260909-debug-block-ops-b4-v1-1-2405f34ec068@canonical.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xA7fh-0002Np-D4
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:17:11 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PDT2Pn3628345
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 15:17:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ XFKJ/2TrMmtj8j1SLXFpIjBKDvN6+bPnfoVVnrVYt8g=; b=FhqgBdSbeAXQlxi1
+ 4EFnH2osfnM7cBM/5oTw7UDffrnID+DkdTC35uVS2kQlZssAY5pUnrY8vTpzUqWq
+ fW8g8K5yfKAxtFKswF99B/YlViAkdgskEEOBkRqcZ5qo17Jix/ziMXuWQGMLJ241
+ RzLBXdB1Zdt64MrJNcKw38v/ZUylQeJh0fkXAwiFKRXmd02iCSfoh6OzcNPE/8HY
+ GbRynZ7T01D1IaX8smxq+wz76D9V03a9X+jnjXmNr8D3Vl1/cadJ6c8kA96S3Xep
+ q/qtpjTCgTP2EPhF0IgBYDVV4of23mBz20ghjYbjVK3hKQnjHkZslD4w1OGAwwJF
+ Xjyg6Q==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq39x8p-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 15:17:07 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2df9a4c95fcso4421315ad.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:17:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790349426; x=1790954226; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=XFKJ/2TrMmtj8j1SLXFpIjBKDvN6+bPnfoVVnrVYt8g=;
+ b=TUgCMF8hCmONOOkKKgGAVrOPVq1RNQiWiYzaMZbCM0rPmfCfh491Gcp/romsaQBGZw
+ PQ3tW8Nz35dNw3/eB+61Pf1vtp6oNr5te5+Nu3mZaQ3LjiDEd08GJXp4fIIEt9leUJW+
+ QPEQWzdtdjh5MKxZOG3enmWhKILA5VEhQoMtU83ehK83wsOoaiDBd9eIs6XZWPHdMVCe
+ I+QWTfbyIc4NROTMas/LWzdCTZPpZyAnPAArEWy6xc1zVQlItspS6avK7EhbeMpnEKZu
+ zbaRUH8vHf8zD6qD8bqLYVrA2ayrDzUBRcnM1kzm857LWkU4icclVP3r5IvNyCshDVYT
+ 6X0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790349426; x=1790954226;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XFKJ/2TrMmtj8j1SLXFpIjBKDvN6+bPnfoVVnrVYt8g=;
+ b=LWNBFOx508w0rxLs2MHs0UeevZPKQQA0DSHIetwQbwWxziyy7+9nwDUFc39baPDvFa
+ qxXUQ/8ijEU7IQsN9Op81XBvY16vQnPqhCcpt9tiwv71vTPf/squrif/WCGTkHoc+ODb
+ B0SPIzapsg6R1RAwjehjpB9gJSalIwAT9510M2IEqERYZmQySYo3ydE15RClFKGUFqdr
+ K4eHhg17AIBOBozvG3BAXtMlxykQgxIO/Yp5T8OGAt5WoGJqVnd85J7PT3XkWQNfg7Zv
+ u5EWes6VjxHrUrUWP0nKWEoKZViSb/is4Jx/0avd4k6LoH2KCdqcvmpHwEP8HQthJwUJ
+ Mnlg==
+X-Gm-Message-State: AFuF++kgOlEUtPhio9ruKKKFDVnHIqGHIOQ5xBOznmf3/NSluOQ0/Raq
+ 9RUv48P4EpTecnf2fIaoiTHT811kEZDvsoK1gbbJvvW7tTfMfyC7T5eEMI08JEbQfIp5KdRPkO0
+ eRQowIbJge+mbmplJGlCCkuCEp9B9NSfrycKLrcK8Spdo7x1O7XedQirNjw==
+X-Gm-Gg: AYBFou1/5yPXLz53MsNzel/++6EcWLyrDc31v71FH0V6iR+M43KSGBb8Tw5wqII+CgG
+ z4KUU7jv3BJT0PdT2qlWZhTS3QC/uVMv8rNQFQxOQuVgpUmbqv77LpOD2bgwylwIkOGdEyPvfYF
+ jYYo3GZCnfD0SRGI4jf/95qi2MaKFsoGKhZpBvuZKoeI4dQ1lRFlU2GTcW20U6/lwKvDJaPfTKV
+ 8Q8DyNlVY9tAayX/GrCzPwAz9atUitdApuMhZTdqN+SzTqsHDGiYHCELUFyMzolVqu571actYN0
+ TAItAQP4UOuSFgnPZFVxN958uwFImozuzSLiWQjSfIgaGGjkf5Wk4TJoNjsUnJayaxFBsuls4G9
+ 7k7GQp0uaZ8tsHx0geO3d9frjPjcv62HWZiYzBtGCJbpM4BT/GVhJk0UqQDxg4F+iCXE=
+X-Received: by 2002:a17:902:f541:b0:2dd:c053:d741 with SMTP id
+ d9443c01a7336-2df7dc3829dmr47175295ad.40.1790349425875; 
+ Fri, 25 Sep 2026 08:17:05 -0700 (PDT)
+X-Received: by 2002:a17:902:f541:b0:2dd:c053:d741 with SMTP id
+ d9443c01a7336-2df7dc3829dmr47175025ad.40.1790349425314; 
+ Fri, 25 Sep 2026 08:17:05 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2df9142a2f9sm13042975ad.48.2026.09.25.08.17.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Sep 2026 08:17:04 -0700 (PDT)
+Message-ID: <b1e1ffe5-a7ce-44be-96ed-b425c15cb10c@oss.qualcomm.com>
+Date: Fri, 25 Sep 2026 08:17:04 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909-debug-block-ops-b4-v1-1-2405f34ec068@canonical.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] tests/tcg/meson.build: introduce cc_alt (alternative
+ cross compiler)
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260924213942.26491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260924213942.26491-3-pierrick.bouvier@oss.qualcomm.com>
+ <arZBMfW-1WcpjNZs@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <arZBMfW-1WcpjNZs@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2MCBTYWx0ZWRfXxHxRCAvgmDr5
+ HfEcIO+hSjC0xWgHhbxKEXnxXnPVq934dJ3DnTj/i9UGV2qbGp5YtDg0XxuTj4CW8dlnS3btGzV
+ 3aT/+EtjsXElOFhsEgUyyluAgES9eqI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2MCBTYWx0ZWRfXwXHNLubCOFwv
+ Dfitp5l3KB5vd2YYcplkMZXxWaL66oJ/5h852s6rRGJ+5J6Thrt3nSEpR3kIBJ2Fp8Okz9TwROE
+ Tfty05lyT+uT7IRcs4MdUjmtStf+XESXgph2R8/Adpb17AoCkFD1tgvP3xv9Nq2ZdgvZJPdjz8d
+ Oad+dFnHbdHhCRgVQ1HuG3Mkw4QC83qQjolxfzqd31XqHhL0xVGhBzhWIjPzZRPRjGthaTGiHZl
+ EEYqbVHSJx3nF/v7Hrp7ypeJ397BAe/YRdC6BuMXDeoe/Ke9zf1QX7hjY2ccVSszCjVy1Qgk9cg
+ 9JEP7NbQnDboR5XO3lSGqmrP6J9TEanLC53gUSIRbeUktgj+ME/VE7oZbOdwZUR5wnJ39oeYp98
+ jekWXArAa6Fbd+0kDo9yaqruYZFErPUHdo1Z1lLA8Jk8aLXCcFVCQ2kpLxRJpUpTjagNhnMdeNq
+ 5+yn3gaGND3VRT9o1CA==
+X-Authority-Analysis: v=2.4 cv=VuO2kO2n c=1 sm=1 tr=0 ts=6ab69073 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=jMxiaY3KWykQ_qJIs7EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: knyDXHCeXz6ojHxf-BMT2QLiItA0y-sH
+X-Proofpoint-ORIG-GUID: knyDXHCeXz6ojHxf-BMT2QLiItA0y-sH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609250060
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,73 +159,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.09.2026 um 21:56 hat Jorge Merlino geschrieben:
-> Add new debug tracepoints when block read and write operations finish to
-> be able to measure latency.
+On 9/25/2026 2:38 AM, Daniel P. Berrangé wrote:
+> On Thu, Sep 24, 2026 at 09:39:40PM +0000, Pierrick Bouvier wrote:
+>> This allows each target to provide an additional list of cross
+>> compilers to check. With this, we can detect default cc for common
+>> setups (debian/fedora/macos) without user having to provide a
+>> --cross-cc-* option.
+>>
+>> In addition, it allows us to pick up host compilers for various hosts.
+>> (debian and archlinux have $arch-linux-gnu-gcc installed
+>> with gcc package by default, but not fedora).
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>  tests/tcg/meson.build | 46 +++++++++++++++++++++++++------------------
+>>  1 file changed, 27 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>> index 0006d192cab..59ab73e1d10 100644
+>> --- a/tests/tcg/meson.build
+>> +++ b/tests/tcg/meson.build
+>> @@ -21,6 +21,7 @@ tcg_tests = {}
+>>  # {
+>>  #   'name_of_target': {
+>>  #     'cc': 'cross_compiler',
+>> +#     'cc_alt': ['list of alternative cross compilers', ...]
+>>  #     'cc_dockerfile': 'name_of_dockerfile',
+>>  #     'cc_feat_cflags': {
+>>  #       'name': ['feature cflags'],
+>> @@ -210,7 +211,7 @@ foreach target, plan: tcg_tests
+>>  
+>>    # return a clear error if user misspell a target entry
+>>    foreach key, _ : plan
+>> -    allowed = ['cc', 'cc_dockerfile', 'cc_feat_cflags',
+>> +    allowed = ['cc', 'cc_alt', 'cc_dockerfile', 'cc_feat_cflags',
+>>                 'folder', 'gdb_arch', 'gdb_feat_version', 'qemu', 'tests']
+>>      if key not in allowed
+>>        error('unknown tcg test plan entry \'' + key + '\' for target ' + target +
+>> @@ -218,15 +219,18 @@ foreach target, plan: tcg_tests
+>>      endif
+>>    endforeach
+>>  
+>> -  cc = find_program(plan['cc'], required : false)
+>> +  cc_list = [plan['cc']]
+>> +  if 'cc_alt' in plan
+>> +    cc_list += plan['cc_alt']
+>> +  endif
 > 
-> Signed-off-by: Jorge Merlino <jorge.merlino@canonical.com>
-
-The subject line should mention trace points. Maybe just "block: Add
-tracepoiont at end of read/write"?
-
-> This patch adds debug tracepoints when block read and write operations
-> finish. The log includes the parameters used when the operation was
-> initiated so that the start and finish messages can be easily
-> correlated. Also the return value of the operation is logged.
+> If you're combining these into a list anyway, why not just
+> have 'cc' be a list of CC names to begin with and not bother
+> with a separate 'cc_alt' field ?
 > 
-> This can be used to analyze latency issues with block operations.
 
-Yes, this seems useful.
+It's just a semantic choice, since cc has to be provided in docker
+container, while cc_alt do not. I can add a comment if it makes sense
+for you with this explanation.
 
-I wonder if we shouldn't make sure that the start and end traces always
-come in pairs. Specifically...
-
->  block/block-backend.c | 2 ++
->  block/trace-events    | 2 ++
->  2 files changed, 4 insertions(+)
-> 
-> diff --git a/block/block-backend.c b/block/block-backend.c
-> index 37ba7e9fc4..75d3cd1949 100644
-> --- a/block/block-backend.c
-> +++ b/block/block-backend.c
-> @@ -1364,6 +1364,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-
-Adding more context here:
-
-    trace_blk_co_preadv(blk, bs, offset, bytes, flags);
-
-    ret = blk_check_byte_request(blk, offset, bytes);
-    if (ret < 0) {
-        return ret;
-    }
-
-Should this error return also call trace_blk_co_preadv_done()?
-
-    bdrv_inc_in_flight(bs);
-
-    /* throttling disk I/O */
-    if (qatomic_load_acquire(&tgm->throttle_state)) {
-        throttle_group_co_io_limits_intercept(tgm, bytes, THROTTLE_READ);
-    }
-
->  
->      ret = bdrv_co_preadv_part(blk->root, offset, bytes, qiov, qiov_offset,
->                                flags);
-> +    trace_blk_co_preadv_done(blk, bs, offset, bytes, ret);
->      bdrv_dec_in_flight(bs);
->      return ret;
->  }
-> @@ -1442,6 +1443,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
->  
->      ret = bdrv_co_pwritev_part(blk->root, offset, bytes, qiov, qiov_offset,
->                                 flags);
-> +    trace_blk_co_pwritev_done(blk, bs, offset, bytes, ret);
->      bdrv_dec_in_flight(bs);
->      return ret;
->  }
-
-Same question for writes.
-
-Kevin
+> With regards,
+> Daniel
 
 
