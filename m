@@ -4,131 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFD4C98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9ECC98321
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:50:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA93g-0001eN-LY; Fri, 25 Sep 2026 12:46:00 -0400
+	id 1xA97i-0002l5-FB; Fri, 25 Sep 2026 12:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA93e-0001dY-5t
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:45:58 -0400
+ id 1xA97b-0002k8-SN
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:50:03 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA93Z-0002xP-JX
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:45:57 -0400
+ id 1xA97Y-00038D-AJ
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:50:02 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PG1Mta796776
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:45:50 GMT
+ 68PG1KvR796594
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:49:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7x8CJI8ZcOeO0a1BAcwgUjsHel5oGzBDcWMojHdLsvo=; b=Zxuac1QcT9+eSp5/
- rYm4Z/C8fuwWILyxLFspnFIdnD9kW4fMqogvEm+RArHQD+8oQvjrJdtAgFNpUThh
- BJRyORhUTFytbfT24mtK4rTdb5uU0dgI27exp/H0eM/+jWvUD2lPO/JVILAQkTqV
- Mou21UR9kTr1z/XwB0ihr9AZm6p3p27Kc2q4/Y5wbFF01pDRqUIWLwkK/6iH6UKi
- Fvea1DFDdz+sexO/rKGjzncyExnjOqIxLDbu7V3qVynDz+eEtd8GL/ODDmlARoRL
- D/CEWd6IXNlmelBHoeHNwpMQudebAVTPruSGM5wMpEK0REmeiIit2dQJUFOt6z28
- PMTxYw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq3aa65-1
+ hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=; b=hkimgEVsoyyDzhQv
+ UAY0iEkV+5+MvfVc3bBj5cYYWaU8Xhq4gUCWfakZlE+9BR8p/KIPynV7JtojTaY9
+ SkwKptpKfgbHI9zWTmA8mSb7SikJULVnu0Yi00r/qkN2joBDnQ4XL2PylYh9zX0y
+ 5AAmAjaitsn6b3QW6hfWwjdDIWyr69GwvotrW73SgIKbiawXFi0r+7sbzpWy5wZR
+ W0kbm6yhdSzfjK9VpkyJdhHr4+44Tl61PY/ZY1iO9bNGEhjWwgtbm6q3OK+3XB2K
+ t/0KScqz08hmcsuFbtuj0wdTxXPX4AZqIZvWmo4NIsEEZcluUpn4GMfG0U8iBAOv
+ MPvMgA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq3aat4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:45:50 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-530e39c5625so23738891cf.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:45:50 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:49:58 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-939f248907fso112161485a.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790354750; x=1790959550; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790354998; x=1790959798; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7x8CJI8ZcOeO0a1BAcwgUjsHel5oGzBDcWMojHdLsvo=;
- b=DBAaHImWznViRLtWt+talzQVuO9OqslV3OMjU4JbtlbH7bB9CI1Pbsc9vuZcr2gHgi
- 8NAv45HIO0noZmQ+z84pvb2oxG33Ud28RKugeQc3Dn5fJm3Z8FOhn2WIybrmO0kRVHBz
- 0eBBDpnQoGS756h+ORGw55krSQkBMDRiBP2A9kVvyW9ZxONck/SWOg6ZupTbaYAEPTQM
- wZdKIjKblt/8n8wyN96uY824j58yNjTXnZMSRxk5c2jlYLDjishxIQlObbmbWweVY879
- gNf0gPRTM9vLqJ58Jl+lE6q0onaADox9FnyiHqcZjuD4D95DTPgtufpyOVP+xv1fT1Gh
- z0WQ==
+ bh=hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=;
+ b=TC89N26Ldqeik6xw0RBbDk8VGNUap+YzLgC9cfV17Gw7JIkUbsUDDFqsdFqlkMWQ7n
+ lWyBfhMkknsmPs2QrSv1nJRCBaC2aIeiIwNtzo+xXY5shOyPEPdfKaxO+PB8pcdvHkOp
+ iN67s+AFnyX7H2lXXSeEhls20dG9wIR64tFiDue+hxQiZ63+cB34mRNzBN/PGAxwXXwQ
+ ZPBtlCfdabCgIBGBXm6fzybVAwGJh28kt+C3BJ5Pr7LqGtyKRmRTu5chSf9PihgmoRPb
+ FMjvLM5IFmeTttQ+ZxtuwVbdcLC3jQ2iojVGYWbMsC2sxmtlkzCW5uMiRHPvW2qKDVoH
+ CymQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790354750; x=1790959550;
+ d=1e100.net; s=20260707; t=1790354998; x=1790959798;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=7x8CJI8ZcOeO0a1BAcwgUjsHel5oGzBDcWMojHdLsvo=;
- b=KQeWZQNeKpLmFtlkKGMI+GN7B9SDDvvczg10PaTKQ7aie5a19Qv5q/+ryIsQ0GpvLM
- Jm9RWwRIqSphywQT+GPYZMU6Rbs3TqOuWZK8xhG7GvlGOgkF9z03y0HqCFAuaosBBJiH
- /D1IDNVTKGxE0WuJ8JuIG7jrHGCCkCNFsAG7k9mD40nz1ESjjtmz3hCMqnrAOjO6+3Zk
- SfXwr4xSZ8B3adbXQKnoAAnQAwqRcNb5zysj7VmIZNrlc425dWpW6mMscKGf5+ZGAs8f
- exupcu3cWmxzGETfZLmbfTwLLz0U6hp2TI/oKQMLupgG+ebLua2Movzwnfcv2TTbUXA1
- 7M9Q==
+ bh=hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=;
+ b=fTAmF0y4oi8Wh0rtRhnHgZWHKPxJkaDMFNxhVZrTskfz3Z3WEBSlkcLwpXdnWbpMuB
+ IJs/QpTI+WEe+60WWIraiJoFAxkPmRvlncUEUXCROPcAGcaNhZxGO4nYp+lunV4FZxGp
+ W7o9DLnOAaFCufjKmnt784yrMCMg+SPTno3kD5/z9jC0THMYZpD2Uvv/jxc0P2LGvebR
+ kBolRUNcfV5SCss0EPk1cKXRuJ3IvjfzK5wYXh/2Z38mrwlctBL433ZsaVemXqvnlJU7
+ Cr7WKsZf2Ld9KIOcLGQ/SflSMjP4UEQj5Pm30OVO0xxVxVEyTRNIZlNJ4bsFDC32ntw9
+ EJng==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzbtht2dDg/goVkTaRoVy6UWOdfhOqFf7I55N/F5pro2cJr8EAaadDjHtj8baZNTAfILaqihxIl2S7/@nongnu.org
-X-Gm-Message-State: AFuF++nrW2uwJHZ92D/y7lfNERV3txo4hipNY7zsZbxXJqf6oNHOFxSs
- eZalMpJzI+YMky3m7TgmivKFxDhL3BRqbCpqHiipXfU+C9SZcURVICLhqhMbusobrnfXtFoHYg6
- iNfJliEWVJI8ed3L7cYFzwE+nnWwRfacmrsHYhVcF8N3wC2JQXPPOjL0cww==
-X-Gm-Gg: AYBFou1ALYPxfVGgylPTZV4/iq6DJpycAMaYetedy8Snn+Fk5nHns4LZb3K0oxhGu3F
- +X4aPXodKCFou2H/wA+D73ijHRgsYS/jFB89t33KP2Zy2Tf+ESzJ6mUWzjkLW+zM8C5N8Um//Q8
- aMQvWp88te6elIeVbMcjhnnWPqcA8E92XPI7TL37AZBecnGeQ+yUgwerlde5lTI4uJLLDP5gBv1
- FEvUqTWIeRoPLRU89Cku6iZCPHCnrExoPUqPXZ8DFhi9/3I1mUhl9ZUnzZcvKoZ4INDKbS7bWnM
- So+3YvEO9WYtxxN3VPRQmheX2+WCw/y/Reg2stDqvSuHwP0AmIH/I/dqba12peFatfKe3gM8n+h
- SssxLeuC3wmU/KPpMMfZyZc4vLH7JAjnVKw==
-X-Received: by 2002:a05:622a:1a8b:b0:532:d3ad:c537 with SMTP id
- d75a77b69052e-5330b703f1amr54918361cf.59.1790354749654; 
- Fri, 25 Sep 2026 09:45:49 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a8b:b0:532:d3ad:c537 with SMTP id
- d75a77b69052e-5330b703f1amr54917261cf.59.1790354748767; 
- Fri, 25 Sep 2026 09:45:48 -0700 (PDT)
+ AKwUvBxZ2J+LaeBKjnhH2JV/hEHnv28T1vbCEO4+w9ViKrxBkYnpaL4xSakec/B0k7ctYya1pjZ4nRpUKeWg@nongnu.org
+X-Gm-Message-State: AFuF++mGuQZ6V+NrBDQt+RPih0OZmNc4iUG0nFjA3epWGVDIkj2RWRME
+ BrxO2VwvBk0ICRXU/ALP18+/hGU6K6ufuZ2E+TO+B6GxgsAnD1AaSiT85fqdow2r6Jv4FJc8m9S
+ 4B8fYx6I2KFdz7zZ5MFwCFlQmPw8gFTrdxpFLN6gIxB4WDuSZG9BareV4Fw==
+X-Gm-Gg: AYBFou3QuPijv4IMMvct4MtyCgv+BFM7JvaYWtHE3miMabYB0PXzcCjfSWrU8mKzX/6
+ 8QhD0Fxe3Brh552ncvVaTUqNeEUZFHqi6keRI+uFpbMwn2aphFV0qfkOTqPq9Gggz/PMqqqAahT
+ I2zwMYVnQHF6jOpN7BvPX9z24ftMigTq/97Vuj8/TgVP3GQfY5nTPrYPtlOTiMOhOXyrCFMP6xt
+ q0q2u4798CVBPV7dzcgEK5b0fszqSXekID02z6uwui5sBzxq1gfONW7K2qg2PT/9B/w/ZPpLDIE
+ wxDjTsFPcmDr0perzWB9x01B3wPq3UkN7KYveSVoF9uZ95/wJadGpNMDNybs5S5wN9kA7cAC72o
+ aNBXCFzV/fzW4/H4k81acJ/fEaV+9OPUKnQ==
+X-Received: by 2002:a05:620a:4450:b0:93a:1fa7:1afb with SMTP id
+ af79cd13be357-93c43cb6a76mr584405385a.42.1790354998197; 
+ Fri, 25 Sep 2026 09:49:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:4450:b0:93a:1fa7:1afb with SMTP id
+ af79cd13be357-93c43cb6a76mr584400085a.42.1790354997614; 
+ Fri, 25 Sep 2026 09:49:57 -0700 (PDT)
 Received: from [192.168.68.102] ([177.94.15.187])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91430df77adsm20612006d6.26.2026.09.25.09.45.46
+ af79cd13be357-93c44652f98sm224487785a.6.2026.09.25.09.49.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Sep 2026 09:45:48 -0700 (PDT)
-Message-ID: <ee7f09b9-7313-40a7-986b-063465272841@oss.qualcomm.com>
-Date: Fri, 25 Sep 2026 13:45:44 -0300
+ Fri, 25 Sep 2026 09:49:57 -0700 (PDT)
+Message-ID: <4c58ea2b-bccf-48a4-95a6-87f38050eb9d@oss.qualcomm.com>
+Date: Fri, 25 Sep 2026 13:49:52 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/14] target/riscv: Preserve fixed PMU state across
- reset
-To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
- <20260910-riscv-pmu-correctness-v2-14-5da5159a0c64@linux.alibaba.com>
+Subject: Re: [PATCH] target/riscv: mask vsepc according to IALIGN
+To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com
+References: <20260915024945.32329-1-fritchleybohrer@gmail.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260910-riscv-pmu-correctness-v2-14-5da5159a0c64@linux.alibaba.com>
+In-Reply-To: <20260915024945.32329-1-fritchleybohrer@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfXw2mGRmWFnsY2
- n8RJMM9z/YMzz+dyDMbHSSVYSFfphakYq//3Yu33XEczPhkyziQ0rjFAyG+4rS/lQx96nVJE+46
- +Bz78rvxj5xNTtxvGlBdyZ540dNnZpU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX4+7xE38j+n44
- efFTthyujvljNTvrkREVyXKKzhcDhFOgGE/9Qgzz/ylHtdu33D6NBFaLLUqVWF3rJdRz1VJz9V3
- s3YClhwVdtLy1M+NZjlhesHgGErNB9IVXVo29YpV+sVP7+YkdCqO8Q7+Tg8uyoee8m3NncDQWZ5
- HDV7gRTJA2+4+sJOaK5jT9lMhHTdisvr89wzxqT04BVIVN4P/8Q06tFzZp7eTFiVbnM0uHapQU4
- p13dYe6ZTG9uJpJUPjQUgbs4/o09Iwd1FNIAhoAj6n6+VBQGYnVURiMEqwrx3ILl9cYw8ieRJSr
- 2JxRP9UUbATBNsX00uAJ8Uh95uTS/H+Qv2OXrRHo5fKMjP2bQca5k7IpkvuKPo8w0+SyC15lKHf
- P9vIIOwd70CQzjkW2PoXaU7ZNx9KtCx6fP4W2U9lqab2wLGW6av9crg5QLScc4qmsHq6rQoYc9r
- YV9NvkOkXa9vIDFlQxw==
-X-Authority-Analysis: v=2.4 cv=VuO2kO2n c=1 sm=1 tr=0 ts=6ab6a53e cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NyBTYWx0ZWRfX8coyyQsLp2t7
+ c9EaP3UH1l+X4OCnBrng8GshfAczttfMiPMiMG9DMkojc5y0qE/eEl496ALCuvSLz028Y7seY0C
+ /QGzrEDdnNiFmDZYnSRWIxrM9H9j9Ro=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NyBTYWx0ZWRfX6Jcvx+4HYjLy
+ 0Ml0EoJu+j7cyP6vg0bbY4mibLHzypVPhCCOlt2tnC+RMT0AvfNvQMYil8VI2Ihko427PpjA0bd
+ /ggOb48d9xtmPs6LjgpRTwcKTR2fZPEH/TNc5TvEMhyAZBYQBY5vd7tA2R0alqND6WU1QvIy90t
+ 0AsHU27SP4bvhJWKQ6RF8qWLWOn0AiK7KPCPY4r8fSXmNaUZMNQU+c2HKigTFbsQDo1GSLBPA0e
+ pgx/yc8k78TPHkwFeDQRkBaoUPvd2G+s9vqwsKwiHU70mJAsMvJ1hioyNjzUnBbwrI4SF8eh/rf
+ q+mmKv3f1124aW6JR6byHJGaC3sd3FOyJPt3R5nFDK6zTfH0KOzpfNkIZm1sieJ+iCwLk0cHE5h
+ IIFJi8ekh+s3s5AYFIg//SlwEpdjGeukGOd7p5elqyYw795FXFeurVlJrA8vKWQjFkeeBPW1myu
+ FgXegzpv82qjh9qO9mA==
+X-Authority-Analysis: v=2.4 cv=VuO2kO2n c=1 sm=1 tr=0 ts=6ab6a636 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=UiZdoYEBrJGKmPSr0pwA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: kEZjLhIJBHOeXfMUkcmjDhX_ecvXd4gG
-X-Proofpoint-ORIG-GUID: kEZjLhIJBHOeXfMUkcmjDhX_ecvXd4gG
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=WWe3HN8v-xbs8q0Pu_QA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: 4A3DLg256tja4wysVYP6RiNll-fYx7FL
+X-Proofpoint-ORIG-GUID: 4A3DLg256tja4wysVYP6RiNll-fYx7FL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
@@ -137,7 +131,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
  phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609250066
+ definitions=main-2609250067
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -146,7 +140,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,207 +158,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/10/2026 11:39 AM, TANG Tiancheng wrote:
-> Privilege filtering records cycle/instruction increments per mode. Reset
-> overwrites privilege/V without adding the final interval to the old
-> mode's total, so a counter filtering for that mode loses those counts.
+On 9/14/2026 11:49 PM, Zephyr Li wrote:
+> vsepc is the VS-mode counterpart of sepc and is a WARL register, but
+> unlike mepc and sepc its accessors do not mask the low address bits
+> according to IALIGN.  As a result, values with invalid low bits can be
+> observed through vsepc.
 > 
-> Account for the old mode before entering M-mode with V=0 and rebuild the
-> overflow timer after reset. On initial reset, only initialize baselines:
-> no guest code has run, so pre-execution QEMU time must not count.
-> Preserve architectural counter and selector state, as before.
+> Apply get_xepc_mask() to both vsepc reads and writes, matching the
+> existing mepc/sepc handling.
 > 
-> Test that a VS-only cycle counter retains its counts across reset.
+> Add a TCG regression test covering both IALIGN=16 and IALIGN=32.
 > 
-> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> Fixes: 8747c9eeb2aa ("target/riscv: Add Hypervisor virtual CSRs accesses")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4420
+> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 > ---
-
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   target/riscv/cpu.c                   |  16 ++++++
->   target/riscv/tcg/pmu.c               |  11 ++++
->   target/riscv/tcg/pmu.h               |   1 +
->   tests/tcg/riscv64/pmu-reset-vs.S     | 105 +++++++++++++++++++++++++++++++++++
->   tests/tcg/riscv64/system/meson.build |   7 +++
->   5 files changed, 140 insertions(+)
+>   target/riscv/tcg/csr.c                 |  4 +-
+>   tests/tcg/riscv64/system/meson.build   | 11 ++++++
+>   tests/tcg/riscv64/test-vsepc-masking.S | 54 ++++++++++++++++++++++++++
+>   3 files changed, 67 insertions(+), 2 deletions(-)
+>   create mode 100644 tests/tcg/riscv64/test-vsepc-masking.S
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index f60d7cca1e2f0008b09b1055c5cdeed3ec4ad1d3..e27312ac505dbee072c5a3c52073b00d703fd81d 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -42,6 +42,9 @@
->   #include "disas/capstone.h"
->   #if !defined(CONFIG_USER_ONLY)
->   #include "target/riscv/tcg/debug.h"
-> +#ifdef CONFIG_TCG
-> +#include "target/riscv/tcg/pmu.h"
-> +#endif
->   #endif
->   
->   /* RISC-V CPU definitions */
-> @@ -979,6 +982,16 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->       }
->   #ifndef CONFIG_USER_ONLY
->       env->misa_mxl = mcc->def->misa_mxl_max;
-> +#ifdef CONFIG_TCG
-> +    /* The initial reset has no guest execution to count. */
-> +    if (tcg_enabled()) {
-> +        if (qdev_is_realized(DEVICE(cpu))) {
-> +            riscv_pmu_update_fixed_ctrs(env, PRV_M, false);
-> +        } else {
-> +            riscv_pmu_init_fixed_counter_baselines(env);
-> +        }
-> +    }
-> +#endif
->       env->priv = PRV_M;
->       env->virt_enabled = false;
->       env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
-> @@ -1092,6 +1105,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->   
->   #ifndef CONFIG_USER_ONLY
->   #ifdef CONFIG_TCG
-> +    if (tcg_enabled()) {
-> +        riscv_pmu_rebuild_timer(env);
-> +    }
->       if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->           riscv_trigger_reset_hold(env);
->       }
-> diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-> index df99b572a4c16cb1ac65c2f7cde35c6f8349e681..1d692a0a8e3f7759e033214d579103627d070b5b 100644
-> --- a/target/riscv/tcg/pmu.c
-> +++ b/target/riscv/tcg/pmu.c
-> @@ -171,6 +171,17 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
->       riscv_pmu_update_fixed_ctrs_snapshot(env, newpriv, new_virt, &snapshot);
+> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+> index bd4b6dc114..274c5cfbf4 100644
+> --- a/target/riscv/tcg/csr.c
+> +++ b/target/riscv/tcg/csr.c
+> @@ -5299,14 +5299,14 @@ static RISCVException write_vsscratch(CPURISCVState *env, int csrno,
+>   static RISCVException read_vsepc(CPURISCVState *env, int csrno,
+>                                    target_ulong *val)
+>   {
+> -    *val = env->vsepc;
+> +    *val = env->vsepc & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
 >   }
 >   
-> +void riscv_pmu_init_fixed_counter_baselines(CPURISCVState *env)
-> +{
-> +    RISCVPMUFixedSnapshot snapshot;
-> +
-> +    riscv_pmu_take_fixed_snapshot(env, &snapshot);
-> +    env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
-> +        .counter_prev[PRV_M] = snapshot.cycle;
-> +    env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
-> +        .counter_prev[PRV_M] = snapshot.instret;
+>   static RISCVException write_vsepc(CPURISCVState *env, int csrno,
+>                                     target_ulong val, uintptr_t ra)
+>   {
+> -    env->vsepc = val;
+> +    env->vsepc = val & get_xepc_mask(env);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+> index 8604c2a45a..5d633a266a 100644
+> --- a/tests/tcg/riscv64/system/meson.build
+> +++ b/tests/tcg/riscv64/system/meson.build
+> @@ -24,6 +24,17 @@ tests += {
+>     'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
+>     'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+>     'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
+> +  'test-vsepc-masking.S': setup + {
+> +    'test_name': 'test-vsepc-masking-c',
+> +    'qemu_args': ['-cpu', 'rv64,h=true,c=true', qemu_args],
+> +  },
 > +}
 > +
->   uint64_t
->   riscv_pmu_ctr_get_fixed_value(CPURISCVState *env, uint32_t ctr_idx,
->                                 const RISCVPMUFixedSnapshot *snapshot)
-> diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-> index 1cfe6acf55b5468f5c00c4a136ece88981384341..fac84dbb1a8a6c637f7241ca27910e5e212223e9 100644
-> --- a/target/riscv/tcg/pmu.h
-> +++ b/target/riscv/tcg/pmu.h
-> @@ -53,6 +53,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
->   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
->   void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
->                                    bool new_virt);
-> +void riscv_pmu_init_fixed_counter_baselines(CPURISCVState *env);
->   void riscv_pmu_decr_instret(CPURISCVState *env);
->   RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
->                                     bool upper_half, uint32_t ctr_idx,
-> diff --git a/tests/tcg/riscv64/pmu-reset-vs.S b/tests/tcg/riscv64/pmu-reset-vs.S
+> +tests += {
+> +  'test-vsepc-masking.S': {
+> +    'test_name': 'test-vsepc-masking-no-c',
+> +    'qemu_args': ['-cpu', 'rv64,h=true,c=false,zca=false', qemu_args],
+> +  },
+>   }
+>   
+>   tests += {
+> diff --git a/tests/tcg/riscv64/test-vsepc-masking.S b/tests/tcg/riscv64/test-vsepc-masking.S
 > new file mode 100644
-> index 0000000000000000000000000000000000000000..d216faef17a2a395120cb3a71166a821a43dee88
+> index 0000000000..e5460f8aee
 > --- /dev/null
-> +++ b/tests/tcg/riscv64/pmu-reset-vs.S
-> @@ -0,0 +1,105 @@
+> +++ b/tests/tcg/riscv64/test-vsepc-masking.S
+> @@ -0,0 +1,54 @@
 > +/* SPDX-License-Identifier: GPL-2.0-or-later */
 > +
-> +/* CSR number for older assemblers. */
-> +#define CSR_MCYCLECFG        0x321
+> +#define MISA_C          (1 << 2)
 > +
 > +	.option	norvc
-> +	.option	norelax
-> +
-> +	.equ	MSTATUS_MPP_S,  (1 << 11)
-> +	.equ	MSTATUS_MPP,    (3 << 11)
-> +	.equ	MSTATUS_SPP,    (1 << 8)
-> +	.equ	HSTATUS_SPV,    (1 << 7)
-> +	.equ	SIFIVE_TEST,    0x100000
-> +	.equ	MTIMECMP,       0x2004000
-> +	.equ	FINISHER_RESET, 0x7777
-> +
 > +	.text
-> +	.global _start
+> +	.global	_start
 > +_start:
-> +	/* Preserve the reset marker and saved count in MTIMECMP. */
-> +	li	t0, MTIMECMP
-> +	ld	t1, 0(t0)
-> +	srli	t2, t1, 48
-> +	li	t3, 0xa5a5
-> +	beq	t2, t3, after_reset
+> +	csrr	s0, misa
+> +	andi	s0, s0, MISA_C
 > +
-> +	/* Count VS only, then remember the value before entering VS-mode. */
-> +	li	t0, 0x1d		/* MINH | SINH | UINH | VUINH */
-> +	slli	t0, t0, 58
-> +	csrw	CSR_MCYCLECFG, t0
-> +	csrr	t1, mcycle
-> +	slli	t1, t1, 16
-> +	srli	t1, t1, 16
-> +	li	t2, 0xa5a5
-> +	slli	t2, t2, 48
-> +	or	t1, t1, t2
-> +	li	t0, MTIMECMP
-> +	sd	t1, 0(t0)
-> +	li	t0, -1
-> +	csrw	pmpaddr0, t0
-> +	li	t0, 0x1f		/* RWX, NAPOT */
-> +	csrw	pmpcfg0, t0
+> +	lla	s1, test_addr
+> +	ori	t0, s1, 3
+> +	csrw	vsepc, t0
+> +	csrr	t1, vsepc
 > +
-> +	/* Enter HS-mode first. */
-> +	csrr	t0, mstatus
-> +	li	t1, MSTATUS_MPP
-> +	not	t1, t1
-> +	and	t0, t0, t1
-> +	li	t1, MSTATUS_MPP_S
-> +	or	t0, t0, t1
-> +	csrw	mstatus, t0
-> +	lla	t0, hs_enter
-> +	csrw	mepc, t0
-> +	mret
+> +	beqz	s0, ialign32
+> +	addi	t2, s1, 2	/* IALIGN=16: bit 0 reads as zero. */
+> +	j	check
 > +
-> +hs_enter:
-> +	li	t0, HSTATUS_SPV
-> +	csrs	hstatus, t0
-> +	li	t0, MSTATUS_SPP
-> +	csrs	sstatus, t0
-> +	lla	t0, vs_reset
-> +	csrw	sepc, t0
-> +	sret
+> +ialign32:
+> +	/* IALIGN=32: bits [1:0] read as zero. */
+> +	mv	t2, s1
 > +
-> +vs_reset:
-> +	/* These VS-mode cycles must remain in mcycle after reset. */
-> +	li	t0, 128
-> +1:
-> +	addi	t0, t0, -1
-> +	bnez	t0, 1b
+> +check:
+> +	li	a0, 2
+> +	bne	t1, t2, _exit
 > +
-> +	li	t0, SIFIVE_TEST
-> +	li	t1, FINISHER_RESET
-> +	sw	t1, 0(t0)
-> +	j	.
+> +	li	a0, 0
+> +	j	_exit
 > +
-> +after_reset:
-> +	csrr	t0, mcycle
-> +	slli	t1, t1, 16		/* Clear the MTIMECMP marker. */
-> +	srli	t1, t1, 16
-> +	addi	t1, t1, 128
-> +	bgeu	t1, t0, fail
-> +	li	t3, 0
-> +	j	exit
+> +	.balign	4
+> +test_addr:
+> +	nop
 > +
-> +fail:
-> +	li	t3, 1
-> +
-> +exit:
+> +/* Exit code in a0. */
+> +_exit:
 > +	lla	a1, semiargs
-> +	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
+> +	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
 > +	sd	t0, 0(a1)
-> +	sd	t3, 8(a1)
-> +	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
+> +	sd	a0, 8(a1)
+> +	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
 > +
+> +	/* Semihosting call sequence. */
 > +	.balign	16
 > +	slli	zero, zero, 0x1f
 > +	ebreak
@@ -375,24 +285,5 @@ Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > +	.balign	16
 > +semiargs:
 > +	.space	16
-> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-> index d2355090121ba7a7d0046c1fc1824d6a89c1267f..3f2043d100ff88cc39a21002a1e90ccab319001b 100644
-> --- a/tests/tcg/riscv64/system/meson.build
-> +++ b/tests/tcg/riscv64/system/meson.build
-> @@ -142,6 +142,13 @@ tests += {
->     },
->   }
->   
-> +tests += {
-> +  'pmu-reset-vs.S': {
-> +    'cflags': cflags,
-> +    'qemu_args': ['-cpu', 'max,smcntrpmf=true', '-icount', 'shift=0', qemu_args],
-> +  },
-> +}
-> +
->   if 'qemu-system-riscv64' in emulators
->     tcg_tests += {
->       'riscv64-softmmu': {
-> 
 
 
