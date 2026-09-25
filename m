@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67922C9832A
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BD1C9832E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 21:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xADot-0008E0-KC; Fri, 25 Sep 2026 17:51:03 -0400
+	id 1xADp1-0008V6-5y; Fri, 25 Sep 2026 17:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoI-0007mv-6T
+ id 1xADoI-0007mu-5d
  for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:27 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xADoF-0007oe-Ef
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:25 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-880cb967dffso409519b3a.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:22 -0700 (PDT)
+ id 1xADoE-0007oI-Cb
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 17:50:24 -0400
+Received: by mail-pz2-x2b.google.com with SMTP id
+ d2e1a72fcca58-8807e5b8fa9so633520b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 14:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790373021; x=1790977821; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790373020; x=1790977820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=C+cdoJ81YNEf4q3G5tKQRS1Ej9pjuy+FmmxI+jro6EY=;
- b=DQJ5kP0sgpe5doq+b6dM8qf79zLntWEkHMB6VEIMjfFmQaZ+n2ImtpBWpV0r+4mT+E
- azXB/ZTRQKJ1EFKgeJtd+VGUgHUOF/qKiejNv6Srqp3L7AbHHSUWkkYVZ0aCy4Qx/AGC
- hRHGbhfkdlQP8RtuH7inY7T8nSzLF5Ppe+0VweDhjtm+YUZ2CcokV8LzFAtAAdPK8YTI
- 4XElKpSFYN8615RcwMKXaWbhIRbFmB2hfpYo0rfbOUHAl+eElqDdarX8MESHycgTYUOQ
- /r6jAC5FXKjnUQb/2Hqfqmp3/rnqPNa4tgDgLWcM7dFPR+UipsX7A91yTMTom0pKUb+b
- Wc2A==
+ bh=cOzcQc8zTJgOy19nChNBP2tzW+uTl+R1lYrTRq/sk8I=;
+ b=OsWWApk21a1rG6ukCqzzX599c5yZ+LkS8TjkBAZf88F78O6ecR3U72U3f9W+fE94Ua
+ eorH5cZEHXMEEsuxNHPhJTfu9bo8sx9lC3QasZKAHDxaXLT2BWJBlbOEelPCzi6UGgIe
+ GqMIe9pZhapf2lRZEOqohZ9xaFvuE6RR5Wj6SyXKM6oujo+Wm/OtlwMwVAyRPtflmOJc
+ HtxZlvL7NMru75vPJgt5ehj5KHtOr+fEnVAEvK/xGrzWjHrZ3NGQN4WJ4sHjznmHFt7G
+ 0AAIwbk2uGfjx5JEbuIBvpzJixG7tDQcAS8FHWipX/Y0gM2OMOj0LnkjR0Nk7ouP/og1
+ bTqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790373021; x=1790977821;
+ d=1e100.net; s=20260707; t=1790373020; x=1790977820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=C+cdoJ81YNEf4q3G5tKQRS1Ej9pjuy+FmmxI+jro6EY=;
- b=rOpefurs90w3K1RcRNSt2LGb+SNmo8iv9Cg9ngSUJjQdjZp3em98djMeQsPR2mV21B
- HjVh7T4TBpyEkBt5Q4+nZOdotFadqT47kUw7g7rs7KpUpwO3Uvn9NOb97YY1tS9gMxIa
- 06oW6Vgqh2xsl/pObXtrw2eX1IGJVj6bV3tT9Sf7uwC8XQDQUJ383myGPBGEVf5Wq8Cx
- Eb941yFRX6jgU64berOU/edaP1K6ut4pSUeSSowATbt0gq8T0TryxQcXbGXuQUAw3Vjg
- uAjnh10CyLKP80qQriyeflOpevoh1stOylK+qAXWeigicAtl+PX4mLEc/wQE3PtcKWoc
- 6yZw==
-X-Gm-Message-State: AFuF++mwQT2jevljIAY9QMs9xAANx/5ReEaAaJDAr4Ect4HYV9H6vEkb
- lRHWaO132T5DOte0F3yM3V6TczZbKLYAIFkdnhN6c7Fn4qkybfBHKmIAGDGBrS5lZJeZAtdRYUs
- V4Pbb
-X-Gm-Gg: AYBFou1DtN3+7d+wTei9GBkutvna7pQjDMXJWb32bLIs5YgA2+L+JTfCyjIXbLf8eh5
- rFYQ/mLKUsZrYCOxIEWKuAoloXMOGGWXCvmfW1nn024fjU6kQqFI2v9Co12jHJkg2ti/C5RfiaY
- rdyyH2XFUcFlJYyB4Tnhu7J3W/O4P2JDFBFI3OOK3LWUxMUrO+tYAg5A5p32yo/6An0z2ouOitX
- 55HTbEk0zv/UoSdZtS/Y0qg0J+1Slq52GeAR0UddoXvo/EwDjf/dgafwiTB+pcowaTVE8g7JnyV
- srA4ZgVsV5alqUtDstCfVFUv0QZjBHsvo42e3vIiMdhnWkS5/oT5uN61S5NDzf1tavxEndyyT9Q
- d6GrXBwqKxZLOPCyCLaWKIYK21W99LkJ27eXrtJwb+UFKMpBs20WVsSnILLDyU325H7oQ2O3Qd8
- 5maZt7XQ/rPwKIVx8uxWwexVM4d+vZD0KFvQMh1TkVMgKAU8KqIWfminIvrmGJerfzLpDUqPWsj
- ekNp6kji76mz+k7iRqvvW5njHmCGWyRpqCGR6tT
-X-Received: by 2002:a05:6a00:2e91:b0:881:236b:748e with SMTP id
- d2e1a72fcca58-881236b753bmr551959b3a.0.1790373020951; 
- Fri, 25 Sep 2026 14:50:20 -0700 (PDT)
+ bh=cOzcQc8zTJgOy19nChNBP2tzW+uTl+R1lYrTRq/sk8I=;
+ b=i2ZTsUrRWeaRLrivufqp15p3PA6NRGBpK4c3P3nkG6z7JU93MFnFz6i2tVlR5BXSLq
+ HN+3qR69MSINEKu5h0hQryad9rLmRKmZIl0flB22ZEoh8C7VgDSkjYEtwvMOzbdX6f4x
+ GcBP8YbqWNsq6J+Qtn8eGPTxYBRcnBEawbfWJyGTwTX8vYM2bdA7WIikAYTCeP4IHq8t
+ l6v++fvzFrOYQOq+vReYrDLJ6MqneHUfYETpos9hlpSjteozRlef/KiGrf1nGZkBciyG
+ v2wiVI1wAW4+NIZjmFN400yT1xsHsquAMmcwnJZNe8+xxw8ZbxuTCr5eZwDb5QqZOLwf
+ MH0Q==
+X-Gm-Message-State: AFuF++mhhpVAGWeLnsqetf1bRjNKBHE8P67qTlh8F+0tTn87bWjCE3Yq
+ tNX9qgwAabbkJOP0hzWkQtNi+xjBFr7G0HhbfwgCjiSB/jIYDBC27Pu+MO42JEG7B0TLYSGFMaS
+ RxkQb
+X-Gm-Gg: AYBFou1VQW6Ku9Y4l3HkcZkaKx/zGjZzVYETL3/aG6D/1hFWHLjWAYLtHIQpzs8Dn/Q
+ 8U+5UqphIVHzsYy+LBapnh2Tt3sa7/yse3+nI9atOS8tA5NDo9jb14NjK/24Dd8KW9XEzGw8bcj
+ MDqB1P64Q2L0Ls7bgDfHtoFKgUZw6AF1dalX86rldz4P7AegBdLSVLvS8XRRj0puIeo7H2NKEWw
+ v7H8BYNbPamgpxG1APBeRxqY+l+BurcFECWqLrFyzLoKT/3di9YmLfEiKuIxI67EV0frhcWb7jK
+ 6O3G4ol3QkLv26zrbIsDdlvrlkuKdq0GibQNxJFp3lBObOVdHkdOgDz82JD6bMIJIv+b0kpq/dE
+ QKLr1ENs5dEKqJVzfW6NrdytUM9YU/j5knrOQRfAA9ZP2NysVsW2W3hdrDPyw5c80TgAgtx42Q3
+ QJXwgn84sYO2Fxlpq+sjLiVwC7wAXzxUgCbVVZBCVs2XSk9BntQ1fTO5bXceiduKo8rjv4ABvHE
+ 4WZ3/cqCHfOqoDS20BJsug/uIqWsw==
+X-Received: by 2002:a05:6a00:28cd:b0:878:34d7:6985 with SMTP id
+ d2e1a72fcca58-8802d814675mr2664436b3a.51.1790373019553; 
+ Fri, 25 Sep 2026 14:50:19 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.19
+ d2e1a72fcca58-87fea1940ecsm1725256b3a.13.2026.09.25.14.50.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 14:50:20 -0700 (PDT)
+ Fri, 25 Sep 2026 14:50:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 14/14] target/arm: Enable FEAT_UINJ for -cpu max-v9
-Date: Fri, 25 Sep 2026 14:50:04 -0700
-Message-ID: <20260925215004.456336-15-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 13/14] target/arm: Honor PSTATE.UINJ during translation
+Date: Fri, 25 Sep 2026 14:50:03 -0700
+Message-ID: <20260925215004.456336-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925215004.456336-1-richard.henderson@linaro.org>
 References: <20260925215004.456336-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,36 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- docs/system/arm/emulation.rst | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- 2 files changed, 2 insertions(+)
+ target/arm/tcg/translate.h     |  2 +-
+ target/arm/tcg/translate-a64.c |  2 +-
+ target/arm/tcg/translate.c     | 10 +++++++---
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 34b63f9867f..3bd5c42a664 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -223,6 +223,7 @@ the following architecture extensions:
- - FEAT_TTL (Translation Table Level)
- - FEAT_TTST (Small translation tables)
- - FEAT_UAO (Unprivileged Access Override control)
-+- FEAT_UINJ (Injection of Undefined Instruction exceptions)
- - FEAT_VHE (Virtualization Host Extensions)
- - FEAT_VMID16 (16-bit VMID)
- - FEAT_WFxT (WFE and WFI instructions with timeout)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index affd87a3ae5..aecee55ef77 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1457,6 +1457,7 @@ void aarch64_max_v9_tcg_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64PFR1, t);
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 7eba9b764ce..57e45ea8724 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -382,7 +382,7 @@ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
+ void arm_gen_test_cc(int cc, TCGLabel *label);
+ MemOp pow2_align(unsigned i);
+ void unallocated_encoding(DisasContext *s);
+-bool check_il(DisasContext *s);
++bool check_il_uinj(DisasContext *s);
+ void gen_exception_internal(int excp);
+ void gen_exception_insn_el(DisasContext *s, int64_t pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 7f858654c43..5d5b11e2da9 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -11174,7 +11174,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     s->fp_access_checked = 0;
+     s->sve_access_checked = 0;
  
-     t = GET_IDREG(isar, ID_AA64PFR2);
-+    t = FIELD_DP64(t, ID_AA64PFR2, UINJ, 1);      /* v9.0: FEAT_UINJ */
-     t = FIELD_DP64(t, ID_AA64PFR2, FPMR, 1);      /* v9.2: FEAT_FPMR */
-     SET_IDREG(isar, ID_AA64PFR2, t);
+-    if (check_il(s)) {
++    if (check_il_uinj(s)) {
+         return;
+     }
+ 
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index fbacc3b7574..6983153ffc6 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -1164,12 +1164,16 @@ void unallocated_encoding(DisasContext *s)
+  * must be checked after reading the instruction.  They have more priority
+  * than the AArch64 BTI exception.
+  */
+-bool check_il(DisasContext *s)
++bool check_il_uinj(DisasContext *s)
+ {
+     if (s->pstate_il) {
+         gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
+         return true;
+     }
++    if (s->pstate_uinj) {
++        unallocated_encoding(s);
++        return true;
++    }
+     return false;
+ }
+ 
+@@ -6167,7 +6171,7 @@ static void disas_arm_insn(DisasContext *s, unsigned int insn)
+         return;
+     }
+ 
+-    if (check_il(s)) {
++    if (check_il_uinj(s)) {
+         return;
+     }
+ 
+@@ -6737,7 +6741,7 @@ static void thumb_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     dc->base.pc_next = pc;
+     dc->insn = insn;
+ 
+-    if (check_il(dc)) {
++    if (check_il_uinj(dc)) {
+         return;
+     }
  
 -- 
 2.53.0
