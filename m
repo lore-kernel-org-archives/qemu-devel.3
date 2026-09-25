@@ -4,108 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA1ADC98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF30C98325
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82c-0006mt-Pc; Fri, 25 Sep 2026 11:40:50 -0400
+	id 1xA82V-0006k3-KG; Fri, 25 Sep 2026 11:40:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Z-0006lj-DF
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:47 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82U-0006jF-1i
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:42 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82W-0004dV-Np
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:46 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82S-0004ch-3B
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:41 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 53E45211CA;
- Fri, 25 Sep 2026 15:40:35 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B66C81FFD7;
+ Fri, 25 Sep 2026 15:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350839; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350834; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FoTZXTyVtqGz0iA556+8eviVAzDVcXsSW1coLubitAE=;
- b=m3d1fRcXnLjE99w4mQY3+N8H1y1N5LvgNPgWWXNG2Cr22Caib9GRUKO568rF0Ehg1XcpFz
- PLp2+cQNsmeZ1V8ZEn0PlLx1szlOSRyZejPKz0U7I9gn9lnXmdnDn5LLWd898ng6CjBGKy
- j3Uy4FeQ5CEPlCugapBf+TNXy2H5Xyo=
+ bh=+G12ss+6Bd8+EazhCD6uIyuAyXQ3cIZopSQxJRJcs2o=;
+ b=Mk6E1SH+cv+dxvRPdlI0BZYa6pkPSig2dX3qQPsUbetXc6rS1VexZ1yrPauWr0kGKJImcB
+ TUST2WmDcFRiOa8RNf+2/zquwtz2mA5pE+SwIjEyqyiplP5TZdSaYcB0eH3VC3jzhtdn9D
+ URoeKZJqnlv6pazeYQFuA+1uXi11B68=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350839;
+ s=susede2_ed25519; t=1790350834;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FoTZXTyVtqGz0iA556+8eviVAzDVcXsSW1coLubitAE=;
- b=iVH/sCbmtYsJ/2gesmaatzKEWH/cmhDAzY7jX469Y81tdSyXWr+zVhRQ08uqc/ijTvH04r
- 0n3RVZpgYQHfw4CA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Zxqz5axH;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=OBesEjSF
+ bh=+G12ss+6Bd8+EazhCD6uIyuAyXQ3cIZopSQxJRJcs2o=;
+ b=3WNKu3Pa/KY8klk95/qo5p8+t9Pg3aFa2eAkqwiPhO6PSJTb/HyA8Mt8Mo61kX/wFxsNly
+ 1phi65FK6ZWuK8Aw==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350830; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FoTZXTyVtqGz0iA556+8eviVAzDVcXsSW1coLubitAE=;
- b=Zxqz5axHiUKcxDiweEwcIghn3efPxNmJp1U7vlOF0E6XMea3C2eAQw5Q7dkOQt0U0BnG3G
- pdX0bCx5m/JDlmTOE3LZ3C/k0OGoFRI7wP4pPAY0HIcTl5Qt9x+JgDgQUwjXka5BxeIato
- vXFuxXl+teYoXz3prR0ksjkx0nzg58Y=
+ bh=+G12ss+6Bd8+EazhCD6uIyuAyXQ3cIZopSQxJRJcs2o=;
+ b=eCLVmBfc1MxFCljsAffJouDBMUitmx11o8H8PcWUSofNRgFaXngKbOHu5yg7n1Uit4fQMm
+ l4ejGM2UCDWsivmM0mXHdfOTcX/bw0z1C8fh0dfH4t4ocm68jBmH4TewclnHC30nPR38eo
+ kAbh7mojIqDaIU+CjkYD6WP3DCyuB54=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350835;
+ s=susede2_ed25519; t=1790350830;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FoTZXTyVtqGz0iA556+8eviVAzDVcXsSW1coLubitAE=;
- b=OBesEjSFB6e5/uSdTS5uEpSs012mrAOPsGKWXMTKs7mH8vMTODorfpXfwQw7nCyq7LI0Zx
- ysB0hW2LY5PmZiBQ==
+ bh=+G12ss+6Bd8+EazhCD6uIyuAyXQ3cIZopSQxJRJcs2o=;
+ b=XeCxx8qcbHFLBaihHB3fBdbaY9JwPx6R4xbLEc9iIGjs3TEtFllAosvDy26KImG6EsU/qw
+ sbHixiKNwjWPJMCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 70F8C132C9;
- Fri, 25 Sep 2026 15:40:34 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7AEF613274;
+ Fri, 25 Sep 2026 15:40:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T16
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:34 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T12
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 15/19] migration: Merge parameter structs instead of assigning
- one by one
-Date: Fri, 25 Sep 2026 12:40:06 -0300
-Message-ID: <20260925154010.599247-16-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
+ Jack Wang <jinpu.wang@cloud.ionos.com>
+Subject: [PULL 11/19] migration/rdma: Remove unused transit bitmap
+Date: Fri, 25 Sep 2026 12:40:02 -0300
+Message-ID: <20260925154010.599247-12-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 53E45211CA
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[ionos.com:email,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,bytedance.com:email];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,300 +116,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the code in migrate_params_test_apply() from an open-coded
-copy of every migration parameter to a merge operation using QAPI
-visitors and QDict.
+From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-The purpose of that routine is to update a temporary structure
-(pre-populated with the current migration parameters), with the values
-received from the user via QAPI. As a result, the temporary structure
-will then contain the "to be applied" parameters and it's validated
-before being used to overwrite the parameters currently in use.
+After the per-chunk write wait is removed, transit_bitmap is no longer
+read.  The remaining set and clear operations only maintain unused
+state.
 
-The update is currently done as follows:
+Remove the bitmap and simplify the block lifecycle tracepoints.
 
-where 'params' is the user input from QAPI,
-for each parameter:
-
-  a) check if the option is present
-     params->has_<name> == true
-     params-><name> != NULL // for strings
-
-  b) if the parameter is a pointer, free the to-be-assigned member and
-     allocate memory for the copy from params
-
-  c) assign the user provided value to the temporary structure.
-
-Step (a) is the same in principle as what the QAPI visitors do at
-visit_type_MigrationParameters_members().
-
-Steps (b) and (c) are roughly the same as what the QDict
-implementation does when qdict_del() and qdict_put_obj() are combined.
-
-Therefore, replace the open-coded function with
-migrate_params_merge(), which achieves the same goal, but uses
-visitors and QDict. This hides the details of QAPI (has_*) from the
-migration code and avoids the need to update
-migrate_params_test_apply() every time a new migration parameter is
-added.
-
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 204 ++++++++++++++------------------------------
- 1 file changed, 65 insertions(+), 139 deletions(-)
+ migration/rdma.c       | 20 +++-----------------
+ migration/trace-events |  4 ++--
+ 2 files changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index ac7e94ed62..0f7478aa6a 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -21,6 +21,9 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
- #include "qapi/qmp/qerror.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qapi/qobject-output-visitor.h"
-+#include "qobject/qdict.h"
- #include "qobject/qnull.h"
- #include "system/runstate.h"
- #include "migration/colo.h"
-@@ -1082,6 +1085,28 @@ static void tls_opt_to_str(StrOrNull *opt)
-     opt->u.s = g_strdup("");
- }
+diff --git a/migration/rdma.c b/migration/rdma.c
+index da5dff2f9b..444123cbca 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -30,7 +30,6 @@
+ #include "qemu/module.h"
+ #include "qemu/rcu.h"
+ #include "qemu/sockets.h"
+-#include "qemu/bitmap.h"
+ #include "qemu/coroutine.h"
+ #include "system/memory.h"
+ #include <sys/socket.h>
+@@ -197,7 +196,6 @@ typedef struct RDMALocalBlock {
+     int            index;           /* which block are we */
+     unsigned int   src_index;       /* (Only used on dest) */
+     int            nb_chunks;
+-    unsigned long *transit_bitmap;
+ } RDMALocalBlock;
  
-+static QDict *migrate_params_to_dict(MigrationParameters *p, Error **errp)
-+{
-+    QObject *obj = NULL;
-+    Visitor *v = qobject_output_visitor_new(&obj);
-+
-+    if (visit_type_MigrationParameters(v, NULL, &p, errp)) {
-+        visit_complete(v, &obj);
-+    }
-+    visit_free(v);
-+    return qobject_to(QDict, obj);
-+}
-+
-+static MigrationParameters *migrate_params_from_dict(QDict *d, Error **errp)
-+{
-+    Visitor *v = qobject_input_visitor_new(QOBJECT(d));
-+    MigrationParameters *tmp = NULL;
-+
-+    visit_type_MigrationParameters(v, NULL, &tmp, errp);
-+    visit_free(v);
-+    return tmp;
-+}
-+
  /*
-  * query-migrate-parameters expects all members of MigrationParameters
-  * to be present, but we cannot mark them non-optional in QAPI because
-@@ -1174,6 +1199,38 @@ static void migrate_post_update_params(MigrationParameters *new, Error **errp)
+@@ -571,8 +569,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+     block->index = local->nb_blocks;
+     block->src_index = ~0U; /* Filled in by the receipt of the block list */
+     block->nb_chunks = ram_chunk_index(host_addr, host_addr + length) + 1UL;
+-    block->transit_bitmap = bitmap_new(block->nb_chunks);
+-    bitmap_clear(block->transit_bitmap, 0, block->nb_chunks);
+     block->remote_keys = g_new0(uint32_t, block->nb_chunks);
+ 
+     if (rdma->blockmap) {
+@@ -583,8 +579,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
+                          (uintptr_t) block->local_host_addr,
+                          block->offset, block->length,
+                          (uintptr_t) (block->local_host_addr + block->length),
+-                         BITS_TO_LONGS(block->nb_chunks) *
+-                             sizeof(unsigned long) * 8,
+                          block->nb_chunks);
+ 
+     local->nb_blocks++;
+@@ -654,9 +648,6 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
+         block->mr = NULL;
      }
- }
  
-+static bool migrate_params_merge(MigrationParameters *base,
-+                                 MigrationParameters *updates,
-+                                 MigrationParameters **new,
-+                                 Error **errp)
-+{
-+    g_autoptr(QDict) d_base = NULL;
-+    g_autoptr(QDict) d_upd = NULL;
-+    const QDictEntry *e;
-+
-+    d_base = migrate_params_to_dict(base, errp);
-+    if (!d_base) {
-+        return false;
-+    }
-+
-+    d_upd = migrate_params_to_dict(updates, errp);
-+    if (!d_upd) {
-+        return false;
-+    }
-+
-+    for (e = qdict_first(d_upd); e; e = qdict_next(d_upd, e)) {
-+        const char *key = qdict_entry_key(e);
-+        QObject *value = qdict_entry_value(e);
-+
-+        qobject_ref(value);
-+        qdict_put_obj(d_base, key, value);
-+    }
-+
-+    *new = migrate_params_from_dict(d_base, errp);
-+
-+    return !!*new;
-+}
-+
- /*
-  * Check whether the parameters are valid. Error will be put into errp
-  * (if provided). Return true if valid, otherwise false.
-@@ -1336,137 +1393,6 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-     return true;
- }
+-    g_free(block->transit_bitmap);
+-    block->transit_bitmap = NULL;
+-
+     g_free(block->remote_keys);
+     block->remote_keys = NULL;
  
--static void migrate_params_test_apply(MigrationParameters *params,
--                                      MigrationParameters *dest)
--{
--    MigrationState *s = migrate_get_current();
--
--    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
--
--    if (params->has_throttle_trigger_threshold) {
--        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
--    }
--
--    if (params->has_cpu_throttle_initial) {
--        dest->cpu_throttle_initial = params->cpu_throttle_initial;
--    }
--
--    if (params->has_cpu_throttle_increment) {
--        dest->cpu_throttle_increment = params->cpu_throttle_increment;
--    }
--
--    if (params->has_cpu_throttle_tailslow) {
--        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
--    }
--
--    if (params->tls_creds) {
--        qapi_free_StrOrNull(dest->tls_creds);
--        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
--    }
--
--    if (params->tls_hostname) {
--        qapi_free_StrOrNull(dest->tls_hostname);
--        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
--    }
--
--    if (params->tls_authz) {
--        qapi_free_StrOrNull(dest->tls_authz);
--        dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
--    }
--
--    if (params->has_max_bandwidth) {
--        dest->max_bandwidth = params->max_bandwidth;
--    }
--
--    if (params->has_avail_switchover_bandwidth) {
--        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
--    }
--
--    if (params->has_downtime_limit) {
--        dest->downtime_limit = params->downtime_limit;
--    }
--
--    if (params->has_x_checkpoint_delay) {
--        dest->x_checkpoint_delay = params->x_checkpoint_delay;
--    }
--
--    if (params->has_multifd_channels) {
--        dest->multifd_channels = params->multifd_channels;
--    }
--    if (params->has_multifd_compression) {
--        dest->multifd_compression = params->multifd_compression;
--    }
--    if (params->has_multifd_qatzip_level) {
--        dest->multifd_qatzip_level = params->multifd_qatzip_level;
--    }
--    if (params->has_multifd_zlib_level) {
--        dest->multifd_zlib_level = params->multifd_zlib_level;
--    }
--    if (params->has_multifd_zstd_level) {
--        dest->multifd_zstd_level = params->multifd_zstd_level;
--    }
--    if (params->has_xbzrle_cache_size) {
--        dest->xbzrle_cache_size = params->xbzrle_cache_size;
--    }
--    if (params->has_max_postcopy_bandwidth) {
--        dest->max_postcopy_bandwidth = params->max_postcopy_bandwidth;
--    }
--    if (params->has_max_cpu_throttle) {
--        dest->max_cpu_throttle = params->max_cpu_throttle;
--    }
--    if (params->has_announce_initial) {
--        dest->announce_initial = params->announce_initial;
--    }
--    if (params->has_announce_max) {
--        dest->announce_max = params->announce_max;
--    }
--    if (params->has_announce_rounds) {
--        dest->announce_rounds = params->announce_rounds;
--    }
--    if (params->has_announce_step) {
--        dest->announce_step = params->announce_step;
--    }
--
--    if (params->has_block_bitmap_mapping) {
--        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
--        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
--                                                params->block_bitmap_mapping);
--    }
--
--    if (params->has_x_vcpu_dirty_limit_period) {
--        dest->x_vcpu_dirty_limit_period =
--            params->x_vcpu_dirty_limit_period;
--    }
--    if (params->has_vcpu_dirty_limit) {
--        dest->vcpu_dirty_limit = params->vcpu_dirty_limit;
--    }
--
--    if (params->has_mode) {
--        dest->mode = params->mode;
--    }
--
--    if (params->has_zero_page_detection) {
--        dest->zero_page_detection = params->zero_page_detection;
--    }
--
--    if (params->has_direct_io) {
--        dest->direct_io = params->direct_io;
--    }
--
--    if (params->has_x_rdma_chunk_size) {
--        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
--    }
--
--    if (params->has_cpr_exec_command) {
--        qapi_free_strList(dest->cpr_exec_command);
--        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
--    }
--
--    if (params->has_local) {
--        dest->local = params->local;
--    }
--}
--
- /*
-  * Caller must ensure the has_* fields of @params are true so they all
-  * get copied and the pointer members don't dangle.
-@@ -1484,7 +1410,8 @@ static void migrate_params_apply(MigrationParameters *params)
+@@ -693,9 +684,8 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
  
- void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
- {
--    MigrationParameters new;
-+    MigrationParameters *cur = &migrate_get_current()->parameters;
-+    g_autoptr(MigrationParameters) new = NULL;
+     trace_rdma_delete_block(block, (uintptr_t)block->local_host_addr,
+                            block->offset, block->length,
+-                            (uintptr_t)(block->local_host_addr + block->length),
+-                           BITS_TO_LONGS(block->nb_chunks) *
+-                               sizeof(unsigned long) * 8, block->nb_chunks);
++                           (uintptr_t)(block->local_host_addr + block->length),
++                           block->nb_chunks);
  
+     g_free(old);
+ 
+@@ -1221,8 +1211,6 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+                                    index, chunk, block->local_host_addr,
+                                    (void *)(uintptr_t)block->remote_host_addr);
+ 
+-        clear_bit(chunk, block->transit_bitmap);
+-
+         if (rdma->nb_sent > 0) {
+             rdma->nb_sent--;
+         }
+@@ -1905,8 +1893,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
      /*
-      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-@@ -1498,14 +1425,13 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
-     tls_opt_to_str(input->tls_hostname);
-     tls_opt_to_str(input->tls_authz);
- 
--    migrate_params_test_apply(input, &new);
-+    /* merge input on top of current */
-+    if (!migrate_params_merge(cur, input, &new, errp)) {
-+        return;
-+    }
- 
--    if (migrate_params_check(&new, errp)) {
--        migrate_params_apply(&new);
-+    if (migrate_params_check(new, errp)) {
-+        migrate_params_apply(new);
-         migrate_post_update_params(input, errp);
+      * Encode the ram block index and chunk within this wrid.
+      * We will use this information at the time of completion
+-     * to figure out which bitmap to check against and then which
+-     * chunk in the bitmap to look for.
++     * to identify the completed write in trace output.
+      */
+     send_wr.wr_id = qemu_rdma_make_wrid(RDMA_WRID_RDMA_WRITE,
+                                         current_index, chunk);
+@@ -1925,7 +1912,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+         return -1;
      }
--
--    migrate_tls_opts_free(&new);
--    qapi_free_BitmapMigrationNodeAliasList(new.block_bitmap_mapping);
--    qapi_free_strList(new.cpr_exec_command);
- }
+ 
+-    set_bit(chunk, block->transit_bitmap);
+     qatomic_add(&mig_stats.normal_pages, sge.length / qemu_target_page_size());
+     /*
+      * We are adding to transferred the amount of data written, but no
+diff --git a/migration/trace-events b/migration/trace-events
+index 00ac737aa9..db911fe6f2 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -249,9 +249,9 @@ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received reg
+ rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+ rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
+ rdma_write_one_zero(uint64_t chunk, int len, int index, int64_t offset) "Entire chunk is zero, sending compress: %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+-rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_add_block(const char *block_name, int block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Added Block: '%s':%d, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_block_notification_handle(const char *name, int index) "%s at %d"
+-rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, uint64_t bits, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " bits %" PRIu64 " chunks %d"
++rdma_delete_block(void *block, uint64_t addr, uint64_t offset, uint64_t len, uint64_t end, int chunks) "Deleted Block: %p, addr: %" PRIu64 ", offset: %" PRIu64 " length: %" PRIu64 " end: %" PRIu64 " chunks %d"
+ rdma_registration_handle_compress(int64_t length, int index, int64_t offset) "Zapping zero chunk: %" PRId64 " bytes, index %d, offset %" PRId64
+ rdma_registration_handle_finished(void) ""
+ rdma_registration_handle_ram_blocks(void) ""
 -- 
 2.53.0
 
