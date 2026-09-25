@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7A7C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 18:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BF7C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 18:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAB5W-0005Cw-Aa; Fri, 25 Sep 2026 14:56:02 -0400
+	id 1xAB8u-0005oB-Jv; Fri, 25 Sep 2026 14:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAB5T-0005CA-Py; Fri, 25 Sep 2026 14:56:00 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xAB8t-0005nh-0u
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:59:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAB5R-0006NH-9c; Fri, 25 Sep 2026 14:55:59 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xAB8r-0006XV-Ju
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:59:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790362554; bh=Dl9zBua/Dhfhu/H4rZhUC+Ym7igP10aix80FuF0JV34=;
+ t=1790362767; bh=i7fn1iCiNxulUkl6FZl6ax7J/bLeBm22bmMz6yakAw8=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=AzF3mue0NIb5YWP3JSEXDtewKc0MjQ/Z9YpLT+rAg7Mw1J57LyYvqqyieaxY5J3If
- Tjn2m0fG9Zr8im8TPOTkfOA5XmL7B+P2PdZZ82PyMSce5T3K/OHmU7wwOTz+GVrYZJ
- E9eSJsp8oWyyYCksz8a7syUYN9R6qjGaIvp+O8gDjXkrMO4TBXRPz8pChncK2ppfrj
- jsk6NIWXBgXpeIkm4YxDbmI9eu54yvN3TySXVpLqUyn/KfCpdaFIxxQNgIQzp2lNEO
- eXoQY1D9yZau58Qho7NTg9x8cXAsmb+7GyVMb9GN9dq1IMQED6hk91Xxxczw7axEJB
- eQsUpGK3q90Dg==
+ b=cwjtkLopiIQGBTDiLjjatqObEaXsKVd3Z5vYLV89NX+FU8n+FocBc20Fpt3gaZhaX
+ mY+OdLQ9FIBK8vfJIvMMb5sU0h0ENzjLeK+cxXMLmHxeRO3ba65tBrEjYFFRkwIZF6
+ 9nBwodxhnShdC7iAOBqFzejaVYGfzotpW8Zxm8RyoyXSoAo7loyMx/k5QyQD7x5QZI
+ 2icuVS2q+6CsghOQGFuVZC08nad48Q1pF4RtgL91sZMi8e/1m+kS9z36HXsfPtyXXT
+ KDS4cIWQH2G3+o9ubbBvobL8t8pwsRh7SuD/WLTU4rUVsarjyhfcsPXkrtpglH/fXt
+ z0Gv561ShxeqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7DA931D86C5;
- Fri, 25 Sep 2026 21:55:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 80CA61D86C8;
+ Fri, 25 Sep 2026 21:59:27 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3901B430D36;
- Fri, 25 Sep 2026 21:55:54 +0300 (MSK)
-Message-ID: <89182116-b7e2-4d3a-b1a7-95939de5866c@tls.msk.ru>
-Date: Fri, 25 Sep 2026 21:55:54 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 515D1430D37;
+ Fri, 25 Sep 2026 21:59:27 +0300 (MSK)
+Message-ID: <0101dce7-773d-44d1-9462-159c38a0a0f6@tls.msk.ru>
+Date: Fri, 25 Sep 2026 21:59:27 +0300
 MIME-Version: 1.0
 User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH 3/3] linux-user/sh4: align the vdso sigreturn trampolines
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] linux-user: report EBADF for setsockopt()/getsockopt() on
+ a bad fd
+To: Michael Morrell <mmorrell@tachyum.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260923013700.1505113-1-mattst88@gmail.com>
- <20260923013700.1505113-4-mattst88@gmail.com>
+ Igor Shevlyakov <igor@tachyum.com>
+References: <20260924193341.2064665-1-mmorrell@tachyum.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20260923013700.1505113-4-mattst88@gmail.com>
+In-Reply-To: <20260924193341.2064665-1-mmorrell@tachyum.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -72,20 +72,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/23/26 04:37, Matt Turner wrote:
-> libunwind's unw_is_signal_frame() reads the trampoline as 32-bit words,
-> but __kernel_sigreturn is only 2-byte aligned. Align both trampolines
-> to 4 bytes, as the kernel's vsyscall-sigreturn.S does (with .balign 32).
+On 9/24/26 22:33, Michael Morrell wrote:
+> From: Igor Shevlyakov <igor@tachyum.com>
 > 
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
-> ---
->   linux-user/sh4/vdso-be.so | Bin 2720 -> 2724 bytes
->   linux-user/sh4/vdso-le.so | Bin 2720 -> 2724 bytes
->   linux-user/sh4/vdso.S     |   2 ++
->   3 files changed, 2 insertions(+)
+> The kernel looks the fd up before validating the rest of the call, so a
+> negative fd is EBADF whatever else is wrong with the arguments.  Several
+> arms of do_setsockopt()/do_getsockopt() reject optlen or optname and
+> return without ever reaching the host syscall, so the host never gets to
+> supply that EBADF and the guest sees the argument error instead:
+> 
+>      setsockopt(-1, SOL_TCP, TCP_NODELAY, ptr, 0)    EINVAL, want EBADF
+>      setsockopt(-1, 0x4321, 1, ptr, sizeof(int))     ENOPROTOOPT
+>      getsockopt(-1, 0x4321, 1, ptr, &len)            EOPNOTSUPP
 
-Shouldn't this one be picked up for 11.1.x stable branch too,
-like the other 2 in this series?
+EBADF is not just -1, it is any number which does not have open FD.
+Yes, -1 is probably most common bug here (passing -1 as fd is a bug
+in the user program), but it is definitely not everything.
 
 Thanks,
 
