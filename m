@@ -4,90 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C035C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0557C98328
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8Uq-0001WH-69; Fri, 25 Sep 2026 12:10:00 -0400
+	id 1xA8V1-0001qE-3G; Fri, 25 Sep 2026 12:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8Dr-0007yp-Ju
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:27 -0400
-Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8Dp-00062B-PZ
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:27 -0400
-Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-482f6350f91so636252f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1790351544; x=1790956344; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GIOmBx1IGb/7oU+3HeMgEeumH7X5vzideD5xlFaVCN8=;
- b=acERh8Wotn7bHAjqkVvALTHm9kXJu5kGg9DSLmozzmhYUI874FCpzZCUDJ/O4l6ZCK
- oz96eG/LFAZSwh3hcLStx5ugCuOl5xFz29BA+Qq8ihEvPOq4yQivXxAEP8AreFNHoYrx
- oXErWE8oXJoclsV+B2pqQncIbzr9t6kdFAIoIfSdubfTPQtKw92gkK/4givJX/cr0xNJ
- Cq+09mz5f9ar6TZAapJRtokbX7EJKjFXdaombQkT0uXnxxNTv4PZVAmelUQOwqSNa/UQ
- PLOUuUvFpQ1b4BBRjMGjIpWfu9sFfgqb0KwB9Ogc7bNlbFNnCpa8ciQ8xTJ/cNnSZG3a
- SQ0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790351544; x=1790956344;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GIOmBx1IGb/7oU+3HeMgEeumH7X5vzideD5xlFaVCN8=;
- b=UwZhmuSaLnpNAFdkmgb2W/7hQlF0bdTIWXhultGHsRk3GG9kebKIJFKBpoAGWK4KjM
- UL5Bbj1PiZSNNx1oZhMYPAJIVqESgV9PvKOiR80AGtlsohRnUqZNqa86z5IhqjWNFukO
- GhLSdPWIk45Jurd6a0zSKNsXLnGHgAJX+b19c1h12iMzPd6zO7jNmboHdpJ830EOdNMp
- 3znuK+nCMovB7vSMRVMoCvayGPtID4eRkHHSQYs9qTXQM7R4u0XwNck5Qwl2cV+o7J/f
- vVzXTaQMpH36a0g2UwX/FGfwtziPuChUciFuOh4xS6ODkSE20i8hxHeU4LRxoV3Ob9Mg
- clpQ==
-X-Gm-Message-State: AFuF++kV+HrSGteCWFjXRabtvaeUTyJNukpfkyRXx4MpBgqeyfCwZxx9
- FKVm/VnVU5KQB0jVjGfUPAfPhWO6mtK29BiZOOXkmcKBFRlnOyODDWsdl0l+FwyCcEVI7CVHivx
- lkHTMm5AnDw==
-X-Gm-Gg: AYBFou1dJqrmBptZpPiPIl/+AAKUzCL3sDPiN55O3ijG51pSdVcZEakjw3reoNM3VNo
- +8KTQtBBIMOgBMdO+O8aYBxTqS79G3F8nfmWhw04l0cWufqV8TMtcnnb5idfBq7ndMxg31g1DeK
- eSh8/Zdq7er3ZNc+IQzMddXPoxKAbzN+8aUD3M1N1P7CoMUNrTC717naJdy/1IKHtlJoAZrSYxJ
- wzuew8OacPxbozKJCUxaVVvlI6KGUmB36LehqwdDRX3FxLbDaJw+DdaLrDF60/EH9FB4S23Rkoh
- 8m5DxVhR/TOWI6lu2/5EVr7Tnx7ZgPJxowDt6GR5thBmVG0Kz4WgJX9DGoW25Wt21zcwQ3B5EF2
- WmRmkB6a0MlTktMpdtLnE4AhKLK3ow7iQpgHsS8ljCUue478aZc8XeNXzkLudtui8k1Bo7/0LeO
- 4YHl4baAGSErE8c0S2mh2FANUJsU7ZEORbCzCUMhU2kLfxFy/AqelrLCTYPf4MkqZktEwLI7MRZ
- OLaGVWKM98zvB6hmlz1yoe/om/mAraBHWOHH4l5TnflAd7kIJke
-X-Received: by 2002:a05:600c:348e:b0:49e:8191:e5cb with SMTP id
- 5b1f17b1804b1-49ff06b2ef6mr49202885e9.5.1790351544332; 
- Fri, 25 Sep 2026 08:52:24 -0700 (PDT)
-Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.52.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 08:52:23 -0700 (PDT)
-From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
- Jinpu Wang <jinpu.wang@cloud.ionos.com>,
- Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH 13/13] migration/rdma: negotiate batched chunk registration
-Date: Fri, 25 Sep 2026 17:51:48 +0200
-Message-ID: <20260925155149.843870-14-dmitrii.omelchenko@cloud.ionos.com>
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xA8Ft-0000EM-Nv; Fri, 25 Sep 2026 11:54:34 -0400
+Received: from 2.mo15.mail-out.ovh.net ([5.135.90.179])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xA8Fp-00067R-Ce; Fri, 25 Sep 2026 11:54:32 -0400
+Received: from DAGFR11EX3.OVH.local (unknown [10.110.43.115])
+ by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4hrwHW1CQbz3wp7;
+ Fri, 25 Sep 2026 15:54:15 +0000 (UTC)
+Received: from ovhcloud.com (109.190.254.61) by DAGFR11EX3.OVH.local
+ (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 25 Sep
+ 2026 17:54:13 +0200
+From: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-block@nongnu.org>, Eric Blake <eblake@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Kevin Wolf
+ <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 1/2] nbd/client-connection: Fix client returning a closed
+ channel
+Date: Fri, 25 Sep 2026 17:53:45 +0200
+Message-ID: <20260925155346.357703-2-guillaume.vincke@ovhcloud.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
-References: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
+In-Reply-To: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
+References: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:30::10;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr2-x10.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Originating-IP: [109.190.254.61]
+X-ClientProxiedBy: CAS4.OVH.local (172.16.1.4) To DAGFR11EX3.OVH.local
+ (172.16.2.113)
+X-OVH-CORPLIMIT-SKIP: true
+x-ovh-tracer-id: 11035789415831191847
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTET5RUJGNfmJ9NTrJITjXYbdcTO3CD1/irQgvmbcVvU+j3yU3NLNdBQmSWzUyxGftnAL5Iois3+qtj5G+XGi6yJapT3529pc59sfOOCq/Kc8FQqT0XQF2xXbKMW9Wi/PJNlpjMFYJCk+XKL+8KSXvAiIysT66Iz/ljKq0uOHOb4fy1muOGETRnXuHRDQlP5guWfSG0NaIpQ2MvLi/625mPQwXHSmLKChwuCT5l8HPUupqfW4YfVcoXdGds9cFNYInZ9eTzaLkTVa9NMU6N55UkVhVs1pX/lFlbzKKFdmuYQ7LC7KFt6l3jwirOWNNA0XHCtZueAPaQvk4ugL/EC2Ybessk4iZdJyM4kj0LVGZxyt6b/vAlnclParS91v/L68acsYwQQ3Rl8NA9EskWg7wcXzNCZQgR3lQCc9U1Q5KBX10qK0wxsS4grI0+aHtp28WBiaotM2121hUueftkSkXHHGA9k7XqBeHKSWs4zKG5nYBdzTpWvKoRT04XPVjXf0TVdXLzwI+I/bUqMu/JAj1q+6wyHWq0xv1+YJqKUnAo+dxeORxN+CxpC9rDjQsAcRTKvbWrh0dB6D8K0Sl6hCwFrFd2knOKIfv1Rj45r+EWlolc5aa5qv6WIKHpjfya1yJ0PaoasSnWd6orkgjpj9bNB3kpkOWy4+s1pyG/pZ3zwOg
+DKIM-Signature: a=rsa-sha256; bh=c/b8KK6NZUiSNY5f9XgjrpPC0lZfNPNTGxt/ZcXT3mU=; 
+ c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
+ t=1790351655; v=1; 
+ b=fK7880b5SwVIYkPP+IPsuINon9dWE7Lvxw3FUAewHzSoqrZ64mJkiGqRwv+LgAYGrYSUInm+
+ hRrbzkXv6I0KFHsUrqhpwXc0d5ArP8qJNTNeTqihRMpGcahIWrAGGkeYwklxDbnnHHR2UBiJ1pj
+ tQPzGuEMdjqWiBbwE/q9CIxU=
+Received-SPF: pass client-ip=5.135.90.179;
+ envelope-from=guillaume.vincke@ovhcloud.com; helo=2.mo15.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 25 Sep 2026 12:05:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,135 +79,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jack Wang <jinpu.wang@cloud.ionos.com>
+When a server closes the connection after a successful handshake but
+before running any operations, the channel returned by
+nbd_co_establish_connection() is the closed one and the connect thread
+is not started.
 
-An old peer echoes REGISTER_RESULT.repeat unchanged but only sends one
-result, so a batched source would read stale rkeys for the rest.
-Negotiate RDMA_CAPABILITY_REG_BATCH like PIN_ALL and cap requests at
-one chunk when unsupported; check resp.len instead of resp.repeat.
+When configured with reconnect-delay=0 (the default), this situation
+generates at least two IO errors. The first one happens when trying to
+issue an operation to the closed socket. The connect thread will be
+started on the next request, which may happen long after, and will
+create the second error as nbd_co_establish_connection() returns a NULL
+channel.
 
-Signed-off-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+Peeking the channel to detect FIN or RST avoids the first IO error and
+does not delay the starting of the connect thread.
+
+Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
 ---
- migration/rdma.c       | 37 ++++++++++++++++++++++++++++++++++---
- migration/trace-events |  1 +
- 2 files changed, 35 insertions(+), 3 deletions(-)
+ nbd/client-connection.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 863165de26..29a2480448 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -75,12 +75,15 @@ static inline uint64_t rdma_merge_max(void)
-  * Capabilities for negotiation.
-  */
- #define RDMA_CAPABILITY_PIN_ALL 0x01
-+/* Peer replies to a batched REGISTER_REQUEST with one result per chunk. */
-+#define RDMA_CAPABILITY_REG_BATCH 0x02
- 
- /*
-  * Add the other flags above to this list of known capabilities
-  * as they are introduced.
-  */
--static uint32_t known_capabilities = RDMA_CAPABILITY_PIN_ALL;
-+static uint32_t known_capabilities = RDMA_CAPABILITY_PIN_ALL |
-+                                     RDMA_CAPABILITY_REG_BATCH;
- 
- /*
-  * A work request ID is 64-bits and we split up these bits
-@@ -352,6 +355,7 @@ typedef struct RDMAContext {
-     uint64_t pend_length;         /* span length in bytes (within one chunk) */
- 
-     bool pin_all;
-+    bool reg_batch;   /* peer negotiated RDMA_CAPABILITY_REG_BATCH */
- 
-     /*
-      * infiniband-specific variables for opening the device
-@@ -1947,6 +1951,14 @@ static int qemu_rdma_write_register(RDMAContext *rdma, RDMARegister *regs,
-         return -1;
+diff --git a/nbd/client-connection.c b/nbd/client-connection.c
+index 6a4f080717..878219fede 100644
+--- a/nbd/client-connection.c
++++ b/nbd/client-connection.c
+@@ -274,6 +274,26 @@ void nbd_client_connection_release(NBDClientConnection *conn)
      }
+ }
  
-+    /* resp.repeat is echoed back unchanged by old peers; resp.len is not. */
-+    if (resp.len != count * sizeof(RDMARegisterResult)) {
-+        error_setg(errp, "rdma: REGISTER_RESULT size mismatch: "
-+                   "requested %u chunks (%zu bytes), peer returned %u bytes",
-+                   count, count * sizeof(RDMARegisterResult), resp.len);
-+        return -1;
++/* only true when the peer closed the channel. Does not detect if dead */
++static bool nbd_channel_is_closed(QIOChannel *ioc)
++{
++    char data;
++    struct iovec iov = { .iov_base = &data, .iov_len = 1 };
++    ssize_t len = -1;
++
++    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
++        return false;
 +    }
 +
-     results = (RDMARegisterResult *)rdma->wr_data[reg_result_idx].control_curr;
-     for (i = 0; i < count; i++) {
-         RDMALocalBlock *block =
-@@ -2172,6 +2184,8 @@ static int qemu_rdma_connect(RDMAContext *rdma, bool return_path,
-         cap.flags |= RDMA_CAPABILITY_PIN_ALL;
-     }
- 
-+    cap.flags |= RDMA_CAPABILITY_REG_BATCH;
++    len = qio_channel_readv_full(
++        ioc, &iov, 1, NULL, NULL, QIO_CHANNEL_READ_FLAG_MSG_PEEK, NULL);
 +
-     caps_to_network(&cap);
- 
-     ret = qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, errp);
-@@ -2219,6 +2233,13 @@ static int qemu_rdma_connect(RDMAContext *rdma, bool return_path,
-         rdma->pin_all = false;
-     }
- 
-+    rdma->reg_batch = !!(cap.flags & RDMA_CAPABILITY_REG_BATCH);
-+    if (!rdma->reg_batch) {
-+        warn_report("RDMA: Server does not support batched chunk "
-+                    "registration. Will register one chunk per request.");
++    if (len == 0 || (len < 0 && len != QIO_CHANNEL_ERR_BLOCK)) {
++        return true;
 +    }
-+    trace_rdma_connect_reg_batch_outcome(rdma->reg_batch);
++    return false;
++}
 +
-     trace_rdma_connect_pin_all_outcome(rdma->pin_all);
+ /*
+  * Get a new connection in context of @conn:
+  *   if the thread is running, wait for completion
+@@ -295,6 +315,7 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
+                             bool blocking, Error **errp)
+ {
+     QemuThread thread;
++    QIOChannel *ioc;
  
-     rdma_ack_cm_event(cm_event);
-@@ -2952,6 +2973,14 @@ static int qemu_rdma_write_run(RDMAContext *rdma, RDMASendRing *r,
-                 return -1;
-             }
-         } else {
-+            bool new_chunk = (int)cmd->block_index != last_bidx ||
-+                             (int64_t)cmd->chunk_index != last_cidx;
+     if (conn->do_negotiation) {
+         assert(info);
+@@ -308,6 +329,20 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
+         assert(!conn->wait_co);
+ 
+         if (!conn->running) {
++            if (conn->sioc) {
++                /* discard if the socket got closed by its peer */
++                ioc = QIO_CHANNEL(conn->sioc);
++                if (!qio_channel_set_blocking(ioc, false, NULL) ||
++                    nbd_channel_is_closed(ioc)) {
 +
-+            /* Cap at one never-seen chunk per request without REG_BATCH. */
-+            if (new_chunk && nreg == 1 && !rdma->reg_batch) {
-+                break;
++                    qio_channel_close(ioc, NULL);
++                    object_unref(OBJECT(conn->sioc));
++                    conn->sioc = NULL;
++                    object_unref(OBJECT(conn->ioc));
++                    conn->ioc = NULL;
++                }
 +            }
 +
-             /* Defer: record every span for a post-registration write. */
-             reg_ring_idx[regn++] = pos + n;
-             /*
-@@ -2959,8 +2988,7 @@ static int qemu_rdma_write_run(RDMAContext *rdma, RDMASendRing *r,
-              * non-decreasing within a run, so a repeat chunk is the last one
-              * queued; add each chunk to the REGISTER batch only once.
-              */
--            if ((int)cmd->block_index != last_bidx ||
--                (int64_t)cmd->chunk_index != last_cidx) {
-+            if (new_chunk) {
-                 regs[nreg].current_index = cmd->block_index;
-                 regs[nreg].current_addr = addr;
-                 nreg++;
-@@ -3663,6 +3691,9 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-     if (cap.flags & RDMA_CAPABILITY_PIN_ALL) {
-         rdma->pin_all = true;
-     }
-+    if (cap.flags & RDMA_CAPABILITY_REG_BATCH) {
-+        rdma->reg_batch = true;
-+    }
- 
-     rdma->cm_id = cm_event->id;
-     verbs = cm_event->id->verbs;
-diff --git a/migration/trace-events b/migration/trace-events
-index e05ca23f32..3c5da0fd14 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -223,6 +223,7 @@ rdma_cleanup_disconnect(void) ""
- rdma_close(void) ""
- rdma_connect_pin_all_requested(void) ""
- rdma_connect_pin_all_outcome(bool pin) "%d"
-+rdma_connect_reg_batch_outcome(bool reg_batch) "%d"
- rdma_dest_init_trying(const char *host, const char *ip) "%s => %s"
- rdma_dump_id_failed(const char *who) "%s RDMA Device opened, but can't query port information"
- rdma_dump_id(const char *who, const char *name, const char *dev_name, const char *dev_path, const char *ibdev_path, int transport, const char *transport_name) "%s RDMA Device opened: kernel name %s uverbs device name %s, infiniband_verbs class device path %s, infiniband class device path %s, transport: (%d) %s"
+             if (conn->sioc) {
+                 /* Previous attempt finally succeeded in background */
+                 if (conn->do_negotiation) {
 -- 
-2.39.5
+2.43.0
 
 
