@@ -4,142 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9ECC98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B34C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA97i-0002l5-FB; Fri, 25 Sep 2026 12:50:10 -0400
+	id 1xA99V-0003dJ-9r; Fri, 25 Sep 2026 12:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA97b-0002k8-SN
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:50:03 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1xA99L-0003b5-UZ; Fri, 25 Sep 2026 12:51:52 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA97Y-00038D-AJ
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:50:02 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PG1KvR796594
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:49:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=; b=hkimgEVsoyyDzhQv
- UAY0iEkV+5+MvfVc3bBj5cYYWaU8Xhq4gUCWfakZlE+9BR8p/KIPynV7JtojTaY9
- SkwKptpKfgbHI9zWTmA8mSb7SikJULVnu0Yi00r/qkN2joBDnQ4XL2PylYh9zX0y
- 5AAmAjaitsn6b3QW6hfWwjdDIWyr69GwvotrW73SgIKbiawXFi0r+7sbzpWy5wZR
- W0kbm6yhdSzfjK9VpkyJdhHr4+44Tl61PY/ZY1iO9bNGEhjWwgtbm6q3OK+3XB2K
- t/0KScqz08hmcsuFbtuj0wdTxXPX4AZqIZvWmo4NIsEEZcluUpn4GMfG0U8iBAOv
- MPvMgA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq3aat4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:49:58 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-939f248907fso112161485a.3
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790354998; x=1790959798; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=;
- b=TC89N26Ldqeik6xw0RBbDk8VGNUap+YzLgC9cfV17Gw7JIkUbsUDDFqsdFqlkMWQ7n
- lWyBfhMkknsmPs2QrSv1nJRCBaC2aIeiIwNtzo+xXY5shOyPEPdfKaxO+PB8pcdvHkOp
- iN67s+AFnyX7H2lXXSeEhls20dG9wIR64tFiDue+hxQiZ63+cB34mRNzBN/PGAxwXXwQ
- ZPBtlCfdabCgIBGBXm6fzybVAwGJh28kt+C3BJ5Pr7LqGtyKRmRTu5chSf9PihgmoRPb
- FMjvLM5IFmeTttQ+ZxtuwVbdcLC3jQ2iojVGYWbMsC2sxmtlkzCW5uMiRHPvW2qKDVoH
- CymQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790354998; x=1790959798;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hsmMaQgqxPNNZVQoNA0BpW7AQv2zWg0p5sPsKfrkAwo=;
- b=fTAmF0y4oi8Wh0rtRhnHgZWHKPxJkaDMFNxhVZrTskfz3Z3WEBSlkcLwpXdnWbpMuB
- IJs/QpTI+WEe+60WWIraiJoFAxkPmRvlncUEUXCROPcAGcaNhZxGO4nYp+lunV4FZxGp
- W7o9DLnOAaFCufjKmnt784yrMCMg+SPTno3kD5/z9jC0THMYZpD2Uvv/jxc0P2LGvebR
- kBolRUNcfV5SCss0EPk1cKXRuJ3IvjfzK5wYXh/2Z38mrwlctBL433ZsaVemXqvnlJU7
- Cr7WKsZf2Ld9KIOcLGQ/SflSMjP4UEQj5Pm30OVO0xxVxVEyTRNIZlNJ4bsFDC32ntw9
- EJng==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxZ2J+LaeBKjnhH2JV/hEHnv28T1vbCEO4+w9ViKrxBkYnpaL4xSakec/B0k7ctYya1pjZ4nRpUKeWg@nongnu.org
-X-Gm-Message-State: AFuF++mGuQZ6V+NrBDQt+RPih0OZmNc4iUG0nFjA3epWGVDIkj2RWRME
- BrxO2VwvBk0ICRXU/ALP18+/hGU6K6ufuZ2E+TO+B6GxgsAnD1AaSiT85fqdow2r6Jv4FJc8m9S
- 4B8fYx6I2KFdz7zZ5MFwCFlQmPw8gFTrdxpFLN6gIxB4WDuSZG9BareV4Fw==
-X-Gm-Gg: AYBFou3QuPijv4IMMvct4MtyCgv+BFM7JvaYWtHE3miMabYB0PXzcCjfSWrU8mKzX/6
- 8QhD0Fxe3Brh552ncvVaTUqNeEUZFHqi6keRI+uFpbMwn2aphFV0qfkOTqPq9Gggz/PMqqqAahT
- I2zwMYVnQHF6jOpN7BvPX9z24ftMigTq/97Vuj8/TgVP3GQfY5nTPrYPtlOTiMOhOXyrCFMP6xt
- q0q2u4798CVBPV7dzcgEK5b0fszqSXekID02z6uwui5sBzxq1gfONW7K2qg2PT/9B/w/ZPpLDIE
- wxDjTsFPcmDr0perzWB9x01B3wPq3UkN7KYveSVoF9uZ95/wJadGpNMDNybs5S5wN9kA7cAC72o
- aNBXCFzV/fzW4/H4k81acJ/fEaV+9OPUKnQ==
-X-Received: by 2002:a05:620a:4450:b0:93a:1fa7:1afb with SMTP id
- af79cd13be357-93c43cb6a76mr584405385a.42.1790354998197; 
- Fri, 25 Sep 2026 09:49:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:4450:b0:93a:1fa7:1afb with SMTP id
- af79cd13be357-93c43cb6a76mr584400085a.42.1790354997614; 
- Fri, 25 Sep 2026 09:49:57 -0700 (PDT)
-Received: from [192.168.68.102] ([177.94.15.187])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c44652f98sm224487785a.6.2026.09.25.09.49.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Sep 2026 09:49:57 -0700 (PDT)
-Message-ID: <4c58ea2b-bccf-48a4-95a6-87f38050eb9d@oss.qualcomm.com>
-Date: Fri, 25 Sep 2026 13:49:52 -0300
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1xA99J-0003Ou-7t; Fri, 25 Sep 2026 12:51:50 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PG5S1j3853825; Fri, 25 Sep 2026 16:51:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zNSu+U
+ E+d2Em/hWRxiY1fobwGJA9W80DlE0DCXH/p4M=; b=iHQEmr78RVxZcgctrx+KPQ
+ JB5Eq7mxOvk0WLXUsGBB5JrrNmIHIxdPPKgRULtDo1+p2i2Hu45pR83+Zk2HcSbP
+ QUhcw2ZXNirBxa1X62Wc3bXjgtLuoD/RJYw8nj+azoPM458pXiCJab3V8j/53blu
+ Evk2v2mYji+5p5fw+XRdaBNES7FIZFAiiTLjSXkas565/Db2q+fZs8N8Ue288thy
+ 7ZYOW6OqIKny1sXqPds8lhEPXEoutlleni4MJe5ig2MLcni1FH7inYaaD5auM1g/
+ UrfiYsyZJCo79TnrSf0aCoef300DsoFqMgAPLKYOEoJzrMj5kUacY0TxG1tdjQbA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske285ku-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 16:51:45 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PG33dB4191778; Fri, 25 Sep 2026 16:51:44 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8k374d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 16:51:44 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68PGphBq2425358
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Sep 2026 16:51:43 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30A2F58059;
+ Fri, 25 Sep 2026 16:51:43 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5C9D58053;
+ Fri, 25 Sep 2026 16:51:41 +0000 (GMT)
+Received: from [9.61.148.101] (unknown [9.61.148.101])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 25 Sep 2026 16:51:41 +0000 (GMT)
+Message-ID: <73a91ec0-12b2-4db4-a209-62c91685d6bd@linux.ibm.com>
+Date: Fri, 25 Sep 2026 12:51:40 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: mask vsepc according to IALIGN
-To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com
-References: <20260915024945.32329-1-fritchleybohrer@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH v4 7/8] tests/qtest: Add s390x virtio net PCI test to
+ pxe-test.c
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
+ cohuck@redhat.com, farman@linux.ibm.com, pasic@linux.ibm.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ jdaley@linux.ibm.com
+References: <20260924194837.80732-1-zycai@linux.ibm.com>
+ <20260924194837.80732-8-zycai@linux.ibm.com>
+ <032734ca-0c40-4e85-97ec-bfb1240199d8@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260915024945.32329-1-fritchleybohrer@gmail.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <032734ca-0c40-4e85-97ec-bfb1240199d8@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NyBTYWx0ZWRfX8coyyQsLp2t7
- c9EaP3UH1l+X4OCnBrng8GshfAczttfMiPMiMG9DMkojc5y0qE/eEl496ALCuvSLz028Y7seY0C
- /QGzrEDdnNiFmDZYnSRWIxrM9H9j9Ro=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NyBTYWx0ZWRfX6Jcvx+4HYjLy
- 0Ml0EoJu+j7cyP6vg0bbY4mibLHzypVPhCCOlt2tnC+RMT0AvfNvQMYil8VI2Ihko427PpjA0bd
- /ggOb48d9xtmPs6LjgpRTwcKTR2fZPEH/TNc5TvEMhyAZBYQBY5vd7tA2R0alqND6WU1QvIy90t
- 0AsHU27SP4bvhJWKQ6RF8qWLWOn0AiK7KPCPY4r8fSXmNaUZMNQU+c2HKigTFbsQDo1GSLBPA0e
- pgx/yc8k78TPHkwFeDQRkBaoUPvd2G+s9vqwsKwiHU70mJAsMvJ1hioyNjzUnBbwrI4SF8eh/rf
- q+mmKv3f1124aW6JR6byHJGaC3sd3FOyJPt3R5nFDK6zTfH0KOzpfNkIZm1sieJ+iCwLk0cHE5h
- IIFJi8ekh+s3s5AYFIg//SlwEpdjGeukGOd7p5elqyYw795FXFeurVlJrA8vKWQjFkeeBPW1myu
- FgXegzpv82qjh9qO9mA==
-X-Authority-Analysis: v=2.4 cv=VuO2kO2n c=1 sm=1 tr=0 ts=6ab6a636 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=WWe3HN8v-xbs8q0Pu_QA:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: 4A3DLg256tja4wysVYP6RiNll-fYx7FL
-X-Proofpoint-ORIG-GUID: 4A3DLg256tja4wysVYP6RiNll-fYx7FL
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -o00YzcH8RUwX5lBwpQJx6l_XiYEX9ZR
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab6a6a1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=JO3BLXImQ-Fy3Z_aLiYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX5EuM6oljkOkp
+ HwtpwfdiuKXodFuHGP6ZqpNYr+IAriNByua/0iW+ew8gbG68oRSB1G3oFnZMTclJFrmeJQp474+
+ e7P1I/k5ADvU40NRV3+FlxwnquWTm9Y=
+X-Proofpoint-GUID: -o00YzcH8RUwX5lBwpQJx6l_XiYEX9ZR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX6lT92Vo/tYni
+ S4nf9vMudL0vUcOKG4lM8H5u40tFri4+HKBRRR+zhkP2trw542So9EyugiLw2K87U8qXU2q8uug
+ yl+QZS/O0nyKe164v0LTvpxTlq5rv7qdj/jjE9XEHJzfy0ZCJAkeYqFgW2DMawk/8gGZZhdRgzy
+ dgY2W7Dt8AZhrQ3i5KNjuNPjxZwONHhjWnx8rkvpBAkwvEamnkvw1uHM8IsfGOC4b8lGyv3Wkqj
+ iJCoCGgmFVkEXiGWAjq9CbAy1/udzSw1CcJb+Y+xf57fMRvWDcbwWePEFX2PwOL8232JjwYazAA
+ XS55fHvMVr6MLHwZ2MKv5gt51ZS8uLfmLKUpdVisqzaihPglPcYWnrGDbgq1kTzK83X9YfBp2Az
+ 6fSwhU+diLQ11CXZgE6eB8uFbONT/S7/yM3JmjfZpTLa/hG3UmIzakFGWEOkgWTEvcWDTomxC24
+ LSyOS4HXY6MndqPGqkQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609250067
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250066
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,132 +132,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/14/2026 11:49 PM, Zephyr Li wrote:
-> vsepc is the VS-mode counterpart of sepc and is a WARL register, but
-> unlike mepc and sepc its accessors do not mask the low address bits
-> according to IALIGN.  As a result, values with invalid low bits can be
-> observed through vsepc.
-> 
-> Apply get_xepc_mask() to both vsepc reads and writes, matching the
-> existing mepc/sepc handling.
-> 
-> Add a TCG regression test covering both IALIGN=16 and IALIGN=32.
-> 
-> Fixes: 8747c9eeb2aa ("target/riscv: Add Hypervisor virtual CSRs accesses")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4420
-> Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-> ---
+On 9/24/26 5:15 PM, Matthew Rosato wrote:
+> On 9/24/26 3:48 PM, Zhuoying Cai wrote:
+>> Add test coverage for virtio-net-pci network booting on s390x by
+>> including it in the PXE test suite. The test verifies that PXE
+>> network booting works correctly with virtio-net-pci devices.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+> It's still kind of confusing, but this is a little better.
+>
+> Not sure if we will need to come up with a better way of identifying the
+> existence of a feature for s390x bios in the future, but for now:
+>
+> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Probably the normal console messages just need to be updated. Currently
+it prints a message like "using virtio-blk" or "netboot started" and that
+was fine when only CCW was supported for those devices, but now that there
+are a lot more device/bus combinations I think we need to be more verbose.
+That would make feature checks easier and also provide better diagnostic
+output in general.
 
->   target/riscv/tcg/csr.c                 |  4 +-
->   tests/tcg/riscv64/system/meson.build   | 11 ++++++
->   tests/tcg/riscv64/test-vsepc-masking.S | 54 ++++++++++++++++++++++++++
->   3 files changed, 67 insertions(+), 2 deletions(-)
->   create mode 100644 tests/tcg/riscv64/test-vsepc-masking.S
-> 
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index bd4b6dc114..274c5cfbf4 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -5299,14 +5299,14 @@ static RISCVException write_vsscratch(CPURISCVState *env, int csrno,
->   static RISCVException read_vsepc(CPURISCVState *env, int csrno,
->                                    target_ulong *val)
->   {
-> -    *val = env->vsepc;
-> +    *val = env->vsepc & get_xepc_mask(env);
->       return RISCV_EXCP_NONE;
->   }
->   
->   static RISCVException write_vsepc(CPURISCVState *env, int csrno,
->                                     target_ulong val, uintptr_t ra)
->   {
-> -    env->vsepc = val;
-> +    env->vsepc = val & get_xepc_mask(env);
->       return RISCV_EXCP_NONE;
->   }
->   
-> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-> index 8604c2a45a..5d633a266a 100644
-> --- a/tests/tcg/riscv64/system/meson.build
-> +++ b/tests/tcg/riscv64/system/meson.build
-> @@ -24,6 +24,17 @@ tests += {
->     'test-crc32.S': setup + {'qemu_args': ['-cpu', 'rv64,xlrbr=true', qemu_args]},
->     'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
->     'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
-> +  'test-vsepc-masking.S': setup + {
-> +    'test_name': 'test-vsepc-masking-c',
-> +    'qemu_args': ['-cpu', 'rv64,h=true,c=true', qemu_args],
-> +  },
-> +}
-> +
-> +tests += {
-> +  'test-vsepc-masking.S': {
-> +    'test_name': 'test-vsepc-masking-no-c',
-> +    'qemu_args': ['-cpu', 'rv64,h=true,c=false,zca=false', qemu_args],
-> +  },
->   }
->   
->   tests += {
-> diff --git a/tests/tcg/riscv64/test-vsepc-masking.S b/tests/tcg/riscv64/test-vsepc-masking.S
-> new file mode 100644
-> index 0000000000..e5460f8aee
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-vsepc-masking.S
-> @@ -0,0 +1,54 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#define MISA_C          (1 << 2)
-> +
-> +	.option	norvc
-> +	.text
-> +	.global	_start
-> +_start:
-> +	csrr	s0, misa
-> +	andi	s0, s0, MISA_C
-> +
-> +	lla	s1, test_addr
-> +	ori	t0, s1, 3
-> +	csrw	vsepc, t0
-> +	csrr	t1, vsepc
-> +
-> +	beqz	s0, ialign32
-> +	addi	t2, s1, 2	/* IALIGN=16: bit 0 reads as zero. */
-> +	j	check
-> +
-> +ialign32:
-> +	/* IALIGN=32: bits [1:0] read as zero. */
-> +	mv	t2, s1
-> +
-> +check:
-> +	li	a0, 2
-> +	bne	t1, t2, _exit
-> +
-> +	li	a0, 0
-> +	j	_exit
-> +
-> +	.balign	4
-> +test_addr:
-> +	nop
-> +
-> +/* Exit code in a0. */
-> +_exit:
-> +	lla	a1, semiargs
-> +	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-> +	sd	t0, 0(a1)
-> +	sd	a0, 8(a1)
-> +	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-> +
-> +	/* Semihosting call sequence. */
-> +	.balign	16
-> +	slli	zero, zero, 0x1f
-> +	ebreak
-> +	srai	zero, zero, 0x7
-> +	j	.
-> +
-> +	.data
-> +	.balign	16
-> +semiargs:
-> +	.space	16
+In the meantime, this particular output could be clarified by simply using
+a substring of the same string literal:
 
+     return s390_bios_has_string("virtio-net-pci");
+
+Will result in:
+
+     # "virtio-net-pci" found in bios
+
+(or not found) which is much more logical to me.  I wouldn't respin the
+series just for that though since the test itself does work as intended.
+
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 
