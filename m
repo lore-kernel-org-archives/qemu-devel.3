@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC43C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818EAC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8Rl-0006rV-Rj; Fri, 25 Sep 2026 12:06:55 -0400
+	id 1xA8QL-0005bI-2t; Fri, 25 Sep 2026 12:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8Dk-0007vw-Qq
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:21 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8Dj-00060a-6c
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:20 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49b912d37b5so6542755e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:52:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1790351537; x=1790956337; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=NTTOBszhae6b65tYdYeG+YHSC5v2PqdRKV+Vycg+4ck=;
- b=M0Ko1r3XnVO6cGVVkrTP9IO1rF7t2ruT04vWIneWpWfvPVsoeJsAyae/JSXXjowm4j
- qd21Ki4XKqFb7e1VRJ5k9UhMtY5sWhhiloCqO440nNPqnDX+KSs0VeykEa39qmf/NFJI
- s448aDs4WxrBWLEVcK9FES2jLVc6xIWwbIFcUx5ZEC7mHqPB+kf4gWJnHH/wLQyvFY8H
- 0aR52MflHDLRjFZxDV3iJeYMIJvguj3W86vakEIo6v46H2Zy/lyijJtr/Y6vV4yfH4Gg
- mhVfTVvyZmtIHjf2i6kVhIe3dikwxjR3ieQSkBnfz1EPPRHhFgJPLJ70Cne//OD9zHhj
- 6XKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790351537; x=1790956337;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NTTOBszhae6b65tYdYeG+YHSC5v2PqdRKV+Vycg+4ck=;
- b=e0/sBuGGUr6o/WzqE80gPH2fijVHXZcVM4n0mebbxH1vF1Yu7K4s8bgkXR3I47jdrc
- yyIlzWOTrz3HzAwBNUlbBNIfn/lNEOpMWIJwSJfQZD0WSV4mCHTjHLSiwbKGIMZnCceE
- ndyeUK8tbLq/NxXU5/3V9YYyZWA3CdGEoqhwJLX8QKvny66vFHWcomtoEoA53i4VBlR/
- dXHSPxs6TJ5LRl+IM+bI/L9vNo1gPiYPPznAt38c+kVyCvm2VcLV2NW6rzWOMIT/7TM3
- WbNE3KUGOEtsuhxvbNZlQDGaiwLRS0E02UwMhRPUwn5oGHA3wN3l26iAN4p4O1dL6dnQ
- ZYYA==
-X-Gm-Message-State: AFuF++nvB4GzxsDV7wmmZa+a+jJ+2Pd7tD3G+XXKll3G8/GQkQHgW//A
- t9MNEBW+uq0sZIICu0hxR51AkIlvDRW/dCF7Mv5Ik39Txrcy7YlYLYkV1Sayk0wAyh6ES35B8KT
- VfRuce2K19w==
-X-Gm-Gg: AYBFou1bMw/GYVW6jzW876CHb6EekJPZDTbjl1T0sVXZeaJeukQs2dT06Vg31KPIz1w
- g6pA3HGPuiEqm9QGVeOmpZ+UcLedjhB1QOnpF7zJrrThF3IRrGEk+nQThrJoodpNQVlB9GZONl8
- NQekXBNG8SppYYOhmB07gT73p/nv3kxu6qwkDhsm6I5tdeQfBed/20wVmElHfLtXtDP3oGvMlQd
- ur/PpkYPfB17gRnKFdXeCwNo4+QmR0a6yArQQMDZqW4hjrnVqxmttKDdMcZThWorqhMGnRUNp7+
- GJr8QgUg+FwsFctLnaxBdbITUiT6f/CMWevA1p5k5E3VOcpqWcFBXHagafxdZTB9/g94c0g8FWQ
- xDPopVyzeG6ehGCL6N2cByuJG+hzfUUN54t+PPZudXS7SrDaWSl3o+LNYCHNC6kNuLL4dhFgpjk
- qsKEV4M5nOfnCz6LjJRrJtfWYvJvruE4cGVNjTKOY8fYjXW03VvaDJ6UeswxoxclWUijex91yfo
- l8dYmI06V9q8LMwuSTXGH91od/VOKAdCi53uYlTHoE=
-X-Received: by 2002:a05:600c:1c25:b0:49f:ce78:3561 with SMTP id
- 5b1f17b1804b1-49fe66f19demr121022405e9.18.1790351537568; 
- Fri, 25 Sep 2026 08:52:17 -0700 (PDT)
-Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.52.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 08:52:17 -0700 (PDT)
-From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
- Jinpu Wang <jinpu.wang@cloud.ionos.com>,
- Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH 10/13] migration/rdma: size reg_resp.len by the register
- request count
-Date: Fri, 25 Sep 2026 17:51:45 +0200
-Message-ID: <20260925155149.843870-11-dmitrii.omelchenko@cloud.ionos.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
-References: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xA8Ot-00048E-8v
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:04:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xA8Or-00079c-6c
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:03:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790352228;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9IjirfNowE5KLs/qXO4qDCvInqvXkmgD1TtZWTx5HNM=;
+ b=LaIpRsukS6u5FgdqCTKru3rrIwCgg1AioyRHfw0PDIKJJNNTTRDLJZjrsE0GLNVCbnqj1C
+ K3hwY/gedFtDjIvOrwmV45/1lRhsEEdJKRE3f+F2D2n9PM2me1cfG2NPDu+3l3553MQsBU
+ w4xC/pNWs/Jk3xM+okd3VpHEMff5RcM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-coOBFpwxOuukRgcvcWPuBQ-1; Fri,
+ 25 Sep 2026 12:03:46 -0400
+X-MC-Unique: coOBFpwxOuukRgcvcWPuBQ-1
+X-Mimecast-MFC-AGG-ID: coOBFpwxOuukRgcvcWPuBQ_1790352225
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E8AF18BA357; Fri, 25 Sep 2026 16:03:45 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80484426; Fri, 25 Sep 2026 16:03:43 +0000 (UTC)
+Date: Fri, 25 Sep 2026 17:03:40 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 3/4] tests/tcg: add alternative cross-compilers for fedora
+Message-ID: <arabXD86yMY9ixed@redhat.com>
+References: <20260924213942.26491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260924213942.26491-4-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:31::11;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wm2-x11.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <20260924213942.26491-4-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Sep 2026 12:05:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,32 +88,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The destination assumed repeat=1; set reg_resp.len to one
-RDMARegisterResult per requested chunk so a batched REGISTER_REQUEST is
-answered in full.
+On Thu, Sep 24, 2026 at 09:39:41PM +0000, Pierrick Bouvier wrote:
+> This allows to pick host compiler automatically on fedora, as those
+> binaries are installed with 'gcc' package.
+> 
+> This covers all host arch supported to this day:
+> https://fedoraproject.org/wiki/Architectures
+> - x86_64
+> - aarch64
+> - ppc64le
+> - riscv64
+> - s390x
+> Note: QEMU and Fedora don't support 32-bit hosts anymore.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  tests/tcg/aarch64/meson.build        | 2 ++
+>  tests/tcg/aarch64/system/meson.build | 1 +
+>  tests/tcg/aarch64_be/meson.build     | 1 +
+>  tests/tcg/ppc64le/meson.build        | 1 +
+>  tests/tcg/riscv64/meson.build        | 2 ++
+>  tests/tcg/riscv64/system/meson.build | 1 +
+>  tests/tcg/s390x/meson.build          | 2 ++
+>  tests/tcg/s390x/system/meson.build   | 1 +
+>  tests/tcg/x86_64/meson.build         | 2 ++
+>  tests/tcg/x86_64/system/meson.build  | 1 +
+>  10 files changed, 14 insertions(+)
 
-Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
----
- migration/rdma.c | 2 ++
- 1 file changed, 2 insertions(+)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index db1f1e3fc6..bffc7d33ef 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -3870,6 +3870,8 @@ int rdma_registration_handle(QEMUFile *f)
-             trace_rdma_registration_handle_register(head.repeat);
- 
-             reg_resp.repeat = head.repeat;
-+            /* one result per requested chunk (source may batch registers) */
-+            reg_resp.len = head.repeat * sizeof(RDMARegisterResult);
-             registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
- 
-             /* Making sure the register buffers to read are valid */
+
+With regards,
+Daniel
 -- 
-2.39.5
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
