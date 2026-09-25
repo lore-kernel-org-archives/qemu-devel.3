@@ -4,84 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4EF6C98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 11:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B92C98321
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 11:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA41L-0002C5-OM; Fri, 25 Sep 2026 07:23:15 -0400
+	id 1xA4UG-0007Dn-EL; Fri, 25 Sep 2026 07:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xA41A-0002AK-6c
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 07:23:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xA4Tx-0007A7-Az; Fri, 25 Sep 2026 07:52:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xA417-00055k-BU
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 07:23:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790335380;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=14afMoM0V2Ub5/LaLgZg2Y9baDvvgAjAk7yLzjmc5eQ=;
- b=JuvtP+5ApkVv5YyVXm6ACIMJ8e8Z06JpUozsXn7mV6Zz4m73Z5Gs9ye2cY7poTAJ6MO2tG
- BklNx8+xOh97pZRmZnf1uyhIDaOQaci4hPg+rnuHpJeIFauxRPjF/4csiaVOa+O4kcW0rq
- jZ5mn0bx9tcJumU2x6YWKRZH/iwLT/g=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-Ie9dvm5EMHKk70SRypc33g-1; Fri,
- 25 Sep 2026 07:22:54 -0400
-X-MC-Unique: Ie9dvm5EMHKk70SRypc33g-1
-X-Mimecast-MFC-AGG-ID: Ie9dvm5EMHKk70SRypc33g_1790335373
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3D6E1944DD9; Fri, 25 Sep 2026 11:22:52 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF0C8433; Fri, 25 Sep 2026 11:22:49 +0000 (UTC)
-Date: Fri, 25 Sep 2026 12:22:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-Message-ID: <arZZhpR5_nPybOUo@redhat.com>
-References: <20260921075251.12831-1-pbonzini@redhat.com>
- <20260921075251.12831-2-pbonzini@redhat.com>
- <arEvLLYK9A5MKNdE@redhat.com> <arP7TDfz7lz699KJ@redhat.com>
- <87ik3vyp3i.fsf@draig.linaro.org> <arT_kefzEhqg8-FB@redhat.com>
- <arUJxE0F7Q3Cw5sk@redhat.com> <arZHWKAgr-GYvoeX@redhat.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xA4Tu-0002Ka-Nz; Fri, 25 Sep 2026 07:52:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P4a7ZS102472; Fri, 25 Sep 2026 11:52:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PqLjyR
+ YeMAaeseJgLqT5QTpuUJJUWA1CFryBV2t5vx8=; b=UMh/eje02q4ouAiy+VACg8
+ 9uunn4MZAzxqoYK457mW2VQpgrVmt6EnkeCG+QvdtnHHJTEzEFtUxfm9wiY5OVsn
+ rwqcyRtu4xVzPHEw2pIoMMqmOx3LCd74b9QdgFH3UOjktABzSN1y/ZEHxVEhdr9n
+ mO+HsOm//kqLyznyutn7eueIvtb4NM7twN1NZjlzOKAgYQ8bUvU0L/fVdb4227l1
+ v5fB6tNzyZfj+sKS5rXJEBi+p2FhmqmcApMpxFni+PWaLSuVVUJjDTmuJLw321cP
+ erwytUZn7vedXMcDyUhwsBWvtElakhzBKPf3zMVf8U1quWoNdxr+4hzTQXWWv6aA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskdvnv4m-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 11:52:43 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P9xNJZ3248857; Fri, 25 Sep 2026 11:52:43 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt3266d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Sep 2026 11:52:43 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68PBpvrZ62194018
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Sep 2026 11:51:57 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 241025805D;
+ Fri, 25 Sep 2026 11:52:41 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 99D5458057;
+ Fri, 25 Sep 2026 11:52:40 +0000 (GMT)
+Received: from [9.61.145.93] (unknown [9.61.145.93])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 25 Sep 2026 11:52:40 +0000 (GMT)
+Message-ID: <3b1ab249-2226-4cbe-b333-a681eeccc12e@linux.ibm.com>
+Date: Fri, 25 Sep 2026 07:52:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 9/9] s390x/sclp: Reject short headers in PV case
+To: Janosch Frank <frankja@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20260922201526.2383047-1-farman@linux.ibm.com>
+ <20260922201526.2383047-10-farman@linux.ibm.com>
+ <84b2133f-a8e2-47d2-8fe7-46c2b92118c5@linux.ibm.com>
+ <ea7dd9b0-0ba6-4485-a488-eb5fe9d5a570@linux.ibm.com>
+ <dbb9db92-6504-4ca3-8ab3-96140a1bf0f8@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <dbb9db92-6504-4ca3-8ab3-96140a1bf0f8@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <arZHWKAgr-GYvoeX@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: e4t4f-U1ud9T1-7CWfbBoe6VJoCUblkI
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA0NiBTYWx0ZWRfX6xkSxuM8juBC
+ 94uhCkBKSQbGyHrgX8md1XYSiq+3heFrWC2yWRZXVArkEO99Y8x3Ar6z4SwFYzxL3PBLNUXoRzf
+ WeU1uEKtxCELttWVwgnTpzW/pr7lpVA=
+X-Authority-Analysis: v=2.4 cv=FLiOVOos c=1 sm=1 tr=0 ts=6ab6608b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=T61ntsxnzfGQLWboZoUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: e4t4f-U1ud9T1-7CWfbBoe6VJoCUblkI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA0NiBTYWx0ZWRfX5VaZrumlWBtK
+ LxMogWDrKaA5ubZACS8djZLEfVPUjbWi8Ti3m9AU6RjZkicDhfa1JvwKzM2YTtIPHO4wIO95PVQ
+ GavAfHPTazWTjXwxwSGxhdgKxhA7X2gBpHk+NjqVImZMYOVIh3mYJI9k/8XIBNYBj/bJKfGIYmE
+ awSl8l4O85jut8PVafGjqYNpBx9B85TxPHRXkQ+VZubuOz2kEEiEq2iKgpvKzJJpqKwUyNCFFYO
+ Pql5XOGSUyYyoSU/tS9MvvzdoJ1sONgjnNwyJVzmdy79La9s3uEeOkutadipPQ/TlqyJyct8Qi9
+ ai699HG+nnwOCOCaerYEFkaZNIxovfyFWasS8W/vzSvylUEC7XrnBiLoqyBLh146quFFtV1PDyd
+ V40EgdnK3Ko81Ig8POzIc8tzIU3kCiSFp0gdV+WZvZp7MOT55+j3GZwmUU5D5gwhwk5SuvPKVK1
+ 8tp5ccbE1of0FxEWg0g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 phishscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609250046
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,259 +172,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 25, 2026 at 12:05:12PM +0200, Kevin Wolf wrote:
-> Am 24.09.2026 um 13:30 hat Daniel P. Berrangé geschrieben:
-> > On Thu, Sep 24, 2026 at 12:46:41PM +0200, Kevin Wolf wrote:
-> > > Am 24.09.2026 um 11:29 hat Alex Bennée geschrieben:
-> > > > Kevin Wolf <kwolf@redhat.com> writes:
-> > > > 
-> > > > > Am 21.09.2026 um 15:20 hat Daniel P. Berrangé geschrieben:
-> > > > >> On Mon, Sep 21, 2026 at 09:52:48AM +0200, Paolo Bonzini wrote:
-> > > > >> > +.. note:: **Use of AI does not remove the need for authors to comply
-> > > > >> > +          with all other requirements for contribution.**  In particular,
-> > > > >> > +          the ``Signed-off-by`` label in a patch submission is a statement
-> > > > >> > +          that the author takes responsibility for the entire contents of
-> > > > >> > +          the patch, certifying that their patch submission is made in
-> > > > >> > +          accordance with the rules of the :ref:`Developer's Certificate of
-> > > > >> > +          Origin (DCO) <dco>`.
-> > > > >> > +
-> > > > >> > +          Since a submitter cannot audit LLM output against its training
-> > > > >> > +          data, the DCO is paired with :ref:`metadata in the commit message
-> > > > >> > +          <ai-used-for>` about AI-generated parts.  The DCO still certifies
-> > > > >> > +          that the contributor has the legal right to submit code in general.
-> > > > >> 
-> > > > >> I'm not a fan of this second paragraph, as that feels like it is undermining
-> > > > >> the DCO. That first sentence in particular is somewhat saying that the
-> > > > >> contributor does not have to think about plagarism and thed project is ok
-> > > > >> with that, and also implying that the DCO doesn't apply to the LLM output.
-> > > > >> This is both not OK in its implication of the project accepting some
-> > > > >> liability, and then also contradicted by the next sentence.
-> > > > >> 
-> > > > >> IMHO this paragraph should just be removed.  The first paragraph clearly
-> > > > >> states the DCO applies to the submission as a whole, and leaves all liability
-> > > > >> for infringement on the contributor.
-> > > > >
-> > > > > I don't think making this the individual contributor's problem is great.
-> > > > > It's rather unfriendly towards contributors to expect them to certify
-> > > > > something that we all know they can't honestly certify.
-> > > > 
-> > > > This is the current position with the DCO anyway. If the contributor has
-> > > > copy and pasted (and maybe adapted) from Stack Overflow they are still
-> > > > realistically the only person that can make that judgement.
-> > > 
-> > > Yes, that's the current position with the DCO and the reasoning why we
-> > > said LLM output is unacceptable in submissions.
-> > > 
-> > > The big difference is if I copy and pasted from Stack Overflow, I _know_
-> > > that I did that. If the LLM effectively does it for me, I don't know
-> > > that. The best I can do is check if I can find similar code elsewhere.
-> > > 
-> > > So while I can certify with 100% confidence that I didn't manually copy
-> > > things for code that I wrote myself, I can't certify that code from
-> > > other sources, including LLMs, isn't copied from elsewhere. I can only
-> > > say that I didn't find any reason to suspect it's copied.
-> > 
-> > > > > Our current AI policy was built on the assertion that it's impossible to
-> > > > > sign the DCO for AI output, and I think that's still right. A developer
-> > > > > can't certify the origin of something when they don't really know where
-> > > > > it comes from.
-> > > > 
-> > > > It's certainly possible for LLMs to replicate copyright material but by
-> > > > far the biggest influence is the code *in the project* that shapes the
-> > > > output. It is basically pattern matching and predicting after all.
-> > > 
-> > > If there is one chunk of code that violates the copyright of someone,
-> > > you can't heal that just by having 1000 more chunks that are clean.
-> > > 
-> > > > What level of reassurance the submitter needs to be able to certify with
-> > > > their DCO is up to them. We can't police it, like every other submission
-> > > > we rely in the submitters good faith representation of what they have
-> > > > done.
-> > > 
-> > > The DCO doesn't talk about levels of reassurance. It talks about hard
-> > > facts, 100% confidence.
-> > > 
-> > > And that I can't give you with LLM generated content. I can maybe give
-> > > you 99%, but never 100%.
-> > 
-> > I appreciate you're speaking about licensing/copyright here, but more
-> > generally I think we're probably wrong in asserting that a human
-> > authored contribution can ever be said to be 100% safe to QEMU with
-> > a DCO signoff. It is risk mitigation, but not absolute.
+
+
+On 9/25/26 3:58 AM, Janosch Frank wrote:
+> On 9/24/26 4:39 PM, Christian Borntraeger wrote:
+>>
+>>
+>> Am 24.09.26 um 16:36 schrieb Janosch Frank:
+>>> On 9/22/26 10:15 PM, Eric Farman wrote:
+>>>> An invalid length in an SCCB header correctly generates a specification
+>>>> exception for the regular (non-PV) codepath that processes an SCLP
+>>>> instruction intercept. The PV case doesn't, even though such a thing
+>>>> should already be sanitized. Since a short length will cause problems
 > 
-> Yes, and I don't think I'm claiming it can, quite the opposite. (Maybe
-> Alex is with "we are insisting they are confident there is no legal risk
-> in what they submit", though).
+> ...even though such a thing should already be handled by the UV.
 > 
-> The difference is probably that you're looking at it from the project
-> perspective and I'm looking at it from the contributor perspective.
-> Would I be happy to sign the DCO for AI output? I would probably be
-> fighting my conscience because I know that everyone (possibly including
-> my manager) expects me to do that even with AI output, but at the same
-> time I also can't certify something I don't know for a fact. That would
-> be a quite unpleasant situation.
+>>>> later down the line with the storage that will be allocated based on
+>>>> that size, put up a defensive check and return if it is too short.
+>>>>
+>>>> Cc: Janosch Frank <frankja@linux.ibm.com>
+>>>> Cc: qemu-stable@nongnu.org
+>>>> Fixes: c1db53a591 ("s390/sclp: read sccb from mem based on provided 
+>>>> length")
+>>>> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>>>> Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+>>>> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+>>>> ---
+>>>
+>>> How would you hit that if the architecture says FW will automatically 
+>>> inject a spec exception without exiting to the hypervisor if length < 8?
+>>
+>> As I said in my review, current UV will sanitize this, so this is just 
+>> defence in depth in case
+>> there would be an implementation error.
 > 
-> Our current policy is quite clear on this, and I seem to remember that
-> it was even you who brought up the reasoning with "it's impossible to
-> sign the DCO for AI output":
+> That got lost in my mailbox overflow.
 > 
->     To satisfy the DCO, the patch contributor has to fully understand
->     the copyright and license status of content they are contributing to
->     QEMU. With AI content generators, the copyright and license status
->     of the output is ill-defined with no generally accepted, settled
->     legal foundation.
+> Alright, then let's extend the comment and commit description before 
+> someone deletes this as dead code.
+
+Works for me. I'll fold the above/below comments in when I apply.
+
 > 
->     Where the training material is known, it is common for it to include
->     large volumes of material under restrictive licensing/copyright
->     terms. Even where the training material is all known to be under
->     open source licenses, it is likely to be under a variety of terms,
->     not all of which will be compatible with QEMU's licensing
->     requirements.
+>>
+>>>
+>>> Did you witness this happening?
+>>> Am I missing something?
+>>>
+>>>>    hw/s390x/sclp.c | 6 ++++++
+>>>>    1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+>>>> index d8b655efcc..ad8129a5d8 100644
+>>>> --- a/hw/s390x/sclp.c
+>>>> +++ b/hw/s390x/sclp.c
+>>>> @@ -277,6 +277,11 @@ int sclp_service_call_protected(S390CPU *cpu, 
+>>>> uint64_t sccb, uint32_t code)
+>>>>        s390_cpu_pv_mem_read(env_archcpu(env), 0, &header, 
+>>>> sizeof(SCCBHeader));
+>>>> +    /* Do nothing if the header appears malformed */
 > 
->     How contributors could comply with DCO terms (b) or (c) for the
->     output of AI content generators commonly available today is unclear.
->     The QEMU project is not willing or able to accept the legal risks of
->     non-compliance.
+> ... We should never end up here due to UV checks but let's be sure.
 > 
-> What has changed so fundamentally (i.e. not just shifted in numbers)
-> since then?
+>>>> +    if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
+>>>> +        goto out_no_write;
+>>>> +    }
+>>>> +
+>>>>        work_sccb = g_malloc0(be16_to_cpu(header.length));
+>>>>        s390_cpu_pv_mem_read(env_archcpu(env), 0, work_sccb,
+>>>>                             be16_to_cpu(header.length));
+>>>> @@ -290,6 +295,7 @@ int sclp_service_call_protected(S390CPU *cpu, 
+>>>> uint64_t sccb, uint32_t code)
+>>>>    out_write:
+>>>>        s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+>>>>                              be16_to_cpu(header.length));
+>>>> +out_no_write:
+>>>>        sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+>>>>        return 0;
+>>>>    }
+>>>
+>>
 > 
-> The commit message doesn't give any explanation. It says "but AI is so
-> useful today", and I can agree with that. But it doesn't change anything
-> about license status. If something is impossible, then that it would be
-> useful doesn't somehow make it possible, and we shouldn't pretend that
-> it does.
-> 
-> So either we need a reasoning why things have changed fundamentally (or
-> why we now think our old reasoning has been wrong from the start) so
-> that it's now okay to request contributors to sign the DCO for AI output
-> when we previously officially asserted that this is impossible for them
-> to do in good faith, or we need to have different standards than the DCO
-> for AI output.
-
-I would say that our original policy was intentionally simplistic
-in declaring a strict ban on every use of AI, under the banner of
-DCO compliance.
-
-I would say our current policy does/should have wiggle room in it
-for modest contributions that don't meet the threshold for code
-to have meaningful copyright protection, either because the code
-is trivial, or it is cloning a boilerplate design pattern, or
-there is only one viable way to achieve the task.  We didn't get
-into that nuance in the original policy, but we've discussed it
-at the time, and on occassions since.
-
-Then there's things like auto-completion, grammar/spelling help,
-translation, and so on, which I also think are reasonable to use
-LLM for and also reasonable to sign-off under DCO.
-
-
-Wrt my message about the DCO being about risk mitigation, rather
-than total risk elimination, I think there is scope for sign off
-of some more significantly sized (but not unbounded) LLM based
-contributions. I don't know how to express that as policy
-language.
-
-For LLMs involved in wholesale architecting of major new features,
-I remain pretty uncomfortable with the idea of DCO signoff, and
-also not especially happy with the proposal in this series that
-it is OK if done with prior agreement with a maintainer.
-
-That is saying implicitly that "Use of AI tools is entirely
-unrestricted for anything", from a DCO signoff POV. It merely
-tries to stop us being flooded, and I'm pretty doubtful that
-will work out.
-
-
-
-> > With this in mind, it is perhaps not that different to accept a little
-> > bit of uncertainty in risks of LLM unknowingly copying from training
-> > material or 3rd party incompatibly licensed code it happened to find
-> > while walking the web ?  The key is that users need to be diligent
-> > in their use of the tools, not reckless. Norms for what that means
-> > are still be established - the so called "clean room" or license
-> > laundering, re-impls of projects are a massively risky activity
-> > but are the exception.
-> 
-> So basically you're saying that it's our interpretation of the DCO that
-> was wrong from the beginning, and it shouldn't actually be understood as
-> strict/literally as we said it should?
-
-No, as above, our current policy was intentionally simplistic,
-going beyond what we needed to declare,  to get an initial
-policy in place. The intent was always to refine the policy
-over time.
-
-This series is less of a refinement, and effectively a complete
-removal almost all restrictions.
-
-We're already feeling the massive burden of reviewing chatbot output
-in our issue tracker, and it is a horrible experiance. I worry about
-what the effects of this new policy will be for QEMU long term on
-the patch side too, since no matter what we say the intent is, I
-expect it will be an excuse to bombard us with more patches than
-ever before.
-
-> Even if people generally agree that that's the case, that should be made
-> explicit. With the history of our claim that it's impossible to sign the
-> DCO for AI output, we can't just mention in passing that the usual
-> requirements like signing the DCO apply as if that is the most natural
-> and uncontroversial thing to do, when we ourselves are claiming the
-> opposite today.
-> 
-> I think that's what Paolo tried to address with the paragraph you
-> suggested to remove. While its wording isn't perfect, I do think we need
-> something like it.
-> 
-> > > > > If we decide that we don't care as much about the legal risks any more
-> > > > > and that we're willing to accept them to some extent, that should be
-> > > > > explicitly reflected in the policy.
-> > > > >
-> > > > > It seems to me that the cleanest way to do it is to exempt correctly
-> > > > > advertised (with 'AI-used-for:') AI output from the DCO requirement and
-> > > > > instead add to the 'AI-used-for:' definition some relaxed version of it,
-> > > > > e.g. "I have reviewed the contribution for potential licensing issues
-> > > > > and haven't found a reason to doubt that I have the rights to submit
-> > > > > this AI generated content under the open source license indicated in the
-> > > > > file". This is something that could realistically be certified by
-> > > > > contributors in good faith and also isn't just "anything goes", but of
-> > > > > course it still is weaker than the DCO.
-> > 
-> > I like the idea of associating "AI-used-for" with an explicit
-> > statement like:
-> > 
-> >   "By using 'AI-used-for', a contributor both identifies areas of
-> >    the patch that involved use of AI/LLM, and also attests that
-> >    their usage of AI/LLMs was in compliance with the policies
-> >    outlined in this document"
-> > 
-> > 
-> > Then we can add whatever guidance we want in the AI policy that
-> > steers people away from LLM usage patterns that we know would
-> > expose us to undesirable risk. Explicitly stating that we do
-> > not want LLMs used to "clean room" / "license launder" re-impl
-> > existing code is something we could include.
-> 
-> Sure, that could be done.
-> 
-> > Or guide that agents should not be given free access to live git repos
-> > to reduce change of direct copying ?
-> 
-> I'm less sure about this one, as long as it's contained to specific
-> repos (e.g. a library that QEMU uses), it could be very useful and also
-> not too bad to review - and we know the licenses are compatible anyway.
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
