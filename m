@@ -4,68 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55476C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0891EC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8RS-0006XO-GZ; Fri, 25 Sep 2026 12:06:34 -0400
+	id 1xA8Rf-0006mA-UN; Fri, 25 Sep 2026 12:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xA8Ft-0000EL-Nu
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:54:34 -0400
-Received: from 2.mo15.mail-out.ovh.net ([5.135.90.179])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xA8Fp-00067V-2g
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:54:33 -0400
-Received: from DAGFR11EX3.OVH.local (unknown [10.110.43.115])
- by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4hrwHW3V0Fz3wwW;
- Fri, 25 Sep 2026 15:54:15 +0000 (UTC)
-Received: from ovhcloud.com (109.190.254.61) by DAGFR11EX3.OVH.local
- (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 25 Sep
- 2026 17:54:14 +0200
-From: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-block@nongnu.org>, Eric Blake <eblake@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Kevin Wolf
- <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 2/2] iotests: Add coverage for NBD connect thread start delay
-Date: Fri, 25 Sep 2026 17:53:46 +0200
-Message-ID: <20260925155346.357703-3-guillaume.vincke@ovhcloud.com>
+ (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
+ id 1xA8DS-0007pX-2D
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:02 -0400
+Received: from mail-wm2-x0b.google.com ([2a00:1450:4864:31::b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
+ id 1xA8DO-0005vr-3n
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:01 -0400
+Received: by mail-wm2-x0b.google.com with SMTP id
+ 5b1f17b1804b1-49cfcf2548aso4532925e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cloud.ionos.com; s=google; t=1790351514; x=1790956314; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gxs1zteg0oJgOLh9bWSpvJH5UE46pzc88b0ND8irtRg=;
+ b=PPZJN7iYXizp3yHjP/Kpi5+OSZsLXLv3pYZEo5f34v4Xx/jnSCSBWzm9Up/K7H+Mgt
+ YmUuPAJ1Mu4/NZaoTN4h3r20y2y+LsTfHQnLheBVHHvtXeMALTlzAXxmjiRfmSaA/nPw
+ W/N5o37gZIMvRMDrgVrW8Egn8IB0prDXpa2J04jVz4UQOARLvocHQr55h1E5BwG+5pwp
+ VVwTZLR/KU8xUy+xeP2xhLTBUSSbs28kLIjLqvh49qTT5IkJkSP3y0NiYT8sxvBFJlS9
+ uFjAxLQBt4jyGeOgxXfEMcr/71rt4RIiv/BEJYqVwcJRK3VwpOuqrBTyrqhvohIL6Kvw
+ MI9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790351514; x=1790956314;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=gxs1zteg0oJgOLh9bWSpvJH5UE46pzc88b0ND8irtRg=;
+ b=Z558o77A/ro9rUqVFutq7LsD/FQtMdahJuT1wuBhoYpohi56YrRnYlqW52BP8lkSl4
+ QQU5WGfmZKK3WB7Dacfl7BD8lFZgGbBBRLyHjtqh8ZRLCVGbMpC4nhAf13mv6IPymEFP
+ HYQVidtYYvA3R0pznUBLHI/L8I7Wu8amtSYcEI/nEvKKaihJy0IrTDW8GsaMijbsnknb
+ BD6ZieSN22HOu/M8yV10FTIgwveFgQGYJaqcsKu0IP+k/kPzfL0LirN+jnaUjKPkSr3S
+ tWve/TJ2sFELWe7TbFBIfmC/UIjiq/SUVzEsnQvxgmSas8SjH3Qh1UgWMNgaynNQx90F
+ tZrw==
+X-Gm-Message-State: AFuF++mBCM21EUAJHluRIViKcFedufD90uvm4TkVnY/zuLbwNeTtg7Vt
+ IkHDgcoI3xMOTMyFSYAqnCllIQLh6mcQ3lFor8aQB4Ta0qsuFCL2K/kUtfQFh80kYduop477WFX
+ 18CmN/qidaNE4
+X-Gm-Gg: AYBFou2gYCGKFYgwXC/pmfyXrZwFv4whB1uaLid4B8kQT4suSwgcxu88sCVfLO5lOBU
+ A2gt+Ebsy+DZ6tfBxp77uL+9rcmcp8NlC4ZoW+sqHcsR5TdwwH/9Iq/0IQe85fzPqCVNwYI4fAz
+ bDmaUhhlXvfmJcI38+3XWMCZSAHsntUssRb73/i6T5fBBfLLmSFs8UzVaW4v8I85nwmO8tgWyxe
+ 6NLr2t7vzuhftZHYlZKjDVMRB5EfTbNx9erMtDFe/sIikIUrQEnLUhGLQNVJ4ybcEdSBna2gBfp
+ QifSPb+dMpsnbUp47r410FsLEJWddTWGQ60xsdk+qKf3hViVY4F62id772KSmvWvcY0PjKE0Pe6
+ bkMedgwXMWWxiZBKK0UaPnwFBqHmQtGCGn6sjSCi2Of42d6YMTPCqIAneZxsb9iT33DgadSmOh8
+ 3tmr3PIn1qG+oHHZFx7uWvOe3dp6bj0TJ9qoJG94MlAKCshR9obJX7gVk9KCYfJJv4dl8oIBQ/n
+ Uo1HOt3HubphobdRq8TyA6FOjsJqLLJUb8ducVQ0Q==
+X-Received: by 2002:a05:600c:6287:b0:49d:827:e5b6 with SMTP id
+ 5b1f17b1804b1-49fe7babaadmr98468075e9.20.1790351513600; 
+ Fri, 25 Sep 2026 08:51:53 -0700 (PDT)
+Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.51.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Sep 2026 08:51:52 -0700 (PDT)
+From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Li Zhijian <lizhijian@fujitsu.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
+ Jinpu Wang <jinpu.wang@cloud.ionos.com>,
+ Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+Subject: [RFC PATCH 00/13] migration/rdma: producer/consumer send path
+Date: Fri, 25 Sep 2026 17:51:35 +0200
+Message-ID: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
-References: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [109.190.254.61]
-X-ClientProxiedBy: CAS4.OVH.local (172.16.1.4) To DAGFR11EX3.OVH.local
- (172.16.2.113)
-X-OVH-CORPLIMIT-SKIP: true
-x-ovh-tracer-id: 11035789415208337703
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTET5RUJGNfmJ9NTrJITjXYbdcTO3CD1/irQgvmbcVvU+j3yU3NLNdBQmSWzUyxGftnAL5Iois3+qtj5G+XGi6yJapT3529pc59sfOOCq/Kc8FQqT0XQF2xXbKMW9Wi/PJNlpjMFYJCk+XKL+8KSXvAiIysT66Iz/ljKq0uOHOb4fy1muOGETRnXuHRDQlP5guWfSG0NaIpQ2MvLi/625mPQwXHSmLKChwuCT5l8HPUupqfW4YfVcoXdGds9cFNYInZ9eTzaLkTVa9NMU6N55UkVhVs1pX/lFlbzKKFdmuYQ7LC7KFt6l3jwirOWNNA0XHCtZueAPaQvk4ugL/EC2Ybessk4iZdJyM4kj0LVGZxyt6b/vAlnclParS91v/L68acsYwQQ3Rl8NA9EskWg7wcXzNCZQgR3lQCc9U1Q5KBX10qK0wxsS4grI0+aHtp28WBiaotM2121hUueftkSkXHHGA9k7XqBeHKSWs4zKG5nYBdzTpWvKoRT04XPVjXf0TVdXLzwI+I/bUqMu/JAj1q+6wyHWq0xv1+YJqKUnAo+dxeORxN+CxpC9rDjQsAcRTKvbWrh0dB6D8K0Sl6hCwFrFd2knOKIfv1Rj45r+EWlolc5aa5qv6WIKHpjfya1yJ0PaoasSnWd6orkgjpj9bNB3kpkOWy4+s1pyG/pZ3zwOg
-DKIM-Signature: a=rsa-sha256; bh=366bXCSEca/MypXuX5DsaXF8rVnjw5CHK4WfDSFcpbg=; 
- c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1790351655; v=1; 
- b=MLPd4GwTafQOE3CxzyxwdIUJQ8zqNDet1CtfnsXA2PQ2yKMD2pRnxNHyr5c3y8YwrfZ1udjg
- 19ZPxqzExoOT2qSJoSLuagMTUz+aaGfstUEOrHsQF7MJRRnFlh4sF9Ds62OLxujKqOlE1d72dtf
- NLiNesNPhBwihcfcKAIFqhvA=
-Received-SPF: pass client-ip=5.135.90.179;
- envelope-from=guillaume.vincke@ovhcloud.com; helo=2.mo15.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: permerror client-ip=2a00:1450:4864:31::b;
+ envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wm2-x0b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Sep 2026 12:05:02 -0400
+X-Mailman-Approved-At: Fri, 25 Sep 2026 12:04:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,116 +101,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test the connect thread starting condition with reconnect-delay=0 when
-the server disconnects after a successful handshake but before running
-operations. Prior to the change to nbd_co_establish_connection(), this
-test would demonstrate two I/O errors. The tests 264 and 277 covering
-reconnection do not use reconnect-delay=0 so this case is not exercised.
+This series splits the RDMA live-migration send path into two threads:
 
-Add a test that provokes multiple errors in order to put an NBD client
-in the above-mentioned situation and shows that the first operation
-starts the connect thread and leads to successful subsequent I/O.
+  - a producer thread (the migration thread) that scans dirty pages and
+    records which chunks must be migrated, pushing chunk descriptors
+    (block + chunk index + dirty byte span) onto a lock-free SPSC ring;
+    and
+  - a consumer thread that owns the RDMA queue pair: it drains the ring,
+    posts the RDMA writes and control messages, handles chunk
+    registration and barriers, and polls the completion queue.
 
-Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
----
- tests/qemu-iotests/tests/nbd-stale-connection | 62 +++++++++++++++++++
- .../tests/nbd-stale-connection.out            | 17 +++++
- 2 files changed, 79 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
- create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
+Chunk-granular descriptors on the ring replace the previous per-page
+merge logic on the migration thread.
 
-diff --git a/tests/qemu-iotests/tests/nbd-stale-connection b/tests/qemu-iotests/tests/nbd-stale-connection
-new file mode 100755
-index 0000000000..6f6fb6ef1b
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-stale-connection
-@@ -0,0 +1,62 @@
-+#!/usr/bin/env python3
-+# group: quick
-+#
-+# Test the NBD client stale channel discard
-+#
-+# Copyright (C) 2026 OVHcloud
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import time
-+import iotests
-+from iotests import qemu_nbd_popen, qemu_img_create, file_path, log
-+
-+
-+# estimated duration required by the connect thread to reach a running server
-+MAX_NBD_HANDSHAKE_DURATION = 0.5
-+# sleep duration of the connection retry in nbd client
-+CONNECT_RETRY_DELAY = 1
-+
-+iotests.script_initialize()
-+nbd_sock = file_path('nbd-sock', base_dir=iotests.sock_dir)
-+disk = file_path('disk')
-+qemu_img_create('-f', iotests.imgfmt, disk, '1M')
-+
-+with iotests.VM() as vm:
-+
-+    vm.launch()
-+
-+    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
-+        vm.cmd('blockdev-add', {
-+            'driver': 'nbd',
-+            'node-name': 'nbd0',
-+            'server': {'type': 'unix', 'path': nbd_sock},
-+        })
-+        iotests.log('=== NBD Device connected ===')
-+        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
-+
-+    iotests.log('=== NBD server down. Detect the break and start the connect '
-+                'thread ===')
-+    # client was in CONNECTED state a new operation updates to CONNECTING
-+    log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
-+    # in CONNECTING, the operation starts the connect thread
-+    log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
-+
-+    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
-+        iotests.log('=== NBD server up. Wait for the connect thread to park '
-+                    'the channel ===')
-+        # wait for the connect thread to get a new channel and stop
-+        time.sleep(CONNECT_RETRY_DELAY + MAX_NBD_HANDSHAKE_DURATION)
-+
-+    iotests.log('=== NBD server down. The parked channel is closed ===')
-+
-+    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
-+        iotests.log('=== NBD server up. Restart the connect thread ===')
-+        # operation will determine that the channel got closed and restart the
-+        # connect thread
-+        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
-+        # Wait for it to succeed
-+        iotests.log('=== Wait for the connect thread to park the new channel. '
-+                    'Subsequent operations are successful ===')
-+        time.sleep(MAX_NBD_HANDSHAKE_DURATION)
-+        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
-diff --git a/tests/qemu-iotests/tests/nbd-stale-connection.out b/tests/qemu-iotests/tests/nbd-stale-connection.out
-new file mode 100644
-index 0000000000..50f80e2305
---- /dev/null
-+++ b/tests/qemu-iotests/tests/nbd-stale-connection.out
-@@ -0,0 +1,17 @@
-+Start NBD server
-+=== NBD Device connected ===
-+{"return": {}}
-+Kill NBD server
-+=== NBD server down. Detect the break and start the connect thread ===
-+{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
-+{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
-+Start NBD server
-+=== NBD server up. Wait for the connect thread to park the channel ===
-+Kill NBD server
-+=== NBD server down. The parked channel is closed ===
-+Start NBD server
-+=== NBD server up. Restart the connect thread ===
-+{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
-+=== Wait for the connect thread to park the new channel. Subsequent operations are successful ===
-+{"return": {}}
-+Kill NBD server
+Dependencies / how to apply
+---------------------------
+Prerequisites (not included; apply first), both from Yanfei Xu:
+  [PATCH v3 0/4] migration/rdma: Allow multiple writes per chunk
+  https://lore.kernel.org/qemu-devel/20260913062455.940447-1-yanfei.xu@bytedance.com/
+  [PATCH v3 0/3] migration/rdma: Misc RDMA migration fixes
+  https://lore.kernel.org/qemu-devel/20260823021657.2824542-1-yanfei.xu@bytedance.com/
+The base-commit below is upstream master; both Yanfei series are recorded
+as the prerequisite-patch-id entries after it.
+
+Note: the misc-fixes series here is Yanfei's v3 rebased onto current
+master (trace events renamed qemu_rdma_* -> rdma_*), so its
+prerequisite-patch-id entries differ from the v3 posting.
+
+Patches 1-12 are the producer/consumer split.  Patch 13 (Jack Wang)
+negotiates the batched chunk registration capability so a peer that
+lacks it falls back to one chunk per request.
+
+Results
+-------
+64 GiB guest, single-path RDMA, memload workload (one-time RAM fill,
+fixed dirty set).  "before" is the single-thread send path with
+only the nb_sent-stats patch (patch 1) applied; "after" is the full
+producer/consumer series, so the delta isolates the split itself.
+
+pin_all=off:
+  - total migration time: -16.2% (24 GiB fill), -14.2% (60 GiB fill)
+  - transfer-phase time:  -16.3% (24 GiB fill), -14.2% (60 GiB fill)
+  - RAM throughput:       +17.2% (24 GiB fill), +16.6% (60 GiB fill)
+  - guest downtime:       -55.3% (24 GiB fill), -23.1% (60 GiB fill)
+
+pin_all=on (whole-RAM registration at setup is unchanged and dominates
+total time, so the split shows mainly in the transfer phase):
+  - total migration time: -5.0%
+  - transfer-phase time:  -10.9%
+  - transfer speed:       +12.9%
+  - guest downtime:       -1.5%
+
+QP saturation was measured with the new nb_sent send-queue counter:
+send-queue "drain to zero" events (queue starved empty) fell by ~99% in
+the transfer-bound pin_all=off cases (24 GiB: 26609 -> 276; 60 GiB:
+63771 -> 641), while "full-queue" hits rose.
+
+This is the first step toward RDMA multipath migration.
+
+Dmitrii Omelchenko (12):
+  migration/rdma: Add nb_sent send-queue-depth stats
+  migration/rdma: Add producer/consumer send-ring types
+  migration/rdma: Add send-ring lifecycle (no consumer thread yet)
+  migration/rdma: Add the send consumer thread (drain only)
+  migration/rdma: Handle write/flush/reg-stop on the consumer
+  migration/rdma: Extract qemu_rdma_write_file() and dispatch FILE
+  migration/rdma: Switch the producer onto the send ring
+  migration/rdma: Add producer/consumer tuning instrumentation
+  migration/rdma: drain the send ring in batches
+  migration/rdma: size reg_resp.len by the register request count
+  migration/rdma: batch chunk registration in one round-trip
+  migration/rdma: trace batching and register runs
+
+Jack Wang (1):
+  migration/rdma: negotiate batched chunk registration
+
+ migration/rdma.c       | 1275 +++++++++++++++++++++++++++++-----------
+ migration/trace-events |   18 +
+ 2 files changed, 956 insertions(+), 337 deletions(-)
+
+
+base-commit: 3876503faff51ce3a132dbbd0ab42c10f2269319
+prerequisite-patch-id: 52ae8b66be76e06e9c74c2fca1dced7f76a260b0
+prerequisite-patch-id: fadde94af9705117610d71a769d67fdd40b9de4f
+prerequisite-patch-id: 8f458aab8e4d1ab1f8d1810051a624341cc9faa8
+prerequisite-patch-id: a7c1ffb7ac1c0b9a31858aad636616916e963663
+prerequisite-patch-id: 8327b7f067c2925781d68a6d506bf0889f31e186
+prerequisite-patch-id: e1879a49d37f2a1b6ea797d3bc48e016f865cf9e
+prerequisite-patch-id: 3d8d7869b69fa850f37558f3170e95a46517b3f8
 -- 
-2.43.0
+2.39.5
 
 
