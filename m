@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C7EC98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33669C98321
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8yL-0000Oy-8C; Fri, 25 Sep 2026 12:40:29 -0400
+	id 1xA938-0001TN-Ve; Fri, 25 Sep 2026 12:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA8yJ-0000OH-E0
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:40:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xA92r-0001OB-QG
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:45:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xA8yH-0002T0-4S
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:40:27 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xA92p-0002ik-Qz
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:45:09 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PG0HZZ1001889
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:40:23 GMT
+ 68PG0qtF2124650
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:45:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 61hXCIdDzY87h0SokloM2NF7s4nIcor0Uucv6xOZd2M=; b=AEZsidrwYE72D+g6
- z/Z1YfKAspZ9Cj+TH2OId4mYeK2eoGc+YIHFh7lvyxvrsK7eGH7WoQXMMVmlj9kR
- xmMB6UmuQJqq6PJItbEgYzX0qFHjlPUyMzbe7cDMkHTvhvYEd1f3fu+n8/1BhwSS
- nEOzvwQnet5keaFoEyCrzCaOhiqw2J+uI+VB8Cw4MrfbmTLj1sBaIuJ4GjtJG/iS
- g8c2ol9oaxAOWXIggW8lqPANDVwviinYRulTzIwDEcEslaQeJjozWwWDsf7ESx8f
- NP508Lva/vt/to1lQI+1rX+i04u073VKIruDZkQtFa1IPjWGjNZOMt+wsikowEf+
- ED8KZA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwr5e9526-1
+ bgJdNVPNIXz6/6vxBeeY4FT3sU03eEKOOlaTO1KM3FM=; b=Ulo28Oa/2M/OOfw9
+ IIqgQg+nobn8GvTGvXdBUZkkRjKheS3R8A6tYZ9WO6YbUWHMkbF8KWknljjFQS3k
+ +tRpdZTnmZwQwWDmVDLWyT20khr9XB4vlJg4O2f+Q0LUY6dp2JS6vxEdYRoFaUmQ
+ hcJ6B4fq8NtKajQYoN8BHfS+kUibPAe/V6RP6/CWc7zCmlTGW69EmA/GMtjn0Azk
+ OzsdbKthX2Cr4SxiqAW3wfE6U8tvsS3G9/LZYnknxHnd+/DPTWbn3rp1D0grrBXK
+ UOudByywPnoIJvsmUoHgrv56826qU1/bPOPoslFXFZmoLbtIAwO22NAzM6RZZWt+
+ FfFiGQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq0a9gc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:40:23 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93bd22160bbso235652485a.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:40:22 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:45:05 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93a0b66ecd9so166361185a.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790354422; x=1790959222; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790354704; x=1790959504; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=61hXCIdDzY87h0SokloM2NF7s4nIcor0Uucv6xOZd2M=;
- b=cIQummMxewjqGNlrZPtPDb47pcFvVkfOCj4MXlozlKQkEF4HM3IXo1Zeiaxh0Sp3Uw
- QE236AGmxCFWIxYvfA4kiHNJjfA78uHaYo4tFR9mT2vnRAWJh1O1weVwVyUPPldqDbgA
- F1NuVrS5eQUvpVbN+QzvNmv+oh879DiVFrDDfDM5P0V4SltRbSDbONBcvcdDPP9d9lNX
- otuJePi2KFm2mbYV4fqwmN5N3vGZCoiblAEYjf6fmKuNc8yhy69sWjvuxf7JYLwNih0S
- YlARSaOBFINAL95s/5FxMOXd7ZSejKe4UdYou+x1IYbsLzoRDj1Byv//XqoGIdxGXXVw
- iXQA==
+ bh=bgJdNVPNIXz6/6vxBeeY4FT3sU03eEKOOlaTO1KM3FM=;
+ b=aBk/Z8PFvynBQtjfazW3VkaBRTtYE7cNRGbuwo+hDQWn3bd0ZIY6RLI8iSPk5ps8qw
+ 0pFblEAZXecbJen6HW+Q6NjSanlvZpheoemgbaCrB4PBSJ1YDjYI3iEs6zP+wBrUI3K1
+ el2ZAoLH+dtETk8zb8DY8C+Vh/DjVWp+81qsKaGpm8C+s7kf7Frxdcuvrert3teLEgaK
+ XACNWPXkzaa80tWdG74qYuNk+r/f9iL+kAUz+dEc1GRkXUUfxWRW0ZQPH6CB3CBc8fL4
+ WlI9tn4h8jeQYsQpCZGF1n3+SRWlxHkTVV+T15gW73FDIj9TCRbGTCuX2eqTPs5BJd4R
+ HLZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790354422; x=1790959222;
+ d=1e100.net; s=20260707; t=1790354704; x=1790959504;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=61hXCIdDzY87h0SokloM2NF7s4nIcor0Uucv6xOZd2M=;
- b=fVhKGxNJQRLatL9kU2SKEiK+POBT5bdI09PF5EIf8l8GttIYnLM28tu1CIbGkeU9wI
- tZ5p59eWFrMpRSWsJTSLlsVulNbMj4AJe497X4817eTn5+KXETlTvIkq4Htu55kN6z/W
- A0OvLbnwfpr+Kf0VDHpnuSo1U4Ep48C4CWX1sRxa/SlKjHkdR+DQmMmDvzeaGUIlPHvr
- x7m5Scyx9VpvKFEQ5OxxN1++56ku5Ci4IyWMUZUqLIafuJe8EwqVAi/ESlMrooCm/DC2
- SUuNXP8ZMWQc/+dGgx3XXZg6LPp+i9wljyHG+nu2Lj/sxem8YFEaqBSp4PNCJ3ewfiWS
- lyTg==
+ bh=bgJdNVPNIXz6/6vxBeeY4FT3sU03eEKOOlaTO1KM3FM=;
+ b=LMDEaB6xcHOdLo6nhF8ydzrViB/AfVQ6ZOKi8icdjExmWeWOTVgaw1KkEFowTBfLv0
+ GIGl/uRjgmGKVv+6GrganMwIZ1CdDs+uVgJA/h8VsCrM9jy3fKK7GL7wkYT5KV6LbJfQ
+ MLWfdMPWH7XIr6FJ28EOlYrtolbXckiqvubGOSvyF24zxH4GJlCcmgBJwMhSpU8kTEGx
+ Up4viBYW7NEB2d00OuB61hf361UrsNY+YPdKdT4qnGyAbS4fYdPtM1ZDpgkzQGZl5CdP
+ EN4rXKThgjM3Ru7P2z50ZnvrtwUJ5GwGdWLbBoFXd8ApK+jXOMyEnKKJ1JtRGpmvfh+l
+ zQZA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzxlRueNISQwEP6EBb+TIkP/vMt+4onuVj4nzdsOpbE1/UtEOXwbBgDx7EtOp8kIako2tvXqgnUiWv0@nongnu.org
-X-Gm-Message-State: AFuF++mama/iaB6Oq5N48rcbJ+hLQ/6+ZX+qE0hlMhqLGxhMm8godd/X
- esKupyXKNVtAfdRqy9qcF3+UlbmwRJ3nAe8uJZ1TGMFwjPEQ3i4Sj6YyM2gUhMytfFJrBi0hwsg
- 3wH6fPDmoIZR9tuz44irrN3AS8DRq/2mX1VcYveGeTA7rIXrPVx+JXTzFGQ==
-X-Gm-Gg: AYBFou30Lfq3RykrkudELmWvYUeD2cO6GFtC3rnsOJWEYPWTsdKGtAzbykufvKlluMa
- aRiwf+I+cY5h8xgR7VUtuuiohACIQAP+tK9w5xcOruNn6dzJD2EN1pnrT3On4DtHTiFNhXJBVm2
- FNqsZ8dqs04cbeVQEmoxL4oHjbQqvdP76yE2iwJgf07GhS8dtKJNGlzr6ssgbgaFDl6Zfdo/WXd
- UKCycvdmhr63mu733PTUuPNwv7eIBJLT4LPt40etSN9GQlL/xbnYJF6YZ9a86MuM7MulL4FrxdJ
- HMAPIjWvpo3K75fhcP53PA9Wl7LdV8ELf3IVvKcqkYc4OS/Edo+rQUsX0iEcr03oEXRo7xDvpLm
- BPl37q08s0yMDOdUoH+MluJ9fMLHzmGPtFQ==
-X-Received: by 2002:a05:620a:700c:b0:92e:bd39:9993 with SMTP id
- af79cd13be357-93c43e0e3ccmr536723485a.31.1790354421909; 
- Fri, 25 Sep 2026 09:40:21 -0700 (PDT)
-X-Received: by 2002:a05:620a:700c:b0:92e:bd39:9993 with SMTP id
- af79cd13be357-93c43e0e3ccmr536716785a.31.1790354421246; 
- Fri, 25 Sep 2026 09:40:21 -0700 (PDT)
+ AKwUvBxFuWgN7oFYlk3BmfXYfPferQC5nVxxiVWcMEf0OBmaq7JuJqm/mdjNFkeCv8JEeq44Pvxt3EC2rWqt@nongnu.org
+X-Gm-Message-State: AFuF++lF/RjoW1QaGyLH44pea1/z7OluTgg8QH/e7RAwch/mUj5wJX9Y
+ i1ufYrXyDhfQgW4F+6uA9LgqWVCk0YN6+BDrVNwy144Tvg3Kr/p12fzWjwYsPcLkXAf2/qFMh/B
+ sRJrvpeWyGmnSozJDZ4r1iRFKFCM8e0onyCzWqH86Yj2OyAGPex7uDtErNw==
+X-Gm-Gg: AYBFou0hTug46FnOUNjpsnB9/effpjIwzxvxMAvQ3HdRp11D8SnrAfNRUQMUOwOyIra
+ kWtuCVcKK1qWeN+sUEpkl/sF0Bxjb2FSKSEfiFbw27qLtaH55j3FLZY6bPSnkIn9EdgVPEcUDVX
+ j27Y3FR20q7vGsK36SDIyUo/jPqwTQisXRppS5noBbXBNr91LC+pqz162PbK18wiUiLpkrZ+csK
+ EdvaTIRrRrRKNxlAvqhE7H+QNBox+YID1cQg7+J4mP6xi5T3ywO33eUGXlCPHT9YRXi1q14gpP3
+ 1+JPSnf4lfu5VFzzq/MK5BW3kSEz8vKcTwgDNO+QjCRTptw1poZAhyxg58HanZ6tg3+1B36y/P/
+ nZZ9FC5alBiKSpwQjXgzxWeuzZcYvzKtuOw==
+X-Received: by 2002:a05:620a:8389:b0:939:f8e9:5e19 with SMTP id
+ af79cd13be357-93c43c2f3ecmr558821885a.1.1790354704441; 
+ Fri, 25 Sep 2026 09:45:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:8389:b0:939:f8e9:5e19 with SMTP id
+ af79cd13be357-93c43c2f3ecmr558815285a.1.1790354703938; 
+ Fri, 25 Sep 2026 09:45:03 -0700 (PDT)
 Received: from [192.168.68.102] ([177.94.15.187])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c527f1a1fsm71776985a.31.2026.09.25.09.40.18
+ af79cd13be357-93c44421508sm223090785a.0.2026.09.25.09.45.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Sep 2026 09:40:20 -0700 (PDT)
-Message-ID: <3da698b9-8b0f-40a9-bc70-87c18363e033@oss.qualcomm.com>
-Date: Fri, 25 Sep 2026 13:40:17 -0300
+ Fri, 25 Sep 2026 09:45:03 -0700 (PDT)
+Message-ID: <ba8f5a00-1da4-4f09-a45f-6666ae0d73fe@oss.qualcomm.com>
+Date: Fri, 25 Sep 2026 13:45:00 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/14] target/riscv: Migrate fixed PMU counter state
+Subject: Re: [PATCH v2 13/14] target/riscv: Clear virtualization mode on reset
 To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -103,41 +103,41 @@ Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
- <20260910-riscv-pmu-correctness-v2-12-5da5159a0c64@linux.alibaba.com>
+ <20260910-riscv-pmu-correctness-v2-13-5da5159a0c64@linux.alibaba.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260910-riscv-pmu-correctness-v2-12-5da5159a0c64@linux.alibaba.com>
+In-Reply-To: <20260910-riscv-pmu-correctness-v2-13-5da5159a0c64@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX1BUHSbq5s0mL
- f1pIbeqbV56tqNox9ixRo1K+JHBsu7P7gMImimJZeh9yTysy6U6MpmwZyiDBJ6EixXPyq2cGU3t
- 3Mh+Bz71LhKs1QcJDsoHRw5gM1DOgps=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX79iMik3u7Eg/
- rodqB/feBm2hVZ5kS+rGuEMnkP/uAy6qsMXwDpWL2CvPJG3LLGnYILzPMFmoaBpBD0c0wLXdIAg
- W6BleUc5VOMRH7nt5W+7koLPnLMeqYp9/mpzDEe0W55HE5DnYmOPCYeW3ykQtX+ocz3vhUBXLnz
- DImbkygmVhJwmcUfPnI8MCwUzO4iiuEEIptagKDCDtT8hBNTsgPDnvbFMDWHR5MzGascP/0NHUl
- AQbFbWGpRhhKfy6wx91h8Sany5ZPOYjhUb4jEmlindMMhBc4TEJcL4SlaXziwIxhuJgSB87kcKr
- FAYuKHRL50IDiasdEJ7RBADc15PM7xmGIxjzBwHIx46LIKb2ppfmoxrvAgzfEdM22j0h8ji21LA
- GNrJ8l9+ynou9SX1FGFLHe0vEvJWnNELUXZAcMxd1L+gCiVAPSBoQTJYRVJT2OeZLIY8gz2B99C
- ovGg2wMZrr8OBSEhYyw==
-X-Proofpoint-GUID: goTbbZViwVQY4Lv57z6etV7oTahxzsMJ
-X-Proofpoint-ORIG-GUID: goTbbZViwVQY4Lv57z6etV7oTahxzsMJ
-X-Authority-Analysis: v=2.4 cv=Hf2B3SE8 c=1 sm=1 tr=0 ts=6ab6a3f7 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX4BrVd3khSIRt
+ UjEIGq0ElzCZ5M/8usEx2R8Jn4/tO+uI3B9kzZpXQvLsDAUxX+zD7rRX21Iz89hrvntePc2h24G
+ AdUEdPgTiUxIyCIPm9obfm+yN+kR+/A=
+X-Proofpoint-GUID: AV-2MUUfML8dpihy0WrN-cUxt-BV7j2t
+X-Proofpoint-ORIG-GUID: AV-2MUUfML8dpihy0WrN-cUxt-BV7j2t
+X-Authority-Analysis: v=2.4 cv=LNPz05W9 c=1 sm=1 tr=0 ts=6ab6a511 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=p0WdMEafAAAA:8 a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=wncE4Eqe_XyKzoaJrS0A:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=qWS3GbcsPDoVOp1RmmoA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX7aCmMeSTYy8h
+ wlJ055HIRpYsBzDJz4jVvvO44nfVY9UTArkOd51F5jfyym5S+qTJ0WwD2UebiUN2brGLmXoSZ0E
+ SkZohwJnrIUdre25Tb8mPIlwewIJdkVdv1o5crEyqstkELdguwZqXCKij5oFy+ZhhS0CopYjO9M
+ ipi6gOiEvaCF1U2tbm7Kw5C8ZIvWLgZTaC3l7QECWf49NylomnS83Rm1koA10tTASk40y9F1Udl
+ bGsgZlsLGt+IdHRsuJzxiJwW/h4RHhvSc2OrDMqTBr+gGehZUkObwzwpcQPtxeD6IA+3r1ef+5O
+ ER9VzCARmrCXnBmXrmBfpIOLU/r+mg/+ElKRyfeIGak/FnLQZnl7cl/uboLEYrvVz/gtatHox5Y
+ 8VvOSG7iRHBD4GXZvFKe4l7/q87O6KmDUxFjRi8x9Oq+xjRkGyk/xAsugnXBmI4MfpcpZfP6DYn
+ 5uqvjcg1dQlVgh5iFKw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015
- impostorscore=0 priorityscore=1501 malwarescore=0 phishscore=0 adultscore=0
+ phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250066
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -163,298 +163,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/10/2026 11:39 AM, TANG Tiancheng wrote:
-> Migration saves fixed-source baselines but not the per-mode totals they
-> refer to, nor mcyclecfg/minstretcfg. TCG can therefore subtract an
-> unrelated baseline or apply the wrong privilege filter after loading.
+> Reset enters M-mode without clearing virt_enabled, leaving an invalid
+> M-mode, V=1 state after a reset from virtual mode. Clear virt_enabled
+> alongside the privilege reset.
 > 
-> Before saving, add pending increments allowed by the current filters to
-> each enabled fixed-source counter, including HPM cycle/instruction
-> counters. The per-mode totals then need not migrate.
-> 
-> On load, clear those totals and establish destination-local baselines.
-> Inhibited counters get a new baseline when enabled; other event counters
-> get one when switched to a fixed source. This excludes migration downtime
-> and avoids using the source QEMU's saved baselines.
-> 
-> Rebuild the event map and overflow timer. Recompute interrupt requests
-> because pre-save can set LCOFIP after cpu_common saved CPU_INTERRUPT_HARD.
-> 
-> Keep the existing main-section fields and add cpu/pmu-fixed to carry
-> mcyclecfg/minstretcfg and identify values that include pending increments.
-> All TCG CPUs send and require it because mcycle/minstret exist even
-> without Zicntr, Zihpm or HPM counters. Reject older TCG streams, whose
-> counter values cannot be reconstructed reliably. KVM PMU migration is
-> unchanged.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4422
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4425
+
+This one is quite old.
+
+Fixes: dc5bd18fa5 ("RISC-V CPU Core Definition")
+
+
+
 > Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   target/riscv/cpu.h     |  1 +
->   target/riscv/machine.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++----
->   target/riscv/tcg/pmu.c | 79 ++++++++++++++++++++++++++++++++++++++++++++
->   target/riscv/tcg/pmu.h |  2 ++
->   4 files changed, 163 insertions(+), 7 deletions(-)
+
+
+>   target/riscv/cpu.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index a4d33f55c4e5cb6052cea6bee4c0afa46372b5c5..788d5a3ced45b32be05e29eaeb9ea3af0c0ccd6d 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -584,6 +584,7 @@ struct ArchCPU {
->       uint64_t pmu_timer_instret_snapshot;
->       bool pmu_timer_stalled;
->       bool pmu_timer_work_pending;
-> +    bool pmu_fixed_subsection_present;
->       /* A bitmask of Available programmable counters */
->       uint32_t pmu_avail_ctrs;
->       /* Mapping of events to counters */
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index b0ff2fc7f2ac10fab1f2ff845a953649091e1f43..7aa38b739cfd4d9274fe249eb914411e8a65b91f 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -267,6 +267,30 @@ static const VMStateDescription vmstate_kvm_mp_state = {
->   };
->   #endif
->   
-> +static int riscv_cpu_pre_load(void *opaque)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    cpu->pmu_fixed_subsection_present = false;
-> +#ifdef CONFIG_KVM
-> +    return riscv_cpu_kvm_pre_load(opaque);
-> +#else
-> +    return 0;
-> +#endif
-> +}
-> +
-> +static int riscv_cpu_pre_save(void *opaque)
-> +{
-> +#ifdef CONFIG_TCG
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    if (tcg_enabled()) {
-> +        riscv_pmu_prepare_save(&cpu->env);
-> +    }
-> +#endif
-> +    return 0;
-> +}
-> +
->   static bool debug_needed(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
-> @@ -308,16 +332,25 @@ static const VMStateDescription vmstate_debug = {
->       }
->   };
->   
-> -static int riscv_cpu_post_load(void *opaque, int version_id)
-> +static bool riscv_cpu_post_load(void *opaque, int version_id, Error **errp)
->   {
->       RISCVCPU *cpu = opaque;
->       CPURISCVState *env = &cpu->env;
->   
->       env->xl = cpu_recompute_xl(env);
->   #ifdef CONFIG_TCG
-> -    riscv_pmu_rebuild_event_map(env);
-> +    if (tcg_enabled()) {
-> +        if (!cpu->pmu_fixed_subsection_present) {
-> +            error_setg(errp,
-> +                       "missing RISC-V fixed-counter PMU migration state");
-> +            return false;
-> +        }
-> +        riscv_pmu_complete_load(env);
-> +        /* PMU pre-save can raise an interrupt after cpu_common was saved. */
-> +        riscv_cpu_interrupt(env);
-> +    }
->   #endif
-> -    return 0;
-> +    return true;
->   }
->   
->   static bool smstateen_needed(void *opaque)
-> @@ -404,6 +437,42 @@ static const VMStateDescription vmstate_pmu_ctr_state = {
->       }
->   };
->   
-> +static int pmu_fixed_post_load(void *opaque, int version_id)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +
-> +    /* Let the outer post-load distinguish this format from a legacy stream. */
-> +    cpu->pmu_fixed_subsection_present = true;
-> +    return 0;
-> +}
-> +
-> +static bool pmu_fixed_needed(void *opaque)
-> +{
-> +    /*
-> +     * KVM keeps PMU state in the kernel, not in the TCG counter model.
-> +     * TCG implements mcycle/minstret even without Zicntr, Zihpm or
-> +     * programmable counters.
-> +     */
-> +    return tcg_enabled();
-> +}
-> +
-> +/*
-> + * This subsection identifies TCG streams whose fixed-source counter values
-> + * include pending deltas. It also carries mcyclecfg and minstretcfg.
-> + */
-> +static const VMStateDescription vmstate_pmu_fixed = {
-> +    .name = "cpu/pmu-fixed",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = pmu_fixed_needed,
-> +    .post_load = pmu_fixed_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(env.mcyclecfg, RISCVCPU),
-> +        VMSTATE_UINT64(env.minstretcfg, RISCVCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   static bool jvt_needed(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
-> @@ -505,10 +574,9 @@ const VMStateDescription vmstate_riscv_cpu = {
->       .name = "cpu",
->       .version_id = 12,
->       .minimum_version_id = 12,
-> -#ifdef CONFIG_KVM
-> -    .pre_load = riscv_cpu_kvm_pre_load,
-> -#endif
-> -    .post_load = riscv_cpu_post_load,
-> +    .pre_load = riscv_cpu_pre_load,
-> +    .pre_save = riscv_cpu_pre_save,
-> +    .post_load_errp = riscv_cpu_post_load,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT64_ARRAY(env.gpr, RISCVCPU, 32),
->           VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
-> @@ -554,6 +622,11 @@ const VMStateDescription vmstate_riscv_cpu = {
->           VMSTATE_UINT32(env.mcounteren, RISCVCPU),
->           VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
->           VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-> +        /*
-> +         * TCG includes pending fixed-source deltas in mhpmcounter_val
-> +         * before saving. After loading, it ignores mhpmcounter_prev and
-> +         * rebuilds the baseline from the destination source.
-> +         */
->           VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
->                                vmstate_pmu_ctr_state, PMUCTRState),
->           VMSTATE_UINT64_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
-> @@ -582,6 +655,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_ctr,
->           &vmstate_sstc,
->           &vmstate_mseccfg,
-> +        &vmstate_pmu_fixed,
->           NULL
->       }
->   };
-> diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-> index 6286552a4ebf614df0252f84ddfadbc25d8d2258..df99b572a4c16cb1ac65c2f7cde35c6f8349e681 100644
-> --- a/target/riscv/tcg/pmu.c
-> +++ b/target/riscv/tcg/pmu.c
-> @@ -663,6 +663,85 @@ void riscv_pmu_rebuild_timer(CPURISCVState *env)
->       riscv_pmu_rebuild_timer_internal(env, false);
->   }
->   
-> +static uint32_t riscv_pmu_fixed_source_counter_mask(CPURISCVState *env)
-> +{
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +    uint32_t mask = COUNTEREN_CY | COUNTEREN_IR;
-> +
-> +    mask |= riscv_pmu_event_counter_mask(
-> +        cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
-> +    mask |= riscv_pmu_event_counter_mask(
-> +        cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
-> +    return mask;
-> +}
-> +
-> +static void riscv_pmu_accumulate_fixed_source_counters(
-> +    CPURISCVState *env, const RISCVPMUFixedSnapshot *snapshot)
-> +{
-> +    uint32_t mask = riscv_pmu_fixed_source_counter_mask(env);
-> +
-> +    while (mask) {
-> +        uint32_t ctr_idx = ctz32(mask);
-> +
-> +        mask &= ~BIT(ctr_idx);
-> +        if (riscv_pmu_fixed_ctr_running(env, ctr_idx)) {
-> +            riscv_pmu_accumulate_fixed_delta(env, ctr_idx, snapshot);
-> +        }
-> +    }
-> +}
-> +
-> +void riscv_pmu_prepare_save(CPURISCVState *env)
-> +{
-> +    RISCVPMUFixedSnapshot snapshot;
-> +
-> +    riscv_pmu_take_fixed_snapshot(env, &snapshot);
-> +    riscv_pmu_accumulate_fixed_source_counters(env, &snapshot);
-> +}
-> +
-> +static void riscv_pmu_rebase_fixed_source_counters(
-> +    CPURISCVState *env, const RISCVPMUFixedSnapshot *snapshot)
-> +{
-> +    uint32_t mask;
-> +
-> +    memset(env->pmu_fixed_ctrs, 0, sizeof(env->pmu_fixed_ctrs));
-> +    if (env->virt_enabled) {
-> +        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
-> +            .counter_virt_prev[env->priv] = snapshot->cycle;
-> +        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
-> +            .counter_virt_prev[env->priv] = snapshot->instret;
-> +    } else {
-> +        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_CYCLE]
-> +            .counter_prev[env->priv] = snapshot->cycle;
-> +        env->pmu_fixed_ctrs[RISCV_PMU_FIXED_DOMAIN_INSTRET]
-> +            .counter_prev[env->priv] = snapshot->instret;
-> +    }
-> +
-> +    mask = riscv_pmu_fixed_source_counter_mask(env);
-> +    while (mask) {
-> +        uint32_t ctr_idx = ctz32(mask);
-> +
-> +        mask &= ~BIT(ctr_idx);
-> +        if (riscv_pmu_fixed_ctr_enabled(env, ctr_idx)) {
-> +            riscv_pmu_set_fixed_baseline(env, ctr_idx, snapshot);
-> +        }
-> +    }
-> +}
-> +
-> +void riscv_pmu_complete_load(CPURISCVState *env)
-> +{
-> +    RISCVCPU *cpu = env_archcpu(env);
-> +    RISCVPMUFixedSnapshot snapshot;
-> +
-> +    riscv_pmu_rebuild_event_map(env);
-> +    riscv_pmu_take_fixed_snapshot(env, &snapshot);
-> +    riscv_pmu_rebase_fixed_source_counters(env, &snapshot);
-> +
-> +    qatomic_set(&cpu->pmu_timer_work_pending, false);
-> +    cpu->pmu_timer_stalled = false;
-> +    cpu->pmu_timer_instret_snapshot = snapshot.instret;
-> +    riscv_pmu_rebuild_timer(env);
-> +}
-> +
->   static void riscv_pmu_timer_work(CPUState *cs, run_on_cpu_data data)
->   {
->       RISCVCPU *cpu = RISCV_CPU(cs);
-> diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-> index d9238ae680f5e67031511db4f9afc2884212c5c2..1cfe6acf55b5468f5c00c4a136ece88981384341 100644
-> --- a/target/riscv/tcg/pmu.h
-> +++ b/target/riscv/tcg/pmu.h
-> @@ -45,6 +45,8 @@ void riscv_pmu_write_counter(CPURISCVState *env, uint32_t ctr_idx,
->   void riscv_pmu_write_inhibit(CPURISCVState *env, uint32_t value);
->   void riscv_pmu_timer_cb(void *priv);
->   void riscv_pmu_rebuild_timer(CPURISCVState *env);
-> +void riscv_pmu_prepare_save(CPURISCVState *env);
-> +void riscv_pmu_complete_load(CPURISCVState *env);
->   void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
->   void riscv_pmu_rebuild_event_map(CPURISCVState *env);
->   int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 5fff9d745e9b36d9cbd30f166ec91b5165e5f497..f60d7cca1e2f0008b09b1055c5cdeed3ec4ad1d3 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -980,6 +980,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>   #ifndef CONFIG_USER_ONLY
+>       env->misa_mxl = mcc->def->misa_mxl_max;
+>       env->priv = PRV_M;
+> +    env->virt_enabled = false;
+>       env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+>       if (env->misa_mxl > MXL_RV32) {
+>           /*
 > 
 
 
