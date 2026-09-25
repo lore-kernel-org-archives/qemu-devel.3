@@ -4,114 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605D7C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69657C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82K-0006fo-59; Fri, 25 Sep 2026 11:40:32 -0400
+	id 1xA82L-0006gm-W0; Fri, 25 Sep 2026 11:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82H-0006fP-Ru
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:29 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82J-0006fl-SA
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:31 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82F-0004b4-Uq
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:29 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82I-0004bH-8J
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:31 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7167921E7C;
- Fri, 25 Sep 2026 15:40:18 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 469A91F457;
+ Fri, 25 Sep 2026 15:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1790350824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
- b=zNbZGkAUVSql2DPEvjRwns4O1Cm9nzk+EGgmDAJv7xeQtxMvfTYMWY8F6vdPTMER1R8iXg
- IVGO02xshM2D5V1ru4Gq6GXTPqg4L4MtMfUAJceqkysaJOLAHa6Tw0QceU7MoGxhKj457W
- dGvv06TCGY9dh4m7LttMhBFuQU10rZU=
+ bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
+ b=m6vcviOivINBEauc67S/xHGkjogsaR0VD3ghyuvx7Bv3JU/7bfOBBMncf995rtLjSPBbTe
+ vg6AxbDJwxk7NYi9sVwkkOLQ5nSS6qyGs0OoeoAvfeG0kEisNC/CpjwwRkWzDVCwEDdj7a
+ qDOoxfB8+WWiJ7WnfkdQofsJUiuYr6s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350822;
+ s=susede2_ed25519; t=1790350824;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
- b=fYzYns4uTQPb02Ud48qYkwc5X1nQSDeeK9y8gpBMdRmlx61ohBZM2uSigI+m3oNRx+Daoq
- IysGAUgOZUEda+Dg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=em5Il3ez;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1KXV9JUM
+ bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
+ b=3nSFUnXTqiulniKoqnG6jkrerwSPCZMqA7GpnMykMYxtGwP1kJH/LGSe8k9dQEtvMg/1Xf
+ kfkZTGu4Zk1Tx6CQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pzUpQP8H;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ihkwdhie
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350818; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1790350820; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
- b=em5Il3ezsY1RDGwJvWLZylPRcImwpYsRhRNhwNdW4MNO5Z7DIbKn7IxDAtnNoqOda8oIWg
- lKTex1V3YVA2YC8GV3h3qPSJbxQRJoPipBKTsMoQCrzjo4BQWSFD3n/v89if/aAq2LMLIZ
- k5L73QGQHJOqULfPvAmUVAMHxeMmFJo=
+ bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
+ b=pzUpQP8Hwt3tHKIr6EgtJbxb/dOCNs55naMK9CGOoE9A1zKJyr+9MKoOrL5uj3yppBg3VV
+ ADWDe8Can0V6mWvFcxUnMoZYxdToMapccxiaq2ubU9QSbvyWXsoS4X8FQ1ggmOXPX5pzX7
+ UOnmdGpjJl0gONPnlVk4QqMDIUbTiuk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350818;
+ s=susede2_ed25519; t=1790350820;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
- b=1KXV9JUMNijpgnTqUh+l9nG/frIdd7P7eS19I9uB6o9VfSb17UwN8bOkcK+F+LJvLVpKZ0
- E33OAEo/CWASrCCg==
+ bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
+ b=ihkwdhievJRFySxIE/U5MptiVIvV3Sqi40B+OVwXVmPC1R20PS6qTe+liiB8VpIWEJIqJJ
+ s45XL1Zg+cGyO3DQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 60CCB1333B;
- Fri, 25 Sep 2026 15:40:17 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A69D313274;
+ Fri, 25 Sep 2026 15:40:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T4
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:17 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T5
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:18 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 03/19] migration: remove duplicate VMSTATE_STRUCT_VARRAY
-Date: Fri, 25 Sep 2026 12:39:54 -0300
-Message-ID: <20260925154010.599247-4-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
+ Jack Wang <jinpu.wang@cloud.ionos.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Lukas Straub <lukasstraub2@web.de>
+Subject: [PULL 04/19] migration/rdma: Fix write-side shutdown
+Date: Fri, 25 Sep 2026 12:39:55 -0300
+Message-ID: <20260925154010.599247-5-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 469A91F457
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 7167921E7C
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,bytedance.com,cloud.ionos.com,fujitsu.com,web.de];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[fujitsu.com:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,bytedance.com:email,ionos.com:email,suse.de:dkim,suse.de:email,suse.de:mid];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[web.de]; FROM_HAS_DN(0.00)[];
  DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_FIVE(0.00)[6]; DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,36 +130,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-Fixes: 028d4ec43de6 ("migration: Remove duplicate vmstate macros")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+qio_channel_rdma_shutdown() reads rdmain for both the input and
+output contexts.  As a result, a write-side shutdown marks the input
+context as errored while leaving the output context active.  A shutdown
+of both directions also fails to stop the output context.
+
+Read rdmaout from the output context so each shutdown direction marks
+the corresponding RDMA context as errored.
+
+Fixes: 54db882f073a ("migration: implement the shutdown for RDMA QIOChannel")
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Tested-by: Lukas Straub <lukasstraub2@web.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/migration/vmstate.h | 10 ----------
- 1 file changed, 10 deletions(-)
+ migration/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 7d2b786382..2901877308 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -725,16 +725,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_STRUCT_VARRAY_POINTER_UINT32 VMSTATE_STRUCT_VARRAY_POINTER
- #define VMSTATE_STRUCT_VARRAY_POINTER_UINT16 VMSTATE_STRUCT_VARRAY_POINTER
+diff --git a/migration/rdma.c b/migration/rdma.c
+index e976739fad..61181deb8a 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -2860,7 +2860,7 @@ qio_channel_rdma_shutdown(QIOChannel *ioc,
+     RCU_READ_LOCK_GUARD();
  
--#define VMSTATE_STRUCT_VARRAY(_field, _state, _field_num, _version, _vmsd, \
--                              _type) {                                  \
--    .name       = (stringify(_field)),                               \
--    .num_indirect = vmstate_field_offset(_state, _field_num),        \
--    .version_id = (_version),                                        \
--    .vmsd       = &(_vmsd),                                          \
--    .size       = sizeof(_type),                                     \
--    .flags      = VMS_STRUCT | VMS_VARRAY,                           \
--    .offset     = vmstate_offset_varray(_state, _field, _type),      \
--}
- #define VMSTATE_STRUCT_VARRAY_INT32 VMSTATE_STRUCT_VARRAY
- #define VMSTATE_STRUCT_VARRAY_UINT32 VMSTATE_STRUCT_VARRAY
+     rdmain = qatomic_rcu_read(&rioc->rdmain);
+-    rdmaout = qatomic_rcu_read(&rioc->rdmain);
++    rdmaout = qatomic_rcu_read(&rioc->rdmaout);
  
+     switch (how) {
+     case QIO_CHANNEL_SHUTDOWN_READ:
 -- 
 2.53.0
 
