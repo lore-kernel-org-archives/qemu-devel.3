@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FFCC9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED191C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82T-0006iu-6e; Fri, 25 Sep 2026 11:40:41 -0400
+	id 1xA82T-0006jB-QZ; Fri, 25 Sep 2026 11:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Q-0006i3-S7
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:39 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82S-0006iS-Hh
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:40 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82N-0004cA-Q2
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:38 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Q-0004cR-NR
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 560991FF47;
- Fri, 25 Sep 2026 15:40:26 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 43E0B1F7D3;
+ Fri, 25 Sep 2026 15:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350830; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350833; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=52DIgqmLX5fYoHFezqVp/OYQGAW7c+IKgzFrqII9PQ0=;
- b=p7cokc9KBcSwZp+eWeBuG3JQu1AlKriaFAI2lnGwJtJh50acVVwk4Uh2Fhcy0rpQqegIhx
- 2JORQx/kfKql0R6xZ6eeHPuOwUqTeO+2vJlJlqm0ev1YQxmXE2I8mCKkqEq3YuMdgMheUn
- R7WcXdzrTQy933KphXWG+1SG+TTLeSk=
+ bh=ZJ1m1CY+5yotCAkfbobTcXoVHjPVSpp0h7o/ODhYa3w=;
+ b=DSzxsDdJX3/H7ZeVYpDulQIT80FPCKmJNuKjhwFJmWtTvZtykQAogHXtNL9MdXPLGtw3pL
+ +GptUrcDRL7oPtsQNEGsjwE6bE+HJRqHkO3GZgBc6CEevzDyF0bHmMNRsHTE9pdYSUIyjq
+ upKNeblDB4jgSEWuC2DnkBbg08oahmM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350830;
+ s=susede2_ed25519; t=1790350833;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=52DIgqmLX5fYoHFezqVp/OYQGAW7c+IKgzFrqII9PQ0=;
- b=4M9vO7Nup84m/6UuH5SoXlx41O/KfA55FAanivQCm90whWOoudLS6KTEf/+C2xxvcFiwY9
- G7OlzVZcMAYrMmDA==
+ bh=ZJ1m1CY+5yotCAkfbobTcXoVHjPVSpp0h7o/ODhYa3w=;
+ b=lxJ3uf/vEh2xfSXpdZZ5qitLqMmPwR9jaKIjc0o0VKLN01weOhGstaRaZeOFoPr+udTc3Q
+ zUFpzu86zMtnwdAQ==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hKjeRZbG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=937MJ+mg
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350829; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=52DIgqmLX5fYoHFezqVp/OYQGAW7c+IKgzFrqII9PQ0=;
- b=bzyQAFIAtdct8ABcODuJIXnbSLbkLIr5w/KKzf2clc23NbaaesD6/aoCSOUn0QIBPhZTL5
- DpRjLR0CgpHOHhqwj9z6upBcCq2L8LtXuSGZDnFl4ayTXmdl2B6uxZRlVdQKIEw043P8m9
- gryx5LrgezyV0W7bhVre7BZylJohhCU=
+ bh=ZJ1m1CY+5yotCAkfbobTcXoVHjPVSpp0h7o/ODhYa3w=;
+ b=hKjeRZbGogME7/CQBZdw6I88HScnoM/NVuL0ShtjPgaBgvo7FsUfUbdG6BGnYaHzGxTczH
+ Hn6Q1igsBHuJckmtq+Idtil7FnLa64NNGdQvubGq6R2JIRckV7T32CRY3eceqP37nI58/4
+ Xc4AFI6gtSLRPXTFn/IbJX14md1zmwM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350826;
+ s=susede2_ed25519; t=1790350829;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=52DIgqmLX5fYoHFezqVp/OYQGAW7c+IKgzFrqII9PQ0=;
- b=MY9xTScGDR7XldHCzPJrYW7V516N2mFRPANcX9ZOh6LqSUSi14wyVOr7N35N7acaLCx8Q6
- 6gdOjfly0J0yO6Bg==
+ bh=ZJ1m1CY+5yotCAkfbobTcXoVHjPVSpp0h7o/ODhYa3w=;
+ b=937MJ+mgBdzfumeoHbJk6eqByqAh4qWwjOBK7m1DVcSxPV3KtQ3H8UhPqcimEpgFQH65Iq
+ NY9xhN3jokSasIBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1A05213353;
- Fri, 25 Sep 2026 15:40:24 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 091C21333B;
+ Fri, 25 Sep 2026 15:40:27 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T9
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:24 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T11
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:27 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
  Jack Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PULL 08/19] migration/ram: Add RAM round synchronization notifiers
-Date: Fri, 25 Sep 2026 12:39:59 -0300
-Message-ID: <20260925154010.599247-9-farosas@suse.de>
+Subject: [PULL 10/19] migration/rdma: Allow multiple in-flight writes per chunk
+Date: Fri, 25 Sep 2026 12:40:01 -0300
+Message-ID: <20260925154010.599247-11-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: 43E0B1F7D3
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,bytedance.com:email,ionos.com:email,suse.de:email,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,ionos.com:email,bytedance.com:email,suse.de:dkim,suse.de:email,suse.de:mid];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -119,174 +129,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-find_dirty_block() directly invokes multifd's per-round synchronization
-when the RAM scan wraps.  Other transports need the same boundary to
-order page versions.
+qemu_rdma_write_one() waits for an earlier write that shares the same
+registration chunk, even when the dirty ranges do not overlap.  This
+serializes sparse writes and leaves send queue capacity unused.
 
-Add a return-valued notifier for RAM round completion and register
-multifd's existing synchronization through it.  This keeps the current
-behavior while allowing other transports to synchronize at the same
-boundary.
+RAM round notifiers now provide the completion barrier before a newer
+page version can be sent, and the obsolete unregister path no longer
+requires per-chunk serialization.  Remove the wait.  The global nb_sent
+count continues to manage CQ and send queue resources.
 
 Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Tested-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-nocomp.c | 24 ++++++++++++++++++++
- migration/ram.c            | 45 +++++++++++++++++++++++++++++++++-----
- migration/ram.h            | 12 ++++++++++
- 3 files changed, 75 insertions(+), 6 deletions(-)
+ migration/rdma.c       | 19 +------------------
+ migration/trace-events |  1 -
+ 2 files changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 9f7a792fa7..3067c19cc6 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -19,6 +19,7 @@
- #include "multifd-colo.h"
- #include "options.h"
- #include "migration.h"
-+#include "ram.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -27,6 +28,28 @@
- 
- static MultiFDSendData *multifd_ram_send;
- 
-+static int multifd_ram_round_notify(NotifierWithReturn *n G_GNUC_UNUSED,
-+                                    void *data, Error **errp)
-+{
-+    RAMRoundNotifyData *round_data = data;
-+    QEMUFile *f = round_data->file;
-+    int ret;
-+
-+    if (!multifd_ram_sync_per_round()) {
-+        return 0;
-+    }
-+
-+    ret = multifd_ram_flush_and_sync(f);
-+    if (ret < 0) {
-+        error_setg(errp, "multifd RAM round synchronization failed");
-+    }
-+    return ret;
-+}
-+
-+static NotifierWithReturn multifd_ram_round_notifier = {
-+    .notify = multifd_ram_round_notify,
-+};
-+
- void multifd_ram_payload_alloc(MultiFDPages_t *pages)
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 7d220acef8..da5dff2f9b 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -1769,7 +1769,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
  {
-     pages->offset = g_new0(ram_addr_t, multifd_ram_page_count());
-@@ -471,6 +494,7 @@ static const MultiFDMethods multifd_nocomp_ops = {
- static void multifd_nocomp_register(void)
- {
-     multifd_register_ops(MULTIFD_COMPRESSION_NONE, &multifd_nocomp_ops);
-+    ram_round_add_notifier(&multifd_ram_round_notifier);
- }
+     struct ibv_sge sge;
+     struct ibv_send_wr send_wr = { 0 };
+-    int reg_result_idx, ret, count = 0;
++    int reg_result_idx, ret;
+     uint64_t chunk, chunks;
+     uint64_t chunk_size = migrate_rdma_chunk_size();
+     uint8_t *chunk_start, *chunk_end;
+@@ -1800,23 +1800,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
  
- migration_init(multifd_nocomp_register);
-diff --git a/migration/ram.c b/migration/ram.c
-index b7c406428e..e6db3bf523 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -470,6 +470,8 @@ typedef struct RAMState RAMState;
- static RAMState *ram_state;
+     chunk_end = ram_chunk_end(block, chunk + chunks);
  
- static NotifierWithReturnList precopy_notifier_list;
-+static NotifierWithReturnList ram_round_notifier_list =
-+    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(ram_round_notifier_list);
- 
- /* Whether postcopy has queued requests? */
- static bool postcopy_has_request(RAMState *rs)
-@@ -500,6 +502,38 @@ int precopy_notify(PrecopyNotifyReason reason, Error **errp)
-     return notifier_with_return_list_notify(&precopy_notifier_list, &pnd, errp);
- }
- 
-+void ram_round_add_notifier(NotifierWithReturn *n)
-+{
-+    notifier_with_return_list_add(&ram_round_notifier_list, n);
-+}
-+
-+void ram_round_remove_notifier(NotifierWithReturn *n)
-+{
-+    notifier_with_return_remove(n);
-+}
-+
-+static int ram_round_notify(QEMUFile *f)
-+{
-+    RAMRoundNotifyData data = {
-+        .file = f,
-+    };
-+    Error *local_err = NULL;
-+    int ret;
-+
-+    ret = notifier_with_return_list_notify(&ram_round_notifier_list, &data,
-+                                           &local_err);
-+    if (ret) {
-+        if (local_err) {
-+            error_report_err(local_err);
-+        } else {
-+            error_report("RAM round notifier failed: %d", ret);
-+        }
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- uint64_t ram_bytes_remaining(void)
- {
-     return ram_state ? (ram_state->migration_dirty_pages * TARGET_PAGE_SIZE) :
-@@ -1410,12 +1444,11 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
-         pss->page = 0;
-         pss->block = QLIST_NEXT_RCU(pss->block, next);
-         if (!pss->block) {
--            if (multifd_ram_sync_per_round()) {
--                QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
--                int ret = multifd_ram_flush_and_sync(f);
--                if (ret < 0) {
--                    return ret;
--                }
-+            QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
-+            int ret = ram_round_notify(f);
-+
-+            if (ret < 0) {
-+                return ret;
-             }
- 
-             /* Hit the end of the list */
-diff --git a/migration/ram.h b/migration/ram.h
-index 41697a7599..84f10087e8 100644
---- a/migration/ram.h
-+++ b/migration/ram.h
-@@ -31,6 +31,7 @@
- 
- #include "qapi/qapi-types-migration.h"
- #include "exec/cpu-common.h"
-+#include "qemu/notify.h"
- #include "system/ram_addr.h"
- #include "io/channel.h"
- 
-@@ -95,6 +96,17 @@ void ram_handle_zero(void *host, uint64_t size);
- void ram_transferred_add(uint64_t bytes);
- void ram_release_page(const char *rbname, uint64_t offset);
- 
-+/*
-+ * The RAM round notifier is invoked whenever the migration RAM core
-+ * completes one full scan of guest memory.
-+ */
-+typedef struct RAMRoundNotifyData {
-+    QEMUFile *file;
-+} RAMRoundNotifyData;
-+
-+void ram_round_add_notifier(NotifierWithReturn *n);
-+void ram_round_remove_notifier(NotifierWithReturn *n);
-+
- int ramblock_recv_bitmap_test(RAMBlock *rb, void *host_addr);
- bool ramblock_recv_bitmap_test_byte_offset(RAMBlock *rb, uint64_t byte_offset);
- void ramblock_recv_bitmap_set(RAMBlock *rb, void *host_addr);
+-
+-    while (test_bit(chunk, block->transit_bitmap)) {
+-        (void)count;
+-        trace_rdma_write_one_block(count++, current_index, chunk,
+-                sge.addr, length, rdma->nb_sent, block->nb_chunks);
+-
+-        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+-
+-        if (ret < 0) {
+-            error_setg(errp, "Failed to Wait for previous write to complete "
+-                    "block %d chunk %" PRIu64
+-                    " current %" PRIu64 " len %" PRIu64 " %d",
+-                    current_index, chunk, sge.addr, length, rdma->nb_sent);
+-            return -1;
+-        }
+-    }
+-
+     if (!rdma->pin_all) {
+         if (!block->remote_keys[chunk]) {
+             /*
+diff --git a/migration/trace-events b/migration/trace-events
+index 2ee2c8f212..00ac737aa9 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -243,7 +243,6 @@ rdma_register_odp_mr(const char *name) "Try to register On-Demand Paging memory
+ rdma_advise_mr(const char *name, uint32_t len, uint64_t addr, const char *res) "Try to advise block %s prefetch at %" PRIu32 "@0x%" PRIx64 ": %s"
+ rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
+ rdma_write_flush(int sent) "sent total: %d"
+-rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
+ rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+ rdma_post_send_queue_full(uint64_t wr_id, int sent) "send queue full, wr_id=%" PRIu64 ", outstanding writes=%d"
+ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
 -- 
 2.53.0
 
