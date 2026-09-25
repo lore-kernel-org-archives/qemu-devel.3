@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C566AC98306
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 06:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573ACC9830D
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 06:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x9zV5-00055y-Vj; Fri, 25 Sep 2026 02:33:40 -0400
+	id 1x9zcd-00069U-UX; Fri, 25 Sep 2026 02:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1x9zUt-00055d-II; Fri, 25 Sep 2026 02:33:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1x9zcb-000695-Mj; Fri, 25 Sep 2026 02:41:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1x9zUq-00006W-V8; Fri, 25 Sep 2026 02:33:27 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1x9zcZ-00027f-NB; Fri, 25 Sep 2026 02:41:25 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4aaLB3084343; Fri, 25 Sep 2026 06:33:20 GMT
+ 68P4a79f061219; Fri, 25 Sep 2026 06:41:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PHLsQP
- 0sUUmgmgSFcROSVdlmQOaSJMjj4YGfXT3lYzA=; b=c9zN9VOQlUzxRWljzdboad
- D0KCRDswbZezSpZ287cHvGbRBaonpATMcno063IKPdKmFuME7+YUPb8mDEkevdlN
- aZVOaCdP67W9g5oShfZv4fF8Gsk718Z68J+GyRTzfxWVwVoEJ9+9iBc6qIkgTE8r
- Y2rX2hza54NEPN8aymODEj9NIZ6qOwcdKlDKqMKgDOh+2ov2VaFs3G6NVJn8A9HE
- Ow87oDkzEAAzQuSYcr3XCXtpjOKpLt4g18z7z5rhfH1Nc6WHsyIVD/fqEBLWoByc
- +jBTE52xR2bG4fWR6S5K4JnwEr5yJlNyhOeclGCrVwZh7XscHCHAJjs5/b3dd1lQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Xc48Am
+ mLDcMI15guOi2OV5qaNu2vWy1EUj1iNvYKm60=; b=SyF+TX0IdpqITCCpidic4f
+ UpPb9uWobDOJ4w6+EYTR+zEAWK6h+grBtMrzyN7Cn+m2cWyrbM6lC+x/0ArQ5lPz
+ CIyAc1o2TX4J7EcdYHbxRz68YhIKQO58gRzYswCKrDhssVEl4ykEY0u8E919lrwL
+ 71CEIvrHgjPaN/MA9AHy8ap14RtHaqSRCdle60jt9UB8QpTa5NRXym3E/TIk/Gf9
+ doE2neRSRoyCf7zjaBzNeiVpHJpvNHbjClx4PG/slCnaHl1o4fPfXk9r96C+oEz1
+ sbZl7t0DlYZcNAREPLt/k4SNorO3XccRFSTrOAPgfW3MNKtnYWKI3b88eRzYzZjw
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqvkva-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsnhea-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 06:33:19 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4lgIY3288275; Fri, 25 Sep 2026 06:33:18 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbe21bs7-1
+ Fri, 25 Sep 2026 06:41:18 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68P4lZNV1959531; Fri, 25 Sep 2026 06:41:17 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvu7edkbd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 06:33:18 +0000 (GMT)
+ Fri, 25 Sep 2026 06:41:17 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68P6XHhb28312216
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68P6fGJE22544942
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Sep 2026 06:33:17 GMT
+ Fri, 25 Sep 2026 06:41:16 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A8EB58043;
- Fri, 25 Sep 2026 06:33:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0D61A58059;
+ Fri, 25 Sep 2026 06:41:16 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0499158059;
- Fri, 25 Sep 2026 06:33:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 70EDB58053;
+ Fri, 25 Sep 2026 06:41:08 +0000 (GMT)
 Received: from [9.43.103.81] (unknown [9.43.103.81])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Sep 2026 06:33:08 +0000 (GMT)
-Message-ID: <9749716e-f527-4e13-80ad-3d4158a0facf@linux.ibm.com>
-Date: Fri, 25 Sep 2026 12:03:06 +0530
+ Fri, 25 Sep 2026 06:41:07 +0000 (GMT)
+Message-ID: <f2a37893-1f96-4610-914b-d2e2235a90f0@linux.ibm.com>
+Date: Fri, 25 Sep 2026 12:11:06 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/8] ppc/spapr: add block device backend to VOF
- open/read/write/seek services
+Subject: Re: [RFC PATCH 6/8] spapr_vscsi: add VOF disk nodes to the device tree
 To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org, aik@ozlabs.ru
 Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
@@ -71,49 +70,49 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
  balaton@eik.bme.hu, philmd@oss.qualcomm.com, npiggin@gmail.com,
  marcandre.lureau@redhat.com, fam@euphon.net, avnish@linux.ibm.com
 References: <20260817102733.605346-1-uverma@linux.ibm.com>
- <20260817102733.605346-6-uverma@linux.ibm.com>
- <4b39b097-4c88-4510-8b2e-8ffb6fd47aac@linux.ibm.com>
+ <20260817102733.605346-7-uverma@linux.ibm.com>
+ <a389ef6f-54bd-4f73-9043-05ce62ae9739@linux.ibm.com>
 Content-Language: en-US, en-ZM
 From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <4b39b097-4c88-4510-8b2e-8ffb6fd47aac@linux.ibm.com>
+In-Reply-To: <a389ef6f-54bd-4f73-9043-05ce62ae9739@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab615af cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab6178e cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=4Ta1ijMdNn7WbP78VVsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfXxBEdW4Lr+/Aw
- Amfdu/sEmERb/gkRvGyEXDvW/KyIfC8vGG2wEkYtGPRUX+3nQtIoUB8pmmajvqCWYvm9MOJ8OGG
- TH7sHX9adnTZcOvgZ2HwC7vebT6iwk+9psVi7Cgde9AoGnLBZAaQ5g3cVC45n1qtnMxQ+3I93N+
- rb5gXPdi9+yAwBpisFyoTXTaUMFfH1K34Bc1GKpBzK+jP19wfYnMyM3AkdBvvfY792VUVkPLwzt
- g4RI4vaR075LH982FRH6LlLfOja+idyNdhpzFt5KkRruW0KG6lMEkKEvS6sHd3cbHeN/9i3/sOE
- +V8PyAz2wze+WxFxWaaMKjBBtSwjm7GJ7BNoXi2zKah3RSS3IkIPlezypp9Ls36zaxZFTcZmEmn
- /7+QZz2G/FeUQvo/lJY9qSsEMOrTJ+EFNP05Tj97GzZPSIqVZukcvCzk3baCz+iIpSvNEYxvebO
- 7S3kfCiwt8JAZbNMwBQ==
-X-Proofpoint-ORIG-GUID: O5rzjzInaJn7XG08XqVPEJnle1edlKQn
-X-Proofpoint-GUID: aXjMj78uZ-ai2EADH6iKS_c7I4ljwtP3
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAyNCBTYWx0ZWRfX+61eTSR0mg5B
- x6vsM3DBeXsoKwqW3Pp077V4P6jHDxS4FqmwNsilmWu7mhCQ8HXNHVSyZ4Gy5vpf4evihd/HxpU
- y8XJcbtqCkNIlvzOKd1ROm3P7l4ZJCo=
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=Fe0xfadQqPI0arZL2PcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: K-XYCjK3_-DV4A9b-5chBGeJGnT0KtZC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAyNiBTYWx0ZWRfXxUTHCB53VlES
+ iKbPGcM1G9AcNTDCFvnhlMVml3pqpzUhomzrI+xb23DS12pLEzPGX6pokZlfldD+8m685hQe7ui
+ rVlKaYcauCrio3HJhqaubjL86b/gXWRrrFhh+SHENs/T/VqYJ5N9Ri1Odqt+PWGKog/GzSQAQ2e
+ +Dckgdf1aUOr8vRxUpFxwaTjTPIdlYUCcpsZDwDazolueAHQQC5TCmrhlmjs2UdqgNxFb84U4AV
+ IoAeRDbSQX7GpWPJrbeHsFm7V8OU8Fgsr7H7r1lnYleMfdnA+6i2Lfw5MH9ktze0f7HJCWWs9nQ
+ ulaNe+AeFSOayZtkbGy0Yy/EUG2OCVFYvK/fsqovZ/od61UUXnjP8G9/AQj2ww4DUjuirCymWq8
+ A7tKCoNn8S/KnQo3oHXOO0VbvKKVvdYQvPtE9MCpRgUnz0MouVE8HIHgDLQVYdan+2ha+ujhENg
+ h6uarz4tcFN+9g5x5FQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAyNiBTYWx0ZWRfXxuAfyKroLGhK
+ Y1ZiVUMIvasvgPLp8BE03tiHF1USXpQpTciVPLFlbFCmYrouIlwt7PQN2XODfFvIS4zLJY3d707
+ VNQ/Xzii7wPPnLaDFDwoV+C7Oo9roCE=
+X-Proofpoint-GUID: Z4eZJOpxvMOJPFiOpUP2Unh9oD-QQ5DK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250024
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250026
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,295 +131,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 9/18/26 10:53 AM, Narayana Murty N wrote:
+On 9/18/26 10:54 AM, Narayana Murty N wrote:
 > Hi Utkarsh,
 > 
 > On 17/08/26 3:57 PM, uverma@linux.ibm.com wrote:
 >> From: Utkarsh Verma <uverma@linux.ibm.com>
 >>
->> Extend the VOF client interface to support block device I/O through the
->> sPAPR SCSI disk, which is needed by bootloaders such as GRUB during VOF
->> disk boot.
+>> Populate the vSCSI device tree node with child disk nodes for VOF
+>> guests.
 >>
->> Add BlockBackend and position tracking fields to OfInstance and use them
->> in vof_seek(), vof_write() and vof_read() to extend their functionality
->> to handle block devices as well.
+>> This lets Open Firmware clients such as GRUB open fully-qualified
+>> paths like /vdevice/v-scsi@.../disk@<srp-lun> for attached vSCSI
+>> disks.
 >>
->> In vof_do_open(), detect FDT nodes named "disk@<srp-lun>" and resolve
->> the SRP LUN encoding to the matching SCSIDevice/BlockBackend by scanning
->> id/channel/lun.
->>
->> Add vof_seek() to implement the OpenFirmware "seek" client service,
->> which was previously missing.
+>> Each child node is named from the encoded SRP LUN and includes a reg
+>> property with the 64-bit LUN value, along with device_type set to
+>> "block".
 >>
 >> AI-used-for: code
 >> Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 >> ---
->>   hw/ppc/trace-events |   2 +
->>   hw/ppc/vof.c        | 116 +++++++++++++++++++++++++++++++++++++++++++-
->>   2 files changed, 117 insertions(+), 1 deletion(-)
+>>   hw/scsi/spapr_vscsi.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 40 insertions(+)
 >>
->> diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
->> index dbdcfada26..a61398ecb2 100644
->> --- a/hw/ppc/trace-events
->> +++ b/hw/ppc/trace-events
->> @@ -78,6 +78,7 @@ vof_error_unknown_service(const char *service, int 
->> nargs, int nret) "\"%s\" args
->>   vof_error_unknown_method(const char *method) "\"%s\""
->>   vof_error_unknown_ihandle_close(uint32_t ih) "ih=0x%x"
->>   vof_error_unknown_path(const char *path) "\"%s\""
->> +vof_error_seek(uint32_t ih) "ih=0x%x"
->>   vof_error_write(uint32_t ih) "ih=0x%x"
->>   vof_error_read(uint32_t ih) "ih=0x%x"
->>   vof_finddevice(const char *path, uint32_t ph) "\"%s\" => ph=0x%x"
->> @@ -92,6 +93,7 @@ vof_interpret(const char *cmd, uint32_t param1, 
->> uint32_t param2, uint32_t ret, u
->>   vof_package_to_path(uint32_t ph, const char *tmp, int ret) "ph=0x%x 
->> => %s len=%d"
->>   vof_instance_to_path(uint32_t ih, uint32_t ph, const char *tmp, int 
->> ret) "ih=0x%x ph=0x%x => %s len=%d"
->>   vof_instance_to_package(uint32_t ih, uint32_t ph) "ih=0x%x => ph=0x%x"
->> +vof_seek(uint32_t ih, uint64_t pos) "ih=0x%x pos=0x%"PRIx64
->>   vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] 
->> \"%s\""
->>   vof_read(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] 
->> \"%s\""
->>   vof_avail(uint64_t start, uint64_t end, uint64_t size) 
->> "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
->> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
->> index 45c197df9f..b1c574aabf 100644
->> --- a/hw/ppc/vof.c
->> +++ b/hw/ppc/vof.c
->> @@ -11,6 +11,7 @@
->>   #include CONFIG_DEVICES /* CONFIG_PSERIES */
->>   #include "qemu/osdep.h"
->> +#include "qemu/cutils.h"
->>   #include "qemu/timer.h"
->>   #include "qemu/range.h"
->>   #include "qemu/units.h"
->> @@ -24,6 +25,8 @@
->>   #include "trace.h"
->>   #include "hw/ppc/spapr_vio.h"
->> +#include "hw/scsi/scsi.h"
->> +#include "system/block-backend.h"
->>   #include <libfdt.h>
->>   /*
->> @@ -46,6 +49,8 @@ typedef struct {
->>   typedef struct {
->>       char *path; /* the path used to open the instance */
->>       uint32_t phandle;
->> +    BlockBackend *blk;
->> +    uint64_t pos; /* current position for seek operations */
->>       void *vty;
->>   } OfInstance;
->> @@ -449,6 +454,7 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, 
->> int offset, const char *path)
+>> diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+>> index b4c8f94d22..03f5f27f5f 100644
+>> --- a/hw/scsi/spapr_vscsi.c
+>> +++ b/hw/scsi/spapr_vscsi.c
+>> @@ -1243,6 +1243,8 @@ void spapr_vscsi_create(SpaprVioBus *bus)
+>>   static int spapr_vscsi_devnode(SpaprVioDevice *dev, void *fdt, int 
+>> node_off)
 >>   {
->>       uint32_t ret = PROM_ERROR;
->>       OfInstance *inst = NULL;
->> +    const char *node_name;
->>       if (vof->of_instance_last == 0xFFFFFFFF) {
->>           /* We do not recycle ihandles yet */
->> @@ -461,10 +467,42 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, 
->> int offset, const char *path)
->>       ++vof->of_instance_last;
->>       inst->path = g_strdup(path);
->> +    inst->blk = NULL;
->> +    inst->pos = 0;
->>       inst->vty = NULL;
->> +    node_name = fdt_get_name(fdt, offset, NULL);
+>> +    VSCSIState *s = VIO_SPAPR_VSCSI_DEVICE(dev);
+>> +    BusChild *kid;
+>>       int ret;
+>>       ret = fdt_setprop_cell(fdt, node_off, "#address-cells", 2);
+>> @@ -1255,6 +1257,44 @@ static int spapr_vscsi_devnode(SpaprVioDevice 
+>> *dev, void *fdt, int node_off)
+>>           return ret;
+>>       }
+>> +    /*
+>> +     * In VOF mode, add a child FDT node for each attached SCSI disk 
+>> so that OF
+>> +     * clients (e.g. GRUB via VOF) can open a fully-qualified path like
+>> +     * /vdevice/v-scsi@.../disk@<srp-lun>.
+>> +     */
+>> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
+>> +    if (spapr->vof) {
+>> +        QTAILQ_FOREACH(kid, &s->bus.qbus.children, sibling) {
+>> +            SCSIDevice *sdev = SCSI_DEVICE(kid->child);
+>> +            char disk_name[32];
+>> +            uint64_t srp_lun;
+>> +            uint32_t reg[2];
+>> +            int disk_off;
 >> +
->> +    if (node_name && strncmp(node_name, "disk@", 5) == 0) {
->> +        uint64_t srp_lun;
->> +        uint32_t id, channel, lun;
->> +        BlockBackend *blk;
+>> +            srp_lun = ((uint64_t)(0x8000 | (sdev->id << 8) |
+>> +                                   (sdev->channel << 5) | sdev->lun)) 
+>> << 48;
+> This matches the decoder introduced in patch 5 for the corresponding bit 
+> ranges, but patch 8 constructs SRP LUNs using a different expression.
+> 
+> Avoid hard coded values, define or use existing relative MACRO definitions.
+> 
+Ack, will fix in v2.
+
 >> +
->> +        if (qemu_strtou64(node_name + 5, NULL, 16, &srp_lun) == 0) {
->> +            id      = (srp_lun >> 56) & 0x3f;
->> +            channel = (srp_lun >> 53) & 0x7;
->> +            lun     = (srp_lun >> 48) & 0x1f;
+>> +            snprintf(disk_name, sizeof(disk_name), "disk@%"PRIx64, 
+>> srp_lun);
 >> +
->> +            for (blk = blk_next(NULL); blk; blk = blk_next(blk)) {
->> +                DeviceState *attached = blk_get_attached_dev(blk);
->> +                SCSIDevice *sdev;
->> +
->> +                if (!attached) {
->> +                    continue;
->> +                }
->> +                sdev = (SCSIDevice 
->> *)object_dynamic_cast(OBJECT(attached),
->> +                                                         
->> TYPE_SCSI_DEVICE);
->> +                if (sdev && sdev->id == (int)id &&
->> +                    sdev->channel == (int)channel &&
->> +                    sdev->lun == (int)lun) {
->> +                    inst->blk = blk;
->> +                    break;
->> +                }
+>> +            disk_off = fdt_add_subnode(fdt, node_off, disk_name);
+>> +            if (disk_off < 0) {
+>> +                return disk_off;
 >> +            }
-> Shouldn't vof_do_open() first resolve that specific vSCSI controller/ 
-> SCSIBus and then find the SCSIDevice on that bus, rather than searching 
-> the global BlockBackend list?
-> 
-> Patch 8 already has code for resolving a v-scsi path to its SCSIBus; it 
-> seems like the block-open path should use the same topology-aware lookup.
-> 
-Sorry, my bad. Will use the same vof_find_vscsi_bus() function to 
-resolve the vSCSI bus and search for the matching id, channel and lun on 
-that bus. Will fix in v2.
-
+>> +
+>> +            reg[0] = cpu_to_be32((uint32_t)(srp_lun >> 32));
+>> +            reg[1] = cpu_to_be32((uint32_t)(srp_lun & 0xFFFFFFFF));
+>> +            ret = fdt_setprop(fdt, disk_off, "reg", reg, sizeof(reg));
+>> +            if (ret < 0) {
+>> +                return ret;
+>> +            }
+>> +
+>> +            ret = fdt_setprop_string(fdt, disk_off, "device_type", 
+>> "block");
+>> +            if (ret < 0) {
+>> +                return ret;
+>> +            }
 >> +        }
 >> +    }
 >> +
->>   #ifdef CONFIG_PSERIES
->> -    const char *node_name = fdt_get_name(fdt, offset, NULL);
->>       if (node_name && strncmp(node_name, "vty", 3) == 0) {
->>           uint8_t discard_buf[VOF_VTY_BUF_SIZE];
->>           MachineState *ms = MACHINE(qdev_get_machine());
->> @@ -601,6 +639,25 @@ static uint32_t vof_write(Vof *vof, uint32_t 
->> ihandle, uint32_t buf,
->>           return PROM_ERROR;
->>       }
->> +    if (inst->blk) {
->> +        g_autofree uint8_t *blkbuf = g_malloc(len);
->> +        int ret;
->> +
->> +        if (VOF_MEM_READ(buf, blkbuf, len) != MEMTX_OK) {
->> +            trace_vof_error_write(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +        ret = blk_pwrite(inst->blk, inst->pos, len, blkbuf, 0);
-> Does VOF disk boot require block-device writes at all?
-> 
-> The series description talks about GRUB discovering the disk and reading 
-> the kernel/initrd. If writable OF disk instances are not required for 
-> boot, could we avoid exposing disk writes entirely?
-> 
-> If write support is required, this should also honour read-only backend 
-> state and propagate blk_flush() errors rather than discarding them.
-
-I added the write functionality because grub can record the selected 
-menuentry in the saved_entry of grubenv file which requires a write 
-operation, also editing the files from GRUB prompt requires the write 
-functionality.
-But will honour the backend's read-only state before attempting 
-blk_pwrite(), and propagate blk_flush() errors through trace messages in v2.
-
->> +        if (ret < 0) {
->> +            trace_vof_error_write(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +        blk_flush(inst->blk);
->> +        inst->pos += len;
->> +        trace_vof_write(ihandle, len, "(disk)");
->> +        return len;
->> +    }
->> +
->>   #ifdef CONFIG_PSERIES
->>       if (inst->vty) {
->>           uint32_t total_written = 0;
->> @@ -646,6 +703,26 @@ static uint32_t vof_read(Vof *vof, uint32_t 
->> ihandle, uint32_t buf,
->>           return PROM_ERROR;
->>       }
->> +    if (inst->blk) {
->> +        g_autofree uint8_t *tmp = g_malloc(len);
-> len comes from the OF client call, i.e. from the guest.
-> 
-> This means the guest can request an allocation up to UINT32_MAX before 
-> either the block layer or guest-memory access is attempted.
-> 
-> I don't think blk_pread()/blk_pwrite() can be relied on for validating 
-> this because the potentially huge host allocation has already happened 
-> before those calls.
-> 
-> Could we instead use a small bounded bounce buffer and process the 
-> request in chunks?
-> 
-> The maximum should preferably come from an existing QEMU block/I/O 
-> convention rather than an arbitrary large allocation.
-> 
-Will fix in v2.
-
-> Thanks,
-> Narayana Murty N.
->> +        int ret;
->> +
->> +        ret = blk_pread(inst->blk, inst->pos, len, tmp, 0);
->> +        if (ret < 0) {
->> +            trace_vof_error_read(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +
->> +        if (VOF_MEM_WRITE(buf, tmp, len) != MEMTX_OK) {
->> +            trace_vof_error_read(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +
->> +        inst->pos += len;
->> +        trace_vof_read(ihandle, len, "(disk)");
->> +        return len;
->> +    }
->> +
->>   #ifdef CONFIG_PSERIES
->>       if (inst->vty) {
->>           uint8_t tmp[VOF_VTY_BUF_SIZE];
->> @@ -675,6 +752,41 @@ static uint32_t vof_read(Vof *vof, uint32_t 
->> ihandle, uint32_t buf,
 >>       return 0;
 >>   }
->> +static uint32_t vof_seek(Vof *vof, uint32_t ihandle, uint32_t pos_hi,
->> +                         uint32_t pos_lo)
->> +{
->> +    OfInstance *inst = (OfInstance *)
->> +        g_hash_table_lookup(vof->of_instances, 
->> GINT_TO_POINTER(ihandle));
->> +    uint64_t pos = ((uint64_t)pos_hi << 32) | pos_lo;
->> +
->> +    if (!inst) {
->> +        trace_vof_error_seek(ihandle);
->> +        return PROM_ERROR;
->> +    }
->> +
->> +    if (inst->blk) {
->> +        int64_t size = blk_getlength(inst->blk);
->> +
->> +        if (size < 0) {
->> +            trace_vof_error_seek(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +
->> +        if (pos > (uint64_t)size) {
->> +            trace_vof_error_seek(ihandle);
->> +            return PROM_ERROR;
->> +        }
->> +
->> +        inst->pos = pos;
->> +        trace_vof_seek(ihandle, pos);
->> +        return 0;
->> +    }
->> +
->> +    /* VTY and other devices don't support seek */
->> +    trace_vof_error_seek(ihandle);
->> +    return PROM_ERROR;
->> +}
->> +
->>   static void vof_claimed_dump(GArray *claimed)
->>   {
->>       int i;
->> @@ -985,6 +1097,8 @@ static uint32_t vof_client_handle(MachineState 
->> *ms, void *fdt, Vof *vof,
->>           ret = vof_package_to_path(fdt, args[0], args[1], args[2]);
->>       } else if (cmpserv("instance-to-path", 3, 1)) {
->>           ret = vof_instance_to_path(fdt, vof, args[0], args[1], 
->> args[2]);
->> +    } else if (cmpserv("seek", 3, 1)) {
->> +        ret = vof_seek(vof, args[0], args[1], args[2]);
->>       } else if (cmpserv("write", 3, 1)) {
->>           ret = vof_write(vof, args[0], args[1], args[2]);
->>       } else if (cmpserv("read", 3, 1)) {
+> Could we please introduce a single helper for SRP-LUN encoding and 
+> decoding and use it in patches 5, 6 and 8?
+> 
+> Something along the lines of:
+> 
+> spapr_vscsi_encode_srp_lun(channel, id, lun)
+> spapr_vscsi_decode_srp_lun(srplun, ...)
+> 
+> That would also make it straightforward to add tests for:
+> 
+> id      = 0, 1, 31, 32, 63
+> channel = 0 .. 7
+> lun     = 0, 1, 31
+> 
+> At the moment the common channel=0/id=0 case can hide inconsistencies 
+> between the three implementations.
+> 
+Sure, will implement new encode and decode functions in this 
+spapr_vscsi.c file and declare them in spapr_vio.h and use them acroos 
+patch 5, 6, and 8.
+
+> 
+> Thanks,
+> Narayana Murty N.
 > 
 > 
+
 Regards,
 Utkarsh
 
