@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76255C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55476C98325
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8R0-000600-0C; Fri, 25 Sep 2026 12:06:03 -0400
+	id 1xA8RS-0006XO-GZ; Fri, 25 Sep 2026 12:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8Da-0007sW-TS
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:10 -0400
-Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8DZ-0005xq-6I
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:10 -0400
-Received: by mail-wr2-x0f.google.com with SMTP id
- ffacd0b85a97d-48882c1f261so204211f8f.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1790351528; x=1790956328; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RpbJfFtFXtW5DVtUKxFYbq48SJgv8dFmBAbxHxL31/s=;
- b=NO43u7dqx5+MMu+oUdCpWXTFnrnql4KZLXB2Ns6gqlvO9afixA+i2j0rMmQqXHuzM0
- jGMhHLPcNlAILF1RwvENN2gX7ZFVZD1sD0Kz7WKs5KFgU/8hyh4WWQSCSVPxrtnRBBC7
- dzqmX2PONfifZrOJKUniIQUKA+1Y6Op7ukOptOlSMIz6l6daDnwqBeTtb5rK0LGWw+Up
- /Sh56rtImiSHhbhX/TNo6u94qe2ItikQ8/JNYgWFQru/yAVoSqqLh3yJY9Vi9yOC4llF
- +seOHKzTj6896TEfjs6Fj89qGrqOLxz+eQdak/783//E8xn6REqMhFKOZTfGQO2aTj0V
- X/yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790351528; x=1790956328;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RpbJfFtFXtW5DVtUKxFYbq48SJgv8dFmBAbxHxL31/s=;
- b=t9HwT3v/isr26bf8haTbS+yPUI9sOgI2Q9zFim+Xmpf2PN+IM3J054MmPql2CF7gpY
- eBujblVD4aEUnivjFJiUUUAT4L6D4sKmuNMBkzQOXqTYs51KQVDbR8zxMr8008DVcy63
- GaaGQ5W26jMKdSzNzGAOm/bS8wxVGNhh5A7eCqY/sBSYB74ilKAVhCstq1aFW/ZiLSJ2
- aZTXpZhRrXHxhg4hxPSGhYViF123d/qlayHZc1mpT29RBDLm4PEN9hR34XIAsN1mFEvc
- GPy0YdxGl1tg6JJod39JsVRI5r9cn7hDqK/SVr+IgOy3vezbimDnEWLuUtxwEUg3cxOp
- 4x+g==
-X-Gm-Message-State: AFuF++nIe7Q8JweDzsBz3FG+b7IutGw5L8hcaBtp2mE7P3jaKXNIbGDc
- pGYOAeathY1EFDBtsjC5RpQq+wO1cc+h4Ub+danYQuL8mCY1p1BxIyFA5YpDpCrL4nCMDNiUvsP
- 74CUMZBC5kQ==
-X-Gm-Gg: AYBFou3kF9s6jepNyvzJQVRXnXupVmjS73hAlCpA9EaIGunfwgijG3afBhMTfQ4ZUxy
- 0j9j4p7DB1aJxeLqUPc7cfHMIt4BhQ1JTK3Kse4/er9MUq54k8EQI1kebyHuixvkBjxYpuBaVQE
- GDoHqomCpvjrjAfiTh4NR8Sb+84sbmCYXRtR0hW5Ba8ZYQueBm7aVnOMozoM1gMURk+4NMQSj3/
- JjD56JPz17kmvqvqhcs00MpaumahVOxf75cG7OhWTQ5QonpHbzPRjExI5PwVevli3Mj975hHuFx
- wc489RQWo57ABXB2NjOtAlBvRdWwhifh4MjKA0DNP9Gv21wwdFgmXORAarfHghiukdP3Eki3P/E
- NHkt0AQQLDM4O6yai7NeaAQHsm57jxohfpVoMwpcIbU6k6p+SNzyqwSS3bHnRDK9wK5k+P3QxtD
- gSKpDbcrsDKdDH+uCHhLuI/6XO9UAZo6Z//6vHFV6nNSjJlckRQWRm3a4zZ+aCgpMyRJMDF8gl3
- 4ZYfRJkA3Fjy549DvmU6SCi5fcM6S7+zVyvJDjvQGpUqGjNRjm9
-X-Received: by 2002:a05:600c:4e8f:b0:49e:7c8c:bc77 with SMTP id
- 5b1f17b1804b1-49fe66d062bmr110866185e9.7.1790351527744; 
- Fri, 25 Sep 2026 08:52:07 -0700 (PDT)
-Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.52.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 08:52:07 -0700 (PDT)
-From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
- Jinpu Wang <jinpu.wang@cloud.ionos.com>,
- Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH 05/13] migration/rdma: Handle write/flush/reg-stop on the
- consumer
-Date: Fri, 25 Sep 2026 17:51:40 +0200
-Message-ID: <20260925155149.843870-6-dmitrii.omelchenko@cloud.ionos.com>
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xA8Ft-0000EL-Nu
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:54:34 -0400
+Received: from 2.mo15.mail-out.ovh.net ([5.135.90.179])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
+ id 1xA8Fp-00067V-2g
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:54:33 -0400
+Received: from DAGFR11EX3.OVH.local (unknown [10.110.43.115])
+ by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4hrwHW3V0Fz3wwW;
+ Fri, 25 Sep 2026 15:54:15 +0000 (UTC)
+Received: from ovhcloud.com (109.190.254.61) by DAGFR11EX3.OVH.local
+ (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 25 Sep
+ 2026 17:54:14 +0200
+From: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-block@nongnu.org>, Eric Blake <eblake@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Kevin Wolf
+ <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 2/2] iotests: Add coverage for NBD connect thread start delay
+Date: Fri, 25 Sep 2026 17:53:46 +0200
+Message-ID: <20260925155346.357703-3-guillaume.vincke@ovhcloud.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
-References: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
+In-Reply-To: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
+References: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:30::f;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr2-x0f.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Originating-IP: [109.190.254.61]
+X-ClientProxiedBy: CAS4.OVH.local (172.16.1.4) To DAGFR11EX3.OVH.local
+ (172.16.2.113)
+X-OVH-CORPLIMIT-SKIP: true
+x-ovh-tracer-id: 11035789415208337703
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTET5RUJGNfmJ9NTrJITjXYbdcTO3CD1/irQgvmbcVvU+j3yU3NLNdBQmSWzUyxGftnAL5Iois3+qtj5G+XGi6yJapT3529pc59sfOOCq/Kc8FQqT0XQF2xXbKMW9Wi/PJNlpjMFYJCk+XKL+8KSXvAiIysT66Iz/ljKq0uOHOb4fy1muOGETRnXuHRDQlP5guWfSG0NaIpQ2MvLi/625mPQwXHSmLKChwuCT5l8HPUupqfW4YfVcoXdGds9cFNYInZ9eTzaLkTVa9NMU6N55UkVhVs1pX/lFlbzKKFdmuYQ7LC7KFt6l3jwirOWNNA0XHCtZueAPaQvk4ugL/EC2Ybessk4iZdJyM4kj0LVGZxyt6b/vAlnclParS91v/L68acsYwQQ3Rl8NA9EskWg7wcXzNCZQgR3lQCc9U1Q5KBX10qK0wxsS4grI0+aHtp28WBiaotM2121hUueftkSkXHHGA9k7XqBeHKSWs4zKG5nYBdzTpWvKoRT04XPVjXf0TVdXLzwI+I/bUqMu/JAj1q+6wyHWq0xv1+YJqKUnAo+dxeORxN+CxpC9rDjQsAcRTKvbWrh0dB6D8K0Sl6hCwFrFd2knOKIfv1Rj45r+EWlolc5aa5qv6WIKHpjfya1yJ0PaoasSnWd6orkgjpj9bNB3kpkOWy4+s1pyG/pZ3zwOg
+DKIM-Signature: a=rsa-sha256; bh=366bXCSEca/MypXuX5DsaXF8rVnjw5CHK4WfDSFcpbg=; 
+ c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
+ t=1790351655; v=1; 
+ b=MLPd4GwTafQOE3CxzyxwdIUJQ8zqNDet1CtfnsXA2PQ2yKMD2pRnxNHyr5c3y8YwrfZ1udjg
+ 19ZPxqzExoOT2qSJoSLuagMTUz+aaGfstUEOrHsQF7MJRRnFlh4sF9Ds62OLxujKqOlE1d72dtf
+ NLiNesNPhBwihcfcKAIFqhvA=
+Received-SPF: pass client-ip=5.135.90.179;
+ envelope-from=guillaume.vincke@ovhcloud.com; helo=2.mo15.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Sep 2026 12:04:59 -0400
+X-Mailman-Approved-At: Fri, 25 Sep 2026 12:05:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,130 +80,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend rdma_consumer_dispatch to run the real send work off the ring:
-RDMA_CMD_WRITE posts one chunk via qemu_rdma_write_chunk, RDMA_CMD_FLUSH
-drains the CQ, and RDMA_CMD_REG_STOP sends REGISTER_FINISHED (draining
-and dumping stats first on FINISH).  The thread acks barrier commands
-via ring_barrier_complete.  The producer still drives the old inline
-path, so the ring still carries only FINISH.
+Test the connect thread starting condition with reconnect-delay=0 when
+the server disconnects after a successful handshake but before running
+operations. Prior to the change to nbd_co_establish_connection(), this
+test would demonstrate two I/O errors. The tests 264 and 277 covering
+reconnection do not use reconnect-delay=0 so this case is not exercised.
 
-Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
+Add a test that provokes multiple errors in order to put an NBD client
+in the above-mentioned situation and shows that the first operation
+starts the connect thread and leads to successful subsequent I/O.
+
+Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
 ---
- migration/rdma.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+ tests/qemu-iotests/tests/nbd-stale-connection | 62 +++++++++++++++++++
+ .../tests/nbd-stale-connection.out            | 17 +++++
+ 2 files changed, 79 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/nbd-stale-connection
+ create mode 100644 tests/qemu-iotests/tests/nbd-stale-connection.out
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index c3070b7a92..d11f6e0da8 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -1216,6 +1216,7 @@ static void rdma_nbsent_zero(RDMAContext *rdma);
- 
- static void rdma_consumer_start(RDMAContext *rdma);
- static void rdma_consumer_stop(RDMAContext *rdma);
-+static void rdma_nbsent_stats_dump(RDMAContext *rdma);
- 
- /*
-  * Consult the connection manager to see a work request
-@@ -1986,6 +1987,33 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
-     return 0;
- }
- 
-+/* Consumer: write one whole chunk */
-+static int qemu_rdma_write_chunk(RDMAContext *rdma, uint32_t block_index,
-+                                 uint32_t chunk_index, Error **errp)
-+{
-+    RDMALocalBlock *block = &rdma->local_ram_blocks.block[block_index];
-+    uint64_t chunk_off = (uint64_t)chunk_index * migrate_rdma_chunk_size();
-+    uint64_t len = block->length - chunk_off;
-+    int ret;
+diff --git a/tests/qemu-iotests/tests/nbd-stale-connection b/tests/qemu-iotests/tests/nbd-stale-connection
+new file mode 100755
+index 0000000000..6f6fb6ef1b
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-stale-connection
+@@ -0,0 +1,62 @@
++#!/usr/bin/env python3
++# group: quick
++#
++# Test the NBD client stale channel discard
++#
++# Copyright (C) 2026 OVHcloud
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    if (len > migrate_rdma_chunk_size()) {
-+        len = migrate_rdma_chunk_size();
-+    }
++import time
++import iotests
++from iotests import qemu_nbd_popen, qemu_img_create, file_path, log
 +
-+    /* write_one wants current_addr in ram_addr_t space (block->offset based) */
-+    ret = qemu_rdma_write_one(rdma, block_index, block->offset + chunk_off,
-+                              len, errp);
-+    if (ret < 0) {
-+        return -1;
-+    }
-+    if (ret == 0) {
-+        rdma->nb_sent++;
-+        trace_rdma_write_flush(rdma->nb_sent);
-+        rdma_nbsent_inc(rdma, rdma->nb_sent);
-+    }
-+    return 0;
-+}
 +
- /*
-  * Push out any unwritten RDMA operations.
-  *
-@@ -2846,6 +2874,13 @@ static void ring_advance_tail(RDMASendRing *r)
-     ring_wake_producer(r);
- }
- 
-+/* Consumer: publish barrier completion. */
-+static void ring_barrier_complete(RDMASendRing *r, unsigned seq)
-+{
-+    qatomic_store_release(&r->barrier_done_seq, seq);
-+    ring_wake_producer(r);
-+}
++# estimated duration required by the connect thread to reach a running server
++MAX_NBD_HANDSHAKE_DURATION = 0.5
++# sleep duration of the connection retry in nbd client
++CONNECT_RETRY_DELAY = 1
 +
- /* Consumer: sleep until the ring is non-empty or aborted. */
- static void ring_idle_wait(RDMASendRing *r)
- {
-@@ -2859,6 +2894,23 @@ static void ring_idle_wait(RDMASendRing *r)
-     qemu_mutex_unlock(&r->wait_lock);
- }
- 
-+/* Consumer: send REGISTER_FINISHED; for FINISH drain and dump stats first. */
-+static int rdma_consumer_reg_stop(RDMAContext *rdma, uint64_t flags,
-+                                  Error **errp)
-+{
-+    RDMAControlHeader head = { .len = 0,
-+                               .type = RDMA_CONTROL_REGISTER_FINISHED,
-+                               .repeat = 1 };
++iotests.script_initialize()
++nbd_sock = file_path('nbd-sock', base_dir=iotests.sock_dir)
++disk = file_path('disk')
++qemu_img_create('-f', iotests.imgfmt, disk, '1M')
 +
-+    if (flags == RAM_CONTROL_FINISH) {
-+        if (qemu_rdma_drain_cq(rdma, errp) < 0) {
-+            return -1;
-+        }
-+        rdma_nbsent_stats_dump(rdma);
-+    }
-+    return qemu_rdma_exchange_send(rdma, &head, NULL, NULL, NULL, NULL, errp);
-+}
++with iotests.VM() as vm:
 +
- static int rdma_consumer_dispatch(RDMAContext *rdma, const RDMACmd *cmd,
-                                   bool *stop)
- {
-@@ -2866,6 +2918,16 @@ static int rdma_consumer_dispatch(RDMAContext *rdma, const RDMACmd *cmd,
-     int ret = 0;
- 
-     switch (cmd->type) {
-+    case RDMA_CMD_WRITE:
-+        ret = qemu_rdma_write_chunk(rdma, cmd->block_index,
-+                                    cmd->chunk_index, &err);
-+        break;
-+    case RDMA_CMD_FLUSH:
-+        ret = qemu_rdma_drain_cq(rdma, &err);
-+        break;
-+    case RDMA_CMD_REG_STOP:
-+        ret = rdma_consumer_reg_stop(rdma, cmd->flags, &err);
-+        break;
-     case RDMA_CMD_FINISH:
-         ret = qemu_rdma_drain_cq(rdma, &err);
-         *stop = true;
-@@ -2895,6 +2957,9 @@ static void *rdma_consumer_thread(void *opaque)
-                 ring_set_abort(rdma);
-                 break;
-             }
-+            if (cmd.seq) {
-+                ring_barrier_complete(r, cmd.seq);
-+            }
-             ring_advance_tail(r);
-             continue;
-         }
++    vm.launch()
++
++    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
++        vm.cmd('blockdev-add', {
++            'driver': 'nbd',
++            'node-name': 'nbd0',
++            'server': {'type': 'unix', 'path': nbd_sock},
++        })
++        iotests.log('=== NBD Device connected ===')
++        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
++
++    iotests.log('=== NBD server down. Detect the break and start the connect '
++                'thread ===')
++    # client was in CONNECTED state a new operation updates to CONNECTING
++    log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
++    # in CONNECTING, the operation starts the connect thread
++    log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
++
++    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
++        iotests.log('=== NBD server up. Wait for the connect thread to park '
++                    'the channel ===')
++        # wait for the connect thread to get a new channel and stop
++        time.sleep(CONNECT_RETRY_DELAY + MAX_NBD_HANDSHAKE_DURATION)
++
++    iotests.log('=== NBD server down. The parked channel is closed ===')
++
++    with qemu_nbd_popen('-k', nbd_sock, '-f', iotests.imgfmt, disk):
++        iotests.log('=== NBD server up. Restart the connect thread ===')
++        # operation will determine that the channel got closed and restart the
++        # connect thread
++        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
++        # Wait for it to succeed
++        iotests.log('=== Wait for the connect thread to park the new channel. '
++                    'Subsequent operations are successful ===')
++        time.sleep(MAX_NBD_HANDSHAKE_DURATION)
++        log(vm.qmp('x-qemu-io', device='nbd0', command='write -P 0x5a 0 64k'))
+diff --git a/tests/qemu-iotests/tests/nbd-stale-connection.out b/tests/qemu-iotests/tests/nbd-stale-connection.out
+new file mode 100644
+index 0000000000..50f80e2305
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-stale-connection.out
+@@ -0,0 +1,17 @@
++Start NBD server
++=== NBD Device connected ===
++{"return": {}}
++Kill NBD server
++=== NBD server down. Detect the break and start the connect thread ===
++{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
++{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
++Start NBD server
++=== NBD server up. Wait for the connect thread to park the channel ===
++Kill NBD server
++=== NBD server down. The parked channel is closed ===
++Start NBD server
++=== NBD server up. Restart the connect thread ===
++{"error": {"class": "GenericError", "desc": "write failed: Input/output error"}}
++=== Wait for the connect thread to park the new channel. Subsequent operations are successful ===
++{"return": {}}
++Kill NBD server
 -- 
-2.39.5
+2.43.0
 
 
