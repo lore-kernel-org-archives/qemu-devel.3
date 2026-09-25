@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C1BC98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605D7C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82W-0006kn-TI; Fri, 25 Sep 2026 11:40:44 -0400
+	id 1xA82K-0006fo-59; Fri, 25 Sep 2026 11:40:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82U-0006jc-Q5
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:42 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82H-0006fP-Ru
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:29 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82T-0004ct-9R
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:42 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82F-0004b4-Uq
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:29 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D6C0520049;
- Fri, 25 Sep 2026 15:40:31 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7167921E7C;
+ Fri, 25 Sep 2026 15:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1790350822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GOpER+kyEWo8fW1URf1jlOhjhXIM/Qlj5C5S6Edhpm0=;
- b=HTE+g6K9C02wQCJNcmOowTU+7al1ypQgcZD+fyIqZaC3ma1XycW2L0REyd9uN9jwkBSUGK
- HKOSJAdklN+XPNpODUKyI3Zjk4xW66WcCsRMs3USejUuXwC974tFaH4TId78/H+Pov6Nnk
- rMhTfIa5XdFaFweIuhIXyLx1BpDPnP8=
+ bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
+ b=zNbZGkAUVSql2DPEvjRwns4O1Cm9nzk+EGgmDAJv7xeQtxMvfTYMWY8F6vdPTMER1R8iXg
+ IVGO02xshM2D5V1ru4Gq6GXTPqg4L4MtMfUAJceqkysaJOLAHa6Tw0QceU7MoGxhKj457W
+ dGvv06TCGY9dh4m7LttMhBFuQU10rZU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350836;
+ s=susede2_ed25519; t=1790350822;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GOpER+kyEWo8fW1URf1jlOhjhXIM/Qlj5C5S6Edhpm0=;
- b=DhiKjxOsUuR+dojYDllxHI/5pJWeg/ewRoPeqlwrwwdmv4VOUW3aWAh1D31xw5g+ezpGG/
- Pi5qTeO7Ar9n3uBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tVUl4qAu;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=CnG8wFoN
+ bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
+ b=fYzYns4uTQPb02Ud48qYkwc5X1nQSDeeK9y8gpBMdRmlx61ohBZM2uSigI+m3oNRx+Daoq
+ IysGAUgOZUEda+Dg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=em5Il3ez;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1KXV9JUM
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350831; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1790350818; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GOpER+kyEWo8fW1URf1jlOhjhXIM/Qlj5C5S6Edhpm0=;
- b=tVUl4qAu8uPp1xE9qMA0zFEIrfbv3lcoPA/jTRUyvXO163SaQSh6+eWiwseai3tP6vKsNk
- zJPIpoKOsN/FuVUG6n+VStLjIYuhDYJj9b3gFyiokhFiCg9iou76MCao8JCeIpWH1oETyT
- yM1uhmWlOb5ohrMHWKYmRR1xfpnNkzE=
+ bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
+ b=em5Il3ezsY1RDGwJvWLZylPRcImwpYsRhRNhwNdW4MNO5Z7DIbKn7IxDAtnNoqOda8oIWg
+ lKTex1V3YVA2YC8GV3h3qPSJbxQRJoPipBKTsMoQCrzjo4BQWSFD3n/v89if/aAq2LMLIZ
+ k5L73QGQHJOqULfPvAmUVAMHxeMmFJo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350831;
+ s=susede2_ed25519; t=1790350818;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GOpER+kyEWo8fW1URf1jlOhjhXIM/Qlj5C5S6Edhpm0=;
- b=CnG8wFoNK3WtMgxhNPu9Q4yiLR9FfIoVU7/1fbRepi0eBYjFvXX37IAnfr96bX9YjDch1r
- CFCJEEX+UrvOMoAg==
+ bh=zDTHNuIn4GHwcHpTCa/xceDGSLHn9ucpmuchLkMWlzA=;
+ b=1KXV9JUMNijpgnTqUh+l9nG/frIdd7P7eS19I9uB6o9VfSb17UwN8bOkcK+F+LJvLVpKZ0
+ E33OAEo/CWASrCCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ED58513297;
- Fri, 25 Sep 2026 15:40:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 60CCB1333B;
+ Fri, 25 Sep 2026 15:40:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T13
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T4
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:17 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 12/19] migration/options.c: Don't export migrate_tls_opts_free
-Date: Fri, 25 Sep 2026 12:40:03 -0300
-Message-ID: <20260925154010.599247-13-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 03/19] migration: remove duplicate VMSTATE_STRUCT_VARRAY
+Date: Fri, 25 Sep 2026 12:39:54 -0300
+Message-ID: <20260925154010.599247-4-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: D6C0520049
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Queue-Id: 7167921E7C
+X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ MX_GOOD(-0.01)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,39 +128,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migrate_tls_opts_free function was never used outside
-options.c. Make it static.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Fixes: 028d4ec43de6 ("migration: Remove duplicate vmstate macros")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 2 +-
- migration/options.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ include/migration/vmstate.h | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 05b026f4bf..f4bba8ca26 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1063,7 +1063,7 @@ AnnounceParameters *migrate_announce_params(void)
-     return &ap;
- }
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 7d2b786382..2901877308 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -725,16 +725,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+ #define VMSTATE_STRUCT_VARRAY_POINTER_UINT32 VMSTATE_STRUCT_VARRAY_POINTER
+ #define VMSTATE_STRUCT_VARRAY_POINTER_UINT16 VMSTATE_STRUCT_VARRAY_POINTER
  
--void migrate_tls_opts_free(MigrationParameters *params)
-+static void migrate_tls_opts_free(MigrationParameters *params)
- {
-     qapi_free_StrOrNull(params->tls_creds);
-     qapi_free_StrOrNull(params->tls_hostname);
-diff --git a/migration/options.h b/migration/options.h
-index b46221998a..c272eb6208 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -93,5 +93,4 @@ uint64_t migrate_rdma_chunk_size(void);
+-#define VMSTATE_STRUCT_VARRAY(_field, _state, _field_num, _version, _vmsd, \
+-                              _type) {                                  \
+-    .name       = (stringify(_field)),                               \
+-    .num_indirect = vmstate_field_offset(_state, _field_num),        \
+-    .version_id = (_version),                                        \
+-    .vmsd       = &(_vmsd),                                          \
+-    .size       = sizeof(_type),                                     \
+-    .flags      = VMS_STRUCT | VMS_VARRAY,                           \
+-    .offset     = vmstate_offset_varray(_state, _field, _type),      \
+-}
+ #define VMSTATE_STRUCT_VARRAY_INT32 VMSTATE_STRUCT_VARRAY
+ #define VMSTATE_STRUCT_VARRAY_UINT32 VMSTATE_STRUCT_VARRAY
  
- bool migrate_params_check(MigrationParameters *params, Error **errp);
- void migrate_params_init(MigrationParameters *params);
--void migrate_tls_opts_free(MigrationParameters *params);
- #endif
 -- 
 2.53.0
 
