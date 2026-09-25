@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08948C98325
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226DFC98325
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8SP-00083i-3K; Fri, 25 Sep 2026 12:07:29 -0400
+	id 1xA8S6-0007AE-00; Fri, 25 Sep 2026 12:07:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8DZ-0007s3-Um
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:10 -0400
-Received: from mail-wr2-x13.google.com ([2a00:1450:4864:30::13])
+ id 1xA8DQ-0007pU-PV
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:02 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dmitrii.omelchenko@ionos.com>)
- id 1xA8DX-0005xX-TU
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:09 -0400
-Received: by mail-wr2-x13.google.com with SMTP id
- ffacd0b85a97d-482f6350f89so674184f8f.3
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:52:07 -0700 (PDT)
+ id 1xA8DO-0005wF-7D
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:52:00 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49cd38e0f79so6339935e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 08:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1790351526; x=1790956326; darn=nongnu.org;
+ d=cloud.ionos.com; s=google; t=1790351517; x=1790956317; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vF6kFcDMQ1VuXLdbyXfYLNVRnEpNUNDUbAvytuAdsMo=;
- b=BmG4kewkHlK0+9Uq6dqchujzQO2qWUtwWFDDXd91VrdsqHCRk22BC9mGm/nwDkFjZb
- 11RAoBx1e3+4aTpgTSy5ruOVMVNxyoCSYjNC6Ui+of9KTiN2XJK0TAyKwak4PDRl+rVO
- wPfMvnFDIfb33peIm+XVzwZDh6QJYXZO9JVqtBWT80iGN1Ukvnu1zduoU6maE2WwVzRb
- al37e+IdgbOQ9QVJzEfIhhaQsJlqL3AUO/kx+7B3B5hwgdkSh97nmiguTyYbRxH4o+7S
- 7YA5iN1qgh/w3Df0hEFgW8jP1+WLpvfjmUtlki7xhbgC4yxb3BZEzSueL7CXTWQZ8e3x
- qJvw==
+ bh=BQTziWc8i9CyJZknsQwFL2OKVJrU1qwkxlEOdcl+8cU=;
+ b=EGfr/On3A52ZGPgAAGoII/3WbCP4TPpZa4oEYgFvfPQFdP1UhzMX4XpUlmZTjRC+eW
+ oyOaAinCE7+JJ+yWhpCM1FgvtKPWVuws+ZWrXtunQ7VC8YpvDBo/5bdl5zwBUCCr5lyb
+ Za4T5teUr4Gy5LEdU0oI7bSJo0aZJe3o9A/tFdo8ycWOp6Su8rXK3UrItft5CV9cklsu
+ vSp1FwonuAUnf4Bnxc2XDko5P2JzGFn3XwsVgC1fjWGk0VUf4OMZp0ic5lxVtY3ErStA
+ 281oYeAzDFx2/PcDNehYh68yr2+EaOTr9QLk7J3OUr2a+xVQW6lmW8ESGrPL6d6hQbFH
+ WeUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790351526; x=1790956326;
+ d=1e100.net; s=20260707; t=1790351517; x=1790956317;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vF6kFcDMQ1VuXLdbyXfYLNVRnEpNUNDUbAvytuAdsMo=;
- b=ZwnirxRx1mW1Omsd1cf7I7sX2VolR7Rb71VO48QjMhHPNbsT+xfwVUBAx2dp+hcEpD
- 8yhsi7Rsq/515nCpsSJQVCme0jdhk78qMDBruluHI7OzuBnEaLaQQxme2nQ8W5WGa7rU
- dFs/w0GEkCtf7TeUqhrdZvhtqLF7cAHLb3/39Rv0tVZCAXNqq+SWogH3cZxbbkgYPAMD
- iZsgNRsWfahX1hq8RN35fc2z9if8dDv4Uwn0rKXoU8d1g/0wsXMvfEU3v0PS2zwCMPXT
- LnSdllUJqUICPjyg7YwylfA8U4o8r5vCwsetXfxjJ+D6TqAL0Mmd8yZuzzAGXiCkHf6w
- nVTg==
-X-Gm-Message-State: AFuF++kjyNAF2FNQKJ+HRruhYx+TGH62av/qQLiZtNmkDi7yQPgqEKCO
- rlQ9ci+kX2DrC93fO9Cc+aIn4xQCdff9zywsYq+R6K2cNizI2SNZeK0VRCG+9aGapdcOsOfZUq4
- +Zwnuw60WPw==
-X-Gm-Gg: AYBFou040ymqPl8udkw0NyNKD7/Pl1bKCCRR++2Sir+P/xzTFMo3vA8fGNxMhVZxOo0
- xd/dP89TorXCEG67R7HUk003pjByAGsU1pCs5bsSwvImTZ3r+9QCLcLlDCOfbhjZ0976yFkgjhV
- DVqyW2AXCxfswTmgwGzsW9mY2B305B/v2MRYWI1GPEadZdxsYFw+dYtf4ff8SBtldRBC/wz0WZW
- y5SGlu3qvc2/rYPsbidESRNGJIGKd+qG2gjo6AAieIiQu7tBi3VzBXiLsgOOYxv/P5oSAUJt68w
- tg+rekgN6VCAfeq7TdW+PGMoLUOk0DB0AP8wDw8lGuD4gkfyHqEijuui7/+7A/O0vCqnLiGK6E9
- rkkDeLTtzEJi7IogyPx+SmSMU8Dlr7zw1SywzYmh5xBPC1WS3v1jdsYseecBok/7osWaBKV1fuy
- LN/IDrVM+KUGaQP1Zme4UUHhlJAG6vvWG32Wvq1nhNae66EqdUYCWckjszN0D7N8CqW2RTdYBx0
- jlFk47YYTDr3eYhvRLETHTRcuRyA05povNH+WPJEg==
-X-Received: by 2002:a05:600d:486:20b0:49f:e941:e26 with SMTP id
- 5b1f17b1804b1-49ff06b2f01mr36998955e9.4.1790351526029; 
- Fri, 25 Sep 2026 08:52:06 -0700 (PDT)
+ bh=BQTziWc8i9CyJZknsQwFL2OKVJrU1qwkxlEOdcl+8cU=;
+ b=LJLI0D9IBsqXquShVVoGw2eSc1O9BDxR/HNIQeVBzoPQM7X9t/NbpH2a3nBU9S5Vo2
+ /4nnigXrT51JWr1mYOMQlHB9PMGHjjdo9vL5PIqcjy7DeWmzMuTmdGpqG1UWmLrLu4zg
+ JEqpdT1syv5kW4w9aP0rGcC8oqyCp2jQ2NL/4Y3ROHxqvmIQPzZ8oxWyiVmWKTJ80GRq
+ I/c7W6BlLIiRH0Kg57lC+TFAhPSUiLZNqlMPZFNaIxnrW4JEaZ7h+1n6Fl/6DtMyszKA
+ HbHXsmxVHOxXIoV0r01/mDmQxO0qLyDrnAQvTRg32CBCKcpWcDSWWkSI00BYFxTwFPXT
+ Tm6A==
+X-Gm-Message-State: AFuF++lZv1DaayoK977G0rwV7xyeDBLgVQ9qpD5FlhyJBB8/xaoSHy1b
+ uK2tfbPh2xuljnvMmBeOySKGbR7kDmr3GtFct9yyIDNl9RM9n4NRQC2CGDhkLTHs0HOAFuz38AK
+ bXlbN8WLU6g==
+X-Gm-Gg: AYBFou3NjzPTgS2C4X2WMGe48n2yUBL2zIdGq7mTbFNZ8S9XO7EA3BT0j8tInh7yGV0
+ UyQkODy9rUyPRWGnejaGbLcxAm9LOT8CN40FSMry4iZGr/PFrw3ZwMKvmwhg1YlsOTHcXtWUV2c
+ sIkvprAlVCb57OQgYZ0yw5i05HZVwLLKBFzb8WNMqNMkVLlMzF1RbD2PeqlvWvsGvFoDY1RUn1X
+ G1L1+wo4xzczatTc6TNqbFDGK4nrY6DEIOgNkhG282qINf6CLfVE6w/P2uyWCk45fZXAjcu/fQO
+ RebxfCDi0fjk48faCN+UafHoqvdWTj2wzqq4LTkpKcIXDv5IrsMzm/Kc5Z11gjqQfhHfPyDzJt6
+ hVye4SfVvB/082a3HzuQ56cdbuvY3CyaPnI8rvyCz7j3HXoUQLCF4+nJ7hAP3ikNY66eAV+NyZT
+ KhXH948ezFqqhkCfO3lr47B/xPxFMjUG3igxgjj/Rq74fKxIDX+Q5dP0aXYwuJG+rzhGl29KPLx
+ 81S2Xkr4Tss5xBxNbXpHR+BKSfWfjgVxZCtg6kmhQ==
+X-Received: by 2002:a05:600c:4f10:b0:49c:dca4:94c with SMTP id
+ 5b1f17b1804b1-49fe66d09c5mr125779165e9.13.1790351516791; 
+ Fri, 25 Sep 2026 08:51:56 -0700 (PDT)
 Received: from PF-5Z7P7F.fkb.profitbricks.net ([212.227.34.98])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.52.05
+ 5b1f17b1804b1-49ff0f1f2e3sm112435875e9.0.2026.09.25.08.51.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 08:52:05 -0700 (PDT)
+ Fri, 25 Sep 2026 08:51:56 -0700 (PDT)
 From: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Li Zhijian <lizhijian@fujitsu.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
  Jinpu Wang <jinpu.wang@cloud.ionos.com>,
  Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
-Subject: [RFC PATCH 04/13] migration/rdma: Add the send consumer thread (drain
- only)
-Date: Fri, 25 Sep 2026 17:51:39 +0200
-Message-ID: <20260925155149.843870-5-dmitrii.omelchenko@cloud.ionos.com>
+Subject: [RFC PATCH 01/13] migration/rdma: Add nb_sent send-queue-depth stats
+Date: Fri, 25 Sep 2026 17:51:36 +0200
+Message-ID: <20260925155149.843870-2-dmitrii.omelchenko@cloud.ionos.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
 References: <20260925155149.843870-1-dmitrii.omelchenko@cloud.ionos.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=2a00:1450:4864:30::13;
- envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wr2-x13.google.com
+Received-SPF: permerror client-ip=2a00:1450:4864:31::11;
+ envelope-from=dmitrii.omelchenko@ionos.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -90,7 +89,7 @@ X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Sep 2026 12:04:59 -0400
+X-Mailman-Approved-At: Fri, 25 Sep 2026 12:04:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,179 +104,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create and join the consumer thread in rdma_consumer_start/stop and add
-the ring operations it needs to drain and shut down: ring_pop,
-ring_advance_tail, ring_idle_wait and ring_set_abort.
-rdma_consumer_dispatch handles only RDMA_CMD_FINISH (drain the CQ and
-exit).  The old send path is still in charge, so the ring carries only
-the FINISH pushed at teardown.
+Track whole-migration counters for the RDMA send queue: peak nb_sent
+(max outstanding writes), the number of posts, how many posts hit a
+full send queue, and how many times the queue drained to zero.  Reset
+at RAM_CONTROL_SETUP and dumped at RAM_CONTROL_FINISH; migration-thread
+only, no locking.
 
 Signed-off-by: Dmitrii Omelchenko <dmitrii.omelchenko@cloud.ionos.com>
 ---
- migration/rdma.c | 120 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 114 insertions(+), 6 deletions(-)
+ migration/rdma.c       | 60 ++++++++++++++++++++++++++++++++++++++++++
+ migration/trace-events |  1 +
+ 2 files changed, 61 insertions(+)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index 2d4807c6b8..c3070b7a92 100644
+index 444123cbca..50f5d7b839 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -2111,7 +2111,7 @@ static void qemu_rdma_cleanup(RDMAContext *rdma)
- {
-     Error *err = NULL;
+@@ -302,6 +302,12 @@ typedef struct RDMAContext {
+     /* number of outstanding writes */
+     int nb_sent;
  
--    /* Free the send ring before touching the QP. */
-+    /* Stop and join the consumer before touching the QP it owns. */
-     rdma_consumer_stop(rdma);
- 
-     if (rdma->cm_id && rdma->connected) {
-@@ -2764,6 +2764,37 @@ static bool ring_full(RDMASendRing *r)
-     return (r->head - qatomic_load_acquire(&r->tail)) >= RDMA_SEND_RING_SIZE;
++    /* nb_sent statistics */
++    uint64_t nbsent_max;            /* peak outstanding writes */
++    uint64_t nbsent_posts;          /* posts (nb_sent++) */
++    uint64_t nbsent_full_hits;      /* posts that hit a full SQ */
++    uint64_t nbsent_zero_hits;      /* drains to zero */
++
+     /* store info about current buffer so that we can
+        merge it with future sends */
+     uint64_t current_addr;
+@@ -1164,6 +1170,11 @@ static uint64_t qemu_rdma_make_wrid(uint64_t wr_id, uint64_t index,
+     return result;
  }
  
-+static bool ring_empty(RDMASendRing *r)
++/* nb_sent statistics counters */
++static void rdma_nbsent_inc(RDMAContext *rdma, uint64_t nb_sent);
++static void rdma_nbsent_full(RDMAContext *rdma);
++static void rdma_nbsent_zero(RDMAContext *rdma);
++
+ /*
+  * Consult the connection manager to see a work request
+  * (of any kind) has completed.
+@@ -1213,6 +1224,9 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+ 
+         if (rdma->nb_sent > 0) {
+             rdma->nb_sent--;
++            if (rdma->nb_sent == 0) {
++                rdma_nbsent_zero(rdma);
++            }
+         }
+     } else {
+         trace_rdma_poll_other(wr_id, rdma->nb_sent);
+@@ -1438,6 +1452,7 @@ static bool qemu_rdma_post_send(RDMAContext *rdma,
+     ret = ibv_post_send(rdma->qp, send_wr, &bad_wr);
+     if (ret == ENOMEM && rdma->nb_sent) {
+         trace_rdma_post_send_queue_full(send_wr->wr_id, rdma->nb_sent);
++        rdma_nbsent_full(rdma);
+         ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+         if (ret < 0) {
+             error_setg(errp, "rdma migration: failed to make room for %s",
+@@ -1953,6 +1968,7 @@ static int qemu_rdma_write_flush(RDMAContext *rdma, Error **errp)
+     if (ret == 0) {
+         rdma->nb_sent++;
+         trace_rdma_write_flush(rdma->nb_sent);
++        rdma_nbsent_inc(rdma, rdma->nb_sent);
+     }
+ 
+     rdma->current_length = 0;
+@@ -2998,6 +3014,41 @@ err:
+     return -1;
+ }
+ 
++static void rdma_nbsent_inc(RDMAContext *rdma, uint64_t nb_sent)
 +{
-+    return (qatomic_load_acquire(&r->head) - r->tail) == 0;
++    rdma->nbsent_posts++;
++    if (nb_sent > rdma->nbsent_max) {
++        rdma->nbsent_max = nb_sent;
++    }
 +}
 +
-+static void ring_set_abort(RDMAContext *rdma)
++static void rdma_nbsent_full(RDMAContext *rdma)
 +{
-+    RDMASendRing *r = rdma->send_ring;
++    rdma->nbsent_full_hits++;
++}
 +
-+    if (!r) {
++static void rdma_nbsent_zero(RDMAContext *rdma)
++{
++    rdma->nbsent_zero_hits++;
++}
++
++static void rdma_stats_reset(RDMAContext *rdma)
++{
++    rdma->nbsent_max = 0;
++    rdma->nbsent_posts = 0;
++    rdma->nbsent_full_hits = 0;
++    rdma->nbsent_zero_hits = 0;
++}
++
++static void rdma_nbsent_stats_dump(RDMAContext *rdma)
++{
++    if (rdma->nbsent_posts == 0) {
 +        return;
 +    }
-+    qemu_mutex_lock(&r->wait_lock);
-+    qatomic_set(&r->abort, true);
-+    qemu_cond_broadcast(&r->not_full);
-+    qemu_cond_broadcast(&r->not_empty);
-+    qemu_cond_broadcast(&r->barrier_cv);
-+    qemu_mutex_unlock(&r->wait_lock);
++    trace_rdma_nbsent_stats(rdma->nbsent_max, rdma->nbsent_posts,
++                            rdma->nbsent_full_hits, rdma->nbsent_zero_hits);
 +}
 +
-+static void ring_wake_producer(RDMASendRing *r)
-+{
-+    smp_mb();   /* order the *_waiting load below vs the sleeper's store */
-+    if (qatomic_read(&r->producer_waiting)) {
-+        qemu_mutex_lock(&r->wait_lock);
-+        qemu_cond_broadcast(&r->not_full);
-+        qemu_cond_broadcast(&r->barrier_cv);
-+        qemu_mutex_unlock(&r->wait_lock);
-+    }
-+}
-+
- /* Producer -> wake the consumer if it is idle on an empty ring. */
- static void ring_wake_consumer(RDMASendRing *r)
+ int rdma_control_save_page(QEMUFile *f, ram_addr_t block_offset,
+                            ram_addr_t offset, size_t size)
  {
-@@ -2800,10 +2831,84 @@ static int ring_push(RDMAContext *rdma, const RDMACmd *cmd)
-     return 0;
- }
- 
--/*
-- * Producer: allocate the send ring once (idempotent).  The consumer
-- * thread that drains it is created in a later change.
-- */
-+static bool ring_pop(RDMASendRing *r, RDMACmd *cmd)
-+{
-+    if (ring_empty(r)) {
-+        return false;
-+    }
-+    *cmd = r->ring[r->tail & RDMA_SEND_RING_MASK];   /* after load_acquire */
-+    return true;
-+}
-+
-+static void ring_advance_tail(RDMASendRing *r)
-+{
-+    qatomic_store_release(&r->tail, r->tail + 1);
-+    ring_wake_producer(r);
-+}
-+
-+/* Consumer: sleep until the ring is non-empty or aborted. */
-+static void ring_idle_wait(RDMASendRing *r)
-+{
-+    qemu_mutex_lock(&r->wait_lock);
-+    r->consumer_waiting = true;
-+    smp_mb();                           /* pair with ring_wake_consumer() */
-+    while (ring_empty(r) && !r->abort) {
-+        qemu_cond_wait(&r->not_empty, &r->wait_lock);
-+    }
-+    r->consumer_waiting = false;
-+    qemu_mutex_unlock(&r->wait_lock);
-+}
-+
-+static int rdma_consumer_dispatch(RDMAContext *rdma, const RDMACmd *cmd,
-+                                  bool *stop)
-+{
-+    Error *err = NULL;
-+    int ret = 0;
-+
-+    switch (cmd->type) {
-+    case RDMA_CMD_FINISH:
-+        ret = qemu_rdma_drain_cq(rdma, &err);
-+        *stop = true;
-+        break;
-+    default:
-+        break;
-+    }
-+    if (ret < 0 && err) {
-+        error_report_err(err);
-+    }
-+    return ret;
-+}
-+
-+static void *rdma_consumer_thread(void *opaque)
-+{
-+    RDMAContext *rdma = opaque;
-+    RDMASendRing *r = rdma->send_ring;
-+    bool stop = false;
-+
-+    rcu_register_thread();
-+
-+    while (!qatomic_read(&r->abort) && !stop) {
-+        RDMACmd cmd;
-+
-+        if (ring_pop(r, &cmd)) {
-+            if (rdma_consumer_dispatch(rdma, &cmd, &stop) < 0) {
-+                ring_set_abort(rdma);
-+                break;
-+            }
-+            ring_advance_tail(r);
-+            continue;
-+        }
-+        ring_idle_wait(r);
-+    }
-+
-+    if (qatomic_read(&r->abort)) {
-+        /* make the failure visible to the producer's rdma_errored() checks */
-+        rdma->errored = true;
-+    }
-+    rcu_unregister_thread();
-+    return NULL;
-+}
-+
- static void rdma_consumer_start(RDMAContext *rdma)
- {
-     RDMASendRing *r;
-@@ -2820,9 +2925,10 @@ static void rdma_consumer_start(RDMAContext *rdma)
-     rdma->pend_block = -1;        /* no pending WRITE span yet */
-     /* Producer-only flag (migration thread + cleanup, never concurrent). */
-     rdma->consumer_started = true;
-+    qemu_thread_create(&rdma->consumer_thread, "rdma-send",
-+                       rdma_consumer_thread, rdma, QEMU_THREAD_JOINABLE);
- }
- 
--/* Producer: tear down the send ring. */
- static void rdma_consumer_stop(RDMAContext *rdma)
- {
-     RDMASendRing *r = rdma->send_ring;
-@@ -2835,6 +2941,8 @@ static void rdma_consumer_stop(RDMAContext *rdma)
-     if (!qatomic_read(&r->abort)) {
-         ring_push(rdma, &cmd);
+@@ -3547,6 +3598,10 @@ int rdma_registration_start(QEMUFile *f, uint64_t flags)
+         return -1;
      }
-+    qemu_thread_join(&rdma->consumer_thread);
+ 
++    if (flags == RAM_CONTROL_SETUP) {
++        rdma_stats_reset(rdma);
++    }
 +
-     qemu_mutex_destroy(&r->wait_lock);
-     qemu_cond_destroy(&r->not_full);
-     qemu_cond_destroy(&r->not_empty);
+     trace_rdma_registration_start(flags);
+     qemu_put_be64(f, RAM_SAVE_FLAG_HOOK);
+     return qemu_fflush(f);
+@@ -3581,6 +3636,11 @@ int rdma_registration_stop(QEMUFile *f, uint64_t flags)
+     }
+ 
+     qemu_fflush(f);
++
++    if (flags == RAM_CONTROL_FINISH) {
++        rdma_nbsent_stats_dump(rdma);
++    }
++
+     ret = qemu_rdma_write_flush(rdma, &err);
+ 
+     if (ret < 0) {
+diff --git a/migration/trace-events b/migration/trace-events
+index db911fe6f2..f8ed6a7250 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -245,6 +245,7 @@ rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
+ rdma_write_flush(int sent) "sent total: %d"
+ rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+ rdma_post_send_queue_full(uint64_t wr_id, int sent) "send queue full, wr_id=%" PRIu64 ", outstanding writes=%d"
++rdma_nbsent_stats(uint64_t max, uint64_t posts, uint64_t full_hits, uint64_t zero_hits) "nb_sent max %" PRIu64 " posts %" PRIu64 " full-queue hits %" PRIu64 " drains to zero %" PRIu64
+ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
+ rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+ rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
 -- 
 2.39.5
 
