@@ -4,61 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA13DC98321
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 12:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA54C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 12:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA4vE-0004yn-EC; Fri, 25 Sep 2026 08:21:00 -0400
+	id 1xA4vt-0005O3-Cv; Fri, 25 Sep 2026 08:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xA4vC-0004yJ-FY
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 08:20:58 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xA4vA-00065E-C5
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 08:20:58 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 47A335832AF;
- Fri, 25 Sep 2026 14:20:51 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id pJPo3jbN9qRm; Fri, 25 Sep 2026 14:20:49 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3CF0B583223; Fri, 25 Sep 2026 14:20:49 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3B6D45831F0;
- Fri, 25 Sep 2026 14:20:49 +0200 (CEST)
-Date: Fri, 25 Sep 2026 14:20:49 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-cc: Kevin Wolf <kwolf@redhat.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- "Michael S . Tsirkin" <mst@redhat.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>, 
- Warner Losh <imp@bsdimp.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-In-Reply-To: <arZZhpR5_nPybOUo@redhat.com>
-Message-ID: <e030a85d-a5d5-8fc6-5d1a-41167f7a95bf@eik.bme.hu>
-References: <20260921075251.12831-1-pbonzini@redhat.com>
- <20260921075251.12831-2-pbonzini@redhat.com> <arEvLLYK9A5MKNdE@redhat.com>
- <arP7TDfz7lz699KJ@redhat.com> <87ik3vyp3i.fsf@draig.linaro.org>
- <arT_kefzEhqg8-FB@redhat.com> <arUJxE0F7Q3Cw5sk@redhat.com>
- <arZHWKAgr-GYvoeX@redhat.com> <arZZhpR5_nPybOUo@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA4vr-0005Nh-N8
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 08:21:39 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA4vp-0006AR-UG
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 08:21:39 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 986181F799;
+ Fri, 25 Sep 2026 12:21:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790338891; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dlhq1rQCcFf4Ok0sJfffEzYV9Y+9RCSxGHwVlX5CKGs=;
+ b=uk0k41W+5jALahGAzUnOA8a7FJmFb5c1GJq3utWQAd3mxX/zoo+APoslcmSyerK7HvFITl
+ QpHHrn5dokBTvndNRmoRu6NqNBzYpRXhgFIfupsr70GU7WAzr2kDQ1SCCpftbOTqTwbjuq
+ R4pLvo4M5zp3Ojq10zvrs4/DGaAxlhE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790338891;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dlhq1rQCcFf4Ok0sJfffEzYV9Y+9RCSxGHwVlX5CKGs=;
+ b=GDYQ3ODQM1Wrds/DZR6FCSN5CwijcownjGMo1bHCPhvqTHvBVPNf+AS/yYPITYUgE7CTzF
+ RRyyd4W3t8WarWDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790338887; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dlhq1rQCcFf4Ok0sJfffEzYV9Y+9RCSxGHwVlX5CKGs=;
+ b=xlpaK3A9DrZQ6ysj0hwtFBxVQh3tSCul6cqXxMp1tfKmGcObY6vBw5/sfmEOBIaLTEjflX
+ K0FaUACgWTn0xBbqUf6/TQAA1Jrle2cGQdPyghBNrvqOvJ9Eqz953elgO4Poh0k1keqo58
+ Gem/bfzR6YX/GG/DDrVnuzxMdwjFYvE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790338887;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dlhq1rQCcFf4Ok0sJfffEzYV9Y+9RCSxGHwVlX5CKGs=;
+ b=jfgna6GWrVgdmzkYUtVNt228qOjKcO+G2d15Ki3SbAFNei0d2AbTvNK9OUQaIqay9H1CnT
+ t2496jSsUE99VKBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1963213432;
+ Fri, 25 Sep 2026 12:21:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Mse+K0ZntmpmZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 12:21:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, Michael
+ Roth <michael.roth@amd.com>
+Subject: Re: [RFC PATCH 07/14] qemu-options: Consolidate qemu_opts_parse*
+ functions
+In-Reply-To: <arZLO5A3S5A_2yE3@redhat.com>
+References: <20260918223002.1892021-1-farosas@suse.de>
+ <20260918223002.1892021-8-farosas@suse.de> <arZLO5A3S5A_2yE3@redhat.com>
+Date: Fri, 25 Sep 2026 09:21:20 -0300
+Message-ID: <87qzih8qtb.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,46 +122,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not directly related to this patch but as an input to this discussion I'd 
-like to bring to your attention how some people use AI now. With LLMs 
-being able to do more, some users who have no idea about coding or QEMU 
-internals but want to use QEMU for things that we could not deliver, now 
-just maintain a fork and let the AI add features and fix bugs they find 
-without ever contacting us or reporting these back. They now talk to the 
-AI instead of us because they get faster results and achieve what they 
-couldn't if they just waited for us to fix these issues or add the needed 
-features. I've briefly looked at one such repo and the patches the AI 
-makes are mostly nonsense but they also contain some actual fixes which at 
-the end is good enough for these users as long as the result does what 
-they want. But this could not be upstreamed by them anyway so they also 
-don't intend to do that. This is not ideal and a strict no-AI policy leads 
-to this practice becoming more common (although a less strict policy will 
-also not stop this if the AI is faster to deliver what they need). 
-Therefore I think we should allow some AI assisted contributions but we 
-have to put a limit on the minimum quality and requiring that people who 
-do such contributions have some idea of what they are doing and don't just 
-flood the project with nonsense patches tries to do that. The proposal to 
-require the human to review and describe the patches, sign the DCO (as a 
-proof they did review the patch and know what's in it) and participate in 
-review seems to be a good middle ground to protect the maintainers from 
-slop but also not lock out people who can't do everything by themselves 
-but could still make useful contribution with AI help.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Alternatively if we worry more about copyright the AI contributions could 
-be restricted to bug fixes that are not rewriting large parts of the code 
-and often are just a few lines that would not be copyrightable anyway. 
-That still locks out new features added with AI help but at least we get 
-notified about bugs they already fixed with AI even if at the end we 
-decide to fix the bug in a different way. Maybe people would not even 
-submit such patches if they can't just tell the AI to do it and they have 
-to do it by hand but we can't lift that limitation without getting too 
-much slop at this point.
+> On Fri, Sep 18, 2026 at 07:29:54PM -0300, Fabiano Rosas wrote:
+>> The qemu_opts_parse, qemu_opts_parse_list and qemu_opts_parse_noisily
+>> functions all call opts_parse(), they can reuse code.
+>>=20
+>> Consolidate them at qemu_opts_parse_list(). Use the presence of the
+>> Error pointer to determine whether the caller wants to be noisy: if
+>> there is an Error pointer, then use it, otherwise print the message.
+>>=20
+>> This makes the code more opaque, so keep the qemu_opts_parse and
+>> qemu_opts_parse_noisily functions as wrappers to make sure the intent
+>> at the callers is still clear.
+>
+> It is also somewhat differnt from the normal semantics in QEMU.
+>
+> The behaviour of passing NULL for an "Error **errp" parameter
+> indicates that the errors are to be ignored/discarded.
+>
+> This patch introduces atypical semantics, that the errors must
+> be printed, so I'm not entirely convinced this patch is a win.
+>
 
-All the above may resolve in a few years when these tools won't be freely 
-available any more but some people are already paying for this so maybe it 
-will stay that way and the "official" QEMU will just become one fork 
-between the many AI managed ones.
+I understand. This is the main reason why this series is RFC. I could
+exchange the implicit "pass NULL to mean noisily" with an explicit
+parameter 'bool noisily'.
 
-Regards,
-BALATON Zoltan
+>>=20
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  tests/unit/test-opts-visitor.c |  2 +-
+>>  util/qemu-option.c             | 32 ++++++++++++++++++--------------
+>>  2 files changed, 19 insertions(+), 15 deletions(-)
+>
+>> diff --git a/util/qemu-option.c b/util/qemu-option.c
+>> index bb38d305c9..c8e552823b 100644
+>> --- a/util/qemu-option.c
+>> +++ b/util/qemu-option.c
+>> @@ -938,7 +938,23 @@ QemuOpts *qemu_opts_parse(const char *group, const =
+char *params,
+>>  QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
+>>                                 bool permit_abbrev, Error **errp)
+>>  {
+>> -    return opts_parse(list, params, permit_abbrev, false, false, errp);
+>> +    bool noisily =3D !errp;
+>> +    QemuOpts *opts =3D NULL;
+>> +
+>> +    if (noisily) {
+>> +        Error *err =3D NULL;
+>> +        bool help_wanted =3D !opts_accepts_any(list);
+>> +
+>> +        opts =3D opts_parse(list, params, permit_abbrev, true, help_wan=
+ted, &err);
+>> +        if (!opts && err) {
+>> +            error_report_err(err);
+>> +        }
+>> +
+>> +    } else {
+>> +        opts =3D opts_parse(list, params, permit_abbrev, false, false, =
+errp);
+>> +    }
+>> +
+>> +    return opts;
+>>  }
+>>=20=20
+>>  /**
+>> @@ -952,19 +968,7 @@ QemuOpts *qemu_opts_parse_list(QemuOptsList *list, =
+const char *params,
+>>  QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *param=
+s,
+>>                                    bool permit_abbrev)
+>>  {
+>> -    Error *err =3D NULL;
+>> -    QemuOpts *opts;
+>> -    bool help_wanted =3D !opts_accepts_any(list);
+>> -
+>> -    opts =3D opts_parse(list, params, permit_abbrev, true, help_wanted,=
+ &err);
+>> -    if (!opts) {
+>> -        if (help_wanted) {
+>> -            assert(!err);
+>> -        } else {
+>> -            error_report_err(err);
+>> -        }
+>> -    }
+>> -    return opts;
+>> +    return qemu_opts_parse_list(list, params, permit_abbrev, NULL);
+>>  }
+>>=20=20
+>>  static bool qemu_opts_from_qdict_entry(QemuOpts *opts,
+>> --=20
+>> 2.53.0
+>>=20
+>>=20
+>
+> With regards,
+> Daniel
 
