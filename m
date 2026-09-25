@@ -4,67 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0557C98328
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C47C9830E
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 16:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA8V1-0001qE-3G; Fri, 25 Sep 2026 12:10:12 -0400
+	id 1xA8XG-0003lr-GO; Fri, 25 Sep 2026 12:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xA8Ft-0000EM-Nv; Fri, 25 Sep 2026 11:54:34 -0400
-Received: from 2.mo15.mail-out.ovh.net ([5.135.90.179])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xA8TC-0000g2-Fe
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:08:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guillaume.vincke@ovhcloud.com>)
- id 1xA8Fp-00067R-Ce; Fri, 25 Sep 2026 11:54:32 -0400
-Received: from DAGFR11EX3.OVH.local (unknown [10.110.43.115])
- by mo15.mail-out.ovh.net (Postfix) with ESMTPS id 4hrwHW1CQbz3wp7;
- Fri, 25 Sep 2026 15:54:15 +0000 (UTC)
-Received: from ovhcloud.com (109.190.254.61) by DAGFR11EX3.OVH.local
- (172.16.2.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Fri, 25 Sep
- 2026 17:54:13 +0200
-From: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
-To: <qemu-devel@nongnu.org>
-CC: <qemu-block@nongnu.org>, Eric Blake <eblake@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Kevin Wolf
- <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 1/2] nbd/client-connection: Fix client returning a closed
- channel
-Date: Fri, 25 Sep 2026 17:53:45 +0200
-Message-ID: <20260925155346.357703-2-guillaume.vincke@ovhcloud.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
-References: <20260925155346.357703-1-guillaume.vincke@ovhcloud.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xA8T7-0007ie-QF
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 12:08:17 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68PG0iT62515800
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:08:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mxB611+hWxACu6YmxPADCJtRZ0wFU7KHtrRoV4JAiV4=; b=h6Pn0XGyUnEerwj4
+ 0gFVt59oda3ZTK9GGqZlUzTWtCHuBKWwP5h+heAW+GeC2aoRjoxEXKQVkXV/pb+S
+ OoGV7zhPGKo1OJWmg34hIqHrIX/qmPw4Xy6sIsWPZQZCOnzszLhwSFW1UxQeiJZc
+ VNrKFkq6RtQQi4/2KxON3tuj0TZUXKP/5/M47ZobW1o0gX6+HIHAnTk4eG51L9pH
+ CMnm0MYXCCIdIoTrXBbhh015b87PeT2itGk+DCjOD2ZrkqkmX6o9XcZExseqUP/N
+ NMvt/oFfKzV4myV8GQMIioem30YNzP1FbnMEMq3LBvcju1JnrZytYGLgkqec8drr
+ NFVFEg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwce7b7pk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 16:08:11 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-91430af782dso20134176d6.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 09:08:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790352491; x=1790957291; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mxB611+hWxACu6YmxPADCJtRZ0wFU7KHtrRoV4JAiV4=;
+ b=WK2+9xn1qyO0geDYtPpOyz9KMwvSuFKMAwx9H64iWJUoTBlDNubsPqyHfM5i0HpCbl
+ NSccwuS0cPKACTBFuSepRGJgiPyfqaCXGh/yQM1jHbEp692ynJA89rk35Hphgzfk0bJi
+ UL4jDZ/WYInT21bvit9IE351ERaRcfvy/Qst9hrujrgi3+qEBqc4ZQWr+X+WCHiVAhz/
+ pUb6y9EATyY/bLtcjoCbFp9fCnmkSTDunGguaimByqjtivEXRGmABrA4mq2JULZ5W3/1
+ k7ww6RGzTL4GpxbfOoDwSJyS+ScvBiIGt0CMCr1zm5jKsyTopo6TR0pEMm1+M+NBsWPF
+ aj4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790352491; x=1790957291;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mxB611+hWxACu6YmxPADCJtRZ0wFU7KHtrRoV4JAiV4=;
+ b=jUXWK+T8+c+9azx/dbHLfkcICYs2O1RqWiQ9s9r4g2DyIx06P86MlIjWEAp6RHAJ8V
+ OTT5JoVwrC70VUokIc0DawI4QDDltCcdXlkCKIDHH0K2u6vlgMDTWK4ACQuPeJzwStxG
+ aHggpoABAxzY+rQe8P47UXuyZUQAh1P0n+zRH9aPFCtuH0PsZxlBfn4r12lRF76vjDYT
+ ajwPeCFXv4XG0AR5YRlwOuid445w7V9MCy1p8ppU1roGXWmdAv0AShpLiHPa7gphCcr4
+ H5yx3kk5P0mVw5N9q5BrneMTJLdJSHLtQsJng8AwtnBjpgatjOa+yX3lebxtsYooQBc6
+ Zg2A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByDYfwib5T6xvZx+jsE3B66cMOucmSN91dAEtbeeFxBuXG03n3BkbJM6zgGrsDwuuutlTytpukFsKlf@nongnu.org
+X-Gm-Message-State: AFuF++lDbOI6H+THNPD5MMgA2KGMAY3/RtljHUUP2dkJszStuowkYtmq
+ lw/g0vGtM8P6a4e1G6+U6sZTarOV5jmP5ra0f1Xg+Kol+kU1tBQq8Y3lPOEGvNrQTK2uFrJ8Ajw
+ AtBa0qK2kpqB0BNK6UvN/6bwtNCaQUwssIzmIuvHOh8ls9W787FtZwUEfVg==
+X-Gm-Gg: AYBFou3RHE8aQvdkyr4MN+EuJ6wpIzHQUZIGbWOnyUTpn696QxIQpDN6R9H56odroiT
+ 5fBdrvYXVT8oI223tjh44GU7Mx2gIcGFE4lMd1X02dRTtzjprnGFK2iriFlSeyKDFiowMihFsSH
+ kPjIQwNrDpEEPxNIBF/DwzQiXs7f3GHcjLD84zlF0dYOM2RA+sLhTKi3OorNIJEWI/LY3qLhDX2
+ rzjVsYIl6ZsEYJLlPzjPp6PwE3cycNtPD5jNFTEXaPsb22ZVSUIzIyxIDM287Pv8wc6VvnE39u7
+ z4k7wJxkZXfDBrz3QcxEFAWXykpesP7/v3EFrdgPZcLa4gCJWFi3dLRjgL2T/uVcT40z9i+d936
+ kmX0b+YN+EvXGzLCHuXtvmrrne24QYIeJvw==
+X-Received: by 2002:a05:6214:1cc5:b0:8ef:e0d0:9fae with SMTP id
+ 6a1803df08f44-9142f68c10bmr51355646d6.14.1790352490640; 
+ Fri, 25 Sep 2026 09:08:10 -0700 (PDT)
+X-Received: by 2002:a05:6214:1cc5:b0:8ef:e0d0:9fae with SMTP id
+ 6a1803df08f44-9142f68c10bmr51354756d6.14.1790352489995; 
+ Fri, 25 Sep 2026 09:08:09 -0700 (PDT)
+Received: from [192.168.68.102] ([177.94.15.187])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91430dd2858sm20134756d6.21.2026.09.25.09.08.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Sep 2026 09:08:09 -0700 (PDT)
+Message-ID: <9055f131-2091-4c6c-83b9-64980be56911@oss.qualcomm.com>
+Date: Fri, 25 Sep 2026 13:08:05 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [109.190.254.61]
-X-ClientProxiedBy: CAS4.OVH.local (172.16.1.4) To DAGFR11EX3.OVH.local
- (172.16.2.113)
-X-OVH-CORPLIMIT-SKIP: true
-x-ovh-tracer-id: 11035789415831191847
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTET5RUJGNfmJ9NTrJITjXYbdcTO3CD1/irQgvmbcVvU+j3yU3NLNdBQmSWzUyxGftnAL5Iois3+qtj5G+XGi6yJapT3529pc59sfOOCq/Kc8FQqT0XQF2xXbKMW9Wi/PJNlpjMFYJCk+XKL+8KSXvAiIysT66Iz/ljKq0uOHOb4fy1muOGETRnXuHRDQlP5guWfSG0NaIpQ2MvLi/625mPQwXHSmLKChwuCT5l8HPUupqfW4YfVcoXdGds9cFNYInZ9eTzaLkTVa9NMU6N55UkVhVs1pX/lFlbzKKFdmuYQ7LC7KFt6l3jwirOWNNA0XHCtZueAPaQvk4ugL/EC2Ybessk4iZdJyM4kj0LVGZxyt6b/vAlnclParS91v/L68acsYwQQ3Rl8NA9EskWg7wcXzNCZQgR3lQCc9U1Q5KBX10qK0wxsS4grI0+aHtp28WBiaotM2121hUueftkSkXHHGA9k7XqBeHKSWs4zKG5nYBdzTpWvKoRT04XPVjXf0TVdXLzwI+I/bUqMu/JAj1q+6wyHWq0xv1+YJqKUnAo+dxeORxN+CxpC9rDjQsAcRTKvbWrh0dB6D8K0Sl6hCwFrFd2knOKIfv1Rj45r+EWlolc5aa5qv6WIKHpjfya1yJ0PaoasSnWd6orkgjpj9bNB3kpkOWy4+s1pyG/pZ3zwOg
-DKIM-Signature: a=rsa-sha256; bh=c/b8KK6NZUiSNY5f9XgjrpPC0lZfNPNTGxt/ZcXT3mU=; 
- c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1790351655; v=1; 
- b=fK7880b5SwVIYkPP+IPsuINon9dWE7Lvxw3FUAewHzSoqrZ64mJkiGqRwv+LgAYGrYSUInm+
- hRrbzkXv6I0KFHsUrqhpwXc0d5ArP8qJNTNeTqihRMpGcahIWrAGGkeYwklxDbnnHHR2UBiJ1pj
- tQPzGuEMdjqWiBbwE/q9CIxU=
-Received-SPF: pass client-ip=5.135.90.179;
- envelope-from=guillaume.vincke@ovhcloud.com; helo=2.mo15.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/14] target/riscv: Require Sscofpmf for non-fixed
+ event overflow
+To: TANG Tiancheng <lyndra@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
+ <20260910-riscv-pmu-correctness-v2-8-5da5159a0c64@linux.alibaba.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260910-riscv-pmu-correctness-v2-8-5da5159a0c64@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: ApXBQmYJtfeQMhIoXDIN1JJ-kxE1ygIm
+X-Proofpoint-ORIG-GUID: ApXBQmYJtfeQMhIoXDIN1JJ-kxE1ygIm
+X-Authority-Analysis: v=2.4 cv=NJFAaE6g c=1 sm=1 tr=0 ts=6ab69c6b cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=XtTp2mjT3OapW3OsOAEA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NCBTYWx0ZWRfX98CWByG95h0M
+ c0ZHP16YUkCaImb4whFU4drXBQggjfKE8AIchkvCQkspzkOLeWAicXFatlTroW4dKxcvu2Wj/+K
+ 1HhDn2S0ev1E0phr8jxEf+gUf1LJAG/9Y6Kp++sGTz2oHxbs3EvqDd2mqp3MC5rAX4UAe4IAO6I
+ O6CNGo1d0Tvth2d+kj0gMUO3uD9LjUrmK7RauBIMs05h1C6FdHgBzpLOTmb8UBMgpOy8z7bFR1F
+ EPUuXD5CgAWWY+4PTyuRaagHbzNFkCy4Q7n8aNJymZUiqV/IeGSDg4SaFZourWS81ssAKy7C02S
+ Y7GydncIH9/hHVv0BaHFT9bWevgbIWO7f/tjTjzST8ipTNY4RNPDO9MAVcF7thAZq6hOi69TNJ1
+ hNTAPOq2+46obEHKAyO9E6nMOcA7+11wpOBKvGEioq4RTK5mRd46P11rzDwxrovz3QRgGh7sjtH
+ 9GheNgWuNHi13Upl1+w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NCBTYWx0ZWRfX7UDiaO1d3nrg
+ lKR4BHLA7LHr4NpxjvxLvXZz36EgtAy251oMIoA8Q/CPPbXdg+EpXK8i5Zc/Fh4Zt9QnXQeRNqf
+ d0d4z7nO+rZSNzlhjrgRvGo/Do+PmPk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ phishscore=0 suspectscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250064
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 25 Sep 2026 12:05:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,87 +161,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a server closes the connection after a successful handshake but
-before running any operations, the channel returned by
-nbd_co_establish_connection() is the closed one and the connect thread
-is not started.
 
-When configured with reconnect-delay=0 (the default), this situation
-generates at least two IO errors. The first one happens when trying to
-issue an operation to the closed socket. The connect thread will be
-started on the next request, which may happen long after, and will
-create the second error as nbd_co_establish_connection() returns a NULL
-channel.
 
-Peeking the channel to detect FIN or RST avoids the first IO error and
-does not delay the starting of the connect thread.
+On 9/10/2026 11:39 AM, TANG Tiancheng wrote:
+> riscv_pmu_incr_ctr() sets OF and LCOFIP on wrap even when Sscofpmf is
+> disabled. Use the shared overflow helper to require Sscofpmf and suppress
+> notifications while OF is set without stopping the counter.
+> 
+> Test DTLB overflow with Sscofpmf enabled and disabled, including
+> notification suppression and continued counting.
+> 
+> Fixes: 14664483457b ("target/riscv: Add sscofpmf extension support")
+> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+> ---
 
-Signed-off-by: Guillaume Vincke <guillaume.vincke@ovhcloud.com>
----
- nbd/client-connection.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-diff --git a/nbd/client-connection.c b/nbd/client-connection.c
-index 6a4f080717..878219fede 100644
---- a/nbd/client-connection.c
-+++ b/nbd/client-connection.c
-@@ -274,6 +274,26 @@ void nbd_client_connection_release(NBDClientConnection *conn)
-     }
- }
- 
-+/* only true when the peer closed the channel. Does not detect if dead */
-+static bool nbd_channel_is_closed(QIOChannel *ioc)
-+{
-+    char data;
-+    struct iovec iov = { .iov_base = &data, .iov_len = 1 };
-+    ssize_t len = -1;
-+
-+    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-+        return false;
-+    }
-+
-+    len = qio_channel_readv_full(
-+        ioc, &iov, 1, NULL, NULL, QIO_CHANNEL_READ_FLAG_MSG_PEEK, NULL);
-+
-+    if (len == 0 || (len < 0 && len != QIO_CHANNEL_ERR_BLOCK)) {
-+        return true;
-+    }
-+    return false;
-+}
-+
- /*
-  * Get a new connection in context of @conn:
-  *   if the thread is running, wait for completion
-@@ -295,6 +315,7 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
-                             bool blocking, Error **errp)
- {
-     QemuThread thread;
-+    QIOChannel *ioc;
- 
-     if (conn->do_negotiation) {
-         assert(info);
-@@ -308,6 +329,20 @@ nbd_co_establish_connection(NBDClientConnection *conn, NBDExportInfo *info,
-         assert(!conn->wait_co);
- 
-         if (!conn->running) {
-+            if (conn->sioc) {
-+                /* discard if the socket got closed by its peer */
-+                ioc = QIO_CHANNEL(conn->sioc);
-+                if (!qio_channel_set_blocking(ioc, false, NULL) ||
-+                    nbd_channel_is_closed(ioc)) {
-+
-+                    qio_channel_close(ioc, NULL);
-+                    object_unref(OBJECT(conn->sioc));
-+                    conn->sioc = NULL;
-+                    object_unref(OBJECT(conn->ioc));
-+                    conn->ioc = NULL;
-+                }
-+            }
-+
-             if (conn->sioc) {
-                 /* Previous attempt finally succeeded in background */
-                 if (conn->do_negotiation) {
--- 
-2.43.0
+>   target/riscv/tcg/pmu.c                      |   6 +-
+>   tests/tcg/riscv64/sscofpmf-event-overflow.S | 103 ++++++++++++++++++++++++++++
+>   tests/tcg/riscv64/system/meson.build        |  15 ++++
+>   3 files changed, 119 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+> index 16942e53489cd5a2d2dd055fdffef07d04d59465..2f600c5a0fc2d7ba380ef34f89af6366e3e27884 100644
+> --- a/target/riscv/tcg/pmu.c
+> +++ b/target/riscv/tcg/pmu.c
+> @@ -448,11 +448,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+>           counter = &env->pmu_ctrs[ctr_idx];
+>           if (counter->mhpmcounter_val == max_val) {
+>               counter->mhpmcounter_val = 0;
+> -            /* Generate interrupt only if OF bit is clear */
+> -            if (!(env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF)) {
+> -                env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
+> -                riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
+> -            }
+> +            riscv_pmu_set_overflow(env, ctr_idx);
+>           } else {
+>               counter->mhpmcounter_val++;
+>           }
+> diff --git a/tests/tcg/riscv64/sscofpmf-event-overflow.S b/tests/tcg/riscv64/sscofpmf-event-overflow.S
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..cce06da10f9c7c20c18c7863b58b6dd724c45182
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/sscofpmf-event-overflow.S
+> @@ -0,0 +1,103 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +/* Non-fixed event overflow with and without Sscofpmf. */
+> +
+> +#ifndef EXPECT_SSCOFPMF
+> +#define EXPECT_SSCOFPMF 1
+> +#endif
+> +
+> +	.option	norvc
+> +	.option	norelax
+> +
+> +	.text
+> +	.global _start
+> +_start:
+> +	/* Unexpected exceptions report the current check number. */
+> +	li	t4, 1
+> +	lla	t0, exit
+> +	csrw	mtvec, t0
+> +	csrw	mie, zero
+> +	csrw	mip, zero
+> +	csrw	mcountinhibit, zero
+> +	csrw	mhpmevent3, zero
+> +	li	t0, -1
+> +	csrw	mhpmcounter3, t0
+> +	li	t0, 0x10019		/* DTLB read miss */
+> +	csrw	mhpmevent3, t0
+> +
+> +	/* One load after flushing the TLB must wrap the counter to zero. */
+> +	sfence.vma
+> +	lla	t0, first_page
+> +	lw	t1, 0(t0)
+> +	csrr	t0, mhpmcounter3
+> +	bnez	t0, exit
+> +
+> +	/* Only Sscofpmf turns that wrap into OF and LCOFIP. */
+> +	li	t4, 2
+> +	csrr	t0, mhpmevent3
+> +	srli	t0, t0, 63
+> +	li	t1, EXPECT_SSCOFPMF
+> +	bne	t0, t1, exit
+> +	li	t4, 3
+> +	csrr	t0, mip
+> +	srli	t0, t0, 13
+> +	andi	t0, t0, 1
+> +	bne	t0, t1, exit
+> +
+> +	/* Clearing LCOFIP alone must not re-enable overflow notification. */
+> +	li	t0, 1 << 13
+> +	csrc	mip, t0
+> +	li	t0, -1
+> +	csrw	mhpmcounter3, t0
+> +	sfence.vma
+> +	lla	t0, second_page
+> +	lw	t1, 0(t0)
+> +	li	t4, 4
+> +	csrr	t0, mhpmcounter3
+> +	bnez	t0, exit
+> +	li	t4, 5
+> +	csrr	t0, mhpmevent3
+> +	srli	t0, t0, 63
+> +	li	t1, EXPECT_SSCOFPMF
+> +	bne	t0, t1, exit
+> +	li	t4, 6
+> +	csrr	t0, mip
+> +	li	t1, 1 << 13
+> +	and	t0, t0, t1
+> +	bnez	t0, exit
+> +
+> +	/* Overflow notification must not stop event counting. */
+> +	sfence.vma
+> +	lla	t0, third_page
+> +	lw	t1, 0(t0)
+> +	li	t4, 7
+> +	csrr	t0, mhpmcounter3
+> +	li	t1, 1
+> +	bne	t0, t1, exit
+> +	li	t4, 0
+> +
+> +exit:
+> +	lla	a1, semiargs
+> +	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
+> +	sd	t0, 0(a1)
+> +	sd	t4, 8(a1)
+> +	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
+> +	.balign	16
+> +	slli	zero, zero, 0x1f
+> +	ebreak
+> +	srai	zero, zero, 0x7
+> +	j	.
+> +
+> +	.data
+> +	.balign	4096
+> +first_page:
+> +	.word	0
+> +	.balign	4096
+> +second_page:
+> +	.word	0
+> +	.balign	4096
+> +third_page:
+> +	.word	0
+> +	.balign	16
+> +semiargs:
+> +	.space	16
+> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+> index 1dd0402631036d0d377bb90d7cb1da2bae34ead4..13ee7954ef4f09559a02a3730fb017ccf2cfd882 100644
+> --- a/tests/tcg/riscv64/system/meson.build
+> +++ b/tests/tcg/riscv64/system/meson.build
+> @@ -99,6 +99,21 @@ tests += {
+>     },
+>   }
+>   
+> +tests += {
+> +  'sscofpmf-event-overflow.S': {
+> +    'cflags': cflags,
+> +    'qemu_args': ['-cpu', 'max', qemu_args],
+> +  },
+> +}
+> +
+> +tests += {
+> +  'sscofpmf-event-overflow.S': {
+> +    'exe_name': 'sscofpmf-event-overflow-off',
+> +    'cflags': cflags + ['-DEXPECT_SSCOFPMF=0'],
+> +    'qemu_args': ['-cpu', 'max,sscofpmf=false', qemu_args],
+> +  },
+> +}
+> +
+>   tests += {
+>     'sscofpmf-cycle-overflow.S': {
+>       'cflags': cflags,
+> 
 
 
