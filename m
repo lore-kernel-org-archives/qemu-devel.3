@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC5AFC9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 09:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80AEFC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 09:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA2ON-0000NS-GY; Fri, 25 Sep 2026 05:38:55 -0400
+	id 1xA2Ob-0000Q2-4M; Fri, 25 Sep 2026 05:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OL-0000N2-8i
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:53 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OT-0000Ow-Qa
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:39:03 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OJ-0006DJ-Gi
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:38:53 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xA2OS-0006Ef-Eq
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:39:01 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id F3FFC6022F;
- Fri, 25 Sep 2026 09:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5941F000FF;
- Fri, 25 Sep 2026 09:38:48 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id C35486022F;
+ Fri, 25 Sep 2026 09:38:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FBE1F000FF;
+ Fri, 25 Sep 2026 09:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790329129;
- bh=8KJX0LVS8OgRm4BbSc6yg63cQQ7Z2QXdlX7Ny7+uvEQ=;
+ s=k20260515; t=1790329139;
+ bh=ECyzsDtcDEjajNrCXxTfs09UvMY1Lp8zlSn++FOVyE4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=S6a6IK6i1FmNznuLcPObG6FDRnf1fvHWE75W4sg0JRkn0ZJ3PvRUszqIM3SMCmIWh
- FFgGHjy5pCQKkGEz2F9mPPL/H3rFtshIoe42N141sPTT8+8tLSmiwI8sVpvJkIPItz
- UnCS/XQB5wCCbGEjEuNBItoXF0MfcKEO3DsvBxM8aRmx9Cyu3+rsi8UuKsPcUQiyUK
- fsT7VtjFhg8F6xa7Wb6PVC58bN+cZIRHtRI8H3y46bVQtCsAl6TOcTEYi4VDaINez5
- RJsWdDhKbXmoOwafC6CfL+yJTixEE7v4O5s1wERAoJq8D6/Ixt7kT6wASPWGOstFbk
- ar0y1ygk81iyA==
+ b=JQ4Hg4IUriKQEViNP/Mg8ThD/YBIizn9pebLsh+LLRJRQzdqdHZrh7JcOKVWwUgxO
+ 1MAp70iE4EKrZ8hW+QkAXqGVWebl7Vjjw4VeMXat8KZUdrPP0yBsMe11qGETA8aR8T
+ apXPl1QJ89H1o5Pnikb4tEfSNLQozQUYvoqNV7VQ3OTn9Z1DkD3ZcU2+Mhed449vJw
+ Ab+ky4CEfcXSFlLqE8kkfcIvy/FrtyRtqlhek2FdNn/O7O/uVTDOw9ru+B04PF+PHa
+ XwryZ7XIjqdLlgdoNLeP2AYvQBraMcggjxfBT4nMisNlk9bEUqpopBDnzILwRvM01+
+ +jyWKQqgYv2zQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -40,10 +40,9 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 1/8] linux-user/sh4: use the kernel's sigreturn trampoline
- sequence in the vdso
-Date: Fri, 25 Sep 2026 11:38:37 +0200
-Message-ID: <20260925093844.5685-2-deller@kernel.org>
+Subject: [PULL 6/8] accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
+Date: Fri, 25 Sep 2026 11:38:42 +0200
+Message-ID: <20260925093844.5685-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260925093844.5685-1-deller@kernel.org>
 References: <20260925093844.5685-1-deller@kernel.org>
@@ -72,111 +71,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-With the vdso, default_sigreturn and default_rt_sigreturn point at
-__kernel_sigreturn and __kernel_rt_sigreturn and setup_sigtramp() is no
-longer used. The vdso trampolines load the syscall number with mov.l
-instead of the kernel's mov.w/trapa/or r0,r0 sequence, which undoes
-commit 9ac5aa7227 ("linux-user/sh4: Fix setup_sigtramp to match Linux
-kernel trampoline pattern"): libunwind's unw_is_signal_frame() no longer
-recognizes the signal frame, so unwinding through a signal handler stops
-there.
+Do not go through the effort of grabbing the exclusive lock
+only to check for interrupts and exit without making progress.
 
-Use the sequence from the kernel's own vdso,
-arch/sh/kernel/vsyscall/vsyscall-sigreturn.S.
-
-Fixes: 975bd51a88 ("linux-user/sh4: add VDSO support for sh4 and sh4eb")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sh4/vdso-be.so | Bin 2704 -> 2720 bytes
- linux-user/sh4/vdso-le.so | Bin 2704 -> 2720 bytes
- linux-user/sh4/vdso.S     |  26 ++++++++++++++++++--------
- 3 files changed, 18 insertions(+), 8 deletions(-)
+ accel/tcg/cpu-exec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/sh4/vdso-be.so b/linux-user/sh4/vdso-be.so
-index 4f50143f8284ab63693c1117e68f3efa886155e3..bc1fb37e1089b7aa5612da0039e24193b156b3d8 100755
-GIT binary patch
-delta 194
-zcmbOrx<GV-GNZyo6=&8T3=AwkCgxO#v^^7IdSMZuBqF1%9rYmk#g%V{*C+nCEhr$w
-zz`(=6z>vYf!19cNfk9yN6UOaK%t{QNljpHmC{1QPETF&*gAC<p{Iv|6lM@-mC;w-8
-z!1!(Q1J-<2uo;s>*zEZrCMPE+g;si2C2d~Fmd4B&GMR%*neoSD9WHgo6_Z1_)J119
-NFfg<*AOItX2>?A$F(&{3
-
-delta 178
-zcmZ1=Ize=TGNZsm6=&8L3=AwUCgxO#6if>*aPh9(e`{gllH+YV4J~=!giQQ#TaZhL
-zfq{pCfgyu|f#m@M0|UqACyd*fm_-=eCeLHB5W38GSb%|(fq|j?GQ(j31_p+;lM@-m
-zC-bvDV0<z818Y7jSkL4XHhVsZNy*7YQI?S@>6<sQr7<(QOqSqMW_&T(hD)7s#^e+(
-Qb<s`+28I>}1YiU)0VjPgU;qFB
-
-diff --git a/linux-user/sh4/vdso-le.so b/linux-user/sh4/vdso-le.so
-index c41cb5831b9e5883a64564da8b2149a33e199f4f..c1ff560cc165413d7b07aa873225bd92afb8569e 100755
-GIT binary patch
-delta 202
-zcmbOrx<GV-0;9r2MQ7F@EDQ`kCT3QP?EQGW?V6EbjpN0Ka-A|h8NXg^nl$mp4M710
-z1_mJp9)=7C28L%W3=9IBA2M!dVpC#ZU|{f^Jdedfk#(}bVQvK&EN4LFuVvtzoX99T
-z`47tj#&47FvgWgbO_?0XW)C-;AvxK|)6&>Db@M{DWM;;Y$*f$;j6Wu8a;Y<}m>kHZ
-RE-{mxfuRLtBNQ+~834g&GJ*gA
-
-delta 184
-zcmZ1=Ize=T0;9l0MQ7F*EDQ`UCT3QPl&)2g-L`IF)#Kt%zJj4I-B(^c;xzHc4M8pj
-z1_mJp9)=7C28IVL3=ABbA2M!dViRFtU|?{YJdeeKpYgK5VNQl}kicbu!)qreGKx>;
-zVST{(V)9$od{(fY$%$<CaFZC4lPkSUBf_#aZ)8hmW^|b>%B9TsVzMQdI^&GViCpRu
-Qo$L$@Eg<8dfDy_70CGt$_W%F@
-
-diff --git a/linux-user/sh4/vdso.S b/linux-user/sh4/vdso.S
-index 4fb5ee9d31..1faa665774 100644
---- a/linux-user/sh4/vdso.S
-+++ b/linux-user/sh4/vdso.S
-@@ -43,6 +43,22 @@ vdso_syscall __vdso_clock_gettime64, __NR_clock_gettime64
- vdso_syscall __vdso_clock_getres, __NR_clock_getres
- vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
- 
-+/*
-+ * Same instruction sequence as the kernel's
-+ * arch/sh/kernel/vsyscall/vsyscall-sigreturn.S. libunwind matches these
-+ * bytes to recognize a signal frame.
-+ */
-+.macro sigreturn_tramp nr
-+	mov.w	1f, r3
-+	trapa	#0x10
-+	or	r0, r0
-+	or	r0, r0
-+	or	r0, r0
-+	or	r0, r0
-+	or	r0, r0
-+1:	.word	\nr
-+.endm
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 5226cfb765..f4428e9f7b 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -566,7 +566,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         /* Execute in a serial context. */
+         s.cflags &= ~CF_PARALLEL;
+         /* After 1 insn, return and release the exclusive lock. */
+-        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | 1;
++        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
 +
- /*
-  * Signal return trampolines.
-  *
-@@ -122,20 +138,14 @@ vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
- 
- sigreturn_region_start:
- __kernel_sigreturn:
--	mov.l	1f, r3
--	trapa	#0x10
--	.align	2
--1:	.long	__NR_sigreturn
-+	sigreturn_tramp __NR_sigreturn
- endf __kernel_sigreturn
- 
- 	/* Update CFA base for the rt_sigreturn frame layout. */
- 	.cfi_def_cfa_offset	RT_SIGFRAME_SC_OFFSET
- 
- __kernel_rt_sigreturn:
--	mov.l	2f, r3
--	trapa	#0x10
--	.align	2
--2:	.long	__NR_rt_sigreturn
-+	sigreturn_tramp __NR_rt_sigreturn
- endf __kernel_rt_sigreturn
- sigreturn_region_end:
- 
+         /*
+          * No need to check_for_breakpoints here.
+          * We only arrive in cpu_exec_step_atomic after beginning execution
 -- 
 2.54.0
 
