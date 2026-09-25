@@ -4,110 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69657C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC57C98325
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82L-0006gm-W0; Fri, 25 Sep 2026 11:40:34 -0400
+	id 1xA82e-0006o0-Qa; Fri, 25 Sep 2026 11:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82J-0006fl-SA
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:31 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82b-0006ma-G6
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:49 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82I-0004bH-8J
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:31 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82Z-0004dw-E0
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:49 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 469A91F457;
- Fri, 25 Sep 2026 15:40:20 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B9E1521FBE;
+ Fri, 25 Sep 2026 15:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350824; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
- b=m6vcviOivINBEauc67S/xHGkjogsaR0VD3ghyuvx7Bv3JU/7bfOBBMncf995rtLjSPBbTe
- vg6AxbDJwxk7NYi9sVwkkOLQ5nSS6qyGs0OoeoAvfeG0kEisNC/CpjwwRkWzDVCwEDdj7a
- qDOoxfB8+WWiJ7WnfkdQofsJUiuYr6s=
+ bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
+ b=FaqsKy/9FiwEEXDeMitizaRgLa7sUrgvmFifXUVPUy1uK4YB58pDmhCvCZgFMh0Wmfabuj
+ qhaF0NF6jNW8GM5+uREGbyygJLLcoCr73AvqVUT9xV/gNOwYXH8gvpdPtNPIUh+OmfEE9l
+ 8cP5QdDI+Ez87imManl9viqGHkK666k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350824;
+ s=susede2_ed25519; t=1790350841;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
- b=3nSFUnXTqiulniKoqnG6jkrerwSPCZMqA7GpnMykMYxtGwP1kJH/LGSe8k9dQEtvMg/1Xf
- kfkZTGu4Zk1Tx6CQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pzUpQP8H;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ihkwdhie
+ bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
+ b=OQfs7VhwP/cwvDT0nCQfRlcl5kQx6iTnMYvLC8JLnZC44iYGhOtlH2XB36ZzqrH0kOGwGu
+ A9V0eWSc4jMfbyDA==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350820; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790350837; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
- b=pzUpQP8Hwt3tHKIr6EgtJbxb/dOCNs55naMK9CGOoE9A1zKJyr+9MKoOrL5uj3yppBg3VV
- ADWDe8Can0V6mWvFcxUnMoZYxdToMapccxiaq2ubU9QSbvyWXsoS4X8FQ1ggmOXPX5pzX7
- UOnmdGpjJl0gONPnlVk4QqMDIUbTiuk=
+ bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
+ b=W+6mt2ydGk9g9xZEx00KuxOoBqRaQNO4hVqhDvzh4qzp2w2c6HoD4OVbtjfpYSHnc9EaVT
+ l8O3BnhvbVK6vhX1cpaOJDueCkaDykfVJVkStt9WNti+YhhjG6QCzfGsTSpLEDTSjzDazP
+ EQm75iSnUPJtiCl9JeWlHiCbtPxbyo0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350820;
+ s=susede2_ed25519; t=1790350837;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5G45mBCiYUDen0EoHtKerILaJEv08Eo3StMnQ0TSXzc=;
- b=ihkwdhievJRFySxIE/U5MptiVIvV3Sqi40B+OVwXVmPC1R20PS6qTe+liiB8VpIWEJIqJJ
- s45XL1Zg+cGyO3DQ==
+ bh=1hTM0ZCY7OaihXhzw/hVe+idx+ErDM+z3nHvYLW4FaQ=;
+ b=mbY7Gi/vWSXsBoSGZnny+8xSIZxhMuU4onzzGKDHVYhhUI8i6twg/Q0WmV/5MneIOkH5zr
+ rfxTzQWtXmd61tAQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A69D313274;
- Fri, 25 Sep 2026 15:40:18 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D051A13310;
+ Fri, 25 Sep 2026 15:40:36 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T5
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:18 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T18
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:36 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
- Jack Wang <jinpu.wang@cloud.ionos.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Lukas Straub <lukasstraub2@web.de>
-Subject: [PULL 04/19] migration/rdma: Fix write-side shutdown
-Date: Fri, 25 Sep 2026 12:39:55 -0300
-Message-ID: <20260925154010.599247-5-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 17/19] migration: Stop freeing s->parameters members
+ individually
+Date: Fri, 25 Sep 2026 12:40:08 -0300
+Message-ID: <20260925154010.599247-18-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
 References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 469A91F457
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.997];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
  RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
  ARC_NA(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,bytedance.com,cloud.ionos.com,fujitsu.com,web.de];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[fujitsu.com:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,bytedance.com:email,ionos.com:email,suse.de:dkim,suse.de:email,suse.de:mid];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[web.de]; FROM_HAS_DN(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[6]; DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -130,41 +118,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yanfei Xu <yanfei.xu@bytedance.com>
+Expecting every pointer member from s->parameters to be freed
+individually is prone to leave some fields forgotten when the code is
+eventually updated. Use a dealloc visitor to free them all at once.
 
-qio_channel_rdma_shutdown() reads rdmain for both the input and
-output contexts.  As a result, a write-side shutdown marks the input
-context as errored while leaving the output context active.  A shutdown
-of both directions also fails to stop the output context.
-
-Read rdmaout from the output context so each shutdown direction marks
-the corresponding RDMA context as errored.
-
-Fixes: 54db882f073a ("migration: implement the shutdown for RDMA QIOChannel")
-Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
-Tested-by: Lukas Straub <lukasstraub2@web.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/rdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/options.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index e976739fad..61181deb8a 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -2860,7 +2860,7 @@ qio_channel_rdma_shutdown(QIOChannel *ioc,
-     RCU_READ_LOCK_GUARD();
+diff --git a/migration/options.c b/migration/options.c
+index 12f884caa4..bdcff002db 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -17,6 +17,7 @@
+ #include "qapi/util.h"
+ #include "exec/target_page.h"
+ #include "qapi/clone-visitor.h"
++#include "qapi/dealloc-visitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
+@@ -1066,11 +1067,21 @@ AnnounceParameters *migrate_announce_params(void)
+     return &ap;
+ }
  
-     rdmain = qatomic_rcu_read(&rioc->rdmain);
--    rdmaout = qatomic_rcu_read(&rioc->rdmain);
-+    rdmaout = qatomic_rcu_read(&rioc->rdmaout);
+-static void migrate_tls_opts_free(MigrationParameters *params)
++static bool migrate_params_free(MigrationParameters *params, Error **errp)
+ {
+-    qapi_free_StrOrNull(params->tls_creds);
+-    qapi_free_StrOrNull(params->tls_hostname);
+-    qapi_free_StrOrNull(params->tls_authz);
++    Visitor *v = qapi_dealloc_visitor_new();
++    bool ret;
++
++    /*
++     * qapi_free_MigrationParameters can't be used here because
++     * MigrationParameters is embedded in MigrationState due to qdev
++     * needing to access the offset of the migration properties inside
++     * the migration object.
++     */
++    ret = visit_type_MigrationParameters_members(v, params, errp);
++    visit_free(v);
++
++    return ret;
+ }
  
-     switch (how) {
-     case QIO_CHANNEL_SHUTDOWN_READ:
+ /* normalize QTYPE_QNULL to QTYPE_QSTRING "" */
+@@ -1419,9 +1430,9 @@ void qmp_migrate_set_parameters(MigrationParameters *input, Error **errp)
+         return;
+     }
+ 
+-    migrate_tls_opts_free(cur);
+-    qapi_free_BitmapMigrationNodeAliasList(cur->block_bitmap_mapping);
+-    qapi_free_strList(cur->cpr_exec_command);
++    if (!migrate_params_free(cur, errp)) {
++        return;
++    }
+ 
+     QAPI_CLONE_MEMBERS(MigrationParameters, cur, new);
+ 
 -- 
 2.53.0
 
