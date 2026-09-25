@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1855EC9830E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2425C98328
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 15:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA82G-0006ei-1X; Fri, 25 Sep 2026 11:40:28 -0400
+	id 1xA82O-0006hO-1o; Fri, 25 Sep 2026 11:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82E-0006eX-JG
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:26 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82M-0006gn-GL
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:34 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82C-0004ap-MQ
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:26 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xA82K-0004bh-Gq
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 11:40:34 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 873301F44E;
- Fri, 25 Sep 2026 15:40:14 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 35EA21FF6B;
+ Fri, 25 Sep 2026 15:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350818; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=IgUyjCll8K8mhmXcsVbbTXtZgBusoBn4BfQWClBlkNw=;
- b=qXMVhnFYrKObTRScg54N5sUABCj9hha6JU1UQx9+uC6uDbclWgMCKpFWJIKuhMcl9DabJn
- u10XhnCGF/FrM4LtNpemlHI7b63zY26+wn6saKCQJxYe7B5SkikW6WtlfjpyoE4KrkbcUU
- zjEAnzTNtPb8pRf7mNhuQ8A/McPLSaM=
+ t=1790350827; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7OSpCuW9nO5gBUIlHX+CIcRjX/6Jh/dAG4Pg2+xuudQ=;
+ b=zmTUD0KAkkSE5H010zXP3/rIvcDXIMp8cYq5TSTJEBSl/f3PTTVNOPjEfSEenNNPW7+XPU
+ gvGvarO9jSUdPOaSgW/kWW4ff9zhKZIr+jsp3E+OAO8QJHXScSl1ge9PD6s25arY4xmppc
+ wSVWakHVdOk8XFrKWFvzsuj9sOL3Wt4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350818;
+ s=susede2_ed25519; t=1790350827;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=IgUyjCll8K8mhmXcsVbbTXtZgBusoBn4BfQWClBlkNw=;
- b=dZsiHIvYcA92oN6xXMYdAIpdqlv6aa3PL7OUy9WSjD583Hn58r4GwulQ+8Xfphlkf/yI3C
- oj9FWFt6OLVwShBw==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7OSpCuW9nO5gBUIlHX+CIcRjX/6Jh/dAG4Pg2+xuudQ=;
+ b=0HDrwIu97RqANSPZEMxgCloms4Hcr7+cN0U4XaAWnNYtEnwoBE+p3kBuoo9cCMfci2xGV6
+ UJvMrUtxvrReKkBA==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=aPjSd1Fx;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1Pn0WDOX
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790350814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=IgUyjCll8K8mhmXcsVbbTXtZgBusoBn4BfQWClBlkNw=;
- b=Dytbo5bC7bW01L+vPF2k2YnU6l+jI8HoY9VGoOqYsjQ1Ky+ls2+xMgvsUmAWxq2OKEgUKO
- 82UN3I9XSPu3CZZR8xIw/0vGAuOloKoAgEZQs7uKvN830fpE+nWOQqogX3x69GEVpKgezF
- tc2Bpo3eVirgfOkv9oXY6q9yEHquDog=
+ t=1790350823; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7OSpCuW9nO5gBUIlHX+CIcRjX/6Jh/dAG4Pg2+xuudQ=;
+ b=aPjSd1Fx3oAioumCg5qVQW283JXbXL6vdf0neSNmYIpU1bkJN9pZlpBLB76k0qmvO8QWuD
+ 6y/a15jcmTXJohd9/WrJctACplCLeW/Z0fF/3ViwcNQ3h2/Q0dtUXUOrjHA1Mo/Ody5yCv
+ arUZ1d/XBloCvt2CpzGDaW1h+oWwE3Y=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790350814;
+ s=susede2_ed25519; t=1790350823;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=IgUyjCll8K8mhmXcsVbbTXtZgBusoBn4BfQWClBlkNw=;
- b=l2Yl46JWr0hrJVaiA210el4y0GFOR/H1twl0MlgMFsblSnnWRFjKhHe9RF5dYZdXcTzt5b
- u1qu+RhXyslPGLCg==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7OSpCuW9nO5gBUIlHX+CIcRjX/6Jh/dAG4Pg2+xuudQ=;
+ b=1Pn0WDOXpXm80s+G667Mhipj7+y+JeS9nuCYFjS6BY6hMN1T+f95moYOJV/eZw1Ri9dL4y
+ KpLzovRFw5GOHaAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8249E132C9;
- Fri, 25 Sep 2026 15:40:13 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EFE5C1333E;
+ Fri, 25 Sep 2026 15:40:21 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:13 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id xxRgCd2VtmqjOwAAD6G6ig:T7
+ (envelope-from <farosas@suse.de>); Fri, 25 Sep 2026 15:40:21 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 00/19] Migration patches for 2026-09-25
-Date: Fri, 25 Sep 2026 12:39:51 -0300
-Message-ID: <20260925154010.599247-1-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>,
+ Jack Wang <jinpu.wang@cloud.ionos.com>
+Subject: [PULL 06/19] migration/rdma: Retry control sends on full queue
+Date: Fri, 25 Sep 2026 12:39:57 -0300
+Message-ID: <20260925154010.599247-7-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260925154010.599247-1-farosas@suse.de>
+References: <20260925154010.599247-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 35EA21FF6B
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.995]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,ionos.com:email];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,74 +128,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3876503faff51ce3a132dbbd0ab42c10f2269319:
+From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-  Merge tag 'target-misc-20260924' of https://github.com/philmd/qemu into staging (2026-09-24 13:30:19 -0700)
+RAM writes and control messages share the send queue. If outstanding
+writes fill it, RDMA writes drain a completion and retry, but control
+sends fail the migration.
 
-are available in the Git repository at:
+Move send posting and queue-full handling into a common helper. On
+ENOMEM, drain one outstanding RDMA write and retry the failed request
+once. If no write is outstanding, or the retry still fails, propagate
+the error.
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20260925-pull-request
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/rdma.c       | 75 ++++++++++++++++++++++++++----------------
+ migration/trace-events |  2 +-
+ 2 files changed, 48 insertions(+), 29 deletions(-)
 
-for you to fetch changes up to bf8156b03d263a66c00707d38b3f852bd9560fb0:
-
-  docs/migration: document that postcopy can be used with multifd (2026-09-25 11:29:14 -0300)
-
-----------------------------------------------------------------
-Migration pull request
-
-- RDMA migration fixes and performance improvements
-- Updates of call sites to new vmstate APIs (bool+errp)
-- Removal of open-coded handling of QAPI structures
-- Documentation updates and other minor fixes
-
-----------------------------------------------------------------
-
-Bin Guo (1):
-  docs/migration: document that postcopy can be used with multifd
-
-Fabiano Rosas (7):
-  migration/options.c: Don't export migrate_tls_opts_free
-  migration: Rename variables in qmp_migrate_set_parameters
-  migration: Use QAPI_CLONE_MEMBERS in migrate_params_apply
-  migration: Merge parameter structs instead of assigning one by one
-  migration: Open code migrate_params_apply
-  migration: Stop freeing s->parameters members individually
-  migration: Use migrate_params_free during finalize
-
-Marc-André Lureau (1):
-  migration: remove duplicate VMSTATE_STRUCT_VARRAY
-
-Markus Armbruster (1):
-  qapi/migration: Make migration parameter @local consistently unstable
-
-Vladimir Sementsov-Ogievskiy (2):
-  tests/unit/test-vmstate: move to new migration APIs
-  migration/vmstate-types: convert vmstate_info_g_byte_array to new APIs
-
-Yanfei Xu (7):
-  migration/rdma: Fix write-side shutdown
-  migration/rdma: Post initial receive before accepting
-  migration/rdma: Retry control sends on full queue
-  migration/ram: Add RAM round synchronization notifiers
-  migration/rdma: Drain writes at RAM round boundaries
-  migration/rdma: Allow multiple in-flight writes per chunk
-  migration/rdma: Remove unused transit bitmap
-
- docs/devel/migration/postcopy.rst |  26 ++
- include/migration/vmstate.h       |  10 -
- migration/migration.c             |   3 +-
- migration/multifd-nocomp.c        |  24 ++
- migration/options.c               | 383 ++++++++----------------------
- migration/options.h               |   2 +-
- migration/ram.c                   |  45 +++-
- migration/ram.h                   |  12 +
- migration/rdma.c                  | 186 ++++++++-------
- migration/trace-events            |   7 +-
- migration/vmstate-types.c         |  17 +-
- qapi/migration.json               |   6 +-
- tests/unit/test-vmstate.c         | 118 +++------
- 13 files changed, 351 insertions(+), 488 deletions(-)
-
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 618324645b..35d918ec83 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -1423,6 +1423,51 @@ err_block_for_wrid:
+     return -1;
+ }
+ 
++/*
++ * Post a send work request, draining an outstanding RDMA write if the send
++ * queue is full.
++ */
++static bool qemu_rdma_post_send(RDMAContext *rdma,
++                               struct ibv_send_wr *send_wr,
++                               Error **errp)
++{
++    struct ibv_send_wr *bad_wr;
++    uint64_t wr_id = send_wr->wr_id & RDMA_WRID_TYPE_MASK;
++    const char *wr_desc;
++    int ret;
++
++    switch (wr_id) {
++    case RDMA_WRID_RDMA_WRITE:
++        wr_desc = "RDMA write";
++        break;
++    case RDMA_WRID_SEND_CONTROL:
++        wr_desc = "control send";
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    ret = ibv_post_send(rdma->qp, send_wr, &bad_wr);
++    if (ret == ENOMEM && rdma->nb_sent) {
++        trace_rdma_post_send_queue_full(send_wr->wr_id, rdma->nb_sent);
++        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
++        if (ret < 0) {
++            error_setg(errp, "rdma migration: failed to make room for %s",
++                       wr_desc);
++            return false;
++        }
++        ret = ibv_post_send(rdma->qp, send_wr, &bad_wr);
++    }
++
++    if (ret > 0) {
++        error_setg_errno(errp, ret, "rdma migration: post %s failed",
++                         wr_desc);
++        return false;
++    }
++
++    return true;
++}
++
+ /*
+  * Post a SEND message work request for the control channel
+  * containing some data and block until the post completes.
+@@ -1433,7 +1478,6 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
+ {
+     int ret;
+     RDMAWorkRequestData *wr = &rdma->wr_data[RDMA_WRID_CONTROL];
+-    struct ibv_send_wr *bad_wr;
+     struct ibv_sge sge = {
+                            .addr = (uintptr_t)(wr->control),
+                            .length = head->len + sizeof(RDMAControlHeader),
+@@ -1465,11 +1509,7 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
+         memcpy(wr->control + sizeof(RDMAControlHeader), buf, head->len);
+     }
+ 
+-
+-    ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
+-
+-    if (ret > 0) {
+-        error_setg(errp, "Failed to use post IB SEND for control");
++    if (!qemu_rdma_post_send(rdma, &send_wr, errp)) {
+         return -1;
+     }
+ 
+@@ -1729,7 +1769,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+ {
+     struct ibv_sge sge;
+     struct ibv_send_wr send_wr = { 0 };
+-    struct ibv_send_wr *bad_wr;
+     int reg_result_idx, ret, count = 0;
+     uint64_t chunk, chunks;
+     uint64_t chunk_size = migrate_rdma_chunk_size();
+@@ -1743,7 +1782,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+                                .repeat = 1,
+                              };
+ 
+-retry:
+     sge.addr = (uintptr_t)(block->local_host_addr +
+                             (current_addr - block->offset));
+     sge.length = length;
+@@ -1900,26 +1938,7 @@ retry:
+     trace_rdma_write_one_post(chunk, sge.addr, send_wr.wr.rdma.remote_addr,
+                                    sge.length);
+ 
+-    /*
+-     * ibv_post_send() does not return negative error numbers,
+-     * per the specification they are positive - no idea why.
+-     */
+-    ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
+-
+-    if (ret == ENOMEM) {
+-        trace_rdma_write_one_queue_full();
+-        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+-        if (ret < 0) {
+-            error_setg(errp, "rdma migration: failed to make "
+-                         "room in full send queue!");
+-            return -1;
+-        }
+-
+-        goto retry;
+-
+-    } else if (ret > 0) {
+-        error_setg_errno(errp, ret,
+-                         "rdma migration: post rdma write failed");
++    if (!qemu_rdma_post_send(rdma, &send_wr, errp)) {
+         return -1;
+     }
+ 
+diff --git a/migration/trace-events b/migration/trace-events
+index e87d4abd91..2ee2c8f212 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -245,7 +245,7 @@ rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
+ rdma_write_flush(int sent) "sent total: %d"
+ rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
+ rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+-rdma_write_one_queue_full(void) ""
++rdma_post_send_queue_full(uint64_t wr_id, int sent) "send queue full, wr_id=%" PRIu64 ", outstanding writes=%d"
+ rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
+ rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
+ rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
 -- 
 2.53.0
 
