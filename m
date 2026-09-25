@@ -4,135 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16601C9830E
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 17:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B635BC9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 18:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAA7t-00089X-2W; Fri, 25 Sep 2026 13:54:25 -0400
+	id 1xAAkT-00016y-Mz; Fri, 25 Sep 2026 14:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAA7r-00087Z-5S
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xAAkO-00016K-5M
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:34:13 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAA7m-0000dI-DN
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 13:54:22 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PG0KYd1363024
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=8TGxjYWUh4LT+rbGbg5Y+a
- tFspa+7gaHfuxBJQXQEDQ=; b=Icfa2yVQ1FrQ1PuBMH4Cy3unbkQ/1pvG5MCfMA
- b8jrxKD4fWTJm+d/4NpXZLtv2J4cfiEqw08FaGTbYDOQ5duKYwPDAhHCNB/uG81v
- 0Fg5LyuuUpRgtKpFeuKWoD5WGzXd1I+eYJSObvEoPiFzduxmPzR8PL9ohZW14DAU
- PuseQwlj5k7WD2p2pFMexFnRqFJA3G4eAbkN1x2CIoyJ+Ca88vr5mbUpDUvvEM82
- NSQLcMgwsrVtbGv3zETMD4sSJ+bng40P/C5YMzXvUXVz12e3H6i0QjTRWNxUmbca
- nKpY8ggF4UX9emwUcX63YAZEOeGiZolIVkuhxUgBfEs0HRCA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwpvnsmkd-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 17:54:08 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-32b8c2b30c4so2050624eec.1
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 10:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790358847; x=1790963647; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=8TGxjYWUh4LT+rbGbg5Y+atFspa+7gaHfuxBJQXQEDQ=;
- b=OcQbrgUxFz5EotNIwULW0A0rbkmSrhNzndlDMf8G/5Qg8LwuL+iXsrgv/bquhtN9UA
- UjZIjk66LYmgHCkZ+c5M18q3QGbOeeMkhVte9rXmU0D2rJz/jlWZg6J+oj/MlHmA9Pxc
- uxaEK9y0ljC9/vbem7F4VaPv10pDlASlYHZdHJKkXIC2eQUwkLhx0REmTRxhj8k34Thn
- Euqe5QWPncx9fv/qxF0ihkbLJFUliHfrgSP8dzWUUblNEOU2nCJzhGZe2qvfzr7mSdd4
- S+W9PWfLXngFfbXuVIAjOHQT26F/HX4imQhZbHFnzktqpBbCdsMVndgmJSeX4pujdpcM
- pn0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790358847; x=1790963647;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8TGxjYWUh4LT+rbGbg5Y+atFspa+7gaHfuxBJQXQEDQ=;
- b=troYJotMowjnMMPw+dnG7j6q0In2snK+bF/g78JflyBRHUdjqcxR3naFBORdLtX9pN
- pjkRA4USJx317ZLIuQGWyQcD7LB0fLA5u4WZ9f+C0aDGVuWrh4UQvAvkK2MQWKSBglEc
- Pi4Jlpb8baDtn0H3demTg3P+DWWFk5fTwz2dzCMJOwztRmlZZ+3f0NFLOz66WlFrnCah
- ga1YiZP82v31Gzojhx34uMPK4UCQk8JPdFTRswbZVPQezmA1Pgq3i/fTI7wehdoHCuaI
- PVKvghHLjpZ0YHkx0xRF7KWEqcVx8BckECGxiUmOiBAZBNr7HhVwcAA9pZbUjC1wYGKn
- fF4w==
-X-Gm-Message-State: AFuF++lyvmhNETzXV9OgYQlhtriZdT1hUhz5BwRwZd49fa5M6dRaJiyg
- sJcAKmq8j/Q2AH+mgcSIrL3XnW09VCjGwDpuixxHJ6eqOO2KHFGS7CaNgZCufUzzFj8OfrGGMI3
- UbSdoOXm2W7if1AG7EO7A7u+gVUv2LQDOkDypCDcGrIe7NGHn+XGupuCulLg4RvveAA==
-X-Gm-Gg: AYBFou2/oNYulCOag9CEmMayfxCj2Ea2sF0nMftOZkibCmB4GHxd4C32/RuFqja0sqf
- wvbTL1GGQa4R92xHoE91ZeIlIev9EE7MNhr2mFUG+HCBa3AQ2A7NX4KzpqY4pBs0dygY55uBM97
- JLId4smEbTbSN9Wrd1Cmq+0kwIUJOArcRj7M/04G3T5E3MUBj5GBHUS5qP2Moa0YLbeT31EnvQf
- EA0j08xxjhkqZEoUfrdFH6x6rECrmRHySaJGda525rNR0IDFRncYNiwhpchcmiPHHZhKZA2p4Gx
- NlV5hEWlNMXcbzbQtSpy+vTf4/IpMWbFeq7l7HkJ7snTXOQ6rdjM+H/G9RRusCjiFNGK3okv0R5
- bbifEXdgcEhkqcFtW+OfkO70thvPm+rarcpNL73NQlGg9FSaVqeqUhrCR9A==
-X-Received: by 2002:a05:7301:1448:b0:342:6595:d750 with SMTP id
- 5a478bee46e88-342711aadcdmr843242eec.2.1790358847088; 
- Fri, 25 Sep 2026 10:54:07 -0700 (PDT)
-X-Received: by 2002:a05:7301:1448:b0:342:6595:d750 with SMTP id
- 5a478bee46e88-342711aadcdmr843219eec.2.1790358846429; 
- Fri, 25 Sep 2026 10:54:06 -0700 (PDT)
-Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-34144172de6sm11055128eec.9.2026.09.25.10.54.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 10:54:06 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 00/13] tcg tests 20260925
-Date: Fri, 25 Sep 2026 10:53:47 -0700
-Message-ID: <20260925175400.1897574-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xAAkM-00049P-08
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 14:34:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=ZsYXNOo
+ eSEQ5Zz8R5/z7jsHtM6nBlv6O/x+4FrXnsJQbzcPg/IUdtAaMiYiey5wPoRUgT3wF8uT79
+ 2HyIJs3/frX7vgvKuvyaZTtwLqDVQb0plhpVuYQyS9ZdqW99+DDfQHN3Eu3fGpiabmz0uq
+ F7Ond3oDhMM0hwQIGd1n/Kls1y0H9URUX5wNShItUqEwLdS1N1l+n1xq1EtrC8t8mV/7gt
+ v/FeyFK7AUc1enXC2LLXcLNS3N5/bOYAA+bag1fDUtlFL9ZpS0pFGbKbpuokjJ9DPCF+4c
+ sHDa19yE4Fto+7GzFVLRPtusdKWHnn1SH6oLMah0tFCPd9EvzRTTSUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=a
+ tVGoxcK8gZnom10CZ0krE6Xvkfj5SYOsffENxthw7Q=;
+ h=references:in-reply-to:
+ subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=Di4ynQcI/zMjc2Vr+Yrf9KyuFBfE2OkSatmOFEQS3CnezJdd/wxfVY+2Z4giHlXVdqtw
+ e482z0sU/Frrr44yYaek8GkJs6nPZ3j+DEY0J2m0Wh8MB/t2poA7yIozRjsvzz2/CrbprC
+ GXDmuqjg8HGlKMfIEhf90cXBf3b5Cj+Rv82fuGYO5V7OffXM7Zh0nak7jDTokm1D9ZHl3r
+ 2aZDw/TojD3CZD3ljr0bwNhBTmnM3Po4V8A+rNcH0h/kn94vrdMoRUVnlbMIeRA5G9aVsx
+ D/gw9//eG9+TbkEF65a6GTHu/h6lrnYAlMi1j8xBWk8EyDyKkB0QCZQ7ousHlnVQ==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=Du2ow80w; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=CqhpT/cy;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=atVGoxcK
+ 8gZnom10CZ0krE6Xvkfj5SYOsffENxthw7Q=; h=references:in-reply-to:
+ subject:cc:to:from:date; d=korins.ky;
+ b=Du2ow80w25OkbKG5iv6t/KH56RIGpz
+ H5GdgMJha0dfLQ8sUzEa9awz0KlnCYJhBlkB8bFDcTOw2NEnQZ9Kvc4ZZGdZ1akZTKqFd1
+ euMpTMGg81w+r6KyulpUlG6Rhkv0RSKZthexlxL9REnYK62QWf2FILjbj3lpVIBd6xSRBt
+ fOwWfVxJ1DBWrLd7Zu8o0GoFuPMnvna0lc3CIgYTQZA0BlE+7lvMTObCE7iuxF2pzGQz9S
+ 4OKIVLXgjd0a9rNEf3qjmEGBdJDzJj2IYZaondKf1iGkrfwyZLiCqHCupXcmONPmdXJvpt
+ 2DBiMmIxrntAhzCYXeGaBf8W0CBI1JnQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=atVGoxcK8gZnom10CZ0krE6Xvkfj5SYOsffENxthw7Q=; h=references:
+ in-reply-to:subject:cc:to:from:date; d=korins.ky; b=CqhpT/cyY5BZ7ryPEH
+ saGo94u+g/hBn40d6FcbxmGY0ZmUlUCg6N2Jd+OQY2PXcMzKioGoMKkRUMIsiP6lT2DA==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id df6edc43
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 25 Sep 2026 20:34:01 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) id 3fdd3eaa;
+ Fri, 25 Sep 2026 20:33:57 +0200 (CEST)
+Date: Fri, 25 Sep 2026 20:33:57 +0200
+Message-ID: <87h5jd5gfe.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,	Philippe =?UTF-8?B?TWF0aGlldS1E?=
+ =?UTF-8?B?YXVkw6k=?= <philmd@mailo.com>,	"Michael S. Tsirkin"
+ <mst@redhat.com>,	Aurelien Jarno <aurelien@aurel32.net>,	Jiaxun Yang
+ <jiaxun.yang@flygoat.com>,	Aleksandar Rikalo <arikalo@gmail.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 0/25] hw/mips: add Octeon III EBB7304 support
+In-Reply-To: <bcf359bb-5dde-482c-b1e2-6161f6498c0b@oss.qualcomm.com>
+References: <20260903120510.34876-1-kirill@korins.ky>
+ <bcf359bb-5dde-482c-b1e2-6161f6498c0b@oss.qualcomm.com>
+User-Agent: Wanderlust
+Mail-Followup-To: philmd@oss.qualcomm.com, pbonzini@redhat.com,
+ philmd@mailo.com, mst@redhat.com, aurelien@aurel32.net,
+ jiaxun.yang@flygoat.com, arikalo@gmail.com,
+ qemu-devel@nongnu.org,
+ "Kirill A. Korinsky" <kirill@korins.ky>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: hk8J3gh9C3WOYgwG1IMRFnUImqBftIZt
-X-Proofpoint-GUID: hk8J3gh9C3WOYgwG1IMRFnUImqBftIZt
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfX/PxAzCYU59nn
- hu30uctVW64ncJENAHb3om6V3C/8V9ZzpS14InDZYlsuQ4VbmkDIp8qQXaOsBUmQUx1qaTl5Ijq
- AKLsNBJSnn1DhCKBbFBRHm3FlZKRWiU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA3MSBTYWx0ZWRfXyHES5KnwwZAT
- O6SgnHSf9QIS6zP6SOaVJ8BHvu0xAKtBhBiva03/annT4ue5DAetH5Vu/8zn6Mi60eV+Ghy2zzf
- lTCpxrb84KeuZu2BjgONshHhFIvVt47dcHXd2qEOuqri2T9guXJQTBsveCsOSuSu7uCGs9BtUiH
- JtwQn0B9uV82VhW4dj3de7Dvczt2tq3hJFMqjd6XWdnlaxOdu5uh72qbZDbFYJBzQZjoMQ4848T
- a02pxQAE+qHhHifN7YE2VoyJ6StT69YpKrXlAgn1/JttappwykBz2m5pYjdyJOofX/LIMPSRz0A
- /XHIvUKkVKr6i1ZXZm0eRVWDAf+U3OEvH5Ch/YcnkUL6XA0SzYdLogOIyW0QeJK3I5prVSwn+eR
- 0lE4irsEIEFXY5wrk2HQHmjHXbuVbsvUg77gR8Ti9GtuDvCCMpIbfDffUo167xqjEFv5jSWBWLf
- l9Oy3CZkCThgzJ8yiQQ==
-X-Authority-Analysis: v=2.4 cv=eNmGH3p1 c=1 sm=1 tr=0 ts=6ab6b540 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=NFqucfQ7s-eWkH41LbIA:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609250071
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,96 +104,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 80c1d80c10a0676728d65874a9641eb578626d7c:
+On Thu, 03 Sep 2026 14:18:02 +0200,
+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> wrote:
+> 
+> Hi Kirill,
+> 
+> On 3/9/26 14:01, Kirill A. Korinsky wrote:
+> > Greetings,
+> > 
+> > This is resend which includes missed maintainer.
+> > 
+> > This series adds enough Cavium Octeon III CN73xx and EBB7304 board
+> > support for upstream U-Boot 2026.04 to boot OpenBSD/octeon from USB
+> > storage or through PCI e1000 and TFTP; the same machine also reaches
+> > the prompt of the vendor U-Boot 2013.07 image from the Ubiquiti
+> > EdgeRouter Infinity ER-8-XG recovery set. The model intentionally
+> > covers the hardware exercised by these firmware and operating system
+> > paths.
+> I'll be offline until the 21th but I tagged your series for review.
+> Please ping me back then in case I forget :)
+>
 
-  Merge tag 'pull-hex-20260924' of https://github.com/qualcomm/qemu into staging (2026-09-24 19:35:55 -0700)
+Friendly ping about this series and https://patchew.org/QEMU/20260719215455.96122-1-kirill@korins.ky/
 
-are available in the Git repository at:
+> > Patch layout:
+> > 
+> >    1. target/mips: make CP0 interrupt state atomic
+> >    2. target/mips: fix MIPS64 segment access checks
+> >    3. target/mips: drop hidden TLB shadowing for tlbwr
+> >    4. target/mips: add Octeon CP0 register state
+> >    5. target/mips: add Octeon CN73xx CPU model
+> >    6. target/mips: accept Octeon PageMask encodings
+> >    7. target/mips: allow Octeon unaligned accesses
+> >    8. hw/mips: add empty Octeon III machine
+> >    9. hw/mips: add Octeon CPUs and boot memory
+> >   10. hw/mips: add Octeon reset controller
+> >   11. hw/mips: add Octeon CIU3 CPU control
+> >   12. hw/mips: add Octeon CIU3 interrupt routing
+> >   13. hw/mips: add Octeon legacy CIU
+> >   14. hw/mips: add Octeon CSR window
+> >   15. hw/mips: expose Octeon reset CSRs
+> >   16. hw/mips: add Octeon MIO boot support
+> >   17. hw/mips: wire the Octeon UART
+> >   18. hw/i2c: add Octeon TWSI controller
+> >   19. hw/mips: add Octeon EMM controller
+> >   20. hw/mips: add Octeon LMC controllers
+> >   21. hw/mips: add Octeon boot support registers
+> >   22. hw/usb: add Octeon USB controller
+> >   23. hw/pci-bridge: add Octeon PCI host bridge
+> >   24. hw/pci-bridge: add Octeon PCI memory window
+> >   25. tests/functional: test Octeon III boot
+> (I'm not sure of the usefulness of listing the default series layout)
 
-  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/tcg-tests-20260925
-
-for you to fetch changes up to 2ed098a7f2549781fc06e5228bf1fddcaf402db1:
-
-  tests/tcg: add alternative cross-compilers for macos (homebrew) (2026-09-25 17:04:17 +0000)
-
-----------------------------------------------------------------
-Changes:
-- [PATCH] tests/tcg/meson.build: reintroduce build-tcg target (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260918202704.9790-1-pierrick.bouvier@oss.qualcomm.com
-- [PATCH] tests/docker/dockerfiles/debian-loongarch-cross: update (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260923000510.218473-1-pierrick.bouvier@oss.qualcomm.com
-- [PATCH] tests/tcg/meson.build: compile test with -fno-stack-protector (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260924202012.2465-1-pierrick.bouvier@oss.qualcomm.com
-- [PATCH v2 0/6] tests/tcg: use x86_64 cross containers on all host (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260923185725.863311-1-pierrick.bouvier@oss.qualcomm.com
-- [PATCH 0/4] tests/tcg/meson.build: detect additional cross compilers (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
-  Link: https://lore.kernel.org/qemu-devel/20260924213942.26491-1-pierrick.bouvier@oss.qualcomm.com
-
-----------------------------------------------------------------
-Pierrick Bouvier (13):
-      tests/tcg/meson.build: reintroduce build-tcg target
-      tests/docker/dockerfiles/debian-loongarch-cross: update toolchain
-      tests/tcg/meson.build: compile test with -fno-stack-protector by default
-      tests/tcg/meson.build: force use of linux/amd64 platform for containers
-      tests/lcitool/refresh: generate dockerfiles using --host-arch x86_64
-      tests/docker/dockerfiles/debian-all-test: remove arch specific bits
-      tests/tcg/meson.build: remove cc_docker_host_arch
-      tests/tcg/loongarch64/system: deactivate loongarch64-softmmu-memory (hang on aarch64 host)
-      tests/tcg/x86_64: speed up compilation of avx, mmx and 3dnow tests
-      tests/tcg/meson.build: report correct cc in summary
-      tests/tcg/meson.build: introduce cc_alt (alternative cross compiler)
-      tests/tcg: add alternative cross-compilers for fedora
-      tests/tcg: add alternative cross-compilers for macos (homebrew)
-
- .gitlab-ci.d/macos.yml                             |  7 --
- tests/docker/dockerfiles/alpine.docker             |  2 +-
- tests/docker/dockerfiles/centos9.docker            |  2 +-
- .../dockerfiles/debian-all-test-cross.docker       | 39 +++++----
- tests/docker/dockerfiles/debian-amd64-cross.docker |  4 +-
- tests/docker/dockerfiles/debian-arm64-cross.docker |  4 +-
- tests/docker/dockerfiles/debian-armhf-cross.docker |  4 +-
- tests/docker/dockerfiles/debian-i686-cross.docker  |  4 +-
- .../dockerfiles/debian-loongarch-cross.docker      |  2 +-
- .../docker/dockerfiles/debian-ppc64el-cross.docker |  4 +-
- .../docker/dockerfiles/debian-riscv64-cross.docker |  4 +-
- tests/docker/dockerfiles/debian-s390x-cross.docker |  4 +-
- tests/docker/dockerfiles/debian.docker             |  4 +-
- .../docker/dockerfiles/fedora-rust-nightly.docker  |  2 +-
- tests/docker/dockerfiles/fedora-win64-cross.docker |  2 +-
- tests/docker/dockerfiles/fedora.docker             |  2 +-
- tests/docker/dockerfiles/opensuse-leap.docker      |  2 +-
- tests/docker/dockerfiles/ubuntu2404.docker         |  2 +-
- tests/lcitool/libvirt-ci                           |  2 +-
- tests/lcitool/refresh                              | 37 +++++----
- tests/tcg/aarch64/meson.build                      |  4 +-
- tests/tcg/aarch64/system/meson.build               |  2 +-
- tests/tcg/aarch64_be/meson.build                   |  2 +-
- tests/tcg/alpha/meson.build                        |  2 -
- tests/tcg/alpha/system/meson.build                 |  1 -
- tests/tcg/arm/meson.build                          |  2 -
- tests/tcg/arm/system/meson.build                   |  2 +-
- tests/tcg/hexagon/meson.build                      |  1 -
- tests/tcg/hppa/meson.build                         |  1 -
- tests/tcg/i386/meson.build                         |  2 -
- tests/tcg/i386/system/meson.build                  |  2 +-
- tests/tcg/loongarch64/meson.build                  |  2 -
- tests/tcg/loongarch64/system/meson.build           |  6 +-
- tests/tcg/m68k/meson.build                         |  1 -
- tests/tcg/meson.build                              | 92 +++++++++++++---------
- tests/tcg/mips/meson.build                         |  1 -
- tests/tcg/mips64/meson.build                       |  1 -
- tests/tcg/mips64el/meson.build                     |  1 -
- tests/tcg/or1k/meson.build                         |  1 -
- tests/tcg/ppc64/meson.build                        |  1 -
- tests/tcg/ppc64le/meson.build                      |  2 +-
- tests/tcg/riscv64/meson.build                      |  4 +-
- tests/tcg/riscv64/system/meson.build               |  2 +-
- tests/tcg/s390x/meson.build                        |  4 +-
- tests/tcg/s390x/system/meson.build                 |  2 +-
- tests/tcg/sh4/meson.build                          |  1 -
- tests/tcg/tricore/meson.build                      |  1 -
- tests/tcg/x86_64/meson.build                       | 10 +--
- tests/tcg/x86_64/system/meson.build                |  2 +-
- tests/tcg/xtensa/meson.build                       |  3 -
- 50 files changed, 142 insertions(+), 149 deletions(-)
+-- 
+wbr, Kirill
 
