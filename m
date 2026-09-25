@@ -4,113 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9114DC9830D
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 08:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98B7C9830E
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Sep 2026 09:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xA0r8-0007Sy-LI; Fri, 25 Sep 2026 04:00:30 -0400
+	id 1xA29N-0006l0-1x; Fri, 25 Sep 2026 05:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1xA0r6-0007RZ-H8; Fri, 25 Sep 2026 04:00:28 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <tcalifan@redhat.com>)
+ id 1xA29L-0006kb-AA
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:23:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1xA0r4-00059b-PU; Fri, 25 Sep 2026 04:00:28 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4a21A061026; Fri, 25 Sep 2026 08:00:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KLvIiG
- kVu94nGuZRbBeOQrjA4SOPaKYR/eZ+vSRmZpo=; b=Us3TNV92z8NKOvXVJ2eKQ1
- gfZBKDqcYjLsG2YAGltgyevJ8xS8B2SW4CW3ZF9xMeP6zEEvg5pKOhMmn4XIAuoy
- 42sZU6+rsYxp9bigV36OgCS5u1+b1055kBXUbCEAoYlR3hQ1R4LPZ4z+lmThm0mD
- SxESFItsM6OBAlYUgRCWmGBJbNZP8oEsZF4rdIj94+Nh7wCB2HXSSoVcWfU/A9k8
- UrIYaR0SWYr0yg2S+KXq/8aFXfEZ9oYYdUKGhvkrRJ/srHuqvMoxJb7pDFr3NSB5
- OGnpix5ICnBR3zZUNI/V9rWLAjLk5qArsXoHutZXrISfzxKMaiupyWOoQxCpzNpA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsnu37-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 08:00:22 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68P4lVTv3298370; Fri, 25 Sep 2026 08:00:21 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8k1mav-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Sep 2026 08:00:21 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68P80HAs47645014
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Sep 2026 08:00:17 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C41EC2004E;
- Fri, 25 Sep 2026 08:00:17 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A23920040;
- Fri, 25 Sep 2026 08:00:14 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.124.210.229])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 25 Sep 2026 08:00:14 +0000 (GMT)
-Message-ID: <3dd5c06a456a49d07ff51be38fdbba651536dddf.camel@linux.ibm.com>
-Subject: Re: [PATCH] target/ppc: Stop vCPU thread before calling
- parent_unrealize
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, sourabhjain@linux.ibm.com,
- rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com,
- richard.henderson@linaro.org, mkchauras@gmail.com,
- sshegde@linux.ibm.com, srikar@linux.ibm.com
-Date: Fri, 25 Sep 2026 13:30:13 +0530
-In-Reply-To: <20260924200552.2eab89e8-e2-amachhiw@linux.ibm.com>
-References: <20260923121444.154175-1-shivangu@linux.ibm.com>
- <20260924200552.2eab89e8-e2-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <tcalifan@redhat.com>)
+ id 1xA29J-0004vE-BB
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 05:23:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790328199;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qwH/7nJuVRR3H3fLTjoSMSoSzYdhHHvzen7XJ7sHsfo=;
+ b=JMUKLTRVskrhaGURuOqXNIgOA/EYr52vB06NyHvq7sBoxSOqJoTijAPxJKPWFcWQmRCc1E
+ 8/DaC6GpOPV27yturQo0idUxIi5caTPkQp3jTEXEtr4RUUyHXL+UrYtBuDhCrzHz6E1CRW
+ caM0CjNt91yXUdGlnJzWoxemUTJacyA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-25-q7aBJffvM1WbIFRmWfNC5A-1; Fri, 25 Sep 2026 05:23:17 -0400
+X-MC-Unique: q7aBJffvM1WbIFRmWfNC5A-1
+X-Mimecast-MFC-AGG-ID: q7aBJffvM1WbIFRmWfNC5A_1790328196
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4870487e33aso233128f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 02:23:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790328196; x=1790932996; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=qwH/7nJuVRR3H3fLTjoSMSoSzYdhHHvzen7XJ7sHsfo=;
+ b=JTDhUQiUptk/lLSrUF2rdHo2gbaT695T6X5oNmQ2tN4lJRuLxDsa9qs9GZRjF+E08C
+ XZBy+An1XA+3LtsKrOxxxYcIACaxvJPkcpOv90F5dXhu+bLOALRJoRU+0wc7FFhg9fo9
+ t4Cp83EdcPH1vIw8ok5Q7cXnurDZNgIkCzvLrAGjXaefWcDLKfA/lV9tifaYsJIgyxck
+ jeszrvLBm6zu0xhKUZdd4N9TcfoWqrlQxETN/O7ttoiHg5T8Zm16p6fYZys+sxKFjDKs
+ BrjkygtvNST4/4i2W0snJbQeyA1TonHuc26tlwr9PCzYePEhQI2s9KA42KFC/JnvnvE0
+ ECtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790328196; x=1790932996;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qwH/7nJuVRR3H3fLTjoSMSoSzYdhHHvzen7XJ7sHsfo=;
+ b=EFEkEPY8C/7NY6HXgg0J7y/VvqZGTnrEdHWnf7uZxbam6PzgpalpMf6o+aGVZ7VCyN
+ pp47SmNDe+YJON+s8bno15O3J0qy+2R1b38fJe0R0rqaBDMhnMZuLyMeayVXVhHQUlOd
+ ifCTaDHyJ5BQK3oG7dt0LA3EwmJlFqS1x2HFDAvjFJAjJgNGZgPjXALVFyRFzyrvaEhw
+ jLhXTV1Cvf26dxe0b3Kog93YouX1v4Tw4/UFnHrKkCrG9Kd7g70pfXAaOm6ay4Y+7wR4
+ oEyniNsYQhkXTPP9enI3RX/GaAPON4+JXRSzxmCU2ru56IEQwBBrQJIQStDrswWqqLHX
+ a30Q==
+X-Gm-Message-State: AFuF++nNsC7bnErXYafBHBWCpVP4iSYHGCzCbowPML15MjTALmgdLyz2
+ BA32KHaW+3UEQTZ80BcaChIUofPef/AHOTmWzB9d9F7/V0hqupBitvOiFbkBJNBumjiWdHdU6FP
+ VMu5pBiFBG/YntXm65d5q2a7ay1uaU2EfKVk0qAfya9BXIhmg2YfyoV6sCUM2sDNC9L4RKuN46r
+ iCStpBOUJlWmBGhdkF/V7m+56X8F2yzXyfwbVV5D3Q
+X-Gm-Gg: AYBFou08ze/BeEWpIC15BVle29i3Q+BDza1cQk/Pxcu+mWz6/1O/FMiIk9zouiisXhP
+ c9jDOIqlVWWkbygc2xAThNyLvqyGe3gCSLplFyCN6yRsmCt5Hke1+8vZippunOn2H2gw2m1jmcX
+ gW9UkNgoj5quaEMNb0HHw1GW67UsuHizvif5Jc2vKUyNgMioacg2OCam/QdCTmVH7RL00SIA+jN
+ bTbUP52cr1RU2nk+s0YYYBdi4gz93rDFhGbPQNtywN7UZ/kC1xqMtwrHz+p7eb/R7O8/+uOCbf9
+ nOcHAtlWhTOpR0APKHl/c6QuiI1TfMWu4CZgW4M5CLbnfIIuA5fN7ilIldeJzI/TAjImyrI=
+X-Received: by 2002:adf:e198:0:b0:486:e5c6:cab with SMTP id
+ ffacd0b85a97d-4887174b7ffmr8221520f8f.32.1790328196160; 
+ Fri, 25 Sep 2026 02:23:16 -0700 (PDT)
+X-Received: by 2002:adf:e198:0:b0:486:e5c6:cab with SMTP id
+ ffacd0b85a97d-4887174b7ffmr8221498f8f.32.1790328195730; 
+ Fri, 25 Sep 2026 02:23:15 -0700 (PDT)
+Received: from tcalifan-p1g8.csb ([213.175.46.86])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4887a74538asm5569877f8f.34.2026.09.25.02.23.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Sep 2026 02:23:15 -0700 (PDT)
+From: Tommaso Califano <tcalifan@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tommaso Califano <tcalifan@redhat.com>
+Subject: [PATCH] hw/usb: Fix USB MTP heap OOB read via dlen underflow
+Date: Fri, 25 Sep 2026 11:23:14 +0200
+Message-ID: <20260925092314.50106-1-tcalifan@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab62a16 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=0D3Gg2UqQP5LkhYO5pUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: ciS63oJ6oESdJt7VvX-PX1ewKKYkGPU8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAzMCBTYWx0ZWRfX2gJKovaGcpU1
- GvlAqj9V5daJzXjRq2kzv1l6McPt1tBF309mjrmyVUtRB0BpC11blKLOgl0XF6CRMLXIwOZSyrD
- 0S5F23kYPFy51sAWm65JhpE2t4Ejbd0bWPZmnV8OFMkP5gl2K5YbCy+EXgIccjfOinndiI8MKNq
- FJs/EVEKg9vPLp+aY7PyzTHA7aRdN72h1kclBJAjT4PETJNTWj6gWjf9L4fC8MnFJh9rEjo69+Z
- CoMfEoU5MhWRsVmeXOwdsbDn1R2rLGC1qAVoSrnB4EdI+MfnzTACd+4KRuUaYIGLO9JBCN2xJKL
- 0BnssIdFzdz7SlYyXyD5+WWoZWvKmCDO/u3tycDOUJqqQBWY/vLOwwHH2e5co5NjomphDR8rmtx
- BXbBrfhw2lxBCzuPDXuvsS4G5467uPzaaUZFlkNm4JdYDeYNC3P4k1oUmM6CA9q9golbd21hptp
- 9BRd1cOgeTE9KE4SPyw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAzMCBTYWx0ZWRfXzcUxMNgr06GG
- 1BtThE2srX8uNfhln7TWTzXj/dhJoYkJgMb/8KvYZWZ7exUou3PUvYuU/ki+oYBKbN5fz2SWUba
- h22+NAoFbX23xw/X/IC516HD2olDHPw=
-X-Proofpoint-GUID: Wz9HJ8tDWobUFvjKUvV0irMJYHmtaOEV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250030
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=tcalifan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,37 +116,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-09-24 at 20:12 +0530, Amit Machhiwal wrote:
-> The fix is correct and the commit message is well written.=C2=A0 The ASan
-> trace makes
-> the race unambiguous: tlb_destroy() frees fast->table and desc-
-> >fulltlb while
-> the MTTCG thread is still running tlb_mmu_resize_locked() on the same
-> structures
-> via the queued tcg_commit_cpu work.
->=20
-> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
->=20
-Thanks for review.
+In QEMU’s USB MTP device, usb_mtp_write_metadata() computes
+filename_chars = dlen - offsetof(ObjectInfo, filename) where
+offsetof(ObjectInfo,filename) = 53. The dlen parameter is the size of the
+last USB packet, not the total ObjectInfo size. If the final packet has
+fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
+utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
+process memory.
 
-> Minor: I think a short comment above cpu_remove_sync() would make the
-> ordering
-> constraint self-documenting, e.g.:
->=20
-> =C2=A0=C2=A0=C2=A0 /*
-> =C2=A0=C2=A0=C2=A0=C2=A0 * Stop and join the vCPU thread before tearing d=
-own accelerator
-> =C2=A0=C2=A0=C2=A0=C2=A0 * state (TLB tables etc.) to prevent the running=
- thread from
-> =C2=A0=C2=A0=C2=A0=C2=A0 * accessing freed resources.
-> =C2=A0=C2=A0=C2=A0=C2=A0 */
-> =C2=A0=C2=A0=C2=A0 cpu_remove_sync(CPU(cpu));
+Add a guard to return RES_INVALID_OBJECTINFO, preventing the case.
 
-Seems this is already pulled via misc tree.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
+Signed-off-by: Tommaso Califano <tcalifan@redhat.com>
+---
+ hw/usb/dev-mtp.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-I plan to work on Philippe's suggestion to pull all cpu_remove_sync()
-calls into cpu_common_unrealize(), that should take care of all such
-caveats.
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 1d8cfd32dc..704e6c533d 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1704,7 +1704,15 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
+     MTPObject *o;
+     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
+     uint32_t next_handle = s->next_handle;
+-    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
++    size_t filename_chars;
++
++    if (dlen < offsetof(ObjectInfo, filename)) {
++         usb_mtp_queue_result(s, RES_INVALID_OBJECTINFO, d->trans,
++                            0, 0, 0, 0);
++         return;
++    }
++
++    filename_chars = dlen - offsetof(ObjectInfo, filename);
 
-~Shivang.
+     /*
+      * filename is utf-16. We're intentionally doing
+--
+2.55.0
+
 
