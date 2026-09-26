@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5BF7C9831E
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E061CC98328
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMTy-0007Ij-4S; Sat, 26 Sep 2026 03:06:04 -0400
+	id 1xAMPr-0002GN-CM; Sat, 26 Sep 2026 03:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMQq-0003Ci-9Q
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:02:48 -0400
-Received: from mail-dy2-x27.google.com ([2607:f8b0:4864:36::27])
+ id 1xAMPm-0002Ew-H3
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:43 -0400
+Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMQo-0000Ya-Dm
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:02:47 -0400
-Received: by mail-dy2-x27.google.com with SMTP id
- 5a478bee46e88-3381a6a05c9so987993eec.1
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:02:45 -0700 (PDT)
+ id 1xAMPj-0000RY-C6
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:42 -0400
+Received: by mail-dy2-x0e.google.com with SMTP id
+ 5a478bee46e88-3411e0ace58so1949847eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406164; x=1791010964; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406098; x=1791010898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+/cSI9KSeYzGrYLevJhsdqe9Hab1ATMpzGrHMp6RW0U=;
- b=sE3TPoYyy+w/5D1Rr+niiEDD5DEbfFd0GY55nP2glZrUwnP7Hu0w7YnG0sxXGjtlxC
- TqTilCeK2LseGqJRwGOinsJHVzzUArXoCHICBc8kx0wtdkHKwNcn5o+7EGiVVwfbvgnw
- UOPhxl6CDZPeHbKB4AdpMonUFTJwD7K3M90fiGG71Ux17OBBx8aZRZcDsDrSYusQKfr6
- sI9Xgb7i3pKS4V6sNmzCCoMS2xUnyFDYzKQ18gG30Ukj78gUKvdeIFhZvFQtu+5mhmKq
- NAQlFPd2pQf2NGqWmf6+OlF4Azgl6GtQroVcKJAs3+xFnx1Hni3OuIrHXb0CGpdydkVn
- idLg==
+ bh=2ign1E0+b6xltdUS4MWB1vKIjsNRvcSjRc2WeM4/+WU=;
+ b=k6A9kGX4JLsqCaoXPNO7b8I3Y6vtFZrk9ZlUXK99vWAEWHWyQ35sRrsweWQBhMeKO5
+ Bg/f+oGFTSf9ApW6KIgbugib91CPj8fhEKqqUvqrgCgNz4CrvWBJZkBYlX2uW0dDOB3J
+ sa+sZn2fcWhfOELnV7fOLLxGpi4ZAwAqAS1GTNpB4MUWW/kj6/GJFYiUjp8vwibMxVt6
+ acKah35olVg9jAB2fVhHJzLo+L+sxXw2cKkeFHkoMGNkL/pCwFAfOz8ksz90+jEqlesK
+ m/lDmCcZmv9498FNDa4K1OelHzW4iVCJmLXypCveeiopNngL/ivyqQwd+5OO1JmU4OmH
+ krdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406164; x=1791010964;
+ d=1e100.net; s=20260707; t=1790406098; x=1791010898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+/cSI9KSeYzGrYLevJhsdqe9Hab1ATMpzGrHMp6RW0U=;
- b=A/sqNahLKT5EafKW4rjnIkR5s1biU1j60v3nATcRCjPPvBCjUMDeWbGQI26Om5dQzm
- i8GbSmRVZKqB8cOVDp7rIMDJrarT0NeA3bnfre6b0AdKecSDVA25XtqCt5ZI5OjbksQV
- qyMDk28kJ+B+wsQFe+CroocKykUQ2rK9tSe99H59/SAIdSoBrXA7A095Fgr5g1U00xJp
- YcQ6iALkCOVB9XFDl0ubdwL23HcsRVrlROeJ40dYMTIv/4L04pByzaAdZGUMmIBuq6gl
- YtSpd7AT9+jNIg2bIiuEyCZFuVWbAs9ubscsW4OYnCmzNsHVjH5Wuj30rjv4h+sJVvRm
- 2Jvw==
-X-Gm-Message-State: AFuF++kvjUK/Wjfr0RUAfQYz72C3xjhl5z3IzMyTjRzELBB8BCrhJ4Lq
- En6Vwar6Gl2eaG5naIRm8LjCbvBQrenjsjxVlX8xDM29J96w7M2AUAs4Ga1M97qk
-X-Gm-Gg: AYBFou1V93PZtpAcI4vqj42fmxJeKX9LxtDWEBrGb+CNqdmWNXMSYQcvnOhT/uZRH54
- 4mx8m6uLK0qITwClKS77ZxkkcSuLtwLFCCzlzgJ1uCLO1HST3lClqvoRX6asEfHE3kKiP98Px2m
- xLW2kXwgpiBYRuaGNFmxTeAVau7oKSwFdOYUerGsrnb7LAjfGjyqbBE41RWN2SIe4NE5AVcL0W9
- +7AAymFcKWNiGeUIyZWdqJ8yN7i6wyu1qWXcvXJz6+NoJWSwglzs6NZbOk7fsmLcEyGz3JQG5bz
- njLncyOMDmaXAivTxcTdB44UkFPXuVnq1aLj0k1g/x8Q1j/vXP1qhTgX7E/nX3OqfmxPHJtFYGe
- 8kqaVv88sB+4WmGSaPLnRzrctchRivD26KtUYOxIMjZkNoUDLOHhF/K6Fbziv9qEIbvYfSWuPww
- IgM2Sqbydi7dJNExNLg9qRo/Hu2oilE4PeTzQD2RgFva3AV1iOfKgCeWfGSXwEdXH7p1Rs5eXtK
- LE0MbMBDr56jLnuZ1H3EFbF/LoUjeU=
-X-Received: by 2002:a05:7301:7e04:b0:33b:c122:6bd4 with SMTP id
- 5a478bee46e88-342701bed7amr1810144eec.6.1790406164340; 
- Sat, 26 Sep 2026 00:02:44 -0700 (PDT)
+ bh=2ign1E0+b6xltdUS4MWB1vKIjsNRvcSjRc2WeM4/+WU=;
+ b=ylDiK5ayrWW7y+IhG5E/QY4vtH1LaRHTBs/NLmtL4rI+LTeDCvpVAH1pj3jb29Ula1
+ eBvUY3xW64junjUm/IicaiBif1GX4Du+grAyWmEwUzuBRp41wzXKXUens8fBdvTxtQF+
+ hb58zRWQp0qybiW0A6Vj6+nfzetUC7YDw13rdxPYC2eHv2KeLTO2ehn6a+VcNAokLE/q
+ ifL60UsyL8ts9zV74DAdqcMuRD9Pbh7RAO5WdyhhBxPt+4voPaYqfpQpGSdf2yB6shU/
+ POxcFnbRq3VvIZdLEFs+DYItm8l0jypcwV0ah2IQvAu1iezw7ssdU7olyGh7XShkl9XC
+ kMcA==
+X-Gm-Message-State: AFuF++kwKFcXWz4ev7QVGNEDV0iAA9YOUiZP8KAHetBu3jr0l70fPHFL
+ 9Gi56MnUJplzMXSWn7Jr+VH4Qp+4klvbZYbyTSgc9hxrFDluqDQ4NKi/WfHRdEMx
+X-Gm-Gg: AYBFou3XEqgi4ahZ55whqDAyY1RP84feGQstzCxAKLSBngwYjDjIA2TMM5pwje3vLcI
+ pkNhOzX/ii9CiNeAXwPcHMopTCP/UUWEEUHbtaR4IAehCrN5TTRFj5aQ2OCf+bwDM/dAqa8HhgR
+ 3CoLFBNSLwjb2teusI0MWxTZlLpNXa4wnUZdARVOg+cfvhTGLiyDwIezLIKwK5AZ1bSJ1n6+q3p
+ +7QHMrnaGNiR9e8AM/YekYS4twcnPkZ2WI7FHwlQ5b2s20NfGbgDs3mnZqg2YRpn7IyqJ+Xr7Yp
+ ryMoz+FCyUte3F4atW6HBczRgUzhnKHbswBK0hCzzRyhRrQdJeLqYNNpiSJMYCUH5tswAaOO2oJ
+ Dh5hBPLBgV7IfuDToJNA95X2VvuTgSXvelwPNbTaq8tovglOCYYifj+gbXbnqUS6PtqsOIh44L6
+ 0/0YrBSYryXtBRVS9tB7f5SFuQ9nfhncws2OSd3Q7tMjUv6DmArY8IJyTmcqyXJ/Xn6VPPxXWRJ
+ Q10fuQYCsMTz84Ln+9eeObeu2+4Sr8=
+X-Received: by 2002:a05:7301:12a:b0:33f:f57:c516 with SMTP id
+ 5a478bee46e88-34270ac0463mr2217178eec.10.1790406097223; 
+ Sat, 26 Sep 2026 00:01:37 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.02.40
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:02:43 -0700 (PDT)
+ Sat, 26 Sep 2026 00:01:36 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,22 +78,23 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 25/55] tcg: give common-system helper tl an i64 slot
-Date: Sat, 26 Sep 2026 15:00:24 +0800
-Message-ID: <20260926070057.1234-26-luoyonggang@gmail.com>
+Subject: [PATCH v4 08/55] tests/qtest: prepare machine-list-test for combined
+ qemu-system
+Date: Sat, 26 Sep 2026 15:00:07 +0800
+Message-ID: <20260926070057.1234-9-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::27;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x27.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,160 +110,1016 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dh_alias_tl stays tl. In common-system code the helper C slot stays
-uint64_t and the typecode stays i64, because one typemask is shared
-by 32- and 64-bit guests. tcg_gen_callN zero-extends an I32 temp into
-that slot and truncates an i64 return.
+Each built qemu-system target checks its query-target arch and
+query-machines names, including the none machine and omitting the
+abstract pegasos parent. xen, vmapple, nitro, and x-remote appear
+only when that host build has them. The lists in
+machine-list-test.inc.h are shared for a later combined
+qemu-system test.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/exec/helper-head.h.inc | 21 ++++++++++++++++++--
- tcg/tcg.c                      | 35 ++++++++++++++++++++++++++++++++--
- 2 files changed, 52 insertions(+), 4 deletions(-)
+ tests/qtest/machine-list-test.c     |  94 +++
+ tests/qtest/machine-list-test.inc.h | 876 ++++++++++++++++++++++++++++
+ tests/qtest/meson.build             |   1 +
+ 3 files changed, 971 insertions(+)
+ create mode 100644 tests/qtest/machine-list-test.c
+ create mode 100644 tests/qtest/machine-list-test.inc.h
 
-diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
-index 7dec5f5b067..6612937c5ae 100644
---- a/include/exec/helper-head.h.inc
-+++ b/include/exec/helper-head.h.inc
-@@ -45,16 +45,29 @@
- #define dh_ctype_noreturn G_NORETURN void
- #define dh_ctype(t) dh_ctype_##t
- 
-+#define dh_alias_tl tl
- #ifdef COMPILING_PER_TARGET
- # include "exec/target_long.h"
- # if TARGET_LONG_BITS == 32
--#  define dh_alias_tl i32
- #  define dh_typecode_tl dh_typecode_i32
- # else
--#  define dh_alias_tl i64
- #  define dh_typecode_tl dh_typecode_i64
- # endif
- # define dh_ctype_tl target_ulong
-+#else
+diff --git a/tests/qtest/machine-list-test.c b/tests/qtest/machine-list-test.c
+new file mode 100644
+index 00000000000..35fb365197d
+--- /dev/null
++++ b/tests/qtest/machine-list-test.c
+@@ -0,0 +1,94 @@
 +/*
-+ * Common-system helper FFI only: helper_info.typemask is compile-time
-+ * and shared by 32- and 64-bit guests, so the C/libffi slot is
-+ * max(i32, i64) -- always i64 / uint64_t. This is not the TCG temp
-+ * width. TCGv_tl stays dynamic (I32 or I64 via tcg_type_tl());
-+ * tcgv_tl_temp() is the handle-to-TCGTemp accessor and is valid for
-+ * either size. Call lowering zero-extends an I32 temp into this
-+ * unsigned i64 slot (dh_typecode_tl is i64, not s64). A helper C
-+ * body that needs a signed guest value must narrow to XLEN and
-+ * sign-extend itself; (int64_t)arg is not a 32-bit sign-extend.
++ * Per-target machine list tests.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+# define dh_typecode_tl dh_typecode_i64
-+# define dh_ctype_tl uint64_t
- #endif /* COMPILING_PER_TARGET */
- 
- #if __SIZEOF_POINTER__ == 4
-@@ -76,6 +89,7 @@
- #define dh_retvar_decl0_i64 TCGv_i64 retval
- #define dh_retval_decl0_i128 TCGv_i128 retval
- #define dh_retvar_decl0_ptr TCGv_ptr retval
-+#define dh_retvar_decl0_tl TCGv_tl retval
- #define dh_retvar_decl0(t) glue(dh_retvar_decl0_, dh_alias(t))
- 
- #define dh_retvar_decl_void
-@@ -84,6 +98,7 @@
- #define dh_retvar_decl_i64 TCGv_i64 retval,
- #define dh_retvar_decl_i128 TCGv_i128 retval,
- #define dh_retvar_decl_ptr TCGv_ptr retval,
-+#define dh_retvar_decl_tl TCGv_tl retval,
- #define dh_retvar_decl(t) glue(dh_retvar_decl_, dh_alias(t))
- 
- #define dh_retvar_void NULL
-@@ -92,6 +107,7 @@
- #define dh_retvar_i64 tcgv_i64_temp(retval)
- #define dh_retvar_i128 tcgv_i128_temp(retval)
- #define dh_retvar_ptr tcgv_ptr_temp(retval)
-+#define dh_retvar_tl tcgv_tl_temp(retval)
- #define dh_retvar(t) glue(dh_retvar_, dh_alias(t))
- 
- #define dh_typecode_void 0
-@@ -115,6 +131,7 @@
- #define dh_callflag_i64  0
- #define dh_callflag_i128 0
- #define dh_callflag_ptr  0
-+#define dh_callflag_tl   0
- #define dh_callflag_void 0
- #define dh_callflag_noreturn TCG_CALL_NO_RETURN
- #define dh_callflag(t) glue(dh_callflag_, dh_alias(t))
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index ecc1f54c1bf..ba2a1127f92 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -2515,6 +2515,8 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-                           TCGTemp *ret, TCGTemp **args)
- {
-     TCGv_i64 extend_free[MAX_CALL_IARGS];
-+    TCGv_i64 ret_temp = NULL;
-+    TCGTemp *orig_ret = ret;
-     int n_extend = 0;
-     TCGOp *op;
-     int i, n, pi = 0, total_args;
-@@ -2524,6 +2526,19 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-         g_once_init_leave(HELPER_INFO_INIT(info), HELPER_INFO_INIT_VAL(info));
-     }
- 
-+    /*
-+     * An I32 temp in an i64 slot is zero-extended; s64 is sign-extended.
-+     * The call returns the wide temp, then extrl writes the I32 back.
-+     */
-+    if (ret != NULL && ret->type == TCG_TYPE_I32) {
-+        unsigned typecode = info->typemask & 7;
 +
-+        if (typecode == dh_typecode_i64 || typecode == dh_typecode_s64) {
-+            ret_temp = tcg_temp_ebb_new_i64();
-+            ret = tcgv_i64_temp(ret_temp);
++#include "qemu/osdep.h"
++
++#include "libqtest.h"
++#include "qobject/qdict.h"
++#include "qobject/qlist.h"
++#include "qobject/qstring.h"
++
++/* query-target "arch" is SysEmuTarget, not always TARGET_NAME. */
++static const char *query_arch_for_target(const char *target_info)
++{
++    static const struct {
++        const char *target_name;
++        const char *arch;
++    } map[] = {
++        { "armeb", "arm" },
++        { "microblazeel", "microblaze" },
++        { "mips64el", "mips64" },
++        { "mipsel", "mips" },
++        { "ppc64le", "ppc64" },
++        { "sh4eb", "sh4" },
++        { "xtensaeb", "xtensa" },
++    };
++    size_t i;
++
++    for (i = 0; i < G_N_ELEMENTS(map); i++) {
++        if (!strcmp(target_info, map[i].target_name)) {
++            return map[i].arch;
 +        }
 +    }
++    return target_info;
++}
 +
-     total_args = info->nr_out + info->nr_in + 2;
-     op = tcg_op_alloc(INDEX_op_call, total_args);
- 
-@@ -2560,8 +2575,19 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-     for (i = 0; i < n; i++) {
-         const TCGCallArgumentLoc *loc = &info->in[i];
-         TCGTemp *ts = args[loc->arg_idx] + loc->tmp_subindex;
-+        TCGCallArgumentKind kind = loc->kind;
- 
--        switch (loc->kind) {
-+        if (kind == TCG_CALL_ARG_NORMAL && ts->type == TCG_TYPE_I32) {
-+            unsigned typecode =
-+                extract32(info->typemask, (loc->arg_idx + 1) * 3, 3);
++#include "machine-list-test.inc.h"
 +
-+            if (typecode == dh_typecode_i64 ||
-+                typecode == dh_typecode_s64) {
-+                kind = TCG_CALL_ARG_EXTEND_U + (typecode & 1);
-+            }
-+        }
++static QList *query_machine_names(QTestState *qts)
++{
++    QDict *resp;
++    QList *machines;
++    QList *names;
++    const QListEntry *e;
 +
-+        switch (kind) {
-         case TCG_CALL_ARG_NORMAL:
-         case TCG_CALL_ARG_BY_REF:
-         case TCG_CALL_ARG_BY_REF_N:
-@@ -2574,7 +2600,7 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-                 TCGv_i64 temp = tcg_temp_ebb_new_i64();
-                 TCGv_i32 orig = temp_tcgv_i32(ts);
- 
--                if (loc->kind == TCG_CALL_ARG_EXTEND_S) {
-+                if (kind == TCG_CALL_ARG_EXTEND_S) {
-                     tcg_gen_ext_i32_i64(temp, orig);
-                 } else {
-                     tcg_gen_extu_i32_i64(temp, orig);
-@@ -2602,6 +2628,11 @@ static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-     for (i = 0; i < n_extend; ++i) {
-         tcg_temp_free_i64(extend_free[i]);
-     }
++    resp = qtest_qmp(qts, "{'execute': 'query-machines'}");
++    g_assert(qdict_haskey(resp, "return"));
++    machines = qdict_get_qlist(resp, "return");
++    g_assert_nonnull(machines);
++    names = qlist_new();
++    for (e = qlist_first(machines); e; e = qlist_next(e)) {
++        QDict *m = qobject_to(QDict, qlist_entry_obj(e));
++        const char *name;
 +
-+    if (ret_temp != NULL) {
-+        tcg_gen_extrl_i64_i32(temp_tcgv_i32(orig_ret), ret_temp);
-+        tcg_temp_free_i64(ret_temp);
++        g_assert_nonnull(m);
++        name = qdict_get_str(m, "name");
++        qlist_append_str(names, name);
 +    }
- }
- 
- void tcg_gen_call0(void *func, TCGHelperInfo *info, TCGTemp *ret)
++    qobject_unref(resp);
++    return names;
++}
++
++static void test_historic_machine_list(void)
++{
++    const char *target = qtest_get_arch();
++    const struct ShippedTarget *t = lookup_shipped_target(target);
++    QTestState *qts;
++    QDict *resp;
++    QDict *ret;
++    g_autoptr(QList) names = NULL;
++
++    qts = qtest_init("-nodefaults -M none");
++    read_accel_flags(qts);
++    resp = qtest_qmp(qts, "{'execute': 'query-target'}");
++    g_assert(qdict_haskey(resp, "return"));
++    ret = qdict_get_qdict(resp, "return");
++    g_assert_cmpstr(qdict_get_str(ret, "arch"), ==,
++                    query_arch_for_target(target));
++    qobject_unref(resp);
++    names = query_machine_names(qts);
++    if (t) {
++        assert_name_list(names, t->name, t->machines, t->n_machines);
++    }
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("machine-list", test_historic_machine_list);
++    return g_test_run();
++}
+diff --git a/tests/qtest/machine-list-test.inc.h b/tests/qtest/machine-list-test.inc.h
+new file mode 100644
+index 00000000000..e6e6f3ea7cd
+--- /dev/null
++++ b/tests/qtest/machine-list-test.inc.h
+@@ -0,0 +1,876 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/* Normal machine lists for every softmmu target. */
++/* Xen, vmapple, nitro, and x-remote stay in special_machine_map. */
++
++static const char * const aarch64_machines[] = {
++    "amd-versal-virt",
++    "amd-versal2-virt",
++    "anacapa-bmc",
++    "ast1030-evb",
++    "ast1040-evb",
++    "ast1060-evb",
++    "ast2500-evb",
++    "ast2600-evb",
++    "ast2700a1-evb",
++    "ast2700a2-evb",
++    "ast2700fc",
++    "axiado-scm3003",
++    "b-l475e-iot01a",
++    "bletchley-bmc",
++    "bpim2u",
++    "canon-a1100",
++    "catalina-bmc",
++    "collie",
++    "cubieboard",
++    "emcraft-sf2",
++    "fby35-bmc",
++    "fuji-bmc",
++    "g220a-bmc",
++    "gb200nvl-bmc",
++    "imx25-pdk",
++    "imx8mm-evk",
++    "imx8mp-evk",
++    "integratorcp",
++    "kudo-bmc",
++    "kzm",
++    "lm3s6965evb",
++    "lm3s811evb",
++    "max78000fthr",
++    "mcimx6ul-evk",
++    "mcimx7d-sabre",
++    "microbit",
++    "mori-bmc",
++    "mps2-an385",
++    "mps2-an386",
++    "mps2-an500",
++    "mps2-an505",
++    "mps2-an511",
++    "mps2-an521",
++    "mps3-an524",
++    "mps3-an536",
++    "mps3-an547",
++    "mps3-an555",
++    "musca-a",
++    "musca-b1",
++    "netduino2",
++    "netduinoplus2",
++    "none",
++    "npcm750-evb",
++    "npcm845-evb",
++    "nuri",
++    "olimex-stm32-h405",
++    "orangepi-pc",
++    "palmetto-bmc",
++    "quanta-gbs-bmc",
++    "quanta-gsj",
++    "quanta-q71l-bmc",
++    "rainier-bmc",
++    "raspi0",
++    "raspi1ap",
++    "raspi2b",
++    "raspi3ap",
++    "raspi3b",
++    "raspi4b",
++    "realview-eb",
++    "realview-eb-mpcore",
++    "realview-pb-a8",
++    "realview-pbx-a9",
++    "romulus-bmc",
++    "sabrelite",
++    "sanmiguel-bmc",
++    "sbsa-ref",
++    "smdkc210",
++    "stm32vldiscovery",
++    "supermicro-x11spi-bmc",
++    "supermicrox11-bmc",
++    "sx1",
++    "sx1-v1",
++    "tiogapass-bmc",
++    "versatileab",
++    "versatilepb",
++    "vexpress-a15",
++    "vexpress-a9",
++    "virt-10.0",
++    "virt-10.1",
++    "virt-10.2",
++    "virt-11.0",
++    "virt-11.1",
++    "virt-11.2",
++    "virt-6.0",
++    "virt-6.1",
++    "virt-6.2",
++    "virt-7.0",
++    "virt-7.1",
++    "virt-7.2",
++    "virt-8.0",
++    "virt-8.1",
++    "virt-8.2",
++    "virt-9.0",
++    "virt-9.1",
++    "virt-9.2",
++    "witherspoon-bmc",
++    "xilinx-zynq-a9",
++    "xlnx-zcu102",
++    "yosemitev2-bmc",
++};
++
++static const char * const alpha_machines[] = {
++    "clipper",
++    "none",
++};
++
++static const char * const arm_machines[] = {
++    "anacapa-bmc",
++    "ast1030-evb",
++    "ast1040-evb",
++    "ast1060-evb",
++    "ast2500-evb",
++    "ast2600-evb",
++    "b-l475e-iot01a",
++    "bletchley-bmc",
++    "bpim2u",
++    "canon-a1100",
++    "catalina-bmc",
++    "collie",
++    "cubieboard",
++    "emcraft-sf2",
++    "fby35-bmc",
++    "fuji-bmc",
++    "g220a-bmc",
++    "gb200nvl-bmc",
++    "imx25-pdk",
++    "integratorcp",
++    "kudo-bmc",
++    "kzm",
++    "lm3s6965evb",
++    "lm3s811evb",
++    "max78000fthr",
++    "mcimx6ul-evk",
++    "mcimx7d-sabre",
++    "microbit",
++    "mori-bmc",
++    "mps2-an385",
++    "mps2-an386",
++    "mps2-an500",
++    "mps2-an505",
++    "mps2-an511",
++    "mps2-an521",
++    "mps3-an524",
++    "mps3-an536",
++    "mps3-an547",
++    "mps3-an555",
++    "musca-a",
++    "musca-b1",
++    "netduino2",
++    "netduinoplus2",
++    "none",
++    "npcm750-evb",
++    "nuri",
++    "olimex-stm32-h405",
++    "orangepi-pc",
++    "palmetto-bmc",
++    "quanta-gbs-bmc",
++    "quanta-gsj",
++    "quanta-q71l-bmc",
++    "rainier-bmc",
++    "raspi0",
++    "raspi1ap",
++    "raspi2b",
++    "realview-eb",
++    "realview-eb-mpcore",
++    "realview-pb-a8",
++    "realview-pbx-a9",
++    "romulus-bmc",
++    "sabrelite",
++    "sanmiguel-bmc",
++    "smdkc210",
++    "stm32vldiscovery",
++    "supermicro-x11spi-bmc",
++    "supermicrox11-bmc",
++    "sx1",
++    "sx1-v1",
++    "tiogapass-bmc",
++    "versatileab",
++    "versatilepb",
++    "vexpress-a15",
++    "vexpress-a9",
++    "virt-10.0",
++    "virt-10.1",
++    "virt-10.2",
++    "virt-11.0",
++    "virt-11.1",
++    "virt-11.2",
++    "virt-6.0",
++    "virt-6.1",
++    "virt-6.2",
++    "virt-7.0",
++    "virt-7.1",
++    "virt-7.2",
++    "virt-8.0",
++    "virt-8.1",
++    "virt-8.2",
++    "virt-9.0",
++    "virt-9.1",
++    "virt-9.2",
++    "witherspoon-bmc",
++    "xilinx-zynq-a9",
++    "yosemitev2-bmc",
++};
++
++static const char * const avr_machines[] = {
++    "arduino-duemilanove",
++    "arduino-mega",
++    "arduino-mega-2560-v3",
++    "arduino-uno",
++    "none",
++};
++
++static const char * const hexagon_machines[] = {
++    "V66G_1024",
++    "V68N_1024",
++    "V81DGB_1",
++    "V81QA_1",
++    "none",
++    "virt",
++};
++
++static const char * const hppa_machines[] = {
++    "715",
++    "A400",
++    "B160L",
++    "C3700",
++    "none",
++};
++
++static const char * const i386_machines[] = {
++    "isapc",
++    "microvm",
++    "none",
++    "pc-i440fx-10.0",
++    "pc-i440fx-10.1",
++    "pc-i440fx-10.2",
++    "pc-i440fx-11.0",
++    "pc-i440fx-11.1",
++    "pc-i440fx-11.2",
++    "pc-i440fx-6.0",
++    "pc-i440fx-6.1",
++    "pc-i440fx-6.2",
++    "pc-i440fx-7.0",
++    "pc-i440fx-7.1",
++    "pc-i440fx-7.2",
++    "pc-i440fx-8.0",
++    "pc-i440fx-8.1",
++    "pc-i440fx-8.2",
++    "pc-i440fx-9.0",
++    "pc-i440fx-9.1",
++    "pc-i440fx-9.2",
++    "pc-q35-10.0",
++    "pc-q35-10.1",
++    "pc-q35-10.2",
++    "pc-q35-11.0",
++    "pc-q35-11.1",
++    "pc-q35-11.2",
++    "pc-q35-6.0",
++    "pc-q35-6.1",
++    "pc-q35-6.2",
++    "pc-q35-7.0",
++    "pc-q35-7.1",
++    "pc-q35-7.2",
++    "pc-q35-8.0",
++    "pc-q35-8.1",
++    "pc-q35-8.2",
++    "pc-q35-9.0",
++    "pc-q35-9.1",
++    "pc-q35-9.2",
++};
++
++static const char * const loongarch64_machines[] = {
++    "none",
++    "virt-11.1",
++    "virt-11.2",
++};
++
++static const char * const m68k_machines[] = {
++    "an5206",
++    "mcf5208evb",
++    "next-cube",
++    "none",
++    "q800",
++    "virt-10.0",
++    "virt-10.1",
++    "virt-10.2",
++    "virt-11.0",
++    "virt-11.1",
++    "virt-11.2",
++    "virt-6.0",
++    "virt-6.1",
++    "virt-6.2",
++    "virt-7.0",
++    "virt-7.1",
++    "virt-7.2",
++    "virt-8.0",
++    "virt-8.1",
++    "virt-8.2",
++    "virt-9.0",
++    "virt-9.1",
++    "virt-9.2",
++};
++
++static const char * const microblaze_machines[] = {
++    "none",
++    "petalogix-ml605",
++    "petalogix-s3adsp1800",
++    "xlnx-zynqmp-pmu",
++};
++
++static const char * const mips_machines[] = {
++    "malta",
++    "none",
++};
++
++static const char * const mips64_machines[] = {
++    "magnum",
++    "malta",
++    "none",
++    "pica61",
++};
++
++static const char * const mips64el_machines[] = {
++    "boston",
++    "fuloong2e",
++    "loongson3-virt",
++    "magnum",
++    "malta",
++    "none",
++    "pica61",
++};
++
++static const char * const mipsel_machines[] = {
++    "malta",
++    "none",
++};
++
++static const char * const or1k_machines[] = {
++    "none",
++    "or1k-sim",
++    "virt",
++};
++
++static const char * const ppc_machines[] = {
++    "40p",
++    "amigaone",
++    "bamboo",
++    "g3beige",
++    "mac99",
++    "mpc8544ds",
++    "none",
++    "pegasos1",
++    "pegasos2",
++    "ppce500",
++    "ppe42_machine",
++    "sam460ex",
++    "virtex-ml507",
++};
++
++static const char * const ppc64_machines[] = {
++    "40p",
++    "amigaone",
++    "bamboo",
++    "g3beige",
++    "mac99",
++    "mpc8544ds",
++    "none",
++    "pegasos1",
++    "pegasos2",
++    "powernv10",
++    "powernv10-rainier",
++    "powernv11",
++    "powernv8",
++    "powernv9",
++    "ppce500",
++    "ppe42_machine",
++    "pseries-10.0",
++    "pseries-10.1",
++    "pseries-10.2",
++    "pseries-11.0",
++    "pseries-11.1",
++    "pseries-11.2",
++    "pseries-6.0",
++    "pseries-6.1",
++    "pseries-6.2",
++    "pseries-7.0",
++    "pseries-7.1",
++    "pseries-7.2",
++    "pseries-8.0",
++    "pseries-8.1",
++    "pseries-8.2",
++    "pseries-9.0",
++    "pseries-9.1",
++    "pseries-9.2",
++    "sam460ex",
++    "virtex-ml507",
++};
++
++static const char * const riscv32_machines[] = {
++    "amd-microblaze-v-generic",
++    "none",
++    "opentitan",
++    "sifive_e",
++    "sifive_u",
++    "spike",
++    "virt",
++};
++
++static const char * const riscv64_machines[] = {
++    "amd-microblaze-v-generic",
++    "boston-aia",
++    "k230",
++    "microchip-icicle-kit",
++    "none",
++    "shakti_c",
++    "sifive_e",
++    "sifive_u",
++    "spike",
++    "tt-atlantis",
++    "virt",
++    "xiangshan-kunminghu",
++};
++
++static const char * const rx_machines[] = {
++    "gdbsim-r5f562n7",
++    "gdbsim-r5f562n8",
++    "none",
++};
++
++static const char * const s390x_machines[] = {
++    "none",
++    "s390-ccw-virtio-10.0",
++    "s390-ccw-virtio-10.1",
++    "s390-ccw-virtio-10.2",
++    "s390-ccw-virtio-11.0",
++    "s390-ccw-virtio-11.1",
++    "s390-ccw-virtio-11.2",
++    "s390-ccw-virtio-6.0",
++    "s390-ccw-virtio-6.1",
++    "s390-ccw-virtio-6.2",
++    "s390-ccw-virtio-7.0",
++    "s390-ccw-virtio-7.1",
++    "s390-ccw-virtio-7.2",
++    "s390-ccw-virtio-8.0",
++    "s390-ccw-virtio-8.1",
++    "s390-ccw-virtio-8.2",
++    "s390-ccw-virtio-9.0",
++    "s390-ccw-virtio-9.1",
++    "s390-ccw-virtio-9.2",
++};
++
++static const char * const sh4_machines[] = {
++    "none",
++    "r2d",
++};
++
++static const char * const sh4eb_machines[] = {
++    "none",
++    "r2d",
++};
++
++static const char * const sparc_machines[] = {
++    "LX",
++    "SPARCClassic",
++    "SPARCbook",
++    "SS-10",
++    "SS-20",
++    "SS-4",
++    "SS-5",
++    "SS-600MP",
++    "Voyager",
++    "leon3_generic",
++    "none",
++};
++
++static const char * const sparc64_machines[] = {
++    "niagara",
++    "none",
++    "sun4u",
++    "sun4v",
++};
++
++static const char * const tricore_machines[] = {
++    "KIT_AURIX_TC277_TRB",
++    "none",
++    "tricore_testboard",
++};
++
++static const char * const x86_64_machines[] = {
++    "isapc",
++    "microvm",
++    "none",
++    "pc-i440fx-10.0",
++    "pc-i440fx-10.1",
++    "pc-i440fx-10.2",
++    "pc-i440fx-11.0",
++    "pc-i440fx-11.1",
++    "pc-i440fx-11.2",
++    "pc-i440fx-6.0",
++    "pc-i440fx-6.1",
++    "pc-i440fx-6.2",
++    "pc-i440fx-7.0",
++    "pc-i440fx-7.1",
++    "pc-i440fx-7.2",
++    "pc-i440fx-8.0",
++    "pc-i440fx-8.1",
++    "pc-i440fx-8.2",
++    "pc-i440fx-9.0",
++    "pc-i440fx-9.1",
++    "pc-i440fx-9.2",
++    "pc-q35-10.0",
++    "pc-q35-10.1",
++    "pc-q35-10.2",
++    "pc-q35-11.0",
++    "pc-q35-11.1",
++    "pc-q35-11.2",
++    "pc-q35-6.0",
++    "pc-q35-6.1",
++    "pc-q35-6.2",
++    "pc-q35-7.0",
++    "pc-q35-7.1",
++    "pc-q35-7.2",
++    "pc-q35-8.0",
++    "pc-q35-8.1",
++    "pc-q35-8.2",
++    "pc-q35-9.0",
++    "pc-q35-9.1",
++    "pc-q35-9.2",
++};
++
++static const char * const xtensa_machines[] = {
++    "kc705",
++    "kc705-nommu",
++    "lx200",
++    "lx200-nommu",
++    "lx60",
++    "lx60-nommu",
++    "ml605",
++    "ml605-nommu",
++    "none",
++    "sim",
++    "virt",
++};
++
++static const char * const xtensaeb_machines[] = {
++    "kc705",
++    "kc705-nommu",
++    "lx200",
++    "lx200-nommu",
++    "lx60",
++    "lx60-nommu",
++    "ml605",
++    "ml605-nommu",
++    "none",
++    "sim",
++    "virt",
++};
++
++static const struct ShippedTarget {
++    const char *name;
++    const char *arch;
++    const char *endianness;
++    const char * const *machines;
++    size_t n_machines;
++} shipped_targets[] = {
++    { "aarch64", "aarch64", "little",
++      aarch64_machines, G_N_ELEMENTS(aarch64_machines) },
++    { "alpha", "alpha", "little",
++      alpha_machines, G_N_ELEMENTS(alpha_machines) },
++    { "arm", "arm", "little",
++      arm_machines, G_N_ELEMENTS(arm_machines) },
++    { "avr", "avr", "little",
++      avr_machines, G_N_ELEMENTS(avr_machines) },
++    { "hexagon", "hexagon", "little",
++      hexagon_machines, G_N_ELEMENTS(hexagon_machines) },
++    { "hppa", "hppa", "big",
++      hppa_machines, G_N_ELEMENTS(hppa_machines) },
++    { "i386", "i386", "little",
++      i386_machines, G_N_ELEMENTS(i386_machines) },
++    { "loongarch64", "loongarch64", "little",
++      loongarch64_machines, G_N_ELEMENTS(loongarch64_machines) },
++    { "m68k", "m68k", "big",
++      m68k_machines, G_N_ELEMENTS(m68k_machines) },
++    { "microblaze", "microblaze", "big",
++      microblaze_machines, G_N_ELEMENTS(microblaze_machines) },
++    { "mips", "mips", "big",
++      mips_machines, G_N_ELEMENTS(mips_machines) },
++    { "mips64", "mips64", "big",
++      mips64_machines, G_N_ELEMENTS(mips64_machines) },
++    { "mips64el", "mips64", "little",
++      mips64el_machines, G_N_ELEMENTS(mips64el_machines) },
++    { "mipsel", "mips", "little",
++      mipsel_machines, G_N_ELEMENTS(mipsel_machines) },
++    { "or1k", "or1k", "big",
++      or1k_machines, G_N_ELEMENTS(or1k_machines) },
++    { "ppc", "ppc", "big",
++      ppc_machines, G_N_ELEMENTS(ppc_machines) },
++    { "ppc64", "ppc64", "big",
++      ppc64_machines, G_N_ELEMENTS(ppc64_machines) },
++    { "riscv32", "riscv32", "little",
++      riscv32_machines, G_N_ELEMENTS(riscv32_machines) },
++    { "riscv64", "riscv64", "little",
++      riscv64_machines, G_N_ELEMENTS(riscv64_machines) },
++    { "rx", "rx", "little",
++      rx_machines, G_N_ELEMENTS(rx_machines) },
++    { "s390x", "s390x", "big",
++      s390x_machines, G_N_ELEMENTS(s390x_machines) },
++    { "sh4", "sh4", "little",
++      sh4_machines, G_N_ELEMENTS(sh4_machines) },
++    { "sh4eb", "sh4", "big",
++      sh4eb_machines, G_N_ELEMENTS(sh4eb_machines) },
++    { "sparc", "sparc", "big",
++      sparc_machines, G_N_ELEMENTS(sparc_machines) },
++    { "sparc64", "sparc64", "big",
++      sparc64_machines, G_N_ELEMENTS(sparc64_machines) },
++    { "tricore", "tricore", "little",
++      tricore_machines, G_N_ELEMENTS(tricore_machines) },
++    { "x86_64", "x86_64", "little",
++      x86_64_machines, G_N_ELEMENTS(x86_64_machines) },
++    { "xtensa", "xtensa", "little",
++      xtensa_machines, G_N_ELEMENTS(xtensa_machines) },
++    { "xtensaeb", "xtensa", "big",
++      xtensaeb_machines, G_N_ELEMENTS(xtensaeb_machines) },
++};
++
++/*
++ * Machines omitted from the normal lists. Merged in when @accel is
++ * present (NULL means no accel check) and the host matches (NULL
++ * host_os or host_cpu means any). xenfv is an alias of xenfv-4.2.
++ * aarch64 HVF (vmapple) is built only on an aarch64 Darwin host.
++ * nitro is Linux-only, on x86_64-softmmu for an x86_64 host and
++ * aarch64-softmmu for an aarch64 host. x-remote follows KVM on Linux
++ * when host_cpu is the host that builds KVM for that target.
++ */
++static const char * const xen_pc_machines[] = {
++    "xenpv",
++    "xenpvh",
++    "xenfv-4.2",
++};
++
++static const char * const xen_aarch64_machines[] = {
++    "xenpvh",
++};
++
++static const char * const hvf_aarch64_machines[] = {
++    "vmapple",
++};
++
++static const char * const nitro_machines[] = {
++    "nitro",
++};
++
++static const char * const x_remote_machines[] = {
++    "x-remote",
++};
++
++static const struct SpecialMachineMap {
++    const char *target;
++    const char *accel;
++    const char *host_os;
++    const char *host_cpu;
++    const char * const *machines;
++    size_t n_machines;
++} special_machine_map[] = {
++    { "i386", "xen", NULL, "x86_64",
++      xen_pc_machines, G_N_ELEMENTS(xen_pc_machines) },
++    { "i386", "xen", NULL, "aarch64",
++      xen_pc_machines, G_N_ELEMENTS(xen_pc_machines) },
++    { "x86_64", "xen", NULL, "x86_64",
++      xen_pc_machines, G_N_ELEMENTS(xen_pc_machines) },
++    { "x86_64", "xen", NULL, "aarch64",
++      xen_pc_machines, G_N_ELEMENTS(xen_pc_machines) },
++    { "aarch64", "xen", NULL, "aarch64",
++      xen_aarch64_machines, G_N_ELEMENTS(xen_aarch64_machines) },
++    { "aarch64", "hvf", "darwin", "aarch64",
++      hvf_aarch64_machines, G_N_ELEMENTS(hvf_aarch64_machines) },
++    { "x86_64", NULL, "linux", "x86_64",
++      nitro_machines, G_N_ELEMENTS(nitro_machines) },
++    { "aarch64", NULL, "linux", "aarch64",
++      nitro_machines, G_N_ELEMENTS(nitro_machines) },
++    { "i386", "kvm", "linux", "x86_64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "x86_64", "kvm", "linux", "x86_64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "aarch64", "kvm", "linux", "aarch64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "ppc", "kvm", "linux", "ppc64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "ppc64", "kvm", "linux", "ppc64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "s390x", "kvm", "linux", "s390x",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "riscv64", "kvm", "linux", "riscv64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++    { "loongarch64", "kvm", "linux", "loongarch64",
++      x_remote_machines, G_N_ELEMENTS(x_remote_machines) },
++};
++
++static const struct ShippedTarget *lookup_shipped_target(const char *name)
++{
++    size_t i;
++
++    for (i = 0; i < G_N_ELEMENTS(shipped_targets); i++) {
++        if (!strcmp(shipped_targets[i].name, name)) {
++            return &shipped_targets[i];
++        }
++    }
++    return NULL;
++}
++
++static bool have_xen;
++static bool have_hvf;
++static bool have_kvm;
++
++static const char *host_cpu(void)
++{
++#if defined(__aarch64__) || defined(_M_ARM64)
++    return "aarch64";
++#elif defined(__x86_64__) || defined(_M_X64)
++    return "x86_64";
++#elif defined(__powerpc64__)
++    return "ppc64";
++#elif defined(__s390x__)
++    return "s390x";
++#elif defined(__riscv) && __riscv_xlen == 64
++    return "riscv64";
++#elif defined(__loongarch64)
++    return "loongarch64";
++#else
++    return "other";
++#endif
++}
++
++static bool host_os_matches(const char *host_os)
++{
++    if (!host_os) {
++        return true;
++    }
++#if defined(CONFIG_LINUX)
++    return !strcmp(host_os, "linux");
++#elif defined(CONFIG_DARWIN)
++    return !strcmp(host_os, "darwin");
++#else
++    return false;
++#endif
++}
++
++static bool accel_present(const char *accel)
++{
++    if (!accel) {
++        return true;
++    }
++    if (!strcmp(accel, "xen")) {
++        return have_xen;
++    }
++    if (!strcmp(accel, "hvf")) {
++        return have_hvf;
++    }
++    if (!strcmp(accel, "kvm")) {
++        return have_kvm;
++    }
++    return false;
++}
++
++static bool host_cpu_matches(const char *want)
++{
++    if (!want) {
++        return true;
++    }
++    return !strcmp(want, host_cpu());
++}
++
++static bool special_applies(const struct SpecialMachineMap *s,
++                            const char *target)
++{
++    return !strcmp(s->target, target) &&
++           accel_present(s->accel) &&
++           host_os_matches(s->host_os) &&
++           host_cpu_matches(s->host_cpu);
++}
++
++static void assert_name_list(QList *names, const char *target,
++                             const char * const *expect, size_t n_expect)
++{
++    GHashTable *got = g_hash_table_new(g_str_hash, g_str_equal);
++    GHashTable *want = g_hash_table_new(g_str_hash, g_str_equal);
++    const QListEntry *e;
++    GHashTableIter iter;
++    gpointer key;
++    size_t i;
++
++    g_assert_nonnull(names);
++    for (e = qlist_first(names); e; e = qlist_next(e)) {
++        QString *qs = qobject_to(QString, qlist_entry_obj(e));
++
++        g_assert_nonnull(qs);
++        g_hash_table_add(got, (gpointer)qstring_get_str(qs));
++    }
++    for (i = 0; i < n_expect; i++) {
++        g_hash_table_add(want, (gpointer)expect[i]);
++    }
++    for (i = 0; i < G_N_ELEMENTS(special_machine_map); i++) {
++        const struct SpecialMachineMap *s = &special_machine_map[i];
++        size_t j;
++
++        if (!special_applies(s, target)) {
++            continue;
++        }
++        for (j = 0; j < s->n_machines; j++) {
++            g_hash_table_add(want, (gpointer)s->machines[j]);
++        }
++    }
++    g_hash_table_iter_init(&iter, got);
++    while (g_hash_table_iter_next(&iter, &key, NULL)) {
++        if (!g_hash_table_contains(want, key)) {
++            g_printerr("unexpected machine: %s\n", (const char *)key);
++        }
++    }
++    g_hash_table_iter_init(&iter, want);
++    while (g_hash_table_iter_next(&iter, &key, NULL)) {
++        if (!g_hash_table_contains(got, key)) {
++            g_printerr("missing machine: %s\n", (const char *)key);
++        }
++    }
++    g_assert_cmpuint(g_hash_table_size(got), ==, g_hash_table_size(want));
++    g_hash_table_unref(got);
++    g_hash_table_unref(want);
++}
++
++static void read_accel_flags(QTestState *qts)
++{
++    QDict *resp;
++    QDict *ret;
++    QList *present;
++    const QListEntry *e;
++
++    have_xen = false;
++    have_hvf = false;
++    have_kvm = false;
++    resp = qtest_qmp(qts, "{'execute': 'query-accelerators'}");
++    g_assert(qdict_haskey(resp, "return"));
++    ret = qdict_get_qdict(resp, "return");
++    present = qdict_get_qlist(ret, "present");
++    g_assert_nonnull(present);
++    for (e = qlist_first(present); e; e = qlist_next(e)) {
++        QString *qs = qobject_to(QString, qlist_entry_obj(e));
++        const char *name;
++
++        g_assert_nonnull(qs);
++        name = qstring_get_str(qs);
++        if (!strcmp(name, "xen")) {
++            have_xen = true;
++        } else if (!strcmp(name, "hvf")) {
++            have_hvf = true;
++        } else if (!strcmp(name, "kvm")) {
++            have_kvm = true;
++        }
++    }
++    qobject_unref(resp);
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 33f58b0e95c..8c53bb2e30e 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -23,6 +23,7 @@ qtests_generic = [
+   'cdrom-test',
+   'device-introspect-test',
+   'machine-none-test',
++  'machine-list-test',
+   'qmp-test',
+   'qmp-cmd-test',
+   'qom-test',
 -- 
 2.52.0.windows.1
 
