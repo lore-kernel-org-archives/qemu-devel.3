@@ -4,141 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60CFC98318
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 10:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D56C98332
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 11:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAPOx-0001jE-FC; Sat, 26 Sep 2026 06:13:03 -0400
+	id 1xAQGf-000801-T9; Sat, 26 Sep 2026 07:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAPOv-0001gm-Hq
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 06:13:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAPOs-0004Ac-Us
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 06:13:01 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68Q6OVkO1949663
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 10:12:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3e3+Fez19eofA4GqzTbGQxOkPf0gXUROii0eFYr63SQ=; b=ps500bUfkBD7hxMF
- ND66irYe5yV4+K1/oFKMh68gyshLTEhCaxKQOd+CuymfuMigFqvom7t83XpM3dVo
- o7qk49XBYOsv91Ic7UsFZ1nA6Cjmd7EVRYEWlq4HcpsMlR0kpMBYBAAwCPk+lFwV
- c4PkhbEyjwxVdQByaOrfzMfTSddenAWKNg/5YeM+2BhOVs/+W2wDsMLenPWJmHun
- c2sPo60vUtc+aU2XChb4gBR6042vhmqozF6lHzgd65x/jf9m376koyB4lc+oX6Rj
- hljNAflbXPFTkrrACCoUjMsfh+yhfUmDC0NaJD+qCneYlQewHckWQXRw5iCbvPZO
- gePJYA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx77jrgnw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 10:12:55 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91430af782dso32918096d6.2
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 03:12:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xAQGe-0007z6-9d
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 07:08:32 -0400
+Received: from mail-dl2-x0f.google.com ([2607:f8b0:4864:38::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xAQGb-0002j7-Lx
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 07:08:32 -0400
+Received: by mail-dl2-x0f.google.com with SMTP id
+ a92af1059eb24-145ab8fd39cso1532878c88.2
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 04:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790417575; x=1791022375; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3e3+Fez19eofA4GqzTbGQxOkPf0gXUROii0eFYr63SQ=;
- b=N1kUe5C0zLWcIuaqLtrtiqTXYVdJI3GPAxv+T9DYDKeUvfMVfIEU+0tF99vLEhtNw4
- UvhjfSGSaMUzOLgVf9eGUUJ2WnmzyfUMJTpymASRDjSw2r6TCkMOvVqH5tSnEjmobDI+
- wrNo5dSKtp/A8zMNJptaLyqUmb5CoCFrUjMH+VIdQ9u0fBvUEBKf4eHLXHnDjuoqQfo/
- 9lCYYjfJiGvyIzCVUPDW38UZ4bXlYB+GIAf+qffUsv9nTVtDGZDgZaVasm1LQBymvSd7
- FtTMDDv0xfFMQIJg1Neld6tmi+5VKuGJHuAYmEU8kgd3SQOVYahw9uoWIoBgsggvSSg/
- M79w==
+ d=gmail.com; s=20251104; t=1790420908; x=1791025708; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=iTUw37RZ2rQmplsSv2IkOJUv3J4TNp7i7p/qBLIspCY=;
+ b=p9sHDE4TVkklut+T64U6+tfvMRg7rvGsQ3Mu0ueFodeEs2mKfizRJubQ6LCg1VGqM/
+ aYcZGKcsJCKPNDi8Uqh+vhuhWekng0lf8a4ASqkdMJfJFIVEe7ZOBAg28VadHxmbjVvT
+ /cYGmozZboWC7GiD0SP+ikR6CRGgap5akElyGV4qSRn4cHy/lj6sZCaFtL0hMWGzjIia
+ hxOuVl4FBSSXU2o5ofEBtS0X0PydRP9RCaOp420Mkkah3SticdsCWsw/GBZYVuceNVlf
+ w86X7S7tsCDbPn0gWzsM6ji4eo4kNZfAIk+syfAWkJg2w9dKU4ZCoYq5eu0EtQ4uHLBZ
+ Gxag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790417575; x=1791022375;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3e3+Fez19eofA4GqzTbGQxOkPf0gXUROii0eFYr63SQ=;
- b=Svyoc1n1MxNh2hVmo6pLuICzHS3xMQIZKESUpyoIcQmHEulBwcH1z0W7xu1a7MksJQ
- PcXRGgIriKvPmGYkSv+f0Fg/vrCpLHMybpxmpEphNAsyMsN8uo/WaD7w+WNzX3B3arlR
- vFHx2lD0M6kB5LXj5snT1ycBjnA5toXN8npTmeVKTNlVIbyVwIWJWORYd1YpwetGEIvE
- InFiM4I38fnD9gYgMMz8fHXuOaELfxfa2yWVPXq93dwNBmsBfX1LFxzcu+bSoTHcy9DI
- HPo//6d4KU1uMpDoyV0D/lmzSOUtngxSsRjwS1iknuzgNArrCE40PZRZGzZkhlJacqwk
- 1eAw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy5oIcxnN+//vvWuyxtLa3tWoMKpNM6MPbSm9fSi/z3y71qXsyHfU7VHJncDlEJcGRqM4FpsKk8hWtV@nongnu.org
-X-Gm-Message-State: AFuF++nVEri2HTYgwiQvkhXuPKbzoZ6ur6yYebEfi1Xp3CErw8bJLWAL
- Lx7aGYmqEs64tODsNUitaRgsQFOGmD8TQShvBlW92TXXOVi9nj36jHdPEcbeKD8/VurBskerqxj
- RU50bcK3r45wb2qUYIyYpcv+nHHjvhRP7WwIeBGREF18gUrmHMaWgGheoiGkcqakYMA==
-X-Gm-Gg: AYBFou1bRV+Jo2409yvBhSP3M4JSfvmjcZUC3F3hu64qyHNpeUiJ81oDOGKeg3kfRfE
- efyt9ABa1E3HnGr/cb6WuUNnw/9EVCQdytIAdB5m/QU2+EUKru1llXGvigho4x5GmMQQdk5Yqb/
- fX8cb0oJmscj4+s2h+WQuiyRroWMmEZWQVFObR8IRuUGCMLA1BfDNnK3LLNRFpMg2lJqK+/oHJT
- OobiDDB1H9tBWXhv6nb10r29qriIsH99oEmnUWgiTSLolUCbcYHSUrdrPs9huul9sF1nToqoipf
- 495RIlV6XXj13RdV2PcWKhOoJUMFRrqVYHTa3h8hu9BklyvgAVjxgUn74CUNSfAPi4Kbi2K7Enz
- pNnOvC5Ow50kmjSrj2bK8iNNRpuOW2+vn5w==
-X-Received: by 2002:a05:620a:19a8:b0:939:a199:45b4 with SMTP id
- af79cd13be357-93c43cd3c45mr982211285a.39.1790417574715; 
- Sat, 26 Sep 2026 03:12:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:19a8:b0:939:a199:45b4 with SMTP id
- af79cd13be357-93c43cd3c45mr982208785a.39.1790417574202; 
- Sat, 26 Sep 2026 03:12:54 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4887a355d96sm14132414f8f.17.2026.09.26.03.12.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 26 Sep 2026 03:12:53 -0700 (PDT)
-Message-ID: <bdfbdd6f-afae-46ea-9de4-70191b9e42a3@oss.qualcomm.com>
-Date: Sat, 26 Sep 2026 12:12:52 +0200
+ d=1e100.net; s=20260707; t=1790420908; x=1791025708;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=iTUw37RZ2rQmplsSv2IkOJUv3J4TNp7i7p/qBLIspCY=;
+ b=uNnVnPIpkPSVEJa7VL3aS2eTrIntL0ta+yMYpV73s8A+CMyyWbCJjNdbLU3EbNSFJG
+ ooEVVx1lcyW7Jz8KDZwA/RrVZZ7dvQQZfqbGOmkVB8+Yt/PevN4kaKz1Aj7zBP1L+14W
+ P+lZ1+d+MHXPO60uuSVN1HHThevvHwMzWKKCv8VVWU+tiu0WhLzyUuDwZQEHEjXyasCn
+ ZHzkvP7bm54zUN88t88CPgpjygydBXYWF6ET+Kc8Qr7xZ7ZPkWktSe3vU6tcmjHTOMZZ
+ 9csUYh+ycHOtWKdMebLhnNSaXt4v9eC5W/oeUVSXgybuJrS2Ua0hADmspg8CMOJJB/7V
+ ergg==
+X-Gm-Message-State: AFuF++m5564Rt93PP2MXzxX5/Ww1hzX0M1JdPLE4N4CZLENEngTnqipi
+ hVF9hSqUWlIQqBX5nyuhmWjAnHfCzJ6g9pjv5i103JSDsoLhKM8MYkEXlc+erkzm+5U=
+X-Gm-Gg: AYBFou3pDw9X30uhLGuJCHB/27hQbQ1EshbvTAomRcIrcrYsu02jas0PIKE5bG0/I4B
+ V/NFxvJSss2NDsJuhQB3Uc2fbc30Md4PBl/w8E4YPZJxMDQPwBm2yMo1fio2fS6G6h8YWfUgfdt
+ 0OhWhOm5JPUFsi4k7iefZhl/Nn8LZC/9EQgcg0zW0g3VOcIPIQGtQAGd4MmcWYU4qir29BA0IHZ
+ eS2s+CluB8XL39U6ZyS4HNQpyACORcrsHfHvKNLdxFmLLhULS75oW/lQF23x164y5W1DunKLFi2
+ VEhL3CDWpl+sg3qIAaafKH7RTMP/g058gFNEzgmHXmpUa7WFh4PxcFAzyL8Zp+wjDlcGyU6RmZr
+ i+eKXryEkBXUWvTPAHefvnCGSPSdnFsLU2615wlWo+T745vydNecyasi6irQWZJ0f1Z9cHuTBnW
+ p6D/RgCuYlr09yuWsL2fJHyLYl+wg6jwUqmnB4kB/vcU0sFtDOwoLQQzWnttS9oPKRgNTraMbkh
+ FEW+CWg+UhDHXp7FAQjPFJrWmjPlBNuoRjw2SFpRQ==
+X-Received: by 2002:a05:7022:2606:b0:12d:d972:b96e with SMTP id
+ a92af1059eb24-146ce67f6cfmr3491660c88.20.1790420907465; 
+ Sat, 26 Sep 2026 04:08:27 -0700 (PDT)
+Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-145a7318afcsm11414045c88.0.2026.09.26.04.08.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 26 Sep 2026 04:08:26 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Igor Mammedov <imammedo@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Song Gao <17746591750@163.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-riscv@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>, Ani Sinha <anisinha@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 0/9] treewide: uniquify colliding helper symbols
+Date: Sat, 26 Sep 2026 19:08:08 +0800
+Message-ID: <20260926110818.1912-1-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.52.0.windows.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci-bridge: honour CONFIG_CXL in PXB
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260922115613.1926083-1-berrange@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260922115613.1926083-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI2MDA0MCBTYWx0ZWRfX10in4Ftirlg9
- EUJf/FNM9WFeZhvXzwA8JA7b03a3YNozbQhQLH/+jBw4+HCGB9U2ffhS6jGjnlLI9cJK+LiHNAl
- VdySJoKC/ona3sUq6d/LqokQ/moIFxk=
-X-Proofpoint-GUID: gYoPoeivPynuIbORdkEWyuq9pN7OedVn
-X-Proofpoint-ORIG-GUID: gYoPoeivPynuIbORdkEWyuq9pN7OedVn
-X-Authority-Analysis: v=2.4 cv=J8U/fwnS c=1 sm=1 tr=0 ts=6ab79aa7 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=20KFwNOVAAAA:8 a=VltH32YkwReFgxx_f08A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI2MDA0MCBTYWx0ZWRfXxSXLXxaGIbCg
- 1vIwfM/BbPgqrutHM+7qjgPDlcBYAX7udMjKKvCuhHTMxUHWZBnl4VqGAOl7ezhVjTR5WlPXlQl
- IGlw31Lam7g8KSwa3DjN6heiDs6Ug2HM21Ffk2XtgLXS8oypLZFlrN8ZV1pIORlCA7A3flj7yFf
- 7lNJ7ygI/p0oeQJFZ2t9L5GIFRTgGwHOwI477g9k8K6lCN8VYWhTQDSKkFodDtoLW9org4HJwnY
- VGCn2sWlhp9RP3TJc76G6zml2VBTyZ7NdIZDUY0Lkz9uS5WkAv0KQAUhj+zdfcFq+42O2KxuYqI
- lK29x8Cm0c0pg8KD8X0wplC7T3zS4p3pxVQBQUxCq6Dl4vTQgEnTtLSCnPhTFBRgTdGEE2l1DGu
- /5KbFh1RwTUTS7PBKvlt5yBUCBkbY9oPCpE+0xiHeC/2E+jhlQBY6tAaSz2P7vE4cfYz0bg+AzO
- 74VxfneTnZMCtL0E62w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-26_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609260040
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:38::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,43 +114,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/9/26 13:56, Daniel P. BerrangÃ© wrote:
-> If CONFIG_CXL=n is added to the Kconfig, the build fails to link
-> the PXB device:
-> 
-> /usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_realize':
-> /home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:202:(.text+0x330): undefined reference to `cxl_component_register_block_init'
-> /usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_dev_reset':
-> /home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:309:(.text+0x768): undefined reference to `cxl_component_register_init_common'
-> 
-> Fixes: 6e4e3ae936 (hw/cxl/component: Implement host bridge MMIO (8.2.5, table 142))
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   hw/pci-bridge/pci_expander_bridge.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> index 40ffbc4e082..8977243a804 100644
-> --- a/hw/pci-bridge/pci_expander_bridge.c
-> +++ b/hw/pci-bridge/pci_expander_bridge.c
-> @@ -123,12 +123,14 @@ static const TypeInfo pxb_pcie_bus_info = {
->       .class_init    = pxb_bus_class_init,
->   };
->   
-> +#ifdef CONFIG_CXL
->   static const TypeInfo pxb_cxl_bus_info = {
->       .name          = TYPE_PXB_CXL_BUS,
->       .parent        = TYPE_CXL_BUS,
->       .instance_size = sizeof(PXBBus),
->       .class_init    = pxb_bus_class_init,
->   };
-> +#endif /* CONFIG_CXL */
-This does not build:
+A combined qemu-system binary cannot export the same C symbol from two targets.
+This series prefixes TCG helpers and virt ACPI setup functions that still use a
+short name another target already exports.
 
-FAILED: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o
-../hw/pci-bridge/pci_expander_bridge.c:126:8: error: attempt to use 
-poisoned "CONFIG_CXL"
-   126 | #ifdef CONFIG_CXL
-       |        ^
+- Prefix leftover i386 TCG raise_exception to i386_raise_exception. Rename the C
+  raise_exception family globals to i386_raise_exception*, and keep the short
+  names as static inline wrappers in helper-tcg.h. Wrappers still call
+  raise_interrupt2.
+- Prefix helper_wait on RX, Hexagon, and MIPS. Hexagon also takes the resume PC
+  as vaddr.
+- Prefix ARM raise_exception to arm_raise_exception and keep the short name as a
+  static inline wrapper.
+- Prefix virt_acpi_setup and virt_is_acpi_enabled on ARM, RISC-V, and LoongArch
+  virt. Leave the ARM trace event virt_acpi_setup unchanged. Leave RISC-V
+  file-local virt_acpi_build* names unchanged.
+- Rename RISC-V TCG crc32, crc32c, and wfi to riscv_crc32, riscv_crc32c, and
+  riscv_wfi. ARM already exports helper_crc32, helper_crc32c, and helper_wfi.
+
+Yonggang Luo (9):
+  target/i386: convert raise_exception to i386_raise_exception
+  target/rx: rename helper_wait to helper_rx_wait
+  target/hexagon: rename helper_wait to helper_hexagon_wait
+  target/arm: rename raise_exception to arm_raise_exception
+  target/mips: rename helper_wait to helper_mips_wait
+  hw/arm/virt: prefix ACPI helpers with arm_virt_
+  hw/riscv/virt: prefix ACPI helpers with riscv_virt_
+  hw/loongarch/virt: prefix ACPI helper with loongarch_virt_
+  target/riscv: uniquify TCG crc32, crc32c, and wfi helper names
+
+ hw/arm/virt-acpi-build.c                      |  4 +-
+ hw/arm/virt.c                                 | 12 +++---
+ hw/loongarch/virt-acpi-build.c                |  6 +--
+ hw/loongarch/virt.c                           |  2 +-
+ hw/riscv/virt-acpi-build.c                    |  2 +-
+ hw/riscv/virt.c                               |  6 +--
+ include/hw/arm/virt.h                         |  4 +-
+ include/hw/loongarch/virt.h                   |  2 +-
+ include/hw/riscv/virt.h                       |  4 +-
+ target/arm/internals.h                        | 27 ++++++++----
+ target/arm/tcg-stubs.c                        |  4 +-
+ target/arm/tcg/op_helper.c                    | 10 ++---
+ target/hexagon/gen_tcg_sys.h                  |  2 +-
+ target/hexagon/helper.h                       |  2 +-
+ target/hexagon/op_helper.c                    |  8 ++--
+ target/i386/helper.h                          |  2 +-
+ target/i386/tcg/excp_helper.c                 | 18 ++++----
+ target/i386/tcg/helper-tcg.h                  | 42 +++++++++++++++----
+ target/i386/tcg/translate.c                   |  2 +-
+ target/mips/helper.h                          |  2 +-
+ target/mips/tcg/exception.c                   |  2 +-
+ target/mips/tcg/translate.c                   |  2 +-
+ target/riscv/helper.h                         |  6 +--
+ target/riscv/tcg/bitmanip_helper.c            |  4 +-
+ .../tcg/insn_trans/trans_privileged.c.inc     |  2 +-
+ target/riscv/tcg/insn_trans/trans_xlrbr.c.inc |  4 +-
+ target/riscv/tcg/op_helper.c                  |  2 +-
+ target/rx/helper.h                            |  2 +-
+ target/rx/op_helper.c                         |  2 +-
+ target/rx/translate.c                         |  2 +-
+ 30 files changed, 115 insertions(+), 74 deletions(-)
+
+-- 
+2.52.0.windows.1
 
 
