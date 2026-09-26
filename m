@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5E6C9832A
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCE3C9831E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMPl-0002Ed-Sw; Sat, 26 Sep 2026 03:01:43 -0400
+	id 1xAMVW-0000mG-6e; Sat, 26 Sep 2026 03:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPg-0002DS-AH
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:37 -0400
+ id 1xAMSO-0005hQ-F4
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:25 -0400
 Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPe-0000Qx-My
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:36 -0400
+ id 1xAMSK-0000jR-AY
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:23 -0400
 Received: by mail-dy2-x0e.google.com with SMTP id
- 5a478bee46e88-341fe27b718so1359060eec.0
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:34 -0700 (PDT)
+ 5a478bee46e88-34182b58d00so864397eec.2
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406093; x=1791010893; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406257; x=1791011057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TZMKrJ9OTgOVuSw0xuj4IN8VaH3KKEmXiPudtyfK+aY=;
- b=EQ37lXl7eCdx2fkFXhKpx7uKs3+kYESeHYwNoXiusJXaQaoFem/F/vxNYgYp50uXrR
- x2Gxsgb6fzeE8PdgeavqBjWv0uPvO82f4RO78AKqurcFZIJHyATxcYUrz3QwFR9UnuSv
- jS4fHgRADXTS7a08nBjxquihaU1Np4Cw52fGBflDyetVTTyGxftsjFzl4IIoXAYFgE5b
- JERNLKCmfHj/R+vcm125BETms4fMf2eUsxbkwWzhgpE0S4ezve1yM9AqQKbPukvMGLT6
- L+HiUMSijaGDPe0nC1Cl1znsj9Z0/33dzE9VjR+XMri7roDnpV2oPo48W/+WqxST7jGM
- yUaA==
+ bh=0cvIXglGfRA1jXahprL6v2Lr8S2XJ1LC0LkB99mN9UQ=;
+ b=g8HP5f8Y3E3rv9A4nPR1P6S3rkakcXp0sTY0h2Y3LyOZKlGiBw9BFBO2fe3/prTLgY
+ xCSZtBRbaGi071H+Sb1VdTaa6f8737jqdtjBtyqkHrRbNifszl+OWBKUI267XsBt4Qen
+ EA9wPyk6ut+VFfTrB9qEcxkKtXOnz8ggrqCsoqW/R/JeWoExHFEcvp2ZCglgaRvqDbmO
+ xySBTCxuae6OiY4hPGuRvRdj5Ta/gw9UzamzGEjReKsaMNZzscKbCY+pUCttSx0KNX7i
+ iJg39S71cn6CMy5X0egTOGpETI4mElTqnlXz7reNmefWVJP4+EQ8eEI+QsF8B509Nfup
+ XULw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406093; x=1791010893;
+ d=1e100.net; s=20260707; t=1790406257; x=1791011057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TZMKrJ9OTgOVuSw0xuj4IN8VaH3KKEmXiPudtyfK+aY=;
- b=axLlSsDuKy4dEv3F3Gvs9EKxbAeubORIYFyZxgGWoyzL1N4Wl0fnvpjkVh6rgo7UWw
- 9dWujX6pulqFMcklEfdVN0zr1+/sy62ZoB4vbvo4Fspv+yaiYqRfsVcpO7wjWups3TAD
- t3tUiYQ3AbyCh87aYoDC/wWvwt4a38TQzSd3I77o9LlqrHOP5c26ivihoBdvP+NYMfKz
- pRIV4wM31xjC9Ri35f3XU2Xh5S0M7OZaQ1UxDkheG3aZxJcia+wkBX0Kf9PoobPF4e5y
- cDRF9M7LAuJyfqIMiSB6AI5Oh28sqz09cpDqYT5YnJhViVNudec9KdRhLdELkymBLcZz
- Rd+Q==
-X-Gm-Message-State: AFuF++lM1c0fN6OuBEz6FhjOYLmr0eVNLy41srfWQPmzRcdKSYomDq4c
- 1xF7h9w286YQPFscv+9zS4naCdcaV1iaROKSNngQR3i/y6lW+3IQTHo0DecidGNZ
-X-Gm-Gg: AYBFou28w7L7EITL32YhREcIRRnGCiau1TEZo7rMZN5zZYQtSXzF0i9RnMt5rQfIByY
- E5gBlj3KK/OrnH9HvwkJaxKBqhHWIutGGBicY6NzHDUrz9EwLfouvVLZ38zMRC7kiaU7y4M7uGs
- GqZjtu2/7PgXZtILE92i/H8Dkt2KEMLom5Fa9wCQLTDEe+Mkds/91uicfi5hfygBNbVchKXc0IQ
- Sh8Bw3w7R/Fc5aBma+XOWBU9u4+cEgjB+ehe5ETj6NUDztmJfuhD0Juy/S29SJvJ2jhiTrCaG0M
- cYXnxSq6dDT00pz0rR/OKkh8Cct2VVsjWCcZuyG3qjrzYtXtv3Ya/VLd6mCo/6r4p8Qsf5UVePc
- TvkV2/zA2JRZu7POaZ3s2Q+o5WOiB8T5DSzAdjaAgfofv3BxR/X4GXhtgf+tEnrPmQi/w2CGVwc
- +110V9tIKQIsC28raUoFh70RjhFTICR93NttSMdCLWsRcaBY8RP8FmTNGswVd5Pan0VpfXpZn9w
- cwUsDoAvtNGD0gpOKAqd33Yyudj8BM=
-X-Received: by 2002:a05:693c:26c2:b0:33e:3f5b:3ffa with SMTP id
- 5a478bee46e88-342700c4766mr2065592eec.10.1790406093187; 
- Sat, 26 Sep 2026 00:01:33 -0700 (PDT)
+ bh=0cvIXglGfRA1jXahprL6v2Lr8S2XJ1LC0LkB99mN9UQ=;
+ b=e2EgtzAPScW+894KG5u5dgYF0FYrEEEz0ayBg3xNniz+3mqF53O0mmE7Xc+b19pVTw
+ /IYto5F+cGtbQJSggIxYZCfElqagI31efIC4++4IV4pXCPTWGjKwj8ImhE1i3l5czqEO
+ 1et9/mTPjVg8DANIXo9s9wunihzFXNayA5b475LU3CJlvhiB/iQJVruMdP5KQFx1kvyc
+ wdEn56PVQ25/BalXUw3j6v9MkxDUI8Arm0U3kWXdGXdFPvyYJfFRofc22A9SNwjQx8lZ
+ xbRYvKrbUH/aDRUAVBkRlWl/4YW6b/dKMlbkaTy9q8sRlNG7Zzm2esFbBx4UrXS9Ta41
+ cMng==
+X-Gm-Message-State: AFuF++kRMRAd1kIRvBupNjERU15rMw0JYyPw2HCzwLPL1VglNTxlRSMT
+ Y++A1pTlb/4KwhOGMgVxdQWNNVmHpqF6Zs/OOPavKlUgi7QMlyoVQQQ1yrP7jzXT
+X-Gm-Gg: AYBFou1PXT0N8dTC1WpYvJ1XmrLWJPFNHjLG8WUoCQH8WbJ8UuYFYwLPOncvw2UNvOT
+ SALH1pkBTd3T9wEBYYkhyRdyo2qEDLABK9ge8GnE4hLKAC3H+TaBoHV33ZUOtx8c3oH7Zq2VSsm
+ IgTsUo8vBBG7cOJrORs98egil49sVKrxtIjlFl5Oh+NXzsQJcTxbpeQNyU33cYPv/m0HxhKZHmV
+ dwXFo+k0nh3Em0LmriRBO8MWk3CXvaOmRs3xCVG/4lpM10GC7Tgd6LdtTWdEgn9RqNqZkartw0B
+ nnJj9n3yG9Y3/dwUcsWrecGrtxupXwrQDzukjesUfBnTc+7rvzcRfKPw9X5W2XbHXlR1unIZCPI
+ 4vvY0TcrpIV+0/ABy1YkFRhA1N3LkKkNuXWZpPl476IthgibG4Wn7HYhe5NbO6zQe4ouxStT/FV
+ xhn6ir+B2MiS88zRl17Va2YELE0Kqem0fV478xVLkcV8WnDwoA03hdceiJDGSLG7TqBjsH0lXSs
+ vnhC/5wPC3YwgJDAbpwRTvWs+61sHc=
+X-Received: by 2002:a05:7300:8a24:b0:33c:c0e:76ec with SMTP id
+ 5a478bee46e88-342742360a7mr2334739eec.35.1790406256679; 
+ Sat, 26 Sep 2026 00:04:16 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.29
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.04.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:01:32 -0700 (PDT)
+ Sat, 26 Sep 2026 00:04:15 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,9 +78,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 07/55] tests/unit: add test-target-info
-Date: Sat, 26 Sep 2026 15:00:06 +0800
-Message-ID: <20260926070057.1234-8-luoyonggang@gmail.com>
+Subject: [PATCH v4 49/55] hw/microblaze: expand petalogix-ml605 and
+ xlnx-zynqmp-pmu to TypeInfo
+Date: Sat, 26 Sep 2026 15:00:48 +0800
+Message-ID: <20260926070057.1234-50-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
@@ -109,109 +110,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Collect each target-info-def.c object in target_info_def_objects,
-keyed by target dir. Link every value so constructors fill the
-list. Assert target_info() is not NULL and target_info_list() has
-one entry per linked object.
+Replace DEFINE_MACHINE with TypeInfo. Rename *_machine_init to
+*_machine_class_init and set is_available to target_is_microblaze.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- meson.build                   |  6 +++++-
- tests/unit/meson.build        |  4 ++++
- tests/unit/test-target-info.c | 38 +++++++++++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 1 deletion(-)
- create mode 100644 tests/unit/test-target-info.c
+ hw/microblaze/petalogix_ml605_mmu.c | 19 +++++++++++++++++--
+ hw/microblaze/xlnx-zynqmp-pmu.c     | 19 +++++++++++++++++--
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index c404d222d9f..93237429713 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4259,6 +4259,8 @@ endif
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 8f9f54ff1e2..508a8005a63 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -26,6 +26,7 @@
+  */
  
- traceable = []
- emulators = {}
-+target_info_def = files('target-info-def.c')
-+target_info_def_objects = {}
- foreach target : target_dirs
-   config_target = config_target_mak[target]
-   target_name = config_target['TARGET_NAME']
-@@ -4330,7 +4332,7 @@ foreach target : target_dirs
-     endif
-   endif
- 
--  arch_srcs += files('target-info-def.c')
-+  arch_srcs += target_info_def
- 
-   if target_base_arch in target_arch
-     t = target_arch[target_base_arch].apply(config_target, strict: false)
-@@ -4408,6 +4410,8 @@ foreach target : target_dirs
-                  c_args: c_args,
-                  build_by_default: false)
- 
-+  target_info_def_objects += {target: lib.extract_objects(target_info_def)}
-+
-   if target.endswith('-softmmu')
-     execs = [{
-       'name': 'qemu-system-' + target_name,
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index e47bc7225ab..dc980a35955 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -43,6 +43,10 @@ tests = {
-   'test-qgraph': ['../qtest/libqos/qgraph.c'],
-   'check-qom-interface': [qom],
-   'check-qom-proplist': [qom],
-+  'test-target-info': [qom, declare_dependency(
-+    objects: target_info_def_objects.values(),
-+    compile_args: ['-DTARGET_INFO_DEF_COUNT=@0@'.format(
-+      target_info_def_objects.values().length())])],
-   'test-qemu-opts': [],
-   'test-keyval': [testqapi],
-   'test-logging': [],
-diff --git a/tests/unit/test-target-info.c b/tests/unit/test-target-info.c
-new file mode 100644
-index 00000000000..e6de9b259e8
---- /dev/null
-+++ b/tests/unit/test-target-info.c
-@@ -0,0 +1,38 @@
-+/*
-+ * TargetInfo unit tests
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
+ #include "qemu/osdep.h"
 +#include "qemu/target-info.h"
-+#include "qemu/target-info-def.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "target/microblaze/cpu.h"
+@@ -214,10 +215,24 @@ petalogix_ml605_init(MachineState *machine)
+ 
+ }
+ 
+-static void petalogix_ml605_machine_init(MachineClass *mc)
++static void petalogix_ml605_machine_class_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
 +
-+static int target_info_list_count(void)
+     mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
+     mc->init = petalogix_ml605_init;
+ }
+ 
+-DEFINE_MACHINE("petalogix-ml605", petalogix_ml605_machine_init)
++static const TypeInfo petalogix_ml605_machine_class_init_typeinfo = {
++    .name = MACHINE_TYPE_NAME("petalogix-ml605"),
++    .parent = TYPE_MACHINE,
++    .class_init = petalogix_ml605_machine_class_init,
++    .is_available = target_is_microblaze,
++};
++
++static void petalogix_ml605_machine_class_init_register_types(void)
 +{
-+    TargetInfoNode *node;
-+    int n = 0;
-+
-+    QLIST_FOREACH(node, target_info_list(), next) {
-+        n++;
-+    }
-+    return n;
++    type_register_static(&petalogix_ml605_machine_class_init_typeinfo);
 +}
 +
-+static void test_target_info_not_null(void)
++type_init(petalogix_ml605_machine_class_init_register_types)
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index 00154236bf8..79b70eb5ad7 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/boards.h"
+@@ -179,10 +180,24 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
+                            NULL);
+ }
+ 
+-static void xlnx_zynqmp_pmu_machine_init(MachineClass *mc)
++static void xlnx_zynqmp_pmu_machine_class_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
++
+     mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
+     mc->init = xlnx_zynqmp_pmu_init;
+ }
+ 
+-DEFINE_MACHINE("xlnx-zynqmp-pmu", xlnx_zynqmp_pmu_machine_init)
++static const TypeInfo xlnx_zynqmp_pmu_machine_class_init_typeinfo = {
++    .name = MACHINE_TYPE_NAME("xlnx-zynqmp-pmu"),
++    .parent = TYPE_MACHINE,
++    .class_init = xlnx_zynqmp_pmu_machine_class_init,
++    .is_available = target_is_microblaze,
++};
++
++static void xlnx_zynqmp_pmu_machine_class_init_register_types(void)
 +{
-+    g_assert_nonnull(target_info());
++    type_register_static(&xlnx_zynqmp_pmu_machine_class_init_typeinfo);
 +}
 +
-+static void test_target_info_list_count(void)
-+{
-+    g_assert_cmpint(target_info_list_count(), ==, TARGET_INFO_DEF_COUNT);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/target-info/not-null", test_target_info_not_null);
-+    g_test_add_func("/target-info/list-count", test_target_info_list_count);
-+    return g_test_run();
-+}
++type_init(xlnx_zynqmp_pmu_machine_class_init_register_types)
 -- 
 2.52.0.windows.1
 
