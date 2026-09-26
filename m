@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6372C9831E
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B9C4C9831E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMPt-0002H0-8X; Sat, 26 Sep 2026 03:01:49 -0400
+	id 1xAMW4-0002Y9-Eq; Sat, 26 Sep 2026 03:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPq-0002Fo-6U
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:46 -0400
-Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
+ id 1xAMSE-0005db-KM
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:19 -0400
+Received: from mail-dy2-x10.google.com ([2607:f8b0:4864:36::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPo-0000Rt-9H
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:45 -0400
-Received: by mail-dy2-x0e.google.com with SMTP id
- 5a478bee46e88-3429bca3880so925250eec.3
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:42 -0700 (PDT)
+ id 1xAMSB-0000ia-IU
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:13 -0400
+Received: by mail-dy2-x10.google.com with SMTP id
+ 5a478bee46e88-33be7dfcfc1so2110431eec.1
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406102; x=1791010902; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406249; x=1791011049; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gvdLUze2sQ9rH6tf9YWuWP18ipAcGMhXKG5e40lFeJk=;
- b=Y5z0WrAgGi6ZZmqa6aFZZyvy29g+3VHviZL1XoP/Z976UfCcD9JrlmeW7pVCQxwzgK
- J17xhQoRs0R1lT9DXTmNEp1gZlgkUuDYhIAcv8PiF/MIobBO3deD4mfwg4vB4nrVKN8O
- bSd6fgpE9ehVIevN9QYeUSEnrcZKltFIGJUH2pxjRuzz25iP2sZL3+SnoKB7QF90uGTT
- Z4ufpdbxZxrVxfWcCrt1Xt+9z9Z0+lBfkwXsLtN1XXulLXDQCYkT9XluBXUKypva0pfp
- E+VU87Z0P8vr6jpeh5rP4sLT6Ty4tFI7EG4N1DF/Q67ZvTPHdq5BcbdNfrAfcS9wpwNS
- yUfw==
+ bh=RNlqCeZxxjHAxzDk9z7qImwINCBhWsreM3aP9qjpGBI=;
+ b=c0on/Pv0GVJ4/31GKofUVlJ4V0qM1Bms/ELoH87hLngFz0ZuvPO6qhoucDO2siqRCg
+ GDqephXtY6fqfvrczM5wMwigUQ4zRX9hZ5yN7YOy7F8WTUOvSBsLlw3ZxiZZp5OxtkCO
+ 8syg2x0Z3UXELkxmu+/jDqYaavFPP6kqW6MLd9Zez4aN/1n72eM4battLcUj8WRIUXpB
+ Oi9eqUZtwRvnw4IAhnyRyMMnmDGyO2Y+JXGzxoMz0MnGBswyguCf/JRRCJwCT81eHUzJ
+ VKJXu62WcIo6hOrC+47A1dDJWk3W/IyjFn5x7Lor69nj0jt8TNiFUOx/n7aPl/mjJm9q
+ AHFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406102; x=1791010902;
+ d=1e100.net; s=20260707; t=1790406249; x=1791011049;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gvdLUze2sQ9rH6tf9YWuWP18ipAcGMhXKG5e40lFeJk=;
- b=BxwiLIAWY9tyKgaewRzrKWocV6+lrQ2+ufOOs0HJOFFykc2asPc655lp8jMikFkUir
- s6+PXDAn6BLSEm+qL3fcwGmhIjYmeAJpy9mfl1W8ApMnIkwspTNeeRDtPzRfidZOAOua
- JgT2Y5LbQL4GDM4W8B/0ws18Y1R0VdTBPwP+tqT3at4KGZBYqyczqK1qIlo3Cdtgdca7
- KyS6jBgwlKEViQyZbroP1PkipxXTrqkIhebyEK4pv8JCU7fEhmnse5CHY63I9kAIgHhB
- x9XOC0rR6AphJPHOEqlEOhvlxHIoEAYgh+ZpyshoE8h4VsTvJ91FscccxDRystdsg0VC
- mfRw==
-X-Gm-Message-State: AFuF++lmy1on3ahsqjfg0soEKQLyQlupCUXLe0Pzq9ggvxQQ3j/esvGm
- FZ7XY25vOb2jjoMPMvaGCGfcVlMjpDTZERvVW6hSVXwWh+NzMo+4oBtve6rZA0Kl
-X-Gm-Gg: AYBFou1LdlTlycB/Z68GcQ0MtlDpkv5cM4le5BbfnfAePI5MTXTNoppEDGNv2cm2jnj
- zZ2KTt9j937lNKZSZYrdX/ZVJLf+i8xWKFsyDfCq4/3oJMI+5s3LpVSuc5bKehFBNztVaHCOF3N
- 0ebMjtgK7y2vwmrmv+D4NrRKnfkZoNaJQP2cK7ZBUpT7I1CwTGkIQ2cFYjScAN0vUrMfXV9Xtns
- mkL58uodBZ7BOvMXeeDNbBzc/wpwxjaqypwQYOfcaAlmTck9adcj9f6YxeQIsoDW9wnfYrOr127
- LbL9Kc4wGZ1toT7jmBmqN65QJphebJUcAzfz5KR94fh3H6M04Qo7vPVA1Ff+ZrHBfnIgGLuJowI
- RL7U6NUtrka60ve6c61KfnfXcO6psD+qMGipDFCi/4+EqPLZ6WTdAK15P4pGEGSnk76cwCaIzUm
- MBcemkrb0IoiU/wmyNVw8ElUiIEbYvabOEMIGdB1X8ek/c+NTRGjKMH6BgAzDLSEoA+SZZ9w1nz
- h7r8bJU+IVVFdFz4nwqK8ypSaHyErI=
-X-Received: by 2002:a05:7301:1506:b0:33b:e529:4446 with SMTP id
- 5a478bee46e88-3426febb75bmr2199672eec.5.1790406101084; 
- Sat, 26 Sep 2026 00:01:41 -0700 (PDT)
+ bh=RNlqCeZxxjHAxzDk9z7qImwINCBhWsreM3aP9qjpGBI=;
+ b=nrc6kj0Y91IHmu7ctv3afQKK5lJ0WahVxiFhJawdlSUSdgsXkx2SlaQy13x06zaQoI
+ dbkIPlrhAfqac4iGcyZs4Ak03D6y0pcOGocfZPJcc6a2za0xD1kxvZ9EdW8aAr1Jl0B6
+ JiF0RWZJq8P45MNcnc4jDG7DHbon0uVhOkV5M4sxX8xFXxNtTuTBtMgcn9qt0C++DIBG
+ 83tatnJ4RD/fOjdiWT6qina1s7feTYQWnTV2vHj/6sqpz5LHwIfmmECdPK+VpblF1xOB
+ qGwpO9qA7DQLcFaRL55yvD4R1jxZV1Ly2JA22wbAu+qCYpz6JH4GV6bHcaKa2I0J/yYi
+ kIEw==
+X-Gm-Message-State: AFuF++kokvn4nNYlH6wtNdfEiVA1Q2ZNr1p3x8V3j5uGVRq5oSBYhire
+ j+dUbY94Zy0C3uR3LXGdfHGh3J61BqnfvBYZpJxW3xXevsPMiQyye7EiCnNsOspV
+X-Gm-Gg: AYBFou22MqhV8mHfmBJPawX+z81n02UDQKyr6BbELF8ZafTg+o2bUuwn7cJdUhi2zsU
+ GCaQh1fyMrL3QVf0wSbyuhaiL9uW85pd5kvUQB435jTrU5yJIqf+6FwecxgcS6Is2+gY+ghrAsR
+ ExCpdc2NAKlhQm7K8PmfeYDR1imZFROwNDnQm8IN0NuxohReSGnLAU4YleF8ZCTdOgG1T6cfQ11
+ RG4Qx+7XB+uVGlzGKyOA/n7IZasW09YSzKbqAi6abHsnfaDqkvT10qIrPetoSQ6LNBWDKPmBoFM
+ HaEjWdNHwn+RVV1+PN00alqfTCr5Q72mOL8FVXxowELJyrqETVXHibWKF8xxFB/bzHkLlMe40Ps
+ QfTvpBk8MjBLunLUAlA6ukpFWhtxX8Y4PXSZ8OBQTUPN2chHLQfeKpZ7U4Q64s5sHMLIyG3++nn
+ a8sJewCgoVmYHz6l/4MFGPWXXO+GdOvIBcnVdb3tE6Q3VlY2EBqIgwqJsqOTikc4tJn/0A6w/1A
+ Sk49vc4PIPt9Rb0mc5cQE6mKEUuuOI=
+X-Received: by 2002:a05:7300:a987:b0:333:fe81:85dd with SMTP id
+ 5a478bee46e88-3426fbbe744mr3025019eec.3.1790406249289; 
+ Sat, 26 Sep 2026 00:04:09 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.37
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.04.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:01:40 -0700 (PDT)
+ Sat, 26 Sep 2026 00:04:08 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,16 +78,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 09/55] kconfig: rename REGISTER to HW_REGISTER
-Date: Sat, 26 Sep 2026 15:00:08 +0800
-Message-ID: <20260926070057.1234-10-luoyonggang@gmail.com>
+Subject: [PATCH v4 47/55] target-info: add target_is_microblaze
+Date: Sat, 26 Sep 2026 15:00:46 +0800
+Message-ID: <20260926070057.1234-48-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::e;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,107 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename config REGISTER to HW_REGISTER. register is a C keyword, and a
-later TargetKconfig commit will use it as a struct member.
+Add target_is_microblaze() and target_microblaze(). The first
+reports SYS_EMU_TARGET_MICROBLAZE. The second checks the current
+TargetInfo.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/Kconfig          | 2 +-
- hw/core/Kconfig     | 2 +-
- hw/core/meson.build | 2 +-
- hw/dma/Kconfig      | 4 ++--
- hw/i2c/Kconfig      | 2 +-
- hw/usb/Kconfig      | 2 +-
- 6 files changed, 7 insertions(+), 7 deletions(-)
+ include/qemu/target-info.h | 15 +++++++++++++++
+ target-info.c              | 10 ++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/hw/Kconfig b/hw/Kconfig
-index c92ca2b13a3..94f963f2944 100644
---- a/hw/Kconfig
-+++ b/hw/Kconfig
-@@ -85,7 +85,7 @@ config XILINX_AXI
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 812e4b04a7b..17fafa0888e 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -210,6 +210,21 @@ bool target_is_s390x(const TargetInfo *ti);
+  */
+ bool target_s390x(void);
  
- config XLNX_ZYNQMP
-     bool
--    select REGISTER
-+    select HW_REGISTER
-     select CAN_BUS
-     select PTIMER
-     select XLNX_BBRAM
-diff --git a/hw/core/Kconfig b/hw/core/Kconfig
-index d1bdf765ee8..839e249b9d0 100644
---- a/hw/core/Kconfig
-+++ b/hw/core/Kconfig
-@@ -29,7 +29,7 @@ config PLATFORM_BUS
-     bool
-     depends on DEVICE_TREE
++/**
++ * target_is_microblaze:
++ * @ti: TargetInfo to inspect
++ *
++ * Returns whether @ti is Microblaze.
++ */
++bool target_is_microblaze(const TargetInfo *ti);
++
++/**
++ * target_microblaze:
++ *
++ * Returns whether the target architecture is Microblaze.
++ */
++bool target_microblaze(void);
++
+ /**
+  * target_is_base_riscv:
+  * @ti: TargetInfo to inspect
+diff --git a/target-info.c b/target-info.c
+index b25e2ada438..0716e2021b8 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -204,6 +204,16 @@ bool target_s390x(void)
+     return target_is_s390x(target_info());
+ }
  
--config REGISTER
-+config HW_REGISTER
-     bool
- 
- config SPLIT_IRQ
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 8fe776d2c86..1c645d7041d 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -21,7 +21,7 @@ system_ss.add(when: 'CONFIG_GUEST_LOADER', if_true: files('guest-loader.c'))
- system_ss.add(when: 'CONFIG_OR_IRQ', if_true: files('or-irq.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('platform-bus.c'))
- system_ss.add(when: 'CONFIG_PTIMER', if_true: files('ptimer.c'))
--system_ss.add(when: 'CONFIG_REGISTER', if_true: files('register.c'))
-+system_ss.add(when: 'CONFIG_HW_REGISTER', if_true: files('register.c'))
- system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
- system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
-diff --git a/hw/dma/Kconfig b/hw/dma/Kconfig
-index 0a23e7d7b87..8f221b20634 100644
---- a/hw/dma/Kconfig
-+++ b/hw/dma/Kconfig
-@@ -16,7 +16,7 @@ config I8257
- 
- config ZYNQ_DEVCFG
-     bool
--    select REGISTER
-+    select HW_REGISTER
- 
- config XLNX_ZDMA
-     bool
-@@ -29,7 +29,7 @@ config SIFIVE_PDMA
- 
- config XLNX_CSU_DMA
-     bool
--    select REGISTER
-+    select HW_REGISTER
- 
- config K230_GSDMA
-     bool
-\ No newline at end of file
-diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
-index 0766130b596..3482f475cf9 100644
---- a/hw/i2c/Kconfig
-+++ b/hw/i2c/Kconfig
-@@ -20,7 +20,7 @@ config ARM_SBCON_I2C
- 
- config DESIGNWARE_I2C
-     bool
--    select REGISTER
-+    select HW_REGISTER
-     select I2C
- 
- config ACPI_SMBUS
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index e8c00f813a6..43771291a06 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -137,7 +137,7 @@ config IMX_USBPHY
- config USB_DWC3
-     bool
-     select USB_XHCI_SYSBUS
--    select REGISTER
-+    select HW_REGISTER
- 
- config XLNX_USB_SUBSYS
-     bool
++bool target_is_microblaze(const TargetInfo *ti)
++{
++    return ti->target_arch == SYS_EMU_TARGET_MICROBLAZE;
++}
++
++bool target_microblaze(void)
++{
++    return target_is_microblaze(target_info());
++}
++
+ bool target_is_base_riscv(const TargetInfo *ti)
+ {
+     switch (ti->target_arch) {
 -- 
 2.52.0.windows.1
 
