@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19E3C98328
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6334AC98328
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMRr-00057Z-MP; Sat, 26 Sep 2026 03:03:54 -0400
+	id 1xAMVF-0000Hy-2h; Sat, 26 Sep 2026 03:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMQF-0002nL-Fb
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:02:12 -0400
-Received: from mail-dl2-x0f.google.com ([2607:f8b0:4864:38::f])
+ id 1xAMSM-0005fE-Fj
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:25 -0400
+Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMQD-0000Uz-NC
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:02:11 -0400
-Received: by mail-dl2-x0f.google.com with SMTP id
- a92af1059eb24-144f7915355so1353795c88.3
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:02:09 -0700 (PDT)
+ id 1xAMSF-0000im-4q
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:17 -0400
+Received: by mail-dy2-x0f.google.com with SMTP id
+ 5a478bee46e88-33e46a15703so1348988eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406128; x=1791010928; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406253; x=1791011053; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=bnB/iWAyXAxW1TeHJut1enjEPN/SkInFqx09vCaNhBQ=;
- b=AKGJA1xTPEf7WTCpy144cfkwtzvLzIhsMn9pKEuNGOp+ck3v1V7AwrnBWP97QELVNa
- NRQCt+6JhnLNSl/MoVfBLlPXy+wM6Fro/enjeo5hECI+ZVV335ubSuNz8E9v/WbR0Zod
- VufDjdSrF5fmKjJRH7gY5H+cQp/nIVv1cJTff7IN2ymd0KWjWM5WKWwj56OjZcLhYuOj
- NigEOmnph/BXoxiNIR4OuMg6Iabi/f+d/71zgln7l625/WmTIMgZVnJu+Xk+QEtE2iPj
- YikGM9ctYStZhbh13LsHCY0yOKmcLkPGBWr2wmB4jnCv6saptflfGqxkuhIFaVqsOwL4
- lSUQ==
+ bh=+A6CkIwPfSE+JT/uIHV8BW74dusgH/Hp+auhmSJ5o/0=;
+ b=Z2ysJGauR8mBKOClVRny1YqcbLp7eeCvLOzWLZVXvW9eL1GONr0A0As5u+B68Crgei
+ Y4clUtq9JoN4WkfTCaleoyUSJJWNRl+wcVi5qcPEkCZIdrz/1PkxzeQfOCwlOmm2WJgQ
+ sPX70FccT4C95keJePeylC/uYNpn+MMiQUsTU02oD/8aLQZ5a9xU7brwm2JNBqMjpphK
+ XhaQkj0NtXFgbgaKIaCnbUHtX6OwApqWpxb51sBR6iWxENK7aBCxdkhuxR6W9QLqeTMI
+ ZLFG6wSB5DojWtDbuZDwVOEmhT8KjrehBzGbyp6pC1d+jdmhgG5kgGOAsiE8JOBhQ6of
+ 7HWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406128; x=1791010928;
+ d=1e100.net; s=20260707; t=1790406253; x=1791011053;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=bnB/iWAyXAxW1TeHJut1enjEPN/SkInFqx09vCaNhBQ=;
- b=VwSyIMjkLM2h+TLCvdVq0aLiSBZP+pvdZjwp5Z30vPar1PZKnH6cWSaB5uNr5VhE/a
- IeBEL85DRkeOapvm/oirXO6ALFyQL5eYoenM33QiDJWd6SfhECavkVt5DdRXkkuh4/Im
- B75V8Ub9bRt6sLEteNMjMfoLGiILQ/EbFcIuI3B19T6gqwA15EZfnrDQIvh1vUf+iyEh
- QkgcYRD029wx42sPU8fAnTINMjL+uYl6hZEWQaY5h3wcMH8hVdb7g7vb3B07CYtkInEO
- 4yio/j+0II6Wm2oj+Ajl+ZMIAXX6mt4zBFUk6Rf6cmGwv1FomURDqdj4F2NODx9B2TSf
- Ht/Q==
-X-Gm-Message-State: AFuF++kkgR/MMpvWm2RxUpMDFCO+4z3jeGoXHo+p3M6mnmAwwF2b95Ts
- IowEWZ+xHJV1GGNemg0INKsXTvIwvvqQju3kYQcC6QdN0h5DMq2uUN5dzzty2v75
-X-Gm-Gg: AYBFou3W3KvStHBS4quNC+iBLCv8Ya4mZkFqcgcBd7ZYzWE9aicDQ2KQ9XmRQeYw/hk
- vAWvnI94bMeu9CKsuuXJUY8GyBMLCIsqsOse20gSrT0NnLkIAdYiTg8uu0MSscAOsyQOjIJLmrM
- 9zGuW/pPZIgy1UZ3biOYEyEnDU6XRD+VXMlcHmBe9/KJ/n1bXzsPML8KMpWhCt45a144AqWRgeH
- B9bjdUBAXGzcrQzSiPvtHKfizocoT9P5cVjf37O5ZS+WF0VQkIJuD+c6B0CdBGn1qfXLgBJKUtH
- 8L8vR6ze7NGgM3dGaBqHbe1+W/3G70hoouTH3D9bcwxgSfdVMqjfOVFqFi0sUK4gHO24CwUIbIZ
- Y4IgdGsl4JIsKzGgQoSvosIGqui2vHQtGfAcnu6mYlg0xRgyc9Zyig6VweTIXfvb2Tolouk5tIp
- 0/HCfyffoEy6GhqO788wvNPwZ9JNiyWQsN6QR5g+/1XbhCl9qRPiSUYHumUmZNqpUuR7sx7Ldyl
- oPfFUWkWntGOAhfC4/vnRrIpeJwNAc=
-X-Received: by 2002:a05:701b:2059:20b0:143:7001:7643 with SMTP id
- a92af1059eb24-146d096d4bamr2224508c88.46.1790406128075; 
- Sat, 26 Sep 2026 00:02:08 -0700 (PDT)
+ bh=+A6CkIwPfSE+JT/uIHV8BW74dusgH/Hp+auhmSJ5o/0=;
+ b=mGGN3+qSQlwGw8P+fbpqmKE6kapuYxJGZt4OIyjUDMUFW4TReXtLKmz6DW0czJXzYg
+ 8lubX1CUkaej1zWKhGrroWNdK5zkMzI5piOyoyLWCfdrs4Wpeok/t4GYfgOWssWMnkyy
+ mQHG2YaX1woDliqXv1GLKGeyRztwyQhvFMFYN/wiAGrZs6+O8o6bgVb2n7reB36FZAct
+ 6WYnIkg8nBKkWtJJ/R7tLfwyH2i8OkTsCNU98oduRbA4baTMWFor9nITM5JjSmwtUjpv
+ EGyGm2UGmKeVKwDNLgfxO4Uu80MOkHXFN9mSYI+Dx0O8vwTEMtfeZIfJWW5rt03a8qog
+ 5BqQ==
+X-Gm-Message-State: AFuF++nkxxMPW7qsDklayHXvnuILE7/KwcTMEC1W8J93/ucAIpNtHOkX
+ O4ke2ISBv07g9p5wvQ7ctw0Z3RTps5v/Q4qhoX9IWLncXhke0lhZGIwveGLD7NQg
+X-Gm-Gg: AYBFou3di0VKRb5/xvXjIHUgkbO3iWc8mVM8by18uEkkABIpue66WPoyFw7MNydOIkg
+ wuicmsGNyeqfEScyUAqh/nqAauhFUH/6zxyGlHewA0XaByKTF1rZ1PLFC5otY44VkSxVB19XfpQ
+ Wh9S/rOYaA9tKfPSe7pIbQJdfjaNF9r2rxYk21kwePYx/YUTy3vr9vGSCLX1ghlj4SmtB9QOxo8
+ KGW4MhiAO45d4AtcNfJ5ROPy78qMjCKd7IRt7AtJxeh6ypt9S6CFmWWsW0mb7O1vjiH3VXdnBZV
+ HcpnfqlUY1nswcveX6bXJ6mgH6kh62a6PlHKzhNYqToQsiJRgJ/GQZygLXe4EGKjUJAUXeH9Vk/
+ QUTUT4aijwZfBB+ePYHmQfTGC2Hvu/tJYGZxdGJpxDOKGFRyosh5sQabfVL4JgacXFDXZgfLSj7
+ Dl3Sa5dRkI5Q+NngEz4k1FcFXNbIMISgCJfalIlWw/4cjP6NRk3C4i0dYDz6YvDeVJ3czWWFKGw
+ I7CrHUsawJWTPhY/QUk2D24DNBb9lPvHPKd/U5CXQ==
+X-Received: by 2002:a05:7300:a987:b0:33c:1f00:358 with SMTP id
+ 5a478bee46e88-34270ac690bmr2902731eec.17.1790406252918; 
+ Sat, 26 Sep 2026 00:04:12 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.02.04
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.04.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:02:07 -0700 (PDT)
+ Sat, 26 Sep 2026 00:04:12 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,22 +78,23 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 16/55] target/arm: gate -cpu host with TypeIsAvailable
-Date: Sat, 26 Sep 2026 15:00:15 +0800
-Message-ID: <20260926070057.1234-17-luoyonggang@gmail.com>
+Subject: [PATCH v4 48/55] hw/microblaze: set petalogix-s3adsp1800
+ TypeInfo.is_available
+Date: Sat, 26 Sep 2026 15:00:47 +0800
+Message-ID: <20260926070057.1234-49-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,165 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register the host ARMCPU type for every target and hide it with
-is_available. aarch64_host_initfn picks kvm, hvf, whpx, or nitro
-from TargetKconfig instead of CONFIG_* ifdefs.
-
-- Add ARMCPUInfo.is_available and pass it from arm_cpu_register
-- target_has_arm_host_cpu covers kvm, hvf, whpx, and nitro
-- Add hvf and whpx set_cpu_features_from_host stubs
+Set TypeInfo.is_available on the petalogix-s3adsp1800 leaf to
+target_is_microblaze.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- target/arm/cpu.c            |  1 +
- target/arm/cpu.h            |  1 +
- target/arm/cpu64.c          | 43 +++++++++++++++++++++----------------
- target/arm/hvf/hvf-stub.c   | 14 ++++++++++++
- target/arm/hvf/meson.build  |  1 +
- target/arm/whpx/whpx-stub.c |  5 +++++
- 6 files changed, 47 insertions(+), 18 deletions(-)
- create mode 100644 target/arm/hvf/hvf-stub.c
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index c138c4c0587..9b498632c86 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2685,6 +2685,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
-         .instance_init = arm_cpu_instance_init,
-         .class_init = info->class_init ?: cpu_register_class_init,
-         .class_data = info,
-+        .is_available = info->is_available,
-     };
- 
-     type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e3f931dba26..87de7e9ff09 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1177,6 +1177,7 @@ typedef struct ARMCPUInfo {
-     const char *deprecation_note;
-     void (*initfn)(Object *obj);
-     void (*class_init)(ObjectClass *oc, const void *data);
-+    TypeIsAvailable *is_available;
- } ARMCPUInfo;
- 
- /**
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 03f3d55f6ba..168639ac2f4 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -20,6 +20,8 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qemu/target-info.h"
-+#include "qemu/target-kconfig-has.h"
- #include "cpu.h"
- #include "cpregs.h"
- #include "qemu/module.h"
-@@ -757,37 +759,42 @@ static void aarch64_a53_initfn(Object *obj)
- void aarch64_host_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-+    const TargetInfo *ti = target_info();
- 
--#if defined(CONFIG_NITRO)
--    if (nitro_enabled()) {
-+    if (target_has_kconfig_nitro(ti) && nitro_enabled()) {
-         /* The nitro accel uses -cpu host, but does not actually consume it */
-         return;
-     }
--#endif
- 
--#if defined(CONFIG_KVM)
--    kvm_arm_set_cpreg_mig_tolerances(cpu);
--    kvm_arm_set_cpu_features_from_host(cpu);
--    aarch64_add_sve_properties(obj);
--#elif defined(CONFIG_HVF)
--    hvf_arm_set_cpu_features_from_host(cpu);
--#elif defined(CONFIG_WHPX)
--    whpx_arm_set_cpu_features_from_host(cpu);
--#else
--    cpu->host_cpu_probe_failed = true;
--#endif
-+    if (target_has_kconfig_kvm(ti)) {
-+        kvm_arm_set_cpreg_mig_tolerances(cpu);
-+        kvm_arm_set_cpu_features_from_host(cpu);
-+        aarch64_add_sve_properties(obj);
-+    } else if (target_has_kconfig_hvf(ti)) {
-+        hvf_arm_set_cpu_features_from_host(cpu);
-+    } else if (target_has_kconfig_whpx(ti)) {
-+        whpx_arm_set_cpu_features_from_host(cpu);
-+    } else {
-+        cpu->host_cpu_probe_failed = true;
-+    }
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         aarch64_add_pauth_properties(obj);
-     }
- }
- 
-+static bool target_has_arm_host_cpu(const TargetInfo *ti)
-+{
-+    return target_has_kconfig_kvm(ti)
-+        || target_has_kconfig_hvf(ti)
-+        || target_has_kconfig_whpx(ti)
-+        || target_has_kconfig_nitro(ti);
-+}
-+
- static const ARMCPUInfo aarch64_cpus[] = {
-     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
-     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
--#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX) || \
--    defined(CONFIG_NITRO)
--    { .name = "host",               .initfn = aarch64_host_initfn },
--#endif
-+    { .name = "host",               .initfn = aarch64_host_initfn,
-+      .is_available = target_has_arm_host_cpu },
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index c5f64319009..a1f41b10348 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -189,6 +189,7 @@ static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
+         .name           = TYPE_PETALOGIX_S3ADSP1800_MACHINE,
+         .parent         = TYPE_MACHINE,
+         .class_init     = petalogix_s3adsp1800_machine_class_init,
++        .is_available   = target_is_microblaze,
+         .instance_size  = sizeof(S3Adsp1800MachineState),
+     },
  };
- 
- static void aarch64_cpu_register_types(void)
-diff --git a/target/arm/hvf/hvf-stub.c b/target/arm/hvf/hvf-stub.c
-new file mode 100644
-index 00000000000..3c8148316c9
---- /dev/null
-+++ b/target/arm/hvf/hvf-stub.c
-@@ -0,0 +1,14 @@
-+/*
-+ * QEMU HVF ARM specific function stubs
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hvf_arm.h"
-+
-+void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/hvf/meson.build b/target/arm/hvf/meson.build
-index afc509a470e..055fab56fb6 100644
---- a/target/arm/hvf/meson.build
-+++ b/target/arm/hvf/meson.build
-@@ -1,3 +1,4 @@
- arm_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
-   'hvf.c',
- ))
-+arm_stubs_ss.add(files('hvf-stub.c'))
-diff --git a/target/arm/whpx/whpx-stub.c b/target/arm/whpx/whpx-stub.c
-index 32e434a5f6a..3d1cbb33a28 100644
---- a/target/arm/whpx/whpx-stub.c
-+++ b/target/arm/whpx/whpx-stub.c
-@@ -13,3 +13,8 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
- {
-     g_assert_not_reached();
- }
-+
-+void whpx_arm_set_cpu_features_from_host(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
 -- 
 2.52.0.windows.1
 
