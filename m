@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DBBDC9832A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC62C98328
 	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMPh-0002DV-QI; Sat, 26 Sep 2026 03:01:37 -0400
+	id 1xAMPN-00028r-P9; Sat, 26 Sep 2026 03:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPZ-0002Cm-Ri
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:31 -0400
-Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
+ id 1xAMPJ-00028L-S9
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:14 -0400
+Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPW-0000QH-PR
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:28 -0400
-Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-328664ef791so901927eec.3
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:26 -0700 (PDT)
+ id 1xAMPH-0000ON-Eo
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:12 -0400
+Received: by mail-dy2-x0e.google.com with SMTP id
+ 5a478bee46e88-341d5303884so851452eec.3
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406085; x=1791010885; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406070; x=1791010870; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NOaZ4jAlSCyjxqIHA0N9ZQnaaf/7JpAiIPWzPNATCyQ=;
- b=OjDkGNDRfr4qRhQ/+OQ4tI0J9Ehp6K+V4ATjgrfnqEZQswPrEgdCE96KFFfF+/pZji
- KJCsga8sWuRkkZvlM/yDP8XjHvUZD2d2Tg3S2obJ2QUrBXd/Cv+47Nl/5pceDqXkai38
- Qnu4FUnFWJTfCxPMMO7MCi0VIASFD5dq1VLCj/2MPbin0l7gYzdbMBahLDRTSDIPsIMA
- bUr79HecSQtjeMEqHI41VJHHHRVjsMcbLPiv5orDezZZUJkwSR0p1axD1TjE50PebV05
- YOrx/RuaUQTWlBa1SuBPF6XzcMYSCWcQOwgN0ZHcEc4OtNit4rD43gej/YkcZ4agnoN6
- zLZQ==
+ bh=UNd0tofN11vkjQp4tb6Cnaia8Ve9dgyARU+ImhmM7as=;
+ b=ARA3YGXhStVCnDbwiWPDMTHrzhicnPeS6vT0QfoWG6sEK/hR+eDxm6krmaImkxE7la
+ 4iQMnJ5pBRjf9FID7Iqnqgob8f3dzjKPoiIxZHMeyfI9BFSH4POrHofP8ttWuH4INfBf
+ D7HOnGA8keAdcYcxPOBoZM3RS98e99nGfWeuTiGxv2CfkUBWwblL54K1Vq4/pZ200LJ8
+ vThpgR5hSaQy6lLrcr5AHZXrvHW94jnuFexU2xPALgiQdKusNb4R6H4YhWN1oa3Mi7ab
+ rB+wxhva2qLnWU7LvkbpCCHi4eZpjOlqbHQ7wqZhXZaOY6CYJrh1IlrjJBOwk9JdZRZd
+ 1wOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406085; x=1791010885;
+ d=1e100.net; s=20260707; t=1790406070; x=1791010870;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NOaZ4jAlSCyjxqIHA0N9ZQnaaf/7JpAiIPWzPNATCyQ=;
- b=Eo1NnzQbV7wPyyfh1S8Pmme6vDiw6evbfgUqOzebmHH52grAQRR0htrAP5woxtoqTO
- xkZaHYlzubVNdEtAiL+P0BZjPzQ5twXt9gHifcLFmoXETrmUT1gUDR/Ujvsg7AQoolKU
- yTr0VX3E8IogfGNBPbVy/6CXZR7ICyYHJBuFeBwXN2vYQSUM5CFx7aL1eZarmVaPfDWV
- cf8w4FC6SC43uwSA22ld/+xJq/BDhmc7HL1q5rbVI7WpnWKuFGAU2iB/WoqhYsatWISY
- r+UyBulS9r6B9smrUwxSiYWjS7SIOjEessVcQ42H+qjIkQzOSIbmufjKlk+RVRdV2xt4
- 4rtQ==
-X-Gm-Message-State: AFuF++l0G0oswrInFPb8QJ7z+Yin4YWB9ffo0djXd3PJBb7Y8pvJcIE7
- i7KwWH/GnM/IEvKG/TbNg1MOzbL/L3jYQ9Q3JGqISS4zvDDJL8LTCeQLy6bnodKI
-X-Gm-Gg: AYBFou1D/TKrj2I8zNrBTf/H2zOkAmr04YacgFSyu0jh/QiZATcNQKgoNp2Fbyq7ZjB
- BnNWwkBuh8OM4xTizhw8am+ejkQvUntHr2M1XoL4Qfd2BWLf2K7WkegXgrUrW9zC+DkUwOh6j7C
- 78kwc2GNrC103/51xuRPoaf7Gn2czFMCxsJQ76sFkWJU1NPzcFpVRTkAyE3xl8ChFYf49CNmDhT
- ExIuoOUGpa1dCV/4EJIS/mFBQaMVS7JsQ9gGqDedLUKlijSbcqgTP854CJnpVyNFpDLjt26D6sv
- 7wT0JfCFYWSxTvNloX51vDOoVr8AQLUU5gBBJZZG8N54UTsqJUwTFBUphRK0zMSj5D22VFLeiCd
- XUCB4KjhKXLOgX0eoHNhET5ZXbl+Q/eBi95y8m7twsUliXgQFozHJWbPIk+/hLdZeKvhvyZc/Qp
- Pxa90hnpsy+HICXFFtGh2hgX6gNwG/dehjryUKDotdF+HtcHYTuPhv0ZCt9O9OJySIlKtGX7y8y
- 2dEf8D2kdTjwGigxlyblJhRwz+Ecx9f
-X-Received: by 2002:a05:7300:a986:b0:328:7033:9b8c with SMTP id
- 5a478bee46e88-342711ac458mr3353958eec.6.1790406085251; 
- Sat, 26 Sep 2026 00:01:25 -0700 (PDT)
+ bh=UNd0tofN11vkjQp4tb6Cnaia8Ve9dgyARU+ImhmM7as=;
+ b=lKtaUn5rtzSaIc80grR+Iuh8IHG0g6X9nuixAfDx6sbHt/ciPakmuf+q2Wn26WWHME
+ nqVPYRnu/NS19bzBXzZT6w+wwNbm2r4m9jROqqKvenIdi4oQ46IxojVu8HcviG6sgMaI
+ OgWtEaYFx4octbvyzBmd/DcOyBf180KcdnSC0fjgES4Y5a2ZlYkg/cDfSMguBTHepOcy
+ z3rAEBp02Kq6iuohdXlOjUIABsOqOMk64OZP0J2tY7zu4bTAc7Pj4BEO56PPAUB79Hxs
+ DVd5qyDILmtm//Jbd6zYfbjrX4nO/waVbuWsc0F7H6rDGYkYj6NGBQY2YOsaaELQXbUT
+ +slg==
+X-Gm-Message-State: AFuF++n3EVrkI6EVw7GjEu1UpQep4ElKMLYGjBnP5vWW1fB3rSXcutNm
+ mAiQl/logEveYYYmCS5m9BR3Pw6cyg9/clL51yQFwzI6pAzxff2R1vykjyRb/N7C
+X-Gm-Gg: AYBFou3B76rMyVUVIo3n96/6kqX0JSYyLZ8yU1iq0jECNDugkNAXrT8K2m0WARHDFJO
+ Mka+8JvgzTmM5K7UngiI7uobZVv9xsQsHYa+qnc6hVoWjg6FdlQ567/niH/oVeGHdMqsGyVlkh0
+ tDMIEaA97jy32mMDC1jT5Mk3vM4oID7KWnVvQ4kNN5nWQORmUXzqlslmZpJdmDx7zHMxHBO7oG1
+ ij4srkXBXlb447fMrk6vW6xBjMPm3rJEKKnv9A6A49zvlDBL56AIQMuQ3MGrDMstISb0uPCxw0s
+ q4x+AS+tnIjvrfYiJu0nfUpV0KVPT+V9F5M8q1jre/l16oPtOhUINjiFxUrC3FJth9mEmiqV4wq
+ SxEAHTGlRus6coiSheunlg+upHb9vbPZpH9MwSCS6PACZXGGhLO8+9hY6TlcKlhuNOrwfDxQe7i
+ HC3yOExKR7+WS8+hWMFRVQJHEC2k/+jf2HLaWN9gp6e80Vsxrb5rl6QFUrmaicZSbVwz+WQ2haH
+ JPxst/Lg4HhQ+LhAg/o7BAmor3d4rdmUilBnSDLqg==
+X-Received: by 2002:a05:693c:414d:10b0:33c:141b:73a5 with SMTP id
+ 5a478bee46e88-34272c6023bmr2305190eec.41.1790406069766; 
+ Sat, 26 Sep 2026 00:01:09 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.21
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:01:24 -0700 (PDT)
+ Sat, 26 Sep 2026 00:01:09 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,16 +78,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 05/55] vl: parse early options before target-info init
-Date: Sat, 26 Sep 2026 15:00:04 +0800
-Message-ID: <20260926070057.1234-6-luoyonggang@gmail.com>
+Subject: [PATCH v4 01/55] target-info: Introduce target_riscv32
+Date: Sat, 26 Sep 2026 15:00:00 +0800
+Message-ID: <20260926070057.1234-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,52 +109,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the first argv pass ahead of MODULE_INIT_TARGET_INFO so later
-target-info selection can use command-line options before QOM init.
+From: Anton Johansson via qemu development <qemu-devel@nongnu.org>
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Will be used in the following commit to filter machines using
+TypeInfo::is_available, so a simple !target_riscv64() is not sufficient.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- system/vl.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ include/qemu/target-info.h | 7 +++++++
+ target-info.c              | 5 +++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/system/vl.c b/system/vl.c
-index 468a9fc247a..3efa4968a20 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2912,16 +2912,6 @@ void qemu_init(int argc, char **argv)
-     error_init(argv[0]);
-     qemu_init_exec_dir(argv[0]);
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index b23e5bc5865..c09e5d2a3ec 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -91,6 +91,13 @@ bool target_ppc64(void);
+  */
+ bool target_s390x(void);
  
--    os_setup_limits();
--
--    module_call_init(MODULE_INIT_TARGET_INFO);
--    target_info_qom_set_target();
--
--    module_init_info(qemu_modinfo);
--    module_allow_arch(target_name());
--
--    qemu_init_subsystems();
--
-     /* first pass of option parsing */
-     optind = 1;
-     while (optind < argc) {
-@@ -2940,6 +2930,16 @@ void qemu_init(int argc, char **argv)
-         }
-     }
++/**
++ * target_riscv32:
++ *
++ * Returns whether the target architecture is riscv32
++ */
++bool target_riscv32(void);
++
+ /**
+  * target_riscv64:
+  *
+diff --git a/target-info.c b/target-info.c
+index 012b384036d..bba4503151a 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -89,6 +89,11 @@ bool target_s390x(void)
+     return target_arch() == SYS_EMU_TARGET_S390X;
+ }
  
-+    os_setup_limits();
++bool target_riscv32(void)
++{
++    return target_arch() == SYS_EMU_TARGET_RISCV32;
++}
 +
-+    module_call_init(MODULE_INIT_TARGET_INFO);
-+    target_info_qom_set_target();
-+
-+    module_init_info(qemu_modinfo);
-+    module_allow_arch(target_name());
-+
-+    qemu_init_subsystems();
-+
-     machine_opts_dict = qdict_new();
-     if (userconfig) {
-         qemu_read_default_config_file(&error_fatal);
+ bool target_riscv64(void)
+ {
+     return target_arch() == SYS_EMU_TARGET_RISCV64;
 -- 
 2.52.0.windows.1
 
