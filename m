@@ -4,127 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16858C9832A
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 01:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF1AC9830E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 01:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAGn2-0000Ja-Ha; Fri, 25 Sep 2026 21:01:20 -0400
+	id 1xAGnC-0000LO-Qh; Fri, 25 Sep 2026 21:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAGmq-0000IX-J3
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 21:01:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xAGms-0000Ik-Kk
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 21:01:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xAGmm-00067I-SA
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 21:01:08 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xAGmo-00067X-7J
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 21:01:09 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68PNcqQN1136014
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:01:02 GMT
+ 68PNcQHS1760888
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:01:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=dcPOu1WBy0Y5SKmH3N7AOX
- BmJm27MvpFkumMZp08rU4=; b=N/8khBrOtvftawiNMxSSfLf6Mm7l3F+LMD78IC
- 3VVkzM+VYgZMirAVGCXPdTgPhY2doaI7YeQreaXVV0gTUjIYdPtrXjMqZ80vsevU
- JLw4f+2Bo+pCwlfx/IF0OVsQhbip12t/6i8bMr6jzj8RaFAMhkco0IvDHSZBd4Fx
- 4zUA/UMcPSCmHuDJXwA/tnEMsroJWejTVrCb6E1yBcmx4BsJ8xX1G9wp4GiLOkqp
- KmT6slyrV6/MVBGUhyKBI8Yo3mDoPXAm/CGba1LywrFDubl+816ZfasECKkgo3Eb
- 2ijyhJgPTQgDyS/7hVF+o2As0Yt4fYzmkmNHJsHlSnR8IjNg==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ o2pBM77M4j9n9oME7lfXwXk45T4g7GUtuGv1O/dDIBk=; b=WrJnkKn6x6Lo0y91
+ xb/R8VoFIy49r64wc1rByQcRXgUgqb3OWIRhli8KGpEPiq8Uo7R0LveyUAps6qQq
+ ztpyZQ5V8u+Ii3Jyr1dWFPYqEaZzTMevb+LUpkMDci9evXsygGGg8mNQcQX4ywoW
+ oKV/QIh3u/8woL5z6qHAgjzEPgtQP8YY41uhMVM4LwKbM47AV2qD08PY7ft4qkgc
+ veXB2XB98qbDVO9LcfBW3Vueby3wsbtYMNSnQt3cFaBrwmE0NJRURUjB/PxMUw9h
+ kFyvt8WUa5+SgbIoiJ+FthRg69gYjU+aG/LQG1P3d88ocs4TvwLkv7S+kby7QBI5
+ AqshCA==
 Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
  [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwhm53v22-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwjq3brdt-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:01:01 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:01:04 +0000 (GMT)
 Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-39de1f85cb2so1614252a91.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 18:01:01 -0700 (PDT)
+ 98e67ed59e1d1-3a0ad137e87so2061814a91.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 18:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790384461; x=1790989261; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=dcPOu1WBy0Y5SKmH3N7AOXBmJm27MvpFkumMZp08rU4=;
- b=dXRv/BY9i6k6Hcfqg+yMQWv5+trG5vrBVnBnX80soUXzKHGnun7ky7Hhuc/Ar1tYNV
- 96s1Fv7AtsST3GsdJ4IrhdUUbp1yp+Mta078aJtMcYT1W4Hq13AaBrSiuJRt4YVUcKmv
- jk2gks4FMwkLWh+O9k0uzZRBtuCDQ48T2LXkB6+WBDAB7FNfmLcnCXQP3o8+oyFouEQg
- ODlR4WUb5qa0sFO4VEEnPXCU8HNvKUQtyBku62KXuYmBVcjEXLUYAggtwLXVNx7fIAtu
- Ybd27MqNLmrQtHUFQ5SteaC7MA3UKAFhamTmcIx7gXaCagKzj0T4PGaTSxlPua3/nu/T
- IEWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790384461; x=1790989261;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1790384464; x=1790989264; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=dcPOu1WBy0Y5SKmH3N7AOXBmJm27MvpFkumMZp08rU4=;
- b=cNJfZ7QU6p2x9TsghH5E5M1OFlff6ZpjpEe6X8tSegWw51X1UhnAtjLvAojbOMwMLK
- R5JDzaeGO0MD1vTOQUOMUaQi+CG4EysJMHJDNuHT9W+BtHOywxTOet6zUPrAYH11f8/R
- o/wRjd4MltYpJ6amGGuRrRsNq3zq2albpn2KQpYKSzyOES0ey21VLg98UfKKtrdaOtuA
- VZt19capOnIDkyHWE6IUsZCXqiX+0Z49JwDI2I+5l7VE7wSHwbigVWK7Ad3mYGsEfnUO
- MqZ0VTKlItr8QhpErgk8+YUuG5ypJq9frNmA17PhAptg+gBrHDSIX1RQ/dKwFZg/U+4V
- MgcQ==
-X-Gm-Message-State: AFuF++kSQTgona+xBDH+2xskiWYpP2vSms9UNZmMeGpQN4srGTtSheLg
- Vvkhs5xAZSm4IMsRLgXdzfsikKgDFpHLHCVBDu5W+RMOIK8ZGxESQ7JS3QL7iWYsXkKLIm2aUHF
- onX1Dh/ULCaozRSvGtp4VPF2bcxtlC9s+82WmCX3s9Q9y3Ly95jy/JU1Wz34lDd1cTg==
-X-Gm-Gg: AYBFou0k/2qzbXYRYzQKSTneLHAShH4l3KObRLbshiCOOS8BCPKYV2wwXdar817bsbe
- bcuooGPk0I+Gv0gVTiRQ9v16aoeqV16H0e0+OrA3K3QR3m5DoLKan+DovVUedSe89q/I61tU/+G
- wNNh7YiB+mZich8etd+DTeOUqPYzjzEZ3XjY+86+zOQubpnoxWtD5FMYYw3xR44JxRzXyCmI1jE
- AYNRiBfHXHIIfPiNbaTpQY+dNSn0kHVT/XWae4Uzn36RmbOmM2WRWgN2W11co61qUIsqaIRQ7Ce
- bk02NcaZ0IpxzXJCTYHAIFgwZdI+Zr0jbYefcSv6Ve/MWbwZEdGom9q97npptNtxIrUWpAJA0KO
- Pn1QdGxQ21kUfzqPQZe9dlXQ6vZPGtQ7N1NQkWKWPNuGpoUjEmBcBMe3hk2dm
-X-Received: by 2002:a17:90b:17c3:b0:3a0:7261:d58e with SMTP id
- 98e67ed59e1d1-3a098b39ba8mr6116890a91.22.1790384460721; 
- Fri, 25 Sep 2026 18:01:00 -0700 (PDT)
-X-Received: by 2002:a17:90b:17c3:b0:3a0:7261:d58e with SMTP id
- 98e67ed59e1d1-3a098b39ba8mr6116860a91.22.1790384459868; 
- Fri, 25 Sep 2026 18:00:59 -0700 (PDT)
+ bh=o2pBM77M4j9n9oME7lfXwXk45T4g7GUtuGv1O/dDIBk=;
+ b=AS0Q1gRmLvf/7y0y8j6kUsuENmrJohVjYiNEUIEAqq0wWHc4gsRPK+VQOZw5vYu2yn
+ GY3P34Zn10mnhHI8FwTuiKnu9DhwOuFVfwO/cmaI2ECIlL+L0qczTEPzp2FYQG9dyXET
+ UsGb5+qBtzKAsGcdEd1CQiaJQBCeqq6bO/c3I8Cx1hv5Y0d9Z16bVbFS3wisznySf0Wr
+ +RT50wV5PF8mbL1fvybz/U7/S6h2DeMeb6hjJf9Jltko7e87wYCv1DDXzc3u6tN0jQeQ
+ 3MtNxesjo5nK4cPHzcYiM2KsmA6dGldBoI6083aUtaJGUHr1Kg/LKZNhbIYnfqGZJnFm
+ 0/dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790384464; x=1790989264;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=o2pBM77M4j9n9oME7lfXwXk45T4g7GUtuGv1O/dDIBk=;
+ b=IkLX1IzcsvnFXFNgNA0kmgCWbD7GgsBzV+CNMNBStnIuVW2PcR2UjyDR02XonUBBKW
+ UQP7FZ+rjSSjQwmUJSrY51Ucj1d/Q3tLl9ISY10LogPk780SIjcZGuxh+MUHZgUsKcJS
+ B/CSWcbroR/fA6Y+e6rie9P/vfGohp4gvT8OD5OBJSYEnPhjIaBJ5l3dlBm0qOA1Xt5P
+ 6baMW7soYXm0X6aRr/VgCZXBLigyWYT8gEyKu9QoiMyry2fivYqA4QK7+eLO+mNT+sdD
+ p4nyBIqZ1B7XqmFII/4pn9qzArN1lK12avGKR5kP5Wdhy+61DGxB8O6PuTo33AFB15dn
+ epwA==
+X-Gm-Message-State: AFuF++kH0Ijem5pw7l6Y24qqZSL5Y8xeKZG1Up5YWl4Za3chTChohBir
+ nyZJf6MqziHQ3DJAbGZoiAHbkSKhmzoMvy02i6oLiJVoXPcF3lJuaeacqMDKLKlWVNg7uOoKuKv
+ +oWmKBLckbbVD7MTwlJUK0gXZlx+1bHktVtTSSCzkaz66yS8OlaCnQilYYHV3uQbVEA==
+X-Gm-Gg: AYBFou2g0DIt5tBiJTvX/P7MMv9kALnZaf5maREBUgUzvvw8Pt1ywSXpKCgbmftJkSm
+ bFz2waktJFg4xbzJSD2odc005zYdn9lt/auSzvAjZ5kw6MfzKeA6UC/9Suk/+MEuwFEyfziVkrf
+ yapAo9kvh/MuxG2113LSzmmK/0/p8Odkj6tIu/Kl6uz7lOo8rwURUhlVT9eruanZpN2Z4Sl7pSO
+ /AOotF2C7pP3R+JXTI2J2cH3+R+qhurJBdhyx6BglVoQoX7tLnxXmsxI739eBO3sbc+L+wdsNfS
+ 83cVcobrDFD+OL0mXkCgPWUKh3QtLgF/7YIqECyVoaeeR9UCae9LHF89NjHhRuGa5iWnVWaFRBe
+ WCTigf2kiNPN30NKDRrZ99HQIkSAxcCabAQUjRXWG5F94ebJJ3sbdINu0NpW7
+X-Received: by 2002:a17:90a:c48:b0:3a0:a055:1739 with SMTP id
+ 98e67ed59e1d1-3a0a0552132mr3924476a91.25.1790384463896; 
+ Fri, 25 Sep 2026 18:01:03 -0700 (PDT)
+X-Received: by 2002:a17:90a:c48:b0:3a0:a055:1739 with SMTP id
+ 98e67ed59e1d1-3a0a0552132mr3924447a91.25.1790384463145; 
+ Fri, 25 Sep 2026 18:01:03 -0700 (PDT)
 Received: from localhost.localdomain (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0b898cabesm7138253a91.0.2026.09.25.18.00.58
+ 98e67ed59e1d1-3a0b898cabesm7138253a91.0.2026.09.25.18.01.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 18:00:59 -0700 (PDT)
+ Fri, 25 Sep 2026 18:01:01 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 0/5] tcg/tests: integrate some of mipsel tests
-Date: Sat, 26 Sep 2026 01:00:48 +0000
-Message-ID: <20260926010053.2840-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 2/5] tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c: fix
+ compilation warning
+Date: Sat, 26 Sep 2026 01:00:50 +0000
+Message-ID: <20260926010053.2840-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260926010053.2840-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260926010053.2840-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: I8Zqn4IQXDIRSvlE1NfxD2XtKa3mOQt0
-X-Authority-Analysis: v=2.4 cv=QYnzLcbv c=1 sm=1 tr=0 ts=6ab7194d cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI2MDAwMyBTYWx0ZWRfX6TBMt9NJHJaN
+ gPAQkffiENpxVPV7YrMj/aDX41o+VIBYz4Ze7Mo/+K4Y+aVR26R9DMbBOd/7dDNsjzw8PKdQSdk
+ j3/QpW4x2RyjzCYX26ncZTv2Y6t7wxU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI2MDAwMyBTYWx0ZWRfX4VUOjimE5oBg
+ oF8uqhEfs9tCutuRAVQUf1++cXHYErKfFBnI7yo0nscn12kp5e+maBNUGs7NLbZxu4vJ02D1VQQ
+ EiZ/M1Ww9iQFiOGpa7z2f/Ho8eqX2uZkMdTYUxMfe5G4Mq0+4PlIvwkuTAr2umLOeH7pxAXnmIq
+ YmEsqoAOFYI+mksmrDfthjh84ePfXZdLdUcVGlvSJP1pmaNLdmn7GCgF/Bbg+I5jjQhEIAmCq91
+ JzJAsdklsjAEak6cGRYb5e6mb2CRxdZ4cStinFk0zj6E86YJ/VZogFktf9p7Nbuw+1yVIkQ5Xm+
+ scCC1VQ6UR8BPp+olVGbyf73I2NzbHGblcPYUpvh6LtZS9D7IvyfUbp2KjE/tZUc2Pk6afVdhGT
+ w6BlxhlgElfNOOynIoOXk3C54B5RuNiacXfxAjD2qdnvA4+Y8wOmlxU9bEE4wpWpltibpwq+45d
+ EW9IKNJNAOm2D6OjJUA==
+X-Authority-Analysis: v=2.4 cv=VuO2kO2n c=1 sm=1 tr=0 ts=6ab71951 cx=c_pps
  a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=PvdraAWqxjNkXReWDOIA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI2MDAwMyBTYWx0ZWRfX+qVW0H/ykux0
- +Gg7F04doop78Mk7IYzL5LBRog/tZ9sAFOOUt3PeMi0z9nC1MJbX87VnNx8A45QRd4HOTLb9HoH
- ie9JPb7qm/CJjgurMPlN7TzV0rLPtNqEDGO8k2CFGlut+hxCQEqCN5aq3D2zDfGD23NBr9wDuwc
- fdeh06p2ercAHlZBtAadPRJ/xORkB9Z4aXm6yaE6CEEQ4eQ4iWYehJdXAFdg3gAljy9ZmgKug6r
- 85vH1SBt9l8cN8JImSsiSWp+H8DZKsvej21enStMFNaB8DWLHTH8jaVeTWdcp5IJQ8nhtFOmxLM
- KX3QdRCuRyea1U40jAkQWEYmVOzb7cB6KSssej5nUY2kUKusCUCvTnC5KQT8fqDZKkziVLxZJlU
- 4b8Sxckt50iN8Ohu500Cf3dAD7D5j4OPVaHGmNH+rp9YWiQXL851e5F0ixzJZ3yqLM7UGNinE1E
- hhcZpyfpZsIZCDq8Xfw==
-X-Proofpoint-ORIG-GUID: I8Zqn4IQXDIRSvlE1NfxD2XtKa3mOQt0
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI2MDAwMyBTYWx0ZWRfX9amjv8J1IL0H
- MMg8KARRVwzKys0rqQ6sgTmtgnhqt0ch2DP9TlAh6qgVRU0Wyj5tn1p4mpYefXpEqQSDw7MHTi9
- aoyDoWHK0eTEH0nN8A+WeqreAsVP9ro=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=GOtNrUbr6fPSDctt2LQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-GUID: MxhQXi4AILV0vGgShFxr1OjhJKb9Q1Iw
+X-Proofpoint-ORIG-GUID: MxhQXi4AILV0vGgShFxr1OjhJKb9Q1Iw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-25_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609260003
-Received-SPF: pass client-ip=205.220.168.131;
+ adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609260003
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -147,351 +155,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series integrates tests from tests/tcg/mips/user/ase/dsp, and also adds
-multiarch tests for mipsel target.
+../tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c:13:5: error: ‘dsp’ is used uninitialized [-Werror=uninitialized]
+   13 |     __asm
+      |
 
-Pierrick Bouvier (5):
-  tests/tcg/mipsel: move dsp sources
-  tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c: fix compilation warning
-  tests/tcg/mipsel: add dsp tests
-  tests/tcg/mipsel: add float reference files
-  tests/tcg/mipsel: add multiarch tests
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- meson_options.txt                             |   4 +
- scripts/meson-buildoptions.sh                 |   2 +
- tests/tcg/meson.build                         |   1 +
- tests/tcg/mips/user/ase/dsp/Makefile          | 184 ----
- tests/tcg/mipsel/float_convd.ref              | 988 ++++++++++++++++++
- tests/tcg/mipsel/float_convs.ref              | 748 +++++++++++++
- tests/tcg/mipsel/float_madds.ref              | 768 ++++++++++++++
- tests/tcg/mipsel/meson.build                  | 191 ++++
- .../dsp => mipsel}/test_dsp_r1_absq_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_absq_s_w.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_addq_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r1_addq_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_addq_s_w.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_addsc.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_addu_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_addu_s_qb.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_addwc.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_bitrev.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_bposge32.c |   0
- .../dsp => mipsel}/test_dsp_r1_cmp_eq_ph.c    |   0
- .../dsp => mipsel}/test_dsp_r1_cmp_le_ph.c    |   0
- .../dsp => mipsel}/test_dsp_r1_cmp_lt_ph.c    |   0
- .../dsp => mipsel}/test_dsp_r1_cmpgu_eq_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_cmpgu_le_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_cmpgu_lt_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_cmpu_eq_qb.c   |   0
- .../dsp => mipsel}/test_dsp_r1_cmpu_le_qb.c   |   0
- .../dsp => mipsel}/test_dsp_r1_cmpu_lt_qb.c   |   0
- .../dsp => mipsel}/test_dsp_r1_dpaq_s_w_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r1_dpaq_sa_l_w.c  |   0
- .../dsp => mipsel}/test_dsp_r1_dpau_h_qbl.c   |   0
- .../dsp => mipsel}/test_dsp_r1_dpau_h_qbr.c   |   0
- .../dsp => mipsel}/test_dsp_r1_dpsq_s_w_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r1_dpsq_sa_l_w.c  |   0
- .../dsp => mipsel}/test_dsp_r1_dpsu_h_qbl.c   |   0
- .../dsp => mipsel}/test_dsp_r1_dpsu_h_qbr.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extp.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extpdp.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extpdpv.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extpv.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extr_r_w.c |   0
- .../dsp => mipsel}/test_dsp_r1_extr_rs_w.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extr_s_h.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extr_w.c   |   0
- .../dsp => mipsel}/test_dsp_r1_extrv_r_w.c    |   0
- .../dsp => mipsel}/test_dsp_r1_extrv_rs_w.c   |   2 +-
- .../dsp => mipsel}/test_dsp_r1_extrv_s_h.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_extrv_w.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_insv.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_lbux.c     |   0
- .../user/ase/dsp => mipsel}/test_dsp_r1_lhx.c |   0
- .../user/ase/dsp => mipsel}/test_dsp_r1_lwx.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_madd.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_maddu.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_main.c     |   0
- .../dsp => mipsel}/test_dsp_r1_maq_s_w_phl.c  |   0
- .../dsp => mipsel}/test_dsp_r1_maq_s_w_phr.c  |   0
- .../dsp => mipsel}/test_dsp_r1_maq_sa_w_phl.c |   0
- .../dsp => mipsel}/test_dsp_r1_maq_sa_w_phr.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mfhi.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mflo.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_modsub.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_msub.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_msubu.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mthi.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mthlip.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mtlo.c     |   0
- .../test_dsp_r1_muleq_s_w_phl.c               |   0
- .../test_dsp_r1_muleq_s_w_phr.c               |   0
- .../test_dsp_r1_muleu_s_ph_qbl.c              |   0
- .../test_dsp_r1_muleu_s_ph_qbr.c              |   0
- .../dsp => mipsel}/test_dsp_r1_mulq_rs_ph.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_mult.c     |   0
- .../ase/dsp => mipsel}/test_dsp_r1_multu.c    |   0
- .../dsp => mipsel}/test_dsp_r1_packrl_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_pick_ph.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_pick_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_preceq_w_phl.c |   0
- .../dsp => mipsel}/test_dsp_r1_preceq_w_phr.c |   0
- .../test_dsp_r1_precequ_ph_qbl.c              |   0
- .../test_dsp_r1_precequ_ph_qbla.c             |   0
- .../test_dsp_r1_precequ_ph_qbr.c              |   0
- .../test_dsp_r1_precequ_ph_qbra.c             |   0
- .../test_dsp_r1_preceu_ph_qbl.c               |   0
- .../test_dsp_r1_preceu_ph_qbla.c              |   0
- .../test_dsp_r1_preceu_ph_qbr.c               |   0
- .../test_dsp_r1_preceu_ph_qbra.c              |   0
- .../dsp => mipsel}/test_dsp_r1_precrq_ph_w.c  |   0
- .../dsp => mipsel}/test_dsp_r1_precrq_qb_ph.c |   0
- .../test_dsp_r1_precrq_rs_ph_w.c              |   0
- .../test_dsp_r1_precrqu_s_qb_ph.c             |   0
- .../dsp => mipsel}/test_dsp_r1_raddu_w_qb.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_rddsp.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_repl_ph.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_repl_qb.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_replv_ph.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_replv_qb.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shilo.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shilov.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shll_ph.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shll_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_shll_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shll_s_w.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shllv_ph.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shllv_qb.c |   0
- .../dsp => mipsel}/test_dsp_r1_shllv_s_ph.c   |   0
- .../dsp => mipsel}/test_dsp_r1_shllv_s_w.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shra_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r1_shra_r_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shra_r_w.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shrav_ph.c |   0
- .../dsp => mipsel}/test_dsp_r1_shrav_r_ph.c   |   0
- .../dsp => mipsel}/test_dsp_r1_shrav_r_w.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shrl_qb.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r1_shrlv_qb.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_subq_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r1_subq_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_subq_s_w.c |   0
- .../ase/dsp => mipsel}/test_dsp_r1_subu_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r1_subu_s_qb.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r1_wrdsp.c    |   0
- .../dsp => mipsel}/test_dsp_r2_absq_s_qb.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_addqh_ph.c |   0
- .../dsp => mipsel}/test_dsp_r2_addqh_r_ph.c   |   0
- .../dsp => mipsel}/test_dsp_r2_addqh_r_w.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_addqh_w.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r2_addu_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r2_addu_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_adduh_qb.c |   0
- .../dsp => mipsel}/test_dsp_r2_adduh_r_qb.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r2_append.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r2_balign.c   |   0
- .../dsp => mipsel}/test_dsp_r2_cmpgdu_eq_qb.c |   0
- .../dsp => mipsel}/test_dsp_r2_cmpgdu_le_qb.c |   0
- .../dsp => mipsel}/test_dsp_r2_cmpgdu_lt_qb.c |   0
- .../ase/dsp => mipsel}/test_dsp_r2_dpa_w_ph.c |   0
- .../dsp => mipsel}/test_dsp_r2_dpaqx_s_w_ph.c |   0
- .../test_dsp_r2_dpaqx_sa_w_ph.c               |   0
- .../dsp => mipsel}/test_dsp_r2_dpax_w_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_dps_w_ph.c |   0
- .../dsp => mipsel}/test_dsp_r2_dpsqx_s_w_ph.c |   0
- .../test_dsp_r2_dpsqx_sa_w_ph.c               |   0
- .../dsp => mipsel}/test_dsp_r2_dpsx_w_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_mul_ph.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r2_mul_s_ph.c |   0
- .../dsp => mipsel}/test_dsp_r2_mulq_rs_w.c    |   0
- .../dsp => mipsel}/test_dsp_r2_mulq_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_mulq_s_w.c |   0
- .../dsp => mipsel}/test_dsp_r2_mulsa_w_ph.c   |   0
- .../test_dsp_r2_mulsaq_s_w_ph.c               |   0
- .../dsp => mipsel}/test_dsp_r2_precr_qb_ph.c  |   0
- .../test_dsp_r2_precr_sra_ph_w.c              |   0
- .../test_dsp_r2_precr_sra_r_ph_w.c            |   0
- .../ase/dsp => mipsel}/test_dsp_r2_prepend.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r2_shra_qb.c  |   0
- .../dsp => mipsel}/test_dsp_r2_shra_r_qb.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_shrav_qb.c |   0
- .../dsp => mipsel}/test_dsp_r2_shrav_r_qb.c   |   0
- .../ase/dsp => mipsel}/test_dsp_r2_shrl_ph.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r2_shrlv_ph.c |   0
- .../ase/dsp => mipsel}/test_dsp_r2_subqh_ph.c |   0
- .../dsp => mipsel}/test_dsp_r2_subqh_r_ph.c   |   0
- .../dsp => mipsel}/test_dsp_r2_subqh_r_w.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_subqh_w.c  |   0
- .../ase/dsp => mipsel}/test_dsp_r2_subu_ph.c  |   0
- .../dsp => mipsel}/test_dsp_r2_subu_s_ph.c    |   0
- .../ase/dsp => mipsel}/test_dsp_r2_subuh_qb.c |   0
- .../dsp => mipsel}/test_dsp_r2_subuh_r_qb.c   |   0
- 168 files changed, 2703 insertions(+), 185 deletions(-)
- delete mode 100644 tests/tcg/mips/user/ase/dsp/Makefile
- create mode 100644 tests/tcg/mipsel/float_convd.ref
- create mode 100644 tests/tcg/mipsel/float_convs.ref
- create mode 100644 tests/tcg/mipsel/float_madds.ref
- create mode 100644 tests/tcg/mipsel/meson.build
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addsc.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_s_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addwc.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bitrev.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bposge32.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_eq_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_le_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_lt_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_eq_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_le_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_lt_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_eq_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_le_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_lt_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_s_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_sa_l_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_s_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_sa_l_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extp.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdp.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdpv.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpv.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_rs_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_s_h.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_rs_w.c (97%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_s_h.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_insv.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lbux.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lhx.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lwx.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_madd.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maddu.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_main.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mfhi.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mflo.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_modsub.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msub.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msubu.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthi.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthlip.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mtlo.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mulq_rs_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mult.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_multu.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_packrl_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbla.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbra.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbl.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbla.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbr.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbra.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_ph_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_qb_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_rs_ph_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrqu_s_qb_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_raddu_w_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_rddsp.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilo.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilov.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrl_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrlv_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_s_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_wrdsp.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_absq_s_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_r_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_append.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_balign.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_eq_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_le_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_lt_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpa_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_s_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_sa_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpax_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dps_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_s_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_sa_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsx_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_rs_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsa_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsaq_s_w_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_qb_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_ph_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_r_ph_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_prepend.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_r_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_r_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrl_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrlv_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_w.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_s_ph.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_qb.c (100%)
- rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_r_qb.c (100%)
-
+diff --git a/tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c b/tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c
+index ccceeb9f4ce..10c182a54b2 100644
+--- a/tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c
++++ b/tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c
+@@ -3,7 +3,7 @@
+ 
+ int main()
+ {
+-    int rt, rs, ach, acl, dsp;
++    int rt, rs, ach, acl, dsp = 0;
+     int result;
+ 
+     rs = 0x03;
 -- 
 2.43.0
 
