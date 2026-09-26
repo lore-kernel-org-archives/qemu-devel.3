@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB77CC9831E
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFDEC9831E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMRR-0004a2-6Z; Sat, 26 Sep 2026 03:03:25 -0400
+	id 1xAMPR-00029k-Rn; Sat, 26 Sep 2026 03:01:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMR2-0003lz-5y
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:03:03 -0400
+ id 1xAMPN-00028s-Ab
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:17 -0400
 Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMR0-0000Zz-F8
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:02:59 -0400
+ id 1xAMPL-0000Oz-Ff
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:17 -0400
 Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-340fbf9c1c6so928476eec.3
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:02:58 -0700 (PDT)
+ 5a478bee46e88-340f56c44b0so646476eec.1
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406177; x=1791010977; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406074; x=1791010874; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=awp3H7a2O80uyPRL2fhVcR6Bx9g9YW6vpgBv8R062bc=;
- b=FxwZOAbWXipUxV2X1xt6jXkNHuimGnt6IeuKRuqSoSRDsJf3IwbcQLgKgW6nwTqI+e
- YvuvYbbxmlPGjpK6qqq9hGhwL1Q1KA3apYv0zimwZE0gYz96DDsvRali+W5/8cwf5k1d
- fH60WPBmpa41Yaxz+eLBtRMiA1wdK/RBOpXJPFPuISxHsSfT6GA89YGpPNNMinm0ktl2
- s8YTVVroRaBO5W45oZdStLVEmjrytnw8CpOpiFeGXRH22Y0mWkY07D2soZuM6nibLyRm
- sAIw0q6w6dj3l4iJYdTthrrH39FII/qOOGyXRohhxfd1AP5zo+YH0HSAYlR7gQo1Y7Ij
- drlg==
+ bh=uuwRl4ClI+53kQRmwmmbWdvUO8JCv7PNWaf6z+9UVak=;
+ b=m3lEff/L10dTx8JQXEl+5mG6lOIWXXyCDz0xgZ8hjAi5+JbHhYcVYxD/1oJE5nyuCX
+ ir/zM0rO4OdmvLNFPVFyGIx9eSoZLOvT6ZaSB6yIoZrFPKAFnAb+htM1Afee4biIOnVD
+ WMjMzaRPFyNjwxz8mxLLR8whJB5lm0mX9loHaraaXZI1w+V5LLf/f4NhzfvWQNkjzFAs
+ j15mHsO1wc34euEwK+HXFvXNJTKsqFiiY4DIPY9Q61qb7YnZjpYvC6fw4bc5tkiCYz64
+ qThfDtI4w2gidls9b6KeEdbsNiHtKvJLPhSKQKFgjm/BCb0s7FDQWHsdSffvf8M2MN3l
+ BGCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406177; x=1791010977;
+ d=1e100.net; s=20260707; t=1790406074; x=1791010874;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=awp3H7a2O80uyPRL2fhVcR6Bx9g9YW6vpgBv8R062bc=;
- b=hu7gDejC+mLp8FUYz5N4Aaq1wa3znh97ZSwi+hLZCggDlNEK0Xhu4eSddoTrV4ELp9
- H017OtY1D/YbDm+tT7ASto/IlY3n2o3dojLXtnlq+uxNc3gdJUGaMZg6wIYqvcA26ZNL
- VB51qOSLmIlxdIvNjlUfofQhTgz0fLujnr6i+T2qXnSnpdH7UqFlHcQrzO3RF+82VNfR
- jxRxPxo9S4B+lN+DymvvayLfJXrdbupydncBPlnokQ45TPsX9o7qaYg2YGCI5lnabDrC
- 6dny7LnqVE+Radakzf0SoF8WtheXMYwNdq7VXxzIs9ouUBBWCtzhMHKIPX7Y4aYqbMAO
- GrsQ==
-X-Gm-Message-State: AFuF++nKVBE1IyQtN7JTBFbhdOKSpha94zl4sXj4q+UJMlj0TeBuJZTY
- GFqQmEgtILcSWmKxsp1dODhGr1Ov+zmrYlOD6gHzJzkIMLU4LGO7o2pjArZ0UWH9
-X-Gm-Gg: AYBFou03WFCTc3CM57zEOf476S8jelz0Y44Yv9ebcE0G9P7qqFxJhw0QNj/ubT9Rllu
- FxIbzN2IxGOdkLipckXJ25uLOLxitWJqvDbtN0MBu5ERmzV2P0Z+CXGsAyqtwAFfWszrV2bdAYp
- yx6lx8AU+NILQ7E6yRunJZSieUTWeOcrjvQL+dwjWQtewnCu3gHlydCURv5r8zuSkV9ROl1Fcd1
- mxRxcTLXP6VbNjb3H4mQ4vMJR7YoibtNLWoJyQGW+rkBFBXNH7XxiYhZwxY0vS+wntwCnrEzxgA
- 1qKMFjqXKKD0LrswfF2/vvqox/36sjK8t1BOSsKi3RefChEAk9KTJ035/6gQgSSe/4ovUMyFshF
- EFT37E80qvRPH3j8xVf3nH1ia3KzoE03PTEy31lnAjYW0mX98NbaEpURi6vgtP8nK/2PmQKNrNE
- xSw548kBfYnCLNk3+yBiBjfUnzqn+9RnBwzBBVIDnL/DUbp+azeL/TEdQ40MZ3ql0d86whTKvvz
- vu4joZoy5OVJKURGambltEQQ6/Rqug=
-X-Received: by 2002:a05:7300:d10a:b0:33b:e1f2:fa10 with SMTP id
- 5a478bee46e88-34271d8d2fbmr1860726eec.24.1790406176444; 
- Sat, 26 Sep 2026 00:02:56 -0700 (PDT)
+ bh=uuwRl4ClI+53kQRmwmmbWdvUO8JCv7PNWaf6z+9UVak=;
+ b=Y9dddtytneyyoAplQyvEZSRc90t8phnW3EnANX6zaH89oPb43adJHRKwQ9LIRLC8nT
+ 2M5A63pz/+IiJQgSOS3QfeI6dW3odhMy8cH1OJVQauX5gQ3zZhAedJV8Yea993dE6gdA
+ njfzRI/w+czdeeait8VTvU8T0fcu8wsmThDYQTNtswRbeAu51Gi0XFF/hOXKMXfSqq7X
+ kh+UFd/sKVVkQX950pMHFbZYOWOOfGOAYF2wxFIXivhWj5G9Pbtb0pHXBtC5sv5UD26c
+ qcLOGmruBSaW90Xyo3xX49CQ17pgio4xYPam3OLkqqx3gDNWjRX1p/LoNLuxj0RNjJyC
+ wSvA==
+X-Gm-Message-State: AFuF++ljuXr3AvKn41b/fvrpUT113AkBDE2JNhzCPBBWClAjdN4rG7Ca
+ x5spJvznR8LlYYsRiKAqhyPNiZEGR8nCTA6ih72I+np0Ssc9pltZOqvUw8Fqkwbs
+X-Gm-Gg: AYBFou0xZZHwpaR7vSZtLJtbE0cuu09vOietQnDlxxeCERnZyOMnI1EbtjQl+7CIJYD
+ 9U8zzMJiUZGKj3o5/Ubhy3+R9+enXZWUvwxyPDrYxBY6k+RuQKq0nIOPC/tUWeIaCPyXk4c9MHX
+ TGmzdsn1f6+q/jDKf5XrGVSSSWRLMFhgEq+jCqAp1rHld0b2jfA5sU1tvSLKqVIkkzZr7Y2E/Pz
+ RyKn9ObHkTgkrN3Ka9f4GTDKWwgC67mXCwZe7qt35KZ1lYjjYJhDnpx+JtqkjWmqtGUfkpjKlyB
+ UY80VaI/fhUUL0Yq6K+1MxuW+KWENUKpIta8DTkIWB4kgWG+z4OvhbgEZFZVODErYw2/dYNBQVm
+ 5z5Sl0HcBnyOrF8s9ZmgasEkAjfAbQcFYRRXld/saxj+8PK1zrt9fA7qpt2Rto7jh/zmQm6xUco
+ kNBGCUeui/eZD/qxnxIesgCjtey0WQu7902inr6JUkkJfYxrUceBkG6tBouHsw9apFExb3xZPVr
+ Fe8f7OGzfHEaZ4ekGeWQBZ87mTxVM4=
+X-Received: by 2002:a05:7300:e11c:b0:339:85bf:dd89 with SMTP id
+ 5a478bee46e88-34272b3c01emr2505009eec.35.1790406073689; 
+ Sat, 26 Sep 2026 00:01:13 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.02.52
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:02:54 -0700 (PDT)
+ Sat, 26 Sep 2026 00:01:12 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,9 +78,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 28/55] tcg: move goto_tb helpers into tcg-op-ldst.c
-Date: Sat, 26 Sep 2026 15:00:27 +0800
-Message-ID: <20260926070057.1234-29-luoyonggang@gmail.com>
+Subject: [PATCH v4 02/55] configs/targets: remove target info definitions
+Date: Sat, 26 Sep 2026 15:00:01 +0800
+Message-ID: <20260926070057.1234-3-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
@@ -109,102 +109,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tcg_gen_goto_tb and tcg_gen_lookup_and_goto_ptr call plugin and
-lookup_tb_ptr helpers. Define them in tcg-op-ldst.c. tcg_gen_op1i is
-static in tcg-op.c, so the moved calls use tcg_gen_op1.
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+Now that we remove machine_typename, we don't need to keep duplicated
+file per target anymore. So we can just rely on target-info-stub.c.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- tcg/tcg-op-ldst.c | 31 +++++++++++++++++++++++++++++++
- tcg/tcg-op.c      | 32 --------------------------------
- 2 files changed, 31 insertions(+), 32 deletions(-)
+ configs/targets/aarch64-softmmu.c | 25 -------------------------
+ configs/targets/arm-softmmu.c     | 25 -------------------------
+ configs/targets/meson.build       |  6 ------
+ configs/targets/riscv32-softmmu.c | 24 ------------------------
+ configs/targets/riscv64-softmmu.c | 24 ------------------------
+ meson.build                       |  7 +------
+ 6 files changed, 1 insertion(+), 110 deletions(-)
+ delete mode 100644 configs/targets/aarch64-softmmu.c
+ delete mode 100644 configs/targets/arm-softmmu.c
+ delete mode 100644 configs/targets/meson.build
+ delete mode 100644 configs/targets/riscv32-softmmu.c
+ delete mode 100644 configs/targets/riscv64-softmmu.c
 
-diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
-index 22211ccb452..fb13c2f1523 100644
---- a/tcg/tcg-op-ldst.c
-+++ b/tcg/tcg-op-ldst.c
-@@ -1346,3 +1346,34 @@ GEN_ATOMIC_HELPER128(xchg, mov2, 0)
+diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
+deleted file mode 100644
+index fdebdcc3582..00000000000
+--- a/configs/targets/aarch64-softmmu.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-aarch64)
+- *
+- *  Copyright (c) Linaro
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/arm/cpu-qom.h"
+-#include "target/arm/cpu-param.h"
+-
+-static const TargetInfo target_info_aarch64_system = {
+-    .target_name = "aarch64",
+-    .target_arch = SYS_EMU_TARGET_AARCH64,
+-    .long_bits = 64,
+-    .cpu_type = TYPE_ARM_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_vary = true,
+-    .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+-};
+-
+-target_info_init(target_info_aarch64_system)
+diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
+deleted file mode 100644
+index 2b98f65a0f8..00000000000
+--- a/configs/targets/arm-softmmu.c
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-arm)
+- *
+- *  Copyright (c) Linaro
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/arm/cpu-qom.h"
+-#include "target/arm/cpu-param.h"
+-
+-static const TargetInfo target_info_arm_system = {
+-    .target_name = "arm",
+-    .target_arch = SYS_EMU_TARGET_ARM,
+-    .long_bits = 32,
+-    .cpu_type = TYPE_ARM_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_vary = true,
+-    .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+-};
+-
+-target_info_init(target_info_arm_system)
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+deleted file mode 100644
+index 2ab4d27eaf5..00000000000
+--- a/configs/targets/meson.build
++++ /dev/null
+@@ -1,6 +0,0 @@
+-foreach target : [
+-      'arm-softmmu', 'aarch64-softmmu',
+-      'riscv32-softmmu', 'riscv64-softmmu'
+-  ]
+-  config_target_info += {target : files(target + '.c')}
+-endforeach
+diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
+deleted file mode 100644
+index 0829ab84de5..00000000000
+--- a/configs/targets/riscv32-softmmu.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-riscv32)
+- *
+- *  Copyright (c) rev.ng Labs Srl.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/riscv/cpu-qom.h"
+-#include "target/riscv/cpu-param.h"
+-
+-static const TargetInfo target_info_riscv32_system = {
+-    .target_name = "riscv32",
+-    .target_arch = SYS_EMU_TARGET_RISCV32,
+-    .long_bits = 32,
+-    .cpu_type = TYPE_RISCV_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_init = TARGET_PAGE_BITS,
+-};
+-
+-target_info_init(target_info_riscv32_system)
+diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
+deleted file mode 100644
+index 553bd1f75fe..00000000000
+--- a/configs/targets/riscv64-softmmu.c
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/*
+- * QEMU binary/target API (qemu-system-riscv64)
+- *
+- *  Copyright (c) rev.ng Labs Srl.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/target-info-impl.h"
+-#include "qemu/target-info-init.h"
+-#include "target/riscv/cpu-qom.h"
+-#include "target/riscv/cpu-param.h"
+-
+-static const TargetInfo target_info_riscv64_system = {
+-    .target_name = "riscv64",
+-    .target_arch = SYS_EMU_TARGET_RISCV64,
+-    .long_bits = 64,
+-    .cpu_type = TYPE_RISCV_CPU,
+-    .endianness = ENDIAN_MODE_LITTLE,
+-    .page_bits_init = TARGET_PAGE_BITS,
+-};
+-
+-target_info_init(target_info_riscv64_system)
+diff --git a/meson.build b/meson.build
+index cfac634cf13..732f0a885ba 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3754,7 +3754,6 @@ subdir('dump')
+ subdir('accel')
  
- #undef GEN_ATOMIC_HELPER
- #undef GEN_ATOMIC_HELPER128
-+
-+void tcg_gen_goto_tb(unsigned idx)
-+{
-+    /* We tested CF_NO_GOTO_TB in translator_use_goto_tb. */
-+    tcg_debug_assert(!(tcg_ctx->gen_tb->cflags & CF_NO_GOTO_TB));
-+    /* We only support two chained exits.  */
-+    tcg_debug_assert(idx <= TB_EXIT_IDXMAX);
-+#ifdef CONFIG_DEBUG_TCG
-+    /* Verify that we haven't seen this numbered exit before.  */
-+    tcg_debug_assert((tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0);
-+    tcg_ctx->goto_tb_issue_mask |= 1 << idx;
-+#endif
-+    plugin_gen_disable_mem_helpers();
-+    tcg_gen_op1(INDEX_op_goto_tb, 0, idx);
-+}
-+
-+void tcg_gen_lookup_and_goto_ptr(void)
-+{
-+    TCGv_ptr ptr;
-+
-+    if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_PTR) {
-+        tcg_gen_exit_tb(NULL, 0);
-+        return;
-+    }
-+
-+    plugin_gen_disable_mem_helpers();
-+    ptr = tcg_temp_ebb_new_ptr();
-+    gen_helper_lookup_tb_ptr(ptr, tcg_env);
-+    tcg_gen_op1(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
-+    tcg_temp_free_ptr(ptr);
-+}
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 2c88f4f7ca9..bd3bae37500 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -27,7 +27,6 @@
- #include "tcg/tcg-temp-internal.h"
- #include "tcg/tcg-op-common.h"
- #include "exec/translation-block.h"
--#include "exec/plugin-gen.h"
- #include "tcg-internal.h"
- #include "tcg-has.h"
+ subdir('backends')
+-subdir('configs/targets')
+ subdir('disas')
+ subdir('migration')
+ subdir('monitor')
+@@ -4331,11 +4330,7 @@ foreach target : target_dirs
+     endif
+   endif
  
-@@ -2699,34 +2698,3 @@ void tcg_gen_exit_tb(const TranslationBlock *tb, unsigned idx)
+-  if target in config_target_info
+-    arch_srcs += config_target_info[target]
+-  else
+-    arch_srcs += files('target-info-stub.c')
+-  endif
++  arch_srcs += files('target-info-stub.c')
  
-     tcg_gen_op1i(INDEX_op_exit_tb, 0, val);
- }
--
--void tcg_gen_goto_tb(unsigned idx)
--{
--    /* We tested CF_NO_GOTO_TB in translator_use_goto_tb. */
--    tcg_debug_assert(!(tcg_ctx->gen_tb->cflags & CF_NO_GOTO_TB));
--    /* We only support two chained exits.  */
--    tcg_debug_assert(idx <= TB_EXIT_IDXMAX);
--#ifdef CONFIG_DEBUG_TCG
--    /* Verify that we haven't seen this numbered exit before.  */
--    tcg_debug_assert((tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0);
--    tcg_ctx->goto_tb_issue_mask |= 1 << idx;
--#endif
--    plugin_gen_disable_mem_helpers();
--    tcg_gen_op1i(INDEX_op_goto_tb, 0, idx);
--}
--
--void tcg_gen_lookup_and_goto_ptr(void)
--{
--    TCGv_ptr ptr;
--
--    if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_PTR) {
--        tcg_gen_exit_tb(NULL, 0);
--        return;
--    }
--
--    plugin_gen_disable_mem_helpers();
--    ptr = tcg_temp_ebb_new_ptr();
--    gen_helper_lookup_tb_ptr(ptr, tcg_env);
--    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
--    tcg_temp_free_ptr(ptr);
--}
+   if target_base_arch in target_arch
+     t = target_arch[target_base_arch].apply(config_target, strict: false)
 -- 
 2.52.0.windows.1
 
