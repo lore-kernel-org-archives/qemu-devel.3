@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F596C98324
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 03:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38F8C98324
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 03:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAJ12-00081j-K0; Fri, 25 Sep 2026 23:23:56 -0400
+	id 1xAJ1E-00082t-28; Fri, 25 Sep 2026 23:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paul@galbraiths.ca>)
- id 1xAJ11-00081X-9H
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 23:23:55 -0400
+ id 1xAJ1C-00082W-8v
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 23:24:06 -0400
 Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <paul@galbraiths.ca>)
- id 1xAJ0z-00009q-9Z
- for qemu-devel@nongnu.org; Fri, 25 Sep 2026 23:23:55 -0400
+ id 1xAJ1A-0000AN-G7
+ for qemu-devel@nongnu.org; Fri, 25 Sep 2026 23:24:06 -0400
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.stl.internal (Postfix) with ESMTP id 0FEC31D000B1;
- Fri, 25 Sep 2026 23:23:50 -0400 (EDT)
+ by mailfout.stl.internal (Postfix) with ESMTP id 8CDEE1D00071;
+ Fri, 25 Sep 2026 23:24:03 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Fri, 25 Sep 2026 23:23:50 -0400
+ by phl-compute-06.internal (MEProxy); Fri, 25 Sep 2026 23:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=galbraiths.ca;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm2; t=1790393029; x=1790479429; bh=4NGcmwPTIG
- 1HrkPq17sTQe91LpvyoAwgd/O4zNm5Ztc=; b=o39FYfKWd6VVDjjtcKDtaedehG
- CcdKDERhAwwydktVsCZPfC83OOclBrCzdhx+97TXZ/LG9XnSwbOE+p7Iuk8puw+i
- UiGtqaVx1+FSMelm1FSUiZ6VnBQUa3zp9ISaRMhSFsXsaSIRiCPRIY3OK3VWyI7a
- 1aFcPLst1skG5m1wAyvIc/HTeIsgPaIsp6LcmrIjOEUn2QxiI5q5vApg+dYeIZ4N
- oOYpTTKmHQTnzW4F9G+0x39vQFO2gHmANDCorowUD7wYRK7Gt+qbavFCsvAXHWlD
- mRwXYFpRyqZJcHIpl6h2GMJtgUBkkkELXCyIhvZGR2yFSfEfr84sRUi6d5tg==
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1790393043; x=
+ 1790479443; bh=UiROjTviiSwdRAUeTrROxyenRNPGultVEh2ZzybIzPs=; b=S
+ zJma5QlN1sStYOEHcBIgMl7Wrqb4ixy7GZib2zBP1k4tqloZzhBqUJ+z2v5heq+I
+ DD9XodSvnnjAp7lYOU4at/DNG/jg3SYH/IL/YIMZfioXO8iFMRbpLXh4VmjLzGAv
+ sVE0AsHhu7ZIev9P1yTebfESdSIP1TmopGfhVYGetDjguOmtN65zzZhqDoLysXBr
+ owMM22YjTbyiyGocP6TrhYWZnYih1U9jNQS/SXLiibBuTYITNcn78WMvZ2cD/pQo
+ /LmhOgqQmxLyKXhjhJ1RV2KKtjGqQp0Sbdg36+TgufWEx2tRWW//uuTLMDmONody
+ Egl0AajYBstcylR0k4dpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1790393029; x=1790479429; bh=4NGcmwPTIG1HrkPq17sTQe91LpvyoAwgd/O
- 4zNm5Ztc=; b=Svipgstr3cnTPR6eAiCsox1zqR+FERKTfbzI7PdDQsZlDqTWS/R
- AOcExmqp+AXxTi6uvUM+K2Torg4bK0L23OQ1RRcvotGJB3WHVZ579r8i6sanucuT
- RksHzFOTVqaFCWakOZl7aOL+z3OxUQCli9+78Kp5aElhPnOs0l2Yqces/xq4ZAcU
- jCbey9WB5qhqkQOnkMCPxVbJj9vnJvRsiyL2HVarte0WlnK42IMo7ehTiiv//MC1
- mwPawcFHqpK3DhUPNNnvR6YR6UJ6ixr6SSgTffW3NLG8cxKZWjVP55uFhUXeb5Op
- apyn/kkvnCowVoeZmW7MMgnexgR0h6uGvZg==
-X-ME-Sender: <xms:xTq3asxwRuW_cRnh7zbOnRuzE9L_lBASItJ5sBlb3oUH4oBxXnZlrw>
- <xme:xTq3agbQ9tZh91B6WR_EdTsXbsVYQOFZV6rV4DJgK3AgaqZ32SjPGzGPTXTnrqNpx
- pLmNv3TbsMKnZxlP5tsigIonkhMMNQnkL3nUI0dkgCNKyPfHEJtRDU>
-X-ME-Received: <xmr:xTq3amQAV61vlg-IEZfZBxFz-TtjDanYoSmV-kWaGNBU3rkBUUPqmZ5ZTGACxAda6jXi7mosrE-tllFBNaGN>
-X-ME-Proxy-Cause: dmFkZTF2Xo4f8fpi+ITsJP+sOv5IKkATOn3cvxf5dxfZ8seOWxM5vAwkfAqDaFKOkldwtL
- CtxDRS7yaMe6wne28c+96KNAU4ZW/tygCqOOyBLlhw9sp7UTnl31udOb+qR0IDDi3uD+Ev
- m0TuKKzoCLocVu5OupVM3Sq/kzHrn468JFpvKSRJbucUIkTKcSPNAmQyXRYev4K9ZniVwz
- S/XnIomsp3Zx6mv5kdA1FahjymiUHywgvD4VYkcF29kPhCHQlYdHJwt6TqZuFcOVvsTXsK
- b3HTc3gvOV7OvummcYHVuetcua5T+zXYPJpiji/gJE0cqD5GQg9QeqdMWY26XBxghbWdFq
- GKYjWO+OSChTVx0GybGalO79Y97yT/1zfEmy01m8IyGVahEb57unrYjrFX7eT+/Bc0uYEE
- rmDwidIr5Kjtdhwux61UHcZ3MvqQ9vWC/31t6Rj+121tWCLXf8ffyqp78XijRWsLoW5jRc
- HSGxTyj9niW1OMcxM8/UztNveTt6NGX+LrkOYFdUWSYZ6oWQm+21hSwwBAJJYPvetsXKCz
- H8h7Co1VtjMkEwuWO5N/4z6hmcrCikojftohafluxU6F0cpFkdEvrPPdZgBbtBTl38IaC+
- Pv/KxMldV7sC+1F7U3VL/6W3giLaPjQVaWq3IgyfXLzKlB9shZb8VkQ9t9lA
-X-ME-Proxy: <xmx:xTq3aizDw28IjgamA_c8doRyhSwlmhALkNcKFWUmiYImTLkImo_a7A>
- <xmx:xTq3ao2vLfpfRojn4BMKQruuqfAqR0nwdeJmb6VjgogS3m7itk_76g>
- <xmx:xTq3ag57SIauP-0CvYy8ilfOBPjeCIEN9xEFEswThKXJ-6tDkFoRxQ>
- <xmx:xTq3arUulI19JS08xzoytetGj4tHkudCtyIv2gCRSP86Y-s7g30pBw>
- <xmx:xTq3av1OTd5VHe8lG7vrmS1q6MaJ6gM-wezvnS3_yM6EDe_ZmVPQEWtj>
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; t=1790393043; x=1790479443; bh=U
+ iROjTviiSwdRAUeTrROxyenRNPGultVEh2ZzybIzPs=; b=P+olfjwG5RxOG4nUq
+ rxa2vMXr0Po1PU4AoLUZXcdcLMMdhkVtIf2z0VZ29PKyeyxD7J9nHK/k2M71D/Nr
+ hzHpyLIIJvFg74q2z9fS83oQ2Q4ygpYbpDlGN+PqMfekr9aGlUSTN4F/p1HudGYG
+ cpm0rNtLbm5ERbSeCBK+4Lf+yVPo4rwskd1yTznJ6vrm4CTFanWs3jpQIt/ZJVH0
+ 5/K6pvGERVsJlH2slICH6RtYkoEi0S//GizZKaVAnA94wzJLv4uBHtGFS4UH3ZmK
+ ftr3GaQaOc9t5O0YpCyvG4awQBNp/z/4SOemyKT2BQ/KGr1OXKMQ34teHEd0iXOb
+ CrKuA==
+X-ME-Sender: <xms:0zq3alCjUZdc4J0Q3acHCenAlT5Fz6ezkihXkNJR61IcfAVVSJw40g>
+ <xme:0zq3ajrqzb7PnonmkspGHlEQeVcqn_ka6i42cjI5yzpSVGmAk1w3G7hp2tq0eHERd
+ 5VbIoTUUcb8ebvHFtNF6_s8Tf-jOpMphOEUdZDtuy8WZmV6GuUsJ8M>
+X-ME-Received: <xmr:0zq3aojgZ-Xvxg_yV-ACtjWTBRx7CL0nWDZ5UBBsFWiKSGYejYz-xnjrB6DrN1Dct0_3OU7Pm36j76FMoylz>
+X-ME-Proxy-Cause: dmFkZTEgfWq44un7oqbbc2cSBXVU9dUWrYd6s7OzGzXYSaviivPuhgIsDL6v/GSXMMoPj0
+ 506Z7ollbyjn15YT0z4R+mLfmdARf21h5/3FOiSHbXu3uMS7KRTgun9Xl7yq01PdX4Aoml
+ NIuSIJF0CpvA6B/Znp3hvZ1uDkNhz3WOn54yjNig/Oxj5duuxPaYcfk+kAvStGrQJ3L1jS
+ Ra6wUB9RqvNdqESUZ8O1ZPstDYOeXtwH/dHhn9qvIBTncyq3ETqEgkwOpk8VQl0YX0+vjL
+ crw5ppkmSAFpsHyYe95iFJSz0KIMfhWNUfLVAKO5h4yPhcbFOl+B0kvn5ryXzDB5Ru+zQq
+ KKK05MmjxuXaZqK8A+LeflQ7/02ZWJl96yAv8yJNbz4CL6gU1d34dozAv4vE58QbRTppKd
+ +967EMXmojo4gZr/9ilkmyeIMr6WLcQ2/kRzvTdiCLybZI4GIwg/zT+WFCace7RmoarcKI
+ ciN92yvhyiG1VczRcNuTss87zNnXPCXvFeOkEoZIY58Kmnw0mNQOj2NZCm6qiW2XGNNanZ
+ Ujq9dQl3cjyS2X1mUqKmYoM0GqSOD48qG7S4lX+wjwOrTV2HPVOYxIdrRYpWBE3OQ0jk4I
+ v2ti8PlL79uTJXZDwql6U5/G+hh4F8wlVmIShrkWiDeS7uoIq7WZV0LgNxeQ
+X-ME-Proxy: <xmx:0zq3aoCKg1GWeT4x4raIMle1zAOzJi0ZWma_VqwO1HOX8-DNDLmuRQ>
+ <xmx:0zq3alEGW_9KP5LuSGYcu_Nz7_wxjIA7IQTbjQcgsfGD98WbjxwoPA>
+ <xmx:0zq3aoKEOmvCVCPhxmlbBm3pIwnMelU9Yhryg_99ddRt4HOuaYfbXA>
+ <xmx:0zq3ahltEMyQrM_ZzuMUyc_WV2vJYN0M_gbHqtg_niGikyH1dJRhBQ>
+ <xmx:0zq3apQ-OhT-r8ymZFW5wfNLDtoQdZ_J2V3t1b6_DACosgB-D8N8MW19>
 Feedback-ID: i00314697:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Sep 2026 23:23:48 -0400 (EDT)
+ 25 Sep 2026 23:24:02 -0400 (EDT)
 From: Paul Galbraith <paul@galbraiths.ca>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
  Paul Galbraith <paul@galbraiths.ca>
-Subject: [PATCH v3 0/2] target/i386/tcg: fix EIP truncation for wrapping
+Subject: [PATCH v3 2/2] tests/tcg/i386: add regression test for wrapping
  16-bit near branches
-Date: Fri, 25 Sep 2026 23:23:34 -0400
-Message-ID: <20260926032336.933-1-paul@galbraiths.ca>
+Date: Fri, 25 Sep 2026 23:23:36 -0400
+Message-ID: <20260926032336.933-3-paul@galbraiths.ca>
 X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20260926032336.933-1-paul@galbraiths.ca>
+References: <20260926032336.933-1-paul@galbraiths.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.12.124.149; envelope-from=paul@galbraiths.ca;
@@ -104,24 +108,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes since v2:
-- Patch 1: no change
-- Patch 2: test rewritten in assembly, hopefully clearer
+Jump from IP 0xFFF0 to IP 0x0020 with a CS base that is not page
+aligned, and check that EIP wraps.
 
-v2: https://lore.kernel.org/qemu-devel/20260910180517.97-1-paul@galbraiths.ca/
-
-Paul Galbraith (2):
-  target/i386/tcg: fix EIP truncation for wrapping 16-bit near branches
-  tests/tcg/i386: add regression test for wrapping 16-bit near branches
-
- target/i386/tcg/translate.c                |  20 +++-
+Signed-off-by: Paul Galbraith <paul@galbraiths.ca>
+---
  tests/tcg/i386/system/meson.build          |   7 ++
  tests/tcg/i386/system/test-branch-wrap16.S | 118 +++++++++++++++++++++
- 3 files changed, 141 insertions(+), 4 deletions(-)
+ 2 files changed, 125 insertions(+)
  create mode 100644 tests/tcg/i386/system/test-branch-wrap16.S
 
-
-base-commit: 8db19f3ad9cef7842b6e5025130fc30075311691
+diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
+index d3f73997c7..d831f7e9c1 100644
+--- a/tests/tcg/i386/system/meson.build
++++ b/tests/tcg/i386/system/meson.build
+@@ -34,6 +34,13 @@ foreach t: tcg_tests['multiarch-softmmu']['tests']
+   endforeach
+ endforeach
+ 
++tests += {
++  'test-branch-wrap16.S': {
++    'cflags': cflags,
++    'qemu_args': qemu_def_args,
++  }
++}
++
+ if 'qemu-system-i386' in emulators
+   tcg_tests += {
+     'i386-softmmu': {
+diff --git a/tests/tcg/i386/system/test-branch-wrap16.S b/tests/tcg/i386/system/test-branch-wrap16.S
+new file mode 100644
+index 0000000000..2520891ba7
+--- /dev/null
++++ b/tests/tcg/i386/system/test-branch-wrap16.S
+@@ -0,0 +1,118 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * A 16-bit near branch must truncate EIP to 16 bits.
++ *
++ * The test jumps from IP 0xFFF0 to IP 0x0020 in 16-bit code. The jump
++ * crosses 0xFFFF. For correct 16-bit behaviour the CPU should wrap the
++ * target to 0x0020, rather than branching to 0x10020.
++ *
++ * TCG used to skip the wrap when the untruncated target (CS base +
++ * 0x10020) was on the same guest page as the jump. That only happens
++ * when the CS base is not page aligned, so the code segment starts at
++ * a page boundary plus 0x10.
++ */
++
++#define SEL_CODE32   0x08
++#define SEL_CODE16   0x18
++
++#define RESULT_NONE  0
++#define RESULT_PASS  1
++#define RESULT_FAIL  2
++
++/*
++ * 16-bit relative 'jmp target', hand-assembled because clang rejects a
++ * rel16 displacement outside [-0x8000, 0x7FFF]. But, in 16-bit code, any
++ * 16-bit displacement is valid. GAS correctly accepts any 16-bit offset.
++ */
++.macro jmp_rel16 target
++        .byte 0xE9                              /* jmp rel16 opcode */
++        .word ((\target) - (. + 2)) & 0xFFFF    /* cw: 16-bit offset */
++.endm
++
++        .data
++
++g_result:
++        .long RESULT_NONE
++
++/* 0x08 and 0x10 must match boot.S, which loaded the data selectors */
++gdt16:
++        .quad 0
++        .word 0xFFFF, 0
++        .byte 0, 0x9b, 0xCF, 0
++        .word 0xFFFF, 0
++        .byte 0, 0x93, 0xCF, 0
++gdt16_code16:
++        /* 16-bit code, 64 KiB limit; main fills in the base */
++        .word 0xFFFF, 0
++        .byte 0, 0x9b, 0x00, 0
++gdt16_end:
++
++gdtr16:
++        .word gdt16_end - gdt16 - 1
++        .long gdt16
++
++fail_msg:
++        .asciz "FAIL: branch left EIP untruncated (result=%d)\n"
++pass_msg:
++        .asciz "PASS\n"
++
++        /*
++         * Page aligned plus 0x10. A larger alignment breaks the
++         * multiboot load in boot.S.
++         */
++        .balign 0x1000
++        .skip 0x10
++wrap16_cs_base:
++        .code16
++
++        /* jmp lands here when EIP wraps to 0x0020 */
++        .org wrap16_cs_base + 0x0020
++wrap16_target:
++        movl $g_result, %eax
++        movb $RESULT_PASS, (%eax)
++        ljmpl $SEL_CODE32, $wrap16_back
++
++        .org wrap16_cs_base + 0xFFF0
++        /* the problematic branch, which should wrap EIP */
++        jmp_rel16 wrap16_target
++
++        /* jmp lands here when EIP does not wrap (0x10020) */
++        .org wrap16_cs_base + 0x10020
++        movl $g_result, %eax
++        movb $RESULT_FAIL, (%eax)
++        ljmpl $SEL_CODE32, $wrap16_back
++
++        .code32
++
++        .text
++
++wrap16_run:
++        ljmp $SEL_CODE16, $0xFFF0
++wrap16_back:
++        ret
++
++        .globl main
++main:
++        movl $wrap16_cs_base, %eax
++        movw %ax, gdt16_code16 + 2
++        shrl $16, %eax
++        movb %al, gdt16_code16 + 4
++        movb %ah, gdt16_code16 + 7
++        lgdt gdtr16
++
++        call wrap16_run
++        cmpl $RESULT_PASS, g_result
++        jne test_failed
++        pushl $pass_msg         /* test passed */
++        call ml_printf
++        addl $4, %esp
++        xorl %eax, %eax
++        ret
++test_failed:
++        pushl g_result
++        pushl $fail_msg
++        call ml_printf
++        addl $8, %esp
++        movl $1, %eax
++        ret
 -- 
 2.55.0.windows.3
 
