@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A3EC98318
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FE9C98328
 	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 04:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAJiJ-0007DL-Nh; Sat, 26 Sep 2026 00:08:39 -0400
+	id 1xAJiG-0007Cm-5d; Sat, 26 Sep 2026 00:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xAJiA-0007Cd-PJ
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 00:08:35 -0400
-Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
+ id 1xAJi7-0007CU-O4
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 00:08:28 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xAJi8-0003kb-9k
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 00:08:29 -0400
-Received: by mail-yx2-x0e.google.com with SMTP id
- 956f58d0204a3-672f90fc533so1535589d50.0
- for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 21:08:27 -0700 (PDT)
+ id 1xAJi5-0003kM-1s
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 00:08:26 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 956f58d0204a3-67413c9dcf1so1157560d50.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Sep 2026 21:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790395707; x=1791000507; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790395703; x=1791000503; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WfOrG7CvMWb1suVPNFr03mapnOOoDwUJHrrOFEWkYHc=;
- b=UYjBoDt4TfllFFiXVMNG6KGuAC0Xxx9teOGV1j76/EfquQO/Ps9losN2LIsFzTbygG
- 6aY/h4TXgH+Uws+/DBcz0NDYsIqNAePEs5vwCa62+B17FiNveuuUPd02pOGaiW69abs1
- K9f91tCv5p4xoUZCp4mo8lMVyjvuUwRbiLdM4WIrYn4bcG7jBK+oXwPRYJIEEPlXtrrs
- cElIYbo52DkFhbgPDn08915nTPENfamQjnXGOrxDiSi/eBXBkd1x/25vxENHUe104DI4
- 13Nf1S5ZkrSagUYaSCxwS6oEIIE0cjZPPpwTyQxZHJu5yNyNqqZwbGWJB+72p6Cf7Yjx
- k+1w==
+ bh=xu8QQeYsLU2+I6ykCLnxSq0STJmvG0R5jf7q2bk+YRw=;
+ b=ss6lCB9uzCSR7quMlkCi5S59oRd+8AZ3jGurGhJZQocpfgyQ80y32IfgYl4GYLFvVr
+ bUJpMeoLt75rxariJqzz9qCkL+BsjZKCNa+SKaGarEJpS6YNT8+re7du4UMyVUThk7xp
+ 76uvDV43Z9bYuuxd1r7vvjFSJNVJPpBwftp3peHM2gxE5vAnJEfG9EG87uFrAHUNQiqo
+ +kPgE3UCHfjgvk/gvAG+BDQJYHvWzzHeh+g/x5CsWrogBdOZEe++vlmOqFe5sXmPx16Z
+ NSFNLF5VCdGaLHLEQVKQ52i/awdCSVRKaYthOYdpbvmtDCWhjhjntASeGu9zDCfbLNdp
+ 7S3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790395707; x=1791000507;
+ d=1e100.net; s=20260707; t=1790395703; x=1791000503;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WfOrG7CvMWb1suVPNFr03mapnOOoDwUJHrrOFEWkYHc=;
- b=YkIYvgUxytCsDevCQUiwM7qVZbPcgoy4rMuVvjeBdJ98MsXxFxFmATJRZZRXExwIVx
- Px4MYuklRdErZgesjQHc1lWYoP0prSUGEDC/P5icWz5rpmP+DgLY57k0T3PDgCqI7ca3
- zP1UhOc8ilrh0J+KywsJCBSUXlMV6Hxk0VNdiSPBlnS1FzdYzR4GugRgjOa8rKkqY89G
- 1mLOx0o+JJPnaGupXMAP2n5thEZhBQt4xb7mCje2UbaP5AgvYILkE+ZwRYAgDfm0GbIB
- FEJ7VUMNRMfxWGqyu5u3dVyPvaVDBBI+2YKJqfcu6Y3H/oJdgvLMAs9p2nE9a32F93vk
- Qdxg==
-X-Gm-Message-State: AFq9FYLro5Ic/P0zHPwxOMIvybGcOuu9Ep4o2rNpL3Vt9FL4mNb/codg
- 85xA/Db1UbsA5V/BmHIyFhHcaxLRqcTwcOhgVgFwggbmvV2qR0CDWpym4ZZ9CQ==
-X-Gm-Gg: AYBFou3qbU4ZniCBjV85K228p//AzifIhogPI1/2BFu4Qv06fYfNSjAvQdSqBtjqgTt
- kiAl1Qm33HMm1IVKlDLBi0irEC2Dawrl0jpCWTnmmhp4RpB0843Wdn13ZqHAxr6YzezbXMetJUP
- uuDQUO/r07EBS3J56nxkRN2flZt+Gw3aD5x1/iDTvrEzZgcePO50AcpOzN9GxKB6uRb+ThaIRzz
- Nzsth5a25dHavScHgctGJzUfastzbkvbVux0gc3ODhzISgUqcNRFW3XQ3x0iRIRhwx6q3WqyzzB
- xkMmKi1oZBeHJ20d5WnM1YChyxRmsQrLycEO5TgDRNc+Vg0iOioJZz8RVFxEL5WLXvzn90JbTzw
- XmRU5y8DVhGJSzI7/++HrbwI4CrPRMahykguT5H2r4a/HTHqhrg62qUzDFNL57i0t11o1c9eFa1
- NrUjRtp5/Fy8Pleyek+YBkNb3VLvoIrKOXveNzR74j9ET04rwgJSwRAGmFg7o/dZUJm40TnTA=
-X-Received: by 2002:a53:e701:0:b0:66e:5604:ecd3 with SMTP id
- 956f58d0204a3-672ed2648edmr2189426d50.37.1790395707119; 
- Fri, 25 Sep 2026 21:08:27 -0700 (PDT)
+ bh=xu8QQeYsLU2+I6ykCLnxSq0STJmvG0R5jf7q2bk+YRw=;
+ b=mMdr2dGOUT+U70snaSTqZfqqfFJFpwVUkArMYLXphUY8p8ieP3V2Imi8ytWN3bR+GP
+ bWgy2+7hsoViL+dCn273OH/8nEAE7ga9XJyEWDIRK7YgP6Jm4dzlb95t7rd2gDgP1c7b
+ lTHzJCcIr8HTKEm5onnPXKSgqDkzDzxYPPwLWjI1ggz9RaTxdzsS3lD8Zav8cLULdOvT
+ KyIeJm4nhw5JzSW/nzFv2m8MpnlpmFG29a0gt6PMrBMTge9I8ynw6siRYMddqVQft29c
+ zxHLRx4XYCqOO+LKJN7X5ijNbSNE1HHNcfRI66NjSPsyeexf/hqrRiR32Zb0sDw5AaJA
+ zfkg==
+X-Gm-Message-State: AFq9FYKiY/EpMTFoTT4s2A0DazYUTMBRUXK3DoG7QHJc/8A3uTuQQGZJ
+ AKrTaZwEzYHTXUMtt3wFOTu+sg4OVYlacuecnFBMCxnWFUcppcIYocY8yI8SAA==
+X-Gm-Gg: AYBFou2BYJIEisLheN7dNlNE2225zebkRIxqgnXrkgiYnHn1jLUOd4ks9yd+J2b88mb
+ F8VHMZhSt1sYXpYSyBHJFT7kuf9P3P0nJ5MpZblo5dQa3OqwoUI880h04JtYyLBmFrM0ukXmiPB
+ afXAMY5SBBVKkq9E2Lsm6furwx8HNtOS2ZfPabuRo243hiIxOOZVRHkF2UQ5BaP2YKgHNMG8b3T
+ hKL5yYil/+h9oRh00XOfW0BJgeNQd3krv/S0Fir3sF+gbAJila4LIoamtnRFMu0CsEcxHXsjgG6
+ GgmtyoM1IyEXp+HYGv4zC4NME8VhYrRTC4i7fHLGidzC43b6Sap4N5xjoCKWeOd1UXYsD98/YIC
+ QG4RUYzTgZ1h0Foz8gyk6iZGtiB8Xmp86oyH1dViEupN0YhJJdtZcigrKgA2QSBiQK4kz5KWPCW
+ bzxp1Ma3NUxrMZCw1qG2P0xlcGjX6RJAOTCTqHwcOOOFnhTlUo5GdpKhbNXFcBso0tpH3voqo=
+X-Received: by 2002:a05:690e:14c7:b0:672:f620:3563 with SMTP id
+ 956f58d0204a3-672f6204d21mr3475410d50.97.1790395703484; 
+ Fri, 25 Sep 2026 21:08:23 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-6740ef87db6sm1810341d50.17.2026.09.25.21.08.24
+ 956f58d0204a3-6740efb13fasm1914769d50.18.2026.09.25.21.08.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Sep 2026 21:08:25 -0700 (PDT)
+ Fri, 25 Sep 2026 21:08:21 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 3/3] linux-user/riscv: copy the executable's e_flags into core
- dumps
-Date: Sat, 26 Sep 2026 00:08:12 -0400
-Message-ID: <20260926040812.725493-3-mattst88@gmail.com>
+Subject: [PATCH 2/3] linux-user/mips64: set EF_MIPS_ABI2 in mipsn32 core dumps
+Date: Sat, 26 Sep 2026 00:08:11 -0400
+Message-ID: <20260926040812.725493-2-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260926040812.725493-1-mattst88@gmail.com>
 References: <20260926040812.725493-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
- envelope-from=mattst88@gmail.com; helo=mail-yx2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=mattst88@gmail.com; helo=mail-yx2-x0c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,27 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 8c94db0ae97c ("binfmt_elf: preserve original ELF e_flags
-for core dumps"), Linux writes the main executable's e_flags into RISC-V
-core files, so debuggers can see the float ABI and RVC. QEMU wrote 0.
----
- linux-user/riscv/target_elf.h | 3 +++
- 1 file changed, 3 insertions(+)
+mipsn32 core files had e_flags 0, so gdb took them for o32, found no
+general-purpose registers and failed with an internal error in
+frame_unwind_find_by_frame.
 
-diff --git ./linux-user/riscv/target_elf.h ./linux-user/riscv/target_elf.h
-index 185b81a2db..e99a9d92ca 100644
---- ./linux-user/riscv/target_elf.h
-+++ ./linux-user/riscv/target_elf.h
-@@ -21,6 +21,9 @@
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_CORE_DUMP      1
+Linux sets e_flags to EF_MIPS_ABI2 for n32 cores (user_mipsn32_view in
+arch/mips/kernel/ptrace.c).
+---
+ linux-user/mips64/target_elf.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git ./linux-user/mips64/target_elf.h ./linux-user/mips64/target_elf.h
+index efb5d97563..fd9fb89269 100644
+--- ./linux-user/mips64/target_elf.h
++++ ./linux-user/mips64/target_elf.h
+@@ -16,6 +16,8 @@
  
-+/* See linux kernel: ARCH_HAS_ELF_CORE_EFLAGS.  */
-+#define elf_core_eflags(info)   ((info)->elf_flags)
-+
- /* Mirrors struct user_regs_struct: pc followed by x1 (ra) .. x31 (t6). */
- typedef struct target_elf_gregset_t {
-     abi_ulong pc;
+ #ifdef TARGET_ABI_MIPSN32
+ #define elf_check_abi(x)        ((x) & EF_MIPS_ABI2)
++/* See linux kernel: arch/mips/kernel/ptrace.c, user_mipsn32_view.  */
++#define elf_core_eflags(info)   EF_MIPS_ABI2
+ #else
+ #define elf_check_abi(x)        (!((x) & EF_MIPS_ABI2))
+ #endif
 -- 
 2.54.0
 
