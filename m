@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53373C9832A
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 23:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F66C9832A
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 23:57:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAcG0-0006Wm-GS; Sat, 26 Sep 2026 19:56:46 -0400
+	id 1xAcFs-0006Vc-Gf; Sat, 26 Sep 2026 19:56:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFs-0006Vd-FW
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:32 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ id 1xAcFq-0006Uv-GC
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:30 -0400
+Received: from mail-pj2-x0d.google.com ([2607:f8b0:4864:39::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFp-0004OL-75
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:30 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-396ccb1a98dso1179544a91.0
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 16:56:28 -0700 (PDT)
+ id 1xAcFm-0004O9-Pl
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:29 -0400
+Received: by mail-pj2-x0d.google.com with SMTP id
+ 98e67ed59e1d1-3a0abca97c0so1036586a91.1
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 16:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790466987; x=1791071787; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790466985; x=1791071785; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0gz45yMIIVliy3SWUWlZVaKuMixUM+jElZ8dLueySp0=;
- b=EYdm+biwFbhsxClvL5NauDoTJUPei8OnDnWtuu97hefjmTgaDEvzJJRPc7HRNtwCxF
- CfpO6xXtmUTaxhJasDz5iGOXyjUWUwuz7n76Q6VZQOKlW1UgTrtm20VyzlgR5scTid1C
- a9s2ejtTvGmz83AmnRjdz5t5Td+SPnYoVp+JtN37XBRecyRYxFi3iOEgiOWz+Tg/6VDl
- zP7m5NlbBxuNCl0PL2F+yb2lZDbwEYcD12aBSUHOvpLr1peIXcwCYdzRTxoM95ucc9gz
- 0U5OHkfp04Gl7JPYq9XMDfGm0+j7mmZet6JvZrntvrsbgBNB/gCYEcId0loo5fnjvP4X
- O6ew==
+ bh=bzXbNAmr51YidYXbmZg8Y0lX6KNq+4GQ5EKwzzDhIKw=;
+ b=D+N+ZoyJarPmZqrvxZusthbIQhaXttRSk63DD25u2sstvl6btYZtj6oWLC15ggjpaR
+ 2OtO4kGZZcPT8b8rNprIa4aku87UmAPljj1DkAeQhXD4Jl4bmyUkVtsc4emkRzKvodiT
+ jeeI4Dmn4f0qYMiKzYyihWcRuQah0XCkoY49Udoj9X8Eyd3m/2K53GL4Y1fpfBpmRxv/
+ Q/yrvNADnU4GkS/oFBnLKke7WCQ7/iPbltOBzNF+oHMyYM8GKCl9PFLINNjv9vwZltEv
+ QzMnCD1ggc4UdYtehGbTFmjpa85djfsylF6rcME0KJMyAXfkGiw/BAvLfHyzpX3edSeI
+ utJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790466987; x=1791071787;
+ d=1e100.net; s=20260707; t=1790466985; x=1791071785;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0gz45yMIIVliy3SWUWlZVaKuMixUM+jElZ8dLueySp0=;
- b=l3EL6mAC0/veZCsR5r5F8lofpcr+cdvIoyR5bf6qLRBjZ2qC440f1zXhjJPipr3HEa
- u+e6XH0UiUdAVtovqcGYX3Jv5f/JeP8WnIySJAKYZpVJdCZJX9Gt8Dxyx5QGJzg1oQw0
- vUk503hBIskOU+O8e43TIydA4bOt6c4/qU91tOMFOX1htdN5tTjcLxKpLDj7PZ84evor
- kWCLHINnIP7Hxb/zTbth4MT9vsrX9QWKTRQYhjerSLUHRWH6rNKy/uAWC5BAd61dxGJj
- ZUeM6blpIwbSOTkICY1emU1yqltQAmhTpfgz/cIIzuxzxMZCus8hSRcxHg+yYmaSgHIb
- maMA==
-X-Gm-Message-State: AFq9FYJycm4mdve7b0P9yteL5L/675fkYqYRINT4n8bthkv2tzhHy+yu
- gitL1k/DczRco00TJt0JW86fDOPXRCzA+odNZ0dXpiuHBbjFLigq91jJy8a5QYWKeyCOLNuIUWA
- +XgGO
-X-Gm-Gg: AYBFou3RfojEZLunCCfPDHBj9mMJ6V4fFM635PupCJUhrAMV6kFcrVBXBZEufSHbf52
- 2xK+vuL47BuXAAXE5EYwe6RgHtLyX3XJe9Zhe0K5fU8dAO4IDtdTnKQJpjep8uAyQMZW8CX/eK3
- vAkYiMvwb27W+GiW6vqC1Gqs6qzl4wantb3HGnkYijSQnzXf8amQZLPBP0uTDk0m68SV1RyAtI2
- IT0i3lPLJdHPp3E2tG81llYYVMM4n9FEMEHKLdnWlahXOjRmMOltholwY7ljnZvwl09ZbKMSiz4
- h4rWeCKXgDfzU8CpzrZfpQyKHsC5jrIDztLqIOB0S2BE7g4WbyBt491G0ucMULovsObyHJhndwn
- Z0QMsSP21wQl60hYo0R9KPmDt2syhVZhgzkFMIfPjFwKzsJYZf/LtbOFfeHPsilJV6QUfbHYi9U
- cYSGcgEPsxWWW0SJrSC9FX5VnDuXXvet8beZLoSCpQXozMV6dS/vbeDr3Gs3f2Mn8CYkr+jlcne
- J86Qgrqil9nHv2MCSA3dbuA/1MrlQ==
-X-Received: by 2002:a17:90b:49:b0:3a0:9ed5:5420 with SMTP id
- 98e67ed59e1d1-3a0bb6139bdmr4296117a91.44.1790466987279; 
- Sat, 26 Sep 2026 16:56:27 -0700 (PDT)
+ bh=bzXbNAmr51YidYXbmZg8Y0lX6KNq+4GQ5EKwzzDhIKw=;
+ b=eBpFupy86WykIHQlRXe4E8moTV7+Sm4ybpJZYpa18nl781/l2R0UMDcgGkyBxyjAag
+ KwKsQi836zliHXqPAxrAkKCkpoGSYv/oe8wT1dSnrMUa/UX32xVo7fHd/+BbH/ugQCX4
+ Jxj02dr2AxY5f8lAj5hCmtiCVj2mbZBXR/Pb0RyvF+RSNm0KwbQUP/dwZGh0+PtPJGF/
+ lr76RR7sugXlgkd35MQcEfAdwFHAGAJLFM31/DuBhIZshS2EEO44mVJlTEPNAbz//K7d
+ 1R8iw+AqK8nM4poTuqVsExAa5fHcGU0/xrcE7fhrD/NYCIlLAwuOGqE/eHxuDbb8oxOL
+ 6NqQ==
+X-Gm-Message-State: AFq9FYLDunouggXtmJiX2bVC4VuUHee5HBT8m0HmGu9oW4d09g8GqU5B
+ Tzx+1q5AHSQMX107iPhDNvml3wIOBjD2LlYFUGNzs+LxEShdQ8yHoSqGOpNB5CJF1jaDP6Re8HY
+ x1LQY
+X-Gm-Gg: AYBFou0VYPPCXnH7cPsdQzhNY+QXzOUuTsThzIX8alXURTU1cK6hdZhKlgHFd/4s2y0
+ UN0EDQW7QvfcE2dNwcO5S/mdIEPnOC/bRxSf3xvDYB5kAIWEseqCFUoru3mm9xUVKm6FxexgZRU
+ x4YgSvXe7IVtckncuNJDkbTQjrfuNGktYFo+xbwgvXgDUIKz2Gzirr0dVHkTrTvJwryJMtP7TiM
+ zN7h19WO6vmTvsmBr0VIw36pXQV2swvFpUtqypRSFrB1kgj9duMXZuykvvUdl+kVIyNtXD0T/o4
+ IidV/QNqEkcIyGFYb2dGJ5s/wT8dO1aj7LSgbTYPPEguujHdgHEoLrMTLJphLMXc5GGZ7gb6jSY
+ rXvFSpFz7q3pLMSsCn0ivrb0ajq8UZmwlt9lE5ZhFZKVyfgPfn5jD/eepUTGZP9E57j6eygfIl4
+ cCTeko9OWJmaJspTh/Pb7rimAltPBAF892tr6uI60XT/B2xs68b7z7R7hfA5jmlAUyoBK8LV9q3
+ fkPXkBCmAOZwtyz3tJP2isRMt5RAQ==
+X-Received: by 2002:a17:90b:57c6:b0:3a0:22bd:6ef6 with SMTP id
+ 98e67ed59e1d1-3a09853a6cdmr6761865a91.2.1790466985168; 
+ Sat, 26 Sep 2026 16:56:25 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a09773e7c3sm18136031a91.17.2026.09.26.16.56.25
+ 98e67ed59e1d1-3a09773e7c3sm18136031a91.17.2026.09.26.16.56.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 16:56:26 -0700 (PDT)
+ Sat, 26 Sep 2026 16:56:24 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: paul@galbraiths.ca,
 	pbonzini@redhat.com,
 	qemu-stable@nongnu.org
-Subject: [PATCH v4 2/3] target/i386/tcg: fix EIP truncation for wrapping near
- branches
-Date: Sat, 26 Sep 2026 16:56:19 -0700
-Message-ID: <20260926235620.851099-3-richard.henderson@linaro.org>
+Subject: [PATCH v4 1/3] target/i386/tcg: Add DisasContext.pc_save_valid
+Date: Sat, 26 Sep 2026 16:56:18 -0700
+Message-ID: <20260926235620.851099-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260926235620.851099-1-richard.henderson@linaro.org>
 References: <20260926235620.851099-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,69 +102,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A 16-bit near branch that wraps through 0xFFFF must truncate EIP.
-TCG skipped this when the target was on the same page, which can
-happen when the CS base is not page aligned.
-
-There was an existing test for this further up that attempted to
-test this, but was restricted to a 16-bit branch in 32-bit mode,
-which can be subsumed.
-
-The previous test for pc being on the same page, rather than eip, is
-only relevant to using goto_tb not to eip wrapping.  There is another
-test for pc on the same page further down, via translator_use_goto_tb.
+Use a separate bool rather than overloading -1,
+which is a perfectly valid value for pc.
 
 Cc: qemu-stable@nongnu.org
 Fixes: e3a79e0e878 ("target/i386: Enable TARGET_TB_PCREL")
-Reported-by: Paul Galbraith <paul@galbraiths.ca>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/translate.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ target/i386/tcg/translate.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index a38cc2c15d0..18706ec8a74 100644
+index 192cf43215e..a38cc2c15d0 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -2015,9 +2015,6 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
-     if (!CODE64(s)) {
-         if (ot == MO_16) {
-             mask = 0xffff;
--            if (tb_cflags(s->base.tb) & CF_PCREL && CODE32(s)) {
--                use_goto_tb = false;
--            }
-         } else {
-             mask = 0xffffffff;
-         }
-@@ -2025,15 +2022,20 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
-     new_eip &= mask;
+@@ -95,6 +95,7 @@ typedef struct DisasContext {
+     int8_t override; /* -1 if no override, else R_CS, R_DS, etc */
+     uint8_t prefix;
  
++    bool pc_save_valid;
+     bool has_modrm;
+     uint8_t modrm;
+ 
+@@ -471,7 +472,7 @@ static void gen_add_A0_im(DisasContext *s, int val)
+ static inline void gen_op_jmp_v(DisasContext *s, TCGv dest)
+ {
+     tcg_gen_mov_tl(cpu_eip, dest);
+-    s->pc_save = -1;
++    s->pc_save_valid = false;
+ }
+ 
+ static inline void gen_op_add_reg(DisasContext *s, MemOp size, int reg, TCGv val)
+@@ -506,7 +507,7 @@ static inline void gen_op_st_v(DisasContext *s, int idx, TCGv t0, TCGv a0)
+ 
+ static void gen_update_eip_next(DisasContext *s)
+ {
+-    assert(s->pc_save != -1);
++    assert(s->pc_save_valid);
      if (tb_cflags(s->base.tb) & CF_PCREL) {
-+        assert(s->pc_save_valid);
-         tcg_gen_addi_tl(cpu_eip, cpu_eip, new_pc - s->pc_save);
--        /*
--         * If we can prove the branch does not leave the page and we have
--         * no extra masking to apply (data16 branch in code32, see above),
--         * then we have also proven that the addition does not wrap.
--         */
--        if (!use_goto_tb || !translator_is_same_page(&s->base, new_pc)) {
--            tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
--            use_goto_tb = false;
-+
-+        if (mask != -1) {
-+            /*
-+             * If eip "page" doesn't change, then the addition cannot
-+             * leave [0, mask] on any rerun of this TB, which only
-+             * ever shifts EIP by whole pages.
-+             */
-+            target_ulong old_eip = s->pc_save - s->cs_base;
-+            if ((old_eip ^ new_eip) & TARGET_PAGE_MASK) {
-+                tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
-+                use_goto_tb = false;
-+            }
-         }
-     } else if (!CODE64(s)) {
-         new_pc = (uint32_t)(new_eip + s->cs_base);
+         tcg_gen_addi_tl(cpu_eip, cpu_eip, s->pc - s->pc_save);
+     } else if (CODE64(s)) {
+@@ -519,7 +520,7 @@ static void gen_update_eip_next(DisasContext *s)
+ 
+ static void gen_update_eip_cur(DisasContext *s)
+ {
+-    assert(s->pc_save != -1);
++    assert(s->pc_save_valid);
+     if (tb_cflags(s->base.tb) & CF_PCREL) {
+         tcg_gen_addi_tl(cpu_eip, cpu_eip, s->base.pc_next - s->pc_save);
+     } else if (CODE64(s)) {
+@@ -542,7 +543,7 @@ static TCGv_i32 cur_insn_len_i32(DisasContext *s)
+ 
+ static TCGv_i32 eip_next_i32(DisasContext *s)
+ {
+-    assert(s->pc_save != -1);
++    assert(s->pc_save_valid);
+     /*
+      * This function has two users: lcall_real (always 16-bit mode), and
+      * iret_protected (16, 32, or 64-bit mode).  IRET only uses the value
+@@ -566,7 +567,7 @@ static TCGv_i32 eip_next_i32(DisasContext *s)
+ 
+ static TCGv eip_next_tl(DisasContext *s)
+ {
+-    assert(s->pc_save != -1);
++    assert(s->pc_save_valid);
+     if (tb_cflags(s->base.tb) & CF_PCREL) {
+         TCGv ret = tcg_temp_new();
+         tcg_gen_addi_tl(ret, cpu_eip, s->pc - s->pc_save);
+@@ -580,7 +581,7 @@ static TCGv eip_next_tl(DisasContext *s)
+ 
+ static TCGv eip_cur_tl(DisasContext *s)
+ {
+-    assert(s->pc_save != -1);
++    assert(s->pc_save_valid);
+     if (tb_cflags(s->base.tb) & CF_PCREL) {
+         TCGv ret = tcg_temp_new();
+         tcg_gen_addi_tl(ret, cpu_eip, s->base.pc_next - s->pc_save);
+@@ -3433,6 +3434,7 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
+ 
+     dc->cs_base = dc->base.tb->cs_base;
+     dc->pc_save = dc->base.pc_next;
++    dc->pc_save_valid = true;
+     dc->flags = flags;
+ #ifndef CONFIG_USER_ONLY
+     dc->cpl = cpl;
 -- 
 2.53.0
 
