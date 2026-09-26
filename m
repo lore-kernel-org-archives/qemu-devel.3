@@ -4,89 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E07C9832F
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 17:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22561C98332
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 19:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAWdz-00016D-5b; Sat, 26 Sep 2026 13:57:03 -0400
+	id 1xAY03-0001LY-P4; Sat, 26 Sep 2026 15:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jwhitakera@gmail.com>)
- id 1xAWdf-000153-HA
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 13:56:44 -0400
-Received: from mail-dl2-x28.google.com ([2607:f8b0:4864:38::28])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jwhitakera@gmail.com>)
- id 1xAWdd-0005o7-Gb
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 13:56:43 -0400
-Received: by mail-dl2-x28.google.com with SMTP id
- a92af1059eb24-14373bcc010so1686221c88.1
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 10:56:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xAXzy-0001Jx-Fr
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 15:23:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xAXzw-0005rw-NG
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 15:23:50 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68QGxQRf1449975
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 19:23:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xRIrBXzKSdyJOLjDczWGLXALDm6y6xvkXDeJw1yIwww=; b=k/VwUAoyv1n8hsYV
+ czx8PTp83Y580X/UQ4t1jjRZzhaJk1hOInNDe/PH5Qu8JjVngEfXQ/Lv7eQBaZnp
+ XVQBcq75zGjjFeBRTZBKgkzqIVNtu9O2gJ2bf5BChX/nXI2Fde/wGDJPaP7z77tN
+ 2YFlGhSkF5oLTdKEGGxKl0TZFtBKSPRlMJCuYijw7ptAX/detmG1EtExAGw3fNox
+ /Ryqi5874wcMyT7FUGP2Lqq/AX6yeJPjx8owzFxWrOdkR6Lqd+fhLtXixcl4f/k3
+ YCAIAaZlqlMc7flTKgwhf5Ejtjwkkgyi6SPxTLR2AVKbm/lEApVD6z3riNbx4Uum
+ ERTA4w==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx3rfswsf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 19:23:47 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-34344599f01so941903eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 12:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790445400; x=1791050200; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=maHY6REF4PxHvCHUgnPtzCMxPlo1A+DkehQAFQcOH2c=;
- b=N/MmgGIrlKZHD1596o5G3el0POVCldkfOHw0EaAbt3o7jikC3Mv0cJvUlMt5+loBgU
- iEsMpyK4bZYX4mdlIPTtcXWN8ubqZZaXRnljIDyqHAfWSJxC9FjLAHn6rRnMUHmvkcl1
- A8QXTGhjibLllCxiWlOeu4giOVKq9kguMSMRRaXbI8lNX0ekJWL5OqTWDzUmzs4V6Uyr
- 635Zds6pZoHFOhdawtKOOJOWa2ZMSiJpXnzu5mhegJOZaOAgBLXAwaa8s5li+zqBsPVb
- 1PZH/1C5+TCCXeu96XZ8sB9lvSxpI+wB/xzLzi0zPj+vTSuoa9i8f4TbMrL9LBkOveqm
- kRLw==
+ d=oss.qualcomm.com; s=google; t=1790450627; x=1791055427; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xRIrBXzKSdyJOLjDczWGLXALDm6y6xvkXDeJw1yIwww=;
+ b=VRscakfgX2cdHkDUBjIcQcJuqT81fIDQ3KWnIefyUT3QNF2DZlaw+nAoApmhuGRAkO
+ KByJ2AKtPfgxDUGuZZ5E0HoJqyZ8TaAAohNA33l7XBv5O2rSu1CQruoqHa66xqUXywXN
+ 74u+rXVV+lrgs5HAEVqB/2n9Jr/dNs//mq9wY7sScl2YsRKAAqcWpVIkheCy36x4eNN6
+ Dgts+6/snBUnA2sh5FTUkSn8h/b9qedCyarR1E9LjAzoF5Q5ATEok0uQkfmLNudnv1vB
+ 9g4OyZvpAn1WNl8G7Q73zknM65GIramZ2/XpnPKNsQcbpueWpMdjJsYWfE2d2Q9aPRvZ
+ fLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790445400; x=1791050200;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=maHY6REF4PxHvCHUgnPtzCMxPlo1A+DkehQAFQcOH2c=;
- b=Ne7gBUuYKy4m/c48aVuHk/pl+seyL1U8RbXImE63v1GEQoCnql3ZYMN1EjFSU88Xsl
- bL3JBaO29yjVAmRLdKP8sXMX7kJBZznrQFvna8dTVnp5A6a6IM9Flo1SBLrGRQAOF56d
- pNbIpEcPz5t0VA1abADHntVjfbCHcmQspaVgZRnLql41A6qVcUuOuMoYZo+bkP61HjTI
- qIEBLrxotHmfik7vmO6WP9V4akfu7vfvaOkYeu6GkR5jGR4hf8RwtvVI3VphplKp1iE5
- mENt5lMgH+7d4/9AVowCDzZRCYE6jS9quxx6ky1mbKY1s+09VfILWVM1EFFnPOqnHTKN
- mxBw==
-X-Gm-Message-State: AFuF++k4a1eqafgaMU1YCMfX5bw5tJ1XW5BR38/Pp8nEb9hnbQr4Hd1f
- 0uFl14/HYeXSSWAM7F3VRK2HZ0a/JVClVd26RhXpiZrkMsGmPdZeNDG9d/8gTAl6
-X-Gm-Gg: AYBFou3JI/YRAEb8c1OP/lTLtUN0If4bJESa5cZCNA0BlUB0QF/8m9wBAqb4QwkOmfW
- jatOM+SDe+oZ6py4u9QVsagMtqK8NF/UI9VLfO2egeVJeze46VYhcHw6aT3w9srmxfv2Mn5YOuy
- XgTN7Zj5YBb58idh97mNlgS4rD79Qurd8Kh75MwYjAp2c3qE1j4/+NXvC+tN347MyWx+G+Gcgac
- ziaf7taH/7nFEXP+VeqnIrsZr8CVTvgDnhdB2TULp8mwOkTTjC2+C9LMdtpeevpHAujcIbngEBV
- 7E6E1hjoOcab4uaJNWE3GINJBcz5n51AnUp6G8S1p3+1VMt2MgzNf6gmGSYi8I5ZN0vvyQNUuNc
- X2bleknS0ygAIE5Yxym32NsyVeq77lscTRKBYxtRg0VNsnJhdYaOQfKga3v74/PQSPWW8zur6lt
- JKkaO+mGA2dDubtSY+Rx4AvS1F4mFj+NvKLtwoVtr2x4I9pl4MgksZkySd7Q0jiS0AUccTWHFYY
- orhgX0I
-X-Received: by 2002:a05:701a:c909:b0:144:fd77:5b0d with SMTP id
- a92af1059eb24-146ce1a9f1amr4229780c88.2.1790445399539; 
- Sat, 26 Sep 2026 10:56:39 -0700 (PDT)
-Received: from jacob-pop23u.lan ([2600:1700:88b2:a50:9eb0:e16a:8f0e:f9cb])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-145a7318afcsm13553669c88.0.2026.09.26.10.56.38
+ d=1e100.net; s=20260707; t=1790450627; x=1791055427;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xRIrBXzKSdyJOLjDczWGLXALDm6y6xvkXDeJw1yIwww=;
+ b=KwfqS4A2KgqusxZRBfXaeDJwoE0fRPI/iVw1LAfrxL/momr0z68LWXFo09FH/m/IE1
+ /ICt8Dt3/gC9F48CKXrBsCd4Ikq1pVhOnXIs+jyANrKrH63gwgcWvjlQYJ/y05YUqrKU
+ vErE/Auf16kLsZPbT6iohZoy67PysjQje8/l4RaDXsJEcCyB3oGQJQ81Ei2kgf4G+Vlq
+ kf7rRkfSdq+K9rp7i6eFYIxRTsVkOSl6dNzMO8YlNSi+Q9kc3K6Sypz/0ckaGSDeX/TK
+ z4ml+CaA7Dt7IN8QcvHh4+fHTyWXMIj6Etqeysi/3sbPdhDc9S6x31+7p2OKRb36aFOz
+ zZJQ==
+X-Gm-Message-State: AFuF++mgWniTHdRGhwKamxDFSuSN0pAIv7aCQjOs9ZxD4B0G5Pz4fU7C
+ 4ju1U5KxfkHK9Rx4kByIEwVevHtGf/PuFn5pw/Z/guk+BmZAbeZyuJYeTYJwpnU1gJ6+oxI3R/w
+ rtjmoVj9tJ+PGD67eR05u+CJuQke3uYrRDjcvGHnTxL9BzDEESYe26dZfqLIIxz3VeA==
+X-Gm-Gg: AYBFou2fXSIcprKAVK3b7R/nJevvhEh2isWzusAah60X/I0YE1eTjwod7w97EkwecZE
+ amlNW8PHO3qfR+EU61kGkkf/S7XtRRTVr4ROSQUR9UKiwkL3v4iNE3bEzyiY6UErTDu40KO9UTC
+ 2I6RiCfMranqOuMP20r6iIB+NepPrkdect5HC5RKWDCwsB8KQDX+LDzS6lneXHJQ/n2kDkx2HH5
+ UKd5pG3+BQsM772pSwBwLRDRINfNGDd6OSEesMswbCv4Rtfe7uJieTo+NZtW69FZhTy9Z+gUa2K
+ tPZu1zDJTZQsut7v/eR3yDMLmrbs8KGNF1k1cxmHYBxbd3sAQSAPe84w1pvB4pm8IrPfYssGM4E
+ eBIvw34xCW7R+FBFPu8TCh0CuxUTzulrGLqHM5/CzjdGT+dE=
+X-Received: by 2002:a05:7022:4199:b0:144:fdf0:9d91 with SMTP id
+ a92af1059eb24-146cfdd2b0dmr5296828c88.24.1790450626514; 
+ Sat, 26 Sep 2026 12:23:46 -0700 (PDT)
+X-Received: by 2002:a05:7022:4199:b0:144:fdf0:9d91 with SMTP id
+ a92af1059eb24-146cfdd2b0dmr5296755c88.24.1790450625438; 
+ Sat, 26 Sep 2026 12:23:45 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-145aa0cb6b9sm13526271c88.1.2026.09.26.12.23.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 10:56:39 -0700 (PDT)
-From: Jacob Whitaker Abrams <jwhitakera@gmail.com>
-X-Google-Original-From: Jacob Whitaker Abrams <satur9nine@gmail.com>
+ Sat, 26 Sep 2026 12:23:44 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Jacob Whitaker Abrams <satur9nine@gmail.com>,
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- qemu-arm@nongnu.org (open list:STM32L4x5 SoC Family)
-Subject: [PATCH v3] hw/char/stm32l4x5_usart.c: Support 16-bit writes
-Date: Sat, 26 Sep 2026 10:56:34 -0700
-Message-ID: <20260926175634.2034094-1-satur9nine@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ richard.henderson@linaro.org, marco.liebel@oss.qualcomm.com
+Subject: [PATCH 04/10] target/hexagon: fix V6_vcmov reserved-bit encoding
+Date: Sat, 26 Sep 2026 12:23:32 -0700
+Message-Id: <20260926192338.2702952-5-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
+References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::28;
- envelope-from=jwhitakera@gmail.com; helo=mail-dl2-x28.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI2MDA3NyBTYWx0ZWRfXzQwRNWwV9o0/
+ opY3j5qRHNW39357jpijRGrmeKVRee/E9F9QcJMihVHCF6PtqnpBMADg7b94Fv75tHnxzdGHS6k
+ Erp4zbDYOb9XiJO43r9t8FS9F7Qd7Aw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI2MDA3NyBTYWx0ZWRfX0SPaCxcZwIDu
+ vm7ug5nhuu8gOI8nJixq1OCVhk+V/+ufzVZSM3hCPZrSnTGJvLK6mfyx/SGg/B6ea5cZRhTWyBa
+ 8YD80Bn/11mWJ73l6PmwzrWz/7K4k+vjF6fLmYyOnkPE3GveV2u3T4rcSpL0UD9tYvVmAzhP46/
+ +0KuGF+NBpz0iCkfAz/rAPUltkWNjc2cnoQvQddjYk2wsDbJrIUGP9KBUFAyySsCvn7ciLFJrWR
+ m+AyN4rryN3piMBtVYFcuikZskmTchEcHocWMIv9dPt3Lm5R9PdeobWWe3i1rFbwPNEPSGBEWPf
+ OEjOQAww6Uf6+v57i4fo1Ke5lAI17AwP4um3LoI3roSlOcg6N1yX1XPUxToYVHyNW/10Q+BVlYX
+ k3vuEGf/yPGN3woIx+8JdraYVvpNF1+Y3ulclPvSRuLATr4XNe1wgrGxHhOvZOG97NbLGRnBIQa
+ 7mrs0m32vHSzTlAGwTA==
+X-Proofpoint-GUID: m3PH_bINl3ghY2UIHwqL4NRtIcyVq17_
+X-Proofpoint-ORIG-GUID: m3PH_bINl3ghY2UIHwqL4NRtIcyVq17_
+X-Authority-Analysis: v=2.4 cv=K6G3jCWI c=1 sm=1 tr=0 ts=6ab81bc3 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=ptefoZwEObSeWYFtGJoA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609260077
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,78 +153,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Official STM32CubeL4 drivers use and require support for 16-bit writes to
-UART registers for proper function despite datasheet claims.
-
-Signed-off-by: Jacob Whitaker Abrams <satur9nine@gmail.com>
----
-v3:
- - Add suggested comment and set only valid.min_access_size to 4
-v2:
- - Remove all changes other than supporting 16-bit writes UART regs
-
- hw/char/stm32l4x5_usart.c          |  7 ++++++-
- tests/qtest/stm32l4x5_usart-test.c | 22 +++++++++++++++++++++-
- 2 files changed, 27 insertions(+), 2 deletions(-)
-
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 0b02dde1f8..c4ffc0d6ce 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -522,7 +522,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-         .max_access_size = 4,
--        .min_access_size = 4,
-+        /*
-+         * Official STM32CubeL4 drivers use and require support for 16-bit
-+         * writes to UART registers for proper function despite datasheet
-+         * claims.
-+         */
-+        .min_access_size = 2,
-         .unaligned = false
-     },
-     .impl = {
-diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-index a72c5a685d..3c6437e75d 100644
---- a/tests/qtest/stm32l4x5_usart-test.c
-+++ b/tests/qtest/stm32l4x5_usart-test.c
-@@ -332,6 +332,26 @@ static void test_ack(void)
-     qtest_quit(qts);
- }
- 
-+static void test_16bit_access(void)
-+{
-+    QTestState *qts = qtest_init("-M b-l475e-iot01a");
-+
-+    /* GTPR is declared uint16_t in the official STM driver. */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_GTPR, 0xABCD);
-+    uint16_t gtpr16 = qtest_readw(qts, USART1_BASE_ADDR + A_GTPR);
-+    g_assert_cmpuint(gtpr16, ==, 0xABCD);
-+
-+    /* TDR is uint16_t and r/w, register is 9-bits */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0x01CD);
-+    uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
-+    g_assert_cmpuint(tdr16, ==, 0x01CD);
-+
-+    /* RDR is uint16_t and read only, register is 9-bits */
-+    qtest_writew(qts, USART1_BASE_ADDR + A_RDR, 0x01FA);
-+
-+    qtest_quit(qts);
-+}
-+
- static void check_clock(QTestState *qts, const char *path, uint32_t rcc_reg,
-                         uint32_t reg_offset)
- {
-@@ -370,6 +390,6 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
-     qtest_add_func("stm32l4x5/usart/ack", test_ack);
-     qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
-+    qtest_add_func("stm32l4x5/usart/16bit_access", test_16bit_access);
-     return g_test_run();
- }
--
--- 
-2.43.0
-
+VGhlIGFyY2hpdGVjdHVyZSBkZWZpbmVzIHRoaXMgZW5jb2RpbmcgYml0IGFzIHplcm8uICBMZWF2
+aW5nIGl0CnVuY29uc3RyYWluZWQgYWNjZXB0cyByZXNlcnZlZCBlbmNvZGluZ3MgYXMgVjZfdmNt
+b3YuCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5j
+b20+Ci0tLQogdGFyZ2V0L2hleGFnb24vaW1wb3J0ZWQvbW12ZWMvZW5jb2RlX2V4dC5kZWYgfCAy
+ICstCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYg
+LS1naXQgYS90YXJnZXQvaGV4YWdvbi9pbXBvcnRlZC9tbXZlYy9lbmNvZGVfZXh0LmRlZiBiL3Rh
+cmdldC9oZXhhZ29uL2ltcG9ydGVkL21tdmVjL2VuY29kZV9leHQuZGVmCmluZGV4IDA4NGFlM2Q4
+NTQyLi5iNDZmNTE0OTJkOSAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vaW1wb3J0ZWQvbW12
+ZWMvZW5jb2RlX2V4dC5kZWYKKysrIGIvdGFyZ2V0L2hleGFnb24vaW1wb3J0ZWQvbW12ZWMvZW5j
+b2RlX2V4dC5kZWYKQEAgLTM5NCw3ICszOTQsNyBAQCBERUZfRU5DKFY2X3ZzaHVmZiwgICAgICAg
+ICAgICAgSUNMQVNTX0NKIiAxIDAwMSAxMTEgdHR0dHQgUFAgMSB5eXl5eSAwMDEgeHh4eHgiKQog
+REVGX0VOQyhWNl92ZGVhbCwgICAgICAgICAgICAgSUNMQVNTX0NKIiAxIDAwMSAxMTEgdHR0dHQg
+UFAgMSB5eXl5eSAwMTAgeHh4eHgiKSAvLwogCiBERUZfRklFTERST1dfREVTQzMyKCAgICBJQ0xB
+U1NfQ0oiIDEgMDEwIC0tLSAtLS0tLSBQUCAtIC0tLS0tIC0tLS0tIC0tLSIsIlsjMl0gaWYgKFBz
+KSBWZD1WdSIpCi1ERUZfRU5DKFY2X3ZjbW92LCAgICAgICAgIElDTEFTU19DSiIgMSAwMTAgMDAw
+IC0tLS0tIFBQIC0gdXV1dXUgLXNzIGRkZGRkIikKK0RFRl9FTkMoVjZfdmNtb3YsICAgICAgICAg
+SUNMQVNTX0NKIiAxIDAxMCAwMDAgLS0tLS0gUFAgMCB1dXV1dSAtc3MgZGRkZGQiKQogREVGX0VO
+QyhWNl92bmNtb3YsICAgICAgICAgSUNMQVNTX0NKIiAxIDAxMCAwMDEgLS0tLS0gUFAgLSB1dXV1
+dSAtc3MgZGRkZGQiKQogREVGX0VOQyhWNl92bmNjb21iaW5lLCAgICAgSUNMQVNTX0NKIiAxIDAx
+MCAwMTAgdnZ2dnYgUFAgLSB1dXV1dSAtc3MgZGRkZGQiKQogREVGX0VOQyhWNl92Y2NvbWJpbmUs
+ICAgICBJQ0xBU1NfQ0oiIDEgMDEwIDAxMSB2dnZ2diBQUCAtIHV1dXV1IC1zcyBkZGRkZCIpCi0t
+IAoyLjM0LjEKCg==
 
