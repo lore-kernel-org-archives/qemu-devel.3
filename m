@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B77C98335
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 08:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E71C98318
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 08:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xANbP-0000ti-LC; Sat, 26 Sep 2026 04:17:47 -0400
+	id 1xANa8-0008Db-WE; Sat, 26 Sep 2026 04:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xANab-0008KI-U8
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 04:17:01 -0400
-Received: from mail-dl2-x0e.google.com ([2607:f8b0:4864:38::e])
+ id 1xANa6-0008C1-Qj
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 04:16:26 -0400
+Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xANaZ-0006rQ-3u
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 04:16:57 -0400
-Received: by mail-dl2-x0e.google.com with SMTP id
- a92af1059eb24-144efd1ea76so1013744c88.1
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:16:53 -0700 (PDT)
+ id 1xANa5-0006oR-A6
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 04:16:26 -0400
+Received: by mail-dy2-x0f.google.com with SMTP id
+ 5a478bee46e88-33e46a156f4so871431eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 01:16:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790410612; x=1791015412; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790410584; x=1791015384; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=bykFcKA6UsA5TmzVTu+04YGJhlxe19nedknbhDiTTcM=;
- b=c2W8u1BXeq5+pvUJDBCX+IVkKRWdYe9YQjwpb2+uCXmYmNa4FiU/8RwCTDvZEh0DFp
- +tBgWWJLHS7DQQuTkZLlZjRIP6dpeL1w0Hi6POmDmrbLWTm+tShNaythUC7YjTQosxTR
- RQsYZnXQxRpakZU0WzLGrAMnuebOOT0D9wZ71CC8ptpP+rPGZRtB2nDIUBUrMJjt1fKf
- ZAeCZcV8hyV7x2o3szQb65bx1902Xy1XxprceGtYJk96Cu4DlU+pBvZR2OtA2AuW7yY5
- PMkkNn0t3wR3QKShFSLxHw1+AmelrW7LeuMmdAwL1nlQHVi28pn+wQm7BwV5WE6+QyBn
- 1RRA==
+ bh=dGcjkcxYt8eZEjWK6mpDvnDtPiferHjEtlr90RuU0eI=;
+ b=GhY45SZTYPb0XGwu4MkKSEpJ6U16TBOjaJQeZx9N64CL20BoEpJ2x7330p4pP1SuyR
+ kRFve7hnbZoW14xM8Ex3iVc/Cg22invFc1xgvrS5LAixlWsJmHlu0SqUSyZVRIRWoHHC
+ gvAigC1Q4OnRbMHLH10I3pJJgSl/Old7O2yDZw5rnbNfadTndOy5TUw0rGjx6pkye3HQ
+ m8mtpl3P4GXLSPcJ+A8UyLjUBwYC3M0Rd3XeoPxAzIyXkSaGvhg8DLtfEUI2mudpv3ny
+ Pi/2TjdLYZHv3Ur7h4RKjUVNy1EIpqOKrf7d8FHknKbbUop/bvDEopM0YgjkJrE9AoqD
+ 5OrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790410612; x=1791015412;
+ d=1e100.net; s=20260707; t=1790410584; x=1791015384;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=bykFcKA6UsA5TmzVTu+04YGJhlxe19nedknbhDiTTcM=;
- b=N/XinlWV9lsxc4RO++Fot1uv40SswmVsDvh2gJ7nShByiIhTp7WQawcJa+pIRZ4QY1
- VOvrPNQFsUHQoMiziCX5tPyU4BtYpc4oDCHFHJ2HWAw8ewGDiiZ5WqfdwuYX+a9NqqCi
- PeKWL+xP3SsqNxVQrsvODioUqD06TUuKGNICZGTok8zSRfxOaBqIZ5JtHWVGIDoCcI+6
- aBKckFP0cDXkUMTGz08sac0RXu/43sqiUB9lCEMOW+DHWVjc2klYTLOQR+Ak9c0vpGch
- GWylPgZkM64z0YyXufnQGZlhCH1icVX2qw/Q+ex7xbgeM8ibTfiB2vnoFVyXZyUCCLCr
- f5nQ==
-X-Gm-Message-State: AFuF++lUxiz0TiYVo4b3GgLVTw4HEsaPG+1UtN5gasvea0OjNe4BsdkZ
- 3kh3++N/13YjPu5jMPIoLEm1/FhaKgVrmAoszmCXWQ98+tsHnFqH2RjsyuvcuGDP
-X-Gm-Gg: AYBFou0S6dLRuQZSK2HBcigG7CQ3OGvGNnQ/hZ+U3B3tcxzc4gfHplhidNotLepbXgF
- hXdzVB+asjHGe4X3D+kxR0zTl/mvxfFadl2VQHe71IH4vG0s/JxOeZ1joUTKlWXwe/FgBfM+kmr
- cJB6LTpIpRc9q/SWpJ9ZP8V+gYpPQ2W7Jkfl31trrr/kEH/sNboZG1sWIfJPzaNY2SO+DsBIlCN
- xAmdtSJhvpPmopHVMlg4tEZ7aIcI1Y9H2W3t4660HuOFoRUv0jsoX0oSNe+RxcqGVbYU5RyfDRV
- /snyej7TfK246n39SJSYbNaixloGJHmhyl5Xa4DgdvDJecuBuTHBBSNUm620uag4XkGyWnFGovb
- BVLc8dtPboW4m9tuuCXGQXGDssaahCMdD0Pwssi3MF3uZZXqRNmMNmNtpHpXM4KIRZdKPw8OCdd
- RBLJuBWNZqKVEDvSNlU2Rv32ZepuXNyeZxe58ZeJkGTNUdyl9GnE+VFWGspCNahE0L2FxwOyMy8
- qTy0CfvNko+oCRwcqtfEK6Ef9pdZMk=
-X-Received: by 2002:a05:7300:a987:b0:341:bcd4:7b6a with SMTP id
- 5a478bee46e88-3426f8c1dcfmr3183022eec.4.1790410612304; 
- Sat, 26 Sep 2026 01:16:52 -0700 (PDT)
+ bh=dGcjkcxYt8eZEjWK6mpDvnDtPiferHjEtlr90RuU0eI=;
+ b=w67bh5/+A3Y/Fy5q72MigBmunhdz4wSXOM3+4YYv9/i3X/pPRN30hFkYT/NwhsRn/T
+ xPB1y59VqFLOKVp0a/ekeXoQLT+elfDCmnOV8QxJhq4H+rdh2e+bi3YbI20DQ2iYXMGg
+ cMOEBGkpKmQ2FPnfME55rLw+D7uCBKn+rbU3XYei4nfH+YIrobbDk448kAiV3sfpkZkR
+ btZLX7IcSoiwB229ROFiJKSq4DER1Ifyl3bgeQQ7QCJ5Z1Mk356bcjSC2TFWZ3IXtQo7
+ p8xtyjkL3wTX05ouE7pYwzL5SoAj0rOFuzXEZxkn7Dm8w7BwC4hlOjXpW9U8xEwCdqoc
+ 8sJQ==
+X-Gm-Message-State: AFuF++m2k2dT+AZqPjEJPnKyUuMDqVAJ5S5K8oSQoaTrOOz8td54GE16
+ 0aN48QCE4+fAYH23BfIr55Xyoaamr7GdQuj8S6sFBMfIfvzEUVdIVw1P2BFPQRQi
+X-Gm-Gg: AYBFou1I39Mqy9/1dvY3RDfhF+EJ4F5tezgZ2o1xynwF2PTT0kagOwJY9AaAmLDH3qW
+ 53fsIE1gD7qDOhHLmYoprmYvG8fDe36fnu3YVNLPsYbO/nEI8+yAyKyZsVDSRyUhlbfYnNbtOz/
+ zb1ATrUEvhgp8WDIjJIhWPFuICPkLQPVXBzaYVseVnqu+QwvjXRp7QqZiyogSSbmH0VT0alDgQF
+ BndXGp5FRMJpB0PmsmH3q/dxjqJi18WAyeYJDqfX7LD3TtSIqkMC2Giej+2nhfo8QVfQyITU4CQ
+ 1kteC+DVKBvDYMlAzVxR4kkkIjDFePZYudI8PMukoGpdlNIo1CVzM38PX3eOCWf+EW7kRZwjA1Z
+ /nK8NyNf1rDXXDsHMBfdmakhmfJMwluVMIUIjHpHvc4PKKbYPxVE18dVXwmMZ8RQ16i6DImKS1l
+ H9YdC5FRQpFOxw9zlKpGfVM1z8AtiVRkIYzelXz1Z2wtSY42WExQi75Xz4TCBroDFDr+S9/ao4s
+ CKjw1L9BJQfFEAXmN5jNPZ4v9sKlrZz
+X-Received: by 2002:a05:7301:f10:b0:33b:c69b:7074 with SMTP id
+ 5a478bee46e88-342700be120mr2169607eec.4.1790410583789; 
+ Sat, 26 Sep 2026 01:16:23 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34144f4eb9esm11970568eec.19.2026.09.26.01.16.47
+ 5a478bee46e88-34144f4eb9esm11970568eec.19.2026.09.26.01.16.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 01:16:51 -0700 (PDT)
+ Sat, 26 Sep 2026 01:16:22 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu@processmission.com>, Eric Blake <eblake@redhat.com>,
@@ -85,23 +85,23 @@ Cc: Chao Liu <chao.liu@processmission.com>, Eric Blake <eblake@redhat.com>,
  Philippe Mathieu-Daude <philmd@mailo.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Laurent Vivier <laurent@vivier.eu>,
  Weiwei Li <liwei1518@gmail.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 09/10] qapi: return MachineInfo typename from query-machines
-Date: Sat, 26 Sep 2026 16:15:49 +0800
-Message-ID: <20260926081551.29-10-luoyonggang@gmail.com>
+Subject: [PATCH v3 04/10] hw/or1k/virt: use unique QOM name
+Date: Sat, 26 Sep 2026 16:15:44 +0800
+Message-ID: <20260926081551.29-5-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926081551.29-1-luoyonggang@gmail.com>
 References: <20260926081551.29-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::e;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,156 +117,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-query-machines returned only the -M name, so management apps inferred
-the QOM type as that name plus "-machine". A prefixed type such as
-arm-virt-11.1-machine no longer matches -M virt-11.1. Return the QOM
-type in MachineInfo typename from object_class_get_name() in
-qmp_query_machines(). test_query_machines_typename checks that
-qom-list-properties accepts it.
+Set TYPE_VIRT_MACHINE to MACHINE_TYPE_NAME("or1k-virt") so OpenRISC
+virt no longer collides with other virt-machine types in one process.
+Keep the -M / help / migration name as virt via
+machine_class_set_name().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/machine-qmp-cmds.c |  1 +
- qapi/machine.json          |  6 +++-
- tests/qtest/qom-test.c     | 65 ++++++++++++++++++++++++++++++++++----
- 3 files changed, 65 insertions(+), 7 deletions(-)
+ hw/or1k/virt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 9c08b17510a..27ceed54a14 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -116,6 +116,7 @@ MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-         }
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index 2ff5c084a2b..35884252379 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -34,7 +34,7 @@
+ #define VIRT_CPUS_MAX 4
+ #define VIRT_CLK_MHZ 20000000
  
-         info->name = g_strdup(mc->name);
-+        info->q_typename = g_strdup(object_class_get_name(OBJECT_CLASS(mc)));
-         info->cpu_max = !mc->max_cpus ? 1 : mc->max_cpus;
-         info->hotpluggable_cpus = mc->has_hotpluggable_cpus;
-         info->numa_mem_supported = mc->numa_mem_supported;
-diff --git a/qapi/machine.json b/qapi/machine.json
-index b1be5608b61..f5ead98e174 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -168,6 +168,9 @@
- #
- # @name: the name of the machine
- #
-+# @typename: QOM type name of the machine, for qom-list-properties
-+#     (since 11.2)
-+#
- # @alias: an alias for the machine name
- #
- # @is-default: whether the machine is default
-@@ -208,7 +211,7 @@
- # Since: 1.2
- ##
- { 'struct': 'MachineInfo',
--  'data': { 'name': 'str', '*alias': 'str',
-+  'data': { 'name': 'str', 'typename': 'str', '*alias': 'str',
-             '*is-default': 'bool', 'cpu-max': 'int',
-             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
-             'deprecated': 'bool', '*default-cpu-type': 'str',
-@@ -238,6 +241,7 @@
- #               {
- #                  "hotpluggable-cpus": true,
- #                  "name": "pc-q35-6.2",
-+#                  "typename": "pc-q35-6.2-machine",
- #                  "compat-props": [
- #                       {
- #                          "qom-type": "virtio-mem",
-diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
-index cf4c6b5add5..4ee95af6d94 100644
---- a/tests/qtest/qom-test.c
-+++ b/tests/qtest/qom-test.c
-@@ -200,13 +200,32 @@ static void test_machine(gconstpointer data)
+-#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
++#define TYPE_VIRT_MACHINE MACHINE_TYPE_NAME("or1k-virt")
+ #define VIRT_MACHINE(obj) \
+     OBJECT_CHECK(OR1KVirtState, (obj), TYPE_VIRT_MACHINE)
  
-     if (g_test_slow()) {
-         /* Make sure we can get the machine class properties: */
--        g_autofree char *qom_machine = g_strdup_printf("%s-machine", machine);
--
--        response = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
--                                  "  'arguments': { 'typename': %s } }",
--                             qom_machine);
--        g_assert(response);
-+        QList *list;
-+        const QListEntry *p;
-+        bool found = false;
-+
-+        response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-+        g_assert(!qdict_haskey(response, "error"));
-+        list = qdict_get_qlist(response, "return");
-+        g_assert(list);
-+        for (p = qlist_first(list); p; p = qlist_next(p)) {
-+            QDict *minfo = qobject_to(QDict, qlist_entry_obj(p));
-+            QDict *props;
-+
-+            if (strcmp(qdict_get_str(minfo, "name"), machine)) {
-+                continue;
-+            }
-+            props = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
-+                                   "  'arguments': { 'typename': %s } }",
-+                              qdict_get_str(minfo, "typename"));
-+            g_assert(!qdict_haskey(props, "error"));
-+            g_assert(qdict_haskey(props, "return"));
-+            qobject_unref(props);
-+            found = true;
-+            break;
-+        }
-         qobject_unref(response);
-+        g_assert(found);
-     }
+@@ -548,6 +548,7 @@ static void openrisc_virt_machine_init(ObjectClass *oc, const void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
  
-     test_properties(qts, "/machine", true);
-@@ -218,6 +237,39 @@ static void test_machine(gconstpointer data)
-     qtest_quit(qts);
- }
- 
-+static void test_query_machines_typename(void)
-+{
-+    QTestState *qts;
-+    QDict *response;
-+    QList *list;
-+    const QListEntry *p;
-+    bool saw = false;
-+
-+    qts = qtest_init("-machine none");
-+    response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
-+    g_assert(!qdict_haskey(response, "error"));
-+    list = qdict_get_qlist(response, "return");
-+    g_assert(list);
-+
-+    for (p = qlist_first(list); p; p = qlist_next(p)) {
-+        QDict *minfo = qobject_to(QDict, qlist_entry_obj(p));
-+        const char *typename = qdict_get_str(minfo, "typename");
-+        g_autoptr(QDict) props = NULL;
-+
-+        g_assert(g_str_has_suffix(typename, "-machine"));
-+        props = qtest_qmp(qts, "{ 'execute': 'qom-list-properties',"
-+                               "  'arguments': { 'typename': %s } }",
-+                          typename);
-+        g_assert(!qdict_haskey(props, "error"));
-+        g_assert(qdict_haskey(props, "return"));
-+        saw = true;
-+    }
-+
-+    g_assert(saw);
-+    qobject_unref(response);
-+    qtest_quit(qts);
-+}
-+
- static void add_machine_test_case(const char *mname)
- {
-     char *path;
-@@ -250,6 +302,7 @@ int main(int argc, char **argv)
- 
-     qtest_cb_for_every_machine(add_machine_test_case, g_test_quick());
-     qtest_add_func("qom/qom-qtests", test_qom_qtests);
-+    qtest_add_func("qom/machine-typename", test_query_machines_typename);
- 
-     return g_test_run();
- }
+     mc->desc = "or1k virtual machine";
++    machine_class_set_name(mc, "virt");
+     mc->init = openrisc_virt_init;
+     mc->max_cpus = VIRT_CPUS_MAX;
+     mc->is_default = false;
 -- 
 2.52.0.windows.1
 
