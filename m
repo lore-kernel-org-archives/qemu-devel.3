@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD89C9831E
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD47C9831E
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMWN-00034i-6B; Sat, 26 Sep 2026 03:08:32 -0400
+	id 1xAMT9-0006GQ-SQ; Sat, 26 Sep 2026 03:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMSR-0005ll-4B
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:29 -0400
-Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
+ id 1xAMRB-0003xS-CC
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:03:11 -0400
+Received: from mail-dl2-x0f.google.com ([2607:f8b0:4864:38::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMSM-0000jY-By
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:04:26 -0400
-Received: by mail-dy2-x0e.google.com with SMTP id
- 5a478bee46e88-341f6327b95so909791eec.0
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:04:21 -0700 (PDT)
+ id 1xAMR8-0000ak-39
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:03:08 -0400
+Received: by mail-dl2-x0f.google.com with SMTP id
+ a92af1059eb24-1450541ab50so742989c88.3
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406261; x=1791011061; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406185; x=1791010985; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0u6v0Fz0eEopOq93fm9oJ1Po0gdhW3aHNUxjTbXaKJQ=;
- b=p0ZTnf2cvDAEw4MFxhl2kUxA0h3qSIoSONS/0GgS7DwfFolLBDhfXgRgaDvoem0mqg
- 9ncWhTsQ0tv3Ny6tT8LPcSbYAUpe5p+mTRCc28Xb7h3UK5JXJ6nbCyR+cSeD0XxRxYGZ
- 2P86h8yEtT6TfGFC+Nagl2xCmpfTpOlCJw8+/F/gCBdujIrDDiAPHXGvnWZknkz41aLS
- ouMtfrBCuxKZ0+y84WpBJPbIPWUCwzfHAN+hKIR922rvg65wsmcsZlMYZzL0rR4GBuec
- eNiY0PmWuLAcTSfLbrgdhfyrjurdo2tXJDlQHZP0S4Lq1lUqgqhUpe2QL/UIeb6S6x6J
- IixA==
+ bh=ALxUX35YxAT0/hMJem0o96GiSG/xYkkLx16debZXGzM=;
+ b=oi3EraHAxGMhb1L7SFTYbGlCxh22LqU9cVXiiI5EQ38PRDAlkz4UrjrQty/NKOknxB
+ mHZj5XIT3CyzKagN2zbWNouFI2pAm46Oik7g6F1Wl7sPdFEDZEW54Ou6+QDMWXcVLgDY
+ 4BNF8aoW1B7mCwwHn+loYz2nzbUwXY05ViAg/WDqMmn5tOKEAXZmwMVxwTe0Pb9a1Osa
+ anLhonf4Pabw2KjjCUcHXAIuinu7QU64c+/3leFxn/dKV3fsz6TXIJnFEMY7VRVhHuuY
+ jdMcd5cGh5N4qdFK/lS3fwNrSxI0hgnVLiuaKFIy7zKVH7f8mz0DMO60WhKi/Cpx5BE0
+ yDbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406261; x=1791011061;
+ d=1e100.net; s=20260707; t=1790406185; x=1791010985;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0u6v0Fz0eEopOq93fm9oJ1Po0gdhW3aHNUxjTbXaKJQ=;
- b=vxoYqT2ivpJjazQjwPA6Vz6f3YVzDPoTmj1Huv6UaA+PthqEJrkOioNhyVSki1mYTz
- NJhdX7i54xiZBD6LT+re0qGacpjHmssjU0ORKbnb7Dd5XivM7lcfhcTbi+Y3TV3Z/g2H
- 0ZiGHdGEHdXKqC7CcBWGBIASXT6o5QpK9GNA2AS2auM/NIMdSFJGGWWJLVTSVdTYJY/m
- XIJdEfT8JC1iEvY/ZTHqU0vl7c3wjrGh/Mkpc8AjaJJP0sfVVkUUyotDx04jenY2btVc
- q1f+B008NL59d07Av0CZulHhu4CSNCTX/Gtpb8GCY6jTiKR2GD4ExxE1bqIGXCQK+Q6a
- yAWg==
-X-Gm-Message-State: AFuF++lwfKpM013+m8uPaUSdGvq51hm2PRKCPEh5uMGkwFY05RPHfH0m
- IhPt8UN4SMiViPHq4DtZY2pGDoT24U7qiSoviqOn7nAMcSPibKOLbn5T5WJdL/+P
-X-Gm-Gg: AYBFou2dkwuhXlJJJSTy0TLpekqUkAvDaimunbkgZYM0XAw9QD5VEL6jcWiaOJmoXUW
- 9PLY1iCrbMHcXbV9VtHtqx8TsKEwODrDK2Kly4pO+pdpnw8EQaweMo6DRuNh+UTLX4+FX+ekaW8
- 7frAHhKCcuNCfNQeBl1htY2/JibU6IPOANhYGhhrOzdOuXaEPpJ78MVUvONVt1GODdYiP5qOcYI
- znUO8K8hobdR4kFsGwWrvzFNIhANzBsHXTeRAKtBtW977LxHFPBPZgxbNhKhqAVfOfNerQ8nSRQ
- YCVzHMnZIKv4vhnsn0giw+7/6NcU05uOOvvOrhwpy3tQeEsVeAWnO1w/eJi/r55IPMLd0ducnKX
- DKdTSwJ4YWfy3CvknhMMWFZj62adYzH1iYiHR57fg1m5UfudVy3HKgKNM8/M1lDqSmLS9PqYidh
- efTzWZer8x5In/2S1pF9y7UQWTetyx4GmM72q6XqqqDl4dErf/1xGO+N9gYcbAiokK3FA8bimxS
- /+rxkXKWPCSQhOfqAbMcUBy9uiIaYA=
-X-Received: by 2002:a05:7301:310:b0:341:bd7e:da35 with SMTP id
- 5a478bee46e88-342702bf0e8mr2173019eec.11.1790406260542; 
- Sat, 26 Sep 2026 00:04:20 -0700 (PDT)
+ bh=ALxUX35YxAT0/hMJem0o96GiSG/xYkkLx16debZXGzM=;
+ b=ti4Kv4sbohSNIfyLPYxf6yAANZNOnJbSupJazVTfbgsYUIDAZVhlSAMQn2dt3EeBcS
+ E8UOXtybKko4QQ0mSRn3VibZMJhAe+fCJE05sE/6IFPQlsnRnmLjMYZ0lKOBp5Fm6Jzt
+ SSnxnNdZ4Cl0QCOW7d5mN+mwa3Q4mmLwnVysuj+18J9O1r/gWsvS7XpxiJlrk/9zLkwV
+ upVEVGKHuoFqhWY1qaFrJvSNdPSSYBplLd73Ncq9b9O9AScnQYS3gMd0kER14/RcejjI
+ LSFLSiBAN3rEmqhxTC5S350P0MAMIIkqAtp+cvCpXdt3H2OjmmvQhTghGJKMISm/UVIs
+ Ep+A==
+X-Gm-Message-State: AFuF++ldJ3rsY+w9w6ERyyWAeBWHQ9W6fvHPoB8vEMSV1rFLnKz3w0AN
+ AwYVXAMN6h22Q6OTHq0QXv3B6gfOEj0y6slhz+bLuKADXEZ0wJaPBjA4M3EzREc4
+X-Gm-Gg: AYBFou32rnjyHzcYiUu+r8EhmYlfm58USa9/45zN2rLFW0cK4Wa3o4hoLfMebS1iWAc
+ axhX6QzwJqTjq7ND/GVACeb167yn1f+Jp3GIcP9zO4CxRW/MN+8mMt/0rRFgJ57opj9iafb3gp8
+ bvqrw4Pyrxfv07vhHOLeMYAggyC1rSpkA3r/F9K5j+emFFj+WMQI+ftOgprWhpZFh4G1RiYngta
+ BbTSCVGN0JabhQ0Ay4RlmbjnI5XVOKlNsBtAEimMpDP1H6/Whft2OCQw4tJt0HQ39TGq7nPCft6
+ AfjtSdf5oRkAXRdJ5nB29VgT3xfVVzHSqC0SgAFeqT1pZLWMb+p866sg7mjxWcDW3oO8qLZ3K+I
+ w/Sf8q2TYom3SscVAooUyO+N3RHrGgZmn9gmf/PmVUueEsLQItlKFhhsgKr8GtBKhBfCid4FYzj
+ rJBsamewjb3ldTWO4ZHy7LeLAjJ/Mrvx+/LNMEGPk7StuwewYKlnwgEyYgelHnGT0CdMYheyA7P
+ LYt4C1IMhyL5siBcG57PdpYSmrYek4=
+X-Received: by 2002:a05:7022:f108:b0:144:fb42:52 with SMTP id
+ a92af1059eb24-146cfdd1e08mr1944186c88.28.1790406184037; 
+ Sat, 26 Sep 2026 00:03:04 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.04.17
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.03.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:04:19 -0700 (PDT)
+ Sat, 26 Sep 2026 00:03:03 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,17 +78,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 50/55] hw/arm: expand leftover 32-bit DEFINE_MACHINE to
- TypeInfo
-Date: Sat, 26 Sep 2026 15:00:49 +0800
-Message-ID: <20260926070057.1234-51-luoyonggang@gmail.com>
+Subject: [PATCH v4 30/55] accel/tcg: move helper_lookup_tb_ptr into cpu-exec.h
+Date: Sat, 26 Sep 2026 15:00:29 +0800
+Message-ID: <20260926070057.1234-31-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::e;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:38::f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,680 +109,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace remaining 32-bit DEFINE_MACHINE and DEFINE_MACHINE_EXTENDED
-call sites with TypeInfo. Rename *_machine_init to
-*_machine_class_init and set is_available to target_is_base_arm.
+helper_lookup_tb_ptr is implemented in cpu-exec.c. Move its
+DEF_HELPER line to cpu-exec.h and emit helper_info_lookup_tb_ptr
+from that file.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- hw/arm/bananapi_m2u.c      | 22 +++++++++++++++++++---
- hw/arm/cubieboard.c        | 23 +++++++++++++++++++----
- hw/arm/digic_boards.c      | 19 +++++++++++++++++--
- hw/arm/imx25_pdk.c         | 19 +++++++++++++++++--
- hw/arm/integratorcp.c      | 23 +++++++++++++++++++----
- hw/arm/kzm.c               | 19 +++++++++++++++++--
- hw/arm/max78000fthr.c      | 19 +++++++++++++++++--
- hw/arm/mcimx6ul-evk.c      | 19 +++++++++++++++++--
- hw/arm/mcimx7d-sabre.c     | 23 +++++++++++++++++++----
- hw/arm/msf2-som.c          | 19 +++++++++++++++++--
- hw/arm/netduino2.c         | 19 +++++++++++++++++--
- hw/arm/netduinoplus2.c     | 19 +++++++++++++++++--
- hw/arm/olimex-stm32-h405.c | 19 +++++++++++++++++--
- hw/arm/orangepi.c          | 23 +++++++++++++++++++----
- hw/arm/stm32vldiscovery.c  | 19 +++++++++++++++++--
- 15 files changed, 265 insertions(+), 39 deletions(-)
+ accel/tcg/cpu-exec.c               | 5 +++++
+ accel/tcg/cpu-exec.h               | 1 +
+ accel/tcg/tcg-runtime.h            | 2 --
+ include/exec/helper-gen-common.h   | 4 ++++
+ include/exec/helper-proto-common.h | 4 ++++
+ 5 files changed, 14 insertions(+), 2 deletions(-)
+ create mode 100644 accel/tcg/cpu-exec.h
 
-diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
-index ccf60ba2955..a1d9105ce0d 100644
---- a/hw/arm/bananapi_m2u.c
-+++ b/hw/arm/bananapi_m2u.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "system/address-spaces.h"
- #include "qapi/error.h"
-@@ -133,8 +134,10 @@ static void bpim2u_init(MachineState *machine)
-     arm_load_kernel(&r40->cpus[0], machine, &bpms->bootinfo);
- }
- 
--static void bpim2u_machine_init(MachineClass *mc)
-+static void bpim2u_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 5b4bca5084f..021912dc022 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -40,6 +40,11 @@
+ #include "exec/replay-core.h"
+ #include "system/tcg.h"
+ #include "exec/helper-proto-common.h"
 +
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a7"),
-         NULL
-@@ -152,5 +155,18 @@ static void bpim2u_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_EXTENDED("bpim2u", MACHINE, Bpim2uMachineState,
--                        bpim2u_machine_init, false, false, NULL)
-+static const TypeInfo bpim2u_machine_class_init_typeinfo = {
-+    .name          = TYPE_BPIM2U_MACHINE,
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = bpim2u_machine_class_init,
-+    .instance_size = sizeof(Bpim2uMachineState),
-+    .abstract      = false,
-+    .is_available  = target_is_base_arm,
-+};
++#define HELPER_H "accel/tcg/cpu-exec.h"
++#include "exec/helper-info.c.inc"
++#undef  HELPER_H
 +
-+static void bpim2u_machine_class_init_register_types(void)
-+{
-+    type_register_static(&bpim2u_machine_class_init_typeinfo);
-+}
-+
-+type_init(bpim2u_machine_class_init_register_types)
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index e4fef9cd76b..6e14d0e3351 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -16,6 +16,7 @@
-  */
+ #include "tcg-accel-ops.h"
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+diff --git a/accel/tcg/cpu-exec.h b/accel/tcg/cpu-exec.h
+new file mode 100644
+index 00000000000..e4803ebc1a6
+--- /dev/null
++++ b/accel/tcg/cpu-exec.h
+@@ -0,0 +1 @@
++DEF_HELPER_FLAGS_1(lookup_tb_ptr, TCG_CALL_NO_WG_SE, cptr, env)
+diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
+index c0626fa0e02..26e0baeca51 100644
+--- a/accel/tcg/tcg-runtime.h
++++ b/accel/tcg/tcg-runtime.h
+@@ -20,8 +20,6 @@ DEF_HELPER_FLAGS_1(clrsb_i64, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_FLAGS_1(ctpop_i32, TCG_CALL_NO_RWG_SE, i32, i32)
+ DEF_HELPER_FLAGS_1(ctpop_i64, TCG_CALL_NO_RWG_SE, i64, i64)
  
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/core/boards.h"
-@@ -113,8 +114,10 @@ static void cubieboard_init(MachineState *machine)
-     arm_load_kernel(&a10->cpu, machine, &cbs->bootinfo);
- }
+-DEF_HELPER_FLAGS_1(lookup_tb_ptr, TCG_CALL_NO_WG_SE, cptr, env)
+-
+ #ifndef IN_HELPER_PROTO
+ /*
+  * Pass calls to memset directly to libc, without a thunk in qemu.
+diff --git a/include/exec/helper-gen-common.h b/include/exec/helper-gen-common.h
+index fa571d88147..73e979a35f3 100644
+--- a/include/exec/helper-gen-common.h
++++ b/include/exec/helper-gen-common.h
+@@ -11,6 +11,10 @@
+ #include "exec/helper-gen.h.inc"
+ #undef  HELPER_H
  
--static void cubieboard_machine_init(MachineClass *mc)
-+static void cubieboard_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
++#define HELPER_H "accel/tcg/cpu-exec.h"
++#include "exec/helper-gen.h.inc"
++#undef  HELPER_H
 +
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a8"),
-         NULL
-@@ -132,6 +135,18 @@ static void cubieboard_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
+ #define HELPER_H "accel/tcg/tcg-runtime.h"
+ #include "exec/helper-gen.h.inc"
+ #undef  HELPER_H
+diff --git a/include/exec/helper-proto-common.h b/include/exec/helper-proto-common.h
+index 1b098777e8d..3c32f95f4c1 100644
+--- a/include/exec/helper-proto-common.h
++++ b/include/exec/helper-proto-common.h
+@@ -13,6 +13,10 @@
+ #include "exec/helper-proto.h.inc"
+ #undef  HELPER_H
  
--DEFINE_MACHINE_EXTENDED("cubieboard", MACHINE, CubieboardMachineState,
--                        cubieboard_machine_init, false, false,
--                        NULL)
-+static const TypeInfo cubieboard_machine_class_init_typeinfo = {
-+    .name          = TYPE_CUBIEBOARD_MACHINE,
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = cubieboard_machine_class_init,
-+    .instance_size = sizeof(CubieboardMachineState),
-+    .abstract      = false,
-+    .is_available  = target_is_base_arm,
-+};
++#define HELPER_H "accel/tcg/cpu-exec.h"
++#include "exec/helper-proto.h.inc"
++#undef  HELPER_H
 +
-+static void cubieboard_machine_class_init_register_types(void)
-+{
-+    type_register_static(&cubieboard_machine_class_init_typeinfo);
-+}
-+
-+type_init(cubieboard_machine_class_init_register_types)
-diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
-index 90c19106ad0..e92d3177039 100644
---- a/hw/arm/digic_boards.c
-+++ b/hw/arm/digic_boards.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "qemu/datadir.h"
- #include "hw/core/boards.h"
-@@ -136,8 +137,10 @@ static void canon_a1100_init(MachineState *machine)
-     digic4_board_init(machine, &digic4_board_canon_a1100);
- }
- 
--static void canon_a1100_machine_init(MachineClass *mc)
-+static void canon_a1100_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Canon PowerShot A1100 IS (ARM946)";
-     mc->init = &canon_a1100_init;
-     mc->ignore_memory_transaction_failures = true;
-@@ -145,4 +148,16 @@ static void canon_a1100_machine_init(MachineClass *mc)
-     mc->default_ram_id = "ram";
- }
- 
--DEFINE_MACHINE("canon-a1100", canon_a1100_machine_init)
-+static const TypeInfo canon_a1100_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("canon-a1100"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = canon_a1100_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void canon_a1100_machine_class_init_register_types(void)
-+{
-+    type_register_static(&canon_a1100_machine_class_init_typeinfo);
-+}
-+
-+type_init(canon_a1100_machine_class_init_register_types)
-diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
-index 243c30a67e7..c0c473e7103 100644
---- a/hw/arm/imx25_pdk.c
-+++ b/hw/arm/imx25_pdk.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/arm/fsl-imx25.h"
-@@ -140,8 +141,10 @@ static void imx25_pdk_init(MachineState *machine)
-     }
- }
- 
--static void imx25_pdk_machine_init(MachineClass *mc)
-+static void imx25_pdk_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "ARM i.MX25 PDK board (ARM926)";
-     mc->init = imx25_pdk_init;
-     mc->ignore_memory_transaction_failures = true;
-@@ -149,4 +152,16 @@ static void imx25_pdk_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE("imx25-pdk", imx25_pdk_machine_init)
-+static const TypeInfo imx25_pdk_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("imx25-pdk"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = imx25_pdk_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void imx25_pdk_machine_class_init_register_types(void)
-+{
-+    type_register_static(&imx25_pdk_machine_class_init_typeinfo);
-+}
-+
-+type_init(imx25_pdk_machine_class_init_register_types)
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index b766edeeee1..94ab08591ce 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
-@@ -691,8 +692,10 @@ static void integratorcp_init(MachineState *machine)
-     arm_load_kernel(cpu, machine, &icms->bootinfo);
- }
- 
--static void integratorcp_machine_init(MachineClass *mc)
-+static void integratorcp_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "ARM Integrator/CP (ARM926EJ-S)";
-     mc->init = integratorcp_init;
-     mc->ignore_memory_transaction_failures = true;
-@@ -703,9 +706,21 @@ static void integratorcp_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
- }
- 
--DEFINE_MACHINE_EXTENDED("integratorcp", MACHINE, IntegratorcpMachineState,
--                        integratorcp_machine_init, false, false,
--                        NULL)
-+static const TypeInfo integratorcp_machine_class_init_typeinfo = {
-+    .name          = TYPE_INTEGRATORCP_MACHINE,
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = integratorcp_machine_class_init,
-+    .instance_size = sizeof(IntegratorcpMachineState),
-+    .abstract      = false,
-+    .is_available  = target_is_base_arm,
-+};
-+
-+static void integratorcp_machine_class_init_register_types(void)
-+{
-+    type_register_static(&integratorcp_machine_class_init_typeinfo);
-+}
-+
-+type_init(integratorcp_machine_class_init_register_types)
- 
- static const Property core_properties[] = {
-     DEFINE_PROP_UINT32("memsz", IntegratorCMState, memsz, 0),
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 387bf54ced1..aaff504564f 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -14,6 +14,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/arm/fsl-imx31.h"
- #include "hw/arm/boot.h"
-@@ -129,12 +130,26 @@ static void kzm_init(MachineState *machine)
-     }
- }
- 
--static void kzm_machine_init(MachineClass *mc)
-+static void kzm_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "ARM KZM Emulation Baseboard (ARM1136)";
-     mc->init = kzm_init;
-     mc->ignore_memory_transaction_failures = true;
-     mc->default_ram_id = "kzm.ram";
- }
- 
--DEFINE_MACHINE("kzm", kzm_machine_init)
-+static const TypeInfo kzm_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("kzm"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = kzm_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void kzm_machine_class_init_register_types(void)
-+{
-+    type_register_static(&kzm_machine_class_init_typeinfo);
-+}
-+
-+type_init(kzm_machine_class_init_register_types)
-diff --git a/hw/arm/max78000fthr.c b/hw/arm/max78000fthr.c
-index ed50bb91979..dce29ccb6a1 100644
---- a/hw/arm/max78000fthr.c
-+++ b/hw/arm/max78000fthr.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
-@@ -35,8 +36,10 @@ static void max78000_init(MachineState *machine)
-                        0x00000000, FLASH_SIZE);
- }
- 
--static void max78000_machine_init(MachineClass *mc)
-+static void max78000_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m4"),
-         NULL
-@@ -47,4 +50,16 @@ static void max78000_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE("max78000fthr", max78000_machine_init)
-+static const TypeInfo max78000_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("max78000fthr"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = max78000_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void max78000_machine_class_init_register_types(void)
-+{
-+    type_register_static(&max78000_machine_class_init_typeinfo);
-+}
-+
-+type_init(max78000_machine_class_init_register_types)
-diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
-index 40071d2c7b9..30de24727ad 100644
---- a/hw/arm/mcimx6ul-evk.c
-+++ b/hw/arm/mcimx6ul-evk.c
-@@ -11,6 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/arm/fsl-imx6ul.h"
- #include "hw/arm/boot.h"
-@@ -68,8 +69,10 @@ static void mcimx6ul_evk_init(MachineState *machine)
-     }
- }
- 
--static void mcimx6ul_evk_machine_init(MachineClass *mc)
-+static void mcimx6ul_evk_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX6UL Evaluation Kit (Cortex-A7)";
-     mc->init = mcimx6ul_evk_init;
-     mc->max_cpus = FSL_IMX6UL_NUM_CPUS;
-@@ -77,4 +80,16 @@ static void mcimx6ul_evk_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE("mcimx6ul-evk", mcimx6ul_evk_machine_init)
-+static const TypeInfo mcimx6ul_evk_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("mcimx6ul-evk"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = mcimx6ul_evk_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void mcimx6ul_evk_machine_class_init_register_types(void)
-+{
-+    type_register_static(&mcimx6ul_evk_machine_class_init_typeinfo);
-+}
-+
-+type_init(mcimx6ul_evk_machine_class_init_register_types)
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index 65fdb19c06f..14e6de8662a 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -13,6 +13,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/arm/fsl-imx7.h"
- #include "hw/arm/boot.h"
-@@ -76,8 +77,10 @@ static void mcimx7d_sabre_init(MachineState *machine)
-     }
- }
- 
--static void mcimx7d_sabre_machine_init(MachineClass *mc)
-+static void mcimx7d_sabre_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX7 DUAL SABRE (Cortex-A7)";
-     mc->init = mcimx7d_sabre_init;
-     mc->max_cpus = FSL_IMX7_NUM_CPUS;
-@@ -85,6 +88,18 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE, Mcimx7dSabreMachineState,
--                        mcimx7d_sabre_machine_init, false, false,
--                        NULL)
-+static const TypeInfo mcimx7d_sabre_machine_class_init_typeinfo = {
-+    .name          = TYPE_MCIMX7D_SABRE_MACHINE,
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = mcimx7d_sabre_machine_class_init,
-+    .instance_size = sizeof(Mcimx7dSabreMachineState),
-+    .abstract      = false,
-+    .is_available  = target_is_base_arm,
-+};
-+
-+static void mcimx7d_sabre_machine_class_init_register_types(void)
-+{
-+    type_register_static(&mcimx7d_sabre_machine_class_init_typeinfo);
-+}
-+
-+type_init(mcimx7d_sabre_machine_class_init_register_types)
-diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
-index 1372d7f628a..5dc30b54d7d 100644
---- a/hw/arm/msf2-som.c
-+++ b/hw/arm/msf2-som.c
-@@ -26,6 +26,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-@@ -96,8 +97,10 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
-                        0, soc->envm_size);
- }
- 
--static void emcraft_sf2_machine_init(MachineClass *mc)
-+static void emcraft_sf2_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m3"),
-         NULL
-@@ -108,4 +111,16 @@ static void emcraft_sf2_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE("emcraft-sf2", emcraft_sf2_machine_init)
-+static const TypeInfo emcraft_sf2_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("emcraft-sf2"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = emcraft_sf2_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void emcraft_sf2_machine_class_init_register_types(void)
-+{
-+    type_register_static(&emcraft_sf2_machine_class_init_typeinfo);
-+}
-+
-+type_init(emcraft_sf2_machine_class_init_register_types)
-diff --git a/hw/arm/netduino2.c b/hw/arm/netduino2.c
-index 0db8798b4bd..5cb7d05877f 100644
---- a/hw/arm/netduino2.c
-+++ b/hw/arm/netduino2.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
-@@ -52,8 +53,10 @@ static void netduino2_init(MachineState *machine)
-                        0, FLASH_SIZE);
- }
- 
--static void netduino2_machine_init(MachineClass *mc)
-+static void netduino2_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m3"),
-         NULL
-@@ -65,4 +68,16 @@ static void netduino2_machine_init(MachineClass *mc)
-     mc->ignore_memory_transaction_failures = true;
- }
- 
--DEFINE_MACHINE("netduino2", netduino2_machine_init)
-+static const TypeInfo netduino2_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("netduino2"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = netduino2_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void netduino2_machine_class_init_register_types(void)
-+{
-+    type_register_static(&netduino2_machine_class_init_typeinfo);
-+}
-+
-+type_init(netduino2_machine_class_init_register_types)
-diff --git a/hw/arm/netduinoplus2.c b/hw/arm/netduinoplus2.c
-index 5ac0eb81637..7a750988f17 100644
---- a/hw/arm/netduinoplus2.c
-+++ b/hw/arm/netduinoplus2.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
-@@ -53,8 +54,10 @@ static void netduinoplus2_init(MachineState *machine)
-                        0, FLASH_SIZE);
- }
- 
--static void netduinoplus2_machine_init(MachineClass *mc)
-+static void netduinoplus2_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m4"),
-         NULL
-@@ -65,4 +68,16 @@ static void netduinoplus2_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE("netduinoplus2", netduinoplus2_machine_init)
-+static const TypeInfo netduinoplus2_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("netduinoplus2"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = netduinoplus2_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void netduinoplus2_machine_class_init_register_types(void)
-+{
-+    type_register_static(&netduinoplus2_machine_class_init_typeinfo);
-+}
-+
-+type_init(netduinoplus2_machine_class_init_register_types)
-diff --git a/hw/arm/olimex-stm32-h405.c b/hw/arm/olimex-stm32-h405.c
-index de9ac4978ce..4e93a245998 100644
---- a/hw/arm/olimex-stm32-h405.c
-+++ b/hw/arm/olimex-stm32-h405.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
-@@ -56,8 +57,10 @@ static void olimex_stm32_h405_init(MachineState *machine)
-                        0, FLASH_SIZE);
- }
- 
--static void olimex_stm32_h405_machine_init(MachineClass *mc)
-+static void olimex_stm32_h405_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m4"),
-         NULL
-@@ -71,4 +74,16 @@ static void olimex_stm32_h405_machine_init(MachineClass *mc)
-     mc->default_ram_size = 0;
- }
- 
--DEFINE_MACHINE("olimex-stm32-h405", olimex_stm32_h405_machine_init)
-+static const TypeInfo olimex_stm32_h405_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("olimex-stm32-h405"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = olimex_stm32_h405_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void olimex_stm32_h405_machine_class_init_register_types(void)
-+{
-+    type_register_static(&olimex_stm32_h405_machine_class_init_typeinfo);
-+}
-+
-+type_init(olimex_stm32_h405_machine_class_init_register_types)
-diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
-index 18ed174032b..c6b0906c980 100644
---- a/hw/arm/orangepi.c
-+++ b/hw/arm/orangepi.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "system/address-spaces.h"
- #include "qapi/error.h"
-@@ -111,8 +112,10 @@ static void orangepi_init(MachineState *machine)
-     arm_load_kernel(&h3->cpus[0], machine, &opms->bootinfo);
- }
- 
--static void orangepi_machine_init(MachineClass *mc)
-+static void orangepi_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a7"),
-         NULL
-@@ -132,6 +135,18 @@ static void orangepi_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_EXTENDED("orangepi-pc", MACHINE, OrangePiMachineState,
--                        orangepi_machine_init, false, false,
--                        NULL)
-+static const TypeInfo orangepi_machine_class_init_typeinfo = {
-+    .name          = TYPE_ORANGEPI_MACHINE,
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = orangepi_machine_class_init,
-+    .instance_size = sizeof(OrangePiMachineState),
-+    .abstract      = false,
-+    .is_available  = target_is_base_arm,
-+};
-+
-+static void orangepi_machine_class_init_register_types(void)
-+{
-+    type_register_static(&orangepi_machine_class_init_typeinfo);
-+}
-+
-+type_init(orangepi_machine_class_init_register_types)
-diff --git a/hw/arm/stm32vldiscovery.c b/hw/arm/stm32vldiscovery.c
-index d899a134b38..3b439c80a67 100644
---- a/hw/arm/stm32vldiscovery.c
-+++ b/hw/arm/stm32vldiscovery.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/target-info.h"
- #include "qapi/error.h"
- #include "hw/core/boards.h"
- #include "hw/core/qdev-properties.h"
-@@ -56,8 +57,10 @@ static void stm32vldiscovery_init(MachineState *machine)
-                        0, FLASH_SIZE);
- }
- 
--static void stm32vldiscovery_machine_init(MachineClass *mc)
-+static void stm32vldiscovery_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-m3"),
-         NULL
-@@ -68,4 +71,16 @@ static void stm32vldiscovery_machine_init(MachineClass *mc)
-     mc->valid_cpu_types = valid_cpu_types;
- }
- 
--DEFINE_MACHINE("stm32vldiscovery", stm32vldiscovery_machine_init)
-+static const TypeInfo stm32vldiscovery_machine_class_init_typeinfo = {
-+    .name = MACHINE_TYPE_NAME("stm32vldiscovery"),
-+    .parent = TYPE_MACHINE,
-+    .class_init = stm32vldiscovery_machine_class_init,
-+    .is_available = target_is_base_arm,
-+};
-+
-+static void stm32vldiscovery_machine_class_init_register_types(void)
-+{
-+    type_register_static(&stm32vldiscovery_machine_class_init_typeinfo);
-+}
-+
-+type_init(stm32vldiscovery_machine_class_init_register_types)
+ #define HELPER_H "accel/tcg/tcg-runtime.h"
+ #include "exec/helper-proto.h.inc"
+ #undef  HELPER_H
 -- 
 2.52.0.windows.1
 
