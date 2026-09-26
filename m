@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D48C9833E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F1EC98338
 	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 12:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xARuB-0000TS-MM; Sat, 26 Sep 2026 08:53:27 -0400
+	id 1xARuC-0000Tq-8O; Sat, 26 Sep 2026 08:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@alexrp.com>) id 1xARAY-0002dz-8n
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 08:06:18 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@alexrp.com>) id 1xARAV-0001Th-5i
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 08:06:17 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id 9B50CEC008C;
- Sat, 26 Sep 2026 08:06:11 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Sat, 26 Sep 2026 08:06:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alexrp.com; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm1; t=1790424371; x=1790510771; bh=8f
- kNYK5liUhC9xU3hbpUiyP+tB2wPtyzCHoVMWrkxq4=; b=RNVwjxboB+k5nc6Sbz
- H/FJiUayFwkGMZQx1DitRpWqVMFYMSd8XpyrkoismD8yh0Eu+O5f4xAxde/wyI/D
- fztSgzoM17Y4g9lU0DXbSUpfjAwk/UUiMk+aYGE/hiY0xGFTaICVOAUvztUDAp5i
- m6AHHJy4/0Vvwl+43tcVGdac0LncHFJpa6Pcn24ZMtmVPGNQN6q2e/SCB4D+/SeG
- 3n2vf+wkMuOMlfESy2sfjBcoqX6ox/CPRZOSWrWnlhHBxKdyjociSyG7XWpFK3JG
- RF/+BwSE7kzXR48hV1p8G25nHC5tTSVzh6URGSHKjMsIQadFOYKfh6JR4xcCNPb3
- kwaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1790424371; x=1790510771; bh=8fkNYK5liUhC9xU3hbpUiyP+tB2w
- PtyzCHoVMWrkxq4=; b=JBDng0q+qMEwnuFpWwDzrEcy63w7Dsyjq4XviVF37dcF
- 5jsQTTmjSaYj+jQqnokhcYvR06VofQjT5VxLAEdvYdhoQNu60P8dwAr43q26pzPc
- I+tqZfQ7+yj3R3L4RQmTt0uLkzmxs72K2mMjUgrAvUu1QaEkFzp7VNlohOk4uuep
- Gxb32iISxcpghh03HZJNEl8yi3FO5JsVs2OL17k2xyJ6QWOll3SYh5p6463Ag8x0
- eUGO+hchHmuv8tnCyrc4EOCtHNjHP//qonYtV+geGY9Kk0sQ71WsY6lMtK3Dkn7F
- 9Z2QTurTFbkzId+HqiLJOyIljneZDyQrt/5FGoJIDA==
-X-ME-Sender: <xms:MrW3anu1jzI6aEiJKenmvYY08ggaiRL-GfNMUJCl8hOU17UjmXOnjg>
- <xme:MrW3aolIMqavMA_d-xrmXxSlynY6KxXJkGTSJqJjiQDWYevXizxb0D8393J1p9SwL
- NXGov6gvr5amEzc-nWdNsNH1EXqiNkPyajPQXbJGhmFinTY8nY_v0Hq>
-X-ME-Received: <xmr:MrW3aisCswraofmQ-UaJc-IH7HFg5pwRTZws408X61mXW72_j7R89iMwqlPy9unYllg>
-X-ME-Proxy-Cause: dmFkZTGJDrwBe7c+0m/LnYDTtd8E1ZJDQrorphPVfLDr0JeQpXdf1oEj/nyL8XNvCBc9bF
- 0oNDFeaviLNdr7kzwboieKqrkqh+EhkHX6S3NFIU+9YMiqByP/ItSqilkWfvkRrQweN9rQ
- DYBaSBU1xVlqRpds1iYuhxWSQ7pNF/Xe6nDHlhyImy3+auO8rpAHAU8gFV/UWHl/QjHW9v
- PbGvFdoru5ox8t2deScEU17UymYYdWyQX2kId94zIvRuz+IVXe2QVtzXbFZuVFxMblr6zb
- A3GC4HERZl4cXQJ6jwcr50x6LuECqCqh7Ev0nWTKNw2mqdR6go2nIGo5hC3sywbYMww2Jg
- pxnb802tagUO7kQiZBsTBSG5x8UTljE8SVrhXHi897YsdEIMiBuKGS+6CmWLgLmLpkJYLr
- 4miFauQO+M6RnqD2jiDyRHNTa0p4HemjVI1kGamQQ8GSMps6KorfpHQSniqUucSu1f2i1q
- B2RvYKQ2jW8f8coOvQvgdPLJ1ftVW4fVOtT30E7mwmKV9k8ioKQoa0s2fzRUq+ImSGl9a2
- RjtDfVoYKykdGCuRgRiWvn1LbjDRTBWhrA+iZNqV9oVVYidLeg3DAVAeB9Vd+cy/dD2Ji2
- hB6aVfvRc9fvi7DEfkZPWCOQOo8BIz0W9jALkjIJnAc9qHwJVi07+MEk75BQ
-X-ME-Proxy: <xmx:MrW3audO_Q6TC4BEEvVWol43aLbZfmGDLFk4PM0Jf8wNcawS6pHhyA>
- <xmx:MrW3aiwwnHPqjb2hp-bQKgyFWq_LRIplkblqDYaxUUvwh0cVf1jmkw>
- <xmx:MrW3asEYePZP-7oQs4UvUg6prP4cdv8ius1EG_IEN6A5n8HLu8aPdw>
- <xmx:MrW3auwljbSNyLzbF8420IWHsU8mtOOKUaJzSSktbKpIMrNHBJO9vg>
- <xmx:M7W3asob2HD5YuiHSyDkoK7YaSDEOxTMFki2vmu5YHfKEpdi4PwuDRwQ>
-Feedback-ID: i799648cc:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 26 Sep 2026 08:06:10 -0400 (EDT)
-From: =?UTF-8?q?Alex=20R=C3=B8nne=20Petersen?= <alex@alexrp.com>
+ (Exim 4.90_1) (envelope-from <zhaoxiaoqiang007@gmail.com>)
+ id 1xARmF-0008HT-KL
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 08:45:17 -0400
+Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhaoxiaoqiang007@gmail.com>)
+ id 1xARmE-0004sR-6k
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 08:45:15 -0400
+Received: by mail-pz2-x2b.google.com with SMTP id
+ 41be03b00d2f7-cc78dd54610so502037a12.1
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 05:45:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790426712; x=1791031512; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pImCYgQdZy64e/+WHphPJKNF/YWpOYzJk9HAVflTVlU=;
+ b=Ge4kSbP4BbgPmPStJG78COzGumh1yhiZng02jrP2f0OzD+0O78/n3EuPSCgH3XaMg7
+ Z904JQ3Hw2zNlWk0FrQ17aekThmSC2aLLzcP4U+rjAL+snIORHO20XraPxZG1jd6hStK
+ MiS7OW8BkLO0+Rii3SetZFZRt3+uA4RjkrDHJwlZO3HW5jp/2k1UqT2WeteleG3GUQn2
+ yrxgyhyEjPu89Dqhkufs3xPzigWWFDgkt5uxns0c31UoRYrE+HkquG+izsQIgL7T79xX
+ Zr2WtVBPv61RW1nv+9e6fMOnPV0Nmfj9tZD/KwJ4wc4kweQuACiMc7Sct2jOPLPDyLUJ
+ y+QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790426712; x=1791031512;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pImCYgQdZy64e/+WHphPJKNF/YWpOYzJk9HAVflTVlU=;
+ b=j9bKgXgveBkTi5QMSTGonbXRYaqXachnXzXLR5PgANIQfpdnjzct6xYeMSkXz+9QB4
+ cery2ff0FZtKiRAuqr2f40okSO1e71KfbVcXkqGv/LmwhHWqLzkbcYvpNk7zG3kSrmYx
+ CcjLD6CTlmgiYH36GJqqTPQgiYIrfHHf/N+G7pg5HTzvFkwzU2yiHnVfCHQrea76klY+
+ 6m/S4sBrZ9VsDQ26ywnLZ54oVgkiF+Sx+3OZPdxfQFLERBkkrKxpaj74vAZGTNbBSqAW
+ gZ/SlQiLvvU4kTGehSnLIir0kxS9HSMRWEEO3o2U2/1GX0Lyxh9+MzwPgHdAgpWwNdCx
+ ZJvw==
+X-Gm-Message-State: AFq9FYInVnsYy6f9nQtwB12w3bwjF/rmGaRpNb/Zk3x1F27PdPRqFmim
+ fmOyDPgH+mKxbJrIgTvhTgy3Sw/Lqip3gKoi6iPBrJer3iO4bUZrOqa/U4x9pLRSQWE=
+X-Gm-Gg: AYBFou03dy0GlwmT9orLhv5V9Pxzr79m0C/FnfXPzVYizrBVvvRekVS6yLt+P0lRlYZ
+ KWPQpdqALxlMBjBEV3ZjSTDDGY7hjWcIoTL7o+nu3lyht48Ese47St2qCThmDTLssfZQ6wvQUh0
+ k7JylsaxdZKh9hT2j0xmw7hQW+DgdXLsUkn3nyMWEUXKpxTZPt5keRiLIP89mEE3btsVSZ2Z7O6
+ QdU1+d0ko94yVoHxiJC/W8NrzyKk+zV3icFZYKW/VxphAmQPGOGnDvsgYBCRqR7y7/N9Y/40O0W
+ Zq2g9wIrFR9nrVzv1ULKmSwf0WNX99oywxTF1B4GWMBbZBHZPb5tw277+KgU0SWCweERQ5Ang+Q
+ 1YI6VW4EyRCKo4mHa+brHJzrquXqJIlAcFXv+nKCtuOLdMrNgPF/9n5+Q4jHYbgVrFcHy1BRztV
+ b8Fh1zzd6MH3l3JAfFEC2R/64SEKlV4jYJA7ZxjxHUd0JDGmLF9CeN/ZnIRkdXI82X
+X-Received: by 2002:a17:90b:3c87:b0:39e:6c68:1556 with SMTP id
+ 98e67ed59e1d1-3a098aab6b9mr5850174a91.30.1790426712045; 
+ Sat, 26 Sep 2026 05:45:12 -0700 (PDT)
+Received: from euler-NAS ([1.203.174.67]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0b7d11124sm10919649a91.10.2026.09.26.05.45.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 26 Sep 2026 05:45:11 -0700 (PDT)
+From: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>
+X-Google-Original-From: xiaoqiang zhao <zxq_yx_007@163.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20R=C3=B8nne=20Petersen?= <alex@alexrp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH v1 0/2] make pre-r6 mips64 nan2008 binaries work without -cpu
-Date: Sat, 26 Sep 2026 14:05:32 +0200
-Message-ID: <20260926120534.240391-1-alex@alexrp.com>
-X-Mailer: git-send-email 2.53.0
+Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ jiaxun.yang@flygoat.com, xiaoqiang zhao <zxq_yx_007@163.com>
+Subject: [PATCH] hw/loongarch/virt: fix SPCR bitwidth value
+Date: Sat, 26 Sep 2026 20:45:05 +0800
+Message-ID: <20260926124505.2900623-1-zxq_yx_007@163.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=alex@alexrp.com;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
+ envelope-from=zhaoxiaoqiang007@gmail.com; helo=mail-pz2-x2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Sat, 26 Sep 2026 08:53:24 -0400
@@ -104,22 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These two patches make it possible to run pre-r6 mips64 binaries that need
-nan2008 without requiring the user to explicitly set a compatible -cpu. The
-first patch is really a bug fix which enables the titular enhancement in the
-second patch.
+Serial base_addr.width should be 8 instead of 32.
+The wrong reported data will cause ADE in FreeBSD console initialize
+process and trigger a reset loop.
 
-Alex Rønne Petersen (2):
-  target/mips: fix Loongson-3A4000 definition to have abs2008 and
-    nan2008
-  linux-user/mips: pick Loongson-3A4000 if a pre-r6 mips64 binary needs
-    nan2008
+Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+---
+ hw/loongarch/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- linux-user/mips/elfload.c  | 14 ++++++++------
- target/mips/cpu-defs.c.inc |  4 ++--
- 2 files changed, 10 insertions(+), 8 deletions(-)
-
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 600ef60fc5..54965f011d 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -268,7 +268,7 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+     AcpiSpcrData serial = {
+         .interface_type = 0,       /* 16550 compatible */
+         .base_addr.id = AML_AS_SYSTEM_MEMORY,
+-        .base_addr.width = 32,
++        .base_addr.width = 8,
+         .base_addr.offset = 0,
+         .base_addr.size = 1,
+         .base_addr.addr = VIRT_UART_BASE,
 -- 
-2.53.0
+2.54.0
 
 
