@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D2FC98328
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 23:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53373C9832A
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 23:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAcFq-0006Uu-He; Sat, 26 Sep 2026 19:56:30 -0400
+	id 1xAcG0-0006Wm-GS; Sat, 26 Sep 2026 19:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFo-0006UL-B5
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:28 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1xAcFs-0006Vd-FW
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:32 -0400
+Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFm-0004O5-Hv
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:27 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-396ccb65437so1115046a91.3
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 16:56:25 -0700 (PDT)
+ id 1xAcFp-0004OL-75
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:30 -0400
+Received: by mail-pj2-x0f.google.com with SMTP id
+ 98e67ed59e1d1-396ccb1a98dso1179544a91.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 16:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790466984; x=1791071784; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I2WBdUuO/e2dwvTQ22E9RGL58YanfA7r4S18IIvoBGw=;
- b=xj+ovhYJ+X/zBhZ7IL01V1nmF/AFGFtkq8k5XW95DbW9DaYksBk784jka+TUVyXmcr
- bRQLlfZ2u7vscuprNa/dXZNtv6pkZHxPGkkDqiMYksis+UfrjK44UP+RtEJZX16zXYPu
- A0wqWVTeWMnLwmkv7voGuvGkYlaM7e043QXogHcLzLabhOMqpz9ryXnVRnndbGDLrpEa
- +HLSW3+2MwovONMdziTJy5z50jNF8h0vJ6fgrKX0FVNiyIZ4HwB5/wX/0vrTOsW8BlX9
- jyirLzQuNMKZa35lx+kkhW7TFrgYcGp6CmIxGget6NzpO7Md4lDMkOh/MXIdX8ElLKY3
- WggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790466984; x=1791071784;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1790466987; x=1791071787; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=I2WBdUuO/e2dwvTQ22E9RGL58YanfA7r4S18IIvoBGw=;
- b=LzmC6DkZifYq+90wo0pB+du+UuEUd53ul3mldTELQNQ9qnvnyAZHrBBUL8f/N0ciu3
- AEJws4f3ZaABzYC9/6SK7RrpS8TiHM1Tl9wXjxZQ0SS72v5UXg5M7+v3kXNTcLImyNo9
- zbvAwlxyuA59Bt+yYZYTXFxkUvJDT1GuHs/sueXq2n6RemKxwQbFOrKsl0Hjmyzb+vtb
- KgfqS0D5y125+fpYK++G1A4ML2XMplqKs4iLLfJvh432SGt01MHBvaj3S9oSswgstuF3
- aMhhQ3497rBTStYKTHY/dkj5EkHr1eSACnA0xgZRWvr5HBeti1nRETRCq4M9ETSFRrKI
- aEHQ==
-X-Gm-Message-State: AFq9FYLVFGqAUmSJ2wC8/wrJ5ySvXku5aRoCBZeBr9082KcuBNMR46cX
- PN7kCrUqwkj0S+waKMUP/T7LldyW9X5VuCI8E8vzAoDoNAiFNe+4DcNEA/S6SVR97WDzYG/i+xf
- tWTUW
-X-Gm-Gg: AYBFou36Wpig1vOtJURWJOz2e2yCkBCHI+sJsFjbNLpvE6IE9H80vYRvtlBc95X4fjz
- EEAw4MBr0YDRWkBsKlbr+k9VxFhGSytoQWAqfRnq6VbhB8oYF+bvQk/rCJOZGU7j1NYO5uH/i/O
- v3MBVqVXtPpOvNYwpqGCA1ts9694IWHoPZ3n0jaerxsEncWzHv10rQ/5FAnGWw51C0mwjq8bRg+
- m3MzA+ZK0+x/UYcyrXf4H6FerkhpevIGvfD/lwht/7WXM8Rc5Io0MlKv89+H18Np4rBWET8YoVP
- 166QMbP8Q87t7DOcGRC+5WUSJBmMoq23sPriH2uOLY/OaFfC/T2Bac7EJFePFYAeAOVGkF76Wgb
- NlakRgKMnY8Nx8a34U8qX4fxUpbl3Uvo74Jkn+As755RT5Xt1wHO4VcNg8TTE5xAo6g+QVNN84a
- 05Hf9yLo1AQaPIJ2QRrMleivSGCY8BL3Ep1mkjRD1u5U9RrfLgmCPGw29W09xS7e9ecdmYbDJ3Q
- /h3BEecP3h2dSQkX5t32RA82oJmWw==
-X-Received: by 2002:a17:90b:314e:b0:39e:5ade:f9de with SMTP id
- 98e67ed59e1d1-3a098b431dbmr8461673a91.26.1790466984123; 
- Sat, 26 Sep 2026 16:56:24 -0700 (PDT)
+ bh=0gz45yMIIVliy3SWUWlZVaKuMixUM+jElZ8dLueySp0=;
+ b=EYdm+biwFbhsxClvL5NauDoTJUPei8OnDnWtuu97hefjmTgaDEvzJJRPc7HRNtwCxF
+ CfpO6xXtmUTaxhJasDz5iGOXyjUWUwuz7n76Q6VZQOKlW1UgTrtm20VyzlgR5scTid1C
+ a9s2ejtTvGmz83AmnRjdz5t5Td+SPnYoVp+JtN37XBRecyRYxFi3iOEgiOWz+Tg/6VDl
+ zP7m5NlbBxuNCl0PL2F+yb2lZDbwEYcD12aBSUHOvpLr1peIXcwCYdzRTxoM95ucc9gz
+ 0U5OHkfp04Gl7JPYq9XMDfGm0+j7mmZet6JvZrntvrsbgBNB/gCYEcId0loo5fnjvP4X
+ O6ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790466987; x=1791071787;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0gz45yMIIVliy3SWUWlZVaKuMixUM+jElZ8dLueySp0=;
+ b=l3EL6mAC0/veZCsR5r5F8lofpcr+cdvIoyR5bf6qLRBjZ2qC440f1zXhjJPipr3HEa
+ u+e6XH0UiUdAVtovqcGYX3Jv5f/JeP8WnIySJAKYZpVJdCZJX9Gt8Dxyx5QGJzg1oQw0
+ vUk503hBIskOU+O8e43TIydA4bOt6c4/qU91tOMFOX1htdN5tTjcLxKpLDj7PZ84evor
+ kWCLHINnIP7Hxb/zTbth4MT9vsrX9QWKTRQYhjerSLUHRWH6rNKy/uAWC5BAd61dxGJj
+ ZUeM6blpIwbSOTkICY1emU1yqltQAmhTpfgz/cIIzuxzxMZCus8hSRcxHg+yYmaSgHIb
+ maMA==
+X-Gm-Message-State: AFq9FYJycm4mdve7b0P9yteL5L/675fkYqYRINT4n8bthkv2tzhHy+yu
+ gitL1k/DczRco00TJt0JW86fDOPXRCzA+odNZ0dXpiuHBbjFLigq91jJy8a5QYWKeyCOLNuIUWA
+ +XgGO
+X-Gm-Gg: AYBFou3RfojEZLunCCfPDHBj9mMJ6V4fFM635PupCJUhrAMV6kFcrVBXBZEufSHbf52
+ 2xK+vuL47BuXAAXE5EYwe6RgHtLyX3XJe9Zhe0K5fU8dAO4IDtdTnKQJpjep8uAyQMZW8CX/eK3
+ vAkYiMvwb27W+GiW6vqC1Gqs6qzl4wantb3HGnkYijSQnzXf8amQZLPBP0uTDk0m68SV1RyAtI2
+ IT0i3lPLJdHPp3E2tG81llYYVMM4n9FEMEHKLdnWlahXOjRmMOltholwY7ljnZvwl09ZbKMSiz4
+ h4rWeCKXgDfzU8CpzrZfpQyKHsC5jrIDztLqIOB0S2BE7g4WbyBt491G0ucMULovsObyHJhndwn
+ Z0QMsSP21wQl60hYo0R9KPmDt2syhVZhgzkFMIfPjFwKzsJYZf/LtbOFfeHPsilJV6QUfbHYi9U
+ cYSGcgEPsxWWW0SJrSC9FX5VnDuXXvet8beZLoSCpQXozMV6dS/vbeDr3Gs3f2Mn8CYkr+jlcne
+ J86Qgrqil9nHv2MCSA3dbuA/1MrlQ==
+X-Received: by 2002:a17:90b:49:b0:3a0:9ed5:5420 with SMTP id
+ 98e67ed59e1d1-3a0bb6139bdmr4296117a91.44.1790466987279; 
+ Sat, 26 Sep 2026 16:56:27 -0700 (PDT)
 Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a09773e7c3sm18136031a91.17.2026.09.26.16.56.21
+ 98e67ed59e1d1-3a09773e7c3sm18136031a91.17.2026.09.26.16.56.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 16:56:21 -0700 (PDT)
+ Sat, 26 Sep 2026 16:56:26 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: paul@galbraiths.ca,
-	pbonzini@redhat.com
-Subject: [PATCH v4 0/3] target/i386/tcg: fix EIP truncation for wrapping
- 16-bit near branches
-Date: Sat, 26 Sep 2026 16:56:17 -0700
-Message-ID: <20260926235620.851099-1-richard.henderson@linaro.org>
+	pbonzini@redhat.com,
+	qemu-stable@nongnu.org
+Subject: [PATCH v4 2/3] target/i386/tcg: fix EIP truncation for wrapping near
+ branches
+Date: Sat, 26 Sep 2026 16:56:19 -0700
+Message-ID: <20260926235620.851099-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260926235620.851099-1-richard.henderson@linaro.org>
+References: <20260926235620.851099-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,28 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paul, thanks for the testcase.
+A 16-bit near branch that wraps through 0xFFFF must truncate EIP.
+TCG skipped this when the target was on the same page, which can
+happen when the CS base is not page aligned.
 
-While your patch did fix the bug, it retained other surrounding
-buggy code that attempted to fix this but failed to do so.
+There was an existing test for this further up that attempted to
+test this, but was restricted to a 16-bit branch in 32-bit mode,
+which can be subsumed.
 
+The previous test for pc being on the same page, rather than eip, is
+only relevant to using goto_tb not to eip wrapping.  There is another
+test for pc on the same page further down, via translator_use_goto_tb.
 
-r~
+Cc: qemu-stable@nongnu.org
+Fixes: e3a79e0e878 ("target/i386: Enable TARGET_TB_PCREL")
+Reported-by: Paul Galbraith <paul@galbraiths.ca>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/i386/tcg/translate.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-
-Paul Galbraith (1):
-  tests/tcg/i386: Add regression test for wrapping 16-bit near branches
-
-Richard Henderson (2):
-  target/i386/tcg: Add DisasContext.pc_save_valid
-  target/i386/tcg: fix EIP truncation for wrapping near branches
-
- target/i386/tcg/translate.c                |  38 ++++----
- tests/tcg/i386/system/meson.build          |   3 +-
- tests/tcg/i386/system/test-branch-wrap16.S | 101 +++++++++++++++++++++
- 3 files changed, 124 insertions(+), 18 deletions(-)
- create mode 100644 tests/tcg/i386/system/test-branch-wrap16.S
-
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index a38cc2c15d0..18706ec8a74 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2015,9 +2015,6 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
+     if (!CODE64(s)) {
+         if (ot == MO_16) {
+             mask = 0xffff;
+-            if (tb_cflags(s->base.tb) & CF_PCREL && CODE32(s)) {
+-                use_goto_tb = false;
+-            }
+         } else {
+             mask = 0xffffffff;
+         }
+@@ -2025,15 +2022,20 @@ static void gen_jmp_rel(DisasContext *s, MemOp ot, int diff, int tb_num)
+     new_eip &= mask;
+ 
+     if (tb_cflags(s->base.tb) & CF_PCREL) {
++        assert(s->pc_save_valid);
+         tcg_gen_addi_tl(cpu_eip, cpu_eip, new_pc - s->pc_save);
+-        /*
+-         * If we can prove the branch does not leave the page and we have
+-         * no extra masking to apply (data16 branch in code32, see above),
+-         * then we have also proven that the addition does not wrap.
+-         */
+-        if (!use_goto_tb || !translator_is_same_page(&s->base, new_pc)) {
+-            tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
+-            use_goto_tb = false;
++
++        if (mask != -1) {
++            /*
++             * If eip "page" doesn't change, then the addition cannot
++             * leave [0, mask] on any rerun of this TB, which only
++             * ever shifts EIP by whole pages.
++             */
++            target_ulong old_eip = s->pc_save - s->cs_base;
++            if ((old_eip ^ new_eip) & TARGET_PAGE_MASK) {
++                tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
++                use_goto_tb = false;
++            }
+         }
+     } else if (!CODE64(s)) {
+         new_pc = (uint32_t)(new_eip + s->cs_base);
 -- 
 2.53.0
 
