@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E35C9832A
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5E6C9832A
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 07:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAMPZ-0002CQ-Lu; Sat, 26 Sep 2026 03:01:29 -0400
+	id 1xAMPl-0002Ed-Sw; Sat, 26 Sep 2026 03:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPW-0002BN-1j
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:26 -0400
+ id 1xAMPg-0002DS-AH
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:37 -0400
 Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xAMPT-0000Px-3g
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:25 -0400
+ id 1xAMPe-0000Qx-My
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 03:01:36 -0400
 Received: by mail-dy2-x0e.google.com with SMTP id
- 5a478bee46e88-3427493501eso503451eec.1
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:22 -0700 (PDT)
+ 5a478bee46e88-341fe27b718so1359060eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 00:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790406082; x=1791010882; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790406093; x=1791010893; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qkiRWh0yDSkP2OT8vLUxuaEaTt8B1WJVNLebJyYrgq0=;
- b=q3bK/EFqleW+HGk2uw71XrcZHRDnxVJAS0p57ADtDCTSf2OmPLEq2rIEHwsY1sVWjK
- o/KSxPYA93lLAmCLCLPiUXEfyWGUJGaUYfyRUl0bP0Gp7pU2CyArppU2V1Fwe2eXk41R
- QhDhNOtXzb3jUW21Dg+SBpZwU2iYp5O13MTfT7YCPoczT7Jou6kuA1By0mzy+Xbptdr6
- +bDt7pLgnwJtaSnyK4w9xdlJCYV6Ru6YLunGawilwNQd3uOOuy3PVooEO9cAPe9obgux
- alsxJ3vn4rXi+PEcfDR3Nf7LkduQSRWoGpyp7pJew7ypMBfAG6HSRPKuaqRa72qJDqlX
- 9r6g==
+ bh=TZMKrJ9OTgOVuSw0xuj4IN8VaH3KKEmXiPudtyfK+aY=;
+ b=EQ37lXl7eCdx2fkFXhKpx7uKs3+kYESeHYwNoXiusJXaQaoFem/F/vxNYgYp50uXrR
+ x2Gxsgb6fzeE8PdgeavqBjWv0uPvO82f4RO78AKqurcFZIJHyATxcYUrz3QwFR9UnuSv
+ jS4fHgRADXTS7a08nBjxquihaU1Np4Cw52fGBflDyetVTTyGxftsjFzl4IIoXAYFgE5b
+ JERNLKCmfHj/R+vcm125BETms4fMf2eUsxbkwWzhgpE0S4ezve1yM9AqQKbPukvMGLT6
+ L+HiUMSijaGDPe0nC1Cl1znsj9Z0/33dzE9VjR+XMri7roDnpV2oPo48W/+WqxST7jGM
+ yUaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790406082; x=1791010882;
+ d=1e100.net; s=20260707; t=1790406093; x=1791010893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=qkiRWh0yDSkP2OT8vLUxuaEaTt8B1WJVNLebJyYrgq0=;
- b=RZOkehTQCcDi0+Tuja3lRtusUOPo+wrVGluXGBTEmvnlnEEWfbeW89XW7660a1SMis
- 5+yZBoyIgt0lnH+lSpkoUYy8g2xwebfTwDLBEiad2E6rEw3tmZNlFuomLr2xlZ+Ub7PH
- JEFIsgncN2Esk0w8lUzFrX1ZGVYvvRDhRJacPx3zQlqNy2DoPZ7X4VneSTKwi05yba3U
- L6JU4JJ/vbFXVCZ1xhqvnNYdKflUl3ETlsTxuA7BYW54o189mTTmeaJ5p64vxsvXdvTr
- CK44YoHRuHA+FUCVRaJdliXsbuZG/B4xe20hxhAiOxBQLVei/0GasEUgMI/TOm1IE7jD
- BUGA==
-X-Gm-Message-State: AFuF++knw+RIFS/FGNWj7G7G3/kV4zrlUdaKs+tUNBNmlXbxIEaSpI9y
- AplYwUuYBpd4AJ3xpokR8sCRwXjY3pAjU7k5y9obv1TcWz/Dkuyct9Bruy9Xm/OI
-X-Gm-Gg: AYBFou3wc1k29BH+5sqTNqlEGd+deHirtzQkTJNsTBO69rRjsxPyHuuWV0wuyEfuV+h
- WTB/cwXGRKv4wBqaGNI1Agfp9VymeePuGkqaMl32E7D6PvaFDJAkl4jZOKUpLeH9hjLXd0f5jf2
- LkorT0JpO3ZD+ffqGhwG4BN7KWDrKJ9QivSaPFOtOcm1IqiCQ57bdoemyEusk8mNPCUznInQTiu
- /yfZtyBQm9H7YGO49tYeyLxHA/fr/k5LitIKoRqVmNFuaU1WTGUGMCPQCC2Gh7j5pwZcH4Hm6wd
- SXciTrJVQlqx/JYd9lefoBoPQS+cXKNI3Wd461n1jvMB/NuYFKsp0cLEM/V+f2onNJm9nr1JPtI
- 7CPqRFbIZQateCz75pWFNDGq61HY8f36svq8xrEYwR0xy5C1Ns6xpkO1nvodGCgKaMof0cIyQBH
- voFRRLE62mFzCjjvgsDx99qf/FK6X6UcBIb2ra/9aAe5t6eoDelF0r9LUv67cxQ4TAG4Sg9Xjwz
- LTvoPClN5Ff2kyWGS7KJmeVMNh2f6A=
-X-Received: by 2002:a05:7300:7313:b0:341:3ca2:de2d with SMTP id
- 5a478bee46e88-342700bdf94mr2923658eec.6.1790406081403; 
- Sat, 26 Sep 2026 00:01:21 -0700 (PDT)
+ bh=TZMKrJ9OTgOVuSw0xuj4IN8VaH3KKEmXiPudtyfK+aY=;
+ b=axLlSsDuKy4dEv3F3Gvs9EKxbAeubORIYFyZxgGWoyzL1N4Wl0fnvpjkVh6rgo7UWw
+ 9dWujX6pulqFMcklEfdVN0zr1+/sy62ZoB4vbvo4Fspv+yaiYqRfsVcpO7wjWups3TAD
+ t3tUiYQ3AbyCh87aYoDC/wWvwt4a38TQzSd3I77o9LlqrHOP5c26ivihoBdvP+NYMfKz
+ pRIV4wM31xjC9Ri35f3XU2Xh5S0M7OZaQ1UxDkheG3aZxJcia+wkBX0Kf9PoobPF4e5y
+ cDRF9M7LAuJyfqIMiSB6AI5Oh28sqz09cpDqYT5YnJhViVNudec9KdRhLdELkymBLcZz
+ Rd+Q==
+X-Gm-Message-State: AFuF++lM1c0fN6OuBEz6FhjOYLmr0eVNLy41srfWQPmzRcdKSYomDq4c
+ 1xF7h9w286YQPFscv+9zS4naCdcaV1iaROKSNngQR3i/y6lW+3IQTHo0DecidGNZ
+X-Gm-Gg: AYBFou28w7L7EITL32YhREcIRRnGCiau1TEZo7rMZN5zZYQtSXzF0i9RnMt5rQfIByY
+ E5gBlj3KK/OrnH9HvwkJaxKBqhHWIutGGBicY6NzHDUrz9EwLfouvVLZ38zMRC7kiaU7y4M7uGs
+ GqZjtu2/7PgXZtILE92i/H8Dkt2KEMLom5Fa9wCQLTDEe+Mkds/91uicfi5hfygBNbVchKXc0IQ
+ Sh8Bw3w7R/Fc5aBma+XOWBU9u4+cEgjB+ehe5ETj6NUDztmJfuhD0Juy/S29SJvJ2jhiTrCaG0M
+ cYXnxSq6dDT00pz0rR/OKkh8Cct2VVsjWCcZuyG3qjrzYtXtv3Ya/VLd6mCo/6r4p8Qsf5UVePc
+ TvkV2/zA2JRZu7POaZ3s2Q+o5WOiB8T5DSzAdjaAgfofv3BxR/X4GXhtgf+tEnrPmQi/w2CGVwc
+ +110V9tIKQIsC28raUoFh70RjhFTICR93NttSMdCLWsRcaBY8RP8FmTNGswVd5Pan0VpfXpZn9w
+ cwUsDoAvtNGD0gpOKAqd33Yyudj8BM=
+X-Received: by 2002:a05:693c:26c2:b0:33e:3f5b:3ffa with SMTP id
+ 5a478bee46e88-342700c4766mr2065592eec.10.1790406093187; 
+ Sat, 26 Sep 2026 00:01:33 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.17
+ 5a478bee46e88-34145c166cfsm10615141eec.28.2026.09.26.00.01.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 00:01:20 -0700 (PDT)
+ Sat, 26 Sep 2026 00:01:32 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -78,10 +78,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH v4 04/55] target-info: rename target-info-impl.h to
- target-info-def.h
-Date: Sat, 26 Sep 2026 15:00:03 +0800
-Message-ID: <20260926070057.1234-5-luoyonggang@gmail.com>
+Subject: [PATCH v4 07/55] tests/unit: add test-target-info
+Date: Sat, 26 Sep 2026 15:00:06 +0800
+Message-ID: <20260926070057.1234-8-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260926070057.1234-1-luoyonggang@gmail.com>
 References: <20260926070057.1234-1-luoyonggang@gmail.com>
@@ -94,7 +93,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,116 +109,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the TargetInfo structure header and its include guard.
+Collect each target-info-def.c object in target_info_def_objects,
+keyed by target dir. Link every value so constructors fill the
+list. Assert target_info() is not NULL and target_info_list() has
+one entry per linked object.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- include/qemu/{target-info-impl.h => target-info-def.h} | 4 ++--
- include/qemu/target-info-qom.h                         | 2 +-
- page-vary-common.c                                     | 2 +-
- page-vary-system.c                                     | 2 +-
- target-info-def.c                                      | 2 +-
- target-info-qom.c                                      | 2 +-
- target-info.c                                          | 2 +-
- 7 files changed, 8 insertions(+), 8 deletions(-)
- rename include/qemu/{target-info-impl.h => target-info-def.h} (94%)
+ meson.build                   |  6 +++++-
+ tests/unit/meson.build        |  4 ++++
+ tests/unit/test-target-info.c | 38 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 1 deletion(-)
+ create mode 100644 tests/unit/test-target-info.c
 
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-def.h
-similarity index 94%
-rename from include/qemu/target-info-impl.h
-rename to include/qemu/target-info-def.h
-index cf42aabbc8b..8019d2c7196 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-def.h
-@@ -6,8 +6,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/meson.build b/meson.build
+index c404d222d9f..93237429713 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4259,6 +4259,8 @@ endif
  
--#ifndef QEMU_TARGET_INFO_IMPL_H
--#define QEMU_TARGET_INFO_IMPL_H
-+#ifndef QEMU_TARGET_INFO_DEF_H
-+#define QEMU_TARGET_INFO_DEF_H
+ traceable = []
+ emulators = {}
++target_info_def = files('target-info-def.c')
++target_info_def_objects = {}
+ foreach target : target_dirs
+   config_target = config_target_mak[target]
+   target_name = config_target['TARGET_NAME']
+@@ -4330,7 +4332,7 @@ foreach target : target_dirs
+     endif
+   endif
  
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-types-machine.h"
-diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
-index 91be415ed33..0f6772e65c3 100644
---- a/include/qemu/target-info-qom.h
-+++ b/include/qemu/target-info-qom.h
-@@ -9,7 +9,7 @@
- #ifndef QEMU_TARGET_INFO_QOM_H
- #define QEMU_TARGET_INFO_QOM_H
+-  arch_srcs += files('target-info-def.c')
++  arch_srcs += target_info_def
  
--#include "qemu/target-info-impl.h"
+   if target_base_arch in target_arch
+     t = target_arch[target_base_arch].apply(config_target, strict: false)
+@@ -4408,6 +4410,8 @@ foreach target : target_dirs
+                  c_args: c_args,
+                  build_by_default: false)
+ 
++  target_info_def_objects += {target: lib.extract_objects(target_info_def)}
++
+   if target.endswith('-softmmu')
+     execs = [{
+       'name': 'qemu-system-' + target_name,
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index e47bc7225ab..dc980a35955 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -43,6 +43,10 @@ tests = {
+   'test-qgraph': ['../qtest/libqos/qgraph.c'],
+   'check-qom-interface': [qom],
+   'check-qom-proplist': [qom],
++  'test-target-info': [qom, declare_dependency(
++    objects: target_info_def_objects.values(),
++    compile_args: ['-DTARGET_INFO_DEF_COUNT=@0@'.format(
++      target_info_def_objects.values().length())])],
+   'test-qemu-opts': [],
+   'test-keyval': [testqapi],
+   'test-logging': [],
+diff --git a/tests/unit/test-target-info.c b/tests/unit/test-target-info.c
+new file mode 100644
+index 00000000000..e6de9b259e8
+--- /dev/null
++++ b/tests/unit/test-target-info.c
+@@ -0,0 +1,38 @@
++/*
++ * TargetInfo unit tests
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info.h"
 +#include "qemu/target-info-def.h"
- #include "qom/object.h"
- 
- #define TYPE_TARGET_INFO "target-info"
-diff --git a/page-vary-common.c b/page-vary-common.c
-index ddd08633788..5a4654725a8 100644
---- a/page-vary-common.c
-+++ b/page-vary-common.c
-@@ -20,7 +20,7 @@
- #define IN_PAGE_VARY 1
- 
- #include "qemu/osdep.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "exec/page-vary.h"
- 
- /* WARNING: This file must *not* be complied with -flto. */
-diff --git a/page-vary-system.c b/page-vary-system.c
-index 6c49c10e23b..9773685dc16 100644
---- a/page-vary-system.c
-+++ b/page-vary-system.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "exec/page-vary.h"
- #include "exec/tlb-flags.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- 
- QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & ((1u < TARGET_PAGE_BITS_MIN) - 1));
- 
-diff --git a/target-info-def.c b/target-info-def.c
-index d121b8c0170..fa19cabc55f 100644
---- a/target-info-def.c
-+++ b/target-info-def.c
-@@ -8,7 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
- #include "hw/core/boards.h"
- #include "cpu.h"
-diff --git a/target-info-qom.c b/target-info-qom.c
-index 6965e4d1169..2b38673a3f8 100644
---- a/target-info-qom.c
-+++ b/target-info-qom.c
-@@ -9,7 +9,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qom/object.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qemu/target-info-init.h"
- #include "qemu/target-info-qom.h"
- 
-diff --git a/target-info.c b/target-info.c
-index bba4503151a..9abe72b1f55 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -9,7 +9,7 @@
- #include "qemu/osdep.h"
- #include "qemu/target-info.h"
- #include "qemu/target-info-qapi.h"
--#include "qemu/target-info-impl.h"
-+#include "qemu/target-info-def.h"
- #include "qapi/error.h"
- 
- const char *target_name(void)
++
++static int target_info_list_count(void)
++{
++    TargetInfoNode *node;
++    int n = 0;
++
++    QLIST_FOREACH(node, target_info_list(), next) {
++        n++;
++    }
++    return n;
++}
++
++static void test_target_info_not_null(void)
++{
++    g_assert_nonnull(target_info());
++}
++
++static void test_target_info_list_count(void)
++{
++    g_assert_cmpint(target_info_list_count(), ==, TARGET_INFO_DEF_COUNT);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/target-info/not-null", test_target_info_not_null);
++    g_test_add_func("/target-info/list-count", test_target_info_list_count);
++    return g_test_run();
++}
 -- 
 2.52.0.windows.1
 
