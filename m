@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72B0EC9830E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B716C98324
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmT3-0002b7-Pl; Sun, 27 Sep 2026 06:50:49 -0400
+	id 1xAmTg-0004gA-SC; Sun, 27 Sep 2026 06:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSy-0002Hr-Ue; Sun, 27 Sep 2026 06:50:45 -0400
+ id 1xAmTS-0004GQ-B0; Sun, 27 Sep 2026 06:51:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSw-0001OM-Te; Sun, 27 Sep 2026 06:50:44 -0400
+ id 1xAmTQ-0001Um-FF; Sun, 27 Sep 2026 06:51:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=4E0CcUu8n3Vm2M5kMzT6kzBXFIz2F3TBe/Lu+pyPeTo=;
+ t=1790506136; bh=nUAmxVomSUnrl24q9hs2bRmQHDje0a5r6DtQAU5k/8c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iaj9YNKBJVh7cnvKXrsuBD8cBo6tEQEP8/U2C1QsMnkAyqEkqWqA6XGamwZr+Hh8V
- Ofp66RWI/lA0VVkp35kT6dwV2SzMVzx4aVxSCVEVD8od2kgM0Tk7BSqWnRah7+gRkF
- XAFPA8XouVU2BxlY50a7GXuyVIyH8ollrKy1JVUFh0XKElwPkmOCBkAq7k9FW6sAQj
- j5+9OrTGfo80NuI9qHC4ihr+oHRRWChVfgp62bop6fyTzIE9unOHSkZbMEM68a4oGJ
- YANWaCjPpqkBIV75gxdnLJ/tuvKxQ1ZPFtAX7I3VKOJL7LYhN28Cfq26BYVtQU9gQM
- z51y/cG4jzMtg==
+ b=ef1Hwdiaxq8MbqZZSes0qcGKGQ8ZZ7MstCz0LW20QlYKD/5O2UEjGkXh1gKNg5E9f
+ 5MKLks2PwuE57gLbWUk1gNYds/j/nDZLYfe7exwRdLOdWQfHQ+TdKyDmRkXq9XBtcA
+ XclwmkhdF7T3HD0nhHIru/tmUMXkbJzk0ETRyG5HivT/MEPEnNr8VoOkgRyJbanN1a
+ HOF+xq3fsrXpW1PHOPrJH/r+dSKqKF0+pavSPjPGJfVQudLswc8hDwbcf8ThCgd1oy
+ RF8xY9JPifbabL4T7setZAWO4+W6ELhwHxvoVqPjq7+WxtmUDu6Gh4HIzxyv+khyV0
+ Q/+b3JqQjCWcQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35C931D8B70;
+ by isrv.corpit.ru (Postfix) with ESMTP id 53CC01D8B75;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31B05432177;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DEB943217C;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EF7565E798; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id 0A2BA5E7A2; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 81/92] tests/qtest/usb-hcd-xhci: test isoch
- endpoint type mismatch
-Date: Sun, 27 Sep 2026 13:47:57 +0300
-Message-ID: <20260927104821.196183-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 86/92] target/i386: Update FPU tag word for FXCH
+Date: Sun, 27 Sep 2026 13:48:02 +0300
+Message-ID: <20260927104821.196183-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -71,89 +70,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Configure the interrupt IN endpoint of usb-kbd as Isoch IN and queue one
-TD. The TD is deferred by a microframe, the kick timer retries it,
-usb-kbd NAKs, and a second doorbell retries it again. The TD has to stay
-pending both times and the controller has to keep running.
+FXCH ST(i) exchanges the contents of ST(0) and ST(i). Both registers
+receive a new value, so both should end up marked valid in the FPU tag
+word, regardless of what they were tagged before the swap.
 
-Without the fix QEMU aborts in the timer retry. The endpoint setup is
-taken from the reproducer attached to #3886.
+helper_fxchg_ST0_STN() swaps the two values but never touches either
+register's tag. So if either register happened to be tagged empty
+beforehand, it is still wrongly tagged empty afterwards.
 
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <c1166d1b83db5a507035d6fc27b1b552d4a95b0e.1789968699.git.junjie.cao@intel.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 1288b0869c082690c04c81ac940c126fb399592b)
+Mark both ST0 and ST(st_index) valid after the swap.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260902120419.212855-3-scherer.simon89@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit a9dbd71f033e6c8d005537da7168aae242b35daf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 61eca37b157..2e173af7506 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -33,6 +33,7 @@
- #define USBCMD_RS               (1 << 0)
- #define USBCMD_HCRST            (1 << 1)
- #define USBSTS_HCH              (1 << 0)
-+#define USBSTS_HCE              (1 << 12)
- #define PORTSC_CCS              (1 << 0)
- #define PORTSC_PR               (1 << 4)
- #define PORTSC_PP               (1 << 9)
-@@ -57,6 +58,7 @@
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 1a2b782e0f9..58e46d8f5f6 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -521,6 +521,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
+     ST(st_index) = ST0;
+     ST0 = tmp;
  
- #define EP_TYPE_ISOCH_OUT       1
- #define EP_TYPE_CONTROL         4
-+#define EP_TYPE_ISOCH_IN        5
- 
- #define XHCI_RING_TRBS          64
- #define XHCI_MICROFRAME_NS      125000
-@@ -390,6 +392,37 @@ static void test_xhci_isoch_mfindex_32bit(void)
-     xhci_test_end(&x);
++    env->fptags[env->fpstt] = 0;
++    env->fptags[(env->fpstt + st_index) & 7] = 0;
++
+     /* C1 is unconditionally cleared to 0 */
+     env->fpus &= ~0x0200;
  }
- 
-+/*
-+ * The endpoint type in the endpoint context is whatever the guest says. Tell
-+ * the controller that the interrupt endpoint of usb-kbd is isoch. The idle
-+ * keyboard NAKs, and the TD has to stay pending when first the kick timer and
-+ * then a doorbell retry it.
-+ */
-+static void test_xhci_isoch_ep_type_mismatch(void)
-+{
-+    uint64_t ring;
-+    XHCITest x;
-+
-+    if (!xhci_test_supported("usb-kbd")) {
-+        return;
-+    }
-+
-+    xhci_test_start(&x, "-device usb-kbd");
-+    ring = xhci_configure_ep(&x, 3, EP_TYPE_ISOCH_IN, 0, 8);
-+
-+    xhci_write_trb(&x, ring, xhci_alloc_page(&x), 8,
-+                   TRB_TYPE(TR_ISOCH) | TRB_TR_SIA | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+    qtest_clock_step(x.qts, 2 * XHCI_MICROFRAME_NS);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+
-+    g_assert_false(xhci_next_event(&x, NULL, NULL));
-+    g_assert_cmphex(xhci_readl(&x, x.oper + XHCI_USBSTS) &
-+                    (USBSTS_HCH | USBSTS_HCE), ==, 0);
-+
-+    xhci_test_end(&x);
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -406,6 +439,8 @@ int main(int argc, char **argv)
-     }
-     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
-                    test_xhci_isoch_mfindex_32bit);
-+    qtest_add_func("/xhci/pci/isoch/ep-type-mismatch",
-+                   test_xhci_isoch_ep_type_mismatch);
- 
-     qtest_start("-device nec-usb-xhci,id=xhci"
-                 " -drive id=drive0,if=none,file=null-co://,"
 -- 
 2.47.3
 
