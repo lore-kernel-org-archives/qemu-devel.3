@@ -4,65 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD1CC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 18:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62192C9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 18:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAtFm-0001m9-AG; Sun, 27 Sep 2026 14:05:36 -0400
+	id 1xAtfj-00050J-SA; Sun, 27 Sep 2026 14:32:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xAtFa-0001gq-E1
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:05:22 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1xAtFX-0007MN-Hi
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:05:22 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1FDFC583393;
- Sun, 27 Sep 2026 20:05:17 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id EY1O-KceIUoN; Sun, 27 Sep 2026 20:05:15 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F0654583382; Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EDD275833E3;
- Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
-Date: Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>, 
- Warner Losh <imp@bsdimp.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-In-Reply-To: <20260927122519-mutt-send-email-mst@kernel.org>
-Message-ID: <2e4e5faf-8efd-a52a-8155-62e56fb62709@eik.bme.hu>
-References: <arEvLLYK9A5MKNdE@redhat.com> <arP7TDfz7lz699KJ@redhat.com>
- <87ik3vyp3i.fsf@draig.linaro.org> <arT_kefzEhqg8-FB@redhat.com>
- <arUJxE0F7Q3Cw5sk@redhat.com> <arZHWKAgr-GYvoeX@redhat.com>
- <arZZhpR5_nPybOUo@redhat.com>
- <e030a85d-a5d5-8fc6-5d1a-41167f7a95bf@eik.bme.hu>
- <20260927052335-mutt-send-email-mst@kernel.org>
- <81d65154-74ce-c6c0-ab40-fb2156d53fba@eik.bme.hu>
- <20260927122519-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1xAtfa-0004zm-UJ
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:32:15 -0400
+Received: from mail-pj2-x0c.google.com ([2607:f8b0:4864:39::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1xAtfZ-0001bT-9W
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:32:14 -0400
+Received: by mail-pj2-x0c.google.com with SMTP id
+ 98e67ed59e1d1-3a2adb9bc3cso264313a91.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 11:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790533931; x=1791138731; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cb97crgsQr+aLgUxmLs9iL7y2lpF1mcB8yK9mFA1qyQ=;
+ b=EiLRygBrx6tJ7U6k3DrJQ4XZYLrw3vdrb4vESJC/avA5p8iJUGaN4mcKYpSbYkenF0
+ llWQl0zFAYyCLOF97c61wIpXx+xfZeu+qx0tfZh0B8JoI9Cx3OTfBnjbswEOvxk/IsSf
+ UNpSYgoBbHgPHbcKIqFhD37DwxxfXYplmWrkCRWUSIFZpWWuvHJIGehcY5bn3w+1J0LN
+ UeWN3zVJHSAOZPluhVwr3h8qvTsGM2cZw8Vs/3SxxSonxahNt0BCnV6VF+0l8igNX5NS
+ CTtq4nSuaNpPkSbC2PN+bUUYWpvp1kmWrX+OjWUTxrietu9/GaTyHnqBdIszlnF403nR
+ WJqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790533931; x=1791138731;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=cb97crgsQr+aLgUxmLs9iL7y2lpF1mcB8yK9mFA1qyQ=;
+ b=0/Q2YtvAnuT+DCUmAjnAvYOQcl3khsJ2zBTw0KTLsxiaLHcQo8KxR76EnHGC9xPVLP
+ PMgVV6IBGDRHtOKDVqK9tNWiD9so+iSmwQt1l1j3uVDGpS5xJz2l+8o04AuVoh83KmbF
+ ei/C5p/ClA4nWtz84I9oayUnbIheEIXk5WbKCNE+g54+KrYg/5UOkgC5AkNJtNBLl8nL
+ R2ted3CRzTA2Ti6Og6vJUtPoY6oBUWChrqCvusLXfFykAC7FLnkzAc/dWhpPgxjbk1yn
+ xozc2gR8EHIrNk8AzFL0uRR0FZayL6cVT1kzL2v6LfJi+DhyyMz0VkHrJapxIl+9oecs
+ 4MeA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx0xkitvL1wqsVSCKk6SErW0iTbp/WbYcyoAhjyTcNZ54GrN/8IsrukGNI2Z9bEKJR9njDgHw0/NODw@nongnu.org
+X-Gm-Message-State: AFq9FYLJSNx27IrzZ+gkxIC9w1NjAJ4kpxYiidth2nre9h24UPtXtdpW
+ r5O/zRsclDKKKcGeYjSGsfQ2bOf2LKqiPwBJH8mQcg/G9kaCRj+78nad
+X-Gm-Gg: AYBFou3XpBT0CZsTib5mljtlVeanuQdulAYTw/OAJI/V6T6NsNL+pl8nqwQYuN5KxuH
+ XeJiM2J9prbd4bAfamP+U2xgWXd+oTJWUBJ88qptrmlR1Nzc81yQm+clEpqntVzeOPoUAkRi+0T
+ lMk4rRWbhQdPUsAElxcgy7nL/+rYNrgNUe0yPGti9zTO2UrvQj96vq3yR/BPevfBeerfq6Qvc/u
+ X8nKHJeKVy9lT53XskxJMucpt4HobxzhgdJb/KmTkmttfp7ZTflJ/rzs0xALAfPt04M9DvLEFL7
+ eWY67jNqqvyQEu1LL85uzUFb/L0EKjmlsAIeIjpjeQtbYQ9Y9/01p87Xhod/Uuttqmwn+eiGRaW
+ dCCl7g1LYmZdt99WNszjGWgfKytNBN6/vGkz+h5ZFv+9nph91Vyhpk20MH0IODD3hmAZK0Rai1v
+ pCph7VhBzSFyykMSyoCmLTLNeSCguj+J/ydtBRXsXvK93wyyFhi/YmoyZ/TvyXVnZP+Irrrio=
+X-Received: by 2002:a17:90b:53d0:b0:3a2:590c:a85f with SMTP id
+ 98e67ed59e1d1-3a2590cb587mr1609679a91.21.1790533931274; 
+ Sun, 27 Sep 2026 11:32:11 -0700 (PDT)
+Received: from google.com ([118.150.148.19]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0b9589f7esm15980365a91.10.2026.09.27.11.32.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 27 Sep 2026 11:32:10 -0700 (PDT)
+Date: Mon, 28 Sep 2026 02:32:05 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: Alistair Francis <Alistair.Francis@wdc.com>
+Cc: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
+ "almer@dabbelt.com" <almer@dabbelt.com>,
+ "lvivier@redhat.com" <lvivier@redhat.com>,
+ "wxchen0913@gmail.com" <wxchen0913@gmail.com>,
+ "marscheng@google.com" <marscheng@google.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "jserv@ccns.ncku.edu.tw" <jserv@ccns.ncku.edu.tw>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "eleanor15x@gmail.com" <eleanor15x@gmail.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>
+Subject: Re: [PATCH v4 6/7] tests/functional/riscv64: Add boot test for
+ Milk-V Duo board
+Message-ID: <arlhCzaJLNneiU3Q@google.com>
+References: <20260822194315.2550260-1-visitorckw@gmail.com>
+ <20260822194315.2550260-7-visitorckw@gmail.com>
+ <66512e37ad227defe5d5512b2694ea0fe5f0a21a.camel@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <66512e37ad227defe5d5512b2694ea0fe5f0a21a.camel@wdc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:39::c;
+ envelope-from=visitorckw@gmail.com; helo=mail-pj2-x0c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,94 +119,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 27 Sep 2026, Michael S. Tsirkin wrote:
-> On Sun, Sep 27, 2026 at 12:03:39PM +0200, BALATON Zoltan wrote:
->> On Sun, 27 Sep 2026, Michael S. Tsirkin wrote:
->>> On Fri, Sep 25, 2026 at 02:20:49PM +0200, BALATON Zoltan wrote:
->>>> Not directly related to this patch but as an input to this discussion I'd
->>>> like to bring to your attention how some people use AI now. With LLMs being
->>>> able to do more, some users who have no idea about coding or QEMU internals
->>>> but want to use QEMU for things that we could not deliver, now just maintain
->>>> a fork and let the AI add features and fix bugs they find without ever
->>>> contacting us or reporting these back.
->>>
->>> More power to them I say. There's no way to find gold in this sand. Let
->>> them be.
->>
->> Sure they are free to do whatever they want and I don't want to stop this
->> but I'd like to see that effort eventually improving QEMU and not lost for
->> us or need to be redone from scratch.
->
-> No one has the time and energy to wade through mountains of slop.
+On Fri, Sep 25, 2026 at 04:02:45AM +0000, Alistair Francis wrote:
+> On Sat, 2026-08-22 at 19:43 +0000, Kuan-Wei Chiu wrote:
+> > Add a functional boot test for the Milk-V Duo board to validate the
+> > end-to-end boot flow.
+> > 
+> > $ ./build/run ./tests/functional/riscv64/test_milkv_duo.py
+> > TAP version 13
+> > ok 1 test_milkv_duo.MilkvDuoMachine.test_riscv64_milkv_duo
+> > 1..1
+> > 
+> > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> > ---
+> >  MAINTAINERS                                |  1 +
+> >  tests/functional/riscv64/meson.build       |  1 +
+> >  tests/functional/riscv64/test_milkv_duo.py | 50
+> > ++++++++++++++++++++++
+> >  3 files changed, 52 insertions(+)
+> >  create mode 100755 tests/functional/riscv64/test_milkv_duo.py
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 245eb7bb58..3f79334c59 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1861,6 +1861,7 @@ F: hw/riscv/milkv_duo.c
+> >  F: include/hw/char/dw8250.h
+> >  F: include/hw/misc/cv1800b_clk.h
+> >  F: include/hw/riscv/cv1800b.h
+> > +F: tests/functional/riscv64/test_milkv_duo.py
+> >  F: tests/qtest/milkv-duo-test.c
+> >  
+> >  RX Machines
+> > diff --git a/tests/functional/riscv64/meson.build
+> > b/tests/functional/riscv64/meson.build
+> > index d1a3e6c2bf..8a4f1d00f9 100644
+> > --- a/tests/functional/riscv64/meson.build
+> > +++ b/tests/functional/riscv64/meson.build
+> > @@ -18,4 +18,5 @@ tests_riscv64_system_thorough = [
+> >    'sifive_u',
+> >    'tt_atlantis',
+> >    'tuxrun',
+> > +  'milkv_duo',
+> >  ]
+> > diff --git a/tests/functional/riscv64/test_milkv_duo.py
+> > b/tests/functional/riscv64/test_milkv_duo.py
+> > new file mode 100755
+> > index 0000000000..aff247e61f
+> > --- /dev/null
+> > +++ b/tests/functional/riscv64/test_milkv_duo.py
+> > @@ -0,0 +1,50 @@
+> > +#!/usr/bin/env python3
+> > +#
+> > +# Functional test that boots a Linux kernel on a Milk-V Duo machine
+> > +#
+> > +# Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
+> > +#
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +from qemu_test import LinuxKernelTest, Asset
+> > +from qemu_test import wait_for_console_pattern
+> > +
+> > +class MilkvDuoMachine(LinuxKernelTest):
+> > +
+> > +    timeout = 120
+> > +
+> > +    ASSET_KERNEL = Asset(
+> > +       
+> > 'https://github.com/visitorckw/milkv-duo-qemu-assets/releases/downloa
+> > d/v1.0/Image',
+> > +       
+> > '3f157ecfcb86d28bfcff9fd3c1a43f60a8513b1919739fdc9a4d946aba35b2af'
+> > +    )
+> > +    ASSET_DTB = Asset(
+> > +       
+> > 'https://github.com/visitorckw/milkv-duo-qemu-assets/releases/downloa
+> > d/v1.0/cv1800b-milkv-duo.dtb',
+> > +       
+> > '2a5d165f64c4b2d55bba282b2974941ab223f6f5220c2e7721e35ab81311c098'
+> > +    )
+> > +    ASSET_ROOTFS = Asset(
+> > +       
+> > 'https://github.com/visitorckw/milkv-duo-qemu-assets/releases/downloa
+> > d/v1.0/rootfs.ext4',
+> > +       
+> > '9e7de9222ab4a79d1291866453aa47cd67a543216df6159bf9b42d055240a676'
+> > +    )
+> 
+> Is there a more official source we could use?
+> 
+I initially tried booting the board using milk-v duo's buildroot SDK
+release. It failed to boot probably because their downstream device
+tree and kernel rely on many custom out oftree bindings that differ
+from mainline Linux. This is why I originally hosted my own mainline
+compiled images on my personal github.
 
-That's why we should ask contributors using AI to do that before trying to 
-submit it and not expect maintainers to do it for them. Telling people 
-that they can use AI but they have to clean up the patches and describe it 
-themselves in the commit message to prove they did that and not just send 
-slop our way is better than just saying no AI generated code at all 
-because that just drives away more potential contributors. If this way of 
-writing code stays there will not be many people willing to do everthing 
-by hand but expecting them to steer the AI and know what they are doing is 
-a reasonable limitation to put on AI use.
+However, I just experimented with switching to tuxboot assets similar
+to how sifive_u is tested, and I can confirm that booting with the
+tuxboot kernel, dtb, and rootfs works perfectly all the way to the
+shell.
 
->> So some kind of AI policy is needed
->> and a strict no-AI policy does not help to get these efforts defragmented.
->
-> There's no effort here.
-
-What do you mean there's no effort? Even if these people don't write code 
-they spend a lot of time talking to the AI and test the generated patches 
-and iterate and refine it until they get what they want. Even if the 
-result is not meaningful to be included upstream there's still wasted 
-effort and some genuine problems solved. The solution may not be the best 
-way but at least it's a start to improve QEMU or show what users want but 
-with a no-AI policy we won't even know about that.
-
->> While goal oriented use of AI tools without caring for code quality leads to
->> non-upstreamable patches maybe we could encourage these people to learn and
->> even use an AI to redo their patches in a way that can at some point be
->> upstreamed after some human review but since we don't have enough
->> maintainers who could do that for them this should be done by the
->> contributors. With the current no-AI policy they are locked out from
->> contributing so they won't even try. By now they have implemented features
->> we wanted for years but still could not get them due to not enough people
->> being able to write code and while the AI generated patches can be mostly
->> sand there are some gold in them that actually fixes issues or add features
->> that could be useful if there was a way to upstream them. With current
->> policy I can't even use the AI patches to look at them and clean them up for
->> upstreaming (not that I want to do that due to the lot of nonsense to sift
->> through but for some simpler patches this could be an option or if the
->> patches would be made higher quality by better guarding what the AI does).
->> Currently all I can say to these people is that QEMU does not accept AI
->> generated patches but maube it would be better to say that while they cannot
->> just submit their AI slop they should try to tell their AIs to do these
->> again cleaning up all the nonsense and distill the gold from it and then
->> there should be some way to let that improve QEMU without drowning the
->> maintainers and putting all this effort on them.
->>
->> Regards,
->> BALATON Zoltan
->
-> AI's can not do this, at this juncture.
-
-AIs can't do that by themselves just by asking to do that but could if 
-steered in the right direction and supervised by people. That means the 
-people need some understanding on how things should be done so we should 
-encourage them to learn and then redo their slop in a better way. Asking 
-them to learn everything first and then redo everything by hand will not 
-lead anywhere. Giving up on it is an option but that will lead to forks 
-corrupted by AI patches that people are using instead of the upstream QEMU 
-because it does what they want and they don't know why it is bad. So I'd 
-try not to give up on it. We don't want to wade through slop and clean 
-those patches but we could try to educate people to use the AI in a better 
-way that can help the project too. That's still talking to real 
-contributors and using their effort and not wasting it. The proposal that 
-patches should be known and described by who submits them and review 
-should be replied by people and not AI is meant to go that way. Of course 
-there will be some people who will disregard that and still try to submit 
-slop and generate replies by AI but then you can refer to the policy and 
-ignore them until they follow the rules and put in some effort to learn.
+I'll update the test to fetch these assets from tuxboot.
 
 Regards,
-BALATON Zoltan
+Kuan-Wei
 
