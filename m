@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39F7C98338
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648F0C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksc-0000Kr-6d; Sun, 27 Sep 2026 05:09:06 -0400
+	id 1xAkre-0002hi-3O; Sun, 27 Sep 2026 05:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrf-0002xM-EX; Sun, 27 Sep 2026 05:08:08 -0400
+ id 1xAkpm-0000oT-L4; Sun, 27 Sep 2026 05:06:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrd-0008Fu-BJ; Sun, 27 Sep 2026 05:08:07 -0400
+ id 1xAkpk-00087X-Sk; Sun, 27 Sep 2026 05:06:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499961; bh=Efpnn7ZN5eb3wLnqdfxtKkWPj55g8PGCMQPViKUJMxU=;
+ t=1790499957; bh=h9jFXRIrtmOwqV/Duq6F+xyHf+3HWH0IsWXxtvYO880=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qHSzbHPlSr115BOCAFZrP9hd1N6E1iKiWWVjP/dufjKWqSThK7Z1giwlnuGEuPyXb
- nU4xEhRzf2TMcATK2vTx4MX2NBImRxBKAaytkvXwVrW0uXPrJyeB394x1O+DYEbZa/
- PO+b47sJ/HTJaFRmbFNAPgjhnY87DuTko8npq1gjv6NU2gfHN48mSCLueDt+PIjcUB
- fFvBR7xxgVwTGZtFk874Ke+vlftThXgHYlmsHvJFpWSbIQ/NJi6N8XXnfF+xS7Bidv
- Kv5vQVTJ1/eu48WoKj6+Ox10fJ8vC1VLU9f/gl45T7m9jbyBq1tfIH3y3B9BOcBshx
- V3CycM6sW7aGQ==
+ b=HZVqSarKKBb6NiOfUdTQ1oiJeA5IWkjVybvhoD/WMK+/TlKAGoo8ssoOUZhDcC42d
+ NIE4Y/OH9/0RoT9YFuBmqse/P4vhWS+7MoGcC7TECFCzUXxbzsu8pkAcQeNVibyZWE
+ svQVdt8XQ8a8MwvaVtCt6vbFmVaC+G6gSUg3uf6z0xWns+2+GEbI7Rb+/KU5O4GRXn
+ js0yvJ7/x/TXjAya2lGzY8QxITsM6xIcIZ2pDPkkf2SYYGb/8CXIzWU+EpiMmvdvIq
+ 2f+QsChIFBw0QER67w1Y0wDud/y7lty7FnnGLCmiOFH+OejOAMoyWHkU7mXn9aeD55
+ 3mxhfD2LaJw9Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F9351D8B25;
- Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E2A41D8B11;
+ Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8CA2C4320DE;
- Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3840F4320CA;
+ Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F02E15E67B; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ id E00CD5E653; Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 84/86] target/i386: Mark MOVNTI as not valid with
- prefixes 0x66, 0xF2, 0xF3
-Date: Sun, 27 Sep 2026 12:05:31 +0300
-Message-ID: <20260927090540.102811-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Morrell <mmorrell@tachyum.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 64/86] linux-user: implement mlock2(2) syscall
+Date: Sun, 27 Sep 2026 12:05:11 +0300
+Message-ID: <20260927090540.102811-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
@@ -73,43 +70,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: Michael Morrell <mmorrell@tachyum.com>
 
-According to both table A-3 in Volume 2 of Intel 64 and IA-32 Architectures
-Software Developer's Manual and table A-3 in Volume 3 of AMD64 Architecture
-Programmer's Manual, 0F C3 is decoded as MOVNTI only if the instruction is
-not preceded by prefixes 0x66, 0xF2, or 0xF3.
+TARGET_NR_mlock2 is defined for every target's syscall table (it has
+been available on all Linux architectures since it was added in
+kernel 4.4), and linux-user/strace.list already has an entry for it,
+but linux-user/syscall.c has no case handler for it. A guest mlock2()
+call therefore falls through to the default case and gets -ENOSYS
+instead of being emulated, on every target.
 
-Currently, QEMU does not check the presence of these prefixes when decoding
-0F C3, which leads to QEMU happily executing 0F C3 as MOVNTI instead of raising
-an expected #UD when any of these prefixes are present, which does not match
-the behavior of the real hardware.
+mlock2() differs from mlock() only by a third `flags` argument
+(MLOCK_ONFAULT). Add TARGET_MLOCK_ONFAULT and a case that validates
+the flags argument and forwards to the host mlock2(), mirroring the
+existing TARGET_NR_mlock case immediately above it.
 
-This patch fixes this bug by correcting the decode table for MOVNTI so that
-it requires that none of the 0x66, 0xF2, and 0xF3 prefixes is present.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 3519b813e1f1 ("target/i386: port extensions of one-byte opcodes to new decoder")
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Link: https://lore.kernel.org/r/20260818145837.550059-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6adc9d9cdc53e2299f3343950d519b6f26e114de)
+Signed-off-by: Michael Morrell <mmorrell@tachyum.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 30fa3eb41f85e114765e8476dc9a32a890b2e78f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 0ae192835e6..3905ce19cc5 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1389,7 +1389,7 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xc0] = X86_OP_ENTRY2(XADD,       E,b, G,b,            lock),
-     [0xc1] = X86_OP_ENTRY2(XADD,       E,v, G,v,            lock),
-     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
--    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-+    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2) p_00), /* MOVNTI */
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index bac13aebec0..af9daa165d1 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -11170,6 +11170,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_mlock:
+         return get_errno(mlock(g2h(cpu, arg1), arg2));
+ #endif
++#ifdef TARGET_NR_mlock2
++    case TARGET_NR_mlock2:
++        if (arg3 & ~TARGET_MLOCK_ONFAULT) {
++            return -TARGET_EINVAL;
++        }
++        return get_errno(mlock2(g2h(cpu, arg1), arg2,
++                                 (arg3 & TARGET_MLOCK_ONFAULT) ?
++                                 MLOCK_ONFAULT : 0));
++#endif
+ #ifdef TARGET_NR_munlock
+     case TARGET_NR_munlock:
+         return get_errno(munlock(g2h(cpu, arg1), arg2));
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index e28853c93b0..f5831a6badd 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2795,6 +2795,10 @@ struct target_mount_attr_ver0 {
+ #ifndef RESOLVE_IN_ROOT
+ #define RESOLVE_IN_ROOT         0x10
+ #endif
++
++/* flags for mlock2() */
++#define TARGET_MLOCK_ONFAULT    0x01
++
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
+     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
+     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
 -- 
 2.47.3
 
