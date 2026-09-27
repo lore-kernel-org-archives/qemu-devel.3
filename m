@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FBB6C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B6AC9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmTi-0004xh-Qm; Sun, 27 Sep 2026 06:51:30 -0400
+	id 1xAmT3-0002YV-9a; Sun, 27 Sep 2026 06:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTO-0004Dq-V5; Sun, 27 Sep 2026 06:51:11 -0400
+ id 1xAmSx-00028l-Gt; Sun, 27 Sep 2026 06:50:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTM-0001Pb-C3; Sun, 27 Sep 2026 06:51:10 -0400
+ id 1xAmSu-0001Nq-2d; Sun, 27 Sep 2026 06:50:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=UD2DCKk5RC2siDEc5hx6BoL7q3x6dJh+kzjciSjalyk=;
+ t=1790506136; bh=WT2bpGMtaRi3hozzh2O1oKM9th1XtT2iMg0ZMo70HDs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AZuEetGhepatxfYWWvfNDysnSOhzwMh7pFn0bjcqgwlcxA8gWrrwjVBXjEYz5TjD1
- gYIzkd+zrjvDLJveoTaxG4AwMNsmCwAJn3suQfetNtQlctx0tbyIwRUaXYSZZqIL4U
- nEOXCzATPC1RieXgB2XdpHCdoWofcRm51Z+2tzIvSzOd7HJHCAdWBsXtiKeS8jHEg+
- XiU0ojWoFGrtYCAcsXD6UwXSfnRQUeqKR+9RdsBtHVyxSVOX+xBBBYtRBrsBwEKSDn
- l/RzIrxTTSNc+XV2eN4MpggNHStapzdUfPPQUyYMlQSbVRDnazt8KCW20YtDeMf22M
- qYdd6pKTwIcLw==
+ b=YyXOaR/H5M7IiT+btIXG8ZRTjLJl1JTZCtYMJ+EAG5VK5GBQpuzX5UL/ceSDiPpTr
+ 1kZ6liWk3UooXwfbFEO9UIVENnOadVyNsgTeJ3b0GFsrjIHLloFYiJDSI5be6wxhk0
+ YUhmFqSMf7I6pdg9YTzvYBFwJVLGWjyRn5QEvaaR8qfxmpBnVK2C5KxndH6IxGDr0o
+ c887pw7lgMcVT2mKh37O2lT5kHReY538Dk2cpM+ulL+tDI5hOnQU3WLgneZLRUZLPc
+ +NnL8uEFbZSnGgvPIJWMdjudMxA20XYFDIVrTAlFpT7SI4lmxoFVZOeDPr/v/OOpUf
+ vpVr/YwzILaoQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4FAFC1D8B73;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2E4601D8B6F;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 42AD243217A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B365432176;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0438D5E79E; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
+ id EC7E95E796; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 84/92] target/i386: Update FPU tag word for
- FXTRACT's old ST(0)
-Date: Sun, 27 Sep 2026 13:48:00 +0300
-Message-ID: <20260927104821.196183-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 80/92] tests/qtest/usb-hcd-xhci: test isoch pacing
+ with MFINDEX above 2^32
+Date: Sun, 27 Sep 2026 13:47:56 +0300
+Message-ID: <20260927104821.196183-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,83 +73,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-FXTRACT writes two registers: the old ST(0) gets the exponent (it
-becomes ST(1) after the push), and the new ST(0) gets the
-significand. Both should end up marked valid in the FPU tag word.
+Add the minimum needed to drive a transfer ring from the test. Use it to
+queue an isoch TD with SIA on usb-audio after stepping the clock past
+2^32 microframes, and check that the TD waits for the next interval
+boundary. Before the ROUND_UP() change it completed as soon as the
+doorbell was rung.
 
-helper_fxtract() only marks the new one valid, via fpush(). The old
-ST(0) just keeps whatever tag it had before the instruction, even
-though it was just written with the exponent. So if it happened to
-be tagged empty beforehand, it is still (wrongly) tagged empty
-afterwards.
+The machine is started with pit=off. With the i8254 present the clock
+step takes 26s in an ASan build instead of well under a second.
 
-Add a fpush_fxtract() helper that does the usual fpush() and also
-marks the old ST(0) (now ST(1)) valid, and use it in place of plain
-fpush() at all previous call sites in helper_fxtract().
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4395
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260901085839.138094-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 994fb6c218f8c8f2be3fc9fab75a41d15b859fdc)
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <eb57b4b9bd78f08d248fa1ae7ed5d2d5958c9ef4.1789968699.git.junjie.cao@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 3c770d72925eb06c1478612233e103e3de9b311f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 32af8b79f4f..829b2c80dbc 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -1808,6 +1808,13 @@ void helper_fpatan(CPUX86State *env)
-     merge_exception_flags(env, old_flags);
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index b58fa1e2dae..61eca37b157 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -10,8 +10,68 @@
+ #include "qemu/osdep.h"
+ #include "libqtest-single.h"
+ #include "libqos/usb.h"
++#include "libqos/malloc-pc.h"
+ #include "qobject/qdict.h"
+ 
++/* capability registers */
++#define XHCI_CAPLENGTH          0x00
++#define XHCI_HCSPARAMS1         0x04
++#define XHCI_DBOFF              0x14
++#define XHCI_RTSOFF             0x18
++/* operational registers */
++#define XHCI_USBCMD             0x00
++#define XHCI_USBSTS             0x04
++#define XHCI_CRCR               0x18
++#define XHCI_DCBAAP             0x30
++#define XHCI_CONFIG             0x38
++#define XHCI_PORTSC(n)          (0x400 + 0x10 * (n))
++/* interrupter 0, relative to the runtime registers */
++#define XHCI_ERSTSZ             0x28
++#define XHCI_ERSTBA             0x30
++#define XHCI_ERDP               0x38
++
++#define USBCMD_RS               (1 << 0)
++#define USBCMD_HCRST            (1 << 1)
++#define USBSTS_HCH              (1 << 0)
++#define PORTSC_CCS              (1 << 0)
++#define PORTSC_PR               (1 << 4)
++#define PORTSC_PP               (1 << 9)
++#define CRCR_RCS                (1 << 0)
++#define ERDP_EHB                (1 << 3)
++
++#define TRB_C                   (1 << 0)
++#define TRB_TR_IOC              (1 << 5)
++#define TRB_TR_SIA              (1U << 31)
++#define TRB_TYPE(t)             ((t) << 10)
++#define TRB_GET_TYPE(control)   (((control) >> 10) & 0x3f)
++#define TRB_GET_CCODE(status)   ((status) >> 24)
++#define TRB_GET_SLOT(control)   ((control) >> 24)
++
++#define TR_ISOCH                5
++#define CR_ENABLE_SLOT          9
++#define CR_ADDRESS_DEVICE       11
++#define CR_CONFIGURE_ENDPOINT   12
++#define ER_TRANSFER             32
++#define ER_COMMAND_COMPLETE     33
++#define CC_SUCCESS              1
++
++#define EP_TYPE_ISOCH_OUT       1
++#define EP_TYPE_CONTROL         4
++
++#define XHCI_RING_TRBS          64
++#define XHCI_MICROFRAME_NS      125000
++
++typedef struct XHCITest {
++    QTestState *qts;
++    QGuestAllocator alloc;
++    QPCIBus *bus;
++    struct qhc hc;
++    uint32_t oper, runtime, doorbell;
++    uint64_t cmd_ring, event_ring, input_ctx;
++    unsigned int cmd_idx, event_idx;
++    unsigned int port, slot;
++} XHCITest;
++
+ static void wait_device_deleted_event(QTestState *qtest, const char *id)
+ {
+     QDict *resp, *data;
+@@ -109,6 +169,227 @@ static void test_usb_ccid_hotplug(void)
+     qtest_qmp_device_del(qts, "ccid");
  }
  
-+/* fpush() only validates the new top. FXTRACT also needs ST(1) validated. */
-+static inline void fpush_fxtract(CPUX86State *env)
++static uint32_t xhci_readl(XHCITest *x, uint32_t off)
 +{
-+    fpush(env);
-+    env->fptags[(env->fpstt + 1) & 7] = 0;
++    return qpci_io_readl(x->hc.dev, x->hc.bar, off);
 +}
 +
- void helper_fxtract(CPUX86State *env)
++static void xhci_writel(XHCITest *x, uint32_t off, uint32_t val)
++{
++    qpci_io_writel(x->hc.dev, x->hc.bar, off, val);
++}
++
++static void xhci_writeq(XHCITest *x, uint32_t off, uint64_t val)
++{
++    xhci_writel(x, off, val);
++    xhci_writel(x, off + 4, val >> 32);
++}
++
++static uint64_t xhci_alloc_page(XHCITest *x)
++{
++    uint64_t addr = guest_alloc(&x->alloc, 0x1000);
++
++    qtest_memset(x->qts, addr, 0, 0x1000);
++    return addr;
++}
++
++static void xhci_write_trb(XHCITest *x, uint64_t addr, uint64_t parameter,
++                           uint32_t status, uint32_t control)
++{
++    qtest_writeq(x->qts, addr, parameter);
++    qtest_writel(x->qts, addr + 8, status);
++    qtest_writel(x->qts, addr + 12, control);
++}
++
++/* Fetch the next event if there is one. Does not advance the clock. */
++static bool xhci_next_event(XHCITest *x, uint32_t *status, uint32_t *control)
++{
++    uint64_t addr = x->event_ring + 16 * x->event_idx;
++    uint32_t c = qtest_readl(x->qts, addr + 12);
++
++    if (!(c & TRB_C)) {
++        return false;
++    }
++    if (status) {
++        *status = qtest_readl(x->qts, addr + 8);
++    }
++    if (control) {
++        *control = c;
++    }
++    x->event_idx++;
++    g_assert_cmpuint(x->event_idx, <, XHCI_RING_TRBS);
++    xhci_writeq(x, x->runtime + XHCI_ERDP, (addr + 16) | ERDP_EHB);
++    return true;
++}
++
++static unsigned int xhci_command(XHCITest *x, uint64_t parameter,
++                                 uint32_t control)
++{
++    uint32_t status;
++
++    g_assert_cmpuint(x->cmd_idx, <, XHCI_RING_TRBS);
++    xhci_write_trb(x, x->cmd_ring + 16 * x->cmd_idx++, parameter, 0,
++                   control | TRB_C);
++    xhci_writel(x, x->doorbell, 0);
++
++    g_assert_true(xhci_next_event(x, &status, &control));
++    g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_COMMAND_COMPLETE);
++    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
++    return TRB_GET_SLOT(control);
++}
++
++/*
++ * Start qemu-xhci with one USB device, run the controller and bring the
++ * device to the Addressed state.
++ */
++static void xhci_test_start(XHCITest *x, const char *usb_device)
++{
++    uint64_t dcbaa, erst, ep0_ring;
++    unsigned int maxports;
++
++    memset(x, 0, sizeof(*x));
++    /* pit=off: a long clock step would run the i8254 timer all the way */
++    x->qts = qtest_initf("-machine pc,pit=off -nodefaults "
++                         "-device qemu-xhci,id=xhci,addr=04.0 %s", usb_device);
++    pc_alloc_init(&x->alloc, x->qts, ALLOC_NO_FLAGS);
++    x->bus = qpci_new_pc(x->qts, NULL);
++    qusb_pci_init_one(x->bus, &x->hc, QPCI_DEVFN(4, 0), 0);
++
++    x->oper = qpci_io_readb(x->hc.dev, x->hc.bar, XHCI_CAPLENGTH);
++    x->runtime = xhci_readl(x, XHCI_RTSOFF) & ~0x1f;
++    x->doorbell = xhci_readl(x, XHCI_DBOFF) & ~0x3;
++    maxports = xhci_readl(x, XHCI_HCSPARAMS1) >> 24;
++
++    xhci_writel(x, x->oper + XHCI_USBCMD, USBCMD_HCRST);
++    g_assert_false(xhci_readl(x, x->oper + XHCI_USBCMD) & USBCMD_HCRST);
++
++    dcbaa = xhci_alloc_page(x);
++    erst = xhci_alloc_page(x);
++    x->cmd_ring = xhci_alloc_page(x);
++    x->event_ring = xhci_alloc_page(x);
++    x->input_ctx = xhci_alloc_page(x);
++
++    xhci_writel(x, x->oper + XHCI_CONFIG, 1);
++    xhci_writeq(x, x->oper + XHCI_DCBAAP, dcbaa);
++    qtest_writeq(x->qts, erst, x->event_ring);
++    qtest_writel(x->qts, erst + 8, XHCI_RING_TRBS);
++    xhci_writel(x, x->runtime + XHCI_ERSTSZ, 1);
++    xhci_writeq(x, x->runtime + XHCI_ERSTBA, erst);
++    xhci_writeq(x, x->runtime + XHCI_ERDP, x->event_ring | ERDP_EHB);
++    xhci_writeq(x, x->oper + XHCI_CRCR, x->cmd_ring | CRCR_RCS);
++    xhci_writel(x, x->oper + XHCI_USBCMD, USBCMD_RS);
++    g_assert_false(xhci_readl(x, x->oper + XHCI_USBSTS) & USBSTS_HCH);
++
++    for (x->port = 0; x->port < maxports; x->port++) {
++        if (xhci_readl(x, x->oper + XHCI_PORTSC(x->port)) & PORTSC_CCS) {
++            break;
++        }
++    }
++    g_assert_cmpuint(x->port, <, maxports);
++    xhci_writel(x, x->oper + XHCI_PORTSC(x->port), PORTSC_PP | PORTSC_PR);
++    while (xhci_next_event(x, NULL, NULL)) {
++        /* drop the port status change events */
++    }
++
++    x->slot = xhci_command(x, 0, TRB_TYPE(CR_ENABLE_SLOT));
++    qtest_writeq(x->qts, dcbaa + 8 * x->slot, xhci_alloc_page(x));
++
++    /* input control context: add slot and ep0 */
++    qtest_writel(x->qts, x->input_ctx + 0x04, 0x3);
++    /* slot context: one context entry, root hub port */
++    qtest_writel(x->qts, x->input_ctx + 0x20, 1 << 27);
++    qtest_writel(x->qts, x->input_ctx + 0x24, (x->port + 1) << 16);
++    /* ep0 context */
++    ep0_ring = xhci_alloc_page(x);
++    qtest_writel(x->qts, x->input_ctx + 0x44,
++                 (64 << 16) | (EP_TYPE_CONTROL << 3));
++    qtest_writeq(x->qts, x->input_ctx + 0x48, ep0_ring | 1);
++    xhci_command(x, x->input_ctx,
++                 TRB_TYPE(CR_ADDRESS_DEVICE) | (x->slot << 24));
++}
++
++/* Returns the address of the transfer ring. */
++static uint64_t xhci_configure_ep(XHCITest *x, unsigned int epid,
++                                  unsigned int type, unsigned int interval,
++                                  unsigned int max_packet)
++{
++    uint64_t ring = xhci_alloc_page(x);
++    uint64_t epctx = x->input_ctx + 0x20 * (epid + 1);
++
++    qtest_memset(x->qts, x->input_ctx, 0, 0x1000);
++    qtest_writel(x->qts, x->input_ctx + 0x04, (1 << epid) | 1);
++    qtest_writel(x->qts, x->input_ctx + 0x20, epid << 27);
++    qtest_writel(x->qts, x->input_ctx + 0x24, (x->port + 1) << 16);
++    qtest_writel(x->qts, epctx + 0x00, interval << 16);
++    qtest_writel(x->qts, epctx + 0x04, (max_packet << 16) | (type << 3));
++    qtest_writeq(x->qts, epctx + 0x08, ring | 1);
++    xhci_command(x, x->input_ctx,
++                 TRB_TYPE(CR_CONFIGURE_ENDPOINT) | (x->slot << 24));
++    return ring;
++}
++
++static void xhci_test_end(XHCITest *x)
++{
++    g_free(x->hc.dev);
++    qpci_free_pc(x->bus);
++    alloc_destroy(&x->alloc);
++    qtest_quit(x->qts);
++}
++
++static bool xhci_test_supported(const char *usb_device)
++{
++    const char *arch = qtest_get_arch();
++
++    if (strcmp(arch, "i386") != 0 && strcmp(arch, "x86_64") != 0) {
++        g_test_skip("Test only runs on x86 (pc machine)");
++        return false;
++    }
++    if (!qtest_has_device("qemu-xhci") || !qtest_has_device(usb_device)) {
++        g_test_skip("Devices not available");
++        return false;
++    }
++    return true;
++}
++
++/*
++ * An isoch TD with SIA set is run at the next interval boundary. That has to
++ * hold once the microframe index no longer fits in 32 bits as well.
++ */
++static void test_xhci_isoch_mfindex_32bit(void)
++{
++    const unsigned int interval = 6;
++    uint32_t control;
++    uint64_t ring;
++    XHCITest x;
++
++    if (!xhci_test_supported("usb-audio")) {
++        return;
++    }
++
++    xhci_test_start(&x, "-audiodev none,id=snd0 "
++                        "-device usb-audio,audiodev=snd0");
++    ring = xhci_configure_ep(&x, 2, EP_TYPE_ISOCH_OUT, interval, 64);
++
++    /* Go past 2^32 microframes and stop off an interval boundary. */
++    qtest_clock_step(x.qts, (1ULL << 32) * XHCI_MICROFRAME_NS);
++    qtest_clock_step(x.qts, 5 * XHCI_MICROFRAME_NS);
++
++    xhci_write_trb(&x, ring, xhci_alloc_page(&x), 64,
++                   TRB_TYPE(TR_ISOCH) | TRB_TR_SIA | TRB_TR_IOC | TRB_C);
++    xhci_writel(&x, x.doorbell + 4 * x.slot, 2);
++    g_assert_false(xhci_next_event(&x, NULL, NULL));
++
++    /*
++     * The streaming interface has not been enabled, so usb-audio stalls the
++     * TD. What matters is when that happens.
++     */
++    qtest_clock_step(x.qts, XHCI_MICROFRAME_NS << interval);
++    g_assert_true(xhci_next_event(&x, NULL, &control));
++    g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_TRANSFER);
++
++    xhci_test_end(&x);
++}
++
+ int main(int argc, char **argv)
  {
-     int old_flags = save_exception_flags(env);
-@@ -1819,22 +1826,22 @@ void helper_fxtract(CPUX86State *env)
-         /* Easy way to generate -inf and raising division by 0 exception */
-         ST0 = floatx80_div(floatx80_chs(floatx80_one), floatx80_zero,
-                            &env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = temp.d;
-     } else if (floatx80_invalid_encoding(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST0 = floatx80_default_nan(&env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-     } else if (floatx80_is_any_nan(ST0)) {
-         if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-             float_raise(float_flag_invalid, &env->fp_status);
-             ST0 = floatx80_silence_nan(ST0, &env->fp_status);
-         }
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-     } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-         ST1 = floatx80_default_inf(0, &env->fp_status);
-     } else {
-@@ -1850,7 +1857,7 @@ void helper_fxtract(CPUX86State *env)
-         }
-         /* DP exponent bias */
-         ST0 = int32_to_floatx80(expdif, &env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         BIASEXPONENT(temp);
-         ST0 = temp.d;
+     int ret;
+@@ -123,6 +404,8 @@ int main(int argc, char **argv)
+     if (qtest_has_device("usb-ccid")) {
+         qtest_add_func("/xhci/pci/hotplug/usb-ccid", test_usb_ccid_hotplug);
      }
++    qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
++                   test_xhci_isoch_mfindex_32bit);
+ 
+     qtest_start("-device nec-usb-xhci,id=xhci"
+                 " -drive id=drive0,if=none,file=null-co://,"
 -- 
 2.47.3
 
