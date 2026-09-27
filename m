@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1A6C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A01C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksj-0001EP-Km; Sun, 27 Sep 2026 05:09:13 -0400
+	id 1xAksY-0008SY-UA; Sun, 27 Sep 2026 05:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrb-0002X4-F5; Sun, 27 Sep 2026 05:08:03 -0400
+ id 1xAkrH-00026u-Dh; Sun, 27 Sep 2026 05:07:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrZ-0008FM-NT; Sun, 27 Sep 2026 05:08:03 -0400
+ id 1xAkrF-0008FH-FS; Sun, 27 Sep 2026 05:07:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499961; bh=HZ7i1VILONMIOtmGbaMlPLO4X6B7ksLjdEcoFOYUQU8=;
+ t=1790499961; bh=BfTdZbj+ebsWldqWdkfa8kSg3370PgB+vAdII6ain/E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=f86Fqw79fMilJ+tsbEB7g6OapHWmG8D91/F0vN1N2sdxsbiZHrwahxOp+r5+yUmes
- F5oXwXiFK4l90yxScGxxkfMCXHakOudGuSHacYUIvLyDqDvyoVk3xHxf7f298I2H0F
- 0YlsRACINbs7/WSYKvuIFHa2lW9t4TYr5HGBKhK0aSSPgd5sXdORUE8hFYtiyncSsi
- Jgac5m85ENHwtGeuC4adkwgWANB5jvQhV/62IDfAU62ISUPxrGy/y+0TOScadvQ6g6
- kZ2vLW33BqM4Btx3WQwzLAfSMZ48HqqNXu121ARY8uK/6dXkwA0j20G0+8PI5C5kz7
- ths/f8Wr9uL0w==
+ b=WrlZ0nRQnu4OElvvTglF/ET7y9AM0L/e3mORjQg4LRdH6tHLIT0g89/dP3sMEV7oQ
+ tzwJuH3hEK6dVOXYHLyWgoqwqrtFV6GrQiaqB6AMsjMCIdUy2UuuSLruVHH53WO3rA
+ N5+57bJw0V2XfDTB+bmcko2oDA9zwaoHfYP8Wm7WFJEad0dd6kuEak65fulu52LkDh
+ RrO0pIuOm7H/7CUakJZIEdjXQE3v+zO6RaAGphU6BhHbOe+l66qjqrcA4y2m2P/C1Z
+ GmH0TXFyPnRK5UME2TtKCrP/8yAJ8fpdT6upefx1fnwOEFGczVAYOcBDjEMQ4o4bjM
+ J0cZP628oq7rw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 89DBF1D8B24;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E0D91D8B23;
  Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 871184320DD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7B3844320DC;
  Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id ED0635E679; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ id E9F245E677; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 83/86] target/i386: Update FPU tag word for FXCH
-Date: Sun, 27 Sep 2026 12:05:30 +0300
-Message-ID: <20260927090540.102811-26-mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 82/86] target/i386: Update FPU tag word for FSTP
+Date: Sun, 27 Sep 2026 12:05:29 +0300
+Message-ID: <20260927090540.102811-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
@@ -72,37 +72,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Simon Scherer <scherer.simon89@gmail.com>
 
-FXCH ST(i) exchanges the contents of ST(0) and ST(i). Both registers
-receive a new value, so both should end up marked valid in the FPU tag
-word, regardless of what they were tagged before the swap.
+FSTP ST(i) copies the value in ST(0) into ST(i) and then pops the
+register stack. ST(i) should end up marked valid in the FPU tag word
+and the old ST(0) should end up marked empty.
 
-helper_fxchg_ST0_STN() swaps the two values but never touches either
-register's tag. So if either register happened to be tagged empty
-beforehand, it is still wrongly tagged empty afterwards.
+helper_fmov_STN_ST0() copies the value into ST(i) but never touches
+its tag. So if ST(i) happened to be tagged empty beforehand, it is
+still wrongly tagged empty afterwards.
 
-Mark both ST0 and ST(st_index) valid after the swap.
+Mark the destination tag to valid in helper_fmov_STN_ST0().
+This also fixes FST ST(i), which shares the same helper.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
 Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902120419.212855-3-scherer.simon89@gmail.com
+Link: https://lore.kernel.org/r/20260902120419.212855-2-scherer.simon89@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a9dbd71f033e6c8d005537da7168aae242b35daf)
+(cherry picked from commit f2357fdcd984c37fb0f3f64698a38ba1f55fd9c5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index a5096e640f6..e92e0b1153c 100644
+index e215dbc1c00..a5096e640f6 100644
 --- a/target/i386/tcg/fpu_helper.c
 +++ b/target/i386/tcg/fpu_helper.c
-@@ -521,6 +521,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
+@@ -510,6 +510,7 @@ void helper_fmov_ST0_STN(CPUX86State *env, int st_index)
+ void helper_fmov_STN_ST0(CPUX86State *env, int st_index)
+ {
      ST(st_index) = ST0;
-     ST0 = tmp;
- 
-+    env->fptags[env->fpstt] = 0;
 +    env->fptags[(env->fpstt + st_index) & 7] = 0;
-+
-     /* C1 is unconditionally cleared to 0 */
-     env->fpus &= ~0x0200;
  }
+ 
+ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
 -- 
 2.47.3
 
