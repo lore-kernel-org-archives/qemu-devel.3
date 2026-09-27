@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6083C98338
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 08:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F629C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAkCj-0003uk-21; Sun, 27 Sep 2026 04:25:49 -0400
+	id 1xAkkA-0002Pc-Sv; Sun, 27 Sep 2026 05:00:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xAkCg-0003rG-IL
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 04:25:46 -0400
-Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xAkk5-0002P6-9h
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:00:18 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xAkCe-0004ek-J7
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 04:25:46 -0400
-Received: by mail-pz2-x2b.google.com with SMTP id
- 41be03b00d2f7-cc78e1a94b8so1096454a12.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 01:25:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xAkk3-0007O0-TB
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:00:17 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-396ccb1a98fso1602219a91.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1790497543; x=1791102343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790499614; x=1791104414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cHPPYRSlB5lQ/aBlCq+uPr2zo6HJWshht44DXCVNEH0=;
- b=auq4RawZrdtlOlM/ZFP67ViS4tH4TablbuE4OjNQmn9sWeYwerFyObcoJBlrL158me
- l1iSYbVZjQOe70zqn2kp5Ehnr1vl5seRSz6+6TTY18S9Y/H7Cn8jI4eCmCOECdUHx5gt
- pfeMShkAYdL7JoOQB/yeT/YT5vf8XFCFOYZ+Ijcp0ptBERfxIVUhwRj+OiKedCtR5TOk
- JJlMLGNw96ndA1i76Fxd6TuWDvcQvoFmyGU9ABO1zwrBO+OdTgvGBqr77jEi8hYw5sYM
- 7tS9s7l8slHLzByQFYCIGfm8qzJrZ0/anKzC67iQ1UyPcB/1ILBS3QM5NmChHHQLxiK8
- oeWg==
+ bh=K0rAvylJFCDebhzyBWGh1HPRhJRm/GjXARu1Rx20O7U=;
+ b=AekehUuFXpzrBANwrc+6Pv9gzfXxMboLzt4zzIK4znck7YpOdUmt6ZrYfKqxVwxTnp
+ P2Yv7dWzgg483V5u0wpwWqFVZHzeeNgdF3UfEWJA3t45KS0bKk/0Pn4Ta7W41lVu/uAL
+ cWSQlWW/jLH0KUlhBD6k+xC4r5AFGmrAkj8AZVvhnfGUuBwmp4SIuNOmNM4LEXneYyT8
+ 2eliUPe+ydOHWqVBEvORioCHSEPZd8rBb7ABBgF2Vt1HHu1tDNabVC/n448FIjGXGwC1
+ SHquwMM0ogNuNOXGUxVFL7APQJMcF5p2WiPOY4KG32Dyg49y5zFsPs+cUfBO9k0QWEC8
+ JboQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790497543; x=1791102343;
+ d=1e100.net; s=20260707; t=1790499614; x=1791104414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cHPPYRSlB5lQ/aBlCq+uPr2zo6HJWshht44DXCVNEH0=;
- b=PQ3XgVpSRJHz467eFyluwewwLKa9E3zAmtpIqrMOcMvpUYq4MIb4A8EPf5SPXBVLud
- qj4+UFw+TNPBf7P4yAdRZlLgm8/S/ACzjXKiXhS1XVjVFhq8e103Ozm/Tvbzc8l6MiHA
- ytdd8vmsI3Uvo+EhOg69ATxVdUmycpP3lYeA79yMhP2UBtgoxB+edYUbOBuOMBjx361J
- X5uh4t/XxMrjBGVX2Q6oh8VgWTKu6BYvZDxrRujBLLDw0IV/n73kAxzLFXuMmGG9/Wk1
- KP3TCJuJ2DpN10GG5byEwsjU0H5qqi1UA9tvCB/UM9E0wYerNU0S28fIC2FeRuEWs4yI
- ksGg==
-X-Gm-Message-State: AFq9FYJo2iUlrXoUCzqp9b5seUpsQcEN1dXxhSGkvaqz8c6NXJ6t053K
- 1HxYPmgD3V7C1KyFQtj3ofAQUBjc8sWwjlgrEFiemukYOeoUozpp2SvsRl/tDF9acDFq13GiyN2
- kUPU3b9GZjr8fzOw+YKYmbygGtumhPNXorumdmywNld8ts+xp+CsINtSqo/rUhNhsVw/PVEzoqa
- tPuKvM2Z9LDr4/4gic5CZDQcJ+RykzM/6rgNjyM8ispA==
-X-Gm-Gg: AYBFou14+PsSQjoYoUmKAoamBi97KMFsEwkQRLxr75F1C3VSuhTFNX2tn3jqAqn6Fgz
- UFD5V37k/xmTguqn0Be/O3HgpaYFimPwn8vq/FMtAV4NyPKnndFgVyWwCQqEeB6jlRd6OzuWKyh
- etBSMTxlo1AQ2QH1pcnscEaIkkOTCD/GuVRwSmameCosN352JRKuBG1dcy07r16SO2SUJGT4qZ3
- AZsHdW8ULe4djt7ri7JZVcRiXN72nTQIOEpjkk8X89sl48UfP1qH+0XkZXai2mzbIJf5tEh9u6k
- Zh8aGNFg5DKPNOy6UFw5InNvaGuDvhg0EIfLCHIrNaRG1uQU7tKib2JMEt5rTqYqPZj2Vjfognc
- d2GaCo9/s8LoDu06SXv7egJTKPD5wP/0bDPww9en1JBFbcMyGGMiyM4j0Qx2mYDNNbc6KOEOsVk
- 9DK8tfzT4v9QyFtFuACiA9PFDhtw+kZYhOcRMAloyseclO1/uE5p2Nogz+tUiTBfZjgoRsoEuXO
- d8PYqBZ0WPQQPOMJmzrirwNkupwGkuXRSPCZfGBr41kP6+IZcApG9pW0Z8bXilDKZGqjCqYmw==
-X-Received: by 2002:a17:90b:384f:b0:3a0:d7e4:c4b7 with SMTP id
- 98e67ed59e1d1-3a0d7e4c5bamr3554216a91.46.1790497542809; 
- Sun, 27 Sep 2026 01:25:42 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0b9357f64sm14498871a91.3.2026.09.27.01.25.40
+ bh=K0rAvylJFCDebhzyBWGh1HPRhJRm/GjXARu1Rx20O7U=;
+ b=VbOvexKJtmeITH0rQL485m56BBVe8Nz/gLgJiAicJ8QuDhY7c3SSidA+DOGnPwKLj8
+ W6w3Ij3uvCGsVhHtWZR527f2fBQz0aWAPtzyZaptFn0cV/jRbNdWY5zpnMvT3clHGgyj
+ 8bRRR2XpYHzGcHI0zZuS3dp5RfZ8uiP4FNMwnZ/6e1cusCP3DvaWCIDROgmcCaOv/p3Q
+ qjVmC/W0nQDmv3ajK3gkgbsuQBX8ev6gmUlbVLJd+nFf9qOTET8faaqik23qVXArBTOf
+ 8LteR8MdwcttoqFq+kGmMz/FYk0L/8e7OWMaOKlsCTkI2ZOhs38l1iGFxgsJUfImufHl
+ aeew==
+X-Gm-Message-State: AFq9FYJlNjhobYhLC5aS13vAB5h8h7sLn4Eqm0yp6ZpJyb6rnZp8YP11
+ i42gq1jgmUlJhKicfFzrac6mtA6pWR4uvAfHOa1+yoZrvNBMFTOgAQf2v1JibY9gmY0YeIYAiIL
+ wgr5O
+X-Gm-Gg: AYBFou1OmXTinFLC2R5dPUqODA52th615DnFx8nUGcXRCpeXVSQzSLJfPWlLwqqyQeW
+ 5szTymPfJCdLVbSzDlxxZ7YPKEpS72HOW6gRRzasECrhX4m1NaKyDjscV37kUN5OYYur8z1t2vZ
+ gfTJSZUugaPFgosU7f7lvk8d4k0uWys9ajeHAWm3bQQ3NUg3pX0bFW9LxCNW5o4e8ngz72lpj7L
+ 5DxokrVXVPb3Oi8qb3J/lOVEQgGqtBY/L4E+IIRYbeuOjP/Ac+weZ/hgZzYokR5sVlMoygnaZ9Z
+ 8y+wYTTVIC3onf78ZTE4bwyeprhNJAqIjmlVuB3CwdfiMOhC5ZbPxjSJnAxiF4EOh9tmybeon3Q
+ VtvFw+MUUn2LiZSBvFFYsk8Z75qwGd7mUr7jOUke1E+yLKbK1PaCwvhgiGF051vPICMcIaM7f1h
+ LbTq0RoUhjEuglDc6T+M6cb7DECaRk6ek33UFUNEU8hqlyycCCFRI0hMHpZQpaLIF25UK62n/5F
+ xsEwIFPZnKIX+sZ6/7PFPUekUl9yQ==
+X-Received: by 2002:a17:90b:4a01:b0:3a0:b50d:50e7 with SMTP id
+ 98e67ed59e1d1-3a0bb552f31mr5595734a91.1.1790499614200; 
+ Sun, 27 Sep 2026 02:00:14 -0700 (PDT)
+Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0b8efaeb3sm14014181a91.2.2026.09.27.02.00.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 01:25:42 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Max Chou <max.chou@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v4 1/6] target/riscv: Add cfg property for SiFive int8 matmul
- extensions
-Date: Sun, 27 Sep 2026 16:25:29 +0800
-Message-ID: <20260927082534.3228237-2-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260927082534.3228237-1-max.chou@sifive.com>
-References: <20260927082534.3228237-1-max.chou@sifive.com>
+ Sun, 27 Sep 2026 02:00:13 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+Subject: [PATCH v5 001/101] include/qemu/compiler: Add QEMU_*_NONNULL
+ attributes
+Date: Sun, 27 Sep 2026 01:58:31 -0700
+Message-ID: <20260927090011.10724-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260927090011.10724-1-richard.henderson@linaro.org>
+References: <20260927090011.10724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
- envelope-from=max.chou@sifive.com; helo=mail-pz2-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,87 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the CPU config properties for SiFive's custom int8 matrix
-multiply vector extensions:
-
-- Xsfvqmaccdod: 2x8x2 int8 matrix-multiply-accumulate operations
-- Xsfvqmaccqoq: 4x8x4 int8 matrix-multiply-accumulate operations
-
-All instructions of these extensions require the Zve32x extension
-to be present whenever either extension is enabled. Validate this
-in riscv_cpu_validate_vendor_ext() alongside the existing vector
-extension validation in riscv_cpu_validate_set_extensions().
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/cpu.c                |  2 ++
- target/riscv/cpu_cfg_fields.h.inc |  2 ++
- target/riscv/tcg/tcg-cpu.c        | 16 ++++++++++++++++
- 3 files changed, 20 insertions(+)
+ include/qemu/compiler.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b9..55833896bef 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -299,6 +299,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
-     ISA_EXT_DATA_ENTRY(xmipscmov, PRIV_VERSION_1_12_0, ext_xmipscmov),
-     ISA_EXT_DATA_ENTRY(xmipslsp, PRIV_VERSION_1_12_0, ext_xmipslsp),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccdod, PRIV_VERSION_1_13_0, ext_xsfvqmaccdod),
-+    ISA_EXT_DATA_ENTRY(xsfvqmaccqoq, PRIV_VERSION_1_13_0, ext_xsfvqmaccqoq),
-     ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-     ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
-     ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index f91c780299c..0f3bda1331c 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -159,6 +159,8 @@ BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
- BOOL_FIELD(ext_xmipslsp)
- BOOL_FIELD(ext_xlrbr)
-+BOOL_FIELD(ext_xsfvqmaccdod)
-+BOOL_FIELD(ext_xsfvqmaccqoq)
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index 4c49f52eb07..3661dc5fbaa 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -25,6 +25,14 @@
+ #define QEMU_PACKED __attribute__((packed))
+ #define QEMU_ALIGNED(X) __attribute__((aligned(X)))
  
- BOOL_FIELD(big_endian)
- BOOL_FIELD(mmu)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b68160af830..4f132488b9e 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -416,6 +416,16 @@ static void riscv_cpu_validate_v(CPURISCVState *env, RISCVCPUConfig *cfg,
-     }
- }
- 
-+static void riscv_cpu_validate_vendor_ext(RISCVCPU *cpu, Error **errp)
-+{
-+    if ((cpu->cfg.ext_xsfvqmaccdod || cpu->cfg.ext_xsfvqmaccqoq) &&
-+        !cpu->cfg.ext_zve32x) {
-+        error_setg(errp, "Xsfvqmaccdod/Xsfvqmaccqoq extensions require "
-+                         "Zve32x extension");
-+        return;
-+    }
-+}
++#define QEMU_ARG_NONNULL                __attribute__((nonnull))
++#define QEMU_ARG_LIST_NONNULL(...)      __attribute__((nonnull(__VA_LIST__)))
++#define QEMU_RET_NONNULL                __attribute__((returns_nonnull))
++#define QEMU_RET_ARG_NONNULL \
++    __attribute__((returns_nonnull, nonnull))
++#define QEMU_RET_ARG_LIST_NONNULL(...) \
++    __attribute__((returns_nonnull, nonnull(__VA_ARGS__)))
 +
- static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -793,6 +803,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+    riscv_cpu_validate_vendor_ext(cpu, &local_err);
-+    if (local_err != NULL) {
-+        error_propagate(errp, local_err);
-+        return;
-+    }
-+
-     if (mcc->def->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
-         error_setg(errp, "svukte is not supported for RV32");
-         return;
+ #ifndef glue
+ #define xglue(x, y) x ## y
+ #define glue(x, y) xglue(x, y)
 -- 
-2.43.0
+2.53.0
 
 
