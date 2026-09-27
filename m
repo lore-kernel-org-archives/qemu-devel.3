@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A81AC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5ACEC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSv-0001r2-BH; Sun, 27 Sep 2026 06:50:41 -0400
+	id 1xAmSK-0007Y5-8C; Sun, 27 Sep 2026 06:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSs-0001fY-FJ; Sun, 27 Sep 2026 06:50:38 -0400
+ id 1xAmS3-0006sl-BQ; Sun, 27 Sep 2026 06:49:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSq-00019Y-BW; Sun, 27 Sep 2026 06:50:37 -0400
+ id 1xAmS1-00014I-IY; Sun, 27 Sep 2026 06:49:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=Wti9fprQX0fBqJ4tBP5IVX0DHD6OxIhM31AoX6U+EEA=;
+ t=1790506135; bh=Jg7a08/7RS0tzA102+KcX7ekHkTDeHBNjFSupvgp+h8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dYoTdZosXiisszouqC3agaPs8SrZ6BFdstjQ4mvwY/EXJhN01Vj0nZy9FMcSWnQUE
- J16QBbNBnbNHufxtwHCPzUqnclEJuU1uxtnKbuIO79tyWHif0AwaxvDq0e8UrOx+s9
- TCtIhlNWY9klo4g15FiMMD0GZt9rQpNBAK/sjyl2PbPKl9McizQJm3egSvG7eS1oFQ
- LXIQ7BccNwz5dR3aeEz8dv1CKM7bRM2MDgt97XkahBN2hcC46h3fXri4Xt52hO57fc
- mdswqOLTTiowFf2xh6fmW8+KPk2pJSCbdx0kdeurXFszwCWFolXOlFkWkLg4QjcG6a
- ScJDCd1BJEoXw==
+ b=mqA4c9LDgZjN6NL650nrOg6RCQcF9n8skMHR4/csh6QqofdnTPavAFkNheOF8qWAs
+ W1kegHhklG6Tu6HxgQ+vSOocVeIRXPJ661KC9zlwWCxPrDF4nUE9UFkJ2iit6FkApo
+ iyeJUQfHQUgs9orVPh5G3ITa328/IL9iAC7j+5dfnqrn/G5KPVuovRjmtQLqUj079q
+ M4SwD135fLzCB6cYE4FtxGxU/O0wgHzTKkdQiAYJzs/fuSiw31qgghIxYswzSVcnCU
+ 2N0plzmOSSMHZCvGWN49cWrmCoUNdEkLQEk+ULWgGShSU7+weCkdWjFleUGA17O6cn
+ ANekT15/fjafQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 226A91D8B6D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0020A1D8B67;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1FC6F432174;
- Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F173643216E;
+ Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E61455E792; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id D46EF5E786; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 78/92] hw/usb/hcd-xhci: fix interval alignment
- after MFINDEX passes 2^32
-Date: Sun, 27 Sep 2026 13:47:54 +0300
-Message-ID: <20260927104821.196183-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 72/92] tcg/optimize: Fix fold_multiply2 vs 1
+Date: Sun, 27 Sep 2026 13:47:48 +0300
+Message-ID: <20260927104821.196183-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,57 +70,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-epctx->interval is an unsigned int, so ~(epctx->interval - 1) is a
-32-bit mask that is zero-extended when and-ed with the 64-bit microframe
-index. Once mfindex no longer fits in 32 bits (2^32 * 125us, about 6.2
-days after the controller was started), asap loses its upper half and
-always compares below mfindex. Isoch TDs with SIA are then run at once
-instead of at the next interval boundary. xhci_calc_intr_kick() has the
-same expression.
+For muls2, we returned from fold_multiply2 without finish_folding
+or any other mechanism to update value tracking for the rh output.
+We might as well do this via fold_shift, which will also mark rh
+as having all copies of the sign bit.
 
-Use ROUND_UP(), which builds the mask in the type of mfindex. The
-interval is always a power of two.
+For the movi paths of multiply vs 0 or mulu2, we're better off tail
+calling to tcg_opt_gen_movi rather than explicitly returning true.
 
-The reporter of #3973 also saw the symptom with UHCI. This change does
-not explain that.
-
-Fixes: 3d1396842d ("xhci: iso xfer support")
-Fixes: 4d7a81c06f ("xhci: emulate intr endpoint intervals correctly")
-Link: https://gitlab.com/qemu-project/qemu/-/issues/3973
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <52c9f935428f2cfc65e4dee7e37638fcb965c6b2.1789968699.git.junjie.cao@intel.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit bfb82d57e7299cb59471f7060cbab0b1ed39504e)
+Fixes: c9349965ce4 ("tcg: Optimize INDEX_op_mul[us]2 for 0 and 1")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4448
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit e2ef4fc38cebeed8e621e30aa0d3c3c6a0389ba9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 12f8ffece0f..61690dbdcec 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1755,8 +1755,7 @@ static int xhci_fire_ctl_transfer(XHCIState *xhci, XHCITransfer *xfer)
- static void xhci_calc_intr_kick(XHCIState *xhci, XHCITransfer *xfer,
-                                 XHCIEPContext *epctx, uint64_t mfindex)
- {
--    uint64_t asap = ((mfindex + epctx->interval - 1) &
--                     ~(epctx->interval-1));
-+    uint64_t asap = ROUND_UP(mfindex, epctx->interval);
-     uint64_t kick = epctx->mfindex_last + epctx->interval;
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index d12babad88f..cd5673b329e 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2169,6 +2169,7 @@ static bool fold_mul_highpart(OptContext *ctx, TCGOp *op)
+     return finish_folding(ctx, op);
+ }
  
-     assert(epctx->interval != 0);
-@@ -1767,8 +1766,7 @@ static void xhci_calc_iso_kick(XHCIState *xhci, XHCITransfer *xfer,
-                                XHCIEPContext *epctx, uint64_t mfindex)
++static bool fold_shift(OptContext *ctx, TCGOp *op);
+ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
  {
-     if (xfer->trbs[0].control & TRB_TR_SIA) {
--        uint64_t asap = ((mfindex + epctx->interval - 1) &
--                         ~(epctx->interval-1));
-+        uint64_t asap = ROUND_UP(mfindex, epctx->interval);
-         if (asap >= epctx->mfindex_last &&
-             asap <= epctx->mfindex_last + epctx->interval * 4) {
-             xfer->mfindex_kick = epctx->mfindex_last + epctx->interval;
+     swap_commutative(op->args[0], &op->args[2], &op->args[3]);
+@@ -2209,15 +2210,13 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
+             /* The proper opcode is supplied by tcg_opt_gen_mov. */
+             op2 = opt_insert_before(ctx, op, 0, 2);
+             tcg_opt_gen_movi(ctx, op, rl, l);
+-            tcg_opt_gen_movi(ctx, op2, rh, h);
+-            return true;
++            return tcg_opt_gen_movi(ctx, op2, rh, h);
+         }
+ 
+         if (b == 0) {
+             op2 = opt_insert_before(ctx, op, 0, 2);
+             tcg_opt_gen_movi(ctx, op2, rl, 0);
+-            tcg_opt_gen_movi(ctx, op, rh, 0);
+-            return true;
++            return tcg_opt_gen_movi(ctx, op, rh, 0);
+         }
+         if (b == 1) {
+             op2 = opt_insert_before(ctx, op, 0, 2);
+@@ -2225,20 +2224,18 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
+ 
+             switch (op->opc) {
+             case INDEX_op_mulu2:
+-                tcg_opt_gen_movi(ctx, op, rh, 0);
+-                break;
++                return tcg_opt_gen_movi(ctx, op, rh, 0);
+             case INDEX_op_muls2:
+                 op->opc = INDEX_op_sar;
+                 op->args[0] = rh;
+                 op->args[1] = rl;
+                 op->args[2] =
+                     arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
+-                break;
++                return fold_shift(ctx, op);
+             default:
+-                g_assert_not_reached();
++                break;
+             }
+-
+-            return true;
++            g_assert_not_reached();
+         }
+     }
+     return finish_folding(ctx, op);
 -- 
 2.47.3
 
