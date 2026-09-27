@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E061BC98338
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AECC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAsXR-0004HJ-Gp; Sun, 27 Sep 2026 13:19:45 -0400
+	id 1xAshl-00067o-Ou; Sun, 27 Sep 2026 13:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAsX5-0004F9-07
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:19:23 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ id 1xAshd-00063r-LB
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:30:18 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAsX3-0002xQ-73
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:19:22 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-3a0b0fa2055so1345542a91.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 10:19:20 -0700 (PDT)
+ id 1xAshb-00043Q-Vh
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:30:17 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ 41be03b00d2f7-cc4aa0f1766so1265005a12.0
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 10:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790529559; x=1791134359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790530214; x=1791135014; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kG6pRtO/2YP6MKP7OHLXrdIWCOygeGPp5IG9VC/pyqY=;
- b=UhefYJDqcKgLSBQVLIdcjS9/YLwpis0IOCBZbjqt+NqDUNsNsjm/jOc6f/hU2dX4Td
- 0nPV0p7d1ajpEfQa0wJrx6MYSGQGuTe7xWo7liAGuW9fDtH6tA8bKp0w2hfd2q2IggE7
- w+D7HJr5qn4HZ8+xJHl5KsMGBWEBMQmNZx/QtFYW61dSOi8/+CQfJ1ui/+T6d/MXBVBO
- vpA+gzJo4udOlEmquHLM28O8rsZiDaOgdC6Iy3cZlTuBrROOH3lr5yzMTaTtqVq0XCaT
- 6HptkFgUeVimzlVlev1bWir7xULU+yOpwwKerfDLwOMi+SvwbX9hkYr0nxQSL573xEA4
- /4AQ==
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ExM/NyBUH8tQ7JkKWySPHwF4vo78dAuWgItqjp9ykiI=;
+ b=hFS4DkfZkiJfbz1c5it6pV626Tpqz5+lwdvdk5L86SkNpYxJCftZ1fEVtmzeVB5Rfv
+ 5BGZRg6CAotR2DqWcpLwqPxe/ZMAUOxwX5nJLFEmw86JNRzCZXxxngw3F99aoBZeDBAu
+ oz4RuE+TlROaY8gxgkQzyS6K5ApvR+GjB0AUeCiXu903fQNpeAUpyW3IKgKftYLH9BIk
+ WdruHDckPEAZ6rXizY++aZpYjhW+Tw9mg6alK7kS9bBR9x8ShPHQEM4+3der9vpWIGS3
+ ituUqiUiygXDfY3hRkzmNd4w8bymz6YbAZcC9vXQ5NXGGEmfF6isNg/6GFNKjLa9BzlL
+ qVLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790529559; x=1791134359;
+ d=1e100.net; s=20260707; t=1790530214; x=1791135014;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=kG6pRtO/2YP6MKP7OHLXrdIWCOygeGPp5IG9VC/pyqY=;
- b=dsAFkGa017JPStohf9NwK0y1rAolE+Z0rEA0j6b/iAX7j7u4O8bwVWpDli9ssCe6EJ
- mqwE+ONU6tfrM+G9czdFWy5gkN0LqtKqjfZRkxQyOAVRZrAb+vb0U6Ifaw2zhf6HUZ7n
- CjGDsK5Eunt4mZbwM5awWP5u2UOX8A1amu2QM0hG/aBM14EVb7qcWNZEm+MJQpCgBQeG
- ZC9Qx5Kxq6tnFAHV8UkSY8TG+B6D93mu4EVYFCoYOqtYzyI/65kXBxnHYnWFKeTi5nwp
- KR77o3fASxq0x8HSYxltJFx75xSbyC4nYhiqQAe3KaDMCw68N6YHvRo+xWhzU7yAtXSm
- Uaqw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxAySRJ4uFyhHWiv1L80Gc08W2L2nCm4Ih0YKFtHLnIlqWJ+4Pajznh0MITohhM62eLMxixsj5ciDi6@nongnu.org
-X-Gm-Message-State: AFq9FYKplCdC+Blzz21kxQJi/H7+XcWZEdHRjLvjpCbkzfBgUdKt0uZp
- pCAAp0fL4VZQxuFqNMfcCeab6FZhKoKr1wsVDQvFAgb3hav4ncEC1ppqeZ4QO1Yczjg=
-X-Gm-Gg: AYBFou23GfS3FgXUa25pfYmnDBRw4jOu9ZaqO2xdmqLRTdYbjN7j7Za0jGkDjAyIY7Q
- CQ1ZFO0vi5xLyPWdM4jF44kh+IlanFztkoNer9GRuyStpXIFpF0ukIB8bV2d5cdskRlwlqceN0j
- Fl9DobIgnVqKQDhE/54GqwjLEvUiIHHeQGpH+mN1dpslOL0j5FeNsVSl9ZeSXEER4WbGGQzfDnp
- BfGsZU5BvO9+F9C8PeQvdQih9O+AApq+wk5EsAjckAm6La1frjgo1ZO6rkurxYrgzj7D+tdbyu0
- B528Ut2eSt7CE9uf/yvutqsagYIzkm5ogBmfO6R4PpVWSpfQzyCIshxSIxH/30iczA5znQW3m+k
- o2BOUApK/l8TpvoIaSO7H7MwJhhgVRHE26Ij268AG++x17qwjWee5A0bDyQW8LDjxLFldAHz16O
- tjz5C6ZO5FoWH7i6a2wn/JFLseLucblWAyHMnWubuol7j2Q55sLwFZ6M/ztlPH8Jnz+bZLlmY/9
- cEJkFOID431yCz4bg7pvIwtGPjMnaxCZtizW1H4MA==
-X-Received: by 2002:a17:90b:530b:b0:3a2:ad6e:4435 with SMTP id
- 98e67ed59e1d1-3a2ad6e455dmr1924225a91.5.1790529559435; 
- Sun, 27 Sep 2026 10:19:19 -0700 (PDT)
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ExM/NyBUH8tQ7JkKWySPHwF4vo78dAuWgItqjp9ykiI=;
+ b=PDLQhwUeWmJbIOojNvIFDyz/hyQfXcKoU9wHKpeea1tXq97FubUnRmrLiyMAuSvuAN
+ 72qiFIZemiPWwFOM9MPGMaMupZKIxBTnZyk5OnfYCgYjuC/AOgIUETmKUYETwhnkI9Qf
+ BUoye+3tipfLR0nxiF1nFOcBi2WzsFKc781VAJNFGXT8S31CoGPiD9TzTvlaDkEbtD7b
+ 6UnFZs/S1St6xcJK8cbrSOJvfcULGbhKp4TOixsoJ3g3WcBrQU6k6og9OhFQm1+0NK1h
+ E15Q8WSLdF5P8EvZX9rwWP3/fGeY0g31Y43pKhtrHpT3lXIOEdPFTDrS8Zdo0CHObeDj
+ 3k7w==
+X-Gm-Message-State: AFuF++mu78pssYGdUAhQ3Sx5XXmx7rx57c0ySP68Ls9Nxq/QEiLOfFRo
+ JQcPmckMYzQpkQW63jjlC05daEslum5ePyVUdAR5E0rtQo83AiXLQopglE0rJLpoqAtYEXX5tze
+ xfDr2
+X-Gm-Gg: AYBFou2BHnFDSeRsPRjjhVYOG1tdeFbtxhiM59Jga6CII8zTbHSKS4Pq+T1O40/5XEY
+ 9MeJNoB/QfXQTuWSFIF1jJyCapkTZWtEjGhUHS1+PK9o02y/3CNk/Cej9qVNuUHD4xn8d5jICyH
+ WYuWbcHMkHvX5gOpgMgNQAUWS03wd/8rX+/hJ8K9eJJaiORj9iOQZuJbtC8XVHnVn7OSTby3Sm3
+ MpoFvlrcptOwmqwuVOEJs9VuswWaVINQJ3o99HNLbHTVM9ZGTDH1CKX9C3SfM7SmXsgNr2RLNuh
+ yjWs3M44cV2tK2scmb+oBi5RvgdCjUPw8YjNmCvp+7B8w5RJ/tSEmsLZk/KQdZEbzCiHWSivxB/
+ bCKOlNSiSeOZTe+0mn5IM6KgFoEl7Y5BcDa/h9lobUhmDSZzfSHYH5Si2fip8N7poTVFlLg91kf
+ 79glQ97sjboWfu899LR8WS1IACPJtwLOzuA3DfFfa5P6AciToUiXAgKUPvWsHTIqLDgVE2znx39
+ vDaLto3jns1jUBRrRQoaUIh5nZuYfgjgrcFc9cr
+X-Received: by 2002:a05:6a20:4321:b0:3de:6338:cfb5 with SMTP id
+ adf61e73a8af0-3de6338d6cfmr670209637.33.1790530213901; 
+ Sun, 27 Sep 2026 10:30:13 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0b4f5b1aasm6019276a91.1.2026.09.27.10.19.17
+ d2e1a72fcca58-87feb583422sm3145267b3a.50.2026.09.27.10.30.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Sep 2026 10:19:18 -0700 (PDT)
-Message-ID: <b840941d-8dec-4868-a069-ddba3f87b9c6@linaro.org>
-Date: Sun, 27 Sep 2026 10:19:16 -0700
+ Sun, 27 Sep 2026 10:30:12 -0700 (PDT)
+Message-ID: <983581aa-ffbd-40f9-8a9a-b6fbc066a1cf@linaro.org>
+Date: Sun, 27 Sep 2026 10:30:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: fix lea address calculation for CS
- register
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20260927123807.492352-1-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v3 00/11] tcg/riscv64: Fix AUIPC pair range validation
 From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, 
+ Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
+References: <20260914000814.785155-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260927123807.492352-1-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,66 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/27/26 05:36, Mark Cave-Ayland wrote:
-> When the effective address calculation was simplified in commit 55a15eb3504
-> ("target/i386/tcg: simplify effective address calculation") the refactoring
-> accidentally introduced the ADDSEG() macro into the CS base address inclusion
-> test.
+Ping.
+
+On 9/13/26 17:08, Richard Henderson wrote:
+> Hi Max,
 > 
-> Fix the logic in gen_lea_v_seg_dest() to use CODE64() instead of ADDSEG() for
-> the CS base address inclusion test, and at the same time split it into a switch
-> statement to make the logic easier to follow.
+> In v2, the change from int32_t to uint32_t is pretty much
+> the opposite of what should have been done, since all of
+> these are logically signed values.  I've adjusted all of
+> the encoders to take signed inputs and assert in range.
 > 
-> Fixes: 55a15eb3504 ("target/i386/tcg: simplify effective address calculation")
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->   target/i386/tcg/translate.c | 20 +++++++++++++++++++-
->   1 file changed, 19 insertions(+), 1 deletion(-)
+> In the process, I noticed tha the branch range tests were
+> off by one.  Now all performed in exactly one place.
 > 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index 192cf43215e..2d3fffeab7b 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -605,7 +605,25 @@ static void gen_lea_v_seg_dest(DisasContext *s, MemOp aflag, TCGv dest, TCGv a0,
->           ovr_seg = def_seg;
->       }
->   
-> -    has_base = ovr_seg >= R_FS || (ovr_seg >= 0 && ADDSEG(s));
-> +    switch (ovr_seg) {
-> +    case R_DS:
-> +    case R_ES:
-> +    case R_SS:
-> +        has_base = ADDSEG(s);
-> +        break;
-> +    case R_CS:
-> +        has_base = !CODE64(s);
-
-I suppose one slight improvement could be
-
-     has_base = s->cs_base != 0;
-
-since we know the value.  It's more rearrangement than it's worth to add 
-a non-zero constant instead of the seg_base temp.
-
-Anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
-
-
-> +        break;
-> +    case R_FS:
-> +    case R_GS:
-> +        has_base = true;
-> +        break;
-> +    default:
-> +        assert(ovr_seg < 0);
-> +        has_base = false;
-> +        break;
-> +    }
-> +
->       easize = CODE64(s) ? MO_64 : MO_32;
->   
->       if (has_base) {
+> Finally, tcg_out_ldst needed updates for AUIPC as well.
+> 
+> I've tested this lightly so far; full testing on a rather
+> slow riscv machine is still on-going.
+> 
+> 
+> r~
+> 
+> 
+> Max Chou (2):
+>    tcg/riscv64: Validate AUIPC relocation range
+>    tcg/riscv64: Fall back when AUIPC pairs are out of range
+> 
+> Richard Henderson (9):
+>    tcg/riscv64: Return tcg_insn_unit from insn encoders
+>    tcg/riscv64: Rename sb-type to b-type format
+>    tcg/riscv64: Rename uj-type to j-type format
+>    tcg/riscv64: Use signed type for encoding immediates
+>    tcg/riscv64: Adjust sign of lui immediate in tcg_out_movi
+>    tcg/riscv64: Assert immediate in range for [isu]-type insns
+>    tcg/riscv64: Return success from encode_jimm
+>    tcg/riscv64: Return success from encode_bimm
+>    tcg/riscv64: Fix off-by-one in branch range tests
+> 
+>   tcg/riscv64/tcg-target.c.inc | 230 ++++++++++++++++++-----------------
+>   1 file changed, 121 insertions(+), 109 deletions(-)
+> 
 
 
