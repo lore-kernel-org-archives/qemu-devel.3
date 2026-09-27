@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B716C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FBB6C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmTg-0004gA-SC; Sun, 27 Sep 2026 06:51:29 -0400
+	id 1xAmTi-0004xh-Qm; Sun, 27 Sep 2026 06:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTS-0004GQ-B0; Sun, 27 Sep 2026 06:51:15 -0400
+ id 1xAmTO-0004Dq-V5; Sun, 27 Sep 2026 06:51:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTQ-0001Um-FF; Sun, 27 Sep 2026 06:51:13 -0400
+ id 1xAmTM-0001Pb-C3; Sun, 27 Sep 2026 06:51:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=nUAmxVomSUnrl24q9hs2bRmQHDje0a5r6DtQAU5k/8c=;
+ t=1790506136; bh=UD2DCKk5RC2siDEc5hx6BoL7q3x6dJh+kzjciSjalyk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ef1Hwdiaxq8MbqZZSes0qcGKGQ8ZZ7MstCz0LW20QlYKD/5O2UEjGkXh1gKNg5E9f
- 5MKLks2PwuE57gLbWUk1gNYds/j/nDZLYfe7exwRdLOdWQfHQ+TdKyDmRkXq9XBtcA
- XclwmkhdF7T3HD0nhHIru/tmUMXkbJzk0ETRyG5HivT/MEPEnNr8VoOkgRyJbanN1a
- HOF+xq3fsrXpW1PHOPrJH/r+dSKqKF0+pavSPjPGJfVQudLswc8hDwbcf8ThCgd1oy
- RF8xY9JPifbabL4T7setZAWO4+W6ELhwHxvoVqPjq7+WxtmUDu6Gh4HIzxyv+khyV0
- Q/+b3JqQjCWcQ==
+ b=AZuEetGhepatxfYWWvfNDysnSOhzwMh7pFn0bjcqgwlcxA8gWrrwjVBXjEYz5TjD1
+ gYIzkd+zrjvDLJveoTaxG4AwMNsmCwAJn3suQfetNtQlctx0tbyIwRUaXYSZZqIL4U
+ nEOXCzATPC1RieXgB2XdpHCdoWofcRm51Z+2tzIvSzOd7HJHCAdWBsXtiKeS8jHEg+
+ XiU0ojWoFGrtYCAcsXD6UwXSfnRQUeqKR+9RdsBtHVyxSVOX+xBBBYtRBrsBwEKSDn
+ l/RzIrxTTSNc+XV2eN4MpggNHStapzdUfPPQUyYMlQSbVRDnazt8KCW20YtDeMf22M
+ qYdd6pKTwIcLw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53CC01D8B75;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4FAFC1D8B73;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4DEB943217C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 42AD243217A;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0A2BA5E7A2; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
+ id 0438D5E79E; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 86/92] target/i386: Update FPU tag word for FXCH
-Date: Sun, 27 Sep 2026 13:48:02 +0300
-Message-ID: <20260927104821.196183-30-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 84/92] target/i386: Update FPU tag word for
+ FXTRACT's old ST(0)
+Date: Sun, 27 Sep 2026 13:48:00 +0300
+Message-ID: <20260927104821.196183-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -72,37 +73,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Simon Scherer <scherer.simon89@gmail.com>
 
-FXCH ST(i) exchanges the contents of ST(0) and ST(i). Both registers
-receive a new value, so both should end up marked valid in the FPU tag
-word, regardless of what they were tagged before the swap.
+FXTRACT writes two registers: the old ST(0) gets the exponent (it
+becomes ST(1) after the push), and the new ST(0) gets the
+significand. Both should end up marked valid in the FPU tag word.
 
-helper_fxchg_ST0_STN() swaps the two values but never touches either
-register's tag. So if either register happened to be tagged empty
-beforehand, it is still wrongly tagged empty afterwards.
+helper_fxtract() only marks the new one valid, via fpush(). The old
+ST(0) just keeps whatever tag it had before the instruction, even
+though it was just written with the exponent. So if it happened to
+be tagged empty beforehand, it is still (wrongly) tagged empty
+afterwards.
 
-Mark both ST0 and ST(st_index) valid after the swap.
+Add a fpush_fxtract() helper that does the usual fpush() and also
+marks the old ST(0) (now ST(1)) valid, and use it in place of plain
+fpush() at all previous call sites in helper_fxtract().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4395
 Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902120419.212855-3-scherer.simon89@gmail.com
+Link: https://lore.kernel.org/r/20260901085839.138094-1-scherer.simon89@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a9dbd71f033e6c8d005537da7168aae242b35daf)
+(cherry picked from commit 994fb6c218f8c8f2be3fc9fab75a41d15b859fdc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 1a2b782e0f9..58e46d8f5f6 100644
+index 32af8b79f4f..829b2c80dbc 100644
 --- a/target/i386/tcg/fpu_helper.c
 +++ b/target/i386/tcg/fpu_helper.c
-@@ -521,6 +521,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
-     ST(st_index) = ST0;
-     ST0 = tmp;
- 
-+    env->fptags[env->fpstt] = 0;
-+    env->fptags[(env->fpstt + st_index) & 7] = 0;
-+
-     /* C1 is unconditionally cleared to 0 */
-     env->fpus &= ~0x0200;
+@@ -1808,6 +1808,13 @@ void helper_fpatan(CPUX86State *env)
+     merge_exception_flags(env, old_flags);
  }
+ 
++/* fpush() only validates the new top. FXTRACT also needs ST(1) validated. */
++static inline void fpush_fxtract(CPUX86State *env)
++{
++    fpush(env);
++    env->fptags[(env->fpstt + 1) & 7] = 0;
++}
++
+ void helper_fxtract(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+@@ -1819,22 +1826,22 @@ void helper_fxtract(CPUX86State *env)
+         /* Easy way to generate -inf and raising division by 0 exception */
+         ST0 = floatx80_div(floatx80_chs(floatx80_one), floatx80_zero,
+                            &env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = temp.d;
+     } else if (floatx80_invalid_encoding(ST0, &env->fp_status)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         ST0 = floatx80_default_nan(&env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+     } else if (floatx80_is_any_nan(ST0)) {
+         if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
+             float_raise(float_flag_invalid, &env->fp_status);
+             ST0 = floatx80_silence_nan(ST0, &env->fp_status);
+         }
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+     } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
+-        fpush(env);
++        fpush_fxtract(env);
+         ST0 = ST1;
+         ST1 = floatx80_default_inf(0, &env->fp_status);
+     } else {
+@@ -1850,7 +1857,7 @@ void helper_fxtract(CPUX86State *env)
+         }
+         /* DP exponent bias */
+         ST0 = int32_to_floatx80(expdif, &env->fp_status);
+-        fpush(env);
++        fpush_fxtract(env);
+         BIASEXPONENT(temp);
+         ST0 = temp.d;
+     }
 -- 
 2.47.3
 
