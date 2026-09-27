@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC62C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909DDC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmTb-0004PH-4v; Sun, 27 Sep 2026 06:51:25 -0400
+	id 1xAmSQ-0007vD-Ff; Sun, 27 Sep 2026 06:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTM-00048r-D9; Sun, 27 Sep 2026 06:51:11 -0400
+ id 1xAmS6-0006xB-Gu; Sun, 27 Sep 2026 06:49:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTK-0001PB-Hc; Sun, 27 Sep 2026 06:51:08 -0400
+ id 1xAmS4-00014n-Pj; Sun, 27 Sep 2026 06:49:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=IKwupBtV/xZdUiO8bWhNJjSpyfCKusLXsff+cakU0jA=;
+ t=1790506136; bh=zDKewzPRSUEhL/ZiER1a5JuFh3ZjQ5nBShC1a3RrJEc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kPg91EAOF6CkeITT2gP/XlvFQK/PeEhTMbCLENVhXVHVMicCQY45OxTzZNK4qO63F
- lagu8MZPSBSOdOFAegCNiCzHtcHir8ZrWhKD2t+buvnHOJBZBCWHa6IQoeg6kiuww7
- T/csXfzAqFuB0H2ZiR8hxZ5G+G/ydKsDfu50PW1QNbGyt1l1eBUrKSaBZ5MXulxQgF
- oYi45IJBCySj5Wr/F3Rr79WcGh1+MFVhSkAcPVi03EIJonx8kFo/csgHv7Y0hMAjdS
- OfCGeqlsXQWnfinIre9iKXLMqaFqbSuOYqyLhkMGMK4hiwi2TA8Xl8Aoi6QMurbj0U
- PJHn66RNehsjg==
+ b=wo/2/0vkP/WbZezqQyHH/GWmIVbTrMMWSYCqXq16pFANvfyl+3rPd7zqcCexLLa8L
+ FHysGPpwdufP2Z8vArtWe/Twzw9gPy/0KxYzLLeSCfeb1U65asdkk0LHOF2Ey9pnh+
+ V3Dee62bbF6JFShpBCCJxsxFRa09lHJs5BOZwKxNbQpTsTJz/DBMiczplwscvcZ+BK
+ ZjirbIeF+4C/qEbcBSU7sE217Iq7KxmfDjsHTRCVG27XgKj4GYNUCXXa4UPjTBEwVx
+ eFQEqbX4Biuukw2CiaVbgzIkUDURhS5woULey8HBx6sF5V5ZmVAyOZeoLv96weuspy
+ f6xiZtK8usHiQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E7CE1D8B71;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B5931D8B69;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 37669432178;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 08B57432170;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F294F5E79A; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id DA5B85E78A; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 82/92] target/ppc: Stop vCPU thread before calling
- parent_unrealize
-Date: Sun, 27 Sep 2026 13:47:58 +0300
-Message-ID: <20260927104821.196183-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 74/92] tcg/optimize: Fix expansion/simplification
+ of deposit
+Date: Sun, 27 Sep 2026 13:47:50 +0300
+Message-ID: <20260927104821.196183-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,85 +71,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-During CPU hot-unplug (e.g. via dynamic reconfiguration unplug),
-ppc_cpu_unrealize() invoked pcc->parent_unrealize(dev) before calling
-cpu_remove_sync(CPU(cpu)).
+When we computed z_mask/o_mask for the deposit, we may accidentally
+prove that the result is a constant.
 
-pcc->parent_unrealize() calls cpu_common_unrealize(), which triggers
-accel_cpu_common_unrealize() -> tcg_exec_unrealizefn() -> tlb_destroy().
-This immediately frees the CPU's TLB tables and structures. Because the
-vCPU thread had not yet been stopped and joined via cpu_remove_sync(),
-the vCPU thread was still actively running its event loop and processing
-queued CPU work (such as tcg_commit_cpu / tlb_flush).
+If we let the rest of the code expand as-is, when can we get to the
+end we'll see the constant, note that it's the same as the current
+value, remove what we think is "the opcode" that computes this same
+value.  But in this case we've been expanding deposit to multiple
+opcodes and the removal of only the last opcode breaks the expansion.
 
-This resulted in a race where the running vCPU thread accessed and freed
-already-destroyed TLB tables concurrently with tlb_destroy(), leading to
-Segfault (due to heap corruption).
-
-AddressSanitizer build reported a double-free:
-
-=================================================================
-==121930==ERROR: AddressSanitizer: attempting double-free on 0x7ef8f3438800 in thread T14:
-    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
-    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
-    #2 0x558bf6a391b1 in tlb_mmu_resize_locked accel/tcg/cputlb.c:249
-    #3 0x558bf6a396b5 in tlb_flush_one_mmuidx_locked accel/tcg/cputlb.c:296
-    #4 0x558bf6a39f91 in tlb_flush_by_mmuidx_async_work accel/tcg/cputlb.c:390
-    #5 0x558bf6a3a200 in tlb_flush_by_mmuidx accel/tcg/cputlb.c:417
-    #6 0x558bf6a3a22a in tlb_flush accel/tcg/cputlb.c:422
-    #7 0x558bf73f31ac in tcg_commit_cpu system/physmem.c:3068
-    #8 0x558bf6987c55 in process_queued_cpu_work cpu-common.c:378
-    #9 0x558bf73a9913 in qemu_process_cpu_events_common system/cpus.c:402
-    #10 0x558bf73a9a46 in qemu_process_cpu_events system/cpus.c:421
-    #11 0x558bf6a65974 in mttcg_cpu_thread_fn accel/tcg/tcg-accel-ops-mttcg.c:90
-
-0x7ef8f3438800 is located 0 bytes inside of 65536-byte region [0x7ef8f3438800,0x7ef8f3448800)
-freed by thread T9 here:
-    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
-    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
-    #2 0x558bf6a39a91 in tlb_destroy accel/tcg/cputlb.c:345
-    #3 0x558bf6a16354 in tcg_exec_unrealizefn accel/tcg/cpu-exec.c:1094
-    #4 0x558bf693d073 in accel_cpu_common_unrealize accel/accel-common.c:117
-    #5 0x558bf6980e37 in cpu_common_unrealize hw/core/cpu-common.c:279
-    #6 0x558bf6980dfa in cpu_common_unrealizefn hw/core/cpu-common.c:267
-    #7 0x558bf763ef65 in ppc_cpu_unrealize target/ppc/cpu_init.c:6965
-    #8 0x558bf7872199 in device_set_realized hw/core/qdev.c:618
-    #14 0x558bf756068f in spapr_unrealize_vcpu hw/ppc/spapr_cpu_core.c:209
-
-Fix this by moving cpu_remove_sync() before pcc->parent_unrealize(dev)
-in ppc_cpu_unrealize(), ensuring the vCPU thread is stopped, has
-finished processing its events, and is joined before CPU resources
-and accelerator state are destroyed.
+Fix this by noting the constant result early, before expanding,
+allowing the entire operation to be removed.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Message-ID: <20260923121444.154175-1-shivangu@linux.ibm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit cbbd4d74eb298e2b407018185a40cb813435527e)
+Fixes: 5f747705a4 ("tcg/optimize: Lower unsupported deposit during optimize")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4449
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 0bc331d1c7d5cedc1dbe0bf21dc5f6be13c58fa4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f404c7e549d..c23ef680bc6 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6964,10 +6964,10 @@ static void ppc_cpu_unrealize(DeviceState *dev)
-     PowerPCCPU *cpu = POWERPC_CPU(dev);
-     PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index cd5673b329e..2dc6e32b536 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1674,6 +1674,23 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+     type_mask = MAKE_64BIT_MASK(0, width);
+     len_mask = MAKE_64BIT_MASK(0, len);
  
--    pcc->parent_unrealize(dev);
--
-     cpu_remove_sync(CPU(cpu));
- 
-+    pcc->parent_unrealize(dev);
++    /*
++     * Compute result masks before calling other fold_* subroutines
++     * which could modify the masks of our inputs.
++     */
++    z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
++    o_mask = deposit64(t1->o_mask, ofs, len, t2->o_mask);
++    if (ofs + len < width) {
++        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
++    } else {
++        s_mask = t2->s_mask << ofs;
++    }
 +
-     destroy_ppc_opcodes(cpu);
- }
++    /* Sometimes we prove a constant from non-constants. */
++    if (z_mask == o_mask) {
++        return tcg_opt_gen_movi(ctx, op, op->args[0], z_mask);
++    }
++
+     /* Inserting all-zero into a value. */
+     if ((t2->z_mask & len_mask) == 0) {
+         op->opc = INDEX_op_and;
+@@ -1706,18 +1723,6 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+         return fold_or(ctx, op);
+     }
  
+-    /*
+-     * Compute result masks before calling other fold_* subroutines
+-     * which could modify the masks of our inputs.
+-     */
+-    z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
+-    o_mask = deposit64(t1->o_mask, ofs, len, t2->o_mask);
+-    if (ofs + len < width) {
+-        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
+-    } else {
+-        s_mask = t2->s_mask << ofs;
+-    }
+-
+     /* Inserting a value into zero. */
+     if (ti_is_const_val(t1, 0)) {
+         uint64_t need_mask;
 -- 
 2.47.3
 
