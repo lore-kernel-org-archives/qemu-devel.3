@@ -4,127 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F038C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3717EC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjNM-0007wD-FT; Sun, 27 Sep 2026 03:32:44 -0400
+	id 1xAjNW-0000CW-84; Sun, 27 Sep 2026 03:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAjNE-0007d9-NX
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:38 -0400
+ id 1xAjNT-0008NA-Dt
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:51 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAjND-0006YI-2Q
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:36 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xAjNR-0006bT-Co
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:51 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68QGxQFN1449967
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:33 GMT
+ 68QHFmcu3201316
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- QYu8bvEGUdQWeDhON91oegvqLJFYqYY7Upi3+WdIY80=; b=YAUNRa/xgICGRbey
- IAbsdqzXL+qd3uuxNnZPMCeIAhhmKyXscrHzYfggsSfr5g7JnAutvduQqQyNHhnq
- 3TEo36cidBpAVp/3t5tzRryrdgIPmF3WE4Uum8iP3Kw26tGa2MwvoIwIiTARzXF+
- 7/cvQms3HN5elRzBEmTTmlymX2EpEEs/fgwURfiIuKMBkDw+AcjoIidBPn/rOGu8
- TWgv5mR9hwwDwDCkvPIc4pXy+bwknPy2zxGI2cQkMcL7oCETqefHMs9/BI12V5Qx
- 318vKKCB2uPijSnrOpKUbbeXHxH54rLMDA3e7EOhjKEopshVZU0tbyH3zENtzuAd
- 159rcg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx3rfttce-1
+ uHFX0PvLMf+Hsw8xnGc25nM8FRuS49x8Ym+534oN7w0=; b=MIntgDM574gtXWIN
+ Lfy1OUU5MEZygrzdJOb5WmW7uhsc8tx5LzQkHvCwWAY9js+ZYSkVFww+nirSvfQm
+ zJ81eeOyjt7oxHBFOZAlb9Ymd8FpR5deR0IrOVnRywDaHYYOVRgQB4NJMS0ki389
+ dWcHO4bULHHzlAj72fjVCYRH3HmB8pzY5GiPWmpgBzv9OxsdsYLpmd3AQhgQihYE
+ 1PtDH96e91OvHIpTZHQqvS7TjUxddVc615HClBepXYAEIqhsNUw714NlCNF241Ph
+ WKQWusNgi7bx0Yw+6ihu7jwPi+xj1sWqdsgo3aO8Iw1qBpyLp5LhPtXnYUwCTrER
+ E8qRSg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx77jtcnh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:33 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93c444b438aso443542085a.2
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:32:33 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:47 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-53310b75674so38749521cf.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790494352; x=1791099152; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790494367; x=1791099167; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QYu8bvEGUdQWeDhON91oegvqLJFYqYY7Upi3+WdIY80=;
- b=Q8tN/jl86v75N7w363/g6usIXm1fUZKe7bTfK72bTdy9X6vkzcRZRe7OICrLOHMXtu
- 4DD6xVApT2iL3ZKc/gkTqk0TfC2vRVvPSp4VPDcbsf5kbtF+PcqAxJzfzPFierqdPmB8
- 7haFozvtJDgZMXEW0WWqfvrOgERznib0mUq33z32vkSmxLm8X2Kd0L+6+cXmEdULV85a
- Kh34t8MHwgMj9fSvdnN2FsTO7rtoDbUeBdepB2VvdFBygwYk6KGG0mhroWKYjWwWZVxh
- PjGVeXplNZCSxcr0Uplg+TkiYkhaLGBiPxsWwyu6LWY3JmhW0Vq+sUEe7HP3S/YzQZUc
- ZIjQ==
+ bh=uHFX0PvLMf+Hsw8xnGc25nM8FRuS49x8Ym+534oN7w0=;
+ b=MWzlb1d6tDxd5nFRmVdeqMd1zjzMZymu4e0Q97/SBkud3DzUq16paodX+4d05cMh8T
+ +bmsfjRZa4d4CsXm1wlJpYXvUqrYks5/7hKx1YyVqUIAa9A39Te22le1rWzPJbtUQAGn
+ 5qma7Uj81L5iLyk3jSpw2zcLqcpF6fXzUphTAOgckr2nDDBTk5/yc3DapaT+4icYw9C/
+ 0kerPjiZeCx0eMUzPMngZdvAN9S08FJNszwJuIGc06l3jw/4yxzyuXGRaNQ1QagfGvJ4
+ 3eRSoe6aitht5lh10L3b6Zdks1mh5QzFp+zE+KGhkztWUhFGiYCWNduPsFtX+puxoQMK
+ cz4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790494352; x=1791099152;
+ d=1e100.net; s=20260707; t=1790494367; x=1791099167;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=QYu8bvEGUdQWeDhON91oegvqLJFYqYY7Upi3+WdIY80=;
- b=wV4ixB1S+7fXKaZppsUyngLpDOrj/yze+KUGDD+PmccwbvDc3/YN1qWRgRDKftlM9f
- hDtJiXWNh8X5tu73TGk2WnMoGz2jfQivkLjYTnzELiAOwVFOShGR2Sxh2TdR2GYHfSNK
- wwhK+KXDoKQT/uA/AcHHsM7TTbyUaRVsVRlNlYJXWE+MBXeuOqQy+dOFDPg4dATSPLCc
- mhpBpaYUgayYYO1MYyXLV4iZs6M/URoBp9aEUpF0BPpfbnwae3YZ2Z/regv182iXeivZ
- 1AMwGwytN9BA0ztTPf0uV9+DKDNFQy1UQlmnhTSIfJmXxQdFA5bOwEj8eXUYFjaQP+Z8
- 2NPQ==
-X-Gm-Message-State: AFuF++mO88YnbJtdbwFtQc7/cswJqePHhWBBJ+H7uel6FFth1NkbJhI5
- PnyuDq9xfdaE2R962eKsyauoECmsxTzEoFyt3q0u+Jov1WYiREp2pfep9MKPMlQmtXCZyEBeCbS
- sFCmvlcDu3WtsE9YytiM4K0UAn8HIYSLScfxIjwzUexfHGs/O/8YS0Ao2J5mpArj7vg==
-X-Gm-Gg: AYBFou2FNIfTuLO/x9H4pIxCS8U2Dl9ZYkKPkAeIrFwJ7LZwqkPjOAxTfEC7TOfWxm0
- DZa/KDtM5dPE7hl6P6wsG67NuOOeWZWpqnBjKbYeJ1Doi1YHPqqwnVRoEVPsrT6EzBeFv0VgPMv
- tOxIv7i/8Cv186yvszGoN2W5bOmaQEARMhn7gQgMFRRJb4YN80+s3h31DyHkpQ4HAT7q0hhWtBQ
- pwRjrAaz6Ra5x42KIf9qWrJt/7vZaPu9HYq2tNYQOHZUZXSaycPQ01h9zxBlZrEGL+odgoJD4Mr
- no4rbbHij3FzbnBd2+cWHuSBZ+/WhvhWzDnrKPnLshCs7AxWLRWaFPSGhwTe+aIY0a63bvnZz3O
- mXXdVaGMSImdtDgSYMUwKnrogerHDc1p38qh+cWWQ
-X-Received: by 2002:a05:620a:46a5:b0:93c:7582:14e4 with SMTP id
- af79cd13be357-93c75821ademr41794685a.40.1790494352527; 
- Sun, 27 Sep 2026 00:32:32 -0700 (PDT)
-X-Received: by 2002:a05:620a:46a5:b0:93c:7582:14e4 with SMTP id
- af79cd13be357-93c75821ademr41791385a.40.1790494352039; 
- Sun, 27 Sep 2026 00:32:32 -0700 (PDT)
+ bh=uHFX0PvLMf+Hsw8xnGc25nM8FRuS49x8Ym+534oN7w0=;
+ b=ZF/Y5eS9bJQGS72iD71KnFCCqr0+T6C3xbLoGxPEyPEx57rivT/SfFaxR3UByp3FIJ
+ hrCmITKYCNJ/bVVwYGse+Wl+naZxTHdfCZvFBIF3m+sHmKiDwHs+04/x4AfLeCLVJXn4
+ bZIS8HQR6nDiiC+SIL+kclNMGNZmISpRsavKlhCi2VpyE4FREco+yULcohXkjOXs+MdW
+ G+R1VOFRrIjqiQrFOzGQ2BbXfhE5I6yTWXvmu7D+5LkFEuis+iQoJwJQMbexvvV5AeLP
+ Prec26l2T+UtzT/B9kn3Cz4sXW0DGFhcT+p6CVdNIDhpkfhJsoyq7N0SoTKfIANk3gmg
+ CJKA==
+X-Gm-Message-State: AFuF++klBxRvhXufbXBfIBi1DTmUwTP/JBy4Hm1HhewL74N/gFIuxnB6
+ m548WxIgGDgvE0iZSdBMZqzZ4Idsn4OBBmQxBacdZ+lEWjPiToCoWkpEKFpQIMhZGqXfkGrPteh
+ 8RXeuk7FNMgI/2NDcpMNeU++1AwHNcCD3r8U6UZfUqEzj/OLVmz65xal0b3JrPCu7XA==
+X-Gm-Gg: AYBFou0ps0lFehxOQsGvv/qUklFbpV+7BzLapPKa/f1z5f9LYgjpdbI3IMsEfd4YPfL
+ q8DpZM4OmvF13eZmHnBQFhv9uKmC0g2shNXuRAtt+y+LLtB4oKi4zSjT4zLDCdNu2E2uYet7fGz
+ EV8efgHrL9/SFLva6RFuUsOpHIp/j1jAhuamhg0Vv16qKc95zNGySdcMZYRUSA5mSUT/ZHxgIxG
+ RzAT/dXU6RN9DUOMj/FvVHSCwles6iHQlLC9eLdksAIA8uNHAg0nYGx5Dz9LQHl5mKdvfj19pcw
+ qj9mkrjQdLkno4edyo/R87Yb4VI61olfbHIb9wAUNr34h0lPaH3jc1qXPE6vfYpXnhs0pD+Gyux
+ MZ/g/Of1J+qcFaglUssZXjGjpCC2p3ya5lyNtz5Ex
+X-Received: by 2002:a05:622a:2515:b0:533:3b67:75dd with SMTP id
+ d75a77b69052e-5333b6778e8mr10934651cf.13.1790494366734; 
+ Sun, 27 Sep 2026 00:32:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:2515:b0:533:3b67:75dd with SMTP id
+ d75a77b69052e-5333b6778e8mr10934351cf.13.1790494366147; 
+ Sun, 27 Sep 2026 00:32:46 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a0018f1375sm33391595e9.8.2026.09.27.00.32.31
+ 5b1f17b1804b1-4a0017816efsm38339935e9.9.2026.09.27.00.32.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 27 Sep 2026 00:32:31 -0700 (PDT)
+ Sun, 27 Sep 2026 00:32:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 7/9] hw/ide/macio: use pmac_ide_transfer_cb() for disk DMA read
- callback
-Date: Sun, 27 Sep 2026 09:31:38 +0200
-Message-ID: <20260927073140.41422-8-philmd@oss.qualcomm.com>
+Subject: [PULL 9/9] target-info: add multi-target test binary
+Date: Sun, 27 Sep 2026 09:31:40 +0200
+Message-ID: <20260927073140.41422-10-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260927073140.41422-1-philmd@oss.qualcomm.com>
 References: <20260927073140.41422-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfXwLsDvrS3IcBP
- sI7ndkbRFru4BXTIgkiWKXSoy6oxrw0YkYepseK/vkPkj+GxlZN3pZ4qsqcCH5FI9sfJIuRDiqa
- +fkB7hqhaGo7r3EmaBxvwd9p09UpBI4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfX/1jY8fH7oPN+
- 92+tV32MV+IOO/CpMP+BmXTaKm9wnb31cVb/bp3QKdA4X6LmKCgvMsCEaYDxhh7hDcAYM9+LSGH
- MibSByHMh0aZnwjK+cqlNnS/qP4I0rwUpKnAXg/9Y+DT5pRS/oiDkiTA3pNf20yZ05CPTsI9GvU
- zLqgEAZIsiKpEJpouxmMaFkIYxlHYAUvvBKOnZzIDJyA5z8SRO4f9VJY+pYb1JJO6YQAxr1rY4J
- GCo/SG6F9G09CHAMG6XTEeUjFUusYBcxC57EGeCXeTOmCmMsEckMUvCNxoQKrRTSN8dTbQBR16L
- 9i6WdTiTE+xuXcohC6BU8Ui5PCEm4DcsiEFvy4nta67jSJ+ik+kH/Anf6kbLOiM133DQ3XGWQzV
- wj5e2Xyu6/YEjQQN8P11T/1g5fj8HyYMYBq1QPFDPAOEcwmxclPoV+hUGw0DxbgxVc3H8xKzY7k
- CpBMHgeXDgLNqweT5Mw==
-X-Proofpoint-GUID: NUPIiiJl_4OWayhR9ZSdkCK2mp_Gpp57
-X-Proofpoint-ORIG-GUID: NUPIiiJl_4OWayhR9ZSdkCK2mp_Gpp57
-X-Authority-Analysis: v=2.4 cv=K6G3jCWI c=1 sm=1 tr=0 ts=6ab8c691 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfX4txrOQjZ5zUc
+ Jy1/N2C52T8cl0AsoCvQ+s91rPj1nTVYP9xscjgzZoDZmi8hlO/smzi/IuFLxwcckYtB6F8TR8H
+ VjAjgqrzp/W0szJNjaWEOhEMC/n5WGc=
+X-Proofpoint-GUID: TZFhzQHAarG1eEWY6wMXG1QHj2bD_EbF
+X-Proofpoint-ORIG-GUID: TZFhzQHAarG1eEWY6wMXG1QHj2bD_EbF
+X-Authority-Analysis: v=2.4 cv=J8U/fwnS c=1 sm=1 tr=0 ts=6ab8c69f cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=pcZqCyVeAAAA:8 a=EUspDBNiAAAA:8 a=nzRHPgdkaXdYiH_QP9EA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=SGy6VSG0Ue1xmPAwIFl9:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=kv-CIVRGVCO3ybwTuYQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfX3L2u+TIQvrH9
+ kIUsXktAEJ3QCmTI4xiL3P5ikCiO+RAgNHmx7my1qx7P6dmz/sNSYLJC7CFbRUQUlultIJpQKys
+ JkOYFjC0277RXL645jTSHn1UwSdaE/e4o8Xiyofo2du4863V2EsnZTSmbW7L9XFiB6bCkqiMN6R
+ UD9QJyOVec2fnLyrCjy/zgrSYpHM0a8trR7ZG2zZaOm+Udy6TzK5InTwHXIOA1nSTdVbby8eSVi
+ HJwYRXRD/tntwcKTnrJU25pxqFLLb/vCAusAeQsrfexOPnnOs6un5ND6ilART5KmBSA8mZ8rh1e
+ SmKXelOTWiMA/j/PUgHsR9MYN6F3ZcKr5X516q0a6Ip6rNdUTRyhNUocnJwR9YnzmmGKAuNuQbh
+ WRmEPGit/xMsyKk5PFi83WHxDnYTy4ayOjPyd7zUkGCIFbu6J1sa2iF4pSVEyAySop9FkXRWuJ+
+ zBN7aMm7kopTpVRGErg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609270029
 Received-SPF: pass client-ip=205.220.168.131;
@@ -151,35 +150,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Since its original implementation the disk DMA callback pmac_ide_transfer_cb()
-accidentally made use of the CDROM DMA read callback pmac_ide_atapi_transfer_cb()
-for disk DMA reads instead of itself.
+Now we are able to link multiple targets together, we want to make sure
+no build regression is introduced. For this, add a new unit test linking
+compatible targets.
 
-Fixes: be1e343995e ("macio: switch over to new byte-aligned DMA helpers")
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+In addition, we check QOM types can be initialized, ensuring uniqueness
+among all targets.
+
+For now, supported targets are:
+- arm-softmmu
+- aarch64-softmmu
+- microblaze-softmmu
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260926074425.468348-1-mark.cave-ayland@ilande.co.uk>
+Message-ID: <20260921204954.50529-3-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/ide/macio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS                    |  1 +
+ meson.build                    | 23 +++++++++++++++
+ include/qemu/target-info-qom.h |  1 +
+ target-info-qom.c              |  5 ++++
+ tests/unit/test-multi-target.c | 53 ++++++++++++++++++++++++++++++++++
+ tests/unit/meson.build         | 12 ++++++++
+ 6 files changed, 95 insertions(+)
+ create mode 100644 tests/unit/test-multi-target.c
 
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index 40fb4f3b4f3..a95e68083f4 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -180,7 +180,7 @@ static void pmac_ide_transfer_cb(void *opaque, int ret)
-     switch (s->dma_cmd) {
-     case IDE_DMA_READ:
-         s->bus->dma->aiocb = dma_blk_read(s->blk, &s->sg, offset, 0x1,
--                                          pmac_ide_atapi_transfer_cb, io);
-+                                          pmac_ide_transfer_cb, io);
-         break;
-     case IDE_DMA_WRITE:
-         s->bus->dma->aiocb = dma_blk_write(s->blk, &s->sg, offset, 0x1,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 026c11bd9b0..1b66c65f689 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2146,6 +2146,7 @@ S: Supported
+ F: include/qemu/target-info*.h
+ F: target-info*.c
+ F: configs/targets/*.c
++F: tests/unit/test-multi-targets.c
+ 
+ Xtensa Machines
+ ---------------
+diff --git a/meson.build b/meson.build
+index cfac634cf13..cae1591cd28 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4259,6 +4259,15 @@ if host_os == 'darwin'
+ endif
+ 
+ traceable = []
++multi_target_libs = []
++multi_target_deps = []
++multi_target_crates = []
++multi_target_supported_targets = [
++  'aarch64-softmmu',
++  'arm-softmmu',
++  'microblaze-softmmu',
++]
++
+ emulators = {}
+ foreach target : target_dirs
+   config_target = config_target_mak[target]
+@@ -4414,6 +4423,12 @@ foreach target : target_dirs
+                  build_by_default: false)
+ 
+   if target.endswith('-softmmu')
++    if target in multi_target_supported_targets
++      multi_target_libs += lib
++      multi_target_deps += arch_deps
++      multi_target_deps += target_stubs
++      multi_target_crates += main_rs
++    endif
+     execs = [{
+       'name': 'qemu-system-' + target_name,
+       'win_subsystem': 'console',
+@@ -4497,6 +4512,14 @@ endforeach
+ 
+ # Other build targets
+ 
++multi_target_objects = []
++foreach lib: multi_target_libs
++  multi_target_objects += lib.extract_all_objects(recursive: true)
++endforeach
++
++multi_target_link_args = emulator_link_args
++multi_target_link_args += enable_modules ? ['@block.syms', '@qemu.syms'] : []
++
+ if get_option('plugins')
+   install_headers('include/plugins/qemu-plugin.h')
+   if host_os == 'windows'
+diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
+index 91be415ed33..8b6e1ece969 100644
+--- a/include/qemu/target-info-qom.h
++++ b/include/qemu/target-info-qom.h
+@@ -26,5 +26,6 @@ typedef struct TargetInfoQomClass {
+ OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
+ 
+ void target_info_qom_set_target(void);
++void target_info_qom_set_target_info(const TargetInfo *ti);
+ 
+ #endif /* QEMU_TARGET_INFO_QOM_H */
+diff --git a/target-info-qom.c b/target-info-qom.c
+index 6965e4d1169..3ae1627b8fb 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -53,3 +53,8 @@ void target_info_qom_set_target(void)
+ 
+     target_info_ptr = TARGET_INFO_CLASS(targets->data)->target_info;
+ }
++
++void target_info_qom_set_target_info(const TargetInfo *ti)
++{
++    target_info_ptr = ti;
++}
+diff --git a/tests/unit/test-multi-target.c b/tests/unit/test-multi-target.c
+new file mode 100644
+index 00000000000..89b55bb1632
+--- /dev/null
++++ b/tests/unit/test-multi-target.c
+@@ -0,0 +1,53 @@
++/*
++ * Test for multiple targets
++ *
++ * Ensures targets compatible can be linked together.
++ * Also that each QOM type is unique among them and can be initialized.
++ *
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * Author:
++ *  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qemu/target-info.h"
++#include "qemu/target-info-qom.h"
++#include "qom/object.h"
++
++#ifdef CONFIG_SDL
++/*
++ * SDL insists on wrapping the main() function with its own implementation on
++ * some platforms; it does so via a macro that renames our main function, so
++ * <SDL.h> must be #included here even with no SDL code called from this file.
++ */
++#include <SDL.h>
++#endif
++
++/* stub for system/main.c */
++int (*qemu_main)(void);
++
++static void test_qom_types_are_unique(void)
++{
++    module_call_init(MODULE_INIT_TARGET_INFO);
++    g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
++    g_assert(targets);
++    const TargetInfo *first_ti = TARGET_INFO_CLASS(targets->data)->target_info;
++    target_info_qom_set_target_info(first_ti);
++
++    /* register all types */
++    module_call_init(MODULE_INIT_QOM);
++    /* trigger type_initialize for all types */
++    object_class_get_list("", false);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/multi-targets/qom-types-are-unique",
++                   test_qom_types_are_unique);
++    return g_test_run();
++}
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index e47bc7225ab..d17435c1877 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -215,3 +215,15 @@ foreach test_name, extra: tests
+        suite: ['unit'] +
+               (slow_tests.has_key(test_name) ? ['slow'] : []))
+ endforeach
++
++# Multi targets test
++if multi_target_objects != []
++  test('test-multi-target',
++       executable('test-multi-target',
++                  sources: [multi_target_crates, files('test-multi-target.c')],
++                  dependencies: multi_target_deps,
++                  objects: multi_target_objects,
++                  link_depends: [block_syms, qemu_syms],
++                  link_args: multi_target_link_args),
++       suite: ['unit'])
++endif
 -- 
 2.53.0
 
