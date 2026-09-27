@@ -4,130 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDABC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 12:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA82C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 12:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAna2-00084P-Us; Sun, 27 Sep 2026 08:02:07 -0400
+	id 1xAnd0-0001Ha-2E; Sun, 27 Sep 2026 08:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xAnZl-0007lb-9l; Sun, 27 Sep 2026 08:01:53 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xAncy-0001Gm-LY
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 08:05:08 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xAnZf-00008M-LL; Sun, 27 Sep 2026 08:01:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tCo1IbKLetRv9amFpFEFgl7gF6tTP4vl6qGqSo+WAfXjjg9wI4OHMl+a+a1BDrcfKJNbICgvSaTVVwbag0U8TJxwswH6tUPi1OgIgWqI+NsjWPJpXBGa9OAO3avVMqVo2Tcw/GAD9/fspRAyVExunq9D28GZ7Nj3rso8JZL9LEKtR++WAKz91mugRM8CqzKw7YQBOyt67lPQtv5ONZweEEkT0RTVWtm4PyMVEJXqGm3bXAMXGV28DWsHSF5V/0BGTrau3L8fDZgyYrrJhBkzf3AtdkGkIdo4Flaa9OhvTjTm/d1lVU64ejuIlXDMb0JwlRCujHnj91jgMSWwaSPWAw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qSbDm6zs6osy1vC1q7SnKVrkI4aasNet73y1bfqmZoE=;
- b=x+F3HzOI3bzoqvow13MyAART2yMsD/DkrUbyLPHxFJaIm5VywJ3CnE+GoZhbl+DjzgY3nbontfgbWcismAtD96q7QzqDFYsDpfGGdKX4FfAFPsDX9c1GUvP95s2uOFKC8ys49otGiPrFFG0gW1w4rn5KweEAG71D0484EsQhYfeYvy7rEh7nCNcX/AdfUnFMBHguYFw2lNsl59F1rmgn6bD4YQlt5Q53zwmtnyhhSFkY4d3sIlIc3eMTst+2YQU7ftouq7AFHj585d0eo35GoCd6/UA0Jly+HamctGHkuoyqibDkpzgyv7JzTKZPRmQDMhrvZSmAJeCn8LvcFkaYiw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qSbDm6zs6osy1vC1q7SnKVrkI4aasNet73y1bfqmZoE=;
- b=BX4Qe+qnfui7Y2yYW6FR/SHvfxW4BcWW4t1TWdLCFv0SqcfrUwzjaYQH6UA1iiCyYwiMj1+iQ8bUcG3tCvq4KUS2hffu9KeTZw1N9HchaJQAJviOpTpXT3YC09N9aQ0Hpx06PWcK2pGv9JGMIivRuQJpDswi+UhmWNMl5rBVVNKxb20iZJ+CLkhXgbJAzbG0rFgPO6HDgBagHrtQGbL/qOFy9aoLGakwqBfmCvXXHEdUdiMsT31+cdfejz8yKLnGCvgQ9OacCy9URuljd4rGUanoy6pUvsAlw0q4goR0+y2LeJeiPwoLM5Zm2wCZcy83r5rYWv13Is9Vl+GWrf0OYQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KUXPR02MB9336.apcprd02.prod.outlook.com (2603:1096:d10:a3::10)
- by KL1PR02MB7331.apcprd02.prod.outlook.com (2603:1096:820:11b::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Sun, 27 Sep
- 2026 12:01:36 +0000
-Received: from KUXPR02MB9336.apcprd02.prod.outlook.com
- ([fe80::1451:cb49:7950:b10d]) by KUXPR02MB9336.apcprd02.prod.outlook.com
- ([fe80::1451:cb49:7950:b10d%5]) with mapi id 15.21.0451.022; Sun, 27 Sep 2026
- 12:01:36 +0000
-Date: Sun, 27 Sep 2026 20:01:29 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Frank Chang <frank.chang@sifive.com>
-Subject: Re: [PATCH v4 4/6] target/riscv: rvv: Add SiFive custom int8 matmul
- instructions
-Message-ID: <arkFkoClGv_lVBzB@MacBook-Pro-4.local>
-References: <20260927082534.3228237-1-max.chou@sifive.com>
- <20260927082534.3228237-5-max.chou@sifive.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260927082534.3228237-5-max.chou@sifive.com>
-X-ClientProxiedBy: PH7P221CA0017.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:32a::32) To KUXPR02MB9336.apcprd02.prod.outlook.com
- (2603:1096:d10:a3::10)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xAncv-0000gV-85
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 08:05:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=QW1+ctuqlkN5VZXrZ+dZmsUmx9dLYk6VLMI980JYg5M=; b=rxm3O+O8/XDmZoKsduU4o+Qe64
+ +LAD0JDg36PL+AJCL5SxT05tUGqDphphdeJp4IC2LkrfEggVy7pcV+cvbDBaciFXA6ygMdhpbg9gr
+ rLitVhrDvJB3zclQO/P3AOsF71+3PsPvbESf58lXNAiCCNJOPCR6u73zi/lbPLYGpuH5BM3ML+GEM
+ 61p3H0kAGRiQIm38TKkK5s9jEeY47QMZcZwlCjL2lA6OW9u2G57Dg9dEr6udTqGfrnhbSGPq974Qk
+ ELbKOFB968nMcLPyg5Rhem7dnRDpaOLajNL28M8sXXhBwrsJcqkhIdvIXz8XcdUt2uyR17xfxL3s7
+ /lFFlOoZEzALTE7q5WEelKu6JwTdvjRUoea/msv48+zp4GZcvGXdIHZZdUSQp7H11XK7GPVgi9tvE
+ FDaWxqcTY3fQdy4Kjex4lljHNTX7o5y4+huiSjLgrL79zRwX/s8+T9xspJgmvK7BSo7n6nPATAhY1
+ e8p48ViLRmbv/4MyqrYSdzey0TTsv5AZy2+BUA16Oq0yiO79cneaAmKUI5EqiDe+ESSHC09oqOfxY
+ aSqH96dr9fp3pWu7uDpDbKBoBz6M/3Q/8Z/NTA7YFXxH11ZROVcuXCwx5lFXbulbKeKpUBAYT/UkZ
+ h7w75OpNnF4Cb0jqePQtRCQC+akHk9JoanfLcfcDs=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xAncJ-00G06p-7y; Sun, 27 Sep 2026 13:04:27 +0100
+Message-ID: <a0542358-1c13-4c22-b8f7-31d42abf3866@ilande.co.uk>
+Date: Sun, 27 Sep 2026 13:04:54 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KUXPR02MB9336:EE_|KL1PR02MB7331:EE_
-X-MS-Office365-Filtering-Correlation-Id: 28a67e9f-0e6c-4d9a-2676-08df1c8f149f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|23010399003|22082099003|18002099003|3023799007|56012099006|260925021311599003|260925021911599003|260925022911599003|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info: boibMeCqgPFvT59itqcvoYnXmM+kzOEBZDQQ6J1wlHz/sEW+SvDOMxNEzdgIXWETx2K32od/ArY4S1wsQfMnwFJUw+ICQef5cLpbU2L2usfgn2xURdYeX8uSN+ogDoyP1jHeXgoU0dwDvYpjkDyEKJLgGTCk/Tr/hpiONwovBF+yvBB2w8NiS2qiNPiDz6J8CibVOZTSVNkLT20ExlZ3GZDtBO87xeEI0h8hZd9tm+DimY4+GThsRgIl84V5V4cPuk1yZYmfIp5t8ZenlM8IWfNTM+2FO2OpHWnfSqRb2NKd7MDWDFQdF4nXht1Cdmd/QvTrDqPp1mFiAZmt3q9QcmqYoHG5XiSwILoulj4QDXou3dhV8HBmnw+0Xbb80lOy62cyvX2y5UQod6EYvFSYKmHVN2HsV9xI5SPQXgNQHdZV3AKXZM9BvMG2Ql/4DBQ9oGQE2tExM3sV5WBw2Cu3coMip7Skpwfj4sbKlXq5gc9aYjGHkq4Eny3CwUAG2QnXRLwT4f0nU/V5/ym7ECjP2WGEBziir551tTvSkWdrYlgI+Gg0xsIfOiSAxjjYCETd91AmzKXzuY7P+jQQgLK7AXzXtXVHX+5P3aqqPn/L78sRjdu3zX+l82YhrYgpo+CemGjIg4re5rDC10108a79HvFC9zhlIT0U1VWMQhq+2Kk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KUXPR02MB9336.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(22082099003)(18002099003)(3023799007)(56012099006)(260925021311599003)(260925021911599003)(260925022911599003)(10067099003)(4143699003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?d1GI+NRQz4xtgh34JCDMUONtiBa4adpdNisftoWSRgr8rMo1dmvVWcWpysxZ?=
- =?us-ascii?Q?P5XvCuUVauUgw0ibzwG7koLbCieCoQEyVKT48t9ufzMPfLuogN8oVU6W3DRz?=
- =?us-ascii?Q?takYWHFb3FtPSlQ4AcjFqB3vdL/m4F10tYNThCkVYcxLvs/KB7QBPLe9bWzu?=
- =?us-ascii?Q?SrVIVZQ5rli1cEQ7Zq96FId+N4D0b0MRb28d/ml/HalfdbVvM6lIshlNbzFv?=
- =?us-ascii?Q?GbpJOOW57qheAtvwy6oUctnasIYP2eZQm/2F8qquTpQAdFcf3SBQvg+L50ik?=
- =?us-ascii?Q?tVXli0mJcHmoBivD6DIlzJTDZAWVoidLGc+k1bsddYzydQZQNACqnLB/GWSM?=
- =?us-ascii?Q?NCiqDzF+u/l4ffV7Mh5ezxg18534dDJ/g/5GVZElKQDwPgfGXNrF6cti93mv?=
- =?us-ascii?Q?e5dvt58ElFaX38QVPAoffTHgPbA7wcYv9KHgdytokb/yKC7qTkhXjX3CCznH?=
- =?us-ascii?Q?BHVzVxO7QqCuIhoHf/QxsUWOhQ1oEdeJ+0sRDkV+7LDa3ghcuX0nxFCKYi6h?=
- =?us-ascii?Q?Jc4panBl+C0NaywJ4uYYRcvKFVT3B+wmRw2kGeATrwx9wV82R0Bl1Raq9R9Z?=
- =?us-ascii?Q?B6NJYRerhfYPpJLEUTfg08xa/wxBEqh9FJIfwNmDx9SvfF/EOy+walpkozIj?=
- =?us-ascii?Q?jH882I0kc5coUuqu2/38KSEYKrmaNTMUpbJco6vQR02tcMV5O2y9x/JWA5xX?=
- =?us-ascii?Q?5vW4+VQrprp0iwR2P1MoykfZsMd+LkCx3Du7e5lUNE9hdR0X2re4tD+GYJyu?=
- =?us-ascii?Q?KzOi+7BzL/RpE+sgjwQ+ubN100AT7tbU02U0Ok7HMM8X3Aqm9eF0AqrdWJBD?=
- =?us-ascii?Q?FdNar7KaW+2FulhOr5PGBF0uphJjPW2G7oMJXt+ka6c5A+PgZq1OtS85kJKb?=
- =?us-ascii?Q?eJQHuN8qgm2LYPfxU3Lj6Wjp59xf5Ep3wYRQAeDnL0xKRkxacoKXlJyGrqeh?=
- =?us-ascii?Q?tSyrfY07viSMoIQB2AujkpLJCa7L2OtAoFtRNLhvDGy/lbVareO3t+Amfkyg?=
- =?us-ascii?Q?hO3cwrPlqLDjT9f5OUHP81qF08BklkRyYLhAbQ8AoYfB/J8iU9wkzIdxKCSd?=
- =?us-ascii?Q?gfiNF23i9RPFKdvdalqClIj2qW2PCBQiktxH1D7gIdRqJTWfFBvMnW5clLjg?=
- =?us-ascii?Q?V4LB85sGhvJlYWGLxeKisW31Wqd3QYVkzLs5dQAF+O2GCymRwHD/HrYPuL/d?=
- =?us-ascii?Q?/WGwPEn+pLenBRE5ocRQQJfRyOEo0T63Eso4VwJJ0rY5Q1oCNYjoCwRjhglz?=
- =?us-ascii?Q?e3yVuKomHxH1BeV2fvGp6s1KYJ5yk31EbC1gjnJQnhyOp1l2gAfwPqCubs9w?=
- =?us-ascii?Q?z+bAJlOr31fcm2+em6hPCbV7NELxwE3/Xza4QXylH7UNlg5KsxKV3UUvg8Fl?=
- =?us-ascii?Q?EvCVUiArh4e67s9ZcrKyDOQ8Bd2kMeBrgZI/X+vXDFrzY1a/TdqOxXYRYglZ?=
- =?us-ascii?Q?gEZ7T7PpPr/+ZYOOd16vvNM7LqevAm9k9qOBcHu8qheAAVnIh5HUBqRt0tre?=
- =?us-ascii?Q?xb3AuLZ/9QTDojH9s3znEeTXU2nBPdLqtc0wtsJu1EMRAIHHLDcxQvuIq/8b?=
- =?us-ascii?Q?R6gOuaCwIxa2cK4G8kGINRXxUcdzOCc/5fSYrs1GGGY9AwMDtOdw5JUkChOR?=
- =?us-ascii?Q?GQRacE9PhWND4CQNEB1mbrtdANaOL3y92cKWDwi/cSD7xC5Cq3TyhF1/CqR6?=
- =?us-ascii?Q?28xy5I9iTji5E8vS3u3MJv+dl/h8Q2Djb5oxSZfPZ/mVuiDjkNUsCjEKdF5C?=
- =?us-ascii?Q?fzLWrTinbhJc5EuMXi3fwv5DvKedZB4=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28a67e9f-0e6c-4d9a-2676-08df1c8f149f
-X-MS-Exchange-CrossTenant-AuthSource: KUXPR02MB9336.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2026 12:01:36.5942 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bl5Qej6JtdfwO5iB8MZ9+Q9S8X9e7WvidZS1A6EoR8K4dvwJG/+LSnCtgac5tlTTqGKYkUdo6qdyaFZRrPCZNxYMnyTV6twmkl16xJ8He+0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7331
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=chao.liu@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+To: Artyom Tarasenko <atar4qemu@gmail.com>, dpim <sun4qemu@gmail.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Richard Henderson <rth@twiddle.net>
+References: <20260918105705.433093-1-sun4qemu@gmail.com>
+ <CACXAS8ALB0EF-LE3icCzY6HO-znccOh6d4fjj799rp130q9CvQ@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CACXAS8ALB0EF-LE3icCzY6HO-znccOh6d4fjj799rp130q9CvQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2] target/sparc: implement TTE page-size for 32M/256M
+ pages
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -144,378 +107,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 27, 2026 at 04:25:32PM +0800, Max Chou wrote:
-> From: Frank Chang <frank.chang@sifive.com>
-> 
-> Add the 8 SiFive custom int8 matrix-multiply vector instructions:
-> sf.vqmacc{u,,us,su}.4x8x4 and sf.vqmacc{u,,us,su}.2x8x2. Each name
-> suffix encodes the signedness of vs1/vs2.
-> The 4x8x4 forms multiply-accumulate a 4x8 by 8x4 int8 tile into a
-> 4x4 int32 result; the 2x8x2 forms use a 2x8 by 8x2 tile producing a
-> 2x2 int32 result. Both Xsfvqmaccqoq/Xsfvqmaccdod extensions are
-> gated on vlenb >= 32, sew == 8 and vm == 1, per the SiFive Int8
-> Matrix Multiplication Extensions Specification.
-> 
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+On 26/09/2026 21:49, Artyom Tarasenko wrote:
 
-Thanks,
-Chao
+> On Fri, Sep 18, 2026 at 1:00 PM dpim <sun4qemu@gmail.com> wrote:
+>>
+>> Currently, the TTE's page-size field, Size, is 2 bits wide:
+>>
+>>      #define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
+>>
+>> That is the TTE of every UltraSPARC before UltraSPARC IV+.
+>> The JPS1 implementation supplements for UltraSPARC III and IV+
+>> describe the TTE word in tables F-1 and F-1-4 respectively, and differ
+>> in one bit:
+>> Before IV+ bit 48 is reserved and reads as 0, Size is 2 bits at 62:61;
+>> On IV+ bit 48 is Size<2>, which "is the most significant bit of the
+>> page size and is concatenated with bits <62:61>"
+>> On T1 the same split exists, szl at 62:61 and szh at 48 (T1 Supplement,
+>> sec. 13.1.2).
+>>
+>> QEMU models parts on both sides of that change (UltraSPARC III/IIIi/IV,
+>> IV+, T1, T2) with the III layout: Size<2> was never implemented.
+>> Bit 48 gets lost in more than one place:
+>>
+>> On sun4u the raw TTE word is stored as the guest wrote it, bit 48
+>> included, but TTE_PGSIZE() only reads bits 62:61: the bit survives in
+>> the TLB, it is just never decoded.
+>>
+>> On sun4v, sun4v_tte_to_sun4u() converts the incoming three-bit code
+>> (cpu.h defines TTE_PGSIZE_UA2005() for it, unused until now) but masked
+>> it to two:
+>>
+>>      sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
+>>
+>> so the third bit was dropped before it was stored.
+>>
+>> demap_tlb() duplicates the same 2-bit math instead of calling
+>> TTE_PGSIZE(), so it misses bit 48 too, for a TTE from either origin.
+>>
+>> Either way 256M decodes as 64K and 32M as 8K; the guest faults on the
+>> first access past the truncated entry.
+>>
+>> This patch implements Size<2> at bit 48, where the hardware keeps it.
+>>
+>> TTE_PGSIZE() now reads bit 48 as the high bit; on parts that keep bit
+>> 48 reserved it reads as zero, so they decode as before.
+>> sun4v_tte_to_sun4u() stores the full three-bit code, and demap_tlb()
+>> now calls TTE_PGSIZE() instead of its own copy. dump_mmu() gains 32M
+>> and 256M labels.
+>>
+>> Link: https://lore.kernel.org/qemu-devel/20260727233646.332875-1-sun4qemu@gmail.com/
+>> AI-used-for: code, analysis
+>> Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
+> 
+> Reviewed-by: Artyom Tarasenko <atar4qemu@gmail.com>
+> 
+> @Richard, Mark can you please pick it up?
 
-> ---
->  MAINTAINERS                                 |  8 ++
->  target/riscv/cpu_cfg.h                      |  5 ++
->  target/riscv/helper.h                       | 10 +++
->  target/riscv/meson.build                    |  1 +
->  target/riscv/tcg/insn_trans/trans_xsf.c.inc | 98 +++++++++++++++++++++
->  target/riscv/tcg/meson.build                |  1 +
->  target/riscv/tcg/translate.c                |  3 +
->  target/riscv/tcg/xsf_helper.c               | 87 ++++++++++++++++++
->  target/riscv/xsf.decode                     | 30 +++++++
->  9 files changed, 243 insertions(+)
->  create mode 100644 target/riscv/tcg/insn_trans/trans_xsf.c.inc
->  create mode 100644 target/riscv/tcg/xsf_helper.c
->  create mode 100644 target/riscv/xsf.decode
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 43d5d3715e4..a3a8199840f 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -399,6 +399,14 @@ F: target/riscv/XVentanaCondOps.decode
->  F: target/riscv/insn_trans/trans_xventanacondops.c.inc
->  F: disas/riscv-xventana*
->  
-> +RISC-V SiFive (Xsf*) extensions
-> +M: Max Chou <max.chou@sifive.com>
-> +L: qemu-riscv@nongnu.org
-> +S: Supported
-> +F: target/riscv/xsf.decode
-> +F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
-> +F: target/riscv/tcg/xsf_helper.c
-> +
->  RENESAS RX CPUs
->  R: Yoshinori Sato <yoshinori.sato@nifty.com>
->  S: Orphan
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 211d0708ba4..d6db1cfb7cc 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -51,6 +51,11 @@ static inline bool has_xthead_p(const RISCVCPUConfig *cfg)
->             cfg->ext_xtheadmempair || cfg->ext_xtheadsync;
->  }
->  
-> +static inline bool has_xsf_p(const RISCVCPUConfig *cfg)
-> +{
-> +    return cfg->ext_xsfvqmaccdod || cfg->ext_xsfvqmaccqoq;
-> +}
-> +
->  #define MATERIALISE_EXT_PREDICATE(ext) \
->      static inline bool has_ ## ext ## _p(const RISCVCPUConfig *cfg) \
->      { \
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index aab92bf132a..43ef6b3ff92 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -1362,3 +1362,13 @@ DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
->  /* Invalidate reservations overlapping a completed linux-user store. */
->  DEF_HELPER_3(riscv_invalidate_reservations, void, env, tl, tl)
->  #endif
-> +
-> +/* SiFive Custom int8 Matrix-Multiply */
-> +DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmacc_4x8x4, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmaccus_4x8x4, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmaccsu_4x8x4, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmaccu_2x8x2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmacc_2x8x2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmaccus_2x8x2, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_5(sf_vqmaccsu_2x8x2, void, ptr, ptr, ptr, env, i32)
-> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> index e1b51d2bd4d..da1df1e74e6 100644
-> --- a/target/riscv/meson.build
-> +++ b/target/riscv/meson.build
-> @@ -6,6 +6,7 @@ gen = [
->    decodetree.process('XVentanaCondOps.decode', extra_args: '--static-decode=decode_XVentanaCodeOps'),
->    decodetree.process('xmips.decode', extra_args: '--static-decode=decode_xmips'),
->    decodetree.process('xlrbr.decode', extra_args: '--static-decode=decode_xlrbr'),
-> +  decodetree.process('xsf.decode', extra_args: '--static-decode=decode_xsf'),
->  ]
->  
->  riscv_ss = ss.source_set()
-> diff --git a/target/riscv/tcg/insn_trans/trans_xsf.c.inc b/target/riscv/tcg/insn_trans/trans_xsf.c.inc
-> new file mode 100644
-> index 00000000000..1677352689f
-> --- /dev/null
-> +++ b/target/riscv/tcg/insn_trans/trans_xsf.c.inc
-> @@ -0,0 +1,98 @@
-> +/*
-> + * RISC-V translation routines for the SiFive vendor extensions (xsf*)
-> + *
-> + * Copyright (c) 2023 SiFive, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +
-> +/*
-> + * SiFive Xsfvqmaccdod/Xsfvqmaccqoq custom int8 matrix-multiply extensions
-> + */
-> +static bool sf_int8_matmul_check(DisasContext *s, arg_rmrr *a)
-> +{
-> +    return require_rvv(s) &&
-> +           vext_check_isa_ill(s) &&
-> +           s->vstart_eq_zero &&
-> +           (s->cfg_ptr->vlenb >= 32) &&
-> +           (s->sew == MO_8) &&
-> +           (a->vm == 1);
-> +}
-> +
-> +static bool sf_int8_matmul_4x8x4_check(DisasContext *s, arg_rmrr *a)
-> +{
-> +    /*
-> +     * vd  has EMUL=2*LMUL
-> +     * vs2 has EMUL=LMUL
-> +     * vs1 has EMUL=1
-> +     * vd must not overlap vs1
-> +     */
-> +    return sf_int8_matmul_check(s, a) &&
-> +           (s->cfg_ptr->ext_xsfvqmaccqoq) &&
-> +           (s->lmul <= 2) &&
-> +           require_align(a->rd, s->lmul + 1) &&
-> +           require_align(a->rs2, s->lmul) &&
-> +           require_align(a->rs1, 0) &&
-> +           require_noover(a->rd, s->lmul + 1, a->rs2, s->lmul) &&
-> +           !is_overlapped(a->rd, 1 << MAX(s->lmul + 1, 0), a->rs1, 1);
-> +}
-> +
-> +static bool sf_int8_matmul_2x8x2_check(DisasContext *s, arg_rmrr *a)
-> +{
-> +    /*
-> +     * vd  has EMUL=LMUL
-> +     * vs2 has EMUL=LMUL
-> +     * vs1 has EMUL=1
-> +     * vd must not overlap vs1
-> +     */
-> +    return sf_int8_matmul_check(s, a) &&
-> +           (s->cfg_ptr->ext_xsfvqmaccdod) &&
-> +           require_align(a->rd, s->lmul) &&
-> +           require_align(a->rs2, s->lmul) &&
-> +           require_align(a->rs1, 0) &&
-> +           !is_overlapped(a->rd, 1 << MAX(s->lmul, 0), a->rs1, 1);
-> +}
-> +
-> +static bool sf_int8_matmul_op(DisasContext *s, arg_rmrr *a, uint8_t seq)
-> +{
-> +    static gen_helper_gvec_3_ptr * const fns[8] = {
-> +        gen_helper_sf_vqmaccu_4x8x4, gen_helper_sf_vqmacc_4x8x4,
-> +        gen_helper_sf_vqmaccus_4x8x4, gen_helper_sf_vqmaccsu_4x8x4,
-> +        gen_helper_sf_vqmaccu_2x8x2, gen_helper_sf_vqmacc_2x8x2,
-> +        gen_helper_sf_vqmaccus_2x8x2, gen_helper_sf_vqmaccsu_2x8x2,
-> +    };
-> +
-> +    /*
-> +     * The helper raises an illegal-instruction exception when vl is not a
-> +     * multiple of the tile size; save the opcode so mtval/stval report the
-> +     * faulting instruction if that exception is thrown.
-> +     */
-> +    decode_save_opc(s, 0);
-> +
-> +    tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs1),
-> +                       vreg_ofs(s, a->rs2), tcg_env,
-> +                       s->cfg_ptr->vlenb, s->cfg_ptr->vlenb, 0, fns[seq]);
-> +
-> +    finalize_rvv_inst(s);
-> +
-> +    return true;
-> +}
-> +
-> +#define GEN_SF_INT8_MATMUL_TRANS(NAME, CHECK, SEQ)       \
-> +static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
-> +{                                                        \
-> +    if (CHECK(s, a)) {                                   \
-> +        return sf_int8_matmul_op(s, a, SEQ);             \
-> +    }                                                    \
-> +    return false;                                        \
-> +}
-> +
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccu_4x8x4,  sf_int8_matmul_4x8x4_check, 0)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmacc_4x8x4,   sf_int8_matmul_4x8x4_check, 1)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccus_4x8x4, sf_int8_matmul_4x8x4_check, 2)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccsu_4x8x4, sf_int8_matmul_4x8x4_check, 3)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccu_2x8x2,  sf_int8_matmul_2x8x2_check, 4)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmacc_2x8x2,   sf_int8_matmul_2x8x2_check, 5)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccus_2x8x2, sf_int8_matmul_2x8x2_check, 6)
-> +GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccsu_2x8x2, sf_int8_matmul_2x8x2_check, 7)
-> diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
-> index a05ab642f41..86805b30cbc 100644
-> --- a/target/riscv/tcg/meson.build
-> +++ b/target/riscv/tcg/meson.build
-> @@ -15,6 +15,7 @@ riscv_ss.add(files(
->    'vcrypto_helper.c',
->    'vector_helper.c',
->    'vector_internals.c',
-> +  'xsf_helper.c',
->    'zce_helper.c'))
->  
->  
-> diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
-> index cce3b6dc721..f88997c859c 100644
-> --- a/target/riscv/tcg/translate.c
-> +++ b/target/riscv/tcg/translate.c
-> @@ -1246,10 +1246,12 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
->  #include "decode-xthead.c.inc"
->  #include "decode-xmips.c.inc"
->  #include "decode-xlrbr.c.inc"
-> +#include "decode-xsf.c.inc"
->  #include "insn_trans/trans_xthead.c.inc"
->  #include "insn_trans/trans_xventanacondops.c.inc"
->  #include "insn_trans/trans_xmips.c.inc"
->  #include "insn_trans/trans_xlrbr.c.inc"
-> +#include "insn_trans/trans_xsf.c.inc"
->  
->  /* Include the auto-generated decoder for 16 bit insn */
->  #include "decode-insn16.c.inc"
-> @@ -1270,6 +1272,7 @@ const RISCVDecoder decoder_table[] = {
->      { has_xthead_p, decode_xthead},
->      { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
->      { has_xlrbr_p, decode_xlrbr},
-> +    { has_xsf_p, decode_xsf },
->  };
->  
->  const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
-> diff --git a/target/riscv/tcg/xsf_helper.c b/target/riscv/tcg/xsf_helper.c
-> new file mode 100644
-> index 00000000000..6e953d12493
-> --- /dev/null
-> +++ b/target/riscv/tcg/xsf_helper.c
-> @@ -0,0 +1,87 @@
-> +/*
-> + * RISC-V translation helpers for the SiFive vendor extensions (xsf*)
-> + *
-> + * Copyright (c) 2023 SiFive, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "cpu.h"
-> +#include "exec/helper-proto.h"
-> +#include "internals.h"
-> +#include "vector_internals.h"
-> +
-> +#define QOP_SUU_B int32_t, uint8_t, uint8_t, int32_t, int32_t
-> +#define QOP_SUS_B int32_t, uint8_t, int8_t, int32_t, int32_t
-> +#define QOP_SSU_B int32_t, int8_t, uint8_t, int32_t, int32_t
-> +#define QOP_SSS_B int32_t, int8_t, int8_t, int32_t, int32_t
-> +
-> +/* SiFive Custom int8 Matrix-Multiply */
-> +/*
-> + * vd may overlap vs2, we need to allocate an additional vd array
-> + * to save temporary results of vd and write them back at the end.
-> + */
-> +#define GEN_VEXT_SF_INT8_MATMUL(NAME, TD, T1, T2, TX1, TX2,           \
-> +                                HD, HS1, HS2, ROWS, COLS, TILE_SIZE)  \
-> +void HELPER(NAME)(void *vd, void *vs1, void *vs2,                     \
-> +                  CPURISCVState *env, uint32_t desc)                  \
-> +{                                                                     \
-> +    int it, il, in, im, ivd, ivs1, ivs2;                              \
-> +    TD *vds;                                                          \
-> +                                                                      \
-> +    if (env->vl % TILE_SIZE) {                                        \
-> +        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC()); \
-> +        return;                                                       \
-> +    }                                                                 \
-> +                                                                      \
-> +    VSTART_CHECK_EARLY_EXIT(env, env->vl);                            \
-> +                                                                      \
-> +    vds = g_malloc0(sizeof(TD) *                                      \
-> +                    ROWS * ROWS * (env->vl / TILE_SIZE));             \
-> +                                                                      \
-> +    for (it = 0; it < (env->vl / TILE_SIZE); it++) {                  \
-> +        for (il = 0; il < ROWS; il++) {                               \
-> +            for (in = 0; in < ROWS; in++) {                           \
-> +                ivd = ROWS * ROWS * it + ROWS * il + in;              \
-> +                vds[ivd] = *((TD *)vd + HD(ivd));                     \
-> +                for (im = 0; im < COLS; im++) {                       \
-> +                    ivs1 = il * COLS + im;                            \
-> +                    ivs2 = TILE_SIZE * it + im * ROWS + in;           \
-> +                    T1 s1 = *((T1 *)vs1 + HS1(ivs1));                 \
-> +                    T2 s2 = *((T2 *)vs2 + HS2(ivs2));                 \
-> +                    vds[ivd] += (TX1)s1 * (TX2)s2;                    \
-> +                }                                                     \
-> +            }                                                         \
-> +        }                                                             \
-> +    }                                                                 \
-> +                                                                      \
-> +    for (it = 0; it < (env->vl / TILE_SIZE); it++) {                  \
-> +        for (il = 0; il < ROWS; il++) {                               \
-> +            for (in = 0; in < ROWS; in++) {                           \
-> +                ivd = ROWS * ROWS * it + ROWS * il + in;              \
-> +                *((TD *)vd + HD(ivd)) = vds[ivd];                     \
-> +            }                                                         \
-> +        }                                                             \
-> +    }                                                                 \
-> +                                                                      \
-> +    env->vstart = 0;                                                  \
-> +    g_free(vds);                                                      \
-> +}
-> +
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccu_4x8x4, QOP_SUU_B, H4, H1, H1,
-> +        4, 8, 32)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmacc_4x8x4, QOP_SSS_B, H4, H1, H1,
-> +        4, 8, 32)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccus_4x8x4, QOP_SUS_B, H4, H1, H1,
-> +        4, 8, 32)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccsu_4x8x4, QOP_SSU_B, H4, H1, H1,
-> +        4, 8, 32)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccu_2x8x2, QOP_SUU_B, H4, H1, H1,
-> +        2, 8, 16)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmacc_2x8x2, QOP_SSS_B, H4, H1, H1,
-> +        2, 8, 16)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccus_2x8x2, QOP_SUS_B, H4, H1, H1,
-> +        2, 8, 16)
-> +RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccsu_2x8x2, QOP_SSU_B, H4, H1, H1,
-> +        2, 8, 16)
-> diff --git a/target/riscv/xsf.decode b/target/riscv/xsf.decode
-> new file mode 100644
-> index 00000000000..bb585046ab1
-> --- /dev/null
-> +++ b/target/riscv/xsf.decode
-> @@ -0,0 +1,30 @@
-> +#
-> +# RISC-V translation routines for the SiFive vendor extensions
-> +#
-> +# Copyright (c) 2023 SiFive, Inc.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +# Fields:
-> +%rs2       20:5
-> +%rs1       15:5
-> +%rd        7:5
-> +%vm        25:1
-> +
-> +# Argument sets:
-> +&rmrr      vm rd rs1 rs2                           !extern
-> +
-> +# Formats:
-> +@r_vm_1    ......  . ..... ..... ... ..... ....... &rmrr vm=1 %rs2 %rs1 %rd
-> +
-> +# *** Xsfvqmaccqoq: SiFive custom int8 matrix-multiply (4x8x4 tile) ***
-> +sf_vqmaccu_4x8x4    111100 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmacc_4x8x4     111101 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmaccus_4x8x4   111110 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmaccsu_4x8x4   111111 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +
-> +# *** Xsfvqmaccdod: SiFive custom int8 matrix-multiply (2x8x2 tile) ***
-> +sf_vqmaccu_2x8x2    101100 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmacc_2x8x2     101101 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmaccus_2x8x2   101110 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> +sf_vqmaccsu_2x8x2   101111 1 ..... ..... 010 ..... 1011011 @r_vm_1
-> -- 
-> 2.43.0
-> 
+I've tagged this series to run through some of my sun4u test images when I get a 
+spare moment: if it doesn't introduce any regressions then I'll queue it via my 
+qemu-sparc branch.
+
+>> ---
+>> v2: described behaviour across sun4u/sun4v instead of the sun4v
+>> conversion; no functional change. QEMU_BUILD_BUG_ON and comments in
+>> cpu.h/ldst_helper.c are dropped.
+>>
+>> This email's text -- beyond the code and analysis the trailer above
+>> covers -- also had AI involvement: current policy (AGENTS.md)
+>> declines AI-derived content outright, and even the not-yet-merged
+>> llm-usage.rst RFC would require it to be human-written regardless of
+>> any trailer. Sending as-is rather than silently -- happy to hear if
+>> that's not acceptable here.
+>>
+>> Happy to run more tests or provide more evidence if this isn't enough.
+>>
+>> Guest is OpenSolaris snv_134 (osol-dev-134-ai-sparc.iso). Firmware is
+>> the S10image/ set from OpenSPARCT1_Arch.1.5.tar.bz2, which
+>> docs/system/target-sparc64.rst names for this machine, except the
+>> MD/hv-config pair (1up-md.bin, 1up-hv.bin), from the repo below. The
+>> archive's own config only boots disk.s10hw2, capped at 4M pages.
+>>
+>> Observed on upstream 5f664cd37a, with and without this patch -- same
+>> guest, firmware and RAM, plain `boot` at the `ok` prompt (occasionally
+>> hits an unrelated, pre-existing trap in OBP's loader phase before the
+>> kernel runs):
+>>
+>>    pristine: hangs after "Loading: /platform/sun4v/kernel/sparcv9/unix";
+>>              "info tlb" shows no 32M or 256M entry.
+>>    patched:  boots to "Enter user name for system maintenance";
+>>              "info tlb" shows 256M entries, e.g.
+>>              [17] VA: 600108b8000, PA: 140000000, 256M, priv, RW, ...
+>>    Full info tlb dumps:
+>>      https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/pristine-plain-boot-tlb.txt
+>>      https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/patched-plain-boot-tlb.txt
+>>
+>> The reproduction as a script, verify.sh (fetches firmware, MD and
+>> ISO, checks their hashes, boots):
+>>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/verify.sh
+>>
+>> On sun4u the pre-extension page sizes are verified by
+>> make check-qtest-sparc64 and make check-functional-sparc64 (sun4u,
+>> tuxrun, migration), which pass on the patched build with logs:
+>>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-qtest-sparc64.log
+>>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-functional-sparc64.log
+>> To check whether
+>> Size<2> is exercised at all, I added a temporary log in
+>> replace_tlb_entry() and ran both suites again: zero hits, as expected
+>> -- IIi predates IV+ and doesn't implement Size<2>, so the guest
+>> running under it never sets bit 48. Result:
+>>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/sun4u-bit48-probe/RESULT
+>> Probe and logs:
+>>    https://github.com/unix0cc/qemu-experimental-patches/tree/967a037/verification/0002-tte-size2/sun4u-bit48-probe/
+>> 32M/256M on sun4u stays untested by this suite; that would need a guest
+>> running under Sun-UltraSparc-IV-plus.
+>>
+>> Overview of everything above (scripts, logs, README):
+>>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/README
+>>
+>>   target/sparc/cpu.h         |  4 +++-
+>>   target/sparc/ldst_helper.c |  9 +++++++--
+>>   target/sparc/mmu_helper.c  | 12 ++++++++++++
+>>   3 files changed, 22 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+>> index 31a16c2af0..1ab420d831 100644
+>> --- a/target/sparc/cpu.h
+>> +++ b/target/sparc/cpu.h
+>> @@ -307,7 +307,9 @@ enum {
+>>   #define TTE_SET_USED(tte)   ((tte) |= TTE_USED_BIT)
+>>   #define TTE_SET_UNUSED(tte) ((tte) &= ~TTE_USED_BIT)
+>>
+>> -#define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
+>> +#define TTE_PGSIZE_HI_BIT   (1ULL << 48)
+>> +#define TTE_PGSIZE(tte)     ((((tte) >> 61) & 3ULL) | \
+>> +                             (((tte) & TTE_PGSIZE_HI_BIT) >> 46))
+>>   #define TTE_PGSIZE_UA2005(tte)     ((tte) & 7ULL)
+>>   #define TTE_PA(tte)         ((tte) & 0x1ffffffe000ULL)
+>>
+>> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+>> index 4ec8799d1f..142c1c24de 100644
+>> --- a/target/sparc/ldst_helper.c
+>> +++ b/target/sparc/ldst_helper.c
+>> @@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulong demap_addr,
+>>                   /* demap page
+>>                      will remove any entry matching VA */
+>>                   mask = 0xffffffffffffe000ULL;
+>> -                mask <<= 3 * ((tlb[i].tte >> 61) & 3);
+>> +                mask <<= 3 * TTE_PGSIZE(tlb[i].tte);
+>>
+>>                   if (!compare_masked(demap_addr, tlb[i].tag, mask)) {
+>>                       continue;
+>> @@ -217,7 +217,12 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState *env, uint64_t tag,
+>>           return sun4v_tte;
+>>       }
+>>       sun4u_tte = TTE_PA(sun4v_tte) | (sun4v_tte & TTE_VALID_BIT);
+>> -    sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
+>> +    {
+>> +        uint64_t pgsz = TTE_PGSIZE_UA2005(sun4v_tte);
+>> +        sun4u_tte |= (pgsz & 3ULL) << 61; /* TTE_PGSIZE bits 61-62 */
+>> +        sun4u_tte |= (pgsz & 4ULL) ?
+>> +            TTE_PGSIZE_HI_BIT : 0; /* TTE_PGSIZE bit 48 */
+>> +    }
+>>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_NFO_BIT_UA2005, TTE_NFO_BIT);
+>>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_USED_BIT_UA2005, TTE_USED_BIT);
+>>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_W_OK_BIT_UA2005, TTE_W_OK_BIT);
+>> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+>> index 07ba25dfce..8544de097d 100644
+>> --- a/target/sparc/mmu_helper.c
+>> +++ b/target/sparc/mmu_helper.c
+>> @@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)
+>>               case 0x3:
+>>                   mask = "  4M";
+>>                   break;
+>> +            case 0x4:
+>> +                mask = " 32M";
+>> +                break;
+>> +            case 0x5:
+>> +                mask = "256M";
+>> +                break;
+>>               }
+>>               if (TTE_IS_VALID(env->dtlb[i].tte)) {
+>>                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
+>> @@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)
+>>               case 0x3:
+>>                   mask = "  4M";
+>>                   break;
+>> +            case 0x4:
+>> +                mask = " 32M";
+>> +                break;
+>> +            case 0x5:
+>> +                mask = "256M";
+>> +                break;
+>>               }
+>>               if (TTE_IS_VALID(env->itlb[i].tte)) {
+>>                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
+>> --
+>> 2.43.0
+
+
+ATB,
+
+Mark.
+
 
