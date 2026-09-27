@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB8EC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C1DC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmRc-00061l-BZ; Sun, 27 Sep 2026 06:49:21 -0400
+	id 1xAmRi-0006Ba-9Y; Sun, 27 Sep 2026 06:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRD-0005tb-II; Sun, 27 Sep 2026 06:48:55 -0400
+ id 1xAmRH-0005uH-Av; Sun, 27 Sep 2026 06:48:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRC-00010Q-1V; Sun, 27 Sep 2026 06:48:55 -0400
+ id 1xAmRF-00010u-QX; Sun, 27 Sep 2026 06:48:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506130; bh=uP+om5gBEQvUnVDuPANeoovrK9XF3HWwiHpLiIgYkjs=;
+ t=1790506130; bh=Jp5FRdAGQPo0Xl3DRBq+xWupd+2Wj0hVes4qBynH0jQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HGRf4UxvtclVyVhwRJs3Ezbcd3HtFUqG8/RR4QaljsdztLqvpIa3CE9gvvRrN2JWF
- vXBEbgSedI56HbrgEChdOEURX0k7irwdHjHijCNTz98qVtD4dzfNniVEM+HV8LGeBY
- 8mv6u2PRRfavQoVT4U0JJcY3euX6SzKz0fcFqla6ZqSpoqMTHzf14rOGgQgfqNv80E
- H2lGi0UWL8g8yBSmNmTN+EK+E8/904ML/LRJJoGIvcA5AOb/dG9PDC7gtIB8Z95RbZ
- wqvL1kQJdx4D3YPLEMn3nuGfNHcZgYVHsKRCQCTqUn4tFB1Ku5/2zTxy+btspTwDzZ
- NXRMI+mPHMH8A==
+ b=ufrqHFMKlUL4Qj240/eWQGFzXpOYwzYN0u6x/8+6ejAztLizlvNJjCs36smArCg2R
+ VhjldTAx7u0Zba/6COBkCOI1AcaoAl9gGLgT13eDkfpcg9LY9c9LpKq/HvHoP+Au0Z
+ a2z7U2cpiAaChsxvLSTb666Dr3ptxPZu/m3kOcn6xi+n3ndbvmWW4hWGztXMHiUAho
+ HMXKWaFT4qYszMfzhwJht5rCf1oBjE/0NZ/t7gCCfyQXcB3SvmWC2MXl9VCI+r5M+R
+ Vi5z4ZaI7ZIaEPZgA/W4uMSriW1Q/5A1zbmvvfEgBDy1hGH6tSiY7qnzOy7cctczmX
+ 9KWZXOAfkybTA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 631601D8B59;
+ by isrv.corpit.ru (Postfix) with ESMTP id 68AD51D8B5A;
  Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 60574432160;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 66191432161;
  Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 46C725E76A; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ id 49A1A5E76C; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bibo Mao <maobibo@loongson.cn>,
- Miao Wang <shankerwangmiao@gmail.com>,
- Xianglai Li <lixianglai@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 58/92] target/loongarch: Fix data race in CSR_ESTAT
-Date: Sun, 27 Sep 2026 13:47:34 +0300
-Message-ID: <20260927104821.196183-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 59/92] hw/uefi: add missing uefi_str_is_valid check
+ to uefi_vars_mm_lock_variable
+Date: Sun, 27 Sep 2026 13:47:35 +0300
+Message-ID: <20260927104821.196183-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -71,72 +71,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The CSR_ESTAT register of a CPU can be read and written by both the
-CPU thread and other threads (e.g., the interrupt controller thread).
-Currently the possible readers and writers of CSR_ESTAT are:
-
-The access from the CPU thread is not synchronized with the access from
-other threads, which may lead to data races. The above readers and
-writers shall all run on the corresponding CPU thread except for
-loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
-loongarch_cpu_set_irq() is moved to the CPU thread by using
-async_run_on_cpu().
-
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by:   Xianglai Li <lixianglai@loongson.cn>
-(cherry picked from commit 1d3e5a4b37fbee0505ddc99a0316d31422a9ac42)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4213
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260916145050.1329206-1-kraxel@redhat.com>
+(cherry picked from commit ff96d562906644699c6a553c35e6cd51383c26c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 7bc77cf67ec..bf7f8078110 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -74,13 +74,26 @@ void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index e0ea3d532eb..ef8849f8151 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -690,6 +690,10 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
      }
- }
  
--void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-+static void loongarch_cpu_self_set_irq(CPUState *cs, run_on_cpu_data data)
- {
--    LoongArchCPU *cpu = opaque;
--    CPULoongArchState *env = &cpu->env;
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPULoongArchState *env = cpu_env(cs);
-     CPUSysState *sys = env_sys(env);
-+    int irq, level;
-     uint64_t old;
- 
-+    irq = data.host_int & ~BIT(31);
-+    level = (data.host_int >> 31) & 1;
-+    old = sys->CSR_ESTAT;
-+    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
-+    loongarch_cpu_update_irq(cpu, old);
-+}
++    if (!uefi_str_is_valid(name, lv->name_size, true)) {
++        return uefi_vars_mm_error(mhdr, mvar, EFI_INVALID_PARAMETER);
++    }
 +
-+void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-+{
-+    LoongArchCPU *cpu = opaque;
-+    CPUState *cs = CPU(cpu);
-+
-     if (irq < 0 || irq >= N_IRQS) {
-         return;
-     }
-@@ -88,9 +101,9 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-     if (kvm_enabled()) {
-         kvm_loongarch_set_interrupt(cpu, irq, level);
-     } else if (tcg_enabled()) {
--        old = sys->CSR_ESTAT;
--        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
--        loongarch_cpu_update_irq(cpu, old);
-+        irq |= (level & 1) << 31;
-+        async_run_on_cpu(cs, loongarch_cpu_self_set_irq,
-+                         RUN_ON_CPU_HOST_INT(irq));
-     }
- }
+     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
  
+     pe = g_malloc0(sizeof(*pe) + lv->name_size);
 -- 
 2.47.3
 
