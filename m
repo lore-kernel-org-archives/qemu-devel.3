@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EA5C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99CC0C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmT6-0002sp-V1; Sun, 27 Sep 2026 06:50:53 -0400
+	id 1xAmTs-0005ek-L8; Sun, 27 Sep 2026 06:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmT0-0002O8-QR; Sun, 27 Sep 2026 06:50:47 -0400
+ id 1xAmTp-0005Yi-P8; Sun, 27 Sep 2026 06:51:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSy-0001Or-V3; Sun, 27 Sep 2026 06:50:46 -0400
+ id 1xAmTo-0001WF-7i; Sun, 27 Sep 2026 06:51:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=v0BRAgsoSKHukfehCLUz8WLZVvP4YQEts7Txnf5nNZ4=;
+ t=1790506136; bh=y93/ikCtWINyScQPH0qIduEsC+O2GGqwUISpAzr+9EU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wITvIyx4cvhBi1eHrxj4NXGi2BSSIp3lMV5j+pUu+O8WMq3CVoy1dbEtVq4FMeFSJ
- fHsjOkj2Mj/Xf7MJ3ae8hBbTGmDh08ZKkMJQpwRQRwZNQGo+QG7ejA3HEVjoptGnu5
- iiC9juPTDe2TbE6s1qWlKAxe9Q1tCgBuGDMPLXNWpUMIH1oPtoFelZVHJFTaz24BLC
- 3vFH3kktPdM+8owgMnalV8F7CYbIZcsIkqcLEPkywkp2ZXQWfFAsnmOclp59bjx+SA
- hggnrxed2tenUMuujXujPus2zRz9WtMQQzn/gbizCWyJpCg7vI+R3WvnglpErTTJGy
- qmS/g7Jbn6N6Q==
+ b=DslOnaPzVowP7ojL2Bc58YVGsW3RlL1aG0l3i1zCXINaEPDTNMuokUqVlisckRQz4
+ QLl5rR1/IoKv9k/1WtScwIXTKyyyl/lx7yoNqlg2KLDo/38dIhLyxJEj49Hu61O6rj
+ VJZqk8ryF2Jk2NbDC9Xzqa2JhAnvCj/6jvTxvVjX6Hq/t5c2/47h7RzeJTl4nSIpeH
+ ThoABMQ0Dp734rVtPkR/d/LoI+jbCReDipy0Hvk9GDfVbbmZ6+NoGmdYoNxUSWlX+1
+ ScZlwbR+7nPOjhQFJ5oYFC+kk5urheWyLfNJwGNukeZcHVoQ6tzIS/z1VjZ92hF5V7
+ khExgeVjRwMOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3F8701D8B72;
+ by isrv.corpit.ru (Postfix) with ESMTP id 62C7F1D8B78;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3CF5F432179;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5EEA743217F;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0146B5E79C; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
+ id 137DE5E7A8; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 83/92] target/i386: Fix FXCH to unconditionally
- clear C1
-Date: Sun, 27 Sep 2026 13:47:59 +0300
-Message-ID: <20260927104821.196183-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 89/92] linux-user/sh4: fix vdso CFA for
+ rt_sigreturn frames
+Date: Sun, 27 Sep 2026 13:48:05 +0300
+Message-ID: <20260927104821.196183-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -71,36 +71,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Per the SDM, FXCH unconditionally clears the FPU status word's C1
-flag. QEMU's helper_fxchg_ST0_STN swaps ST(0) and ST(i) but never
-touches fpus, so C1 is left untouched from whatever prior instruction
-set it.
+The unwinder looks up a return address as IP - 1 (hence the nop before
+sigreturn_region_start). For a frame returning to __kernel_rt_sigreturn
+that is the last byte of __kernel_sigreturn, which still has the
+sigreturn CFA, so the rt_sigreturn frame is unwound with the wrong
+sigcontext offset. _Unwind_Backtrace() from an SA_SIGINFO handler stops
+after three frames.
 
-This patch clears C1 after the exchange matching the SDM.
+Add a nop after .cfi_def_cfa_offset, as linux-user/i386/vdso.S does.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4399
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902085424.148650-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit c7cc09c85b89f8dbabff548a441d8f2c3a5ca50a)
+Fixes: 975bd51a88 ("linux-user/sh4: add VDSO support for sh4 and sh4eb")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 5c98e72e6aae3e538ef8276e8d7f30d33af6d6bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b812125efa1..32af8b79f4f 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -519,6 +519,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
-     tmp = ST(st_index);
-     ST(st_index) = ST0;
-     ST0 = tmp;
-+
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
- }
+diff --git a/linux-user/sh4/vdso-be.so b/linux-user/sh4/vdso-be.so
+index bc1fb37e108..df9fa22efab 100755
+Binary files a/linux-user/sh4/vdso-be.so and b/linux-user/sh4/vdso-be.so differ
+diff --git a/linux-user/sh4/vdso-le.so b/linux-user/sh4/vdso-le.so
+index c1ff560cc16..decd6742022 100755
+Binary files a/linux-user/sh4/vdso-le.so and b/linux-user/sh4/vdso-le.so differ
+diff --git a/linux-user/sh4/vdso.S b/linux-user/sh4/vdso.S
+index 1faa6657746..290eb498aeb 100644
+--- a/linux-user/sh4/vdso.S
++++ b/linux-user/sh4/vdso.S
+@@ -141,8 +141,9 @@ __kernel_sigreturn:
+ 	sigreturn_tramp __NR_sigreturn
+ endf __kernel_sigreturn
  
- /* FPU operations */
+-	/* Update CFA base for the rt_sigreturn frame layout. */
++	/* rt_sigreturn frame layout; nop for the same reason as above. */
+ 	.cfi_def_cfa_offset	RT_SIGFRAME_SC_OFFSET
++	nop
+ 
+ __kernel_rt_sigreturn:
+ 	sigreturn_tramp __NR_rt_sigreturn
 -- 
 2.47.3
 
