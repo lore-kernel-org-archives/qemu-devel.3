@@ -4,57 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47332C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63DFC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjJs-0002mi-2Y; Sun, 27 Sep 2026 03:29:08 -0400
+	id 1xAjN9-0007Mf-Ua; Sun, 27 Sep 2026 03:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjIi-0000my-Ni; Sun, 27 Sep 2026 03:27:59 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xAjN2-00077T-0C
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjIh-0005Z0-21; Sun, 27 Sep 2026 03:27:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494013; bh=x6gcmHhBs7IQfWE9A8osmAXoFPl1fXQHWL9NlmC75y4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TmxXjAkyCztGRWhsZyCDG03s8vJi7RgGG45gvO34kDPKKJp9IWt0ifMoUj6Cv3F+B
- sOffmFUfdp1n+GDEWqoAKDzGiu13FVh2FBKvWwAxsLbTK+ts5UDdbJFSIw229Vvxjz
- HQQ+ddQutwYTlpQ1WNaoI/p8XUO3jfK2Yqztczjg7jXl7Lbb4zVtnFfio2g1jzkE8+
- 4eNI729SR/eHky6lNj+sR14H7aRWblyOGdrnA/8pW8L45mMBB1zgCQjaolOkk5K2N7
- PmCl+Lc43Edrld8wmJ1wzHUf66CP1JE01ZhiQFlRY2GNglBoGOvV0Ks7QGxlhkSE21
- Yhu5LX593JWyA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EEAF91D8AC4;
- Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EBB54432056;
- Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 090315E637; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xAjN0-0006Ue-5b
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:23 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68QNBSTL2196059
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=; b=lxtRQC2qPzJgZ+ou
+ 3udCJgHq9GdrTV1Hfdfl56d8Q38ntY8zIlL4UKJwv97AmpjxVYVpoa71W1ViUlJY
+ G002hAMl5hwtuZdb4gTnhsGJXnaycGLxynBzLJYn8zESM1qK9E6w8yef+yKZTEvi
+ 91a7keIE9696OQ9m7AKnxvvne1q3Xu9s/jVLFJ+1as4DjaxACfYMpn00txDNTV1Y
+ Fuz0T9zAJbSOys/oHYB6rSuXU3tW0hex+5IrsW4qXES0mYgtmP+7Pi9TzufTTUN1
+ DzA/qHXYgt3Lws4rqofAXIO18k4Q3TCcR8nOn7IDVGHM5Okz1VBZid1ZcAkrhS72
+ hA04lA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx3rfttc5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:20 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-939f248907fso211217185a.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790494339; x=1791099139; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=;
+ b=ddDDZLEuDv01I3aR03EhcEqhN3LGlS3HrdvosIilYrUkNEb594hMgivWX5zmLZaI49
+ tAJImaKeNLYA5kqR/vOXl/dNVxCHhQwABaWg0R0mVLeIe1irgNzh19mkb0n4w4TP46Np
+ U2gWoQlUqpFqdO3OTFmur4gxoqfwOztZXzGwRkLQ2Mi6sL/JXRdI/9McRSS3VNzLfczz
+ DKQ02B1Vpb21cjJ709YGUkQtVFJAPC0tAt+ma19wL6UZrwwJmyPAPVtTeraNWEiLoLXN
+ DAnrPwwUXJ3NyGe51w1aR+4DKFvAG4Ex/tYFgLxd+yKcvmMqfgOd/5O7oT1wpoyL1RuR
+ sZkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790494339; x=1791099139;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=;
+ b=BuxpsE9CwMfY22NXMLx8pyBvn4sshscQ9L3ml2XRZ9YZq8nu/MKW0Sv0MVEB3+sx7r
+ WzjbA0r4TkRDTqM0fO1kkn6TwSRinZkvaEW/NlZIpoL2VsY+rE9XlvAuShMGZzBPoZeN
+ Tn8BSHDAwEOA2C8DxIin1ajI9tzr5LDB8RHs8fDeLfACZaemIaAWxf7SCaVJwg1bw9z2
+ vCfG6tTpKTXt84AoUH875bTTl1+fktMVem3bOZQxn7TNb3Ys0tQqjFVcur55HlMvhfRj
+ Adgab3WhftBlEbMuZB7GoSS/tltxH+TOhD5P4JPZLh9nhVAx8IRtZPoNsYWaWNcnqbBm
+ w89w==
+X-Gm-Message-State: AFuF++mwd+VQi3qgBZzA+LnBc5+7otx6tLofFgtKgTTen3oWxjVwmE4W
+ O0kiW/lQ0ar76ilecsCJ+BhHoKtsWC3+0wU2qz08kn4a9JA+gj69q144OCPduEaAuFg5ukQK0n6
+ nq6h1kzKjUgzkPua1miKKDY0qk00LXMDSsE1p2csqBGEz5oAYhJmsfLVSTxIityLBjA==
+X-Gm-Gg: AYBFou1N09ICUAy+DkEl2gBmSKR/hZJOJSMmSTLsOXinB0tOm3YFf6+Ojji6FS8UHT8
+ v8ZE2Md0+OA+H/Yhh66pbFguUWWP9qHT6HhweFADkS4SwZGB3NE95xcNQ4/jXmfw3RA0r3sKxkC
+ bEKx9Kr6nCVzM71aIIjY5cVLRS5PqZWYXCvude8+28O7Akx1M0PwUAg3Jg3dCC3848V8IuSHOyQ
+ +emTcsPwRxt3/ARrL2YmQsDOrRU3ocnGyzn3+4oTo7uSUlhpDaAEWfArDL1Tw5ltPJHO2EdmygQ
+ p+fKXhm239yXOXMdZyFn18a6XQ4sYUaoJ/35v+iku/GxvsDPOLiUgcJSepTjVhM2p7FHNMRazwe
+ 8a7bLBCo0hIgHNiTtdcyGgSVFdZWz4KyRamSm35gt
+X-Received: by 2002:a05:620a:29c6:b0:93b:d7a2:dd2a with SMTP id
+ af79cd13be357-93c43d2d07bmr1406998585a.58.1790494339189; 
+ Sun, 27 Sep 2026 00:32:19 -0700 (PDT)
+X-Received: by 2002:a05:620a:29c6:b0:93b:d7a2:dd2a with SMTP id
+ af79cd13be357-93c43d2d07bmr1406996685a.58.1790494338620; 
+ Sun, 27 Sep 2026 00:32:18 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4887a64ef3asm18939019f8f.30.2026.09.27.00.32.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 27 Sep 2026 00:32:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 66/72] target/i386: Fix FXCH to unconditionally
- clear C1
-Date: Sun, 27 Sep 2026 10:25:58 +0300
-Message-ID: <20260927072622.93656-17-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
-References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
+Subject: [PULL 5/9] hw/intc: use kvm_enabled() in APLIC AIA helpers
+Date: Sun, 27 Sep 2026 09:31:36 +0200
+Message-ID: <20260927073140.41422-6-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260927073140.41422-1-philmd@oss.qualcomm.com>
+References: <20260927073140.41422-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfXzFOoBOSRGIrl
+ KtdSGVkteiAAXZitePy3hw7q0lrer3EGbiStkeKupTGabYMuGkZOcxqDFWQ9JZGxiZ5Ie/oMx0g
+ puc/inb4ukcf2zoO9XWrQJF2hbYQDcI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfX3glcP9Aj0Wui
+ ei5h8g72Ddi7QsozkhA3t3QNqzVyqp7QOANQmiC0a6MsYO8edWAN3vUnt+5y2DIXLKdgLzr5Bik
+ hSpoNb0emRqXY0HIzTmwpimxG94yfmycUpBUqu6plKI6ocKwiI8EFTWkebRVIcyhvmz/ZqWtkUT
+ fFSMfITq7NlfTY12jttsLyZ3wpJDgKlV+i0OH6M4R4M/G/sm4Y2J3n+S/6qnHeG9AqHVxWara0N
+ HC1BuE8+eszIBFe9Va0DgQKKEb+0w01ihiIlNSnV1rP2n/KWBgzSBydUJEtjepo0KzKyyGVco2l
+ a04TD2VmxvjHeRnk/BdKVhs4N8zcKO5BID9iNR1hwFgJUNTld/2XrwIuatPUpHRdRwl4N4EdEOm
+ qJfYYr5qmwsGybn525iAH9r4aCKt2lIJMuSYK2OuciWg5RjTIXKM4vlO9h9XamYUe5oYQ7VdV1y
+ KNaAS8EU5iMRwdaSLRA==
+X-Proofpoint-GUID: 4yD4RkSAKg5dEV93jSu1ntroSb10Nhwe
+X-Proofpoint-ORIG-GUID: 4yD4RkSAKg5dEV93jSu1ntroSb10Nhwe
+X-Authority-Analysis: v=2.4 cv=K6G3jCWI c=1 sm=1 tr=0 ts=6ab8c684 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=aK4Vr543ky-C4wP0_eYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609270029
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,37 +150,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
 
-Per the SDM, FXCH unconditionally clears the FPU status word's C1
-flag. QEMU's helper_fxchg_ST0_STN swaps ST(0) and ST(i) but never
-touches fpus, so C1 is left untouched from whatever prior instruction
-set it.
+- Replace CONFIG_KVM ifdefs in riscv_use_emulated_aplic and
+  riscv_aplic_set_kvm_msicfgaddr with kvm_enabled().
 
-This patch clears C1 after the exchange matching the SDM.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260923131635.1894-29-luoyonggang@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/intc/riscv_aplic.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4399
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902085424.148650-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit c7cc09c85b89f8dbabff548a441d8f2c3a5ca50a)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 128f16dc951..235a9adcc15 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -519,6 +519,9 @@ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
-     tmp = ST(st_index);
-     ST(st_index) = ST0;
-     ST0 = tmp;
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index d8e25bfda14..03a0852b8b8 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -167,7 +167,10 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimode)
+ 
+ bool riscv_use_emulated_aplic(bool msimode)
+ {
+-#ifdef CONFIG_KVM
++    if (!kvm_enabled()) {
++        return true;
++    }
 +
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
+     if (tcg_enabled()) {
+         return true;
+     }
+@@ -177,21 +180,20 @@ bool riscv_use_emulated_aplic(bool msimode)
+     }
+ 
+     return kvm_kernel_irqchip_split();
+-#else
+-    return true;
+-#endif
  }
  
- /* FPU operations */
+ void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
+ {
+-#ifdef CONFIG_KVM
++    if (!kvm_enabled()) {
++        return;
++    }
++
+     if (riscv_use_emulated_aplic(aplic->msimode)) {
+         addr >>= APLIC_xMSICFGADDR_PPN_SHIFT;
+         aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
+         aplic->kvm_msicfgaddrH = extract64(addr, 32, 32) &
+                                  APLIC_MMSICFGADDRH_VALID_MASK;
+     }
+-#endif
+ }
+ 
+ /*
 -- 
-2.47.3
+2.53.0
 
 
