@@ -4,56 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 648F0C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D61C3C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAkre-0002hi-3O; Sun, 27 Sep 2026 05:08:06 -0400
+	id 1xAkpe-00005E-Sv; Sun, 27 Sep 2026 05:06:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkpm-0000oT-L4; Sun, 27 Sep 2026 05:06:11 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkpk-00087X-Sk; Sun, 27 Sep 2026 05:06:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499957; bh=h9jFXRIrtmOwqV/Duq6F+xyHf+3HWH0IsWXxtvYO880=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HZVqSarKKBb6NiOfUdTQ1oiJeA5IWkjVybvhoD/WMK+/TlKAGoo8ssoOUZhDcC42d
- NIE4Y/OH9/0RoT9YFuBmqse/P4vhWS+7MoGcC7TECFCzUXxbzsu8pkAcQeNVibyZWE
- svQVdt8XQ8a8MwvaVtCt6vbFmVaC+G6gSUg3uf6z0xWns+2+GEbI7Rb+/KU5O4GRXn
- js0yvJ7/x/TXjAya2lGzY8QxITsM6xIcIZ2pDPkkf2SYYGb/8CXIzWU+EpiMmvdvIq
- 2f+QsChIFBw0QER67w1Y0wDud/y7lty7FnnGLCmiOFH+OejOAMoyWHkU7mXn9aeD55
- 3mxhfD2LaJw9Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E2A41D8B11;
- Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3840F4320CA;
- Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E00CD5E653; Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xAkoA-0005Bc-LC
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:04:31 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xAko4-0007gC-Oq
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:04:26 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-398a147688bso1553220a91.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:04:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790499863; x=1791104663; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5L8yVK4ncB9UnbbLeWRaxEzRDbg26f8jPxDocOkjPv0=;
+ b=FhR1XnH00/n3FhCIr7KTQXL4TuN5I0ukBkBZ8Rb0Ob0/XnQowieHWR9AwNuaFtI0Zs
+ oQGBsiXKR7+5e3fRhejjZEaABZA1A/xQZYhBFYLDGcXfR2D4qaEVpbq5Gsh8AE4x4WaL
+ Iev8OUeAbTnruOdHacwUmtW8NDPClERA26DDm9Z5g2184M9yOH5NH83bRuL3dFmTeiA4
+ sHNu/5uH+X40ooFYkdl3KityvL90lmRNzbpveLkdySfer0mVhYJ+0oVT+jLSfxtnLEwp
+ ZnmTkheTN+YzGOX59X6cj8RdaRc2BlEYO4ENdG4QrVMNrCTxTabhroH/pFJJ+bIfnszX
+ WzyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790499863; x=1791104663;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5L8yVK4ncB9UnbbLeWRaxEzRDbg26f8jPxDocOkjPv0=;
+ b=YKW3jJkFDIX2g1bMO7M9eNQ1n9G76DCo3uenMTiGQUB17zZMyU0waBRGxRMtYzHrzM
+ SS7PLobEBnQiJSC3DQS0EPEDS46IfbWOoSBtJPoC9FOhtxxvakS+DQI7jyMoASJfVX38
+ 7Myhv5GCcTBdfdGa0vDzFw35T1pwP906+ElVjm2eC9WVk8RmD4nBPWN8V80pPrtVFX4c
+ EAqDQmmWOp6kYHF/CYv5FgO9eAF/Nk11yT2U9KPNvfV0MmAlUBe2CZA6zXgumtZY3Hcg
+ z5GxfvVE1FRvKmYU25QZ52CJYVX+g6D3A1W23xpkAFhZEo3qY2scSRtR3WjGqoakm6Jr
+ gUGQ==
+X-Gm-Message-State: AFq9FYKXwxab0KM+viRwtYCfni9XoSwTjgxuUwV9ywZC/1MRN3eG6uTQ
+ meKvgsIRmA2s2HS7BwHossmC8M23dg7qVAOIzryWxbRdUiebKzNhBVbMeEXsZBs+Dhy9pgrZFmE
+ fO6Qr
+X-Gm-Gg: AYBFou0x6xo5DsfUtmWsNDueCmIwetIpr0Fd6tBNX1cVSDx3qqgv5vItKRGuK/oPHn5
+ Wjn6+anDf87KpffgieFVtJFd87qEBpopjVmzSkHisP1cP+f1N70QqEop5QgGI104ILRfiHYY750
+ oailEyQkoqaPSBwvt7L4tUPXVyUmYH3A7gvVcWpnLYIQ2UrTjV2q6iLM9vrpYc6A1n6KHprIKZf
+ FAaoMLawlCQZcEDuVAHnJhbrgmtiraM3vXSXAMoBi3jgvmAYe8MChBktVDJ93/t7aia0TxY+KJA
+ YmBL3fb+moU1+zxcitCzSWhwq/jd1viTVbRL/c5+nQYQit2Oim2wb5KE6Jhk0YJl8Uy9ol0fH1I
+ l7zVktDjIuMmmVNJMFQ3q0iQDYFVJeV00FMpI0F9ccyKW7IGsleUdW4ut3XXUia00LaRRhj0gJN
+ x0rf4DQUBKKhP0gjB0lWncZtXONTY/LxX1m23JC8MnNAojXXEc6f7s/s3xN9g7AhMIaibMMmodv
+ UbSyRtF4G+is1orrLh1ZE88L1W+nQ==
+X-Received: by 2002:a17:90b:3c05:b0:3a0:e5ed:ef99 with SMTP id
+ 98e67ed59e1d1-3a0e5edf00bmr2473299a91.45.1790499863327; 
+ Sun, 27 Sep 2026 02:04:23 -0700 (PDT)
+Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a0e0ec367csm2916932a91.4.2026.09.27.02.04.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 27 Sep 2026 02:04:22 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Morrell <mmorrell@tachyum.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 64/86] linux-user: implement mlock2(2) syscall
-Date: Sun, 27 Sep 2026 12:05:11 +0300
-Message-ID: <20260927090540.102811-7-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
-References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
+Cc: mattst88@gmail.com
+Subject: [PATCH v5 066/101] tcg: Generic expansion of tcg_gen_ext8s_*
+Date: Sun, 27 Sep 2026 01:59:36 -0700
+Message-ID: <20260927090011.10724-67-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260927090011.10724-1-richard.henderson@linaro.org>
+References: <20260927090011.10724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,61 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Morrell <mmorrell@tachyum.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/tcg/tcg-op-common.h  |  2 --
+ include/tcg/tcg-op-def.h.inc |  1 +
+ tcg/tcg-op.c                 | 15 +++++----------
+ 3 files changed, 6 insertions(+), 12 deletions(-)
 
-TARGET_NR_mlock2 is defined for every target's syscall table (it has
-been available on all Linux architectures since it was added in
-kernel 4.4), and linux-user/strace.list already has an entry for it,
-but linux-user/syscall.c has no case handler for it. A guest mlock2()
-call therefore falls through to the default case and gets -ENOSYS
-instead of being emulated, on every target.
-
-mlock2() differs from mlock() only by a third `flags` argument
-(MLOCK_ONFAULT). Add TARGET_MLOCK_ONFAULT and a case that validates
-the flags argument and forwards to the host mlock2(), mirroring the
-existing TARGET_NR_mlock case immediately above it.
-
-Signed-off-by: Michael Morrell <mmorrell@tachyum.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 30fa3eb41f85e114765e8476dc9a32a890b2e78f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index bac13aebec0..af9daa165d1 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -11170,6 +11170,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_mlock:
-         return get_errno(mlock(g2h(cpu, arg1), arg2));
- #endif
-+#ifdef TARGET_NR_mlock2
-+    case TARGET_NR_mlock2:
-+        if (arg3 & ~TARGET_MLOCK_ONFAULT) {
-+            return -TARGET_EINVAL;
-+        }
-+        return get_errno(mlock2(g2h(cpu, arg1), arg2,
-+                                 (arg3 & TARGET_MLOCK_ONFAULT) ?
-+                                 MLOCK_ONFAULT : 0));
-+#endif
- #ifdef TARGET_NR_munlock
-     case TARGET_NR_munlock:
-         return get_errno(munlock(g2h(cpu, arg1), arg2));
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index e28853c93b0..f5831a6badd 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2795,6 +2795,10 @@ struct target_mount_attr_ver0 {
- #ifndef RESOLVE_IN_ROOT
- #define RESOLVE_IN_ROOT         0x10
- #endif
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index f80e9dc2e29..52752db2655 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -143,7 +143,6 @@ void tcg_gen_addcio_i32(TCGv_i32 r, TCGv_i32 co,
+ void tcg_gen_mulu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_muls2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
+-void tcg_gen_ext8s_i32(TCGv_i32 ret, TCGv_i32 arg);
+ void tcg_gen_ext16s_i32(TCGv_i32 ret, TCGv_i32 arg);
+ void tcg_gen_ext8u_i32(TCGv_i32 ret, TCGv_i32 arg);
+ void tcg_gen_ext16u_i32(TCGv_i32 ret, TCGv_i32 arg);
+@@ -187,7 +186,6 @@ void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b);
+ void tcg_gen_mulu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_muls2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2);
+-void tcg_gen_ext8s_i64(TCGv_i64 ret, TCGv_i64 arg);
+ void tcg_gen_ext16s_i64(TCGv_i64 ret, TCGv_i64 arg);
+ void tcg_gen_ext32s_i64(TCGv_i64 ret, TCGv_i64 arg);
+ void tcg_gen_ext8u_i64(TCGv_i64 ret, TCGv_i64 arg);
+diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
+index 88e87ebc2f6..a5b2bdcb432 100644
+--- a/include/tcg/tcg-op-def.h.inc
++++ b/include/tcg/tcg-op-def.h.inc
+@@ -19,6 +19,7 @@ DEF4(deposit_z, TCGV, TCGV, unsigned, unsigned)
+ DEF1(discard, TCGV)
+ DEF3(div, TCGV, TCGV, TCGV)
+ DEF3(divu, TCGV, TCGV, TCGV)
++DEF2(ext8s, TCGV, TCGV)
+ DEF4(extract, TCGV, TCGV, unsigned, unsigned)
+ DEF3(eqv, TCGV, TCGV, TCGV)
+ DEF2(mov, TCGV, TCGV)
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 2e5bc1e8200..6dbe396afc1 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -600,6 +600,11 @@ void tcg_gen_eqv(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
+     }
+ }
+ 
++void tcg_gen_ext8s(TCGType type, TCGTemp *dst, TCGTemp *src)
++{
++    tcg_gen_sextract(type, dst, src, 0, 8);
++}
 +
-+/* flags for mlock2() */
-+#define TARGET_MLOCK_ONFAULT    0x01
-+
- #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
+ void tcg_gen_extract(TCGType type, TCGTemp *dst, TCGTemp *src,
+                      unsigned int ofs, unsigned int len)
+ {
+@@ -1166,11 +1171,6 @@ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
+     tcg_temp_free_i64(t1);
+ }
+ 
+-void tcg_gen_ext8s_i32(TCGv_i32 ret, TCGv_i32 arg)
+-{
+-    tcg_gen_sextract_i32(ret, arg, 0, 8);
+-}
+-
+ void tcg_gen_ext16s_i32(TCGv_i32 ret, TCGv_i32 arg)
+ {
+     tcg_gen_sextract_i32(ret, arg, 0, 16);
+@@ -1472,11 +1472,6 @@ void tcg_gen_st_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset)
+     tcg_gen_ldst_op_i64(INDEX_op_st, arg1, arg2, offset);
+ }
+ 
+-void tcg_gen_ext8s_i64(TCGv_i64 ret, TCGv_i64 arg)
+-{
+-    tcg_gen_sextract_i64(ret, arg, 0, 8);
+-}
+-
+ void tcg_gen_ext16s_i64(TCGv_i64 ret, TCGv_i64 arg)
+ {
+     tcg_gen_sextract_i64(ret, arg, 0, 16);
 -- 
-2.47.3
+2.53.0
 
 
