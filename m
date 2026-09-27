@@ -4,89 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28436C9832A
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Sep 2026 23:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD85C9832A
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 00:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAcGE-0006YH-7K; Sat, 26 Sep 2026 19:56:54 -0400
+	id 1xAcRJ-00019A-EK; Sat, 26 Sep 2026 20:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFu-0006WE-Dl
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:34 -0400
-Received: from mail-pz2-x10.google.com ([2607:f8b0:4864:3b::10])
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xAcRG-00018g-AQ
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 20:08:18 -0400
+Received: from mail-ed2-x0e.google.com ([2a00:1450:4864:33::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAcFr-0004Ok-1e
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 19:56:33 -0400
-Received: by mail-pz2-x10.google.com with SMTP id
- 41be03b00d2f7-cc1cea34f01so856231a12.1
- for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 16:56:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xAcRE-0005XJ-Cc
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 20:08:18 -0400
+Received: by mail-ed2-x0e.google.com with SMTP id
+ 4fb4d7f45d1cf-6ab01dda422so1042551a12.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 17:08:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790467695; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lEaaXV+6W33lZXkVEarZW5sTleM3R348L6vZos240U+scChSFD3ZZ+hWA3LO5u4or3
+ wG5+b4GdynqKTqma9i8UqCOizHYK+GCFboX2NZWpcXHIpBZCe1uPnCdUyJyauYolxqQV
+ nIyloFL1wHWBbD1/MVmBFbVpNfy/cCW4Vl6spTBVaBGHKKzsqfyW48qESX76+7JWTQq7
+ PRxgI7M6gBe+2O+QpecYGYH1TFff5ZTR7ADbKchpeXNx2nuFDsMWlGSdgv9DrX7Tuv4X
+ DzYVAhpAWYl1nNjPbk1RngBS9ueZTLdZiIHjPlgxeXqrqUu9giVLvZ+hUyz0pcJK4+F0
+ fF5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=UKM+5PQ2HuuWEDJIWiPIZCGezMD8Lmj5jjp3C6dDZxY=;
+ fh=qWdeHqxIZd4mUnKBmLwUCZvccZPP1CZueR0MGTlmSRA=;
+ b=L0iFXVkF40HxjM7xITrchYqLVFzqNqe6YM8U+uiS2EIXzgviey1DG98I7QfCmzWI0J
+ ETlzKpiCdRKK/O/JEn8wf3DUjw+4AcK1NSwUdd8FmL/bZqnfqnnqas0ODlGM9xzB1mae
+ wNlv+LbBJysE7ELsS4pQZSDubk25XBRGv6kbHVlST5kuGzeEQZR0kIbOgkkZZdOs99lE
+ 3EmX/Rl20x5rSyDmxS6wxL7RaJzb2MT1ywAUrTHDZdgjLndkLIfRwVFHSeOrySa8y0JV
+ LMfu1w7Ou5As7TlAaMabajIQtAXwM8zdTq3nWvfp85I4aZylt8+bfACSIxCiueOOOPQ6
+ dU/w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790466989; x=1791071789; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1790467695; x=1791072495; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lG+J3suELYt96W3OkQY+H0iATWW74eO2wnH4cNj4aBM=;
- b=M8pZ5iEC10qeX2mb5zUwmOVC13KK3H81VOUhANxsJdcSzCxL6+EOYBbo9/6wIX+yXX
- v0+rCsPZhHbDPz8VJ7m+cmf7EKvPOWqGe+9mTUEGA/q6Z5NcvvhKsg4UdlV3AKM/F/VY
- SydneaTSSPCWjx5s+1dgBonM/lIpB37HJ3WJ+nWmieF5MEIn3L7LJuxCztJKZJZ7xEAt
- QhjqVzDpnBy1nDCUf9/1wpHb8yzuD0LFOm4sA/sindgFH8ik9t3yeJJjyKQmWYM5y2O0
- X5eu94nHpxVh+3jL/kzQTTmmZpZZadBUxgYyv8BrLVq20ExBrDW/hx626JvyKP1/bww2
- ROoA==
+ bh=UKM+5PQ2HuuWEDJIWiPIZCGezMD8Lmj5jjp3C6dDZxY=;
+ b=VFCpeMCRPn0KTTRMWjiPrxbStMIwHHwosqg13q2kmO303zKg+H7wfCpMyF2JaEAsMB
+ cjNqN0WNHTq2f62ZSOYLBjh0lz8+31iY2PE2bq1dsyAXaTG9d1bZYuoo2qyDk+AdnWCM
+ NlIeeq8kqYxAUoBbb1d+Z3jyEqhq2hhlC/EeBtMrD3U/yyJ0/CSNki7WJdPmuz5OsrUt
+ 9Gx940zzmI/mED9vrTHFwduoNFmkaUH1wRVozf73Dl32NdlHizERWy7jpEsrrhmKDSRI
+ 29yfanmjrl9sD3lF87PvG+lR3eFnz8VYfC7sH6e7uZXLmMiPCQxr5lBS14nFUPuQvx6o
+ rFXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790466989; x=1791071789;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20260707; t=1790467695; x=1791072495;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lG+J3suELYt96W3OkQY+H0iATWW74eO2wnH4cNj4aBM=;
- b=cypDt4tliSYQXlpMkhrs3/8iewGhAkgMPVX9wmDtbLKoFP7dmY+q8A11bOGzBzn1hL
- NIoIn5ccMkg6GRz/jwRFSbXVuUj1wkHoNfdZGqdwitbWEWCcH4XDPsZ4hLb8PqAg3JcN
- FbhvuBRKYI4UJdRY7SgROFS6oIwWSgfbWIX1MmCJh84MKzwdVm6PFifyDq6Y/I6TDtIv
- YmPCTB8gq+09PtNWIQPBVPxc3uOcmNgrSLH7EJKmTZOpuUoVYDVAh0VGISeu6Wle+Ur+
- av0qipEo+KM4I6dYznLPy7qQqjtvMl1Ln8tkvxXPUhlSX0HxRX7jFfC2s5uTi/uJDttv
- e8ZQ==
-X-Gm-Message-State: AFq9FYLlqV9DWRNRt4a6Xs+OkAWbRWMgNUM/W542wChT4+Gj3fRb6n6E
- dhdnZ86jWJbi2ytoe+vOkgOlgQp+RRe+9eQE5j/+pfyMr4tPVJe/EjlW5G7w37dYL0WoqQ2ZeR/
- ivzNE
-X-Gm-Gg: AYBFou3G6tmBcjXtKSySYRhHpu/49vFBm8rIfeFTeoETe3Bs9chIhtGj7H1ZPJKMn7z
- Iwf1+rwucw9BmlYVffhddjTxhmJcM1dbAbTHQvnx3j10+LSxtc0vQWcy8mrk8W3zuvS3EP+l86o
- UdRA+D0/AowZHC++fzZcrGOvsc5A5rM3ODOSs6sHoE1qNr4xxDkCjrlUTuvYRY0L9LewZ/ZxWRQ
- Y/7Vd9UIOkwMiOjdMdW9BJjetgyYDIjrK5ysGQFc+ZZOMZ42/POWUkgeP48G8Sk5rlxz98O65Pl
- Z1h6bgCnIYbY3gjF31v8sAz6d0mo2TA0LPXhLx3TXfNcv6KKQocph+a9xXJpnqzSHYGTR/2FRzn
- IEBbNdefXxVS5wmklx+0cAp+2i0RMxC6e4ZzAiIOpcO77zgkZ8F1TqMK7z01HP8jimIgxDJYTPd
- 2SGP/6/C4lxkTZTOV822UEmwnNvtmE9MQzBkO5hM0KY2EtisqcqUX43dd1lpq66RWipCIrEdV1a
- LKuHvhdHOvMfqN9hQ4nU9so7c5RkFc=
-X-Received: by 2002:a17:90a:bc9:b0:3a0:a515:c47d with SMTP id
- 98e67ed59e1d1-3a0a515c8f3mr4882131a91.34.1790466989090; 
- Sat, 26 Sep 2026 16:56:29 -0700 (PDT)
-Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a09773e7c3sm18136031a91.17.2026.09.26.16.56.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2026 16:56:28 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: paul@galbraiths.ca,
-	pbonzini@redhat.com
-Subject: [PATCH v4 3/3] tests/tcg/i386: Add regression test for wrapping
- 16-bit near branches
-Date: Sat, 26 Sep 2026 16:56:20 -0700
-Message-ID: <20260926235620.851099-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260926235620.851099-1-richard.henderson@linaro.org>
-References: <20260926235620.851099-1-richard.henderson@linaro.org>
+ bh=UKM+5PQ2HuuWEDJIWiPIZCGezMD8Lmj5jjp3C6dDZxY=;
+ b=Ow6C2Wo4Vcu43NlnUu4YQh3YBWGFfpMVXd4lbHvj0NL+p6T2ExefY3gI3gPzIuxaWu
+ 1ZBJr3eCtw7D0YKi1HigkreGwlOQSWEerfPz8jQl3pPd3Ei7ZKpazDdISlxH8hf4FX1y
+ VFSPk5qXjNTu1MFNQmIJeUxL/x4eMi6id9hTmB1ogDNBg7zBPCRHpb6wG9WM8jO+XGb+
+ 6CbNluTnJ4rJVzkiTLlTLJ2KUpFCPEScTxQV1veAsS5JhE3KxQ0OmyDg/bclHGHvLIoi
+ AGMXFVi3Bchmkzij03HB55V4v9ok7/E2GCijU1EWj1rNV80mB+x0NaL/B6C7DBs6tSBF
+ aKHw==
+X-Gm-Message-State: AFq9FYIYxLM7yXuloYmkOh6RGmgiRUXWSFkDwbg9X+HZghRVl94HOVs/
+ 2geHQBeO69PsFBfxMKe54NaY95wj7tH9WOnd6RXSXG7jYvG4vMORAXUyYY4i6MoSLccPnurlZIx
+ j+4UAGcS1p+M5eW7itIJdc2ff2rDrDyk=
+X-Gm-Gg: AYBFou1c65Auu1D78PrmFy6uu/YyI/XpDYAIGCNAoOeppMWNB3JHJLwTelXfTZOsYcU
+ dNYYVQZ4ZZxc5OhcY4LGjrbv58VB6qC3nx7yGxwi09yutF5tlGutWn4zGkxauyADbtEemqWHaB7
+ BZ74vMJb9DVLsRPILjyaufBGzCzOOT0CdlwkwZVIsBXYOHDKzB6mdEjYQ4FGj7AnusZHGn4iL6A
+ KoeF2Zd4knIt9HciQXegKbaLE3w2fo7Pd/jWI4kQdp3+7Vd8MPowXaYwhVTo1uYBnmFsIoqUBvf
+ hBmMSFhUIDqQIcFE1gImVYwsCAJv8b/o987IsE/2YA3oQioV0HIRUZk=
+X-Received: by 2002:a05:6402:4494:b0:6ab:541:a685 with SMTP id
+ 4fb4d7f45d1cf-6ab0541c080mr1942313a12.17.1790467694320; Sat, 26 Sep 2026
+ 17:08:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x10.google.com
+References: <20260923131635.1894-1-luoyonggang@gmail.com>
+ <20260923131635.1894-29-luoyonggang@gmail.com>
+ <5687f0f3-052a-4e16-9747-0be60296e07a@oss.qualcomm.com>
+In-Reply-To: <5687f0f3-052a-4e16-9747-0be60296e07a@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Sun, 27 Sep 2026 08:08:01 +0800
+X-Gm-Features: AclHuK9GTDw59PSmvQn9GZmAFMJououA1PQmQRoLQXooftHLs4G9T0uQ4MpS95c
+Message-ID: <CAE2XoE-N56GNgQLBqee8U5RP7g2zj=_Z4Hr+R1-BHvwA+9x_3w@mail.gmail.com>
+Subject: Re: [PATCH v3 028/114] hw/intc: use kvm_enabled() in APLIC AIA helpers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>, 
+ xen-devel@lists.xenproject.org, Chao Liu <chao.liu@processmission.com>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Sunil V L <sunilvl@ventanamicro.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Fabiano Rosas <farosas@suse.de>, Xianglai Li <lixianglai@loongson.cn>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-ppc@nongnu.org, 
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Bibo Mao <maobibo@loongson.cn>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-riscv@nongnu.org, kvm@vger.kernel.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Stafford Horne <shorne@gmail.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Song Gao <17746591750@163.com>, 
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org, 
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Content-Type: multipart/alternative; boundary="000000000000e6df7a065c6bbe69"
+Received-SPF: pass client-ip=2a00:1450:4864:33::e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,148 +139,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paul Galbraith <paul@galbraiths.ca>
+--000000000000e6df7a065c6bbe69
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jump from IP 0xFFF0 to IP 0x0020 with a CS base that is not page
-aligned, and check that EIP wraps.
+On Sat, Sep 26, 2026 at 5:35=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
+philmd@oss.qualcomm.com> wrote:
+>
+> On 23/9/26 15:15, Yonggang Luo wrote:
+> > - Replace CONFIG_KVM ifdefs in riscv_use_emulated_aplic and
+> >    riscv_aplic_set_kvm_msicfgaddr with kvm_enabled().
+>
+> Can you provide your S-o-b tag please?
 
-Signed-off-by: Paul Galbraith <paul@galbraiths.ca>
-Message-ID: <20260926032336.933-3-paul@galbraiths.ca>
-[rth: Simplfy slightly with ljmpl to pass/fail.
-      Put 16-bit code in its own section with labels for
-      ease of disassembly via "objdump -d -M i8086 -j .text16"]
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/tcg/i386/system/meson.build          |   3 +-
- tests/tcg/i386/system/test-branch-wrap16.S | 101 +++++++++++++++++++++
- 2 files changed, 103 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/i386/system/test-branch-wrap16.S
+Thanks, I forgot this, the following patches will attach S-o-b. This series
+is dropped as gmail limits me to send all the things.
 
-diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
-index 91c6e887191..a6278da3955 100644
---- a/tests/tcg/i386/system/meson.build
-+++ b/tests/tcg/i386/system/meson.build
-@@ -35,7 +35,8 @@ foreach t: tcg_tests['multiarch-softmmu']['tests']
- endforeach
- 
- tests += {
--  'wraparound.S': { 'cflags': cflags, 'qemu_args': ['-m', '4G'] + qemu_def_args }
-+  'test-branch-wrap16.S': { 'cflags': cflags, 'qemu_args': qemu_def_args },
-+  'wraparound.S': { 'cflags': cflags, 'qemu_args': ['-m', '4G'] + qemu_def_args },
- }
- 
- if 'qemu-system-i386' in emulators
-diff --git a/tests/tcg/i386/system/test-branch-wrap16.S b/tests/tcg/i386/system/test-branch-wrap16.S
-new file mode 100644
-index 00000000000..9a64b4c6d04
---- /dev/null
-+++ b/tests/tcg/i386/system/test-branch-wrap16.S
-@@ -0,0 +1,101 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * A 16-bit near branch must truncate EIP to 16 bits.
-+ *
-+ * The test jumps from IP 0xFFF0 to IP 0x0020 in 16-bit code. The jump
-+ * crosses 0xFFFF. For correct 16-bit behaviour the CPU should wrap the
-+ * target to 0x0020, rather than branching to 0x10020.
-+ *
-+ * TCG used to skip the wrap when the untruncated target (CS base +
-+ * 0x10020) was on the same guest page as the jump. That only happens
-+ * when the CS base is not page aligned, so the code segment starts at
-+ * a page boundary plus 0x10.
-+ */
-+
-+#define SEL_CODE32   0x08
-+#define SEL_CODE16   0x18
-+
-+        .data
-+
-+/* 0x08 and 0x10 must match boot.S, which loaded the data selectors */
-+        .balign 8
-+gdt16:
-+        .quad 0
-+        .word 0xFFFF, 0
-+        .byte 0, 0x9b, 0xCF, 0
-+        .word 0xFFFF, 0
-+        .byte 0, 0x93, 0xCF, 0
-+gdt16_code16:
-+        /* 16-bit code, 64 KiB limit; main fills in the base */
-+        .word 0xFFFF, 0
-+        .byte 0, 0x9b, 0x00, 0
-+gdt16_end:
-+
-+gdtr16:
-+        .word gdt16_end - gdt16 - 1
-+        .long gdt16
-+
-+fail_msg:
-+        .asciz "FAIL: branch left EIP untruncated\n"
-+pass_msg:
-+        .asciz "PASS\n"
-+
-+        .section .text16, "ax"
-+        .code16
-+
-+        /*
-+         * Page aligned plus 0x10. A larger alignment breaks the
-+         * multiboot load in boot.S.
-+         */
-+        .balign 0x1000
-+        .skip 0x10
-+wrap16_cs_base:
-+
-+        .skip 0x10
-+wrap16_target:
-+        /* jmp lands here when EIP wraps to 0x0020 */
-+        ljmpl $SEL_CODE32, $test_passed
-+
-+        .org wrap16_cs_base + 0xfff0
-+wrap16_entry:
-+        /*
-+         * The problematic branch, which should wrap EIP:
-+         * 16-bit relative 'jmp target', hand-assembled because clang rejects a
-+         * rel16 displacement outside [-0x8000, 0x7FFF]. But, in 16-bit code, any
-+         * 16-bit displacement is valid. GAS correctly accepts any 16-bit offset.
-+         */
-+        .byte 0xe9                              /* jmp rel16 opcode */
-+        .word wrap16_target - (. + 2)           /* cw: 16-bit offset */
-+
-+        .org wrap16_cs_base + 0x10020
-+wrap16_fail:
-+        /* jmp lands here when EIP does not wrap (0x10020) */
-+        ljmpl $SEL_CODE32, $test_failed
-+
-+        .text
-+        .code32
-+        .globl main
-+main:
-+        movl $wrap16_cs_base, %eax
-+        movw %ax, gdt16_code16 + 2
-+        shrl $16, %eax
-+        movb %al, gdt16_code16 + 4
-+        movb %ah, gdt16_code16 + 7
-+        lgdt gdtr16
-+
-+        ljmpw $SEL_CODE16, $0xFFF0
-+
-+test_passed:
-+        pushl $pass_msg
-+        call ml_printf
-+        addl $4, %esp
-+        xorl %eax, %eax
-+        ret
-+
-+test_failed:
-+        pushl $fail_msg
-+        call ml_printf
-+        addl $8, %esp
-+        movl $1, %eax
-+        ret
--- 
-2.53.0
+>
+> > ---
+> >   hw/intc/riscv_aplic.c | 14 ++++++++------
+> >   1 file changed, 8 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> > index d8e25bfda14..03a0852b8b8 100644
+> > --- a/hw/intc/riscv_aplic.c
+> > +++ b/hw/intc/riscv_aplic.c
+> > @@ -167,7 +167,10 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimode)
+> >
+> >   bool riscv_use_emulated_aplic(bool msimode)
+> >   {
+> > -#ifdef CONFIG_KVM
+> > +    if (!kvm_enabled()) {
+> > +        return true;
+> > +    }
+> > +
+> >       if (tcg_enabled()) {
+> >           return true;
+> >       }
+> > @@ -177,21 +180,20 @@ bool riscv_use_emulated_aplic(bool msimode)
+> >       }
+> >
+> >       return kvm_kernel_irqchip_split();
+> > -#else
+> > -    return true;
+> > -#endif
+> >   }
+> >
+> >   void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr
+addr)
+> >   {
+> > -#ifdef CONFIG_KVM
+> > +    if (!kvm_enabled()) {
+> > +        return;
+> > +    }
+> > +
+> >       if (riscv_use_emulated_aplic(aplic->msimode)) {
+> >           addr >>=3D APLIC_xMSICFGADDR_PPN_SHIFT;
+> >           aplic->kvm_msicfgaddr =3D extract64(addr, 0, 32);
+> >           aplic->kvm_msicfgaddrH =3D extract64(addr, 32, 32) &
+> >                                    APLIC_MMSICFGADDRH_VALID_MASK;
+> >       }
+> > -#endif
+> >   }
+> >
+> >   /*
+>
 
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--000000000000e6df7a065c6bbe69
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Sat, Sep 26, 2026 at 5:35=E2=80=AFPM Philippe M=
+athieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@oss.qualcomm.com">philmd@oss=
+.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; On 23/9/26 15:15, Yonggang Luo=
+ wrote:<br>&gt; &gt; - Replace CONFIG_KVM ifdefs in riscv_use_emulated_apli=
+c and<br>&gt; &gt; =C2=A0 =C2=A0riscv_aplic_set_kvm_msicfgaddr with kvm_ena=
+bled().<br>&gt;<br>&gt; Can you provide your S-o-b tag please?<div><br></di=
+v><div>Thanks, I forgot this, the following patches will attach S-o-b. This=
+ series is dropped as gmail limits me to send all the things.</div><div><br=
+>&gt;<br>&gt; &gt; ---<br>&gt; &gt; =C2=A0 hw/intc/riscv_aplic.c | 14 +++++=
++++------<br>&gt; &gt; =C2=A0 1 file changed, 8 insertions(+), 6 deletions(=
+-)<br>&gt; &gt;<br>&gt; &gt; diff --git a/hw/intc/riscv_aplic.c b/hw/intc/r=
+iscv_aplic.c<br>&gt; &gt; index d8e25bfda14..03a0852b8b8 100644<br>&gt; &gt=
+; --- a/hw/intc/riscv_aplic.c<br>&gt; &gt; +++ b/hw/intc/riscv_aplic.c<br>&=
+gt; &gt; @@ -167,7 +167,10 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimod=
+e)<br>&gt; &gt; =C2=A0 <br>&gt; &gt; =C2=A0 bool riscv_use_emulated_aplic(b=
+ool msimode)<br>&gt; &gt; =C2=A0 {<br>&gt; &gt; -#ifdef CONFIG_KVM<br>&gt; =
+&gt; + =C2=A0 =C2=A0if (!kvm_enabled()) {<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0return true;<br>&gt; &gt; + =C2=A0 =C2=A0}<br>&gt; &gt; +<br>&gt;=
+ &gt; =C2=A0 =C2=A0 =C2=A0 if (tcg_enabled()) {<br>&gt; &gt; =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 return true;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 }<br>&g=
+t; &gt; @@ -177,21 +180,20 @@ bool riscv_use_emulated_aplic(bool msimode)<b=
+r>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 }<br>&gt; &gt; =C2=A0 <br>&gt; &gt; =C2=A0=
+ =C2=A0 =C2=A0 return kvm_kernel_irqchip_split();<br>&gt; &gt; -#else<br>&g=
+t; &gt; - =C2=A0 =C2=A0return true;<br>&gt; &gt; -#endif<br>&gt; &gt; =C2=
+=A0 }<br>&gt; &gt; =C2=A0 <br>&gt; &gt; =C2=A0 void riscv_aplic_set_kvm_msi=
+cfgaddr(RISCVAPLICState *aplic, hwaddr addr)<br>&gt; &gt; =C2=A0 {<br>&gt; =
+&gt; -#ifdef CONFIG_KVM<br>&gt; &gt; + =C2=A0 =C2=A0if (!kvm_enabled()) {<b=
+r>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>&gt; &gt; + =C2=A0 =C2=
+=A0}<br>&gt; &gt; +<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 if (riscv_use_emulate=
+d_aplic(aplic-&gt;msimode)) {<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 addr &gt;&gt;=3D APLIC_xMSICFGADDR_PPN_SHIFT;<br>&gt; &gt; =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 aplic-&gt;kvm_msicfgaddr =3D extract64(addr, 0, 32=
+);<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 aplic-&gt;kvm_msicfgaddr=
+H =3D extract64(addr, 32, 32) &amp;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0APLIC_MMSICFGADDRH_VALID_MASK;<br>&gt; &gt; =C2=
+=A0 =C2=A0 =C2=A0 }<br>&gt; &gt; -#endif<br>&gt; &gt; =C2=A0 }<br>&gt; &gt;=
+ =C2=A0 <br>&gt; &gt; =C2=A0 /*<br>&gt;<br><br><br>--<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=
+=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div></div>
+
+--000000000000e6df7a065c6bbe69--
 
