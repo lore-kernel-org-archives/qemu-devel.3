@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A2C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2030C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjHx-000085-BZ; Sun, 27 Sep 2026 03:27:13 -0400
+	id 1xAjIb-0000ci-V2; Sun, 27 Sep 2026 03:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHf-0008W4-So; Sun, 27 Sep 2026 03:26:52 -0400
+ id 1xAjHp-00007P-FI; Sun, 27 Sep 2026 03:27:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHe-0005P7-8M; Sun, 27 Sep 2026 03:26:51 -0400
+ id 1xAjHn-0005SI-Rr; Sun, 27 Sep 2026 03:27:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494004; bh=PdaqPbz4ZAoS3tU56IUiiMPYochh7rPTqKNCeHsUGfs=;
+ t=1790494013; bh=K1Lt7sP3wmT8RZ3tfnxOVyqp64tNz2mg0uZRAEwe8OI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jWlmkq7IGVwKVr5w7GgFxuj78Jjb5pf1yFuGuMzR/NlzLMpyP4TT2uBLORd5rV6r/
- SzXDUCNmkK6un2fl5e9oLqwhtokmmjFXXbi/truRcAOkPqVQVTK5M39CIhFrWKtcNq
- 7SqIRh0BjQl56vZR8dUD053b2TgtKlYHv3S99eqr1MUzv70AUmCJOGrWgWmLceed/d
- vi0zY9XGEJicsKhR9svWhLszM4C+r2uH9964as2omPZodODcd0D1ABatQLkNLQuRqw
- 9REhNZHVuOMO7AkzxIsB3/Lnb/Asw7E7/PX1FjD/b4BdZPaeMUHuGsWO+WoKS4rtUQ
- fgPxWVo3QrTLw==
+ b=ju4uubFvA7LdjZvFH9T/bLpgP/sBUtpUc/2+ICvzUeKDs7yIdSKiB/h15CM+V3Dwn
+ CK1/J79UoB44wg+y0JZPzMTCH7Rtc08C2igbe9tifzXIaHJ8umALc66CtR+EEdbEJE
+ b35tdkyp4xDJCzCbwwxByJdcVWib2cDg/W6/+epKpNwIumAU+v0ub1ctcK+R7G1sYO
+ tm2ICxNqWb2gfVasKmBQHF8tEh9B4tInaNye/pCvjMKN2rIqKuvY9NQs4258bvvhB3
+ LZ3FvKdW6xYMEs5/AD1FIZG8eHlKGJWZK5TznUAPA0/5VQoXYyN0G2yEUkVmDvyw/d
+ bpjTkLGRbGdFQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A14951D8AB6;
- Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 71D191D8ABD;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 88CBF432048;
- Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B77643204F;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5941E5E61B; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ id E7E8E5E629; Sun, 27 Sep 2026 10:26:52 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
- Alistair Francis <alistair.francis@wdc.com>, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 52/72] linux-user/riscv: honor zicntr=false for
- base counterCSRs
-Date: Sun, 27 Sep 2026 10:25:44 +0300
-Message-ID: <20260927072622.93656-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 59/72] tcg/riscv64: Set vtype before
+ whole-register vector loads
+Date: Sun, 27 Sep 2026 10:25:51 +0300
+Message-ID: <20260927072622.93656-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -72,50 +72,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In user-only builds, the base cycle and instret CSRs bypass the zicntr
-feature gate because the check is inside the system-mode block. Move the
-check before the conditional block so an explicitly disabled zicntr
-extension makes the CSRs illegal in linux-user mode.
+With vtype uninitialized, VILL might be set, leading to SIGILL.
+Also, assert vtype initialized for whole-register stores and moves.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4148
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit ebfde6dafff2ebfb653d8b9a620ea52a4f714f5b)
+Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
+Reported-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 57d98debdf8a3a00e6022ad5c4dad1d8c4fa0f39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 9d43dbfab81..8dbe82c7f6d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -107,6 +107,13 @@ static RISCVException vs(CPURISCVState *env, int csrno)
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index ec13d8fee9f..4e2cc24a862 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -784,6 +784,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         {
+             int lmul = type - riscv_lg2_vlenb;
+             int nf = 1 << MAX(lmul, 0);
+@@ -1023,6 +1024,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+             unsigned idx = type - riscv_lg2_vlenb;
  
- static RISCVException ctr(CPURISCVState *env, int csrno)
- {
-+    if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
-+        (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
-+        if (!riscv_cpu_cfg(env)->ext_zicntr) {
-+            return RISCV_EXCP_ILLEGAL_INST;
-+        }
-+    }
-+
- #if !defined(CONFIG_USER_ONLY)
-     RISCVCPU *cpu = env_archcpu(env);
-     int ctr_index;
-@@ -123,10 +130,6 @@ static RISCVException ctr(CPURISCVState *env, int csrno)
- 
-     if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
-         (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
--        if (!riscv_cpu_cfg(env)->ext_zicntr) {
--            return RISCV_EXCP_ILLEGAL_INST;
--        }
--
-         goto skip_ext_pmu_check;
-     }
- 
+             tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
++            /* We must initialize vtype to something to avoid VILL. */
++            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
++                set_vtype(s, type, MO_8);
++            }
+             insn = whole_reg_ld[idx];
+         } else {
+             static const RISCVInsn unit_stride_ld[] = {
+@@ -1055,6 +1060,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         if (type >= riscv_lg2_vlenb) {
+             static const RISCVInsn whole_reg_st[] = {
+                 OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
 -- 
 2.47.3
 
