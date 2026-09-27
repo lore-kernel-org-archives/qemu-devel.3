@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35EBC9833E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026C0C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmRt-0006Fc-0A; Sun, 27 Sep 2026 06:49:37 -0400
+	id 1xAmRy-0006TC-NC; Sun, 27 Sep 2026 06:49:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRc-00063z-Og; Sun, 27 Sep 2026 06:49:21 -0400
+ id 1xAmRM-0005xY-HE; Sun, 27 Sep 2026 06:49:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRb-00012w-37; Sun, 27 Sep 2026 06:49:20 -0400
+ id 1xAmRJ-00011R-Kj; Sun, 27 Sep 2026 06:49:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506130; bh=S5jJGaBHYE4/j786GiZecP46N6njqO1d5Hk/nMkFJFw=;
+ t=1790506130; bh=I5VJpGs6HPqC0k8PnGZ2I1M/ZnWMOaTXiQ71nKaGbDY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KWZ+qpujqjhJiTi14qTUkexccs2ckU3Iu95wkD8ryS3Ds2VvdciypAD9WObxY+dz8
- 4ysHJrUSuUvbqwnNWMdpuY8YDe1QDDBQy1cq3DGcOJ4giKEFD4wAV4R2HeIQGO0suW
- xSoRZTTxfcjpTNEDkYejwaQq7JhDFRhqrG63KLEdb+uVvt+KCoRGwQWXNHiIvdPyDN
- hXUeDXEAf2ufgsWyVxQyeLEtpC0fBuOHsL+4CPyjO/TLvai7yZfscFO39SNWBJ+4yB
- xp6WtxOwawGAxT/OGC1ybRy81PGCvjpvRYsxDUi/1fWexGBdnyG++0nuS9U7jfp0OC
- nDbfxxk84QX7Q==
+ b=c80HTsWheliVCxjlzQb9woExdq05C3xtek1AdJfhFp7KtiPEqrXrBwlVV8gQ4vSU2
+ NCrVvLlmeoGRLWmI7IsnG2tmqBkgrUDg9vboKW2qyZs091gjkBBNlmF9JdDA2iWw/j
+ o4jioJy2SxqDnDGb+85NBOXkHqBDeMWVo/oeAwunQRaQyYuoMpYY3Ikoeo/3K1sOnw
+ ZXbNh/AQ7EbtTps5cD9fw8SvhAsVHLXGBmleEZJCj42TP5atITBUd0d6FT4JQ4tQ5Y
+ UkJKBxq0uxR0QNxOjlLAIWeM817oqPFnw2q/46zVWZTNta/BrAWsGu4WIoevNp47qs
+ tHKEK/XxDAnRQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F1951D8B62;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7A3A61D8B5D;
  Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9AD5243216A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7780C432164;
  Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 654635E77E; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ id 52D235E772; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Omar Elghoul <oelghoul@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 68/92] s390x/pci: fix DMA slot leak on I/O TLB
- entry replacement
-Date: Sun, 27 Sep 2026 13:47:44 +0300
-Message-ID: <20260927104821.196183-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Cam Miller <cam@linux.ibm.com>,
+ Boris Fiuczynski <fiuczy@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 62/92] system/ram-discard-manager: fix
+ offset_within_address_space in replay_by_populated_state()
+Date: Sun, 27 Sep 2026 13:47:38 +0300
+Message-ID: <20260927104821.196183-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,60 +74,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Omar Elghoul <oelghoul@linux.ibm.com>
+From: Cam Miller <cam@linux.ibm.com>
 
-When s390_pci_update_iotlb() does a mapping update for an IOVA that has
-an already-existing TLB entry with different permissions or translated
-address, it unmaps then remaps it. However, at the end of the map path,
-it unconditionally decrements the available DMA slot counter without a
-corresponding increment in the intermediate unmap branch.
+Fix bug inside replay_by_populated_state() that forgets to initialize
+MemoryRegionSection field offset_within_address_space. Follow the
+established pattern of calling memory_region_section_intersect_range()
+to accomplish this task.
 
-This causes the DMA slot count to be decremented on every remapping of
-an active IOVA, leading to a permanent DMA slot leak. This remapping
-without a prior invalidation and sync is not seen today in well-behaved
-guests but is allowed by the architecture. Fix it by only decrementing
-available DMA slots when inserting a brand new mapping.
+Prior to commit cc9c77f4ddf0 ("system/memory: implement
+RamDiscardManager multi-source aggregation"),
+replay_by_populated_state() had called
+memory_region_section_intersect_range() in order to initialize
+interdependent fields offset_within_address_space, offset_within_region,
+and size together, as shown below.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
-Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260917140431.45343-1-oelghoul@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 9b64b3cc833eaec290e65bc0958aeb51c6892152)
+    s->offset_within_address_space += start - s->offset_within_region;
+    s->offset_within_region = start;
+    s->size = int128_sub(end, int128_make64(start));
+
+cc9c77f4ddf0 reimplements replay_by_populated_state() initializing the
+fields of the given MemoryRegionSection instance by hand instead of via
+memory_region_section_intersect_range(). In doing so, it leaves
+offset_within_address_space uninitialized for some reason, as you can
+see below.
+
+    MemoryRegionSection subsection = {
+        .mr = section->mr,
+        .offset_within_region = offset,
+        .size = int128_make64(MIN(granularity, end_offset - offset)),
+    };
+
+Consequently offset_within_address_space defaults to GPA 0x0, which is
+incorrect. For example, on s390x, base RAM begins at GPA 0x0 and it is
+problematic to report that a virtio-iommu MR section lives there
+instead.
+
+cc9c77f4ddf0 deliberately calls memory_region_section_intersect_range()
+from other related code paths inside the same file, namely
+replay_source_by_state() and rdl_populate_cb()/rdl_discard_cb(). It is
+unclear why the new replay_by_populated_state() implementation does not
+conform to this same pattern.
+
+The effects of the bug include qemu crashes on multiple architectures.
+The following assertion failure occurs when driving the
+guest_phys_blocks_append() code path, for guests with virtio-mem device
+that has some memory plugged.
+
+    DBG: guest_phys_block_add_section: predecessor->target_end=280000000 target_start=0
+    **
+    ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+    Bail out! ERROR:../system/memory_mapping.c:222:guest_phys_block_add_section: assertion failed: (predecessor->target_end <= target_start)
+    2026-09-11 16:03:57.405+0000: shutting down, reason=crashed
+
+This crash can be triggered on x86 via the dump-guest-memory QMP
+command. The same crash can be triggered on s390x by restoring VM State
+that has been migrated to a local file. (I used libvirt to manage this
+migration restore operation, namely command virsh managedsave then virsh
+start.) Applying the fix resolved the crash on both platforms.
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Fixes: cc9c77f4ddf0 ("system/memory: implement RamDiscardManager multi-source aggregation")
+Reported-by: Boris Fiuczynski <fiuczy@linux.ibm.com>
+Signed-off-by: Cam Miller <cam@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20260914-vmem_fix-v1-1-f69ef04a07b0@linux.ibm.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 666dd3c9b10a70eea4aae3c09b0f945175a7cb8e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index b7de23c7d2c..652e1712ec3 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -655,6 +655,7 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-         goto out;
-     } else {
-         if (cache) {
-+            /* valid->valid transitions reuse the DMA slot */
-             if (cache->perm == entry->perm &&
-                 cache->translated_addr == entry->translated_addr) {
-                 goto out;
-@@ -665,6 +666,9 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-             memory_region_notify_iommu(&iommu->iommu_mr, 0, event);
-             event.type = IOMMU_NOTIFIER_MAP;
-             event.entry.perm = entry->perm;
-+        } else {
-+            /* invalid->valid transitions consume a new DMA slot */
-+            dec_dma_avail(iommu);
-         }
- 
-         cache = g_new(S390IOTLBEntry, 1);
-@@ -673,7 +677,6 @@ static uint32_t s390_pci_update_iotlb(S390PCIIOMMU *iommu,
-         cache->len = TARGET_PAGE_SIZE;
-         cache->perm = entry->perm;
-         g_hash_table_replace(iommu->iotlb, &cache->iova, cache);
--        dec_dma_avail(iommu);
+diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
+index 4e8816e5a2f..e9a609e5cd5 100644
+--- a/system/ram-discard-manager.c
++++ b/system/ram-discard-manager.c
+@@ -238,14 +238,15 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
+             }
+         } else {
+             if (in_run) {
+-                MemoryRegionSection run_section = {
+-                    .mr = section->mr,
+-                    .offset_within_region = run_start,
+-                    .size = int128_make64(offset - run_start),
+-                };
+-                ret = replay_fn(&run_section, user_opaque);
+-                if (ret) {
+-                    return ret;
++                MemoryRegionSection run_section = *section;
++
++                if (memory_region_section_intersect_range(&run_section,
++                                                          run_start,
++                                                          offset - run_start)) {
++                    ret = replay_fn(&run_section, user_opaque);
++                    if (ret) {
++                        return ret;
++                    }
+                 }
+                 in_run = false;
+             }
+@@ -257,12 +258,12 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
      }
  
-     /*
+     if (in_run) {
+-        MemoryRegionSection run_section = {
+-            .mr = section->mr,
+-            .offset_within_region = run_start,
+-            .size = int128_make64(end_offset - run_start),
+-        };
+-        ret = replay_fn(&run_section, user_opaque);
++        MemoryRegionSection run_section = *section;
++
++        if (memory_region_section_intersect_range(&run_section, run_start,
++                                                  end_offset - run_start)) {
++            ret = replay_fn(&run_section, user_opaque);
++        }
+     }
+ 
+     return ret;
 -- 
 2.47.3
 
