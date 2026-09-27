@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B12DC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46203C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjJ1-0001Bv-Q1; Sun, 27 Sep 2026 03:28:16 -0400
+	id 1xAjJe-0002FR-OI; Sun, 27 Sep 2026 03:28:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjIK-0000MB-3s; Sun, 27 Sep 2026 03:27:32 -0400
+ id 1xAjHp-00006M-66; Sun, 27 Sep 2026 03:27:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjII-0005YK-EB; Sun, 27 Sep 2026 03:27:31 -0400
+ id 1xAjHn-0005SG-OT; Sun, 27 Sep 2026 03:27:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494013; bh=4E0CcUu8n3Vm2M5kMzT6kzBXFIz2F3TBe/Lu+pyPeTo=;
+ t=1790494013; bh=9Zk/6xEEThFRTNWbdUd6QyQapEDc8AoPLtyyVJWfl0A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HfAwXlGFIGClvYTkqU6S3dJzsD0GFWparsmguqYb+/d4Ux6ogIf6rnouEU3AFHGIC
- oNwk+aEYMIUb2Zbny2jlBXaY6Wg5NwUMsh2yR0QoMDp1AHh+ZUHEOldX2EhqYKw+nR
- QOEILVA2iOoqIhpcfRlE58XpbzN0Yst/Hzp2c8+/3MF6sagNd3sgoWPhd4xS1RYGFs
- LMD2jZA6ymdTatvlQQhYra+GhJjow8CwTtKy3JtT/kzrY7dbUh9Dc7/RbAjlJDcAth
- FzyUUls19Wya5jH/uuPD78NCIZuoqzNU52F56vTmrS6ODM8+KBCG9SI6/BXkpkrF+z
- KbuZJoqQ+dHMg==
+ b=DC4uIf8Fm8vMcosxixZKN1W3ReDhQgiAgDgKwb2zDNJbubCfTNCxi0xy4jEvmLKmt
+ Ag4x8s/9YVl1w6wRToxL+2b7ly957IE6wHjhgBLLVkzxPzAb8VLGv1PdApYdfwzdQ0
+ YTp35DRVPo9Z5Oqsdz09XiIRrekcEIAOXUxWzcLwDiS5Gb+2kayQn+/WOngvuj6cz8
+ cifE9p+TAjF3hKxdL5IKTO2xOMp4e4jRUjFzRfWekH3zdwMCoEXO6ZE3+d7vz15mx4
+ XdJ10HrASh4HAS9+g++2gPRop8ptxiftrTtuLuyoMT1uKzOdqzPLWYfFqczUxWY6ch
+ VtDRU9C7Ez4KQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DB5541D8AC2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 58AD01D8ABC;
  Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8C19432054;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4263E43204E;
  Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 02F445E633; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
+ id E4CDA5E627; Sun, 27 Sep 2026 10:26:52 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 64/72] tests/qtest/usb-hcd-xhci: test isoch
- endpoint type mismatch
-Date: Sun, 27 Sep 2026 10:25:56 +0300
-Message-ID: <20260927072622.93656-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 58/72] accel/tcg: Fix TLB_MMIO check in
+ tlb_plugin_lookup()
+Date: Sun, 27 Sep 2026 10:25:50 +0300
+Message-ID: <20260927072622.93656-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -71,89 +72,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Configure the interrupt IN endpoint of usb-kbd as Isoch IN and queue one
-TD. The TD is deferred by a microframe, the kick timer retries it,
-usb-kbd NAKs, and a second doorbell retries it again. The TD has to stay
-pending both times and the controller has to keep running.
+Update tlb_plugin_lookup() to check TLB_MMIO in slow_flags.
 
-Without the fix QEMU aborts in the timer retry. The endpoint setup is
-taken from the reproducer attached to #3886.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <c1166d1b83db5a507035d6fc27b1b552d4a95b0e.1789968699.git.junjie.cao@intel.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 1288b0869c082690c04c81ac940c126fb399592b)
+Cc: qemu-stable@nongnu.org
+Fixes: 24b5e0fdb543 ("include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE to slow flags")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Message-ID: <20260916123958.1884903-1-antonb@tenstorrent.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit f371388029c9b2afb9c94a2333fa314e8499d409)
+(Mjt: context fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 61eca37b157..2e173af7506 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -33,6 +33,7 @@
- #define USBCMD_RS               (1 << 0)
- #define USBCMD_HCRST            (1 << 1)
- #define USBSTS_HCH              (1 << 0)
-+#define USBSTS_HCE              (1 << 12)
- #define PORTSC_CCS              (1 << 0)
- #define PORTSC_PR               (1 << 4)
- #define PORTSC_PP               (1 << 9)
-@@ -57,6 +58,7 @@
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 6ebd1007dd9..b0d0a07c961 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1583,7 +1583,7 @@ bool tlb_plugin_lookup(CPUState *cpu, vaddr addr, int mmu_idx,
+     data->phys_addr = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
  
- #define EP_TYPE_ISOCH_OUT       1
- #define EP_TYPE_CONTROL         4
-+#define EP_TYPE_ISOCH_IN        5
- 
- #define XHCI_RING_TRBS          64
- #define XHCI_MICROFRAME_NS      125000
-@@ -390,6 +392,37 @@ static void test_xhci_isoch_mfindex_32bit(void)
-     xhci_test_end(&x);
- }
- 
-+/*
-+ * The endpoint type in the endpoint context is whatever the guest says. Tell
-+ * the controller that the interrupt endpoint of usb-kbd is isoch. The idle
-+ * keyboard NAKs, and the TD has to stay pending when first the kick timer and
-+ * then a doorbell retry it.
-+ */
-+static void test_xhci_isoch_ep_type_mismatch(void)
-+{
-+    uint64_t ring;
-+    XHCITest x;
-+
-+    if (!xhci_test_supported("usb-kbd")) {
-+        return;
-+    }
-+
-+    xhci_test_start(&x, "-device usb-kbd");
-+    ring = xhci_configure_ep(&x, 3, EP_TYPE_ISOCH_IN, 0, 8);
-+
-+    xhci_write_trb(&x, ring, xhci_alloc_page(&x), 8,
-+                   TRB_TYPE(TR_ISOCH) | TRB_TR_SIA | TRB_TR_IOC | TRB_C);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+    qtest_clock_step(x.qts, 2 * XHCI_MICROFRAME_NS);
-+    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
-+
-+    g_assert_false(xhci_next_event(&x, NULL, NULL));
-+    g_assert_cmphex(xhci_readl(&x, x.oper + XHCI_USBSTS) &
-+                    (USBSTS_HCH | USBSTS_HCE), ==, 0);
-+
-+    xhci_test_end(&x);
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -406,6 +439,8 @@ int main(int argc, char **argv)
-     }
-     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
-                    test_xhci_isoch_mfindex_32bit);
-+    qtest_add_func("/xhci/pci/isoch/ep-type-mismatch",
-+                   test_xhci_isoch_ep_type_mismatch);
- 
-     qtest_start("-device nec-usb-xhci,id=xhci"
-                 " -drive id=drive0,if=none,file=null-co://,"
+     /* We must have an iotlb entry for MMIO */
+-    if (tlb_addr & TLB_MMIO) {
++    if (full->slow_flags[access_type] & TLB_MMIO) {
+         MemoryRegionSection *section =
+             iotlb_to_section(cpu, full->xlat_section & ~TARGET_PAGE_MASK,
+                              full->attrs);
 -- 
 2.47.3
 
