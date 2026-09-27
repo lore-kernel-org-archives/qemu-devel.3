@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5ACEC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72B0EC9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSK-0007Y5-8C; Sun, 27 Sep 2026 06:50:04 -0400
+	id 1xAmT3-0002b7-Pl; Sun, 27 Sep 2026 06:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmS3-0006sl-BQ; Sun, 27 Sep 2026 06:49:47 -0400
+ id 1xAmSy-0002Hr-Ue; Sun, 27 Sep 2026 06:50:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmS1-00014I-IY; Sun, 27 Sep 2026 06:49:47 -0400
+ id 1xAmSw-0001OM-Te; Sun, 27 Sep 2026 06:50:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506135; bh=Jg7a08/7RS0tzA102+KcX7ekHkTDeHBNjFSupvgp+h8=;
+ t=1790506136; bh=4E0CcUu8n3Vm2M5kMzT6kzBXFIz2F3TBe/Lu+pyPeTo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mqA4c9LDgZjN6NL650nrOg6RCQcF9n8skMHR4/csh6QqofdnTPavAFkNheOF8qWAs
- W1kegHhklG6Tu6HxgQ+vSOocVeIRXPJ661KC9zlwWCxPrDF4nUE9UFkJ2iit6FkApo
- iyeJUQfHQUgs9orVPh5G3ITa328/IL9iAC7j+5dfnqrn/G5KPVuovRjmtQLqUj079q
- M4SwD135fLzCB6cYE4FtxGxU/O0wgHzTKkdQiAYJzs/fuSiw31qgghIxYswzSVcnCU
- 2N0plzmOSSMHZCvGWN49cWrmCoUNdEkLQEk+ULWgGShSU7+weCkdWjFleUGA17O6cn
- ANekT15/fjafQ==
+ b=iaj9YNKBJVh7cnvKXrsuBD8cBo6tEQEP8/U2C1QsMnkAyqEkqWqA6XGamwZr+Hh8V
+ Ofp66RWI/lA0VVkp35kT6dwV2SzMVzx4aVxSCVEVD8od2kgM0Tk7BSqWnRah7+gRkF
+ XAFPA8XouVU2BxlY50a7GXuyVIyH8ollrKy1JVUFh0XKElwPkmOCBkAq7k9FW6sAQj
+ j5+9OrTGfo80NuI9qHC4ihr+oHRRWChVfgp62bop6fyTzIE9unOHSkZbMEM68a4oGJ
+ YANWaCjPpqkBIV75gxdnLJ/tuvKxQ1ZPFtAX7I3VKOJL7LYhN28Cfq26BYVtQU9gQM
+ z51y/cG4jzMtg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0020A1D8B67;
+ by isrv.corpit.ru (Postfix) with ESMTP id 35C931D8B70;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F173643216E;
- Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 31B05432177;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D46EF5E786; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id EF7565E798; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 72/92] tcg/optimize: Fix fold_multiply2 vs 1
-Date: Sun, 27 Sep 2026 13:47:48 +0300
-Message-ID: <20260927104821.196183-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 81/92] tests/qtest/usb-hcd-xhci: test isoch
+ endpoint type mismatch
+Date: Sun, 27 Sep 2026 13:47:57 +0300
+Message-ID: <20260927104821.196183-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -70,79 +71,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Junjie Cao <junjie.cao@intel.com>
 
-For muls2, we returned from fold_multiply2 without finish_folding
-or any other mechanism to update value tracking for the rh output.
-We might as well do this via fold_shift, which will also mark rh
-as having all copies of the sign bit.
+Configure the interrupt IN endpoint of usb-kbd as Isoch IN and queue one
+TD. The TD is deferred by a microframe, the kick timer retries it,
+usb-kbd NAKs, and a second doorbell retries it again. The TD has to stay
+pending both times and the controller has to keep running.
 
-For the movi paths of multiply vs 0 or mulu2, we're better off tail
-calling to tcg_opt_gen_movi rather than explicitly returning true.
+Without the fix QEMU aborts in the timer retry. The endpoint setup is
+taken from the reproducer attached to #3886.
 
-Cc: qemu-stable@nongnu.org
-Fixes: c9349965ce4 ("tcg: Optimize INDEX_op_mul[us]2 for 0 and 1")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4448
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit e2ef4fc38cebeed8e621e30aa0d3c3c6a0389ba9)
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <c1166d1b83db5a507035d6fc27b1b552d4a95b0e.1789968699.git.junjie.cao@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 1288b0869c082690c04c81ac940c126fb399592b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index d12babad88f..cd5673b329e 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2169,6 +2169,7 @@ static bool fold_mul_highpart(OptContext *ctx, TCGOp *op)
-     return finish_folding(ctx, op);
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index 61eca37b157..2e173af7506 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -33,6 +33,7 @@
+ #define USBCMD_RS               (1 << 0)
+ #define USBCMD_HCRST            (1 << 1)
+ #define USBSTS_HCH              (1 << 0)
++#define USBSTS_HCE              (1 << 12)
+ #define PORTSC_CCS              (1 << 0)
+ #define PORTSC_PR               (1 << 4)
+ #define PORTSC_PP               (1 << 9)
+@@ -57,6 +58,7 @@
+ 
+ #define EP_TYPE_ISOCH_OUT       1
+ #define EP_TYPE_CONTROL         4
++#define EP_TYPE_ISOCH_IN        5
+ 
+ #define XHCI_RING_TRBS          64
+ #define XHCI_MICROFRAME_NS      125000
+@@ -390,6 +392,37 @@ static void test_xhci_isoch_mfindex_32bit(void)
+     xhci_test_end(&x);
  }
  
-+static bool fold_shift(OptContext *ctx, TCGOp *op);
- static bool fold_multiply2(OptContext *ctx, TCGOp *op)
++/*
++ * The endpoint type in the endpoint context is whatever the guest says. Tell
++ * the controller that the interrupt endpoint of usb-kbd is isoch. The idle
++ * keyboard NAKs, and the TD has to stay pending when first the kick timer and
++ * then a doorbell retry it.
++ */
++static void test_xhci_isoch_ep_type_mismatch(void)
++{
++    uint64_t ring;
++    XHCITest x;
++
++    if (!xhci_test_supported("usb-kbd")) {
++        return;
++    }
++
++    xhci_test_start(&x, "-device usb-kbd");
++    ring = xhci_configure_ep(&x, 3, EP_TYPE_ISOCH_IN, 0, 8);
++
++    xhci_write_trb(&x, ring, xhci_alloc_page(&x), 8,
++                   TRB_TYPE(TR_ISOCH) | TRB_TR_SIA | TRB_TR_IOC | TRB_C);
++    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
++    qtest_clock_step(x.qts, 2 * XHCI_MICROFRAME_NS);
++    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
++
++    g_assert_false(xhci_next_event(&x, NULL, NULL));
++    g_assert_cmphex(xhci_readl(&x, x.oper + XHCI_USBSTS) &
++                    (USBSTS_HCH | USBSTS_HCE), ==, 0);
++
++    xhci_test_end(&x);
++}
++
+ int main(int argc, char **argv)
  {
-     swap_commutative(op->args[0], &op->args[2], &op->args[3]);
-@@ -2209,15 +2210,13 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
-             /* The proper opcode is supplied by tcg_opt_gen_mov. */
-             op2 = opt_insert_before(ctx, op, 0, 2);
-             tcg_opt_gen_movi(ctx, op, rl, l);
--            tcg_opt_gen_movi(ctx, op2, rh, h);
--            return true;
-+            return tcg_opt_gen_movi(ctx, op2, rh, h);
-         }
- 
-         if (b == 0) {
-             op2 = opt_insert_before(ctx, op, 0, 2);
-             tcg_opt_gen_movi(ctx, op2, rl, 0);
--            tcg_opt_gen_movi(ctx, op, rh, 0);
--            return true;
-+            return tcg_opt_gen_movi(ctx, op, rh, 0);
-         }
-         if (b == 1) {
-             op2 = opt_insert_before(ctx, op, 0, 2);
-@@ -2225,20 +2224,18 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
- 
-             switch (op->opc) {
-             case INDEX_op_mulu2:
--                tcg_opt_gen_movi(ctx, op, rh, 0);
--                break;
-+                return tcg_opt_gen_movi(ctx, op, rh, 0);
-             case INDEX_op_muls2:
-                 op->opc = INDEX_op_sar;
-                 op->args[0] = rh;
-                 op->args[1] = rl;
-                 op->args[2] =
-                     arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
--                break;
-+                return fold_shift(ctx, op);
-             default:
--                g_assert_not_reached();
-+                break;
-             }
--
--            return true;
-+            g_assert_not_reached();
-         }
+     int ret;
+@@ -406,6 +439,8 @@ int main(int argc, char **argv)
      }
-     return finish_folding(ctx, op);
+     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
+                    test_xhci_isoch_mfindex_32bit);
++    qtest_add_func("/xhci/pci/isoch/ep-type-mismatch",
++                   test_xhci_isoch_ep_type_mismatch);
+ 
+     qtest_start("-device nec-usb-xhci,id=xhci"
+                 " -drive id=drive0,if=none,file=null-co://,"
 -- 
 2.47.3
 
