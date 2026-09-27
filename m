@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C86EC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE98FC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjHp-000065-Dd; Sun, 27 Sep 2026 03:27:01 -0400
+	id 1xAjI3-00008x-0G; Sun, 27 Sep 2026 03:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHc-0008W0-Eb; Sun, 27 Sep 2026 03:26:50 -0400
+ id 1xAjHi-000058-TT; Sun, 27 Sep 2026 03:26:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHa-0005Nf-7g; Sun, 27 Sep 2026 03:26:47 -0400
+ id 1xAjHh-0005QL-9v; Sun, 27 Sep 2026 03:26:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494004; bh=LvAxGpuInu9Hrr33ultbDPNl4gy85fNQpUr89gC+yPs=;
+ t=1790494004; bh=ptbt+9JEYY2oqtwgL+itYqXSvq7YBetqi7jvNMLrBy8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mOqopi5Sj/w+6AX1x45Bmt7RGNqMYWy7tm4WZI46Y11QnVNT5wtdKTaQJjTaJmr6V
- itkRdxi5atHlvWzI+GPpLV33QTxeu+ImSupDgpLCvVIew4dRmrpciqFNEDMsvieZqE
- SshbeA0ZR6JfISz+BsRagwWjnJ1PxkPPUJAq7i1p6m1PgLbnZQ+gILtZI/XM06OXch
- SDJFOGQRkBbwxnICrA8bvEKGyjIl+Cbf/zXMwklBa56+UNwPU4IWI0ZuvCTAsz3Z/q
- Duz13uDPAuUvIwJk334gve0P67MGQ91VgbbRdAhg/vDncqRYIE6bz5/EXCv66mrDlm
- zfRgPDYoGx6HA==
+ b=jeFMl4PVRcmv72iy3qfxKCaWOmzu/EgwQcFpkAM8hq1eUC2U8jpzAxgDB+gnbhMFb
+ p+9O7+NTd6oRTBTqYaOzPkeEV9mGwrAtf3b9qjnOTcOVlpwR0hb+op4WBoIPU9Ymwa
+ LlynjJ/WqPrBus3CAP73bU3NeWbgqgNw+CfVNJCQt7MtGTQ36Y6qOCGl6XBlf3LzFF
+ RFU6NgHXxQoOIqGpC2plZGhdwBhLumMvf93aWyGzyAQv1WmesEOE9FUY3xmJoyfDMv
+ GouD8rlrS4+uqaLlxuKVIxr6zha80rxyrbdo6NRyhip4mG57fFScwTm5MDw17Pl03j
+ f6tx2HqMErprQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 856CA1D8AB5;
+ by isrv.corpit.ru (Postfix) with ESMTP id C2B5D1D8AB8;
  Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 715FC432047;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BD20843204A;
  Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 561115E619; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ id 5F56D5E61F; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 51/72] hw/uefi: add missing uefi_str_is_valid
- check to uefi_vars_mm_lock_variable
-Date: Sun, 27 Sep 2026 10:25:43 +0300
-Message-ID: <20260927072622.93656-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, SignKirigami <prcups@krgm.moe>,
+ Felix Yan <felixonmars@archlinux.org>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 54/72] linux-user/loongarch64: Detect vector
+ stores in host_signal_write()
+Date: Sun, 27 Sep 2026 10:25:46 +0300
+Message-ID: <20260927072622.93656-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -71,30 +72,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: SignKirigami <prcups@krgm.moe>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4213
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260916145050.1329206-1-kraxel@redhat.com>
-(cherry picked from commit ff96d562906644699c6a553c35e6cd51383c26c2)
+Recognize LSX/LASX stores in the LoongArch host signal handler to fix
+internal QEMU crashes when RISC-V vector stores hit write-protected code
+pages through host memcpy.
+
+Signed-off-by: Felix Yan <felixonmars@archlinux.org>
+Signed-off-by: SignKirigami <prcups@krgm.moe>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit e95f53e30be7935d98e38eb09cd6360fe2886249)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 49ecbaec1f8..67869b79f51 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -652,6 +652,10 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-+    if (!uefi_str_is_valid(name, lv->name_size, true)) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_INVALID_PARAMETER);
-+    }
-+
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
- 
-     pe = g_malloc0(sizeof(*pe) + lv->name_size);
+diff --git a/linux-user/include/host/loongarch64/host-signal.h b/linux-user/include/host/loongarch64/host-signal.h
+index d33c3fc03e4..eb4308cf090 100644
+--- a/linux-user/include/host/loongarch64/host-signal.h
++++ b/linux-user/include/host/loongarch64/host-signal.h
+@@ -61,6 +61,10 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
+             return true;
+         }
+         break;
++    case 0b001011: /* v{ld,st}, xv{ld,st} */
++        return (insn >> 22) & 1;
++    case 0b001100: /* v{ldrepl,stelm}, xv{ldrepl,stelm} */
++        return (insn >> 24) & 1;
+     case 0b001110: /* indexed, atomic, bounds-checking memory operations */
+         switch ((insn >> 15) & 0b11111111111) {
+         case 0b00000100000: /* stx.b */
+@@ -69,6 +73,8 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
+         case 0b00000111000: /* stx.d */
+         case 0b00001110000: /* fstx.s */
+         case 0b00001111000: /* fstx.d */
++        case 0b00010001000: /* vstx */
++        case 0b00010011000: /* xvstx */
+         case 0b00011101100: /* fstgt.s */
+         case 0b00011101101: /* fstgt.d */
+         case 0b00011101110: /* fstle.s */
 -- 
 2.47.3
 
