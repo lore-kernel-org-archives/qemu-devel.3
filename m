@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B9AC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A81AC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSi-0000qV-Ox; Sun, 27 Sep 2026 06:50:29 -0400
+	id 1xAmSv-0001r2-BH; Sun, 27 Sep 2026 06:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSX-000052-Q4; Sun, 27 Sep 2026 06:50:18 -0400
+ id 1xAmSs-0001fY-FJ; Sun, 27 Sep 2026 06:50:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSV-00019M-KJ; Sun, 27 Sep 2026 06:50:17 -0400
+ id 1xAmSq-00019Y-BW; Sun, 27 Sep 2026 06:50:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=BFJSeo7+VUpJGq++EhB68TEptPcA9Fi1uL3saiYu39M=;
+ t=1790506136; bh=Wti9fprQX0fBqJ4tBP5IVX0DHD6OxIhM31AoX6U+EEA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DXEIG5XAvcRgdan5zVnSTs26BnulwNEk2G7rz6qves1HuNLXjHqC2aB/9JPSq1BcK
- 0B4ALYtQeHX2aS4rOi08iGBqpxJoZn7jj6iN3D7Xc1MVWSVdqjEeuCbSgEHP2FnHN+
- qqB/QeN7dyMx979xAeS2TIJbQu6XwZsrTBg+bLEu1GnsH0CZWAXAjwS2+/tRVdCF+N
- kFWHMh7sqxrPcSuqpZjuH2f6D1eH4lXLbQw6Z+DJNI64w30TqxnfV868hjdrifFlPf
- qQGw0vPb1q7Gb5jv/6oYT2+LJmNnSlpvF7M0DcGAUftFDqvbG111oyZpjtiupD8ltl
- zK1MaiuXNSxHQ==
+ b=dYoTdZosXiisszouqC3agaPs8SrZ6BFdstjQ4mvwY/EXJhN01Vj0nZy9FMcSWnQUE
+ J16QBbNBnbNHufxtwHCPzUqnclEJuU1uxtnKbuIO79tyWHif0AwaxvDq0e8UrOx+s9
+ TCtIhlNWY9klo4g15FiMMD0GZt9rQpNBAK/sjyl2PbPKl9McizQJm3egSvG7eS1oFQ
+ LXIQ7BccNwz5dR3aeEz8dv1CKM7bRM2MDgt97XkahBN2hcC46h3fXri4Xt52hO57fc
+ mdswqOLTTiowFf2xh6fmW8+KPk2pJSCbdx0kdeurXFszwCWFolXOlFkWkLg4QjcG6a
+ ScJDCd1BJEoXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CAFF1D8B6C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 226A91D8B6D;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 19FB9432173;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1FC6F432174;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E310D5E790; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id E61455E792; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 77/92] hw/usb/hcd-xhci: Set reentrancy guard in
- timer functions (CVE-2026-17588)
-Date: Sun, 27 Sep 2026 13:47:53 +0300
-Message-ID: <20260927104821.196183-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 78/92] hw/usb/hcd-xhci: fix interval alignment
+ after MFINDEX passes 2^32
+Date: Sun, 27 Sep 2026 13:47:54 +0300
+Message-ID: <20260927104821.196183-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,77 +73,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-The xHCI controller processes USB events from timer callbacks
-(xhci_mfwrap_timer and xhci_ep_kick_timer) outside of any MMIO handler
-context. The device's mem_reentrancy_guard is therefore not engaged
-during this processing.
+epctx->interval is an unsigned int, so ~(epctx->interval - 1) is a
+32-bit mask that is zero-extended when and-ed with the 64-bit microframe
+index. Once mfindex no longer fits in 32 bits (2^32 * 125us, about 6.2
+days after the controller was started), asap loses its upper half and
+always compares below mfindex. Isoch TDs with SIA are then run at once
+instead of at the next interval boundary. xhci_calc_intr_kick() has the
+same expression.
 
-A malicious guest can exploit this by pointing the event ring base
-address (er_start) at the xHCI doorbell MMIO region. When
-xhci_write_event() performs a DMA write to deliver a transfer
-completion event, the write lands on doorbell register 0. If the
-written value is 0, this triggers xhci_process_commands() reentrantly.
-A CR_DISABLE_SLOT command prepared on the command ring then frees
-endpoint and transfer objects via xhci_disable_ep() / g_free() while
-the outer call stack still holds references to them, causing a
-heap use-after-free.
+Use ROUND_UP(), which builds the mask in the type of mfindex. The
+interval is always a power of two.
 
-Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
-around the processing in these non-MMIO entry points. This mirrors
-the protection that EHCI, DWC2, and UHCI already have via
-qemu_bh_new_guarded(). With the guard active, the memory subsystem's
-automatic reentrancy check (system/memory.c) blocks DMA writes that
-would dispatch into the device's own MMIO handlers.
+The reporter of #3973 also saw the symptom with UHCI. This change does
+not explain that.
 
-CVE: CVE-2026-17588
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3926
-Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
-    Guannan Wang <wgnbuaa@gmail.com>, Zhanpeng Liu <pkugenuine@gmail.com>,
-    Jiashuo Liang <761232680@qq.com>, Guancheng Li <lgcpku@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4195
-Reported By: Ken Hsu and Royce Lu of Palo Alto Networks
-Message-ID: <20260915112213.525283-1-thuth@redhat.com>
+Fixes: 3d1396842d ("xhci: iso xfer support")
+Fixes: 4d7a81c06f ("xhci: emulate intr endpoint intervals correctly")
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3973
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <52c9f935428f2cfc65e4dee7e37638fcb965c6b2.1789968699.git.junjie.cao@intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit f91b0544fe1f9fbabf582ccaaecc08877b7e19e1)
+(cherry picked from commit bfb82d57e7299cb59471f7060cbab0b1ed39504e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index d342aa2739e..12f8ffece0f 100644
+index 12f8ffece0f..61690dbdcec 100644
 --- a/hw/usb/hcd-xhci.c
 +++ b/hw/usb/hcd-xhci.c
-@@ -456,9 +456,15 @@ static void xhci_mfwrap_timer(void *opaque)
+@@ -1755,8 +1755,7 @@ static int xhci_fire_ctl_transfer(XHCIState *xhci, XHCITransfer *xfer)
+ static void xhci_calc_intr_kick(XHCIState *xhci, XHCITransfer *xfer,
+                                 XHCIEPContext *epctx, uint64_t mfindex)
  {
-     XHCIState *xhci = opaque;
-     XHCIEvent wrap = { ER_MFINDEX_WRAP, CC_SUCCESS };
-+    MemReentrancyGuard *guard = &xhci->parent.mem_reentrancy_guard;
-+
-+    assert(!guard->engaged_in_io);
-+    guard->engaged_in_io = true;
+-    uint64_t asap = ((mfindex + epctx->interval - 1) &
+-                     ~(epctx->interval-1));
++    uint64_t asap = ROUND_UP(mfindex, epctx->interval);
+     uint64_t kick = epctx->mfindex_last + epctx->interval;
  
-     xhci_event(xhci, &wrap, 0);
-     xhci_mfwrap_update(xhci);
-+
-+    guard->engaged_in_io = false;
- }
- 
- static void xhci_die(XHCIState *xhci)
-@@ -1086,7 +1092,14 @@ static void xhci_set_ep_state(XHCIState *xhci, XHCIEPContext *epctx,
- static void xhci_ep_kick_timer(void *opaque)
+     assert(epctx->interval != 0);
+@@ -1767,8 +1766,7 @@ static void xhci_calc_iso_kick(XHCIState *xhci, XHCITransfer *xfer,
+                                XHCIEPContext *epctx, uint64_t mfindex)
  {
-     XHCIEPContext *epctx = opaque;
-+    MemReentrancyGuard *guard = &epctx->xhci->parent.mem_reentrancy_guard;
-+
-+    assert(!guard->engaged_in_io);
-+    guard->engaged_in_io = true;
-+
-     xhci_kick_epctx(epctx, 0);
-+
-+    guard->engaged_in_io = false;
- }
- 
- static XHCIEPContext *xhci_alloc_epctx(XHCIState *xhci,
+     if (xfer->trbs[0].control & TRB_TR_SIA) {
+-        uint64_t asap = ((mfindex + epctx->interval - 1) &
+-                         ~(epctx->interval-1));
++        uint64_t asap = ROUND_UP(mfindex, epctx->interval);
+         if (asap >= epctx->mfindex_last &&
+             asap <= epctx->mfindex_last + epctx->interval * 4) {
+             xfer->mfindex_kick = epctx->mfindex_last + epctx->interval;
 -- 
 2.47.3
 
