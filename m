@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE98FC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A2C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjI3-00008x-0G; Sun, 27 Sep 2026 03:27:15 -0400
+	id 1xAjHx-000085-BZ; Sun, 27 Sep 2026 03:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHi-000058-TT; Sun, 27 Sep 2026 03:26:55 -0400
+ id 1xAjHf-0008W4-So; Sun, 27 Sep 2026 03:26:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHh-0005QL-9v; Sun, 27 Sep 2026 03:26:54 -0400
+ id 1xAjHe-0005P7-8M; Sun, 27 Sep 2026 03:26:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494004; bh=ptbt+9JEYY2oqtwgL+itYqXSvq7YBetqi7jvNMLrBy8=;
+ t=1790494004; bh=PdaqPbz4ZAoS3tU56IUiiMPYochh7rPTqKNCeHsUGfs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jeFMl4PVRcmv72iy3qfxKCaWOmzu/EgwQcFpkAM8hq1eUC2U8jpzAxgDB+gnbhMFb
- p+9O7+NTd6oRTBTqYaOzPkeEV9mGwrAtf3b9qjnOTcOVlpwR0hb+op4WBoIPU9Ymwa
- LlynjJ/WqPrBus3CAP73bU3NeWbgqgNw+CfVNJCQt7MtGTQ36Y6qOCGl6XBlf3LzFF
- RFU6NgHXxQoOIqGpC2plZGhdwBhLumMvf93aWyGzyAQv1WmesEOE9FUY3xmJoyfDMv
- GouD8rlrS4+uqaLlxuKVIxr6zha80rxyrbdo6NRyhip4mG57fFScwTm5MDw17Pl03j
- f6tx2HqMErprQ==
+ b=jWlmkq7IGVwKVr5w7GgFxuj78Jjb5pf1yFuGuMzR/NlzLMpyP4TT2uBLORd5rV6r/
+ SzXDUCNmkK6un2fl5e9oLqwhtokmmjFXXbi/truRcAOkPqVQVTK5M39CIhFrWKtcNq
+ 7SqIRh0BjQl56vZR8dUD053b2TgtKlYHv3S99eqr1MUzv70AUmCJOGrWgWmLceed/d
+ vi0zY9XGEJicsKhR9svWhLszM4C+r2uH9964as2omPZodODcd0D1ABatQLkNLQuRqw
+ 9REhNZHVuOMO7AkzxIsB3/Lnb/Asw7E7/PX1FjD/b4BdZPaeMUHuGsWO+WoKS4rtUQ
+ fgPxWVo3QrTLw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C2B5D1D8AB8;
+ by isrv.corpit.ru (Postfix) with ESMTP id A14951D8AB6;
  Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BD20843204A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 88CBF432048;
  Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5F56D5E61F; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ id 5941E5E61B; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Felix Yan <felixonmars@archlinux.org>, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 54/72] linux-user/loongarch64: Detect vector
- stores in host_signal_write()
-Date: Sun, 27 Sep 2026 10:25:46 +0300
-Message-ID: <20260927072622.93656-5-mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 52/72] linux-user/riscv: honor zicntr=false for
+ base counterCSRs
+Date: Sun, 27 Sep 2026 10:25:44 +0300
+Message-ID: <20260927072622.93656-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -72,42 +72,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: SignKirigami <prcups@krgm.moe>
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-Recognize LSX/LASX stores in the LoongArch host signal handler to fix
-internal QEMU crashes when RISC-V vector stores hit write-protected code
-pages through host memcpy.
+In user-only builds, the base cycle and instret CSRs bypass the zicntr
+feature gate because the check is inside the system-mode block. Move the
+check before the conditional block so an explicitly disabled zicntr
+extension makes the CSRs illegal in linux-user mode.
 
-Signed-off-by: Felix Yan <felixonmars@archlinux.org>
-Signed-off-by: SignKirigami <prcups@krgm.moe>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4148
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit e95f53e30be7935d98e38eb09cd6360fe2886249)
+(cherry picked from commit ebfde6dafff2ebfb653d8b9a620ea52a4f714f5b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/include/host/loongarch64/host-signal.h b/linux-user/include/host/loongarch64/host-signal.h
-index d33c3fc03e4..eb4308cf090 100644
---- a/linux-user/include/host/loongarch64/host-signal.h
-+++ b/linux-user/include/host/loongarch64/host-signal.h
-@@ -61,6 +61,10 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
-             return true;
-         }
-         break;
-+    case 0b001011: /* v{ld,st}, xv{ld,st} */
-+        return (insn >> 22) & 1;
-+    case 0b001100: /* v{ldrepl,stelm}, xv{ldrepl,stelm} */
-+        return (insn >> 24) & 1;
-     case 0b001110: /* indexed, atomic, bounds-checking memory operations */
-         switch ((insn >> 15) & 0b11111111111) {
-         case 0b00000100000: /* stx.b */
-@@ -69,6 +73,8 @@ static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
-         case 0b00000111000: /* stx.d */
-         case 0b00001110000: /* fstx.s */
-         case 0b00001111000: /* fstx.d */
-+        case 0b00010001000: /* vstx */
-+        case 0b00010011000: /* xvstx */
-         case 0b00011101100: /* fstgt.s */
-         case 0b00011101101: /* fstgt.d */
-         case 0b00011101110: /* fstle.s */
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 9d43dbfab81..8dbe82c7f6d 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -107,6 +107,13 @@ static RISCVException vs(CPURISCVState *env, int csrno)
+ 
+ static RISCVException ctr(CPURISCVState *env, int csrno)
+ {
++    if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
++        (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
++        if (!riscv_cpu_cfg(env)->ext_zicntr) {
++            return RISCV_EXCP_ILLEGAL_INST;
++        }
++    }
++
+ #if !defined(CONFIG_USER_ONLY)
+     RISCVCPU *cpu = env_archcpu(env);
+     int ctr_index;
+@@ -123,10 +130,6 @@ static RISCVException ctr(CPURISCVState *env, int csrno)
+ 
+     if ((csrno >= CSR_CYCLE && csrno <= CSR_INSTRET) ||
+         (csrno >= CSR_CYCLEH && csrno <= CSR_INSTRETH)) {
+-        if (!riscv_cpu_cfg(env)->ext_zicntr) {
+-            return RISCV_EXCP_ILLEGAL_INST;
+-        }
+-
+         goto skip_ext_pmu_check;
+     }
+ 
 -- 
 2.47.3
 
