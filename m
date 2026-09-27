@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F106DCA5FA2
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6738C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmST-00087B-5C; Sun, 27 Sep 2026 06:50:13 -0400
+	id 1xAmSx-00023m-VG; Sun, 27 Sep 2026 06:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSQ-0007xb-MH; Sun, 27 Sep 2026 06:50:10 -0400
+ id 1xAmSv-0001wr-BT; Sun, 27 Sep 2026 06:50:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSO-00014m-Q5; Sun, 27 Sep 2026 06:50:10 -0400
+ id 1xAmSt-0001A6-BZ; Sun, 27 Sep 2026 06:50:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=knZhph2XZ8QOEruRqI+5dyMIHI0zD0BZACq40LF4KE4=;
+ t=1790506136; bh=nTtkgOlloxxVZChi/qwdhtYXp5TgC/4P/4PrKTa/PI4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VXo97EmS4Ha45Yd0uGRelQAhgK2FIsgrjJ4qR7/fMlfcIr2tb+JFlx/PEZwtki06i
- WbO1X9kh76XXplOl5hw+309WJTd16AdQSgbrqxeEeHyDy0qGzMgOb54Kdk/uaub8My
- QhTBERKyuNSVLvEm/B2QgLi1G5d5eowYiK144A9VJwSV13WmJi6CHrweGBnhGUJHax
- 8Z2pi0RkIgRXh4Ugv0H/p0tWMWefaBVP1CmSggjcz3DXLkRy5YYmwcUmId1XLxW6bO
- zeGGxVQXWLIpCX4msNYyde//TgkXkCTCcVJnl07UK1N+tq43H3emnDLR41lS1HZr5y
- TWwb7sysKFnhg==
+ b=koA77YWv22E+/474w4pF8S5l6Xe1nxcw2reypRTrDyIeqdNld1lNqZ3/KcHvi5Jfe
+ V5f1kl2IC6THwDRyUdJqSjOSbgXkac7R1ATiihurC1WerMOa70iiHzcKtnm4g5SEpM
+ hrmL3gceNudywkkW63kTEfu84l07BChi+54CREueUio9O/XdA42bkMYKKlOPnK1giY
+ fm4Mr+OLVdCIML/g7HtuVw2Uf9FdAzeCeT6DiFi0ar18FOins9XHpATdQSBjPFxgK4
+ 4Ug9mE9C82Y7lnLe9HOCbDSaj3cpdeAxz54abIQ9bqpEof6k6gOIOqNlddkjgoBmcG
+ iMHK3qQb5BA2Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 056951D8B68;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B1B41D8B6E;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 02DAE43216F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2586E432175;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D760F5E788; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id E94515E794; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 73/92] tests/tcg/arm: Add regression test for #4448
-Date: Sun, 27 Sep 2026 13:47:49 +0300
-Message-ID: <20260927104821.196183-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ Feifan Qian <bea1e@proton.me>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 79/92] hw/usb/hcd-xhci: don't assert on NAK when
+ retrying an isoch transfer
+Date: Sun, 27 Sep 2026 13:47:55 +0300
+Message-ID: <20260927104821.196183-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -70,84 +72,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 4278a7ba36c2f7f5297c8ed886646a4a453f555c)
-(Mjt: adjust across make=>meson conversion in tcg tests)
+The endpoint type in the xHCI endpoint context comes from the guest and
+is not checked against the device. A guest can configure the interrupt
+IN endpoint of usb-kbd as Isoch IN. The idle HID endpoint NAKs, and as
+soon as the transfer goes through the retry path in xhci_kick_epctx()
+it hits
+
+  assert(xfer->packet.status != USB_RET_NAK);
+
+No device model NAKs on an isoch endpoint, so this only triggers with a
+mismatched endpoint type.
+
+The two retry branches differ only in what they do on NAK: the isoch one
+asserts, the other keeps the transfer pending. Merge them.
+
+Fixes: 3d1396842d ("xhci: iso xfer support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3886
+Reported-by: Feifan Qian <bea1e@proton.me>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <44227b05b22064a22f4c135e025ff0b1d838b9e3.1789968699.git.junjie.cao@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 45684127cdee2d212125fd8d1de8a9c4804ee8bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-index 613bbf0939a..51a3ed76a87 100644
---- a/tests/tcg/arm/Makefile.target
-+++ b/tests/tcg/arm/Makefile.target
-@@ -32,6 +32,8 @@ run-fcvt: fcvt
- ARM_TESTS += pcalign-a32
- pcalign-a32: CFLAGS+=-marm
- 
-+ARM_TESTS += issue4448
-+
- ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
- 
- # Semihosting smoke test for linux-user
-diff --git a/tests/tcg/arm/issue4448.c b/tests/tcg/arm/issue4448.c
-new file mode 100644
-index 00000000000..0a498373a89
---- /dev/null
-+++ b/tests/tcg/arm/issue4448.c
-@@ -0,0 +1,51 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <assert.h>
-+#include <stdint.h>
-+
-+/* Signed 64-bit product, constant operand first then second. */
-+#define SMULL_CONST_LHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tsmull %0, %1, r0, %2" \
-+            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+#define SMULL_CONST_RHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tsmull %0, %1, %2, r0" \
-+            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+/* Unsigned 64-bit product, for contrast: this one is folded correctly. */
-+#define UMULL_CONST_LHS(k, x, lo, hi) \
-+    __asm__("mov r0, #" #k "\n\tumull %0, %1, r0, %2" \
-+            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
-+
-+static int64_t s64(int32_t hi, int32_t lo)
-+{
-+    return ((int64_t)hi << 32) | (uint32_t)lo;
-+}
-+
-+static uint64_t u64(int32_t hi, int32_t lo)
-+{
-+    return ((uint64_t)(uint32_t)hi << 32) | (uint32_t)lo;
-+}
-+
-+int main(void)
-+{
-+    static const int32_t values[] = { 1961612, -1479053948, -7, 0 };
-+
-+    for (unsigned i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
-+        int32_t x = values[i];
-+        int32_t lo, hi;
-+
-+        SMULL_CONST_LHS(1, x, lo, hi);
-+        assert(x == s64(hi, lo));
-+
-+        SMULL_CONST_RHS(1, x, lo, hi);
-+        assert(x == s64(hi, lo));
-+
-+        UMULL_CONST_LHS(1, x, lo, hi);
-+        assert((uint32_t)x == u64(hi, lo));
-+
-+        SMULL_CONST_LHS(0, x, lo, hi);
-+        assert(0 == u64(hi, lo));
-+    }
-+    return 0;
-+}
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 61690dbdcec..624ce4ee75a 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1925,26 +1925,15 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
+             xfer->timed_xfer = 0;
+             xfer->running_retry = 1;
+         }
+-        if (xfer->iso_xfer) {
+-            /* retry iso transfer */
+-            if (xhci_setup_packet(xfer) < 0) {
+-                return;
+-            }
+-            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
+-            assert(xfer->packet.status != USB_RET_NAK);
+-            xhci_try_complete_packet(xfer);
+-        } else {
+-            /* retry nak'ed transfer */
+-            if (xhci_setup_packet(xfer) < 0) {
+-                return;
+-            }
+-            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
+-            if (xfer->packet.status == USB_RET_NAK) {
+-                xhci_xfer_unmap(xfer);
+-                return;
+-            }
+-            xhci_try_complete_packet(xfer);
++        if (xhci_setup_packet(xfer) < 0) {
++            return;
++        }
++        usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
++        if (xfer->packet.status == USB_RET_NAK) {
++            xhci_xfer_unmap(xfer);
++            return;
+         }
++        xhci_try_complete_packet(xfer);
+         assert(!xfer->running_retry);
+         if (xfer->complete) {
+             /* update ring dequeue ptr */
 -- 
 2.47.3
 
