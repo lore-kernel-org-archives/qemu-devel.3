@@ -4,94 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0800FC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD1CC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 18:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAt7h-0000LC-GI; Sun, 27 Sep 2026 13:57:13 -0400
+	id 1xAtFm-0001m9-AG; Sun, 27 Sep 2026 14:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAt7f-0000Kh-CT
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:57:11 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAt7d-0006TK-Pn
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:57:11 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- 98e67ed59e1d1-39dacf053eeso1158771a91.2
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 10:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790531828; x=1791136628; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=18F/S+HH9vVdedRwNwUQ/+8qnowflupyJ6j5ZEejJu0=;
- b=aqerPASq0TtnQOCBxJ5JtP2KHyGfdBRdO+DUKjeS12J7kWe2+Wo6ZZf+h4VzzfX8C/
- KKOK+EBX8+0O7zR6egpGWUwrXaiBI72P9pidcWPZ91dnIoP10Yci9qTzCqYAcoJqJcBH
- UeM/edR8FX7XjpYKE+cIy0tkzxCpZ3/3+awI8XcM42HiDf20v58s2hwPXN8nm0xyr0Xs
- wA9jgKVvT3UaLPoGCqAvT5oy4yuU61qNe1kGTIb/1d9fAUeCg+sU7qV462gfsJRWTFRb
- 7tqlss5LDle9hn0MpN9ZfvlhxQG+74R8kYB0JDZsvBvd8mwPlbWaRfq8hXKm2xFflULc
- bZMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790531828; x=1791136628;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=18F/S+HH9vVdedRwNwUQ/+8qnowflupyJ6j5ZEejJu0=;
- b=2OKC3EVX9tIZ12/HTRQZlJkjCEnthlFVsdC1oZ5WPzPNPZ9hwhaFzkbUWH0hJLWt++
- VR0GWaMaaKIDt1/T0Y37nMbiLAsIA8GD+S+NfK5DDtPrEcVzz5RFSVz0saO6k3CP2PUP
- SPO0BC4FpKIoBW0aiGMBqpTJ2TCGIBq0l8DORRTdLtwZGJ/ESLpt747fZClyf7ja+w+C
- 6pZr8/S5vSlXwmsU4EqqLTRfhdtQmXg4tvUU1D4dD7Qpptg10C5PLUAp8da3SV/0Ur4o
- WOStSI24pUdkTd5IsVg8BpDLLeWG1NU8Y84szOiWC6tSaj574gCM9d+ilDh4B7mhe/do
- kCDw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxrDRT9+fTjzpIec0cKTkZmUMpLMsEFnTl+fIeffFJPop1rXixtA9R0dpafwGtVQ82eO50BA8uOYOIj@nongnu.org
-X-Gm-Message-State: AFq9FYJBiD4/fZyP5jLyabcxxGJlrHB1E6SoJULobK3xwGxIAnbKet6u
- L16G/ClNQAGRiNs7jQfpiowGNBFZ2xn/uI9HVJOEWjIdYMp/Wq4b0hU5wzsuqCJbKCs=
-X-Gm-Gg: AYBFou1z7m/0rHWeSxGUpBkaN+UcoSOvXYsYj/6NLUX/6u5NodsNMesPQvuozBN84Ui
- zxdPMhGxF6F3MzT9XeR9y8RL/fOBHTywqafA69SRLVsLH8h9JO3B9zHHFxUO6VvfcvbEj1tuLbz
- 6c2Slzl63VEp0wR8kfxXBw1efN12wdQEFAOJPBc9SMuocqHVR5CJ0giB5imBD8Z7RlWtB581fwl
- vv0rd9unMg6Q+ZUfB6hoUsyJBBabizzz+XBofImyUlYQ7tSp78e4Gy1roPCDc2702TAJdbzpIsF
- Q1GXL+j8lWSElavuIOfWHN3drmH666D8UIDP+faFbNLKDdHl6NjNUYv3XqDhYUcOrH0ZmlRlLmx
- owzHA274+9aZt3JspnHw7kBuGS5p+jjQ/VuoYwjlkI+5J7BENvKQKk5Pxzvh/i4fO06xvrmZ6Px
- v8U2+xjcbWLfoBRy6dAXieHAy1jZOPK0D1dfekN/o2lk+zMkoGgzTKCJNH9UdGwA7qvOOGqRHe0
- XsXe92j8v/nVR2BlXznNoW2vQ+ckyOYixt2vB7n
-X-Received: by 2002:a17:90a:ec83:b0:39e:6c6a:4b77 with SMTP id
- 98e67ed59e1d1-3a098e43948mr8054541a91.65.1790531827702; 
- Sun, 27 Sep 2026 10:57:07 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0b4f5f917sm6215484a91.1.2026.09.27.10.57.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Sep 2026 10:57:07 -0700 (PDT)
-Message-ID: <aa750bd3-39b0-4409-9fe2-802098b356f4@linaro.org>
-Date: Sun, 27 Sep 2026 10:57:05 -0700
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xAtFa-0001gq-E1
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:05:22 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1xAtFX-0007MN-Hi
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 14:05:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1FDFC583393;
+ Sun, 27 Sep 2026 20:05:17 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id EY1O-KceIUoN; Sun, 27 Sep 2026 20:05:15 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F0654583382; Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EDD275833E3;
+ Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
+Date: Sun, 27 Sep 2026 20:05:14 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>, 
+ Warner Losh <imp@bsdimp.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <20260927122519-mutt-send-email-mst@kernel.org>
+Message-ID: <2e4e5faf-8efd-a52a-8155-62e56fb62709@eik.bme.hu>
+References: <arEvLLYK9A5MKNdE@redhat.com> <arP7TDfz7lz699KJ@redhat.com>
+ <87ik3vyp3i.fsf@draig.linaro.org> <arT_kefzEhqg8-FB@redhat.com>
+ <arUJxE0F7Q3Cw5sk@redhat.com> <arZHWKAgr-GYvoeX@redhat.com>
+ <arZZhpR5_nPybOUo@redhat.com>
+ <e030a85d-a5d5-8fc6-5d1a-41167f7a95bf@eik.bme.hu>
+ <20260927052335-mutt-send-email-mst@kernel.org>
+ <81d65154-74ce-c6c0-ab40-fb2156d53fba@eik.bme.hu>
+ <20260927122519-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 010/101] tcg: Generic expansion of tcg_gen_movi_*
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-References: <20260927090011.10724-1-richard.henderson@linaro.org>
- <20260927090011.10724-11-richard.henderson@linaro.org>
- <5f762124-6163-433d-b8df-90ad0ae76353@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5f762124-6163-433d-b8df-90ad0ae76353@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,31 +78,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/27/26 08:31, Philippe Mathieu-Daudé wrote:
-> On 27/9/26 10:58, Richard Henderson wrote:
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/tcg/tcg-op-common.h  |  2 --
->>   include/tcg/tcg-op-def.h.inc |  1 +
->>   tcg/tcg-op.c                 | 15 +++++----------
->>   3 files changed, 6 insertions(+), 12 deletions(-)
-> 
-> 
->> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
->> index 77ed34fcb8f..b2fa509cd1f 100644
->> --- a/tcg/tcg-op.c
->> +++ b/tcg/tcg-op.c
->> @@ -370,6 +370,11 @@ void tcg_gen_mov(TCGType type, TCGTemp *dst, 
->> TCGTemp *src)
->>       }
->>   }
->> +void tcg_gen_movi(TCGType type, TCGTemp *dst, int64_t src)
-> 
-> Maybe this commit (the first converting opcode with an integer arg)
-> could have a description explaining / reminding now all args are
-> passed as int64_t.
-Where would you place such a comment that would be useful?
-I can't see how or where.
+On Sun, 27 Sep 2026, Michael S. Tsirkin wrote:
+> On Sun, Sep 27, 2026 at 12:03:39PM +0200, BALATON Zoltan wrote:
+>> On Sun, 27 Sep 2026, Michael S. Tsirkin wrote:
+>>> On Fri, Sep 25, 2026 at 02:20:49PM +0200, BALATON Zoltan wrote:
+>>>> Not directly related to this patch but as an input to this discussion I'd
+>>>> like to bring to your attention how some people use AI now. With LLMs being
+>>>> able to do more, some users who have no idea about coding or QEMU internals
+>>>> but want to use QEMU for things that we could not deliver, now just maintain
+>>>> a fork and let the AI add features and fix bugs they find without ever
+>>>> contacting us or reporting these back.
+>>>
+>>> More power to them I say. There's no way to find gold in this sand. Let
+>>> them be.
+>>
+>> Sure they are free to do whatever they want and I don't want to stop this
+>> but I'd like to see that effort eventually improving QEMU and not lost for
+>> us or need to be redone from scratch.
+>
+> No one has the time and energy to wade through mountains of slop.
 
-r~
+That's why we should ask contributors using AI to do that before trying to 
+submit it and not expect maintainers to do it for them. Telling people 
+that they can use AI but they have to clean up the patches and describe it 
+themselves in the commit message to prove they did that and not just send 
+slop our way is better than just saying no AI generated code at all 
+because that just drives away more potential contributors. If this way of 
+writing code stays there will not be many people willing to do everthing 
+by hand but expecting them to steer the AI and know what they are doing is 
+a reasonable limitation to put on AI use.
+
+>> So some kind of AI policy is needed
+>> and a strict no-AI policy does not help to get these efforts defragmented.
+>
+> There's no effort here.
+
+What do you mean there's no effort? Even if these people don't write code 
+they spend a lot of time talking to the AI and test the generated patches 
+and iterate and refine it until they get what they want. Even if the 
+result is not meaningful to be included upstream there's still wasted 
+effort and some genuine problems solved. The solution may not be the best 
+way but at least it's a start to improve QEMU or show what users want but 
+with a no-AI policy we won't even know about that.
+
+>> While goal oriented use of AI tools without caring for code quality leads to
+>> non-upstreamable patches maybe we could encourage these people to learn and
+>> even use an AI to redo their patches in a way that can at some point be
+>> upstreamed after some human review but since we don't have enough
+>> maintainers who could do that for them this should be done by the
+>> contributors. With the current no-AI policy they are locked out from
+>> contributing so they won't even try. By now they have implemented features
+>> we wanted for years but still could not get them due to not enough people
+>> being able to write code and while the AI generated patches can be mostly
+>> sand there are some gold in them that actually fixes issues or add features
+>> that could be useful if there was a way to upstream them. With current
+>> policy I can't even use the AI patches to look at them and clean them up for
+>> upstreaming (not that I want to do that due to the lot of nonsense to sift
+>> through but for some simpler patches this could be an option or if the
+>> patches would be made higher quality by better guarding what the AI does).
+>> Currently all I can say to these people is that QEMU does not accept AI
+>> generated patches but maube it would be better to say that while they cannot
+>> just submit their AI slop they should try to tell their AIs to do these
+>> again cleaning up all the nonsense and distill the gold from it and then
+>> there should be some way to let that improve QEMU without drowning the
+>> maintainers and putting all this effort on them.
+>>
+>> Regards,
+>> BALATON Zoltan
+>
+> AI's can not do this, at this juncture.
+
+AIs can't do that by themselves just by asking to do that but could if 
+steered in the right direction and supervised by people. That means the 
+people need some understanding on how things should be done so we should 
+encourage them to learn and then redo their slop in a better way. Asking 
+them to learn everything first and then redo everything by hand will not 
+lead anywhere. Giving up on it is an option but that will lead to forks 
+corrupted by AI patches that people are using instead of the upstream QEMU 
+because it does what they want and they don't know why it is bad. So I'd 
+try not to give up on it. We don't want to wade through slop and clean 
+those patches but we could try to educate people to use the AI in a better 
+way that can help the project too. That's still talking to real 
+contributors and using their effort and not wasting it. The proposal that 
+patches should be known and described by who submits them and review 
+should be replied by people and not AI is meant to go that way. Of course 
+there will be some people who will disregard that and still try to submit 
+slop and generate replies by AI but then you can refer to the policy and 
+ignore them until they follow the rules and put in some effort to learn.
+
+Regards,
+BALATON Zoltan
 
