@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF35C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 12:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F20C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 12:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAncu-0001DI-Uw; Sun, 27 Sep 2026 08:05:05 -0400
+	id 1xAnjb-0003PN-6B; Sun, 27 Sep 2026 08:11:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xAnan-0008UX-Q4; Sun, 27 Sep 2026 08:02:57 -0400
+ id 1xAnjZ-0003Ow-9s; Sun, 27 Sep 2026 08:11:57 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1xAnaj-0000N3-TS; Sun, 27 Sep 2026 08:02:52 -0400
+ id 1xAnjW-0001i2-E0; Sun, 27 Sep 2026 08:11:57 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Dx+hZfR6axZTsmzGy5K9qUd6YVuHV6rf5vYb0H3XgjOiDy8Yokd8M75rQ42XnXL/aVVU66TxA7K8OHFu2vnfGCuoCTbXJtcF1CrTVr/QjaNFaYwHH9/cFIFAr1G73S3ZnX7ACTMMkhgqI5r/fOJeA8MZm8DQy5wF6uegTRVbXeep33Rm2lew0mb3i6/mSSDc9q6vlvcnpRib08p7GQRi+577+EeSVbxDU/Le7dK3M9SpBEMZaUslFlh4kdssGZxcoghX30ljGsmrqjHFbNSHdxf7sU0tBQaP5gWcGOVb9Kgx21JNejEEM60fWkJS0cMRHvbOMExq1HJvftuN0qR3Xg==
+ b=AQfma9N4cpV02jSdI8MNR+HCcTSgWelyQJfVVY+NgvxWmOTCdpkpGoOD1Cnpya6woehhRUIfnrBL2QCxyZoYC0WutwtbXAc5B39rptV8JYbHX0655fYpM3ZhW+4/EIO4PlIGAB4bAfVMSWv8/4SsV8Yq7j6eLCRSz5OcuD3NcX8ASZEEDgV1rbWY0BzPIPEVFEHiQhrEsG/BuIZFcA+JooPIcMkFwUPyxWXkUxOCD6HESr9zMVIyXw3OlK5erdc0f2vgfbgzNddT/SCJ6WWlgxfaG4JDtOKk+xF1z8wqKPLG2iflqoHd4obAGZoME3DPneaHh6yOpTIAbrFP9TJm3A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=daKLMM9J/Ri1HcwU4dB01UGVCDSQ2tqZy1sjXxSkGOc=;
- b=ZmPOidL9fKwDNcKEgqGFMyRH7dAsdSOv6YM9AdtSBvRj69bB7vCx9u5Uqc3dL1uyv1tt2x9outqsTtGjfY++D4OQJcu6jHv/PjCGxbK88arE9qdyRx6HTztr1o+rhK/hP2Cqvx6DBugC6y62ZyHSquc13dECjNOWaMMM9uQMKWhQ6rQBVPOBZQvWlKiCsAP6wQBTl0qPKUmx456Ve9Ill4V+rYHRePw3D1zm72TTcriM8olcoIeg0p0D30reqa+57hUCjJucX25YsqDo55s0JfJb1FLnWV/jQQpcriLPeY4CkqspCbtGEKOB/zVQB3pLBER2O2WomVwHAweYqsel9w==
+ bh=bYISzz3BASxIfYt2XLm6pgU61rixsd3tatrcsKcdmZA=;
+ b=PxlS8k+inUdbwaP6JRWLSH9Ep8wcHYjrTTCG4qlSrc7bwN5S1NUvBPKZBVqssHUWp/tXCnZKOA7xAJ562QL+HM25nHrgQNjsfvWyU0+L7Lo58bzr2DENaL76i3GWsODYi+xR8C1zNm4HXXV0qcGOpuXsF4CNAtW2A9olMH4lWVgUOvES/Qs9Gmojz/+aKkhttIgfSTT0nuomklnVvwzcDruV7LeowOleOWpUCUu7liADh/gVghN9iZA5SuqpPFyJioTRVUJ53mkGPHXpqIdSLeF+6bkQ4EUiAi1J6uG3Qeh9zCpDmXNsEUU2NdZRFns0gmurcjueV9U/yrE+g/yNhg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,93 +33,92 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=daKLMM9J/Ri1HcwU4dB01UGVCDSQ2tqZy1sjXxSkGOc=;
- b=jkS83LyQr+F/kGYY9BNxFYecEocr+xwrBHi93UdEnSjg1S3Hei66HY0QGhew1q+ncHAdhdfuNzhNNN34B14dgajWY+2mGVhf3RE8bF3b1WSVeU3pLJpb0ph+EHatNHAtoo3D5uJ4NMzNiZnPTPslkMuliLC98e1IfDrGI/6gMXIbjWmzgCyuozE1OW2useCL2GsEA1bLsFCbgJCMOchOegtqd3sQ71MXoYv2/1AUuGlbK4hIHxwJqM9v9mPXHIhHCDSHSnDZZ5OoN8YsrBsu/FzheJts8cieJce5cvB4dnFT/VfCAf4h+8MHpDzaWIMS51MVecYMlFhOFVv+rFW+7A==
+ bh=bYISzz3BASxIfYt2XLm6pgU61rixsd3tatrcsKcdmZA=;
+ b=Iwoyl84fPltFpIvK61BdzkmELYWVBZYeM5S25lrtOYkTbOkZwUhfy80O5+goGvS0co2XFaABj689+w48uY1k7TKzrQ9G6J5t//QwF30I7BdAmwWaVu+aurjZPQmvMNijBtT2ts/Ubl3RENwMsW32tOXBeHJG2zv0swsx/fXZBX6RRC/3mbDCdCPX+8ydMGFhJ6aVigHNiWbs08/sIBkFnSb7MPXjKwyI8bw6u9sCtefxvb7cuCNFNm3kmTv1ce6chmIQm+/qlDErm74wgUyM9QFCn97AUGxLaW72eUVZQn70CaVo7IHEkDCEdoOR4kSGMdsy+/JilnKzJzDD15TF7g==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KUXPR02MB9336.apcprd02.prod.outlook.com (2603:1096:d10:a3::10)
- by KL1PR02MB7331.apcprd02.prod.outlook.com (2603:1096:820:11b::7)
+ by SEZPR02MB7365.apcprd02.prod.outlook.com (2603:1096:101:1f6::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Sun, 27 Sep
- 2026 12:02:45 +0000
+ 2026 12:11:47 +0000
 Received: from KUXPR02MB9336.apcprd02.prod.outlook.com
  ([fe80::1451:cb49:7950:b10d]) by KUXPR02MB9336.apcprd02.prod.outlook.com
  ([fe80::1451:cb49:7950:b10d%5]) with mapi id 15.21.0451.022; Sun, 27 Sep 2026
- 12:02:45 +0000
-Date: Sun, 27 Sep 2026 20:02:39 +0800
+ 12:11:47 +0000
+Date: Sun, 27 Sep 2026 20:11:41 +0800
 From: Chao Liu <chao.liu@processmission.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <Alistair.Francis@wdc.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jason Chien <jason.chien@sifive.com>
-Subject: Re: [PATCH v4 5/6] disas/riscv: Add disassembler support for
- Xsfvqmaccdod/Xsfvqmaccqoq
-Message-ID: <arkF1wgQYpYLDo9i@MacBook-Pro-4.local>
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v4 6/6] tests/tcg/riscv64: Add tests for SiFive int8
+ matmul extensions
+Message-ID: <arkH39PkZWjekd-z@MacBook-Pro-4.local>
 References: <20260927082534.3228237-1-max.chou@sifive.com>
- <20260927082534.3228237-6-max.chou@sifive.com>
+ <20260927082534.3228237-7-max.chou@sifive.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260927082534.3228237-6-max.chou@sifive.com>
-X-ClientProxiedBy: BY3PR04CA0008.namprd04.prod.outlook.com
- (2603:10b6:a03:217::13) To KUXPR02MB9336.apcprd02.prod.outlook.com
+In-Reply-To: <20260927082534.3228237-7-max.chou@sifive.com>
+X-ClientProxiedBy: PH7P221CA0028.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:32a::16) To KUXPR02MB9336.apcprd02.prod.outlook.com
  (2603:1096:d10:a3::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KUXPR02MB9336:EE_|KL1PR02MB7331:EE_
-X-MS-Office365-Filtering-Correlation-Id: ca2cf2fb-37c4-4b83-5b66-08df1c8f3dbf
+X-MS-TrafficTypeDiagnostic: KUXPR02MB9336:EE_|SEZPR02MB7365:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00495a23-b0e9-4d81-2fc3-08df1c90810d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|23010399003|22082099003|18002099003|3023799007|56012099006|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info: XhOhfAkdVBlR6i7kQO+2+90vVK1wjUaV8Iu/pdEFFxaQSYSTmTw7rLPU/S/DwRp6UZ6Hfr+af2tchl/piBwdsLuZ4h8hhf1Mq2EZrmuROs3uw1oqSGryDwIaT88bPpaSuVS5zXkadQ+wjtdPtPgc/duqJqp3rUxbQHIfz+fh0TQc/ngQU31zTAH/vjoEflr9W7m/Yf8nlYF0VF4ubH63D5Uex746KiWfGZag2Dvy0lheYGop7y5fLmF5fq9mD0X4OjV6hNQty6orOUmwh9meMZ8VoW+2QAZ4TkN3VstKq0EH35JB6DOEmy4YWos7RJYWvJfD0pLFeA2kznFPZjBgVzcqsFr4e9MZwGVCIUXEkVdk4fgnkgUjjhlWU6Py2EzRjRM6/bPgSgbNwXVZplZ3WVwLMO69H8Vw0iLixlqUDA4yHRGogffHG0RgufvNhbohgf2Q+b32/w6fFawHtLTM4fRIeZewESA9mIKFFvXY0ys3R5T7ekCqieKn1SG4o8ntYXgyBjNT8t57hrELU/t9uRYUTgqP6x5P1VvxGLJyo2ZTL4Pl6PJ4Cum3tH29+hhQkl0AOeK+vYQyn1Gy/sNeEkSGvMGq1UeOsN8nTpZ3xduD0BrAW+X4x5Mvxc2IHSvYCRV56L8w1Rs4N4Qh0wFnuD3ob4kG+S1DcyV8/H6yDwo=
+ ARA:13230040|366016|23010399003|1800799024|376014|4143699003|56012099006|10067099003|22082099003|18002099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info: 2XJDQQQPO4DvEAj1j9DBWYmj+eRGbrVhJi8LEVk8q8+FkMeW5ctV2WCuc32jwmCRcmArWcAI17AEVIcUHUxvgTqCaQnqzfg2Fl+SFbPMGmHYnPdlgaeS1ZbKQobi7am0u6+d4phcmuLem1/JX2nZTZK8NeKWwwn56dt5lcdnBhh6aPKfhfYckuBOvXHr55f/FZezXJoT+gy0WmDBpeaXeUiUUFSBFTUPoiYsZ0QDmJ3cXJaSehhhmqPiydJjC+YqvIyWmA+a4W3IaasVnPavVMcLL0CUbrBzwu05Rc8OoK+On+tmfnErRGxek3qFlUW4V969NpuJxvx42ZGfU0Rbo+2IzlkGj4Iz4vEysKmR1JioIdIgo77m/Hn+dOO1iRWe7v+GtBIdC9gpGAlPnYWl9a8gDYclmiPteYXY/UhT4sv3c1Wk5fN3Jl6XYhSkzcQ1lf+qtwL1joS/Hi/Y9V7vyNAR9ak1/+3l2PgIgMcXDeyO0kjJoEhrNWkYh2zjfKuN+E5ciX0g7dT/TAwEok4TBiY96z+7MnZ759is8gncH+hHZ9sk//LlMAxpIYbUKwU8biH6pjw6nmUzbb+8YECd9u06YnSOJk5c6DAqbgLT8O17V4NjRrhwyQj/jZdfAv8dve//5J6Kq3RW5PHVDAg5PhkXjPtRr0phsJAKrlkc6C8=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KUXPR02MB9336.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(22082099003)(18002099003)(3023799007)(56012099006)(10067099003)(4143699003);
+ SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(4143699003)(56012099006)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tzmhrc8Zp+/CIXEaaKtEVYpy5IO4rwS2DcYaxtwNcFwz/3NptG0EBJh+opWQ?=
- =?us-ascii?Q?i9W+G65h47vwI+om5lMa/YO7U9lRzWLDMrwdphO/qTONS2lIl4v8ac7NcZs1?=
- =?us-ascii?Q?cZJWDzoGeUY57IvwGgbLPK7SayIZLWu4iAZVeLxKLq6awlcL0Okw0zur8OSk?=
- =?us-ascii?Q?aiRJisWgpbHdp2WFUzXUEqUU9EfEIkU5sum+rzKEgDAtXakHqRRdV1FGiikg?=
- =?us-ascii?Q?onUTG/li+eroSZEi2STXaPdzr8G9BjReas4YcERwtrhOb3X4ocQquxsQki83?=
- =?us-ascii?Q?QDww8aSRtrVBCkcl+Eckx3NemBeitvgZXuedQ2sIXJ8e38Y8beoE5bsjVHmE?=
- =?us-ascii?Q?97tb8t5R3Sz4xLhvWs2hAPW9BXLdkOEUStWfOBHftBHuWMv2Mx495mxg3Hez?=
- =?us-ascii?Q?JMTHxHkzQ+pjBNDdCV+iPpIHBLR72NEmpJoMG0LSSD3Xwo2rN/lFJv+QdBK7?=
- =?us-ascii?Q?SMOQ2hJPuyx5KJnePvTdEG32qWZn4mpON1vHwrAT/qgBDIIe96tSMWlbxD/V?=
- =?us-ascii?Q?CR8L38jTl2Dp2HXa4JIeChGQxbCgthRBRFPA/YUIf07jfT3dO5R8tTtKd2Z2?=
- =?us-ascii?Q?qXWob0/gVsfL+RTXS5ikxuFwdXzEd/SqTubvuN1rC3tYzxAEwjaHNk9Gloxy?=
- =?us-ascii?Q?r7oqYnnKveL8m65eI6JUPVHo5Og6k5GbP3nPnZCxeJLgWrxETQZ0RBwn0Ln2?=
- =?us-ascii?Q?887w9dm/E8TUo6nkr4QHaCjetuny5Z3VAckyNMvTV3sQusA/Cbk75ZBSVVKG?=
- =?us-ascii?Q?Q4oONiLQaJNvER5bgLtO9KEY7XjzEzh+3/rgduBRbgkt14mHKe6274LFpUf8?=
- =?us-ascii?Q?viOezA/MK1GmUQa6IF9OCyE43eo7IpuTy6rnN1qEFeFVXKKmXGSOEDgdEcei?=
- =?us-ascii?Q?0ePdFUOzdDXxDP9mVc/s5ppeGgxBssx02YdBLPZ+E0sRS8z8MpDxHImNRnKp?=
- =?us-ascii?Q?D0busgWKSDYAlgoXQWWv3IH5rBrEit0kupHTkxjxSmYjyPP24ME7PGQFifZZ?=
- =?us-ascii?Q?pNvgMOdnIWc8QlQvxZmdOyXxCYottBrxfgPhJjMKxeJ5hi5sjeeUZqCQY7Le?=
- =?us-ascii?Q?mWZ5Cyr12QJICyRMYzf5zuGgAju/ibf0U/K+/vpxIEHepK/3eBUy3Ixnng/U?=
- =?us-ascii?Q?xrLCwCZ8JD6z27Q7YE1QTHg+KkH6KuV1cJHjbEymDoQZDDOvyg+bdxPorall?=
- =?us-ascii?Q?TYIA+wQurvfsTZjo1rVX9YVsHkUkeROonJbhcBRLMEHglCRi17NrYxvtF69m?=
- =?us-ascii?Q?mr28LLLn6wAzXSdKvkASOAb1HeQOSGRPc0wod79S3ogskR4FLXptPA7oS07j?=
- =?us-ascii?Q?0uFEkcyPoVy+iyUL23C1tkrV+cGgP4ss11o9Z+HOuNRKjAEeSuz/nuKsMs/B?=
- =?us-ascii?Q?mKlDbca+5EOHSSj1vPndmWdsUrdMfNe0CkMPYkMbYlQLCTxtsIohVd8MIc7I?=
- =?us-ascii?Q?mi6vLZfVVqLVuLN8ESu0AZVsIw2cvaWzuW5rPfrgmixWEjMi4v9M7HyLnxiI?=
- =?us-ascii?Q?RhSTU4SsQ2i85+TU1GpgXJZgmYIotZu20c8c9HkyEyCcOcyMnCp5kD5IRCNm?=
- =?us-ascii?Q?TTRGCOeI2DpYQOjy/VUXjeeY1/mdNZCWRipOFs3+bsAhu6VdJ2rbENJKy4Ny?=
- =?us-ascii?Q?Swu5W4HOEhQJwanMQFElPxayfffXYmsIqRnXzSBytTis9bsv8fdpWCwm7Zfs?=
- =?us-ascii?Q?Tha5xmBel5Y/X8HdzYkzAwbmH0Bp66KuXFZJmqfUIcU8W0G+ubzGm87rDd4F?=
- =?us-ascii?Q?KEgJdEH7IDWQ77xRh7/j+sWGQcf2A2E=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?YSdN/VEaH3qpxKP3O1PRYJSXBRRM9noCaOc7c6AkDVqjn5Tav/W9QfXm2Gsn?=
+ =?us-ascii?Q?V2xcx9rslU33EdTn7cExsTGVNJwPmDEateovC35/hpRTY0XJVAqQpNszHgM3?=
+ =?us-ascii?Q?MIhOYZMqp8aD1dLrme2CeedwaxqEAlNnwwz0c0msX5SnXb6zfgBE68fVvX/b?=
+ =?us-ascii?Q?GU0NXhU1006UxBz5vkOOWuqAqw9zApxNRs0QktqsEL1ZUWkT9VjgDAs09FRN?=
+ =?us-ascii?Q?lekZdGSECawBcVA8COyA5Yft9tuVExJlfWSrzyxrigylk0LfDJdxUrhG7K8o?=
+ =?us-ascii?Q?Eg+nxF9C1SLp7fo7rU41ZuURRqN5TCRvRHuBMzQsfE4nLP6cY19q2/PZYtBE?=
+ =?us-ascii?Q?2Or8BWCo2SEBy0md4GD76RCf8L6L2bttNbKuM19ERsCGxF/c8jjNHfBiRyB9?=
+ =?us-ascii?Q?DEGZ1laxhavYHJaojH8dcqxRAv9ba3sw5iHBp1e8GVQDYZ5+8hSKchuroceB?=
+ =?us-ascii?Q?THQ/UWvCG/jIs5DY94a57NLh1vpEhqLfPK1mVq+hUe7+qeitz+iC+0ODbaYy?=
+ =?us-ascii?Q?Wo2i2PtwgPlqrZuG/6vD/wBd1RXEsl1ib0bNxChmZ3HJgIQCTpLwYrzqq5MG?=
+ =?us-ascii?Q?lOkOZacnTw52I2uvsLGEVLbhDj2hhpu213Xto52ERe6YGHzsly49u6r7uPvE?=
+ =?us-ascii?Q?iHj/zLQM/7rpN6DqylH1PyNTY0F0n6CNJ4NLQIUjPhsfbrUI1xJplv4qv0hT?=
+ =?us-ascii?Q?juTs8+VQ1Uouw/PmC2oQJViDpBw5UiKQjbllWNTFGJDcArzsL+BaE1rxVR0s?=
+ =?us-ascii?Q?bv/N//QcOqnDaEGR1rRk6V0fy7vvm5AwAheeiRzVp9Q96mgPJFbV+0QGKcWO?=
+ =?us-ascii?Q?aGPQSQjC1XQvintCz2LbJzmwRZ9EahKMslMfHsKkZDKNp6hPmI8gt5PXZQzR?=
+ =?us-ascii?Q?SeGfLWwXv5rSQub9qyKhINm+Ack7JRYpNHksIWCQsGx0ps4GKPTjTMtrE/5M?=
+ =?us-ascii?Q?y8USfB9Yru4TJFTKgcbGvXeQGrXmxcgBop/PGHnr29RMOEkJzDsrcr6QAsrl?=
+ =?us-ascii?Q?iEdpiH62V7hlk3THznupArlj7RVUJhWjd15tbLD0jepNJdpfJjPIKHZi5tyr?=
+ =?us-ascii?Q?Kbs9saNtI9KviKsd2hCb+ZVxD8UISS7vpEW7g4IEUllyBWKs7X+LqES4jTz5?=
+ =?us-ascii?Q?QfMq5KCX29iEUX9dBtqXzZ6zmMpmi7bZryDErFxpiedABZCFs9cznhFQQtbn?=
+ =?us-ascii?Q?UrkLOB6h3uin9MYLjAVpeTuGmt78rna+OW6zUOg+qrdg6L4E2FtT5HH6TZsB?=
+ =?us-ascii?Q?H7AQ3D0dFNM4+Jm4rhK3CTQMVn7HF4xCijl5d2nCpt35wWEPUM73LI1f5OoV?=
+ =?us-ascii?Q?KPIygl/Nzp6vnHHuS8pEzYEMlElEoufyLLTo8lrlGC0ot7RHjDl8wQFF9I34?=
+ =?us-ascii?Q?Yk1zkuWNanjP/xThk9pqVnmV9pfLhrh+xIIOI6tY7obffATcOaQ1zTqIX7Er?=
+ =?us-ascii?Q?9SInUHW45u2sL6mh+dWc4VTexdzMUrsBmz1I8N7uFqKZTk/VtMIA5WpXrEvs?=
+ =?us-ascii?Q?5OOKA6dGe6F3YBm0hWsTOnGRWjDzQaleS5PKy+dNyrB5P0tbHX5+azBkf/g2?=
+ =?us-ascii?Q?9IZjwH+p9k2BcdC9WAqLdDbGKNiKSajeabAi7SB7+nTkCY1p9OLpzTjwJ6yf?=
+ =?us-ascii?Q?zYOUi5GFz5QOZ/4N+pUF7Oz5RT/bzRq7eD/DBhLYE1LEPUNZbI8QrTowDKbm?=
+ =?us-ascii?Q?qJ/L3Xxjue5tCSAFdH1uY6Z61H0jBb0u/D2N7FXdz9GJ0fjpxZv4gNws1SiI?=
+ =?us-ascii?Q?Gje4cdHhvySeYbpdetapJj0Wl0uPA+0=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca2cf2fb-37c4-4b83-5b66-08df1c8f3dbf
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00495a23-b0e9-4d81-2fc3-08df1c90810d
 X-MS-Exchange-CrossTenant-AuthSource: KUXPR02MB9336.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2026 12:02:45.2200 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Sep 2026 12:11:47.8167 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: J95U23nIkTLH1JaLr9F7xiWm8giEao3N2AFa4ejGFFEEjofLiVtqVK4zd4u+iE4hcFfufwp2mcyD4bjMs7wqEyOM//7CMVVUFyyy+Sz/Cik=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7331
+X-MS-Exchange-CrossTenant-UserPrincipalName: EXQtCPOobt/ARLoyjEratbXxHZ4pQXhKqN0kDmCcSYaFJ14hVDBhkjB+fTSLNlYfZHMMs9H93ZkHmKvYi7KrfsHCyebA+HQoULNCEA2iSOg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7365
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=chao.liu@processmission.com;
  helo=OS8PR02CU002.outbound.protection.outlook.com
@@ -144,17 +143,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Sep 27, 2026 at 04:25:33PM +0800, Max Chou wrote:
-> From: Jason Chien <jason.chien@sifive.com>
+On Sun, Sep 27, 2026 at 04:25:34PM +0800, Max Chou wrote:
+> Add a test that exercises all SiFive int8 matrix-multiply instructions
+> from the Xsfvqmaccqoq and Xsfvqmaccdod extensions.
 > 
-> Add disassembler support for all SiFive custom int8 matrix-multiply
-> instructions: sf.vqmacc{u,,us,su}.4x8x4 and sf.vqmacc{u,,us,su}.2x8x2.
+> For each tile shape the test covers the four signedness variants
+> (sf.vqmaccu / sf.vqmacc / sf.vqmaccus / sf.vqmaccsu) and the
+> reserved-encoding path: with vl set to a value that is not a multiple
+> of the tile size the helper raises an illegal-instruction exception.
 > 
-> These instructions share opcode 0b1011011 and funct3 0b010, and are
-> distinguished by funct6: 60-63 for the 4x8x4 (Xsfvqmaccqoq) tile and
-> 44-47 for the 2x8x2 (Xsfvqmaccdod) tile.
-> 
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
 > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > Acked-by: Alistair Francis <alistair.francis@wdc.com>
 > Signed-off-by: Max Chou <max.chou@sifive.com>
@@ -164,170 +161,308 @@ Thanks,
 Chao
 
 > ---
->  MAINTAINERS              |  1 +
->  disas/meson.build        |  3 ++-
->  disas/riscv-xsf-op.c.inc | 11 +++++++++
->  disas/riscv-xsf.c        | 49 ++++++++++++++++++++++++++++++++++++++++
->  disas/riscv-xsf.h        | 16 +++++++++++++
->  disas/riscv.c            |  2 ++
->  disas/riscv.h            |  1 +
->  7 files changed, 82 insertions(+), 1 deletion(-)
->  create mode 100644 disas/riscv-xsf-op.c.inc
->  create mode 100644 disas/riscv-xsf.c
->  create mode 100644 disas/riscv-xsf.h
+>  MAINTAINERS                          |   1 +
+>  tests/tcg/riscv64/system/meson.build |   7 +
+>  tests/tcg/riscv64/test-xsfvqmacc.S   | 260 +++++++++++++++++++++++++++
+>  3 files changed, 268 insertions(+)
+>  create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
 > 
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index a3a8199840f..be1c505ac20 100644
+> index be1c505ac20..9bf7f46fc24 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -406,6 +406,7 @@ S: Supported
->  F: target/riscv/xsf.decode
+> @@ -407,6 +407,7 @@ F: target/riscv/xsf.decode
 >  F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
 >  F: target/riscv/tcg/xsf_helper.c
-> +F: disas/riscv-xsf*
+>  F: disas/riscv-xsf*
+> +F: tests/tcg/riscv64/test-xsfvqmacc.S
 >  
 >  RENESAS RX CPUs
 >  R: Yoshinori Sato <yoshinori.sato@nifty.com>
-> diff --git a/disas/meson.build b/disas/meson.build
-> index b382550e41f..9b14adf4f1b 100644
-> --- a/disas/meson.build
-> +++ b/disas/meson.build
-> @@ -8,7 +8,8 @@ common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
->      'riscv.c',
->      'riscv-xthead.c',
->      'riscv-xventana.c',
-> -    'riscv-xlrbr.c'
-> +    'riscv-xlrbr.c',
-> +    'riscv-xsf.c'
->  ))
->  common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
->  common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
-> diff --git a/disas/riscv-xsf-op.c.inc b/disas/riscv-xsf-op.c.inc
-> new file mode 100644
-> index 00000000000..c8daa7ebef8
-> --- /dev/null
-> +++ b/disas/riscv-xsf-op.c.inc
-> @@ -0,0 +1,11 @@
-> +/* Xsfvqmaccqoq */
-> +OP(sf_vqmaccu_4x8x4, "sf.vqmaccu.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmacc_4x8x4, "sf.vqmacc.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmaccus_4x8x4, "sf.vqmaccus.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmaccsu_4x8x4, "sf.vqmaccsu.4x8x4", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +
-> +/* Xsfvqmaccdod */
-> +OP(sf_vqmaccu_2x8x2, "sf.vqmaccu.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmacc_2x8x2, "sf.vqmacc.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmaccus_2x8x2, "sf.vqmaccus.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> +OP(sf_vqmaccsu_2x8x2, "sf.vqmaccsu.2x8x2", rv_codec_v_r, rv_fmt_vd_vs1_vs2)
-> diff --git a/disas/riscv-xsf.c b/disas/riscv-xsf.c
-> new file mode 100644
-> index 00000000000..745fcc8efda
-> --- /dev/null
-> +++ b/disas/riscv-xsf.c
-> @@ -0,0 +1,49 @@
-> +/*
-> + * QEMU RISC-V Disassembler for xsf (SiFive vendor extensions).
-> + *
-> + * Copyright (c) 2023 SiFive, Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "disas/riscv.h"
-> +#include "disas/riscv-xsf.h"
-> +
-> +#define OP(N, ...) static const rv_opcode_data op_##N = { __VA_ARGS__ };
-> +#include "riscv-xsf-op.c.inc"
-> +#undef OP
-> +
-> +const rv_opcode_data *decode_xsf(rv_decode *dec, rv_isa isa)
-> +{
-> +    rv_inst inst = dec->inst;
-> +
-> +    switch ((inst >> 0) & 0b1111111) {
-> +    case 0b1011011:
-> +        switch ((inst >> 12) & 0b111) {
-> +        case 0b010:
-> +            switch ((inst >> 26) & 0b111111) {
-> +            case 0b101100:
-> +                return &op_sf_vqmaccu_2x8x2;
-> +            case 0b101101:
-> +                return &op_sf_vqmacc_2x8x2;
-> +            case 0b101110:
-> +                return &op_sf_vqmaccus_2x8x2;
-> +            case 0b101111:
-> +                return &op_sf_vqmaccsu_2x8x2;
-> +            case 0b111100:
-> +                return &op_sf_vqmaccu_4x8x4;
-> +            case 0b111101:
-> +                return &op_sf_vqmacc_4x8x4;
-> +            case 0b111110:
-> +                return &op_sf_vqmaccus_4x8x4;
-> +            case 0b111111:
-> +                return &op_sf_vqmaccsu_4x8x4;
-> +            }
-> +            break;
-> +        }
-> +        break;
-> +    }
-> +
-> +    return NULL;
+> diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+> index 2aca68e0782..7f861212366 100644
+> --- a/tests/tcg/riscv64/system/meson.build
+> +++ b/tests/tcg/riscv64/system/meson.build
+> @@ -62,6 +62,13 @@ tests += {
+>    }
+>  }
+>  
+> +tests += {
+> +  'test-xsfvqmacc.S': {
+> +    'cflags': cflags,
+> +    'qemu_args': ['-cpu', 'rv64,v=true,vlen=256,xsfvqmaccdod=true,xsfvqmaccqoq=true', qemu_args],
+> +  }
 > +}
-> diff --git a/disas/riscv-xsf.h b/disas/riscv-xsf.h
+> +
+>  if 'qemu-system-riscv64' in emulators
+>    tcg_tests += {
+>      'riscv64-softmmu': {
+> diff --git a/tests/tcg/riscv64/test-xsfvqmacc.S b/tests/tcg/riscv64/test-xsfvqmacc.S
 > new file mode 100644
-> index 00000000000..b15b7aa97c8
+> index 00000000000..a116712e502
 > --- /dev/null
-> +++ b/disas/riscv-xsf.h
-> @@ -0,0 +1,16 @@
+> +++ b/tests/tcg/riscv64/test-xsfvqmacc.S
+> @@ -0,0 +1,260 @@
 > +/*
-> + * QEMU disassembler -- RISC-V specific header (xsf*).
+> + * Test the SiFive Xsfvqmaccqoq/Xsfvqmaccdod custom int8 matrix-multiply
+> + * extensions.
 > + *
-> + * Copyright (c) 2023 SiFive, Inc.
+> + * The eight instructions widen 8-bit integer inputs to 32 bits and perform
+> + * a matrix-multiply-accumulate into a vector of int32 accumulators:
+> + *
+> + *   C[j] += A * B[j]
+> + *
+> + * Xsfvqmaccqoq (4x8x4): A is 4x8, B[j] is 8x4, C[j] is 4x4 int32. One matrix
+> + * operation is performed per 32 elements of vl (TILE_SIZE = 32).
+> + * Xsfvqmaccdod (2x8x2): A is 2x8, B[j] is 8x2, C[j] is 2x2 int32. One matrix
+> + * operation is performed per 16 elements of vl (TILE_SIZE = 16).
+> + *
+> + * The input tiles below contain bytes >= 0x80 so that each signedness
+> + * variant produces a distinct result; the expected int32 tiles were computed
+> + * with an independent reference model of the specification. The accumulators
+> + * are cleared before every operation, so the expected value is the pure
+> + * matrix product.
+> + *
+> + * Test exits via semihosting with status 0 on success, or the 1-based index
+> + * of the first failing operation.
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
 > +
-> +#ifndef DISAS_RISCV_XSF_H
-> +#define DISAS_RISCV_XSF_H
+> +	.option arch, +v
+> +	.option norvc
 > +
-> +#include "disas/riscv.h"
+> +	.text
 > +
-> +const rv_opcode_data *decode_xsf(rv_decode *, rv_isa);
+> +/*
+> + * Run one 4x8x4 operation: load the 32-byte A and B tiles, clear the 4x4
+> + * int32 accumulator (vd = v4:v5, EMUL = 2), execute the op, then compare the
+> + * 16 int32 results against the expected tile.
+> + */
+> +.macro RUN_QOQ id, word, exp
+> +	li	a2, 32
+> +	vsetvli	t0, a2, e8, m1, ta, ma
+> +	la	t1, a_qoq
+> +	vle8.v	v1, (t1)
+> +	la	t1, b_qoq
+> +	vle8.v	v2, (t1)
+> +	vsetvli	t0, x0, e32, m2, ta, ma
+> +	vmv.v.i	v4, 0
+> +	li	a2, 32
+> +	vsetvli	t0, a2, e8, m1, ta, ma
+> +	.word	\word
+> +	vsetvli	t0, x0, e32, m2, ta, ma
+> +	la	t1, result
+> +	vse32.v	v4, (t1)
+> +	la	a0, result
+> +	la	a1, \exp
+> +	li	a2, 16
+> +	li	t6, \id
+> +	call	check_words
+> +.endm
 > +
-> +#endif /* DISAS_RISCV_XSF_H */
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index ef8b7ff20f9..d755172164a 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -27,6 +27,7 @@
->  #include "disas/riscv-xthead.h"
->  #include "disas/riscv-xventana.h"
->  #include "disas/riscv-xlrbr.h"
-> +#include "disas/riscv-xsf.h"
->  
->  /* register names */
->  
-> @@ -3456,6 +3457,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
->              { has_xtheadsync_p, decode_xtheadsync },
->              { has_XVentanaCondOps_p, decode_xventanacondops },
->              { has_xlrbr_p, decode_xlrbr },
-> +            { has_xsf_p, decode_xsf },
->          };
->  
->          for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
-> diff --git a/disas/riscv.h b/disas/riscv.h
-> index b0269bb709f..4f1ffc4ae02 100644
-> --- a/disas/riscv.h
-> +++ b/disas/riscv.h
-> @@ -262,6 +262,7 @@ typedef struct {
->  #define rv_fmt_vd_vs2_imm_vm          "O\tD,F,im"
->  #define rv_fmt_vd_vs2_uimm            "O\tD,F,u"
->  #define rv_fmt_vd_vs2_uimm_vm         "O\tD,F,um"
-> +#define rv_fmt_vd_vs1_vs2             "O\tD,E,F"
->  #define rv_fmt_vd_vs1_vs2_vm          "O\tD,E,Fm"
->  #define rv_fmt_vd_rs1_vs2_vm          "O\tD,1,Fm"
->  #define rv_fmt_vd_fs1_vs2_vm          "O\tD,4,Fm"
+> +/*
+> + * Run one 2x8x2 operation: load the 16-byte A and B tiles, clear the 2x2
+> + * int32 accumulator (vd = v4, EMUL = 1), execute the op, then compare the
+> + * 4 int32 results against the expected tile.
+> + */
+> +.macro RUN_DOD id, word, exp
+> +	li	a2, 16
+> +	vsetvli	t0, a2, e8, m1, ta, ma
+> +	la	t1, a_dod
+> +	vle8.v	v1, (t1)
+> +	la	t1, b_dod
+> +	vle8.v	v2, (t1)
+> +	vsetvli	t0, x0, e32, m1, ta, ma
+> +	vmv.v.i	v4, 0
+> +	li	a2, 16
+> +	vsetvli	t0, a2, e8, m1, ta, ma
+> +	.word	\word
+> +	vsetvli	t0, x0, e32, m1, ta, ma
+> +	la	t1, result
+> +	vse32.v	v4, (t1)
+> +	la	a0, result
+> +	la	a1, \exp
+> +	li	a2, 4
+> +	li	t6, \id
+> +	call	check_words
+> +.endm
+> +
+> +	.global _start
+> +_start:
+> +	/* Enable the vector unit (mstatus.VS = Initial). */
+> +	li	t0, 1 << 9
+> +	csrs	mstatus, t0
+> +
+> +	/* Route synchronous traps to trap_handler (mtvec direct mode). */
+> +	la	t0, trap_handler
+> +	csrw	mtvec, t0
+> +
+> +	RUN_QOQ	1, 0xF220A25B, exp_qoq_u	/* sf.vqmaccu.4x8x4  */
+> +	RUN_QOQ	2, 0xF620A25B, exp_qoq_s	/* sf.vqmacc.4x8x4   */
+> +	RUN_QOQ	3, 0xFA20A25B, exp_qoq_us	/* sf.vqmaccus.4x8x4 */
+> +	RUN_QOQ	4, 0xFE20A25B, exp_qoq_su	/* sf.vqmaccsu.4x8x4 */
+> +	RUN_DOD	5, 0xB220A25B, exp_dod_u	/* sf.vqmaccu.2x8x2  */
+> +	RUN_DOD	6, 0xB620A25B, exp_dod_s	/* sf.vqmacc.2x8x2   */
+> +	RUN_DOD	7, 0xBA20A25B, exp_dod_us	/* sf.vqmaccus.2x8x2 */
+> +	RUN_DOD	8, 0xBE20A25B, exp_dod_su	/* sf.vqmaccsu.2x8x2 */
+> +
+> +	/*
+> +	 * Illegal-instruction reporting test (op 9).
+> +	 *
+> +	 * When vl is not a multiple of the tile size the instruction is
+> +	 * reserved and the helper raises an illegal-instruction exception at
+> +	 * runtime.
+> +	 */
+> +	la	t1, trap_mtval
+> +	sd	zero, 0(t1)
+> +	la	t1, trap_mcause
+> +	sd	zero, 0(t1)
+> +	/* vl = 16 is not a multiple of the 4x8x4 tile size (32 elements). */
+> +	li	a2, 16
+> +	vsetvli	t0, a2, e8, m1, ta, ma
+> +	.word	0xF220A25B		/* sf.vqmaccu.4x8x4, traps */
+> +	/* The handler skips the faulting insn, so control resumes here. */
+> +	li	a0, 9			/* fail code for this check */
+> +	la	t1, trap_mcause
+> +	ld	t2, 0(t1)
+> +	li	t3, 2			/* RISCV_EXCP_ILLEGAL_INST */
+> +	bne	t2, t3, _exit
+> +	la	t1, trap_mtval
+> +	ld	t2, 0(t1)
+> +	li	t3, 0xF220A25B
+> +	bne	t2, t3, _exit
+> +
+> +	li	a0, 0
+> +	j	_exit
+> +
+> +/*
+> + * Machine-mode trap handler: record mcause and mtval, then advance mepc
+> + * past the 4-byte faulting instruction and return.
+> + */
+> +	.balign	4
+> +trap_handler:
+> +	csrr	t4, mcause
+> +	la	t5, trap_mcause
+> +	sd	t4, 0(t5)
+> +	csrr	t4, mtval
+> +	la	t5, trap_mtval
+> +	sd	t4, 0(t5)
+> +	csrr	t4, mepc
+> +	addi	t4, t4, 4
+> +	csrw	mepc, t4
+> +	mret
+> +
+> +/*
+> + * check_words(a0 = result, a1 = expected, a2 = word count).
+> + * Returns to the caller if every word matches; otherwise exits with the
+> + * operation index held in t6.
+> + */
+> +check_words:
+> +1:	beqz	a2, 2f
+> +	lw	t2, 0(a0)
+> +	lw	t3, 0(a1)
+> +	bne	t2, t3, 3f
+> +	addi	a0, a0, 4
+> +	addi	a1, a1, 4
+> +	addi	a2, a2, -1
+> +	j	1b
+> +2:	ret
+> +3:	mv	a0, t6
+> +	j	_exit
+> +
+> +/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
+> +_exit:
+> +	la	a1, semiargs
+> +	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
+> +	sd	t0, 0(a1)
+> +	sd	a0, 8(a1)
+> +	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
+> +	.balign	16
+> +	slli	zero, zero, 0x1f
+> +	ebreak
+> +	srai	zero, zero, 0x7
+> +	j	.
+> +
+> +	.data
+> +	.balign	8
+> +semiargs:
+> +	.space	16
+> +result:
+> +	.space	64
+> +trap_mcause:
+> +	.space	8
+> +trap_mtval:
+> +	.space	8
+> +
+> +/*
+> + * A (4x8, row-major) in bytes [0, 32) of vs1.
+> + */
+> +a_qoq:
+> +	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
+> +	.byte	0xFF, 0x01, 0x00, 0x02, 0x7F, 0x03, 0x04, 0x05
+> +	.byte	0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x08
+> +	.byte	0x00, 0x00, 0x81, 0x00, 0x00, 0x02, 0x00, 0x03
+> +/*
+> + * B (8x4, row-major) in bytes [0, 32) of vs2.
+> + */
+> +b_qoq:
+> +	.byte	0x01, 0x02, 0x03, 0x04
+> +	.byte	0x05, 0x06, 0x07, 0x08
+> +	.byte	0x80, 0x7F, 0xFF, 0x01
+> +	.byte	0x00, 0x10, 0x20, 0x30
+> +	.byte	0x02, 0x02, 0x02, 0x02
+> +	.byte	0xFE, 0x01, 0x00, 0x7F
+> +	.byte	0x03, 0x00, 0x81, 0x04
+> +	.byte	0x40, 0x50, 0x60, 0x70
+> +/*
+> + * A (2x8, row-major) in bytes [0, 16) of vs1.
+> + */
+> +a_dod:
+> +	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
+> +	.byte	0xFF, 0x7F, 0x00, 0x02, 0x81, 0x03, 0x04, 0x05
+> +/*
+> + * B (8x2, row-major) in bytes [0, 16) of vs2.
+> + */
+> +b_dod:
+> +	.byte	0x01, 0x02
+> +	.byte	0x80, 0x7F
+> +	.byte	0x03, 0xFF
+> +	.byte	0x00, 0x10
+> +	.byte	0x02, 0xFE
+> +	.byte	0x7F, 0x01
+> +	.byte	0x81, 0x04
+> +	.byte	0x40, 0x50
+> +
+> +	.balign	4
+> +exp_qoq_u:
+> +	.word	0x0000279e, 0x000029db, 0x0000371f, 0x00003bf7
+> +	.word	0x00000648, 0x000004b5, 0x00000826, 0x0000091f
+> +	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
+> +	.word	0x0000433c, 0x000040f1, 0x0000819f, 0x000002cf
+> +exp_qoq_s:
+> +	.word	0xffffde9e, 0xffffd9db, 0xffffcd1f, 0xffffcbf7
+> +	.word	0x00000248, 0x000002b5, 0x00000126, 0x0000051f
+> +	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
+> +	.word	0x0000403c, 0xffffc1f1, 0x0000019f, 0x000001cf
+> +exp_qoq_us:
+> +	.word	0x00001e9e, 0x000029db, 0x00002d1f, 0x00003bf7
+> +	.word	0x00000348, 0x000004b5, 0x00000426, 0x0000091f
+> +	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
+> +	.word	0xffffc03c, 0x000040f1, 0x0000009f, 0x000002cf
+> +exp_qoq_su:
+> +	.word	0xffffe79e, 0xffffd9db, 0xffffd71f, 0xffffcbf7
+> +	.word	0x00000548, 0x000002b5, 0x00000526, 0x0000051f
+> +	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
+> +	.word	0xffffc33c, 0xffffc1f1, 0xffff829f, 0x000001cf
+> +exp_dod_u:
+> +	.word	0x00002795, 0x00003155, 0x00004642, 0x0000c2c0
+> +exp_dod_s:
+> +	.word	0xffffde95, 0xffffd955, 0xffffc042, 0x000041c0
+> +exp_dod_us:
+> +	.word	0x00001e95, 0x00002955, 0xffffc342, 0x000041c0
+> +exp_dod_su:
+> +	.word	0xffffe795, 0xffffe155, 0x00004342, 0xffffc2c0
 > -- 
 > 2.43.0
 > 
