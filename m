@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6738C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B9AC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSx-00023m-VG; Sun, 27 Sep 2026 06:50:44 -0400
+	id 1xAmSi-0000qV-Ox; Sun, 27 Sep 2026 06:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSv-0001wr-BT; Sun, 27 Sep 2026 06:50:41 -0400
+ id 1xAmSX-000052-Q4; Sun, 27 Sep 2026 06:50:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSt-0001A6-BZ; Sun, 27 Sep 2026 06:50:41 -0400
+ id 1xAmSV-00019M-KJ; Sun, 27 Sep 2026 06:50:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=nTtkgOlloxxVZChi/qwdhtYXp5TgC/4P/4PrKTa/PI4=;
+ t=1790506136; bh=BFJSeo7+VUpJGq++EhB68TEptPcA9Fi1uL3saiYu39M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=koA77YWv22E+/474w4pF8S5l6Xe1nxcw2reypRTrDyIeqdNld1lNqZ3/KcHvi5Jfe
- V5f1kl2IC6THwDRyUdJqSjOSbgXkac7R1ATiihurC1WerMOa70iiHzcKtnm4g5SEpM
- hrmL3gceNudywkkW63kTEfu84l07BChi+54CREueUio9O/XdA42bkMYKKlOPnK1giY
- fm4Mr+OLVdCIML/g7HtuVw2Uf9FdAzeCeT6DiFi0ar18FOins9XHpATdQSBjPFxgK4
- 4Ug9mE9C82Y7lnLe9HOCbDSaj3cpdeAxz54abIQ9bqpEof6k6gOIOqNlddkjgoBmcG
- iMHK3qQb5BA2Q==
+ b=DXEIG5XAvcRgdan5zVnSTs26BnulwNEk2G7rz6qves1HuNLXjHqC2aB/9JPSq1BcK
+ 0B4ALYtQeHX2aS4rOi08iGBqpxJoZn7jj6iN3D7Xc1MVWSVdqjEeuCbSgEHP2FnHN+
+ qqB/QeN7dyMx979xAeS2TIJbQu6XwZsrTBg+bLEu1GnsH0CZWAXAjwS2+/tRVdCF+N
+ kFWHMh7sqxrPcSuqpZjuH2f6D1eH4lXLbQw6Z+DJNI64w30TqxnfV868hjdrifFlPf
+ qQGw0vPb1q7Gb5jv/6oYT2+LJmNnSlpvF7M0DcGAUftFDqvbG111oyZpjtiupD8ltl
+ zK1MaiuXNSxHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2B1B41D8B6E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1CAFF1D8B6C;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2586E432175;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 19FB9432173;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E94515E794; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id E310D5E790; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Feifan Qian <bea1e@proton.me>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 79/92] hw/usb/hcd-xhci: don't assert on NAK when
- retrying an isoch transfer
-Date: Sun, 27 Sep 2026 13:47:55 +0300
-Message-ID: <20260927104821.196183-23-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 77/92] hw/usb/hcd-xhci: Set reentrancy guard in
+ timer functions (CVE-2026-17588)
+Date: Sun, 27 Sep 2026 13:47:53 +0300
+Message-ID: <20260927104821.196183-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -72,72 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The endpoint type in the xHCI endpoint context comes from the guest and
-is not checked against the device. A guest can configure the interrupt
-IN endpoint of usb-kbd as Isoch IN. The idle HID endpoint NAKs, and as
-soon as the transfer goes through the retry path in xhci_kick_epctx()
-it hits
+The xHCI controller processes USB events from timer callbacks
+(xhci_mfwrap_timer and xhci_ep_kick_timer) outside of any MMIO handler
+context. The device's mem_reentrancy_guard is therefore not engaged
+during this processing.
 
-  assert(xfer->packet.status != USB_RET_NAK);
+A malicious guest can exploit this by pointing the event ring base
+address (er_start) at the xHCI doorbell MMIO region. When
+xhci_write_event() performs a DMA write to deliver a transfer
+completion event, the write lands on doorbell register 0. If the
+written value is 0, this triggers xhci_process_commands() reentrantly.
+A CR_DISABLE_SLOT command prepared on the command ring then frees
+endpoint and transfer objects via xhci_disable_ep() / g_free() while
+the outer call stack still holds references to them, causing a
+heap use-after-free.
 
-No device model NAKs on an isoch endpoint, so this only triggers with a
-mismatched endpoint type.
+Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
+around the processing in these non-MMIO entry points. This mirrors
+the protection that EHCI, DWC2, and UHCI already have via
+qemu_bh_new_guarded(). With the guard active, the memory subsystem's
+automatic reentrancy check (system/memory.c) blocks DMA writes that
+would dispatch into the device's own MMIO handlers.
 
-The two retry branches differ only in what they do on NAK: the isoch one
-asserts, the other keeps the transfer pending. Merge them.
-
-Fixes: 3d1396842d ("xhci: iso xfer support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3886
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <44227b05b22064a22f4c135e025ff0b1d838b9e3.1789968699.git.junjie.cao@intel.com>
+CVE: CVE-2026-17588
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3926
+Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
+    Guannan Wang <wgnbuaa@gmail.com>, Zhanpeng Liu <pkugenuine@gmail.com>,
+    Jiashuo Liang <761232680@qq.com>, Guancheng Li <lgcpku@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4195
+Reported By: Ken Hsu and Royce Lu of Palo Alto Networks
+Message-ID: <20260915112213.525283-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 45684127cdee2d212125fd8d1de8a9c4804ee8bb)
+(cherry picked from commit f91b0544fe1f9fbabf582ccaaecc08877b7e19e1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 61690dbdcec..624ce4ee75a 100644
+index d342aa2739e..12f8ffece0f 100644
 --- a/hw/usb/hcd-xhci.c
 +++ b/hw/usb/hcd-xhci.c
-@@ -1925,26 +1925,15 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
-             xfer->timed_xfer = 0;
-             xfer->running_retry = 1;
-         }
--        if (xfer->iso_xfer) {
--            /* retry iso transfer */
--            if (xhci_setup_packet(xfer) < 0) {
--                return;
--            }
--            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
--            assert(xfer->packet.status != USB_RET_NAK);
--            xhci_try_complete_packet(xfer);
--        } else {
--            /* retry nak'ed transfer */
--            if (xhci_setup_packet(xfer) < 0) {
--                return;
--            }
--            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
--            if (xfer->packet.status == USB_RET_NAK) {
--                xhci_xfer_unmap(xfer);
--                return;
--            }
--            xhci_try_complete_packet(xfer);
-+        if (xhci_setup_packet(xfer) < 0) {
-+            return;
-+        }
-+        usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
-+        if (xfer->packet.status == USB_RET_NAK) {
-+            xhci_xfer_unmap(xfer);
-+            return;
-         }
-+        xhci_try_complete_packet(xfer);
-         assert(!xfer->running_retry);
-         if (xfer->complete) {
-             /* update ring dequeue ptr */
+@@ -456,9 +456,15 @@ static void xhci_mfwrap_timer(void *opaque)
+ {
+     XHCIState *xhci = opaque;
+     XHCIEvent wrap = { ER_MFINDEX_WRAP, CC_SUCCESS };
++    MemReentrancyGuard *guard = &xhci->parent.mem_reentrancy_guard;
++
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
+ 
+     xhci_event(xhci, &wrap, 0);
+     xhci_mfwrap_update(xhci);
++
++    guard->engaged_in_io = false;
+ }
+ 
+ static void xhci_die(XHCIState *xhci)
+@@ -1086,7 +1092,14 @@ static void xhci_set_ep_state(XHCIState *xhci, XHCIEPContext *epctx,
+ static void xhci_ep_kick_timer(void *opaque)
+ {
+     XHCIEPContext *epctx = opaque;
++    MemReentrancyGuard *guard = &epctx->xhci->parent.mem_reentrancy_guard;
++
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
++
+     xhci_kick_epctx(epctx, 0);
++
++    guard->engaged_in_io = false;
+ }
+ 
+ static XHCIEPContext *xhci_alloc_epctx(XHCIState *xhci,
 -- 
 2.47.3
 
