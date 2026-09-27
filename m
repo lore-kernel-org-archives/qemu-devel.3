@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF733C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC62C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmTv-0005rV-Ci; Sun, 27 Sep 2026 06:51:43 -0400
+	id 1xAmTb-0004PH-4v; Sun, 27 Sep 2026 06:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTs-0005gV-Fj; Sun, 27 Sep 2026 06:51:40 -0400
+ id 1xAmTM-00048r-D9; Sun, 27 Sep 2026 06:51:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmTq-0001Wb-Sp; Sun, 27 Sep 2026 06:51:40 -0400
+ id 1xAmTK-0001PB-Hc; Sun, 27 Sep 2026 06:51:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=yAUoIeZa3Nzaze9xoITWPF4GL86OWmPA5QNZRIm4f3Q=;
+ t=1790506136; bh=IKwupBtV/xZdUiO8bWhNJjSpyfCKusLXsff+cakU0jA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JCrF/ImMPY8mI0KVyXzChPb7SpqN52JQjQYpV+zmPpx/g9JAsdBTJ630vSmza9RC1
- CBogE0shxNUrERgHJfGcmF0NuyugyI7y6K5NfFXiVqNdQ8J7OfNAce5+3KmfS0Ulsf
- rPec+RhlITCey+DafCf7nMNC2Cao2CU7EJU5j/saDRJ+1UjzE1i0uOPcLin4mQz/cM
- lmZ9WwtxvrowRPuw4cSS809zEJI8iGR247qVHbKcNwAwGu1vn/ehHWWgyVDZycVu+2
- 1bTgoPqrO6mdHh/fHhtuxjjR6YyrcWObEWBlMa28L+uDqcqXm0Uqcs9umQzUr767qc
- DBlkXAccz6B8Q==
+ b=kPg91EAOF6CkeITT2gP/XlvFQK/PeEhTMbCLENVhXVHVMicCQY45OxTzZNK4qO63F
+ lagu8MZPSBSOdOFAegCNiCzHtcHir8ZrWhKD2t+buvnHOJBZBCWHa6IQoeg6kiuww7
+ T/csXfzAqFuB0H2ZiR8hxZ5G+G/ydKsDfu50PW1QNbGyt1l1eBUrKSaBZ5MXulxQgF
+ oYi45IJBCySj5Wr/F3Rr79WcGh1+MFVhSkAcPVi03EIJonx8kFo/csgHv7Y0hMAjdS
+ OfCGeqlsXQWnfinIre9iKXLMqaFqbSuOYqyLhkMGMK4hiwi2TA8Xl8Aoi6QMurbj0U
+ PJHn66RNehsjg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 695A11D8B79;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E7CE1D8B71;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6468E432180;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 37669432178;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 169685E7AA; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
+ id F294F5E79A; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 90/92] linux-user/sh4: align the vdso sigreturn
- trampolines
-Date: Sun, 27 Sep 2026 13:48:06 +0300
-Message-ID: <20260927104821.196183-34-mjt@tls.msk.ru>
+ "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 82/92] target/ppc: Stop vCPU thread before calling
+ parent_unrealize
+Date: Sun, 27 Sep 2026 13:47:58 +0300
+Message-ID: <20260927104821.196183-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -73,45 +74,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-libunwind's unw_is_signal_frame() reads the trampoline as 32-bit words,
-but __kernel_sigreturn is only 2-byte aligned. Align both trampolines
-to 4 bytes, as the kernel's vsyscall-sigreturn.S does (with .balign 32).
+During CPU hot-unplug (e.g. via dynamic reconfiguration unplug),
+ppc_cpu_unrealize() invoked pcc->parent_unrealize(dev) before calling
+cpu_remove_sync(CPU(cpu)).
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+pcc->parent_unrealize() calls cpu_common_unrealize(), which triggers
+accel_cpu_common_unrealize() -> tcg_exec_unrealizefn() -> tlb_destroy().
+This immediately frees the CPU's TLB tables and structures. Because the
+vCPU thread had not yet been stopped and joined via cpu_remove_sync(),
+the vCPU thread was still actively running its event loop and processing
+queued CPU work (such as tcg_commit_cpu / tlb_flush).
+
+This resulted in a race where the running vCPU thread accessed and freed
+already-destroyed TLB tables concurrently with tlb_destroy(), leading to
+Segfault (due to heap corruption).
+
+AddressSanitizer build reported a double-free:
+
+=================================================================
+==121930==ERROR: AddressSanitizer: attempting double-free on 0x7ef8f3438800 in thread T14:
+    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
+    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
+    #2 0x558bf6a391b1 in tlb_mmu_resize_locked accel/tcg/cputlb.c:249
+    #3 0x558bf6a396b5 in tlb_flush_one_mmuidx_locked accel/tcg/cputlb.c:296
+    #4 0x558bf6a39f91 in tlb_flush_by_mmuidx_async_work accel/tcg/cputlb.c:390
+    #5 0x558bf6a3a200 in tlb_flush_by_mmuidx accel/tcg/cputlb.c:417
+    #6 0x558bf6a3a22a in tlb_flush accel/tcg/cputlb.c:422
+    #7 0x558bf73f31ac in tcg_commit_cpu system/physmem.c:3068
+    #8 0x558bf6987c55 in process_queued_cpu_work cpu-common.c:378
+    #9 0x558bf73a9913 in qemu_process_cpu_events_common system/cpus.c:402
+    #10 0x558bf73a9a46 in qemu_process_cpu_events system/cpus.c:421
+    #11 0x558bf6a65974 in mttcg_cpu_thread_fn accel/tcg/tcg-accel-ops-mttcg.c:90
+
+0x7ef8f3438800 is located 0 bytes inside of 65536-byte region [0x7ef8f3438800,0x7ef8f3448800)
+freed by thread T9 here:
+    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
+    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
+    #2 0x558bf6a39a91 in tlb_destroy accel/tcg/cputlb.c:345
+    #3 0x558bf6a16354 in tcg_exec_unrealizefn accel/tcg/cpu-exec.c:1094
+    #4 0x558bf693d073 in accel_cpu_common_unrealize accel/accel-common.c:117
+    #5 0x558bf6980e37 in cpu_common_unrealize hw/core/cpu-common.c:279
+    #6 0x558bf6980dfa in cpu_common_unrealizefn hw/core/cpu-common.c:267
+    #7 0x558bf763ef65 in ppc_cpu_unrealize target/ppc/cpu_init.c:6965
+    #8 0x558bf7872199 in device_set_realized hw/core/qdev.c:618
+    #14 0x558bf756068f in spapr_unrealize_vcpu hw/ppc/spapr_cpu_core.c:209
+
+Fix this by moving cpu_remove_sync() before pcc->parent_unrealize(dev)
+in ppc_cpu_unrealize(), ensuring the vCPU thread is stopped, has
+finished processing its events, and is joined before CPU resources
+and accelerator state are destroyed.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 95e14595d398d0044ec8b03ffcf1459dc157a69f)
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Message-ID: <20260923121444.154175-1-shivangu@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit cbbd4d74eb298e2b407018185a40cb813435527e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/vdso-be.so b/linux-user/sh4/vdso-be.so
-index df9fa22efab..d74a2d78e86 100755
-Binary files a/linux-user/sh4/vdso-be.so and b/linux-user/sh4/vdso-be.so differ
-diff --git a/linux-user/sh4/vdso-le.so b/linux-user/sh4/vdso-le.so
-index decd6742022..a59c9e5244d 100755
-Binary files a/linux-user/sh4/vdso-le.so and b/linux-user/sh4/vdso-le.so differ
-diff --git a/linux-user/sh4/vdso.S b/linux-user/sh4/vdso.S
-index 290eb498aeb..a66cac7439a 100644
---- a/linux-user/sh4/vdso.S
-+++ b/linux-user/sh4/vdso.S
-@@ -135,6 +135,7 @@ vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
- 	.cfi_offset		24, SC_FPSCR
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index f404c7e549d..c23ef680bc6 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6964,10 +6964,10 @@ static void ppc_cpu_unrealize(DeviceState *dev)
+     PowerPCCPU *cpu = POWERPC_CPU(dev);
+     PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
  
- 	nop
-+	.balign	4
+-    pcc->parent_unrealize(dev);
+-
+     cpu_remove_sync(CPU(cpu));
  
- sigreturn_region_start:
- __kernel_sigreturn:
-@@ -144,6 +145,7 @@ endf __kernel_sigreturn
- 	/* rt_sigreturn frame layout; nop for the same reason as above. */
- 	.cfi_def_cfa_offset	RT_SIGFRAME_SC_OFFSET
- 	nop
-+	.balign	4
++    pcc->parent_unrealize(dev);
++
+     destroy_ppc_opcodes(cpu);
+ }
  
- __kernel_rt_sigreturn:
- 	sigreturn_tramp __NR_rt_sigreturn
 -- 
 2.47.3
 
