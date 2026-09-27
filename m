@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AECC9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0800FC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAshl-00067o-Ou; Sun, 27 Sep 2026 13:30:25 -0400
+	id 1xAt7h-0000LC-GI; Sun, 27 Sep 2026 13:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAshd-00063r-LB
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:30:18 -0400
-Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
+ id 1xAt7f-0000Kh-CT
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:57:11 -0400
+Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAshb-00043Q-Vh
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:30:17 -0400
-Received: by mail-pz2-x0e.google.com with SMTP id
- 41be03b00d2f7-cc4aa0f1766so1265005a12.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 10:30:15 -0700 (PDT)
+ id 1xAt7d-0006TK-Pn
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:57:11 -0400
+Received: by mail-pj2-x11.google.com with SMTP id
+ 98e67ed59e1d1-39dacf053eeso1158771a91.2
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 10:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790530214; x=1791135014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790531828; x=1791136628; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ExM/NyBUH8tQ7JkKWySPHwF4vo78dAuWgItqjp9ykiI=;
- b=hFS4DkfZkiJfbz1c5it6pV626Tpqz5+lwdvdk5L86SkNpYxJCftZ1fEVtmzeVB5Rfv
- 5BGZRg6CAotR2DqWcpLwqPxe/ZMAUOxwX5nJLFEmw86JNRzCZXxxngw3F99aoBZeDBAu
- oz4RuE+TlROaY8gxgkQzyS6K5ApvR+GjB0AUeCiXu903fQNpeAUpyW3IKgKftYLH9BIk
- WdruHDckPEAZ6rXizY++aZpYjhW+Tw9mg6alK7kS9bBR9x8ShPHQEM4+3der9vpWIGS3
- ituUqiUiygXDfY3hRkzmNd4w8bymz6YbAZcC9vXQ5NXGGEmfF6isNg/6GFNKjLa9BzlL
- qVLA==
+ bh=18F/S+HH9vVdedRwNwUQ/+8qnowflupyJ6j5ZEejJu0=;
+ b=aqerPASq0TtnQOCBxJ5JtP2KHyGfdBRdO+DUKjeS12J7kWe2+Wo6ZZf+h4VzzfX8C/
+ KKOK+EBX8+0O7zR6egpGWUwrXaiBI72P9pidcWPZ91dnIoP10Yci9qTzCqYAcoJqJcBH
+ UeM/edR8FX7XjpYKE+cIy0tkzxCpZ3/3+awI8XcM42HiDf20v58s2hwPXN8nm0xyr0Xs
+ wA9jgKVvT3UaLPoGCqAvT5oy4yuU61qNe1kGTIb/1d9fAUeCg+sU7qV462gfsJRWTFRb
+ 7tqlss5LDle9hn0MpN9ZfvlhxQG+74R8kYB0JDZsvBvd8mwPlbWaRfq8hXKm2xFflULc
+ bZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790530214; x=1791135014;
+ d=1e100.net; s=20260707; t=1790531828; x=1791136628;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ExM/NyBUH8tQ7JkKWySPHwF4vo78dAuWgItqjp9ykiI=;
- b=PDLQhwUeWmJbIOojNvIFDyz/hyQfXcKoU9wHKpeea1tXq97FubUnRmrLiyMAuSvuAN
- 72qiFIZemiPWwFOM9MPGMaMupZKIxBTnZyk5OnfYCgYjuC/AOgIUETmKUYETwhnkI9Qf
- BUoye+3tipfLR0nxiF1nFOcBi2WzsFKc781VAJNFGXT8S31CoGPiD9TzTvlaDkEbtD7b
- 6UnFZs/S1St6xcJK8cbrSOJvfcULGbhKp4TOixsoJ3g3WcBrQU6k6og9OhFQm1+0NK1h
- E15Q8WSLdF5P8EvZX9rwWP3/fGeY0g31Y43pKhtrHpT3lXIOEdPFTDrS8Zdo0CHObeDj
- 3k7w==
-X-Gm-Message-State: AFuF++mu78pssYGdUAhQ3Sx5XXmx7rx57c0ySP68Ls9Nxq/QEiLOfFRo
- JQcPmckMYzQpkQW63jjlC05daEslum5ePyVUdAR5E0rtQo83AiXLQopglE0rJLpoqAtYEXX5tze
- xfDr2
-X-Gm-Gg: AYBFou2BHnFDSeRsPRjjhVYOG1tdeFbtxhiM59Jga6CII8zTbHSKS4Pq+T1O40/5XEY
- 9MeJNoB/QfXQTuWSFIF1jJyCapkTZWtEjGhUHS1+PK9o02y/3CNk/Cej9qVNuUHD4xn8d5jICyH
- WYuWbcHMkHvX5gOpgMgNQAUWS03wd/8rX+/hJ8K9eJJaiORj9iOQZuJbtC8XVHnVn7OSTby3Sm3
- MpoFvlrcptOwmqwuVOEJs9VuswWaVINQJ3o99HNLbHTVM9ZGTDH1CKX9C3SfM7SmXsgNr2RLNuh
- yjWs3M44cV2tK2scmb+oBi5RvgdCjUPw8YjNmCvp+7B8w5RJ/tSEmsLZk/KQdZEbzCiHWSivxB/
- bCKOlNSiSeOZTe+0mn5IM6KgFoEl7Y5BcDa/h9lobUhmDSZzfSHYH5Si2fip8N7poTVFlLg91kf
- 79glQ97sjboWfu899LR8WS1IACPJtwLOzuA3DfFfa5P6AciToUiXAgKUPvWsHTIqLDgVE2znx39
- vDaLto3jns1jUBRrRQoaUIh5nZuYfgjgrcFc9cr
-X-Received: by 2002:a05:6a20:4321:b0:3de:6338:cfb5 with SMTP id
- adf61e73a8af0-3de6338d6cfmr670209637.33.1790530213901; 
- Sun, 27 Sep 2026 10:30:13 -0700 (PDT)
+ bh=18F/S+HH9vVdedRwNwUQ/+8qnowflupyJ6j5ZEejJu0=;
+ b=2OKC3EVX9tIZ12/HTRQZlJkjCEnthlFVsdC1oZ5WPzPNPZ9hwhaFzkbUWH0hJLWt++
+ VR0GWaMaaKIDt1/T0Y37nMbiLAsIA8GD+S+NfK5DDtPrEcVzz5RFSVz0saO6k3CP2PUP
+ SPO0BC4FpKIoBW0aiGMBqpTJ2TCGIBq0l8DORRTdLtwZGJ/ESLpt747fZClyf7ja+w+C
+ 6pZr8/S5vSlXwmsU4EqqLTRfhdtQmXg4tvUU1D4dD7Qpptg10C5PLUAp8da3SV/0Ur4o
+ WOStSI24pUdkTd5IsVg8BpDLLeWG1NU8Y84szOiWC6tSaj574gCM9d+ilDh4B7mhe/do
+ kCDw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxrDRT9+fTjzpIec0cKTkZmUMpLMsEFnTl+fIeffFJPop1rXixtA9R0dpafwGtVQ82eO50BA8uOYOIj@nongnu.org
+X-Gm-Message-State: AFq9FYJBiD4/fZyP5jLyabcxxGJlrHB1E6SoJULobK3xwGxIAnbKet6u
+ L16G/ClNQAGRiNs7jQfpiowGNBFZ2xn/uI9HVJOEWjIdYMp/Wq4b0hU5wzsuqCJbKCs=
+X-Gm-Gg: AYBFou1z7m/0rHWeSxGUpBkaN+UcoSOvXYsYj/6NLUX/6u5NodsNMesPQvuozBN84Ui
+ zxdPMhGxF6F3MzT9XeR9y8RL/fOBHTywqafA69SRLVsLH8h9JO3B9zHHFxUO6VvfcvbEj1tuLbz
+ 6c2Slzl63VEp0wR8kfxXBw1efN12wdQEFAOJPBc9SMuocqHVR5CJ0giB5imBD8Z7RlWtB581fwl
+ vv0rd9unMg6Q+ZUfB6hoUsyJBBabizzz+XBofImyUlYQ7tSp78e4Gy1roPCDc2702TAJdbzpIsF
+ Q1GXL+j8lWSElavuIOfWHN3drmH666D8UIDP+faFbNLKDdHl6NjNUYv3XqDhYUcOrH0ZmlRlLmx
+ owzHA274+9aZt3JspnHw7kBuGS5p+jjQ/VuoYwjlkI+5J7BENvKQKk5Pxzvh/i4fO06xvrmZ6Px
+ v8U2+xjcbWLfoBRy6dAXieHAy1jZOPK0D1dfekN/o2lk+zMkoGgzTKCJNH9UdGwA7qvOOGqRHe0
+ XsXe92j8v/nVR2BlXznNoW2vQ+ckyOYixt2vB7n
+X-Received: by 2002:a17:90a:ec83:b0:39e:6c6a:4b77 with SMTP id
+ 98e67ed59e1d1-3a098e43948mr8054541a91.65.1790531827702; 
+ Sun, 27 Sep 2026 10:57:07 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87feb583422sm3145267b3a.50.2026.09.27.10.30.11
+ 98e67ed59e1d1-3a0b4f5f917sm6215484a91.1.2026.09.27.10.57.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Sep 2026 10:30:12 -0700 (PDT)
-Message-ID: <983581aa-ffbd-40f9-8a9a-b6fbc066a1cf@linaro.org>
-Date: Sun, 27 Sep 2026 10:30:10 -0700
+ Sun, 27 Sep 2026 10:57:07 -0700 (PDT)
+Message-ID: <aa750bd3-39b0-4409-9fe2-802098b356f4@linaro.org>
+Date: Sun, 27 Sep 2026 10:57:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] tcg/riscv64: Fix AUIPC pair range validation
+Subject: Re: [PATCH v5 010/101] tcg: Generic expansion of tcg_gen_movi_*
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+References: <20260927090011.10724-1-richard.henderson@linaro.org>
+ <20260927090011.10724-11-richard.henderson@linaro.org>
+ <5f762124-6163-433d-b8df-90ad0ae76353@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: max.chou@sifive.com, palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, 
- Alistair.Francis@wdc.com, philmd@oss.qualcomm.com
-References: <20260914000814.785155-1-richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260914000814.785155-1-richard.henderson@linaro.org>
+In-Reply-To: <5f762124-6163-433d-b8df-90ad0ae76353@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pz2-x0e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,45 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On 9/27/26 08:31, Philippe Mathieu-Daudé wrote:
+> On 27/9/26 10:58, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/tcg/tcg-op-common.h  |  2 --
+>>   include/tcg/tcg-op-def.h.inc |  1 +
+>>   tcg/tcg-op.c                 | 15 +++++----------
+>>   3 files changed, 6 insertions(+), 12 deletions(-)
+> 
+> 
+>> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+>> index 77ed34fcb8f..b2fa509cd1f 100644
+>> --- a/tcg/tcg-op.c
+>> +++ b/tcg/tcg-op.c
+>> @@ -370,6 +370,11 @@ void tcg_gen_mov(TCGType type, TCGTemp *dst, 
+>> TCGTemp *src)
+>>       }
+>>   }
+>> +void tcg_gen_movi(TCGType type, TCGTemp *dst, int64_t src)
+> 
+> Maybe this commit (the first converting opcode with an integer arg)
+> could have a description explaining / reminding now all args are
+> passed as int64_t.
+Where would you place such a comment that would be useful?
+I can't see how or where.
 
-On 9/13/26 17:08, Richard Henderson wrote:
-> Hi Max,
-> 
-> In v2, the change from int32_t to uint32_t is pretty much
-> the opposite of what should have been done, since all of
-> these are logically signed values.  I've adjusted all of
-> the encoders to take signed inputs and assert in range.
-> 
-> In the process, I noticed tha the branch range tests were
-> off by one.  Now all performed in exactly one place.
-> 
-> Finally, tcg_out_ldst needed updates for AUIPC as well.
-> 
-> I've tested this lightly so far; full testing on a rather
-> slow riscv machine is still on-going.
-> 
-> 
-> r~
-> 
-> 
-> Max Chou (2):
->    tcg/riscv64: Validate AUIPC relocation range
->    tcg/riscv64: Fall back when AUIPC pairs are out of range
-> 
-> Richard Henderson (9):
->    tcg/riscv64: Return tcg_insn_unit from insn encoders
->    tcg/riscv64: Rename sb-type to b-type format
->    tcg/riscv64: Rename uj-type to j-type format
->    tcg/riscv64: Use signed type for encoding immediates
->    tcg/riscv64: Adjust sign of lui immediate in tcg_out_movi
->    tcg/riscv64: Assert immediate in range for [isu]-type insns
->    tcg/riscv64: Return success from encode_jimm
->    tcg/riscv64: Return success from encode_bimm
->    tcg/riscv64: Fix off-by-one in branch range tests
-> 
->   tcg/riscv64/tcg-target.c.inc | 230 ++++++++++++++++++-----------------
->   1 file changed, 121 insertions(+), 109 deletions(-)
-> 
-
+r~
 
