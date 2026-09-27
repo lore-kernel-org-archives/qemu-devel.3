@@ -4,88 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73785C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 22:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEA0C9832F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 00:11:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAxT1-0000Vf-14; Sun, 27 Sep 2026 18:35:31 -0400
+	id 1xAywu-0001Ko-I1; Sun, 27 Sep 2026 20:10:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAxSx-0000VT-Vu
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 18:35:28 -0400
-Received: from mail-pj2-x0d.google.com ([2607:f8b0:4864:39::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAxSw-0006n2-EH
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 18:35:27 -0400
-Received: by mail-pj2-x0d.google.com with SMTP id
- 98e67ed59e1d1-3a0bcdf41a3so1206237a91.2
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 15:35:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790548524; x=1791153324; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jHVOgrfi07N/06CkPD3Q2QaI64QqPzLuQ6max01W4Zo=;
- b=C9uI/TSaqeYE91EKyIRJPr7T8LhImx4rktJoxPxkzRFrHw+FvnV26OQeHO08E5mbaj
- 3+dRfOCArAQyP+51U1+MQaCHTqcIailif/2wWXwrcqwcHLa/6us7uEkPGBSfOTMOpG2u
- qrMnfV/+x1xsB/RhjkFKsZgLNSIkbgOZUw6MwRP55sawB3rHqyvrwOQGPdIbatUTb21r
- dgl2IhzaVHlxPDDKUUjQfiPtzcp+nWU4XilJNmlVpuK4oVnKfr3a2k/LU7Czluju8dVi
- IrHQWiDFhig+9CENMExCjVquBwQ/ZQqiGZ8bJnJidvOPMkehI/xx8XWYwKZSwR4AViQO
- uBFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790548524; x=1791153324;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jHVOgrfi07N/06CkPD3Q2QaI64QqPzLuQ6max01W4Zo=;
- b=EXcVt7sTrgylXDQ1VEJm1rExcKahn9WQNDI6ylSFv1h6dnvtEUM5E1Ln57kFhgbMbb
- cpFEyrebpnZ/J1H2OGgcgFRUr+c+yDUN2yIACcuO8ctjT8Iun1kI7pM7pyZw5sooh9qa
- EzyYYGdyZz6XDCICeBd7gJDGvtuTBMHcKmVHMOAbWVx+dkzAEjJS6ixEhT4O9rUbPdZ0
- FwqRB4CNpgyYWAJsFYFmx25BJYL8CkLzWVd1W0yUA6iI3FtXP3f+9eakDO3px/8ZWPD3
- upOd27zPpckcSNQKpodwkyCJ/IEmqMN7995+XXGTqu+yUjkyyaN2yHHT3fHFnxe9Rh9e
- IzHQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvByozn4p6Nkf7C+7QXODtMz+Sy8RkYTNpdLjVS2CdUXn+UQB3ZzBCxIrV+4CUWLYGjdejB6ecNjqKYWu@nongnu.org
-X-Gm-Message-State: AFq9FYJWXlJAFf/TfE8dpYK5qFxSSRg+eWgZR4ZHYQ7V0o0/L8tSdwTW
- y4pKVf3TE/GPk92Y3HuQTD8n9OftyHC7XGJAU9L/tV+2K+gzEAJJvrV6SadqfMjD/Ww=
-X-Gm-Gg: AYBFou1sr3o3c9xivkL8GdHcsLiib5Qo2/VS5Z6ANPHZutQtfM3v/BtPoOKrfVsPz2w
- re2sREq4S77II9GTTPQLLi6+1Pi9O2kdgo7rSq8LN1TagEBpavZYzZv+ZvRTopDTGxre40Rj3zQ
- VwX1Nh6Zk/UwjuBI+Ou1CdrvCQi2Op7gjk2zTxO7rZCt0zdfohwa+G3DSi4c5IHNt0phSvOJeev
- jTI6STtVOsrPZx4kQ1yHItq+NVaqx+AI5B6WlWKl7UBqPb7s8ElHEz8FDr0loS6rx76gWQOXjfB
- z4vsjbnYAOIToUP36GAG5KqWrsOYWWG8TqbIuXeypBhWYGl1oTlaBn0/xoA95PX2JUdhLT0pQUd
- YqnaMlLIzaadGv37OZ1ZA/8QFdnPsGzYUp/4tmEqjCh300u9LT/mcb1J0tjEsfdTVy/mq4PfDvI
- nWSXq/d+Q/8Zu0hqYArjQ7ll9kmS53tLdmfBZiTxd7V+kN3qqN3IjqguCGLJoOgCkc9xRzRuYGF
- +pphY0N19V37ale/fJIdq2DBTRKiuOA/9KGZXxy
-X-Received: by 2002:a17:90b:390b:b0:3a0:e786:84cc with SMTP id
- 98e67ed59e1d1-3a0e786876fmr3929669a91.51.1790548524165; 
- Sun, 27 Sep 2026 15:35:24 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc78796cf39sm3678773a12.32.2026.09.27.15.35.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Sep 2026 15:35:22 -0700 (PDT)
-Message-ID: <c8448194-1576-4b5d-8d85-5d594ff26c09@linaro.org>
-Date: Sun, 27 Sep 2026 15:35:20 -0700
+ (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
+ id 1xAy93-00050W-Vk; Sun, 27 Sep 2026 19:18:57 -0400
+Received: from vmexit.de ([2a0a:4cc0:c1:d4ba::2] helo=gizmo.vmexit.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
+ id 1xAy92-0001c8-0s; Sun, 27 Sep 2026 19:18:57 -0400
+From: Ralf Ramsauer <ralf@vmexit.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
+ t=1790551129;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LSVcCaB/lC+MLtJl6kRphvXsrliN21Zj5Sg5dUFUWHk=;
+ b=kNyhf5jfvAC9Qel0jt8age10w9epG1s8XT44qKqS+ffSOUB59X+jlq7MKB5rwG5+XIlTCl
+ e3VD4/4ohXDvWXtAnMQe/Q4yr/BtMLM/vO/R04CZw/7MVEEHlpGjWkOPTwVskjo/+1SMaf
+ 2fql0WEV31uhOiCToBwnKk2ctkXxyMo=
+To: qemu-devel@nongnu.org
+Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ Bin Meng <bmeng.cn@gmail.com>
+Subject: [PATCH] hw/riscv/virt: only describe PLIC contexts that exist
+Date: Mon, 28 Sep 2026 01:18:37 +0200
+Message-ID: <20260927231838.236616-1-ralf@vmexit.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 002/101] include/qemu/compiler: Define QEMU_ALIAS
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: mattst88@gmail.com, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260927090011.10724-1-richard.henderson@linaro.org>
- <20260927090011.10724-3-richard.henderson@linaro.org>
- <9e71b3a6-4afb-4208-a6a8-9c100775b061@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <9e71b3a6-4afb-4208-a6a8-9c100775b061@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x0d.google.com
+Received-SPF: pass client-ip=2a0a:4cc0:c1:d4ba::2; envelope-from=ralf@vmexit.de;
+ helo=gizmo.vmexit.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,6 +52,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 27 Sep 2026 20:10:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,45 +67,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/27/26 08:51, Philippe Mathieu-Daudé wrote:
-> On 27/9/26 10:58, Richard Henderson wrote:
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/qemu/compiler.h | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
->> index 3661dc5fbaa..8fa4552ef8f 100644
->> --- a/include/qemu/compiler.h
->> +++ b/include/qemu/compiler.h
->> @@ -230,6 +230,13 @@
->>   # define QEMU_UNINITIALIZED
->>   #endif
->> +/*
->> + * Alias the current function definition to another.
->> + */
->> +
->> +#define QEMU_ALIAS(N) \
->> +    __attribute__((alias(stringify(glue(__USER_LABEL_PREFIX__, N)))))
->> +
->>   /*
->>    * http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
->>    *
-> 
-> On macOS:
-> 
-> ../../tcg/tcg-op.c:1820:38: error: aliases are not supported on darwin
->   1820 | void tcg_gen_discard_ptr(TCGv_ptr a) 
-> QEMU_ALIAS(tcg_gen_discard_i64);
->        |                                      ^
-> include/qemu/compiler.h:238:20: note: expanded from macro 'QEMU_ALIAS'
->    238 |     __attribute__((alias(stringify(glue(__USER_LABEL_PREFIX__, 
-> N)))))
->        |                    ^
-> 
+From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 
-Bah.  Ok.
+The PLIC device is created from the topology string built by
+riscv_plic_hart_config_string(), which gives a hart a supervisor context
+only if that hart actually has supervisor mode.  The device tree, in
+contrast, lists a machine and a supervisor context for every hart,
+unconditionally.
 
+The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
+PLIC config helper function") taught the device about harts without
+S-mode and left the device tree behind.  Boot with
 
-r~
+    -cpu rv64,s=false,u=false -smp 4
+
+and the PLIC implements four contexts while the device tree advertises
+eight.  Contexts are numbered by their position in 'interrupts-extended',
+so a guest that takes its context number from the property gets it wrong
+for every hart but the first: hart 1 drives the context of hart 2, and
+the upper harts address contexts the PLIC never created.  This is what an
+M-mode kernel on the virt machine runs into; sifive_u already omits the
+supervisor entry for its management hart.
+
+Emit the supervisor entry only for the harts that have supervisor mode.
+
+Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
+Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
+---
+ hw/riscv/virt.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f..d0ce9dc862 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -165,14 +165,23 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+             plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
+         }
+    } else {
+-        cells_length = s->soc[socket].num_harts * 4;
+-        plic_cells = g_new0(uint32_t, cells_length);
++        plic_cells = g_new0(uint32_t, s->soc[socket].num_harts * 4);
++        cells_length = 0;
+ 
+         for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+-            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
+-            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
++            CPURISCVState *env = &s->soc[socket].harts[cpu].env;
++
++            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
++            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
++
++            /*
++             * The PLIC implements a supervisor context only for harts that
++             * have supervisor mode, see riscv_plic_hart_config_string().
++             */
++            if (riscv_has_ext(env, RVS)) {
++                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
++                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
++            }
+         }
+     }
+ 
+
+base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
+-- 
+2.54.0
+
 
