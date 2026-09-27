@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A78CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F106DCA5FA2
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSX-0008Pg-BJ; Sun, 27 Sep 2026 06:50:18 -0400
+	id 1xAmST-00087B-5C; Sun, 27 Sep 2026 06:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSU-0008CM-46; Sun, 27 Sep 2026 06:50:14 -0400
+ id 1xAmSQ-0007xb-MH; Sun, 27 Sep 2026 06:50:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSS-00018A-5t; Sun, 27 Sep 2026 06:50:13 -0400
+ id 1xAmSO-00014m-Q5; Sun, 27 Sep 2026 06:50:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=Z/LXGCYI/1dhN3wjcVVBEmbET1GiKlT4Rdlg5vpf7B8=;
+ t=1790506136; bh=knZhph2XZ8QOEruRqI+5dyMIHI0zD0BZACq40LF4KE4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=deMgdpWshkyOY329kc9UdBjrf6yUrevlGCCkIbRqR2PCxRM9kvJ5k2+Noxbgz45AX
- GG8w2uGrNln418g000Y7VTkMFYpLOO0xXsY2HDNBZAwoX0LxupPw6K2L+mg35uonRL
- xmC5MOQ3FC5sGdpx7qIun5f7O0PtKQGwmOs8FjrfwMCQ5z7FW0nUTfDS9cSpVBXlSU
- FyJvEQy+Jkgn/ivD+z3DbIxSm/2QYlrU8Z6gpfjS6cRwGpT1b8QejHFMdh7HgKiC1N
- dG5hZ8p8QM2oB9aX11iTiumjbbm5xOiwMLW73aATMSF7OvTkufbNSdZVTAa5tqfsnv
- WCXGiVhmU5JDw==
+ b=VXo97EmS4Ha45Yd0uGRelQAhgK2FIsgrjJ4qR7/fMlfcIr2tb+JFlx/PEZwtki06i
+ WbO1X9kh76XXplOl5hw+309WJTd16AdQSgbrqxeEeHyDy0qGzMgOb54Kdk/uaub8My
+ QhTBERKyuNSVLvEm/B2QgLi1G5d5eowYiK144A9VJwSV13WmJi6CHrweGBnhGUJHax
+ 8Z2pi0RkIgRXh4Ugv0H/p0tWMWefaBVP1CmSggjcz3DXLkRy5YYmwcUmId1XLxW6bO
+ zeGGxVQXWLIpCX4msNYyde//TgkXkCTCcVJnl07UK1N+tq43H3emnDLR41lS1HZr5y
+ TWwb7sysKFnhg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16F3D1D8B6B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 056951D8B68;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 143C8432172;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02DAE43216F;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E02E95E78E; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id D760F5E788; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 76/92] tcg/riscv64: Set vtype before whole-register
- vector loads
-Date: Sun, 27 Sep 2026 13:47:52 +0300
-Message-ID: <20260927104821.196183-20-mjt@tls.msk.ru>
+ Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 73/92] tests/tcg/arm: Add regression test for #4448
+Date: Sun, 27 Sep 2026 13:47:49 +0300
+Message-ID: <20260927104821.196183-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -74,47 +72,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-With vtype uninitialized, VILL might be set, leading to SIGILL.
-Also, assert vtype initialized for whole-register stores and moves.
-
-Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
-Reported-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 57d98debdf8a3a00e6022ad5c4dad1d8c4fa0f39)
+(cherry picked from commit 4278a7ba36c2f7f5297c8ed886646a4a453f555c)
+(Mjt: adjust across make=>meson conversion in tcg tests)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 76dd4fca97b..86baf5a213c 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -768,6 +768,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
-     case TCG_TYPE_V64:
-     case TCG_TYPE_V128:
-     case TCG_TYPE_V256:
-+        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
-         {
-             int lmul = type - riscv_lg2_vlenb;
-             int nf = 1 << MAX(lmul, 0);
-@@ -1007,6 +1008,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
-             unsigned idx = type - riscv_lg2_vlenb;
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 613bbf0939a..51a3ed76a87 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -32,6 +32,8 @@ run-fcvt: fcvt
+ ARM_TESTS += pcalign-a32
+ pcalign-a32: CFLAGS+=-marm
  
-             tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
-+            /* We must initialize vtype to something to avoid VILL. */
-+            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
-+                set_vtype(s, type, MO_8);
-+            }
-             insn = whole_reg_ld[idx];
-         } else {
-             static const RISCVInsn unit_stride_ld[] = {
-@@ -1039,6 +1044,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
-     case TCG_TYPE_V64:
-     case TCG_TYPE_V128:
-     case TCG_TYPE_V256:
-+        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
-         if (type >= riscv_lg2_vlenb) {
-             static const RISCVInsn whole_reg_st[] = {
-                 OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
++ARM_TESTS += issue4448
++
+ ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
+ 
+ # Semihosting smoke test for linux-user
+diff --git a/tests/tcg/arm/issue4448.c b/tests/tcg/arm/issue4448.c
+new file mode 100644
+index 00000000000..0a498373a89
+--- /dev/null
++++ b/tests/tcg/arm/issue4448.c
+@@ -0,0 +1,51 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <assert.h>
++#include <stdint.h>
++
++/* Signed 64-bit product, constant operand first then second. */
++#define SMULL_CONST_LHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tsmull %0, %1, r0, %2" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++#define SMULL_CONST_RHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tsmull %0, %1, %2, r0" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++/* Unsigned 64-bit product, for contrast: this one is folded correctly. */
++#define UMULL_CONST_LHS(k, x, lo, hi) \
++    __asm__("mov r0, #" #k "\n\tumull %0, %1, r0, %2" \
++            : "=&r"(lo), "=&r"(hi) : "r"(x) : "r0", "cc")
++
++static int64_t s64(int32_t hi, int32_t lo)
++{
++    return ((int64_t)hi << 32) | (uint32_t)lo;
++}
++
++static uint64_t u64(int32_t hi, int32_t lo)
++{
++    return ((uint64_t)(uint32_t)hi << 32) | (uint32_t)lo;
++}
++
++int main(void)
++{
++    static const int32_t values[] = { 1961612, -1479053948, -7, 0 };
++
++    for (unsigned i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
++        int32_t x = values[i];
++        int32_t lo, hi;
++
++        SMULL_CONST_LHS(1, x, lo, hi);
++        assert(x == s64(hi, lo));
++
++        SMULL_CONST_RHS(1, x, lo, hi);
++        assert(x == s64(hi, lo));
++
++        UMULL_CONST_LHS(1, x, lo, hi);
++        assert((uint32_t)x == u64(hi, lo));
++
++        SMULL_CONST_LHS(0, x, lo, hi);
++        assert(0 == u64(hi, lo));
++    }
++    return 0;
++}
 -- 
 2.47.3
 
