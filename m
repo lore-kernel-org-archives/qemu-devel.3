@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A01C98338
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394E5C9830E
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksY-0008SY-UA; Sun, 27 Sep 2026 05:09:03 -0400
+	id 1xAksC-0006aW-8I; Sun, 27 Sep 2026 05:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrH-00026u-Dh; Sun, 27 Sep 2026 05:07:45 -0400
+ id 1xAkri-0003ER-NY; Sun, 27 Sep 2026 05:08:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrF-0008FH-FS; Sun, 27 Sep 2026 05:07:42 -0400
+ id 1xAkrg-0008Jm-9Q; Sun, 27 Sep 2026 05:08:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499961; bh=BfTdZbj+ebsWldqWdkfa8kSg3370PgB+vAdII6ain/E=;
+ t=1790499961; bh=EJh+1Oa19DdG0CtfSB8Ym8fpmtLViez9wfBwb/clZHI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WrlZ0nRQnu4OElvvTglF/ET7y9AM0L/e3mORjQg4LRdH6tHLIT0g89/dP3sMEV7oQ
- tzwJuH3hEK6dVOXYHLyWgoqwqrtFV6GrQiaqB6AMsjMCIdUy2UuuSLruVHH53WO3rA
- N5+57bJw0V2XfDTB+bmcko2oDA9zwaoHfYP8Wm7WFJEad0dd6kuEak65fulu52LkDh
- RrO0pIuOm7H/7CUakJZIEdjXQE3v+zO6RaAGphU6BhHbOe+l66qjqrcA4y2m2P/C1Z
- GmH0TXFyPnRK5UME2TtKCrP/8yAJ8fpdT6upefx1fnwOEFGczVAYOcBDjEMQ4o4bjM
- J0cZP628oq7rw==
+ b=b5jH2WVccJ7lM55bivSsYjIW9awJ07KxSPfkARGuZH6HoIo2CbiiXzcsbxfTzxZzX
+ p5RqOmqI3NQ9wWdOJsEf2kxVdT4qNd5CkjSqyPTKhNrWCGsIio5BzLhOkSw0I7b4oU
+ jxcgzLL/uSBNtTRcUcfOY+9PZhdxmCVVzS1LjzW5Kw4SfnNKTTUJD8VqWbiHviaeYN
+ cYaR9xAvv0i6lNHVEFt07focrA9LbGQXpDbrw2tDlJsTF168VrOXs/0neHg3fNlNQu
+ 8MbCKK4WjLjnCCAKnHLbreMcMMOtM/yr20mDd9XnAReJ6Yuv3C7mfi7+QSGx2+T4Ak
+ 6wjAvVE7J3neA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E0D91D8B23;
+ by isrv.corpit.ru (Postfix) with ESMTP id B1AAD1D8B27;
  Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B3844320DC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9A5BF4320E0;
  Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E9F245E677; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ id 027F15E67F; Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 82/86] target/i386: Update FPU tag word for FSTP
-Date: Sun, 27 Sep 2026 12:05:29 +0300
-Message-ID: <20260927090540.102811-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mikulas Patocka <mpatocka@redhat.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 86/86] target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE
+ with CF_STEP_ATOMIC
+Date: Sun, 27 Sep 2026 12:05:33 +0300
+Message-ID: <20260927090540.102811-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
@@ -70,38 +72,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-FSTP ST(i) copies the value in ST(0) into ST(i) and then pops the
-register stack. ST(i) should end up marked valid in the FPU tag word
-and the old ST(0) should end up marked empty.
+There was a complex bug with gUSA wherein:
 
-helper_fmov_STN_ST0() copies the value into ST(i) but never touches
-its tag. So if ST(i) happened to be tagged empty beforehand, it is
-still wrongly tagged empty afterwards.
+  * decode_gusa calls gen_restart_exclusive
+  * gen_restart_exclusive generates code that sets TB_FLAG_GUSA_EXCLUSIVE
+    and generates a call to helper_exclusive
 
-Mark the destination tag to valid in helper_fmov_STN_ST0().
-This also fixes FST ST(i), which shares the same helper.
+  * when the code is executed, TB_FLAG_GUSA_EXCLUSIVE is set
+  * helper_exclusive calls cpu_loop_exit_atomic, this makes cpu_exec exit
+    with EXCP_ATOMIC
+  * we go to cpu_loop, we execute cpu_exec_step_atomic
+  * suppose that exit request is set, cpu_exec_step_atomic does nothing, it
+    leaves the CPU in the same state as it was before
+  * we go back to cpu_loop
+  * suppose that no signal is delivered, so the gUSA is not rewound
+  * cpu_loop goes to cpu_exec
+  * there is one difference - now, TB_FLAG_GUSA_EXCLUSIVE is set and it was
+    clear before - so cpu_exec will not use the TB that calls
+    helper_exclusive, it will instead use the TB that performs the atomic
+    operation (both of these TBs have the same PC, they only differ in flags)
+  * the TB that performs the atomic operation is executed inside cpu_exec
+    => race condition
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260902120419.212855-2-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit f2357fdcd984c37fb0f3f64698a38ba1f55fd9c5)
+Fix the bug by managing the "are we in cpu_exec_step_atomic" flag
+from cpu_exec_step_atomic itself, rather from the translator.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 4bfa602bc22 ("target/sh4: Handle user-space atomics")
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 62728f8c932f9572eeea22f91e3ee223978b1c7f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index e215dbc1c00..a5096e640f6 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -510,6 +510,7 @@ void helper_fmov_ST0_STN(CPUX86State *env, int st_index)
- void helper_fmov_STN_ST0(CPUX86State *env, int st_index)
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index fdc65c1c33a..3ef48300f24 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -563,7 +563,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         /* Execute in a serial context. */
+         s.cflags &= ~CF_PARALLEL;
+         /* After 1 insn, return and release the exclusive lock. */
+-        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
++        s.cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR |
++                    CF_NOIRQ | CF_STEP_ATOMIC | 1;
+ 
+         /*
+          * No need to check_for_breakpoints here.
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 4f83d5bec98..6c5059d49af 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -83,6 +83,7 @@ struct TranslationBlock {
+ #define CF_NOIRQ         0x00010000 /* Generate an uninterruptible TB */
+ #define CF_PCREL         0x00020000 /* Opcodes in TB are PC-relative */
+ #define CF_BP_PAGE       0x00040000 /* Breakpoint present in code page */
++#define CF_STEP_ATOMIC   0x00080000 /* Running in cpu_exec_step_atomic */
+ #define CF_CLUSTER_MASK  0xff000000 /* Top 8 bits are cluster ID */
+ #define CF_CLUSTER_SHIFT 24
+ 
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index fbecde13a97..6117d5469d3 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -85,8 +85,7 @@
+ #define TB_FLAG_DELAY_SLOT_RTE   (1 << 2)
+ #define TB_FLAG_PENDING_MOVCA    (1 << 3)
+ #define TB_FLAG_GUSA_SHIFT       4                      /* [11:4] */
+-#define TB_FLAG_GUSA_EXCLUSIVE   (1 << 12)
+-#define TB_FLAG_UNALIGN          (1 << 13)
++#define TB_FLAG_UNALIGN          (1 << 12)
+ #define TB_FLAG_SR_FD            (1 << SR_FD)           /* 15 */
+ #define TB_FLAG_FPSCR_PR         FPSCR_PR               /* 19 */
+ #define TB_FLAG_FPSCR_SZ         FPSCR_SZ               /* 20 */
+@@ -97,8 +96,7 @@
+ #define TB_FLAG_DELAY_SLOT_MASK  (TB_FLAG_DELAY_SLOT |       \
+                                   TB_FLAG_DELAY_SLOT_COND |  \
+                                   TB_FLAG_DELAY_SLOT_RTE)
+-#define TB_FLAG_GUSA_MASK        ((0xff << TB_FLAG_GUSA_SHIFT) | \
+-                                  TB_FLAG_GUSA_EXCLUSIVE)
++#define TB_FLAG_GUSA_MASK        (0xff << TB_FLAG_GUSA_SHIFT)
+ #define TB_FLAG_FPSCR_MASK       (TB_FLAG_FPSCR_PR | \
+                                   TB_FLAG_FPSCR_SZ | \
+                                   TB_FLAG_FPSCR_FR)
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 3f018611316..9c357c126c1 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -47,6 +47,9 @@ typedef struct DisasContext {
+     uint16_t opcode;
+ 
+     bool has_movcal;
++#ifdef CONFIG_USER_ONLY
++    bool in_gusa_exclusive;
++#endif
+ } DisasContext;
+ 
+ #if defined(CONFIG_USER_ONLY)
+@@ -220,7 +223,11 @@ static inline void gen_save_cpu_state(DisasContext *ctx, bool save_pc)
+ 
+ static inline bool use_exit_tb(DisasContext *ctx)
  {
-     ST(st_index) = ST0;
-+    env->fptags[(env->fpstt + st_index) & 7] = 0;
+-    return (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) != 0;
++#ifdef CONFIG_USER_ONLY
++    return ctx->in_gusa_exclusive;
++#else
++    return false;
++#endif
  }
  
- void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
+ static bool use_goto_tb(DisasContext *ctx, vaddr dest)
+@@ -273,7 +280,8 @@ static void gen_conditional_jump(DisasContext *ctx, vaddr dest,
+     TCGLabel *l1 = gen_new_label();
+     TCGCond cond_not_taken = jump_if_true ? TCG_COND_EQ : TCG_COND_NE;
+ 
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* When in an exclusive region, we must continue to the end.
+            Therefore, exit the region on a taken branch, but otherwise
+            fall through to the next instruction.  */
+@@ -286,6 +294,7 @@ static void gen_conditional_jump(DisasContext *ctx, vaddr dest,
+         ctx->base.is_jmp = DISAS_NEXT;
+         return;
+     }
++#endif
+ 
+     gen_save_cpu_state(ctx, false);
+     tcg_gen_brcondi_i32(cond_not_taken, cpu_sr_t, 0, l1);
+@@ -304,7 +313,8 @@ static void gen_delayed_conditional_jump(DisasContext * ctx)
+     tcg_gen_mov_i32(ds, cpu_delayed_cond);
+     tcg_gen_discard_i32(cpu_delayed_cond);
+ 
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* When in an exclusive region, we must continue to the end.
+            Therefore, exit the region on a taken branch, but otherwise
+            fall through to the next instruction.  */
+@@ -318,6 +328,7 @@ static void gen_delayed_conditional_jump(DisasContext * ctx)
+         ctx->base.is_jmp = DISAS_NEXT;
+         return;
+     }
++#endif
+ 
+     tcg_gen_brcondi_i32(TCG_COND_NE, ds, 0, l1);
+     gen_goto_tb(ctx, 1, ctx->base.pc_next + 2);
+@@ -1793,16 +1804,18 @@ static void decode_opc(DisasContext * ctx)
+         /* go out of the delay slot */
+         ctx->envflags &= ~TB_FLAG_DELAY_SLOT_MASK;
+ 
++#ifdef CONFIG_USER_ONLY
+         /* When in an exclusive region, we must continue to the end
+            for conditional branches.  */
+-        if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE
+-            && old_flags & TB_FLAG_DELAY_SLOT_COND) {
++        if (ctx->in_gusa_exclusive && old_flags & TB_FLAG_DELAY_SLOT_COND) {
+             gen_delayed_conditional_jump(ctx);
+             return;
+         }
++
+         /* Otherwise this is probably an invalid gUSA region.
+            Drop the GUSA bits so the next TB doesn't see them.  */
+         ctx->envflags &= ~TB_FLAG_GUSA_MASK;
++#endif
+ 
+         tcg_gen_movi_i32(cpu_flags, ctx->envflags);
+         if (old_flags & TB_FLAG_DELAY_SLOT_COND) {
+@@ -1820,7 +1833,6 @@ static void decode_opc(DisasContext * ctx)
+  */
+ static void gen_restart_exclusive(DisasContext *ctx)
+ {
+-    ctx->envflags |= TB_FLAG_GUSA_EXCLUSIVE;
+     gen_save_cpu_state(ctx, false);
+     gen_helper_exclusive(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+@@ -2208,11 +2220,13 @@ static void sh4_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         int backup = sextract32(ctx->tbflags, TB_FLAG_GUSA_SHIFT, 8);
+         int max_insns = (pc_end - pc) / 2;
+ 
++        ctx->in_gusa_exclusive = ctx->base.tb->cflags & CF_STEP_ATOMIC;
++
+         if (pc != pc_end + backup || max_insns < 2) {
+             /* This is a malformed gUSA region.  Don't do anything special,
+                since the interpreter is likely to get confused.  */
+             ctx->envflags &= ~TB_FLAG_GUSA_MASK;
+-        } else if (tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++        } else if (ctx->in_gusa_exclusive) {
+             /* Regardless of single-stepping or the end of the page,
+                we must complete execution of the gUSA region while
+                holding the exclusive lock.  */
+@@ -2246,7 +2260,7 @@ static void sh4_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+ 
+ #ifdef CONFIG_USER_ONLY
+     if (unlikely(ctx->envflags & TB_FLAG_GUSA_MASK)
+-        && !(ctx->envflags & TB_FLAG_GUSA_EXCLUSIVE)) {
++        && !ctx->in_gusa_exclusive) {
+         /*
+          * We're in an gUSA region, and we have not already fallen
+          * back on using an exclusive region.  Attempt to parse the
+@@ -2276,10 +2290,12 @@ static void sh4_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* Ending the region of exclusivity.  Clear the bits.  */
+         ctx->envflags &= ~TB_FLAG_GUSA_MASK;
+     }
++#endif
+ 
+     switch (ctx->base.is_jmp) {
+     case DISAS_STOP:
 -- 
 2.47.3
 
