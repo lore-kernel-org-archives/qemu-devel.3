@@ -4,205 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D6AC98338
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 20:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0257AC9832F
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 20:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAvNL-00048R-0Y; Sun, 27 Sep 2026 16:21:31 -0400
+	id 1xAvYl-0006cy-SF; Sun, 27 Sep 2026 16:33:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAvNG-00048E-3D
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:21:26 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAvND-0004Mz-NS
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:21:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1790540475; x=1791145275; i=deller@gmx.de;
- bh=0g70Y4bYIwEJTLzdsisABtd5vzYCXXduvMzumPx1jyk=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=Y/jFJ9c08a+l2gYspFJ6vGD4g2Kw+YzBIvh2xgC/JynBfmGG6SSbdfv0QHlnN5jG
- /Rl5FYwDxNcNDPAr/4hQZ7+dUYRomZa4MvPvGGj30YTLjcFUXkJQlMDnZGynYrAY3
- +wpxI3gCC1cssqebQrBfpBfNU7Rd4S6lSUAnviRa8BJ6ywj99R/Gjes6kaUbKWy86
- TozjGMK3PM0y9aCruCuzbZ0AQz82k3K+Vy7j5nQ2qB2yVKTFnBN3NxKDGxdrgGSiU
- bNMT13fc/SFJaIUxFUwqe9YqTpO5C4iV2xp30hzToK+P1rWiuUH7GceKbqdB/pS7C
- sej8p5FIi2hW9O5fiA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTiPl-1xIF6c06gf-00IqDJ; Sun, 27
- Sep 2026 22:21:15 +0200
-Message-ID: <8faecb5d-464d-46ce-a4e7-e805c83123e7@gmx.de>
-Date: Sun, 27 Sep 2026 22:21:13 +0200
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1xAvYg-0006cq-8g
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:33:15 -0400
+Received: from mail-pz2-x2a.google.com ([2607:f8b0:4864:3b::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1xAvYd-0005Np-K8
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:33:14 -0400
+Received: by mail-pz2-x2a.google.com with SMTP id
+ d2e1a72fcca58-883a16b758dso21838b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 13:33:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790541189; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KdC2reynoFc88zfM4Rm5p4KdEPWIRk6pzyyPMJJIP1s4fblZQc6UElkQBdFAmKhCbt
+ LUzcI/fZLhSJrgldUHBR+3bXcLEpBDXleDup9YyJgSkOvwpTykF4cd3Ecdx6BASuM2zU
+ 2Z2KJcxE7F4jhdkgroSRUp+V1d6uKC8D/E85Pfo1wIUQEshVICdV2JXNl/9eI1JeRbpm
+ ey7vKCbOWsMia1qVlsR05F53kp/+cU5Akgwb7U85iAUCgSyI/ZbebRdxBwJ+A5lJsu6R
+ XSdM7pkI1N21U5eUTwa67+8f02F1MyJsuBHT60BS4ssmWZu3gsBmji/BuanBZUWQVT46
+ pEvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=LmiAhYoAzMlMCCHzqR0iDegGO+JM5hOLSU7wUEzIe5I=;
+ fh=c35z3VH4CHQwBTzlGjvgfMJH6NPf0YEMm/crc/VDn88=;
+ b=og1vm4Ed23hfsM1g5Jio/UrB4NCbBCfrsqnWRHAvozSuW2vsqlSd7f1za3+5huVf7O
+ j5IqLiBTQ0JohWcsqfAz5+eS5YLhrC90F8ktOhT79kuIZpvypaRTFCHCFASvnZ7zOqhn
+ Zfx9vxDsl8PpoONM1bixR5AH2w/cD5CiFf0CeCxoD3rKdEFE1C4PDAjGjOZQCSdNyKnO
+ MBigJgrXZzxVCfQTnHWeeM+l2Xe1Ofo1F1dMXsIP/iP9F5tUVKvJu2q5NGFLb3XLdZJE
+ 0uj2qKz/GIoxmd+HK5uJoaquo1HjBGsXQyLYpXe2Fd9ZqrPL6Dg2LopUoH0iaksIwGdI
+ 5wBg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1790541189; x=1791145989;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LmiAhYoAzMlMCCHzqR0iDegGO+JM5hOLSU7wUEzIe5I=;
+ b=PjE2ZEqUm1AJ+9ccozWIwhKzJzBE/82e4DHk2CrOqonsGbRq8mKw6H6asjC95kAx5U
+ CCxPIbsr3h8MBLGEeg8uVbwScKtDN+SM+2ki8YDd0vxm7VpEr0u4EKTyQqbiYETQg65s
+ XT/jhtOHCJZ9VsrgyhZxUB32Y9TWV6IvP0pArXNSevdiyLnHSeJIj/bAMmyPMEf7oJDI
+ EL3879x+sblODSVdnvo5NEBLM3n2moZcwnphNKAzqDLub+CTIHQv8rPVYRrA/2GWHayJ
+ w1jFEM8nkNaGDS1bIps5SaU2SRPKcNn4SdO3Djjrfb67CNKSoeuUiLO1lLYouodIZ47d
+ D1Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790541189; x=1791145989;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=LmiAhYoAzMlMCCHzqR0iDegGO+JM5hOLSU7wUEzIe5I=;
+ b=zDQQ9Osf4tIlvKyntj5TUseR2HFQMFQkh9g/0KSPV1mxVTjz8ZPFoQ+/i6vflGKSin
+ 3IFsTOinu35OXitq7No651AO2yjd0t5dSsmv4VVf9uIIi16HasvPNSHHdh4rV3S4OScB
+ FpwIfS1wMeAHC3JPGiy7hcsEfqeTXCAEF9NaW4Ex8RzvZDJAzeHv8QtarySDkZOgnANx
+ OR8BFeNN8XkagLhSB0Pa6WOxKEeEe9apsJdQQ/HZOSf8yTuUAlpmib/vLHWvha34E43l
+ 1KGUD8op1DlXi9lv6CtqhFzkbria049YhUqNH4GSvi1m+gwO2nV+Sm1GSYeDSsd13n9X
+ jv+Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz+Ry+H/veFnBRjbID5GNTZfR03C98GKIRh495ExVs6SYNwMveXiGNpGU/wqItD4k9Zzfe9y4ywGaUQ@nongnu.org
+X-Gm-Message-State: AFuF++kzjMV5pfyDL4h7EICqRTKJ/8Z+NGhR8ekzXbrJ+N0/EGdzvqL8
+ 4Lgb7cw2tmKkh69HdRREcnaiJGXvdSiaziKrZgGqQmd54kF3ooluEU+OqesBbqafnHN292FYgAP
+ xrFuBAwH9fngGSLfbm5yAp+IVaiZ4wI9TcOINzsVTKQ==
+X-Gm-Gg: AYBFou30/HHWtAnCSEJvCBqpa2Dn62dIU1cuDeJUp7qWT3reyKXxEIg2SVjYoUgND+5
+ qduga3iOANUAcvaPXdHENoZdO3WZeN9ltwE9cEFvFOmwB3GGOca18mFhbvT8WN5Ptg155aozxEo
+ L7EzSwa2hLfRuE5ftofhtPHeOgPgmN4XgJF9H5WHRD7yrQH3zSwj0l+bI1fOOD1PkNP5oVCEUMO
+ lE9xAzqeKls8kPNSwIRu/AC2WpVlX9qel9pZj8ppxXR9xRtCQX9C5h7gfekInhVuF7wNIn3aIrt
+ udeX+NlcBxiNb+ClqVSPhQDOR/IsCysZ12yMLitDBG3x5WWGp/hiFbkn
+X-Received: by 2002:a05:6a00:4501:b0:880:89cd:8c99 with SMTP id
+ d2e1a72fcca58-88089cd8e2emr3765867b3a.25.1790541189253; Sun, 27 Sep 2026
+ 13:33:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/5] input/hid: apply multiplier scaling with residual
- accumulation
-To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Soumyajyotii Ssarkar <sarkarsoumyajyoti23@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Lambertz <patch@thomaslambertz.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex Golovko <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>
-References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
- <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/XEdwlAKBFqIWcETIky9dsUC1M6bpHAhbEOiGs6vwnLD9fdt2Wx
- 6/s4MjNcVx1EWzJM97pVcmGpMaBP/V5f4L1dCKwadIxdbLS2HRFBgbF4R/amdzVl7HD1hVC
- kykYYeyA21/3wtLY1Gxl6bsGZXQZDUJ7+cLHoemNMkRJBHf/8m87GrbPNGWvPPIbxFrL2N4
- eb6BW1JzUKKHNeFmKb3LQ==
-UI-OutboundReport: notjunk:1;M01:P0:CNXVyCltm3w=;GECKWJtOUiOqthYeB8a1j6KaRrq
- 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
- ZpipPsBIj7+jkJ7bif50LpkPHw==
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260921075251.12831-1-pbonzini@redhat.com>
+ <20260927123441-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260927123441-mutt-send-email-mst@kernel.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Sun, 27 Sep 2026 14:32:57 -0600
+X-Gm-Features: AclHuK91ncCJvNSQjGTSLf5NaJtKSVL5vGMvF0v0K-ZxYWRHCJE_TD3rO8ulWDE
+Message-ID: <CANCZdfqF6YBNXjOq4XQ8KJqwhkr=jDb9jUAsbtTf27z8MgaNww@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 0/4] docs/devel, AGENTS.md: a completely new policy
+ on AI-generated contributions
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000008a9d94065c7cdb2a"
+Received-SPF: none client-ip=2607:f8b0:4864:3b::2a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pz2-x2a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,142 +122,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/31/26 19:08, Soumyajyotii Ssarkar wrote:
-> Implement multiplier-based scaling with residual accumulation for
-> fine-grained mouse wheel and pan sensitivity control in report mode.
->=20
-> Applies divisor based scaling (1, 4, 8, 16) based on negotiated
-> multiplier values.
-> Then uses residual based approach to prevent precision loss:
->=20
->    residual +=3D delta
->    output =3D residual / divisor
->    residual -=3D output * divisor
->=20
-> Residual state preserved across VM migrations via VMState.
->=20
-> Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-> ---
->   hw/input/hid.c         | 60 ++++++++++++++++++++++++++++++++++++++++++
->   include/hw/input/hid.h |  2 ++
->   2 files changed, 62 insertions(+)
->=20
-> diff --git a/hw/input/hid.c b/hw/input/hid.c
-> index d0b7af7c13..9b800faeb0 100644
-> --- a/hw/input/hid.c
-> +++ b/hw/input/hid.c
-> @@ -365,6 +365,7 @@ void hid_pointer_activate(HIDState *hs)
->   int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
->   {
->       int dx, dy, dz, pan, l;
-> +    int wheel_divisor, pan_divisor;
->       int index;
->       HIDPointerEvent *e;
->=20
-> @@ -392,6 +393,54 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, in=
-t len)
->       e->pan -=3D pan;
->=20
->=20
-> +    if (hs->kind =3D=3D HID_MOUSE && hs->protocol !=3D 0) {
+--0000000000008a9d94065c7cdb2a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-shouldn't this better be "hs->protocol =3D=3D 1" ?
+On Sun, Sep 27, 2026 at 10:39=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
 
+> On Mon, Sep 21, 2026 at 09:52:47AM +0200, Paolo Bonzini wrote:
+> > WARNING: this is *intentionally* a full U-turn from the previous policy
+> > and discussions.  This is not a refusal of the arguments presented in
+> > those discussions.  Also, it is still a request for comments.
+> >
+> > I've explained in v2 my reason to "try something else".  On one hand
+> > attempting to introduce small carve-outs did not work due the
+> impossibility
+> > of reaching a widespread consensus on this topic.  On the other hand,
+> > some contributors have been posting AI-generated patches or even larger
+> > series, most likely in good faith as they predated the introduction
+> > of an AGENTS.md file.  This shows that AI can be used for useful work
+> > on QEMU, ranging from small incremental improvements to new device
+> models.
+> >
+> > This is not a free-for-all, which is not a good idea either.  Maintaine=
+rs
+> > will want to apply their own considerations (see [1] for a good list),
+> > and contributors should take into account the maintainers' preferences.
+> >
+> > This is an attempt at building a process for contributions that use AI,
+> > heeding Conservancy's advice to not shun contributors or maintainers
+> > belonging to either camp, and keeping in mind that maintainer burnout
+> > is the one thing we have to avoid.  Some of these processes already
+> > existed, but the possibility of AI contribution makes it all more
+> > important to write them down for everyone.
+> >
+> > There was not much discussion in the previous version.  I tried to rein
+> > in some of the language that allowed too wide interpretations, to apply
+> > the changes that were suggested, and to clarify those choices that drew
+> > more remarks.
+> >
+> > As usual, the text including the commit messages is informed by
+> discussion
+> > with plenty of people, mentioned in the Cc trailers of patch 1.
+> >
+> > Paolo
+>
+>
+>
+> Something that we maybe should do, is to ask that
+> agent does not repeat, verbatim, code from outside
+> of qemu.
+>
+> would not help in 100% of cases but hey.
+>
 
-> +        switch (hs->ptr.wheel_multiplier & 0x03) {
-> +        case 0:
-> +            wheel_divisor =3D 1;
-> +            break;
-> +        case 1:
-> +            wheel_divisor =3D 4;
-> +            break;
-> +        case 2:
-> +            wheel_divisor =3D 8;
-> +            break;
-> +        default:
-> +            wheel_divisor =3D 16;
-> +            break;
-> +        }
-> +
-> +        switch (hs->ptr.pan_multiplier & 0x03) {
-> +        case 0:
-> +            pan_divisor =3D 1;
-> +            break;
-> +        case 1:
-> +            pan_divisor =3D 4;
-> +            break;
-> +        case 2:
-> +            pan_divisor =3D 8;
-> +            break;
-> +        default:
-> +            pan_divisor =3D 16;
-> +            break;
-> +        }
-> +
-> +        if (wheel_divisor > 1) {
-> +            hs->ptr.wheel_residual +=3D dz;
-> +            dz =3D hs->ptr.wheel_residual / wheel_divisor;
-> +            hs->ptr.wheel_residual -=3D dz * wheel_divisor;
-> +        } else {
-> +            hs->ptr.wheel_residual =3D 0;
-> +        }
+In a similar vain, do we want to call out *NOT* adding reviewed by: claude
+or similar?
+(assuming I'm up on the consensus view). I don't recall seeing this in the
+changes so far.
 
-maybe instead of the whole above: ?
-
-	if (hs->ptr.wheel_multiplier & 0x03) {
-             wheel_divisor =3D 2 << (hs->ptr.wheel_multiplier & 0x03);
-             hs->ptr.wheel_residual +=3D dz;
-             dz =3D hs->ptr.wheel_residual / wheel_divisor;
-             hs->ptr.wheel_residual -=3D dz * wheel_divisor;
-         } else {
-             hs->ptr.wheel_residual =3D 0;
-         }
-
-> +
-> +        if (pan_divisor > 1) {
-> +            hs->ptr.pan_residual +=3D pan;
-> +            pan =3D hs->ptr.pan_residual / pan_divisor;
-> +            hs->ptr.pan_residual -=3D pan * pan_divisor;
-> +        } else {
-> +            hs->ptr.pan_residual =3D 0;
-> +        }
-
-same here.
+Warner
 
 
-> +    }
-> +
->       if (hs->n &&
->           !e->dz &&
->           !e->pan &&
-> @@ -405,6 +454,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int=
- len)
->       dz =3D 0 - dz;
->       pan =3D 0 - pan;
->       l =3D 0;
-> +
+> > v2->v3:
+> > - remove parser example, replace with "adaptations of existing code"
+> > - when LLMs are used for boilerplate, "highly recommend" disclosure
+> >   for "non-trivial, functional code".  The idea here is to avoid
+> >   having to disclose using AI to apply e.g. changes related to
+> >   automatic code review, and leaving people some leeway.
+> > - clarify split between DCO (legal right to submit code in general)
+> >   and AI-used-for acknowledging that the submitter cannot audit LLM
+> >   output against e.g. the training data.
+> > - clarify the defense-in-depth/swiss-cheese approach to limit the
+> >   risk of copyright violations from LLM output
+> > - mention that pre-arrangement is not an entirely new concept
+> > - mention that maintainers can demand larger changes than for
+> human-written code
+> > - do not mention inclusion of the prompt
+> > - add checkpatch.pl hunk, changing the phrasing of "no AI" lint
+> > - rebase AGENTS.md on top of existing file, split
+> > - drop CLAUDE.md/GEMINI.md symlinks, already done via .claude/.gemini
+> >
+> > [1]
+> https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=3DcXiYyFoQo0wCSUJ6b=
+=3D7nVLLCwKhP6Nwxw@mail.gmail.com/
+> >
+> > Paolo Bonzini (4):
+> >   docs/devel: relax policy on AI-generated contributions
+> >   AGENTS.md: add final instructions
+> >   AGENTS.md: let agents know what the participation rules are
+> >   AGENTS.md: make the human part of the design process
+> >
+> >  docs/devel/code-provenance.rst |  71 +-----------
+> >  docs/devel/index-process.rst   |   1 +
+> >  docs/devel/llm-usage.rst       | 202 +++++++++++++++++++++++++++++++++
+> >  AGENTS.md                      | 137 +++++++++++++++++++---
+> >  scripts/checkpatch.pl          |   5 +-
+> >  5 files changed, 336 insertions(+), 80 deletions(-)
+> >  create mode 100644 docs/devel/llm-usage.rst
+> >
+> > --
+> > 2.55.0
+>
+>
 
-drop this change.
+--0000000000008a9d94065c7cdb2a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->       switch (hs->kind) {
->       case HID_MOUSE:
->           if (hs->protocol =3D=3D 0) {
-> @@ -528,6 +578,11 @@ void hid_reset(HIDState *hs)
->       case HID_MOUSE:
->       case HID_TABLET:
->           memset(hs->ptr.queue, 0, sizeof(hs->ptr.queue));
-> +        hs->ptr.mouse_grabbed =3D 0;
-> +        hs->ptr.wheel_multiplier =3D 0;
-> +        hs->ptr.pan_multiplier =3D 0;
-> +        hs->ptr.wheel_residual =3D 0;
-> +        hs->ptr.pan_residual =3D 0;
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep 27,=
+ 2026 at 10:39=E2=80=AFAM Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redh=
+at.com">mst@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Mon, Sep 21, 2026 at 09:52:47AM +0200, Paolo Bonzi=
+ni wrote:<br>
+&gt; WARNING: this is *intentionally* a full U-turn from the previous polic=
+y<br>
+&gt; and discussions.=C2=A0 This is not a refusal of the arguments presente=
+d in<br>
+&gt; those discussions.=C2=A0 Also, it is still a request for comments.<br>
+&gt; <br>
+&gt; I&#39;ve explained in v2 my reason to &quot;try something else&quot;.=
+=C2=A0 On one hand<br>
+&gt; attempting to introduce small carve-outs did not work due the impossib=
+ility<br>
+&gt; of reaching a widespread consensus on this topic.=C2=A0 On the other h=
+and,<br>
+&gt; some contributors have been posting AI-generated patches or even large=
+r<br>
+&gt; series, most likely in good faith as they predated the introduction<br=
+>
+&gt; of an AGENTS.md file.=C2=A0 This shows that AI can be used for useful =
+work<br>
+&gt; on QEMU, ranging from small incremental improvements to new device mod=
+els.<br>
+&gt; <br>
+&gt; This is not a free-for-all, which is not a good idea either.=C2=A0 Mai=
+ntainers<br>
+&gt; will want to apply their own considerations (see [1] for a good list),=
+<br>
+&gt; and contributors should take into account the maintainers&#39; prefere=
+nces.<br>
+&gt; <br>
+&gt; This is an attempt at building a process for contributions that use AI=
+,<br>
+&gt; heeding Conservancy&#39;s advice to not shun contributors or maintaine=
+rs<br>
+&gt; belonging to either camp, and keeping in mind that maintainer burnout<=
+br>
+&gt; is the one thing we have to avoid.=C2=A0 Some of these processes alrea=
+dy<br>
+&gt; existed, but the possibility of AI contribution makes it all more<br>
+&gt; important to write them down for everyone.<br>
+&gt; <br>
+&gt; There was not much discussion in the previous version.=C2=A0 I tried t=
+o rein<br>
+&gt; in some of the language that allowed too wide interpretations, to appl=
+y<br>
+&gt; the changes that were suggested, and to clarify those choices that dre=
+w<br>
+&gt; more remarks.<br>
+&gt; <br>
+&gt; As usual, the text including the commit messages is informed by discus=
+sion<br>
+&gt; with plenty of people, mentioned in the Cc trailers of patch 1.<br>
+&gt; <br>
+&gt; Paolo<br>
+<br>
+<br>
+<br>
+Something that we maybe should do, is to ask that<br>
+agent does not repeat, verbatim, code from outside<br>
+of qemu.<br>
+<br>
+would not help in 100% of cases but hey.<br></blockquote><div><br></div><di=
+v>In a similar vain, do we want to call out *NOT* adding reviewed by: claud=
+e or similar?</div><div>(assuming I&#39;m up on the consensus view). I don&=
+#39;t recall seeing this in the changes so far.</div><div><br></div><div>Wa=
+rner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
+">
+&gt; v2-&gt;v3:<br>
+&gt; - remove parser example, replace with &quot;adaptations of existing co=
+de&quot;<br>
+&gt; - when LLMs are used for boilerplate, &quot;highly recommend&quot; dis=
+closure<br>
+&gt;=C2=A0 =C2=A0for &quot;non-trivial, functional code&quot;.=C2=A0 The id=
+ea here is to avoid<br>
+&gt;=C2=A0 =C2=A0having to disclose using AI to apply e.g. changes related =
+to<br>
+&gt;=C2=A0 =C2=A0automatic code review, and leaving people some leeway.<br>
+&gt; - clarify split between DCO (legal right to submit code in general)<br=
+>
+&gt;=C2=A0 =C2=A0and AI-used-for acknowledging that the submitter cannot au=
+dit LLM<br>
+&gt;=C2=A0 =C2=A0output against e.g. the training data.<br>
+&gt; - clarify the defense-in-depth/swiss-cheese approach to limit the<br>
+&gt;=C2=A0 =C2=A0risk of copyright violations from LLM output<br>
+&gt; - mention that pre-arrangement is not an entirely new concept<br>
+&gt; - mention that maintainers can demand larger changes than for human-wr=
+itten code<br>
+&gt; - do not mention inclusion of the prompt<br>
+&gt; - add <a href=3D"http://checkpatch.pl" rel=3D"noreferrer" target=3D"_b=
+lank">checkpatch.pl</a> hunk, changing the phrasing of &quot;no AI&quot; li=
+nt<br>
+&gt; - rebase AGENTS.md on top of existing file, split<br>
+&gt; - drop CLAUDE.md/GEMINI.md symlinks, already done via .claude/.gemini<=
+br>
+&gt; <br>
+&gt; [1] <a href=3D"https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=3D=
+cXiYyFoQo0wCSUJ6b=3D7nVLLCwKhP6Nwxw@mail.gmail.com/" rel=3D"noreferrer" tar=
+get=3D"_blank">https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=3DcXiYy=
+FoQo0wCSUJ6b=3D7nVLLCwKhP6Nwxw@mail.gmail.com/</a><br>
+&gt; <br>
+&gt; Paolo Bonzini (4):<br>
+&gt;=C2=A0 =C2=A0docs/devel: relax policy on AI-generated contributions<br>
+&gt;=C2=A0 =C2=A0AGENTS.md: add final instructions<br>
+&gt;=C2=A0 =C2=A0AGENTS.md: let agents know what the participation rules ar=
+e<br>
+&gt;=C2=A0 =C2=A0AGENTS.md: make the human part of the design process<br>
+&gt; <br>
+&gt;=C2=A0 docs/devel/code-provenance.rst |=C2=A0 71 +-----------<br>
+&gt;=C2=A0 docs/devel/index-process.rst=C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 docs/devel/llm-usage.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0| 202 +++++++=
+++++++++++++++++++++++++++<br>
+&gt;=C2=A0 AGENTS.md=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 | 137 +++++++++++++++++++---<br>
+&gt;=C2=A0 scripts/<a href=3D"http://checkpatch.pl" rel=3D"noreferrer" targ=
+et=3D"_blank">checkpatch.pl</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =
+=C2=A05 +-<br>
+&gt;=C2=A0 5 files changed, 336 insertions(+), 80 deletions(-)<br>
+&gt;=C2=A0 create mode 100644 docs/devel/llm-usage.rst<br>
+&gt; <br>
+&gt; -- <br>
+&gt; 2.55.0<br>
+<br>
+</blockquote></div></div>
 
-and move that in an own patch.
-
-Otherwise the patch seems ok.
-I suggest you resend the series with the proposed changes and
-make sure it applies against git head.
-
-Thanks!
-Helge
+--0000000000008a9d94065c7cdb2a--
 
