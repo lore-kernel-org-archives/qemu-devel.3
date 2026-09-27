@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7DFBC9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C92AAC9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAkrn-0003jg-UI; Sun, 27 Sep 2026 05:08:16 -0400
+	id 1xAkrx-0004qV-1V; Sun, 27 Sep 2026 05:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrD-00026r-JH; Sun, 27 Sep 2026 05:07:45 -0400
+ id 1xAkqI-0001SW-5N; Sun, 27 Sep 2026 05:06:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkrB-0008Ez-Pt; Sun, 27 Sep 2026 05:07:39 -0400
+ id 1xAkqF-0008AF-M2; Sun, 27 Sep 2026 05:06:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499961; bh=NPRmmysrtL9EvjfpRW5GnviFekIV6bv1odapoUDeyMU=;
+ t=1790499960; bh=I3mm9gl4xbbP4KwmV+SH3oiRYZ/hpGc79EQTfXy/kpk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ih+v4T+9Z7zrwCtAMjDJU0/KPioZJng6BsBO3L2LVDqboehW2QJgxfC4HbgEAwM2c
- Bc1WpfrU/nBTHTQd3MRn9smUCtgQ5UFrA1RSp7MMMzwLKBXlP099x+s/ZGHHN4EwLk
- 1F2+1kBtYfefmlNo1WRqLB2gb1diuWt6ILsqAMuaxDicrCsRLz9bLgWyZZipY2XIBS
- pGP9o1oMsIPPD3DkDk8X626a0eNeDktMm8G6s7vxVTrhwj8mxnAu4UktqwGhettaiE
- zMd2C87lVQLTJQ3FXZQwz2/8pJggT2Uhms4txq7GZk4nCNm8OgLW/dhfSBKyACVmsm
- LPSmC7IE1nxiA==
+ b=DNylhmSK42lzc4Ttx+Pn+is6oQovgjVdSIr6hKpgEYPSxDRN3ND7OCoAMq/I0sXSi
+ TLqrhds5Sfj3mCP15VmJEeVItw03wFJnbJHwPh+ZyuuLe4PV0RaNGLjEDaPY4Iq+6+
+ qkdH6IdmniMSFIBCg2Q4qsiP/jkKEnt6oYd2ev/FpAuFJau7EkSuUBscqW1bubgeSa
+ C7/KZ0ebGoVtUx6YW1DXXJiqn8UkU2EshLDI/tX6YX6NcUliBIPAxM293QjZ/fm35D
+ UOrlSZSPiw9LEF8/1EB/pVt8Czyg8f8F/PYKS0z7IMxuaHJSCagBV9HGF5GN7ELGRO
+ yARiIak7NQErA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 791041D8B22;
- Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EB5B11D8B18;
+ Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 706D54320DB;
- Sun, 27 Sep 2026 12:06:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E89254320D1;
+ Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E6B6C5E675; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ id C7EFF5E661; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 81/86] target/i386: Update FPU tag word for
- FXTRACT's old ST(0)
-Date: Sun, 27 Sep 2026 12:05:28 +0300
-Message-ID: <20260927090540.102811-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 71/86] tcg/optimize: Fix expansion/simplification
+ of deposit
+Date: Sun, 27 Sep 2026 12:05:18 +0300
+Message-ID: <20260927090540.102811-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
@@ -71,83 +71,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-FXTRACT writes two registers: the old ST(0) gets the exponent (it
-becomes ST(1) after the push), and the new ST(0) gets the
-significand. Both should end up marked valid in the FPU tag word.
+When we computed z_mask/o_mask for the deposit, we may accidentally
+prove that the result is a constant.
 
-helper_fxtract() only marks the new one valid, via fpush(). The old
-ST(0) just keeps whatever tag it had before the instruction, even
-though it was just written with the exponent. So if it happened to
-be tagged empty beforehand, it is still (wrongly) tagged empty
-afterwards.
+If we let the rest of the code expand as-is, when can we get to the
+end we'll see the constant, note that it's the same as the current
+value, remove what we think is "the opcode" that computes this same
+value.  But in this case we've been expanding deposit to multiple
+opcodes and the removal of only the last opcode breaks the expansion.
 
-Add a fpush_fxtract() helper that does the usual fpush() and also
-marks the old ST(0) (now ST(1)) valid, and use it in place of plain
-fpush() at all previous call sites in helper_fxtract().
+Fix this by noting the constant result early, before expanding,
+allowing the entire operation to be removed.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4395
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260901085839.138094-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 994fb6c218f8c8f2be3fc9fab75a41d15b859fdc)
+Cc: qemu-stable@nongnu.org
+Fixes: 5f747705a4 ("tcg/optimize: Lower unsupported deposit during optimize")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4449
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 0bc331d1c7d5cedc1dbe0bf21dc5f6be13c58fa4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 83164fc8ea5..e215dbc1c00 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -1807,6 +1807,13 @@ void helper_fpatan(CPUX86State *env)
-     merge_exception_flags(env, old_flags);
- }
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index c266cfe99c9..891612e3126 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1674,6 +1674,23 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+     type_mask = MAKE_64BIT_MASK(0, width);
+     len_mask = MAKE_64BIT_MASK(0, len);
  
-+/* fpush() only validates the new top. FXTRACT also needs ST(1) validated. */
-+static inline void fpush_fxtract(CPUX86State *env)
-+{
-+    fpush(env);
-+    env->fptags[(env->fpstt + 1) & 7] = 0;
-+}
++    /*
++     * Compute result masks before calling other fold_* subroutines
++     * which could modify the masks of our inputs.
++     */
++    z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
++    o_mask = deposit64(t1->o_mask, ofs, len, t2->o_mask);
++    if (ofs + len < width) {
++        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
++    } else {
++        s_mask = t2->s_mask << ofs;
++    }
 +
- void helper_fxtract(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
-@@ -1818,22 +1825,22 @@ void helper_fxtract(CPUX86State *env)
-         /* Easy way to generate -inf and raising division by 0 exception */
-         ST0 = floatx80_div(floatx80_chs(floatx80_one), floatx80_zero,
-                            &env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = temp.d;
-     } else if (floatx80_invalid_encoding(ST0, &env->fp_status)) {
-         float_raise(float_flag_invalid, &env->fp_status);
-         ST0 = floatx80_default_nan(&env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-     } else if (floatx80_is_any_nan(ST0)) {
-         if (floatx80_is_signaling_nan(ST0, &env->fp_status)) {
-             float_raise(float_flag_invalid, &env->fp_status);
-             ST0 = floatx80_silence_nan(ST0, &env->fp_status);
-         }
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-     } else if (floatx80_is_infinity(ST0, &env->fp_status)) {
--        fpush(env);
-+        fpush_fxtract(env);
-         ST0 = ST1;
-         ST1 = floatx80_default_inf(0, &env->fp_status);
-     } else {
-@@ -1849,7 +1856,7 @@ void helper_fxtract(CPUX86State *env)
-         }
-         /* DP exponent bias */
-         ST0 = int32_to_floatx80(expdif, &env->fp_status);
--        fpush(env);
-+        fpush_fxtract(env);
-         BIASEXPONENT(temp);
-         ST0 = temp.d;
++    /* Sometimes we prove a constant from non-constants. */
++    if (z_mask == o_mask) {
++        return tcg_opt_gen_movi(ctx, op, op->args[0], z_mask);
++    }
++
+     /* Inserting all-zero into a value. */
+     if ((t2->z_mask & len_mask) == 0) {
+         op->opc = INDEX_op_and;
+@@ -1706,18 +1723,6 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+         return fold_or(ctx, op);
      }
+ 
+-    /*
+-     * Compute result masks before calling other fold_* subroutines
+-     * which could modify the masks of our inputs.
+-     */
+-    z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
+-    o_mask = deposit64(t1->o_mask, ofs, len, t2->o_mask);
+-    if (ofs + len < width) {
+-        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
+-    } else {
+-        s_mask = t2->s_mask << ofs;
+-    }
+-
+     /* Inserting a value into zero. */
+     if (ti_is_const_val(t1, 0)) {
+         uint64_t need_mask;
 -- 
 2.47.3
 
