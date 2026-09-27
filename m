@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90387C9833F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E23C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjK4-0003Uh-Pt; Sun, 27 Sep 2026 03:29:20 -0400
+	id 1xAjK2-0003Ge-9y; Sun, 27 Sep 2026 03:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjJ9-0001Tb-82; Sun, 27 Sep 2026 03:28:24 -0400
+ id 1xAjIE-0000Ji-2b; Sun, 27 Sep 2026 03:27:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjJ7-0005cx-Ch; Sun, 27 Sep 2026 03:28:22 -0400
+ id 1xAjIB-0005TC-Tv; Sun, 27 Sep 2026 03:27:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494014; bh=mScn57nSfFKiWsR2gjykJjgAHLKsYoWtWgKRoIM2VfA=;
+ t=1790494013; bh=YjkLGra2R5/21VxIuW0V+PhnQN0hV7Ep8aXq2mss5ZU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eGgcCUpzcYUSrME4nSwt4cBIJTB352oD66b3L8Tc5W2qbTsUBU4j5XMN402RCcHfv
- dN6pai3uznxDFDrTa3ctYhAB+/khqG59TydjCdHs6qVmwq7E7TElu/LHSYI+ovTwBb
- Xhh72p6060OfIBdT4pXdCqOLbpkce46hvGvgRVi1OXGFIoKjJAvmvJzPWlTWJ5EqXg
- RmwyE3COiUrkU+g4eF1jSKA+AM4uXa1I3eUyns/8f4tJK0S9vucCBgxxm4frD/4oSx
- Uq9BTzDqlNp47Wn9tyGK8Mripmdx8EfvfKrmqw+s79JWLO/y8WbQttbRSaqlKA6Ivx
- iYvHnzf47bTAQ==
+ b=KRTd5Sv+HyATlhlKbHes0SPfxrRttjYrfH6QDFIiM2ZhTyk5KKOkIwzhgt4dlVMoY
+ PkAufT7rw/wScVdIlhMXsi3dI8DuJEYBJysXvC0w9GDOaREOVnxdgNVOPo+zozeS3e
+ 5hetuqRv9l8DAq6+QKWc73ovFRMESVj8mkE5p7sWEJccGXjlw0Yx8oM6fhGWRraxwl
+ AhTj73m6sZhy0ybxxTLuqtwj+57gJBCEZwlGcYBmZ3dOO9QuurE+/QI0y7h8Sw+KSd
+ Z1Ya+NXhdUX5Ec3ua8BPkYlHn6U1sNT+GLEYhxQ7AZZ6w2OHAFdLorugWxfNUieDYk
+ Svhq4CTWiy/pA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 106481D8AC8;
- Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A39551D8ABF;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E0C443205A;
- Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 892DA432051;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1528F5E63F; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
+ id EDC015E62D; Sun, 27 Sep 2026 10:26:52 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 70/72] target/i386: Mark MOVNTI as not valid with
- prefixes 0x66, 0xF2, 0xF3
-Date: Sun, 27 Sep 2026 10:26:02 +0300
-Message-ID: <20260927072622.93656-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 61/72] hw/usb/hcd-xhci: fix interval alignment
+ after MFINDEX passes 2^32
+Date: Sun, 27 Sep 2026 10:25:53 +0300
+Message-ID: <20260927072622.93656-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,43 +73,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-According to both table A-3 in Volume 2 of Intel 64 and IA-32 Architectures
-Software Developer's Manual and table A-3 in Volume 3 of AMD64 Architecture
-Programmer's Manual, 0F C3 is decoded as MOVNTI only if the instruction is
-not preceded by prefixes 0x66, 0xF2, or 0xF3.
+epctx->interval is an unsigned int, so ~(epctx->interval - 1) is a
+32-bit mask that is zero-extended when and-ed with the 64-bit microframe
+index. Once mfindex no longer fits in 32 bits (2^32 * 125us, about 6.2
+days after the controller was started), asap loses its upper half and
+always compares below mfindex. Isoch TDs with SIA are then run at once
+instead of at the next interval boundary. xhci_calc_intr_kick() has the
+same expression.
 
-Currently, QEMU does not check the presence of these prefixes when decoding
-0F C3, which leads to QEMU happily executing 0F C3 as MOVNTI instead of raising
-an expected #UD when any of these prefixes are present, which does not match
-the behavior of the real hardware.
+Use ROUND_UP(), which builds the mask in the type of mfindex. The
+interval is always a power of two.
 
-This patch fixes this bug by correcting the decode table for MOVNTI so that
-it requires that none of the 0x66, 0xF2, and 0xF3 prefixes is present.
+The reporter of #3973 also saw the symptom with UHCI. This change does
+not explain that.
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 3519b813e1f1 ("target/i386: port extensions of one-byte opcodes to new decoder")
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Link: https://lore.kernel.org/r/20260818145837.550059-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6adc9d9cdc53e2299f3343950d519b6f26e114de)
+Fixes: 3d1396842d ("xhci: iso xfer support")
+Fixes: 4d7a81c06f ("xhci: emulate intr endpoint intervals correctly")
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3973
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <52c9f935428f2cfc65e4dee7e37638fcb965c6b2.1789968699.git.junjie.cao@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit bfb82d57e7299cb59471f7060cbab0b1ed39504e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 16ea52e9d5c..704858ff57b 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1265,7 +1265,7 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xc0] = X86_OP_ENTRY2(XADD,       E,b, G,b,            lock),
-     [0xc1] = X86_OP_ENTRY2(XADD,       E,v, G,v,            lock),
-     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
--    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-+    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2) p_00), /* MOVNTI */
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 9805dff0114..26dcb8c6bd7 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1757,8 +1757,7 @@ static int xhci_fire_ctl_transfer(XHCIState *xhci, XHCITransfer *xfer)
+ static void xhci_calc_intr_kick(XHCIState *xhci, XHCITransfer *xfer,
+                                 XHCIEPContext *epctx, uint64_t mfindex)
+ {
+-    uint64_t asap = ((mfindex + epctx->interval - 1) &
+-                     ~(epctx->interval-1));
++    uint64_t asap = ROUND_UP(mfindex, epctx->interval);
+     uint64_t kick = epctx->mfindex_last + epctx->interval;
+ 
+     assert(epctx->interval != 0);
+@@ -1769,8 +1768,7 @@ static void xhci_calc_iso_kick(XHCIState *xhci, XHCITransfer *xfer,
+                                XHCIEPContext *epctx, uint64_t mfindex)
+ {
+     if (xfer->trbs[0].control & TRB_TR_SIA) {
+-        uint64_t asap = ((mfindex + epctx->interval - 1) &
+-                         ~(epctx->interval-1));
++        uint64_t asap = ROUND_UP(mfindex, epctx->interval);
+         if (asap >= epctx->mfindex_last &&
+             asap <= epctx->mfindex_last + epctx->interval * 4) {
+             xfer->mfindex_kick = epctx->mfindex_last + epctx->interval;
 -- 
 2.47.3
 
