@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9C6C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACB8C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjJW-0001xE-Ps; Sun, 27 Sep 2026 03:28:47 -0400
+	id 1xAjKG-0004AG-TB; Sun, 27 Sep 2026 03:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjIG-0000LO-W7; Sun, 27 Sep 2026 03:27:32 -0400
+ id 1xAjIe-0000f7-Qm; Sun, 27 Sep 2026 03:27:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjIF-0005UC-5x; Sun, 27 Sep 2026 03:27:28 -0400
+ id 1xAjId-0005YX-4j; Sun, 27 Sep 2026 03:27:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494013; bh=ADRC8PT9oMNdyhIQADbwSFkd2z06GUFKrBzVmDDd+Fg=;
+ t=1790494013; bh=RV2dHwSSGnkSM0RTR/qYO7Pu2Fhw93CJHUP4cvi0f/U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UjgBunXHkAJ/Qwrami7Kg26j4YOC8tCrgEEcUuoVcvIJPOwS57ae5c9PB4MOjTg9x
- 00v7OlleyxG/BrlEexhphdyQhP5tRazVh7kYoTa3xJa845CFqo1TcPVm2hSu9PYXA7
- WpatmzMOgkq39g+/U8fkyryqxhCpM/VDuDocHwyHh3uXBBgUVRxDNTa82OOc486wAA
- 2vI3TocsPMdPr09+af9vV3TEuNqWD5DDa2Dxq5qP8jN9R1lw2K9Yn0JzceMy7HBnpG
- 9az6xBttBdECQIF/+hyO4OJldLc4629R3WpEhmhf+yzJB4M/V4egeSdZppVd8kQ7Nr
- syWeBUkgXfuWA==
+ b=oXiQS5ia60JOM4kRndLUMmIbCnJGqwHICpo9E5QfNK4x3wqcTvWio850hIAhXacIY
+ cEKrrzqCooIzLvLSr4cx8OBExG+lxr7wadeB4nvLzc16j2BD5l9GmWtNKT25zO+NUH
+ FAZndTt3vS712a/eVQwNA3y69h9YhfUxlGpiPKWND2CV/KfiTCV23PWHhmsCrSFiaS
+ chE6jr9t7FWI2cP43uLjlGe26ErvMteP9qWLxQdsfWcsgxZYiI0zVszmuMiT7m+1BZ
+ cyE1n8RVc+9l0gJI6v3MC5Mw753zRwOKe3e778FJhbVqupK49E4X/UPkGnZ3cuPaEM
+ wn87so6JeK7tA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BCF291D8AC0;
+ by isrv.corpit.ru (Postfix) with ESMTP id E8D5B1D8AC3;
  Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A6BDC432052;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDC51432055;
  Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F0EBB5E62F; Sun, 27 Sep 2026 10:26:52 +0300 (MSK)
+ id 05FEC5E635; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Feifan Qian <bea1e@proton.me>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 62/72] hw/usb/hcd-xhci: don't assert on NAK when
- retrying an isoch transfer
-Date: Sun, 27 Sep 2026 10:25:54 +0300
-Message-ID: <20260927072622.93656-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 65/72] target/ppc: Stop vCPU thread before calling
+ parent_unrealize
+Date: Sun, 27 Sep 2026 10:25:57 +0300
+Message-ID: <20260927072622.93656-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,72 +74,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-The endpoint type in the xHCI endpoint context comes from the guest and
-is not checked against the device. A guest can configure the interrupt
-IN endpoint of usb-kbd as Isoch IN. The idle HID endpoint NAKs, and as
-soon as the transfer goes through the retry path in xhci_kick_epctx()
-it hits
+During CPU hot-unplug (e.g. via dynamic reconfiguration unplug),
+ppc_cpu_unrealize() invoked pcc->parent_unrealize(dev) before calling
+cpu_remove_sync(CPU(cpu)).
 
-  assert(xfer->packet.status != USB_RET_NAK);
+pcc->parent_unrealize() calls cpu_common_unrealize(), which triggers
+accel_cpu_common_unrealize() -> tcg_exec_unrealizefn() -> tlb_destroy().
+This immediately frees the CPU's TLB tables and structures. Because the
+vCPU thread had not yet been stopped and joined via cpu_remove_sync(),
+the vCPU thread was still actively running its event loop and processing
+queued CPU work (such as tcg_commit_cpu / tlb_flush).
 
-No device model NAKs on an isoch endpoint, so this only triggers with a
-mismatched endpoint type.
+This resulted in a race where the running vCPU thread accessed and freed
+already-destroyed TLB tables concurrently with tlb_destroy(), leading to
+Segfault (due to heap corruption).
 
-The two retry branches differ only in what they do on NAK: the isoch one
-asserts, the other keeps the transfer pending. Merge them.
+AddressSanitizer build reported a double-free:
 
-Fixes: 3d1396842d ("xhci: iso xfer support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3886
-Reported-by: Feifan Qian <bea1e@proton.me>
+=================================================================
+==121930==ERROR: AddressSanitizer: attempting double-free on 0x7ef8f3438800 in thread T14:
+    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
+    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
+    #2 0x558bf6a391b1 in tlb_mmu_resize_locked accel/tcg/cputlb.c:249
+    #3 0x558bf6a396b5 in tlb_flush_one_mmuidx_locked accel/tcg/cputlb.c:296
+    #4 0x558bf6a39f91 in tlb_flush_by_mmuidx_async_work accel/tcg/cputlb.c:390
+    #5 0x558bf6a3a200 in tlb_flush_by_mmuidx accel/tcg/cputlb.c:417
+    #6 0x558bf6a3a22a in tlb_flush accel/tcg/cputlb.c:422
+    #7 0x558bf73f31ac in tcg_commit_cpu system/physmem.c:3068
+    #8 0x558bf6987c55 in process_queued_cpu_work cpu-common.c:378
+    #9 0x558bf73a9913 in qemu_process_cpu_events_common system/cpus.c:402
+    #10 0x558bf73a9a46 in qemu_process_cpu_events system/cpus.c:421
+    #11 0x558bf6a65974 in mttcg_cpu_thread_fn accel/tcg/tcg-accel-ops-mttcg.c:90
+
+0x7ef8f3438800 is located 0 bytes inside of 65536-byte region [0x7ef8f3438800,0x7ef8f3448800)
+freed by thread T9 here:
+    #0 0x7fe8f74e5beb in free.part.0 (/lib64/libasan.so.8+0xe5beb)
+    #1 0x7fe8f6cb8f84 in g_free (/lib64/libglib-2.0.so.0+0x41f84)
+    #2 0x558bf6a39a91 in tlb_destroy accel/tcg/cputlb.c:345
+    #3 0x558bf6a16354 in tcg_exec_unrealizefn accel/tcg/cpu-exec.c:1094
+    #4 0x558bf693d073 in accel_cpu_common_unrealize accel/accel-common.c:117
+    #5 0x558bf6980e37 in cpu_common_unrealize hw/core/cpu-common.c:279
+    #6 0x558bf6980dfa in cpu_common_unrealizefn hw/core/cpu-common.c:267
+    #7 0x558bf763ef65 in ppc_cpu_unrealize target/ppc/cpu_init.c:6965
+    #8 0x558bf7872199 in device_set_realized hw/core/qdev.c:618
+    #14 0x558bf756068f in spapr_unrealize_vcpu hw/ppc/spapr_cpu_core.c:209
+
+Fix this by moving cpu_remove_sync() before pcc->parent_unrealize(dev)
+in ppc_cpu_unrealize(), ensuring the vCPU thread is stopped, has
+finished processing its events, and is joined before CPU resources
+and accelerator state are destroyed.
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <44227b05b22064a22f4c135e025ff0b1d838b9e3.1789968699.git.junjie.cao@intel.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 45684127cdee2d212125fd8d1de8a9c4804ee8bb)
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Message-ID: <20260923121444.154175-1-shivangu@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit cbbd4d74eb298e2b407018185a40cb813435527e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 26dcb8c6bd7..88937683aad 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1927,26 +1927,15 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
-             xfer->timed_xfer = 0;
-             xfer->running_retry = 1;
-         }
--        if (xfer->iso_xfer) {
--            /* retry iso transfer */
--            if (xhci_setup_packet(xfer) < 0) {
--                return;
--            }
--            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
--            assert(xfer->packet.status != USB_RET_NAK);
--            xhci_try_complete_packet(xfer);
--        } else {
--            /* retry nak'ed transfer */
--            if (xhci_setup_packet(xfer) < 0) {
--                return;
--            }
--            usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
--            if (xfer->packet.status == USB_RET_NAK) {
--                xhci_xfer_unmap(xfer);
--                return;
--            }
--            xhci_try_complete_packet(xfer);
-+        if (xhci_setup_packet(xfer) < 0) {
-+            return;
-+        }
-+        usb_handle_packet(xfer->packet.ep->dev, &xfer->packet);
-+        if (xfer->packet.status == USB_RET_NAK) {
-+            xhci_xfer_unmap(xfer);
-+            return;
-         }
-+        xhci_try_complete_packet(xfer);
-         assert(!xfer->running_retry);
-         if (xfer->complete) {
-             /* update ring dequeue ptr */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 21a76e904af..b770045fbee 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6969,10 +6969,10 @@ static void ppc_cpu_unrealize(DeviceState *dev)
+     PowerPCCPU *cpu = POWERPC_CPU(dev);
+     PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
+ 
+-    pcc->parent_unrealize(dev);
+-
+     cpu_remove_sync(CPU(cpu));
+ 
++    pcc->parent_unrealize(dev);
++
+     destroy_ppc_opcodes(cpu);
+ }
+ 
 -- 
 2.47.3
 
