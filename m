@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06F62C9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 20:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4327C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 20:15:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAvFx-0008Iz-JN; Sun, 27 Sep 2026 16:13:53 -0400
+	id 1xAvGP-0008SL-65; Sun, 27 Sep 2026 16:14:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1xAvFv-0008Hu-2X
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:13:51 -0400
-Received: from mail-pz2-x2b.google.com ([2607:f8b0:4864:3b::2b])
+ id 1xAvGN-0008QE-SM
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:14:19 -0400
+Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1xAvFt-0003Xl-4N
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:13:50 -0400
-Received: by mail-pz2-x2b.google.com with SMTP id
- 41be03b00d2f7-cc78e1a94b8so1267749a12.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 13:13:48 -0700 (PDT)
+ id 1xAvGM-0003Zq-2j
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 16:14:19 -0400
+Received: by mail-pj2-x10.google.com with SMTP id
+ 98e67ed59e1d1-39b5b07ec78so1252483a91.3
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 13:14:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790540027; x=1791144827; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790540057; x=1791144857; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Bf3vR6iy7Q7v1q8bV5ZxQj6Bf/iMYhH2zfM2TdxLg7Y=;
- b=JHYg8mvf9lmlxMzdTibvA9xKn6Wb6zx2lgDdl9ml+ISvO+/efStlrrPG0CHeDramnf
- sdF5P/21ZWiGutZqo+1D9dtFFaVOC3VLT0FfHiK8DN+fykoMDmnUhzuxWgItDmM1vqzV
- ZUMJFOegUMCKqklgGS+/gGw0TpbSmpjKpN35Roh3mD/5woGlVmJm+D36if/3t2Piipjo
- tfeR4pZYSqu+1BW8JZuuQwT0ynZFaAZHoDDMnKioub0cp8Tl1safKQmTsFmNO3Qpp/lt
- UCe6/eZsvP3x4PJqpNQW1DbgKJRR6YTGr8xyXDtn94oRAWnAGfdKdBs2WsymKt6comot
- lnpg==
+ bh=YE9SXqkXYYCp6VqxqB8fdiOqNVXMFbewvhAgf9jvcl0=;
+ b=n+kHiRqn4yn/YKk9m44c47+IxBjCb0NdS6j15OutBKGXcZjn1VTNVzIn1Lt/otoFLE
+ XWvt2Effxuxje9r4lShngQyuw5T/REl59fXldn9UMALMD9ayNFV4gjndnZGx31BbCDCo
+ 7iwrEZ6yE43i0NA2dsWtTHpiPYJblu0/Y4NupaxwSB8utN16/ZpK9SDXHkLhU5jKLvZk
+ JJbIc+vGdSrHUhBqjqunqK1CMJuiyGbdu6GJi7mDbEsxUcEMdrt4EKLb2cd9puvGeJXz
+ pVPAtwacAJP5/jn9mAoN7STyJfyJDlheS8GfOlZC/0S7s5XnRP9GaJ/hTUG9QKCfPxyR
+ EScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790540027; x=1791144827;
+ d=1e100.net; s=20260707; t=1790540057; x=1791144857;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Bf3vR6iy7Q7v1q8bV5ZxQj6Bf/iMYhH2zfM2TdxLg7Y=;
- b=FR1r08mknR2Cd4D3pOEh/OByRiKoaGKsqEM9/JmzAgLZt5GbkPUvkHsTABRfpZj/Ho
- PeLPARyZJDBnht4Vmmens0x2xvLrGcuXRJLCSPss2PxS4TiarQT/TBnRO6PdHQuITuZa
- +JBtHqww9a3XdLW24wWvFC9mtdt6dJGCol3ksYVCwuX5Zr4ba0XfviBHecKUVOuZoU2c
- UkAB4DEjT+DlFRqfLfjF69Uv+ELz4Kj8lmXUQE2Ynf+GWi3ZXUuH8IBzKG647s/Z5uZ2
- 7/n3RpV9rnIQiGvXauwuBu+PNyTKVLOAmW2oaG8dPlm2igdyBTbW/49ppoeeSml2PWh8
- uL2g==
+ bh=YE9SXqkXYYCp6VqxqB8fdiOqNVXMFbewvhAgf9jvcl0=;
+ b=kb9FbLw0HL8KPykcwRJMwRTqofzCz6zZda2cj1XkJahq3KmxhNJHo4kLBAe2XLRWY4
+ WCc61fFMM396XlkrDnU3QekkWZ6sI+ErFiap/aGuGtw6WvLcxVTir+ern698JdeNQUNt
+ DOrlEOJqMQY33Ch5DB4eLln79czwLSex1xNpGdki0YHWr04/NcNm29M4U9XbBM03o0uj
+ v+Fy0ijlXJ76eTMiao0LlNiP0RX2DUpDX7LoPNNCDG2hIN93chksNfOkrpkOyKY7OI/o
+ 7rwWlFmSzVyxgdC6z0+kIkr6MAkRCSxq5kGJJwJKwuJQOP2EQ/ijRvR9fCoze8XYB2RR
+ Zx3w==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx4PhRSOFjhGWJEtr44KYH2HaaJ+CBqpXqZEz7AnZc3HIQ8BrbNgSlSqg0iM6vop10COYJ0aj24OG4y@nongnu.org
-X-Gm-Message-State: AFq9FYIy9HnwQ+XSkXL3gTNkwDUV2PfhY/d9Aa5b+PrWPPNafvOZu5Yl
- 3ZTsWK9nwktFim0HLwCRqPWPOQ52ZYaaV/8SEAmj613dgGiP0JbhKuwd
-X-Gm-Gg: AYBFou3iNSUBU19jTYEQgouVfzuGiofBuYegI9G6iixjeecRXH9MXIzo/HMoE48i4Qe
- bWXeb4cwckXq1mriyXy9cnISRm7vwpMfxzaXq867EkIedIwiWAkeREuOfyuPtFjVgURf7fEPlj6
- 8Qi+Jq04rRpWwGZKCKfI7u3AP7iNEiE2l1oOeB7kKWjE7YqWjY8CIfPvtZFlauGS1seC44lU7W0
- N5bDN8ZOOUf9dUgOPcquIPEVCCvMPagQJ5oyrm6Ecj5Nzi/Y7Hy4jGW6nFNnLC+gdk0BpmKoDzp
- wFu0YwHb1F01Z9VpzAcZINIr+rWkmQQ1lfEObVysvAU7WK3LulvbXD9c7M9gGbq/5B0IWEwmJA5
- 1TrcLwr/eb3EUOzYN58I3xbPZPmO2/Fd8AMRzGG0WhjHzUS2vpHg6K+ifKPQnmXNt5VQAfOig6s
- pfCGL5kZXIxE9ww8vdKCLRNNSQNzFDZDQbgVoUCOjdWmftbtGc8Pycfi0V2Uw9xe21KHVzjBBlj
- ri2bfDa6YftvP7LQ1l+RZc4rk0ZPytj6Jt2oHG2ppd5aL6YtpgkpaRmqZf6oSUcarNrwRXTqA==
-X-Received: by 2002:a17:90b:4d0f:b0:39b:61f1:8032 with SMTP id
- 98e67ed59e1d1-3a098b49032mr9577065a91.16.1790540027496; 
- Sun, 27 Sep 2026 13:13:47 -0700 (PDT)
+ AKwUvBxzeGQng+yVj+hYfH38j8+ck6N/VWrY9G3MvF0zCOkmLrHktDCRm0P9l11m6VQoosxCLn4/DA0KlwZc@nongnu.org
+X-Gm-Message-State: AFq9FYJErxMQNRLWugvtzWJCa5jauyNt6c+Io5n5TpqA7YEddSFXHA6m
+ bgbxkmxZlRL23mfX2FZPkcGfbXnMmqBcKiUkRsPDpF5tPmcAeoUqv9J51DRDndMD
+X-Gm-Gg: AYBFou3s0fA1BZYtfGpnKiY7/DrXFHjzP7tXcaolBZ8UOPK7OHZ3u15N8sBef2XtQxQ
+ KzUEn8HPW5X0dkLaF1Smx9khKwB0wWBe+OkcBkz96APNkmAgt5x0t2jxLAe/dXJmK1Cyc+tON35
+ HzOtO+i4x7gd2dt5Xov22rJcOqrPhTA+ZyZGl5Xlcu4rBK/Wha7YVvHTMD+aOKkPCC9hBJBggDR
+ bC1uUtxi3RZV4+rkrmetPWFrwAhaGydaENpnjVJIHnFnyFKqfvd3fKGDW7VgTwSF+ncm54BWkUI
+ 1oZ278bnIQXLS4ZbtFG0SacsTlBMiCGHT3rPPOllzePR6twSuKqGVC9f5AiWqhoQVNs+FQ7LyLm
+ SaoS9oqujaQctoZaMeeiiD7pULiyJ3nn4WJi6wFlruOQA0zwtxM/LocsN9HrrZ/M3N62eW/1pmS
+ qHzhHXsIV6D11FNYIcQIJOtUkdCc2Mj9Erj8q7gdrtblbZGRjmJf8FH1r2uvmgFFmyT2O7wbP7H
+ gF3AO8WdzfI51fWk51rSqzxhZAiYi7hLYTHJUvnpyfRltNNly9enpLyW5s8ZGtAMz7AVkO/xSuj
+ zDP4kgLj
+X-Received: by 2002:a17:90b:3b4b:b0:3a0:e320:d1d4 with SMTP id
+ 98e67ed59e1d1-3a0e320d3b5mr3758332a91.16.1790540056791; 
+ Sun, 27 Sep 2026 13:14:16 -0700 (PDT)
 Received: from visitorckw-work01.c.googlers.com.com
  (33.223.194.35.bc.googleusercontent.com. [35.194.223.33])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0c719f86fsm13932737a91.7.2026.09.27.13.13.41
+ 98e67ed59e1d1-3a0c719f86fsm13932737a91.7.2026.09.27.13.14.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 13:13:47 -0700 (PDT)
+ Sun, 27 Sep 2026 13:14:16 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
  alistair.francis@wdc.com, pbonzini@redhat.com, marcandre.lureau@redhat.com,
@@ -76,24 +77,25 @@ Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  portias@oss.tenstorrent.com, wxchen0913@gmail.com, jserv@ccns.ncku.edu.tw,
  marscheng@google.com, eleanor15x@gmail.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PATCH v5 1/7] hw/char: Add dw8250 UART
-Date: Sun, 27 Sep 2026 20:13:20 +0000
-Message-ID: <20260927201326.650943-2-visitorckw@gmail.com>
+ qemu-riscv@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>
+Subject: [PATCH v5 6/7] tests/functional/riscv64: Add boot test for Milk-V Duo
+ board
+Date: Sun, 27 Sep 2026 20:13:25 +0000
+Message-ID: <20260927201326.650943-7-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
 In-Reply-To: <20260927201326.650943-1-visitorckw@gmail.com>
 References: <20260927201326.650943-1-visitorckw@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2b;
- envelope-from=visitorckw@gmail.com; helo=mail-pz2-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
+ envelope-from=visitorckw@gmail.com; helo=mail-pj2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,237 +111,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the dw8250 uart support. This hardware is a widely used 16550A
-derivative that includes additional registers.
+Add a functional boot test for the Milk-V Duo board to validate the
+end-to-end boot flow.
 
-Without this specific device support, the Linux 8250_dw driver fails to
-probe the extended registers (UCV, CPR, etc.), which are essential for
-correct feature detection.
+$ ./build/run ./tests/functional/riscv64/test_milkv_duo.py
+TAP version 13
+ok 1 test_milkv_duo.MilkvDuoMachine.test_riscv64_milkv_duo
+1..1
 
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS              |   6 ++
- hw/char/Kconfig          |   4 ++
- hw/char/dw8250.c         | 131 +++++++++++++++++++++++++++++++++++++++
- hw/char/meson.build      |   1 +
- include/hw/char/dw8250.h |  27 ++++++++
- 5 files changed, 169 insertions(+)
- create mode 100644 hw/char/dw8250.c
- create mode 100644 include/hw/char/dw8250.h
+ MAINTAINERS                                |  1 +
+ tests/functional/riscv64/meson.build       |  1 +
+ tests/functional/riscv64/test_milkv_duo.py | 53 ++++++++++++++++++++++
+ 3 files changed, 55 insertions(+)
+ create mode 100755 tests/functional/riscv64/test_milkv_duo.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 6be9c5725b..d4e9cf61ea 100644
+index f7e4159679..689424fd1c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2848,6 +2848,12 @@ S: Maintained
- F: hw/i2c/designware_i2c.c
- F: include/hw/i2c/designware_i2c.h
+@@ -1880,6 +1880,7 @@ F: hw/riscv/cv1800b.c
+ F: hw/riscv/milkv_duo.c
+ F: include/hw/misc/cv1800b_clk.h
+ F: include/hw/riscv/cv1800b.h
++F: tests/functional/riscv64/test_milkv_duo.py
+ F: tests/qtest/milkv-duo-test.c
  
-+DesignWare 8250 UART
-+M: Kuan-Wei Chiu <visitorckw@gmail.com>
-+S: Maintained
-+F: hw/char/dw8250.c
-+F: include/hw/char/dw8250.h
-+
- Generic Loader
- M: Alistair Francis <alistair@alistair23.me>
- S: Maintained
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 020c0a84bb..418d99b757 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -95,3 +95,7 @@ config IP_OCTAL_232
-     bool
-     default y
-     depends on IPACK
-+
-+config DW8250
-+    bool
-+    select SERIAL
-diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
-new file mode 100644
-index 0000000000..ccf05dd9ad
+ RX Machines
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index d1a3e6c2bf..8a4f1d00f9 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -18,4 +18,5 @@ tests_riscv64_system_thorough = [
+   'sifive_u',
+   'tt_atlantis',
+   'tuxrun',
++  'milkv_duo',
+ ]
+diff --git a/tests/functional/riscv64/test_milkv_duo.py b/tests/functional/riscv64/test_milkv_duo.py
+new file mode 100755
+index 0000000000..6a7e2a5d19
 --- /dev/null
-+++ b/hw/char/dw8250.c
-@@ -0,0 +1,131 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Synopsys DesignWare APB UART (DW 8250)
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
++++ b/tests/functional/riscv64/test_milkv_duo.py
+@@ -0,0 +1,53 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on a Milk-V Duo machine
++#
++# Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/char/dw8250.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
++from qemu_test import LinuxKernelTest, Asset
++from qemu_test import skipIfMissingCommands, wait_for_console_pattern
 +
-+#define DW_UART_REGION_SIZE 0x100
++class MilkvDuoMachine(LinuxKernelTest):
 +
-+#define DW_UART_RE_EN (0xB4 >> 2) /* Receiver Output Enable Register */
-+#define DW_UART_DLF   (0xC0 >> 2) /* Divisor Latch Fraction Register */
-+#define DW_UART_CPR   (0xF4 >> 2) /* Component Parameter Register */
-+#define DW_UART_UCV   (0xF8 >> 2) /* UART Component Version */
-+#define DW_UART_CTR   (0xFC >> 2) /* Component Type Register */
++    timeout = 120
 +
-+#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
-+#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
++    ASSET_KERNEL = Asset(
++        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
++        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0'
++    )
++    ASSET_DTBS = Asset(
++        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/dtbs.tar.xz',
++        '97e5e65a7e6c68303e53486af120c0846ee8df572e9c15f0c4dccb831d0cef4b'
++    )
++    ASSET_ROOTFS = Asset(
++        'https://storage.tuxboot.com/buildroot/20241119/riscv64/rootfs.ext4.zst',
++        'aa4736a9872651dfc0d95e709465eedf1134fd19d42b8cb305bfd776f9801004'
++    )
 +
-+static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    DW8250State *s = opaque;
++    @skipIfMissingCommands('zstd')
++    def test_riscv64_milkv_duo(self):
++        self.set_machine('milkv-duo')
 +
-+    switch (addr >> s->regshift) {
-+    case DW_UART_UCV:
-+        return DW_UART_UCV_VALUE;
-+    case DW_UART_CPR:
-+        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
-+    case DW_UART_CTR:
-+        return DW_UART_CTR_VALUE;
++        kernel_path = self.ASSET_KERNEL.fetch()
++        dtb_path = self.archive_extract(
++            self.ASSET_DTBS, member='dtbs/sophgo/cv1800b-milkv-duo.dtb')
++        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
 +
-+    case DW_UART_RE_EN:
-+    case DW_UART_DLF:
-+        /*
-+         * Return 0 to indicate these optional features
-+         * (RS485 and Fractional Divisor) are not implemented.
-+         */
-+        return 0x00000000;
++        self.vm.set_console()
++        self.vm.add_args('-bios', 'default',
++                         '-kernel', kernel_path,
++                         '-dtb', dtb_path,
++                         '-drive', f'file={rootfs_path},format=raw,id=sd-card,snapshot=on',
++                         '-device', 'sd-card,drive=sd-card',
++                         '-append', 'console=ttyS0,115200 root=/dev/mmcblk0 rootwait earlycon')
 +
-+    default:
-+        return 0;
-+    }
-+}
++        self.vm.launch()
 +
-+static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
-+{
-+    qemu_log_mask(LOG_UNIMP, "%s: Unimplemented write to address 0x%" HWADDR_PRIx "\n",
-+                  __func__, addr);
-+}
++        wait_for_console_pattern(self, 'Machine model: Milk-V Duo')
++        wait_for_console_pattern(self, 'Welcome to TuxTest')
++        wait_for_console_pattern(self, 'tuxtest login:')
 +
-+static const MemoryRegionOps dw8250_ext_ops = {
-+    .read = dw8250_ext_read,
-+    .write = dw8250_ext_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void dw8250_instance_init(Object *obj)
-+{
-+    DW8250State *s = DW8250(obj);
-+
-+    s->serial_mm = qdev_new("serial-mm");
-+    object_property_add_child(obj, "serial-mm", OBJECT(s->serial_mm));
-+    object_property_add_alias(obj, "chardev", OBJECT(s->serial_mm), "chardev");
-+}
-+
-+static void dw8250_realize(DeviceState *dev, Error **errp)
-+{
-+    DW8250State *s = DW8250(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(s->serial_mm);
-+
-+    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
-+                       DW_UART_REGION_SIZE);
-+    sysbus_init_mmio(sbd, &s->container);
-+
-+    qdev_prop_set_uint8(s->serial_mm, "regshift", s->regshift);
-+    qdev_prop_set_uint8(s->serial_mm, "endianness", DEVICE_LITTLE_ENDIAN);
-+    if (!sysbus_realize(serial_sbd, errp)) {
-+        return;
-+    }
-+
-+    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
-+                          "dw8250-ext", DW_UART_REGION_SIZE);
-+    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
-+
-+    memory_region_add_subregion_overlap(&s->container, 0,
-+                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
-+
-+    sysbus_pass_irq(sbd, serial_sbd);
-+}
-+
-+static const Property dw8250_properties[] = {
-+    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
-+};
-+
-+static void dw8250_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = dw8250_realize;
-+    device_class_set_props(dc, dw8250_properties);
-+}
-+
-+static const TypeInfo dw8250_info = {
-+    .name          = TYPE_DW8250,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(DW8250State),
-+    .instance_init = dw8250_instance_init,
-+    .class_init    = dw8250_class_init,
-+};
-+
-+static void dw8250_register_types(void)
-+{
-+    type_register_static(&dw8250_info);
-+}
-+
-+type_init(dw8250_register_types)
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index fc3d7ee506..b2250ee6ae 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
- system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
-+system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
- 
- specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
-diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
-new file mode 100644
-index 0000000000..59396ad202
---- /dev/null
-+++ b/include/hw/char/dw8250.h
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Synopsys DesignWare APB UART (DW 8250)
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#ifndef HW_CHAR_DW8250_H
-+#define HW_CHAR_DW8250_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_DW8250 "dw8250"
-+OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
-+
-+struct DW8250State {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion container;
-+    MemoryRegion ext_iomem;
-+    DeviceState *serial_mm;
-+
-+    uint8_t regshift;
-+};
-+
-+#endif
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.56.0.rc1.315.gc6ed9934b7-goog
 
