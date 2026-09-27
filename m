@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2120BC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FC2CA5FA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksG-0006qg-K1; Sun, 27 Sep 2026 05:08:44 -0400
+	id 1xAkrp-0003ye-LP; Sun, 27 Sep 2026 05:08:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkpt-0000x5-Eh; Sun, 27 Sep 2026 05:06:20 -0400
+ id 1xAkpq-0000wY-2N; Sun, 27 Sep 2026 05:06:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAkpr-00088e-In; Sun, 27 Sep 2026 05:06:17 -0400
+ id 1xAkpo-00087x-8I; Sun, 27 Sep 2026 05:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790499960; bh=i9LoI/JZwEH9Pcj0V3XWRlnAYJA2HeIVw8yTNFx1ETk=;
+ t=1790499957; bh=cqjV+MLVWF4LhvhI2EFcgVDUYV7PRpp6TrxjjNb40Ik=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZLB+tYGqC4pWmayELKGjcIbrC2fAWA24plIOfwr2syU50A4sfyr7w3nl7NPw6azFN
- rXRAM70x5wSW5UCbpZd6u4BcUap4mcANJa0hbiR/2gqSK+O3G/Cf4wEQwaymqXJTAE
- QEJdNO63D2mLIg/Ricjhoe5c7jiLUmUsWLENri58vj3yMI327GNnF3C8nFk866Uph0
- pxlPZcGO88nNk6dKuOpgHT5OeROJirIlCqWC4kxpSMkFig1VfuZXOGUWELmCNqWDRf
- igETi257Edsksm9GIEN8ylfinh6x+2cUz6Ig6SSi9zgB8riyJN1gcVL4gwT5701zJg
- OvB2qXAgIEe1A==
+ b=Q+cIuIv/fhrcAnbzo/6rzodM5Lo4RJl77QwIwcu2v3Jwd/CPySTHZafUCgvvf84Aw
+ uhTuEvXtEoz/05Oz21yt/sP5DBdtKftYSyCB9X7oDCaMUvrbTLoljynwfUwE58VncW
+ EGsibUYgZj9kFy7GICtplr+NDm6/jhlIdY3RrY+/kzeLh5NvCzNV8tT0/CWmcuM6oM
+ KLgrZRnscSxApOQCHaVuLAJU2NOT8vbes9J+WgM4/qsTEcrjQa2tI5r6yP4VDAELZs
+ 5pAjyfTupjupRph/uD4xXtPo/rrqkHMls1gjOrkwVNEN45uNX7xyTtWLhXsN8EKKkV
+ w74SZ+4hbv9Qw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CC06D1D8B15;
- Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 677E91D8B13;
+ Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C401C4320CE;
- Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4BEDD4320CC;
+ Sun, 27 Sep 2026 12:05:57 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BE35D5E65B; Sun, 27 Sep 2026 12:06:00 +0300 (MSK)
+ id E66315E657; Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.5 v2 68/86] hw/9pfs: mutate FID path from main thread
- only (CVE-2026-93834)
-Date: Sun, 27 Sep 2026 12:05:15 +0300
-Message-ID: <20260927090540.102811-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Jason J. Herne" <jjherne@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 66/86] hw/s390x/ipl: Fix incorrect PCI IPL block
+ lengths
+Date: Sun, 27 Sep 2026 12:05:13 +0300
+Message-ID: <20260927090540.102811-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
@@ -71,87 +73,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-v9fs_co_open2() is the only code that mutates a FID path from a worker
-thread: inside its v9fs_co_run_in_worker() block it frees fidp->path
-and copies in the new path under the held FID path write lock.
+The length of the PCI IPLB is calculated by size of the IplBlockPci struct
+plus the number of bytes used for common IPLB fields.
 
-Every other FID path mutation in the 9p codebase happens on the main
-thread, so main thread readers (v9fs_walk(), v9fs_xattrwalk(),
-v9fs_stat(), v9fs_co_name_to_path()) rely on the same (main) thread
-atomicity and don't take the path read lock themselves on main thread.
+Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
+while we are at it.
 
-Fix this by making the worker thread block in v9fs_co_open2() read-only
-with respect to the FID: render the new path into the local 'path'
-variable only and copy it to fidp->path after the worker block returned
-back to the main thread and still under the held write lock of the FID,
-like every other FID path mutation does.
-
-Fixes: 02cb7f3a25 ("hw/9pfs: Use read-write lock for protecting fid path.")
-Fixes: CVE-2026-93834
-Reported-by: Milad Nasr <https://gitlab.com/sirkhezr>
-Suggested-by: Milad Nasr <https://gitlab.com/sirkhezr>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4491
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Link: https://lore.kernel.org/qemu-devel/E1x8d3N-003M3F-Pz@kylie.crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit fe9e30899ffceef25cf345ec83f76546afca19dd)
+Cc: qemu-stable@nongnu.org
+Fixes: 395116781df5 ("s390x: Build IPLB for virtio-pci devices")
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260831194919.3830270-3-jrossi@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 8435aadbb9add09c4c2e16f803b37441b4c6a32f)
+(Mjt: S390_IPLB_MIN_PCI_LEN is in hw/s390x/ipl.h across v11.1.0-600-g854de451f21c
+ "hw/s390x/ipl: Add IPIB flags to IPL Parameter Block")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
-index 6e775c8e412..27fe5bfb200 100644
---- a/hw/9pfs/cofile.c
-+++ b/hw/9pfs/cofile.c
-@@ -144,10 +144,11 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
-     cred.fc_mode = mode & 07777;
-     cred.fc_uid = fidp->uid;
-     cred.fc_gid = gid;
-+    v9fs_path_init(&path);
-     /*
-      * Hold the directory fid lock so that directory path name
--     * don't change. Take the write lock to be sure this fid
--     * cannot be used by another operation.
-+     * don't change. Take the write lock since the fid path is
-+     * mutated below on success.
-      */
-     v9fs_path_write_lock(s);
-     v9fs_co_run_in_worker(
-@@ -157,23 +158,30 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
-             if (err < 0) {
-                 err = -errno;
-             } else {
--                v9fs_path_init(&path);
-                 err = v9fs_name_to_path(s, &fidp->path, name->data, &path);
-                 if (!err) {
-                     err = s->ops->lstat(&s->ctx, &path, stbuf);
-                     if (err < 0) {
-                         err = -errno;
-                         s->ops->close(&s->ctx, &fidp->fs);
--                    } else {
--                        v9fs_path_copy(&fidp->path, &path);
-                     }
-                 } else {
-                     s->ops->close(&s->ctx, &fidp->fs);
-                 }
--                v9fs_path_free(&path);
-             }
-         });
-+    /*
-+     * The fid path must not be mutated from the worker thread: other
-+     * requests may access the same fid on the main thread, and the main
-+     * thread never takes the path lock for reads. Mutate the new path
-+     * here, on the main thread and still under the held write lock, like
-+     * every other mutation of a fid path.
-+     */
-+    if (!err) {
-+        v9fs_path_copy(&fidp->path, &path);
-+    }
-     v9fs_path_unlock(s);
-+    v9fs_path_free(&path);
-     if (!err) {
-         total_open_fd++;
-         if (total_open_fd > open_fd_hw) {
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 1babcd2b7dd..a844b5daecf 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -525,6 +525,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+         switch (devtype) {
+         case PCI_DEVTYPE_VIRTIO:
+             iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
++            iplb->blk0_len =
++                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
+             iplb->pbt = S390_IPL_TYPE_PCI;
+             iplb->pci.fid = cpu_to_be32(pbdev->fid);
+             break;
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 33729d4be5a..ad79b000367 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -107,7 +107,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+ #define S390_IPLB_MIN_PV_LEN 148
+ #define S390_IPLB_MIN_CCW_LEN 200
+ #define S390_IPLB_MIN_FCP_LEN 384
+-#define S390_IPLB_MIN_PCI_LEN 376
++#define S390_IPLB_MIN_PCI_LEN (offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci))
+ #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
+ 
+ static inline bool iplb_valid_len(IplParameterBlock *iplb)
 -- 
 2.47.3
 
