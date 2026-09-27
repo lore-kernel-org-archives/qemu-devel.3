@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35D4C9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6873C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 17:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAsPA-0002eR-H3; Sun, 27 Sep 2026 13:11:12 -0400
+	id 1xAsSZ-00034d-BB; Sun, 27 Sep 2026 13:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAsP9-0002eJ-5Y
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:11:11 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAsSY-00034V-3y
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:14:42 -0400
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAsP7-0002Ry-0j
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:11:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1xAsSW-0002Xd-Dn
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 13:14:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1790529067; x=1791133867; i=deller@gmx.de;
- bh=JCcOJDCtiy5nmciz8s+/3+KC+AFjAJGlpX82oX0g5X0=;
+ s=s31663417; t=1790529270; x=1791134070; i=deller@gmx.de;
+ bh=BXRsgtPIOUTrfvbDQspD9QqalNkk6rqSKJJJOO58pJU=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=gUxSqLdFSA69Z5zkUc280x0I1tJD0SM3EgBGPK5we7oGgK6T4OTZ3+E8R4JCjdP2
- 28NXWM8Ze5kTOwIVknIr+kW6AnWyykDUwBWBQTlTC/Lk9XRPGqQ0uNvKtQd7N4nNd
- WcFarEg+YFK4+URdcgKRVJPJbFT7zmC3FRJ26e3i8tV8Q9IszrXfur52pTsUkDNi5
- CGuXJ1JguFJUmRZMxykgxaIdR0Bg90z6JwXMDbWELM608DFnywK2aaLjZjhR97NTo
- pchEgY0boAWfRk2NEF4CWRXU+D0DBvI26OS2Wt8q/aJZCHp7+27zIMtc4Hh9ZfaNl
- 3W7enqluaNGuS4Yatw==
+ b=evJZJG/KH8FzaJijGfHfWNvmAX3mYf9O8Jwl7+ZOMGZ4QlwqxXi3tKrjkiQEYuZI
+ yZuSFb5Zrpq8jG9nIRbJiUqaaB7bgbyCo+/ZmshS1FuAH6ZcusEJWreWhcdE0Gb+w
+ yO2//2615LWnm++5y0YpRtC3+nNE7N0s8JDqwKHvJ/EzOzqtUQTWCivnQJx+XNkzw
+ Zap+5DX71dNr9SvrrxAs9700YZGRMk0yG0GQNKFJLPPlJMzmxOXZRg/LhfjH00Eah
+ UN97F5AltgTrmGh/LKWHTJEDeP/erVYD7rsU9BRhN/F1KtW5aqUyKPpyzBHfmdUHU
+ NvPt1Zz+7z0PCOT7uA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbox-1xM5dB41MZ-00IxVK; Sun, 27
- Sep 2026 19:11:07 +0200
-Message-ID: <b183de1f-b6a2-4733-ad1e-a5c47df0328c@gmx.de>
-Date: Sun, 27 Sep 2026 19:11:05 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2O2Q-1xAJQW21s6-004sY2; Sun, 27
+ Sep 2026 19:14:30 +0200
+Message-ID: <f95b3ad3-d396-4f3b-b5a7-a3c13ed32484@gmx.de>
+Date: Sun, 27 Sep 2026 19:14:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/5] usb/hid: add enhanced wheel mouse report
- descriptor and packet size
+Subject: Re: [RFC PATCH 3/5] input/hid: emit protocol aware mouse reports with
+ pan support
 To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -50,7 +50,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alex Golovko <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>
 References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
- <20260331170823.72511-3-soumyajyotisarkar23@gmail.com>
+ <20260331170823.72511-4-soumyajyotisarkar23@gmail.com>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -96,106 +96,105 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20260331170823.72511-3-soumyajyotisarkar23@gmail.com>
+In-Reply-To: <20260331170823.72511-4-soumyajyotisarkar23@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/gIJiytfU58/htJdPO+5gKxNcRn0oY/IfKCXtZYrnG0ocNC3dia
- qu7cs/h/RkDmnkCSb6wLi3XBmXM3p03pJfr7BpI9etAdDAoJk0E8p2F4KYC5fH+XRYhTwKa
- qRWPuXs5QgypeQM40o5q0BpyCjtmZKezNHdpx87yMlEFsArz+LuF39uzVHfM42etdfa6WF0
- MjBhJeLqNIpnZR6eoKrow==
-UI-OutboundReport: notjunk:1;M01:P0:sBVr1GQb7zY=;KtD5TBCRvjTXiNAxnQl74Oz7FFD
- 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
- daEJYqeynDCvVoo4eDwjhef2TVXl9Xz/YpxK/A=
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:Etz1/DX3g5IVtnstVQ2ugLnQSqr86lKPg/QYBgMh9K7+i04xSXM
+ OGCla8v33rTQpl0HItc17ZTV6vFn/k+nA5jUCiAkECnu0Ui8+6Dm/ouYw1aaRANtEC5Pz7j
+ ByiqgyOpTRaR8pC3dxGGoe9XKze1YMkox/t++JUc5axwc0pAnE4mjEiJR+SvtyZpR0V3F0P
+ 7i5UVEMImfIQDfL/w2YYA==
+UI-OutboundReport: notjunk:1;M01:P0:MHZic2+SSow=;r8Op9OtaCpEScj4tJrdCYMJFX2e
+ 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
+ JO57i5cVehHVXkJFnRy/VC0G0g==
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -220,205 +219,93 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/31/26 19:08, Soumyajyotii Ssarkar wrote:
-> Build on top of the simple mouse HID report descriptor with an enhanced =
-version
-> that supports report IDs and feature reports for high resolution mouse
-> wheel control. As per the documentation structure.
+> Implement protocol-aware mouse report output to support both boot
+> protocol (protocol 0) and report protocol (protocol 1).
 >=20
-> Check: https://download.microsoft.com/download/b/d/1/bd1f7ef4-7d72-419e-=
-bc5c-9f79ad7bb66e/wheel.docx
->=20
-> Changes:
-> - Increase HID descriptor length from 52 to 144 bytes
-> - Add report IDs (0x01 input, 0x02 feature)
-> - Implement feature reports for wheel/pan resolution multipliers
-> - Add AC Pan (horizontal scroll) usage
-> - Increase endpoint packet size from 4 to 6 bytes for pan byte
->=20
-> This enables guests to configure resolution multipliers (+-1, +-4, +-8, =
-+-16)
-> to control scroll acceleration and precision.
+> Boot protocol: 4-byte reports (button, dx, dy, dz)
+> Report protocol: 6-byte reports with report ID 0x01 + pan byte
+
+pan bytes ? (with "s"?)
+
+> Both modes now support the 'pan' field for horizontal scrolling. The
+> distinction ensures correct behavior across different guest operating
+> systems and their HID implementations.
 >=20
 > Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 > ---
->   hw/usb/dev-hid.c | 126 +++++++++++++++++++++++++++++++++++------------
->   1 file changed, 95 insertions(+), 31 deletions(-)
+>   hw/input/hid.c | 44 +++++++++++++++++++++++++++++++++-----------
+>   1 file changed, 33 insertions(+), 11 deletions(-)
 >=20
-> diff --git a/hw/usb/dev-hid.c b/hw/usb/dev-hid.c
-> index ae19d60203..49e23c2319 100644
-> --- a/hw/usb/dev-hid.c
-> +++ b/hw/usb/dev-hid.c
-> @@ -93,7 +93,7 @@ static const USBDescIface desc_iface_mouse =3D {
->                   0x00,          /*  u8  country_code */
->                   0x01,          /*  u8  num_descriptors */
->                   USB_DT_REPORT, /*  u8  type: Report */
-> -                52, 0,         /*  u16 len */
-> +                144, 0,        /*  u16 len */
->               },
->           },
->       },
-> @@ -101,7 +101,7 @@ static const USBDescIface desc_iface_mouse =3D {
->           {
->               .bEndpointAddress      =3D USB_DIR_IN | 0x01,
->               .bmAttributes          =3D USB_ENDPOINT_XFER_INT,
-> -            .wMaxPacketSize        =3D 4,
-> +            .wMaxPacketSize        =3D 6,
->               .bInterval             =3D 0x0a,
->           },
->       },
-> @@ -124,7 +124,7 @@ static const USBDescIface desc_iface_mouse2 =3D {
->                   0x00,          /*  u8  country_code */
->                   0x01,          /*  u8  num_descriptors */
->                   USB_DT_REPORT, /*  u8  type: Report */
-> -                52, 0,         /*  u16 len */
-> +                144, 0,        /*  u16 len */
->               },
->           },
->       },
-> @@ -132,7 +132,7 @@ static const USBDescIface desc_iface_mouse2 =3D {
->           {
->               .bEndpointAddress      =3D USB_DIR_IN | 0x01,
->               .bmAttributes          =3D USB_ENDPOINT_XFER_INT,
-> -            .wMaxPacketSize        =3D 4,
-> +            .wMaxPacketSize        =3D 6,
->               .bInterval             =3D 7, /* 2 ^ (8-1) * 125 usecs =3D=
- 8 ms */
->           },
->       },
-> @@ -454,33 +454,97 @@ static const USBDesc desc_keyboard2 =3D {
->   };
+> diff --git a/hw/input/hid.c b/hw/input/hid.c
+> index 457dbb0096..d0b7af7c13 100644
+> --- a/hw/input/hid.c
+> +++ b/hw/input/hid.c
+> @@ -403,20 +403,42 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, i=
+nt len)
 >=20
->   static const uint8_t qemu_mouse_hid_report_descriptor[] =3D {
-> -    0x05, 0x01,		/* Usage Page (Generic Desktop) */
-> -    0x09, 0x02,		/* Usage (Mouse) */
-> -    0xa1, 0x01,		/* Collection (Application) */
-> -    0x09, 0x01,		/*   Usage (Pointer) */
-> -    0xa1, 0x00,		/*   Collection (Physical) */
-> -    0x05, 0x09,		/*     Usage Page (Button) */
-> -    0x19, 0x01,		/*     Usage Minimum (1) */
-> -    0x29, 0x05,		/*     Usage Maximum (5) */
-> -    0x15, 0x00,		/*     Logical Minimum (0) */
-> -    0x25, 0x01,		/*     Logical Maximum (1) */
-> -    0x95, 0x05,		/*     Report Count (5) */
-> -    0x75, 0x01,		/*     Report Size (1) */
-> -    0x81, 0x02,		/*     Input (Data, Variable, Absolute) */
-> -    0x95, 0x01,		/*     Report Count (1) */
-> -    0x75, 0x03,		/*     Report Size (3) */
-> -    0x81, 0x01,		/*     Input (Constant) */
-> -    0x05, 0x01,		/*     Usage Page (Generic Desktop) */
-> -    0x09, 0x30,		/*     Usage (X) */
-> -    0x09, 0x31,		/*     Usage (Y) */
-> -    0x09, 0x38,		/*     Usage (Wheel) */
-> -    0x15, 0x81,		/*     Logical Minimum (-0x7f) */
-> -    0x25, 0x7f,		/*     Logical Maximum (0x7f) */
-> -    0x75, 0x08,		/*     Report Size (8) */
-> -    0x95, 0x03,		/*     Report Count (3) */
-> -    0x81, 0x06,		/*     Input (Data, Variable, Relative) */
-> -    0xc0,		/*   End Collection */
-> -    0xc0,		/* End Collection */
-> +    0x05, 0x01,     /* Usage Page (Generic Desktop) */
+>       /* Appears we have to invert the wheel direction */
+>       dz =3D 0 - dz;
+> +    pan =3D 0 - pan;
+>       l =3D 0;
+>       switch (hs->kind) {
+>       case HID_MOUSE:
+> -        if (len > l) {
+> -            buf[l++] =3D e->buttons_state;
+> -        }
+> -        if (len > l) {
+> -            buf[l++] =3D dx;
+> -        }
+> -        if (len > l) {
+> -            buf[l++] =3D dy;
+> -        }
+> -        if (len > l) {
+> -            buf[l++] =3D dz;
+> +        if (hs->protocol =3D=3D 0) {
 
-You are reformatting the lines here by moving the comments.
-Please do that in an own patch, or keep the position of the comments for y=
-our code as well.
+I suggest to add a comment here, e.g. "/* boot protocol (0) */"
 
-Otherwise the patch looks good.
+> +            if (len > l) {
+> +                buf[l++] =3D e->buttons_state;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dx;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dy;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dz;
+> +            }
+> +        } else {
+
+and e.g. "/* report protocol (1) */"
+
+Looks good otherwise.
 
 Helge
 
-> +    0x09, 0x02,     /* Usage (Mouse) */
-> +    0xA1, 0x01,     /* Collection (Application) */
-> +
-> +    0x09, 0x02,     /* Usage (Mouse) */
-> +    0xA1, 0x02,     /* Collection (Logical) */
-> +
-> +    0x85, 0x01,     /* Report ID (0x01) */
-> +    0x09, 0x01,     /* Usage (Pointer) */
-> +    0xA1, 0x00,     /* Collection (Physical) */
-> +
-> +    0x05, 0x09,     /* Usage Page (Button) */
-> +    0x19, 0x01,     /* Usage Minimum (1) */
-> +    0x29, 0x05,     /* Usage Maximum (5) */
-> +    0x15, 0x00,     /* Logical Minimum (0) */
-> +    0x25, 0x01,     /* Logical Maximum (1) */
-> +    0x95, 0x05,     /* Report Count (5) */
-> +    0x75, 0x01,     /* Report Size (1) */
-> +    0x81, 0x02,     /* Input (Data,Var,Abs) */
-> +
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0x75, 0x03,     /*  Report Size (3) */
-> +    0x81, 0x01,     /*  Input (Const) */
-> +
-> +    0x05, 0x01,     /*  Usage Page (Generic Desktop) */
-> +    0x09, 0x30,     /*  Usage (X) */
-> +    0x09, 0x31,     /*  Usage (Y) */
-> +    0x95, 0x02,     /*  Report Count (2) */
-> +    0x75, 0x08,     /*  Report Size (8) */
-> +    0x15, 0x81,     /*  Logical Minimum (-127) */
-> +    0x25, 0x7F,     /*  Logical Maximum (127) */
-> +    0x81, 0x06,     /*  Input (Data,Var,Rel) */
-> +
-> +    /* Vertical wheel logical collection */
-> +    0xA1, 0x02,     /*  Collection (Logical) */
-> +
-> +    0x85, 0x02,     /*  Report ID (0x02) */
-> +    0x09, 0x48,     /*  Usage (Resolution Multiplier) */
-> +    0x15, 0x00,     /*  Logical Minimum (0) */
-> +    0x25, 0x01,     /*  Logical Maximum (1) */
-> +    0x35, 0x01,     /*  Physical Minimum (1) */
-> +    0x45, 0x04,     /*  Physical Maximum (4) */
-> +    0x75, 0x02,     /*  Report Size (2) */
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0xB1, 0x02,     /*  Feature (Data,Var,Abs) */
-> +
-> +    0x85, 0x01,     /*  Report ID (0x01) */
-> +    0x09, 0x38,     /*  Usage (Wheel) */
-> +    0x35, 0x00,     /*  Physical Minimum (0) */
-> +    0x45, 0x00,     /*  Physical Maximum (0) */
-> +    0x15, 0x81,     /*  Logical Minimum (-0x7f) */
-> +    0x25, 0x7F,     /*  Logical Maximum (0x7f) */
-> +    0x75, 0x08,     /*  Report Size (8) */
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0x81, 0x06,     /*  Input (Data,Var,Rel) */
-> +
-> +    0xC0,           /*  End Collection */
-> +
-> +    /* Horizontal wheel logical collection */
-> +    0xA1, 0x02,     /*  Collection (Logical) */
-> +
-> +    0x85, 0x02,     /*  Report ID (0x02) */
-> +    0x09, 0x48,     /*  Usage (Resolution Multiplier) */
-> +    0x15, 0x00,     /*  Logical Minimum (0) */
-> +    0x25, 0x01,     /*  Logical Maximum (1) */
-> +    0x35, 0x01,     /*  Physical Minimum (1) */
-> +    0x45, 0x04,     /*  Physical Maximum (4) */
-> +    0x75, 0x02,     /*  Report Size (2) */
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0xB1, 0x02,     /*  Feature (Data,Var,Abs) */
-> +
-> +    0x35, 0x00,     /*  Physical Minimum (0) */
-> +    0x45, 0x00,     /*  Physical Maximum (0) */
-> +    0x75, 0x04,     /*  Report Size (4) */
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0xB1, 0x01,     /*  Feature (Const) */
-> +
-> +    0x85, 0x01,     /*  Report ID (0x01) */
-> +    0x05, 0x0C,     /*  Usage Page (Consumer Devices) */
-> +    0x0A, 0x38, 0x02,   /*  Usage (AC Pan) */
-> +    0x15, 0x81,     /*  Logical Minimum (-0x7f) */
-> +    0x25, 0x7F,     /*  Logical Maximum (0x7f) */
-> +    0x75, 0x08,     /*  Report Size (8) */
-> +    0x95, 0x01,     /*  Report Count (1) */
-> +    0x81, 0x06,     /*  Input (Data,Var,Rel) */
-> +
-> +    0xC0,           /*  End Collection */
-> +
-> +    0xC0,           /*  End Collection (Physical) */
-> +    0xC0,           /*  End Collection (Logical) */
-> +    0xC0            /*  End Collection (Application) */
->   };
+
+> +            if (len > l) {
+> +                buf[l++] =3D 0x01;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D e->buttons_state;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dx;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dy;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D dz;
+> +            }
+> +            if (len > l) {
+> +                buf[l++] =3D pan;
+> +            }
+>           }
+>           break;
 >=20
->   static const uint8_t qemu_tablet_hid_report_descriptor[] =3D {
 > --
 > 2.53.0
 
