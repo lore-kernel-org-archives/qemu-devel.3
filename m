@@ -4,135 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2428DC9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3471C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAj6W-0006PP-NB; Sun, 27 Sep 2026 03:15:20 -0400
+	id 1xAj7C-0006sg-U7; Sun, 27 Sep 2026 03:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAj6F-0006K2-VW
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:15:03 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xAj6q-0006jC-7k
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:15:48 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAj6E-0002L4-6U
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:15:03 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xAj6o-0002Y6-MH
+ for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:15:39 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68QGxUaD4013981
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:15:00 GMT
+ 68QGxmou245652
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:15:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gNbdb1a4Eg8TqvqZT/jMuFZkviLnqSojNkYplKDccnk=; b=ECrsWkWwKsQpaHJK
- +2Vo8GTrjf2VcpSXouK86c33HLbZTXTZq0bd7gI9+vu8FZUAMrcGow9pVssg5fnG
- Je/mvyR+zncwTyMk1tCBOx6NwMex+vCNM8m9smxIgQ/CIdWqnX86pNwIJtQcXfou
- u+quDHT2hWuM+eYtqkmjMleLob0PJxAheCV6xocG/uXD7mg+NNRcMgI1ljNmqFX8
- rArtNhkEs61dtHjHo4nfA6xzXhkN8Ay7LruuYlVlRgG2P/VGFQppB9ZDEhc0PDAv
- IbZ3D/t9EDZW19HvozOcsj0HHw4wiH8XkgvZQb5opsKjVWiGCnu1YtLHSqRAOqxv
- ZOU71g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx6tejd1u-1
+ WUiGurPna4QzVW1z8ZiNzWcCK/RyfVRlA+CoHMZcGe8=; b=pIeufA1NJmhMPk24
+ ETmaDjJPPTX56hrYBL0Qj9Tk+kwCWxtjgMD2Rbj178NZZcpkiak7wUid0NoGxu6R
+ dZJtXEzLS8pcMRX7TJyMn3J3I5J4yJQNtc6bIIz91zTel7kLOfU+dnayRC/aRNig
+ gsmvrmgrOXRx/QbEPC4yIoMcFkoM62BwFr6Tjb5xm4bhDKrZvD16gasastBmnHJ4
+ s7Vi4B8q0tFX9ldw6PcsHdqWY+HTBQ2NWB9LRR3yI/kOcj1L7PZyMTggaS8O+ymw
+ gRqdc1ohJa8xzslfwXAF9HdY1mcBzBqH70MjgWzIma+7FJkE/Lafvu4iFdmn8qb5
+ EHxAtQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx3dp2tm8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:15:00 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93a183a0e93so468904285a.1
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:14:59 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:15:37 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93bfb2da664so631360885a.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790493299; x=1791098099; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790493336; x=1791098136; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gNbdb1a4Eg8TqvqZT/jMuFZkviLnqSojNkYplKDccnk=;
- b=ibC4G2Vs8eWnWlUXgi6D6JflrYCrF/kmGpoZ+WdT2BjfqHh9Su0RSM2wYffAchi2q2
- zbci/X4hmhFG5cG8piXHTco69pYEL9SzxeHNWpj2GEnHqic1xhELKmcj4/MOEdGzlWZh
- 6T4mtWO2SJE3V45BFD7I2B8eXpoiOAhdTuwuc0LMNWDsGO++1DmVTThuAApDXIkJFh3M
- U1bSgWXYPJL64L86Tmxmksr782+o1NvdL59WXqgmQEbbWOZ6B8deJLzXm4Z6F5WPzqAq
- zfrNzTXf8n2ROG2R0yhRwhvrzVZi/3bnF7aCR9ggvWMeDYUPf5ZM58uOh1wCw8HMj7v0
- k5og==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WUiGurPna4QzVW1z8ZiNzWcCK/RyfVRlA+CoHMZcGe8=;
+ b=d8tACSj+gjRAT+kwZCtUOChED+sxwUf5gvd6QUQwxpiJhBty8V2uta616MgtmJ1Xa7
+ hU0oefLH86YcjMVsYv6ju8Zd6HfDiMTpl3dZ9ZTyp5XGniSLFiN5fGXtNUCVLnyjJthS
+ q1fPfjROtHfDEO5P5sCkgRMRxrGJLB0GWeCP/YK8kRSO5Xfn6c1pKnmVFqIqik2+O/Es
+ RXdRMZj2FyGmnhxDgSPZ6yTAbzLu6l5f2rDSrRvVkexijwed5/ObT0vovDebYquHPw/Z
+ EpjHK/qoA94N9e1oWmuloirti++aOCiTfe941uXbxb9DLgqR6QujGDgDpMxcNIBqKr4f
+ v3Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790493299; x=1791098099;
+ d=1e100.net; s=20260707; t=1790493336; x=1791098136;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gNbdb1a4Eg8TqvqZT/jMuFZkviLnqSojNkYplKDccnk=;
- b=H1xB9u3+CB42mthDyC5WxhYJu7sQtf7mGw2m6WBFzdX3/B4FEXUXg+Pj/ToR87nCDO
- 04bBg6eh93I3byQSo6jjFSNrzEGNUHeYMVZE0i3sa7nVsFAiG84UAzBcPK8Yhgd4kMrb
- ku5LqCnW20xyVDVZ9Kk30spsMNwwHBeQVQCYK/tcJLow948GfZuaKLT/u0mdqWS+NTX0
- Rkn1/jQMuJDB9Lk2zAegEuGHI5/N7uqu6pKAYSxu3eZQ0qcoFGzTlqeC3Hb58oI8tuLC
- xu2vlmrqQfow5b5zlFW2ihBhKQysGpgjSQNwanurHGFHLKxztPYvVUsxijNO2RrhDvFH
- KWag==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=WUiGurPna4QzVW1z8ZiNzWcCK/RyfVRlA+CoHMZcGe8=;
+ b=G49DVpTXpgWseTZIp1aaR9u4TtWkGBI8lparXhzhV+2prMAOC1O8V8FYutHcOU1Gxp
+ d0wrarpsIJwLbZK6iwz3WjK9Q/00/8n90EgCqWV9p4S0Tggkb6soj1pzjoXjV+XrZ694
+ 9QgutxGmlUeQ6LwmXEtK6ZKXN2JTHEFOJGCfU+ntO9ljuDaJer45ifRz4VgpDF5RWyVr
+ bL/yVPaPcwmRMVAz1MnY5SQwOigUuYUsnOy4jETL56JuVP1uRbajAiyBk0XVfcT1EbfP
+ TARKzI4qCE5+3paikkyYhy3GIhNQaP+TpBfh3oBSGg8nJNMZDCFn6Z0eIs4s20LN8i9r
+ T0yw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwenK9C646FuiZQles/+ERAMFlxhPQcFGmZgej4iJOQYv4h4XJmolrYJPYSB+GRBwnBwu3RlvDumnKG@nongnu.org
-X-Gm-Message-State: AFuF++m2LWfKFe0pewt2ckbru5ZAWGkB82/UMCJvv6adJ33cp/cd4hnW
- g8DfRCTvas91/IcmXGBBAxGSds8+RZPDVAunpK5KSFPf+VzWr5nKi+4N3sDaSFbi+qxnM4FP8gl
- fqUFtiRe+s2Ldi1pORObe2lXHMIaKZZEferM7hDbeP4Hfgq7SYX7wgjvXvw==
-X-Gm-Gg: AYBFou2xRyz4bOUZ6o1EOWF2FThwcYGfxGvTGsWBnRAzzv+LqLn/DbWsGqXFIcmixi8
- Ye4lygri4W4FfWp6kBdX4U+t6RgMxp+OegBhMghz5SB6msttaHVDoFpQKJYE0nDRCf5RPGRoRde
- sVus6Xk0CPZxUwuDTK9546lRUCCALRTyxtxRsryP07JwDpe/aTiAuniNS+7VYfcHbHjqpQ8Ub86
- wTSJ3cwispqyNMtzurI5fksp7QQ5Op2jYF/9Hfozse0hEvGylp72Li1aqjU1D94qtoAk8dAILZy
- zoWgGsj/7CAzfC6oUAM/g0JSidct+OKSSBvSX/J7tgyBB3Bbf5I10mcSSznOYdM0IX/8/EtZTui
- rFTAWqVdhJhSEp3c7xfPBX31NJubliv9h9Q==
-X-Received: by 2002:a05:620a:471f:b0:93b:d7a3:45d5 with SMTP id
- af79cd13be357-93c43d77939mr1393046085a.62.1790493299090; 
- Sun, 27 Sep 2026 00:14:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:471f:b0:93b:d7a3:45d5 with SMTP id
- af79cd13be357-93c43d77939mr1393043785a.62.1790493298609; 
- Sun, 27 Sep 2026 00:14:58 -0700 (PDT)
+ AKwUvBxreYwkuXaxf3oqGqY6zL71+RCZKlKbZPPsJQIkPttEIGVqXFBENIRUI3clGP7CU59jt8eRumfZ2dzd@nongnu.org
+X-Gm-Message-State: AFuF++nEcwey21mu08UOUopZfGnqq1kmUmrxWbMbHl9P7/DVyStoyr5z
+ O5kX6UxPmuxlqgFrCHp00/Kxb/hym/hq2D/TSbtAzlYSgH6YAC/EdFVo1vDEPp5l8Kl1fRYAxsE
+ X6mzXzaaBvGHDg4jepWAUmew+4iiVh0K1KDsyN7Kd1Q6MYyOYywCByccy6Q==
+X-Gm-Gg: AYBFou2iJcR2YxDJ1eD5jlzX04FqlteHcSXXwx5WrYnw0E6TBYoH5ehCvZIEuKNI3Rh
+ XI/oQUStbVS4M/YouUiBJzpoSExHvWqRcEafkq6+3bwQar2YPzC7Fzg4uApwdVWtDZs+7pzIUga
+ lvomeSP9ZMoUsAzaxsBYcGgvGpuwN/W9gajaRzqdrBhM5SKctn2fTU7OtO36BY32Y3PEkRbS8A4
+ A0dfqk0v7joFgohCtaeLMlEoQH+XoTOHI56R7F1BG9wpn1R4Ep+19WLsHSQq/65a++ImppXB9Wp
+ 7h0UafZIVjyPyYUcNHu8LB4jVcCLFMeQyHP3ZokbHuBnIqusij+SFUl1/mU04A9Olir/G+6f76v
+ bpWdX82LivgsdudIFt0xjhmtyzQbLhj0QoA==
+X-Received: by 2002:a05:620a:46a4:b0:93c:6b90:1d18 with SMTP id
+ af79cd13be357-93c6b902283mr292468285a.62.1790493336470; 
+ Sun, 27 Sep 2026 00:15:36 -0700 (PDT)
+X-Received: by 2002:a05:620a:46a4:b0:93c:6b90:1d18 with SMTP id
+ af79cd13be357-93c6b902283mr292465085a.62.1790493336058; 
+ Sun, 27 Sep 2026 00:15:36 -0700 (PDT)
 Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49fef5f876esm127947425e9.2.2026.09.27.00.14.57
+ ffacd0b85a97d-4887a35fb05sm20517954f8f.20.2026.09.27.00.15.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 27 Sep 2026 00:14:57 -0700 (PDT)
-Message-ID: <ad3b3719-73c3-4c0b-a77e-aae131450855@oss.qualcomm.com>
-Date: Sun, 27 Sep 2026 09:14:57 +0200
+ Sun, 27 Sep 2026 00:15:35 -0700 (PDT)
+Message-ID: <46355b7d-34f6-4f0d-be5d-e656e31aff75@oss.qualcomm.com>
+Date: Sun, 27 Sep 2026 09:15:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/xen: use stub_ss for xen_stubs
+Subject: Re: [PATCH] mac_dbdma: ensure only implemented DBDMA registers are
+ accessed
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260921204954.50529-1-pierrick.bouvier@oss.qualcomm.com>
- <20260921204954.50529-2-pierrick.bouvier@oss.qualcomm.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20260914125236.820155-1-mark.cave-ayland@ilande.co.uk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260921204954.50529-2-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260914125236.820155-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOCBTYWx0ZWRfXzjMqmhbR79YK
- gPWJwxDqQ5MqNeB1nRvY70c9yAyMz4hUCEJ4gKgnggrb25fJHnJ/ud2HXAMrY2L+431UG3RJny3
- kn/A1ASzouFXi47HWZyupESjGm5IbutFE6idh2wx+hvmpZaBvSQpATsRMgE56fglMppOyCuUYBU
- UbOkUnDfSr2sp2j2KUukdida22Pwwln7/CvHcaQJm9eHZxlfiK5K2idcx1+aHCnNX8yvuuxMkw0
- O79uiw3QPuFEHFfA470pjvlE2KWPOPFmjFTcp/JL1jFF073d4n6nT9RdzsLlBrFyc8nFPe1VhXM
- H3uvUe3CYpfVL8LAymouaXFDV4HG97FdF645xTMTAlCm+UayQfZK3m4CKC74QMyeOjJZNSkueXg
- OeJS9OVWd6PSBD6tpx6kaue7sog5FEGa1N3QIbQZv3z4BNe8QflUOdI7BteBmleWPG56ogzSZFr
- lBhw10Rmesv96yNGCZw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOCBTYWx0ZWRfXyBWQ6kFyvOOf
- WxQ9UF8SSaQM1cyWY49ytW6QS+0GXdnoOPmpMzg9DqX6NCiK9LmtgmnGUjnpbuWCXBSd+2hQhyO
- D3JLKfvJmns3nm+j6+ZsTyqpC6DGJzI=
-X-Proofpoint-ORIG-GUID: ZbKMzLl16iGl3rind8Xb1SAdaJkYtvK_
-X-Authority-Analysis: v=2.4 cv=X9LHu2Te c=1 sm=1 tr=0 ts=6ab8c274 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOCBTYWx0ZWRfX0oFb4Hb/BmdH
+ tdsYNB7eL06mG+f1KjCelWxqWEYY2dYoZ4RqmAsvJBnD09H4vjFifc04AzGrc08NtHdgCR5DDf0
+ ZC8RhWngVSxT7AwHGE62kNbQixgylGSC8Bc4khyO3+qFnMubHoaxv8y3ok9aXTFLRwWN3dDIqH0
+ CQi/MEiEZVWeNRnDLB/Tv2vEf99tSBdmtWAL3kBItAbh7Xe73mTc43OPulHdmduZjUsq67JTeOw
+ 4BTPdRyVYOy4NRnzr4Zfvz+am2xdEakXzUtio+8wq3Sg7y/g3BxU9lkKHcyuS+r4S3VLM9f3nFd
+ 0Fs9BTkHjulVGmK4mwkJMMT+ImL5Y++PY8Kpgynmy5CNgJ1t7X4Rc+6zFXnjxLbpmO2n1gBXWfU
+ fmpQ4GNl6AV/l6kxtZVnokx3vef+1ARH8VsuV/4TxVPN1h4ULcmNq4RYDdzEJ71LMr3BV4PxlJS
+ CeAZ3pjMocw+6MZjViw==
+X-Authority-Analysis: v=2.4 cv=QsXLTlyd c=1 sm=1 tr=0 ts=6ab8c299 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=qIEN1zWNEFoNWvbB_woA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: ZbKMzLl16iGl3rind8Xb1SAdaJkYtvK_
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pcZqCyVeAAAA:8 a=736gKsQ0j4UtIq-i_HQA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
+ a=zZCYzV9kfG8A:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=SGy6VSG0Ue1xmPAwIFl9:22
+X-Proofpoint-GUID: D_Wlskp8D3h0HCZGvdEkzmQ4zEUUXWCL
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOCBTYWx0ZWRfX47XPNjw9khT6
+ EOneU5IPBk9jwOapLXnCxoblu6vnCACT9wheSb1v25X3kktDjB8maFON8A0di8VR04XAK04KoO5
+ cRjDX2OgPV8+pIlGQlq28Axe6MWmb6I=
+X-Proofpoint-ORIG-GUID: D_Wlskp8D3h0HCZGvdEkzmQ4zEUUXWCL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609270028
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,29 +154,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/9/26 22:49, Pierrick Bouvier wrote:
-> Solves these link errors on aarch64 hosts when linking
-> arm and aarch64 targets:
+On 14/9/26 14:52, Mark Cave-Ayland wrote:
+> Whilst the DBDMA memory region is 4K in size, only the bottom 16 registers are
+> implemented in the Power Macintosh DBDMA controller. If an attempt is made to
+> access any unimplemented registers then an out-of-bounds array access occurs.
 > 
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_hvm_modified_memory':
-> /qemu/build/../hw/xen/xen_stubs.c:17: multiple definition of `xen_hvm_modified_memory'; libsystem_arm.a.p/hw_arm_xen-stubs.c.o:/qemu/build/../hw/arm/xen-stubs.c:25: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_ram_alloc':
-> /qemu/build/../hw/xen/xen_stubs.c:23: multiple definition of `xen_ram_alloc'; libsystem.a.p/hw_xen_xen-hvm-common.c.o:/qemu/build/../hw/xen/xen-hvm-common.c:39: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_mr_is_memory':
-> /qemu/build/../hw/xen/xen_stubs.c:28: multiple definition of `xen_mr_is_memory'; libsystem.a.p/hw_xen_xen-hvm-common.c.o:/qemu/build/../hw/xen/xen-hvm-common.c:27: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_map_cache_enabled':
-> /qemu/build/../hw/xen/xen_stubs.c:34: multiple definition of `xen_map_cache_enabled'; libsystem.a.p/hw_xen_xen-mapcache.c.o:/qemu/build/../hw/xen/xen-mapcache.c:86: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_invalidate_map_cache_entry':
-> /qemu/build/../hw/xen/xen_stubs.c:38: multiple definition of `xen_invalidate_map_cache_entry'; libsystem.a.p/hw_xen_xen-mapcache.c.o:/qemu/build/../hw/xen/xen-mapcache.c:664: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_ram_addr_from_mapcache':
-> /qemu/build/../hw/xen/xen_stubs.c:43: multiple definition of `xen_ram_addr_from_mapcache'; libsystem.a.p/hw_xen_xen-mapcache.c.o:/qemu/build/../hw/xen/xen-mapcache.c:538: first defined here
-> /usr/bin/ld: libsystem.a.p/hw_xen_xen_stubs.c.o: in function `xen_map_cache':
-> /qemu/build/../hw/xen/xen_stubs.c:54: multiple definition of `xen_map_cache'; libsystem.a.p/hw_xen_xen-mapcache.c.o:/qemu/build/../hw/xen/xen-mapcache.c:468: first defined here
+> Rework the switch() statements in dbdma_read() and dbdma_write() to handle each
+> individual register access, as well as providing a safe default for all other
+> unimplemented registers.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   hw/xen/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/misc/macio/mac_dbdma.c | 34 ++++++++++++++++++----------------
+>   1 file changed, 18 insertions(+), 16 deletions(-)
 
-Series queued, thanks.
+Patch queued, thanks.
 
