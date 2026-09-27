@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B03FC9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01461C98338
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjLW-00061B-O6; Sun, 27 Sep 2026 03:30:51 -0400
+	id 1xAjKO-0004p9-4z; Sun, 27 Sep 2026 03:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjJ9-0001Ta-7N; Sun, 27 Sep 2026 03:28:24 -0400
+ id 1xAjIl-0000qf-SX; Sun, 27 Sep 2026 03:28:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjJ7-0005d3-Jg; Sun, 27 Sep 2026 03:28:22 -0400
+ id 1xAjIk-0005cN-8H; Sun, 27 Sep 2026 03:27:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494014; bh=tcDUnp9cq4ZEadATM3BdWC82z52Nea+fjyNy36fzdmQ=;
+ t=1790494014; bh=LEmg9F9PdULKO6GWFi1RbejtH0RhTEMggeN72KNyl8g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YBLcHmvn9q72J0obu8bFYK+Pw0CYP+Wuq0ZRHCClURnB/RpbAemZQWlcrmHsLbhtT
- 32SQ/y9MkwJ7MbNrjDytPsz9/g+rDHs1GlxA3WaNsCcOjaOdDCXNM0xHlQjp6ZtJN6
- jgTrUnkigo/duQo1AcV0Ph4IV65/w5lzisqFiD7yXEdIVIsQse4jFPmsU9TUJ2+JV+
- SFHl/1Uv4u51Vq5+q9kiRL9Uuu1eOcO209VaZrJnrWqTbdp6xyRQI7EWIoGnJNGWy8
- bDi0VxI3PXTPSHy/LPz/nN1kPZHIgikjr/JbGL8nVRUQmEwCLOEOH2Y69/eYj7TJ7a
- qNjeiRnJ8Hf3Q==
+ b=RDLIiO71Cy4m1vhH63DGduhjYj52Xi/8OvYgVxPiQMFg6yTw7M1adL+mayougURKP
+ 1xvzSW4AYI9APIeozrABKh6/awzQgWfeSHp+dL+I5dVjsd+h5Bz5Jmb8Yj8a8GqBsm
+ O6/Lu0J7gLb05kXS2MqTZeEJXNiJ5dR9fjJP81JYE1fKDCe+T/0emhNWiTY6yXuOHF
+ rKZYaNlowG83nGTm8ODqSFEtmhQq+1czEi7wH/NNi0oc6wtOQZGbtPs3oinOeUxI/k
+ KUjuhaqbSQ/xMjv3/K1EaetghF/gL2kICCRmaJVfEeBv0t0+L7up1BiXi8awFT1Fyz
+ 5FNXyNLxOxwZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 159E01D8AC9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 05C4A1D8AC6;
  Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1320F43205B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02D3A432058;
  Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 183AE5E641; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
+ id 0F1B75E63B; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Mikulas Patocka <mpatocka@redhat.com>, Helge Deller <deller@gmx.de>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 71/72] accel/tcg: Set CF_NOIRQ during
- cpu_exec_step_atomic
-Date: Sun, 27 Sep 2026 10:26:03 +0300
-Message-ID: <20260927072622.93656-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 68/72] target/i386: Update FPU tag word for FSTP
+Date: Sun, 27 Sep 2026 10:26:00 +0300
+Message-ID: <20260927072622.93656-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -72,33 +70,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Do not go through the effort of grabbing the exclusive lock
-only to check for interrupts and exit without making progress.
+FSTP ST(i) copies the value in ST(0) into ST(i) and then pops the
+register stack. ST(i) should end up marked valid in the FPU tag word
+and the old ST(0) should end up marked empty.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 460da0e55c31694156d545097569e1e14052cd46)
-(Mjt: adjust for 10.0.x across v10.0.0-561-g4759aae43235
- "accel/tcg: Return TCGTBCPUState from cpu_get_tb_cpu_state")
+helper_fmov_STN_ST0() copies the value into ST(i) but never touches
+its tag. So if ST(i) happened to be tagged empty beforehand, it is
+still wrongly tagged empty afterwards.
+
+Mark the destination tag to valid in helper_fmov_STN_ST0().
+This also fixes FST ST(i), which shares the same helper.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260902120419.212855-2-scherer.simon89@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit f2357fdcd984c37fb0f3f64698a38ba1f55fd9c5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index ef3d967e3af..27f69b1a4a2 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -580,7 +580,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
-         /* Execute in a serial context. */
-         cflags &= ~CF_PARALLEL;
-         /* After 1 insn, return and release the exclusive lock. */
--        cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | 1;
-+        cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
-         /*
-          * No need to check_for_breakpoints here.
-          * We only arrive in cpu_exec_step_atomic after beginning execution
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 64c5e82a2c4..53b6e612812 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -510,6 +510,7 @@ void helper_fmov_ST0_STN(CPUX86State *env, int st_index)
+ void helper_fmov_STN_ST0(CPUX86State *env, int st_index)
+ {
+     ST(st_index) = ST0;
++    env->fptags[(env->fpstt + st_index) & 7] = 0;
+ }
+ 
+ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
 -- 
 2.47.3
 
