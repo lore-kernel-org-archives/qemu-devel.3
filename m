@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B690C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966CBC98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSG-0007Ju-9c; Sun, 27 Sep 2026 06:50:00 -0400
+	id 1xAmSA-0006zl-Jw; Sun, 27 Sep 2026 06:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRc-000640-Og; Sun, 27 Sep 2026 06:49:21 -0400
+ id 1xAmRz-0006fu-Ux; Sun, 27 Sep 2026 06:49:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRb-00013A-6W; Sun, 27 Sep 2026 06:49:20 -0400
+ id 1xAmRy-00013a-8a; Sun, 27 Sep 2026 06:49:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506130; bh=oP827NXVehDBLxkNpXERII/bI5xIvEsJzeGXxZTyvI8=;
+ t=1790506135; bh=7ulAkzRSrBUpu8+Z4oxLCBWBbZuBzcUKsoIe6P/fFBE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cg8yFcEF5Kfd2pKnL2yvHSPnRlCfhrhlQ9B/yBeSzOJV8lyagxiy+G/7YMKrBPY/u
- gLpqKC3u9s+vkfXRz+8UpqvOGm9a/GLsiZh0ll/QipLWEAkLn/to8qxAZIzG4TzH3H
- 75Xypv4fG0TtZlnNMsge78DScRHApZZi7BlPsUzd27BxyC4UmL5elEDEhSABhOiusC
- OiYZM0ijwJYdCUrugEx8wHiLOWQDGwXW09eQJh3iyF/b35zcPJTG/jIdIQM0IhhJpR
- TkbbvRbtx0T8JnRucW+9rqFGgRKlgeeibkxRBjXlryhLPjQ+9x8qN8HO1LdZCyhsob
- rskUVbXofoSLw==
+ b=uA7RTV14ls8drMuqDGyrf2f9Pf5KdMbHbs8jJKxKa5EWXpl3DRHv4lOaGAloZWSD0
+ tjiBspvLxs9Tu44M+M+/0L/rex9j4eWCuS3OOB70F5kw2HDO8LqV2KuWXqVHmy1ezW
+ lfeajHFfsnguxnZOGZdcc8hwrjh0ZUWZg9hafCkoaSVHwyaV2pIpo6ILfy1BT8IvtO
+ L9xhJo5UYtv/2o8AZjlvvky9qiu4jilXxIikeEYyQalq0MkVB4mK+F8cz9bb+kQNcK
+ pB9T5h9libRoqAn+0zWUrO/JSb+VR7Xdlv517l+q1AA5mLNIK9OwycuhY0MFgxd2YK
+ pfnZkfaKSh4wQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A1E9E1D8B63;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E8BB81D8B65;
+ Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 94F44432169;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E60F543216C;
+ Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 623935E77C; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ id CE5745E782; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- "Jason J. Herne" <jjherne@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 67/92] hw/s390x/ipl: Fix incorrect PCI IPL block
- lengths
-Date: Sun, 27 Sep 2026 13:47:43 +0300
-Message-ID: <20260927104821.196183-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 70/92] accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO
+ for system plugins
+Date: Sun, 27 Sep 2026 13:47:46 +0300
+Message-ID: <20260927104821.196183-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -73,53 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The length of the PCI IPLB is calculated by size of the IplBlockPci struct
-plus the number of bytes used for common IPLB fields.
-
-Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
-while we are at it.
+In b79a9b6e5b, we stopped using TLB_MMIO for user-only plugins,
+but erroneously thought we were already doing the same for system.
+Do that now.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 395116781df5 ("s390x: Build IPLB for virtio-pci devices")
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260831194919.3830270-3-jrossi@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 8435aadbb9add09c4c2e16f803b37441b4c6a32f)
-(Mjt: S390_IPLB_MIN_PCI_LEN is in hw/s390x/ipl.h across v11.1.0-600-g854de451f21c
- "hw/s390x/ipl: Add IPIB flags to IPL Parameter Block")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit cab8663761943141f8fd75dddc99255fe2cb45c4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index d5fdc3ea0ff..fd6e9100f96 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -526,6 +526,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         switch (devtype) {
-         case PCI_DEVTYPE_VIRTIO:
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-+            iplb->blk0_len =
-+                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
-             iplb->pbt = S390_IPL_TYPE_PCI;
-             iplb->pci.fid = cpu_to_be32(pbdev->fid);
-             break;
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index ef9c063d904..a60c9520c0c 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -107,7 +107,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
- #define S390_IPLB_MIN_PV_LEN 148
- #define S390_IPLB_MIN_CCW_LEN 200
- #define S390_IPLB_MIN_FCP_LEN 384
--#define S390_IPLB_MIN_PCI_LEN 376
-+#define S390_IPLB_MIN_PCI_LEN (offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci))
- #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 7f7c208ba12..ae5af014960 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1369,7 +1369,6 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
+     uint64_t tlb_addr = tlb_read_idx(entry, access_type);
+     vaddr page_addr = addr & TARGET_PAGE_MASK;
+     int flags = TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
+-    bool force_mmio = check_mem_cbs && cpu_plugin_mem_cbs_enabled(cpu);
+     CPUTLBEntryFull *full;
  
- static inline bool iplb_valid_len(IplParameterBlock *iplb)
+     if (!tlb_hit_page(tlb_addr, page_addr)) {
+@@ -1399,16 +1398,13 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
+ 
+     *pfull = full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
+     flags |= full->slow_flags[access_type];
+-
+-    /* Fold all "mmio-like" bits into TLB_MMIO.  This is not RAM.  */
+-    if (unlikely(flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED))
+-        || (access_type != MMU_INST_FETCH && force_mmio)) {
+-        *phost = NULL;
+-        return TLB_MMIO;
++    if (check_mem_cbs && cpu_plugin_mem_cbs_enabled(cpu)) {
++        flags |= TLB_FORCE_SLOW;
+     }
+ 
+-    /* Everything else is RAM. */
+-    *phost = (void *)((uintptr_t)addr + entry->addend);
++    *phost = (flags & ~(TLB_WATCHPOINT | TLB_NOTDIRTY | TLB_CHECK_ALIGNED)
++              ? NULL
++              : (void *)((uintptr_t)addr + entry->addend));
+     return flags;
+ }
+ 
 -- 
 2.47.3
 
