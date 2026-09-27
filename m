@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048CEC9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162C6C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmRg-00067m-2e; Sun, 27 Sep 2026 06:49:24 -0400
+	id 1xAmTd-0004Q9-1y; Sun, 27 Sep 2026 06:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRE-0005tv-3D; Sun, 27 Sep 2026 06:48:58 -0400
+ id 1xAmTP-0004EW-Jg; Sun, 27 Sep 2026 06:51:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRC-00010P-BL; Sun, 27 Sep 2026 06:48:55 -0400
+ id 1xAmTN-0001UY-RG; Sun, 27 Sep 2026 06:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506130; bh=I6P4jic7x4ju6OfKPsETZKjI/JI/h8MJn9rP0A/HgTk=;
+ t=1790506136; bh=CqPeSmLOKfORqhwf1puP6OV29jgnqqbTnuWmVIN7bys=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OYYY10zyIid/pwKUkW7zorXSq4NyXkFh9Gm7JHFdfm4nYJhhjdzFMcssFp+DTCHc0
- qPBOjUUwh/FI3p/uaiQNqPMh3pOdtTCiBaCaxLmKQYMTh93KcSTwxeOBy2Mel5xOjS
- h2+WDHaD81ktTxxPAwZL/kdOfCkKsrI0n8dutezN9d0psG7ST+EJnZ0/U2YpHJnQqD
- hFLcxvoNePumcIIXxLvpYeCffSuSV4o4ZS11ujIwiAy4welFw1lYp2ezfPt3Ymg5XP
- Wm0hEDJeyQYZRNfwuMmv2fIsCWzWxL2lTn39KDgqn0taJP1gh1visjWnkbhxnEaeXR
- WMYKtYijahdZg==
+ b=KNcDMgpJPzDHyuH4C/X7N+caPAqTDP38W2aQM+1d8irXv/xZsAN8qXhE0G9uGuLVo
+ OoujZ2sH11hhiTrIfKtQNwiY3IN5vEs6uqrKI3upGIJOd3hL5dP923GlePeN2/nZuS
+ D9HBsH1DhPOIatWLNJFHmGMRVWHI6453NVk3B9qqmTuHUuxqd4n7rj1JXahkd8SC97
+ KXnDiY/5aGd9tIUopKRBWEKS2te7KenqB9ObZTWKupJttvdTa9WB7ocv4CCk6J+kHz
+ JCesGpVdYNyQPNl0dZ9aRdN6fga48rK7CM4zqhTQRt/V83K5m47tLy8lLl5Ii5RuqS
+ Je2fzglZg0O4w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 592211D8B58;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 534D21D8B74;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 55E8243215F;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 486CD43217B;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 43C905E768; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ id 073575E7A0; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 57/92] hw/riscv/virt.c: fix aclint soc/mtimer
- nodename
-Date: Sun, 27 Sep 2026 13:47:33 +0300
-Message-ID: <20260927104821.196183-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 85/92] target/i386: Update FPU tag word for FSTP
+Date: Sun, 27 Sep 2026 13:48:01 +0300
+Message-ID: <20260927104821.196183-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -74,56 +70,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Running 'dtc' to generate a readable fdt for the virt machine produce
-warnings:
+FSTP ST(i) copies the value in ST(0) into ST(i) and then pops the
+register stack. ST(i) should end up marked valid in the FPU tag word
+and the old ST(0) should end up marked empty.
 
- $ dtc -I dtb -O dts virt.dtb > virt.dts
-<stdout>: Warning (simple_bus_reg): /soc/mtimer@2000000: simple-bus unit address format error, expected "2007ff8"
-<stdout>: Warning (simple_bus_reg): /soc/mtimer@2008000: simple-bus unit address format error, expected "200fff8"
+helper_fmov_STN_ST0() copies the value into ST(i) but never touches
+its tag. So if ST(i) happened to be tagged empty beforehand, it is
+still wrongly tagged empty afterwards.
 
-This happens because the 'reg' field does not match the address in the
-nodename.  The right fix, pointed out by Chao in [1], is to make the
-nodename match the reg value:
+Mark the destination tag to valid in helper_fmov_STN_ST0().
+This also fixes FST ST(i), which shares the same helper.
 
-"In the current QEMU implement, `addr` is the MTIMECMP base address,
-while the MTIME register is located at addr + RISCV_ACLINT_DEFAULT_MTIME."
-
-In other words, the 'reg' value is correct but the nodename isn't.
-
-We'll make the fix now, allowing the next patch to move the fixed version
-of aclint FDT to fdt-common.
-
-[1] https://lore.kernel.org/qemu-devel/apHH1upnh8udUUT-@ChaodeMacBook-Pro.local/
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Chao Liu <chao.liu@processmission.com>
-Fixes: 954886ea6d ("hw/riscv: virt: Add optional ACLINT support to virt machine")
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260828203918.350131-9-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 9d6ac47d3182f2bdadea4bed596c82759a167e67)
-(Mjt: drop format string change (it was corrected in subsequent change),
-  but keep the value change)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4400
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260902120419.212855-2-scherer.simon89@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit f2357fdcd984c37fb0f3f64698a38ba1f55fd9c5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 51bac47a91d..6707979169a 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -286,7 +286,8 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
-                (s->memmap[VIRT_CLINT].size * socket);
-         size = s->memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
-     }
--    name = g_strdup_printf("/soc/mtimer@%lx", addr);
-+    name = g_strdup_printf("/soc/mtimer@%lx",
-+                           addr + RISCV_ACLINT_DEFAULT_MTIME);
-     qemu_fdt_add_subnode(ms->fdt, name);
-     qemu_fdt_setprop_string(ms->fdt, name, "compatible",
-         "riscv,aclint-mtimer");
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 829b2c80dbc..1a2b782e0f9 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -510,6 +510,7 @@ void helper_fmov_ST0_STN(CPUX86State *env, int st_index)
+ void helper_fmov_STN_ST0(CPUX86State *env, int st_index)
+ {
+     ST(st_index) = ST0;
++    env->fptags[(env->fpstt + st_index) & 7] = 0;
+ }
+ 
+ void helper_fxchg_ST0_STN(CPUX86State *env, int st_index)
 -- 
 2.47.3
 
