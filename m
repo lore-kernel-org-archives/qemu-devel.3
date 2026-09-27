@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A03C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39629C9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjJ4-0001Mh-Eb; Sun, 27 Sep 2026 03:28:19 -0400
+	id 1xAjIP-0000QX-Lz; Sun, 27 Sep 2026 03:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHf-0008W3-Rd; Sun, 27 Sep 2026 03:26:52 -0400
+ id 1xAjHt-00008V-NV; Sun, 27 Sep 2026 03:27:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAjHe-0005P8-9T; Sun, 27 Sep 2026 03:26:51 -0400
+ id 1xAjHr-0005Sy-RM; Sun, 27 Sep 2026 03:27:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790494004; bh=ypQX5MOKyWsP/BHUAYVNeKD6LMu8cG4KoINOsRdECH0=;
+ t=1790494013; bh=tiXXDqgXg7lPbcJbyG2ZRq/+J8WaPZB+kwSlU8kfh4c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ooigIeINwMUfhrEp5jW39eyyOMSj4DUI0MWWS7M3i7t3xjnGIjbNymlueCuPyCQ4P
- blSfdIIJ4ck3G2QktQRCYMQt5gnJNrsh3Dnq6dRR4J3M10umEflil31j922n4NXiIj
- fj1d2EzfXCrVZCS9c20dj3ut8dAsFAqGZdop2xezu6LA8jFf/VznCvk4HBAgjS7FMZ
- 6pC4jcmYMhKtLx4nBDRMM9wShC860B7WT+eqaj6wzuO7SHpCd+xbsjC3WgKAZjeknI
- E1nAgJsf6Iek11oGCKirxQl38COX8kTlZasLtDWusNARUSzHUezX17gG6u5rRomdXR
- 7nRhef/FZU5sA==
+ b=ctTD0fl3AdnVuBvoj4jWb+ayxwAC6ViDe2O+E8vgM4GzFRMAU4fgCDAefxKOWZTIK
+ q8nwFT5s4RIlgYurR/iOsGBKGcOCQtUzRctQVmIJBDs4kZIlSUPSeCl5DvXO/cKKQp
+ ld4PRE2afdH+LD1tepvjOAKB+WgI5PnB2n699J2IDuDCBpbb9xUiIDSFTUHye7KAel
+ s9lCNHZaZYgbhKwfdgHDadrGZ8GFNusfabCXHI8TaPn8TcQ8PPw/hgyHQNjYXVlUeB
+ SqJpis4wIPfXMegPiyp0Uwd/fd86O8eVpx/gY5thdTqoQf8ShObRsx0vc64DbHSQ36
+ sTeD8rscAyAkw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B9FBD1D8AB7;
- Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8647E1D8ABE;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A4308432049;
- Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74E1D432050;
+ Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5C53E5E61D; Sun, 27 Sep 2026 10:26:44 +0300 (MSK)
+ id EADEB5E62B; Sun, 27 Sep 2026 10:26:52 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Morrell <mmorrell@tachyum.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.14 v2 53/72] linux-user: implement mlock2(2) syscall
-Date: Sun, 27 Sep 2026 10:25:45 +0300
-Message-ID: <20260927072622.93656-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 60/72] hw/usb/hcd-xhci: Set reentrancy guard in
+ timer functions (CVE-2026-17588)
+Date: Sun, 27 Sep 2026 10:25:52 +0300
+Message-ID: <20260927072622.93656-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
@@ -70,60 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Morrell <mmorrell@tachyum.com>
+From: Thomas Huth <thuth@redhat.com>
 
-TARGET_NR_mlock2 is defined for every target's syscall table (it has
-been available on all Linux architectures since it was added in
-kernel 4.4), and linux-user/strace.list already has an entry for it,
-but linux-user/syscall.c has no case handler for it. A guest mlock2()
-call therefore falls through to the default case and gets -ENOSYS
-instead of being emulated, on every target.
+The xHCI controller processes USB events from timer callbacks
+(xhci_mfwrap_timer and xhci_ep_kick_timer) outside of any MMIO handler
+context. The device's mem_reentrancy_guard is therefore not engaged
+during this processing.
 
-mlock2() differs from mlock() only by a third `flags` argument
-(MLOCK_ONFAULT). Add TARGET_MLOCK_ONFAULT and a case that validates
-the flags argument and forwards to the host mlock2(), mirroring the
-existing TARGET_NR_mlock case immediately above it.
+A malicious guest can exploit this by pointing the event ring base
+address (er_start) at the xHCI doorbell MMIO region. When
+xhci_write_event() performs a DMA write to deliver a transfer
+completion event, the write lands on doorbell register 0. If the
+written value is 0, this triggers xhci_process_commands() reentrantly.
+A CR_DISABLE_SLOT command prepared on the command ring then frees
+endpoint and transfer objects via xhci_disable_ep() / g_free() while
+the outer call stack still holds references to them, causing a
+heap use-after-free.
 
-Signed-off-by: Michael Morrell <mmorrell@tachyum.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 30fa3eb41f85e114765e8476dc9a32a890b2e78f)
+Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
+around the processing in these non-MMIO entry points. This mirrors
+the protection that EHCI, DWC2, and UHCI already have via
+qemu_bh_new_guarded(). With the guard active, the memory subsystem's
+automatic reentrancy check (system/memory.c) blocks DMA writes that
+would dispatch into the device's own MMIO handlers.
+
+CVE: CVE-2026-17588
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3926
+Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
+    Guannan Wang <wgnbuaa@gmail.com>, Zhanpeng Liu <pkugenuine@gmail.com>,
+    Jiashuo Liang <761232680@qq.com>, Guancheng Li <lgcpku@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4195
+Reported By: Ken Hsu and Royce Lu of Palo Alto Networks
+Message-ID: <20260915112213.525283-1-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit f91b0544fe1f9fbabf582ccaaecc08877b7e19e1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5e742f55b82..111f97bd5eb 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -10941,6 +10941,15 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_mlock:
-         return get_errno(mlock(g2h(cpu, arg1), arg2));
- #endif
-+#ifdef TARGET_NR_mlock2
-+    case TARGET_NR_mlock2:
-+        if (arg3 & ~TARGET_MLOCK_ONFAULT) {
-+            return -TARGET_EINVAL;
-+        }
-+        return get_errno(mlock2(g2h(cpu, arg1), arg2,
-+                                 (arg3 & TARGET_MLOCK_ONFAULT) ?
-+                                 MLOCK_ONFAULT : 0));
-+#endif
- #ifdef TARGET_NR_munlock
-     case TARGET_NR_munlock:
-         return get_errno(munlock(g2h(cpu, arg1), arg2));
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 4d610490c98..4150e191577 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2792,6 +2792,10 @@ struct target_mount_attr_ver0 {
- #ifndef RESOLVE_IN_ROOT
- #define RESOLVE_IN_ROOT         0x10
- #endif
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 97b18f8d362..9805dff0114 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -458,9 +458,15 @@ static void xhci_mfwrap_timer(void *opaque)
+ {
+     XHCIState *xhci = opaque;
+     XHCIEvent wrap = { ER_MFINDEX_WRAP, CC_SUCCESS };
++    MemReentrancyGuard *guard = &xhci->parent.mem_reentrancy_guard;
 +
-+/* flags for mlock2() */
-+#define TARGET_MLOCK_ONFAULT    0x01
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
+ 
+     xhci_event(xhci, &wrap, 0);
+     xhci_mfwrap_update(xhci);
 +
- #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
++    guard->engaged_in_io = false;
+ }
+ 
+ static void xhci_die(XHCIState *xhci)
+@@ -1087,7 +1093,14 @@ static void xhci_set_ep_state(XHCIState *xhci, XHCIEPContext *epctx,
+ static void xhci_ep_kick_timer(void *opaque)
+ {
+     XHCIEPContext *epctx = opaque;
++    MemReentrancyGuard *guard = &epctx->xhci->parent.mem_reentrancy_guard;
++
++    assert(!guard->engaged_in_io);
++    guard->engaged_in_io = true;
++
+     xhci_kick_epctx(epctx, 0);
++
++    guard->engaged_in_io = false;
+ }
+ 
+ static XHCIEPContext *xhci_alloc_epctx(XHCIState *xhci,
 -- 
 2.47.3
 
