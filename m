@@ -1,104 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C36606A32E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF7E606A330
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Nov 2026 15:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=a/7mTHoj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xRX50-0007K5-UX; Thu, 12 Nov 2026 10:51:14 -0500
+	id 1xRX51-0007K9-Dc; Thu, 12 Nov 2026 10:51:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcfaracco@gmail.com>)
- id 1xRWp1-0007bJ-UC
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 10:34:44 -0500
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcfaracco@gmail.com>)
- id 1xRWoy-0004Zr-8m
- for qemu-devel@nongnu.org; Thu, 12 Nov 2026 10:34:43 -0500
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-67be1e468a8so3651045d50.0
- for <qemu-devel@nongnu.org>; Thu, 12 Nov 2026 07:34:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1794497679; x=1795102479; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zANwaYKdGSgNJt295Sr9bJFo22t9rxZ3P/MbCD+xx1w=;
- b=a/7mTHojffLkSlkgtCDkVZMyWNR1AB24SsedVoEht6Lwn1d3uMgEQdnU1BMuFvg5vu
- Olv5ZMy/aXKBNFwH4TjFWvgV71i6BlBOjndvrX6Z+L40E4lDtKVVu79KfOUS7Su36m6l
- kBiIb54mUZlTtTPom+ytqjjrZQPlUp3dRWdcJ37m1sqmxlH+8ZD3eO1BEznrV31C/ZGJ
- 36wHEl5RDGK9o8e2n6xsr/6AsEu///z8HozEmuSPNO/7Z3B8MN3g/YI0Y91rYv6d8wpv
- EspQdVjWTMzErk7/3F2OI9awt546HlwfkBKgCfQmYY+OExvGV9hI2QfK/lNGZgNHr5g4
- mCDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1794497679; x=1795102479;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zANwaYKdGSgNJt295Sr9bJFo22t9rxZ3P/MbCD+xx1w=;
- b=N4Kvn5SFeQaAhQpmTackU08LoGLdk8wMzjTM6Gpi3aW+6BRxx0yVM/tLC0A4xUQpx+
- daw6t/R3e/67Ga19UzmVmY4rkwdVDvt2DMJFXDqIsQ/Yq4MYrim/zQAWMfBbHBtPszpl
- /DdMbEuRW84o+3yuTr/pKPzGv1B6/Lqa8roS873gzuy0aRb8+136Mlly5ILXcXEAKz1J
- dScnUz/168ba3JEs84QZRJTZ5vooti2qoVVgag/WkuAk70CrnTTtnSs0roTXy2TBCmHS
- 5gX6TJ6OiXROXa5qYqCK0KVpOk6evnQeIsCuBMvKaqZA2ndBcEP+c5275xDn0YLx5KjY
- vTsQ==
-X-Gm-Message-State: APuU4Z9sXpGt23mddutB3yXxAwy/pg659M8VCgesdrSoWjPrwYySkG50
- 4XCEfvf01kRNEvZmjhHqcPgHbLZBsFhuU9y9XIEw1JwFx+7Ripbdevju
-X-Gm-Gg: AYBFou0RX+FPCxjcArJMnUW9Z/ZQel8cDCvYwHxr+JDjSdlcGI0LzefHAhi6x6y/9x9
- uYfIJdTwscUty+ZPD53sngV8bwywqlGoBUwazZ5fW9WKgwy2y30xDTXLcjkEFBkkTmV7/bmKYTp
- DU4x6BUSX4qlUfq10BkM2yBPrzstkYaHM/YANoLW2lQqr7alkHUY7niTG5IUEXS6H4/KEgGvVzf
- 5Z2z6UbOcWJVCFeKEWBXxSgBPeUXwo+I44D8HI5tdqyXJ6NWuc3lcWkpoCOuolx6nbl3z3FtfRd
- tM9MT+YhyeXw4bE4QGsl7QrpsUtJ8TQhhXzO5+Z3XqtHEGNBLQc3+RoWX63q1fi5IWzwxC0ytqD
- 5F3WqN/wH+UbBRKMY1QGd6cQTHXo1D174CEA3B5ceogQydfwQzNCSSkVynEmtKOr4aPFLuR6yCw
- 9irCCNdn0zOocJ/iVY88RdVOqyCL3cfXFZErPEWP9ydAlY1YT62rhpu+Fr64TY26pI59xcy9AC1
- vUy3f9XdotUcJyY8EmN9dcd2UK3/LXK0jKbZS51Qtl8MXNXFjswMDzien/8fj+FbAJ6WRtxu3Ib
- pi23+c6uwIVH+X7NLg==
-X-Received: by 2002:a05:690e:4509:10b0:67c:2752:e53c with SMTP id
- 956f58d0204a3-67c67f6e4dcmr2990787d50.39.1794497678723; 
- Thu, 12 Nov 2026 07:34:38 -0800 (PST)
-Received: from [192.168.0.195] ([2804:14c:3b83:954b::221c])
- by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-67c58a09074sm7656618d50.18.2026.11.12.07.34.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Nov 2026 07:34:38 -0800 (PST)
-From: Julio Faracco <jcfaracco@gmail.com>
-Date: Thu, 12 Nov 2026 12:33:57 -0300
-Subject: [PATCH 2/2] tests/qemu-iotests: cover the dmg LZFSE short-decode fix
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1xRWKj-0005hX-Fp; Thu, 12 Nov 2026 10:03:30 -0500
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1xRWKb-0004Od-6b; Thu, 12 Nov 2026 10:03:23 -0500
+DKIM-Signature: a=rsa-sha256; bh=p4IDh++u1IHDGi4mN9UnqfLBDP9tCK96z1YOsWsrgbU=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1794495790; v=1;
+ b=moBKQQe8+knR7JkOuPqL2p/PejITV2lSMU1TAMBz06NNgr7Xsxgw41uGtfVWS1r/u5/PX/f2
+ nvzCWyqXqX8A/pqHgpmaG32wOk6fAnEqjkM5Qd2RuKeRR7dOuGH7BR55ltvTpYpIDQZFS0JDPDz
+ hlu5i5GGZ+ZFcpIypcymr1SxQHsfnflVNmUNA6yrZNDMQy3eryLkR2jRdKwrhLXhDoV/2DlroIy
+ yjaZ6Z/XOEBwSfDvqPnua4XYiKTkfBIJYyaOjoZPxbYf7NLs70l5LJ6I7cZlTrk1FNE9EjeSMG/
+ LXlvDI+davvcDEt4aQ/+IGrN5CpyILIOym5MmpOfYvJbw==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 4349B22F0D;
+ Thu, 12 Nov 2026 15:03:10 +0000 (UTC)
+From: ~mohammadodeh <mohammadodeh@git.sr.ht>
+Date: Sun, 27 Sep 2026 10:09:50 +0300
+Subject: [PATCH qemu 2/3] hw/ssi: Add STM32L4x5 QuadSPI controller
+Message-ID: <179449578952.8382.2790865629085512841-2@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <179449578952.8382.2790865629085512841-0@git.sr.ht>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Samuel Tardieu <sam@rfc1149.net>, Alistair Francis <alistair@alistair23.me>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Philippe =?utf-8?q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
+ Jan Kiszka <jan.kiszka@web.de>, Bin Meng <bin.meng@processmission.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?utf-8?q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-dmg-short-decode-v1-2-f7f342097b60@gmail.com>
-References: <20261112-dmg-short-decode-v1-0-f7f342097b60@gmail.com>
-In-Reply-To: <20261112-dmg-short-decode-v1-0-f7f342097b60@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org, 
- Julio Faracco <jcfaracco@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794497667; l=7218;
- i=jcfaracco@gmail.com; s=20261112; h=from:subject:message-id;
- bh=k/K8U+Tz7gp/lpKwrEoUljN2D+g0N1+lMDxrD+/1uL8=;
- b=Tc7MuC0TcvHXSSqqMw1O/C+u4Kwb61KKSiFXarm41Be1bvPzRJ7WNLNAOpMLeevrIyM2QeRE8
- 3ovqfuStJ8/AynDtCXkHj2GkqaWl7PPFa3KamPWfgPilSvvwp1BaOuw
-X-Developer-Key: i=jcfaracco@gmail.com; a=ed25519;
- pk=hAqVCeSg6RtgTRedcz7HIqiICyRcEDanumwIF9bNBHg=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=jcfaracco@gmail.com; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 12 Nov 2026 10:51:10 -0500
+X-Mailman-Approved-At: Thu, 12 Nov 2026 10:51:09 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,188 +72,903 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~mohammadodeh <Mohammad.Odeh@exalt.ps>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DATE_IN_PAST_96_XX,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a regression test for the LZFSE short-decode heap disclosure. It
-builds a minimal DMG (koly trailer, plist, BLKX block, LZFSE data fork)
-whose chunk declares two sectors of output while its LZFSE stream only
-decodes to one, and checks that reading the chunk now fails with an I/O
-error instead of leaking stale heap bytes.
+From: Mohammad Odeh <mohammad.odeh@exalt.ps>
 
-A valid single-sector DMG is converted first; if that fails, the test
-is skipped as LZFSE support is not built in.
+Model the STM32L4x5 QuadSPI controller indirect read and write modes.
+Wire its clock, interrupt, and SSI bus into the STM32L4x5 SoC.
 
-Signed-off-by: Julio Faracco <jcfaracco@gmail.com>
+Automatic polling, memory-mapped mode, and DMA are not implemented.
+
+Signed-off-by: Mohammad Odeh <zephyr@exalt.ps>
 ---
- tests/qemu-iotests/tests/dmg-lzfse-short     | 142 +++++++++++++++++++++++++++
- tests/qemu-iotests/tests/dmg-lzfse-short.out |   2 +
- 2 files changed, 144 insertions(+)
+ MAINTAINERS                        |   1 +
+ hw/arm/Kconfig                     |   1 +
+ hw/arm/stm32l4x5_soc.c             |  17 +
+ hw/ssi/Kconfig                     |   4 +
+ hw/ssi/meson.build                 |   1 +
+ hw/ssi/stm32l4x5_quadspi.c         | 680 +++++++++++++++++++++++++++++
+ include/hw/arm/stm32l4x5_soc.h     |   2 +
+ include/hw/ssi/stm32l4x5_quadspi.h |  51 +++
+ 8 files changed, 757 insertions(+)
+ create mode 100644 hw/ssi/stm32l4x5_quadspi.c
+ create mode 100644 include/hw/ssi/stm32l4x5_quadspi.h
 
-diff --git a/tests/qemu-iotests/tests/dmg-lzfse-short b/tests/qemu-iotests/tests/dmg-lzfse-short
-new file mode 100755
-index 0000000000..fc0b69cee3
---- /dev/null
-+++ b/tests/qemu-iotests/tests/dmg-lzfse-short
-@@ -0,0 +1,142 @@
-+#!/usr/bin/env python3
-+# group: rw quick
-+#
-+# Regression test for the dmg LZFSE short-decode heap disclosure.
-+#
-+# Copyright (C) 2026 Red Hat, Inc.
-+#
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation; either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+#
-+# A crafted DMG can declare a chunk output size larger than its LZFSE
-+# stream actually produces.  dmg_uncompress_lzfse_do() used to accept
-+# such a short decode and hand the untouched tail of the (unzeroed)
-+# uncompressed chunk buffer to the guest -- a heap disclosure.  Reading
-+# such a chunk must now fail with an I/O error instead.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fa0c6d0c9b..7a820703f8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1119,6 +1119,7 @@ F: hw/misc/stm32l4x5_exti.c
+ F: hw/misc/stm32l4x5_syscfg.c
+ F: hw/misc/stm32l4x5_rcc.c
+ F: hw/gpio/stm32l4x5_gpio.c
++F: hw/ssi/stm32l4x5_quadspi.c
+ F: include/hw/*/stm32l4x5_*.h
+ F: tests/qtest/stm32l4x5*
+=20
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index e9f796f718..94a01c412b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -398,6 +398,7 @@ config STM32L4X5_SOC
+     select STM32L4X5_RCC
+     select STM32L4X5_GPIO
+     select STM32L4X5_USART
++    select STM32L4X5_QUADSPI
+=20
+ config XLNX_ZYNQMP_ARM
+     bool
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index 39b8cdf97d..d91d18e88b 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -81,6 +81,9 @@ static const int exti_irq[NUM_EXTI_IRQ] =3D {
+ #define RCC_BASE_ADDRESS 0x40021000
+ #define RCC_IRQ 5
+=20
++#define QUADSPI_BASE_ADDRESS 0xa0001000
++#define QUADSPI_IRQ 71
 +
-+import base64
-+import os
-+import struct
-+import sys
+ #define EXTI_USART1_IRQ 26
+ #define EXTI_UART4_IRQ 29
+ #define EXTI_LPUART1_IRQ 31
+@@ -144,6 +147,8 @@ static void stm32l4x5_soc_initfn(Object *obj)
+     }
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32L4X5_SYSCFG=
+);
+     object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32L4X5_RCC);
++    object_initialize_child(obj, "quadspi", &s->quadspi,
++                            TYPE_STM32L4X5_QUADSPI);
+=20
+     for (unsigned i =3D 0; i < NUM_GPIOS; i++) {
+         g_autofree char *name =3D g_strdup_printf("gpio%c", 'a' + i);
+@@ -313,6 +318,18 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, =
+Error **errp)
+     sysbus_mmio_map(busdev, 0, RCC_BASE_ADDRESS);
+     sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, RCC_IRQ));
+=20
++    /* QuadSPI controller */
++    dev =3D DEVICE(&s->quadspi);
++    qdev_connect_clock_in(dev, "clk",
++        qdev_get_clock_out(DEVICE(&s->rcc), "qspi-out"));
++    busdev =3D SYS_BUS_DEVICE(dev);
++    if (!sysbus_realize(busdev, errp)) {
++        return;
++    }
++    sysbus_mmio_map(busdev, 0, QUADSPI_BASE_ADDRESS);
++    sysbus_connect_irq(busdev, 0,
++                       qdev_get_gpio_in(armv7m, QUADSPI_IRQ));
 +
-+import iotests
+     /* USART devices */
+     for (int i =3D 0; i < STM_NUM_USARTS; i++) {
+         g_autofree char *name =3D g_strdup_printf("usart%d-out", i + 1);
+diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+index d477d20e9b..1b79da6d90 100644
+--- a/hw/ssi/Kconfig
++++ b/hw/ssi/Kconfig
+@@ -21,6 +21,10 @@ config STM32F2XX_SPI
+     bool
+     select SSI
+=20
++config STM32L4X5_QUADSPI
++    bool
++    select SSI
 +
-+ULFO = 0x80000007  # LZFSE compressed block type
-+SECTOR = 512
-+
-+
-+def lzfse_uncompressed_stream(payload: bytes) -> bytes:
-+    """A valid LZFSE stream: one uncompressed block + end-of-stream marker."""
-+    return (b'bvx-' + struct.pack('<I', len(payload))  # uncompressed block
-+            + payload
-+            + b'bvx$')                                   # end of stream
-+
-+
-+def build_dmg(stream: bytes, decl_sectors: int, total_sectors: int) -> bytes:
-+    """
-+    Build a minimal DMG with a single LZFSE chunk.  The chunk declares
-+    decl_sectors sectors of output; when that exceeds what 'stream'
-+    decodes to, the decode is short.
-+    """
-+    data_fork = stream
-+
-+    # BLKX ("mish") block: 204-byte header followed by one 40-byte entry.
-+    mish = bytearray(204)
-+    struct.pack_into('>I', mish, 0x00, 0x6d697368)        # 'mish' magic
-+    struct.pack_into('>I', mish, 0x04, 1)                 # version
-+    struct.pack_into('>Q', mish, 0x08, 0)                 # first sector number
-+    struct.pack_into('>Q', mish, 0x10, total_sectors)     # sector count
-+    struct.pack_into('>Q', mish, 0x18, 0)                 # data fork offset
-+
-+    entry = bytearray(40)
-+    struct.pack_into('>I', entry, 0x00, ULFO)             # entry type
-+    struct.pack_into('>Q', entry, 0x08, 0)               # sector number
-+    struct.pack_into('>Q', entry, 0x10, decl_sectors)    # sector count
-+    struct.pack_into('>Q', entry, 0x18, 0)               # compressed offset
-+    struct.pack_into('>Q', entry, 0x20, len(data_fork))  # compressed length
-+    mish += entry
-+
-+    xml = (b'<plist><dict><data>'
-+           + base64.b64encode(bytes(mish))
-+           + b'</data></dict></plist>')
-+
-+    buf = bytearray()
-+    buf += data_fork
-+    xml_off = len(buf)
-+    buf += xml
-+    koly_off = len(buf)
-+
-+    # UDIF trailer ("koly" block), 512 bytes, big-endian.
-+    koly = bytearray(512)
-+    struct.pack_into('>4s', koly, 0x000, b'koly')         # signature
-+    struct.pack_into('>I', koly, 0x004, 4)               # version
-+    struct.pack_into('>I', koly, 0x008, 512)             # header size
-+    struct.pack_into('>Q', koly, 0x018, 0)               # DataForkOffset
-+    struct.pack_into('>Q', koly, 0x020, len(data_fork))  # DataForkLength
-+    struct.pack_into('>Q', koly, 0x028, 0)               # RsrcForkOffset
-+    struct.pack_into('>Q', koly, 0x030, 0)               # RsrcForkLength
-+    struct.pack_into('>Q', koly, 0x0d8, xml_off)         # XMLOffset
-+    struct.pack_into('>Q', koly, 0x0e0, len(xml))        # XMLLength
-+    struct.pack_into('>q', koly, 0x1ec, total_sectors)   # SectorCount
-+    buf += koly
-+
-+    assert koly_off == len(buf) - 512
-+    return bytes(buf)
-+
-+
-+def convert_to_raw(dmg: bytes, name: str):
-+    dmg_path = os.path.join(iotests.test_dir, name)
-+    raw_path = dmg_path + '.raw'
-+    with open(dmg_path, 'wb') as f:
-+        f.write(dmg)
-+    res = iotests.qemu_img('convert', '-f', 'dmg', '-O', 'raw',
-+                           dmg_path, raw_path, check=False)
-+    return res, dmg_path, raw_path
-+
-+
-+def main() -> None:
-+    payload = b'\xab' * SECTOR
-+
-+    # A well-formed single-sector chunk must convert cleanly.  Skip only
-+    # when QEMU was built without the LZFSE module (so this would never
-+    # work); treat any other failure as a real regression.
-+    good = build_dmg(lzfse_uncompressed_stream(payload),
-+                     decl_sectors=1, total_sectors=1)
-+    res, _, raw_path = convert_to_raw(good, 'good.dmg')
-+    if res.returncode != 0:
-+        if 'dmg-lzfse module is missing' in res.stdout:
-+            iotests.notrun('LZFSE decompression not available')
-+        iotests.log('FAIL: valid LZFSE chunk failed to convert')
-+        iotests.log(res.stdout)
-+        sys.exit(1)
-+
-+    with open(raw_path, 'rb') as f:
-+        if f.read() != payload:
-+            iotests.log('FAIL: valid LZFSE chunk decoded incorrectly')
-+            return
-+    iotests.log('valid LZFSE chunk converts: ok')
-+
-+    # Same 512-byte stream, but the chunk claims two sectors (1024 bytes).
-+    # The decode is short and must be rejected with an I/O error.
-+    evil = build_dmg(lzfse_uncompressed_stream(payload),
-+                     decl_sectors=2, total_sectors=2)
-+    res, _, _ = convert_to_raw(evil, 'evil.dmg')
-+    if res.returncode == 0:
-+        iotests.log('FAIL: short LZFSE decode was accepted')
-+        return
-+    iotests.log('short LZFSE decode rejected: ok')
-+
-+
-+iotests.script_main(main, supported_fmts=['dmg'],
-+                    supported_protocols=['file'],
-+                    supported_platforms=['linux'])
-diff --git a/tests/qemu-iotests/tests/dmg-lzfse-short.out b/tests/qemu-iotests/tests/dmg-lzfse-short.out
+ config BCM2835_SPI
+     bool
+     select SSI
+diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+index f334e48e2f..ce9511b5df 100644
+--- a/hw/ssi/meson.build
++++ b/hw/ssi/meson.build
+@@ -6,6 +6,7 @@ system_ss.add(when: 'CONFIG_PL022', if_true: files('pl022.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_SPI', if_true: files('sifive_spi.c'))
+ system_ss.add(when: 'CONFIG_SSI', if_true: files('ssi.c'))
+ system_ss.add(when: 'CONFIG_STM32F2XX_SPI', if_true: files('stm32f2xx_spi.c'=
+))
++system_ss.add(when: 'CONFIG_STM32L4X5_QUADSPI', if_true: files('stm32l4x5_qu=
+adspi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPI', if_true: files('xilinx_spi.c'))
+ system_ss.add(when: 'CONFIG_XILINX_SPIPS', if_true: files('xilinx_spips.c'))
+ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal-ospi.c=
+'))
+diff --git a/hw/ssi/stm32l4x5_quadspi.c b/hw/ssi/stm32l4x5_quadspi.c
 new file mode 100644
-index 0000000000..6802cf1a76
+index 0000000000..cb3e7eb665
 --- /dev/null
-+++ b/tests/qemu-iotests/tests/dmg-lzfse-short.out
-@@ -0,0 +1,2 @@
-+valid LZFSE chunk converts: ok
-+short LZFSE decode rejected: ok
-
--- 
-2.56.0
++++ b/hw/ssi/stm32l4x5_quadspi.c
+@@ -0,0 +1,680 @@
++/*
++ * STM32L4x5 QuadSPI controller
++ *
++ * Copyright (c) 2026 EXALT Technologies
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++/*
++ * The reference used is the STMicroelectronics RM0351 reference manual for
++ * STM32L47xxx, STM32L48xxx, STM32L49xxx and STM32L4Axxx MCUs.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/core/irq.h"
++#include "hw/ssi/stm32l4x5_quadspi.h"
++#include "migration/vmstate.h"
++
++#define QUADSPI_MMIO_SIZE 0x400
++#define QUADSPI_FIFO_SIZE 16
++
++#define QUADSPI_CR    0x00
++#define QUADSPI_DCR   0x04
++#define QUADSPI_SR    0x08
++#define QUADSPI_FCR   0x0c
++#define QUADSPI_DLR   0x10
++#define QUADSPI_CCR   0x14
++#define QUADSPI_AR    0x18
++#define QUADSPI_ABR   0x1c
++#define QUADSPI_DR    0x20
++#define QUADSPI_PSMKR 0x24
++#define QUADSPI_PSMAR 0x28
++#define QUADSPI_PIR   0x2c
++#define QUADSPI_LPTR  0x30
++
++#define CR_EN       BIT(0)
++#define CR_ABORT    BIT(1)
++#define CR_DFM      BIT(6)
++#define CR_FTHRES_SHIFT 8
++#define CR_FTHRES   MAKE_64BIT_MASK(8, 4)
++#define CR_TEIE     BIT(16)
++#define CR_TCIE     BIT(17)
++#define CR_FTIE     BIT(18)
++#define CR_SMIE     BIT(19)
++#define CR_TOIE     BIT(20)
++
++#define SR_TEF      BIT(0)
++#define SR_TCF      BIT(1)
++#define SR_FTF      BIT(2)
++#define SR_SMF      BIT(3)
++#define SR_TOF      BIT(4)
++#define SR_BUSY     BIT(5)
++#define SR_FLEVEL   MAKE_64BIT_MASK(8, 5)
++#define SR_FLEVEL_SHIFT 8
++
++#define CCR_INSTRUCTION MAKE_64BIT_MASK(0, 8)
++#define CCR_IMODE       MAKE_64BIT_MASK(8, 2)
++#define CCR_ADMODE      MAKE_64BIT_MASK(10, 2)
++#define CCR_ADSIZE      MAKE_64BIT_MASK(12, 2)
++#define CCR_ABMODE      MAKE_64BIT_MASK(14, 2)
++#define CCR_ABSIZE      MAKE_64BIT_MASK(16, 2)
++#define CCR_DCYC        MAKE_64BIT_MASK(18, 5)
++#define CCR_DMODE       MAKE_64BIT_MASK(24, 2)
++#define CCR_FMODE       MAKE_64BIT_MASK(26, 2)
++#define CCR_SIOO        BIT(28)
++#define CCR_DDRM        BIT(31)
++
++#define CCR_IMODE_SHIFT 8
++#define CCR_ADMODE_SHIFT 10
++#define CCR_ADSIZE_SHIFT 12
++#define CCR_ABMODE_SHIFT 14
++#define CCR_ABSIZE_SHIFT 16
++#define CCR_DCYC_SHIFT 18
++#define CCR_DMODE_SHIFT 24
++#define CCR_FMODE_SHIFT 26
++
++enum QuadSpiFunctionalMode {
++    QUADSPI_INDIRECT_WRITE,
++    QUADSPI_INDIRECT_READ,
++    QUADSPI_AUTO_POLLING,
++    QUADSPI_MEMORY_MAPPED,
++};
++
++static unsigned int stm32l4x5_quadspi_mode_width(uint32_t mode)
++{
++    static const unsigned int widths[] =3D { 0, 1, 2, 4 };
++
++    return widths[mode & 3];
++}
++
++static unsigned int stm32l4x5_quadspi_fmode(Stm32l4x5QuadSpiState *s)
++{
++    return (s->ccr & CCR_FMODE) >> CCR_FMODE_SHIFT;
++}
++
++static void stm32l4x5_quadspi_update_irq(Stm32l4x5QuadSpiState *s)
++{
++    bool level =3D ((s->sr & SR_TEF) && (s->cr & CR_TEIE)) ||
++                 ((s->sr & SR_TCF) && (s->cr & CR_TCIE)) ||
++                 ((s->sr & SR_FTF) && (s->cr & CR_FTIE)) ||
++                 ((s->sr & SR_SMF) && (s->cr & CR_SMIE)) ||
++                 ((s->sr & SR_TOF) && (s->cr & CR_TOIE));
++
++    qemu_set_irq(s->irq, level);
++}
++
++static void stm32l4x5_quadspi_update_fifo(Stm32l4x5QuadSpiState *s)
++{
++    unsigned int level =3D fifo8_num_used(&s->fifo);
++    unsigned int threshold =3D ((s->cr & CR_FTHRES) >> CR_FTHRES_SHIFT) + 1;
++    unsigned int mode =3D stm32l4x5_quadspi_fmode(s);
++
++    s->sr &=3D ~(SR_FLEVEL | SR_FTF | SR_BUSY);
++    s->sr |=3D level << SR_FLEVEL_SHIFT;
++    if (s->transaction_active ||
++        (mode =3D=3D QUADSPI_INDIRECT_READ && level)) {
++        s->sr |=3D SR_BUSY;
++    }
++    if (s->cr & CR_EN) {
++        if (mode =3D=3D QUADSPI_INDIRECT_READ &&
++            (level >=3D threshold ||
++             (!s->remaining && !s->indefinite && level))) {
++            s->sr |=3D SR_FTF;
++        } else if (mode =3D=3D QUADSPI_INDIRECT_WRITE &&
++                   fifo8_num_free(&s->fifo) >=3D threshold) {
++            s->sr |=3D SR_FTF;
++        }
++    }
++    stm32l4x5_quadspi_update_irq(s);
++}
++
++static void stm32l4x5_quadspi_select(Stm32l4x5QuadSpiState *s)
++{
++    if (!s->transaction_active) {
++        qemu_set_irq(s->cs, 0);
++        s->transaction_active =3D true;
++        s->sr |=3D SR_BUSY;
++    }
++}
++
++static void stm32l4x5_quadspi_deselect(Stm32l4x5QuadSpiState *s)
++{
++    if (s->transaction_active) {
++        qemu_set_irq(s->cs, 1);
++        s->transaction_active =3D false;
++    }
++    s->remaining =3D 0;
++    s->indefinite =3D false;
++    s->write_pending =3D false;
++}
++
++static void stm32l4x5_quadspi_transfer_value(Stm32l4x5QuadSpiState *s,
++                                              uint32_t value,
++                                              unsigned int count)
++{
++    for (int i =3D count - 1; i >=3D 0; i--) {
++        ssi_transfer(s->ssi, extract32(value, i * 8, 8));
++    }
++}
++
++static void stm32l4x5_quadspi_send_prefix(Stm32l4x5QuadSpiState *s)
++{
++    unsigned int imode =3D (s->ccr & CCR_IMODE) >> CCR_IMODE_SHIFT;
++    unsigned int admode =3D (s->ccr & CCR_ADMODE) >> CCR_ADMODE_SHIFT;
++    unsigned int abmode =3D (s->ccr & CCR_ABMODE) >> CCR_ABMODE_SHIFT;
++    unsigned int dmode =3D (s->ccr & CCR_DMODE) >> CCR_DMODE_SHIFT;
++    unsigned int dummy_cycles =3D (s->ccr & CCR_DCYC) >> CCR_DCYC_SHIFT;
++    unsigned int dummy_width;
++    unsigned int dummy_bytes;
++
++    stm32l4x5_quadspi_select(s);
++
++    if (imode) {
++        ssi_transfer(s->ssi, s->ccr & CCR_INSTRUCTION);
++    }
++    if (admode) {
++        unsigned int address_bytes =3D
++            ((s->ccr & CCR_ADSIZE) >> CCR_ADSIZE_SHIFT) + 1;
++
++        stm32l4x5_quadspi_transfer_value(s, s->ar, address_bytes);
++    }
++    if (abmode) {
++        unsigned int alternate_bytes =3D
++            ((s->ccr & CCR_ABSIZE) >> CCR_ABSIZE_SHIFT) + 1;
++
++        stm32l4x5_quadspi_transfer_value(s, s->abr, alternate_bytes);
++    }
++
++    dummy_width =3D stm32l4x5_quadspi_mode_width(admode ? admode : dmode);
++    dummy_bytes =3D DIV_ROUND_UP(dummy_cycles * dummy_width, 8);
++    for (unsigned int i =3D 0; i < dummy_bytes; i++) {
++        ssi_transfer(s->ssi, 0);
++    }
++}
++
++static void stm32l4x5_quadspi_complete(Stm32l4x5QuadSpiState *s)
++{
++    stm32l4x5_quadspi_deselect(s);
++    s->rx_stalled =3D false;
++    if (stm32l4x5_quadspi_fmode(s) =3D=3D QUADSPI_INDIRECT_WRITE) {
++        fifo8_reset(&s->fifo);
++    }
++    s->sr |=3D SR_TCF;
++    stm32l4x5_quadspi_update_fifo(s);
++}
++
++static bool stm32l4x5_quadspi_prepare_data(Stm32l4x5QuadSpiState *s)
++{
++    unsigned int fsize =3D extract32(s->dcr, 16, 5);
++    uint64_t flash_size =3D 1ULL << (fsize + 1);
++    uint64_t address =3D (s->ccr & CCR_ADMODE) ? s->ar : 0;
++    bool has_data =3D s->ccr & CCR_DMODE;
++
++    fifo8_reset(&s->fifo);
++    s->rx_stalled =3D false;
++    s->write_pending =3D false;
++    s->indefinite =3D has_data && s->dlr =3D=3D UINT32_MAX && fsize =3D=3D 3=
+1;
++    s->remaining =3D has_data ? (uint64_t)s->dlr + 1 : 0;
++    s->sr &=3D ~SR_TCF;
++    if ((s->ccr & CCR_ADMODE) &&
++        (address >=3D flash_size ||
++         (has_data && s->dlr !=3D UINT32_MAX &&
++          s->remaining > flash_size - address))) {
++        s->remaining =3D 0;
++        s->indefinite =3D false;
++        s->sr |=3D SR_TEF;
++        stm32l4x5_quadspi_update_fifo(s);
++        return false;
++    }
++    if (has_data && s->dlr =3D=3D UINT32_MAX) {
++        s->remaining =3D s->indefinite ? 0 : flash_size - address;
++    }
++    stm32l4x5_quadspi_update_fifo(s);
++    return true;
++}
++
++static bool stm32l4x5_quadspi_indirect(Stm32l4x5QuadSpiState *s)
++{
++    if (stm32l4x5_quadspi_fmode(s) >=3D QUADSPI_AUTO_POLLING ||
++        (s->ccr & (CCR_SIOO | CCR_DDRM)) || (s->cr & CR_DFM)) {
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: polling, mapped, SIOO, DDR, or dual flash mode\n",
++                      TYPE_STM32L4X5_QUADSPI);
++        return false;
++    }
++    return true;
++}
++
++static void stm32l4x5_quadspi_fill_fifo(Stm32l4x5QuadSpiState *s)
++{
++    if (!(s->cr & CR_EN) || !s->transaction_active) {
++        return;
++    }
++    /* After a full FIFO, reception resumes when FLEVEL is at most 11. */
++    if (s->rx_stalled && fifo8_num_used(&s->fifo) > 11) {
++        return;
++    }
++    s->rx_stalled =3D false;
++    while ((s->remaining || s->indefinite) && !fifo8_is_full(&s->fifo)) {
++        fifo8_push(&s->fifo, ssi_transfer(s->ssi, 0));
++        if (!s->indefinite) {
++            s->remaining--;
++        }
++    }
++    if (!s->remaining && !s->indefinite) {
++        stm32l4x5_quadspi_complete(s);
++    } else {
++        s->rx_stalled =3D true;
++        stm32l4x5_quadspi_update_fifo(s);
++    }
++}
++
++static void stm32l4x5_quadspi_start_read(Stm32l4x5QuadSpiState *s)
++{
++    if (!stm32l4x5_quadspi_prepare_data(s)) {
++        return;
++    }
++    stm32l4x5_quadspi_send_prefix(s);
++    stm32l4x5_quadspi_fill_fifo(s);
++}
++
++static void stm32l4x5_quadspi_execute_command(Stm32l4x5QuadSpiState *s)
++{
++    if (!stm32l4x5_quadspi_prepare_data(s)) {
++        return;
++    }
++    stm32l4x5_quadspi_send_prefix(s);
++    stm32l4x5_quadspi_complete(s);
++}
++
++static uint64_t stm32l4x5_quadspi_read_register(void *opaque, hwaddr addr,
++                                       unsigned int size)
++{
++    Stm32l4x5QuadSpiState *s =3D opaque;
++    uint32_t value =3D 0;
++
++    switch (addr) {
++    case QUADSPI_CR:
++        return s->cr;
++    case QUADSPI_DCR:
++        return s->dcr;
++    case QUADSPI_SR:
++        return s->sr;
++    case QUADSPI_FCR:
++        return 0;
++    case QUADSPI_DLR:
++        return s->dlr;
++    case QUADSPI_CCR:
++        return s->ccr;
++    case QUADSPI_AR:
++        return s->ar;
++    case QUADSPI_ABR:
++        return s->abr;
++    case QUADSPI_DR:
++        if (!(s->cr & CR_EN) ||
++            stm32l4x5_quadspi_fmode(s) !=3D QUADSPI_INDIRECT_READ) {
++            return 0;
++        }
++        for (unsigned int i =3D 0; i < size && !fifo8_is_empty(&s->fifo); i+=
++) {
++            value |=3D (uint32_t)fifo8_pop(&s->fifo) << (i * 8);
++        }
++        s->dr =3D value;
++        stm32l4x5_quadspi_fill_fifo(s);
++        stm32l4x5_quadspi_update_fifo(s);
++        return value;
++    case QUADSPI_PSMKR:
++        return s->psmkr;
++    case QUADSPI_PSMAR:
++        return s->psmar;
++    case QUADSPI_PIR:
++        return s->pir;
++    case QUADSPI_LPTR:
++        return s->lptr;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad read offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_STM32L4X5_QUADSPI, addr);
++        return 0;
++    }
++}
++
++static void stm32l4x5_quadspi_write_data(Stm32l4x5QuadSpiState *s,
++                                          uint32_t value,
++                                          unsigned int size)
++{
++    if (!(s->cr & CR_EN) ||
++        stm32l4x5_quadspi_fmode(s) !=3D QUADSPI_INDIRECT_WRITE ||
++        (!s->write_pending && !s->remaining && !s->indefinite)) {
++        return;
++    }
++    if (s->write_pending) {
++        if (!stm32l4x5_quadspi_indirect(s) ||
++            !stm32l4x5_quadspi_prepare_data(s)) {
++            s->write_pending =3D false;
++            return;
++        }
++    }
++    if (fifo8_num_free(&s->fifo) < size) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: write to full FIFO\n",
++                      TYPE_STM32L4X5_QUADSPI);
++        return;
++    }
++    for (unsigned int i =3D 0; i < size; i++) {
++        fifo8_push(&s->fifo, extract32(value, i * 8, 8));
++    }
++    s->dr =3D value;
++    if (!s->transaction_active) {
++        stm32l4x5_quadspi_send_prefix(s);
++    }
++
++    while ((s->remaining || s->indefinite) && !fifo8_is_empty(&s->fifo)) {
++        ssi_transfer(s->ssi, fifo8_pop(&s->fifo));
++        if (!s->indefinite) {
++            s->remaining--;
++        }
++    }
++
++    if (!s->remaining && !s->indefinite) {
++        stm32l4x5_quadspi_complete(s);
++    } else {
++        stm32l4x5_quadspi_update_fifo(s);
++    }
++}
++
++static void stm32l4x5_quadspi_abort(Stm32l4x5QuadSpiState *s)
++{
++    stm32l4x5_quadspi_deselect(s);
++    fifo8_reset(&s->fifo);
++    s->rx_stalled =3D false;
++    s->cr &=3D ~CR_ABORT;
++    s->sr |=3D SR_TCF;
++    stm32l4x5_quadspi_update_fifo(s);
++}
++
++static void stm32l4x5_quadspi_write_register(void *opaque, hwaddr addr,
++                                    uint64_t value, unsigned int size)
++{
++    Stm32l4x5QuadSpiState *s =3D opaque;
++
++    switch (addr) {
++    case QUADSPI_CR:
++        if (s->sr & SR_BUSY) {
++            uint32_t mutable =3D CR_EN | CR_ABORT | CR_TEIE | CR_TCIE |
++                               CR_FTIE | CR_SMIE | CR_TOIE;
++            value =3D (s->cr & ~mutable) | (value & mutable);
++        }
++        s->cr =3D value;
++        if (s->cr & CR_ABORT) {
++            stm32l4x5_quadspi_abort(s);
++        } else {
++            if (!(s->cr & CR_EN)) {
++                /* Disabling is not a reset or a transfer-complete event. */
++                stm32l4x5_quadspi_deselect(s);
++                fifo8_reset(&s->fifo);
++                s->rx_stalled =3D false;
++            }
++            stm32l4x5_quadspi_update_fifo(s);
++        }
++        return;
++    case QUADSPI_DCR:
++        s->dcr =3D value;
++        return;
++    case QUADSPI_SR:
++        return;
++    case QUADSPI_FCR:
++        s->sr &=3D ~(value & (SR_TEF | SR_TCF | SR_SMF | SR_TOF));
++        stm32l4x5_quadspi_update_irq(s);
++        return;
++    case QUADSPI_DLR:
++        s->dlr =3D value;
++        return;
++    case QUADSPI_CCR:
++        s->ccr =3D value;
++        s->write_pending =3D false;
++        if (!(s->cr & CR_EN) || !stm32l4x5_quadspi_indirect(s)) {
++            return;
++        }
++        if (((s->ccr & CCR_DMODE) =3D=3D 0) &&
++            ((s->ccr & CCR_ADMODE) =3D=3D 0) &&
++            ((s->ccr & CCR_IMODE) !=3D 0)) {
++            stm32l4x5_quadspi_execute_command(s);
++        } else if ((s->ccr & CCR_DMODE) &&
++                   stm32l4x5_quadspi_fmode(s) =3D=3D QUADSPI_INDIRECT_WRITE)=
+ {
++            s->write_pending =3D true;
++            stm32l4x5_quadspi_update_fifo(s);
++        } else if ((s->ccr & CCR_DMODE) &&
++                   !(s->ccr & CCR_ADMODE) &&
++                   stm32l4x5_quadspi_fmode(s) =3D=3D QUADSPI_INDIRECT_READ) {
++            stm32l4x5_quadspi_start_read(s);
++        }
++        return;
++    case QUADSPI_AR:
++        s->ar =3D value;
++        if (!(s->cr & CR_EN) || !stm32l4x5_quadspi_indirect(s)) {
++            return;
++        }
++        if ((s->ccr & CCR_DMODE) && (s->ccr & CCR_ADMODE) &&
++            stm32l4x5_quadspi_fmode(s) =3D=3D QUADSPI_INDIRECT_READ) {
++            stm32l4x5_quadspi_start_read(s);
++        } else if (((s->ccr & CCR_DMODE) =3D=3D 0) &&
++                   ((s->ccr & CCR_ADMODE) !=3D 0)) {
++            stm32l4x5_quadspi_execute_command(s);
++        }
++        return;
++    case QUADSPI_ABR:
++        s->abr =3D value;
++        return;
++    case QUADSPI_DR:
++        stm32l4x5_quadspi_write_data(s, value, size);
++        return;
++    case QUADSPI_PSMKR:
++        s->psmkr =3D value;
++        return;
++    case QUADSPI_PSMAR:
++        s->psmar =3D value;
++        return;
++    case QUADSPI_PIR:
++        s->pir =3D value;
++        return;
++    case QUADSPI_LPTR:
++        s->lptr =3D value;
++        return;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: bad write offset 0x%" HWADDR_PRIx "\n",
++                      TYPE_STM32L4X5_QUADSPI, addr);
++    }
++}
++
++static uint64_t stm32l4x5_quadspi_read(void *opaque, hwaddr addr,
++                                      unsigned int size)
++{
++    uint64_t value;
++
++    if ((addr & ~3ULL) =3D=3D QUADSPI_DR) {
++        /* DR access size determines the number of FIFO bytes consumed. */
++        return stm32l4x5_quadspi_read_register(opaque, addr, size);
++    }
++    value =3D stm32l4x5_quadspi_read_register(opaque, addr & ~3ULL, 4);
++    return extract32(value, (addr & 3) * 8, size * 8);
++}
++
++static void stm32l4x5_quadspi_write(void *opaque, hwaddr addr,
++                                  uint64_t value, unsigned int size)
++{
++    Stm32l4x5QuadSpiState *s =3D opaque;
++    unsigned int shift =3D (addr & 3) * 8;
++    hwaddr reg =3D addr & ~3ULL;
++
++    if ((s->sr & SR_BUSY) && reg !=3D QUADSPI_CR &&
++        reg !=3D QUADSPI_FCR && reg !=3D QUADSPI_SR && reg !=3D QUADSPI_DR) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: configuration write while busy\n",
++                      TYPE_STM32L4X5_QUADSPI);
++        return;
++    }
++    if (reg =3D=3D QUADSPI_FCR) {
++        value <<=3D shift;
++    } else if (reg !=3D QUADSPI_DR && size !=3D 4) {
++        uint32_t mask =3D MAKE_64BIT_MASK(shift, size * 8);
++        uint32_t old =3D stm32l4x5_quadspi_read_register(s, reg, 4);
++
++        value =3D (old & ~mask) | ((value << shift) & mask);
++    }
++    stm32l4x5_quadspi_write_register(s, reg, value, size);
++}
++
++static bool stm32l4x5_quadspi_accepts(void *opaque, hwaddr addr,
++                                   unsigned int size, bool is_write,
++                                   MemTxAttrs attrs)
++{
++    return (size =3D=3D 1 || size =3D=3D 2 || size =3D=3D 4) &&
++           ((addr & ~3ULL) !=3D QUADSPI_DR || addr =3D=3D QUADSPI_DR);
++}
++
++static const MemoryRegionOps stm32l4x5_quadspi_ops =3D {
++    .read =3D stm32l4x5_quadspi_read,
++    .write =3D stm32l4x5_quadspi_write,
++    .endianness =3D DEVICE_LITTLE_ENDIAN,
++    .impl.min_access_size =3D 1,
++    .impl.max_access_size =3D 4,
++    .valid.min_access_size =3D 1,
++    .valid.max_access_size =3D 4,
++    .valid.unaligned =3D false,
++    .valid.accepts =3D stm32l4x5_quadspi_accepts,
++};
++
++static void stm32l4x5_quadspi_hold_reset(Object *obj, ResetType type)
++{
++    Stm32l4x5QuadSpiState *s =3D STM32L4X5_QUADSPI(obj);
++
++    s->cr =3D 0;
++    s->dcr =3D 0;
++    s->sr =3D 0;
++    s->dlr =3D 0;
++    s->ccr =3D 0;
++    s->ar =3D 0;
++    s->abr =3D 0;
++    s->dr =3D 0;
++    s->psmkr =3D 0;
++    s->psmar =3D 0;
++    s->pir =3D 0;
++    s->lptr =3D 0;
++    s->remaining =3D 0;
++    s->transaction_active =3D false;
++    s->rx_stalled =3D false;
++    s->indefinite =3D false;
++    s->write_pending =3D false;
++    fifo8_reset(&s->fifo);
++    qemu_set_irq(s->cs, 1);
++    qemu_irq_lower(s->irq);
++}
++
++static void stm32l4x5_quadspi_init(Object *obj)
++{
++    Stm32l4x5QuadSpiState *s =3D STM32L4X5_QUADSPI(obj);
++    DeviceState *dev =3D DEVICE(obj);
++
++    fifo8_create(&s->fifo, QUADSPI_FIFO_SIZE);
++    memory_region_init_io(&s->mmio, obj, &stm32l4x5_quadspi_ops, s,
++                          TYPE_STM32L4X5_QUADSPI, QUADSPI_MMIO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
++    qdev_init_gpio_out_named(dev, &s->cs, "cs", 1);
++    s->ssi =3D ssi_create_bus(dev, "ssi");
++    s->clk =3D qdev_init_clock_in(dev, "clk", NULL, s, 0);
++}
++
++static void stm32l4x5_quadspi_finalize(Object *obj)
++{
++    Stm32l4x5QuadSpiState *s =3D STM32L4X5_QUADSPI(obj);
++
++    fifo8_destroy(&s->fifo);
++}
++
++static void stm32l4x5_quadspi_realize(DeviceState *dev, Error **errp)
++{
++    Stm32l4x5QuadSpiState *s =3D STM32L4X5_QUADSPI(dev);
++
++    if (!clock_has_source(s->clk)) {
++        error_setg(errp, "%s: clk input must be connected",
++                   TYPE_STM32L4X5_QUADSPI);
++    }
++}
++
++static int stm32l4x5_quadspi_post_load(void *opaque, int version_id)
++{
++    Stm32l4x5QuadSpiState *s =3D opaque;
++
++    if (s->fifo.head >=3D QUADSPI_FIFO_SIZE ||
++        fifo8_num_used(&s->fifo) > QUADSPI_FIFO_SIZE) {
++        return -EINVAL;
++    }
++    if ((s->transaction_active && !(s->cr & CR_EN)) ||
++        (s->indefinite && s->remaining)) {
++        return -EINVAL;
++    }
++    qemu_set_irq(s->cs, !s->transaction_active);
++    stm32l4x5_quadspi_update_fifo(s);
++    return 0;
++}
++
++static const VMStateDescription vmstate_stm32l4x5_quadspi =3D {
++    .name =3D TYPE_STM32L4X5_QUADSPI,
++    .version_id =3D 1,
++    .minimum_version_id =3D 1,
++    .post_load =3D stm32l4x5_quadspi_post_load,
++    .fields =3D (const VMStateField[]) {
++        VMSTATE_UINT32(cr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(dcr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(sr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(dlr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(ccr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(ar, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(abr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(dr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(psmkr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(psmar, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(pir, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT32(lptr, Stm32l4x5QuadSpiState),
++        VMSTATE_UINT64(remaining, Stm32l4x5QuadSpiState),
++        VMSTATE_BOOL(transaction_active, Stm32l4x5QuadSpiState),
++        VMSTATE_FIFO8(fifo, Stm32l4x5QuadSpiState),
++        VMSTATE_BOOL(rx_stalled, Stm32l4x5QuadSpiState),
++        VMSTATE_BOOL(indefinite, Stm32l4x5QuadSpiState),
++        VMSTATE_BOOL(write_pending, Stm32l4x5QuadSpiState),
++        VMSTATE_CLOCK(clk, Stm32l4x5QuadSpiState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void stm32l4x5_quadspi_class_init(ObjectClass *klass, const void *dat=
+a)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
++
++    dc->realize =3D stm32l4x5_quadspi_realize;
++    dc->vmsd =3D &vmstate_stm32l4x5_quadspi;
++    rc->phases.hold =3D stm32l4x5_quadspi_hold_reset;
++}
++
++static const TypeInfo stm32l4x5_quadspi_info =3D {
++    .name =3D TYPE_STM32L4X5_QUADSPI,
++    .parent =3D TYPE_SYS_BUS_DEVICE,
++    .instance_size =3D sizeof(Stm32l4x5QuadSpiState),
++    .instance_init =3D stm32l4x5_quadspi_init,
++    .instance_finalize =3D stm32l4x5_quadspi_finalize,
++    .class_init =3D stm32l4x5_quadspi_class_init,
++};
++
++static void stm32l4x5_quadspi_register_types(void)
++{
++    type_register_static(&stm32l4x5_quadspi_info);
++}
++
++type_init(stm32l4x5_quadspi_register_types)
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
+index 9c3d662bca..5b5e817ee7 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -32,6 +32,7 @@
+ #include "hw/misc/stm32l4x5_rcc.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
+ #include "hw/char/stm32l4x5_usart.h"
++#include "hw/ssi/stm32l4x5_quadspi.h"
+ #include "qom/object.h"
+=20
+ #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
+@@ -56,6 +57,7 @@ struct Stm32l4x5SocState {
+     Stm32l4x5RccState rcc;
+     Stm32l4x5GpioState gpio[NUM_GPIOS];
+     Stm32l4x5UsartBaseState usart[STM_NUM_USARTS];
++    Stm32l4x5QuadSpiState quadspi;
+     Stm32l4x5UsartBaseState uart[STM_NUM_UARTS];
+     Stm32l4x5UsartBaseState lpuart;
+=20
+diff --git a/include/hw/ssi/stm32l4x5_quadspi.h b/include/hw/ssi/stm32l4x5_qu=
+adspi.h
+new file mode 100644
+index 0000000000..e9882dd996
+--- /dev/null
++++ b/include/hw/ssi/stm32l4x5_quadspi.h
+@@ -0,0 +1,51 @@
++/*
++ * STM32L4x5 QuadSPI controller
++ *
++ * Copyright (c) 2026 EXALT Technologies
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_STM32L4X5_QUADSPI_H
++#define HW_STM32L4X5_QUADSPI_H
++
++#include "hw/core/clock.h"
++#include "hw/core/sysbus.h"
++#include "hw/ssi/ssi.h"
++#include "qemu/fifo8.h"
++#include "qom/object.h"
++
++#define TYPE_STM32L4X5_QUADSPI "stm32l4x5-quadspi"
++OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5QuadSpiState, STM32L4X5_QUADSPI)
++
++struct Stm32l4x5QuadSpiState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    Clock *clk;
++    qemu_irq irq;
++    qemu_irq cs;
++    SSIBus *ssi;
++
++    uint32_t cr;
++    uint32_t dcr;
++    uint32_t sr;
++    uint32_t dlr;
++    uint32_t ccr;
++    uint32_t ar;
++    uint32_t abr;
++    uint32_t dr;
++    uint32_t psmkr;
++    uint32_t psmar;
++    uint32_t pir;
++    uint32_t lptr;
++
++    Fifo8 fifo;
++    uint64_t remaining;
++    bool transaction_active;
++    bool rx_stalled;
++    bool indefinite;
++    bool write_pending;
++};
++
++#endif /* HW_STM32L4X5_QUADSPI_H */
+--=20
+2.49.1
 
 
