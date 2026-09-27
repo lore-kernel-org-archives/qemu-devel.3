@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B63C98324
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9702C9830E
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksM-0007RD-10; Sun, 27 Sep 2026 05:08:50 -0400
+	id 1xAkqA-00015Q-Qf; Sun, 27 Sep 2026 05:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAkrb-0002Vz-4Q
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:08:03 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAkrZ-0008IK-Bg
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:08:02 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-398cb5615deso1779484a91.3
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:08:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790500080; x=1791104880; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3Xlg19gLajgUhYwe4YmuEahkgDDR3SjKfWeD/LdU7cQ=;
- b=XFd7y9kqsu4vR/sRXwV5hkmuKSxEc7THfZz04NoncFl10A8mPsd9B4pZ/Cq5ant4Ya
- 1wkhzj+1nmpuCFj+EKMX3k23wzs4YivtD2H5wlkxwjT9co5F5rR0rVd0dGchVIx8TvRW
- klbVv6bqbYjSQ9qbJzgSHKQuDG//DKW2RCGftHqj8tYbdVIk2veZE36vuMKkCXw4tyn0
- wW59mdYahgEnx6pnRHAmnUBoDcNXpzUMqjVm9fYPxdd+yF2CwTdJyHuA639D0eMqeFYQ
- 3WN3wCNwiWdfY5xW9ZzC4tzY0aVAjOnDnZ7jDvhTREyCPH/yO2iI69kxz3QH+ACwmz5m
- gJmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790500080; x=1791104880;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3Xlg19gLajgUhYwe4YmuEahkgDDR3SjKfWeD/LdU7cQ=;
- b=s8OOvKiO1zKhEdB41Z2XI1ztDcojITEcVySp3UuW+I5BFt1NPs2Zra/zUevmVWdRsR
- sXIRKlxb7nI5cfNB3NydBu/xu8UEKKXn0IP3NgLwOKkGSo9uqHvkA2avd0pkQMNaMFYY
- 0QSw0R4RkHsCZg2TwcjHudJ65p0l1WusEE6htr5KE2w/Un/5DKkSA9h6NQiKa/sD2+65
- U4EcjJtvIV6ve4WTXATosS4XUUePpZ/+Bpw8/khn7/YLy5Cngaq+R8wcqO4BuE4yeZgc
- rM9xJAiNbRea7tMxQX1f0uL8g0OLTi7yh6HtuO0FPUOymoP/jauZiuPj+TwkvcrXEY0h
- prtA==
-X-Gm-Message-State: AFq9FYIhLmbCxwW/9bD9AL0Xkyx1uQjRl18fHOOZTUSow5xZZmNbAvNz
- UQPu5zza+H/p66FJjHIHRVdyC+VBtlm3IVShvGsSb/z2eIW+VNOCBYnqhdQMYmjKAcYj2jrqZ7V
- 7lZX6
-X-Gm-Gg: AYBFou3VrHvqGh5oRjhuXM2nOU6z9fzx0tx58FzPMPLwWwIbFYOQwwWJqAhMviy3KHV
- AZrfCZoMswfMkXXn8z/IqUsm+ncaWzBV8Q8E8oZb2/KDcRzpzCiFTWM3cUAzYkZCoM/pw78wsFJ
- WjN9BhmVfcGarGpMyR/aOdf5DXu5XpPNsMecyYc/Jwc/SJtRw951NXDr9jLlm840tCWMBKwzY9B
- yACuzkipt3qDheR2k4ZAO6bULCrR05n8XeovJzLF3111oYseH62tZINaUOaSLvPCZlh1/R7Ni0V
- CjR2OwQT2A0DrBh+zQ8gssvTGyQuejIQ8wwSRiW7okWvcLkNVoPVIWWSBvPxwwvPrqmHKuPouir
- 9gTAgPO1j8q4FWNCGfM05M5YxCgVMnw2L672IhItk6Ssd/FRrm9G8ME87OBbZaNf3xqox284YkC
- LOkZ5uJ17bjoHmqtPZECvkUV/kl1ud6y5pC6Y4Zv25l3CXde5gm/bxKsWruBnB9ad9v9FzjcEkU
- RXZWOvOgIuTdNEXy8oGdzF40tkhNw==
-X-Received: by 2002:a17:90b:440d:b0:395:7fff:a08f with SMTP id
- 98e67ed59e1d1-3a09860fe05mr8348736a91.0.1790500079903; 
- Sun, 27 Sep 2026 02:07:59 -0700 (PDT)
-Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0e7036e3bsm7144984a91.13.2026.09.27.02.07.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 02:07:59 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAkpc-0008Ug-F6; Sun, 27 Sep 2026 05:06:00 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAkpa-000868-Hu; Sun, 27 Sep 2026 05:06:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1790499956; bh=8lATwgFAZf0GaQqiWWyOkMjEM2htT3z1FKVo8PB+JPI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=NQpaLQoQwI4GjPdMkPxb0pKUluSm2XGnMA7py6KuBVrxXxg1BCmRhc80cgd41LOND
+ ARlOGeUST402GYkb4XInfB7jJ0wrCi7qKSqwp2JBrPA0cTsk/nIJRqSTpD5LWpBzWd
+ eU/RHtwGy8AyKtQaEMRjjzzvDvfA1Ra0+NXhoKc1oU7hnBiyUz4zTTZru4wt4frWhG
+ gW3Ubjr85q2mG8TKBUoOQrNjUwjrfHf/+17gPt0pY5xM8vE6eblfFJ/PJV5o69ZJIB
+ Sb0fSU0PsZ4ah0Z2whdP1Dj+oAwnHKyY2dkH8B4l1hzoPCkMPd6LddRpUYr6mICD8w
+ Pk0oro40COTYg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D5FC61D8B0B;
+ Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D2E364320C4;
+ Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id CD2985E647; Sun, 27 Sep 2026 12:05:56 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-Subject: [PATCH v5 096/101] tcg: Generic expansion of tcg_gen_dup_*
-Date: Sun, 27 Sep 2026 02:00:06 -0700
-Message-ID: <20260927090011.10724-97-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260927090011.10724-1-richard.henderson@linaro.org>
-References: <20260927090011.10724-1-richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 58/86] hw/riscv/virt.c: fix aclint soc/mtimer
+ nodename
+Date: Sun, 27 Sep 2026 12:05:05 +0300
+Message-ID: <20260927090540.102811-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
+References: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,130 +74,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/tcg/tcg-op-common.h  |  6 ------
- include/tcg/tcg-op-def.h.inc |  1 +
- tcg/tcg-op-gvec.c            | 41 ------------------------------------
- tcg/tcg-op.c                 | 16 ++++++++++++++
- 4 files changed, 17 insertions(+), 47 deletions(-)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 65b9d828e38..583f6ebb2f5 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -137,9 +137,6 @@ void tcg_gen_bswap32_i32(TCGv_i32 ret, TCGv_i32 arg);
- void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg);
- void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg);
- 
--/* Replicate a value of size @vece from @in to all the lanes in @out */
--void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in);
--
- /* 64 bit ops */
- 
- void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a, TCGv_i64 *b);
-@@ -153,9 +150,6 @@ void tcg_gen_wswap_i64(TCGv_i64 ret, TCGv_i64 arg);
- void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
- void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
- 
--/* Replicate a value of size @vece from @in to all the lanes in @out */
--void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in);
--
- void tcg_gen_st32_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
- void tcg_gen_ld32u_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset);
-diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
-index f9dab50a911..556f7470cd6 100644
---- a/include/tcg/tcg-op-def.h.inc
-+++ b/include/tcg/tcg-op-def.h.inc
-@@ -23,6 +23,7 @@ DEF4(deposit_z, TCGV, TCGV, unsigned, unsigned)
- DEF1(discard, TCGV)
- DEF3(div, TCGV, TCGV, TCGV)
- DEF3(divu, TCGV, TCGV, TCGV)
-+DEF3(dup, unsigned, TCGV, TCGV)
- DEF3(ext, TCGV, TCGV, MemOp)
- DEF2(ext8s, TCGV, TCGV)
- DEF2(ext8u, TCGV, TCGV)
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 0d649cc13b2..72abb0a08ec 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -434,47 +434,6 @@ uint64_t (dup_const)(unsigned vece, uint64_t c)
+Running 'dtc' to generate a readable fdt for the virt machine produce
+warnings:
+
+ $ dtc -I dtb -O dts virt.dtb > virt.dts
+<stdout>: Warning (simple_bus_reg): /soc/mtimer@2000000: simple-bus unit address format error, expected "2007ff8"
+<stdout>: Warning (simple_bus_reg): /soc/mtimer@2008000: simple-bus unit address format error, expected "200fff8"
+
+This happens because the 'reg' field does not match the address in the
+nodename.  The right fix, pointed out by Chao in [1], is to make the
+nodename match the reg value:
+
+"In the current QEMU implement, `addr` is the MTIMECMP base address,
+while the MTIME register is located at addr + RISCV_ACLINT_DEFAULT_MTIME."
+
+In other words, the 'reg' value is correct but the nodename isn't.
+
+We'll make the fix now, allowing the next patch to move the fixed version
+of aclint FDT to fdt-common.
+
+[1] https://lore.kernel.org/qemu-devel/apHH1upnh8udUUT-@ChaodeMacBook-Pro.local/
+
+Cc: qemu-stable@nongnu.org
+Suggested-by: Chao Liu <chao.liu@processmission.com>
+Fixes: 954886ea6d ("hw/riscv: virt: Add optional ACLINT support to virt machine")
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20260828203918.350131-9-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 9d6ac47d3182f2bdadea4bed596c82759a167e67)
+(Mjt: drop format string change (it was corrected in subsequent change),
+  but keep the value change)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a1c323e66df..5dc4a787ee2 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -406,7 +406,8 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
+                (s->memmap[VIRT_CLINT].size * socket);
+         size = s->memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
      }
- }
- 
--/* Duplicate IN into OUT as per VECE.  */
--void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in)
--{
--    switch (vece) {
--    case MO_8:
--        tcg_gen_ext8u_i32(out, in);
--        tcg_gen_muli_i32(out, out, 0x01010101);
--        break;
--    case MO_16:
--        tcg_gen_deposit_i32(out, in, in, 16, 16);
--        break;
--    case MO_32:
--        tcg_gen_mov_i32(out, in);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
--void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in)
--{
--    switch (vece) {
--    case MO_8:
--        tcg_gen_ext8u_i64(out, in);
--        tcg_gen_muli_i64(out, out, 0x0101010101010101ull);
--        break;
--    case MO_16:
--        tcg_gen_ext16u_i64(out, in);
--        tcg_gen_muli_i64(out, out, 0x0001000100010001ull);
--        break;
--    case MO_32:
--        tcg_gen_deposit_i64(out, in, in, 32, 32);
--        break;
--    case MO_64:
--        tcg_gen_mov_i64(out, in);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- /* Select a supported vector type for implementing an operation on SIZE
-  * bytes.  If OP is 0, assume that the real operation to be performed is
-  * required by all backends.  Otherwise, make sure than OP can be performed
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 2e8087c938c..924b94414b7 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -661,6 +661,22 @@ void tcg_gen_divu(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
-     }
- }
- 
-+void tcg_gen_dup(TCGType type, unsigned vece, TCGTemp *dst, TCGTemp *src)
-+{
-+    unsigned t_width = tcg_type_size(type) * 8;
-+    unsigned e_width = memop_size(vece) * 8;
-+
-+    tcg_debug_assert(e_width <= t_width);
-+    if (t_width == e_width) {
-+        tcg_gen_mov(type, dst, src);
-+    } else if (t_width == e_width * 2) {
-+        tcg_gen_deposit(type, dst, src, src, e_width, e_width);
-+    } else {
-+        tcg_gen_extract(type, dst, src, 0, e_width);
-+        tcg_gen_muli(type, dst, dst, ~0ull / MAKE_64BIT_MASK(0, e_width));
-+    }
-+}
-+
- void tcg_gen_eqv(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
- {
-     if (tcg_op_supported(INDEX_op_eqv, type, 0)) {
+-    name = g_strdup_printf("/soc/mtimer@%lx", addr);
++    name = g_strdup_printf("/soc/mtimer@%lx",
++                           addr + RISCV_ACLINT_DEFAULT_MTIME);
+     qemu_fdt_add_subnode(ms->fdt, name);
+     qemu_fdt_setprop_string(ms->fdt, name, "compatible",
+         "riscv,aclint-mtimer");
 -- 
-2.53.0
+2.47.3
 
 
