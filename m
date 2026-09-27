@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51E2C98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0A0C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmS2-0006nb-Uv; Sun, 27 Sep 2026 06:49:47 -0400
+	id 1xAmTo-0005U9-Gs; Sun, 27 Sep 2026 06:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmS0-0006fv-33; Sun, 27 Sep 2026 06:49:44 -0400
+ id 1xAmTm-0005PM-PD; Sun, 27 Sep 2026 06:51:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRy-00013Z-82; Sun, 27 Sep 2026 06:49:43 -0400
+ id 1xAmTl-0001Us-2i; Sun, 27 Sep 2026 06:51:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506135; bh=i9LoI/JZwEH9Pcj0V3XWRlnAYJA2HeIVw8yTNFx1ETk=;
+ t=1790506136; bh=P45cZDgg7RGBGwA+WWAJcHoU4NQpXQQASpMsorOwDT4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eS+rSIS/ry8/S1oVGvmd9zHALVk70PGkywhiBjstWhFcmuuyKg4OSxcJQs8dSoHSY
- KCRKoNnumpURpeRVJO3hh1R2LzloA9cAS54TQ3Q9oGJSYzcRd9TQoaYQCHXY6XL6fZ
- S75264VC4pJ4NmuPUj30/p9IJ+TflowlkfaPYSzPrIBIDu7ozEGUFZ32/Q+JR58T4e
- wtE0JAFFZPFlyiR+r3atg3CO+0cWEP5RrlodAHXEjj8NnfTQT0hMEVuyjkRWnxayGh
- yy8ySP3YhL9fba1f/X5ayUS45Yj77G7FkuCgH3ZgfDd6she91SHPhOR6CEMgCjaBCM
- 5iobF6GG1Wc3w==
+ b=CvL6EUpTAp7bpoNZoapLw5l0YTRoUgJ1y6N9gp4HzkGYjUaOT/oEsoOxONZapVzH1
+ Hbk4A0GYIlK3XF5oq0emgcHfMdXfx5rNnHYA2t7sZDX5LV+/ThoAKlx7fB1AZjVRC1
+ 6Egzh1wWwjZupl40PHj3KwYsZhA+EbETFIOoiwj9uSkDpCp7nqJj1fI44o7qMuXooZ
+ jchfnox/1LWNqUjy40bl1wKuBnD6KR908qEboFxUA4ZidW76mKIyippSDmGc/i26+W
+ 51h0PqjnMBtv+k8GwjSYiUgOGHPxOr2hwth+IZnYJsCF3qtfDDs1dy90H/ZeaCmM3t
+ uD4IPFI4psekA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E01521D8B64;
- Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5BDA41D8B76;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DD2AC43216B;
- Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5922843217E;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CB57B5E780; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id 107445E7A6; Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 69/92] hw/9pfs: mutate FID path from main thread
- only (CVE-2026-93834)
-Date: Sun, 27 Sep 2026 13:47:45 +0300
-Message-ID: <20260927104821.196183-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 88/92] linux-user/sh4: use the kernel's sigreturn
+ trampoline sequence in the vdso
+Date: Sun, 27 Sep 2026 13:48:04 +0300
+Message-ID: <20260927104821.196183-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -71,87 +71,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Matt Turner <mattst88@gmail.com>
 
-v9fs_co_open2() is the only code that mutates a FID path from a worker
-thread: inside its v9fs_co_run_in_worker() block it frees fidp->path
-and copies in the new path under the held FID path write lock.
+With the vdso, default_sigreturn and default_rt_sigreturn point at
+__kernel_sigreturn and __kernel_rt_sigreturn and setup_sigtramp() is no
+longer used. The vdso trampolines load the syscall number with mov.l
+instead of the kernel's mov.w/trapa/or r0,r0 sequence, which undoes
+commit 9ac5aa7227 ("linux-user/sh4: Fix setup_sigtramp to match Linux
+kernel trampoline pattern"): libunwind's unw_is_signal_frame() no longer
+recognizes the signal frame, so unwinding through a signal handler stops
+there.
 
-Every other FID path mutation in the 9p codebase happens on the main
-thread, so main thread readers (v9fs_walk(), v9fs_xattrwalk(),
-v9fs_stat(), v9fs_co_name_to_path()) rely on the same (main) thread
-atomicity and don't take the path read lock themselves on main thread.
+Use the sequence from the kernel's own vdso,
+arch/sh/kernel/vsyscall/vsyscall-sigreturn.S.
 
-Fix this by making the worker thread block in v9fs_co_open2() read-only
-with respect to the FID: render the new path into the local 'path'
-variable only and copy it to fidp->path after the worker block returned
-back to the main thread and still under the held write lock of the FID,
-like every other FID path mutation does.
-
-Fixes: 02cb7f3a25 ("hw/9pfs: Use read-write lock for protecting fid path.")
-Fixes: CVE-2026-93834
-Reported-by: Milad Nasr <https://gitlab.com/sirkhezr>
-Suggested-by: Milad Nasr <https://gitlab.com/sirkhezr>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4491
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Link: https://lore.kernel.org/qemu-devel/E1x8d3N-003M3F-Pz@kylie.crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit fe9e30899ffceef25cf345ec83f76546afca19dd)
+Fixes: 975bd51a88 ("linux-user/sh4: add VDSO support for sh4 and sh4eb")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 170dfd8d1f86d4baa0bd7ba7d615febde3252086)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
-index 6e775c8e412..27fe5bfb200 100644
---- a/hw/9pfs/cofile.c
-+++ b/hw/9pfs/cofile.c
-@@ -144,10 +144,11 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
-     cred.fc_mode = mode & 07777;
-     cred.fc_uid = fidp->uid;
-     cred.fc_gid = gid;
-+    v9fs_path_init(&path);
-     /*
-      * Hold the directory fid lock so that directory path name
--     * don't change. Take the write lock to be sure this fid
--     * cannot be used by another operation.
-+     * don't change. Take the write lock since the fid path is
-+     * mutated below on success.
-      */
-     v9fs_path_write_lock(s);
-     v9fs_co_run_in_worker(
-@@ -157,23 +158,30 @@ int coroutine_fn v9fs_co_open2(V9fsPDU *pdu, V9fsFidState *fidp,
-             if (err < 0) {
-                 err = -errno;
-             } else {
--                v9fs_path_init(&path);
-                 err = v9fs_name_to_path(s, &fidp->path, name->data, &path);
-                 if (!err) {
-                     err = s->ops->lstat(&s->ctx, &path, stbuf);
-                     if (err < 0) {
-                         err = -errno;
-                         s->ops->close(&s->ctx, &fidp->fs);
--                    } else {
--                        v9fs_path_copy(&fidp->path, &path);
-                     }
-                 } else {
-                     s->ops->close(&s->ctx, &fidp->fs);
-                 }
--                v9fs_path_free(&path);
-             }
-         });
-+    /*
-+     * The fid path must not be mutated from the worker thread: other
-+     * requests may access the same fid on the main thread, and the main
-+     * thread never takes the path lock for reads. Mutate the new path
-+     * here, on the main thread and still under the held write lock, like
-+     * every other mutation of a fid path.
-+     */
-+    if (!err) {
-+        v9fs_path_copy(&fidp->path, &path);
-+    }
-     v9fs_path_unlock(s);
-+    v9fs_path_free(&path);
-     if (!err) {
-         total_open_fd++;
-         if (total_open_fd > open_fd_hw) {
+diff --git a/linux-user/sh4/vdso-be.so b/linux-user/sh4/vdso-be.so
+index 4f50143f828..bc1fb37e108 100755
+Binary files a/linux-user/sh4/vdso-be.so and b/linux-user/sh4/vdso-be.so differ
+diff --git a/linux-user/sh4/vdso-le.so b/linux-user/sh4/vdso-le.so
+index c41cb5831b9..c1ff560cc16 100755
+Binary files a/linux-user/sh4/vdso-le.so and b/linux-user/sh4/vdso-le.so differ
+diff --git a/linux-user/sh4/vdso.S b/linux-user/sh4/vdso.S
+index 4fb5ee9d31b..1faa6657746 100644
+--- a/linux-user/sh4/vdso.S
++++ b/linux-user/sh4/vdso.S
+@@ -43,6 +43,22 @@ vdso_syscall __vdso_clock_gettime64, __NR_clock_gettime64
+ vdso_syscall __vdso_clock_getres, __NR_clock_getres
+ vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
+ 
++/*
++ * Same instruction sequence as the kernel's
++ * arch/sh/kernel/vsyscall/vsyscall-sigreturn.S. libunwind matches these
++ * bytes to recognize a signal frame.
++ */
++.macro sigreturn_tramp nr
++	mov.w	1f, r3
++	trapa	#0x10
++	or	r0, r0
++	or	r0, r0
++	or	r0, r0
++	or	r0, r0
++	or	r0, r0
++1:	.word	\nr
++.endm
++
+ /*
+  * Signal return trampolines.
+  *
+@@ -122,20 +138,14 @@ vdso_syscall __vdso_gettimeofday, __NR_gettimeofday
+ 
+ sigreturn_region_start:
+ __kernel_sigreturn:
+-	mov.l	1f, r3
+-	trapa	#0x10
+-	.align	2
+-1:	.long	__NR_sigreturn
++	sigreturn_tramp __NR_sigreturn
+ endf __kernel_sigreturn
+ 
+ 	/* Update CFA base for the rt_sigreturn frame layout. */
+ 	.cfi_def_cfa_offset	RT_SIGFRAME_SC_OFFSET
+ 
+ __kernel_rt_sigreturn:
+-	mov.l	2f, r3
+-	trapa	#0x10
+-	.align	2
+-2:	.long	__NR_rt_sigreturn
++	sigreturn_tramp __NR_rt_sigreturn
+ endf __kernel_rt_sigreturn
+ sigreturn_region_end:
+ 
 -- 
 2.47.3
 
