@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C66CFCA5FA1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E99BC9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmRh-00069q-Br; Sun, 27 Sep 2026 06:49:25 -0400
+	id 1xAmSZ-000055-U6; Sun, 27 Sep 2026 06:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRH-0005xF-Th; Sun, 27 Sep 2026 06:49:13 -0400
+ id 1xAmSU-0008Et-Pf; Sun, 27 Sep 2026 06:50:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmRF-000110-Qy; Sun, 27 Sep 2026 06:48:59 -0400
+ id 1xAmSS-00015Q-QQ; Sun, 27 Sep 2026 06:50:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506130; bh=AsGG4zrN1D4UK3Kz30kRFhte+WrE92dWm9BD9W6Ta+w=;
+ t=1790506136; bh=7BhEayz5r078dP7gCjHeryKaCB8U5aJ6d6jOXU5aBCo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bRGvNWQGjsrnDNLXwglti4n06IB+7oaDlplK7lRMm3LHhOexbXlyKfgZIKdn8zxB1
- OpBmhc5VytJzRtH8K8eVUDXGGB5lRCcVjLjC6iTLo4RmufspN9tXrnzx/P7iXBa/Sm
- lf55jDVDXemZRBBOZQOAO1sqX73dkCPhA6c5fiP5jymZrGMbMMsMqk/e4aiE6S4GFx
- vhLR97/R6LpsNjpvTNrg2+8/OXWHegbrGg9v6Fu+UbBA7DdEXGKRixEI1w8xpkQgEL
- 4Q0XKvkh9rlhT4c0tOe7dHrywN7aYzMiHXY1SjyWaoqaVJ6IRXqC59X0Qmt9tkV4Ri
- scOHXE8EQLVJQ==
+ b=weormbYTV+U4E8MG4yIrVCbfp3g/MfLEkS7wB7abZ/KEZMYSw9Ge70zGvpRYRUvj3
+ dEs/Dvpfz32nGixhNWYJevwxfwOC03U8GVVt2tklgV7sVYhPsgVf8OIAjPJFOLiL8R
+ jTdsXUgWLKChWmjQMZPASmyOicZBA091oVC2RK3M6y8ivvAQGJKGs0ZocBBwx/isRb
+ vvrqsG15vAYzSer6hvDfZPg93gxKw6NPo6zPdRUMUsoCgoSwBi7wLvKzQPAymahd3f
+ Kn67P1sSCztdoh6fgc+ENq/T7qogZcU06bIIuua0sJRJI5Y6xwvPBJIYzUvwyNrl9r
+ EqVD20JtUexkw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F3EC1D8B5B;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 116331D8B6A;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6C1B2432162;
- Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0E7E0432171;
+ Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4CBE15E76E; Sun, 27 Sep 2026 13:48:50 +0300 (MSK)
+ id DD2405E78C; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Luigi Leonardi <leonardi@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 60/92] igvm: validate and honor byte_offset in
- parameter directives
-Date: Sun, 27 Sep 2026 13:47:36 +0300
-Message-ID: <20260927104821.196183-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 75/92] tests/tcg/s390x: Add regression test for
+ #4449
+Date: Sun, 27 Sep 2026 13:47:51 +0300
+Message-ID: <20260927104821.196183-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -72,238 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luigi Leonardi <leonardi@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Parameter directive handlers either ignore param->byte_offset,
-overwriting each other when several parameters share one area, or use
-it without validating it, letting a malformed IGVM file corrupt QEMU's
-memory.
-
-Add qigvm_get_param_data(), which validates byte_offset against the
-parameter area size and returns the offset-adjusted pointer together
-with the space left after it. Convert all parameter directive handlers
-to use it and to check their writes against that remaining space, so
-that no parameter can be written past the end of its area.
-
-Fixes: c1d466d267 ("backends/igvm: Add IGVM loader and configuration")
-Fixes: dea1f68a5c ("igvm: Fill MADT IGVM parameter field on x86_64")
-Fixes: 1c4bd8f13c ("igvm: add device tree parameter support")
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-ID: <20260916-fix_offset-v5-1-11cf8ef37854@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-(cherry picked from commit d9275e776e95ca04bd47bdf519cf1b1d9101b0ce)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit c66fe5b04d643d013e97cbbede5b736b56a667d4)
+(Mjt: adjust across make=>meson conversion in tcg tests)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 80e87fe6029..9c610578587 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -100,6 +100,38 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
-     return NULL;
- }
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index 97c0f021902..118eaf7896a 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -51,6 +51,7 @@ TESTS+=ts
+ TESTS+=ex-smc
+ TESTS+=divide-to-integer
+ TESTS+=stckf
++TESTS+=issue4449
  
-+/*
-+ * Get parameter area data at byte_offset with bounds validation.
-+ * On success, returns offset-adjusted data pointer and sets param_size
-+ * to remaining space.
-+ * Returns NULL on failure.
-+ */
-+uint8_t *
-+qigvm_get_param_data(QIgvm *igvm, const IGVM_VHS_PARAMETER *param,
-+                     uint32_t *param_size,
-+                     Error **errp)
+ cdsg: CFLAGS+=-pthread
+ cdsg: LDFLAGS+=-pthread
+diff --git a/tests/tcg/s390x/issue4449.c b/tests/tcg/s390x/issue4449.c
+new file mode 100644
+index 00000000000..0c9c80e8cac
+--- /dev/null
++++ b/tests/tcg/s390x/issue4449.c
+@@ -0,0 +1,31 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <assert.h>
++
++#define CASE(name, old, cst, sh)                                        \
++    static void __attribute__((noinline)) case_##name(void) {           \
++        unsigned long t1, got;                                          \
++        __asm__("lhi  %0," #cst "\n\t"   /* low 32 known, high not */   \
++                "lghi %1," #old "\n\t"   /* whole register constant */  \
++                "sllk %1,%0," #sh "\n\t" /* 32-bit write = deposit */   \
++                "brc 15,1f\n\t"          /* ends the translation block */ \
++                "nop\n"                                                 \
++                "1:"                                                    \
++                : "=r"(t1), "=r"(got) : : );                            \
++        unsigned long want = (unsigned)(cst) << (sh);                   \
++        assert(got == want);                                            \
++    }
++
++CASE(a, 256, 128, 1);
++CASE(b, 128, 128, 0);
++CASE(c, 512, 128, 2);
++CASE(d,   2,   1, 1);
++
++int main()
 +{
-+    QIgvmParameterData *param_entry;
-+
-+    assert(param_size);
-+
-+    param_entry = qigvm_find_param_entry(igvm, param->parameter_area_index,
-+                                         errp);
-+    if (!param_entry) {
-+        return NULL;
-+    }
-+
-+    if (param->byte_offset > param_entry->size) {
-+        error_setg(errp,
-+                   "IGVM: byte_offset 0x%x exceeds parameter area size 0x%x",
-+                   param->byte_offset, param_entry->size);
-+        return NULL;
-+    }
-+
-+    *param_size = param_entry->size - param->byte_offset;
-+    return param_entry->data + param->byte_offset;
++    case_a();
++    case_b();
++    case_c();
++    case_d();
++    return 0;
 +}
-+
- static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
-                                      Error **errp);
- static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
-@@ -595,7 +627,7 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-                              Error **errp) = NULL;
--    QIgvmParameterData *param_entry;
-+    uint32_t param_size;
-     int max_entry_count;
-     int entry = 0;
-     IGVM_VHS_MEMORY_MAP_ENTRY *mm_entry;
-@@ -616,14 +648,14 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     }
- 
-     /* Find the parameter area that should hold the memory map */
--    param_entry = qigvm_find_param_entry(ctx,
--                                         param->parameter_area_index, errp);
--    if (param_entry == NULL) {
-+    mm_entry =
-+        (IGVM_VHS_MEMORY_MAP_ENTRY *)qigvm_get_param_data(ctx, param,
-+                                                          &param_size, errp);
-+    if (!mm_entry) {
-         return -1;
-     }
- 
--    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
--    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
-+    max_entry_count = param_size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
- 
-     retval = get_mem_map_entry(entry, &cgmm_entry, errp);
-     while (retval == 0) {
-@@ -672,17 +704,22 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
-                                     Error **errp)
- {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
--    QIgvmParameterData *param_entry;
-+    uint32_t param_size;
-     uint32_t *vp_count;
-     CPUState *cpu;
- 
--    param_entry = qigvm_find_param_entry(ctx,
--                                         param->parameter_area_index, errp);
--    if (param_entry == NULL) {
-+    vp_count = (uint32_t *)qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!vp_count) {
-+        return -1;
-+    }
-+
-+    if (sizeof(*vp_count) > param_size) {
-+        error_setg(errp,
-+                   "IGVM: vp-count parameter exceeds parameter area "
-+                   "defined in IGVM file");
-         return -1;
-     }
- 
--    vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
-     *vp_count = 0;
-     CPU_FOREACH(cpu)
-     {
-@@ -697,17 +734,23 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
-                                             Error **errp)
- {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
--    QIgvmParameterData *param_entry;
-+    uint32_t param_size;
-     IgvmEnvironmentInfo *environmental_state;
- 
--    param_entry = qigvm_find_param_entry(ctx,
--                                         param->parameter_area_index, errp);
--    if (param_entry == NULL) {
-+    environmental_state =
-+        (IgvmEnvironmentInfo *)qigvm_get_param_data(ctx, param, &param_size,
-+                                                    errp);
-+    if (!environmental_state) {
-+        return -1;
-+    }
-+
-+    if (sizeof(*environmental_state) > param_size) {
-+        error_setg(errp,
-+                   "IGVM: environment-info parameter exceeds parameter area "
-+                   "defined in IGVM file");
-         return -1;
-     }
- 
--    environmental_state =
--        (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
-     environmental_state->memory_is_shared = 1;
- 
-     return 0;
-@@ -804,12 +847,12 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
- {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-     g_autofree void *fdt_packed = NULL;
--    QIgvmParameterData *param_entry;
-+    uint8_t *param_data;
-+    uint32_t param_size;
-     uint32_t fdt_size;
- 
--    param_entry = qigvm_find_param_entry(ctx,
--                                         param->parameter_area_index, errp);
--    if (param_entry == NULL) {
-+    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!param_data) {
-         return -1;
-     }
- 
-@@ -827,14 +870,14 @@ static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-     }
- 
-     fdt_size = fdt_totalsize(fdt_packed);
--    if (fdt_size > param_entry->size) {
-+    if (fdt_size > param_size) {
-         error_setg(errp,
-                    "IGVM: device tree size exceeds parameter area"
-                    " defined in IGVM file");
-         return -1;
-     }
- 
--    memcpy(param_entry->data, fdt_packed, fdt_size);
-+    memcpy(param_data, fdt_packed, fdt_size);
- 
-     return 0;
- }
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 7eb3792ed8c..1330ea3f6e0 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -75,4 +75,9 @@ QIgvmParameterData*
- qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
-                        Error **errp);
- 
-+uint8_t *
-+qigvm_get_param_data(QIgvm *igvm, const IGVM_VHS_PARAMETER *param,
-+                     uint32_t *param_size,
-+                     Error **errp);
-+
- #endif
-diff --git a/target/i386/igvm.c b/target/i386/igvm.c
-index ad9bf87761f..9c2f8d51649 100644
---- a/target/i386/igvm.c
-+++ b/target/i386/igvm.c
-@@ -187,20 +187,20 @@ void qigvm_x86_bsp_reset(CPUX86State *env)
- int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
- {
-     const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
--    QIgvmParameterData *param_entry;
-+    uint8_t *param_data;
-+    uint32_t param_size;
-     int result = 0;
- 
-     /* Find the parameter area that should hold the MADT data */
--    param_entry = qigvm_find_param_entry(ctx,
--                                         param->parameter_area_index, errp);
--    if (param_entry == NULL) {
-+    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!param_data) {
-         return -1;
-     }
- 
-     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
- 
--    if (madt->len <= param_entry->size) {
--        memcpy(param_entry->data, madt->data, madt->len);
-+    if (madt->len <= param_size) {
-+        memcpy(param_data, madt->data, madt->len);
-     } else {
-         error_setg(
-             errp,
 -- 
 2.47.3
 
