@@ -4,136 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63DFC98324
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02142C98324
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 07:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAjN9-0007Mf-Ua; Sun, 27 Sep 2026 03:32:32 -0400
+	id 1xAjKB-0003sH-LN; Sun, 27 Sep 2026 03:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAjN2-00077T-0C
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAjJC-0001YE-R7; Sun, 27 Sep 2026 03:28:36 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xAjN0-0006Ue-5b
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 03:32:23 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68QNBSTL2196059
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=; b=lxtRQC2qPzJgZ+ou
- 3udCJgHq9GdrTV1Hfdfl56d8Q38ntY8zIlL4UKJwv97AmpjxVYVpoa71W1ViUlJY
- G002hAMl5hwtuZdb4gTnhsGJXnaycGLxynBzLJYn8zESM1qK9E6w8yef+yKZTEvi
- 91a7keIE9696OQ9m7AKnxvvne1q3Xu9s/jVLFJ+1as4DjaxACfYMpn00txDNTV1Y
- Fuz0T9zAJbSOys/oHYB6rSuXU3tW0hex+5IrsW4qXES0mYgtmP+7Pi9TzufTTUN1
- DzA/qHXYgt3Lws4rqofAXIO18k4Q3TCcR8nOn7IDVGHM5Okz1VBZid1ZcAkrhS72
- hA04lA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx3rfttc5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 07:32:20 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-939f248907fso211217185a.3
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 00:32:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790494339; x=1791099139; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=;
- b=ddDDZLEuDv01I3aR03EhcEqhN3LGlS3HrdvosIilYrUkNEb594hMgivWX5zmLZaI49
- tAJImaKeNLYA5kqR/vOXl/dNVxCHhQwABaWg0R0mVLeIe1irgNzh19mkb0n4w4TP46Np
- U2gWoQlUqpFqdO3OTFmur4gxoqfwOztZXzGwRkLQ2Mi6sL/JXRdI/9McRSS3VNzLfczz
- DKQ02B1Vpb21cjJ709YGUkQtVFJAPC0tAt+ma19wL6UZrwwJmyPAPVtTeraNWEiLoLXN
- DAnrPwwUXJ3NyGe51w1aR+4DKFvAG4Ex/tYFgLxd+yKcvmMqfgOd/5O7oT1wpoyL1RuR
- sZkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790494339; x=1791099139;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PtAkygZ0Bvn6wTQ/CU3tqWA1BcZzlgCTjGQS9l5/rPo=;
- b=BuxpsE9CwMfY22NXMLx8pyBvn4sshscQ9L3ml2XRZ9YZq8nu/MKW0Sv0MVEB3+sx7r
- WzjbA0r4TkRDTqM0fO1kkn6TwSRinZkvaEW/NlZIpoL2VsY+rE9XlvAuShMGZzBPoZeN
- Tn8BSHDAwEOA2C8DxIin1ajI9tzr5LDB8RHs8fDeLfACZaemIaAWxf7SCaVJwg1bw9z2
- vCfG6tTpKTXt84AoUH875bTTl1+fktMVem3bOZQxn7TNb3Ys0tQqjFVcur55HlMvhfRj
- Adgab3WhftBlEbMuZB7GoSS/tltxH+TOhD5P4JPZLh9nhVAx8IRtZPoNsYWaWNcnqbBm
- w89w==
-X-Gm-Message-State: AFuF++mwd+VQi3qgBZzA+LnBc5+7otx6tLofFgtKgTTen3oWxjVwmE4W
- O0kiW/lQ0ar76ilecsCJ+BhHoKtsWC3+0wU2qz08kn4a9JA+gj69q144OCPduEaAuFg5ukQK0n6
- nq6h1kzKjUgzkPua1miKKDY0qk00LXMDSsE1p2csqBGEz5oAYhJmsfLVSTxIityLBjA==
-X-Gm-Gg: AYBFou1N09ICUAy+DkEl2gBmSKR/hZJOJSMmSTLsOXinB0tOm3YFf6+Ojji6FS8UHT8
- v8ZE2Md0+OA+H/Yhh66pbFguUWWP9qHT6HhweFADkS4SwZGB3NE95xcNQ4/jXmfw3RA0r3sKxkC
- bEKx9Kr6nCVzM71aIIjY5cVLRS5PqZWYXCvude8+28O7Akx1M0PwUAg3Jg3dCC3848V8IuSHOyQ
- +emTcsPwRxt3/ARrL2YmQsDOrRU3ocnGyzn3+4oTo7uSUlhpDaAEWfArDL1Tw5ltPJHO2EdmygQ
- p+fKXhm239yXOXMdZyFn18a6XQ4sYUaoJ/35v+iku/GxvsDPOLiUgcJSepTjVhM2p7FHNMRazwe
- 8a7bLBCo0hIgHNiTtdcyGgSVFdZWz4KyRamSm35gt
-X-Received: by 2002:a05:620a:29c6:b0:93b:d7a2:dd2a with SMTP id
- af79cd13be357-93c43d2d07bmr1406998585a.58.1790494339189; 
- Sun, 27 Sep 2026 00:32:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:29c6:b0:93b:d7a2:dd2a with SMTP id
- af79cd13be357-93c43d2d07bmr1406996685a.58.1790494338620; 
- Sun, 27 Sep 2026 00:32:18 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4887a64ef3asm18939019f8f.30.2026.09.27.00.32.17
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 27 Sep 2026 00:32:17 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAjJA-0005f1-Mr; Sun, 27 Sep 2026 03:28:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1790494014; bh=uARxCeggQJqVMQZaWn6tzN7uNqQPMoOtVAQXF7f5W2w=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=UlY3bFgxOTmU+ina35YYO8iGATouVZy3WCn8Ob6UH8RoIAvrT/Y3R+8xTkfzHARQa
+ g+Pe2Uptw0TrUVoaimVLhVT2BlcvUCc9oM0DVfeO6enP+JS1Q4dxFhstjcQdNUIYkg
+ fxczRqBuFnaaIc1NNof4G1upLuJmGX7EmAdMwtmH/KMKYv3O5QXbrzPtCZLhKvVTT0
+ UWwmvbgL1hyYNWWQetOR9b6VFmxNrwh+4Z5CRJxyIKYIyLk+RLCpJWWeqAI7Qiucp4
+ FzGWW8tyHI7A2a8QOCp2NLZ4LOuoYttkngatSqDgDdwSK8jG7ydPAeqtCPXJpw2zXP
+ BST14ReUw/+qg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C21E1D8ACA;
+ Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 185E643205C;
+ Sun, 27 Sep 2026 10:26:54 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 1B7265E643; Sun, 27 Sep 2026 10:26:53 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Subject: [PULL 5/9] hw/intc: use kvm_enabled() in APLIC AIA helpers
-Date: Sun, 27 Sep 2026 09:31:36 +0200
-Message-ID: <20260927073140.41422-6-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260927073140.41422-1-philmd@oss.qualcomm.com>
-References: <20260927073140.41422-1-philmd@oss.qualcomm.com>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mikulas Patocka <mpatocka@redhat.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.14 v2 72/72] target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE
+ with CF_STEP_ATOMIC
+Date: Sun, 27 Sep 2026 10:26:04 +0300
+Message-ID: <20260927072622.93656-23-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
+References: <qemu-stable-10.0.14-20260927020824@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfXzFOoBOSRGIrl
- KtdSGVkteiAAXZitePy3hw7q0lrer3EGbiStkeKupTGabYMuGkZOcxqDFWQ9JZGxiZ5Ie/oMx0g
- puc/inb4ukcf2zoO9XWrQJF2hbYQDcI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAyOSBTYWx0ZWRfX3glcP9Aj0Wui
- ei5h8g72Ddi7QsozkhA3t3QNqzVyqp7QOANQmiC0a6MsYO8edWAN3vUnt+5y2DIXLKdgLzr5Bik
- hSpoNb0emRqXY0HIzTmwpimxG94yfmycUpBUqu6plKI6ocKwiI8EFTWkebRVIcyhvmz/ZqWtkUT
- fFSMfITq7NlfTY12jttsLyZ3wpJDgKlV+i0OH6M4R4M/G/sm4Y2J3n+S/6qnHeG9AqHVxWara0N
- HC1BuE8+eszIBFe9Va0DgQKKEb+0w01ihiIlNSnV1rP2n/KWBgzSBydUJEtjepo0KzKyyGVco2l
- a04TD2VmxvjHeRnk/BdKVhs4N8zcKO5BID9iNR1hwFgJUNTld/2XrwIuatPUpHRdRwl4N4EdEOm
- qJfYYr5qmwsGybn525iAH9r4aCKt2lIJMuSYK2OuciWg5RjTIXKM4vlO9h9XamYUe5oYQ7VdV1y
- KNaAS8EU5iMRwdaSLRA==
-X-Proofpoint-GUID: 4yD4RkSAKg5dEV93jSu1ntroSb10Nhwe
-X-Proofpoint-ORIG-GUID: 4yD4RkSAKg5dEV93jSu1ntroSb10Nhwe
-X-Authority-Analysis: v=2.4 cv=K6G3jCWI c=1 sm=1 tr=0 ts=6ab8c684 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=aK4Vr543ky-C4wP0_eYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609270029
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,62 +72,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yonggang Luo <luoyonggang@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-- Replace CONFIG_KVM ifdefs in riscv_use_emulated_aplic and
-  riscv_aplic_set_kvm_msicfgaddr with kvm_enabled().
+There was a complex bug with gUSA wherein:
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260923131635.1894-29-luoyonggang@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/intc/riscv_aplic.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+  * decode_gusa calls gen_restart_exclusive
+  * gen_restart_exclusive generates code that sets TB_FLAG_GUSA_EXCLUSIVE
+    and generates a call to helper_exclusive
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index d8e25bfda14..03a0852b8b8 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -167,7 +167,10 @@ bool riscv_is_kvm_aia_aplic_imsic(bool msimode)
+  * when the code is executed, TB_FLAG_GUSA_EXCLUSIVE is set
+  * helper_exclusive calls cpu_loop_exit_atomic, this makes cpu_exec exit
+    with EXCP_ATOMIC
+  * we go to cpu_loop, we execute cpu_exec_step_atomic
+  * suppose that exit request is set, cpu_exec_step_atomic does nothing, it
+    leaves the CPU in the same state as it was before
+  * we go back to cpu_loop
+  * suppose that no signal is delivered, so the gUSA is not rewound
+  * cpu_loop goes to cpu_exec
+  * there is one difference - now, TB_FLAG_GUSA_EXCLUSIVE is set and it was
+    clear before - so cpu_exec will not use the TB that calls
+    helper_exclusive, it will instead use the TB that performs the atomic
+    operation (both of these TBs have the same PC, they only differ in flags)
+  * the TB that performs the atomic operation is executed inside cpu_exec
+    => race condition
+
+Fix the bug by managing the "are we in cpu_exec_step_atomic" flag
+from cpu_exec_step_atomic itself, rather from the translator.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 4bfa602bc22 ("target/sh4: Handle user-space atomics")
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 62728f8c932f9572eeea22f91e3ee223978b1c7f)
+(Mjt: adjust for 10.0.x across v10.0.0-561-g4759aae43235
+ "accel/tcg: Return TCGTBCPUState from cpu_get_tb_cpu_state")
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 27f69b1a4a2..3fb880b43f9 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -580,7 +580,8 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         /* Execute in a serial context. */
+         cflags &= ~CF_PARALLEL;
+         /* After 1 insn, return and release the exclusive lock. */
+-        cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR | CF_NOIRQ | 1;
++        cflags |= CF_NO_GOTO_TB | CF_NO_GOTO_PTR |
++                    CF_NOIRQ | CF_STEP_ATOMIC | 1;
+         /*
+          * No need to check_for_breakpoints here.
+          * We only arrive in cpu_exec_step_atomic after beginning execution
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 3c69bc71a9f..d8f133b41b7 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -80,6 +80,7 @@ struct TranslationBlock {
+ #define CF_NOIRQ         0x00010000 /* Generate an uninterruptible TB */
+ #define CF_PCREL         0x00020000 /* Opcodes in TB are PC-relative */
+ #define CF_BP_PAGE       0x00040000 /* Breakpoint present in code page */
++#define CF_STEP_ATOMIC   0x00080000 /* Running in cpu_exec_step_atomic */
+ #define CF_CLUSTER_MASK  0xff000000 /* Top 8 bits are cluster ID */
+ #define CF_CLUSTER_SHIFT 24
  
- bool riscv_use_emulated_aplic(bool msimode)
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index 2ada25ee004..2cc39bd37a0 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -83,8 +83,7 @@
+ #define TB_FLAG_DELAY_SLOT_RTE   (1 << 2)
+ #define TB_FLAG_PENDING_MOVCA    (1 << 3)
+ #define TB_FLAG_GUSA_SHIFT       4                      /* [11:4] */
+-#define TB_FLAG_GUSA_EXCLUSIVE   (1 << 12)
+-#define TB_FLAG_UNALIGN          (1 << 13)
++#define TB_FLAG_UNALIGN          (1 << 12)
+ #define TB_FLAG_SR_FD            (1 << SR_FD)           /* 15 */
+ #define TB_FLAG_FPSCR_PR         FPSCR_PR               /* 19 */
+ #define TB_FLAG_FPSCR_SZ         FPSCR_SZ               /* 20 */
+@@ -95,8 +94,7 @@
+ #define TB_FLAG_DELAY_SLOT_MASK  (TB_FLAG_DELAY_SLOT |       \
+                                   TB_FLAG_DELAY_SLOT_COND |  \
+                                   TB_FLAG_DELAY_SLOT_RTE)
+-#define TB_FLAG_GUSA_MASK        ((0xff << TB_FLAG_GUSA_SHIFT) | \
+-                                  TB_FLAG_GUSA_EXCLUSIVE)
++#define TB_FLAG_GUSA_MASK        (0xff << TB_FLAG_GUSA_SHIFT)
+ #define TB_FLAG_FPSCR_MASK       (TB_FLAG_FPSCR_PR | \
+                                   TB_FLAG_FPSCR_SZ | \
+                                   TB_FLAG_FPSCR_FR)
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 6286862241e..4af2a9351bf 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -47,6 +47,9 @@ typedef struct DisasContext {
+     uint16_t opcode;
+ 
+     bool has_movcal;
++#ifdef CONFIG_USER_ONLY
++    bool in_gusa_exclusive;
++#endif
+ } DisasContext;
+ 
+ #if defined(CONFIG_USER_ONLY)
+@@ -220,7 +223,11 @@ static inline void gen_save_cpu_state(DisasContext *ctx, bool save_pc)
+ 
+ static inline bool use_exit_tb(DisasContext *ctx)
  {
--#ifdef CONFIG_KVM
-+    if (!kvm_enabled()) {
-+        return true;
-+    }
-+
-     if (tcg_enabled()) {
-         return true;
-     }
-@@ -177,21 +180,20 @@ bool riscv_use_emulated_aplic(bool msimode)
-     }
- 
-     return kvm_kernel_irqchip_split();
--#else
--    return true;
--#endif
+-    return (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) != 0;
++#ifdef CONFIG_USER_ONLY
++    return ctx->in_gusa_exclusive;
++#else
++    return false;
++#endif
  }
  
- void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
- {
--#ifdef CONFIG_KVM
-+    if (!kvm_enabled()) {
-+        return;
-+    }
-+
-     if (riscv_use_emulated_aplic(aplic->msimode)) {
-         addr >>= APLIC_xMSICFGADDR_PPN_SHIFT;
-         aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
-         aplic->kvm_msicfgaddrH = extract64(addr, 32, 32) &
-                                  APLIC_MMSICFGADDRH_VALID_MASK;
-     }
--#endif
- }
+ static bool use_goto_tb(DisasContext *ctx, target_ulong dest)
+@@ -273,7 +280,8 @@ static void gen_conditional_jump(DisasContext *ctx, target_ulong dest,
+     TCGLabel *l1 = gen_new_label();
+     TCGCond cond_not_taken = jump_if_true ? TCG_COND_EQ : TCG_COND_NE;
  
- /*
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* When in an exclusive region, we must continue to the end.
+            Therefore, exit the region on a taken branch, but otherwise
+            fall through to the next instruction.  */
+@@ -286,6 +294,7 @@ static void gen_conditional_jump(DisasContext *ctx, target_ulong dest,
+         ctx->base.is_jmp = DISAS_NEXT;
+         return;
+     }
++#endif
+ 
+     gen_save_cpu_state(ctx, false);
+     tcg_gen_brcondi_i32(cond_not_taken, cpu_sr_t, 0, l1);
+@@ -304,7 +313,8 @@ static void gen_delayed_conditional_jump(DisasContext * ctx)
+     tcg_gen_mov_i32(ds, cpu_delayed_cond);
+     tcg_gen_discard_i32(cpu_delayed_cond);
+ 
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* When in an exclusive region, we must continue to the end.
+            Therefore, exit the region on a taken branch, but otherwise
+            fall through to the next instruction.  */
+@@ -318,6 +328,7 @@ static void gen_delayed_conditional_jump(DisasContext * ctx)
+         ctx->base.is_jmp = DISAS_NEXT;
+         return;
+     }
++#endif
+ 
+     tcg_gen_brcondi_i32(TCG_COND_NE, ds, 0, l1);
+     gen_goto_tb(ctx, 1, ctx->base.pc_next + 2);
+@@ -1800,16 +1811,18 @@ static void decode_opc(DisasContext * ctx)
+         /* go out of the delay slot */
+         ctx->envflags &= ~TB_FLAG_DELAY_SLOT_MASK;
+ 
++#ifdef CONFIG_USER_ONLY
+         /* When in an exclusive region, we must continue to the end
+            for conditional branches.  */
+-        if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE
+-            && old_flags & TB_FLAG_DELAY_SLOT_COND) {
++        if (ctx->in_gusa_exclusive && old_flags & TB_FLAG_DELAY_SLOT_COND) {
+             gen_delayed_conditional_jump(ctx);
+             return;
+         }
++
+         /* Otherwise this is probably an invalid gUSA region.
+            Drop the GUSA bits so the next TB doesn't see them.  */
+         ctx->envflags &= ~TB_FLAG_GUSA_MASK;
++#endif
+ 
+         tcg_gen_movi_i32(cpu_flags, ctx->envflags);
+         if (old_flags & TB_FLAG_DELAY_SLOT_COND) {
+@@ -1827,7 +1840,6 @@ static void decode_opc(DisasContext * ctx)
+  */
+ static void gen_restart_exclusive(DisasContext *ctx)
+ {
+-    ctx->envflags |= TB_FLAG_GUSA_EXCLUSIVE;
+     gen_save_cpu_state(ctx, false);
+     gen_helper_exclusive(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+@@ -2215,11 +2227,13 @@ static void sh4_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         int backup = sextract32(ctx->tbflags, TB_FLAG_GUSA_SHIFT, 8);
+         int max_insns = (pc_end - pc) / 2;
+ 
++        ctx->in_gusa_exclusive = ctx->base.tb->cflags & CF_STEP_ATOMIC;
++
+         if (pc != pc_end + backup || max_insns < 2) {
+             /* This is a malformed gUSA region.  Don't do anything special,
+                since the interpreter is likely to get confused.  */
+             ctx->envflags &= ~TB_FLAG_GUSA_MASK;
+-        } else if (tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++        } else if (ctx->in_gusa_exclusive) {
+             /* Regardless of single-stepping or the end of the page,
+                we must complete execution of the gUSA region while
+                holding the exclusive lock.  */
+@@ -2253,7 +2267,7 @@ static void sh4_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+ 
+ #ifdef CONFIG_USER_ONLY
+     if (unlikely(ctx->envflags & TB_FLAG_GUSA_MASK)
+-        && !(ctx->envflags & TB_FLAG_GUSA_EXCLUSIVE)) {
++        && !ctx->in_gusa_exclusive) {
+         /*
+          * We're in an gUSA region, and we have not already fallen
+          * back on using an exclusive region.  Attempt to parse the
+@@ -2283,10 +2297,12 @@ static void sh4_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
+-    if (ctx->tbflags & TB_FLAG_GUSA_EXCLUSIVE) {
++#ifdef CONFIG_USER_ONLY
++    if (ctx->in_gusa_exclusive) {
+         /* Ending the region of exclusivity.  Clear the bits.  */
+         ctx->envflags &= ~TB_FLAG_GUSA_MASK;
+     }
++#endif
+ 
+     switch (ctx->base.is_jmp) {
+     case DISAS_STOP:
 -- 
-2.53.0
+2.47.3
 
 
