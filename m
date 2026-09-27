@@ -4,87 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB67C9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 104ACC9830E
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 09:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAksX-0008LM-2q; Sun, 27 Sep 2026 05:09:01 -0400
+	id 1xAkra-0002Ow-L0; Sun, 27 Sep 2026 05:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAkrO-0002AN-PY
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:07:53 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xAkrN-0008GY-74
- for qemu-devel@nongnu.org; Sun, 27 Sep 2026 05:07:50 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- 98e67ed59e1d1-398b3b189e0so1122822a91.2
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:07:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790500068; x=1791104868; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UX0xQBovpEREz5D93muEOF8+6jWv4DzWOIo1Qb5cFS4=;
- b=ubrdCNwd+63BeBGxnq9ByeXitRvuvdjlxIsdeX6vl9DJhNMKRY8jcue9INvXR4xy2H
- Zlv8bpM4ROnoA1cSP7QSpGApKTr7QM/l4LodPx74Cw+OK6a62XIWcq67pHYGZeXFyiKE
- +4V4/gy5taHFpe4FGgCUfVYeNJMZST+mPOUSq4LadN4jeSsEzhDH9a8Z3UrCqBpEZbPS
- 54zhED8ISaFMN6Nw/erhTOPQ4AL3EnhQcLxrpbwbx6BbRCJwG7lkExyqplTspd8kt7M7
- bW6P8IhNXD7DEB8VKMTL97PURGsMpgOj1shBpIme9/JVtFK8s1EgOoeUjgmbGJ7SQX6k
- qDXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790500068; x=1791104868;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UX0xQBovpEREz5D93muEOF8+6jWv4DzWOIo1Qb5cFS4=;
- b=oSzWQ8tYFZ6Q7PFmlM4md+7o0Z5KJaEM1vgOVFYJGUR1SijULdHdAtWjYtHWJEIbji
- oKB909R8ex0yilr7bJHIRczE/Rx3ZlMTFH7Qu9mgBbzpgUA67KkP8ITl/y8grbv5qmc3
- X+zmT/DMp1TrLfL0+bsAz+Yk8M1KCJoe8q9a/cVgHj6GXL9oLda/OgJdzs2Ffg6ZiEsQ
- I3P5dEivxLReHE0t8SdiBaqbhnWJs7ibWLHYHJ+YmAclclnoWgnV2SUDYzanZyD2hGzf
- DFtaFWnjNmDv59O8PQTncvOvZVwFbUZpqP0eUbkrZY2/Ywkgwo+Ko6oHUsK/E4Ikq6tO
- +xOA==
-X-Gm-Message-State: AFq9FYICyIeAivsev8dFhzKM9G3+Ys9iVgKrCQlvseak5U33gwCwairN
- MDjxwCj0XMzt4STL2jdCKXZTEFypmnSSwfs+5o8mJa1iONgyTl0+rnIYV9gZFlk4cSfk2BQ+ke5
- Vy5SF
-X-Gm-Gg: AYBFou0vMgFVl2QoD95G/lfCkJdx3QtpwZV2dAfyJAwdBCBNGWzpNRHztcmoQPhN4WQ
- raeMmGPzu4RJ6oXv+6AImZx7aIOJRpq6lw+uKSuWyk7ByTIR6VyWU6d39C7jSPDM9ymwnJ/yKmW
- 14P7XRzuAzigBbxqTPgr0mINisnKgxBRCkDB6QnWWkJG9wbLR6uXsE8S2gPU9BrjXk/c3ZhBcDB
- eyooXqIXA5813yAQJtXLERXa4HC7g7U0E97Xd2rxWxVu7rFsOaXsRa80naLsXfD27cdAIzuWZLg
- jJsFoiPO9e7GU3x1qykNuXtSD/oS3W/8jTT3JpYYx8j2af1qVAvOZ55xqDslvFmv8f7nKahOPC6
- 9yrQfaRtlO/YOqUybrH+S4yj6J/LuPsTy0v9/Hae9yqzbPzsWiGLgzNrdPGGJdOqk2l4W7AgN45
- EXcNXXrK+9o4tvrsxzRXonfBIE7pm8XSMMMYd9HryEx/8fHn9/iGflaAnMeYOCnYzXIfXg86f1Y
- UCpmofvl7JmwnqKJZ9ShEqx04HKSegyV7ho1hbyrQ==
-X-Received: by 2002:a17:90b:55d0:b0:398:9bd5:490b with SMTP id
- 98e67ed59e1d1-3a098cdbb1fmr8519247a91.18.1790500067622; 
- Sun, 27 Sep 2026 02:07:47 -0700 (PDT)
-Received: from stoup (174-21-68-150.tukw.qwest.net. [174.21.68.150])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a0e7036e3bsm7144984a91.13.2026.09.27.02.07.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 02:07:47 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAkpO-00085R-M6; Sun, 27 Sep 2026 05:05:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xAkpL-00085h-Ab; Sun, 27 Sep 2026 05:05:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1790499940; bh=ZydiJ+s/WW5vxOaZbcFZaOaSANxCRJoXr5PxZ3OHoQQ=;
+ h=From:To:Cc:Subject:Date;
+ b=wEwLRiEwSYb/rz4fT9E/ySTFvt2NINXNPznHReUTP0wg5v2lPfYYQnNcwie63XvlT
+ CUYzf0Huf4lqf4aYkjSIF9WWtGu/Luc48YSP1WtoS/+EBlg0mtZElCM2Y+IiVo1OFc
+ vS6iZm/RgyWezcg+OYYpEUZ6AkYmvwws1g42SY0M2+l9BdRiIUSDNJC4omOwnOYbb8
+ wdH207b1kJk0s3oiJrCWBeSWN/5zzvzxstAS8WK4sv2nXJD6JLqhZqS0qHMu2Qo+d6
+ QylZbQwdLLF1h6f52Zlusmo7Inuy8ktt9ZwtDYU90e9UiJgqVlYPvVHzeK9YY4k1Pv
+ E1zic/HUF9GFQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6D9BD1D8B0A;
+ Sun, 27 Sep 2026 12:05:40 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3806D4320C3;
+ Sun, 27 Sep 2026 12:05:40 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 267DE5E645; Sun, 27 Sep 2026 12:05:40 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-Subject: [PATCH v5 086/101] tcg: Split out gen_bitswap
-Date: Sun, 27 Sep 2026 01:59:56 -0700
-Message-ID: <20260927090011.10724-87-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260927090011.10724-1-richard.henderson@linaro.org>
-References: <20260927090011.10724-1-richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.5 v2 00/86] Patch Round-up for stable 11.0.5,
+ freeze on 2026-09-26 (frozen)
+Date: Sun, 27 Sep 2026 12:05:04 +0300
+Message-ID: <qemu-stable-11.0.5-20260927120511@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,94 +70,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need this for other generic expansions.
+The following patches are queued for QEMU stable v11.0.5:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/tcg-op.c | 58 ++++++++++++++++++++++------------------------------
- 1 file changed, 25 insertions(+), 33 deletions(-)
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
 
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 0bf7c2fdff1..0c6146cfbe6 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -290,6 +290,27 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
- #undef DEF5
- #undef DEF6
- 
-+/*
-+ * Internal helper for bit and byte reversal.
-+ * Given a repeating matched block of 1's and 0's, swap the bits within
-+ * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-+ * right 8 bits.
-+ */
-+static void tcg_gen_bitswap(TCGType type, TCGTemp *dst,
-+                            TCGTemp *src, uint64_t mask)
-+{
-+    g_autoptr(TCGTemp) t0 = tcg_temp_new_ebb(type);
-+    g_autoptr(TCGTemp) t1 = tcg_temp_new_ebb(type);
-+    TCGTemp *tmask = tcg_constant_internal(type, mask);
-+    TCGTemp *tshift = tcg_constant_internal(type, cto64(mask));
-+
-+    tcg_gen_and(type, t0, src, tmask);
-+    tcg_gen_shr(type, t1, src, tshift);
-+    tcg_gen_shl(type, t0, t0, tshift);
-+    tcg_gen_and(type, t1, t1, tmask);
-+    tcg_gen_or(type, dst, t0, t1);
-+}
-+
- /*
-  * Generic expansions for templated operations.
-  * We have used compiler type checks to ensure all TCGTemp
-@@ -1292,43 +1313,14 @@ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
-     tcg_temp_free_i64(t1);
- }
- 
--/*
-- * Internal helper for bit and byte reversal.
-- * Given a repeating matched block of 1's and 0's, swap the bits within
-- * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-- * right 8 bits.
-- */
--static void gen_bitswap_i32(TCGv_i32 ret, TCGv_i32 arg, uint32_t mask)
-+static void gen_bitswap_i32(TCGv_i32 dst, TCGv_i32 src, uint32_t mask)
- {
--    TCGv_i32 t0 = tcg_temp_ebb_new_i32();
--    TCGv_i32 t1 = tcg_temp_ebb_new_i32();
--    int sh = cto32(mask);
--
--    tcg_gen_andi_i32(t0, arg, mask);
--    tcg_gen_shri_i32(t1, arg, sh);
--    tcg_gen_shli_i32(t0, t0, sh);
--    tcg_gen_andi_i32(t1, t1, mask);
--    tcg_gen_or_i32(ret, t0, t1);
--
--    tcg_temp_free_i32(t0);
--    tcg_temp_free_i32(t1);
-+    tcg_gen_bitswap(TCG_TYPE_I32, tcgv_i32_temp(dst), tcgv_i32_temp(src), mask);
- }
- 
--/* Similarly for 64-bit operands. */
--static void gen_bitswap_i64(TCGv_i64 ret, TCGv_i64 arg, uint64_t mask)
-+static void gen_bitswap_i64(TCGv_i64 dst, TCGv_i64 src, uint64_t mask)
- {
--    TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--    TCGv_i64 t1 = tcg_temp_ebb_new_i64();
--    int sh = cto64(mask);
--
--    tcg_gen_andi_i64(t0, arg, mask);
--    tcg_gen_shri_i64(t1, arg, sh);
--    tcg_gen_shli_i64(t0, t0, sh);
--    tcg_gen_andi_i64(t1, t1, mask);
--    tcg_gen_or_i64(ret, t0, t1);
--
--    tcg_temp_free_i64(t0);
--    tcg_temp_free_i64(t1);
-+    tcg_gen_bitswap(TCG_TYPE_I64, tcgv_i64_temp(dst), tcgv_i64_temp(src), mask);
- }
- 
- /*
--- 
-2.53.0
+Patch freeze is 2026-09-26 (frozen), and the release is planned for 2026-09-28:
 
+  https://wiki.qemu.org/Planning/11.0
+
+This 11.0.5 release is supposed to be the last release in 11.0.x series.
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* ab7183ed4eec Marc-André Lureau:
+   hw/display/qxl: validate primary surface stride against width
+02* eb2b3a1fa807 Marc-André Lureau:
+   virtio-gpu: use g_try_malloc to avoid guest-triggered abort
+03* 0e62034ca10f Marc-André Lureau:
+   crypto: fix build against nettle >= 4
+04* ddf5738503e2 Fabiano Rosas:
+   chardev: Don't unregister yank upon async path connection failure
+05* 418396be8013 Warisjeet Singh:
+   hw/display/vga: fix text-mode OOB write after a graphics surface switch
+06* 0846740652d1 Christian Quante:
+   hw/input/ps2: answer unknown mouse commands with a resend
+07* 2667133c2799 Denis V. Lunev:
+   job: keep job paused across overlapping pause requests
+08* 438ee08bc97a Denis V. Lunev:
+   tests/unit/test-blockjob: cover keeping a job paused while a pause is 
+   pending
+09* 59ecd8a1ac3f Denis V. Lunev:
+   block/monitor: reject persistent bitmap add on a read-only node
+10* 3f3f5cdb929e Denis V. Lunev:
+   migration/block-dirty-bitmap: reject bitmap load onto ro node
+11* 9a77ef813f5f Denis V. Lunev:
+   block/monitor: allow dropping a bitmap never stored on disk
+12* dc04053687ec Denis V. Lunev:
+   dirty-bitmap: fix integer overflow in serialization coverage
+13* 569aa6280d14 Nicholas Piggin:
+   target/riscv: tt-ascalon: Enable Zkr extension
+14* 51362da8f73b Ivan Efremov:
+   target/riscv: Fix seed CSR sign extension
+15* e80cf2947978 Ivan Efremov:
+   tests/qtest: Add seed CSR zero extension test
+16* d7913fac7747 Christian Borntraeger:
+   s390x/sclp: pv: only copy the original SCCB buffer
+17* 6c712a86f6c8 Denis V. Lunev:
+   hw/ide: reject an unsupported CHS translation
+18* 0905ef5b6d48 Denis V. Lunev:
+   tests/qtest/ide-test: cover a CHS translation with zero sectors
+19* 0df27c66dc72 Denis V. Lunev:
+   hw/ide: report the default CHS translation in IDENTIFY DEVICE
+20* 1332990194b5 Denis V. Lunev:
+   hw/ide: reject an out-of-range PIO transfer window on load
+21* d30254aec931 Paolo Bonzini:
+   scsi-disk: fix out-of-bound read in WRITE SAME
+22* 0f410adf6b0d Paolo Bonzini:
+   scsi: hide MODE SELECT block size change behind a quirk
+23* d61c8a6fb738 Paolo Bonzini:
+   vapic: confine the VAPIC region to 0xc0000..0xe0000
+24* cfa6e2c52ca8 Paolo Bonzini:
+   i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
+25* b78c6d5b1bf0 Gautam Menghani:
+   ppc/xive: Trigger the pending interrupt for a guest after migration
+26* f63124af7846 Alexandre Frey:
+   target/arm: fix TTA instruction S bit for IDAU-exempt addresses
+27* 59716ac3067d Peter Maydell:
+   target/arm: Correct reset value of SCTLR for arm926, arm1026
+28* c05e01a88581 Peter Maydell:
+   target/arm: Make CBZ/CBNZ UNDEF before v6T2
+29* 50d6757147db Peter Maydell:
+   target/arm: Make IT insn undef when not present
+30* 2931a675e9d3 Peter Maydell:
+   target/arm: Make Thumb T1 hint space UNDEF before v6T2
+31* 10dddf15e294 Bin Meng:
+   hw/sd: sdhci: Accept version 4 enable without UHS-I
+32* 15d4bc75f817 Alberto Garcia:
+   hw/sd/sdcard: Register device ops in drives without media
+33* 259b877eac36 Junjie Cao:
+   hw/cxl: fix timer leak in cxl_destroy_cci()
+34* a3de21bfa5d0 Denis V. Lunev:
+   io/channel-socket: do not treat a zero length write as an error
+35* cd71c2f40a53 Denis V. Lunev:
+   io/channel-websock: send an HTTP 400 when the greeting has no space
+36* 2295deb48898 Denis V. Lunev:
+   io/channel-websock: handle a blocked write during the handshake
+37* e867e2047c6c Denis V. Lunev:
+   tests/unit: add websock handshake test
+38* 7a72a4652a79 Denis V. Lunev:
+   io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
+39* 0e5718799199 Denis V. Lunev:
+   tests/unit: cover blocked IO during the websock handshake
+40* 3ece85b53c12 Marc-André Lureau:
+   virtio-gpu: disable blob scanouts on mapping cleanup
+41* c7254cd584bb Marc-André Lureau:
+   virtio-gpu: clear res->blob on mapping cleanup
+42* 713e7e85a2b4 Junjie Cao:
+   hw/cxl: Fix guest-triggerable QEMU exit on reserved interleave ways
+43* f10977073cb4 Zhang Chen:
+   qapi/misc: Fix missed query-iothreads items
+44* 5d85a09554fb Laurent Vivier:
+   hw/net/virtio-net: check packet size before VLAN tag access in 
+   receive_filter()
+45* 73c3d017ef6a Laurent Vivier:
+   hw/net/virtio-net: strip trailing padding when caching RSC segment
+46* 15dcee919555 Jia Jia:
+   hw/virtio: reject inverted virtio-iommu IOVA ranges
+47* fdc3f9a83ddf Michael S. Tsirkin:
+   virtio-balloon: fix free-page BH teardown on unrealize
+48* 5440b6b5de46 Stefan Hajnoczi:
+   virtio-scsi: set dataplane_started to false upon failure
+49* 0ddbce88c45a Junjie Cao:
+   hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC when sn= is set
+50* 2c43897356ac Denis V. Lunev:
+   hw/display/qxl: hold ssd.lock while replacing ssd.cursor
+51* 1063bbb71185 Denis V. Lunev:
+   ui/cursor: make the cursor refcount atomic
+52* 01df81b24c50 Marc-André Lureau:
+   vhost-user-gpu: validate command buffer size in submit_3d
+53* 7e5c85f7f2a8 Kostiantyn Kostiuk:
+   qga: Change effective user/group ID in guest-ssh-* commands
+54* 2a8b740e7acf Bin Guo:
+   hw/intc/bcm2835_ic: reject out-of-range FIQ source values
+55* 6ae0b0426705 Doug Cook:
+   target/arm/whpx: Don't try to sync ARM_CP_CONST registers
+56* 518f45b32d04 Doug Cook:
+   target/arm/whpx: incorrect ENCODE_AA64_CP_REG parameter order
+57* 57197bf183f3 Doug Cook:
+   target/arm/whpx: fix whpx-arm post-reset CPU state
+58 9d6ac47d3182 Daniel Henrique Barboza:
+   hw/riscv/virt.c: fix aclint soc/mtimer nodename
+59 ff96d5629066 Gerd Hoffmann:
+   hw/uefi: add missing uefi_str_is_valid check to uefi_vars_mm_lock_variable
+60 4d3b9dc4d1fb Luigi Leonardi:
+   igvm: Report error on missing parameter area in directive handlers
+61 d9275e776e95 Luigi Leonardi:
+   igvm: validate and honor byte_offset in parameter directives
+62 f277592cfdbe Luigi Leonardi:
+   igvm: mark qigvm_find_param_entry as static
+63 ebfde6dafff2 wangyang:
+   linux-user/riscv: honor zicntr=false for base counterCSRs
+64 30fa3eb41f85 Michael Morrell:
+   linux-user: implement mlock2(2) syscall
+65 e95f53e30be7 SignKirigami:
+   linux-user/loongarch64: Detect vector stores in host_signal_write()
+66 8435aadbb9ad Jared Rossi:
+   hw/s390x/ipl: Fix incorrect PCI IPL block lengths
+67 9b64b3cc833e Omar Elghoul:
+   s390x/pci: fix DMA slot leak on I/O TLB entry replacement
+68 fe9e30899ffc Christian Schoenebeck:
+   hw/9pfs: mutate FID path from main thread only (CVE-2026-93834)
+69 cab866376194 Richard Henderson:
+   accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for system plugins
+70 f371388029c9 Anton Blanchard:
+   accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
+71 0bc331d1c7d5 Richard Henderson:
+   tcg/optimize: Fix expansion/simplification of deposit
+72 c66fe5b04d64 Richard Henderson:
+   tests/tcg/s390x: Add regression test for #4449
+73 57d98debdf8a Richard Henderson:
+   tcg/riscv64: Set vtype before whole-register vector loads
+74 f91b0544fe1f Thomas Huth:
+   hw/usb/hcd-xhci: Set reentrancy guard in timer functions (CVE-2026-17588)
+75 bfb82d57e729 Junjie Cao:
+   hw/usb/hcd-xhci: fix interval alignment after MFINDEX passes 2^32
+76 45684127cdee Junjie Cao:
+   hw/usb/hcd-xhci: don't assert on NAK when retrying an isoch transfer
+77 3c770d72925e Junjie Cao:
+   tests/qtest/usb-hcd-xhci: test isoch pacing with MFINDEX above 2^32
+78 1288b0869c08 Junjie Cao:
+   tests/qtest/usb-hcd-xhci: test isoch endpoint type mismatch
+79 cbbd4d74eb29 Shivang Upadhyay:
+   target/ppc: Stop vCPU thread before calling parent_unrealize
+80 c7cc09c85b89 Simon Scherer:
+   target/i386: Fix FXCH to unconditionally clear C1
+81 994fb6c218f8 Simon Scherer:
+   target/i386: Update FPU tag word for FXTRACT's old ST(0)
+82 f2357fdcd984 Simon Scherer:
+   target/i386: Update FPU tag word for FSTP
+83 a9dbd71f033e Simon Scherer:
+   target/i386: Update FPU tag word for FXCH
+84 6adc9d9cdc53 Andrey Polivoda:
+   target/i386: Mark MOVNTI as not valid with prefixes 0x66, 0xF2, 0xF3
+85 460da0e55c31 Richard Henderson:
+   accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
+86 62728f8c932f Richard Henderson:
+   target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE with CF_STEP_ATOMIC
+
+(commit(s) marked with * were in previous series and are not resent)
 
