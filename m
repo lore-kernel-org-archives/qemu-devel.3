@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E99BC9830E
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A78CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 10:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAmSZ-000055-U6; Sun, 27 Sep 2026 06:50:20 -0400
+	id 1xAmSX-0008Pg-BJ; Sun, 27 Sep 2026 06:50:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSU-0008Et-Pf; Sun, 27 Sep 2026 06:50:15 -0400
+ id 1xAmSU-0008CM-46; Sun, 27 Sep 2026 06:50:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xAmSS-00015Q-QQ; Sun, 27 Sep 2026 06:50:14 -0400
+ id 1xAmSS-00018A-5t; Sun, 27 Sep 2026 06:50:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1790506136; bh=7BhEayz5r078dP7gCjHeryKaCB8U5aJ6d6jOXU5aBCo=;
+ t=1790506136; bh=Z/LXGCYI/1dhN3wjcVVBEmbET1GiKlT4Rdlg5vpf7B8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=weormbYTV+U4E8MG4yIrVCbfp3g/MfLEkS7wB7abZ/KEZMYSw9Ge70zGvpRYRUvj3
- dEs/Dvpfz32nGixhNWYJevwxfwOC03U8GVVt2tklgV7sVYhPsgVf8OIAjPJFOLiL8R
- jTdsXUgWLKChWmjQMZPASmyOicZBA091oVC2RK3M6y8ivvAQGJKGs0ZocBBwx/isRb
- vvrqsG15vAYzSer6hvDfZPg93gxKw6NPo6zPdRUMUsoCgoSwBi7wLvKzQPAymahd3f
- Kn67P1sSCztdoh6fgc+ENq/T7qogZcU06bIIuua0sJRJI5Y6xwvPBJIYzUvwyNrl9r
- EqVD20JtUexkw==
+ b=deMgdpWshkyOY329kc9UdBjrf6yUrevlGCCkIbRqR2PCxRM9kvJ5k2+Noxbgz45AX
+ GG8w2uGrNln418g000Y7VTkMFYpLOO0xXsY2HDNBZAwoX0LxupPw6K2L+mg35uonRL
+ xmC5MOQ3FC5sGdpx7qIun5f7O0PtKQGwmOs8FjrfwMCQ5z7FW0nUTfDS9cSpVBXlSU
+ FyJvEQy+Jkgn/ivD+z3DbIxSm/2QYlrU8Z6gpfjS6cRwGpT1b8QejHFMdh7HgKiC1N
+ dG5hZ8p8QM2oB9aX11iTiumjbbm5xOiwMLW73aATMSF7OvTkufbNSdZVTAa5tqfsnv
+ WCXGiVhmU5JDw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 116331D8B6A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 16F3D1D8B6B;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E7E0432171;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 143C8432172;
  Sun, 27 Sep 2026 13:48:56 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DD2405E78C; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
+ id E02E95E78E; Sun, 27 Sep 2026 13:48:55 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.2 v2 75/92] tests/tcg/s390x: Add regression test for
- #4449
-Date: Sun, 27 Sep 2026 13:47:51 +0300
-Message-ID: <20260927104821.196183-19-mjt@tls.msk.ru>
+Subject: [Stable-11.1.2 v2 76/92] tcg/riscv64: Set vtype before whole-register
+ vector loads
+Date: Sun, 27 Sep 2026 13:47:52 +0300
+Message-ID: <20260927104821.196183-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
 References: <qemu-stable-11.1.2-20260927121932@cover.tls.msk.ru>
@@ -73,60 +74,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+With vtype uninitialized, VILL might be set, leading to SIGILL.
+Also, assert vtype initialized for whole-register stores and moves.
+
+Fixes: f63e7089b4 ("tcg/riscv: Add basic support for vector")
+Reported-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit c66fe5b04d643d013e97cbbede5b736b56a667d4)
-(Mjt: adjust across make=>meson conversion in tcg tests)
+(cherry picked from commit 57d98debdf8a3a00e6022ad5c4dad1d8c4fa0f39)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 97c0f021902..118eaf7896a 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -51,6 +51,7 @@ TESTS+=ts
- TESTS+=ex-smc
- TESTS+=divide-to-integer
- TESTS+=stckf
-+TESTS+=issue4449
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 76dd4fca97b..86baf5a213c 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -768,6 +768,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         {
+             int lmul = type - riscv_lg2_vlenb;
+             int nf = 1 << MAX(lmul, 0);
+@@ -1007,6 +1008,10 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+             unsigned idx = type - riscv_lg2_vlenb;
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/issue4449.c b/tests/tcg/s390x/issue4449.c
-new file mode 100644
-index 00000000000..0c9c80e8cac
---- /dev/null
-+++ b/tests/tcg/s390x/issue4449.c
-@@ -0,0 +1,31 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include <assert.h>
-+
-+#define CASE(name, old, cst, sh)                                        \
-+    static void __attribute__((noinline)) case_##name(void) {           \
-+        unsigned long t1, got;                                          \
-+        __asm__("lhi  %0," #cst "\n\t"   /* low 32 known, high not */   \
-+                "lghi %1," #old "\n\t"   /* whole register constant */  \
-+                "sllk %1,%0," #sh "\n\t" /* 32-bit write = deposit */   \
-+                "brc 15,1f\n\t"          /* ends the translation block */ \
-+                "nop\n"                                                 \
-+                "1:"                                                    \
-+                : "=r"(t1), "=r"(got) : : );                            \
-+        unsigned long want = (unsigned)(cst) << (sh);                   \
-+        assert(got == want);                                            \
-+    }
-+
-+CASE(a, 256, 128, 1);
-+CASE(b, 128, 128, 0);
-+CASE(c, 512, 128, 2);
-+CASE(d,   2,   1, 1);
-+
-+int main()
-+{
-+    case_a();
-+    case_b();
-+    case_c();
-+    case_d();
-+    return 0;
-+}
+             tcg_debug_assert(idx < ARRAY_SIZE(whole_reg_ld));
++            /* We must initialize vtype to something to avoid VILL. */
++            if (s->riscv_cur_type == TCG_TYPE_COUNT) {
++                set_vtype(s, type, MO_8);
++            }
+             insn = whole_reg_ld[idx];
+         } else {
+             static const RISCVInsn unit_stride_ld[] = {
+@@ -1039,6 +1044,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg arg,
+     case TCG_TYPE_V64:
+     case TCG_TYPE_V128:
+     case TCG_TYPE_V256:
++        tcg_debug_assert(s->riscv_cur_type != TCG_TYPE_COUNT);
+         if (type >= riscv_lg2_vlenb) {
+             static const RISCVInsn whole_reg_st[] = {
+                 OPC_VS1R_V, OPC_VS2R_V, OPC_VS4R_V, OPC_VS8R_V
 -- 
 2.47.3
 
