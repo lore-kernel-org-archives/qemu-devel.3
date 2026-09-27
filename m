@@ -4,73 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68EEC98328
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 01:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7979ECA5FA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Sep 2026 02:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAdm3-0007tW-2h; Sat, 26 Sep 2026 21:33:51 -0400
+	id 1xAeru-00052a-Cm; Sat, 26 Sep 2026 22:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xAdm0-0007tH-A2
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 21:33:48 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xAers-00051u-EY
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 22:43:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xAdlv-0006Wf-GX
- for qemu-devel@nongnu.org; Sat, 26 Sep 2026 21:33:48 -0400
-Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68R1X5hf067697
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 27 Sep 2026 10:33:05 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=naxUHLr5Ot81hrVj0nSc6GD64MEBgjgrUVqWk9XvJDc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1790472786; v=1;
- b=pT0lk+pwiMX2HRtYg04JhC04HVci3/VUQo8cfj09j88cobpxRQx0UXqS/cJk/YFU
- JfZqjewusZW9jdA9wzwCct+5sM8IcoE5YaARolByhxp18Z/c2/4V9lwC7kYzeNRw
- vJ8EQ8rLQDuQRtFLGkfkWQAeF9zqShyR0psMcBa9JZAtMZqIXCfa5qnZ9yYxC5Ec
- Cq4jAGWRv1pvVCaeCz3Hzer1GOWfgWUq1bGTgmWD03GdWZZWpESRZVxDcGFdyWLN
- SXw+WD1fe6UR9xigqc9xjZ/TMe/YdTjVXbpr6GuQhPv05T9c9tObxJBbAdtSlBIz
- 3Fc98HcCbHgcgAanq6xVgQ==
-Message-ID: <11f9068f-8e95-4c66-b84c-c3274a128c4a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 27 Sep 2026 10:33:05 +0900
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xAerq-0007Uf-4w
+ for qemu-devel@nongnu.org; Sat, 26 Sep 2026 22:43:56 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68QNHIle1478410
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:43:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ hajtpxF2Cztk5kuYRbyQnh/pr7a1DMFLfRCtDXBoNmY=; b=XRRBi1VO/3+O68gC
+ 8EjHzW6Q0eLFlmSRyNZfyZy9kStzBRdgWjBkNV5Y943aXs7AUZUfg1/hl+/jkmUW
+ wEGCDxuOYY585m1BCelUv6QuMmKRczDj4heDRdEqc7DrT4fOB7N2wOHemwrymAmU
+ 4dFkhUeDeFFzgT4Bzd5IaTaFgpIaSkFbAQQON9n5lbk3iZX9+E+GOXpmL0IvFSxE
+ lghSUT8Vls/3zRtlGiw7+/Fc4eaZB9SCT0SJmbr76PzrJXGMtgtOhMTBkmwxFQwS
+ 0Qmr9orxhs2ZU8G5TxV/mS05kOmg4UZgmfykQeLwfFqx8qUHwb0+qameSMuShGqd
+ nN6zng==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gx526j89d-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 02:43:52 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-342b66c0b06so1404985eec.0
+ for <qemu-devel@nongnu.org>; Sat, 26 Sep 2026 19:43:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790477031; x=1791081831; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hajtpxF2Cztk5kuYRbyQnh/pr7a1DMFLfRCtDXBoNmY=;
+ b=iPpVkay7E7tJueTK0Y9sSyI3lCLSx2UiejsVwW0R+wZj5xGKYUKtZ6UxyeOwk6mXFS
+ 63wjdRFV9KE1Vs7+gdsXdVLlfXXfx2+qupz/MK/kyYs1qDuK3wYNaHGsQuyNA0OltL5s
+ yQFFMl/tjmlGBkRqyAg4XT7XD43oPkNlfhhOrNn1PDlC/QzR7B4603HnOGrSRcC2NCQt
+ GbYuYkdZiwBxjs9FAFy0jCsHTjBkvUqMVYVunAmBWakEgzMq5L3zCaWpG3xfFjSXmWtf
+ xGevHT0naC6iL6vasq3HMzem7IsAI6bu3npkKC1m+PdBMs0zXV9x6Z2LknNyho4U9CNX
+ Q0RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790477031; x=1791081831;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hajtpxF2Cztk5kuYRbyQnh/pr7a1DMFLfRCtDXBoNmY=;
+ b=2YCoDgAYq+WU0g8vHsrLNoiyNzVsd2JoRzT+oCySO7+oxDvsMJdkAbgVh6drWWqGDc
+ 3YvhKSreMXcjqhunYgErzW9tgo4QYB8T13I6ZvlMaphYosbPyCa/a83T1NJpH2ss0QqH
+ IJ4Riflsk7f4YQ2HdCJ3+Paz3dJwF7rEmKKxMmHVscT8efxXtOmHV6wXC6sSFJF2tWv+
+ RIo03bSxME8jVlKr8Zp4GLEqQaZ8lbUY7hh6j6ZHJAqa3c0spFneYBMwb8wRdnbytx9y
+ agtoEfnG7cuWHX7cLapQmdgDRfG9wXVLNJy5aZqb87QnCe7gbLv407DwV5h5rklDumrU
+ AgkA==
+X-Gm-Message-State: AFuF++klEz6XCN4TUGfkkF9cdwE2ZPqAxBkY6BmmIPi2G1k9LeXjkQyl
+ tKP1YEL7eYeEqM/5nMQ2xZw4QSe3Mjl0hD1sAIt6Z2mB2W57RaSChnunyGlxb8uOH+e/GEiFray
+ iwu62V369NYMe1eDO2kATjwFGM7D4P47QE8BUPzFZFvnw1eqZCjB5lvM4pvcmdlHg5A==
+X-Gm-Gg: AYBFou0NGJsP0noShgm5e9V1hYnxdsLpuTfIjdVG7KoowRqsUKKTKPdYf1IyQBnYpfe
+ oisVUyqoy77wFOctxLWwXBE7YWuKtLkRFy7g7pnad3yY4i9BPTsYmwbkN2RqCuJ5wtHN/6apFrH
+ nP7/Wy6Zkr+9Vg0v+dI4DcMIX5WOVKY/DTKMtqgeYGOhmw5icapF4mnJRmgLR9HvNTv95VnQ6pj
+ t47hRt+meXOuS8WXnDD/uXIg9ok5AXpcP3ttF6HzjIoB+QDMXmucehilycCF6QI+g69PGeJFeSq
+ TTk2Kun+sK6x3UFFPGMHjIneSfuIIL9f1rinHE882IYN6iyiszKWg/iNoeRqoGSZ3LP1FhyDXmc
+ kZmY0NeRr3GDfhL02E+eHbD8U86MowW83Phx/0EeOFnYKvUM=
+X-Received: by 2002:a05:701b:4591:10b0:143:1bb1:3305 with SMTP id
+ a92af1059eb24-146d0871d4emr4281487c88.22.1790477030413; 
+ Sat, 26 Sep 2026 19:43:50 -0700 (PDT)
+X-Received: by 2002:a05:701b:4591:10b0:143:1bb1:3305 with SMTP id
+ a92af1059eb24-146d0871d4emr4281461c88.22.1790477029873; 
+ Sat, 26 Sep 2026 19:43:49 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-145ac67c3f8sm15459747c88.3.2026.09.26.19.43.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 26 Sep 2026 19:43:49 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ marco.liebel@oss.qualcomm.com, Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH 1/5] target/hexagon: emit explicit TCG memory barriers
+Date: Sat, 26 Sep 2026 19:43:43 -0700
+Message-Id: <20260927024347.3545385-2-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260927024347.3545385-1-brian.cain@oss.qualcomm.com>
+References: <20260927024347.3545385-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] migration: Implement Xen migration blocker
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: xen-devel@lists.xenproject.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260912-xen-v1-0-ebd6a2aa519f@rsg.ci.i.u-tokyo.ac.jp>
- <20260912-xen-v1-2-ebd6a2aa519f@rsg.ci.i.u-tokyo.ac.jp>
- <87v77x9x8u.fsf@suse.de>
- <78984db5-6de9-40c7-abf4-884c539232da@rsg.ci.i.u-tokyo.ac.jp>
- <87fqyzabx7.fsf@suse.de>
- <c8a6fdcb-1b97-497c-81eb-7c26abdec7dc@rsg.ci.i.u-tokyo.ac.jp>
- <877bkaakoj.fsf@suse.de>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <877bkaakoj.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Authority-Analysis: v=2.4 cv=VvS2kO2n c=1 sm=1 tr=0 ts=6ab882e8 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=4KcYvu_XbJg6GINjK8oA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: 8NTXnkFlW0vhiAISTe4qDftr1GM2Z208
+X-Proofpoint-ORIG-GUID: 8NTXnkFlW0vhiAISTe4qDftr1GM2Z208
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI3MDAxMCBTYWx0ZWRfX4jOg8NxgQr7y
+ MIo0njBCE3VbD7omGYn4cRvuMdUsPnekUZ/rs+YzXZeks0i4BR2INZZwfxXGUxaqrAWRt4Z7GGQ
+ mvSd0B9VqbduDK+Jn3OE/QpEw9CGriikAMmLF4nAtY/i4VSB1FHStuiUXJkIZLrmNz8UxRhTFds
+ DvOOA5FlBN0r7OcsA0vbVsMzoaq53YdgHSFWXpw2RI0e9Wy8+S3eicJo4X7u+gBEiNCfXT1TUrY
+ 4vVJi/lrEjjTucory+Sz8svqxBPjpwNBmLQ3xFP/KYJPtggQWHyXqfZ5CqttVnkIhPF7SDLS94p
+ IH+ew2fsYoDQa7cBHoT/BMgcBtNjk94GaF/TaRRpfPgnlaNjrTAkykobmmpIIQS4di0Cfl1fj7o
+ 5yySeBz07ci5gheZPpPV9Tzc0LMeLzbtKTTvAW2rHG1DHuS44VYGJzX58P2I9EHrH4gqR5xaHSG
+ KPirLMu3zVl6JojLgjQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI3MDAxMCBTYWx0ZWRfX+qb4s8pRE9k7
+ 8ukOdT/HSTCEcXg4qHwojczg86U4I60u3ALSK9NYJzX70tEdUo0oxvWUfap4Inv/Exu/W8T8hsR
+ 3S1Jy53p7M8vMe82YgkvXkTbh3+kkOQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-26_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609270010
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,650 +152,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/24 21:38, Fabiano Rosas wrote:
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
-> 
->> On 2026/09/24 6:35, Fabiano Rosas wrote:
->>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
->>>
->>>> On 2026/09/22 23:28, Fabiano Rosas wrote:
->>>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
->>>>>
->>>>>> xen-save-devices-state saves device VMState outside QEMU's normal
->>>>>> migration-mode machinery, so it currently ignores migration blockers.
->>>>>> Add a separate blocker class for this command.
->>>>>>
->>>>>> Blockers registered with migrate_add_blocker() or
->>>>>> migrate_add_blocker_internal() now include this class. Existing
->>>>>> mode-specific blocker masks remain unchanged, except that vhost-scsi's
->>>>>> default blocker now covers normal migration and Xen device-state
->>>>>> saving. Its CPR exemption assumes that the replacement QEMU runs on
->>>>>> the same host and not concurrently with the old QEMU; Xen save and
->>>>>> restore do not guarantee those conditions. Users can set
->>>>>> migratable=true when shared storage or orchestrator-migrated target
->>>>>> state makes migration safe.
->>>>>>
->>>>>
->>>>> So one thing is rejecting the xen-save-devices-state command if there
->>>>> are blockers. This could very well just use the normal mode (default),
->>>>> no? Or all modes, like qmp_dump_guest_memory() does?
->>>>
->>>> In general, blockers registered via migrate_add_blocker_normal() are
->>>> specific to standard QEMU live migration and do not apply to Xen. For
->>>> example, block formats like qcow or vhd register normal migration
->>>> blockers, but Xen explicitly supports migration with them [1].
->>>> Unconditionally applying normal-mode blockers to Xen would cause
->>>> regressions. vhost-scsi is the exception here and is handled specifically.
->>>>
->>>> Checking every mode would lead to the same regression. Note that
->>>> qmp_dump_guest_memory() registers an all-mode blocker during execution;
->>>> it does not check all existing blocker lists when invoked.
->>>>
->>>> [1] https://xenbits.xen.org/docs/4.22-testing/SUPPORT.html#blkback
->>>>
->>>>>
->>>>> Another thing (complementary, could be in the same patch) is rejecting
->>>>> the command line if there are blocked devices, including any ones used
->>>>> along with Xen acceleration. Again, why does this need a new blocker
->>>>> category? I'm not seeing it.
->>>> You can use -only-migratable.
->>>>
->>>>>
->>>>>> Fixes: a7ae8355b446 ("Introduce "xen-save-devices-state"")
->>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>> ---
->>>>>>     include/migration/blocker.h | 10 ++++++-
->>>>>>     include/qemu/accel.h        |  2 +-
->>>>>>     migration/migration.h       |  2 ++
->>>>>>     accel/accel-system.c        | 25 +++++++++++++-----
->>>>>>     hw/scsi/vhost-scsi.c        |  5 +++-
->>>>>>     migration/migration.c       | 63 ++++++++++++++++++++++++++++++++++++++-------
->>>>>>     migration/savevm.c          |  4 +++
->>>>>>     system/vl.c                 |  9 ++++---
->>>>>>     8 files changed, 99 insertions(+), 21 deletions(-)
->>>>>>
->>>>>> diff --git a/include/migration/blocker.h b/include/migration/blocker.h
->>>>>> index 80b75ad5cbdb..0fbaaac83ce8 100644
->>>>>> --- a/include/migration/blocker.h
->>>>>> +++ b/include/migration/blocker.h
->>>>>> @@ -16,6 +16,14 @@
->>>>>>     
->>>>>>     #include "qapi/qapi-types-migration.h"
->>>>>>     
->>>>>> +/**
->>>>>> + * define MIG_XEN - identifier for Xen migration
->>>>>
->>>>> Hm.
->>>>>
->>>>>> + *
->>>>>> + * Xen migration is distinct from those expressed with &typedef MigMode.
->>>>>> + * Use this for migration blockers that affect Xen.
->>>>>> + */
->>>>>> +#define MIG_XEN MIG_MODE__MAX
->>>>>
->>>>> This could be fine, Xen migration is pre-existing and 'mode' is part of
->>>>> QAPI, we don't want to create a new mode for Xen.
->>>>>
->>>>>> +
->>>>>>     /**
->>>>>>      * @migrate_add_blocker - prevent all modes of migration from proceeding
->>>>>>      *
->>>>>> @@ -80,7 +88,7 @@ int migrate_add_blocker_normal(Error **reasonp, Error **errp);
->>>>>>      *
->>>>>>      * @reasonp - address of an error to be returned whenever migration is attempted
->>>>>>      *
->>>>>> - * @modes - the migration modes to be blocked, a bit set of MigMode
->>>>>> + * @modes - the migration modes to be blocked, a bit set of MigMode and %MIG_XEN
->>>>>
->>>>> But it's not a mode, so we shouldn't re-use @modes. We just want a place
->>>>> to store the Xen blockers, let's not introduce the confusion that this
->>>>> could be a mode somehow.
->>>>>
->>>>> We could just add migrate_add_blocker_xen and call add_blockers directly
->>>>> since you're changing that function to use the array size instead of
->>>>> MIG_MODE__MAX.
->>>>
->>>> I would prefer to keep a single function for adding blockers across all
->>>> migration types so that the full scope of a blocker can be seen at a
->>>> single call site (see the vhost-scsi changes for an example).
->>>>
->>>
->>> Fair.
->>>
->>>> Practically speaking, I think the risk of reusing @modes is minimal
->>>> because there is no alternative selective-blocking API to misuse. It
->>>> would indeed be cleaner to have a parameter name that encompasses both
->>>> MigMode and MIG_XEN, but I haven't come up with a better name yet;
->>>> suggestions are welcome.
->>>>
->>>
->>> Keep the @mode, but let's do away with any mentions of MigMode. This is
->>> a "blocker mode", not "migration mode". wink wink
->>
->> Good idea. That will also fix the documentation comments, along with the
->> variable and function names. I will include this change in the next version.
->>
->>>
->>>>>
->>>>>>      *
->>>>>>      * @errp - [out] The reason (if any) we cannot block migration right now.
->>>>>>      *
->>>>>> diff --git a/include/qemu/accel.h b/include/qemu/accel.h
->>>>>> index 6f65f1cb89a0..b6b456a82fc3 100644
->>>>>> --- a/include/qemu/accel.h
->>>>>> +++ b/include/qemu/accel.h
->>>>>> @@ -47,7 +47,7 @@ const char *current_accel_name(void);
->>>>>>     
->>>>>>     void accel_init_interfaces(AccelClass *ac);
->>>>>>     
->>>>>> -int accel_init_machine(AccelState *accel, MachineState *ms);
->>>>>> +int accel_init_machine(AccelState *accel, MachineState *ms, Error **errp);
->>>>>>     
->>>>>>     /* Called just before os_setup_post (ie just before drop OS privs) */
->>>>>>     void accel_setup_post(MachineState *ms);
->>>>>> diff --git a/migration/migration.h b/migration/migration.h
->>>>>> index 683bc7bdd521..f53fdb2df107 100644
->>>>>> --- a/migration/migration.h
->>>>>> +++ b/migration/migration.h
->>>>>> @@ -568,7 +568,9 @@ void migration_start_incoming(void);
->>>>>>     int migration_call_notifiers(MigrationEventType type, Error **errp);
->>>>>>     
->>>>>>     int migrate_init(MigrationState *s, Error **errp);
->>>>>> +bool enforce_only_migratable(Error **errp);
->>>>>>     bool migration_is_blocked(Error **errp);
->>>>>> +bool xen_migration_is_blocked(Error **errp);
->>>>>>     /* True if outgoing migration has entered postcopy phase */
->>>>>>     bool migration_in_postcopy(void);
->>>>>>     bool migration_postcopy_is_alive(MigrationStatus state);
->>>>>> diff --git a/accel/accel-system.c b/accel/accel-system.c
->>>>>> index 1325b23864c8..75a691cb3cfe 100644
->>>>>> --- a/accel/accel-system.c
->>>>>> +++ b/accel/accel-system.c
->>>>>> @@ -26,7 +26,9 @@
->>>>>>     #include "qemu/osdep.h"
->>>>>>     #include "qemu/accel.h"
->>>>>>     #include "qom/compat-properties.h"
->>>>>> +#include "qapi/error.h"
->>>>>>     #include "qapi/qapi-commands-accelerator.h"
->>>>>> +#include "migration/migration.h"
->>>>>>     #include "monitor/monitor.h"
->>>>>>     #include "monitor/hmp.h"
->>>>>>     #include "hw/core/boards.h"
->>>>>> @@ -37,20 +39,31 @@
->>>>>>     #include "qemu/error-report.h"
->>>>>>     #include "accel-internal.h"
->>>>>>     
->>>>>> -int accel_init_machine(AccelState *accel, MachineState *ms)
->>>>>> +int accel_init_machine(AccelState *accel, MachineState *ms, Error **errp)
->>>>>>     {
->>>>>>         AccelClass *acc = ACCEL_GET_CLASS(accel);
->>>>>>         int ret;
->>>>>>         ms->accelerator = accel;
->>>>>>         *(acc->allowed) = true;
->>>>>> +
->>>>>> +    if (!enforce_only_migratable(errp)) {
->>>>>> +        ret = -EACCES;
->>>>>> +        goto fail;
->>>>>> +    }
->>>>>
->>>>> Here I think you want to fail the initialization if the accelerator is
->>>>> Xen, -only-migratable is set and there are blockers. At this point is
->>>>> not clear whether these blockers really need a xen-specific category.
->>>>
->>>> The category reflects the specific requirements of the blocker itself.
->>>> Looking at vhost-scsi (which registers a Xen-affecting blocker)
->>>> clarifies why this distinction is necessary; this code merely enforces
->>>> registered blockers.
->>>>
->>>>>
->>>>> Isn't this too soon anyway? What blockers will be registered at this
->>>>> point and if there are blockers on the list, why the
->>>>> is_only_migratable() check at migrate_add_blocker_modes() hasn't already
->>>>> rejected the cmdline?
->>>>
->>>> This check is placed here because qemu_create_early_backends() runs
->>>> before configure_accelerators(). Command-line backends (such as qcow or
->>>> vmdk) can register blockers before xen_enabled() accurately reflects the
->>>> selected accelerator.
->>>>
->>>
->>> Ok, so we want to validate that the blockers registered so far don't
->>> affect the current accel. This information is important to have in a
->>> comment somewhere.
->>>
->>> Now, in the bad case we're going to fail the startup anyway, so wouldn't
->>> it be better to avoid all the error handling and just make this a
->>> generic check after configure_accelerators?
->>>
->>> void qemu_init(int argc, char **argv)
->>> {
->>>       configure_accelerators(argv[0]);
->>>       phase_advance(PHASE_ACCEL_CREATED);
->>>
->>>       enforce_only_migratable();
->>>       ...
->>
->> I agree. We can also add a comment here explaining that
->> -only-migratable needs to be enforced at this point.
->>
-> 
-> See if you can structure these changes in a way that we first change the
-> behavior regarding when only_migratable is enforced, then later add the
-> Xen support. So we make it clear in the commit log how this affects the
-> normal mode.
-
-I will split this patch into two as suggested: first adjusting the 
-only_migratable enforcement, and then adding the Xen support.
-
-> 
->>>
->>>>>
->>>>>> +
->>>>>>         ret = acc->init_machine(accel, ms);
->>>>>>         if (ret < 0) {
->>>>>> -        ms->accelerator = NULL;
->>>>>> -        *(acc->allowed) = false;
->>>>>> -        object_unref(OBJECT(accel));
->>>>>> -    } else {
->>>>>> -        object_set_accelerator_compat_props(acc->compat_props);
->>>>>> +        error_setg(errp, "%s", strerror(-ret));
->>>>>> +        goto fail;
->>>>>>         }
->>>>>> +
->>>>>> +    object_set_accelerator_compat_props(acc->compat_props);
->>>>>> +    return ret;
->>>>>> +
->>>>>> +fail:
->>>>>> +    ms->accelerator = NULL;
->>>>>> +    *(acc->allowed) = false;
->>>>>> +    object_unref(OBJECT(accel));
->>>>>>         return ret;
->>>>>>     }
->>>>>>     
->>>>>> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
->>>>>> index 657403cad011..f9847b5e7096 100644
->>>>>> --- a/hw/scsi/vhost-scsi.c
->>>>>> +++ b/hw/scsi/vhost-scsi.c
->>>>>> @@ -262,12 +262,15 @@ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
->>>>>>         }
->>>>>>     
->>>>>>         if (!vsc->migratable) {
->>>>>> +        unsigned int modes = BIT(MIG_MODE_NORMAL) | BIT(MIG_XEN);
->>>>>> +
->>>>>>             error_setg(&vsc->migration_blocker,
->>>>>>                     "vhost-scsi does not support migration in all cases. "
->>>>>>                     "When external environment supports it (Orchestrator migrates "
->>>>>>                     "target SCSI device state or use shared storage over network), "
->>>>>>                     "set 'migratable' property to true to enable migration.");
->>>>>> -        if (migrate_add_blocker_normal(&vsc->migration_blocker, errp) < 0) {
->>>>>> +        if (migrate_add_blocker_modes(&vsc->migration_blocker,
->>>>>> +                                      modes, errp) < 0) {
->>>>>>                 goto free_virtio;
->>>>>>             }
->>>>>>         }
->>>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>>> index d0b864a76066..c177dc52a1c1 100644
->>>>>> --- a/migration/migration.c
->>>>>> +++ b/migration/migration.c
->>>>>> @@ -23,6 +23,7 @@
->>>>>>     #include "system/runstate.h"
->>>>>>     #include "system/system.h"
->>>>>>     #include "system/cpu-throttle.h"
->>>>>> +#include "system/xen.h"
->>>>>>     #include "ram.h"
->>>>>>     #include "migration/cpr.h"
->>>>>>     #include "migration/global_state.h"
->>>>>> @@ -94,7 +95,8 @@ enum mig_rp_message_type {
->>>>>>     static MigrationState *current_migration;
->>>>>>     static MigrationIncomingState *current_incoming;
->>>>>>     
->>>>>> -static GSList *migration_blockers[MIG_MODE__MAX];
->>>>>> +static GSList *migration_blockers[MIG_MODE__MAX + 1];
->>>>>> +static bool enforcing_only_migratable;
->>>
->>> I think I missed the need for this variable. Isn't only_migratable
->>> enough?
->>
->> enforcing_only_migratable is initially false, allowing blockers to be
->> registered without immediate enforcement.
->>
->> Once enforce_only_migratable() is called, the existing blockers are
->> validated, and this flag becomes true. Any blocker added later are then
->> checked immediately. Together, this ensures all blockers are
->> consistently enforced at runtime.
->>
-> 
-> I see, otherwise we'll reject a blocker for MIG_MODE_NORMAL when in
-> reality the vm could be running Xen and therefore not want to reject
-> that blocker.
-> 
->>>
->>>>>>     
->>>>>>     static bool migration_object_check(MigrationState *ms, Error **errp);
->>>>>>     static bool migration_switchover_start(MigrationState *s, Error **errp);
->>>>>> @@ -1760,15 +1762,22 @@ static bool is_busy(Error **reasonp, Error **errp)
->>>>>>         return false;
->>>>>>     }
->>>>>>     
->>>>>> +static void propagate_disallowed_blocker(Error **errp, Error **reasonp)
->>>>>> +{
->>>>>> +    error_propagate_prepend(errp, *reasonp,
->>>>>> +                            "disallowing migration blocker "
->>>>>> +                            "(--only-migratable) for: ");
->>>>>> +    *reasonp = NULL;
->>>>>> +}
->>>>>> +
->>>>>>     static bool is_only_migratable(Error **reasonp, unsigned modes, Error **errp)
->>>>>>     {
->>>>>> +    unsigned mode = xen_enabled() ? MIG_XEN : MIG_MODE_NORMAL;
->>>>>> +
->>>
->>> Hmm, the original code is actually special casing CPR isn't it? I'd
->>> prefer to be explicit instead:
->>>
->>>       unsigned int ignore_only_migratable = (BIT(MIG_MODE_CPR_TRANSFER) |
->>>                                              BIT(MIG_MODE_CPR_EXEC) |
->>>                                              BIT(MIG_MODE_CPR_REBOOT));
->>>       unsigned int cur_mode = blocker_mode() & ~ignore_only_migratable;
->>
->> blocker_mode() returns an index, whereas ignore_only_migratable is a
->> bitmask, so we'll need to adapt the bitwise operations accordingly to
->> handle them properly.
->>
-> 
-> Well spotted.
-> 
->>>
->>> Where blocker_mode is:
->>>
->>> /*
->>>    * Migration blockers are scoped by migration mode. Nonetheless it's
->>>    * still possible for an accelerator to have particularities that
->>>    * require blocking migration, independently of mode. Use this helper
->>>    * when indexing into migration_blockers to ensure the accelerator is
->>>    * taken into account.
->>>    */
->>> static unsigned int *blocker_mode(void)
->>> {
->>>       if (phase_check(PHASE_ACCEL_CREATED)) {
->>
->> It would be safer to use assert(phase_check(PHASE_ACCEL_CREATED)); here;
->> otherwise, the returned value may not be valid.
->>
-> 
-> If we want to allow blockers to be registered before accel being
-> configured, then we cannot assert.
-
-Calling blocker_mode() is unnecessary before the accelerator is 
-configured, as blockers are unconditionally registered at that stage.
-
-By the way, while implementing this change, I realized that 
-"special-casing CPR" isn't an entirely accurate description of the 
-behavior. In reality, prior to this patch, -only-migratable always 
-enforced normal mode blockers, even when the current migration mode was CPR.
-
-I suspect this is a limitation of the -only-migratable command-line 
-option: it cannot predict which migration mode will ultimately be used 
-since the mode can be changed later via QMP. I will preserve the 
-existing behavior for non-Xen scenarios.
-
-> 
->>>           if (xen_enabled()) {
->>>               return MIG_BLOCK_XEN;
->>>           }
->>>       }
->>>
->>>       return migrate_mode();
->>> }
->>
->> Aside from the minor adjustments mentioned above, explicitly
->> special-casing CPR looks good to me overall.
->>
->>>
->>>>>>         ERRP_GUARD();
->>>>>>     
->>>>>> -    if (only_migratable && (modes & BIT(MIG_MODE_NORMAL))) {
->>>>>> -        error_propagate_prepend(errp, *reasonp,
->>>>>> -                                "disallowing migration blocker "
->>>>>> -                                "(--only-migratable) for: ");
->>>>>> -        *reasonp = NULL;
->>>>>> +    if (enforcing_only_migratable && (modes & BIT(mode))) {
->>>>>> +        propagate_disallowed_blocker(errp, reasonp);
->>>>>>             return true;
->>>>>>         }
->>>>>>         return false;
->>>>>> @@ -1776,7 +1785,7 @@ static bool is_only_migratable(Error **reasonp, unsigned modes, Error **errp)
->>>>>>     
->>>>>>     static int add_blockers(Error **reasonp, unsigned modes, Error **errp)
->>>>>>     {
->>>>>> -    for (MigMode mode = 0; mode < MIG_MODE__MAX; mode++) {
->>>>>> +    for (MigMode mode = 0; mode < ARRAY_SIZE(migration_blockers); mode++) {
->>>>>
->>>>> Not a MigMode anymore.
->>>>
->>>> Good catch. I will fix the type in the next version.
->>>>
->>>>>
->>>>>>             if (modes & BIT(mode)) {
->>>>>>                 assert(g_slist_index(migration_blockers[mode],
->>>>>>                                      *reasonp) == -1);
->>>>>> @@ -1809,7 +1818,7 @@ int migrate_add_blocker_modes(Error **reasonp, unsigned modes, Error **errp)
->>>>>>     
->>>>>>     int migrate_add_blocker_internal(Error **reasonp, Error **errp)
->>>>>>     {
->>>>>> -    unsigned modes = BIT(MIG_MODE__MAX) - 1;
->>>>>> +    unsigned modes = BIT(ARRAY_SIZE(migration_blockers)) - 1;
->>>>>>     
->>>>>>         if (is_busy(reasonp, errp)) {
->>>>>>             return -EBUSY;
->>>>>> @@ -1820,7 +1829,7 @@ int migrate_add_blocker_internal(Error **reasonp, Error **errp)
->>>>>>     void migrate_del_blocker(Error **reasonp)
->>>>>>     {
->>>>>>         if (*reasonp) {
->>>>>> -        for (MigMode mode = 0; mode < MIG_MODE__MAX; mode++) {
->>>>>> +        for (MigMode mode = 0; mode < ARRAY_SIZE(migration_blockers); mode++) {
->>>>>
->>>>> Same here, just use int i.
->>>>
->>>> Will update the variable name and type accordingly.
->>>>
->>>>>
->>>>>>                 migration_blockers[mode] = g_slist_remove(migration_blockers[mode],
->>>>>>                                                           *reasonp);
->>>>>>             }
->>>>>> @@ -1948,6 +1957,26 @@ void qmp_migrate_pause(Error **errp)
->>>>>>                    "during postcopy-active or postcopy-recover state");
->>>>>>     }
->>>>>>     
->>>>>> +bool enforce_only_migratable(Error **errp)
->>>>>> +{
->>>>>> +    unsigned mode = xen_enabled() ? MIG_XEN : MIG_MODE_NORMAL;
->>>>>> +    GSList *blockers = migration_blockers[mode];
->>>>>
->>>>> For Xen, what blockers are those? Is it the case that existing blockers
->>>>> are simply not taking effect for Xen because the QMP command never
->>>>> checks blockers? Or do you intend to add xen-specific blockers?
->>>>
->>>> The former.
->>>>
->>>> Existing migration blockers currently do not take effect for Xen, which
->>>> this patch fixes. However, applying all blockers from an existing
->>>> MigMode could cause a regression for the reasons stated above.
->>>> Therefore, this patch ensures that only blockers relevant to Xen are
->>>> applied.
->>>>
->>>> Specifically, it enforces the blockers added via migrate_add_blocker()
->>>> and the vhost-scsi blocker. The remaining blockers have not been proven
->>>> incompatible with Xen migration, so applying them unconditionally could
->>>> cause regressions.
->>>>
->>>> Regards,
->>>> Akihiko Odaki
->>>>
->>>>>
->>>>>> +    Error *reason;
->>>>>> +
->>>>>> +    if (!only_migratable) {
->>>>>> +        return true;
->>>>>> +    }
->>>>>> +
->>>>>> +    if (blockers) {
->>>>>> +        reason = error_copy(blockers->data);
->>>>>> +        propagate_disallowed_blocker(errp, &reason);
->>>>>> +        return false;
->>>>>> +    }
->>>>>> +
->>>>>> +    enforcing_only_migratable = true;
->>>>>> +    return true;
->>>>>> +}
->>>
->>> We could reduce the scope of migration_is_blocked so
->>> enforce_only_migrate can call it instead of checking the blockers
->>> itself:
->>>
->>> // replaces migration_is_blocked
->>> bool can_migrate(Error **errp)
->>> {
->>>       if (qemu_savevm_state_blocked(errp)) {
->>>           return false;
->>>       }
->>>
->>>       if (migration_is_blocked(errp) {
->>>           return false;
->>>       }
->>>       return true;
->>> }
->>>
->>> static bool migration_is_blocked(Error **errp)
->>> {
->>>       GSList *blockers;
->>>
->>>       assert(phase_check(PHASE_ACCEL_CREATED));
->>>
->>>       blockers = migration_blockers[blocker_mode()];
->>>       if (blockers) {
->>>           error_propagate(errp, error_copy(blockers->data));
->>>           return true;
->>>       }
->>>
->>>       return false;
->>> }
->>
->> This might be bikeshedding, but I'd rather extract the logic to check
->> migration_blockers to a new function, perhaps named
->> has_migration_blockers().
->>
->> I feel can_migrate() is a bit confusing since migrate_prepare() actually
->> has more checks and it does not clearly differentiate itself from
->> migration_is_blocked() well. Updating migration/savevm.c would also be
->> slightly cumbersome.
->>
->> While has_migration_blockers() doesn't perfectly differentiate itself
->> from migration_is_blocked() either, aligning it with the existing
->> "migration_blockers" variable clarifies its exact intent.
->>
-> 
-> Sure, go ahead. Maybe migration_active_blockers or some other word to
-> indicate the blockers affect the mode/accel currently in effect.
-
-Because -only-migratable enforces normal mode migration blockers even 
-when the current migration mode is CPR, this function won't strictly be 
-checking the presence of "active" blockers. For that reason, I would 
-prefer to keep the name has_migration_blockers(). I'll update the 
-function to take a parameter specifying which blocker mode to check.
-
-Regards,
-Akihiko Odaki
-
-> 
->>>
->>>>>> +
->>>>>>     bool migration_is_blocked(Error **errp)
->>>>>>     {
->>>>>>         GSList *blockers = migration_blockers[migrate_mode()];
->>>>>> @@ -1964,6 +1993,22 @@ bool migration_is_blocked(Error **errp)
->>>>>>         return false;
->>>>>>     }
->>>>>>     
->>>>>> +bool xen_migration_is_blocked(Error **errp)
->>>>>> +{
->>>>>> +    GSList *blockers = migration_blockers[MIG_XEN];
->>>
->>> Does this need to use MIG_XEN? If we use something like the
->>> blocker_mode() I suggested, then this function can be replaced with
->>> can_migrate() and we make all the points that start migration uniform.
->>>
->>> What do you think? Let me know if I missed any details.
->>
->> That makes sense to me. I'll incorporate this approach in the next version.
->>
-> 
-> Thanks! See you in v2.
-> 
->> Regards,
->> Akihiko Odaki
->>
->>>
->>> Thanks
->>>
->>>>>> +
->>>>>> +    if (qemu_savevm_state_blocked(errp)) {
->>>>>> +        return true;
->>>>>> +    }
->>>>>> +
->>>>>> +    if (blockers) {
->>>>>> +        error_propagate(errp, error_copy(blockers->data));
->>>>>> +        return true;
->>>>>> +    }
->>>>>> +
->>>>>> +    return false;
->>>>>> +}
->>>>>> +
->>>>>>     /* Returns true if continue to migrate, or false if error detected */
->>>>>>     static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->>>>>>     {
->>>>>> diff --git a/migration/savevm.c b/migration/savevm.c
->>>>>> index 4b590ea672d2..4e5e1af1b202 100644
->>>>>> --- a/migration/savevm.c
->>>>>> +++ b/migration/savevm.c
->>>>>> @@ -3418,6 +3418,10 @@ void qmp_xen_save_devices_state(const char *filename, bool has_live, bool live,
->>>>>>         int saved_vm_running;
->>>>>>         int ret;
->>>>>>     
->>>>>> +    if (xen_migration_is_blocked(errp)) {
->>>>>> +        return;
->>>>>> +    }
->>>>>> +
->>>>>>         if (!has_live) {
->>>>>>             /* live default to true so old version of Xen tool stack can have a
->>>>>>              * successful live migration */
->>>>>> diff --git a/system/vl.c b/system/vl.c
->>>>>> index 9bd7664b85c7..21fa810637c3 100644
->>>>>> --- a/system/vl.c
->>>>>> +++ b/system/vl.c
->>>>>> @@ -2392,6 +2392,7 @@ static int accelerator_set_property(void *opaque,
->>>>>>     
->>>>>>     static int do_configure_accelerator(void *opaque, QemuOpts *opts, Error **errp)
->>>>>>     {
->>>>>> +    Error *local_err = NULL;
->>>>>>         bool *p_init_failed = opaque;
->>>>>>         const char *acc = qemu_opt_get(opts, "accel");
->>>>>>         AccelClass *ac = accel_find(acc);
->>>>>> @@ -2418,10 +2419,12 @@ static int do_configure_accelerator(void *opaque, QemuOpts *opts, Error **errp)
->>>>>>                          accel,
->>>>>>                          &error_fatal);
->>>>>>     
->>>>>> -    ret = accel_init_machine(accel, current_machine);
->>>>>> +    ret = accel_init_machine(accel, current_machine, &local_err);
->>>>>>         if (ret < 0) {
->>>>>> -        if (!qtest_with_kvm || ret != -ENOENT) {
->>>>>> -            error_report("failed to initialize %s: %s", acc, strerror(-ret));
->>>>>> +        if (qtest_with_kvm && ret == -ENOENT) {
->>>>>> +            error_free(local_err);
->>>>>> +        } else {
->>>>>> +            error_reportf_err(local_err, "failed to initialize %s: ", acc);
->>>>>>             }
->>>>>>             goto bad;
->>>>>>         }
-
+R2VuZXJhdGUgcmVsZWFzZSBiYXJyaWVycyBiZWZvcmUgcmVsZWFzZSBhbmQgSFZYIHNjYXR0ZXIt
+cmVsZWFzZQpvcGVyYXRpb25zLCBhY3F1aXJlIGJhcnJpZXJzIGFmdGVyIGFjcXVpcmUgbG9hZHMs
+IGFuZCBmdWxsIGJhcnJpZXJzCmZvciBiYXJyaWVyLCBzeW5jaHQsIGlzeW5jLCBhbmQgZG1zeW5j
+aHQuCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5j
+b20+Ci0tLQogdGFyZ2V0L2hleGFnb24vdHJhbnNsYXRlLmMgfCAxNSArKysrKysrKysrKysrKysK
+IDEgZmlsZSBjaGFuZ2VkLCAxNSBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hl
+eGFnb24vdHJhbnNsYXRlLmMgYi90YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYwppbmRleCA4Mjc4
+NTllMDUyYy4uMWRhZTYwYzAzOTAgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0
+ZS5jCisrKyBiL3RhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jCkBAIC04MzEsMTIgKzgzMSwyNyBA
+QCBzdGF0aWMgdm9pZCBtYXJrX3N0b3JlX3dpZHRoKERpc2FzQ29udGV4dCAqY3R4KQogCiBzdGF0
+aWMgdm9pZCBnZW5faW5zbihEaXNhc0NvbnRleHQgKmN0eCkKIHsKKyAgICB1aW50MTZfdCBvcGNv
+ZGUgPSBjdHgtPmluc24tPm9wY29kZTsKKworICAgIGlmIChHRVRfQVRUUklCKG9wY29kZSwgQV9S
+RUxFQVNFKSB8fAorICAgICAgICBHRVRfQVRUUklCKG9wY29kZSwgQV9DVklfU0NBVFRFUl9SRUxF
+QVNFKSkgeworICAgICAgICB0Y2dfZ2VuX21iKFRDR19NT19BTEwgfCBUQ0dfQkFSX1NUUkwpOwor
+ICAgIH0KKwogICAgIGlmIChjdHgtPmluc24tPmdlbmVyYXRlKSB7CiAgICAgICAgIGN0eC0+aW5z
+bi0+Z2VuZXJhdGUoY3R4KTsKICAgICAgICAgbWFya19zdG9yZV93aWR0aChjdHgpOwogICAgIH0g
+ZWxzZSB7CiAgICAgICAgIGhleF9nZW5fZXhjZXB0aW9uX2VuZF90YihjdHgsIEhFWF9DQVVTRV9J
+TlZBTElEX09QQ09ERSk7CiAgICAgfQorCisgICAgaWYgKEdFVF9BVFRSSUIob3Bjb2RlLCBBX0FD
+UVVJUkUpKSB7CisgICAgICAgIHRjZ19nZW5fbWIoVENHX01PX0FMTCB8IFRDR19CQVJfTERBUSk7
+CisgICAgfQorICAgIGlmIChvcGNvZGUgPT0gWTJfYmFycmllciB8fCBvcGNvZGUgPT0gWTJfc3lu
+Y2h0IHx8CisgICAgICAgIG9wY29kZSA9PSBZMl9pc3luYyB8fCBvcGNvZGUgPT0gWTZfZG1zeW5j
+aHQpIHsKKyAgICAgICAgdGNnX2dlbl9tYihUQ0dfTU9fQUxMIHwgVENHX0JBUl9TQyk7CisgICAg
+fQogfQogCiAvKgotLSAKMi4zNC4xCgo=
 
