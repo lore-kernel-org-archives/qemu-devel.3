@@ -4,123 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51AECA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3721CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBI3I-0000b1-CF; Mon, 28 Sep 2026 16:34:20 -0400
+	id 1xBI7m-0001aB-Pp; Mon, 28 Sep 2026 16:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBI33-0000ZT-T8; Mon, 28 Sep 2026 16:34:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBI31-0002Uy-KO; Mon, 28 Sep 2026 16:34:05 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SI5MMo4187624; Mon, 28 Sep 2026 20:33:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Ps+j9N
- B4MVe9RueeMa8n9DoCX1SmYZeD4lmeITd80Y8=; b=iA/dddbLjvZGQQe813Nyyd
- DoC/VJOHP0Zu+bVhz7TYcAzmvZmb9IX12YWcm+5zr+n66HsMcHCjAygXIWfyMMFs
- lxFTDqRriU9Cbax2fX9K0FBh7Zx/nlJH+vlPzmahZzHv4qA+oEDnI6tdYBxW63ov
- V+IqhynC/UyMU34NDoJRYNkTqkpsZj8/3ErJGKY51QThox7G3M8rDgLiwvIen922
- eWkQ0h5uEBzb+IzStgyxgE0OKDnV/uygV9TA/5WgDQ6EWY/fiSGjGd/vI4dgwmKo
- OGbw2Vc4OBKVQRSe47wVkhplOf4+OfhrkdmefMT9eADi8eqNgD9Qtdkrrv8KSLkg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qr3ncx-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 20:33:52 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SI2hcT532504; Mon, 28 Sep 2026 20:33:51 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxsvheu39-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 20:33:51 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68SKXo4f62128624
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Sep 2026 20:33:50 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 778085804E;
- Mon, 28 Sep 2026 20:33:50 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 475745803F;
- Mon, 28 Sep 2026 20:33:48 +0000 (GMT)
-Received: from [9.61.92.210] (unknown [9.61.92.210])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 28 Sep 2026 20:33:48 +0000 (GMT)
-Message-ID: <9a2e2ac7-5f84-40cc-bd6e-4788a2375011@linux.ibm.com>
-Date: Mon, 28 Sep 2026 16:33:47 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xBI7S-0001Zi-Tk
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:38:39 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xBI7N-0002pZ-Dp
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:38:38 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B617321D70;
+ Mon, 28 Sep 2026 20:38:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790627906; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+rlGUrEeYzU3wb90k0viJS5s/d8d5f+44/woCEDwjn4=;
+ b=jdWnywVZtaNm6Dvy2ut+BjUvbs6YwqJL9ATRdmqROJwe15jwivfM2LWkxkAdNn/Q2EWUy7
+ DyYuwomUoP2I3TAU2B1H6dUykcwvcFV9XXoZJnsf26rdh1oGOH/83R9sSHVcEb4Wu0+m+W
+ daOzZXNn8nj2NWwfGUtVz71s9I4h6r0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790627906;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+rlGUrEeYzU3wb90k0viJS5s/d8d5f+44/woCEDwjn4=;
+ b=hSiE70K+h+ag498ch8iXmGk6TquVMOEc8DiVh1nZ2Vm7HD7zkogpde+CpO5jyjvgy6M1WM
+ HZnX1Nk1BCLnRTCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hDWdkmSv;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=U1w1JwSo
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790627902; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+rlGUrEeYzU3wb90k0viJS5s/d8d5f+44/woCEDwjn4=;
+ b=hDWdkmSvN0AWknasOTOFqHT/NysMV94WhuhqszVoDBTGgO9jUCGMWb7LaasHgI3rFmBW2S
+ pCKH76+cTKGsO2pcEAYCS42R5Zt65evu8Bv93E3DNHUVMW3sp4qMrosA9hg2X1Xr6Q/u4k
+ 94pjw9DUuAg7x2VvDRuGRUfd+HcNZ8M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790627902;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+rlGUrEeYzU3wb90k0viJS5s/d8d5f+44/woCEDwjn4=;
+ b=U1w1JwSoTcO7fYHSL729LZ7UqQlpRHhQDT6GwxrGnVI1g6YdHzoh7fQcAn3DToGC45ueY5
+ NLCbPBcd3xW6V9CQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3F3EB133F3;
+ Mon, 28 Sep 2026 20:38:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UkYzMjzQumptewAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 28 Sep 2026 20:38:21 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Akash Kulhalli <akulhall@redhat.com>, Juraj
+ Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 6/7] migration: Fix incoming channel race with multifd
+ and preempt_pre_7_2
+In-Reply-To: <arq-dDIjTbGSbT4W@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260916213558.587304-1-peterx@redhat.com>
+ <20260916213558.587304-7-peterx@redhat.com> <87wlsa8gdq.fsf@suse.de>
+ <arq-dDIjTbGSbT4W@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Date: Mon, 28 Sep 2026 17:38:16 -0300
+Message-ID: <87cxtx862v.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390x/sclpconsole: implement resizing for vt220
- consoles
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
- "Jason J. Herne" <jjherne@linux.ibm.com>, filip.hejsek@gmail.com
-Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- brueckner@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
- maximilian.immanuel.brandtner@protonmail.com
-References: <20260921121641.1354712-1-maxbr@linux.ibm.com>
- <20260928090846.2315532-1-maxbr@linux.ibm.com>
- <e17a5337-849a-428a-b8e4-65fd92a8c186@linux.ibm.com>
- <557a71b95eb900454adc477ad16154e1466f13d9.camel@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <557a71b95eb900454adc477ad16154e1466f13d9.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA4MCBTYWx0ZWRfX+aQ7viyj7zdh
- WdQ4o/NCHoR2wwszHIdIQuWrScZt9mrg+ZxtplrnYL3mJMZQbaYsIj/W09TqITmw4iGl1t5CFdE
- tnKnhOc0w+fNMZBo+KkZDuI4wOEX4WxjgzqCnDPjTWgprONMQIbbWTZEQ7VVJdkwecEx6sOOWdG
- VaDjLsME/Hf7e1X0okypgmj6ad5JByoNNMlQopx7iLup+p02841F5u81oP9lbqwxR9FULIiYPfh
- MboiPYFn6Ngd/VcaiC+Ic/xGSEOWElz4A2WoW8dFOBrDvQT108PqMH3pGFT350H/inUq+sAVOGm
- gdXmKVVFE4rgSjSnkZazrSBgHpeDuU3G/jVfcMIIkSMB+4bHaJBCnnooG3E3d6LyF/PKyCWNLBh
- PkD6VQvB3NbPLdtzUidxhAZOtMdrmlcP4D4ArHjVG3U1dBBWHdDtiIBuiD7fYxcNT3hnssVKDRH
- fhd8XL1qoLCFHyyOAOQ==
-X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6abacf31 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=G0mUEZQB_ZACgesOxLkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: E4cHhZF1v1pmWJuoVnvVlP4Jy4PEyxE_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA4MCBTYWx0ZWRfX+4yX5p7SQUnW
- Z4RU0w9u6K1YW0jjFIDGzaboSA/7jAN7OldLNAaygwT077icRiRudm6YM3FvexC3iPL6Thk60L8
- a9bfPZg6wpHAS5LPQsP++NF70LGMGlU=
-X-Proofpoint-GUID: s-FMyZ1dtcHSTpMlL-lKLuvXhhePqJKv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609280080
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: B617321D70
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,226 +125,1208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/28/26 3:28 PM, Maximilian Immanuel Brandtner wrote:
-> On Mon, 2026-09-28 at 09:32 -0400, Jason J. Herne wrote:
->>
->>
->> On 9/28/26 5:08 AM, Maximilian Immanuel Brandtner wrote:
->>> Add a tty code to indicate a resize frame. The body contains two
->>> big
->>> endian 16-bit integers rows and columns.
->>>
->>> After reset, the guest must be informed of the terminal size again.
->>> A
->>> chardev that doesn't report its size yields 0x0, which shouldn't
->>> replace
->>> the guest's default.
->>>
->>> Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
->>> ---
->>> Changelog:
->>> v2:
->>> - Use packed struct and named event type codes for resize frames
->>> - Trigger initial resize event in console_reset() instead of
->>>    console_init(), skip when chardev reports no size
->>> - Reset event_pending after resize event
->>>
->>> Requires the following pre-req:
->>>      [PATCH v7 00/12] virtio-console: notify about the terminal
->>> size
->>>     
->>> (https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c
->>> 550fdcec15@gmail.com/)
->>>
->>> Testing:
->>> - Tested on QEMU: commit 38879a667f with the following patches
->>> applied:
->>>      [PATCH v7 00/12] virtio-console: notify about the terminal
->>> size
->>> - Tested on linux-next (commit c1f49dea2b8f) with the following
->>> patches
->>>    applied:
->>>      [PATCH 0/2] s390/sclp: Resize for sclp-vt220 console
->>> ---
->>>   hw/char/sclpconsole.c | 92 +++++++++++++++++++++++++++++++++++++-
->>> -----
->>>   1 file changed, 80 insertions(+), 12 deletions(-)
->>>
->>> diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
->>> index 179d12745c..12033e1e46 100644
->>> --- a/hw/char/sclpconsole.c
->>> +++ b/hw/char/sclpconsole.c
->>> @@ -33,6 +33,9 @@ typedef struct ASCIIConsoleData {
->>>   /* max size for ASCII data in 4K SCCB page */
->>>   #define SIZE_BUFFER_VT220 4080
->>>   
->>> +#define SCLP_CONSOLE_EVENT_TYPE_DATA 0x00
->>> +#define SCLP_CONSOLE_EVENT_TYPE_RESIZE 0x08
->>> +
->>>   struct SCLPConsole {
->>>       SCLPEvent event;
->>>       CharFrontend chr;
->>> @@ -42,6 +45,8 @@ struct SCLPConsole {
->>>       uint32_t iov_data_len;  /* length of byte stream in
->>> buffer             */
->>>       uint32_t iov_sclp_rest; /* length of byte stream not read via
->>> SCLP     */
->>>       bool notify;            /* qemu_notify_event() req'd if
->>> true           */
->>> +    bool resize;
->>> +    bool resize_init;
->>>   };
->>>   typedef struct SCLPConsole SCLPConsole;
->>>   
->>> @@ -49,6 +54,12 @@ typedef struct SCLPConsole SCLPConsole;
->>>   DECLARE_INSTANCE_CHECKER(SCLPConsole, SCLP_CONSOLE,
->>>                            TYPE_SCLP_CONSOLE)
->>>   
->>> +typedef struct SCLPConsoleResizeData {
->>> +    uint8_t type;
->>> +    uint16_t rows;
->>> +    uint16_t cols;
->>> +} QEMU_PACKED SCLPConsoleResizeData;
->>> +
->>>   /* character layer call-back functions */
->>>   
->>>   /* Return number of bytes that fit into iov buffer */
->>> @@ -81,6 +92,29 @@ static void chr_read(void *opaque, const uint8_t
->>> *buf, int size)
->>>       sclp_service_interrupt(0);
->>>   }
->>>   
->>> +static void chr_event(void *opaque, QEMUChrEvent event)
->>> +{
->>> +    SCLPConsole *scon = opaque;
->>> +
->>> +    assert(scon);
->>> +
->>> +    switch (event) {
->>> +    case CHR_EVENT_RESIZE:
->>> +    case CHR_EVENT_MUX_IN:
->>> +        scon->resize = true;
->>> +        scon->resize_init = false;
->>> +        scon->event.event_pending = true;
->>> +        sclp_service_interrupt(0);
->>> +        break;
->>> +    case CHR_EVENT_BREAK:
->>> +    case CHR_EVENT_OPENED:
->>> +    case CHR_EVENT_MUX_OUT:
->>> +    case CHR_EVENT_CLOSED:
->>> +        /* ignore */
->>> +        break;
->>> +    }
->>> +}
->>> +
->>>   /* functions to be called by event facility */
->>>   
->>>   static bool can_handle_event(uint8_t type)
->>> @@ -104,10 +138,37 @@ static sccb_mask_t receive_mask(void)
->>>   static void get_console_data(SCLPEvent *event, uint8_t *buf,
->>> size_t *size,
->>>                                int avail)
->>>   {
->>> +    SCLPConsoleResizeData resize_data;
->>>       SCLPConsole *cons = SCLP_CONSOLE(event);
->>> +    uint16_t rows, cols;
->>> +
->>> +    if (cons->resize) {
->>> +        if (avail < sizeof(resize_data)) {
->>> +            *size = 0;
->>> +            return;
->>> +        }
->>>   
->>> -    /* first byte is hex 0 saying an ascii string follows */
->>> -    *buf++ = '\0';
->>> +        qemu_chr_fe_get_winsize(&cons->chr, &cols, &rows);
->>> +
->>> +        if (cons->resize_init && cols == 0 && rows == 0) {
->>> +            *size = 0;
->>> +        } else {
->>> +            resize_data.type = SCLP_CONSOLE_EVENT_TYPE_RESIZE;
->>> +            resize_data.rows = cpu_to_be16(rows);
->>> +            resize_data.cols = cpu_to_be16(cols);
->>> +
->>> +            memcpy(buf, &resize_data, sizeof(resize_data));
->>> +            *size = sizeof(resize_data);
->>> +        }
->>> +
->>> +        cons->resize = false;
->>> +        cons->resize_init = false;
->>> +        event->event_pending = cons->iov_sclp_rest != 0;
->>> +
->>> +        return;
->>> +    }
->>> +
->>> +    *buf++ = SCLP_CONSOLE_EVENT_TYPE_DATA;
->>>       avail--;
->>>       /* if all data fit into provided SCLP buffer */
->>>       if (avail >= cons->iov_sclp_rest) {
->>> @@ -150,6 +211,9 @@ static int read_event_data(SCLPEvent *event,
->>> EventBufferHeader *evt_buf_hdr,
->>>       to = (uint8_t *)&acd->data;
->>>       avail = *slen - sizeof(ASCIIConsoleData);
->>>       get_console_data(event, to, &src_len, avail);
->>> +    if (src_len == 0) {
->>> +        return 0;
->>> +    }
->>>       acd->ebh.length = cpu_to_be16(sizeof(ASCIIConsoleData) +
->>> src_len);
->>>       acd->ebh.type = SCLP_EVENT_ASCII_CONSOLE_DATA;
->>> @@ -233,22 +297,26 @@ static int console_init(SCLPEvent *event)
->>>       }
->>>       console_available = true;
->>>       qemu_chr_fe_set_handlers(&scon->chr, chr_can_read,
->>> -                             chr_read, NULL, NULL, scon, NULL,
->>> true);
->>> +                             chr_read, chr_event, NULL, scon,
->>> NULL, true);
->>>   
->>>       return 0;
->>>   }
->>>   
->>>   static void console_reset(DeviceState *dev)
->>>   {
->>> -   SCLPEvent *event = SCLP_EVENT(dev);
->>> -   SCLPConsole *scon = SCLP_CONSOLE(event);
->>> -
->>> -   event->event_pending = false;
->>> -   scon->iov_sclp = 0;
->>> -   scon->iov_bs = 0;
->>> -   scon->iov_data_len = 0;
->>> -   scon->iov_sclp_rest = 0;
->>> -   scon->notify = false;
->>> +    SCLPEvent *event = SCLP_EVENT(dev);
->>> +    SCLPConsole *scon = SCLP_CONSOLE(event);
->>> +
->>> +    scon->iov_sclp = 0;
->>> +    scon->iov_bs = 0;
->>> +    scon->iov_data_len = 0;
->>> +    scon->iov_sclp_rest = 0;
->>> +    scon->notify = false;
->>> +
->>> +    /* the guest defaults its terminal size on reset, announce the
->>> real one */
->>> +    scon->resize = true;
->>> +    scon->resize_init = true;
->>> +    event->event_pending = true;
->>>   }
->>
->> This is a style fix, included in a functional patch. I suppose it is 
->> probably borderline, but it might be best to put this in its own
->> patch.
-> 
-> I thought about that, but concluded that a 6-line indentation commit
-> would be too small to warrant its own patch. If you'd prefer it to be
-> split I could also send it as a seperate patch.
+Peter Xu <peterx@redhat.com> writes:
 
-I would prefer it in its own patch if possible as a preparatory commit
-prior to this one.  It keeps git blame easier to read if we have issues
-later and are trying to sort out where the functional changes occurred
-vs what was just whitespace cleanup.
+> On Thu, Sep 24, 2026 at 06:54:25PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > PROBLEM
+>> > =======
+>> >
+>> > Migration reliably hangs with old machine types (7.2-) when these migration
+>> > capabilities are enabled: multifd, postcopy-ram, postcopy-preempt.
+>> >
+>> > Simplest reproducer :
+>> >
+>> >   $ QTEST_QEMU_MACHINE_TYPE=pc-q35-7.2 \
+>> >       QTEST_QEMU_BINARY=./qemu-system-x86_64 \
+>> >       ./tests/qtest/migration-test --full \
+>> >       -r /x86_64/migration/multifd+postcopy/preempt/plain
+>> >
+>> > Current workaround is to kill destination QEMU, cancel the migration on
+>> > source (with/without yank), disable one or more of the features, and retry.
+>> >
+>> > The hang is caused by receiving preempt channel before most of the multifd
+>> > channels, the peek buffer operation will stuck forever.
+>> >
+>> > Incoming side QEMU hang (with relevant tracepoints enabled):
+>> >
+>> >   migrate_set_state new state setup
+>> >   migration_socket_incoming_accepted
+>> >   migration_set_incoming_channel ioc=0x557d82c1caa0 ioctype=qio-channel-socket
+>> >   migration_socket_incoming_accepted
+>> >   migration_set_incoming_channel ioc=0x557d83023840 ioctype=qio-channel-socket
+>> >   multifd_recv_new_channel channel 1
+>> >   migration_socket_incoming_accepted
+>> >   migration_set_incoming_channel ioc=0x557d830c08c0 ioctype=qio-channel-socket
+>> >   multifd_recv_new_channel channel 0
+>> >   multifd_recv_thread_start 1
+>> >   migration_socket_incoming_accepted
+>> >   migration_set_incoming_channel ioc=0x557d8284a010 ioctype=qio-channel-socket
+>> >   multifd_recv_thread_start 0
+>> >   multifd_recv_unfill channel 0 packet_num 0 flags 0x1 next packet size 0
+>> >   multifd_recv_unfill channel 1 packet_num 1 flags 0x1 next packet size 0
+>> >   [dest qemu hangs here]
+>> >
+>> > Incoming side backtrace:
+>> >
+>> >   __syscall_cancel_arch
+>> >   __internal_syscall_cancel
+>> >   __syscall_cancel
+>> >   recvmsg
+>> >   qio_channel_socket_readv
+>> >   qio_channel_readv_full
+>> >   migration_channel_read_peek
+>> >   migration_channel_identify
+>> >   migration_channel_process_incoming
+>> >   socket_accept_incoming_migration
+>> >   qio_net_listener_channel_func
+>> >   qio_channel_fd_source_dispatch
+>> >   g_main_context_dispatch_unlocked.lto_priv
+>> >   g_main_context_dispatch
+>> >   glib_pollfds_poll
+>> >   os_host_main_loop_wait
+>> >   main_loop_wait
+>> >   qemu_main_loop
+>> >   qemu_default_main
+>> >   main
+>> >
+>> > This patch tries to fix it, from incoming side first.  This patch alone
+>> > should enable single-direction migration to this new QEMU.  The next patch
+>> > will propose a fix for the outgoing path, fixing new->old migrations.
+>> >
+>> > BACKGROUND
+>> > ==========
+>> >
+>> > preempt_pre_7_2 used to be a flag marking QEMU releases 7.1/7.2 only
+>> > because they have a flaw on channel establishment on preempt channel.
+>> >
+>> > Now, after we have multifd + postcopy support, new QEMU binaries can
+>> > migrate old machine types with both features enabled.  Juraj reported
+>> > constant migration hang at the very beginning for those old machine types
+>> > in our downstream systems with such setup.  Juraj found it's because of
+>> > this flag.
+>> >
+>> > QEMU source initiates channels in this order on current master when both
+>> > features enabled with postcopy-preempt mode:
+>> >
+>> >   - First, main channel connect() happens,
+>> >   - Second, postcopy_preempt_setup() invokes connect() for preempt channel,
+>> >   - Last, in migration_thread(), multifd_send_setup() invokes connect()s
+>> >     for all the multifd channels
+>> >
+>> > However on an old QEMU, it expect the channels arrive in order of
+>> > "main"->"multifd"->"preempt".  Even on a new QEMU, the destination expects
+>> > the same order of arrival on the channels when the channels are not
+>> > peekable.
+>> >
+>> > For peekable channels (non-tls sockets), this time we'll likely see preempt
+>> > channel appearing very soon, peeking at it causing main thread hang, like
+>> > mentioned in the PROBLEM section above.
+>> >
+>> > SOLUTION
+>> > ========
+>> >
+>> > One major problem of current hang is we try to peek at preempt channel,
+>> > which offers nothing at the beginning.
+>> >
+>> > Since we'll need to accept stream from old binaries, arrival of preempt
+>> > channel early is unavoidable.
+>> >
+>> > What we can do, though, is to allow concurrent monitoring of all channels
+>> > rather than one.  Meanwhile, we shouldn't peek at anything that has no
+>> > data.
+>> >
+>> > migration_channel_read_peek() almost does the wait, but it's too late.
+>> > This patch proposes to watch all channels from the start without reading at
+>> > them at all, relying on an IO watch attached.  This will make sure (1) for
+>> > preempt channel, we never read on it (watch can be gracefully disarmed when
+>> > we know it's preempt channel later) (2) since we have one IO watch for each
+>> > channel, then we can allow accept() to happen in almost any order, process
+>> > only when there's some header to read.
+>> >
+>> > To maintain these watches, a new GArray @channels_early is introduced, with
+>> > each element to be a (ioc, GSource) tuple (@MigEarlyIncomingChannel), so
+>> > that QEMU can manage all the IO watches later with it.  Here I used GSource
+>> > rather than io_tag because the GSource may or may not be attached to the
+>> > default main thread gcontext: when OOB is used, it may be the iothread
+>> > context instead.  IOW, g_source_remove() on io_tags stops working, which
+>> > only works for default main context.
+>> >
+>> > The trick this patch used is when we have the ability to wait on all
+>> > channel headers at the same time, we pick one by one from main and multifd
+>> > channels (since both of the types will contain headers dumped right at the
+>> > very beginning), leave preempt channel alone.  It means, after dest QEMU
+>> > finds all main and multifd channels, there are three possibilities:
+>> >
+>> >   - If preempt not enabled, we finished full channel establishment, done.
+>> >
+>> >   - If preempt enabled,
+>> >
+>> >     - If we have one registered IO watch with the IOC, it must be the
+>> >       preempt channel,
+>> >
+>> >     - If we have no further IO watch, wait for the next accept(), which
+>> >       must be the preempt channel.
+>> >
+>> > This will make channel establish work on incoming side even with the old
+>> > QEMU binaries.
+>> >
+>> > While working on it, I managed to refactor the peeking logic quite a bit:
+>> > we used to have a very convoluted migration_channel_identify() function,
+>> > taking care of two different cases:
+>> >
+>> > (1) when the channel is peekable (like normal socket channels),
+>> > (2) when the channel is not peekable (like TLS or file migrations).
+>> >
+>> > This patch refactored that part to make it crystal clear on how we make
+>> > decisions on which channel is which, and split the peek/identify paths.
+>> >
+>> > One example incoming migration from pc-q35-7.2 after this patch applied,
+>> > and with relevant tracepoints set (8 multifd channels, 1 preempt channel):
+>> >
+>> >   migrate_set_state new state setup
+>> >   migration_channel_process_incoming ioc=0x557dc8af4e20 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc8af4e20 ioctype=qio-channel-socket
+>> >   migration_channel_process_incoming ioc=0x557dc8abc5d0 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc8abc5d0 ioctype=qio-channel-socket
+>> >   migration_channel_process_incoming ioc=0x557dc953d680 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc953d680 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc8abc5d0 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc898a820 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc898a820 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc953d680 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc919bd70 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc919bd70 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc898a820 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc8734b20 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc8734b20 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc919bd70 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc898bdf0 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc898bdf0 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc8734b20 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc968cfd0 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc968cfd0 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc898bdf0 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_channel_process_incoming ioc=0x557dc8c31810 ioctype=qio-channel-socket
+>> >   migration_incoming_channel_watch ioc=0x557dc8c31810 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc968cfd0 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_set_incoming_channel ioc=0x557dc8c31810 ioctype=qio-channel-socket type=MULTIFD
+>> >   migration_set_incoming_channel ioc=0x557dc8af4e20 ioctype=qio-channel-socket type=MAIN
+>> >   migration_start_incoming
+>> >   migrate_set_state new state active
+>> >   migration_channel_process_incoming ioc=0x557dc8966160 ioctype=qio-channel-socket
+>> >   migration_set_incoming_channel ioc=0x557dc8966160 ioctype=qio-channel-socket type=PREEMPT
+>> >
+>> > While at it, I renamed the four channel incoming/outgoing tracepoints, make
+>> > all to follow migration_[incoming|outgoing]_channel_*().  Especially for
+>> > incoming, then we can enable migration_incoming_channel* for incoming
+>> > channel debuggings.
+>> >
+>> > FINAL NOTE ON TLS
+>> > =================
+>> >
+>> > Note that this solution isn't a magic bullet fixing everything.  TLS is not
+>> > fixable with this approach because TLS isn't peekable channel, hence the
+>> > watch won't help.
+>> >
+>> > We can have other ways to hack it to make it work, e.g. we can make TLS
+>> > channels peekable too, but I don't want to pollute the TLS iochannel only
+>> > for this: let's hope handshake will arrive soon so we can drop these code.
+>> >
+>> > For now, when TLS is involved with such old machine type (7.2-), one needs
+>> > to migrate it out with any combination of features except enabling all
+>> > four (multifd + TLS + postcopy + preempt) to a patched binary, after that,
+>> > all combinations will start working.
+>> >
+>> > BugLink: https://redhat.atlassian.net/browse/RHEL-254933
+>> > Fixes: e27418861288 ("migration: enable multifd and postcopy together")
+>> > Reported-by: Juraj Marcin <jmarcin@redhat.com>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  migration/channel.h    |   3 +
+>> >  migration/migration.h  |  35 ++++
+>> >  migration/channel.c    | 414 +++++++++++++++++++++++++++++++++++------
+>> >  migration/migration.c  |  23 ++-
+>> >  migration/trace-events |   7 +-
+>> >  5 files changed, 421 insertions(+), 61 deletions(-)
+>> 
+>> Hi Peter, I think the code looks good, but there are some twists and
+>> turns that I think we can get rid of. I put a fixup patch [1] at the end
+>> with my suggestions and mentioned inline what I changed and why.
+>
+> Thanks, especially for covering the tests while suggesting.
+>
+> I believe I agree with many of them, I'll comment on the rest, see inline.
+>
+>> 
+>> >
+>> > diff --git a/migration/channel.h b/migration/channel.h
+>> > index 678712f291..40bd339a3e 100644
+>> > --- a/migration/channel.h
+>> > +++ b/migration/channel.h
+>> > @@ -49,4 +49,7 @@ bool migration_channel_parse_input(const char *uri,
+>> >                                     MigrationChannel **main_channelp,
+>> >                                     MigrationChannel **cpr_channelp,
+>> >                                     Error **errp);
+>> > +
+>> > +void migration_incoming_free_early_channels(MigrationIncomingState *mis);
+>> > +
+>> >  #endif
+>> > diff --git a/migration/migration.h b/migration/migration.h
+>> > index 683bc7bdd5..6f23e1805b 100644
+>> > --- a/migration/migration.h
+>> > +++ b/migration/migration.h
+>> > @@ -90,6 +90,28 @@ typedef enum {
+>> >      PREEMPT_THREAD_QUIT,
+>> >  } PreemptThreadStatus;
+>> >  
+>> > +typedef struct {
+>> > +    /*
+>> > +     * The GSource we have allocated to track G_IO_IN events for the
+>> > +     * channel.  Note: it may not be attached to the default main gcontext,
+>> > +     * for example, when in case of io watch created during an OOB
+>> > +     * migrate-recover command.
+>> > +     */
+>> > +    GSource *source;
+>> > +    /* The channel we will identify later after getting some buffers to read */
+>> > +    QIOChannel *ioc;
+>> > +} MigEarlyIncomingChannel;
+>> > +
+>> > +typedef struct {
+>> > +    GArray *channels;
+>> > +    /*
+>> > +     * In most cases, channels are only operated with BQl, but since we
+>> > +     * have OOB command support, don't assume it, just use a standalone
+>> > +     * mutex to protect any access to the channels array.
+>> > +     */
+>> > +    QemuMutex mutex;
+>> > +} MigEarlyIncomingChannels;
+>> > +
+>> >  /* State for the incoming migration */
+>> >  struct MigrationIncomingState {
+>> >      QEMUFile *from_src_file;
+>> > @@ -255,6 +277,19 @@ struct MigrationIncomingState {
+>> >  
+>> >      /* Do exit on incoming migration failure */
+>> >      bool exit_on_error;
+>> > +
+>> > +    /*
+>> > +     * Maintains all channels only at early stage.  After incoming
+>> > +     * migration started, this should be an empty array and no use anymore.
+>> > +     *
+>> > +     * TODO: we logically only need this to make new QEMU binaries work for
+>> > +     * old machines who have @preempt_pre_7_2 set on the source, but it's
+>> > +     * also good to have this early stage anyway, making sure when peek the
+>> > +     * channel there will be something in the channel.  Ideally, we should
+>> > +     * manage all migration channels in the future with proper headers,
+>> > +     * then we can drop this.
+>> > +     */
+>> > +    MigEarlyIncomingChannels channels_early;
+>> >  };
+>> >  
+>> >  MigrationIncomingState *migration_incoming_get_current(void);
+>> > diff --git a/migration/channel.c b/migration/channel.c
+>> > index b9065efd03..acb7ef5206 100644
+>> > --- a/migration/channel.c
+>> > +++ b/migration/channel.c
+>> > @@ -12,6 +12,8 @@
+>> >  
+>> >  #include "qemu/osdep.h"
+>> >  #include "qemu/cutils.h"
+>> > +#include "qemu/main-loop.h"
+>> > +#include "qemu/error-report.h"
+>> >  #include "channel.h"
+>> >  #include "exec.h"
+>> >  #include "fd.h"
+>> > @@ -146,61 +148,84 @@ bool migration_has_all_channels(void)
+>> >      return true;
+>> >  }
+>> >  
+>> > -static MigChannelType migration_channel_identify(MigrationIncomingState *mis,
+>> > -                                                 QIOChannel *ioc, Error **errp)
+>> > +static bool qio_channel_is_peekable(QIOChannel *ioc)
+>> > +{
+>> > +    return qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+>> > +}
+>> > +
+>> > +/*
+>> > + * With multiple channels, it is possible that we receive channels out of
+>> > + * order on destination side, causing incorrect mapping of source channels
+>> > + * on destination side.
+>> > + *
+>> > + * When the channel is peekable (e.g. non-TLS socket channels), check
+>> > + * channel MAGIC to decide type of channel.
+>> > + *
+>> > + * Please note this is best effort, postcopy preempt channel does not send
+>> > + * any magic number so avoid it for postcopy live migration.
+>> > + *
+>> > + * Returns: >0 if success, ==0 (CH_NONE) if error.  If error happened,
+>> > + * *errp must be set.
+>> > + */
+>> > +static MigChannelType migration_channel_peek(MigrationIncomingState *mis,
+>> > +                                             QIOChannel *ioc,
+>> > +                                             Error **errp)
+>> >  {
+>> >      MigChannelType channel = CH_NONE;
+>> >      uint32_t channel_magic = 0;
+>> >      int ret = 0;
+>> >  
+>> > -    if (!migration_has_main_and_multifd_channels()) {
+>> > -        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+>> > -            /*
+>> > -             * With multiple channels, it is possible that we receive channels
+>> > -             * out of order on destination side, causing incorrect mapping of
+>> > -             * source channels on destination side. Check channel MAGIC to
+>> > -             * decide type of channel. Please note this is best effort,
+>> > -             * postcopy preempt channel does not send any magic number so
+>> > -             * avoid it for postcopy live migration. Also tls live migration
+>> > -             * already does tls handshake while initializing main channel so
+>> > -             * with tls this issue is not possible.
+>> > -             */
+>> > -            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+>> > -                                              sizeof(channel_magic), errp);
+>> > -            if (ret != 0) {
+>> > -                goto out;
+>> > -            }
+>> > +    assert(qio_channel_is_peekable(ioc));
+>> >  
+>> > -            channel_magic = be32_to_cpu(channel_magic);
+>> > -            if (channel_magic == QEMU_VM_FILE_MAGIC) {
+>> > -                channel = CH_MAIN;
+>> > -            } else if (channel_magic == MULTIFD_MAGIC) {
+>> > -                assert(migrate_multifd());
+>> > -                channel = CH_MULTIFD;
+>> > -            } else if (!mis->from_src_file &&
+>> > -                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>> > -                /* reconnect main channel for postcopy recovery */
+>> > -                channel = CH_MAIN;
+>> > -            } else {
+>> > -                error_setg(errp, "unknown channel magic: %u", channel_magic);
+>> > -            }
+>> > -        } else if (mis->from_src_file && migrate_multifd()) {
+>> > -            /*
+>> > -             * Non-peekable channels like tls/file are processed as
+>> > -             * multifd channels when multifd is enabled.
+>> > -             */
+>> > -            channel = CH_MULTIFD;
+>> > -        } else if (!mis->from_src_file) {
+>> > -            channel = CH_MAIN;
+>> > -        } else {
+>> > -            error_setg(errp, "non-peekable channel used without multifd");
+>> > -        }
+>> > +    ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+>> > +                                      sizeof(channel_magic), errp);
+>> > +    if (ret != 0) {
+>> > +        /* Failed */
+>> > +        return channel;
+>> > +    }
+>> > +
+>> > +    channel_magic = be32_to_cpu(channel_magic);
+>> > +
+>> > +    if (channel_magic == QEMU_VM_FILE_MAGIC) {
+>> > +        channel = CH_MAIN;
+>> > +    } else if (channel_magic == MULTIFD_MAGIC) {
+>> > +        assert(migrate_multifd());
+>> > +        channel = CH_MULTIFD;
+>> > +    } else if (!mis->from_src_file &&
+>> > +               mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>> > +        /* reconnect main channel for postcopy recovery */
+>> > +        channel = CH_MAIN;
+>> 
+>> This is not peeking, maybe it should be somewhere else. Not this patch's
+>> fault, we can think about it some other day.
+>
+> If we separate "peek" from "identify", this one still falls into "peek".
+>
+> Per my definition, the latter "identify" only does "pick channels by order
+> they arrive".  Then this doesn't belong to that. As it needs to "peek for
+> at least something readable", rather than blindly rely on the order of
+> arrival.
+>
+> But yeah, it'll be good we leave this for later regardless.
+>
+>> 
+>> >      } else {
+>> > +        error_setg(errp, "Unknown channel magic: %u", channel_magic);
+>> > +    }
+>> > +
+>> > +    return channel;
+>> > +}
+>> > +
+>> > +/*
+>> > + * Returns: >0 if success, ==0 (CH_NONE) if error.  If error happened,
+>> > + * *errp must be set.
+>> > + */
+>> > +static MigChannelType migration_channel_identify(MigrationIncomingState *mis,
+>> > +                                                 QIOChannel *ioc, Error **errp)
+>> > +{
+>> > +    MigChannelType channel = CH_NONE;
+>> > +
+>> > +    if (migration_has_main_and_multifd_channels()) {
+>> >          assert(migrate_postcopy_preempt());
+>> >          channel = CH_POSTCOPY;
+>> 
+>> This check is the same as the one at
+>> migration_channel_process_incoming(). I think we can simplify this.
+>
+> True, this path should be dead code when original patch applied.  I have a
+> slight preference on keeping the other one instead (which I know you tend
+> to think "awkward").  I'll explain below, and we'll see.
+>
+>> 
+>> See [1].
+>> 
+>> > +    } else if (!mis->from_src_file) {
+>> > +        channel = CH_MAIN;
+>> > +    } else if (migrate_multifd()) {
+>> > +        /*
+>> > +         * Non-peekable channels like tls/file are processed as
+>> > +         * multifd channels when multifd is enabled.
+>> > +         */
+>> > +        channel = CH_MULTIFD;
+>> > +    } else {
+>> > +        error_setg(errp, "Unexpected non-peekable channel observed");
+>> >      }
+>> >  
+>> > -out:
+>> >      return channel;
+>> >  }
+>> >  
+>> > @@ -214,31 +239,275 @@ static void migration_incoming_error_propagate(MigrationIncomingState *mis,
+>> >      }
+>> >  }
+>> >  
+>> > +/* Must be with mis->channels_early.mutex held */
+>> > +static void
+>> > +migration_incoming_early_channel_insert(MigrationIncomingState *mis,
+>> > +                                        QIOChannel *ioc,
+>> > +                                        GSource *source)
+>> > +{
+>> > +    MigEarlyIncomingChannel chan = {
+>> > +        .source = source,
+>> > +        .ioc = ioc,
+>> > +    };
+>> > +
+>> > +    object_ref(OBJECT(ioc));
+>> > +    g_source_ref(source);
+>> > +
+>> > +    g_array_append_val(mis->channels_early.channels, chan);
+>> > +}
+>> > +
+>> > +static void migration_incoming_early_channel_free(GArray *channels, int i)
+>> > +{
+>> > +    MigEarlyIncomingChannel *chan;
+>> > +
+>> > +    chan = &g_array_index(channels, MigEarlyIncomingChannel, i);
+>> > +
+>> > +    g_source_destroy(chan->source);
+>> > +    g_source_unref(chan->source);
+>> > +    object_unref(OBJECT(chan->ioc));
+>> > +
+>> > +    g_array_remove_index_fast(channels, i);
+>> > +}
+>> > +
+>> > +/*
+>> > + * Remove this channel from the monitoring of @channels_early array.
+>> > + * Return true if found and successful, false otherwise.
+>> > + */
+>> > +static bool
+>> > +migration_incoming_early_channel_remove(MigrationIncomingState *mis,
+>> > +                                        QIOChannel *ioc)
+>> > +{
+>> > +    GArray *channels = mis->channels_early.channels;
+>> > +    MigEarlyIncomingChannel *chan;
+>> > +    int i;
+>> > +
+>> > +    QEMU_LOCK_GUARD(&mis->channels_early.mutex);
+>> > +
+>> > +    for (i = 0; i < channels->len; i++) {
+>> > +        chan = &g_array_index(channels, MigEarlyIncomingChannel, i);
+>> > +        if (chan->ioc != ioc) {
+>> > +            continue;
+>> > +        }
+>> > +        migration_incoming_early_channel_free(channels, i);
+>> > +        return true;
+>> > +    }
+>> > +
+>> > +    return false;
+>> > +}
+>> > +
+>> > +void migration_incoming_free_early_channels(MigrationIncomingState *mis)
+>> > +{
+>> > +    GArray *channels = mis->channels_early.channels;
+>> > +
+>> > +    QEMU_LOCK_GUARD(&mis->channels_early.mutex);
+>> > +
+>> > +    while (channels->len) {
+>> > +        migration_incoming_early_channel_free(channels, 0);
+>> > +    }
+>> > +}
+>> > +
+>> > +static bool migration_incoming_setup_channel(QIOChannel *ioc,
+>> > +                                             MigChannelType ch,
+>> > +                                             Error **errp)
+>> > +{
+>> > +    trace_migration_incoming_channel_set(ioc,
+>> > +                                         object_get_typename(OBJECT(ioc)),
+>> > +                                         mig_channel_str[ch]);
+>> > +    migration_ioc_register_yank(ioc);
+>> > +    /* TODO: make this return the success status instead */
+>> > +    migration_incoming_setup(ioc, ch, errp);
+>> 
+>> I implemented this TODO. It allows us to skip the main+mfd check after
+>> starting migration because migration_incoming_setup() already returns
+>> that value. See [1].
+>
+> Actually now looking at this patch, this TODO is so trivial.. yes I'll do
+> it.
+>
+> But when I do it, I think it too error prone to return a value returned
+> from migration_has_main_and_multifd_channels() for this function.  I
+> changed it to simple true/false for success or not instead.  I'll attach a
+> 2nd version of the fixup patch at the end, applying most changes you
+> suggested but stick with returning true/false for this one.
+>
+>> 
+>> > +
+>> > +    return *errp == NULL;
+>> > +}
+>> > +
+>> >  static bool migration_incoming_channel_install(MigrationIncomingState *mis,
+>> >                                                 QIOChannel *ioc,
+>> >                                                 Error **errp)
+>> >  {
+>> > -    MigChannelType ch = migration_channel_identify(mis, ioc, errp);
+>> > +    MigChannelType ch;
+>> > +    bool ret;
+>> > +
+>> > +    if (qio_channel_is_peekable(ioc)) {
+>> 
+>> This check is redundant, we can only arrive here via the watch and we
+>> checked peekable already at migration_channel_process_incoming. See [1].
+>
+> Shouldn't? Because the file path uses migration_incoming_channel_install()
+> too, afaict.
+>
+> But I see how your question came, which I'm guessing: I used this function
+> in a peekable only path, so here what I can do minimum is I can move the
+> migration_channel_peek() to the peekable path, then move the other path of
+> migration_channel_identify() to the e.g. file path.  I'll do that.
+>
+>> 
+>> > +        ch = migration_channel_peek(mis, ioc, errp);
+>> > +    } else {
+>> > +        ch = migration_channel_identify(mis, ioc, errp);
+>> > +    }
+>> >  
+>> >      if (!ch) {
+>> > -        assert(*errp);
+>> >          return false;
+>> >      }
+>> >  
+>> > -    trace_migration_set_incoming_channel(ioc,
+>> > -                                         object_get_typename(OBJECT(ioc)),
+>> > -                                         mig_channel_str[ch]);
+>> > -    migration_ioc_register_yank(ioc);
+>> > +    ret = migration_incoming_setup_channel(ioc, ch, errp);
+>> > +    if (!ret) {
+>> > +        return false;
+>> > +    }
+>> >  
+>> > -    if (migration_incoming_setup(ioc, ch, errp)) {
+>> > +    /* Installation succeeded, kickoff migration if needed */
+>> > +    if (migration_has_main_and_multifd_channels()) {
+>> >          migration_start_incoming();
+>> >      }
+>> >  
+>> > -    if (*errp) {
+>> > -        return false;
+>> > +    return true;
+>> > +}
+>> > +
+>> > +static void
+>> > +migration_incoming_channel_preempt_setup(QIOChannel *ioc)
+>> > +{
+>> > +    assert(migrate_postcopy_preempt());
+>> > +    /* Installation of preempt channel should never fail */
+>> > +    migration_incoming_setup_channel(ioc, CH_POSTCOPY, &error_abort);
+>> > +}
+>> > +
+>> > +static void
+>> > +migration_incoming_detect_preempt_channel(MigrationIncomingState *mis)
+>> > +{
+>> > +    GArray *channels = mis->channels_early.channels;
+>> > +    MigEarlyIncomingChannel *chan;
+>> > +
+>> > +    QEMU_LOCK_GUARD(&mis->channels_early.mutex);
+>> > +
+>> > +    /* When preempt mode not enabled, nothing to detect.. */
+>> > +    if (!migrate_postcopy_preempt()) {
+>> > +        /*
+>> > +         * .. but if we found something pending, throw an error only, which
+>> > +         * should not happen.  Even if it happens, resources will still be
+>> > +         * released after incoming migration is completedly.
+>> > +         */
+>> > +        if (channels->len) {
+>> > +            error_report("%s: Found %u unused channels",
+>> > +                         __func__, channels->len);
+>> > +        }
+>> > +        return;
+>> >      }
+>> >  
+>> > -    return true;
+>> > +    /* Preempt channel hasn't yet arrived?  Process it later */
+>> > +    if (!channels->len) {
+>> > +        return;
+>> > +    }
+>> > +
+>> > +    /*
+>> > +     * More than one channel should never happen.. capture it in case if
+>> > +     * it happens, then there's not much we can do.
+>> > +     */
+>> > +    if (channels->len > 1) {
+>> > +        error_report("%s: Found %u unused channels, "
+>> > +                     "can't identify preempt channel",
+>> > +                     __func__, channels->len);
+>> > +        return;
+>> > +    }
+>> > +
+>> > +    assert(channels->len == 1);
+>> > +    /* This is the preempt channel, install it directly */
+>> > +    chan = &g_array_index(channels, MigEarlyIncomingChannel, 0);
+>> > +    migration_incoming_channel_preempt_setup(chan->ioc);
+>> > +    migration_incoming_early_channel_free(channels, 0);
+>> > +}
+>> > +
+>> > +static gboolean migration_incoming_channel_readable(QIOChannel *ioc,
+>> > +                                                    GIOCondition condition,
+>> > +                                                    gpointer opaque)
+>> > +{
+>> > +    MigrationIncomingState *mis = opaque;
+>> > +    Error *local_err = NULL;
+>> > +
+>> > +    /*
+>> > +     * No need to monitor this channel anymore as long as anything arrived,
+>> > +     * remove it from tracking.
+>> > +     *
+>> > +     * NOTE: this means if partial data arrived we may still block here,
+>> > +     * but it shouldn't happen in production, only malicious stream.  Since
+>> > +     * migration stream is trusted (either due to trusted network, or TLS),
+>> > +     * that's non-issue.
+>> 
+>> Could we check the amount of data and keep waiting?
+>
+> We could, but it is about the security side of things, I'd not bother in
+> this patch, and maybe we don't bother forever, hopping that at the end of
+> this year we enable handshake in next release, then this is a ioc read()
+> block reading, as simple as that.
+>
 
-With the whitespace changes broken out:
+Ok, no worries.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+>> 
+>> > +     *
+>> > +     * NOTE2: this will also release the ioc ref that we used to hold, but
+>> > +     * it's fine since we have at least one more refcount in the current
+>> > +     * event handler.
+>> 
+>> I don't understand "one more ref in the event handler". Looks like
+>> you're trying to say the refcount is consistent, but why even mention
+>> it? I may be missing something.
+>
+> Not about consistency, it's about holding at least one refcount to make sure
+> migration_incoming_early_channel_remove() won't already free the IOC.
+>
+> But I think maybe you're right: likely nobody will notice the context of
+> this path processing the gsource, and maybe this sentence brings more
+> confusion than clarity?  Let me know, I can drop this line.
+>
+
+You mean the inc at qio_channel_create_fd_watch()? Then we don't need
+this comment.
+
+>> 
+>> > +     *
+>> > +     * NOTE3: it's theoretically possible that this entry is gone reaching
+>> > +     * here. Example: the main thread is doing incoming cleanup having this
+>> > +     * one removed, while this watch can be registered on the monitor
+>> > +     * iothread's context and fired at the exact same time but in the
+>> > +     * iothread instead.  If it happens, skip the rest.  I'm not sure if
+>> > +     * this could happen at all, may depend on iothread lifespan management
+>> > +     * in the main thread, but be prepared.
+>> 
+>> I wonder if we should extend the locking a bit further. Not because of
+>> what you mentioned here^, but because everything the code running on the
+>> monitor thread touches can race with changes from the main loop. All of
+>> these migrate_foo_bar() helpers, the QEMUFiles, caps, params, etc.
+>
+> Is that about the new lock (mis->channels_early.mutex) or existing code?
+> Possible to do on top, or a new concern introduced from this patch?
+>
+
+If we can reach migration_channel_process_incoming() via OOB command,
+then everything below it needs to be audited to ensure we're not
+changing global state concurrently. Mostly pre-existing, but you are
+adding more code inside the danger window.
+
+>> 
+>> > +     */
+>> > +    if (!migration_incoming_early_channel_remove(mis, ioc)) {
+>> > +        goto out;
+>> > +    }
+>> > +
+>> 
+>> I moved the peek into here and passed the already identified
+>> channel into migration_incoming_channel_install(). See [1].
+>
+> Agree on this change, better.
+>
+>> 
+>> > +    if (!migration_incoming_channel_install(mis, ioc, &local_err)) {
+>> > +        goto out;
+>> > +    }
+>> > +
+>> > +    if (migration_has_main_and_multifd_channels()) {
+>> 
+>> This check became redundant because the _setup routine already returns
+>> it. See [1].
+>
+> I didn't adopt this in my new fixup, because I want to avoid returning that
+> info deep from stack.  Let's continue the discussion in my fixup there as a
+> reply.
+>
+
+I wrote a migration_can_start() routine and tried to incorporate some
+preempt channel knowledge into it, but it didn't work so well. I find it
+a bit opaque to look only at main+mfd channels to start the
+migration. Since nothing better came up so far, I agree you keep this
+here.
+
+>> 
+>> > +        /*
+>> > +         * Possibilities when reaching here:
+>> > +         *
+>> > +         * (1) if preempt not enabled, this should be no-op, all done,
+>> > +         * (2) if preempt enabled,
+>> > +         *   (2.a) preempt channel arrived @channels_early, handle it now
+>> > +         *   (2.b) preempt channel not arrived, to be handled in
+>> > +         *         migration_channel_process_incoming() later
+>> > +         */
+>> > +        migration_incoming_detect_preempt_channel(mis);
+>> 
+>> Moved this into migration_incoming_channel_install(). See [1].
+>
+> Since my version used migration_incoming_channel_install() for both
+> peekable and non-peekable, this path is not needed for non-peekable.
+> I still left it here, assuming it's clearer it's only needed for peekable.
+> But you can reply with your thought.  I hope at least we can be more
+> focused with most of the rest addressed.
+>
+
+I tend to prefer having a single path and make it a noop via code than
+to have two paths and use our knowledge of the code to decide what goes
+where. Here we can't escape having two paths, so it's not a huge deal.
+
+>> 
+>> > +    }
+>> > +
+>> > +out:
+>> > +    if (local_err) {
+>> > +        migration_incoming_error_propagate(mis, local_err);
+>> > +    }
+>> > +
+>> > +    /*
+>> > +     * NOTE: we should have already detached the GSource, returning
+>> > +     * G_SOURCE_REMOVE to be logically consistent only.
+>> > +     */
+>> > +    return G_SOURCE_REMOVE;
+>> > +}
+>> > +
+>> > +static void migration_incoming_channel_watch(MigrationIncomingState *mis,
+>> > +                                             QIOChannel *ioc)
+>> > +{
+>> > +    GMainContext *context = g_main_context_get_thread_default();
+>> > +    GSource *source;
+>> > +    guint io_tag;
+>> > +
+>> > +    trace_migration_incoming_channel_watch(ioc,
+>> > +                                           object_get_typename(OBJECT(ioc)));
+>> > +
+>> > +    /*
+>> > +     * Careful: this can be run from either the main thread or the monitor
+>> > +     * iothread when migrate_recover is used with OOB=on, so we need to
+>> > +     * take the lock and use the full version to specify the correct
+>> > +     * context.
+>> > +     */
+>> > +    QEMU_LOCK_GUARD(&mis->channels_early.mutex);
+>> > +
+>> > +    /*
+>> > +     * We should never watch an @ioc that is not peekable, because there's
+>> > +     * no point.  What is worse is we lose the real order of accept()s via
+>> > +     * the asynchronous IO watch operation.
+>> > +     *
+>> > +     * Another note is TLS channel (non-peekable) may or may not work
+>> > +     * properly with IO watch due to its current .io_create_watch() impl,
+>> > +     * which is another story.  Just guard both points.
+>> > +     */
+>> > +    assert(qio_channel_is_peekable(ioc));
+>> > +    io_tag = qio_channel_add_watch_full(ioc, G_IO_IN,
+>> > +                                        migration_incoming_channel_readable,
+>> > +                                        mis, NULL, context);
+>> > +
+>> > +    /*
+>> > +     * Replace this if one day qio_channel_add_watch*() API can directly
+>> > +     * return the GSource*.. for now, stick with it.
+>> > +     */
+>> > +    source = g_main_context_find_source_by_id(context, io_tag);
+>> > +    /*
+>> > +     * Nothing can race with adding the IO watch, aka, concurrent removal
+>> > +     * is not possible when we have the lock.  So it must be present.
+>> > +     */
+>> > +    assert(source);
+>> > +
+>> > +    migration_incoming_early_channel_insert(mis, ioc, source);
+>> >  }
+>> >  
+>> >  /**
+>> > @@ -254,13 +523,44 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>> >      MigrationIncomingState *mis = migration_incoming_get_current();
+>> >      Error *local_err = NULL;
+>> >  
+>> > -    trace_migration_channel_process_incoming(
+>> > +    trace_migration_incoming_channel_process(
+>> >          ioc, object_get_typename(OBJECT(ioc)));
+>> >  
+>> >      if (migrate_channel_requires_tls_upgrade(ioc)) {
+>> >          migration_tls_channel_process_incoming(ioc, &local_err);
+>> >      } else {
+>> > -        migration_incoming_channel_install(mis, ioc, &local_err);
+>> > +        if (migration_has_main_and_multifd_channels()) {
+>> 
+>> The fact that this check must come before everything is a major
+>> weirdness. In fact, this is conceptually the same case as the first
+>> branch in migration_channel_identify(). I therefore moved that function
+>> to this point and added a comment explaining why this must come
+>> first. See [1].
+>
+> This is one part that I left alone so far.  My reason is that preempt
+> channel needs special care at least for peekable, it's because it's not
+> peekable there when hitting this case.  So we need to have this separate
+> path.  This is also relevant to below, where..
+>
+
+You removed the check from _identify, so it's less confusing now.
+
+>> 
+>> > +            /*
+>> > +             * If all main+multifd channels are present already, this must
+>> > +             * be the preempt channel.
+>> > +             *
+>> > +             * QEMU can't register an IO watch for it if there is only the
+>> > +             * last preempt channel left, because it means the IO watch
+>> > +             * will never fire and nobody will pick it up: we rely on the
+>> > +             * one before the last one to pick both.
+>> > +             *
+>> > +             * See comment in migration_incoming_channel_readable() on
+>> > +             * the migration_incoming_detect_preempt_channel() call.
+>> > +             */
+>> > +            migration_incoming_channel_preempt_setup(ioc);
+>> > +        } else {
+>> > +            /*
+>> > +             * Register an IO watch for peekable channels, so that channels
+>> > +             * can be accept()ed with any order.
+>> > +             *
+>> > +             * Non-peekable channels (file, TLS, etc.) cannot register IO
+>> > +             * watch, not only because there's no data to look at to help
+>> > +             * making the decision, but also because after registering we
+>> > +             * will lose the real ordering we get from accept(), which is
+>> > +             * still so far the only source of truth to identify a channel
+>> > +             * in such case.
+>> > +             */
+>> > +            if (qio_channel_is_peekable(ioc)) {
+>> 
+>> I moved this line into migration_channel_identify(). That way we ensure
+>> the ordering regarding the main+mfd check. The watch is still installed
+>> at this point. See [1].
+>
+> ... you suggested moving this into migration_channel_identify().
+>
+> Personally I think it's against my purpose of split: I wanted to make
+> migration_channel_identify() to only rely on order of arrival to identify
+> channels, nothing else.  Then for all peekable handling, it should be
+> inside the _peek() function.
+>
+
+ok
+
+>> 
+>> > +                migration_incoming_channel_watch(mis, ioc);
+>> > +            } else {
+>> > +                migration_incoming_channel_install(mis, ioc, &local_err);
+>> 
+>> This invocation of install does not check for the preempt channel after
+>> it returns. Is this simply assuming that if a non-peekable channel is
+>> present then there will be no preempt channel at all?
+>> 
+>> Or if main+TLS is the first channel, then the next channel will be
+>> preempt and already enter the first branch?
+>
+> Yes.  It's because for non-peekable, preempt channel is only processed
+> above (in my patch logic, with/without my new fixup to be attached).
+>
+> For peekable, preempt channel may be picked up by the 2nd last channel,
+> which is not possible for non-peekable, so that is special way for peekable
+> channels only.
+>
+>> 
+>> > +            }
+>> > +        }
+>> >      }
+>> >  
+>> >      if (local_err) {
+>> > @@ -270,7 +570,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>> >  
+>> >  void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
+>> >  {
+>> > -    trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
+>> > +    trace_migration_outgoing_channel_set(ioc, object_get_typename(OBJECT(ioc)));
+>> >  
+>> >      if (migrate_channel_requires_tls_upgrade(ioc)) {
+>> >          Error *local_err = NULL;
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index cfadcc79c2..4cc4077a76 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -334,6 +334,10 @@ void migration_object_init(void)
+>> >      current_incoming->page_requested = g_tree_new(page_request_addr_cmp);
+>> >  
+>> >      current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+>> > +    /* zero_terminated=false, clear_=true */
+>> 
+>> There's an extra _ after 'clear' I think.
+>
+> See?  I know someone else will get confused too. :)
+>
+
+hahaha crap. Put a +1 next to that comment and let's increment it every
+time someone mentions this.
+
+> https://docs.gtk.org/glib/type_func.Array.new.html
+>
+>     GArray*
+>     g_array_new (
+>         gboolean zero_terminated,
+>         gboolean clear_,
+>         guint element_size
+>     )
+>
+>     ...
+>
+>     clear_
+>     Type: gboolean
+>
+>     If true, GArray elements should be automatically cleared to 0 when they are allocated.
+>
+>> 
+>> > +    current_incoming->channels_early.channels =
+>> > +        g_array_new(FALSE, TRUE, sizeof(MigEarlyIncomingChannel));
+>> > +    qemu_mutex_init(&current_incoming->channels_early.mutex);
+>> >  
+>> >      migration_object_check(current_migration, &error_fatal);
+>> >  
+>> > @@ -447,6 +451,24 @@ void migration_incoming_state_destroy(void)
+>> >      MigrationIncomingState *mis = migration_incoming_get_current();
+>> >      PostcopyState ps = postcopy_state_get();
+>> >  
+>> > +    /* Cleanup listener to make sure no further accept() for sockets */
+>> > +    migration_incoming_transport_cleanup(mis);
+>> > +
+>> > +    /*
+>> > +     * It's safer to free channel watches earlier than most of the rest, in
+>> > +     * case the IO watches could fire in the monitor iothread concurrently
+>> > +     * against this function.
+>> 
+>> Now I'm getting worried. Cleanup races are super annoying. This is
+>> "just" about the recovery command, right?
+>
+> I think so.
+>
+> Note: I didn't have any way to trigger any crash at all, this is something
+> when I had AI review my code and it pointed out this.  I thought I should
+> be safe than sorry.
+>
+
+It will happen in CI one day when we least expect it, don't worry. =)
+
+It's fine, I don't think it's good use of our time to overthink this at
+the moment.
+
+> Below is my fixup.  The hope is I addressed most of them but not all, with
+> reasonings inline above.  Let me know.
+>
+>
+> ===8<===
+> From eb03b1b648b91a317a8a7559240186c87d835b8c Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Mon, 28 Sep 2026 11:35:20 -0400
+> Subject: [PATCH] fixup! migration: Fix incoming channel race with multifd and
+>  preempt_pre_7_2
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/channel.c   | 42 +++++++++++++++++-------------------------
+>  migration/migration.c |  9 +++------
+>  2 files changed, 20 insertions(+), 31 deletions(-)
+>
+> diff --git a/migration/channel.c b/migration/channel.c
+> index acb7ef5206..72de9c9778 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -204,17 +204,14 @@ static MigChannelType migration_channel_peek(MigrationIncomingState *mis,
+>  
+>  /*
+>   * Returns: >0 if success, ==0 (CH_NONE) if error.  If error happened,
+> - * *errp must be set.
+> + * *errp must be set.  NOTE: preempt channel is done separately.
+>   */
+>  static MigChannelType migration_channel_identify(MigrationIncomingState *mis,
+>                                                   QIOChannel *ioc, Error **errp)
+>  {
+>      MigChannelType channel = CH_NONE;
+>  
+> -    if (migration_has_main_and_multifd_channels()) {
+> -        assert(migrate_postcopy_preempt());
+> -        channel = CH_POSTCOPY;
+
+Fair.
+
+> -    } else if (!mis->from_src_file) {
+> +    if (!mis->from_src_file) {
+>          channel = CH_MAIN;
+>      } else if (migrate_multifd()) {
+>          /*
+> @@ -314,31 +311,16 @@ static bool migration_incoming_setup_channel(QIOChannel *ioc,
+>                                           object_get_typename(OBJECT(ioc)),
+>                                           mig_channel_str[ch]);
+>      migration_ioc_register_yank(ioc);
+> -    /* TODO: make this return the success status instead */
+> -    migration_incoming_setup(ioc, ch, errp);
+>  
+> -    return *errp == NULL;
+> +    return migration_incoming_setup(ioc, ch, errp);
+>  }
+>  
+>  static bool migration_incoming_channel_install(MigrationIncomingState *mis,
+>                                                 QIOChannel *ioc,
+> +                                               MigChannelType ch,
+>                                                 Error **errp)
+>  {
+> -    MigChannelType ch;
+> -    bool ret;
+> -
+> -    if (qio_channel_is_peekable(ioc)) {
+> -        ch = migration_channel_peek(mis, ioc, errp);
+> -    } else {
+> -        ch = migration_channel_identify(mis, ioc, errp);
+> -    }
+> -
+> -    if (!ch) {
+> -        return false;
+> -    }
+> -
+> -    ret = migration_incoming_setup_channel(ioc, ch, errp);
+> -    if (!ret) {
+> +    if (!migration_incoming_setup_channel(ioc, ch, errp)) {
+>          return false;
+>      }
+>  
+> @@ -409,6 +391,7 @@ static gboolean migration_incoming_channel_readable(QIOChannel *ioc,
+>  {
+>      MigrationIncomingState *mis = opaque;
+>      Error *local_err = NULL;
+> +    MigChannelType ch;
+>  
+>      /*
+>       * No need to monitor this channel anymore as long as anything arrived,
+> @@ -435,7 +418,12 @@ static gboolean migration_incoming_channel_readable(QIOChannel *ioc,
+>          goto out;
+>      }
+>  
+> -    if (!migration_incoming_channel_install(mis, ioc, &local_err)) {
+> +    ch = migration_channel_peek(mis, ioc, &local_err);
+> +    if (!ch) {
+> +        goto out;
+> +    }
+> +
+> +    if (!migration_incoming_channel_install(mis, ioc, ch, &local_err)) {
+>          goto out;
+>      }
+>  
+> @@ -522,6 +510,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      Error *local_err = NULL;
+> +    MigChannelType ch;
+>  
+>      trace_migration_incoming_channel_process(
+>          ioc, object_get_typename(OBJECT(ioc)));
+> @@ -558,7 +547,10 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>              if (qio_channel_is_peekable(ioc)) {
+>                  migration_incoming_channel_watch(mis, ioc);
+
+Please carry my "async" comment if possible. It helps when navigating
+the code because there's a migration_incoming_channel_install() just
+below so we can jump to it without having to read
+migration_incoming_channel_watch() definition.
+
+>              } else {
+> -                migration_incoming_channel_install(mis, ioc, &local_err);
+> +                ch = migration_channel_identify(mis, ioc, &local_err);
+> +                if (ch) {
+> +                    migration_incoming_channel_install(mis, ioc, ch, &local_err);
+> +                }
+>              }
+>          }
+>      }
+> diff --git a/migration/migration.c b/migration/migration.c
+> index adba154e46..242b8ed812 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -854,10 +854,7 @@ out:
+>      migrate_incoming_unref_outgoing_state();
+>  }
+>  
+> -/*
+> - * Returns whether all the necessary channels to proceed with the
+> - * incoming migration have been established without error.
+> - */
+> +/* Return true if success, false otherwise (with *errp set) */
+
+Probably not needed, this is the expected way.
+
+>  bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
+>  {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> @@ -886,13 +883,13 @@ bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
+>          assert(!mis->postcopy_qemufile_dst);
+>          f = qemu_file_new_input(ioc);
+>          postcopy_preempt_new_channel(mis, f);
+> -        return false;
+> +        break;
+
+I see. Maybe a separate preliminary patch for this change?
+
+>  
+>      default:
+>          g_assert_not_reached();
+>      }
+>  
+> -    return migration_has_main_and_multifd_channels();
+> +    return true;
+>  }
+>  
+>  void migration_outgoing_setup(QIOChannel *ioc)
+> -- 
+> 2.55.0
 
