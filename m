@@ -4,113 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FBECA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 14:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AFECA5FA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 14:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBCHv-0000qX-Lk; Mon, 28 Sep 2026 10:25:03 -0400
+	id 1xBCJ4-0001OW-Sp; Mon, 28 Sep 2026 10:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBCHp-0000pv-Pr
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:24:57 -0400
-Received: from mail-ed2-x0d.google.com ([2a00:1450:4864:33::d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBCHn-0005La-LA
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:24:57 -0400
-Received: by mail-ed2-x0d.google.com with SMTP id
- 4fb4d7f45d1cf-6ab06778bdfso2408575a12.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 07:24:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790605494; cv=none;
- d=google.com; s=arc-20260327;
- b=IYxF0SLF8+aoWwVnldjQGq27ausX1eb2SFuhNtBohlOggx/TmLdiqVaALk7/ZhY349
- ikg4tuQzcThI6Us89qDtC9ProWcXdOewLzVCp3UwezVvpCrLbNTL7wC3b5chx3UR6AsU
- MK0g2NN4/XSKTf1KeBYcNXu1zAcps4gOan6pdpvGB3O7KwyQcYDO75RcHq1m7lIdiEUN
- MEmiKNT7y8iZCngonE6hO9qeIRaKd0WP13RTUd1bkkicO4fCyvLEJrL+mtSuI03d/LqQ
- yQOrkrTHLOAAQzI0u2QWVsl3zgW+e/Ngcv2P5x9IT85vxUECK3rIEe1Efv/e+tslyxA4
- Zwwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=cFi7chTl/dXnccUH1qK76VepQPSMCTxgrhW/RRhkUhE=;
- fh=4eeYYN7SaSVMgnkle1XNo8n3Za5vqgebzO1th9Am2XA=;
- b=Xn1BG2FJ5ObYSNdOM1G2+LAbFAyBdDwlIsFFOZpBnMp9L4h7ZxVCAlqll1H4hmVV3P
- T85vH2HSWbb+4Z3coQ45rBljd26SsXp7MpGti3hoiKzYdYTRXN1p0WuwSPFwvITU2TeM
- 2OUb+KO67voXoZMQ4MidazsJctXlFPk3heWzN3EIfQj4ecokuGupuhAvZn7/l3Ne6IS4
- zMdfHJaDWn2HyXJx4ggVCDXJyylNi7I9EM7Wtg1k1TGkO15xryWMN+j5aFlUgwVX13+7
- tHnoXVuCDIIGR5DY1Bbbrilf1Axu5gRlyM7M9JiYrCSfZVvtahV89G6ReknnxGobeRZK
- QUGA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBCJ2-0001OB-PV
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:26:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBCIz-0005cg-TG
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:26:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790605568;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jE+AjIRmFbNsRsfiY8Pkp9FYl5bNpeJl0HtiAP8ptTU=;
+ b=M99YTQuh7D9SkEOp40XPXY4yUJxjd8VQnE5FK6sYPJW4NIVovxvusv09w3LFfNvznLYvOb
+ GN4veguXgJuH326i+EHtLCIwYiwV3tdKInxX4/idBaj3gw8r22lHNePzoNm2NaWyUBx6y7
+ mw7HkYvYMfDPghgI3kQbhQCwXtW60wQ=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-35-94XtDMw9PNO5ykHzUFu8Jg-1; Mon, 28 Sep 2026 10:26:05 -0400
+X-MC-Unique: 94XtDMw9PNO5ykHzUFu8Jg-1
+X-Mimecast-MFC-AGG-ID: 94XtDMw9PNO5ykHzUFu8Jg_1790605565
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93c673116e3so332503085a.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 07:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790605494; x=1791210294; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cFi7chTl/dXnccUH1qK76VepQPSMCTxgrhW/RRhkUhE=;
- b=QTBfeR5R5d35Fu47R5GzlLBKCN4YhZ1rkf5zSk+ww9HsczuuPi8HqsgXORMcuM6d+G
- xwXNG3ds8S5mTK4wGL2GagXndrf3OPNT683o6AKtGKEzkGiBf6mAIjzDHzRxN0S8F7dS
- /NkN93bJK2S5nChO5e3WURr4IIvJwRY+FrOKAfD9dcFHjvGsClBF9l04KWlUDaC8UKIV
- GJzA3BZH3RtHW98m/Ypu8OHdc48xvawkm87qIgDJEk0/ep+4qp8R9xej+2CNuzgXvHNj
- /r1dWBuSwWl6is5ee9jRtxCOzmuNlvgNKoeh6o5ZebMagsy6p1lcszTu/kIo3MxAfG4c
- qQ8g==
+ d=redhat.com; s=google; t=1790605565; x=1791210365; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jE+AjIRmFbNsRsfiY8Pkp9FYl5bNpeJl0HtiAP8ptTU=;
+ b=ZhNvo3Nx29p2o6C+7eT1FyZf9Tzk/ublaUin7Lr7hlaP5rRqY14t5evv51sjspJ/9+
+ KvIT1KNP19D93vOWapGD2JgVGxt+0ys3bW1NSNFVjy1ntP8TKP4k4/t7mq2ynsIYmQU8
+ aFYFYn/R0y+mL7upHIyvElfPb/gxCZbgHfg5bLgwPIKOW34ACliDtMNtASEfZcPIR721
+ qEb+9wak2IBVXkv3ASX4bq4gaG66FlbEUOOAqET1wOGaboPm0FClYFWav+xyzbiwNjVJ
+ QQWZ2wRD6FIq1Nhv0PXItJXGuM554XpfBpyxlNtG76jtVNT4KwlPUCF9m2i2tw4dEL2J
+ BHoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790605494; x=1791210294;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cFi7chTl/dXnccUH1qK76VepQPSMCTxgrhW/RRhkUhE=;
- b=EcsGrhJYyBQXbIiSJvmjhmKPeZQ3GXxncOl01Pxr2TwAvUUvWvmxQ0N/nK6aDjPMYD
- OvL7BBhkJ8aaF+eveCtAycjY7NQpOnSChkDfZIE6dgPBiJgBS+RMCkH5qXRiEzxdkYjS
- zuAC95XTg5D1XT0hsaSeOsvNO241A2cyiC1WMRAKCEhgEzYRp7KOqPbmCClTgjXgIOJV
- 4mKMsWbNPH0ky9PQgMjUc6wbetNyJsiKfHkxZE+HISx+1N7qMRsTjovIoNK//bMGzqUK
- jz8SBuUMeUtJksf20P+E8V+PGiew50MdRBi/eT4CFwMw+czZTdtC+gYNA/OO5kjggQl0
- AlYQ==
-X-Gm-Message-State: AFq9FYLTAAr9BixMAz897WgnoF+ewlwGRXkVwNlKd0DJkk6+WQBs3bWR
- 3HO3szH4SOWI3cz85CQVpFJA/X+gQg+gkQ9s6KuRM0ME4ltccbqn5LqkUoKeO+yuseJTJ7UgMFk
- acTBx+O60LXUbBH1dZebWvbi6303jEHY=
-X-Gm-Gg: AYBFou2WVSKp4VFdCWvxIG2469JkdRwjkZP2xAqV9Mf13DKFQzNmGBuYH82a1kp0TdT
- zgXTjfVSc1toMqMSoERgpvoMBAnkbNG7rSc2G7cd6wdON8x95fq/zC7iwIkS/lMsXJo9BdNtzes
- 5VAcYd7qxRESX9kFLdORY6PDKHSeJfsDG6fD17bg1+JgR0jfCJ3+xZGTZYZTKqe2p622dEKiutz
- t/NkIj8Y0XzYHWrS5kiFqVCKt8U+v5c4wa904MOaEJqn5DyKcakUIH+gun8RaYTuEyvYHP59b26
- qGnOvEb/7DsUa6T+sDzJgLA9B7jOLj6A7zBt3re1g3b/KD6KK6f8Tn8=
-X-Received: by 2002:a05:6402:2406:b0:6aa:734b:1a2d with SMTP id
- 4fb4d7f45d1cf-6aac908f34amr10185339a12.39.1790605493584; Mon, 28 Sep 2026
- 07:24:53 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790605565; x=1791210365;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=jE+AjIRmFbNsRsfiY8Pkp9FYl5bNpeJl0HtiAP8ptTU=;
+ b=vWsu7uXIHs2AY8yasf+QzumRI5XV7oFriLVeiBOKvlrgweyB2Vkw+WHbuewrCN7/SX
+ XjGmwJacmAE/Q5WUfajOuDKmB2vYtKfKkeqOCJuPeK2q+obzlc+CeesJCVjURSUosIj6
+ V9Ut9b3W/2yJ0FDqM1pfFXx+U8ElqnivQyp/hlQ2NWKeI4FPrB6YCNyp2zYYtyDyOczC
+ gAwsc4QzxUCWP+gdA9WHSyNk0kiIQQllCEaJXuLSrm1YBdaIgbgaug7EcZL1SjW/SIwI
+ fdHXToc4LuPfLuSr9g9lQ68VnolxenA1K8TDnoRPUJW//BMGRlL0shq+QPjIfpjx6VsD
+ NHcw==
+X-Gm-Message-State: AFuF++mwtcqUzxqcQBeNa+WrZz9iWoYo3h6WNM3222MkrbzgZy3c2lGQ
+ flm8jJt9YWX0vqpM/8ZjUYZo+Ouu++Ybx3JekzIU/kk3lCQMN4DNJe5imxJO4xfx7px/ONoeJSz
+ i9kGRU6tgz0ia43rZbgsDEUcxt+6FrKpljjmyDZOk53aR+9BMajlO9IbU
+X-Gm-Gg: AYBFou0LVEFZFLwyyUXPdwJabTLRVtGl0HEmlkuMplC0XEPx1H+2fw8j9kuPfyrTKED
+ vpg7x8l8TJoqI4GG1WEulvqHB+9VgWfqvGG33ky3F6aqie3opXHv5Ol86W2KZY38DZWTa9lexj1
+ 6JyXVHZOPtwizNPNnHijLIgSPOuZ91uIpy0btiHiwVVJOfgeTn9i8HneHNsr+kbo/X+K6FTKZfX
+ 7LJ9zcu+GaD3PhWkCSkZrdjoSPuEP7jQ4+otF4EuXaMsRM7am4Oi+SQzQh4wx18gScpDlKy0DE/
+ fx1XItLAdxeYYy9EgzmfCfTCFx0KMlqxvobzveneBH0F+0IfRc2ZixL5BX9xXs32yNL1xis=
+X-Received: by 2002:a05:620a:280d:b0:939:bc7c:15c8 with SMTP id
+ af79cd13be357-93c43dcc4cfmr2043673085a.45.1790605564688; 
+ Mon, 28 Sep 2026 07:26:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:280d:b0:939:bc7c:15c8 with SMTP id
+ af79cd13be357-93c43dcc4cfmr2043659185a.45.1790605563655; 
+ Mon, 28 Sep 2026 07:26:03 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91430dd2858sm81523466d6.21.2026.09.28.07.26.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Sep 2026 07:26:02 -0700 (PDT)
+Date: Mon, 28 Sep 2026 10:26:00 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, bchaney@akamai.com,
+ mark.kanda@oracle.com, philmd@oss.qualcomm.com,
+ vsementsov@yandex-team.ru, maciej.szmigiero@oracle.com,
+ dongli.zhang@oracle.com, mst@redhat.com, clg@redhat.com,
+ den@openvz.org, sgarzare@redhat.com
+Subject: Re: [PATCH v7 01/16] migration/cpr: forbid saving duplicate CprFds
+ into hash table
+Message-ID: <arp4-P14_JP_-ABU@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260918-up-vsock-vhost-v5-v7-0-6ef9ef033c35@virtuozzo.com>
+ <20260918-up-vsock-vhost-v5-v7-1-6ef9ef033c35@virtuozzo.com>
 MIME-Version: 1.0
-References: <20260926070057.1234-1-luoyonggang@gmail.com>
- <20260926070057.1234-47-luoyonggang@gmail.com>
- <aro93NuZBXYGbD33@redhat.com>
-In-Reply-To: <aro93NuZBXYGbD33@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Mon, 28 Sep 2026 22:24:39 +0800
-X-Gm-Features: AclHuK_TF7EH46o0FV_02vjDQ7TfERSCRkWxvOvxDGTBInzpkGOWpF_MFAtARQg
-Message-ID: <CAE2XoE9AAz8KfJrpErBaZvW5p5COxfE1yveA_AMPwa0j=ghyEA@mail.gmail.com>
-Subject: Re: [PATCH v4 46/55] qapi: add query-targets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::d;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260918-up-vsock-vhost-v5-v7-1-6ef9ef033c35@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,170 +119,408 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 28, 2026 at 6:14=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> I don't think that we need to report machines though.
-> We already have 'query-machines' which gives much broader
-> information on the machines. "MachineInfo" needs to
-> gain
->
->    "targets": ["SysEmuTarget"]
->
-> to list which target(s) a machine can be used with.
->
+On Fri, Sep 18, 2026 at 04:46:52PM +0300, Andrey Drobyshev wrote:
+> In its current form, the mechanism for saving CPR FDs into hash table
+> has flaws.
+> 
+> The CPR fd hash table uses the same CprFd for both key and value, and
+> is created with a key destroy function.  Inserting a second element
+> with the same (name, id) key leads to a use after free.  According to
+> GLib docs [1], g_hash_table_insert() keeps the old key, replaces the
+> value with the new element, and destroys the new key.  Thus when
+> inserting 2 CprFd elements fd1 and fd2 with equal keys we get:
+> 
+>   g_hash_table_insert(table, fd1, fd1);  /* table has fd1 -> fd1 */
+>   g_hash_table_insert(table, fd2, fd2);  /* table has fd1 -> fd2, fd2 freed */
+> 
+> Any subsequent cpr_find_fd() for that key then returns freed memory.
+> 
+> This is reachable whenever two CPR-aware objects register fds under the
+> same name, and it happens long before an actual CPR, since cpr_save_fd()
+> is typically called from .realize(), i.e. at boot time.
+> 
+> Apart from the UAF itself, when the user decides to perform CPR migration,
+> on CPR target we'd get corrupted FD from the hash table and fail somewhere
+> in .realize() for affected devices.
+> 
+> As a solution, let's altogether prohibit adding CprFds with duplicate
+> keys.  Since FDs are being registered for a subsequent CPR right at the
+> startup in .realize(), that'll allow us to error out and exit QEMU (or
+> fail a device hotplug op) gracefully instead of delaying potential
+> problems for later.  To do so, let's make cpr_save_fd() return 'bool'
+> instead of 'void' and provide an 'errp' argument to it.  That way caller
+> becomes responsible for checking the return value and propagating the
+> error.
+> 
+> Also update all the callers to use the adjusted interface to keep things
+> compilable and bisectable.
+> 
+> [1] https://docs.gtk.org/glib/type_func.HashTable.insert.html
+> 
+> Fixes: a181df93bb3 ("migration/cpr: use hashtable for cpr fds")
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
+>  backends/hostmem-memfd.c   |  5 ++++-
+>  backends/hostmem-shm.c     |  5 ++++-
+>  backends/iommufd.c         |  4 +++-
+>  hw/vfio/container-legacy.c | 17 +++++++++-----
+>  hw/vfio/cpr-legacy.c       | 10 +++++----
+>  hw/vfio/cpr.c              |  6 ++---
+>  hw/vfio/pci.c              |  5 ++++-
+>  include/hw/vfio/vfio-cpr.h |  6 ++---
+>  include/migration/cpr.h    |  2 +-
+>  migration/cpr.c            | 55 ++++++++++++++++++++++++++++++----------------
+>  system/physmem.c           |  5 +++--
+>  11 files changed, 78 insertions(+), 42 deletions(-)
+> 
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index e21c5a3f2e2..a95a4368a9e 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -54,7 +54,10 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>      if (fd == -1) {
+>          return false;
+>      }
+> -    cpr_save_fd(name, 0, fd);
+> +    if (!cpr_save_fd(name, 0, fd, errp)) {
+> +        close(fd);
+> +        return false;
+> +    }
+>  
+>  have_fd:
+>      backend->aligned = true;
+> diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+> index 806e2670e03..2fa7b823a62 100644
+> --- a/backends/hostmem-shm.c
+> +++ b/backends/hostmem-shm.c
+> @@ -48,7 +48,10 @@ shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>      if (fd < 0) {
+>          return false;
+>      }
+> -    cpr_save_fd(backend_name, 0, fd);
+> +    if (!cpr_save_fd(backend_name, 0, fd, errp)) {
+> +        close(fd);
+> +        return false;
+> +    }
+>  
+>  have_fd:
+>      /* Let's do the same as memory-backend-ram,share=on would do. */
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 15f2a513501..45fd2e44c7f 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -85,7 +85,9 @@ static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
+>          if (cpr_is_incoming()) {
+>              be->fd = cpr_find_fd(name, 0);
+>          } else {
+> -            cpr_save_fd(name, 0, be->fd);
+> +            if (!cpr_save_fd(name, 0, be->fd, errp)) {
+> +                return;
+> +            }
+>          }
+>      } else if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
+>          error_setg(errp, "/dev/iommu does not exist"
+> diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+> index 7ac7b372145..1d2c8356189 100644
+> --- a/hw/vfio/container-legacy.c
+> +++ b/hw/vfio/container-legacy.c
+> @@ -844,16 +844,21 @@ static void vfio_group_put(VFIOGroup *group)
+>  static bool vfio_device_get(VFIOGroup *group, const char *name,
+>                              VFIODevice *vbasedev, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      g_autofree struct vfio_device_info *info = NULL;
+>      int fd;
+>  
+> -    fd = vfio_cpr_group_get_device_fd(group->fd, name);
+> +    fd = vfio_cpr_group_get_device_fd(group->fd, name, errp);
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "error getting device from group %d",
+> -                         group->groupid);
+> -        error_append_hint(errp,
+> -                      "Verify all devices in group %d are bound to vfio-<bus> "
+> -                      "or pci-stub and not already in use\n", group->groupid);
+> +        if (!*errp) {
 
-This is my final design for the query-target / query-targets / query-machin=
-es,
-for consistency and testability.
+IIUC this implies something not done right.  If we add errp into
+vfio_cpr_group_get_device_fd(), then when fd<0 (failure case), we should
+set *errp always.  Maybe this should be moved into it?
 
-Per review: reuse `QemuTargetInfo` for both target commands, drop the
-per-target machine list, and let
-`MachineInfo` say which target(s) each machine runs on.
-`QemuTargetInfo` stays small; `query-target` and `query-targets` return a
-derived struct that adds the target's device and accel Kconfig state.
+> +            error_setg_errno(errp, errno,
+> +                             "error getting device from group %d",
+> +                             group->groupid);
+> +            error_append_hint(errp,
+> +                              "Verify all devices in group %d are bound to "
+> +                              "vfio-<bus> or pci-stub and not already in use\n",
+> +                              group->groupid);
+> +        }
+>          return false;
+>      }
+>  
+> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+> index 2d40d8baeaf..14a06a1fa59 100644
+> --- a/hw/vfio/cpr-legacy.c
+> +++ b/hw/vfio/cpr-legacy.c
+> @@ -254,15 +254,16 @@ bool vfio_cpr_ram_discard_replay_populated(VFIOContainer *bcontainer,
+>                                                  &vrdl->listener) == 0;
+>  }
+>  
+> -int vfio_cpr_group_get_device_fd(int d, const char *name)
+> +int vfio_cpr_group_get_device_fd(int d, const char *name, Error **errp)
+>  {
+>      const int id = 0;
+>      int fd = cpr_find_fd(name, id);
+>  
+>      if (fd < 0) {
+>          fd = ioctl(d, VFIO_GROUP_GET_DEVICE_FD, name);
+> -        if (fd >= 0) {
+> -            cpr_save_fd(name, id, fd);
+> +        if (fd >= 0 && !cpr_save_fd(name, id, fd, errp)) {
 
-## QemuTargetInfo
+IMHO it's slightly error prone to do oneliner like this, this might be
+relevant to the above !*errp question.
 
-```
-{ 'struct': 'QemuTargetInfo',
-  'data': { 'arch': 'SysEmuTarget' } }  # since 1.2
-```
+> +            close(fd);
+> +            fd = -1;
+>          }
+>      }
+>      return fd;
+> @@ -291,6 +292,7 @@ bool vfio_cpr_container_match(VFIOLegacyContainer *container, VFIOGroup *group,
+>       */
+>      cpr_delete_fd("vfio_container_for_group", group->groupid);
+>      close(fd);
+> -    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd);
+> +    cpr_save_fd("vfio_container_for_group", group->groupid, container->fd,
+> +                &error_abort);
+>      return true;
+>  }
+> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+> index ffa4f8e099d..6e1659dcddc 100644
+> --- a/hw/vfio/cpr.c
+> +++ b/hw/vfio/cpr.c
+> @@ -32,11 +32,11 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+>  #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
+>      g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
+>  
+> -void vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
+> -                             int fd)
+> +bool vfio_cpr_save_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr,
+> +                             int fd, Error **errp)
+>  {
+>      g_autofree char *fdname = STRDUP_VECTOR_FD_NAME(vdev, name);
+> -    cpr_save_fd(fdname, nr, fd);
+> +    return cpr_save_fd(fdname, nr, fd, errp);
+>  }
+>  
+>  int vfio_cpr_load_vector_fd(VFIOPCIDevice *vdev, const char *name, int nr)
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 428ab2f0698..ad13f2306f1 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -76,7 +76,10 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+>      }
+>  
+>      fd = event_notifier_get_fd(e);
+> -    vfio_cpr_save_vector_fd(vdev, name, nr, fd);
+> +    if (!vfio_cpr_save_vector_fd(vdev, name, nr, fd, errp)) {
+> +        event_notifier_cleanup(e);
+> +        return false;
+> +    }
+>      return true;
+>  }
+>  
+> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+> index ecabe0c747d..e57766e7e2b 100644
+> --- a/include/hw/vfio/vfio-cpr.h
+> +++ b/include/hw/vfio/vfio-cpr.h
+> @@ -60,7 +60,7 @@ void vfio_iommufd_cpr_register_device(struct VFIODevice *vbasedev);
+>  void vfio_iommufd_cpr_unregister_device(struct VFIODevice *vbasedev);
+>  void vfio_cpr_load_device(struct VFIODevice *vbasedev);
+>  
+> -int vfio_cpr_group_get_device_fd(int d, const char *name);
+> +int vfio_cpr_group_get_device_fd(int d, const char *name, Error **errp);
+>  
+>  bool vfio_cpr_container_match(struct VFIOLegacyContainer *container,
+>                                struct VFIOGroup *group, int fd);
+> @@ -71,8 +71,8 @@ void vfio_cpr_giommu_remap(struct VFIOContainer *bcontainer,
+>  bool vfio_cpr_ram_discard_replay_populated(
+>      struct VFIOContainer *bcontainer, const MemoryRegionSection *section);
+>  
+> -void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+> -                             int nr, int fd);
+> +bool vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+> +                             int nr, int fd, Error **errp);
+>  int vfio_cpr_load_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+>                              int nr);
+>  void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index 56fb67e6b4d..3ad084d5bab 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -28,7 +28,7 @@ typedef struct CprState {
+>  
+>  extern CprState cpr_state;
+>  
+> -void cpr_save_fd(const char *name, int id, int fd);
+> +bool cpr_save_fd(const char *name, int id, int fd, Error **errp);
+>  void cpr_delete_fd(const char *name, int id);
+>  int cpr_find_fd(const char *name, int id);
+>  void cpr_resave_fd(const char *name, int id, int fd);
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index bca43e9bf35..aeb9ad12392 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -82,10 +82,27 @@ static GHashTable *get_cpr_fds_hash(void)
+>      return cpr_fds_hash;
+>  }
+>  
+> +static CprFd *find_fd(const char *name, int id)
+> +{
+> +    CprFd key = {
+> +        .name = (char *)name,
+> +        .id = id,
+> +    };
+> +
+> +    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+> +}
+> +
+>  static void cpr_fd_hash_insert(CprFd *elem)
+>  {
+> -    /* Use the same CprFd as key and value. */
+> -    g_hash_table_insert(get_cpr_fds_hash(), elem, elem);
+> +    GHashTable *hash = get_cpr_fds_hash();
+> +
+> +    /*
+> +     * The same CprFd is used as key and value, and the table owns the key.
+> +     * Inserting a duplicate would destroy the new element while keeping it
+> +     * as the value, so a duplicate key is a bug in the caller.
 
-`mips` and `mipsel` are distinct `SysEmuTarget` values; the target value
-identifies the system emulator, including its endianness, rather than only
-the underlying architecture family.
+IIUC this comment is slightly misleading.  It almost says "the caller can't
+do this because the impl of the API does that", but logically the caller
+shouldn't care about the internal impl..
 
-## QemuTargetDetails: QemuTargetInfo plus kconfig
+There're two relevant issues, IMHO:
 
-```
-{ 'struct': 'QemuTargetDetails',
-  'base': 'QemuTargetInfo',
-  'data': { 'kconfig': 'any' } }
-```
+(1) the memory crash described in this patch, solid, needs fixing one way
+    or another
 
-`kconfig` maps every device and accel `CONFIG_*` symbol to whether it
-is enabled for that target.
+(2) if there's real use case of injecting the same (name, id) fd twice, or
+    should we forbid it?
 
-For example, `TYPE_NITRO_ENCLAVE_MACHINE` is available only when
-`CONFIG_NITRO_ENCLAVE` is enabled for the target:
+For (1), fixing it like this patch would work, but then the comment is
+wrong here, and it means we already said YES to (2), hence (1) relies on
+(2).
 
-```
-{ "arch": "x86_64",
-  "kconfig": { "CONFIG_NITRO_ENCLAVE": true } }
-```
+But I do see the existance of cpr_resave_fd().  I confess I don't know why
+it existed and didn't check.  That looks exactly like sometimes we can save
+the same fd twice, if the 1st one is fd=-1.  Any quick answer?
 
-Examples below are trimmed.
+Thanks,
 
-## query-target (now returns QemuTargetDetails)
+> +     */
+> +    g_assert(!g_hash_table_contains(hash, elem));
+> +    g_hash_table_insert(hash, elem, elem);
+>  }
+>  
+>  static int cpr_fd_pre_save(void *opaque)
+> @@ -127,26 +144,24 @@ static int cpr_fd_post_load(void *opaque, int version_id)
+>      return 0;
+>  }
+>  
+> -void cpr_save_fd(const char *name, int id, int fd)
+> +bool cpr_save_fd(const char *name, int id, int fd, Error **errp)
+>  {
+> -    CprFd *elem = g_new0(CprFd, 1);
+> +    CprFd *elem;
+>  
+> +    if (find_fd(name, id)) {
+> +        error_setg(errp, "cpr fd '%s' id %d is already registered", name, id);
+> +        return false;
+> +    }
+> +
+> +    elem = g_new0(CprFd, 1);
+>      trace_cpr_save_fd(name, id, fd);
+>      elem->name = g_strdup(name);
+>      elem->namelen = strlen(name) + 1;
+>      elem->id = id;
+>      elem->fd = fd;
+>      cpr_fd_hash_insert(elem);
+> -}
+> -
+> -static CprFd *find_fd(const char *name, int id)
+> -{
+> -    CprFd key = {
+> -        .name = (char *)name,
+> -        .id = id,
+> -    };
+>  
+> -    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+> +    return true;
+>  }
+>  
+>  void cpr_delete_fd(const char *name, int id)
+> @@ -176,7 +191,7 @@ void cpr_resave_fd(const char *name, int id, int fd)
+>      int old_fd = elem ? elem->fd : -1;
+>  
+>      if (old_fd < 0) {
+> -        cpr_save_fd(name, id, fd);
+> +        cpr_save_fd(name, id, fd, &error_abort);
+>      } else if (old_fd != fd) {
+>          error_report("internal error: cpr fd '%s' id %d value %d "
+>                       "already saved with a different value %d",
+> @@ -192,8 +207,9 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+>  
+>      if (fd < 0) {
+>          fd = qemu_open(path, flags, errp);
+> -        if (fd >= 0) {
+> -            cpr_save_fd(name, id, fd);
+> +        if (fd >= 0 && !cpr_save_fd(name, id, fd, errp)) {
+> +            close(fd);
+> +            fd = -1;
+>          }
+>      }
+>      return fd;
+> @@ -400,10 +416,11 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
+>          }
+>      } else {
+>          fd = monitor_fd_param(monitor_cur(), fdname, errp);
+> -        if (fd >= 0) {
+> -            cpr_save_fd(name, index, fd);
+> -        } else {
+> +        if (fd < 0) {
+>              error_prepend(errp, "Could not parse object fd %s:", fdname);
+> +        } else if (!cpr_save_fd(name, index, fd, errp)) {
+> +            close(fd);
+> +            fd = -1;
+>          }
+>      }
+>      return fd;
+> diff --git a/system/physmem.c b/system/physmem.c
+> index a4a6a4710c6..e94fe5d4a4a 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2445,8 +2445,9 @@ static int qemu_ram_get_shared_fd(const char *name, bool *reused, Error **errp)
+>          fd = qemu_shm_alloc(0, errp);
+>      }
+>  
+> -    if (fd >= 0) {
+> -        cpr_save_fd(name, 0, fd);
+> +    if (fd >= 0 && !cpr_save_fd(name, 0, fd, errp)) {
+> +        close(fd);
+> +        fd = -1;
+>      }
+>      *reused = false;
+>      return fd;
+> 
+> -- 
+> 2.47.1
+> 
 
-Adding members to a return type is backward compatible; existing
-clients reading only `arch` are unaffected.
+-- 
+Peter Xu
 
-```
-{ 'command': 'query-target', 'returns': 'QemuTargetDetails' }
-```
-
-Single-target binary (`qemu-system-aarch64`):
-
-```
--> { "execute": "query-target" }
-<- { "return": { "arch": "aarch64",
-                 "kconfig": { "CONFIG_ARM_VIRT": true,
-                              "CONFIG_Q35": false,
-                              ... } } }
-```
-
-## query-targets (new, returns ['QemuTargetDetails'])
-
-Single-target binary:
-
-```
--> { "execute": "query-targets" }
-<- { "return": [ { "arch": "aarch64",
-                   "kconfig": { "CONFIG_ARM_VIRT": true,
-                                "CONFIG_Q35": false, ... } } ] }
-```
-
-Combined `qemu-system` linking aarch64 and riscv64 (`none` is always
-present):
-
-```
--> { "execute": "query-targets" }
-<- { "return": [ { "arch": "aarch64",
-                   "kconfig": { "CONFIG_ARM_VIRT": true,
-                                "CONFIG_RISCV_VIRT": false, ... } },
-                 { "arch": "riscv64",
-                   "kconfig": { "CONFIG_ARM_VIRT": false,
-                                "CONFIG_RISCV_VIRT": true, ... } },
-                 { "arch": "none",
-                   "kconfig": { "CONFIG_ARM_VIRT": false,
-                                "CONFIG_RISCV_VIRT": false, ... } } ] }
-```
-
-## query-machines: MachineInfo gains targets
-
-```
-{ 'struct': 'MachineInfo',
-  'data': { 'name': 'str', 'typename': 'str', ...existing members...,
-            'targets': ['QemuTargetInfo'] } }   # since 11.2
-```
-
-Combined `qemu-system` (other MachineInfo members trimmed):
-
-```
--> { "execute": "query-machines" }
-<- { "return": [
-       { "name": "virt-11.2", "typename": "arm-virt-11.2-machine",
-         "alias": "virt", "is-default": false,
-         "cpu-max": 512, "deprecated": false, "secure": true,
-         "targets": [ { "arch": "aarch64" } ] },
-       { "name": "virt", "typename": "riscv-virt-machine",
-         "cpu-max": 512, "deprecated": false,
-         "secure": true,
-         "targets": [ { "arch": "riscv64" } ] },
-       { "name": "none", "typename": "none-machine",
-         "cpu-max": 1, "deprecated": false,
-         "secure": false,
-         "targets": [ { "arch": "aarch64" },
-                      { "arch": "riscv64" },
-                      { "arch": "none" } ] }
-     ] }
-```
-
-Single-target binary: every entry has exactly one element in
-`targets`, equal to `query-target`'s `arch`.
-
-A client that wants the old "machines per target" view filters
-`query-machines` on `targets`.
-
-## Open questions for the list
-
-Machine names are not unique in a combined binary (`virt` above exists
-for aarch64 and riscv64). `typename` is the unique QOM identity, so the
-list contains one `MachineInfo` per `typename`; `targets` lists the
-targets on which that machine type is available.
-
-1. `kconfig` on `QemuTargetDetails`. The use case is tests telling "not
-   built" apart from "missing". Open points:
-   - `'any'` (a JSON object) vs. a list of enabled symbol names.
-     The object makes a typo (symbol absent) distinguishable from
-     "disabled" (`false`).
-   - Stable, or an `unstable` feature, given that Kconfig symbol
-     names are internal and can be renamed.
-   - Size: several hundred entries per target, which is why it is
-     in `QemuTargetDetails` (`query-target`, `query-targets`) and not
-     in `QemuTargetInfo` (which contains only the target architecture).
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
