@@ -4,81 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB11EC9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 11:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC699CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 11:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB9kN-0002IE-HT; Mon, 28 Sep 2026 07:42:15 -0400
+	id 1xB9kY-0002Jq-3K; Mon, 28 Sep 2026 07:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xB9kH-0002Fz-Qc
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:42:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xB9kR-0002Iz-Jb
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:42:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xB9kF-0002wB-B4
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:42:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790595725;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lT/7dUd3Ns3Hv2bavTQFNjVEdK3MCpIQuBS+9fK13UY=;
- b=DQ/H26WjMfmULppNgU+OkwZfPmHMhIl3KdPsBQehd/3y7G4j8ctiUjI0Z65uu3bGC+laBU
- rvlx0CT2krrE9vnv5HdGMCEit2N7vZGFjg1T9yHAZLw0adaq2+jdmk4m/cNEHsSE7lYHCz
- d9ZxVdq+mpyHndtkoAP6qaiHrCW5/NY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-lQ4Kth-gPn6aKFylciYdQQ-1; Mon,
- 28 Sep 2026 07:42:03 -0400
-X-MC-Unique: lQ4Kth-gPn6aKFylciYdQQ-1
-X-Mimecast-MFC-AGG-ID: lQ4Kth-gPn6aKFylciYdQQ_1790595721
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 548BC195607C; Mon, 28 Sep 2026 11:42:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95EA81800345; Mon, 28 Sep 2026 11:42:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 362E721E6A04; Mon, 28 Sep 2026 13:41:58 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Alistair Francis <alistair@alistair23.me>,  Peter
- Maydell <peter.maydell@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  qemu-arm@nongnu.org,  kvm@vger.kernel.org
-Subject: Re: [PATCH v4 40/55] meson: link shared objects into qemu-system
-In-Reply-To: <20260926070057.1234-41-luoyonggang@gmail.com> (Yonggang Luo's
- message of "Sat, 26 Sep 2026 15:00:39 +0800")
-References: <20260926070057.1234-1-luoyonggang@gmail.com>
- <20260926070057.1234-41-luoyonggang@gmail.com>
-Date: Mon, 28 Sep 2026 13:41:58 +0200
-Message-ID: <8733uthabd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xB9kQ-0002x1-26
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:42:19 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SBAPbg558663
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:42:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Z49/2JaZ4oOE3XP028GM1sqmGR3P49pYZigkWpywuiE=; b=NRRgbEnzt0hjfmIa
+ 3VzLPebGAxAnYEJKrVmn+8bxFVbxaYIeZ7BF70l43B4xq4MYx+CXzZD1sQNdou4a
+ mSbo6s8iRAAjVDZtYLENdueLNRkWOU+pytr9UVfCMW6RbqdpPWX1gbnTSt6Q+uGt
+ 03bfUrfHY0Xn9wYbrQ2tWSc64tQuaTqvqdjFbZLBU3mhKbNcRF4kTcnko1rrWTtN
+ HkXoitSU73k58vgHAVveFaJ6lFYx2CiEfe8WGFtsezJVW1AmGQYGkOiY/rkNTjXD
+ ngFBDmq3/j2aSUes0ImFN/n5AYmKZhhlAbSS6oN1MkakrGSAT/UxX4UzRAMByCWs
+ 667CuQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyebq1xj0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:42:16 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93c5c205127so300019785a.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 04:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790595735; x=1791200535; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Z49/2JaZ4oOE3XP028GM1sqmGR3P49pYZigkWpywuiE=;
+ b=RL03ffCG35lOLo+GuVSB1iX0UFS+ReRPyfHphgqn5Ixb55/A+uaDSYmhQ3Z/qswMNe
+ Jj3+8bHXkOlNUurmPSge9BMoSxKwc35bQ2BSqH/Q1eZDdnmee8VdKs3OEvFM5LRmzM3f
+ KyZ+FheWrRWnIavE6O3pjkS+rmAFaBD7vSms08G5kg7roY26Oz8HlbEO5Pop9BMu+Deb
+ rRx+SnTtkRrMLMPEyUWcaa3X7X3pvDNDIxnXhitQ52tlMt+tjoAxIiLVPbQ44ivHDDvg
+ K8CXd/WIUr2TwVeLPETJPmGTmfcD3P5grnKKwOwCxACgpHAdFDdm6bdRSXw16NxGAlJ5
+ 15dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790595735; x=1791200535;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Z49/2JaZ4oOE3XP028GM1sqmGR3P49pYZigkWpywuiE=;
+ b=t14MSux60EfFttU+0gT4+/DxF7JDs1+kdltwUhCal14Dor0xxLy1AgTlk6VePmDkWj
+ 0K6JQ5vfZ7aPOT0m6/Qk6YEf2n2/a8qu+2h1RGJYMsT39cz649azRVcUaC7XLlwS5b3h
+ Up9mbi950OQPCxBjLjtaDbsP2qOMGAFcBMedx8KyROKq09vD4PGM1oaBt/LVywMAHl+e
+ c6dw+/Kqe9oAI1Xtj08T7SYP+nvt/GG0mjQkboG1+EVd5X7MlhDz6CZApEbNptu9eUjI
+ j4wN+X64E5awLAtuOGqTwdmVfZKr6uyZbmvKwvCgf+qfZGzCBiviWQzof6QY+lTfWcmx
+ vbnw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz1ScfK60jDv7bsvup/wFnaJRF0lfkcpHlzD7QZiGQjlCPzD2IL0EvLNDzc1c28CP14Zv2743sGYofK@nongnu.org
+X-Gm-Message-State: AFuF++kXVdqeU/s38J9dIKha1mCHXlVP/H6xf2+FBryGfz0rnHNCITq2
+ d7yBsbstDvdjs8tUdG6NcWKAG+aCvu1aN0/6OfJkOMYNERFok3cNwKtMjkH/vFNuj/KCpFqIsio
+ qk3wpinZpL4Ddo8JmMqGbpClh2Lt4USQGkHuPd9oGUejtk/YktCRUtsnyuA==
+X-Gm-Gg: AYBFou0Ju3FtJxCpbSFlGCYk34nXikQlc+THcQiyicGHtnyqEDvM5Dpc7fbZlL1bEe5
+ gIOXoyMPddFzWdIELlNpfDtl49x0h8qCKIEg3oLLHiIoRfbcj7UX+U1D/wONP5iT8GCutSiheVY
+ S2Mhwb4u1tcUXXwXqeQL3ulpgDY3avKuNXj9Fr5MApk5tVxoRR/YoLEHl1zRYm9a5ke/IuNowB3
+ 3kzI9i9IOcarDTy3fscALkq870Im79HBgPGE+DwraYPcdWluhWCQTw/Fm7Dmf3gquAT6FiLCpdY
+ L4f+sRdicWygXIKGVEW8O/QYbZbYBmrEB/c4wxYE9PPRhYHkc6i+86XH8+zUKa16nM7a9LFvUBR
+ 9BeDPcwAAhFWFXFsPAUBigfOd1vmZwJuHjw==
+X-Received: by 2002:a05:620a:261c:b0:93c:72d2:ccc1 with SMTP id
+ af79cd13be357-93c72d2cf15mr694683085a.18.1790595735219; 
+ Mon, 28 Sep 2026 04:42:15 -0700 (PDT)
+X-Received: by 2002:a05:620a:261c:b0:93c:72d2:ccc1 with SMTP id
+ af79cd13be357-93c72d2cf15mr694677885a.18.1790595734622; 
+ Mon, 28 Sep 2026 04:42:14 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a0018f3e68sm134141125e9.9.2026.09.28.04.42.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Sep 2026 04:42:13 -0700 (PDT)
+Message-ID: <c34f9f8e-ed6e-4560-9100-05a911654047@oss.qualcomm.com>
+Date: Mon, 28 Sep 2026 13:42:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 098/101] tcg: Generic expansion of tcg_gen_qemu_st_chk
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+References: <20260927090011.10724-1-richard.henderson@linaro.org>
+ <20260927090011.10724-99-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260927090011.10724-99-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: s7uCSqFlPUvLVqwac4nZ4oWI9aV3RYY8
+X-Proofpoint-GUID: s7uCSqFlPUvLVqwac4nZ4oWI9aV3RYY8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA0NiBTYWx0ZWRfXwjCul1NTjDU/
+ 2Io7StlWWCrDGmCIVetNLPxa1+YfWXJ0v/z8vlOcQzpYW4xquu7YNugZzcqeO8SwsfpDABJWCwX
+ +8hc67U5RvDWCjDDTv0Dm51FncWdEFE=
+X-Authority-Analysis: v=2.4 cv=EqRHPicA c=1 sm=1 tr=0 ts=6aba5298 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=KKAkSRfTAAAA:8 a=8nvS8mFBlntTEaBoOTYA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA0NiBTYWx0ZWRfXwN0Jp9hCs793
+ /jrvjZvkLa7ZSQmffFdF3BAlnAsY759SYPpB40Ps2Q9FXxMZXEyQYAZ3fv4IsiR9U1qQ+ihigMu
+ 0PeeJpPGexkgaE9KdBCtvNRn4Usdooukz/+Y7/WoGVSQg7500FUYr+CdIoF17iSYcbGOElj9+zh
+ 3D6mARv+dxhbRHZDB/YhkQnB5Hz+p0ki1RB0YYWdniGDmZ9NOy7DSBnFia/znhXzhwhOj/UsYYd
+ HtVeJZL1nCwY6za9cvvIXBz86BkwTz0Vi+N9TJ2huzl7g1PsEaEzTNa4DGEMz+qAUzkdvLrjdaW
+ JJ4CAdMdx8ZYBkq3NWfPDeKEJ1BOKomFCJBeMMDlQuXbOb2WarlSAXBL6mk1cKK5SVfe5WTTW02
+ i+OySchSmSScvLgYEcuB+8laiUw2CGvujfJjBxqE65STKUjaLLZZqjzmlo386i5mbzPKCyX3Gy+
+ y3DajGFoc1PFqfteBuQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-28_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 phishscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609280046
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +155,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yonggang Luo <luoyonggang@gmail.com> writes:
+On 27/9/26 11:00, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-op-common.h  |   6 +-
+>   include/tcg/tcg-op-mem.h     |   6 +-
+>   include/tcg/tcg-op-def.h.inc |   1 +
+>   tcg/tcg-op-ldst.c            | 114 ++++++-----------------------------
+>   4 files changed, 25 insertions(+), 102 deletions(-)
 
-> Extract common_ss, system_ss, and family-common objects into one
-> qemu-system binary. Only arm, aarch64, microblaze-softmmu are
-> listed; a new target must have arch_srcs equal to target_info_def
-> only (target-info-def.c). Config headers stay in arch_genh.
->
-> - Union non-TARGET_* keys with y taking precedence
-> - Reject leftover arch_srcs on participating targets
-> - Reject TARGET_* conditions on common_ss and system_ss
-> - Link SDL, install the binary, and apply Darwin entitlements
->
-> Adding a target that still has per-target sources fails meson, for
-> example:
->
->   combined qemu-system leftover for :
->   expected:
->   target-info-def.c
->   arch_srcs:
->   target/microblaze/mmu.c
->   target/microblaze/machine.c
->   target-info-def.c
->
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 
-Watch query-target lie:
+> -static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
+> -                                    TCGArg idx, MemOp memop)
+> +static void tcg_gen_qemu_st_int(TCGType type, TCGTemp *orig_val,
+> +                                TCGTemp *addr, unsigned idx, MemOp memop)
+>   {
+> -    TCGv_i32 val = orig_val;
+> +    TCGTemp *val = orig_val;
+>       MemOpIdx orig_oi, oi;
+>       TCGTemp *addr_new;
+>   
+>       tcg_gen_req_mo(TCG_MO_LD_ST | TCG_MO_ST_ST);
+> -    memop = tcg_canonicalize_memop(memop, 0, 1);
+> +    memop = tcg_canonicalize_memop(memop, type != TCG_TYPE_I32, 1);
+>       orig_oi = oi = make_memop_idx(memop, idx);
+>   
+>       if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+> -        val = tcg_temp_ebb_new_i32();
+> -        switch (memop & MO_SIZE) {
+> -        case MO_16:
+> -            tcg_gen_bswap16_i32(val, orig_val, 0);
+> -            break;
+> -        case MO_32:
+> -            tcg_gen_bswap32_i32(val, orig_val);
+> -            break;
+> -        default:
+> -            g_assert_not_reached();
+> -        }
+> +        val = tcg_temp_new_ebb(type);
+> +        tcg_gen_bswap(type, val, orig_val, 0, memop);
+>           memop &= ~MO_BSWAP;
+>           oi = make_memop_idx(memop, idx);
+>       }
+>   
+>       addr_new = tci_extend_addr(addr);
+> -    gen_ldst1(INDEX_op_qemu_st, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+> -    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
+> -                                 QEMU_PLUGIN_MEM_W);
+> +    tcg_gen_op_tti(INDEX_op_qemu_st, type, val, addr_new, oi);
+> +    plugin_gen_mem_callbacks_tmp(type, orig_val, NULL, addr,
+> +                                 orig_oi, QEMU_PLUGIN_MEM_W);
+>       maybe_free_addr(addr, addr_new);
+>   
+>       if (val != orig_val) {
+> -        tcg_temp_free_i32(val);
+> +        tcg_temp_free_internal(val);
+>       }
 
-    $ qemu-system -S -nodefaults -display none -qmp stdio
-    {"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 11}, "package": "v11.1.0-1902-g88f617913a"}, "capabilities": ["oob"]}}
-    qemu-system: warning: nic xlnx.xps-ethernetlite.0 has no peer
-    {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
-    {"return": {}}
-    {'execute': 'query-target'}
---> {"return": {"arch": "aarch64"}}
+Directly:
 
-Perhaps you can fix this by reordering patches.  If you can't,
-deficiencies like this one need a prominent mention in the commit
-message.
+         maybe_free_addr(val, orig_val);
 
+>   }
 
