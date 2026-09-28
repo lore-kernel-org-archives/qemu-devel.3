@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA99C9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3732DCA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBAJo-0008VQ-SV; Mon, 28 Sep 2026 08:18:54 -0400
+	id 1xBAJi-0008Uo-RA; Mon, 28 Sep 2026 08:18:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBAJQ-0008Rm-MX
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBAJM-0008RX-IB
  for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:18:30 -0400
-Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBAJM-0007PK-A0
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:18:26 -0400
-Received: by mail-yx2-x10.google.com with SMTP id
- 956f58d0204a3-66fb93aee5eso3032387d50.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 05:18:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790597902; cv=none;
- d=google.com; s=arc-20260327;
- b=GhzVCJwDXNcWe3tlo8AHmXdOIvQd6uzr7Z7tLpfwgBwTfByqPQZoPtx4txnUR6wwzk
- RYfKmO7AP3xas3KF4rHaDQqkohchLyj95TWS21Sm3w6QGkXNH2EXBtAyaZgi2PzugGeA
- pkR7U+051xJUJZvushF5FkOAFr2AZhloL1D1880SAGA2gZ8FVwSSwyjH9vtmDix/8Ecs
- fO183yBUB1NsEPMZt7wf/VKvIPJW7Aq/62oTDkoFS4vrTShUMqA8+vlypT47+dmz3yL7
- Pr8yoQGtCHUJtfRcUvo4ulDY+mkLxdTcvH0mfH44NxUh2VeJk+nrQnquppgllGhSCLUT
- xoZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=tyhR6K8kv2DiaBgjFE5j6JP51JNzMA3q085iJsPNf8s=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=T9di96Acu8jWqNhiYX22dF/aHCgDwhAtJYf0tHjkk4uWkfDyVGAuRcsucyDiAnkGYp
- wPeoQSIukN56O0EcEEP0NggpoTiTRKiFXAj5hKXMJLps/wT65H/NCBXdPegy4Au9U1iH
- v1DVoU/a0WkSYzKsPPsbp0yxLTF78gk+OZVCBvuWSMOf7n2vc2x5wTSqS9m/aQud3jeG
- CvCYkkLwE/hpMd4G27CDp3toZkyoy0TCx1wvBTGntXa4VBet05nQ6NxogSqhHngB9Jrr
- R+BUqIe4k9k1ZGDbMX+jRHgqEU44BdhfcRY9aAl9JLAkl4SJQrDws1zYy7W8Tj4zC5Ot
- gfbw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790597902; x=1791202702; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=tyhR6K8kv2DiaBgjFE5j6JP51JNzMA3q085iJsPNf8s=;
- b=pD98JnWO4cP29tAnDj5txLVFwmZHXI/QKQsNQUV4w0cRhZmfu2D22SLoySuWWzouf8
- 9c3bN+M3e75TvDVBO1zrYcVzeSWupnk/QudfiTBRpwUbMPP5VxoL4hkZdiruy5LHiB9Q
- SdkuxL+RtbogmV57aYsRA4++8b3NeSYPifXWjBFCSh9h6ndXRHO+054xkD3mekFBrUOy
- w3K7dHYbKZHgA84k9R7PH8nu3goRpOpH7cS3Zlam+220MM3yvoy8Bi++dZyYq8NH61hd
- iO1B9AAXKqCbjggjGeyk/hH33Gl5QVzqHLcKHtpkj5LPldCfNAmHmSTDZOGSvJy+GhDJ
- FtNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790597902; x=1791202702;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=tyhR6K8kv2DiaBgjFE5j6JP51JNzMA3q085iJsPNf8s=;
- b=MjRZYz2zvBffzlvmlQaO3FQmWva9ztxsCOP5+C1fttvFzAqEVRs/RaIv4q3Ax3SXXl
- 7EWrIbzwBWowIAN5UZgk084ALuDpaFTF53lxF7Ck1wsS5RMiVigevcOP9sBAMyYvCaOa
- 8MnY9NonRQThnNvhwVMbfEs/coqZ9LKXKjwjbEIudCtECPBydWuG+iwI/l3wgQhrqaqL
- S/qNzX4YonEkEzL8Q8dBQIufDVbNQv1qpHKbEVIzPi/mJjQVBalwNUAWbMHJoC/Px618
- 9UOvWVK08cNY2K+FrWXHKp2NWuIG2Z5UXhhwqWnwPbQkOv+N4tBt2YUYKnmKQhrQ7ZO0
- H2PA==
-X-Gm-Message-State: AFq9FYLtMvW1knSy6VoCT9ZnTN+vkGnczmhomPMQx3s/04fKNWpSaw+F
- 86Q90ebzxAAbZYctcEjI39lSvUvmxO+BxxdHVezQyCb+RXvaPF7seNinVb2qBMwmWq+XjD4Vb5s
- mL36qACIAbVXcYbrgw0BCOeXBzzbkhy/YWPptDKQr8A==
-X-Gm-Gg: AYBFou0KMK7pA9e5lWagBh2rC7iJiFRwWz7VffanlWo7ZfQj3EvSx/LcYuxLP4mQ1d+
- puGQsvACPul76rMV0GC+0naLboPGolUodOpm1bBhqRxtbFNRTKm2rxI3xpftsq5ju27SHPKaIY3
- 0/8o+ZLqbTj0Y205UmyD4sZQzMDVn+ldg1liB6JPcahTPll1RZt56KXtBL6NQzr865HC33dZHmA
- rZsA2fO52h7Yd+yKnMBSg8Utreo+PhrndeRDqkjd/Evr5TkAO4OI0KaJJaTOWKUbjvf6PaGtGP5
- J4r2ZkKYmwM45k9Mf4UUXPf76bm8oA8lz8G8HOKWk5h5T/Gi78mP6u8nR8wDXVR997n0ON7Bcv1
- JBMuCPeh/eKP7T6P94KGTGeLdmJ+CosHFO4oq/D8=
-X-Received: by 2002:a05:690e:dcb:b0:671:43a0:77c1 with SMTP id
- 956f58d0204a3-672ed3b5989mr4523407d50.66.1790597901959; Mon, 28 Sep 2026
- 05:18:21 -0700 (PDT)
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBAJ9-0007Oz-3E
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:18:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790597890;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0/vrLJXlrs9bLYKtYtporGPrELgOtVfcRvQQzCv5liU=;
+ b=X03R0EYZPTo/yFXWmv4soLWsGI3FEUHjsZYWR6WHm6DWxrmO9Lm6VFuPuhabxqfEpF0Fsq
+ qkSu7acli1mfepOP5vwCcdHqxusXq3vKNYC0R6dTLzrIvzFgnz+HSLHF/OphosvW3w9m3Q
+ 5fPUPsBl9SbyloD/HduNCWpXAvuIe1A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-XybCGkfKMwW9YHVF8Lnt6Q-1; Mon,
+ 28 Sep 2026 08:18:03 -0400
+X-MC-Unique: XybCGkfKMwW9YHVF8Lnt6Q-1
+X-Mimecast-MFC-AGG-ID: XybCGkfKMwW9YHVF8Lnt6Q_1790597881
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BC361955D4D; Mon, 28 Sep 2026 12:18:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92796180036E; Mon, 28 Sep 2026 12:18:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 27E7421E6A04; Mon, 28 Sep 2026 14:17:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>
+Cc: qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Alistair Francis <alistair@alistair23.me>,  Peter
+ Maydell <peter.maydell@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-arm@nongnu.org,  kvm@vger.kernel.org
+Subject: Re: [PATCH v4 41/55] target-info: add SysEmuTarget none
+In-Reply-To: <CAE2XoE_QozVhBix251nyUQkFMi6p_4idGXpVOT0LSP7VYK8ddw@mail.gmail.com>
+ (Yonggang Luo's message of "Mon, 28 Sep 2026 20:04:59 +0800")
+References: <20260926070057.1234-1-luoyonggang@gmail.com>
+ <20260926070057.1234-42-luoyonggang@gmail.com>
+ <87zex1fvh4.fsf@pond.sub.org>
+ <CAE2XoE_QozVhBix251nyUQkFMi6p_4idGXpVOT0LSP7VYK8ddw@mail.gmail.com>
+Date: Mon, 28 Sep 2026 14:17:58 +0200
+Message-ID: <87ik3pfu2x.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260925162632.404001-1-richard.henderson@linaro.org>
-In-Reply-To: <20260925162632.404001-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Sep 2026 13:18:10 +0100
-X-Gm-Features: AclHuK8kmZe_VtLT6MyoHjA3rojXfYTWWpiZFWu8iZkiem5QwyY5U50CBobbcPQ
-Message-ID: <CAFEAcA9GAqVM-G2EYrAcJ-xcAQUoHgGFVtkcMfaYYjG_78uetg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] target/arm: Implement FEAT_IDTE3
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,25 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Sept 2026 at 17:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Changes for v3:
->   - Drop helper_tid3_udef_el1, because the entire tid3 space has backing cpregs.
->
-> r~
->
-> Richard Henderson (5):
->   target/arm: Rename isar_feature_aa64_idst
->   target/arm: Enable writes to SCR_EL3.TID{3,5}
->   target/arm: Implement SCR_EL3.TID3
->   target/arm: Implement SCR_EL3.TID5
->   target/arm: Enable FEAT_IDTE3 for -cpu max
->
+Yonggang Luo <luoyonggang@gmail.com> writes:
 
+> On Mon, Sep 28, 2026 at 7:48=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Yonggang Luo <luoyonggang@gmail.com> writes:
+>>
+>> > Add a none target for when no TargetInfo is selected. It is last
+>> > so existing SYS_EMU_TARGET_* values stay put, and it is not a
+>> > qemu-system- executable name. target_is_none() and target_none()
+>> > report that state.
+>>
+>> Why does it matter that existing SYS_EMU_TARGET_* stay put?
+>
+> We need a state that not a real CPU target is selected( I called it none),
+> then we can use it to list all targets. for example, do query-targets.
+> query-machines(all machines for all targets).
+> Any better ways to handle it would be appreciated, I am not choosing to s=
+et
+> it to NULL because
+> that would cause too much NULL-check error, as the pre-existing code
+> presume there is always a
+> CPU target present.
 
+Doesn't answer my question, so let me try again :)
 
-Applied to target-arm.next, thanks.
+In your commit message, you explain "it is last so existing
+SYS_EMU_TARGET_* values stay put".  They do, but why is that useful?
 
--- PMM
 
