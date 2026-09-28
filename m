@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C73B7C9833E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155C6C9832F
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 08:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB78Q-0007kH-Kj; Mon, 28 Sep 2026 04:54:54 -0400
+	id 1xB78b-0007pd-To; Mon, 28 Sep 2026 04:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhaoxiaoqiang007@gmail.com>)
- id 1xB78P-0007gK-4Y
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 04:54:53 -0400
-Received: from mail-pz2-x0c.google.com ([2607:f8b0:4864:3b::c])
+ id 1xB78Z-0007oH-9t
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 04:55:03 -0400
+Received: from mail-pz2-x2a.google.com ([2607:f8b0:4864:3b::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhaoxiaoqiang007@gmail.com>)
- id 1xB78N-0002aA-N8
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 04:54:52 -0400
-Received: by mail-pz2-x0c.google.com with SMTP id
- d2e1a72fcca58-87fd84c0bfeso984429b3a.3
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 01:54:50 -0700 (PDT)
+ id 1xB78X-0002dJ-OT
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 04:55:03 -0400
+Received: by mail-pz2-x2a.google.com with SMTP id
+ d2e1a72fcca58-882c2bcef77so617970b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 01:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790585689; x=1791190489; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Y+uAfa+jzC1Q2rWRjpzOqPq0n+yBQdFZVlFpDBX3WIo=;
- b=opM/q5esy7CCYM56SUNDV4N8N+TJZ09CnAdOisTPNupNl79rzgSyhCvhtGAptTZ2dz
- V8p7s8pl5EXqyipg4FIykP8EPCCfVHAq+gSLrFrkJWuJTFqwMierZT6ziCe172XT3sJI
- g299uZndCyZ4XdyYHAbR1iXvkCRVICWGUvuJyUm2iKxL/dLBAC3cqbHA1YbIQQ9cG9Wa
- jUztCcpbLI0eGyIPFiO1DyjYmLyv38JRh0sgXojyQ1A5+xcaot4aASkFZQRAPnUfwHjT
- uKn21GpH+i67mrknNqj7tXBY0RSeqpcxZXANceHsDImMQEqzNAI7fPwcJb7NFRQjqv72
- thvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790585689; x=1791190489;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1790585700; x=1791190500; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Y+uAfa+jzC1Q2rWRjpzOqPq0n+yBQdFZVlFpDBX3WIo=;
- b=T0vdGYQFBxWEGEmcnqbVu0uhHsdtcSZ8h5oX/SZ6w+rTjXkq3i7QbADacruor39jAe
- ZkG/E7zHXOnN7ywXRpzx+oig7lkopc/6pAP7LhD0RIlLYrUvd8cMH1W1qUexc138oYf6
- 9sP20dWhdvNQZjBBGnzQERoNB0Gh5for1+Q5kL8FbLl9fxGEFhIJzjwNTl0s9/zCUosc
- YKV97om2JWvzw3NWTLkH0GmwuVyB0eh88qnKpNcSDgSZtWjTAHn+Ba0jrSCoE0xoMWRN
- VKOC+pr824rv5th0QE11hhnwV9u7Ig4Gs3zFsHoI+NcrIaui3iw1WOBE8cbPa5JbReRA
- LGVA==
-X-Gm-Message-State: AFuF++mUbwOFsb4IXYOzjZGzr3foF+2eV+rMG0X8IB3hAA+WNBwM11JV
- 42vqAImL5/JYdTY1MEaLPdX5PeLMjyCwzW9Qs9Dc2vj8l+vuglUI9M1CHca4dng5
-X-Gm-Gg: AYBFou0rldbcPdOYFVGi+QfPsWCYL65upx2CtNLkisFZlQfp/IBG4ztXH8BhTkPIokF
- cH8ufNuNWgWCAe6LING3EKxXbV1HMMWNzH54XAF3D1654O5O4eIgY/n6pLVhqzIkQBRS4VP0tpJ
- RFFFxOHaXaQ+MpOR5lQTjDPiV/7WWoB/pSGtSRg6bKVk/5zLe8BJmDlRJ3kvveqViOi49s8/lqr
- 1lGTJdR4l0vyXQ6xNuk/xLZV3LOs10WJN+V0+FstyI/+ElaFl3vYXhlh++fx93OpV7mVQu2Y10t
- nDFBOHmlV+UhbIFqnF2PzXyBab64plARRfYYhhV4i02pNnCqiUmfg9UxfU1qGevSHmnKhU6q78i
- u7FjbzY360kJRnonlnUch3GlSkyItGioBUzN+aM1/7ZQJU9dTuHuSGxeIBN2b4xv6mRi6jsc/qS
- nCRyHCUBOlOfO3DG3kz8yylkV6b5q6uM+9GZA6mfnXmLTaxPrK93Ghdp1LM/hT
-X-Received: by 2002:a05:6a00:408d:b0:882:2195:5a74 with SMTP id
- d2e1a72fcca58-88221955f35mr3374007b3a.59.1790585689331; 
- Mon, 28 Sep 2026 01:54:49 -0700 (PDT)
+ bh=U63lHaeicpFEWBUa6vI1IpOgqgcW5RuE4jfl53b+aYA=;
+ b=FfIXCEZKq4g2kK12VwOEVP3H01yMlL72OqF6mqpU9cZRRzAVITIYJbkej5vuJJ8a+L
+ IbrJ5j+2pGRNnYLW/vaSsayeebbGXucyIFAy1fh5SaYiBV0dSJKkeKXjzUkHADl68qk0
+ UtQS63ggCrxWRiyyoV/l6ZZtew68b9qUZ84mgHs8nfY7B2UslrYokr+uqImTj5HmSyOE
+ Mt06TaRALSEr71gikrnC2jP6kHNBmeV2mZnGVeSe9mVzzu3F/FiWbgVdkQG3SkrSHrPQ
+ cUVJXSZW1JwWKwyk7DS2kCi828A4QrevKwUhOZpLp3Rh2Csr+U6V8hzchY4KvGp5VYmn
+ dn4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790585700; x=1791190500;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=U63lHaeicpFEWBUa6vI1IpOgqgcW5RuE4jfl53b+aYA=;
+ b=JX7onEmW7k04DQt3dwwBwjtYX2Z6fjW4zs8ynih1LivlPtvr4oqW9br3/YEavEdWHd
+ 1373+NEZdMN91z+ASLQiPgjlM+Up26RNtSQu85lI2P/0T6EAGMClPZlJfRO1ap9Yff43
+ bp51rNW9Qrzr4zWCy6tmuVoN4AzwovUKjUNewwozqOjg9FuKMG2/SWYfsS+O8OjLtMil
+ aQhrx0yDe/gxRqXUQM1/Bd/dcta8exuwa68UTxKHRwAX6uyAr4eydl0eunAJmg3vLXrE
+ xmQ14f1yJh2+vyg6yRjLJ5cdOdi6fLsWz9EjEumFAy4A/vKFPESkDoOchgCmXl309PpV
+ m6bA==
+X-Gm-Message-State: AFuF++lV+7k4ERGT/E8et+GDEi230rq3i1BxBKZyPV5S76VQJEcixHQU
+ g4ekrUCl2UjV1x6+4NHPc/yrjgS2ucUPyUYIJGsiywyxS+feRGnOGYcEaRnrQtqU
+X-Gm-Gg: AYBFou1NHJmzVpGUZm+/2oPxhgbuS3fgXfBQ/pGoXSzEuhiYmkrFAHsqcn10fCmh4pM
+ L3ZcAaYC7UF43T+byXldDLxn3nS4Tc+aYhUuQGXl0d8HWK4q1HeGti9yEMFlnIr8BQXtccV/Vou
+ qyuMkLJUaS2nFoPnrrqCoMCDjelcOvcIVoOAVyw/bsqTEdC7xKpY7F3hmDsAi2UA3KOUjzbZChU
+ 9f19Tqm6Ncs+FvL/a5EXnnLF27OAmKTqUQO5jQVDx8YoZXWNw5dS+JxS/HPtci1TDohtc9HYWkB
+ tWtMckZYG1TUBu9SEJgnUhGdRzH8lLo1rX7GJZJIlWLK0WfL9UgGJsQ5ORIy6Rx7mlVObHYfDVa
+ +qu+I4p2tHv/NEwuyC0EsvH6YUR86lZBhW3WL4N/3ZgATVXXlCLDdXNBccnhCTovNUb2xHL92oL
+ pLewaR9GfsS5axEBg8de9OSSn5rjRiyYg4gG9gd14h2HfPB9OGzh6FKDae9Yvq
+X-Received: by 2002:a05:6a00:2991:b0:882:d8c4:17c9 with SMTP id
+ d2e1a72fcca58-882d8c423bbmr2236261b3a.23.1790585700297; 
+ Mon, 28 Sep 2026 01:55:00 -0700 (PDT)
 Received: from debian ([1.203.174.67]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-87fea18ff77sm3849500b3a.14.2026.09.28.01.54.47
+ d2e1a72fcca58-87fea18ff77sm3849500b3a.14.2026.09.28.01.54.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 01:54:48 -0700 (PDT)
+ Mon, 28 Sep 2026 01:54:59 -0700 (PDT)
 From: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>
 X-Google-Original-From: xiaoqiang zhao <zxq_yx_007@163.com>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, maobibo@loongson.cn, jiaxun.yang@flygoat.com,
  xiaoqiang zhao <zxq_yx_007@163.com>
-Subject: [PATCH 0/3] hw/loongarch/virt: fix SPCR bitwidth
-Date: Mon, 28 Sep 2026 16:54:16 +0800
-Message-ID: <20260928085419.188886-1-zxq_yx_007@163.com>
+Subject: [PATCH v2 1/3] bios-tables-test-allowed-diff.h: allow loongarch SPCR
+Date: Mon, 28 Sep 2026 16:54:17 +0800
+Message-ID: <20260928085419.188886-2-zxq_yx_007@163.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260928085419.188886-1-zxq_yx_007@163.com>
+References: <20260928085419.188886-1-zxq_yx_007@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::c;
- envelope-from=zhaoxiaoqiang007@gmail.com; helo=mail-pz2-x0c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::2a;
+ envelope-from=zhaoxiaoqiang007@gmail.com; helo=mail-pz2-x2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,17 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change SPCR base_addr.width from 32 to 8 to avoid UART probe ADE
+Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Xiaoqiang Zhao (3):
-  bios-tables-test-allowed-diff.h: allow loongarch SPCR
-  hw/loongarch/virt: fix SPCR bitwidth value
-  tests/data/acpi/loongarch64: update expected SPCR blob
-
- hw/loongarch/virt-acpi-build.c        |   2 +-
- tests/data/acpi/loongarch64/virt/SPCR | Bin 80 -> 80 bytes
- 2 files changed, 1 insertion(+), 1 deletion(-)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..53702282e5 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++tests/data/acpi/loongarch64/virt/SPCR
 -- 
 2.55.0
 
