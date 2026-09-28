@@ -4,144 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C539C9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD46FC9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB8f2-0003P6-74; Mon, 28 Sep 2026 06:32:40 -0400
+	id 1xB8gv-0004Gz-10; Mon, 28 Sep 2026 06:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1xB8er-0003JR-Ax
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:32:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xB8gU-0004BG-DO
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:34:13 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1xB8el-0003nz-Ek
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:32:27 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68S9M9FF1195740
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:32:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=G5ivyUuKV4P829UvfjJhYTlM
- 0U+Vma9MKuvP6Pzhg6E=; b=SMy07vOUQNr37amSa26ud2miMJ8aa414581s9D4U
- cAEjGGyalCCSGqlud1aJq6nUkcp7Z9P90l/WFPoPRCqZsh0K9cnaoCff5vgPoclP
- BOlkFKZ5tQJrG5AD9j68SlcM+x9aBQpArrYoQ/ltMh4dowahSOqrW5RzN9cm3m7M
- JxygJLLl1jVTnXyZo+MBJ/yrxW2lRj7642BhD8Tk3qS8j/YW5THCEFmINQQSvEMK
- U/rmy+OE8pCN989hYMxH1yemlMhQTFcvQKtOaB6GrYh91Q0XjiTFQ/th53nnIcnm
- dam8J+DH6M8s1V4GMaO3P/dgz0DTJp7V04PCAtkDeg+Zwg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyj2s13xv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:32:19 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93a05d645acso621262085a.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 03:32:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790591539; x=1791196339; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=G5ivyUuKV4P829UvfjJhYTlM0U+Vma9MKuvP6Pzhg6E=;
- b=ETOB7HSKvyFiR868aDQMmv6Uf1kbwBPW3WzJuuX/lYtysgWFp3yymxy4DvrG0f80be
- ysyzPKO7Cq2vW1LjdN6gq2yS1oxoIx+aN1Z+prxDXRys+QQDfczBt4NCz3Y5A++D9EY5
- DNK7qQ+0ZSq2Pa1eXWSodJSP/DsY5r1Pj/kTwGbsqrXO5epC5TUVTCi3iuBJ9tItMF89
- /cYuyVpuCazoaXwI37UhZKKRcLIW86X8ixiSsVRzaSjQiRbLr8tgNxqM8hO/rN/oyTnZ
- QSLVrNk2RpbZDbGyKcPLIoPA2MSZ4+Qc9na84DzUKZXwYUc29bO8/p4pdv/GpWpfDCqK
- WHhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790591539; x=1791196339;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=G5ivyUuKV4P829UvfjJhYTlM0U+Vma9MKuvP6Pzhg6E=;
- b=dqtYggWux0uchIyVixQQM97mgNMbkVYIaIkEsE6Q8Fcm7r2dYhbZCgwKD6vt8fn6l9
- bbpTVIrlIpfK9VzqmYuRo/ZnhXJBFXs/CX0pPITO2oiXz9qpdU/L7HjbmmK7UgRHSwkr
- WOJ/oRkV7iRQI6QKYwI9kC6UUWATYk8Rmzw5EFnK2tTfurzN0vF+lKKIWVS0WiQloilm
- Giky5NbAvn8eAOQQKpgGYfK/IAKZOU94tUPHUl+6ZoFniGS/j/K6kRjJtpqO8R+qvZyS
- KcJxKU7uXuFzA5KApOxAp8SlLxCCAKHVkKgk9lzK+qGsXHS4feV44z2St4iZCgJMAHXd
- UXrQ==
-X-Gm-Message-State: AFuF++kfroowGcZokcf2T4r2gjuq6PjPWwajzTvuwZhOCm+8gfRPv2u0
- mvjO7aDTWcMY4pC4HK7WR5uL3GpzT28pcjMjmgMT56o9R7M3l7e+0Ah+/EbSa0FBkZeahG99YrH
- fFrrbUXeuTOKs6YT7hEvMvHBorTqbsQzMTl60UFEFZoSLJShQIhhaEc6aBw==
-X-Gm-Gg: AYBFou24qLJfVtjuZSBz3z59E8lK261i7SPORLk/rajN0gYBxYU87fq8Wfx1Xwecwyo
- o+yVdmjuJDtQt7rqt01CLsIlbLkQiBixIcaOnzSWB+mNm7j0+kKMc8aT60LY3f2ptn+LvLWke6t
- 62e2j7Gx7fOR5y3rk8ocNqLgX/dckx5/lU2p9rRUYrkAYwa5Dsjtu7Zlnb6wI4Yz9N2TZfVanbD
- Q/ktNxEZGWEE8ZJANlqwZEsB32kpPAemK7jTdp/Hoj8xjmUwBMeC6vCJ6HhMvOviNYvdA5T6UO0
- /h4JjtQkiMt5c3NxmMim/zUK6iaYwMzOWdaNsYkW7DRGEiV8KTIRT7UW5J2OfxfKvN3UdmhB2l2
- c+DkORB+aZGciZsmoca4TVsPs6NFjzx4H1uOwmA==
-X-Received: by 2002:a05:620a:45a4:b0:93c:6450:9cef with SMTP id
- af79cd13be357-93c6450c33bmr1043236385a.57.1790591538841; 
- Mon, 28 Sep 2026 03:32:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:45a4:b0:93c:6450:9cef with SMTP id
- af79cd13be357-93c6450c33bmr1043232385a.57.1790591538365; 
- Mon, 28 Sep 2026 03:32:18 -0700 (PDT)
-Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4887a30b1dfsm27651233f8f.4.2026.09.28.03.32.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 03:32:17 -0700 (PDT)
-Date: Mon, 28 Sep 2026 12:32:16 +0200
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
- Icenowy Zheng <uwu@icenowy.me>,
- Matheus Ferst <matheus.ferst@eldorado.org.br>,
- Sunil V L <sunilvl@oss.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v12 2/5] target/riscv: add riscv-server-ref CPU
-Message-ID: <jd3sbg3cdtl4y6ogu2oyhitpd45jbrm6ir55f4bwbebvilkd3v@nwqxtslxlc2c>
-References: <20260917174405.3471736-1-daniel.barboza@oss.qualcomm.com>
- <20260917174405.3471736-3-daniel.barboza@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1xB8gS-0003u0-Dl
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:34:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1790591648; x=1822127648;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=R4wqFfpd54dEkrthMBlaKEQmqyx9HQ4Ka95jdTtQBns=;
+ b=jLL36GRsQqihSNrmrKGl7zMHn9DoeWpT5zte1OxCotdSqJ2R4G5L7031
+ nz6u8OPZ3B4m9Jsz1kbs6Dzm0SpmCj0fzwEU9zoGMvtXv0uXdiIEEFmTt
+ PVxV0QeKWy9oyxRqJ8NoHOnU6EBBRROqSykCSizH39Zg0XNSiuH5l81N2
+ 8JvMT/xiSO3oqBIBqolA3CiyMHLoC3pHhszh8r8+ymadkyUTQ1e94RmV8
+ ayI7u4snMLHuMNMIXVu6QCF1L0AWr9nyAl54J6hNaGYTze4Tf+wJOH306
+ V8Ce0r3vAknmyDkqoer8BODvbPih9UyvB04DWa3b7d1humo8jsRvhtkFG w==;
+X-CSE-ConnectionGUID: dRWnlnRXTFy8VU7LAqoHfg==
+X-CSE-MsgGUID: LXaPl3nwS3S4MKYvDP/eLA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11918"; a="116816086"
+X-IronPort-AV: E=Sophos;i="6.27,128,1787036400"; d="scan'208";a="116816086"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Sep 2026 03:34:06 -0700
+X-CSE-ConnectionGUID: RCmrsxoORHqZN+cUDaxYjQ==
+X-CSE-MsgGUID: pgP1eVwFQlO0osmN705FoQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,128,1787036400"; d="scan'208";a="278379420"
+Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.112.226.173])
+ by orviesa004.jf.intel.com with ESMTP; 28 Sep 2026 03:34:04 -0700
+Date: Mon, 28 Sep 2026 18:34:03 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ chang.seok.bae@intel.com, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 13/17] target/i386/tcg: add decode functionality for APX
+Message-ID: <arpCm2czQxjKaPwi@intel.com>
+References: <20260923173021.317809-1-pbonzini@redhat.com>
+ <20260923173021.317809-14-pbonzini@redhat.com>
+ <58073b08-9f64-400c-b8a2-acd0baa4add5@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260917174405.3471736-3-daniel.barboza@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA0MSBTYWx0ZWRfX/FY+iCds9uvL
- 4djWLfSiARCKtlFFS7exMwnvIn5ES3/EcLbYDu9QDADi0PDkDTjjP9Jw45OSke5dGpMxj+v1afN
- Atd73M2lL9HP87azzIiBFBYVjQYSxsGQGNPDxn9obVYiVDHv8wLTCfLy4THBXxlOg+wSAtQLR4D
- hduRoHQflsZGoRkJNW+hgB1FowthHi7cTVtx71Xxskyy9dk8zbV24OS4brzJbWCqdKxbJYwdzm1
- ed9PCRtGTp1sSl/mg6rcWfI2+57zd8p3cd5BavDHa47YiBofQgL1Cx+XNx1zhrocqIgJBJolgyh
- SheelgUpuGWETOqWRvs1YMbWUXSqCUvFukEBQaJJqMGplquu+MulacduccSK+giEcbDcHGAOhZe
- zrhLYh33kZ/wnfnYWNqlQjhNpMmOQszF9Ful2aOrmGGVDxLe93uDArz/y2lKxEKs9hiQCcoeGqA
- S3YkhP+plQpmyMUBZGA==
-X-Proofpoint-ORIG-GUID: Po9DjTuUveAfrwaMVjjXh6goKH3v-JSB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA0MSBTYWx0ZWRfX/Dds+t3MvhsR
- GPMtoh6Fv4toQ48hOz30bnUdjtj7SbZkL4kl6CczIjlySlrZfV6VJwdnX+1PCmqShElAPaRfLMB
- dWQpl10DyIKBcd3CpIcK04tiJJlCK1U=
-X-Proofpoint-GUID: Po9DjTuUveAfrwaMVjjXh6goKH3v-JSB
-X-Authority-Analysis: v=2.4 cv=TptzFzXh c=1 sm=1 tr=0 ts=6aba4233 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=PXcuKL70AAAA:8
- a=FRSEYCzRAAAA:8 a=j2afkqJCyIVXg8yJ22EA:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=xVlTc564ipvMDusKsbsT:22 a=1qLaeP4TCVy2vqIEy19U:22
- a=H4N_Y-AU75W7NKDNhZlT:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609280041
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <58073b08-9f64-400c-b8a2-acd0baa4add5@linaro.org>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,37 +83,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 17, 2026 at 02:44:01PM -0300, Daniel Henrique Barboza wrote:
-> The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> profile support and others.
+On Thu, Sep 24, 2026 at 08:17:17AM -0700, Richard Henderson wrote:
+> Date: Thu, 24 Sep 2026 08:17:17 -0700
+> From: Richard Henderson <richard.henderson@linaro.org>
+> Subject: Re: [PATCH 13/17] target/i386/tcg: add decode functionality for APX
 > 
-> We're going for a profile-based implementation, instead of a regular CPU
-> that can inherit RVA23, to allow future CPUs to use it internally as a
-> starting base for their own extension sets.  There's also a new
-> 'rvserver-ref-1.0' flag that can be used to set the extensions in the
-> command line for other CPUs, which can be used for testing/debugging
-> purposes.
+> On 9/23/26 10:30, Paolo Bonzini wrote:
+> > +    case X86_EVEX_APX:
+> > +    case X86_EVEX_APX_cmp:
+> > +    case X86_EVEX_APX_pp2:
+> > +    case X86_EVEX_APX_zu:
+> > +        /* Only reached through EVEX map 4.  */
+> > +        assert(!(s->prefix & PREFIX_VEX));
+> > +        if (s->vex_l) {
+> > +            goto illegal;
+> > +        }
+> > +        if ((s->prefix & PREFIX_EVEX) && !validate_evex_apx(s, decode)) {
+> > +            return false;
+> > +        }
 > 
-> Note that for all intents and purposes "riscv-server-ref" is a regular
-> CPU and no, we're not trying to set a precedent of calling the riscv
-> server platform spec a profile.
+> They're only reached by map4, so surely
+>
+>     assert(s->prefix & PREFIX_EVEX);
 > 
-> [1] defines in rule SEE_020 that we must support at least 11 debug
-> triggers (4 for insn address, 4 for insn load/store, 1 for icount,
-> one for int, one for excp).  We're going for the minimum.  If more
-> triggers are needed users can set any trigger amount (N <= 1024)
-> with:
-> 
-> -cpu riscv-server-ref,num-triggers=N
-> 
-> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
-> 
-> Suggested-by: Icenowy Zheng <uwu@icenowy.me>
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Reviewed-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
-> Reviewed-by: Chao Liu <chao.liu@processmission.com>
-> Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+> is more appropriate, and the subsequent test for evex moot.
 
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+I think the code comment is misleading (and assert seems right).
+
+Not only evex map4, but also some legacy decoding reaches here, and
+those legacy decoding share the decode helpers with evex map4, e.g.
+decode_group1/decode_group3/decode_group4_5. And REX2 could also reach
+here since it reuses legacy decoding table in decode_REX2_map0.
+
+Maybe we can refine the commnet like:
+
+/* EVEX map4/REX2/legacy all may reach here. Only VEX won't */
+
+or we can drop that comment directly? :-)
+
+Regards,
+Zhao
+
 
