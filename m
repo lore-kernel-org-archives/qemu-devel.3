@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7BACA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 581F6C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB0c-0005CD-PX; Mon, 28 Sep 2026 09:03:06 -0400
+	id 1xBB2k-0006UP-W5; Mon, 28 Sep 2026 09:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0Q-00059g-JD
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xBB19-0005ZM-R7
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0N-0004Li-VJ
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:53 -0400
+ id 1xBB17-0004QF-Vl
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600571;
+ s=mimecast20190719; t=1790600616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w8Z2Howvt+ht69Xjzhv6iIFW39HwWL2tc8fuzRCp4fM=;
- b=A//roeH50/NeNjdcfcyhP5pQAT7PR/GTfKkNlbTJNDYx+L6jsZD/HdCp7mMuQuaNTDnKUY
- +X8/8iMYiwVxevz7AkIXk10coPhTdnl9HBsrnxNt/jMtJNum1N8F420D7HhWwBOyPZ+mC+
- lXx9M1MAgUHZ2B4nNtL19WWBywbWbfs=
+ bh=KAcfqtbVAb5pnaKetSqUEg4BiO5HB5L3GZOP7o6cwU4=;
+ b=enkyZXoB+ad9zkZT2PCwxEL2VMV22eaBeq2CzbfxhqNJgFFvE/9CH8fMIbKJ85ACmjskh4
+ Fzb8foE/jugk3oJeC+sGjYx1qhNk5Q1O7zlhexFX5Mh1Us1qskJh0GEZxxWTFVz6kM03ea
+ pPSkIpZA0DoYcuescuZ//Rlo2uN5kpE=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-6HBFt9_YN_yFbBbw_iviAg-1; Mon, 28 Sep 2026 09:02:49 -0400
-X-MC-Unique: 6HBFt9_YN_yFbBbw_iviAg-1
-X-Mimecast-MFC-AGG-ID: 6HBFt9_YN_yFbBbw_iviAg_1790600568
+ us-mta-306-bEpqLNPrPbyPBNr2Rasqtw-1; Mon, 28 Sep 2026 09:03:35 -0400
+X-MC-Unique: bEpqLNPrPbyPBNr2Rasqtw-1
+X-Mimecast-MFC-AGG-ID: bEpqLNPrPbyPBNr2Rasqtw_1790600614
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c293e604f0eso286404466b.3
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:02:49 -0700 (PDT)
+ a640c23a62f3a-c294442d71dso345183866b.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600568; x=1791205368; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600614; x=1791205414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=w8Z2Howvt+ht69Xjzhv6iIFW39HwWL2tc8fuzRCp4fM=;
- b=nU5vdzC+ciHYxPVzOSFR8oUpNoAsjID2ix8tZkMq43JcRV7YSzJcPzS8cDlzM1+6hX
- q6jn3MmV40Eu1hSSGNYsQkwMXiJLgSVhsU/9a/CRD8PG5pDYsl+T/ZkjauTHgZaY429B
- ifapuayzj1tiQkujFJY/AplwceO2xX2iF/K7e1rVp8pObQlrrTBuiNSW03mJJBzOOJgF
- FMQoPgsjRzbiOQeZNZtgT6cesVBSl0W9lJaN6fyLpqU1mnZixg2UCH/422/Dt5qYtrsE
- rojt+dlVVjlMobJJccYV+EYitTyIsEAC5gHATA/iex0wuX9wpLARGi4uEKdF/dkV7oMG
- ZcMA==
+ bh=KAcfqtbVAb5pnaKetSqUEg4BiO5HB5L3GZOP7o6cwU4=;
+ b=HSebAYyWSRp7+YMV+lCy7H00zpSlrjI+kAsIdBX1Yp9RNMz3rxqgvtM1AXOPlxbQtu
+ PpvA7r6VxaDjdA3BTeNJ+ZwuBdrmxH5vJgpU7DxF0kY8loZpD1iCyk0l3WYkwpof4M2O
+ 6aSmA0rMmayoqG2T78Off62Q73pwBFp4GroBKCk1Dyynn9Bu4GZ0FtJpD0Oq9O9c6aqP
+ Bl8RcI8gMnX5aaTLeNgOpJT+JlhxOafjVXPP9uzjHx4w/zKGD1OAfjDR34cimfngglIm
+ BA9Jki6igWfumYPA8cxT1RCJVvM8WEWCVPx0nozRKADSW8J0p0VfF1o0DvMBqN1xqjvj
+ un1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600568; x=1791205368;
+ d=1e100.net; s=20260707; t=1790600614; x=1791205414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=w8Z2Howvt+ht69Xjzhv6iIFW39HwWL2tc8fuzRCp4fM=;
- b=MRwzKRNw1Xm56/1CBacR1GR+L+mIyAhFP6ZNCxtmTffOgVd9JS+kPGnXPBX51TEk3B
- lcq8tRwwKkx8QJIcMD3KZcBB0ctYrCDGsrkp/hbPtZ0UJebjA600xfAN4JJblybJBLtf
- 0vSzewd0d6uqgOd6OBdtXJ4mqlWDica60W5G702rsKpOf4U+M6EBZIXAeXtOFri4KMxI
- spL9BNW0ncxXPp72FvM5U+Qj6ltx2iEZGU9tbRaETDOnxIIhd4aNs3XTQ/WK6shLF1Kx
- RL1lR3M9NDm+e/KGXzFCjn05a6cUVeelg+al4qnUA+DXXgEBPsgbKg8jGSC+yKInjd4U
- ZNyA==
-X-Gm-Message-State: AFuF++n/IM53r5zGJo9zaIbCiHzM/yyyATfnCCNx5Iy/31lTmxSSTn9W
- YONLiHZ4Ki9+mJa8nbBVmDsuDd3CczzfrjgKiTNpfHB/ss0yv/LjuoFeItTR7w2/E6LIYV3dw++
- eMz77LNWbMrL/bzvNdZekZvb6/wihFew04WqEmEdrTkebZsgImxJ2r51TgNC4vTiQhqQCQTlFuS
- 8rTbgoaveeOojDp2SkH86MOd2Cgq7aSj7kWAJG5w3w
-X-Gm-Gg: AYBFou2CJT+oCHPBSRSbweCjvuhCk8BQ2EkwS8/MaWnYUmDDiWwbAiLZ4YN8PryO+lr
- hGJXDxXntclYZmFMlxbOsblSTi0/b+hYXB/eCT8NQlYvNtm8VCIHSA4xoqgUbK96cT7RZxcU/y9
- Jj5WSf10+L1iFsZXTikQPHw21ej691mBFMpRM8cVzI/A4k4qRfo6PXZVcosLJBMJdaBDx+d9WgK
- npi9L8bAncV3P6OjCWYzC8lvyDxj7Y/cK+BYzOjdcL1ngmf+/v2RRf7OEkNV1gAgf64hSp0A4ho
- 8qgzLcLIrPxqY1q2Y5TZfyJIMJZmPjNd1681/ytFSGbgm642FdC66FfnFcu0QwfT2doKeEtiU0L
- rhmmoJX8MwnAC8E3egDAl/IsgcjLQId4/4NXa0CGkY61IxlNTxW8v+m7n2/ZOed+ZHQ==
-X-Received: by 2002:a17:907:1999:b0:c29:349e:7c1d with SMTP id
- a640c23a62f3a-c2ac268060fmr1028062466b.49.1790600567887; 
- Mon, 28 Sep 2026 06:02:47 -0700 (PDT)
-X-Received: by 2002:a17:907:1999:b0:c29:349e:7c1d with SMTP id
- a640c23a62f3a-c2ac268060fmr1028058766b.49.1790600567189; 
- Mon, 28 Sep 2026 06:02:47 -0700 (PDT)
+ bh=KAcfqtbVAb5pnaKetSqUEg4BiO5HB5L3GZOP7o6cwU4=;
+ b=UKbTdh884RS7LMJxXsooPjiFtq68QfrRF2Josnbfd5KvX+KYmxeTnoy60StXmTOvyD
+ AiSaJY7SjSmf2Q/TkUjN5i7f8fZDD7RmL4pcH9QbaaAaDPYQZr9CTZGv79NZdRqTl/TZ
+ P4kuXrjFWdGrMK54YCu6ppcUeN+NOv9UN8KEP+ibmqr24nSiRMLfdbddiJp8O7m4vGtB
+ L7WVs7OWp6W33Y4+bOGBFDvikujL3f9fAMQpZ3wq5T9OviaK3Fn7ylFedQhmkFaVbxaI
+ IltT1wMQXGbPoe+8FDBeMRPsbUpElMZxchF+SXLIu312FegSLGc4nlkwtwB4Ss99u1hQ
+ M81g==
+X-Gm-Message-State: AFuF++lFrD7FhGUGWxD3PaOi6De7Xizvwb5Xsb5H+Y2lpBQUvhXnjJBb
+ xKxms/2Mtrd+k/wBl+68T/MsVJbkA6VEMqMAgGoicCMFRyyZ/myDgJV8xTZniZ8MhQlMO1V9oXP
+ As8UTuHvXzcjLuNWxUp3euRZgUpmmLknO65VL4rWl4fqdn/1f8Rxl3eZJl8magJtyODICBydYya
+ LBw4cm1HQll2ynrD8wVWgc1LDtu7eRrRh09gs0c62x
+X-Gm-Gg: AYBFou3hbHiQuJlfyLpeSlfqO6Le+tcqF4Xq0VgvIXDt/f0MZKp6S7guzXa74q2z14O
+ A3fsMsL6lwinA3ysP1Sx56HF3qPT4hhfRRWhkBKCG4LTeLVwrNrc/193pmnAFgEMbhl+o0F/9Ls
+ ZYXZ0m2FHeVKjB1JunfOcyquxl+QE7HLWzoKbAjKg19A8XeDYvFuvqsE5KvdFlFTrZpOwAKyoeb
+ cq9whrdDfRKifDMY0drDa3mNMd7mLNy4s2hb0JwYF7dy7ZM9haj7oraQvhHeMek/1+Qw2jAFRR4
+ bjdsL0WoAapKiucXq1t5JzbJXvOE0eJsXpSSo+rXRQj52Lsb5J9FzzTYj6qD8UG/hLzFRQotCiS
+ 9zxTK+oMwA4UkyyseAn7ZPHXtYWAWH4XcdoK4PyEeYWdAY8dpxTzaUddlv1AOKRe4L1ugzcUZ6Z
+ 588NJZ
+X-Received: by 2002:a17:906:c114:b0:c29:555e:bf9 with SMTP id
+ a640c23a62f3a-c2ae97cc5e6mr796301766b.18.1790600613631; 
+ Mon, 28 Sep 2026 06:03:33 -0700 (PDT)
+X-Received: by 2002:a17:906:c114:b0:c29:555e:bf9 with SMTP id
+ a640c23a62f3a-c2ae97cc5e6mr796298166b.18.1790600613040; 
+ Mon, 28 Sep 2026 06:03:33 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2ae757857bsm461898066b.24.2026.09.28.06.02.46
+ a640c23a62f3a-c2ae757b84bsm462976066b.31.2026.09.28.06.03.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:02:46 -0700 (PDT)
+ Mon, 28 Sep 2026 06:03:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Andrey Polivoda <apolivodaa433@gmail.com>
-Subject: [PULL 06/30] target/i386/tcg: ignore VEX.L for unary scalar
- instructions
-Date: Mon, 28 Sep 2026 15:02:04 +0200
-Message-ID: <20260928130228.877003-7-pbonzini@redhat.com>
+Cc: "Chang S. Bae" <chang.seok.bae@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 20/30] target/i386/tcg: decode REX2 prefix
+Date: Mon, 28 Sep 2026 15:02:18 +0200
+Message-ID: <20260928130228.877003-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,101 +121,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to both Volume 2 of Intel 64 and IA-32 Architectures Software
-Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
-VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
+The REX2 prefix has two main complications: it does not apply
+to vector registers, and it disables or mutates some opcodes
+(thus needing separate decoding functions instead of decode_root
+and decode_0F).  Otherwise, all it does is extend s->rex_r,
+s->rex_w and s->rex_b to two bits.
 
-Currently, QEMU handles VEX.L with these instructions differently:
-- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
-  (XMM or YMM), leading to differences between QEMU and the real hardware.
-- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
-  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
-  bit set, the QEMU process crashes with an assertion failure.
+Since REX2 provides the ability to access r16...r31, extend
+cpu_regs[] to CPU_NB_EREGS elements.
 
-These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
-it also allows unprivileged guest userspace to crash the QEMU process itself.
-Instead, always handle the instructions as if VEX.L=0.
-
-Reported-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Reviewed-by: Chang S. Bae <chang.seok.bae@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     |  6 ++++++
- target/i386/tcg/decode-new.c.inc | 17 +++++++++++------
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ target/i386/tcg/translate.c      |  22 +++++-
+ target/i386/tcg/decode-new.c.inc | 114 +++++++++++++++++++++++++++++--
+ 2 files changed, 126 insertions(+), 10 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 92822969003..25f7d2215ee 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -263,6 +263,12 @@ typedef enum X86VEXSpecial {
-      * operands, and thus handled by decode_op_size.
-      */
-     X86_VEX_AVX2_256,
-+
-+    /*
-+     * Instructions that do not care about VEX.L; used for scalar operands, because
-+     * they *should* be used only with VEX.L=0 but may accept VEX.L=1 on some machines.
-+     */
-+    X86_VEX_LIG,
- } X86VEXSpecial;
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 2e48e3a8898..99c74e4d5d5 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -78,7 +78,7 @@
+ static TCGv cpu_cc_dst, cpu_cc_src, cpu_cc_src2;
+ static TCGv cpu_eip;
+ static TCGv_i32 cpu_cc_op;
+-static TCGv cpu_regs[CPU_NB_REGS];
++static TCGv cpu_regs[CPU_NB_EREGS];
+ static TCGv cpu_seg_base[6];
+ static TCGv_i64 cpu_bndl[4];
+ static TCGv_i64 cpu_bndu[4];
+@@ -3341,7 +3341,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
  
+ void tcg_x86_init(void)
+ {
+-    static const char reg_names[CPU_NB_REGS][4] = {
++    static const char reg_names[CPU_NB_EREGS][4] = {
+ #ifdef TARGET_X86_64
+         [R_EAX] = "rax",
+         [R_EBX] = "rbx",
+@@ -3359,6 +3359,22 @@ void tcg_x86_init(void)
+         [13] = "r13",
+         [14] = "r14",
+         [15] = "r15",
++        [16] = "r16",
++        [17] = "r17",
++        [18] = "r18",
++        [19] = "r19",
++        [20] = "r20",
++        [21] = "r21",
++        [22] = "r22",
++        [23] = "r23",
++        [24] = "r24",
++        [25] = "r25",
++        [26] = "r26",
++        [27] = "r27",
++        [28] = "r28",
++        [29] = "r29",
++        [30] = "r30",
++        [31] = "r31",
+ #else
+         [R_EAX] = "eax",
+         [R_EBX] = "ebx",
+@@ -3403,7 +3419,7 @@ void tcg_x86_init(void)
+                                      "cc_src2");
+     cpu_eip = tcg_global_mem_new(tcg_env, offsetof(CPUX86State, eip), eip_name);
  
+-    for (i = 0; i < CPU_NB_REGS; ++i) {
++    for (i = 0; i < CPU_NB_EREGS; ++i) {
+         cpu_regs[i] = tcg_global_mem_new(tcg_env,
+                                          offsetof(CPUX86State, regs[i]),
+                                          reg_names[i]);
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 459452b04e3..8d1e581cfde 100644
+index 546c6451ed1..f79098e8348 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -260,6 +260,7 @@
- #define svm(a) .intercept = SVM_EXIT_##a, .has_intercept = true,
+@@ -1991,6 +1991,65 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xFF] = X86_OP_GROUP1(group4_5, E,v),
+ };
  
- #define avx2_256 .vex_special = X86_VEX_AVX2_256,
-+#define vex_lig .vex_special = X86_VEX_LIG,
++#ifdef TARGET_X86_64
++static const X86OpEntry opcodes_rex2_map0_A0toAF[16] = {
++};
++
++static void decode_REX2(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b,
++                        const X86OpEntry **map)
++{
++    *b = x86_ldub_code(env, s);
++    const X86OpEntry *group = map[*b >> 4];
++    *entry = group ? group[*b & 15] : UNKNOWN_OPCODE;
++}
++
++static void decode_REX2_map0(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    static const X86OpEntry *opcode_rex2_map0[16] = {
++        &opcodes_root[0x00],
++        &opcodes_root[0x10],
++        &opcodes_root[0x20],
++        &opcodes_root[0x30],
++        NULL,
++        &opcodes_root[0x50],
++        &opcodes_root[0x60],
++        NULL,
++        &opcodes_root[0x80],
++        &opcodes_root[0x90],
++        opcodes_rex2_map0_A0toAF,
++        &opcodes_root[0xB0],
++        &opcodes_root[0xC0],
++        &opcodes_root[0xD0],
++        NULL,
++        &opcodes_root[0xF0],
++    };
++    decode_REX2(s, env, entry, b, opcode_rex2_map0);
++}
++
++static void decode_REX2_map1(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    static const X86OpEntry *opcode_rex2_map1[16] = {
++        &opcodes_0F[0x00],
++        &opcodes_0F[0x10],
++        &opcodes_0F[0x20],
++        NULL,
++        &opcodes_0F[0x40],
++        &opcodes_0F[0x50],
++        &opcodes_0F[0x60],
++        &opcodes_0F[0x70],
++        NULL,
++        &opcodes_0F[0x90],
++        &opcodes_0F[0xA0],
++        &opcodes_0F[0xB0],
++        &opcodes_0F[0xC0],
++        &opcodes_0F[0xD0],
++        &opcodes_0F[0xE0],
++        &opcodes_0F[0xF0],
++    };
++    decode_REX2(s, env, entry, b, opcode_rex2_map1);
++}
++#endif
++
+ #undef mmx
+ #undef vex1
+ #undef vex2
+@@ -2010,6 +2069,20 @@ static void decode_root(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+     *entry = opcodes_root[*b];
+ }
  
- #define P_00          1
- #define P_66          (1 << PREFIX_DATA)
-@@ -996,8 +997,8 @@ static const X86OpEntry opcodes_0F3A[256] = {
-      * For other unary operations such as VSQRTSx this is hidden by the "REPScalar"
-      * value of vex_special, because the table lists the operand types of VSQRTPx.
-      */
--    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 cpuid(SSE41) p_66),
--    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 cpuid(SSE41) p_66),
-+    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 vex_lig cpuid(SSE41) p_66),
-+    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 vex_lig cpuid(SSE41) p_66),
-     [0x0c] = X86_OP_ENTRY4(VBLENDPS,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0d] = X86_OP_ENTRY4(VBLENDPD,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
-@@ -1053,8 +1054,8 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F10_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5),
--        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5),
-+        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5 vex_lig),
-     };
++static int reg_nb_mask(DisasContext *s, int unit)
++{
++    switch (unit) {
++    case X86_OP_MMX:
++        return 7;
++    case X86_OP_SSE:
++        return 15;
++        break;
++    default:
++        return 31;
++        break;
++    }
++}
++
+ /* Decode the MODRM and SIB bytes into a register or memory operand.  */
+ static void decode_modrm(DisasContext *s, CPUX86State *env,
+                          X86DecodedInsn *decode, X86DecodedOp *op)
+@@ -2020,10 +2093,7 @@ static void decode_modrm(DisasContext *s, CPUX86State *env,
+     int sib = -1;
  
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -1076,8 +1077,8 @@ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F11_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
--        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
-+        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5 vex_lig), /* MOVSD */
-     };
+     if (mod == 3) {
+-        op->n = rm;
+-        if (op->unit != X86_OP_MMX) {
+-            op->n |= REX_B(s);
+-        }
++        op->n = (rm | REX_B(s)) & reg_nb_mask(s, op->unit);
+ 	return;
+     }
  
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -2653,6 +2654,10 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-     case X86_VEX_None:
+@@ -2324,9 +2394,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         }
+     get_reg:
+         op->n = ((s->modrm >> 3) & 7);
+-        if (op->unit != X86_OP_MMX) {
+-            op->n |= REX_R(s);
+-        }
++        op->n |= REX_R(s) & reg_nb_mask(s, op->unit);
          break;
  
-+    case X86_VEX_LIG:
-+        s->vex_l = 0;
-+        break;
+     case X86_TYPE_E:  /* ALU modrm operand */
+@@ -2785,6 +2853,24 @@ static void dump_unknown_opcode(CPUX86State *env, DisasContext *s)
+     }
+ }
+ 
++/* MASK must have two bits set.  Bring the lowest just below the highest;
++ * for example if MASK == 0x11, bit 1 of value is moved to bit 3.  Clear
++ * every other bit in VALUE.
++ *
++ * Generally mask will be a constant, so that all of the first three
++ * lines disappear.  Likewise, if the bits in mask are already adjacent
++ * this becomes just "return value & mask".
++ */
++static inline uint8_t collapse_two_bits(uint8_t value, uint8_t mask)
++{
++    uint8_t high = mask & (mask - 1);
++    uint8_t low = mask & ~high;
++    uint8_t tweak = (high >> 1) - low;
 +
-     case X86_VEX_REPScalar:
-         /*
-          * Instructions which differ between 00/66 and F2/F3 in the
++    value &= mask;
++    return (value + tweak) & (mask + tweak);
++}
++
+ /*
+  * Convert one instruction. s->base.is_jmp is set if the translation must
+  * be stopped.
+@@ -2880,6 +2966,20 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+             goto next_byte_rex;
+         }
+         break;
++    case 0xd5: /* REX2 */
++        if (CODE64(s) && (s->flags & HF_APX_EN_MASK)) {
++            int rex2 = x86_ldub_code(env, s);
++            if (rex != -1) {
++                goto illegal_op;
++            }
++            s->prefix |= PREFIX_REX2;
++            s->rex_b = collapse_two_bits(rex2, 0x11);
++            s->rex_x = collapse_two_bits(rex2, 0x22) >> 1;
++            s->rex_r = collapse_two_bits(rex2, 0x44) >> 2;
++            s->vex_w = (rex2 >> 3) & 1;
++            decode_func = rex2 & 0x80 ? decode_REX2_map1 : decode_REX2_map0;
++        }
++        break;
+ #endif
+     case 0xc5: /* 2-byte VEX */
+     case 0xc4: /* 3-byte VEX */
 -- 
 2.55.0
 
