@@ -4,72 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2AE6CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA31C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBAik-00018w-2X; Mon, 28 Sep 2026 08:44:39 -0400
+	id 1xBAlI-0001nD-0X; Mon, 28 Sep 2026 08:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBAig-00018c-FT
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:44:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBAie-00027B-2M
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:44:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790599470;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0OgzuqfPwIyicbkfEvXHrbloe3jrX5uGmTmtCm9+G84=;
- b=HApGkbWCm5myOzmmV4lBwrz/AtGMiEzXaTiGrd617lZJEqYSlnYU3pl2eS2/U0P4/IrJAK
- I9YKzLI9eplsw5Oa/6y9hwhyVltfem1Z22BoJr6SfFs1ntSvVqBoAHpOnj6IgZfapiTAGC
- P2umy540bIERoONuXfeYUVDs3afvU9g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-Vug6NgYNOhCwEqGGVlOVFg-1; Mon,
- 28 Sep 2026 08:44:29 -0400
-X-MC-Unique: Vug6NgYNOhCwEqGGVlOVFg-1
-X-Mimecast-MFC-AGG-ID: Vug6NgYNOhCwEqGGVlOVFg_1790599468
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF8AD195DB8E; Mon, 28 Sep 2026 12:44:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 855141956095; Mon, 28 Sep 2026 12:44:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 342A721E6A04; Mon, 28 Sep 2026 14:44:25 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Tim Pambor <timpambor@gmail.com>
-Cc: qemu-devel@nongnu.org,  Jason Wang <jasowangio@gmail.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH] net/vmnet: Add host address options for vmnet-host
-In-Reply-To: <20260927-vmnet-host-address-v1-1-6feb74f727c5@gmail.com> (Tim
- Pambor's message of "Sun, 27 Sep 2026 13:04:44 +0200")
-References: <20260927-vmnet-host-address-v1-1-6feb74f727c5@gmail.com>
-Date: Mon, 28 Sep 2026 14:44:25 +0200
-Message-ID: <87a4p15yvq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBAl5-0001mO-97
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:47:03 -0400
+Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBAl3-0002Rj-3a
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:47:03 -0400
+Received: by mail-yx2-x0e.google.com with SMTP id
+ 956f58d0204a3-672f4b7091dso1491553d50.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 05:46:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790599619; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MTvTnG+qz93LiZjW+UB8NYHIMZvdoDHPd+aJRFji89d8K9xLKounA5E14zXVRMvXqx
+ GqZ5QUogK7NMq7Z4ma58uhTN06T9xD75g1CUAtI0brsY9mTTh4uSrmAZYeAxYYXOsHaf
+ B7HZJAINGH7gcBkBOwVXsPA9EIfwEWJeq+vi3uAR//1wQJXbv8ss8GU+HCLc8HbJnfXR
+ RxLKY2v7A1ytgRxiGHTTDGhbbirumIecDg5QaqGNhaLhgR5RqQNQ65sL48L9abvcFORN
+ vKytCd/2rd+XoYmFxbNlyzXT14GEkwE45XUVIfTHnfAzYOvwZcAhRuJMqvgP3nA6f7R4
+ TVGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=1+VGnfe7ib3gQRob+y51DwBtrmpQpMtEkJB8abEMfHI=;
+ fh=gicmf1zLCz5mLo37/slHRwiGNwG9FuwwhzHTeCt9t94=;
+ b=NHbFI+3MldWr3gMMmKqQ/Fh8Zoxy8h/1PmBLzQ0SgyyD9uYWdq6wqvnQoslDe34ah4
+ of9hx+zJ4nFEFsGjqW2EQtn0uubNsHHhz1brOuFOtVI8hN80YwDja+aEbaTx+Bj/Nbf4
+ 2nxXlZVdeLN6+xVgbuDU9eJ/ZaSpfR2om4kJpW0GGDDBFklphlIK1YlX5/vX/Wzh6tpA
+ a+m0r3TizHt+mHNE0eojQcyd/haVw36Vhu1FaNJKt5/ZiP9fphyHVLhLG5usJvOLc485
+ 4wYpOwYNWq7prOzWLrf9LerZ/W4h94su3yB+bY0gNMfE9fbY9RupRqbgPnlvCRcIDis7
+ MGHA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790599619; x=1791204419; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=1+VGnfe7ib3gQRob+y51DwBtrmpQpMtEkJB8abEMfHI=;
+ b=TTqPhQxKTHe5DMnnQAlI8u9yWG+m3OGO+lDEBm7ckCA81Vy0cSZPWciObuuotlS3R7
+ 3n9RDAJMDg2fccpxrUoMWPyJoK+U6pVj8TYZX02ALtYgDoCvhRs4w87ppc/ijtYGMJNd
+ gVMEOO9VLS9xoRp1GuSshDEy77NPUQ2SUIvPZRlPUourokZqMa6Oz7IurukJ2Fog118a
+ NB05RZjslL1rJyoEVCOhmdDN20Fv0e6psfj8xvP9TLI2bBOzgLiG5zWDPXmrFUGEP1VP
+ g4SWIxobw/8Vq2lY1fnb1gEGGLM8PgKBqW+IgljjJJmLvJ6BfAKA6bjl0rxkJu8oTbOK
+ yp0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790599619; x=1791204419;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=1+VGnfe7ib3gQRob+y51DwBtrmpQpMtEkJB8abEMfHI=;
+ b=ybHqNMrVHStGVCjPNdzltkHantPT9DelFzBHT7Ae028p3IcA6c0w7XSiLjAZOtmI1N
+ 2EDgegTHWN5Ar/xMgs+GFgVbYBBzidnyMzfafz1bw0Q6yfDHl8oxTaQ5gwB3znKwzawD
+ 8Yvvj1NsUHAtUMR70am+dmxzr+zSsSBcPC28dqjP3BCfHav4mujYT0N/pvdyN1u+RnRc
+ gtkszVFuT54doaZ+6LnULeNi+FiEuIUXWZ0AezqfAUqfNSeFS1G7VzJXFxo/idIkj8PQ
+ GodfSz7u9G/MBTD5KP5aIiX3XWwSMmp4wxvTZ0IMZ/C1qsgmyInVSH/7VKb1nHHD+BKL
+ 3xwQ==
+X-Gm-Message-State: AFq9FYKfr8UP4hWE/Jyr/Lcy+DjB8atVQFdd4dLN8jM4RUA7o3QtfpSZ
+ 2Oz1kfGAuYXrtC9s1+UHociqtl32CX4U/Rq0TrHUEcZ8G6OzfRcGAZOuAVpsiwovYs0nKWXCMZk
+ 5+eaL9iykfS+ep81DE3iUDyaUQNLL00mRFAeQ7eH8jg==
+X-Gm-Gg: AYBFou21u+ix9AZLt6jmne1hosDseBYjsLcbT4vRVWR330pKoKuk5Zj0YsUlnwtu5Z6
+ k9ViLQQvdFx7JcYe1rdmfYyPzLZE8JYl/x7QcyBDhISKZvl9JeOggcG8prjuqNfF1SPRyeHraX3
+ lk5e8/CYdgzLYrFmO2lFM2PbkwznhVOkz37QjznktpfcHqr5/xab7T2lZzp2l/DX6Ix4dpMSnwa
+ S0/HKwu2GWyhWFCFG+kCcQ7kqhRRNtqxovwQLOXGB6wwynxK5xYXEnEz4G5EXNdvIvTGfvfk4M3
+ HipQ0Q81wh6/hl6oPSSPlG5ttpyWZOJGgNuauTe+eSmxcYuNCc/zqD2VZC4Ry189YtmseHAE/QY
+ fkJeMNALuuTxCYQpg0UoYc/3wK0egD8VfnJ2bCkQ=
+X-Received: by 2002:a05:690e:191a:b0:672:b59a:3784 with SMTP id
+ 956f58d0204a3-672f82be77bmr4530233d50.28.1790599619037; Mon, 28 Sep 2026
+ 05:46:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
+In-Reply-To: <20260915-allwinner-gpio-v4-0-b1ee1d09c9fd@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Sep 2026 13:46:47 +0100
+X-Gm-Features: AclHuK8MQJ5VUUQArtFEHdvd7zJe6_nFwFZL2uYShKGj2cKjGpMO_aiSMW2-jUM
+Message-ID: <CAFEAcA9_=TV9xxkgBC+30xAtbqX9A9EJ8-1sO_ei9U1SB3qEiw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] Allwinner A10 GPIO support
+To: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Jack wang <163wangjack@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,64 +117,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tim Pambor <timpambor@gmail.com> writes:
-
-> When a vmnet-host interface is added to an isolated network via
-> 'net-uuid', vmnet does not provide DHCP and the host side of the
-
-Comma after DHCP?
-
-> bridge gets no address, so the host cannot talk to guests on that
-> network without manually assigning an IP address to the bridge
-> interface after QEMU has started.
+On Tue, 15 Sept 2026 at 21:27, Strahinja Jankovic
+<strahinja.p.jankovic@gmail.com> wrote:
 >
-> vmnet provides the vmnet_host_ip_address_key,
-> vmnet_host_subnet_mask_key and vmnet_host_ipv6_address_key
-> properties to assign addresses to the host interface in this case.
-> Expose them as the 'host-ip-address', 'host-subnet-mask' and
-> 'host-ipv6-address' options of the vmnet-host backend.
+> This patch series introduces GPIO support for Allwinner A10 and
+> Cubieboard.
 >
-> Signed-off-by: Tim Pambor <timpambor@gmail.com>
+> The support is focused on input/output and interrupt functionality.
+> The qtest suite is also updated with tests for implemented
+> functionality.
+>
+> Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+> ---
 
-[...]
 
-> diff --git a/qapi/net.json b/qapi/net.json
-> index b46af1fdc9..38b43d20ed 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -795,6 +795,16 @@
->  #     is allowed only with other interfaces added to this network
->  #     identified by the UUID.  Requires at least macOS Big Sur 11.0.
->  #
-> +# @host-ip-address: The IPv4 address to set on the host side of the
-> +#     interface.  Only applicable when @net-uuid is also specified.
-> +#     Must be specified along with @host-subnet-mask.
-> +#
-> +# @host-subnet-mask: The IPv4 subnet mask to set on the host side of
-> +#     the interface.  Must be specified along with @host-ip-address.
-> +#
-> +# @host-ipv6-address: The IPv6 address to set on the host side of the
-> +#     interface.  Only applicable when @net-uuid is also specified.
-> +#
->  # Since: 7.1
->  ##
->  { 'struct': 'NetdevVmnetHostOptions',
-> @@ -803,7 +813,10 @@
->      '*end-address':   'str',
->      '*subnet-mask':   'str',
->      '*isolated':      'bool',
-> -    '*net-uuid':      'str' },
-> +    '*net-uuid':      'str',
-> +    '*host-ip-address': 'str',
-> +    '*host-subnet-mask': 'str',
-> +    '*host-ipv6-address': 'str' },
->    'if': 'CONFIG_VMNET' }
->  
->  ##
 
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Applied to target-arm.next, thanks.
 
-[...]
-
+-- PMM
 
