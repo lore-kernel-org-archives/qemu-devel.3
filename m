@@ -4,107 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2631C9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0951CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBACE-0002Gz-5E; Mon, 28 Sep 2026 08:11:02 -0400
+	id 1xBACC-0002Bu-I4; Mon, 28 Sep 2026 08:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
- id 1xB4W7-0005Lg-Ex
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:12 -0400
-Received: from mail-wm2-f12.google.com ([74.125.225.140])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
- id 1xB4W4-0004Ol-6C
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:11 -0400
-Received: by mail-wm2-f12.google.com with SMTP id
- 5b1f17b1804b1-49ce364488dso6896835e9.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 23:07:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790575625; x=1791180425;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=YvbufSJ8de3jLwpO62dY2tmldsGbWsZ+fJKLfQ7LzTc=;
- b=YGKXRftB/zFGppmAAQx5j/8qBrLI4lZ+urNxCGqYrtHa1JAZNVsQ2cOimbSHvUOV27
- xI/Gx2mn6ps2WO/vW8UwgAqkgaq/CJsiciF4TKsPoqtNhIjfUWVK03SlF/Gurp33hwtR
- fkfBr9zRXqQpTzheR5Tn54lBhD1Gvqq4aexpNPK7vXPKI9ke3NC/FLPckoe+5xxtr8Mz
- C9RjYFyTHoPV8IRAh2xQe+CC10XrWenQuItpnCjnf2d2e6sE/BbiHKbH6x1Op3XieUiW
- abxmm2hLkGY7PzNTgCMcPDfGdWBM5hXozqbcmoiVPdutSwWiTgRzUlyQpQm2OcogSi4N
- cupw==
-X-Gm-Message-State: AFuF++m/qdEK42kfdmLzi8mTAauTcprk6CEKL2YgeEe3v2xONgGrQztl
- 3EuxIr7nPLtoG4c0ZJiMdPs8lCjA3e9ISEXSk7/xYjzY/IylfwOQhaEu
-X-Gm-Gg: AYBFou02EI21mwsjnWr/DnUxAsvNq0BkRepE/SucqOMP5iwgrmCMI7eGFywVzJuP0w3
- PzFFcRgSLmcBE/6hbKqG4ixuPndesN0bqnVxGmJdGYlNPm3DM3ZA1+qerD53SLFbVLSKTdc7JZk
- o8tcKwsAI094XDjsriQwjCKOZ5D0HdQu4E1dLjz4qbztHK+YdAsqgGUmph7w7jPrKySlZ6IcYRZ
- GxsBWjMGdu3E8BMKeDNf2/AOXlJFENzYYj5vpZCHHZQ8yRLsJK3Jnm1E0Y2TaP4puhDZL0yFcON
- d0XVi3RN4X55PqrJ1r4JV3Qw50T937C1+Vdws2kyNdMm3r8WMXr2AgUX5RdzIQ0FuNRd9icY9Ih
- B39RId0B+E5pfzK2svMRBAMgqHFVQ8EAPBDFBvljNPv8lGCe7iQeHbLhF5wBaXMqIU9osWo9V4s
- xleXc5Vr8YintjVctT+xZS77fTdVJgYuszd010s8YGHL8zQ7b2D+RIKUHqLh+AvyX5tU6UkZQZu
- jGrNg/BwloVc+KUXg==
-X-Received: by 2002:a05:600c:5394:b0:4a0:25c:8ad2 with SMTP id
- 5b1f17b1804b1-4a0025c8c52mr56865615e9.9.1790575625341; 
- Sun, 27 Sep 2026 23:07:05 -0700 (PDT)
-Received: from mac.fritz.box ([2a05:fa40:300:1a00:d105:6a41:99ee:cbff])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a008f7f1c2sm1325775e9.1.2026.09.27.23.07.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 23:07:05 -0700 (PDT)
-Date: Mon, 28 Sep 2026 08:06:36 +0200
-Subject: [PATCH 1/4] hw/riscv/virt: Provide number of interrupt identities
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260928-spacemit-k3-v1-1-8c57d0596b87@butz.st>
-References: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
-In-Reply-To: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
+ (Exim 4.90_1) (envelope-from <kaloz@kernel.org>) id 1xB9ZL-0006Vg-H5
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:30:55 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kaloz@kernel.org>) id 1xB9ZI-0001we-Ig
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 07:30:51 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2420C601F7
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:30:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485A41F000FF
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:30:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1790595037;
+ bh=IAAzLgxiLQ+y2/sMSN2Du/cynTkLmseeh7hD9BG0I8Q=;
+ h=From:To:Subject:Date;
+ b=Wof1PpoK+F298dyqtMuko0++ZeHlQGojRpkkNP08aB9kFYyFjmRLtpQqLTziXJey9
+ BGpauD6MBkzDALpyn+EFPIKFEJoV5fdcNMmJwYQ2ScDZdPExFtX7sCahVcU+QdW+Xo
+ 9hdBR/vmpEldPLYaqRfoI6MnNYGRvWG0EHC5Yj9tihva4EIF40SwCyeM1gAz/Umqlr
+ Xi+39dKA0mlplJ/VRa9IqKvY+DD25E1i0bAdK1xs8lnTmdovumXbMASIeZ/PuK8UVJ
+ VDxBS6grbnoKFy3vc7pNePONmeyWf22R6/oFQWNLfk4B5BDbBD47lyWdY/B9952Z/9
+ eIelGUgB/wo+Q==
+From: Imre Kaloz <kaloz@kernel.org>
 To: qemu-devel@nongnu.org
-Cc: Sunil V L <sunilvl@ventanamicro.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Stefan Butz <mail@butz.st>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openssh-sha256; t=1790575623; l=3599;
- i=mail@butz.st; h=from:subject:message-id;
- bh=w2OjWKCaO3jaHKzDKRqYUmo5SBU5u8jG3s//MB19DZY=;
- b=U1NIU0lHAAAAAQAAAZcAAAAHc3NoLXJzYQAAAAMBAAEAAAGBAOJW8yHG2FdKcC8jiWoQyd2Z6
- SNHh+aJB0RLkH7BFF7Yy7MymfE5UJE2mmoucIa3HiNQdlVZjgqLY7wph/VSM4kniDO57IG9Q9jN
- x96oOAzzWWJEVrh8vlxRGXatNy8ywcO9WExvzLop5s2ddP08f0Wrzn/55mpqoLJyoKaIbk10kxz
- JW1GONHT8nsNvBpVB2lnzA2jhv7DC79UlHzA98+sp8eX6kmUips+9LpTJLDeVna8f/vwkU708PI
- Qxt/5nhmFXKj/su/CMFivCLHckdmMOem/4UNoTyRcAbcoFQ9WWyYHvAD/bRuYZVEA2hfoBEQVu2
- FGHdG/OimvbT/GseVmWjiw7WV9HUOJJawVmfoTEJynX9BbV+VNMKZVpW5YaAaps6/KOC7V2bM7P
- hvORUmj3b8eUr418GYC3M4rLJtrj6Vu2cUyTV9Q5dvq9Lg2TIj/jpbEWpOqn2FSGkQcLvcDksNk
- jOSGmdG4h+OJ3vbGrva5UCJF/KIyuV4ozlSU7awAAAAZwYXRhdHQAAAAAAAAABnNoYTUxMgAAAZ
- QAAAAMcnNhLXNoYTItNTEyAAABgAwWtm/L/IcJjewD14QlBPATSiL5yGh982s4fUA7odc/Qsmxx
- EjuLRojyTXVh1Fb+GsymXFV43YUaIKgj22vgFq2Q8GfuxXmo2XM6JHZU8lAkR3aA9DcjVBPB8VT
- REXL3tRtaWGV+CMtp2lEGZdomw4F2Mh+RynyQm1WqpMCCbaGpVassDlOrG1ZHMWq/a2m+F8O2ig
- 35WJSe3HiBX2gGScOFjmS1IfwVq+iZfu3kIQeLtZpDZ589S4xuhM3Rowrg3+Kx/mPqQAtbwJ9sd
- IpIARwy6MRJsMt1XSpnzl9bOwLX2WBBE5uGFntcLVq2nczI7dTBPiuK9LdA1IHOBL06FKitiexX
- hSxCFFNqUcXeiuxqBLQyc4lN+LTIWiBLQCbhLNVRgTimQEoU10CA/fwKYY3XhY/Ihrn1Mtrb7Tf
- as51w/C8hH+U4NR8SxrkGdRg2tYVtgajq2lNjYODr1Mp1v1QZ1U2FFX9K/ZHgbS2sg+1mvWUY0F
- 5+znUOfsEItlPJw==
-X-Developer-Key: i=mail@butz.st; a=openssh;
- fpr=SHA256:jcZFBs39daoQJIontO/rJaVachWp/oqTbhNpQk8+REQ
-Received-SPF: pass client-ip=74.125.225.140;
- envelope-from=stefan260699@gmail.com; helo=mail-wm2-f12.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: [PATCH] hw/sparc/sun4m: Limit max_mem to what the memory controllers
+ decode
+Date: Mon, 28 Sep 2026 13:29:35 +0200
+Message-ID: <20260928112935.19447-1-kaloz@kernel.org>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=kaloz@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 28 Sep 2026 08:10:50 -0400
+X-Mailman-Approved-At: Mon, 28 Sep 2026 08:10:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,93 +64,165 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Butz <mail@butz.st>
-From:  Stefan Butz via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of hard coding the number interrrupt identities used by the IMSIC
-pass it in as a parameter. This allows other machines to configure this as
-required.
+The SS-10, SS-20 and SPARCserver 600MP accept -m up to 60 GiB, and the
+LX, SS-4, SPARCclassic and Voyager accept 256 MiB, more than any of
+these machines could hold. On the SS-10, SS-20 and 600MP, sizes above
+the hardware limit fall into three ranges:
 
-No functional change.
+- Up to 4 GiB, QEMU maps the RAM, but no real machine could hold it.
+- From 4 GiB, the size wraps around in the firmware. QEMU passes it as
+  an 8-byte fw_cfg item, but the sparc32 OpenBIOS reads only its low
+  32 bits, so -m 5120 boots as if it were -m 1024.
+- Above about 56 GiB, the RAM also overlaps the SBus devices, which
+  start at 0xe20000000 (TCX).
 
-Signed-off-by: Stefan Butz <mail@butz.st>
+Set each limit from the real hardware:
+
+- The SS-10 and SS-20 memory controllers (EMC and SMC) decode eight
+  SIMM slots as 64 MiB windows from 29 DRAM address bits, 512 MiB in
+  total (Sun patent EP0571099).
+- The SPARCserver 600MP takes at max 1 GiB, onboard plus expansion
+  boards (SPARCsystem 600MP service manual, 800-5318).
+- The SS-4 takes at most 160 MiB in its five SIMM slots.
+- The LX and SPARCclassic use the microSPARC-I on-chip controller,
+  which decodes four 32 MiB banks, 128 MiB.
+- The Voyager has 16 MiB onboard and two slots for 16 or 32 MiB cards,
+  80 MiB. Its default RAM size becomes 80 MiB, so -M Voyager without
+  -m still starts.
+- The SPARCbook model gets 128 MiB, the decode limit of its
+  microSPARC-I. This keeps QEMU's default -m of 128 MiB working and
+  does not describe a real SPARCbook configuration.
+
+Machines without ECC map an empty slot so that accesses to missing RAM
+do not fault. It now ends at iommu_base, where memory decode ends on
+those machines, rather than at max_mem.
+
+Update the maximum memory sizes in docs/system/target-sparc.rst.
+
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
 ---
- hw/riscv/virt-acpi-build.c | 4 ++--
- hw/riscv/virt.c            | 7 ++++---
- include/hw/riscv/virt.h    | 1 +
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ docs/system/target-sparc.rst |  6 ++++--
+ hw/sparc/sun4m.c             | 24 ++++++++++++++----------
+ 2 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 8e516ec114..0ebfa10a02 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -576,9 +576,9 @@ static void build_madt(GArray *table_data,
-         build_append_int_noprefix(table_data, 0, 1);        /* Reserved */
-         build_append_int_noprefix(table_data, 0, 4);        /* Flags */
-         /* Number of supervisor mode Interrupt Identities */
--        build_append_int_noprefix(table_data, VIRT_IRQCHIP_NUM_MSIS, 2);
-+        build_append_int_noprefix(table_data, s->num_msis, 2);
-         /* Number of guest mode Interrupt Identities */
--        build_append_int_noprefix(table_data, VIRT_IRQCHIP_NUM_MSIS, 2);
-+        build_append_int_noprefix(table_data, s->num_msis, 2);
-         /* Guest Index Bits */
-         build_append_int_noprefix(table_data, guest_index_bits, 1);
-         /* Hart Index Bits */
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d4b501802f..0ee726b4c0 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -277,7 +277,7 @@ static void create_fdt_sockets(RISCVVirtState *s,
-             .imsic_m_base = !kvm_enabled() ? s->memmap[VIRT_IMSIC_M].base : 0,
-             .imsic_s_base = s->memmap[VIRT_IMSIC_S].base,
-             .imsic_group_max_size = VIRT_IMSIC_GROUP_MAX_SIZE,
--            .irqchip_num_msis = VIRT_IRQCHIP_NUM_MSIS,
-+            .irqchip_num_msis = s->num_msis,
-             .aia_guests = s->aia_guests
-         };
+diff --git a/docs/system/target-sparc.rst b/docs/system/target-sparc.rst
+index 4116cac493..de0acc76dc 100644
+--- a/docs/system/target-sparc.rst
++++ b/docs/system/target-sparc.rst
+@@ -52,8 +52,10 @@ QEMU emulates the following sun4m peripherals:
+ -  CS4231 sound device (only on SS-5, not working yet)
  
-@@ -826,7 +826,7 @@ static void virt_machine_init(MachineState *machine)
-                                              &s->memmap[VIRT_IMSIC_M],
-                                              &s->memmap[VIRT_IMSIC_S],
-                                              i, base_hartid, hart_count,
--                                             VIRT_IRQCHIP_NUM_MSIS,
-+                                             s->num_msis,
-                                              VIRT_IRQCHIP_NUM_PRIO_BITS);
-         }
+ The number of peripherals is fixed in the architecture. Maximum memory
+-size depends on the machine type, for SS-5 it is 256MB and for others
+-2047MB.
++size depends on the machine type: 512 MiB for the SS-10 and SS-20,
++256 MiB for the SS-5, 160 MiB for the SS-4, 128 MiB for the LX,
++SPARCclassic and SPARCbook, 80 MiB for the Voyager, and 1 GiB for the
++SPARCserver 600MP.
  
-@@ -847,7 +847,7 @@ static void virt_machine_init(MachineState *machine)
+ Since version 0.8.2, QEMU uses OpenBIOS https://www.openbios.org/.
+ OpenBIOS is a free (GPL v2) portable firmware implementation. The goal
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 550acdff6d..c586b1c44e 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -840,10 +840,13 @@ static void sun4m_hw_init(MachineState *machine)
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0);
  
-     if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
-         kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
--                             VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_NUM_MSIS,
-+                             s->num_sources, s->num_msis,
-                              s->memmap[VIRT_APLIC_S].base,
-                              s->memmap[VIRT_IMSIC_S].base,
-                              s->aia_guests);
-@@ -972,6 +972,7 @@ static void virt_machine_instance_init(Object *obj)
-     s->acpi = ON_OFF_AUTO_AUTO;
-     s->iommu_sys = ON_OFF_AUTO_AUTO;
-     s->num_sources = VIRT_IRQCHIP_NUM_SOURCES;
-+    s->num_msis = VIRT_IRQCHIP_NUM_MSIS;
+-    /* models without ECC don't trap when missing ram is accessed */
++    /*
++     * models without ECC don't trap when missing ram is accessed,
++     * up to the end of memory decode at iommu_base
++     */
+     if (!hwdef->ecc_base) {
+         empty_slot_init("ecc", machine->ram_size,
+-                        hwdef->max_mem - machine->ram_size);
++                        hwdef->iommu_base - machine->ram_size);
+     }
+ 
+     prom_init(hwdef->slavio_base, machine->firmware);
+@@ -1174,7 +1177,7 @@ static void ss10_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x72,
+         .machine_id = ss10_id,
+         .iommu_version = 0x03000000,
+-        .max_mem = 0xf00000000ULL,
++        .max_mem = 0x20000000, /* 512M: EMC has 29 DRAM address bits */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCstation 10";
+@@ -1207,7 +1210,7 @@ static void ss600mp_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x71,
+         .machine_id = ss600mp_id,
+         .iommu_version = 0x01000000,
+-        .max_mem = 0xf00000000ULL,
++        .max_mem = 0x40000000, /* 1G: onboard plus expansion boards */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCserver 600MP";
+@@ -1258,7 +1261,7 @@ static void ss20_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x72,
+         .machine_id = ss20_id,
+         .iommu_version = 0x13000000,
+-        .max_mem = 0xf00000000ULL,
++        .max_mem = 0x20000000, /* 512M: SMC has 29 DRAM address bits */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCstation 20";
+@@ -1291,11 +1294,12 @@ static void voyager_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x80,
+         .machine_id = vger_id,
+         .iommu_version = 0x05000000,
+-        .max_mem = 0x10000000,
++        .max_mem = 0x05000000, /* 80M: 16M onboard plus two 32M cards */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCstation Voyager";
+     mc->default_cpu_type = SPARC_CPU_TYPE_NAME("Fujitsu-MB86904");
++    mc->default_ram_size = 80 * MiB;
+     smc->hwdef = &voyager_hwdef;
  }
  
- static char *virt_get_aia_guests(Object *obj, Error **errp)
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index e516898f9a..98e48ac894 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -66,6 +66,7 @@ struct RISCVVirtState {
-     OnOffAuto iommu_sys;
-     uint16_t pci_iommu_bdf;
-     uint16_t num_sources;
-+    uint16_t num_msis;
- };
+@@ -1324,7 +1328,7 @@ static void ss_lx_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x80,
+         .machine_id = lx_id,
+         .iommu_version = 0x04000000,
+-        .max_mem = 0x10000000,
++        .max_mem = 0x08000000, /* 128M: microSPARC-I on-chip controller */
+     };
  
- enum {
-
+     mc->desc = "Sun4m platform, SPARCstation LX";
+@@ -1357,7 +1361,7 @@ static void ss4_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x80,
+         .machine_id = ss4_id,
+         .iommu_version = 0x05000000,
+-        .max_mem = 0x10000000,
++        .max_mem = 0x0a000000, /* 160M: 5 SIMM slots */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCstation 4";
+@@ -1389,7 +1393,7 @@ static void scls_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x80,
+         .machine_id = scls_id,
+         .iommu_version = 0x05000000,
+-        .max_mem = 0x10000000,
++        .max_mem = 0x08000000, /* 128M: microSPARC-I on-chip controller */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCClassic";
+@@ -1421,7 +1425,7 @@ static void sbook_class_init(ObjectClass *oc, const void *data)
+         .nvram_machine_id = 0x80,
+         .machine_id = sbook_id,
+         .iommu_version = 0x05000000,
+-        .max_mem = 0x10000000,
++        .max_mem = 0x08000000, /* 128M: microSPARC-I on-chip controller */
+     };
+ 
+     mc->desc = "Sun4m platform, SPARCbook";
 -- 
-Git-157)
+2.47.3
 
 
