@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A295BCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE9BC9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBACG-0002Pu-Hv; Mon, 28 Sep 2026 08:11:04 -0400
+	id 1xBACR-000308-70; Mon, 28 Sep 2026 08:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
- id 1xB4W8-0005Lj-Is
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:12 -0400
-Received: from mail-wm2-f13.google.com ([74.125.225.141])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xBAC0-00022j-H4
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:10:50 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
- id 1xB4W4-0004PH-Hb
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:12 -0400
-Received: by mail-wm2-f13.google.com with SMTP id
- 5b1f17b1804b1-49ffbd83a92so10699815e9.0
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 23:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xBABy-0006C0-GX
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 08:10:48 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49ffb83bf7aso15378855e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 05:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790597444; x=1791202244; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8uLsWFBAwoNnVuqk/hxCl5YS7RooPa8d8u1LGQIXtd8=;
+ b=MBHSDRXoS2G5qlFelTiWp4dNm5IiYmeIdcChasAVnqKbPZwlYcspIEsIYfXFh1I+Ij
+ T7gngDgBp+lVfBsnolHAlhuBZZ7o/ssIoJws5gBcnyLzp2psTgDMMn5TZNGeEs78HVFi
+ QnbesZ/fsiB322cYiR3QOgweIJDQa+jwjdOiJFlVDCN8Q/Bks4izrCm6VIZM8BZsJWix
+ q1PcNqxEOOj7fgDTV0Eme/Pg7+u3JVhFnan5ORFv08P2fx5YHpFTEdL16LR90v4Wvc3O
+ s17N2SSUM3lnQ+hTWtMhbSH5Ppk5XgSvyjwz9/RC4LQncdwgB9DDiGfMuHjS1Qr0+7TK
+ JZRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790575627; x=1791180427;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1790597444; x=1791202244;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=UrVtJk/zRiOa4XVd4HFsMF4pqFTMubmXdGMXTPSPLPg=;
- b=W52NYEDQxZc1jRw9k4R8ysy9V0FdEATobmw0MGLBJQ3Ln+WJeJBO7ArjV5aD6OjiqT
- miH742k4lNJOHOLV9o3IL/416mJ1HS0jKKVWbtr92zNQLqPjSQaOWLGWT3E1ap66yZM/
- WhJDFAEs9X4td6WiFyhcL9/DpfCR+f3pSW4kWvMT0BMfGEOH2Y1+wcHGgiFty0qQtT66
- U88WFoec/wxx0TYs4uUV6+zOVXiVGud1XCe1PXJN5fKc751IsuaxmhjSY9nLJ0iHlrv2
- 8gzHZR56ySUeTc6Lkbn9xkkpF44cM/9SbLEQQ8spoFu2x+1AHM/oXCQUU3uCAA87B8Ve
- iw7Q==
-X-Gm-Message-State: AFuF++lxjnmgKU5ANDd4apv4qeULWPZyfPdyS/dVSB5rTd+mzFfMYail
- +ylwDHzXa89fblwHZgkGfXaiNsFuT7cxO4p39GpuV+aiiqWHHDPeoQIH8vjrVwbX
-X-Gm-Gg: AYBFou1ZWCW3/c15SxosewkEpBeaWK3sx5bRw82wIg/CgOAZoLgqs3BjjZM0twtnGQK
- mF8fZXHo3oFulig26feWOK2wi2tzInJT+fVa5HcVVGLCH1rnE4/zdPgzzNYI6mWtAk2I8XScML7
- 2bMtZftL/Wfb6LA5ovgLOfc/pAyrbaWRV/sL8ZUXyQ6ug/Cn0vkROzNCwwAXyH0crQnrTzAj3EX
- 5NmBpzLntGG+Qlx9J4UWjbO5yvp3W9GAUewFLMtdOPOGUWOf8CBjqrtSH74bhFEpDx1JYEk07rk
- ji+LSfWL3d0SwAtJVDDvP0BmeZTE5XEVA7f/x4wB5Q/VpO2xh+M6wGes6TA1d4DpMLuoFLT5e9N
- ojUCh6OB1Nbh1OCO2bjBlUtETl1os+S5ReBKEsrbivc6RhTK6APvs/bQQUE8d6wyS1dwBe4CHVh
- yOlSMMIT8eaxlFiE4IApNgmyvAScSxYs173vDun39yAr7AUkK9VikS5R8w6+cyCExpAskR6gxB+
- zWKF791Q2z3Hu6vkg==
-X-Received: by 2002:a05:600c:4e55:b0:49f:bd3c:bc1a with SMTP id
- 5b1f17b1804b1-49fe66f506fmr198725375e9.21.1790575626985; 
- Sun, 27 Sep 2026 23:07:06 -0700 (PDT)
-Received: from mac.fritz.box ([2a05:fa40:300:1a00:d105:6a41:99ee:cbff])
+ bh=8uLsWFBAwoNnVuqk/hxCl5YS7RooPa8d8u1LGQIXtd8=;
+ b=AfvcxLae9N525vUR5Qt+u0KqgMeriCZdpPqeXYVEpQBfefSh+XaZ++EjTU5zvIhlAD
+ CvzxcJrRzhNsC3SmoG4H5VJuzMp9uN1kLUaH4VoEdLWJoQ4gaLpCw2Wuq2de9oAqopoZ
+ gIPQTJtp8AIgj5TvS/h/ci7cqGMyr/JoYa5mLEunNfB8/q1Vlmtbg0BhN+nFNwECnEaL
+ Rl+om+tuWxKucRxQtxcyefvKH5O3J6MP37Fq2ssWGU8XOtAzVci4ti3ZAKlFa5qWtOzW
+ JH/WrL0rIwr7zlmCY15QOQjvIKBi918Q0/FZWNL0xf/EmRCUuN7I5yWgfCGA8KfMbO4Z
+ fC8w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByhlreDrZPLolYM+77H+MUhmXgARMSwDkqIt/VuBS+78x5eLHzPillP40Qwk9V1++PMXEXbpC0GMuj1@nongnu.org
+X-Gm-Message-State: AFuF++nXb4Auvk583J/UWiiWN1NFXgwrB2O5DXWoR3LnGlSrWZ7HBTFY
+ t3S79MuIEjHKMmhoZICocWezp+E3MFPxWbj+69ZUfWjy14eX6PX7StRH
+X-Gm-Gg: AYBFou3XXyQ4O9noMwoD8k8wUr5v7C2TM20Em9t+4qFJA3HEvq3bscxLJvVDtCHcK5I
+ HAAAk2ifkUdoUqte4muXHucCO+8gNVvMexgw3zzgBCiwICizGPb7n7xGn7Vi8wbN2gQIpxu1TgE
+ MZPnPEGSevL4mGjcZyOvDJS6IsWzKJ5bcDGjA32jXUDzd2iPSMvj3KnaUKp+3gREUFWw7fCanic
+ LVjN3NsSDA4o9O85eip23sS+QDakSlXBHYY3W03P3iODT5CDANsbGmS1AX2tzmXtvxYEVr+pP3b
+ 3AExGX/atTkNoKEed+LQj3IQDQoMpqPXSrkmjTxi1MIIcTyu3bCt7Nj6bZzwvY3DYJGBzLI1Gsv
+ WKIanuaB+0S5UYppHusCOiaCvALiZL9QDjMvxsaefBywPOj+La+vALOZ9gVy1wpvE2b8CdaZjl7
+ rM0pI9XuJpZ/mNC6H14ytMsayord2MH3RI54R+18TGqwyOLixky8IJGTO5brxoQa2VcQYU2HxJ2
+ /B+/odZ1QFPHPndKexKF1xrfaI+2YIKXywefFEoZES/zwvvV/IXqvrFURiD561GRA==
+X-Received: by 2002:a05:600c:4754:b0:49d:1e09:694a with SMTP id
+ 5b1f17b1804b1-49fe66d2ce2mr231107505e9.11.1790597444170; 
+ Mon, 28 Sep 2026 05:10:44 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (business-090-187-110-129.90.187.pools.vodafone-ip.de. [90.187.110.129])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a008f7f1c2sm1325775e9.1.2026.09.27.23.07.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 23:07:06 -0700 (PDT)
-Date: Mon, 28 Sep 2026 08:06:38 +0200
-Subject: [PATCH 3/4] target/riscv/kvm: Create KVM AIA device before
- configuring it
+ ffacd0b85a97d-489bd7b1df0sm6670310f8f.31.2026.09.28.05.10.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Sep 2026 05:10:43 -0700 (PDT)
+Date: Mon, 28 Sep 2026 10:41:53 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>
+Subject: =?US-ASCII?Q?RE=3A_=5BEXT=5D_Re=3A_=5BPATCHv3_00/?=
+ =?US-ASCII?Q?10=5D_hw/arm=3A_Adding_Cortex-M?=
+ =?US-ASCII?Q?7_Asymmetric_Multiprocessing_boot_support_for_i=2EMX8MP?=
+In-Reply-To: <DB8PR04MB71779F207064411F31E56DBC87822@DB8PR04MB7177.eurprd04.prod.outlook.com>
+References: <20260920115458.481605-1-gaurav.sharma_7@nxp.com>
+ <DC17DA54-3C43-4955-A38F-6FADFAA2EFF5@gmail.com>
+ <DB8PR04MB71779F207064411F31E56DBC87822@DB8PR04MB7177.eurprd04.prod.outlook.com>
+Message-ID: <473ADFC2-3FC7-4CB6-A9B1-D554A6EA2E05@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260928-spacemit-k3-v1-3-8c57d0596b87@butz.st>
-References: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
-In-Reply-To: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
-To: qemu-devel@nongnu.org
-Cc: Sunil V L <sunilvl@ventanamicro.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Stefan Butz <mail@butz.st>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openssh-sha256; t=1790575623; l=5680;
- i=mail@butz.st; h=from:subject:message-id;
- bh=ZHu1gcQh340uibL5qlA7g4LAeLjP6u4ZEbGaM7hx5EA=;
- b=U1NIU0lHAAAAAQAAAZcAAAAHc3NoLXJzYQAAAAMBAAEAAAGBAOJW8yHG2FdKcC8jiWoQyd2Z6
- SNHh+aJB0RLkH7BFF7Yy7MymfE5UJE2mmoucIa3HiNQdlVZjgqLY7wph/VSM4kniDO57IG9Q9jN
- x96oOAzzWWJEVrh8vlxRGXatNy8ywcO9WExvzLop5s2ddP08f0Wrzn/55mpqoLJyoKaIbk10kxz
- JW1GONHT8nsNvBpVB2lnzA2jhv7DC79UlHzA98+sp8eX6kmUips+9LpTJLDeVna8f/vwkU708PI
- Qxt/5nhmFXKj/su/CMFivCLHckdmMOem/4UNoTyRcAbcoFQ9WWyYHvAD/bRuYZVEA2hfoBEQVu2
- FGHdG/OimvbT/GseVmWjiw7WV9HUOJJawVmfoTEJynX9BbV+VNMKZVpW5YaAaps6/KOC7V2bM7P
- hvORUmj3b8eUr418GYC3M4rLJtrj6Vu2cUyTV9Q5dvq9Lg2TIj/jpbEWpOqn2FSGkQcLvcDksNk
- jOSGmdG4h+OJ3vbGrva5UCJF/KIyuV4ozlSU7awAAAAZwYXRhdHQAAAAAAAAABnNoYTUxMgAAAZ
- QAAAAMcnNhLXNoYTItNTEyAAABgIeZvVjlPJhqxoVDv/7mKJMPS4/8RgOCtnYAkjOijxW9/qEcf
- 5Hzvb/7GfO9jvL+OZ5m1ozKAIFT+iTz+A+QqMFTXz+9ztvPGh63glTeivVrztDMs8wehA1UdRkg
- SWAuUCNQoF/mSzyD2mFMMWx93JerQ1gyuu9AmltXCdxizwfW7zF+bVd1O94ZK03ycbvkctUOJb1
- IrvqQWtF+chAp0hNp0ICDoPSEcaAjZ/sDagg6Qb3QqRIpwFD2De0fn6F1uhqCniZ2SVNnCCJ6ZF
- MDWg9guEkJVvLumuD15WkWmLiJFmCAkJDhCVSLU6YSWxd+ykLl7ODcxsivztcH8k6Y6OBSwM2ib
- dwU0sAcPB9JKTxGVAhSYiIPqBy8QkR46i3j/Jf9RJEYKwgSD6Vd8X8gnRJf1ydjb/BXxh4IMB2+
- NUv05EwSCu3Fx93XG/OzK2ElHwEIyV+QSzu8ZLDXP5Em1v8FGSKFQfuKDf57/ERz+67VVm2YQsf
- ODwN6sPVSInLqOg==
-X-Developer-Key: i=mail@butz.st; a=openssh;
- fpr=SHA256:jcZFBs39daoQJIontO/rJaVachWp/oqTbhNpQk8+REQ
-Received-SPF: pass client-ip=74.125.225.141;
- envelope-from=stefan260699@gmail.com; helo=mail-wm2-f13.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=shentey@gmail.com; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 28 Sep 2026 08:10:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,156 +108,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Butz <mail@butz.st>
-From:  Stefan Butz via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The next patch shall limit the number of sources to what the host's
-KVM AIA supports.
-This requires creating the KVM AIA device before buildling the
-device tree.
 
-Signed-off-by: Stefan Butz <mail@butz.st>
----
- hw/riscv/virt.c              | 14 +++++++++-----
- target/riscv/kvm/kvm-cpu.c   | 27 ++++++++++++++++-----------
- target/riscv/kvm/kvm-stub.c  | 13 +++++++++----
- target/riscv/kvm/kvm_riscv.h |  9 +++++----
- 4 files changed, 39 insertions(+), 24 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 0ee726b4c0..28fa31d538 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -733,6 +733,10 @@ static void virt_machine_init(MachineState *machine)
-         exit(1);
-     }
- 
-+    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
-+        kvm_riscv_aia_create();
-+    }
-+
-     /* Initialize sockets */
-     mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
-     for (i = 0; i < socket_count; i++) {
-@@ -846,11 +850,11 @@ static void virt_machine_init(MachineState *machine)
-     }
- 
-     if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
--        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
--                             s->num_sources, s->num_msis,
--                             s->memmap[VIRT_APLIC_S].base,
--                             s->memmap[VIRT_IMSIC_S].base,
--                             s->aia_guests);
-+        kvm_riscv_aia_init(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
-+                           s->num_sources, s->num_msis,
-+                           s->memmap[VIRT_APLIC_S].base,
-+                           s->memmap[VIRT_IMSIC_S].base,
-+                           s->aia_guests);
-     }
- 
-     if (riscv_is_32bit(&s->soc[0])) {
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 68e1501b21..1098581e7a 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1814,6 +1814,7 @@ void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
- }
- 
- static int aia_mode;
-+static int aia_fd = -1;
- 
- static const char *kvm_aia_mode_str(uint64_t mode)
- {
-@@ -1859,13 +1860,22 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
-                                     "auto");
- }
- 
--void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
--                          uint64_t aia_irq_num, uint64_t aia_msi_num,
--                          uint64_t aplic_base, uint64_t imsic_base,
--                          uint64_t guest_num)
-+void kvm_riscv_aia_create(void)
-+{
-+    aia_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, false);
-+
-+    if (aia_fd < 0) {
-+        error_report("Unable to create in-kernel irqchip");
-+        exit(1);
-+    }
-+}
-+
-+void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
-+                        uint64_t aia_irq_num, uint64_t aia_msi_num,
-+                        uint64_t aplic_base, uint64_t imsic_base,
-+                        uint64_t guest_num)
- {
-     int ret, i;
--    int aia_fd = -1;
-     uint64_t default_aia_mode;
-     uint64_t socket_count = riscv_socket_count(machine);
-     uint64_t max_hart_per_socket = 0;
-@@ -1873,12 +1883,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-     uint64_t socket_bits, hart_bits, guest_bits;
-     uint64_t max_group_id;
- 
--    aia_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, false);
--
--    if (aia_fd < 0) {
--        error_report("Unable to create in-kernel irqchip");
--        exit(1);
--    }
-+    g_assert(aia_fd >= 0);
- 
-     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
-                             KVM_DEV_RISCV_AIA_CONFIG_MODE,
-diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
-index 64e39c96d8..672f635b08 100644
---- a/target/riscv/kvm/kvm-stub.c
-+++ b/target/riscv/kvm/kvm-stub.c
-@@ -9,10 +9,15 @@
- #include "qemu/osdep.h"
- #include "target/riscv/kvm/kvm_riscv.h"
- 
--void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
--                          uint64_t aia_irq_num, uint64_t aia_msi_num,
--                          uint64_t aplic_base, uint64_t imsic_base,
--                          uint64_t guest_num)
-+void kvm_riscv_aia_create(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
-+                        uint64_t aia_irq_num, uint64_t aia_msi_num,
-+                        uint64_t aplic_base, uint64_t imsic_base,
-+                        uint64_t guest_num)
- {
-     g_assert_not_reached();
- }
-diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-index 61eaa12443..532e42b0df 100644
---- a/target/riscv/kvm/kvm_riscv.h
-+++ b/target/riscv/kvm/kvm_riscv.h
-@@ -23,10 +23,11 @@
- 
- void kvm_riscv_reset_vcpu(RISCVCPU *cpu);
- void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level);
--void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
--                          uint64_t aia_irq_num, uint64_t aia_msi_num,
--                          uint64_t aplic_base, uint64_t imsic_base,
--                          uint64_t guest_num);
-+void kvm_riscv_aia_create(void);
-+void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
-+                        uint64_t aia_irq_num, uint64_t aia_msi_num,
-+                        uint64_t aplic_base, uint64_t imsic_base,
-+                        uint64_t guest_num);
- void riscv_kvm_aplic_request(void *opaque, int irq, int level);
- bool kvm_riscv_has_mp_state(void);
- void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+Am 23=2E September 2026 17:24:58 UTC schrieb Gaurav Sharma <gaurav=2Esharm=
+a_7@nxp=2Ecom>:
+>
+>
+>
+>NXP Confidential
+>> -----Original Message-----
+>> From: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Sent: 22 September 2026 11:42
+>> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-devel@nongnu=2Eor=
+g
+>> Cc: qemu-arm@nongnu=2Eorg; pbonzini@redhat=2Ecom;
+>> peter=2Emaydell@linaro=2Eorg; pierrick=2Ebouvier@oss=2Equalcomm=2Ecom
+>> Subject: [EXT] Re: [PATCHv3 00/10] hw/arm: Adding Cortex-M7 Asymmetric
+>> Multiprocessing boot support for i=2EMX8MP
+>>
+>> Caution: This is an external email=2E Please take care when clicking li=
+nks or
+>> opening attachments=2E When in doubt, report the message using the 'Rep=
+ort
+>> this email' button
+>>
+>>
+>> Am 20=2E September 2026 11:54:48 UTC schrieb Gaurav Sharma
+>> <gaurav=2Esharma_7@nxp=2Ecom>:
+>>
+>> Hi Gaurav,
+>>
+>> >Changes in v1:
+>> >
+>> >This series adds Asymmetric Multiprocessing (AMP) boot support for the
+>> >Cortex-M7 core on the i=2EMX8MP SoC=2E The M7 firmware can be loaded a=
+nd
+>> >started from Linux running on the Cortex-A53 cores via the remoteproc
+>> >framework=2E
+>> >
+>> >The series introduces the following peripheral models needed for AMP:
+>> >  - GPC (General Power Controller)
+>> >  - GPR (General Purpose Registers)
+>> >  - SRC (System Reset Controller) authored by Bernhard Beschow
+>> ><shentey@gmail=2Ecom>
+>> >  - MU (Messaging Unit)
+>> >  - Extends the CCM with M7 clock outputs and wires into the i=2EMX8MP
+>> >SoC
+>> >  - Enable Cortex-M7 boot in i=2EMX8MP EVK functional test
+>> >
+>> >Changes in v2:
+>> >
+>> >- Removed the usage of device_class_set_legacy_reset in imx8mp
+>> >gpc,gpr,mu and
+>> >  src=2E
+>> >- Removed the usage of 'smp' , 'maxcpus' and 'enable-cm7' to make the
+>> >  invocation simpler=2E
+>> >- Cleaned up imx8mp_src by removing redundant/unused code=2E
+>> >- Updated Maintainers and improved the imx8mp documentation
+>> >
+>> >Changes in v3:
+>> >
+>> >- Added a new patch for smp removal from test_imx8mp_evk=2Epy=2E
+>> >- Added a new patch to introduce IRQ splitting for i=2EMX8MP AMP
+>> >interrupt
+>> >  routing=2E
+>> >- Added a new patch to rename FSL_IMX8MP_NUM_CPUS to
+>> >FSL_IMX8MP_NUM_A53,
+>> >  since M7 is being introduced now=2E
+>> >- In GPR, parent_phases moved from global variable to class struct
+>> >- M7 reset handling moved from the machine to SRC device model=2E
+>> >- Added ITCM and DTCM memory regions to support zephyr firmware
+>> loading=2E
+>> >
+>> >Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >
+>> >Bernhard Beschow (1):
+>> >  hw/misc: Add SRC (System Reset Controller) to i=2EMX8MP
+>>
+>> I think you can claim ownership of the SRC since I think only non-
+>> copyrightable changes are left from the original commit=2E
+>>
+>
+>Sure=2E I will update the authorship accordingly in v4=2E Your sign-off c=
+an still be retained right?
 
--- 
-Git-157)
+I think there is no need for retaining it=2E
 
+>
+>> >
+>> >Gaurav Sharma (9):
+>> >  hw/misc: Add i=2EMX8MP GPC (General Power Controller) IP
+>> >  hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+>> >  hw/misc: Add MU (Messaging Unit) IP to i=2EMX8MP device model
+>> >  hw/misc: Extend i=2EMX8MP CCM with Cortex-M7 clock outputs
+>>
+>> >  hw/arm: Enable Cortex-M7 AMP boot on i=2EMX8MP
+>>
+>> This should be the last patch of the series=2E The paches below are ref=
+actorings
+>> and should rather be the first patches in the series=2E Right now they =
+depend on
+>> changes in this series which prevents them from being cherry-picked for=
+ early
+>> merge=2E
+>>
+>> Generally, touching the same code twice in a series is discuraged and s=
+hould
+>> only be done with good reasons=2E In favor of a clean history QEMU is n=
+ot
+>> interested in the detours during development and instead we pretend as =
+if we
+>> knew the shortest path towards a goal in the first place=2E Makes sense=
+?
+>>
+>> Best regards,
+>> Bernhard
+>>
+>
+>Yes, it does make sense=2E Thank you for the guidance=2E In v4 I will reo=
+rder the
+>series so that all independent refactoring patches come first and the
+>CM7 boot patch comes last=2E Something like this:-
+>
+>0001-0005 hw/misc: GPC, GPR, SRC, MU, CCM (unchanged)
+>  0006         hw/arm: Add ITCM/DTCM memory regions (new, split from 0009=
+)
+>  0007         hw/arm: Rename FSL_IMX8MP_NUM_CPUS to FSL_IMX8MP_NUM_A53
+
+Make sure it only contains the renaming of the enum=2E CM7 stuff should be=
+ postponed to the patch integrating it=2E
+
+>  0008         hw/arm: Add IRQ splitter for AMP interrupt routing
+>  0009         MAINTAINERS: Merge MCIMX8MM-EVK and MCIMX8MP-EVK entries
+>  0010         tests/functional: Fix i=2EMX8MP EVK SMP configuration
+>  0011         hw/arm: Enable Cortex-M7 AMP boot on i=2EMX8MP
+
+I'd move patches 9, 7, and 10 to the front since they're independent refac=
+torings=2E This allows them to be pulled independently=2E Other than that t=
+he ordering looks fine to me=2E
+
+Best regards,
+Bernhard
+
+>
+>>
+>> >  hw/arm: Rename FSL_IMX8MP_NUM_CPUS to FSL_IMX8MP_NUM_A53
+>> >  MAINTAINERS: Merge MCIMX8MM-EVK and MCIMX8MP-EVK entries
+>> >  hw/arm: Add IRQ splitter for i=2EMX8MP AMP interrupt routing
+>> >  tests/functional: Fix i=2EMX8MP EVK SMP configuration
+>> >
+>> > MAINTAINERS                                 |  13 +-
+>> > docs/system/arm/imx8m=2Erst                   | 188 ++++++++-
+>> > hw/arm/Kconfig                              |   4 +
+>> > hw/arm/fsl-imx8mp=2Ec                         | 227 +++++++++--
+>> > hw/arm/imx8mp-evk=2Ec                         |   5 +-
+>> > hw/misc/Kconfig                             |  12 +
+>> > hw/misc/imx8mp_ccm=2Ec                        |   9 +
+>> > hw/misc/imx8mp_gpc=2Ec                        | 146 +++++++
+>> > hw/misc/imx8mp_gpr=2Ec                        | 155 ++++++++
+>> > hw/misc/imx8mp_mu=2Ec                         | 328 ++++++++++++++++
+>> > hw/misc/imx8mp_src=2Ec                        | 411 +++++++++++++++++=
++++
+>> > hw/misc/meson=2Ebuild                         |   4 +
+>> > hw/misc/trace-events                        |   5 +
+>> > include/hw/arm/fsl-imx8mp=2Eh                 |  33 +-
+>> > include/hw/misc/imx8mp_ccm=2Eh                |   3 +
+>> > include/hw/misc/imx8mp_gpc=2Eh                |  34 ++
+>> > include/hw/misc/imx8mp_gpr=2Eh                |  62 +++
+>> > include/hw/misc/imx8mp_mu=2Eh                 |  53 +++
+>> > include/hw/misc/imx8mp_src=2Eh                |  52 +++
+>> > tests/functional/aarch64/test_imx8mp_evk=2Epy |   1 -
+>> > 20 files changed, 1696 insertions(+), 49 deletions(-) create mode
+>> > 100644 hw/misc/imx8mp_gpc=2Ec create mode 100644 hw/misc/imx8mp_gpr=
+=2Ec
+>> > create mode 100644 hw/misc/imx8mp_mu=2Ec create mode 100644
+>> > hw/misc/imx8mp_src=2Ec create mode 100644
+>> include/hw/misc/imx8mp_gpc=2Eh
+>> > create mode 100644 include/hw/misc/imx8mp_gpr=2Eh create mode 100644
+>> > include/hw/misc/imx8mp_mu=2Eh create mode 100644
+>> > include/hw/misc/imx8mp_src=2Eh
+>> >
 
