@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B20CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28B8C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB2b-00069T-OC; Mon, 28 Sep 2026 09:05:14 -0400
+	id 1xBB2C-0005pk-57; Mon, 28 Sep 2026 09:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB10-0005Qp-FF
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xBB0o-0005Jo-5F
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0y-0004P2-JG
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:29 -0400
+ id 1xBB0m-0004Nc-G8
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600607;
+ s=mimecast20190719; t=1790600595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4Zw66y0dqHiAFlKwC+PrqW0WKcZn8ncWgvsu+fbY0LQ=;
- b=G6xOwXLByxrX1cfUGod+mehy5YJWYtHQgP4zsPSo/qjrqghp/pLgAGT+mREwq7Cx3FTuC1
- 68ir9nSv45le1a9LWVIcbSvsL4KmmqeOTHfduVlVlxTQloDs6Mw3oD1BgO6skps5Lnv4o3
- XGLdtgctYHRcHR0Oh+wVJpGQFBfwTfA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uvqi6imudO/cDeNotTPuYwAVUIDuXEBNJO2xyIztaJk=;
+ b=H6GCStj1Tb6FXjKrt6160LWOEzTntltAmsLSuAFR9XYVBlOSOgWLE5W0OGb63xDmb6RnNJ
+ zZ37rpgNTyc3CI44GSlVjJu97Zjx/OchHA5CYZQCzGOlATcvA6pfqOJt1VTsE6ZjWjwD0b
+ JE3GW+WJsbrtnmpN+CkbxJmotgldpN0=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-I7YFpHElN1qRb7G4xBQw2A-1; Mon, 28 Sep 2026 09:03:26 -0400
-X-MC-Unique: I7YFpHElN1qRb7G4xBQw2A-1
-X-Mimecast-MFC-AGG-ID: I7YFpHElN1qRb7G4xBQw2A_1790600605
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49e6862e924so23907205e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:26 -0700 (PDT)
+ us-mta-193-PzNJrtPAMrySVRiJ1VGTcg-1; Mon, 28 Sep 2026 09:03:13 -0400
+X-MC-Unique: PzNJrtPAMrySVRiJ1VGTcg-1
+X-Mimecast-MFC-AGG-ID: PzNJrtPAMrySVRiJ1VGTcg_1790600593
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c2939083cefso325627666b.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600605; x=1791205405; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600592; x=1791205392; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4Zw66y0dqHiAFlKwC+PrqW0WKcZn8ncWgvsu+fbY0LQ=;
- b=M90L4q1MmG9a4Y+Hv70IGv2v/vl6PVrzSnvq5ueweoRuKYstJ4dZrV2i62DHGhCiZ6
- 7Y1NuASKS4WU/V6wrl+tdQ+GTwUg8U7hc6TNGeHu+8nGZw4uQv8ZLPK4Du6gPeKBQqM5
- wbV+I4kTfNv9KvIWUxUIIhki0izgFRvD7wPmQ54vC+uVjIqmrLDe6khJoa9Ctm5/XNZY
- CRA+HzUkg94OaXuWrx76CTP/rBcuKX4BskfrceOs5hvrkfqxjdBnFfeUjzAX2Z097Jeh
- zPA7SOCKDi3/i4q43p/kP0BY4CCgWnpN1dPzyWCYvbaVkeiUoRCc3Szu+dIrM3ED2yd4
- kIEw==
+ bh=uvqi6imudO/cDeNotTPuYwAVUIDuXEBNJO2xyIztaJk=;
+ b=NEn2gMbnlHQy9RPJyGMbWIebNuXXnY+rncsXCB+xCfIjyS4ONN9W0YilofuhcPVTPS
+ stFJbVkHyoAD+bOBBfH1I3q4SGCh0xwNH10zmlZxOJ0BmAgBC7erhlNIG0drMYjCNTb+
+ IwxAY9fuBHrzk2jDTec0BoP533SZymmN+Nd7tz4iMhdSlzChZGfgPY/vOIkBubb9znRR
+ IHEJSipxr051qpNXoQR2HahuumiDiYe3tenDtI4VLB5cw1R9krUlUMWa1SGnciRI1xN1
+ 4xKHl5Ex11dlh9SxcfkZ9C4jPXiRNT7/i0idEnnhicjMwwdULWVbFyd6G4KhQMzvTlay
+ fuKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600605; x=1791205405;
+ d=1e100.net; s=20260707; t=1790600592; x=1791205392;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4Zw66y0dqHiAFlKwC+PrqW0WKcZn8ncWgvsu+fbY0LQ=;
- b=e2xdzwaYS94/fa1dJzSpuZI1tGN4iv1w3hzHGc4VUOoLJi0f2oML9qSuaP5GzrFQpS
- 4MI9tKWV5tKr1YGiFbtYhvMDaP0D1C6ne0i/1q4tE9evsWhWEa4AZTzFHETc0hsfG6wQ
- /hBUzGQ3CUH4Glvdot9kkMTe52a9SMzas2AeJDmuW3baB+w7TlLzz0q0cryl4w3M0jFC
- Ct6zq18cRZCLgLSeeHrqoa5cdSw5OgzDH9k/PH5qhm0/IQg5oJFx+JIKx9UBaWGBgUFz
- hDTRjz4aYO1WniIWPyFcgNX4qBXs7oR2COPtG39sizRx/z28MBMK9n81lqa74czJrmq0
- mq7A==
-X-Gm-Message-State: AFuF++mSTBMWWpRyEbSxDDiwcDWNO8oO62TPnkUgVYQPqYQ+NegUDYyV
- IXU3ZnDLJdDnnOdajEw/6t6tCIdPhLovXGycCufMvfRu6ny6wxOoQfaLhF4qYFV05ErYu+fHy08
- 0y5nBpMtE1BZZZskCBViszpeO6W51cHbllKQkSb2GxgCiWnJ1Rd0T9R20ufSukJm708MwE2CB7w
- 89cUx4wdLs5JgMDSurTd4/waExlWIBjhpXuDPIUekS
-X-Gm-Gg: AYBFou0Lz49VG1HyqFAhwFmXCcGYzpRibWBc20pSvKewqxJGxbhIBCOBSRhe0rhUewX
- LeshCCUnuSmkcpMpo/AOHDi9PrZjNsWqAKmuOo+nckydwztesJUBVC5ooyLEnXmZYNRykLRf9rP
- cgG54FsSdG4HVqaPTo4MD66pixsf3/fNZuFKx4N+8k5m19gemcwgIjmnClrcjI8BSh0+nkNdyzA
- qJLp9thS9jxOZ5mq/wAZui43UrJhBk15G3iTXyJMLqSDF7VdZElS9BAqbzVRKGLkwIuXBcUSXcH
- 2kmJv9ha8HM407dLCUb67gKQ0QHVxkmFMC0k3Ny6M63y/JbhY6MCdemtghneTxtzrTzXmq4btq1
- 42L5UixQ9JxFGIY7XZDMUknGHCByvA4P6VFY96TMVeDchLwX7jypczACsiq20TPEPAOgY/SalkD
- jpIpVf
-X-Received: by 2002:a05:600c:310b:b0:49e:7862:c09e with SMTP id
- 5b1f17b1804b1-49fe66c6289mr221340345e9.14.1790600605067; 
- Mon, 28 Sep 2026 06:03:25 -0700 (PDT)
-X-Received: by 2002:a05:600c:310b:b0:49e:7862:c09e with SMTP id
- 5b1f17b1804b1-49fe66c6289mr221339965e9.14.1790600604557; 
- Mon, 28 Sep 2026 06:03:24 -0700 (PDT)
+ bh=uvqi6imudO/cDeNotTPuYwAVUIDuXEBNJO2xyIztaJk=;
+ b=HGKb5KnnBXH7wfpuP5ho/3pxY9agRFxBMEtUNsM8k4hWGB8ygDPQG99Uca5+q21eNN
+ kluHrVgVIOPb8N1gHSmPxjeLZ+UXSpk7233o6x5w0kGpUJM89Q1fj7DJJ6V4RIiEa5/j
+ P7F/GOxCd4NtwoTEteC6a9Uelk7FUrgOBxHMh4h+Jx7CAL9TKPlRjrpyZdwC5/6CzRHZ
+ Pcsl7QfOf7E4VEx0KLbcmWyP3FG4fFmmv1h6SWuFLXvZMbASc/F9t98PRadg911FZYFq
+ j5yRwgnN7PKvhI2DKwsJ+YzScsPecSY2kLMPJCquJJ0d3mRsriYB5237L4SC9WCgzTVB
+ 5fWA==
+X-Gm-Message-State: AFuF++lXugYZuv9rdeZXbjL89BY7U7LjKTR38asRXfmGoFgO7rMer4/5
+ T2DxSgpt5F0/7jmCFEHjgOD2Plru7xfBY93ehFX+9yBWN/K3cGG1PvutHqkC9XkSvUKaU4cfqpD
+ prNvhGAL+/572q5alaifFYLqlLXeMm2zTiWnoIJSy/DWebMhVvPfYrHCnJdKidKEk4nsalgqVSq
+ kuTonNgTZrFt46eL3WulSVZbkvUZgIioWv/Tj7EzvA
+X-Gm-Gg: AYBFou0LJ91njomj7JRFGeS484NqdZmTq0uQicAp3AMu/hxkQbF3YuQUQ31eWEfBrG2
+ t1klzemGdM5kN+T/5fpAGqDi4O6eXp99h65OtVlCIukjSjgjkEZxaY1GdsQZ1joQJy1ajuWnrlQ
+ ksaovFIBxQ/lLz1H8vMyyEz6icz4MfmTHnKw5/VBAxaxJsVT7CgsYNZZehmBPnd/k1l2qgVIK3T
+ Wj56+We64hncH/YOO4YVzt585mlO8Kew6+J/maILIBZVI0MiW5o0qXX04089Ix5pztmQtqLEz4T
+ L5bsV/3sbF2K+6h/c+gdcqCwWp/sGIhNFY2wQGOkJLPo6G58XDizKg9i8O3vZZWneP/xEt0eTVu
+ CkxAT9dpzxR5MZtwWWvMdzOCEIlH9InYUKrmAdomh+14fpKNw1FydjVaowrB1w5mL9cKHjNw9+V
+ 7Qt8Uk
+X-Received: by 2002:a17:907:d08f:b0:c26:36c4:858e with SMTP id
+ a640c23a62f3a-c2ac249d86dmr1082095866b.25.1790600592417; 
+ Mon, 28 Sep 2026 06:03:12 -0700 (PDT)
+X-Received: by 2002:a17:907:d08f:b0:c26:36c4:858e with SMTP id
+ a640c23a62f3a-c2ac249d86dmr1082092666b.25.1790600591893; 
+ Mon, 28 Sep 2026 06:03:11 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00c076dc3sm2197625e9.0.2026.09.28.06.03.22
+ a640c23a62f3a-c2dbd110c3esm276990166b.63.2026.09.28.06.03.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:03:23 -0700 (PDT)
+ Mon, 28 Sep 2026 06:03:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 17/30] target/i386/tcg: add definition for REX2 prefix
-Date: Mon, 28 Sep 2026 15:02:15 +0200
-Message-ID: <20260928130228.877003-18-pbonzini@redhat.com>
+Subject: [PULL 13/30] target/i386/tcg: use standard operand order for BSF and
+ BSR
+Date: Mon, 28 Sep 2026 15:02:11 +0200
+Message-ID: <20260928130228.877003-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +121,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+BSF and BSR currently pass their source as operand 0 and the old
+destination as operand 2.  This nonstandard order was needed so that the
+source could use zextT0.
+
+Per-operand extensions now let operand 2 use zextT1, so that BSF and BSR
+can use the normal X86_OP_ENTRY2.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 18 ++++++++----------
+ target/i386/tcg/emit.c.inc       | 12 +++++-------
+ 2 files changed, 13 insertions(+), 17 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 7fa2604a220..2e48e3a8898 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -50,6 +50,7 @@
- #define PREFIX_ADR    0x10
- #define PREFIX_VEX    0x20
- #define PREFIX_REX    0x40
-+#define PREFIX_REX2   0x80
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 07a627af5cf..3acac68977d 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -674,12 +674,11 @@ static void decode_0FB8(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
  
- #ifdef TARGET_X86_64
- # define ctztl  ctz64
-@@ -208,7 +209,7 @@ typedef struct DisasContext {
- #endif
+ static void decode_0FBC(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
+-    /* For BSF, pass 2op as the third operand so that we can use zextT0 */
+     static const X86OpEntry opcodes_0FBC[4] = {
+-        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0),
+-        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0), /* 0x66 */
+-        X86_OP_ENTRYwr(TZCNT, G,v, E,v,        zextT0), /* 0xf3 */
+-        X86_OP_ENTRY3(BSF,    G,v, E,v, 2op,v, zextT0), /* 0xf2 */
++        X86_OP_ENTRY2(BSF,    G,v, E,v, zextT1),
++        X86_OP_ENTRY2(BSF,    G,v, E,v, zextT1), /* 0x66 */
++        X86_OP_ENTRYwr(TZCNT, G,v, E,v, zextT0), /* 0xf3 */
++        X86_OP_ENTRY2(BSF,    G,v, E,v, zextT1), /* 0xf2 */
+     };
+     if (!(s->cpuid_ext3_features & CPUID_EXT3_ABM)) {
+         *entry = opcodes_0FBC[0];
+@@ -690,12 +689,11 @@ static void decode_0FBC(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
  
- #ifdef TARGET_X86_64
--#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_VEX)) != 0)
-+#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_REX2 | PREFIX_VEX)) != 0)
- #define REX_W(S)       ((S)->vex_w)
- #define REX_R(S)       ((S)->rex_r + 0)
- #define REX_X(S)       ((S)->rex_x + 0)
+ static void decode_0FBD(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
+-    /* For BSR, pass 2op as the third operand so that we can use zextT0 */
+     static const X86OpEntry opcodes_0FBD[4] = {
+-        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0),
+-        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0), /* 0x66 */
+-        X86_OP_ENTRYwr(LZCNT, G,v, E,v,        zextT0), /* 0xf3 */
+-        X86_OP_ENTRY3(BSR,    G,v, E,v, 2op,v, zextT0), /* 0xf2 */
++        X86_OP_ENTRY2(BSR,    G,v, E,v, zextT1),
++        X86_OP_ENTRY2(BSR,    G,v, E,v, zextT1), /* 0x66 */
++        X86_OP_ENTRYwr(LZCNT, G,v, E,v, zextT0), /* 0xf3 */
++        X86_OP_ENTRY2(BSR,    G,v, E,v, zextT1), /* 0xf2 */
+     };
+     if (!(s->cpuid_7_0_ebx_features & CPUID_7_0_EBX_BMI1)) {
+         *entry = opcodes_0FBD[0];
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 54dc23ca624..abf40123035 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1396,7 +1396,6 @@ static void gen_BOUND(DisasContext *s, X86DecodedInsn *decode)
+     }
+ }
+ 
+-/* Non-standard convention - on entry T0 is zero-extended input, T1 is the output.  */
+ static void gen_BSF(DisasContext *s, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[0].ot;
+@@ -1404,7 +1403,7 @@ static void gen_BSF(DisasContext *s, X86DecodedInsn *decode)
+     /* Only the Z bit is defined and it is related to the input.  */
+     decode->cc_dst = tcg_temp_new();
+     decode->cc_op = CC_OP_LOGICB + ot;
+-    tcg_gen_mov_tl(decode->cc_dst, s->T0);
++    tcg_gen_mov_tl(decode->cc_dst, s->T1);
+ 
+     /*
+      * The manual says that the output is undefined when the
+@@ -1412,10 +1411,9 @@ static void gen_BSF(DisasContext *s, X86DecodedInsn *decode)
+      * real programs appear to depend on that.  Accomplish this
+      * by passing the output as the value to return upon zero.
+      */
+-    tcg_gen_ctz_tl(s->T0, s->T0, s->T1);
++    tcg_gen_ctz_tl(s->T0, s->T1, s->T0);
+ }
+ 
+-/* Non-standard convention - on entry T0 is zero-extended input, T1 is the output.  */
+ static void gen_BSR(DisasContext *s, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[0].ot;
+@@ -1423,7 +1421,7 @@ static void gen_BSR(DisasContext *s, X86DecodedInsn *decode)
+     /* Only the Z bit is defined and it is related to the input.  */
+     decode->cc_dst = tcg_temp_new();
+     decode->cc_op = CC_OP_LOGICB + ot;
+-    tcg_gen_mov_tl(decode->cc_dst, s->T0);
++    tcg_gen_mov_tl(decode->cc_dst, s->T1);
+ 
+     /*
+      * The manual says that the output is undefined when the
+@@ -1432,8 +1430,8 @@ static void gen_BSR(DisasContext *s, X86DecodedInsn *decode)
+      * by passing the output as the value to return upon zero.
+      * Plus, return the bit index of the first 1 bit.
+      */
+-    tcg_gen_xori_tl(s->T1, s->T1, TARGET_LONG_BITS - 1);
+-    tcg_gen_clz_tl(s->T0, s->T0, s->T1);
++    tcg_gen_xori_tl(s->T0, s->T0, TARGET_LONG_BITS - 1);
++    tcg_gen_clz_tl(s->T0, s->T1, s->T0);
+     tcg_gen_xori_tl(s->T0, s->T0, TARGET_LONG_BITS - 1);
+ }
+ 
 -- 
 2.55.0
 
