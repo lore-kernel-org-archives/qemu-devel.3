@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6EEC98328
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 05:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E6DC98328
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 05:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB3o6-0003RY-EK; Mon, 28 Sep 2026 01:21:42 -0400
+	id 1xB3q9-000640-Sp; Mon, 28 Sep 2026 01:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xB3o3-0003P5-Sz
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 01:21:39 -0400
-Received: from mail-dl2-x0f.google.com ([2607:f8b0:4864:38::f])
+ id 1xB3p2-0004Jd-Qf
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 01:22:42 -0400
+Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xB3o1-0007o6-AZ
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 01:21:39 -0400
-Received: by mail-dl2-x0f.google.com with SMTP id
- a92af1059eb24-144f7915355so2184871c88.3
- for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 22:21:36 -0700 (PDT)
+ id 1xB3ox-0007xV-8T
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 01:22:40 -0400
+Received: by mail-dl1-x122d.google.com with SMTP id
+ a92af1059eb24-13fc403e373so3618893c88.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 22:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790572895; x=1791177695; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790572950; x=1791177750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=73rQMz/FeeOV5ziS5/l0PWsSUPqi0F5RY6316YoaJz4=;
- b=XTRyUEZtJkkFGHJJWQxBZCEPMBo9W9naAdkz4onDQoaQkGPO7Yvf9XdOXCUHMx23f6
- hB53moVK1gZM2pj/QzUg8AbtZgfYSvKa3bi71BvqB2wJwKFbCrvLEFIZ5rXdJGfZZ24f
- i/EP9IKMUagKvO98DnTt+EmTxSNmVInB4dQJDJtA+i2kTa5YjVWcZP8CJFoLd2tgHOzs
- AJbTwH2N8MRkOByUdjhOxU6z1mnaE0b/DS1q9/A2Q7qFO2h8avuhj2YBab9t3SzYJxtG
- j19/OxK49KlDPSKPZBisZjCsslmO19a9shwjGBCZW/rcbPXDADgZ/cjSPNtg3UhLPdkL
- WgEg==
+ bh=8pmxoMbXEOAbY5ho9GIQBnFCO5MxHEqBgNN23qjbjmk=;
+ b=P/XaW1pY+KIX0db2BIKsDlpYN1Az7r50VMuaz4/tIj1rZ1srUp39mt1K3VKevI327O
+ S+fF885NNKw/t1RglnUXr5MYXzTq0KccvFoLHuip05obqIGiwxFCDUzy9XqnTlyaXag0
+ VIdz1ilTUwNMklmnQ++etO3a2fItwyM3tH/WrDX7VES1laTGIdR/MC0dUSfPXafEwjqs
+ DVASbTfMFm87mD0mcoOOKvJBsF/zpL1xeZNniydwzg0MmYJVG01wvGuA7tlcscfCMfbN
+ 0OqBu768GFL4OJUTDc+v9aHue7N0EiSlxcJLTZqackEK+DSwKyG8YspC7F0k2MCQtJtQ
+ N3LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790572895; x=1791177695;
+ d=1e100.net; s=20260707; t=1790572950; x=1791177750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=73rQMz/FeeOV5ziS5/l0PWsSUPqi0F5RY6316YoaJz4=;
- b=QXgtwRxquz2Kd5REO7Q7WmlHmG+fb+9ekHEjMCyM6gNU3GJ23Naztvqv9HJ+qaeiVL
- tGlt4SImpR+5vzOxsqQJQ/kFeTsS6oNeoiPxxJQWPGMULZt5TfL0VNzUNf4mMp15aBqg
- SzRav4cPlC8jvhPJCI6cPwztum7iDnqNBOEHhGXGusYHRNCYyQiqX2xu2dVBVAIMSVgU
- YlCED5renR8DNS4iY6akOabjQ66vVpLyyAo/WlRPe/qnisMEs97xJrv396VH+IH0H6QQ
- g0GY5uKWq5Nbc2XqsPEaty14CRWaqQcn6F93T6LCkjlKuaPTTX3h+YgNWqoGKGeXuavS
- X0EA==
-X-Gm-Message-State: AFuF++lwLRuPhZcbS4VZ1H/qGvlSG6BhDw4KfoBWWC6bLdEcLwicPmq5
- RmgiIEvrk/8bOC/pbXbz6nSuteP600SD9S0w5B523DDSOcuXOKoxsWfR2EhOxW2DxBM=
-X-Gm-Gg: AYBFou3/l78YDRJXntLHEgQ6LtOwhugeSIiKzppIAGIy7rnhpmJs74zY7IhE3EvKzeA
- ECiZMXKP53tnxnaJr/+EHpoEcvU2fsodJXNzXa8g6CKIkwEq6e6mV3PaMji+RbpJDmRRxSMr3/C
- lP0nwNB1UTKIe+J/D1ULnoW92Pr6P/3kSRUhUKo3E3v++Uby6aoTBOu5M05IRVYNQhQXIbaj7gb
- 0SyNHKk6aQWgfQQsHucA170E5ZOp+T89lGetSq+RM5mowaBy0WwL/z6cZMGtw0YrURf/kXxqCUU
- bbDGNysBqXsc2BZrBDDHWcq7FXerX/ISnImoLhEHPqdmLyfurk2LC12ldY5Mw8AC5OAtxIDOK1m
- ymuFbQ2Op0+LvhLNvOuLzJzpwGl2TmTusPh+4er9yfByovFmMacFS684PUahrlXm5zTMcm5OShf
- +n8KoSLlcWG3WMPOZ8AcuhyXjfeqA/DVjcH1qbODpGFXzZDgj6mwgl4Q6MyhTBuXsFoMNPW+/tf
- Al3tdEW5Hytm4s2gVfzwVHZswPyxvk=
-X-Received: by 2002:a05:7022:f515:b0:143:26cf:8615 with SMTP id
- a92af1059eb24-146cfec8423mr8557002c88.25.1790572894929; 
- Sun, 27 Sep 2026 22:21:34 -0700 (PDT)
+ bh=8pmxoMbXEOAbY5ho9GIQBnFCO5MxHEqBgNN23qjbjmk=;
+ b=LrD8IAPET2mBDarAkYWoU5ZYUs98t+ofdchRUIdh0t6NzeCLRFjU6uIvF6itEASCQf
+ s9wPOIjfsTAxs2QuRAYzwB4GwnNdTBU9EwDDc1WdB0IHTOu1m/lp2sHNJsF/9cmV+jCA
+ FGlfFxKMFrPejHzbOPvo6H7VvnyjkHCRI7k0uCWskk3sDiBwpSqZwA3WUDaAGVzkan3T
+ NrlK7XmMty3dmI5pkncUReh95H09Kt1HNmknTtTwHgvtqgIGVIL9XLH6s76MefMTWUUi
+ 5bEB1cX6//LwF8UBQY/EYjYJetBXlmp/rxD8P7vadkqzrXbuEcHbh7KiZ3u3T/4jNJPa
+ yV8g==
+X-Gm-Message-State: AFuF++kBZEZCJc/4hHl7msjy9e9pcRxqE0PXqIbZoZyOv3osyoJ+9EjW
+ MZKuIGEoTPXdFP0rJRX/29L0nZJlIHBC/pQruTPJXZlmwdDCjjhvBn6WvmjjPdxTJi8=
+X-Gm-Gg: AYBFou0ofNhCTx6aI9h3U8giiYP/o5HcliNNomwJoATjv/VPfofnp3uNgyvtwkH9Wy6
+ 95LtHQ7XgryQKE0N2VCZ3v7XovrCPuzvGtnm5blKMUs/JQPopT8JW/C6YtwiV+ystq4ipFyBOLH
+ 5gZbPHD1/qEEDUSpxqJ3xP3kWDk9D0QTkKMM9jx49fCexjYGuqO7Kc+KcHugX9zucTEPe2k3vWZ
+ BNZusc1DFzJDRqGQbb3fyD3RAzdfdbGaG0BdmDwc3LfnjSUIV2guNwFtX1NwxOAM91SKTzNoJ+D
+ 29EtY8jnGJvK/OeLaAE4cMmIsO+CVhnNyc28BvuyH/1GFLBPRFeLTAYZOlZZlezqzKf2GAuoFkM
+ UALtr7upFkNDJqeAJZYQ0q4d0BiURHwJvAnrAaRTCQCcFGFnWT3z09rEIlo6NXtW1M0OMpBwhFy
+ RtOree0PJEqaUZkhwhe2i9o4IVVTRGaTKUdkG3nZ+FMVziRZlCZx7iF3dtdaOHUJ/3PxSz7JNb/
+ 1kujhj5Z2chWo1FgpkioF32UziNuwU=
+X-Received: by 2002:a05:701b:454e:20b0:148:bce6:429b with SMTP id
+ a92af1059eb24-148bce64402mr4049554c88.8.1790572948987; 
+ Sun, 27 Sep 2026 22:22:28 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-146bb6551d9sm14726248c88.9.2026.09.27.22.21.27
+ a92af1059eb24-146bb6551d9sm14726248c88.9.2026.09.27.22.22.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Sep 2026 22:21:34 -0700 (PDT)
+ Sun, 27 Sep 2026 22:22:28 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -94,16 +94,16 @@ Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Rolnik <mrolnik@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
-Subject: [PATCH v2 04/24] target/rx: name guest trap numbers RX_EXCP_*
-Date: Mon, 28 Sep 2026 13:20:30 +0800
-Message-ID: <20260928052051.251-5-luoyonggang@gmail.com>
+Subject: [PATCH v2 11/24] target/sparc: convert raise_exception to raise_excp
+Date: Mon, 28 Sep 2026 13:20:37 +0800
+Message-ID: <20260928052051.251-12-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260928052051.251-1-luoyonggang@gmail.com>
 References: <20260928052051.251-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl2-x0f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,35 +126,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add RX_EXCP_* in cpu.h for the guest trap numbers stored in
-cs->exception_index.
+Translate through raise_excp after save_state. Drop TCG
+raise_exception. Keep C cpu_raise_exception_ra. Exit DEBUG and HLT
+through cpu_loop_exit_excp.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- target/rx/cpu.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/sparc/helper.c    | 21 +++------------------
+ target/sparc/helper.h    |  2 --
+ target/sparc/translate.c |  6 +++---
+ 3 files changed, 6 insertions(+), 23 deletions(-)
 
-diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-index 64ba48a7329..521e494172e 100644
---- a/target/rx/cpu.h
-+++ b/target/rx/cpu.h
-@@ -71,6 +71,16 @@ enum {
-     NUM_REGS = 16,
- };
+diff --git a/target/sparc/helper.c b/target/sparc/helper.c
+index 8de261b0e30..411a8dfe359 100644
+--- a/target/sparc/helper.c
++++ b/target/sparc/helper.c
+@@ -27,26 +27,12 @@
  
-+/* Guest trap numbers. */
-+enum {
-+    RX_EXCP_PRIVILEGE_VIOLATION = 20,
-+    RX_EXCP_ACCESS = 21,
-+    RX_EXCP_ILLEGAL_INSTRUCTION = 23,
-+    RX_EXCP_FPU = 25,
-+    RX_EXCP_NMI = 30,
-+    RX_EXCP_INT = 0x100,
-+};
-+
- typedef struct CPUArchState {
-     /* CPU registers */
-     uint32_t regs[NUM_REGS];    /* general registers */
+ void cpu_raise_exception_ra(CPUSPARCState *env, int tt, uintptr_t ra)
+ {
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = tt;
+-    cpu_loop_exit_restore(cs, ra);
+-}
+-
+-void helper_raise_exception(CPUSPARCState *env, int tt)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = tt;
+-    cpu_loop_exit(cs);
++    cpu_loop_exit_excp(env_cpu(env), tt, ra);
+ }
+ 
+ void helper_debug(CPUSPARCState *env)
+ {
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = EXCP_DEBUG;
+-    cpu_loop_exit(cs);
++    cpu_loop_exit_excp(env_cpu(env), EXCP_DEBUG, 0);
+ }
+ 
+ #ifdef TARGET_SPARC64
+@@ -208,10 +194,9 @@ void helper_power_down(CPUSPARCState *env)
+     CPUState *cs = env_cpu(env);
+ 
+     cs->halted = 1;
+-    cs->exception_index = EXCP_HLT;
+     env->pc = env->npc;
+     env->npc = env->pc + 4;
+-    cpu_loop_exit(cs);
++    cpu_loop_exit_excp(cs, EXCP_HLT, 0);
+ }
+ 
+ target_ulong helper_rdasr17(CPUSPARCState *env)
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 3a7f7dc1296..9fc38f5706a 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -53,8 +53,6 @@ DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, i32, env, i128, i128)
+ DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, i32, env, i128, i128)
+ DEF_HELPER_FLAGS_3(flcmps, TCG_CALL_NO_RWG_SE, i32, env, f32, f32)
+ DEF_HELPER_FLAGS_3(flcmpd, TCG_CALL_NO_RWG_SE, i32, env, f64, f64)
+-DEF_HELPER_2(raise_exception, noreturn, env, int)
+-
+ DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fsubd, TCG_CALL_NO_WG, f64, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fmuld, TCG_CALL_NO_WG, f64, env, f64, f64)
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index 3156be6a94c..6dae5da7157 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -1048,7 +1048,7 @@ static void gen_exception(DisasContext *dc, int which)
+ {
+     finishing_insn(dc);
+     save_state(dc);
+-    gen_helper_raise_exception(tcg_env, tcg_constant_i32(which));
++    gen_helper_raise_excp(tcg_env, tcg_constant_i32(which));
+     dc->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+@@ -2811,7 +2811,7 @@ static bool do_tcc(DisasContext *dc, int cond, int cc,
+     /* Trap always.  */
+     if (cond == 8) {
+         save_state(dc);
+-        gen_helper_raise_exception(tcg_env, trap);
++        gen_helper_raise_excp(tcg_env, trap);
+         dc->base.is_jmp = DISAS_NORETURN;
+         return true;
+     }
+@@ -5833,7 +5833,7 @@ static void sparc_tr_tb_stop(DisasContextBase *dcbase, CPUState *cs)
+         if (e->npc % 4 == 0) {
+             tcg_gen_movi_tl(cpu_npc, e->npc);
+         }
+-        gen_helper_raise_exception(tcg_env, e->excp);
++        gen_helper_raise_excp(tcg_env, e->excp);
+ 
+         e_next = e->next;
+         g_free(e);
 -- 
 2.52.0.windows.1
 
