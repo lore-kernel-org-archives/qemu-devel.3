@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81101CA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 19:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C34CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 19:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBGzb-0003iC-FE; Mon, 28 Sep 2026 15:26:27 -0400
+	id 1xBH05-000498-NX; Mon, 28 Sep 2026 15:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGza-0003hv-3a
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGzl-0003y1-4Z
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGzY-00035p-6H
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGzj-00037Z-Mr
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790623583;
+ s=mimecast20190719; t=1790623594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DVvRu5veR1ODLGzlxgOOJrq0dxzpkPdsUW4h6EYigqA=;
- b=OTB4AlpKAQ1ObSiQeWtEjYGanTGzl3vJUH3B5O0QhAB14Slz5uPPwymHa9M2aiDT9JGJqd
- IqnqZji1onZ2eFDI+vXwDwv39afJS5W1ZCn3fD/hIcS7UFoetmm5X1trgsaR/BedGz+4Fu
- R5OoeYtJzzIgMHItHjfqqneEjjj/xXw=
+ bh=gULQK93bF0WfASx3NZ/DO88Wn/FvDwky+Rf1PNX+v3I=;
+ b=glUB7lqc6CkSudirxg78WqDGK0w0Cvs4gBQui/cg5AOEmfTDzRAczWLhb14OWG5fOY6yGf
+ H37n7BRRp5s4oEUpdJhxIdHmXM/Jcl13+CgOuw9CAjMg3KKG4K/Ar/fIHH5nlKc9F2UtKE
+ RUW5PZ+LksJt0oxKh9lFRLTJhgyIYfQ=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-BElwsphwO_iiLb7NU9fvpw-1; Mon,
- 28 Sep 2026 15:26:20 -0400
-X-MC-Unique: BElwsphwO_iiLb7NU9fvpw-1
-X-Mimecast-MFC-AGG-ID: BElwsphwO_iiLb7NU9fvpw_1790623577
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-VlRKHOxbMh-SGWTvAqZlxA-1; Mon,
+ 28 Sep 2026 15:26:31 -0400
+X-MC-Unique: VlRKHOxbMh-SGWTvAqZlxA-1
+X-Mimecast-MFC-AGG-ID: VlRKHOxbMh-SGWTvAqZlxA_1790623590
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA6D41955D5B; Mon, 28 Sep 2026 19:26:16 +0000 (UTC)
+ id C46821955DDC; Mon, 28 Sep 2026 19:26:29 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.217])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8998776A; Mon, 28 Sep 2026 19:26:13 +0000 (UTC)
+ id D913776B; Mon, 28 Sep 2026 19:26:26 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
@@ -59,24 +59,23 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v3 04/10] qapi: convert/split intros for job.json commands
-Date: Mon, 28 Sep 2026 15:25:51 -0400
-Message-ID: <20260928192557.509157-5-jsnow@redhat.com>
+Subject: [PATCH v3 08/10] qapi: split intro sections for events
+Date: Mon, 28 Sep 2026 15:25:55 -0400
+Message-ID: <20260928192557.509157-9-jsnow@redhat.com>
 In-Reply-To: <20260928192557.509157-1-jsnow@redhat.com>
 References: <20260928192557.509157-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,107 +91,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert or split apart the existing intro for commands in job.json
-into introduction and details sections. The introduction is indented,
-remaining plaintext/details paragraphs are not.
-
-@job-dismiss has its text split apart a little more aggressively to
-help the documentation read more smoothly in the rendered version.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/job.json | 42 +++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ qapi/machine-s390x.json | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/qapi/job.json b/qapi/job.json
-index b68d7292423..aa75a8efa24 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -128,8 +128,7 @@
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index 05716fe2472..8d8cbe2fb75 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -57,8 +57,7 @@
  
  ##
- # @job-pause:
+ # @CPU_POLARIZATION_CHANGE:
 -#
--# Pause an active job.
-+#     Pause an active job.
+-# Emitted when the guest asks to change the polarization.
++#     Emitted when the guest asks to change the polarization.
  #
- # This command returns immediately after marking the active job for
- # pausing.  Pausing an already paused job is an error.
-@@ -148,8 +147,7 @@
- 
- ##
- # @job-resume:
--#
--# Resume a paused job.
-+#     Resume a paused job.
- #
- # This command returns immediately after resuming a paused job.
- # Resuming an already running job is an error.
-@@ -165,10 +163,9 @@
- 
- ##
- # @job-cancel:
--#
--# Instruct an active background job to cancel at the next opportunity.
--# This command returns immediately after marking the active job for
--# cancellation.
-+#     Instruct an active background job to cancel at the next
-+#     opportunity.  This command returns immediately after marking the
-+#     active job for cancellation.
- #
- # The job will cancel as soon as possible and then emit a
- # `JOB_STATUS_CHANGE` event.  Usually, the status will change to
-@@ -184,9 +181,9 @@
- 
- ##
- # @job-complete:
--#
--# Manually trigger completion of an active job in the READY or STANDBY
--# state.  Completing the job in any other state is an error.
-+#     Manually trigger completion of an active job in the READY or
-+#     STANDBY state.  Completing the job in any other state is an
-+#     error.
- #
- # This is supported only for drive mirroring, where it also switches
- # the device to write to the target path only.  Note that drive
-@@ -211,14 +208,14 @@
- 
- ##
- # @job-dismiss:
-+#     Deletes a job that is in the CONCLUDED state.
- #
--# Deletes a job that is in the CONCLUDED state.  This command only
--# needs to be run explicitly for jobs that don't have automatic
--# dismiss enabled.  In turn, automatic dismiss may be enabled only for
--# jobs that have @auto-dismiss option, which are `drive-backup`,
--# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit`
--# and `block-stream`.  @auto-dismiss is enabled by default for these
--# jobs.
-+# This command only needs to be run explicitly for jobs that don't
-+# have automatic dismiss enabled.  In turn, automatic dismiss may be
-+# enabled only for jobs that have @auto-dismiss option, which are
-+# `drive-backup`, `blockdev-backup`, `drive-mirror`,
-+# `blockdev-mirror`, `block-commit` and `block-stream`.  @auto-dismiss
-+# is enabled by default for these jobs.
- #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, CONCLUDED.  For jobs that make use of
-@@ -233,11 +230,10 @@
- 
- ##
- # @job-finalize:
--#
--# Instructs all jobs in a transaction (or a single job if it is not
--# part of any transaction) to finalize any graph changes and do any
--# necessary cleanup.  This command requires that all involved jobs are
--# in the PENDING state.
-+#     Instructs all jobs in a transaction (or a single job if it is
-+#     not part of any transaction) to finalize any graph changes and
-+#     do any necessary cleanup.  This command requires that all
-+#     involved jobs are in the PENDING state.
- #
- # For jobs in a transaction, instructing one job to finalize will
- # force ALL jobs in the transaction to finalize, so it is only
+ # The guest can tell the host (via the PTF instruction) whether the
+ # CPUs should be provisioned using horizontal or vertical
 -- 
 2.55.0
 
