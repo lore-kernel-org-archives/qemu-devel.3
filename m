@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26684CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 22:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3741ECA5FAB
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 22:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBJyr-00071s-5d; Mon, 28 Sep 2026 18:37:53 -0400
+	id 1xBJzS-0008By-K0; Mon, 28 Sep 2026 18:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJyp-00071G-6i
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:37:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzN-0007ul-W2
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJyn-0006Do-Et
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:37:50 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzM-0006I4-1S
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790635068;
+ s=mimecast20190719; t=1790635103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zNPSCAGT8naj7/CMTraZ0sXWBDY1bHeXVOh1E8VeXRA=;
- b=OUzaL4uXs3/U849c9itTEgIsFcFRf7gAQdfzfzWs+SmNFaaBkKtGJXRAFRrdY8AnLDmAHp
- 2YLO6dGsGrDdc0iab3/hNQjCDWtId0Iyy+Vap+eZ5dmibyQa6miXAAeEtmX6rxo8gYvw5u
- KJJiwCEwRXo6iUjJKEwk8WWXbzx1HHs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kLHJm8TXcyeIk6tiCEQAhsRwOUnRyEQUxRThN5sFETI=;
+ b=K4PLQdbgNUOOHiKqr/c+fqr4GE0dJ7jNBgekPM19KVThau/jMaMvnSqTiPKWrKDijNJ4ps
+ Xpj7C+GEebvepgfv9Ghdqnrw+NC48oA+0NCxT+uYDYPcaEzwHa2J0a2jQKUIW3m+w63mC1
+ vLrPaG4+j3E5vYnwfxgmtFaoe0e1pX0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-Yo0bDo4bP6uVU5qGS7-oCw-1; Mon,
- 28 Sep 2026 18:37:46 -0400
-X-MC-Unique: Yo0bDo4bP6uVU5qGS7-oCw-1
-X-Mimecast-MFC-AGG-ID: Yo0bDo4bP6uVU5qGS7-oCw_1790635064
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-Bi4dlrVgPqOurGcUS5AZ8Q-1; Mon,
+ 28 Sep 2026 18:38:19 -0400
+X-MC-Unique: Bi4dlrVgPqOurGcUS5AZ8Q-1
+X-Mimecast-MFC-AGG-ID: Bi4dlrVgPqOurGcUS5AZ8Q_1790635098
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A96BE1926B77; Mon, 28 Sep 2026 22:37:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB9A4180057C; Mon, 28 Sep 2026 22:38:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.217])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE1581956047; Mon, 28 Sep 2026 22:37:37 +0000 (UTC)
+ id 612D619560AB; Mon, 28 Sep 2026 22:38:13 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -73,24 +73,23 @@ Cc: Peter Xu <peterx@redhat.com>,
  Jason Wang <jasowangio@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eric Blake <eblake@redhat.com>
-Subject: [PATCH 04/14] qapi/parser: enforce doc block section ordering
-Date: Mon, 28 Sep 2026 18:36:47 -0400
-Message-ID: <20260928223657.2303684-5-jsnow@redhat.com>
+Subject: [PATCH 10/14] qapi/parser: add _append() method
+Date: Mon, 28 Sep 2026 18:36:53 -0400
+Message-ID: <20260928223657.2303684-11-jsnow@redhat.com>
 In-Reply-To: <20260928223657.2303684-1-jsnow@redhat.com>
 References: <20260928223657.2303684-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,134 +105,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enforce the relative ordering of "Intro", "Members", "Features",
-"Errors" and "Returns" sections.
+This method is intended to become the sole point of appending new
+sections to the section list, prohibiting outside callers from
+accessing the list of sections directly.
+
+A forthcoming commit will actually convert the "all_sections" field to
+be a private field to begin enforcing that no outside callers are
+manipulating the section list from outside of this class.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/devel/qapi-code-gen.rst | 19 +++++++++++------
- scripts/qapi/parser.py       | 41 ++++++++++++++++++++++++++++++------
- 2 files changed, 48 insertions(+), 12 deletions(-)
+ scripts/qapi/parser.py | 50 ++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index 3ac1c2dae18..29e9c5a3da6 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -985,12 +985,19 @@ When documentation is required (see pragma_ 'doc-required'), every
- definition must have documentation.
- 
- Definition documentation starts with a description naming the
--definition with an optional indented overview (the "intro"),
--:ref:`descriptions <doc-descrip>` of each argument (for commands and
--events), member (for structs and unions), branch (for alternates), or
--value (for enums), :ref:`feature descriptions <doc-feat>` of each
--feature (if any), and finally optional :ref:`tagged sections
--<doc-tagged>`.
-+definition with an optional indented overview (the "intro").
-+
-+The introduction is followed by :ref:`descriptions <doc-descrip>` of
-+each argument (for commands and events), member (for structs and
-+unions), branch (for alternates), or value (for enums).
-+
-+:ref:`Tagged sections <doc-tagged>` follow in order: Returns (for
-+commands), Errors (for commands), and lastly :ref:`feature
-+descriptions <doc-feat>` if applicable.
-+
-+Definition documentation concludes with rST-formatted detail
-+paragraphs (including examples, notes, &c), and finally an optional
-+"Since" tagged section at the very end.
- 
- .. _doc-descrip:
- 
 diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index fe284a3f866..94a60a23482 100644
+index 5fc9c18c81d..0dca1acba4c 100644
 --- a/scripts/qapi/parser.py
 +++ b/scripts/qapi/parser.py
-@@ -545,6 +545,28 @@ def get_doc(self) -> 'QAPIDoc':
-             doc.all_sections.append(QAPIDoc.Section(info, QAPIDoc.Kind.INTRO))
+@@ -542,7 +542,7 @@ def get_doc(self) -> 'QAPIDoc':
+             if not symbol:
+                 raise QAPIParseError(self, "name required after '@'")
+             doc = QAPIDoc(info, symbol)
+-            doc.all_sections.append(QAPIDoc.Section(info, QAPIDoc.Kind.INTRO))
++            doc.new_tagged_section(info, QAPIDoc.Kind.INTRO)
              line = self.get_doc_indented(doc)
              no_more_args = False
-+            last_ordered_section = QAPIDoc.Kind.INTRO
-+
-+            def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-+                nonlocal last_ordered_section
-+                if isinstance(this, str):
-+                    this = QAPIDoc.Kind.from_string(this)
-+
-+                if this in (QAPIDoc.Kind.TODO, QAPIDoc.Kind.SINCE,
-+                            QAPIDoc.Kind.DETAILS):
-+                    return
-+
-+                if this.value < last_ordered_section.value:
-+                    raise QAPIParseError(
-+                        self,
-+                        f"'{this}' section cannot appear after "
-+                        f"'{last_ordered_section}' section, please re-order "
-+                        "the sections and adjust phrasing as necessary to "
-+                        "ensure consistent documentation flow between the "
-+                        "source code and the rendered HTML manual"
-+                    )
-+
-+                last_ordered_section = this
+             last_ordered_section = QAPIDoc.Kind.INTRO
+@@ -772,6 +772,33 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+     def has_features(self) -> bool:
+         return bool(self._features)
  
-             while line is not None:
-                 # Blank lines
-@@ -558,6 +580,7 @@ def get_doc(self) -> 'QAPIDoc':
-                     if doc.has_features:
-                         raise QAPIParseError(
-                             self, "duplicated 'Features:' line")
-+                    _tag_check(QAPIDoc.Kind.FEATURE)
-                     self.accept(False)
-                     line = self.get_doc_line()
-                     while line == '':
-@@ -581,6 +604,7 @@ def get_doc(self) -> 'QAPIDoc':
-                             self,
-                             "description of '@%s:' follows a section"
-                             % match.group(1))
-+                    _tag_check(QAPIDoc.Kind.MEMBER)
-                     while (line is not None
-                            and (match := self._match_at_name_colon(line))):
-                         doc.new_argument(self.info, match.group(1))
-@@ -621,6 +645,7 @@ def get_doc(self) -> 'QAPIDoc':
-                         )
-                         raise QAPIParseError(self, emsg)
++    def _append(self, section: 'QAPIDoc.Section') -> None:
++        """
++        Primary internal interface for adding a new section.
++
++        It is intended to become the sole access point for adding new
++        sections to the QAPIDoc section list, but we are currently in
++        a transitional phase where other methods access the section
++        list directly to do insertions of generated sections at
++        targeted points.
++        """
++        if section.kind == QAPIDoc.Kind.RETURNS:
++            if self._returns:
++                raise QAPISemError(
++                    section.info, "duplicated '%s' section" % section.kind)
++            self._returns = section
++        elif section.kind == QAPIDoc.Kind.ERRORS:
++            if self._errors:
++                raise QAPISemError(
++                    section.info, "duplicated '%s' section" % section.kind)
++            self._errors = section
++        elif section.kind == QAPIDoc.Kind.SINCE:
++            if self.since:
++                raise QAPISemError(
++                    section.info, "duplicated '%s' section" % section.kind)
++            self.since = section
++        self.all_sections.append(section)
++
+     def end(self) -> None:
+         for section in self.all_sections:
+             section.text = section.text.strip('\n')
+@@ -797,7 +824,7 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
  
-+                    _tag_check(match.group(1))
-                     doc.new_tagged_section(
-                         self.info,
-                         QAPIDoc.Kind.from_string(match.group(1))
-@@ -632,6 +657,7 @@ def get_doc(self) -> 'QAPIDoc':
-                     no_more_args = True
-                 else:
-                     # plain paragraph(s)
-+                    _tag_check(QAPIDoc.Kind.DETAILS)
-                     doc.ensure_untagged_section(self.info)
-                     doc.append_line(line)
-                     line = self.get_doc_paragraph(doc)
-@@ -674,14 +700,17 @@ class QAPIDoc:
-     """
+         # start new section
+         section = self.Section(info, kind)
+-        self.all_sections.append(section)
++        self._append(section)
  
-     class Kind(enum.Enum):
--        DETAILS = 0
-+        # The order here is the order in which sections must appear in
-+        # source code; with the exception of 'TODO' which may appear
-+        # anywhere but is treated as a comment.
-+        INTRO = 0
-         MEMBER = 1
--        FEATURE = 2
--        RETURNS = 3
--        ERRORS = 4
--        SINCE = 5
-+        RETURNS = 2
-+        ERRORS = 3
-+        FEATURE = 4
-+        DETAILS = 5
-         TODO = 6
--        INTRO = 7
-+        SINCE = 7
+     def new_tagged_section(
+         self,
+@@ -805,22 +832,7 @@ def new_tagged_section(
+         kind: 'QAPIDoc.Kind',
+     ) -> None:
+         section = self.Section(info, kind)
+-        if kind == QAPIDoc.Kind.RETURNS:
+-            if self._returns:
+-                raise QAPISemError(
+-                    info, "duplicated '%s' section" % kind)
+-            self._returns = section
+-        elif kind == QAPIDoc.Kind.ERRORS:
+-            if self._errors:
+-                raise QAPISemError(
+-                    info, "duplicated '%s' section" % kind)
+-            self._errors = section
+-        elif kind == QAPIDoc.Kind.SINCE:
+-            if self.since:
+-                raise QAPISemError(
+-                    info, "duplicated '%s' section" % kind)
+-            self.since = section
+-        self.all_sections.append(section)
++        self._append(section)
  
-         @staticmethod
-         def from_string(kind: str) -> 'QAPIDoc.Kind':
+     def _new_description(
+         self,
+@@ -834,7 +846,7 @@ def _new_description(
+         if name in desc:
+             raise QAPISemError(info, "'%s' parameter name duplicated" % name)
+         section = self.ArgSection(info, kind, name)
+-        self.all_sections.append(section)
++        self._append(section)
+         desc[name] = section
+ 
+     def new_argument(self, info: QAPISourceInfo, name: str) -> None:
 -- 
 2.55.0
 
