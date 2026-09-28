@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40A4CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C847CCA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB0f-0005Cm-4c; Mon, 28 Sep 2026 09:03:09 -0400
+	id 1xBB17-0005Xc-Vy; Mon, 28 Sep 2026 09:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0b-0005BZ-9C
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:05 -0400
+ id 1xBB0s-0005KX-3Q
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0Z-0004N6-HA
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:04 -0400
+ id 1xBB0q-0004Nq-GI
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600582;
+ s=mimecast20190719; t=1790600599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
- b=JXss2JqAvH8lVewMmM0Iq+nMDnw7HyWGzO9CPDUbyvaHGobhSG82gMvSuuqwTUkvVTtWOv
- rjrd4SlPvor5UIzDAS8+gXA+B++To+ATXgYB1d1luE2wk2t4amKZtnfJsmHAuiSC3CTftv
- eEv8P7VVQbDPjv6Cjo1VSWJtEHDp6yQ=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cMOlQlahvgMSuFSsGvR4hLZ/4OhA3DTiUtO96EFCceM=;
+ b=BjuYaM01Bbx5j0r60GR1NQU5jJJZLDKMSr1XusPUNPS/i6cgzIGIGVFLTA493JR1EBaUkV
+ c656nrgnbzmuJTLOj6KtZ7UN9I9t0dJRGMJJx5h5iDGIfd+XKb3/+XbcA7E20hVDNwonnD
+ 44xrLpmc71MEB7wnrCoYza60n4JO75I=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-201-dSTk4TR3Ptq7i6febftGog-1; Mon, 28 Sep 2026 09:03:01 -0400
-X-MC-Unique: dSTk4TR3Ptq7i6febftGog-1
-X-Mimecast-MFC-AGG-ID: dSTk4TR3Ptq7i6febftGog_1790600580
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c29680b34b5so2434666b.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:01 -0700 (PDT)
+ us-mta-641-Wfn-91iVM_idn1XJXQaKIA-1; Mon, 28 Sep 2026 09:03:17 -0400
+X-MC-Unique: Wfn-91iVM_idn1XJXQaKIA-1
+X-Mimecast-MFC-AGG-ID: Wfn-91iVM_idn1XJXQaKIA_1790600597
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-6a5d7e3ac13so3282314a12.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600580; x=1791205380; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600597; x=1791205397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
- b=jKWiMwxYAF8YT34FZc0SeYWL93oX5C0dgx2CFG0AhICMXJ8urmuTQm1A19kXRju8pB
- ziB2KyNWIv4sDsbMJeM7UipV62+keirJLJSovAn85xGlYep/Icco/xWayyAEtDl/lLhP
- 45AIdxsTImnhoAAbHvKK+qdOn7LwzMnzRrQku9o8brSwRnJ4PZOio2FElOLqqBPzanYS
- XrOwbfvKwG9+yeaTghDpWtP//gYCs8tKmB16lznWVP9hbjJFJU//TJ+3gbQHUcz4W04G
- seP6PqutyqxH88Ixv7tpkeS5rcxb+trRfyaSxAOS00nFLFXs8zravsWxUYByDtpsWsXJ
- 5V2g==
+ bh=cMOlQlahvgMSuFSsGvR4hLZ/4OhA3DTiUtO96EFCceM=;
+ b=jj77GKZw/2BIAYLfbkqxJadh6GK15GXVzzCDA0o/7fKGqgfihOMSKO2RGfMMgIrJuH
+ XQK2eEJuItNOTiAoV0Di3SWvx57wLf6ORDc6tdQY/FoPHJp5tKh3JBzu+O3FiCZU5UE0
+ +w6IHYY1ynz7p+EKaOqrkp57pBanTf19n/CfzNmXe+YtKbE1jIbe9SqCyu6C6owej/xh
+ /8vgt0VEZU/N17z25T9wpSRkwIOiM5ZWqGPZDB2NwmAvWFyDNe26AdCB0suf5MKbcvWP
+ cKrkT9+BqBK/x++puQGVhaGehRKnl3KnvGF1v/I+PlkNChmj49RbLXY9pGr0qP13D4Rs
+ M2EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600580; x=1791205380;
+ d=1e100.net; s=20260707; t=1790600597; x=1791205397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
- b=UTydd80m4wnfccZMgARbgZJ9sUWQcKlIpeAmWzWYjfgFnFgGLxnKX8uRdlQ30OJoug
- fF9GUl4F4bCKanbvDnUgSPPBpXWpg4OUDq6Cop02TPXrUj+5oWmuHR+R6q4zGe1ZjNcb
- XKKYZdV049OPt98AqGA8kS1LL3oboQx0oXZQ75eMKAWaf/A6Jxa0Eg+jNiznbkVnf5c8
- 5b9n/s69C/SS+q/n9ZYC7c1hfjpDUu6lyXxnO4DAlSAC5Qtnv+yV5IN+TF2HmM4KIJa8
- HnM5cQ6XS5B4+wwsMw/DA+ecKxW4ZSCtcnBN9ud+Ju0n177zRuCKWpdvVF7ZG62siExj
- BzhQ==
-X-Gm-Message-State: AFuF++lfTgEm0EGK2RSSpTRdcN1Hm0seZKsAV7OrkLZg3fsmqKTUUffE
- 9qxFns0Mpr0yo/ggQatNmiep/LaXsmBvjiXWF8LLvR8EDK32HhGUt1Wv2tNgxsVHmzN8XvxDcmF
- xMXomMA0QHhfcbFzArewp61LRtCEJMDgYPjUXATGFjcOIVRFg3qynGGOA/lxv4oHPHZmQCwuNPQ
- jxBA9WGq2NUSTEfaufLcvjOwC6SzEWLGhJAYcfWyOK
-X-Gm-Gg: AYBFou3pV4+e+n5SfWtx596BVk/lctfZuI9KgKcx+IZHeWrXB1u2Y6R9SFzgWN96r08
- sCAl/040aRfM5y+p4Wi1Uac7tUOiCJ1t+hRwLknqPj03yyeUiuEn/7mnPlPftm/6Qjwm43MHOh0
- kPzdXSt8kKhBDEmdhDy/zd78NrboIgbPymyqsPdVFLAfMOyp0NOuxz18YLu4NqFJAdTYNBnsBMY
- sp5ji2qUMYTMeukrF283M1hnc5JTXgYPsDQv3fZeKkwrdZeVs8cs7FrVwkhh8IiV/fYbhMYnjey
- E5R/dRYvsFVPrBSDBjavfPmsLIlpM0HvtT++Qr5rgdItsiNQvg7nR8pRv6pIaNgROz0qzlR0omk
- O/cD9raKnLEKqmJme5zxLUFUd0DRtfc3XbrAPHz356JXKLHisgtr95YCafLHvaIG6Aw9L7Yo/aW
- tYDr1R
-X-Received: by 2002:a17:907:960d:b0:c25:f7db:4bf0 with SMTP id
- a640c23a62f3a-c2ac238a8d0mr1170609666b.22.1790600580006; 
- Mon, 28 Sep 2026 06:03:00 -0700 (PDT)
-X-Received: by 2002:a17:907:960d:b0:c25:f7db:4bf0 with SMTP id
- a640c23a62f3a-c2ac238a8d0mr1170605566b.22.1790600579326; 
- Mon, 28 Sep 2026 06:02:59 -0700 (PDT)
+ bh=cMOlQlahvgMSuFSsGvR4hLZ/4OhA3DTiUtO96EFCceM=;
+ b=K6dfVq4QJ+51Aox4tN2Y6XURDac1T0bq7yEcU8wupBME0mbUd96KVPTAdCjJ2FGew4
+ /m+WVu3lraQfMALECA7dRDlnWADFHWP2YAyhmLz/htwtWHBIld0HUpoPrCH1o/J1ddna
+ bFi49Ikhv1+QbLsRA5rEUVaJt8XERP93I/kyyxJx1a6JLcNwhPFZN5TNpoRsklk79YmM
+ Yygr9TBHLh9Zcsc2Qpq8EDqjSYaxNk7DFjc4vrXkTlAA9GIw6SZR8p5coDkwDCN2m7eK
+ /DH9FrwPTRufCHF9LBGxrN61NvpAPcPLyKhoX5QvaSEJdqINNb5FurTxahas3CfU3kxQ
+ 0EYQ==
+X-Gm-Message-State: AFq9FYJmerXXSxrKDmr25SzmSKK3M80QxqKygRB65Q0JtO3+DTeaXQZD
+ SiKj/05idF6Lc8bVglJ0oUgj0UJAJeWSgiHoJzqL5yf88fwZ1Um2MyvYIVuG32NnMsWnamk50fU
+ xKrYwzhd7keRAuSLj6Tt8HEATCoW9HJ13iTDFGRUEYBWj9ZIV8x5Aa0LpImRLHUV/9MhfQXVgfd
+ Xf+TnZZXNPVBzILBkljpqnSEB8zNeVPvRFctx8T8ih
+X-Gm-Gg: AYBFou3VVYHHTF28NFEnlwNOGscqMbiWN/HQlZnqmv/81lldfpxZqKNNRrb3SUv8r3C
+ YKu0P0OwqVYjrzQrGBYShP6fPxGmpl2/P3CrPA/kZG5WNHSDqT9IJ6YB511Gu4CVuNzlK3ryJQ9
+ yadxNyaS9pqg9EmchIV6rSkhw6Y/zHT/TZ92JhqfHK+XwT2o6RoP/miaC6+ijlUnuiWIHPJeY4Y
+ Xu5WlTKwji3c1OPF70NOCsAXjpvL+kZUmSAY9f0X/vt2iXpDPjNXqa7dVFKIAueuUswJTBTye4H
+ s3h5iRXrhReNG1CRBwLj3N57i4uezO0iqdIzXt1xLvFbJakaAmi2zl/LwV+tNHZAeJIU+94yLrm
+ iYMdf8K78gLlYHlFW78VYWglWb/dp/lUSIdVibOVsxbT9elkzwsnaMIgZoAm0z1pXfjoT6+7ZsH
+ 9ysaqr
+X-Received: by 2002:a05:6402:a00d:b0:6ab:1c2:967e with SMTP id
+ 4fb4d7f45d1cf-6ab01c29bf6mr4204482a12.32.1790600596540; 
+ Mon, 28 Sep 2026 06:03:16 -0700 (PDT)
+X-Received: by 2002:a05:6402:a00d:b0:6ab:1c2:967e with SMTP id
+ 4fb4d7f45d1cf-6ab01c29bf6mr4204460a12.32.1790600596036; 
+ Mon, 28 Sep 2026 06:03:16 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2dc7b6f438sm236245366b.2.2026.09.28.06.02.58
+ 4fb4d7f45d1cf-6ab5be60872sm2744523a12.34.2026.09.28.06.03.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:02:58 -0700 (PDT)
+ Mon, 28 Sep 2026 06:03:12 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>,
- "Vulnerability Report" <vr@darknavy.com>
-Subject: [PULL 10/30] accel/kvm: protect kvm_resample_fd_list with a mutex
-Date: Mon, 28 Sep 2026 15:02:08 +0200
-Message-ID: <20260928130228.877003-11-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 14/30] target/i386/tcg: use zextT1 for CMPXCHG
+Date: Mon, 28 Sep 2026 15:02:12 +0200
+Message-ID: <20260928130228.877003-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
@@ -121,110 +120,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
-
-Legacy PCI INTx interrupts are level triggered and can, in theory, be shared.
-
-Upon receiving such an interrupt, VFIO kernel driver masks it in a generic way,
-using INTX_DISABLE bit in the PCI config space.
-
-It then waits for the guest to signal completion (EOI) of the interrupt,
-upon which VFIO re-enables the interrupt.
-
-The completion is signaled with another eventfd.
-
-For split irqchip mode, KVM doesn't have a notion of EOI on IOAPIC level.
-Instead it signals EOI with a userspace VM exit, KVM_EXIT_IOAPIC_EOI.
-
-Upon receiving this VM exit, Qemu manually signals the above-mentioned eventfd.
-
-The problem that this patch resolves is that QEMU keeps these eventfds in
-a linked list without any locking to prevent the list from being corrupted by
-concurrent access.
-
-Such use is possible and guest triggerable if the guest rapidly toggles
-INTX mode of a VFIO device and at the same time signals EOI with an arbitrary
-vector.
-
-Fix this by protecting this list (kvm_resample_fd_list) with a mutex.
-
-This patch was only compile tested.
-
-Reported-by: "Vulnerability Report" <vr@darknavy.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3942
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260923004651.101197-1-mlevitsk@redhat.com
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/kvm/kvm-all.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 4 ++--
+ target/i386/tcg/emit.c.inc       | 5 ++---
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 83cbd120a84..da3afdc68d8 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -146,6 +146,7 @@ typedef struct KVMResampleFd KVMResampleFd;
- static QLIST_HEAD(, KVMResampleFd) kvm_resample_fd_list =
-     QLIST_HEAD_INITIALIZER(kvm_resample_fd_list);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 3acac68977d..8394924a7ed 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1365,8 +1365,8 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xa4] = X86_OP_ENTRY4(SHLD,  E,v, 2op,v, G,v),
+     [0xa5] = X86_OP_ENTRY3(SHLD,  E,v, 2op,v, G,v),
  
-+static QemuMutex kvm_resample_fd_list_lock;
- static QemuMutex kml_slots_lock;
+-    [0xb0] = X86_OP_ENTRY2(CMPXCHG,E,b, G,b, lock),
+-    [0xb1] = X86_OP_ENTRY2(CMPXCHG,E,v, G,v, lock),
++    [0xb0] = X86_OP_ENTRY2(CMPXCHG,E,b, G,b, lock zextT1),
++    [0xb1] = X86_OP_ENTRY2(CMPXCHG,E,v, G,v, lock zextT1),
+     [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
+     [0xb3] = X86_OP_ENTRY2(BTR,    E,v, G,v,             btEvGv),
+     [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index abf40123035..e4700473c9f 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1760,11 +1760,10 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
+     MemOp ot = decode->op[2].ot;
+     TCGv cmpv = tcg_temp_new();
+     TCGv oldv = tcg_temp_new();
+-    TCGv newv = tcg_temp_new();
++    TCGv newv = s->T1;
+     TCGv dest;
  
- #define kvm_slots_lock()    qemu_mutex_lock(&kml_slots_lock)
-@@ -157,6 +158,8 @@ static inline void kvm_resample_fd_remove(int gsi)
- {
-     KVMResampleFd *rfd;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-+
-     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
-         if (rfd->gsi == gsi) {
-             QLIST_REMOVE(rfd, node);
-@@ -164,6 +167,8 @@ static inline void kvm_resample_fd_remove(int gsi)
-             break;
-         }
-     }
-+
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
-@@ -173,20 +178,26 @@ static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
-     rfd->gsi = gsi;
-     rfd->resample_event = event;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-     QLIST_INSERT_HEAD(&kvm_resample_fd_list, rfd, node);
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- void kvm_resample_fd_notify(int gsi)
- {
-     KVMResampleFd *rfd;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-+
-     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
-         if (rfd->gsi == gsi) {
-             event_notifier_set(rfd->resample_event);
-             trace_kvm_resample_fd_notify(gsi);
--            return;
-+            break;
-         }
-     }
-+
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- /**
-@@ -2910,6 +2921,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
-     int type;
- 
-     qemu_mutex_init(&kml_slots_lock);
-+    qemu_mutex_init(&kvm_resample_fd_list_lock);
- 
-     /*
-      * On systems where the kernel can support different base page
+     tcg_gen_ext_tl(cmpv, cpu_regs[R_EAX], ot);
+-    tcg_gen_ext_tl(newv, s->T1, ot);
+     if (s->prefix & PREFIX_LOCK) {
+         tcg_gen_atomic_cmpxchg_tl(oldv, s->A0, cmpv, newv,
+                                   s->mem_index, ot | MO_LE);
+@@ -1787,7 +1786,7 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
+              * not zero-extending it on 64-bit processors.  So, precompute
+              * the result of a successful writeback and perform the movcond
+              * directly on cpu_regs.  In case rm is part of RAX, note that this
+-             * movcond and the one below are mutually exclusive is executed.
++             * movcond and the one below are mutually exclusive.
+              */
+             dest = gen_op_deposit_reg_v(s, ot, decode->op[0].n, newv, newv);
+             tcg_gen_movcond_tl(TCG_COND_EQ, dest, oldv, cmpv, newv, dest);
 -- 
 2.55.0
 
