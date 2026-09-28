@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F71AC9833E
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC4C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB8NC-0007Nf-6c; Mon, 28 Sep 2026 06:14:16 -0400
+	id 1xB8Nt-00085j-VA; Mon, 28 Sep 2026 06:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xB8N2-0007N3-FZ
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:14:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xB8N0-0001ei-9z
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:14:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790590440;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=WfspKtklugh/OYlKtKuxjrPv/b7W5PFR1FRmVmYBQRs=;
- b=EX9uSR/2mpihPkKFA8/uBHiE+aR//AMaWiI1F6WJoOt7hMZVCu3L1j5zj+8Pq1PpAZKBx0
- S8MnftbzMms8FACzrGhLrsQ9GMMWqp2eT7uflpsMT9xWqhy+sKdOIR1BhonoKtKmXio+v8
- fITKALVNw3/rTm4vZfyWGCLJEF9Ay6I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-3q5wHjZTPt24_x-CQkTmEA-1; Mon,
- 28 Sep 2026 06:13:57 -0400
-X-MC-Unique: 3q5wHjZTPt24_x-CQkTmEA-1
-X-Mimecast-MFC-AGG-ID: 3q5wHjZTPt24_x-CQkTmEA_1790590435
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D72B1954229; Mon, 28 Sep 2026 10:13:55 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 848C01956095; Mon, 28 Sep 2026 10:13:51 +0000 (UTC)
-Date: Mon, 28 Sep 2026 11:13:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v4 46/55] qapi: add query-targets
-Message-ID: <aro93NuZBXYGbD33@redhat.com>
-References: <20260926070057.1234-1-luoyonggang@gmail.com>
- <20260926070057.1234-47-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xB8Nq-00083G-4B
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:14:54 -0400
+Received: from mail-yx2-x0d.google.com ([2607:f8b0:4864:41::d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xB8No-0001ht-Ct
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:14:53 -0400
+Received: by mail-yx2-x0d.google.com with SMTP id
+ 956f58d0204a3-67408b109e3so984106d50.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 03:14:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790590489; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GiB3ySogS6BkpLa/27shSigd3oBkfRg3bs2pcIrYdDNdp76rg7aTe0a07FLDS1h9Xc
+ eOlEnXP/AsFQwM/u+cnmQgTIZKnqPvnwcJhYaTNQngDcpYBvK1LQmkLGaICH+bt0OFIi
+ FKE7ec1SSh9/3ruxkqRXbP0A1yV8+poT2Nwo2a2N5pjN9EWVXVeFjsYGAHAVRe3Sv/m8
+ cr2HqyPsQMBuxVDYF+hmafImvxfVKGsX/56AClRSjXmg5WYvA2lCqJs2VCvru9hV7zIB
+ xM9ISKC018Ssjssej1N/eDsBAVdVdfqz4j8PKABSUMyHgYJ8n6KyB3e4J8U0SjqauQEj
+ wUaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=XiBCiJHKw+C/zcKBLBy8Igxb+ylPPyXlNIB3fGbFwBI=;
+ fh=apQ5YAk5rciH9kejZnfHIsveSgWLYiG5KT4x9gaYX6k=;
+ b=epdO8cjAhrA73ldYdEsxyixFowZZrhG3kV3l5FR07JHuS3BYwY6bGjmYGiF4+eDf3v
+ sGx/U+8Q9VfsT/9TdoaFdnjJBCRDRSh4pOSqzvqvX6pVltQEIqiz2qZF9oQ0152finlz
+ 6GEcrqhb9i1UDBEv5+L8V2KSjuc/SqWBJKiBfbCljPi6DgnTYbvs3fE3SzEBZu4duYt0
+ t+9aCEk6cX0wAtjMXcyKUfXTeycNcTnfwyg0LjntAn4ADJBmpYprpcbB6nvg9lmHfN9h
+ o3FsMweQHEnnEpi5Tyh4bTK3eFpnGEOkR8qcFv+PiGh6d75QLliVPD6uz40ozQ6VqRLO
+ e8cw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790590489; x=1791195289; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=XiBCiJHKw+C/zcKBLBy8Igxb+ylPPyXlNIB3fGbFwBI=;
+ b=lDHqlOCTPDC0eVEOcPOqcPAXf5k3FBIXqzFEFMEft73K7dQfkZow53wBDUxQ4+j6cm
+ BqFtPHBasZgqKHlUhrdVXF4Y/W0ffbY/AqLYq0KtT544unWnQxPNgOHw5OJ2iXdOAQOR
+ QM/rBWiD+zpUoHgRMqtCWI4XMI+w+6OIzYzPUeWL0sRiuxQ1KIcxgCG08gRdJUVn4eia
+ bI+yYXD3SEx/bXfKVz/ko04uz8DFwvyKWTExANp6Gl6F5c6AJ+s27Awv5tWBRSLPQj4M
+ Ew3NJp2iCL2ncJSJNLhylZML6qS9pjxyEoUOVvMOsdsoPjH3KEIBlGNeP+ik/ugHhK3k
+ CH8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790590489; x=1791195289;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=XiBCiJHKw+C/zcKBLBy8Igxb+ylPPyXlNIB3fGbFwBI=;
+ b=Z8dy0uJZS5i+dUVpAYFXEg74FFaaUhjkbLdNjJwPZsrKjRZn77PkghLJE+kE1rouwM
+ pAx3ar+Igj1Pogtw6LPIZFCgr+/EBndoCTtz5DVjwQiVE34uQUlnu+WTZ4H49m0eTfna
+ UYeEI+srQyAdyPBcGsJJmL/SPsHUupo3/WKKrOhT4meLdGP0zIiCpZYMlPeRlP8diZOM
+ 6owhCav7n9yOWDAdXSSJZQYR71nVuZgTDhIpdXPE/j95SoR0pg/I/2S/cfvtn0DXAZ4K
+ 6dn/PIgVFuVyIQvH+DD5Wmr8TMan7VrI8ndhQsNQkW5jm0sNQ8+WxdYmTWwBzhB79CKy
+ C0yw==
+X-Gm-Message-State: AFq9FYIJgwjVBEvdWaoT9ggjU/fFeBwgFaJFbWl3ggF66M7JG83KYfc6
+ 30IlniKBK4sTktHU0tuzI7JdFc9xB1SMUHnH6mr97B9He1oYBP8iBCW/jmFHNYcE5l0NkGvcI/k
+ JE0Q7OHdgczA4ljZ9JloAhav6szZ4i6h6mipwa6Ck5g==
+X-Gm-Gg: AYBFou36rHMzPUPiuPVQ0rasDUvU37QGuRBcfGVYAHtL853lTq0qxzb4WgxGjunoXuo
+ 8/5QKFXVrddYFPEaLnBypUUmY/0y3dOrHDRJEvFTxCto4OowFVF8Hy2B64H6CfMLKGdIb7aiEIR
+ Ehu38cS7f4oqb5nXeprabyaSNbdLr2efqIIIznLLCF7ZZtk8eVKlvbrJq8aLphEcMx0lfYfajU6
+ EmxAd9yJ77B1hU86k2/SsNq1OaAAPs1Ezrv4knb1RW+DYN0b7AaEhlNNe/qHnK17s4pHZzTD9rd
+ NxTPB/d1ydtf4XoxOL3xHtTdnnT9uh2RHcG/V2VJYeuS6RvnfthWUBWt18uB4OVkvIRzjWm/W5+
+ Os/IDT98VCqzfo9BHK2z+nHZnxu0pc331GNX4zJQ=
+X-Received: by 2002:a05:690e:1243:b0:675:3b2f:14a9 with SMTP id
+ 956f58d0204a3-6753b2f7644mr1742729d50.34.1790590488991; Mon, 28 Sep 2026
+ 03:14:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260926070057.1234-47-luoyonggang@gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260923153516.3615007-1-brian.cain@oss.qualcomm.com>
+ <20260923153516.3615007-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260923153516.3615007-5-brian.cain@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Sep 2026 11:14:37 +0100
+X-Gm-Features: AclHuK9Hp8NkzY31hlmZ3nSb19aofD3Ux2X8dEE15uLUUfzDjmmCI8i3UHy9NcA
+Message-ID: <CAFEAcA9tY8in5QSuwbqxAyUxYySBWDVWdhJmCswt=zoR33ne9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] target/hexagon: add directory semihosting
+ operations
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,87 +114,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 26, 2026 at 03:00:45PM +0800, Yonggang Luo wrote:
-> query-targets lists each linked target, including none, with its
-> arch, endianness, and the machines that target accepts.
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+On Wed, 23 Sept 2026 at 16:35, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>
+> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+>
+> Bare-metal Hexagon programs use OPENDIR, READDIR, and CLOSEDIR
+> semihosting calls to enumerate host directories. Directory handles are shared
+> by CPUs in a cluster, allowing guest indices to resolve across calls.
+>
+> Use lock_user_string()/unlock_user() to read the OPENDIR path from guest
+> memory instead of copying it into a fixed-size buffer.
+>
+> CLOSEDIR clears its slot in the directory list, so a stale index reports
+> EBADF instead of dereferencing a freed pointer.
+>
+> Also add a functional test for the new semihosting operations.
+>
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  hw/core/machine-qmp-cmds.c | 30 ++++++++++++++++++++++++++++++
->  qapi/machine.json          | 35 +++++++++++++++++++++++++++++++++++
->  2 files changed, 65 insertions(+)
-
-
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 6aaa2af709a..d8cdea6203e 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -307,6 +307,41 @@
->  ##
->  { 'command': 'query-target', 'returns': 'QemuTargetInfo' }
->  
-> +##
-> +# @TargetMachines:
-> +#
-> +# One registered system target and the machines that can run on it.
-> +#
-> +# @arch: the target architecture
-> +#
-> +# @endianness: the target endianness
-> +#
-> +# @machines: machine type names, not aliases
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'TargetMachines',
-> +  'data': { 'arch': 'SysEmuTarget',
-> +            'endianness': 'EndianMode',
-> +            'machines': ['str'] } }
-
-We already have  'QemuTargetInfo' struct which is used
-with 'query-target', that should also be used with the
-new 'query-targets' command.
-
-We need to add the 'endianness' field to QemuTargetInfo.
-
-I don't think that we need to report machines though.
-We already have 'query-machines' which gives much broader
-information on the machines. "MachineInfo" needs to
-gain
-
-   "targets": ["SysEmuTarget"]
-
-to list which target(s) a machine can be used with.
-
-
+>  include/hw/hexagon/hexagon.h              |  14 ++-
+>  hw/hexagon/hex-subsys.c                   |  32 ++++---
+>  target/hexagon/hexswi.c                   | 108 ++++++++++++++++++++++
+>  tests/functional/hexagon/test_systests.py |  11 +++
+>  4 files changed, 153 insertions(+), 12 deletions(-)
+>
+> diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
+> index 62398eeb359..58bdcabe87e 100644
+> --- a/include/hw/hexagon/hexagon.h
+> +++ b/include/hw/hexagon/hexagon.h
+> @@ -11,6 +11,7 @@
+>
+>  #include "system/memory.h"
+>  #include "hw/core/boards.h"
+> +#include "hw/cpu/cluster.h"
+>
+>  struct hexagon_board_boot_info {
+>      uint64_t ram_size;
+> @@ -159,6 +160,17 @@ struct hexagon_machine_config {
+>      union hexagon_config_table cfgtable;
+>  };
+>
+> +#define TYPE_HEXAGON_CLUSTER_STATE "hexagon-cluster-state"
+> +OBJECT_DECLARE_SIMPLE_TYPE(HexagonClusterState, HEXAGON_CLUSTER_STATE)
 > +
-> +##
-> +# @query-targets:
-> +#
-> +# Return each target linked into this QEMU binary and the machines
-> +# whose availability check accepts that target.
-> +#
-> +# Since: 11.2
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "query-targets" }
-> +#     <- { "return": [ { "arch": "aarch64", "endianness": "little",
-> +#                        "machines": [ "virt" ] } ] }
-> +##
-> +{ 'command': 'query-targets',
-> +  'returns': ['TargetMachines'] }
+> +struct HexagonClusterState {
+> +    CPUClusterState parent_obj;
+> +
+> +    struct {
+> +        GList *dir_list;
+> +    } semihosting;
+> +};
 
+I still don't think we should be holding this semihosting
+specific information in a struct in the hardware-emulation
+side of the code. File descriptors aren't per-cluster, they're
+shared across all of QEMU (i.e. you can open a file in
+one cluster and read it from another), so opendir handles also
+should have the same semantics. That also means the code for
+them can be in the semihosting related files, and not spill
+out into the hardawre-emulation files.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Compare semihosting/guestfd.c, where we handle filedescriptors
+for the guest by tracking them in a file-scoped global variable.
 
+-- PMM
 
