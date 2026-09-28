@@ -4,120 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C42FCA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 19:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D63CA5FA3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBH28-0008AP-P0; Mon, 28 Sep 2026 15:29:04 -0400
+	id 1xBHVi-0004LI-Rc; Mon, 28 Sep 2026 15:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1xBH27-0008AA-EB; Mon, 28 Sep 2026 15:29:03 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBHVN-0004KK-4n
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1xBH25-0003GW-2t; Mon, 28 Sep 2026 15:29:03 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SI5MeY4187633; Mon, 28 Sep 2026 19:28:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DOj1lW
- LrdxcsgnPxMCU8iTDJyqV8emFf5H+Sv4J0HtE=; b=d2awK95oFfsQJV+aCXsQHK
- PZO1bmZ2FJnVQCJKKpmfRPgPI+Ncy14GLnUr98QqbxoS4TKEPOspvmomb8R3LKWa
- MMUAvPFLdKV2v5D4Qna26x31kP0xiK4SQwx+TCZ5TE4lLyLeuZKuDrhVkcnVdx6r
- B16Y7CHGalAzuWKLfuVazHBz/m5cNVfBwWgjiLwprOkP1u+whh2XTFzqlesia4wq
- J2oQDX8ajaHQRdKVv+cXCjCmPvH6md88TUukjhzU9T1aE2K+FHqNvFQmB4kcJ108
- rzxgN8LY69oggV+2+Fdau6nRUawFK/3cFKhGfoLd9+QcTC6Hu837UFDeMpLqUmvQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qr3dj2-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 19:28:50 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SI2hPm532504; Mon, 28 Sep 2026 19:28:49 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxsvhen71-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 19:28:48 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68SJSigq9830850
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Sep 2026 19:28:45 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D915A20043;
- Mon, 28 Sep 2026 19:28:44 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CABB420040;
- Mon, 28 Sep 2026 19:28:42 +0000 (GMT)
-Received: from li-fa2166e9-1f7d-4f1a-8ca5-7ccf0f022c25.ibm.com (unknown
- [9.111.43.35]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 28 Sep 2026 19:28:42 +0000 (GMT)
-Message-ID: <557a71b95eb900454adc477ad16154e1466f13d9.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] s390x/sclpconsole: implement resizing for vt220
- consoles
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-To: "Jason J. Herne" <jjherne@linux.ibm.com>, filip.hejsek@gmail.com
-Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- mjrosato@linux.ibm.com, brueckner@linux.ibm.com, farman@linux.ibm.com,
- cohuck@redhat.com, maximilian.immanuel.brandtner@protonmail.com
-Date: Mon, 28 Sep 2026 21:28:42 +0200
-In-Reply-To: <e17a5337-849a-428a-b8e4-65fd92a8c186@linux.ibm.com>
-References: <20260921121641.1354712-1-maxbr@linux.ibm.com>
- <20260928090846.2315532-1-maxbr@linux.ibm.com>
- <e17a5337-849a-428a-b8e4-65fd92a8c186@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBHVH-0006hy-7V
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:12 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SI00is1384871
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=6h6ewQlcslb6o35Pe7JwdOvqw2Cz138bscq
+ 5UMFbsjA=; b=WcOFFE3Dzzd4Ug2Fp0pF4qI5gJA2tM9fNzXD5Kwe/FLQ8V5DCL7
+ +91WpwcESigQ4OL7qI+eChmrd+E76G7KfYVzPZ2+WTMU2zPI8Pl1+DBDK0iXTY46
+ y2rspupto6IRj2njfJ4YZyFucG3Z9ipl5qqifWvX5/P4DZgH6HBO8CygryLyQ8Wp
+ oh6rlUYNFTVFRCe/1x1zUBBU+TYRxNKyenq7X7daVcerblL42fOXIV7U7xFMSG5p
+ WrehV0YMlqO1kMoZnS9gLZzPnEZ0CoCXF9iBK2AhQ85zBCl6A+z8X941aWgIIRQ1
+ HiKvNXhZ96R0emY2daCuGQa4/qAK78JqWew==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjt139w8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:08 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-915e6c351f3so24206896d6.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 12:59:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790625548; x=1791230348; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6h6ewQlcslb6o35Pe7JwdOvqw2Cz138bscq5UMFbsjA=;
+ b=VpSAAjIDVFl6/7FngMBi07Qt0Pb7pK40wUD7z1QFMbkUkq4Dov5jDlhu8zWzmQA+7x
+ tfXy67OFb9yoVx78djGHLjw1NAbPx2d1knJ54Cg8vdT6e0eTEJeifXD4x1Xp+EjRnV8h
+ ao5I55/z/gBzEBtt59fUyTvX39CT4ItMngMswGOHZ3ICbFvGomW2T8yX9PSR8n2MyUfX
+ LKTKaFw+XKJm1hMfBMBUIa2ZdacPDxI/hGr+UpHFHhsbW4ImrhbzLcE/ZRLEzihLMukR
+ 0WWLfh72s2fWa8qIW9njEwV7BsK7gGrsyRRNay4gtvdvkXKtSmbWzc0EyKKeCFcMzCup
+ 5LiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790625548; x=1791230348;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6h6ewQlcslb6o35Pe7JwdOvqw2Cz138bscq5UMFbsjA=;
+ b=0mb0uAzQMdzp47+lKLiYpe82XJKtczYhyx1HpEu9wsYkGQr2+khzdadCcJ04yj7bWQ
+ OAj8rAUc5+LRxNmlC/ZOSWpY4ywHWkRZHTSTZhNsWpkVGcEOR9waarzJ1j3YmWJ1Sb1K
+ 8lugfT/XajwKdW/26ib5wWqRxckne5r9SyeXB2slpHK9vcom5oLuyYTT6+Xh5rtrpsu+
+ 5VZMjpUtuNzH4jzJm1MEaOX8LduzqmXa+YMH2LWhde6i9P6IVFAy3Ut3JpRwYPU2sDLj
+ l6wXQDYGkLrMCCnvXSqRSlFnLMhr2iOB/InCgLSS5ZduzLeHZnL42weU3x0AB1qUBGDX
+ Qdww==
+X-Gm-Message-State: AFuF++mK2u9l88MAeibDZ/qDdFa5PRN3rp9ggXVy55Q5+x9YVJNkpDj2
+ Fq6Zj84eDBGZeZLEEhZPrOmFWIOaslP4lyO97iYkzbzdjTQZn72qo/xjkWcgFcLTeS2DBOGiFjJ
+ hVyeGKiXthxrOVBNcram/FiAQGh9CAmbitaxE+6kLfw7YnC/IYJVhMiXxk+4oZAyk2A==
+X-Gm-Gg: AYBFou0em2exl2p86iQBrL+DPxgOlA/XyahN20ey0R+t/po0QoU8M+t7wRSHuPtMilU
+ g2DjAcpsu1rSmU5fTvY8fF6MtOdWb9nUUsDXSLqvbdjLerZeMsmGaS+0fy0HpFKu6aXJX/3IthS
+ qcPnRju8ymY2mqE40b2TzkIrcCA9AA1uVN5IGhNIQL9XYyhIaqCSYrKIdcg1CbtYLRO4oSCtzDa
+ h3bbNmrf4CZu5m3/yWppSHsn+FYE0LnsYAJdxe8QsGBqPw2XqdVrdmZBWCkeW1yKiVLM2+X76pt
+ vxqsJX/X0o9PBG9XYcJo0HBmQ7GS3KUh+z0NI9Y604RNwAwyWQ7IX1AkL9TKZbV1ZWeoka4BpKg
+ ODWm7sO5YxZX0lNA6uoxJLJLMeM7OXhsafkA=
+X-Received: by 2002:a05:6214:29ce:b0:8ef:4ed2:316 with SMTP id
+ 6a1803df08f44-917819e1cb7mr23876776d6.1.1790625547970; 
+ Mon, 28 Sep 2026 12:59:07 -0700 (PDT)
+X-Received: by 2002:a05:6214:29ce:b0:8ef:4ed2:316 with SMTP id
+ 6a1803df08f44-917819e1cb7mr23876376d6.1.1790625547491; 
+ Mon, 28 Sep 2026 12:59:07 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.94.15.187])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-9143d0a64b9sm75905556d6.35.2026.09.28.12.59.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Sep 2026 12:59:06 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v10 0/7] riscv: add initial sdext support
+Date: Mon, 28 Sep 2026 16:58:54 -0300
+Message-ID: <20260928195902.2045235-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3NiBTYWx0ZWRfX3kv0Gqkc79JL
- paI5IH6+gznXzUaaAUW6jk+q5HXhheoBm5cGqg5kR3U/mp2g+cs0pM/mb2LLM3C/Kgafo6Eomga
- CbuMKtDnPUO1s2x19E88OEAMvO4t0vKBIIV2+NohakhVwj1qyjk1DVvVn0+RV1CvOiHjs1Lng5R
- n4I9e41tRWSUEa6B7fV8Loy7vvWOeuLybLiIgqYTvmsPuf9SSSywiXEKeHNmfocyvcIBTXiUTC+
- YTEJggkHV6bGe1WCzJMsr6mnBpv6JAzOHO6GYJb5jr+yBE1ADo88x8jQgXGS8Krx8Gm36LJtYYH
- qgvjb0SgSqeY36jKKIsZ/j/PhkZsHjgDFLJvrrvl9l22dhI0O12W6nnDfmz7eAMp0bGvkPDO+Pc
- gzPRC6r4NPfMFEUOk4PW1saPD7jb4kh7nZdxlyaGqqIUbh2g/ehdwZ645mtZ8025OW5czXxnBQW
- 6NoqN7GgBNFqSIAE7Ug==
-X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6ababff2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=Kadzyh2ZY87WCsIF0bUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 2U7PU1emLHhSijkI7AVAX03dDqXy-41v
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3NiBTYWx0ZWRfX/ufpuRjqAiB7
- ZKDsn+KFHhZflLmo6NjL6tlflQNF58TrCDBU4fyLey/+Y7v/roSlBdNPIA6Jbe0tOMNJdYwOuzC
- AZGwSVW1A8dhNeWj9Ejkrdqf1uO5Da4=
-X-Proofpoint-GUID: 634dt6mi0bRTFqU1rHNRRqog58cfZB78
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfX1+iupxaorTl5
+ SNKA/rC3JeQtCQbn7jxgDgNGpl5XrMma/fLRkEVPJmwpUcjk27v4q+q0TSZ8wwhpLQS4hJvLN5D
+ HUURMjKNV+AvNvj5yXkIKa2XyjVwWj4H8/ksnfe/R1A3+ziZz0/qGoKfGFztR1It+KgFBjXtUnl
+ ERxsLQ5CO95xfEomoK/57fZtu8l98xsKRbepfieKUA99eqA8NNcpBOhL8xB0N5oHkW9NHxRk760
+ sxfEGxFPDnfpzxlEJMV56SDbOVSS9XwkSrQyRtNe6w8X8oklTSw5RSvXJ17QuHbyOEDpz0BHDUD
+ jMxgrg+1w6KpFX918/uKyHuLSkk4x88rgr+VAYYn7I/W53GhA7ANb8hdTwt7qYF9im9hxME//Vg
+ +lzu4AXv3/LRnW714g+IzbC/vnQuN6/6/2ovoTAMjT1MsKurfNqHF3hQkr6JCwP64xuDgs6bLt+
+ 0uxfufWgsupEDJicg/A==
+X-Authority-Analysis: v=2.4 cv=V8foQuni c=1 sm=1 tr=0 ts=6abac70c cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=_RQOco2gYyG3p533wUoA:9 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-ORIG-GUID: LLiPgEnNqKbHsUeUzjwsZ91H--3eVzg0
+X-Proofpoint-GUID: LLiPgEnNqKbHsUeUzjwsZ91H--3eVzg0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfX+vVCGYNDapB4
+ iJu2BiWTOoyqIR0nMTrL0ukA2nFQ1vFEzfbMZ7G8Ib3v2di0UXnUHTbBDtlm2vi1SUxnR08Xw+D
+ E7StIzwoGJzfCjx+COKZpTOWQ6BmHv8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-28_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609280076
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=maxbr@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280079
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,262 +145,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-09-28 at 09:32 -0400, Jason J. Herne wrote:
->=20
->=20
-> On 9/28/26 5:08 AM, Maximilian Immanuel Brandtner wrote:
-> > Add a tty code to indicate a resize frame. The body contains two
-> > big
-> > endian 16-bit integers rows and columns.
-> >=20
-> > After reset, the guest must be informed of the terminal size again.
-> > A
-> > chardev that doesn't report its size yields 0x0, which shouldn't
-> > replace
-> > the guest's default.
-> >=20
-> > Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-> > ---
-> > Changelog:
-> > v2:
-> > - Use packed struct and named event type codes for resize frames
-> > - Trigger initial resize event in console_reset() instead of
-> > =C2=A0=C2=A0 console_init(), skip when chardev reports no size
-> > - Reset event_pending after resize event
-> >=20
-> > Requires the following pre-req:
-> > =C2=A0=C2=A0=C2=A0=C2=A0 [PATCH v7 00/12] virtio-console: notify about =
-the terminal
-> > size
-> > =C2=A0=C2=A0=C2=A0=C2=A0
-> > (https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c
-> > 550fdcec15@gmail.com/)
-> >=20
-> > Testing:
-> > - Tested on QEMU: commit 38879a667f with the following patches
-> > applied:
-> > =C2=A0=C2=A0=C2=A0=C2=A0 [PATCH v7 00/12] virtio-console: notify about =
-the terminal
-> > size
-> > - Tested on linux-next (commit c1f49dea2b8f) with the following
-> > patches
-> > =C2=A0=C2=A0 applied:
-> > =C2=A0=C2=A0=C2=A0=C2=A0 [PATCH 0/2] s390/sclp: Resize for sclp-vt220 c=
-onsole
-> > ---
-> > =C2=A0 hw/char/sclpconsole.c | 92 +++++++++++++++++++++++++++++++++++++=
--
-> > -----
-> > =C2=A0 1 file changed, 80 insertions(+), 12 deletions(-)
-> >=20
-> > diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
-> > index 179d12745c..12033e1e46 100644
-> > --- a/hw/char/sclpconsole.c
-> > +++ b/hw/char/sclpconsole.c
-> > @@ -33,6 +33,9 @@ typedef struct ASCIIConsoleData {
-> > =C2=A0 /* max size for ASCII data in 4K SCCB page */
-> > =C2=A0 #define SIZE_BUFFER_VT220 4080
-> > =C2=A0=20
-> > +#define SCLP_CONSOLE_EVENT_TYPE_DATA 0x00
-> > +#define SCLP_CONSOLE_EVENT_TYPE_RESIZE 0x08
-> > +
-> > =C2=A0 struct SCLPConsole {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SCLPEvent event;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CharFrontend chr;
-> > @@ -42,6 +45,8 @@ struct SCLPConsole {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t iov_data_len;=C2=A0 /* length o=
-f byte stream in
-> > buffer=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 */
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t iov_sclp_rest; /* length of byt=
-e stream not read via
-> > SCLP=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool notify;=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* qemu_notify_event() req'd if
-> > true=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 bool resize;
-> > +=C2=A0=C2=A0=C2=A0 bool resize_init;
-> > =C2=A0 };
-> > =C2=A0 typedef struct SCLPConsole SCLPConsole;
-> > =C2=A0=20
-> > @@ -49,6 +54,12 @@ typedef struct SCLPConsole SCLPConsole;
-> > =C2=A0 DECLARE_INSTANCE_CHECKER(SCLPConsole, SCLP_CONSOLE,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 TYPE_SCLP_CONSOLE)
-> > =C2=A0=20
-> > +typedef struct SCLPConsoleResizeData {
-> > +=C2=A0=C2=A0=C2=A0 uint8_t type;
-> > +=C2=A0=C2=A0=C2=A0 uint16_t rows;
-> > +=C2=A0=C2=A0=C2=A0 uint16_t cols;
-> > +} QEMU_PACKED SCLPConsoleResizeData;
-> > +
-> > =C2=A0 /* character layer call-back functions */
-> > =C2=A0=20
-> > =C2=A0 /* Return number of bytes that fit into iov buffer */
-> > @@ -81,6 +92,29 @@ static void chr_read(void *opaque, const uint8_t
-> > *buf, int size)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sclp_service_interrupt(0);
-> > =C2=A0 }
-> > =C2=A0=20
-> > +static void chr_event(void *opaque, QEMUChrEvent event)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 SCLPConsole *scon =3D opaque;
-> > +
-> > +=C2=A0=C2=A0=C2=A0 assert(scon);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 switch (event) {
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_RESIZE:
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_MUX_IN:
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 scon->resize =3D true;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 scon->resize_init =3D false=
-;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 scon->event.event_pending =
-=3D true;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sclp_service_interrupt(0);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_BREAK:
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_OPENED:
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_MUX_OUT:
-> > +=C2=A0=C2=A0=C2=A0 case CHR_EVENT_CLOSED:
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* ignore */
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +}
-> > +
-> > =C2=A0 /* functions to be called by event facility */
-> > =C2=A0=20
-> > =C2=A0 static bool can_handle_event(uint8_t type)
-> > @@ -104,10 +138,37 @@ static sccb_mask_t receive_mask(void)
-> > =C2=A0 static void get_console_data(SCLPEvent *event, uint8_t *buf,
-> > size_t *size,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int avail)
-> > =C2=A0 {
-> > +=C2=A0=C2=A0=C2=A0 SCLPConsoleResizeData resize_data;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SCLPConsole *cons =3D SCLP_CONSOLE(event=
-);
-> > +=C2=A0=C2=A0=C2=A0 uint16_t rows, cols;
-> > +
-> > +=C2=A0=C2=A0=C2=A0 if (cons->resize) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (avail < sizeof(resize_d=
-ata)) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *si=
-ze =3D 0;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret=
-urn;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=20
-> > -=C2=A0=C2=A0=C2=A0 /* first byte is hex 0 saying an ascii string follo=
-ws */
-> > -=C2=A0=C2=A0=C2=A0 *buf++ =3D '\0';
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_chr_fe_get_winsize(&co=
-ns->chr, &cols, &rows);
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (cons->resize_init && co=
-ls =3D=3D 0 && rows =3D=3D 0) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *si=
-ze =3D 0;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-ize_data.type =3D SCLP_CONSOLE_EVENT_TYPE_RESIZE;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-ize_data.rows =3D cpu_to_be16(rows);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 res=
-ize_data.cols =3D cpu_to_be16(cols);
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mem=
-cpy(buf, &resize_data, sizeof(resize_data));
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *si=
-ze =3D sizeof(resize_data);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cons->resize =3D false;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cons->resize_init =3D false=
-;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 event->event_pending =3D co=
-ns->iov_sclp_rest !=3D 0;
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> > +=C2=A0=C2=A0=C2=A0 }
-> > +
-> > +=C2=A0=C2=A0=C2=A0 *buf++ =3D SCLP_CONSOLE_EVENT_TYPE_DATA;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 avail--;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* if all data fit into provided SCLP bu=
-ffer */
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (avail >=3D cons->iov_sclp_rest) {
-> > @@ -150,6 +211,9 @@ static int read_event_data(SCLPEvent *event,
-> > EventBufferHeader *evt_buf_hdr,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 to =3D (uint8_t *)&acd->data;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 avail =3D *slen - sizeof(ASCIIConsoleDat=
-a);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 get_console_data(event, to, &src_len, av=
-ail);
-> > +=C2=A0=C2=A0=C2=A0 if (src_len =3D=3D 0) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> > +=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 acd->ebh.length =3D cpu_to_be16(sizeof(A=
-SCIIConsoleData) +
-> > src_len);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 acd->ebh.type =3D SCLP_EVENT_ASCII_CONSO=
-LE_DATA;
-> > @@ -233,22 +297,26 @@ static int console_init(SCLPEvent *event)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 console_available =3D true;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_chr_fe_set_handlers(&scon->chr, chr=
-_can_read,
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 chr_read, NULL, NULL, scon, NULL,
-> > true);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 chr_read, chr_event, NULL, scon,
-> > NULL, true);
-> > =C2=A0=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> > =C2=A0 }
-> > =C2=A0=20
-> > =C2=A0 static void console_reset(DeviceState *dev)
-> > =C2=A0 {
-> > -=C2=A0=C2=A0 SCLPEvent *event =3D SCLP_EVENT(dev);
-> > -=C2=A0=C2=A0 SCLPConsole *scon =3D SCLP_CONSOLE(event);
-> > -
-> > -=C2=A0=C2=A0 event->event_pending =3D false;
-> > -=C2=A0=C2=A0 scon->iov_sclp =3D 0;
-> > -=C2=A0=C2=A0 scon->iov_bs =3D 0;
-> > -=C2=A0=C2=A0 scon->iov_data_len =3D 0;
-> > -=C2=A0=C2=A0 scon->iov_sclp_rest =3D 0;
-> > -=C2=A0=C2=A0 scon->notify =3D false;
-> > +=C2=A0=C2=A0=C2=A0 SCLPEvent *event =3D SCLP_EVENT(dev);
-> > +=C2=A0=C2=A0=C2=A0 SCLPConsole *scon =3D SCLP_CONSOLE(event);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 scon->iov_sclp =3D 0;
-> > +=C2=A0=C2=A0=C2=A0 scon->iov_bs =3D 0;
-> > +=C2=A0=C2=A0=C2=A0 scon->iov_data_len =3D 0;
-> > +=C2=A0=C2=A0=C2=A0 scon->iov_sclp_rest =3D 0;
-> > +=C2=A0=C2=A0=C2=A0 scon->notify =3D false;
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /* the guest defaults its terminal size on reset, a=
-nnounce the
-> > real one */
-> > +=C2=A0=C2=A0=C2=A0 scon->resize =3D true;
-> > +=C2=A0=C2=A0=C2=A0 scon->resize_init =3D true;
-> > +=C2=A0=C2=A0=C2=A0 event->event_pending =3D true;
-> > =C2=A0 }
->=20
-> This is a style fix, included in a functional patch. I suppose it is=20
-> probably borderline, but it might be best to put this in its own
-> patch.
+Hi,
 
-I thought about that, but concluded that a 6-line indentation commit
-would be too small to warrant its own patch. If you'd prefer it to be
-split I could also send it as a seperate patch.
+In this version we have minor changes proposed during v8, in particular
+the 'dcsr' field being an uint32_t instead of a target_ulong given that
+the reg is always 32 bits.
 
->=20
-> Other than that:
-> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+No other changes made.  Patches based on alistair/riscv-to-apply.next.
 
-Thanks
+Changes from v9:
+- patch 1:
+  - change 'dcsr' field type from target_ulong to uint32_t.
+- patch 2
+  - remove (target_ulong) cast when evaluating env->dcsr in
+    riscv_cpu_enter_debug_mode();
+  - move var declarations to the top of riscv_cpu_leave_debug_mode().
+- patch 3:
+  - move 'retpc' var declaration up in helper_dret().
+- v9 link: https://lore.kernel.org/qemu-devel/20260909144841.1766921-1-daniel.barboza@oss.qualcomm.com/
+
+
+Chao Liu (6):
+  target/riscv: add sdext debug CSRs state
+  target/riscv: add sdext Debug Mode helpers
+  target/riscv: add dret instruction
+  target/riscv: add sdext enter Debug Mode on ebreak
+  target/riscv: add sdext single-step support
+  target/riscv: add sdtrig trigger action=debug mode
+
+Daniel Henrique Barboza (1):
+  tests/tcg/riscv64: add sdext "not on Debug mode" sigill tests
+
+ include/exec/translation-block.h              |   4 +-
+ target/riscv/cpu.c                            |   7 +
+ target/riscv/cpu.h                            |   9 ++
+ target/riscv/cpu_bits.h                       |  33 +++++
+ target/riscv/cpu_cfg_fields.h.inc             |   1 +
+ target/riscv/helper.h                         |   3 +
+ target/riscv/insn32.decode                    |   1 +
+ target/riscv/machine.c                        |  22 +++
+ target/riscv/tcg/cpu_helper.c                 |  94 +++++++++++++
+ target/riscv/tcg/csr.c                        | 126 ++++++++++++++++++
+ target/riscv/tcg/debug.c                      |  59 +++++++-
+ .../tcg/insn_trans/trans_privileged.c.inc     |  24 ++++
+ target/riscv/tcg/op_helper.c                  |  72 ++++++++++
+ target/riscv/tcg/tcg-cpu.c                    |  19 +++
+ target/riscv/tcg/translate.c                  |  15 ++-
+ tests/tcg/riscv64/system/meson.build          |   8 ++
+ tests/tcg/riscv64/test-sdext-sigill.S         |  83 ++++++++++++
+ 17 files changed, 574 insertions(+), 6 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-sdext-sigill.S
+
+-- 
+2.43.0
+
 
