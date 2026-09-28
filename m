@@ -4,136 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D84ACA5FA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 18:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2011CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 18:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBFej-0004o5-Fe; Mon, 28 Sep 2026 14:00:49 -0400
+	id 1xBFhI-0005Ka-3f; Mon, 28 Sep 2026 14:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFef-0004nM-CE
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:00:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFhG-0005Ji-5g
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:03:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFed-000356-C7
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:00:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFhD-0003Eh-Sb
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:03:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790618441;
+ s=mimecast20190719; t=1790618601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
- b=eJoWnLz1EFG4vU4dbg8Y6z/H+73elokUgeQI3O0AOx6ANoUovambj4yEvyzTbRNjFBjlbl
- ER7bOsheFX+Y3PiKcqULRypaO/IEKRMKuWa/z5O3zIBHWu2l291+aYB87dnZT3XiXSWyOc
- y+86Suz+EXBwcKpHa7v4xIUgKiL3g68=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9TzD4m1GIGiouclgWcKPaYiHi2p8wNNNIrF3GoB1awo=;
+ b=TXI6XiZh+EC0qnDRgQYaS+x0qVsRUo2HOTmjgSjA5alO6Vq+oOCk/1TNlgc6EABRuCjKiy
+ HjbQaaNW2f852M8U2FH0Fi/35jUfiz8opi0D4UIH4w73dL03b1/k+9MfTu42vCPVvXYM42
+ VN8wB13X6NhphasUICBPH6/X/guLUcs=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-504-N1cKuXygMlmfxXBNPHlR5Q-1; Mon, 28 Sep 2026 14:00:39 -0400
-X-MC-Unique: N1cKuXygMlmfxXBNPHlR5Q-1
-X-Mimecast-MFC-AGG-ID: N1cKuXygMlmfxXBNPHlR5Q_1790618439
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-66ce3040ea9so4537320d50.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:00:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790618439; cv=none;
+ us-mta-413-JrAifxZPNziu4iVAi0W0uA-1; Mon, 28 Sep 2026 14:03:20 -0400
+X-MC-Unique: JrAifxZPNziu4iVAi0W0uA-1
+X-Mimecast-MFC-AGG-ID: JrAifxZPNziu4iVAi0W0uA_1790618600
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-895241d7405so50718527b3.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:03:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790618600; cv=none;
  d=google.com; s=arc-20260327;
- b=H0PP3SkWeUGoEiv8xynGVgFi7ZUdhZr1qXxL/44DY/jDvyD/aFe8tNmBZXXvcbR4kI
- HbdpaVf93oZXEiJf5kIu/1e+kxRNFc2iSLxf0Pci5JnSxb3x7oQeOlPJapzHmDJ+XHcy
- /CY/ijTs2ga0eMoA04N5pw9lLHBkQbIbHeJNMBazVRmuNJ9NvPcK/cuQWDU66xq3xQ44
- lDrh0n+Iy8LllvRyrmCvlrwa8uD3QhASF8w+rXUgPR2sa+LNQwR3Lqi2S9iz0sXS7omu
- VW88pUfyO4mh2NU/ckpJeYmFrdAAw0phIbo7zP642e6P4APmsSWKcyfuprHL37AidTXq
- z2jw==
+ b=JcTQcDCr/tIAHD5ILOed1Ag2mb7uEfz+yPqPX4VrfttxVUDXcmTZNJtivHD+7EZcty
+ cZ8vZgs9SKG84lsQS83G/H0OCvoyY+F86d/jaXYTgJCocysqHt8NbTHMI3xbS5BYQQTL
+ 6jCQz7Nbumt0hz6pc0BQYiYyxwaGcERuIrg8sIY7qoBK5Q7DHBTjYISPue7cJcjI5FgS
+ heAFHAoFLWJZBOo0TpmJOa38kuxoNnCTu6bdxZFrJvj4nmdZkmXSPz07Ln0sshWyxEcL
+ B3xD6gcYsl/vEKWgOgFg0yLzRjay0wJ194DbQq+AmmYgscwsoOUtcc7Lid1gM8ZvaTJj
+ vAtg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
- fh=Z6xqQETmBQHCMUmtgNvZpB0/PqW8mRNgD4h2NHznaGA=;
- b=iV6IGIBrwT0w3q8bQAbe5eNEQrCX6JSAweMSas7hhwSkcdrQlIRxuFi2pFWdCUr0Z7
- ukvfLOSSim03UzAl/P3iFZNBI22yqViMfOHhH26kUnTum+Gib2N9TSMR2ogMlDy9IaIu
- 1si5bU48D9twq/qfKGnhs4xx5nwxXlZ35IhJkW3GszPuGTRJU/aetBRlUn3279OuEzKn
- jVo0+eaape3RN6FtVCaK6f96zD4VJf5iEHErXpNo4ZLBKvZ/sk15vRXB6OXiYwnLIv2P
- HJEjAyulnvuceNQqFyfUlkoYF5yXHYMLS2QS5L/ARYGqjkQM7KkOt7mtS/L24I+pcKCz
- 93lQ==; darn=nongnu.org
+ bh=9TzD4m1GIGiouclgWcKPaYiHi2p8wNNNIrF3GoB1awo=;
+ fh=VX+jQhbKE203JT7GlTHPkMrp32AwbTQQc3wjLY5/O1w=;
+ b=pmrxzVxg/XUwxNgYLjRA/8ft9znzVohREQL/AmeJMOHWoXdWjmMpUWF9qvx3sQ+RDG
+ IovlAtDsq0oG9uyX4qQe5OvvU9Fcyiaw8lEG0vICABPZd9fv4PW7pQhlK8eJ4mcJXRe9
+ 5RA6eOYkAQSknhUJsWDAKNX7om33PkavIVP7jrfcKeVHeXHdHtmkv00S/D6uGCNPuWi9
+ DkVZcWRYbCw0jdBgPl4MZlV4TPg5NsqmGpncvBo/VVNTMGMmOXS2upNN2BgOyPGmzL7T
+ KVVDjx54J1aevswlG8giJwIV/Y/xFABueNAdf4Ut6KWVMHpTj662/3JJEyHzwSR3FDEJ
+ 0LDw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790618439; x=1791223239; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790618600; x=1791223400; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
- b=nMLXMqxRF8rm28FFp+7fHoQENdwVAscEq2a3+lpTZ/F372sgJdGZJv+XWF+xH8EkgL
- UL7H0mrN1FkbzD+0WExWGafM1yjme0++8oYx1NBqrh1Rfqc58vKtU8NsuWewYyrgeb6B
- w4Vrtj5vM4xVRfDZdAfD0m80m4cnHsjBigoNNb3+SiljDe4KpYYbXI4bOKhuDCbK0P5D
- iPqCUzQ/SGwjj50XGwDnZutHE9d3SMn/TdD4IMRgndA5203HVtAJR0WCbHSqba59E5Cj
- 0Z6GWQ2kZsdGCG5Tl+iS8UYXeqUVAqAV423XwtEoMK8wi3KtUOTljJe6tOQM3O1t3a2T
- aRZA==
+ bh=9TzD4m1GIGiouclgWcKPaYiHi2p8wNNNIrF3GoB1awo=;
+ b=nGpH/dqud794p5E2rCeO7yvZQ8FkznU4KU8PtWikparzSobdfTBZ/xPa+u/FF4rWjx
+ XN9NHjxYhFC9t9reMRX1pzotwaoO4mxUNr8uHJ3v3oCdMHjKQVqYNQAy3oFygNOcqMgz
+ C0HFU7OSHIFRrjbDJFMnP8YwRxaAiP9zdic/pmW/e4bjb3hNi2iqiBVA10ZV8MRuuOf8
+ T8KPOv2rP+4m0XvlmeEcgv7ZEQo5bEUymYJa5dqw9w4q4PSSAVatM/LidxjPCT0s2PtY
+ uDsHKFwo6Wp7O/X5OQ5+7HVLVMKyzhakGaDA96BiRhdatIhpekrUvqlYC4tOIF1X9X9x
+ oU5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790618439; x=1791223239;
+ d=1e100.net; s=20260707; t=1790618600; x=1791223400;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
- b=ZsWS9DCplHsKcH9mhvZmiZr6sa9kPJaL/qd5LeQDgMpMx04NWQzNnAOWeGbQ2mh+cT
- tP8JyFBMyp1eZa7bT8x2rL+OQ7PqYZkEqb9HFXfedJA2ILCoiurXBrlDg0+mYf61AmOU
- u3tTjJFr9NIjE6Ha0N/XWccMoe/TscPao0t6tepvFcAnnp7APlAV/2sFYw3SKPMb/BXn
- tDek9SsVslC5FBpvpLlln6IzwvBn3eLNyZOz2N+Cmkymtvao4xjby1jNmZt9HYpAlSh+
- iDozRfBg45qGxpCOUgiU1hdeWgjoqtxS4NI+TZHt2IPihUJdxpGU8C3zcqxjB2d6zSZU
- RQpA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxVG/Z4R3ZH6KWUxI6K4wdNU9gUM2VNfqftYSYvglzYudeocTPCeq2xwLhie02ktlPSaiixxoevocyV@nongnu.org
-X-Gm-Message-State: AFq9FYLpfbfc3jazJOkTa2EZfRU4zXg34O4l/+0NVmEljYJcSlNBc32q
- 8uRmq2NxPP4eUmVCbpgWWCK6sXHVjs7lEC5ron+GxpbrMoedWsf2AZrxxemtiizgZR0nXRO1qU0
- 0YAn9PfYvnT3QVTagRzW7SJaq9UwmpMcv1yCpIZD2K9idnk8b+1P8IWuyvhIiwob7pBfWncO8gg
- NZZrt+B/NjQgN8T+Ouc3gEejVQBURhI6M=
-X-Gm-Gg: AYBFou0Nat2dVNmT5H3rhIafUvGPcxvWJgvITvPYiTLiW2Hzk8Opl9NXiISOvh03BxB
- iaeA+PeJkNx+jq3vVXeHOfKOczM0Fk7b3G0UxY5e5ueKbuosQw+eEDQPXkcLVgFyjcsbbmXbq1Y
- sOkMbfJOPQ29l/7W0qlif8ADh/BUat/nl+jU/2/xv4kmm9HkNYsMPtrioPlyY0VaKnG6iuR/iaF
- 3HCKpaa0AMVDUIb
-X-Received: by 2002:a05:690e:812:20b0:674:1743:a143 with SMTP id
- 956f58d0204a3-6741743a7ccmr2077777d50.148.1790618438439; 
- Mon, 28 Sep 2026 11:00:38 -0700 (PDT)
-X-Received: by 2002:a05:690e:812:20b0:674:1743:a143 with SMTP id
- 956f58d0204a3-6741743a7ccmr2077760d50.148.1790618437790; Mon, 28 Sep 2026
- 11:00:37 -0700 (PDT)
+ bh=9TzD4m1GIGiouclgWcKPaYiHi2p8wNNNIrF3GoB1awo=;
+ b=iDXcM182Ibr+lLxFLu9fr+Ve769Q8/MaGYjXLrPsjeJPuVwL+K659NK0BHOXDp6Bgz
+ yN+IVFQmYQeSzSZXHlJ3K0sB32CeCWbIPHTTfD85IhTGbXpHiRdH2hrcENWLxtw1Ea4o
+ JHMq8mYxm+eWYQzXJryLe+OSTkiRF1aNIDaKE88jZ/C7iSWwcADUgKcMS6XUH9BPjn1P
+ 25hZQlXQ0Xb9aYODKyEOUj7kkuP8Uw71KtQ3sXyydJqvuN7CGJczvdN9LKlcmBMVy6c4
+ HQqGMBzb3wC3qimkzfNpqznAsRKdBP5UHOkmQOh+zyLvN4BJ4dpM9E1Fy2rAnsiA3jQK
+ CtpA==
+X-Gm-Message-State: AFq9FYKNcUMF+i/2ZEFU8euTu784PCAKvHQiW8VFNoD02aIR+XCtMiLe
+ 6NCCwlcxa3zgt1CrmSJNtY402CEs6P12q08WhOFiskNe8HEEnRZpf5hTR5AJMk2QM4PAypitjir
+ JOEQZdkD8bgKAVRs9VytW/op4qlFqGgvH+VU4pNU7I7S/YC0FiJkyeWWNZOKGs2HZuZ8q5tIv3b
+ g3htD2d3P0cLkg4QQLBPaVvvpN+kGdSUY=
+X-Gm-Gg: AYBFou0IPr7+McRlPbJU4HVMoUZEERXAPWogD6/eDhtP3Oc6nj5B8Rldt1CqWq7zKp3
+ WuDCVRtQZ6VSfQ7U69P2D7MCiRj2HIRRfKbw/UcmJCE83SlxtYC7nGlbycU+czLi8PhtT5wZcQk
+ TlQ3mNfGFM3vLGPOVtPyXnwr1cKeJwewI4i0Nf2yFhlC9FS9jPszomv6Rrysaax0U7HYdIupbdr
+ PobW4Zsu8U6ynOi
+X-Received: by 2002:a05:690e:1094:10b0:671:7e90:70f7 with SMTP id
+ 956f58d0204a3-672ed343c1amr4251819d50.53.1790618599850; 
+ Mon, 28 Sep 2026 11:03:19 -0700 (PDT)
+X-Received: by 2002:a05:690e:1094:10b0:671:7e90:70f7 with SMTP id
+ 956f58d0204a3-672ed343c1amr4251787d50.53.1790618599297; Mon, 28 Sep 2026
+ 11:03:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260921205712.1862167-1-jsnow@redhat.com>
- <20260921205712.1862167-4-jsnow@redhat.com>
- <877bkcwcl5.fsf@pond.sub.org> <arp6VdpPGB8JgMJt@redhat.com>
-In-Reply-To: <arp6VdpPGB8JgMJt@redhat.com>
+References: <20260928063231.2158073-1-armbru@redhat.com>
+In-Reply-To: <20260928063231.2158073-1-armbru@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Mon, 28 Sep 2026 14:00:25 -0400
-X-Gm-Features: AclHuK-RnGzfrxbiOE0YxfB7iu-z2CNj_ss3DFdl6CFGAveFY_KLbkO5tGBVNWM
-Message-ID: <CAFn=p-awvipaJTFXnoKV45mMLyrce9yOECUC1hMPQ=VDdiscLg@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] qapi: convert/split intros for block commands
-To: Eric Blake <eblake@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Jason Wang <jasowangio@gmail.com>, qemu-block@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Date: Mon, 28 Sep 2026 14:03:07 -0400
+X-Gm-Features: AclHuK-pz8ZYSsjg6k06PpRVe1LZW8hcqmufwd7Lni2MsPxN7ncB3NzrndsnG20
+Message-ID: <CAFn=p-bv4rF_VzVPQBLvcNxrnbvJDNpsAHQR9_iH1q0coc7rig@mail.gmail.com>
+Subject: Re: [PATCH] qapi/control: Turn the reference to qmp-spec.rst into a
+ link
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, michael.roth@amd.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,86 +134,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 28, 2026 at 10:33=E2=80=AFAM Eric Blake <eblake@redhat.com> wro=
-te:
+On Mon, Sep 28, 2026 at 2:32=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> On Wed, Sep 23, 2026 at 11:17:58AM +0200, Markus Armbruster wrote:
-> > John Snow <jsnow@redhat.com> writes:
-> >
-> > > Signed-off-by: John Snow <jsnow@redhat.com>
-> >
-> > Consider mentioning how this affects rendered documentation:
-> >
-> > 1. blockdev-open-tray and blockdev-close-tray: first paragraph splits
-> >
-> > 2. block_set_io_throttle, nbd-server-add: Arguments: move up.
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qapi/control.json | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I'm liking this series, but also the suggestions of documenting the
-> known impacts. At this point, I'm trusting Markus' review rather than
-> diving in deep myself, but you're welcome to add:
->
-> Acked-by: Eric Blake <eblake@redhat.com>
-
-I'll admit that I have been somewhat lacking in providing a
-comprehensive analysis in each cover letter as we have been doing this
-conversion rather piecemeal in order to make it more palatable on the
-list, but here's the best, shortest synopsis I can hope to give you:
-
-(A) In order to define a point in the documentation where we should
-insert auto-generated documentation (for members, returns, etc) we are
-pivoting towards a strict ordering of sections:
-
-1. Intro
-2. Members
-3. Returns
-4. Errors
-5. Features
-6. Details
-7. Since
-
-With this goal in mind, the "Intro" will always be up at the very top,
-but "Details" - the unindented portions in this series - are
-ultimately fated to get sifted to the bottom. If you consult the
-rendered QMP documentation - for example `block-dirty-bitmap-add`:
-https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#command-QMP-bloc=
-k-core.block-dirty-bitmap-add
-
-The stuff that appears in the middle - Arguments and Errors - always
-forms a two-column table sort of layout.
-
-Anything that appears above it I have been calling "above the fold" -
-and that's always the Introduction text, now.
-
-Anything that appears below I have been informally calling "below the
-fold" - and that's always details text, now.
-
-So with this in mind, stuff I indent will go "above" and stuff I do
-not will go "below". Simple enough.
-
-(B) The tricky part: We are still pursuing the documentation inliner,
-which means that for block-dirty-bitmap-add, the arguments we
-"inherit" from the "BlockDirtyBitmap" structure will be displayed
-"inline" as if they were defined locally for this command. When we
-inline documentation from another definition/entity, we need to know
-where and how to splice the documentation together to form a coherent
-document.
-
-What Markus and I decided on was to *drop* the intro from any inlined
-documentation. For this reason, delineating the Intro from the Details
-becomes very important: the Intro text will not travel with the
-inlined arguments.
-
-With this in mind, the splits we are creating here become very
-important for structures specifically, as their intro text will get
-dropped on the floor when it is rendered in an inlined context. The
-split for commands, enums, etc., is less important because there is
-never any circumstance where we would drop the intro on the floor.
-
->
+> diff --git a/qapi/control.json b/qapi/control.json
+> index 9898552814..c56aabacff 100644
+> --- a/qapi/control.json
+> +++ b/qapi/control.json
+> @@ -46,7 +46,7 @@
+>  # connection, used for agreeing on particular QMP extension behaviors.
+>  #
+>  # @oob: QMP ability to support out-of-band requests.  (Please refer to
+> -#     qmp-spec.rst for more information on OOB)
+> +#     :doc:`/interop/qmp-spec` for more information on OOB)
+>  #
+>  # Since: 2.12
+>  ##
 > --
-> Eric Blake, Principal Software Engineer
-> Red Hat, Inc.
-> Virtualization:  qemu.org | libguestfs.org
+> 2.55.0
 >
+
+I have a similar patch coming up in my rework of the @oob feature that:
+
+(1) Adds an anchor to the OOB section of the qmp spec explicitly,
+(2) Uses a standard form text with the above reference when generating
+docs for commands with the @oob property.
+
+The second doesn't apply to this command as it's an arg and not a
+feature/property; but we can do better and link directly to the OOB
+section of the spec doc.
+
+--js
 
 
