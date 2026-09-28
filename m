@@ -4,75 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE72C9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EF7C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB5D-0004W0-BX; Mon, 28 Sep 2026 09:07:51 -0400
+	id 1xBB0d-0005CX-QZ; Mon, 28 Sep 2026 09:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBB4o-0004FG-ES
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:07:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xBB0a-0005BJ-B9
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBB4l-0004tr-DD
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:07:25 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xBB0Y-0004Mz-K9
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600842;
+ s=mimecast20190719; t=1790600581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TpacEvx24w/wPUnNZdIqPqC0z5kn3YcTX7KjkQ6RE+U=;
- b=Oi+IgxcP7aok1H7erLmTIkKK+B6Jh4p8dgffyUSBajxDYgPZcT0TRw2x9/QmL2HUZVQrMe
- +9Zq3UNMBZlM+esIoD1yRPA99a4sINNlhG87+ClkJScH72z+BAr4PcUoviSNxNNMGwwFfA
- hFFO5UQtSpEhqSvhZU3EHINa8JAuIsI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-Slu5LfRwPW27lV2cJu98eg-1; Mon,
- 28 Sep 2026 09:07:19 -0400
-X-MC-Unique: Slu5LfRwPW27lV2cJu98eg-1
-X-Mimecast-MFC-AGG-ID: Slu5LfRwPW27lV2cJu98eg_1790600838
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48DF9195DE0D; Mon, 28 Sep 2026 13:07:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E08EE180035F; Mon, 28 Sep 2026 13:07:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7F9F121E6A04; Mon, 28 Sep 2026 15:07:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com,  eblake@redhat.com,  th.huth+qemu@posteo.eu,
- philmd@oss.qualcomm.com,  berrange@redhat.com,  pbonzini@redhat.com,
- zhao1.liu@intel.com,  qemu-devel@nongnu.org,  qemu-stable@nongnu.org,
- Nikolay Kuratov <kniv@yandex-team.ru>
-Subject: Re: [PATCH 3/3] qapi/monitor: Handle missing vhost-user protocol
- features
-In-Reply-To: <20260922213210.1429435-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 23 Sep 2026 00:32:10 +0300")
-References: <20260922213210.1429435-1-vsementsov@yandex-team.ru>
- <20260922213210.1429435-4-vsementsov@yandex-team.ru>
-Date: Mon, 28 Sep 2026 15:07:13 +0200
-Message-ID: <875wzp5xtq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=ZWTp+6K7E/K8crot3KEl7U888+KpjQqgcdT3Duqs7nU=;
+ b=WcKt2cbN0R7lL33mjm0o1qUrhdPsoKpeda0R5eT6UbwQikv1IlMJAl6Yc0EV2hWiY/YuPd
+ gpCrYH1ELUFSjoWx/vHziIGK9rr4z/wUZPORV+qjSCdkOVVXK3Vjo49CNk3WVBIY0LiXtw
+ vinWgjvyrrSNvacbDeAKh887+zEiB/o=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-172-d69LEimPNSOZL17vfBff3g-1; Mon, 28 Sep 2026 09:02:59 -0400
+X-MC-Unique: d69LEimPNSOZL17vfBff3g-1
+X-Mimecast-MFC-AGG-ID: d69LEimPNSOZL17vfBff3g_1790600578
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c294442d71dso345101766b.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:02:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790600578; x=1791205378; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZWTp+6K7E/K8crot3KEl7U888+KpjQqgcdT3Duqs7nU=;
+ b=Of0bGMVsT0+C8DWA0Dol+rMLS6ZCUSe9qkz+j8WHsb1FDT/I/ZNKZXnfdtbvOU0E8L
+ XT8JjxRvp8VL/Rw305fKKTpnbrgE+CW9f7MfYxntZIPZpf7vDwt5WOWMpExOSHAiJCgg
+ /EK1/lW1nuYsfXUPeuukNVzcIkzcDISw+kA6L2mTALVW0LVuMz5pe/XN61SHmKi4Kq/W
+ 5WOydi8hOVG4PSbieqPPHW2Lf0ipahY32nPifc/LUzliMQr10q0b1jrzilgZ2l0qbo/S
+ +Pkr5ddkw1fXDmVfYoX2im1OSQnSqGNqzlRMFNfpC4lM6g76PeZ375uHXToJtqodl/Qv
+ Pxbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790600578; x=1791205378;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZWTp+6K7E/K8crot3KEl7U888+KpjQqgcdT3Duqs7nU=;
+ b=HOZg06dMMv1z9RIIapgiIt4RZ+BrsuZI1da947TE9H6kGQko+pivoB5b/PMnL68GsY
+ tf59f5thjb2hXVnRhn5/ug7ogG8y7K4wjJFQXaBansQLDrdAlM23vvPDTa4Ok9X5Uy4S
+ PcGuaUzdwstoQZu25BwaDMl6fAv3eiVv7fQCgXaN/sIzVD8wJWm0pQrGFMUPW2eBWUco
+ q4dM5wvlkZdhf4mXX3yyPEVx8hPncmAS56HF1JLq8MUfUb3VcJVdFqwQU8e5l2CfSiqB
+ ct6U+V8zAG+OCkB+3TwoiTFwPiKaa6uyJiIe94yjVoGbmvEr/mu+ngMjRqvb35yQbRgy
+ Gbag==
+X-Gm-Message-State: AFuF++nvmrtjl/HCMZMaaE5QcaZuunMSUeWevzbVMUDf//R7Zn63bfZi
+ qx9hxKTQhNFGZdVQbpc1jerT6IuL++VK2UxGZCMMqd9i7g4b3j7CDJrMq6jb2IjVOlyKH5z1yz/
+ X9wah0CCaYqxS3i2uAOL8jcbsZ5vB5KKUiBT/+ahKObmUWZ9cWMsZOo7ePk0FwIjai/sd8Rgwel
+ BA31q1kU93VF5eyjclGq3OtaBQlkZOAs/kYSRRAizW
+X-Gm-Gg: AYBFou1slRBxXlu/KdGqlTXyYPEGon+J57sF4VoaxRaYn4Kf7T4PbZBpBu1fbefVM0+
+ jzNElXTbbBgQ/tO3VCOREKntKl+IBNenvTY94+a6oI0+3T1GVeXkDbi1dkW/5rhV1yiHG0Xj1QN
+ sujMi+yhU+gBuullYmTyFIZtfJkpVosB+IlHU86Q4VI9dlX4rWvZzOJGeRExSCJ5sXEBwWBkGZK
+ 6RGeivm5+qWG6xoGdd5RHemYE7DwKaRSAVJUnYpXi4eRxJj3/xMg8za/0DDWeWcL9dnMx56X8MT
+ C+LXZTkVwPibcRfL98+1ZEN/kufpfLFWeWVfCpU5pn8DPoqxr6Ncp643Tl/fpwr5oFRt/N78Ezr
+ SgEygjybYHLgzKb3fS8f1aqnO4Lz2vSrN5R/2cIZGZ6vREdqpZWk5EtBGZEzFae/zi0EAmT+zYf
+ J2bC7T
+X-Received: by 2002:a17:907:1c93:b0:c2d:c03d:acaa with SMTP id
+ a640c23a62f3a-c2dec6f6cd3mr54625866b.22.1790600578128; 
+ Mon, 28 Sep 2026 06:02:58 -0700 (PDT)
+X-Received: by 2002:a17:907:1c93:b0:c2d:c03d:acaa with SMTP id
+ a640c23a62f3a-c2dec6f6cd3mr54623966b.22.1790600577696; 
+ Mon, 28 Sep 2026 06:02:57 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c2ae7352336sm463905966b.16.2026.09.28.06.02.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Sep 2026 06:02:54 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Maxim Levitsky <mlevitsk@redhat.com>, Jordy Zomer <jordyzomer@google.com>
+Subject: [PULL 09/30] system: fix buffer overflow in tdx_parse_panic_message
+Date: Mon, 28 Sep 2026 15:02:07 +0200
+Message-ID: <20260928130228.877003-10-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
+References: <20260928130228.877003-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,108 +120,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-> Commit f9a8f5812607 moved protocol_features to the vhost-user backend.
-> As a result, VhostStatus.protocol_features is only populated for
-> vhost-user devices.
->
-> For an active kernel vhost device, HMP info virtio-status and QMP
-> x-query-virtio-status crashes now because of unset protocol-features.
->
-> Make protocol-features optional in VhostStatus and skip dumping a
-> missing object in HMP.
->
-> For QMP we can change the x-query-virtio-status command semantics
-> because it is unstable.
+tdx_parse_panic_message has code that detects if the guest supplied
+message contains some unprintable characters and in this case prints a hex dump.
 
-Suggest
+The code has a bug: it allocates 3 bytes for 'sprintf("%02x ")',
+but sprintf in this case actually writes at least 4 bytes, because it adds the NULL
+terminator, or even 9 bytes if the char type is signed and the MSB is set.
 
-  This is a compatibility break.  Okay, since VhostStatus is only used
-  by x-query-virtio-status, which is unstable.
+To fix this, just use qemu_hexdump_line instead.
 
-> Enable corresponding test, it works now.
->
-> Fixes: f9a8f5812607 ("vhost: move protocol_features to vhost_user")
-> Co-authored-by: Nikolay Kuratov <kniv@yandex-team.ru>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/virtio/virtio-hmp-cmds.c                   | 6 ++++--
->  qapi/virtio.json                              | 5 +++--
->  tests/functional/x86_64/test_virtio_status.py | 1 -
->  3 files changed, 7 insertions(+), 5 deletions(-)
->
+Reported-by: Jordy Zomer <jordyzomer@google.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3905
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20260923004553.100732-1-mlevitsk@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ system/runstate.c | 36 +++++++-----------------------------
+ 1 file changed, 7 insertions(+), 29 deletions(-)
 
-The actual bug is in qmp_x_query_virtio_status(), which can leave
-status->vhost_dev->protocol null:
-
-           if (hdev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER) {
-               vhost_user_qmp_status(hdev, status);
-           }
-
-A non-optional struct pointer must not be null.  I believe the visitor
-detects this programming error and crashes.
-
-An optional struct pointer may be null: it means "absent".  Making the
-struct optional fixes the crash.
-
-> diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-> index e5da6f00699..5b08a06ec42 100644
-> --- a/hw/virtio/virtio-hmp-cmds.c
-> +++ b/hw/virtio/virtio-hmp-cmds.c
-> @@ -176,8 +176,10 @@ void hmp_virtio_status(MonitorHMP *hmp, const QDict *qdict)
->          hmp_virtio_dump_features(hmp, s->vhost_dev->features);
->          monitor_hmp_printf(hmp, "    Acked features:\n");
->          hmp_virtio_dump_features(hmp, s->vhost_dev->acked_features);
-> -        monitor_hmp_printf(hmp, "    Protocol features:\n");
-> -        hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-> +        if (s->vhost_dev->protocol_features) {
-> +            monitor_hmp_printf(hmp, "    Protocol features:\n");
-> +            hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-> +        }
-
-This isn't the bug fix, it's the adjustment for optional, as you write
-in the commit message.
-
->      }
->  
->      qapi_free_VirtioStatus(s);
-> diff --git a/qapi/virtio.json b/qapi/virtio.json
-> index 1fc4e38a44d..f8e699a0e4e 100644
-> --- a/qapi/virtio.json
-> +++ b/qapi/virtio.json
-> @@ -85,7 +85,8 @@
->  #
->  # @acked-features: vhost_dev acked_features
->  #
-> -# @protocol-features: vhost_dev protocol_features
-> +# @protocol-features: vhost-user protocol features.  Present only for
-> +#     vhost-user devices.
->  #
->  # @max-queues: vhost_dev max_queues
->  #
-> @@ -104,7 +105,7 @@
->              'vq-index': 'int',
->              'features': 'VirtioDeviceFeatures',
->              'acked-features': 'VirtioDeviceFeatures',
-> -            'protocol-features': 'VhostDeviceProtocols',
-> +            '*protocol-features': 'VhostDeviceProtocols',
->              'max-queues': 'uint64',
->              'backend-cap': 'uint64',
->              'log-enabled': 'bool',
-> diff --git a/tests/functional/x86_64/test_virtio_status.py b/tests/functional/x86_64/test_virtio_status.py
-> index 1e72c713cc6..a88823004f8 100755
-> --- a/tests/functional/x86_64/test_virtio_status.py
-> +++ b/tests/functional/x86_64/test_virtio_status.py
-> @@ -45,7 +45,6 @@ def check_commands(self, vm):
->          vm.cmd("x-query-virtio-status", path=self.VIRTIO_PATH)
->  
->      @skipIfMissingCommands("unshare")
-> -    @skipIfMissingEnv("QEMU_FAILING_TESTS")
->      def test_vhost(self):
->          self.require_netdev("tap")
->          for device in ("/dev/net/tun", "/dev/vhost-net"):
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/system/runstate.c b/system/runstate.c
+index d3e64d2b625..56bfc5b07da 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -50,6 +50,7 @@
+ #include "qemu/sockets.h"
+ #include "qemu/timer.h"
+ #include "qemu/thread.h"
++#include "qemu/cutils.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
+ #include "system/cpu-timers.h"
+@@ -760,10 +761,9 @@ static void qemu_system_wakeup(void)
+     }
+ }
+ 
+-static char *tdx_parse_panic_message(char *message)
++static GString *tdx_parse_panic_message(char *message)
+ {
+     bool printable = false;
+-    char *buf = NULL;
+     int len = 0, i;
+ 
+     /*
+@@ -784,32 +784,11 @@ static char *tdx_parse_panic_message(char *message)
+         }
+     }
+ 
+-    if (len == 0) {
+-        buf = g_malloc(1);
+-        buf[0] = '\0';
++    if (printable) {
++        return g_string_new(message);
+     } else {
+-        if (!printable) {
+-            /* 3 = length of "%02x " */
+-            buf = g_malloc(len * 3);
+-            for (i = 0; i < len; i++) {
+-                if (message[i] == '\0') {
+-                    break;
+-                } else {
+-                    sprintf(buf + 3 * i, "%02x ", message[i]);
+-                }
+-            }
+-            if (i > 0) {
+-                /* replace the last ' '(space) to NULL */
+-                buf[i * 3 - 1] = '\0';
+-            } else {
+-                buf[0] = '\0';
+-            }
+-        } else {
+-            buf = g_strdup(message);
+-        }
++        return qemu_hexdump_line(NULL, message, len, 1, 0);
+     }
+-
+-    return buf;
+ }
+ 
+ void qemu_system_guest_panicked(GuestPanicInformation *info)
+@@ -854,12 +833,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
+                           info->u.s390.psw_mask,
+                           info->u.s390.psw_addr);
+         } else if (info->type == GUEST_PANIC_INFORMATION_TYPE_TDX) {
+-            char *message = tdx_parse_panic_message(info->u.tdx.message);
++            g_autoptr(GString) message = tdx_parse_panic_message(info->u.tdx.message);
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "\nTDX guest reports fatal error."
+                           " error code: 0x%" PRIx32 " error message:\"%s\"\n",
+-                          info->u.tdx.error_code, message);
+-            g_free(message);
++                          info->u.tdx.error_code, message->str);
+             if (info->u.tdx.has_gpa) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "Additional error information "
+                               "can be found at gpa page: 0x%" PRIx64 "\n",
+-- 
+2.55.0
 
 
