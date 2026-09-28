@@ -4,73 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4528ACA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 15:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19AB2CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 15:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBDFw-0002te-G4; Mon, 28 Sep 2026 11:27:04 -0400
+	id 1xBDPZ-00041f-Sk; Mon, 28 Sep 2026 11:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xBDFu-0002tO-5K
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 11:27:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xBDFs-00033Y-OA
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 11:27:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790609217;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=QSepLCYcLHkYw6JhqFJ4Yq2ksiR5+lE5XyHbC0U6GAs=;
- b=cNoRqDSrI/P9XcD2yByK/xQoeiaMcF3WJRBW76gRw2kpYbyUBad9hnuxrrUG+rRIZtTf+V
- QO3eBxarxpOVpn/6SNJW7x3sG9fvV99ojjNQ8g2TSvadVyc9+g/jnt6rvPtCRrEef7pcpy
- qQSBGn8L9VSmGcQraRm/QpgsyvGS5EI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-ZFvAbd_ZNxaspmAieGgf3g-1; Mon,
- 28 Sep 2026 11:26:53 -0400
-X-MC-Unique: ZFvAbd_ZNxaspmAieGgf3g-1
-X-Mimecast-MFC-AGG-ID: ZFvAbd_ZNxaspmAieGgf3g_1790609212
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B37C4195FCD5; Mon, 28 Sep 2026 15:26:52 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 517CB30000E7; Mon, 28 Sep 2026 15:26:50 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Amit Shah <amit@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] hw/char/virtio-serial: return throttled descriptor on port
- close
-Date: Mon, 28 Sep 2026 19:26:48 +0400
-Message-ID: <20260928152648.249959-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBDPV-0003zy-Rh
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 11:36:57 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBDPU-00046V-E0
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 11:36:57 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 956f58d0204a3-67413c9dcf0so2424683d50.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 08:36:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790609815; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rmWHNJ6RTff87d4EvYD2kdYEfbvjB+z0QDLdIYP3zi46Eh7IrZPAeEPhNhAGPOk3KJ
+ r7ymy+D/HogjJFGd99L+kJDqouA3BJUVi/HfpQvLfaKvROzzyA5+YJCnw/BUH0OwsiGv
+ gF47xjC/F7YYdMlEjGs4M4OZ7BAVme5lxDrthFxwMmLYjhJz9fjas8UuDUFXg4Empf53
+ 4KWoJ+B4aWfTCy0Srqx7LCHDjCfsu66O7M6NmrUqH6YiGEkR5DrkvtH62ZhKAqRh+54M
+ GnDJelctwbRzW/9TANSTzXFI0SyfBOci7WijXbhfcZzfGhhkZCFWIKAHgsAW9fwBQNgo
+ 64ww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=5a5z5TBdzXzcWjaqRCZjk3mWtpgfot9Ir2y5mBBuiqk=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=mDAgEUCQIUA1MOO1h3V9cXu0Csfmdhms7F/eNEh5iX0ztrXOIQU39tkJw2qqu4uu6J
+ SAQAPn2uZGPt2QpAXHSMX+WK1VTGhBcriakTkEgb2FmyCUElADMa0mBe29I1WsAy51nu
+ uFwztUUfTQvCS4f67YJAjVuCalgl5IydhkKq3z7DuKd2aGQPee5CekoDZJRn6k+AWYa1
+ HxD9YcEwxX7L4FLfXH7KlxK4A1tKmTuMZWpqy/AB3U2CkZBG50Z/rOnO7JtGCrol5eg3
+ 7mceCuwLCICvQOQn5XlKTNrSeKmBwy3Ya9EYLA3B39bd0UvvHqNUNec5C+HA4Pl2Y//K
+ fWhw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790609815; x=1791214615; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=5a5z5TBdzXzcWjaqRCZjk3mWtpgfot9Ir2y5mBBuiqk=;
+ b=Qz8wI8vE8sN2X44StpvvY/CCGXmFQ7sp+avg9FQV39usla8hmtQvQAPQjbQMAv4DYg
+ rxDdcqitfl0c5CTwbtyr86tbR0gfYkBphnvwBXIdtlK/PC0emqnG+YH9ROgEs/tZeGW6
+ ARtBCLu+F4afQ/VNe/uB80XStoHqo8EdaFYn984BL5XjPvTVR4ILKG54QosJNTuk6IqY
+ dkr5Q7WhkYW0KEgWj2Ro6iCFTsoaxZ1EZ/BFbyrzHa6L1Rnbqsg4hb+P1+NmAzbOgpLK
+ 0pek9F9h5IO1/AHT9Ebgjw5uYYYtVZrA9I0EdwBZPMGkIW4pPL9uNdBahvkQ6Qi8VAem
+ sk9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790609815; x=1791214615;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=5a5z5TBdzXzcWjaqRCZjk3mWtpgfot9Ir2y5mBBuiqk=;
+ b=czbA4bCl2hFH78RxOY1ROeee7UL32Sdw2yqeKXIzmfKFemdcGZ4P2lma0yFFQO+7rw
+ r+p0La+b2usGq6/Sd9qma4f7TlWXRcTkXzqRF8rVU8GZF87m/DG0Um/VnEYETyWeQIzI
+ yvtxoJqnMOjn3pQZGNGtIHbffFTCZCVvTSrsurhKARGluxdvEIVweMQsXjwBrRx92FyV
+ aRxzKw8KLaHb/NYOQqV8WYupmDFyZowiAG8wqQY68vKEfh0dA9Ju2IAig2NuRHqHWoXp
+ Aauh7Pg1BuYSgzQ/qbh9LFMCUJJuyIJ3n7ZS302KdBMbJl47kqUpE6pnVqzgDJF5BLgU
+ K6/A==
+X-Gm-Message-State: AFuF++kjy/7mWbS7mu8+Mr10cP9lgeFtQpr7f1eqVvPJ9Gk/wOoiFfM3
+ AE5j7m6EvPjmnqEo2kLlRYU6cy3hqtC5v8icMZHR54dI/0RLtK4lcATjFVEDYr36ZhEcWenCQ2P
+ 9Ci5WqgKJqrBiJXeDJPO9cRIR4XP7w4viffGWRwb4Zg==
+X-Gm-Gg: AYBFou0OoAXFFfRnSvZAW3E1LmYiNzwSqTrVGJA4ljROuRiSxr2EMS3EwqhBVGfa1lk
+ uTpCsBe35AI/iaRl9vRyQ6IMexqdWbbCzfQLf+r2o/ocpuU489yRYBDJFNTaZHlzDn6/e00lfPT
+ wNG4q7rg+OfY/28x7L1JAuqqoG+gLQkBU+lFcKgGQZ5NpcaJ5lyVekBAX2qjDIqsjrdK/sRAJ61
+ jId+yLI4YXGn8XGbGIcuzWMfY61RAmuBW0NfKEWgo2WCYQz9x+JRf6qDDBVgB2DCWbZQs4jRP2Q
+ c5WiLGy7OxYWn5s/K23bQQ4cZpyHjKy8s3/lCbQtZL/PNksyICnpbFjip8xUriQnYtT6sivzMB1
+ NJ4tMWpqQP9JhzsVaAE3BOA9b7W68i5X3BKnBDZD9
+X-Received: by 2002:a05:690e:1343:b0:672:99e1:11f4 with SMTP id
+ 956f58d0204a3-672ed523ab0mr4214756d50.145.1790609814986; Mon, 28 Sep 2026
+ 08:36:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260925215004.456336-1-richard.henderson@linaro.org>
+ <20260925215004.456336-3-richard.henderson@linaro.org>
+In-Reply-To: <20260925215004.456336-3-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Sep 2026 16:36:43 +0100
+X-Gm-Features: AclHuK-Sdmn0RY5k6jbxbp8w59rVdx46jmoMyGCQDJ0eIwwh3bSZl5tErGC-CxM
+Message-ID: <CAFEAcA-C=1FH9jf=qqjK76Eoy41aGgg=Cy=weVcqBa1C_RWtBA@mail.gmail.com>
+Subject: Re: [PATCH v2 02/14] target/arm: Reorg rebuild_hflags_common*
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,59 +115,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Fri, 25 Sept 2026 at 22:51, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Invert the call ordering of rebuild_hflags_common_32 and
+> rebuild_hflags_common vs the rest of the flags setting.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-When the host chardev disconnects while the output queue is throttled,
-virtio_serial_close() calls discard_throttle_data() which detaches the
-in-flight element with virtqueue_detach_element(). This silently removes
-the descriptor without placing it on the used ring, so the guest never
-sees the write complete and the descriptor leaks.
+We do have "set a TB flag and then later in the hflags calculation
+functions read it back" dependencies in a couple of places:
+UNPRIV, ATA, FGT_ACTIVE, PSTATE_SM -- but in all four cases
+these flags are both set and read inside rebuild_hflags_a64(),
+so reordering whether we do the common flags first or last
+doesn't move the "read" before the "set", so it's OK.
 
-Add return_throttle_data(), which pushes the element back via
-virtqueue_push() instead of detaching it, and call it from
-virtio_serial_close().
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Fixes: d4c19cdeeb2f ("virtio-serial: add missing virtio_detach_element() call")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/char/virtio-serial-bus.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index 623e9f17a83e..008cad1b625c 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -158,6 +158,20 @@ static void discard_throttle_data(VirtIOSerialPort *port)
-     }
- }
- 
-+/*
-+ * Return a partial element held back by throttling to the guest via
-+ * the used ring, so the guest driver can reclaim the descriptor.
-+ * Unlike discard_throttle_data() this must be used when the virtqueue
-+ * stays live (port close) rather than being reset.
-+ */
-+static void return_throttle_data(VirtIOSerialPort *port)
-+{
-+    if (port->elem) {
-+        virtqueue_push(port->ovq, port->elem, 0);
-+        g_clear_pointer(&port->elem, g_free);
-+    }
-+}
-+
- static void do_flush_queued_data(VirtIOSerialPort *port, VirtQueue *vq,
-                                  VirtIODevice *vdev)
- {
-@@ -283,7 +297,7 @@ int virtio_serial_close(VirtIOSerialPort *port)
-      * consume, reset the throttling flag and discard the data.
-      */
-     port->throttled = false;
--    discard_throttle_data(port);
-+    return_throttle_data(port);
-     discard_vq_data(port->ovq, VIRTIO_DEVICE(port->vser));
- 
-     send_control_event(port->vser, port->id, VIRTIO_CONSOLE_PORT_OPEN, 0);
--- 
-2.56.0.rc0.29.g47ce80527c56
-
+thanks
+-- PMM
 
