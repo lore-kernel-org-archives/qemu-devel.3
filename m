@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9936CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D40A4CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB0O-00059P-Pp; Mon, 28 Sep 2026 09:02:54 -0400
+	id 1xBB0f-0005Cm-4c; Mon, 28 Sep 2026 09:03:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0H-00058L-Qn
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xBB0b-0005BZ-9C
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0G-0004Kn-7c
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:45 -0400
+ id 1xBB0Z-0004N6-HA
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600563;
+ s=mimecast20190719; t=1790600582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+8xh6U/mkKR+NkoNetETMDGnTrpdlOFIsC41PL8P3Kg=;
- b=G3hzeL7uJbzO/SmjAkt1HmRx9Q2OPFgRdgYwUdLlvKQhqnLeBkE4QHe7IwBnxXHIrBEs6d
- mJjXgN2fCxnUDC7VjDIz7TSoPg/2NkYBxl5GcPH+4BPhiQ7a5Mf0Pc/Q4rie/PGn0Uj9XL
- 3eNi8zrtuh+KNFiMHrmpOPrZfzhkNj8=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
+ b=JXss2JqAvH8lVewMmM0Iq+nMDnw7HyWGzO9CPDUbyvaHGobhSG82gMvSuuqwTUkvVTtWOv
+ rjrd4SlPvor5UIzDAS8+gXA+B++To+ATXgYB1d1luE2wk2t4amKZtnfJsmHAuiSC3CTftv
+ eEv8P7VVQbDPjv6Cjo1VSWJtEHDp6yQ=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-_ITox9ZmNPa_ohNYBbxy2g-1; Mon, 28 Sep 2026 09:02:41 -0400
-X-MC-Unique: _ITox9ZmNPa_ohNYBbxy2g-1
-X-Mimecast-MFC-AGG-ID: _ITox9ZmNPa_ohNYBbxy2g_1790600561
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-69e70c286ecso3146566a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:02:41 -0700 (PDT)
+ us-mta-201-dSTk4TR3Ptq7i6febftGog-1; Mon, 28 Sep 2026 09:03:01 -0400
+X-MC-Unique: dSTk4TR3Ptq7i6febftGog-1
+X-Mimecast-MFC-AGG-ID: dSTk4TR3Ptq7i6febftGog_1790600580
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c29680b34b5so2434666b.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600560; x=1791205360; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600580; x=1791205380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+8xh6U/mkKR+NkoNetETMDGnTrpdlOFIsC41PL8P3Kg=;
- b=NnWnrodqV4pH9qia0dsJ2dL/xiuQHfYnEn7mijm0zMW6xgHrqt5HNqL8Wx8AnnbhU8
- cLfJJPLc5fwN53+0HaqxFB45+H4Iha0KTQVIPhR4teV+f5E32lh3tbgZxvgALxKYyBSP
- URBpqmDPx3gFIgUAOolTaXQPQjUmOQ6uYz73bFkBiyOdRpjcUH5UYnqyPANA5QnlowSj
- 4MXiklQkoNbO33LO3mxm0vVVAR9kwhzJ0pz8zZIwYxH/xm09gQl/Mddl7AFmRcCye+Jm
- aDsmlIiINDMYdamNgJJ9pxtqvb+Q8zMjN+OqmuZikdLj+mGwjvqHS3HpptOm3GpCgrWb
- ApmA==
+ bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
+ b=jKWiMwxYAF8YT34FZc0SeYWL93oX5C0dgx2CFG0AhICMXJ8urmuTQm1A19kXRju8pB
+ ziB2KyNWIv4sDsbMJeM7UipV62+keirJLJSovAn85xGlYep/Icco/xWayyAEtDl/lLhP
+ 45AIdxsTImnhoAAbHvKK+qdOn7LwzMnzRrQku9o8brSwRnJ4PZOio2FElOLqqBPzanYS
+ XrOwbfvKwG9+yeaTghDpWtP//gYCs8tKmB16lznWVP9hbjJFJU//TJ+3gbQHUcz4W04G
+ seP6PqutyqxH88Ixv7tpkeS5rcxb+trRfyaSxAOS00nFLFXs8zravsWxUYByDtpsWsXJ
+ 5V2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600560; x=1791205360;
+ d=1e100.net; s=20260707; t=1790600580; x=1791205380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+8xh6U/mkKR+NkoNetETMDGnTrpdlOFIsC41PL8P3Kg=;
- b=LUstB5C8/NAuR1V5PiUdZYCKszd/PDiJhL95Qwp/ZTHCneeJXThukZegVBDnCXFPce
- dZ5rIJFCiRgA5+J26qbhVEuvSkI0XTDOxxI/w9Za4/V8Kn4SLEwx3f5ZSmd5pk7QhKUz
- FG//b8IspYjTKr3j0umUkKfd5x2Mp5fkxvntFRTI/2hlucoaC8ALpptKbqQYyQp7FGOy
- kY199fQStHtSJreCzw156wAlOVaa/YtstwSG4S2xorGtKcQqamtcJMZDCJlKEp8F2aPp
- 7hqti4fAMWluHwVwZGUbrYDdCz2Qiagic9UvPHZPl0+hncqFQpzDOkHOdYswVgcQK4Oj
- +VDQ==
-X-Gm-Message-State: AFq9FYK5S9uwwF66TPMKFyMxmkmroURTuWVlVwa/SxKF4PSEAI7vJFds
- m3BlaYgL5J7JJyOdzqN8IJ25yhiAsmhDEd10YsbERi01cz37CLaogFxRfin69Jz+uolEiS2v4JD
- IHCMcrVkvR4869PCrAMwJL5UcCvgQl++Bve1yHYX1mez/A+WafVwxHekWR+yW05cf1gBU+mKiqA
- Ufy86hVb5WgcZXpwNBx4D0//GA1cGF4R86oNrQhT+B
-X-Gm-Gg: AYBFou16AEXyojnrRcbOsURmz5hEy5IvCsid4Uot/q+F4SKWkV9hqTr59aRnMxGYxYV
- ugbaYkviUsMqE7VYwUkPAYsTWyYDHde5TwMjHoYQhxkPKS9UDt7lbEFc2mXR6Uao3Enur8aiS8X
- pK81ot/950+oGMqXsN8Bb/hoLtZOJ4lxbPtvL6k5bHMMovjKofzMDgfSpxIE8tYp2vV4TLflqWD
- 5NSUT1vQgHk3myuQaEdy/7EpXjIgpfp47jaL9+GigJ+tmXnGhEH4ogJt99LvRSgaK2JiDL96UzG
- aU565p/A8CNFwyMpuQeTRdgsR7hoVPrG1ErE9R70y3O+biX03V4kwr/QPKaN3wptvsa7W5nx0il
- 2T3ngjUQ4UHnYl0wFy3Hc7Py5dhb+vEoEEh9o3zb9N4SQeXCNpW7pDumV3WZUcwwf1EbBFdFv+6
- aoRWnC
-X-Received: by 2002:a05:6402:e96:b0:6a9:cb3:7022 with SMTP id
- 4fb4d7f45d1cf-6aac90f568dmr10493210a12.40.1790600560587; 
- Mon, 28 Sep 2026 06:02:40 -0700 (PDT)
-X-Received: by 2002:a05:6402:e96:b0:6a9:cb3:7022 with SMTP id
- 4fb4d7f45d1cf-6aac90f568dmr10493177a12.40.1790600560115; 
- Mon, 28 Sep 2026 06:02:40 -0700 (PDT)
+ bh=pSLEISylSiJNwY0Q9y+CKPHH5pYkBTTvvnRNG1F/obs=;
+ b=UTydd80m4wnfccZMgARbgZJ9sUWQcKlIpeAmWzWYjfgFnFgGLxnKX8uRdlQ30OJoug
+ fF9GUl4F4bCKanbvDnUgSPPBpXWpg4OUDq6Cop02TPXrUj+5oWmuHR+R6q4zGe1ZjNcb
+ XKKYZdV049OPt98AqGA8kS1LL3oboQx0oXZQ75eMKAWaf/A6Jxa0Eg+jNiznbkVnf5c8
+ 5b9n/s69C/SS+q/n9ZYC7c1hfjpDUu6lyXxnO4DAlSAC5Qtnv+yV5IN+TF2HmM4KIJa8
+ HnM5cQ6XS5B4+wwsMw/DA+ecKxW4ZSCtcnBN9ud+Ju0n177zRuCKWpdvVF7ZG62siExj
+ BzhQ==
+X-Gm-Message-State: AFuF++lfTgEm0EGK2RSSpTRdcN1Hm0seZKsAV7OrkLZg3fsmqKTUUffE
+ 9qxFns0Mpr0yo/ggQatNmiep/LaXsmBvjiXWF8LLvR8EDK32HhGUt1Wv2tNgxsVHmzN8XvxDcmF
+ xMXomMA0QHhfcbFzArewp61LRtCEJMDgYPjUXATGFjcOIVRFg3qynGGOA/lxv4oHPHZmQCwuNPQ
+ jxBA9WGq2NUSTEfaufLcvjOwC6SzEWLGhJAYcfWyOK
+X-Gm-Gg: AYBFou3pV4+e+n5SfWtx596BVk/lctfZuI9KgKcx+IZHeWrXB1u2Y6R9SFzgWN96r08
+ sCAl/040aRfM5y+p4Wi1Uac7tUOiCJ1t+hRwLknqPj03yyeUiuEn/7mnPlPftm/6Qjwm43MHOh0
+ kPzdXSt8kKhBDEmdhDy/zd78NrboIgbPymyqsPdVFLAfMOyp0NOuxz18YLu4NqFJAdTYNBnsBMY
+ sp5ji2qUMYTMeukrF283M1hnc5JTXgYPsDQv3fZeKkwrdZeVs8cs7FrVwkhh8IiV/fYbhMYnjey
+ E5R/dRYvsFVPrBSDBjavfPmsLIlpM0HvtT++Qr5rgdItsiNQvg7nR8pRv6pIaNgROz0qzlR0omk
+ O/cD9raKnLEKqmJme5zxLUFUd0DRtfc3XbrAPHz356JXKLHisgtr95YCafLHvaIG6Aw9L7Yo/aW
+ tYDr1R
+X-Received: by 2002:a17:907:960d:b0:c25:f7db:4bf0 with SMTP id
+ a640c23a62f3a-c2ac238a8d0mr1170609666b.22.1790600580006; 
+ Mon, 28 Sep 2026 06:03:00 -0700 (PDT)
+X-Received: by 2002:a17:907:960d:b0:c25:f7db:4bf0 with SMTP id
+ a640c23a62f3a-c2ac238a8d0mr1170605566b.22.1790600579326; 
+ Mon, 28 Sep 2026 06:02:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6aae5dd5e49sm4041944a12.19.2026.09.28.06.02.39
+ a640c23a62f3a-c2dc7b6f438sm236245366b.2.2026.09.28.06.02.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:02:39 -0700 (PDT)
+ Mon, 28 Sep 2026 06:02:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-stable@nongnu.org,
- Yuxuan Li <liyuxuan.darfux@bytedance.com>
-Subject: [PULL 03/30] target/i386: Migrate error code only with an exception
-Date: Mon, 28 Sep 2026 15:02:01 +0200
-Message-ID: <20260928130228.877003-4-pbonzini@redhat.com>
+Cc: Maxim Levitsky <mlevitsk@redhat.com>,
+ "Vulnerability Report" <vr@darknavy.com>
+Subject: [PULL 10/30] accel/kvm: protect kvm_resample_fd_list with a mutex
+Date: Mon, 28 Sep 2026 15:02:08 +0200
+Message-ID: <20260928130228.877003-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,84 +121,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yanfei Xu <yanfei.xu@bytedance.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-An exception that carries an error code must retain it across migration.
-Otherwise the destination reinjects it with error_code 0, which can make
-the guest panic. Do not suppress this required state for old machine
-types; an incompatible destination should abort migration instead.
+Legacy PCI INTx interrupts are level triggered and can, in theory, be shared.
 
-The chance of stopping a vCPU while an exception is pending or injected
-is extremely low, so the cpu/error_code subsection should rarely be
-needed.
+Upon receiving such an interrupt, VFIO kernel driver masks it in a generic way,
+using INTX_DISABLE bit in the PCI config space.
 
-It is currently emitted much more often because KVM does not clear
-has_error_code and error_code after completing exception injection.
-Require a valid exception_nr before sending the subsection. This filters
-stale KVM state while preserving the error code for a real exception.
+It then waits for the guest to signal completion (EOI) of the interrupt,
+upon which VFIO re-enables the interrupt.
 
-Fixes: 1b80f1009d ("target/i386: add compat for migrating error code")
-Cc: qemu-stable@nongnu.org
-Reported-by: Yuxuan Li <liyuxuan.darfux@bytedance.com>
-Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-Message-Id: <20260914113817.2212058-1-yanfei.xu@bytedance.com>
+The completion is signaled with another eventfd.
+
+For split irqchip mode, KVM doesn't have a notion of EOI on IOAPIC level.
+Instead it signals EOI with a userspace VM exit, KVM_EXIT_IOAPIC_EOI.
+
+Upon receiving this VM exit, Qemu manually signals the above-mentioned eventfd.
+
+The problem that this patch resolves is that QEMU keeps these eventfds in
+a linked list without any locking to prevent the list from being corrupted by
+concurrent access.
+
+Such use is possible and guest triggerable if the guest rapidly toggles
+INTX mode of a VFIO device and at the same time signals EOI with an arbitrary
+vector.
+
+Fix this by protecting this list (kvm_resample_fd_list) with a mutex.
+
+This patch was only compile tested.
+
+Reported-by: "Vulnerability Report" <vr@darknavy.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3942
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20260923004651.101197-1-mlevitsk@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h     | 1 -
- hw/i386/pc.c          | 1 -
- target/i386/cpu.c     | 1 -
- target/i386/machine.c | 2 +-
- 4 files changed, 1 insertion(+), 4 deletions(-)
+ accel/kvm/kvm-all.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 786957fadd0..4b9df1d3329 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2389,7 +2389,6 @@ struct ArchCPU {
-     bool expose_tcg;
-     bool migratable;
-     bool migrate_smi_count;
--    bool migrate_error_code;
-     uint32_t apic_id;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 83cbd120a84..da3afdc68d8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -146,6 +146,7 @@ typedef struct KVMResampleFd KVMResampleFd;
+ static QLIST_HEAD(, KVMResampleFd) kvm_resample_fd_list =
+     QLIST_HEAD_INITIALIZER(kvm_resample_fd_list);
  
-     /* Enables publishing of TSC increment and Local APIC bus frequencies to
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 9006e7c29e1..6ebac0c20b1 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -85,7 +85,6 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
++static QemuMutex kvm_resample_fd_list_lock;
+ static QemuMutex kml_slots_lock;
  
- GlobalProperty pc_compat_10_1[] = {
-     { "mch", "extended-tseg-mbytes", "16" },
--    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
- };
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b97f144aea5..2a69ffeda40 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10818,7 +10818,6 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
-     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
-                      true),
--    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
-     /*
-      * lecacy_cache defaults to true unless the CPU model provides its
-      * own cache information (see x86_cpu_load_def()).
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 8d69d7e25ef..b5c6b127c9c 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -466,7 +466,7 @@ static bool cpu_errcode_needed(void *opaque)
+ #define kvm_slots_lock()    qemu_mutex_lock(&kml_slots_lock)
+@@ -157,6 +158,8 @@ static inline void kvm_resample_fd_remove(int gsi)
  {
-     X86CPU *cpu = opaque;
+     KVMResampleFd *rfd;
  
--    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
-+    return cpu->env.exception_nr != -1 && cpu->env.has_error_code != 0;
++    qemu_mutex_lock(&kvm_resample_fd_list_lock);
++
+     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
+         if (rfd->gsi == gsi) {
+             QLIST_REMOVE(rfd, node);
+@@ -164,6 +167,8 @@ static inline void kvm_resample_fd_remove(int gsi)
+             break;
+         }
+     }
++
++    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
  }
  
- static const VMStateDescription vmstate_error_code = {
+ static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
+@@ -173,20 +178,26 @@ static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
+     rfd->gsi = gsi;
+     rfd->resample_event = event;
+ 
++    qemu_mutex_lock(&kvm_resample_fd_list_lock);
+     QLIST_INSERT_HEAD(&kvm_resample_fd_list, rfd, node);
++    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
+ }
+ 
+ void kvm_resample_fd_notify(int gsi)
+ {
+     KVMResampleFd *rfd;
+ 
++    qemu_mutex_lock(&kvm_resample_fd_list_lock);
++
+     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
+         if (rfd->gsi == gsi) {
+             event_notifier_set(rfd->resample_event);
+             trace_kvm_resample_fd_notify(gsi);
+-            return;
++            break;
+         }
+     }
++
++    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
+ }
+ 
+ /**
+@@ -2910,6 +2921,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
+     int type;
+ 
+     qemu_mutex_init(&kml_slots_lock);
++    qemu_mutex_init(&kvm_resample_fd_list_lock);
+ 
+     /*
+      * On systems where the kernel can support different base page
 -- 
 2.55.0
 
