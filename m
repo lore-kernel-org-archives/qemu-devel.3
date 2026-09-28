@@ -4,141 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FC7CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 09:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CD5C9833E
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 09:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB82K-0007Ia-0k; Mon, 28 Sep 2026 05:52:40 -0400
+	id 1xB82b-0007NT-MF; Mon, 28 Sep 2026 05:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xB82I-0007IR-1M
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:52:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xB82G-00086I-Dc
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:52:37 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68S9M8t02057267
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 09:52:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- HvNP/BAI0o9lknC2+cucXpbe5AwnBLZsgbDgZa7YMos=; b=iwM5okfe/b1Zlcq4
- DSfmGwP8ym8JRgRllu3v30daDAZxnxQ/XDUfeUH/8SRwOlB5wcJXK0myrzwpbyzJ
- FcnaY6qxSUcFbOEoaQL6ctutgnVArtu42Mo3ldyvVeiZkVM0XZ2qvqiom5Rr6GIV
- /XrKxvwbxPgM/wckFkgygsyBaAdagpf/DbOeCGO0YBKYyCQJhnkFpbpL7c2OdKbY
- TygX6qv7+qxq8XauSBwuMD2BrHzI6El4OS58rGwO/8Y4OKm+FI0fiMBXd1cV0yvj
- qpcb7+S8e5AAB2Qn1s3mTkV2hvkcIPZSi5CcgUd4fR1UDLsFcd9sTu5twmtDTp0d
- DdIamw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyhubh08q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 09:52:34 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-91578e96164so16523156d6.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 02:52:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xB82Z-0007Mz-DX
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:52:55 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xB82X-00087D-BZ
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:52:55 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a99cd5115bso4688073a12.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 02:52:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790589171; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oTVKvlW1gJMyy2YBnkPYV+jDito8OtWBxgdVfDcovKic0PN+XjLfUw2H9mOYF47vqx
+ +1ABO9hRdSCESB56UT+pFBjOrx2x93I2mCsvdjB8CNOtopCvopmZRgoou/k/gpWVhmdT
+ XN8rzKL63tc/5wHKyeoDrq+EQfRHwjZjArzesNltttT/yNj8POmAb8TYs/HM3RRfp1Dk
+ Ep98yBNbWtdEcbyPGumZK7avHpscgNJDSDi8hQ9Qx2RF2wCojAmbKa6VYjllb7AGuaLI
+ Kj9Zo7FehPWm7q6qTp8aKU5HohO222yqB8waB27Hf/z2t3YlMePw87BHO0UYxUC9g8+d
+ 2v1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=16hfC2LW9swJl28G+eFKHSzYGTOo/LpaFUTErsNFz7E=;
+ fh=0lfTr6jTFd1YDB57XHKUl0EwzSxrUdhX43qv2k3GoOo=;
+ b=C9FqLPJDJSuzoA/QLtm2a6R7AA5c1pJNUPGlXe6w/g5YiYc5XKZ1mIgI1r7RfnxB7L
+ CkYgyu4IQsMpp7U3KPiofHzZ2jBW8CMoH9wwPwDdEbAD0m9D0AimTPgrNtz57LB1nKYu
+ MGu3CNVFKti0EM6VnWzXkmkGov6rd9ZAr6z+Srx4S3JEIVm8VnPkyjc2W4lliGbUzrqH
+ BRen/AvTaQnBqlNKyQtABFqngNxt+02+bDX5mDLRw8pW0ZkV2ZE4V42cD6KU7Ai6m8Qt
+ C1Z0zJs2wOiJ62ixVl70Jvp8LXuS7T91XEK9+17/Sh0L0gaBmOJy8PijsHBYOqb0K9sD
+ F38g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790589153; x=1791193953; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HvNP/BAI0o9lknC2+cucXpbe5AwnBLZsgbDgZa7YMos=;
- b=BVkyvdIsAEkF59+63y5OunYDU9u1JMIhrcOk3OcSm4aCNTsVTbjuuYow41wVoZQA24
- hQKi9U8N6gYHLyEJG3XH2s8Ovi85XYptq9cfEHNnNuU4l5l51G7riKkz/ntdtyy9LC4I
- KULT5cyeqWtvlRcizNJY9fyFAQSrY/hrGChnXHqrEi3VpISJ6v/QXtQmySpEwmOGvvrE
- 4K2M2d1jvbhHl53ZKv5QxC+45bixmdptaYvzZnEEroGH0VSV8rN36u6Y7e35ewbu1mTb
- 4R4mV/Er0UdMbMk1mgJylg9nQhtYEHytPjxE1aGF9V0zemhHlV1ZY7TWx2i/VFG51J7n
- 0pnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790589153; x=1791193953;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1790589171; x=1791193971; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HvNP/BAI0o9lknC2+cucXpbe5AwnBLZsgbDgZa7YMos=;
- b=OyDumSKytPXknPCVWpziapcmGWoQuIzNdHV9aIyR5s3r2z/EJh8Qxv/yADmLMdAwBo
- hikE6VADLIhzd/YTftVT9TIxzSX49BVobE6kN/Nz2Z3zFOO2ns+kmBg/LLnVzQrSNLSn
- LeTec3x92jqMnMdfgLeVJ4Dh/w7Dnwn0z5z+yxdGXHyUYTT7z1wox1ohO/IYvEsSJ1q1
- 8gQhLCurB0kDmMR5jXWAILmykp7YffKdthXeCtPgX/9JiEPy8g0YrfQMeoCCfDyLoO7S
- kbr5z6peLda1O5DCxcSj1saXHKuJjQDL7yW9iOL0yUqpmUjSODbkwj41REf5/3MTcj+R
- UEFg==
+ bh=16hfC2LW9swJl28G+eFKHSzYGTOo/LpaFUTErsNFz7E=;
+ b=BiKPBRbbm9Xbyn+Ot6RjjGMYxw5pjzuUh7TYqo0LEddKhWu43CszUNqPku6OQYb1VN
+ Kj5jOtE3stlZW/NXO5Opo8152QD/RGlAuARQ4goTR7lQ1pMJHg5SQe0BcHGfNlaX6Z6w
+ Ox3dglTaBxm7dTfOTviqzKbsF9BRBC4x9nxj9xSc9NaMSEf+nZzAfcO1ei1TXH180LAF
+ 70N0xvVfOsf1y69TTO3wa9fccbvYDNwzbVPEo3keMrrAxghg/nCYf1Q9QmxDigVVaic5
+ J95UxIWmFkvdKQRG/dr5LcfEnr4aQRVe9snlwL1EYtYTHOhdSiO3PkLf/axU8EUBSHST
+ FVnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790589171; x=1791193971;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=16hfC2LW9swJl28G+eFKHSzYGTOo/LpaFUTErsNFz7E=;
+ b=xlvogJdSunIYVzpfcqO8rjoNlpPhi+Lhk/XriQoSk9dYpVuO5ykUhu2Edo+1tYqcAV
+ ZTCPKP8A6lNVg1DC/4Dzu8Fq1/dYIixobzFt+EcAwZsE0NQu8jDU1GloocDDOr+jly2B
+ qDWVTcM7DljlSXomtFn4QPNhu098qdRbMP40hkVLEg+EoqroAXZtIcG33wPlES+yY7YQ
+ pvQFpi1m8XOGGG3v+dykaQqtcfV/dOMQntqs0I9wL8ZwtRo3liFvQOFoC50D3RibORuu
+ XR1P7hok0a6uy4Nn7L5dl3hgHf3VdyrUBBzdVH9Utmiz49U/e2j1otryil63nJ4YT3mP
+ +gfA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxpb1s8e0JVsLxUCIG5rfLbZ7QzZHnuOJ6SfT0DaStyj3DYWaDDhS1gkBz4RNwdj+d8WhFKnpHrPS/p@nongnu.org
-X-Gm-Message-State: AFuF++mjTMsqOWKf+nbfEu+Dh4C5gnSRMfHzCHg4rIpdeV25iMXrhli7
- kmer8Yp6jTySVxld5wGsGSFlE01Hl8s6zc6V85WDHKxZ/43XGBCqIlzg3RG0LOibu9B77z3JWVs
- A4QdP878vMevHrvwkKFHBecSZIsSETVlesCxpphwI1pt5Vf6agTF1VN3wqw==
-X-Gm-Gg: AYBFou1T8asZByGXqmb+vH9JkNdktQwd1OEr3mm3AbovkC27dYlKmp9a38BX9jvqVPU
- NbAXIBxhqnSLQnF4xo+U5wCw8LvlImTr65e4a65BkfdIHwjFw0vF6MSEkl+PyslQS6XlZXyAdvy
- dAoXjni3CXWYQKpgOOpKwul42PiR1CjG7zJEIpmaDWlTIEHBbhdA86M6dRDc6BJISWoMXxKymak
- eE5YIVKNugMyA5HA5RWv7m+fuxIMp31/UdyagpCuYPNDBEGM95GvyfO8yq4t7wW9XHnj3j/Hq3Y
- nkceyxxz5syEDR/Eu0XEIDxetW/2LeRBc0xe/W47L43nxve29Ce7kht4KKPPct/+g9dNnAk9n9i
- O+KwqzgBwxQnYG9KrhZcZnImRzMj+Xw1RNg==
-X-Received: by 2002:a05:620a:6409:b0:93c:6450:9cec with SMTP id
- af79cd13be357-93c6450c36bmr951320385a.5.1790589153481; 
- Mon, 28 Sep 2026 02:52:33 -0700 (PDT)
-X-Received: by 2002:a05:620a:6409:b0:93c:6450:9cec with SMTP id
- af79cd13be357-93c6450c36bmr951317985a.5.1790589153008; 
- Mon, 28 Sep 2026 02:52:33 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a007fd1a01sm25918105e9.0.2026.09.28.02.52.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 02:52:32 -0700 (PDT)
-Message-ID: <9732ca6f-d103-4993-a8b9-5eb820d79134@oss.qualcomm.com>
-Date: Mon, 28 Sep 2026 11:52:31 +0200
+ AKwUvBxSuEFrvuKj2F0SpNSwG1CrdBYcLLjFy1HZjfBKcpo4IpHRP1646fh9Ns8xi4NvfGkoHqH0rc4vyji+@nongnu.org
+X-Gm-Message-State: AFq9FYL7n2KyzmP/UUvxlzGMSv4osfiXeD8Psdn+QB3P5cFMhTPVDQSI
+ LVJgq0wm28sFVdApvOM2pNTdZrhRwT80ecmZmES2653mZdE+BMH2p/FfM9+2vqcwdAzlR9phSPx
+ XNFgH/yRDV9Q+CP/10YHaNxiOIQiSBx4=
+X-Gm-Gg: AYBFou0gaRoA4AKKGefRLhRokvr5qsY9oAQCfbercJTB/UwVyyIsw+ijdP8jz8d7ds6
+ 180Qr4ngv087Sj9AmT9TqHDP3mxOwwN0FnGsrI34uxaFZiZeVNnyT/IqzVbutwzP7sqgGcDbmJd
+ zP/5beN9yEvjllpywKMkOrTrFAQJOD5xdKM7mDzZ2hlE8XhDzMkOPA0tI+dC540AoilRh2o6gAl
+ yTlOYZptjEe8mz1STIF0HamKCiG1TPnVgV7V3m1rxkNvD4SlMHbPzBdfoHLmd2LdmVuJUQpCS9p
+ kXKP/NqVcr3qlPZf7Fr90MwpY2EQHEnTRa9y/QOv9CVITMaHloVAHJo=
+X-Received: by 2002:a05:6402:3806:b0:6aa:e46b:2ca with SMTP id
+ 4fb4d7f45d1cf-6aae8f391b3mr6492934a12.30.1790589170871; Mon, 28 Sep 2026
+ 02:52:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 042/101] tcg: Generic expansion of tcg_gen_orc_*
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-References: <20260927090011.10724-1-richard.henderson@linaro.org>
- <20260927090011.10724-43-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260927090011.10724-43-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: WxVzGpPsLvxCu4urgq-Iya7Q146kaZLD
-X-Authority-Analysis: v=2.4 cv=C7F8WgP+ c=1 sm=1 tr=0 ts=6aba38e2 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: WxVzGpPsLvxCu4urgq-Iya7Q146kaZLD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDAzOSBTYWx0ZWRfXxjmuYkaAsEgC
- 1QGQqIF4sCXo9pN+m2OQ2voJtxgRV7/P0s+UJLjfEztGGcTBvDyl65utaQhiGAII9FedqHH/SbI
- d99Sl1iZo70B+mysiDJ4m7I20MuJfznl3UV0sn90KyfJjdHMWeoCWiai98uj6GtEQZlk4wjPRMs
- jKlJtQCQmGvCgb1ittFlIRnCQn3mplVc4Ed+5NuRJXl2gYcDUtTerypb7rbLYFyw3UwF5KSsQwc
- FzHS2Am0EmAzjPx0RIgtkV78GncJ00KCpDIbpENZD8KtoijgNTfDQ9W+32FPmWLG1XMK9cKRe8i
- CDM6eKsbSdnpzhY+BRvownf+jp/5J2ncGdmdkUtSu0uAmwlqx2+CZ1U2Q3148Q6w+V7y3NcW3Hs
- zgbiQ8E9RT5JMRA4TnvEVJn8U2UwVIxZ7zrDMPL8IR3JDB4jy61pNgzpqUOR23c/px/Jdu2q58b
- Y81WItQLZ5s8n9NNCig==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDAzOSBTYWx0ZWRfX1IFSI1huEj7f
- bnlclTs5QBUgjFYhgyc7yVfixfQqm079v6UtAN5f4GTX1x2hE6DiMz3dQ6oSZOYKZeIramsGZHF
- 3pI1jO1JhJRsEBnxcweHwGo1qvrxzPc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609280039
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260926070057.1234-1-luoyonggang@gmail.com>
+ <20260926070057.1234-8-luoyonggang@gmail.com>
+ <87zex1hhhj.fsf@pond.sub.org>
+ <CAE2XoE9_R13NsUWu-s12QA9RBJykR87TEMh3VmndNEXQsCkNtg@mail.gmail.com>
+ <aro2vIQRSspHUbju@redhat.com>
+In-Reply-To: <aro2vIQRSspHUbju@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Mon, 28 Sep 2026 17:52:37 +0800
+X-Gm-Features: AclHuK-o85qHlkeeo97uV89smy_E5G2VyjR6dbfSwGc6ZJKpdP_USxFaQlJ3OC4
+Message-ID: <CAE2XoE8ASdhTpk9ncx8my2gRCwQO2QpvV9mwqDc+UxHFG-pxcA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/55] tests/unit: add test-target-info
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+Content-Type: multipart/alternative; boundary="00000000000077f0cf065c880790"
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,16 +127,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/9/26 10:59, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/tcg/tcg-op-common.h  |  2 --
->   include/tcg/tcg-op-def.h.inc |  1 +
->   tcg/tcg-op.c                 | 36 ++++++++++++------------------------
->   3 files changed, 13 insertions(+), 26 deletions(-)
+--00000000000077f0cf065c880790
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Mon, Sep 28, 2026 at 5:43=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com>
+wrote:
+>
+> On Mon, Sep 28, 2026 at 05:21:06PM +0800, Yonggang Luo wrote:
+> > On Mon, Sep 28, 2026 at 5:07=E2=80=AFPM Markus Armbruster <armbru@redha=
+t.com>
+wrote:
+> > >
+> > > Yonggang Luo <luoyonggang@gmail.com> writes:
+> > >
+> > > > Collect each target-info-def.c object in target_info_def_objects,
+> > > > keyed by target dir. Link every value so constructors fill the
+> > > > list. Assert target_info() is not NULL and target_info_list() has
+> > > > one entry per linked object.
+> > > >
+> > > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > >
+> > > Doesn't compile for me:
+>
+> snip
+>
+> > >
+> > > I have meson 1.8.5.
+> > >
+> >
+> > Hi, It's because I use a feature from meson 1.10.0, you can install
+meson
+> > 1.12.0 for it. and the remote branch I also fixed for KVM and got gitla=
+b
+> > running. but for this series you need to install meson 1.12.x
+>
+> There needs to be a patch in this series that bumps the required
+> meson version then.
+
+Yeap, my bad, I did not run the gitlab-ci before(because too much work),
+the newest branch get ci passed, and more patches needs.
+
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--00000000000077f0cf065c880790
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Mon, Sep 28, 2026 at 5:43=E2=80=AFPM Daniel P. =
+Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.co=
+m</a>&gt; wrote:<br>&gt;<br>&gt; On Mon, Sep 28, 2026 at 05:21:06PM +0800, =
+Yonggang Luo wrote:<br>&gt; &gt; On Mon, Sep 28, 2026 at 5:07=E2=80=AFPM Ma=
+rkus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com<=
+/a>&gt; wrote:<br>&gt; &gt; &gt;<br>&gt; &gt; &gt; Yonggang Luo &lt;<a href=
+=3D"mailto:luoyonggang@gmail.com">luoyonggang@gmail.com</a>&gt; writes:<br>=
+&gt; &gt; &gt;<br>&gt; &gt; &gt; &gt; Collect each target-info-def.c object=
+ in target_info_def_objects,<br>&gt; &gt; &gt; &gt; keyed by target dir. Li=
+nk every value so constructors fill the<br>&gt; &gt; &gt; &gt; list. Assert=
+ target_info() is not NULL and target_info_list() has<br>&gt; &gt; &gt; &gt=
+; one entry per linked object.<br>&gt; &gt; &gt; &gt;<br>&gt; &gt; &gt; &gt=
+; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoyonggang@gmail.com">=
+luoyonggang@gmail.com</a>&gt;<br>&gt; &gt; &gt;<br>&gt; &gt; &gt; Doesn&#39=
+;t compile for me:<br>&gt;<br>&gt; snip<br>&gt;<br>&gt; &gt; &gt;<br>&gt; &=
+gt; &gt; I have meson 1.8.5.<br>&gt; &gt; &gt;<br>&gt; &gt;<br>&gt; &gt; Hi=
+, It&#39;s because I use a feature from meson 1.10.0, you can install meson=
+<br>&gt; &gt; 1.12.0 for it. and the remote branch I also fixed for KVM and=
+ got gitlab<br>&gt; &gt; running. but for this series you need to install m=
+eson 1.12.x<br>&gt;<br>&gt; There needs to be a patch in this series that b=
+umps the required<br>&gt; meson version then.<br><br>Yeap, my bad, I did no=
+t run the gitlab-ci before(because too much work), the newest branch get ci=
+ passed, and more patches needs.<br><br>&gt;<br>&gt; With regards,<br>&gt; =
+Daniel<br>&gt; --<br>&gt; |: <a href=3D"https://berrange.com">https://berra=
+nge.com</a> =C2=A0 =C2=A0 =C2=A0 ~~ =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"h=
+ttps://hachyderm.io/@berrange">https://hachyderm.io/@berrange</a> :|<br>&gt=
+; |: <a href=3D"https://libvirt.org">https://libvirt.org</a> =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0~~ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https:/=
+/entangle-photo.org">https://entangle-photo.org</a> :|<br>&gt; |: <a href=
+=3D"https://pixelfed.art/berrange">https://pixelfed.art/berrange</a> =C2=A0=
+ ~~ =C2=A0 =C2=A0<a href=3D"https://fstop138.berrange.com">https://fstop138=
+.berrange.com</a> :|<br>&gt;<br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>You=
+rs<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo
+</div>
+
+--00000000000077f0cf065c880790--
 
