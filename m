@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7743CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 22:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3279CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 22:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBJzl-00015J-KE; Mon, 28 Sep 2026 18:38:49 -0400
+	id 1xBJzW-0008Nt-SA; Mon, 28 Sep 2026 18:38:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzi-0000n3-N2
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzS-0008Dr-Nj
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzf-0006Kp-Rd
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJzQ-0006Ic-Gh
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:38:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790635123;
+ s=mimecast20190719; t=1790635107;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/b/Od3BpWMmHkzO7tH4rvvBU/DXG2EYvGhNMZnzaLsM=;
- b=Qpt0gcxLaO/f08kIb6mJYh3oHYOWyx7AMboHwIMaeKQjZmJRz/eCoWd+/ENzxOoyFMUgWv
- 9cL6qSWml7ZZ1x9QrnG9dUZKHVp26sIPGU/1JWEg71JB+HmCdaEkd9/re4mO40WZ+XlgrB
- h5fSdbi7HmeA6jxdMyddMEv4Hf7GsFE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=1YqI6aRChkBWarji7FCb1tybf+1n8Ov8rZHJjZGAUqs=;
+ b=DIIpTxDv5MdRIn27C1ZXAFLRwazTPwFvE1rP7ikeNxmocNp71PGsptE+lAeVG7UU2TRS5x
+ 9c0ub2jrYE32LBFlPKMHAZKVVRSOh3hErz9cawoNxR/oEokrr+nL96agjB2KY8HisXo8/Z
+ W6/T1Ad7bH6c1NTeQLyp49WCXW1A3dg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-MOB8raSbPPCExRbd2ZNzxw-1; Mon,
- 28 Sep 2026 18:38:39 -0400
-X-MC-Unique: MOB8raSbPPCExRbd2ZNzxw-1
-X-Mimecast-MFC-AGG-ID: MOB8raSbPPCExRbd2ZNzxw_1790635117
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-UR25jgwEPAe8PGzhf14i9Q-1; Mon,
+ 28 Sep 2026 18:38:24 -0400
+X-MC-Unique: UR25jgwEPAe8PGzhf14i9Q-1
+X-Mimecast-MFC-AGG-ID: UR25jgwEPAe8PGzhf14i9Q_1790635102
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48B6B1944D3E; Mon, 28 Sep 2026 22:38:37 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A4201800BE4; Mon, 28 Sep 2026 22:38:22 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.217])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E117A19560AB; Mon, 28 Sep 2026 22:38:32 +0000 (UTC)
+ id 1DC1C19560AB; Mon, 28 Sep 2026 22:38:17 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -73,10 +73,10 @@ Cc: Peter Xu <peterx@redhat.com>,
  Jason Wang <jasowangio@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eric Blake <eblake@redhat.com>
-Subject: [PATCH 14/14] qapi/parser: convert single-section properties to
- getter properties
-Date: Mon, 28 Sep 2026 18:36:57 -0400
-Message-ID: <20260928223657.2303684-15-jsnow@redhat.com>
+Subject: [PATCH 11/14] qapi/parser: privatize "all_sections" field as
+ "_sections"
+Date: Mon, 28 Sep 2026 18:36:54 -0400
+Message-ID: <20260928223657.2303684-12-jsnow@redhat.com>
 In-Reply-To: <20260928223657.2303684-1-jsnow@redhat.com>
 References: <20260928223657.2303684-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -84,14 +84,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,90 +106,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove dedicated pointers to single sections, instead preferring a
-functional getter property that returns the same thing dynamically.
+In preparation for switching QAPIDoc to a more complex data structure
+for keeping track of sections, convert the "all_sections" property to
+a private property.
 
-This is being done mainly for the benefit of being able to condense
-the _append() function, but I'm not convinced it's worth it. I'm not
-convinced it's not not worth it either, though.
+Rename it "_sections" to emphasize that there is not* some alternative
+property that is somehow not all sections. This is what you get and
+you're going to love it.
+
+Implement the len() and iter() features for QAPIDoc as a replacement
+for direct, public access to the all_sections property.
+
+(*OK, currently there are some, but spoilers, they're going away in
+the next commits.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/parser.py | 47 +++++++++++++++++++++++-------------------
- 1 file changed, 26 insertions(+), 21 deletions(-)
+ docs/sphinx/qapidoc.py         |  7 ++++---
+ scripts/qapi/parser.py         | 27 +++++++++++++++++----------
+ tests/qapi-schema/test-qapi.py |  2 +-
+ 3 files changed, 22 insertions(+), 14 deletions(-)
 
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index ae57056a393..fd666be131f 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -377,7 +377,7 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
+                 )
+             )
+ 
+-        sections = ent.doc.all_sections if ent.doc else []
++        sections = list(ent.doc) if ent.doc else []
+ 
+         # Add sections in source order:
+         for section in sections:
+@@ -416,8 +416,9 @@ def visit_module(self, path: str) -> None:
+         self.ensure_blank_line()
+ 
+     def visit_freeform(self, doc: QAPIDoc) -> None:
+-        assert len(doc.all_sections) == 1, doc.all_sections
+-        body = doc.all_sections[0]
++        sections = list(doc)
++        assert len(sections) == 1, sections
++        body = sections[0]
+         self.add_lines(self.reformat_arobase(body.text), doc.info)
+         self.ensure_blank_line()
+ 
 diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 1d8f1d39ab1..d4b5b3e5ab6 100644
+index 0dca1acba4c..bdd0f1ec3ff 100644
 --- a/scripts/qapi/parser.py
 +++ b/scripts/qapi/parser.py
-@@ -773,12 +773,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+@@ -19,6 +19,7 @@
+     TYPE_CHECKING,
+     Any,
+     Dict,
++    Iterator,
+     List,
+     Mapping,
+     Match,
+@@ -758,7 +759,7 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+         # definition doc's symbol, None for free-form doc
+         self.symbol: Optional[str] = symbol
+         # the sections in textual order
+-        self.all_sections: List[QAPIDoc.Section] = []
++        self._sections: List[QAPIDoc.Section] = []
+         # dicts mapping parameter/feature names to their description
          self._args: Dict[str, QAPIDoc.ArgSection] = {}
          self._features: Dict[str, QAPIDoc.ArgSection] = {}
+@@ -797,10 +798,16 @@ def _append(self, section: 'QAPIDoc.Section') -> None:
+                 raise QAPISemError(
+                     section.info, "duplicated '%s' section" % section.kind)
+             self.since = section
+-        self.all_sections.append(section)
++        self._sections.append(section)
++
++    def __iter__(self) -> Iterator['QAPIDoc.Section']:
++        return iter(self._sections)
++
++    def __len__(self) -> int:
++        return len(self._sections)
  
--        # a command's "Returns" and "Errors" section
--        self._returns: Optional[QAPIDoc.Section] = None
--        self._errors: Optional[QAPIDoc.Section] = None
--        # "Since" section
--        self.since: Optional[QAPIDoc.Section] = None
--
-     @property
-     def has_features(self) -> bool:
-         return bool(self._features)
-@@ -790,21 +784,10 @@ def _append(self, section: 'QAPIDoc.Section') -> None:
-         All other methods/helpers/etc ultimately use this and only
-         this interface for appending a new section.
-         """
--        if section.kind == QAPIDoc.Kind.RETURNS:
--            if self._returns:
--                raise QAPISemError(
--                    section.info, "duplicated '%s' section" % section.kind)
--            self._returns = section
--        elif section.kind == QAPIDoc.Kind.ERRORS:
--            if self._errors:
--                raise QAPISemError(
--                    section.info, "duplicated '%s' section" % section.kind)
--            self._errors = section
--        elif section.kind == QAPIDoc.Kind.SINCE:
--            if self.since:
--                raise QAPISemError(
--                    section.info, "duplicated '%s' section" % section.kind)
--            self.since = section
-+        if str(section.kind) in ('Intro', 'Returns', 'Errors', 'Since'):
-+            if self._sections[section.kind]:
-+                raise QAPISemError(section.info,
-+                                   "duplicated '%s' section" % section.kind)
-         self._sections[section.kind].append(section)
-         self._active_section = section
- 
-@@ -815,6 +798,28 @@ def __iter__(self) -> Iterator['QAPIDoc.Section']:
-     def __len__(self) -> int:
-         return sum(len(x) for x in self._sections.values())
- 
-+    def _single_section_property(
-+        self,
-+        kind: 'QAPIDoc.Kind'
-+    ) -> Optional['QAPIDoc.Section']:
-+        try:
-+            return self._sections[kind][0]
-+        except IndexError:
-+            pass
-+        return None
-+
-+    @property
-+    def _returns(self) -> Optional['QAPIDoc.Section']:
-+        return self._single_section_property(QAPIDoc.Kind.RETURNS)
-+
-+    @property
-+    def _errors(self) -> Optional['QAPIDoc.Section']:
-+        return self._single_section_property(QAPIDoc.Kind.ERRORS)
-+
-+    @property
-+    def since(self) -> Optional['QAPIDoc.Section']:
-+        return self._single_section_property(QAPIDoc.Kind.SINCE)
-+
      def end(self) -> None:
-         for section in self:
+-        for section in self.all_sections:
++        for section in self:
              section.text = section.text.strip('\n')
+             if (
+                     section.kind not in (
+@@ -813,9 +820,9 @@ def end(self) -> None:
+     def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+         kind = QAPIDoc.Kind.DETAILS
+ 
+-        if self.all_sections and self.all_sections[-1].kind == kind:
++        if self._sections and self._sections[-1].kind == kind:
+             # extend current section
+-            section = self.all_sections[-1]
++            section = self._sections[-1]
+             if not section.text:
+                 # Section is empty so far; update info to start *here*.
+                 section.info = info
+@@ -856,7 +863,7 @@ def new_feature(self, info: QAPISourceInfo, name: str) -> None:
+         self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._features)
+ 
+     def append_line(self, line: str) -> None:
+-        self.all_sections[-1].append_line(line)
++        self._sections[-1].append_line(line)
+ 
+     def _insert_near_kind(
+         self,
+@@ -865,12 +872,12 @@ def _insert_near_kind(
+         after: bool = False,
+     ) -> bool:
+         """Insert or append a new doc section at a specific point."""
+-        for idx, sect in enumerate(reversed(self.all_sections)):
++        for idx, sect in enumerate(reversed(list(self))):
+             if sect.kind == kind:
+-                pos = len(self.all_sections) - idx - 1
++                pos = len(self) - idx - 1
+                 if after:
+                     pos += 1
+-                self.all_sections.insert(pos, new_sect)
++                self._sections.insert(pos, new_sect)
+                 return True
+         return False
+ 
+@@ -915,7 +922,7 @@ def ensure_returns(self, info: QAPISourceInfo) -> None:
+         # TODO: Take advantage of the new strict section ordering and
+         # simplify this algorithm.
+ 
+-        if any(s.kind == QAPIDoc.Kind.RETURNS for s in self.all_sections):
++        if self._returns:
+             return
+ 
+         # Stub "Returns" section for undocumented returns value
+diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
+index 5beb96e894f..d5b4ac3a682 100755
+--- a/tests/qapi-schema/test-qapi.py
++++ b/tests/qapi-schema/test-qapi.py
+@@ -117,7 +117,7 @@ def test_frontend(fname):
+             print('doc symbol=%s' % doc.symbol)
+         else:
+             print('doc freeform')
+-        for section in doc.all_sections:
++        for section in doc:
+             if isinstance(section, QAPIDoc.ArgSection):
+                 print('    %s=%s' % (section.kind, section.name))
+             else:
 -- 
 2.55.0
 
