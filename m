@@ -4,146 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A3ECA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 17:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 709F6CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 17:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBFPd-0001JG-0Q; Mon, 28 Sep 2026 13:45:14 -0400
+	id 1xBFbT-0003YG-Nr; Mon, 28 Sep 2026 13:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBFPY-0001Bx-0j
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:45:09 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBFPS-0001Lr-ER
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:45:06 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SEdqVb1908457
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 17:44:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mP052L6B5onsSn1YqwYyBCKOlIaEkYFq8zzE8C6qU4I=; b=dV2Na/WvuHkS26LZ
- 2nRd4vxOKNzVEEWhLoETGi3KDPj9XhFJFH5kh3rknkBWuwU0FRDl38EtEfrHS8Jf
- zUtjDRLvEpR/ZG2M0BGTOLskGY9cEmXkjLZlsFXegDhWiKDq8AcdJoqDDmjGYB5G
- vjjak2xehtFft5S/TW0zaz42UTtOlIuEpnU0v3xUcffN2Rre3J599l31v5SMSozT
- FYTEIvrd8DoS+eVFMfDCejE8MDtbIAk08d5fA2KSodSz8zCIsFM9+2Q9DFIpY9Zh
- 56XeJSMpGQxUSw1Pzkon+TSduDN5E2gAuZVZg2RWwO5gMBz33cC9EQwx/FuJWnqU
- D4glew==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjkxjrxm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 17:44:59 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93a082c014aso18548485a.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:44:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBFbS-0003Xv-1P
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:57:26 -0400
+Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBFbQ-0002hJ-0M
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:57:25 -0400
+Received: by mail-yx2-x11.google.com with SMTP id
+ 956f58d0204a3-66fb93aee5eso3580716d50.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:57:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790618242; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hmHSNEqlChL2Kn/cxBvC5oGKXgcB8lzwMLcAjSNOzfqtf0gYggFmCov3W2FJhg3xPc
+ WA5zS/y0Q+RSFWQMtzuQv8gbUzkfMRVU3PcC5+nEcDhXLiqrgaVJx31AY4xXuB9NovnJ
+ RkajDcRVHWou+PDnaCH7bTXkis+VH/Alll8Lm8Z+VsuWslGKieGn+dQKyXPlGozwIkdS
+ SbCu5nVSb5IidjRiHHKXVbKgVOVfrwowXCGYNWew2o8YQUMB1wxQTRr1dbuFY8Y0/0Tb
+ 8uatOCK1QafXv2Yu7WsdKYaB1GduBUIkmlcca9Inpc8F7dAnnDxUf0QMce/+QSIn9Aay
+ qeWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=eru0LST9w3Lbh59JKh8rLBU/sUB7p6jjByIWRWRE7Ww=;
+ fh=ub/zH6y+WPJijJytJEhlCd5PKbYleOIQ1GJXfRlIPlM=;
+ b=MkcieqcZ5hzuqDpyT8ogAi5IMAntagdXAiOySp69MzRB1PnhxhnA4X/oW17S68OFDN
+ 37JFgqiC5wRbV9RlH7Nj9DhATdUwF/csyBdN4rZ9bXE3BNsO659GGXzwyc1qhVacHo2+
+ nrG6OqugTkPrPgo3D7MOxUnpMwk1W4fT678p3S5XDbkpC+cIDfzxzotV1SUDnnvpYcCI
+ eTfZQQoO5n8z/a/LTOX5VE25j7KAWWePtYBcxGpYiovX5SBZ8rx3LdFDMrsxU1YLzfVi
+ wUNIhexjScpLtFOg+oqNyfDkN2c3vrlaXT2V2WieSuJanxs3mkxYljGXbRT/89Z9HrVv
+ 5hNw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790617499; x=1791222299; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=mP052L6B5onsSn1YqwYyBCKOlIaEkYFq8zzE8C6qU4I=;
- b=UYCkoKJ9MbBs0Dulp36Alno9NdxTyXjRcXsbhLwb5JAAGKxSA7Ai6S/ieqk2/43i7f
- 3Z2S9ddyCzcBrptwNxbk2stIpyMJQ0+0VL6E4BOV22pozpvq48SsGyV7j6yivoXYakNr
- IgZQl3n0NzvR61QMQqmcqUOVP48XJoYRmvwA7FWo4UeidQnQvbVbjm6JGzcHL+s4vSD/
- WIXc9hXYaaSt1scBkZc6vYl2wJ5Y7ffVK4XqwoU3N8Dcd0TP8+vV+OEf0/BlnEzi8PKy
- W1XPXNobr8bhVlPWGhRsZr9w5GLpM7SdF8CJkPN/U6jx+z+24ynYEVOmbqvMmdqr4i54
- QUxg==
+ d=linaro.org; s=google; t=1790618242; x=1791223042; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=eru0LST9w3Lbh59JKh8rLBU/sUB7p6jjByIWRWRE7Ww=;
+ b=rNBW+woPt6lHeMZMqakptyWuxQpBkHK6FNN1y/r3yo5ue0z8UHw/ByIz2hBwwPhxCa
+ 3pQeMxpEpdmZyaZgewJkAmyRZ2DLYDUI68FstQ+56hYnPMXtcf0ALXvfjMjRXNzGuBlS
+ G1iQBQ4/Qo3XwoOXp/qNXOUA2xgLMwc9yxB6VGqLg8AoVtyplPTt5/a53LlnBiCv7BxT
+ cTXBhMHGnvpfsdDOP/1pc9tjXJmAhM5E21aTSa1UDEndL+IKUQOY9msi8CRqw+3F0Lc8
+ MUv4y234rso13qv5SZmQGOT/z7N4C09cZK3HYAAuvjP5iTjkmvhw+6jm0QamfrnzqoOM
+ BA+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790617499; x=1791222299;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mP052L6B5onsSn1YqwYyBCKOlIaEkYFq8zzE8C6qU4I=;
- b=x49hZ4FoSdsGxXK/tuklkFX5SoWZgMTV14+F+moEx5GD58pukE1m+upNw598uX175y
- jMZ9ifCBco3kgPhkt04OON+Apqglc3m6juj5xVIphQNpQfr6HTa6ZARuGTXVao6G2JuF
- rCOrPz52y41A9sqqyvb57x6ZOcmY0ckxSCVwEPVeGBvYgTrRIwzpYzP+LH6cMG5dWVWB
- rFdCsuHDhNwq32VxExP85CB6xHLIwf5ah4+ztOm2ZIdp5fybY8Vnr7hgWkEoW+vqVGc1
- ynj8M0hYKIDHM/tv9CQ9mliWUAVV9E9cbZbQyM4TpA6EbiEbv4h9TO/eTYZhjye7kxCa
- +joQ==
-X-Gm-Message-State: AFuF++noxZSpOKFM3SmChsROxy0CsuLBLXiF2WaQPFS3fSsYj3td5cB8
- 3f0Ly/KvcWPOuHLkZ958prYAqy99RXuPEItO9FJwYmptHG01mh81OHInZSrGosb+ucDQ/ZKJoI2
- S1V+TcGLGEfxs/hWvE7wTb4+Qh+hPTpN14kgrPwa0lf2nngoLd8vSztmHqQ==
-X-Gm-Gg: AYBFou0M59Z1tSsN4r/DyVZLuuKzVxGm6HJBImkQpoy0YPuG5+ZWu4RR5oE/prndvt4
- JtFCaCkD+M6bX2hUVn7dmjzey+19DPb4Zp8PYOVUGPrEhVxqdjELJVbGSUmrIKYGVFQ7iQbpAC/
- F+HmVdrq2Gean3hX1eKfoJ40k/hPDOhk4bT65R9GwkFtPr3o3qhEp4XKf9eEQY1rjcSWGMR9Q36
- 5vcEHuU3OJ17YX1sUKHvXZKl/JHul7ydz7RzN0M9K0OI1bhA2AyFrHWHf0VaYNTArR+s2LItXZp
- M2E6b6yI7ctBg/KlrQJkJEyp7Zc38OpVqJ9V2Wak10N/lOmIM/OcR0YAuHvltI1vae5T2uUelL5
- ox7gjXeAds+wsDkxm81neKTjtgc8IriODnYQmzBSJ1rMl
-X-Received: by 2002:a05:620a:4722:b0:93c:5b32:c9d9 with SMTP id
- af79cd13be357-93c8bcd086dmr29149485a.6.1790617498567; 
- Mon, 28 Sep 2026 10:44:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:4722:b0:93c:5b32:c9d9 with SMTP id
- af79cd13be357-93c8bcd086dmr29134485a.6.1790617496669; 
- Mon, 28 Sep 2026 10:44:56 -0700 (PDT)
-Received: from [192.168.68.102] ([177.94.15.187])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c81598783sm200315685a.46.2026.09.28.10.44.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 10:44:56 -0700 (PDT)
-Message-ID: <282073db-9c0b-4aaa-a634-6fec673232a9@oss.qualcomm.com>
-Date: Mon, 28 Sep 2026 14:44:52 -0300
+ d=1e100.net; s=20260707; t=1790618242; x=1791223042;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eru0LST9w3Lbh59JKh8rLBU/sUB7p6jjByIWRWRE7Ww=;
+ b=iuT+2jZ4UyFz82cVBmnVXaKJa5hDw+a7DWD0F6zmeOPYZs0cV6Rn0TaWY6z9piW5Ie
+ WlkIBxIVtzWQi7vV5QXkQezQduYTEQUzhqpetEARjjNh1RJWz1tZCdBMGzSkI6XdGTnl
+ vC9k8k8EWqGV5icAjX3v1uAqQSYn2J4R39G1ehBrRixxv6dkthHeeeY3tPdFPwFAUxaf
+ PIPPuJCgj+QkryWVkLaLQk2kEuYKZDI9CzZDmhaHam1YLJkiC2zu6HMITo8ZMsVctOZ6
+ GWSXbL/Th30i97wMRvhMKWTlYBjpIS8j64KkYcAMUXj12l4McyKJuz8QEN57SVfBR87W
+ lK5Q==
+X-Gm-Message-State: AFq9FYLE1o5JMYdJWyQk9OKkDy66Z2mpuwCWtk7MsRd03DRjepbA/32T
+ lgNhmApdw3HMTUndA931rijJEyBCAXIV9yQh7vV74Y/k4M0YkxnGx8xO0fCdemrWgOrUFSBqcWd
+ kQNBTQxIY8c8Txl4ptFVfEoFZdVj3etKmcMwZSC+WTw==
+X-Gm-Gg: AYBFou0b+nMt3FrxCquMgqCf6+G7cajAKhEPKC3rZ3iWpmXrHzi7l50Ao/MXiZ2gdC2
+ XnHeoLJR5RyMi4d7K3UhVC9F8xycnDB+L5+e8hroMNAMiUKAXV31dEzQ1l142t0HS7SP5ZoOhdx
+ YIYPXis4A0OI7y9pyU/vu6Tl25zl8UnILDkgEtemPSHGchjXR18w1vbwZAimuFDzks1P7o3brFx
+ iVVFtMGJlOj+2S1O/T4iZx4xt22LuiiqDFbqlDV7GYiq331xOkFv8UpVZPIyoEsSUt6oGk3ErtX
+ Luu6jBdGyPMxJ/2+tAWRaZkcudYEHbqE24ATrGnr0LfxCw4xQjiB8MVFQ3Dwrubk5MnPoesehDZ
+ i9OaH57NKO9SbfnWPK28vDBtusor9zGUoJdRvnvU=
+X-Received: by 2002:a05:690e:34b:b0:673:1df3:84d8 with SMTP id
+ 956f58d0204a3-6731df4aca3mr3303803d50.103.1790618242206; Mon, 28 Sep 2026
+ 10:57:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 4/5] tests/functional/riscv64: add riscv-server-ref
- tests
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260917174405.3471736-1-daniel.barboza@oss.qualcomm.com>
- <20260917174405.3471736-5-daniel.barboza@oss.qualcomm.com>
- <geavtirs7hw5givjazrneegb7gwqsvmwq3koglyxxcxz2fauy3@j4vobi7nbsh6>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <geavtirs7hw5givjazrneegb7gwqsvmwq3koglyxxcxz2fauy3@j4vobi7nbsh6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: NhyWVY9zr65PXL4IzQ0IrHxi8Up-kPAS
-X-Proofpoint-ORIG-GUID: NhyWVY9zr65PXL4IzQ0IrHxi8Up-kPAS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3MCBTYWx0ZWRfX68lFbvCh8kUv
- twqJP+y0c7BGEH74vSLUE9HxHQREDWX2bffQIl8B/PjGv0fD78tItS2rROu8n833GEsgNy+F2ay
- Z6HcADuQ7ojhMyDugxYgfASRJHbEPqw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3MCBTYWx0ZWRfX69+ujSZJkrLU
- IH/4i0/vyIjXtrtKGQZm81zf5XYqEzGEDGgDAO4LaJ0XKPbisE2VWp+/oPb4h+Z8JPlebyrp3fs
- T0oMtIoKtY93f8vSZ8Pu7i5esSvcvVJsgFtTHIYIaUuXTWPYUjx8XWsbufNHQAU4WiD9D1UjgLK
- 5BzQPsiKdoOJtSj3XdMyhtlDL+k3mJYujsj/OOz8rWO7vtLZOlGDORjxHNhSRoZo/WySb4YEEms
- +zi9utamVd84X8zdXPkJfL14aSbmG54zmQfVfXzQ4KRDjyh7+rawipWpRtIkq87rLlKFHzjAall
- 3tZbgfH6Fp30GQfbBZ7I5pJx2zF32tWb+orHcCfqI3+GpHY3Ig3+N23uBj6LwUnPm/JbSd2TeBZ
- FSZ2PHsZeKnqWKt0xQD5lTuiZlJdW+PljA9wpgO6o4Be4n3PnvB1McKmp77xBd1v7ntEOwdMg3l
- /QDNPM2CmM/5BxCGXaQ==
-X-Authority-Analysis: v=2.4 cv=QZfzLcbv c=1 sm=1 tr=0 ts=6abaa79b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=69EAbJreAAAA:8
- a=JF9118EUAAAA:8 a=IYXIzjRPg5gYPgzrHYoA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- suspectscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280070
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260921142910.1462880-1-alex.bennee@linaro.org>
+In-Reply-To: <20260921142910.1462880-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Sep 2026 18:57:09 +0100
+X-Gm-Features: AclHuK_Nvl__Z2zn_qWyjTMlzHzSV-sBV5P3IHoAompVNR4gwPVZt1ThHbN5BVY
+Message-ID: <CAFEAcA8E8hpWbr677yyaFkOioyDaLv8CaSiPxiDoOTP+YSbbNg@mail.gmail.com>
+Subject: Re: [RFC PATCH] target/arm: fix user-mode emulation of
+ ID_AA64MMFR0_EL1
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,135 +118,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 21 Sept 2026 at 15:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
+ote:
+>
+> Since kernel commit b130a8f70cbbf9 (KVM: arm64: Check advertised
+> Stage-2 page size capability) the relevant Stage 2 have been pegged at
+> 1 f(4KB granule not supported at stage 2) by the kernel. As a result
+> the behaviour of the test differs when run on real HW compared to
+> under emulation:
+>
+>   id_aa64mmfr0_el1    : 0x00000111ff000000
+>     !!extra bits!!    : 0x0000011100000000
+>
+> Update the test with a new helper to explicitly test for fixed bits
+> and update v8_user_idregs to match real systems.
 
+Huh, 2020; that's not a recent change at all...
 
-On 9/28/2026 7:46 AM, Andrew Jones wrote:
-> On Thu, Sep 17, 2026 at 02:44:03PM -0300, Daniel Henrique Barboza wrote:
->> Add tests for the recently added riscv-server-ref machine:
->>
->> - a new test_opensbi.py test.  The idea is to have a quick test that can
->> catch trivial regressions that would prevent OpenSBI to finish;
->> - a new Linux boot "thorough" test that will boot the machine up to the
->> buildroot prompt.
->> - a TPM specific selftest for the riscv-server-ref board.  The test
->> will be skipped if there's no 'swtpm' in the host.
->>
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
->> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
->> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->> Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
->> ---
->>   tests/functional/riscv64/meson.build        |  2 +
->>   tests/functional/riscv64/test_opensbi.py    |  4 +
->>   tests/functional/riscv64/test_server_ref.py | 90 +++++++++++++++++++++
->>   3 files changed, 96 insertions(+)
->>   create mode 100755 tests/functional/riscv64/test_server_ref.py
->>
->> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
->> index d1a3e6c2bf..2d22e49efd 100644
->> --- a/tests/functional/riscv64/meson.build
->> +++ b/tests/functional/riscv64/meson.build
->> @@ -3,6 +3,7 @@
->>   test_riscv64_timeouts = {
->>     'boston' : 120,
->>     'k230' : 120,
->> +  'server_ref' : 120,
->>     'tuxrun' : 120,
->>   }
->>   
->> @@ -15,6 +16,7 @@ tests_riscv64_system_thorough = [
->>     'endianness',
->>     'boston',
->>     'k230',
->> +  'server_ref',
->>     'sifive_u',
->>     'tt_atlantis',
->>     'tuxrun',
->> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
->> index 0f8beb7e7a..367e131164 100755
->> --- a/tests/functional/riscv64/test_opensbi.py
->> +++ b/tests/functional/riscv64/test_opensbi.py
->> @@ -36,5 +36,9 @@ def test_riscv_virt(self):
->>           self.set_machine('virt')
->>           self.boot_opensbi()
->>   
->> +    def test_riscv_server_ref(self):
->> +        self.set_machine('riscv-server-ref')
->> +        self.boot_opensbi()
->> +
->>   if __name__ == '__main__':
->>       QemuSystemTest.main()
->> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
->> new file mode 100755
->> index 0000000000..ad29094dbe
->> --- /dev/null
->> +++ b/tests/functional/riscv64/test_server_ref.py
->> @@ -0,0 +1,90 @@
->> +#!/usr/bin/env python3
->> +#
->> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> +#
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +#
->> +"""
->> +riscv-server-ref board test
->> +"""
->> +
->> +import os
->> +import tempfile
->> +import subprocess
->> +
->> +from qemu_test import QemuSystemTest, Asset
->> +from qemu_test import wait_for_console_pattern
->> +from qemu_test import skipIfMissingCommands
->> +
->> +class RiscvServerRefTest(QemuSystemTest):
->> +    """
->> +    Test the riscv-server-ref board
->> +    """
->> +
->> +    ASSET_KERNEL = Asset(
->> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
->> +         'master/riscv/images/virt64/buildroot/Image'),
->> +        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
->> +
->> +    ASSET_ROOTFS = Asset(
->> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
->> +         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
->> +        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
->> +
->> +    def do_test_boot_linux_test(self, tpmstate_dir=None):
->> +        self.set_machine('riscv-server-ref')
->> +        kernel_path = self.ASSET_KERNEL.fetch()
->> +        rootfs_path = self.ASSET_ROOTFS.fetch()
->> +
->> +        self.vm.add_args('-kernel', kernel_path)
->> +        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
->> +        self.vm.add_args('-drive',
->> +            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
->> +        self.vm.add_args('-device', 'ich9-ahci,id=ahci0')
->> +        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci0.0')
-> 
-> Any reason not to use nvme here like the documented command line does? We
-> could drop AHCI in that case.
+I don't understand what the above output is intended to tell me,
+though. What are "extra bits"? In the actual implementation code
+in helper.c all we define is exported bits and fixed bits. I think
+we could stand to be a bit more verbose in the test program output
+in saying what the test thinks the problem is.
 
-Didn't find a way of booting a nvme type disk with "-kernel" that produces an output
-compatible with boot_linux_test.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4566
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  target/arm/helper.c         |  7 +++++--
+>  tests/tcg/aarch64/sysregs.c | 31 ++++++++++++++++++++++++++++---
+>  2 files changed, 33 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index c3f607e6d6b..7e65f072a4a 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -6902,8 +6902,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                                 R_ID_AA64FPFR0_F8CVT_MASK },
+>              { .name =3D "ID_AA64MMFR0_EL1",
+>                .exported_bits =3D R_ID_AA64MMFR0_ECV_MASK,
+> -              .fixed_bits =3D (0xfu << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
+> -                            (0xfu << R_ID_AA64MMFR0_TGRAN4_SHIFT) },
+> +              .fixed_bits =3D (0xfULL << R_ID_AA64MMFR0_TGRAN64_SHIFT) |
+> +                            (0xfULL << R_ID_AA64MMFR0_TGRAN4_SHIFT) |
+> +                            (0x1ULL << R_ID_AA64MMFR0_TGRAN4_2_SHIFT) |
+> +                            (0x1ULL << R_ID_AA64MMFR0_TGRAN64_2_SHIFT) |
+> +                            (0x1ULL << R_ID_AA64MMFR0_TGRAN16_2_SHIFT) }=
+,
 
-In the (hopefully near) future, when we have an upstream EDK2 firmware compatible with
-this board, we'll revisit this test.  We want to have the same command line we're
-reporting in the docs.
+This change looks OK: the rule for the ID registers at EL0
+(per https://docs.kernel.org/arch/arm64/cpu-feature-registers.html )
+is that fields not visible to userspace should have the value
+indicating "feature is missing". That is:
+ * for TGran16: 0
+ * for TGran64 and TGran4: 0b1111
+ * for TGran16_2, TGran64_2, TGran4_2: 0b0001
 
-For now we want a sanity check to see if the board is sane.  Using AHCI is good enough.
+and that's what we now define for the fixed_bits value. I think
+we could reasonably add a brief comment, though:
 
+ /*
+  * Linux does not expose the  TGRAN* fields to userspace and so they
+  * must read as the "this is not implemented" value for those fields
+  * (which is 0, 0b0001 or 0b1111 depending on the field)
+  */
 
-Thanks,
-Daniel
-
-
-> 
-> Thanks,
-> drew
-
+thanks
+-- PMM
 
