@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA97CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 230F6C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB3L-0000AQ-FQ; Mon, 28 Sep 2026 09:05:55 -0400
+	id 1xBB3E-0007sB-6W; Mon, 28 Sep 2026 09:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0u-0005P8-SO
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:30 -0400
+ id 1xBB13-0005Vh-Vc
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0r-0004O0-Sm
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:24 -0400
+ id 1xBB12-0004PU-87
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600601;
+ s=mimecast20190719; t=1790600611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
- b=OX2GQz/+2lJjxjC2MMLEV78cMaNYwwDVUXBmTX9RewZNiaAilD0pyzrzerKJz+dXJbvWj/
- vuX0y/ovVXH1b+BGOVRTS43z6xPJyejk6Ssi9nrz3BCq2liaoFVUnzzh2ClhRYULb7UIQN
- QnoSoau4rRS7FXFQgP+1TobgfPCPOIE=
+ bh=GOGGOosVOXz7SU22mlT+6Pco7bzFoUj282Mj5J/mKI0=;
+ b=KawcF2LQ6D+uLhGM5r8OWGEXrniGk3V6NvMU/wLr1rIcez/h7ydKwgmF2EkwAaWsOEr+YJ
+ yihiUWBo3mBhogzSjrYzfXjE8YsYO5YHx6Qml3oWI7JE7kLJZ6WIvaSBMmGxJhKKZT5F9m
+ SzaNso90fFafn1XeXTMeQ1yTwPLu6FE=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-bzDoey8cP4evzFwz17ArxA-1; Mon, 28 Sep 2026 09:03:18 -0400
-X-MC-Unique: bzDoey8cP4evzFwz17ArxA-1
-X-Mimecast-MFC-AGG-ID: bzDoey8cP4evzFwz17ArxA_1790600597
+ us-mta-677-0ejYtkwzM0epfrCYIObjjA-1; Mon, 28 Sep 2026 09:03:28 -0400
+X-MC-Unique: 0ejYtkwzM0epfrCYIObjjA-1
+X-Mimecast-MFC-AGG-ID: 0ejYtkwzM0epfrCYIObjjA_1790600607
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c25edb54d22so336331766b.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:18 -0700 (PDT)
+ a640c23a62f3a-c29d3ad6b74so149299966b.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600597; x=1791205397; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600607; x=1791205407; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
- b=CPGq1hyj2OGQDLjSVo3a0YKgZSRzK53tOQtVnnvAki2xj7eKaZpiNW7e964FbLNd4T
- J9aIdQZJ/wtb9izdrlIcY+G836ViZPQYsNF92TLPApcyIbgT6K5M7NBYa0JU0Is9QXs8
- Kf3XDEW6fVhVVWpbm11dXPTj+YdR+OUY69YxbMDcCZzdhvzgBo+fGGBrqXQRlZrBb35k
- gJvuWQtchY/e+DCakip18jM2T1KPShpLqtXr/Mdomf+dNoJBj1DDUeL3UZc1S/qz6ohj
- 12YL1lrvHlTy0mcSvTB6Q4iFxsWXrjVE3cLpp995qlFGMzjw0+FjdnnKYskUr9p8WyJU
- WmGw==
+ bh=GOGGOosVOXz7SU22mlT+6Pco7bzFoUj282Mj5J/mKI0=;
+ b=jl2PJYv7u4oQa6qDIregmM5ncXHRPIsnANKs0LwlFDWrd4Gcz0UmRNszI2/xoNdA71
+ gCIge5mqudmlOa1ZuUCSZkM6hk6XH+q+CVeqkUNsXZUxA0vCkRUv5y6z99WBWinB0Ysl
+ 0xpDVtp1gPhpq2aP84jdWnVoteU6jGOJeykVrurNMy3n7DcYJYdxDZxjTWMUnTde5oIu
+ w6aZXd6y8Rvt5t6HSI/Hb8kas2URjhQIj4Vf/7Vyw0EiG3PWrz6aGW3HDmwmxzBgE+PU
+ vmbFqrvCwy0YNx3wWpiaBHHh8z0SwlSk0BIXqbfeCq6KahPAyU1XImUkYf4vb3mVK5Q2
+ U1Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600597; x=1791205397;
+ d=1e100.net; s=20260707; t=1790600607; x=1791205407;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
- b=aEgVFjJYCQojDcajLQi8LFVy48su4MJDbA6yxV+4pw4T3+QVo0TO0c1KeOsOrCmBmm
- t9fLNjVLIi0fYSlxXStQIbOpeqNc10E0uQZ1weUCXLT366L2kKclrozgII3FHWWva9ID
- bmrBm8q15DRQAuFQIv5TW7RS3v1b/ZCMpH8qV2djo/+MJGVFieLgPU1meRj7/GCfnbTB
- FLYqPuXNHaD6whDvWf9xVYsB5UJIugggY9BE/RWcwllktyGz1/FY5gSZToXzD/40Gjfr
- dzH7xf2+jDUCpzqKZREkn++NWurOevAZDkhuElKIyf8BFe9QCb/YksnTBksnQeZw49K8
- 3I3A==
-X-Gm-Message-State: AFuF++lK1eUgpsgVXjQb0jCREQapzEr+BVwTj26aVb3PctTrlQGQCzZk
- pFVT9+ejkMFG//3/WCacDnzINh8QBxKQ9AVfEnnbkWso7k8iHz11H5XhTJ5MPlCVXr2b23NBipg
- Gpg22Pox17po9tMTF6aROaM/LS5uM0M4Wc6GBk/AzlPfuc1nlwGQdT0hlfTyN9o2eX7n7gdMVKf
- MMQAp8yCYXXc29GdpS/s2o72evU45moMujWA//P6RQ
-X-Gm-Gg: AYBFou2kswTmsMKe+g93vTstyEAjG9v5GUgHk3xnr8rzjE2vgHbaXziCxKhPHqtrIln
- /lUgKfXsKzdvRCmhHgriQAWHDwrZvCOPsJJdOW8w1BfufPUVUR+YYcQlkwgYd8HcZbmU1vKi4Fu
- 8mdPu+AywVXp0quGD3g8tijY5A2pmiTgwjBs8Al8j1fqooyNnvN8hSBTzytRic5zcWfWZaC3wxC
- LJLECyXoiju4oXjRHI3bTPrFlEI9HBS4UkstF6rBvQoFdlVEZiJ0AFL6roarj7ZCDoCYvfXusOY
- EmaykFBFvYmrKJf8QmdzFAJi1+OYCAEQQq9c2/g3tcGAEmPCGiCWdYDykQH+cmOKEQDzA8N8Nhe
- 1WRYqcAr5bS2ZVDadNHPWs7aPPHtXJcrTNXPiqHRmB+jQdCBA+irncpPBe0+JKABVsrw+qW/hD/
- GjrEY7
-X-Received: by 2002:a17:907:96a2:b0:c29:f5d8:9c7e with SMTP id
- a640c23a62f3a-c2ac22cb906mr1124339466b.45.1790600591348; 
- Mon, 28 Sep 2026 06:03:11 -0700 (PDT)
-X-Received: by 2002:a17:907:96a2:b0:c29:f5d8:9c7e with SMTP id
- a640c23a62f3a-c2ac22cb906mr1124331866b.45.1790600589805; 
- Mon, 28 Sep 2026 06:03:09 -0700 (PDT)
+ bh=GOGGOosVOXz7SU22mlT+6Pco7bzFoUj282Mj5J/mKI0=;
+ b=aa1+l1CZMCEWjS4ov1T/V0r7bufQ7t12toLrA+pATY3+YboTeBnNaukky8twOhZL+F
+ j4RcVzJtyRddyMkgVGBGiYxW0uue2UXGJzvTrVWjzFl/Kp9t1MQRCHmYRv6ILi4EIjBT
+ wa5SuA5K/EwP4O7oVv4gpnMX57Om3R5806TTUBWU8Xs+fRBUK1LfLM93Tj1HWfCYPOlf
+ nJ30N79ULlwSVRx7uJcOp0YCtldE6Dr2m7Plg6PmEzlL1F/7yk6f8oB0kaFONQiWpAHx
+ 7qEHOUUGfzePds9ZqEP8KF7HqJf6pWHxkfjKzsTcPnsqZ8rpn0cu5hoYqTy5tCSucjA1
+ BRRQ==
+X-Gm-Message-State: AFuF++lWO8NAqJZYUEw8ouytYvtFc3uo7Vk2Y/BuVHyxpkvPgrZXyIvS
+ bcJUhLicpddlaK0n+aIQG1Kn0Xou0Av9AQXkX+tbU7uGZOkuHmexj1y0xiIMJLFAQSohkR8xSFs
+ O7YNLuWjsfppZ3df38vCKtbXaGXBZ6ADyczeoeNihR2Sjw1k4hZBLEt+mrdLd/bnCMRSTQr7dmu
+ +YzCPfKNl41dd5kVXIRfE8vljJqmHouBXoeooV+5++
+X-Gm-Gg: AYBFou23aX08Qi8XdODMrs3y4/FRaX+3WG1vAJjliUoWwkhnyRkyyZLKo4BeREJHzDM
+ zP1ogzuaoa9XMSuHkFDLeplBVzyRfLHb5lfzHpVzhdp0SUvax+8ediGEMmWP+1BrLsvPKsrunkN
+ WGJ7OAD1TSUsWc8WsjzbGwmhX0K4/V0+nxIsH/RYDfR3zwZrfiz2E6TvUmzIEvBnVbxFUhxdGQ3
+ lPKqJhluRy3/MZviIP2n5SdTvGdYXsMS3CdqxRg1aNrIrgEp2XIKOOwLdLD32xI8kllP4OCKzwd
+ TlJoyW7Aec58noPYil7hnUwp3PB811QvZx80koI/wiII/zJB5Lvy+O6nWmnjKmQUK+V8CwozXMM
+ zOpn0GzHMhyRiLT3SOc0/qAiaQjCJS/d1XM+fLmIiWJLPwAxt9GgnfYlxBIGGxxi3Q3srHYpNkX
+ 0mhMoL
+X-Received: by 2002:a17:907:9489:b0:c2d:d277:da41 with SMTP id
+ a640c23a62f3a-c2dd277de66mr264672766b.38.1790600607415; 
+ Mon, 28 Sep 2026 06:03:27 -0700 (PDT)
+X-Received: by 2002:a17:907:9489:b0:c2d:d277:da41 with SMTP id
+ a640c23a62f3a-c2dd277de66mr264671266b.38.1790600606887; 
+ Mon, 28 Sep 2026 06:03:26 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2dec4cec91sm37033866b.28.2026.09.28.06.03.04
+ a640c23a62f3a-c2b0f2f4f53sm359127666b.47.2026.09.28.06.03.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:03:04 -0700 (PDT)
+ Mon, 28 Sep 2026 06:03:25 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/30] target/i386/tcg: generalize zero- and sign-extension
-Date: Mon, 28 Sep 2026 15:02:10 +0200
-Message-ID: <20260928130228.877003-13-pbonzini@redhat.com>
+Cc: "Chang S. Bae" <chang.seok.bae@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 18/30] target/i386/tcg: mark XSAVE* as not allowing REX2
+Date: Mon, 28 Sep 2026 15:02:16 +0200
+Message-ID: <20260928130228.877003-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
@@ -120,175 +121,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow applying sign and zero extension to T1 load and T0 writeback.
-T1 load is useful for some cases where the tables are hacked to
-put the sign extended operand in T0; T0 writeback is used for APX ZU
-instructions.
-
+Reviewed-by: Chang S. Bae <chang.seok.bae@intel.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     | 15 +++++++++++----
- target/i386/tcg/decode-new.c.inc | 21 +++++++++++----------
- target/i386/tcg/emit.c.inc       | 16 ++++++++++------
- 3 files changed, 32 insertions(+), 20 deletions(-)
+ target/i386/tcg/decode-new.h     |  3 +++
+ target/i386/tcg/decode-new.c.inc | 21 ++++++++++-----------
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 25f7d2215ee..1b5a91b4f46 100644
+index 1b5a91b4f46..bb686c9efd0 100644
 --- a/target/i386/tcg/decode-new.h
 +++ b/target/i386/tcg/decode-new.h
-@@ -148,6 +148,12 @@ typedef enum X86OpUnit {
-     X86_OP_MMX,     /* address in either s->ptrX or s->A0 depending on has_ea */
- } X86OpUnit;
- 
-+typedef enum X86OpExt {
-+    X86_EXT_None,
-+    X86_EXT_Signed,
-+    X86_EXT_Unsigned,
-+} X86OpExt;
+@@ -187,6 +187,9 @@ typedef enum X86InsnCheck {
+     /* Vendor-specific checks for Intel/AMD differences */
+     X86_CHECK_i64_amd = 2048,
+     X86_CHECK_o64_intel = 4096,
 +
- typedef enum X86InsnCheck {
-     /* Illegal or exclusive to 64-bit mode */
-     X86_CHECK_i64 = 1,
-@@ -226,10 +232,6 @@ typedef enum X86InsnSpecial {
-      */
-     X86_SPECIAL_MMX,
++    /* No REX2 prefix allowed */
++    X86_CHECK_no_rex2 = 8192,
+ } X86InsnCheck;
  
--    /* When loaded into s->T0, register operand 1 is zero/sign extended.  */
--    X86_SPECIAL_SExtT0,
--    X86_SPECIAL_ZExtT0,
--
-     /* Memory operand size of MOV from segment register is MO_16 */
-     X86_SPECIAL_Op0_Mw,
- } X86InsnSpecial;
-@@ -300,6 +302,10 @@ struct X86OpEntry {
-     X86OpSize    s3:8;
- 
-     X86InsnSpecial special:8;
-+    X86OpExt     ext0:2;
-+    X86OpExt     ext1:2;
-+    X86OpExt     ext2:2;
-+    unsigned     :2;
-     X86CPUIDFeature cpuid:8;
-     unsigned     vex_class:8;
-     X86VEXSpecial vex_special:8;
-@@ -314,6 +320,7 @@ typedef struct X86DecodedOp {
-     int8_t n;
-     MemOp ot;     /* For b/c/d/p/s/q/v/w/y/z */
-     X86OpUnit unit;
-+    X86OpExt ext;
-     bool has_ea;
-     int offset;   /* For MMX and SSE */
- 
+ typedef enum X86InsnSpecial {
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 26f6d6277be..07a627af5cf 100644
+index 8394924a7ed..194a99a4753 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -233,8 +233,12 @@
- #define op0_Rd .special = X86_SPECIAL_Op0_Rd,
- #define op2_Ry .special = X86_SPECIAL_Op2_Ry,
- #define avx_movx .special = X86_SPECIAL_AVXExtMov,
--#define sextT0 .special = X86_SPECIAL_SExtT0,
--#define zextT0 .special = X86_SPECIAL_ZExtT0,
-+#define sextwT0 .ext0 = X86_EXT_Signed,
-+#define zextwT0 .ext0 = X86_EXT_Unsigned,
-+#define sextT0  .ext1 = X86_EXT_Signed,
-+#define zextT0  .ext1 = X86_EXT_Unsigned,
-+#define sextT1  .ext2 = X86_EXT_Signed,
-+#define zextT1  .ext2 = X86_EXT_Unsigned,
- #define op0_Mw .special = X86_SPECIAL_Op0_Mw,
- #define btEvGv .special = X86_SPECIAL_BitTest,
+@@ -486,9 +486,9 @@ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+         [1] = X86_OP_ENTRYr(FXRSTOR,    M,y, cpuid(FXSR) p_00),
+         [2] = X86_OP_ENTRYr(LDMXCSR,    E,d, vex5 chk(VEX128) p_00),
+         [3] = X86_OP_ENTRYw(STMXCSR,    E,d, vex5 chk(VEX128) p_00),
+-        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00),
+-        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00),
+-        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00),
++        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00 chk(no_rex2)),
+         [7] = X86_OP_ENTRYw(NOP,        M,b, cpuid(CLFLUSH) p_00),
+     };
  
-@@ -1614,9 +1618,9 @@ static void decode_group2(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     int op = (get_modrm(s, env) >> 3) & 7;
-     entry->gen = group2_gen[op];
-     if (op == 7) {
--        entry->special = X86_SPECIAL_SExtT0;
-+        entry->ext1 = X86_EXT_Signed;
-     } else {
--        entry->special = X86_SPECIAL_ZExtT0;
-+        entry->ext1 = X86_EXT_Unsigned;
-     }
- }
- 
-@@ -2528,16 +2532,19 @@ static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_f
-         !decode_op(s, env, decode, &decode->op[0], e->op0, decode->b)) {
-         return false;
-     }
-+    decode->op[0].ext = e->ext0;
- 
-     if (e->op1 != X86_TYPE_None &&
-         !decode_op(s, env, decode, &decode->op[1], e->op1, decode->b)) {
-         return false;
-     }
-+    decode->op[1].ext = e->ext1;
- 
-     if (e->op2 != X86_TYPE_None &&
-         !decode_op(s, env, decode, &decode->op[2], e->op2, decode->b)) {
-         return false;
-     }
-+    decode->op[2].ext = e->ext2;
- 
-     if (e->op3 != X86_TYPE_None) {
-         decode->immediate = insn_get_signed(env, s, MO_8);
-@@ -3079,12 +3086,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         }
-         break;
- 
--    case X86_SPECIAL_SExtT0:
--    case X86_SPECIAL_ZExtT0:
--        /* Handled in gen_load.  */
--        assert(decode.op[1].unit == X86_OP_INT);
--        break;
--
-     case X86_SPECIAL_Op0_Mw:
-         assert(decode.op[0].unit == X86_OP_INT);
-         if (decode.op[0].has_ea) {
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index c83ab809408..54dc23ca624 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -266,23 +266,21 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
- #endif
-     case X86_OP_INT:
-         if (op->has_ea) {
--            if (v == s->T0 && decode->e.special == X86_SPECIAL_SExtT0) {
-+            if (op->ext == X86_EXT_Signed) {
-                 gen_op_ld_v(s, op->ot | MO_SIGN, v, s->A0);
-             } else {
-                 gen_op_ld_v(s, op->ot, v, s->A0);
+@@ -3008,15 +3008,14 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+                 goto illegal_op;
              }
- 
--        } else if (op->ot < MO_TL && v == s->T0 &&
--                   (decode->e.special == X86_SPECIAL_SExtT0 ||
--                    decode->e.special == X86_SPECIAL_ZExtT0)) {
-+        } else if (op->ot < MO_TL && op->ext != X86_EXT_None) {
-             if (op->ot == MO_8 && byte_reg_is_xH(s, op->n)) {
--                if (decode->e.special == X86_SPECIAL_SExtT0) {
-+                if (op->ext == X86_EXT_Signed) {
-                     tcg_gen_sextract_tl(v, cpu_regs[op->n - 4], 8, 8);
-                 } else {
-                     tcg_gen_extract_tl(v, cpu_regs[op->n - 4], 8, 8);
-                 }
-             } else {
--                if (decode->e.special == X86_SPECIAL_SExtT0) {
-+                if (op->ext == X86_EXT_Signed) {
-                     tcg_gen_ext_tl(v, cpu_regs[op->n], op->ot | MO_SIGN);
-                 } else {
-                     tcg_gen_ext_tl(v, cpu_regs[op->n], op->ot);
-@@ -347,6 +345,12 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
-     case X86_OP_INT:
-         if (op->has_ea) {
-             gen_op_st_v(s, op->ot, v, s->A0);
-+        } else if (op->ot < MO_TL && op->ext != X86_EXT_None) {
-+            if (op->ext == X86_EXT_Signed) {
-+                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot | MO_SIGN);
-+            } else {
-+                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot);
-+            }
-         } else {
-             gen_op_mov_reg_v(s, op->ot, op->n, v);
          }
+-        if (decode.e.check & X86_CHECK_prot_or_vm86) {
+-            if (!PE(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_prot_or_vm86) && !PE(s)) {
++            goto illegal_op;
+         }
+-        if (decode.e.check & X86_CHECK_no_vm86) {
+-            if (VM86(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_no_vm86) && VM86(s)) {
++            goto illegal_op;
++        }
++        if ((decode.e.check & X86_CHECK_no_rex2) && (s->prefix & PREFIX_REX2)) {
++            goto illegal_op;
+         }
+         if ((decode.e.check & X86_CHECK_VEX128) && s->vex_l) {
+             goto illegal_op;
 -- 
 2.55.0
 
