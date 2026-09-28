@@ -4,115 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39772C9833E
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 09:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9478C9833E
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 09:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB7MB-0002xb-Iu; Mon, 28 Sep 2026 05:09:07 -0400
+	id 1xB7Y9-0004Jn-Pe; Mon, 28 Sep 2026 05:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1xB7M9-0002xF-Tw; Mon, 28 Sep 2026 05:09:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1xB7M7-0004Co-S2; Mon, 28 Sep 2026 05:09:05 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68S85Qnf2949359; Mon, 28 Sep 2026 09:08:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=nklpXVrtdAxgfmWDj
- ZoMMEO45+Axx3mQMWmXxzUiTq0=; b=GIHoXQ0aw5F3GfuEDbtF8lLXoIjrYAx25
- nB6l4Egfs0FtT+Mubl4q+Aj5HpPkhpdBeFpAFP0xyTJNCpW9wD/pm2GZZURIWVnO
- f9n1eWv3fx52RaNkss80q72+ciV3x8xolkR+4VmLzlfXV1j4bUYT3ejL3kM2kLZB
- g4nc9cFxKMjcMNDFXTK2MEkOpF7jEcPkJp3pLDWMdkj6LFlVPhxS/40u1BD4OuEZ
- jmPLEEZbyG+sh0waebB9Vd6bVHuqTQZDgK2bezu/FrtHarlqk9ZV3/J48w70xk4q
- FysuPFZDy7bMArhlRnXf4RXuNgX23/amgk0iVCPgSdfSJIIJjJfMA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qr0avh-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 09:08:53 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68S82VE24048563; Mon, 28 Sep 2026 09:08:52 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxrcpmp65-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 28 Sep 2026 09:08:52 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68S98m6D39911870
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 28 Sep 2026 09:08:48 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D19D20043;
- Mon, 28 Sep 2026 09:08:48 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4373120040;
- Mon, 28 Sep 2026 09:08:48 +0000 (GMT)
-Received: from li-fa2166e9-1f7d-4f1a-8ca5-7ccf0f022c25.ehn-de.ibm.com (unknown
- [9.224.79.183]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 28 Sep 2026 09:08:48 +0000 (GMT)
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-To: filip.hejsek@gmail.com
-Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, brueckner@linux.ibm.com,
- farman@linux.ibm.com, cohuck@redhat.com,
- maximilian.immanuel.brandtner@protonmail.com
-Subject: [PATCH v2] s390x/sclpconsole: implement resizing for vt220 consoles
-Date: Mon, 28 Sep 2026 11:08:46 +0200
-Message-ID: <20260928090846.2315532-1-maxbr@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260921121641.1354712-1-maxbr@linux.ibm.com>
-References: <20260921121641.1354712-1-maxbr@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xB7Y6-0004JA-BS
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:21:26 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xB7Y3-00056n-Ip
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 05:21:26 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a996c8adf3so4508910a12.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 02:21:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790587280; cv=none;
+ d=google.com; s=arc-20260327;
+ b=KneM+Xv7J79awBWhPNDjghghPjhAN7wKBGD1hkEVdqvtZBAYsCDkOSchrZXheD2ntU
+ z2KAW7hKmlsQ4fa6k93XT5Sw2b9iP42xNZo9b2pQ/Hx7GtxCPEEzqKrbbuVhQF+awLud
+ NNFFaFJ7pQCpKkmHTxMQJFLnz2CpDK/KxV81F+mDNk9imEu02EqRh7H+7T/c8QR2BcZW
+ iBFD1Ufq8gTvFzJvf/7hDiQiBNQaHfKldTXY2fGaxJ9u6oWsOujlWX6xWrAd7SRmYs6N
+ VyGnDTOH4X3KaiEQ0cqYqMruMAek7aOx9gVriZWivlZaEqK4kZI1EbNeQAoiXYinax01
+ Fcew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=BaD9gTLRQUl+GaSgB7F/ge7MYAXO7CUa8FzcMMr2ZCQ=;
+ fh=6jdXT6b4cnfDza0iCJZs0pGSp8j3wtI2284GwcwH8j8=;
+ b=Ni172EWFPJESMzvcPKcegzqs5RlC2ZlHLIhhl2tFALTKTYvTFESyKQwlnsr7Du/iO4
+ 2VEn56+j/E8k6eLws7XuYrldvxD862cGta+9VTOIZY7uZRNOi5j6iHBD5FDtsdo5Mtna
+ Tf+oyWexs24htrUSiQ/TxHHjNF40It/adGMUoU0UeswVJG/cvb9XZXJupJQ/ELS1laSB
+ iIlIHnfTIu6fJTihUihrm1BpJGhTQlmtu6pDyab5i2QBv7tNvPpdsjHkpi/vAA6ICvYc
+ nd1+V23qzT5H3yjUPmz99qSXTguSE3FwP145yDMGI4f95lDYDiDX0WD8SxnNP8d5Azs3
+ E2Ww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1790587280; x=1791192080; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BaD9gTLRQUl+GaSgB7F/ge7MYAXO7CUa8FzcMMr2ZCQ=;
+ b=myj5srgZ9+yI08hIs4xNsdXp2/qE2F/sBsdaeSLM0GHdbk6ivqYKZpF7ehrXluvpxi
+ eRqLhcc47i7hG7aki0MaX/awW+XQLdONfcn7JiSLjKx33iLyfSvphA7eu/rrxFsb9H/j
+ BCSiv5tT1RHRPjAChxVoAgkfImCwyAKxIx5mwKPRi3+YXsRL9OAYlYThrf3SrsqaOJ8g
+ K5Dz4SSbA5IXNt1kYedb7Jk5g/8xNXoEmzOUE+OjRdk1zkngM434pQxW2LgzoTH12TdV
+ QDNyNIIeSWtGGkVTKz4iyemejksv3PIIyxY74Gc4LnwRdvxZYHJPMBGziEXbbKqc9rd6
+ 1rKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790587280; x=1791192080;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BaD9gTLRQUl+GaSgB7F/ge7MYAXO7CUa8FzcMMr2ZCQ=;
+ b=KgLUvCakPcsKizdjFsrMBSLvnjfbrohJuh8DjzJvc2PGerqRdSTMtDisCi0+ecx239
+ gVrtEYjPzlUBXIN/jxa3OghJtkGV2za0w0rWHq5V3Sd4gyf3F3Y6491WbTRQAGhzdwon
+ CY03I3XR2aBHAl6MvW240I0N75CMuI1U7PXkbAsac5qQMpQWBs5u/kogcltTfwEb/VUQ
+ 6jZaIWxHsxqKmrop90MFJY9zNdR+fudwrfDKdzCjDV1cFlEY5nqoxZ2F9idiCdWpKXas
+ LsEPtjauOq0Md0wvAl2yn9MWzRZasMMROTUDKZVI+16X8BNC+N36EBCDrcvrIzVMzkVG
+ /Q3A==
+X-Gm-Message-State: AFq9FYIuFUyeb/65RHcuY5Hfdf8P0JRloW3hp6KrqeFhMblPYYF9ycbz
+ hG6CXOeIqL+boT03lxV4cwv8jxF0tPyntk1qkAVAhDeO+CXolEa+/rjUoR91UApl6siyDO28J37
+ jyEM93mMRQNByTLj0kFuunERX+91QLwU=
+X-Gm-Gg: AYBFou3zH57Q7OQPi6LwIjU4oSOhHomOfH6PBv433wlFW5Q1qXw05xdqdzYBg6q+AYh
+ wlQPLMo4nksm22ydDLam8HQN+mWOur3oZ5T+YySPX2BJbsb5PiE/lZbKtnKA5oejhJCwra5G0f4
+ kOJeRnGVT7+Ma+12pXMe/M2WY1TRKHzzxPuvOzYbTNI9nIzHB8uE8rD7eOvVLzpWlJ5xfExVVif
+ bZwNoSRCCQApG1hsFLP5UOCfGwUdkWSG2AigPMPwXe5yoAiNcbpu8ZN3hunO79uwmtQgxD8O/JH
+ PdwU9IM6dzUk8924brLO/aGe/g7W66s0U4QfZlxLtakpeleU0PopH4s=
+X-Received: by 2002:a05:6402:43ca:b0:6aa:f809:ef40 with SMTP id
+ 4fb4d7f45d1cf-6aaf809f25fmr5698928a12.28.1790587280073; Mon, 28 Sep 2026
+ 02:21:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDAzNiBTYWx0ZWRfX94WxmqsjF7xi
- 0p4sGsXoPpChgSgHLJ7jPxf5A/r2/jY0L93rBMpubtt4QfXR2Uv+c9SsXV6ySEGLPGvZc+TPuRf
- ccbOVXGtJmWpsN+6dpLumOW8xrfMfKaoSeK707GIwQfE1cwMGTZlychxFSqvzUQ2b+D3jyOK+n8
- rvSWczKVC7xxeFTjyceIGBXmAOpLd2CMBZBeuxmRr2de8q3WoRIO6XLu01WktBVwDKvTLBCoBAE
- GLMZWzpXIBNpr96I6iJxB+nwiunSBCnUAi7OmGd9azvK15HhRJPiQCrzmg/crcUnnph57NQ6/xK
- RqYm0FGg9Hzt9NGUIjCAWKJNidchyf91OM3uJ7rYWq/faaOeKf4F55REuq+ztEMiP/Day8RvijL
- tK6RytKf8E3LVyiADF+8YcNwKti4uuoVGbOQ+lJeFlVpL3ro9wpaBaV8qz3ILzO3B0xhpnXiWVq
- U0ZacttWUFio6tJohcQ==
-X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6aba2ea5 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
- a=q2DVYbRnPiRVfZbQHhQA:9
-X-Proofpoint-ORIG-GUID: z9PKVFXnBPfDdMWgyKAeguEigjq2zEdC
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDAzNiBTYWx0ZWRfX4pX1Mq0RXNMB
- bJXmzlVve5aLfwUjM5ZkNCA6L2VN43L+6pwkWenBNw0IEzDBq/vxIMlEj4BXa5JbKQ2z7X8JPvA
- pgWEO+G6SvJGAD0bgfxGbetu/qFLQPo=
-X-Proofpoint-GUID: VM0s8bNKYpbIP_N8o8B_oSLLP1DtaNXG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_01,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609280036
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=maxbr@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260926070057.1234-1-luoyonggang@gmail.com>
+ <20260926070057.1234-8-luoyonggang@gmail.com>
+ <87zex1hhhj.fsf@pond.sub.org>
+In-Reply-To: <87zex1hhhj.fsf@pond.sub.org>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Mon, 28 Sep 2026 17:21:06 +0800
+X-Gm-Features: AclHuK-lburuGsp0597nwjJbOsl0IgXfPGG1dSZcoBfVhOTpTxugPjtZMvEfng0
+Message-ID: <CAE2XoE9_R13NsUWu-s12QA9RBJykR87TEMh3VmndNEXQsCkNtg@mail.gmail.com>
+Subject: Re: [PATCH v4 07/55] tests/unit: add test-target-info
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+Content-Type: multipart/alternative; boundary="000000000000c4a926065c8796e1"
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,193 +123,273 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a tty code to indicate a resize frame. The body contains two big
-endian 16-bit integers rows and columns.
+--000000000000c4a926065c8796e1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-After reset, the guest must be informed of the terminal size again. A
-chardev that doesn't report its size yields 0x0, which shouldn't replace
-the guest's default.
+On Mon, Sep 28, 2026 at 5:07=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Yonggang Luo <luoyonggang@gmail.com> writes:
+>
+> > Collect each target-info-def.c object in target_info_def_objects,
+> > keyed by target dir. Link every value so constructors fill the
+> > list. Assert target_info() is not NULL and target_info_list() has
+> > one entry per linked object.
+> >
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>
+> Doesn't compile for me:
+>
+> ../tests/unit/meson.build:47:37: ERROR: Unknown method "values" in object
+<[DictHolder] holds [dict]: {'aarch64-linux-user': <ExtractedObjects
+'qemu-aarch64-linux-user': [<File: target-info-def.c (not built)>]>,
+'aarch64_be-linux-user': <ExtractedObjects 'qemu-aarch64_be-linux-user':
+[<File: target-info-def.c (not built)>]>, 'alpha-linux-user':
+<ExtractedObjects 'qemu-alpha-linux-user': [<File: target-info-def.c (not
+built)>]>, 'arm-linux-user': <ExtractedObjects 'qemu-arm-linux-user':
+[<File: target-info-def.c (not built)>]>, 'armeb-linux-user':
+<ExtractedObjects 'qemu-armeb-linux-user': [<File: target-info-def.c (not
+built)>]>, 'hexagon-linux-user': <ExtractedObjects
+'qemu-hexagon-linux-user': [<File: target-info-def.c (not built)>]>,
+'hppa-linux-user': <ExtractedObjects 'qemu-hppa-linux-user': [<File:
+target-info-def.c (not built)>]>, 'i386-linux-user': <ExtractedObjects
+'qemu-i386-linux-user': [<File: target-info-def.c (not built)>]>,
+'loongarch64-linux-user': <ExtractedObjects 'qemu-loongarch64-linux-user':
+[<File: target-info-def.c (not built)>]>, 'm68k-linux-user':
+<ExtractedObjects 'qemu-m68k-linux-user': [<File: target-info-def.c (not
+built)>]>, 'microblaze-linux-user': <ExtractedObjects
+'qemu-microblaze-linux-user': [<File: target-info-def.c (not built)>]>,
+'microblazeel-linux-user': <ExtractedObjects
+'qemu-microblazeel-linux-user': [<File: target-info-def.c (not built)>]>,
+'mips-linux-user': <ExtractedObjects 'qemu-mips-linux-user': [<File:
+target-info-def.c (not built)>]>, 'mips64-linux-user': <ExtractedObjects
+'qemu-mips64-linux-user': [<File: target-info-def.c (not built)>]>,
+'mips64el-linux-user': <ExtractedObjects 'qemu-mips64el-linux-user':
+[<File: target-info-def.c (not built)>]>, 'mipsel-linux-user':
+<ExtractedObjects 'qemu-mipsel-linux-user': [<File: target-info-def.c (not
+built)>]>, 'mipsn32-linux-user': <ExtractedObjects
+'qemu-mipsn32-linux-user': [<File: target-info-def.c (not built)>]>,
+'mipsn32el-linux-user': <ExtractedObjects 'qemu-mipsn32el-linux-user':
+[<File: target-info-def.c (not built)>]>, 'or1k-linux-user':
+<ExtractedObjects 'qemu-or1k-linux-user': [<File: target-info-def.c (not
+built)>]>, 'ppc-linux-user': <ExtractedObjects 'qemu-ppc-linux-user':
+[<File: target-info-def.c (not built)>]>, 'ppc64-linux-user':
+<ExtractedObjects 'qemu-ppc64-linux-user': [<File: target-info-def.c (not
+built)>]>, 'ppc64le-linux-user': <ExtractedObjects
+'qemu-ppc64le-linux-user': [<File: target-info-def.c (not built)>]>,
+'riscv32-linux-user': <ExtractedObjects 'qemu-riscv32-linux-user': [<File:
+target-info-def.c (not built)>]>, 'riscv64-linux-user': <ExtractedObjects
+'qemu-riscv64-linux-user': [<File: target-info-def.c (not built)>]>,
+'s390x-linux-user': <ExtractedObjects 'qemu-s390x-linux-user': [<File:
+target-info-def.c (not built)>]>, 'sh4-linux-user': <ExtractedObjects
+'qemu-sh4-linux-user': [<File: target-info-def.c (not built)>]>,
+'sh4eb-linux-user': <ExtractedObjects 'qemu-sh4eb-linux-user': [<File:
+target-info-def.c (not built)>]>, 'sparc-linux-user': <ExtractedObjects
+'qemu-sparc-linux-user': [<File: target-info-def.c (not built)>]>,
+'sparc32plus-linux-user': <ExtractedObjects 'qemu-sparc32plus-linux-user':
+[<File: target-info-def.c (not built)>]>, 'sparc64-linux-user':
+<ExtractedObjects 'qemu-sparc64-linux-user': [<File: target-info-def.c (not
+built)>]>, 'x86_64-linux-user': <ExtractedObjects 'qemu-x86_64-linux-user':
+[<File: target-info-def.c (not built)>]>, 'xtensa-linux-user':
+<ExtractedObjects 'qemu-xtensa-linux-user': [<File: target-info-def.c (not
+built)>]>, 'xtensaeb-linux-user': <ExtractedObjects
+'qemu-xtensaeb-linux-user': [<File: target-info-def.c (not built)>]>,
+'aarch64-softmmu': <ExtractedObjects 'qemu-aarch64-softmmu': [<File:
+target-info-def.c (not built)>]>, 'alpha-softmmu': <ExtractedObjects
+'qemu-alpha-softmmu': [<File: target-info-def.c (not built)>]>,
+'arm-softmmu': <ExtractedObjects 'qemu-arm-softmmu': [<File:
+target-info-def.c (not built)>]>, 'avr-softmmu': <ExtractedObjects
+'qemu-avr-softmmu': [<File: target-info-def.c (not built)>]>,
+'hexagon-softmmu': <ExtractedObjects 'qemu-hexagon-softmmu': [<File:
+target-info-def.c (not built)>]>, 'hppa-softmmu': <ExtractedObjects
+'qemu-hppa-softmmu': [<File: target-info-def.c (not built)>]>,
+'i386-softmmu': <ExtractedObjects 'qemu-i386-softmmu': [<File:
+target-info-def.c (not built)>]>, 'loongarch64-softmmu': <ExtractedObjects
+'qemu-loongarch64-softmmu': [<File: target-info-def.c (not built)>]>,
+'m68k-softmmu': <ExtractedObjects 'qemu-m68k-softmmu': [<File:
+target-info-def.c (not built)>]>, 'microblaze-softmmu': <ExtractedObjects
+'qemu-microblaze-softmmu': [<File: target-info-def.c (not built)>]>,
+'mips-softmmu': <ExtractedObjects 'qemu-mips-softmmu': [<File:
+target-info-def.c (not built)>]>, 'mips64-softmmu': <ExtractedObjects
+'qemu-mips64-softmmu': [<File: target-info-def.c (not built)>]>,
+'mips64el-softmmu': <ExtractedObjects 'qemu-mips64el-softmmu': [<File:
+target-info-def.c (not built)>]>, 'mipsel-softmmu': <ExtractedObjects
+'qemu-mipsel-softmmu': [<File: target-info-def.c (not built)>]>,
+'or1k-softmmu': <ExtractedObjects 'qemu-or1k-softmmu': [<File:
+target-info-def.c (not built)>]>, 'ppc-softmmu': <ExtractedObjects
+'qemu-ppc-softmmu': [<File: target-info-def.c (not built)>]>,
+'ppc64-softmmu': <ExtractedObjects 'qemu-ppc64-softmmu': [<File:
+target-info-def.c (not built)>]>, 'riscv32-softmmu': <ExtractedObjects
+'qemu-riscv32-softmmu': [<File: target-info-def.c (not built)>]>,
+'riscv64-softmmu': <ExtractedObjects 'qemu-riscv64-softmmu': [<File:
+target-info-def.c (not built)>]>, 'rx-softmmu': <ExtractedObjects
+'qemu-rx-softmmu': [<File: target-info-def.c (not built)>]>,
+'s390x-softmmu': <ExtractedObjects 'qemu-s390x-softmmu': [<File:
+target-info-def.c (not built)>]>, 'sh4-softmmu': <ExtractedObjects
+'qemu-sh4-softmmu': [<File: target-info-def.c (not built)>]>,
+'sh4eb-softmmu': <ExtractedObjects 'qemu-sh4eb-softmmu': [<File:
+target-info-def.c (not built)>]>, 'sparc-softmmu': <ExtractedObjects
+'qemu-sparc-softmmu': [<File: target-info-def.c (not built)>]>,
+'sparc64-softmmu': <ExtractedObjects 'qemu-sparc64-softmmu': [<File:
+target-info-def.c (not built)>]>, 'tricore-softmmu': <ExtractedObjects
+'qemu-tricore-softmmu': [<File: target-info-def.c (not built)>]>,
+'x86_64-softmmu': <ExtractedObjects 'qemu-x86_64-softmmu': [<File:
+target-info-def.c (not built)>]>, 'xtensa-softmmu': <ExtractedObjects
+'qemu-xtensa-softmmu': [<File: target-info-def.c (not built)>]>,
+'xtensaeb-softmmu': <ExtractedObjects 'qemu-xtensaeb-softmmu': [<File:
+target-info-def.c (not built)>]>}> of type DictHolder.
+>
+> I have meson 1.8.5.
+>
 
-Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
----
-Changelog:
-v2:
-- Use packed struct and named event type codes for resize frames
-- Trigger initial resize event in console_reset() instead of
-  console_init(), skip when chardev reports no size
-- Reset event_pending after resize event
+Hi, It's because I use a feature from meson 1.10.0, you can install meson
+1.12.0 for it. and the remote branch I also fixed for KVM and got gitlab
+running. but for this series you need to install meson 1.12.x
 
-Requires the following pre-req:
-    [PATCH v7 00/12] virtio-console: notify about the terminal size
-    (https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c550fdcec15@gmail.com/)
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
-Testing:
-- Tested on QEMU: commit 38879a667f with the following patches applied:
-    [PATCH v7 00/12] virtio-console: notify about the terminal size
-- Tested on linux-next (commit c1f49dea2b8f) with the following patches
-  applied:
-    [PATCH 0/2] s390/sclp: Resize for sclp-vt220 console
----
- hw/char/sclpconsole.c | 92 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 80 insertions(+), 12 deletions(-)
+--000000000000c4a926065c8796e1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
-index 179d12745c..12033e1e46 100644
---- a/hw/char/sclpconsole.c
-+++ b/hw/char/sclpconsole.c
-@@ -33,6 +33,9 @@ typedef struct ASCIIConsoleData {
- /* max size for ASCII data in 4K SCCB page */
- #define SIZE_BUFFER_VT220 4080
- 
-+#define SCLP_CONSOLE_EVENT_TYPE_DATA 0x00
-+#define SCLP_CONSOLE_EVENT_TYPE_RESIZE 0x08
-+
- struct SCLPConsole {
-     SCLPEvent event;
-     CharFrontend chr;
-@@ -42,6 +45,8 @@ struct SCLPConsole {
-     uint32_t iov_data_len;  /* length of byte stream in buffer             */
-     uint32_t iov_sclp_rest; /* length of byte stream not read via SCLP     */
-     bool notify;            /* qemu_notify_event() req'd if true           */
-+    bool resize;
-+    bool resize_init;
- };
- typedef struct SCLPConsole SCLPConsole;
- 
-@@ -49,6 +54,12 @@ typedef struct SCLPConsole SCLPConsole;
- DECLARE_INSTANCE_CHECKER(SCLPConsole, SCLP_CONSOLE,
-                          TYPE_SCLP_CONSOLE)
- 
-+typedef struct SCLPConsoleResizeData {
-+    uint8_t type;
-+    uint16_t rows;
-+    uint16_t cols;
-+} QEMU_PACKED SCLPConsoleResizeData;
-+
- /* character layer call-back functions */
- 
- /* Return number of bytes that fit into iov buffer */
-@@ -81,6 +92,29 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-     sclp_service_interrupt(0);
- }
- 
-+static void chr_event(void *opaque, QEMUChrEvent event)
-+{
-+    SCLPConsole *scon = opaque;
-+
-+    assert(scon);
-+
-+    switch (event) {
-+    case CHR_EVENT_RESIZE:
-+    case CHR_EVENT_MUX_IN:
-+        scon->resize = true;
-+        scon->resize_init = false;
-+        scon->event.event_pending = true;
-+        sclp_service_interrupt(0);
-+        break;
-+    case CHR_EVENT_BREAK:
-+    case CHR_EVENT_OPENED:
-+    case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_CLOSED:
-+        /* ignore */
-+        break;
-+    }
-+}
-+
- /* functions to be called by event facility */
- 
- static bool can_handle_event(uint8_t type)
-@@ -104,10 +138,37 @@ static sccb_mask_t receive_mask(void)
- static void get_console_data(SCLPEvent *event, uint8_t *buf, size_t *size,
-                              int avail)
- {
-+    SCLPConsoleResizeData resize_data;
-     SCLPConsole *cons = SCLP_CONSOLE(event);
-+    uint16_t rows, cols;
-+
-+    if (cons->resize) {
-+        if (avail < sizeof(resize_data)) {
-+            *size = 0;
-+            return;
-+        }
- 
--    /* first byte is hex 0 saying an ascii string follows */
--    *buf++ = '\0';
-+        qemu_chr_fe_get_winsize(&cons->chr, &cols, &rows);
-+
-+        if (cons->resize_init && cols == 0 && rows == 0) {
-+            *size = 0;
-+        } else {
-+            resize_data.type = SCLP_CONSOLE_EVENT_TYPE_RESIZE;
-+            resize_data.rows = cpu_to_be16(rows);
-+            resize_data.cols = cpu_to_be16(cols);
-+
-+            memcpy(buf, &resize_data, sizeof(resize_data));
-+            *size = sizeof(resize_data);
-+        }
-+
-+        cons->resize = false;
-+        cons->resize_init = false;
-+        event->event_pending = cons->iov_sclp_rest != 0;
-+
-+        return;
-+    }
-+
-+    *buf++ = SCLP_CONSOLE_EVENT_TYPE_DATA;
-     avail--;
-     /* if all data fit into provided SCLP buffer */
-     if (avail >= cons->iov_sclp_rest) {
-@@ -150,6 +211,9 @@ static int read_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr,
-     to = (uint8_t *)&acd->data;
-     avail = *slen - sizeof(ASCIIConsoleData);
-     get_console_data(event, to, &src_len, avail);
-+    if (src_len == 0) {
-+        return 0;
-+    }
- 
-     acd->ebh.length = cpu_to_be16(sizeof(ASCIIConsoleData) + src_len);
-     acd->ebh.type = SCLP_EVENT_ASCII_CONSOLE_DATA;
-@@ -233,22 +297,26 @@ static int console_init(SCLPEvent *event)
-     }
-     console_available = true;
-     qemu_chr_fe_set_handlers(&scon->chr, chr_can_read,
--                             chr_read, NULL, NULL, scon, NULL, true);
-+                             chr_read, chr_event, NULL, scon, NULL, true);
- 
-     return 0;
- }
- 
- static void console_reset(DeviceState *dev)
- {
--   SCLPEvent *event = SCLP_EVENT(dev);
--   SCLPConsole *scon = SCLP_CONSOLE(event);
--
--   event->event_pending = false;
--   scon->iov_sclp = 0;
--   scon->iov_bs = 0;
--   scon->iov_data_len = 0;
--   scon->iov_sclp_rest = 0;
--   scon->notify = false;
-+    SCLPEvent *event = SCLP_EVENT(dev);
-+    SCLPConsole *scon = SCLP_CONSOLE(event);
-+
-+    scon->iov_sclp = 0;
-+    scon->iov_bs = 0;
-+    scon->iov_data_len = 0;
-+    scon->iov_sclp_rest = 0;
-+    scon->notify = false;
-+
-+    /* the guest defaults its terminal size on reset, announce the real one */
-+    scon->resize = true;
-+    scon->resize_init = true;
-+    event->event_pending = true;
- }
- 
- static const Property console_properties[] = {
--- 
-2.54.0
+<div dir=3D"ltr"><br>On Mon, Sep 28, 2026 at 5:07=E2=80=AFPM Markus Armbrus=
+ter &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrot=
+e:<br>&gt;<br>&gt; Yonggang Luo &lt;<a href=3D"mailto:luoyonggang@gmail.com=
+">luoyonggang@gmail.com</a>&gt; writes:<br>&gt;<br>&gt; &gt; Collect each t=
+arget-info-def.c object in target_info_def_objects,<br>&gt; &gt; keyed by t=
+arget dir. Link every value so constructors fill the<br>&gt; &gt; list. Ass=
+ert target_info() is not NULL and target_info_list() has<br>&gt; &gt; one e=
+ntry per linked object.<br>&gt; &gt;<br>&gt; &gt; Signed-off-by: Yonggang L=
+uo &lt;<a href=3D"mailto:luoyonggang@gmail.com">luoyonggang@gmail.com</a>&g=
+t;<br>&gt;<br>&gt; Doesn&#39;t compile for me:<br>&gt;<br>&gt; ../tests/uni=
+t/meson.build:47:37: ERROR: Unknown method &quot;values&quot; in object &lt=
+;[DictHolder] holds [dict]: {&#39;aarch64-linux-user&#39;: &lt;ExtractedObj=
+ects &#39;qemu-aarch64-linux-user&#39;: [&lt;File: target-info-def.c (not b=
+uilt)&gt;]&gt;, &#39;aarch64_be-linux-user&#39;: &lt;ExtractedObjects &#39;=
+qemu-aarch64_be-linux-user&#39;: [&lt;File: target-info-def.c (not built)&g=
+t;]&gt;, &#39;alpha-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-alpha-l=
+inux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;arm=
+-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-arm-linux-user&#39;: [&lt;=
+File: target-info-def.c (not built)&gt;]&gt;, &#39;armeb-linux-user&#39;: &=
+lt;ExtractedObjects &#39;qemu-armeb-linux-user&#39;: [&lt;File: target-info=
+-def.c (not built)&gt;]&gt;, &#39;hexagon-linux-user&#39;: &lt;ExtractedObj=
+ects &#39;qemu-hexagon-linux-user&#39;: [&lt;File: target-info-def.c (not b=
+uilt)&gt;]&gt;, &#39;hppa-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-h=
+ppa-linux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#3=
+9;i386-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-i386-linux-user&#39;=
+: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;loongarch64-linux=
+-user&#39;: &lt;ExtractedObjects &#39;qemu-loongarch64-linux-user&#39;: [&l=
+t;File: target-info-def.c (not built)&gt;]&gt;, &#39;m68k-linux-user&#39;: =
+&lt;ExtractedObjects &#39;qemu-m68k-linux-user&#39;: [&lt;File: target-info=
+-def.c (not built)&gt;]&gt;, &#39;microblaze-linux-user&#39;: &lt;Extracted=
+Objects &#39;qemu-microblaze-linux-user&#39;: [&lt;File: target-info-def.c =
+(not built)&gt;]&gt;, &#39;microblazeel-linux-user&#39;: &lt;ExtractedObjec=
+ts &#39;qemu-microblazeel-linux-user&#39;: [&lt;File: target-info-def.c (no=
+t built)&gt;]&gt;, &#39;mips-linux-user&#39;: &lt;ExtractedObjects &#39;qem=
+u-mips-linux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, =
+&#39;mips64-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-mips64-linux-us=
+er&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;mips64el-l=
+inux-user&#39;: &lt;ExtractedObjects &#39;qemu-mips64el-linux-user&#39;: [&=
+lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;mipsel-linux-user&#39=
+;: &lt;ExtractedObjects &#39;qemu-mipsel-linux-user&#39;: [&lt;File: target=
+-info-def.c (not built)&gt;]&gt;, &#39;mipsn32-linux-user&#39;: &lt;Extract=
+edObjects &#39;qemu-mipsn32-linux-user&#39;: [&lt;File: target-info-def.c (=
+not built)&gt;]&gt;, &#39;mipsn32el-linux-user&#39;: &lt;ExtractedObjects &=
+#39;qemu-mipsn32el-linux-user&#39;: [&lt;File: target-info-def.c (not built=
+)&gt;]&gt;, &#39;or1k-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-or1k-=
+linux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;pp=
+c-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-ppc-linux-user&#39;: [&lt=
+;File: target-info-def.c (not built)&gt;]&gt;, &#39;ppc64-linux-user&#39;: =
+&lt;ExtractedObjects &#39;qemu-ppc64-linux-user&#39;: [&lt;File: target-inf=
+o-def.c (not built)&gt;]&gt;, &#39;ppc64le-linux-user&#39;: &lt;ExtractedOb=
+jects &#39;qemu-ppc64le-linux-user&#39;: [&lt;File: target-info-def.c (not =
+built)&gt;]&gt;, &#39;riscv32-linux-user&#39;: &lt;ExtractedObjects &#39;qe=
+mu-riscv32-linux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&g=
+t;, &#39;riscv64-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-riscv64-li=
+nux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;s390=
+x-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-s390x-linux-user&#39;: [&=
+lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;sh4-linux-user&#39;: =
+&lt;ExtractedObjects &#39;qemu-sh4-linux-user&#39;: [&lt;File: target-info-=
+def.c (not built)&gt;]&gt;, &#39;sh4eb-linux-user&#39;: &lt;ExtractedObject=
+s &#39;qemu-sh4eb-linux-user&#39;: [&lt;File: target-info-def.c (not built)=
+&gt;]&gt;, &#39;sparc-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-sparc=
+-linux-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;s=
+parc32plus-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-sparc32plus-linu=
+x-user&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;sparc6=
+4-linux-user&#39;: &lt;ExtractedObjects &#39;qemu-sparc64-linux-user&#39;: =
+[&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;x86_64-linux-user&#=
+39;: &lt;ExtractedObjects &#39;qemu-x86_64-linux-user&#39;: [&lt;File: targ=
+et-info-def.c (not built)&gt;]&gt;, &#39;xtensa-linux-user&#39;: &lt;Extrac=
+tedObjects &#39;qemu-xtensa-linux-user&#39;: [&lt;File: target-info-def.c (=
+not built)&gt;]&gt;, &#39;xtensaeb-linux-user&#39;: &lt;ExtractedObjects &#=
+39;qemu-xtensaeb-linux-user&#39;: [&lt;File: target-info-def.c (not built)&=
+gt;]&gt;, &#39;aarch64-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-aarch64=
+-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;alph=
+a-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-alpha-softmmu&#39;: [&lt;Fil=
+e: target-info-def.c (not built)&gt;]&gt;, &#39;arm-softmmu&#39;: &lt;Extra=
+ctedObjects &#39;qemu-arm-softmmu&#39;: [&lt;File: target-info-def.c (not b=
+uilt)&gt;]&gt;, &#39;avr-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-avr-s=
+oftmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;hexago=
+n-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-hexagon-softmmu&#39;: [&lt;F=
+ile: target-info-def.c (not built)&gt;]&gt;, &#39;hppa-softmmu&#39;: &lt;Ex=
+tractedObjects &#39;qemu-hppa-softmmu&#39;: [&lt;File: target-info-def.c (n=
+ot built)&gt;]&gt;, &#39;i386-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-=
+i386-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;=
+loongarch64-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-loongarch64-softmm=
+u&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;m68k-softmm=
+u&#39;: &lt;ExtractedObjects &#39;qemu-m68k-softmmu&#39;: [&lt;File: target=
+-info-def.c (not built)&gt;]&gt;, &#39;microblaze-softmmu&#39;: &lt;Extract=
+edObjects &#39;qemu-microblaze-softmmu&#39;: [&lt;File: target-info-def.c (=
+not built)&gt;]&gt;, &#39;mips-softmmu&#39;: &lt;ExtractedObjects &#39;qemu=
+-mips-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39=
+;mips64-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-mips64-softmmu&#39;: [=
+&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;mips64el-softmmu&#39=
+;: &lt;ExtractedObjects &#39;qemu-mips64el-softmmu&#39;: [&lt;File: target-=
+info-def.c (not built)&gt;]&gt;, &#39;mipsel-softmmu&#39;: &lt;ExtractedObj=
+ects &#39;qemu-mipsel-softmmu&#39;: [&lt;File: target-info-def.c (not built=
+)&gt;]&gt;, &#39;or1k-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-or1k-sof=
+tmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;ppc-soft=
+mmu&#39;: &lt;ExtractedObjects &#39;qemu-ppc-softmmu&#39;: [&lt;File: targe=
+t-info-def.c (not built)&gt;]&gt;, &#39;ppc64-softmmu&#39;: &lt;ExtractedOb=
+jects &#39;qemu-ppc64-softmmu&#39;: [&lt;File: target-info-def.c (not built=
+)&gt;]&gt;, &#39;riscv32-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-riscv=
+32-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;ri=
+scv64-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-riscv64-softmmu&#39;: [&=
+lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;rx-softmmu&#39;: &lt;=
+ExtractedObjects &#39;qemu-rx-softmmu&#39;: [&lt;File: target-info-def.c (n=
+ot built)&gt;]&gt;, &#39;s390x-softmmu&#39;: &lt;ExtractedObjects &#39;qemu=
+-s390x-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#3=
+9;sh4-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-sh4-softmmu&#39;: [&lt;F=
+ile: target-info-def.c (not built)&gt;]&gt;, &#39;sh4eb-softmmu&#39;: &lt;E=
+xtractedObjects &#39;qemu-sh4eb-softmmu&#39;: [&lt;File: target-info-def.c =
+(not built)&gt;]&gt;, &#39;sparc-softmmu&#39;: &lt;ExtractedObjects &#39;qe=
+mu-sparc-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &=
+#39;sparc64-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-sparc64-softmmu&#3=
+9;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;tricore-softmmu=
+&#39;: &lt;ExtractedObjects &#39;qemu-tricore-softmmu&#39;: [&lt;File: targ=
+et-info-def.c (not built)&gt;]&gt;, &#39;x86_64-softmmu&#39;: &lt;Extracted=
+Objects &#39;qemu-x86_64-softmmu&#39;: [&lt;File: target-info-def.c (not bu=
+ilt)&gt;]&gt;, &#39;xtensa-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-xte=
+nsa-softmmu&#39;: [&lt;File: target-info-def.c (not built)&gt;]&gt;, &#39;x=
+tensaeb-softmmu&#39;: &lt;ExtractedObjects &#39;qemu-xtensaeb-softmmu&#39;:=
+ [&lt;File: target-info-def.c (not built)&gt;]&gt;}&gt; of type DictHolder.=
+<br>&gt;<br>&gt; I have meson 1.8.5.<br>&gt;<br><br>Hi, It&#39;s because I =
+use a feature from meson 1.10.0, you can install meson 1.12.0 for it. and t=
+he remote branch I also fixed for KVM and got gitlab running. but for this =
+series you need to install meson 1.12.x<br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A=
+<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div>
 
+--000000000000c4a926065c8796e1--
 
