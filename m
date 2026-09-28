@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B375CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA083C9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 14:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBBok-0003Ct-W7; Mon, 28 Sep 2026 09:54:55 -0400
+	id 1xBBui-0004h7-TO; Mon, 28 Sep 2026 10:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBBoj-0003Bi-10
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:54:53 -0400
-Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBBuY-0004cl-3R
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:00:56 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBBoh-0002P9-Ef
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:54:52 -0400
-Received: by mail-yx2-x0c.google.com with SMTP id
- 956f58d0204a3-674138cbe59so2161678d50.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:54:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790603690; cv=none;
- d=google.com; s=arc-20260327;
- b=MAX0wEa+CkTHALOrA3eQSnza4vK1hDkDzvF6/d1k4eqwKPYCMmbAybt3DRU+AHzZcJ
- krgcnt0JfjFSbCNKxDZflLlWqduvvQBKOIjXfwkplS1tzltQlRYu7F9MpQSze9nVqtv8
- 6E+tNG+tkyg+s+2/XJCngrzly+uLpHnE1X/fKTATlC7V6zqBFv6zNY2G6dVMsDVkqJIi
- xhnMvHOSLl6RxHIFAasSg+z/yRevd2iqp4xGE4px7saNm2NvSgQXlrj/S3pkS1ZJ8haH
- ZCxTG+1Xu2jHwNyjB1EiDHMomzr2PcyYftcDzw5oqys5pDuc5nSbJkEyd9WQaTT8bErT
- /2Og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ij4uY4bkMYQGxRppabaKag+gIL2WEZJ23RiGoAkDOPo=;
- fh=gwJhe9BW/WntmRMo+gCDeYSj3sQ5xYkravNayQouye0=;
- b=qcLOH10Sa0nydmt2IriwNpFgJV+5NApkm67FnAvMxwNUfni8faZVGDF0k1+DDPetOr
- W2803RsyS4Y94PcNf3f5lCO7qV+lDojh7W1BO981NR90qvzrDZ+N4P4Lw8OQ1x6yMNif
- pL8umByM9K0vcNAMeYyHwCi9mkXQn9DrStDBN+DbL74Ay+zCKEtEqI3paEI1+diyXnoZ
- I6avFe4uZqxgDWrFVgLHR4T/KFlz2r8szTQA/w/A13eTMckznrG/GU2SvqLiY2pVReX9
- 0LoLvr7ioVYft5aqXnFFwrZswt4/teCwgNiymLSEYZbRfT7UO7SJRV1wsIFzbtOG66/G
- YaMA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBBuU-00038p-B0
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:00:53 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49ffa15f67fso10830915e9.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 07:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790603690; x=1791208490; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ij4uY4bkMYQGxRppabaKag+gIL2WEZJ23RiGoAkDOPo=;
- b=UoNhlp7ZpUmZr810zn1/gIGDYwA9rfVwyWvgE5Xk9HUpeS6OMMZ76dO4874tX4POC0
- KGRO/e2Nt6dUILsnMpQSoqF2OKSr/lTKWBr8ZdID4r9Q4NJiRi9yEelMCuRospwFAAAL
- GawHPZAJNBKEWqDeQlDcDmzIP5KN5f4Az3je6FnZF5bH/gYwAt1zbLHgJ6bbZEMUUQZi
- jfIMHSBLhCTloUMeNFlESjaYD+uutAOEn7YYWQSKc8JU5H92LEmc/V1eP+C63NfxAf4D
- 2bgvkl3OsFtqEiOaNDzktTrYG3TQucTUwedHXs35PozIFU2dpKgdCGtiN0Q6Zzx8nJiy
- 6l7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790603690; x=1791208490;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1790604048; x=1791208848; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=ij4uY4bkMYQGxRppabaKag+gIL2WEZJ23RiGoAkDOPo=;
- b=B5jmE0k7s54U+VgEEdDN8Y/ZMxXQvRDpQzhoSQbZYMta3Dqh1HiqwnqWItW+kEM0Ne
- T8Vi7IR+N2IF4kNsSrwNyHsC5rxpudNlixo7hZs0UFd3rJRX1vfGuJFz69NMJWlUq+en
- O0D9nf8jQWheGAHAPkSzpXmFVZdA5VkPB3wDYpmJq+SQP9axubO29O+RayO8Z0YT1YQx
- u9fmttnDSScFiJ1Y1nYPRbekJX36u8qG+wOOG0tYz2cgb/QFNAsUmQkZtUzQ2fp8bH+y
- 22gPG2n6Xtwgt6DOwQUImA04MaVMZLadLZTSUbWhrqNWWkN0VVxohHEccnFiUjOwHXts
- py5Q==
-X-Gm-Message-State: AFuF++mZQFOcQkNt3GRWznSWhYybloPcrMRZT2nt0tof/+1al+DK5D44
- fZaV58o5vPhbHucpVvpJf2o9DNEaYJ/CSLGMxPAS33x0WyIxlxjM6zfWfGYls+BC8JCB11cK0Qi
- jWXDwmGw/IAxenYhuAY38RbjKZnA9YR89fj1Gk3f5Pw==
-X-Gm-Gg: AYBFou2rXzeob/RrZEInQNk2irvBtKnPHHtOqSzIIRpxPAtL9BgOWuwyCLk5HpiGWLv
- oDdX+QjibSBhbOuR2R+xk+JBYVfNERuhGnrN2Omu8ziogtSvwe+ZeXxT14r7Wwul9dB1FrdhPsC
- oYsee7A0RB9bK6zUvPbyazjh1DJColjNO2/nEIC+gZzGg+/xl/F8MqtsjkNpHcXt5TXR/Tbiarl
- crwQS0zQxtsYZf3kQSFjia3IDykKUkC3PTdF6pfcy1cPR3KX5JgzzpZ2+OnTk1QpU+SQSzBRY5O
- 98tfNyoJ1xgN30Iwb9DhT3tgM4HwMdHkeu5cs6SZsOUx9VvFDGa5L74PXa5/3D6qpj1/O+KQO9y
- QZHb5bTjAGGVout6das/h9DWgPmcPKkuZiWOaaM0=
-X-Received: by 2002:a05:690e:14c6:b0:675:3d40:3c1f with SMTP id
- 956f58d0204a3-6753d403fcbmr1555494d50.71.1790603689729; Mon, 28 Sep 2026
- 06:54:49 -0700 (PDT)
+ bh=LBbN8Oo6oa6n+1aLPrPR5Awrkq9UXBigcfmWzrk2yEA=;
+ b=LUEonE3FUbE7rB24bgub9x38XJYIrAwZx/8vBan1NwVsdMFyiQOq8w59IP7uFzouEr
+ BGp8VGTggWlGOPJCROPPu7Kj6Hu6Qq+lgO+UQWs0Xt+0a8GdaVADEck8QbCNsoylqgfc
+ Uuzsbw8LFfxg6DlwgPcVTvWVjdGaN96h0XRlvwg+hzMBmDwNgGaAd7UtsQZtyWH+c8gw
+ A3gK5xY+NvKwAWUIvgHMpdBWCpDRBXoF0IZSgywVSQn1fsIOo4biciC9yXCigr7Z/mKa
+ 3M7xY8VqaNDkiC/Bs9bYtLTNGAwpt8x3HSJ0SnD3pGKGid9u7kMynghj1SYRmUgea2CM
+ dSZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790604048; x=1791208848;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LBbN8Oo6oa6n+1aLPrPR5Awrkq9UXBigcfmWzrk2yEA=;
+ b=qfWrcf02cSE6YnOBNv9wypPSgm/s4Xl6YcoFi6TGZO5hPhKEP2H/+0ymhdNF8dm2nn
+ 0F5goSeXuRBX1hif+IgKfHJBBYYnwkwAZqm2R4sW+SL/Y77RKuwNkKvFcVS69bFDMTvq
+ fYW++YWNok96kiVMm8V3YiIdORTUjxxcYTXdLDcO/Dyjrp8yE4hBCrbgAeq71dJiN2S7
+ t4DZyFD4Pl87ukbmvp+ixYOwfm7QaHUK2OTL/iDDUDm3gCJiXTFBfcgTCvpNdMV2LKsC
+ H5VV8ElUG7v98aqKAKK2L5nzgPlQW8EsAa49gcwiKLiFaJSewfglB1TSaiV/AiC1a7pB
+ JYCg==
+X-Gm-Message-State: AFuF++koLu1ePtIaXm6KkCJSyJD4o0TzACKcsKTzEf7fixsrGM00aR8O
+ ZZDf8sqzk9WY5ElmLx8dKqgXOxsXRLTZKCLKQ6/0tBjrDzG+rKnSjfgrLFxMOxeS5Uw=
+X-Gm-Gg: AYBFou2CjL4tZbzn+fmV7aOmlCeKj6G7iCl3q3bXI628O1NgiErcaJQK74rrbmmrjG6
+ UBfCuzHv82qyYS2dMsz9A3VKa+llrXVQRHXqjeMLcdm4s9/R5h2gJOA9Z3r70cWsDAD0NtG2i24
+ N72sN8338zjQ7biBss0A8HjNBndsKLHzQS89MgHY7Hfoja34nCO9yf2fncyAZTHUGYZcAMpgA/b
+ TkxVMQVg5NgbUkaUy+rg1gJ5ldiZyT7rSB3WI3nv21fjZb5/4mUd9Y8lDQNQj1ECviM9uNq077H
+ 4A9eaGrLnFbEIvbq4GbL/VNDFRoxweSWlogrfh3ZvMIyWDVUKwbuYdYk0puyMouUESVAE/CNXci
+ eDslBeAFO1WL3AfOMmdiHGgjR6Wns33EkLEniWduMbwGRFKUryQdKSHGx9ulb10+JTl2hvv8DUj
+ fqqS6SU2f9MvbRlIuSZptELSAjon8UzJqkd+60BLKw9F8oLGrUBV5/e5Si8L8fBEwLZ6KjxQ==
+X-Received: by 2002:a05:600c:1c25:b0:49f:ce78:3561 with SMTP id
+ 5b1f17b1804b1-49fe66f19demr255506385e9.18.1790604048219; 
+ Mon, 28 Sep 2026 07:00:48 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a007fd182csm44625565e9.2.2026.09.28.07.00.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Sep 2026 07:00:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AF1125F8C1;
+ Mon, 28 Sep 2026 15:00:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Cc: qemu-devel@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Soumyajyotii Ssarkar <sarkarsoumyajyoti23@gmail.com>,  Michael Tokarev
+ <mjt@tls.msk.ru>,  Thomas Lambertz <patch@thomaslambertz.de>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alex Golovko
+ <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>
+Subject: Re: [RFC PATCH 5/5] input/hid: apply multiplier scaling with
+ residual accumulation
+In-Reply-To: <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
+ (Soumyajyotii Ssarkar's message of "Tue, 31 Mar 2026 22:38:23 +0530")
+References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
+ <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
+User-Agent: mu4e 1.14.4-pre4; emacs 30.1
+Date: Mon, 28 Sep 2026 15:00:45 +0100
+Message-ID: <87se2ta31u.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260914192323.29250-1-gilles.grimaud@univ-lille.fr>
- <20260914192323.29250-3-gilles.grimaud@univ-lille.fr>
- <CAFEAcA_=sRZboB1GyGDxEa4vTZe5YS4GwJV9aK=6h-fONgLVkQ@mail.gmail.com>
- <20260920220722.73501-1-gilles.grimaud@univ-lille.fr>
-In-Reply-To: <20260920220722.73501-1-gilles.grimaud@univ-lille.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Sep 2026 14:54:37 +0100
-X-Gm-Features: AclHuK_eNBIKBT6Poa7gPEOoGww3X56YJ7ArQXHNcJ9lHMik8ltiNnY_jjJbN8o
-Message-ID: <CAFEAcA9ScL5mmu1LKEhq3Qo0OSJL+-Ee4K6ura+2SgYYZi9O6g@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: model Cortex-M0+ privilege extension
-To: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Alex Bennee <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,37 +111,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 20 Sept 2026 at 23:07, Gilles Grimaud
-<gilles.grimaud@univ-lille.fr> wrote:
+Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com> writes:
+
+> Implement multiplier-based scaling with residual accumulation for
+> fine-grained mouse wheel and pan sensitivity control in report mode.
 >
-> The Armv6-M Unprivileged/Privileged Extension is optional. Cortex-M0 does
-> not implement it, while Cortex-M0+ may implement it. The RP2040 Cortex-M0+
-> configuration provides the extension.
+> Applies divisor based scaling (1, 4, 8, 16) based on negotiated
+> multiplier values.
+> Then uses residual based approach to prevent precision loss:
 >
-> Add an ARM feature bit that represents the optional privileged/unprivileged
-> extension. Make ARM_FEATURE_M_MAIN imply ARM_FEATURE_M_UNPRIV (handled in
-> arm_cpu_propagate_feature_implications) so that privileged writes to
-> CONTROL.nPRIV are allowed when the Main Extension is present (or when the
-> optional privilege extension is present without the Main Extension).
+>   residual +=3D delta
+>   output =3D residual / divisor
+>   residual -=3D output * divisor
 >
-> Update the microbit Cortex-M0 test to verify that writes to nPRIV are
-> ignored.
+> Residual state preserved across VM migrations via VMState.
 >
-> Signed-off-by: Gilles Grimaud <gilles.grimaud@univ-lille.fr>
+> Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 > ---
-> Changes in v2:
-> - Removed the Cortex-M0+ CPU type definition from this generic patch; it will
->   be added separately in the upcoming RP2040/Pico series.
-> - Added the implication ARM_FEATURE_M_MAIN -> ARM_FEATURE_M_UNPRIV in
->   arm_cpu_propagate_feature_implications().
-> - Changed the CONTROL.nPRIV write condition in m_helper.c to test only
->   ARM_FEATURE_M_UNPRIV (Main Extension CPUs acquire it via the implication,
->   while an Armv6-M CPU without Main Extension can expose the feature
->   independently).
+>  hw/input/hid.c         | 60 ++++++++++++++++++++++++++++++++++++++++++
+>  include/hw/input/hid.h |  2 ++
+>  2 files changed, 62 insertions(+)
+>
+> diff --git a/hw/input/hid.c b/hw/input/hid.c
+> index d0b7af7c13..9b800faeb0 100644
+> --- a/hw/input/hid.c
+> +++ b/hw/input/hid.c
+> @@ -365,6 +365,7 @@ void hid_pointer_activate(HIDState *hs)
+>  int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+>  {
+>      int dx, dy, dz, pan, l;
+> +    int wheel_divisor, pan_divisor;
+>      int index;
+>      HIDPointerEvent *e;
+>
+> @@ -392,6 +393,54 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int=
+ len)
+>      e->pan -=3D pan;
+>
+>
+> +    if (hs->kind =3D=3D HID_MOUSE && hs->protocol !=3D 0) {
+> +        switch (hs->ptr.wheel_multiplier & 0x03) {
+> +        case 0:
+> +            wheel_divisor =3D 1;
+> +            break;
+> +        case 1:
+> +            wheel_divisor =3D 4;
+> +            break;
+> +        case 2:
+> +            wheel_divisor =3D 8;
+> +            break;
+> +        default:
+> +            wheel_divisor =3D 16;
+> +            break;
+> +        }
+> +
+> +        switch (hs->ptr.pan_multiplier & 0x03) {
+> +        case 0:
+> +            pan_divisor =3D 1;
+> +            break;
+> +        case 1:
+> +            pan_divisor =3D 4;
+> +            break;
+> +        case 2:
+> +            pan_divisor =3D 8;
+> +            break;
+> +        default:
+> +            pan_divisor =3D 16;
+> +            break;
+> +        }
+> +
+> +        if (wheel_divisor > 1) {
+> +            hs->ptr.wheel_residual +=3D dz;
+> +            dz =3D hs->ptr.wheel_residual / wheel_divisor;
+> +            hs->ptr.wheel_residual -=3D dz * wheel_divisor;
+> +        } else {
+> +            hs->ptr.wheel_residual =3D 0;
+> +        }
+> +
+> +        if (pan_divisor > 1) {
+> +            hs->ptr.pan_residual +=3D pan;
+> +            pan =3D hs->ptr.pan_residual / pan_divisor;
+> +            hs->ptr.pan_residual -=3D pan * pan_divisor;
+> +        } else {
+> +            hs->ptr.pan_residual =3D 0;
+> +        }
+> +    }
+> +
+>      if (hs->n &&
+>          !e->dz &&
+>          !e->pan &&
+> @@ -405,6 +454,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int =
+len)
+>      dz =3D 0 - dz;
+>      pan =3D 0 - pan;
+>      l =3D 0;
+> +
+>      switch (hs->kind) {
+>      case HID_MOUSE:
+>          if (hs->protocol =3D=3D 0) {
+> @@ -528,6 +578,11 @@ void hid_reset(HIDState *hs)
+>      case HID_MOUSE:
+>      case HID_TABLET:
+>          memset(hs->ptr.queue, 0, sizeof(hs->ptr.queue));
+> +        hs->ptr.mouse_grabbed =3D 0;
+> +        hs->ptr.wheel_multiplier =3D 0;
+> +        hs->ptr.pan_multiplier =3D 0;
+> +        hs->ptr.wheel_residual =3D 0;
+> +        hs->ptr.pan_residual =3D 0;
+>          break;
+>      }
+>      hs->head =3D 0;
+> @@ -619,6 +674,7 @@ static const VMStateDescription vmstate_hid_ptr_queue=
+ =3D {
+>          VMSTATE_INT32(xdx, HIDPointerEvent),
+>          VMSTATE_INT32(ydy, HIDPointerEvent),
+>          VMSTATE_INT32(dz, HIDPointerEvent),
+> +        VMSTATE_INT32(pan, HIDPointerEvent),
+>          VMSTATE_INT32(buttons_state, HIDPointerEvent),
+>          VMSTATE_END_OF_LIST()
+>      }
+> @@ -636,6 +692,10 @@ const VMStateDescription vmstate_hid_ptr_device =3D {
+>          VMSTATE_UINT32(n, HIDState),
+>          VMSTATE_INT32(protocol, HIDState),
+>          VMSTATE_UINT8(idle, HIDState),
+> +        VMSTATE_UINT8(ptr.wheel_multiplier, HIDState),
+> +        VMSTATE_UINT8(ptr.pan_multiplier, HIDState),
+> +        VMSTATE_INT32(ptr.wheel_residual, HIDState),
+> +        VMSTATE_INT32(ptr.pan_residual, HIDState),
+>          VMSTATE_END_OF_LIST(),
 
+If you update migration state you also need to ensure that older systems
+can be migrated to newer ones. There are some docs in docs/devel that
+give some guidance on handling these cases.=20
 
+>      }
+>  };
+> diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
+> index 1a1941d371..db902fa023 100644
+> --- a/include/hw/input/hid.h
+> +++ b/include/hw/input/hid.h
+> @@ -25,6 +25,8 @@ typedef struct HIDMouseState {
+>      int mouse_grabbed;
+>      uint8_t wheel_multiplier;
+>      uint8_t pan_multiplier;
+> +    int32_t wheel_residual;
+> +    int32_t pan_residual;
+>  } HIDMouseState;
+>
+>  typedef struct HIDKeyboardState {
 
-Applied to target-arm.next, thanks.
-
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
