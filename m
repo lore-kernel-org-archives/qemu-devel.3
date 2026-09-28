@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96111CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 18:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB70CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 18:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBFjT-00063d-DX; Mon, 28 Sep 2026 14:05:43 -0400
+	id 1xBG0Q-0008Rh-2l; Mon, 28 Sep 2026 14:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBFjD-00062I-K9
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:05:32 -0400
-Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
+ id 1xBG0H-0008Qs-Bq
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:23:06 -0400
+Received: from mail-yx2-x10.google.com ([2607:f8b0:4864:41::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBFjB-0003Y9-1e
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:05:27 -0400
-Received: by mail-yx2-x0e.google.com with SMTP id
- 956f58d0204a3-672f516c271so2911896d50.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:05:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790618724; cv=none;
+ id 1xBG0F-00058w-Gh
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:23:05 -0400
+Received: by mail-yx2-x10.google.com with SMTP id
+ 956f58d0204a3-66e56a1b327so2738769d50.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:23:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790619782; cv=none;
  d=google.com; s=arc-20260327;
- b=I+tlO8CH+Lv0gtJAR1Rd3MO3xSTHo4T0oNebGDFNzUtL3Z+ZyCB9VTgXut3gw7AXBC
- dbgCHKMqLMPGfhosicAaEbAyHLq6tWxRXURbttgXpvxMYToI8r1jIQEmzBh3JlO7tlO7
- QLyAbrPiolqHVH1aQso+EWn3Fx4y0CiKD+FCIQ9U4v4Bg6f6YwZkpzQy7x2kYTboUht1
- UQNOJy9X4i3o141XoE8QgIN3ph3qAN+h8G3G9A23+w/lcU9Qt4myenltQvBJrD81ZN7h
- 4B9Wf1xeMA+FvSngJ0LyxQWypaPhQSmiJomXiIdAecK7R2OnzLziSnonpqbKHHkNhGlz
- RuGA==
+ b=ej6tuxFcubAYw91qLPAi5DwMnMV/lRBZoxd+v3OBQ87fwQzjNd0O0xJKPnzSrEhA8m
+ n52HR+Zo02VUlO8QYyt39Ob0wNPR+rcQh/7ZljZ8kdpoOtQpniUWNkvK7KRuwXjzPMhz
+ iQTzYqt5CvNJhEmP3Ik8s3c9LLQunMoesb/hy/dX29GGppvWeAvYDSsnQ7FZolEH7zf+
+ uYcWteMDg4WgBKh1F02h1TssAeacwnvfbyv+KhWmgzJlAqDnkmmn6o7u2GW3XdO0Qsyt
+ k8GJrrXKz78TUC9wOH5TBycT5jOTTPAbMpw65/wIkhRROJGy6/bNT5XVUJHvWm7JYchU
+ qpSA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=wAHj7yB6+hyjeccZw1OjSROT0wPZuQBNT+jUXfK3d40=;
+ bh=T2iNR5FQsp70JtKxZOrNk2y83HYHAPVGZSVmLsoewpA=;
  fh=1aI44e0p5XplGskc+UeFLoNCjn/8ANQtrjF8ujCp7vc=;
- b=RnACramOUM28Laa9c7MbUPH7uLSYfMixKwIgahONK+ki7JLZ7dOajezRbkPRxN++hj
- CbKMHXsjcbVfmUdpixZ1Ko5U08wylaCagy5+y5i4RyNyui01xn9Mhkwy70w5amOCvDLW
- i5RovHAuyPF3++S9MRwMvXZmwC64doRs0KLbrOvX1JrgYGVX8GsE+w87SLY6M8fmL8uI
- OM1WWU0SqvSuImmOB5Z568nj539jJ3vTlAkgjA9ai26MOTjvOBCA0zAjWfWcJL0bLByT
- nPthnPupteErchInkbqrikPwNbIpNvk0O2JB1R+2qS9SGCdKvyhBpZ1yr8MJb7isScDr
- 0Bhg==; darn=nongnu.org
+ b=DnKX+Y7K57hjfK/nrSh5gHbeXuh9yCX+Pq282FKgeMjZdllGXpZZej3ItNZ/1NDPVb
+ WoM97WJPc8YYjQXKSJZbU3yIuie0CnjCJacPJv5n5ATvuBdISApDdLbDx9lBMQCanYFw
+ ZZJkiHHWhAd31HibV6XPu9f/gtCMLgwt5pYUOxTAr9EKMN6h1wKoiEcrY6QsKkVkPYfP
+ oQTf1x3dj2NKJx3VtxUtBfLkfQ7KsJrtfain9fdI8u/Hq6M4vFhwzYa8Dy2HjR5ii1xh
+ iFBZlaf4V3Tb8adn07oByB7ZbdRjY24MgLgUyMpzjvIe6ND3Mb4E+Xxunn7VNEl4lCOV
+ hDdg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790618724; x=1791223524; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790619782; x=1791224582; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=wAHj7yB6+hyjeccZw1OjSROT0wPZuQBNT+jUXfK3d40=;
- b=a0ge8zN1nfZR63f4HpTOPHFOPYWQMSR+edFnI+O1wNWYX2L9FaFdRsXXJ/tM6yED3m
- 4mGcWhznpna9GAdALlgMpYUKZGexpCvnG5KKO466FYTWt6AspwrfvbBCUPwJnSV4r3v4
- oVy5KazZzKjiGyxmBrjVOtn4xAq5RfMVaTDRbCvqbV8XKofUdoqkGbRYwIB8LHM+j9SV
- vH3pxCSn6Il5KucNmd34t9cKg4wQudHrCUikk3B/ukb+w1pPAkJTb8hgE3i7LzpC8vbX
- SY/ujf99w0pF/f6jPpQ2LebB+uWrGrRw9IFlH0nFdbVp3V/oHJebwnpXJkcVPhX8pjvZ
- osLQ==
+ :content-type; bh=T2iNR5FQsp70JtKxZOrNk2y83HYHAPVGZSVmLsoewpA=;
+ b=babxks+PJ6lZlWqare5YMm+m3PUSIuZXWa3/9Y37Te6F/7jwRu5sofbCaH1+mxytX9
+ +3mSQtSGmQ6ER5V79vpGXskUr51N7qPszZcLtWWsTiWsyMU1xTw44CgAepCGvvi+unFb
+ ok+ct2CQadSIg5SSlFNALcEFm4I/bUqqXNzTEPuLtMWQEulamMl2xoDx+RlsgcAEZh6L
+ M8wWOTHSYRakSuVKzj+v1MVXWdEyMAmdMqobPhQMHd++JvbO7beZ33/muQZdJGIQYhxk
+ RF+OWe0ga6uZSG3Si8ohXx78LWCh/XNKy/YAv6rNP2taTLyJOL9F7x/QJy2y/iDgsutp
+ KJww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790618724; x=1791223524;
+ d=1e100.net; s=20260707; t=1790619782; x=1791224582;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=wAHj7yB6+hyjeccZw1OjSROT0wPZuQBNT+jUXfK3d40=;
- b=MEZ/mVQSJMwMrKHa+C3xWaUEPJvkpobUFFKAxBn5yQp4b4GQkwY0YWPhcMInoh+uG+
- hRLnqSBrFwzWLzbZzSVq5ddyyYW5EoWzD8D5C2UJWw3iYwQu4o7vUWXylfoRQHdLmgpv
- iuOC9aUx5Rni8X2+HK0SN7FxJJfacIWySKT6uQB6gWqcKRntC+RNO8TlGIIH+CGyJZKZ
- /uMZM2G/o/4qETCPsvfItcJhSe3vBKoCKeZU6wr7jBaglEk5m0YM2U3O3HmJRZSypwUw
- VBIEDyto/HhV8rdkLz08MHEyZnkL4JaYVxhtd5vEBDfqZqJ1/icPjhJ+QOIHVE2IlpzD
- LvlA==
-X-Gm-Message-State: AFq9FYKoZc7b4xqzBkQ9+4yE7AyI55oG8a1ZaYPbcWZxOdsrVEJZQWns
- 3lIEv1fHbAGGCIZNlAqin9V6xNLv6Lceexejjftfqc3Hv5KxXblrs/QsvGHFcJ7ZTusXKYqC3GR
- p3rR62ax639jNBw2f1c8hpHeL8xD7ZSQBv1zyaZigLA==
-X-Gm-Gg: AYBFou17xG1jbPJm+mbYEdDbHbzXSps9g2bLnb0uN5BSp4qZr8FRllxbadoUL+6kUFb
- dyxpWh555jhG0/GYUOKN3KAniVhITm8s1RfARs+p45qMREQBGwV7mHy0BcZxL46OVESEyJ2RgCL
- m/+QIhstCZ6IJeeWPyrXkVWg/w07mUGWzHVXP1UksrYOydmakn/UxUmGwRgAwqgoU2BjgErhdXW
- mDmoYe0r+r4e+MhzoF50dBX66UeKu7lz0+ad9wF2HGDtw/7NmihXU8hdAuYyP0nUMd2WIU02ebs
- /w2evdd8OLG9APgpHcFX0wlHaD0gZfGePmzJLuHRtxEPaReWfAarXdJ2Qbm3mz9O3Ncsdp0eG0+
- EAIxahLE/rPEgT9aIamhydvGu4JbNE1GBJN1gSEMP
-X-Received: by 2002:a05:690e:810:20b0:671:541e:2bc7 with SMTP id
- 956f58d0204a3-672ed42dc03mr4063259d50.58.1790618722901; Mon, 28 Sep 2026
- 11:05:22 -0700 (PDT)
+ bh=T2iNR5FQsp70JtKxZOrNk2y83HYHAPVGZSVmLsoewpA=;
+ b=yuQgRru9EiZe0l+VwoLljoZgIr4izxMQ15aR4mEbRDyNmxE6DylTJ1vLpNqH7L2A0e
+ 2venxRNL9PnXPt56hnzqnKvAnexwIV8dSF/Zt/B6smzDR3mgfin3+Dl45s726eQPZrHP
+ nd6HRr86qLOtsOM/6crxN8V1xCAbr7TDpVJYYzKegogcnpOFzD/RrYOtBUDPLSoCtxUx
+ v2+/PXHV2zGGHcM4w7TqwHREBN8HGKQIt9CjN99szCqwua2kVScibNzDH4yXbIudn/9t
+ HdAUhzFmLHqSF/NYU/qrYyT8VcB9KmSLzNnUm0iL4+Lik1X341K+9nBD8fvrhYk0ro1N
+ D2fw==
+X-Gm-Message-State: AFq9FYKVMpsjS46BYJZc/CDmjDLVlETFzN/MaALvYhC81/5syl025xyc
+ hgVyRfsg2YKYY5tTad1AMTZMldqTNu8rqfuYFoHN8kJrm9YO4S4RXicQnKeTkfAln3sGNOeApVq
+ 1pXBzYhxd6i5PdDOQosAmP1DKRExzCj0xVxbLq0ShaQ==
+X-Gm-Gg: AYBFou2LUObYSBaGo/n66KOB2A4tt3yG+UBtnx2CaRx80dhQZReRIxg0P7VYravakpp
+ TmMLm5bLLRD7u2cI+JhsGAkI6NphhoD8sUMM23LnnGRfjwDfJPxwWxWfv+dtxkKlujUMh5K+EwU
+ xgieHGjws639DrODYmCKy3KT5NG4sBGqlnJkFJPefxZVD2V7g89nUuAn1Cb16ycT0YFcDXrxONp
+ iFrunvRJG45sAHLBGGbKT9Q/b1QXDAqOZ8eZrNWWr8iZtMg8egXwQJKgLeLT9dfSQ1p2vV48nbH
+ w5vnVtKki4WXb7lVoUCdTeyLfcZGI1rX8A91NMkSKWujxy4fQNcDMrz7uePVFYl5A9Dq2F24GUl
+ nuj7wjnIQxoq93t66g+Kod+ArEeetJuFqzQCS/F8=
+X-Received: by 2002:a05:690e:1697:b0:671:7e90:70f4 with SMTP id
+ 956f58d0204a3-672ed2263f0mr7677894d50.10.1790619781443; Mon, 28 Sep 2026
+ 11:23:01 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260921214710.29422-1-shentey@gmail.com>
- <20260921214710.29422-5-shentey@gmail.com>
-In-Reply-To: <20260921214710.29422-5-shentey@gmail.com>
+ <20260921214710.29422-2-shentey@gmail.com>
+In-Reply-To: <20260921214710.29422-2-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Sep 2026 19:05:11 +0100
-X-Gm-Features: AclHuK-3d4xy9LTRK37sGYmfoU7UgCiFS38yARawsolNfdcvG6jtyI9B4aN-0RE
-Message-ID: <CAFEAcA_+nmV0WvoD0OCExmJ7sQdY2T3dvd7ZipbkNuj-RuZQug@mail.gmail.com>
-Subject: Re: [PATCH 04/42] hw/arm/mcimx7d-sabre: Ignore memory transaction
- failures
+Date: Mon, 28 Sep 2026 19:22:49 +0100
+X-Gm-Features: AclHuK9ptH5nI8v-P9ELzPhwoodstuoK8rQto_4bAwC2L9-Wz5OjI2fcKU_CqCw
+Message-ID: <CAFEAcA_xVcfC9UrxM4jjW8HOGoq96iuOABdbVB9Ftfxjq2zMAg@mail.gmail.com>
+Subject: Re: [PATCH 01/42] hw/watchdog/wdt_imx2: Fix handling of write-once
+ WCR bits
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>, 
  Alistair Francis <alistair@alistair23.me>, Alexander Graf <agraf@csgraf.de>, 
@@ -99,8 +99,8 @@ Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
  Jean-Christophe Dubois <jcd@tribudubois.net>,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,42 +125,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 21 Sept 2026 at 22:47, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> When using mcimx7d-sabre with newer Linux versions such as 7.0, the
-> machine fails to boot. This happens due to memory transaction failures
-> since the address space is not fully covered with unimp devices. Fix
-> booting by ignoring memory transaction failures in the machine.
+> Guests such as u-boot may experience inadvertant reboots when configuring
+> the WCR register. Apparently there is a typo in the WCR locked bits
+> handling: The locked values for s->wcr must come from itself rather than
+> from s->wicr. While at it remove the redundant locked attributes for the
+> bits which stick to one once written with one.
+
+"while at it" is one of those phrases that tends to suggest
+this should be more than one commit. It's doing a lot more
+than fixing the bug where we use wicr when we should have used wcr.
+
+> Note that removing the locked attributes required a migration break. Defer
+> that to a subsequent patch to help backporting.
 >
+> Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog
+> support")
 > cc: qemu-stable
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  hw/arm/mcimx7d-sabre.c | 1 +
->  1 file changed, 1 insertion(+)
+>  hw/watchdog/wdt_imx2.c | 19 +++----------------
+>  1 file changed, 3 insertions(+), 16 deletions(-)
 >
-> diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-> index 65fdb19c06..8d223fca6c 100644
-> --- a/hw/arm/mcimx7d-sabre.c
-> +++ b/hw/arm/mcimx7d-sabre.c
-> @@ -83,6 +83,7 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
->      mc->max_cpus = FSL_IMX7_NUM_CPUS;
->      mc->default_ram_id = "mcimx7d-sabre.ram";
->      mc->auto_create_sdcard = true;
-> +    mc->ignore_memory_transaction_failures = true;
->  }
+> diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+> index c83d4107c1..aaf4695db2 100644
+> --- a/hw/watchdog/wdt_imx2.c
+> +++ b/hw/watchdog/wdt_imx2.c
+> @@ -59,9 +59,8 @@ static void imx2_wdt_reset(DeviceState *dev)
+>
+>      s->wicr_locked = false;
+>      s->wcr_locked = false;
+> -    s->wcr_wde_locked = false;
+>
+> -    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
+> +    s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS | (s->wcr & IMX2_WDT_WCR_WDT);
 
-This flag is in QEMU strictly to allow us to preserve
-backwards compatibility of behaviour with the older QEMU
-versions which pre-dated the suport of transaction failures
-(and where therefore we expected that if we just enabled it
-globally that we'd break previously-working user setups
-because we were missing some devices). It should not be
-newly set for any board model that isn't already setting it
-(and in an ideal world we would eliminate it from all those
-old board models, except that's a lot of work for mostly
-ancient hardly used machine types).
+This doesn't look right. Reset should be "cold start power on", so
+the reset value of WCR shouldn't depend on what s->wcr happens
+to contain now. It's also not mentioned in the commit message.
 
-Instead the fix here is to identify which devices we need
-to provide as at least unimplemented-device stubs, and add
-them to the board/SoC.
+>      s->wsr = 0;
+>      s->wrsr &= ~(IMX2_WDT_WRSR_TOUT | IMX2_WDT_WRSR_SFTW);
+>      s->wicr = IMX2_WDT_WICR_WICT_DEF;
+> @@ -156,23 +155,11 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+>      case IMX2_WDT_WCR:
+>          if (s->wcr_locked) {
+>              value &= ~IMX2_WDT_WCR_LOCK_MASK;
+> -            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
+> +            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
+>          }
+>          s->wcr_locked = true;
+> -        if (s->wcr_wde_locked) {
+> -            value &= ~IMX2_WDT_WCR_WDE;
+> -            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
+> -        } else if (value & IMX2_WDT_WCR_WDE) {
+> -            s->wcr_wde_locked = true;
+> -        }
+> -        if (s->wcr_wdt_locked) {
+> -            value &= ~IMX2_WDT_WCR_WDT;
+> -            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
+> -        } else if (value & IMX2_WDT_WCR_WDT) {
+> -            s->wcr_wdt_locked = true;
+> -        }
+>
+> -        s->wcr = value;
+> +        s->wcr = value | (s->wcr & (IMX2_WDT_WCR_WDT | IMX2_WDT_WCR_WDE));
+
+This looks correct, but I think it would be helpful to have a
+comment that notes that WDZST, WDBG and WDW are "write-once only"
+whereas WDT and WDE are "write one once only". The difference is
+a bit subtle otherwise.
 
 thanks
 -- PMM
