@@ -4,105 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F77CA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 16:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440EACA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 17:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBEb6-0007Ju-1N; Mon, 28 Sep 2026 12:53:00 -0400
+	id 1xBFFO-00064v-3l; Mon, 28 Sep 2026 13:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1xBEb4-0007Jk-CM
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:52:58 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1xBEb2-0003ba-3z
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:52:58 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-39dacf053eeso1665140a91.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 09:52:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790614374; cv=none;
- d=google.com; s=arc-20260327;
- b=Q9LDDzG9QoUyXW79/RmJUJmRIE2sYQZfOSJViwRJePYGYBUPvTOyb2FRIsaafQodIh
- HAPPuSW4zJj5A+i2REjTQGW+g1hlrlha+vWPz3Wu6O7QVbP/C6gCPMQiR27MVXtUH3KK
- WchEHZTP2gE+ZNSOkNQC82kPVcLGB0p+p7yVKKw+anJe+OKVxUfFWLR9ufp7SdxohbOG
- ydDzjOwElRYq11mp3JLrJ7b811wfH6Qruf0vXk8XZSE/8Ujam9eXok2IqPXd2VpFAvac
- TcwKAJUQlB149zRlhA+c6ZYBKCuGOGn84TBZuqxdGrHLqqL65sDikO7iYc1Oc/fcdDWG
- ssjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=o9kN9xY0mEvCj/nfI+9lJdTn+X2tKBk+Cpoqlf2JFgY=;
- fh=aFQfxpNWovoQ01QbmIMn6V+zwDnbq7aiAeCFl39L+kU=;
- b=oTGQh5fH4u702RxoH8mtNjaL/Qu+w5yXvQhx6fM30JP70nJAQtO7CtjU9RvTBkZobk
- GZX0YhrcB5r3Sinsj1wOSwyE2NIlv8MEan1RS/8KXf7YAnJRxor7yFn3U1lmCZceGvI4
- lSYUJqwqmsZQtjmnIz2lTqn2H4T1ZbfEYfiUsdkLCPheBBlRAWXoSsin2AeuxBZcCWyp
- hJ1sgZ6mlMOGHf2MOjJPxcOJrzQBWc+MD99zGy+5z9v+HCaE4WX+2Wc0IPCeOOJQldE0
- ZWoVGIWR7rtmWl+CSPxBJiknESBDEfPouGXFSeNGMBEDuEeEYMgKRdysUL54S01FPeJg
- sfZw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790614374; x=1791219174; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=o9kN9xY0mEvCj/nfI+9lJdTn+X2tKBk+Cpoqlf2JFgY=;
- b=MX3PynPKSexMj4xadK7SeE8KEPPPHgQ2nm7eKbJVR9oMsgN5ck58BOe29yMVk8ljRB
- qdShALsUl5ah2BJgeJfuoOlpWMtmlT2bgK0RHuEn+W3NGa6F1Bw8amTEE+u4IXnu78OL
- iK8u8qv0KS7NmlQBVxwSlOf0Blr8KTUiGBfC2ltBnYbUouJRfSfNmRxZyMcK+pDY8teF
- dN8MfemT5hoScbOBiwWdCnDDqjjoRu7hL6YiwAyghu6kOcFz/8PgAarfKperwCcspRAT
- MKfuxkjT8NMhejdfujc1xPuQs6WMv5rmiRJV9qtU69hqRICZ1m7M6KjfoyCx2j8qZkq8
- uaZg==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xBFFL-00064Z-1e
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:34:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1xBFFJ-0000IO-4Z
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 13:34:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790616871;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6QcRmKAZPk4+69MBsW2Ao6CpwFSl1GoQnOOgz4WoGyo=;
+ b=CwUyPJeF6iBR6IZdrw1a5KbJ06KVKFeEZTg15BvqSgpXyQf/+utGqvH2xqkpxGknCJFb8p
+ whg/kRweAItImg7js/QIkIbQUedGyoCTQMEParDuOTbeWLu+S1fB+X/+0TGfYFIqz2WuHR
+ JiVTrMafWjt93EeU0kLnM6BL/yBhim0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-323-7NteIG8xOnujI1tsXbbhsQ-1; Mon, 28 Sep 2026 13:34:28 -0400
+X-MC-Unique: 7NteIG8xOnujI1tsXbbhsQ-1
+X-Mimecast-MFC-AGG-ID: 7NteIG8xOnujI1tsXbbhsQ_1790616867
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49e6422198fso21763875e9.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:34:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790614374; x=1791219174;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=o9kN9xY0mEvCj/nfI+9lJdTn+X2tKBk+Cpoqlf2JFgY=;
- b=U03qIJktUdzv/adfMfxixi5ahy7Rvip5msBKdWlfjlEs6jFn3p8Kqa2kNazzS/beuQ
- wBt8mqDb5YzV1MOAnO8XYcIC8hnqn8oLd3Eow7FI/LRCQrWq0Y1LPLWFCjAegZhK4A+H
- d33aRMfzi/x0fRavtuppn2IF7JDNpuTTO1uo52fO/2i2308Uoa+LQA3b/kzRXlBnL2mf
- wbDAwVOH1aaI5KyXxOAhKJKVt8KrB6MkwldhFusLpAGsbm6pGyB/8xAwHygyJo8YzohI
- QSqp/LPZ9TO2dTyDIbNJUNC//k1eq+J7ST4QnAyIO6M7cxXy6vgDugp85bTJoWSwSmi6
- KdTQ==
-X-Gm-Message-State: AFq9FYK2YLv0ZbCwp6LI1vjr6FfLQEpZUfyFhGvrRRmMrwox+RiW4RJN
- 2Us14QNHo73poxkxbtwHH6SLBefjvvYtl4qFooslWc5a3RBhyDt5F3j8tn13gQpxJc/2rWoN2lO
- qZGLqoGQhoHUxwG62iMc/kjZip3NpIeI=
-X-Gm-Gg: AYBFou171vA98N5NCyDDmPkRixARdQZaIoEvFSe2zKuQFc7OtWhxLJ+zG+MSdlRWddW
- hqWgBavBJ52zEEi0sf2R8U9HJwbOxiirxKSttDTJl7ekHCV56HzCuzhaI3/A8K1hqzT3xR277wD
- GQqaRw5A/Fs5CnjBRWu87+bkRqcP60WAKSuo1xZkGs+jt3dYfsipseND4k6/Vi3T9+rbCaGtQLw
- 8mrHQ3v52a30wsupSM4xdoDk2a7eKy9o7ZRk/gUoWG76wW/+yB9LKbM2SWarhQXbB1AnytUkDbB
- xMDyU3IJdPrsYI3P94Mb+M5iMHotGRQu2CaPw8TDenjrTKNI/+8GnbzI0iCi34Trp0cRsHZ5Ztb
- p3fGVh2SRkWQt
-X-Received: by 2002:a17:90b:3c91:b0:3a4:7a81:e6ad with SMTP id
- 98e67ed59e1d1-3a47a81e754mr1819277a91.11.1790614374299; Mon, 28 Sep 2026
- 09:52:54 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790616867; x=1791221667;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6QcRmKAZPk4+69MBsW2Ao6CpwFSl1GoQnOOgz4WoGyo=;
+ b=BkDe6wrciviyhZHAE5LWrPQY4RUuIIp0pIdwuknskYEEnvIcqUE4gG8TYa8un45qL1
+ scJwuClx1nc0GPkzAAv04SN8duL6nLJZVvoRypAbEVss3HuG8BvzWFfDccBgGi856rvP
+ L+KLNhqDtEKgxIZK0c3mETTIUsPVlUl8iKQENkipTjbC5VTx/6z21iORnfd2eUiUm7/w
+ nanMbtF/j70GkB5DvNTc615gRBwxPbWJ/k0tPky5tR4TQqm6PedpyAvytu2tpITllprq
+ SLWC3QGSLyTuyKiLCWTYs/vgfhW9mMy3Bxd8lMA4GRL2C2gnsnz6M5B80l8Mu/K+aK8q
+ +FBw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwWCplZoVKyyDQPJRW1PpzG65t7SGeS+aXWQ4qPt7OZOevhuBnpTd3hVQdDgtr51eFpbjgZ94k6RkyN@nongnu.org
+X-Gm-Message-State: AFuF++m5LzWfygU7LfRSvxllBcgLu0/6HHzKgf+LjBPSHwTyOFa7LIyz
+ 0mONdd5PBtp0JYAMfXQYx9mwpNSIP0iZ15JshPhnPBUvxbZ6owmo4z/Cj5VSf1h42VlKg3W24mf
+ y+hmxyTUVlbo78ZaJKAiXu25kiAIIWxlZqpu1xIbSureojneWFg3xzCzv
+X-Gm-Gg: AYBFou2E4jFRaty2kGlaba9PRLVTp+nr3+p57Q6Vea5peBPxsABwm3X6ZBRYdl7HiFs
+ rgyBOxB/19hVbirXFcx6aCK0ZY8MR6avdY2FrLH81PUDn92pD/mI0sKWVYgpqtagmAW2ysz+22g
+ mW9hhgYhMW/yUGtfEiqmbpBhWDtBEH8BQI34u5jsQ0oXWAfl4c/gC95u/4Lrkml6uxHcVQ4CFNN
+ yM4KlA660Or7Wncb2bAg0+cj1q7guMYWYHAlbLGPQixdn2HG2cZbEnlRICjZN9C6BrovOzPL/Ow
+ jAo+7E+Ae7Aw6QAv2tLzMmO6/jAAP1WrboGBcUL3K+76BP8JY4PgQQJLDxrsQpKHZYFTMfkfxvS
+ e36AT/vtoh5FCeOy/2yE1qYoBST6NXKJVfi8aWRtLUCyrwUk/
+X-Received: by 2002:a05:600c:3b1b:b0:49f:e4d4:dd70 with SMTP id
+ 5b1f17b1804b1-49fe6705bd7mr249667295e9.31.1790616866699; 
+ Mon, 28 Sep 2026 10:34:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b1b:b0:49f:e4d4:dd70 with SMTP id
+ 5b1f17b1804b1-49fe6705bd7mr249666885e9.31.1790616866176; 
+ Mon, 28 Sep 2026 10:34:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a00cfa57d7sm7988175e9.10.2026.09.28.10.34.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Sep 2026 10:34:25 -0700 (PDT)
+Message-ID: <3bcc8ccf-6daf-47a1-8620-a69915adf8ae@redhat.com>
+Date: Mon, 28 Sep 2026 19:34:24 +0200
 MIME-Version: 1.0
-References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
- <20260926192338.2702952-3-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260926192338.2702952-3-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 28 Sep 2026 10:52:42 -0600
-X-Gm-Features: AclHuK_BEqZH_GwG76rwgZQ0DC3lv8B1qMo6h1ColIci1YiFnrdj_B34eOgD0Kw
-Message-ID: <CAATN3NqiYs5Pm3S02H1vwLmE_BEkG--jq=+XiL0bXxQnJcXZ9g@mail.gmail.com>
-Subject: Re: [PATCH 02/10] tests/tcg/hexagon: Cover HVX vector write conflicts
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- richard.henderson@linaro.org, marco.liebel@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="000000000000b5ba5f065c8de572"
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj2-x0f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 12/26] arm/kvm: Initialize isar.idregs[] with all
+ writable host ID regs
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260916144721.751810-1-eric.auger@redhat.com>
+ <20260916144721.751810-13-eric.auger@redhat.com>
+ <8C1A034C-C3E7-4EC3-89CF-6E3AD99AE90C@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <8C1A034C-C3E7-4EC3-89CF-6E3AD99AE90C@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,392 +131,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b5ba5f065c8de572
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 26, 2026 at 1:23=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com>
-wrote:
 
-> Cc: Taylor Simpson <ltaylorsimpson@gmail.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  tests/tcg/hexagon/multiple-writes.c | 98 +++++++++++++++++++++++++++++
->  1 file changed, 98 insertions(+)
+On 9/25/26 3:27 PM, Khushit Shah wrote:
 >
-> diff --git a/tests/tcg/hexagon/multiple-writes.c
-> b/tests/tcg/hexagon/multiple-writes.c
-> index bd2b1384dd9..21771252020 100644
-> --- a/tests/tcg/hexagon/multiple-writes.c
-> +++ b/tests/tcg/hexagon/multiple-writes.c
-> @@ -13,6 +13,7 @@
+>> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> kvm_arm_get_host_cpu_features() already retrieves the values of some
+>> host id registers to analyze the available vcpu features.
+>>
+>> Eventually we want to be able to allow the user to change the value
+>> of writable ID reg fields. So we need to store the initial value of all
+>> writable ID regs into isar.idregs[].
+>>
+>> Introduce a new get_host_cpu_idregs() helper that populates isar.idregs[]
+>> and call it from kvm_arm_get_host_cpu_features.
+>>
+>> This patch has no impact on cpreg values. isar.idregs[] is only
+>> used as a temporary storage for register values to be updated in place
+>> later.  Also it does not handle the writeback of isar.idregs[] into cpreg
+>> value list after user update. This will be handled separately.
+>>
+>> Note the host values are retrieved from the scratch vcpu initialized with
+>> all the available capabilities exposed by KVM, independently on the
+>> final choice made by the suer.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Hi Eric,
 >
->  #include <assert.h>
->  #include <signal.h>
-> +#include <stdint.h>
->  #include <stdio.h>
->  #include <stdlib.h>
->  #include <string.h>
-> @@ -223,6 +224,80 @@ static int test_vreg_legal_predicated(void)
->      return sig;
->  }
+> As we discussed, in v10, there will be an option to also read all the ID registers, not only writable.
+yes we can do that. reviewers may advocate the leave as is though as the
+only call site in
+this series will use writable mode.
+>> ---
+>> v8 -> v9:
+>> - improve the commit msg. Only initialize in this patch and move the
+>>  write back to cpreg value list in a different patch.
+>> - Do not hack CLIDR here. The correct way to fix that temporarily is to
+>>  do that in the machine instead.
+>>
+>> v7 -> v8
+>> - fix indent and added Khushit's R-b
+>>
+>> v6 -> v7
+>> - remove vcpu from prototypes (Khushit)
+>>
+>> v5 -> v6
+>> - do not check writable_map anymore
+>> ---
+>> target/arm/kvm.c        | 43 ++++++++++++++++++++++++++++++++++++++++-
+>> target/arm/trace-events |  2 ++
+>> 2 files changed, 44 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index c6eac41991..958b25e550 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+>> @@ -43,6 +43,7 @@
+>> #include "hw/acpi/ghes.h"
+>> #include "target/arm/gtimer.h"
+>> #include "migration/blocker.h"
+>> +#include "cpu-idregs.h"
+>>
+>> const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+>>     KVM_CAP_INFO(DEVICE_CTRL),
+>> @@ -290,7 +291,44 @@ static int kvm_feature_idx_to_idregs_idx(int kidx)
+>>     return get_sysreg_idx(sysreg);
+>> }
+>>
+>> -static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>> +/*
+>> + * get_host_cpu_idregs: Read all the writable ID reg host values
+>> + *
+>> + * Need to be called once the writable mask has been populated
+>> + * Note we may want to read all the known id regs but some of them are not
+>> + * writable and return an error, hence the choice of reading only those which
+>> + * are writable. Those are also readable!
+>> + */
+>> +static int get_host_cpu_idregs(int fd, ARMHostCPUFeatures *ahcf)
+>> +{
+>> +    int err = 0;
+>> +    int i;
+>> +
+>> +    for (i = 0; i < NUM_ID_IDX; i++) {
+>> +        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
+>> +        ARMSysRegs sysreg = id_register_sysreg[i];
+>> +        uint64_t *reg;
+>> +        int ret;
+>> +
+>> +        if (!sysregdesc->writable_mask) {
+>> +            continue;
+>> +        }
+>> +
+>> +        reg = &ahcf->isar.idregs[i];
+>> +        ret = read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg));
+>> +        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
+>> +        if (ret) {
+>> +            error_report("%s error reading value of host %s register (%m)",
+>> +                         __func__, sysregdesc->name);
+>> +
+>> +            err = ret;
+>> +        }
+>> +    }
+>> +    return err;
+>> +}
+>> +
+>> +static void
+>> +kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>> {
+>>     /* Identify the feature bits corresponding to the host CPU, and
+>>      * fill out the ARMHostCPUClass fields accordingly. To do this
+>> @@ -376,6 +414,9 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>         SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
+>>         err = 0;
+>>     } else {
+>> +        /* Make sure all writable ID reg values are initialized */
+>> +        err |= get_host_cpu_idregs(fd, ahcf);
+>> +
+> Perhaps if we read “all” the ID registers, we should be able to get rid of all the manual reads below.
+Yes if all are read, we can remove this. But for now this is depends on
+the host capabilities, better to
+leave as is I think.
 >
-> +/*
-> + * Complementary predicated writes to the same V-register pair are legal=
-.
-> + * v16 and v22 are splatted with distinct patterns; since p0 is always
-> + * true, v14 must end up holding v16's pattern.  Extracting a word from
-> + * v14 confirms the executed branch actually ran, rather than merely tha=
-t
-> + * no SIGILL was raised.
-> + */
-> +static int test_vreg_pair_legal_predicated(void)
-> +{
-> +    int sig;
-> +    uint32_t result;
-> +
-> +    asm volatile(
-> +        "r0 =3D #0\n"
-> +        "r1 =3D ##1f\n"
-> +        "memw(%[resume_pc]) =3D r1\n"
-> +        "r4 =3D #0x11111111\n"
-> +        "r5 =3D #0x22222222\n"
-> +        "v16 =3D vsplat(r4)\n"
-> +        "v22 =3D vsplat(r5)\n"
+>>         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+>>         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR2_EL1_IDX);
+>>         err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
+>> diff --git a/target/arm/trace-events b/target/arm/trace-events
+>> index 8502fb3265..c25d2a1191 100644
+>> --- a/target/arm/trace-events
+>> +++ b/target/arm/trace-events
+>> @@ -13,6 +13,8 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+>>
+>> # kvm.c
+>> kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+>> +get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+>> +kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%”PRIx64
+> ^^ leaked into this commit.
+yup. Thanks!
+
+Eric
 >
-
-Go ahead and assign something to v21 and v23 here.
-Ultimately, the values aren't used but the registers are referenced in the
-vcombine instructions below.
-Alternatively, you could just use v16 and v22.  Something like
-        "    if (p0) v15:14 =3D vcombine(v22, v16)\n"
-        "    if (!p0) v15:14 =3D vcombine(v16, v22)\n"
-If you do that, you can remove v21 and v23 from the clobber list.
-
-
-> +        "r4 =3D #0\n"
-> +        "p0 =3D cmp.eq(r0, r0)\n"
-> +        "{\n"
-> +        "    if (p0) v15:14 =3D vcombine(v21, v16)\n"
-> +        "    if (!p0) v15:14 =3D vcombine(v23, v22)\n"
-> +        "}\n"
-> +        "%[result] =3D vextract(v14, r4)\n"
-> +        "1:\n"
-> +        "%[sig] =3D r0\n"
-> +        : [sig] "=3Dr"(sig), [result] "=3Dr"(result)
-> +        : [resume_pc] "r"(&resume_pc)
-> +        : "r0", "r1", "r4", "r5", "p0",
-> +          "v14", "v15", "v16", "v21", "v22", "v23", "memory");
-> +
-> +    return sig =3D=3D SIGILL ? SIGILL : result;
-> +}
-> +
-> +/*
-> + * A future write may consume a temporary value from the same V-register=
-.
-> + * buf is zeroed, so v0.tmp loads all-zero and v0.w =3D vadd(v0.tmp.w, 1=
-)
-> + * must end up as 1 in every word.  Extracting a word from the result
-> + * confirms the add actually used the loaded .tmp value, rather than
-> + * merely that no SIGILL was raised.
-> + */
-> +static int test_vreg_legal_tmp(void)
-> +{
-> +    long long buf[16] __attribute__((aligned(128)));
-> +    int sig;
-> +    uint32_t result;
-> +
-> +    memset(buf, 0, sizeof(buf));
-> +
-> +    asm volatile(
-> +        "r0 =3D #0\n"
-> +        "r1 =3D ##1f\n"
-> +        "memw(%[resume_pc]) =3D r1\n"
-> +        "r2 =3D %[buf]\n"
-> +        "r3 =3D #1\n"
-> +        "r4 =3D #0\n"
-> +        "v1 =3D vsplat(r3)\n"
+> Warm Regards,
+> Khushit
 >
+>> # cpu.c
+>> arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
+>> -- 
+>> 2.53.0
+>>
 
-Consider putting something non-zero into v0 here.
-That will be a stronger check that the read from buf actually took place.
-
-
-> +        "{\n"
-> +        "    v0.tmp =3D vmem(r2 + #0)\n"
-> +        "    v0.w =3D vadd(v0.w, v1.w)\n"
-> +        "}\n"
-> +        "%[result] =3D vextract(v0, r4)\n"
-> +        "1:\n"
-> +        "%[sig] =3D r0\n"
-> +        : [sig] "=3Dr"(sig), [result] "=3Dr"(result)
-> +        : [resume_pc] "r"(&resume_pc), [buf] "r"(buf)
-> +        : "r0", "r1", "r2", "r3", "r4", "v0", "v1", "memory");
-> +
-> +    return sig =3D=3D SIGILL ? SIGILL : result;
-> +}
-> +
->  static int test_vreg_illegal_mixed(void)
->  {
->      int sig;
-> @@ -242,6 +317,26 @@ static int test_vreg_illegal_mixed(void)
->      return sig;
->  }
->
-> +/* A pair write and a single write to either pair member are illegal. */
-> +static int test_vreg_illegal_pair_overlap(void)
-> +{
-> +    int sig;
-> +
-> +    asm volatile(
-> +        "r0 =3D #0\n"
-> +        "r1 =3D ##1f\n"
-> +        "memw(%[resume_pc]) =3D r1\n"
->
-
-Consider putting something into v14 and v15 here and check the values are
-unchanged at the end.
-Perhaps a subsequent patch that does this for all the illegal tests.
-
-
-> +        ".word 0x1f5055ee    /* { v15:14 =3D vcombine(v21, v16) */\n"
-> +        ".word 0x1e03e5ee    /*   v14 =3D v5 } */\n"
-> +        "1:\n"
-> +        "%[sig] =3D r0\n"
-> +        : [sig] "=3Dr"(sig)
-> +        : [resume_pc] "r"(&resume_pc)
-> +        : "r0", "r1", "memory");
-> +
-> +    return sig;
-> +}
-> +
->  static int test_vreg_illegal_uncond(void)
->  {
->      int sig;
-> @@ -308,7 +403,10 @@ int main()
->      assert(test_post_increment3() =3D=3D SIGILL);
->
->      assert(test_vreg_legal_predicated() =3D=3D 23);
-> +    assert(test_vreg_pair_legal_predicated() =3D=3D 0x11111111);
-> +    assert(test_vreg_legal_tmp() =3D=3D 1);
->      assert(test_vreg_illegal_mixed() =3D=3D SIGILL);
-> +    assert(test_vreg_illegal_pair_overlap() =3D=3D SIGILL);
->      assert(test_vreg_illegal_uncond() =3D=3D SIGILL);
->
->      assert(test_qreg_illegal() =3D=3D SIGILL);
-> --
-> 2.34.1
->
-
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
---000000000000b5ba5f065c8de572
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 26,=
- 2026 at 1:23=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
-alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">Cc: Taylor Simpson &lt;<a href=3D"ma=
-ilto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</=
-a>&gt;<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0tests/tcg/hexagon/multiple-writes.c | 98 ++++++++++++++++++++++++++++=
-+<br>
-=C2=A01 file changed, 98 insertions(+)<br>
-<br>
-diff --git a/tests/tcg/hexagon/multiple-writes.c b/tests/tcg/hexagon/multip=
-le-writes.c<br>
-index bd2b1384dd9..21771252020 100644<br>
---- a/tests/tcg/hexagon/multiple-writes.c<br>
-+++ b/tests/tcg/hexagon/multiple-writes.c<br>
-@@ -13,6 +13,7 @@<br>
-<br>
-=C2=A0#include &lt;assert.h&gt;<br>
-=C2=A0#include &lt;signal.h&gt;<br>
-+#include &lt;stdint.h&gt;<br>
-=C2=A0#include &lt;stdio.h&gt;<br>
-=C2=A0#include &lt;stdlib.h&gt;<br>
-=C2=A0#include &lt;string.h&gt;<br>
-@@ -223,6 +224,80 @@ static int test_vreg_legal_predicated(void)<br>
-=C2=A0 =C2=A0 =C2=A0return sig;<br>
-=C2=A0}<br>
-<br>
-+/*<br>
-+ * Complementary predicated writes to the same V-register pair are legal.<=
-br>
-+ * v16 and v22 are splatted with distinct patterns; since p0 is always<br>
-+ * true, v14 must end up holding v16&#39;s pattern.=C2=A0 Extracting a wor=
-d from<br>
-+ * v14 confirms the executed branch actually ran, rather than merely that<=
-br>
-+ * no SIGILL was raised.<br>
-+ */<br>
-+static int test_vreg_pair_legal_predicated(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 int sig;<br>
-+=C2=A0 =C2=A0 uint32_t result;<br>
-+<br>
-+=C2=A0 =C2=A0 asm volatile(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r0 =3D #0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r1 =3D ##1f\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;memw(%[resume_pc]) =3D r1\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r4 =3D #0x11111111\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r5 =3D #0x22222222\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;v16 =3D vsplat(r4)\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;v22 =3D vsplat(r5)\n&quot;<br></blockquo=
-te><div><br></div><div>Go ahead and assign something to v21 and v23 here.</=
-div><div>Ultimately, the values aren&#39;t used but the registers are refer=
-enced in the vcombine instructions below.</div><div>Alternatively, you coul=
-d just use v16 and v22.=C2=A0 Something like</div><div>=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 &quot;=C2=A0 =C2=A0 if (p0) v15:14 =3D vcombine(v22, v16)\n&quot;<b=
-r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 if (!p0) v15:14 =3D vcomb=
-ine(v16, v22)\n&quot;<br></div><div>If you do that, you can remove v21 and =
-v23 from the clobber list.</div><div>=C2=A0</div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r4 =3D #0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;p0 =3D cmp.eq(r0, r0)\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 if (p0) v15:14 =3D vcombin=
-e(v21, v16)\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 if (!p0) v15:14 =3D vcombi=
-ne(v23, v22)\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[result] =3D vextract(v14, r4)\n&quot;<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;1:\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[sig] =3D r0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [sig] &quot;=3Dr&quot;(sig), [result] &quot;=
-=3Dr&quot;(result)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [resume_pc] &quot;r&quot;(&amp;resume_pc)<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r0&quot;, &quot;r1&quot;, &quot;r4&quo=
-t;, &quot;r5&quot;, &quot;p0&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;v14&quot;, &quot;v15&quot;, &quot=
-;v16&quot;, &quot;v21&quot;, &quot;v22&quot;, &quot;v23&quot;, &quot;memory=
-&quot;);<br>
-+<br>
-+=C2=A0 =C2=A0 return sig =3D=3D SIGILL ? SIGILL : result;<br>
-+}<br>
-+<br>
-+/*<br>
-+ * A future write may consume a temporary value from the same V-register.<=
-br>
-+ * buf is zeroed, so v0.tmp loads all-zero and v0.w =3D vadd(v0.tmp.w, 1)<=
-br>
-+ * must end up as 1 in every word.=C2=A0 Extracting a word from the result=
-<br>
-+ * confirms the add actually used the loaded .tmp value, rather than<br>
-+ * merely that no SIGILL was raised.<br>
-+ */<br>
-+static int test_vreg_legal_tmp(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 long long buf[16] __attribute__((aligned(128)));<br>
-+=C2=A0 =C2=A0 int sig;<br>
-+=C2=A0 =C2=A0 uint32_t result;<br>
-+<br>
-+=C2=A0 =C2=A0 memset(buf, 0, sizeof(buf));<br>
-+<br>
-+=C2=A0 =C2=A0 asm volatile(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r0 =3D #0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r1 =3D ##1f\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;memw(%[resume_pc]) =3D r1\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r2 =3D %[buf]\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r3 =3D #1\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r4 =3D #0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;v1 =3D vsplat(r3)\n&quot;<br></blockquot=
-e><div><br></div><div>Consider putting something non-zero into v0 here.</di=
-v><div>That will be a stronger check that the read from buf actually took p=
-lace.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 v0.tmp =3D vmem(r2 + #0)\n=
-&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 v0.w =3D vadd(v0.w, v1.w)\=
-n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;}\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[result] =3D vextract(v0, r4)\n&quot;<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;1:\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[sig] =3D r0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [sig] &quot;=3Dr&quot;(sig), [result] &quot;=
-=3Dr&quot;(result)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [resume_pc] &quot;r&quot;(&amp;resume_pc), [=
-buf] &quot;r&quot;(buf)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quo=
-t;, &quot;r3&quot;, &quot;r4&quot;, &quot;v0&quot;, &quot;v1&quot;, &quot;m=
-emory&quot;);<br>
-+<br>
-+=C2=A0 =C2=A0 return sig =3D=3D SIGILL ? SIGILL : result;<br>
-+}<br>
-+<br>
-=C2=A0static int test_vreg_illegal_mixed(void)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int sig;<br>
-@@ -242,6 +317,26 @@ static int test_vreg_illegal_mixed(void)<br>
-=C2=A0 =C2=A0 =C2=A0return sig;<br>
-=C2=A0}<br>
-<br>
-+/* A pair write and a single write to either pair member are illegal. */<b=
-r>
-+static int test_vreg_illegal_pair_overlap(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 int sig;<br>
-+<br>
-+=C2=A0 =C2=A0 asm volatile(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r0 =3D #0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;r1 =3D ##1f\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;memw(%[resume_pc]) =3D r1\n&quot;<br></b=
-lockquote><div><br></div><div>Consider putting something into v14 and v15 h=
-ere and check the values are unchanged at the end.</div><div>Perhaps a subs=
-equent patch that does this for all the illegal tests.</div><div>=C2=A0</di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;.word 0x1f5055ee=C2=A0 =C2=A0 /* { v15:1=
-4 =3D vcombine(v21, v16) */\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;.word 0x1e03e5ee=C2=A0 =C2=A0 /*=C2=A0 =
-=C2=A0v14 =3D v5 } */\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;1:\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%[sig] =3D r0\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [sig] &quot;=3Dr&quot;(sig)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : [resume_pc] &quot;r&quot;(&amp;resume_pc)<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r0&quot;, &quot;r1&quot;, &quot;memory=
-&quot;);<br>
-+<br>
-+=C2=A0 =C2=A0 return sig;<br>
-+}<br>
-+<br>
-=C2=A0static int test_vreg_illegal_uncond(void)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int sig;<br>
-@@ -308,7 +403,10 @@ int main()<br>
-=C2=A0 =C2=A0 =C2=A0assert(test_post_increment3() =3D=3D SIGILL);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0assert(test_vreg_legal_predicated() =3D=3D 23);<br>
-+=C2=A0 =C2=A0 assert(test_vreg_pair_legal_predicated() =3D=3D 0x11111111);=
-<br>
-+=C2=A0 =C2=A0 assert(test_vreg_legal_tmp() =3D=3D 1);<br>
-=C2=A0 =C2=A0 =C2=A0assert(test_vreg_illegal_mixed() =3D=3D SIGILL);<br>
-+=C2=A0 =C2=A0 assert(test_vreg_illegal_pair_overlap() =3D=3D SIGILL);<br>
-=C2=A0 =C2=A0 =C2=A0assert(test_vreg_illegal_uncond() =3D=3D SIGILL);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0assert(test_qreg_illegal() =3D=3D SIGILL);<br>
--- <br>
-2.34.1<br></blockquote><div><br></div><div>Otherwise</div><div>Reviewed-by:=
- Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">ltaylorsimp=
-son@gmail.com</a>&gt;</div><div>=C2=A0</div></div></div>
-
---000000000000b5ba5f065c8de572--
 
