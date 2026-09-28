@@ -4,141 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C76ACA5FA2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A295BCA5FA5
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 12:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBACL-0002cE-0i; Mon, 28 Sep 2026 08:11:09 -0400
+	id 1xBACG-0002Pu-Hv; Mon, 28 Sep 2026 08:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Refael-M@hotmail.com>)
- id 1xB4U6-00053A-M2
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:05:06 -0400
-Received: from mail-westus2azolkn190100000.outbound.protection.outlook.com
- ([2a01:111:f403:d004::] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Refael-M@hotmail.com>)
- id 1xB4U4-000407-4D
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:05:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YN61BRVH/m7B/7EO7iBtIDoMEsIWfUpHj7uwUwXPdY6dd6V93ygBZelv1pmw/3y8mbNR+sm4WhcWFXP9CMOYwue8Gk0pk664QVT5KrHzYsvpCor4gXSUrDe4mYAYOYpzBo49VRZGuVPlRP9DhCH3zRWj7Q1bKBPER0XnXkWcRdKiVW4toGzEJNmE70LIKncvfTPzuI54qnBwO3xhhsGl91pEWJLtrdSgs8Be22U8I4Z/SDeouUY8fYEAcn/ulzgVW/z619bW7VAMf2ZQv4EyoeGUQ9MlmElovzsEgjyCsfKCVZUOo0gfx8VFReGg6ude1u6sxs/4TrPOshvxpOVIDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AY10WmyLt5qYI9PtP/LNIlv7BmEeuxAzi1+oM0/UUYU=;
- b=mwSjTiPhQt6xaYOuSncUlhg0E7o7FTYcZ7Za51jZsYb2H4pqWHWIuj46gJbr6ZSzX5jbD7rW+D1nnys4zCsReLFjn4n9Kw7lCbSZn7aprz11FwYDoxPy3tAeUM0kkuB+4YLMGzSjB4D2rudZc18r8mdE0S+v3JubJp1HkWYOI76xo7tbuX4P26866VT/vMkyTJ/2JVj0vr5thc6NOz+uKTCu5eAv28/cBCeQfCGv1GDcVWb/YFpOVTrj8oq6mhBjstwOkk7pRqNwmfMQ3UCUu+iZTAzTDt3M+ZAnOnkq60W01dFv+qF9s9PEz0uQEB76pD2/LsMsLpeXmKIPsKhyWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AY10WmyLt5qYI9PtP/LNIlv7BmEeuxAzi1+oM0/UUYU=;
- b=P7b4i+ZlfQr7GUnqkKuGjn/cdGJlP6+RuGpUB0S99AllTRazPFCv0WIXJSEXwwJUkkaalJNbVf8jJdB4MB7RRw6hgUgeOzMoQVTkVZVBSKsNXcLoZ66p6kxj7mv1wDQVemEPatuePh6kzP8NBBlMEvuY9lpvrokzfVjmk/s/S27w3zIJPILEDNuowkOCUYGjaDQsbVBbYu+wtJ1pDH4WmhIMomv7cdBrD1jQyN5JFW4yXmbXnwGWKtwX3nZOIFWuFcjfOtKfQphL2W1VTwevCNZWzmH1eab9v/WwifIti+gkXEbNf5PoB6frd/ct+JDxKn/Nm6uh9YM928Ho7Kpezg==
-Received: from LV5PR84MB4026.NAMPRD84.PROD.OUTLOOK.COM (2603:10b6:408:2fb::15)
- by CH3PR84MB3545.NAMPRD84.PROD.OUTLOOK.COM (2603:10b6:610:1bb::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Mon, 28 Sep
- 2026 05:59:57 +0000
-Received: from LV5PR84MB4026.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::9151:9e8:f98a:99e5]) by LV5PR84MB4026.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::9151:9e8:f98a:99e5%6]) with mapi id 15.21.0451.022; Mon, 28 Sep 2026
- 05:59:57 +0000
-From: Refael Mantsur <Refael-M@hotmail.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PATCH] hw/hyperv/vmbus: allow receiving outside the channel notify
- callback
-Thread-Topic: [PATCH] hw/hyperv/vmbus: allow receiving outside the channel
- notify callback
-Thread-Index: AQHdTw6E7JfU52EUdEqH+DwCWNoxNQ==
-Date: Mon, 28 Sep 2026 05:59:56 +0000
-Message-ID: <LV5PR84MB40263D472C5CF968889420A9968D2@LV5PR84MB4026.NAMPRD84.PROD.OUTLOOK.COM>
-Accept-Language: he-IL, en-US
-Content-Language: he-IL
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV5PR84MB4026:EE_|CH3PR84MB3545:EE_
-x-ms-office365-filtering-correlation-id: 148dc2e7-b716-41dc-b19e-08df1d25b94d
-x-microsoft-antispam: BCL:0;
- ARA:14566002|8062599012|8060799015|19110799012|31061999003|25031999004|25010399006|24071999003|4140399003|37011999003|39105399006|24021099003|41001999006|20031999006|15030799006|15080799012|5062599005|40105399003|12091999003|18061999006|2607281247196008|102099032|440099028|3412199025;
-x-microsoft-antispam-message-info: =?windows-1255?Q?6ZfHC8Hjj+zYASDn3gBd7FO5KhTA//3VP8UyaJS1kbwi72wwEv8ixenx?=
- =?windows-1255?Q?BO36P1ikrl+P+O5fOkJ45zyEfukcHXlkVIHvzhM9ERwV3KHxVGfd6zTq?=
- =?windows-1255?Q?ij21pFa+q02n+Co0UMD/J18zbJSlh/epuQEGkCaZ8AAkZQTVyfN9NjWY?=
- =?windows-1255?Q?9Jq9C1mGwuGw/lLealZLdRYTYHMIY1OaMxHDLMxZzRXtMm5xxB5jj76j?=
- =?windows-1255?Q?55JH/gvgYropnraKWXEvCCtuECG4kxFXEbyKCP/K6bEeLlfgnoa5Q8Fl?=
- =?windows-1255?Q?ghvy73AM9Nlu/N3ubCttXp1Vi8ous8F5qQx7/XdrPrLQxoJe3jhiTw6J?=
- =?windows-1255?Q?T0cURxBkYNaNRpyiQq+d9Mk2hGg+3oJH18kGTY/p5NXuLQGkp+LFs+39?=
- =?windows-1255?Q?bpzYYEItf6u8vwYfDhME+d26dtuUyQgVKUVHeFU4zPuPXKT/mDWFXIol?=
- =?windows-1255?Q?ZVJcd3UamHJdnL3hWQQXeaO6gfXQwRqXaHBgMV7TqF6Xn4+45jYh5WGT?=
- =?windows-1255?Q?f4/f3f3rPR4jqw8QvbmmnmYYvmzcEI0vNd8WBILa+DByYh+esn5u03O7?=
- =?windows-1255?Q?4Z1i27QkI/r0zzwK/VWyk38IuglmN5Ycy5nVh4/aUbDHJiPDaFHnWTDC?=
- =?windows-1255?Q?e1fvR+EX8uAURsU7zqpV91Lrr7ujy7nmCvs4A0jDuE2r8jZmqFN9Dh0h?=
- =?windows-1255?Q?0RejjB6ZXZfmRJq+skkR44YsWYzQk3XA8091db2khWN/6/rHGg5vJc57?=
- =?windows-1255?Q?lIqDa42+zDRKK1f5zKZ3OeGYDxgmQrMm4IGaRZSdeTH+pSqddjNbXWI4?=
- =?windows-1255?Q?WIRC0EJdlZ+oiRMBBazwkF45SWwDBSok1YHw45fsFUQRtdgggJ7hGcum?=
- =?windows-1255?Q?14jUJsK72U0pNfsVek0qJEtz0bVtKbDQ6djkvvVc/JqllqPmkNhyjjO9?=
- =?windows-1255?Q?iCBzAt1mQ25+bQ2CgGV69amuZoyME56zVu9TgLtR667/JwwXS/lyp4WN?=
- =?windows-1255?Q?dNdpRdTIfOvXYZhg+ysh2Y6sQd/h+FoLGfWsOISSTKeyJGvvMf6XON2h?=
- =?windows-1255?Q?RyKx6JCtbgoRGcW/0eLmUwBuANo9xGG8W+CbbXgIkLS3qi9TXna2g/ck?=
- =?windows-1255?Q?+MIcNBn1hfq/OArIylOigS0f2pHAXxcfWRHokk0lubl92SzCc3Xvhxx1?=
- =?windows-1255?Q?jqza+oV1cy6nThupbvx6JDvC/19E1bIDqMnhr4vhyKY/w7OzZ5J+wUdy?=
- =?windows-1255?Q?vWgW0Q8lCHgeCc3MPfWsYQT7Bwuva83V/f9OsLtGz+1JDQt7GtErWDar?=
- =?windows-1255?Q?g+H8ZJ+xnFj+LxP91n6M85irVa8=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?windows-1255?Q?bC95oErQH8fyhQ1Um41OHakvQjgIFHc4zlwBV8eSMIHmjbv2ndjBmIYO?=
- =?windows-1255?Q?okBjEEOiDHkV2Ftm37csF7edRn5YIjj+ILphwtjVNf6cEI+FFeHj//U8?=
- =?windows-1255?Q?N0guJNJUAQcQhcaoZ6kISLEdsjB9KBITc78CD7OCPPTDmJOPvESFsJLN?=
- =?windows-1255?Q?kGE2L0hrisJCOMH1vlXtd/hkbpneRflQQDFfvjZRVsWrpTyR/PyFOfBg?=
- =?windows-1255?Q?rjFkpxNUH8xBR25iEgRXSoOGkg3AZVulQ0ojz95yy4X6v1tKU7V87Zk8?=
- =?windows-1255?Q?7KXNkGDqJ6Dvnt0dZ5noq+JPqvkTlljDoeNAmCqIp0sSjKrgEiCInZWU?=
- =?windows-1255?Q?6p3JZ4fx+SIjcO6QiuGNtcjvHgVphrJzFDUHo3J/cLPXE5KKKsNhVzOh?=
- =?windows-1255?Q?JRLDQ4HgSgsSY3lZMipZXPXTIyEh9+488wk5SDASggPviYGGI2wvFWqN?=
- =?windows-1255?Q?L/0BRav+pKt7dtiUFvqN+KWGSOaSzooDmQZMsEXgPBVHUW2e9VE5sYb0?=
- =?windows-1255?Q?WCz01ebzkghGXtgYiC1XA2ijMduSOG6BQFF3Fh1PRiCP6HIrC+SbRDoO?=
- =?windows-1255?Q?H1Z/zFRgvlC8YzXwwl7Ig4ZCIGtheDKRq4/7dQsF0NFO2GJdqsNDLBNV?=
- =?windows-1255?Q?BtN8ta7/DLW/7c/YWvANTlKc+NK4akNqFEbl1JOMTp3GN80AJSg79l06?=
- =?windows-1255?Q?oxBIYOuPfAD6yQYvvRWdQg7Js2lAESdzTB2FPn4xm6VNAE+3Q2FzhcZf?=
- =?windows-1255?Q?txCvKJX9AWZCj+1/PbQZllaMavJmc/dIMSa7hkyve6DIymcMlisRBnqm?=
- =?windows-1255?Q?WJxfIhwwd0GI16iSE9kiQSYkZFtLJziAff+E2/0RV16SLxX2kErxUEfr?=
- =?windows-1255?Q?u1xnXOa/UDEcwpkVT7OzzljI+GNrhDmhdVT6oHnlauLt6+WPAOjnD4uI?=
- =?windows-1255?Q?RyvVTh8WlBvhRY/Ksy00nPOid9baaXdq67YTFQu2s/bdeVVDclWWi0rU?=
- =?windows-1255?Q?pgJ/eusckWX+MTFqrMSNsoxYDma/dsj1IL7LhbXfeX8eCgfBH4fJwAvT?=
- =?windows-1255?Q?oTMghe5MMtqHyTeyU7QiNX/piB8ptYZnAkz9GI2rCpwuwzh4i7Gom5+l?=
- =?windows-1255?Q?dIWQjxafgqugvK228XXmKIFILhzxJ993z6ABF3/1skxAlzQZEeJSQmLJ?=
- =?windows-1255?Q?i7dQY/F5z+VG8kYyiNE/losBhF04+u/VicR1WOlCHpCcOkHvEOLc037b?=
- =?windows-1255?Q?7occ+3fQzbzt4dfLpgTpbl8MCxG7B981mgjQGeJg6U7LjCqcC0SXFuyb?=
- =?windows-1255?Q?w7obuAPUYHOGr4zrRIiA9v0BDK6cKhm+lc91MuqwVlEgZjGFTl9OFVne?=
- =?windows-1255?Q?Gs6P41P+/qazgLlbBWEH59I51nGNUT7WatFT6n80nJtwU05rGDhYxpav?=
- =?windows-1255?Q?JbJ8NqesRvhgkLxIX3xtqA7gqsgAVOAc5AfgRiC41ig=3D?=
-Content-Type: multipart/alternative;
- boundary="_000_LV5PR84MB40263D472C5CF968889420A9968D2LV5PR84MB4026NAMP_"
+ (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
+ id 1xB4W8-0005Lj-Is
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:12 -0400
+Received: from mail-wm2-f13.google.com ([74.125.225.141])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefan260699@gmail.com>)
+ id 1xB4W4-0004PH-Hb
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 02:07:12 -0400
+Received: by mail-wm2-f13.google.com with SMTP id
+ 5b1f17b1804b1-49ffbd83a92so10699815e9.0
+ for <qemu-devel@nongnu.org>; Sun, 27 Sep 2026 23:07:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790575627; x=1791180427;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=UrVtJk/zRiOa4XVd4HFsMF4pqFTMubmXdGMXTPSPLPg=;
+ b=W52NYEDQxZc1jRw9k4R8ysy9V0FdEATobmw0MGLBJQ3Ln+WJeJBO7ArjV5aD6OjiqT
+ miH742k4lNJOHOLV9o3IL/416mJ1HS0jKKVWbtr92zNQLqPjSQaOWLGWT3E1ap66yZM/
+ WhJDFAEs9X4td6WiFyhcL9/DpfCR+f3pSW4kWvMT0BMfGEOH2Y1+wcHGgiFty0qQtT66
+ U88WFoec/wxx0TYs4uUV6+zOVXiVGud1XCe1PXJN5fKc751IsuaxmhjSY9nLJ0iHlrv2
+ 8gzHZR56ySUeTc6Lkbn9xkkpF44cM/9SbLEQQ8spoFu2x+1AHM/oXCQUU3uCAA87B8Ve
+ iw7Q==
+X-Gm-Message-State: AFuF++lxjnmgKU5ANDd4apv4qeULWPZyfPdyS/dVSB5rTd+mzFfMYail
+ +ylwDHzXa89fblwHZgkGfXaiNsFuT7cxO4p39GpuV+aiiqWHHDPeoQIH8vjrVwbX
+X-Gm-Gg: AYBFou1ZWCW3/c15SxosewkEpBeaWK3sx5bRw82wIg/CgOAZoLgqs3BjjZM0twtnGQK
+ mF8fZXHo3oFulig26feWOK2wi2tzInJT+fVa5HcVVGLCH1rnE4/zdPgzzNYI6mWtAk2I8XScML7
+ 2bMtZftL/Wfb6LA5ovgLOfc/pAyrbaWRV/sL8ZUXyQ6ug/Cn0vkROzNCwwAXyH0crQnrTzAj3EX
+ 5NmBpzLntGG+Qlx9J4UWjbO5yvp3W9GAUewFLMtdOPOGUWOf8CBjqrtSH74bhFEpDx1JYEk07rk
+ ji+LSfWL3d0SwAtJVDDvP0BmeZTE5XEVA7f/x4wB5Q/VpO2xh+M6wGes6TA1d4DpMLuoFLT5e9N
+ ojUCh6OB1Nbh1OCO2bjBlUtETl1os+S5ReBKEsrbivc6RhTK6APvs/bQQUE8d6wyS1dwBe4CHVh
+ yOlSMMIT8eaxlFiE4IApNgmyvAScSxYs173vDun39yAr7AUkK9VikS5R8w6+cyCExpAskR6gxB+
+ zWKF791Q2z3Hu6vkg==
+X-Received: by 2002:a05:600c:4e55:b0:49f:bd3c:bc1a with SMTP id
+ 5b1f17b1804b1-49fe66f506fmr198725375e9.21.1790575626985; 
+ Sun, 27 Sep 2026 23:07:06 -0700 (PDT)
+Received: from mac.fritz.box ([2a05:fa40:300:1a00:d105:6a41:99ee:cbff])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a008f7f1c2sm1325775e9.1.2026.09.27.23.07.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 27 Sep 2026 23:07:06 -0700 (PDT)
+Date: Mon, 28 Sep 2026 08:06:38 +0200
+Subject: [PATCH 3/4] target/riscv/kvm: Create KVM AIA device before
+ configuring it
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-4a72f.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV5PR84MB4026.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 148dc2e7-b716-41dc-b19e-08df1d25b94d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Sep 2026 05:59:56.9327 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR84MB3545
-Received-SPF: pass client-ip=2a01:111:f403:d004::;
- envelope-from=Refael-M@hotmail.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260928-spacemit-k3-v1-3-8c57d0596b87@butz.st>
+References: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
+In-Reply-To: <20260928-spacemit-k3-v1-0-8c57d0596b87@butz.st>
+To: qemu-devel@nongnu.org
+Cc: Sunil V L <sunilvl@ventanamicro.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Stefan Butz <mail@butz.st>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openssh-sha256; t=1790575623; l=5680;
+ i=mail@butz.st; h=from:subject:message-id;
+ bh=ZHu1gcQh340uibL5qlA7g4LAeLjP6u4ZEbGaM7hx5EA=;
+ b=U1NIU0lHAAAAAQAAAZcAAAAHc3NoLXJzYQAAAAMBAAEAAAGBAOJW8yHG2FdKcC8jiWoQyd2Z6
+ SNHh+aJB0RLkH7BFF7Yy7MymfE5UJE2mmoucIa3HiNQdlVZjgqLY7wph/VSM4kniDO57IG9Q9jN
+ x96oOAzzWWJEVrh8vlxRGXatNy8ywcO9WExvzLop5s2ddP08f0Wrzn/55mpqoLJyoKaIbk10kxz
+ JW1GONHT8nsNvBpVB2lnzA2jhv7DC79UlHzA98+sp8eX6kmUips+9LpTJLDeVna8f/vwkU708PI
+ Qxt/5nhmFXKj/su/CMFivCLHckdmMOem/4UNoTyRcAbcoFQ9WWyYHvAD/bRuYZVEA2hfoBEQVu2
+ FGHdG/OimvbT/GseVmWjiw7WV9HUOJJawVmfoTEJynX9BbV+VNMKZVpW5YaAaps6/KOC7V2bM7P
+ hvORUmj3b8eUr418GYC3M4rLJtrj6Vu2cUyTV9Q5dvq9Lg2TIj/jpbEWpOqn2FSGkQcLvcDksNk
+ jOSGmdG4h+OJ3vbGrva5UCJF/KIyuV4ozlSU7awAAAAZwYXRhdHQAAAAAAAAABnNoYTUxMgAAAZ
+ QAAAAMcnNhLXNoYTItNTEyAAABgIeZvVjlPJhqxoVDv/7mKJMPS4/8RgOCtnYAkjOijxW9/qEcf
+ 5Hzvb/7GfO9jvL+OZ5m1ozKAIFT+iTz+A+QqMFTXz+9ztvPGh63glTeivVrztDMs8wehA1UdRkg
+ SWAuUCNQoF/mSzyD2mFMMWx93JerQ1gyuu9AmltXCdxizwfW7zF+bVd1O94ZK03ycbvkctUOJb1
+ IrvqQWtF+chAp0hNp0ICDoPSEcaAjZ/sDagg6Qb3QqRIpwFD2De0fn6F1uhqCniZ2SVNnCCJ6ZF
+ MDWg9guEkJVvLumuD15WkWmLiJFmCAkJDhCVSLU6YSWxd+ykLl7ODcxsivztcH8k6Y6OBSwM2ib
+ dwU0sAcPB9JKTxGVAhSYiIPqBy8QkR46i3j/Jf9RJEYKwgSD6Vd8X8gnRJf1ydjb/BXxh4IMB2+
+ NUv05EwSCu3Fx93XG/OzK2ElHwEIyV+QSzu8ZLDXP5Em1v8FGSKFQfuKDf57/ERz+67VVm2YQsf
+ ODwN6sPVSInLqOg==
+X-Developer-Key: i=mail@butz.st; a=openssh;
+ fpr=SHA256:jcZFBs39daoQJIontO/rJaVachWp/oqTbhNpQk8+REQ
+Received-SPF: pass client-ip=74.125.225.141;
+ envelope-from=stefan260699@gmail.com; helo=mail-wm2-f13.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 28 Sep 2026 08:10:43 -0400
+X-Mailman-Approved-At: Mon, 28 Sep 2026 08:10:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -150,622 +117,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Butz <mail@butz.st>
+From:  Stefan Butz via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_LV5PR84MB40263D472C5CF968889420A9968D2LV5PR84MB4026NAMP_
-Content-Type: text/plain; charset="windows-1255"
-Content-Transfer-Encoding: quoted-printable
+The next patch shall limit the number of sources to what the host's
+KVM AIA supports.
+This requires creating the KVM AIA device before buildling the
+device tree.
 
-hv-balloon runs its event loop, including the receive path, from contexts
-other than the VMBus channel notify callback: the QMP "balloon" handler
-(hv_balloon_to_target()), the post-init timer and the open/close/reset
-paths. Receiving is only legal between ringbuf_start_io() and
-ringbuf_end_io(), which channel_event_cb() provides for the notify path.
-When the receive ring is empty, vmbus_channel_recv_peek() returns before
-seeking, so this is usually harmless. When the guest has just posted a
-Dynamic Memory message (e.g. the periodic STATUS report, or the response
-to a previous hot-add) and the QMP "balloon" command arrives before the
-notifier runs, QEMU aborts:
-  hw/hyperv/vmbus.c:418: gpadl_iter_seek: Assertion `iter->active' failed.
-Seen with a Windows Server 2022 guest (Hyper-V Dynamic Memory driver),
-hv-balloon with a memdev and status-report=3Don, and a host-side controller
-issuing a few "balloon" commands within a minute while an RDP user logged
-in (the guest's committed memory jumped and hot-adds were in flight).
-Make vmbus_channel_recv_start() start the ring I/O itself when it is
-called outside the notify callback, remember that in the receive ring,
-and end it in vmbus_channel_recv_done() (or right away if recv_start()
-fails). The notify-callback path is unchanged.
-Signed-off-by: FULL NAME <refael-m@hotmail.com>
+Signed-off-by: Stefan Butz <mail@butz.st>
 ---
- hw/hyperv/vmbus.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 47 insertions(+), 2 deletions(-)
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -121,6 +121,12 @@
-     uint32_t last_rd_idx;
-     /* last seen write index */
-     uint32_t last_seen_wr_idx;
-+    /*
-+     * recv_start was called outside the channel notify callback (e.g. fro=
-m a
-+     * QMP-triggered device path such as hv-balloon's balloon target chang=
-e),
-+     * so it started the I/O on the ring itself and recv_done must end it.
-+     */
-+    bool own_io;
- } VMBusRecvRingBuf;
+ hw/riscv/virt.c              | 14 +++++++++-----
+ target/riscv/kvm/kvm-cpu.c   | 27 ++++++++++++++++-----------
+ target/riscv/kvm/kvm-stub.c  | 13 +++++++++----
+ target/riscv/kvm/kvm_riscv.h |  9 +++++----
+ 4 files changed, 39 insertions(+), 24 deletions(-)
 
-
-@@ -1113,7 +1119,7 @@
-     return req;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 0ee726b4c0..28fa31d538 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -733,6 +733,10 @@ static void virt_machine_init(MachineState *machine)
+         exit(1);
+     }
+ 
++    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
++        kvm_riscv_aia_create();
++    }
++
+     /* Initialize sockets */
+     mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
+     for (i = 0; i < socket_count; i++) {
+@@ -846,11 +850,11 @@ static void virt_machine_init(MachineState *machine)
+     }
+ 
+     if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+-        kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
+-                             s->num_sources, s->num_msis,
+-                             s->memmap[VIRT_APLIC_S].base,
+-                             s->memmap[VIRT_IMSIC_S].base,
+-                             s->aia_guests);
++        kvm_riscv_aia_init(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
++                           s->num_sources, s->num_msis,
++                           s->memmap[VIRT_APLIC_S].base,
++                           s->memmap[VIRT_IMSIC_S].base,
++                           s->aia_guests);
+     }
+ 
+     if (riscv_is_32bit(&s->soc[0])) {
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 68e1501b21..1098581e7a 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1814,6 +1814,7 @@ void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level)
  }
-
--int vmbus_channel_recv_start(VMBusChannel *chan)
-+static int vmbus_channel_recv_start_io(VMBusChannel *chan)
+ 
+ static int aia_mode;
++static int aia_fd = -1;
+ 
+ static const char *kvm_aia_mode_str(uint64_t mode)
  {
-     VMBusRecvRingBuf *ringbuf =3D &chan->recv_ringbuf;
-     vmbus_ring_buffer *rb;
-@@ -1132,6 +1138,33 @@
-     /* prevent reorder of the following data operation with write_index re=
-ad */
-     smp_mb();                   /* barrier pair [C] */
-     return 0;
+@@ -1859,13 +1860,22 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+                                     "auto");
+ }
+ 
+-void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+-                          uint64_t aia_irq_num, uint64_t aia_msi_num,
+-                          uint64_t aplic_base, uint64_t imsic_base,
+-                          uint64_t guest_num)
++void kvm_riscv_aia_create(void)
++{
++    aia_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, false);
++
++    if (aia_fd < 0) {
++        error_report("Unable to create in-kernel irqchip");
++        exit(1);
++    }
 +}
 +
-+int vmbus_channel_recv_start(VMBusChannel *chan)
-+{
-+    VMBusRecvRingBuf *ringbuf =3D &chan->recv_ringbuf;
-+    bool own_io =3D false;
-+    int ret;
-+
-+    /*
-+     * Receives normally happen within channel_event_cb(), which brackets =
-them
-+     * with ringbuf_start_io()/ringbuf_end_io().  Device code may also rec=
-eive
-+     * from other contexts (hv-balloon does from its QMP balloon handler);=
- make
-+     * that safe instead of tripping the iter->active assertion in
-+     * gpadl_iter_seek() when a packet is pending.
-+     */
-+    if (!ringbuf->common.iter.active) {
-+        ringbuf_start_io(&ringbuf->common);
-+        own_io =3D true;
-+    }
-+
-+    ret =3D vmbus_channel_recv_start_io(chan);
-+    if (ret && own_io) {
-+        ringbuf_end_io(&ringbuf->common);
-+        own_io =3D false;
-+    }
-+    ringbuf->own_io =3D own_io;
-+    return ret;
- }
-
- void *vmbus_channel_recv_peek(VMBusChannel *chan, uint32_t size)
-@@ -1208,7 +1241,7 @@
-     ringbuf->rd_idx =3D ringbuf_tell(&ringbuf->common);
- }
-
--ssize_t vmbus_channel_recv_done(VMBusChannel *chan)
-+static ssize_t vmbus_channel_recv_done_io(VMBusChannel *chan)
++void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
++                        uint64_t aia_irq_num, uint64_t aia_msi_num,
++                        uint64_t aplic_base, uint64_t imsic_base,
++                        uint64_t guest_num)
  {
-     VMBusRecvRingBuf *ringbuf =3D &chan->recv_ringbuf;
-     vmbus_ring_buffer *rb;
-@@ -1266,6 +1299,18 @@
-     ringbuf_unmap_hdr(&ringbuf->common, rb, true);
-     ringbuf->last_rd_idx =3D ringbuf->rd_idx;
-     return read;
+     int ret, i;
+-    int aia_fd = -1;
+     uint64_t default_aia_mode;
+     uint64_t socket_count = riscv_socket_count(machine);
+     uint64_t max_hart_per_socket = 0;
+@@ -1873,12 +1883,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+     uint64_t socket_bits, hart_bits, guest_bits;
+     uint64_t max_group_id;
+ 
+-    aia_fd = kvm_create_device(kvm_state, KVM_DEV_TYPE_RISCV_AIA, false);
+-
+-    if (aia_fd < 0) {
+-        error_report("Unable to create in-kernel irqchip");
+-        exit(1);
+-    }
++    g_assert(aia_fd >= 0);
+ 
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                             KVM_DEV_RISCV_AIA_CONFIG_MODE,
+diff --git a/target/riscv/kvm/kvm-stub.c b/target/riscv/kvm/kvm-stub.c
+index 64e39c96d8..672f635b08 100644
+--- a/target/riscv/kvm/kvm-stub.c
++++ b/target/riscv/kvm/kvm-stub.c
+@@ -9,10 +9,15 @@
+ #include "qemu/osdep.h"
+ #include "target/riscv/kvm/kvm_riscv.h"
+ 
+-void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+-                          uint64_t aia_irq_num, uint64_t aia_msi_num,
+-                          uint64_t aplic_base, uint64_t imsic_base,
+-                          uint64_t guest_num)
++void kvm_riscv_aia_create(void)
++{
++    g_assert_not_reached();
 +}
 +
-+ssize_t vmbus_channel_recv_done(VMBusChannel *chan)
-+{
-+    VMBusRecvRingBuf *ringbuf =3D &chan->recv_ringbuf;
-+    ssize_t ret =3D vmbus_channel_recv_done_io(chan);
-+
-+    if (ringbuf->own_io) {
-+        ringbuf_end_io(&ringbuf->common);
-+        ringbuf->own_io =3D false;
-+    }
-+    return ret;
++void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
++                        uint64_t aia_irq_num, uint64_t aia_msi_num,
++                        uint64_t aplic_base, uint64_t imsic_base,
++                        uint64_t guest_num)
+ {
+     g_assert_not_reached();
  }
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index 61eaa12443..532e42b0df 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -23,10 +23,11 @@
+ 
+ void kvm_riscv_reset_vcpu(RISCVCPU *cpu);
+ void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level);
+-void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+-                          uint64_t aia_irq_num, uint64_t aia_msi_num,
+-                          uint64_t aplic_base, uint64_t imsic_base,
+-                          uint64_t guest_num);
++void kvm_riscv_aia_create(void);
++void kvm_riscv_aia_init(MachineState *machine, uint64_t group_shift,
++                        uint64_t aia_irq_num, uint64_t aia_msi_num,
++                        uint64_t aplic_base, uint64_t imsic_base,
++                        uint64_t guest_num);
+ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+ bool kvm_riscv_has_mp_state(void);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
 
- void vmbus_free_req(void *req)
+-- 
+Git-157)
 
-
---_000_LV5PR84MB40263D472C5CF968889420A9968D2LV5PR84MB4026NAMP_
-Content-Type: text/html; charset="windows-1255"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dwindows-1=
-255">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"rtl">
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-hv-balloon runs its event loop, including the receive path, from contexts</=
-div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-other than the VMBus channel notify callback: the QMP &quot;balloon&quot; h=
-andler</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-(hv_balloon_to_target()), the post-init timer and the open/close/reset</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-paths. Receiving is only legal between ringbuf_start_io() and</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-ringbuf_end_io(), which channel_event_cb() provides for the notify path.</d=
-iv>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-When the receive ring is empty, vmbus_channel_recv_peek() returns before</d=
-iv>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-seeking, so this is usually harmless. When the guest has just posted a</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-Dynamic Memory message (e.g. the periodic STATUS report, or the response</d=
-iv>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-to a previous hot-add) and the QMP &quot;balloon&quot; command arrives befo=
-re the</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-notifier runs, QEMU aborts:</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp; hw/hyperv/vmbus.c:418: gpadl_iter_seek: Assertion `iter-&gt;active' =
-failed.</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-Seen with a Windows Server 2022 guest (Hyper-V Dynamic Memory driver),</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-hv-balloon with a memdev and status-report=3Don, and a host-side controller=
-</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-issuing a few &quot;balloon&quot; commands within a minute while an RDP use=
-r logged</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-in (the guest's committed memory jumped and hot-adds were in flight).</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-Make vmbus_channel_recv_start() start the ring I/O itself when it is</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-called outside the notify callback, remember that in the receive ring,</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-and end it in vmbus_channel_recv_done() (or right away if recv_start()</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-fails). The notify-callback path is unchanged.</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-Signed-off-by: FULL NAME &lt;refael-m@hotmail.com&gt;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
----</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;hw/hyperv/vmbus.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++=
-+--</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;1 file changed, 47 insertions(+), 2 deletions(-)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
---- a/hw/hyperv/vmbus.c</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+++ b/hw/hyperv/vmbus.c</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-@@ -121,6 +121,12 @@</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; uint32_t last_rd_idx;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; /* last seen write index */</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; uint32_t last_seen_wr_idx;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; /*</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * recv_start was called outside the channel notif=
-y callback (e.g. from a</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * QMP-triggered device path such as hv-balloon's =
-balloon target change),</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * so it started the I/O on the ring itself and re=
-cv_done must end it.</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; */</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; bool own_io;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;} VMBusRecvRingBuf;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-@@ -1113,7 +1119,7 @@</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; return req;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
--int vmbus_channel_recv_start(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+static int vmbus_channel_recv_start_io(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;{</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; VMBusRecvRingBuf *ringbuf =3D &amp;chan-&gt;recv_r=
-ingbuf;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; vmbus_ring_buffer *rb;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-@@ -1132,6 +1138,33 @@</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; /* prevent reorder of the following data operation=
- with write_index read */</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; smp_mb();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* barr=
-ier pair [C] */</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; return 0;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+int vmbus_channel_recv_start(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+{</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; VMBusRecvRingBuf *ringbuf =3D &amp;chan-&gt;recv_ringbu=
-f;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; bool own_io =3D false;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; int ret;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; /*</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * Receives normally happen within channel_event_c=
-b(), which brackets them</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * with ringbuf_start_io()/ringbuf_end_io().&nbsp;=
- Device code may also receive</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * from other contexts (hv-balloon does from its Q=
-MP balloon handler); make</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * that safe instead of tripping the iter-&gt;acti=
-ve assertion in</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; * gpadl_iter_seek() when a packet is pending.</di=
-v>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp; */</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; if (!ringbuf-&gt;common.iter.active) {</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ringbuf_start_io(&amp;ringbuf-&=
-gt;common);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; own_io =3D true;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; }</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; ret =3D vmbus_channel_recv_start_io(chan);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; if (ret &amp;&amp; own_io) {</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ringbuf_end_io(&amp;ringbuf-&gt=
-;common);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; own_io =3D false;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; }</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; ringbuf-&gt;own_io =3D own_io;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; return ret;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;void *vmbus_channel_recv_peek(VMBusChannel *chan, uint32_t size)</div=
->
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-@@ -1208,7 +1241,7 @@</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; ringbuf-&gt;rd_idx =3D ringbuf_tell(&amp;ringbuf-&=
-gt;common);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
--ssize_t vmbus_channel_recv_done(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+static ssize_t vmbus_channel_recv_done_io(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;{</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; VMBusRecvRingBuf *ringbuf =3D &amp;chan-&gt;recv_r=
-ingbuf;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; vmbus_ring_buffer *rb;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-@@ -1266,6 +1299,18 @@</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; ringbuf_unmap_hdr(&amp;ringbuf-&gt;common, rb, tru=
-e);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; ringbuf-&gt;last_rd_idx =3D ringbuf-&gt;rd_idx;</d=
-iv>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;&nbsp;&nbsp;&nbsp; return read;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+ssize_t vmbus_channel_recv_done(VMBusChannel *chan)</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+{</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; VMBusRecvRingBuf *ringbuf =3D &amp;chan-&gt;recv_ringbu=
-f;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; ssize_t ret =3D vmbus_channel_recv_done_io(chan);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; if (ringbuf-&gt;own_io) {</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ringbuf_end_io(&amp;ringbuf-&gt=
-;common);</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ringbuf-&gt;own_io =3D false;</=
-div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; }</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-+&nbsp;&nbsp;&nbsp; return ret;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;}</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"direction: ltr; margin: 0cm; font-fa=
-mily: &quot;Calibri Light&quot;, &quot;Helvetica Light&quot;, sans-serif; f=
-ont-size: 16pt; color: rgb(0, 0, 0);">
-&nbsp;void vmbus_free_req(void *req)</div>
-<div style=3D"direction: ltr; font-family: &quot;Calibri Light&quot;, &quot=
-;Helvetica Light&quot;, sans-serif; font-size: 16pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-</body>
-</html>
-
---_000_LV5PR84MB40263D472C5CF968889420A9968D2LV5PR84MB4026NAMP_--
 
