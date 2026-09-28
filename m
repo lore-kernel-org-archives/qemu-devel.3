@@ -4,81 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6562CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 17:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D84ACA5FA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 18:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBFdI-0004AR-1A; Mon, 28 Sep 2026 13:59:20 -0400
+	id 1xBFej-0004o5-Fe; Mon, 28 Sep 2026 14:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xBFdD-000498-Pz; Mon, 28 Sep 2026 13:59:16 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFef-0004nM-CE
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:00:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xBFdA-0002lV-FO; Mon, 28 Sep 2026 13:59:15 -0400
-Received: from [192.168.10.153] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68SHwBV3010935
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 29 Sep 2026 02:58:11 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=bhNfS5XO2iaI5aLMAvwzQlHQQrEAoGc5fDrXaHyQC5g=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1790618292; v=1;
- b=vXHwzDghWy/WugSK0hd6WwfnZw+gAQb1cums1llrFO556mobUTc8a2GSP9jqOcp3
- LUMTdOWGwz1U+xsuSkmhGq6Pd5cBKWGxUZDstEbQAr0gUOw5LAUvTQWbyQ/tpwKb
- kVy8GBblBdyrtefIj+8s48fSiNRx2235N5E4qxcHzBC8PzVJ7tB6FeahhctxPDDP
- jBT0lsG4hsUa+IqRXK5chGQikh+d9yVo1WwyH+EsGJ+FUewAP5AMeM7N/OdxOvn1
- FcSkUQkikmSCRFvOJYz1YSEe7FGdiXjVk2XpWpMtIb4nuSiqdExXs74NjH4llMjG
- 4WJWA+CW7XZMzFwYCc/S8g==
-Message-ID: <71854074-d5f4-4818-ae4f-4d1b9d761b46@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 29 Sep 2026 02:58:11 +0900
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBFed-000356-C7
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 14:00:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790618441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
+ b=eJoWnLz1EFG4vU4dbg8Y6z/H+73elokUgeQI3O0AOx6ANoUovambj4yEvyzTbRNjFBjlbl
+ ER7bOsheFX+Y3PiKcqULRypaO/IEKRMKuWa/z5O3zIBHWu2l291+aYB87dnZT3XiXSWyOc
+ y+86Suz+EXBwcKpHa7v4xIUgKiL3g68=
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-N1cKuXygMlmfxXBNPHlR5Q-1; Mon, 28 Sep 2026 14:00:39 -0400
+X-MC-Unique: N1cKuXygMlmfxXBNPHlR5Q-1
+X-Mimecast-MFC-AGG-ID: N1cKuXygMlmfxXBNPHlR5Q_1790618439
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-66ce3040ea9so4537320d50.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 11:00:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790618439; cv=none;
+ d=google.com; s=arc-20260327;
+ b=H0PP3SkWeUGoEiv8xynGVgFi7ZUdhZr1qXxL/44DY/jDvyD/aFe8tNmBZXXvcbR4kI
+ HbdpaVf93oZXEiJf5kIu/1e+kxRNFc2iSLxf0Pci5JnSxb3x7oQeOlPJapzHmDJ+XHcy
+ /CY/ijTs2ga0eMoA04N5pw9lLHBkQbIbHeJNMBazVRmuNJ9NvPcK/cuQWDU66xq3xQ44
+ lDrh0n+Iy8LllvRyrmCvlrwa8uD3QhASF8w+rXUgPR2sa+LNQwR3Lqi2S9iz0sXS7omu
+ VW88pUfyO4mh2NU/ckpJeYmFrdAAw0phIbo7zP642e6P4APmsSWKcyfuprHL37AidTXq
+ z2jw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
+ fh=Z6xqQETmBQHCMUmtgNvZpB0/PqW8mRNgD4h2NHznaGA=;
+ b=iV6IGIBrwT0w3q8bQAbe5eNEQrCX6JSAweMSas7hhwSkcdrQlIRxuFi2pFWdCUr0Z7
+ ukvfLOSSim03UzAl/P3iFZNBI22yqViMfOHhH26kUnTum+Gib2N9TSMR2ogMlDy9IaIu
+ 1si5bU48D9twq/qfKGnhs4xx5nwxXlZ35IhJkW3GszPuGTRJU/aetBRlUn3279OuEzKn
+ jVo0+eaape3RN6FtVCaK6f96zD4VJf5iEHErXpNo4ZLBKvZ/sk15vRXB6OXiYwnLIv2P
+ HJEjAyulnvuceNQqFyfUlkoYF5yXHYMLS2QS5L/ARYGqjkQM7KkOt7mtS/L24I+pcKCz
+ 93lQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790618439; x=1791223239; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
+ b=nMLXMqxRF8rm28FFp+7fHoQENdwVAscEq2a3+lpTZ/F372sgJdGZJv+XWF+xH8EkgL
+ UL7H0mrN1FkbzD+0WExWGafM1yjme0++8oYx1NBqrh1Rfqc58vKtU8NsuWewYyrgeb6B
+ w4Vrtj5vM4xVRfDZdAfD0m80m4cnHsjBigoNNb3+SiljDe4KpYYbXI4bOKhuDCbK0P5D
+ iPqCUzQ/SGwjj50XGwDnZutHE9d3SMn/TdD4IMRgndA5203HVtAJR0WCbHSqba59E5Cj
+ 0Z6GWQ2kZsdGCG5Tl+iS8UYXeqUVAqAV423XwtEoMK8wi3KtUOTljJe6tOQM3O1t3a2T
+ aRZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790618439; x=1791223239;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=iEhPpJfQgm6GF4EslS3FLodmLvPs4OIPRbio9anLmNo=;
+ b=ZsWS9DCplHsKcH9mhvZmiZr6sa9kPJaL/qd5LeQDgMpMx04NWQzNnAOWeGbQ2mh+cT
+ tP8JyFBMyp1eZa7bT8x2rL+OQ7PqYZkEqb9HFXfedJA2ILCoiurXBrlDg0+mYf61AmOU
+ u3tTjJFr9NIjE6Ha0N/XWccMoe/TscPao0t6tepvFcAnnp7APlAV/2sFYw3SKPMb/BXn
+ tDek9SsVslC5FBpvpLlln6IzwvBn3eLNyZOz2N+Cmkymtvao4xjby1jNmZt9HYpAlSh+
+ iDozRfBg45qGxpCOUgiU1hdeWgjoqtxS4NI+TZHt2IPihUJdxpGU8C3zcqxjB2d6zSZU
+ RQpA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxVG/Z4R3ZH6KWUxI6K4wdNU9gUM2VNfqftYSYvglzYudeocTPCeq2xwLhie02ktlPSaiixxoevocyV@nongnu.org
+X-Gm-Message-State: AFq9FYLpfbfc3jazJOkTa2EZfRU4zXg34O4l/+0NVmEljYJcSlNBc32q
+ 8uRmq2NxPP4eUmVCbpgWWCK6sXHVjs7lEC5ron+GxpbrMoedWsf2AZrxxemtiizgZR0nXRO1qU0
+ 0YAn9PfYvnT3QVTagRzW7SJaq9UwmpMcv1yCpIZD2K9idnk8b+1P8IWuyvhIiwob7pBfWncO8gg
+ NZZrt+B/NjQgN8T+Ouc3gEejVQBURhI6M=
+X-Gm-Gg: AYBFou0Nat2dVNmT5H3rhIafUvGPcxvWJgvITvPYiTLiW2Hzk8Opl9NXiISOvh03BxB
+ iaeA+PeJkNx+jq3vVXeHOfKOczM0Fk7b3G0UxY5e5ueKbuosQw+eEDQPXkcLVgFyjcsbbmXbq1Y
+ sOkMbfJOPQ29l/7W0qlif8ADh/BUat/nl+jU/2/xv4kmm9HkNYsMPtrioPlyY0VaKnG6iuR/iaF
+ 3HCKpaa0AMVDUIb
+X-Received: by 2002:a05:690e:812:20b0:674:1743:a143 with SMTP id
+ 956f58d0204a3-6741743a7ccmr2077777d50.148.1790618438439; 
+ Mon, 28 Sep 2026 11:00:38 -0700 (PDT)
+X-Received: by 2002:a05:690e:812:20b0:674:1743:a143 with SMTP id
+ 956f58d0204a3-6741743a7ccmr2077760d50.148.1790618437790; Mon, 28 Sep 2026
+ 11:00:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] hw/qdev: Introduce DevicePhase
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- FangSheng Huang <FangSheng.Huang@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
- Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260914-qdev-v4-0-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
- <20260914-qdev-v4-2-93f849b4865c@rsg.ci.i.u-tokyo.ac.jp>
- <99d1d189-fd2c-47fd-83ba-e232121096e4@oss.qualcomm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <99d1d189-fd2c-47fd-83ba-e232121096e4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260921205712.1862167-1-jsnow@redhat.com>
+ <20260921205712.1862167-4-jsnow@redhat.com>
+ <877bkcwcl5.fsf@pond.sub.org> <arp6VdpPGB8JgMJt@redhat.com>
+In-Reply-To: <arp6VdpPGB8JgMJt@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 28 Sep 2026 14:00:25 -0400
+X-Gm-Features: AclHuK-RnGzfrxbiOE0YxfB7iu-z2CNj_ss3DFdl6CFGAveFY_KLbkO5tGBVNWM
+Message-ID: <CAFn=p-awvipaJTFXnoKV45mMLyrce9yOECUC1hMPQ=VDdiscLg@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] qapi: convert/split intros for block commands
+To: Eric Blake <eblake@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Jason Wang <jasowangio@gmail.com>, qemu-block@nongnu.org, 
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,129 +149,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/26 18:48, Philippe Mathieu-Daudé wrote:
-> On 14/9/26 11:31, Akihiko Odaki wrote:
->> Replace the bool DeviceState::realized field with the enum-valued
->> DeviceState::phase field to express finer phases in following changes.
->>
->> The QOM realized property is an internal lifecycle property, not for
->> end users. Replace it with the enum-valued phase property.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   qapi/common.json          | 14 ++++++++++++++
->>   include/hw/core/qdev.h    |  7 ++++---
->>   hw/core/qdev-clock.c      |  4 ++--
->>   hw/core/qdev-properties.c |  4 ++--
->>   hw/core/qdev.c            | 45 ++++++++++++++++++++++ 
->> +----------------------
->>   hw/scsi/scsi-bus.c        |  4 ++--
->>   qom/qom-qmp-cmds.c        |  2 +-
->>   system/qdev-monitor.c     |  5 +++--
->>   8 files changed, 51 insertions(+), 34 deletions(-)
->>
->> diff --git a/qapi/common.json b/qapi/common.json
->> index af7e3d618a7c..415a2722fc1a 100644
->> --- a/qapi/common.json
->> +++ b/qapi/common.json
->> @@ -7,6 +7,20 @@
->>   # *****************
->>   ##
->> +##
->> +# @DevicePhase:
->> +#
->> +# An enumeration of the device phases
->> +#
->> +# @unrealized: the initial phase
->> +#
->> +# @realized: the phase after realization
->> +#
->> +# Since: 11.2
->> +##
->> +{ 'enum': 'DevicePhase',
->> +  'data': [ 'unrealized', 'realized' ] }
->> +
->>   ##
->>   # @IoOperationType:
->>   #
->> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
->> index b1c5f4780a90..ff367b2a5f98 100644
->> --- a/include/hw/core/qdev.h
->> +++ b/include/hw/core/qdev.h
->> @@ -1,6 +1,7 @@
->>   #ifndef QDEV_CORE_H
->>   #define QDEV_CORE_H
->> +#include "qapi/qapi-types-common.h"
->>   #include "qemu/atomic.h"
->>   #include "qemu/queue.h"
->>   #include "qemu/bitmap.h"
->> @@ -232,9 +233,9 @@ struct DeviceState {
->>        */
->>       char *canonical_path;
->>       /**
->> -     * @realized: has device been realized?
->> +     * @phase: the current phase
->>        */
->> -    bool realized;
->> +    DevicePhase phase;
->>       /**
->>        * @pending_deleted_event: track pending deletion events during 
->> unplug
->>        */
->> @@ -440,7 +441,7 @@ DeviceState *qdev_try_new(const char *name);
->>    */
->>   static inline bool qdev_is_realized(const DeviceState *dev)
->>   {
->> -    return qatomic_load_acquire(&dev->realized);
->> +    return qatomic_load_acquire(&dev->phase) == DEVICE_PHASE_REALIZED;
->>   }
->>   /**
->> diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
->> index 861f78f94c64..efb33a3a27e7 100644
->> --- a/hw/core/qdev-clock.c
->> +++ b/hw/core/qdev-clock.c
->> @@ -30,7 +30,7 @@ static NamedClockList 
->> *qdev_init_clocklist(DeviceState *dev, const char *name,
->>        * Clock must be added before realize() so that we can compute the
->>        * clock's canonical path during device_realize().
->>        */
->> -    assert(!dev->realized);
->> +    assert(dev->phase != DEVICE_PHASE_REALIZED);
->>       /*
->>        * The ncl structure is freed by qdev_finalize_clocklist() which 
->> will
->> @@ -186,6 +186,6 @@ Clock *qdev_alias_clock(DeviceState *dev, const 
->> char *name,
->>   void qdev_connect_clock_in(DeviceState *dev, const char *name, Clock 
->> *source)
->>   {
->> -    assert(!dev->realized);
->> +    assert(dev->phase != DEVICE_PHASE_REALIZED);
->>       clock_set_source(qdev_get_clock_in(dev, name), source);
->>   }
->> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
->> index 34d7b26a7303..66cff4b9338c 100644
->> --- a/hw/core/qdev-properties.c
->> +++ b/hw/core/qdev-properties.c
->> @@ -33,7 +33,7 @@ static bool qdev_prop_allow_set(Object *obj, const 
->> char *name,
->>   {
->>       DeviceState *dev = DEVICE(obj);
->> -    if (dev->realized && !info->realized_set_allowed) {
->> +    if (dev->phase == DEVICE_PHASE_REALIZED && !info- 
->> >realized_set_allowed) {
->>           qdev_prop_set_after_realize(dev, name, errp);
->>           return false;
->>       }
-> 
-> IMO a preliminary patch should convert to use qdev_is_realized() where
-> appropriate (due to the atomicity), then this patch which LGTM btw.
+On Mon, Sep 28, 2026 at 10:33=E2=80=AFAM Eric Blake <eblake@redhat.com> wro=
+te:
+>
+> On Wed, Sep 23, 2026 at 11:17:58AM +0200, Markus Armbruster wrote:
+> > John Snow <jsnow@redhat.com> writes:
+> >
+> > > Signed-off-by: John Snow <jsnow@redhat.com>
+> >
+> > Consider mentioning how this affects rendered documentation:
+> >
+> > 1. blockdev-open-tray and blockdev-close-tray: first paragraph splits
+> >
+> > 2. block_set_io_throttle, nbd-server-add: Arguments: move up.
+>
+> I'm liking this series, but also the suggestions of documenting the
+> known impacts. At this point, I'm trusting Markus' review rather than
+> diving in deep myself, but you're welcome to add:
+>
+> Acked-by: Eric Blake <eblake@redhat.com>
 
-I haven't found any places that need additional atomicity guarantees,
-and I'm simply assuming the existing code is correct here. In the 
-previous version, I converted accesses outside qdev to use the qdev 
-accessor for encapsulation.
+I'll admit that I have been somewhat lacking in providing a
+comprehensive analysis in each cover letter as we have been doing this
+conversion rather piecemeal in order to make it more palatable on the
+list, but here's the best, shortest synopsis I can hope to give you:
 
-Regards,
-Akihiko Odaki
+(A) In order to define a point in the documentation where we should
+insert auto-generated documentation (for members, returns, etc) we are
+pivoting towards a strict ordering of sections:
+
+1. Intro
+2. Members
+3. Returns
+4. Errors
+5. Features
+6. Details
+7. Since
+
+With this goal in mind, the "Intro" will always be up at the very top,
+but "Details" - the unindented portions in this series - are
+ultimately fated to get sifted to the bottom. If you consult the
+rendered QMP documentation - for example `block-dirty-bitmap-add`:
+https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#command-QMP-bloc=
+k-core.block-dirty-bitmap-add
+
+The stuff that appears in the middle - Arguments and Errors - always
+forms a two-column table sort of layout.
+
+Anything that appears above it I have been calling "above the fold" -
+and that's always the Introduction text, now.
+
+Anything that appears below I have been informally calling "below the
+fold" - and that's always details text, now.
+
+So with this in mind, stuff I indent will go "above" and stuff I do
+not will go "below". Simple enough.
+
+(B) The tricky part: We are still pursuing the documentation inliner,
+which means that for block-dirty-bitmap-add, the arguments we
+"inherit" from the "BlockDirtyBitmap" structure will be displayed
+"inline" as if they were defined locally for this command. When we
+inline documentation from another definition/entity, we need to know
+where and how to splice the documentation together to form a coherent
+document.
+
+What Markus and I decided on was to *drop* the intro from any inlined
+documentation. For this reason, delineating the Intro from the Details
+becomes very important: the Intro text will not travel with the
+inlined arguments.
+
+With this in mind, the splits we are creating here become very
+important for structures specifically, as their intro text will get
+dropped on the floor when it is rendered in an inlined context. The
+split for commands, enums, etc., is less important because there is
+never any circumstance where we would drop the intro on the floor.
+
+>
+> --
+> Eric Blake, Principal Software Engineer
+> Red Hat, Inc.
+> Virtualization:  qemu.org | libguestfs.org
+>
+
 
