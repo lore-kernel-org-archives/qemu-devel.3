@@ -4,107 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7568CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF66CA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB0c-0005CI-VE; Mon, 28 Sep 2026 09:03:07 -0400
+	id 1xBB0D-000577-88; Mon, 28 Sep 2026 09:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0U-0005Aa-Vn
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xBB0B-00056h-Kw
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB0S-0004MU-O6
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:57 -0400
+ id 1xBB0A-0004KO-36
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:02:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600576;
+ s=mimecast20190719; t=1790600557;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NptjkWI2sQNwUfLL1DrSnSM2e5R9WkikDlAfiT6IwcU=;
- b=PG7nWm2QAT/536Q+EJEMykifbE5qyh2VqjpvpGhKNPwFJ+vHwwc4gDQnrKYdUeVZWdK6dr
- G2ZgBvnx3sU82Ua8CVllx9Nhi+9tKCIBLYyUPx/naY5G7JoK4in9YkhfWvQBPEc122KYqY
- Z6i5Lh1OnZD0t0xHv4mUzsNAZFG9wTg=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ux77QkOlHCa4NF/rvx8ihTOVQe/ui4LtamGz3z//b7c=;
+ b=EIEht8FmnbD49IEFEDgdiwtklgB3aVkgcsW37eV2jfb4DIYr+5yJFoEaL2ih6eqQfGGBGo
+ VqsX7Uw1MK04ea/KZxpHllQMuLhook/tW99uJCh5WHcIGhorI/Lj2aiDzij5UQZwdc8gYm
+ GmqqxXaE7xutssRudcf+hBFUWPYnNmE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-Lgzt_wQ6N8KL3gXSD2AYrg-1; Mon, 28 Sep 2026 09:02:53 -0400
-X-MC-Unique: Lgzt_wQ6N8KL3gXSD2AYrg-1
-X-Mimecast-MFC-AGG-ID: Lgzt_wQ6N8KL3gXSD2AYrg_1790600572
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-c294ca8193eso135488166b.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:02:53 -0700 (PDT)
+ us-mta-610-24_irJwlMkSiCZyLhhTexw-1; Mon, 28 Sep 2026 09:02:35 -0400
+X-MC-Unique: 24_irJwlMkSiCZyLhhTexw-1
+X-Mimecast-MFC-AGG-ID: 24_irJwlMkSiCZyLhhTexw_1790600555
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c29958acf10so3989166b.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600572; x=1791205372; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=NptjkWI2sQNwUfLL1DrSnSM2e5R9WkikDlAfiT6IwcU=;
- b=lCZNxe9AbJBDu9CXdIC1CL+livGfeyWJFUTsTWuHeESOsX2jei2baw4rCjh0I2XMOC
- nOj2dF6sj8cR19IEKhx8jxzxYgWks/6Aj+g1HWOHKMjZpjjfjH5WQfP6+lCoe+UbJvod
- tIZfwfKU5HYSnLSrHe0kCnARm3NlhMYR+9fmpimZEdMB+yeSFwYao46h+Fz4stjVYHLN
- jbjx6WIXqdZVcQvvuNzKBOAXrIKZkEMYetmDHrZT+dXceuPtXn5jrqGE4Guo7kaMeL4Z
- BeIx5CbydFDinKTvXeQIcrV3Lf1lUGbt/puoYZ/JRDsdsHurjS/wSPoZyYPoxvZ/nDAk
- WbYA==
+ d=redhat.com; s=google; t=1790600554; x=1791205354; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ux77QkOlHCa4NF/rvx8ihTOVQe/ui4LtamGz3z//b7c=;
+ b=UhuYuQrNsqUaYOFHih46WWCMUpkNPF7AZj0tVlgaKGv0/2W6sLylSGNkUV98qvY62o
+ +jE1RlXWqGHrJf9SSy8eIYd9ysZOGKu4o4WPayz4lkHaMdcBp56gkuuIQEW3zVTJHXK1
+ qy4G3VdoiNkTEK+F18HRNDmrJV3S+RPUuY0z5PW49dwdHa6ujooNIAT+0zr0y50zlH50
+ SV0mfPk5yxggRrnW3mDdIVX8Rkk1wHZpz80xd3Ix8h+GDEHSMllUEVrzu5Roavh+ej2x
+ QKZH/MFMqmBzAj/VUZjKFxVJuy1SBw/llr/ic+ft1N8ZHDLBSWp4gjOvBbknQTcyRY/o
+ XJ+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600572; x=1791205372;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=NptjkWI2sQNwUfLL1DrSnSM2e5R9WkikDlAfiT6IwcU=;
- b=fvfmWp5xnze5qgpUKbc6VWRy2N95MvOujBzdhcZxKQg2JVlti7EIkPDSZZLyT9J3/V
- qVQGhYZiEeVNaaDrWBxNV5UPDD8ESPQVK8SLXXsheWIfsZ0zLruJfmdwFqzwFH0Q+fT/
- /FkCqd2Xr0kU33efnrSiA22OyfiRTduhoBzrHz4CKHbfaEPgg70rtaItaNCsPdrzsKml
- NVa44i6P0JRaSSC3nIs6+ihNItuSWvgGsd8n5pyO6fObWViFwrjR8WhannvQaqg/oUr9
- UeNPMhKgY+sh3LzBfYv+tgW0Zt+ZAFBgjAuS13Z/kBoJ2mLSGqTrhf8hLgLEF4nqFlhJ
- s+9Q==
-X-Gm-Message-State: AFuF++nnEzTvSIqmRlA77YbImh7Q0OI8GywR0quSalQK0Xc1U8gfPbxA
- CdQ0Ol962RwetiwlYuV4TBBCdLrakDjtRwy2kJQgWrgYzUD+oQ46UTbFO22PeSDDnzUd0mA2NIP
- KNyZ+ms9nv9UudVNcoDYIR4lO6HtekCUMlGBVOZ0xCYhELY9OOu5qIFSmVrkilpSQjDJpiXqXyN
- n9HmT4G67eI+6LWOjdQ3vTnXXrhxr+O3E4X946VmlO
-X-Gm-Gg: AYBFou32RGwZXqZ3deDxOVAgomOV8d9rQV/BbNcoPL2BHqW0rP2qZL3gm8NDfIuicE1
- 29WstKCTCzF2o18lDv/2KXDf57PXYck9w7bzEMLBO8VgPP2/DIRgTQWMwS/t0uO+pOt1rJhwho0
- cDGf1NaZAsEu7j1Znp6NPnCqTiTACjvJsz7Dg0Npht7U6Tx/NJ2eDb123buY2RAOBfb734UOoSL
- hI9rOy+M5EaSONHmq0a5PwK3S/awGFVNgarQ4L0krB7HjXDkMn5niD1Ws/aOowwa4U19PQnF3Rs
- BHPdbgGjJhaNwEzstCOEsyC+JIUhAeHVvmQLDZHcUx9kpn0nzmI9WHNAQcfUo5aAa6XSx23kBSu
- oOotBfZNk1btun77du22ts+Q4I/fqzuJMU61w4jZgUugzEgw/YCutJz05SuczxRLlMecueYA35X
- 9VGr3z
-X-Received: by 2002:a17:907:6ea3:b0:c26:1649:47af with SMTP id
- a640c23a62f3a-c2ac53cb0afmr1074740166b.37.1790600572139; 
- Mon, 28 Sep 2026 06:02:52 -0700 (PDT)
-X-Received: by 2002:a17:907:6ea3:b0:c26:1649:47af with SMTP id
- a640c23a62f3a-c2ac53cb0afmr1074737166b.37.1790600571608; 
- Mon, 28 Sep 2026 06:02:51 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790600554; x=1791205354;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ux77QkOlHCa4NF/rvx8ihTOVQe/ui4LtamGz3z//b7c=;
+ b=vFI1iY57Fx7zAruV052DxyY7ecm8WXNd94WIgwjOshEm215hBUJ4Hzs7uxpR2aM0F4
+ EdKJi0OLbuy8A2is9SerjgKLgP4oBox/4EOfNWjgkIXF7ZzXwBv9vRl9DjmKbWUl5Cy8
+ 78es7ZtOxPe00MlMj/M7ZdUHShdTW4PmupYVNy790qjsB39qK7A/fgRPGCLp736jc1MI
+ PaTQHLzqEx6dnLE6LwiRvn2g/yPNjUeyFDVnW/3zxhrUrco3bMAl9W/zBUyvPuRfwv2p
+ 05OFs5NvOhPcizM+DulA+OZWSoxeHdzIfcSkarVmNO6CYXMr8bWNUX8ScouFL6xVNT1W
+ OGQw==
+X-Gm-Message-State: AFuF++lNdLAUS9sZvHiurOAKOZCkrVBh087gq2iSEAKe1LdNCKoP9jKQ
+ VETZ8Dw+y/gb2bMPwUEs40ej0GQCPYDQJtUYRmpQEQA2cdjXB15KI5aMwud5+cTKxpSvycTXLAZ
+ OBtzYlbdWUU5eiFAHGLRUpFor8eHKi9zPMivcKTMk+IChdPjgZMuIopWrMQ28kPKsrywZ6HrlLM
+ TO8hJeVo1fU3gzhqQT+M5gwPIH5hP7JvH4jDpIflsZ
+X-Gm-Gg: AYBFou3f2/UtIG6B8MYlOfjTIgu6+9vgUxv3ieiKy6CBwl4ISMhG4Ktgx8jtyrDhOE4
+ +mCvuoXRH/2DtR/svHOenDpaQjkBtWzef8UKBlyHo0jGvZDugBWrmFuuZQZCxst3/OovkNxAfGE
+ ZfuMeJkUERJrP5tUHVJPBhKJv+hgOJ+TdZBXqyD/Jv/br3EgN50eRGG4Z/Pwo/Duod2pczUQfDx
+ gNju9Fd3LxclN5GIEGlz8WlboxRxgb/zktX3j+6KHs5zmEr2FVySwwOULTwo6sQfrAwGEPTemxP
+ rnZFZb5qpmGlseTxrIjKtS17V6sXy5k6akUSodDtW18say+OFIS90Jw03ZOcXH1hRO4WfbEEo4x
+ XW76lcgQSlPsCcF9v5I5Sw+LeKKfeZExWIpG9Nv+EsnSjw37KD57rppOoVWh+X6fHmlnkYzKnjm
+ rp1nmZ
+X-Received: by 2002:a17:907:7291:b0:c2d:c6e7:9e9a with SMTP id
+ a640c23a62f3a-c2dc6e81bfcmr391537266b.11.1790600554550; 
+ Mon, 28 Sep 2026 06:02:34 -0700 (PDT)
+X-Received: by 2002:a17:907:7291:b0:c2d:c6e7:9e9a with SMTP id
+ a640c23a62f3a-c2dc6e81bfcmr391532766b.11.1790600554025; 
+ Mon, 28 Sep 2026 06:02:34 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2dd68786a1sm163341066b.62.2026.09.28.06.02.47
+ a640c23a62f3a-c2af70056bbsm387784966b.49.2026.09.28.06.02.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:02:48 -0700 (PDT)
+ Mon, 28 Sep 2026 06:02:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 07/30] target/i386/tcg: fix REPScalar with memory operand
-Date: Mon, 28 Sep 2026 15:02:05 +0200
-Message-ID: <20260928130228.877003-8-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
+ qemu-stable@nongnu.org
+Subject: [PULL 01/30] target/i386/tcg: raise #GP(0) on null SS load with RPL
+ != CPL
+Date: Mon, 28 Sep 2026 15:01:59 +0200
+Message-ID: <20260928130228.877003-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +124,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By the time validate_vex() runs, e->s2 is not used anymore and
-decode->op[2].ot has already been filled in by decode_size().
-So it's the latter that has to be adjusted, just like before
-commit b7d4ec4832d ("target/i386/tcg: move VEX validation early",
-2026-08-26).
+From: Jakub Lipový <lipovyjakub@tillia.cz>
 
-Fixes: b7d4ec4832d ("target/i386/tcg: move VEX validation early", 2026-08-26)
-Reported-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
+or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
+first case: the null-selector path never examined the selector's RPL, so
+a null selector with non-zero RPL (such as 0x0003) loaded successfully at
+CPL < 3.
+
+This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
+additionally fails its subsequent non-null check because the wrongly
+succeeded load leaves 3 in SS.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
+Link: https://lore.kernel.org/r/20260818164414.245189-1-lipovyjakub@tillia.cz
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/seg_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 8d1e581cfde..26f6d6277be 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2671,7 +2671,7 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-             }
-             assert(e->op2 == X86_TYPE_W && e->s2 == X86_SIZE_x);
-             if ((s->modrm >> 6) != 3) {
--                e->s2 = s->prefix & PREFIX_REPNZ ? X86_SIZE_sd : X86_SIZE_ss;
-+                decode->op[2].ot = s->prefix & PREFIX_REPNZ ? MO_64 : MO_32;
-             }
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 6d424349a58..cad19f9ca6b 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1411,11 +1411,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+ 
+     selector &= 0xffff;
+     cpl = env->hflags & HF_CPL_MASK;
++    rpl = selector & 3;
+     if ((selector & 0xfffc) == 0) {
+         /* null selector case */
+         if (seg_reg == R_SS
+ #ifdef TARGET_X86_64
+-            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
++            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
+ #endif
+             ) {
+             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
+@@ -1439,7 +1440,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+         if (!(e2 & DESC_S_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
          }
-         break;
+-        rpl = selector & 3;
+         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         if (seg_reg == R_SS) {
+             /* must be writable segment */
 -- 
 2.55.0
 
