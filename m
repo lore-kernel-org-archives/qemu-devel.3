@@ -4,78 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A530CCA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 19:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148CCCA5FA6
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 19:27:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBH07-0004Ht-KA; Mon, 28 Sep 2026 15:27:00 -0400
+	id 1xBH0E-0004Z7-Et; Mon, 28 Sep 2026 15:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGzt-0003zW-01
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1xBH0B-0004Ra-Fx; Mon, 28 Sep 2026 15:27:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBGzq-00038E-4X
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:26:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790623601;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8eQvYRZ4qmLzeMqP55rAR4FriDI7Yx03d295awHQM9g=;
- b=MdcATLP+xCrSQ9mtJbCp/nzmGOxM4erJnV6akMq7kaE70Tg/AzNhrgky4covfyvC7nRcho
- 0TUytEvIkddd8oB+Z6i/J6+QaoHnGHglMB1eHkCVhUhrJX6dNZ+yphOvWMJ+T2QsWIaXD3
- Hv7MKXF+flj2yMzZDrSCqfc3uYmhD6w=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-YHEs1F3hMs6oMMMahLKJLA-1; Mon,
- 28 Sep 2026 15:26:38 -0400
-X-MC-Unique: YHEs1F3hMs6oMMMahLKJLA-1
-X-Mimecast-MFC-AGG-ID: YHEs1F3hMs6oMMMahLKJLA_1790623596
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F75F1944F30; Mon, 28 Sep 2026 19:26:36 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.217])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 16E0A5BC; Mon, 28 Sep 2026 19:26:32 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v3 10/10] qapi: split intro sections for inlinable structs
-Date: Mon, 28 Sep 2026 15:25:57 -0400
-Message-ID: <20260928192557.509157-11-jsnow@redhat.com>
-In-Reply-To: <20260928192557.509157-1-jsnow@redhat.com>
-References: <20260928192557.509157-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1xBH09-00039R-6j; Mon, 28 Sep 2026 15:27:03 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SI6Uu81862928; Mon, 28 Sep 2026 19:26:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EBLNnZ
+ tb1tcmm/T40RzswBp4SLQ7pmUXG2nklJCRbzk=; b=EWH3MDyGttBGYweAmuKImV
+ Ndwlz7CyRVnDhHCpR4grKLWePqH+kFHg2WcWV1WIs4nntWye5vdCnA4EztRYCc2c
+ zZACQ4HZrgEuE7jQr0z9ksrg1I1Y1yvGHxo77LIu4X3Nk1WbmIPazvErz/ud7z6m
+ xqwtCzdANxZebSVXOBy1GSo62sM8wTBzF+5UPWk91Z3MyZ2Y9VvfzOPQy+0HSL5r
+ LVGFpSztCf6Hb9cgNCJ4Y1xfzPyjBlX4t0u+cxopgzn4tlcqNtInoWce3jUQhlLY
+ eSdualWeTrnG76LH1naAWNv7B6PoVdgbqaAcOrx4MFZ1qwvmqWBCXeE3Ya13tiyw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5j53gu9-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 28 Sep 2026 19:26:49 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SI2bHF525998; Mon, 28 Sep 2026 19:26:48 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxrcppv5u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 28 Sep 2026 19:26:48 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68SJQkXB16384574
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 28 Sep 2026 19:26:46 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 540255805A;
+ Mon, 28 Sep 2026 19:26:46 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B9E0758056;
+ Mon, 28 Sep 2026 19:26:44 +0000 (GMT)
+Received: from [9.61.20.72] (unknown [9.61.20.72])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 28 Sep 2026 19:26:44 +0000 (GMT)
+Message-ID: <e17a5337-849a-428a-b8e4-65fd92a8c186@linux.ibm.com>
+Date: Mon, 28 Sep 2026 09:32:11 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] s390x/sclpconsole: implement resizing for vt220
+ consoles
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, filip.hejsek@gmail.com
+Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
+ eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
+ pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ mjrosato@linux.ibm.com, brueckner@linux.ibm.com, farman@linux.ibm.com,
+ cohuck@redhat.com, maximilian.immanuel.brandtner@protonmail.com
+References: <20260921121641.1354712-1-maxbr@linux.ibm.com>
+ <20260928090846.2315532-1-maxbr@linux.ibm.com>
+Content-Language: en-US
+From: "Jason J. Herne" <jjherne@linux.ibm.com>
+In-Reply-To: <20260928090846.2315532-1-maxbr@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3NiBTYWx0ZWRfXwOEEanZG0e5V
+ J9EtVYobQI0ocxnAeKNoiAJeUmIl/9jgedbPMxkW2mg0Yn9Kn49H+PTiQuLmmJhMD8OSoyHSudV
+ IPgRRKvirso2ah4eau9HbD2ANB16a1M=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3NiBTYWx0ZWRfX6HtqRiinAlvs
+ Ws7WnTLzuEZ3opzGLytxuunHUFufO5gVByM7etkbj63ey8JLFVZXm+7HL9eRMuQNH4xbJZGZ9ea
+ S+BVrZCxiRKP1G81t1bISo1Ol9e5nooR++V9JqUhaQE72fPdu2ASbvd1sihLeC0o1kEreg35N/P
+ IhrmRA3/59ccW50d72AsqV/sp48f769+C1Y9wwBa5zXJCQVpylskLKBK+LDy/MoXnEGirqoxNzh
+ 2K6UV4S6zKHzyO1pWmSu1EFQMEObs4zkf12XmL8s6kckIX85EXA7DVM9grnWWz+lU6C3deEQlUB
+ fSAQ6MTIPIhLU90laR9x8DNUiDPH/A1nft5tvdBkH++A6yBv1soRrQHTZZCrzR8UU8Xep7+L4Cj
+ cNR1qR/Bd316BCuvz6SQthnTH6dE01AGOCCoDXgNezH/TB5StXDMOazzXbTZVTBTBWNiqLSOxod
+ uFE9fgEjPDzdpY8TSgA==
+X-Proofpoint-GUID: Xs1PgEPOt0II0zTKJnCIbrdnU6tS6ze5
+X-Authority-Analysis: v=2.4 cv=RKcmjIi+ c=1 sm=1 tr=0 ts=6ababf79 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=5IBcVxVqQIVh2jd4fTEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: EqR4KJaxfzSqg4I5yK__76MIGNdF2Sy1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-28_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,200 +132,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch splits the intro/details section for structs which are used
-in an inlinable context; i.e. structs used either as arguments for a
-command/event, or used as a branch of a union. The QAPI documentation
-block for these entities will have their intro section left behind
-when inlined into other contexts, but will still display the intro
-section on standalone documentation for these types.
 
-In general, this patch does not change how the rendered documentation
-currently looks, except:
 
-1. MemoryBackendShmProperties and MemoryBackendEpcProperties see their
-   member descriptions move upwards to just below their formalized
-   introductory sections.
+On 9/28/26 5:08 AM, Maximilian Immanuel Brandtner wrote:
+> Add a tty code to indicate a resize frame. The body contains two big
+> endian 16-bit integers rows and columns.
+> 
+> After reset, the guest must be informed of the terminal size again. A
+> chardev that doesn't report its size yields 0x0, which shouldn't replace
+> the guest's default.
+> 
+> Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+> ---
+> Changelog:
+> v2:
+> - Use packed struct and named event type codes for resize frames
+> - Trigger initial resize event in console_reset() instead of
+>    console_init(), skip when chardev reports no size
+> - Reset event_pending after resize event
+> 
+> Requires the following pre-req:
+>      [PATCH v7 00/12] virtio-console: notify about the terminal size
+>      (https://lore.kernel.org/qemu-devel/20260609-console-resize-v7-0-0c550fdcec15@gmail.com/)
+> 
+> Testing:
+> - Tested on QEMU: commit 38879a667f with the following patches applied:
+>      [PATCH v7 00/12] virtio-console: notify about the terminal size
+> - Tested on linux-next (commit c1f49dea2b8f) with the following patches
+>    applied:
+>      [PATCH 0/2] s390/sclp: Resize for sclp-vt220 console
+> ---
+>   hw/char/sclpconsole.c | 92 +++++++++++++++++++++++++++++++++++++------
+>   1 file changed, 80 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
+> index 179d12745c..12033e1e46 100644
+> --- a/hw/char/sclpconsole.c
+> +++ b/hw/char/sclpconsole.c
+> @@ -33,6 +33,9 @@ typedef struct ASCIIConsoleData {
+>   /* max size for ASCII data in 4K SCCB page */
+>   #define SIZE_BUFFER_VT220 4080
+>   
+> +#define SCLP_CONSOLE_EVENT_TYPE_DATA 0x00
+> +#define SCLP_CONSOLE_EVENT_TYPE_RESIZE 0x08
+> +
+>   struct SCLPConsole {
+>       SCLPEvent event;
+>       CharFrontend chr;
+> @@ -42,6 +45,8 @@ struct SCLPConsole {
+>       uint32_t iov_data_len;  /* length of byte stream in buffer             */
+>       uint32_t iov_sclp_rest; /* length of byte stream not read via SCLP     */
+>       bool notify;            /* qemu_notify_event() req'd if true           */
+> +    bool resize;
+> +    bool resize_init;
+>   };
+>   typedef struct SCLPConsole SCLPConsole;
+>   
+> @@ -49,6 +54,12 @@ typedef struct SCLPConsole SCLPConsole;
+>   DECLARE_INSTANCE_CHECKER(SCLPConsole, SCLP_CONSOLE,
+>                            TYPE_SCLP_CONSOLE)
+>   
+> +typedef struct SCLPConsoleResizeData {
+> +    uint8_t type;
+> +    uint16_t rows;
+> +    uint16_t cols;
+> +} QEMU_PACKED SCLPConsoleResizeData;
+> +
+>   /* character layer call-back functions */
+>   
+>   /* Return number of bytes that fit into iov buffer */
+> @@ -81,6 +92,29 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+>       sclp_service_interrupt(0);
+>   }
+>   
+> +static void chr_event(void *opaque, QEMUChrEvent event)
+> +{
+> +    SCLPConsole *scon = opaque;
+> +
+> +    assert(scon);
+> +
+> +    switch (event) {
+> +    case CHR_EVENT_RESIZE:
+> +    case CHR_EVENT_MUX_IN:
+> +        scon->resize = true;
+> +        scon->resize_init = false;
+> +        scon->event.event_pending = true;
+> +        sclp_service_interrupt(0);
+> +        break;
+> +    case CHR_EVENT_BREAK:
+> +    case CHR_EVENT_OPENED:
+> +    case CHR_EVENT_MUX_OUT:
+> +    case CHR_EVENT_CLOSED:
+> +        /* ignore */
+> +        break;
+> +    }
+> +}
+> +
+>   /* functions to be called by event facility */
+>   
+>   static bool can_handle_event(uint8_t type)
+> @@ -104,10 +138,37 @@ static sccb_mask_t receive_mask(void)
+>   static void get_console_data(SCLPEvent *event, uint8_t *buf, size_t *size,
+>                                int avail)
+>   {
+> +    SCLPConsoleResizeData resize_data;
+>       SCLPConsole *cons = SCLP_CONSOLE(event);
+> +    uint16_t rows, cols;
+> +
+> +    if (cons->resize) {
+> +        if (avail < sizeof(resize_data)) {
+> +            *size = 0;
+> +            return;
+> +        }
+>   
+> -    /* first byte is hex 0 saying an ascii string follows */
+> -    *buf++ = '\0';
+> +        qemu_chr_fe_get_winsize(&cons->chr, &cols, &rows);
+> +
+> +        if (cons->resize_init && cols == 0 && rows == 0) {
+> +            *size = 0;
+> +        } else {
+> +            resize_data.type = SCLP_CONSOLE_EVENT_TYPE_RESIZE;
+> +            resize_data.rows = cpu_to_be16(rows);
+> +            resize_data.cols = cpu_to_be16(cols);
+> +
+> +            memcpy(buf, &resize_data, sizeof(resize_data));
+> +            *size = sizeof(resize_data);
+> +        }
+> +
+> +        cons->resize = false;
+> +        cons->resize_init = false;
+> +        event->event_pending = cons->iov_sclp_rest != 0;
+> +
+> +        return;
+> +    }
+> +
+> +    *buf++ = SCLP_CONSOLE_EVENT_TYPE_DATA;
+>       avail--;
+>       /* if all data fit into provided SCLP buffer */
+>       if (avail >= cons->iov_sclp_rest) {
+> @@ -150,6 +211,9 @@ static int read_event_data(SCLPEvent *event, EventBufferHeader *evt_buf_hdr,
+>       to = (uint8_t *)&acd->data;
+>       avail = *slen - sizeof(ASCIIConsoleData);
+>       get_console_data(event, to, &src_len, avail);
+> +    if (src_len == 0) {
+> +        return 0;
+> +    }
+>       acd->ebh.length = cpu_to_be16(sizeof(ASCIIConsoleData) + src_len);
+>       acd->ebh.type = SCLP_EVENT_ASCII_CONSOLE_DATA;
+> @@ -233,22 +297,26 @@ static int console_init(SCLPEvent *event)
+>       }
+>       console_available = true;
+>       qemu_chr_fe_set_handlers(&scon->chr, chr_can_read,
+> -                             chr_read, NULL, NULL, scon, NULL, true);
+> +                             chr_read, chr_event, NULL, scon, NULL, true);
+>   
+>       return 0;
+>   }
+>   
+>   static void console_reset(DeviceState *dev)
+>   {
+> -   SCLPEvent *event = SCLP_EVENT(dev);
+> -   SCLPConsole *scon = SCLP_CONSOLE(event);
+> -
+> -   event->event_pending = false;
+> -   scon->iov_sclp = 0;
+> -   scon->iov_bs = 0;
+> -   scon->iov_data_len = 0;
+> -   scon->iov_sclp_rest = 0;
+> -   scon->notify = false;
+> +    SCLPEvent *event = SCLP_EVENT(dev);
+> +    SCLPConsole *scon = SCLP_CONSOLE(event);
+> +
+> +    scon->iov_sclp = 0;
+> +    scon->iov_bs = 0;
+> +    scon->iov_data_len = 0;
+> +    scon->iov_sclp_rest = 0;
+> +    scon->notify = false;
+> +
+> +    /* the guest defaults its terminal size on reset, announce the real one */
+> +    scon->resize = true;
+> +    scon->resize_init = true;
+> +    event->event_pending = true;
+>   }
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/block-export.json |  5 ++---
- qapi/crypto.json       |  3 +--
- qapi/machine.json      | 11 ++++-------
- qapi/net.json          | 34 +++++++++++++++-------------------
- qapi/qom.json          |  9 +++------
- 5 files changed, 25 insertions(+), 37 deletions(-)
+This is a style fix, included in a functional patch. I suppose it is 
+probably borderline, but it might be best to put this in its own patch.
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 77459f6321b..e3cee2fb5ce 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -154,9 +154,8 @@
- 
- ##
- # @BlockExportOptionsFuse:
--#
--# Options for exporting a block graph node on some (file) mountpoint
--# as a raw image.
-+#     Options for exporting a block graph node on some (file)
-+#     mountpoint as a raw image.
- #
- # Multi-threading note: The FUSE export supports multi-threading.
- # Currently, requests are distributed across these threads in a
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 7b4c80edae2..a8d753d360f 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -429,8 +429,7 @@
- 
- ##
- # @SecretProperties:
--#
--# Properties for secret objects.
-+#     Properties for secret objects.
- #
- # Either @data or @file must be provided, but not both.
- #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d09424b8701..9b145c635ba 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -690,9 +690,8 @@
- 
- ##
- # @NumaHmatLBOptions:
--#
--# Set the system locality latency and bandwidth information between
--# Initiator and Target proximity Domains.
-+#     Set the system locality latency and bandwidth information
-+#     between Initiator and Target proximity Domains.
- #
- # For more information about `NumaHmatLBOptions`, see chapter
- # 5.2.27.4: Table 5-146 of ACPI 6.3 spec.
-@@ -766,8 +765,7 @@
- 
- ##
- # @NumaHmatCacheOptions:
--#
--# Set the memory side cache information for a given memory domain.
-+#     Set the memory side cache information for a given memory domain.
- #
- # For more information of `NumaHmatCacheOptions`, see chapter
- # 5.2.27.5: Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
-@@ -932,8 +930,7 @@
- 
- ##
- # @CpuInstanceProperties:
--#
--# Properties identifying a CPU.
-+#     Properties identifying a CPU.
- #
- # Which members are optional and which mandatory depends on the
- # architecture and board.
-diff --git a/qapi/net.json b/qapi/net.json
-index 3541dd7cada..f0312dfb714 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -719,11 +719,10 @@
- 
- ##
- # @NetdevVhostVDPAOptions:
-+#     Vhost-vdpa network backend
- #
--# Vhost-vdpa network backend
--#
--# vDPA device is a device that uses a datapath which complies with the
--# virtio specifications with a vendor specific control path.
-+#     vDPA device is a device that uses a datapath which complies with
-+#     the virtio specifications with a vendor specific control path.
- #
- # @vhostdev: path of vhost-vdpa device (default:'/dev/vhost-vdpa-0')
- #
-@@ -750,11 +749,10 @@
- 
- ##
- # @NetdevVmnetHostOptions:
-+#     vmnet (host mode) network backend.
- #
--# vmnet (host mode) network backend.
--#
--# Allows the vmnet interface to communicate with other vmnet
--# interfaces that are in host mode and also with the host.
-+#     Allows the vmnet interface to communicate with other vmnet
-+#     interfaces that are in host mode and also with the host.
- #
- # @start-address: The starting IPv4 address to use for the interface.
- #     Must be in the private IP range (RFC 1918).  Must be specified
-@@ -793,15 +791,14 @@
- 
- ##
- # @NetdevVmnetSharedOptions:
-+#     vmnet (shared mode) network backend.
- #
--# vmnet (shared mode) network backend.
--#
--# Allows traffic originating from the vmnet interface to reach the
--# Internet through a network address translator (NAT).  The vmnet
--# interface can communicate with the host and with other shared mode
--# interfaces on the same subnet.  If no DHCP settings, subnet mask and
--# IPv6 prefix specified, the interface can communicate with any of
--# other interfaces in shared mode.
-+#     Allows traffic originating from the vmnet interface to reach the
-+#     Internet through a network address translator (NAT).  The vmnet
-+#     interface can communicate with the host and with other shared
-+#     mode interfaces on the same subnet.  If no DHCP settings, subnet
-+#     mask and IPv6 prefix specified, the interface can communicate
-+#     with any of other interfaces in shared mode.
- #
- # @start-address: The starting IPv4 address to use for the interface.
- #     Must be in the private IP range (RFC 1918).  Must be specified
-@@ -838,10 +835,9 @@
- 
- ##
- # @NetdevVmnetBridgedOptions:
-+#     vmnet (bridged mode) network backend.
- #
--# vmnet (bridged mode) network backend.
--#
--# Bridges the vmnet interface with a physical network interface.
-+#     Bridges the vmnet interface with a physical network interface.
- #
- # @ifname: The name of the physical interface to be bridged.
- #
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 59e523e3bfe..e03ede34421 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -465,8 +465,7 @@
- 
- ##
- # @FilterRedirectorProperties:
--#
--# Properties for filter-redirector objects.
-+#     Properties for filter-redirector objects.
- #
- # At least one of @indev or @outdev must be present.  If both are
- # present, they must not refer to the same character device backend.
-@@ -765,8 +764,7 @@
- 
- ##
- # @MemoryBackendShmProperties:
--#
--# Properties for memory-backend-shm objects.
-+#     Properties for memory-backend-shm objects.
- #
- # This memory backend supports only shared memory, which is the
- # default.
-@@ -780,8 +778,7 @@
- 
- ##
- # @MemoryBackendEpcProperties:
--#
--# Properties for memory-backend-epc objects.
-+#     Properties for memory-backend-epc objects.
- #
- # The @merge boolean option is false by default with epc
- #
--- 
-2.55.0
+Other than that:
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 
 
