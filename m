@@ -4,134 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB27CA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E00ECA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBHbO-0008O6-H8; Mon, 28 Sep 2026 16:05:30 -0400
+	id 1xBHff-0000Ub-6a; Mon, 28 Sep 2026 16:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
- id 1xBHbH-0008Mt-Pg
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:05:27 -0400
-Received: from mail-eastusazon11021118.outbound.protection.outlook.com
- ([52.101.52.118] helo=BL2PR02CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
- id 1xBHbG-0007iR-1A
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:05:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Da4QsykygTCOLu6AVvmPmNJP9Q0kUbQ10EDI+33c3ejKcL1OXNnRtvY4WLyk2Jsmn+PGe3czPQ2PHbT+SkvwTi3BCnuvxgFUSWeuHhRWJSGttMnal5a4Zzup6lSYaY4yM79RhjCpONppXdIiQw0YJhG8covx84wy9bsVV9HQnY0opO0QNatY66p/zKW8eyd5f07OEaXBs8koBjk7QGtXKDYdCO1YNpqYg8Nuko9IzU+a+FYJqHC9AwL7/wQv+bKlCJFCP6Xl2QwZcovQ5tZzfIucV4lXIoTLw2td4M3ZGQlKXgDUVtbImbtJX5WAbEleKS+nMqGSXOGPQTOz77wVyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uKscV1pzcAdpzr5EyL1FJ5xOSEXdPXqKB0HU/lf16Ks=;
- b=RUafFfcxpYuGebtH9Tb03HsvpWFlHm0HOOrp1DKVyxTNXDQqZi4nlUkgZothDcYuBhcz3UjbY6Ka0ePlPyV/6YweXSoGrafUFH5f+KvAIWIkRi52lRvLb/DWNw6uLeIfrsOQ4SpaahgG/m24pnPQwd39/f56bNaxANVUzi+1a9MwKXjyUUKraRORdZ/7OLo3ISrxXek4LZU1eSSHO7BH8PPruDj7ifhEmf5dBVdqItDtXrYQMkjxccQGgL7w+cZHoyG36/vFyQUpP2g4FUee0X2ttPB9NhMgOwqmhEIpyoZXm+R9SoMKBVbxJCKYXJomZAo1PrvIu53ITBXMI/HGug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uKscV1pzcAdpzr5EyL1FJ5xOSEXdPXqKB0HU/lf16Ks=;
- b=dB8kXNbqoJOYmtkC1UYROMzpgZ+Hn2RfXFufiI9XifpH90B6VjEUvZ5vkV1ReFpYbJtfw0yE+mZKRfiGJx1VlND5TkcOSevWBCa+lTD7UqA4EFydmK84R0VFd+M6EKLX4F4ZeLsYbMffSjNevvI7FSlYRdObCfCqhTOLxEu8HCU=
-Received: from LVXPR21MB7009.namprd21.prod.outlook.com (2603:10b6:408:37f::24)
- by LV0PR21MB6832.namprd21.prod.outlook.com (2603:10b6:408:32f::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.7; Mon, 28 Sep
- 2026 20:00:16 +0000
-Received: from LVXPR21MB7009.namprd21.prod.outlook.com
- ([fe80::31c0:bc96:2ac3:64dc]) by LVXPR21MB7009.namprd21.prod.outlook.com
- ([fe80::31c0:bc96:2ac3:64dc%5]) with mapi id 15.21.0496.006; Mon, 28 Sep 2026
- 20:00:11 +0000
-From: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>,
- "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>
-Subject: [PATCH] target/i386/whpx: fix VMX capability MSR values
-Thread-Topic: [PATCH] target/i386/whpx: fix VMX capability MSR values
-Thread-Index: Ad1Pg9DvQy3twICnQ9WEDhtMZr13fQ==
-Date: Mon, 28 Sep 2026 20:00:10 +0000
-Message-ID: <LVXPR21MB7009E7B7DB875353A715A0A6AD8D2@LVXPR21MB7009.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=30128016-6f7a-4408-ab83-26123841c1f1;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-09-28T19:59:05Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10, 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LVXPR21MB7009:EE_|LV0PR21MB6832:EE_
-x-ms-office365-filtering-correlation-id: cc008b3c-0495-4865-8302-08df1d9b1a67
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|366016|376014|38070700021|7146999003|10067099003|11063799006|56012099006|18002099003;
-x-microsoft-antispam-message-info: DwZnqi1gYWz7geIoFsO1B5B91OcRkDE12hkWoQtiRHWje8FP9eropsgYbDx3H7x+LJyVlkJHK8ivfIfmHFRQh2CRFNbUYf1dpW7BQSH5wDtX2ZymZ/7gt4WX5ztz8dmgu+FoG+6AvlxRwfxMV+cNxyE06LYaAw/QM7RvxGS3Cu8Qz/Gxc7iNjX3snCNOUeHKtS7kRRD4O/JxXxAbJk1OV1m//CGTH5JOM0U4ZiZRFoKP5l1t5o0IBQLbvpX26iF9rwKb37ePW6vk9csoqarj4u4rLJqOxXUZm89C2a5CS9fl43AeuvfUZ5aAup6mV4FuAht1iQ344bNg+U/gwIIdV13/ytQmyhpMOE1cdo6eX+Ha8QjwmjNAqUjkR11P5xJ6hGqqHwMOqn3wZOCorZizL38AqrhRQBlbAcn/G+ZMNiQPP0aphVE56PVQV3QH3zaUNmC9cI+E0LpiL6uDyLhvu2je8FEgiJHxnJFm6Uc6JSWrwJm97ki40eCul5UbOkJWtuNK5mIVdPxQfWWAHmuONrv9IuAFAyw3icffhQ6GBeNEtrpcv2NZgFJZzcbJRvC5ZGGh1Bc7D7tLsSiiakD+pJZUh6xiV4LUgcEZSe3Wou+2Orepo0MnakyUaFby/6MhO24TjqcXuB1CHvjpLnNIIROGWnXsnH3S1XGZlLR89IdK7pbn06DVfWhtEXXvJgODpkJcvS7t5ehcHx21m5VUHq60FR3cNauIdGAaGtZZgLg=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LVXPR21MB7009.namprd21.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(38070700021)(7146999003)(10067099003)(11063799006)(56012099006)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?MwrEBOYml32wNuS2B3l6RZ8B50Ph7/iEpKcVAmqrz2elxgVF+CIuHZfmxyQo?=
- =?us-ascii?Q?qOzjmEoOO5k8K5sVNd0efLkx+8hRxpj3Kjcwyd0TTiXQmzkqs68eTfcj+cOp?=
- =?us-ascii?Q?xitV8bWJfR2vdtgn81uLpWpuUPkfv4yEVpJfiPIocL9ZR1EajOsUs92qWsV6?=
- =?us-ascii?Q?R4ZRDx+hIFLhsvSa81Zis9KZ2bNpa9Hr0LFnn3SccFl04W1mO8bOzMi88RjS?=
- =?us-ascii?Q?5cDhS1nIsIUcUxh9efQbrnnALmF0aUdhoknhzu7QiNhXCb2XLVAy60XBgSYA?=
- =?us-ascii?Q?KPdoKkTHgjLvAg9s8vv5fmXAkZfW/AdvNu+BsLOs1fOCNM3Rm801y/vN6JVB?=
- =?us-ascii?Q?htO2+Pv21xSOeDSqZrEGU97dlQc0mAmDHADBe8FsFE5vxzcaDCXeO8B4BEGd?=
- =?us-ascii?Q?5wbjXA6QEDWBiQdbRbUvj/Gv3W/9ivrvYyBpS8kcPLLJakn5Ia+7Oc4TfCGK?=
- =?us-ascii?Q?3cP/UDVr5BXaaiaeuXCnoGbOWZ3yItqxK7cO7t7Neqrq69Pk0zSohxVl9ALb?=
- =?us-ascii?Q?gP3pB6CNBCs9kY7TWCJ320doNHDq7kJFniAQeAwc7MbBV85KK1DAsBnpEGfU?=
- =?us-ascii?Q?UD/I3EmnrFGy8lvwAyKFctvefvZ3woL3BA951TOEd6p3m1TTTonmoER8SP2O?=
- =?us-ascii?Q?B7b7DlvW7PkfLkq7wxzT5xy1SXym7U1+Sq2nHJz3y3ro5T3rWz86pnqAP/Hq?=
- =?us-ascii?Q?FKkmzayYaEnaJfx4XML9i2RJQCTglc07gaklWuMKmqfjB8w+kH+sX2CwtOyl?=
- =?us-ascii?Q?NsEheKYLRUAVeZa1tIYW7j7g/1fuuiIjChfE3j4WRMdeJDaQ+dNXH10lrtdT?=
- =?us-ascii?Q?1WvjGXZEeWZvvKy47UJAEMdbSZGJChPZin/vRsPIAdUBh5R79UauEVth/yOp?=
- =?us-ascii?Q?atDfFM6kFl+68GPfgIs/o2fsUTHxpkN6ddnwUt7nfNqg/P/me+dbYrN/RDdM?=
- =?us-ascii?Q?HOb5RRFmqQ9EvKVQcpzdAaDwC/iJI83dJur7EsScJQe3lpWU02C9cKmwxcGC?=
- =?us-ascii?Q?+HYJ7U+Ge+NZDZAoFDvnH5OfZLuxkAgupbo1Rg/74wXZq2jkBVeSAjC5XTJW?=
- =?us-ascii?Q?w2pUbRizlbHOB5GRIR77KwlK5tYdv+lk2IPLj2zfGV8neq+8sZAgmG9tKJUT?=
- =?us-ascii?Q?k3T9hoXHvtYW3yDX4DSwOw+WRLI8LjUYSXI/cR8cwC2/3EfgQik0ZMK4tZZG?=
- =?us-ascii?Q?u0tNYnHZqaOYvLOybp4LKz5yeu7bPpnapy6dBRknNk+bu2GQgLOVzkZtE2dM?=
- =?us-ascii?Q?w4LNryUIgVV1gJsPX+ADQU14hTQzOK3eb1w6txZT6PkblP/twMivF96UACHR?=
- =?us-ascii?Q?aTbpxgHrDdfUapy8s6sfXDuitTMmRgfZt++td9wDb3SRtFRqMn71pmkakfMN?=
- =?us-ascii?Q?KShW8W/YcIefu0u7VxIAWE/6FmFEsFdbCJIFiz5xJmqRHzbDZOfNEpZ6YX3R?=
- =?us-ascii?Q?pX5Zgwp2QmlPO76DRFeldr6d8sfGaVZi1Acpc7Qau0FTEBAfwjfjm3HQQgpA?=
- =?us-ascii?Q?IXI/aHBaGA+SdKJqMVa9Po3I1/gr5nyhw0YdyjC3Rx3I3d80d2ePZ3xAWeGL?=
- =?us-ascii?Q?HtY9f70CWbPGxqMaptNNFgvqQHblhr01GEgCREu41ESmdB2DzOUqSJPq91vN?=
- =?us-ascii?Q?JEzmkpCjoVg3SGIFOc4LSoIqBWGIoGsxCf33tqeLcLMuwIT+P19K4jkrU2/Z?=
- =?us-ascii?Q?Rj/6C2MKNVgcUXfvvbkm8bd1t4GguB3JAtlbynl8ySTWBKhU?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xBHfb-0000U7-Tu
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:09:52 -0400
+Received: from mail-dy2-x0e.google.com ([2607:f8b0:4864:36::e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xBHfa-0007wf-19
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 16:09:51 -0400
+Received: by mail-dy2-x0e.google.com with SMTP id
+ 5a478bee46e88-3413069aa25so2254694eec.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 13:09:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790626187; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Tt2i8+WyC0bDfSAw4flT+z0p4Reb8lIjg0FUjJUynHaJwtFTZMdYOULFrWod5c0jJp
+ VgbeDshxIcKRainnA+p+i5BsKIwkRmM+puCgvdAA9KiPi0sVdolyGvH35Q0CvybHjnMd
+ zd1W4mIO3AvSNdB5aEaoqdNWuH/Uhf8aL+qj/1lzJUtCiTmFm5d/hXO/6uMy6i1HV7qD
+ u4mAB6iKkPWTAN3dgqvMt/XbY8yIATxeiWyw+6yZ3hnrymTAewsnG8LT4R0bOSV2yPhH
+ 6OE5Epgrtj3PL+iokUX2HzWlufbacvspew3csMNsSMEhsr/gRwQNyGlpxdb2mdwZeLau
+ 8fpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=TYUJAuudZlxbhn+/MQ9KE+584hyQsSjCbgZhYA9QhEc=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=kgvj6Vf5pIfrWqFK9Fg68rzq8PdS2F80xXJvzZN8WYt8xte3I9Bn8JS/ARBsD3UTYt
+ hzSX2OXOysXL1ImqDN+Ha97BiORANJh5KnMiRAd7vaFrCp23sWZN39Y2L75kEivLvwQC
+ abEY5ELnwQ2v/r2w5zWP9awXjSMEvcIN/IVikkF/ZMptQPcCGI5Bj2Ww3SqGRjPNujs2
+ 81/Itu4iCi2yon9neeV3HiohBFfAk8Ld2pudaOiF13fkGOshvnyCNokbx0egFqLy9YuK
+ at7/E4sovRz/+AM2ARiiBifsKU4Z8aGAdxeTb0FPeIbx/LujARCEyZQ/Jw+dSAPeWBD3
+ foBQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790626187; x=1791230987; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=TYUJAuudZlxbhn+/MQ9KE+584hyQsSjCbgZhYA9QhEc=;
+ b=c8n64P4ChqCRUNzpuo+Ac/YeJYsnHO4/r4vS4OvQrCqaXPhQDPVFxVjCUNmsIR+tvi
+ u/SlM4hngxTnNjr2nWSZ0bG7w8iFjDWCwVOxXmzsCQ2u+dIuuP43krm24AHH4HfNS+Gu
+ R0ZKDVs47bUN/oqVKLGiBXfqTN3S6w/QfHLeVtG3WONitudXbfh7tdaiLF7AnIDEyZTl
+ GKdU1qshexe2SWxK3JuWuD0g5RK/tWVvRztNHUoJkfYsSXFSYZV5dmsjZXvmzpEZfWuF
+ GfNWj4dqW2iW9CsgCxLvLYw65VgMMWGVQRWCAndd+BwsqeqBrbamhd2J524pR7piOEa2
+ 9jQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790626187; x=1791230987;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=TYUJAuudZlxbhn+/MQ9KE+584hyQsSjCbgZhYA9QhEc=;
+ b=hk2TgJbCI+P6TvfTyUEQJmmqvO0X+ptmUUGVDtLc8cbtSBMTsR1ku9Ui9ZwWXJVie4
+ dvHU7vnU0cMSkeePC4o4ecPToVVAIlGTeuHiJQOH6vIoqI1AJSHHY+T9r4tGpyj5kihe
+ xDHRo15vh89Cfr3u/Q5Tf0Oi7s3e7gPALG0GEhGIG+7dUDY8smDQdCpTYpmXKgCLKPmB
+ MIJJXhF8QeaS+RT2pv1OLqCJR/mvqgEoLgXkrrbRUgG5hc2PBh5s7mLJ+2tgS7GFirBi
+ CBrbGYusa/hyINNqXGmw+NQuy5gV2JdofbLS6qtYCEJuVcYZX+b/s0yB6KPo7hHRIhg5
+ yOdw==
+X-Gm-Message-State: AFq9FYI+9hBjoEcP+pruIw18EYCet97ysc6BBoAeCL2MTKcE8+43N/td
+ +1+XlEb/pK0bufwJVADYmZwTzScslWu2pax+1gyj9IclZqQbGLTVZ0maUuOJoVlrZOySNuhxUHo
+ S2K1ddj17T9AzqEnWqya9Zuklosy8CSw=
+X-Gm-Gg: AYBFou2aPxv9yqI/GWHVltt5tuWQVB7b27RcrwCrKB1r3+fRBWfLzbm/qGcizk1C+UN
+ 4dKFejMDxvF0YTMxi2eR+DU2pamfOfViMFYsE27AYS/zk5j1vjBd+eJvTw3G15IhS8t7U0cyxgx
+ yIRkemmWQVf2DPkP82KpB2GIef3BAGCZKGQHW0pOVrpr8jRSnSVADwXsCg3eNZA1NI/Hw/bRuK9
+ OxmXFYw51JzPC2WtyM91nljo+B5suJtP4tKi3O+3VqL75F7CSH0scsYxQLSUyVx2q0lRjaJ8O6V
+ ALMibLojqiPP6R4uUHolz4hta62RwaQTrZHrsbnsUBQOdPN01JOuAQWwwBK884cpFLsyttlvd5n
+ esZARqBXEzO/FQLfMvYHyLg==
+X-Received: by 2002:a05:7300:a986:b0:328:7033:9b8c with SMTP id
+ 5a478bee46e88-342711ac458mr16917380eec.6.1790626187375; Mon, 28 Sep 2026
+ 13:09:47 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LVXPR21MB7009.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc008b3c-0495-4865-8302-08df1d9b1a67
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Sep 2026 20:00:10.9750 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dcQJYmVbQHl2Qp0X3YePFpm2hpUyYHppagJs5Yo2/eK/O0cog+zTk8v32XehVnJhEgAeUtucf9jWNG8ZPh0Qgw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR21MB6832
-Received-SPF: pass client-ip=52.101.52.118; envelope-from=dcook@microsoft.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+References: <20260928130904.3921495-1-berrange@redhat.com>
+In-Reply-To: <20260928130904.3921495-1-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 29 Sep 2026 00:09:35 +0400
+X-Gm-Features: AclHuK8XG2a6Wuy15TOyhcekcudx8hSIBCiw8-sWi935o7NFi7OO7ar2E7ujQ4o
+Message-ID: <CAJ+F1C+CqVB45HLPNaiwJJjbnrmwNAkDu=kGN=Ut8OsBW4VdYA@mail.gmail.com>
+Subject: Re: [PATCH] io: prevent unbounded read of websocket data from client
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:36::e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy2-x0e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,85 +118,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Doug Cook <dcook@microsoft.com>
+On Mon, Sep 28, 2026 at 5:09=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> The QIOChannelWebsock class wraps an underlying QIOChannel instance,
+> providing a websocket server handshake and packet encoding/decoding.
+>
+> When a watch is added to QIOChannelWebsock, this in turn creates a watch
+> on the underlying QIOChannel that is always monitoring G_IO_IN, as long
+> as the 'encinput' buffer has space.
+>
+> When this watch fires, it reads data off the wire into 'encinput' and
+> then decodes as much of 'encinput' as possible into the 'rawinput'
+> buffer.
+>
+> The qio_channel_websock_set_watch method checks to see that 'encinput'
+> does not exceed a max limit, but fails to check that 'rawinput' size.
+> Since any data read into 'encinput', can usually be immediately decoded
+> into 'rawinput', the 'encinput' size check is largely a no-op, and so
+> 'rawinput' will grow without bound.
+>
+> This is readily seen with the chardev socket backend if enabling
+> websockets, connecting a client that sends data, while not running any
+> guest OS to consume data from the chardev via a virtual serial port.
+>
+> The qio_channel_websock_read_wire() method will also unconditionally
+> read more data into 'encinput' if it has less than 4k present, which
+> is then decoded into 'rawinput'.
+>
+> IOW, if qio_channel_websock_read_wire() is triggered for lots of small
+> reads, it will be reading and decoding more data to 'rawinput' than is
+> consumed. Skip reading more data if 'rawinput' is already at its max
+> size.
+>
+> Reported-by: Aisle Research
+> Fixes: CVE-2026-101291
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-whpx_get_supported_msr_feature() had two bugs in how it reports the
-VMX control MSRs:
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-- MSR_IA32_VMX_TRUE_PINBASED_CTLS and MSR_IA32_VMX_TRUE_PROCBASED_CTLS
-  were queried using the non-TRUE capability codes
-  (WHvCapabilityCodeVmxPinbasedCtls and WHvCapabilityCodeVmxProcbasedCtls).
+not sure if it's worth to add:
+Fixes: 2d1d0e70cf3e ("io: add QIOChannelWebsock class")
 
-- For PROCBASED_CTLS2 and the four TRUE_* control MSRs, the raw
-  allowed-0/allowed-1 pair was returned. The feature-word code expects
-  only the bits that may be 1 but are not required to be 1. Apply the
-  same transformation as kvm_arch_get_supported_msr_feature();
-  make_vmx_msr_value() adds the must-be-one bits back afterwards.
-
-As a result, with +vmx QEMU treated many VMX features the host does
-support (secondary controls, EPT, VPID, MSR bitmaps, ...) as missing,
-warned about each of them, and dropped them from the CPU model. The
-guest itself reads the VMX MSRs from the hypervisor, not from QEMU,
-so this did not change what the guest saw.
-
-Signed-off-by: Doug Cook <dcook@microsoft.com>
----
- target/i386/whpx/whpx-all.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index bc6c1e00a2..8fd6b3ce2b 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1516,10 +1516,10 @@ uint64_t whpx_get_supported_msr_feature(uint32_t in=
-dex)
-         cap =3D WHvCapabilityCodeVmxEptVpidCap;
-         break;
-     case MSR_IA32_VMX_TRUE_PINBASED_CTLS:
--        cap =3D WHvCapabilityCodeVmxPinbasedCtls;
-+        cap =3D WHvCapabilityCodeVmxTruePinbasedCtls;
-         break;
-     case MSR_IA32_VMX_TRUE_PROCBASED_CTLS:
--        cap =3D WHvCapabilityCodeVmxProcbasedCtls;
-+        cap =3D WHvCapabilityCodeVmxTrueProcbasedCtls;
-         break;
-     case MSR_IA32_VMX_TRUE_ENTRY_CTLS:
-         cap =3D WHvCapabilityCodeVmxTrueEntryCtls;
-@@ -1538,6 +1538,31 @@ uint64_t whpx_get_supported_msr_feature(uint32_t ind=
-ex)
-         if (FAILED(hr)) {
-             return 0;
-         }
-+
-+        switch (index) {
-+        case MSR_IA32_VMX_PROCBASED_CTLS2:
-+        case MSR_IA32_VMX_TRUE_PINBASED_CTLS:
-+        case MSR_IA32_VMX_TRUE_PROCBASED_CTLS:
-+        case MSR_IA32_VMX_TRUE_ENTRY_CTLS:
-+        case MSR_IA32_VMX_TRUE_EXIT_CTLS: {
-+            /*
-+             * These MSRs hold the allowed-0 settings in the low half and =
-the
-+             * allowed-1 settings in the high half.  QEMU's feature words =
-want
-+             * only the bits that can be one but do not have to be one, so
-+             * apply the same transformation as
-+             * kvm_arch_get_supported_msr_feature(); make_vmx_msr_value()
-+             * restores the must-be-one bits later.
-+             */
-+            uint32_t must_be_one =3D (uint32_t)val;
-+            uint32_t can_be_one =3D (uint32_t)(val >> 32);
-+
-+            val =3D can_be_one & ~must_be_one;
-+            break;
-+        }
-+        default:
-+            break;
-+        }
-+
-         return val;
-     }
-     return 0;
---=20
-2.55.0.vfs.0.8
+> ---
+>  io/channel-websock.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/io/channel-websock.c b/io/channel-websock.c
+> index 461abcae487..646cd45be2a 100644
+> --- a/io/channel-websock.c
+> +++ b/io/channel-websock.c
+> @@ -970,7 +970,8 @@ static ssize_t qio_channel_websock_read_wire(QIOChann=
+elWebsock *ioc,
+>  {
+>      ssize_t ret;
+>
+> -    if (ioc->encinput.offset < 4096) {
+> +    if (ioc->encinput.offset < 4096 &&
+> +        ioc->rawinput.offset < QIO_CHANNEL_WEBSOCK_MAX_BUFFER) {
+>          size_t want =3D 4096 - ioc->encinput.offset;
+>
+>          buffer_reserve(&ioc->encinput, want);
+> @@ -1091,6 +1092,7 @@ static void qio_channel_websock_set_watch(QIOChanne=
+lWebsock *ioc)
+>          cond |=3D G_IO_OUT;
+>      }
+>      if (ioc->encinput.offset < QIO_CHANNEL_WEBSOCK_MAX_BUFFER &&
+> +        ioc->rawinput.offset < QIO_CHANNEL_WEBSOCK_MAX_BUFFER &&
+>          !ioc->io_eof) {
+>          cond |=3D G_IO_IN;
+>      }
+> --
+> 2.55.0
+>
+>
 
