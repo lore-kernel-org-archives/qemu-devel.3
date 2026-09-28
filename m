@@ -4,92 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCB4CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 22:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C78CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 23:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBJyn-00070t-FU; Mon, 28 Sep 2026 18:37:49 -0400
+	id 1xBKjp-0008Nm-0m; Mon, 28 Sep 2026 19:26:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJyl-000706-Hu
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:37:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBKjl-0008MY-Kr
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 19:26:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBJyj-0006D7-2U
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 18:37:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790635063;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G27JRL4KEooQSkufMVaczvAaz/ZiFJfGsFvjZcdtJ80=;
- b=RcsgOu2sC4v8a0Vyocj+NQ/GGom+hC0NHiMOYoAaYh48po8/EL6ocZl6n+vWSJpClMK8r1
- VS0yilzjo1Hclkj8nKzEHLQfo9S95O9hJBCmvoeYpnLBUAoObpRn6M93V9+7ndid6/vCOt
- AqTBxdicFkNEl+EtxpTKRO+J45i+hkM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-FRTNlhg6NQerpjDmk7IqGg-1; Mon,
- 28 Sep 2026 18:37:40 -0400
-X-MC-Unique: FRTNlhg6NQerpjDmk7IqGg-1
-X-Mimecast-MFC-AGG-ID: FRTNlhg6NQerpjDmk7IqGg_1790635058
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C8781944D33; Mon, 28 Sep 2026 22:37:37 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.217])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 849EB19560AB; Mon, 28 Sep 2026 22:37:32 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Kevin Wolf <kwolf@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jiri Pirko <jiri@resnulli.us>, Alex Williamson <alex@shazbot.org>,
- Markus Armbruster <armbru@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Roth <michael.roth@amd.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Jason Wang <jasowangio@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH 03/14] qapi: re-order QAPI doc block sections
-Date: Mon, 28 Sep 2026 18:36:46 -0400
-Message-ID: <20260928223657.2303684-4-jsnow@redhat.com>
-In-Reply-To: <20260928223657.2303684-1-jsnow@redhat.com>
-References: <20260928223657.2303684-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBKjj-0002WV-Jf
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 19:26:21 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SLTeoO1838875
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:26:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=; b=PNSP9y1Pnhxb2JRp
+ 5xjIMWy8Gc/Ben+DBHGJvIr7pVGX8NLEdvPH5I+iBn9x9/LTwzsNgmjxLi22OJkB
+ 7FDqKoPrpsb7AaT9zP9tQ5MhtPLGTh3nXEl21hlXzodLyux/DeM1pL7WkHTi3MVP
+ rYZDpiSI60Sd3TbjomAJHRt6wA71Jt0z7DkQwsWtxwmDEXs/wuddgRD9STMCSv5x
+ cWJPYYIRVeCgc78yml7bBbVZU4PfEacQE9H7AkOUNklk0gT0qFyZi3AZfS1/L8oB
+ 9mcIB+Oh1IuvlIC3YbHLiJ42TfeqgwFSdYr/A7GNvwGhb2yJayuyuWQsqj0vGRK/
+ dMK7bg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjt13y2s-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:26:17 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-530d028f779so42870351cf.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 16:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790637977; x=1791242777; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=;
+ b=J9QhOmoTk/7Q5Vd9ZByM6/HTZIS3AN6rqzus9q5mCQ0paNJmW5gGg2eeqKIDAOWYz1
+ Ggkl6HIiwxWXjw37w6E8U/5yjdbYaFEYhgRWUp77XML7D4v1ICKPNAJqNBeKjlcar2Uk
+ gPF0rdL2yTFmgP6QMthbhMQdDstYit1Xpcic7CLJ/ALmdM0W9IpOiIy//EdlrVmQBXYA
+ pJD0KYNPE5Nffzv59r4nFdW6rsIf/CQQ1mfJJJFweIMaYiLNbFoSLhzg1qVBtkPeB/wg
+ /Z7cDBB1mPBh37qcqTcuUvTi1ihC4BXhfT/KqhRnPcBBXN3T3dHxqo2UVvp8jKAQbqSn
+ 4vlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790637977; x=1791242777;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=;
+ b=okmViKz7vmGmPooFBWkgEwwVjd/xw5Y7JVgcQnZoDVje9lEFxI+3LlGe2bCnqi3jsy
+ rA4mACLRmh01fYVISTfR9/R2f4Anp9MeVBJy9NQvnSUIRyWdxpyJoObVzavS9OzLDrwB
+ YbBj2sZ/GVOgOerDbTSwR8rAu74b25132ySERWgsCnGnjff1NvMQ7j7iR7wwJulpEscs
+ WS+cdublVvz6gz/qe6vy0Tzr1CPNVLq7sAbfVfG9sTV+wETHAtj3LcDemJ6TTRM1NILx
+ 5BMJE9+MJ7FaD5+ZjXGqGsDLPtiWbVi5dpqHKxtlwHJh6Hbt1ztPWJRFyh4D64QE7LaM
+ BBcg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx8rLC9wxUqFq9tVkZZVb54clTPBEyPxzB53F9SHlWCnafItEXSgVIWNMGujPonWe8QAVLCRFVx0FCr@nongnu.org
+X-Gm-Message-State: AFuF++nlxOiim1mGlrP3YZxL/zKSlzmvThdv1/xiEqNULOJz4VOtLn3U
+ m5pQqu32DQugvNFb6rG1dRsgkmf+zk5eM2I5AdJISrnn/5LKTjGe1n/PS0zkNrUHBj3d1rVtuwT
+ vreQpQTR7Ph6hbVj18u5/9AvbuoZIgRjxNlmKOVf2dBR3y+oB9aqfEea7Eg==
+X-Gm-Gg: AYBFou0o7oIIindYyf52uOo4MKcwGdFRQEltnjUEjSqOMBZOe57tnaGfotl76mOXYpw
+ DU2csx9DP+lqNVk5r+9XTS/EaluZwDVWrMfYutLAoI22WpWYsXtf2iMEWfh6VUMHWRj9qpgh0mT
+ Pu00dfGEZK9xD4ZzkXkOOY2+4QElfELpDVkDafqSta6t/8DxkVfOb8e78EYA4vZasH6Qtboyw8U
+ WiHTmI3XHtylYRWtYRMjhfx9FcC6PmbS8iAPjflY0IlaEi1FqEjonm9r8nhGrTEPi2M2ankEdUX
+ CJBL8m/IWMU81/TIfetCrDHaGoPTFBXKb9UnmkdBJ9h7PO3z+Kvde4pEfW8gL1LX+VhNA1QEk3B
+ gjL3Jn5Dp/q0QFPFY78vxdNuztHPj0jdNCA==
+X-Received: by 2002:ac8:5a12:0:b0:532:9b14:96c5 with SMTP id
+ d75a77b69052e-5330b706380mr244407741cf.60.1790637977183; 
+ Mon, 28 Sep 2026 16:26:17 -0700 (PDT)
+X-Received: by 2002:ac8:5a12:0:b0:532:9b14:96c5 with SMTP id
+ d75a77b69052e-5330b706380mr244407371cf.60.1790637976584; 
+ Mon, 28 Sep 2026 16:26:16 -0700 (PDT)
+Received: from [192.168.68.100] ([187.10.234.20])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-533223d1ad0sm74997081cf.23.2026.09.28.16.26.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Sep 2026 16:26:16 -0700 (PDT)
+Message-ID: <0abd8b75-8fd5-465f-9b67-5fdc161cc14f@oss.qualcomm.com>
+Date: Mon, 28 Sep 2026 20:26:12 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/virt: only describe PLIC contexts that exist
+To: Ralf Ramsauer <ralf@vmexit.de>, qemu-devel@nongnu.org
+Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ Bin Meng <bmeng.cn@gmail.com>
+References: <20260927231838.236616-1-ralf@vmexit.de>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260927231838.236616-1-ralf@vmexit.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA5MyBTYWx0ZWRfX2qftuSlpO+VJ
+ ZKEdmX2HQeE2hgEOnUeOIJTRY4e8kN/5+yGglTAVnJkOpmibBqSpsJuXNjVhpDkrDvjo/A7Hw8a
+ ixktK/3bzJKf28FvgS/JdGh3dGCHloZwOpJ7YSqtaTATU3fWTeytNt7RbOtJx19ipplZspcFuzC
+ YwT6knvidplIqpSV2aY4MYKVsq6LeE83jf3URJX4h17AbUW7uUB08Y5PY7fiRua36D1k0+orwef
+ Z4lsGqgsG7OSb5QaaQSMif97TJNg/6ocaikVo85AAOP59LPjPQBytdBxUzA8F2/9CtzI1iC/MyA
+ tImDHAB9z/gbEiehN7vidrpZsWWNg9rN6PwOqk5RJwl4bTr+thVad+edUAHVbdS+pUPAeDqxys8
+ xNxU76oc8MmssFggY6ZIeSn8SwEb0e4XDvVx0KR5S8nRF5IyGuQq0vQTcfN2s411XidYU85sZou
+ l9yElcWmlB9q0HaljhQ==
+X-Authority-Analysis: v=2.4 cv=V8foQuni c=1 sm=1 tr=0 ts=6abaf799 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=jbqyKmyYbxlRs/MVMa3Ccg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=TqtECITn0xDTAHAp4AAA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: G0Ful_2ydZOUqhquQL8Hm8oyav-Gjhr6
+X-Proofpoint-GUID: G0Ful_2ydZOUqhquQL8Hm8oyav-Gjhr6
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA5MyBTYWx0ZWRfX1w5+NNg55Kez
+ oW9tbUZ6Q/R+38uIt2pJLcsReStqllguwfPuOU6eBLX05pzoxPapwHLt7yhC46Mbb6kWSyJ/6mO
+ YG46HsmiwMM7/EbpwyptwO9l5Co9M8k=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-28_06,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,635 +158,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch is focused on making sure that "Returns" appears before
-"Errors", and "Errors" appears before "Features".
+Hello,
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- qapi/accelerator.json           |  8 ++---
- qapi/block-core.json            | 44 +++++++++++++-------------
- qapi/block-export.json          | 20 ++++++------
- qapi/block.json                 |  8 ++---
- qapi/machine-s390x.json         |  8 ++---
- qapi/machine.json               | 56 ++++++++++++++++-----------------
- qapi/misc.json                  |  4 +--
- qapi/net.json                   | 16 +++++-----
- qapi/qom.json                   | 10 +++---
- qapi/virtio.json                | 32 +++++++++----------
- tests/qapi-schema/doc-good.json | 12 +++----
- tests/qapi-schema/doc-good.out  | 12 +++----
- tests/qapi-schema/doc-good.txt  | 18 +++++------
- 13 files changed, 124 insertions(+), 124 deletions(-)
+On 9/27/2026 8:18 PM, Ralf Ramsauer wrote:
+> From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
+> 
+> The PLIC device is created from the topology string built by
+> riscv_plic_hart_config_string(), which gives a hart a supervisor context
+> only if that hart actually has supervisor mode.  The device tree, in
+> contrast, lists a machine and a supervisor context for every hart,
+> unconditionally.
+> 
+> The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
+> PLIC config helper function") taught the device about harts without
+> S-mode and left the device tree behind.  Boot with
+> 
+>      -cpu rv64,s=false,u=false -smp 4
+> 
+> and the PLIC implements four contexts while the device tree advertises
+> eight.  Contexts are numbered by their position in 'interrupts-extended',
+> so a guest that takes its context number from the property gets it wrong
+> for every hart but the first: hart 1 drives the context of hart 2, and
+> the upper harts address contexts the PLIC never created.  This is what an
+> M-mode kernel on the virt machine runs into; sifive_u already omits the
+> supervisor entry for its management hart.
+> 
+> Emit the supervisor entry only for the harts that have supervisor mode.
+> 
+> Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
+> Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
+> ---
+>   hw/riscv/virt.c | 21 +++++++++++++++------
+>   1 file changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index d4b501802f..d0ce9dc862 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -165,14 +165,23 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+>               plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
+>           }
+>      } else {
+> -        cells_length = s->soc[socket].num_harts * 4;
+> -        plic_cells = g_new0(uint32_t, cells_length);
+> +        plic_cells = g_new0(uint32_t, s->soc[socket].num_harts * 4);
+> +        cells_length = 0;
+>   
+>           for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+> -            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
+> -            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
+> -            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
+> -            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
+> +            CPURISCVState *env = &s->soc[socket].harts[cpu].env;
 
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index efc0fa81418..9f6a322685f 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -46,12 +46,12 @@
- # @x-accel-stats:
- #     Query accelerator statistics
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: accelerator statistics
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 10.1
- ##
- { 'command': 'x-accel-stats',
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 741c8165c06..1fa6e34e884 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1958,14 +1958,14 @@
- #     `job-dismiss`.  When true, this job will automatically disappear
- #     without user intervention.  Defaults to true.  (Since 3.1)
- #
-+# Errors:
-+#     - If @device does not exist, DeviceNotFound
-+#
- # Features:
- #
- # @deprecated: Members @base and @top are deprecated.  Use @base-node
- #     and @top-node instead.
- #
--# Errors:
--#     - If @device does not exist, DeviceNotFound
--#
- # Since: 1.3
- #
- # .. qmp-example::
-@@ -1996,14 +1996,14 @@
- #     can be stopped before it has completed using the `job-cancel` or
- #     `block-job-cancel` command.
- #
-+# Errors:
-+#     - If @device is not a valid block device, GenericError
-+#
- # Features:
- #
- # @deprecated: This command is deprecated.  Use `blockdev-backup`
- #     instead.
- #
--# Errors:
--#     - If @device is not a valid block device, GenericError
--#
- # Since: 1.6
- #
- # .. qmp-example::
-@@ -2551,14 +2551,14 @@
- # @x-debug-block-dirty-bitmap-sha256:
- #     Get bitmap SHA256.
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Errors:
- #     - If @node is not a valid block device, DeviceNotFound
- #     - If @name is not found or if hashing has failed, GenericError
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 2.10
- ##
- { 'command': 'x-debug-block-dirty-bitmap-sha256',
-@@ -3053,15 +3053,15 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Errors:
-+#     - If no background operation is active on this device,
-+#       DeviceNotActive
-+#
- # Features:
- #
- # @deprecated: This command is deprecated.  Use `job-pause`
- #     instead.
- #
--# Errors:
--#     - If no background operation is active on this device,
--#       DeviceNotActive
--#
- # Since: 1.3
- ##
- { 'command': 'block-job-pause', 'data': { 'device': 'str' },
-@@ -3081,15 +3081,15 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Errors:
-+#     - If no background operation is active on this device,
-+#       DeviceNotActive
-+#
- # Features:
- #
- # @deprecated: This command is deprecated.  Use `job-resume`
- #     instead.
- #
--# Errors:
--#     - If no background operation is active on this device,
--#       DeviceNotActive
--#
- # Since: 1.3
- ##
- { 'command': 'block-job-resume', 'data': { 'device': 'str' },
-@@ -3121,15 +3121,15 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Errors:
-+#     - If no background operation is active on this device,
-+#       DeviceNotActive
-+#
- # Features:
- #
- # @deprecated: This command is deprecated.  Use `job-complete`
- #     instead.
- #
--# Errors:
--#     - If no background operation is active on this device,
--#       DeviceNotActive
--#
- # Since: 1.3
- ##
- { 'command': 'block-job-complete', 'data': { 'device': 'str' },
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index e3cee2fb5ce..172d18b3556 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -239,15 +239,15 @@
- # The export name will be used as the id for the resulting block
- # export.
- #
--# Features:
--#
--# @deprecated: This command is deprecated.  Use `block-export-add`
--#     instead.
--#
- # Errors:
- #     - if the server is not running
- #     - if an export with the same name already exists
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use `block-export-add`
-+#     instead.
-+#
- # Since: 1.3
- ##
- { 'command': 'nbd-server-add',
-@@ -285,16 +285,16 @@
- # @mode: Mode of command operation.  See `BlockExportRemoveMode`
- #     description.  Default is 'safe'.
- #
--# Features:
--#
--# @deprecated: This command is deprecated.  Use `block-export-del`
--#     instead.
--#
- # Errors:
- #     - if the server is not running
- #     - if export is not found
- #     - if mode is 'safe' and there are existing connections
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use `block-export-del`
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'nbd-server-remove',
-diff --git a/qapi/block.json b/qapi/block.json
-index 0a88d405a26..4b96a72fe70 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -105,13 +105,13 @@
- # @force: If true, eject regardless of whether the drive is locked.
- #     If not specified, the default value is false.
- #
--# Features:
--#
--# @deprecated: Member @device is deprecated.  Use @id instead.
--#
- # Errors:
- #     - If @device is not a valid block device, DeviceNotFound
- #
-+# Features:
-+#
-+# @deprecated: Member @device is deprecated.  Use @id instead.
-+#
- # .. note:: Ejecting a device with no media results in success.
- #
- # Since: 0.14
-diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
-index 8d8cbe2fb75..4a745d0d73f 100644
---- a/qapi/machine-s390x.json
-+++ b/qapi/machine-s390x.json
-@@ -104,12 +104,12 @@
- ##
- # @query-s390x-cpu-polarization:
- #
--# Features:
--#
--# @unstable: This command is experimental.
--#
- # Returns: the machine's CPU polarization
- #
-+# Features:
-+#
-+# @unstable: This command is experimental.
-+#
- # Since: 8.2
- ##
- { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 9b145c635ba..911132918bd 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1686,12 +1686,12 @@
- # @x-query-irq:
- #     Query interrupt statistics
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: interrupt statistics
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-irq',
-@@ -1702,12 +1702,12 @@
- # @x-query-jit:
- #     Query TCG compiler statistics
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: TCG compiler statistics
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-jit',
-@@ -1719,12 +1719,12 @@
- # @x-query-numa:
- #     Query NUMA topology information
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: topology information
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-numa',
-@@ -1735,12 +1735,12 @@
- # @x-query-ramblock:
- #     Query system ramblock information
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: system ramblock information
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-ramblock',
-@@ -1751,12 +1751,12 @@
- # @x-query-roms:
- #     Query information on the registered ROMS
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: registered ROMs
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-roms',
-@@ -1767,12 +1767,12 @@
- # @x-query-usb:
- #     Query information on the USB devices
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: USB device information
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 6.2
- ##
- { 'command': 'x-query-usb',
-@@ -1833,12 +1833,12 @@
- # @x-query-interrupt-controllers:
- #     Query information on interrupt controller devices
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: Interrupt controller devices information
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 9.1
- ##
- { 'command': 'x-query-interrupt-controllers',
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 4469e44d057..6a96ece6d91 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -214,14 +214,14 @@
- #
- # @cpu-index: The CPU to use for commands that require an implicit CPU
- #
-+# Returns: the output of the command as a string
-+#
- # Features:
- #
- # @savevm-monitor-nodes: If present, HMP command savevm only snapshots
- #     monitor-owned nodes if they have no parents.  This allows the
- #     use of 'savevm' with -blockdev.  (since 4.2)
- #
--# Returns: the output of the command as a string
--#
- # Since: 0.14
- #
- # .. note:: This command only exists as a stop-gap.  Its use is highly
-diff --git a/qapi/net.json b/qapi/net.json
-index f0312dfb714..376cd01cb6a 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1296,12 +1296,12 @@
- # @x-query-usernet:
- #     Query user-mode network stack connection states.
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: list of user-mode network stack information.
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 11.2
- #
- # .. qmp-example::
-@@ -1412,12 +1412,12 @@
- # @x-query-network:
- #     Query the network configuration including hubs and clients.
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: @NetworkInfo describing hubs and clients.
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 11.2
- #
- # .. qmp-example::
-diff --git a/qapi/qom.json b/qapi/qom.json
-index e03ede34421..8d626797819 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -158,12 +158,12 @@
- # @paths: The absolute or partial path for each object, as described
- #     in `qom-get`.
- #
--# Errors:
--#     - If any path is not valid or is ambiguous
--#
- # Returns: A list where each element is the result for the
- #     corresponding element of @paths.
- #
-+# Errors:
-+#     - If any path is not valid or is ambiguous
-+#
- # Since: 10.1
- ##
- { 'command': 'qom-list-get',
-@@ -245,12 +245,12 @@
- #
- # @typename: the type name of an object
- #
-+# Returns: a list describing object properties
-+#
- # .. note:: Objects can create properties at runtime, for example to
- #    describe links between different devices and/or objects.  These
- #    properties are not included in the output of this command.
- #
--# Returns: a list describing object properties
--#
- # Since: 2.12
- ##
- { 'command': 'qom-list-properties',
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 0a4753cc343..219c3f75043 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -26,12 +26,12 @@
- # @x-query-virtio:
- #     Return a list of all realized VirtIODevices
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: List of gathered VirtIODevices
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 7.2
- #
- # .. qmp-example::
-@@ -189,12 +189,12 @@
- #
- # @path: Canonical QOM path of the VirtIODevice
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: Status of the virtio device
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 7.2
- #
- # .. qmp-example::
-@@ -554,12 +554,12 @@
- #
- # @queue: VirtQueue index to examine
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: Status of the queue
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # .. note:: last_avail_idx will not be displayed in the case where the
- #    selected VirtIODevice has a running vhost device and the
- #    VirtIODevice VirtQueue index (queue) does not exist for the
-@@ -678,12 +678,12 @@
- #
- # @queue: vhost_virtqueue index to examine
- #
--# Features:
--#
--# @unstable: This command is meant for debugging.
--#
- # Returns: Status of the vhost_virtqueue
- #
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
- # Since: 7.2
- #
- # .. qmp-example::
-diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
-index d9a84ccd729..50e4fdb54d1 100644
---- a/tests/qapi-schema/doc-good.json
-+++ b/tests/qapi-schema/doc-good.json
-@@ -160,16 +160,16 @@
- # @arg2: description starts on the same line
- #     remainder indented differently
- #
--# Features:
--# @cmd-feat1: a feature
--# @cmd-feat2: another feature
--#
--# .. note:: @arg3 is undocumented
--#
- # Returns: @Object
- #
- # Errors: some
- #
-+# Features:
-+# @cmd-feat1: a feature
-+# @cmd-feat2: another feature
-+#
-+# .. note:: @arg3 is undocumented
-+#
- # TODO: frobnicate
- #
- # .. admonition:: Notes
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 1d4fbd3762a..3858bfa861d 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -171,16 +171,16 @@ description starts on the same line
-     remainder indented differently
-     Member=arg3
- 
--    Feature=cmd-feat1
--a feature
--    Feature=cmd-feat2
--another feature
--    Details
--.. note:: @arg3 is undocumented
-     Returns
- @Object
-     Errors
- some
-+    Feature=cmd-feat1
-+a feature
-+    Feature=cmd-feat2
-+another feature
-+    Details
-+.. note:: @arg3 is undocumented
-     Todo
- frobnicate
-     Details
-diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
-index ba089a7f942..1f8274ef1f3 100644
---- a/tests/qapi-schema/doc-good.txt
-+++ b/tests/qapi-schema/doc-good.txt
-@@ -115,21 +115,21 @@ Command cmd (Since: 2.10)
- 
-       * **arg3** ("boolean") -- Not documented
- 
--   Features:
--      * **cmd-feat1** -- a feature
--
--      * **cmd-feat2** -- another feature
--
--   Note:
--
--     "arg3" is undocumented
--
-    Return:
-       "Object" -- "Object"
- 
-    Errors:
-       some
- 
-+   Features:
-+      * **cmd-feat1** -- a feature
-+
-+      * **cmd-feat2** -- another feature
-+
-+   Note:
-+
-+     "arg3" is undocumented
-+
-    Notes:
- 
-    * Lorem ipsum dolor sit amet
--- 
-2.55.0
+There are a few things to consider here.  First is that we have a very similar PLIC
+code in the sifive_u.c board.  I believe we want this fix also applied there.
+
+Second, we should avoid accessing CPU internals in board code.  In an ideal world
+the board would be completely oblivious to what the CPU is about, e.g. its extensions
+and accelerator mode.  In practice we have to account for accelerator differences since
+KVM and TCG requires different stuff w.r.t irq controllers and timers and so on, and
+at least for now this code is being open coded in the boards.
+
+For the problem you're addressing here I would like to avoid making the board accessing
+the CPU env and checking for RVS.  My suggestion here is:
+
+- we need a pre-patch that adds a helper in cpu.c that tells whether a CPU has supervisor
+mode.  Something like:
+
+(cpu.c, could be right after "riscv_cpu_is_vendor")
+
+bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu)
+{
+#ifndef CONFIG_USER_ONLY
+     if (kvm_enabled()) {
+         return true;
+     }
+
+     return riscv_has_ext(&cpu->env, RVS);
+#else
+    return false;
+#endif
+}
+
+same thing in cpu.h.  The justification for this helper in a separated patch is that
+"next patch needs to verify supervisor mode for CPUs in hw/riscv board code", or
+something around those lines.
+
+
+- in this patch you can then do:
+
+
+ > +            if (riscv_cpu_has_supervisor_mode(s->soc[socket].harts[cpu])) {
+ > +                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+ > +                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+ > +            }
+
+And we're at least trying to obfuscating the CPU internals from the board a bit.
+
+
+And please do the same in sifive_u.c.  Don't need to be in this same patch, so feel
+free to add another patch  just for the sifive_u board.
+
+
+Thanks,
+Daniel
+
+> +
+> +            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+> +            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
+> +
+> +            /*
+> +             * The PLIC implements a supervisor context only for harts that
+> +             * have supervisor mode, see riscv_plic_hart_config_string().
+> +             */
+> +            if (riscv_has_ext(env, RVS)) {
+> +                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+> +                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+> +            }
+>           }
+>       }
+>   
+> 
+> base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
 
 
