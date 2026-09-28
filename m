@@ -4,115 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C73CA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 16:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD3CCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 16:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBDr1-0005lT-8T; Mon, 28 Sep 2026 12:05:23 -0400
+	id 1xBDrx-00062L-1M; Mon, 28 Sep 2026 12:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBDqz-0005jd-0Q
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:05:21 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBDqw-0007EY-UT
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:05:20 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a6056ac81fso4571724a12.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 09:05:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790611517; cv=none;
- d=google.com; s=arc-20260327;
- b=m8eSHxUJX9O67RsPqeaFJr3o3nw7h9k5i2rR+HUj+wj8j51wAlUjbAEciJ4EINWsnf
- uDJZl2vzUAjE+sR8DWXae5Jy4wK8T3jDVwrsRSOEo7bZs0YxWEOhueY4zOT5kHbY+5tK
- cvu/DuQ0H3I2Wi/0jIkAS62vTSSDoPBhKfWFh86ZB3nvotPH+yNO1hERlRXoZcD++nGk
- PJizjRHqNTOKlbHgkQBFamn/OLCpQZmZKn9cXbYYsPS1fzkwk65OvmlQ5eUbVI9aEtad
- C5K8JQ3+Z+Fy15oHmRJMpchYp1w5t/94OsNEHhZDB0LCuOVlXqFWYz0Bi2ENffcg6N2a
- 9/cQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=w9EzIeFbERenqhymBK9XblJ6PBKI//1Ot9k5xJ9LNso=;
- fh=4eeYYN7SaSVMgnkle1XNo8n3Za5vqgebzO1th9Am2XA=;
- b=gE/TcQCBdSQNfHiYcsaV5pr70632WrkAB94xuWWlYgIKOOSeIhdNkbuWmdyMeGb08o
- Ey5WYyM0oyhkTIqNg1Hz4E0sICH4J70ObgDx6GqM/W6DwHwxIXllhwfUFb7nR906pDIx
- AgxAv2mwpguFOI6uZger76W0R2uzwpwzYC+fufhgU11h9jfHQghUpotOTIn+Rtlk1EEI
- gTdPrgKrl41HA/hd6pq4QHWx+lJ1sX0Ea3vjPVxVXWzKyrhDHswZ38kqkLDkRx+T+Pwy
- YCJOqIi3AyRL/XNbaLz8uvE8Iywp/6+78EKNT0aIlXUAltB0DboW9bMYx6EuAxuSr2bA
- ifdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBDrY-00060O-G4
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:05:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBDrU-0007Hl-Ud
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 12:05:54 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68SEdsD0378842
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 16:05:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MWm1ZpdATIyjdhQn7tI4HPksEZTcYbnZPW64CSdiMeQ=; b=KlTQYL0LD/vRfVp8
+ 91rXx/84jlDmdQbYpUbLqUwpINhtMrmgRYNYE4tHg1VTHk0VmVdD4iPO64km/vQt
+ BDnWqocFkng3bBPoH2/1IUpIbVIJydAYrDfnjezn3rIgZxu1QTDFxYPJ7L5pMe2L
+ IDf54RSs+SwuvRZB5X04QksVC5vir2DZhMXURr25ZC5zCtngHxTiceymPWbXkqBl
+ ryUszpPvkmayp6W4XOa9qw4PpArQOSmm4WVc8EuFJS9FLbluX5zqTBTKyP4Qr9ak
+ uUA2x54T8Bag7tWYmsCV66p/QaVyvL1p0YS7/49RbcVVJBe9xpW6afx7OUnITu1Q
+ 9rpl8Q==
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyqx390jt-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 16:05:51 +0000 (GMT)
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-98304865f02so2797649241.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 09:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790611517; x=1791216317; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=w9EzIeFbERenqhymBK9XblJ6PBKI//1Ot9k5xJ9LNso=;
- b=gDv5TVeTTeUH+4gi4thS2Y5FO9S5VVWqIEEH82BkfiINyYu3x1CcxAtlOKeS6B5Cmc
- jHAyF4xHO9aIoU69W69aB2BJQ4SGRsFacLpDrwwdQEZzcn6K6s/NS1hl9ilwlGBmFa1D
- R+nHpmbVTYh3j7QtrVF7NjV+qQf8w1VcahGqmkVFcs12cy99CKnQTVkM+jPoODzRCtOJ
- 6MRfIq2GEleC2ogNKqJGDMeIzWw2kBnL+u0kwv7xy7AWdQCikravjoaRxGjcaq2kX17p
- Wi1jV+jFBhXyVt5sNvMT/hQqzBHXzPLSBEUyNYfDlvSmxx6c3kMT6wv6PCkNL2VDtSPZ
- NJyA==
+ d=oss.qualcomm.com; s=google; t=1790611550; x=1791216350; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MWm1ZpdATIyjdhQn7tI4HPksEZTcYbnZPW64CSdiMeQ=;
+ b=OPqGIWH8qEKZdH4ZtOZithofNnRlKWNr9L0asStNFcCJ9+4qkFILuVAsZ0feloUb8+
+ BZuUDSy2EiEaYff7zR5bFGztROEgcJJTrk0423lOTruf7JHgperYn3Q/ZRboNtcdK8fS
+ 0aQLOxrIhO8GuXCFj8Ih4JpL1dcsuwzcGmzRMLqGPrrPswXzz07ClJnfJbtwPcKaM1TM
+ 5nmsbF3M+yJIKAnN3yKNBiBs8FCfENuJfy3+ElGOSzbRqqdwBco0AVCA89aDeJN6gWZn
+ 6k9JC4h6zFh1DsOftlGZOpqGQ0wusz5TZgGvxHnh9L6inzsGHThFde1NoRQPywwDJ1Jc
+ iDHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790611517; x=1791216317;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=w9EzIeFbERenqhymBK9XblJ6PBKI//1Ot9k5xJ9LNso=;
- b=e/Sqw+s3l7ZAfdrlXREiVmSzWZLw5aGVGP0jrmCvDx/MjZYN7EJDlZ68ScWYI6MJI5
- I8d03rwG6p5AwTkCBPnDxl0pm7l4WWNk1dduvv/tUS4eRAx+R4FJ7D/5e6pkfPZs2FDO
- oobKw5yV1/RjVEBd4IM3AqpetSGouo3NAZ7Wx3D84bLdcxjyof/4XDl3qHPvu6za7f4p
- Gl9er5OFNo3wiQRjOXdqweZ0rNJFVvRgLtMFcofwfLvFyOLcfM/G34hbpHE4gjm74WPs
- iefD7xbTi9iBEtAgVaomZj8IfNEjEGoWXaYxjPastUtBZvydrdE9cC+d7NAdDmiBYrfX
- nllg==
-X-Gm-Message-State: AFq9FYLpeB1TC47kqUqT6e4ARyyXhX+4qeES7elDSFcBv2Mp/TN+nBnd
- KHcYPxqh78Xq4eRcFsDe4bM5jvFdMXfyuLWVvl0GmrH3SD6oTafIPb197/WCPz5RWewee+d8PIx
- tC3P1XFbEj9GxgXG+ZSiJOf5VoHLo/W4=
-X-Gm-Gg: AYBFou1UBBkWAkN5vhy3xyU8Fmgq/L3eUCVCm4lrtZwuFlSsS69vnzZwiI/+NDghUAI
- tEgUZ6uplojIyEPPU6mbrjSDPCLMZ5Nle+r9BryEZhli9u/yx5uhnjTRAnmuIVIdEoYjgnii1gG
- 4FjWWFu4nU8w23HVld7RnfSPN5BjwEi/8+n12PUJ7+3L6sv7D+Abo03dMZqacOHw+dTTdgahLsK
- CYF7YNJySA/JlE2/52ea8MejRP1sL5OktvX6M27SfS58jFH1pv4NW9J6HaBhGBIXfZlkiDzU5z7
- kz+C+aB/RnKHUJen7LsQy0hMW70SxnmtRwX6rzQsNEz2WO6zvEJSfc4=
-X-Received: by 2002:a05:6402:a290:10b0:6aa:e589:87df with SMTP id
- 4fb4d7f45d1cf-6aae5898994mr5001332a12.30.1790611516982; Mon, 28 Sep 2026
- 09:05:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790611550; x=1791216350;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MWm1ZpdATIyjdhQn7tI4HPksEZTcYbnZPW64CSdiMeQ=;
+ b=ziGOZM3SEPP+iDYAdCr1HoRLNpqQn+gepOw3FdHYZsuSNx5GlBzRZ7LcMHE88c4Rq3
+ mGvkyLViAQUphX7fV5yMRmQJO5R3e0RdREotWCyWBxYJYUYW17RL/EAbO5fJ9ueICB49
+ ffdB/TnVg6top2mjJVcghBC2DD3QoKPOtd0JMqYeAXH9EAC0J89He5N/CSduvanWbZs7
+ PY8MIOYtbveerZfIWDYgcGYc4KqY3KyrJwlpctjYxy6mowPsyzdwCLZmCIt1r4jo7nBk
+ 7bi4UX1xbCJEU86dbyOMr+w2om+NG3s7ab/Aq6JVGJ68An2u2ZQ9W4JaQNPWFBxPpwAM
+ pU+w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzlQNY7im4pQpelQBfF9rq+K3RApVtPrTXRxqaugLstWujw6Quz8puYkXdd43mFpbpaGzqqpkWeHRIB@nongnu.org
+X-Gm-Message-State: AFq9FYJunAA8hULWD2ugCXunmAHl8JlI1Zofg551cefgSaqGGwLhHqB+
+ 9cxdioYtlQEYQgK8SHU/mriqV6R1D0mdlVQzb+4VYDbtshh66iwVYITR6INRIim8T9XvcCbtU2G
+ 4pWk7fuSjnVcdCVTkAoGrsfyBp8VoTRV09O1G2nO9nxWDMVcfcddQduy3yg==
+X-Gm-Gg: AYBFou1PRLqHoJWrBoPRYjEkUoa+FHf7QWkwi9yAVhfE4I0h1wUKCpi+GxPp1kbKshT
+ osF8QoCBihUekE3pcntUmsgX6qRpFuytQ6C6/wLgF3S70y/EozTMtY3/sTxNIZZMpOsnafjH3Jg
+ yPF7HzBO8gBdiDx6w22gT0Voy9xqkuwmp2UO3GZZ+pCwNu6kTkm2adpOgfx2BiuSjZ0C5Qc58zA
+ J1vo4tyGb1GquqM2JzGMKChpG5qGbL9/Rbx5fy0bsHncRi69NnBCoj2D42tTQBXGd9vW/zGqNwr
+ /nx0A6iMjm6QMlDab2O2ljNE1eugR2DZ338Ge3xia6oH13YJxfV6pyyNCfTQsTpSIYHvJH0v4U5
+ l9I9/GfMT1VmenrurKgxszKRQww+M65uBvQ==
+X-Received: by 2002:a05:6102:10c8:b0:7b2:f790:c020 with SMTP id
+ ada2fe7eead31-7b2f790cd9emr2316343137.30.1790611550354; 
+ Mon, 28 Sep 2026 09:05:50 -0700 (PDT)
+X-Received: by 2002:a05:6102:10c8:b0:7b2:f790:c020 with SMTP id
+ ada2fe7eead31-7b2f790cd9emr2316334137.30.1790611549860; 
+ Mon, 28 Sep 2026 09:05:49 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4887a34a638sm27648275f8f.9.2026.09.28.09.05.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Sep 2026 09:05:49 -0700 (PDT)
+Message-ID: <87cc37bf-3cb8-464d-aac1-f5f5394aa1e5@oss.qualcomm.com>
+Date: Mon, 28 Sep 2026 18:05:48 +0200
 MIME-Version: 1.0
-References: <20260926070057.1234-1-luoyonggang@gmail.com>
- <20260926070057.1234-47-luoyonggang@gmail.com>
- <aro93NuZBXYGbD33@redhat.com>
- <CAE2XoE9AAz8KfJrpErBaZvW5p5COxfE1yveA_AMPwa0j=ghyEA@mail.gmail.com>
- <arp7xUzPHmkgfxLC@redhat.com>
-In-Reply-To: <arp7xUzPHmkgfxLC@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 29 Sep 2026 00:05:04 +0800
-X-Gm-Features: AclHuK_ySAh2wUP_ZLkRO-cTQXhVC-RYZXjpf9omF8LYWvQDhoUtMF2fg4CBqtU
-Message-ID: <CAE2XoE_Zgs0_Co4ZLZiTRQZrx4DMRo_i-FEN79b+ZbHCedFd6w@mail.gmail.com>
-Subject: Re: [PATCH v4 46/55] qapi: add query-targets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 046/101] tcg: Generic expansion of tcg_gen_setcondi_*
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+References: <20260927090011.10724-1-richard.henderson@linaro.org>
+ <20260927090011.10724-47-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260927090011.10724-47-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA2NCBTYWx0ZWRfX0K9daQe7U6YK
+ dhAT14l/ccPlAAQOPUoGzJnYMA+Qg2bQCFQy3Ur6Bggi/Ek1t862l0hEAVYaMFHLtTZHYeDOfm9
+ Tj253oxUsL2wYCuo8k3RCWLPpT0emX6UuEu/ysO+za3AV1HUuzYLmeV6SHJW+6web56NJcKYMD6
+ SgSzqtIyNAix26xaBHndHwnQsoqxgcuWdz6WHex0bmJBuXyQa7V4cPLXhdgLZHN2m17FdW1RE3o
+ yCTpq4g90nwvmAXJXVfddJIcx83YnGqV1iIjgypJJTzP38Ge45Ho5VIzsLVUxxtwsf7/l+G0NSj
+ qPKmzdMvWo6mMBwF4+uN+RtKA9uQ89VV2YLzE5yi2TfCmgbYdoPYpuXudrRo/qme155SXa7X35g
+ QGPxq1H36fatgoqYto9xkPUzFJqXZKmc3WKp7uPdDInjOs1gi/kWlcZkzCIYkmTDu0XHaPy9OHM
+ EA6REHE8rHRMvpDTuYw==
+X-Authority-Analysis: v=2.4 cv=f7jdl+yM c=1 sm=1 tr=0 ts=6aba905f cx=c_pps
+ a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: T2I44quVGjdgIUrMOhyNp4CsvhtC-VHx
+X-Proofpoint-GUID: T2I44quVGjdgIUrMOhyNp4CsvhtC-VHx
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA2NCBTYWx0ZWRfX6t2IqsOx9F0Y
+ zHCfdrstyHxIQf1VgvIPwQHZo3iWXcQkKLzt0UYTcGEZDJpf2VDOECVClmzxnzduM0MLLTT9dtH
+ 6z6MqkGjZPi3O3BnCg+zL9K+Ah2R7Qk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-28_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 adultscore=0 phishscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609280064
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,160 +152,16 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 28, 2026 at 10:38=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Mon, Sep 28, 2026 at 10:24:39PM +0800, Yonggang Luo wrote:
-> > On Mon, Sep 28, 2026 at 6:14=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > I don't think that we need to report machines though.
-> > > We already have 'query-machines' which gives much broader
-> > > information on the machines. "MachineInfo" needs to
-> > > gain
-> > >
-> > >    "targets": ["SysEmuTarget"]
-> > >
-> > > to list which target(s) a machine can be used with.
-> > >
-> >
-> > This is my final design for the query-target / query-targets / query-ma=
-chines,
-> > for consistency and testability.
-> >
-> > Per review: reuse `QemuTargetInfo` for both target commands, drop the
-> > per-target machine list, and let
-> > `MachineInfo` say which target(s) each machine runs on.
-> > `QemuTargetInfo` stays small; `query-target` and `query-targets` return=
- a
-> > derived struct that adds the target's device and accel Kconfig state.
-> >
-> > ## QemuTargetInfo
-> >
-> > ```
-> > { 'struct': 'QemuTargetInfo',
-> >   'data': { 'arch': 'SysEmuTarget' } }  # since 1.2
-> > ```
->
-> > ## QemuTargetDetails: QemuTargetInfo plus kconfig
-> >
-> > ```
-> > { 'struct': 'QemuTargetDetails',
-> >   'base': 'QemuTargetInfo',
-> >   'data': { 'kconfig': 'any' } }
-> > ```
-> >
-> > `kconfig` maps every device and accel `CONFIG_*` symbol to whether it
-> > is enabled for that target.
->
-> KConfig is an internal implementation detail that should not be exposed
-> to management apps as we don't want KConfig to become an ABI we must
-> preserve.  QAPI introspection provides feature based information to
-> the user. eg instead of querying for "CONFIG_SEV", qom-list-types can
-> be queried to look for the 'sev-guest' class.
+On 27/9/26 10:59, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-op-common.h  |  4 ----
+>   include/tcg/tcg-op-def.h.inc |  1 +
+>   tcg/tcg-op.c                 | 18 ++++++------------
+>   3 files changed, 7 insertions(+), 16 deletions(-)
 
-For example, `TYPE_NITRO_ENCLAVE_MACHINE` is available only when
-`CONFIG_NITRO_ENCLAVE` is enabled for the target. When I construct the
-machine list literal,
-I need this information to help me to check if the machine is listed
-in qemu-system that matches
-qemu-sysetem-$arch. That needs a QAPI for it. What's the method you
-would suggest
-for? Otherwise, the test for the listing machine names can not be
-reliably running for it.
-
-for example:
-
-
-/*
- * Machines omitted from the normal lists. Merged in when @kconfig is
- * true in the target's query-targets "kconfig" object, which already
- * folds in host libraries and accelerators. xenfv is an alias of
- * xenfv-4.2.
- */
-static const char * const xen_pc_machines[] =3D {
-    "xenpv",
-    "xenpvh",
-    "xenfv-4.2",
-};
-
-static const char * const xen_aarch64_machines[] =3D {
-    "xenpvh",
-};
-
-static const char * const vmapple_machines[] =3D {
-    "vmapple",
-};
-
-static const char * const microvm_machines[] =3D {
-    "microvm",
-};
-
-static const char * const nitro_machines[] =3D {
-    "nitro",
-};
-
-static const char * const nitro_enclave_machines[] =3D {
-    "nitro-enclave",
-};
-
-static const char * const x_remote_machines[] =3D {
-    "x-remote",
-};
-
-#define SPECIAL(t, k, m) { t, k, m, G_N_ELEMENTS(m) }
-
-static const struct SpecialMachineMap {
-    const char *target;
-    const char *kconfig;
-    const char * const *machines;
-    size_t n_machines;
-} special_machine_map[] =3D {
-    SPECIAL("i386", "CONFIG_XEN", xen_pc_machines),
-    SPECIAL("x86_64", "CONFIG_XEN", xen_pc_machines),
-    SPECIAL("aarch64", "CONFIG_XEN", xen_aarch64_machines),
-    SPECIAL("aarch64", "CONFIG_VMAPPLE", vmapple_machines),
-    SPECIAL("i386", "CONFIG_MICROVM", microvm_machines),
-    SPECIAL("x86_64", "CONFIG_MICROVM", microvm_machines),
-    SPECIAL("x86_64", "CONFIG_NITRO_MACHINE", nitro_machines),
-    SPECIAL("aarch64", "CONFIG_NITRO_MACHINE", nitro_machines),
-    SPECIAL("i386", "CONFIG_NITRO_ENCLAVE", nitro_enclave_machines),
-    SPECIAL("x86_64", "CONFIG_NITRO_ENCLAVE", nitro_enclave_machines),
-    SPECIAL("i386", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("x86_64", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("aarch64", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("ppc", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("ppc64", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("s390x", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("riscv64", "CONFIG_MULTIPROCESS", x_remote_machines),
-    SPECIAL("loongarch64", "CONFIG_MULTIPROCESS", x_remote_machines),
-};
-
-#undef SPECIAL
-
-These machines all depend on the kconfig. When I try to write qtest
-for it, I need the CONFIG_* information to be returned for them.
-
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
