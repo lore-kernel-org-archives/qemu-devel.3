@@ -4,129 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A095CA5FA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C4CCA5FA2
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 20:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBHWP-0004Zb-CM; Mon, 28 Sep 2026 16:00:25 -0400
+	id 1xBHWp-0004ya-Rg; Mon, 28 Sep 2026 16:00:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBHVX-0004Kv-KX
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:29 -0400
+ id 1xBHVc-0004LD-W2
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:35 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBHVU-0006jE-0B
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:27 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xBHVY-0006kR-PZ
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 15:59:30 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SHwZU31683622
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:21 GMT
+ 68SHvfKS1457506
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=QWSp4UO9hUK
- dHjYQRdO+jbQ27QRy4o/C7A+ldLm7TaI=; b=iybscOvFDLrPnQtBWSLaiY+fH9o
- y5eabv7UnZrSCbZBHfcqR/PgrF71hDimvY2EkbBlzsbFeWpQHhRkoEtTN7edshF0
- ZXE++L6iWp+VHVjy/+4ok3vNINPCQ0/KWGHyME0MUbWFELG+J7LN79jKf45G96yT
- Uxgsb0noEY2JP4TsJ0n0fC87vNKf1GRYeRd3R7MHzJvNY1Hq3yrKXPHOkCzyy9MN
- sVIKhUQXzOtikKlRrs3EwbxVgtLvGdJ4CSQL/GIFEoZWnBu1vqGzZg9iReY3Fgju
- pchBjRgPiz++vszOYiXkTvATr2Te7arLFhKy5K7bVM9lozz+i9qwHptL9SA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvwn8jev-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=E1XJr91Z9/W
+ OpJPaYnmJllfqFKpVjckfx04k0/PB4bM=; b=BcL8AU1xOkxp1c7p7H9BhCC/hq+
+ OeXWE1hDN4Tfmn4nojVdZD267JZqxAKaD26d8epubsCJsXYCtGYm6nq2ALEkRlPL
+ 7qlomrYAbAYq4NkAu1jwO+c4iu6HVoJwXIrh+N9VDqQFALC0hE0StCcdviykwdl5
+ KBTsHSWuQO47TpjrjjpQZG9awSYuQ9/TvkLnekXYyZ9MHk1JJSjstzECBk1LwcZZ
+ NjRb1RQVOswa3jXa7ElhK5cIW5f4SxZCoD62j2GPbGjTUR2h6hsKaxe4FxgyUfe/
+ Caze/HEXwEt9HjE66OFeYxgR6jL/X4ZoVw5UWUEU9fEpgvlxQBV0Rkd944Q==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvw20k26-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:21 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93c5c205127so383502785a.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 12:59:21 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:59:27 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-530d028f779so40931851cf.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 12:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790625560; x=1791230360; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790625566; x=1791230366; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QWSp4UO9hUKdHjYQRdO+jbQ27QRy4o/C7A+ldLm7TaI=;
- b=EdYK3Wx6WBYuIOkmwiluCRsgcqbfmiIv15a8cN6vyYBWUiKWp324xDTXbiivsfPn73
- qaXgY3Je5yr8nXRmimispplMuBwtOZAw0tvTs+YhDwpdVsTOBw25mSrLq/RpZYbFVjHD
- DzlngokvFQB61Tn8eJKPRnG2ADNj7v+Oy5OnDGtnrNbeO9dZ1ujMi3lJDDIMkbp/Ltzi
- tJFUPn7gdcx/PdreSXAcDJsaWUKr2YCEYfnSVJ+63g29bya8fOxquamnHDEopfUN0W0e
- 579wBk0Knonoomp84C9re6bPA/848+1dh6WysYAL3iXQu+JOCxz10gGVFLVbtWJPou0V
- cHDg==
+ bh=E1XJr91Z9/WOpJPaYnmJllfqFKpVjckfx04k0/PB4bM=;
+ b=Cj4L1zOLGkU9/qwphIub5P8sGpIzaQ7JOvWI9QEryANaDUYCClDTa5JQL3ZuoTXNTJ
+ RdnCcJZnxyRAvamaf8Yjj1hee/ZWBJ08bYhpnmoxd4YLMAAdVFh2NfzIjxvd86An0dri
+ iskJ5gO/C/vCJHYAekXfii/wS3JeFiYS5qTRWqX0XQwCpyvXqCRrtnE7BQpOA+i63L/D
+ yuPeFqbczb3qrSijVgB0VoHMx4IQCP4I1AKvlgN1tuNF6BmfPicgF8yAZQGaY0mrKmaG
+ Gg99VOwFLW+EMKyRVQ9u00HRRGAL57atVQ2fQWeuorBARsoWrv/BGaC13ryqIhyp8/BB
+ GrfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790625560; x=1791230360;
+ d=1e100.net; s=20260707; t=1790625566; x=1791230366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QWSp4UO9hUKdHjYQRdO+jbQ27QRy4o/C7A+ldLm7TaI=;
- b=sy+HC2it/92TxDjfx+JvsJkRU4KpqAILgNdFRGrndm7quT8oIUo9PL+85eSAyJ9+Xr
- aMXgXZdNsErI4X8az2sZIryB6GtXH/MwaGmX8SEWuYvqBbbV8eYU0vjdDKZkIuofdX/z
- YCrfTVUp6xFD2VXDOqwHP47J3XxN7lPs5+7rDoT2fy0bfzePLIJtdObU5OeQSh2XyEGG
- lnYT1bo05ZLBz43VGXw3no31cWdU1BRXmivSEtZJuFR+aos3lxkcxF9GP4eJ82Wlkhbt
- d1HrsK7gp+IhCo+j+Ko+IVt+XY75f2p/duB3GrJMT9RCU26lLydFIJB8YTjKEAIIQPQR
- kSXQ==
-X-Gm-Message-State: AFuF++nkUoRxqPSOneEJsxgwSxOU7z/WJit+3fYc5imCZ6LmwGiJQ32z
- sIuLeUllxAYRUPn7aAwuRL1yORXJE6FJrAJx+BT3e1j5r8sVQMFfkpRdSKa/iJ7b3YygkY75zhK
- CqJZF7O3jkJYXj10jm/S583d/tEpIzpXL2EpdZQwX8+alQj3IsoLD5woSOzfKByU1Qg==
-X-Gm-Gg: AYBFou3Vxy/4i+cNOZWMnsWodZj/sF6dUtXIKFuv3ctB465AWzy4OWlFntMiC4lrrt5
- NNlDjqRERAAciYJPYDEvWO7UgiJlg5fcKheNNlrR06p3c/XL87l/idGhXytjf6kb+8WX52N6PUf
- iiHdtQDhzOl0mGqZONMMqKzhZjnOkJYCl569pPKq6rQi7WcSb+Bf6UpEk6QrtotaSr69bcY0CAk
- eEsNkOa2i6o3aohQw2p66MmsAFmNSE5jFiXPaNql2+5y8UOBcGZTRnf+K0qjuruu/K3CM+W/q9q
- 31PoPE4SU/6k9fn2bWffllyugRf90FO4mI4CEgVgb9M20z+9SuI9h8vZK2e5I9z22n8pQkXrJTz
- GPTbSbD+JVt/zm99NwOS46rDnRBJKAcs2L98=
-X-Received: by 2002:a05:620a:460d:b0:93c:89a0:bf82 with SMTP id
- af79cd13be357-93c89a0c0bamr248412285a.43.1790625560311; 
- Mon, 28 Sep 2026 12:59:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:460d:b0:93c:89a0:bf82 with SMTP id
- af79cd13be357-93c89a0c0bamr248406585a.43.1790625559755; 
- Mon, 28 Sep 2026 12:59:19 -0700 (PDT)
+ bh=E1XJr91Z9/WOpJPaYnmJllfqFKpVjckfx04k0/PB4bM=;
+ b=UT73NZ2MilLkMIcIguqHaRj/R39iBPd8IMOEGLBpANYV7qY0NJP3OjH09/SeofQJFv
+ 7cAtLBQg+pVchSwFz3+q+fgf5AhoG3cqlcKA29SH/JRIpcWO/3ppTIe+qeLPHXBGokl7
+ e2GX3Cv3ngdW5z+BHtl+iScmF2nOg1AMzfwkgA9++MiL9vilbCoPv6wGylP+TYOOT4TQ
+ jneNhwTuZlv/i/Wjjrcx2mESKJvqKnC5C3vAYPrHJmE726SR1gzaAL1WPwbdFmFx2EbW
+ MmC/qjC+AkLij8jvkL35kjyL8I5bfJwhoautzS2AM/NQXS1tfSPXSrWS1e3sB7YNK9ex
+ vFDg==
+X-Gm-Message-State: AFuF++lcSp+eoZHROwUjCWx+4WiYiCBKGZKGxhUTI5Zm9mBUDCrxK91d
+ oQ6EWeGzZpKb0pO6W2LnbimM6bDt+hM5Qnjug/DFQ2gkgMPdnUtZ8M/fIGbe4fGL1tp9XfeO8vO
+ l2q7rAW+Znt99As5n6eoPMIi+U8ZT++FTJzwe7joaGyuV3SdqoBcLttWbehZoLgJWKA==
+X-Gm-Gg: AYBFou0nhsvsdZjJJ+Da0upKChGgV+YeF7LvnNSuRwr9rqD1hF3d8Mimy0LBjkNJz9R
+ 6YjhlIC+ddYdE9LsHIN6wCflD7y80L/FWfkdemJRy97U6O+MRN/UORG3qXFQKftbW3g0Sx9rx5P
+ qmC+VMsejTgX6nOHBMEWi0cy5eF+x6nY13Xx2kE/mK0xAjB/vy+tIcsY/8lcS93pHtLKJyCN+dS
+ iiTk0/RoV5t++sLDlbEm3AvX9cU7i9M9KSxNIVnSboP1jX4ixP9oaiIanfiPw/EBwB9p1GOvNUJ
+ aEINRZyTaaRQYZLN3OPgEi8JV+li8qQ4lxy/Bcd6BXIn9BeVde+0tBFjz2Utd5b+h6TkFabzBya
+ hi4b9TWmiSEbutS9VGf4zsoxK35+BJeyDKFM=
+X-Received: by 2002:a05:622a:5147:b0:533:42e0:a1ee with SMTP id
+ d75a77b69052e-53342e0e0f7mr89126071cf.37.1790625566260; 
+ Mon, 28 Sep 2026 12:59:26 -0700 (PDT)
+X-Received: by 2002:a05:622a:5147:b0:533:42e0:a1ee with SMTP id
+ d75a77b69052e-53342e0e0f7mr89125661cf.37.1790625565739; 
+ Mon, 28 Sep 2026 12:59:25 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.94.15.187])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9143d0a64b9sm75905556d6.35.2026.09.28.12.59.17
+ 6a1803df08f44-9143d0a64b9sm75905556d6.35.2026.09.28.12.59.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 12:59:19 -0700 (PDT)
+ Mon, 28 Sep 2026 12:59:24 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  Chao Liu <chao.liu.zevorn@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Nutty Liu <nutty.liu@hotmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v10 4/7] target/riscv: add sdext enter Debug Mode on ebreak
-Date: Mon, 28 Sep 2026 16:58:58 -0300
-Message-ID: <20260928195902.2045235-5-daniel.barboza@oss.qualcomm.com>
+ Tao Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH v10 6/7] target/riscv: add sdtrig trigger action=debug mode
+Date: Mon, 28 Sep 2026 16:59:00 -0300
+Message-ID: <20260928195902.2045235-7-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260928195902.2045235-1-daniel.barboza@oss.qualcomm.com>
 References: <20260928195902.2045235-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: BBewDnNIIvvDBAihYJxbat1RXsc-1hW8
-X-Authority-Analysis: v=2.4 cv=W42txhWk c=1 sm=1 tr=0 ts=6abac719 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
+X-Authority-Analysis: v=2.4 cv=N6i8hG9B c=1 sm=1 tr=0 ts=6abac71f cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=0kFmPUMe/4ewoYCJjrGTNA==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=xvfqbYfxAAAA:20
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=xvfqbYfxAAAA:20
  a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=fgrLqfBXAAAA:8 a=JF9118EUAAAA:8
- a=69EAbJreAAAA:8 a=ITXOtABjXhpKHoTPUzwA:9 a=NFOGd7dJGGMPyQGDc5-O:22
- a=_Ge82aPy-h_wFa7gWU4u:22 a=xVlTc564ipvMDusKsbsT:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfXw3yFiKy+fXNT
- z4i/9j19wHcsMqdJcnPTM9wtfofwl20DcqmT/FZupxzaKGVF5559MjTrF5ZOcvxd9PNQ9d8McOM
- IpXY1fV6LgyM9Y3R2SeT2d0rcyyRZJPoGV8oFFZOcrSiIGSnYWZyO/a5KDb9k14vuBaogPDCBo6
- y3rDHMtFtntkFk2JIW/Nk8BopJNNc+ycgZkDXgwci+0xadOw7pe7DIwQVOlxKOs6XvG5Y+vZ3/q
- CYuat/Oln1AYFYVCpmTM0mdNXK55RrQl4eY34ik+HYaXwNVkVP9mW90BqFo3zaxwxGmTjnO9Ps+
- QN5Xaa43JzyVZ1uDrT+/wPj2HSOgfug4RggY9vYSdmV7WGjy4FtKAzs4zaS/GSOsPZ/jAOkCZ3E
- 1cfdMDQsINv6XLh+VaBCdA2jjyqiUJ+r14iniZqIxUT0/CrTG9A3MiptQ2fqK26XFzbRu1LNLnB
- tRi6FEPRWEOpgRKnoKQ==
-X-Proofpoint-GUID: BBewDnNIIvvDBAihYJxbat1RXsc-1hW8
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfX5QFjYRus6T7P
- frWu1fT3s4d0Tm+vo2PvMC8qiZyXTVAM7+SBJ4s75h+eQmtYI/GEEj3TCiUhjmrGhuUKmGLWaAD
- a4RAJO/YUgScleUqTzP+ONvoXbR8bsA=
+ a=jq8im54kr7_wP6Zmv5cA:9 a=a_PwQJl-kcHnX1M80qC6:22 a=_Ge82aPy-h_wFa7gWU4u:22
+ a=xVlTc564ipvMDusKsbsT:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: QaRlJb146gvzhQHpQEDeed-fmK_czXaN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfX3zLP0XOx0tbd
+ Acaa57pMeDLlhioQW764zFu6xWEN9v5CUXyAC4gk7CRpQiT4aNseKPmOAcz3YfAGu5wwy3NCKhF
+ G/UVOpB3G1dODHB10j2ORcok+EV1jn3zE9mrDK4iHsMev9yZ7tpSV67UKvaIfEWbxamR0zSX1gt
+ nEDRNHOcg+R6hBjIYAvzk1+15iJ3IanXZHSsYuKaQ2tchXqp4JGR4DvKBpvoRiE2zu3VPNgw/16
+ A1rXIUMUA+bOmJAkzPPQyyAMeMlah19qYA86vat/JFzYsJoTOx8Q5nWwquXQB/CWPgsk7Cnh3BP
+ Ump9h8VbIOYAosKFGGh5viE4W21njHm3FmBLYx4jT1Q+o8sV//yvhTMrO0pgWmuP4+13GhsFjP6
+ do7IaU8kRrZ51pL1x05jsXP1LXKNRI8v9vjSzDa7IQ901uvX5wxRLHMDQ8HG5GP2kpYlqnDunQD
+ GJZ6F9p2KKMKpWLZ7jg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA3OSBTYWx0ZWRfX6gK0xd/DujBy
+ leSrZ/5sJBihE0vWLY238Q6C3p/9+8hOaboqzTV6xicuVxJNLsjnnVqbozwVQesR2VH+RaP+s0H
+ PNmxwboYceET4+QkzfSNDSkRH369uvU=
+X-Proofpoint-GUID: QaRlJb146gvzhQHpQEDeed-fmK_czXaN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-28_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280079
 Received-SPF: pass client-ip=205.220.168.131;
@@ -137,7 +136,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,99 +157,153 @@ From: Chao Liu <chao.liu.zevorn@gmail.com>
 RISC-V Debug Specification:
 https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-Route EBREAK via helper_sdext_ebreak. If Sdext is enabled and the
-matching dcsr.ebreak* bit is set, enter Debug Mode with cause=ebreak
-and stop with EXCP_DEBUG. Otherwise keep the normal breakpoint trap.
+Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
+trigger hits, enter Debug Mode with cause=trigger and stop with
+EXCP_DEBUG.
+
+Also report inst-count triggers in tinfo and read their action field.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/helper.h                         |  1 +
- .../tcg/insn_trans/trans_privileged.c.inc     |  6 ++++
- target/riscv/tcg/op_helper.c                  | 34 +++++++++++++++++++
- 3 files changed, 41 insertions(+)
+ target/riscv/tcg/debug.c | 54 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index a790595b40..533dee1765 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -142,6 +142,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
- DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
- /* Native Debug */
- DEF_HELPER_1(itrigger_match, void, env)
-+DEF_HELPER_2(sdext_ebreak, void, env, tl)
- #endif
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 2537515f54..aaf2dca17e 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -34,6 +34,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/cpu-timers.h"
+ #include "exec/icount.h"
++#include "accel/tcg/cpu-loop.h"
  
- /* Hypervisor functions */
-diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-index f1a042d57f..e22df6fbe7 100644
---- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-@@ -68,9 +68,15 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
-+#ifndef CONFIG_USER_ONLY
-+        gen_update_pc(ctx, 0);
-+        gen_helper_sdext_ebreak(tcg_env, tcg_constant_tl(ebreak_addr));
-+        ctx->base.is_jmp = DISAS_NORETURN;
-+#else
-         tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
-                       offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-+#endif
-     }
-     return true;
- }
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index dbdaa64f5e..53e9eb445f 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -526,6 +526,40 @@ target_ulong helper_dret(CPURISCVState *env)
- #endif
- }
+ /*
+  * The following M-mode trigger CSRs are implemented:
+@@ -117,6 +118,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+         action = (tdata1 & TYPE6_ACTION) >> 12;
+         break;
+     case TRIGGER_TYPE_INST_CNT:
++        action = tdata1 & ITRIGGER_ACTION;
++        break;
+     case TRIGGER_TYPE_INT:
+     case TRIGGER_TYPE_EXCP:
+     case TRIGGER_TYPE_EXT_SRC:
+@@ -287,6 +290,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
  
-+void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
-+{
-+    CPUState *cs = env_cpu(env);
-+    bool enter_debug = false;
-+
-+    if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode) {
-+        if (env->virt_enabled) {
-+            if (env->priv == PRV_S) {
-+                enter_debug = env->dcsr & DCSR_EBREAKVS;
-+            } else if (env->priv == PRV_U) {
-+                enter_debug = env->dcsr & DCSR_EBREAKVU;
-+            }
-+        } else {
-+            if (env->priv == PRV_M) {
-+                enter_debug = env->dcsr & DCSR_EBREAKM;
-+            } else if (env->priv == PRV_S) {
-+                enter_debug = env->dcsr & DCSR_EBREAKS;
-+            } else if (env->priv == PRV_U) {
-+                enter_debug = env->dcsr & DCSR_EBREAKU;
-+            }
-+        }
-+    }
-+
-+    env->badaddr = pc;
-+
-+    if (enter_debug) {
-+        riscv_cpu_enter_debug_mode(env, pc, DCSR_CAUSE_EBREAK);
-+        cs->exception_index = EXCP_DEBUG;
-+        cpu_loop_exit_restore(cs, GETPC());
-+    }
-+
-+    riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, GETPC());
-+}
-+
- target_ulong helper_mnret(CPURISCVState *env)
+ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
  {
-     target_ulong retpc = env->mnepc;
++    CPUState *cs = env_cpu(env);
+     trigger_action_t action = get_trigger_action(env, trigger_index);
+ 
+     switch (action) {
+@@ -296,6 +300,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
+         riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
+         break;
+     case DBG_ACTION_DBG_MODE:
++        if (!env_archcpu(env)->cfg.ext_sdext) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
++        }
++        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
++        /*
++         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
++         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
++         */
++        if (cs->exception_index != EXCP_DEBUG) {
++            cs->exception_index = EXCP_DEBUG;
++            cpu_loop_exit_restore(cs, GETPC());
++        }
++        break;
+     case DBG_ACTION_TRACE0:
+     case DBG_ACTION_TRACE1:
+     case DBG_ACTION_TRACE2:
+@@ -448,6 +467,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
+@@ -455,11 +475,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
+     warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
+ 
++    action = (ctrl & TYPE2_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE2_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE2_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
++    }
++
+     /* validate size encoding */
+     size = type2_breakpoint_size(env, ctrl);
+     if (access_size[size] == -1) {
+@@ -576,6 +610,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+ {
+     target_ulong val;
+     uint32_t size;
++    uint32_t action;
+ 
+     /* validate the generic part first */
+     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
+@@ -583,7 +618,6 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+     /* validate unimplemented (always zero) bits */
+     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+-    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
+ 
+@@ -593,6 +627,21 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+         warn_always_zero_bit(ctrl, TYPE6_TIMING_0_13, "timing");
+     }
+ 
++    action = (ctrl & TYPE6_ACTION) >> 12;
++    if (action == DBG_ACTION_BP) {
++        val |= ctrl & TYPE6_ACTION;
++    } else if (action == DBG_ACTION_DBG_MODE) {
++        if (env_archcpu(env)->cfg.ext_sdext) {
++            val |= ctrl & TYPE6_ACTION;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "trigger action=debug mode requires Sdext\n");
++        }
++    } else {
++        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
++                      action);
++    }
++
+     /* validate size encoding */
+     size = extract32(ctrl, 16, 4);
+     if (access_size[size] == -1) {
+@@ -959,6 +1008,7 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+ target_ulong tinfo_csr_read(CPURISCVState *env)
+ {
+     target_ulong val = BIT(TRIGGER_TYPE_AD_MATCH) |
++                       BIT(TRIGGER_TYPE_INST_CNT) |
+                        BIT(TRIGGER_TYPE_AD_MATCH6);
+ 
+     if (debug_trigger_version_1_0(env)) {
 -- 
 2.43.0
 
