@@ -4,101 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8893ECA5FA2
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 830ACC9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBBhY-0000re-T3; Mon, 28 Sep 2026 09:47:30 -0400
+	id 1xBBi6-0001EQ-3Q; Mon, 28 Sep 2026 09:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBBhT-0000pd-1A
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:47:24 -0400
-Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1xBBhy-0001A8-UB
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:47:56 -0400
+Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBBhO-0001hQ-DO
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:47:20 -0400
-Received: by mail-yx2-x0c.google.com with SMTP id
- 956f58d0204a3-674138cbe59so2149942d50.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:47:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790603237; cv=none;
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1xBBhw-0001kv-L1
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:47:54 -0400
+Received: by mail-ed2-x10.google.com with SMTP id
+ 4fb4d7f45d1cf-6a99cd5115bso5092867a12.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:47:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790603270; cv=none;
  d=google.com; s=arc-20260327;
- b=gmb5efCQaGZZAeAzjkJa9HsaRunWbezgCBK9wg2qmvXGBpo52vPgSLGjGG3CtjdNZm
- 3wYNrgt+QdKIGG8juIf1VLH47q2JeSyoCH1lk5Ax6YRi8tkCbSBKcE8/Q3VszJZ1MJXv
- Lv4HYKLT+Ozqv93ssAKeHioga/epSz5bWtdvmI0zL60QkWuH7ec6HQDHtsXsTUr0B3ye
- 6frU4UMFd38zOSEZLfjOZ0eMNCIwcdyjCskDREcH4VGdewE/zwAoz3QqeAnC+G+13h0D
- h0y7NUu19U56Q1XzQ7PWZRgDJq1xxUTf99Cnno7vPk3ZM9Uvebt1yje1p8U1gMwrMajN
- +w3A==
+ b=sU3/7JknWmBIfNJO/9zMzBeQgS6VEhtSZV2cLH165U/AazqIOiEbf1jEBkiKPglX3i
+ VHN7aef8XoZJxysKqjHbyZnlXyj7KuDMPhIfRlcPMDjqApBVB4CZEhGYVfzaoo9O2zJM
+ N863etWUmk0Wrr5evYrsMWe4TRlXku43BU1W+qPGiLnw+bwNKHlnWqQHDs/gF5XF/7hT
+ aiimN8bbVe93uhnfWUTUg0vpGoq1TQyR2sCwSUHoKHFqQnkjFCNFL0VT4bT5zOledh9G
+ cuxtM0/tz0x9vM+XY8k+dKU10A10mouEXBzRj3z/c02SFPJZUm5CGjrVwxB36Q+UMRRZ
+ dfdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=D3EhREK3ZFIioeDYjJjTdCtC/aZbDyqG8MQ9EpA7BPg=;
- fh=19csRpazKedu9tRflGE64teBj66NPBVlHpICXacguJk=;
- b=Xe98sogLtK6j0vwG67OD+Wi2Z/jKfthevn6S644J3+cmWQvmr7Ob19TsWUIuENPy6/
- 5Gvu3Hdg6Yj++DVVJif+N4C21XP3E8NGH5YmUcVniQoJX+FUyUPjjiopqud2nG8NcNY+
- EM64yGi3C7p/EdZFMzqsZw2oTYyScKRO80A9wLTu5G4LvNgxPQ12iDvrM8l35hQJRhQf
- 7nsUPmfXXN9YsmRFQGna3ku9INuYdpItZrU8reYiDVc5MGZvVQsGmqUqNQqzxY+Qnqac
- /q8jl/dVx6vHbJVQ/VFE/+XAxz61xvSDqmeLFygX3bWnXjh53O0L27i3pA8ntCs7kmvA
- W8pw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=90TS4/HohSKsclD3ZOBgHeLX3Hm2WU4o4xP+PIiuVu4=;
+ fh=ktf6Nh0mtAO/Hm67YzfrEaqGSC/t8ysW0OowjWZSxZU=;
+ b=VtSbqkELCuSqBRrFSCUGC0bPsjsRI+92fCgGl0Pwc7T26jA4WGJGXnhdFFpHlUwJv1
+ +ggfwYleiDm5nGt1i6ErToEaotFvYmtsddX+3ZLJO6U4HvDx0o74GyfMuf1SPcYv0y65
+ 49nLcjGxgXxi7U+USu1nQH/pHk/3qToZ65j+Hlm8e7eU5t7XRyuCQ1nA30CkOgNICsji
+ zEHseI+8Rk/Xm2aKc5COtBfBHlUej8yrFdIj02i46LCStrpLpIyxshetSW6y1EJQ36HL
+ Zm8FcAONom67LzcQnV8b3ETnC5DXg0kkw8667h1KK962SkAfVnmqBefoSnT5VUR4N6Oj
+ Zsgg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790603237; x=1791208037; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=D3EhREK3ZFIioeDYjJjTdCtC/aZbDyqG8MQ9EpA7BPg=;
- b=weUNMWHwgbvxFc4Me6PtZDUAzMAcQDNcYrMoOVXUqye3cLMN6gOzYOEu/iyRXNAJKh
- J34Z7g7Zg1cs7ATQdXsatIBH+TIufT9m+KgUetljkSI8629U2p6GOBFpUwjpPJEJ11iU
- dw4K3Nsx11PCeqzgmv3P+o91T098SHcDzYq5vIrYb8uKfwhKY3rTi9y6V5EcAMkXwdxC
- h+MBBPQva6CYzTLd1e2flmagF9RF8SESEHp2Ml9+PagD9xgWZuqgRWU02t0DqUOZMYUI
- riwkUy1iP+JOMf1760iPONi1RZ/4enHPdVVJc65/1tdkTeNj4Fy2bGs1pmj9OqUkkQI1
- ahQg==
+ d=adacore.com; s=google; t=1790603270; x=1791208070; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=90TS4/HohSKsclD3ZOBgHeLX3Hm2WU4o4xP+PIiuVu4=;
+ b=QzWw1sWK7zgA0RLnO154wT6jOEU/XDFb8vYbmUiomQ6gD3JeJDZuXOC8M29KYy7y7A
+ 6ZDowB80nciEGFVeo8dmG4CpA3Wg2RQyeXeekk4Jb+Eija2wkErOl0CsXFbv3lhbYAou
+ H/RLCT7gyV6TlwNLfvidLKdkulJ1U+Q1AZKcCIPZsk3DvkUkv6Wwqt2+moxCS/ObweAt
+ r94V9UWxutrYKPiwPM5FIS/c16GoPY9Qo4v9VHd/5OzSin/2y52lZeSgebuxozyYYt/S
+ bq+JYu6gF/DIwLdrXNYPI4DRuUtt1MlIGINKbOIRX1UUm+eXvXjWkpZXR8MdKmI6wCxH
+ 6jnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790603237; x=1791208037;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=D3EhREK3ZFIioeDYjJjTdCtC/aZbDyqG8MQ9EpA7BPg=;
- b=FhE7n16eWuuYE6lBmJLw6uWL+c/wnVf2coE+c1EqsTYH8/vwzl73tfwOR45gLBPG5Y
- UtSuzM91VDrXmZyVkiNzo7Nfl2/OGQvkU2jFuQ1dEwpMEBdu4spBsrVoUWiIEge3QHUE
- ZKlJDcRfxgkB6XlBb1qSRzWMzUxiPHdlCOWWUCf6l2U9dIGlctzWrXq+94jD8exSwuIb
- 22xy3CiSLIZUgefYnwpGDkEVPRIHNA3slrQPDoAGbehrTgu+A4FT1janyDUEnf8IYHFZ
- ntulHBceYU1Ug/tYVxTMROSdqU8MmzLJLHHbPZ0UaKwq1wzInMJOMqTVqS0WXTSzp/yY
- lEZg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBylrXt9ihYHZyIVRFfyhCBHn4hf2U2jtKDDhhimk2N9UEN4Y20FG/wWGSJdEUg5dScOqU3qoWQ4UufX@nongnu.org
-X-Gm-Message-State: AFq9FYJ/ePSoQ4UDPta7sH5Pz8jBJc2Rc/EOz8MYY+HsRiqf7tyhmnKD
- rDM7qhx/G/FXimQgXv8K1mJ0lchz8wsLbXMdPXrYRhsnpfr12//4/Y0sQ8tU36ezvJDow/JgaYF
- 3Nn/H4qMzCADtFRbboziPbPD94qNNw7K2GU4acKdLJA==
-X-Gm-Gg: AYBFou0iwWLm5I86Zw0icfsAiFlqnCXU2b30lxadjUxNofbqcIr3XHgv6ycgPsY82eT
- hTfj9YQnVLTwFex9STsEKAGmmBDNQJcl5w2IV795KBrBxbQwYC/cz8wOgM2RL7Az+ETLCpYWwgO
- rWYJziEig5VlhDj+I8BK+3rfav2hDxQeQqruSxjusvH9hK8oMaHbtOF87w9TyYMZUEb1MPSBOEm
- KsS7gANJcVITs2nK2vu04i+njCOlzLXK2RRBWxgt0A4dyD6K+O3d7m+exVL5WIdfICT4lUMVksg
- 1MGmmu/A59B/KF0ewDPa5DgHqh+aSCcOCosEmyA2qko8GStV8dNCzYFohoerk9GL+ik/WvHWTmf
- I/bmwiVLDSWoBcqbJP7PufyOtaGRhcVrXpae8BPQ=
-X-Received: by 2002:a05:690e:191a:b0:674:14bc:49ed with SMTP id
- 956f58d0204a3-67414bc4ac9mr3058152d50.58.1790603237060; Mon, 28 Sep 2026
- 06:47:17 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790603270; x=1791208070;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=90TS4/HohSKsclD3ZOBgHeLX3Hm2WU4o4xP+PIiuVu4=;
+ b=ETUotdUdBROkeh6LEz0UsZW8s/aqKE4/gPAsK7iCHku2xjS4T5KEYxNl4rwf01EFjG
+ yJXjiOFKjjrmx3Oxmpt+Ap+PglcOZPWTmUu7pSNONCvWXRx+ZqHadgyrEBLHi3c4udLu
+ g7z1bm8GgR85cvat9F9Nq9oVA7oGRBkvgwGBrJq/IXILNyQAsFT7KISxrRqEhsIPuwwz
+ sU7ArrICQzkrdaLtoSNoOXpWOe6GMm/4d6bVI68JssM11U0qLdW33QJo5KdisZWdX3Mb
+ nf0bf7grtPEM7S3TYk7pQ9ZPHuWAoa6YvIJRLl3n5RUWrn/sn9xWUzj+5WG4bPqai6xb
+ 4PYg==
+X-Gm-Message-State: AFq9FYJAfGKug3/lbuD8F8eAiVXxF+D5X0zYw8czvW8GzyARxft8DvhO
+ j7Dl4lmZl2g70BvfHzhmS3lmSoPKitfQJQP/Ob0mMS6VvcRRuYnY9wRm1vPbndz2bDwfoaZJ1Eg
+ 2hQ7JNpHbNxsUiETpGpGuu68Mm/3GZtYB9cXaLApR
+X-Gm-Gg: AYBFou3VPjNGROLZpLYHNAC/Td0rHDpTtJn73Dj/p3GkvQbaJnyeHzW3QhxD+2amsB1
+ tKW9E5/AuQpLPS6wRMfQOJwPnWxtUklAjWedTO7PQpKtAbVa3qGSK2fUP+a3AC07OiYgMO/dPsv
+ hTOLQRmpK0/jDOZybfcTyd2dzEr1aAjJYzaAC7G8EMCBoWD+CDihcA44Yei8aAUK8JCe/ZmXWs0
+ PoRBHtknOPf0ciKvgg3ImmXsHeiG8OW6BrKZMsM1UDAWaZIDvqce5IPX5RRLllKJAlPt1gX6oGw
+ phxWZ+i74YM+O/Swci8d0D4SZs1ae/SDfaQqnLxSFVkI4A3gLCRndJA=
+X-Received: by 2002:a05:6402:4588:b0:6aa:13c1:2c88 with SMTP id
+ 4fb4d7f45d1cf-6aae8f7690cmr7002818a12.44.1790603270201; Mon, 28 Sep 2026
+ 06:47:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260916165117.39764-1-sebott@redhat.com>
-In-Reply-To: <20260916165117.39764-1-sebott@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Sep 2026 14:47:05 +0100
-X-Gm-Features: AclHuK_0cWJvuXI9w6ckERpSxL31YnHPnNaz6MLenPc9GBO34luEAup-VxU6JiE
-Message-ID: <CAFEAcA9p9X0A76O1Dt8bQEfy4ZsOwXtK-fC1HQ=K4kzEQQesGQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] arm: demuxed ID registers (CCSIDR_EL1)
-To: Sebastian Ott <sebott@redhat.com>
-Cc: Eric Auger <eauger@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- Alireza Sanaee <alireza.sanaee@huawei.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, 
- khushit.shah@nutanix.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20260803072853.2920007-1-dtalexundeer@yandex-team.ru>
+ <20260803072853.2920007-2-dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260803072853.2920007-2-dtalexundeer@yandex-team.ru>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Mon, 28 Sep 2026 15:47:39 +0200
+X-Gm-Features: AclHuK_6mZnFAdrL08_eUQ1NOgUZoTHvSagXzvzVgNbWK2CHJ9nVrFDbnTdFXBk
+Message-ID: <CAJ307Eg_8167wGsjDnGoy08tnCe9SVwP9XSHwRSvFa7nCd4rYw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] vhost-user: add skip_drain param to
+ do_vhost_virtqueue_stop
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Jason Wang <jasowangio@gmail.com>, 
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, 
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Fam Zheng <fam@euphon.net>, virtio-fs@lists.linux.dev, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:33::10;
+ envelope-from=chigot@adacore.com; helo=mail-ed2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,24 +132,349 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 16 Sept 2026 at 17:51, Sebastian Ott <sebott@redhat.com> wrote:
+On Mon, Aug 3, 2026 at 9:30=E2=80=AFAM Alexandr Moshkov
+<dtalexundeer@yandex-team.ru> wrote:
 >
-> To support efforts to generalize handling of writable System ID Registers
-> [1] this series addresses the demuxed registers that are kept outside of
-> ARMISARegisters namely CSSELR_EL1.
+> Currently do_vhost_virtqueue_stop always sends GET_VRING_BASE to the
+> back-end, which requires the back-end to drain all in-flight I/O before
+> stopping the vring.
 >
-> CSSELR_EL1 is moved within ARMISARegisters and accessors to retrieve
-> and set the demuxed values are provided. Initial values are gathered via
-> the usual KVM_GET_ONE_REG ioctl.
+> Add a skip_drain parameter to do_vhost_virtqueue_stop and propagate it
+> up through vhost_virtqueue_stop, vhost_dev_stop and their callers.
+> The parameter will be used in a follow-up commit to send a new protocol
+> message that instructs the back-end to suspend in-flight I/O immediately
+> instead of draining it.
 >
-> V5 of this series was posted here:
-> https://lore.kernel.org/qemu-devel/20260909144151.26803-1-sebott@redhat.com/
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  backends/cryptodev-vhost.c     |  2 +-
+>  backends/vhost-user.c          |  2 +-
+>  hw/block/vhost-user-blk.c      |  2 +-
+>  hw/net/vhost_net.c             |  9 +++++----
+>  hw/scsi/vhost-scsi-common.c    |  2 +-
+>  hw/virtio/vdpa-dev.c           |  2 +-
+>  hw/virtio/vhost-user-base.c    |  2 +-
+>  hw/virtio/vhost-user-fs.c      |  2 +-
+>  hw/virtio/vhost-user-scmi.c    |  2 +-
+>  hw/virtio/vhost-vsock-common.c |  2 +-
+>  hw/virtio/vhost.c              | 28 +++++++++++++++++++---------
+>  include/hw/virtio/vhost.h      |  7 +++++--
+>  12 files changed, 38 insertions(+), 24 deletions(-)
 >
-> [1] https://lore.kernel.org/qemu-arm/20260616132625.1732031-1-eric.auger@redhat.com/
+> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
+> index c6069f4e5b..f1ca6bcd4e 100644
+> --- a/backends/cryptodev-vhost.c
+> +++ b/backends/cryptodev-vhost.c
+> @@ -109,7 +109,7 @@ static void
+>  cryptodev_vhost_stop_one(CryptoDevBackendVhost *crypto,
+>                                   VirtIODevice *dev)
+>  {
+> -    vhost_dev_stop(&crypto->dev, dev, false);
+> +    vhost_dev_stop(&crypto->dev, dev, false, false);
+>      vhost_dev_disable_notifiers(&crypto->dev, dev);
+>  }
+>
+> diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+> index 380d825023..0423c2d4ec 100644
+> --- a/backends/vhost-user.c
+> +++ b/backends/vhost-user.c
+> @@ -108,7 +108,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
+>          return 0;
+>      }
+>
+> -    ret =3D vhost_dev_stop(&b->dev, b->vdev, true);
+> +    ret =3D vhost_dev_stop(&b->dev, b->vdev, true, false);
+>
+>      if (k->set_guest_notifiers &&
+>          (err =3D k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false=
+)) < 0) {
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index b2e46eb3f9..e3b873af7c 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -232,7 +232,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>                   qemu_force_shutdown_requested();
+>
+>      ret =3D force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+> -                       vhost_dev_stop(&s->dev, vdev, true);
+> +                       vhost_dev_stop(&s->dev, vdev, true, false);
+>
+>      err =3D k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+>      if (err < 0) {
+> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> index 323d117735..6e05c995f1 100644
+> --- a/hw/net/vhost_net.c
+> +++ b/hw/net/vhost_net.c
+> @@ -384,7 +384,7 @@ fail:
+>      if (net->nc->info->poll) {
+>          net->nc->info->poll(net->nc, true);
+>      }
+> -    vhost_dev_stop(&net->dev, dev, false);
+> +    vhost_dev_stop(&net->dev, dev, false, false);
+>  fail_start:
+>      return r;
+>  }
+> @@ -403,7 +403,7 @@ static void vhost_net_stop_one(struct vhost_net *net,
+>      if (net->nc->info->poll) {
+>          net->nc->info->poll(net->nc, true);
+>      }
+> -    vhost_dev_stop(&net->dev, dev, false);
+> +    vhost_dev_stop(&net->dev, dev, false, false);
+>      if (net->nc->info->stop) {
+>          net->nc->info->stop(net->nc);
+>      }
+> @@ -636,7 +636,8 @@ void vhost_net_virtqueue_reset(VirtIODevice *vdev, Ne=
+tClientState *nc,
+>      vhost_virtqueue_stop(&net->dev,
+>                           vdev,
+>                           net->dev.vqs + idx,
+> -                         net->dev.vq_index + idx);
+> +                         net->dev.vq_index + idx,
+> +                         false);
+>  }
+>
+>  int vhost_net_virtqueue_restart(VirtIODevice *vdev, NetClientState *nc,
+> @@ -686,7 +687,7 @@ err_start:
+>          assert(ret >=3D 0);
+>      }
+>
+> -    vhost_dev_stop(&net->dev, vdev, false);
+> +    vhost_dev_stop(&net->dev, vdev, false, false);
+>
+>      return r;
+>  }
+> diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
+> index e19800a0bc..e546a6dc75 100644
+> --- a/hw/scsi/vhost-scsi-common.c
+> +++ b/hw/scsi/vhost-scsi-common.c
+> @@ -108,7 +108,7 @@ int vhost_scsi_common_stop(VHostSCSICommon *vsc)
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
+>      int ret =3D 0;
+>
+> -    ret =3D vhost_dev_stop(&vsc->dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vsc->dev, vdev, true, false);
+>
+>      if (k->set_guest_notifiers) {
+>          int r =3D k->set_guest_notifiers(qbus->parent, vsc->dev.nvqs, fa=
+lse);
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index 94188d37bb..b86d0b664a 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -300,7 +300,7 @@ static void vhost_vdpa_device_stop(VirtIODevice *vdev=
+)
+>          return;
+>      }
+>
+> -    vhost_dev_stop(&s->dev, vdev, false);
+> +    vhost_dev_stop(&s->dev, vdev, false, false);
+>
+>      ret =3D k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+>      if (ret < 0) {
+> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> index 39b5e637fc..abeae1a064 100644
+> --- a/hw/virtio/vhost-user-base.c
+> +++ b/hw/virtio/vhost-user-base.c
+> @@ -78,7 +78,7 @@ static int vub_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+>
+> -    ret =3D vhost_dev_stop(&vub->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vub->vhost_dev, vdev, true, false);
+>
+>      err =3D k->set_guest_notifiers(qbus->parent, vub->vhost_dev.nvqs, fa=
+lse);
+>      if (err < 0) {
+> diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+> index 209993918a..0d8842817a 100644
+> --- a/hw/virtio/vhost-user-fs.c
+> +++ b/hw/virtio/vhost-user-fs.c
+> @@ -111,7 +111,7 @@ static int vuf_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+>
+> -    ret =3D vhost_dev_stop(&fs->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&fs->vhost_dev, vdev, true, false);
+>
+>      err =3D k->set_guest_notifiers(qbus->parent, fs->vhost_dev.nvqs, fal=
+se);
+>      if (err < 0) {
+> diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+> index 9470f68c1f..9fa65d7d8b 100644
+> --- a/hw/virtio/vhost-user-scmi.c
+> +++ b/hw/virtio/vhost-user-scmi.c
+> @@ -101,7 +101,7 @@ static int vu_scmi_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+>
+> -    ret =3D vhost_dev_stop(vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(vhost_dev, vdev, true, false);
+>
+>      err =3D k->set_guest_notifiers(qbus->parent, vhost_dev->nvqs, false)=
+;
+>      if (err < 0) {
+> diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-commo=
+n.c
+> index b79f4c9ce6..4ef037627b 100644
+> --- a/hw/virtio/vhost-vsock-common.c
+> +++ b/hw/virtio/vhost-vsock-common.c
+> @@ -106,7 +106,7 @@ int vhost_vsock_common_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+>
+> -    ret =3D vhost_dev_stop(&vvc->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vvc->vhost_dev, vdev, true, false);
+>
+>      err =3D k->set_guest_notifiers(qbus->parent, vvc->vhost_dev.nvqs, fa=
+lse);
+>      if (err < 0) {
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index af41841b52..2a62550222 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -23,6 +23,7 @@
+>  #include "qemu/log.h"
+>  #include "standard-headers/linux/vhost_types.h"
+>  #include "hw/virtio/virtio-bus.h"
+> +#include "hw/virtio/vhost-user.h"
+>  #include "hw/mem/memory-device.h"
+>  #include "migration/blocker.h"
+>  #include "migration/qemu-file-types.h"
+> @@ -1496,8 +1497,13 @@ fail:
+>  static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+>                                     struct VirtIODevice *vdev,
+>                                     struct vhost_virtqueue *vq,
+> -                                   unsigned idx, bool force)
+> +                                   unsigned idx, bool force,
+> +                                   bool skip_drain)
+>  {
+> +    if (skip_drain) {
+> +        assert(vhost_user_has_protocol_feature(dev,
+> +               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT));
+> +    }
 
+FYI, with only `--disable-vhost-user` configuration, this line
+triggers a link error:
+  | undefined reference to `vhost_user_has_protocol_feature'
 
+Disabling all vhosts (so vhost-user, vhost-vdpa and vhost-kernel) was
+enough to fix it.
 
-Applied to target-arm.next, thanks.
+Cl=C3=A9ment
 
--- PMM
+>      int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>      struct vhost_vring_state state =3D {
+>          .index =3D vhost_vq_index,
+> @@ -1547,9 +1553,10 @@ static int do_vhost_virtqueue_stop(struct vhost_de=
+v *dev,
+>  int vhost_virtqueue_stop(struct vhost_dev *dev,
+>                           struct VirtIODevice *vdev,
+>                           struct vhost_virtqueue *vq,
+> -                         unsigned idx)
+> +                         unsigned idx,
+> +                         bool skip_drain)
+>  {
+> -    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false);
+> +    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false, skip_drain=
+);
+>  }
+>
+>  static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
+> @@ -2302,7 +2309,8 @@ fail_vq:
+>          vhost_virtqueue_stop(hdev,
+>                               vdev,
+>                               hdev->vqs + i,
+> -                             hdev->vq_index + i);
+> +                             hdev->vq_index + i,
+> +                             false);
+>      }
+>
+>  fail_mem:
+> @@ -2317,7 +2325,7 @@ fail_features:
+>
+>  /* Host notifiers must be enabled at this point. */
+>  static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
+> -                             bool vrings, bool force)
+> +                             bool vrings, bool force, bool skip_drain)
+>  {
+>      int i;
+>      int rc =3D 0;
+> @@ -2344,7 +2352,8 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev=
+, VirtIODevice *vdev,
+>                                        vdev,
+>                                        hdev->vqs + i,
+>                                        hdev->vq_index + i,
+> -                                      force);
+> +                                      force,
+> +                                      skip_drain);
+>      }
+>      if (hdev->vhost_ops->vhost_reset_status) {
+>          hdev->vhost_ops->vhost_reset_status(hdev);
+> @@ -2366,15 +2375,16 @@ static int do_vhost_dev_stop(struct vhost_dev *hd=
+ev, VirtIODevice *vdev,
+>      return rc;
+>  }
+>
+> -int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs)
+> +int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs,
+> +                   bool skip_drain)
+>  {
+> -    return do_vhost_dev_stop(hdev, vdev, vrings, false);
+> +    return do_vhost_dev_stop(hdev, vdev, vrings, false, skip_drain);
+>  }
+>
+>  int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
+>                           bool vrings)
+>  {
+> -    return do_vhost_dev_stop(hdev, vdev, vrings, true);
+> +    return do_vhost_dev_stop(hdev, vdev, vrings, true, false);
+>  }
+>
+>  int vhost_net_set_backend(struct vhost_dev *hdev,
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 684bafcaad..33b88f95ea 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -228,6 +228,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODev=
+ice *vdev, bool vrings);
+>   * @hdev: common vhost_dev structure
+>   * @vdev: the VirtIODevice structure
+>   * @vrings: true to have vrings disabled in this call
+> + * @skip_drain: true to notice back-end to skip draining all in-flight r=
+equests
+>   *
+>   * Stop the vhost device. After the device is stopped the notifiers
+>   * can be disabled (@vhost_dev_disable_notifiers) and the device can
+> @@ -235,7 +236,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODev=
+ice *vdev, bool vrings);
+>   *
+>   * Return: 0 on success, !=3D 0 on error when stopping dev.
+>   */
+> -int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs);
+> +int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs,
+> +                   bool skip_drain);
+>
+>  /**
+>   * vhost_dev_force_stop() - force stop the vhost device
+> @@ -393,7 +395,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, ui=
+nt64_t iova, int write);
+>  int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vd=
+ev,
+>                            struct vhost_virtqueue *vq, unsigned idx);
+>  int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vde=
+v,
+> -                         struct vhost_virtqueue *vq, unsigned idx);
+> +                         struct vhost_virtqueue *vq, unsigned idx,
+> +                         bool skip_drain);
+>
+>  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+>  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+> --
+> 2.34.1
+>
+>
 
