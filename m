@@ -4,125 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 137CBC9833E
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFD6C9833E
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 10:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xB8tF-0003oW-92; Mon, 28 Sep 2026 06:47:22 -0400
+	id 1xB8tb-0003y8-Mg; Mon, 28 Sep 2026 06:47:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1xB8sz-0003m0-RA
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:47:10 -0400
+ id 1xB8tW-0003ve-Ul
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:47:39 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1xB8sx-0005Nb-Ba
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:47:05 -0400
+ id 1xB8tV-0005Pl-7C
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 06:47:38 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68S9M6L4246041
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:46:56 GMT
+ 68S9M91c246082
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:47:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=R6wWn9Tx1IIbQKEEN34411xD
- nFrgkphR2cbEq2CuHro=; b=RbQXIix+Jhcm5Mba//82FEqgAeOzlvsW/bLoO72o
- bF7FkICpod+9eRS4/AgAU3LjmPdEenJpIiOqauIViannS6MBq854kxlIyQAIvzMr
- KlRalEryBpvxjEWUTa+FQMYwH54QXK8CB4y/6EPqID3vKPERUVKoC8o9Hcks+CXc
- M1mZ8ScNTAfKnQ4FnRfxxa1a6sNc/ePV7UrbOX2s+Q/xLYlNCr5NC0rZWzbLU+sl
- tZsV91QuO2WokqeCNyWtPXidnYPUv8Exx5CR2TpWkPZNfZZNper21wWycgCG48hf
- ILFsYft+fcsTTcZn/VcSwR4x4IRkVs4tRn0CpseMTrgo8w==
+ :references:subject:to; s=qcppdkim1; bh=5CbzSh57V9netNcg1XapNPpH
+ IEUR0BGvLm/6aAFLKvI=; b=j5HiuiH29BKHowh3CFJnmQ9NC/LwuNPYaF0hp6uk
+ 3/8rIONIierogkG0haWShvyj5CLYyQABODUie6/7shHhnvR5uUUPz62F8ZcrX+Ck
+ n5Rd9K24NGiikdv6UTXh9iKQsJpWNVNnwZpPSaV5PuJ61VRGIjyeBJnX/HAofQ0M
+ Kt5lvDAO+lDPsr4DgRC/wD8qhF/BHHh5CU8flDG1WazVXL+IeTZtBKJ7niOci5Wf
+ G/djLovT6bJe5/qcREDHnUv6A4GYfMPhr2ASl9LwGEzsfeP1XC24admC741r0r/P
+ zJDvBNAY6Gc04HDnYkAE3yqY5irjZkqhW28gjxBlU/MSsg==
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjt110eq-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjt110gq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:46:56 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 10:47:35 +0000 (GMT)
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93a0c7126e7so535391585a.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 03:46:56 -0700 (PDT)
+ af79cd13be357-93c77c0d96eso107399385a.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 03:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790592416; x=1791197216; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790592455; x=1791197255; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=R6wWn9Tx1IIbQKEEN34411xDnFrgkphR2cbEq2CuHro=;
- b=CvyueCKyLGNBWelQTnIt/g4ZRF0U2CduCmttqObI4fpzL3HO+4bHGep+KFopLvGs/w
- pvKsCxPjMK5GoxCMy0VXb2+P7H++rw8uNa6abCU2xVftxf+K42wZi1heSWvn0NJ/VAkD
- MlITbKg9NNIYys8UOxo67r9n460lgvqBI6rGl8TCJ4H+AXrecu4BggMmbalXpmwOIJ+/
- Oiueof1967cszGsYm1sqxggGcvDksPt0Aqfcdc0rMyTMKFnschXSVjFFBkcS+nFPmH+e
- NVBbbIqNN+S0vSMdeeGYbPlGyVsObFRIh4TqW+ZJlOo+Xe9m8cw1cSlnF/65YojgLuVX
- OPyQ==
+ bh=5CbzSh57V9netNcg1XapNPpHIEUR0BGvLm/6aAFLKvI=;
+ b=LDFDUtVdw0cwTAbpl9tTH2po9mkcA+sIlpuo4Drt/GaiXpd5lGvF1htfpIinsrSzha
+ VNV0uu3zlGDzV/xvlxfTsV7PZjGjLdD7yd30s7N7kpm/1uBjzMcZALR4bdr0i5TJLwfs
+ gfK1LYDE6n47/O59XCkppBvIc3yAZJnNuwDR/JYsKzu5Hpu+EDm2FqtxCETH6Km9WKQ6
+ rYY/qic8jlPhTo1hBFQQKZMYVLp+heIskznoK9hAKjl6iTOULaY/zuH5bZTd8m63dz6n
+ BgexzhOg0RHRlyyprUQvHNOymOsGDZX9SHUkAExkwul6y8FF0GVpWpYbth1Cyf0V+Ybn
+ fxzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790592416; x=1791197216;
+ d=1e100.net; s=20260707; t=1790592455; x=1791197255;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=R6wWn9Tx1IIbQKEEN34411xDnFrgkphR2cbEq2CuHro=;
- b=U2kBs6qUJU7ae3ASn+nQDnMm9d5GJVVmvPy/1mkn+IkFUl22gl7D2xYNK4ruRf3UkQ
- 8ddSa7DkJIReNhNnwyPGtIki66nCavseLgJeDjRHhj0ZJbh3mezbCW+WQxdwPWM2R8W2
- Ay3U1Aiq8baBylbgCDxuluysLuBGTkr0YYCmwLMCI7O37Cuc8QAOwSTFlmGjyUtLpQvL
- DXw6Ji962n2RYbNpCKwBi+ta28rkAUvj/26y5kjbdv0k1/zXwHVgGUrzotrwuMYfXhf2
- 4CfFNrGugQ249mZ2jKYaRqCBChbuv9ttTw32Isx4wI56Enx7o1aBXUvjPZPjLh9Juzrf
- JUlQ==
-X-Gm-Message-State: AFuF++nmldtOgziialk1Wzcxib9OB8YP2vSslk2h+GSnigI6OYJKHJv0
- I5zfSifRCeSIrRE4enCUWb2qP9NP1oyfbIp4V4bLaYuOAjmL66SYZTPIFO9zgq99V9IqOKrrKQZ
- 7Zd+fHTknk0oLLrDT5OO+Zk0eg2WSE4r7CfY0YT+aagJpReDnQQy9gGpqJg==
-X-Gm-Gg: AYBFou1Dd4oWG9Sk6BMSLUU1jEF0C03/JBAx95AH4UtMnA1oopZskgiCpmpnwfmcDjv
- yeQD/EZ494hebpI06Gs5wYz0bthjoiEpsrp83Kn1G1zRNRzoP5/e6h90gAq7ns7YdnJA1LBmntJ
- COIc6qZSqWk0BXXU7FpuT4aX11ywbufXBKwqu2FdIK8lVHfspy3qCbUeq7NR1jtJMa/2VqEcDU9
- Q3P3N12H/CqVJ5aTaZEuFQ1q1+q6LnZYBFNIEdhGtN5sX/Zel9xloJt6R3WI7Cv9KUkJrsl19yB
- P5QnCHoLT/DQ9ucEYx0+m/JXGSOUGx/H7wABJ4uDBdncuku06moB5hi9M23myfmhfVSi9i30Iad
- u3l3lk7tko8qHxCIPvBUov/DEcBKPaICOCPEFPg==
-X-Received: by 2002:a05:620a:6c0d:b0:939:de6c:cb45 with SMTP id
- af79cd13be357-93c43d159a1mr2069814685a.47.1790592416014; 
- Mon, 28 Sep 2026 03:46:56 -0700 (PDT)
-X-Received: by 2002:a05:620a:6c0d:b0:939:de6c:cb45 with SMTP id
- af79cd13be357-93c43d159a1mr2069810785a.47.1790592415550; 
- Mon, 28 Sep 2026 03:46:55 -0700 (PDT)
+ bh=5CbzSh57V9netNcg1XapNPpHIEUR0BGvLm/6aAFLKvI=;
+ b=X6xtqfyDhlwhvLJPjpUYfrWMsD8PVEvwtEiP6nArcAFVGfKySgpt1/EXlmPRpG3UGN
+ IuCFIYQA+h5oS2jcupxMphAes/nxs8Caoz7O+WOOpEPkn8iP4JlGwzTzQPucydY7Ihoa
+ Sc070Iy4vlXLVsN4EHq81lBv0EQpbH1f3WZpaT1dQ0V5lac8/T+NNZ1AneEW7PhJT7am
+ lPz+jEhTfZtbX2ljyesoIL+ymcCuMj8RxVwFiexM844pP3Lva5MSpBwkmpUgu6nST3LU
+ 5Qr17jUWPKPEYUFbiPLqTBxwHeyfkQ4fILoSy1YrtIPOywWM1vFuj6co5Kgj6sqCMJNV
+ Aozw==
+X-Gm-Message-State: AFuF++lWkNg919lc6SkoyMmiAX0oMpjjZqg+VVv5JlU3UCKf/ENt9zwM
+ Yw4BtwDRC+8ckPVqwnP9zSphZFXqflEoK1Dm6aqbicANQLKrX5yGKTIohiU9EbS9qioAUlI+TGy
+ 7vblxZSA9J8XtowaD6NBWe0wM65pp3/hBzdycEB7NaoJ7V0f/l8gyVVBqpA==
+X-Gm-Gg: AYBFou1iR/FLwJkQVKzrb3b2XGX7hSN9ZI8vHWTLFiOIRlAHTOgD//S6jWRBKFVkM0e
+ GGYL7JTYB2+waD/viOvWzLAP44LijMEWwisOsD+gJcOYD9Az5869Qy01Lso/xJFFMAty3171B4v
+ xuac6XR481VmvZ+pLp7L4z6TlZk69b9CeXCaJce1EHL8xamIaQ9w/bhmEQZsOvcWTDEjEQsYbEF
+ xgF75xUf507zjit3fuVyC/EXciUfnOEHiJ13t6v74yvRepW7zptJSVlo52BD0BfFxtquzO0Iwje
+ 1sb+vsxlsYyHXYW93bQn+qa/K4MUWDrzywHZoaPIr5Xo9pPksslbamuw+mmvSx/WKeueQq4Kd2e
+ RXoWyWDs1shpDKpu2QsZ/dMuK82TGLQc3O6D4Xw==
+X-Received: by 2002:a05:620a:4512:b0:939:f513:cc3b with SMTP id
+ af79cd13be357-93c43c9dd61mr1953951185a.42.1790592455195; 
+ Mon, 28 Sep 2026 03:47:35 -0700 (PDT)
+X-Received: by 2002:a05:620a:4512:b0:939:f513:cc3b with SMTP id
+ af79cd13be357-93c43c9dd61mr1953948585a.42.1790592454714; 
+ Mon, 28 Sep 2026 03:47:34 -0700 (PDT)
 Received: from localhost (ip-86-49-245-11.bb.vodafone.cz. [86.49.245.11])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4887a6456f8sm26368609f8f.26.2026.09.28.03.46.54
+ ffacd0b85a97d-4887a2acb4dsm26425246f8f.0.2026.09.28.03.47.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 03:46:54 -0700 (PDT)
-Date: Mon, 28 Sep 2026 12:46:53 +0200
+ Mon, 28 Sep 2026 03:47:33 -0700 (PDT)
+Date: Mon, 28 Sep 2026 12:47:33 +0200
 From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
  chao.liu@processmission.com, leif.lindholm@oss.qualcomm.com,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v12 4/5] tests/functional/riscv64: add riscv-server-ref
- tests
-Message-ID: <geavtirs7hw5givjazrneegb7gwqsvmwq3koglyxxcxz2fauy3@j4vobi7nbsh6>
+ Sunil V L <sunilvl@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v12 5/5] docs: add riscv-server-ref.rst
+Message-ID: <spgwi4uj47tgyscqpda2xpvrndgtydejudicqwdcltabxiyjje@bgv52z7nhuf7>
 References: <20260917174405.3471736-1-daniel.barboza@oss.qualcomm.com>
- <20260917174405.3471736-5-daniel.barboza@oss.qualcomm.com>
+ <20260917174405.3471736-6-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260917174405.3471736-5-daniel.barboza@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA0MiBTYWx0ZWRfXyKA7vFaIZRz8
- 1ZozqBPwWaUmo16l+32lbXd3vw9XE5umtsng2qD8ZHvFlH1PO8Qc+9BFTn/BBY0Zd1PclKkOSvx
- NfFoRKfzG+kTt7qYLQWB9KN3MHs8CwAwrMewVlJOsCqvPlgDjkzvI1YF9PR+14xqkKq6F1pT+wJ
- FGC5laZZMQpRrPFHBCZmr//2+f8i3Rhgt8IgKPgolFYScbjb/OERzUcPsoST9olIHCsxs75ovKU
- iOxH7uNnbYMi1RH13Nu102trWdBxbvw/i9w8yyhPbwdw7TS1rEqZrgbxYFbu8Y6juWhi7h8k76y
- hHEjBEHi0GXbeI06mNgMLtY5fi29b+awvjnx4Cb1xijh/figJnxeGKQHnVsFQUc9p4hhhzHfkq6
- MaDmOF+VZ69NmFC7/Uyqe+DPkw17AN5l0gbo/L/UMEZawCh+11BXtpbbI9r1oWUS3AiE64J4Gt2
- IZTEochkB6M7uHc5Nzg==
-X-Authority-Analysis: v=2.4 cv=V8foQuni c=1 sm=1 tr=0 ts=6aba45a0 cx=c_pps
+In-Reply-To: <20260917174405.3471736-6-daniel.barboza@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA0MiBTYWx0ZWRfX3NE6w/bipWmL
+ 8BJZzIKGi98zgw5cJrKEVmjeNQSySRDzT1dZ5ws6Kac6wfynCHUQoz3s6RQYJ50Nr0PDeIGk2yM
+ 0Gx1LZIUStXJn8MjggZDXvGkM5Dj/gFyaWywgDFlEbfQf14ZuIWLQH6YBodE5cSD4DQ9m2C0iO/
+ O7cqykjZirB20hjRgNh8cwoqllQmVtpDyPRrrr/6lnTEoomF+W1LFx/x3NuxWYr3aK521gfG8MV
+ w5H0+659JbDwzl+yR/G2C+oR8sI69OxGLG8B9luQkpQp+30GSE4msu77doSDaeBgBQuL7DYEj3j
+ F/K69aAax6pPJtAHtGmnS0TEjdqTgmDuGTSjGgNrfmYqQQiY8VWuoOxveqgrnbNaWBgg4csEKzE
+ BKxP67O8H64Ef/fn1fcuuqMJXT55vBeo8NCD4Q3SBEZQz7TcOYIAJMdUjvI3QVHuhrPb+4tn2Eb
+ rMsnDPo2slGRwTDlEPg==
+X-Authority-Analysis: v=2.4 cv=V8foQuni c=1 sm=1 tr=0 ts=6aba45c7 cx=c_pps
  a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4CXLxsOAgPM/krjtHEZQyA==:17
  a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=69EAbJreAAAA:8
- a=JF9118EUAAAA:8 a=2REcCJ5HaDLgvgcGo00A:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-ORIG-GUID: GBxmBQSd6r2_sGE-45TouLO_r9Qfh-fg
-X-Proofpoint-GUID: GBxmBQSd6r2_sGE-45TouLO_r9Qfh-fg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA0MiBTYWx0ZWRfX5nA/EEJ5agIR
- mDSVIA2RASGkSsOWKgdgaonyvhzc8ebXfUrVqKwhmMtE8buLCoGfYbKqxP5xyopns3w9HMqmznn
- F3qA+NLFJPd7myJFN/IZQhLZx/mmpE0=
+ a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=FRSEYCzRAAAA:8 a=acypBfbJLT_Bn9_HBn8A:9
+ a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=xVlTc564ipvMDusKsbsT:22
+ a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-ORIG-GUID: lqCBRyWFfr5hbIOfOELWMukyXeThNoR8
+X-Proofpoint-GUID: lqCBRyWFfr5hbIOfOELWMukyXeThNoR8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA0MiBTYWx0ZWRfX0sRAh23OCPXz
+ j6uFkZ+XAB07JkLut9s1ZVTjCn84cGnL/+kjo2yB9KWkxHveNCMcvXBcnvtl8tCxg6XtReJoyBD
+ LqY9vsMc0YPJo4HobnqrZC7vD6J8wFg=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-28_02,2026-09-21_02,2025-10-01_01
@@ -155,115 +155,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Sep 17, 2026 at 02:44:03PM -0300, Daniel Henrique Barboza wrote:
-> Add tests for the recently added riscv-server-ref machine:
-> 
-> - a new test_opensbi.py test.  The idea is to have a quick test that can
-> catch trivial regressions that would prevent OpenSBI to finish;
-> - a new Linux boot "thorough" test that will boot the machine up to the
-> buildroot prompt.
-> - a TPM specific selftest for the riscv-server-ref board.  The test
-> will be skipped if there's no 'swtpm' in the host.
+On Thu, Sep 17, 2026 at 02:44:04PM -0300, Daniel Henrique Barboza wrote:
+> Add documentation for the new riscv-server-ref board.
 > 
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Reviewed-by: Chao Liu <chao.liu@processmission.com>
 > Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
 > ---
->  tests/functional/riscv64/meson.build        |  2 +
->  tests/functional/riscv64/test_opensbi.py    |  4 +
->  tests/functional/riscv64/test_server_ref.py | 90 +++++++++++++++++++++
->  3 files changed, 96 insertions(+)
->  create mode 100755 tests/functional/riscv64/test_server_ref.py
+>  docs/system/riscv/riscv-server-ref.rst | 64 ++++++++++++++++++++++++++
+>  docs/system/target-riscv.rst           |  1 +
+>  2 files changed, 65 insertions(+)
+>  create mode 100644 docs/system/riscv/riscv-server-ref.rst
 > 
-> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-> index d1a3e6c2bf..2d22e49efd 100644
-> --- a/tests/functional/riscv64/meson.build
-> +++ b/tests/functional/riscv64/meson.build
-> @@ -3,6 +3,7 @@
->  test_riscv64_timeouts = {
->    'boston' : 120,
->    'k230' : 120,
-> +  'server_ref' : 120,
->    'tuxrun' : 120,
->  }
->  
-> @@ -15,6 +16,7 @@ tests_riscv64_system_thorough = [
->    'endianness',
->    'boston',
->    'k230',
-> +  'server_ref',
->    'sifive_u',
->    'tt_atlantis',
->    'tuxrun',
-> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-> index 0f8beb7e7a..367e131164 100755
-> --- a/tests/functional/riscv64/test_opensbi.py
-> +++ b/tests/functional/riscv64/test_opensbi.py
-> @@ -36,5 +36,9 @@ def test_riscv_virt(self):
->          self.set_machine('virt')
->          self.boot_opensbi()
->  
-> +    def test_riscv_server_ref(self):
-> +        self.set_machine('riscv-server-ref')
-> +        self.boot_opensbi()
-> +
->  if __name__ == '__main__':
->      QemuSystemTest.main()
-> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
-> new file mode 100755
-> index 0000000000..ad29094dbe
+> diff --git a/docs/system/riscv/riscv-server-ref.rst b/docs/system/riscv/riscv-server-ref.rst
+> new file mode 100644
+> index 0000000000..5b23122f19
 > --- /dev/null
-> +++ b/tests/functional/riscv64/test_server_ref.py
-> @@ -0,0 +1,90 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +"""
-> +riscv-server-ref board test
-> +"""
+> +++ b/docs/system/riscv/riscv-server-ref.rst
+> @@ -0,0 +1,64 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
 > +
-> +import os
-> +import tempfile
-> +import subprocess
+> +RISC-V Server Platform Reference board (``riscv-server-ref``)
+> +=============================================================
 > +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test import skipIfMissingCommands
+> +The RISC-V Server Platform specification `spec`_ defines a standardized
+> +set of hardware and software capabilities that portable system software,
+> +such as OS and hypervisors, can rely on being present in a RISC-V server
+> +platform.  This machine aims to emulate this specification, providing
+> +an environment for firmware/OS development and testing.
 > +
-> +class RiscvServerRefTest(QemuSystemTest):
-> +    """
-> +    Test the riscv-server-ref board
-> +    """
+> +`spec`_ is version 1.0 at the introduction of this board.  For each new
+> +supported spec version a new versioned board will be added, keeping
+> +"riscv-server-ref" as an alias for the newest version supported.  E.g.
+> +for spec version 2.0:
 > +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-> +         'master/riscv/images/virt64/buildroot/Image'),
-> +        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
+> +* riscv-server-ref-1.0 - board that complies with spec version 1.0
+> +* riscv-server-ref-2.0 - board that complies with spec version 2.0
+> +* riscv-server-ref - alias for riscv-server-ref-2.0
 > +
-> +    ASSET_ROOTFS = Asset(
-> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-> +         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
-> +        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
+> +The main features included in the riscv-server-ref board are:
 > +
-> +    def do_test_boot_linux_test(self, tpmstate_dir=None):
-> +        self.set_machine('riscv-server-ref')
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_ROOTFS.fetch()
+> +* IOMMU platform device (riscv-iommu-sys)
+> +* AIA
+> +* No AHCI (can be added via command line)
+> +* No NIC (can be added via command line)
+> +* No virtio mmio bus
+> +* No fw_cfg device
+> +* No ACPI table
+> +* Minimal device tree nodes
 > +
-> +        self.vm.add_args('-kernel', kernel_path)
-> +        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
-> +        self.vm.add_args('-drive',
-> +            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
-> +        self.vm.add_args('-device', 'ich9-ahci,id=ahci0')
-> +        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci0.0')
+> +There are multiple ways of using this reference board.  The spec compliant way
+> +is using an EDK2 image and a TPM device.  The board was tested with the TPM
+> +device ``tpm-tis`` that uses the external ``swtpm`` emulator.  More info on how
+> +to use this device can be found in `tpm`_.
+> +
+> +To use this board coupled with the tpm-tis device, first start the ``swtpm``
+> +process in a shell (the ``log`` parameter is optional):
+> +
+> +.. code-block:: bash
+> +
+> +    $ mkdir /tmp/mytpm1
+> +    $ swtpm socket --tpmstate dir=/tmp/mytpm1 \
+> +            --ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock \
+> +            --tpm2 \
+> +            --log level=20
+> +
+> +And then start QEMU with:
+> +
+> +.. code-block:: bash
+> +
+> + qemu-system-riscv64 -M riscv-server-ref \
+> +     -bios fw_dynamic.bin \
+> +     -kernel EDK2.fd \
+> +     -drive file=nvme_disk.ext2,format=raw,id=hd0,if=none \
+> +     -device nvme,drive=hd0,serial=ddaaddaa \
+> +     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock \
+> +     -tpmdev emulator,id=tpm0,chardev=chrtpm \
+> +     -device tpm-tis-device,tpmdev=tpm0 \
+> +     -nographic
 
-Any reason not to use nvme here like the documented command line does? We
-could drop AHCI in that case.
+Should we add the e1000e to this example command line?
 
 Thanks,
 drew
