@@ -4,97 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA083C9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 14:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E6BDC9833F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 14:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBBui-0004h7-TO; Mon, 28 Sep 2026 10:01:04 -0400
+	id 1xBBwE-0005EK-V2; Mon, 28 Sep 2026 10:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBBuY-0004cl-3R
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:00:56 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBBvT-000516-NT
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:02:05 -0400
+Received: from mail-yx2-x0d.google.com ([2607:f8b0:4864:41::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBBuU-00038p-B0
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:00:53 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ffa15f67fso10830915e9.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 07:00:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBBvR-0003EC-WD
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 10:01:51 -0400
+Received: by mail-yx2-x0d.google.com with SMTP id
+ 956f58d0204a3-6740dd8b4b0so2578947d50.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 07:01:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790604105; cv=none;
+ d=google.com; s=arc-20260327;
+ b=UgCSonJdoaJIKkGNph5ZZdLfQRsXZ96U3+ertM7R+YjMpGep2zFpz8lPDEXdghkJlh
+ 1azaTWw0QnekYORi8InAdMofqTWPOSBzBbY7qPmoNAreVrt5JSZ65Ctc6ahruOcM0KLX
+ k35cSW54BaHE65e949Ilh/oXr24kkDR/znq4eu49/puj8IuvxrxGr6mFxnFRfWGGb3gC
+ oZxRUJHi+/lQ4tNoZEgfRR3uX7XFrpIrC+gT5QU92MHDlU0CJf9gWJ98ZkpUzLqnU1ro
+ jg1PU+uCs5qp2b4yktArI4i+34xLyxMS5Y9u1ho3HAmNfC7k+1pTa8mopMwk+ziwFqHp
+ s11A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gVo78a/wlP80EbN8BDeCX3xsqSYxql3c+VM4RzW0dd4=;
+ fh=QIHDBHaxQTyW2nnR5XQLVB6kn1zRona5Z7li/OUaVtA=;
+ b=FOtpI1WRM4pQ+ZBcTgfcY22iDW/r6D8uqnnfyitXrie7LJgBTvQ66EGMEHHHU455X7
+ oZwCD/y7m/zwgqkjWTvtb+ipjlq0LeeU54jFQdTwLuannDlLbTqJ2uMsYRXfPcYAoC6t
+ 0xn2segCRzOhaNJuQFecklGJ8QhJuRguK3XAnPs9LF/Az4CmoBjMPws6WrH7fJ8AMf6l
+ rw1dhw/Kw1brqxfPFkImpYeL1ftfwwJZ4/B7S0IqvgTMnAm4mA4Mr9aP2A2y+gLuT1lz
+ J16KgTCrMEiedw3wDj/rBoUi4MlIFwXereWQUaLTh8m5ELRPNY781p+aGnTnTIzzTTsJ
+ Pj0Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790604048; x=1791208848; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=LBbN8Oo6oa6n+1aLPrPR5Awrkq9UXBigcfmWzrk2yEA=;
- b=LUEonE3FUbE7rB24bgub9x38XJYIrAwZx/8vBan1NwVsdMFyiQOq8w59IP7uFzouEr
- BGp8VGTggWlGOPJCROPPu7Kj6Hu6Qq+lgO+UQWs0Xt+0a8GdaVADEck8QbCNsoylqgfc
- Uuzsbw8LFfxg6DlwgPcVTvWVjdGaN96h0XRlvwg+hzMBmDwNgGaAd7UtsQZtyWH+c8gw
- A3gK5xY+NvKwAWUIvgHMpdBWCpDRBXoF0IZSgywVSQn1fsIOo4biciC9yXCigr7Z/mKa
- 3M7xY8VqaNDkiC/Bs9bYtLTNGAwpt8x3HSJ0SnD3pGKGid9u7kMynghj1SYRmUgea2CM
- dSZg==
+ d=linaro.org; s=google; t=1790604105; x=1791208905; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=gVo78a/wlP80EbN8BDeCX3xsqSYxql3c+VM4RzW0dd4=;
+ b=qxvHfP6n4NRaLUphGYB0tfvkrPEGyBcZb37ohSDQ2prajO5a/V5kEug0L8q+jUABAa
+ 7tdJDJGi4vwPHYmKVGNs3C0qVuuQEjrJLZFzRTkKJb8gH/9sMR9RQOWBcvhYJtdyL1KG
+ Y/rQzPZXR6jBxIUrtHL3oA1muK9jXyABGB//rEW5lEu5e10bfO2DYORGMxeD+phaWTAl
+ onlTnEaz8jhsJhZR1AaweCUM+QjnTDGtN0qHhzgkmG8eBeLhPtsS1zkI3oTZEyfIUtvu
+ U+ylC/QXjawJXfZ/xFVPRy+tgyfQ0XUvfkdGcJSmxc4oWQRuZRwgO3pAhHrl5nsNnYaa
+ Comw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790604048; x=1791208848;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LBbN8Oo6oa6n+1aLPrPR5Awrkq9UXBigcfmWzrk2yEA=;
- b=qfWrcf02cSE6YnOBNv9wypPSgm/s4Xl6YcoFi6TGZO5hPhKEP2H/+0ymhdNF8dm2nn
- 0F5goSeXuRBX1hif+IgKfHJBBYYnwkwAZqm2R4sW+SL/Y77RKuwNkKvFcVS69bFDMTvq
- fYW++YWNok96kiVMm8V3YiIdORTUjxxcYTXdLDcO/Dyjrp8yE4hBCrbgAeq71dJiN2S7
- t4DZyFD4Pl87ukbmvp+ixYOwfm7QaHUK2OTL/iDDUDm3gCJiXTFBfcgTCvpNdMV2LKsC
- H5VV8ElUG7v98aqKAKK2L5nzgPlQW8EsAa49gcwiKLiFaJSewfglB1TSaiV/AiC1a7pB
- JYCg==
-X-Gm-Message-State: AFuF++koLu1ePtIaXm6KkCJSyJD4o0TzACKcsKTzEf7fixsrGM00aR8O
- ZZDf8sqzk9WY5ElmLx8dKqgXOxsXRLTZKCLKQ6/0tBjrDzG+rKnSjfgrLFxMOxeS5Uw=
-X-Gm-Gg: AYBFou2CjL4tZbzn+fmV7aOmlCeKj6G7iCl3q3bXI628O1NgiErcaJQK74rrbmmrjG6
- UBfCuzHv82qyYS2dMsz9A3VKa+llrXVQRHXqjeMLcdm4s9/R5h2gJOA9Z3r70cWsDAD0NtG2i24
- N72sN8338zjQ7biBss0A8HjNBndsKLHzQS89MgHY7Hfoja34nCO9yf2fncyAZTHUGYZcAMpgA/b
- TkxVMQVg5NgbUkaUy+rg1gJ5ldiZyT7rSB3WI3nv21fjZb5/4mUd9Y8lDQNQj1ECviM9uNq077H
- 4A9eaGrLnFbEIvbq4GbL/VNDFRoxweSWlogrfh3ZvMIyWDVUKwbuYdYk0puyMouUESVAE/CNXci
- eDslBeAFO1WL3AfOMmdiHGgjR6Wns33EkLEniWduMbwGRFKUryQdKSHGx9ulb10+JTl2hvv8DUj
- fqqS6SU2f9MvbRlIuSZptELSAjon8UzJqkd+60BLKw9F8oLGrUBV5/e5Si8L8fBEwLZ6KjxQ==
-X-Received: by 2002:a05:600c:1c25:b0:49f:ce78:3561 with SMTP id
- 5b1f17b1804b1-49fe66f19demr255506385e9.18.1790604048219; 
- Mon, 28 Sep 2026 07:00:48 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a007fd182csm44625565e9.2.2026.09.28.07.00.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 07:00:46 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF1125F8C1;
- Mon, 28 Sep 2026 15:00:45 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- Soumyajyotii Ssarkar <sarkarsoumyajyoti23@gmail.com>,  Michael Tokarev
- <mjt@tls.msk.ru>,  Thomas Lambertz <patch@thomaslambertz.de>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alex Golovko
- <alex@browserling.com>, ShengYi Hung <aokblast@FreeBSD.org>
-Subject: Re: [RFC PATCH 5/5] input/hid: apply multiplier scaling with
- residual accumulation
-In-Reply-To: <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
- (Soumyajyotii Ssarkar's message of "Tue, 31 Mar 2026 22:38:23 +0530")
-References: <20260331170823.72511-1-soumyajyotisarkar23@gmail.com>
- <20260331170823.72511-6-soumyajyotisarkar23@gmail.com>
-User-Agent: mu4e 1.14.4-pre4; emacs 30.1
-Date: Mon, 28 Sep 2026 15:00:45 +0100
-Message-ID: <87se2ta31u.fsf@draig.linaro.org>
+ d=1e100.net; s=20260707; t=1790604105; x=1791208905;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gVo78a/wlP80EbN8BDeCX3xsqSYxql3c+VM4RzW0dd4=;
+ b=rAduFDb1eYJ2SwzWq3aEclztI4MKbdA31befMizdvP3gBXNhDi6OHV7H+RSCnOPzKC
+ SC2yO5mXDX1yhBcmSMkzKlhOFtujZzcwjGW+7aVoc5NFDmYDc6AY4ez2/JshAZdsqrav
+ /geLOLIEaNfuujGcqoymkeO3rDqZ5heDRAMkaCP5zz4Jb5ZTXTeVPfnKiIoMZtRHJ79X
+ snshyuyfipnUN5ei+bLWcgaxnR2sZRWcxEd9Gw1unImgHV+UZb+vxlSv26qD+6pfAqUf
+ WOTFlfBik7lms+0Q+xhSyKWLTJvqj1NPE4EE5mH/YCKA2G+Qbdd18NfRc0VIYLXfxPcA
+ wfxQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByQeFDWMSouTKcBCYtuhFJzc68C9xg2k70Y/G4hV7rE4aBgnEhdYwsTTel9OytphJv+bi3nbCDaJ2YN@nongnu.org
+X-Gm-Message-State: AFq9FYIa7RZh+A7BBhfR9uKjf94Kam96MvfM84XcwwwpmHyDsbDKe2n4
+ FmjypPSSBkowlwbb0aLBv7IYm4PuxD73CkCMM/zN+Qe1DAybQn4r+ibJ5r+jeximV7B2M+QD2me
+ +iVggX2izP4o82W0nwQRtWmwryybhmqL/sWZYUInegQ==
+X-Gm-Gg: AYBFou2ZgFT01tyBpKXWP+tSiiunuJ9QHTpE6/1OGQOuFjDgIDK9u8LmCYMaHk7Acwl
+ +hi/Zb1ifeSXtnYZg+GGvQlGSAejd4gaMJMILCm0Jjz9yPF4ar/ymw7itwgCHZL+CPuzqaomMo/
+ Jsmm4MP28uzScCr0jnWsVUJAidawXHs5S8Ov1hpESp/iok0kiY5ySSlNj9bZ0xCWOzEaXgIBskg
+ ajS2SjNH/woNFNpBXRxTdCMWwqXN0EUrlf6eOsfOqONg7F96a/1aQXhZ7wAS8FbwNpvdYmI5qG5
+ g9nJlJ520BnP3Nd3XtaeVhRrZ1MxQfpaUNc6vUeqJZX2I9UIhIUrv1IUtY2ee6irx8pYd84fDVx
+ hLdBM9cTzxC2dqD5mCZpLFuycoShHs8TKvV/NR9yw
+X-Received: by 2002:a05:690e:169e:b0:667:b503:4d2e with SMTP id
+ 956f58d0204a3-672ed1d4e4bmr6799180d50.37.1790604105100; Mon, 28 Sep 2026
+ 07:01:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+References: <20260924172928.2110956-1-coltonlewis@google.com>
+ <20260924173051.2117637-1-coltonlewis@google.com>
+In-Reply-To: <20260924173051.2117637-1-coltonlewis@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 28 Sep 2026 15:01:32 +0100
+X-Gm-Features: AclHuK-1ibztR8QVF_T1w6zQp7WvVuCy3F9mqxT4-ubotzdPTVl79C5Fj0zkGKo
+Message-ID: <CAFEAcA9Rwrffx8bYiOxrtQGdg31QAz1oBm8okzpfqHZ6yK0Y7A@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Enable KVM PMU partitioning and counter limit
+To: Colton Lewis <coltonlewis@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvmarm@lists.linux.dev, 
+ Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>,
+ Oliver Upton <oupton@kernel.org>, 
+ Will Deacon <will@kernel.org>, James Clark <james.clark@linaro.org>, 
+ Mingwei Zhang <mizhang@google.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,156 +120,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com> writes:
+On Thu, 24 Sept 2026 at 18:30, Colton Lewis <coltonlewis@google.com> wrote:
+>
+> Add CPU properties to configure KVM ARM64 PMU counter partitioning:
+> - 'pmu-partition' (bool): enables KVM_ARM_VCPU_PMU_V3_ENABLE_PARTITION
+> - 'pmu-num-counters' (uint32): sets KVM_ARM_VCPU_PMU_V3_SET_NR_COUNTERS
+>
+> When 'pmu-partition=on' and 'pmu-num-counters=N' are passed via -cpu,
+> QEMU enables hardware PMU partitioning and reserves N general-purpose
+> event counters for the guest prior to calling KVM_ARM_VCPU_PMU_V3_INIT.
+>
+> Note that this patch is an example to demonstrate the KVM ARM64 PMU
+> Partitioning uAPI [1]. That is why it aborts immediately if setting the
+> device attributes does not succeed.
+>
+> [1] https://lore.kernel.org/kvmarm/20260924172928.2110956-1-coltonlewis@google.com/
+>
+> Signed-off-by: Colton Lewis <coltonlewis@google.com>
 
-> Implement multiplier-based scaling with residual accumulation for
-> fine-grained mouse wheel and pan sensitivity control in report mode.
->
-> Applies divisor based scaling (1, 4, 8, 16) based on negotiated
-> multiplier values.
-> Then uses residual based approach to prevent precision loss:
->
->   residual +=3D delta
->   output =3D residual / divisor
->   residual -=3D output * divisor
->
-> Residual state preserved across VM migrations via VMState.
->
-> Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+FYI for next time around, QEMU patches that depend on not-yet-accepted
+kernel ABI changes should be tagged RFC, please.
+
 > ---
->  hw/input/hid.c         | 60 ++++++++++++++++++++++++++++++++++++++++++
->  include/hw/input/hid.h |  2 ++
->  2 files changed, 62 insertions(+)
+>  target/arm/cpu.c | 20 ++++++++++++++++++++
+>  target/arm/cpu.h |  4 ++++
+>  target/arm/kvm.c | 32 ++++++++++++++++++++++++++++++++
+
+New CPU properties should be documented in docs/system/arm/cpu-features.rst .
+
+>  3 files changed, 56 insertions(+)
 >
-> diff --git a/hw/input/hid.c b/hw/input/hid.c
-> index d0b7af7c13..9b800faeb0 100644
-> --- a/hw/input/hid.c
-> +++ b/hw/input/hid.c
-> @@ -365,6 +365,7 @@ void hid_pointer_activate(HIDState *hs)
->  int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index f58a1db843..7538c6a24c 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1359,6 +1359,20 @@ static bool arm_get_pmu(Object *obj, Error **errp)
+>      return cpu->has_pmu;
+>  }
+>
+> +static bool arm_get_pmu_partition(Object *obj, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +
+> +    return cpu->kvm_pmu_partition;
+> +}
+> +
+> +static void arm_set_pmu_partition(Object *obj, bool value, Error **errp)
+> +{
+> +    ARMCPU *cpu = ARM_CPU(obj);
+> +
+> +    cpu->kvm_pmu_partition = value;
+> +}
+
+If your getter/setter are only updating the struct field,
+you can use a DEFINE_PROP_BOOL to avoid having to have them
+(compare arm_cpu_has_el2_property etc.)
+
+> +
+>  static void arm_set_pmu(Object *obj, bool value, Error **errp)
 >  {
->      int dx, dy, dz, pan, l;
-> +    int wheel_divisor, pan_divisor;
->      int index;
->      HIDPointerEvent *e;
->
-> @@ -392,6 +393,54 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int=
- len)
->      e->pan -=3D pan;
->
->
-> +    if (hs->kind =3D=3D HID_MOUSE && hs->protocol !=3D 0) {
-> +        switch (hs->ptr.wheel_multiplier & 0x03) {
-> +        case 0:
-> +            wheel_divisor =3D 1;
-> +            break;
-> +        case 1:
-> +            wheel_divisor =3D 4;
-> +            break;
-> +        case 2:
-> +            wheel_divisor =3D 8;
-> +            break;
-> +        default:
-> +            wheel_divisor =3D 16;
-> +            break;
-> +        }
-> +
-> +        switch (hs->ptr.pan_multiplier & 0x03) {
-> +        case 0:
-> +            pan_divisor =3D 1;
-> +            break;
-> +        case 1:
-> +            pan_divisor =3D 4;
-> +            break;
-> +        case 2:
-> +            pan_divisor =3D 8;
-> +            break;
-> +        default:
-> +            pan_divisor =3D 16;
-> +            break;
-> +        }
-> +
-> +        if (wheel_divisor > 1) {
-> +            hs->ptr.wheel_residual +=3D dz;
-> +            dz =3D hs->ptr.wheel_residual / wheel_divisor;
-> +            hs->ptr.wheel_residual -=3D dz * wheel_divisor;
-> +        } else {
-> +            hs->ptr.wheel_residual =3D 0;
-> +        }
-> +
-> +        if (pan_divisor > 1) {
-> +            hs->ptr.pan_residual +=3D pan;
-> +            pan =3D hs->ptr.pan_residual / pan_divisor;
-> +            hs->ptr.pan_residual -=3D pan * pan_divisor;
-> +        } else {
-> +            hs->ptr.pan_residual =3D 0;
-> +        }
-> +    }
-> +
->      if (hs->n &&
->          !e->dz &&
->          !e->pan &&
-> @@ -405,6 +454,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int =
-len)
->      dz =3D 0 - dz;
->      pan =3D 0 - pan;
->      l =3D 0;
-> +
->      switch (hs->kind) {
->      case HID_MOUSE:
->          if (hs->protocol =3D=3D 0) {
-> @@ -528,6 +578,11 @@ void hid_reset(HIDState *hs)
->      case HID_MOUSE:
->      case HID_TABLET:
->          memset(hs->ptr.queue, 0, sizeof(hs->ptr.queue));
-> +        hs->ptr.mouse_grabbed =3D 0;
-> +        hs->ptr.wheel_multiplier =3D 0;
-> +        hs->ptr.pan_multiplier =3D 0;
-> +        hs->ptr.wheel_residual =3D 0;
-> +        hs->ptr.pan_residual =3D 0;
->          break;
->      }
->      hs->head =3D 0;
-> @@ -619,6 +674,7 @@ static const VMStateDescription vmstate_hid_ptr_queue=
- =3D {
->          VMSTATE_INT32(xdx, HIDPointerEvent),
->          VMSTATE_INT32(ydy, HIDPointerEvent),
->          VMSTATE_INT32(dz, HIDPointerEvent),
-> +        VMSTATE_INT32(pan, HIDPointerEvent),
->          VMSTATE_INT32(buttons_state, HIDPointerEvent),
->          VMSTATE_END_OF_LIST()
->      }
-> @@ -636,6 +692,10 @@ const VMStateDescription vmstate_hid_ptr_device =3D {
->          VMSTATE_UINT32(n, HIDState),
->          VMSTATE_INT32(protocol, HIDState),
->          VMSTATE_UINT8(idle, HIDState),
-> +        VMSTATE_UINT8(ptr.wheel_multiplier, HIDState),
-> +        VMSTATE_UINT8(ptr.pan_multiplier, HIDState),
-> +        VMSTATE_INT32(ptr.wheel_residual, HIDState),
-> +        VMSTATE_INT32(ptr.pan_residual, HIDState),
->          VMSTATE_END_OF_LIST(),
+>      ARMCPU *cpu = ARM_CPU(obj);
+> @@ -1604,6 +1618,12 @@ static void arm_cpu_post_init(Object *obj)
+>      if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
+>          cpu->has_pmu = true;
+>          object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+> +        object_property_add_bool(obj, "pmu-partition",
+> +                                 arm_get_pmu_partition,
+> +                                 arm_set_pmu_partition);
+> +        object_property_add_uint32_ptr(obj, "pmu-num-counters",
+> +                                       &cpu->kvm_pmu_nr_counters,
+> +                                       OBJ_PROP_FLAG_READWRITE);
 
-If you update migration state you also need to ensure that older systems
-can be migrated to newer ones. There are some docs in docs/devel that
-give some guidance on handling these cases.=20
+What should we do with these properties if we're not using KVM
+(i.e. for TCG, hvf, etc) ?
 
->      }
->  };
-> diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
-> index 1a1941d371..db902fa023 100644
-> --- a/include/hw/input/hid.h
-> +++ b/include/hw/input/hid.h
-> @@ -25,6 +25,8 @@ typedef struct HIDMouseState {
->      int mouse_grabbed;
->      uint8_t wheel_multiplier;
->      uint8_t pan_multiplier;
-> +    int32_t wheel_residual;
-> +    int32_t pan_residual;
->  } HIDMouseState;
->
->  typedef struct HIDKeyboardState {
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
