@@ -4,55 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEA0C9832F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 00:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15036C9832F
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 01:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xAywu-0001Ko-I1; Sun, 27 Sep 2026 20:10:28 -0400
+	id 1xB0Dy-0003VI-Kz; Sun, 27 Sep 2026 21:32:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xAy93-00050W-Vk; Sun, 27 Sep 2026 19:18:57 -0400
-Received: from vmexit.de ([2a0a:4cc0:c1:d4ba::2] helo=gizmo.vmexit.de)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1xB0Dw-0003Uc-0J; Sun, 27 Sep 2026 21:32:08 -0400
+Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xAy92-0001c8-0s; Sun, 27 Sep 2026 19:18:57 -0400
-From: Ralf Ramsauer <ralf@vmexit.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
- t=1790551129;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=LSVcCaB/lC+MLtJl6kRphvXsrliN21Zj5Sg5dUFUWHk=;
- b=kNyhf5jfvAC9Qel0jt8age10w9epG1s8XT44qKqS+ffSOUB59X+jlq7MKB5rwG5+XIlTCl
- e3VD4/4ohXDvWXtAnMQe/Q4yr/BtMLM/vO/R04CZw/7MVEEHlpGjWkOPTwVskjo/+1SMaf
- 2fql0WEV31uhOiCToBwnKk2ctkXxyMo=
-To: qemu-devel@nongnu.org
-Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Bin Meng <bmeng.cn@gmail.com>
-Subject: [PATCH] hw/riscv/virt: only describe PLIC contexts that exist
-Date: Mon, 28 Sep 2026 01:18:37 +0200
-Message-ID: <20260927231838.236616-1-ralf@vmexit.de>
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1xB0Dt-00038u-65; Sun, 27 Sep 2026 21:32:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1790559096; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=U0EqrEyYIKV/PVkNVjCYC9ipTeKn0LMg4/zi3+y+2iI=;
+ b=fvb8VbxeVxGhKnjWeKqphIQuBy3PI0hx+iXUrK5uY9NIHrPGnR4X3cj9ZXclx4srLegQNR3vHGdO3Np9PFpaKKWJjHNT70b+V/gfpdTQmbwqnNnni9qfKxkAtqi8991/uvgTpfFuqqdvLcGHnOcGeVtcvFmj7fsW38/lxXnodg0=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=12; SR=0;
+ TI=SMTPD_---0XBgzOIl_1790559094; 
+Received: from 30.166.64.215(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0XBgzOIl_1790559094 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 28 Sep 2026 09:31:35 +0800
+Message-ID: <a95fe98a-d15e-473d-bcf4-366920788a93@linux.alibaba.com>
+Date: Mon, 28 Sep 2026 09:31:34 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 13/14] target/riscv: Clear virtualization mode on reset
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Zephyr Li <fritchleybohrer@gmail.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260910-riscv-pmu-correctness-v2-0-5da5159a0c64@linux.alibaba.com>
+ <20260910-riscv-pmu-correctness-v2-13-5da5159a0c64@linux.alibaba.com>
+ <ba8f5a00-1da4-4f09-a45f-6666ae0d73fe@oss.qualcomm.com>
+From: TianCheng TANG <lyndra@linux.alibaba.com>
+In-Reply-To: <ba8f5a00-1da4-4f09-a45f-6666ae0d73fe@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a0a:4cc0:c1:d4ba::2; envelope-from=ralf@vmexit.de;
- helo=gizmo.vmexit.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=lyndra@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 27 Sep 2026 20:10:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,73 +77,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 
-The PLIC device is created from the topology string built by
-riscv_plic_hart_config_string(), which gives a hart a supervisor context
-only if that hart actually has supervisor mode.  The device tree, in
-contrast, lists a machine and a supervisor context for every hart,
-unconditionally.
+在 2026/9/26 00:45, Daniel Henrique Barboza 写道:
+>
+>
+> On 9/10/2026 11:39 AM, TANG Tiancheng wrote:
+>> Reset enters M-mode without clearing virt_enabled, leaving an invalid
+>> M-mode, V=1 state after a reset from virtual mode. Clear virt_enabled
+>> alongside the privilege reset.
+>>
+>
+> This one is quite old.
+>
+> Fixes: dc5bd18fa5 ("RISC-V CPU Core Definition")
+>
+>
+Hi Daniel,
 
-The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
-PLIC config helper function") taught the device about harts without
-S-mode and left the device tree behind.  Boot with
+Thanks. I traced the virtualization state back to:
 
-    -cpu rv64,s=false,u=false -smp 4
+Fixes: ef6bb7b62682 ("target/riscv: Add the virtulisation mode")
 
-and the PLIC implements four contexts while the device tree advertises
-eight.  Contexts are numbered by their position in 'interrupts-extended',
-so a guest that takes its context number from the property gets it wrong
-for every hart but the first: hart 1 drives the context of hart 2, and
-the upper harts address contexts the PLIC never created.  This is what an
-M-mode kernel on the virt machine runs into; sifive_u already omits the
-supervisor entry for its management hart.
+That commit introduced env->virt and its helpers without resetting
+the new state. dc5bd18fa5 predates the virtualization state, so I
+think ef6bb7b62682 is a more precise reference.
 
-Emit the supervisor entry only for the harts that have supervisor mode.
+Thanks,
+Tiancheng
 
-Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
-Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
----
- hw/riscv/virt.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d4b501802f..d0ce9dc862 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -165,14 +165,23 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-             plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
-         }
-    } else {
--        cells_length = s->soc[socket].num_harts * 4;
--        plic_cells = g_new0(uint32_t, cells_length);
-+        plic_cells = g_new0(uint32_t, s->soc[socket].num_harts * 4);
-+        cells_length = 0;
- 
-         for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
--            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
--            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
--            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
--            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
-+            CPURISCVState *env = &s->soc[socket].harts[cpu].env;
-+
-+            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
-+            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
-+
-+            /*
-+             * The PLIC implements a supervisor context only for harts that
-+             * have supervisor mode, see riscv_plic_hart_config_string().
-+             */
-+            if (riscv_has_ext(env, RVS)) {
-+                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
-+                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
-+            }
-         }
-     }
- 
-
-base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
--- 
-2.54.0
-
+>
+>> Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+>> ---
+>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>
+>
+>
+>>   target/riscv/cpu.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 
+>> 5fff9d745e9b36d9cbd30f166ec91b5165e5f497..f60d7cca1e2f0008b09b1055c5cdeed3ec4ad1d3 
+>> 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -980,6 +980,7 @@ static void riscv_cpu_reset_hold(Object *obj, 
+>> ResetType type)
+>>   #ifndef CONFIG_USER_ONLY
+>>       env->misa_mxl = mcc->def->misa_mxl_max;
+>>       env->priv = PRV_M;
+>> +    env->virt_enabled = false;
+>>       env->mstatus &= ~(MSTATUS_MIE | MSTATUS_MPRV);
+>>       if (env->misa_mxl > MXL_RV32) {
+>>           /*
+>>
 
