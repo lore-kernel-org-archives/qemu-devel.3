@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E55FC9833F
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA97CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 13:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBB3P-0000Vp-MA; Mon, 28 Sep 2026 09:06:02 -0400
+	id 1xBB3L-0000AQ-FQ; Mon, 28 Sep 2026 09:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB1J-0005iu-VA
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:04:00 -0400
+ id 1xBB0u-0005P8-SO
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBB1E-0004Qz-Um
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:46 -0400
+ id 1xBB0r-0004O0-Sm
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 09:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790600624;
+ s=mimecast20190719; t=1790600601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fzZ5zkzQGm0NEmRL/QyQRtrROMj9NKqg3PW0HwzbjyQ=;
- b=N7chB1m2vG7e4/28Wu6qOTc3TJmDS0uCfA1Kk444f7JJTaOqohj2S3uKS5Y0RcqDGIY2v7
- 0nBvl6y/JxgqNJ18ZxYwjjfjai2Igrq2RCt3aJyzGyRs+b4OHIuc2R1tZRrPi6be2oHDEz
- /uW1BzekoLEvwSlbEGFJXmvpAnm8svU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
+ b=OX2GQz/+2lJjxjC2MMLEV78cMaNYwwDVUXBmTX9RewZNiaAilD0pyzrzerKJz+dXJbvWj/
+ vuX0y/ovVXH1b+BGOVRTS43z6xPJyejk6Ssi9nrz3BCq2liaoFVUnzzh2ClhRYULb7UIQN
+ QnoSoau4rRS7FXFQgP+1TobgfPCPOIE=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-WJ3S6eiVNGqo9Kp_CgSfwA-1; Mon, 28 Sep 2026 09:03:42 -0400
-X-MC-Unique: WJ3S6eiVNGqo9Kp_CgSfwA-1
-X-Mimecast-MFC-AGG-ID: WJ3S6eiVNGqo9Kp_CgSfwA_1790600622
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49e6422198fso19958805e9.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:42 -0700 (PDT)
+ us-mta-577-bzDoey8cP4evzFwz17ArxA-1; Mon, 28 Sep 2026 09:03:18 -0400
+X-MC-Unique: bzDoey8cP4evzFwz17ArxA-1
+X-Mimecast-MFC-AGG-ID: bzDoey8cP4evzFwz17ArxA_1790600597
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c25edb54d22so336331766b.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 06:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790600621; x=1791205421; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790600597; x=1791205397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fzZ5zkzQGm0NEmRL/QyQRtrROMj9NKqg3PW0HwzbjyQ=;
- b=pifmf1sQizXiFn5GDd4LlTUXr5sDw+d8W/iBcLl0elOr3fyJFWerzjtN3b+0dC6n8/
- hS4ztqXmC7iTKRr4x+M6bcQ0NhBI0OkJVJFV6qDML8yepBaoNduPGm3Oh0I9mZZv6HCB
- 8sjLgthX9z0wIUL8gtTKx2O21rrKupNQs63ohZjzYzXmSlDsAyVO5UapLBYARI76wpwk
- JHA7aO+2LPRJAJFtRDu0DhwDPfsN6RlhM0ioIqZGqkoEHPI9awQoEjGmW3B5BMlG3iQC
- mhgC1dBxoKQPw5lrnuqKs8cKzCBzGUg6IlnrWr22SVEogR2vS3re1J0T/suENpx6pEeJ
- lehQ==
+ bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
+ b=CPGq1hyj2OGQDLjSVo3a0YKgZSRzK53tOQtVnnvAki2xj7eKaZpiNW7e964FbLNd4T
+ J9aIdQZJ/wtb9izdrlIcY+G836ViZPQYsNF92TLPApcyIbgT6K5M7NBYa0JU0Is9QXs8
+ Kf3XDEW6fVhVVWpbm11dXPTj+YdR+OUY69YxbMDcCZzdhvzgBo+fGGBrqXQRlZrBb35k
+ gJvuWQtchY/e+DCakip18jM2T1KPShpLqtXr/Mdomf+dNoJBj1DDUeL3UZc1S/qz6ohj
+ 12YL1lrvHlTy0mcSvTB6Q4iFxsWXrjVE3cLpp995qlFGMzjw0+FjdnnKYskUr9p8WyJU
+ WmGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790600621; x=1791205421;
+ d=1e100.net; s=20260707; t=1790600597; x=1791205397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fzZ5zkzQGm0NEmRL/QyQRtrROMj9NKqg3PW0HwzbjyQ=;
- b=Pz8XhUW6zsytmlChQjLdDZv0N5wlNF6bcFEumz8PA4yNBjocn0arc0Clujap0YOmCO
- e9PBC2XS7i3JBcZdrdrPg+FcNm+7fILlQ6Z7JemdRcZptJCvz79rlhL1Cyn41DWxxrEz
- VCa+yRlz6E9UhfRO0MTaaPxvtGAc4AEIp0ywFz5ZzwRzAK3wAfBSZo2yxqs0udBdhFvi
- oHaiWFy+zZHwz5nqsU8dAPhoBZ3yZNbCUhcsGORdmBmBlmbjuaFPNHwJmdvzwtACz9KV
- Y8Nl8hFK07OtL+StIpPTJCEwDVDW8L7SC/lpUn2G9vSudd8RmpS59CQ6KzUBYctyPm6x
- +oYw==
-X-Gm-Message-State: AFuF++lbEollJcRl3uqz/ugCeNQz2Ib3K98t08HGzRR4ISSXxGKvasrT
- 0FdrBxxzA8OG2Ksl39aarUlx8ncY5kunZKJejDbPRUV7RaspZ3nPAtUIqw/gaCPi+CTs+zdn/xB
- sjdJtBU3TgXgISc8K0Z4EcHNhBqoSMezh7vN1jRc9K6pwIWBqQ6ybeNlcuLojr5uYlozzmJpTQE
- RQ+Dm4eQexZNELIt2rGbKPvNcjJ26GgYvETF8oHFph
-X-Gm-Gg: AYBFou3oLoUilRLd3PyyagYq9t0SR6lLPQH6iDDBvu+/2f7GsDBDGeKqLJs0BWqdgbv
- HvgCuYeu9iCabIu5cxC5SKlluv4FykBxfRslda3Ra9JDWtBpro6DORDTAbhPJluNibMDYQEZk/k
- eQ3K/AJ8VzsLa4LErUu1rhYN4o211fYhipwB4WBPLrMaBryqFxNk/3d/CBXVEGUe1clWo71r7Zg
- VanmMkS6J4Y4sKIotaZc39dNhuV3bYjUmCS35dTlcEwrD3BAOUAY3PnrKf7ErwJDCZuyGRVClwf
- 2wX9u31YhCL/MzRaDBmeabX85vUOx9qJkNg62MPI0ytlSvAQNebOLrnrN6ReDT4hGWI0e9AjTuF
- THhl5EcwIA/MIy7jjvsJ+C/r5lp487/nHHNIPgj4enKEh7eFBmALAGZEcsE3EE0fkOV5wO3+56n
- c0ddk3
-X-Received: by 2002:a05:600c:3b85:b0:49f:ffc7:2099 with SMTP id
- 5b1f17b1804b1-4a00071552fmr93818565e9.26.1790600621379; 
- Mon, 28 Sep 2026 06:03:41 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b85:b0:49f:ffc7:2099 with SMTP id
- 5b1f17b1804b1-4a00071552fmr93817815e9.26.1790600620782; 
- Mon, 28 Sep 2026 06:03:40 -0700 (PDT)
+ bh=mW0ys8hwwnGDqJKKC8lFlPh0MB7wA3LFYUXiLzgZ2E0=;
+ b=aEgVFjJYCQojDcajLQi8LFVy48su4MJDbA6yxV+4pw4T3+QVo0TO0c1KeOsOrCmBmm
+ t9fLNjVLIi0fYSlxXStQIbOpeqNc10E0uQZ1weUCXLT366L2kKclrozgII3FHWWva9ID
+ bmrBm8q15DRQAuFQIv5TW7RS3v1b/ZCMpH8qV2djo/+MJGVFieLgPU1meRj7/GCfnbTB
+ FLYqPuXNHaD6whDvWf9xVYsB5UJIugggY9BE/RWcwllktyGz1/FY5gSZToXzD/40Gjfr
+ dzH7xf2+jDUCpzqKZREkn++NWurOevAZDkhuElKIyf8BFe9QCb/YksnTBksnQeZw49K8
+ 3I3A==
+X-Gm-Message-State: AFuF++lK1eUgpsgVXjQb0jCREQapzEr+BVwTj26aVb3PctTrlQGQCzZk
+ pFVT9+ejkMFG//3/WCacDnzINh8QBxKQ9AVfEnnbkWso7k8iHz11H5XhTJ5MPlCVXr2b23NBipg
+ Gpg22Pox17po9tMTF6aROaM/LS5uM0M4Wc6GBk/AzlPfuc1nlwGQdT0hlfTyN9o2eX7n7gdMVKf
+ MMQAp8yCYXXc29GdpS/s2o72evU45moMujWA//P6RQ
+X-Gm-Gg: AYBFou2kswTmsMKe+g93vTstyEAjG9v5GUgHk3xnr8rzjE2vgHbaXziCxKhPHqtrIln
+ /lUgKfXsKzdvRCmhHgriQAWHDwrZvCOPsJJdOW8w1BfufPUVUR+YYcQlkwgYd8HcZbmU1vKi4Fu
+ 8mdPu+AywVXp0quGD3g8tijY5A2pmiTgwjBs8Al8j1fqooyNnvN8hSBTzytRic5zcWfWZaC3wxC
+ LJLECyXoiju4oXjRHI3bTPrFlEI9HBS4UkstF6rBvQoFdlVEZiJ0AFL6roarj7ZCDoCYvfXusOY
+ EmaykFBFvYmrKJf8QmdzFAJi1+OYCAEQQq9c2/g3tcGAEmPCGiCWdYDykQH+cmOKEQDzA8N8Nhe
+ 1WRYqcAr5bS2ZVDadNHPWs7aPPHtXJcrTNXPiqHRmB+jQdCBA+irncpPBe0+JKABVsrw+qW/hD/
+ GjrEY7
+X-Received: by 2002:a17:907:96a2:b0:c29:f5d8:9c7e with SMTP id
+ a640c23a62f3a-c2ac22cb906mr1124339466b.45.1790600591348; 
+ Mon, 28 Sep 2026 06:03:11 -0700 (PDT)
+X-Received: by 2002:a17:907:96a2:b0:c29:f5d8:9c7e with SMTP id
+ a640c23a62f3a-c2ac22cb906mr1124331866b.45.1790600589805; 
+ Mon, 28 Sep 2026 06:03:09 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a0017656cesm134572915e9.3.2026.09.28.06.03.39
+ a640c23a62f3a-c2dec4cec91sm37033866b.28.2026.09.28.06.03.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 06:03:40 -0700 (PDT)
+ Mon, 28 Sep 2026 06:03:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 23/30] target/i386/tcg: decode EVEX prefix
-Date: Mon, 28 Sep 2026 15:02:21 +0200
-Message-ID: <20260928130228.877003-24-pbonzini@redhat.com>
+Subject: [PULL 12/30] target/i386/tcg: generalize zero- and sign-extension
+Date: Mon, 28 Sep 2026 15:02:10 +0200
+Message-ID: <20260928130228.877003-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260928130228.877003-1-pbonzini@redhat.com>
 References: <20260928130228.877003-1-pbonzini@redhat.com>
@@ -120,228 +120,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-EVEX is really messy and the exact position of the fields is spread all
-over the place.  For now store the three data bytes of the prefix in
-DisasContext, later the EVEX instruction classes for APX will be added
-to extract_evex_params and validate_vex.
+Allow applying sign and zero extension to T1 load and T0 writeback.
+T1 load is useful for some cases where the tables are hacked to
+put the sign extended operand in T0; T0 writeback is used for APX ZU
+instructions.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c      |  8 ++-
- target/i386/tcg/decode-new.c.inc | 89 +++++++++++++++++++++++++++++---
- 2 files changed, 87 insertions(+), 10 deletions(-)
+ target/i386/tcg/decode-new.h     | 15 +++++++++++----
+ target/i386/tcg/decode-new.c.inc | 21 +++++++++++----------
+ target/i386/tcg/emit.c.inc       | 16 ++++++++++------
+ 3 files changed, 32 insertions(+), 20 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 4e012521bd9..8b07e92beef 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -51,6 +51,7 @@
- #define PREFIX_VEX    0x20
- #define PREFIX_REX    0x40
- #define PREFIX_REX2   0x80
-+#define PREFIX_EVEX   0x100
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 25f7d2215ee..1b5a91b4f46 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -148,6 +148,12 @@ typedef enum X86OpUnit {
+     X86_OP_MMX,     /* address in either s->ptrX or s->A0 depending on has_ea */
+ } X86OpUnit;
  
- #ifdef TARGET_X86_64
- # define ctztl  ctz64
-@@ -93,8 +94,8 @@ typedef struct DisasContext {
-     MemOp aflag;
-     MemOp dflag;
++typedef enum X86OpExt {
++    X86_EXT_None,
++    X86_EXT_Signed,
++    X86_EXT_Unsigned,
++} X86OpExt;
++
+ typedef enum X86InsnCheck {
+     /* Illegal or exclusive to 64-bit mode */
+     X86_CHECK_i64 = 1,
+@@ -226,10 +232,6 @@ typedef enum X86InsnSpecial {
+      */
+     X86_SPECIAL_MMX,
  
-+    uint16_t prefix;
-     int8_t override; /* -1 if no override, else R_CS, R_DS, etc */
--    uint8_t prefix;
+-    /* When loaded into s->T0, register operand 1 is zero/sign extended.  */
+-    X86_SPECIAL_SExtT0,
+-    X86_SPECIAL_ZExtT0,
+-
+     /* Memory operand size of MOV from segment register is MO_16 */
+     X86_SPECIAL_Op0_Mw,
+ } X86InsnSpecial;
+@@ -300,6 +302,10 @@ struct X86OpEntry {
+     X86OpSize    s3:8;
  
-     bool has_modrm;
-     uint8_t modrm;
-@@ -114,6 +115,9 @@ typedef struct DisasContext {
-     uint8_t rex_x;
-     uint8_t rex_b;
- #endif
-+    uint8_t evex2;
-+    uint8_t evex3;
-+    uint8_t evex4;
-     bool vex_w; /* used by AVX even on 32-bit processors */
-     bool jmp_opt; /* use direct block chaining for direct jumps */
-     bool cc_op_dirty;
-@@ -210,7 +214,7 @@ typedef struct DisasContext {
- #endif
+     X86InsnSpecial special:8;
++    X86OpExt     ext0:2;
++    X86OpExt     ext1:2;
++    X86OpExt     ext2:2;
++    unsigned     :2;
+     X86CPUIDFeature cpuid:8;
+     unsigned     vex_class:8;
+     X86VEXSpecial vex_special:8;
+@@ -314,6 +320,7 @@ typedef struct X86DecodedOp {
+     int8_t n;
+     MemOp ot;     /* For b/c/d/p/s/q/v/w/y/z */
+     X86OpUnit unit;
++    X86OpExt ext;
+     bool has_ea;
+     int offset;   /* For MMX and SSE */
  
- #ifdef TARGET_X86_64
--#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_REX2 | PREFIX_VEX)) != 0)
-+#define REX_PREFIX(S)  (((S)->prefix & (PREFIX_REX | PREFIX_REX2 | PREFIX_VEX | PREFIX_EVEX)) != 0)
- #define REX_W(S)       ((S)->vex_w)
- #define REX_R(S)       ((S)->rex_r + 0)
- #define REX_X(S)       ((S)->rex_x + 0)
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 5289df7d6eb..3f59a85d474 100644
+index 26f6d6277be..07a627af5cf 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -2049,6 +2049,11 @@ static void decode_REX2_map1(DisasContext *s, CPUX86State *env, X86OpEntry *entr
-     };
-     decode_REX2(s, env, entry, b, opcode_rex2_map1);
- }
-+
-+static void decode_EVEX_map4(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
-+{
-+    *entry = UNKNOWN_OPCODE;
-+}
- #endif
+@@ -233,8 +233,12 @@
+ #define op0_Rd .special = X86_SPECIAL_Op0_Rd,
+ #define op2_Ry .special = X86_SPECIAL_Op2_Ry,
+ #define avx_movx .special = X86_SPECIAL_AVXExtMov,
+-#define sextT0 .special = X86_SPECIAL_SExtT0,
+-#define zextT0 .special = X86_SPECIAL_ZExtT0,
++#define sextwT0 .ext0 = X86_EXT_Signed,
++#define zextwT0 .ext0 = X86_EXT_Unsigned,
++#define sextT0  .ext1 = X86_EXT_Signed,
++#define zextT0  .ext1 = X86_EXT_Unsigned,
++#define sextT1  .ext2 = X86_EXT_Signed,
++#define zextT1  .ext2 = X86_EXT_Unsigned,
+ #define op0_Mw .special = X86_SPECIAL_Op0_Mw,
+ #define btEvGv .special = X86_SPECIAL_BitTest,
  
- #undef mmx
-@@ -2076,8 +2081,7 @@ static int reg_nb_mask(DisasContext *s, int unit)
-     case X86_OP_MMX:
-         return 7;
-     case X86_OP_SSE:
--        return 15;
--        break;
-+        return s->prefix & PREFIX_EVEX ? 31 : 15;
-     default:
-         return 31;
-         break;
-@@ -2469,7 +2473,7 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
-         op->unit = X86_OP_SSE;
-     get_vex_v:
-         if (s->vex_ndd) {
--            assert(s->prefix & PREFIX_VEX);
-+            assert(s->prefix & (PREFIX_VEX | PREFIX_EVEX));
-             op->n = s->vex_v;
-             break;
-         }
-@@ -2595,6 +2599,15 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-     return true;
- }
- 
-+static bool extract_evex_params(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    /*
-+     * Here, the position of RXB and (for AVX512) displacement multiplier
-+     * should be known.
-+     */
-+    return false;
-+}
-+
- static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-                        X86DecodedInsn *decode)
- {
-@@ -2729,13 +2742,16 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
- {
-     X86OpEntry *e = &decode->e;
- 
--    if (s->prefix & PREFIX_VEX) {
-+    if (s->prefix & (PREFIX_VEX | PREFIX_EVEX)) {
-         if (e->op0 == X86_TYPE_H || e->op0 == X86_TYPE_B ||
-             e->op1 == X86_TYPE_H || e->op1 == X86_TYPE_B ||
-             e->op2 == X86_TYPE_H || e->op2 == X86_TYPE_B) {
-             s->vex_ndd = true;
-         }
-     }
-+    if ((s->prefix & PREFIX_EVEX) && !extract_evex_params(s, decode)) {
-+        goto illegal;
-+    }
- 
-     switch (e->vex_special) {
-     case X86_VEX_None:
-@@ -2883,6 +2899,10 @@ static inline uint8_t collapse_two_bits(uint8_t value, uint8_t mask)
-     return (value + tweak) & (mask + tweak);
- }
- 
-+static const int pp_prefix[4] = {
-+    0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
-+};
-+
- /*
-  * Convert one instruction. s->base.is_jmp is set if the translation must
-  * be stopped.
-@@ -2908,6 +2928,9 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     s->vex_v = 0;
-     s->vex_w = false;
-     s->vex_ndd = false;
-+    s->evex2 = 0;
-+    s->evex3 = 0;
-+    s->evex4 = 0;
-     s->has_modrm = false;
-     s->prefix = 0;
- 
-@@ -2994,6 +3017,59 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         }
-         break;
- #endif
-+    case 0x62: /* EVEX */
-+        if (CODE32(s) && !VM86(s)) {
-+            int evex2 = x86_ldub_code(env, s);
-+
-+            if (!CODE64(s) && (evex2 & 0xc0) != 0xc0) {
-+                s->pc--; /* rewind the advance_pc() x86_ldub_code() did */
-+                break;
-+            }
-+#ifdef TARGET_X86_64
-+            if (rex != -1) {
-+                goto illegal_op;
-+            }
-+#endif
-+            if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ
-+                             | PREFIX_LOCK | PREFIX_DATA)) {
-+                goto illegal_op;
-+            }
-+            /*
-+             * Store them because the exact correspondence between EVEX
-+             * and RXB bits is only known later.  It's different for APX,
-+             * AVX512 register operands, and AVX512 VSIB index operands.
-+             */
-+            s->evex2 = evex2;
-+            s->evex3 = x86_ldub_code(env, s);
-+            s->evex4 = x86_ldub_code(env, s);
-+            s->vex_w = (s->evex3 >> 7) & 1;
-+            s->vex_l = (s->evex4 >> 5) & 3;
-+            s->prefix |= pp_prefix[s->evex3 & 3] | PREFIX_EVEX;
-+            switch (evex2 & 7) {
-+            case 0x01:
-+                /*
-+                 * Note: actually uses VEX map1, to which AVX512 adds extra
-+                 * instructions encoded with VEX.L=1.  Of these, KMOV*
-+                 * has an APX extension too.
-+                 */
-+                decode_func = decode_0F;
-+                break;
-+            case 0x02:
-+                decode_func = decode_0F38;
-+                break;
-+            case 0x03:
-+                decode_func = decode_0F3A;
-+                break;
-+#ifdef TARGET_X86_64
-+            case 0x04:
-+                decode_func = decode_EVEX_map4;
-+                break;
-+#endif
-+            default:   /* Reserved for future use.  */
-+                goto unknown_op;
-+            }
-+        }
-+        break;
-     case 0xc5: /* 2-byte VEX */
-     case 0xc4: /* 3-byte VEX */
-         /*
-@@ -3001,9 +3077,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-          * Otherwise the instruction is LES or LDS.  Not allowed in real mode.
-          */
-         if (PE(s) && !VM86(s)) {
--            static const int pp_prefix[4] = {
--                0, PREFIX_DATA, PREFIX_REPZ, PREFIX_REPNZ
--            };
-             int vex3, vex2 = x86_ldub_code(env, s);
- 
-             if (!CODE64(s) && (vex2 & 0xc0) != 0xc0) {
-@@ -3152,7 +3225,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     }
- 
-     if (decode.e.vex_class == 0) {
--        if (s->prefix & PREFIX_VEX) {
-+        if (s->prefix & (PREFIX_VEX | PREFIX_EVEX)) {
-             goto illegal_op;
-         }
+@@ -1614,9 +1618,9 @@ static void decode_group2(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     int op = (get_modrm(s, env) >> 3) & 7;
+     entry->gen = group2_gen[op];
+     if (op == 7) {
+-        entry->special = X86_SPECIAL_SExtT0;
++        entry->ext1 = X86_EXT_Signed;
      } else {
+-        entry->special = X86_SPECIAL_ZExtT0;
++        entry->ext1 = X86_EXT_Unsigned;
+     }
+ }
+ 
+@@ -2528,16 +2532,19 @@ static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_f
+         !decode_op(s, env, decode, &decode->op[0], e->op0, decode->b)) {
+         return false;
+     }
++    decode->op[0].ext = e->ext0;
+ 
+     if (e->op1 != X86_TYPE_None &&
+         !decode_op(s, env, decode, &decode->op[1], e->op1, decode->b)) {
+         return false;
+     }
++    decode->op[1].ext = e->ext1;
+ 
+     if (e->op2 != X86_TYPE_None &&
+         !decode_op(s, env, decode, &decode->op[2], e->op2, decode->b)) {
+         return false;
+     }
++    decode->op[2].ext = e->ext2;
+ 
+     if (e->op3 != X86_TYPE_None) {
+         decode->immediate = insn_get_signed(env, s, MO_8);
+@@ -3079,12 +3086,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         }
+         break;
+ 
+-    case X86_SPECIAL_SExtT0:
+-    case X86_SPECIAL_ZExtT0:
+-        /* Handled in gen_load.  */
+-        assert(decode.op[1].unit == X86_OP_INT);
+-        break;
+-
+     case X86_SPECIAL_Op0_Mw:
+         assert(decode.op[0].unit == X86_OP_INT);
+         if (decode.op[0].has_ea) {
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index c83ab809408..54dc23ca624 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -266,23 +266,21 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
+ #endif
+     case X86_OP_INT:
+         if (op->has_ea) {
+-            if (v == s->T0 && decode->e.special == X86_SPECIAL_SExtT0) {
++            if (op->ext == X86_EXT_Signed) {
+                 gen_op_ld_v(s, op->ot | MO_SIGN, v, s->A0);
+             } else {
+                 gen_op_ld_v(s, op->ot, v, s->A0);
+             }
+ 
+-        } else if (op->ot < MO_TL && v == s->T0 &&
+-                   (decode->e.special == X86_SPECIAL_SExtT0 ||
+-                    decode->e.special == X86_SPECIAL_ZExtT0)) {
++        } else if (op->ot < MO_TL && op->ext != X86_EXT_None) {
+             if (op->ot == MO_8 && byte_reg_is_xH(s, op->n)) {
+-                if (decode->e.special == X86_SPECIAL_SExtT0) {
++                if (op->ext == X86_EXT_Signed) {
+                     tcg_gen_sextract_tl(v, cpu_regs[op->n - 4], 8, 8);
+                 } else {
+                     tcg_gen_extract_tl(v, cpu_regs[op->n - 4], 8, 8);
+                 }
+             } else {
+-                if (decode->e.special == X86_SPECIAL_SExtT0) {
++                if (op->ext == X86_EXT_Signed) {
+                     tcg_gen_ext_tl(v, cpu_regs[op->n], op->ot | MO_SIGN);
+                 } else {
+                     tcg_gen_ext_tl(v, cpu_regs[op->n], op->ot);
+@@ -347,6 +345,12 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
+     case X86_OP_INT:
+         if (op->has_ea) {
+             gen_op_st_v(s, op->ot, v, s->A0);
++        } else if (op->ot < MO_TL && op->ext != X86_EXT_None) {
++            if (op->ext == X86_EXT_Signed) {
++                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot | MO_SIGN);
++            } else {
++                tcg_gen_ext_tl(cpu_regs[op->n], v, op->ot);
++            }
+         } else {
+             gen_op_mov_reg_v(s, op->ot, op->n, v);
+         }
 -- 
 2.55.0
 
