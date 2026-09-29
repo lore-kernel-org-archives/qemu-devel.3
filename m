@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8032ECA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C4DCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUep-000704-BV; Tue, 29 Sep 2026 06:01:55 -0400
+	id 1xBUeq-00070Y-JA; Tue, 29 Sep 2026 06:01:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUen-0006zG-Mv
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:53 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1xBUep-0006zv-4v
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:55 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUel-000891-QF
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:53 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6aa8d04fcddso1344184a12.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:51 -0700 (PDT)
+ id 1xBUem-00089M-Uf
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:54 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4980fe6b3beso5412255e9.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676110; x=1791280910; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=5X8d4mzD1FUNO8qMzl4hH+p4fBhPvGgv0Onyr1W6qQo=;
- b=QGLBGcVpMgxVHT00nEX1ZJQLiJ0SxQtVTx4W73KcA83xISucQKuLcfs0uv32MfSX4+
- QXokvZhMRyRyn92+6CZe+CO5TErysQHFE43mWFnVZIQD0DQVirMOSIVXtN2HVmWbCKp4
- vunTIw6LYW+tt0jBTK/8tQzgdeWzaF9YOi7v2uoHOosBhC9Pfq/4TJISqebcAbTDD6lD
- WEjqTCKYqAnfqBouGofLZjCjNQnWK4L0Nx8fFYaWWUUpOt3INlfM9MK3K83Y40q8YN37
- Nrzz2Ogm6x6gLeU393yaBqY0Cv8mwbhSqHeu7mSXt9AmBrOV4jGDW1kPPzlgMSlgzyDk
- 5efQ==
+ d=linaro.org; s=google; t=1790676111; x=1791280911; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=r9V8//4qhC4ighSdbtWyd4J2CAhgVgHit6AfXHkwuFI=;
+ b=EYwDpqGWTeynXl9j3KvyZBFsANyj01a8M0sVFQPS3gllChvOCjUKPCXzCk833m/kCw
+ c2F85SXHDfO0HysBEReXdrB3c9kDjO9TkZe6/SMSgEqSsiezj/0Dll2jK649du3Wx+rv
+ 2wr7b0TurmYOW4giQCfD2AzMVLmhPo9dZBYsdNvuaNKm/sjAr4ZH1RP6y3B20dvCxZMN
+ +fBTPj2+2FcBSwTFErt9U3LUcW8VDry/qzkhabJji1eAiAW31gAHlhpmS5x0DJd1Ulx3
+ LhJ7Evb+y21v6OvM6zWqa6ha91KYpjRdFDLy5dwROqDo/n5KyyfmVEfqKHWlz6VncXT8
+ g/ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676110; x=1791280910;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=5X8d4mzD1FUNO8qMzl4hH+p4fBhPvGgv0Onyr1W6qQo=;
- b=0v7FmBlx0sZT6c4HpY1KZcp7/88W3Ia++RXX0UcxdwY9IOrB+uPqd1y0bL564/aeI8
- EQ6PXFabXw+OwQEk4Jnp4VfdADzg0HMy52JaP4AlPi77Z18O1WK7aGM1DXT3FX73gdxr
- jXtFjb8bb17+MXAfBXVGglVi0SwoDUXmYtn71EjIWWtW1X0v+/O5JZLG6KJNo0V+fe3E
- hKWNQkXOP0FpQ709bhVEYSg+bj61sjTnmZkUxhaNO7LNB9L9JMJegL5S4GpYFlfrf/KU
- bzAK7YzNqEgi26f+bCmYZK8/cIoVrL4NZOOUPrwiBXOpyPKcNUQliqWXLk9hluqrMLfh
- ZH2Q==
-X-Gm-Message-State: AFq9FYJY++SvTdaIEYqTHlAAd+R9yo3hBOAXf8S3USpy0ZwRq3ScB4PP
- VCIIITkvM66TWmuttFfg0R7fQX5vkT13tOn7+MEeVILb0veHmFNq0z/RsJs1OPfppnp8Es4XE7l
- RVvid
-X-Gm-Gg: AYBFou3Rn+G1x3XpiU24+vZL6BIwXF7zc6QxJwEdfLYA06jU/tq4SiAlwXTb67m6P0k
- V9vjzbp9WjcVQtlvxO+6ZFuLbLV56dhJ/NoXQPyfOdEKM45Lio0XNAlBoZ8o2JS8O9eOm3KfMX9
- lHpRT6Hx5s3NnW1I9i0DBI55HLTbvf3PdWDZjjfxfXzAJ2+/3N5DwxaajBR48mfI/1BwkJBC6Ko
- JP+KfM0t0b6CHBBjWBn7HQ7Em8jw5yJF8y47Fn5uDCAZrU+u3KcJss2wxhZl129ESrg6cyUoDrd
- TBjW3Db/cEB/oPkxin9zEjp6dl7FXYDP5FgBjo/m/Z04fo8t7kjCYOgl2OxhaZmP+X3v/6RMRJM
- bJN1OnTA/+N3cP1ZtjK8q/JuAI/J/nNMI6GVngknFGFFJKXBvUFJeUUEuII0aIZKpBm6vZ0UlB8
- bgxaf2WdF/W2hW1wRn4pKz3qzxNOSmYf/Ll+qC+FMxCFp/4+0DIm14NJbcmgCYqCXggd7wya6m8
- r2r73vhgR+YbyWIIjhqoPrzMJBqAtLuMe+5sgN0YTOpDFUTbDcWxJ0AqJ1nH4b/nZP3sbRbINF9
- 69o=
-X-Received: by 2002:a05:6402:3257:20b0:6aa:e44a:ae9e with SMTP id
- 4fb4d7f45d1cf-6aca82b4179mr1226492a12.1.1790676109414; 
- Tue, 29 Sep 2026 03:01:49 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790676111; x=1791280911;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=r9V8//4qhC4ighSdbtWyd4J2CAhgVgHit6AfXHkwuFI=;
+ b=WA+BAhn78lg7Z2lckpia7pcKCzGbR9/a/yAIsPNIhiI5lQwHDYSrkJPTFC7UDGb3U/
+ WW3TScmkotzgPs4KK24mTHsx1N0Emw5WbhJgKQGBEbcXfRfxr4tj7w5UVk0g0PwBk9Yy
+ AjtjaVjj2G8dp+OeaCyPhlqq7Q8PRV0t0DNhW1OBzcP603irpbbGQtyGdz18LsJ67iqn
+ kYRkRHsR0mq4bfS2SBM4fheVHrVg2LHzcxQeU4LKzyOjirU1R6SGEej3XIbYamb5kpp+
+ 2Y/YECltijws9jpNBxelZ8vj1b6Qc5AgB9gfVxWGlLkZMqwH81enUEpwE0alc1XDXthA
+ BhEA==
+X-Gm-Message-State: AFuF++lmImTHTkLhlFynen6c8kbmDWigmPg8idEFV64963uborQ9Cyrr
+ 6LViF3Y5m5qpScaMuaDa/oTdlZ565EZNCBQQxZYsP5U721krtFRGnrkA+N9NRtkx3JH3GABXziR
+ h+rh4
+X-Gm-Gg: AYBFou0ewMWHqp2Udd8KBQNc1FRWYhpuqFkkx21pagvCCiSir2HF8Xm/H3XPt3VASxV
+ XMdRbKpK9p48RLQmp5Ac7PndsIBefTFlX6PHHeIHonvz8aPNOVxNoF0IpgskU33SISGDknuy3K/
+ tXODgjJoOuoCT0ixiyI28K3PrOE87ooPpxo4biIHsntleTQaMr4twnc1kiy16IFYiYaNjw4aB/i
+ HYO+AED+u1QJZFI73hvLW7MgtTKwy3JPeMyR6QjfoYtZ8aKrqrknhbAcqg8PagFjifo4xytgvX7
+ 0i6+HrOKsEvs+jpo9Ocf9OyunlqDhHYoo90c2DGifS6HP4U2HXpPBqBRCxUaxrWGx9txlZMYccc
+ qotGSGAAJlUwPS16AwEClvoV1L0o6zw9iWGNuwtjOglIgJ7zw/BFJWaO3jWUDT80++vK2t6XUtj
+ 8S196gNasTf95DMXg3qNy0LwhoY5vkL71Moy9+whQskaJ1+k4I4kyLzv8G9S/XeJ8KqoVKvTHVR
+ srhsXF9tFqmBRk/5yhV2VHWRKbXt3c/iq7HWgpsgitfq2EOVcbl5CVJJ4NtKuUujP1R+Wcqjp0S
+ 4+A=
+X-Received: by 2002:a05:600d:864d:10b0:49f:f90e:bf9e with SMTP id
+ 5b1f17b1804b1-4a00d79a5a5mr25147945e9.9.1790676100076; 
+ Tue, 29 Sep 2026 03:01:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.48
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:01:48 -0700 (PDT)
+ Tue, 29 Sep 2026 03:01:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/37] arm: handle demuxed ID registers
-Date: Tue, 29 Sep 2026 11:01:04 +0100
-Message-ID: <20260929100133.2598676-10-peter.maydell@linaro.org>
+Subject: [PULL 02/37] hw/char/stm32l4x5_usart.c: Support 16-bit writes
+Date: Tue, 29 Sep 2026 11:00:57 +0100
+Message-ID: <20260929100133.2598676-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,125 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+From: Jacob Whitaker Abrams <jwhitakera@gmail.com>
 
-For some registers, we do not have a single ID register, but actually
-an array of values (e.g. CCSIDR_EL1, where the actual value is
-determined by whatever CSSELR_EL1 points to.) If we want to avoid
-using a different way to handle registers like that for every
-instance, we should provide some kind of infrastructure. Therefore,
-add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
-we already use for regular ID registers.
+Official STM32CubeL4 drivers use and require support for 16-bit writes to
+UART registers for proper function despite datasheet claims.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Message-id: 20260916165117.39764-2-sebott@redhat.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+As the only 16 bit accesses we need to handle are ones to a
+register's base address for registers that have no defined fields in
+their top 16 bits, the emulation of 16-bit accesses provided by the
+memory system core is good enough, and we can implement this by
+updating .valid.min_access_size.
+
+Signed-off-by: Jacob Whitaker Abrams <satur9nine@gmail.com>
+Message-id: 20260926175634.2034094-1-satur9nine@gmail.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+[PMM: expanded commit message]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-sysregs.h |  9 +++++++++
- target/arm/cpu.h         | 16 ++++++++++++++++
- target/arm/cpu64.c       |  8 ++++++++
- 3 files changed, 33 insertions(+)
+ hw/char/stm32l4x5_usart.c          |  7 ++++++-
+ tests/qtest/stm32l4x5_usart-test.c | 22 +++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-index 7877a3b06a8..a4b9621a7e1 100644
---- a/target/arm/cpu-sysregs.h
-+++ b/target/arm/cpu-sysregs.h
-@@ -20,20 +20,29 @@
- 
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    NAME##_IDX,                                         \
-+    NAME##_IDX_LAST = NAME##_IDX + NUM - 1,
-+
- typedef enum ARMIDRegisterIdx {
- #include "cpu-sysregs.h.inc"
-     NUM_ID_IDX,
- } ARMIDRegisterIdx;
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- typedef enum ARMSysRegs {
- #include "cpu-sysregs.h.inc"
- } ARMSysRegs;
- 
- #undef DEF
-+#undef DEF_MUX
- 
- extern const uint32_t id_register_sysreg[NUM_ID_IDX];
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index e3f931dba26..6d1bad1dfc6 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -919,6 +919,22 @@ typedef struct {
-         i_->idregs[REG ## _EL1_IDX];                                    \
-     })
- 
-+#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        unsigned int idx_ = REG ## _IDX + INDEX;                        \
-+        assert(idx_ <= REG ## _IDX_LAST);                               \
-+        i_->idregs[idx_] = VALUE;                                       \
-+    })
-+
-+#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        unsigned int idx_ = REG ## _IDX + INDEX;                        \
-+        assert(idx_ <= REG ## _IDX_LAST);                               \
-+        i_->idregs[idx_];                                               \
-+    })
-+
- /**
-  * ARMCPU:
-  * @env: #CPUARMState
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 4e8c4725308..c11ab2da210 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -42,14 +42,21 @@
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-     [NAME##_IDX] = SYS_##NAME,
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- const uint32_t id_register_sysreg[NUM_ID_IDX] = {
- #include "cpu-sysregs.h.inc"
- };
- 
- #undef DEF
-+#undef DEF_MUX
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-     case SYS_##NAME: return NAME##_IDX;
- 
-+#define DEF_MUX(NAME, OP0, OP1, CRN, CRM, OP2, NUM)     \
-+    DEF(NAME, OP0, OP1, CRN, CRM, OP2)
-+
- int get_sysreg_idx(ARMSysRegs sysreg)
- {
-     switch (sysreg) {
-@@ -59,6 +66,7 @@ int get_sysreg_idx(ARMSysRegs sysreg)
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index 0b02dde1f8c..c4ffc0d6ce5 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -522,7 +522,12 @@ static const MemoryRegionOps stm32l4x5_usart_base_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+     .valid = {
+         .max_access_size = 4,
+-        .min_access_size = 4,
++        /*
++         * Official STM32CubeL4 drivers use and require support for 16-bit
++         * writes to UART registers for proper function despite datasheet
++         * claims.
++         */
++        .min_access_size = 2,
+         .unaligned = false
+     },
+     .impl = {
+diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
+index a72c5a685d1..3c6437e75d4 100644
+--- a/tests/qtest/stm32l4x5_usart-test.c
++++ b/tests/qtest/stm32l4x5_usart-test.c
+@@ -332,6 +332,26 @@ static void test_ack(void)
+     qtest_quit(qts);
  }
  
- #undef DEF
-+#undef DEF_MUX
- 
- void aarch64_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
++static void test_16bit_access(void)
++{
++    QTestState *qts = qtest_init("-M b-l475e-iot01a");
++
++    /* GTPR is declared uint16_t in the official STM driver. */
++    qtest_writew(qts, USART1_BASE_ADDR + A_GTPR, 0xABCD);
++    uint16_t gtpr16 = qtest_readw(qts, USART1_BASE_ADDR + A_GTPR);
++    g_assert_cmpuint(gtpr16, ==, 0xABCD);
++
++    /* TDR is uint16_t and r/w, register is 9-bits */
++    qtest_writew(qts, USART1_BASE_ADDR + A_TDR, 0x01CD);
++    uint16_t tdr16 = qtest_readw(qts, USART1_BASE_ADDR + A_TDR);
++    g_assert_cmpuint(tdr16, ==, 0x01CD);
++
++    /* RDR is uint16_t and read only, register is 9-bits */
++    qtest_writew(qts, USART1_BASE_ADDR + A_RDR, 0x01FA);
++
++    qtest_quit(qts);
++}
++
+ static void check_clock(QTestState *qts, const char *path, uint32_t rcc_reg,
+                         uint32_t reg_offset)
  {
+@@ -370,6 +390,6 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
+     qtest_add_func("stm32l4x5/usart/ack", test_ack);
+     qtest_add_func("stm32l4x5/usart/clock_enable", test_clock_enable);
++    qtest_add_func("stm32l4x5/usart/16bit_access", test_16bit_access);
+     return g_test_run();
+ }
+-
 -- 
 2.43.0
 
