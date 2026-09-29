@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91154C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 312BAC9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBSSH-00038g-Fj; Tue, 29 Sep 2026 03:40:49 -0400
+	id 1xBSSb-0003Id-8Q; Tue, 29 Sep 2026 03:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSD-00034k-VI
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xBSSV-0003CM-Hp
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:41:03 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSC-0005qH-DX
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:45 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xBSSS-0005sC-FE
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:41:03 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T7U1wi3684787
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:43 GMT
+ 68T7ToiI3435129
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=oPsYHiS4/nQ
- ZTnSdaOWSfuQBdzkzVWofjCst6NFy3OI=; b=dI23c4KATUtkQWD/FCErGy1818a
- lX/sqq/CmRGX2ndEZrzBzKFIg5YGYzu0Zuk88RUKyOMjXKljyXKXZ9qMARuUrhSv
- +h6bd6SiL204qkwLG7U6MLsknA0nVlqHxgfZr3EwHmVZTVJ4W1ePzCtxtxVDtar4
- h5Bvfglz05hYitU//mrTQbE2Lq3FJweMqLCeMlzqzoNu1jOD4iO3PheO8zuhkfNo
- C3Ew2l9xIKYRRf4G7xG76nosZzCJGbeuX/KeMiFQ34u1eFx6tLaG0iOltSimjNcu
- DFmTvPlUhXwxJodZfLfmh/AKtbRN2rosn5IOFAXL2kdq3SC9INhOSqKnk9A==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=MbFr4shikd7
+ c0ENP1LL509m/bPELb69Bpzl0xR6MFb0=; b=IIT4JaRcJMvk06KcVUKI1PlTiSg
+ szgDRJz6hpltN9ByTv9Nkl/DaD1n9k5PsSuga8AFKZZMCNDH/UgpMedmMUMjMHAM
+ OWtytFYRnjTV9XHHX2yM/qVl7tZ/ZCUEBTIibOpx9ohQUv0zgPHn2M/VW9Pr9zRh
+ t5Nm5SN5URo53ZhYaa2fTIHkZwekJIUlOPv3E5GuFQDFOb/ceYccPPrb7RWRfKF6
+ aNyw6p/d2uEs6H5EzyMf3P2eaLb31lwwicywkfO2EjjLbcTI5zsP+/x+ZttYHnIH
+ UXZNxi82SDmuZWydhIZv85qPit0NDGFqaU0LWLgAvCt8pikEA6teOa8rbrw==
 Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
  [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0144srte-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvwnauaj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:43 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:56 +0000 (GMT)
 Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-33baaba6371so14823570eec.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:43 -0700 (PDT)
+ 5a478bee46e88-34344599f01so2042811eec.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790667642; x=1791272442; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790667656; x=1791272456; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oPsYHiS4/nQZTnSdaOWSfuQBdzkzVWofjCst6NFy3OI=;
- b=h5DXW4QENjEQRBOf9DDYbU29xXdVLuJSZ9YXPSb4MnFk4ppQGE5zpDVc9puIjvONSs
- +h1VlRf3cELEUnvf0Y4DnjEZc1XWWVu7Fg5VkbZe+012ncQmUsIQd0Mj5npuZ7zSEzP6
- h+koDrlGR3rKE4DeJ4QSyQpnF1gK/YcBOdb7ai9uDYI9Bk15DgAw9iA9TtTjNkuJXIxS
- Nl/HWhSGQOSPDSQzT96qEIQ1taPvLhOZF2OEzBto9QS8GDQISlzjkn9HCMj4XnR+Sltg
- 52ey3FWxi73RV18g+DbJ31fRDlJqRkPKo9gUwSifuBnR4NFkhYKrPDauihmVAY9vZF1a
- 2afQ==
+ bh=MbFr4shikd7c0ENP1LL509m/bPELb69Bpzl0xR6MFb0=;
+ b=Rp/qlQHmJ0/RIkNZATwcHLIazuoZC7jiZVGjVYjVo2kxCjS52WpSydaqtXwvHaDqAO
+ ROIRl75XUimK1V6Zj+RGbi0oRR1S4e4ePpZOpDQBA5dtxgjA9c5+G+XvPPIXjWhgLvV9
+ TNsHgEdc04TLMEvhBc9aV+PLgMObgVw5WUYQiP5iHzx6iTg4wFtZmat5rjVqNOvqI0G8
+ /i42G9sfxxqKU3EP+TfJjgePiZoYGLXOlZjkXdvJOpwEZWlkq5nDJp+7Y1rRBYh9G29s
+ ufrcSnVBjAc28WRfsIERx9qX/i/j7L6XuFtg2b51qhyvEF534ro9qiEN/c4ZOOZvCqG4
+ rRIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790667642; x=1791272442;
+ d=1e100.net; s=20260707; t=1790667656; x=1791272456;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oPsYHiS4/nQZTnSdaOWSfuQBdzkzVWofjCst6NFy3OI=;
- b=dodZ+lwFCa7viIUxcZo3gOxz3CQi8YbfZMmWEbIz3St1g7eaLuohpuSioLYIBt9BQY
- duL2jejlmBOuqV0qT/STQ+E6K3eiJV3Ie9l7WAb3fhYTDdYolkQknphK9t2k9iuDbU0i
- MFxo9iKFXJdDWHe/FBYTeWzUnU2+Do0+e9FxNHqvrQnWnDhNs2H10Ayqzh/Mdj9SkEDm
- gRsdeVgP2eh2VFqBQUxAxJIYuYO0TadtNMaRqnLMrs0jb/Db7bZB7wnqx7r3fYZum0fo
- w1tILN2hItXDTV7teOzzm5lzxQ0ilsOznOvVmQVDXSRLgHU84X4f2qrlP6V2SRX5+waU
- VPBg==
-X-Gm-Message-State: AFuF++m8U/sSm3iZHmdZxeZHuarRk0r57rHMY76xfnZnZ4hsPBktVq01
- 4wIHaYB8zb1e2WP7z1xiczlLol62wXMI97/Udtw93PbZq2upxqex6zh8+R3N3iUWH27Is/bT1ZQ
- rxc0bZ7Bpuo+OpNDKhhRyF9Irjg4qvpBJ2wUdodVu02shsttcZjI6ZKc9cmxnMyM2Dw==
-X-Gm-Gg: AYBFou1mNdsNqsZwjbaUOaXlVe2LRuO3U1ADf7VIarq/Vq2yxLNZKn7TY4GHDD+KZBw
- ZlYlHmlEDctDM1x81PYS/rYB1eUZyFNZaQSnlL+T3fPvma7eCD1R16e9kU4jzGsmaXNZtfl6VmY
- Dtbk2980nPEHr9kNk0z7r+wJwgYdzgchSNIAA2aKZuXye6iDBK277S+cebMehbaiiseNefUwGE7
- 5LxtC6ruy3IX6nPeShNRBbWtOOIKrjFXKxay760Q10w4Wej8gc4/IKo63P+SJZhQ67nMp33bdHY
- N5YSt+UHLIbRobjIJpOXQ3qBncYLpqOROBbXjwW+/dskgxuRHOpE8Yekx97vXehGGKVLdkSU7F1
- WKt2JYEkP0cY5g34TycTwUqqWAPNTFgJ8xxwKWEwYHEJR6tHa5QBthVgf/g==
-X-Received: by 2002:a05:693c:820c:b0:33c:e9d:6d4b with SMTP id
- 5a478bee46e88-34273057620mr14529123eec.41.1790667642239; 
- Tue, 29 Sep 2026 00:40:42 -0700 (PDT)
-X-Received: by 2002:a05:693c:820c:b0:33c:e9d:6d4b with SMTP id
- 5a478bee46e88-34273057620mr14529087eec.41.1790667641579; 
- Tue, 29 Sep 2026 00:40:41 -0700 (PDT)
+ bh=MbFr4shikd7c0ENP1LL509m/bPELb69Bpzl0xR6MFb0=;
+ b=J9wHvqnowlgUavRYpU8KQsf9oOOqh6UNsEi6Y5M7iCxLweSAt7l5WCBcBNRs+0Hc3A
+ PNZ5jC9kOXrCKu2q7smT9I9pI8zEtiKrcexOuXGxoeldaCwzfPgxe/G1AwIdIM4/r/sA
+ UDfE9plox3tBuIfApVdKJkMNupxekLRb6QqFTungemzna+h4IaS04i6A74WJBl6XjZQw
+ nDXklYCpn++f1sTADa85u7OZdevt1wkpiYVlIc5uLjanTiaZq5Tc8KPAuv379CqLpYj6
+ W3GevycOxF/NdK8aTucGax0QR3NuPjMtuSwh9Mk82lP7b8tw1p43aEuW3SgprF9CEze2
+ X67g==
+X-Gm-Message-State: AFq9FYKkbJKOQ4CSKLXOv/St2IAMt4uwulL6lM6/T4bEa+oP1DbQXj40
+ SyGKueeTSFHDjUaev+rLiMwLZy7Ze9e/SBZqxHUYfrFVengNNZuHEenRVUJUCBiLFPWxhKcn+jy
+ Nqcb6WpNC5/Pjw09bFS3Zxd9AtWC+Xf1Bittw3b3HPfZtryGUUp+BID6XIJ3IGAmmug==
+X-Gm-Gg: AYBFou0Ugjtt7War+GBxY3+ZjPVNuqhsPZpx5p/Sg4iRAwk1qwzn2CGnfD/PEg5rKkJ
+ HetYY6N+6BeCWJe3mexuhOa8/kWf2idUGrvC6IKIqwiAEePGxjUxRkGcAOEoOtgAynHL+7N2ahg
+ /jz9s3Fqx9N1cf55Lk5f5Ade+Ig4544uqnagzqxhvumK1XIDz0vJHjdnPmahCVhVqa1F5oUwe1G
+ pnwmsUvNR6jf8InvuKSAB1zv7cqjvAXX0wqR2UziMY0uLdcDMjmGYnUFln4dhbh5Q2kjmr3NPSm
+ XoEqPTRUdy00Aq6zVK63BtF7g9xAV0IjuXks4ip0Sij/JF8OeU7/n8cS4sDZD73Pkjj4Nu5WO06
+ I0uSVNxOxCs9LLwGbY54RCAKYDVh37vIzmBzvmln2nFA8wVw/7/1q2NN9Nw==
+X-Received: by 2002:a05:7301:d8f:b0:339:79c9:a711 with SMTP id
+ 5a478bee46e88-34272e579cdmr19702924eec.33.1790667655495; 
+ Tue, 29 Sep 2026 00:40:55 -0700 (PDT)
+X-Received: by 2002:a05:7301:d8f:b0:339:79c9:a711 with SMTP id
+ 5a478bee46e88-34272e579cdmr19702881eec.33.1790667654832; 
+ Tue, 29 Sep 2026 00:40:54 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.39
+ 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 00:40:39 -0700 (PDT)
+ Tue, 29 Sep 2026 00:40:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -92,43 +92,43 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 08/19] tests/tcg/mips64*/meson.build: remove unused cc_feat
-Date: Tue, 29 Sep 2026 07:39:56 +0000
-Message-ID: <20260929074007.118970-9-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 18/19] tests/tcg/mips64/mips64r6: update references
+Date: Tue, 29 Sep 2026 07:40:06 +0000
+Message-ID: <20260929074007.118970-19-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfXy9CjrLnAHD8A
- aGgza98ZFm1ekLrFPB+NCdlZYNe+j5zTvnaEbd+fifpKWNnMd/ogUjAkPJY9z5Jbw0mkbBnq3ix
- cqULMX0QpMMONQCFSSRL+ZU6h0y53sKJG+kQiU5RbTUeV6VLfxEkZo9pz5057or1eAlF4nmMXHw
- bow1NGwZ1nbGuLLIB65bjpEQvMfTsvCMhb8zmreQp2B58eb15q3vGz+wuxma4iENJ5SQoA/e1Zx
- grXBB4RyhmJb2GHiFnbg42YLzYITd7Lgd770U2Q550c+mXu+VZjli3PKv+LnIdYvkot4nn1ThgV
- k9hqSsGl7XdB9SATO0qiaN7sZ7YLDj/v6hVp8bQHKjwRvgAnwkj0nUgYncArEnJ0fxpaf6pMP1p
- dJr+FffY/s0G3aFPs3UxQAzbKjupqfvdAwQj0NgzhLtYiM/m+LZxONz5iztDNjGFNNjyHJhBa8D
- oOy5Kjr2CqQAbW4r4Og==
-X-Authority-Analysis: v=2.4 cv=FJSOVOos c=1 sm=1 tr=0 ts=6abb6b7b cx=c_pps
+X-Proofpoint-ORIG-GUID: uNX_XgXiwpb2qsUmO-lBkRCDm67Fm3RD
+X-Authority-Analysis: v=2.4 cv=W42txhWk c=1 sm=1 tr=0 ts=6abb6b88 cx=c_pps
  a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=9k7arhYmT5PAGqctRaAA:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-ORIG-GUID: 3Vl-_OV9nl_4g5PuO-qDOOqZDQ4Fr7aR
-X-Proofpoint-GUID: 3Vl-_OV9nl_4g5PuO-qDOOqZDQ4Fr7aR
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfXx+QYTEoBaXRS
- OWueAj26Gq3cuFEEEvpMbna8i95ti1WmuxBzpnac+nEeIjJ0t1FKSev3pi/4FFP3cRH7PrMOuW1
- Fi8tj42jIB8SEhx683oYw7NtyiGZtWk=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=qKrdMFHdGPHgctB_9acA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX7x2fc/osObdK
+ XynAU6U7rTOLQnqVMQpqAr+M7j9F3H8Y49vBsVlJwjX1tXI6nMHkb3u44tOdYk5Ioh92woCHgYy
+ li5npjyF1ZTE2mWVldKReRv5B7qMTbIZ2ILxmY0grbSHksV5eXSN/mJ9QiQuDHUOb/vym/73mHc
+ CBY01zr23D0dXIk2wB2C814lxMYtrq/sXn/gBy/7bO6VpCyvCErzp8YaTa2EQIZijrweYlzUXxa
+ EChmSPNevAn/qDlWSCfRzsJCakkW0uyyhTeZu+mwBYncHX/RV9+o1EkLBDgSdiPd5FxnZzxKrji
+ DGWQl2tHH9k9GAM0VMPND+V1TH0Jhf9Q3PCQTijMm17ywDKOvIGXi3r/FY35525gPHW2gs0lYL7
+ UFmdXv8tCICQXhpZXmc2GQfvhKmOy4J83VGNcksRIg+SKtAwJqzIFXx6R8yRJR8B1zEekV6tC6W
+ 2j/krb3UrpT/kZpy+3Q==
+X-Proofpoint-GUID: uNX_XgXiwpb2qsUmO-lBkRCDm67Fm3RD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX31bkmIM7sWl9
+ TtblP1t/bXpCGRroDme/J9WKeoKCF9rJAMx5qAbChrsaz/xx5pVLKKzwOmfDxtfJ4f1qM3y+ds4
+ 01GeUb6WoZxK7vh1jScSlDFIo36K9OI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290030
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -151,39 +151,892 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mips64 has no cc_feat defined, and it was a wrong copy from a previous
-architecture (cc_feat defined for a previous arch was used).
+Those references were incorrect. Updated them, after comparing output on
+host machine using:
+
+```
+  #include <assert.h>
+  #include <stdint.h>
+  #define and(x,y) (x&y)
+  #define or(x,y) (x|y)
+  #define xor(x,y) (x^y)
+  #define nor(x,y) (~(x|y))
+  #define srav(x,y) ((int64_t)((int32_t)(x)>>(y&0b11111)))
+  int main(void)
+  {
+  /* following source files are output of associated tests */
+  #include "./and.c"
+  #include "./or.c"
+  #include "./nor.c"
+  #include "./xor.c"
+  #include "./srav.c"
+  }
+```
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips64/meson.build   | 1 -
- tests/tcg/mips64el/meson.build | 1 -
- 2 files changed, 2 deletions(-)
+ tests/tcg/mips64/test_mips64r6_and.c  | 160 +++++++++++++-------------
+ tests/tcg/mips64/test_mips64r6_nor.c  | 160 +++++++++++++-------------
+ tests/tcg/mips64/test_mips64r6_or.c   | 160 +++++++++++++-------------
+ tests/tcg/mips64/test_mips64r6_srav.c | 160 +++++++++++++-------------
+ tests/tcg/mips64/test_mips64r6_xor.c  | 160 +++++++++++++-------------
+ 5 files changed, 400 insertions(+), 400 deletions(-)
 
-diff --git a/tests/tcg/mips64/meson.build b/tests/tcg/mips64/meson.build
-index a324a16d671..f08d1182576 100644
---- a/tests/tcg/mips64/meson.build
-+++ b/tests/tcg/mips64/meson.build
-@@ -16,7 +16,6 @@ if 'qemu-mips64' in emulators
-     'mips64-linux-user': {
-       'cc': 'mips64-linux-gnuabi64-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'mips64',
-       'gdb_arch': 'mips64',
-       'qemu': emulators['qemu-mips64'],
-diff --git a/tests/tcg/mips64el/meson.build b/tests/tcg/mips64el/meson.build
-index 2aafbba750d..d74c7de9b7a 100644
---- a/tests/tcg/mips64el/meson.build
-+++ b/tests/tcg/mips64el/meson.build
-@@ -3,7 +3,6 @@ if 'qemu-mips64el' in emulators
-     'mips64el-linux-user': {
-       'cc': 'mips64el-linux-gnuabi64-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'mips64el',
-       'gdb_arch': 'mips64el',
-       'qemu': emulators['qemu-mips64el'],
+diff --git a/tests/tcg/mips64/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
+index f83359107b9..d7aba39edc3 100644
+--- a/tests/tcg/mips64/test_mips64r6_and.c
++++ b/tests/tcg/mips64/test_mips64r6_and.c
+@@ -32,86 +32,86 @@
+ int32_t main(void)
+ {
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+-        0x8000000000000000ULL,                    /*   0  */
+-        0xffffffffffffffffULL,
+-        0xfffffc0000000000ULL,
+-        0xffffffffffe00000ULL,
+-        0xfffffffffffff000ULL,
+-        0xfff8000000000000ULL,
+-        0xffffffffffffc000ULL,
+-        0xfffe000000000000ULL,
+-        0x0000000000000000ULL,                    /*   8  */
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,                    /*  16  */
+-        0xaaaaaaaaaaaaaaaaULL,
+-        0xaaaaa80000000000ULL,
+-        0x5555555555400000ULL,
+-        0xaaaaaaaaaaaaa000ULL,
+-        0x5550000000000000ULL,
+-        0xaaaaaaaaaaaa8000ULL,
+-        0x5554000000000000ULL,
+-        0x8000000000000000ULL,                    /*  24  */
+-        0x5555555555555555ULL,
+-        0x5555540000000000ULL,
+-        0xaaaaaaaaaaa00000ULL,
+-        0x5555555555555000ULL,
+-        0xaaa8000000000000ULL,
+-        0x5555555555554000ULL,
+-        0xaaaa000000000000ULL,
+-        0x0000000000000000ULL,                    /*  32  */
+-        0xccccccccccccccccULL,
+-        0x3333300000000000ULL,
+-        0x9999999999800000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6660000000000000ULL,
+-        0x3333333333330000ULL,
+-        0x9998000000000000ULL,
+-        0x8000000000000000ULL,                    /*  40  */
+-        0x3333333333333333ULL,
+-        0xcccccc0000000000ULL,
+-        0x6666666666600000ULL,
+-        0x3333333333333000ULL,
+-        0x9998000000000000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6666000000000000ULL,
+-        0x0000000000000000ULL,                    /*  48  */
+-        0xe38e38e38e38e38eULL,
+-        0xe38e380000000000ULL,
+-        0x1c71c71c71c00000ULL,
+-        0xe38e38e38e38e000ULL,
+-        0x1c70000000000000ULL,
+-        0x8e38e38e38e38000ULL,
+-        0xc71c000000000000ULL,
+-        0x8000000000000000ULL,                    /*  56  */
+-        0x1c71c71c71c71c71ULL,
+-        0x1c71c40000000000ULL,
+-        0xe38e38e38e200000ULL,
+-        0x1c71c71c71c71000ULL,
+-        0xe388000000000000ULL,
+-        0x71c71c71c71c4000ULL,
+-        0x38e2000000000000ULL,
+-        0x886ae6cc28625540ULL,                    /*  64  */
+-        0x6ae6cc2862554000ULL,
+-        0x886ae6cc28625540ULL,
+-        0xb9b30a1895500000ULL,
+-        0xfbbe00634d93c708ULL,
+-        0xbe00634d93c70800ULL,
+-        0xfbbe00634d93c708ULL,
+-        0x8018d364f1c20000ULL,
+-        0xac5aaeaab9cf8b80ULL,                    /*  72  */
+-        0x5aaeaab9cf8b8000ULL,
+-        0xac5aaeaab9cf8b80ULL,
+-        0xabaaae73e2e00000ULL,
+-        0x704f164d5e31e24eULL,
+-        0x4f164d5e31e24e00ULL,
+-        0x704f164d5e31e24eULL,
+-        0xc593578c78938000ULL,
++        0xffffffffffffffff,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x5555555555555555,
++        0xcccccccccccccccc,
++        0x3333333333333333,
++        0xe38e38e38e38e38e,
++        0x1c71c71c71c71c71,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x0,
++        0x8888888888888888,
++        0x2222222222222222,
++        0xa28a28a28a28a28a,
++        0x820820820820820,
++        0x5555555555555555,
++        0x0,
++        0x0,
++        0x5555555555555555,
++        0x4444444444444444,
++        0x1111111111111111,
++        0x4104104104104104,
++        0x1451451451451451,
++        0xcccccccccccccccc,
++        0x0,
++        0x8888888888888888,
++        0x4444444444444444,
++        0xcccccccccccccccc,
++        0x0,
++        0xc08c08c08c08c08c,
++        0xc40c40c40c40c40,
++        0x3333333333333333,
++        0x0,
++        0x2222222222222222,
++        0x1111111111111111,
++        0x0,
++        0x3333333333333333,
++        0x2302302302302302,
++        0x1031031031031031,
++        0xe38e38e38e38e38e,
++        0x0,
++        0xa28a28a28a28a28a,
++        0x4104104104104104,
++        0xc08c08c08c08c08c,
++        0x2302302302302302,
++        0xe38e38e38e38e38e,
++        0x0,
++        0x1c71c71c71c71c71,
++        0x0,
++        0x820820820820820,
++        0x1451451451451451,
++        0xc40c40c40c40c40,
++        0x1031031031031031,
++        0x0,
++        0x1c71c71c71c71c71,
++        0x886ae6cc28625540,
++        0x882a004008024500,
++        0x884aa68828420100,
++        0x4a064c08204040,
++        0x882a004008024500,
++        0xfbbe00634d93c708,
++        0xa81a002209838300,
++        0x700e00414c11c208,
++        0x884aa68828420100,
++        0xa81a002209838300,
++        0xac5aaeaab9cf8b80,
++        0x204a060818018200,
++        0x4a064c08204040,
++        0x700e00414c11c208,
++        0x204a060818018200,
++        0x704f164d5e31e24e,
+     };
+ 
+     return !check_binary_op_64(do_mips64r6_AND, "and", b64_expect);
+diff --git a/tests/tcg/mips64/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
+index 13a51490187..a758f5cd5d9 100644
+--- a/tests/tcg/mips64/test_mips64r6_nor.c
++++ b/tests/tcg/mips64/test_mips64r6_nor.c
+@@ -32,86 +32,86 @@
+ int32_t main(void)
+ {
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+-        0x8000000000000000ULL,                    /*   0  */
+-        0xffffffffffffffffULL,
+-        0xfffffc0000000000ULL,
+-        0xffffffffffe00000ULL,
+-        0xfffffffffffff000ULL,
+-        0xfff8000000000000ULL,
+-        0xffffffffffffc000ULL,
+-        0xfffe000000000000ULL,
+-        0x0000000000000000ULL,                    /*   8  */
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,                    /*  16  */
+-        0xaaaaaaaaaaaaaaaaULL,
+-        0xaaaaa80000000000ULL,
+-        0x5555555555400000ULL,
+-        0xaaaaaaaaaaaaa000ULL,
+-        0x5550000000000000ULL,
+-        0xaaaaaaaaaaaa8000ULL,
+-        0x5554000000000000ULL,
+-        0x8000000000000000ULL,                    /*  24  */
+-        0x5555555555555555ULL,
+-        0x5555540000000000ULL,
+-        0xaaaaaaaaaaa00000ULL,
+-        0x5555555555555000ULL,
+-        0xaaa8000000000000ULL,
+-        0x5555555555554000ULL,
+-        0xaaaa000000000000ULL,
+-        0x0000000000000000ULL,                    /*  32  */
+-        0xccccccccccccccccULL,
+-        0x3333300000000000ULL,
+-        0x9999999999800000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6660000000000000ULL,
+-        0x3333333333330000ULL,
+-        0x9998000000000000ULL,
+-        0x8000000000000000ULL,                    /*  40  */
+-        0x3333333333333333ULL,
+-        0xcccccc0000000000ULL,
+-        0x6666666666600000ULL,
+-        0x3333333333333000ULL,
+-        0x9998000000000000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6666000000000000ULL,
+-        0x0000000000000000ULL,                    /*  48  */
+-        0xe38e38e38e38e38eULL,
+-        0xe38e380000000000ULL,
+-        0x1c71c71c71c00000ULL,
+-        0xe38e38e38e38e000ULL,
+-        0x1c70000000000000ULL,
+-        0x8e38e38e38e38000ULL,
+-        0xc71c000000000000ULL,
+-        0x8000000000000000ULL,                    /*  56  */
+-        0x1c71c71c71c71c71ULL,
+-        0x1c71c40000000000ULL,
+-        0xe38e38e38e200000ULL,
+-        0x1c71c71c71c71000ULL,
+-        0xe388000000000000ULL,
+-        0x71c71c71c71c4000ULL,
+-        0x38e2000000000000ULL,
+-        0x886ae6cc28625540ULL,                    /*  64  */
+-        0x6ae6cc2862554000ULL,
+-        0x886ae6cc28625540ULL,
+-        0xb9b30a1895500000ULL,
+-        0xfbbe00634d93c708ULL,
+-        0xbe00634d93c70800ULL,
+-        0xfbbe00634d93c708ULL,
+-        0x8018d364f1c20000ULL,
+-        0xac5aaeaab9cf8b80ULL,                    /*  72  */
+-        0x5aaeaab9cf8b8000ULL,
+-        0xac5aaeaab9cf8b80ULL,
+-        0xabaaae73e2e00000ULL,
+-        0x704f164d5e31e24eULL,
+-        0x4f164d5e31e24e00ULL,
+-        0x704f164d5e31e24eULL,
+-        0xc593578c78938000ULL,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0xffffffffffffffff,
++        0x5555555555555555,
++        0xaaaaaaaaaaaaaaaa,
++        0x3333333333333333,
++        0xcccccccccccccccc,
++        0x1c71c71c71c71c71,
++        0xe38e38e38e38e38e,
++        0x0,
++        0x5555555555555555,
++        0x5555555555555555,
++        0x0,
++        0x1111111111111111,
++        0x4444444444444444,
++        0x1451451451451451,
++        0x4104104104104104,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x2222222222222222,
++        0x8888888888888888,
++        0x820820820820820,
++        0xa28a28a28a28a28a,
++        0x0,
++        0x3333333333333333,
++        0x1111111111111111,
++        0x2222222222222222,
++        0x3333333333333333,
++        0x0,
++        0x1031031031031031,
++        0x2302302302302302,
++        0x0,
++        0xcccccccccccccccc,
++        0x4444444444444444,
++        0x8888888888888888,
++        0x0,
++        0xcccccccccccccccc,
++        0xc40c40c40c40c40,
++        0xc08c08c08c08c08c,
++        0x0,
++        0x1c71c71c71c71c71,
++        0x1451451451451451,
++        0x820820820820820,
++        0x1031031031031031,
++        0xc40c40c40c40c40,
++        0x1c71c71c71c71c71,
++        0x0,
++        0x0,
++        0xe38e38e38e38e38e,
++        0x4104104104104104,
++        0xa28a28a28a28a28a,
++        0x2302302302302302,
++        0xc08c08c08c08c08c,
++        0x0,
++        0xe38e38e38e38e38e,
++        0x77951933d79daabf,
++        0x4011910920c28b7,
++        0x538511114610203f,
++        0x7900932818c08b1,
++        0x4011910920c28b7,
++        0x441ff9cb26c38f7,
++        0x1511402203077,
++        0x400e990a04c18b1,
++        0x538511114610203f,
++        0x1511402203077,
++        0x53a551554630747f,
++        0x3a0411000001431,
++        0x7900932818c08b1,
++        0x400e990a04c18b1,
++        0x3a0411000001431,
++        0x8fb0e9b2a1ce1db1,
+     };
+ 
+     return !check_binary_op_64(do_mips64r6_NOR, "nor", b64_expect);
+diff --git a/tests/tcg/mips64/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
+index e4d7a95d37f..9f6189827db 100644
+--- a/tests/tcg/mips64/test_mips64r6_or.c
++++ b/tests/tcg/mips64/test_mips64r6_or.c
+@@ -32,86 +32,86 @@
+ int32_t main(void)
+ {
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+-        0x8000000000000000ULL,                    /*   0  */
+-        0xffffffffffffffffULL,
+-        0xfffffc0000000000ULL,
+-        0xffffffffffe00000ULL,
+-        0xfffffffffffff000ULL,
+-        0xfff8000000000000ULL,
+-        0xffffffffffffc000ULL,
+-        0xfffe000000000000ULL,
+-        0x0000000000000000ULL,                    /*   8  */
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,                    /*  16  */
+-        0xaaaaaaaaaaaaaaaaULL,
+-        0xaaaaa80000000000ULL,
+-        0x5555555555400000ULL,
+-        0xaaaaaaaaaaaaa000ULL,
+-        0x5550000000000000ULL,
+-        0xaaaaaaaaaaaa8000ULL,
+-        0x5554000000000000ULL,
+-        0x8000000000000000ULL,                    /*  24  */
+-        0x5555555555555555ULL,
+-        0x5555540000000000ULL,
+-        0xaaaaaaaaaaa00000ULL,
+-        0x5555555555555000ULL,
+-        0xaaa8000000000000ULL,
+-        0x5555555555554000ULL,
+-        0xaaaa000000000000ULL,
+-        0x0000000000000000ULL,                    /*  32  */
+-        0xccccccccccccccccULL,
+-        0x3333300000000000ULL,
+-        0x9999999999800000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6660000000000000ULL,
+-        0x3333333333330000ULL,
+-        0x9998000000000000ULL,
+-        0x8000000000000000ULL,                    /*  40  */
+-        0x3333333333333333ULL,
+-        0xcccccc0000000000ULL,
+-        0x6666666666600000ULL,
+-        0x3333333333333000ULL,
+-        0x9998000000000000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6666000000000000ULL,
+-        0x0000000000000000ULL,                    /*  48  */
+-        0xe38e38e38e38e38eULL,
+-        0xe38e380000000000ULL,
+-        0x1c71c71c71c00000ULL,
+-        0xe38e38e38e38e000ULL,
+-        0x1c70000000000000ULL,
+-        0x8e38e38e38e38000ULL,
+-        0xc71c000000000000ULL,
+-        0x8000000000000000ULL,                    /*  56  */
+-        0x1c71c71c71c71c71ULL,
+-        0x1c71c40000000000ULL,
+-        0xe38e38e38e200000ULL,
+-        0x1c71c71c71c71000ULL,
+-        0xe388000000000000ULL,
+-        0x71c71c71c71c4000ULL,
+-        0x38e2000000000000ULL,
+-        0x886ae6cc28625540ULL,                    /*  64  */
+-        0x6ae6cc2862554000ULL,
+-        0x886ae6cc28625540ULL,
+-        0xb9b30a1895500000ULL,
+-        0xfbbe00634d93c708ULL,
+-        0xbe00634d93c70800ULL,
+-        0xfbbe00634d93c708ULL,
+-        0x8018d364f1c20000ULL,
+-        0xac5aaeaab9cf8b80ULL,                    /*  72  */
+-        0x5aaeaab9cf8b8000ULL,
+-        0xac5aaeaab9cf8b80ULL,
+-        0xabaaae73e2e00000ULL,
+-        0x704f164d5e31e24eULL,
+-        0x4f164d5e31e24e00ULL,
+-        0x704f164d5e31e24eULL,
+-        0xc593578c78938000ULL,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x5555555555555555,
++        0xcccccccccccccccc,
++        0x3333333333333333,
++        0xe38e38e38e38e38e,
++        0x1c71c71c71c71c71,
++        0xffffffffffffffff,
++        0xaaaaaaaaaaaaaaaa,
++        0xaaaaaaaaaaaaaaaa,
++        0xffffffffffffffff,
++        0xeeeeeeeeeeeeeeee,
++        0xbbbbbbbbbbbbbbbb,
++        0xebaebaebaebaebae,
++        0xbefbefbefbefbefb,
++        0xffffffffffffffff,
++        0x5555555555555555,
++        0xffffffffffffffff,
++        0x5555555555555555,
++        0xdddddddddddddddd,
++        0x7777777777777777,
++        0xf7df7df7df7df7df,
++        0x5d75d75d75d75d75,
++        0xffffffffffffffff,
++        0xcccccccccccccccc,
++        0xeeeeeeeeeeeeeeee,
++        0xdddddddddddddddd,
++        0xcccccccccccccccc,
++        0xffffffffffffffff,
++        0xefcefcefcefcefce,
++        0xdcfdcfdcfdcfdcfd,
++        0xffffffffffffffff,
++        0x3333333333333333,
++        0xbbbbbbbbbbbbbbbb,
++        0x7777777777777777,
++        0xffffffffffffffff,
++        0x3333333333333333,
++        0xf3bf3bf3bf3bf3bf,
++        0x3f73f73f73f73f73,
++        0xffffffffffffffff,
++        0xe38e38e38e38e38e,
++        0xebaebaebaebaebae,
++        0xf7df7df7df7df7df,
++        0xefcefcefcefcefce,
++        0xf3bf3bf3bf3bf3bf,
++        0xe38e38e38e38e38e,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0x1c71c71c71c71c71,
++        0xbefbefbefbefbefb,
++        0x5d75d75d75d75d75,
++        0xdcfdcfdcfdcfdcfd,
++        0x3f73f73f73f73f73,
++        0xffffffffffffffff,
++        0x1c71c71c71c71c71,
++        0x886ae6cc28625540,
++        0xfbfee6ef6df3d748,
++        0xac7aeeeeb9efdfc0,
++        0xf86ff6cd7e73f74e,
++        0xfbfee6ef6df3d748,
++        0xfbbe00634d93c708,
++        0xfffeaeebfddfcf88,
++        0xfbff166f5fb3e74e,
++        0xac7aeeeeb9efdfc0,
++        0xfffeaeebfddfcf88,
++        0xac5aaeaab9cf8b80,
++        0xfc5fbeefffffebce,
++        0xf86ff6cd7e73f74e,
++        0xfbff166f5fb3e74e,
++        0xfc5fbeefffffebce,
++        0x704f164d5e31e24e,
+     };
+ 
+     return !check_binary_op_64(do_mips64r6_OR, "or", b64_expect);
+diff --git a/tests/tcg/mips64/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
+index e98bb9b90ee..77fa59a0121 100644
+--- a/tests/tcg/mips64/test_mips64r6_srav.c
++++ b/tests/tcg/mips64/test_mips64r6_srav.c
+@@ -32,86 +32,86 @@
+ int32_t main(void)
+ {
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+-        0xffffffffffffffffULL,                    /*   0  */
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0xffffffffffffffffULL,
+-        0x0000000000000000ULL,                    /*   8  */
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0xffffffffffffffffULL,                    /*  16  */
+-        0xffffffffaaaaaaaaULL,
+-        0xffffffffffeaaaaaULL,
+-        0xfffffffffffffd55ULL,
+-        0xfffffffffffaaaaaULL,
+-        0xfffffffffffff555ULL,
+-        0xfffffffffffeaaaaULL,
+-        0xffffffffffffd555ULL,
+-        0x0000000000000000ULL,                    /*  24  */
+-        0x0000000055555555ULL,
+-        0x0000000000155555ULL,
+-        0x00000000000002aaULL,
+-        0x0000000000055555ULL,
+-        0x0000000000000aaaULL,
+-        0x0000000000015555ULL,
+-        0x0000000000002aaaULL,
+-        0xffffffffffffffffULL,                    /*  32  */
+-        0xffffffffccccccccULL,
+-        0xfffffffffff33333ULL,
+-        0xfffffffffffffe66ULL,
+-        0xfffffffffffcccccULL,
+-        0xfffffffffffff999ULL,
+-        0xffffffffffff3333ULL,
+-        0xffffffffffffe666ULL,
+-        0x0000000000000000ULL,                    /*  40  */
+-        0x0000000033333333ULL,
+-        0x00000000000cccccULL,
+-        0x0000000000000199ULL,
+-        0x0000000000033333ULL,
+-        0x0000000000000666ULL,
+-        0x000000000000ccccULL,
+-        0x0000000000001999ULL,
+-        0xffffffffffffffffULL,                    /*  48  */
+-        0xffffffff8e38e38eULL,
+-        0xffffffffffe38e38ULL,
+-        0xfffffffffffffc71ULL,
+-        0xfffffffffff8e38eULL,
+-        0xfffffffffffff1c7ULL,
+-        0xfffffffffffe38e3ULL,
+-        0xffffffffffffc71cULL,
+-        0x0000000000000000ULL,                    /*  56  */
+-        0x0000000071c71c71ULL,
+-        0x00000000001c71c7ULL,
+-        0x000000000000038eULL,
+-        0x0000000000071c71ULL,
+-        0x0000000000000e38ULL,
+-        0x000000000001c71cULL,
+-        0x00000000000038e3ULL,
+-        0x0000000028625540ULL,                    /*  64  */
+-        0x0000000000286255ULL,
+-        0x0000000028625540ULL,
+-        0x000000000000a189ULL,
+-        0x000000004d93c708ULL,
+-        0x00000000004d93c7ULL,
+-        0x000000004d93c708ULL,
+-        0x000000000001364fULL,
+-        0xffffffffb9cf8b80ULL,                    /*  72  */
+-        0xffffffffffb9cf8bULL,
+-        0xffffffffb9cf8b80ULL,
+-        0xfffffffffffee73eULL,
+-        0x000000005e31e24eULL,
+-        0x00000000005e31e2ULL,
+-        0x000000005e31e24eULL,
+-        0x00000000000178c7ULL,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0xffffffffffffffff,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0x0,
++        0xffffffffffffffff,
++        0xffffffffaaaaaaaa,
++        0xffffffffffeaaaaa,
++        0xfffffffffffffd55,
++        0xfffffffffffaaaaa,
++        0xfffffffffffff555,
++        0xfffffffffffeaaaa,
++        0xffffffffffffd555,
++        0x0,
++        0x55555555,
++        0x155555,
++        0x2aa,
++        0x55555,
++        0xaaa,
++        0x15555,
++        0x2aaa,
++        0xffffffffffffffff,
++        0xffffffffcccccccc,
++        0xfffffffffff33333,
++        0xfffffffffffffe66,
++        0xfffffffffffccccc,
++        0xfffffffffffff999,
++        0xffffffffffff3333,
++        0xffffffffffffe666,
++        0x0,
++        0x33333333,
++        0xccccc,
++        0x199,
++        0x33333,
++        0x666,
++        0xcccc,
++        0x1999,
++        0xffffffffffffffff,
++        0xffffffff8e38e38e,
++        0xffffffffffe38e38,
++        0xfffffffffffffc71,
++        0xfffffffffff8e38e,
++        0xfffffffffffff1c7,
++        0xfffffffffffe38e3,
++        0xffffffffffffc71c,
++        0x0,
++        0x71c71c71,
++        0x1c71c7,
++        0x38e,
++        0x71c71,
++        0xe38,
++        0x1c71c,
++        0x38e3,
++        0x28625540,
++        0x286255,
++        0x28625540,
++        0xa189,
++        0x4d93c708,
++        0x4d93c7,
++        0x4d93c708,
++        0x1364f,
++        0xffffffffb9cf8b80,
++        0xffffffffffb9cf8b,
++        0xffffffffb9cf8b80,
++        0xfffffffffffee73e,
++        0x5e31e24e,
++        0x5e31e2,
++        0x5e31e24e,
++        0x178c7,
+     };
+ 
+     return !check_binary_op_64(do_mips64r6_SRAV, "srav", b64_expect);
+diff --git a/tests/tcg/mips64/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
+index 6aab6fc1d47..70626e4b429 100644
+--- a/tests/tcg/mips64/test_mips64r6_xor.c
++++ b/tests/tcg/mips64/test_mips64r6_xor.c
+@@ -32,86 +32,86 @@
+ int32_t main(void)
+ {
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+-        0x8000000000000000ULL,                    /*   0  */
+-        0xffffffffffffffffULL,
+-        0xfffffc0000000000ULL,
+-        0xffffffffffe00000ULL,
+-        0xfffffffffffff000ULL,
+-        0xfff8000000000000ULL,
+-        0xffffffffffffc000ULL,
+-        0xfffe000000000000ULL,
+-        0x0000000000000000ULL,                    /*   8  */
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,
+-        0x0000000000000000ULL,                    /*  16  */
+-        0xaaaaaaaaaaaaaaaaULL,
+-        0xaaaaa80000000000ULL,
+-        0x5555555555400000ULL,
+-        0xaaaaaaaaaaaaa000ULL,
+-        0x5550000000000000ULL,
+-        0xaaaaaaaaaaaa8000ULL,
+-        0x5554000000000000ULL,
+-        0x8000000000000000ULL,                    /*  24  */
+-        0x5555555555555555ULL,
+-        0x5555540000000000ULL,
+-        0xaaaaaaaaaaa00000ULL,
+-        0x5555555555555000ULL,
+-        0xaaa8000000000000ULL,
+-        0x5555555555554000ULL,
+-        0xaaaa000000000000ULL,
+-        0x0000000000000000ULL,                    /*  32  */
+-        0xccccccccccccccccULL,
+-        0x3333300000000000ULL,
+-        0x9999999999800000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6660000000000000ULL,
+-        0x3333333333330000ULL,
+-        0x9998000000000000ULL,
+-        0x8000000000000000ULL,                    /*  40  */
+-        0x3333333333333333ULL,
+-        0xcccccc0000000000ULL,
+-        0x6666666666600000ULL,
+-        0x3333333333333000ULL,
+-        0x9998000000000000ULL,
+-        0xccccccccccccc000ULL,
+-        0x6666000000000000ULL,
+-        0x0000000000000000ULL,                    /*  48  */
+-        0xe38e38e38e38e38eULL,
+-        0xe38e380000000000ULL,
+-        0x1c71c71c71c00000ULL,
+-        0xe38e38e38e38e000ULL,
+-        0x1c70000000000000ULL,
+-        0x8e38e38e38e38000ULL,
+-        0xc71c000000000000ULL,
+-        0x8000000000000000ULL,                    /*  56  */
+-        0x1c71c71c71c71c71ULL,
+-        0x1c71c40000000000ULL,
+-        0xe38e38e38e200000ULL,
+-        0x1c71c71c71c71000ULL,
+-        0xe388000000000000ULL,
+-        0x71c71c71c71c4000ULL,
+-        0x38e2000000000000ULL,
+-        0x886ae6cc28625540ULL,                    /*  64  */
+-        0x6ae6cc2862554000ULL,
+-        0x886ae6cc28625540ULL,
+-        0xb9b30a1895500000ULL,
+-        0xfbbe00634d93c708ULL,
+-        0xbe00634d93c70800ULL,
+-        0xfbbe00634d93c708ULL,
+-        0x8018d364f1c20000ULL,
+-        0xac5aaeaab9cf8b80ULL,                    /*  72  */
+-        0x5aaeaab9cf8b8000ULL,
+-        0xac5aaeaab9cf8b80ULL,
+-        0xabaaae73e2e00000ULL,
+-        0x704f164d5e31e24eULL,
+-        0x4f164d5e31e24e00ULL,
+-        0x704f164d5e31e24eULL,
+-        0xc593578c78938000ULL,
++        0x0,
++        0xffffffffffffffff,
++        0x5555555555555555,
++        0xaaaaaaaaaaaaaaaa,
++        0x3333333333333333,
++        0xcccccccccccccccc,
++        0x1c71c71c71c71c71,
++        0xe38e38e38e38e38e,
++        0xffffffffffffffff,
++        0x0,
++        0xaaaaaaaaaaaaaaaa,
++        0x5555555555555555,
++        0xcccccccccccccccc,
++        0x3333333333333333,
++        0xe38e38e38e38e38e,
++        0x1c71c71c71c71c71,
++        0x5555555555555555,
++        0xaaaaaaaaaaaaaaaa,
++        0x0,
++        0xffffffffffffffff,
++        0x6666666666666666,
++        0x9999999999999999,
++        0x4924924924924924,
++        0xb6db6db6db6db6db,
++        0xaaaaaaaaaaaaaaaa,
++        0x5555555555555555,
++        0xffffffffffffffff,
++        0x0,
++        0x9999999999999999,
++        0x6666666666666666,
++        0xb6db6db6db6db6db,
++        0x4924924924924924,
++        0x3333333333333333,
++        0xcccccccccccccccc,
++        0x6666666666666666,
++        0x9999999999999999,
++        0x0,
++        0xffffffffffffffff,
++        0x2f42f42f42f42f42,
++        0xd0bd0bd0bd0bd0bd,
++        0xcccccccccccccccc,
++        0x3333333333333333,
++        0x9999999999999999,
++        0x6666666666666666,
++        0xffffffffffffffff,
++        0x0,
++        0xd0bd0bd0bd0bd0bd,
++        0x2f42f42f42f42f42,
++        0x1c71c71c71c71c71,
++        0xe38e38e38e38e38e,
++        0x4924924924924924,
++        0xb6db6db6db6db6db,
++        0x2f42f42f42f42f42,
++        0xd0bd0bd0bd0bd0bd,
++        0x0,
++        0xffffffffffffffff,
++        0xe38e38e38e38e38e,
++        0x1c71c71c71c71c71,
++        0xb6db6db6db6db6db,
++        0x4924924924924924,
++        0xd0bd0bd0bd0bd0bd,
++        0x2f42f42f42f42f42,
++        0xffffffffffffffff,
++        0x0,
++        0x0,
++        0x73d4e6af65f19248,
++        0x2430486691addec0,
++        0xf825f0817653b70e,
++        0x73d4e6af65f19248,
++        0x0,
++        0x57e4aec9f45c4c88,
++        0x8bf1162e13a22546,
++        0x2430486691addec0,
++        0x57e4aec9f45c4c88,
++        0x0,
++        0xdc15b8e7e7fe69ce,
++        0xf825f0817653b70e,
++        0x8bf1162e13a22546,
++        0xdc15b8e7e7fe69ce,
++        0x0,
+     };
+ 
+     return !check_binary_op_64(do_mips64r6_XOR, "xor", b64_expect);
 -- 
 2.43.0
 
