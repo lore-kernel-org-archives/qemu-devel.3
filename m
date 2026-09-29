@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4139C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A6CCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBREW-0008Tb-Jn; Tue, 29 Sep 2026 02:22:32 -0400
+	id 1xBRGY-0000TO-4l; Tue, 29 Sep 2026 02:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBRET-0008TI-M0
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:22:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBRGV-0000So-6G
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:24:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBRES-00072q-AG
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:22:29 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBRGT-000768-Qe
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:24:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790662947;
+ s=mimecast20190719; t=1790663073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=rEQZ3DV8fHD35xRg4RzDLEEbJv/bo0qtwCb3+QQzKyw=;
- b=ZYf41yfVcDLXMXjjC6JoEx+FD95rZf6ldkSqCX69DTuS6Qo1nCXlbGQP7jmSKXq/ymstGv
- WQZl/JQzXBaAnEkEJ4zYaum/MgxD+3+Kz3TQx43Fdph59jUQD2b0GNIHv5HA2qNV2PYNh1
- ZjdnoNDxj9Uwt/RhG9x8RcJTU/f6tTU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=p9pFwMQx6jxvxpN37j3qBHx7WlxyPSOaOCbksZBzu04=;
+ b=F4YNczDSdjbwLv6Xo2yJlIVbgvNfbqay2KPkdxeMEe+wPyfBZYCKn4PnphhhvIcQVzmZJk
+ szxBa1UkWzW6sC352Z5+DC/+YWUMJv2VaFI0NjqrnW/5vxgnD4GTMAvTsU02bhx0imgWIA
+ 5gCXpUqBsBE5HZTP3gRNpLB2PjBwBP0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584--bpn7pgPMWGEDL0vmWdRMg-1; Tue,
- 29 Sep 2026 02:22:24 -0400
-X-MC-Unique: -bpn7pgPMWGEDL0vmWdRMg-1
-X-Mimecast-MFC-AGG-ID: -bpn7pgPMWGEDL0vmWdRMg_1790662942
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-jR4Q9PK8OHW1Pls884LbiQ-1; Tue,
+ 29 Sep 2026 02:24:29 -0400
+X-MC-Unique: jR4Q9PK8OHW1Pls884LbiQ-1
+X-Mimecast-MFC-AGG-ID: jR4Q9PK8OHW1Pls884LbiQ_1790663068
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DBAB195423D; Tue, 29 Sep 2026 06:22:22 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A50AA19539AC; Tue, 29 Sep 2026 06:24:27 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 210C430000E4; Tue, 29 Sep 2026 06:22:21 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA258768; Tue, 29 Sep 2026 06:24:26 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 86F4F21E6A04; Tue, 29 Sep 2026 08:22:18 +0200 (CEST)
+ id 7F29821E6A04; Tue, 29 Sep 2026 08:24:24 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Igor Mammedov
@@ -61,17 +61,17 @@ Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Igor Mammedov
  Wolf <kwolf@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-block@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  <philmd@mailo.com>
-Subject: Re: [PATCH v3 06/10] qapi: convert/split intros for commands
-In-Reply-To: <20260928192557.509157-7-jsnow@redhat.com> (John Snow's message
- of "Mon, 28 Sep 2026 15:25:53 -0400")
+Subject: Re: [PATCH v3 10/10] qapi: split intro sections for inlinable structs
+In-Reply-To: <20260928192557.509157-11-jsnow@redhat.com> (John Snow's message
+ of "Mon, 28 Sep 2026 15:25:57 -0400")
 References: <20260928192557.509157-1-jsnow@redhat.com>
- <20260928192557.509157-7-jsnow@redhat.com>
-Date: Tue, 29 Sep 2026 08:22:18 +0200
-Message-ID: <87a4p037c5.fsf@pond.sub.org>
+ <20260928192557.509157-11-jsnow@redhat.com>
+Date: Tue, 29 Sep 2026 08:24:24 +0200
+Message-ID: <875wzo378n.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
@@ -99,22 +99,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> Convert or split apart the existing intro for any remaining commands
-> in the QAPI schema into introduction and details sections. The
-> introduction is indented, remaining plaintext/details paragraphs
-> are not.
+> This patch splits the intro/details section for structs which are used
+> in an inlinable context; i.e. structs used either as arguments for a
+> command/event, or used as a branch of a union. The QAPI documentation
+> block for these entities will have their intro section left behind
+> when inlined into other contexts, but will still display the intro
+> section on standalone documentation for these types.
 >
-> For commands that have automatically generated documentation inserted
-> at parse time, these new split points serve as the new insertion
-> point. This affects the rendered documentation for `netdev_add` in
-> particular, whose arguments descriptions are pushed upwards.
+> In general, this patch does not change how the rendered documentation
+> currently looks, except:
 
-Missing: query-stats arguments and query-gic-capabilities "Return:" move
-up.
+Suggest to scratch "In general".
 
->
-> Minor rephrasings are applied for `query-qmp-schema` to help
-> the split flow better in rendered documentation.
+> 1. MemoryBackendShmProperties and MemoryBackendEpcProperties see their
+>    member descriptions move upwards to just below their formalized
+>    introductory sections.
 >
 > Signed-off-by: John Snow <jsnow@redhat.com>
 
