@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F197CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF1FFCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUek-0006y7-9E; Tue, 29 Sep 2026 06:01:50 -0400
+	id 1xBUeh-0006xM-VE; Tue, 29 Sep 2026 06:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUei-0006xj-ST
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:49 -0400
+ id 1xBUeg-0006x5-5t
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:46 -0400
 Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUeg-00088B-Ny
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:48 -0400
+ id 1xBUee-00087z-H5
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:45 -0400
 Received: by mail-wr2-x10.google.com with SMTP id
- ffacd0b85a97d-485ac898fa4so3247406f8f.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:46 -0700 (PDT)
+ ffacd0b85a97d-4843c3ea1f6so2179323f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676105; x=1791280905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790676103; x=1791280903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Yb1O3Pn56o4LiGypd3inPYKXfLS5LOODB/H+Z8H+8kI=;
- b=xyki7hluCVQ3EcUSGWg6nSZsNk8EJT6Gh1mNzEL56jCKvLGkVmVgSZiE7BmNZTnEBd
- AkiAj7CKR8cB5E9K+5DOVD1Y+li4jkZ/KASK6jmVCFhijqJbu61mrzBTEjCyqwKhLTa9
- Dyv5nblgWM33/Fi2VB+s4gnrOggbACD9eKb1tWwXBT/WX1IJdKIyf62BnVf1Nz6r6BeE
- m2hRnH59ibp4UHppZ2x5JGJ2kTaLoBSCREmqz67RcA9Qe0FTzxwaCaq8QoZgLZVt8Epa
- In7+P4Apgclu9ipcM+veccRf9oBsCm/QU/Foewr1mznYfS6TSVwVY240ViCb9dnzYmDm
- O8rg==
+ bh=xINePJIRXNKMnUd9OUs615HAdFRt0Nl+Akf6sHOm/9Y=;
+ b=XB3q/XqQWxaO/n1O+c++0DfFBTgcV232JRmkSnNucftYvA0BwIpQmP6dE1GqD0PEut
+ mF/ZaR82U2ZyX6VFKTYWtp+ZzDLjSTFQrF4O/rl3Er9vo0C567UnZmZ9jNDMq0Gpc7kA
+ D85x3LqFdN6CoiaXG1wYuYZQNmZoEIEtBcPAcbeZ/QOxiVURZQ+RRFLJsKTIB7KW7Cps
+ pTMnTpNh8x5kgc0jLfy8142UFfdWbMfwu70CkbIp+JzDinsWYflxyDzbrmkhhuIjklLO
+ J1s8Jz+qfiwP6+oc/JzeYrdesXDlJRkAVLvSKyYlnTXgtZILnp4FFlc3YO+oWDRWu0d5
+ 1Dtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676105; x=1791280905;
+ d=1e100.net; s=20260707; t=1790676103; x=1791280903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Yb1O3Pn56o4LiGypd3inPYKXfLS5LOODB/H+Z8H+8kI=;
- b=KE5WRZ59RcuaLTatb7YiZA1c/imjW7QxryouD+giWLsLfDgYvWCLLJxeofDo/Kqh/w
- a0PKYjegb1ZHvO69tELAKNw/vwzQE3nGFGEDJX/yf1ULTQSVgkRMDdjmJEvAZyJNcelP
- VAw0aEig29GvOdvOmjwgRtexGaxDpBJ9k5D+Wi2XAtnbmSxRh7CBRjvwhkqmwgQLqx3+
- f0dA4PA1l5SO78IjoePawdjQ3gPgz26P9KTt+iyjq5KaT8N9bONsFMkKsD/6i/Dt6moZ
- Jvsdb/cBBPOw+1Fgfec84jsl8EtQC+6JJr0IdojOAZYRIm/QBY60j56OaNJrXDJo1irP
- erfw==
-X-Gm-Message-State: AFq9FYJY894QjcKeUFlhN26vU0gkd6UM/Fe1Lo2e6VmzYaM2bcOlaLUC
- 47jZTh1x/sa9fZOYJ1FlPLRnbYNQD6yk3VCR6LjrLV5YzrmZcrCSRSN13HT2VAmc24A3uNb2Ac0
- npwDy
-X-Gm-Gg: AYBFou1l08AI3W9NamjSydQ0NtV/XHsGyUzCq5SSBUB0QujEnlFpOg5llsX5dY5N/rK
- QWKYu+l3WJkbrWy7JzqbcXpZWzXLPjRcBXCDlbSHElbsgKzkesbYTeM2WcNdp0QH2yfgniU9Sne
- dAqJREwmA2yEZBgclcDb8qg+TVLjs6SSA89dpSs/k0QikW5iPgStir4v0r5+lmIzzkjUXH26/FQ
- 6tM+wjtXKXJjMwwVymxbsD+vADa9kD5+VmR4GKu5OStYSQ+m0czXf+i3R/2bVdNLDEAYhgKk9fH
- sbOr+lqbQK1QXVhDb99wv2EgBKZQcv2yNUSu0mxTU9j3UdM9YdY38JbD4FBTJBRIC92OvT+m4Uv
- r59N5FBaqNzboiyOEjxt0vn3Rn4mMsHZ9LUCFPdL+H3eHEOmSld7Z4yr/Vxf77XTnJGieZhLFbk
- mZcb4BP4qkckZSjpIgOFJ9oodjmO538xn4p2ONOK8G8m/NhWCzepIRgqiG0pGSsSUcHGa7Bq/d6
- YxGQZXLwA9IZK8JFR7g4vC5VK3rM0ym1TYD5WYCwndiWkErOnN45iEyVdjbe6fJbxbroL799zXS
- Tp8=
-X-Received: by 2002:a5d:5d11:0:b0:486:e949:532c with SMTP id
- ffacd0b85a97d-48871875a05mr30542295f8f.43.1790676105189; 
- Tue, 29 Sep 2026 03:01:45 -0700 (PDT)
+ bh=xINePJIRXNKMnUd9OUs615HAdFRt0Nl+Akf6sHOm/9Y=;
+ b=UgxNZ6SUyhRnRjq2Hs5/oddZdsZonY9Bm8ggQEYn7+vMP6oJNrZ+1WrrCtRTa8wVBj
+ LkufYBrWkc8Uv8ISyxskwJvAIQ+eau/zhoBhmqbA6mgLT5/FHOF+D3fOYJuQHRX8G/TY
+ 19fO9lisxGC8Ci4nWh3zPp/F1tCbXuLvUdOgdVAO1IG0R53WQ+pmpeMcdpz1TdFYikvF
+ HkHa2xlOTykfNZl+2K2J9pLdkzpFV1TgkrRD6dREiSpjiJz+b2NjhXsCj3tBGLqXCZqL
+ qi837sIiejYUkm2A1gnsUuT/hZK6jOkvrPmBSJUrg/SMBAOov8THDbq1C93DfTjN31AY
+ U+TA==
+X-Gm-Message-State: AFq9FYL2Y0zFzkp9I7Ag6X90mmHbet9udJluFTSGQ6oAcVxKdjHl2HwY
+ tIxHt+axnwGKkqrJsBhJxC9MG6FO21DqgSu1OikRjV0mPunbsShxmRI/GPCesWFGCc581gqmWkG
+ n1HpW
+X-Gm-Gg: AYBFou3JjW+LIPqcX4SuzG4uU9ri5OenlwlW3GbhO57CPr2BZ8IvPVIbkcaIOn/uSSv
+ IYfW5nDo4eCwZ20cpFwLrRF3I7GCPXCw7vOw4NcIOQHBG47JY9vCQkrue+heYR/Be6l3s9+Lci0
+ hZg3/kNk5RBTaxAZg6aGW/HHahs+hUGx6x7+LQOFrF3p4qOqeJWCc8J2tk0rJzIl2nnF1NMIL12
+ Ok0lGVuFLa1KgdvRqQsEK0y2RsMzCrmoIMH9V6FOuBqeTRSNdvS69gO4sHXDVm/a8utIqYtlqna
+ sgYqIrzK59COtoEsNEYkzmH5MCEpFwJol415x9mSP3X1OcF5fmx7dFjrOIvUQ2QBIrtOTroWfMB
+ 4/Wt1dZrfzP1t4SA/XkBTRxftci5taMneAWbyUEXZxOp22/lgZWSlg21bBSvJ6BlW3aaCpEJbra
+ hZllGpgG1G0sD5zt8qtxcecZo7jiqoMfo7IcuYAdHHRIYLlz5hcJdPfCbVnTCtOefwUksIDRxRO
+ /ODRi2tx7rtx8j8JOPlHuPFExqHTCFXIbV/jna/T4rw+dG5MYpjOwVWHNpEdCD34E2B8JKUh6VL
+ cRs3YGK3larLoQ==
+X-Received: by 2002:a5d:5d0c:0:b0:487:1f7:f506 with SMTP id
+ ffacd0b85a97d-488835f2adamr22759461f8f.11.1790676102832; 
+ Tue, 29 Sep 2026 03:01:42 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.44
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:01:44 -0700 (PDT)
+ Tue, 29 Sep 2026 03:01:41 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/37] hw/arm/tegra241-cmdqv: Keep VINTF page0 region alive
-Date: Tue, 29 Sep 2026 11:01:01 +0100
-Message-ID: <20260929100133.2598676-7-peter.maydell@linaro.org>
+Subject: [PULL 04/37] hw/arm: Add GPIO to Allwinner A10 model
+Date: Tue, 29 Sep 2026 11:00:59 +0100
+Message-ID: <20260929100133.2598676-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
@@ -102,156 +102,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Matthew R. Ochs" <mochs@nvidia.com>
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
-With CMDQV enabled, resetting a guest after it enables VINTF invokes
-the VINTF page0 unmap path. The resulting crash is intermittent and
-has been observed on the RCU reclaim thread as:
+The Allwinner A10 GPIO is added to the Allwinner A10
+description, so it is available when Cubieboard is emulated.
 
-  reboot: Restarting system
-  double free or corruption (!prev)
-  ...
-  #5 address_space_dispatch_free
-  #6 flatview_destroy
-  #7 call_rcu_thread
+Update the documentation for Cubieboard to indicate GPIO availability.
 
-FlatViews retain raw MemoryRegion pointers and release their references
-asynchronously through RCU. The VINTF page0 unmap path removes the
-subregion and immediately unparents and frees it. An old FlatView can
-then access the freed region during teardown, resulting in a
-use-after-free and heap corruption.
-
-Embed the VINTF page0 MemoryRegion in Tegra241CMDQV and tie its lifetime
-to the VINTF page0 mmap. Initialize and add the region disabled after
-successful vIOMMU allocation, and remove and unparent it before releasing
-the mmap during allocation unwind. Guest VINTF enable and disable then
-only toggle the region with memory_region_set_enabled(). New FlatViews
-omit the disabled region, while old views continue to reference valid
-storage.
-
-Keeping the region initialized across VINTF disable and reset is safe
-because the vIOMMU association and its VINTF page0 mmap remain stable
-once the guest CMDQ has been initialized. QEMU blocks hot-unplug of the
-device that established the association, so later hot-adds reuse it
-instead of associating the initialized guest CMDQ with a different host
-SMMUv3. The CMDQV free_viommu path is therefore only invoked while
-unwinding initial allocation, when the region is still disabled and has
-never entered a FlatView.
-
-Fixes: 5965b81ce283 ("hw/arm/tegra241-cmdqv: Use mmap'd host VINTF page0 for virtual VINTF page0")
-Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Matthew R. Ochs <mochs@nvidia.com>
-Message-id: 20260914222554.708582-1-mochs@nvidia.com
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260915-allwinner-gpio-v4-2-b1ee1d09c9fd@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/tegra241-cmdqv.c | 54 +++++++++++++++++++++--------------------
- hw/arm/tegra241-cmdqv.h |  2 +-
- 2 files changed, 29 insertions(+), 27 deletions(-)
+ docs/system/arm/cubieboard.rst | 1 +
+ hw/arm/Kconfig                 | 1 +
+ hw/arm/allwinner-a10.c         | 8 ++++++++
+ include/hw/arm/allwinner-a10.h | 2 ++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index 273633e6293..57041408a7f 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -131,36 +131,12 @@ static void tegra241_cmdqv_reset_vcmdq_cache(Tegra241CMDQV *cmdqv, int index)
+diff --git a/docs/system/arm/cubieboard.rst b/docs/system/arm/cubieboard.rst
+index 90d24c73a13..ee9f489ead2 100644
+--- a/docs/system/arm/cubieboard.rst
++++ b/docs/system/arm/cubieboard.rst
+@@ -12,6 +12,7 @@ Emulated devices:
+ - RTC
+ - EMAC
+ - SDHCI
++- GPIO
+ - USB controller
+ - SATA controller
+ - TWI (I2C) controller
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index eae06369b02..4445f16f451 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -295,6 +295,7 @@ config ALLWINNER_A10
+     select ALLWINNER_EMAC
+     select ALLWINNER_I2C
+     select ALLWINNER_A10_SPI
++    select ALLWINNER_GPIO
+     select AXP2XX_PMU
+     select SERIAL_MM
+     select UNIMP
+diff --git a/hw/arm/allwinner-a10.c b/hw/arm/allwinner-a10.c
+index 66f30757dd5..66fe484ae0e 100644
+--- a/hw/arm/allwinner-a10.c
++++ b/hw/arm/allwinner-a10.c
+@@ -41,6 +41,7 @@
+ #define AW_A10_EHCI_BASE        0x01c14000
+ #define AW_A10_OHCI_BASE        0x01c14400
+ #define AW_A10_SATA_BASE        0x01c18000
++#define AW_A10_GPIO_BASE        0x01c20800
+ #define AW_A10_WDT_BASE         0x01c20c90
+ #define AW_A10_RTC_BASE         0x01c20d00
+ #define AW_A10_I2C0_BASE        0x01c2ac00
+@@ -83,6 +84,8 @@ static void aw_a10_init(Object *obj)
  
- static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
- {
--    if (!cmdqv->mr_vintf_page0) {
--        return;
--    }
--
--    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
--    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
--    g_free(cmdqv->mr_vintf_page0);
--    cmdqv->mr_vintf_page0 = NULL;
-+    memory_region_set_enabled(&cmdqv->mr_vintf_page0, false);
- }
+     object_initialize_child(obj, "spi0", &s->spi0, TYPE_AW_A10_SPI);
  
- static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
- {
--    char *name;
--
--    if (cmdqv->mr_vintf_page0) {
--        return;
--    }
--
--    name = g_strdup_printf("%s vintf-page0",
--                           memory_region_name(&cmdqv->mmio_cmdqv));
--    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
--    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
--                                      memory_region_owner(&cmdqv->mmio_cmdqv),
--                                      name, VINTF_PAGE_SIZE,
--                                      cmdqv->vintf_page0);
--    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
--    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
--                                        CMDQV_VINTF_PAGE0_BASE,
--                                        cmdqv->mr_vintf_page0, 1);
--    g_free(name);
-+    memory_region_set_enabled(&cmdqv->mr_vintf_page0, true);
- }
- 
- static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
-@@ -899,6 +875,9 @@ static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
-         cmdqv->veventq = NULL;
-     }
-     if (cmdqv->vintf_page0) {
-+        memory_region_del_subregion(&cmdqv->mmio_cmdqv,
-+                                    &cmdqv->mr_vintf_page0);
-+        object_unparent(OBJECT(&cmdqv->mr_vintf_page0));
-         munmap(cmdqv->vintf_page0, VINTF_PAGE_SIZE);
-         cmdqv->vintf_page0 = NULL;
-     }
-@@ -910,6 +889,7 @@ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-                             uint32_t *out_viommu_id, Error **errp)
- {
-     Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
-+    char *name;
-     uint32_t viommu_id, veventq_id, veventq_fd;
-     IOMMUFDVeventq *veventq;
-     int flags;
-@@ -955,6 +935,28 @@ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
- 
-     /* Set up event handler for veventq fd */
-     qemu_set_fd_handler(veventq_fd, tegra241_cmdqv_event_read, NULL, cmdqv);
++    object_initialize_child(obj, "gpio", &s->gpio, TYPE_AW_GPIO);
 +
-+    /*
-+     * Tie the MemoryRegion lifetime to the VINTF page0 mmap. Initialize it
-+     * disabled. If initial vIOMMU setup later unwinds, the region has never
-+     * entered a FlatView and can be removed and unparented before releasing
-+     * the mmap. After successful setup, keep it parented across guest disable
-+     * and reset, and only toggle its enabled state so old FlatViews continue
-+     * to reference valid storage.
-+     */
-+    name = g_strdup_printf("%s vintf-page0",
-+                           memory_region_name(&cmdqv->mmio_cmdqv));
-+    memory_region_init_ram_device_ptr(&cmdqv->mr_vintf_page0,
-+                                      memory_region_owner(&cmdqv->mmio_cmdqv),
-+                                      name, VINTF_PAGE_SIZE,
-+                                      cmdqv->vintf_page0);
-+    memory_region_set_skip_iommu_map(&cmdqv->mr_vintf_page0, true);
-+    memory_region_set_enabled(&cmdqv->mr_vintf_page0, false);
-+    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
-+                                        CMDQV_VINTF_PAGE0_BASE,
-+                                        &cmdqv->mr_vintf_page0, 1);
-+    g_free(name);
+     for (size_t i = 0; i < AW_A10_NUM_USB; i++) {
+         object_initialize_child(obj, "ehci[*]", &s->ehci[i],
+                                 TYPE_PLATFORM_EHCI);
+@@ -203,6 +206,11 @@ static void aw_a10_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi0), 0, AW_A10_SPI0_BASE);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi0), 0, qdev_get_gpio_in(dev, 10));
+ 
++    /* GPIO */
++    sysbus_realize(SYS_BUS_DEVICE(&s->gpio), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio), 0, AW_A10_GPIO_BASE);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0, qdev_get_gpio_in(dev, 28));
 +
-     *out_viommu_id = viommu_id;
-     return true;
+     /* WDT */
+     sysbus_realize(SYS_BUS_DEVICE(&s->wdt), &error_fatal);
+     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->wdt), 0, AW_A10_WDT_BASE, 1);
+diff --git a/include/hw/arm/allwinner-a10.h b/include/hw/arm/allwinner-a10.h
+index 445ba1be212..8b7736c7bd1 100644
+--- a/include/hw/arm/allwinner-a10.h
++++ b/include/hw/arm/allwinner-a10.h
+@@ -13,6 +13,7 @@
+ #include "hw/misc/allwinner-a10-dramc.h"
+ #include "hw/i2c/allwinner-i2c.h"
+ #include "hw/ssi/allwinner-a10-spi.h"
++#include "hw/gpio/allwinner-gpio.h"
+ #include "hw/watchdog/allwinner-wdt.h"
+ #include "system/block-backend.h"
  
-diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-index de4c1e53358..bba985099e3 100644
---- a/hw/arm/tegra241-cmdqv.h
-+++ b/hw/arm/tegra241-cmdqv.h
-@@ -49,7 +49,7 @@ typedef struct Tegra241CMDQV {
-     IOMMUFDVeventq *veventq;
-     IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
-     void *vintf_page0;
--    MemoryRegion *mr_vintf_page0;
-+    MemoryRegion mr_vintf_page0;
- 
-     /* CMDQ-V Config page register cache */
-     uint32_t config;
+@@ -42,6 +43,7 @@ struct AwA10State {
+     AwSdHostState mmc0;
+     AWI2CState i2c0;
+     AWA10SPIState spi0;
++    AWGPIOState gpio;
+     AwRtcState rtc;
+     AwWdtState wdt;
+     MemoryRegion sram_a;
 -- 
 2.43.0
 
