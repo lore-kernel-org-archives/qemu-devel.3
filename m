@@ -4,145 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66787CA5FA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 18:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972F9CA5FA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 19:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBd0o-0001eW-AQ; Tue, 29 Sep 2026 14:57:10 -0400
+	id 1xBdK4-0003ng-H4; Tue, 29 Sep 2026 15:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xBd0m-0001eG-1Z
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 14:57:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBdJr-0003lR-FQ
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 15:16:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xBd0k-0003La-6E
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 14:57:07 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68THgIZN3300548
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 18:57:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mbEYwYSz+q6l4frroQQiH2DpwITqHWZ2q2m9qgRMFDM=; b=UeZKGOYbJYZ9s79n
- L+WHqKHE/iZfZwC+GSUJ4fQS8/tdnfhh5kyTUhdKJeR+0JY3OX1p9EFDwCdagxIY
- 9vxs0CLML7ZTqnrgh/+cWd1JsyrvaBIpWf6MNV30JJrF440zL9rsFlvdIIaStImz
- fRUJxalBr5dtNJ69TPRaOAJr9LSG2i+0+8RxSPJmg3mWC+/WQENO2TH7otqzjLgD
- cFHGmpeBfC7zeIyAZcyvfNodEmu8v0bXuVmzccG3vHhDlApFnwgwEZ/b6xBMi1Nn
- nOs/CDPBTS4KAKhlS+C1rv508zZAZSbGKRP4MDoVhMxRgEraxWETJX174k1b/TcX
- u/uSyw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0dsx1q5g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 18:57:02 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-936708f129aso911040985a.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 11:57:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBdJp-00051Y-VT
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 15:16:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790709408;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zr4ttoSXHNg6/T4ZIV3Yen6JhtgWktUSl1HfXjwFSms=;
+ b=jQLROIIobwf4qsHem4CULwa8B7Lxrv/Ju1m0EGJppz8ae0D7bKvYn9JoNtZep59dDShtfe
+ Ad1tF5YQEC1PE6nVkEfypNl+QH8gXG5IgyDXyb5+NI7zeN91fIRHJQ+jkhxE6ZwVIT/d6m
+ xHj2K6DhyM2EQirOSHSeYi1QuNXiTgQ=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-175-h6nT0TNLNmK4X7diZqXU2A-1; Tue, 29 Sep 2026 15:16:46 -0400
+X-MC-Unique: h6nT0TNLNmK4X7diZqXU2A-1
+X-Mimecast-MFC-AGG-ID: h6nT0TNLNmK4X7diZqXU2A_1790709406
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-53310b75674so89884761cf.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790708221; x=1791313021; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=mbEYwYSz+q6l4frroQQiH2DpwITqHWZ2q2m9qgRMFDM=;
- b=SwfqExwk9vUwa4iih30xL9+Vc053sm1em1BdzukLouxFLUqBxe3G+5pqn9kCqaiEeS
- 7w8caG4Cd5ZiVbXfM87FYDUOBYz2N8Yp23SX6+oJVCFJT/OCgVZXnnxJ1HJe0fpnwe08
- eiUI1gelXZGQZv+PUf965dt7zWB3qsbkOKX1uhVovmZ2WDjofFn7uE/ufmSoLqpAqlTz
- v3eenD/bU/gwXwHF09oGIUBY01MDAVA1emdh5o9fCe+buhOAgyskOfWt51qLg5m/GmiE
- zb8T7kTEpLCZYiiabWvPt4q7yg/BFfhVww3MLX33RZ98maTv9lTGOjPYWZfWlmZOWkg6
- Vsgg==
+ d=redhat.com; s=google; t=1790709406; x=1791314206; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Zr4ttoSXHNg6/T4ZIV3Yen6JhtgWktUSl1HfXjwFSms=;
+ b=iI+SbUVG+HPbOPCBgr84J1s/pHIYNFUlMrpLSuKdUHt1/kcIEtWfnKjx81D+PYisGF
+ vyaKD7HQg1liqZEZh0xkdjNqQnwjKjkNaTrJWY1X78N/7R5jXYIohbnncm3qqmmzThIh
+ gxGIX6DjMqf1uEihGMDx+Qe0n7ArsXob9nca6XZJhPkfeox5UiCCneXVvrsxO/q4tKSM
+ mzbB60T8UwY8/tK+8U54NqNGptUcDIy/ADHtoEZcelCkgzefUeKZuH0vDPlYCnH14thG
+ Gkze9YpN0lEW/Dn+yondWCC3mNNAoGO6yL+bAtfjIvqghR/ud1ZL8b9z+7v5aI0mqn4o
+ QZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790708221; x=1791313021;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mbEYwYSz+q6l4frroQQiH2DpwITqHWZ2q2m9qgRMFDM=;
- b=Z/ENuGGbzUo1Lm3+rHe2Q74goFZf9J+25RwCEr5WinEwkQIg3jWYKAwqlOE8mMdwXr
- udcaqni/HKzHgER5mcZ8N9bXjqBIoCooAvVg4mqML5UxUhSdSWvrlhtdpOFM+J86WRS7
- FOcDsGMoq+y8VAn+uoyq2R44gayL9iNIh9kvR4AZ1ndoZcRHZ3YqveoRNnmtypmaaBmW
- 4s8v+zNpKDgjOpG5DwPrNS1uGwCcbsUDu2YBW0T1u0ZvfanlSfShIfqm0ZX9OEaGnK5i
- BIXLk17oKwwq5HPnobLXtAc68WgguVPgwvKdZVmkv+Qr7S+Nk7Kg7OG1z6hMm/ivzPmS
- lasg==
+ d=1e100.net; s=20260707; t=1790709406; x=1791314206;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Zr4ttoSXHNg6/T4ZIV3Yen6JhtgWktUSl1HfXjwFSms=;
+ b=2U2+yLfSPLDeEIRacaagEYPz/FrDeIXU3XGdWkIbeyKp7rbJJPff6H9FYq8yb6b0e4
+ F2vSAVXuNQjTXTY9eZzrOzQof4Y8FwGExBC17exNovxiFwSoUIIPTAH3ftN2Y2uyy+w0
+ OO3k5RYvkeKCsNIwddBqMtlSzrPXGYSACZmRQZeEFSjVa/vvel0hS/0MpxFF0sT4TtC+
+ pWr3t9LWSqlNzTh9jxN4rWE06wfMCdya8SRJQLlTW8aO3KkdRzf229THtuMzler5Dw5f
+ noyq0YIWrzd1UwxuY792TBHX4nMA6Eb19CtOGRuPZo5tlKWsWqBualL+OEbTD5cW7fXl
+ UB0g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx1HhNxlEAjkXV9bEstAQ4fgEfXbioJ0951HST9BV9c8XjQAWo+eP/+ZVQdrO6nhhnpveb/ejrEMx6Q@nongnu.org
-X-Gm-Message-State: AFuF++kPxrp9oe01QyFuqHNvA5MF0tMzuArkaEnGRSLrga/xZcUQXYA8
- Og2lq+Halltc6tUK4a5zdnCPoaIpvhvoQ6TQFM0vmjiASH63fvJGdsYzUMEBbf4Z14+ztVJRkTb
- NOSTMpK4h1ZPtiqsvjuSKQeh69b9AJZIoZAbRmYQ1oms6k/PAujt6TR8JDg==
-X-Gm-Gg: AYBFou1DZY9YBVjmFlKOBeV0qzbrvZxgGbjec0vjTpJTuoCFiSH2SBAndG5UkG6ke/7
- k6McC1aat+3jSCzmH/MiemE9AKS2ksdFani5d8MmzZVxdQTmCmBsAY8Wm2cwEVuyYMzEEja24Ai
- b6OpvBSzUfex4+d+EAxSLkaEf8eNNbio6ZjPcSm+7vhgTfatdl8rMwSMMvHJbw2edRfjdRZnDlv
- Nl72j4Ly4WO6973sSLNVAwyDSiKZ6e/m0gOnHTzkt9hhGFEf1QQ2iIQ+7CxFJSv/qYpnjYeI8BQ
- 9cq3DwIcU8hqIVhVX7BnOCyQqmWeljt/HTWM5S3RqMYAoHx1h4hBew+QHGJskzDmW8Inx7Rf0we
- h+n6ppzfU/Hj+GNR8AugDy5HYp6IcF2NSFckLHpq3rTWy87UChZa9AlPrlEarnRZIHzj7c0NJhR
- pPWbsYEPOJT11dfUpQ7vZJ7wE=
-X-Received: by 2002:a05:620a:8010:b0:939:fde0:a71b with SMTP id
- af79cd13be357-93c9f315edcmr112204385a.0.1790708221499; 
- Tue, 29 Sep 2026 11:57:01 -0700 (PDT)
-X-Received: by 2002:a05:620a:8010:b0:939:fde0:a71b with SMTP id
- af79cd13be357-93c9f315edcmr112197185a.0.1790708220844; 
- Tue, 29 Sep 2026 11:57:00 -0700 (PDT)
-Received: from [10.222.168.145] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c9f4b52a8sm37336785a.19.2026.09.29.11.56.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 11:57:00 -0700 (PDT)
-Message-ID: <2574f946-74a3-4025-b147-1bc91c532ab9@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 13:56:58 -0500
+ AKwUvBx5f3ChgD5RfdPXy0ALfTKHUDRonS6sXZpfPO2C6iy2Rf4qpLAkuf1IugCKaeVWHa3IK7NH2uDD5afv@nongnu.org
+X-Gm-Message-State: AFuF++mGaIzpbjyyyk+5nYoYt492/peognEtyi/eErWPCNu3KAe6GD2a
+ h9o0UZjd6Ir+A7xb0tv4kl6k3eFFBuwFhWAn+5Rn806L80QmMvOrg5M5QQT1QB3VPpgkGW74pw6
+ gCLKv38OxA1h9yHyscleFgQcp9QU1Gxt15Tv+JUcs5/0RWYEOhq+A2Tbt
+X-Gm-Gg: AYBFou3NOtdDqLr6fWBptSKzoTHs0CN8h+4hyQJ8osrv9awDs1YZX/6E1Sq8wHtphxF
+ q1JTzYSVnwQES29FFAapI0KZpeQYZ+ZiI4VG9pGmQJgPB97QKyCpWbLldHHQhGRQrgcCrMz4Xnf
+ epW6kUrtWU8VKt5hEJyYvKF2XUvIsPdqn9aiPcA4wvJFVeNBzFWeaJ39dPp8KVo6A7UpaUWfvVL
+ g/fRVTy/6xUP/o1vUEvaeq0hkNwVnmOPmd1d1AyG1kL56a5k4AnGa5PEmKt6Q7Tfa4OIYgsAjGq
+ 24eO1qmEigtZRTiRS64ztHuTqzsmztr3C6xFXJSx8MgonJOtvJTkJrNvgYehNF9UOzmj5Ok=
+X-Received: by 2002:ac8:5a0d:0:b0:531:e1:6fcc with SMTP id
+ d75a77b69052e-5336a2f53b6mr5164011cf.14.1790709406066; 
+ Tue, 29 Sep 2026 12:16:46 -0700 (PDT)
+X-Received: by 2002:ac8:5a0d:0:b0:531:e1:6fcc with SMTP id
+ d75a77b69052e-5336a2f53b6mr5163511cf.14.1790709405482; 
+ Tue, 29 Sep 2026 12:16:45 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-53369988e00sm2656471cf.2.2026.09.29.12.16.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Sep 2026 12:16:44 -0700 (PDT)
+Date: Tue, 29 Sep 2026 15:16:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ qemu-devel@nongnu.org, mst@redhat.com, maciej.szmigiero@oracle.com,
+ philmd@oss.qualcomm.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ clg@redhat.com, den@openvz.org, mark.kanda@oracle.com,
+ vsementsov@yandex-team.ru, farosas@suse.de, sgarzare@redhat.com,
+ bchaney@akamai.com, dongli.zhang@oracle.com, Paul Durrant <paul@xen.org>
+Subject: Re: [PATCH v8 04/17] migration: forbid snapshots under Xen
+Message-ID: <arwOl9OvOlXJTtwS@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260929-up-vsock-vhost-v5-v8-0-12bcf1c0b84a@virtuozzo.com>
+ <20260929-up-vsock-vhost-v5-v8-4-12bcf1c0b84a@virtuozzo.com>
+ <arwCADGhCZenoYke@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ <b7d2302dfa4b48480e45423ffaceb93ce2239e7b.camel@infradead.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] target/hexagon: use vector payload size for HVX
- operations
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- richard.henderson@linaro.org
-References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
- <20260926192338.2702952-6-brian.cain@oss.qualcomm.com>
-Content-Language: en-US
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-In-Reply-To: <20260926192338.2702952-6-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA3NSBTYWx0ZWRfX71ja9RwWf55/
- i4aPfWjUfISlTYD46Umedh7w954Ul4o4UO8qGJ9ti335/+KukQtrj11/Vog/ES+wAV94HRIhEQe
- RiTHj9QiYlXpydIDJjcoo/Ofs4AlPbiWBofOwEZ+T+C1JDSkdtH71w3BgherLUgqLnos1gwEW81
- gLvXeQvQBnom8K4x7QkWNECTNW4QvqB/BhS8UYDxwGageN4D6/KC441fgI16M+d192FxvNaSgiz
- uiHQ9qtwGXnyK6mLSkndsglgOd4X8yurgU+CF4l6nIMHEP7aIg/H1O7B18Cr79FGxpRj4uI9QAb
- kCUhTG4DsYh2DYmzCuyLBw4x0cTpR6X/gdHEv1UGxI3c/dZf1THNPtRQoB2VNE8EqLyrYTkSsyA
- KvFRYkaulTzIWRBUyhRJcj2vLHIqxcbjCJxUig5A7FvUbQNvaucA0p0s4ZcU7dw0jSF/rjKCEwo
- 5uA7linfpvu3MYy9KJg==
-X-Proofpoint-ORIG-GUID: cdIqpsZKq-hfs12jWD1J4lY6LzMHTFCs
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA3NSBTYWx0ZWRfX84h5WCNrzdPX
- ugq93A9gn4gWhOpkefDUeKWfFGJ4t58kkPf6oAh9KueZl3nXD3xdjBsdqoMJnGWWF9uRe+ToJWz
- /uqO/oXcA5TydZ74LhlnJSq1PhTBgKE=
-X-Proofpoint-GUID: cdIqpsZKq-hfs12jWD1J4lY6LzMHTFCs
-X-Authority-Analysis: v=2.4 cv=DqvDa2/+ c=1 sm=1 tr=0 ts=6abc09fe cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=XkjCc0faG8W-Hq6Ck4QA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 phishscore=0 adultscore=0 malwarescore=0
- suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290075
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b7d2302dfa4b48480e45423ffaceb93ce2239e7b.camel@infradead.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,31 +124,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.09.2026 14:23, Brian Cain wrote:
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   target/hexagon/gen_tcg_hvx.h            | 242 ++++++++++++------------
->   target/hexagon/mmvec/macros.h           |   8 +-
->   target/hexagon/genptr.c                 |  18 +-
->   target/hexagon/mmvec/system_ext_mmvec.c |   8 +-
->   target/hexagon/op_helper.c              |  34 ++--
->   5 files changed, 152 insertions(+), 158 deletions(-)
+On Tue, Sep 29, 2026 at 07:34:50PM +0100, David Woodhouse wrote:
+> On Tue, 2026-09-29 at 14:22 -0400, Peter Xu wrote:
+> > On Tue, Sep 29, 2026 at 08:23:23PM +0300, Andrey Drobyshev wrote:
+> > > The snapshot RAM-saving path does not support Xen's memory mappings.
+> > > Refuse 'savevm' and 'loadvm' when running as a Xen device model, the
+> > > same way they are refused for CPR migration modes.
+> > > 
+> > > Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> > 
+> > Acked-by: Peter Xu <peterx@redhat.com>
+> > 
+> > Cc: David Woodhouse <dwmw2@infradead.org>
+> > Cc: Paul Durrant <paul@xen.org>
 > 
-> diff --git a/target/hexagon/mmvec/system_ext_mmvec.c b/target/hexagon/mmvec/system_ext_mmvec.c
-> index 081cadd814a..b796bad72a6 100644
-> --- a/target/hexagon/mmvec/system_ext_mmvec.c
-> +++ b/target/hexagon/mmvec/system_ext_mmvec.c
-> @@ -21,15 +21,13 @@
->   
->   void mem_gather_store(CPUHexagonState *env, target_ulong vaddr, int slot)
->   {
-> -    size_t size = sizeof(MMVector);
-> -
->       env->vstore_pending[slot] = 1;
->       env->vstore[slot].va   = vaddr;
-> -    env->vstore[slot].size = size;
-> -    memcpy(&env->vstore[slot].data, &env->tmp_VRegs[0], size);
-> +    env->vstore[slot].size = MAX_VEC_SIZE_BYTES;
-> +    memcpy(&env->vstore[slot].data, &env->tmp_VRegs[0], sizeof(MMVector));
-Shouldn't memcpy use MAX_VEC_SIZE_BYTES too?
+> Hm, but surely if QEMU is running as a device model for a Xen domain,
+> all it should be saving and restoring is that device model. It's then
+> up to Xen and its toolstack to migrate the domain and its memory.
+> 
+> We've had guest-transparent live migration working on Xen, as well as
+> in-place update of QEMU on the same host. Surely all of those require
+> save/load support?
+
+Looks like I was wise copying more people..
+
+I knew Xen had qmp_xen_save_devices_state(), I was thinking that is the
+save support wiring together with Xen's facilities.
+
+I confess I never know what is the load support, and I was taking it for
+granted RAM was managed elsewhere, so load perhaps the same.
+
+So I suppose this is still a question to the author, or maybe Akihiko?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
