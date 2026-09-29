@@ -4,149 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44429C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A45D2CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZJe-0004Ys-3h; Tue, 29 Sep 2026 11:00:23 -0400
+	id 1xBZKB-0004rJ-Q1; Tue, 29 Sep 2026 11:00:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBZJU-0004Vo-UQ
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBZK0-0004lW-FF
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBZJS-00050p-5Z
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:11 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TCqlag350194
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:00:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=; b=I3uoVswzPOAVm45U
- TySoSv+ewy4ebXsFI5kGIvjFmCG2aGKTapyARHykhPziLI1dvgeJCBMgbQJM637F
- YgCVPCaEM6MRsSMgoOzaAlkb4kcLRvAIDqpP8VnjmjZP5RYb//VVIaXwT5T2jKw0
- It0z1aq+EjF4HubqI0tWmdcikjGL6pjh4EEpZO3YEFLxIc6NSdwUVNBwaBiVM8kt
- zRHFLdSyOFa98HPyUmNzIL2Gf440igV6CKRnLbOjy5SyLdTScKTRnef5n7WP7nf7
- 0ycKhQRwT7HvGPWkaAOdQFUGagb073o7Z6R3zyknWd/ukp99+YuBx6X0oriOUDeB
- 1qNitQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h01vkkfaq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:00:08 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93c58ee2116so742463585a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:00:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790694008; x=1791298808; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=;
- b=UqBxgU2QaCs5nKvp37QgUxjFEeqTOXPitUi4x7nF40J0UjezKwxd0fj7H7+CRvZzkh
- yJhymoi5fshIxagd3D2Xi0tXXfpQymhiKTCUzEoAQ75/4wPh65zSJUqJs7Burt0NH6xX
- 2D3s6CfgeYSfIAKQ3fr/T82s7Wm52BWkdwc7iDVsoApJ6N44+9/6ESCSwITnUbdzdsCM
- 0QnheGC6vnJv5U7V1ZM9T0cPd2gOOwEe2UsIxB9J+WU1QbAODrJqmI747D0NymLwMQ9x
- bK9Gj88yQJY03XmYwMhvGMNd28S6QkRy/hUKOZfRJHv7CpI7wH0+YSOKBLHhIZ8iXI//
- apLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790694008; x=1791298808;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=;
- b=OCPgvJVtzni6lnt7uw/DhCOj6yGroJjfS73Xh9RX/0vpwbIsw5F88KnYK7FcDBISwn
- 878YwsRT72Oh1Fw7nqTzuTiwOnuw1XSje/pu3uzjbU5H6hWTl1KviEG25vPw7EHH/Hgj
- AHwM5SrEMMRkqp4NtCg8WhpswrdwG0g0NgXZvfSl/MXjU7gU+2l/tlBZfiZgZc7583Ui
- 7X9NXRMAfA8RREddhRbJh/n6lV7wK1y/kiHTQvlODX1d9PaNhSNPzEmZwatSX2tMA0IP
- dw4+N9xeU3uF/6ighk0+5S8xaImbDIEDF+uhjUYR6fIF8XhiUgHVXH9fcw3LP4gnx7U1
- CdbA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzp6hJp1jKXLV8UNQgyTfbZoh63yvg0OnDU+rJeRHj6zab8HcQy1jZZrT915WyWwpfgcKi8RafEHg/Q@nongnu.org
-X-Gm-Message-State: AFuF++ns9NPc//zBRYZ8TV0HYU6H6Tcn9R53zLiG9h+0YTUlyop5gJeu
- nk7kRsiyHZqGEr3H1EpX/Wpn+gpt47ESDTKb5AEfTGLvaowdlYcy18uViIdO1P4qo1ek/ela55l
- Ofp82eU+prKMsQXO/lEcyEN9/SwUXUeTwB4fLCtb2S0cEdGKe92KiRn/cdA==
-X-Gm-Gg: AYBFou1eQAn4kTFU4Ww+DWOoUciXG+dk2CpvrFyJoypcQvHB2SRIXfZPOK0e4cWnrQ1
- B/PpyMV6Ie19Q6NDKkgGPXRbxWqsrQVxHoZqwFiTUqBljXl/J4kaP8/lL/BQmELQy1aGfRmMTCL
- YO/VQjm1mOCOy5o5Tt1PVhIRac7M5LCySX5lRJNwLDA2cGfuYKNCzmbqooSNc9UpjQpklApYbFa
- l9+6+U4HFPPf/ynzEDeWPWT8SDdQuCWHKcIlgC9Ahvh8ZLvJ5XJrhgpo0JTx5EZhN5mRy/tBwyo
- JZhd0rRVqDr9+VZ75ZXSVykChOx7Cyx812HD75Y+7HQSAKA/IvMCoVwMVua2ZSwZcO8VKmu8w8Y
- DJnmPP9bjBKqCqEOUpkAJkKwOj2I1p/oITg==
-X-Received: by 2002:a05:620a:4547:b0:93b:bc51:b40 with SMTP id
- af79cd13be357-93c47223f95mr2617134885a.2.1790694007759; 
- Tue, 29 Sep 2026 08:00:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:4547:b0:93b:bc51:b40 with SMTP id
- af79cd13be357-93c47223f95mr2617120885a.2.1790694006945; 
- Tue, 29 Sep 2026 08:00:06 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a014217216sm760635e9.14.2026.09.29.08.00.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 08:00:06 -0700 (PDT)
-Message-ID: <1391eb6b-b4e9-417e-a634-115fc1751166@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 17:00:04 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBZJy-00052G-Lp
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790694040;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=imk8CsUFuatBckDywQe+HSBOt51xD6uedwE+4ppvWwc=;
+ b=YMwWc1OapK56x+l2xWnqRsnPz2uhw0QSfY9YdtJ7aBcGg/C4RZXWeFsRPfPguX+DWzm5Ko
+ fa47vMr8DVGdCzjvdpBKhpAVVMg+5+q3dp1H9gJ94Rd0WZBuUOx25WbhJoCpoRW5CAucWN
+ obv155AKmUh2j4yIOjfdCp0+mECVGas=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-498-d4uZC5m4NtWJrzKC4_aJpw-1; Tue,
+ 29 Sep 2026 11:00:37 -0400
+X-MC-Unique: d4uZC5m4NtWJrzKC4_aJpw-1
+X-Mimecast-MFC-AGG-ID: d4uZC5m4NtWJrzKC4_aJpw_1790694035
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DEFFD1944B13; Tue, 29 Sep 2026 15:00:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25A00768; Tue, 29 Sep 2026 15:00:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B4F6D21E6A04; Tue, 29 Sep 2026 17:00:29 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Peter Xu <peterx@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
+ Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
+ Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
+ <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
+ <michael.roth@amd.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Stefano Garzarella
+ <sgarzare@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Jason Wang <jasowangio@gmail.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 04/14] qapi/parser: enforce doc block section ordering
+In-Reply-To: <CAFn=p-ZCq09nrc=O7jCay9JJ9c9eopMzQmDqHcdS8j=kWtVa_w@mail.gmail.com>
+ (John Snow's message of "Tue, 29 Sep 2026 10:31:42 -0400")
+References: <20260928223657.2303684-1-jsnow@redhat.com>
+ <20260928223657.2303684-5-jsnow@redhat.com>
+ <87bj9gxmiw.fsf@pond.sub.org>
+ <CAFn=p-ZCq09nrc=O7jCay9JJ9c9eopMzQmDqHcdS8j=kWtVa_w@mail.gmail.com>
+Date: Tue, 29 Sep 2026 17:00:29 +0200
+Message-ID: <874if8w19u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 18/25] target/arm: add cpu-models-stub.c
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, eric.auger@redhat.com
-Cc: cohuck@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org, 
- maz@kernel.org, oliver.upton@linux.dev, berrange@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, gshan@redhat.com,
- skolothumtho@nvidia.com, sebott@redhat.com, armbru@redhat.com,
- philmd@linaro.org, yangjinqian1@huawei.com, shaju.abraham@nutanix.com,
- mark.caveayland@nutanix.com, ping@khushitshah.com,
- sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-19-khushit.shah@nutanix.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260921123249.1708067-19-khushit.shah@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1OSBTYWx0ZWRfX8xIrPy0ifRQw
- D2Fdsv7H5Q2kCvKYea9ctX0EFGxJCjhmoNZyKGLyCf4gGzGKP3CR+zjUhpNcsFOQun0aHmuXMTJ
- W0Z9Cv/RomnPeqMpEKKa92qwQLjeOyhV63+MJNmmmv1L+c/DCsfZJIZcZSEg31mVLII3VbEQWcN
- UTYLA1SdaNhAwUZYpb4ZWADJfcdTLwXi5uuVST306e3FLqDete1agIr7rUnS58FSHyte68efnA0
- Xz9Rm3L+T/gwkrT71KyE7quh5HPHdP3Si01CvOngNBspQP5hzTVge15i/15QiiEcGtf/P+lV4OG
- rAyCMlButnqjQbDjw/Zrsm/anz7mhFMqR45QYKAaDGbyxNqRhMjIWIXp008S1G4evlebyqHGlxT
- FLyconDbdZFP0Eym6s/oMJEn0qNwFDXn6yNS77d8s9qDVqgZR6+VpOgWDbHnnJHuG8i+N7h0hJD
- /CSDcvt7/pfSFr7MS9A==
-X-Proofpoint-GUID: tVDDHL5TkE02d0jcj2-9rrTZTQL0V_fU
-X-Authority-Analysis: v=2.4 cv=VcVir1p9 c=1 sm=1 tr=0 ts=6abbd278 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=64Cc0HZtAAAA:8 a=kBidzhC-Fu57bEbtvHYA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: tVDDHL5TkE02d0jcj2-9rrTZTQL0V_fU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1OSBTYWx0ZWRfX3QAJmUuDwpFM
- DEysj4aVE7VYvSO0GpyWbs5lZscne9XqhvCspAyPGJYDj019nUaQfHtGBQAC8+8QjvSVWBsyNKE
- t/+x3q9k4LrLRBKN8ZYqMqWf1zfPEWA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290059
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,21 +109,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/9/26 14:32, Khushit Shah wrote:
-> Add cpu-models-stub.c, which will be required to add QMP support.
-> 
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-> ---
->   target/arm/cpu-models-stub.c | 13 +++++++++++++
->   target/arm/meson.build       |  1 +
->   2 files changed, 14 insertions(+)
->   create mode 100644 target/arm/cpu-models-stub.c
+John Snow <jsnow@redhat.com> writes:
 
-Shouldn't be needed if guarded in qmp_query_cpu_model_expansion() as:
+> On Tue, Sep 29, 2026, 8:36=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > Enforce the relative ordering of "Intro", "Members", "Features",
+>> > "Errors" and "Returns" sections.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > ---
+>> >  docs/devel/qapi-code-gen.rst | 19 +++++++++++------
+>> >  scripts/qapi/parser.py       | 41 ++++++++++++++++++++++++++++++------
+>> >  2 files changed, 48 insertions(+), 12 deletions(-)
+>> >
+>> > diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.r=
+st
+>> > index 3ac1c2dae18..29e9c5a3da6 100644
+>> > --- a/docs/devel/qapi-code-gen.rst
+>> > +++ b/docs/devel/qapi-code-gen.rst
+>> > @@ -985,12 +985,19 @@ When documentation is required (see pragma_
+>> 'doc-required'), every
+>> >  definition must have documentation.
+>> >
+>> >  Definition documentation starts with a description naming the
+>> > -definition with an optional indented overview (the "intro"),
+>> > -:ref:`descriptions <doc-descrip>` of each argument (for commands and
+>> > -events), member (for structs and unions), branch (for alternates), or
+>> > -value (for enums), :ref:`feature descriptions <doc-feat>` of each
+>> > -feature (if any), and finally optional :ref:`tagged sections
+>> > -<doc-tagged>`.
+>> > +definition with an optional indented overview (the "intro").
+>> > +
+>> > +The introduction is followed by :ref:`descriptions <doc-descrip>` of
+>> > +each argument (for commands and events), member (for structs and
+>> > +unions), branch (for alternates), or value (for enums).
+>> > +
+>> > +:ref:`Tagged sections <doc-tagged>` follow in order: Returns (for
+>> > +commands), Errors (for commands), and lastly :ref:`feature
+>> > +descriptions <doc-feat>` if applicable.
+>>
+>> *Some* of the tagged sections do.
+>>
+>> Does this document still need the concept "tagged section"?
+>>
+>
+> I doubt it does, beyond an explanation of common syntax. Happy to hear
+> suggestions...
 
-     bool named_model = false;
+I'll keep it in mind when I review PATCH 02.
 
-     if (kvm_enabled()) {
-         named_model = arm_find_model(model->name) != NULL;
-     }
+> We could also stand to change some of the method names like "ensure
+> untagged section" could become "ensure details", and the like.
+
+Fair!
+
+> tagged vs untagged has become increasingly non-meaningful.
+
+True.
+
+>> > +
+>> > +Definition documentation concludes with rST-formatted detail
+>> > +paragraphs (including examples, notes, &c), and finally an optional
+>> > +"Since" tagged section at the very end.
+>> >
+>> >  .. _doc-descrip:
+>> >
+>> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+>> > index fe284a3f866..94a60a23482 100644
+>> > --- a/scripts/qapi/parser.py
+>> > +++ b/scripts/qapi/parser.py
+>> > @@ -545,6 +545,28 @@ def get_doc(self) -> 'QAPIDoc':
+>> >              doc.all_sections.append(QAPIDoc.Section(info,
+>> QAPIDoc.Kind.INTRO))
+>> >              line =3D self.get_doc_indented(doc)
+>> >              no_more_args =3D False
+>> > +            last_ordered_section =3D QAPIDoc.Kind.INTRO
+>> > +
+>> > +            def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
+>> > +                nonlocal last_ordered_section
+>> > +                if isinstance(this, str):
+>> > +                    this =3D QAPIDoc.Kind.from_string(this)
+>>
+>> Simpler, I think: require a .Kind argument, and do the conversion from
+>> string in the one caller that needs it.
+>>
+>
+> You're right.
+>
+>
+>> > +
+>> > +                if this in (QAPIDoc.Kind.TODO, QAPIDoc.Kind.SINCE,
+>> > +                            QAPIDoc.Kind.DETAILS):
+>> > +                    return
+>> > +
+>> > +                if this.value < last_ordered_section.value:
+>> > +                    raise QAPIParseError(
+>> > +                        self,
+>> > +                        f"'{this}' section cannot appear after "
+>> > +                        f"'{last_ordered_section}' section, please
+>> re-order "
+>> > +                        "the sections and adjust phrasing as necessary
+>> to "
+>> > +                        "ensure consistent documentation flow between
+>> the "
+>> > +                        "source code and the rendered HTML manual"
+>> > +                    )
+>>
+>> That's a loooong error message.  It actually consists of the error
+>> proper and advice on how to correct it.  Please use
+>>
+>>     "<error>\n<advice>"
+>>
+>> like we do in expr.py's check_keys(), parser.py's
+>> ._validate_doc_line_format(), and schema.py's ._def_definition().  Yes,
+>> the embedded newline is a bit of a hack.
+>>
+>
+> ACK.
+>
+>
+>> > +
+>> > +                last_ordered_section =3D this
+>> >
+>> >              while line is not None:
+>> >                  # Blank lines
+>> > @@ -558,6 +580,7 @@ def get_doc(self) -> 'QAPIDoc':
+>> >                      if doc.has_features:
+>> >                          raise QAPIParseError(
+>> >                              self, "duplicated 'Features:' line")
+>> > +                    _tag_check(QAPIDoc.Kind.FEATURE)
+>> >                      self.accept(False)
+>> >                      line =3D self.get_doc_line()
+>> >                      while line =3D=3D '':
+>> > @@ -581,6 +604,7 @@ def get_doc(self) -> 'QAPIDoc':
+>> >                              self,
+>> >                              "description of '@%s:' follows a section"
+>> >                              % match.group(1))
+>> > +                    _tag_check(QAPIDoc.Kind.MEMBER)
+>> >                      while (line is not None
+>> >                             and (match :=3D
+>> self._match_at_name_colon(line))):
+>> >                          doc.new_argument(self.info, match.group(1))
+>> > @@ -621,6 +645,7 @@ def get_doc(self) -> 'QAPIDoc':
+>> >                          )
+>> >                          raise QAPIParseError(self, emsg)
+>> >
+>> > +                    _tag_check(match.group(1))
+>>
+>> This is the caller that needs it.
+>>
+>
+> Yep.
+>
+>
+>> >                      doc.new_tagged_section(
+>> >                          self.info,
+>> >                          QAPIDoc.Kind.from_string(match.group(1))
+>> > @@ -632,6 +657,7 @@ def get_doc(self) -> 'QAPIDoc':
+>> >                      no_more_args =3D True
+>> >                  else:
+>> >                      # plain paragraph(s)
+>> > +                    _tag_check(QAPIDoc.Kind.DETAILS)
+>> >                      doc.ensure_untagged_section(self.info)
+>> >                      doc.append_line(line)
+>> >                      line =3D self.get_doc_paragraph(doc)
+>> > @@ -674,14 +700,17 @@ class QAPIDoc:
+>> >      """
+>> >
+>> >      class Kind(enum.Enum):
+>> > -        DETAILS =3D 0
+>> > +        # The order here is the order in which sections must appear in
+>> > +        # source code; with the exception of 'TODO' which may appear
+>> > +        # anywhere but is treated as a comment.
+>> > +        INTRO =3D 0
+>> >          MEMBER =3D 1
+>> > -        FEATURE =3D 2
+>> > -        RETURNS =3D 3
+>> > -        ERRORS =3D 4
+>> > -        SINCE =3D 5
+>> > +        RETURNS =3D 2
+>> > +        ERRORS =3D 3
+>> > +        FEATURE =3D 4
+>> > +        DETAILS =3D 5
+>> >          TODO =3D 6
+>> > -        INTRO =3D 7
+>> > +        SINCE =3D 7
+>> >
+>> >          @staticmethod
+>> >          def from_string(kind: str) -> 'QAPIDoc.Kind':
+>>
+>> Missing: negative test for the new error.
+>>
+>
+> Yep. If you are overall pleased with this change enough (pending nits),
+> I'll add the tests now.
+
+I am!
+
 
