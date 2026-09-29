@@ -4,194 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05766CA5FA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBF9CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBarD-00049j-9N; Tue, 29 Sep 2026 12:39:07 -0400
+	id 1xBarj-0004FL-Iq; Tue, 29 Sep 2026 12:39:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1xBarB-00049S-6D; Tue, 29 Sep 2026 12:39:05 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xBard-0004Dt-HR
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:39:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1xBar9-00061h-0n; Tue, 29 Sep 2026 12:39:04 -0400
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TAkVgM361478; Tue, 29 Sep 2026 09:38:44 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=g3Hv6Ret52feTI/PdvCrORsBZwSDIA+XtNxI+QrEv
- Ts=; b=eJjXSX+x48XHRyllArJ6EkIq+rWd4Cgt5y4YcKAKMn4sjwN6ufekih/MA
- o9K9Wb+iuFRQFvd8+e1YmKipTdmOEApOAMWBZldKWZjhIeXs2pgGHHMeZ+xj3KPM
- bGUAkZwWrxVeB/kuy6ZsEex8k1Ro/223fRNekgXVaSDASASeQV7kGdLU93ECkfen
- lqAhvxmWR2LfyQXrbcl0Smq3BrQJ+zpz/+qoQxz3/rgeVOMxuvcJ5g12KXcsRHDh
- sfNv1R/aenOufTsu5wnBPP96nJbvEjkFhHza2yoA7pnzIzCKlz6lKAo1UFnGvpGJ
- cWauMFSODDHtRRRGbRlMIhaJUvvFA==
-Received: from sn4pr2101cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11022129.outbound.protection.outlook.com
- [40.93.195.129])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4h098sh9yj-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 09:38:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=khcG+e721kRcOB9k+u2z5LI3eoUukr0rOpUMUgiD9jpJe13NDfdDMhn2aH+zaePBeIfMdB7shfWSSq/c/C3AYAWsDhr01hwOpfO3KaEFtK4DVKGtL20JO6LzTMvHwM80/zHvTc+GsrXUPzuzx3e0FZSWXHbkNcm3wr5vOmi4c4cLJP+sUJZxIynvs9H1ralnTIqzPtT7ZSuMa02UT3/5ftUX7LTwkCx6bTA4FP2I3dfmuaBXhYCJJ8wit6rOda/NY2+JnjLd18jYhegxSrKChHdyS7K5hL7Ot1VCBCcwhQoxeTyML1AfT0ZIbyQS7EjKV1gtFKkXpF2XxDJJeh+qLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g3Hv6Ret52feTI/PdvCrORsBZwSDIA+XtNxI+QrEvTs=;
- b=pAeNWQlgiN9R602K8i2O6tL8SB70RoWETG3CT32PedJlqORAtxvFqB4XS/D1qKeTGyBwyHQI90b7nNm3S0SDg+lVcTAnVzQLgkxvhHGKQ1I/NawGvx7aCDy/UVsIBrujf7V3LVtA8xFU0QijVsgPQM4XDqlxqFWzA/W8eJZsIkWUAKvQo8Knl0TT4RpeKmwwStCjrCOwP6zToKwL1ZQDdHzszMjMn7RZ+bx5hdOvmbu+5Wkbb9akDDhFrGd6lgSfUbO3fvEWK2DC0K6AB2O1qE6J8VZOs5K3yDCLIl908WVct2RhnSQbocAF1QFPXEVerbHWxSfgHAMpvkpwOJGh8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g3Hv6Ret52feTI/PdvCrORsBZwSDIA+XtNxI+QrEvTs=;
- b=BQywB5K9AUoaaOpIq6Y39uDfYW7krIY1F7RKGgHHZQ+cZplI3mbLpQmXjUveZhF6rV7pHo7sWkOV/GugHTj7B319LIiPWBrW2kpvv46fAXZ8L4vup/JJyUI/Mnhm1cxw1jVyaAA/GqJ4ivFKT9n1MMEv2S0BxuUUPz70F0Mo/dwm5j9zvJll62sDT4UD2vF85xBWrM3xNOXafD3gQTIRQ0gfhfr/HJdliUcZu45gsV2cciiO03OZPR7QrGg31TcN+BQokKvJi0npx87/Yh31v3F1bnA23ME/mK/xvlaUF9QQD6UWafe8Oy36KRjO3zeC6jh0H1vhovEGgV5i4QjLnA==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by CH0PR02MB8043.namprd02.prod.outlook.com (2603:10b6:610:108::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Tue, 29 Sep
- 2026 16:38:42 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0451.026; Tue, 29 Sep 2026
- 16:38:42 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "cohuck@redhat.com"
- <cohuck@redhat.com>, "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
- <jdenemar@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>, "sebott@redhat.com"
- <sebott@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "yangjinqian1@huawei.com"
- <yangjinqian1@huawei.com>, Shaju Abraham <shaju.abraham@nutanix.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>, "ping@khushitshah.com"
- <ping@khushitshah.com>, Sandesh Patel <sandesh.patel@nutanix.com>, Mohamed
- Mediouni <mohamed@unpredictable.fr>
-Subject: Re: [RFC PATCH v4 00/25] named CPU models for Arm64 on KVM
-Thread-Topic: [RFC PATCH v4 00/25] named CPU models for Arm64 on KVM
-Thread-Index: AQHdScVcmVH3lL3Gaki+e01U/Yh81bbltYuAgAAY1oA=
-Date: Tue, 29 Sep 2026 16:38:41 +0000
-Message-ID: <6361B7E6-E3C1-41FF-9F40-3051669529ED@nutanix.com>
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <365d64a9-416c-46fd-b9af-4023b112a164@oss.qualcomm.com>
-In-Reply-To: <365d64a9-416c-46fd-b9af-4023b112a164@oss.qualcomm.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CH0PR02MB8043:EE_
-x-ms-office365-filtering-correlation-id: dd09ced6-7738-49e7-59b4-08df1e481f37
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|7416014|10067099003|56012099006|5023799004|4143699003|3023799007|6133799003|22082099003|18002099003|38070700021;
-x-microsoft-antispam-message-info: RdzmO5dYjTYl6IjlLgDNVxiFPQXcqaq7I+ol4n1x7VEnaMpJV3yswFrtCTbBwnyZflRlPNmqjSKk8rvB9cEkYUwkytHRILdkkW7I4+ZtAfhImjZVhwMXvo4LmK1M57JKxmlQNbXiEO98FgNz898EpV2F5GlXL+F90nwo9NKFb78We8TQW4zzkDFUdWt1oRgP3REjv3Mg2NSLhrkS/w2x/NXPazk9OTttqWXl39GCaMO6hlazKPw0csXqyG2teFUNBiTBLv14LsnTpHuaxDZh6h16YViUF7ihYSHifWB8qU07+Fizvi8VkC6WQBI2jGIm5+xy1S02H2Fwc5h8ldRU1ETYDsxXEscJSzx3HEU4uRETL0mAKS5ExsU8KKVWP0ibLUCG+kO92tk3hpVh7HrhoP0AsS2TB7PoasLHW5u2tNxOzzD47m365tAkPZ5PNDmVGNlxJiPS3LSOowHM42KKkcK9BihfaR62SMJr4SMHeUnQXMHhRbm1T17WSbux/kZfI5BTADZUaeqkmtsh8814/9WfSZZaTnkAskigFXpx1a/9D1VABEmDbur29xPYuYrutPIaD8cVfsCqLZRkUDKk6Tq20d8dYOkqCViMODFbz8ebDQlkAXCodP26H+DcKy5VymVzwafJgTGYSg6qkwdvIosWRsST12ydFs165rczq8OaH1DBQINpMIgv7YBV4kMLcMTLLbp2JW04Ht+7n67Zy90A2PVDAFa4/HAhyQ/AHZo=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(10067099003)(56012099006)(5023799004)(4143699003)(3023799007)(6133799003)(22082099003)(18002099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aW1pcmZnUUt0aGZBOWVUeUN3SE5Nck9TK0JMV1p4clJFN29WRTlJRWpsNlZI?=
- =?utf-8?B?SWRqYUdsNmczYm4xVXZTZ1hFREhIditKa096NFVsY2YxSGxUN1p6WVkwcGtu?=
- =?utf-8?B?cndsZGNZSDQvd29XT2c5eHRHamdySFEvTkh6enNuaVN1WHQ0U1FDVnN3SGsy?=
- =?utf-8?B?M2QzbDVWS2NBMk15SXYrc1dPNjdHK3VHbEh4aEZTa0Q1Zk5OcEZwQVVaNDhx?=
- =?utf-8?B?azZFQmlwbzl5QkVFdHdCNGx1OFczcFVKWGIvdjhsVXVNU1VMaVBSNmRhblF5?=
- =?utf-8?B?SDFWbUNBUStraHRnY1lxZWNucERxdFlITFZQbGRPMTVJbkxjRkhXbDk5OEUz?=
- =?utf-8?B?aW5ZbytWbHQ3TE1KM05HVmJwenJqV2hGbEtoMEthWko5TmxKMlhWWEZTcEtE?=
- =?utf-8?B?K090b0tCZlVOdEJjME1DZnQvSmZWZUlOTUU2SHB1QlJsSG1jaEVJS3N1bDl4?=
- =?utf-8?B?bXdtSGRQVDlZTyticlZSb1NsYnVCRW1yR2xwZ1cxS0szNDk3QXlON0l5eUNt?=
- =?utf-8?B?ajZhZUNtY2NwWUZTZy9pL3ZXNXovUnJQSjVsMnF3M29KNWlHOXhXVkRNYlZE?=
- =?utf-8?B?ejNneHJzNjQxNGVvM3V1cEQ4K2JKT0NlZ0VvSkdaMVVDdHVhcG5MV0JIUEZ0?=
- =?utf-8?B?a2hBb21uUyt1Mi9uZXpZSmY1OXRZaUtoMVZzWDRQSDVXN2JUbU8vQVNDNGw0?=
- =?utf-8?B?TFFJaFZPWklSOFlDUWRaaWJPVDY0d2hRMVV3QmYwZjVKUVpZSVpvUFFFZ3ZX?=
- =?utf-8?B?engzLzBuZCtEME5uUnZyWUp0bnB1c3FYQTVQTFVjS1dFVkhrclRLZHdhNDdL?=
- =?utf-8?B?MTVNYkVMN2dQWGVJMmRUNHg3anJsejZTazhDUWEyanZCeVFNdlJnL0QxdmM3?=
- =?utf-8?B?TWlDdEtSUnlkYjBhSVJUK2wvd1NKdUxyS1ZVZG5lVE5EMEVpQ3RZejYveitv?=
- =?utf-8?B?UWxuNFhsVkZnOVRwVXdqNUJzQWxEbTJKMU1OaUxLVEZhSDZBVEFsekg2cVV2?=
- =?utf-8?B?RjNhNGdRY2QrTUhXNFBnZDNWeU9hWWp1aTBzbEtLUFYrTDl2ZVhzKzFoZDJ3?=
- =?utf-8?B?empPQjBiK0FEQjVpTzdjWkk1NXhTWTBvMnRGdStNeUVMRXdsbmZ0QVZkSWxq?=
- =?utf-8?B?dmZLOWFmZTVtQzNETndlSnZTNXlSSFBFNlVhcHlkUU1MWE1aT25MOWptajlo?=
- =?utf-8?B?cXZ3eTZLVk82SEdTUWc5QlhXU0FiaU0rU0RoUGF6NnJOYnhpRm85ZXVSQWxj?=
- =?utf-8?B?dW1xT0xpVnluVUg5dlUyRjNCR3ByN0lJWDI0YmpaVzJEU2hTeC9Vakd3Znpn?=
- =?utf-8?B?NDFpZFk3c2ZnakVBSldFVDhWV3gycGhyUFZBbk04QXkrd0JpTWZUbFhCdlNS?=
- =?utf-8?B?alhKRENtOXNUUENvOW1wUXF6WFluYWRWTFEwbVh2UWVSM1VES3dua2ZJc1lF?=
- =?utf-8?B?Zm9NK090UVFNbHJsZDhvQjdJL3NLWlRFbC9veHJQck5CQ2xaOWU2dGwxUlk4?=
- =?utf-8?B?T1E5UFdseHA0MnR4YVRwM09vc0l1QWVCWVJlT3JtT0NnWXU3S1NPQmdiTDA0?=
- =?utf-8?B?UWdjNjlDQmc5TGRxZ2U5QkM0dDY2RUVTbW0zcFErRnEwSFJ0bW9KM2lHOWkv?=
- =?utf-8?B?R3ZoVElBVzAxV3BTa1BhVkIxLzBZS0t5bUtUTkdkZXR5bjU2Z0FJRjdHMlJy?=
- =?utf-8?B?WXNEb24za3NNRllqZW5jU1NPZjBOdUVvL3dMSmZ5U0NKd094RUh0MjdTOU13?=
- =?utf-8?B?eUh6WFEweGdGbnQ4WEhJN0hScFZXTk1aWU9SL3RkNkhlZ2lPUUJOR3RSUUU1?=
- =?utf-8?B?c3FsdDlFZHc2UFhrZ2FCaWpXcnpCYjJ1SHhYazdUcGlWbU9wQWN2Z3JSNktM?=
- =?utf-8?B?eXk2dnVKU1NnZEhEVnZqV3l5QlNCZ2lTSk5CRzdhTmN6dGdLSWV6K2xMQnRK?=
- =?utf-8?B?UldtZ0NZd05UN3FyQlhQYmVsY0JkdGNRMCtsYjZrcUtYSnRaRzlBdnpycjJG?=
- =?utf-8?B?WDRtbVJQb1FOaDlrM3JtWi90QmsxbmVLMU51OUttcld5M2g3eWNIeW0xaHE3?=
- =?utf-8?B?eTVQVk5IUlFkVUFNK2hGVUpTVk1nMnV6UGV2NzQzSEx6bmFScmloY1BFM1B1?=
- =?utf-8?B?RmJPU0gwamRDVFFVNjlJVTRtaFFTTUlLUFAwemF3RnhiQjNqMHlieEFEMVMx?=
- =?utf-8?B?NU9XRG1GK01xV1dSZmovZUJiU2l5SEVGZTNZM0dXbExNckkxUDVPOXk4Uy94?=
- =?utf-8?B?OHJwdkcwL25RQXh0RmZUaE10Tnl5VHdteHROUVlBdkwwMXBaUUEwa01VNENL?=
- =?utf-8?B?N21LN3NkbmxQODJnY3FZa3JrUStFNi8vQUJvQ1hlZWQrdXJPNXB2YjdicEp5?=
- =?utf-8?Q?j4GaDftZh+hENgP0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4B2BE7D479A1DD4E98433A2421965CB4@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xBara-00063H-PL
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:39:33 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TCqkkU858127
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 16:39:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=B5WBMdbGnoqAAhFppySLjkhk
+ LBqj8UkaXKoXDwgAvaw=; b=W0nXo2rARNCfaqvNP6RjM9kedsSKosmYWMDbGurD
+ s5+i5fFGzq6lM31In0ywIjyoi2tyhlI0CaLGIr3p/JcoEjxkigQtnuXFZh7JFZkl
+ e9JMFkXzjOOw3bjZSnta/2Up5OY7c4HdQ1DidKfE6GPwXaon2fxAroiL9bSptZRT
+ Gk6dj+jfiwJddj1mL2iBWYnMNcLQMGLV9jI9goTs3jw7yRaz5Y0GGdyxWA2ihYL2
+ hhzzu4HRDnH/g18vl/RWcfXAmtX6O49eqXuuOGNVtTXNtYijeFzvXtwgMR6m7P/N
+ IAc9QK0ES1aWMcoldHiSUdB9mm+PIXa7I6pPw3cjs4ZTIw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h08e0jjgn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 16:39:29 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-530d028f779so52447421cf.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:39:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790699968; x=1791304768; darn=nongnu.org;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=B5WBMdbGnoqAAhFppySLjkhkLBqj8UkaXKoXDwgAvaw=;
+ b=jDYVZAYtMlRFtZ3KVgNGnye0tRBDOZ9g3ShH9xRhZSmPFYO42KIxahvxPgMCGJ4ehi
+ EnOY4IRVN1Rvc3P6lu1+0yib6U4KbmUIQ6WlsHN/41r6+iJcgGqeykV0u5lbJLBqWhiC
+ fm42vmdv5Ss/L4pYqMCpIOqzD8hKD2+eVu8zKyUPrMzIOzwHKRDEvuTvmQ+UXqOZ+hC7
+ NjJagVrVrewbzJcQtNkJuH5qKMT2TZLPlDFv9tBaeKrYBcS/uyWTPdVbPFJizqyDV/rJ
+ nBnlie5MR8u/hmHV8+B0TxM8SIcdKnEA+WW8APjsmE32oDBfsdv7xT+Tw9j1nQrwcnA/
+ uxBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790699968; x=1791304768;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=B5WBMdbGnoqAAhFppySLjkhkLBqj8UkaXKoXDwgAvaw=;
+ b=wl7VbPKwZskO6tnc6XZrTVlLU1LCLv5nKktZ3GUhyz6VED1GzhIUQDDAXvow09IItN
+ oLN+vfBJQcIn8j9rwW2Il7ipDrN692vQb36ntovFnEvJPcUTnyhZ/DATkuQYmD3zrl+i
+ opnixA+7EFYIH5v4P/RzqvruRHKfJ+weqz5Dz1ag2KMMmTZrAPzZR381LWy6GZSx8NvZ
+ DnsPCtLUCI9R8hyvaWJ4UCVSsSsxG1J/lsZySWy8Ii2i8FJLWDYgOO97j2NrOy/sOLQ8
+ 6y/oqcnJcVzkSsRZEGUqhftF0L1fDpMfdqXA0tBzv2jXQ1d5LciFGgY4BR5ZkhTC7Tj+
+ /1hw==
+X-Gm-Message-State: AFuF++nu8G7H/+xS0e7BtDXcOiPkEpt4T+SE1w5nV0/E1QHxGjXbIwEG
+ f31RE77srVJQ+Z8dIK6MAETgk2iDRbMoNAeTVNxSSEcvOSwYv70LH659ucI4AnCFYAm0/QbmCEh
+ XFZy7BB9fL3WUh2H882OUOm+mvdxsTh3wSmNtXv/i5oLfnr99H2wmnBA3pA==
+X-Gm-Gg: AYBFou1v5S3hI0PWANZDW6J7c323trLZX7fPCEsac46wM+cUYlXGgnR+pgoGZgoZN59
+ AniDc7dRg0no2FLRt9AnoOJ8BN1CcfpkLG5rFtMu8OEi/xBog0fOEZ04lHltJMWDlTvZRaPtfs7
+ hTqN7cSo47fMaSEc3uhoxyPklIXFmeNA/2YP4FLOgRXkVLwYsfQppDKE/FYjpN9rRdDYBr1d8aa
+ /IwkNvKFVh8FZKydCr6RlCoWbgFBlxUZNms2vN2dkLKu79jIkypDd04tDr5GEIH2/S+d2e0W1JB
+ DmnFBMkod9Z4LZ4ffxoCSVWzSR7/GEDNH7dyItD7zui007lcSrvxKEm2+QCzZw2MGk2bCzvunyO
+ AXnc7xTXONKf57zKjTgdOvNokL4Kwh9RVv9zO0+VelTdXA548n6u61vB4bM9yGfKPQy9PUtx/Pm
+ oQrm8=
+X-Received: by 2002:a05:622a:830b:b0:533:2a84:1f98 with SMTP id
+ d75a77b69052e-5332a84315amr153666561cf.3.1790699968211; 
+ Tue, 29 Sep 2026 09:39:28 -0700 (PDT)
+X-Received: by 2002:a05:622a:830b:b0:533:2a84:1f98 with SMTP id
+ d75a77b69052e-5332a84315amr153665701cf.3.1790699967246; 
+ Tue, 29 Sep 2026 09:39:27 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5332201fe59sm92101781cf.3.2026.09.29.09.39.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Sep 2026 09:39:26 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------dJrYDi0TPRZ9cR26RCNdMuDh"
+Message-ID: <073a7c20-a75e-4873-9208-a366d06db991@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 11:39:24 -0500
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: D9tPT9VxEmrOgLT4HdSgQKy6WQRKKQB9KbSsQ5/R51XkcI6/+ljdvnAOF1fzcOa2PNaZ3+0C76Y5+o+ojGDxdBQU7Xn2F6oG5tGMkS75BwpHvzATlWqcS2FeBH8W04XGri9eo5DNR4ZF3mkxCxuWGmR00XQ7ZsLAfMPVHNaF7z0mpNLY1DeaMhlsRw5/qL4L6+B9PlnfqC9JJN0SbZiYxsr2D9BW7nhZLjmAkw3uhnMsShQzepmwK+nHDWsikUgeGUswDKTrmRyr4/8XK69m1gvJL1B9y51iM7FAHnk/lJoazIEp3y5VFtpGK3ik6oVfkmr7TrYKDEvB60sBL6UDGg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd09ced6-7738-49e7-59b4-08df1e481f37
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Sep 2026 16:38:41.9597 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eKeG8XYQvwIB/NwW+Glw3+Uwduo/4DhB4P9A/TsW0BAtoOSSQ29hSs/dahr2OuMsJGueVOs8AMBmV6fejJ9oBFrWbg1rvpv+rndOanIo+7Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR02MB8043
-X-Authority-Analysis: v=2.4 cv=O6CsLx9W c=1 sm=1 tr=0 ts=6abbe993 cx=c_pps
- a=+AD+TCgY8d24af2vGjQMRw==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22 a=EUspDBNiAAAA:8
- a=KXmzLhxscmQzJtRbCecA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 1l8sait_OfHr8DM_hYve4BQc8j1TjuqB
-X-Proofpoint-GUID: 1l8sait_OfHr8DM_hYve4BQc8j1TjuqB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2NiBTYWx0ZWRfX7SkJdyXBz8u9
- w2+l9vwrfPn2JqAiNzee1UBPdOjw+QZj6vQh9tbs9ApU+5GZdQwBSESppMVApXeYwdn13NPaCWA
- aLxC9CYvf3phVg7MjYAtMxlQ0SGquFwziEuPuN8H4EW3plj+hj5onOZJ/uW5Rum5zv+Rg5WkF/s
- mIs6GB5flQsmDODl6O5Uyx2YGgEPiJWw8g3FD5fPCEc0O+q89gO+wd5OlQMm0IZZDKba7QJGqj5
- B8HEbg1HhCY499uPgCIr5X2IbY83Xv1ZsXgDbvfulSv8e0sGhcZnnlcV4BVcXpRJ1GIN5BuKbi/
- yyUdYNWT3EHwQ3YIywPmumsGKDUw+5xxnXgPqCXO0P+phoF0y0i7otKM2J9b6Mp+nePmIEgXBQo
- iQQ/szpp7YOxB6DBuC/MFX6+NIVU1YqcDqUJi2RFmLj+56RlmhIwCvDmF8eJDtsbytnY9MMD+1P
- KhDRWoloOiNbumBDG/A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2NiBTYWx0ZWRfX8tXRQ1LmM1uQ
- A8WdUvnn0hP3I1dggDxyql2nSEgVFgkUEjoYDeqEXviHhN4N9DgsNQWceZFj1TxvoFruGtdVjV2
- XE8C5YUauAJ+Pu4PPILPl0xvofocH+s=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] tests/tcg/hexagon: Cover HVX vector write conflicts
+To: Taylor Simpson <ltaylorsimpson@gmail.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ richard.henderson@linaro.org, marco.liebel@oss.qualcomm.com
+References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
+ <20260926192338.2702952-3-brian.cain@oss.qualcomm.com>
+ <CAATN3NqiYs5Pm3S02H1vwLmE_BEkG--jq=+XiL0bXxQnJcXZ9g@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAATN3NqiYs5Pm3S02H1vwLmE_BEkG--jq=+XiL0bXxQnJcXZ9g@mail.gmail.com>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2NiBTYWx0ZWRfX3kuAhTs53tlw
+ ayhHg0kObYpeb65DhE+IdssHmTAKVW1S89tBl74dLCm0VPm+ZdezfFwpvXWVf0N5gKHBmLGshqe
+ 2nSkrii0j0gujB+fYJQUUqb+hv+8mBo=
+X-Proofpoint-ORIG-GUID: uQm9CAN_3NtV4Yc73m55_15DfGs9Kd5s
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2NiBTYWx0ZWRfX54GQC27kzmbK
+ TtMPrJWNy7mvBZ8mBCmszUu1zdk7ch/Jjmjc+WCuZq0eNzyLLbbqaAAzXouSq3Yim+rkaHe8BuT
+ FWZWABIwD2xOBbYXwyOSX+YhOfNUyvFiAax0LpVDt+HP5HCAHlE83zqcmSgfXHRnet1uJNnxMxM
+ A9F8r+ing7jleuftVQ5QLjSNxuPzVdnguEI51cmNnrIb09c28onXwSt5vd+1GhZQAiqDuYAHGu2
+ SgwyjeUU4qpA1djJnTzmPRhDTWGriDvj4/VZmUHhxORMWykrHG69ULiDPDpr8520yul8W5wgcZA
+ TZ94ww7wXRyAT4CJCcfoMaLISTZN04GZIGHGpKLu5seqllfI0S4YTxlhUqwSbWWNpz5cx4p0CpT
+ h1LgOtuwKAiiHiKKwSHl4ahgRRGOqWJU7houX8xWQzhq9HkOwYUv94xZEt41NhKozhzaUdByky5
+ i1mm2IQXHqKR4QV4zAw==
+X-Authority-Analysis: v=2.4 cv=WJ7qzXsR c=1 sm=1 tr=0 ts=6abbe9c1 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=r77TgQKjGQsHNAKrUKIA:9
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=3pT8_-mKT5-ywmvStBMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-ui2fljckFxbOdJo6NkA:9 a=8sMz4n05qokqYSjx:21
+ a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: uQm9CAN_3NtV4Yc73m55_15DfGs9Kd5s
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ adultscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290066
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -209,93 +157,453 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMjkgU2VwIDIwMjYsIGF0IDg6MznigK9QTSwgUGhpbGlwcGUgTWF0aGlldS1EYXVk
-w6kgPHBoaWxtZEBvc3MucXVhbGNvbW0uY29tPiB3cm90ZToNCj4gDQo+ICEtLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0K
-PiBDQVVUSU9OOiBFeHRlcm5hbCBFbWFpbA0KPiANCj4gfC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0hDQo+IA0KPiBIaSwN
-Cj4gDQo+IE9uIDIxLzkvMjYgMTQ6MzIsIEtodXNoaXQgU2hhaCB3cm90ZToNCj4+IEhpIEFsbCwN
-Cj4+IEhlcmUgaXMgdjQgb2YgdGhlIFJGQyBmb3IgbmFtZWQgQ1BVIG1vZGVscyBvbiBBcm02NC9L
-Vk0uDQo+PiBCYWNrZ3JvdW5kOg0KPj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KPj4gQ3VycmVudGx5IFFFTVUgb25seSBzdXBw
-b3J0cyAtY3B1IGhvc3QvbWF4IGZvciBLVk0gb24gQXJtNjQuIFRoaXMgYmxvY2tzDQo+PiBsaXZl
-IG1pZ3JhdGlvbiBvZiBWTXMgYmV0d2VlbiBob3N0cyB0aGF0IGRpZmZlciBpbiBDUFUgZmVhdHVy
-ZXMuDQo+PiBUaGlzIFJGQyBwcm9wb3NlcyBoaWVyYXJjaGljYWwgbmFtZWQgbW9kZWxzIGZvciBB
-cm02NCB1bmRlciBLVk0uIEEgbmFtZWQNCj4+IG1vZGVsIGlzIGEgc3RyaWN0IGNvbnRyYWN0IG9m
-IHRoZSBDUFUgZmVhdHVyZXMgZXhwb3NlZCB0byB0aGUgZ3Vlc3QsIHNvDQo+PiB0aGUgc2FtZSBt
-b2RlbCByZXNvbHZlcyB0byB0aGUgc2FtZSBndWVzdC12aXNpYmxlIElEIHJlZ2lzdGVycyBvbiBh
-bnkNCj4+IGNhcGFibGUgaG9zdC4gTW9kZWxzIGNhbiBiZSBjdXN0b21pemVkIGZ1cnRoZXIgYnkg
-b3ZlcnJpZGluZyBpbmRpdmlkdWFsDQo+PiBJRC1yZWdpc3RlciBmaWVsZHMgKGUuZy4gU1lTUkVH
-X0lEX0FBNjRJU0FSMF9FTDFfU0hBMT0wKS4NCj4+IE9uIHRvcCBvZiB0aGUgbW9kZWxzLCB0aGlz
-IHNlcmllcyBhZGRzIHRoZSBRTVAgaW50cm9zcGVjdGlvbiBzdXBwb3J0IG9uDQo+PiBBcm0gdGhh
-dCB0aGUgbWFuYWdlbWVudCBsYXllciBhbHJlYWR5IGRlcGVuZHMgb24gZm9yIHg4NjoNCj4+IGBx
-dWVyeS1jcHUtZGVmaW5pdGlvbnNgIGxpc3RzIHRoZSBtb2RlbHMgYSBob3N0IGNhbiBydW4gYW5k
-IHJlcG9ydHMNCj4+IGJsb2NrZXJzIGZvciB0aGUgb25lcyBpdCBjYW5ub3QsIGBxdWVyeS1jcHUt
-bW9kZWwtZXhwYW5zaW9uYCByZXNvbHZlcyBhDQo+PiBtb2RlbCB0byBpdHMgZnVsbCBzZXQgb2Yg
-cHJvcGVydGllcywgYW5kIHRoZSBuZXcgYHF1ZXJ5LWNwdS1wcm9wcy1pbmZvYA0KPj4gcmVwb3J0
-cyB0aGUgdmFsdWVzIHRoZSBob3N0IHN1cHBvcnRzIGZvciBlYWNoIHByb3BlcnR5LiBUaGUgYWlt
-IGlzIGZlYXR1cmUNCj4+IHBhcml0eSB3aXRoIHg4NiBzbyBleGlzdGluZyB0b29saW5nIGNhbiBj
-b25zdW1lIEFybSBuYW1lZCBtb2RlbHMgd2l0aA0KPj4gbGl0dGxlIGNoYW5nZS4NCj4+IFRMO0RS
-IGV4YW1wbGVzOg0KPj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PQ0KPj4gICAjIEJvb3QgYSBuYW1lZCBtb2RlbA0KPj4gICBxZW11
-LXN5c3RlbS1hYXJjaDY0IC1jcHUgZ3JhY2UtdjEgLW1hY2hpbmUgdmlydCxhY2NlbD1rdm0gLi4u
-DQo+PiAgICMgTmFtZWQgbW9kZWwgd2l0aCBJRC1yZWdpc3RlciBmaWVsZCBvdmVycmlkZQ0KPj4g
-ICBxZW11LXN5c3RlbS1hYXJjaDY0IC1jcHUgZ3JhY2UtdjEsU1lTUkVHX0lEX0FBNjRJU0FSMF9F
-TDFfU0hBMT0wIC4uLg0KPj4gICAjIC1jcHUgaG9zdCB3aXRoIElELXJlZ2lzdGVyIGZpZWxkIG92
-ZXJyaWRlDQo+PiAgIHFlbXUtc3lzdGVtLWFhcmNoNjQgLWNwdSBob3N0LFNZU1JFR19JRF9BQTY0
-SVNBUjBfRUwxX0FFUz0xIC4uLg0KPj4gICAjIHF1ZXJ5LWNwdS1tb2RlbC1leHBhbnNpb24NCj4+
-ICAgICAgICAgIm1vZGVsIjogew0KPj4gICAgICAgICAgICAgIm5hbWUiOiAiZ3Jhdml0b240LXYx
-IiwNCj4+ICAgICAgICAgICAgICJwcm9wcyI6IHsNCj4+ICAgICAgICAgICAgICAgICAiU1lTUkVH
-X0lEX0FBNjRJU0FSMF9FTDFfQUVTIjogMiwNCj4+ICAgICAgICAgICAgICAgICAiU1lTUkVHX0lE
-X0FBNjRJU0FSMF9FTDFfU0hBMSI6IDEsDQo+PiAgICAgICAgICAgICAgICAgIlNZU1JFR19JRF9B
-QTY0SVNBUjBfRUwxX1NIQTIiOiAyLA0KPj4gICAgICAgICAgICAgICAgICJTWVNSRUdfSURfQUE2
-NElTQVIxX0VMMV9BUEEiOiAzLA0KPj4gICAgICAgICAgICAgICAgICJTWVNSRUdfSURfQUE2NFBG
-UjBfRUwxX1NWRSI6IDEsDQo+PiAgICAgICAgICAgICAgICAgInN2ZSI6IHRydWUsDQo+PiAgICAg
-ICAgICAgICAgICAgInN2ZTEyOCI6IHRydWUsDQo+PiAgICAgICAgICAgICAgICAgLi4uDQo+PiAg
-ICAgICAgICAgICB9DQo+PiAgICAgICAgIH0NCj4gDQo+PiBLaHVzaGl0IFNoYWggKDI1KToNCj4+
-ICAgdGFyZ2V0L2FybTogZXhwb3NlIFNZU1JFR18gcHJvcHMgZm9yIFJFVklEUl9FTDEgYW5kIEFJ
-RFJfRUwxDQo+PiAgIHRhcmdldC9hcm06IGV4cG9zZSBhbGwgbm9uLXJlcyBJRCByZWcgZmllbGRz
-IGFzIHByb3BlcnRpZXMNCj4+ICAgdGFyZ2V0L2FybTogbW92ZSBTWVNSRUdfIHByb3AgaW5mcmEg
-dG8gY3B1NjQuYw0KPj4gICB0YXJnZXQvYXJtL2t2bTogZW5hYmxlIHdyaXRhYmxlIGltcGxlbWVu
-dGF0aW9uIElEIHJlZ2lzdGVycw0KPj4gICB0YXJnZXQvYXJtL2t2bTogcmVhZCBhbGwgSUQgcmVn
-aXN0ZXJzIGZyb20gS1ZNDQo+PiAgIHRhcmdldC9hcm0va3ZtOiBoYW5kbGUgc3BlY2lhbCBJRCBy
-ZWdpc3RlcnMgd2hlbiByZWFkaW5nIGZyb20gS1ZNDQo+PiAgIHRhcmdldC9hcm0va3ZtOiBwcm9j
-ZXNzIElEIHJlZ2lzdGVyIHdyaXRlYmFjayBwZXIgZmllbGQNCj4+ICAgdGFyZ2V0L2FybS9rdm06
-IGhhbmRsZSB3cml0ZWJhY2sgZm9yIHNwZWNpYWwgSUQgcmVnaXN0ZXIgZmllbGRzDQo+IA0KPiBX
-aGlsZSB0aGUgZmlyc3QgcGFydCBvZiB0aGlzIHNlcmllcyBkbyBLVk0gc3BlY2lmaWMgY2FsbHMg
-dG8gZ2V0DQo+IHVzYWJsZSBJRCByZWdpc3RlcnMsIHRoZSByZXN0IGRvZXNuJ3Qgc2VlbSBLVk0g
-c3BlY2lmaWMuIElPVywgd2hhdA0KPiB3b3VsZCByZXN0cmljdCBuYW1lZCBDUFUgbW9kZWxzIHRv
-IGJlIHVzZWQgd2l0aCBIVkYgb3IgV0hQWD8gSUlVQw0KPiBhcyBsb25nIGFzIHdlIGNhbiB2YWxp
-ZGF0ZSB0aGUgQ1BVIGZlYXR1cmVzIHdpdGggdGhlIGhvc3Qgd2UgYXJlDQo+IGdvb2QuIElmIHNv
-LCBzb21lIGhhbmRsZXJzIHNob3VsZCBiZSBtb3ZlZCB0byB0aGUgYWNjZWxlcmF0b3IgbGF5ZXI7
-DQo+IGJ1dCBvZiBjb3VzZSB0aGlzIGNhbiBiZSBkb25lIGxhdGVyLg0KPiANCg0KSSBkb24ndCBz
-ZWUgYSByZWFzb24gd2h5IG5hbWVkIG1vZGVscyBzaG91bGRuJ3Qgd29yayB3aXRoIG90aGVyIGFj
-Y2VsZXJhdG9ycywNCmFzIGxvbmcgYXMgdGhlIGFjY2VsZXJhdG9yIHByb3ZpZGVzIGEgd2F5IHRv
-IHNldCB0aGUgZ3Vlc3QncyBJRCByZWdpc3RlciB2YWx1ZXMNCmFuZCB0byByZXBvcnQgd2hpY2gg
-dmFsdWVzIGl0IHN1cHBvcnRzIG9uIHRoZSBob3N0Lg0KDQpJJ20gbm90IHN1cmUgYWJvdXQgSFZG
-L1dIUFggY2FwYWJpbGl0aWVzLiBJIGRpZCB0cnkgYSBxdWljayBoYWNrICh+MjAgbGluZXMpDQpm
-b3IgVENHIGFuZCB0aGUgbmFtZWQgbW9kZWxzIGFuZCB0aGUgdW5kZXJseWluZyBTWVNSRUdfIHBy
-b3BlcnRpZXMgd29yayBhbG1vc3QNCm91dCBvZiB0aGUgYm94ISA6KQ0KDQpNYXliZSBpbiB0aGUg
-ZnV0dXJlIHRoZSBob3N0LWRlcGVuZGVudCBwYXJ0cyBpbiBuYW1lZCBtb2RlbHMvcW1wIChnZXR0
-aW5nIHRoZQ0Kc3VwcG9ydGVkIHZhbHVlcyBhbmQgY29tcHV0aW5nIGJsb2NrZXJzKSBjb3VsZCBi
-ZSBtYWRlIG1vcmUgYWNjZWxlcmF0b3ItYWdub3N0aWMuDQooSWYgSSB1bmRlcnN0b29kIHlvdSBj
-b3JyZWN0bHkpDQoNClRoYW5rcywNCktodXNoaXQNCj4+ICAgdGFyZ2V0L2FybTogaW50cm9kdWNl
-IG5hbWVkIENQVSBtb2RlbCBpbmZyYXN0cnVjdHVyZQ0KPj4gICB0YXJnZXQvYXJtOiBmaXggU1ZF
-IGFuZCBQQXV0aCBmaW5hbGl6ZSBmb3IgbmFtZWQgQ1BVIG1vZGVscw0KPj4gICB0YXJnZXQvYXJt
-OiBkaXNhYmxlIFBNVSBzdXBwb3J0IGZvciBuYW1lZCBDUFUgbW9kZWxzDQo+PiAgIHRhcmdldC9h
-cm06IGFkZCBhcm0tdjkuMC1hLXYxIG5hbWVkIENQVSBtb2RlbA0KPj4gICB0YXJnZXQvYXJtOiBh
-ZGQgbmVvdmVyc2UtdjItdjEgbmFtZWQgQ1BVIG1vZGVsDQo+PiAgIHRhcmdldC9hcm06IGFkZCBu
-ZW92ZXJzZS12Mi12MiBuYW1lZCBDUFUgbW9kZWwNCj4+ICAgdGFyZ2V0L2FybTogYWRkIGdyYXZp
-dG9uNC12MSBuYW1lZCBDUFUgbW9kZWwNCj4+ICAgdGFyZ2V0L2FybTogYWRkIGdyYWNlLXYxIG5h
-bWVkIENQVSBtb2RlbA0KPj4gICB0YXJnZXQvYXJtOiBmYWlsIG5hbWVkIENQVSBtb2RlbHMgb24g
-dW5rbm93biBub24temVybyBmZWF0dXJlIElEIHJlZ3MNCj4+ICAgdGFyZ2V0L2FybTogYWRkIGNw
-dS1tb2RlbHMtc3R1Yi5jDQo+PiAgIHRhcmdldC9hcm0vcW1wOiBhbGxvdyBuYW1lZCBDUFUgbW9k
-ZWxzIG9uIGNwdS1tb2RlbC1leHBhbnNpb24NCj4+ICAgdGFyZ2V0L2FybS9rdm06IGNvbXB1dGUg
-aG9zdC1zdXBwb3J0ZWQgdmFsdWVzIGZvciBJRCByZWdpc3RlciBmaWVsZHMNCj4+ICAgdGFyZ2V0
-L2FybTogcmVwb3J0IDAgYXMgc3VwcG9ydGVkIGZvciBJRCBmaWVsZHMgZ2F0ZWQgYnkgdkNQVSBp
-bml0DQo+PiAgICAgZmxhZ3MNCj4+ICAgdGFyZ2V0L2FybS9rdm06IGFkZCBrdm1fYXJtX2dldF9o
-b3N0X2lzYXIgaGVscGVyDQo+PiAgIHFtcDogYWRkIHF1ZXJ5LWNwdS1wcm9wcy1pbmZvIGNvbW1h
-bmQNCj4+ICAgdGFyZ2V0L2FybS9xbXA6IGltcGxlbWVudCBxdWVyeS1jcHUtcHJvcHMtaW5mbyBm
-b3IgS1ZNDQo+PiAgIHRhcmdldC9hcm0vcW1wOiBob29rIGJsb2NrZXJzIGluIHF1ZXJ5LWNwdS1k
-ZWZpbml0aW9ucw0KPiANCg0K
+This is a multi-part message in MIME format.
+--------------dJrYDi0TPRZ9cR26RCNdMuDh
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+On 9/28/2026 11:52 AM, Taylor Simpson wrote:
+>
+>
+> On Sat, Sep 26, 2026 at 1:23 PM Brian Cain 
+> <brian.cain@oss.qualcomm.com> wrote:
+>
+>     Cc: Taylor Simpson <ltaylorsimpson@gmail.com>
+>     Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>     ---
+>
+As it turns out, the multiple write behavior for vector / vector-pred 
+registers is "undefined".  In practice, neither the hardware nor ISS 
+raises exceptions here.  I will downgrade this behavior to logging a 
+GUEST_ERROR similar to the assembler behavior to reject these packets.
+
+
+>      tests/tcg/hexagon/multiple-writes.c | 98
+>     +++++++++++++++++++++++++++++
+>      1 file changed, 98 insertions(+)
+>
+>     diff --git a/tests/tcg/hexagon/multiple-writes.c
+>     b/tests/tcg/hexagon/multiple-writes.c
+>     index bd2b1384dd9..21771252020 100644
+>     --- a/tests/tcg/hexagon/multiple-writes.c
+>     +++ b/tests/tcg/hexagon/multiple-writes.c
+>     @@ -13,6 +13,7 @@
+>
+>      #include <assert.h>
+>      #include <signal.h>
+>     +#include <stdint.h>
+>      #include <stdio.h>
+>      #include <stdlib.h>
+>      #include <string.h>
+>     @@ -223,6 +224,80 @@ static int test_vreg_legal_predicated(void)
+>          return sig;
+>      }
+>
+>     +/*
+>     + * Complementary predicated writes to the same V-register pair
+>     are legal.
+>     + * v16 and v22 are splatted with distinct patterns; since p0 is
+>     always
+>     + * true, v14 must end up holding v16's pattern.  Extracting a
+>     word from
+>     + * v14 confirms the executed branch actually ran, rather than
+>     merely that
+>     + * no SIGILL was raised.
+>     + */
+>     +static int test_vreg_pair_legal_predicated(void)
+>     +{
+>     +    int sig;
+>     +    uint32_t result;
+>     +
+>     +    asm volatile(
+>     +        "r0 = #0\n"
+>     +        "r1 = ##1f\n"
+>     +        "memw(%[resume_pc]) = r1\n"
+>     +        "r4 = #0x11111111\n"
+>     +        "r5 = #0x22222222\n"
+>     +        "v16 = vsplat(r4)\n"
+>     +        "v22 = vsplat(r5)\n"
+>
+>
+> Go ahead and assign something to v21 and v23 here.
+> Ultimately, the values aren't used but the registers are referenced in 
+> the vcombine instructions below.
+> Alternatively, you could just use v16 and v22.  Something like
+>         "    if (p0) v15:14 = vcombine(v22, v16)\n"
+>         "    if (!p0) v15:14 = vcombine(v16, v22)\n"
+> If you do that, you can remove v21 and v23 from the clobber list.
+>
+>     +        "r4 = #0\n"
+>     +        "p0 = cmp.eq(r0, r0)\n"
+>     +        "{\n"
+>     +        "    if (p0) v15:14 = vcombine(v21, v16)\n"
+>     +        "    if (!p0) v15:14 = vcombine(v23, v22)\n"
+>     +        "}\n"
+>     +        "%[result] = vextract(v14, r4)\n"
+>     +        "1:\n"
+>     +        "%[sig] = r0\n"
+>     +        : [sig] "=r"(sig), [result] "=r"(result)
+>     +        : [resume_pc] "r"(&resume_pc)
+>     +        : "r0", "r1", "r4", "r5", "p0",
+>     +          "v14", "v15", "v16", "v21", "v22", "v23", "memory");
+>     +
+>     +    return sig == SIGILL ? SIGILL : result;
+>     +}
+>     +
+>     +/*
+>     + * A future write may consume a temporary value from the same
+>     V-register.
+>     + * buf is zeroed, so v0.tmp loads all-zero and v0.w =
+>     vadd(v0.tmp.w, 1)
+>     + * must end up as 1 in every word.  Extracting a word from the result
+>     + * confirms the add actually used the loaded .tmp value, rather than
+>     + * merely that no SIGILL was raised.
+>     + */
+>     +static int test_vreg_legal_tmp(void)
+>     +{
+>     +    long long buf[16] __attribute__((aligned(128)));
+>     +    int sig;
+>     +    uint32_t result;
+>     +
+>     +    memset(buf, 0, sizeof(buf));
+>     +
+>     +    asm volatile(
+>     +        "r0 = #0\n"
+>     +        "r1 = ##1f\n"
+>     +        "memw(%[resume_pc]) = r1\n"
+>     +        "r2 = %[buf]\n"
+>     +        "r3 = #1\n"
+>     +        "r4 = #0\n"
+>     +        "v1 = vsplat(r3)\n"
+>
+>
+> Consider putting something non-zero into v0 here.
+> That will be a stronger check that the read from buf actually took place.
+>
+>     +        "{\n"
+>     +        "    v0.tmp = vmem(r2 + #0)\n"
+>     +        "    v0.w = vadd(v0.w, v1.w)\n"
+>     +        "}\n"
+>     +        "%[result] = vextract(v0, r4)\n"
+>     +        "1:\n"
+>     +        "%[sig] = r0\n"
+>     +        : [sig] "=r"(sig), [result] "=r"(result)
+>     +        : [resume_pc] "r"(&resume_pc), [buf] "r"(buf)
+>     +        : "r0", "r1", "r2", "r3", "r4", "v0", "v1", "memory");
+>     +
+>     +    return sig == SIGILL ? SIGILL : result;
+>     +}
+>     +
+>      static int test_vreg_illegal_mixed(void)
+>      {
+>          int sig;
+>     @@ -242,6 +317,26 @@ static int test_vreg_illegal_mixed(void)
+>          return sig;
+>      }
+>
+>     +/* A pair write and a single write to either pair member are
+>     illegal. */
+>     +static int test_vreg_illegal_pair_overlap(void)
+>     +{
+>     +    int sig;
+>     +
+>     +    asm volatile(
+>     +        "r0 = #0\n"
+>     +        "r1 = ##1f\n"
+>     +        "memw(%[resume_pc]) = r1\n"
+>
+>
+> Consider putting something into v14 and v15 here and check the values 
+> are unchanged at the end.
+> Perhaps a subsequent patch that does this for all the illegal tests.
+>
+>     +        ".word 0x1f5055ee    /* { v15:14 = vcombine(v21, v16) */\n"
+>     +        ".word 0x1e03e5ee    /*   v14 = v5 } */\n"
+>     +        "1:\n"
+>     +        "%[sig] = r0\n"
+>     +        : [sig] "=r"(sig)
+>     +        : [resume_pc] "r"(&resume_pc)
+>     +        : "r0", "r1", "memory");
+>     +
+>     +    return sig;
+>     +}
+>     +
+>      static int test_vreg_illegal_uncond(void)
+>      {
+>          int sig;
+>     @@ -308,7 +403,10 @@ int main()
+>          assert(test_post_increment3() == SIGILL);
+>
+>          assert(test_vreg_legal_predicated() == 23);
+>     +    assert(test_vreg_pair_legal_predicated() == 0x11111111);
+>     +    assert(test_vreg_legal_tmp() == 1);
+>          assert(test_vreg_illegal_mixed() == SIGILL);
+>     +    assert(test_vreg_illegal_pair_overlap() == SIGILL);
+>          assert(test_vreg_illegal_uncond() == SIGILL);
+>
+>          assert(test_qreg_illegal() == SIGILL);
+>     -- 
+>     2.34.1
+>
+>
+> Otherwise
+> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+--------------dJrYDi0TPRZ9cR26RCNdMuDh
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 9/28/2026 11:52 AM, Taylor Simpson
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAATN3NqiYs5Pm3S02H1vwLmE_BEkG--jq=+XiL0bXxQnJcXZ9g@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">
+        <div dir="ltr"><br>
+        </div>
+        <br>
+        <div class="gmail_quote gmail_quote_container">
+          <div dir="ltr" class="gmail_attr">On Sat, Sep 26, 2026 at
+            1:23 PM Brian Cain &lt;<a
+              href="mailto:brian.cain@oss.qualcomm.com"
+              moz-do-not-send="true" class="moz-txt-link-freetext">brian.cain@oss.qualcomm.com</a>&gt;
+            wrote:<br>
+          </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Cc:
+            Taylor Simpson &lt;<a href="mailto:ltaylorsimpson@gmail.com"
+              target="_blank" moz-do-not-send="true"
+              class="moz-txt-link-freetext">ltaylorsimpson@gmail.com</a>&gt;<br>
+            Signed-off-by: Brian Cain &lt;<a
+              href="mailto:brian.cain@oss.qualcomm.com" target="_blank"
+              moz-do-not-send="true" class="moz-txt-link-freetext">brian.cain@oss.qualcomm.com</a>&gt;<br>
+            ---<br>
+          </blockquote>
+        </div>
+      </div>
+    </blockquote>
+    <p>As it turns out, the multiple write behavior for vector /
+      vector-pred registers is "undefined".  In practice, neither the
+      hardware nor ISS raises exceptions here.  I will downgrade this
+      behavior to logging a GUEST_ERROR similar to the assembler
+      behavior to reject these packets.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+cite="mid:CAATN3NqiYs5Pm3S02H1vwLmE_BEkG--jq=+XiL0bXxQnJcXZ9g@mail.gmail.com">
+      <div dir="ltr">
+        <div class="gmail_quote gmail_quote_container">
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"> tests/tcg/hexagon/multiple-writes.c
+            | 98 +++++++++++++++++++++++++++++<br>
+             1 file changed, 98 insertions(+)<br>
+            <br>
+            diff --git a/tests/tcg/hexagon/multiple-writes.c
+            b/tests/tcg/hexagon/multiple-writes.c<br>
+            index bd2b1384dd9..21771252020 100644<br>
+            --- a/tests/tcg/hexagon/multiple-writes.c<br>
+            +++ b/tests/tcg/hexagon/multiple-writes.c<br>
+            @@ -13,6 +13,7 @@<br>
+            <br>
+             #include &lt;assert.h&gt;<br>
+             #include &lt;signal.h&gt;<br>
+            +#include &lt;stdint.h&gt;<br>
+             #include &lt;stdio.h&gt;<br>
+             #include &lt;stdlib.h&gt;<br>
+             #include &lt;string.h&gt;<br>
+            @@ -223,6 +224,80 @@ static int
+            test_vreg_legal_predicated(void)<br>
+                 return sig;<br>
+             }<br>
+            <br>
+            +/*<br>
+            + * Complementary predicated writes to the same V-register
+            pair are legal.<br>
+            + * v16 and v22 are splatted with distinct patterns; since
+            p0 is always<br>
+            + * true, v14 must end up holding v16's pattern.  Extracting
+            a word from<br>
+            + * v14 confirms the executed branch actually ran, rather
+            than merely that<br>
+            + * no SIGILL was raised.<br>
+            + */<br>
+            +static int test_vreg_pair_legal_predicated(void)<br>
+            +{<br>
+            +    int sig;<br>
+            +    uint32_t result;<br>
+            +<br>
+            +    asm volatile(<br>
+            +        "r0 = #0\n"<br>
+            +        "r1 = ##1f\n"<br>
+            +        "memw(%[resume_pc]) = r1\n"<br>
+            +        "r4 = #0x11111111\n"<br>
+            +        "r5 = #0x22222222\n"<br>
+            +        "v16 = vsplat(r4)\n"<br>
+            +        "v22 = vsplat(r5)\n"<br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>Go ahead and assign something to v21 and v23 here.</div>
+          <div>Ultimately, the values aren't used but the registers are
+            referenced in the vcombine instructions below.</div>
+          <div>Alternatively, you could just use v16 and v22.  Something
+            like</div>
+          <div>        "    if (p0) v15:14 = vcombine(v22, v16)\n"<br>
+                    "    if (!p0) v15:14 = vcombine(v16, v22)\n"<br>
+          </div>
+          <div>If you do that, you can remove v21 and v23 from the
+            clobber list.</div>
+          <div> </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+            +        "r4 = #0\n"<br>
+            +        "p0 = cmp.eq(r0, r0)\n"<br>
+            +        "{\n"<br>
+            +        "    if (p0) v15:14 = vcombine(v21, v16)\n"<br>
+            +        "    if (!p0) v15:14 = vcombine(v23, v22)\n"<br>
+            +        "}\n"<br>
+            +        "%[result] = vextract(v14, r4)\n"<br>
+            +        "1:\n"<br>
+            +        "%[sig] = r0\n"<br>
+            +        : [sig] "=r"(sig), [result] "=r"(result)<br>
+            +        : [resume_pc] "r"(&amp;resume_pc)<br>
+            +        : "r0", "r1", "r4", "r5", "p0",<br>
+            +          "v14", "v15", "v16", "v21", "v22", "v23",
+            "memory");<br>
+            +<br>
+            +    return sig == SIGILL ? SIGILL : result;<br>
+            +}<br>
+            +<br>
+            +/*<br>
+            + * A future write may consume a temporary value from the
+            same V-register.<br>
+            + * buf is zeroed, so v0.tmp loads all-zero and v0.w =
+            vadd(v0.tmp.w, 1)<br>
+            + * must end up as 1 in every word.  Extracting a word from
+            the result<br>
+            + * confirms the add actually used the loaded .tmp value,
+            rather than<br>
+            + * merely that no SIGILL was raised.<br>
+            + */<br>
+            +static int test_vreg_legal_tmp(void)<br>
+            +{<br>
+            +    long long buf[16] __attribute__((aligned(128)));<br>
+            +    int sig;<br>
+            +    uint32_t result;<br>
+            +<br>
+            +    memset(buf, 0, sizeof(buf));<br>
+            +<br>
+            +    asm volatile(<br>
+            +        "r0 = #0\n"<br>
+            +        "r1 = ##1f\n"<br>
+            +        "memw(%[resume_pc]) = r1\n"<br>
+            +        "r2 = %[buf]\n"<br>
+            +        "r3 = #1\n"<br>
+            +        "r4 = #0\n"<br>
+            +        "v1 = vsplat(r3)\n"<br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>Consider putting something non-zero into v0 here.</div>
+          <div>That will be a stronger check that the read from buf
+            actually took place.</div>
+          <div> </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+            +        "{\n"<br>
+            +        "    v0.tmp = vmem(r2 + #0)\n"<br>
+            +        "    v0.w = vadd(v0.w, v1.w)\n"<br>
+            +        "}\n"<br>
+            +        "%[result] = vextract(v0, r4)\n"<br>
+            +        "1:\n"<br>
+            +        "%[sig] = r0\n"<br>
+            +        : [sig] "=r"(sig), [result] "=r"(result)<br>
+            +        : [resume_pc] "r"(&amp;resume_pc), [buf] "r"(buf)<br>
+            +        : "r0", "r1", "r2", "r3", "r4", "v0", "v1",
+            "memory");<br>
+            +<br>
+            +    return sig == SIGILL ? SIGILL : result;<br>
+            +}<br>
+            +<br>
+             static int test_vreg_illegal_mixed(void)<br>
+             {<br>
+                 int sig;<br>
+            @@ -242,6 +317,26 @@ static int
+            test_vreg_illegal_mixed(void)<br>
+                 return sig;<br>
+             }<br>
+            <br>
+            +/* A pair write and a single write to either pair member
+            are illegal. */<br>
+            +static int test_vreg_illegal_pair_overlap(void)<br>
+            +{<br>
+            +    int sig;<br>
+            +<br>
+            +    asm volatile(<br>
+            +        "r0 = #0\n"<br>
+            +        "r1 = ##1f\n"<br>
+            +        "memw(%[resume_pc]) = r1\n"<br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>Consider putting something into v14 and v15 here and
+            check the values are unchanged at the end.</div>
+          <div>Perhaps a subsequent patch that does this for all the
+            illegal tests.</div>
+          <div> </div>
+          <blockquote class="gmail_quote"
+style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+            +        ".word 0x1f5055ee    /* { v15:14 = vcombine(v21,
+            v16) */\n"<br>
+            +        ".word 0x1e03e5ee    /*   v14 = v5 } */\n"<br>
+            +        "1:\n"<br>
+            +        "%[sig] = r0\n"<br>
+            +        : [sig] "=r"(sig)<br>
+            +        : [resume_pc] "r"(&amp;resume_pc)<br>
+            +        : "r0", "r1", "memory");<br>
+            +<br>
+            +    return sig;<br>
+            +}<br>
+            +<br>
+             static int test_vreg_illegal_uncond(void)<br>
+             {<br>
+                 int sig;<br>
+            @@ -308,7 +403,10 @@ int main()<br>
+                 assert(test_post_increment3() == SIGILL);<br>
+            <br>
+                 assert(test_vreg_legal_predicated() == 23);<br>
+            +    assert(test_vreg_pair_legal_predicated() ==
+            0x11111111);<br>
+            +    assert(test_vreg_legal_tmp() == 1);<br>
+                 assert(test_vreg_illegal_mixed() == SIGILL);<br>
+            +    assert(test_vreg_illegal_pair_overlap() == SIGILL);<br>
+                 assert(test_vreg_illegal_uncond() == SIGILL);<br>
+            <br>
+                 assert(test_qreg_illegal() == SIGILL);<br>
+            -- <br>
+            2.34.1<br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>Otherwise</div>
+          <div>Reviewed-by: Taylor Simpson &lt;<a
+              href="mailto:ltaylorsimpson@gmail.com"
+              moz-do-not-send="true" class="moz-txt-link-freetext">ltaylorsimpson@gmail.com</a>&gt;</div>
+          <div> </div>
+        </div>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------dJrYDi0TPRZ9cR26RCNdMuDh--
 
