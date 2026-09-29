@@ -4,198 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32130CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 13:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80242CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 13:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBXaY-0004WX-2v; Tue, 29 Sep 2026 09:09:42 -0400
+	id 1xBXmf-00071g-5o; Tue, 29 Sep 2026 09:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1xBXaV-0004V7-6Z; Tue, 29 Sep 2026 09:09:39 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xBXmc-000718-Sy
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:22:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1xBXaS-0001Sw-Rs; Tue, 29 Sep 2026 09:09:38 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TAlkx3509130; Tue, 29 Sep 2026 06:09:21 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=nIzdQPl6QLCEB6PxteIuIsLLEmuuSc1zBFyQL9C4Y
- EA=; b=qsMEKQzdgkeadkKrEwgGLFhT5jtqCL41CDN6lllLT/ENjr3w5YVQ6cKBG
- bRhtJereFvBZ4Osji/0TYG47HJk6QoKGGWe99HROwV/7xCvmnbrn1MYAixHAanTU
- iTVOfzqlNnSXHQRiiot/KdD0z4gYYDCXf4IAe3G3MOYQpDzjpBRhzB7oF2d7D009
- Z0JSDNWLtpOgcEywwPhn/ul7MXRcDKujCFcpz/tSwShb2FjjYCsble37JdzBFJH2
- uq7Mr1OD+9rp3RWcWdoUuAT7+8UTML2kr5uw+sq8Cm5HwI57NdDEaSc+9g/B4Wm0
- 0+hsJtUHTeLjDm2FOyEmfkf2tdzVw==
-Received: from mw6pr02cu001.outbound.protection.outlook.com
- (mail-westus2azon11022132.outbound.protection.outlook.com [52.101.48.132])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4gyycv27ay-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 06:09:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lKLVNjyKqNPfhOwyq8kl5LDc+4hnRQEQPXCBSPmmBbzsVch521FTcYxLa0ebwmedBD9BO9WBM2o6nBKYkfhnbMhzsIVJpAaxY7y+W7dZ4+F1CoShkohisWk5psk4tmRIIHW9XsdV75+Q5wUqT+AzdZ244cj8xlwhfSRsEnoNLe0J/c/BM/ejwy9HzEmpw1rcMe9aEymQRJlJkF9G5coJWK+fAddj6+/iaYvIPr6h7LTnnmtnWaVvHIKXdBTk1JZzG+K7jlptz/MwhMc7aAGvNEQE+FhzZS/PeO1eP4A3s8qCZ7hveMSZszbTo2MbM1dtspVM/zcVMd89o9YjVBCM9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nIzdQPl6QLCEB6PxteIuIsLLEmuuSc1zBFyQL9C4YEA=;
- b=tbjXjiBYPquHrkJtm4b6DGXxYLLPaStwLUzjj2mP9AmGZAU343Bi+BPc49qVnO18/aDwworwEV+PnSvyOdMb4w7FUsdSz/norwvkA4xFDSGxx/wJkiIn1ixwIz/Jp8cS8XpnB02n4Y8y52bH2+78LKCw4xCFzRRnKjA73M4rDfPg+q0E3rq81IZKiv6Am/Gkl7nXBA20Uao61yIGzUIhF08oKNVsF97BiAiKZ9LsA3pABIcU7qNWB4iy6/sCaC/Ul7+azXGfjK5i0Jdb9mKpyW5Ng9CeiW981f6mtOR6pcibtVtzbqcarLlceHttJ9YOqd0e2yGO0RemNN2f2P2Q5g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nIzdQPl6QLCEB6PxteIuIsLLEmuuSc1zBFyQL9C4YEA=;
- b=aEM4EU74P2cox80nS81qDZcIxfHUjOjUvKv9ULhrifc6pIgeNR2el2vV1PNs4uvvaexjI6+bHi0FUg8V1HymdOpMG9KkCfWk6kn9bfKFHHEos82jq+8NmXoF1sf1HSVXqUEU/0fYT93AGgMpitcRVFNHrUMVKgoJAmKPVr9jsZYgWInvSSiEiPA5le+kGAmjT4IB6gKnzepU/CvHCw4dtgiF4/O40APzQktnDv/s38c6qnhuVLZFsA5EtCj+O8uFjoNjzmHjeB52ITm8xF+ihyX4uFm5df0RV4WSsiNticcqJOk3Ryz7lhU4vAuDzsDPQGOcoOw1yj6m0e9bQPp5vQ==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by IA1PR02MB9206.namprd02.prod.outlook.com (2603:10b6:208:426::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
- 2026 13:09:17 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0451.026; Tue, 29 Sep 2026
- 13:09:14 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "cohuck@redhat.com" <cohuck@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>, "gshan@redhat.com"
- <gshan@redhat.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>, Shaju Abraham
- <shaju.abraham@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- "ping@khushitshah.com" <ping@khushitshah.com>, Sandesh Patel
- <sandesh.patel@nutanix.com>
-Subject: Re: [RFC PATCH v4 08/25] target/arm/kvm: handle writeback for special
- ID register fields
-Thread-Topic: [RFC PATCH v4 08/25] target/arm/kvm: handle writeback for
- special ID register fields
-Thread-Index: AQHdScVnVa3Hz5ai9EyoEFthTgDDig==
-Date: Tue, 29 Sep 2026 13:09:14 +0000
-Message-ID: <3EF48EF1-279C-4EBA-9673-D9FB269155DC@nutanix.com>
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-9-khushit.shah@nutanix.com>
- <aabcb61b-8341-423f-b113-e7ab2b34c2ac@redhat.com>
-In-Reply-To: <aabcb61b-8341-423f-b113-e7ab2b34c2ac@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nutanix.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|IA1PR02MB9206:EE_
-x-ms-office365-filtering-correlation-id: 4d9335ec-2e00-4d0e-a420-08df1e2adca7
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|23010399003|10067099003|56012099006|6133799003|4143699003|22082099003|18002099003|38070700021;
-x-microsoft-antispam-message-info: CLioVgkKBi8OFQsiWXOXGLqG9Agl9u3G0vsgMIbUKFMkhLwkfzEkpgIVtc4TYKXrbLpgezzmSC2mGbT8u1JHAgUhAPPBOvcNTP2SDzf5C0SRJnkj4gddyKsDdM5WKtoaMbtxNJtal18R8XwB/9Na1CImUTeX0RTEtUeH3AnbfNh+eQ5/B5bJxOHS+6HPgt9ChADV+2d3sp6/orvVaMsm98hNrCfrXTOh1rNqitOHYlYJvs8suhkqBTBjBA07I0xMkdVDK7DJX7L5JC2HzFy3FEpJAVexpD4OFTNWlkJaEgHV6y0bRFjDwWwgylY9J4/y4bs+3n2beYioyz2n6NVh1ZVhtBAORLv7Lcv/7lRFysePdln5c9/R0Q9MHKNHrGpAXIB+lpDI28Qe1fuCp9VwnYF+jVbb7OFbWSLB/r/JC1wpD8Kvn7HJL+j9I7Mvo2BiOVkrs147btPrGW807Kd5DWYfNHaQySa2pNuuvAwo0yNkcIxbqSqYVViZwzcCHyHr3UPjWdc2fmgqO5OFtdwibueCjpZnLtT43RdhhSHS9WO1IlWGelmk99l2tVzJKCZtn9p/BGMb+wU2DE1b0WbJcSdEZ1U++SA7smNQbb9SUT5uCI/8ksT1nJhRgz2ZJ4JwDiEmlezSNsLaIuj9Z3gjgAwtzZQZMg0DSe/ji0hbH+8LPsxIn0Kq/WVqSsO4LvdZkEfDpLMJbr26eWSvURXVwfPZc0nsiZrCcdPMcp/Kl/0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(23010399003)(10067099003)(56012099006)(6133799003)(4143699003)(22082099003)(18002099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eWpXNGt2L2NkZ3NzOWhTeUJQYUdoOFpCRTg2N1JleE9rd1lHZWlCRnc5SUFy?=
- =?utf-8?B?dHFBTHJGL0dvMHRWNFRwb3JJMTJib2N6UVR5MTBjZkY4bGNnV3pTRll6MVF0?=
- =?utf-8?B?Nkd6MzFTN2FqRmZxQ29BUVRVMFB3dUpNQjF5NFdXd0VoamV2UFhabWlaUG45?=
- =?utf-8?B?VUI2L21IS2lRcEpscnUzY2FWSFBCL09FWVg0aVNFV3BTd3h0Q0l0bFdkeGd1?=
- =?utf-8?B?ZEorSW9yRUlUOE04eFpaZjZmdEJoa2FtaG8rZUZOQmNFVDdWZnU2LzRrdWtu?=
- =?utf-8?B?aVBTMG9QKyt3dmxzcTdQdXV0TXV1UFhkb3ZUNFl1TnU3eDhJUjdxU3JVTHVI?=
- =?utf-8?B?ZWdWUjMwc3J1SmlSRFgwWVpwQ3BUaFBCeng4dEhGY2huRkV2cGlVVHFpdU90?=
- =?utf-8?B?dGxTdEpkZVFKYjNwSG9oNDFzMTNGeDk4OWp3ZEJxaThLTnhCTlBRZGpmemdo?=
- =?utf-8?B?OWpMZURsS2VvbDFVNFNsWkhSSUJmeSthcDhwbnQvTHRMVVE2eklZeHoyRnB6?=
- =?utf-8?B?RW80YUVRRTM5Vmo3d2tBY29pK1p4and4UzA3RkdQNnhSbExqeWlUTjAwQmNP?=
- =?utf-8?B?SW0xT0hKSklaV3VGM29QN04vbjZickxtYlVYOE40ZHU1eklWOU5kOGsyejdI?=
- =?utf-8?B?UUdwMjgrU2FadGhFVkM4UU4yMFFzVjdESk5Sb3drM0VDL21HU3Z3Y2J1OXhP?=
- =?utf-8?B?RzBWY21kSnJqdXkwWlZqd1pBc2w0UThPT0hoRnRUbDhraTBmc2NXSXFGZE1D?=
- =?utf-8?B?ditySWJFQTZ0N3VNQ1J0ekJTRENiMzB1VktpUVU2UHREWWJsUHZpRjgrbW5s?=
- =?utf-8?B?bGI1bjdTL0NDeS9Kd1VLWGNIMnkycko1Y0YwYllEVCtoQmxuR2kvSkNVMDVk?=
- =?utf-8?B?SlRyZENFbUYvR2E3eDRWRlpaUXBoYStpSjZmUlJQSzVqcHQ4Q2EvaWNCeHJx?=
- =?utf-8?B?cFlPcUhqZEtoTVpORUd0YXBLZlRnZ3B5WFIvQWhKcXdxK3pPNHc1NjYwSHBz?=
- =?utf-8?B?aHFnRGROc2ZXL2VtN2hxM2txbElXNk1UU2RHV3Fidk1Zb0xmM1MxNDZHNUtt?=
- =?utf-8?B?TFRjSzZTSTN1YkxrT1Q1OUFxRHhNL2E5UDR6bEsrdks3NDNFQW40cElWL3dS?=
- =?utf-8?B?UlNRaVBlYzhYRVVwSko1TW1zNnpBWXBWY3dQLzZ3R2hsajlMZHZpeDBJTUVY?=
- =?utf-8?B?OFlCb3JMZGRRU0RGMDJ3UXMxaWI2UTFyNmJ1TSthNVZ5MzJ2U3JhWmRkWVpO?=
- =?utf-8?B?MTB2SFppVVh6VFVVb1BsM3U5c00xWFZIeEpuZmxScWRGZGRXQ0lUWjhOcXpV?=
- =?utf-8?B?VlRud3JqME1RNWpBVUdXSDdkTnV0Yjcyb3dhZUNyTmNvYnZiajEydVJNM3Bx?=
- =?utf-8?B?bDdiS1Blb2RuczUrY0h5bklraktSTGFZelZDT0EvQkRqN1VSZzJ6bzN0TVkx?=
- =?utf-8?B?a0FvOVhhcFNjS3JibjBXRXJsNUV0QWFwUk9mcnN0MDludkd4L3lkWVFZL0pv?=
- =?utf-8?B?OGRINmdqYlk0MU5peVhHZWI5Wmd5M210RmtrdHZ4SkJWM1NvdzI3TDhvNk13?=
- =?utf-8?B?WWg1N29oeXFxOHBGdjFUd3FCbWlrbkErTmRaZ3RPSm12OEprVU5RSVdCdW9k?=
- =?utf-8?B?WU9xMWxVdHdLdmVVLzlkdi9DdUNkMWRTU0IxWGJhS3JEb2VvV2UwN1hJRlRZ?=
- =?utf-8?B?V0g3d1h3cm85NEVFTGxPOFFBU0JvbFBOclhuck9FK2ZMdjdud0toeFg0T2xs?=
- =?utf-8?B?Y2tkcnltSlJMSEpZRnZZajBtNjBTcUlpbjArNVkvZW5XcGhnbHRmeW9yWTBB?=
- =?utf-8?B?c0FFMEdocEF4cTFyWjEvWDBzZ2JMZVBubXdSb2ZlKzl6M092Yy9ocFFlcGxE?=
- =?utf-8?B?T09lUGo4WXRVRG5RT1Q4aURIemJwMGUycjMwTnAybHNrMEJldGxQMWFHNUQz?=
- =?utf-8?B?MDlXWHZoMEtOcmZKTlBmekVySVlRT3FKeDdIN1ZzVWtabVVBM0QwNHFoc2hs?=
- =?utf-8?B?VVorVDFxNjk0N2lNcjNqSkhJeGRvK25oSkdYUmcrUi9lN1gwdzh5bHRqVWps?=
- =?utf-8?B?SzltSjJqMHZiWkpHOGZpSmVEdWNFNFVSRmNkSjhIZWorTnhuVzUxcXNpN1Qv?=
- =?utf-8?B?QW04SEpmamxxbkZVL1FvcTU3TUoxeVdyQzdCTE45ak5PUHBoVGJicHdCYmpH?=
- =?utf-8?B?VGlodW8zM25tR3RYa1M0UW55bVo4bXRjTzM2LzJDZlJTcGdVN2lUZFRRQ2kz?=
- =?utf-8?B?WjFYSEdMSFVzd1FBUHdzMjRxd1hOQUFFWVZLdHhSelIzMnJqY0ViMEV2Mmts?=
- =?utf-8?B?M3EzSndEcnVUemZSRmdzNUVaNE83NXY0UjV1TGpEMHhJNHJzV090RjhGZXlx?=
- =?utf-8?Q?svlAwavTHgHkjzI0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DFAF908C5EE0E4408C3C7E635BEC8ED2@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1xBXma-0002rg-F0
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790688124;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iooU9FN5TIubzv7f6r7MGbmOFAuzxVs8SmVrAUE2K3M=;
+ b=IJCZtf8MIvKUEOVhxgZyS+XI52rYOpaoiYjhhjOMlN99srNMlVVAxYN0LWdrypMXYZz98y
+ /2ZQqn8Tw9izi48+KLX0uip2fbwZyWFrDS76THA2gUAftGGY7iQpezD2UV9SShm/JjZwwk
+ jQBw1RnWeAXzKEnYNZDsfVS/D2mYcfc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-R0yXyohXMSSA1E91Re4yFQ-1; Tue,
+ 29 Sep 2026 09:22:03 -0400
+X-MC-Unique: R0yXyohXMSSA1E91Re4yFQ-1
+X-Mimecast-MFC-AGG-ID: R0yXyohXMSSA1E91Re4yFQ_1790688122
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F09491954B27; Tue, 29 Sep 2026 13:22:01 +0000 (UTC)
+Received: from jmarcin-thinkpadt14gen5.tpbc.csb
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7DBDA768; Tue, 29 Sep 2026 13:22:00 +0000 (UTC)
+From: Juraj Marcin <jmarcin@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] migration: Add option to VMSD to synchronize CPU right after
+ loading
+Date: Tue, 29 Sep 2026 15:21:46 +0200
+Message-ID: <20260929132150.2215007-1-jmarcin@redhat.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: YXrN/G4Kp97bRMwzJPddqWmTB1i/yM4JiI1rLF4f95w7qwdM19i8Ms7p+61gePJQIUQaz93IZ2PhwkAlLNmnC5IahqLItD4oNsE6xJLsUutA4PPJNkZ0Zgfk89GcUHS33Yh5/a5yf5LRYzUkG/xHrmLTaVGUI0Obn98Brn+WTpy6rcXWe2tJIfpn/One4Jsi6tZAn6CrGjBdRPdU/RYD+a+2YS9AGl6jsuGvjGVfu8z5eOx5MMVczzCzt86eC9bJXLtsKO7iROiOsp9rXUWFIz7ZkJLOZ9JZ9KL2cwF3SBcQbb22nhdTgYy9cC0EQ6Y02StldBEUCyUicdwpEK+DrQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d9335ec-2e00-4d0e-a420-08df1e2adca7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Sep 2026 13:09:14.9304 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YQK3pgxkQbSceLprSF3ZJlNXh1YY7U6h0Kgig7WNrXZ5JEiSL4zbmJgAD4U2BqMEGYMOSO+B4RR9FhoxeGPB1gYne97rnE0O/a4WZnzQxVI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR02MB9206
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1MiBTYWx0ZWRfX3ecAUDUvYuGt
- jN02ILcNIGuwCur9by7H3LsxsDVWh9R76mcsxkJKHHo/5gAkxkx9kYCCgzBi0BNJZZMCtFvF1jF
- Xyi76gOg3hBOjwAYrzm2rx46IBxFcgpc69AMVHhB2e/1lLwacfnesXwig1klYcccsr3DmJldz3K
- v/EnMBQlEF7zasE45ik5mUSb6VK8qbUG8+rDfYeek1cxomIhQRV655aFZ8v1aigCBKxGdId4BIs
- WQUOyTJDniaKZqMApqGjjn7sZBlWHXQdyZXB9SrgEks8kSaCWy01dH9r53Vg1kKg992OnrIJEL1
- RmDn++Xe3ijPKCc/odEUxST37Yw3TMET/Cd0ayFRHXBC96tYer1x1waFlH6+4CFnklVU8BrtERp
- bHYMM+6NI7S+jAuKuY50VkHXinR/ehFnWq0/+v3qB7MwNpU4UQNvLM60WjX9xVvPErpCH+aPC5h
- SCyVcZq+H/geQZFYpFQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1MiBTYWx0ZWRfX3FVp4siF673Y
- r4Qx1gKn20gS03HPwpWM3TDQBxPqpfNStCAf9UqUGHWw/3HlpbzUM7U4t6nWSvfGlwR/Oz9RXIq
- 5K4ZBQLKvlSLBBsRoebhcNaRlEBsv0w=
-X-Authority-Analysis: v=2.4 cv=FM2OVOos c=1 sm=1 tr=0 ts=6abbb881 cx=c_pps
- a=D7hViFZnkHkNtnby+5Sw9A==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=VdqzKS8jKosA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22 a=20KFwNOVAAAA:8
- a=64Cc0HZtAAAA:8 a=MJ3db33aqVT_XWkCQYgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: PB-NOBIcxwoy8-SWd8KXvbGiVj9cn4Pk
-X-Proofpoint-ORIG-GUID: PB-NOBIcxwoy8-SWd8KXvbGiVj9cn4Pk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -211,105 +84,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMjQgU2VwIDIwMjYsIGF0IDM6MjfigK9QTSwgRXJpYyBBdWdlciA8ZXJpYy5hdWdl
-ckByZWRoYXQuY29tPiB3cm90ZToNCj4gDQo+ICEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KPiAgQ0FVVElPTjogRXh0
-ZXJuYWwgRW1haWwNCj4gDQo+IHwtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIQ0KPiANCj4gDQo+IA0KPiBPbiA5LzIxLzI2
-IDI6MzIgUE0sIEtodXNoaXQgU2hhaCB3cm90ZToNCj4+IFNvbWUgZmllbGRzIHNob3VsZCBub3Qg
-YmUgd3JpdHRlbiBiYWNrIHRvIEtWTSBmb3IgdmFyaW91cyByZWFzb25zOg0KPj4gLSBJRF9BQTY0
-UEZSMF9FTDEuR0lDIC8gSURfUEZSMV9FTDEuR0lDIGFyZSBmYWJyaWNhdGVkIGJ5IEtWTSBiYXNl
-ZCBvbg0KPj4gICB0aGUgZ2ljLXZlcnNpb24gcHJvcGVydHkuDQo+PiAtIEtWTSBkb2VzIG5vdCBh
-bGxvdyB3cml0aW5nIDAgdG8gSURfREZSMF9FTDEuQ29wRGJnLCB3aGljaCBicmVha3MNCj4+ICAg
-Ym9vdGluZyBhbiBBQXJjaDY0LW9ubHkgZ3Vlc3Qgb24gYSBob3N0IHRoYXQgYWxzbyBzdXBwb3J0
-cyBBQXJjaDMyLg0KPj4gLSBJRF9ERlIwX0VMMS5QZXJmTW9uIGlzIHBvcHVsYXRlZCBieSBLVk0g
-ZXZlbiBmb3IgQUFyY2g2NC1vbmx5IGd1ZXN0cw0KPj4gICBidXQgaXMgbm90IHdyaXRhYmxlIHRo
-ZXJlLg0KPj4gLSBNUElEUl9FTDEgaXMgbWFuYWdlZCBieSBLVk0gYmFzZWQgb24gdkNQVSBpbmRl
-eC4NCj4+IC0gSG9sZCBvZmYgd3JpdGluZyBiYWNrIENMSURSX0VMMSB1bnRpbCB3ZSBwcm9wZXJs
-eSBzdXBwb3J0IGV4cG9zaW5nDQo+PiAgIGNhY2hlIHRvcG9sb2d5IHRvIGEgS1ZNIGd1ZXN0Lg0K
-Pj4gDQo+PiBTaWduZWQtb2ZmLWJ5OiBLaHVzaGl0IFNoYWggPGtodXNoaXQuc2hhaEBudXRhbml4
-LmNvbT4NCj4+IC0tLQ0KPj4gdGFyZ2V0L2FybS9jcHUtaWRyZWdzLmMgfCAgNiArKysrKysNCj4+
-IHRhcmdldC9hcm0vY3B1LWlkcmVncy5oIHwgIDIgKysNCj4+IHRhcmdldC9hcm0va3ZtLmMgICAg
-ICAgIHwgNDAgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLQ0KPj4gMyBm
-aWxlcyBjaGFuZ2VkLCA0NyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+PiANCj4+IGRp
-ZmYgLS1naXQgYS90YXJnZXQvYXJtL2NwdS1pZHJlZ3MuYyBiL3RhcmdldC9hcm0vY3B1LWlkcmVn
-cy5jDQo+PiBpbmRleCBkNThiOGVkMDYzLi4xZjdlYmZlOWJiIDEwMDY0NA0KPj4gLS0tIGEvdGFy
-Z2V0L2FybS9jcHUtaWRyZWdzLmMNCj4+ICsrKyBiL3RhcmdldC9hcm0vY3B1LWlkcmVncy5jDQo+
-PiBAQCAtMTA3LDMgKzEwNyw5IEBAIGJvb2wgYXJtX2ZpZWxkX2lzX3dyaXRhYmxlKGNvbnN0IEFS
-TTY0U3lzUmVnRmllbGQgKmZpZWxkKQ0KPj4gICAgIHJldHVybiAoYXJtNjRfaWRfcmVnc1tmaWVs
-ZC0+aW5kZXhdLndyaXRhYmxlX21hc2sgJiBmaWVsZF9tYXNrKQ0KPj4gICAgICAgICAgICA9PSBm
-aWVsZF9tYXNrOw0KPj4gfQ0KPj4gKw0KPj4gK2Jvb2wgZmllbGRfbWF0Y2hlcyhjb25zdCBBUk02
-NFN5c1JlZ0ZpZWxkICpmaWVsZCwgQVJNSURSZWdpc3RlcklkeCBpbmRleCwNCj4+ICsgICAgICAg
-ICAgICAgICAgICAgY29uc3QgY2hhciAqbmFtZSkNCj4+ICt7DQo+PiArICAgIHJldHVybiBmaWVs
-ZC0+aW5kZXggPT0gaW5kZXggJiYgIXN0cmNtcChmaWVsZC0+bmFtZSwgbmFtZSk7DQo+PiArfQ0K
-Pj4gZGlmZiAtLWdpdCBhL3RhcmdldC9hcm0vY3B1LWlkcmVncy5oIGIvdGFyZ2V0L2FybS9jcHUt
-aWRyZWdzLmgNCj4+IGluZGV4IGFhYjFhNzlkYjEuLjhlZjNmOTM1MGUgMTAwNjQ0DQo+PiAtLS0g
-YS90YXJnZXQvYXJtL2NwdS1pZHJlZ3MuaA0KPj4gKysrIGIvdGFyZ2V0L2FybS9jcHUtaWRyZWdz
-LmgNCj4+IEBAIC0zNSw0ICszNSw2IEBAIGV4dGVybiBBUk02NFN5c1JlZyBhcm02NF9pZF9yZWdz
-W05VTV9JRF9JRFhdOw0KPj4gDQo+PiB1aW50NjRfdCBhcm1fZ2V0X2ZpZWxkX21hc2soY29uc3Qg
-QVJNNjRTeXNSZWdGaWVsZCAqZmllbGQpOw0KPj4gYm9vbCBhcm1fZmllbGRfaXNfd3JpdGFibGUo
-Y29uc3QgQVJNNjRTeXNSZWdGaWVsZCAqZmllbGQpOw0KPj4gK2Jvb2wgZmllbGRfbWF0Y2hlcyhj
-b25zdCBBUk02NFN5c1JlZ0ZpZWxkICpmaWVsZCwgQVJNSURSZWdpc3RlcklkeCBpbmRleCwNCj4+
-ICsgICAgICAgICAgICAgICAgICAgY29uc3QgY2hhciAqbmFtZSk7DQo+PiAjZW5kaWYNCj4+IGRp
-ZmYgLS1naXQgYS90YXJnZXQvYXJtL2t2bS5jIGIvdGFyZ2V0L2FybS9rdm0uYw0KPj4gaW5kZXgg
-MmQ5NGIzYTg4NC4uNzBkOWEwNzU4MCAxMDA2NDQNCj4+IC0tLSBhL3RhcmdldC9hcm0va3ZtLmMN
-Cj4+ICsrKyBiL3RhcmdldC9hcm0va3ZtLmMNCj4+IEBAIC0xMzE3LDEwICsxMzE3LDQwIEBAIGJv
-b2wga3ZtX2FybV9jcHVfcG9zdF9sb2FkKEFSTUNQVSAqY3B1KQ0KPj4gICAgIHJldHVybiB0cnVl
-Ow0KPj4gfQ0KPj4gDQo+PiArc3RhdGljIGJvb2wgYXJtX2ZpZWxkX3NraXBfd3JpdGViYWNrX2Fs
-d2F5cyhjb25zdCBBUk02NFN5c1JlZ0ZpZWxkICpmaWVsZCkNCj4+ICt7DQo+PiArICAgIC8qDQo+
-PiArICAgICAqIEdJQyBpcyBjb250cm9sbGVkIGJ5IHRoZSBnaWMtdmVyc2lvbiBwcm9wZXJ0eSBh
-bmQgZmFicmljYXRlZCBieSBLVk0NCj4+ICsgICAgICogd2hlbiB0aGUgdkdJQyBkZXZpY2UgaXMg
-Y3JlYXRlZCwgc28gYSBuYW1lZCBDUFUgbW9kZWwgbXVzdCBub3QgdG91Y2gNCj4+ICsgICAgICog
-aXQuIEtWTSBhbHNvIHJlamVjdHMgd3JpdGluZyAwIHRvIElEX0RGUjBfRUwxLkNvcERiZywgd2hp
-Y2ggYnJlYWtzDQo+PiArICAgICAqIGJvb3RpbmcgYSBtb2RlbCB0aGF0IGxhY2tzIEFBcmNoMzIg
-c3VwcG9ydCBvbiBhIGhvc3QgdGhhdCBzdXBwb3J0cw0KPj4gKyAgICAgKiBpdC4gTVBJRFJfRUwx
-IGlzIG1hbmFnZWQgYnkgS1ZNIGJhc2VkIG9uIHZDUFUgaW5kZXgsIHNraXAgd3JpdGluZyBpdA0K
-Pj4gKyAgICAgKiBiYWNrLiBTaW1pbGFybHksIHNraXAgd3JpdGluZyBiYWNrIENMSURSX0VMMSB0
-aWxsIHdlIHByb3Blcmx5DQo+PiArICAgICAqIHN1cHBvcnQgZXhwb3NpbmcgY2FjaGUgZm9yIEtW
-TSBndWVzdC4NCj4+ICsgICAgICovDQo+PiArICAgIHJldHVybiBmaWVsZF9tYXRjaGVzKGZpZWxk
-LCBJRF9BQTY0UEZSMF9FTDFfSURYLCAiR0lDIikNCj4+ICsgICAgICAgIHx8IGZpZWxkX21hdGNo
-ZXMoZmllbGQsIElEX1BGUjFfRUwxX0lEWCwgIkdJQyIpDQo+PiArICAgICAgICB8fCBmaWVsZF9t
-YXRjaGVzKGZpZWxkLCBJRF9ERlIwX0VMMV9JRFgsICJDb3BEYmciKQ0KPj4gKyAgICAgICAgfHwg
-ZmllbGQtPmluZGV4ID09IE1QSURSX0VMMV9JRFgNCj4+ICsgICAgICAgIHx8IGZpZWxkLT5pbmRl
-eCA9PSBDTElEUl9FTDFfSURYOw0KPiANCj4gd2hhdCBkb2VzIGhhcHBlbiBmb3IgU01JRFJfRUwx
-IGFuZCBHTUlEX0VMMSB3aG9zZSB2YWx1ZSBjb3VsZCBub3QgYmUNCj4gaW5pdGlhbGl6ZWQgZnJv
-bSBob3N0LiBUaGUgc2V0dGVyIGZvciBhbnkgb2YgdGhlaXIgZmllbGQgc2hhbGwgZmFpbC4NCg0K
-WWVwLCB0aGlzIHdpbGwgZmFpbCBkdXJpbmcgd3JpdGUgYmFjay4NCg0KPj4gK30NCj4+ICsNCj4+
-ICtzdGF0aWMgYm9vbA0KPj4gK2FybV9maWVsZF9za2lwX3dyaXRlYmFja19pZl9ub3Rfd3JpdGFi
-bGUoY29uc3QgQVJNNjRTeXNSZWdGaWVsZCAqZmllbGQpDQo+PiArew0KPj4gKyAgICAvKg0KPj4g
-KyAgICAgKiBLVk0gcG9wdWxhdGVzIElEX0RGUjBfRUwxLlBlcmZNb24gZXZlbiBmb3IgQUFyY2g2
-NC1vbmx5IGd1ZXN0cyBidXQNCj4+ICsgICAgICogZG9lcyBub3QgZXhwb3NlIGl0IGFzIHdyaXRh
-YmxlIHRoZXJlLCBzbyBza2lwIGl0IHdoZW4gaXQgaXMgbm90DQo+PiArICAgICAqIHdyaXRhYmxl
-Lg0KPj4gKyAgICAgKi8NCj4+ICsgICAgcmV0dXJuIGZpZWxkX21hdGNoZXMoZmllbGQsIElEX0RG
-UjBfRUwxX0lEWCwgIlBlcmZNb24iKTsNCj4+ICt9DQo+PiArDQo+PiAvKg0KPj4gICogQ29weSB3
-cml0YWJsZSBJRCByZWcgZmllbGRzIGZyb20gaXNhci5pZHJlZ3NbXSBpbnRvIHRoZSBLVk0gY3By
-ZWcgbGlzdCwNCj4+ICAqIHNvIHRoZSBzdWJzZXF1ZW50IHdyaXRlX2xpc3RfdG9fa3Ztc3RhdGUo
-KSBwdXNoZXMgdGhlbSB0byBLVk0uDQo+PiAtICogT25seSB3cml0YWJsZSBmaWVsZHMgYXJlIGNv
-cGllZC4NCj4+ICsgKiBPbmx5IHdyaXRhYmxlIGZpZWxkcyBhcmUgY29waWVkOyBmaWVsZHMgdGhh
-dCBtdXN0IG5vdCBiZSB3cml0dGVuIGJhY2sNCj4+ICsgKiAoc2VlIGFybV9maWVsZF9za2lwX3dy
-aXRlYmFja18qKSBhcmUgc2tpcHBlZC4NCj4+ICAqIFJldHVybnMgLTEgaWYgYW55IHZDUFUncyBJ
-RCByZWcgdmFsdWUgZGlmZmVycyBmcm9tIHRoZSBob3N0IHZhbHVlIGFuZCB0aGUNCj4+ICAqIGZp
-ZWxkIGlzIG5vdCB3cml0YWJsZS4NCj4+ICAqLw0KPj4gQEAgLTEzNTcsNiArMTM4NywxNCBAQCBz
-dGF0aWMgaW50IGt2bV9hcm1fd3JpdGVfaWRyZWdzX3RvX2NwcmVnX2xpc3QoQVJNQ1BVICpjcHUp
-DQo+PiAgICAgICAgICAgICAgICAgY29udGludWU7DQo+PiAgICAgICAgICAgICB9DQo+PiANCj4+
-ICsgICAgICAgICAgICBpZiAoYXJtX2ZpZWxkX3NraXBfd3JpdGViYWNrX2Fsd2F5cyhmaWVsZCkg
-fHwNCj4+ICsgICAgICAgICAgICAgICAgKCFhcm1fZmllbGRfaXNfd3JpdGFibGUoZmllbGQpICYm
-DQo+PiArICAgICAgICAgICAgICAgICBhcm1fZmllbGRfc2tpcF93cml0ZWJhY2tfaWZfbm90X3dy
-aXRhYmxlKGZpZWxkKSkpIHsNCj4+ICsgICAgICAgICAgICAgICAgLyogTmV2ZXIgd3JpdGUgdGhp
-cyBmaWVsZCBiYWNrOyBrZWVwIEtWTSdzIHZhbHVlLiAqLw0KPj4gKyAgICAgICAgICAgICAgICB3
-cml0YWJsZV9tYXNrICY9IH5maWVsZF9tYXNrOw0KPj4gKyAgICAgICAgICAgICAgICBjb250aW51
-ZTsNCj4+ICsgICAgICAgICAgICB9DQo+PiArDQo+PiAgICAgICAgICAgICBpZiAoIWFybV9maWVs
-ZF9pc193cml0YWJsZShmaWVsZCkpIHsNCj4+ICAgICAgICAgICAgICAgICBlcnJvcl9yZXBvcnQo
-IiVzLiVzIGlzIG5vdCB3cml0YWJsZTogaG9zdD0weCUiIFBSSXg2NA0KPj4gICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAiLCByZXF1ZXN0ZWQ9MHglIiBQUkl4NjQsDQo+IHY5IGhhcyBjaGFu
-Z2VkIHRoZSB3YXkgbmV3IGZpZWxkIHZhbHVlcyBhcmUgc3RvcmVkLiB3cml0YWJsZSBmaWVsZCBw
-cm9wcw0KPiBhbmQgbm9uIHdyaXRhYmxlIGZpZWxkIHByb3BzIGNvdWxkIGhhdmUgZGlmZmVyZW50
-IHNldHRlcnMuIEEgbm9uDQo+IHdyaXRhYmxlIGZpZWxkIHNldHRlciBqdXN0IG5lZWRzIHRvIGNo
-ZWNrIHRoZSBuZXcgdmFsdWUgaXMgdGhlIHNhbWUgYXMNCj4gdGhlIGN1cnJlbnQgaG9zdCB2YWx1
-ZS4gTm8gbmVlZCB0byByZWNvcmQgdGhlIG5ldyB2YWx1ZSBpbiB0aGUgaGFzaHRhYmxlDQo+IGZv
-ciBmdXJ0aGVyIGNvbW1pdG1lbnQuDQoNCkkgZG9u4oCZdCBsaWtlIHRoZSBpZGVhIG9mIGRpZmZl
-cmVudCBzZXR0ZXJzLiBJIHdpbGwgbm90IGV4cG9zZSBmaWVsZHMgd2hpY2gNCmNvbmZsaWN0cyB3
-aXRoIGxlZ2FjeSBvcHRpb25zIGxpa2UgR1BBL0FQQSB3aGljaCBjb25mbGljdHMgd2l0aCBwYXV0
-aC4NCg0KQnV0IHdlIGRvIGxvc2Ugc29tZSBpbnRyb3NwZWN0YWJpbGl0eSB3aXRoIHRoaXMgb3B0
-aW9uLg0KDQpUaGFua3MsDQpLaHVzaGl0DQoNCj4gDQo+IEVyaWMNCg0KDQo=
+From: Juraj Marcin <jmarcin@redhat.com>
+
+Previously, the post init CPU synchronization with the accelerator, like
+KVM, was performed in the bottom half of the POSTCOPY_RUN command
+handler. However, this causes several problems.
+
+First issue is that if CPU synchronization fails, the destination QEMU
+crashes. However, it is too late to recover the source side as the
+response to special PING has been already sent, and both sides are
+already in the POSTCOPY_ACTIVE state.
+
+By moving synchronization before responding, if the machine crashes, the
+response is never sent and the source side can resume from the
+POSTCOPY_DEVICE state.
+
+Second issue is caused when migration is paused due to a network
+failure or user command right after transitioning to the POSTCOPY_ACTIVE
+state and the CPU synchronization causes a page fault. This page fault
+blocks the CPU and the main QEMU threads and cannot be resolved until
+postcopy migration is recovered. However, as libvirt also tries to
+execute 'cont' QMP command at this time (destination side transitions
+from POSTCOPY_DEVICE to POSTCOPY_ACTIVE), it will also halt waiting for
+the response from the blocked main QEMU thread, unaware of the fact that
+the migration is paused and needs to be recovered. Thus, it will wait
+indefinitely and never report postcopy migration error.
+
+This patch adds an option to VMSD that identifies devices that require
+CPU post init synchronization and runs synchronization for those device
+after they are loaded.
+
+This moved CPU synchronization right to the device load and if this CPU
+synchronization fails, or the network fails during it, the source side
+can safely transition from POSTCOPY_DEVICE to a FAILED state.
+
+Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+---
+This patch an alternative approach to my previous RFC patch [1] that is
+in my opinion less hacky and also pretty minimal.
+
+[1]: https://lore.kernel.org/r/20260423154525.10292-1-jmarcin@redhat.com/
+---
+ include/migration/vmstate.h  | 6 ++++++
+ migration/savevm.c           | 5 -----
+ migration/vmstate.c          | 6 ++++++
+ target/alpha/machine.c       | 1 +
+ target/arm/machine.c         | 1 +
+ target/avr/machine.c         | 1 +
+ target/hexagon/machine.c     | 1 +
+ target/hppa/machine.c        | 1 +
+ target/i386/machine.c        | 1 +
+ target/loongarch/machine.c   | 1 +
+ target/m68k/cpu.c            | 1 +
+ target/microblaze/machine.c  | 1 +
+ target/mips/system/machine.c | 1 +
+ target/or1k/machine.c        | 1 +
+ target/ppc/machine.c         | 1 +
+ target/riscv/machine.c       | 1 +
+ target/s390x/machine.c       | 1 +
+ target/sh4/cpu.c             | 1 +
+ target/sparc/machine.c       | 1 +
+ target/xtensa/cpu.c          | 1 +
+ 20 files changed, 29 insertions(+), 5 deletions(-)
+
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 2901877308..60ddeacdd5 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -298,6 +298,12 @@ struct VMStateDescription {
+      */
+ 
+     bool early_setup;
++    /*
++     * This VMSD describes a CPU which requires synchronization with an
++     * accelerator after it's loaded. Can be set to true only if the device
++     * described by this VMSD is of type CPU.
++     */
++    bool cpu_sync;
+     int version_id;
+     int minimum_version_id;
+     MigrationPriority priority;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 4b590ea672..d7153912b1 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2235,8 +2235,6 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
+     /* TODO we should move all of this lot into postcopy_ram.c or a shared code
+      * in migration.c
+      */
+-    cpu_synchronize_all_post_init();
+-
+     trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
+ 
+     qemu_announce_self(&mis->announce_timer, migrate_announce_params());
+@@ -3217,8 +3215,6 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+         }
+     }
+ 
+-    cpu_synchronize_all_post_init();
+-
+     return ret;
+ }
+ 
+@@ -3233,7 +3229,6 @@ int qemu_load_device_state(QEMUFile *f, Error **errp)
+         return ret;
+     }
+ 
+-    cpu_synchronize_all_post_init();
+     return 0;
+ }
+ 
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 24004565bf..80a23f8943 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -19,6 +19,7 @@
+ #include "qemu-file.h"
+ #include "qemu/bitops.h"
+ #include "qemu/error-report.h"
++#include "system/hw_accel.h"
+ #include "trace.h"
+ 
+ static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
+@@ -449,6 +450,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+         return false;
+     }
+ 
++    if (vmsd->cpu_sync) {
++        CPUState *cpu = CPU(opaque);
++        cpu_synchronize_post_init(cpu);
++    }
++
+     trace_vmstate_load_state_success(vmsd->name);
+     return true;
+ }
+diff --git a/target/alpha/machine.c b/target/alpha/machine.c
+index dcba5d441b..2b72159f06 100644
+--- a/target/alpha/machine.c
++++ b/target/alpha/machine.c
+@@ -82,6 +82,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+ 
+ const VMStateDescription vmstate_alpha_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = vmstate_cpu_fields,
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 53a2734d25..cdc9003866 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -1247,6 +1247,7 @@ static int cpu_post_load(void *opaque, int version_id)
+ 
+ const VMStateDescription vmstate_arm_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 22,
+     .minimum_version_id = 22,
+     .pre_save = cpu_pre_save,
+diff --git a/target/avr/machine.c b/target/avr/machine.c
+index 8064a7214a..9232c98e72 100644
+--- a/target/avr/machine.c
++++ b/target/avr/machine.c
+@@ -99,6 +99,7 @@ static const VMStateInfo vms_eind = {
+ 
+ const VMStateDescription vms_avr_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
+index 179b6f53a2..23548639a7 100644
+--- a/target/hexagon/machine.c
++++ b/target/hexagon/machine.c
+@@ -21,6 +21,7 @@ static int hexagon_cpu_post_load(void *opaque, int version_id)
+ 
+ const VMStateDescription vmstate_hexagon_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .post_load = hexagon_cpu_post_load,
+diff --git a/target/hppa/machine.c b/target/hppa/machine.c
+index 6a143cf8df..bfc286caaa 100644
+--- a/target/hppa/machine.c
++++ b/target/hppa/machine.c
+@@ -224,6 +224,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+ 
+ const VMStateDescription vmstate_hppa_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = vmstate_cpu_fields,
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 8d69d7e25e..ced3c9a2ac 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1806,6 +1806,7 @@ static const VMStateDescription vmstate_apx = {
+ 
+ const VMStateDescription vmstate_x86_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 12,
+     .minimum_version_id = 11,
+     .pre_save = cpu_pre_save,
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 931a5ca5ba..e6deddce58 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -210,6 +210,7 @@ static const VMStateDescription vmstate_tlb = {
+ /* LoongArch CPU state */
+ const VMStateDescription vmstate_loongarch_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 4,
+     .minimum_version_id = 4,
+     .fields = (const VMStateField[]) {
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 9b52ad5fc2..28bc7bdd71 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -638,6 +638,7 @@ const VMStateDescription vmstate_68040_spregs = {
+ 
+ static const VMStateDescription vmstate_m68k_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
+index f930ff8609..63c8816582 100644
+--- a/target/microblaze/machine.c
++++ b/target/microblaze/machine.c
+@@ -101,6 +101,7 @@ static const VMStateField vmstate_cpu_fields[] = {
+ 
+ const VMStateDescription vmstate_mb_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 0,
+     .minimum_version_id = 0,
+     .fields = vmstate_cpu_fields,
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index bd1e4002cf..536d98f3c4 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -374,6 +374,7 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
+ 
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 21,
+     .minimum_version_id = 21,
+     .post_load = cpu_post_load,
+diff --git a/target/or1k/machine.c b/target/or1k/machine.c
+index 2d5ca16c51..abf11a37a5 100644
+--- a/target/or1k/machine.c
++++ b/target/or1k/machine.c
+@@ -133,6 +133,7 @@ static int cpu_post_load(void *opaque, int version_id)
+ 
+ const VMStateDescription vmstate_openrisc_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .post_load = cpu_post_load,
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index 569536bd02..33b46d6f3c 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -733,6 +733,7 @@ static const VMStateDescription vmstate_bhrb = {
+ 
+ const VMStateDescription vmstate_ppc_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 5,
+     .minimum_version_id = 5,
+     .pre_save = cpu_pre_save,
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index bf203bffce..f96f5b4dfb 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -497,6 +497,7 @@ static const VMStateDescription vmstate_mseccfg = {
+ 
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = 12,
+     .minimum_version_id = 12,
+ #ifdef CONFIG_KVM
+diff --git a/target/s390x/machine.c b/target/s390x/machine.c
+index b44fba43f1..411d563e25 100644
+--- a/target/s390x/machine.c
++++ b/target/s390x/machine.c
+@@ -256,6 +256,7 @@ static const VMStateDescription vmstate_diag318 = {
+ 
+ const VMStateDescription vmstate_s390_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .post_load = cpu_post_load,
+     .pre_save = cpu_pre_save,
+     .version_id = 4,
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 3bbdee301d..c9c724551b 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -285,6 +285,7 @@ static void superh_cpu_initfn(Object *obj)
+ #ifndef CONFIG_USER_ONLY
+ static const VMStateDescription vmstate_sh_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .unmigratable = 1,
+ };
+ 
+diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+index 0d5d79b5e7..a45071b09a 100644
+--- a/target/sparc/machine.c
++++ b/target/sparc/machine.c
+@@ -227,6 +227,7 @@ static int cpu_pre_save(void *opaque)
+ 
+ const VMStateDescription vmstate_sparc_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .version_id = SPARC_VMSTATE_VER,
+     .minimum_version_id = SPARC_VMSTATE_VER,
+     .pre_save = cpu_pre_save,
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 7c25b9ab70..c431450e58 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -298,6 +298,7 @@ XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
+ #ifndef CONFIG_USER_ONLY
+ static const VMStateDescription vmstate_xtensa_cpu = {
+     .name = "cpu",
++    .cpu_sync = true,
+     .unmigratable = 1,
+ };
+ 
+-- 
+2.55.0
+
 
