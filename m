@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBBFCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 20:25:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79101CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 20:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBeNK-00065n-IM; Tue, 29 Sep 2026 16:24:30 -0400
+	id 1xBeNL-00065v-1X; Tue, 29 Sep 2026 16:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1xBeNI-00065H-TO
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 16:24:28 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ id 1xBeNH-000655-2a
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 16:24:27 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weqaar.janjua@packetfive.com>)
- id 1xBeNG-0005DH-QL
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 16:24:28 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e7d2bb404so5317935e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 13:24:26 -0700 (PDT)
+ id 1xBeNE-0005D8-Mr
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 16:24:26 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49b912d3931so34987885e9.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 13:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1790713465; x=1791318265;
+ d=packetfive-com.20251104.gappssmtp.com; s=20251104; t=1790713463; x=1791318263;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WlIiYqaRAqQ4N1lBMr1Qu3XkYhW+HvCgOQQGU/rAzLk=;
- b=HxV3+mXAIqhw+jBQWLnqoJgI34pM75dodRy33595U5rPNhEcuoZ+bPWamv+4Qko6Ff
- wmevkeWkGfl8xMGsxfWYMFOM2xEAkcZlbEVRGaG1xHkEudOJMIh6WyvW+8+bW4xMU+pY
- eR9vQpDPB/3imPj1GcUnzONa1c/gGVvIVUKqEgrXTB7BvHyiD4WxK56+TG5Rbd5kKYok
- twN3KB1ADlp/AH+c6xATpaoEcVGt5AGRmlczZW17IM296SazgnJxftp417nBq95ydXZN
- AAmZ1ER05WZmYsTYZ44/b5jkzpVXp317K6ytIodCjWHyhEBV5fq6auS0L06YSeLBMK31
- zC2w==
+ bh=kS3uCFMZyn6plfeHWN+FNCEZUTBvhmjHhCngGT2STbk=;
+ b=Z+lhGTQn2SWI4E1mfbkjCsyCxwGuUAk9wZz6VLn2AisIJ2Ca1DBc3qmtcGmywJsTzE
+ yaU8MDzJ7htoNK4esnyxy5VLXh9K+hV0yBGsvobd7f7ya5KpxCHyxqcGfo+pHHrvmOBo
+ ggXr+tf9FQtvSpMShxQiaE2XkINqYyZXjiitDEQZwmTk2zLDG0adElhUx+/ooFtlIQwh
+ S5wauGtGGu0lppH5vOzdyeA55jr7ifzpLeIMq41jkhLw4B7ZLk6rj9047FUC27HRD/0K
+ kqJ8Midpml1u3zdSkGfBMbAd3IcopR9fuAHAMrWTfSj6FTXhngfe6321pkIK+7pDSTKa
+ WcLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790713465; x=1791318265;
+ d=1e100.net; s=20260707; t=1790713463; x=1791318263;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WlIiYqaRAqQ4N1lBMr1Qu3XkYhW+HvCgOQQGU/rAzLk=;
- b=ol3V2d5DYqLEoTStUbW92VW7XK4xDbv2wf9kbp1ci9hk9mdNcgxD6k7b9ZB7s3oVWd
- 9GSBoCAyEYVxap4ql3wrtWFqccQG9XyuFRKTugYGHotamnf2gcsZvdn2XGxqeiFEBvg6
- wnI1Y1IFVLGijLXQ3kf8hr9JH9fg6E2n9VsjOPvpbvA8eEVJ3hAWzUfAclh5H8EXn1/F
- GMNnY1kL9jxZWNHiAo++QwYCl472sQs1+DuX0ASdnlzWuNGnOR76fvdEMMdZo5sKzZ5A
- QXiozP+SCi5gYcLyZ2NC3whFcb/YVcZ7M187ldXp/pZHAPujb+PN9b6KS0TFBH2Amcll
- Mi/w==
-X-Gm-Message-State: AFuF++mfA60VrgAVp9m8WxB8C9qEvPMTu2XBsE/UnUqhkbl02YAqyMfR
- NwuWMhmhgDBOgGLc0GxVVWGnd1a5b+S44HQzP4cX4OLJ0Z8D9e/u8S3kPzLlYN5hV3T6CTNVW47
- ImYaVOLs=
-X-Gm-Gg: AYBFou20OolNCMRIX84iQL94nK0n/lH3KzAYQEUozjMP2B3pK0D8Xxxtrs8faw02fbT
- DteABKdoSl3xlwChSon52nAo9VVhGSJ+Yg8ue+tK5rEwhUfZKedvC/W8LNV3Zk9CR5/jZsHaXVA
- XZcfZulreD6B7bzLDNEigPKbsHWQeG/my+K415wYQhAOGjC4DI6OieRdV6jGdUBAwPo5JDujDkQ
- 5ifi460VmrRaFtndhdBEpO8JyFVp8p7P4Eec6pzdSogux5GqG1vQunkTX3bBRgtu/X2yexHCz39
- 0OTMw7yTt91irRULwSF5XUXGaRrjAOxX6dxCqNd8zaqrWp6qvR/AXo2Pr7ZpWc+3ycyqIVDgMxY
- gbH34p7O6MEqT++DmNSH1DX/tKDyA1wPf9/MEPV3w0xqh3dEOWpiqm2N5bu7BqTV0ZRHXIlzL8/
- j/s1LgDD6AF1hJp0oU6ODgJeZ4FsEVb5BzXPMNlbaNKckRanz1czuLjI15r+Z9qkSjcP1EVN20f
- YfyKWm3nlx3LV5/uK3yIdGjXqJ5UGPRFo4gYFr0jEIBUzFJ3814dfWgdpgZCUjE6Q==
-X-Received: by 2002:a05:600d:82e3:b0:4a0:2a3:7115 with SMTP id
- 5b1f17b1804b1-4a014fce65fmr5415815e9.1.1790713465150; 
- Tue, 29 Sep 2026 13:24:25 -0700 (PDT)
+ bh=kS3uCFMZyn6plfeHWN+FNCEZUTBvhmjHhCngGT2STbk=;
+ b=JY4WeJN4/cj7J+LSDBZ/vwtarV7uRBE6NhAY2YEbm70jmOpfMNS3CHsS42TsYicx+n
+ kjtGa3BcUk/72omQPCGkCVrk5lWNLY4horQ8Csq0UdTpSk3XogAkeZ4beDw/N6OjBbZk
+ Caa76gf2G0GaxnRSJknQ0L4F02UpuI0rk/18jScWftjy7m9v8FuhOuSClI2+epvXmrA9
+ r7/7Oy6uUY/O/V1u68338UxIPOb7JZHq1KPR5rT40GcDhA59IAQS17KiL+vbld6LGYru
+ mwHZn/rw8oK270KifBbZLn8WjZzKbJhMVW1hqSZ0/nVYnty0Jfh90RyZ9dbTGfwvYgST
+ taHg==
+X-Gm-Message-State: AFuF++nzVccc0KX5OBwGHnUlvV35yrmfnXnoHTWyB2Qs69RzabZbJtem
+ STehn7BxRKdFZSvfvhMKe7H2Lt7pvAMEgStrpUzf5eg7FDoUeX15OwcixQ65duQhXSkfXXGi6jO
+ PHjozM8M=
+X-Gm-Gg: AYBFou2me4p8noWdstjckZuX+f+S+qzW21gGOCfbOaADIi3h9WD6Hp0Y6dvij9aQkfI
+ rzRomRDLW+C7P6FQ7gQQOa3CpTz07CK8fsBemLJYA2THueRAyYlyE7d7AjFfReChR17nStIQupN
+ km4IHpjcrgtdg/yOB9j6ghuNtI+4Hox5DeL6sLPEtuv7nZbmfEEWgoNZtGqV4BHVA1e1hhlHdvs
+ PBhSBVPAaGfdonAUgVq6j1CKnOyUq2mY+YODg8zqN/ie2LP1WiOoWKnT6YhbZiJKRS2x46A8mw0
+ NLzlCN709aGM4ulaPIzFGFON3ph7iEvVMTjBjMv7bziKOCqH2OaV8lvomC6un/kVSIW++wnUUp0
+ pfAU+Qsrgk/nOnZnwGGDijUa5cmSIdIuuhhf1agCjWghUkc/Rq813qDIJx1TwE1lVl8ajC0PQsI
+ 84/oLLwtd3JXN4O9mrCrh81YAFbdCNuK7vmidhzfGe3J6N9EPyDjpS4rQN6+vv8j3ectlNFrhsI
+ QDxJb/BgyliWZqh5hWVYCJ3DteYhOyKBRbnA/7PSNwieil0Bwlk5qeu/xMbOAYDRA==
+X-Received: by 2002:a05:600c:3103:b0:49e:81db:4926 with SMTP id
+ 5b1f17b1804b1-4a01502fbd0mr3472175e9.5.1790713463290; 
+ Tue, 29 Sep 2026 13:24:23 -0700 (PDT)
 Received: from node-dev.home
  (86-45-19-184-dynamic.agg1.roc.bbh-prp.eircom.net. [86.45.19.184])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a014f77aa3sm7021525e9.7.2026.09.29.13.24.24
+ 5b1f17b1804b1-4a014f77aa3sm7021525e9.7.2026.09.29.13.24.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 13:24:24 -0700 (PDT)
+ Tue, 29 Sep 2026 13:24:22 -0700 (PDT)
 From: Weqaar Janjua <weqaar.janjua@packetfive.com>
 To: qemu-devel@nongnu.org
 Cc: kraxel@redhat.com, peter.maydell@linaro.org, mst@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com,
  pbonzini@redhat.com, farosas@suse.de, lvivier@redhat.com
-Subject: [PATCH v3 3/6] tests/qtest: Add Cnuas virtual network adapter tests
-Date: Tue, 29 Sep 2026 20:23:54 +0000
-Message-ID: <20260929202358.725310-4-weqaar.janjua@packetfive.com>
+Subject: [PATCH v3 1/6] pci: Add device ID for CnuasNIC
+Date: Tue, 29 Sep 2026 20:23:52 +0000
+Message-ID: <20260929202358.725310-2-weqaar.janjua@packetfive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929202358.725310-1-weqaar.janjua@packetfive.com>
 References: <20260929202358.725310-1-weqaar.janjua@packetfive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2a00:1450:4864:31::11;
- envelope-from=weqaar.janjua@packetfive.com; helo=mail-wm2-x11.google.com
+Received-SPF: none client-ip=2a00:1450:4864:31::10;
+ envelope-from=weqaar.janjua@packetfive.com; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,279 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover PCI identity, register reset, DMA, and packet transport.
+Reserve device ID 0017 for the Cnuas virtual network adapter.
 
 Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
 ---
- MAINTAINERS                   |   1 +
- tests/qtest/cnuas-vnic-test.c | 233 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |   1 +
- 3 files changed, 235 insertions(+)
- create mode 100644 tests/qtest/cnuas-vnic-test.c
+ docs/specs/pci-ids.rst | 2 ++
+ include/hw/pci/pci.h   | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index efcb15c52d..7be5622f23 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2778,6 +2778,7 @@ M: Weqaar Janjua <weqaar.janjua@packetfive.com>
- S: Maintained
- F: docs/specs/cnuas-vnic.rst
- F: hw/net/cnuas_vnic.c
-+F: tests/qtest/cnuas-vnic-test.c
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index 261b0f359f..271f61bb81 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -100,6 +100,8 @@ PCI devices (other than virtio):
+   PCI UFS device (``-device ufs``)
+ 1b36:0014
+   PCI RISC-V IOMMU device
++1b36:0017
++  Cnuas virtual RDMA network adapter
  
- VMware
- M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
-diff --git a/tests/qtest/cnuas-vnic-test.c b/tests/qtest/cnuas-vnic-test.c
-new file mode 100644
-index 0000000000..fc27b7fa8e
---- /dev/null
-+++ b/tests/qtest/cnuas-vnic-test.c
-@@ -0,0 +1,233 @@
-+/*
-+ * QTest for the Cnuas virtual network adapter
-+ *
-+ * Copyright (c) 2026 PacketFive
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_regs.h"
-+#include "libqos/pci.h"
-+#include "libqos/pci-pc.h"
-+#include "libqtest.h"
-+
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+
-+#define CNUAS_VNIC_DEVFN           QPCI_DEVFN(4, 0)
-+#define CNUAS_VNIC_BAR_SIZE        4096
-+#define CNUAS_VNIC_REG_TX_ADDR_LO  0x00
-+#define CNUAS_VNIC_REG_TX_ADDR_HI  0x04
-+#define CNUAS_VNIC_REG_TX_LEN      0x08
-+#define CNUAS_VNIC_REG_TX_DOORBELL 0x0c
-+#define CNUAS_VNIC_REG_RX_ADDR_LO  0x10
-+#define CNUAS_VNIC_REG_RX_ADDR_HI  0x14
-+#define CNUAS_VNIC_REG_RX_LEN      0x18
-+#define CNUAS_VNIC_REG_RX_STATUS   0x1c
-+#define CNUAS_VNIC_REG_IRQ_STATUS  0x20
-+#define CNUAS_VNIC_REG_IRQ_MASK    0x24
-+#define CNUAS_VNIC_REG_LINK_STATUS 0x28
-+#define CNUAS_VNIC_REG_MAC_LO      0x2c
-+#define CNUAS_VNIC_REG_MAC_HI      0x30
-+
-+typedef struct CnuasVnicTest {
-+    QTestState *qts;
-+    QPCIBus *bus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+} CnuasVnicTest;
-+
-+static void cnuas_vnic_test_start_with_args(CnuasVnicTest *test,
-+                                            const char *args)
-+{
-+    uint64_t bar_size;
-+
-+    test->qts = qtest_initf("-machine q35 "
-+                            "-device cnuas-vnic,addr=04.0,"
-+                            "mac=02:11:22:33:44:55%s", args);
-+    test->bus = qpci_new_pc(test->qts, NULL);
-+    test->dev = qpci_device_find(test->bus, CNUAS_VNIC_DEVFN);
-+    g_assert_nonnull(test->dev);
-+    qpci_device_enable(test->dev);
-+    test->bar = qpci_iomap(test->dev, 0, &bar_size);
-+    g_assert_cmpuint(bar_size, ==, CNUAS_VNIC_BAR_SIZE);
-+}
-+
-+static void cnuas_vnic_test_start(CnuasVnicTest *test)
-+{
-+    cnuas_vnic_test_start_with_args(test, "");
-+}
-+
-+static void cnuas_vnic_test_stop(CnuasVnicTest *test)
-+{
-+    g_free(test->dev);
-+    qpci_free_pc(test->bus);
-+    qtest_quit(test->qts);
-+}
-+
-+static void cnuas_vnic_test_pci_config(void)
-+{
-+    CnuasVnicTest test;
-+
-+    cnuas_vnic_test_start(&test);
-+
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_VENDOR_ID), ==,
-+                    PCI_VENDOR_ID_REDHAT);
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_DEVICE_ID), ==,
-+                    PCI_DEVICE_ID_REDHAT_CNUASNIC);
-+    g_assert_cmphex(qpci_config_readw(test.dev, PCI_CLASS_DEVICE), ==,
-+                    PCI_CLASS_NETWORK_OTHER);
-+    g_assert_cmphex(qpci_config_readb(test.dev, PCI_REVISION_ID), ==, 1);
-+    g_assert_cmphex(qpci_find_capability(test.dev, PCI_CAP_ID_MSI, 0), !=, 0);
-+
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+static void cnuas_vnic_test_registers(void)
-+{
-+    CnuasVnicTest test;
-+
-+    cnuas_vnic_test_start(&test);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_LINK_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_MAC_LO), ==, 0x33221102);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_MAC_HI), ==, 0x5544);
-+
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_LO,
-+                   0x89abcdef);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_HI,
-+                   0x01234567);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_LEN, 4096);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_IRQ_MASK, 7);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_LO), ==,
-+                    0x89abcdef);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_HI), ==,
-+                    0x01234567);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_LEN), ==, 4096);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_MASK), ==, 7);
-+
-+    qtest_system_reset(test.qts);
-+    qpci_device_enable(test.dev);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_LO), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_ADDR_HI), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_TX_LEN), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_RX_STATUS), ==, 0);
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_IRQ_MASK), ==, 0);
-+
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+static int cnuas_vnic_test_listen(char **path)
-+{
-+    struct sockaddr_un address = { .sun_family = AF_UNIX };
-+    int fd;
-+
-+    *path = g_strdup_printf("/tmp/cnuas-vnic-test-%u.sock", getpid());
-+    unlink(*path);
-+    g_strlcpy(address.sun_path, *path, sizeof(address.sun_path));
-+
-+    fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
-+    g_assert_cmpint(fd, >=, 0);
-+    g_assert_cmpint(bind(fd, (struct sockaddr *)&address, sizeof(address)),
-+                    ==, 0);
-+    g_assert_cmpint(listen(fd, 1), ==, 0);
-+    return fd;
-+}
-+
-+static void cnuas_vnic_test_transport(void)
-+{
-+    static const uint8_t tx_frame[] = {
-+        0x02, 0, 0, 0, 0, 2, 0x02, 0, 0, 0, 0, 1, 0x08, 0,
-+        'C', 'n', 'u', 'a', 's',
-+    };
-+    static const uint8_t rx_frame[] = {
-+        0x02, 0, 0, 0, 0, 1, 0x02, 0, 0, 0, 0, 2, 0x08, 0,
-+        'R', 'D', 'M', 'A',
-+    };
-+    uint8_t result[64] = { 0 };
-+    const uint64_t tx_address = 0x100000;
-+    const uint64_t rx_address = 0x101000;
-+    g_autofree char *path = NULL;
-+    g_autofree char *args = NULL;
-+    CnuasVnicTest test;
-+    int connection;
-+    int listener;
-+    unsigned int i;
-+
-+    listener = cnuas_vnic_test_listen(&path);
-+    args = g_strdup_printf(",socket_path=%s", path);
-+    cnuas_vnic_test_start_with_args(&test, args);
-+    connection = accept(listener, NULL, NULL);
-+    g_assert_cmpint(connection, >=, 0);
-+
-+    g_assert_cmphex(qpci_io_readl(test.dev, test.bar,
-+                                  CNUAS_VNIC_REG_LINK_STATUS), ==, 1);
-+
-+    qtest_memwrite(test.qts, tx_address, tx_frame, sizeof(tx_frame));
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_LO,
-+                   tx_address);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_ADDR_HI,
-+                   tx_address >> 32);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_LEN,
-+                   sizeof(tx_frame));
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_TX_DOORBELL, 1);
-+
-+    g_assert_cmpint(recv(connection, result, sizeof(result), 0), ==,
-+                    sizeof(tx_frame));
-+    g_assert_cmpmem(result, sizeof(tx_frame), tx_frame, sizeof(tx_frame));
-+
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_RX_ADDR_LO,
-+                   rx_address);
-+    qpci_io_writel(test.dev, test.bar, CNUAS_VNIC_REG_RX_ADDR_HI,
-+                   rx_address >> 32);
-+    g_assert_cmpint(send(connection, rx_frame, sizeof(rx_frame), 0), ==,
-+                    sizeof(rx_frame));
-+
-+    for (i = 0; i < 1000; i++) {
-+        if (qpci_io_readl(test.dev, test.bar,
-+                          CNUAS_VNIC_REG_RX_STATUS) == 1) {
-+            break;
-+        }
-+        g_usleep(1000);
-+    }
-+    g_assert_cmpuint(i, <, 1000);
-+    g_assert_cmpuint(qpci_io_readl(test.dev, test.bar,
-+                                   CNUAS_VNIC_REG_RX_LEN), ==,
-+                     sizeof(rx_frame));
-+
-+    memset(result, 0, sizeof(result));
-+    qtest_memread(test.qts, rx_address, result, sizeof(rx_frame));
-+    g_assert_cmpmem(result, sizeof(rx_frame), rx_frame, sizeof(rx_frame));
-+
-+    close(connection);
-+    close(listener);
-+    unlink(path);
-+    cnuas_vnic_test_stop(&test);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/cnuas-vnic/pci-config", cnuas_vnic_test_pci_config);
-+    qtest_add_func("/cnuas-vnic/registers", cnuas_vnic_test_registers);
-+    qtest_add_func("/cnuas-vnic/transport", cnuas_vnic_test_transport);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 33f58b0e95..84d2fa702a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -59,6 +59,7 @@ qtests_filter = \
- qtests_i386 = \
-   (slirp.found() ? ['pxe-test'] : []) + \
-   qtests_filter + \
-+  (config_all_devices.has_key('CONFIG_CNUAS_VNIC') ? ['cnuas-vnic-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_ACPI_VMGENID') ? ['vmgenid-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_AHCI_ICH9') and have_tools ? ['ahci-test'] : []) +    \
-   (config_all_devices.has_key('CONFIG_AHCI_ICH9') ? ['tco-test'] : []) +                    \
+ All these devices are documented in :doc:`index`.
+ 
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index f2448e941a..99a31856d0 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -121,6 +121,7 @@ extern bool pci_available;
+ #define PCI_DEVICE_ID_REDHAT_ACPI_ERST   0x0012
+ #define PCI_DEVICE_ID_REDHAT_UFS         0x0013
+ #define PCI_DEVICE_ID_REDHAT_RISCV_IOMMU 0x0014
++#define PCI_DEVICE_ID_REDHAT_CNUASNIC    0x0017
+ #define PCI_DEVICE_ID_REDHAT_QXL         0x0100
+ 
+ #define FMT_PCIBUS                      PRIx64
 -- 
 2.43.0
 
