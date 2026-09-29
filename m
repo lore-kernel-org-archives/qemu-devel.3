@@ -4,73 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C43CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 14:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67B88C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 14:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBYzA-00082R-L5; Tue, 29 Sep 2026 10:39:12 -0400
+	id 1xBZ4f-0000fB-3V; Tue, 29 Sep 2026 10:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xBYz6-00081X-LT
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:39:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xBZ4c-0000ek-NO; Tue, 29 Sep 2026 10:44:51 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xBYz5-0002cc-70
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:39:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790692746;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CDIe1z5fgliycx5PBCFycn92kDwDeCNiWibSTQw6qAU=;
- b=U/EVNr7kf0va2RfzoSvwP/nRIaeE8ewN3CMNNOD5kqe4z2XFe9EJxbohWSdcKCF8VREZml
- KS4u8U7oSymO57g69qDh3L75MKKRM+zSXMTWV1BStEkU4zbdDJg7V0GU1M2zimJNbc+tSb
- QH4NHfEEdJm6Hy4gq9WEN7eWpex2qn4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-Hou3eabCO_qyC2fn0k1_fg-1; Tue,
- 29 Sep 2026 10:39:04 -0400
-X-MC-Unique: Hou3eabCO_qyC2fn0k1_fg-1
-X-Mimecast-MFC-AGG-ID: Hou3eabCO_qyC2fn0k1_fg_1790692743
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C9D01933B45; Tue, 29 Sep 2026 14:39:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.225])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE0A21956042; Tue, 29 Sep 2026 14:39:00 +0000 (UTC)
-Date: Tue, 29 Sep 2026 16:38:58 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] iotests: remove unused 'owner=' variable assignment
-Message-ID: <arvNgvmyp69UYcGD@redhat.com>
-References: <20260810141206.525581-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xBZ4a-0003Jx-8G; Tue, 29 Sep 2026 10:44:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1790693075; bh=tU2yEw60spqgHaWztDI/Y/OyYK+VHiV3+OUw8X43jAY=;
+ h=From:To:Cc:Subject:Date;
+ b=IO4rmyrr0wa8a2onh3nZgA4iU2dyga8AOrsOiQnqKxgx4ZfRRNhB6x6O+6Ru60D3l
+ IXgjfoFUcQ/hLrIXEpkk3LYSCU93OTjme4/jlyrHoIghvoKu7+g7G9gEdsTtHsYhop
+ X/ubaqYuSkLHqeYFzDJXq0/3+r4020435sh+WPPJf6SSwn33S5O8cGYF+fbDBtLHFZ
+ wzUUTe38ACecZpX+z8u/qaJFDibj7ONgSXozA/XVFxNpBlOHpJd7VDcNli3Kd13Xr5
+ e1BOPpbc51p4l8sGbb95fA5ziM/RCMu6KA3zFApFNARF8CAz1Zjk5dYpdDzHAAAvZd
+ 7o6yenmI2/LkQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id AE8711D97D8;
+ Tue, 29 Sep 2026 17:44:35 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A9171434FAC;
+ Tue, 29 Sep 2026 17:44:35 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 9305572D3F; Tue, 29 Sep 2026 17:44:35 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-stable@nongnu.org
+Subject: [ANNOUNCE] QEMU 10.0.14 Stable released
+Date: Tue, 29 Sep 2026 17:44:29 +0300
+Message-ID: <20260929144433.126636-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260810141206.525581-1-berrange@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,43 +69,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.08.2026 um 16:12 hat Daniel P. Berrang� geschrieben:
-> Most, but not all, of the shell I/O tests assign an email address to
-> the 'owner' shell variable. This variable is never used for anything
-> so gets reported as a dead assignment by shellcheck. The same is also
-> not done for the python I/O tests, though some include owner= in a
-> comment.
-> 
-> Mostly the 'owner=' variable seems to be an alternative to expressing
-> an "Author: NAME <EMAIL>" comment, but without the NAME. While they
-> could be converted to Author comments, this does not have a benefit
-> over using Git history and are not widely used in QEMU source code.
-> Git records activity over time so is more representative than the
-> initial author. Meanwhile the MAINTAINERS file, also expresses a
-> notion of ownership over the maint of files.
-> 
-> Signed-off-by: Daniel P. Berrang� <berrange@redhat.com>
+Hi everyone,
 
-Ok, why not. I don't think I ever looked at the line to figure out who
-to contact.
+The QEMU v10.0.14 stable release is now available.
 
-> diff --git a/tests/qemu-iotests/001 b/tests/qemu-iotests/001
-> index 6f980fd34d..d26c13ea03 100755
-> --- a/tests/qemu-iotests/001
-> +++ b/tests/qemu-iotests/001
-> @@ -19,8 +19,6 @@
->  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
->  #
->  
-> -# creator
-> -owner=hch@lst.de
->  
->  seq=`basename $0`
->  echo "QA output created by $seq"
+You can grab the tarball from our download page here:
 
-But can you remove one of the now two empty lines after the comment
-block, too, please? (Same for every hunk.)
+  https://www.qemu.org/download/#source
 
-Kevin
+  https://download.qemu.org/qemu-10.0.14.tar.xz
+  https://download.qemu.org/qemu-10.0.14.tar.xz.sig (signature)
+
+v10.0.14 is now tagged in the official qemu.git repository, and the
+stable-10.0 branch has been updated accordingly:
+
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.0
+
+There are 72 changes since the previous v10.0.13 release.
+
+Thank you everyone who has been involved and helped with the stable series!
+
+/mjt
+
+Changelog (stable-10.0-hash master-hash Author Name: Commmit-Subject):
+
+4cf887f340e Michael Tokarev:
+ Update version for 10.0.14 release
+5b691bef8b3 62728f8c93 Richard Henderson:
+ target/sh4: Replace TB_FLAG_GUSA_EXCLUSIVE with CF_STEP_ATOMIC
+33602fcf707 460da0e55c Richard Henderson:
+ accel/tcg: Set CF_NOIRQ during cpu_exec_step_atomic
+aa1efcc34a3 6adc9d9cdc Andrey Polivoda:
+ target/i386: Mark MOVNTI as not valid with prefixes 0x66, 0xF2, 0xF3
+88033080bb4 a9dbd71f03 Simon Scherer:
+ target/i386: Update FPU tag word for FXCH
+7e8f7e26595 f2357fdcd9 Simon Scherer:
+ target/i386: Update FPU tag word for FSTP
+e45273954e0 994fb6c218 Simon Scherer:
+ target/i386: Update FPU tag word for FXTRACT's old ST(0)
+f65eb33ecb4 c7cc09c85b Simon Scherer:
+ target/i386: Fix FXCH to unconditionally clear C1
+2d1215405fd cbbd4d74eb Shivang Upadhyay:
+ target/ppc: Stop vCPU thread before calling parent_unrealize
+eff846ffb9f 1288b0869c Junjie Cao:
+ tests/qtest/usb-hcd-xhci: test isoch endpoint type mismatch
+17b0f93f625 3c770d7292 Junjie Cao:
+ tests/qtest/usb-hcd-xhci: test isoch pacing with MFINDEX above 2^32
+4a8e99cddab 45684127cd Junjie Cao:
+ hw/usb/hcd-xhci: don't assert on NAK when retrying an isoch transfer
+cccddba9808 bfb82d57e7 Junjie Cao:
+ hw/usb/hcd-xhci: fix interval alignment after MFINDEX passes 2^32
+1622c9abec1 f91b0544fe Thomas Huth:
+ hw/usb/hcd-xhci: Set reentrancy guard in timer functions (CVE-2026-17588)
+5240dbca410 57d98debdf Richard Henderson:
+ tcg/riscv64: Set vtype before whole-register vector loads
+08beef369cd f371388029 Anton Blanchard:
+ accel/tcg: Fix TLB_MMIO check in tlb_plugin_lookup()
+d00f1e7f985 cab8663761 Richard Henderson:
+ accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for system plugins
+d27cd8d5a1c fe9e30899f Christian Schoenebeck:
+ hw/9pfs: mutate FID path from main thread only (CVE-2026-93834)
+9ff7a593a10 9b64b3cc83 Omar Elghoul:
+ s390x/pci: fix DMA slot leak on I/O TLB entry replacement
+a248a6fd3a3 e95f53e30b SignKirigami:
+ linux-user/loongarch64: Detect vector stores in host_signal_write()
+c88adf28967 30fa3eb41f Michael Morrell:
+ linux-user: implement mlock2(2) syscall
+c87eedc5d7e ebfde6daff wangyang:
+ linux-user/riscv: honor zicntr�lse for base counterCSRs
+5fe06d875df ff96d56290 Gerd Hoffmann:
+ hw/uefi: add missing uefi_str_is_valid check to uefi_vars_mm_lock_variable
+99800c3edc0 9d6ac47d31 Daniel Henrique Barboza:
+ hw/riscv/virt.c: fix aclint soc/mtimer nodename
+df011b98733 2a8b740e7a Bin Guo:
+ hw/intc/bcm2835_ic: reject out-of-range FIQ source values
+332ab334bc6 7e5c85f7f2 Kostiantyn Kostiuk:
+ qga: Change effective user/group ID in guest-ssh-* commands
+305ade8a1c0 01df81b24c Marc-André Lureau:
+ vhost-user-gpu: validate command buffer size in submit_3d
+31578ed93f8 1063bbb711 Denis V. Lunev:
+ ui/cursor: make the cursor refcount atomic
+fcea6a65e1f 2c43897356 Denis V. Lunev:
+ hw/display/qxl: hold ssd.lock while replacing ssd.cursor
+ef04c75d314 0ddbce88c4 Junjie Cao:
+ hw/cxl: fix the CDAT DOE overlapping the Flex Bus DVSEC when sn= is set
+e90b8fbf6d8 5440b6b5de Stefan Hajnoczi:
+ virtio-scsi: set dataplane_started to false upon failure
+be1244c4239 fdc3f9a83d Michael S. Tsirkin:
+ virtio-balloon: fix free-page BH teardown on unrealize
+731853c31ee 15dcee9195 Jia Jia:
+ hw/virtio: reject inverted virtio-iommu IOVA ranges
+cc48e48a3a3 73c3d017ef Laurent Vivier:
+ hw/net/virtio-net: strip trailing padding when caching RSC segment
+0b193fea526 5d85a09554 Laurent Vivier:
+ hw/net/virtio-net: check packet size before VLAN tag access in receive_filter()
+e19a771ba75 f10977073c Zhang Chen:
+ qapi/misc: Fix missed query-iothreads items
+38d75047060 713e7e85a2 Junjie Cao:
+ hw/cxl: Fix guest-triggerable QEMU exit on reserved interleave ways
+4bcc4c58a6c c7254cd584 Marc-André Lureau:
+ virtio-gpu: clear res->blob on mapping cleanup
+8eebc546bbd 3ece85b53c Marc-André Lureau:
+ virtio-gpu: disable blob scanouts on mapping cleanup
+1998111f111 0e57187991 Denis V. Lunev:
+ tests/unit: cover blocked IO during the websock handshake
+316989d81e9 7a72a4652a Denis V. Lunev:
+ io/channel-websock: do not lose QIO_CHANNEL_ERR_BLOCK while reading
+833d5a50360 e867e2047c Denis V. Lunev:
+ tests/unit: add websock handshake test
+d95c50ff7a0 2295deb488 Denis V. Lunev:
+ io/channel-websock: handle a blocked write during the handshake
+ade3c1a1000 cd71c2f40a Denis V. Lunev:
+ io/channel-websock: send an HTTP 400 when the greeting has no space
+f86e368f256 a3de21bfa5 Denis V. Lunev:
+ io/channel-socket: do not treat a zero length write as an error
+beeadf39ed0 10dddf15e2 Bin Meng:
+ hw/sd: sdhci: Accept version 4 enable without UHS-I
+2153d22983b 2931a675e9 Peter Maydell:
+ target/arm: Make Thumb T1 hint space UNDEF before v6T2
+67600905969 50d6757147 Peter Maydell:
+ target/arm: Make IT insn undef when not present
+8060d7e4ac7 c05e01a885 Peter Maydell:
+ target/arm: Make CBZ/CBNZ UNDEF before v6T2
+9cfc4597f5c 59716ac306 Peter Maydell:
+ target/arm: Correct reset value of SCTLR for arm926, arm1026
+b605da7ddd8 f63124af78 Alexandre Frey:
+ target/arm: fix TTA instruction S bit for IDAU-exempt addresses
+7f134f63be0 cfa6e2c52c Paolo Bonzini:
+ i386/vapic: unref MemoryRegion if vapic_map_rom_writable fails
+c9cfa87402c d61c8a6fb7 Paolo Bonzini:
+ vapic: confine the VAPIC region to 0xc0000..0xe0000
+60f71663dd0 0f410adf6b Paolo Bonzini:
+ scsi: hide MODE SELECT block size change behind a quirk
+6bbb24ce21a d30254aec9 Paolo Bonzini:
+ scsi-disk: fix out-of-bound read in WRITE SAME
+40858bc3d38 0df27c66dc Denis V. Lunev:
+ hw/ide: report the default CHS translation in IDENTIFY DEVICE
+25d53f2812b 0905ef5b6d Denis V. Lunev:
+ tests/qtest/ide-test: cover a CHS translation with zero sectors
+0922a862087 6c712a86f6 Denis V. Lunev:
+ hw/ide: reject an unsupported CHS translation
+4dee22592ab d7913fac77 Christian Borntraeger:
+ s390x/sclp: pv: only copy the original SCCB buffer
+560839bbf5f e80cf29479 Ivan Efremov:
+ tests/qtest: Add seed CSR zero extension test
+9016dea77ad 51362da8f7 Ivan Efremov:
+ target/riscv: Fix seed CSR sign extension
+b836e9697d8 569aa6280d Nicholas Piggin:
+ target/riscv: tt-ascalon: Enable Zkr extension
+1cdd3f73f6a dc04053687 Denis V. Lunev:
+ dirty-bitmap: fix integer overflow in serialization coverage
+32a122cec60 9a77ef813f Denis V. Lunev:
+ block/monitor: allow dropping a bitmap never stored on disk
+49c8abbb886 3f3f5cdb92 Denis V. Lunev:
+ migration/block-dirty-bitmap: reject bitmap load onto ro node
+eae97b7b8e4 59ecd8a1ac Denis V. Lunev:
+ block/monitor: reject persistent bitmap add on a read-only node
+716ef96e8ae 438ee08bc9 Denis V. Lunev:
+ tests/unit/test-blockjob: cover keeping a job paused while a pause is pending
+4b862e13708 2667133c27 Denis V. Lunev:
+ job: keep job paused across overlapping pause requests
+959c77a714c 0846740652 Christian Quante:
+ hw/input/ps2: answer unknown mouse commands with a resend
+93186168536 418396be80 Warisjeet Singh:
+ hw/display/vga: fix text-mode OOB write after a graphics surface switch
+5e990a39498 0e62034ca1 Marc-André Lureau:
+ crypto: fix build against nettle >= 4
+728584b13e9 eb2b3a1fa8 Marc-André Lureau:
+ virtio-gpu: use g_try_malloc to avoid guest-triggered abort
+e6d0120e039 ab7183ed4e Marc-André Lureau:
+ hw/display/qxl: validate primary surface stride against width
 
 
