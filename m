@@ -4,110 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19A1CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFEEC9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZmk-0005nE-Nb; Tue, 29 Sep 2026 11:30:26 -0400
+	id 1xBZmj-0005lZ-29; Tue, 29 Sep 2026 11:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBZmh-0005kV-Rb; Tue, 29 Sep 2026 11:30:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xBZmg-0005kB-LW; Tue, 29 Sep 2026 11:30:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBZmf-0007wA-Vg; Tue, 29 Sep 2026 11:30:23 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1xBZmf-0007w3-3U; Tue, 29 Sep 2026 11:30:22 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TB5jFd3836778; Tue, 29 Sep 2026 15:30:18 GMT
+ 68TB5NUp2187763; Tue, 29 Sep 2026 15:30:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=6MOZU/NZWOwAIMtx6
- VsCx0AhvXr5R2udK8cfN1R7yE0=; b=lnCeABd2LuXoe7kFZ0B6g/lJojKJunMxV
- Bjf28EauWsnDZE/R35vvjYBMFuqft/tjcibGkw/BtmY376oys4RXZEPCwscC7yXM
- E55rZdCFQBxcsB9dv9jmC85KxSjrrD7Azl4nVmMGLuPeSfHys0QGCD75OqMf748d
- bZKvfGnLE8FFYhFwU+ZIRcLhcAmFnf88vUf1obbPjnebJZCnZs0paBN0aoRI2AHI
- mQj8NhjirBJfiA54qVDG2/DLaOuNy+sXp4H3kb8Y4sul6wHlb/7SaLwvhqzH4rzZ
- 2GzVWLcScLTTuuWzvbdZnOvCqvTK+4Y5d6jLFnLXo58A9wCb/8E/Q==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fk7eca-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=lKhXEN6KQfWMGVWgrDMA3hlJK6rYwC104f/n4uoyw
+ 10=; b=GSu5VE6A+ZY2e1lAH9gMQBBfk+ekO74K5li6mn75jfFGLDzKVsrZbFD78
+ /+J+/irkP1ELr6xebKgplwXTYAEMaO762bubvN/ShCGUrdvRqIJV8N5Ul7bFTD/t
+ VmOQfRURG/mIA3aPSragZNFhSrJBF4TW7pxQyDsfLto0+giO8mxL2AC8BwbXSV0X
+ XWpX0aXt34asEPmwNiU9l/i+BSXMkUtMhb9SFRghNBSQ67g9QT3DAilW1F7YKp20
+ DT89Fq0K7M1v2PLC4jUkAe/3i8p28OKV3GN2T00GE7mhA1WknE+DBqukrCuJle1T
+ b+Pmq3AbhZYNMHo5UVTkyI4vMCkpg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qr7sta-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:30:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TF1toF1617010; Tue, 29 Sep 2026 15:30:17 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxrrwadkq-1
+ Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TF10nU1647411; Tue, 29 Sep 2026 15:30:15 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxu2ya30s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:30:17 +0000 (GMT)
+ Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68TFUGIL24904422
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68TFUE1M17892060
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Sep 2026 15:30:16 GMT
+ Tue, 29 Sep 2026 15:30:14 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F23058059;
- Tue, 29 Sep 2026 15:30:16 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4797058055;
+ Tue, 29 Sep 2026 15:30:14 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45E7A58055;
- Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 80CBA58059;
+ Tue, 29 Sep 2026 15:30:13 +0000 (GMT)
 Received: from li-2311da4c-2e09-11b2-a85c-c003041e9174.ibm.com.com (unknown
  [9.61.92.210]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
+ Tue, 29 Sep 2026 15:30:13 +0000 (GMT)
 From: Matthew Rosato <mjrosato@linux.ibm.com>
 To: qemu-s390x@nongnu.org
 Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
  iii@linux.ibm.com, david@kernel.org, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, cohuck@redhat.com, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-Subject: [PATCH v2 2/3] s390x/pci: Use qemu_log_mask() for guest-triggered
- errors in reg_ioat()
-Date: Tue, 29 Sep 2026 11:30:11 -0400
-Message-ID: <20260929153012.774530-3-mjrosato@linux.ibm.com>
+ borntraeger@linux.ibm.com, cohuck@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/3] s390x/pci: some translation fixes
+Date: Tue, 29 Sep 2026 11:30:09 -0400
+Message-ID: <20260929153012.774530-1-mjrosato@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260929153012.774530-1-mjrosato@linux.ibm.com>
-References: <20260929153012.774530-1-mjrosato@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: KIZkIQfbzoNBVA-PByCmFAEfKCq934Wq
-X-Proofpoint-GUID: KIZkIQfbzoNBVA-PByCmFAEfKCq934Wq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX88bvJsIoJzg3
- cr27Fs7Uf9RHYub1oTTN3JZjJkN26n6JQRGdMrDJz6mK9uKZOH/51wgPi8/488bmBJzoQmmRyi3
- Xh2u+8ijEYrksgg9oobOVSMmC+412s4=
-X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6abbd989 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX8V7gDyHcD04E
+ h3xWlwX/Ib2zmcV8ejLB5Tv0yOQ3BpFchEc6mvVN3mTOdlmwGngeWicVq1IuY8iXP4o9dJm/N7I
+ OGXNS+LAj+8UVQSsoRKIDqIWVh1uZ0OtPVesJmPnk6ZiWrc8PxQkU0RsBVg/ekkLTmPHiOkS/kl
+ /s5Tg10dZlGIdsTNAdjR5qT0jBW+GMe98MfLwppYTmRLLBA+rB+QXgKUKuIN+feKHXD1RZ+V38T
+ e5Aj7vIlnxhbkxe3ps21O547HtRAbIcTA/fjCi6TBliSG0b6Pf7YnD/Q8gElcFOvLNGnmTxlFaE
+ sWkHfDeJ5fERLYdlX/uXPpLlXjSKwkacpE/Uuyyv+ke6YsuPbRx/3yB0EzDQ9UI559vRXjG+GNS
+ 89qAUUU45zCnLa/nkH2LCqApKR0gVUGl3qHNJsqagod5mXXU9kmqqjZvu1XvLyitI6VqqjLMQ/r
+ EYrH3NC5BfcutEIOBig==
+X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6abbd987 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=Z9dgWC5d4jRJgd9rOkYA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX+qygRfZUEYqh
- i/LYP6mWhF+9UiHm55I/OeEBhHaGfTr3Zzf39xc0vW8udSAL0ZLYNjhErHRAJjAS6mNM2PAFkwf
- 8ZwIXtMS+mm39Jf9oMutRRPGsY6ghhU9eT5pPixiMZZaNqp/AV1GRXpFt8DmB7jZI3hMC63G/tP
- y+87VrbkAubqiYjoJxNLvz4P5BnaOsYMWD0I3zo9Mamkdxh89RUcMw4LO4a3sHnBB/JWTpBed4x
- 3qt3cAjL2sRBqkpDMsiYJrqz418/TGdD6zSG6UbJZIjAqsJSv+PMQweIWmbtjMxw7KftWjV4B5t
- QNkrUUgnmVFDkMSj13LHrPqea3fW7FhICYGdBTH+n/YnqNv6vOZDw5QDVifAb9jDYn+EYlviiot
- QzK/A+Q5p84+i8Ag7Vj9gzPTCinjkvAAmKY/jtCvzimzSlJ4SZotdXVoSuqhRPcAqe0TQ658MxH
- 2f1+ORPuhJq6cn8+GKQ==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=XbGThKhIVj4Z1Gef3_UA:9
+X-Proofpoint-ORIG-GUID: AuSphLcwi4OLbmm846kHcqcNFnHBcJiU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX1D8VQ/5/G+ka
+ usYpVHuRpzdxCD20A1sT+dbFC9JJxnmphuCY6wnbitkwXRX4hAPd16/lIcMi7p7HlsZN93exV5b
+ YyMNPFm/6R3XHT9GUcuo6k3MW8ixzzQ=
+X-Proofpoint-GUID: AuSphLcwi4OLbmm846kHcqcNFnHBcJiU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
  definitions=main-2609290060
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,51 +119,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error paths in reg_ioat() that are triggered by a guest providing
-invalid MPCIFC arguments use error_report(), which writes unconditionally
-to stderr.  A misbehaving guest can exploit this to flood the host log
-by repeatedly issuing the instruction with bad arguments.
+While reviewing Konstantin's migration series, a few edge cases have
+been identified in the existing code.  Let's tighten them up first.
 
-Replace these with qemu_log_mask(LOG_GUEST_ERROR, ...) so that the
-messages are suppressible.
+Changes for v2:
 
-Fixes: 863f6f52b713 ("s390: implement pci instructions")
-Fixes: dfcee1ea4c52 ("s390x/pci: add support for guests that request direct mapping")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
----
- hw/s390x/s390-pci-inst.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+- convert to QEMU_ALIGN_UP
+- add newlines to qemu_log_mask
+- drop qemu/error-report.h
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index bac813fb6a..73417edade 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -15,8 +15,8 @@
- #include "exec/memop.h"
- #include "exec/target_page.h"
- #include "system/memory.h"
--#include "qemu/error-report.h"
- #include "qemu/bswap.h"
-+#include "qemu/log.h"
- #include "system/hw_accel.h"
- #include "hw/core/boards.h"
- #include "hw/pci/pci_device.h"
-@@ -1044,11 +1044,12 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
- 
-     /* currently we only support designation type 1 with translation */
-     if (t && dt != ZPCI_IOTA_RTTO) {
--        error_report("unsupported ioat dt %d t %d", dt, t);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "unsupported ioat dt %d t %d\n", dt, t);
-         s390_program_interrupt(env, PGM_OPERAND, ra);
-         return -EINVAL;
-     } else if (!t && !pbdev->rtr_avail) {
--        error_report("relaxed translation not allowed");
-+        qemu_log_mask(LOG_GUEST_ERROR, "relaxed translation not allowed\n");
-         s390_program_interrupt(env, PGM_OPERAND, ra);
-         return -EINVAL;
-     }
+Matthew Rosato (3):
+  s390x/pci: Fix frame stepping in rpcit_service_call()
+  s390x/pci: Use qemu_log_mask() for guest-triggered errors in
+    reg_ioat()
+  s390x/pci: Reject apertures beyond IOAT capacity in translation mode
+
+ hw/s390x/s390-pci-inst.c        | 25 +++++++++++++++++++++----
+ include/hw/s390x/s390-pci-bus.h |  1 +
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+
 -- 
 2.55.0
 
