@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34D0CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 21:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63723CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 21:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBfKK-0000SH-DG; Tue, 29 Sep 2026 17:25:28 -0400
+	id 1xBfK8-0000Fi-Mh; Tue, 29 Sep 2026 17:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBfKI-0000NG-UF
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 17:25:26 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xBfK4-0000EZ-W6
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 17:25:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBfKF-0003sS-Qg
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 17:25:26 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xBfK2-0003gN-GE
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 17:25:12 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TL0qHq942361
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 21:25:22 GMT
+ 68THbGNh3842772
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 21:25:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 00b0x4BcKuHK0PJLODljFnDDrWevc4u7cUXy3tIJ0Rc=; b=JmX8o281TnUFzryU
- iw6IkErHMwctZ/b7irluilQbczVd6Lw/QrmzqmQdpl6/0xrvUZsU/TNEVvgyuXmK
- bD3aNEy+z0sfHRl8SjZJJSL/ESAHQxSgKG9L0w6tVFmA7QBYAwQUoCq2+t14To+S
- YbQQmrtm/2/JVjrWe1ZULe7reHMtkzXguljOZAfAyydWMB7OlBBLBifXQbbiANeC
- PPQ+KmhOuZ3rcWywYXcPh72+seC5hzCF/LL97OJnkIJsXFqAOodnmnGxgMn2ftk5
- jcbKZGhFTFawjKxD8nl5eGkjmb/LZsEt+ssXSbLdc5jK1YdbQzQfRa6AoH+VQsXc
- NVfeXw==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0ftuhjuc-1
+ 82qTmvNGZPxUnq/00/luW3EtkUNNMT7YcRCCVI9kQOc=; b=oGmd9eOiD/uYlWXb
+ oaXxsuvUFSSV6/tSIEb8OFdSMzfbun49Gqo4Wj8IFBiEEVSwbK47uCVUoAOiAtep
+ /zWEARt6Y3g7KZ0Sb1RGONtTzlFNlkF4yJpyLIzl4eXKeZiobYpjJp39pQb/v5Jt
+ FhiUNlTsRcil39imqY6teace4VD+Tw4c+5nbQCMdzM+GTI2fdU6Sw/kPtlvfoWmL
+ E6IQF1k3FeZwb2gCgaTwMHUVsPrQ1M/rzSvHUw/vRTfVJQd7gPO734CHL4zQFdRr
+ 10DWdDudWAHEgOLcrXFFeY5fJFAIaCJHAa/mc7tqTvDQcsrWqyB6FxGAxVwVBMPS
+ 7KihYg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0b0vb0sp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 21:25:22 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-349ffa249bdso3887813eec.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 14:25:22 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 21:25:09 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-34318e88ba2so3590064eec.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 14:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790717122; x=1791321922; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790717108; x=1791321908; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=00b0x4BcKuHK0PJLODljFnDDrWevc4u7cUXy3tIJ0Rc=;
- b=YBeiO1p+ZbfBM7iRtQCkgEmBQJzkc9iNa2V8mmO8eoBdjsTMH4SEV7Q9e90PYIwUhK
- kCDTSV317N5lpofyQj2aENaRr3eQ4L7sC7TZAPP1p0ZumWWJtvK8yJRIbqKOghBqEkKv
- 4YhgR3pmCsAD96JzBXNKJN/jv/ggDyizL1iQvCIJ/lTLX3f6AAgcocxn+MLkgnZRIAjV
- CwacZvZJlegjbL2CGrbyiO+2UUS778z/SVvM3AY8eKzHUNg9sd/wA95yBaFT1CoIE7rV
- TdCrdmr5pc47vzaUBWDXhhBZ/ou8r1UiFAiMXTarCp+sJPh9WtX/44XoPweNiX9pp8qL
- w2jQ==
+ bh=82qTmvNGZPxUnq/00/luW3EtkUNNMT7YcRCCVI9kQOc=;
+ b=KeAR8i5rTV06a0jqks0PTso5JZA9U6fiBEY7gvqodoqxgBzOqriLWZOEB88QKjzto8
+ K8wvNA3V4M7qEl5dWlE2pY7aRUQIrNpW0ksk9yJ/p2DHXtgIbkahJUe6HkKw5my7Uar7
+ TRpgqGHJLUHVEJRQ/YXcsk8UN3hAgHKq/hBvJcMZpPTWH+Izf8kLsXtgBB8c/dE/5N2U
+ UYorEAvR9DezMDGsS6u5a8nybEDhFG9fa4hdGzvBkD4M5HQeYLCXy0lDW6pvB0xG+JqU
+ WC+rfNIFf+ZzIjEgIpfgy8lDEJ6KWvX7dK9gcQkNArIzyG5UuuFjwzHKqRn83nMKbXIA
+ TYSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790717122; x=1791321922;
+ d=1e100.net; s=20260707; t=1790717108; x=1791321908;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=00b0x4BcKuHK0PJLODljFnDDrWevc4u7cUXy3tIJ0Rc=;
- b=25NKagN8dNEed+yVnW7LihczktqdkLxzUeYVZ7vNcSDUeQDyS7O+eyAYY/+ueRf6FE
- d2UinqbSnvh/7c+oV/lL+VthEk4ytcWjS4o/7ratBhE/RXISlcxhTyL+itIlSYdjOCGC
- VGquZd6OMX2pCw8XOfMm62Qs0ZaC0lNK32F4VDKhRxH1UB6Huu8/3J17oTCNoLjv3QRj
- B+CSRAP2YDa0UOusA6F8n794tcSlJk5mGo4uBXhtTAuNZNvW1iqLeKtHKdtaDZoKH2JE
- hwSLbRVrdRP3SrLGhzxcdGjdzAhSXyxyUQV+nwznpxu7Uby8c+QknzRO8jw9sfyspVnq
- AhoQ==
-X-Gm-Message-State: AFq9FYKwAWAsXa1RIdXqsHTg+KGIHjafwjhAhbFZWNt0ofLVSFWXhC7s
- rD8fW85VokhGicC0413LrYASlBcCt6hKSDQCNyJ8hBoJ1PHAp3KMzH7ecjUhi5PLAdjNLZYCeb7
- ehOqGvsjdtVYXoqSewtukUpc/kYADs17/hzOZd14MtpspRPgaVLMxs1hEsMs60U2gzA==
-X-Gm-Gg: AYBFou1dKuz+znUvQkM61JlXrj9GAJnBekRQy0P+UoTbgM/mHr9GDMrDpw8Cli/viQM
- vMT/8+0qz+NBWgMMEDpoTI1cXFDONPJyor/s+LzxgVxCCJAY6hsZGD+jrvYn4kDGll/F1D3c/S7
- CPmccMCgyrfwKXiOOMQuxA2dl/5YVJw4cY/n1KXkszj+ZVabpf4Up1mbTyy322j3TtU8Xn8wLDz
- LV3HCccCsEAzxI4bSFX3VhyI2YVntyJidrqKFP77rRueWmg8S2BxB1Gvo/dvOwGIHuF3cG1f9VS
- 7LbRkXrWUyDncsLTEvayu9oAUphl56Y3c6aUeNQU5oSZYqdt77dmIOLhxiUHvebaKhuM2mAfVXL
- HUTo6PqgqoMxrDBCFJHN1933+q+wDC6TfCbRrav9u3HxMDE0CL5dnhojIn1Ng
-X-Received: by 2002:a05:7301:dd84:b0:342:a328:fe1e with SMTP id
- 5a478bee46e88-34c672e5098mr688962eec.28.1790717121490; 
- Tue, 29 Sep 2026 14:25:21 -0700 (PDT)
-X-Received: by 2002:a05:7301:dd84:b0:342:a328:fe1e with SMTP id
- 5a478bee46e88-34c672e5098mr688894eec.28.1790717120146; 
- Tue, 29 Sep 2026 14:25:20 -0700 (PDT)
+ bh=82qTmvNGZPxUnq/00/luW3EtkUNNMT7YcRCCVI9kQOc=;
+ b=CLb9tMLZoJDL1XKtLfTwSLnwcJ5T2pvfNd1yRtPy68rik8c1cMHG4N8iAQWxsFiOMQ
+ 2KyQCrIM33FFTsVkpI1rzgxiDGuGZPpFhYqt/ALLhle/w77uhyXwR9swxdV3hFr9Zz46
+ g7eYLssiC5lA9t0uTiaDTSHIvX0mvxQfanfBk+h4O6Ckgm8Ur2Y7ITqrS0aHegi4Jx+V
+ YyaXi/tWMooqXafKmvvtEu489Ipdp0XAeZ9lUdTpQjmSCB2ZLRtrXsQu1OqWPyP6GwgC
+ ga2Ci3DI2WiC9v5aU/Qz+KPMNIzK6G85yQyVGFOxiujxgocjyqiDqsLRmfM7uEbKMvgD
+ qhVA==
+X-Gm-Message-State: AFq9FYLAaMQH7AGBEDQCNVgIGOFRmmOa7H1xaCc5iUVfSYRSkHSa8yQv
+ cpX+wZPLAQhE7xoTOOKtMujxEKQBi6tQPQ5ZNshQvd1RxfPyNhj5UC0V+UJWw/6Zt3ChQqCPW2l
+ Wd96MAosjtBhrFHSi5A6nE+4tylU23FZiPvzDuAhIvtUDcKLm09a9Twd2YD4lKUX/CQ==
+X-Gm-Gg: AYBFou1dtGTMsiuyiJS5UcAeuMyZRJwBn2Cj7HrS2JRFupvj0U7izJbXVVs0LSMvHrk
+ yl2aWik4G9N5F1eC+T13CirQeiefR1ufNpPiRecRoVm7KUs6XfHpv/5/8zk1x8IKsgrLYa6/HNZ
+ QxgMKvRziynMC8QI6tADipeWEqLXfMDXOtD13ZWJAYd16fsa/KMGHT3PgtOqFJVBzltaXdA0h6t
+ U03yWBg6nYsCh15UZun0Czs/yolhbY+W1KbjweMIqPGNbL96RcwQ8D28o5Ftu1T8XBfMVqYeYsK
+ Z1bjJpiA6G5KdZNqhu38Way7fxI8hT/LB2hYbOXwbdXCwLOY8c3hq0e54FyUXRDaxr2uP/OgiBz
+ 8E5awd7kKI9V10Dl3k0cfDvvarHPMHlWm+jNFh8TJXSuflZZJAgnF4TXSVpqi
+X-Received: by 2002:a05:7300:c00d:20b0:34b:6d45:de57 with SMTP id
+ 5a478bee46e88-34c65a7418amr735385eec.9.1790717108184; 
+ Tue, 29 Sep 2026 14:25:08 -0700 (PDT)
+X-Received: by 2002:a05:7300:c00d:20b0:34b:6d45:de57 with SMTP id
+ 5a478bee46e88-34c65a7418amr735334eec.9.1790717107205; 
+ Tue, 29 Sep 2026 14:25:07 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-34c388d0110sm1415413eec.20.2026.09.29.14.25.18
+ 5a478bee46e88-34c388d0110sm1415413eec.20.2026.09.29.14.25.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 14:25:18 -0700 (PDT)
+ Tue, 29 Sep 2026 14:25:06 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
@@ -95,46 +95,46 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v3 14/24] tests/tcg/mips64/test_mips64r6: fix call to
- check_results_64
-Date: Tue, 29 Sep 2026 21:24:29 +0000
-Message-ID: <20260929212439.110454-15-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 09/24] tests/tcg/mips64: move mips64r6 sources
+Date: Tue, 29 Sep 2026 21:24:24 +0000
+Message-ID: <20260929212439.110454-10-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929212439.110454-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260929212439.110454-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA4NSBTYWx0ZWRfX5acLuWCHt3UI
- V1kh4EDSpUXiV4lk/loOjBgYW5fkewsxFDgA43hYx/oONJvo7ck+yUp103keA2H2ZqQEtysK6Id
- CEYAO8dZlxvub95HPe3q+HwEkFxXG5TgbQuk/AZMaJ2RSK9+MAhyvpvmWmW7Rif2Q4+1amoAHlM
- lynV+M9VUAhVTh9YE7BYn44WyK6oFCSiKn1ogoox+9wPGIVs40C+mmLBCCgy/dE0acC/dM6j4AO
- aea4xyA2jFCtM6gmEqwRtRe+ALM31HDPp7JeGpz2pS786F9zdctYIRMnGVZRpi7g3qjlKptxRNw
- m/49j6BWdnL9QZGEjQGAgQlEuTuz9pcAncPY9DdWeFG+LbWQ+g6WKwewPepRB7iSSMp5nIwp67K
- li8DwADAbPWJBtmIz7RpTp+KPVp2Ur+pNhKEkz2DohuwDOSOZ+GB41vRyeqg+7FV5hHCqMKJxe0
- bGhwhABBGmjX5bgP8eQ==
-X-Authority-Analysis: v=2.4 cv=AoB7T+9P c=1 sm=1 tr=0 ts=6abc2cc2 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-ORIG-GUID: SDrPo-_L7CNsMo0d6hOrND-Pnp9nORqW
+X-Proofpoint-GUID: SDrPo-_L7CNsMo0d6hOrND-Pnp9nORqW
+X-Authority-Analysis: v=2.4 cv=Z+55j3RA c=1 sm=1 tr=0 ts=6abc2cb5 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=au1VBuIrrAiolwtL1wwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA4NSBTYWx0ZWRfX7bvLKG0U1m8P
- 7wOSxNmCzTnjV7ygAjG9BD0Md6MaiNAyisJiWChaUiByAMU8icCvFja5HqhoOOUX09sRC0Qrv+w
- bRp7Ifg1dKYVVRk25i0RdpyLMHcDD+Q=
-X-Proofpoint-GUID: L4tqg-GdFAenZPTulQp6FGei50VQL3m9
-X-Proofpoint-ORIG-GUID: L4tqg-GdFAenZPTulQp6FGei50VQL3m9
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=ALku5c8DAAAA:8 a=xz38mcJZfOssY3GY9MsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=Skunnq644UPbuD6fT1yj:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA4NSBTYWx0ZWRfX/RoI/QQFmPrv
+ gH5gppvCPtK9fo60k661v+5wEgqPHfpku+ZOQ6TB4uPlW0hPGl9EMuqTEOzPhsCD4CxCIW8VcjZ
+ xlQBotClG3k1RHObZ4S2poaZVAnV30tTKo+mWh4hQow08Jp5pwzuHs/FEbsRVIjbpW4aQVKERKa
+ YmN5TAkP7uy4cRBoqmH32d5hC0wvjaFAwdGBZcYE/dtk2ycZqHVfnZfbdG78nclxBAFxfPMHMmn
+ QdFxcc3lKXolvBOzroBUlF9wxRLdytBNzi/ikxNWcFFk/xBTt6q2/xgyGwNOzZCAxBS66wIAEFk
+ wpDwc5Psta1B/YMkG3AAbFU4deW7oSYstNfsS+bgLsmTfC/d4B+ufo4pooMxdymgD4g1vKhSiBs
+ R2tQNKbMBGKaQj0w8bl+ZOB8YkjIWYACYZrJRUYxBMlDEBRf2S1Wch69wS1FO9rHbzYlQP9whhG
+ iHWHHdsUFVkLRjNKP3Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA4NSBTYWx0ZWRfX+bbtNWvG/BCQ
+ fMddVLUsJjJzs62APQ2Y7r/k+QniEJct7PQFiyGfVrYgZ2lCvr+3LCQMZQn3eP0uwV27IGOM6yf
+ 3IP5uobmQ/8NDHE+UMeYkduuzHG3c/o=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290085
-Received-SPF: pass client-ip=205.220.168.131;
+ spamscore=0 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290085
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -157,520 +157,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-isa and group names were present in all files, but not passed to
-check_results_64, which expects them.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips64/test_mips64r6_and.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_bitswap.c  | 3 ++-
- tests/tcg/mips64/test_mips64r6_clo.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_clz.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_crc32b.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cb.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cd.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32ch.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cw.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32d.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32h.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32w.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_dbitswap.c | 3 ++-
- tests/tcg/mips64/test_mips64r6_dclo.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dclz.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmuh.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmuhu.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmul.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmulu.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsllv.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsrav.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsrlv.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_muh.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_muhu.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_mul.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_mulu.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_nor.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_or.c       | 3 ++-
- tests/tcg/mips64/test_mips64r6_sllv.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_srav.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_srlv.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_xor.c      | 3 ++-
- 32 files changed, 72 insertions(+), 48 deletions(-)
+ tests/tcg/mips/user/isa/mips64r6/crc/Makefile | 40 -------------------
+ .../logic => mips64}/test_mips64r6_and.c      |  0
+ .../test_mips64r6_bitswap.c                   |  0
+ .../bit-count => mips64}/test_mips64r6_clo.c  |  0
+ .../bit-count => mips64}/test_mips64r6_clz.c  |  0
+ .../crc => mips64}/test_mips64r6_crc32b.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32cb.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32cd.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32ch.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32cw.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32d.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32h.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32w.c     |  0
+ .../test_mips64r6_dbitswap.c                  |  0
+ .../bit-count => mips64}/test_mips64r6_dclo.c |  0
+ .../bit-count => mips64}/test_mips64r6_dclz.c |  0
+ .../test_mips64r6_dmuh.c                      |  0
+ .../test_mips64r6_dmuhu.c                     |  0
+ .../test_mips64r6_dmul.c                      |  0
+ .../test_mips64r6_dmulu.c                     |  0
+ .../shift => mips64}/test_mips64r6_dsllv.c    |  0
+ .../shift => mips64}/test_mips64r6_dsrav.c    |  0
+ .../shift => mips64}/test_mips64r6_dsrlv.c    |  0
+ .../test_mips64r6_muh.c                       |  0
+ .../test_mips64r6_muhu.c                      |  0
+ .../test_mips64r6_mul.c                       |  0
+ .../test_mips64r6_mulu.c                      |  0
+ .../logic => mips64}/test_mips64r6_nor.c      |  0
+ .../logic => mips64}/test_mips64r6_or.c       |  0
+ .../shift => mips64}/test_mips64r6_sllv.c     |  0
+ .../shift => mips64}/test_mips64r6_srav.c     |  0
+ .../shift => mips64}/test_mips64r6_srlv.c     |  0
+ .../logic => mips64}/test_mips64r6_xor.c      |  0
+ 33 files changed, 40 deletions(-)
+ delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_and.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-swap => mips64}/test_mips64r6_bitswap.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_clo.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_clz.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32b.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cb.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cd.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32ch.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cw.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32d.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32h.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32w.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-swap => mips64}/test_mips64r6_dbitswap.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_dclo.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_dclz.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmuh.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmuhu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmul.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmulu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsllv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsrav.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsrlv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_muh.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_muhu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_mul.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_mulu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_nor.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_or.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_sllv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_srav.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_srlv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_xor.c (100%)
 
-diff --git a/tests/tcg/mips64/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
-index 38ae641e907..3a3d8e68831 100644
---- a/tests/tcg/mips64/test_mips64r6_and.c
-+++ b/tests/tcg/mips64/test_mips64r6_and.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_bitswap.c b/tests/tcg/mips64/test_mips64r6_bitswap.c
-index ae2f74b34ee..5e5f948e250 100644
---- a/tests/tcg/mips64/test_mips64r6_bitswap.c
-+++ b/tests/tcg/mips64/test_mips64r6_bitswap.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_clo.c b/tests/tcg/mips64/test_mips64r6_clo.c
-index 611dcc9572f..a2e370849e6 100644
---- a/tests/tcg/mips64/test_mips64r6_clo.c
-+++ b/tests/tcg/mips64/test_mips64r6_clo.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_clz.c b/tests/tcg/mips64/test_mips64r6_clz.c
-index 3f89cbdec2f..0707cf751b7 100644
---- a/tests/tcg/mips64/test_mips64r6_clz.c
-+++ b/tests/tcg/mips64/test_mips64r6_clz.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32b.c b/tests/tcg/mips64/test_mips64r6_crc32b.c
-index 7b8955cffd5..d9956b4e20e 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32b.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32b.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cb.c b/tests/tcg/mips64/test_mips64r6_crc32cb.c
-index 58479c2733b..7edced391b7 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cb.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cb.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cd.c b/tests/tcg/mips64/test_mips64r6_crc32cd.c
-index 417cd895fb9..f7e3f474aa6 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cd.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cd.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32ch.c b/tests/tcg/mips64/test_mips64r6_crc32ch.c
-index 9ae4804e687..b5f0bc207bc 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32ch.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32ch.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cw.c b/tests/tcg/mips64/test_mips64r6_crc32cw.c
-index 2e1ca6f836f..a8e37f43929 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cw.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cw.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32d.c b/tests/tcg/mips64/test_mips64r6_crc32d.c
-index d916ee2586b..b6e97fc71c6 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32d.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32d.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32h.c b/tests/tcg/mips64/test_mips64r6_crc32h.c
-index 72575e95858..72bdb59d136 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32h.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32h.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32w.c b/tests/tcg/mips64/test_mips64r6_crc32w.c
-index 4518b4fe482..b625cce241c 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32w.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32w.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_dbitswap.c b/tests/tcg/mips64/test_mips64r6_dbitswap.c
-index 7473f3f0ceb..9ded266e77f 100644
---- a/tests/tcg/mips64/test_mips64r6_dbitswap.c
-+++ b/tests/tcg/mips64/test_mips64r6_dbitswap.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dclo.c b/tests/tcg/mips64/test_mips64r6_dclo.c
-index a6f8688b76c..864736275c7 100644
---- a/tests/tcg/mips64/test_mips64r6_dclo.c
-+++ b/tests/tcg/mips64/test_mips64r6_dclo.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dclz.c b/tests/tcg/mips64/test_mips64r6_dclz.c
-index ab2d3eadeff..8c7e7389cc4 100644
---- a/tests/tcg/mips64/test_mips64r6_dclz.c
-+++ b/tests/tcg/mips64/test_mips64r6_dclz.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmuh.c b/tests/tcg/mips64/test_mips64r6_dmuh.c
-index 490c81f884a..0bcaf97d50b 100644
---- a/tests/tcg/mips64/test_mips64r6_dmuh.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmuh.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmuhu.c b/tests/tcg/mips64/test_mips64r6_dmuhu.c
-index 28dd2026418..b4cb47f884d 100644
---- a/tests/tcg/mips64/test_mips64r6_dmuhu.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmuhu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmul.c b/tests/tcg/mips64/test_mips64r6_dmul.c
-index 2a33d678992..c5cc48ad0db 100644
---- a/tests/tcg/mips64/test_mips64r6_dmul.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmul.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmulu.c b/tests/tcg/mips64/test_mips64r6_dmulu.c
-index 161d1fe96bc..739ad90f043 100644
---- a/tests/tcg/mips64/test_mips64r6_dmulu.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmulu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsllv.c b/tests/tcg/mips64/test_mips64r6_dsllv.c
-index fc93e0b218a..fa8108ee750 100644
---- a/tests/tcg/mips64/test_mips64r6_dsllv.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsllv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsrav.c b/tests/tcg/mips64/test_mips64r6_dsrav.c
-index e496e8fa83a..f5752e4141a 100644
---- a/tests/tcg/mips64/test_mips64r6_dsrav.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsrav.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsrlv.c b/tests/tcg/mips64/test_mips64r6_dsrlv.c
-index 2c4c04f4c42..62b7f974ed3 100644
---- a/tests/tcg/mips64/test_mips64r6_dsrlv.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsrlv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_muh.c b/tests/tcg/mips64/test_mips64r6_muh.c
-index 8f371e22e61..2706de4c0d3 100644
---- a/tests/tcg/mips64/test_mips64r6_muh.c
-+++ b/tests/tcg/mips64/test_mips64r6_muh.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_muhu.c b/tests/tcg/mips64/test_mips64r6_muhu.c
-index 79824c05b13..c4f34ced688 100644
---- a/tests/tcg/mips64/test_mips64r6_muhu.c
-+++ b/tests/tcg/mips64/test_mips64r6_muhu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_mul.c b/tests/tcg/mips64/test_mips64r6_mul.c
-index 9589c4c3a08..87c0422ba09 100644
---- a/tests/tcg/mips64/test_mips64r6_mul.c
-+++ b/tests/tcg/mips64/test_mips64r6_mul.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_mulu.c b/tests/tcg/mips64/test_mips64r6_mulu.c
-index 72b4d038cfe..2ccda6b912f 100644
---- a/tests/tcg/mips64/test_mips64r6_mulu.c
-+++ b/tests/tcg/mips64/test_mips64r6_mulu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
-index 04b841c8df1..6edcc1e394c 100644
---- a/tests/tcg/mips64/test_mips64r6_nor.c
-+++ b/tests/tcg/mips64/test_mips64r6_nor.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
-index fde9601a78d..e6b07cd4bf8 100644
---- a/tests/tcg/mips64/test_mips64r6_or.c
-+++ b/tests/tcg/mips64/test_mips64r6_or.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_sllv.c b/tests/tcg/mips64/test_mips64r6_sllv.c
-index 46136de0634..2d3f0d38dd9 100644
---- a/tests/tcg/mips64/test_mips64r6_sllv.c
-+++ b/tests/tcg/mips64/test_mips64r6_sllv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
-index 94c528f8ab8..951bd7826dc 100644
---- a/tests/tcg/mips64/test_mips64r6_srav.c
-+++ b/tests/tcg/mips64/test_mips64r6_srav.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_srlv.c b/tests/tcg/mips64/test_mips64r6_srlv.c
-index 993d0b75205..0195802f660 100644
---- a/tests/tcg/mips64/test_mips64r6_srlv.c
-+++ b/tests/tcg/mips64/test_mips64r6_srlv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
-index 3ab67ea0555..52981f73579 100644
---- a/tests/tcg/mips64/test_mips64r6_xor.c
-+++ b/tests/tcg/mips64/test_mips64r6_xor.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/Makefile b/tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+deleted file mode 100644
+index b7f5811a5e9..00000000000
+--- a/tests/tcg/mips/user/isa/mips64r6/crc/Makefile
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#
+-#  Test program for MIPS64R6 CRC32 instructions
+-#
+-#  Copyright (C) 2025  Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+-#
+-#  SPDX-License-Identifier: GPL-2.0-or-later
+-#
+-
+-ifndef PREFIX
+-  $(error "PREFIX not set, please export GNU Toolchain install directory.")
+-endif
+-
+-ifndef SYSROOT
+-  $(error "SYSROOT not set, please export GNU Toolchain system root directory.")
+-endif
+-
+-SIM = ../../../../../../../build/qemu-mips64
+-SIM_FLAGS = -L $(SYSROOT)
+-
+-CC      =  $(PREFIX)/bin/mips64-r6-linux-gnu-gcc
+-
+-TESTCASES  = test_mips64r6_crc32b.tst
+-TESTCASES += test_mips64r6_crc32h.tst
+-TESTCASES += test_mips64r6_crc32w.tst
+-TESTCASES += test_mips64r6_crc32d.tst
+-TESTCASES += test_mips64r6_crc32cb.tst
+-TESTCASES += test_mips64r6_crc32ch.tst
+-TESTCASES += test_mips64r6_crc32cw.tst
+-TESTCASES += test_mips64r6_crc32cd.tst
+-
+-all: $(TESTCASES)
+-	@for case in $(TESTCASES); do \
+-            echo $(SIM) $(SIM_FLAGS) ./$$case; \
+-            $(SIM) $(SIM_FLAGS) ./$$case; \
+-            echo $(RM) -rf ./$$case; \
+-            $(RM) -rf ./$$case; \
+-	done
+-
+-%.tst: %.c
+-	$(CC) $< -o $@
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c
+rename to tests/tcg/mips64/test_mips64r6_and.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c b/tests/tcg/mips64/test_mips64r6_bitswap.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c
+rename to tests/tcg/mips64/test_mips64r6_bitswap.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c b/tests/tcg/mips64/test_mips64r6_clo.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c
+rename to tests/tcg/mips64/test_mips64r6_clo.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c b/tests/tcg/mips64/test_mips64r6_clz.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c
+rename to tests/tcg/mips64/test_mips64r6_clz.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32b.c b/tests/tcg/mips64/test_mips64r6_crc32b.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32b.c
+rename to tests/tcg/mips64/test_mips64r6_crc32b.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cb.c b/tests/tcg/mips64/test_mips64r6_crc32cb.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cb.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cb.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cd.c b/tests/tcg/mips64/test_mips64r6_crc32cd.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cd.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cd.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32ch.c b/tests/tcg/mips64/test_mips64r6_crc32ch.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32ch.c
+rename to tests/tcg/mips64/test_mips64r6_crc32ch.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cw.c b/tests/tcg/mips64/test_mips64r6_crc32cw.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cw.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cw.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32d.c b/tests/tcg/mips64/test_mips64r6_crc32d.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32d.c
+rename to tests/tcg/mips64/test_mips64r6_crc32d.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32h.c b/tests/tcg/mips64/test_mips64r6_crc32h.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32h.c
+rename to tests/tcg/mips64/test_mips64r6_crc32h.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32w.c b/tests/tcg/mips64/test_mips64r6_crc32w.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32w.c
+rename to tests/tcg/mips64/test_mips64r6_crc32w.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c b/tests/tcg/mips64/test_mips64r6_dbitswap.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c
+rename to tests/tcg/mips64/test_mips64r6_dbitswap.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c b/tests/tcg/mips64/test_mips64r6_dclo.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c
+rename to tests/tcg/mips64/test_mips64r6_dclo.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c b/tests/tcg/mips64/test_mips64r6_dclz.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c
+rename to tests/tcg/mips64/test_mips64r6_dclz.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c b/tests/tcg/mips64/test_mips64r6_dmuh.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c
+rename to tests/tcg/mips64/test_mips64r6_dmuh.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c b/tests/tcg/mips64/test_mips64r6_dmuhu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c
+rename to tests/tcg/mips64/test_mips64r6_dmuhu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c b/tests/tcg/mips64/test_mips64r6_dmul.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c
+rename to tests/tcg/mips64/test_mips64r6_dmul.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c b/tests/tcg/mips64/test_mips64r6_dmulu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c
+rename to tests/tcg/mips64/test_mips64r6_dmulu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c b/tests/tcg/mips64/test_mips64r6_dsllv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c
+rename to tests/tcg/mips64/test_mips64r6_dsllv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c b/tests/tcg/mips64/test_mips64r6_dsrav.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c
+rename to tests/tcg/mips64/test_mips64r6_dsrav.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c b/tests/tcg/mips64/test_mips64r6_dsrlv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c
+rename to tests/tcg/mips64/test_mips64r6_dsrlv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c b/tests/tcg/mips64/test_mips64r6_muh.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c
+rename to tests/tcg/mips64/test_mips64r6_muh.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c b/tests/tcg/mips64/test_mips64r6_muhu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c
+rename to tests/tcg/mips64/test_mips64r6_muhu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c b/tests/tcg/mips64/test_mips64r6_mul.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c
+rename to tests/tcg/mips64/test_mips64r6_mul.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c b/tests/tcg/mips64/test_mips64r6_mulu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c
+rename to tests/tcg/mips64/test_mips64r6_mulu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c
+rename to tests/tcg/mips64/test_mips64r6_nor.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c
+rename to tests/tcg/mips64/test_mips64r6_or.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c b/tests/tcg/mips64/test_mips64r6_sllv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c
+rename to tests/tcg/mips64/test_mips64r6_sllv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c
+rename to tests/tcg/mips64/test_mips64r6_srav.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c b/tests/tcg/mips64/test_mips64r6_srlv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c
+rename to tests/tcg/mips64/test_mips64r6_srlv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c
+rename to tests/tcg/mips64/test_mips64r6_xor.c
 -- 
 2.43.0
 
