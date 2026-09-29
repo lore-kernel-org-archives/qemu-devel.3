@@ -4,133 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C193CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BD0CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBWdp-0004K1-Hl; Tue, 29 Sep 2026 08:09:01 -0400
+	id 1xBWdu-0004Kn-A4; Tue, 29 Sep 2026 08:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBWdj-0004Jm-1X
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:57 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xBWdr-0004KR-6E
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:09:03 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBWdg-0002EG-Ti
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:54 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xBWdp-0002EW-4n
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:09:02 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TAj8uE577106
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:51 GMT
+ 68TAjAG23011311
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=; b=WaHHSryZOCy6ogwA
- ytg8upaqK7WyA1Yf7i3NElmTRE4i6xriVNbcc619r5KP9GFsDdq7JjzEORsck2Sg
- ES9/eM00KiflR4bJmKFDpaR6NOYrtTzh8TX8Wut/i+GiYpcrKeIBoCzRPGzPJCn1
- KNIcfmR9YBnTsQhEyc9+uvAeqKeLpHNKRfjRXZcVQRMJh1D9hWWFNPYzV2uvz50J
- r+nQ61XpDRqG8KbFPpEmVVFGvCJrdnOux/0fC1ipaRNHkSukA+IKAgUESiy2GQoT
- lKoBSwVNsN1d2BXYgpKNImWbpFGmZu1IqG9Myg+XAEmFGhqrdZPxYdfkPFq/AFxP
- Vst5MA==
+ tBm/TcUhWtcLrJxa3nv5MzT9WCBk+41V2EDjg42P7aQ=; b=h0AXcejVbjz3oxYt
+ TDFA2izF32xO6qfJAByUmXEYYJcTGiW3NJFmpo0VU8k/qwTPrxAcM9WjavTmrpxu
+ EVZeSKp1tKfdI3B3Fr9VuR6m2oUfQJlDLnoZAUl6J6gvsMH0c3aKGsibcqCOzbAM
+ C05dyG44osM9GYzyrQTDt0TLztxvGgZC6eg2Eesy/55e8ZGyPNRImz8B3HT80zbI
+ SNz6xW87jL69WkUcMx9mnEEV1TsyHQfVwD0HJ8+qyvmZ5F0BXC9eNri7XsYiWbSb
+ /RHfNOwDFYy8Mx9rDKQyS/X3d3HaDNcf3QkC+p9wxafD0wW6VKFnXG3tPYMfpCZZ
+ tXHEwg==
 Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
  [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h08e0h9tc-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h02mnajs8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:51 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:58 +0000 (GMT)
 Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-988c9d1be19so78304241.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:08:51 -0700 (PDT)
+ a1e0cc1a2514c-97e9cc5ac86so378863241.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790683730; x=1791288530; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790683738; x=1791288538; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=;
- b=JJqxgU75F6sxoRPKPMpRxmr/AxJM1gZXsL9NOYNqZMe/9z0CN5KnFqR0zFSslKnqAU
- 1t9zwPtW9T1cVaHTJ0f8xDbMJAbI8wIFpaVeZ7qRWmkAc+swJh/UcA32kOYs4G1R8r+d
- PQDgJ2jV4kSmgzwN8HS4Z7ub83kjkMX85+rA0+I1SicS24/YD2Z75kSXfQrvZ1C+izOS
- 5q8j5D1zEh/MfZMPG2oLS229rTEZbCCQQWLWA8WwrNICL7OHd2QiihR6Vs5paHDBx+e3
- f4Vu8WrlJu4lC4nq5JM3uhq/JL88vyIW4TPgbNp9J/v0GOXAZYTwWj3OhDD6525RolNE
- 9myw==
+ bh=tBm/TcUhWtcLrJxa3nv5MzT9WCBk+41V2EDjg42P7aQ=;
+ b=UeAcbPYFqmn+n2hJ8xOtfTwmusfNB/JlzjsjRNVXcs3EO0+cL5k1K+heogXj6rFg7V
+ TEPM/AyraN7xwJDw/gW4mAZR0VUQNhXTXqW4Ko8bbDvJG1UC9aYYllnHNVPPZt+4FU8s
+ iqqkbrFDO+r4KXhufCXrOrmAqvm26mfzzot/aU2ZPe2iaGzZWSJlXLFfBNtW3jGjI0TP
+ 7j4SlxlvQgcAUDOj9EtuHuBDW0EiFps2p6MKuC1uh2SdzIBLZ5GXMTl/4lLqCiS/0xb1
+ FcjYQVlmlWyMVYIwz6KykjZVxttg5SNUSK3eaXVJSxVC91t7bcmPKUVXujOUVHEiJr+Q
+ sf8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790683730; x=1791288530;
+ d=1e100.net; s=20260707; t=1790683738; x=1791288538;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=;
- b=jjSWsihb8iRQU6wVkje8aG5G61YThA0NVZdCXkG62Ubc/YB+zC37CZdEfSo/haoUE8
- rieVKPCsxR4UCypNDw/lVPXMVvXTDADM6hGu3XCUJSO87kaF0e2dMmYQ6kykY4IsM9mG
- fKV2sMSrcY3Wt32lNZhebyVtN5RnSlbB3W1cDZHTPBHhR5XO77Bw3gMdWWkC6RO0cOj7
- sDWIVreq8C0PilprVBc3CvP144sOdixquUCgq/iC3ZzXsZ4Qvj7s3Gft+EUhv8761rX7
- 2/zSrudQLdJ+u8bgzhUfPInyWS7k4cMdjLVO9dGlzVr/Kq/ymaMD0z6hsC4vVgnXSujX
- yLVg==
-X-Gm-Message-State: AFq9FYIOXfJ5a8Lsu3k/Yi24FL9DRcH6J0GcQVBYXJ4ASOQe3omat01N
- GUXZ9Moz7mnKi1HULdM9RMMoJgXY+0EA/ujaCiS7ej4KzPvbB2RFE6cg8DpjdN5ReFyiF3jMZ6c
- IYCBDodyWMDULxEfqoD6EmlPzgfnsWSkHwGC/r/OVkJL1bgveoY28I3I62VDGjuqtdQ==
-X-Gm-Gg: AYBFou0Yl9/wn6yfhgiMQM6uVXTjgWRYs7eh5PelqhzPSZXnZzfPDCXHR6elcRf5LVr
- Bd5gYN8RxKaJHbQ3s1mKu6fAPw5zWd5Vm82mmU/YmfA9+gfH2wk/hho1BdyiHZydTCrwNCFX9sI
- Uo+CZlEgSTRyGr2Jiy6lCYN0TqCRDdrRRw6Xb6YSVNKhezXZ1zSDPwAnf+jiy/cXir+bIPc8glP
- QSBvhVaAsPSPeiIxxE2zPN9ICpFkSeDK2B6nzscETfGe83nlwbcwqYtAdKX+VLj09KcWrI1nkvV
- ZARZCBNiy+yKqId/NUSye29jybnLEDVL6Z5//4UjPEJqppUZQvEt6vBRMMh4X8d4O4KrISAgnmn
- OL/KkZr+ShSUMG8Dnl1gy97KyK6rARMJNlAo0kYCZ
-X-Received: by 2002:a05:6102:a186:20b0:7af:dc0d:7578 with SMTP id
- ada2fe7eead31-7b94edb181amr402279137.8.1790683730506; 
- Tue, 29 Sep 2026 05:08:50 -0700 (PDT)
-X-Received: by 2002:a05:6102:a186:20b0:7af:dc0d:7578 with SMTP id
- ada2fe7eead31-7b94edb181amr402267137.8.1790683729941; 
- Tue, 29 Sep 2026 05:08:49 -0700 (PDT)
+ bh=tBm/TcUhWtcLrJxa3nv5MzT9WCBk+41V2EDjg42P7aQ=;
+ b=D/veqjAb8OAVJBQtrPEe5Dl7+j1ubLdinfrNYGxzTyGZm+4ovx384FxpVGjfvvXQNb
+ tvbdGhGvwP2N75GkqjTp6e+P7Qb7/C3x8/6akXFcprEML+iOhQF7cs0CjIr/1c3ap/Qo
+ ISaGzhl+VJ3vvky/F0cZQz+rvoyo+6FweuMJbC5y505QBtpzZOoEKLgGitBSSdq484te
+ Yq0Fis0eE8Jt/uvukuJpibAy2kihtPPzjEtVsUmcsZSW/yUG46YlIH/ft2QqgPTnfT72
+ 1XCURX/QPTSu/rYJvFGyeihNQPioiBhCybx40T32EUxDEQQBhxllGMk6BqHshXK7UY4q
+ bRvg==
+X-Gm-Message-State: AFq9FYJo59o7QZ1Sq/JgPfwzxyHXJ31dE7v9CG4orEkcfpqa2pEAcJI8
+ sutA2sJ6nClI/vT1GTHvNLjnPsyxofEHRtrz874bPrE3uLiVqYl67zcZMSlmrsdIspZwIB5iaYJ
+ axeypDt7SdnjsfADtGQr/stFr6+zFt7WpK55WCjTgBnwY4CvG42pwUkyd/TYdxt5VYQ==
+X-Gm-Gg: AYBFou3FBV3YRH7aNRYv+QJgOsJaELTEFy1hHdRMHuBIQlkQ6K87AhesKBXGAz4sPuX
+ S/NxGjfyCdWVsl2NhsIPZtU18Hqq9yfwVJfU5FgJir5UFLpSeAhrfVbxCFZ901+35lm0JiDixLC
+ kS1ag+shSXrM0Jt1aGQ2A2AXwooOvGwXXlNqtY+/tOlzRTvcZ4e6M2f8J1+8vVgupNnpTYResJx
+ d/EkkBNziPx8+PPugut7cNFSyIWv6mUSZBYfEDdO0YEcRfCHNKFk9+QN3gbVhsJ0GxzOGpAW6NA
+ maaXayHbrYo0BblVXKhpDNxvM/rv0hfGUhxkmWiIzS9zo+aveGyHS8vj1mSlCrIcjeUvw4HHN5Y
+ Qsd2Wmn6kjLNonFI1397tWiyEMP3bhQJH2tqmIjbS
+X-Received: by 2002:a67:e703:0:b0:7a5:c8c4:fe87 with SMTP id
+ ada2fe7eead31-7af1cb9a2bdmr4610722137.9.1790683737548; 
+ Tue, 29 Sep 2026 05:08:57 -0700 (PDT)
+X-Received: by 2002:a67:e703:0:b0:7a5:c8c4:fe87 with SMTP id
+ ada2fe7eead31-7af1cb9a2bdmr4610713137.9.1790683737038; 
+ Tue, 29 Sep 2026 05:08:57 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00d0f66cfsm85295515e9.14.2026.09.29.05.08.48
+ ffacd0b85a97d-48af50513c7sm3613415f8f.16.2026.09.29.05.08.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Sep 2026 05:08:48 -0700 (PDT)
+ Tue, 29 Sep 2026 05:08:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 1/2] target/rx: Unify BRK and INT trap handling
-Date: Tue, 29 Sep 2026 14:08:37 +0200
-Message-ID: <20260929120838.13583-2-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 2/2] target/rx: Define exception vector constants
+Date: Tue, 29 Sep 2026 14:08:38 +0200
+Message-ID: <20260929120838.13583-3-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260929120838.13583-1-philmd@oss.qualcomm.com>
 References: <20260929120838.13583-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX3pKMRl/JR77/
- h8bDj1sXU11vu9efjOdRJ4wUgnJPlnYhe0pwojQvQTE8QYQAjeQbyuMg0np1mxedUEJ50ff8LZw
- wM7DkeAHuf6zaZlQp2znybA+tcQvbaA=
-X-Proofpoint-ORIG-GUID: Pn_QlGlJ1rIAvRPjiW6Kck5H3WRfXcA5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfXx4zp0aREuglM
- XfQVsKtXVnNjWojl7Nf6YoMh0hXnBJixWOmK2ateaDSRfSpuqqvey7FYFhvoUs4HqcCn6D2v2/6
- CkH6SQdC2ubkFNMBro/0BkBkb5w0vKmAxV8n0/QwxJ/BRZQiD/UId2gOt9S2Kw8G3tXjGJT4Med
- xbtI8W/9uvczQvyTvwBszsOO/xZsSWLogEHNzVl4k4gZSnJxS84HCCvNfS9WsSrWzp1urxRuLEz
- 8yvKruIcw+lY1LA6IJNLW+HxxVjLAG2LHIiULQXN4znAVHdtK1obwH+16pJH94i9wV7y4hxt8BQ
- j0PPY4yvCLkh1/ZMM+Lc96V7D6cELU6h8M+/g3gLhITSzyovyp1s11WY2DF5QrG1SnvNl/ge3lt
- offtU8QeOY7qbx/EMQGFwO8z1y6+Igy0SpgfJMMJCSAEBuWLRixBxYyjcMDdQzY0CZQTq42eLAZ
- CoNGURevyu+DmvArR3Q==
-X-Authority-Analysis: v=2.4 cv=WJ7qzXsR c=1 sm=1 tr=0 ts=6abbaa53 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=X9fHu2Te c=1 sm=1 tr=0 ts=6abbaa5a cx=c_pps
  a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=jDMzgGwzCE0q-kHIl9cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-GUID: Pn_QlGlJ1rIAvRPjiW6Kck5H3WRfXcA5
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=KwDs--hy771jlAYoLH4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-GUID: YYvJTBm7Cy_I6sxk93QnUldn62tROQUU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX3Nx2kf16yEwx
+ IwAaJ2d4uQnYWhH346ZMM1b0EnbxawP8MCdFS/XD+SIQlrUDnuvAcapIk5eillvX9motfSHZ8cq
+ ncxL+8zedMSiBrvXKFtuCNSEpPB+aeA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfXzefWKrV/dPcu
+ vow02AblYZJLel8n7ox7CpUAquvn+U1ESc5bpVWL6D5HMn3iOXrMBR7625TUPyR/EYYOUGGaAOu
+ WscNOK3PVaj7ewI6FpLAnfTvDF2oiyCK91ENuca1m525zWm+GerHXr2lsCunxoSewBjQQ25XQKx
+ oQ2W41jmvZ1KU8bukIi4lplPFFwomUhYgtEhMA7IsjXAg+NoVh4gxDiCpiebo3JEWOZHA36qk3n
+ AJnCwp2sNqhu6rtlTHkP/49uJwJagxjrxtZNeTZs2IfvADtZl8VWvfu3eIp6tCEIE2encFAkyT3
+ 4hZJpacZN5jI4W7IUFNWh54nENBDrCAxwzktvQI3QUDNszHxBCYV+LdLbOoT6kyk//XYNNOD2o5
+ WkieAip8O45H7mR3edE19cVlKGJSM8kbQpb9LMz05UzgQ7HK9mbGv3vO1Fac3USRcm5mAo8887D
+ /YRQBilWuAj/Xr3RJJw==
+X-Proofpoint-ORIG-GUID: YYvJTBm7Cy_I6sxk93QnUldn62tROQUU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- adultscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0 spamscore=0
+ bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290048
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,89 +153,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BRK is equivalent to INT #0, so route both instructions
-through the same trap helper.
+From: Yonggang Luo <luoyonggang@gmail.com>
 
+Name RX exception vectors and trap ranges, and use the
+definitions throughout exception handling and exception
+raising.
+
+Assert that exception indexes remain within the defined
+range before accessing their vector tables.
+
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Co-developed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/rx/helper.h    |  3 +--
- target/rx/op_helper.c |  7 +------
- target/rx/translate.c | 21 ++++++++++-----------
- 3 files changed, 12 insertions(+), 19 deletions(-)
+ target/rx/cpu.h       | 13 +++++++++++++
+ target/rx/helper.c    | 21 +++++++++++----------
+ target/rx/op_helper.c | 10 +++++-----
+ target/rx/translate.c |  2 +-
+ 4 files changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/target/rx/helper.h b/target/rx/helper.h
-index 8cc38b0cb71..f3897ce7619 100644
---- a/target/rx/helper.h
-+++ b/target/rx/helper.h
-@@ -2,8 +2,7 @@ DEF_HELPER_1(raise_illegal_instruction, noreturn, env)
- DEF_HELPER_1(raise_access_fault, noreturn, env)
- DEF_HELPER_1(raise_privilege_violation, noreturn, env)
- DEF_HELPER_1(wait, noreturn, env)
--DEF_HELPER_2(rxint, noreturn, env, i32)
--DEF_HELPER_1(rxbrk, noreturn, env)
-+DEF_HELPER_2(trap, noreturn, env, i32)
- DEF_HELPER_3(fadd, f32, env, f32, f32)
- DEF_HELPER_3(fsub, f32, env, f32, f32)
- DEF_HELPER_3(fmul, f32, env, f32, f32)
+diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+index 64ba48a7329..0d9f4898a26 100644
+--- a/target/rx/cpu.h
++++ b/target/rx/cpu.h
+@@ -71,6 +71,19 @@ enum {
+     NUM_REGS = 16,
+ };
+ 
++#define RX_EXCP_TRAP_COUNT          0x100
++
++enum {
++    RX_EXCP_PRIVILEGE_VIOLATION     = 20,
++    RX_EXCP_ACCESS                  = 21,
++    RX_EXCP_ILLEGAL_INSTRUCTION     = 23,
++    RX_EXCP_FPU                     = 25,
++    RX_EXCP_NMI                     = 30,
++    RX_EXCP_TRAP_BASE               = 0x100, /* Up to RX_EXCP_TRAP_COUNT */
++};
++
++#define RX_EXCP_COUNT   (RX_EXCP_TRAP_BASE + RX_EXCP_TRAP_COUNT)
++
+ typedef struct CPUArchState {
+     /* CPU registers */
+     uint32_t regs[NUM_REGS];    /* general registers */
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index 0f99279bbaa..bc76dd28ab3 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -86,13 +86,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         env->isp -= 4;
+         cpu_stl_le_data(env, env->isp, env->pc);
+ 
+-        if (vec < 0x100) {
+-            env->pc = cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
+-        } else {
++        assert(vec < RX_EXCP_COUNT);
++        if (vec >= RX_EXCP_TRAP_BASE) {
+             env->pc = cpu_ldl_le_data(env, env->intb + (vec & 0xff) * 4);
++        } else {
++            env->pc = cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
+         }
+ 
+-        if (vec == 30) {
++        if (vec == RX_EXCP_NMI) {
+             /* Non-maskable interrupt */
+             qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+         } else {
+@@ -100,22 +101,22 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         }
+ 
+         switch (vec) {
+-        case 20:
++        case RX_EXCP_PRIVILEGE_VIOLATION:
+             expname = "privilege violation";
+             break;
+-        case 21:
++        case RX_EXCP_ACCESS:
+             expname = "access exception";
+             break;
+-        case 23:
++        case RX_EXCP_ILLEGAL_INSTRUCTION:
+             expname = "illegal instruction";
+             break;
+-        case 25:
++        case RX_EXCP_FPU:
+             expname = "fpu exception";
+             break;
+-        case 30:
++        case RX_EXCP_NMI:
+             expname = "non-maskable interrupt";
+             break;
+-        case 0x100 ... 0x1ff:
++        case RX_EXCP_TRAP_BASE ... RX_EXCP_TRAP_BASE + RX_EXCP_TRAP_COUNT - 1:
+             expname = "unconditional trap";
+         }
+         qemu_log_mask(CPU_LOG_INT, "exception 0x%02x [%s] raised\n",
 diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
-index 36df7d377e5..6782912247e 100644
+index 6782912247e..d4e9ac2f192 100644
 --- a/target/rx/op_helper.c
 +++ b/target/rx/op_helper.c
-@@ -455,12 +455,7 @@ G_NORETURN void helper_wait(CPURXState *env)
-     raise_exception(env, EXCP_HLT, 0);
+@@ -115,7 +115,7 @@ static void update_fpsw(CPURXState *env, float32 ret, uintptr_t retaddr)
+         enable = FIELD_EX32(env->fpsw, FPSW, ENABLE);
+         enable |= 1 << 5; /* CE always enabled */
+         if (cause & enable) {
+-            raise_exception(env, 21, retaddr);
++            raise_exception(env, RX_EXCP_ACCESS, retaddr);
+         }
+     }
+ }
+@@ -432,17 +432,17 @@ void raise_exception(CPURXState *env, int index,
+ 
+ G_NORETURN void helper_raise_privilege_violation(CPURXState *env)
+ {
+-    raise_exception(env, 20, GETPC());
++    raise_exception(env, RX_EXCP_PRIVILEGE_VIOLATION, GETPC());
  }
  
--G_NORETURN void helper_rxint(CPURXState *env, uint32_t vec)
-+G_NORETURN void helper_trap(CPURXState *env, uint32_t vec)
+ G_NORETURN void helper_raise_access_fault(CPURXState *env)
  {
-     raise_exception(env, 0x100 + vec, 0);
+-    raise_exception(env, 21, GETPC());
++    raise_exception(env, RX_EXCP_ACCESS, GETPC());
  }
--
--G_NORETURN void helper_rxbrk(CPURXState *env)
--{
--    raise_exception(env, 0x100, 0);
--}
+ 
+ G_NORETURN void helper_raise_illegal_instruction(CPURXState *env)
+ {
+-    raise_exception(env, 23, GETPC());
++    raise_exception(env, RX_EXCP_ILLEGAL_INSTRUCTION, GETPC());
+ }
+ 
+ G_NORETURN void helper_wait(CPURXState *env)
+@@ -457,5 +457,5 @@ G_NORETURN void helper_wait(CPURXState *env)
+ 
+ G_NORETURN void helper_trap(CPURXState *env, uint32_t vec)
+ {
+-    raise_exception(env, 0x100 + vec, 0);
++    raise_exception(env, RX_EXCP_TRAP_BASE + vec, 0);
+ }
 diff --git a/target/rx/translate.c b/target/rx/translate.c
-index 132d495710c..d0910fbf8e7 100644
+index d0910fbf8e7..1bacc7adf92 100644
 --- a/target/rx/translate.c
 +++ b/target/rx/translate.c
-@@ -2170,26 +2170,25 @@ static bool trans_RTE(DisasContext *ctx, arg_RTE *a)
-     return true;
- }
- 
-+static bool do_trap(DisasContext *ctx, uint8_t vec)
-+{
-+    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
-+    gen_helper_trap(tcg_env, tcg_constant_i32(vec));
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    return true;
-+}
-+
- /* brk */
- static bool trans_BRK(DisasContext *ctx, arg_BRK *a)
- {
--    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
--    gen_helper_rxbrk(tcg_env);
--    ctx->base.is_jmp = DISAS_NORETURN;
--    return true;
-+    return do_trap(ctx, 0);
- }
- 
+@@ -2187,7 +2187,7 @@ static bool trans_BRK(DisasContext *ctx, arg_BRK *a)
  /* int #imm */
  static bool trans_INT(DisasContext *ctx, arg_INT *a)
  {
--    TCGv_i32 vec;
--
-     tcg_debug_assert(a->imm < 0x100);
--    vec = tcg_constant_i32(a->imm);
--    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
--    gen_helper_rxint(tcg_env, vec);
--    ctx->base.is_jmp = DISAS_NORETURN;
--    return true;
-+    return do_trap(ctx, a->imm);
+-    tcg_debug_assert(a->imm < 0x100);
++    tcg_debug_assert(a->imm < RX_EXCP_TRAP_COUNT);
+     return do_trap(ctx, a->imm);
  }
  
- /* wait */
 -- 
 2.53.0
 
