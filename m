@@ -4,145 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C78CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Sep 2026 23:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDA5CA5FAB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 01:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBKjp-0008Nm-0m; Mon, 28 Sep 2026 19:26:25 -0400
+	id 1xBMlZ-0003Ap-G7; Mon, 28 Sep 2026 21:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBKjl-0008MY-Kr
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 19:26:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xBKjj-0002WV-Jf
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 19:26:21 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68SLTeoO1838875
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:26:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=; b=PNSP9y1Pnhxb2JRp
- 5xjIMWy8Gc/Ben+DBHGJvIr7pVGX8NLEdvPH5I+iBn9x9/LTwzsNgmjxLi22OJkB
- 7FDqKoPrpsb7AaT9zP9tQ5MhtPLGTh3nXEl21hlXzodLyux/DeM1pL7WkHTi3MVP
- rYZDpiSI60Sd3TbjomAJHRt6wA71Jt0z7DkQwsWtxwmDEXs/wuddgRD9STMCSv5x
- cWJPYYIRVeCgc78yml7bBbVZU4PfEacQE9H7AkOUNklk0gT0qFyZi3AZfS1/L8oB
- 9mcIB+Oh1IuvlIC3YbHLiJ42TfeqgwFSdYr/A7GNvwGhb2yJayuyuWQsqj0vGRK/
- dMK7bg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyjt13y2s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:26:17 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-530d028f779so42870351cf.2
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 16:26:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xBMlX-0003A9-Ha
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 21:36:19 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xBMlU-00070P-Og
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 21:36:19 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-6aa8d04fcddso823945a12.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 18:36:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790645775; cv=none;
+ d=google.com; s=arc-20260327;
+ b=A78WAf36GlZgCpVZlltgpdG/frsNT2q8jqWlYJ2XaOMdma3tvL45hMRoarhlW+9sXF
+ DkFd6rK2HN7NLBBPU4ronC9TOxye5VEG0Z/+wTVtN2tJjZDByjgEKHzkJU1QG/D9sAA1
+ yHIm9ExHA/FK3Or1dzk2mh+d4BNSXL6iF6tzjdT2zl7eCJzoE7SaMPcPKR42fdsE00SC
+ LSbu0nmaRtlx3BojiLMSXkvcXYa21Rk5oTjosA8dAjaSTExPU03hBhaeP4CJxB5sfUK5
+ QAaW2GOkCb0k5AbYrbWZlJ1wq3+ycuD8Vebvi4pFLDe3aLxC4IHocFeDXET+F29BNXt+
+ zy1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
+ fh=BVKKP+mkzO7bpixOB/3p+NE5Ld6PqqFIp9SCiygR7O0=;
+ b=RdNm8fr9TsJxfGz1NOUb7pSrCqN4kCGcnWrTpTdc9qko6AmsxO64rvfYsEIydzmDEO
+ pPkhSjp/WtZm7MOsXyRfYNe8lpCItG4yi28jD9ZsqG2kY57Epu6AAfpRyJ2lW/O1ta5Q
+ wXXoMqSuHTlmm+xNp3pyLj5mQphpzQUgYJHfct20+nMj8gQnehILVavLb+7+a7bWW1qU
+ nrH4GXx23D5B+y0P8rhcJFpgoGlkDLBDbPu+oe54mCvrQmiSBkCNs/StgX5g55ggwKtr
+ 0GbIx7slK6ivmHecCRZYEUDvIsFjBBMqPf5qluNnxG9UzVunSux1445dPiLBSyUcJPGz
+ 7TsA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790637977; x=1791242777; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=;
- b=J9QhOmoTk/7Q5Vd9ZByM6/HTZIS3AN6rqzus9q5mCQ0paNJmW5gGg2eeqKIDAOWYz1
- Ggkl6HIiwxWXjw37w6E8U/5yjdbYaFEYhgRWUp77XML7D4v1ICKPNAJqNBeKjlcar2Uk
- gPF0rdL2yTFmgP6QMthbhMQdDstYit1Xpcic7CLJ/ALmdM0W9IpOiIy//EdlrVmQBXYA
- pJD0KYNPE5Nffzv59r4nFdW6rsIf/CQQ1mfJJJFweIMaYiLNbFoSLhzg1qVBtkPeB/wg
- /Z7cDBB1mPBh37qcqTcuUvTi1ihC4BXhfT/KqhRnPcBBXN3T3dHxqo2UVvp8jKAQbqSn
- 4vlQ==
+ d=gmail.com; s=20251104; t=1790645775; x=1791250575; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
+ b=TxvsfGw9ZfLJ4LSdn/ER5Fs+mtsywNNUruBZLjQWN0g+ZYKV2+nIzfPxVcUplFKo5c
+ iteDccaeompSd+s3fI/YSNcLcKdXBHCzFgaffr58yhKcj1CaHDlI2av6ThaM5bh4ON00
+ 9omUD+l6aQzHraDvJBJ/z9jJkwtLHtp2OGBtS+Dd5NKluOnlHEM5UBscnXELrZGqk4wI
+ JBcKsR0canbjRZcy20Lfge8AkLYKp9ytHCwWInuFUSqKWQVqzMiHpin3I0OO5+jio4zZ
+ Ov1jJw8sVfBgaqwf46HdNuU3mEBSqyX9uD8ff0KOti31+4vQcAGY2WU9rNVPKiALzU5S
+ MNEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790637977; x=1791242777;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=uRBYbItNNvBuuWOlETkg0fjWOgiEDzeeZFG8FC3eZ3A=;
- b=okmViKz7vmGmPooFBWkgEwwVjd/xw5Y7JVgcQnZoDVje9lEFxI+3LlGe2bCnqi3jsy
- rA4mACLRmh01fYVISTfR9/R2f4Anp9MeVBJy9NQvnSUIRyWdxpyJoObVzavS9OzLDrwB
- YbBj2sZ/GVOgOerDbTSwR8rAu74b25132ySERWgsCnGnjff1NvMQ7j7iR7wwJulpEscs
- WS+cdublVvz6gz/qe6vy0Tzr1CPNVLq7sAbfVfG9sTV+wETHAtj3LcDemJ6TTRM1NILx
- 5BMJE9+MJ7FaD5+ZjXGqGsDLPtiWbVi5dpqHKxtlwHJh6Hbt1ztPWJRFyh4D64QE7LaM
- BBcg==
+ d=1e100.net; s=20260707; t=1790645775; x=1791250575;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
+ b=JbsMY2NH9MMkCw1nPD1dUjOk1pHhJFgLWq0/1/PrsLzynrDngCVYx4mUsdbFBu3n3Z
+ i9R3nv26etR6p0cfQ0QenZZxrSkH4wWh+ju2DjLJrRVN/UeQbhYBCuUXkuwPOj9D4PJq
+ vnyI2IG2Roq7xFueSQr/19/ymOyZIdRqaoELnc7BLCMSoGMZwYEZMSwsde7OXPO7Lg3g
+ XJuDz521Oe+ZgrVcwElB70YAgSSzrmAlEu0cSn2yCu7eO7xoLNSwEqVziukWHtsLd1/7
+ VhfHo45ahMr+kKtXKw2rfhREbwyXQVdESWO5FMAXdeGlcwbvvXtBsckE4rIYLdjAVwZ4
+ iB2Q==
 X-Forwarded-Encrypted: i=1;
- AKwUvBx8rLC9wxUqFq9tVkZZVb54clTPBEyPxzB53F9SHlWCnafItEXSgVIWNMGujPonWe8QAVLCRFVx0FCr@nongnu.org
-X-Gm-Message-State: AFuF++nlxOiim1mGlrP3YZxL/zKSlzmvThdv1/xiEqNULOJz4VOtLn3U
- m5pQqu32DQugvNFb6rG1dRsgkmf+zk5eM2I5AdJISrnn/5LKTjGe1n/PS0zkNrUHBj3d1rVtuwT
- vreQpQTR7Ph6hbVj18u5/9AvbuoZIgRjxNlmKOVf2dBR3y+oB9aqfEea7Eg==
-X-Gm-Gg: AYBFou0o7oIIindYyf52uOo4MKcwGdFRQEltnjUEjSqOMBZOe57tnaGfotl76mOXYpw
- DU2csx9DP+lqNVk5r+9XTS/EaluZwDVWrMfYutLAoI22WpWYsXtf2iMEWfh6VUMHWRj9qpgh0mT
- Pu00dfGEZK9xD4ZzkXkOOY2+4QElfELpDVkDafqSta6t/8DxkVfOb8e78EYA4vZasH6Qtboyw8U
- WiHTmI3XHtylYRWtYRMjhfx9FcC6PmbS8iAPjflY0IlaEi1FqEjonm9r8nhGrTEPi2M2ankEdUX
- CJBL8m/IWMU81/TIfetCrDHaGoPTFBXKb9UnmkdBJ9h7PO3z+Kvde4pEfW8gL1LX+VhNA1QEk3B
- gjL3Jn5Dp/q0QFPFY78vxdNuztHPj0jdNCA==
-X-Received: by 2002:ac8:5a12:0:b0:532:9b14:96c5 with SMTP id
- d75a77b69052e-5330b706380mr244407741cf.60.1790637977183; 
- Mon, 28 Sep 2026 16:26:17 -0700 (PDT)
-X-Received: by 2002:ac8:5a12:0:b0:532:9b14:96c5 with SMTP id
- d75a77b69052e-5330b706380mr244407371cf.60.1790637976584; 
- Mon, 28 Sep 2026 16:26:16 -0700 (PDT)
-Received: from [192.168.68.100] ([187.10.234.20])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-533223d1ad0sm74997081cf.23.2026.09.28.16.26.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 16:26:16 -0700 (PDT)
-Message-ID: <0abd8b75-8fd5-465f-9b67-5fdc161cc14f@oss.qualcomm.com>
-Date: Mon, 28 Sep 2026 20:26:12 -0300
+ AKwUvBxjHPTZguW5qq/9TV+w1gAwZQG0jyWi4o2ss+m0jGc5zDmvae+k8Dtnsv4T/wG6SLWq4lB7M40fbaCM@nongnu.org
+X-Gm-Message-State: AFq9FYL9erP0t13wUJbCzFBXi9HM422kKkaxOOKIzWrTGmgyGT6OrwXy
+ pMwD2G4nMmS3hIciZkkjzW4JxucAfLT7SJ3R2etbmqaRjTC+7b6sEPsMab8EqpunJDWn/Q2tfYN
+ vD+/TeWko5jT6Q1igERmBdsqnbrPvlhs=
+X-Gm-Gg: AYBFou1uD/k447Tb+oT3nGSE+TPum0P9UnzduBvcHx0Y60+P1aRVnh8mdG0UJgpIcqL
+ Z9gfKFN+E/Mtq/011i9HFxHud5g0tYjQjZACtflllTjbSX8AubvIx0nsmlo7pQ4HiJi4EpJ2ZW1
+ E6nnY0jTxfHusDe+jCf2p1QO5dPJV6ao5wXhwnhnVhSMQZKpUqAYWJwpIUGE3UWSG1NF0LSMpEh
+ CLIWRuQnrT73WolEqteUOt/oyZg2v1SPFLDZV7Q7MLWnh1pKm6KsZhwqrzLDJI9m790SFC+5uZ5
+ k6+ZY02lyjoYrjVNYlmGuiPsJBvHLNM/vX0pciGhj1VPnEHz8w6Bg9I=
+X-Received: by 2002:aa7:d51a:0:b0:6ab:260:6378 with SMTP id
+ 4fb4d7f45d1cf-6aca86236a8mr499160a12.11.1790645774380; Mon, 28 Sep 2026
+ 18:36:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/virt: only describe PLIC contexts that exist
-To: Ralf Ramsauer <ralf@vmexit.de>, qemu-devel@nongnu.org
-Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Bin Meng <bmeng.cn@gmail.com>
-References: <20260927231838.236616-1-ralf@vmexit.de>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260927231838.236616-1-ralf@vmexit.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA5MyBTYWx0ZWRfX2qftuSlpO+VJ
- ZKEdmX2HQeE2hgEOnUeOIJTRY4e8kN/5+yGglTAVnJkOpmibBqSpsJuXNjVhpDkrDvjo/A7Hw8a
- ixktK/3bzJKf28FvgS/JdGh3dGCHloZwOpJ7YSqtaTATU3fWTeytNt7RbOtJx19ipplZspcFuzC
- YwT6knvidplIqpSV2aY4MYKVsq6LeE83jf3URJX4h17AbUW7uUB08Y5PY7fiRua36D1k0+orwef
- Z4lsGqgsG7OSb5QaaQSMif97TJNg/6ocaikVo85AAOP59LPjPQBytdBxUzA8F2/9CtzI1iC/MyA
- tImDHAB9z/gbEiehN7vidrpZsWWNg9rN6PwOqk5RJwl4bTr+thVad+edUAHVbdS+pUPAeDqxys8
- xNxU76oc8MmssFggY6ZIeSn8SwEb0e4XDvVx0KR5S8nRF5IyGuQq0vQTcfN2s411XidYU85sZou
- l9yElcWmlB9q0HaljhQ==
-X-Authority-Analysis: v=2.4 cv=V8foQuni c=1 sm=1 tr=0 ts=6abaf799 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=jbqyKmyYbxlRs/MVMa3Ccg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=TqtECITn0xDTAHAp4AAA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: G0Ful_2ydZOUqhquQL8Hm8oyav-Gjhr6
-X-Proofpoint-GUID: G0Ful_2ydZOUqhquQL8Hm8oyav-Gjhr6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA5MyBTYWx0ZWRfX1w5+NNg55Kez
- oW9tbUZ6Q/R+38uIt2pJLcsReStqllguwfPuOU6eBLX05pzoxPapwHLt7yhC46Mbb6kWSyJ/6mO
- YG46HsmiwMM7/EbpwyptwO9l5Co9M8k=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_06,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280093
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260926070057.1234-1-luoyonggang@gmail.com>
+ <20260926070057.1234-47-luoyonggang@gmail.com>
+ <aro93NuZBXYGbD33@redhat.com>
+ <87e7c5ae-c78c-4a47-b9ba-9851ce5757d9@oss.qualcomm.com>
+ <CAE2XoE8Fp8w4m0WBjEXF3LceFXUqKDcXhdSmhCThgkAM3wRVaQ@mail.gmail.com>
+ <1f46d3a3-1275-4ae0-be07-717c643cf0ae@oss.qualcomm.com>
+In-Reply-To: <1f46d3a3-1275-4ae0-be07-717c643cf0ae@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 29 Sep 2026 09:36:00 +0800
+X-Gm-Features: AclHuK_udHvC7oTjEuhilwZdEHpiOvElmXHC3KV0wZOIgddeR19NpS3MIjJMWOE
+Message-ID: <CAE2XoE_fxTRQJPzsDZHS44z65KR0e54cWjVpyZQGtr1sdLOinw@mail.gmail.com>
+Subject: Re: [PATCH v4 46/55] qapi: add query-targets
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,131 +129,145 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Tue, Sep 29, 2026 at 3:11=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 28/9/26 20:34, Yonggang Luo wrote:
+> > On Mon, Sep 28, 2026 at 6:39=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
+> > philmd@oss.qualcomm.com> wrote:
+> >>
+> >> On 28/9/26 12:13, Daniel P. Berrang=C3=83=C2=A9 wrote:
+> >>> On Sat, Sep 26, 2026 at 03:00:45PM +0800, Yonggang Luo wrote:
+> >>>> query-targets lists each linked target, including none, with its
+> >>>> arch, endianness, and the machines that target accepts.
+> >>>>
+> >>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> >>>> ---
+> >>>>    hw/core/machine-qmp-cmds.c | 30 ++++++++++++++++++++++++++++++
+> >>>>    qapi/machine.json          | 35 +++++++++++++++++++++++++++++++++=
+++
+> >>>>    2 files changed, 65 insertions(+)
+> >>>
+> >>>
+> >>>> diff --git a/qapi/machine.json b/qapi/machine.json
+> >>>> index 6aaa2af709a..d8cdea6203e 100644
+> >>>> --- a/qapi/machine.json
+> >>>> +++ b/qapi/machine.json
+> >>>> @@ -307,6 +307,41 @@
+> >>>>    ##
+> >>>>    { 'command': 'query-target', 'returns': 'QemuTargetInfo' }
+> >>>>
+> >>>> +##
+> >>>> +# @TargetMachines:
+> >>>> +#
+> >>>> +# One registered system target and the machines that can run on it.
+> >>>> +#
+> >>>> +# @arch: the target architecture
+> >>>> +#
+> >>>> +# @endianness: the target endianness
+> >>>> +#
+> >>>> +# @machines: machine type names, not aliases
+> >>>> +#
+> >>>> +# Since: 11.2
+> >>>> +##
+> >>>> +{ 'struct': 'TargetMachines',
+> >>>> +  'data': { 'arch': 'SysEmuTarget',
+> >>>> +            'endianness': 'EndianMode',
+> >>>> +            'machines': ['str'] } }
+> >>>
+> >>> We already have  'QemuTargetInfo' struct which is used
+> >>> with 'query-target', that should also be used with the
+> >>> new 'query-targets' command.
+> >>>
+> >>> We need to add the 'endianness' field to QemuTargetInfo.
+> >>
+> >> Why do we want to expose endianness, and what endianness to
+> >> expose? Endianness is a runtime bit state of CPUs. Sometime
+> >> this bit is hardwired but that is an implementation detail.
+> >>
+> >> See commit 0e2c5647d92 and surrounding for MicroBlaze for
+> >> example.
+> >
+> > Please take a look at
+> > https://gitlab.com/lygstate-qemu/qemu/-/pipelines/2890507627
+> >
+> > I do not have clue to fixes it properly
+>
+> What are you asking here? I'm seeing failures on targets supporting
+> dual endianness. I can not try to help you until I understand what
+> your goal is (I asked it multiple times but you don't reply explaining).
 
-On 9/27/2026 8:18 PM, Ralf Ramsauer wrote:
-> From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
-> 
-> The PLIC device is created from the topology string built by
-> riscv_plic_hart_config_string(), which gives a hart a supervisor context
-> only if that hart actually has supervisor mode.  The device tree, in
-> contrast, lists a machine and a supervisor context for every hart,
-> unconditionally.
-> 
-> The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
-> PLIC config helper function") taught the device about harts without
-> S-mode and left the device tree behind.  Boot with
-> 
->      -cpu rv64,s=false,u=false -smp 4
-> 
-> and the PLIC implements four contexts while the device tree advertises
-> eight.  Contexts are numbered by their position in 'interrupts-extended',
-> so a guest that takes its context number from the property gets it wrong
-> for every hart but the first: hart 1 drives the context of hart 2, and
-> the upper harts address contexts the PLIC never created.  This is what an
-> M-mode kernel on the virt machine runs into; sifive_u already omits the
-> supervisor entry for its management hart.
-> 
-> Emit the supervisor entry only for the harts that have supervisor mode.
-> 
-> Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
-> Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
-> ---
->   hw/riscv/virt.c | 21 +++++++++++++++------
->   1 file changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index d4b501802f..d0ce9dc862 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -165,14 +165,23 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
->               plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
->           }
->      } else {
-> -        cells_length = s->soc[socket].num_harts * 4;
-> -        plic_cells = g_new0(uint32_t, cells_length);
-> +        plic_cells = g_new0(uint32_t, s->soc[socket].num_harts * 4);
-> +        cells_length = 0;
->   
->           for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
-> -            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
-> -            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
-> -            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
-> -            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
-> +            CPURISCVState *env = &s->soc[socket].harts[cpu].env;
+Now I can answer the question more clear, it's because the pitfall of commi=
+t
+https://gitlab.com/qemu-project/qemu/-/commit/e934c624f32f6f44f427d73a2e6a6=
+7e983a02ae6
+cause the issue
 
-There are a few things to consider here.  First is that we have a very similar PLIC
-code in the sifive_u.c board.  I believe we want this fix also applied there.
+ target-info-stub.c | 2 +-
+ target-info.c      | 8 +-------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-Second, we should avoid accessing CPU internals in board code.  In an ideal world
-the board would be completely oblivious to what the CPU is about, e.g. its extensions
-and accelerator mode.  In practice we have to account for accelerator differences since
-KVM and TCG requires different stuff w.r.t irq controllers and timers and so on, and
-at least for now this code is being open coded in the boards.
+diff --git a/target-info-stub.c b/target-info-stub.c
+index 8392d81e8f..65220cc782 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -18,7 +18,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) !=3D sizeof(CPUS=
+tate));
 
-For the problem you're addressing here I would like to avoid making the board accessing
-the CPU env and checking for RVS.  My suggestion here is:
+ static const TargetInfo target_info_stub =3D {
+     .target_name =3D TARGET_NAME,
+-    .target_arch =3D SYS_EMU_TARGET__MAX,
++    .target_arch =3D glue(SYS_EMU_TARGET_, TARGET_ARCH),
+     .long_bits =3D TARGET_LONG_BITS,
+     .cpu_type =3D CPU_RESOLVING_TYPE,
+     .machine_typename =3D TYPE_MACHINE,
+diff --git a/target-info.c b/target-info.c
+index 5a6d728252..a26532f660 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -24,13 +24,7 @@ unsigned target_long_bits(void)
 
-- we need a pre-patch that adds a helper in cpu.c that tells whether a CPU has supervisor
-mode.  Something like:
+ SysEmuTarget target_arch(void)
+ {
+-    SysEmuTarget arch =3D target_info()->target_arch;
+-
+-    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
+-        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+-                               &error_abort);
+-    }
+-    return arch;
++    return target_info()->target_arch;
+ }
 
-(cpu.c, could be right after "riscv_cpu_is_vendor")
+ const char *target_cpu_type(void)
 
-bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu)
-{
-#ifndef CONFIG_USER_ONLY
-     if (kvm_enabled()) {
-         return true;
-     }
+Look at the diff, the original one is directly parsed from
+target_name(). and the new one
+defines "glue(SYS_EMU_TARGET_, TARGET_ARCH)", but that indeed does not
+match target_name() at all.
 
-     return riscv_has_ext(&cpu->env, RVS);
-#else
-    return false;
-#endif
-}
-
-same thing in cpu.h.  The justification for this helper in a separated patch is that
-"next patch needs to verify supervisor mode for CPUs in hw/riscv board code", or
-something around those lines.
+And TARGET_ARCH is introduced in commit
+https://gitlab.com/lygstate-qemu/qemu/-/commit/f87f7e145d63f93315e0f0e00fb9=
+ba0b6ee8570f
+for this.
+Hi Richard, is this done for intention or a mistake?
+maybe we should always generate target_arch from target_name()
+in meson.build?
 
 
-- in this patch you can then do:
+
+>
 
 
- > +            if (riscv_cpu_has_supervisor_mode(s->soc[socket].harts[cpu])) {
- > +                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
- > +                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
- > +            }
-
-And we're at least trying to obfuscating the CPU internals from the board a bit.
-
-
-And please do the same in sifive_u.c.  Don't need to be in this same patch, so feel
-free to add another patch  just for the sifive_u board.
-
-
-Thanks,
-Daniel
-
-> +
-> +            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
-> +            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
-> +
-> +            /*
-> +             * The PLIC implements a supervisor context only for harts that
-> +             * have supervisor mode, see riscv_plic_hart_config_string().
-> +             */
-> +            if (riscv_has_ext(env, RVS)) {
-> +                plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
-> +                plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
-> +            }
->           }
->       }
->   
-> 
-> base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
-
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
