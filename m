@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDDACA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 03:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0CCCA5FAD
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 03:18:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBOL0-0004fS-0k; Mon, 28 Sep 2026 23:17:03 -0400
+	id 1xBOLK-0004x8-Qt; Mon, 28 Sep 2026 23:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xBOKx-0004eu-2r
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:16:59 -0400
+ id 1xBOLH-0004t6-TR
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:17:20 -0400
 Received: from mail-pj2-x2b.google.com ([2607:f8b0:4864:39::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xBOKv-0006uh-F2
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:16:58 -0400
+ id 1xBOLG-0006xW-3E
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:17:19 -0400
 Received: by mail-pj2-x2b.google.com with SMTP id
- 98e67ed59e1d1-3a49902b607so58739a91.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 20:16:56 -0700 (PDT)
+ 98e67ed59e1d1-3a49b3e7bc3so88186a91.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 20:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1790651816; x=1791256616; darn=nongnu.org;
+ d=tenstorrent.com; s=google; t=1790651836; x=1791256636; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xgvmK5DxRC1HY1CRDGEPmN5s3hlr3uaLM+KbE+Mlu3o=;
- b=RDjx6J53LIE8is5kZ5uHD7e/zUYtzbTGBLVY9SKoWrfeDYoG3N6yZm5807lzmNelyn
- 6zSzsG1bg5kV/JVFjc8KRTLWYcLVktJ/eBsSJBiMW9c6oG7RUg1uANHeGcDaCsqiEAVo
- RL26ysbrF6CNGp52mzWwQQabB6ZrDt4G5ar/haLPy9ltnpa62i4mNa7RiLLM6AfszVuj
- c3ObuTQcvkXMn66x3NcO14HStAxadgPUChCjd0qFDsCXz+34bZ6bNPgqqZvptVGr8AGC
- 5xq7gMlxjHC8lbutMAFZlnFP+ItD7e0rl68+/CJnJ8+W1Vyv4KRYk0fDfk2wGywObAH2
- IphA==
+ bh=zozyAcbZ1VUQydZR7vvEW52sN1AndGrBgYH/TN5JD7o=;
+ b=PH9JkYZUKeHJk4A6EmXZwQEXCMKOrO643b0LixbDo26G3wdQ2xMS+Y/x61q3T6fkAM
+ zWjsnwF4btJRbrkuCI/CnYswxORxkk0TgAyVRWxIRLj0J8+bDNEGpTSJ3VL+YLnYfAiS
+ wACbOHmX6dVDXBB8SxVdawPlIGvN4/YslXoKyOE//0xsR4i5kbjYabMbD33WBdHU/TLe
+ yY1ym9HVLYoxfgem5r1kgevp7jgV4nWib+DRkTcJzrDdQIWiclWcvuzarHr70MniZ1YY
+ l5AjvY3SXfocS+BMk8Fyi9h9iw1pzse5x0XAw5d+DwUsXqMdgMq+JXqWn5HfOJp/qGEk
+ HoXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790651816; x=1791256616;
+ d=1e100.net; s=20260707; t=1790651836; x=1791256636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xgvmK5DxRC1HY1CRDGEPmN5s3hlr3uaLM+KbE+Mlu3o=;
- b=qVLDRZB9iM2HGtBdiJ80nq3uxlXkIEbx1pbIAd246K9R9KmPFIoV6gHcHtwpd9v6Ug
- qQ0ysoOUY6rFgje80LSVrghq2cr/NhlAVzVTp3CQv+0T8v3cpQpQlnpOsb+9ANFyIju6
- fNRzSI/v4K4UXPl6IlOANI/3KWz4XBwMeCdfZJMzdwjh9zafdSrE0p4BrkBvHVRVGrVQ
- qTFiaudy9OdEPjRYbqTgNwCk3AbqmVnndWZPovvq7XAkSX+LYK5oTlH0oQboO6yZWJAj
- DKtKQ2lmirYpJdFO6iiIt+Mw2iVa7LMHm4QIWFbUlAA4/tCITJwflk9RA9Pgea9Xxeb7
- LZaQ==
-X-Gm-Message-State: AFq9FYIVaykn3sXlab73i3lPLyKfNU8Z22QdIfuJjmm2EjZLUZB1s3IA
- DA+3XMrqXN2bra+0QU1oz7sdZ16yJBO9mWnBWqMTHt54Mdb7L+OoX00t33Ho8U9w4X2ELgFShK+
- q3Zv4bMQ=
-X-Gm-Gg: AYBFou1oF6aDWIgQLSZ3ns8hf8JsaPndnEnfuKAOVIm8sDamSnEUfQFAWsVUTCPNiCI
- uOYY8Bt6tFNgi/L7XDLdIy85cZzT8nB1YtxkeYpzRqfayNAiODn1jOjZ6NHf0ik+efq3OsUDgAO
- AIiDBtyuUu+lY9J4WltrN5UXt4FWhQIbNJF7fDtPISmCGh3OFecDAdStjA3gaUr6zsMb+kkUCHF
- A9QMqmpLw4KCOre/FueZR67AIiG7aUgHDXYBv4eYgmTHOcI/pyDfitPrVcDTtIH9dnMWyvbBi8D
- gL4h7/6hCuvPO2JNsPHllBRMSfi4j+FUmf0awBRW4WhmtflmhAfmnLUYrWa8clPbESfJgRTKALf
- eT7aZZhy3wORvsiZr8P/78oXK53xtOSUtzl8Q9VI4GWzPoUWVrxKo37N9gTJAS8Rw3U1eX2glu9
- LIiGFOFtbtEJv71yD/1E0wqi69TF26SUj3dv7L4fLrFYPmgvVeiEzcif4slOMvJNOvJBtZjRNpR
- 09sDmfhkytexhOY5rqpMAChnsZemID2+fakaB0aT0/P9TBT2T/SBbvaVg==
-X-Received: by 2002:a17:90b:388d:b0:39e:2f57:67c8 with SMTP id
- 98e67ed59e1d1-3a0b25ca8a1mr17894962a91.4.1790651816069; 
- Mon, 28 Sep 2026 20:16:56 -0700 (PDT)
+ bh=zozyAcbZ1VUQydZR7vvEW52sN1AndGrBgYH/TN5JD7o=;
+ b=wo3oG8QfvzDnNawAaX2llQ6dImMgMCtDyh1E6GFHJ6B2xFARIBfZ2RKL88JJLYL94A
+ vaE/56OHqiJM9GizrIQR/mlC3FIG64p24SFSMyNWraIFvMkbL5zFSn3qT+YSGd/JTQZz
+ 613SDgCbMzuaH1m+P80mVcgbF5a/I/03pliA4wEe/9f5V68fOEyKXOf5W0yOrSPETa7p
+ /OVhz1AfnWXUeDMxA0uam/L/NDG28ncGjquNtWoDjvTiE7KWuAgVl7OqmDVqWiA6BqZP
+ 2W0gg+YMb0UR163AnWJBdTSY5I9cGtHo0Yj3/NOEMyfy82BiEYvylF2tfRVddU0iwP9I
+ PRFQ==
+X-Gm-Message-State: AFq9FYLMsEs+coYUsrOfYvmN4RxUA6J8OIz4Ul6J6B/TzLwaj9XykScs
+ mtXBteARiKn0RKmHkuVIWnYbjVqE9BYl1fsYyZggKTzcBtGeyAerr3fJKoWgFjNAsJqfZR2p2N8
+ ruTy/PTs=
+X-Gm-Gg: AYBFou2uUWshdNwVhnAet6/dwsKvK0861qQaDJV1ah/jj3FvAuYtyofE0HVWEJHufva
+ U1BzL9FeqEsr0UjAEPfbYoYnkb095TEybv9HGy49sKToCD8ZexLmVXCSFE5TdccS4SP7uGDaH7E
+ WrzV9b4ulXE/D2BMLs7Fu4YQMw0qznU90bDACaV4nFsKyr+bvvHbCc2uJRClki+BJ9hxAf8gG+V
+ Ok1JCvaJmtGll4s5jx6d/Cg1tZnaKj1a+OaHFV3t4mm0h0WNYCD4EkmvXuSaxFLKzx5rDbsoA4L
+ ysCmgwdrGLdEHWD46DaTlA37X4Vs+0TG/BFpnS2o0bxG+d3hSv7hBZnbkDCL5h6i79jLNW0Ch/M
+ FlPt3RzyfEibZwKU6owcy9J9US5CiG57oJ3Meu54IIU1lhHS3cm2uQ2/Dq1RAatte1igC5sGRgE
+ 3K3E4bwoXAESYhEcv7lzFDQmWUIsrJirEx8MX4rpa//z+3viUG2K2kc6hz718OAe5g/F4ZfxO1n
+ zPsQ+r/t7cVAd2bvb/Mgjdkaq7l/ck+N+p1MjbCRIuo0c0=
+X-Received: by 2002:a17:90b:3c8d:b0:3a0:8001:7d11 with SMTP id
+ 98e67ed59e1d1-3a0b2617800mr17665004a91.6.1790651836141; 
+ Mon, 28 Sep 2026 20:17:16 -0700 (PDT)
 Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a492dfc5absm1563641a91.3.2026.09.28.20.16.51
+ 98e67ed59e1d1-3a492dfc5absm1563641a91.3.2026.09.28.20.17.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2026 20:16:55 -0700 (PDT)
+ Mon, 28 Sep 2026 20:17:15 -0700 (PDT)
 From: portias@oss.tenstorrent.com
 To: qemu-devel@nongnu.org
 Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
@@ -81,9 +81,9 @@ Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-riscv@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/5] hw/char/dw8250: Fix leak when creating child device
-Date: Tue, 29 Sep 2026 13:16:40 +1000
-Message-ID: <20260929031644.1016354-2-portias@oss.tenstorrent.com>
+Subject: [PATCH 5/5] docs/atlantis: Update Atlantis UART documentation
+Date: Tue, 29 Sep 2026 13:16:44 +1000
+Message-ID: <20260929031644.1016354-6-portias@oss.tenstorrent.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
 References: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
@@ -114,70 +114,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Portia Stephens <portias@oss.tenstorrent.com>
 
-dw8250_instance_init() creates two references for serial_mm, one from
-qdev_new() and one from object_property_add_child() which leaks the
-serial_mm object. Fix embedding the SerialMM struct in the DW8250State.
+Add documentation describing how to use the console machine property to
+control the console.
 
 Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 ---
- hw/char/dw8250.c         | 11 +++++------
- include/hw/char/dw8250.h |  3 ++-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ docs/system/riscv/tt_atlantis.rst | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
-index ccf05dd9ad..50baeae62c 100644
---- a/hw/char/dw8250.c
-+++ b/hw/char/dw8250.c
-@@ -72,23 +72,22 @@ static void dw8250_instance_init(Object *obj)
- {
-     DW8250State *s = DW8250(obj);
+diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
+index 1f2880d617..167cd57c27 100644
+--- a/docs/system/riscv/tt_atlantis.rst
++++ b/docs/system/riscv/tt_atlantis.rst
+@@ -15,6 +15,20 @@ tt-atlantis QEMU model features
+ * RISC-V compliant Advanced Interrupt Architecture
+ * 16550A compatible UART
  
--    s->serial_mm = qdev_new("serial-mm");
--    object_property_add_child(obj, "serial-mm", OBJECT(s->serial_mm));
--    object_property_add_alias(obj, "chardev", OBJECT(s->serial_mm), "chardev");
-+    object_initialize_child(obj, "serial-mm", &s->serial_mm, TYPE_SERIAL_MM);
-+    object_property_add_alias(obj, "chardev", OBJECT(&s->serial_mm), "chardev");
- }
++Boot options
++----------------
++
++ * ``console`` to change the default console device. Most of the
++   machines use the ``UART1`` device for a boot console, which is
++   mapped on ``/dev/ttyS0`` under Linux, but it is not always the
++   case.
++
++To change the boot console and use device ``UART3``
++
++.. code-block:: bash
++
++  -M tt-atlantis,console=uart3
++
+ Known limitations
+ -----------------
  
- static void dw8250_realize(DeviceState *dev, Error **errp)
- {
-     DW8250State *s = DW8250(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(s->serial_mm);
-+    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(&s->serial_mm);
+@@ -24,9 +38,6 @@ real platform. Notably:
+ * There is no PCI host bridge, so virtio-pci devices cannot be
+   attached. Boots that need block storage must use ``-initrd`` with
+   an initramfs.
+-* The DesignWare UART is modelled with QEMU's ns16550-compatible
+-  ``serial_mm`` device; DesignWare-specific registers beyond that
+-  set return 0.
  
-     memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
-                        DW_UART_REGION_SIZE);
-     sysbus_init_mmio(sbd, &s->container);
- 
--    qdev_prop_set_uint8(s->serial_mm, "regshift", s->regshift);
--    qdev_prop_set_uint8(s->serial_mm, "endianness", DEVICE_LITTLE_ENDIAN);
-+    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "regshift", s->regshift);
-+    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "endianness", DEVICE_LITTLE_ENDIAN);
-     if (!sysbus_realize(serial_sbd, errp)) {
-         return;
-     }
-diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
-index 59396ad202..ce0b97715b 100644
---- a/include/hw/char/dw8250.h
-+++ b/include/hw/char/dw8250.h
-@@ -10,6 +10,7 @@
- 
- #include "hw/core/sysbus.h"
- #include "qom/object.h"
-+#include "hw/char/serial-mm.h"
- 
- #define TYPE_DW8250 "dw8250"
- OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
-@@ -19,7 +20,7 @@ struct DW8250State {
- 
-     MemoryRegion container;
-     MemoryRegion ext_iomem;
--    DeviceState *serial_mm;
-+    SerialMM serial_mm;
- 
-     uint8_t regshift;
- };
+ Supported software
+ ------------------
 -- 
 2.43.0
 
