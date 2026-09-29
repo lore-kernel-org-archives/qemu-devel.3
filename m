@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEBE6CA5FA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144A9CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBafX-0001VR-6p; Tue, 29 Sep 2026 12:27:03 -0400
+	id 1xBakv-0002Bc-Ky; Tue, 29 Sep 2026 12:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBafV-0001VC-Io
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:27:01 -0400
-Received: from mail-pz2-x2a.google.com ([2607:f8b0:4864:3b::2a])
+ id 1xBaks-0002BT-Id
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:32:35 -0400
+Received: from mail-pj2-x0c.google.com ([2607:f8b0:4864:39::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBafT-000553-V1
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:27:01 -0400
-Received: by mail-pz2-x2a.google.com with SMTP id
- d2e1a72fcca58-882c2bcef77so1764132b3a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:26:59 -0700 (PDT)
+ id 1xBakr-0005Vo-3v
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:32:34 -0400
+Received: by mail-pj2-x0c.google.com with SMTP id
+ 98e67ed59e1d1-3a0f64df6a6so1541789a91.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1790699218; x=1791304018; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=X9kWX6v3y+YXYZdUtYWCrvUlVDuqoAqJpKOAsp5S0x0=;
- b=FbRsYgH5QbmPk6zoQHmlQfNctyIgpMd82tZDeS3paoa45VYr7UI4Hhus6p3YaUqSt4
- nqFzKPt+BLgOgBBuwj1Rs+suhwNzQY00zv7S4I8VicMEAeBx/5gemmerQinjyh10J8qE
- 6n7TDeNRdgrZyW30h7jIUp0ML0dm561i7mUe2HdGVtVc6cqEpIg0ziWXcyAFM9Rc13iU
- IsFUNaiZ39aoY8+zoBHVgWZCaCqA2A7bNkNcyGUaWsUFClVwgxZLZmTKdZPt2qnZMd3L
- 7k9htZrGnoA+V8+gmbQ9crfZy9EgD7rkLcniXEtT/O1EWbQA7p5dDgSo8YIAVBGePQY1
- Brug==
+ d=sifive.com; s=google; t=1790699551; x=1791304351; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bybYEK6pYA+dBkjrB2nDXDUbwFfCebRai4GNmCJz4ck=;
+ b=SppGW9sPxWVm8q/2Tg1iigsaqh8gTuokxRdZcF0gVG24U79kWIlGAM7wrg58WV3f5j
+ dKd3pgCDMnJcDT+W16VrCN9PD0UERFfnrSk29182WUDInH28Gq7sxJNaHP7VBYerSqDK
+ Yx1XWmKYnQagpZgDuqkOu0v3nvmyo/T4du/qppq9PYqJUdf9MtFveDrsWwo75V3GIOKV
+ 75tconfzHLcB9BCzyCc5On8bXUjYbAJbG2HhZLUPLav26gkbv2DmAdla/YWbKqgrpuDb
+ MSyZzkUO6ZtrZsP3k+G8I+qV9g8NLupRI3fTbhswjuvkUrs7wiQ07oxWUBRtXMHzAIrs
+ crdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790699218; x=1791304018;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=X9kWX6v3y+YXYZdUtYWCrvUlVDuqoAqJpKOAsp5S0x0=;
- b=YqhJKDKGMUfZCJ/glR9XJb/MsC+e2MWtLNC/gNtEEohCGIsVSq9iNGdVOrOLz07UTA
- BLv9WNI1QJ0IGaU6YbI+98zqUncipP1qwg1dJnJrQ7EhCaLJ1vc5BOkT0ZDv910EzrpB
- sGyDAHxnZh+XQpLgjzj9WKI7h1tzKJg83BL5u4gJ0UZ73OJ+3KX6qtZTuzkbPqipb5nY
- LVqKZjHDxsEFC4N2psYR67SVB2xoRKu5bnsVzPKWgM6aOnRM79JbBfS/tKwevcgm6EbQ
- eF1HTl2QRwXvDIR68C4zhC+/YHKZVVN375b9ZiE7KkEQ9XJvgsFny+1fE9QiON5BrVeV
- uvmA==
-X-Gm-Message-State: AFuF++lNxWU5BJnDISPjg9Rl9w1xAm7jBmQKQQRJTe4M8Kc+Smq4qtTI
- YOqZSVoDVX/TqQvgflLx57PCelV1muVCw1m0y4/0a2BLM8RxHIOMKwQA2Vtl3nBA0eQ=
-X-Gm-Gg: AYBFou0R69K7pof4uVyLHe/c2qj4SOxfG4q+70lg0KQuXfxG/L8CJ4e3/MfNAhM7LZA
- vOf5VdHxcNJtCFr953BrZPCRh/aiDqi0DEoD+sKKpvnBbeBAl/T9gK3SlqgX5LmNBBqrN1McPyf
- pwcJyvvA6Mz43wasDErqFlmQewDcRh87f70SkucikrlNMmVMmjQvdRHOcPmGhjp+GtPzsQ0pSlK
- Nl0eINif/my/4jFik04J0dHYUWbogprKQhACWmeZhRiv4eTPyxe6ji8kGoSiWf9gN7lF2RBhvXD
- +KcZKwdJl6aDS3mC8X0HKWOQ2IlHaGxIaXOviXZgbNviSM2LsIg2WiYaGZ5jHcCDTLu937IxSfH
- RSHJVi+FnOy+FTQn9NoQvy+RE6drvMD0xOBeLFb1z25LDWATuYxemjR7CHiEKHuH4925pFdopUE
- twNrqiP58j/1WuZCOjs8B4rszVPsKRJi0Z2HyhqSeanW+XC8rAt8hWXFHw1jBfYMtmk1uqnHcGv
- JUlQDPpxBMFyO0Cka8S22s=
-X-Received: by 2002:a05:6300:2204:b0:3dd:a196:69ed with SMTP id
- adf61e73a8af0-3de26fad73emr11609707637.72.1790699218256; 
- Tue, 29 Sep 2026 09:26:58 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790699551; x=1791304351;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=bybYEK6pYA+dBkjrB2nDXDUbwFfCebRai4GNmCJz4ck=;
+ b=zcZiXw3CYK8hijWo0UPsnZ868A8XdZ3cDtemWNezpjhvAZwIWNgwphQKjazGKJFS6I
+ aYxGhiP20pbQA6qd13AjgPLXsE1g7V5oBJ9Jhj4R/AO9796Sec4DFbHm93XPr+LXYTBf
+ p3ja2zaX48WVVvl+XEu4ydKvyhlkimTzy7V+EKIQfWAnOdl6R4xHrLou6voiY7YSWoCV
+ 5Ki4QqK7LPoJnwAemQBhJgJcl0c6WXQZ9MpTThoihom6OAX3m7LMEb2t7O6H+9XIQl+D
+ Rsc35V7b/8YKb4tplpgRaPb/9YQVw2lOHSZAPqqD1B4+cKKE7bC4L97ObdOthgxasKyT
+ 4aCQ==
+X-Gm-Message-State: AFq9FYJHyfnuvS4XbcFTYRtU4wa98HLhoSL5GQjFBocOnPT/Qxi/KWw4
+ gadYoIwepT8IKIe0NhOvZDrZSvQDIhEimuq8jnqCywlG0xv407zzHV0csMh6wtyJcXI=
+X-Gm-Gg: AYBFou1YWWnUyMCDScaTKYIyIOrRxOdNJMOtnh50UnOs1+40LdS4L+gphf1FQHcLJs3
+ LHIIEOaeg1pC4NP+1R4Pkj7TgtcnBUNthwDgwvSyuLOUFs6fiKVgSpo6m5sbmkC0Obnx45AIn6L
+ CBoq2+CoHU0wjTSRTsspk5duNn44gkyE0Puyb9VT6gt0cISA3prKxsbUd89TzfDKtogwy6bYCkV
+ Ames+7Y4uGyX5rHIThQ4nI2pFFHH3YauzGaNIklhZUkrJ3ON0ZFJqC6HyQvkDrfhWCMDLmDI3xS
+ 5DPCIsWxfm3EWjZUeQtqNzhYfRTaYZEcA1oFklFQ4IaL3osta0Jp4ml2Y2i2wYoaFO2M3aauu5E
+ tg5LO8TQ/vt9JrVJFUr+WTTtQvIFFgbok5opU1486w+D8v3pWfU/ZilrqupKPV7dgvvKpdritAM
+ vOGASQ7pZMBY1r4dYEjSkYiQf0fu5Amj3Uylqrk6P++Kj7qRJ/XsrEElKdpybeU96lZWzTWk8Kb
+ 8sySAM+NmiE8+ZSL9hYA7Y=
+X-Received: by 2002:a17:90b:3a44:b0:3a2:aec0:6bc4 with SMTP id
+ 98e67ed59e1d1-3a2aec07038mr6263993a91.50.1790699551516; 
+ Tue, 29 Sep 2026 09:32:31 -0700 (PDT)
 Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc7d2b3b3e4sm103301a12.17.2026.09.29.09.26.54
+ 98e67ed59e1d1-3a497f1b13esm6486361a91.9.2026.09.29.09.32.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 09:26:57 -0700 (PDT)
-Date: Wed, 30 Sep 2026 00:26:53 +0800
+ Tue, 29 Sep 2026 09:32:31 -0700 (PDT)
+Date: Wed, 30 Sep 2026 00:32:28 +0800
 From: Max Chou <max.chou@sifive.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, 
  daniel.barboza@oss.qualcomm.com, Alistair.Francis@wdc.com,
  philmd@oss.qualcomm.com
-Subject: Re: [PATCH v3 09/11] tcg/riscv64: Fix off-by-one in branch range tests
-Message-ID: <arvmrqCgbcQ0FgMv@sifive.com>
+Subject: Re: [PATCH v3 10/11] tcg/riscv64: Validate AUIPC relocation range
+Message-ID: <arvoDcqs6m0AMxTs@sifive.com>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
- <20260914000814.785155-10-richard.henderson@linaro.org>
+ <20260914000814.785155-11-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260914000814.785155-10-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2a;
- envelope-from=max.chou@sifive.com; helo=mail-pz2-x2a.google.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260914000814.785155-11-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:39::c;
+ envelope-from=max.chou@sifive.com; helo=mail-pj2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +105,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-09-13 14:08, Richard Henderson wrote:
-> We tested the size of the field encoding, not the
-> actual range of values.
+> From: Max Chou <max.chou@sifive.com>
 > 
+> reloc_call splits a PC-relative offset into a signed 12-bit low
+> immediate and an AUIPC contribution. When the low immediate carries
+> into bit 31, the existing 32-bit arithmetic can accept an unencodable
+> positive 0x80000000 AUIPC contribution.
+> 
+> Keep the split in pointer-width arithmetic and reject it unless the
+> rounded upper contribution is representable as signed 32-bit. Factor
+> this validation into split_auipc_offset so reloc_call retains its
+> existing failure contract.
+> 
+> Fixes: dfa8e74f9463 ("tcg/riscv: Add the relocation functions")
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> [rth: Pass target as intptr_t to split_auipc_offset.]
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/riscv64/tcg-target.c.inc | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  tcg/riscv64/tcg-target.c.inc | 24 +++++++++++++++++++-----
+>  1 file changed, 19 insertions(+), 5 deletions(-)
 > 
 
 Reviewed-by: Max Chou <max.chou@sifive.com>
