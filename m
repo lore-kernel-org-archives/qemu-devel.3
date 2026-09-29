@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4539ECA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 11:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD6B0CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBWRI-0001ce-SN; Tue, 29 Sep 2026 07:56:04 -0400
+	id 1xBWUj-0002HU-MC; Tue, 29 Sep 2026 07:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1xBWRE-0001Y6-8L
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 07:56:00 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBWUf-0002H3-Gr
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 07:59:34 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1xBWRC-0008T0-2c
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 07:55:59 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6aae37d33cbso1164922a12.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 04:55:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790682956; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBWUe-0000Ti-34
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 07:59:33 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 00721157ae682-8ab42612328so5333027b3.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 04:59:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790683170; cv=none;
  d=google.com; s=arc-20260327;
- b=cQ4l1mFx1rHXBZbA897x0PZQvcssiGTQcCh6NBDuniL57zaa3RU/fDiHnKdK0Q5G+M
- d3Y2ZpmoRTmBjL4U86VQb001n1PviO2Trz0C1Bufn0XDzywXYoVwlorTZ841Rh0wxcBo
- v743m/DpQUH2sMfqCGaCM3UT+29zhtbysN2r1U9P/2qjUBT4McHCrILImeBQK4NHHGXY
- kveF5He571JVi1EsAPgCdB8N72vhD3pRPvbBXuzi85pmgWpKrXCOKM5tffJmmEq79MBG
- avr7hfiZ4E/4QPHAyEifQMC4g/7as0ciEYgPjYnnBMfhPO+HQt22ti1lPr30ufEofuVC
- 2ovg==
+ b=hohJ7vyEYY0nPxlhnjU/m+mF98k1Lr1+U17h5NOEKPA9zJ2IjuCl9V0XZFpp2OhSBC
+ KBN7diR8p7alM1v8CeM/B9wtZwoj7FoXGhyOXNxBdr8oM78ixnDXtypu5Be4c6dYBUGM
+ NIW2Ey1nF0FvQOFJyxh78wxccAoYLvhI4Aq/JfBPJWlFZ5nYZGxwGqzZ8j672lTlbhDN
+ 15b7yL6axoXEmsQ0RgXp0mBWU79RBEfNpRE4xiEYkcWCVwTy39WIz9f11Dt08SwYKB5U
+ 1ptk/gSpv5bz2aOfctS1mF1RlmMnPOrRVk6tWRIfH+Le9p2KviM4A0cVylcx1W5wGbVh
+ 7OnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=L/AUE7z/S3HZbJnpo7hnSBOGf+Hsl2RJ9sPM/XIYPTw=;
- fh=2kYGgNObuMHp4dCltJDUttIfg1lV/fywA1MKdk7Ny2g=;
- b=lgJ8bTkYkGwPIfyZAzYG21ScWAZ0d0/nBMqNDolCDWJWyGgB2kyw8rNUaiaoAnaWk8
- kwY0hFrwRNiyU61EgQx7FFQHYboq21+IIvDZD9ArnQ0OjcJ3fVMD0IN9+3xS0B7ZeJVt
- EhC7WFIASoh4xFAqkgDRN3Sdyd86sVkVlwwd11jwmjz+GrehICQqS6w4nytfR4EmAOr2
- xBX+VrcwkDSxrgMjUf6MhjppStNmsvcrEAQaHHCSlXuSUF7/hbrQbqbaaiTYuCdvMmVF
- TWZyR21oGiJk7SOHokwPitz0AZXS5OgoRxEYyfeXdxJ1k65OipE2UZH5Iv/v70D6KREK
- yW3w==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=uhUmKaNeDbkAMuwPlQwx96vVzLUgAk1GkcgWtLQ+m9k=;
+ fh=Pp9jX0adaTHvd9hHphcIldRAvXtGCoFyDCqLE2UesPU=;
+ b=TpBQAfJSQWPRa2EoqKS7ieKts6/wTEQUEJEFRzYlgqycV3Q89bE+2SwOVsXNFam0D+
+ NZNsUN+aRdbFN7L1A8V4ZoEdVDZuW4lrMeFe0/DODwZ2hpEQqoJXyjMmJdI4oLcq/3S6
+ MWIkhyuo0ghHw6cEA1zOZ9arXMLkaxBfVWGBWWaZJcWKiQ8uH9Gqel5SbvkVnOtvgiA9
+ 9lPC8VBKOwf3ofLO7l+K96/X+4ivoPG6pkGckc0wsuAi71LzXQJQR/WPJTPuZ3vys2Md
+ 07wsFqNAeXzAHDVmwVNvEnmTOnKVDkPEx+TjCxE6WzwxM8sDKoF5HlJ/01PUZhiyssH9
+ zCZQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1790682956; x=1791287756; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=L/AUE7z/S3HZbJnpo7hnSBOGf+Hsl2RJ9sPM/XIYPTw=;
- b=YGviD5Nl2io4JSrPdR7IfYF2eacKgAFNxPff6CuV0TR+ZhzpcZzsIMDA1OBDuygTSR
- k9OCGcWJkO4wBDRb83JOv/65x7fc7J/LITM4go2UfGbRUcKSuq0ljxbka07KM0sJQRkn
- qXtWhnHHE0PVoPKroSrwSYg9OamNr18T73LaMQj6qRK1kke2ePF+4VKti5H7trwg5mGm
- bgXDrc6y9hWCuzFPehCzjnx/oA6WoApCh5q+zBlnfwAC9ay6RoZbuBaWwr1UQ9+V+enY
- UTY8GjSKhUFBYVBDDBh4FOHHK7eAGmmczDg9Mr2RgRCAJaLaCJoJGMc7GBa4bioJi1t2
- U/LQ==
+ d=linaro.org; s=google; t=1790683170; x=1791287970; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=uhUmKaNeDbkAMuwPlQwx96vVzLUgAk1GkcgWtLQ+m9k=;
+ b=yItC6S8q6kAijaXfkQt61tuOSDxp0shsfUJmFPLvnWNX40aOJT7PPBzGKWb0D5vC43
+ V5sgSHs8HpUuBRb2z0b4mzrIK5fq6/f8djJKM41Rbb7R++KVWY3dZvDA9I65Eo+RHfci
+ L6cTO9IBVDVsD9W55COmlbJDV9W5fiIhN3zBs4KVRpA5DIotEE5VYSuqmoAfm8SCZH8J
+ AC//fS6LFYn00Y55fY+0PPHu5JA68sY8X+VWPwvLSHANIKDit8/rm733pVZ6e/F7CuWs
+ 4FIX6LSXqcymURGI19U5yDPVTdxc75fk3GcYyErgCdhz5W4ZjMA3Y23cO/bPR+smzvNA
+ +uMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790682956; x=1791287756;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=L/AUE7z/S3HZbJnpo7hnSBOGf+Hsl2RJ9sPM/XIYPTw=;
- b=i0e9eN3YAJTWeA0US0I8kJm47L8v307Th1Y4Lt4rr81p0euZ8nlfxPvEQTxpTSxe5z
- AthYHB1HiiHOukhld1MSVBEpE8tYGpRRO8rjyoSJMBa9I/Wyxnf1yA2qW9H5gN/BuY0x
- 4BfNQjOiWpjWjCJ8KeXC6sVsKLvuDv5v7dyZ487r9l/nBCJDR3fKU/trX/AfrUcIDAGM
- L+PRq3UVT/CE/OrowUeWLUBPO59+CwqL5u4ENELFD8qi1vW6C5AW+iMpJnUAAIWFabm6
- Xx1lqhjL4+xnDxUYv6NgeymFxAB+4b/z5J+7SmEJtzCkqaxsqRGb2lV7ZcCnnGE0eEvn
- Dh+g==
-X-Gm-Message-State: AFq9FYLltVN80vWxNofrV4fUXfUAQkzUu7smPd4089rGD5aktbvmZQk9
- MLX/LSFtgssWf3n27wDNM1RTAMWnVz6sJdPNO/+5QPMWrTe0UoE7jUDv5AXl6IqMWVguV0AilBo
- YOi5fQ4Cab9xdV56pMnmZwV/CexjX5p0DJvzTYBms
-X-Gm-Gg: AYBFou0truP20KvxsiCaq98/hlZng0woBj2HAcTrbk7YonkRFsERKBL4eTbW4Ud67Zx
- eHGwMMzvHqzTNqLdZewV2QWnFGHUfln9+ZapaT2e5MaRSS0zRmtt8EQKdClfH5D3q32DpPqkZQZ
- DMKlgaNsRXNfmuQBgodbVg5COno9AjhFquDMxJxQqKG8OQJiwuCVpbbovDNWwgSSQBUSu8jfq96
- LK+cDgGHuFQMFzx9/wpjBS0TUCbONSRO8Jmnuo/1b6SoT0ImH69waCscIoUnMJ/HPHAOIFl1i/i
- fHCtXq5NVJ4eMrzeD4G4o2t4HZIcrLUO2sYDKLy7JXb5NXyLl2w+Pdj6ytAOgJjZZB6RCTK2Q4h
- /1QXdg2V/6fVd8o0TyOtuk9Kv
-X-Received: by 2002:a17:907:940d:b0:c26:1cfd:4244 with SMTP id
- a640c23a62f3a-c2df4cf87bcmr191939766b.11.1790682956303; Tue, 29 Sep 2026
- 04:55:56 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790683170; x=1791287970;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=uhUmKaNeDbkAMuwPlQwx96vVzLUgAk1GkcgWtLQ+m9k=;
+ b=aXoIHTbXIjytWs72rFvKFMjGTdpo0Xkt3vQ4SxO7wWQjrEjuwklRC96dnoiNv0FBxN
+ oBIBdnU8p9GQsNP0lcJPo0x97Tue/LvIX+rlev9nZyv/j7qRZcWDrXMuIrQMekzISQKR
+ vu3Wl4ruouKb53Zht3/0UNE0Yu8Zts80TaP+faGFfHqt9PGqHrkLHMZfP/UQ6p4lkaHS
+ I5HBsKflyf+ksZZu+ft4jrLhDwd/xO4YewX/XnvnSxaQJmS7U93wj/Ih9x1szBPVoIjj
+ mgfCbWdNvokcmhBcgLTBOBmbgFstkIeXWH/neRT5JQXk90TaLK7sbgMWN6zsn/NzCB1b
+ L8RA==
+X-Gm-Message-State: AFq9FYKncZIN2oL0rF6Xo6fugrOY9Nq/AOG3KBqAbvtWUgdy6TIvyEBF
+ 71vako2imGjw+pvmSDBG8wRl2lQo4LNhP5eZ81k7yLF5sXDbAdbxATltavFkEnGLccG50foqvgx
+ Pmvzw2mm71BOY29bEXcEuHJ6E6v+HpnYe1YoaIDhzgA==
+X-Gm-Gg: AYBFou2ZszcqYmo5yKFsefM6HCmOC4Y64qnMTW4PeAhP+PHsQHwdCHaYbZKAuSEU5KG
+ rAwntmabBf5nlZtuWnaOzA+CD2O0mezZcA4EK162UHV8wz0n6QuuSYMwSva+c36XTng3HUB/Ysg
+ 11SqNriOEdU/oM6gDIgAFf2pFM2zPZ7HGPY3mijmG1tNX4/+iBxk4fgGWlx+436O7NjyfaIv9CF
+ YhlOgplNsySSEYX53KYmnIxUKXDhlMDqO2VjC/l4q41xDgZVy7pdCaISHGInQ2RFfL5oUd9vI2Q
+ 1xA/kMZnBzSfnrDeewiNJWsfjC8exT56B3tDGl6M4OuUmSpFD/GEy5GAnhsk5/r2C0vcFbAD5xT
+ eDPl5qFk/03E5kL2CayS7rnbSnH/OZzE8rGPtrKK9P6FKnwf34g==
+X-Received: by 2002:a05:690c:39a:b0:8a6:1205:12e8 with SMTP id
+ 00721157ae682-8a64e5bf235mr64894887b3.44.1790683169742; Tue, 29 Sep 2026
+ 04:59:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260929101623.1352299-1-dtalexundeer@yandex-team.ru>
-In-Reply-To: <20260929101623.1352299-1-dtalexundeer@yandex-team.ru>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Tue, 29 Sep 2026 13:55:45 +0200
-X-Gm-Features: AclHuK9S5T0PiB5SRQjMtmZkNOIVYmAgYsEdM77FCr8878b0G0o5_tSOP4ayM3w
-Message-ID: <CAJ307Egrw4xL0TOaiB3rnvprY5FSSNtGipLFiBUdEg7QLrjqhg@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user: add missing stub for
- vhost_user_has_protocol_feature()
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, 
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260922223045.190062-1-weqaar.janjua@packetfive.com>
+ <20260922223045.190062-2-weqaar.janjua@packetfive.com>
+In-Reply-To: <20260922223045.190062-2-weqaar.janjua@packetfive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 29 Sep 2026 12:59:17 +0100
+X-Gm-Features: AclHuK-AwSF9m43FuNRJyJYMDSdzD-k7LbVI5_kwKGaD3No356DOS_96YlHEGuI
+Message-ID: <CAFEAcA9AP3RrLY4fzvsc9Bx845tiP9NXYo1CJ5Fb_iVePQKc5g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] pci: Add device ID for CnuasNIC
+To: Weqaar Janjua <weqaar.janjua@packetfive.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, mst@redhat.com, 
+ pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com, pbonzini@redhat.com, 
+ farosas@suse.de, lvivier@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=chigot@adacore.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,41 +117,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 29, 2026 at 12:16=E2=80=AFPM Alexandr Moshkov
-<dtalexundeer@yandex-team.ru> wrote:
+On Tue, 22 Sept 2026 at 23:32, Weqaar Janjua
+<weqaar.janjua@packetfive.com> wrote:
 >
-> Currently, building with --disable-vhost-user fails to link when other
-> vhost backends are enabled: vhost.c calls vhost_user_has_protocol_feature=
-(),
-> but its implementation is not built.
+> Reserve device ID 0015 for the Cnuas virtual network adapter.
 >
-> Add a stub returning false to fix the link error.
->
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-
-I'll let you decide if this is the best solution. Meanwhile,
-
-Tested-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
-
+> Signed-off-by: Weqaar Janjua <weqaar.janjua@packetfive.com>
 > ---
->  hw/virtio/vhost-user-stub.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  docs/specs/pci-ids.rst | 2 ++
+>  include/hw/pci/pci.h   | 1 +
+>  2 files changed, 3 insertions(+)
 >
-> diff --git a/hw/virtio/vhost-user-stub.c b/hw/virtio/vhost-user-stub.c
-> index 45559788dd..9d2e521788 100644
-> --- a/hw/virtio/vhost-user-stub.c
-> +++ b/hw/virtio/vhost-user-stub.c
-> @@ -4,3 +4,8 @@
->  void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
->  {
->  }
-> +
-> +bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t fea=
-ture)
-> +{
-> +    return false;
-> +}
-> --
-> 2.34.1
->
+> diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+> index 261b0f359f..3f3825bfe5 100644
+> --- a/docs/specs/pci-ids.rst
+> +++ b/docs/specs/pci-ids.rst
+> @@ -100,6 +100,8 @@ PCI devices (other than virtio):
+>    PCI UFS device (``-device ufs``)
+>  1b36:0014
+>    PCI RISC-V IOMMU device
+> +1b36:0015
+> +  Cnuas virtual RDMA network adapter (:doc:`cnuas-vnic`)
+
+This adds a reference to a documentation file that isn't
+added until a later patch in the series. Doesn't this break
+building the docs at this point?
+
+I think it would be better to add the ref at the point where
+the document it's linking to is added.
+
+thanks
+-- PMM
 
