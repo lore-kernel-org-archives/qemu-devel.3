@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA378CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A94CA5FAE
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUfA-0007QS-KE; Tue, 29 Sep 2026 06:02:16 -0400
+	id 1xBUfi-0000Hz-DY; Tue, 29 Sep 2026 06:02:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUf6-0007DZ-0Y
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:12 -0400
-Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
+ id 1xBUfL-0007d7-W2
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:28 -0400
+Received: from mail-wr2-x0e.google.com ([2a00:1450:4864:30::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUf4-0008DD-C9
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:11 -0400
-Received: by mail-wr2-x0f.google.com with SMTP id
- ffacd0b85a97d-4888129c46eso2222998f8f.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:09 -0700 (PDT)
+ id 1xBUfK-0008Gh-8t
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:27 -0400
+Received: by mail-wr2-x0e.google.com with SMTP id
+ ffacd0b85a97d-48881a62e09so2366484f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676129; x=1791280929; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=3E1j13XxexociUAT7fIrLPdI7KyK/OVHkL2j46CvOVs=;
- b=zlMHhfHtoiWUVDw9sfVOzaqUppN4ZBPE2+ZCXPNaiuZ+3Xv0GKjub4a1YgnJQfauZa
- XQXNCbm9zjaiFweK6jqSasd+8+MywXarEYnpqTLm/eU2aBMQyWbMN5mpnCJ0fzJFD79V
- Xrf+zHiykottazKBf4y50lg07DEyRy/q/EUKFQ5hWnONhd00tUfB+M+OOGpLHeVJKt2Z
- XpCGvcKXBppelxSDd+DqYKJX5vZQd5aczdrsADZdJb8yRjRR5NAoneqT0LCjpbJS+N9B
- W5l49I+qr7G0PCh9USjQE1Sur6jn0qbVCr0x49usYEllZqjO/iragNgAMJbXwSNx4zOE
- b0Sw==
+ d=linaro.org; s=google; t=1790676145; x=1791280945; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=IkFpezh0UNbWbltntytc6lBVFDfMOMoC/WCVqTS3c5A=;
+ b=vlBIIiwPuGBg3x2wBd/LWy3pufEkQZKHf19W9QiWFkijK1TmEQGMoG9ZkVPEU7vXwi
+ H1GshWAXif/d5rLBKLdblbsjYba401eZlkohws7D6qmiEwB8U+tZ0jcNpGq2ZnLPdojP
+ Fl30LUk6s30BJqgo23YNZ8RtaKBGrJedSi/alcsF1OHGd28IN4yJsfPRWNKYWJyVIp/Y
+ n7MBs1pXrZoOlwvUOZvxY7lxSZbaIMhFXpYlAwRgN7wjfNT7irP81iccqJOBJlIkozY/
+ lBrZx46sAPkuz/d6BdeX1nqoSsOoiYtxnpYG8Q6dna43xvpHWQvNCUZYmmtPesru2uxT
+ i09w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676129; x=1791280929;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=3E1j13XxexociUAT7fIrLPdI7KyK/OVHkL2j46CvOVs=;
- b=rJDiOET1QBGBkmzaRqSny3JmeBvDgsuoy0ZM0k8QChtLk3nuiF2g7bu672ZibnASMs
- TsGkNlsnHoLCNC7nAj4V1lz3o8nGH1EH7skQwoW/sxggr5NiDSNBBnqlU4htqm41hjge
- JKqZCIo+LhNnQWIUOwXDIpzuM6mv4BzPf+lMe9leqMAF8XXw+I6SmAqEyLY5RZQ82NT3
- wT7PhYv+CdFprljsp6siHd/UxYfnvEBG3mmg0+CpFh5Qxo/xorvLcshsqRfBMz/SFfiv
- E4Gbegf2Q8Z6y5uXcgF9z0KbcVyqEKei6LUsREOtD+9nWCniUn2NHWq9nNuZudyE2MSr
- cm/w==
-X-Gm-Message-State: AFq9FYJdwQuQoiTuQDWToTxLBXIY+UPYqCr0KZXZ3NjEVkvAVzkGzxHZ
- J3ZJ3XZnL9BJJmAHYZnmrmKeBXFB3DhLXn0qv6DlAsDi9MIIOLD7JixaWbao2aMWYI6oYLzEifN
- x6Bee
-X-Gm-Gg: AYBFou0rAnSrEiHk5gjgZ4Ypn1RmxTEyYwFRWH9QgJFw+WKCgZZxtdrPAcrWffoc/Bg
- aysTv3K9m3dVDDrJBHKp0TS7fRvGWv9dtUDjRYM8HAnl0QKnhT5iqQ0v4mZGmYtk40hboGWofWy
- OdUjoRSUzNCmE8V5lvkpCorPVPKMUTomXvyZelYWDSK2nhYPJg3RH6eMqJcdKQ8oxfLmvW4zxZk
- QTd725CJS2dfv/AFTmeAYjdhcMfaZceb55W8Pf+0qPQbvOPupfGK2C/pIqqgzeG8VFUAemaDlNZ
- jnKljGPvHBdP+qWkXyaCLKI1ks+vZmnlIR424yZQm2KFyFAW5BMxqbyLBnhxZF1Ts9tF/80yBPI
- tNA7NstrcW7Ejd2H6ECmH0mTkr4jgoT9Z3jtKxl8F0f0Jo5jqIRwlcV520Z1z530Ec5FeO8behy
- MfTgQLiOr6fOz4fgF//V03Y71f7+gXpUJANVASU5wgXFpa/eiTIWSWx5JqIe6j5x7wKNK1peDgp
- 6QAw07lUUZFUYp/RJCPo4EucTk3SNv/m/eZwKW/6xZIDH2/nXqYI3g4FQwHYH+S+pelHworiFes
- eFwS
-X-Received: by 2002:a05:6000:4021:b0:482:fd9c:3740 with SMTP id
- ffacd0b85a97d-48871678f1amr28210411f8f.22.1790676128438; 
- Tue, 29 Sep 2026 03:02:08 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790676145; x=1791280945;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=IkFpezh0UNbWbltntytc6lBVFDfMOMoC/WCVqTS3c5A=;
+ b=0rqeM+PUpJDoo5LpGEPAoB0AUrl9pNI+H4v7TOi/7xcU1auxGhwEfEY0nRZ3Wd/naJ
+ GMTaiNXCjFVP49udpUX2E9VS3WTrGGGisx35YOQZdGrZrHsHyNlDQr9zOTW9Nz4PypAW
+ ORP/imknv3nsYIyT0/PpJKY9SY7wK0rQispqe7bEWl+CtQWDQXViA1VumV+Xs1jJMGlJ
+ QfiTl/JWR6jF+XWhTlwtqkWyguMlkr3Ixtn8nSI1YZbUriEYP8PylHF/vMcRk5cbs9o6
+ WBVnaObA2qDJmNRGwLFQH8y1mzRLpnW0bOnKAkcb1lXpntgm8/eutA4yOGUYfjqcPXV4
+ a5ig==
+X-Gm-Message-State: AFq9FYKX+miGc4N6y4Uc/LScja/BZMAEq6lJKkX0WD9Z6ADH6j3E0vzK
+ J8izIy1DVSKKKzbn3sqIzJtTlrnW33BbaCt59aPo+VD2Ql9t93Z1SiKsjqblzIxZZxZDxWRJvFj
+ iGOp4
+X-Gm-Gg: AYBFou3KZ75U6j8nc6NLa0ZLUye75UZplONvlxDKlFSTU9OydZnBXDl/S3MQfp8Pcit
+ wpbtUm1AoV9mVHw4mU6/TDnnNiQ3puzaraPZsWrbivRQQmpAB6yAimnWAQSEoYLBxCZws1afueX
+ /V1LVMzA/kw/jf+zXo2gufqeDn00S53ocGjNx46FL3NvWfIHhGgSKp3gN5a0C25nRe9/FDWE+PP
+ FLkzPu73xQCWw9ZuITySMjWli7P8b/QcSVXS0aS6/YKGoLY1U+Y3nesE/diU/+Wffn0/3p4yrbV
+ lV+QRbf6zQJ7Wuat+YRUIC/93i7y4G5jWxRGQsryWvXi1VF4riW7Dbl70gDfMI1eIWRYbQY7HVX
+ 7yt2NIKPdi+m0SBgw8ZV/6tDDdT5qGjpmkiCeOkjH4wqch1afeMX2s1uq3bu+fmwXioJ9agke5w
+ G5C1DQSb1O86g2hw8JDWpPnv1JDeDiRWJH5kGeTl1CG3sH2Y6dou8KXxqkAlRdX0gkQAzBXkMsJ
+ //4tj9+MXgctpT48/x52CxrDLguj6BmzqA5frZQ4jQbSt6OrVBcjDmPesNICsaf/3JNrBX+1iLz
+ 8/M=
+X-Received: by 2002:a05:6000:208a:b0:48a:f929:e140 with SMTP id
+ ffacd0b85a97d-48af929e23cmr807255f8f.10.1790676144867; 
+ Tue, 29 Sep 2026 03:02:24 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.06
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:02:07 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/37] target/arm: Fix PMSAv8 shareability decode for R-profile
- MPU regions
-Date: Tue, 29 Sep 2026 11:01:16 +0100
-Message-ID: <20260929100133.2598676-22-peter.maydell@linaro.org>
+Subject: [PULL 32/37] target/arm: Add PSTATE.UINJ to tbflags
+Date: Tue, 29 Sep 2026 11:01:27 +0100
+Message-ID: <20260929100133.2598676-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x0f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,43 +103,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Francois Bortolotti <jeff@borto.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In Armv8-R AArch32 the shareability field of an MPU region lives in
-PRBAR, not PRLAR:
-
-  PRBAR: [31:6] BASE  [5] RES0  [4:3] SH  [2:1] AP  [0] XN
-  PRLAR: [31:6] LIMIT [5:4] RES0  [3:1] AttrIndx  [0] EN
-
-(Arm Cortex-R52 TRM 100026_0103_00_en: Tables 3-80 and 3-83 for
-HPRBAR/HPRLAR, Tables 3-124 and 3-127 for PRBAR/PRLAR.)
-
-Without this fix, address translation instructions like ATS1HR
-will return wrong value for PAR.SH.
-
-Cc: qemu-stable@nongnu.org
-Fixes: fca45e3467f7 ("target/arm: Add PMSAv8r functionality")
-Signed-off-by: Jean-Francois Bortolotti <jeff@borto.fr>
-Message-id: 20260925234136.1182108-1-jeff@borto.fr
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260925215004.456336-12-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/ptw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/cpu.h               | 1 +
+ target/arm/tcg/hflags.c        | 3 +++
+ target/arm/tcg/translate-a64.c | 1 +
+ target/arm/tcg/translate.c     | 1 +
+ target/arm/tcg/translate.h     | 2 ++
+ 5 files changed, 8 insertions(+)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index f537502d3b1..de0435a58b8 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3092,7 +3092,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
-         if (!arm_feature(env, ARM_FEATURE_M)) {
-             uint8_t attrindx = extract32(matched_rlar, 1, 3);
-             uint64_t mair = env->cp15.mair_el[regime_el(mmu_idx)];
--            uint8_t sh = extract32(matched_rlar, 3, 2);
-+            uint8_t sh = extract32(matched_rbar, 3, 2);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 78bf4576a58..06ebed4a8fd 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2506,6 +2506,7 @@ FIELD(TBFLAG_ANY, ALIGN_MEM, 10, 1)
+ FIELD(TBFLAG_ANY, PSTATE__IL, 11, 1)
+ FIELD(TBFLAG_ANY, FGT_ACTIVE, 12, 1)
+ FIELD(TBFLAG_ANY, FGT_SVC, 13, 1)
++FIELD(TBFLAG_ANY, PSTATE__UINJ, 14, 1)
  
-             if (regime_sctlr(env, mmu_idx) & SCTLR_WXN &&
-                 result->f.prot & PAGE_WRITE && mmu_idx != ARMMMUIdx_Stage2) {
+ /*
+  * Bit usage when in AArch32 state, both A- and M-profile.
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index cf7d49be908..c0b47f484e6 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -121,6 +121,9 @@ static void rebuild_hflags_common_aprofile(CPUARMTBFlags *flags,
+     if (il) {
+         DP_TBFLAG_ANY(*flags, PSTATE__IL, 1);
+     }
++    if (env->pstate & PSTATE_UINJ) {
++        DP_TBFLAG_ANY(*flags, PSTATE__UINJ, 1);
++    }
+     if (aprofile_require_alignment(env, el, sctlr)) {
+         DP_TBFLAG_ANY(*flags, ALIGN_MEM, 1);
+     }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index c60f4c4103d..b3438235828 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -11028,6 +11028,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
+     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
+     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
++    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
+     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
+     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
+     dc->trap_eret = EX_TBFLAG_A64(tb_flags, TRAP_ERET);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 8c56348a665..f32200cc47e 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6418,6 +6418,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     dc->fp_excp_el = EX_TBFLAG_ANY(tb_flags, FPEXC_EL);
+     dc->align_mem = EX_TBFLAG_ANY(tb_flags, ALIGN_MEM);
+     dc->pstate_il = EX_TBFLAG_ANY(tb_flags, PSTATE__IL);
++    dc->pstate_uinj = EX_TBFLAG_ANY(tb_flags, PSTATE__UINJ);
+     dc->fgt_active = EX_TBFLAG_ANY(tb_flags, FGT_ACTIVE);
+     dc->fgt_svc = EX_TBFLAG_ANY(tb_flags, FGT_SVC);
+ 
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 31f52a34a68..f633aa265f0 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -155,6 +155,8 @@ typedef struct DisasContext {
+     bool align_mem;
+     /* True if PSTATE.IL is set */
+     bool pstate_il;
++    /* True if PSTATE.UINJ is set */
++    bool pstate_uinj;
+     /* True if PSTATE.SM is set. */
+     bool pstate_sm;
+     /* True if PSTATE.ZA is set. */
 -- 
 2.43.0
 
