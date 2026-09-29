@@ -4,121 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D36FCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DE8CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBWiu-0006Tl-Fj; Tue, 29 Sep 2026 08:14:16 -0400
+	id 1xBWjk-0007BT-0S; Tue, 29 Sep 2026 08:15:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xBWih-0006KB-Ro
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:14:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBWja-00075L-V3
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:14:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xBWig-0002c3-04
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:14:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790684040;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0p9GsPyqfCLG6Q3eZpXp3Aciwh0Q5G37w2jNJDtV/CM=;
- b=d6m6Sc3aqBXokmu5SYYe6IXkjL8f0c3XKbswHUSIFbL1PZ5/Latcb4pU2uLzx2CEEs931S
- Z9Gr/s1SG2okZmtq0a/pL0PGO2WlGwlqLmUgs9RiJk6c+ZvCXK9Z21nNYhwXHvRh8dUNLs
- WawY99jjVwusv04pAiMXK92ArPoYS+0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-4Ilo7JOWPYahUyZcns96Yg-1; Tue, 29 Sep 2026 08:13:58 -0400
-X-MC-Unique: 4Ilo7JOWPYahUyZcns96Yg-1
-X-Mimecast-MFC-AGG-ID: 4Ilo7JOWPYahUyZcns96Yg_1790684037
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-49fcd86b8d3so34690235e9.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:13:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790684037; x=1791288837;
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBWjZ-0002ek-IH
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:14:58 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TCDvD71491541
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:14:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ p59NJOt4h6rQH7UZlYf95Pn6Hfc87EstH3PiRygGn/g=; b=mDBEg2NbYeAROLUg
+ CZ3kAm0GGN0HlybNijDQUybrda+Jr0cnDjx5GR//ybE1IAiPaGx60loOaIhR0dfF
+ ZQJUyTvVPTu8ZE0TrWvXRnZh3qIQTkhqKFSXv7/j21zF91tOSczilmdbHnqVDYaz
+ yMj+aD9C7xBQYbuub+YxaXlx7rroSxZieWJpWGlOQxCN4HpRq3cIXVGftbk99hok
+ BeqZpa2r2g3RA3+RIW4oY8+6SuRkfowm34ViUv3gLSWp5zgACBCLsVSmFbD1j3Jc
+ 87wfFddqntFokm8Dt2HY1uomN0XAHVz2L5oMFDI0heh7bnpn0dftX8/9ukkjPg/l
+ 9KGTvA==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h09x4rvss-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:14:55 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-98331b577e4so3190383241.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:14:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790684095; x=1791288895; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=p59NJOt4h6rQH7UZlYf95Pn6Hfc87EstH3PiRygGn/g=;
+ b=TOlSt6+XfzDipBOLJQ59K4SR9sGL9yLqCS/hz3DF4zMxk7rNO/G+JTbeDmvnbo4w8r
+ atCqqHkOhwSGRQSq1GKBIydi3C7VZ62eFMJZNSzLUjKxgXmb3It8zeF5RctXaS3uxyGS
+ pNzI/Ki/AKrkfxnv4VNKIKsalJ41F1/G8OC3j3R2Wtq1ie6F5jMsCQ7IGEiFULpwzPTD
+ j89uqqgOKTKQWzsUhxWfRjBmSpmfcLtvllXO6M8ZSWvUU8UyPg3kbMC0yqwT18BStDqB
+ 4Eo9XHJljvlIvgiUuAmdwpH+1D+31AY3dq+/FBnasidSjbm8dDwGAsqlVS9jmkLlG+Kh
+ 0POA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790684095; x=1791288895;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0p9GsPyqfCLG6Q3eZpXp3Aciwh0Q5G37w2jNJDtV/CM=;
- b=SX8TMi8Hb2+NMHCE046BudcpT2++4HAbAq+Gc1Ef8e9tGX/JWnbieyXXtvyzYiyOjZ
- cxLCOMIk8L4LGtWekqIhhEVbmv7kHvbp+B4VFY8WJBLb8R7jWY3UIoD1NGT+wu2OeYUh
- MnGMHOPHYdiz++ckR877GgSGhnIWiMePHMb6zko/iZZuylzhR40DAp38fkl3a6V7pXSf
- O4AWlOVKuBgdX8NcT1Lv+j4hrVVExrF+otF07XuSeuHa/7j9b48Dt/YtwwVzuvh6Lrvp
- mLFKpd1rrIxO5xakUTA1wWkTfTIuuoh/8tCoJpfihU+3NHN2B4nwp+M2JfWTvdChPOqr
- jWSA==
+ bh=p59NJOt4h6rQH7UZlYf95Pn6Hfc87EstH3PiRygGn/g=;
+ b=ipQmPs2j2pXCAFqASpfA5VUoO+GSzgpg8TT6J4TYPRyyRsYhwXXMcm38YYqKwx0Bvi
+ XhV2XUGwq1UjuxuUPiyxXJzp1xL8bYymTbb+/B/zvRo1xtAxFRyp8agDjgjNqDV0G42L
+ AmafEpoyHoy60zMz/yp8LenDR5TI6drHQwWORAq8/KNgFUju+XaTcB9Fo2JlsWVdOY/c
+ qc7OXlJoLgjFT80OngGn3VTwYX10gnUSAI5XnTzwwCWAK7wxPc2wSqX0RhwR83iHsdH6
+ p7zjBJeOYbCbRkRMcGXr2w/9UgQjbmrw+jTu6aXs8Xxi04vyZ+Vi6vB42vaXMt1ttR3t
+ +Owg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxwOlY6GiWdycUH5+Z5ZTB3gtbMz/fWLEHDfJUm++pnHZMVXEJ4IuA0QKAlQ+3LE6o++73pmvnTgoxy@nongnu.org
-X-Gm-Message-State: AFuF++nBCio2c6xCpkbN18IaxTx/HBs1D7O1BDpfeKJOJNOFW69Qxf8m
- wJXgXLf3pFphSZ1UJOjXUMVZw/SgnouD4Ci4iZwuFMccHxIhEAOjGSNLX0D/6V2Iou+TBD3tQbY
- DNGVp4n9M8XcqoebVhTGEqcUU0/G8WqJE69TpIa0Jgy0IVBf4rUyxStRv
-X-Gm-Gg: AYBFou2Ao7YvDSQYMK2DqUToP/U2ywqAO9YP0zMQ+BAGlafBU3zhae5vGbiZYwp+JDJ
- 00vr2rbv+XsZ9kn51KbKjr9JuLt7LFWrcfn9v8GpbQBoikP8A6lJrwI2IxFGqcSAakd97XORN2F
- fx+EiRvUltRWWXjlas7T7PSubrKlw1K0AHusP6DGfzdBVafaG4tHnvQkipDtFE75x3zOy3FHCns
- cLpohs42v/wZmaxf11AZHoJLHZmwnOXjJXC4TRC7WbkK8CSHdiZ2Mmfgg54xrkRB+AqOUHkqluD
- zsKVGvuDrZ4zPxnWKIhl0jQ51W+thMQgVdmgJ/AO5pudNSWCB5+hO9YR80PmUB+AvZMNl4T4bBh
- RBCySkpm5SVdUQsiIxz45kWlvfKZ4WFz4ZrBmRV2UTQMxpuuP
-X-Received: by 2002:a05:600c:c094:b0:49f:f997:7ed7 with SMTP id
- 5b1f17b1804b1-49ff997807amr116111835e9.11.1790684036832; 
- Tue, 29 Sep 2026 05:13:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:c094:b0:49f:f997:7ed7 with SMTP id
- 5b1f17b1804b1-49ff997807amr116111335e9.11.1790684036397; 
- Tue, 29 Sep 2026 05:13:56 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AKwUvBz11M4f48kJK4gw6A+u2PuC7JAy42eWZOQwj17jo4F6R9aDTu7cK6s6F7VxRLGHUY5VNefxREjKVKaX@nongnu.org
+X-Gm-Message-State: AFq9FYJP09EllWRJJ6M8TW5F8JCYvavYP/e/n795pAkjvDS2K0+aCfH4
+ hQ04DRAHF56npQPnjFUMLMSUUdkVVm7HnCBHIJ/akZy83z5mZw59e6VKqnGblX4xsAL0bEaV2GH
+ XGm5Zzy2DbnP7zRlD/UOmkV/xkleKiRmlOPgqhpyMFN18F6qHEBeXagC03g==
+X-Gm-Gg: AYBFou1qyPRN0rFt6Fxfyaikg4k6vlQ3jKKR/wXGROB79aIZ28Kk8ksEThe+d+SAkKe
+ eLX1+E/SkC03IHj1fR0wpIjRa2ByHJqLTc2FGkAiGWkbfoJH+9uAmqb5/Ol9FDpSLXxVd4vPY6I
+ AQ+QJebY8O71Lo7oFFBNbsv8odykTEayO5C8xSL/zP2uP075FtT1KPcMaXrSZIC5UywFVwL0Rdn
+ WOmOYD/1UHG5Ac0TNPbOkLruzmsXVoGrpQ0I4OPRbfgdKZM7AZLqwc/3CmzAWDjU0rLKnv9/cDY
+ N5LL4YYlFY+Ona6bHniHLsBfFOIFcUW9fj6OR7YmDJ18wCkCrzgAJLatvSCtURm2BJE9zryZ9Jg
+ 00fIlCetXHtdGc9i0bKLTzj7j9XEagd1OQA==
+X-Received: by 2002:a05:6102:55d1:b0:7af:fef2:8ecf with SMTP id
+ ada2fe7eead31-7affef29fe5mr3462393137.8.1790684094951; 
+ Tue, 29 Sep 2026 05:14:54 -0700 (PDT)
+X-Received: by 2002:a05:6102:55d1:b0:7af:fef2:8ecf with SMTP id
+ ada2fe7eead31-7affef29fe5mr3462389137.8.1790684094412; 
+ Tue, 29 Sep 2026 05:14:54 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00c10c656sm111735875e9.2.2026.09.29.05.13.54
+ 5b1f17b1804b1-4a00d47eeedsm30180655e9.3.2026.09.29.05.14.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 05:13:55 -0700 (PDT)
-Message-ID: <1ce67e00-1037-4de0-84c5-8248fd4d4e97@redhat.com>
-Date: Tue, 29 Sep 2026 14:13:53 +0200
+ Tue, 29 Sep 2026 05:14:52 -0700 (PDT)
+Message-ID: <3d90de54-5665-4a87-9fd9-a1488af2f493@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 14:14:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 17/26] target/arm/kvm: Add consistency checking for
- SYSREG props
+Subject: Re: [PATCH 10/42] tests/functional/arm: Add console test for
+ `mcimx7d-sabre` machine
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260916144721.751810-1-eric.auger@redhat.com>
- <20260916144721.751810-18-eric.auger@redhat.com>
- <7C929003-175E-450D-885B-CAB243B89645@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <7C929003-175E-450D-885B-CAB243B89645@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+References: <20260921214710.29422-1-shentey@gmail.com>
+ <20260921214710.29422-11-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260921214710.29422-11-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX5dOU0Wf13WT7
+ NncDqrkCRPMDy77WUj89hmn4zev/BtrmcMuObg/4qyhzOJScF9wlb6ymPFugD2ClbQuta6xZANS
+ XF0G92eCesuUGNBCz9zPHLVRaCvehuE=
+X-Proofpoint-GUID: 9sxPPx4Hyd6ToBH150iWs8TcMV0m-SLQ
+X-Authority-Analysis: v=2.4 cv=I5Hw19gg c=1 sm=1 tr=0 ts=6abbabbf cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22
+X-Proofpoint-ORIG-GUID: 9sxPPx4Hyd6ToBH150iWs8TcMV0m-SLQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX3YA5qzdqpz1L
+ 3RKxbI7G261pd0foHijPZRuRsgpa/XMhR/XFqGfPKw53zcdncADQUyCOX7nT+B/xCTBqyjjQtkw
+ LgE0uB5Ws355wozpLteZ/VthysuGiiUMNzjfKK3hf2SAV2FnW4bJUpd5sluGgmbZB0MWdh/4tCd
+ B+ePkUXJxd8O0o4kAptiX6I9q8ZGR5DOHNnPHlF1iaFKL2tajKg8fGZu0yaSvg/Uzq1kPhsKR47
+ CL17VoBzy4Lp5AHnQulvbBWWstvWqvOU+OSeubxjefQyoBiSdic8T7LuA+7BAH7q6b9EDy1nssL
+ wXLWIefgM+AP3NCsfg7jqWpL50fZZG8QZlaAkXNqcb3hW32G6EDWKO3xUYojvFOjZsEpptt5+Ct
+ WcvccQ3olFM3y8EocbSdITUbvxEH71qsifan3BNO6ctGAeDDC7m7FklYndfyayaphAaLHFY2gjS
+ DvqCWFKEL2lln1K7vsA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290048
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,197 +161,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
+On 21/9/26 23:46, Bernhard Beschow wrote:
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   MAINTAINERS                                |  1 +
+>   tests/functional/arm/meson.build           |  1 +
+>   tests/functional/arm/test_mcimx7d_sabre.py | 46 ++++++++++++++++++++++
+>   3 files changed, 48 insertions(+)
+>   create mode 100755 tests/functional/arm/test_mcimx7d_sabre.py
 
-On 9/28/26 2:53 PM, Khushit Shah wrote:
-> Hi Eric,
->
->> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Since legacy composite options (such as SVE, virtualization, ...)
->> and new SYSREG props coexist, add some basic consistency checks.
->>
->> Those checks are performed both in kvm_arch_init_vcpu() before
->> applying the SYSREG props at the end of the initialization chain.
-> Where else?
-nowhere, I shall remove the 'both'
->
->> Some ID reg fields corresponding to legacy composite option scope
->> are not writable. In that case we just check that the field has
->> not become writable.
-> I don’t understand where the above happens in code.
-Everywhere you have:
-
-+        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
-+                   propname);
-
-I modified the commit description with:
-
-Some ID reg fields corresponding to legacy composite option scope
-are not (yet) writable (EL3, MTE, SVE, ...). As such they are not
-supposed to be exposed through SYSREG properties. However in the
-hypothesis they would become writable, and thus would be exposed
-and attempted to be set, we need to reject any setting because no
-consistency check is implemented yet.
-
-
-
->
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->> target/arm/kvm.c | 105 +++++++++++++++++++++++++++++++++++++++++++++++
->> 1 file changed, 105 insertions(+)
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index ddf320d0e6..f52c03745e 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -340,6 +340,107 @@ static ARM64SysRegField *get_field(int i, ARM64SysReg *reg)
->>     return NULL;
->> }
->>
->> +
->> +/**
->> + * kvm_arm_vcpu_validate_sysreg:
->> + *
->> + * Validate a SYSREG field value is consistent with legacy composite options
->> + * Some checks are not implemented because the corresponding sysreg field
->> + * is not currently writable. In that case we make sure the field has not
->> + * become writable, which would mean the user had the capability to set the
->> + * corresponding property.
->> + *
->> + * return true if consistent. false if it is not, along with an error handle
->> + */
->> +static bool kvm_arm_vcpu_validate_sysreg(ARMCPU *cpu, ARM64SysRegField *field,
->> +                                         uint64_t value, Error **errp)
->> +{
->> +    const char *fieldname = field->name;
->> +    ARM64SysReg *sysregdesc = &arm64_id_regs[field->index];
->> +    const char *regname = sysregdesc->name;
->> +    g_autofree char *propname = g_strdup_printf("SYSREG_%s_%s", regname, fieldname);
-> I don’t see a reason to build property name here.
-
-a field is fully discriminated by the reg name string/index + the field name string/index. So I imagined I could use the prop name directly which has both. Now I can also remove "SYSREG_" if this was you prefer?
-
-
->> +
->> +    /* virtualization */
->> +    if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) {
->> +        /* consistency with machine virtualization property */
->> +        if (cpu->has_el2 && value == 0) {
->> +            error_setg(errp,
->> +                "Inconsistent -machine virtualization=on and "
->> +                "%s=0", propname);
->> +            return false;
->> +        } else if (!cpu->has_el2 && value > 0) {
->> +            error_setg(errp,
->> +                "Inconsistent -machine virtualization=off and "
->> +                "%s > 0", propname);
->> +            return false;
->> +        }
->> +    /* secure */
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL3") && value > 0) {
->> +        /* consistency with machine secure property */
->> +        error_setg(errp, "%s is set but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    /* MTE */
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR1_EL1_MTE")) {
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    /* SVE */
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_SVE")) {
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ZFR0_EL1_SVEver")) {
->> +        if (cpu_isar_feature(aa64_sve, cpu) && value == 0) {
->> +            error_setg(errp, "sve is set but %s is set to 0", propname);
->> +            return false;
-> This is actually an valid configuration.
-OK I removed that
-
-Thanks!
-
-Eric
->
->> +        } else if (!cpu_isar_feature(aa64_sve, cpu) && value > 0) {
->> +            error_setg(errp, "sve is not set but %s is greater than 0",
->> +                       propname);
->> +            return false;
->> +        }
->> +    /* PAUTH */
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_APA")) {
->> +        /* PAUTH QARMA5 address authentification */
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_API")) {
->> +        /* PAUTH Impl Defined address authentification */
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_GPA")) {
->> +        /* QARMA5 generic code authentification */
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64ISAR1_EL1_GPI")) {
->> +        /* QARMA5 generic code authentification */
->> +        error_setg(errp, "%s is now exposed but qemu is not ready to support it",
->> +                   propname);
->> +        return false;
->> +    /* PMU */
->> +    } else if (!strcmp(propname, "SYSREG_ID_AA64DFR0_EL1_PMUVer")) {
->> +        if (cpu->has_pmu && value == 0) {
->> +            error_setg(errp, "%s is 0 whereas pmu is set", propname);
->> +            return false;
->> +        } else if (!cpu->has_pmu && value) {
->> +            error_setg(errp, "%s is non null whereas pmu is unset", propname);
->> +            return false;
->> +        }
->> +    /* aarch64 false */
->> +    } else if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
->> +        if ((!strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL0") ||
->> +             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL1") ||
->> +             !strcmp(propname, "SYSREG_ID_AA64PFR0_EL1_EL2")) && value < 2)
->> +            error_setg(errp, "%s is < 2 while aarch64 is set to off",
->> +                       propname);
->> +            return false;
-> return should be covered in braces.
->
-> Warm Regards,
-> Khushit
->> +    }
->> +    return true;
->> +}
->> +
->> #define MAKE_IDREG_KEY(reg_idx, field_shift) \
->>     (((uint64_t)(reg_idx) << 8) | ((uint64_t)(field_shift) & 0xFF))
->>
->> @@ -2241,6 +2342,10 @@ static int kvm_arm_apply_sysreg_props(ARMCPU *cpu, Error **errp)
->>         uint64_t oldfv;
->>         int ret;
->>
->> +        if (!kvm_arm_vcpu_validate_sysreg(cpu, field, value, errp)) {
->> +            return -1;
->> +        }
->> +
->>         mask = MAKE_64BIT_MASK(lower, length);
->>         value = value << lower;
->>
->> -- 
->> 2.53.0
->>
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
