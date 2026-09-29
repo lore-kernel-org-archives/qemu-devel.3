@@ -4,130 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5BFCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 14:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44429C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZIh-0003yU-JX; Tue, 29 Sep 2026 10:59:23 -0400
+	id 1xBZJe-0004Ys-3h; Tue, 29 Sep 2026 11:00:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBZIf-0003y1-RA
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:59:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBZJU-0004Vo-UQ
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBZIe-0004n7-CU
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:59:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790693959;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qqQNJTixA8kN0oh0AmOlHcis6d0HHLkXX2BcFyuKAbM=;
- b=Aj7coIyhp6spLFFXpJ1GFrXZrk/hpjMu4QTUS7r8PEsQgPoLIva7ya2TZcwgfWESLfAT1t
- wIkhVX8bDHLxddqky1Fkdfw4h3YYKgVW6IbfnsWF9ljlYOQH7HReserJlt1Sinu9LpZ3RL
- xXzIPuZtYJDkw44Jdi9T4/eYIMPJFC4=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-A7Gy9wsDMtmGDf9HhD6UeQ-1; Tue, 29 Sep 2026 10:59:17 -0400
-X-MC-Unique: A7Gy9wsDMtmGDf9HhD6UeQ-1
-X-Mimecast-MFC-AGG-ID: A7Gy9wsDMtmGDf9HhD6UeQ_1790693957
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-675346c1d96so3969823d50.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:59:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790693957; cv=none;
- d=google.com; s=arc-20260327;
- b=TVKG73TEP7piS2IEsyyWL5Cua12hXeb2NjILvSTa0oUcpIX9cg2Te/1OAqX3gCcB4x
- Midh4TpCCIXIcn87jmsinL31YTUTs/PFPx1nSB3h4aPR2H68HUNNXEH20edYAjk1Ng9U
- jslDnkCmvdEA4QcB3ilPlsCHicOlVLldbqem2OmiNHoaLxbbT7mm9K26zqROLlcsYw5g
- xukF83OGRQ5FmdOgRK7+seZpusvzCyPUwkmO49Q00G/9QJ/BZMP1UG8/Rai8BQq9pL2H
- ulNYDdn5/cw1FF72evTWxtwHGG7TAlvjb/bny5C08eqlH+uiUgT4/St5zbbHn5YxFW11
- mWxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=qqQNJTixA8kN0oh0AmOlHcis6d0HHLkXX2BcFyuKAbM=;
- fh=n+2DAFMZlHp3F1d4nio56yaatBOIj9xQxACGOxQdYUk=;
- b=Y/9C7SxS1EEa90Qqs/TE/4qQD3UpjOV10Yqh8zZThn3U3TuthW00nG6GHV2LXsGr1G
- I/AOr8H9D0fl8xKz3YRexaKtpamXtJW5TStoZ2g+ZL8vmlRCFD3CNLNUTY1Y2DzrayMS
- tSrUYeoYvlnI0M0sXwawaFD6bUhmFAAMlP/MrnRLGn7VMcylDZL83wUvCgQUI0OemBA/
- z+Cof69fq/+RXtpjagsQOJ4iBNxgU8JNB+sDOWYObqa/IMbgLBO3Dh8STlBv1sMmU+uL
- wW3nTCIyksx1boNOWhdjjJmr3PUE6tNwe2c/4PX44g/0P3w9a5xlCzKjso50f6Z+Wsb9
- zRtg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBZJS-00050p-5Z
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:00:11 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TCqlag350194
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:00:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=; b=I3uoVswzPOAVm45U
+ TySoSv+ewy4ebXsFI5kGIvjFmCG2aGKTapyARHykhPziLI1dvgeJCBMgbQJM637F
+ YgCVPCaEM6MRsSMgoOzaAlkb4kcLRvAIDqpP8VnjmjZP5RYb//VVIaXwT5T2jKw0
+ It0z1aq+EjF4HubqI0tWmdcikjGL6pjh4EEpZO3YEFLxIc6NSdwUVNBwaBiVM8kt
+ zRHFLdSyOFa98HPyUmNzIL2Gf440igV6CKRnLbOjy5SyLdTScKTRnef5n7WP7nf7
+ 0ycKhQRwT7HvGPWkaAOdQFUGagb073o7Z6R3zyknWd/ukp99+YuBx6X0oriOUDeB
+ 1qNitQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h01vkkfaq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:00:08 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93c58ee2116so742463585a.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790693957; x=1791298757; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=qqQNJTixA8kN0oh0AmOlHcis6d0HHLkXX2BcFyuKAbM=;
- b=S3nud+KvIiJZkv058a/0y4Gd0XKDyXkER2TFWUp5x8y+Tx8B8W6eRJma5QmxxHkSoi
- c+21DiwJvrbRbGxMOIFpwz2K4LuN8jpu3VXXvPUl3jP5hYXh3EBxW7J+y5IRY/ToSZTp
- zDdTPquh4ih4HvAyu7AzMnGaQewL/KVjpTr1NyotPYvAWDAauaNshNJmR3bNNFRRUyP2
- BUYHEpXtt7XPBEaHHy86ri/PVyyO/oV1guE+BDCFQBFZmoibr9kzhI4LqHctOcsP+c5o
- kHARxo/YYyc2L3Mnp3W2xTRljr3gC9xFq83v5u7g1wR5LdEjVaFpKqMiSGdSMQvXH27y
- 9Qwg==
+ d=oss.qualcomm.com; s=google; t=1790694008; x=1791298808; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=;
+ b=UqBxgU2QaCs5nKvp37QgUxjFEeqTOXPitUi4x7nF40J0UjezKwxd0fj7H7+CRvZzkh
+ yJhymoi5fshIxagd3D2Xi0tXXfpQymhiKTCUzEoAQ75/4wPh65zSJUqJs7Burt0NH6xX
+ 2D3s6CfgeYSfIAKQ3fr/T82s7Wm52BWkdwc7iDVsoApJ6N44+9/6ESCSwITnUbdzdsCM
+ 0QnheGC6vnJv5U7V1ZM9T0cPd2gOOwEe2UsIxB9J+WU1QbAODrJqmI747D0NymLwMQ9x
+ bK9Gj88yQJY03XmYwMhvGMNd28S6QkRy/hUKOZfRJHv7CpI7wH0+YSOKBLHhIZ8iXI//
+ apLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790693957; x=1791298757;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=qqQNJTixA8kN0oh0AmOlHcis6d0HHLkXX2BcFyuKAbM=;
- b=cOuXlJ+WxiEgHbH6fKUoCA/ZoE2F57r9W6Gd++Edi6ItbOnoHDoYE+2GKFoSSb8hYn
- Gz6B4l5Am3uWPDdUkU/MTVWA8MtEsKUflPKLauQE2CTK9ufwbCOkaQ4F5DvW2+6n0dZH
- VSGeLqPCcBVyYEtsValoOC/HchievGs6xorT4B+wNwkRVCL22mMsWOmH30RvABZEFR79
- ItWoxFYDUi7fM+nG3rSdGaAzHfAmt3spmWMDDCPHWHkJ3e/DLvhmAmoWOjQRZ06gUuoJ
- tJjmk0hRaidqdynuIwlAbPetFBZlfUqPLPjZhtN7nLIUMNq9SXZ2pCLdkg8sq+Yq2Ayj
- pU+A==
-X-Gm-Message-State: AFuF++mpjLPkdBZtqo/h/rpU7cW9Hpe9JLoP7asgjIlkfCo+Zg5BjnS3
- SwgoCtq1c4sb8lpUhBB0OY6LpRy2+cxWqiYzTsNhgs4J3zCJ5+c1LSyO/eClzd/z5uFtrLLoxG+
- 0F4YquUAmzOZgsqTeARIWsp+j7StkksOfTMZ1Htvbs6b1D603DDxb6hIrVxYE0bd4G74uuvYI+t
- XeASDE64UIIzy8HGOJbUKPI55GA60w5Xc=
-X-Gm-Gg: AYBFou0jzCF+2H3BGW61u8pexFstAHI6e/qk1iV8XGoXJIiv8BQn54Gyc9z4fR+Q3Lz
- QKemcNDlNfTBB03JImO3pZ+QI20D2uPHMeXwagZ/s0zqHJTbszk5IU1jZaLf9K3mmUtbyp1/mrh
- jImM9jhsXXqcp0sQ/SPM7CYfwXFyrvJIGCP5fMjX2szQjAVzgCjZ+T9CgS0qtf8ZQtLZa04r229
- it+FZQSIoM+0sY=
-X-Received: by 2002:a05:690e:b48:b0:675:3ce0:29bf with SMTP id
- 956f58d0204a3-6753ce02dafmr3293396d50.34.1790693956675; 
- Tue, 29 Sep 2026 07:59:16 -0700 (PDT)
-X-Received: by 2002:a05:690e:b48:b0:675:3ce0:29bf with SMTP id
- 956f58d0204a3-6753ce02dafmr3293389d50.34.1790693956258; Tue, 29 Sep 2026
- 07:59:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790694008; x=1791298808;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oC6ycxct5evGf7msqSYvksrjwR+3Ojl2H7PIOG3pGA4=;
+ b=OCPgvJVtzni6lnt7uw/DhCOj6yGroJjfS73Xh9RX/0vpwbIsw5F88KnYK7FcDBISwn
+ 878YwsRT72Oh1Fw7nqTzuTiwOnuw1XSje/pu3uzjbU5H6hWTl1KviEG25vPw7EHH/Hgj
+ AHwM5SrEMMRkqp4NtCg8WhpswrdwG0g0NgXZvfSl/MXjU7gU+2l/tlBZfiZgZc7583Ui
+ 7X9NXRMAfA8RREddhRbJh/n6lV7wK1y/kiHTQvlODX1d9PaNhSNPzEmZwatSX2tMA0IP
+ dw4+N9xeU3uF/6ighk0+5S8xaImbDIEDF+uhjUYR6fIF8XhiUgHVXH9fcw3LP4gnx7U1
+ CdbA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzp6hJp1jKXLV8UNQgyTfbZoh63yvg0OnDU+rJeRHj6zab8HcQy1jZZrT915WyWwpfgcKi8RafEHg/Q@nongnu.org
+X-Gm-Message-State: AFuF++ns9NPc//zBRYZ8TV0HYU6H6Tcn9R53zLiG9h+0YTUlyop5gJeu
+ nk7kRsiyHZqGEr3H1EpX/Wpn+gpt47ESDTKb5AEfTGLvaowdlYcy18uViIdO1P4qo1ek/ela55l
+ Ofp82eU+prKMsQXO/lEcyEN9/SwUXUeTwB4fLCtb2S0cEdGKe92KiRn/cdA==
+X-Gm-Gg: AYBFou1eQAn4kTFU4Ww+DWOoUciXG+dk2CpvrFyJoypcQvHB2SRIXfZPOK0e4cWnrQ1
+ B/PpyMV6Ie19Q6NDKkgGPXRbxWqsrQVxHoZqwFiTUqBljXl/J4kaP8/lL/BQmELQy1aGfRmMTCL
+ YO/VQjm1mOCOy5o5Tt1PVhIRac7M5LCySX5lRJNwLDA2cGfuYKNCzmbqooSNc9UpjQpklApYbFa
+ l9+6+U4HFPPf/ynzEDeWPWT8SDdQuCWHKcIlgC9Ahvh8ZLvJ5XJrhgpo0JTx5EZhN5mRy/tBwyo
+ JZhd0rRVqDr9+VZ75ZXSVykChOx7Cyx812HD75Y+7HQSAKA/IvMCoVwMVua2ZSwZcO8VKmu8w8Y
+ DJnmPP9bjBKqCqEOUpkAJkKwOj2I1p/oITg==
+X-Received: by 2002:a05:620a:4547:b0:93b:bc51:b40 with SMTP id
+ af79cd13be357-93c47223f95mr2617134885a.2.1790694007759; 
+ Tue, 29 Sep 2026 08:00:07 -0700 (PDT)
+X-Received: by 2002:a05:620a:4547:b0:93b:bc51:b40 with SMTP id
+ af79cd13be357-93c47223f95mr2617120885a.2.1790694006945; 
+ Tue, 29 Sep 2026 08:00:06 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a014217216sm760635e9.14.2026.09.29.08.00.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Sep 2026 08:00:06 -0700 (PDT)
+Message-ID: <1391eb6b-b4e9-417e-a634-115fc1751166@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 17:00:04 +0200
 MIME-Version: 1.0
-References: <20260928192557.509157-1-jsnow@redhat.com>
- <20260928192557.509157-4-jsnow@redhat.com>
- <87h5j837kv.fsf@pond.sub.org>
-In-Reply-To: <87h5j837kv.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 29 Sep 2026 10:59:04 -0400
-X-Gm-Features: AclHuK-KWOI1zcL_ePAM2xCU4btDO_KZYw4uZu2m8ONSdd_3oQjvIT_z-HvG1gk
-Message-ID: <CAFn=p-YxNvecsdJGgtd=6A0ySxBL_F-ZQpkJzvbt6iBJ3B88cA@mail.gmail.com>
-Subject: Re: [PATCH v3 03/10] qapi: convert/split intros for block commands
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Zhao Liu <zhao1.liu@intel.com>, 
- Igor Mammedov <imammedo@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowangio@gmail.com>, 
- Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Qemu-block <qemu-block@nongnu.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: multipart/alternative; boundary="0000000000002a2778065ca06ddb"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 18/25] target/arm: add cpu-models-stub.c
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, eric.auger@redhat.com
+Cc: cohuck@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org, 
+ maz@kernel.org, oliver.upton@linux.dev, berrange@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, gshan@redhat.com,
+ skolothumtho@nvidia.com, sebott@redhat.com, armbru@redhat.com,
+ philmd@linaro.org, yangjinqian1@huawei.com, shaju.abraham@nutanix.com,
+ mark.caveayland@nutanix.com, ping@khushitshah.com,
+ sandesh.patel@nutanix.com
+References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
+ <20260921123249.1708067-19-khushit.shah@nutanix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260921123249.1708067-19-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1OSBTYWx0ZWRfX8xIrPy0ifRQw
+ D2Fdsv7H5Q2kCvKYea9ctX0EFGxJCjhmoNZyKGLyCf4gGzGKP3CR+zjUhpNcsFOQun0aHmuXMTJ
+ W0Z9Cv/RomnPeqMpEKKa92qwQLjeOyhV63+MJNmmmv1L+c/DCsfZJIZcZSEg31mVLII3VbEQWcN
+ UTYLA1SdaNhAwUZYpb4ZWADJfcdTLwXi5uuVST306e3FLqDete1agIr7rUnS58FSHyte68efnA0
+ Xz9Rm3L+T/gwkrT71KyE7quh5HPHdP3Si01CvOngNBspQP5hzTVge15i/15QiiEcGtf/P+lV4OG
+ rAyCMlButnqjQbDjw/Zrsm/anz7mhFMqR45QYKAaDGbyxNqRhMjIWIXp008S1G4evlebyqHGlxT
+ FLyconDbdZFP0Eym6s/oMJEn0qNwFDXn6yNS77d8s9qDVqgZR6+VpOgWDbHnnJHuG8i+N7h0hJD
+ /CSDcvt7/pfSFr7MS9A==
+X-Proofpoint-GUID: tVDDHL5TkE02d0jcj2-9rrTZTQL0V_fU
+X-Authority-Analysis: v=2.4 cv=VcVir1p9 c=1 sm=1 tr=0 ts=6abbd278 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=64Cc0HZtAAAA:8 a=kBidzhC-Fu57bEbtvHYA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: tVDDHL5TkE02d0jcj2-9rrTZTQL0V_fU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1OSBTYWx0ZWRfX3QAJmUuDwpFM
+ DEysj4aVE7VYvSO0GpyWbs5lZscne9XqhvCspAyPGJYDj019nUaQfHtGBQAC8+8QjvSVWBsyNKE
+ t/+x3q9k4LrLRBKN8ZYqMqWf1zfPEWA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290059
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,77 +162,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002a2778065ca06ddb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 21/9/26 14:32, Khushit Shah wrote:
+> Add cpu-models-stub.c, which will be required to add QMP support.
+> 
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>   target/arm/cpu-models-stub.c | 13 +++++++++++++
+>   target/arm/meson.build       |  1 +
+>   2 files changed, 14 insertions(+)
+>   create mode 100644 target/arm/cpu-models-stub.c
 
-On Tue, Sep 29, 2026, 2:17=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
+Shouldn't be needed if guarded in qmp_query_cpu_model_expansion() as:
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > Convert, or split off, intro sections for commands defined in
-> > block.json and block-export.json. In general, this does not currently
->
-> Suggest to scratch "In general".
->
+     bool named_model = false;
 
-ACK
-
-
-> > impact the way these commands are rendered, except:
-> >
-> > 1. blockdev-open-tray and blockdev-close-tray see their opening
-> >    paragraphs split apart, which is reflected in the rendered output,
-> >    and
-> >
-> > 2. block_set_io_throttle and nbd-server-add see their argument
-> >    definitions move up to just below the formalized introductory
-> >    section.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
->
-
---0000000000002a2778065ca06ddb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 29, 2026, 2:17=E2=80=
-=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
-t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Convert, or split off, intro sections for commands defined in<br>
-&gt; block.json and block-export.json. In general, this does not currently<=
-br>
-<br>
-Suggest to scratch &quot;In general&quot;.<br></blockquote></div></div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">ACK</div><div dir=3D"auto"><br></=
-div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
-cc solid;padding-left:1ex">
-<br>
-&gt; impact the way these commands are rendered, except:<br>
-&gt;<br>
-&gt; 1. blockdev-open-tray and blockdev-close-tray see their opening<br>
-&gt;=C2=A0 =C2=A0 paragraphs split apart, which is reflected in the rendere=
-d output,<br>
-&gt;=C2=A0 =C2=A0 and<br>
-&gt;<br>
-&gt; 2. block_set_io_throttle and nbd-server-add see their argument<br>
-&gt;=C2=A0 =C2=A0 definitions move up to just below the formalized introduc=
-tory<br>
-&gt;=C2=A0 =C2=A0 section.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000002a2778065ca06ddb--
-
+     if (kvm_enabled()) {
+         named_model = arm_find_model(model->name) != NULL;
+     }
 
