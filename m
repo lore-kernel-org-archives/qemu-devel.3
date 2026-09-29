@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BB4CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4F0CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUfX-0007kO-CV; Tue, 29 Sep 2026 06:02:40 -0400
+	id 1xBUfY-0007oh-Uv; Tue, 29 Sep 2026 06:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfF-0007ZI-1G
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:21 -0400
-Received: from mail-wr2-x17.google.com ([2a00:1450:4864:30::17])
+ id 1xBUfJ-0007cv-78
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:28 -0400
+Received: from mail-ej2-x0e.google.com ([2a00:1450:4864:34::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfD-0008El-Bd
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:20 -0400
-Received: by mail-wr2-x17.google.com with SMTP id
- ffacd0b85a97d-4888598e4f9so2572019f8f.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:18 -0700 (PDT)
+ id 1xBUfH-0008Ft-6o
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:24 -0400
+Received: by mail-ej2-x0e.google.com with SMTP id
+ a640c23a62f3a-c2da4eea067so351978366b.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676137; x=1791280937; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790676141; x=1791280941; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=INN0hh4o6+2YKso9yD9XUIa0Z6UZ9zt13jPQTQszeEM=;
- b=QkaNbNvJjtHQYPD82DPOcdlno5vccJyPkUXt4PyGtQLYyEDmQmOWUtBEg4C5GM9IHg
- /MegtNzMT9GnjUUEgnzAkTiGcftnqRbjtdcl11xREr6S/O19IbIwzMsNAVGJpZuVMAlH
- zMcf8WaPoEVy4udRZgU88RkzRjdBttbhhGWYemwGQ6eJ5Hx4ifEnNR2knGPie7Fo6kfu
- ptc0OqMxu8uGUEhebUjBy1+xbm4gd5z5/LG7NOShFavSl756RrbPjZlJLW17UqWP5B9b
- Cmjlc6uf2b5kWvtd0PLFcax0h2rr2NsPiEECGxcEUYih2eKa7DJRsMLvWL13EhpgLVyl
- MdCw==
+ bh=F3YgnIvFjhPZJOJvluiJoQ7sWOshmcyO01yTKvAWt0Y=;
+ b=v/KVuLtlpp7MRsK5IPjyjT600I0HGaHB6yL05ZuJd8nHQiONB7S3pMQBbrnEhuws+7
+ a/x2+QasvY9OXfDvLl2SUKauY1uc1gh8yruY8yOOrl69Hlcfzd3Cv5bhIIgBJ8q0sFTs
+ 3UVOgbQbSZNVnk4YQxEriVCKojyLsP8t0onVc6QMr4Fr2ipJrN5RNNaXLeSZ3yStubCr
+ P0963y2yfk6udvJDZM88ysfl6EMlarHz/AnJB6YRrnGAq+AnhKNb5j0S/3mjMAlxC0O2
+ +b995zv8cz3Xrh/N+8LXA5gjNq9RME9T8mIYTauaIpV46yfq2jn8bu9fawuwXoe2C9Tr
+ m2PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676137; x=1791280937;
+ d=1e100.net; s=20260707; t=1790676141; x=1791280941;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=INN0hh4o6+2YKso9yD9XUIa0Z6UZ9zt13jPQTQszeEM=;
- b=G8FteB0DwaeCMzkKbhiqPtOmpei6RnbhX1ml2RjTuf30y2RoaBrapKeIbeEtv67fcQ
- MjWgoMti/Fr3X8gVrznvsgDfeteBk9cxx3aoRJE1A5u6DiTfaKPLhivw+fRDJQbwHKB5
- MwsRWh4IPUkhK8XufXvO9xovC6NKjBfW3BJFu6aY37/fSJIue2kGcwIUrUS6Cx8ekJ+n
- d4qVmI2eE8PsnKnKrq1POS8OdLMW1w6jqN6oih+D03rD5IpU9a9MHRxWMt0Q3CSqO6gM
- BGkeyAQPit95aMztfRvYeMm0Yte0XgehDB9C31zAGiShJxIbprBwLRtB4Lweyw2zHFK9
- mShg==
-X-Gm-Message-State: AFq9FYK8HTE5Oli7VOLaREwfJObuxSJxV2JG8rjzbl7/dBxRF3+sHeyj
- Uj16LMOIM/2Ys+McAn8/+/T0vLg8HZMxni+75ulX6AsRYYIa9SBk4TUsrUOm8aGv38w1sqjRsdu
- MVyCX
-X-Gm-Gg: AYBFou0bad2r+VNc5zYtq2DEMj+GD6kKkhEVqXYXW2yIRracVIFrrEQZfCwAPOF9FCK
- TCCNBSesRNbZbzchDLhrKMOKNnhwQ3uyOLqlb5Ir3drC1w4SUf96v/WY3UVDT/eqSnHvFyZd/sF
- mLXCwM4zpsUJjYeaoAArfN2kXutDXjwFVbgycE5iEnp3RASsPEpDwrDv5zBAy6uB1gdxoFCPRuu
- jVH8O/jLWQETuuABOFUbGILlBo1egwjXnosvfi/w/qGrcUXbwtP6LS/8RxBsuxz6VJxxPk5M6TB
- 5U/Ol3ncGhjtGjs69Ts69rAj4Dqq6rhHJnjwoqkNsE81KSxRQIYxvqfcBnVHIDio4vu8UiFXDnJ
- vl6cKqkBoPzpvNe7/zdNP7Ryswuk3kukIowqVqOLGfFBeHAVVzGOq4Ogt4Tpf1c9riubs77Lo6Q
- zg+IbNUXtX1oYPNdnP1/oir38sITvSrIPSN3yqrSRT8hpqDr5JSDKgGOxYbHKvfg2lvSYvgoyJ4
- 3/0MFB7t0aWJmcYn1uEpjhhMh9LX3k2xcklC2vhta8WKss+iE0CrjDC1NlAq55v41y2SVaa/zC7
- b+M=
-X-Received: by 2002:a05:6000:388:b0:487:27f9:833 with SMTP id
- ffacd0b85a97d-48af56cf229mr1703089f8f.40.1790676137537; 
- Tue, 29 Sep 2026 03:02:17 -0700 (PDT)
+ bh=F3YgnIvFjhPZJOJvluiJoQ7sWOshmcyO01yTKvAWt0Y=;
+ b=PJuz8zZ5ny7Je1+0TlYk6PdMEcQfA3KTxur4KEvw59dw+DpQ4GiheXJaSJ/tfS7vLz
+ bjSPUTl1YY/+UOVwKeirwczRDkFwjfmBTPgGL5GOa7piIPX/mcKQbWktyRFPXmytxR0X
+ 3nqfEoQVbZJTUYEWtoqTzuJoq2UCPAYJcAZy8HynKymtdd+LnUmGvFtpsbYvJGodK7j+
+ 8mOB+l9p3NiTpdobFmXt9GCApUyqGpsvBMS7Ogzrlz+Zply3XwNmrccQjoDACL9vL0DO
+ dSv2ou8JZE7fVITAHzekTTZ7GTPG/DA+sepkH3Hs8htN8jGA0HS+KIyQ0Xmw3fWzzmFG
+ KQjQ==
+X-Gm-Message-State: AFuF++mCRXu65ctd/akQYtO2rleEsmkcTdV9lXSZoC3HPG0UrUXJFNAT
+ muldnKC/8IFIGlGJpskFMi++bZnj8B3Mv7jB5kK7JiT5rUaXbGvHJddrPgGpF2kHPHFYDRgKfpT
+ 5VIJA
+X-Gm-Gg: AYBFou2Ffqlcc8PeQLvSjPiZizaU53ZCFr5esCucePH0+dnr1nF7J4c8cwzLhNWKQTX
+ Ig2lqHPZ7iIv3Vl7ot61h0j8709ciGi/5ciusF2LfSww4a29SEZJ/Acp05NID87aymyfi5E26ok
+ Q7s2NY0SMNjRv0WFYUHi9tP6UbN5K4QwjSLY5837easlewMWwpVI4GxMH52PsYDJLPf6auEM9jG
+ CTD1tydW9pfrkSY+1J6C5dv3GRsf/26EAu7iXIuONxD0vFyIQaJ2RpzHxswSnzsqkMGXxFb25yE
+ o2CRvcxw+aY37ZgXhmLKLWqLHYsfNTWvZNJCLgSIf5Lh1W9oWSwtgbPaFfIsAwWo/jVD4+PGVJM
+ /bd/eU8DAY2jxalswiEt37lJ9CsRtKol9VcSgo1/Y+daeaEBreZ6XV1l0uTC836t3OGcWE5c/zN
+ 2oZOryEIugk8Y/bOHV7yCJFgL0erFBBrP/gnGdPvRFqtvKr7uuDNu0A4d+iOhLv5eKjdXEaG0rt
+ G8UhTQaOy5yTitBsCkDtkT880ifwbizldD/TuQ3siX/PqyxFt9iccU9vUvKvBxWIbqlYC0AAtkY
+ oZw=
+X-Received: by 2002:a17:907:c0e:b0:c2a:fd19:8fa5 with SMTP id
+ a640c23a62f3a-c2afd19cdccmr729939366b.34.1790676141408; 
+ Tue, 29 Sep 2026 03:02:21 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.16
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:02:16 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/37] target/arm: Add isar_feature_aa64_uinj
-Date: Tue, 29 Sep 2026 11:01:22 +0100
-Message-ID: <20260929100133.2598676-28-peter.maydell@linaro.org>
+Subject: [PULL 30/37] target/arm: Widen cpsr_{read,
+ write}_for_spsr_elx to uint64_t
+Date: Tue, 29 Sep 2026 11:01:25 +0100
+Message-ID: <20260929100133.2598676-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::17;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x17.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:34::e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,39 +106,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+We will shortly need to handle bit 36: PSTATE.UINJ.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260925215004.456336-7-richard.henderson@linaro.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260925215004.456336-10-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/arm/helper.c    | 6 +++---
+ target/arm/internals.h | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 06318d12f9f..a9eebb45564 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -290,6 +290,7 @@ FIELD(ID_AA64PFR2, MTEPERM, 0, 4)
- FIELD(ID_AA64PFR2, MTESTOREONLY, 4, 4)
- FIELD(ID_AA64PFR2, MTEFAR, 8, 4)
- FIELD(ID_AA64PFR2, GCIE, 12, 4)
-+FIELD(ID_AA64PFR2, UINJ, 16, 4)
- FIELD(ID_AA64PFR2, FPMR, 32, 4)
- 
- FIELD(ID_AA64MMFR0, PARANGE, 0, 4)
-@@ -1242,6 +1243,11 @@ static inline bool isar_feature_aa64_gcie(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64PFR2, GCIE) != 0;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 76956cfd97b..f843f281fcd 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9514,9 +9514,9 @@ static int aarch64_regnum(CPUARMState *env, int aarch32_reg)
+     }
  }
  
-+static inline bool isar_feature_aa64_uinj(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR2, UINJ) != 0;
-+}
-+
- static inline bool isar_feature_aa64_fpmr(const ARMISARegisters *id)
+-uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
++uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
  {
-     return FIELD_EX64_IDREG(id, ID_AA64PFR2, FPMR) != 0;
+-    uint32_t ret = cpsr_read(env);
++    uint64_t ret = cpsr_read(env);
+ 
+     /* Move DIT to the correct location for SPSR_ELx */
+     if (ret & CPSR_DIT) {
+@@ -9529,7 +9529,7 @@ uint32_t cpsr_read_for_spsr_elx(CPUARMState *env)
+     return ret;
+ }
+ 
+-void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val)
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
+ {
+     uint32_t mask;
+ 
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1efda543270..843e12487ec 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -2016,8 +2016,8 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env);
+  */
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask);
+ bool arm_pan_enabled(CPUARMState *env);
+-uint32_t cpsr_read_for_spsr_elx(CPUARMState *env);
+-void cpsr_write_from_spsr_elx(CPUARMState *env, uint32_t val);
++uint64_t cpsr_read_for_spsr_elx(CPUARMState *env);
++void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val);
+ 
+ /* Compare uint64_t for qsort and bsearch. */
+ int compare_u64(const void *a, const void *b);
 -- 
 2.43.0
 
