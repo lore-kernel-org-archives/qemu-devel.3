@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3649BC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813A5CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBSbm-0005j1-4P; Tue, 29 Sep 2026 03:50:38 -0400
+	id 1xBSee-00068R-5Q; Tue, 29 Sep 2026 03:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xBSbh-0005iW-Cd
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:50:33 -0400
-Received: from mail-ed2-x0d.google.com ([2a00:1450:4864:33::d])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xBSea-00068E-7E
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:53:32 -0400
+Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xBSbf-0007Hk-RJ
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:50:33 -0400
-Received: by mail-ed2-x0d.google.com with SMTP id
- 4fb4d7f45d1cf-6ac5ef2610aso1450716a12.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:50:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xBSeY-0007h5-Pb
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:53:31 -0400
+Received: by mail-dl1-x1231.google.com with SMTP id
+ a92af1059eb24-144f79153f5so264806c88.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:53:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790668407; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QXrxoOwJcAsHTCNdJhb7q9c8kpmA91E7j2YU4dTytRSn/VGXr1Kus54vMJf1KUL71R
+ iOmkgnhGJS/QaLeJxBKX8ZCk80PGSskmwb4koSQG6g37RBuw3MK759A6cnsKkzXJb6la
+ K6OVZ9xMyoKj1Tgx1TtlVuHkIlxINZevm/Lw7xHM2VJD8TOLu+AI3VIu2yv/+SonXXal
+ UVUkSxPRC/ZwwLIzYfOHQuvp77Uie7vP1jAykUHpXVnWWAMcj6qGs/GyMi/8EqkG6+zU
+ lTYI6QeYRdkKvO6RggrEgwBkr7KFKo5DFa7eFB6bHurAMntr5H2/CBRElXf7Usy6d9db
+ B4cg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Z1f25xCxHnjZVY8m1tfSdeydZ67Y0UAI3N7miEYwJwM=;
+ fh=5HO4nrRWbQikJwJf1gOHQ1283vX6Qqk9pcIv/p0VE7E=;
+ b=F4YnnAOHf6z/LhopDv1urHkUkhxX9Tpcvmg0Bc+miPAzsvZ4JwDpsDgGV9cZr8HtKJ
+ 0YVcv5n+4DaJimndIwgsh6EIa+vCpVwIzGd+SjRNexWS0QBfQlWdPqZVt31elR72lxFP
+ SD97e/pc4bcofmkOZlKR2G3IyDfxQuIzTsBpDhycWW+rsQqi/HqFQ585n42XDnuqhsvz
+ oezepB+zfHTY5Rn8uhfVvE9peDWGtEhPUJQaIGIiZFtnWx9jarA79EahtQ83YopcARiG
+ rCb7fFoxbvvOw1kTZOwni6YDncWMVz6SiliIky7gEcaaczMGuF62o37hIKASYwcWimuS
+ yy1Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790668230; x=1791273030; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=B0e1Kl1EeloPRCSvDrjLKAw0ivD9Q7nIR7NywgGoxR0=;
- b=BElo0eH/MovOKFIszSL/Dbc6ACjMAWcSuz4Lqp9r8OuOoYrQJI4DyM9y1CliovpwfS
- VEIWBxcyQrHmdRnfGHIPJ2tdbHNMu9ljtT0vDNSyOKjgn7pg1G5kMjy+HGePhNrlr0+m
- 7SIKVF84Qe2za5BObFjn7DuGjwscnVc6rDjza9osj7rVseuDXbI4KhjIGc3HU09flaDi
- 6GTFvZlvfMAindgTj0HtQOA0IZfr1+h3TqVB0i6fQbpQClioZXQWgewSpqFRgWW1h+fs
- 8kXtBSsc7IFnfbmIffZwygOQDySc+6Pfw1XqdMOEBJA/xx+hE2v9Zgpt9hykbw9WavpH
- o/dQ==
+ d=gmail.com; s=20251104; t=1790668407; x=1791273207; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Z1f25xCxHnjZVY8m1tfSdeydZ67Y0UAI3N7miEYwJwM=;
+ b=oQEnbOlxXjtkLo9pB+vR5VDgRgDj0P24GCdD4OxyPy3HX8BXCkCf5qgkzY4/Hu/4p7
+ Vdwu447nl2jZmPvP9BZI/9AEooy0dshsOohuUCEAm3h23nQLvIMHd1hyoI1Lp2dx7+mu
+ kZ6m37DCMcUjCnJcyC3QF1Ajbimq/x1L6IzRSsOvMkJDSt13S9dGPF6fSBJBJh/XCbgO
+ B4MEgsHhMNN7BLC2vz/DGtzGL+Lflo5wdxLlQB2273mrP/M7PaF5uqqXoEdXWVs4YHHJ
+ Jj0xPPyjNBmJ/5vVKBKlWvYLIcb91Q9u2Ja822uNzKxPkJXK7J9bpWNy6KEbyRiYQUvv
+ QQNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790668230; x=1791273030;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=B0e1Kl1EeloPRCSvDrjLKAw0ivD9Q7nIR7NywgGoxR0=;
- b=oqkmttsRAlBRGbqveQpL5CcneA/dWI21ZorEjhGyJE8OQDzbSw4wTbLuDkupnWBhO+
- 1IVh8EdoGSQ/1vemc6YaA9X6njrOekcbNA+G2JEDBINwqAL5bDzYjPYlUNmCMlxYOyLU
- i0CdWA9cgUlYS0uID6wIXpbQnM8gqMMkpnUr89eeWFpAa0y6xncmhPi6eGBJWeXzoFbv
- 3NgzPMSV/eBw/Lo1saCrITJSUPkNkSraYFX5/YJaf8NdPMvuiYbnLN1/7g2oKhWKkhk+
- ZAsPxC3TyfaqJH7PnCYTA9hqxdELOOcc5Lqp459a1zP4t6yRsPs30oBfdhO3L8Z3lbsN
- qdJA==
-X-Gm-Message-State: AFq9FYKs71roJKaJ6QYXjnRFcoKAo82Uytz9hmAU8EJc3EN0WheKF1Df
- FZsEKmEZCiind5vrdADgMo+SLkDsPLmgMW/+JmgkwmQcj1kXpnspAcr5UxnZS4U+dkU=
-X-Gm-Gg: AYBFou2+cwnTjwHqDD8DLglP08BaylzDCznE13R3++U2FwQ5jcjH8OFRO7uqw8MMfri
- lFYu59pLXG3+Frp02M7v9KwqTRMG8aphmLujJnpZzJ6cTolamTyhJtUpUZxbJ4i6AbkUkU3gM6F
- 4SEis/bTAtFFer4Zok89V5C0tmwiU5Q8TsdnZiGctKxcOWWZLXwohM7zmAplIy8bZSQXJIeIUIf
- cIovsJNBSqlQpBPvlIx+YYGvyy4ha2iruk3UeQFJaE2SqUAM6abJn8R7U2QkcnZJdNxcjgKAqEW
- 9DEgjgY/rGxK6sLAK4KnMpULnAQU/AnZIjwEpUaaJCe91/rWrr+qAY3rFAAGh4zsnkShTNfXCws
- Sbh392Bf9xZpCcnVvcs3h8gDfJUPo3a1OQ0HFWsnPZKAGB0F4jPBra247no3W1gaLAwGEMnOt98
- IFQCuSIJYku1w/79m3dmqob0mMZC5CbwMUvIohqTKcVEDaUBGyzyQuadh5Je2j/QiXPM1Z4c8EN
- rKaZa6u+WRVKaC1HFPr4QJxCWzSdAdOwohZoENSDGss+b7AO0R2I233zVpsluQ006R6T1OmS2q+
- KdOKig==
-X-Received: by 2002:a05:6402:23d1:b0:6aa:f74b:dbec with SMTP id
- 4fb4d7f45d1cf-6aca82a3de6mr1228752a12.1.1790668230163; 
- Tue, 29 Sep 2026 00:50:30 -0700 (PDT)
-Received: from [192.168.1.39]
- (cpc91486-slou5-2-0-cust898.17-4.cable.virginm.net. [82.13.155.131])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6acb9000b34sm331702a12.7.2026.09.29.00.50.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 00:50:29 -0700 (PDT)
-Message-ID: <927a489e-a70e-40c8-a490-e22df7b79168@linaro.org>
-Date: Tue, 29 Sep 2026 08:50:26 +0100
+ d=1e100.net; s=20260707; t=1790668407; x=1791273207;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Z1f25xCxHnjZVY8m1tfSdeydZ67Y0UAI3N7miEYwJwM=;
+ b=t8++WPUZj+1nDJJykrn0o1eZhfukxZLLACUuw8SAa7lzqDS+AQA/GXM2dtKABKP/a0
+ AjihtykXcLX17j+t6FdTAe/rWx9hQ8jG4sfFLtylPSQvzV3rcIkzZi0vYrzLasf6Mul5
+ Rn+Cd/dzniOkR3llNhjSu4hImW95+9cebcg0rj04HVVodO6i1mCxzDKbycm8zN8+0Ciz
+ BS8w49jI6KxcHczBQXovlfXx0joXPTL1jNtR65OukEXwRF3utQptkI88FZhreOS7sbgw
+ aRypzFWiFrbg/vP5zchl63uc1n8ll31DoLtEgdkhXRR17MZlxDvXquVsQKo1aZhN/JD+
+ 3iCw==
+X-Gm-Message-State: AFuF++k1tyJ1jvJky1z+RyVFqUrQYS0OlO2bBhlCJ5Joyf8SFgY1zCzu
+ g+pzemcsX4hLEUtCnfXPi3B/2Af+7/9nR6UHXZEOQQtgewMh/z+Mu8SAZ6q1tWZTW1Gzl2OkSix
+ gqzcIVIh0SDpJWRtZ2DpjN1AefTu1Qp4=
+X-Gm-Gg: AYBFou1GZVaEYxGtO8z+Ab4q2ktmwBVd3lr5DlD6C75hqria8QH89YWN+6KmnrRWE2G
+ xqu2ZL7K5AYDPq6BXYPAIZ6fDZ7AAX5Vt2UsKPr2byatUmgHM7qoPwx+1GL5BFrM6iLHoc6PyDW
+ 5tCLy/wRlvvbvPUieG1uAXQ9DENkD6jj3temiHtR86rHTOd1XUlTto309ULmkmXyaMZfN+x5sQC
+ bKx6nPwjTk+PWAbrP3YkacmqMiaKBNVJXmrv2+TdTQl8cgt/xAXRVQoCXth061z7zDhTAGkmT3S
+ TeGToZS42+WLB75UMO99XYLI/eT2WWK9WoLobCnsZ12ZUUeEbXLMNnXSLuTtHEsEj2yRQpo/JEc
+ VKJyq2Le6ILo=
+X-Received: by 2002:a05:701b:42c5:20b0:148:bce6:429b with SMTP id
+ a92af1059eb24-14b2d993e52mr2268880c88.8.1790668407418; Tue, 29 Sep 2026
+ 00:53:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/17] target/i386/tcg: add decode functionality for APX
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, chang.seok.bae@intel.com, zhao1.liu@intel.com
-References: <20260923173021.317809-1-pbonzini@redhat.com>
- <20260923173021.317809-14-pbonzini@redhat.com>
- <58073b08-9f64-400c-b8a2-acd0baa4add5@linaro.org>
- <CABgObfadcML=HsEfHXBg8ru5m2eByerxHZaKN8UOJQRoTSKTZA@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CABgObfadcML=HsEfHXBg8ru5m2eByerxHZaKN8UOJQRoTSKTZA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:33::d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed2-x0d.google.com
+References: <20260929060653.445985-1-malike@kylinos.cn>
+In-Reply-To: <20260929060653.445985-1-malike@kylinos.cn>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 29 Sep 2026 11:53:14 +0400
+X-Gm-Features: AclHuK_veZ5J6HpMP1_oPnbbAJgThIFBvdvL-q9s1CaugW_HqAKFD16lO980ij0
+Message-ID: <CAJ+F1CJ80FWS6qOXe+kNek6fPkJvuyrNtUKjQc-iup_2sgOuJw@mail.gmail.com>
+Subject: Re: [PATCH] contrib/systemd: use BindsTo in qemu-guest-agent.service
+To: malike <malike@kylinos.cn>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,34 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/28/26 13:16, Paolo Bonzini wrote:
-> On Thu, Sep 24, 2026 at 5:17 PM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 9/23/26 10:30, Paolo Bonzini wrote:
->>> +    case X86_EVEX_APX:
->>> +    case X86_EVEX_APX_cmp:
->>> +    case X86_EVEX_APX_pp2:
->>> +    case X86_EVEX_APX_zu:
->>> +        /* Only reached through EVEX map 4.  */
->>> +        assert(!(s->prefix & PREFIX_VEX));
->>> +        if (s->vex_l) {
->>> +            goto illegal;
->>> +        }
->>> +        if ((s->prefix & PREFIX_EVEX) && !validate_evex_apx(s, decode)) {
->>> +            return false;
->>> +        }
->>
->> They're only reached by map4, so surely
->>
->>       assert(s->prefix & PREFIX_EVEX);
->>
->> is more appropriate, and the subsequent test for evex moot.
-> 
-> No, validate_vex() is also invoked for non-VEX/EVEX instructions.
+On Tue, Sep 29, 2026 at 10:08=E2=80=AFAM malike <malike@kylinos.cn> wrote:
+>
+> The qemu-guest-agent systemd unit uses the old BindTo=3D directive
+> name. systemd renamed BindTo=3D to BindsTo=3D, so use the current
+> directive name here.
+>
+> systemd commit 7f2cdda committed on Jul 14, 2012:
+> unit: rename BindTo=3D to BindsTo=3D
+>
+> Fixes: 2ba60ec17518 ("contrib: add systemd unit files")
+> Signed-off-by: malike <malike@kylinos.cn>
 
-Of course.  But how do you get X86_EVEX_APX* from non EVEX paths?
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  contrib/systemd/qemu-guest-agent.service | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/contrib/systemd/qemu-guest-agent.service b/contrib/systemd/q=
+emu-guest-agent.service
+> index 51cd7b37ff..59f7ecb1b8 100644
+> --- a/contrib/systemd/qemu-guest-agent.service
+> +++ b/contrib/systemd/qemu-guest-agent.service
+> @@ -1,6 +1,6 @@
+>  [Unit]
+>  Description=3DQEMU Guest Agent
+> -BindTo=3Ddev-virtio\x2dports-org.qemu.guest_agent.0.device
+> +BindsTo=3Ddev-virtio\x2dports-org.qemu.guest_agent.0.device
+>  After=3Ddev-virtio\x2dports-org.qemu.guest_agent.0.device
+>
+>  [Service]
+> --
+> 2.25.1
+>
+>
 
 
-r~
+--=20
+Marc-Andr=C3=A9 Lureau
 
