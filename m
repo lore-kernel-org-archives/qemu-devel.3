@@ -4,143 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45993CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 09:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B597CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 09:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUVD-0004Ty-PW; Tue, 29 Sep 2026 05:51:59 -0400
+	id 1xBUYa-0005Me-DU; Tue, 29 Sep 2026 05:55:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBUVC-0004Tq-Ja
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:51:58 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xBUYZ-0005M7-8l
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:55:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBUVB-0006BY-43
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:51:58 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T9lWKU3437055
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:51:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KLnVegajSovd9OyWjNOR0xPw+kiR4VNR7oJWQq5Mjd0=; b=UBZK0wuQGBN1P2OC
- pQBrrpuRhhz0tsDCyg88hsf3/yI2OyauuLCAe49kYlMAqUpY4562SffR4+Gm31Pw
- 7/uklYuWzH4pDcIaEpWiEswIZLgvkwmoC8mXrlq5BuSkelTffquIboaMAWBbgdZ5
- PfD6EcLGUBdKsZXV9kYtu5+K13EF5l5dKs6XiHbN4lI71ED2Dqg9ZL85zDvEHyrO
- tGaR3W33lQUMuZnXMUh/t9E3V6ZejAtRV6cBCrYImlanWkDPEGuEyuJf6V3hQfGQ
- A0ADPYV0+O2aGMdZyiTLr1R0qJWbjCMXT6XlwfQ7gsJYFAeGtZ54m3FYvUsJvgqt
- AAd+QA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0b0v80mf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:51:55 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93909014c85so818061885a.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 02:51:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xBUYW-0007Fe-4t
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:55:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790675720;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VtzTh+dDCA3XGDOcsGJs5iYbLq9spB0eUO4+f6djXh4=;
+ b=LS0qEi43KmirKkcbJ/QRj9rB78XVNZ60u/3wuC4Tx6jH5Hq2Q/e8D0IViEffZqtkfDuYUO
+ aQIxB7PP1cEmaLGYPtqxJi1BoaI+7+klqvE8PPD7707JvXiRhrbddb40iWUim/Qh06ww6d
+ 5/ldLPVSC1URZtskpKkuGO1r3E1XwF8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-39-LzWZQw04Mdewzgdv4VHg7w-1; Tue, 29 Sep 2026 05:55:16 -0400
+X-MC-Unique: LzWZQw04Mdewzgdv4VHg7w-1
+X-Mimecast-MFC-AGG-ID: LzWZQw04Mdewzgdv4VHg7w_1790675715
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4887782ab2dso3048229f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 02:55:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790675514; x=1791280314; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=KLnVegajSovd9OyWjNOR0xPw+kiR4VNR7oJWQq5Mjd0=;
- b=UJ5nTMUC97LPCSAExyZH32XaF6ZKDn99EHNdVJE7JznUsKUKqMG2YO/3laltELfEV2
- 44ugg3BhAC1Ax3dhp/aUzs9TsPK7DcEcgKLVABMz+dfZyOCYwToLT5MC8stHVPWVUO4e
- ZcY0KrZYM9R57/hkYwirvMf5ib0aemTNmsvHw6hq/c062gSgs/nQ/DKK6MlH0MGmWadt
- vEoKKc8MtQfuXxHR7Lnf3woAR+E2aV6WDMNRojBoNGXfdLR8xcep45KYW6CZih5cBF6a
- tlZ4SNve7g+ZLdQAGejpoPm9KMval6vJeZJcJHaQ1u+9J7gAcIon2Bma51FH2n8saRfs
- BJjA==
+ d=redhat.com; s=google; t=1790675715; x=1791280515; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=VtzTh+dDCA3XGDOcsGJs5iYbLq9spB0eUO4+f6djXh4=;
+ b=UBAxiLjRWwo7GfkmFOEPLnHv7m6RllS4LylhzRTf7MZmtv2xmkhTu2vzQtgwkKfbUI
+ ap7gzc6EudayXDRncOAJvTiEN0NUaQFKUXRCwIYziR37UQ9ZzKgAxkTgyYibtLuyozkO
+ JcBZkqawUekDssIlBILttVqmBNEIuPs0HrTx0sW/enT7QOVBD7xMtc2qZOjuT9nJnrCT
+ XAByIEi3vLbizoZU9gBwEqP3okNBZsHTMg1oWlcTV9dVZGHcCtRiWs5hPnev1RFr1qgQ
+ 0PvfmhSU80oEeBHETFMDwaPp82077rWCJ/wyNsRSzBWq5uDJiAxc/kvuQCkN03s1+yr2
+ prlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790675514; x=1791280314;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=KLnVegajSovd9OyWjNOR0xPw+kiR4VNR7oJWQq5Mjd0=;
- b=xpyJP8V4nn+jd7jPDRadBzM+XsF0i/CxGKNFSvguBGDv6rsP7nlmeqTn6RdKLPJbIn
- BZaFgJRtGQBVqN9h5d5YAo6fFTFvxoX+W9kSPSGuScHVPcYVri7jbPf4UACKOfuvoGpS
- F63kSYcoavUvOK3PDM1rfl6UvqSerfh82CfIVO3CNPPHlL7AzdPKrj9ung/dGxJaGoSe
- bVRwQgxGNiJP/lyNd2dDm9033V/gN8He0diHKTDeW/5lSh1xmH9RMmgYJ28byyAjH14Y
- ziYgMD73QcRbuYxKB5nwtQdjgxrtucNSUbAwrsnM+NG86MJQM9ngXeqKKA9E9P6QxBEY
- gIYA==
+ d=1e100.net; s=20260707; t=1790675715; x=1791280515;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=VtzTh+dDCA3XGDOcsGJs5iYbLq9spB0eUO4+f6djXh4=;
+ b=OWGLLj97YK/IEtZKX6yusWXE77DrA2osp9vXx4F1tIHdIWHX/UCyxS53n00fkY0kuY
+ 5YwEQpECEA8+4HYlhod5FMjqqmkadudequHpu4ox+WCiAdjV0pN1AXlFdHHwabpas34V
+ aHioZNMaEtynJsQKq6k8QnHljJHqFuLbjWWlL2Q/KD9qds42hAUo3q3HX+4DGCvY5OPq
+ BBVZBJHGoXqNV7Lt28iHBmiA1eoIve7uCZFryhnsemEXVUI9F9V73j4yeW8wsJwoaPxc
+ coSjddG4rRBCPs6jfTalKdNWVi7SaA8SFhYxQIgMHfd6jhmm2n9nVXnn5ilWxxK2Phse
+ nlnw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBz/VcVPJM8ZSYdF6l11hGsnn7ZoG2Rubog2OEtRcyPJrCLqOmhQrrIlQZba5siDPA8o6ZBJRPkUSczS@nongnu.org
-X-Gm-Message-State: AFuF++l36DwKJcwPEaFrytl2MTnAjNMjRvD87IJtpEroN4cZjI/6LyU4
- Jaog5rzdBTPCXtEMBm5x2wcRyV+qK7yeFRBnikFBV6A4hBojB6EiCMvkpH6RBhASe1Fy+5pLRvM
- BG0n51B+cM9RKuUmJNvK2B+3HCAA7j1pABxdxVvNMcB+h/4qWMRj7xj1ULg==
-X-Gm-Gg: AYBFou2Y1gUCYTwt1L/q2MUPK7XHeN5N29xwDAXCMKNKr01xBuJaC9LeUJsfevo3o32
- GRfTlRzuN0lT7+IJsdPhiMmjt3GBhu7UQ/Ca5s/bzelrxP9yUngD0RTXfbOjKnGVDtpqyCPYOHj
- fRVEBypOxQM93ku6vKVsM5nW8F9CGsbZJVE44wMn1Zn3i7G4icrloxS7drOkrPfOzsfXudoB/M+
- VdrGvZUnKWvD8MaBAJhK0Orl6NoRCeZpjmxvs7rtA1sRvcVYm4CU9PFweJLxxF/jUx+pV/tie46
- 29qEXDu8VVrbiGeKo5mK/5CV8crGk4SOWrROFWeGZKkR+DQvKRmW8kTdJJoHqJvfY0Yyh+E3ood
- sviNnsHnGDBYMba6yjWll6+2aO9D4Zj5GGA==
-X-Received: by 2002:a05:620a:6509:b0:93c:612e:9b4c with SMTP id
- af79cd13be357-93c612ead03mr1784905885a.58.1790675514316; 
- Tue, 29 Sep 2026 02:51:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:6509:b0:93c:612e:9b4c with SMTP id
- af79cd13be357-93c612ead03mr1784904185a.58.1790675513802; 
- Tue, 29 Sep 2026 02:51:53 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ AKwUvBw0gBnIhSrGtH/QHN6ppXH1Hqv+evXljY0CyqBmQ9i6te6Nwjwz5/E1gBLzEDx9HTRUA0rKyibF7kzd@nongnu.org
+X-Gm-Message-State: AFq9FYKuzRfcYmK+o9Zqx4pIr6NiFZgt5CxQXopm+uSTO/gsGYz7fae0
+ vokfi9mYBBew0eWd5FdIKvDmuNJmIfXspEQcxeG34l0egNXlmysO9kTgEjIhFHITMytCefef+EO
+ /5RLcMV4ALw3oRAASbCgTGojIpE7c+BOlV1NcJldN48n2ELeakLA48vj1
+X-Gm-Gg: AYBFou0gGcdLF706H/bDuvSOc0HSaYOIV2a30RdojbvQjyrbjDPor1nZX+XwouaEYCW
+ fXL3w2G5yaPN2oQ6KwEzuNRKB3B/5qUcGYOSLIn4AQuS0wtU9e3mzUQGyJyw7D0gbvrA56Zi8yP
+ hzlLCY9kTVWJ5+YnzYA4t35GWhwgSeR8C1dMdd6zBm1EoHI3tow981ro23SWfjhkHP70OQ+XemS
+ 2rNIlMfRJ6j/9v+8z9wy6fAeOp5ffpOaSmr0Pi0JQOGsds4IujILJCkvmlfCcFvx08B8KSR5v/I
+ XKyKqzVT3K4NufNlZIweePQYjPcA+kJ/atg8T59sJTcc8MWHkjer2cUJlwPWSjGyvUL6AQ==
+X-Received: by 2002:a5d:5d08:0:b0:487:35c:6e6b with SMTP id
+ ffacd0b85a97d-48872a5c2d7mr32483438f8f.12.1790675715240; 
+ Tue, 29 Sep 2026 02:55:15 -0700 (PDT)
+X-Received: by 2002:a5d:5d08:0:b0:487:35c:6e6b with SMTP id
+ ffacd0b85a97d-48872a5c2d7mr32483391f8f.12.1790675714760; 
+ Tue, 29 Sep 2026 02:55:14 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:3fd7:5300:3d6b:52a4:a23f:9d0b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00dc06ec7sm36102755e9.1.2026.09.29.02.51.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 02:51:52 -0700 (PDT)
-Message-ID: <5dcc8fda-2301-4610-ad48-72e54621161c@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 11:51:51 +0200
+ ffacd0b85a97d-48af5030037sm3245347f8f.8.2026.09.29.02.55.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Sep 2026 02:55:14 -0700 (PDT)
+Date: Tue, 29 Sep 2026 05:55:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+ Filip Hejsek <filip.hejsek@gmail.com>, Eric Farman <farman@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Szymon Lukasz <noh4hss@gmail.com>
+Subject: Re: [PATCH v7 00/12] virtio-console: notify about the terminal size
+Message-ID: <20260929055431-mutt-send-email-mst@kernel.org>
+References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+ <e6ac40a4ff79b9c603c7548acbd8fad9c0c44c87.camel@linux.ibm.com>
+ <20260928054918-mutt-send-email-mst@kernel.org>
+ <7ac1826c-3891-4750-b5b9-c5f2a4217396@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/19] tests/tcg/mips64: add mips64r6(el) tests
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
- <20260929074007.118970-20-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260929074007.118970-20-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Wnxiq8DY55XkhF-j63-lb_XJGkmupL3P
-X-Proofpoint-GUID: Wnxiq8DY55XkhF-j63-lb_XJGkmupL3P
-X-Authority-Analysis: v=2.4 cv=Z+55j3RA c=1 sm=1 tr=0 ts=6abb8a3b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=2w4hv2SypY4VhzKpvnoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzOSBTYWx0ZWRfX9d2t2GJmMroe
- ONB6T+ZDp32OFS2MvHa7mGzpZVcfQRsd3FB0xCEHupC4R/gDDZQ4ZuU6xPRxwtK57ku+lQTAL+w
- ufswIm3T/laG3KI/7lSXBf1jQESiPuP01iP/2XtU5x4daug+e4qqhmbQWibtSUyWm3XsIB1Xyjs
- l4TziW5J/3hY5PwGhkKT1NALxTcpDu4jpwlMQeZriQEQibLcpwfLUW5gbkg/Jg1wY1sYMbvKNmG
- 35gjnI+1CU+8OT7s8dhLlDYcMvA3dv593HqRHkhPxiNMSU7PW+FvfvKPQm2wifYFt9ER256ISo7
- ZbUbm1m/8jT0DxkyDBJ4P57EyMvr8IQ5L8BiUOZtAjIRJalLZ21r3yt513n2Cn6K9IMMt8lR3X4
- ryyO52OEkCDFGFwavFRwa61FgsFGXjsvoQDMrG6vkEahYeEY3KTeIv+3QCCDhstplUfHc5zJxV6
- vOi7wtdvWzJ4rSuLYug==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzOSBTYWx0ZWRfXwxTWmAYk1Qde
- E21ujeOqM4RhOfdc0U0JVfI0IwQEUDMQdVL3E4cgfKWXXuLynSZKdYQ+1SsVg5kqvi5uXeaoNGz
- 4ew2uLL0VNh6qtZjaK5nt39CzXMUsEU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 phishscore=0 bulkscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290039
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7ac1826c-3891-4750-b5b9-c5f2a4217396@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,18 +132,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/9/26 09:40, Pierrick Bouvier wrote:
-> We need to define two new test suites mips64r6-linux-user and
-> mips64r6el-linux-user to be able to use a different compiler from
-> mips64-linux-user, as cc is setup only once per suite.
+On Mon, Sep 28, 2026 at 05:21:25PM -0400, Matthew Rosato wrote:
+> On 9/28/26 5:50 AM, Michael S. Tsirkin wrote:
+> > On Mon, Sep 28, 2026 at 11:30:03AM +0200, Maximilian Immanuel Brandtner wrote:
+> >> I would really appreciate it, if this patch-set could be merged. I know
+> >> that things can get really busy, but it seems to me that there aren't
+> >> any blockers that should prevent this patch-set from being merged
+> >> (apart from some minor refactors), even as is.
+> > 
+> > Why not address the minor comments you got?
+> >
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   meson_options.txt              |  8 +++++
->   scripts/meson-buildoptions.sh  |  4 +++
->   tests/tcg/mips64/meson.build   | 57 ++++++++++++++++++++++++++++++++++
->   tests/tcg/mips64el/meson.build | 11 +++++++
->   4 files changed, 80 insertions(+)
+> Just to clarify, Max did not write the subject series; he is expressing
+> interest in it because he wrote a patch that builds upon it for s390x
+> [1]. 
+> 
+> Now, I'm not asking anyone to take code that isn't ready; but I would
+> like to understand if this series is abandoned or if the developer is
+> planning to send a v8 so we (s390x maintainers) know what to do about
+> Max's patch.
+> 
+> @Filip, do you plan to respin and address the comments you received? 
+> There isn't much, but it looks like there was at least one real bug
+> identified.
+> 
+> Thanks,
+> Matt
+> 
+> [1] https://lore.kernel.org/qemu-devel/20260928090846.2315532-1-maxbr@linux.ibm.com/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+This is what I am saying. It's been since June. Whoever wants this,
+should clean it up and repost.
+
+-- 
+MST
+
 
