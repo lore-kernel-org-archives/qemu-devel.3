@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA18CCA5FA7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEAC8CA5FAD
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 17:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBblJ-0005Hg-Ui; Tue, 29 Sep 2026 13:37:06 -0400
+	id 1xBblS-0005Jp-Mn; Tue, 29 Sep 2026 13:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xBbl9-0005GM-JH; Tue, 29 Sep 2026 13:36:56 -0400
+ id 1xBblL-0005I7-1X; Tue, 29 Sep 2026 13:37:07 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xBbl7-000467-G3; Tue, 29 Sep 2026 13:36:54 -0400
+ id 1xBblJ-00046b-Ie; Tue, 29 Sep 2026 13:37:06 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TB5ekW2783708; Tue, 29 Sep 2026 17:36:48 GMT
+ 68TB5bV22783548; Tue, 29 Sep 2026 17:37:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ReCExo
- eTnF/p2AAbnlM2DPro30LA3tzVOaiEgRKBlQs=; b=dj4j0V7hp8ribUZSPEf9pH
- /Z5zqkIwiJtbQZw1+AG7DSVAc1tSBlzL0+SFO9khGPAnNGxb7FsCi4sNpDlfaRFu
- BgbgmvgM8bFeZDkUUKrtH5KXb7/G4HaBf45pnGLPImXpKtRns4O0yV2sRCvfYNao
- 52E4lhFDKsG5Zsal8cm6xdYv3QH5bGi13IAMi2N0CQX1z2Kd2X9u+k2i1DfSEyaM
- WHgcTljQQCMJF/UQmb3QGelFCPcFtb67OlWWzrVIxHdWCMr6Hi25D4MaxzJX4Ieb
- kQpfC3dG6IoMN9THIT3AGk1OWRBV65gfVGessyK4n4L2EGV8wTDHaSLeA86hocwQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Ddxjgu
+ KNL7zvpjBpYEl+H1cMQWkrJDzY4tMNCDKByl8=; b=tL8a5rUtR4qIaPWxHU5YNV
+ XlFs7kCNmK0rHHayEfO9aj9UWcbGaDHmYyaNA5MqBTkphZTtA4wEsLaH/YaBIy2W
+ Iw3V/mfz6iFpjPgZkLo9rrPef5PN1I8atIvc+uP685QdQTztsdanHBA9LJMspRvp
+ mgoL5aZywMrzJhYdBII/L1rJMlIYefXE23u775v/zx4RZc6xLs4PUtHLTp/n0ycD
+ GUxw1WlpiZcTW/rEM/8BvhxkshM6RoXsdVwm0NgJlc5h8xyYiJldIV9hTZtm/6Xp
+ Jvx9K4375eewQHYWh1btFR7Lmj5EIjA3UTtCL/4qlI7+4We7ZqxT+fijrkQs5a2Q
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fe7s81-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fe7s8y-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 17:36:48 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TFiwKD2060538; Tue, 29 Sep 2026 17:36:47 GMT
+ Tue, 29 Sep 2026 17:37:01 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TF55FP350693; Tue, 29 Sep 2026 17:37:01 GMT
 Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h0g8e0dhj-1
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxtkgam1f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 17:36:47 +0000 (GMT)
+ Tue, 29 Sep 2026 17:37:01 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
  by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68THakAM19530326
+ 68THaxa614942866
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Sep 2026 17:36:46 GMT
+ Tue, 29 Sep 2026 17:37:00 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7958458063;
- Tue, 29 Sep 2026 17:36:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DA21D58063;
+ Tue, 29 Sep 2026 17:36:59 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BBB945805A;
- Tue, 29 Sep 2026 17:36:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2BBD85805E;
+ Tue, 29 Sep 2026 17:36:59 +0000 (GMT)
 Received: from [9.61.5.156] (unknown [9.61.5.156])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Sep 2026 17:36:45 +0000 (GMT)
-Message-ID: <3985e796-f48a-4191-857e-71144ba01adb@linux.ibm.com>
-Date: Tue, 29 Sep 2026 13:36:45 -0400
+ Tue, 29 Sep 2026 17:36:59 +0000 (GMT)
+Message-ID: <336bce94-529c-444e-8615-db3f24a8b970@linux.ibm.com>
+Date: Tue, 29 Sep 2026 13:36:58 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] s390x/pci: Use qemu_log_mask() for guest-triggered
- errors in reg_ioat()
+Subject: Re: [PATCH v2 1/3] s390x/pci: Fix frame stepping in
+ rpcit_service_call()
 To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
 Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
  david@kernel.org, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  cohuck@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
 References: <20260929153012.774530-1-mjrosato@linux.ibm.com>
- <20260929153012.774530-3-mjrosato@linux.ibm.com>
+ <20260929153012.774530-2-mjrosato@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -116,29 +116,29 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260929153012.774530-3-mjrosato@linux.ibm.com>
+In-Reply-To: <20260929153012.774530-2-mjrosato@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abbf730 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abbf73d cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=6nEuQmOdkwVQYqC_m6UA:9 a=QEXdDO2ut3YA:10
+ a=VnNF1IyMAAAA:8 a=ph5Z-r5AeXlLnT07bH4A:9 a=QEXdDO2ut3YA:10
  a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA3MCBTYWx0ZWRfX42h5sBWdEnrf
- lZLIzpgL/g1hI6WtiMFn5MlSKZlHmxA6hFdSX5+EsBLqUHiUAAsd9V01k5Sn/hTeQ450i7w7F0+
- ufQS/+YKYeG3Y8N4okwGFQtGA5gBa6M=
-X-Proofpoint-ORIG-GUID: DIfTTzJgqz9LgR7reJqrREU7SCRSfFI_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA3MCBTYWx0ZWRfXx+YMczkT+50Y
- NY//EpjY2ADa7nK0RSLB4/lUidbKliYyRriXL4EDlf287hRL6jXy2R89gFArAeVS+NigQ9auOuU
- vB6dfGuEthe8CtX0JZdLqKf4qyFYwQn8NldLjW2X8qqz5Mp1QQJ2tbQ3zDPavbEdntP7JcjkI2M
- YcvpUtvP7yJTsREMe2Ait/96I0W17Sd0w5Csp2HQsX6VYzPu+hod5YgJbjIgnA83EiyQknR07bO
- G8uzRrQUR2DBl0tjDy7go4SlS6BqKgoqU3P60YGIRgTyGIbSohwqAfrb6fxGbXWV9yePio4T+H/
- 6ey3bSOw4UAjnsb+fLwz5qQ52gSlXbxuqcLO9fo9Cg/zP3W+aGU3Np9h64zXl1PZW7gPPIcXb7V
- bJpw8f1IhzgK61dN8CF0eotndjZo2eDdVJU5lztSKeVOgXZ9N7Kraf+hSnC6iogSKjtKy+j8OUz
- tfvyrAX/QHGvp2drHfA==
-X-Proofpoint-GUID: DIfTTzJgqz9LgR7reJqrREU7SCRSfFI_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA3MCBTYWx0ZWRfX5BUoPqLTaLAQ
+ oxDFJ3+qhIBMpwGBRG2i1SX1zJxXu5IQWHeQG3cUR+SibR4uubrsAlnTjKGuW6dR2X4GJxDBRLL
+ UbqHTyXPZlYFDL82iQjQ/SMxNO63lVo=
+X-Proofpoint-ORIG-GUID: opBd8cooQLvUtxkovxPLyfBCk38BMLw1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA3MCBTYWx0ZWRfXyQpeyQ6o38JH
+ J1JiIrfYfrxdPSEeODF0uLGDM6jvID2R7JKXK2OIrcdsdv6ADmxKNo98W8RGo85TgMeFrflCzk0
+ oDxccossiGOmpF7AMoU8yvQL5vwQOmShK4ZHZwT+VICJZokYLoWo+xoO2w5N2ExyQSSknyW2lZr
+ oKz95GPp9hFXwTjZE3H8/K+chzl603XPaEBPu+ww2f0yO8nO4BZXaZ0dJNVX0/rCXKwyGWH4b+I
+ qSTM20+nFcTaBYoD8Itp9HLgatJ8qo0rA2WK4AdaoGzFFgXbKo/ksCzrQed87klB146j59SltKZ
+ ykvPydKv5dKD7UYOHOuScxglxLuyi1PJMUEnFzHwMFka5a28FEldpe1NMhDIMnCQ46fK8xMvQ3i
+ N4NKzdyvBxWywUpNfXyxEMpPZHOdMwXX0O875aNr685d149OeQxryuGpSPdWDUoiTBN9IV+7Vya
+ 1rSjclbmZ1PGlVcoiIA==
+X-Proofpoint-GUID: opBd8cooQLvUtxkovxPLyfBCk38BMLw1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
@@ -175,57 +175,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 9/29/26 11:30 AM, Matthew Rosato wrote:
-> The error paths in reg_ioat() that are triggered by a guest providing
-> invalid MPCIFC arguments use error_report(), which writes unconditionally
-> to stderr.  A misbehaving guest can exploit this to flood the host log
-> by repeatedly issuing the instruction with bad arguments.
+> When walking the guest IO address table, an invalid segment or region
+> entry causes table_translate() to return entry.len equal to the frame
+> size for that table level (1 MiB for ST, 2 GiB for RT).  Adding
+> entry.len directly to start only advances to the correct next frame
+> boundary if start is already frame-aligned at that level -- which is
+> true for a well-behaved Linux guest but not a general requirement.
 > 
-> Replace these with qemu_log_mask(LOG_GUEST_ERROR, ...) so that the
-> messages are suppressible.
+> Add logic to advance start to the next frame boundary rather than
+> simply adding entry.len.  For a frame-aligned start (the typical,
+> well-behaved case) the result is identical.
 > 
-> Fixes: 863f6f52b713 ("s390: implement pci instructions")
-> Fixes: dfcee1ea4c52 ("s390x/pci: add support for guests that request direct mapping")
+> Fixes: 0125861eacc3 ("s390x/pci: fixup the code walking IOMMU tables")
 > Cc: qemu-stable@nongnu.org
 > Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 > ---
->   hw/s390x/s390-pci-inst.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
-
-Christian's comment about newline had me looking at other occurrences; 
-looks like one in virtio-ccw I should fix up. But for this:
+>   hw/s390x/s390-pci-inst.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-
 > 
 > diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-> index bac813fb6a..73417edade 100644
+> index 652e1712ec..bac813fb6a 100644
 > --- a/hw/s390x/s390-pci-inst.c
 > +++ b/hw/s390x/s390-pci-inst.c
-> @@ -15,8 +15,8 @@
->   #include "exec/memop.h"
->   #include "exec/target_page.h"
->   #include "system/memory.h"
-> -#include "qemu/error-report.h"
->   #include "qemu/bswap.h"
-> +#include "qemu/log.h"
->   #include "system/hw_accel.h"
->   #include "hw/core/boards.h"
->   #include "hw/pci/pci_device.h"
-> @@ -1044,11 +1044,12 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+> @@ -808,7 +808,8 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+>               coalesce = 0;
+>           }
 >   
->       /* currently we only support designation type 1 with translation */
->       if (t && dt != ZPCI_IOTA_RTTO) {
-> -        error_report("unsupported ioat dt %d t %d", dt, t);
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "unsupported ioat dt %d t %d\n", dt, t);
->           s390_program_interrupt(env, PGM_OPERAND, ra);
->           return -EINVAL;
->       } else if (!t && !pbdev->rtr_avail) {
-> -        error_report("relaxed translation not allowed");
-> +        qemu_log_mask(LOG_GUEST_ERROR, "relaxed translation not allowed\n");
->           s390_program_interrupt(env, PGM_OPERAND, ra);
->           return -EINVAL;
->       }
+> -        start += entry.len;
+> +        /* Advance to next frame boundary if start was not frame-aligned */
+> +        start = QEMU_ALIGN_UP(start + 1, entry.len);
+>           while (entry.iova < start && entry.iova < end) {
+>               if (dma_avail > 0 || entry.perm == IOMMU_NONE) {
+>                   dma_avail = s390_pci_update_iotlb(iommu, &entry);
 
 
