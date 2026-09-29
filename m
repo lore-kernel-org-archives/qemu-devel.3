@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEAD2CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C680CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUfG-0007bZ-Kb; Tue, 29 Sep 2026 06:02:22 -0400
+	id 1xBUfc-00088T-Bu; Tue, 29 Sep 2026 06:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfB-0007VP-Vd
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:18 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1xBUfK-0007d2-7M
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:28 -0400
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUf9-0008E1-T6
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:17 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3920so29747055e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:15 -0700 (PDT)
+ id 1xBUfI-0008GF-15
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:25 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-485933b24c3so2415244f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676134; x=1791280934; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790676143; x=1791280943; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=IUgvG5wXyuxPwvGGjWMik6bOpv8TU6Nj/fKQdsvfpEg=;
- b=e6fpmGjdQVIpLNvm/lP/sIH04NQRvMHHQW8j92CLJk1OLKNmOMEcq56vo7I3jnWxE+
- cikEYhsDHEsF6398kRrSzBR6LTcNLvhAyzJ97RWHo5uEg/lt+nReAEDRtAV8KrGSiowj
- ZVFpmylCDcDIkTX95xezhYKMjzKDJ90eb12GI7xDE4PPYRYW4TUP6s5tLZ4y02ER4kDB
- qwkgF2UZI+/Retrw/NWdVsmfjl+6RB4Ju++nThwvoNPRWyJqOBjzRGiv/i5dhCf69kqP
- TgLkwCGC2LUimPCHXhU7ACvGwnn6xu/doFb0KwM4Hi5RAx4IbobKCN7rNrvsJTVEObYs
- nc1A==
+ bh=sLwGhsAhnQ1hR2aRiWts4FnTUYr8rzSUb6aL3HPnY5s=;
+ b=inglY8QzKJJNyMjgSP8w3FrKdKrJzXxC/+V7fusZSUXGiqh1oBW4ug2cmFverxhRNs
+ LvC7VsreDXRWFVEMar8lHUvyXf1dRdL7I3SgvgDcROZYVYB/h8CJUMcC4ti/eUq13s+3
+ 21u9iopNHctACVhdu/5OijV5TrnIATI5C3o5fVg/fy7VRPFZtSllJSXEmbCmPpG5C3vc
+ 5yWChX6MvJJaOBDN1xD1h6lvVENyECZj01P5ZAkQlACbNgQIh5YD3WiIpFFlcOU0mo/w
+ XKbUQZ5svB/45oEpF5ahaMtGdTI+FGwVJAwbasYUZNsT+6IHxAKnAhtxocOZ6CpIcgG4
+ hmWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676134; x=1791280934;
+ d=1e100.net; s=20260707; t=1790676143; x=1791280943;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=IUgvG5wXyuxPwvGGjWMik6bOpv8TU6Nj/fKQdsvfpEg=;
- b=WdL/Z2BdF/sXkwjVmNUI5iSjECL39QJ1JLMq3zHX1JBiAHf1j9IB+L5UQ4/Y6dRC32
- GlW4OOZb8qcP631J1IZD2qlphtDSsXDt0j7Bt8vNxhT0O3WLeNRXULrYbVLMRzySCi66
- XM599dJPhG83Mnz+O09yIc7y62BT8A7JIYqyuHrFQdvWTkQiNQST3/eyRf5UUhvDGQOo
- F3YNJsEM0V3XQl4Q0ePHUR90CGyCXX/ao//RA/AAnz8Iabw9D30qHo/IYR2f01PUaNLh
- OTOCeKTqVO5kZClTf9Rzbs1MPHw9QX+hP+P98roz94xNgi+jAFj0rh+oSA8LXGYTo3Xe
- CbHg==
-X-Gm-Message-State: AFuF++m7Bo1+h/4VQfFSG3B6fyjqp+ytYFdXBw5G0FV9tgjAj04O1adN
- xcAaeop6ONvGcr4E7wf+iv5R1pTsaB5U5lGYAbx7brqefCtMMWK26v4M5kH6zDm45TvfITLR19o
- oVY0u
-X-Gm-Gg: AYBFou3drShsywZVKCnHTQZSbyXLtY73NSc3ExgZ3MahkSz9EpkmWG7Ernthxn2zSe+
- 0HeepgBeTdVQ9FkMySiqODLRpscsxv1U/pM2uOeMp157PwuhkBOSnYOdB8hQPlJlnx1dQ8TVdco
- 6455/VJtilKOtJaygy3OrQ84++JUYk5kjYdOoZ2pndeMNbmxiQIrsowMEMDkxSfaduQ9zdTX4TN
- oxMGQgWZyB0Ts4pTvV9mcP1g26802m0loOEegkn9ck3fQHiNe5jtxfurg7c567CMaI8ydGWMHvB
- fTH9hBL1eBzM+gaZ9IxT8Kl0ByVutr4NdGFGcYYi4/4SS4ebuWRbeH8ndGc3kTfqb4KlnTUWf4h
- vgy6X4CAF2mp0NOaLwqEhEGUWvG/FOgZ8QVd2p6WM/fN6Z1DMW8BPaXleYegSJKBo++V3BBCytU
- LP+d4Rk7f3L8zunBncyQZ2NxILz3c6cvKHIUjUivAx9CP+cgbB22Sf8zXJLQC4ylo3SAYHaHxIT
- hTPOiTKQ2TmjPzhPoDAfpXjYSdATcyOT30ccpSEOWjt7Eoi87BYgRnQwAlEQfgxfEwW/2S7euR9
- zyto
-X-Received: by 2002:a05:600c:198a:b0:49f:fbf1:3f7e with SMTP id
- 5b1f17b1804b1-49ffbf13ffbmr144775065e9.9.1790676133889; 
- Tue, 29 Sep 2026 03:02:13 -0700 (PDT)
+ bh=sLwGhsAhnQ1hR2aRiWts4FnTUYr8rzSUb6aL3HPnY5s=;
+ b=U+7YOdSlM8zo+tVykjtawjhHD1BHzf8GSAUrO2x2KaynkwgcrlyGNvivm7tTAzn/FO
+ nzRQzwEsZbbOdVI8E8Rcwx9qIfSrXZYATGPRikcdclnopR+BXu0Np83+k5SuO83y4xpb
+ 6plXpG7Ab5C4FUk2nc3t9x2cgHeDliWub59uNBs4bHOsxfbcEMeN5j/1lGItPzP4tyON
+ R3E4aqStsZSchZ+XSTXiiunp0WDOPDHmIA25pXqnSoZIvhnNyqt9nk3VUBcUjgvh7bcR
+ R/eBGSrJNwJG73msmIisp2/CUdoLEqfsGFdhuin0vpFkQ8dR7CH06g13nTXFpJNOOipm
+ 3tQA==
+X-Gm-Message-State: AFq9FYLkUlX7ATcAzmyVrEIKzSrgaI85HcIoF/Jxmu1d7rw/o3c7TTZd
+ c3wB7TsF1iEvrfPkhhgYifApLcy6DeOnrl5g0nv7SI0VbL3NYnEXwzFp1ux6HKC7lp5qFSfqJzC
+ JdcxQ
+X-Gm-Gg: AYBFou2R9WXZqCbGX81EjWCgJ+kmkbg4aG5JbDl9FUUDMXWRPPhkREVAnee/cxwgeR7
+ 4SEV0fbf6QfDQJB0fQnn2UThmKoGv9l9Y2gWp3HbMIa5XXLqFbN2DeDQT/lObz8ZnnATAV3Zx0X
+ tc71SKuSYskTcQfjvhHdDoXMxxedEACHBubonHA6wR6Qs67iOgPFM6qX6rOYPiDrpIV8sQYF2jR
+ ZyDfsdrFnlCKhRwJRmd7IyQo3w3XfxvaYfVYdfFNZCyvN2Vp9nMUCq7qRnmlOhkquj3Pgpv5MNr
+ Ux1yAzjHfFPOlbZZeX64uBKgsWJqQwgmT60zNUeRNzf9qniKL+2GdT6iS3PPOqzxMkrZzahphT6
+ DHDm0F+24smq4woTzAYOboLP6WluQxKl2GMOiSeP0LiU+pF/upWWAgjC54Bwk3V+ZyArkAzJUHz
+ LdFBRY4gi32ovCPv45ItbTr6A++XdAmT4mlJNT4sdxrEeU0IMfBdBKKx/4A+JuhrLnCYTCQEDTv
+ OnWoAOlfG+/SzL0A2NoDLq1B0a6gTbPqytg4Ln4DT95atPetSwHx0V/e5o/831u03FpwSVzTQGZ
+ EnTt/a9BuLnFfw==
+X-Received: by 2002:a05:6000:178c:b0:485:8ee5:5ffa with SMTP id
+ ffacd0b85a97d-48871703b57mr28484111f8f.38.1790676142468; 
+ Tue, 29 Sep 2026 03:02:22 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.12
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:02:12 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/37] target/arm: Split out rebuild_hflags_common_aprofile
-Date: Tue, 29 Sep 2026 11:01:19 +0100
-Message-ID: <20260929100133.2598676-25-peter.maydell@linaro.org>
+Subject: [PULL 31/37] target/arm: Read and write PSTATE.UINJ
+Date: Tue, 29 Sep 2026 11:01:26 +0100
+Message-ID: <20260929100133.2598676-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,140 +104,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Alignment, FGT, and IL are common to a32 and a64, though the
-latter comes from different places.
+With FEAT_UINJ, allow PSTATE.UINJ to be set from aa64 and aa32 modes.
+Read the value back for SPSR_ELx from aa32 mode.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260925215004.456336-4-richard.henderson@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260925215004.456336-11-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/hflags.c | 65 +++++++++++++++++++----------------------
- 1 file changed, 30 insertions(+), 35 deletions(-)
+ target/arm/helper.c    | 13 +++++++++++--
+ target/arm/internals.h |  3 +++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index eb1aff91d5f..8da02ae1ecf 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -114,6 +114,24 @@ static void rebuild_hflags_common_32(CPUARMTBFlags *flags, CPUARMState *env)
-     DP_TBFLAG_A32(*flags, NS, !access_secure_reg(env));
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f843f281fcd..9a90ab68071 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9523,8 +9523,9 @@ uint64_t cpsr_read_for_spsr_elx(CPUARMState *env)
+         ret &= ~CPSR_DIT;
+         ret |= PSTATE_DIT;
+     }
+-    /* Merge PSTATE.SS into SPSR_ELx */
+-    ret |= env->pstate & PSTATE_SS;
++
++    /* Merge PSTATE.{SS,UINJ} into SPSR_ELx */
++    ret |= env->pstate & (PSTATE_SS | PSTATE_UINJ);
+ 
+     return ret;
  }
- 
-+static void rebuild_hflags_common_aprofile(CPUARMTBFlags *flags,
-+                                           CPUARMState *env, int el,
-+                                           uint64_t sctlr, bool il)
-+{
-+    if (il) {
-+        DP_TBFLAG_ANY(*flags, PSTATE__IL, 1);
-+    }
-+    if (aprofile_require_alignment(env, el, sctlr)) {
-+        DP_TBFLAG_ANY(*flags, ALIGN_MEM, 1);
-+    }
-+    if (arm_fgt_active(env, el)) {
-+        DP_TBFLAG_ANY(*flags, FGT_ACTIVE, 1);
-+        if (fgt_svc(env, el)) {
-+            DP_TBFLAG_ANY(*flags, FGT_SVC, 1);
-+        }
-+    }
-+}
-+
- static CPUARMTBFlags rebuild_hflags_m32(CPUARMState *env, int fp_el,
-                                         ARMMMUIdx mmu_idx)
+@@ -9533,6 +9534,14 @@ void cpsr_write_from_spsr_elx(CPUARMState *env, uint64_t val)
  {
-@@ -284,9 +302,8 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+     uint32_t mask;
  
-     el = arm_current_el(env);
-     sctlr = arm_sctlr(env, el);
--    if (aprofile_require_alignment(env, el, sctlr)) {
--        DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
--    }
-+    rebuild_hflags_common_aprofile(&flags, env, el, sctlr,
-+                                   env->uncached_cpsr & CPSR_IL);
- 
-     if (arm_el_is_aa64(env, 1)) {
-         DP_TBFLAG_A32(flags, VFPEN, 1);
-@@ -297,17 +314,6 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-         DP_TBFLAG_A32(flags, HSTR_ACTIVE, 1);
-     }
- 
--    if (arm_fgt_active(env, el)) {
--        DP_TBFLAG_ANY(flags, FGT_ACTIVE, 1);
--        if (fgt_svc(env, el)) {
--            DP_TBFLAG_ANY(flags, FGT_SVC, 1);
--        }
--    }
--
--    if (env->uncached_cpsr & CPSR_IL) {
--        DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
--    }
--
-     /*
-      * The SME exception we are testing for is raised via
-      * AArch64.CheckFPAdvSIMDEnabled(), as called from
-@@ -397,14 +403,17 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
- {
-     CPUARMTBFlags flags = rebuild_hflags_common(env, fp_el, mmu_idx);
-     ARMMMUIdx stage1 = stage_1_mmu_idx(mmu_idx);
--    uint64_t tcr = regime_tcr(env, mmu_idx);
--    uint64_t hcr = arm_hcr_el2_eff(env);
--    uint64_t sctlr;
-+    uint64_t sctlr = regime_sctlr(env, stage1);
-+    uint64_t tcr, hcr;
-     int tbii, tbid, mtx;
- 
-+    rebuild_hflags_common_aprofile(&flags, env, el, sctlr,
-+                                   env->pstate & PSTATE_IL);
++    /* Save SPSR_ELx.UINJ into PSTATE. */
++    if (unlikely(val & PSTATE_UINJ)
++        && arm_feature(env, ARM_FEATURE_AARCH64)
++        && cpu_isar_feature(aa64_uinj, env_archcpu(env))) {
++        env->pstate |= PSTATE_UINJ;
++        val &= ~PSTATE_UINJ;
++    }
 +
-     DP_TBFLAG_ANY(flags, AARCH64_STATE, 1);
- 
-     /* Get control bits for tagged addresses.  */
-+    tcr = regime_tcr(env, mmu_idx);
-     tbid = aa64_va_parameter_tbi(tcr, mmu_idx);
-     tbii = tbid & ~aa64_va_parameter_tbid(tcr, mmu_idx);
-     mtx = cpu_isar_feature(aa64_mte_mtx, env_archcpu(env)) ?
-@@ -415,6 +424,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-     DP_TBFLAG_A64(flags, TBID, tbid);
- 
-     /* E2H is used by both VHE and NV2. */
-+    hcr = arm_hcr_el2_eff(env);
-     if (hcr & HCR_E2H) {
-         DP_TBFLAG_A64(flags, E2H, 1);
+     /* Save SPSR_ELx.SS into PSTATE. */
+     env->pstate = (env->pstate & ~PSTATE_SS) | (val & PSTATE_SS);
+     val &= ~PSTATE_SS;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 843e12487ec..c41fa5225c7 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1392,6 +1392,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
+     if (isar_feature_aa64_nmi(id)) {
+         valid |= PSTATE_ALLINT;
      }
-@@ -465,12 +475,6 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-         }
-     }
++    if (isar_feature_aa64_uinj(id)) {
++        valid |= PSTATE_UINJ;
++    }
  
--    sctlr = regime_sctlr(env, stage1);
--
--    if (aprofile_require_alignment(env, el, sctlr)) {
--        DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
--    }
--
-     if (arm_cpu_data_is_big_endian_a64(el, sctlr)) {
-         DP_TBFLAG_ANY(flags, BE_DATA, 1);
-     }
-@@ -525,18 +529,9 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-         }
-     }
- 
--    if (env->pstate & PSTATE_IL) {
--        DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
--    }
--
--    if (arm_fgt_active(env, el)) {
--        DP_TBFLAG_ANY(flags, FGT_ACTIVE, 1);
--        if (FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, ERET)) {
--            DP_TBFLAG_A64(flags, TRAP_ERET, 1);
--        }
--        if (fgt_svc(env, el)) {
--            DP_TBFLAG_ANY(flags, FGT_SVC, 1);
--        }
-+    if (EX_TBFLAG_ANY(flags, FGT_ACTIVE) &&
-+        FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, ERET)) {
-+        DP_TBFLAG_A64(flags, TRAP_ERET, 1);
-     }
- 
-     /*
+     return valid;
+ }
 -- 
 2.43.0
 
