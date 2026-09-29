@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB088C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 14:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79B2CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 14:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBYsH-0006El-Ex; Tue, 29 Sep 2026 10:32:05 -0400
+	id 1xBYtT-0006ih-Mc; Tue, 29 Sep 2026 10:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBYsG-0006Ea-CH
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:32:04 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBYtF-0006hO-Tn
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:33:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBYsB-00020w-II
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:32:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBYtE-00024j-KB
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 10:33:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790692318;
+ s=mimecast20190719; t=1790692383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=B8aHOYMw06vFqIyQ1lq70Z2xZ30dZKMzPuV/jSQIEo4=;
- b=ISyCPsv4NVc5b0LxmHzllWm0Wwj+hoO+X7U5F8oAtEy6UDTjvHk0er0diM+6EwohNwxNae
- 1EvI2Q/67WffcfV+zXNuIuYOWQdRh6+GWcxhWb769IS78XHoKK97g2/ZqRjm4woJzKDaeD
- xh/d1K/GBQ8vq8BPjacMsp+suThi5gw=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=O33wHsx9hFc57nwbQ+4eNwdDDviU2EiwJ+GyTz6zSE0=;
+ b=P3N7e27LByHuYWkOOCl1MMLE6wNOwKD4lyw10+rEG+Fz8sngiGOTIZt6aFxCOLVWgwSgJa
+ xlYoC9U83StvgmGorOKmLhCCtWg31kSqe1isKNwwGh0lzfsiw3d/UgyXWZHjLlbWNPqpGI
+ QkhKV7JcJxtVi6jnlu29ybJu1dU79aU=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-5Na_TWHvN3e6X25cClxAkw-1; Tue, 29 Sep 2026 10:31:56 -0400
-X-MC-Unique: 5Na_TWHvN3e6X25cClxAkw-1
-X-Mimecast-MFC-AGG-ID: 5Na_TWHvN3e6X25cClxAkw_1790692315
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-8200c815489so62320247b3.2
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:31:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790692315; cv=none;
+ us-mta-367-lu_wxB1lNSKJTMB0xeAYmg-1; Tue, 29 Sep 2026 10:32:59 -0400
+X-MC-Unique: lu_wxB1lNSKJTMB0xeAYmg-1
+X-Mimecast-MFC-AGG-ID: lu_wxB1lNSKJTMB0xeAYmg_1790692379
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-673e272fbbeso4487114d50.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:32:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790692379; cv=none;
  d=google.com; s=arc-20260327;
- b=PFjDPcIKBGLC1ZV6hA8tpfNPLENaXoEgI3j4J5bPv2iN3hm51JeYNWEyqVX/RzE2qz
- jZF9FhRhp+axYq4VxFrY2Z7aL/rvzMgi7jeFaUXIlBPeC8kJDfeNW2t7XQ8WjE4JCVL6
- ItGuCf+btHy75g94rchZjfCySQ/CRSpTIh4b1IYHsy0g3a+Qy7v9xIi8RuXrBXXO8Kwh
- 18lDZ0XLG+7+jqXJj7KnKTMtGY71sbCfEv8ujtjDE9suX5ZTMEZlfkwrmJ+tetLBxdWA
- 3007vzVHennuVN0wYh6v0KjpnN8QC0g2UkzGgVunaTQZKPQd7OnvQrEGU+sD2fZPww7M
- EbLg==
+ b=ggmld/sf0I0Ai2mVZm2IwyhkxcEjLDB+Mcq4WL0swiyLsVLMtd5PAUMmIwWAnQ5eJ/
+ CEl5KjXJvacjlec/h6Xx1nM/uHu1DVKTxh0ZiZttI45T4VcPu406NB+G4geu+Ru2GK9P
+ O0OP3CQn0yjrtX1ziFEbvucSLB45HSa54OFHdw960GaHgb72k6/G/q+5wEEdttxqK6rb
+ 6whH4S0AynJ4f+f7f5sdI6pCVTxmdObZXyk7eXGmbUbIZAkMElJK7qYEsLd/nU8CUoQG
+ vBx2UqIQ0KiJofgOTOhpn97dXc5DtB+4kwFpegt6id+nTBnJiQ8Yh0/6n0P0NZu9WUrm
+ msKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=B8aHOYMw06vFqIyQ1lq70Z2xZ30dZKMzPuV/jSQIEo4=;
+ bh=O33wHsx9hFc57nwbQ+4eNwdDDviU2EiwJ+GyTz6zSE0=;
  fh=be+vfmX/XCacP4IeQ/q9Cx8cwWw6V3GT9VXAd+fPJLc=;
- b=h5dujBsbtL1rK3LpT7PGTg7nNtopQxfSfd022de+TkrAUTF/dIcQI10uW2kSLc613s
- qEgI1D3LV7FL0F5l+RwfacukO8UxmviiuEQHIKh9SsJrjw7qHlCz4/dkjbFsqzgrFXoB
- cmqmQECs2eGcIxaHy8kqxfVvGdtEJvb/ldzfnHde8+pah69MIJaKMXugoTu5Z1BIMwrx
- nenefhZhILrHxefJLyhesFkfxp7HxUK840QDgGufVdM9zuXzt/l0T/1H2Bsb+OIVEVa+
- Au4ce5t32nNugFvWhdLQk9jPuc0VkkRpV8Yq/ShI92xFSGvt5RniHOpZjA6an/VM4yHf
- ZaFg==; darn=nongnu.org
+ b=mVWsU70XsEANQWhib7aEkbhH9C5UffjXcIDlH7k+5CNQ50A1R+K4dkpFujRe3rOJl4
+ ckNi31bPbFPIodr5WxAABTbwRO5kUGw9LLKLgrvOJ+mx1nRrAOpKZo77U8zl8GBItw0L
+ 1QiH8eWxRgM0vpoWpP4g+h9jjI1lav70amxmty/jBTAQ0p4QaLPnUKpmopGoMFB1bwNm
+ 4GfgnwrpfszXsdX9tF4byAq3uZjEuehWoXIW40M+TBFypb2ka9PP4fVKXYBN+i8f6/w9
+ 8dUM9vuFqaz+yLyFWqJdmxzjASZnSLuDscsoe94YcHYDdCeK5TciUS8x1XCjW+ilQaq7
+ rSOw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790692315; x=1791297115; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790692379; x=1791297179; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=B8aHOYMw06vFqIyQ1lq70Z2xZ30dZKMzPuV/jSQIEo4=;
- b=atBd4WFkzsQ70u8C4xeaLn1/PyTPnB+9KT8TCEpVHEdtmMWbMACfxxRrb0yJzJt+Yj
- kbOyY0JbYT5uCANm430g4nuj8rehXDALwYdTOaK44NXnf5pfr3LwER10wZTWBlWwjS8i
- 5VtHTs8aeSEfh9kTqH6L1rz2g0R4F2mmRtosryereraDbKKnqePIP0+FftNDs1xiQ27P
- wTZxvAp2qh3jkqu0paYfhVfWlxhbMg1w/MdnDKoHDOw0B3g5Z5TpEzKjt9pTJE5Ct3oW
- NJol8FlwFUJ0Y0vWtgwO8DPdUD9+sxeLZXFujGLRCnQkzUktwPektm5G42di8NEt69nV
- Vtbw==
+ :content-type; bh=O33wHsx9hFc57nwbQ+4eNwdDDviU2EiwJ+GyTz6zSE0=;
+ b=Mxbgj7W9z7fOwE35iRdv+KnBWdy4+fAWFdm3fXjakeztmxaunGHSkLCdGa+38egzxL
+ e2rI6053618NyxWh1kiqVZkUBVh2udYpSqAtJQDqhSpOoUwc2NWHVeDrM2264M8n8S2a
+ r0pvJqzlvp1EzQ0B+sKfdiOuKILteFTwZmNjBx/hFtFXKGD+uPn4nL8srGMFJa/d48z5
+ aKZiTNi+TyfwfmfE0GIR0khxFabuuVHZ6vBWtFwOWiAiG1vcSdl7O1OYjjBUsKQgcrFz
+ TQVTRQXmCK/nnjg6p8fFl8OPC5aOhaHe+uPxe9s5E7rQ1S5G0yIXKwIRkSr4wIyqmeOj
+ paaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790692315; x=1791297115;
+ d=1e100.net; s=20260707; t=1790692379; x=1791297179;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=B8aHOYMw06vFqIyQ1lq70Z2xZ30dZKMzPuV/jSQIEo4=;
- b=JuZdo7hEjbi98LZszMce9/uPOPVV/3w3RAhr71WjFRjmJ1T85mwvWeQgl0EtNC8Bs9
- ZDyv4eo6cnPq/RaECOZ96byf1Jjs7d6EvKrC/xUod12vGHELpBM9+bDFifJQYJtNSo7l
- Wx/7yVLm6eMUAl9TcIQEeqMXdbIut8G8lxjaym7Tc6MuYjGUzvqgzzV1phbJNszI6Vev
- DjJ0BcA7mnNODdFRkGdk4w3zD4K/3XlXnnjZlzQIqf3I94dJJ/VJZpLDWQL67LopYB51
- l4EnfFsZIOfO5SmfaEI5sWyCy8W0rRh+hiPQIjRoj/EUTlsFsV1MRl9dJ97MOQa/Z7wa
- 0kcg==
-X-Gm-Message-State: AFuF++mKszL/QO8/n84MOuV6jAPLwuerx82gajAlKpCitsajMAYG3z/H
- qpYgR/t6IXpkBpFYS84fuchsRcDGaYLIobjvelCwV2NAtxths+hFtEjP41ooKLt/30RNniR4R5E
- kw/Yn75paLyq6x3jdx2OfSUPL82Ku45yBzoWCmOTeVRKfXv4XOBQ1toUuTWhPFBFcfQPm3OPs4y
- dHEUs9BRscQn2Pi2xeIWUqksZayHNzcXQbwNz+2j8=
-X-Gm-Gg: AYBFou2MEdSDIR83S2BFzXseBOxcXtAFlPXFTCZIq5KOi253d1tdOzzuN0aF7Wd4SBV
- U92L0p9RSuDJgBoa4HPIsnl8N+BfS+VRn03OmPKOGPRkpcFgnEb0Q91GX9jC8YJpMD0ssjy3huI
- Lx2F6oRb66e6EXPPWUQYAsPxt1Uu0OwG+xVPxRXDGl/Whokm0INk0kELo0dhTL1nIx1S8VGQv+Z
- ewGF6r0CZvIDYM=
-X-Received: by 2002:a53:a44c:0:b0:672:99e1:11ce with SMTP id
- 956f58d0204a3-672ed48ecf5mr4742337d50.107.1790692315051; 
- Tue, 29 Sep 2026 07:31:55 -0700 (PDT)
-X-Received: by 2002:a53:a44c:0:b0:672:99e1:11ce with SMTP id
- 956f58d0204a3-672ed48ecf5mr4742297d50.107.1790692314344; Tue, 29 Sep 2026
- 07:31:54 -0700 (PDT)
+ bh=O33wHsx9hFc57nwbQ+4eNwdDDviU2EiwJ+GyTz6zSE0=;
+ b=kaVBXRnzYiZGWm1ARKQhaOzUnRg6OgZk4pNlWzfae+SnVSM47D/ahyetiCsvQvqVgL
+ 7bwvBCWPL82mtNGqFFKsbzcEgSG85M4pPKaHmYJjGUQmNjuRrrjYCHAz1eQ2uPqQmt51
+ O/zngvO24LgwzVF3DI2HnnN5+GYAJTvp1xXI670oM5UYST+OHDI5bzfaMJM5HWwznSKA
+ /EzBTeQ956ai2BQfhT26NN1qh7GbLRVbieHsOHzVgycW1GHks9cqt1fhnyxVYS5zB608
+ 1oE8Kr6VW1mzQEmAIjwKuMqjcyLAZCRZiYN/rZx+Qmagx4LS3E+3+th72RrtAzgUSQvc
+ y13A==
+X-Gm-Message-State: AFq9FYIvkcq0Tevd77BHndzF+gqfioQ8NwxpJ/F/2v5ZBrQ3Iyks9H7K
+ 25elyIpy7MyKuuTfsYtErqGfU/83GSzG0hunPCJc6btoTZfSUi+wxTZHOhza2A6rUxkG1lzZseW
+ 8ywdbExg/QY7H/GqqCp4JLGxsOId+JSw/pNU9wKIfIhqL8wgy9BiGDhlxWQce3Qmxb08cFblyLI
+ Bny40WSeAchNAXV1PtGjsjtPCtNA42v14=
+X-Gm-Gg: AYBFou04Aw9htKPHMPC5ZKYaoBvYxIpb4qeMSyF5ObkD89z9Mmqnnf+wZrk36GGMXo+
+ 5ZWnEaql0kGsptqF/TQv1PoEVH0QNNhgKyM2JcRdY4cy7i735GrjIuIJS/+n8k8+UkyigmMNvHZ
+ zgfTpqqedaOS0RqNIYhwsVnp21l2wrrV1LVapjAFMHv5/V2heBoTJjKeMbXtAqDjYoUtqbgJ8ZZ
+ 3/VoruqeDghOWg=
+X-Received: by 2002:a05:690e:1c07:b0:675:47ba:21aa with SMTP id
+ 956f58d0204a3-67547ba266bmr2411704d50.87.1790692379023; 
+ Tue, 29 Sep 2026 07:32:59 -0700 (PDT)
+X-Received: by 2002:a05:690e:1c07:b0:675:47ba:21aa with SMTP id
+ 956f58d0204a3-67547ba266bmr2411673d50.87.1790692378565; Tue, 29 Sep 2026
+ 07:32:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260928223657.2303684-1-jsnow@redhat.com>
- <20260928223657.2303684-5-jsnow@redhat.com>
- <87bj9gxmiw.fsf@pond.sub.org>
-In-Reply-To: <87bj9gxmiw.fsf@pond.sub.org>
+ <20260928223657.2303684-4-jsnow@redhat.com>
+ <87h5j8xnq5.fsf@pond.sub.org>
+In-Reply-To: <87h5j8xnq5.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 29 Sep 2026 10:31:42 -0400
-X-Gm-Features: AclHuK8VT7pOP9Ev7qcKKRAdfby7S_vJcyRKahKO9PBwkchjsAj75Rlpv2FMiw4
-Message-ID: <CAFn=p-ZCq09nrc=O7jCay9JJ9c9eopMzQmDqHcdS8j=kWtVa_w@mail.gmail.com>
-Subject: Re: [PATCH 04/14] qapi/parser: enforce doc block section ordering
+Date: Tue, 29 Sep 2026 10:32:47 -0400
+X-Gm-Features: AclHuK9iLZXcCcnKy9SfAXrDvaBFV68wmXmiUL-P_JfVdqOFiB9tv3PwQFRdrYM
+Message-ID: <CAFn=p-YcABv7kk+9_NmYNfXSTzyOqAzdErNXBsV96mLRonOhVg@mail.gmail.com>
+Subject: Re: [PATCH 03/14] qapi: re-order QAPI doc block sections
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -130,16 +130,17 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
  Jason Wang <jasowangio@gmail.com>, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  Eric Blake <eblake@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000004ca787065ca00bc0"
+Content-Type: multipart/alternative; boundary="00000000000020b5d4065ca00ff4"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,473 +156,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004ca787065ca00bc0
+--00000000000020b5d4065ca00ff4
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 29, 2026, 8:36=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+On Tue, Sep 29, 2026, 8:10=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
  wrote:
+
+> What's a "block section"?
+>
+
+"doc block" section. Documentation block. probably.
+
+I dunno.
+
 
 > John Snow <jsnow@redhat.com> writes:
 >
-> > Enforce the relative ordering of "Intro", "Members", "Features",
-> > "Errors" and "Returns" sections.
+> > This patch is focused on making sure that "Returns" appears before
+> > "Errors", and "Errors" appears before "Features".
+>
+> Aha.  Suggest
+>
+>   qapi: Move Returns:, Errors: and Features: into this order
+>
 > >
 > > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/devel/qapi-code-gen.rst | 19 +++++++++++------
-> >  scripts/qapi/parser.py       | 41 ++++++++++++++++++++++++++++++------
-> >  2 files changed, 48 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rs=
-t
-> > index 3ac1c2dae18..29e9c5a3da6 100644
-> > --- a/docs/devel/qapi-code-gen.rst
-> > +++ b/docs/devel/qapi-code-gen.rst
-> > @@ -985,12 +985,19 @@ When documentation is required (see pragma_
-> 'doc-required'), every
-> >  definition must have documentation.
-> >
-> >  Definition documentation starts with a description naming the
-> > -definition with an optional indented overview (the "intro"),
-> > -:ref:`descriptions <doc-descrip>` of each argument (for commands and
-> > -events), member (for structs and unions), branch (for alternates), or
-> > -value (for enums), :ref:`feature descriptions <doc-feat>` of each
-> > -feature (if any), and finally optional :ref:`tagged sections
-> > -<doc-tagged>`.
-> > +definition with an optional indented overview (the "intro").
-> > +
-> > +The introduction is followed by :ref:`descriptions <doc-descrip>` of
-> > +each argument (for commands and events), member (for structs and
-> > +unions), branch (for alternates), or value (for enums).
-> > +
-> > +:ref:`Tagged sections <doc-tagged>` follow in order: Returns (for
-> > +commands), Errors (for commands), and lastly :ref:`feature
-> > +descriptions <doc-feat>` if applicable.
 >
-> *Some* of the tagged sections do.
->
-> Does this document still need the concept "tagged section"?
+> Patch looks good to me.
 >
 
-I doubt it does, beyond an explanation of common syntax. Happy to hear
-suggestions...
-
-We could also stand to change some of the method names like "ensure
-untagged section" could become "ensure details", and the like.
-
-tagged vs untagged has become increasingly non-meaningful.
-
-
-> > +
-> > +Definition documentation concludes with rST-formatted detail
-> > +paragraphs (including examples, notes, &c), and finally an optional
-> > +"Since" tagged section at the very end.
-> >
-> >  .. _doc-descrip:
-> >
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index fe284a3f866..94a60a23482 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -545,6 +545,28 @@ def get_doc(self) -> 'QAPIDoc':
-> >              doc.all_sections.append(QAPIDoc.Section(info,
-> QAPIDoc.Kind.INTRO))
-> >              line =3D self.get_doc_indented(doc)
-> >              no_more_args =3D False
-> > +            last_ordered_section =3D QAPIDoc.Kind.INTRO
-> > +
-> > +            def _tag_check(this: Union['QAPIDoc.Kind', str]) -> None:
-> > +                nonlocal last_ordered_section
-> > +                if isinstance(this, str):
-> > +                    this =3D QAPIDoc.Kind.from_string(this)
->
-> Simpler, I think: require a .Kind argument, and do the conversion from
-> string in the one caller that needs it.
->
-
-You're right.
-
-
-> > +
-> > +                if this in (QAPIDoc.Kind.TODO, QAPIDoc.Kind.SINCE,
-> > +                            QAPIDoc.Kind.DETAILS):
-> > +                    return
-> > +
-> > +                if this.value < last_ordered_section.value:
-> > +                    raise QAPIParseError(
-> > +                        self,
-> > +                        f"'{this}' section cannot appear after "
-> > +                        f"'{last_ordered_section}' section, please
-> re-order "
-> > +                        "the sections and adjust phrasing as necessary
-> to "
-> > +                        "ensure consistent documentation flow between
-> the "
-> > +                        "source code and the rendered HTML manual"
-> > +                    )
->
-> That's a loooong error message.  It actually consists of the error
-> proper and advice on how to correct it.  Please use
->
->     "<error>\n<advice>"
->
-> like we do in expr.py's check_keys(), parser.py's
-> ._validate_doc_line_format(), and schema.py's ._def_definition().  Yes,
-> the embedded newline is a bit of a hack.
->
-
-ACK.
-
-
-> > +
-> > +                last_ordered_section =3D this
-> >
-> >              while line is not None:
-> >                  # Blank lines
-> > @@ -558,6 +580,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                      if doc.has_features:
-> >                          raise QAPIParseError(
-> >                              self, "duplicated 'Features:' line")
-> > +                    _tag_check(QAPIDoc.Kind.FEATURE)
-> >                      self.accept(False)
-> >                      line =3D self.get_doc_line()
-> >                      while line =3D=3D '':
-> > @@ -581,6 +604,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                              self,
-> >                              "description of '@%s:' follows a section"
-> >                              % match.group(1))
-> > +                    _tag_check(QAPIDoc.Kind.MEMBER)
-> >                      while (line is not None
-> >                             and (match :=3D
-> self._match_at_name_colon(line))):
-> >                          doc.new_argument(self.info, match.group(1))
-> > @@ -621,6 +645,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                          )
-> >                          raise QAPIParseError(self, emsg)
-> >
-> > +                    _tag_check(match.group(1))
->
-> This is the caller that needs it.
->
-
-Yep.
-
-
-> >                      doc.new_tagged_section(
-> >                          self.info,
-> >                          QAPIDoc.Kind.from_string(match.group(1))
-> > @@ -632,6 +657,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                      no_more_args =3D True
-> >                  else:
-> >                      # plain paragraph(s)
-> > +                    _tag_check(QAPIDoc.Kind.DETAILS)
-> >                      doc.ensure_untagged_section(self.info)
-> >                      doc.append_line(line)
-> >                      line =3D self.get_doc_paragraph(doc)
-> > @@ -674,14 +700,17 @@ class QAPIDoc:
-> >      """
-> >
-> >      class Kind(enum.Enum):
-> > -        DETAILS =3D 0
-> > +        # The order here is the order in which sections must appear in
-> > +        # source code; with the exception of 'TODO' which may appear
-> > +        # anywhere but is treated as a comment.
-> > +        INTRO =3D 0
-> >          MEMBER =3D 1
-> > -        FEATURE =3D 2
-> > -        RETURNS =3D 3
-> > -        ERRORS =3D 4
-> > -        SINCE =3D 5
-> > +        RETURNS =3D 2
-> > +        ERRORS =3D 3
-> > +        FEATURE =3D 4
-> > +        DETAILS =3D 5
-> >          TODO =3D 6
-> > -        INTRO =3D 7
-> > +        SINCE =3D 7
-> >
-> >          @staticmethod
-> >          def from_string(kind: str) -> 'QAPIDoc.Kind':
->
-> Missing: negative test for the new error.
->
-
-Yep. If you are overall pleased with this change enough (pending nits),
-I'll add the tests now.
+ACK
 
 >
 
---0000000000004ca787065ca00bc0
+--00000000000020b5d4065ca00ff4
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 29, 2026, 8:36=E2=80=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 29, 2026, 8:10=E2=80=
 =AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@red=
 hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">John Snow &l=
-t;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-jsnow@redhat.com</a>&gt; writes:<br>
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">What&#39;s a=
+ &quot;block section&quot;?<br></blockquote></div></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">&quot;doc block&quot; section. Documentation blo=
+ck. probably.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I dunno.</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
+ gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
 <br>
-&gt; Enforce the relative ordering of &quot;Intro&quot;, &quot;Members&quot=
-;, &quot;Features&quot;,<br>
-&gt; &quot;Errors&quot; and &quot;Returns&quot; sections.<br>
+John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"=
+noreferrer">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; This patch is focused on making sure that &quot;Returns&quot; appears =
+before<br>
+&gt; &quot;Errors&quot;, and &quot;Errors&quot; appears before &quot;Featur=
+es&quot;.<br>
+<br>
+Aha.=C2=A0 Suggest<br>
+<br>
+=C2=A0 qapi: Move Returns:, Errors: and Features: into this order<br>
+<br>
 &gt;<br>
 &gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
 t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 docs/devel/qapi-code-gen.rst | 19 +++++++++++------<br>
-&gt;=C2=A0 scripts/qapi/parser.py=C2=A0 =C2=A0 =C2=A0 =C2=A0| 41 ++++++++++=
-++++++++++++++++++++------<br>
-&gt;=C2=A0 2 files changed, 48 insertions(+), 12 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.r=
-st<br>
-&gt; index 3ac1c2dae18..29e9c5a3da6 100644<br>
-&gt; --- a/docs/devel/qapi-code-gen.rst<br>
-&gt; +++ b/docs/devel/qapi-code-gen.rst<br>
-&gt; @@ -985,12 +985,19 @@ When documentation is required (see pragma_ &#39=
-;doc-required&#39;), every<br>
-&gt;=C2=A0 definition must have documentation.<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 Definition documentation starts with a description naming the<br=
->
-&gt; -definition with an optional indented overview (the &quot;intro&quot;)=
-,<br>
-&gt; -:ref:`descriptions &lt;doc-descrip&gt;` of each argument (for command=
-s and<br>
-&gt; -events), member (for structs and unions), branch (for alternates), or=
 <br>
-&gt; -value (for enums), :ref:`feature descriptions &lt;doc-feat&gt;` of ea=
-ch<br>
-&gt; -feature (if any), and finally optional :ref:`tagged sections<br>
-&gt; -&lt;doc-tagged&gt;`.<br>
-&gt; +definition with an optional indented overview (the &quot;intro&quot;)=
-.<br>
-&gt; +<br>
-&gt; +The introduction is followed by :ref:`descriptions &lt;doc-descrip&gt=
-;` of<br>
-&gt; +each argument (for commands and events), member (for structs and<br>
-&gt; +unions), branch (for alternates), or value (for enums).<br>
-&gt; +<br>
-&gt; +:ref:`Tagged sections &lt;doc-tagged&gt;` follow in order: Returns (f=
-or<br>
-&gt; +commands), Errors (for commands), and lastly :ref:`feature<br>
-&gt; +descriptions &lt;doc-feat&gt;` if applicable.<br>
-<br>
-*Some* of the tagged sections do.<br>
-<br>
-Does this document still need the concept &quot;tagged section&quot;?<br></=
-blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I doub=
-t it does, beyond an explanation of common syntax. Happy to hear suggestion=
-s...</div><div dir=3D"auto"><br></div><div dir=3D"auto">We could also stand=
- to change some of the method names like &quot;ensure untagged section&quot=
-; could become &quot;ensure details&quot;, and the like.</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">tagged vs untagged has become increasingly=
- non-meaningful.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cl=
-ass=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote"=
- style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; +<br>
-&gt; +Definition documentation concludes with rST-formatted detail<br>
-&gt; +paragraphs (including examples, notes, &amp;c), and finally an option=
-al<br>
-&gt; +&quot;Since&quot; tagged section at the very end.<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 .. _doc-descrip:<br>
-&gt;=C2=A0 <br>
-&gt; diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
-&gt; index fe284a3f866..94a60a23482 100644<br>
-&gt; --- a/scripts/qapi/parser.py<br>
-&gt; +++ b/scripts/qapi/parser.py<br>
-&gt; @@ -545,6 +545,28 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 doc.all_sections.appen=
-d(QAPIDoc.Section(info, QAPIDoc.Kind.INTRO))<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 line =3D self.get_doc_=
-indented(doc)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 no_more_args =3D False=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last_ordered_section =3D QA=
-PIDoc.Kind.INTRO<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 def _tag_check(this: Union[=
-&#39;QAPIDoc.Kind&#39;, str]) -&gt; None:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nonlocal last=
-_ordered_section<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if isinstance=
-(this, str):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- this =3D QAPIDoc.Kind.from_string(this)<br>
-<br>
-Simpler, I think: require a .Kind argument, and do the conversion from<br>
-string in the one caller that needs it.<br></blockquote></div></div><div di=
-r=3D"auto"><br></div><div dir=3D"auto">You&#39;re right.</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_cont=
-ainer"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if this in (Q=
-APIDoc.Kind.TODO, QAPIDoc.Kind.SINCE,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPIDoc.Kind.DETAILS):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- return<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if this.value=
- &lt; last_ordered_section.value:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- raise QAPIParseError(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 self,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 f&quot;&#39;{this}&#39; section cannot appear after &quot;<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 f&quot;&#39;{last_ordered_section}&#39; section, please re-o=
-rder &quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 &quot;the sections and adjust phrasing as necessary to &quot=
-;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 &quot;ensure consistent documentation flow between the &quot=
-;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 &quot;source code and the rendered HTML manual&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- )<br>
-<br>
-That&#39;s a loooong error message.=C2=A0 It actually consists of the error=
-<br>
-proper and advice on how to correct it.=C2=A0 Please use<br>
-<br>
-=C2=A0 =C2=A0 &quot;&lt;error&gt;\n&lt;advice&gt;&quot;<br>
-<br>
-like we do in expr.py&#39;s check_keys(), parser.py&#39;s<br>
-._validate_doc_line_format(), and schema.py&#39;s ._def_definition().=C2=A0=
- Yes,<br>
-the embedded newline is a bit of a hack.<br></blockquote></div></div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">ACK.</div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #cc=
-c solid;padding-left:1ex"><br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last_ordered_=
-section =3D this<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 while line is not None=
-:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Blank =
-lines<br>
-&gt; @@ -558,6 +580,7 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 if doc.has_features:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 raise QAPIParseError(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self, &quot;duplicated &#39;Features:&#3=
-9; line&quot;)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- _tag_check(QAPIDoc.Kind.FEATURE)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 self.accept(False)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 line =3D self.get_doc_line()<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 while line =3D=3D &#39;&#39;:<br>
-&gt; @@ -581,6 +604,7 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;description of &#39;@%s:&#39; foll=
-ows a section&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 % match.group(1))<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- _tag_check(QAPIDoc.Kind.MEMBER)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 while (line is not None<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0and (match :=3D self._match_at_name_colon=
-(line))):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 doc.new_argument(<a href=3D"http://self.info" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">self.info</a>, match.group(1))<br>
-&gt; @@ -621,6 +645,7 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 )<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 raise QAPIParseError(self, emsg)<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- _tag_check(match.group(1))<br>
-<br>
-This is the caller that needs it.<br></blockquote></div></div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">Yep.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote =
-class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid=
-;padding-left:1ex">
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 doc.new_tagged_section(<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 <a href=3D"http://self.info" rel=3D"noreferrer norefer=
-rer" target=3D"_blank">self.info</a>,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 QAPIDoc.Kind.from_string(match.group(1))<br>
-&gt; @@ -632,6 +657,7 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 no_more_args =3D True<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 # plain paragraph(s)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- _tag_check(QAPIDoc.Kind.DETAILS)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 doc.ensure_untagged_section(<a href=3D"http://self.info" rel=3D"nore=
-ferrer noreferrer" target=3D"_blank">self.info</a>)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 doc.append_line(line)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 line =3D self.get_doc_paragraph(doc)<br>
-&gt; @@ -674,14 +700,17 @@ class QAPIDoc:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &quot;&quot;&quot;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 class Kind(enum.Enum):<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 DETAILS =3D 0<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # The order here is the order in which se=
-ctions must appear in<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # source code; with the exception of &#39=
-;TODO&#39; which may appear<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 # anywhere but is treated as a comment.<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 INTRO =3D 0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MEMBER =3D 1<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 FEATURE =3D 2<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 RETURNS =3D 3<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 ERRORS =3D 4<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 SINCE =3D 5<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 RETURNS =3D 2<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ERRORS =3D 3<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 FEATURE =3D 4<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 DETAILS =3D 5<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TODO =3D 6<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 INTRO =3D 7<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 SINCE =3D 7<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 @staticmethod<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 def from_string(kind: str) -&gt; &#3=
-9;QAPIDoc.Kind&#39;:<br>
-<br>
-Missing: negative test for the new error.<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Yep. If you are overall pleased wi=
-th this change enough (pending nits), I&#39;ll add the tests now.</div><div=
- dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote =
-class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid=
-;padding-left:1ex"></blockquote></div></div></div>
+Patch looks good to me.<br></blockquote></div></div><div dir=3D"auto"><br><=
+/div><div dir=3D"auto">ACK</div><div dir=3D"auto"><div class=3D"gmail_quote=
+ gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
 
---0000000000004ca787065ca00bc0--
+--00000000000020b5d4065ca00ff4--
 
 
