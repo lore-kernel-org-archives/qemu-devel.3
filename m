@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603D8CA5FAD
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E23CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUfD-0007Wc-W5; Tue, 29 Sep 2026 06:02:20 -0400
+	id 1xBUf4-0007Bi-8w; Tue, 29 Sep 2026 06:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfA-0007SD-S8
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:17 -0400
-Received: from mail-ej2-x0d.google.com ([2a00:1450:4864:34::d])
+ id 1xBUf1-00075z-7L
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:07 -0400
+Received: from mail-ej2-x13.google.com ([2a00:1450:4864:34::13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUf8-0008Dm-Ph
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:16 -0400
-Received: by mail-ej2-x0d.google.com with SMTP id
- a640c23a62f3a-c2e01f5c0aeso4402266b.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:14 -0700 (PDT)
+ id 1xBUez-0008Ca-2q
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:06 -0400
+Received: by mail-ej2-x13.google.com with SMTP id
+ a640c23a62f3a-c2dc50c6eccso302472066b.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676133; x=1791280933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790676123; x=1791280923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=spYIh9pyhVcO6HeigayUWPJWrRXyKwBCckHqXhigO8Y=;
- b=uxRM5dzfWPN1xs8t9qjTDvVpF33oaaXQ4hXGjgvo54R0Ct/cpesHn8W39QMAILIfsL
- x/eDmnErRb6IPcK7egU/l/FOvCipVGlginkyUSfcTUAL6RMaqaaim+/Dfzg75fYlRhRq
- Mxhymmtw/g4dzJa+An1c/GrS5mXe95hEhUXRMaVEgfIwGd10EUFRvoKgO3NZlrrZ0Pu1
- LWJ9+339NksnEA6h9NIieegJ+t1b8yS1ZMu9asfpidYOqXgzQQajjNg3HYHRM2Y6yQXl
- k5uycyN7I7URFAlLtapeIp4+2jtbVl1GRW6GHRr8AH1gUEW100+m2mz3/bodCxQf5BSV
- 8icA==
+ bh=Tg8Trm3rIcaOaRzuQ0W5qsFGZrHzGmF2Sk39CZZch28=;
+ b=Dt433MIoAOj30UjcB4G5jh17RNIfwHGhNkz9x0/UyPCUKzUFEm4BAtGiHGirKkT4z8
+ 0PBCkGpNPcZh5OUPLvI6N0QsxTJWDgK6+K0A545J49EO6hTy7mFYatXgbUUPdUyg99W9
+ A5xRZJpFcCIpIYfDj5XlGnBDvwmF1E5AhuaKg/aPZoV9gS9glrua2t6ZjlqqwZWkhl0b
+ 0bNqY9NQdbsquAuKC9OtxFYnSecRSt93YdcYXytlCqe4NZbwUdrgdMz4Ut+zdbsHAolM
+ Rb+te5TRLscBYSHp8C8p8nddpkUMCAA+g7E5hT4T/6s7lyaPf8nGKxfG/RbaIFhfxxyu
+ juCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676133; x=1791280933;
+ d=1e100.net; s=20260707; t=1790676123; x=1791280923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=spYIh9pyhVcO6HeigayUWPJWrRXyKwBCckHqXhigO8Y=;
- b=rU2FQhQeQ9B/71f0ogUXFcT2vvLzYhxtXz4h5bjCeyIGqtmHb6Mcp3KN0R1hJojzs4
- zUpFSyqkcuZExjDrP4SdtA85mlCvn4Lp0k6ACLyAyLzNwyfDYcLFv1u+rqi36FF4nIFj
- 2v8/G3ow5TG2tUO6VbfQlNAj/piBz6hWQC3eWN6oOu236ytIlGV5+GBRZxb4KywccNs+
- SIBO3G7NSTP+g6/r8pKdYvOzRBzEY5CMGTGQkA8DXvqeyziTa/MBW17lEfEHQYGKSQAA
- f36F7g54Ux5H4t4A3K1mhMZ6+OPbacpncdYnw8gsZSpUOf5KZtBuzKguDZnMGmbsnWv8
- GvKA==
-X-Gm-Message-State: AFuF++kWMeiAzxwz3aA8hi+aESzqddmJflJiOYVib4TZu9zXuFpkHnIX
- aESZDFduIvyjR82jfa52+IEV+iomVUiP6W9gyq5XPZQhGbX7IxldkCpfYi2MOyKeiKF+Bgz2Mv8
- eJ3Do
-X-Gm-Gg: AYBFou3q0xzuhT/es+RN1sdpKUs9uLnEwwoSrCzPZY+QoNTCoQVDp8FQHojf40v3wbx
- fadmxXwQV0JZqnkIeD4f7EGM1nMdBlBuizdH1K5wJxOTbRDglTZvXIB4XxlVvSRo/ZCA1gjGig+
- /3D9PRhQ2jHVVprpU0v+gecVINUq3ZxrcD9HL9DT+z4u5HJJKM2Y+GVCpb9yRfZkWzvTNe+DDMU
- ABpvsobk3EkZsQU2iws58qmve41JnGUxJCs704c5YdtNnvHsAEKuCpTWdXWaTzQHh72OV5R/nj2
- SlD0T8mSw3/loVvGO7k/VKTGfsvlpnMUyvrSjrpAbGkijgyTh/XyBrLpd2lAi4PkP0I/yEfHptN
- fF7m9SF0YywQhgUdsR1Obixj3RVUcI6qhS8YzrvqXXPdFtjjsVaSGBZ6TQcFYRfzFJK98zcRC+p
- xjCytvZTlYrQWteTPPhi34WlFQaUiU5ChHPiAuNhJxnglkESxCp6Gf+X1p0BD0fUAVxfnjtSBY/
- QS3eAsRLD0JiyTy9Bl1DLI53yNTHsAToNU1RWnISdnE6plJQR8Pkjj2EBC/GBMDhaEMXXCqB/MI
- mas=
-X-Received: by 2002:a17:907:da6:b0:c2d:ca8d:435a with SMTP id
- a640c23a62f3a-c2dca8d5492mr485697066b.38.1790676132615; 
- Tue, 29 Sep 2026 03:02:12 -0700 (PDT)
+ bh=Tg8Trm3rIcaOaRzuQ0W5qsFGZrHzGmF2Sk39CZZch28=;
+ b=JstzA7wHimap7oRCOotpZ/ArfxHKEvGxmshrh6Bq1SLs6yFPV8E92ixwDckDDEeYUA
+ iBdALO6OoMiQacuZNzICHhxASSqzf/vz43etE6hqDkJeL9Kc+HYRWW2KBkcTYeSym1Sg
+ tGF+00L7hB0hF7+HaC8BVN44QmWU93ByKcix/k9Sugx2W6COutV0VZi61nWPQQuW6fT3
+ gpzFERI855BqI4IsRcbZeu1qyVji6F/VK5ixyTrV/00unlbB0f3oYmAyBeiyf/b1X+Yx
+ EANXDNMIX4dMuQjYfmwGM2DuK/c+b1yvnvraNagxZtFAn1J2tf/NgA1/bioGIqyrWGBx
+ 4zjw==
+X-Gm-Message-State: AFuF++l8s3xv6jHCwgL8YL7+LyHO0W6RRc5E+QucNT4mUOgjtYSiQhJO
+ 144+QR13aj4WTUXS/7A0hsJKsPll2ooXpwme/bcfysyFnr7Vppz6djwRH9VlCYHAvcwbYphAzU/
+ C9PFo
+X-Gm-Gg: AYBFou1fRKzkykm1JjhgzSbXz5exwkO/STUPfDnrMy75Qq7JCr/fFh+/xes8nVjlBhl
+ FGYoxzay3TAfghNRBTu8rbr8Ow6/LTFViP8fhwbRIwiWjgOIB4kpa9J1iUSGV8bDi1QCrllNu9E
+ Zpc7it6NgeVyMY46UTQDyc5TCx06uNsNtZ0ZJjU7hQ4T+gYDW/C1rpIECJSJ8eg0RWlgTgb7z5S
+ JGs2ha99mRsY56LfkOdUvgiocAPpNWoeWSJhVrCKu3VGn/fwVBKqqEzPUeLdtPpFLSMzfgeaU83
+ O+K/BwyNNruAGflkioIMwKVvomXfjoUUGGC+tGINNYA+lTqx4zyRGj0WzaZUzgqi/joC4MUyarU
+ XK483iMAmsSNI0DfuNfPpBHGlJxjR0/mlTOGs0LP+1RuOilEKtq6IvK6oR9JS3gYIIyB4ui2dDZ
+ TxxPYq9hfKskHSs/V1s32TPH0OwPja3nMclnIicpqtrSjRFAExD+CdQDqc/xGKSn8tg7TpPv7oQ
+ fn79rVrwwyJfFjwhf8al/yfRw0GDadg3HmpswsvcXlC1t5FAyZ7BB3cUx4lMzmrO0gTxXl/YAA2
+ /Ho=
+X-Received: by 2002:a17:907:d10:b0:c24:adf4:5c73 with SMTP id
+ a640c23a62f3a-c2ac2310342mr1294853266b.1.1790676123433; 
+ Tue, 29 Sep 2026 03:02:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.11
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:02:11 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/37] target/arm: Reorg rebuild_hflags_common*
-Date: Tue, 29 Sep 2026 11:01:18 +0100
-Message-ID: <20260929100133.2598676-24-peter.maydell@linaro.org>
+Subject: [PULL 18/37] target/arm: Don't set ARM_FEATURE_VAPA for v7 PMSA
+Date: Tue, 29 Sep 2026 11:01:13 +0100
+Message-ID: <20260929100133.2598676-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:34::d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej2-x0d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:34::13;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej2-x13.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,130 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The features VAPA (which gets you the ATS instructions and the PAR
+register) and LPAE (which gets you a 64-bit PAR and the long-format
+page table descriptors).  were originally defined in v7 as being
+A-profile only.  For v8, the ATS insns and PAR are added to
+R-profile; although there are no page table descriptors to be long or
+short, the v8R PAR format is always long-descriptor style, so it
+makes more sense to set ARM_FEATURE_LPAE than not (and matches how we
+already return true from regime_using_lpae_format() for v8R PMSA).
 
-Invert the call ordering of rebuild_hflags_common_32 and
-rebuild_hflags_common vs the rest of the flags setting.
+Our "feature X implies feature Y" code was only taking account of
+A-profile; adjust it so that for PMSA:
+ * V8 implies V7VE, LPAE, V7, and VAPA (no change from currently)
+ * V7 does not imply VAPA (new)
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260925215004.456336-3-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+(v8R wants V7VE because this implies things like the existence of
+ERET and the PMOVSSET insns.)
+
+This will stop us incorrectly exposing the PAR and ATS insns for v7R
+CPUs (and it will be a migration break on those CPUs, which is fine
+as none of them are usable with versioned machine types).
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260907130223.3148989-7-peter.maydell@linaro.org
 ---
- target/arm/tcg/hflags.c | 44 +++++++++++++++++++++--------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ target/arm/cpu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index c7739fc61b2..eb1aff91d5f 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -87,9 +87,10 @@ bool access_secure_reg(CPUARMState *env)
- }
- 
- static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
--                                           ARMMMUIdx mmu_idx,
--                                           CPUARMTBFlags flags)
-+                                           ARMMMUIdx mmu_idx)
- {
-+    CPUARMTBFlags flags = {};
-+
-     DP_TBFLAG_ANY(flags, FPEXC_EL, fp_el);
-     DP_TBFLAG_ANY(flags, MMUIDX, arm_to_core_mmu_idx(mmu_idx));
- 
-@@ -100,28 +101,27 @@ static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
-     return flags;
- }
- 
--static CPUARMTBFlags rebuild_hflags_common_32(CPUARMState *env, int fp_el,
--                                              ARMMMUIdx mmu_idx,
--                                              CPUARMTBFlags flags)
-+static void rebuild_hflags_common_32(CPUARMTBFlags *flags, CPUARMState *env)
- {
-     bool sctlr_b = arm_sctlr_b(env);
- 
-     if (sctlr_b) {
--        DP_TBFLAG_A32(flags, SCTLR__B, 1);
-+        DP_TBFLAG_A32(*flags, SCTLR__B, 1);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index be2316bec1c..10ac6c98318 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1507,7 +1507,11 @@ static void arm_cpu_propagate_feature_implications(ARMCPU *cpu)
+         set_feature(env, ARM_FEATURE_V7);
      }
-     if (arm_cpu_data_is_big_endian_a32(env, sctlr_b)) {
--        DP_TBFLAG_ANY(flags, BE_DATA, 1);
-+        DP_TBFLAG_ANY(*flags, BE_DATA, 1);
-     }
--    DP_TBFLAG_A32(flags, NS, !access_secure_reg(env));
--
--    return rebuild_hflags_common(env, fp_el, mmu_idx, flags);
-+    DP_TBFLAG_A32(*flags, NS, !access_secure_reg(env));
- }
- 
- static CPUARMTBFlags rebuild_hflags_m32(CPUARMState *env, int fp_el,
-                                         ARMMMUIdx mmu_idx)
- {
--    CPUARMTBFlags flags = {};
--    uint32_t ccr = env->v7m.ccr[env->v7m.secure];
-+    CPUARMTBFlags flags = rebuild_hflags_common(env, fp_el, mmu_idx);
-+    uint32_t ccr;
-+
-+    rebuild_hflags_common_32(&flags, env);
-+    ccr = env->v7m.ccr[env->v7m.secure];
- 
-     /* Without HaveMainExt, CCR.UNALIGN_TRP is RES1. */
-     if (ccr & R_V7M_CCR_UNALIGN_TRP_MASK) {
-@@ -146,8 +146,7 @@ static CPUARMTBFlags rebuild_hflags_m32(CPUARMState *env, int fp_el,
-     if (arm_feature(env, ARM_FEATURE_M_SECURITY) && env->v7m.secure) {
-         DP_TBFLAG_M32(flags, SECURE, 1);
-     }
--
--    return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
-+    return flags;
- }
- 
- /* This corresponds to the ARM pseudocode function IsFullA64Enabled(). */
-@@ -277,10 +276,14 @@ static bool arm_d32dis(CPUARMState *env, int cur_el)
- static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
-                                         ARMMMUIdx mmu_idx)
- {
--    CPUARMTBFlags flags = {};
--    int el = arm_current_el(env);
--    uint64_t sctlr = arm_sctlr(env, el);
-+    CPUARMTBFlags flags = rebuild_hflags_common(env, fp_el, mmu_idx);
-+    int el;
-+    uint64_t sctlr;
- 
-+    rebuild_hflags_common_32(&flags, env);
-+
-+    el = arm_current_el(env);
-+    sctlr = arm_sctlr(env, el);
-     if (aprofile_require_alignment(env, el, sctlr)) {
-         DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
-     }
-@@ -323,7 +326,7 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
- 
-     DP_TBFLAG_A32(flags, D32DIS, arm_d32dis(env, el));
- 
--    return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
-+    return flags;
- }
- 
- /*
-@@ -392,7 +395,7 @@ static int fpmr_exception_el(CPUARMState *env, int el)
- static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-                                         ARMMMUIdx mmu_idx)
- {
--    CPUARMTBFlags flags = {};
-+    CPUARMTBFlags flags = rebuild_hflags_common(env, fp_el, mmu_idx);
-     ARMMMUIdx stage1 = stage_1_mmu_idx(mmu_idx);
-     uint64_t tcr = regime_tcr(env, mmu_idx);
-     uint64_t hcr = arm_hcr_el2_eff(env);
-@@ -672,8 +675,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
-     if (cpu_isar_feature(aa64_fpmr, env_archcpu(env))) {
-         DP_TBFLAG_A64(flags, FPMR_EL, fpmr_exception_el(env, el));
-     }
--
--    return rebuild_hflags_common(env, fp_el, mmu_idx, flags);
-+    return flags;
- }
- 
- static CPUARMTBFlags rebuild_hflags_internal(CPUARMState *env)
+     if (arm_feature(env, ARM_FEATURE_V7)) {
+-        set_feature(env, ARM_FEATURE_VAPA);
++        /* VAPA appears in v7A, but not in R profile until v8R */
++        if (arm_feature(env, ARM_FEATURE_V8) ||
++            !arm_feature(env, ARM_FEATURE_PMSA)) {
++            set_feature(env, ARM_FEATURE_VAPA);
++        }
+         set_feature(env, ARM_FEATURE_THUMB2);
+         set_feature(env, ARM_FEATURE_MPIDR);
+         if (!arm_feature(env, ARM_FEATURE_M)) {
 -- 
 2.43.0
 
