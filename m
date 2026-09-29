@@ -4,130 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC24C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D6C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBQPa-0005ta-Kb; Tue, 29 Sep 2026 01:29:54 -0400
+	id 1xBQtO-0002Sx-6g; Tue, 29 Sep 2026 02:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBQPU-0005rY-QV
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:29:51 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBQPS-0001qa-Pw
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:29:48 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a6063d7dc4so4590243a12.3
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:29:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790659785; cv=none;
- d=google.com; s=arc-20260327;
- b=RlBxb4iXrnwPYNgQS8wsfxQojWBqjaN0FIQcAI4gxwbjSELqaaueojZ628u5iV6DQs
- z2VVVVz5+Fk/fDzwe/h57D8v0IiBCWLKFB5mm8Er9GiLV/wYbPX6oG0Fo4K54D2TS/Ab
- seBc88Jb3rPHKWLinBdmgaHCFCSQ8rMHdQEGSLGC0xk1noALTNddhXt1mAer7RgbcBVL
- 5Zja8yvpHWd6/KMYLoFMQbVuJa8wdT+yDxJPywUfDE07t7r2uUT+5Y8BYgdUdcmfmy5n
- Jh5C1oo9zqa6bE3YfOGytZLXHbyc2rT6j2IT1uWx4X29QjLIwBD8hUCY8jgb1612z30p
- 0g+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=xV5ttRcpYOm4eTqxOEwdri0P3mUYdyXck72/42+CiY0=;
- fh=/XhB7PTqpds2+yqfZ8mzcKXS0fqCEV1XQQIG8MCCxOU=;
- b=MPaKYDKK4PQfHI2GdhRXCRAXMGFU+r0hrgHUby/zqTaQlMLk24VESZw9QYDwmRsBAd
- JS8J7nu693N0TwgY7k4Ak/RJGw6G2/z1z4QTi2OauNGVM85qvDnL1vlkcJL82NMmH/vg
- 3XrE7rgaADe/C1Srm/YN+x9w9YLU4Z3jZFcA33KbTH+oncAcqonGzxX/Q0Zc9oWlOvS5
- z+u1N1Gq40JJXI6cNZUPUg4AbkgeuZRzf6u7AeZa4DUGX6RuTFyiGT92xYe53i3FRE+X
- /79zJT4VNjtaGshzL6zy0hNkGTW98zOWyKaKLWz+e5F35/pFRZFlcgx8DeQ/rKS3KNc4
- GAcA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790659785; x=1791264585; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=xV5ttRcpYOm4eTqxOEwdri0P3mUYdyXck72/42+CiY0=;
- b=BgTyLnyUnvvMBYn9DZ+sHxS2v5VhPjKsSzIBIVlZiXq8+bM+SMK/5UpsTI7e4zzj4B
- nfuoQ/fGI+dFt29CUsqlQ6K1b7tgyuBbPBlUvWaMHjTD3qwXSvQkPaHTPFDjKybdA04j
- 6JN06BcWsbTHsvoFTdyYWMPEikCNJzHxn233weY4ERJliaAoOS69mYlhPlEKKUQw/kro
- Sz8Kj2J11PgjlMX9Bu6RxbhOP6ULc+rtsKPFhQolj1CgljQE6q0ZBZS7j0xBdDxCO6rt
- K/jbZbnB7/FfiZa9sZdYnXPc6P7pTWcti3UoQ9N377sAMc+ejJn0lHdlPuF9NEnrYu4H
- kOxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790659785; x=1791264585;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xV5ttRcpYOm4eTqxOEwdri0P3mUYdyXck72/42+CiY0=;
- b=lN6dZxADBKekpSUvLWr3PYF7qv6DWNy1Zvj2b/52XQwfobfYJfr4v8Vx3WfQHY15G0
- /12Iwp6EuT2aOBPLvQL1iKOAmH2vHxYQjIBopaBF7V463K2x7QpwhQ9iqk+7pgHmPsVn
- ePsh876E7R+yaZRmrx2qTinAZ51gwjabz0BqLcBWSMCnlsLQt3xlsn8ob4aOBOegJuAZ
- 3pcoYnmZWOx32t5JsHBlrFoIjg3tkFdUF9PDvps0D7gTV0Bv7ZdxdqaLin3MHzm/pHdt
- iWYofEanqSHGyoVDbmpWFG1x7+m4yBwIqv4KA9Ig/2JJyXCyrr40FyyRKyu4IUBxumnX
- ZKVQ==
-X-Gm-Message-State: AFq9FYI70GEOxfozDGUB3afao2mRs9c5OFGpsOlD1sd0KNnTVLRyZH9x
- cTUusNcIa7hCBCTFFH1/DTNaszXCQ9dXLRueugbpHyHfm5z7zJD7P3sTim9KFsWcLqRrVcA78MR
- oxOifEUizI7JvxRrGB1f8YjfElxkVkoM=
-X-Gm-Gg: AYBFou34GGe1gztRx2HlX7NXX2EbNGRfWbwt4WumkkpIq05+FznugxXqClg5IfEeBtG
- 0t0iEWVQwX46A2sY75nTxlYqt6uHpMhYRbVRv5LHeIbFvh0MFvWqJl84+TXzAcWIBDGRHFEbXd0
- V1odAmQYT/y0QcIp2Yt9pZiVLTczUVLzanToEdX85kcg8yMFZMdluql/4HazTWupTPm8yQqaapI
- liLyWgMxW//GmSOSfcQlmGDMEYLL2biAHgB7EmYRl008NMoG3CXhyIst+KwYPZVzWqTxiqE77V3
- 5OhaQbQRWm3ey4HA3UbdT2Qrw5QYHTnR2vRKlizNX1mfFCwLefaxEwbapaSIZmslgw==
-X-Received: by 2002:a05:6402:1d4d:b0:6aa:734b:1a33 with SMTP id
- 4fb4d7f45d1cf-6aac90a25d0mr12269867a12.45.1790659784584; Mon, 28 Sep 2026
- 22:29:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBQtM-0002Sh-Pl
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:00:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBQtL-00056x-2W
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:00:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790661638;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pd1nE8tm6QIZrV/nFhCguSAStzLKRhwQqSFAGuCgj5I=;
+ b=e4nIy+kHTSl/pk0RBF1p4vPzd6xH4r3pOiIEaQEM26tyXZSFPff6zGTTv3yzNIRiW/lHO3
+ //CoLzj8zi64IVQM8IDn0sHMd/n/XSDU1LmygdUi94/4zRr+s5DMUfxUsgQqovhPwLSfq/
+ H3vsYrq88eybT5kwCb+sLpmc4XHH0Fg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-rjXNEiorP-SaACrUtD1MLg-1; Tue,
+ 29 Sep 2026 02:00:33 -0400
+X-MC-Unique: rjXNEiorP-SaACrUtD1MLg-1
+X-Mimecast-MFC-AGG-ID: rjXNEiorP-SaACrUtD1MLg_1790661632
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 996971944D40; Tue, 29 Sep 2026 06:00:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0FFD19560AB; Tue, 29 Sep 2026 06:00:30 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3654521E6A04; Tue, 29 Sep 2026 08:00:28 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Jason Wang <jasowangio@gmail.com>,  Eric
+ Blake <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Peter
+ Xu <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>
+Subject: Re: [PATCH v3 02/10] qapi: convert/split intros for block-core.json
+ commands
+In-Reply-To: <20260928192557.509157-3-jsnow@redhat.com> (John Snow's message
+ of "Mon, 28 Sep 2026 15:25:49 -0400")
+References: <20260928192557.509157-1-jsnow@redhat.com>
+ <20260928192557.509157-3-jsnow@redhat.com>
+Date: Tue, 29 Sep 2026 08:00:28 +0200
+Message-ID: <87mrt038cj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260928052051.251-1-luoyonggang@gmail.com>
- <20260928052051.251-5-luoyonggang@gmail.com>
- <0c156b42-3476-4ac3-bd29-f4e878108f0c@oss.qualcomm.com>
-In-Reply-To: <0c156b42-3476-4ac3-bd29-f4e878108f0c@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 29 Sep 2026 13:29:31 +0800
-X-Gm-Features: AclHuK-hBYjfdyUtFue77G6Rrnmj0ZHq-R9b0MFpLMGayDCYUEm7imkFjKaFk54
-Message-ID: <CAE2XoE9VC6YfqsOQBM_KLrdaKpU-=bD9CscCDGi63EsQt-EhFg@mail.gmail.com>
-Subject: Re: [PATCH v2 04/24] target/rx: name guest trap numbers RX_EXCP_*
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Max Filippov <jcmvbkbc@gmail.com>, 
- Chao Liu <chao.liu@processmission.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Stafford Horne <shorne@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Yoshinori Sato <yoshinori.sato@nifty.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Eric Farman <farman@linux.ibm.com>,
- qemu-riscv@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>, 
- Glenn Miles <milesg@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Song Gao <17746591750@163.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Michael Rolnik <mrolnik@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,58 +94,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 29, 2026 at 1:26=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
+John Snow <jsnow@redhat.com> writes:
+
+> Convert, or split off, intro sections for commands defined in
+> block-core.json. In general, this does not currently impact the way
+
+Suggest to scratch "In general".
+
+> these commands are rendered, except:
 >
-> On 28/9/26 07:20, Yonggang Luo wrote:
-> > Add RX_EXCP_* in cpu.h for the guest trap numbers stored in
-> > cs->exception_index.
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >   target/rx/cpu.h | 10 ++++++++++
-> >   1 file changed, 10 insertions(+)
-> >
-> > diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-> > index 64ba48a7329..521e494172e 100644
-> > --- a/target/rx/cpu.h
-> > +++ b/target/rx/cpu.h
-> > @@ -71,6 +71,16 @@ enum {
-> >       NUM_REGS =3D 16,
-> >   };
-> >
-> > +/* Guest trap numbers. */
-> > +enum {
-> > +    RX_EXCP_PRIVILEGE_VIOLATION =3D 20,
-> > +    RX_EXCP_ACCESS =3D 21,
-> > +    RX_EXCP_ILLEGAL_INSTRUCTION =3D 23,
-> > +    RX_EXCP_FPU =3D 25,
-> > +    RX_EXCP_NMI =3D 30,
-> > +    RX_EXCP_INT =3D 0x100,
-> > +};
+> 1. blockdev-reopen sees its arguments shit up to just below the
+
+I trust you meant "shift" ;)
+
+>    formalized introductory section.
 >
-> Thanks for splitting in a previous patch, but we want to
-> add the definitions and replace the magic values at the
-> same time (i.e. the changes in rx_cpu_do_interrupt() in
-> the next patch go here), but also s/21/RX_EXCP_ACCESS/ in
-> update_fpsw, etc...).
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-Do you mean add a single enum value in a single commit? so it can
-be tracked clearly.
-So when RX_EXCP_ACCESS is introduced. all usage of 21 will be replaced with
-RX_EXCP_ACCESS?
+Happy to adjust commit messages without a respin.
 
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
