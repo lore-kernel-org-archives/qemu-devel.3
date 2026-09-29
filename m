@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B76C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19A1CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZmj-0005mH-Mm; Tue, 29 Sep 2026 11:30:25 -0400
+	id 1xBZmk-0005nE-Nb; Tue, 29 Sep 2026 11:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBZmh-0005kS-KL; Tue, 29 Sep 2026 11:30:23 -0400
+ id 1xBZmh-0005kV-Rb; Tue, 29 Sep 2026 11:30:23 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBZmf-0007w6-P0; Tue, 29 Sep 2026 11:30:23 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1xBZmf-0007wA-Vg; Tue, 29 Sep 2026 11:30:23 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TB65J02784022; Tue, 29 Sep 2026 15:30:17 GMT
+ 68TB5jFd3836778; Tue, 29 Sep 2026 15:30:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ZaenF2XjXh5pLJOOD
- gpYO3+oXMdbOOnFH6E/qVZFipI=; b=jMbCiTiJvM6p/fLQPoeoKiF4+xSZbGiYq
- DerzraxlL3gQjPOCyh/1Rs4/hRfebbzYACxAt32q3twV16LBiTDvQ7Uxtj+qZKuo
- sNn7rlOpN8gaVB8pQZqqf81jmNvIo/rv+J979KI8UdljZxeP9RfxUodF89W7yQjt
- Nv+4JDtxbaqjO7jLr0QExBWKAFv1H7JV2SIFe70KD0P2FbqY+vT8pwtBE4qO0MIq
- SqhlLbIGzCHnqIxIstywJwR8J6lRB1FigSpNmGZpw0b1SEbGMvH5AxdBW7Qf8qoi
- wisu40ht3YWeDEMMVcj2/coxgNRRRCnt67RL8gRbq+YCpbAaZ1ZWg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fe76ru-1
+ :mime-version:references:subject:to; s=pp1; bh=6MOZU/NZWOwAIMtx6
+ VsCx0AhvXr5R2udK8cfN1R7yE0=; b=lnCeABd2LuXoe7kFZ0B6g/lJojKJunMxV
+ Bjf28EauWsnDZE/R35vvjYBMFuqft/tjcibGkw/BtmY376oys4RXZEPCwscC7yXM
+ E55rZdCFQBxcsB9dv9jmC85KxSjrrD7Azl4nVmMGLuPeSfHys0QGCD75OqMf748d
+ bZKvfGnLE8FFYhFwU+ZIRcLhcAmFnf88vUf1obbPjnebJZCnZs0paBN0aoRI2AHI
+ mQj8NhjirBJfiA54qVDG2/DLaOuNy+sXp4H3kb8Y4sul6wHlb/7SaLwvhqzH4rzZ
+ 2GzVWLcScLTTuuWzvbdZnOvCqvTK+4Y5d6jLFnLXo58A9wCb/8E/Q==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fk7eca-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:30:16 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TF6cH61607727; Tue, 29 Sep 2026 15:30:16 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxscka9sj-1
+ Tue, 29 Sep 2026 15:30:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TF1toF1617010; Tue, 29 Sep 2026 15:30:17 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxrrwadkq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:30:16 +0000 (GMT)
+ Tue, 29 Sep 2026 15:30:17 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68TFUFRu32965178
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68TFUGIL24904422
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Sep 2026 15:30:15 GMT
+ Tue, 29 Sep 2026 15:30:16 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C80A58043;
+ by IMSVA (Postfix) with ESMTP id 0F23058059;
+ Tue, 29 Sep 2026 15:30:16 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 45E7A58055;
  Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 61A105805E;
- Tue, 29 Sep 2026 15:30:14 +0000 (GMT)
 Received: from li-2311da4c-2e09-11b2-a85c-c003041e9174.ibm.com.com (unknown
  [9.61.92.210]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Sep 2026 15:30:14 +0000 (GMT)
+ Tue, 29 Sep 2026 15:30:15 +0000 (GMT)
 From: Matthew Rosato <mjrosato@linux.ibm.com>
 To: qemu-s390x@nongnu.org
 Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
  iii@linux.ibm.com, david@kernel.org, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, cohuck@redhat.com, qemu-devel@nongnu.org,
  qemu-stable@nongnu.org
-Subject: [PATCH v2 1/3] s390x/pci: Fix frame stepping in rpcit_service_call()
-Date: Tue, 29 Sep 2026 11:30:10 -0400
-Message-ID: <20260929153012.774530-2-mjrosato@linux.ibm.com>
+Subject: [PATCH v2 2/3] s390x/pci: Use qemu_log_mask() for guest-triggered
+ errors in reg_ioat()
+Date: Tue, 29 Sep 2026 11:30:11 -0400
+Message-ID: <20260929153012.774530-3-mjrosato@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260929153012.774530-1-mjrosato@linux.ibm.com>
 References: <20260929153012.774530-1-mjrosato@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abbd988 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-ORIG-GUID: KIZkIQfbzoNBVA-PByCmFAEfKCq934Wq
+X-Proofpoint-GUID: KIZkIQfbzoNBVA-PByCmFAEfKCq934Wq
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX88bvJsIoJzg3
+ cr27Fs7Uf9RHYub1oTTN3JZjJkN26n6JQRGdMrDJz6mK9uKZOH/51wgPi8/488bmBJzoQmmRyi3
+ Xh2u+8ijEYrksgg9oobOVSMmC+412s4=
+X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6abbd989 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=MMuBV-PD9cgeK7xIxbcA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfXy2CYphHxftLE
- lKo80QIxdVmdFcHgqkQ4D7uKhIVYHSJeuwaW7OJZDQ2f0ONiKPmVCkm7gcBf9pnqdagY7Q6X5CW
- 3nJu7ZCWIEW01zmBX5Ak2N048rkCG/k=
-X-Proofpoint-ORIG-GUID: y44Si8K92s86wCYUYY27itH8zyOyVw2f
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX68iPl8fqV5Uq
- wEBZtamdwM5PxAwtu8YXRRXA3A04FadjTGMwjAxL92hqt5Q4OVTuaSuVwi9MMDhJCFxJnfKjD34
- q/y80ua5lCeJhtcDPuWmfGUts5dMYXifBo/Oq4avFTGvmpvo/GZnIzkHjdbmP9tEgd0gfcAnxw6
- rWYy6xWLLbqrJ5Hbsbqn+TalOj6G/NqkmqBJUk6e0j1JDfdEmgwYwCvtzfPyxQ84uQePpAabpmC
- FMiTlVsh7mE/PVTLneSi1QTpeh6ox+osKhWNYAusbJBWpxxZ3Pocooxwa73koJArQSrJ/hIQfM0
- VnIeYccAS78P4zs0RN8x/qiPrXRZiN0AUDxUkb8xbs087oTL1Lm7sd1AHQOUH167Tw1di0yQOUG
- 5ryel+eUiIOWQi5zGEeHYTC0a0nmjCnp2sye/MNBucArrbFJn7jf20l/p0L0n76iLXVwe3F6UYA
- LtoHIf5Amgxqvy1140Q==
-X-Proofpoint-GUID: y44Si8K92s86wCYUYY27itH8zyOyVw2f
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=Z9dgWC5d4jRJgd9rOkYA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX+qygRfZUEYqh
+ i/LYP6mWhF+9UiHm55I/OeEBhHaGfTr3Zzf39xc0vW8udSAL0ZLYNjhErHRAJjAS6mNM2PAFkwf
+ 8ZwIXtMS+mm39Jf9oMutRRPGsY6ghhU9eT5pPixiMZZaNqp/AV1GRXpFt8DmB7jZI3hMC63G/tP
+ y+87VrbkAubqiYjoJxNLvz4P5BnaOsYMWD0I3zo9Mamkdxh89RUcMw4LO4a3sHnBB/JWTpBed4x
+ 3qt3cAjL2sRBqkpDMsiYJrqz418/TGdD6zSG6UbJZIjAqsJSv+PMQweIWmbtjMxw7KftWjV4B5t
+ QNkrUUgnmVFDkMSj13LHrPqea3fW7FhICYGdBTH+n/YnqNv6vOZDw5QDVifAb9jDYn+EYlviiot
+ QzK/A+Q5p84+i8Ag7Vj9gzPTCinjkvAAmKY/jtCvzimzSlJ4SZotdXVoSuqhRPcAqe0TQ658MxH
+ 2f1+ORPuhJq6cn8+GKQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
  definitions=main-2609290060
 Received-SPF: pass client-ip=148.163.158.5;
@@ -123,38 +124,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When walking the guest IO address table, an invalid segment or region
-entry causes table_translate() to return entry.len equal to the frame
-size for that table level (1 MiB for ST, 2 GiB for RT).  Adding
-entry.len directly to start only advances to the correct next frame
-boundary if start is already frame-aligned at that level -- which is
-true for a well-behaved Linux guest but not a general requirement.
+The error paths in reg_ioat() that are triggered by a guest providing
+invalid MPCIFC arguments use error_report(), which writes unconditionally
+to stderr.  A misbehaving guest can exploit this to flood the host log
+by repeatedly issuing the instruction with bad arguments.
 
-Add logic to advance start to the next frame boundary rather than
-simply adding entry.len.  For a frame-aligned start (the typical,
-well-behaved case) the result is identical.
+Replace these with qemu_log_mask(LOG_GUEST_ERROR, ...) so that the
+messages are suppressible.
 
-Fixes: 0125861eacc3 ("s390x/pci: fixup the code walking IOMMU tables")
+Fixes: 863f6f52b713 ("s390: implement pci instructions")
+Fixes: dfcee1ea4c52 ("s390x/pci: add support for guests that request direct mapping")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 ---
- hw/s390x/s390-pci-inst.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/s390x/s390-pci-inst.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 652e1712ec..bac813fb6a 100644
+index bac813fb6a..73417edade 100644
 --- a/hw/s390x/s390-pci-inst.c
 +++ b/hw/s390x/s390-pci-inst.c
-@@ -808,7 +808,8 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
-             coalesce = 0;
-         }
+@@ -15,8 +15,8 @@
+ #include "exec/memop.h"
+ #include "exec/target_page.h"
+ #include "system/memory.h"
+-#include "qemu/error-report.h"
+ #include "qemu/bswap.h"
++#include "qemu/log.h"
+ #include "system/hw_accel.h"
+ #include "hw/core/boards.h"
+ #include "hw/pci/pci_device.h"
+@@ -1044,11 +1044,12 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
  
--        start += entry.len;
-+        /* Advance to next frame boundary if start was not frame-aligned */
-+        start = QEMU_ALIGN_UP(start + 1, entry.len);
-         while (entry.iova < start && entry.iova < end) {
-             if (dma_avail > 0 || entry.perm == IOMMU_NONE) {
-                 dma_avail = s390_pci_update_iotlb(iommu, &entry);
+     /* currently we only support designation type 1 with translation */
+     if (t && dt != ZPCI_IOTA_RTTO) {
+-        error_report("unsupported ioat dt %d t %d", dt, t);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "unsupported ioat dt %d t %d\n", dt, t);
+         s390_program_interrupt(env, PGM_OPERAND, ra);
+         return -EINVAL;
+     } else if (!t && !pbdev->rtr_avail) {
+-        error_report("relaxed translation not allowed");
++        qemu_log_mask(LOG_GUEST_ERROR, "relaxed translation not allowed\n");
+         s390_program_interrupt(env, PGM_OPERAND, ra);
+         return -EINVAL;
+     }
 -- 
 2.55.0
 
