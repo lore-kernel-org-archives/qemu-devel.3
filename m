@@ -4,119 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDA5CA5FAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 01:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF618CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 02:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBMlZ-0003Ap-G7; Mon, 28 Sep 2026 21:36:21 -0400
+	id 1xBNUB-0003Az-AD; Mon, 28 Sep 2026 22:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBMlX-0003A9-Ha
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 21:36:19 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1xBNU8-0003AW-MF
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 22:22:24 -0400
+Received: from mail-dl1-x1230.google.com ([2607:f8b0:4864:20::1230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBMlU-00070P-Og
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 21:36:19 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6aa8d04fcddso823945a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 18:36:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790645775; cv=none;
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1xBNU6-0002mh-J9
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 22:22:24 -0400
+Received: by mail-dl1-x1230.google.com with SMTP id
+ a92af1059eb24-13fc403e373so515773c88.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 19:22:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790648540; cv=none;
  d=google.com; s=arc-20260327;
- b=A78WAf36GlZgCpVZlltgpdG/frsNT2q8jqWlYJ2XaOMdma3tvL45hMRoarhlW+9sXF
- DkFd6rK2HN7NLBBPU4ronC9TOxye5VEG0Z/+wTVtN2tJjZDByjgEKHzkJU1QG/D9sAA1
- yHIm9ExHA/FK3Or1dzk2mh+d4BNSXL6iF6tzjdT2zl7eCJzoE7SaMPcPKR42fdsE00SC
- LSbu0nmaRtlx3BojiLMSXkvcXYa21Rk5oTjosA8dAjaSTExPU03hBhaeP4CJxB5sfUK5
- QAaW2GOkCb0k5AbYrbWZlJ1wq3+ycuD8Vebvi4pFLDe3aLxC4IHocFeDXET+F29BNXt+
- zy1Q==
+ b=Np3dtHrsglu0/BiEZ56dOsiAI/FlIQ0pt2+gUJHzTzpGpmZtDl9h8XskXtcm1trBsH
+ 953dP2+YVdS3AtS81IP3QzQ79fJh2PRUoq4kMpaImKGoWvPBpOHZ0Z8MkuPa/9LEdUWp
+ ciNXyui96zQqIzIawvc1adHcuN0awJeDlRGVoIfC5xXGQA44YQiZIIaj7eMFwDePJmlc
+ bHseaiAcyBljpxuIWn9LLZEJ47Klv0QMpFNFXWZBTSOu8oW8EKmppGdAgs0A7K/x/NZh
+ +BuvxnOkjdXEmJL7WrJrQQUNFrQPE0op2rQyOi3wBgTwH3M8/gSSHEX9MmvrTRo58pL+
+ olUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
- fh=BVKKP+mkzO7bpixOB/3p+NE5Ld6PqqFIp9SCiygR7O0=;
- b=RdNm8fr9TsJxfGz1NOUb7pSrCqN4kCGcnWrTpTdc9qko6AmsxO64rvfYsEIydzmDEO
- pPkhSjp/WtZm7MOsXyRfYNe8lpCItG4yi28jD9ZsqG2kY57Epu6AAfpRyJ2lW/O1ta5Q
- wXXoMqSuHTlmm+xNp3pyLj5mQphpzQUgYJHfct20+nMj8gQnehILVavLb+7+a7bWW1qU
- nrH4GXx23D5B+y0P8rhcJFpgoGlkDLBDbPu+oe54mCvrQmiSBkCNs/StgX5g55ggwKtr
- 0GbIx7slK6ivmHecCRZYEUDvIsFjBBMqPf5qluNnxG9UzVunSux1445dPiLBSyUcJPGz
- 7TsA==; darn=nongnu.org
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Glv5NLTQubEYktMeZJbosgRjn3g9PFPONh5X9c7EHJ4=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=qclRgCsPNc2Ox25M4zRPQgTUYEZPGfWTHn03fId/rutdZUIl7Dw+UlndeRO/tOMFvo
+ Y4lA/QWOSZXWrvHdJy8KHbhWnZs41o9COonxBXkvLZrzxNeXN0hjrRK12Jq/fyPZDJEC
+ bdoUbQ0z4wDbpPg4BVGCysgXk/uT0PZfca5cYG80RiAEp2OkI8+avBG+z9W1gkHPmxRE
+ /3LNeF8LK45zRxJDopaG5Ec/6xKQ3UaXK+SFeqRjyZ3ZKElo1S/28HDn5xWK/Ktjo5PD
+ VMsxFAnMBy68OqnTMnV2VMSvuFT3JK7r8eozgkoMfG98T2/BRqg2a7SYxT0DujCvecxh
+ HY/Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790645775; x=1791250575; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790648540; x=1791253340; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
- b=TxvsfGw9ZfLJ4LSdn/ER5Fs+mtsywNNUruBZLjQWN0g+ZYKV2+nIzfPxVcUplFKo5c
- iteDccaeompSd+s3fI/YSNcLcKdXBHCzFgaffr58yhKcj1CaHDlI2av6ThaM5bh4ON00
- 9omUD+l6aQzHraDvJBJ/z9jJkwtLHtp2OGBtS+Dd5NKluOnlHEM5UBscnXELrZGqk4wI
- JBcKsR0canbjRZcy20Lfge8AkLYKp9ytHCwWInuFUSqKWQVqzMiHpin3I0OO5+jio4zZ
- Ov1jJw8sVfBgaqwf46HdNuU3mEBSqyX9uD8ff0KOti31+4vQcAGY2WU9rNVPKiALzU5S
- MNEw==
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Glv5NLTQubEYktMeZJbosgRjn3g9PFPONh5X9c7EHJ4=;
+ b=IKs9Tf1cnirZ9CxtcqBKLgyvojj76weyVBIVBvPrxeyuHrv521d5A/cSWiSFWtrKp2
+ r3BfT65KSCfQcN2HrrS+4jz3Y9VWjEDW4TwYhh56RaBxuNLr526Ek/aTPi2rWNnOvSv9
+ Kra27thXb+gS9UM5dv9HnTz9J+Pz7+qewZi21KnVNKcIiryth47eAXAkwmkWPWgoRVnh
+ sffFMHS4RDy1vOzKyN0i/FQ33QtdKmSfoJBHum/rcwOelCPVV/5+bq7OhlabsbdyQ6pZ
+ t2qI/hG8tm1hl6h74FLwzm9nHncmOnBE45n9zdqnnL4mORTkzezsTaaFFS4Liiy19nH3
+ RRkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790645775; x=1791250575;
+ d=1e100.net; s=20260707; t=1790648540; x=1791253340;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=rs9au1eGA9M7SYgh5SPNLTgJY2xqQlWh6Et+Arr6MM0=;
- b=JbsMY2NH9MMkCw1nPD1dUjOk1pHhJFgLWq0/1/PrsLzynrDngCVYx4mUsdbFBu3n3Z
- i9R3nv26etR6p0cfQ0QenZZxrSkH4wWh+ju2DjLJrRVN/UeQbhYBCuUXkuwPOj9D4PJq
- vnyI2IG2Roq7xFueSQr/19/ymOyZIdRqaoELnc7BLCMSoGMZwYEZMSwsde7OXPO7Lg3g
- XJuDz521Oe+ZgrVcwElB70YAgSSzrmAlEu0cSn2yCu7eO7xoLNSwEqVziukWHtsLd1/7
- VhfHo45ahMr+kKtXKw2rfhREbwyXQVdESWO5FMAXdeGlcwbvvXtBsckE4rIYLdjAVwZ4
- iB2Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxjHPTZguW5qq/9TV+w1gAwZQG0jyWi4o2ss+m0jGc5zDmvae+k8Dtnsv4T/wG6SLWq4lB7M40fbaCM@nongnu.org
-X-Gm-Message-State: AFq9FYL9erP0t13wUJbCzFBXi9HM422kKkaxOOKIzWrTGmgyGT6OrwXy
- pMwD2G4nMmS3hIciZkkjzW4JxucAfLT7SJ3R2etbmqaRjTC+7b6sEPsMab8EqpunJDWn/Q2tfYN
- vD+/TeWko5jT6Q1igERmBdsqnbrPvlhs=
-X-Gm-Gg: AYBFou1uD/k447Tb+oT3nGSE+TPum0P9UnzduBvcHx0Y60+P1aRVnh8mdG0UJgpIcqL
- Z9gfKFN+E/Mtq/011i9HFxHud5g0tYjQjZACtflllTjbSX8AubvIx0nsmlo7pQ4HiJi4EpJ2ZW1
- E6nnY0jTxfHusDe+jCf2p1QO5dPJV6ao5wXhwnhnVhSMQZKpUqAYWJwpIUGE3UWSG1NF0LSMpEh
- CLIWRuQnrT73WolEqteUOt/oyZg2v1SPFLDZV7Q7MLWnh1pKm6KsZhwqrzLDJI9m790SFC+5uZ5
- k6+ZY02lyjoYrjVNYlmGuiPsJBvHLNM/vX0pciGhj1VPnEHz8w6Bg9I=
-X-Received: by 2002:aa7:d51a:0:b0:6ab:260:6378 with SMTP id
- 4fb4d7f45d1cf-6aca86236a8mr499160a12.11.1790645774380; Mon, 28 Sep 2026
- 18:36:14 -0700 (PDT)
+ bh=Glv5NLTQubEYktMeZJbosgRjn3g9PFPONh5X9c7EHJ4=;
+ b=kTJgWloHzcc5m9glY40HoOilor0qZP/QynQ7o0pnJnOW2lHc09G7TKz7kS/dKp7z9f
+ I72gyulsOb+Nmu2pbINrumPR5pqAoBRaexMYT7uyX9VtuzDQrNqnK6u8vzXVUxtrEOVi
+ 6Ff5VB9ETk+7KyFus14z3vJoKoQ/AkSw+iyM5QJWHNqvZQcSEWB1+E6LwTGCFT4qfDzl
+ 5q+9/doP33StiqUdMQJXnZjaPMc0dbTkEQTAJsSZTSe1wknGSTNPxrGRr8BkBiJfJ9pE
+ Rg00rl+oFlrkFnd3gjTer9P1/u8IlhlwSAysBvXfPL5CbfA9gsdmZC/vy+HLOUeX7smZ
+ Qf2g==
+X-Gm-Message-State: AFuF++lJ8P9r89DMxTbD1W4mN5MhGWZXSmDW54+smvQX+4HXCQJm5X5K
+ giF1Mxw1lOMzAYz9YzZzOUu/VVGiJU4GtGnmDaulOkmyBHP5Qya/kdY08qPfyUyqA4XrSFC3r0b
+ fqyqJ0lZuXAiWfU08Y5aQdFY4skYFd5Q=
+X-Gm-Gg: AYBFou0ocvMU8ULddIh8Z2mCca+s8dzSxhYzU14v4J71IjKSwRHM6u7jm4Pd/zoQKPy
+ OefzqiF9Nv3OZZvr67xa2mbOE5uF5PQNX4AfNqiMp83dXvgIPKuOqmHnRxWq5ZuxtA63gCpEzio
+ bRSTKf+hyutRQ7MIf0mXRuFAD6MdZlR74FDBQDRsd5iAcgSEhiPsLbgzK3aVH4lxY7TuPSMsh14
+ BTHdyYJFyhwXZsTdPz0smCzcehzO077p75UoVLhXS85TZUUFa6mJM3KNvZGP40Vk8M36yN1uwUu
+ BEnavOuJHoDCYoEkRAeXowgFfwZoM5N1A3lQtcJmQi7TWKjKhQZKJ9hD1EmnXiMjdt9B5MSU/o5
+ tOqg+emNVf9E=
+X-Received: by 2002:a05:7022:288:b0:13c:f65c:d5b5 with SMTP id
+ a92af1059eb24-14b2b6c2a13mr1242926c88.3.1790648540099; Mon, 28 Sep 2026
+ 19:22:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260926070057.1234-1-luoyonggang@gmail.com>
- <20260926070057.1234-47-luoyonggang@gmail.com>
- <aro93NuZBXYGbD33@redhat.com>
- <87e7c5ae-c78c-4a47-b9ba-9851ce5757d9@oss.qualcomm.com>
- <CAE2XoE8Fp8w4m0WBjEXF3LceFXUqKDcXhdSmhCThgkAM3wRVaQ@mail.gmail.com>
- <1f46d3a3-1275-4ae0-be07-717c643cf0ae@oss.qualcomm.com>
-In-Reply-To: <1f46d3a3-1275-4ae0-be07-717c643cf0ae@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 29 Sep 2026 09:36:00 +0800
-X-Gm-Features: AclHuK_udHvC7oTjEuhilwZdEHpiOvElmXHC3KV0wZOIgddeR19NpS3MIjJMWOE
-Message-ID: <CAE2XoE_fxTRQJPzsDZHS44z65KR0e54cWjVpyZQGtr1sdLOinw@mail.gmail.com>
-Subject: Re: [PATCH v4 46/55] qapi: add query-targets
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-arm@nongnu.org, kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>
+References: <20260928130228.877003-1-pbonzini@redhat.com>
+ <20260928130228.877003-7-pbonzini@redhat.com>
+In-Reply-To: <20260928130228.877003-7-pbonzini@redhat.com>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+Date: Tue, 29 Sep 2026 12:22:05 +1000
+X-Gm-Features: AclHuK8g4JKmGu8FUfpQq4hAGOTnsh6ncp6N0l3RppKkeVOrguCbNQXUz-UHOxw
+Message-ID: <CAGscdFvd5kzKM4DbkCm3EsBNTr5vmk6nCfQCP=bzTkZn+tcWdA@mail.gmail.com>
+Subject: Re: [PULL 06/30] target/i386/tcg: ignore VEX.L for unary scalar
+ instructions
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1230;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-dl1-x1230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,145 +117,349 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 29, 2026 at 3:11=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 28/9/26 20:34, Yonggang Luo wrote:
-> > On Mon, Sep 28, 2026 at 6:39=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
-> > philmd@oss.qualcomm.com> wrote:
-> >>
-> >> On 28/9/26 12:13, Daniel P. Berrang=C3=83=C2=A9 wrote:
-> >>> On Sat, Sep 26, 2026 at 03:00:45PM +0800, Yonggang Luo wrote:
-> >>>> query-targets lists each linked target, including none, with its
-> >>>> arch, endianness, and the machines that target accepts.
-> >>>>
-> >>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> >>>> ---
-> >>>>    hw/core/machine-qmp-cmds.c | 30 ++++++++++++++++++++++++++++++
-> >>>>    qapi/machine.json          | 35 +++++++++++++++++++++++++++++++++=
-++
-> >>>>    2 files changed, 65 insertions(+)
-> >>>
-> >>>
-> >>>> diff --git a/qapi/machine.json b/qapi/machine.json
-> >>>> index 6aaa2af709a..d8cdea6203e 100644
-> >>>> --- a/qapi/machine.json
-> >>>> +++ b/qapi/machine.json
-> >>>> @@ -307,6 +307,41 @@
-> >>>>    ##
-> >>>>    { 'command': 'query-target', 'returns': 'QemuTargetInfo' }
-> >>>>
-> >>>> +##
-> >>>> +# @TargetMachines:
-> >>>> +#
-> >>>> +# One registered system target and the machines that can run on it.
-> >>>> +#
-> >>>> +# @arch: the target architecture
-> >>>> +#
-> >>>> +# @endianness: the target endianness
-> >>>> +#
-> >>>> +# @machines: machine type names, not aliases
-> >>>> +#
-> >>>> +# Since: 11.2
-> >>>> +##
-> >>>> +{ 'struct': 'TargetMachines',
-> >>>> +  'data': { 'arch': 'SysEmuTarget',
-> >>>> +            'endianness': 'EndianMode',
-> >>>> +            'machines': ['str'] } }
-> >>>
-> >>> We already have  'QemuTargetInfo' struct which is used
-> >>> with 'query-target', that should also be used with the
-> >>> new 'query-targets' command.
-> >>>
-> >>> We need to add the 'endianness' field to QemuTargetInfo.
-> >>
-> >> Why do we want to expose endianness, and what endianness to
-> >> expose? Endianness is a runtime bit state of CPUs. Sometime
-> >> this bit is hardwired but that is an implementation detail.
-> >>
-> >> See commit 0e2c5647d92 and surrounding for MicroBlaze for
-> >> example.
-> >
-> > Please take a look at
-> > https://gitlab.com/lygstate-qemu/qemu/-/pipelines/2890507627
-> >
-> > I do not have clue to fixes it properly
->
-> What are you asking here? I'm seeing failures on targets supporting
-> dual endianness. I can not try to help you until I understand what
-> your goal is (I asked it multiple times but you don't reply explaining).
+Hi Paolo,
 
-Now I can answer the question more clear, it's because the pitfall of commi=
-t
-https://gitlab.com/qemu-project/qemu/-/commit/e934c624f32f6f44f427d73a2e6a6=
-7e983a02ae6
-cause the issue
+In its current form, this patch makes VROUNDSS (and possibly other
+instructions) use 256-bit operand size when VEX.L=3D1
 
- target-info-stub.c | 2 +-
- target-info.c      | 8 +-------
- 2 files changed, 2 insertions(+), 8 deletions(-)
+This happens because the operand sizes are set in `decode_op_size()`,
+which is called in `decode_insn()`
 
-diff --git a/target-info-stub.c b/target-info-stub.c
-index 8392d81e8f..65220cc782 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -18,7 +18,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) !=3D sizeof(CPUS=
-tate));
+`decode_op_size()` reaches the code below (irrelevant parts of pwndbg
+UI are omitted):
+```
+pwndbg> set $decode=3D&decode
+pwndbg> watch $decode->op[0].ot
+Hardware watchpoint 3: $decode->op[0].ot
+pwndbg> c
+Continuing.
 
- static const TargetInfo target_info_stub =3D {
-     .target_name =3D TARGET_NAME,
--    .target_arch =3D SYS_EMU_TARGET__MAX,
-+    .target_arch =3D glue(SYS_EMU_TARGET_, TARGET_ARCH),
-     .long_bits =3D TARGET_LONG_BITS,
-     .cpu_type =3D CPU_RESOLVING_TYPE,
-     .machine_typename =3D TYPE_MACHINE,
-diff --git a/target-info.c b/target-info.c
-index 5a6d728252..a26532f660 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -24,13 +24,7 @@ unsigned target_long_bits(void)
+Thread 1 hit Hardware watchpoint 3: $decode->op[0].ot
 
- SysEmuTarget target_arch(void)
- {
--    SysEmuTarget arch =3D target_info()->target_arch;
--
--    if (arch =3D=3D SYS_EMU_TARGET__MAX) {
--        arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
--                               &error_abort);
--    }
--    return arch;
-+    return target_info()->target_arch;
- }
+Old value =3D MO_8
+New value =3D MO_256
+decode_op_size (s=3D0x7b1a3af02020, e=3D0x7b1a3ae08e20, size=3DX86_SIZE_x,
+ot=3D0x7b1a3ae08e44) at ../target/i386/tcg/decode-new.c.inc:2289
+2289            return true;
+=3D> 0x000055e7af160d5a <decode_op_size+4186>:    c6 45 ff 01
+ mov    BYTE PTR [rbp-0x1],0x1
+   0x000055e7af160d5e <decode_op_size+4190>:    e9 91 04 00 00
+ jmp    0x55e7af1611f4 <decode_op_size+5364>
+...
+=E2=94=80[ SOURCE (CODE) ]=E2=94=80
+In file: .../QEMU/target/i386/tcg/decode-new.c.inc:2289
+   2283             return true;
+   2284         }
+   2285         /* fall through */
+   2286     case X86_SIZE_ps: /* SSE/AVX packed single precision */
+   2287     case X86_SIZE_pd: /* SSE/AVX packed double precision */
+   2288         *ot =3D s->vex_l ? MO_256 : MO_128;
+ =E2=96=BA 2289         return true;
+   2290
+   2291     case X86_SIZE_xh: /* SSE/AVX packed half register */
+   2292         *ot =3D s->vex_l ? MO_128 : MO_64;
+   2293         return true;
+   2294
+   2295     case X86_SIZE_d64:  /* Default to 64-bit in 64-bit mode */
+   2296         *ot =3D CODE64(s) && s->dflag =3D=3D MO_32 ? MO_64 : s->dfl=
+ag;
+...
+=E2=94=80[ BACKTRACE ]=E2=94=80
+ =E2=96=BA 0 0x55e7af160d5a decode_op_size+4186
+   1 0x55e7af0b6598 decode_insn+1288
+   2 0x55e7af0b1edd disas_insn+14861
+   3 0x55e7af0ac8a9 i386_tr_translate_insn+1385
+   4 0x55e7aed5a57d translator_loop+5261
+   5 0x55e7af0a99d4 x86_translate_code+500
+   6 0x55e7aed56cdc setjmp_gen_code+1052
+   7 0x55e7aed53f45 tb_gen_code+4933
+...
+pwndbg> p s->vex_l
+$5 =3D 0x1
+pwndbg>
+```
 
- const char *target_cpu_type(void)
+Then `validate_vex()` is called, which sets the `s->vex_l` to 0. But
+by the time it is called, it is already too late:
+```
+pwndbg> set $s=3Ds
+pwndbg> watch $s->vex_l
+Hardware watchpoint 4: $s->vex_l
+pwndbg> c
+Continuing.
 
-Look at the diff, the original one is directly parsed from
-target_name(). and the new one
-defines "glue(SYS_EMU_TARGET_, TARGET_ARCH)", but that indeed does not
-match target_name() at all.
+Thread 1 hit Hardware watchpoint 4: $s->vex_l
 
-And TARGET_ARCH is introduced in commit
-https://gitlab.com/lygstate-qemu/qemu/-/commit/f87f7e145d63f93315e0f0e00fb9=
-ba0b6ee8570f
-for this.
-Hi Richard, is this done for intention or a mistake?
-maybe we should always generate target_arch from target_name()
-in meson.build?
+Old value =3D 0x1
+New value =3D 0x0
+validate_vex (s=3D0x7b1a3af02020, decode=3D0x7b1a3ae08e20) at
+../target/i386/tcg/decode-new.c.inc:2889
+2889            break;
+=3D> 0x000055e7af0ba0ad <validate_vex+1645>:      e9 69 0a 00 00
+ jmp    0x55e7af0bab1b <validate_vex+4315>
+...
+=E2=94=80[ SOURCE (CODE) ]=E2=94=80
+In file: /home/user/Projects/QEMU/target/i386/tcg/decode-new.c.inc:2889
+   2883     switch (e->vex_special) {
+   2884     case X86_VEX_None:
+   2885         break;
+   2886
+   2887     case X86_VEX_LIG:
+   2888         s->vex_l =3D 0;
+ =E2=96=BA 2889         break;
+   2890
+   2891     case X86_VEX_REPScalar:
+   2892         /*
+   2893          * Instructions which differ between 00/66 and F2/F3 in the
+   2894          * exception classification and the size of the memory oper=
+and.
+   2895          */
+   2896         assert(e->vex_class =3D=3D 1 || e->vex_class =3D=3D 2 ||
+e->vex_class =3D=3D 4);
+...
+=E2=94=80[ BACKTRACE ]=E2=94=80
+ =E2=96=BA 0 0x55e7af0ba0ad validate_vex+1645
+   1 0x55e7af0b2948 disas_insn+17528
+   2 0x55e7af0ac8a9 i386_tr_translate_insn+1385
+   3 0x55e7aed5a57d translator_loop+5261
+   4 0x55e7af0a99d4 x86_translate_code+500
+   5 0x55e7aed56cdc setjmp_gen_code+1052
+   6 0x55e7aed53f45 tb_gen_code+4933
+   7 0x55e7aed294da cpu_exec_loop+1738
+...
+pwndbg> p *decode
+$6 =3D {
+  e =3D {
+    {
+      gen =3D 0x55e7af15a3b0 <gen_VROUNDSS>,
+      decode =3D 0x55e7af15a3b0 <gen_VROUNDSS>
+    },
+    op0 =3D X86_TYPE_V,
+    s0 =3D X86_SIZE_x,
+    op1 =3D X86_TYPE_H,
+    s1 =3D X86_SIZE_x,
+    op2 =3D X86_TYPE_W,
+    s2 =3D X86_SIZE_ss,
+    op3 =3D X86_TYPE_I,
+    s3 =3D X86_SIZE_b,
+    special =3D X86_SPECIAL_None,
+    ext0 =3D X86_EXT_None,
+    ext1 =3D X86_EXT_None,
+    ext2 =3D X86_EXT_None,
+    cpuid =3D X86_FEAT_SSE41,
+    vex_class =3D 0x3,
+    vex_special =3D X86_VEX_LIG,
+    valid_prefix =3D 0x100,
+    check =3D 0x0,
+    intercept =3D 0x0,
+    has_intercept =3D 0x0,
+    is_decode =3D 0x0
+  },
+  op =3D {{
+      n =3D 0x0,
+      ot =3D MO_256,
+      unit =3D X86_OP_SKIP,
+      ext =3D X86_EXT_None,
+      has_ea =3D 0x0,
+      offset =3D 0x0,
+      {
+        imm =3D 0x0,
+        v_ptr =3D 0x0
+      }
+    }, {
+      n =3D 0x0,
+      ot =3D MO_256,
+      unit =3D X86_OP_SKIP,
+      ext =3D X86_EXT_None,
+      has_ea =3D 0x0,
+      offset =3D 0x0,
+      {
+        imm =3D 0x0,
+        v_ptr =3D 0x0
+      }
+    }, {
+      n =3D 0x0,
+      ot =3D MO_32,
+      unit =3D X86_OP_SKIP,
+      ext =3D X86_EXT_None,
+      has_ea =3D 0x0,
+      offset =3D 0x0,
+      {
+        imm =3D 0x0,
+        v_ptr =3D 0x0
+      }
+    }},
+  immediate =3D 0x0,
+  mem =3D {
+    def_seg =3D 0x0,
+    base =3D 0x0,
+    index =3D 0x0,
+    scale =3D 0x0,
+    disp =3D 0x0
+  },
+  cc_dst =3D 0x0,
+  cc_src =3D 0x0,
+  cc_src2 =3D 0x0,
+  cc_op_dynamic =3D 0x0,
+  cc_op =3D 0xff,
+  b =3D 0xa
+}
+pwndbg> p s->pc_save
+$7 =3D 0x201194
+pwndbg> x/i s->pc_save
+   0x201194:    vroundss xmm0,xmm0,xmm1,0x0
+pwndbg> x/6xb s->pc_save
+0x201194:       0xc4    0xe3    0xfd    0x0a    0xc1    0x00
+pwndbg>
+```
 
+Since the operand size is already set to `MO_256`, that size will
+eventually be used by the TCG frontend. This is seen in the TCG ops
+dump (annotated a little for better readability):
+```
+$ .../QEMU/build_asan_ubsan_dbg/qemu-x86_64 -d in_asm,op
+--one-insn-per-tb ./vroundss_test
+...
+# VEX.L =3D 0
+----------------
+IN:
+0x0020117a:  c4 e3 f9 0a c1 00        vroundss $0, %xmm1, %xmm0, %xmm0
 
+OP:
+ ld_i32 loc3,env,$0xffffffffffffffec
+ brcond_i32 loc3,$0x0,lt,$L0
 
->
+ ---- 000000000020117a 000000000000003c 0000000000000000
+ add_i64 loc5,env,$0x3c0
+ add_i64 loc7,env,$0x3c0
+ add_i64 loc8,env,$0x400
+ call roundss_xmm,$0x0,$0,env,loc5,loc7,loc8,$0x0
+# v128 ops present in VEX.L =3D 0 case!
+mov_vec v128,e8,tmp10,v128$0x0
+st_vec v128,e8,tmp10,env,$0x3d0
+ mov_i64 rip,$0x201180
+ exit_tb $0x0
+ set_label $L0
+ exit_tb $0x7b1a30a003c3
+...
+# VEX.L =3D 1
+----------------
+IN:
+0x00201194:  c4 e3 fd 0a c1 00        vroundss $0, %xmm1, %xmm0, %xmm0
 
+OP:
+ ld_i32 loc3,env,$0xffffffffffffffec
+ brcond_i32 loc3,$0x0,lt,$L0
 
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+ ---- 0000000000201194 000000000000003c 0000000000000000
+ add_i64 loc5,env,$0x3c0
+ add_i64 loc7,env,$0x3c0
+ add_i64 loc8,env,$0x400
+ call roundss_xmm,$0x0,$0,env,loc5,loc7,loc8,$0x0
+# No v128 ops in VEX.L =3D 1 case!
+ mov_i64 rip,$0x20119a
+ exit_tb $0x0
+ set_label $L0
+ exit_tb $0x7b1a30a00883
+...
+----------------
+IN:
+0x002011bf:  f4                       hlt
+
+OP:
+ ld_i32 loc3,env,$0xffffffffffffffec
+ brcond_i32 loc3,$0x0,lt,$L0
+
+ ---- 00000000002011bf 000000000000003c 0000000000000000
+ mov_i64 rip,$0x2011bf
+ call raise_exception,$0xa,$0,env,$0xd
+ set_label $L0
+ exit_tb $0x7b1a30a01003
+
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+```
+
+Test binary source below:
+```nasm
+bits 64
+default rel
+
+global _start
+_start:
+mov dword [rounding_mode], 0x40200000
+
+vmovups ymm0, [garbage]
+vmovups ymm1, [rounding_mode]
+; VEX.L =3D 0
+db 0xc4, 0xe3, 0xf9, 0x0a, 0xc1, 0x00
+vmovups ymm3, ymm0
+
+vmovups ymm0, [garbage]
+vmovups ymm1, [rounding_mode]
+; VEX.L =3D 1
+db 0xc4, 0xe3, 0xfd, 0x0a, 0xc1, 0x00
+
+vmovups [out_vex_l_0], ymm3
+vmovups [out_vex_l_1], ymm0
+
+vpxor ymm2, ymm0, ymm3
+vptest ymm2, ymm2
+jnz .bug_detected
+
+mov rax, 60
+xor rdi, rdi
+syscall
+
+.bug_detected:
+hlt
+
+section .data
+align 32
+garbage: times 32 db 0xAA
+rounding_mode: times 32 db 0xBB
+
+out_vex_l_0: times 32 db 0xff
+out_vex_l_1: times 32 db 0xff
+```
+```
+$ nasm -f elf64 vroundss_test.asm
+$ ld.lld -o vroundss_test vroundss_test.o
+```
+
+And here are the results in the `out_vex_l_0` and `out_vex_l_1`:
+```
+$ .../QEMU/build_asan_ubsan_dbg/qemu-x86_64 -d in_asm,op
+--one-insn-per-tb -g 1234 ./vroundss_test
+```
+```
+pwndbg> x/i $pc
+=3D> 0x2011b3 <_start+83>:        jne    0x2011bf <_start.bug_detected>
+pwndbg> info r eflags
+eflags         0x203               [ IOPL=3D0 IF CF ]
+pwndbg> x/32xb &out_vex_l_0
+0x202200:       0x00    0x00    0x00    0x40    0xaa    0xaa    0xaa    0xa=
+a
+0x202208:       0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xa=
+a
+0x202210:       0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x0=
+0
+0x202218:       0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x0=
+0
+pwndbg> x/32xb &out_vex_l_1
+0x202220:       0x00    0x00    0x00    0x40    0xaa    0xaa    0xaa    0xa=
+a
+0x202228:       0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xa=
+a
+0x202230:       0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xa=
+a
+0x202238:       0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xaa    0xa=
+a
+pwndbg>
+```
+
+(Sorry for the late response, got burned out a little recently. Still,
+couldn't let this issue go into the upstream unnoticed)
 
