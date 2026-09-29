@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2061EC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D81CA5FA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBaGU-00042i-A1; Tue, 29 Sep 2026 12:01:10 -0400
+	id 1xBaHH-0004X5-VH; Tue, 29 Sep 2026 12:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBaFr-0003uR-BA
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:00:42 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1xBaHE-0004TG-Oh
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:01:56 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBaFp-0002c6-OS
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:00:30 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d8fb334e72so17782275ad.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:00:29 -0700 (PDT)
+ id 1xBaHD-0002hG-4X
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:01:56 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ d2e1a72fcca58-86efece610cso2219209b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1790697628; x=1791302428; darn=nongnu.org;
+ d=sifive.com; s=google; t=1790697713; x=1791302513; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=uEsMF6FEe1NyyH3LW5JFoMkxQGNwq5tG40KlfFvxfrQ=;
- b=ghRNm3txOQJZqnCBlxn/V1zuPv3IaWXpANWiJEtWl5PbN4HTGbzhQRY6OpOmh7K4zM
- 7Dx0EbVhtAMEJJKSKtsLpY5jqdiRUVsDeAaC8/lhL9P7MMQ9BZs3+xSL539YgxWwYnCn
- 7SUR5ObFxKyKddmuaov2B0UsZM0KY0nimvFACAanHFTvxRh25225KhNOAx9jrD5faz+K
- Wb39sc5KebImam8rfjgkbAuP/zwE09t8QLck/XAC99wbmis4vfN2OWc0P1w6S78PrvQX
- aK/u2aWla1P/h+88lhVxX59OLA3Qan673f0MjHKEokemMuq9a19XvvRCSZ4Xns9oPPuC
- hiaQ==
+ bh=2j2rx9qGfEP+/oVC/ZzL0eiZboFVJO2eNdfIf4+jMOU=;
+ b=CSF9AW36VNz0DBaicbmc9ne+ww0cvHsjfuthh9y/0J0U//jZikv5G5hwERBXpPrf+f
+ J7jt/SEVYsSFwvQD+E4w5PQHLRjhheriCqSA6RYoRy9RUhaVLMGk/F+T/Rd9MB4eK3X/
+ gKEdt/hXA3SPj5jW1gc1EYcwCcYfAmlfFXNqC3/poTdeu1OwArInn1WRJZc0yjWgWvxq
+ 6zyM/6zbjgFkBIoucGoC//hj8PNaTCBcjs7kjO/6giotWvxl1g7stxhC/79Ge8zICfpp
+ WDSZGNrs8tMcyrz2imL1/2NApDogNk8C2vNeztK+oVr6q9fL20qr5c0RC5HqiV4qkyoI
+ qPiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790697628; x=1791302428;
+ d=1e100.net; s=20260707; t=1790697713; x=1791302513;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uEsMF6FEe1NyyH3LW5JFoMkxQGNwq5tG40KlfFvxfrQ=;
- b=kqwNxgfJq8I6I5WAi5G8ctaMNPP7AxfkTZbC5oCM561jbYsr0Xa5/2i4RM7RddcRwj
- inv2TPecqhbO6JBFBHL0KfZzbiTqcQ27DbdPU5S7wkq1lvp5mCkD4lfDsTR/bWEf1kQt
- tWwwY5gqKEc9y0PVM35uaw0sQSDEvX1NkZK133GIHV4FpHhlyt9h6CiGqz3tQD/0ecLF
- NOKbjrZ5TQbuucfSxMLfOSaaw6zzweM6KRMwlUveirURJklh08rIp03hoyvCgb+Pgb2a
- VHiS2ttL0HCgHI6Gq2Cpueuth5p+r79vEYpf0ZSXu3cch9nMMg5u7rD6LO1DW7VD24+x
- 8hXg==
-X-Gm-Message-State: AFq9FYJKKhooRPfiflaIkE6Em8qtG3NW0X/H5EGAaNu7ZzuJOSq/AXcp
- kVjq410sz3a76HZ6ecR+/S6033ypTWKt4SFzQYagcQfm8xV5NRwEnDH80hQxoTatZI4=
-X-Gm-Gg: AYBFou30gSQMp2BwMW62P0khkrnNdRHBM3bXq4lrtKOnV8CK1kVgI4SSVijDfzbv+72
- aS4qxX2ujon7XnSxLvUiS7/9xpPd55DxdbqzLjKYesSo/kkZ1eUo+Og3RXXVqD118TiYtG8fSek
- SJ3Cdh9snt7x3i2OfVuOJsWJEOFMv9mVDNw0NOxHqrtpBJ6YRioYw2nz/31W5f2B9KxaA2xFqlX
- dqYLmD7p23UEZAqJjc/fxkAgWzy9FcjXRnPr8o21WIEAuMl0R523OBa7YcRu03uG60Hw65viZ5S
- SOnA1L7d7xBE3bTN1Xa9z1krbRrqeR2mJXpssmh8Tz3awv2F1tlRhE8INLE3RDZI5T9Ha6dtT0a
- PDixNei1O9KyAzAKZCZJlhSSQSLltjraufRWzpVk/DifktZQJDZrBcyadLVF4OxwMLkFaXDKgTI
- WMa13FjM6+rR+bIDSIbBD+bfIVRcoP16+pBj2RpjU2S3DcdBtnY3wDQs0Z81QSpepy7Bkkg1Nv7
- FSoEJXnDo0ErewNvDztDe+X
-X-Received: by 2002:a17:903:3848:b0:2df:5a29:ea5f with SMTP id
- d9443c01a7336-2e2ba4028e4mr43398145ad.57.1790697628196; 
- Tue, 29 Sep 2026 09:00:28 -0700 (PDT)
+ bh=2j2rx9qGfEP+/oVC/ZzL0eiZboFVJO2eNdfIf4+jMOU=;
+ b=EJqFpADXoLz+nxLn/cciHtzU5TNnF5c/imLxzTagnt4YeKi/V0XvqloOP6RIqRR0+4
+ mthdm6aW7JXtHAvpZGihOGLUX8jBg/aY1FURaCUgjbFL96OmL1Wl7aaLYr0hkdEB6JyK
+ E+J8kx9C63OOaXOB0PvcrUPh5gXPP6SQ0OR0WhgFWEb3atbNi9SrE4NLw8iTaKGGhXQC
+ QqnrADsxsz1bZrnlCA+87Y9wte2mImNbR6iI9tDFX74SqrI0UWpMsRK8bSGugTT/YDC5
+ lfw8tUaQLWESnSawzLkTmEiCRvcHpV6mPfKq0wQ2Hm21l1AqJNWWCQc2HcsEVq63I6P2
+ om3A==
+X-Gm-Message-State: AFuF++muWDAzxn2CWOryMgu1mY4VOJrh6zXcddg65wXYJvFYRq0VLjHQ
+ wfD0J61lB0BUmnHLIsJv9hw/e2WvwF96g9JbFKSv3D52OFIC/kNqv2D9DlTQ2jZdoko=
+X-Gm-Gg: AYBFou1LKz0bG4Crbqyc3GC9UHvvoGfogr+IT47SRbZhJH0qo8Wg2BeFKsw9p7kNiLr
+ F89oyyTDqT/SIpWHTyG7+kDSgiZHHInxwSZWZL3Y2MyzxYVY0DEtVQtLJhGlD2+1ojUrUKRuXuK
+ ciK9KrhI0MDOpB9+GB1XFVOiEE9QTsB6q4HEO9rTPW+g36OMAFcLIcBX8ZlKqhF0gS3xkvdM70K
+ NulOP919ypnRo7n/Y3B8L3b5lqBR7w7qNjati4pfbTxWMD8cVeH/MJvA82Dpz7cQ8WGmiOmIyqm
+ Ws680FshyMIbkUMNqJpKDw+GodqRBYMTEGPBq/iAQli88Xj8VfMfjRspdS2iqnpzxev1YLuZKn7
+ JRaWVLybaOv/fxiIT9M5gi4nICAKTgiDMCbq0H4u+CvotkT82cAhrCf61M/PwrUsLqLJ44EEeKd
+ 3tOC1AYRF3UorgXfzSkQOFySiMnGHMZFp6+Gl72siElPXlxmNglIw+X/nqLUJ0uveQNqQJQoyrJ
+ ADyiIKAjTTlC/2J6CDkNyI=
+X-Received: by 2002:a05:6a00:408e:b0:87d:430:1437 with SMTP id
+ d2e1a72fcca58-87e9d8da674mr14163594b3a.38.1790697713107; 
+ Tue, 29 Sep 2026 09:01:53 -0700 (PDT)
 Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2df9146ed7csm58986725ad.80.2026.09.29.09.00.25
+ d2e1a72fcca58-8868d1d3fa8sm162115b3a.57.2026.09.29.09.01.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 09:00:27 -0700 (PDT)
-Date: Wed, 30 Sep 2026 00:00:24 +0800
+ Tue, 29 Sep 2026 09:01:52 -0700 (PDT)
+Date: Wed, 30 Sep 2026 00:01:49 +0800
 From: Max Chou <max.chou@sifive.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, 
  daniel.barboza@oss.qualcomm.com, Alistair.Francis@wdc.com,
  philmd@oss.qualcomm.com
-Subject: Re: [PATCH v3 07/11] tcg/riscv64: Return success from encode_jimm
-Message-ID: <arvf31AEdoJeVu2s@sifive.com>
+Subject: Re: [PATCH v3 08/11] tcg/riscv64: Return success from encode_bimm
+Message-ID: <arvg5EdpRRCfqrUz@sifive.com>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
- <20260914000814.785155-8-richard.henderson@linaro.org>
+ <20260914000814.785155-9-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260914000814.785155-8-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=max.chou@sifive.com; helo=mail-pj2-x10.google.com
+In-Reply-To: <20260914000814.785155-9-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=max.chou@sifive.com; helo=mail-pz2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,13 +105,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026-09-13 14:08, Richard Henderson wrote:
 > Centralize the range test for this encoding.
 > Directly OR into the insn value.
-> Assert success in encode_j.
-> Use encode_jimm in tcg_out_call_int.
+> Assert success in encode_b.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/riscv64/tcg-target.c.inc | 46 ++++++++++++++++--------------------
->  1 file changed, 21 insertions(+), 25 deletions(-)
+>  tcg/riscv64/tcg-target.c.inc | 30 ++++++++++++++----------------
+>  1 file changed, 14 insertions(+), 16 deletions(-)
 > 
 
 Reviewed-by: Max Chou <max.chou@sifive.com>
