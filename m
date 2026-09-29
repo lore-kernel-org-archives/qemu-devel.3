@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103AAC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3423CC9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZzn-0003Ea-3C; Tue, 29 Sep 2026 11:43:55 -0400
+	id 1xBa06-0003Ux-2p; Tue, 29 Sep 2026 11:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBZzk-0003EE-Bu
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:43:53 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
+ id 1xBa04-0003Sx-2S
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:12 -0400
+Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBZzZ-0000fG-E3
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:43:44 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d91ede8035so37018345ad.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:43:40 -0700 (PDT)
+ id 1xBa02-0000gT-Fb
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:11 -0400
+Received: by mail-pz2-x0d.google.com with SMTP id
+ d2e1a72fcca58-86e6d007703so2033294b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1790696619; x=1791301419; darn=nongnu.org;
+ d=sifive.com; s=google; t=1790696649; x=1791301449; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=9BFSr0MMPULdJAhx06wcX6IZ7Z15Rp7P2jwzsVUboSA=;
- b=OiDp53X4Yx1yU7/idD4g1ow9+a8MzyjYqT6S584cMRB5zCafLML+UXGJv6nAWxhhrq
- AOdjai84V8zQnTZfhpO9dCMoO8fqVHiO/hOXOeFM9tQsk6uWDs2+RcLIop8Dueo1McJ2
- Dj+O+UrW3MXXerDhZhTBdeWW6EC86JTkQKeQdC5BFzNkC0cUoBkMU7L5jTHaHIX64bLk
- a2UAwCP10V2rsdIAVTwdJb0PmhHsLs8VMVL4wa/5z0jtUMQhK/gZQK4fSJmnb8enpc8a
- NnCFAH9GUxmK9pQsmu7E4peV7UNS8gWIqvvdZPeQI3xxekGzmMBuQnSh9vMhWCpV6nWu
- jnCA==
+ bh=N4kEFt36TW5JGe1FwbWriX3cQQwwxlGel/06QpjqTSQ=;
+ b=cl2WN9g+T1MQgjIE51MPCIxdVdYXWfJycPnW0BI/LXgygqa+iWiup9GZxY3fbx+9Hj
+ XPSa8pEF1x2oC1p/lbNQ47wZsDAOvhaLFTNouQceSA+uUxMy8av5vVJJBpLhcLnW4qy1
+ nF3NfSAjAZ0ASzBDrKxylrmhEznnrgMY8Sivn0lVvZ8OtiYmLTAslQR05OVVQOq0ag08
+ 3yJRnqtkTd0ZrvhTkgkspA+JnZkQYJlQanYUz/inqNIT4ZOdSA941QUsX2xbH2LjIPhI
+ Pqp9Pth7kZU2Xp7nLm6NtZ5PS/si0KVbxx9lvgz/3gvmmpioNWmBXvK9m2FZ2Q6/jV+3
+ dIzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790696619; x=1791301419;
+ d=1e100.net; s=20260707; t=1790696649; x=1791301449;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=9BFSr0MMPULdJAhx06wcX6IZ7Z15Rp7P2jwzsVUboSA=;
- b=XUpzU4k/NCnIAUJqTPuSH2jLDiJ+GBoavNUP8X+Hrk0hGw/wpr3K2K1RNX9GEYtBB8
- BMeldUIhuU1IiLEos9EZ9bMCIkFvj+CLDnPUb3RCedqnWX2IVYVQZEIdW7ijzQ39/9fQ
- 8l18OKPUe/JfLuk0MQ0DBanZeezutWMAJc/mhUWKHpp+u9HOjFZN5Lzi4YMeaVZuzVl8
- marUXLAmV06fn6ZezeWsTKS2/W9RUGn/kKXxydDb9oPH4UKGmHra1gVP5SfcoXdJQuep
- IctA9gWYdqd+TrDsYXclscqd7wDllACVrvPDY2F7u09G/52GPLqCJ441lqubImLED5s7
- rclw==
-X-Gm-Message-State: AFq9FYKydJfQc8+/n2QxBJ1O5HXKPefzxUvjN3kMpKt8KJogie4rMtAo
- daZ0/kpkZKwhWFaihApDCiVGCyE5IV8AnPTpTZh/K7bP4k3BRyE58zMByYJwIfGF2xI=
-X-Gm-Gg: AYBFou327p4022xWDbuz5wJT3anWORajEnld/X0ywVGNwic5JXitTauBCTkCe0Ho9w5
- 6DiAiquUXPAajZZlGLnGe010MTSfTFFYJbS3Y8DseWup2FbbQgAV65Exez3M24P24yByzgqaK7z
- Z2X6u7lKXs6yoAUtZ5JpyBpKsjo+dxQ2YVHYVJF7iMnbH8zaWkxgOz16BegwH/Qs1KGIs2Fybnd
- zdaeUEUyDmHOOrn95WsRhfRNDbQTAHmRS9aWkZ3do7hG7FTj6XXumF1q9i63ucv41Gab8SgUNvI
- YfeJobPs1RCw4lf4FpW9YuZ8IPV7EhAaS2/4OD0P5YaSEWFEPqH4Q2XpStyj9VUhAfqd1EmBihq
- RHSolhN0KoMnAteEsFa3HI2n8VHTilj82BPk2hCrKfsnwOj+50BUSfyUizfBHGjcD50bRThdo03
- DM2Dc+DkNOF2rHUT19m5dgCCO1bcJGEQj2G6K1IGjO59t0nsfQMXCBeBMaVKayZzkDWmZ6xN5U7
- FskfoJjgkj5qtJ2ZS4Cpx8=
-X-Received: by 2002:a17:902:ebc7:b0:2ca:e19c:97b with SMTP id
- d9443c01a7336-2df94901b8dmr111406495ad.5.1790696618859; 
- Tue, 29 Sep 2026 08:43:38 -0700 (PDT)
+ bh=N4kEFt36TW5JGe1FwbWriX3cQQwwxlGel/06QpjqTSQ=;
+ b=0qsMEw0b/l40Fm/WLrX8aHRuzIkM6ACgZafJ5VRPgU03fCpLLHXYb8O5PDbYO9hW/0
+ r/WfVkUy0zLDw9yOTkwbGyEvTl2x0iAxWnRIBzkVcFFx4rlwAbHGN0af4vwoQ1vxYJuJ
+ lRb8h4ez5lPIL9E1Yvx3k+gjgGyEq5viXcS4hWw6J+4WD7yC5rf2FP77YNHX6vJ/63XW
+ EKxa7HUGw/htXhZ8aIk/oKpOuZBz4Ku3TFxk3OHRhGoJk0hT006e/lWXewQyv1NRHzEj
+ ThsGhr3Th44t624I3C1L4Ocufmn9JX4dceaI9n/7rJJD4EHrD9MDZ1SekBju+u2rWr2+
+ bw1w==
+X-Gm-Message-State: AFuF++nBKan4KV81wt7p2HISIC09/l7FD7dN9J9yL3qZ4kvmbw/d89Il
+ RyD4VJEgqRol+5zECyEMbwq1PWzLzUthia28AXomJtHIBw4yEne+URMBPyimGdV7W0s=
+X-Gm-Gg: AYBFou2P6mfdnFCQQiK8HFK9IA2wUKBvY2Gj6mQTK/jLDlkusWLRW7eRB2iRtlssptv
+ 51Hrckvn/oSFZFJiBvU3DcOva1kW/ZuooK8ETb/bS+Fqjk9Y4RpcbrN85agqa9UncuUSGzuGfKl
+ YrN/6QSDTcBIjaVg/sQybx4CKijO8rQkpd1C6hQrhj7uvFm9hn4FsBSYlU1oHB3nmjxQwP2Swj5
+ gB6mzQwRdoxRpFICdRcMQO53mAzawlOb/vP0JC05J6BBzvSJmW+gzD/LEZdLA+Rn8K4T+fDAjy1
+ xv7+s87Yth5rpBds9YCw4tccVd2Zfz6tLXpVT7s26l9o/NYvfgi59sm4UPCq/pSku53e9XbPsyI
+ e+Rcku++NJD4marKkEn7pAOndrNIR7LRNNjWb2MTBgdnFYly7NfyB3/5n4WW5uJo58afb+URTXF
+ kJRfa83mZa+zcq6nwddLOy7IcLPMCYeoGQqBMmLqt39v8HT2r+SEmNZp2axRE3VpR+LjEPc8UzS
+ mf49nIyM8Fh8p45ksuWgtU=
+X-Received: by 2002:a05:6a00:4c97:b0:874:706d:8574 with SMTP id
+ d2e1a72fcca58-87e9f0543cfmr12096283b3a.28.1790696648922; 
+ Tue, 29 Sep 2026 08:44:08 -0700 (PDT)
 Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2df91458e3bsm59339785ad.68.2026.09.29.08.43.36
+ d2e1a72fcca58-8868c0ef466sm154844b3a.32.2026.09.29.08.44.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 08:43:38 -0700 (PDT)
-Date: Tue, 29 Sep 2026 23:43:35 +0800
+ Tue, 29 Sep 2026 08:44:08 -0700 (PDT)
+Date: Tue, 29 Sep 2026 23:44:06 +0800
 From: Max Chou <max.chou@sifive.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, 
  daniel.barboza@oss.qualcomm.com, Alistair.Francis@wdc.com,
  philmd@oss.qualcomm.com
-Subject: Re: [PATCH v3 02/11] tcg/riscv64: Rename sb-type to b-type format
-Message-ID: <arvcjJ_WhYJyFSiN@sifive.com>
+Subject: Re: [PATCH v3 03/11] tcg/riscv64: Rename uj-type to j-type format
+Message-ID: <arvcsMKCU9XQLrNC@sifive.com>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
- <20260914000814.785155-3-richard.henderson@linaro.org>
+ <20260914000814.785155-4-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260914000814.785155-3-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=max.chou@sifive.com; helo=mail-pj2-x10.google.com
+In-Reply-To: <20260914000814.785155-4-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
+ envelope-from=max.chou@sifive.com; helo=mail-pz2-x0d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,12 +104,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-09-13 14:08, Richard Henderson wrote:
-> The current riscv documentation calls this b-type.
+> The current riscv documentation calls this j-type.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/riscv64/tcg-target.c.inc | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+>  tcg/riscv64/tcg-target.c.inc | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
 
 Reviewed-by: Max Chou <max.chou@sifive.com>
