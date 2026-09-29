@@ -4,66 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8497CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 03:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51618CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 03:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBO7S-0001nF-Kw; Mon, 28 Sep 2026 23:03:04 -0400
+	id 1xBOKw-0004ec-N0; Mon, 28 Sep 2026 23:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xBO7J-0001mg-Nz
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:02:53 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xBO7G-0005oW-No
- for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:02:53 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxQNFSKrtq_cwQAA--.49751S3;
- Tue, 29 Sep 2026 11:02:42 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxBc1JKrtqKmEmAA--.53588S2;
- Tue, 29 Sep 2026 11:02:35 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: delete CSR_OFF_FUNCS
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-References: <20260928082622.110889-1-prcups@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <e70f13be-70f6-a829-9a71-5596317253cb@loongson.cn>
-Date: Tue, 29 Sep 2026 11:03:58 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1xBOKt-0004cr-3D
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:16:55 -0400
+Received: from mail-pj2-x2b.google.com ([2607:f8b0:4864:39::2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1xBOKr-0006u7-1y
+ for qemu-devel@nongnu.org; Mon, 28 Sep 2026 23:16:54 -0400
+Received: by mail-pj2-x2b.google.com with SMTP id
+ 98e67ed59e1d1-3a49b3e7bc3so88125a91.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 20:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1790651811; x=1791256611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=wQRpqb30JdS927aEFmUSHnoj4SoVnjZFUmdr6PiqntE=;
+ b=OmOOnhrrVO4dRFCneSbl59C+RFH79Sw8GTnOXkB8OHJwK/L22kIoYg4trnuqy2XMYC
+ 9Le6CLv/bZzPsbM1UGuO0TB2ZAtxBKpZvhm8J0PFUpPusPDnkz9pYQaxJgGIq0zysZIC
+ nXDAM2pU9b3uLylQ8Q92Aaj6s2aQyKrzI3QmjBY1rTix5LfT78FQLfTHEddokieiRgQF
+ I2kkwP7YW3d/TDU8yWBXbLxeFFYM57Z/EPN0lhKDIhoejjYf1pCR5EHFPwFNCf8x5Lxl
+ x38Wuv340rjCYT3y7x9sg5cTJhqGL3DD8l7kDhxNgrndfO0i/G3bF03gOF6Y1MGtIqYE
+ ojMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790651811; x=1791256611;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wQRpqb30JdS927aEFmUSHnoj4SoVnjZFUmdr6PiqntE=;
+ b=VK5oyFb6wvQUBm3V+VIjo5woDv8djwNU7W1QeYXN8tCtqA825OSht3cyOuvyO6HFl3
+ JG2X6LZXm1ntteCyRHIT0oz2dkQVeqT+fduOL+Ion7TgSuOqlYMXpwgQtAPPEFG021Q3
+ sN1JseGrBexNo5U7uhbS2tAlAI7LyijgZb+6xaU47FjQfvs/0H0DxHw4f6THo/nvGt/U
+ iUDWgLtRujM5OZAaJ2Hs6CY/kHuVTPhGYPPEZW1UYx7fuYql3BmLBCOFq8TniO+W4JwL
+ oDPYJ5mQNPVXeTG/AuXx6Mj14w5oatFSJU35VHVdJpC8zzL/mxpS8hhSUWxEbinrLK2P
+ 2U/g==
+X-Gm-Message-State: AFq9FYLkDJoEl4qE83MRQPjqXkURBmHC85hj5M3CE2xp3SyJXa5Fgxu4
+ Sg+MQdi9Bl5NeT4T/Fc28BmtcxIElXZKsjQDZGCg65KYVtHFLr3TWyFc8iMzv3SLrt8vDLtQML/
+ gR+4aHR4=
+X-Gm-Gg: AYBFou0tZ0Nb/sBRHQgBTiwiNz17GhYIwfccI3K7k8wC1WzUePCxWEDTzIchpdGsP/7
+ 70rY7g0M2f87n4vMA0HfBT4JM5T8wTXsEqrTX5H3LQ2KKbqKRNwtV7L30ZQqhiD402VJMl0crT1
+ C9QTRluOxjCGrLUIxkDFBwvL7BKanlqB+GyA3aXsjkh+4pagc9xfrzn81JA/isZbwvKQMnQPau/
+ D61c8vcCIBNgIPXL7bsk1VlPvDWo6o9jPjhNu4foa9kh9ZJ2oX1BVzVLDmdHmQM9syMfy+L6jDj
+ QMflrFHM4k8Z5ctmKd0o+HmRLFhE+G+PvJr04Gt0InsOTFCU0cGXx6OB1YETXVidildVDhxOnpH
+ V3goe7UvhK4eeMHWAVuNrf8BmGcU7cUt14Ae1RFl2EM39rBcQBsZfU14QcvT9XcaggSGWye1hIt
+ VZoPOMH9rOEkd2GSMcUZ/3R4niSFXjI38cI+jqmebVa9Y2bpPpisAkYr927Bi3YYEB2LjXPauo8
+ xOSD6ktTwfJV6/rvjSrHgxQVswib6fswKkIkcgts1qj1SA=
+X-Received: by 2002:a17:90b:4c81:b0:39e:3728:3b11 with SMTP id
+ 98e67ed59e1d1-3a0b2507f4cmr17299719a91.3.1790651811235; 
+ Mon, 28 Sep 2026 20:16:51 -0700 (PDT)
+Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a492dfc5absm1563641a91.3.2026.09.28.20.16.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Sep 2026 20:16:50 -0700 (PDT)
+From: portias@oss.tenstorrent.com
+To: qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ Joel Stanley <joel@jms.id.au>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 0/5] Improve modeling of the Atlantis UART
+Date: Tue, 29 Sep 2026 13:16:39 +1000
+Message-ID: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
+X-Mailer: git-send-email 2.43.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20260928082622.110889-1-prcups@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxBc1JKrtqKmEmAA--.53588S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7KF4ftFWfKrW8AFyrCF1fKrX_yoW8Wr1rpF
- 1fZayrKFWUJrWS9asrt3Wag3ZrWFn5Gw18Kay2k3yktw4Yqw1vga4jvr4Ygr95JFWfArWS
- vr1vyanxXFnrKFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:39::2b;
+ envelope-from=portias@tenstorrent.com; helo=mail-pj2-x2b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,57 +110,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
+The Atlantis SoC has a DesignWare UART compatible with DW8250. Previously
+the Atlantis machine had used the ns16550 UART with an unimplemented memory
+region backing the DesignWare specific register space. This updates the Atlantis
+model to use the now modeled DW8250.
 
-On 2026/9/28 下午4:26, SignKirigami wrote:
-> Now csr helpers are set by SET_CSR_FUNC in trans_privileged.c.inc, so this
-> macro is unneeded.
-> 
-> Signed-off-by: SignKirigami <prcups@krgm.moe>
-> ---
->   target/loongarch/csr.c | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-> index d2ac39dee9..e4ad8a4618 100644
-> --- a/target/loongarch/csr.c
-> +++ b/target/loongarch/csr.c
-> @@ -6,21 +6,20 @@
->   #include "cpu.h"
->   #include "csr.h"
->   
-> -#define CSR_OFF_FUNCS(NAME, FL, RD, WR)                    \
-> -    [LOONGARCH_CSR_##NAME] = {                             \
-> -        .name   = (stringify(NAME)),                       \
-> -        .offset = CSR_OFFSET(CSR_##NAME),                  \
-> -        .flags = FL, .readfn = RD, .writefn = WR           \
-> +#define CSR_OFF_FLAGS(NAME, FL)                               \
-> +    [LOONGARCH_CSR_##NAME] = {                                \
-> +        .name   = (stringify(NAME)),                          \
-> +        .offset = CSR_OFFSET(CSR_##NAME),                     \
-> +        .flags = FL, .readfn = NULL, .writefn = NULL          \
-I think ".readfn = NULL, .writefn = NULL" can be removed, since csr_info 
-array is defined as static variable.
+It also adds the remaining 4 UARTs that were not originally included in the
+machine along with a machine property, console. console allows the user to
+which uart is being used at the console and will be mapped to the first
+serial interface.
 
->       }
->   
->   #define CSR_OFF_ARRAY(NAME, N)                                \
->       [LOONGARCH_CSR_##NAME(N)] = {                             \
->           .name   = (stringify(NAME##N)),                       \
->           .offset = CSR_OFFSET(CSR_##NAME[N]),                  \
-> -        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
-> +        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL \
-Ditto.
-".readfn = NULL, .writefn = NULL" can be removed here.
+Portia Stephens (5):
+  hw/char/dw8250: Fix leak when creating child device
+  hw/riscv/atlantis: Use dw8250 UART model
+  hw/riscv/atlantis: Add all UARTs for Atlantis SoC
+  hw/riscv/atlantis: Add machine property to select default uart
+  docs/atlantis: Update Atlantis UART documentation
 
-Regards
-Bibo Mao
->       }
->   
-> -#define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
->   #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
->   
->   static CSRInfo csr_info[] = {
-> 
+ docs/system/riscv/tt_atlantis.rst |  17 +++-
+ hw/char/dw8250.c                  |  11 ++-
+ hw/riscv/Kconfig                  |   2 +-
+ hw/riscv/tt_atlantis.c            | 130 ++++++++++++++++++++++--------
+ include/hw/char/dw8250.h          |   3 +-
+ include/hw/riscv/tt_atlantis.h    |  14 +++-
+ 6 files changed, 132 insertions(+), 45 deletions(-)
+
+-- 
+2.43.0
 
 
