@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F49CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4844CCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBTSg-0005zi-PN; Tue, 29 Sep 2026 04:45:18 -0400
+	id 1xBTSk-000605-62; Tue, 29 Sep 2026 04:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTSa-0005sU-DY
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:12 -0400
-Received: from mail-pj2-x0e.google.com ([2607:f8b0:4864:39::e])
+ id 1xBTSd-0005y4-VP
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:16 -0400
+Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTSY-00041C-4h
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:11 -0400
-Received: by mail-pj2-x0e.google.com with SMTP id
- 98e67ed59e1d1-398cb5615deso3167912a91.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:45:09 -0700 (PDT)
+ id 1xBTSb-00041W-JI
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:15 -0400
+Received: by mail-pj2-x0f.google.com with SMTP id
+ 98e67ed59e1d1-3a49573b8bdso597313a91.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790671509; x=1791276309; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790671512; x=1791276312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=tSwqmMZQEjC0Trxhzu56bKX57rueCWfNPzUcXcWo2UQ=;
- b=dBu0uPbHWVv/tQ0nvM+00kebRaUbFTxmmip88Mm8ZL0z+X61jnqZ5PHOjZX9nzB2dj
- e5vH3ScUDOIoT8yRJm31MHyuaw71qaccckY3MDptloCWHFt/mUx+ij/rpx0pnDR1xlV2
- sHbksm4/XI+rrBIUnn5FKu3v2rm6C8Dd0hs59tBYb/LNi+Xm24lTQaTc4ONb7XPTN+OH
- GZgb4WndCFKBYWFK35F7BDoxS7e+QK0azMiPSnv9EuACFcNkwRWZzF9euTDcMg/JY4HF
- nz6zPoP3eIK8YpUnKQNT5YpXziqe3Vxkx1CwQzrkHForJ5OWRB+6QzEf22fHbM2oyktb
- zM5Q==
+ bh=8HA0URDqzo40kYUGgC9BRkSZVXz0Ja8B7EI4ZLWVnOM=;
+ b=LNCICU75VZ6ujzrZNCPjnB5fzv28rYCnWwQiXRJaFg4BofYE8hWwiLqronRxDFVeKJ
+ 99kj9pYt/73nthuBQQyN6TxcbS/5AXtHSMPYAFC8SbPsODfh9Tge+CgzcjPnlFt2zaSl
+ qXWMtOe25i9YbfhAlCOd9eHsLJ/YAUCICDtX9yFPxI/n3O/FoqD7UiSyeo5DKq66Nrs/
+ u6Oq2tNSdMbTg5gqfQLv7en1geCwQOJFJQHXqKoPkl/5bL9hYbWwZguMzo42Oodz5tPT
+ Am19Wir7xMA41M3mqiQsSIySDWXRScmr7wj+284WqMras09XQm0N7XUK/XqGu9oBC9Ij
+ wdiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790671509; x=1791276309;
+ d=1e100.net; s=20260707; t=1790671512; x=1791276312;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tSwqmMZQEjC0Trxhzu56bKX57rueCWfNPzUcXcWo2UQ=;
- b=Zq6yN+kIaWu2ED0WwBEQ4D6JycRw0s2RwAN58t/M7/fVo1sl3zy7x51a2wYcCn4T/R
- dY6XwDkVY1jD57FXfCWzGrNUcRqPmR4X3F83kNNUkLzMr47p+s3QuOsn/vkgnMUYPUCc
- KDuyyoEefX6f1aTJUiBw7+oPpb9b8OZtlHyZH7FSLeTbzKHUlmUCZZCwRBGWUAAl+kr4
- vD8cG79yKAhHFFBerYL9Na/aPe2mFKWNFHg02RlCwoyeGsxrhKqBo6RoJ5RoDDWzK/5e
- rUDpX6BSLM011iL7GGmIlxVag0MF6qmiVxc8T88t2+VnKb142KLKIFX9dsviT4KR2itc
- aL4Q==
-X-Gm-Message-State: AFq9FYJ2dYjHDEYo74JFFkAmxCynIRqyZ0ZoUWPDWi/uhnGL+IASRlsA
- r1jvM7ECrKJH5ljd4eywkkDQpe9TR4iW6lHOyqqD9tzLM4pHbomgyLgf3SppjzWA
-X-Gm-Gg: AYBFou1pWMFXLIXojPkmLJHLIgn/3UYV/mUNURTGJFFRn//AfnEzjN0jCjotUReidoZ
- wNAI0oGha3F9VAB+EyV8iZIJl2yjvqVS2x/125QEepH+YUGkuxE+rhfnJwK7eTBvPyUz4bE//aa
- Kc5diO6CWpemxpFXEUvxmGCUqwmoRvCgffJwgxsyJ90Ag601n6mvEhAk7IOZHjSkEtgJtZuE5zm
- L8ZJr79ObBEZYluuaCuRDIsqomLP3hnd96T0FhChZKQgunSEMSieXUl0qy+VyWZ47uwWDEl3tKP
- ts6dyYsAssLIgfIT96Pc8U0uT0NbJD8ryxjFEr/VnYuqHQAPwbnqmF+TG9ycgZIMVUWjFCTkWhj
- VuurodGMv5mAY7Lh4BabqCQO9VovxYOK13K6aKH3Ft5Fjm7nZ8Q6yBw8BRbPRdd5xeZ3ZCjDt1d
- whZRnbZtZCumtDh43ezVSwJJHNvjVwr4K0mr9Zebb6W/RmDhBFIy99PLHAMZexoF+QAEhuFzH/9
- /IGQxqRTls2gJfquvKpAjU/xCOu
-X-Received: by 2002:a17:90b:1f8a:b0:39e:6a82:afda with SMTP id
- 98e67ed59e1d1-3a098fe651cmr11916679a91.44.1790671508643; 
- Tue, 29 Sep 2026 01:45:08 -0700 (PDT)
+ bh=8HA0URDqzo40kYUGgC9BRkSZVXz0Ja8B7EI4ZLWVnOM=;
+ b=x2LBdtkRI3lfenmYnzPjORwPEMTl/tIGpbt1LFXtr+xfnvD4nzi+deY3e7CCflzVEW
+ 9bEhzYTpeBtXGYYF5gj5tUkbb0D8eSnx9Ajbe31P57ghY0GHXXMfKc87dykYKoqSqESm
+ 7vrZn/8q7yAA4IS5LdIgh3dtig7WQSszT6kA/bA4DqdIGkyf7lvX5w3c4mx3aGyV0EcM
+ 3pnmSDErD0rsjz6jV9JsOd0zW7xtojMkkat3jCXLUaLVOzVArZiu7oVPo9Z/WlGJTj5S
+ p2pBc8tPmvW1/e8kukZAOejv3m2oWmRyMN+OjzMjnvjH+qqN47cJfGFZ6VpLO71uqMi9
+ jv6Q==
+X-Gm-Message-State: AFq9FYJ+LkqNLLlHfK5yq3Cj5kKD92cnVUYtXkcfQBMDESc9sEwdyJpi
+ CKPm9qCgy/Bf6AHguPB8XwlMxCMCglcz2/VsaQhESoRZZcfVe240Fzcif7+NbCVR
+X-Gm-Gg: AYBFou1Aefxx/KzP2xt3z6VB+L1+eZZuHMIH5EtBRUl9oHztlfU4stCw0YBqrmZLp05
+ 5fu/QuCxPQXu3A4pvcEifxa6+WT+inG2nm2jtDzbTapFJf7Zu86X6fHFsLcr33dgZ0zjOIJi4qP
+ jh37fThDg8MvnL53ftA1w5eD0IQWS1NMZ+XKQjWjEDweteXt2NaU3pG2PASPdaLyc19EHVFeWBt
+ UjTYchKEv1o5DHDA5S+jTMuSJJePecCoc9fmDXL1YWC4I+k2sZuzBqEsoCiWK2Alp0FQ7EKqYMB
+ BwhKOcMbQOSIJSy4tBGzqf+n8C4q2eRvlJVY17x7USHRtYeL+MxN/M9a8tbn/pHYtB9hJrS+/5g
+ I0qmBX/ERQlBB3lOKfQOmmtxAkRy+N5Wn0joz4JrxbRiguBCZbG8VjywiFux07e/eoWM18meAEO
+ PkUQ8doimW+o9D2uE1tDra2J/YIjX1D/NkUznmewAyfAtVYT7BpTk6+TXQdbL5UybldWTb6P1so
+ 98mMdOWw24w2ls5DdLOzkA5TII=
+X-Received: by 2002:a17:90a:ce:b0:3a0:4146:2955 with SMTP id
+ 98e67ed59e1d1-3a0bb6596f3mr6702873a91.61.1790671512139; 
+ Tue, 29 Sep 2026 01:45:12 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.45.03
+ 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.45.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 01:45:08 -0700 (PDT)
+ Tue, 29 Sep 2026 01:45:11 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V18 12/13] iothread: make legacy AioContext getter explicitly
- unsafe
-Date: Tue, 29 Sep 2026 16:44:15 +0800
-Message-ID: <20260929084416.1600199-13-zhangckid@gmail.com>
+Subject: [PATCH V18 13/13] tests/unit/iothread: update AioContext ref/put
+ helpers
+Date: Tue, 29 Sep 2026 16:44:16 +0800
+Message-ID: <20260929084416.1600199-14-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929084416.1600199-1-zhangckid@gmail.com>
 References: <20260929084416.1600199-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::e;
- envelope-from=zhangckid@gmail.com; helo=mail-pj2-x0e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj2-x0f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,81 +106,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that holder-aware callers have been converted, rename
-iothread_get_aio_context() to iothread_unsafe_get_aio_context() and
-update qmp_x_blockdev_set_iothread().
+Update the unit-test IOThread stubs and callers to use
+iothread_ref_and_get_aio_context() together with the matching
+iothread_unref_and_put_aio_context().
 
-The only remaining user is qmp_x_blockdev_set_iothread().  It cannot
-use iothread_ref_and_get_aio_context() as is, because it ties the
-AioContext to the block node, and iothread_unref_and_put_aio_context()
-would have to be called when that tie is broken.
-
-New code should use iothread_ref_and_get_aio_context().
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- blockdev.c                |  9 ++++++++-
- include/system/iothread.h | 11 ++++++++++-
- iothread.c                |  2 +-
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ tests/unit/iothread.c             | 18 ++++++++++++------
+ tests/unit/iothread.h             |  7 ++++++-
+ tests/unit/test-aio-multithread.c |  5 ++++-
+ tests/unit/test-bdrv-drain.c      | 18 +++++++++++++-----
+ tests/unit/test-block-iothread.c  | 21 ++++++++++++++-------
+ 5 files changed, 49 insertions(+), 20 deletions(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index 6e86c6262f..3bd32feb39 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-             goto out;
-         }
+diff --git a/tests/unit/iothread.c b/tests/unit/iothread.c
+index a363bf8f70..790cd2dce7 100644
+--- a/tests/unit/iothread.c
++++ b/tests/unit/iothread.c
+@@ -30,12 +30,23 @@ struct IOThread {
+     bool stopping;
+ };
  
--        new_context = iothread_get_aio_context(obj);
-+        /*
-+         * We cannot use iothread_ref_and_get_aio_context() /
-+         * iothread_unref_and_put_aio_context() here. The block graph stores
-+         * the AioContext but not the IOThread, and continues using the
-+         * context after this command returns. A matching put would need
-+         * to be tied to the block graph's context lifecycle.
-+         */
-+        new_context = iothread_unsafe_get_aio_context(obj);
-     } else {
-         new_context = qemu_get_aio_context();
-     }
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index f6c5f95dd9..9850cdb3dc 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -66,7 +66,16 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
- 
- char *iothread_get_id(IOThread *iothread);
- IOThread *iothread_by_id(const char *id);
--AioContext *iothread_get_aio_context(IOThread *iothread);
++AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
++                                             IOThreadHolder *holder)
++{
++    return iothread->ctx;
++}
 +
-+/*
-+ * Return @iothread's AioContext without registering a holder or taking a
-+ * reference on @iothread.  The caller must ensure that the IOThread remains
-+ * alive for as long as the returned AioContext is used.
-+ *
-+ * This API exists for legacy callers without a clear ref/unref lifecycle.  Do
-+ * not use it in new code; use iothread_ref_and_get_aio_context() instead.
-+ */
-+AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
++void iothread_unref_and_put_aio_context(IOThread *iothread,
++                                        IOThreadHolder *holder)
++{
++}
++
+ static void iothread_init_gcontext(IOThread *iothread)
+ {
+     GSource *source;
+ 
+     iothread->worker_context = g_main_context_new();
+-    source = aio_get_g_source(iothread_get_aio_context(iothread));
++    source = aio_get_g_source(iothread->ctx);
+     g_source_attach(source, iothread->worker_context);
+     g_source_unref(source);
+     iothread->main_loop = g_main_loop_new(iothread->worker_context, TRUE);
+@@ -113,8 +124,3 @@ IOThread *iothread_new(void)
+     qemu_mutex_unlock(&iothread->init_done_lock);
+     return iothread;
+ }
+-
+-AioContext *iothread_get_aio_context(IOThread *iothread)
+-{
+-    return iothread->ctx;
+-}
+diff --git a/tests/unit/iothread.h b/tests/unit/iothread.h
+index eb4d0c77f8..9bdac074c0 100644
+--- a/tests/unit/iothread.h
++++ b/tests/unit/iothread.h
+@@ -17,9 +17,14 @@
+ #include "qemu/thread.h"
+ 
+ typedef struct IOThread IOThread;
++typedef struct IOThreadHolder IOThreadHolder;
++
++AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
++                                             IOThreadHolder *holder);
++void iothread_unref_and_put_aio_context(IOThread *iothread,
++                                        IOThreadHolder *holder);
+ 
+ IOThread *iothread_new(void);
+ void iothread_join(IOThread *iothread);
+-AioContext *iothread_get_aio_context(IOThread *iothread);
+ 
+ #endif
+diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
+index 9179cdc6a3..66ba5a466b 100644
+--- a/tests/unit/test-aio-multithread.c
++++ b/tests/unit/test-aio-multithread.c
+@@ -69,7 +69,7 @@ static void create_aio_contexts(void)
+ 
+     for (i = 0; i < NUM_CONTEXTS; i++) {
+         threads[i] = iothread_new();
+-        ctx[i] = iothread_get_aio_context(threads[i]);
++        ctx[i] = iothread_ref_and_get_aio_context(threads[i], NULL);
+     }
+ 
+     qemu_event_init(&done_event, false);
+@@ -87,6 +87,9 @@ static void join_aio_contexts(void)
+     for (i = 0; i < NUM_CONTEXTS; i++) {
+         aio_context_ref(ctx[i]);
+     }
++    for (i = 0; i < NUM_CONTEXTS; i++) {
++        iothread_unref_and_put_aio_context(threads[i], NULL);
++    }
+     for (i = 0; i < NUM_CONTEXTS; i++) {
+         iothread_join(threads[i]);
+     }
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 43b0ba8648..05c31ffca8 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -537,8 +537,8 @@ static void test_iothread_common(enum drain_type drain_type, int drain_thread)
+ 
+     IOThread *a = iothread_new();
+     IOThread *b = iothread_new();
+-    AioContext *ctx_a = iothread_get_aio_context(a);
+-    AioContext *ctx_b = iothread_get_aio_context(b);
++    AioContext *ctx_a = iothread_ref_and_get_aio_context(a, NULL);
++    AioContext *ctx_b = iothread_ref_and_get_aio_context(b, NULL);
+ 
+     QEMUIOVector qiov = QEMU_IOVEC_INIT_BUF(qiov, NULL, 0);
+ 
+@@ -612,6 +612,8 @@ static void test_iothread_common(enum drain_type drain_type, int drain_thread)
+ 
+     bdrv_unref(bs);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(a, NULL);
++    iothread_unref_and_put_aio_context(b, NULL);
+ 
+ out:
+     iothread_join(a);
+@@ -762,7 +764,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+         AioContext *ctx;
+ 
+         iothread = iothread_new();
+-        ctx = iothread_get_aio_context(iothread);
++        ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+         blk_set_aio_context(blk_src, ctx, &error_abort);
+     }
+ 
+@@ -892,6 +894,10 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+     bdrv_unref(src_overlay);
+     bdrv_unref(target);
+ 
++    if (use_iothread) {
++        iothread_unref_and_put_aio_context(iothread, NULL);
++    }
++
+     if (iothread) {
+         iothread_join(iothread);
+     }
+@@ -1398,8 +1404,8 @@ static void test_set_aio_context(void)
+     BlockDriverState *bs;
+     IOThread *a = iothread_new();
+     IOThread *b = iothread_new();
+-    AioContext *ctx_a = iothread_get_aio_context(a);
+-    AioContext *ctx_b = iothread_get_aio_context(b);
++    AioContext *ctx_a = iothread_ref_and_get_aio_context(a, NULL);
++    AioContext *ctx_b = iothread_ref_and_get_aio_context(b, NULL);
+ 
+     bs = bdrv_new_open_driver(&bdrv_test, "test-node", BDRV_O_RDWR,
+                               &error_abort);
+@@ -1410,6 +1416,8 @@ static void test_set_aio_context(void)
+     bdrv_try_change_aio_context(bs, qemu_get_aio_context(), NULL, &error_abort);
+ 
+     bdrv_unref(bs);
++    iothread_unref_and_put_aio_context(a, NULL);
++    iothread_unref_and_put_aio_context(b, NULL);
+     iothread_join(a);
+     iothread_join(b);
+ }
+diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
+index 5273ff235a..fc9735d056 100644
+--- a/tests/unit/test-block-iothread.c
++++ b/tests/unit/test-block-iothread.c
+@@ -466,7 +466,7 @@ static void test_sync_op(const void *opaque)
+ {
+     const SyncOpTest *t = opaque;
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     BlockBackend *blk;
+     BlockDriverState *bs;
+     BdrvChild *c;
+@@ -493,6 +493,7 @@ static void test_sync_op(const void *opaque)
+ 
+     bdrv_unref(bs);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(iothread, NULL);
+ }
+ 
+ typedef struct TestBlockJob {
+@@ -549,7 +550,7 @@ BlockJobDriver test_job_driver = {
+ static void test_attach_blockjob(void)
+ {
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     BlockBackend *blk;
+     BlockDriverState *bs;
+     TestBlockJob *tjob;
+@@ -595,6 +596,7 @@ static void test_attach_blockjob(void)
+ 
+     bdrv_unref(bs);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(iothread, NULL);
+ }
  
  /*
-  * Register @holder and return @iothread's AioContext.  The holder is copied,
-diff --git a/iothread.c b/iothread.c
-index 5a4291a2f0..28460afb3f 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -422,7 +422,7 @@ char *iothread_get_id(IOThread *iothread)
-     return g_strdup(object_get_canonical_path_component(OBJECT(iothread)));
+@@ -612,7 +614,7 @@ static void test_attach_blockjob(void)
+ static void test_propagate_basic(void)
+ {
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     AioContext *main_ctx;
+     BlockBackend *blk;
+     BlockDriverState *bs_a, *bs_b, *bs_verify;
+@@ -658,6 +660,7 @@ static void test_propagate_basic(void)
+     bdrv_unref(bs_b);
+     bdrv_unref(bs_a);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(iothread, NULL);
  }
  
--AioContext *iothread_get_aio_context(IOThread *iothread)
-+AioContext *iothread_unsafe_get_aio_context(IOThread *iothread)
+ /*
+@@ -676,7 +679,7 @@ static void test_propagate_basic(void)
+ static void test_propagate_diamond(void)
  {
-     return iothread->ctx;
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     AioContext *main_ctx;
+     BlockBackend *blk;
+     BlockDriverState *bs_a, *bs_b, *bs_c, *bs_verify;
+@@ -736,12 +739,13 @@ static void test_propagate_diamond(void)
+     bdrv_unref(bs_c);
+     bdrv_unref(bs_b);
+     bdrv_unref(bs_a);
++    iothread_unref_and_put_aio_context(iothread, NULL);
  }
+ 
+ static void test_propagate_mirror(void)
+ {
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     AioContext *main_ctx = qemu_get_aio_context();
+     BlockDriverState *src, *target, *filter;
+     BlockBackend *blk;
+@@ -807,12 +811,13 @@ static void test_propagate_mirror(void)
+     blk_unref(blk);
+     bdrv_unref(src);
+     bdrv_unref(target);
++    iothread_unref_and_put_aio_context(iothread, NULL);
+ }
+ 
+ static void test_attach_second_node(void)
+ {
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     AioContext *main_ctx = qemu_get_aio_context();
+     BlockBackend *blk;
+     BlockDriverState *bs, *filter;
+@@ -840,12 +845,13 @@ static void test_attach_second_node(void)
+     bdrv_unref(filter);
+     bdrv_unref(bs);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(iothread, NULL);
+ }
+ 
+ static void test_attach_preserve_blk_ctx(void)
+ {
+     IOThread *iothread = iothread_new();
+-    AioContext *ctx = iothread_get_aio_context(iothread);
++    AioContext *ctx = iothread_ref_and_get_aio_context(iothread, NULL);
+     BlockBackend *blk;
+     BlockDriverState *bs;
+ 
+@@ -871,6 +877,7 @@ static void test_attach_preserve_blk_ctx(void)
+     blk_set_aio_context(blk, qemu_get_aio_context(), &error_abort);
+     bdrv_unref(bs);
+     blk_unref(blk);
++    iothread_unref_and_put_aio_context(iothread, NULL);
+ }
+ 
+ int main(int argc, char **argv)
 -- 
 2.43.0
 
