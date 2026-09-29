@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F207CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEAD2CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUfa-00080s-Qb; Tue, 29 Sep 2026 06:02:42 -0400
+	id 1xBUfG-0007bZ-Kb; Tue, 29 Sep 2026 06:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfO-0007eO-4d
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:30 -0400
+ id 1xBUfB-0007VP-Vd
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:18 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUfM-0008Gx-Bh
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:29 -0400
+ id 1xBUf9-0008E1-T6
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:17 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ffde3cec6so14057015e9.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:27 -0700 (PDT)
+ 5b1f17b1804b1-49b912d3920so29747055e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676147; x=1791280947; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7FcDnvk9pAWjFQZm+alNq0PBIDEtJ047Mx8z3tKKR6c=;
- b=t2DI/9FTmR3hVJcawdwW/2qxvOtYCmsa2qnxG3PZKPqU4rbLZ7nQb69FzKV1Py+aQY
- vLvL1MUqp3AHRlsQNOrUreygqaATCkSjOp3qmsM/wcVaw1jBd1eJG+n9XrV10pvaRUpt
- QUAIvI9prMgUJe09eqGylsxr3QmA/u6LiJS5t7YMsyLw2eUtmjrnSS2xnTYjK7lXdMQp
- 9ImsHAWR/Dy2EVsedQ4B/m4vIrngxN1JSWzYmQw2+68snL6mZOaeluniIeeWXnDAHppn
- cbEGkP9EpThgFLEC/xRoa0RqLAWeVApVC/Wh0P/hlVj9bwfF9jJXUXA7fHNzaXBMsakD
- jDUw==
+ d=linaro.org; s=google; t=1790676134; x=1791280934; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=IUgvG5wXyuxPwvGGjWMik6bOpv8TU6Nj/fKQdsvfpEg=;
+ b=e6fpmGjdQVIpLNvm/lP/sIH04NQRvMHHQW8j92CLJk1OLKNmOMEcq56vo7I3jnWxE+
+ cikEYhsDHEsF6398kRrSzBR6LTcNLvhAyzJ97RWHo5uEg/lt+nReAEDRtAV8KrGSiowj
+ ZVFpmylCDcDIkTX95xezhYKMjzKDJ90eb12GI7xDE4PPYRYW4TUP6s5tLZ4y02ER4kDB
+ qwkgF2UZI+/Retrw/NWdVsmfjl+6RB4Ju++nThwvoNPRWyJqOBjzRGiv/i5dhCf69kqP
+ TgLkwCGC2LUimPCHXhU7ACvGwnn6xu/doFb0KwM4Hi5RAx4IbobKCN7rNrvsJTVEObYs
+ nc1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676147; x=1791280947;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7FcDnvk9pAWjFQZm+alNq0PBIDEtJ047Mx8z3tKKR6c=;
- b=GwmrW7NVV4M/4c85HDIInQs9jjrn5kzHGvytoQmcdfAo4BCfBHJfn4XDeNKfmwmspN
- eEl3ZIaWpDaa6KeOvl1ScLisOxpV0gepN9It6rsbxlMq2Fapn5IYafhb/JPS8ehGtoB0
- dgACtyZe/UL6vhwnzzjkV2TvK1pmwLL8c+YEXzduk+h6OQF6ihDB6T8wo+bEzna/bQCg
- yB6KrBcbu3V7H0SxMmU6a8djvx6bUcKc+BFb5oVlrW+99Nz4cR15rbsx62LSltIhVu5n
- ZoOVPy1N5UM3S1SVWmOErOXLhOOr/7iEiaaTVq9TgZexQYBCz8keDPmRJhc3XggbVeMX
- Oo4Q==
-X-Gm-Message-State: AFuF++ltW1OSXnfwQRswDsFOXsZ/CKuzNqDiy0s/kUtME7C4dwNB2Y5f
- ZkNE6xP15huoHhjvb6Vx2VCpk4epP5IuEaSW+hVZXu2AQUpu/WAJNWB0ccQfw3DC0su4K9MXhRP
- tX0KW
-X-Gm-Gg: AYBFou04rxQ1pwZLpREE+bUArT02IKybiY9BwgFFqSUUJbpuegEbeLiorvUt4h+mJte
- fd4o9WH27TdHtkEAr4edP/E23818Cn6y20qNJA/bpDMLU2d8zrAIa6vRAoxGamQ0gbcHikoK6CL
- gJz+0sRSNAcI1HPxTg3QgGUnZQKq35xtUMCvgvkCb6vMgCmY4nkjOhvubHUuoGSlh3S9qTPINZO
- UzCl7fooMSCfuSsfgJ7ebpSjsFMQmtqT8sdhxSK14TzyLuf580r67HgY6Ham3avgddKMDuXyw7R
- GSTYp37ud1g8bDHZCRUAxMwzh6H5Htd8VETclMm0mqua7dvlvckqWmYGtA9f18OLWBx/S91S6vo
- lDon8zmpMl3eDhZK7OWRHFZ4xLUXSmcolTE70fvoMmOc8T+swMcdBBi8Ve0k4zljdDv0xGvCrqW
- 43m0JP+ize4HqnRR9mbWITtMzwOSUKQafQcyyOy2aQg39MzEhoE6IcOapGxkM7qpLv/OvPOeHv9
- KZSn+6MU8vcF/v4/TIWtPSu9FQ/DCI0kWfF5LNAGarB8YObEEy8azcrx9F7EJQ53iqWErJ6qjwI
- V+o=
-X-Received: by 2002:a05:600c:4e53:b0:49e:6861:50f7 with SMTP id
- 5b1f17b1804b1-49fe66c8921mr263353615e9.5.1790676146611; 
- Tue, 29 Sep 2026 03:02:26 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790676134; x=1791280934;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=IUgvG5wXyuxPwvGGjWMik6bOpv8TU6Nj/fKQdsvfpEg=;
+ b=WdL/Z2BdF/sXkwjVmNUI5iSjECL39QJ1JLMq3zHX1JBiAHf1j9IB+L5UQ4/Y6dRC32
+ GlW4OOZb8qcP631J1IZD2qlphtDSsXDt0j7Bt8vNxhT0O3WLeNRXULrYbVLMRzySCi66
+ XM599dJPhG83Mnz+O09yIc7y62BT8A7JIYqyuHrFQdvWTkQiNQST3/eyRf5UUhvDGQOo
+ F3YNJsEM0V3XQl4Q0ePHUR90CGyCXX/ao//RA/AAnz8Iabw9D30qHo/IYR2f01PUaNLh
+ OTOCeKTqVO5kZClTf9Rzbs1MPHw9QX+hP+P98roz94xNgi+jAFj0rh+oSA8LXGYTo3Xe
+ CbHg==
+X-Gm-Message-State: AFuF++m7Bo1+h/4VQfFSG3B6fyjqp+ytYFdXBw5G0FV9tgjAj04O1adN
+ xcAaeop6ONvGcr4E7wf+iv5R1pTsaB5U5lGYAbx7brqefCtMMWK26v4M5kH6zDm45TvfITLR19o
+ oVY0u
+X-Gm-Gg: AYBFou3drShsywZVKCnHTQZSbyXLtY73NSc3ExgZ3MahkSz9EpkmWG7Ernthxn2zSe+
+ 0HeepgBeTdVQ9FkMySiqODLRpscsxv1U/pM2uOeMp157PwuhkBOSnYOdB8hQPlJlnx1dQ8TVdco
+ 6455/VJtilKOtJaygy3OrQ84++JUYk5kjYdOoZ2pndeMNbmxiQIrsowMEMDkxSfaduQ9zdTX4TN
+ oxMGQgWZyB0Ts4pTvV9mcP1g26802m0loOEegkn9ck3fQHiNe5jtxfurg7c567CMaI8ydGWMHvB
+ fTH9hBL1eBzM+gaZ9IxT8Kl0ByVutr4NdGFGcYYi4/4SS4ebuWRbeH8ndGc3kTfqb4KlnTUWf4h
+ vgy6X4CAF2mp0NOaLwqEhEGUWvG/FOgZ8QVd2p6WM/fN6Z1DMW8BPaXleYegSJKBo++V3BBCytU
+ LP+d4Rk7f3L8zunBncyQZ2NxILz3c6cvKHIUjUivAx9CP+cgbB22Sf8zXJLQC4ylo3SAYHaHxIT
+ hTPOiTKQ2TmjPzhPoDAfpXjYSdATcyOT30ccpSEOWjt7Eoi87BYgRnQwAlEQfgxfEwW/2S7euR9
+ zyto
+X-Received: by 2002:a05:600c:198a:b0:49f:fbf1:3f7e with SMTP id
+ 5b1f17b1804b1-49ffbf13ffbmr144775065e9.9.1790676133889; 
+ Tue, 29 Sep 2026 03:02:13 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.24
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:02:25 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:12 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/37] target/arm: Split out check_il
-Date: Tue, 29 Sep 2026 11:01:28 +0100
-Message-ID: <20260929100133.2598676-34-peter.maydell@linaro.org>
+Subject: [PULL 24/37] target/arm: Split out rebuild_hflags_common_aprofile
+Date: Tue, 29 Sep 2026 11:01:19 +0100
+Message-ID: <20260929100133.2598676-25-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:31::10;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
@@ -106,99 +104,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Alignment, FGT, and IL are common to a32 and a64, though the
+latter comes from different places.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260925215004.456336-13-richard.henderson@linaro.org
+Message-id: 20260925215004.456336-4-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-a64.c |  7 +------
- target/arm/tcg/translate.c     | 28 ++++++++++++++++------------
- target/arm/tcg/translate.h     |  1 +
- 3 files changed, 18 insertions(+), 18 deletions(-)
+ target/arm/tcg/hflags.c | 65 +++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 35 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b3438235828..7f858654c43 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -11174,12 +11174,7 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     s->fp_access_checked = 0;
-     s->sve_access_checked = 0;
- 
--    if (s->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(s)) {
-         return;
-     }
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f32200cc47e..fbacc3b7574 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -1159,6 +1159,20 @@ void unallocated_encoding(DisasContext *s)
-     gen_exception_insn(s, 0, EXCP_UDEF, syn_uncategorized());
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index eb1aff91d5f..8da02ae1ecf 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -114,6 +114,24 @@ static void rebuild_hflags_common_32(CPUARMTBFlags *flags, CPUARMState *env)
+     DP_TBFLAG_A32(*flags, NS, !access_secure_reg(env));
  }
  
-+/*
-+ * These conditions have less priority than instruction abort, and thus
-+ * must be checked after reading the instruction.  They have more priority
-+ * than the AArch64 BTI exception.
-+ */
-+bool check_il(DisasContext *s)
++static void rebuild_hflags_common_aprofile(CPUARMTBFlags *flags,
++                                           CPUARMState *env, int el,
++                                           uint64_t sctlr, bool il)
 +{
-+    if (s->pstate_il) {
-+        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+        return true;
++    if (il) {
++        DP_TBFLAG_ANY(*flags, PSTATE__IL, 1);
 +    }
-+    return false;
++    if (aprofile_require_alignment(env, el, sctlr)) {
++        DP_TBFLAG_ANY(*flags, ALIGN_MEM, 1);
++    }
++    if (arm_fgt_active(env, el)) {
++        DP_TBFLAG_ANY(*flags, FGT_ACTIVE, 1);
++        if (fgt_svc(env, el)) {
++            DP_TBFLAG_ANY(*flags, FGT_SVC, 1);
++        }
++    }
 +}
 +
- /* Force a TB lookup after an instruction that changes the CPU state.  */
- void gen_lookup_tb(DisasContext *s)
+ static CPUARMTBFlags rebuild_hflags_m32(CPUARMState *env, int fp_el,
+                                         ARMMMUIdx mmu_idx)
  {
-@@ -6153,12 +6167,7 @@ static void disas_arm_insn(DisasContext *s, unsigned int insn)
-         return;
+@@ -284,9 +302,8 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+ 
+     el = arm_current_el(env);
+     sctlr = arm_sctlr(env, el);
+-    if (aprofile_require_alignment(env, el, sctlr)) {
+-        DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
+-    }
++    rebuild_hflags_common_aprofile(&flags, env, el, sctlr,
++                                   env->uncached_cpsr & CPSR_IL);
+ 
+     if (arm_el_is_aa64(env, 1)) {
+         DP_TBFLAG_A32(flags, VFPEN, 1);
+@@ -297,17 +314,6 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+         DP_TBFLAG_A32(flags, HSTR_ACTIVE, 1);
      }
  
--    if (s->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(s, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(s)) {
-         return;
+-    if (arm_fgt_active(env, el)) {
+-        DP_TBFLAG_ANY(flags, FGT_ACTIVE, 1);
+-        if (fgt_svc(env, el)) {
+-            DP_TBFLAG_ANY(flags, FGT_SVC, 1);
+-        }
+-    }
+-
+-    if (env->uncached_cpsr & CPSR_IL) {
+-        DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
+-    }
+-
+     /*
+      * The SME exception we are testing for is raised via
+      * AArch64.CheckFPAdvSIMDEnabled(), as called from
+@@ -397,14 +403,17 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+ {
+     CPUARMTBFlags flags = rebuild_hflags_common(env, fp_el, mmu_idx);
+     ARMMMUIdx stage1 = stage_1_mmu_idx(mmu_idx);
+-    uint64_t tcr = regime_tcr(env, mmu_idx);
+-    uint64_t hcr = arm_hcr_el2_eff(env);
+-    uint64_t sctlr;
++    uint64_t sctlr = regime_sctlr(env, stage1);
++    uint64_t tcr, hcr;
+     int tbii, tbid, mtx;
+ 
++    rebuild_hflags_common_aprofile(&flags, env, el, sctlr,
++                                   env->pstate & PSTATE_IL);
++
+     DP_TBFLAG_ANY(flags, AARCH64_STATE, 1);
+ 
+     /* Get control bits for tagged addresses.  */
++    tcr = regime_tcr(env, mmu_idx);
+     tbid = aa64_va_parameter_tbi(tcr, mmu_idx);
+     tbii = tbid & ~aa64_va_parameter_tbid(tcr, mmu_idx);
+     mtx = cpu_isar_feature(aa64_mte_mtx, env_archcpu(env)) ?
+@@ -415,6 +424,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+     DP_TBFLAG_A64(flags, TBID, tbid);
+ 
+     /* E2H is used by both VHE and NV2. */
++    hcr = arm_hcr_el2_eff(env);
+     if (hcr & HCR_E2H) {
+         DP_TBFLAG_A64(flags, E2H, 1);
+     }
+@@ -465,12 +475,6 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+         }
      }
  
-@@ -6728,12 +6737,7 @@ static void thumb_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-     dc->base.pc_next = pc;
-     dc->insn = insn;
- 
--    if (dc->pstate_il) {
--        /*
--         * Illegal execution state. This has priority over BTI
--         * exceptions, but comes after instruction abort exceptions.
--         */
--        gen_exception_insn(dc, 0, EXCP_UDEF, syn_illegalstate());
-+    if (check_il(dc)) {
-         return;
+-    sctlr = regime_sctlr(env, stage1);
+-
+-    if (aprofile_require_alignment(env, el, sctlr)) {
+-        DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
+-    }
+-
+     if (arm_cpu_data_is_big_endian_a64(el, sctlr)) {
+         DP_TBFLAG_ANY(flags, BE_DATA, 1);
+     }
+@@ -525,18 +529,9 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+         }
      }
  
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index f633aa265f0..7eba9b764ce 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -382,6 +382,7 @@ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
- void arm_gen_test_cc(int cc, TCGLabel *label);
- MemOp pow2_align(unsigned i);
- void unallocated_encoding(DisasContext *s);
-+bool check_il(DisasContext *s);
- void gen_exception_internal(int excp);
- void gen_exception_insn_el(DisasContext *s, int64_t pc_diff, int excp,
-                            uint32_t syn, uint32_t target_el);
+-    if (env->pstate & PSTATE_IL) {
+-        DP_TBFLAG_ANY(flags, PSTATE__IL, 1);
+-    }
+-
+-    if (arm_fgt_active(env, el)) {
+-        DP_TBFLAG_ANY(flags, FGT_ACTIVE, 1);
+-        if (FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, ERET)) {
+-            DP_TBFLAG_A64(flags, TRAP_ERET, 1);
+-        }
+-        if (fgt_svc(env, el)) {
+-            DP_TBFLAG_ANY(flags, FGT_SVC, 1);
+-        }
++    if (EX_TBFLAG_ANY(flags, FGT_ACTIVE) &&
++        FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, ERET)) {
++        DP_TBFLAG_A64(flags, TRAP_ERET, 1);
+     }
+ 
+     /*
 -- 
 2.43.0
 
