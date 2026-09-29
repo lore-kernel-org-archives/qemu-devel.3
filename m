@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3AAACA5FB2
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC1BCA5FA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 16:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBasl-00058Z-6J; Tue, 29 Sep 2026 12:40:43 -0400
+	id 1xBasn-0005Ad-Nt; Tue, 29 Sep 2026 12:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xBash-00057O-6H
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:40:40 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1xBasm-00059u-FT
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:40:44 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xBase-0006ME-El
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:40:38 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ffb83bf7aso27227215e9.2
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:40:36 -0700 (PDT)
+ id 1xBask-0006Nx-33
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 12:40:44 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49ffe817151so17990165e9.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790700035; x=1791304835; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790700041; x=1791304841; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oWIkUj1yFeaQWlWBHcLADbfPchqUgz63VyyNsj5XG3Y=;
- b=kgWzlRpdiv/qIv8/lK3wdsbqJXIYSMoFNSij6hHZm0DITINxvtQHHaf02LhEixEjlF
- IvlTGBbsUS805yunIBiqnSY8SqR4Ml4avwACiouTv6RmKx9eeO2fKFuCLeEJtR7iSc4z
- uP1xj3iNqiWwl5r05P+/eC6AxEgFfIO+QRFO3+RQTT9S44JGJxssdRIRhs5/bhvck58P
- 3nXYggd1h9A597cP0ce+4lFnwq5Ch8TjoMgbURzYsyoeZEEoNmKtul87jiv5pAZO+uQe
- 1gVsZNEVPr58Vvoo/y8k2v0l3Vebk8QP8bT95XRrs8rEs68JRrk0u4uEjV8q8YZoZJnX
- lP1g==
+ bh=l0PYHA6RrE88tZ77C1oINvZS756ml3SDfHa/y09NmKo=;
+ b=L1s3NeGB65VM0BkDRe4NmWTuodgfoDkonjpscO6V2Ph9/Z9D50p8khrGaNTW47zpQP
+ WHS7IkIg1D0jcn4Pcmw0GBLazDJNzNFgv36ycSLajkOBIpdLfDUMdcjx+XGsdzbqpfsf
+ 5siXWQlUXWV2nRM+VaOYVv1A/AEvwrUyCFBh01ElhujgFHxKTzN44gVkwz61YJ4NZ1b8
+ vjnEgbJBSfPr09X9Ryjzl0W/NcGKpDTv9Nh73nqVM8MvdHqIZ/PvtYchHoJ/JtlrgPXO
+ GwhAEQ9inBT1hB505aAPt6gVXIv8GalK3wffxc/SedE19KWRpnkYHZ654KtzHxSJxzGB
+ X+LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790700035; x=1791304835;
+ d=1e100.net; s=20260707; t=1790700041; x=1791304841;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=oWIkUj1yFeaQWlWBHcLADbfPchqUgz63VyyNsj5XG3Y=;
- b=1iJaomam8gyjZ9tmuv+BHZBht/GchbY3OdS32ubdIqDJbKA8YmmWKly1GHCBWnuVd2
- jfmNg3OZOHBLlEU9+OEapn2x/GH3zkcCKH2UlrqhevMUf1Iaa8Cldiul5w9WVDWubmNN
- Oi8/KcNV2uxZJS34JLZzVC8J0n8vORxyktNWCjoenchNzjOo33KhXL8Vg22Hf3CuxdzW
- VETwQ1YkOx5wmJKRo4mYhQnoc8moJv2ElovGH4ueQ5GpsyPkxwcUb0l6iouJKuvH72A5
- t+85eR87rikAGoNRpyGv/+N02ibrmJaAeCpOno5/N/O9xcmMqUugdlLGGacr+bnPb+jt
- mWBA==
-X-Gm-Message-State: AFuF++nsMjudryaVJegiFaoGBJdvXe/fsTuxHqfe+W1p0krYEmVaNIq7
- CHqhwMtraGZKoYo+NF+RxGO6jEloFWyhUYecTe1An1X4jXRdZEdrTJ/A
-X-Gm-Gg: AYBFou1jOKy3VyjkU0SE097znjH0BtOZgeY2zunL0Z+ic7M4n3VZxatuSPe0UWpezDM
- 7sYVNsbSnB56Nhc5ihsVGBXqxvfNU0BxWbPa+ii+LfnMF394XLme+yYCMWmPWyHryjlCtXlsUhg
- 5AAw7C2j9rDMU8WiBDB045QxeHAh7MnCvqZCepdoJysymHuyiCWwsfv/cR0DWB+RCcYdB0hE4OX
- UQ/Y4UcQ/vyZYuxeIsGrsmiCr6wmtiqiulCflAPFy3CB40g8qPc4mgF5jkqs1UrSSFfTzHTjLnj
- RvSuXT8nmr/89kgJmN7b3P99Xim6LXiIIvkiLl5iRdPRlb87wUsqIS8KXxNj46D/WPMWiKeSO8a
- VopJMHLCgv4fO1IIf+mmUdcNJ8mlDXfw+wrRfpl6FqSkuyAlEF2ZHEKmrUWsPoRda7V20cbixeF
- A6rhWC9+x7ViJAoiNqwQPxHCMFQoFild1wusrAYPOKwPU7/fBIKYR+Lsacg2h4EXZ9nnuLXzE1m
- HJayIGBqXDQbngNIBfhd5mBNok=
-X-Received: by 2002:a05:600c:37c4:b0:4a0:b6:460f with SMTP id
- 5b1f17b1804b1-4a001e8c579mr134367835e9.33.1790700033229; 
- Tue, 29 Sep 2026 09:40:33 -0700 (PDT)
+ bh=l0PYHA6RrE88tZ77C1oINvZS756ml3SDfHa/y09NmKo=;
+ b=X93Qswu2gIxwmyx9bHYMvw1n43HPeWNVVlDprqde0bObDwKBos/gr1sM15NXoMFwrI
+ Y5DdBarUSOLtSRCtnO9kPAPSa6siFNyX0Ox3qv44ecw6uDAbEdvwdW2ODgSXJTS1Xekl
+ nhebM6Vvk81onr+udwLv1o+bTGdl53aqpHcc+LYd2mINSUYXo9Ts2RzsKmpJctWGO34M
+ erfxJu0+d7EqM5mSwZ3Xo0jDTnMpHx3becvWcHJNohe/xz5bf9ox8dqdtbJFjITx/a/J
+ xGoFcs7MsDZ7qRRxFG14p9P9SLDIZ0TJyjwSqNyrZGaShCbpJ0DyHxphX1fX6nKm76q7
+ SZxw==
+X-Gm-Message-State: AFuF++k8Y13JDaEEuP5heXepP64cAF/qXvEekbCHPgWv9gyNbz8dzO7t
+ sDamtZqgfp5we8sv9SNAC5i6yc8Mmrzrg3cDHrBz/NHh3ZSoPzPdafml
+X-Gm-Gg: AYBFou09IkmD7W+6Kd+q+XUNBF5u3zcPNmY73Lv83EaG34ATfG1c+vx37LTZlJioiyx
+ 9cqP7kh59usyfAYSicPKn3VWPWYcIPb1dVN2V+oUQ47cIiBdHVgtBGow8egDfxplLH7OH0U+wI6
+ z0+JOYZFBJSiCq+8WseeDwqRXssT7JrjDF1oqsPh5DU23as9kBDuYZnWH81zQ1kBRSb+BKd0MsN
+ gmmGpT4tE9Uh5TfauNCqC/EpI1N5SisG+xrzEktY9eEHqeoCJ/4Z2oX9IBIIshuuDOqz5jwo1Rz
+ m3pq4mbRX9J1lfC660D+OAl8xJpfWNhuiM1x66h3ZrXhaQLmOcxGfix2ock/xDzMGvJzIuRPaGj
+ Be2Mc1Qd6DZFldgVXSh5vpD46VyM2GpoZI3IsuxcPU1sv+Xi43la2iB3vJR5aTovMaIBvSZXtKt
+ IIE5FMgtXqMdoe8qw52c1FToM1ecHu6KuGmNn0iCZeHvz+Xzo0SaTosAYofkXUYJt61FXULkpV/
+ LNCuo8WcmzRS9zudlBJhaIq7AA=
+X-Received: by 2002:a05:600d:8653:10b0:49f:e701:51c8 with SMTP id
+ 5b1f17b1804b1-49fe70151ebmr217698515e9.9.1790700040640; 
+ Tue, 29 Sep 2026 09:40:40 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a013d3c85fsm6577765e9.4.2026.09.29.09.40.32
+ 5b1f17b1804b1-4a014951f24sm30715e9.1.2026.09.29.09.40.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 09:40:32 -0700 (PDT)
+ Tue, 29 Sep 2026 09:40:40 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Tue, 29 Sep 2026 18:38:30 +0200
-Subject: [PATCH v8 02/12] chardev: add CHR_EVENT_RESIZE
+Date: Tue, 29 Sep 2026 18:38:39 +0200
+Subject: [PATCH v8 11/12] virtio-serial-bus: add terminal resize messages
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260929-console-resize-v8-2-2ff9183f8750@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260929-console-resize-v8-11-2ff9183f8750@gmail.com>
 References: <20260929-console-resize-v8-0-2ff9183f8750@gmail.com>
 In-Reply-To: <20260929-console-resize-v8-0-2ff9183f8750@gmail.com>
 To: qemu-devel@nongnu.org
@@ -89,15 +89,15 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Szymon Lukasz <noh4hss@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1790700030; l=8913;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1790700030; l=7998;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=JMEv0Ha1KdOHv17m7jIqBI35vnSmAKBqsx5HxeK1exM=;
- b=+59IfzgEZiltyi/f/Vi7/6UHDjmZJDO3+E+VnI+TAM++iqH1ZEumyDat7zA0mMoM6SuKOKeDC
- 8Nco9QG8ghNDosOPMyEDTKZEYyEpiukLHUX17vN0l0uiKHNShizvppZ
+ bh=W6Ngl+5uqHdlNcDJIkFBYbNYDzHwfMLxTQr45thgrTw=;
+ b=hsZK1cPCRG+4bTKUVQWb/BuhM8dpqeaENJhB0kNC76Wh3v/wPsf4szj+jFK+x+mmPQPFqH6Kw
+ gt2o/BZfYF7CpjxDfs99NSCKtifteecqNXtLhlxHDz16J090+TVrNce
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,257 +120,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Szymon Lukasz <noh4hss@gmail.com>
+Implement the part of the virtio spec that allows to notify the virtio
+driver about terminal resizes. Gate the new resize support behind the
+console-size property, which defaults to off. To implement the property,
+restore VirtIOSerial::host_features (previously removed by commit
+d0660e5b7fc7e97926232d13d2500a16df32b310).
 
-Add a new chardev event, CHR_EVENT_RESIZE, which a backend should
-trigger if it detects the size of the connected terminal changed.
+The virtio spec contains two methods to inform the guest about console
+size:
+
+For legacy drivers, we have only one port and we put the terminal size
+in the config space and inject the config changed interrupt.
+
+For multiport devices, we use the control virtqueue to send a
+packet containing the terminal size. Unfortunately, old versions
+of the Linux kernel used an incorrect order for the fields (rows
+then cols instead of cols then rows), until it was fixed by commit
+5326ab737a47278dbd16ed3ee7380b26c7056ddd. As a result, when running an
+old guest kernel, the number of rows and columns will be swapped.
+
+Based on a patch originally written by Szymon Lukasz <noh4hss@gmail.com>,
+but partially rewritten to fix various corner cases.
 
 Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-[Filip: add note that only the focused frontend gets the event]
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- backends/cryptodev-vhost-user.c | 1 +
- chardev/char.c                  | 1 +
- hw/block/vhost-user-blk.c       | 1 +
- hw/char/terminal3270.c          | 1 +
- hw/char/virtio-console.c        | 1 +
- hw/display/vhost-user-media.c   | 1 +
- hw/ipmi/ipmi_bmc_extern.c       | 1 +
- hw/scsi/vhost-user-scsi.c       | 1 +
- hw/usb/ccid-card-passthru.c     | 1 +
- hw/usb/dev-serial.c             | 1 +
- hw/usb/redirect.c               | 1 +
- hw/virtio/vhost-user-base.c     | 1 +
- hw/virtio/vhost-user-scmi.c     | 1 +
- include/chardev/char.h          | 6 ++++++
- monitor/hmp.c                   | 1 +
- monitor/qmp.c                   | 1 +
- net/passt.c                     | 1 +
- net/vhost-user.c                | 1 +
- 18 files changed, 23 insertions(+)
+ hw/char/trace-events              |  1 +
+ hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-serial.h |  7 ++++
+ 3 files changed, 87 insertions(+), 2 deletions(-)
 
-diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
-index 3334e280a2..b0e325e47e 100644
---- a/backends/cryptodev-vhost-user.c
-+++ b/backends/cryptodev-vhost-user.c
-@@ -173,6 +173,7 @@ static void cryptodev_vhost_user_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/chardev/char.c b/chardev/char.c
-index 9da0911e50..40d2180ce7 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -75,6 +75,7 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 3dade143c9..1352a0cf57 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -441,6 +441,7 @@ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/char/terminal3270.c b/hw/char/terminal3270.c
-index 989b6f6ee1..acd754bcfa 100644
---- a/hw/char/terminal3270.c
-+++ b/hw/char/terminal3270.c
-@@ -169,6 +169,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
-index 4737b9a56e..36ad2ddc3f 100644
---- a/hw/char/virtio-console.c
-+++ b/hw/char/virtio-console.c
-@@ -165,6 +165,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/display/vhost-user-media.c b/hw/display/vhost-user-media.c
-index 851af8ddc2..3d76aaba58 100644
---- a/hw/display/vhost-user-media.c
-+++ b/hw/display/vhost-user-media.c
-@@ -241,6 +241,7 @@ static void vu_media_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
-index fa08ed6c21..bd7c61b2d2 100644
---- a/hw/ipmi/ipmi_bmc_extern.c
-+++ b/hw/ipmi/ipmi_bmc_extern.c
-@@ -436,6 +436,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 5070178dc2..7687f2804f 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -225,6 +225,7 @@ static void vhost_user_scsi_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/usb/ccid-card-passthru.c b/hw/usb/ccid-card-passthru.c
-index 5ab7855272..3f4052ec82 100644
---- a/hw/usb/ccid-card-passthru.c
-+++ b/hw/usb/ccid-card-passthru.c
-@@ -323,6 +323,7 @@ static void ccid_card_vscard_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-     case CHR_EVENT_CLOSED:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
-index b238cb7937..98d2abbd56 100644
---- a/hw/usb/dev-serial.c
-+++ b/hw/usb/dev-serial.c
-@@ -576,6 +576,7 @@ static void usb_serial_event(void *opaque, QEMUChrEvent event)
-         break;
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
-index dfd9e8bb50..a666b1e8d7 100644
---- a/hw/usb/redirect.c
-+++ b/hw/usb/redirect.c
-@@ -1390,6 +1390,7 @@ static void usbredir_chardev_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 1a377016e7..3cb59fc173 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -277,6 +277,7 @@ static void vub_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
-index c4692bd6aa..29d37716b3 100644
---- a/hw/virtio/vhost-user-scmi.c
-+++ b/hw/virtio/vhost-user-scmi.c
-@@ -215,6 +215,7 @@ static void vu_scmi_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index 6394ec2ffe..ee9f24038b 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -22,6 +22,12 @@ typedef enum {
-     CHR_EVENT_OPENED, /* new connection established */
-     CHR_EVENT_MUX_IN, /* mux-focus was set to this terminal */
-     CHR_EVENT_MUX_OUT, /* mux-focus will move on */
-+    CHR_EVENT_RESIZE, /*
-+                       * the size of the terminal connected to
-+                       * the chardev has changed.  NOTE: this event is only
-+                       * sent to the focused frontend, so you should also
-+                       * update the size on receiving CHR_EVENT_MUX_IN.
-+                       */
-     CHR_EVENT_CLOSED /* connection closed.  NOTE: currently this event
-                       * is only bound to the read port of the chardev.
-                       * Normally the read port and write port of a
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 488ec23937..7b80d84800 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1587,6 +1587,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-         break;
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index a3fcc77287..e387c8853f 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -11,6 +11,7 @@ serial_update_parameters(uint64_t baudrate, char parity, int data_bits, int stop
  
-     case CHR_EVENT_BREAK:
-+    case CHR_EVENT_RESIZE:
-         /* Ignored */
-         break;
-     }
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index aec0315775..eb44012643 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -663,6 +663,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/net/passt.c b/net/passt.c
-index 45440c399b..e65198960e 100644
---- a/net/passt.c
-+++ b/net/passt.c
-@@ -428,6 +428,7 @@ static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 2d0fc49b4d..b849de92da 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -363,6 +363,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_BREAK:
-     case CHR_EVENT_MUX_IN:
-     case CHR_EVENT_MUX_OUT:
-+    case CHR_EVENT_RESIZE:
-         /* Ignore */
-         break;
-     }
+ # virtio-serial-bus.c
+ virtio_serial_send_control_event(unsigned int port, uint16_t event, uint16_t value) "port %u, event %u, value %u"
++virtio_serial_send_console_resize(unsigned int port, uint16_t cols, uint16_t rows) "port %u, cols %u, rows %u"
+ virtio_serial_throttle_port(unsigned int port, bool throttle) "port %u, throttle %d"
+ virtio_serial_handle_control_message(uint16_t event, uint16_t value) "event %u, value %u"
+ virtio_serial_handle_control_message_port(unsigned int port) "port %u"
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index c36e18a4cf..882765ac88 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -261,6 +261,68 @@ static size_t send_control_event(VirtIOSerial *vser, uint32_t port_id,
+     return send_control_msg(vser, &cpkt, sizeof(cpkt));
+ }
+ 
++/*
++ * This struct should be added to the Linux kernel uapi headers
++ * and later imported to standard-headers/linux/virtio_console.h
++ */
++struct virtio_console_resize {
++    __virtio16 cols;
++    __virtio16 rows;
++};
++
++static void send_console_resize(VirtIOSerialPort *port)
++{
++    VirtIOSerial *vser = port->vser;
++    VirtIODevice *vdev = VIRTIO_DEVICE(vser);
++
++    if (!virtio_has_feature(vser->host_features, VIRTIO_CONSOLE_F_SIZE)) {
++        return;
++    }
++
++    trace_virtio_serial_send_console_resize(port->id, port->cols, port->rows);
++
++    if (use_multiport(vser)) {
++        struct {
++            struct virtio_console_control control;
++            struct virtio_console_resize resize;
++        } buffer = {};
++
++        virtio_stl_p(vdev, &buffer.control.id, port->id);
++        virtio_stw_p(vdev, &buffer.control.event, VIRTIO_CONSOLE_RESIZE);
++        virtio_stw_p(vdev, &buffer.resize.cols, port->cols);
++        virtio_stw_p(vdev, &buffer.resize.rows, port->rows);
++
++        send_control_msg(vser, &buffer, sizeof(buffer));
++    }
++}
++
++void virtio_serial_resize_console(VirtIOSerialPort *port,
++                                  uint16_t cols, uint16_t rows)
++{
++    VirtIOSerial *vser = port->vser;
++    VirtIODevice *vdev = VIRTIO_DEVICE(vser);
++
++    if (port->cols == cols && port->rows == rows) {
++        return;
++    }
++
++    port->cols = cols;
++    port->rows = rows;
++
++    if (port->id == 0 && !use_multiport(vser) &&
++        virtio_vdev_has_feature(vdev, VIRTIO_CONSOLE_F_SIZE)) {
++        virtio_notify_config(vdev);
++    }
++
++    /*
++     * We will send these messages even before we told the guest that
++     * it is a console port (by sending VIRTIO_CONSOLE_CONSOLE_PORT
++     * message), but that should be fine as the guest will likely
++     * ignore them.
++     */
++    send_console_resize(port);
++}
++
+ /* Functions for use inside qemu to open and read from/write to ports */
+ int virtio_serial_open(VirtIOSerialPort *port)
+ {
+@@ -403,6 +465,7 @@ static void handle_control_message(VirtIOSerial *vser,
+          */
+         if (vsc->is_console) {
+             send_control_event(vser, port->id, VIRTIO_CONSOLE_CONSOLE_PORT, 1);
++            send_console_resize(port);
+         }
+ 
+         if (port->name) {
+@@ -538,6 +601,7 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
+ 
+     vser = VIRTIO_SERIAL(vdev);
+ 
++    features |= vser->host_features;
+     features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
+     if (vser->bus.max_nr_ports > 1) {
+         virtio_add_feature(&features, VIRTIO_CONSOLE_F_MULTIPORT);
+@@ -549,11 +613,18 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
+ static void get_config(VirtIODevice *vdev, uint8_t *config_data)
+ {
+     VirtIOSerial *vser = VIRTIO_SERIAL(vdev);
++    VirtIOSerialPort *port;
+     struct virtio_console_config *config =
+         (struct virtio_console_config *)config_data;
+ 
+-    config->cols = 0;
+-    config->rows = 0;
++    port = find_port_by_id(vser, 0);
++    if (port) {
++        config->cols = virtio_tswap16(vdev, port->cols);
++        config->rows = virtio_tswap16(vdev, port->rows);
++    } else {
++        config->cols = 0;
++        config->rows = 0;
++    }
+     config->max_nr_ports = virtio_tswap32(vdev,
+                                           vser->serial.max_virtserial_ports);
+ }
+@@ -716,6 +787,10 @@ static void virtio_serial_post_load_timer_cb(void *opaque)
+                                port->host_connected);
+         }
+         vsc = VIRTIO_SERIAL_PORT_GET_CLASS(port);
++        /*
++         * TODO: let the guest know about new console size if it has changed
++         * (this will require sending old size in the migration stream)
++         */
+         if (vsc->set_guest_connected) {
+             vsc->set_guest_connected(port, port->guest_connected);
+         }
+@@ -1142,6 +1217,8 @@ static const VMStateDescription vmstate_virtio_console = {
+ static const Property virtio_serial_properties[] = {
+     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
+                                                   31),
++    DEFINE_PROP_BIT64("console-size", VirtIOSerial, host_features,
++                      VIRTIO_CONSOLE_F_SIZE, false),
+ };
+ 
+ static void virtio_serial_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virtio/virtio-serial.h
+index da0c91e1a4..bda6d5312a 100644
+--- a/include/hw/virtio/virtio-serial.h
++++ b/include/hw/virtio/virtio-serial.h
+@@ -145,6 +145,9 @@ struct VirtIOSerialPort {
+     bool host_connected;
+     /* Do apps not want to receive data? */
+     bool throttled;
++
++    /* Terminal size reported to the guest.  Only used for consoles. */
++    uint16_t cols, rows;
+ };
+ 
+ /* The virtio-serial bus on top of which the ports will ride as devices */
+@@ -186,6 +189,8 @@ struct VirtIOSerial {
+     struct VirtIOSerialPostLoad *post_load;
+ 
+     virtio_serial_conf serial;
++
++    uint64_t host_features;
+ };
+ 
+ /* Interface to the virtio-serial bus */
+@@ -220,5 +225,7 @@ size_t virtio_serial_guest_ready(VirtIOSerialPort *port);
+  */
+ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle);
+ 
++void virtio_serial_resize_console(VirtIOSerialPort *port,
++                                  uint16_t cols, uint16_t rows);
+ 
+ #endif
 
 -- 
 2.55.0
