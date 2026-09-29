@@ -4,128 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4069CCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C193CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 12:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBWde-0004JL-Sl; Tue, 29 Sep 2026 08:08:50 -0400
+	id 1xBWdp-0004K1-Hl; Tue, 29 Sep 2026 08:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBWda-0004JC-SK
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xBWdj-0004Jm-1X
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:57 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBWdZ-0002E4-9j
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:46 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xBWdg-0002EG-Ti
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 08:08:54 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TAjKJ93870510
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:43 GMT
+ 68TAj8uE577106
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=+kDypYw8uNdVo1iNR3iY0p
- KnF8Cbi+Mp/niQ9DNtKUY=; b=XxGRHw7HZGH2vu4E71PkqH6O7td8DQKie0YpeO
- sGL4eYf2Md3TBcLK986QKW3n7kq0T80b+01jaYyyxsf5eCPmt3BlP6h3v/r3SI1F
- CgZs4suZIGzqT/jeQYBl8sPFt8M0Z3SYOZG10zXsALoWZ4Ha5ap83RKX9YpxqrD7
- i9nrh3uPmIGyaiMzTpaLONfi+JVVSCfrGommANkV5yyR55SkfZ6lF6oLsnyr60tr
- 97fyD723yHmOJ7iWHrNiq2tgMWxJdPA8jtp30Uit5NM97eyxm44ON3dlQTj8ujOr
- 0IxaNFsJndiJitOMxmw6ebmofxgudYGSIUJosPqLVISZ0x7A==
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
- [209.85.221.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvwnbwct-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=; b=WaHHSryZOCy6ogwA
+ ytg8upaqK7WyA1Yf7i3NElmTRE4i6xriVNbcc619r5KP9GFsDdq7JjzEORsck2Sg
+ ES9/eM00KiflR4bJmKFDpaR6NOYrtTzh8TX8Wut/i+GiYpcrKeIBoCzRPGzPJCn1
+ KNIcfmR9YBnTsQhEyc9+uvAeqKeLpHNKRfjRXZcVQRMJh1D9hWWFNPYzV2uvz50J
+ r+nQ61XpDRqG8KbFPpEmVVFGvCJrdnOux/0fC1ipaRNHkSukA+IKAgUESiy2GQoT
+ lKoBSwVNsN1d2BXYgpKNImWbpFGmZu1IqG9Myg+XAEmFGhqrdZPxYdfkPFq/AFxP
+ Vst5MA==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h08e0h9tc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:42 +0000 (GMT)
-Received: by mail-vk1-f199.google.com with SMTP id
- 71dfb90a1353d-5d1d0c60c5fso277227e0c.2
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:08:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 12:08:51 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-988c9d1be19so78304241.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790683722; x=1791288522; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=+kDypYw8uNdVo1iNR3iY0pKnF8Cbi+Mp/niQ9DNtKUY=;
- b=Szy6quXqlpqPY5lHV86mLTSMDSvldX+OV/xu1mbKHrD/ir3Z0lSyntP+UF5nfW8Tts
- RtpNWUp85R7D9ohqFUkuCopO8ZzfDDJ5KGKl6mDYR+BVvhVNC2e9Q+JoFophRL4HZh/V
- nI9mlhwGxdzb/FpnWCfnk+j8MgYGtxDAaB+3DS7tz/RDYw6AG8+Jl5BHES9AgjI01IMi
- QvlQJ5fyLGhlHmXJzww316kQiul9yjEwL0PstH5o2ZaaLCzIqaBCPOCbVZHp1a7kszjT
- A8ZPQyMaRMkJ3/HTd7ggLBajUw0v2wbZsHZ4wW/7VcmujgHK7yeWgjTQL7uDP4dnai5s
- OmWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790683722; x=1791288522;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1790683730; x=1791288530; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=+kDypYw8uNdVo1iNR3iY0pKnF8Cbi+Mp/niQ9DNtKUY=;
- b=00eh7voEIEi3aTwPA5n5cRZzNzsC8XW7rJJMT29+Be2jzATsX1qVVo1giVLQndX9fu
- FQXnNtUr7jvTSl/ZZrYGI3w6azoakkfyuiJp53KFjGpHkNWXODhfj06nYV1Cjk3MlSf3
- 8ESxGcdj5avhS0EhcD/zqLx9Og9n2j87PZiKRYL12R4ztLLOpgn/KrScoqG5yqubqT95
- RmOvuOPQPLZSpqWSvrRPJWLIMRtTXRW8l4APHFLiV94m6CXqE1xtvmyaq/MJK9ojlHks
- 6iZ2XCqeE2Dc/6wp5f2BSxcahAb2a0Dr3QgtS8c1Whj8XhVJlrQv+C3SUCTJWxnUcA97
- gvmQ==
-X-Gm-Message-State: AFq9FYL5QrTtk2dE1omU6caCkVnMkoQTtxmU6BMfaaYWF0lIGqvOxVAa
- +TZJbrsrZKR7Pr+/1ob3H4IExcJGL3kTj9I0hHxoFIQGAwQXh+ArIlzI0cZTdJSXc+V4tT0gEj5
- vVMkBkMppA1l0c3r/EgV+5kULyJQ8lFI87RwvVqWOxYXZE2T4ekzbjbGfeYpmoZG0IQ==
-X-Gm-Gg: AYBFou2JP1bdr+Xu2zmr3wYxtDv1SGS2rG45t31oREk2RKVQQriC+KJJ8MmAwwZnWC3
- dj8Tm3ybIyXuT6i3TUfGt7bv0SrxU3g8TkHfYUk++wqOn4iRD/76TjyKyIVTsBGC0oDijVFkACL
- MQEKUmvgv2b2o8I4TdGooDiTly7/dK/Qo2gwqClOmUn3/JWreMxfWrZ7hn1C6Ju8wb3zRDB7ZPR
- NM9Vu1JHoj4/LDeCRQjot1utogE9PXF5qCorGmOyLB2a43g6Tg2/S7KXp95sHkoiBHE1jLLF6xW
- Ds9lz0E62fe9UohKiz1pzcRB1wm+G+xtNT9miFLSiBez/p4EbiNAH72qkxVaebcQjwN0EDRxUb7
- 05FsJ1+XBy+i/iJaR5cT9GPbvQ47+6zYSubpZEI7W
-X-Received: by 2002:a05:6102:5112:b0:7a1:f7d2:e84b with SMTP id
- ada2fe7eead31-7af1eff69cbmr4938500137.27.1790683721734; 
- Tue, 29 Sep 2026 05:08:41 -0700 (PDT)
-X-Received: by 2002:a05:6102:5112:b0:7a1:f7d2:e84b with SMTP id
- ada2fe7eead31-7af1eff69cbmr4938496137.27.1790683721279; 
- Tue, 29 Sep 2026 05:08:41 -0700 (PDT)
+ bh=8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=;
+ b=JJqxgU75F6sxoRPKPMpRxmr/AxJM1gZXsL9NOYNqZMe/9z0CN5KnFqR0zFSslKnqAU
+ 1t9zwPtW9T1cVaHTJ0f8xDbMJAbI8wIFpaVeZ7qRWmkAc+swJh/UcA32kOYs4G1R8r+d
+ PQDgJ2jV4kSmgzwN8HS4Z7ub83kjkMX85+rA0+I1SicS24/YD2Z75kSXfQrvZ1C+izOS
+ 5q8j5D1zEh/MfZMPG2oLS229rTEZbCCQQWLWA8WwrNICL7OHd2QiihR6Vs5paHDBx+e3
+ f4Vu8WrlJu4lC4nq5JM3uhq/JL88vyIW4TPgbNp9J/v0GOXAZYTwWj3OhDD6525RolNE
+ 9myw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790683730; x=1791288530;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8QBLMbbyNu3Sv9NF4oWmxFtz810iWI9KV4fPOYUZEMI=;
+ b=jjSWsihb8iRQU6wVkje8aG5G61YThA0NVZdCXkG62Ubc/YB+zC37CZdEfSo/haoUE8
+ rieVKPCsxR4UCypNDw/lVPXMVvXTDADM6hGu3XCUJSO87kaF0e2dMmYQ6kykY4IsM9mG
+ fKV2sMSrcY3Wt32lNZhebyVtN5RnSlbB3W1cDZHTPBHhR5XO77Bw3gMdWWkC6RO0cOj7
+ sDWIVreq8C0PilprVBc3CvP144sOdixquUCgq/iC3ZzXsZ4Qvj7s3Gft+EUhv8761rX7
+ 2/zSrudQLdJ+u8bgzhUfPInyWS7k4cMdjLVO9dGlzVr/Kq/ymaMD0z6hsC4vVgnXSujX
+ yLVg==
+X-Gm-Message-State: AFq9FYIOXfJ5a8Lsu3k/Yi24FL9DRcH6J0GcQVBYXJ4ASOQe3omat01N
+ GUXZ9Moz7mnKi1HULdM9RMMoJgXY+0EA/ujaCiS7ej4KzPvbB2RFE6cg8DpjdN5ReFyiF3jMZ6c
+ IYCBDodyWMDULxEfqoD6EmlPzgfnsWSkHwGC/r/OVkJL1bgveoY28I3I62VDGjuqtdQ==
+X-Gm-Gg: AYBFou0Yl9/wn6yfhgiMQM6uVXTjgWRYs7eh5PelqhzPSZXnZzfPDCXHR6elcRf5LVr
+ Bd5gYN8RxKaJHbQ3s1mKu6fAPw5zWd5Vm82mmU/YmfA9+gfH2wk/hho1BdyiHZydTCrwNCFX9sI
+ Uo+CZlEgSTRyGr2Jiy6lCYN0TqCRDdrRRw6Xb6YSVNKhezXZ1zSDPwAnf+jiy/cXir+bIPc8glP
+ QSBvhVaAsPSPeiIxxE2zPN9ICpFkSeDK2B6nzscETfGe83nlwbcwqYtAdKX+VLj09KcWrI1nkvV
+ ZARZCBNiy+yKqId/NUSye29jybnLEDVL6Z5//4UjPEJqppUZQvEt6vBRMMh4X8d4O4KrISAgnmn
+ OL/KkZr+ShSUMG8Dnl1gy97KyK6rARMJNlAo0kYCZ
+X-Received: by 2002:a05:6102:a186:20b0:7af:dc0d:7578 with SMTP id
+ ada2fe7eead31-7b94edb181amr402279137.8.1790683730506; 
+ Tue, 29 Sep 2026 05:08:50 -0700 (PDT)
+X-Received: by 2002:a05:6102:a186:20b0:7af:dc0d:7578 with SMTP id
+ ada2fe7eead31-7b94edb181amr402267137.8.1790683729941; 
+ Tue, 29 Sep 2026 05:08:49 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00d0ea7c0sm77761795e9.11.2026.09.29.05.08.39
+ 5b1f17b1804b1-4a00d0f66cfsm85295515e9.14.2026.09.29.05.08.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Sep 2026 05:08:39 -0700 (PDT)
+ Tue, 29 Sep 2026 05:08:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Yonggang Luo <luoyonggang@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 0/2] target/rx: Define exception vector constants
-Date: Tue, 29 Sep 2026 14:08:36 +0200
-Message-ID: <20260929120838.13583-1-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 1/2] target/rx: Unify BRK and INT trap handling
+Date: Tue, 29 Sep 2026 14:08:37 +0200
+Message-ID: <20260929120838.13583-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260929120838.13583-1-philmd@oss.qualcomm.com>
+References: <20260929120838.13583-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Gox5mIQcqaZDlpyVzl0D6F2Z_7oDeee1
-X-Authority-Analysis: v=2.4 cv=W42txhWk c=1 sm=1 tr=0 ts=6abbaa4a cx=c_pps
- a=+D9SDfe9YZWTjADjLiQY5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX3pKMRl/JR77/
+ h8bDj1sXU11vu9efjOdRJ4wUgnJPlnYhe0pwojQvQTE8QYQAjeQbyuMg0np1mxedUEJ50ff8LZw
+ wM7DkeAHuf6zaZlQp2znybA+tcQvbaA=
+X-Proofpoint-ORIG-GUID: Pn_QlGlJ1rIAvRPjiW6Kck5H3WRfXcA5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfXx4zp0aREuglM
+ XfQVsKtXVnNjWojl7Nf6YoMh0hXnBJixWOmK2ateaDSRfSpuqqvey7FYFhvoUs4HqcCn6D2v2/6
+ CkH6SQdC2ubkFNMBro/0BkBkb5w0vKmAxV8n0/QwxJ/BRZQiD/UId2gOt9S2Kw8G3tXjGJT4Med
+ xbtI8W/9uvczQvyTvwBszsOO/xZsSWLogEHNzVl4k4gZSnJxS84HCCvNfS9WsSrWzp1urxRuLEz
+ 8yvKruIcw+lY1LA6IJNLW+HxxVjLAG2LHIiULQXN4znAVHdtK1obwH+16pJH94i9wV7y4hxt8BQ
+ j0PPY4yvCLkh1/ZMM+Lc96V7D6cELU6h8M+/g3gLhITSzyovyp1s11WY2DF5QrG1SnvNl/ge3lt
+ offtU8QeOY7qbx/EMQGFwO8z1y6+Igy0SpgfJMMJCSAEBuWLRixBxYyjcMDdQzY0CZQTq42eLAZ
+ CoNGURevyu+DmvArR3Q==
+X-Authority-Analysis: v=2.4 cv=WJ7qzXsR c=1 sm=1 tr=0 ts=6abbaa53 cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=DAsVBvhwAGrwFLCKlOcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=vmgOmaN-Xu0dpDh8OwbV:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX6Gn7EN3ogHgU
- HnCYN/54LyO43lZakDNzpZC/LjQY90cxcuXdDbedXLi2ORWqq3rr57GbMBZfeYCkp8bRlHVGmeN
- 0SlN2lSzm0XgO+8zuV42TXf9y0FYQRho5SWzrVc3NZoBSn54DHOJuYTRFU5tVNrmC3fnc6mI0az
- EvqOxyANj9qysW5aaa/Sp2bMtfTp9kjz63WRpPgMI++uBj3YSu+wR6y97bKOPhyHz1AQqLk+499
- HThFrcJlj1PhwmCRPup5QuyopmXTAyU8GVMLqOFJRb2YtUDmr834K5f8c6ceFju9rynIqCiv5Cq
- 9ZLiXeM3O7wT0SAE4zyjfKSmRu0wNeh2q2m3heflDOKGtl4Sl53NoA1pDanWcYEteLnbmOAhCVf
- xgj1EbW5cXNuSPcAL6EZJ8Llm2E+OF9060MNwrLW8sw5dHpsAPUkKQYi/1PYB8Wxwp4RqL7ZzWG
- lYBmf3F5aXjKoI/vWjw==
-X-Proofpoint-GUID: Gox5mIQcqaZDlpyVzl0D6F2Z_7oDeee1
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0OCBTYWx0ZWRfX302YAyGBx03V
- PmZQGwMQQ3kYwHRqupj3tWDbLZK5wkGrM5EEEfdgn/J64aYvz+iJmI0xwPEZNi0ruaMhHV2dSh9
- U2mo6pgxfZHtcFseL+GSSzHmKXbcOq0=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=jDMzgGwzCE0q-kHIl9cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-GUID: Pn_QlGlJ1rIAvRPjiW6Kck5H3WRfXcA5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- adultscore=0 impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ adultscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290048
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -148,23 +153,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1: Repost as a series (not buried in thread)
+BRK is equivalent to INT #0, so route both instructions
+through the same trap helper.
 
-Unify BRK/INT0, replace magic values by exception vector constants.
-
-Philippe Mathieu-Daudé (1):
-  target/rx: Unify BRK and INT trap handling
-
-Yonggang Luo (1):
-  target/rx: Define exception vector constants
-
- target/rx/cpu.h       | 13 +++++++++++++
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
  target/rx/helper.h    |  3 +--
- target/rx/helper.c    | 21 +++++++++++----------
- target/rx/op_helper.c | 17 ++++++-----------
- target/rx/translate.c | 23 +++++++++++------------
- 5 files changed, 42 insertions(+), 35 deletions(-)
+ target/rx/op_helper.c |  7 +------
+ target/rx/translate.c | 21 ++++++++++-----------
+ 3 files changed, 12 insertions(+), 19 deletions(-)
 
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index 8cc38b0cb71..f3897ce7619 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -2,8 +2,7 @@ DEF_HELPER_1(raise_illegal_instruction, noreturn, env)
+ DEF_HELPER_1(raise_access_fault, noreturn, env)
+ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
+ DEF_HELPER_1(wait, noreturn, env)
+-DEF_HELPER_2(rxint, noreturn, env, i32)
+-DEF_HELPER_1(rxbrk, noreturn, env)
++DEF_HELPER_2(trap, noreturn, env, i32)
+ DEF_HELPER_3(fadd, f32, env, f32, f32)
+ DEF_HELPER_3(fsub, f32, env, f32, f32)
+ DEF_HELPER_3(fmul, f32, env, f32, f32)
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index 36df7d377e5..6782912247e 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -455,12 +455,7 @@ G_NORETURN void helper_wait(CPURXState *env)
+     raise_exception(env, EXCP_HLT, 0);
+ }
+ 
+-G_NORETURN void helper_rxint(CPURXState *env, uint32_t vec)
++G_NORETURN void helper_trap(CPURXState *env, uint32_t vec)
+ {
+     raise_exception(env, 0x100 + vec, 0);
+ }
+-
+-G_NORETURN void helper_rxbrk(CPURXState *env)
+-{
+-    raise_exception(env, 0x100, 0);
+-}
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 132d495710c..d0910fbf8e7 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2170,26 +2170,25 @@ static bool trans_RTE(DisasContext *ctx, arg_RTE *a)
+     return true;
+ }
+ 
++static bool do_trap(DisasContext *ctx, uint8_t vec)
++{
++    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
++    gen_helper_trap(tcg_env, tcg_constant_i32(vec));
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return true;
++}
++
+ /* brk */
+ static bool trans_BRK(DisasContext *ctx, arg_BRK *a)
+ {
+-    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
+-    gen_helper_rxbrk(tcg_env);
+-    ctx->base.is_jmp = DISAS_NORETURN;
+-    return true;
++    return do_trap(ctx, 0);
+ }
+ 
+ /* int #imm */
+ static bool trans_INT(DisasContext *ctx, arg_INT *a)
+ {
+-    TCGv_i32 vec;
+-
+     tcg_debug_assert(a->imm < 0x100);
+-    vec = tcg_constant_i32(a->imm);
+-    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
+-    gen_helper_rxint(tcg_env, vec);
+-    ctx->base.is_jmp = DISAS_NORETURN;
+-    return true;
++    return do_trap(ctx, a->imm);
+ }
+ 
+ /* wait */
 -- 
 2.53.0
 
