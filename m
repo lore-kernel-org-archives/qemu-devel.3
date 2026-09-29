@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3423CC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66965C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBa06-0003Ux-2p; Tue, 29 Sep 2026 11:44:14 -0400
+	id 1xBa0k-0003zd-Rp; Tue, 29 Sep 2026 11:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBa04-0003Sx-2S
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:12 -0400
-Received: from mail-pz2-x0d.google.com ([2607:f8b0:4864:3b::d])
+ id 1xBa0h-0003yb-DP
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:51 -0400
+Received: from mail-pz2-x29.google.com ([2607:f8b0:4864:3b::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1xBa02-0000gT-Fb
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:11 -0400
-Received: by mail-pz2-x0d.google.com with SMTP id
- d2e1a72fcca58-86e6d007703so2033294b3a.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:44:10 -0700 (PDT)
+ id 1xBa0f-0000hj-Sp
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:44:51 -0400
+Received: by mail-pz2-x29.google.com with SMTP id
+ d2e1a72fcca58-8864c6bd0d5so235970b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:44:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1790696649; x=1791301449; darn=nongnu.org;
+ d=sifive.com; s=google; t=1790696688; x=1791301488; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=N4kEFt36TW5JGe1FwbWriX3cQQwwxlGel/06QpjqTSQ=;
- b=cl2WN9g+T1MQgjIE51MPCIxdVdYXWfJycPnW0BI/LXgygqa+iWiup9GZxY3fbx+9Hj
- XPSa8pEF1x2oC1p/lbNQ47wZsDAOvhaLFTNouQceSA+uUxMy8av5vVJJBpLhcLnW4qy1
- nF3NfSAjAZ0ASzBDrKxylrmhEznnrgMY8Sivn0lVvZ8OtiYmLTAslQR05OVVQOq0ag08
- 3yJRnqtkTd0ZrvhTkgkspA+JnZkQYJlQanYUz/inqNIT4ZOdSA941QUsX2xbH2LjIPhI
- Pqp9Pth7kZU2Xp7nLm6NtZ5PS/si0KVbxx9lvgz/3gvmmpioNWmBXvK9m2FZ2Q6/jV+3
- dIzw==
+ bh=FtnvpBA4+dRQFWAJXjg2RG+jSqgBLd4rI/12kJ5llqM=;
+ b=NYLRYZsBcfwS2i/6fUupzDqDQ1AgmwSc+taJIJ3Ph+2PgXqN6P9IYtjP6fX55up3PB
+ DW8uFTKKFwQXPV15nmMeFYRKFqRCgZbAxaIaK2k4TaA/7q60xZ7++Rqmi0d9iju17RlW
+ x3BOG3O8qov/gq7Pv3+99Obpn1r5iFxJcuuXg2Bb81fdKMxBhQ0tAhgl/Rq3HxlhxI0u
+ L9Y8C39Ad0a4iSE9/QuKmpzhNcSZnIevL+x2T1sBXFu72EHDmByfF2S0zVfMOm8hKtvW
+ HIrTFF2YzL+Fyg3pDNCidus889cBrSxL2SRf9YFvfS62BSCXGhPnSW+Aa9jPScwI3hOE
+ gw9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790696649; x=1791301449;
+ d=1e100.net; s=20260707; t=1790696688; x=1791301488;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=N4kEFt36TW5JGe1FwbWriX3cQQwwxlGel/06QpjqTSQ=;
- b=0qsMEw0b/l40Fm/WLrX8aHRuzIkM6ACgZafJ5VRPgU03fCpLLHXYb8O5PDbYO9hW/0
- r/WfVkUy0zLDw9yOTkwbGyEvTl2x0iAxWnRIBzkVcFFx4rlwAbHGN0af4vwoQ1vxYJuJ
- lRb8h4ez5lPIL9E1Yvx3k+gjgGyEq5viXcS4hWw6J+4WD7yC5rf2FP77YNHX6vJ/63XW
- EKxa7HUGw/htXhZ8aIk/oKpOuZBz4Ku3TFxk3OHRhGoJk0hT006e/lWXewQyv1NRHzEj
- ThsGhr3Th44t624I3C1L4Ocufmn9JX4dceaI9n/7rJJD4EHrD9MDZ1SekBju+u2rWr2+
- bw1w==
-X-Gm-Message-State: AFuF++nBKan4KV81wt7p2HISIC09/l7FD7dN9J9yL3qZ4kvmbw/d89Il
- RyD4VJEgqRol+5zECyEMbwq1PWzLzUthia28AXomJtHIBw4yEne+URMBPyimGdV7W0s=
-X-Gm-Gg: AYBFou2P6mfdnFCQQiK8HFK9IA2wUKBvY2Gj6mQTK/jLDlkusWLRW7eRB2iRtlssptv
- 51Hrckvn/oSFZFJiBvU3DcOva1kW/ZuooK8ETb/bS+Fqjk9Y4RpcbrN85agqa9UncuUSGzuGfKl
- YrN/6QSDTcBIjaVg/sQybx4CKijO8rQkpd1C6hQrhj7uvFm9hn4FsBSYlU1oHB3nmjxQwP2Swj5
- gB6mzQwRdoxRpFICdRcMQO53mAzawlOb/vP0JC05J6BBzvSJmW+gzD/LEZdLA+Rn8K4T+fDAjy1
- xv7+s87Yth5rpBds9YCw4tccVd2Zfz6tLXpVT7s26l9o/NYvfgi59sm4UPCq/pSku53e9XbPsyI
- e+Rcku++NJD4marKkEn7pAOndrNIR7LRNNjWb2MTBgdnFYly7NfyB3/5n4WW5uJo58afb+URTXF
- kJRfa83mZa+zcq6nwddLOy7IcLPMCYeoGQqBMmLqt39v8HT2r+SEmNZp2axRE3VpR+LjEPc8UzS
- mf49nIyM8Fh8p45ksuWgtU=
-X-Received: by 2002:a05:6a00:4c97:b0:874:706d:8574 with SMTP id
- d2e1a72fcca58-87e9f0543cfmr12096283b3a.28.1790696648922; 
- Tue, 29 Sep 2026 08:44:08 -0700 (PDT)
+ bh=FtnvpBA4+dRQFWAJXjg2RG+jSqgBLd4rI/12kJ5llqM=;
+ b=lF8PY7TsGjnubplwPojPP+eRtOfbSDMVrOjrVWmJ9WXZlpIZ61YlrI1FMVmRYube0W
+ 5igxodgbE2grNdhCmyzYVRA0lgnj25XG8Ow2IqaGDGvwO8u6GzvKf8N4TbJ5Vs7KIR3F
+ QD1RNvBM00MoLjrf6Dn47DZLhpeQYSD3HbQP233e3Z8AfoXcumeja9rZNLkQbU3QAL7B
+ IWY+zVdGfTS39L6k5zr3/0oX8qu+3PkHaMqX9sWrjFpYr0WgYD83UINdZmKYkQFwCog+
+ J/710EtQOvBOXKuvff1UC55YPFwOAOeu5sZAHP/xaxaBGOnDg4UrCNLGaM1BOZVyZezy
+ ujoQ==
+X-Gm-Message-State: AFuF++lTKUAcgP567Axx9O2StOJFwERv4JAuGj6N3cfucSuB8ESphPxp
+ x5ImrLgcNdKzu1nzSdlvcaSbCFb64vaAVleZFXF6WppuCc22aUCXx/z3x8hv6GdDS60=
+X-Gm-Gg: AYBFou2MYQtNs1tEYGRxYw5HBDUmon2DZRm6iTiiRUosby84X35OGs45Y71pEamXSPR
+ /qUNdaInutjHbgq72jpgQA177Dt9oLJKrVWzNDUbds4mOZdoD3j9guv64WwH1/AA9APLMBAtV4C
+ rcfitf9QXzdvq4cUPhSUG700wFsN3oOvMHod9c6L2lQJdE+q7KuEzhaWwkCxHIZA0nf7tdGUhJY
+ v6th0YbahUZ5ic5phYVRdaaa5KFWTep2x1ByHLQwnxxAAmc9tdQ+FmjFvGRd02MCT4Xr67f+i1Z
+ QDkk0AoFk/S2piVdaYh56Rr1JKRrKavGUfSX0Scar70kSy70SQgHVw1P7uHGfZlbec2VyIu2M1k
+ /DwZxyUEP0XrDrENrL0cw5eI+kM48K5LLJHmFkOC7inE4eXyt21p7XVQP9CdT5bfivZXp5TUEbK
+ q0j6cH/G5qo/LqjmytrDPFrqUSOaqlEfzpKlir/+4hA9MLSi/s4/8fh8F/tSS+rKzt/+10dk0sc
+ 7Gx5+x4496wkRMfSOd+w/I=
+X-Received: by 2002:a05:6a00:91c3:b0:886:29a4:a00 with SMTP id
+ d2e1a72fcca58-88629a43b5amr982314b3a.47.1790696688265; 
+ Tue, 29 Sep 2026 08:44:48 -0700 (PDT)
 Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8868c0ef466sm154844b3a.32.2026.09.29.08.44.07
+ d2e1a72fcca58-8868c1f335dsm152207b3a.34.2026.09.29.08.44.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 08:44:08 -0700 (PDT)
-Date: Tue, 29 Sep 2026 23:44:06 +0800
+ Tue, 29 Sep 2026 08:44:47 -0700 (PDT)
+Date: Tue, 29 Sep 2026 23:44:44 +0800
 From: Max Chou <max.chou@sifive.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, 
  daniel.barboza@oss.qualcomm.com, Alistair.Francis@wdc.com,
  philmd@oss.qualcomm.com
-Subject: Re: [PATCH v3 03/11] tcg/riscv64: Rename uj-type to j-type format
-Message-ID: <arvcsMKCU9XQLrNC@sifive.com>
+Subject: Re: [PATCH v3 04/11] tcg/riscv64: Use signed type for encoding
+ immediates
+Message-ID: <arvc0-0j0-ObxhCQ@sifive.com>
 References: <20260914000814.785155-1-richard.henderson@linaro.org>
- <20260914000814.785155-4-richard.henderson@linaro.org>
+ <20260914000814.785155-5-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260914000814.785155-4-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::d;
- envelope-from=max.chou@sifive.com; helo=mail-pz2-x0d.google.com
+In-Reply-To: <20260914000814.785155-5-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::29;
+ envelope-from=max.chou@sifive.com; helo=mail-pz2-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,12 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-09-13 14:08, Richard Henderson wrote:
-> The current riscv documentation calls this j-type.
+> The immediate operands in the 5 base instruction formats are all signed,
+> so passing an unsigned type was logically incorrect.  Use tcg_target_long
+> not int32_t to avoid truncation, which will become relevant later.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/riscv64/tcg-target.c.inc | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+>  tcg/riscv64/tcg-target.c.inc | 33 ++++++++++++++++++---------------
+>  1 file changed, 18 insertions(+), 15 deletions(-)
 > 
 
 Reviewed-by: Max Chou <max.chou@sifive.com>
