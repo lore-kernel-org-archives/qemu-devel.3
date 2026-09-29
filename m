@@ -4,95 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261E4C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C92C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBZT5-00016g-WF; Tue, 29 Sep 2026 11:10:13 -0400
+	id 1xBZUY-0001ke-Op; Tue, 29 Sep 2026 11:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBZSy-00015x-9a
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:10:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBZU4-0001X6-7E
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:11:14 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBZSw-0005ss-K8
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:10:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790694593;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=quZAYt2i9xvS66I5QKTPdQqQ/WTXOmecM8lac2UmdtA=;
- b=OY3lPB63YFfNBi5Ye+t/aaAoCaBgOJ9gk3ACTyqpACBYRwq+A3cxGC8OVnveApavnq/M41
- qsR6iqYIrR5v2IH5RCSL+pA92KhcvqD32rD8sPO6oetRG8K8lwLLArh1LHQZj87E48a6oZ
- iP13FUFyA5kNO9A2/P88F30mWagpKFs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-lAmPalVnPz-djnf3sutWMg-1; Tue,
- 29 Sep 2026 11:09:41 -0400
-X-MC-Unique: lAmPalVnPz-djnf3sutWMg-1
-X-Mimecast-MFC-AGG-ID: lAmPalVnPz-djnf3sutWMg_1790694571
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0CB418E68E3; Tue, 29 Sep 2026 15:09:30 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07E861956042; Tue, 29 Sep 2026 15:09:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 92CDA21E6A04; Tue, 29 Sep 2026 17:09:27 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Peter Xu <peterx@redhat.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
- Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
- Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
- <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
- <michael.roth@amd.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Stefano Garzarella
- <sgarzare@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Jason Wang <jasowangio@gmail.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 10/14] qapi/parser: add _append() method
-In-Reply-To: <CAFn=p-YN-AqL335UF1U1eMDKNm+xFR7e9zVDfANJsMFU7qzkJA@mail.gmail.com>
- (John Snow's message of "Tue, 29 Sep 2026 10:14:51 -0400")
-References: <20260928223657.2303684-1-jsnow@redhat.com>
- <20260928223657.2303684-11-jsnow@redhat.com>
- <87qzicw5js.fsf@pond.sub.org>
- <CAFn=p-YN-AqL335UF1U1eMDKNm+xFR7e9zVDfANJsMFU7qzkJA@mail.gmail.com>
-Date: Tue, 29 Sep 2026 17:09:27 +0200
-Message-ID: <87qzicumag.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBZTy-00068D-42
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:11:07 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68TCqiKN611654
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:10:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ t9dAgan/FClYD06WiZJ6Gsw0K8DIxASjxCauWf5/5Xg=; b=fCcljLQYb+alC5Q0
+ z9HCd1QG8K2E22vY3l1XLRLCd2M7MAiO+On9fYNkwFnrCfi7fAEjEVZXP+w9R5Tg
+ KdlFqxCsLZwgT7Om7m61/BtTVVwvfu6qK+RUeqCxLN9+vMu0a7vMzKJN/olJUBmx
+ 8OEBJMJtH6GJFqpgCFHi+3PI/Yuzgiw1S83JLHDZDYkol6ktNRi/cx48nxmXDTMu
+ MyhdCBKBlMWKABSvwpzNuQaKNS9cNkhnYmpFZKwztlf9Vza7gYR7DBi/PV3wG43k
+ 9BHviAEENzsJ36SucsVGtlU4V515InkHtC9oD8LnoyejCgKfweUbUIoBBKZC0FyZ
+ 4mTv/w==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h00s4usrs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 15:10:53 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-986ea272f77so294258241.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790694652; x=1791299452; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=t9dAgan/FClYD06WiZJ6Gsw0K8DIxASjxCauWf5/5Xg=;
+ b=dlfDiXBrKwuSlSgMwAUV733n8yrG5gf8hhVh/wzpKc3tIg0drmqPbTm4frs7Dy6Gdh
+ 8BhQnfZslrKLNB9jHzauJotSi7L58gPJBDhTpqaX3wJrjYs/arcTfaEyLuwEijqGVJIs
+ F+Wc9qfBKzAJWgpNdmbnbGm12zPgu7tGkdd448dV3Ce45MYwQUWREWhc9RaajjB/R68B
+ QwPj4HV5l1hLHNdN983DXhgjN3ACWV/WbcH6kQ3K045HUZ3Wf0yVM+MnUusn9eXZbHQX
+ wpiSCYsYfYvwFYn8q0KSkSXI5W5RRfsiB1VLz+VgxqpJFjuB82LBTDEVSrb9phG5dAo9
+ 2Exw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790694652; x=1791299452;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=t9dAgan/FClYD06WiZJ6Gsw0K8DIxASjxCauWf5/5Xg=;
+ b=vaFgUANyO2n3KcKkTC7qC0UlGKT+u8k8+j1e6ZBAxwP/u2fozrv83U/PEI72DqqUpy
+ A2ahSL4pVNbJsQO4qKhBU3VQLfjd1v/c/50jEQxqHd4LgzSA7k8/LS7POrbkNpiBwsnm
+ g8dzKjH6dYEKOSw+w+77RDuEwLYOyU8KdPntv6F5P54ZyXKnL2dJhfqV9lvLK/7P278N
+ 9FU/mezicl70Yg5JAzAsS2+J81/Bp6j+HjIUShsGOHcNvs1P/4No6VNj/UlZ37cJC58M
+ x0QCnxQZxJXzKjB/omi4hc3g07FYekoiAKGO38diArUHB3eyJVqVsiVtk0k4Lqb8q4d1
+ WVpQ==
+X-Gm-Message-State: AFq9FYJMKVP4nEHzyjC+fnNe5u/hGmdolPpP8xghuvh3jNAiAYbD3tLx
+ wadD5AoRSH2FH4dARzbqphG+BFHlSB15imaCMw0UQ8y/yBR9DCN4nRms/yhmcpaUcnhWYuAB18o
+ gbbyAWfTfTd2LPhWHRmZHhwIiZzJjbtGB8ehxmLptOsL7qKUR4vUP+YhNjQ==
+X-Gm-Gg: AYBFou1LVwj5xQC9JX4MVoWO5fhqCqaZPbeo8Qv+ZHXQmzYFWSewxw87uE4T0XEoh4Q
+ lF1blsn9fMsiMdn4cE9H8C0BHgiOvqK0evMMlcQ33L9Y3mmyZqTuTbTcvLhT6x85Eeq4dz3H54S
+ SsIyAibPCExS09LKo4EqygDS1SBsyz3pnotE1IvGVDl0u0QjJ/isluiNFjYBkYa5zwwfUyURY6c
+ CPF6ah8U7UTJgIuB1eGx4isXc6FjU2DR5wp3+U4B1JJi8xiubYiDIT/FirU37JDvdWTWStxzfrD
+ 1ya7+eatjAzAmVUkgPO5+/WRADky0UTHANkgRpcrrfVhMK6dzksunTQGiBXD5lW46rFpkKoEfnD
+ YFe/Dbg3p/6SF9sQlS2eT6hvh3Egg2D/vbQ==
+X-Received: by 2002:a05:6102:4428:b0:7a7:198a:c2c4 with SMTP id
+ ada2fe7eead31-7b1d74b3a9dmr3685553137.34.1790694652092; 
+ Tue, 29 Sep 2026 08:10:52 -0700 (PDT)
+X-Received: by 2002:a05:6102:4428:b0:7a7:198a:c2c4 with SMTP id
+ ada2fe7eead31-7b1d74b3a9dmr3685525137.34.1790694650764; 
+ Tue, 29 Sep 2026 08:10:50 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48af50abad2sm4239206f8f.37.2026.09.29.08.10.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Sep 2026 08:10:50 -0700 (PDT)
+Message-ID: <20610c52-5cd5-4ef1-b025-ed477e8de42a@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 17:10:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iotests: remove unused 'owner=' variable assignment
+Content-Language: en-US
+To: Kevin Wolf <kwolf@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>
+References: <20260810141206.525581-1-berrange@redhat.com>
+ <arvNgvmyp69UYcGD@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <arvNgvmyp69UYcGD@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX77esCymReMG/
+ mZc9APywFv+lFTnTja75TpAsWdGO8MCxbxD8SmmDpIZ/hRdC7/iw6Y4yZiCNbBsfYfqLSpwpljV
+ UeZoPJEs5RgsX6gWNbMthPSlFJMLCv4=
+X-Authority-Analysis: v=2.4 cv=ALbfqNVA c=1 sm=1 tr=0 ts=6abbd4fd cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=20KFwNOVAAAA:8 a=0qrXtdWqIBmr4_x4gesA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX5rOiTcMzZX7U
+ XTp1rBsfeqa5fwbAw0/Nem2eYshpPFKWxxM/8DIr1WbTcXlJ54Vo23/rJFkknBU04vhGem4o64r
+ FqXGBMe0ZoKiA40EyYO2y8kqM2u6dVZqCto4P72Eci4cFsjpHJSTqzx+Wvl2tvhNxjJPwtvtxGK
+ 9PvASTJpvvSjU7qtyyup2XiAa1x4HofczEK20NsSN61JAzKr7Mwe9HjBCvA3uOyerflpnz1MCGd
+ xdT2qkTKy8sCzoYTkOULGK2X4QXE2JW9FXMZrJJvfybXmVx4VQ+AOcrR18uZW3eyCrIwmMcFfWH
+ ofHmw4UR9X2d28KQ5K14NAaXmSXj5nv5L5idRU1zEtqkfuJHNuZZ5m/IkXtuLMLWs8P7m4KfZA2
+ 16vssZ92uWMWNfYubNN84y8Xly+LNMoVv1jzRh7ex8gldfYs5aqXcpFxDg0kO1eg6dk4aUxf9DU
+ m6Keoye2q1Ffhsp/S6Q==
+X-Proofpoint-GUID: aNPlhc_GCYh7xEmzqjZrDhU7skLw0X3Z
+X-Proofpoint-ORIG-GUID: aNPlhc_GCYh7xEmzqjZrDhU7skLw0X3Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290060
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,118 +156,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 29/9/26 16:38, Kevin Wolf wrote:
+> Am 10.08.2026 um 16:12 hat Daniel P. Berrangé geschrieben:
+>> Most, but not all, of the shell I/O tests assign an email address to
+>> the 'owner' shell variable. This variable is never used for anything
+>> so gets reported as a dead assignment by shellcheck. The same is also
+>> not done for the python I/O tests, though some include owner= in a
+>> comment.
+>>
+>> Mostly the 'owner=' variable seems to be an alternative to expressing
+>> an "Author: NAME <EMAIL>" comment, but without the NAME. While they
+>> could be converted to Author comments, this does not have a benefit
+>> over using Git history and are not widely used in QEMU source code.
+>> Git records activity over time so is more representative than the
+>> initial author. Meanwhile the MAINTAINERS file, also expresses a
+>> notion of ownership over the maint of files.
+>>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> Ok, why not. I don't think I ever looked at the line to figure out who
+> to contact.
 
-> On Tue, Sep 29, 2026, 9:28=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > This method is intended to become the sole point of appending new
->> > sections to the section list, prohibiting outside callers from
->> > accessing the list of sections directly.
->> >
->> > A forthcoming commit will actually convert the "all_sections" field to
->> > be a private field to begin enforcing that no outside callers are
->> > manipulating the section list from outside of this class.
->>
->> This suggests you merely add the method now.  Not true, you also put it
->> to use.
->>
->
-> Didn't mean to suggest such a thing! I'll try to reword.
->
-> I mean only to convey that at this point, this doesn't *quite* become the
-> sole access point as intended, due to some transitional code that this
-> series is on its way to remove.
->
-> I'm trying to justify the partial conversion.
->
->
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  scripts/qapi/parser.py | 50 ++++++++++++++++++++++++++----------------
->> >  1 file changed, 31 insertions(+), 19 deletions(-)
->> >
->> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> > index 5fc9c18c81d..0dca1acba4c 100644
->> > --- a/scripts/qapi/parser.py
->> > +++ b/scripts/qapi/parser.py
->> > @@ -542,7 +542,7 @@ def get_doc(self) -> 'QAPIDoc':
->> >              if not symbol:
->> >                  raise QAPIParseError(self, "name required after '@'")
->> >              doc =3D QAPIDoc(info, symbol)
->> > -            doc.all_sections.append(QAPIDoc.Section(info, QAPIDoc.Kin=
-d.INTRO))
->> > +            doc.new_tagged_section(info, QAPIDoc.Kind.INTRO)
->> >              line =3D self.get_doc_indented(doc)
->> >              no_more_args =3D False
->> >              last_ordered_section =3D QAPIDoc.Kind.INTRO
->> > @@ -772,6 +772,33 @@ def __init__(self, info: QAPISourceInfo, symbol: =
-Optional[str] =3D None):
->> >      def has_features(self) -> bool:
->> >          return bool(self._features)
->> >
->> > +    def _append(self, section: 'QAPIDoc.Section') -> None:
->>
->> Maybe name it _append_section()?  We already have append_line()...
->>
->
-> Eh, why not, sure.
->
->
->> > +        """
->> > +        Primary internal interface for adding a new section.
->> > +
->> > +        It is intended to become the sole access point for adding new
->> > +        sections to the QAPIDoc section list, but we are currently in
->> > +        a transitional phase where other methods access the section
->> > +        list directly to do insertions of generated sections at
->> > +        targeted points.
->>
->> Yes: ._insert_near_kind().
->>
->> > +        """
->>
->> This comment will soon change to
->>
->>            """
->>            Primary internal interface for adding a new section.
->>
->>            All other methods/helpers/etc ultimately use this and only
->>            this interface for appending a new section.
->>            """
->>
->> There's a bit of redundancy.  Suggest
->>
->>            """
->>            Add a new section at the end.
->>
->>            It is intended to ...
->>            """
->>
->> now, and
->>
->>            """
->>            Add a new section at the end.
->>
->>            All other ...
->>            """
->>
->> later.
->>
->
-> More or less correct, though "at the end" isn't really true, it's
-> contextually sensitive.
->
-> "Add a new section" is more correct.
->
-> Actually, why don't we name it _add_section() to make it clear that it
-> isn't *always* an append?
-
-Sold!
-
-[...]
+Maybe you didn't had to because these iotests already reached code 
+perfection :)
 
 
