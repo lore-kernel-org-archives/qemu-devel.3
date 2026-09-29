@@ -4,144 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3658CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 09:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5464FCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUcD-0006OI-4e; Tue, 29 Sep 2026 05:59:13 -0400
+	id 1xBUef-0006x3-Ly; Tue, 29 Sep 2026 06:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBUcB-0006Nt-Oj
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:59:11 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBUcA-0007hE-3a
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:59:11 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T7TYXV760458
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:59:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xJtH7MTRn7ORBSxOZN/+VzPtzVwbCNDr5t090KUe3/k=; b=BAJeYVkbHK7v2vJC
- wKLg6xZN/7HFU9I7XVbPeETsDptgjumjVbdwwph2FTNEMIFJVoR/mRGhVCEEhcNk
- VPUmjps4NgD6hF4jFOz9TCBtkFMynra57RTW/dvP/NRJBMm/eiEWe8LfjoAldRYk
- WXDm0k6e2H4qNeqIZq+mPkF6RvJpTA68kjRd8dA/FqxCFEMJ8L3Sa/0jhekHLWGI
- yKaZjPx9/gTV9pgpICJFitYCc31d9SNjcnY/8Hw/3m7p0bJcZPpfX33ocs//cLt+
- IDOD7FPv7+mqJx1bwkZtvMaOVtoWdVcqbbuXzv6wM7ozmJSjKrJY//Wt/zWhjmJL
- SXdOrQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyw03kcx4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 09:59:07 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93c6a0d2122so493627485a.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 02:59:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBUeZ-0006w1-P9
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:43 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBUeX-00087P-Hd
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:39 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-488885c3844so434849f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790675946; x=1791280746; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xJtH7MTRn7ORBSxOZN/+VzPtzVwbCNDr5t090KUe3/k=;
- b=P5E3SZWwNsU48VIr8TMhcMuBGHMvll3v867sCbpIHwOQ5uEp0wTHssBsoNDgkIVmTE
- JAhpQL/Zf1t8yULARULN2fe54oNiMd7x0sSLiYt3bwXgBM6TAM0SrgL1nvxTyhQvkSDN
- WtwwozhOamsWH5fr5LDnjrd3L01qQ9o5lZ4qLuqS6Mn844ESf5PfLlE3+kYr3r0+C7qe
- OrihaVfboMvYp/a2+UrqS9K+oWBedThu2O/ktj1hEFuhoTHLL0ZTxpwR+uvIRJEAZPRW
- Zr0n3aHNimh/kQ3LNQDMEfxd3U5aQvRyYBgsp7rjWq7g+bNXcyG73AhtA9kdUSMtf95j
- T7Mg==
+ d=linaro.org; s=google; t=1790676096; x=1791280896; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=o52pPMvL0P5jXna2vDHMoo4a3EDppPJn1Fs/mpMq5Ao=;
+ b=tMU8BQD+o4jEGk8kzTTclfOrxh2m34XWJ99ebe52a5kb9hOCndxEaRqdzV+KgC9+9x
+ mPcFd46sggrvYFv4vH5oPD4yMxCbN11X647D0sXMFNtvG4BRfP3M2+gS+a0gTCB3LEhQ
+ Yr4Dfqirwr8aATUCNUPm7fNUIsi9/Rn+R9ceuHTV0NUKx8I1iEfWzCeXJco1plEfZxGq
+ fIzZ3qvg0eFmix45aNvHb9h+TMT4ym1D/fWzjyycz9OcPHQSdljqzxbOW9kC3RfsFmBv
+ CicsMOnajMrs/fe2FUaBZvVoKHzHbnXSqlkhEADuNWKjYDrDMoByIO0L2o2yUF2KzC7Z
+ 6nGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790675946; x=1791280746;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1790676096; x=1791280896;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xJtH7MTRn7ORBSxOZN/+VzPtzVwbCNDr5t090KUe3/k=;
- b=2o5oYRTyJKLfXBWbC17zWW6fIIHN+mMV/imCALgnEEGia5Eqf2VQEmHmZSQCQ4/kdU
- IYsksSkwDbuyZm2jcatklvJ4KtZ2d/LDHnD33Yx25fzZlAAmaH4YnXJgMIJig4R5KnJw
- qPXJ64Og8IM9Z+DD7vrPr+clJdiJHQsn9o8e1uka+Iu4anaZM6HAnWA0DZG8GGPk+iDR
- 4k+j2NQbUdRKMT/vAxV1zmLSGb0W5R6qSLxCIJS8lCcUW6NUZtPEHIi3npn8iPIgFaBe
- 7VZZR7f3pQQSOL7Uz59MD1FG+dW4jWHnAqWFBEo3HOPkOX6DeSpBxELilhMBD/TUWQqT
- 3yQQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzeDcFcuCOCKElHVKgVobRwKmhtJ926wONQNGlLX9rXW0CeEnGK7xAhYQ6XpO5LWMM84FULBx0f+R7L@nongnu.org
-X-Gm-Message-State: AFuF++nD8GT8OBhlgvVlLG7JnsDQxxYHpclV1IA56lIN49TgJGkDb1xE
- r+0/dmfPhXCN4jTZ5Zs3fWsZCq/5JFp/eRPw3/cvdl2SVB6LUXKV04iDVyf9lmRZwwo0EBMHhTZ
- 2qmTe8StulD/MsdexVVOXRT97Gvy8Z9MY4pNerVX8wDTb/EyoSlbGOlM40w==
-X-Gm-Gg: AYBFou1XN8k7RqxIDg6Lq4AqCGlPKR35TCQIocsR3IGRIoBt9PKzucOSVeIPWFdFrol
- aL9ajLZX6SMU2JyUqRy3tU3+qrEKdEyh/Z8omW/P+EVPSWyPnN9J8gijmn1+YrMZleFN4Mfihm8
- G3qKuzzoHUqta52d6CTXRurzV1ALBC0E65k67lJkGOswfnD3J1nFShgo9i2/wNrV3OS2mGd8uLz
- //hS/paoVat6mtHc25O0yWmbc4DScUpWvsBGHkUF2m1YVPvuKCG4rfzQehnlFn2xrGAv74GIe75
- 22eFweCuL/NmnJ2Rm5HQ3XUkGsMTKrxU7NFVyRW9Je04bXs7gKGVBdLoaUriPtPpHlXuoa+xJ1D
- qYBevMNSc1QpfK/1Q/AE=
-X-Received: by 2002:a05:620a:254f:b0:939:f978:c1aa with SMTP id
- af79cd13be357-93c43b7e985mr2630497785a.11.1790675945904; 
- Tue, 29 Sep 2026 02:59:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:254f:b0:939:f978:c1aa with SMTP id
- af79cd13be357-93c43b7e985mr2630493485a.11.1790675945323; 
- Tue, 29 Sep 2026 02:59:05 -0700 (PDT)
-Received: from [192.168.0.4] ([79.127.134.49])
+ bh=o52pPMvL0P5jXna2vDHMoo4a3EDppPJn1Fs/mpMq5Ao=;
+ b=eJDewI9sRevXWuHAX+fH2rNOtapJwGpZwc6C6tc53szIedBTVmshRaiN0V0+3iFxU9
+ mRyCV7YkD3JqlavJeyEXteta5oKX8TynSL6+1C3lh8UrJvNsmHjXe0NAQhgn7uDx30Ep
+ DHUROHIs5e40QI+vU0LakbajqQ7nxQerIn991q0vbOTxzk7RUsxitXRFU+7FQxO3AfEh
+ f1ug2YFECpUptqSWonoz8ed8EAhJE91X9FBc36a4GDtUZEWAm+NhXwU6kIfBUDeO4AtS
+ MrHWrr5Z7auq1QoXOHNU0YVD+RWTSEyc0/PzK4mOlMyQDYmNALupHQupvupdfkNJUosX
+ e25w==
+X-Gm-Message-State: AFq9FYK3WA2f4oLmsrI1hSk+GSpKrFKX5uCeDDUH+ZNLBgscqbFtp8QL
+ O8pKFEKuiT82zTP2N67rviMm6Ry83CU6Rny+MmaUaWh6ZRsQ7O+sJSXuX7cehZaCQt1Cvj9jbaQ
+ 72CLq
+X-Gm-Gg: AYBFou1Y7xCEd+CkJoiYNa+G7LNlnbtHfyjViuVX11+JOJ7uKtrhLU8jE4PcxV0RlA/
+ QkWVY8xQh2zNLJ/57qS+yeEx5eRjT/7c0ILz1warkjpId2CJ4bZSCXbyThHp9NWgkUv3z9vMS21
+ YbOofypkNr7giYrSt+hLVTd+sr/6DtKv1BfpU+tgPL0WCG1Ui1O32py/g5cuPTXNl+ib7xBUYSP
+ cwyL0eC+PFsrOEG6zYCPA4sg7SaJL0UpdX1vQx0Y3Okc8JUgbMUfdlQSWBx8p1aj+irXHdk0zXI
+ KT82RYRKnLxvOhjOlUSdDzF7w70clI81oT3NPkpdiZvmk7EBGL68hGBJleSbbyE1d8ktkIKaHhO
+ 5PKCrTvj8g+AqXBzjpwH7txQDMNIXXID9u/rKj3S1kNEH39XHBZoALgGNcxoH1dLQKs0HgUQeBT
+ wFTeqlnlLRYgPv4VAJO+HXElVmkd/DD0rYfr4+K8hbJlSm7yNylAqzVLme3RthJ5MFpu/HhyJM2
+ GrY0emiCgpsvA3uDdQv136Lxp8ObawG/1j+C6yz1aJmsOs8SPmkWS/geLB1ZgIDnUTazh9O2ZVl
+ eJA=
+X-Received: by 2002:a05:6000:1789:b0:488:8111:6f50 with SMTP id
+ ffacd0b85a97d-48af1b851cemr3561638f8f.20.1790676095625; 
+ Tue, 29 Sep 2026 03:01:35 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00cf869c4sm64993545e9.2.2026.09.29.02.59.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 02:59:04 -0700 (PDT)
-Message-ID: <91c8dd12-1efa-4333-abf3-279a0c239d26@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 11:59:02 +0200
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Sep 2026 03:01:33 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/37] target-arm queue
+Date: Tue, 29 Sep 2026 11:00:55 +0100
+Message-ID: <20260929100133.2598676-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/19] target/mips/tcg/translate: add sign extension
- for srav
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
- <20260929074007.118970-18-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260929074007.118970-18-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzOSBTYWx0ZWRfXzdQ0ruTuzvAC
- pdPTL9fT5D7TTxROuEwNhv/lmM9zpHymWXB9GO8rsOktFYRP3sbhcVW8r8pxFyVR2i9Y0Ad1MwC
- 2BMCjuVONqVM54XdbLTj+aJ8oldKeEM=
-X-Authority-Analysis: v=2.4 cv=SIbXx+vH c=1 sm=1 tr=0 ts=6abb8beb cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=Trj8EPfxmUJEcqxUpYwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzOSBTYWx0ZWRfX3jYqW9z6AlPn
- jKD8/dZLj3S+f/7cl4vjcbFFC4Xwds9tLDxtNbvg2GZ4VWJlzomLaae+GYKJ7a/jHRRaFwxXaJ5
- idpzmZ3oW4brAX1xwdIllCew5gUu2gRphq82exBv04z/Eg5U7JpK8YkIqSb6Hl/CtN/ifwCKvpD
- OVXDvnjIaQjScwkVs4Q1j+PmyjiFfKSBjPkh8SupCwZlqu39MS3Raop/qkUgygKZI45TPKOa0JZ
- s2m0ZWG3DbUCtNxkXBCTV7uWj2wF0f1D5PVqZ3mTs5UL60cosIwkfYOWeP+R7zrsLfb96iCYHYv
- Eopt4BzRKK4B/WoyuPITitgjlXCuP8DikDeXGMH5UeDpTA36CspTPPc9i54FeAuhf8FDrnxoVR7
- N3WFy/ufjnRaWMHs2XC7IEshvVY2hFz5GiavJ11Susosd/tBQKTzgEoyECn6SciI2D11/3XEsd8
- dmOr5Gid9r1U3mJGI7A==
-X-Proofpoint-GUID: xDSDVfRvOlUs1c1MMmx_O_Qf3SSHbH6n
-X-Proofpoint-ORIG-GUID: xDSDVfRvOlUs1c1MMmx_O_Qf3SSHbH6n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290039
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,53 +100,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-29 9:40, Pierrick Bouvier wrote:
-> In next commit, we update references for failing tests.
-> One test, test_mips64r6_srav, has an output that is not reproducible
-> on my host. After checking, it's coming from UNPREDICTABLE case
-> described by mips64 reference manual.
-> 
-> ```
-> Format: SRAV rd, rt, rs MIPS32
-> Description: GPR[rd] = GPR[rt] >> GPR[rs] (arithmetic)
-> The contents of the low-order 32-bit word of GPR rt are shifted right,
-> duplicating the sign-bit (bit 31) in the emptied
-> bits; the word result is sign-extended and placed in GPR rd. The
-> bit-shift amount is specified by the low-order 5 bits
-> Restrictions:
-> On 64-bit processors, if GPR rt does not contain a sign-extended 32-bit value (bits 63..31 equal), then the result of the
-> operation is UNPREDICTABLE.
-> ```
-> 
-> Current implementation takes advantage of restriction above and does not
-> perform sign extension on lower part.
-> 
-> Given this definition: srav(x,y) ((int64_t)((int32_t)(x)>>(y&0b11111)))
-> srav(0xaaaaaaaaaaaaaaaa, 0xffffffffffffffff) = 0xffffffffffffffff
-> With qemu-mips64, this instruction returns 0xffffffff55555555 instead.
-> 
-> While this is not wrong following the spec, it can be surprising. To
-> have a more predictable behavior, always perform sign extension on lower
-> part. This will give us the advantage of having a test output that can
-> be checked on any host.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   target/mips/tcg/translate.c | 1 +
->   1 file changed, 1 insertion(+)
+Hi; here's a target-arm queue: FEAT_UINJ is the biggest thing here,
+otherwise largely bugfixes of various kinds.
 
-Or simpler:
+thanks
+-- PMM
 
-'''
-   target/mips: Sign-extend the SRAV operand
+The following changes since commit 81ce3a87737aa50716c42db8886082d12783e0a1:
 
-   SRAV operates on the low-order 32-bit word of its source and
-   sign-extends the shifted result. Sign-extend the source before
-   shifting to make results deterministic when the source register
-   is not already sign-extended.
-'''
+  Merge tag 'hw-misc-20260927' of https://github.com/philmd/qemu into staging (2026-09-27 02:02:29 -0700)
 
-Fixes: 48d38ca52b6 ("Switch most MIPS logical and arithmetic 
-instructions to TCG")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260929
+
+for you to fetch changes up to 998b6db69e3ec58fd52ddc7a06ece6cf286f3c77:
+
+  target/arm: Fix WFxT timeouts when the offset puts the count ahead (2026-09-29 10:58:40 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * whpx: arm64: check for physical address width after WHPX availability
+ * hw/char/stm32l4x5_usart.c: Support 16-bit writes
+ * hw/arm: Add GPIO to Allwinner A10 model
+ * hw/arm/tegra241-cmdqv: Keep VINTF page0 region alive
+ * hw/char/exynos4210_uart: fix fifo overflow
+ * arm: handle CCSIDR_EL1 as a demuxed register
+ * target/arm: model Cortex-M0+ privilege extension
+ * target/arm: Fix migration of Aarch32 Secure banked registers
+ * target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
+ * target/arm: Enable FEAT_UINJ for -cpu max-v9
+ * target/arm: Fix timer tick and WFxT timeouts when the offset puts the count ahead
+
+----------------------------------------------------------------
+Cornelia Huck (3):
+      arm: handle demuxed ID registers
+      arm: handle CCSIDR_EL1 as a demuxed register
+      arm/kvm: get demuxed ID registers from kvm
+
+Fuad Tabba (2):
+      target/arm: Fix next timer tick when the offset puts the count ahead
+      target/arm: Fix WFxT timeouts when the offset puts the count ahead
+
+Gilles Grimaud (1):
+      target/arm: model Cortex-M0+ privilege extension
+
+Jacob Whitaker Abrams (1):
+      hw/char/stm32l4x5_usart.c: Support 16-bit writes
+
+Jean-Francois Bortolotti (1):
+      target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
+
+Matthew R. Ochs (1):
+      hw/arm/tegra241-cmdqv: Keep VINTF page0 region alive
+
+Mohamed Mediouni (1):
+      whpx: arm64: check for physical address width after WHPX availability
+
+Peter Maydell (8):
+      target/arm: Keep the S/NS bit in migration data
+      target/arm: Don't assume secure-banked registers are migrated by 64-bit regs
+      target/arm: Drop uses of reset_ignore for banked AArch32 registers
+      target/arm: Don't use arm_cp_reset_ignore when fieldoffset is 0
+      target/arm: Move ESR_EL1 definition to vmsa_pmsa_cp_reginfo
+      target/arm: Don't set ARM_FEATURE_VAPA for v7 PMSA
+      target/arm: Don't register 64-bit TTBR0, TTBR1 for PMSA
+      target/arm: Add a debug check that all sysregs are migrated
+
+Richard Henderson (14):
+      target/arm: Parenthesize tbflags arguments in TBFLAG macros
+      target/arm: Reorg rebuild_hflags_common*
+      target/arm: Split out rebuild_hflags_common_aprofile
+      target/arm: Sort BE_DATA toward the top of rebuild_hflags_a64
+      target/arm: Move ID_AA64PFR2 feature tests together
+      target/arm: Add isar_feature_aa64_uinj
+      target/arm: Drop U from most PSTATE bits
+      target/arm: Clear PSTATE.UINJ when taking exceptions
+      target/arm: Widen cpsr_{read, write}_for_spsr_elx to uint64_t
+      target/arm: Read and write PSTATE.UINJ
+      target/arm: Add PSTATE.UINJ to tbflags
+      target/arm: Split out check_il
+      target/arm: Honor PSTATE.UINJ during translation
+      target/arm: Enable FEAT_UINJ for -cpu max-v9
+
+Strahinja Jankovic (3):
+      hw/gpio: Allwinner A10 GPIO emulation
+      hw/arm: Add GPIO to Allwinner A10 model
+      tests/qtest: Allwinner GPIO tests
+
+jprx (2):
+      hw/char/exynos4210_uart: fix fifo overflow
+      tests/qtest: add test for exynos4210 uart fifo overflow bug
+
+ MAINTAINERS                                |   3 +
+ docs/system/arm/cubieboard.rst             |   1 +
+ docs/system/arm/emulation.rst              |   1 +
+ hw/arm/Kconfig                             |   1 +
+ hw/arm/allwinner-a10.c                     |   8 +
+ hw/arm/tegra241-cmdqv.c                    |  54 +--
+ hw/arm/tegra241-cmdqv.h                    |   2 +-
+ hw/arm/virt.c                              |  19 +-
+ hw/char/exynos4210_uart.c                  | 111 ++----
+ hw/char/stm32l4x5_usart.c                  |   7 +-
+ hw/gpio/Kconfig                            |   3 +
+ hw/gpio/allwinner-gpio.c                   | 441 ++++++++++++++++++++++++
+ hw/gpio/meson.build                        |   1 +
+ hw/gpio/trace-events                       |   6 +
+ hw/intc/armv7m_nvic.c                      |   2 +-
+ include/hw/arm/allwinner-a10.h             |   2 +
+ include/hw/gpio/allwinner-gpio-regs.h      | 227 ++++++++++++
+ include/hw/gpio/allwinner-gpio.h           |  41 +++
+ target/arm/cpregs.h                        |  21 +-
+ target/arm/cpu-features.h                  |  26 +-
+ target/arm/cpu-max.c                       |   6 +-
+ target/arm/cpu-sysregs.h                   |   9 +
+ target/arm/cpu-sysregs.h.inc               |   1 +
+ target/arm/cpu.c                           |  10 +-
+ target/arm/cpu.h                           |  97 ++++--
+ target/arm/cpu64.c                         |  14 +-
+ target/arm/helper.c                        | 237 ++++++++++---
+ target/arm/internals.h                     |   7 +-
+ target/arm/kvm.c                           |  43 +++
+ target/arm/machine.c                       |  80 +++++
+ target/arm/ptw.c                           |   2 +-
+ target/arm/tcg/cpu32.c                     |  26 +-
+ target/arm/tcg/cpu64.c                     |  69 ++--
+ target/arm/tcg/helper-a64.c                |   2 +
+ target/arm/tcg/hflags.c                    | 118 +++----
+ target/arm/tcg/m_helper.c                  |   2 +-
+ target/arm/tcg/op_helper.c                 |   6 +-
+ target/arm/tcg/translate-a64.c             |   8 +-
+ target/arm/tcg/translate.c                 |  33 +-
+ target/arm/tcg/translate.h                 |   3 +
+ target/arm/whpx/whpx-all.c                 |  16 +-
+ tests/qtest/allwinner-gpio-test.c          | 535 +++++++++++++++++++++++++++++
+ tests/qtest/exynos4210_uart_fifo-test.c    |  86 +++++
+ tests/qtest/meson.build                    |   7 +-
+ tests/qtest/stm32l4x5_usart-test.c         |  22 +-
+ tests/tcg/aarch64/system/meson.build       |   7 +
+ tests/tcg/aarch64/system/vtimer.c          |  28 ++
+ tests/tcg/aarch64/system/wfxt.c            | 118 +++++++
+ tests/tcg/arm/system/meson.build           |   6 +
+ tests/tcg/arm/system/test-armv6m-control.S |  66 ++++
+ 50 files changed, 2278 insertions(+), 363 deletions(-)
+ create mode 100644 hw/gpio/allwinner-gpio.c
+ create mode 100644 include/hw/gpio/allwinner-gpio-regs.h
+ create mode 100644 include/hw/gpio/allwinner-gpio.h
+ create mode 100644 tests/qtest/allwinner-gpio-test.c
+ create mode 100644 tests/qtest/exynos4210_uart_fifo-test.c
+ create mode 100644 tests/tcg/aarch64/system/wfxt.c
+ create mode 100644 tests/tcg/arm/system/test-armv6m-control.S
 
