@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBB8CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B90C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBSHo-0001bp-KT; Tue, 29 Sep 2026 03:30:00 -0400
+	id 1xBSRC-0002Z3-7M; Tue, 29 Sep 2026 03:39:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xBSHl-0001ba-IP
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:29:57 -0400
-Received: from mail-ej2-x0f.google.com ([2a00:1450:4864:34::f])
+ id 1xBSRA-0002Yv-0N
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:39:40 -0400
+Received: from mail-ej2-x10.google.com ([2a00:1450:4864:34::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xBSHk-0004gl-35
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:29:57 -0400
-Received: by mail-ej2-x0f.google.com with SMTP id
- a640c23a62f3a-c2af876539fso420876166b.2
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:29:45 -0700 (PDT)
+ id 1xBSR7-0005Pi-3a
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:39:38 -0400
+Received: by mail-ej2-x10.google.com with SMTP id
+ a640c23a62f3a-c293c683202so556404166b.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790666984; x=1791271784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790667575; x=1791272375; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UMJHGExU7xukH6YJxFgTk4NqLwvBo+DnDXaDfqLDP7s=;
- b=Y8Aju3WNV4N8fjPQaTYva62pJa6npP1dj+0kCZUsDBPGMApncwuUY8rrqZcrKFfky/
- rxIxh6aUn6r8NK1oO2cblGdvxPntstGfD2L3qQKtFCOeM6qct0EHUVUSBpNc+Y2Bt4wc
- lyphX7SJuNykYteIeOUZHoAv6HU0OYKCykazBR51vffgSy954MYz85SrZWLXcMFS7C6l
- OKpiS2lxIiApNAQhzD+/2Qk09CTadJwyPQZ9MxxBCw6SP4f5F3L0XYfALp8xDw4V/7yG
- Qmzj0oW6I7DBYVHulQ9cUs/Q+g1HquBphtMjLd6fEnFNAkcLTcZS4l0mYpIff5NY//Z+
- Ub+Q==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=3WZ18XJ6XgCGDzy9TgcyGC1cokB2nelddPH4ZGMBB7o=;
+ b=jnVlAJPC03uq2umU9PHT7QR1HK2/KtUl+1z8w5TpqYjeGoNWN9ULwfiTBr8VAqzzSg
+ vh6BeLeYUeFzt8hUdR0dlVwj2XTIacW2CVTwYbABZY3IL1IVxnX9xTIKDTBh9Xq4THVk
+ kvgZlM+2x8jgeZByPYkBbuU2QOjy2Zq5tXXLZe4kshALivHTsVQObiu447ChkICPNtuE
+ 5JeA3ovga4OfaMklHCdUo/vuUzYVBuRBYKgJWariOWKRfEuxHnYveH+5HMOhcBmLVy+9
+ Np+Fd42v0FNGc1StAh3khM2XNkmMZquG09JAIx1lLhRQVGmk3awByaPjBZWyrxaRyA01
+ DPUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790666984; x=1791271784;
+ d=1e100.net; s=20260707; t=1790667575; x=1791272375;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=UMJHGExU7xukH6YJxFgTk4NqLwvBo+DnDXaDfqLDP7s=;
- b=byjhDwV2ud1kIzeJmmfmBHm13fQ3JWNiE7CFcR+9SXD3t3wTn+dpfee4cWRZi+0uoi
- fdgHH4mBvcwg0Xfc1HxLFXJ8+gIz0IC1bc0Lca17iZn3x8L5kZv4eHaa3OtUkmhsYQhn
- Sd8QpevhxW+TRGyx0i3rGpx6sm65zjXnV83mb167RckF0pHhipz2IPCly1aXpXh8E+TJ
- nGkmRx4c1J9SaltfXvlSkX5/ikpiLRIRJ5bAKMYOaQ3NIlMc1xLVW4/tPaweZ3TMawLV
- wIDS+037IQpNtgM2xid23jPXUwfR5SrB5r++kX4fjPVRgpSYxPJbv8oHa93ePsnC8l8g
- qQXQ==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=3WZ18XJ6XgCGDzy9TgcyGC1cokB2nelddPH4ZGMBB7o=;
+ b=J5SvoijHFVVFepeuK0DqdvXCedkIXnnhTUtuBg/PYS37bi6TAKMnzhdfFN5VbwoAQT
+ ETffoXCOybX3/tn5J3uTldPW0qrO+bYhswknShsiN/kialsR/Z2BUCUA9dgSQqdV76IS
+ kdhTFC2hHDeSVIajz0/cn76ktMcm1xQ4Ihd333NZzTVOQM1MFKTb5Vi/k7qRhDRpYqBm
+ u1donRR/hStBBsJ1EkBXBeOY2FLown0LI6/SzyC05cEkvM2Cfaf7/VOFUCMvUKZSk4FU
+ D1cK5CiWnmoPBISoPn7NZA+BwnXoQw20prqiV+95pOt0QiouPcI3rTGnhMETTgLv42KX
+ DFFg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzyb/YiOhZJOSXGF0eoni6PV454RzuEaahV57OW3ZCqvoV9ZNPMqA78jH+e5adrU8TnDy//0V8XQRoV@nongnu.org
-X-Gm-Message-State: AFuF++lM+LXZjlY+cYzRgRZq3COh6lQ9ZBGp+72TCYB+gYSmVaYpc73v
- Fj9pFsQYhrtFVjrZ8azSqyWr9t7PMPg4DSndv574/vIhyhGz48hcD2sGPLWZUXnTjDY=
-X-Gm-Gg: AYBFou1dnoDmgPr6cSuGvudNhN5rpBRg3pApX2D72QPDQz+E5bDbepo1cLgrxOdgOYQ
- 9ZNAkcePb9Lh2Mkf5QiTdibjsq9i74MRrf/rzgAMEd/TcotGd3tmXd+cd4adMLPGe1OEGzhAQAq
- HVJQNpGHcHrE75PXTnzlE6WrkhBo/hgv1nuAidW9s6FAa8HIx6u3POQ/WOGcGf9TdHfKjnhiNRy
- c5EZ5WsA8LMsNI/eEfM/hkGoz/RkzibubSWYh1xvpaUSqGm+qZF8JUs+NHPpO+/5dy0FPeRvn3h
- LKClaEnaaooBMh8INdFgbqGDZhMClp2N0c2J93uZNCD8h2QtiRV/k1mximVqU2FNhT1CPlZdNAZ
- nmvaXl7hzN+P/W+rRYA0+4ZaRKCgmH+5WVGphVpLK+h0f/BUgkEtuFz08R85OnQw9GgsxtdWLXZ
- HSk5wQGc9PuZTE3EuLUVEhFPyizmtYN5XJ6xnzVkqMVIT5/lYGooa0NFhqluPiFW0SChUbNqCbJ
- VARbHro9u/hMEQYW3fN7DwReoJt14C5o765ekijKUBM+yG42mjhgBkunVH/CIcpFnuezg==
-X-Received: by 2002:a17:907:3f19:b0:c29:3c21:ee69 with SMTP id
- a640c23a62f3a-c2ae9f3157dmr923075566b.23.1790666984417; 
- Tue, 29 Sep 2026 00:29:44 -0700 (PDT)
+ AKwUvBy2koZOb9643+Hg5uWc+tixQ5BS9NCKTpP8pPwFvU0b7pgq4Sy4goHJ09ds8FINdwX/y4hLbvPWAHOP@nongnu.org
+X-Gm-Message-State: AFuF++nShZp38enXCW/ij9r1G6wvwACcvjHb+KDdALfK4dXuEHN+Ob9H
+ dQG0OZTCl4qmLinZnQodTHtSqB8yigzBVs3Z95pbMXHxLRaYQRSyPu5zZ7pp4h2aajk=
+X-Gm-Gg: AYBFou1CtiQ4/D8bVUEqQ8FxsEwnmbqbGpKw6vrA3uppzzLopEGD/IGrNWnMCns5Ax7
+ umAtcOqtiNsk3duuPFC2MSdhlfoXYCPuYBvo77ktQIwVXrWpDzhhXmdRzrb0tsk1ceG+cALNgJp
+ BpOH42r7psVz4DzTIKMtOkBqsqML3/C06MT9mpGR4VnZYsVFQZu2uiaRFcd53E7ssykJbAtH4e8
+ s9sMpprD2pKpKms3vaQrvJ6rGwy1tgyLGmFKq/c2POKS5ILJBeOic90q7bktNd3y3en/fwun3nZ
+ /Ldg039CvkTGHrpSr6kTWviqr1U5iGx3lXcL62kn4Sgvu8x9lLguNPRDaOKQpaKef3g2Uf8oJzO
+ 9AgDbqw+06Rgw2O98H/cG3p4dGzyM5CgT3ApklkjENP1WR2HYj3qMP8CXegTHH4B2Wli6Ai0b4k
+ 9S/x3w1cvJVuYAsBtoLpxKu12vLFdGppAvRwPAIlC5g1vrTj/aL82TE2E4ssOc7SOFjLBDv7vUL
+ lNTFvky4+WKsxWWeD0IvoFLf0SXasKvjB9TScPRKsZMixROVHrzFd2am4vTeVnM8OIhCQ==
+X-Received: by 2002:a17:907:7283:b0:c29:22cf:b0f5 with SMTP id
+ a640c23a62f3a-c2aea05f3dcmr936690566b.33.1790667575340; 
+ Tue, 29 Sep 2026 00:39:35 -0700 (PDT)
 Received: from [192.168.1.39]
  (cpc91486-slou5-2-0-cust898.17-4.cable.virginm.net. [82.13.155.131])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2af4192b8asm532755666b.8.2026.09.29.00.29.43
+ a640c23a62f3a-c2de21a6349sm220626466b.21.2026.09.29.00.39.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 00:29:43 -0700 (PDT)
-Message-ID: <fd28137b-e3fb-4b28-8c45-b7be735a3487@linaro.org>
-Date: Tue, 29 Sep 2026 08:29:41 +0100
+ Tue, 29 Sep 2026 00:39:34 -0700 (PDT)
+Message-ID: <3cca72d4-ebb9-4086-acf2-57ee0177b3af@linaro.org>
+Date: Tue, 29 Sep 2026 08:39:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/30] target/i386/tcg: ignore VEX.L for unary scalar
- instructions
-To: Paolo Bonzini <pbonzini@redhat.com>, QEMU <qemu-devel@nongnu.org>
-References: <20260928130228.877003-1-pbonzini@redhat.com>
- <20260928130228.877003-7-pbonzini@redhat.com>
- <CAGscdFvd5kzKM4DbkCm3EsBNTr5vmk6nCfQCP=bzTkZn+tcWdA@mail.gmail.com>
- <CABgObfa9ZucyDLFtfv+ShrKNq4uAD8YwUfJe+TYpYR2Rf4J5Lw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+References: <20260917082618.1076988-1-richard.henderson@linaro.org>
+ <20260917082618.1076988-3-richard.henderson@linaro.org>
+ <8ed6ee25-57b4-4068-b526-c9370934bd84@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CABgObfa9ZucyDLFtfv+ShrKNq4uAD8YwUfJe+TYpYR2Rf4J5Lw@mail.gmail.com>
+In-Reply-To: <8ed6ee25-57b4-4068-b526-c9370934bd84@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:34::f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej2-x0f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:34::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +110,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/26 06:29, Paolo Bonzini wrote:
+On 9/29/26 08:16, Philippe Mathieu-Daudé wrote:
+>>
 > 
-> 
-> Il mar 29 set 2026, 04:22 Andrey Polivoda <apolivodaa433@gmail.com 
-> <mailto:apolivodaa433@gmail.com>> ha scritto:
-> 
->     Hi Paolo,
-> 
->     In its current form, this patch makes VROUNDSS (and possibly other
->     instructions) use 256-bit operand size when VEX.L=1
-> 
-> 
-> Thanks for the test case. I will take a look. The ordering of 
-> validate_vex() and decode_op_*() is tricky, I should fix it once and for 
-> all...
+> Noticed this commit while rebasing hybrid-accel work. Could this new
+> helper be useful for this previous discussion (patches 38-40)?
+> https://lore.kernel.org/qemu-devel/730b4fca-e0fa-4e99-a092- 
+> f63aadfa57d9@linaro.org/
 
-I take it I should discard this and expect another PR?
+No.  tb->cflags and tb->flags have different purposes.
+
+That hook is avoid synchronizing cached state internal to the target.
 
 
 r~
