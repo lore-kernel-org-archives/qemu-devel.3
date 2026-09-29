@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6645CCA5FAC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AFDC9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBa7P-0005rK-BK; Tue, 29 Sep 2026 11:51:47 -0400
+	id 1xBa7T-0005s5-50; Tue, 29 Sep 2026 11:51:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7H-0005mT-JE
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:51:40 -0400
-Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7F-0001RF-0h
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7F-0005lp-UQ
  for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:51:38 -0400
-Received: by mail-wr2-x0f.google.com with SMTP id
- ffacd0b85a97d-4887f6cf16bso2751109f8f.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:51:36 -0700 (PDT)
+Received: from mail-wr2-x10.google.com ([2a00:1450:4864:30::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7D-0001Qp-BY
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:51:37 -0400
+Received: by mail-wr2-x10.google.com with SMTP id
+ ffacd0b85a97d-48439feca17so3271197f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1790697095; x=1791301895; darn=nongnu.org;
+ d=openvz.org; s=google; t=1790697093; x=1791301893; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lFAcWnrWi60JYEjwn6l8H/drw/Jr0F8dV3g2fTSKPqM=;
- b=hIc6WSSC8x6U2V/ozGyjq8NHrca3JSiuM/FutMg2EXrVMTovfbrrDl1/JBmGejHEnt
- u9LfEgJojLiD6dmKr4q0YhRq4siY5G39MeJOZQDGrfdEKjl6GSToKS9Ugbv9mBsJOQZX
- hFWibaawN4KBIW51ioo+GczDfZXoF8PUpXA6ZYmvqNDJLbcqJhlyjCao4EProim4hFX+
- ms4F+5tLvDnouvGT5m4DeNU20u2j9SEnxv/8LKUza3DPTXInN0XouASb60ofoPcDAM5l
- NpEQa2wrPqYMQrKVAUEhH467r6Yuxo3fVXUGK/ka7D/P9Ytv2JB52m6ZhEmXqEEci48G
- vJMg==
+ bh=mo2H2454pgzwXQizQ9mmVpilIP+aDCvsipICKA+Bkms=;
+ b=t2J+6yfAgeuOcF1bWFH5cNShtrEjha+EenzxeijjdFD6p04zkubogwByu8gzkOP1Wa
+ 9+519rdoS1rdUF2fq4zHjjLAwVssaqvaZFHPKIupxjJKYnMomKPaBZ1Xv2I++u9gr82O
+ LRL2RvUG76qOrKlDUPeSNCiTisBdhAu1W3PZte29ftYR1Ko0EMJHB/Xc07HZuFKwuMaO
+ z/zGzbqDM/JCy8WRV4+lT0Wpn0cDPLYV/oOueGoZewQMCPPxYmBMGWtQyRGy1ejhSnOO
+ m7qHhOruA1fAd4JiSO8zXUjgvyCpJkQMphJjSdMp8A9sbG44kAxr38NHo2aSI4rmeqf/
+ vcRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790697095; x=1791301895;
+ d=1e100.net; s=20260707; t=1790697093; x=1791301893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lFAcWnrWi60JYEjwn6l8H/drw/Jr0F8dV3g2fTSKPqM=;
- b=y8i9Ac7+mSgd4CgATFXpHqDZUsun3PRAXrAkMO5R/AsDYwatFALdLLTLlVdO3/vcwV
- E8VCY3+uVQ6IhdJaEw385sUJq9yF4mtnx3uQhaEmsmVsHQ4UgyxXPelUXDNU8+WlwREs
- pXLgRVXGP4qipPkU/AHD/WNblCCB0tW3Y9VdZsVz2/Fj2xuDQAZWDZ9NjfuDAENnZCG8
- KeglzxL+cOKd2llNIjvLSK/KcI/p+gtS69kDaDOYfVXjqcloyOb7oGaKUxYfqj2I4y0L
- YzotGQZDL6GMC0601yMhCqdE9oB1D1dBkX9KfTanVWopBmhvaAesIDyF0g6A+594dN8W
- Jrdw==
-X-Gm-Message-State: AFq9FYLru+r+FgZW5bamQunyTCtxNnyxPCP/s4TN/CW95bRKvSWXDumv
- cL+9wc1vEQx9zvmLlJDkr8SR+/UIY8VMjZcBqxt/59pSiQhjyZtagRcv1x6U3YjSPFNfS9M9cKf
- kzOHE
-X-Gm-Gg: AYBFou2JFOkQHk//Ap/QBGhoCfuwV/r+PxrNI/rn2uM3cddQMQqn31PnM0YJkNbZUs4
- /mbTxjnsjQ0qB4Sn9IgzLlScsLoZe40kEMWrAL6BzXIZN4yqU7ddUmie8Mz0iNyp5sPD+YEQhbd
- EeLp6KNk8861D/eaEreu8CKsP0OrOxTKZPMcVceF4Rcm3dmq0NPkwyVFQULhme/ff7n7Eql5Rg/
- /31byMA5tBzSPlVLIggWS5ipaR9KGBjquCmRRAlLTpmqIe0YttpHevTm2jhEpxZKVUYa6M1OZ6g
- M7iW+JR2c0vTf16Eiyu4FElQYv5jk5niJn0zoxhOx8kuW89YLRsOcoCE09Z+Q/MyRE+sznqKvrR
- gQkk4+9qbWgDb3cTN3ctvX8/SPdUeKObFkUcAKfPwoIgaPcr5SLAYe9Eo6sSEjE1ZQ3Nt3dxx/q
- Z7RMTiyM7GcWnPF2fH/drixxXaPpJqmQ0MvJdectcPui+Bt3KUAf9LeZZWXw==
-X-Received: by 2002:a05:6000:4a04:b0:487:aa6:c90d with SMTP id
- ffacd0b85a97d-4887d9fa6e6mr23686461f8f.1.1790697095528; 
- Tue, 29 Sep 2026 08:51:35 -0700 (PDT)
+ bh=mo2H2454pgzwXQizQ9mmVpilIP+aDCvsipICKA+Bkms=;
+ b=jKNfWG17R1WIVyNHx6zl6nhXChjldTPiIFRi/15WZeoTexGD2OnOmmuxcH3ob+FAt/
+ 1p7kOIuqXty1jN+/PhNNDrBt7O0uY1wP1NUXdLl3yEiErXZzWaW9vPx0ZUsnqWn7gS6q
+ yXAaNZfd+pytKJa6wIEaUBj51XdBrArpyOZZQQRT0ycxaX+ARP9raZLzQPcDt0x4ipK1
+ kX4mP7gsFcOwGCP/5NX174FL2alDMTOrYGAfox01qBezPgsR0fsPMxtwCofxXnPrFJhc
+ RRt+n2jDINj3K5nR5XO+EVPXrg5+fN0/ICIg4ikFx2c7xP1HdNdEjWRougBdGqqAbjsP
+ 4/sA==
+X-Gm-Message-State: AFq9FYL2Vbw95U5lI7aY36ICVx22PRkj3/+aXs+9mI0rT7y/7pHYxzs3
+ Sz5IxfwCZXKlO6gr8yh7juANrhUyXuKbeD6Z0Sl6RMK0jJ3eG4qdruBO+cpenhlKHSvEcHG06nq
+ AgTHR
+X-Gm-Gg: AYBFou1xIe+1bpDIL0U2+9HiZ/BlKVUpmhs1SVeWSH07cVuDvtOAsWi14etK85z5WTm
+ zjgVlRkLWOZlZ3K6z6ev7/G2eJ4ZoPkMFWvSw2fwyj5HK1xAC743uBFBaBoV/49G/knTECMNtHj
+ ISur7je2CrlpyoCumkKbgGudIwD/e69cO/5kPeJEUZX8+knowfgNZTiV+OuQDdTJmcNwr4SAVfk
+ xxX2KQTDicoZPRJS9+NommCPttO8iUnsRVlV9jGrPQFxv79szV1mN8uWvsMMucGyW5Cqd7JJwD2
+ ykJn4yHnDthtI8dUdJP4jjPd0SqqKYr6SH8WBRw8Wme48OLyuw3cPzbU0Y5LIlqD8md4w4l9qs0
+ vmwKfIRXyqZKsty7u6E+mI173IKQ17tl8gg2sAC8bUSVWH3lURXbMFFxeKFoLdJe2PZkm7M0KOL
+ Kr4H2L1x3hg0uW0QbaGYiDe2Emuwl7fkWlqqOTzJ7xgJ25a05VwXO13NHH/g==
+X-Received: by 2002:a05:6000:2c0b:b0:48a:fdb2:f2f4 with SMTP id
+ ffacd0b85a97d-48afdb2f312mr74331f8f.57.1790697093501; 
+ Tue, 29 Sep 2026 08:51:33 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:37e8:6d0c:7fb:398c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af508b13fsm4416852f8f.27.2026.09.29.08.51.33
+ ffacd0b85a97d-48af508b13fsm4416852f8f.27.2026.09.29.08.51.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 08:51:34 -0700 (PDT)
+ Tue, 29 Sep 2026 08:51:32 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 3/9] block/commit: batch block-status queries
-Date: Tue, 29 Sep 2026 17:51:19 +0200
-Message-ID: <20260929155125.3151111-4-den@openvz.org>
+Subject: [PATCH v3 2/9] iotests/040: cover large and fragmented commit runs
+Date: Tue, 29 Sep 2026 17:51:18 +0200
+Message-ID: <20260929155125.3151111-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260929155125.3151111-1-den@openvz.org>
 References: <20260929155125.3151111-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::f; envelope-from=den@openvz.org;
- helo=mail-wr2-x0f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::10;
+ envelope-from=den@openvz.org; helo=mail-wr2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +103,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
-time, so a long run above base pays one query per 512K for an answer
-the whole run shares.
+040 never commits runs long enough to span more than one block-status
+query, so the answer that commit_iteration() is about to start caching
+goes untested.
 
-Query the remainder of the image instead and keep the answer in a
-CommitStatus owned by commit_run(). No device or export writes top
-above base_overlay while the job runs: they ask for
-BLK_PERM_CONSISTENT_READ along with BLK_PERM_WRITE, and the job
-withholds CONSISTENT_READ there, having to share WRITE or it would
-block its own writes to base through the backing chain. A job target
-asks for WRITE alone and is refused by the op blocker instead. From
-filtered_base downwards CONSISTENT_READ is shared again, and there only
-the job writes.
-
-Copying is still bounded by the read buffer. Zeroes need no buffer, so
-COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
-write-zeroes, and an unallocated span is crossed in one step.
+Add two cases on a base <- mid <- active chain, committing mid so the
+job takes the regular commit path rather than active commit, and compare
+base against a snapshot of mid taken before the commit. One case mixes
+multi-megabyte data, zero and hole runs, the other fragments them down
+to single clusters with every transition off the 512K boundary.
 
 Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
@@ -127,118 +119,148 @@ CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- block/commit.c | 58 ++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/040     | 102 ++++++++++++++++++++++++++++++++++++-
+ tests/qemu-iotests/040.out |   4 +-
+ 2 files changed, 103 insertions(+), 3 deletions(-)
 
-diff --git a/block/commit.c b/block/commit.c
-index 4e0b0f9029..e8ddd46053 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -31,8 +31,23 @@ enum {
-      * contiguous regions of the image is efficient.
-      */
-     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
+diff --git a/tests/qemu-iotests/040 b/tests/qemu-iotests/040
+index 5c18e413ec..e01c9385ba 100755
+--- a/tests/qemu-iotests/040
++++ b/tests/qemu-iotests/040
+@@ -25,13 +25,14 @@
+ import time
+ import os
+ import iotests
+-from iotests import qemu_img, qemu_io
++from iotests import qemu_img, qemu_img_create, qemu_io, compare_images
+ import struct
+ import errno
+ 
+ backing_img = os.path.join(iotests.test_dir, 'backing.img')
+ mid_img = os.path.join(iotests.test_dir, 'mid.img')
+ test_img = os.path.join(iotests.test_dir, 'test.img')
++reference_img = os.path.join(iotests.test_dir, 'reference.img')
+ 
+ class ImageCommitTestCase(iotests.QMPTestCase):
+     '''Abstract base class for image commit test cases'''
+@@ -951,6 +952,105 @@ class TestCommitWithOverriddenBacking(iotests.QMPTestCase):
+         self.vm.qmp('block-job-complete', device='commit')
+         self.vm.event_wait('BLOCK_JOB_COMPLETED')
+ 
++class TestCommitLargeRuns(iotests.QMPTestCase):
++    """Commit runs long enough to cross commit_iteration()'s cached span."""
 +
-+    /*
-+     * Zeroes need no buffer, so they are bounded by this instead. It stays
-+     * well under BDRV_REQUEST_MAX_BYTES and keeps a cancel from waiting on
-+     * a multi-gigabyte write.
-+     */
-+    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
- };
- 
-+/* Last block-status answer, covering [offset, end). Empty when equal. */
-+typedef struct CommitStatus {
-+    int64_t len;
-+    int64_t offset;
-+    int64_t end;
-+    int ret;
-+} CommitStatus;
++    MB = 1024 * 1024
++    CLUSTER = 64 * 1024
 +
- typedef struct CommitBlockJob {
-     BlockJob common;
-     BlockDriverState *commit_top_bs;
-@@ -130,26 +145,45 @@ static void commit_clean(Job *job)
- 
- static int coroutine_fn
- commit_iteration(CommitBlockJob *s, int64_t offset,
--                 int64_t *requested_bytes, void *buf)
-+                 int64_t *requested_bytes, void *buf, CommitStatus *st)
- {
-     BlockErrorAction action;
--    int64_t bytes = *requested_bytes;
-+    int64_t bytes;
-     int ret = 0;
-     bool error_in_source = true;
- 
--    /* Copy if allocated above the base */
--    WITH_GRAPH_RDLOCK_GUARD() {
--        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
--            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
--            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
-+    assert(offset >= st->offset);
++    # Runs several COMMIT_BUFFER_SIZE (512K) chunks long, of every kind.
++    SIZE = 32 * MB
++    LAYOUT = [
++        (0, 4 * MB, 'data'),
++        (4 * MB, 6 * MB, 'hole'),
++        (10 * MB, 4 * MB, 'data'),
++        (14 * MB, 6 * MB, 'zero'),
++        (20 * MB, 4 * MB, 'data'),
++        (24 * MB, 8 * MB, 'hole'),
++    ]
 +
-+    if (offset >= st->end) {
-+        /* Copy if allocated above the base */
-+        WITH_GRAPH_RDLOCK_GUARD() {
-+            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
-+                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
-+                st->len - offset, &bytes, NULL, NULL, NULL);
-+        }
++    # The same, with every transition off the 512K boundary.
++    SIZE_FRAGMENTED = 384 * CLUSTER  # 24M
++    LAYOUT_FRAGMENTED = [
++        (0, 45 * CLUSTER, 'data'),
++        (45 * CLUSTER, 55 * CLUSTER, 'hole'),
++        (100 * CLUSTER, CLUSTER, 'data'),
++        (101 * CLUSTER, 49 * CLUSTER, 'zero'),
++        (150 * CLUSTER, 80 * CLUSTER, 'data'),
++        (230 * CLUSTER, CLUSTER, 'hole'),
++        (231 * CLUSTER, 69 * CLUSTER, 'data'),
++        (300 * CLUSTER, 83 * CLUSTER, 'zero'),
++        (383 * CLUSTER, CLUSTER, 'hole'),
++    ]
 +
-+        if (ret < 0) {
-+            trace_commit_one_iteration(s, offset, 0, ret);
-+            goto fail;
-+        }
++    def setUp(self):
++        self.vm = iotests.VM()
++        self.vm.launch()
 +
-+        st->offset = offset;
-+        st->end = offset + bytes;
-+        st->ret = ret;
-     }
- 
--    trace_commit_one_iteration(s, offset, bytes, ret);
-+    ret = st->ret;
-+    bytes = st->end - offset;
- 
--    if (ret < 0) {
--        goto fail;
-+    /* An unallocated span costs no I/O, so it is crossed in one step. */
-+    if (ret & BDRV_BLOCK_ZERO) {
-+        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
-+    } else if (ret & BDRV_BLOCK_ALLOCATED) {
-+        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
-     }
- 
-+    trace_commit_one_iteration(s, offset, bytes, ret);
++    def tearDown(self):
++        self.vm.shutdown()
++        for img in (backing_img, mid_img, test_img, reference_img):
++            if os.path.exists(img):
++                os.remove(img)
 +
-     if (ret & BDRV_BLOCK_ALLOCATED) {
-         if (ret & BDRV_BLOCK_ZERO) {
-             /*
-@@ -215,6 +249,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     int64_t n = 0; /* bytes */
-     QEMU_AUTO_VFREE void *buf = NULL;
-     int64_t len, base_len;
-+    CommitStatus st = { 0 };
++    def build_images(self, layout, size):
++        # A pattern of its own in base, so a misplaced cluster shows up.
++        qemu_img_create('-f', iotests.imgfmt, backing_img, str(size))
++        qemu_io('-c', f'write -P 0x11 0 {size}', backing_img)
++
++        qemu_img_create('-f', iotests.imgfmt, '-b', backing_img, '-F',
++                        iotests.imgfmt, mid_img, str(size))
++        for offset, length, kind in layout:
++            if kind == 'data':
++                qemu_io('-c', f'write -P 0x22 {offset} {length}', mid_img)
++            elif kind == 'zero':
++                qemu_io('-c', f'write -z {offset} {length}', mid_img)
++
++        # What base must equal once mid is committed into it.
++        qemu_img('convert', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
++                 mid_img, reference_img)
++
++        # An empty layer above mid, so top_node=mid is not the active one.
++        qemu_img_create('-f', iotests.imgfmt, '-b', mid_img, '-F',
++                        iotests.imgfmt, test_img, str(size))
++
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'base',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': backing_img},
++        })
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'mid',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': mid_img},
++            'backing': 'base',
++        })
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'active',
++            'driver': iotests.imgfmt,
++            'file': {'driver': 'file', 'filename': test_img},
++            'backing': 'mid',
++        })
++
++    def commit_and_verify(self):
++        self.vm.cmd('block-commit', job_id='commit0', device='active',
++                    top_node='mid', base_node='base')
++        self.wait_until_completed(drive='commit0')
++
++        self.vm.cmd('blockdev-del', node_name='active')
++        self.vm.cmd('blockdev-del', node_name='mid')
++        self.vm.cmd('blockdev-del', node_name='base')
++        self.assertTrue(compare_images(reference_img, backing_img))
++
++    def test_commit_large_runs(self):
++        self.build_images(self.LAYOUT, self.SIZE)
++        self.commit_and_verify()
++
++    def test_commit_fragmented_runs(self):
++        self.build_images(self.LAYOUT_FRAGMENTED, self.SIZE_FRAGMENTED)
++        self.commit_and_verify()
++
++
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2', 'qed'],
+                  supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/040.out b/tests/qemu-iotests/040.out
+index 1bb1dc5f0e..d2e2a2d98f 100644
+--- a/tests/qemu-iotests/040.out
++++ b/tests/qemu-iotests/040.out
+@@ -1,5 +1,5 @@
+-.................................................................
++...................................................................
+ ----------------------------------------------------------------------
+-Ran 65 tests
++Ran 67 tests
  
-     len = blk_co_getlength(s->top);
-     if (len < 0) {
-@@ -235,6 +270,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     }
- 
-     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
-+    st.len = len;
- 
-     for (offset = 0; offset < len; offset += n) {
-         /* Note that even when no rate limit is applied we need to yield
-@@ -245,7 +281,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-             break;
-         }
- 
--        ret = commit_iteration(s, offset, &n, buf);
-+        ret = commit_iteration(s, offset, &n, buf, &st);
- 
-         if (ret < 0) {
-             return ret;
+ OK
 -- 
 2.53.0
 
