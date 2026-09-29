@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37EAC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 617E2CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBSSU-0003Bt-Pp; Tue, 29 Sep 2026 03:41:02 -0400
+	id 1xBSSC-000341-1I; Tue, 29 Sep 2026 03:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSS-0003BS-J7
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:41:00 -0400
+ id 1xBSS9-00033I-Vd
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:42 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSK-0005rU-LC
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:55 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xBSS4-0005o7-2W
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:41 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T7ToEP3220601
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:51 GMT
+ 68T7U1684087187
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=/rgMAnHhrCX
- imBNG6YIjFj0XIqIYRzMOCjJNP+IQ9Sg=; b=f17RckzfQxl77/nWzJl8aL3tFzM
- LF3zoVk4prDhLsI6l9l4m8ANnZG12DqSiB7F++tNPJlyGelrDiHJYgL7YT1RRppr
- pVtonRfU6gUwSTPGtsFSE1gz3c37xFvEKbrQa12sZuBz/BU6VSV8F/7JoQjfQMoN
- nSQ9TvnCnBLwCusIw02VSKuOuUhvu+uDjgEv3l5bFO/7jTLayhI3FhleWd+639WZ
- +tuJzc+NgeuJdBF+2rrnZ67j0/XGkBjYXjaAUDxjmJUwjjAqoescGiYNuneoZ1PR
- gt/hUViftJqM7AtvTue7C7gTDwyEfcL2XfqVqQUhX5pVnhCL9xnYEJGIusw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvw22v16-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=1feSs4MlC9Y
+ ZDZzEA+daQuqqh8V9w/ch8Qdu5MJCY4w=; b=j7Dpdz0hon4VCPhPjs3NyQrcjR7
+ gnHnsJuTKyQSqE0lP7PDO9JZTcb8Q0ZSqqrHUz3GenAoPpMEixDAB7aO5uzwRNG9
+ 8kzvSRHDvBuzLbbVzqgYLujaBAADo7B8ee/y1hXWTpt6HKG3H0IaMvgpP839/ao5
+ FPeT1OhtAMJD25UZdpgbD9A2SBNDt7Wc8pVOwxlwzLdj7zigdznLkGozVy6/jJDy
+ rZYn7y4zPnUtFZI/mg+h4/pK8/ncXPGjvtNuioO9tmVOqE/D0cK/7nkFTwwFoD8X
+ //yrZ9Omau8f39SfS2c4NG0RnDFPycnk8wzPPDqUsjrCzKXIapOw9gnTj2w==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h00s4su77-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:51 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-342b66c0b06so746841eec.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:34 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-14388664b04so600059c88.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790667651; x=1791272451; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790667633; x=1791272433; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/rgMAnHhrCXimBNG6YIjFj0XIqIYRzMOCjJNP+IQ9Sg=;
- b=fUfqabzka9qtmtjAkt8fs8iKAHD7Y7gDnAzOWOX0XNO+ZZx6DkveNpzfd6PS0K2cmu
- 6SpBrNTF2morOS9GraJAmgAJjFyrIUqmcn2hS3Q7dodqRIpvoujR9+LGQ5prnoXX7Dba
- 0wwWXO2i/aFne7BDH6KtZvNnF5Txv8Vf++kwS5sFuNPQBdX1InQOJzVg3sWRr37O8vCu
- wutVfSIhIHwoMXBzuBNulCT6MBZmv7RtlCvN0KV1VfqP1Ptb25kxDkWvXhPIM12laU4a
- QvPn7V6vCkWk79s2THNRrrnRhpEY/GwRGAnRPu7Vqj7OtILGtWmbQkxv1lWydlVhz4Pn
- iXRA==
+ bh=1feSs4MlC9YZDZzEA+daQuqqh8V9w/ch8Qdu5MJCY4w=;
+ b=gMIFEN27VQa9PsYzxh3HtzL6UEFSb8YF+984frjUVaY8fHdl2YW9u8Pkvq1BH9U/Dq
+ Ond9Kj0zlYVfLSqkMkDrvldeIFCgM5AIS6YQBQOiDc6nWshXIlzP8DoKBfptPiL43XbZ
+ yM9Lw297KqvmycvYLyelqpmL7rUYvCPITxN+4B6lAkm+eCJdS5LAW99VUBny97QuJKR8
+ P+JjgOy0rDQIoOAJuNpvSgMk3ZEZx4Xn0otdd3CGxzLDx51FZKr1D6hVxES8V9l8AUuf
+ LPoOyqhcN7bX9Y67Af7BBlD2AuEwtf9xbHJzzp6e8IMeMZKcgKh4LERgWpcyUdroLQWA
+ nkIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790667651; x=1791272451;
+ d=1e100.net; s=20260707; t=1790667633; x=1791272433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/rgMAnHhrCXimBNG6YIjFj0XIqIYRzMOCjJNP+IQ9Sg=;
- b=s3IyOo6IOgUnHiAluSt0IS79syVSrDJC1oUzGg6wB2QOyHQupKeRw7AK1xj4FpMzQY
- ukFu/0ihbrnQkIiRopvrGeib66b7jY6lBrikDzeeUMl23Kb11/BP328RrGp+nQcp9nSv
- 06kZGAMvUTwXwKgTUEp5cXuWBisredkVekOriKZLNpLDpgm0rEt+yRL/GMlyhXf6QI5T
- L/LlSewi5VSljjrV0nKaTtiv6AY8JfYNshHdVM6kLrAL6r/HXM2ic7pMZ3QkxBIUnSvs
- cfbGPrQvTbINvJrSS196aTZqzzO3W0Hj/EgzokJc5Rk3yoHqoIEsG4wXkxuoDXnnkhEN
- aNQw==
-X-Gm-Message-State: AFq9FYKm7K5iFJvRbmvDIocaQPMr+mBKBZibUbkQ79PYIyaQ3kmixF1N
- SbZgYWnCxF+gtRe2T1+42zq30BNkSYeezQFyqNf5aKBRClFjY7t6ba4t4Q+BakHjYa1drDb+4J+
- 7v/cGRDlYrmP2UKF7j9IxoYkBcnVJ6C/19tZqgfR/1M2fjss12dFteqkkU/UUNynuzA==
-X-Gm-Gg: AYBFou1Sgbx+T7CiOeqOKm5CrxdNuboxxpTL2MRDDvM8zm6/QusetxMToy4EE2HnZW5
- IsZFHDiagPkRjg5KD5ZWLPGoAZvGCIvI+EshA5b5DuqzsFT5FN49FgyLgECpItHq8ZRxUMcMoW7
- ywipAJTQlo5JS0u+1Tm0HUeVhhP1f9CZb7HQnCb8A3rQMFTj5zBuW73meoPi9rxjXAC4CCA58Gf
- 9hlfVxUg0T2Gbt0X1ySoleiSTi6+eCxiEFph3QFubSBeI9+a2grQ8sanItbSb9/oPyTT1qUrpqt
- qI8uyahCjQ4ExiST+5q/4ytLvXtHuaYVPstBHglm2D3GhxNAiE0rAUgnom+MzJihxkn4U3aw72o
- +bBwuSSpkd3U00qE+Ocbs50lkwGu7KS96LT2k/RhNgJ9ZfKdO3M0LLAJ8VQ==
-X-Received: by 2002:a05:693c:8808:10b0:332:94e9:a72e with SMTP id
- 5a478bee46e88-34af5cca9c4mr1947370eec.9.1790667650350; 
- Tue, 29 Sep 2026 00:40:50 -0700 (PDT)
-X-Received: by 2002:a05:693c:8808:10b0:332:94e9:a72e with SMTP id
- 5a478bee46e88-34af5cca9c4mr1947349eec.9.1790667649621; 
- Tue, 29 Sep 2026 00:40:49 -0700 (PDT)
+ bh=1feSs4MlC9YZDZzEA+daQuqqh8V9w/ch8Qdu5MJCY4w=;
+ b=Vb0L7C1JgDTMpdi0MvyrEtC8WVCInrVOwfyDPNrm9vAAlCRnKNYn8sEUk7GM07GzYN
+ IKuogfYshk9igGVIPgIc2HtdnvQ7Dys6wp9aRfYtuZ/0QRqBsDCGWbCVdbVfymZkX3xz
+ S15Y66x22MCOiAusWnoush0WcmCfzG872LAM+c8PTMd+YojjkpqjhzqBt+ioOBs0mRRV
+ YyNEvj7xD0O5rWkR8OdIf6joJ9/L4dHOOAABNmkf9Fp6x7DiSMSfBmlycp4Iowvt16V4
+ f6NbeuKAo9NaNI+/KNFHq4MGN/WVYDDPtzR95WmnHfuYkXcT4VHdmlZoBl8orVbAuVW9
+ epww==
+X-Gm-Message-State: AFuF++kWHnEoL1RdD/yzOOYMtSeMwsFnYA7oXhAEu8iriRi8q4hPfcpH
+ MvYsTJH3teYboOr0QINnnjQeNsJN/yjHsbAIApwPpUcn64NSh26jw+AKLC6fKRg7yaL3j5Ymu/2
+ Q+bPzaO2cFf13TrjLzXCNxt0vU5TlNvvubI3XdAzHpISvRHus81CKshy/GMBoVhzv3g==
+X-Gm-Gg: AYBFou3x+3aX1dz8IMDcQjlPhxsWK4Y/1zTm8LTUmqbUYYn+ZjdLnvEHpeaecyY/XXn
+ PenHCZ8mSsJ7RmgNNU0eLxcQOLPad0SV+wM97b8FGNsQdTFXzzWKd8o3YFZKAfL37rlVE2TFXT6
+ 735OS28uAVueZHTG/XjaJoTt2qfFH5+f6OB2+Y6qbfKDVFcEVJnBrAKLB+h3niHfHN+IjKcQNzF
+ sFAWJSswu70iudmgETSmPB4o6HanY4PpxFS+rhUJRXE0U8u+B26OgDMvj/Vt8rMo1ogUrsoBAuO
+ xq8CIG+/rg+GGdNIcUhiTgEmUvKLRhyz1km26mvhMb4rJojAZbsWgO0QJ4NP5UDle9ciAbW3dHt
+ v/CI6uYlRr4InPACZnxOw2D8moKXI1tMTUsviu9WhHDh1d9iKNrYIPF54xA==
+X-Received: by 2002:a05:7022:ff49:b0:148:516e:53e with SMTP id
+ a92af1059eb24-14b2d89e1bcmr2968987c88.6.1790667632701; 
+ Tue, 29 Sep 2026 00:40:32 -0700 (PDT)
+X-Received: by 2002:a05:7022:ff49:b0:148:516e:53e with SMTP id
+ a92af1059eb24-14b2d89e1bcmr2968898c88.6.1790667631578; 
+ Tue, 29 Sep 2026 00:40:31 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.48
+ 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 00:40:48 -0700 (PDT)
+ Tue, 29 Sep 2026 00:40:30 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -92,39 +91,38 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 14/19] tests/tcg/mips64/test_mips64r6: fix call to
- check_results_64
-Date: Tue, 29 Sep 2026 07:40:02 +0000
-Message-ID: <20260929074007.118970-15-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 01/19] tests/tcg/mipsel: move dsp sources
+Date: Tue, 29 Sep 2026 07:39:49 +0000
+Message-ID: <20260929074007.118970-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=N6i8hG9B c=1 sm=1 tr=0 ts=6abb6b83 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX2ow1ABPhDH3+
+ 2PG+27zgWzI+0GeGUy7lyFOA+ui0XCI3fxfmq/HJtYww01Z9xIjjaAqZbBU3F5Cb96osOrUdhzf
+ 7AxBFIjGTLcBnOE577Gtte4RtktWNx4=
+X-Authority-Analysis: v=2.4 cv=ALbfqNVA c=1 sm=1 tr=0 ts=6abb6b72 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=Jd2gHzoULpm3QAu6kFYA:9 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: lMJdMD-i7ky0DyJWHU-gFlWvke-0hOtT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX5O212LQ3Gc9r
- UQNkXmH7ImSCTxKbOeVpmsZMoGLC4PDmDqZhZ8kwLcMNIBp5OWzqmXEbT9JdJrWoBlG1nhVqjFe
- XV43w/Nu86bRS+6bqvlCVnMcPex3RlJWNrXynGwvIsV6FlTh6FArv3/unSdKdjoD7HwYe3M72s0
- EP1G/yr8UqF8qXqur4cCl7oBgCKBrexUom/E0bgqSpJv3EvU9R7zoQoKDGoVCbx6zY/ZUjku1pH
- vQZFvDHkymkNtlapLkHiAdvPNbJDH+Q/MiYlso2UwL1U3BYoGLXUiC8/USLZjbiYA50EcJosz1e
- j5bOaREePtgd+dgCd+tE+rhgIUq3Bywfo+cvI7S+w060fuw2w2KIkUx06LaLL5kx18AWq6HZGYq
- 732CwuitKjZarUqK5pyJBaakEmwsxK4gs8rcCiY28bB1cXX0xmYB6C5EEArqS+lvINgTJlMH/ZO
- dS6/9zX1ROCEeCR4toQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX4AvhM5c/MLpI
- R9MY4UwBlQxyCTWOsJSxKj9nsz2FOiHL+m4tYG8n3Rtf6v/5iolA/NZSubBJqDVkWcjcpq6ZU8m
- psG79JIyAuEXIZjGTMThe9JrtRLVTmE=
-X-Proofpoint-GUID: lMJdMD-i7ky0DyJWHU-gFlWvke-0hOtT
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=sw0IbGe5VMtlCODVeQsA:9 a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX00+mC/Gs9Utw
+ SCIClRM5/ZJilxzUKvxh05Gb5y1y6jm7Ek6PGpjVDXrVekVgwlIqX4MzkeQNqGHuKKtTyj4QMA+
+ 4E12JD4bXDH3iEw/l+L6BESR8ii3EcAyyM7KwNHxuczNOS7kpbK3H51CEjlSyv6pPtAjHP3zfvO
+ Md4rhSXHmVT5BpHoNi4aHrEvsL50QRaJADl06c8qx6JJvBgC6PYmUvgaDyuPljRwU6mmkJ/qSP5
+ Ff/T9fxvAzlDZWzhjzN+548YN+BcuePlBNj7A5jP6CYHWwm8d5PddxMZ3cnXrVj7aj7HUncseHT
+ xCQne1B3S38k4H3CB7JUaDcywDz8PtmCCjXUmXc9F5DYzw82M9pXNGrsvoaj+2y/6eZ1Q635Ufn
+ 3nMHyiE7qn6mOJYWWIKd5zmYCyXP47MDKLNgol8qg98MQEpBRGN3Q2yEXnPqSO0wbCG8JECEk5q
+ DUy9Rqf/8Db1KAUnprQ==
+X-Proofpoint-GUID: MV6qZFFcdPqrNbM62QyfADragSqalFJU
+X-Proofpoint-ORIG-GUID: MV6qZFFcdPqrNbM62QyfADragSqalFJU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290030
 Received-SPF: pass client-ip=205.220.168.131;
@@ -152,517 +150,976 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-isa and group names were present in all files, but not passed to
-check_results_64, which expects them.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips64/test_mips64r6_and.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_bitswap.c  | 3 ++-
- tests/tcg/mips64/test_mips64r6_clo.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_clz.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_crc32b.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cb.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cd.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32ch.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32cw.c  | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32d.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32h.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_crc32w.c   | 6 +++---
- tests/tcg/mips64/test_mips64r6_dbitswap.c | 3 ++-
- tests/tcg/mips64/test_mips64r6_dclo.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dclz.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmuh.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmuhu.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmul.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_dmulu.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsllv.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsrav.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_dsrlv.c    | 3 ++-
- tests/tcg/mips64/test_mips64r6_muh.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_muhu.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_mul.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_mulu.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_nor.c      | 3 ++-
- tests/tcg/mips64/test_mips64r6_or.c       | 3 ++-
- tests/tcg/mips64/test_mips64r6_sllv.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_srav.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_srlv.c     | 3 ++-
- tests/tcg/mips64/test_mips64r6_xor.c      | 3 ++-
- 32 files changed, 72 insertions(+), 48 deletions(-)
+ tests/tcg/{mips/user/ase/dsp => mipsel}/Makefile                  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addsc.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_s_qb.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addwc.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bitrev.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bposge32.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_eq_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_le_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_lt_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_eq_qb.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_le_qb.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_lt_qb.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_eq_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_le_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_lt_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_s_w_ph.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_sa_l_w.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbl.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbr.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_s_w_ph.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_sa_l_w.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbl.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbr.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extp.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdp.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdpv.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpv.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_r_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_rs_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_s_h.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_w.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_r_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_rs_w.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_s_h.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_w.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_insv.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lbux.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lhx.c         | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lwx.c         | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_madd.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maddu.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_main.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phl.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phr.c | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phl.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phr.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mfhi.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mflo.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_modsub.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msub.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msubu.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthi.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthlip.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mtlo.c        | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phl.c | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phr.c | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbl.c    | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbr.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mulq_rs_ph.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mult.c        | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_multu.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_packrl_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_qb.c     | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phl.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phr.c  | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbl.c    | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbla.c   | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbr.c    | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbra.c   | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbl.c | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbla.c    | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbr.c | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbra.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_ph_w.c | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_qb_ph.c  | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_rs_ph_w.c    | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrqu_s_qb_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_raddu_w_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_rddsp.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilo.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilov.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_ph.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_ph.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrl_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrlv_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_s_qb.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_wrdsp.c       | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_absq_s_qb.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_ph.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_w.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_r_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_append.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_balign.c      | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_eq_qb.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_le_qb.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_lt_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpa_w_ph.c    | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_s_w_ph.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_sa_w_ph.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpax_w_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dps_w_ph.c    | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_s_w_ph.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_sa_w_ph.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsx_w_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_ph.c      | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_s_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_rs_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_w.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsa_w_ph.c  | 0
+ .../tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsaq_s_w_ph.c | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_qb_ph.c | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_ph_w.c    | 0
+ .../{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_r_ph_w.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_prepend.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_qb.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_r_qb.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_r_qb.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrl_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrlv_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_ph.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_ph.c  | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_w.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_w.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_ph.c     | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_s_ph.c   | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_qb.c    | 0
+ tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_r_qb.c  | 0
+ 161 files changed, 0 insertions(+), 0 deletions(-)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/Makefile (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_absq_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addq_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addsc.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addu_s_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_addwc.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bitrev.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_bposge32.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_eq_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_le_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmp_lt_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_eq_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_le_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpgu_lt_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_eq_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_le_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_cmpu_lt_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_s_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpaq_sa_l_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpau_h_qbr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_s_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsq_sa_l_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_dpsu_h_qbr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extp.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdp.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpdpv.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extpv.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_rs_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_s_h.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extr_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_rs_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_s_h.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_extrv_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_insv.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lbux.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lhx.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_lwx.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_madd.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maddu.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_main.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_s_w_phr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_maq_sa_w_phr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mfhi.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mflo.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_modsub.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msub.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_msubu.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthi.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mthlip.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mtlo.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleq_s_w_phr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_muleu_s_ph_qbr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mulq_rs_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_mult.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_multu.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_packrl_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_pick_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceq_w_phr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbla.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precequ_ph_qbra.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbl.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbla.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbr.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_preceu_ph_qbra.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_ph_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_qb_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrq_rs_ph_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_precrqu_s_qb_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_raddu_w_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_rddsp.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_repl_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_replv_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilo.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shilov.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shll_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shllv_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shra_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrav_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrl_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_shrlv_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subq_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_subu_s_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r1_wrdsp.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_absq_s_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addqh_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_addu_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_adduh_r_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_append.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_balign.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_eq_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_le_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_cmpgdu_lt_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpa_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_s_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpaqx_sa_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpax_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dps_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_s_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsqx_sa_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_dpsx_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mul_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_rs_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulq_s_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsa_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_mulsaq_s_w_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_qb_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_ph_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_precr_sra_r_ph_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_prepend.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shra_r_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrav_r_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrl_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_shrlv_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_r_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subqh_w.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subu_s_ph.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_qb.c (100%)
+ rename tests/tcg/{mips/user/ase/dsp => mipsel}/test_dsp_r2_subuh_r_qb.c (100%)
 
-diff --git a/tests/tcg/mips64/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
-index 38ae641e907..3a3d8e68831 100644
---- a/tests/tcg/mips64/test_mips64r6_and.c
-+++ b/tests/tcg/mips64/test_mips64r6_and.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_bitswap.c b/tests/tcg/mips64/test_mips64r6_bitswap.c
-index ae2f74b34ee..5e5f948e250 100644
---- a/tests/tcg/mips64/test_mips64r6_bitswap.c
-+++ b/tests/tcg/mips64/test_mips64r6_bitswap.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_clo.c b/tests/tcg/mips64/test_mips64r6_clo.c
-index 611dcc9572f..a2e370849e6 100644
---- a/tests/tcg/mips64/test_mips64r6_clo.c
-+++ b/tests/tcg/mips64/test_mips64r6_clo.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_clz.c b/tests/tcg/mips64/test_mips64r6_clz.c
-index 3f89cbdec2f..0707cf751b7 100644
---- a/tests/tcg/mips64/test_mips64r6_clz.c
-+++ b/tests/tcg/mips64/test_mips64r6_clz.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32b.c b/tests/tcg/mips64/test_mips64r6_crc32b.c
-index 7b8955cffd5..d9956b4e20e 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32b.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32b.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cb.c b/tests/tcg/mips64/test_mips64r6_crc32cb.c
-index 58479c2733b..7edced391b7 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cb.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cb.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cd.c b/tests/tcg/mips64/test_mips64r6_crc32cd.c
-index 417cd895fb9..f7e3f474aa6 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cd.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cd.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32ch.c b/tests/tcg/mips64/test_mips64r6_crc32ch.c
-index 9ae4804e687..b5f0bc207bc 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32ch.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32ch.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32cw.c b/tests/tcg/mips64/test_mips64r6_crc32cw.c
-index 2e1ca6f836f..a8e37f43929 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32cw.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32cw.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32d.c b/tests/tcg/mips64/test_mips64r6_crc32d.c
-index d916ee2586b..b6e97fc71c6 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32d.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32d.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32h.c b/tests/tcg/mips64/test_mips64r6_crc32h.c
-index 72575e95858..72bdb59d136 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32h.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32h.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_crc32w.c b/tests/tcg/mips64/test_mips64r6_crc32w.c
-index 4518b4fe482..b625cce241c 100644
---- a/tests/tcg/mips64/test_mips64r6_crc32w.c
-+++ b/tests/tcg/mips64/test_mips64r6_crc32w.c
-@@ -134,9 +134,9 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(isa_ase_name, group_name, instruction_name,
--                           TEST_COUNT_TOTAL, elapsed_time, b64_result,
--                           b64_expect);
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+                           b64_result, b64_expect);
- 
-     return ret;
- }
-diff --git a/tests/tcg/mips64/test_mips64r6_dbitswap.c b/tests/tcg/mips64/test_mips64r6_dbitswap.c
-index 7473f3f0ceb..9ded266e77f 100644
---- a/tests/tcg/mips64/test_mips64r6_dbitswap.c
-+++ b/tests/tcg/mips64/test_mips64r6_dbitswap.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dclo.c b/tests/tcg/mips64/test_mips64r6_dclo.c
-index a6f8688b76c..864736275c7 100644
---- a/tests/tcg/mips64/test_mips64r6_dclo.c
-+++ b/tests/tcg/mips64/test_mips64r6_dclo.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dclz.c b/tests/tcg/mips64/test_mips64r6_dclz.c
-index ab2d3eadeff..8c7e7389cc4 100644
---- a/tests/tcg/mips64/test_mips64r6_dclz.c
-+++ b/tests/tcg/mips64/test_mips64r6_dclz.c
-@@ -139,7 +139,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmuh.c b/tests/tcg/mips64/test_mips64r6_dmuh.c
-index 490c81f884a..0bcaf97d50b 100644
---- a/tests/tcg/mips64/test_mips64r6_dmuh.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmuh.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmuhu.c b/tests/tcg/mips64/test_mips64r6_dmuhu.c
-index 28dd2026418..b4cb47f884d 100644
---- a/tests/tcg/mips64/test_mips64r6_dmuhu.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmuhu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmul.c b/tests/tcg/mips64/test_mips64r6_dmul.c
-index 2a33d678992..c5cc48ad0db 100644
---- a/tests/tcg/mips64/test_mips64r6_dmul.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmul.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dmulu.c b/tests/tcg/mips64/test_mips64r6_dmulu.c
-index 161d1fe96bc..739ad90f043 100644
---- a/tests/tcg/mips64/test_mips64r6_dmulu.c
-+++ b/tests/tcg/mips64/test_mips64r6_dmulu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsllv.c b/tests/tcg/mips64/test_mips64r6_dsllv.c
-index fc93e0b218a..fa8108ee750 100644
---- a/tests/tcg/mips64/test_mips64r6_dsllv.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsllv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsrav.c b/tests/tcg/mips64/test_mips64r6_dsrav.c
-index e496e8fa83a..f5752e4141a 100644
---- a/tests/tcg/mips64/test_mips64r6_dsrav.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsrav.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_dsrlv.c b/tests/tcg/mips64/test_mips64r6_dsrlv.c
-index 2c4c04f4c42..62b7f974ed3 100644
---- a/tests/tcg/mips64/test_mips64r6_dsrlv.c
-+++ b/tests/tcg/mips64/test_mips64r6_dsrlv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_muh.c b/tests/tcg/mips64/test_mips64r6_muh.c
-index 8f371e22e61..2706de4c0d3 100644
---- a/tests/tcg/mips64/test_mips64r6_muh.c
-+++ b/tests/tcg/mips64/test_mips64r6_muh.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_muhu.c b/tests/tcg/mips64/test_mips64r6_muhu.c
-index 79824c05b13..c4f34ced688 100644
---- a/tests/tcg/mips64/test_mips64r6_muhu.c
-+++ b/tests/tcg/mips64/test_mips64r6_muhu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_mul.c b/tests/tcg/mips64/test_mips64r6_mul.c
-index 9589c4c3a08..87c0422ba09 100644
---- a/tests/tcg/mips64/test_mips64r6_mul.c
-+++ b/tests/tcg/mips64/test_mips64r6_mul.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_mulu.c b/tests/tcg/mips64/test_mips64r6_mulu.c
-index 72b4d038cfe..2ccda6b912f 100644
---- a/tests/tcg/mips64/test_mips64r6_mulu.c
-+++ b/tests/tcg/mips64/test_mips64r6_mulu.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
-index 04b841c8df1..6edcc1e394c 100644
---- a/tests/tcg/mips64/test_mips64r6_nor.c
-+++ b/tests/tcg/mips64/test_mips64r6_nor.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
-index fde9601a78d..e6b07cd4bf8 100644
---- a/tests/tcg/mips64/test_mips64r6_or.c
-+++ b/tests/tcg/mips64/test_mips64r6_or.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_sllv.c b/tests/tcg/mips64/test_mips64r6_sllv.c
-index 46136de0634..2d3f0d38dd9 100644
---- a/tests/tcg/mips64/test_mips64r6_sllv.c
-+++ b/tests/tcg/mips64/test_mips64r6_sllv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
-index 94c528f8ab8..951bd7826dc 100644
---- a/tests/tcg/mips64/test_mips64r6_srav.c
-+++ b/tests/tcg/mips64/test_mips64r6_srav.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_srlv.c b/tests/tcg/mips64/test_mips64r6_srlv.c
-index 993d0b75205..0195802f660 100644
---- a/tests/tcg/mips64/test_mips64r6_srlv.c
-+++ b/tests/tcg/mips64/test_mips64r6_srlv.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
-diff --git a/tests/tcg/mips64/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
-index 3ab67ea0555..52981f73579 100644
---- a/tests/tcg/mips64/test_mips64r6_xor.c
-+++ b/tests/tcg/mips64/test_mips64r6_xor.c
-@@ -146,7 +146,8 @@ int32_t main(void)
-     elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
-     elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
- 
--    ret = check_results_64(instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-+    ret = check_results_64(isa_ase_name, group_name,
-+                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
-                            b64_result, b64_expect);
- 
-     return ret;
+diff --git a/tests/tcg/mips/user/ase/dsp/Makefile b/tests/tcg/mipsel/Makefile
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/Makefile
+rename to tests/tcg/mipsel/Makefile
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_absq_s_ph.c b/tests/tcg/mipsel/test_dsp_r1_absq_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_absq_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_absq_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_absq_s_w.c b/tests/tcg/mipsel/test_dsp_r1_absq_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_absq_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_absq_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_ph.c b/tests/tcg/mipsel/test_dsp_r1_addq_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_addq_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_s_ph.c b/tests/tcg/mipsel/test_dsp_r1_addq_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_addq_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_s_w.c b/tests/tcg/mipsel/test_dsp_r1_addq_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addq_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_addq_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addsc.c b/tests/tcg/mipsel/test_dsp_r1_addsc.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addsc.c
+rename to tests/tcg/mipsel/test_dsp_r1_addsc.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addu_qb.c b/tests/tcg/mipsel/test_dsp_r1_addu_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addu_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_addu_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addu_s_qb.c b/tests/tcg/mipsel/test_dsp_r1_addu_s_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addu_s_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_addu_s_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_addwc.c b/tests/tcg/mipsel/test_dsp_r1_addwc.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_addwc.c
+rename to tests/tcg/mipsel/test_dsp_r1_addwc.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_bitrev.c b/tests/tcg/mipsel/test_dsp_r1_bitrev.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_bitrev.c
+rename to tests/tcg/mipsel/test_dsp_r1_bitrev.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_bposge32.c b/tests/tcg/mipsel/test_dsp_r1_bposge32.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_bposge32.c
+rename to tests/tcg/mipsel/test_dsp_r1_bposge32.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_eq_ph.c b/tests/tcg/mipsel/test_dsp_r1_cmp_eq_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_eq_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmp_eq_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_le_ph.c b/tests/tcg/mipsel/test_dsp_r1_cmp_le_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_le_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmp_le_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_lt_ph.c b/tests/tcg/mipsel/test_dsp_r1_cmp_lt_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmp_lt_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmp_lt_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_eq_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpgu_eq_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_eq_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpgu_eq_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_le_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpgu_le_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_le_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpgu_le_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_lt_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpgu_lt_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpgu_lt_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpgu_lt_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_eq_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpu_eq_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_eq_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpu_eq_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_le_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpu_le_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_le_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpu_le_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_lt_qb.c b/tests/tcg/mipsel/test_dsp_r1_cmpu_lt_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_cmpu_lt_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_cmpu_lt_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpaq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpaq_s_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpaq_s_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpaq_sa_l_w.c b/tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpaq_sa_l_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpaq_sa_l_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpau_h_qbl.c b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpau_h_qbl.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpau_h_qbl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpau_h_qbr.c b/tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpau_h_qbr.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpau_h_qbr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsq_s_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpsq_s_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsq_sa_l_w.c b/tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsq_sa_l_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpsq_sa_l_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsu_h_qbl.c b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsu_h_qbl.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsu_h_qbr.c b/tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_dpsu_h_qbr.c
+rename to tests/tcg/mipsel/test_dsp_r1_dpsu_h_qbr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extp.c b/tests/tcg/mipsel/test_dsp_r1_extp.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extp.c
+rename to tests/tcg/mipsel/test_dsp_r1_extp.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpdp.c b/tests/tcg/mipsel/test_dsp_r1_extpdp.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpdp.c
+rename to tests/tcg/mipsel/test_dsp_r1_extpdp.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpdpv.c b/tests/tcg/mipsel/test_dsp_r1_extpdpv.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpdpv.c
+rename to tests/tcg/mipsel/test_dsp_r1_extpdpv.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpv.c b/tests/tcg/mipsel/test_dsp_r1_extpv.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extpv.c
+rename to tests/tcg/mipsel/test_dsp_r1_extpv.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_r_w.c b/tests/tcg/mipsel/test_dsp_r1_extr_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extr_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_rs_w.c b/tests/tcg/mipsel/test_dsp_r1_extr_rs_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_rs_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extr_rs_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_s_h.c b/tests/tcg/mipsel/test_dsp_r1_extr_s_h.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_s_h.c
+rename to tests/tcg/mipsel/test_dsp_r1_extr_s_h.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_w.c b/tests/tcg/mipsel/test_dsp_r1_extr_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extr_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extr_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_r_w.c b/tests/tcg/mipsel/test_dsp_r1_extrv_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extrv_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_rs_w.c b/tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_rs_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extrv_rs_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_s_h.c b/tests/tcg/mipsel/test_dsp_r1_extrv_s_h.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_s_h.c
+rename to tests/tcg/mipsel/test_dsp_r1_extrv_s_h.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_w.c b/tests/tcg/mipsel/test_dsp_r1_extrv_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_extrv_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_extrv_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_insv.c b/tests/tcg/mipsel/test_dsp_r1_insv.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_insv.c
+rename to tests/tcg/mipsel/test_dsp_r1_insv.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_lbux.c b/tests/tcg/mipsel/test_dsp_r1_lbux.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_lbux.c
+rename to tests/tcg/mipsel/test_dsp_r1_lbux.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_lhx.c b/tests/tcg/mipsel/test_dsp_r1_lhx.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_lhx.c
+rename to tests/tcg/mipsel/test_dsp_r1_lhx.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_lwx.c b/tests/tcg/mipsel/test_dsp_r1_lwx.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_lwx.c
+rename to tests/tcg/mipsel/test_dsp_r1_lwx.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_madd.c b/tests/tcg/mipsel/test_dsp_r1_madd.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_madd.c
+rename to tests/tcg/mipsel/test_dsp_r1_madd.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_maddu.c b/tests/tcg/mipsel/test_dsp_r1_maddu.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_maddu.c
+rename to tests/tcg/mipsel/test_dsp_r1_maddu.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_main.c b/tests/tcg/mipsel/test_dsp_r1_main.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_main.c
+rename to tests/tcg/mipsel/test_dsp_r1_main.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_s_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_s_w_phl.c
+rename to tests/tcg/mipsel/test_dsp_r1_maq_s_w_phl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_s_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_s_w_phr.c
+rename to tests/tcg/mipsel/test_dsp_r1_maq_s_w_phr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_sa_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_sa_w_phl.c
+rename to tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_sa_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_maq_sa_w_phr.c
+rename to tests/tcg/mipsel/test_dsp_r1_maq_sa_w_phr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mfhi.c b/tests/tcg/mipsel/test_dsp_r1_mfhi.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mfhi.c
+rename to tests/tcg/mipsel/test_dsp_r1_mfhi.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mflo.c b/tests/tcg/mipsel/test_dsp_r1_mflo.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mflo.c
+rename to tests/tcg/mipsel/test_dsp_r1_mflo.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_modsub.c b/tests/tcg/mipsel/test_dsp_r1_modsub.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_modsub.c
+rename to tests/tcg/mipsel/test_dsp_r1_modsub.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_msub.c b/tests/tcg/mipsel/test_dsp_r1_msub.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_msub.c
+rename to tests/tcg/mipsel/test_dsp_r1_msub.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_msubu.c b/tests/tcg/mipsel/test_dsp_r1_msubu.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_msubu.c
+rename to tests/tcg/mipsel/test_dsp_r1_msubu.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mthi.c b/tests/tcg/mipsel/test_dsp_r1_mthi.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mthi.c
+rename to tests/tcg/mipsel/test_dsp_r1_mthi.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mthlip.c b/tests/tcg/mipsel/test_dsp_r1_mthlip.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mthlip.c
+rename to tests/tcg/mipsel/test_dsp_r1_mthlip.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mtlo.c b/tests/tcg/mipsel/test_dsp_r1_mtlo.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mtlo.c
+rename to tests/tcg/mipsel/test_dsp_r1_mtlo.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleq_s_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_muleq_s_w_phl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleq_s_w_phl.c
+rename to tests/tcg/mipsel/test_dsp_r1_muleq_s_w_phl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleq_s_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_muleq_s_w_phr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleq_s_w_phr.c
+rename to tests/tcg/mipsel/test_dsp_r1_muleq_s_w_phr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleu_s_ph_qbl.c b/tests/tcg/mipsel/test_dsp_r1_muleu_s_ph_qbl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleu_s_ph_qbl.c
+rename to tests/tcg/mipsel/test_dsp_r1_muleu_s_ph_qbl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleu_s_ph_qbr.c b/tests/tcg/mipsel/test_dsp_r1_muleu_s_ph_qbr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_muleu_s_ph_qbr.c
+rename to tests/tcg/mipsel/test_dsp_r1_muleu_s_ph_qbr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mulq_rs_ph.c b/tests/tcg/mipsel/test_dsp_r1_mulq_rs_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mulq_rs_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_mulq_rs_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_mult.c b/tests/tcg/mipsel/test_dsp_r1_mult.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_mult.c
+rename to tests/tcg/mipsel/test_dsp_r1_mult.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_multu.c b/tests/tcg/mipsel/test_dsp_r1_multu.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_multu.c
+rename to tests/tcg/mipsel/test_dsp_r1_multu.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_packrl_ph.c b/tests/tcg/mipsel/test_dsp_r1_packrl_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_packrl_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_packrl_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_pick_ph.c b/tests/tcg/mipsel/test_dsp_r1_pick_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_pick_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_pick_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_pick_qb.c b/tests/tcg/mipsel/test_dsp_r1_pick_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_pick_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_pick_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceq_w_phl.c b/tests/tcg/mipsel/test_dsp_r1_preceq_w_phl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceq_w_phl.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceq_w_phl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceq_w_phr.c b/tests/tcg/mipsel/test_dsp_r1_preceq_w_phr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceq_w_phr.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceq_w_phr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbl.c b/tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbl.c
+rename to tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbla.c b/tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbla.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbla.c
+rename to tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbla.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbr.c b/tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbr.c
+rename to tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbra.c b/tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbra.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precequ_ph_qbra.c
+rename to tests/tcg/mipsel/test_dsp_r1_precequ_ph_qbra.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbl.c b/tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbl.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbl.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbl.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbla.c b/tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbla.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbla.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbla.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbr.c b/tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbr.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbr.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbr.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbra.c b/tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbra.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_preceu_ph_qbra.c
+rename to tests/tcg/mipsel/test_dsp_r1_preceu_ph_qbra.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_ph_w.c b/tests/tcg/mipsel/test_dsp_r1_precrq_ph_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_ph_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_precrq_ph_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_qb_ph.c b/tests/tcg/mipsel/test_dsp_r1_precrq_qb_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_qb_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_precrq_qb_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_rs_ph_w.c b/tests/tcg/mipsel/test_dsp_r1_precrq_rs_ph_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrq_rs_ph_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_precrq_rs_ph_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrqu_s_qb_ph.c b/tests/tcg/mipsel/test_dsp_r1_precrqu_s_qb_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_precrqu_s_qb_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_precrqu_s_qb_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_raddu_w_qb.c b/tests/tcg/mipsel/test_dsp_r1_raddu_w_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_raddu_w_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_raddu_w_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_rddsp.c b/tests/tcg/mipsel/test_dsp_r1_rddsp.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_rddsp.c
+rename to tests/tcg/mipsel/test_dsp_r1_rddsp.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_repl_ph.c b/tests/tcg/mipsel/test_dsp_r1_repl_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_repl_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_repl_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_repl_qb.c b/tests/tcg/mipsel/test_dsp_r1_repl_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_repl_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_repl_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_replv_ph.c b/tests/tcg/mipsel/test_dsp_r1_replv_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_replv_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_replv_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_replv_qb.c b/tests/tcg/mipsel/test_dsp_r1_replv_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_replv_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_replv_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shilo.c b/tests/tcg/mipsel/test_dsp_r1_shilo.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shilo.c
+rename to tests/tcg/mipsel/test_dsp_r1_shilo.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shilov.c b/tests/tcg/mipsel/test_dsp_r1_shilov.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shilov.c
+rename to tests/tcg/mipsel/test_dsp_r1_shilov.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_ph.c b/tests/tcg/mipsel/test_dsp_r1_shll_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shll_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_qb.c b/tests/tcg/mipsel/test_dsp_r1_shll_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_shll_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_s_ph.c b/tests/tcg/mipsel/test_dsp_r1_shll_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shll_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_s_w.c b/tests/tcg/mipsel/test_dsp_r1_shll_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shll_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_shll_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_ph.c b/tests/tcg/mipsel/test_dsp_r1_shllv_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shllv_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_qb.c b/tests/tcg/mipsel/test_dsp_r1_shllv_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_shllv_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_s_ph.c b/tests/tcg/mipsel/test_dsp_r1_shllv_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shllv_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_s_w.c b/tests/tcg/mipsel/test_dsp_r1_shllv_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shllv_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_shllv_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_ph.c b/tests/tcg/mipsel/test_dsp_r1_shra_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shra_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_r_ph.c b/tests/tcg/mipsel/test_dsp_r1_shra_r_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_r_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shra_r_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_r_w.c b/tests/tcg/mipsel/test_dsp_r1_shra_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shra_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_shra_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_ph.c b/tests/tcg/mipsel/test_dsp_r1_shrav_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shrav_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_r_ph.c b/tests/tcg/mipsel/test_dsp_r1_shrav_r_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_r_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_shrav_r_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_r_w.c b/tests/tcg/mipsel/test_dsp_r1_shrav_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrav_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_shrav_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrl_qb.c b/tests/tcg/mipsel/test_dsp_r1_shrl_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrl_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_shrl_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrlv_qb.c b/tests/tcg/mipsel/test_dsp_r1_shrlv_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_shrlv_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_shrlv_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_ph.c b/tests/tcg/mipsel/test_dsp_r1_subq_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_subq_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_s_ph.c b/tests/tcg/mipsel/test_dsp_r1_subq_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r1_subq_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_s_w.c b/tests/tcg/mipsel/test_dsp_r1_subq_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_subq_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r1_subq_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_subu_qb.c b/tests/tcg/mipsel/test_dsp_r1_subu_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_subu_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_subu_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_subu_s_qb.c b/tests/tcg/mipsel/test_dsp_r1_subu_s_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_subu_s_qb.c
+rename to tests/tcg/mipsel/test_dsp_r1_subu_s_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r1_wrdsp.c b/tests/tcg/mipsel/test_dsp_r1_wrdsp.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r1_wrdsp.c
+rename to tests/tcg/mipsel/test_dsp_r1_wrdsp.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_absq_s_qb.c b/tests/tcg/mipsel/test_dsp_r2_absq_s_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_absq_s_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_absq_s_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_ph.c b/tests/tcg/mipsel/test_dsp_r2_addqh_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_addqh_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_r_ph.c b/tests/tcg/mipsel/test_dsp_r2_addqh_r_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_r_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_addqh_r_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_r_w.c b/tests/tcg/mipsel/test_dsp_r2_addqh_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_addqh_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_w.c b/tests/tcg/mipsel/test_dsp_r2_addqh_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addqh_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_addqh_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addu_ph.c b/tests/tcg/mipsel/test_dsp_r2_addu_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addu_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_addu_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_addu_s_ph.c b/tests/tcg/mipsel/test_dsp_r2_addu_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_addu_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_addu_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_adduh_qb.c b/tests/tcg/mipsel/test_dsp_r2_adduh_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_adduh_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_adduh_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_adduh_r_qb.c b/tests/tcg/mipsel/test_dsp_r2_adduh_r_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_adduh_r_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_adduh_r_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_append.c b/tests/tcg/mipsel/test_dsp_r2_append.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_append.c
+rename to tests/tcg/mipsel/test_dsp_r2_append.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_balign.c b/tests/tcg/mipsel/test_dsp_r2_balign.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_balign.c
+rename to tests/tcg/mipsel/test_dsp_r2_balign.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_eq_qb.c b/tests/tcg/mipsel/test_dsp_r2_cmpgdu_eq_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_eq_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_cmpgdu_eq_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_le_qb.c b/tests/tcg/mipsel/test_dsp_r2_cmpgdu_le_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_le_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_cmpgdu_le_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_lt_qb.c b/tests/tcg/mipsel/test_dsp_r2_cmpgdu_lt_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_cmpgdu_lt_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_cmpgdu_lt_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpa_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpa_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpaqx_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpaqx_s_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpaqx_s_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpaqx_sa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpaqx_sa_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpaqx_sa_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpax_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpax_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpax_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dps_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dps_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dps_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsqx_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsqx_s_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpsqx_s_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsqx_sa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsqx_sa_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpsqx_sa_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsx_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_dpsx_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_dpsx_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mul_ph.c b/tests/tcg/mipsel/test_dsp_r2_mul_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mul_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_mul_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mul_s_ph.c b/tests/tcg/mipsel/test_dsp_r2_mul_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mul_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_mul_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_rs_w.c b/tests/tcg/mipsel/test_dsp_r2_mulq_rs_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_rs_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_mulq_rs_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_s_ph.c b/tests/tcg/mipsel/test_dsp_r2_mulq_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_mulq_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_s_w.c b/tests/tcg/mipsel/test_dsp_r2_mulq_s_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulq_s_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_mulq_s_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulsa_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulsa_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_mulsa_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulsaq_s_w_ph.c b/tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_mulsaq_s_w_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_mulsaq_s_w_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_qb_ph.c b/tests/tcg/mipsel/test_dsp_r2_precr_qb_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_qb_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_precr_qb_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_sra_ph_w.c b/tests/tcg/mipsel/test_dsp_r2_precr_sra_ph_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_sra_ph_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_precr_sra_ph_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_sra_r_ph_w.c b/tests/tcg/mipsel/test_dsp_r2_precr_sra_r_ph_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_precr_sra_r_ph_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_precr_sra_r_ph_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_prepend.c b/tests/tcg/mipsel/test_dsp_r2_prepend.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_prepend.c
+rename to tests/tcg/mipsel/test_dsp_r2_prepend.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shra_qb.c b/tests/tcg/mipsel/test_dsp_r2_shra_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shra_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_shra_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shra_r_qb.c b/tests/tcg/mipsel/test_dsp_r2_shra_r_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shra_r_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_shra_r_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrav_qb.c b/tests/tcg/mipsel/test_dsp_r2_shrav_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrav_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_shrav_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrav_r_qb.c b/tests/tcg/mipsel/test_dsp_r2_shrav_r_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrav_r_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_shrav_r_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrl_ph.c b/tests/tcg/mipsel/test_dsp_r2_shrl_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrl_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_shrl_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrlv_ph.c b/tests/tcg/mipsel/test_dsp_r2_shrlv_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_shrlv_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_shrlv_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_ph.c b/tests/tcg/mipsel/test_dsp_r2_subqh_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_subqh_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_r_ph.c b/tests/tcg/mipsel/test_dsp_r2_subqh_r_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_r_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_subqh_r_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_r_w.c b/tests/tcg/mipsel/test_dsp_r2_subqh_r_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_r_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_subqh_r_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_w.c b/tests/tcg/mipsel/test_dsp_r2_subqh_w.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subqh_w.c
+rename to tests/tcg/mipsel/test_dsp_r2_subqh_w.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subu_ph.c b/tests/tcg/mipsel/test_dsp_r2_subu_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subu_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_subu_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subu_s_ph.c b/tests/tcg/mipsel/test_dsp_r2_subu_s_ph.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subu_s_ph.c
+rename to tests/tcg/mipsel/test_dsp_r2_subu_s_ph.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subuh_qb.c b/tests/tcg/mipsel/test_dsp_r2_subuh_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subuh_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_subuh_qb.c
+diff --git a/tests/tcg/mips/user/ase/dsp/test_dsp_r2_subuh_r_qb.c b/tests/tcg/mipsel/test_dsp_r2_subuh_r_qb.c
+similarity index 100%
+rename from tests/tcg/mips/user/ase/dsp/test_dsp_r2_subuh_r_qb.c
+rename to tests/tcg/mipsel/test_dsp_r2_subuh_r_qb.c
 -- 
 2.43.0
 
