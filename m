@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9975CCA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB0ACA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBQHH-0003B2-H9; Tue, 29 Sep 2026 01:21:19 -0400
+	id 1xBQJb-0003of-3v; Tue, 29 Sep 2026 01:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBQHE-0003Ac-T8
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:21:16 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xBQJI-0003lg-Bk
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:23:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBQHD-00018V-2K
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:21:16 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xBQJC-0001F4-Mg
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:23:23 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T47BKP3643065
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:21:12 GMT
+ 68T47j5E4053034
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:23:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=; b=EEa/9RWOg9LSijHI
- mSaYH/6wPcJO4jK35Sa1D2QlBTS0v/RyWr2wcYEg6mWiYzQA2AtEKMACzEmrJFud
- /msjKrUAkKccu+iWjtZe8ID0YaQbe60wxIuKwP5bCkoToxg5x92+MLMVnpStF3OU
- eX5wBlgEsd8iBTGgSiGxt8BpUXSCMMf9/jRf1OIVZkZUUjPRKG3sLIH5I0Ai9Zfk
- jC/te42ePIfi1qK964Bva38/dNALKfC8LLX5oGUqiAGAs45/fx6p8x2H9X0rSER7
- U8MWEmamHwhG9EoD1VyUimPjUjzCqjWEnF51OlH3nvCCjEEfdds0Icl3gGFChfDq
- 3CdzUw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h00s4s9rn-1
+ +Y61lvgRoyDuPTg1QDOdOT9mx1A0JfLWYx0xNIbTLF4=; b=P15x4jVNgGaTQ3tE
+ DJUVYpao19FUrymjkrZ8oLoLZMsGLnJT02GwV2jq9hr2nWE2qeazTct6JGIIGrE9
+ d73Q6FSx6DCa/EfgJGaT++Ad/v1T0Uv3/z8DQ08Wtr0Wy2Z4CHqWWsSJm8oj/7t3
+ lh17+A+SVxwNnSBtLJfkEESuxOs5SWQAQZxybKV4vs24lQZAtOvFLv7Sgurnfaqi
+ jUBRvRmp/qA3r3zBJbxWsxwuABCVbLzA+PjFqgyS3NguVl3QhBolctSZzolFkgkQ
+ NP0kwmp8Bnr9xhhibIOYrKbNTvZZESwbU17BL9BvNEUbhzJjZxmTKcEWtvxkadNv
+ RTkM6g==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h05yxg8eb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:21:12 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93c5e9c2ec1so99150985a.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:21:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:23:17 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93bf4c0af4eso88986385a.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790659271; x=1791264071; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790659396; x=1791264196; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=;
- b=XCWcQKotZMfQPAB/lQydpEYEk7OyXJH+QjPlcXPAl5cvWZK6awSoa5xd+MAQW9oPHF
- wj+LeHi/OPClMSxuS1RnZ0bCsXe17q3WSrI9gGzFU2d5qmjMe7VfdZSzXsrWZLz/ufnU
- eKKRFxsBs2fhP4TlgHH0P5hLHR96qVv7WUqQ8keXwiBwqWJDaZNUnd47rpigkvR7LXNM
- 3gKTuyW4XKRnkQtRN4kwOyavGTkgIAvIi6SNaYY3Fly7qctyzVXPNWVthQRxA+i5U/Qr
- ZrYDUxceHUyh0W1GxpucWK66rifkHp5FLy8AXblZ4eU2+TVoeh3+rCu0UI3rGwfvq78H
- jtIQ==
+ bh=+Y61lvgRoyDuPTg1QDOdOT9mx1A0JfLWYx0xNIbTLF4=;
+ b=ETuKRw0l/XCUNzNdAqqf2UKhHD98jaJkR0WS0yrdtozOSSfioFdC9GS6Jf4IeBP1pH
+ z17uE37U4V3puA7RSg3jvjwQ4sz5sio0RZ/jfFYGDOJxqh2bwXk67s8y0fnu2qKp3GrX
+ oaKMRT8iiczmuoJf80lm1wGwRrZpGGH71Qk1mGaCAXY/+4eDMKkQcMAhAC0ngB9LGn13
+ w7kw+/jfVO+CJuJKEFCwlIQN6vY6tnuadSpS5MZf97xY13dy6aGMhz2vhiZIXkw4/n31
+ snaqQSre1CMYqVipXF7BiswQh5mY6nKIw6ocD3jVe+ZEKS+xydSwg4bhiw9HpQFVZGX6
+ dYDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790659271; x=1791264071;
+ d=1e100.net; s=20260707; t=1790659396; x=1791264196;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=;
- b=JgJF31suz2lYccx7pswZr/WGSVYTDps914dJRK00VwqQabf8YCRugw+oo8DtQavrPx
- dHBWBJ/6sq05kuYbxSLMg+I1W7L5yq0Qy9IrskzgZRo1CAyEQNEXy4b7+sZ4SSzE/Cv5
- RjoF468HMSaTlNZfyjWnsm/X2E+gsDSOKJnDXhTo7yEd2+wua0Fphp3Pm8i93NdNGcaE
- ip5Chs5kXdVRztBvu6SbKwvWvn2T0brO+m+t9KcnrnqPhusQjh3eDMQhsEKIdUCnEo6T
- 13TMCmY59H/G8Y8a29YtcBxiIr7m04SsryV5GEiOVal7xl3cArqt8YJNyOQpGg8Hz451
- K+rw==
+ bh=+Y61lvgRoyDuPTg1QDOdOT9mx1A0JfLWYx0xNIbTLF4=;
+ b=ZNXlMEB3ze4T+/QbwwhoTc1NiPe7KEc3gBAfYEmd2tin2AxaMr9fSdN5PVLzAY5WtX
+ Lwpf/IrPJ1bhe8pDIZH7hMgycYfZoqlFQFOrfxS9kdSgeuYVC5rSBmOGum8e4NpEJl9B
+ 3hhiwub5AesPsLhfAHt9jCTJaHAK+ul4v7l3ywdSgfGxjMt4WaBAPmwU8cx+sW0upvp1
+ 9eJ0a+P57X0hd3TTJueU1Sk92L7TN236U6WwUrK+olIZ4eQN3GtoJ8DfhB18c+6TESeF
+ ssYR+r0mBd7ESbzkTXJ5zb8UtaYHWF8yvesHo2lMTQWQre5HmLmfshtRHcBdUnpn7/Zr
+ Chog==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw/u4j8PqTtzXhcapWF9EORy7NjtwMphd17CwtuDXg779uNK+iNS27QlqzzaOw5AuSbiuqepoLGuLnj@nongnu.org
-X-Gm-Message-State: AFuF++nR3k81I3AflCocjdDLa+lVlfrNRNN1RmiWWV6RoNhWTaPeCqhP
- dJPliuGi6g5GTTLh990TtkS0EtmHbwuchGEiU9XJxekl+47oyVUvzRjq/uyEl8TW6v4MW1xmVZn
- XJT1o327OQUoivabDkYHFE8Su4CbWsFE++TVJUEDxkiSthtz4BtGczxRd2A==
-X-Gm-Gg: AYBFou22n6fIAPnifAGJTy/L4U4iSGHdUIbiR/88q6NUEOI7/lVLSendI0Kwsvt40wS
- ssdRkZjyvFH+5anuU8LMvB5sSPrTQfUYZO8lGfgTGnZFBY5KcUbfOZyN/LVQGCFSHpBaTkYcE8p
- 0ev7oPthlfD8DBSn26BKFx2CLaLD67/babnl37+mZ9C0/KHakgUmeeYtvCM/7XP4PbPEvq7nM40
- t3TpTt2UKxMUi3NXTdt29sy6siI1C7LEDtFHwdNP/ZA1l7kLLtS5qRY+Zq7vmP9SPCn3cf5kxqH
- l9E9Aj8f3RkyouS/MHQpdh1kNWlzaSf89K702Tk7oOvWHAdvmqX0MxfaVA+q+EwXmIzBHIOyC59
- y4D4Ou1h92cV6kCUhj8IqT193ZXMH/DFfYA==
-X-Received: by 2002:a05:620a:880c:b0:939:a095:e458 with SMTP id
- af79cd13be357-93c8bcd0262mr272687985a.3.1790659271386; 
- Mon, 28 Sep 2026 22:21:11 -0700 (PDT)
-X-Received: by 2002:a05:620a:880c:b0:939:a095:e458 with SMTP id
- af79cd13be357-93c8bcd0262mr272684485a.3.1790659270896; 
- Mon, 28 Sep 2026 22:21:10 -0700 (PDT)
+ AKwUvBzemioqPzB+Rz7WMsAg0l4xufyHS5hY2TT2jVy/sgiOdLz4FA4XzFgb3n6TnD+MZHQqbB5SOFq/xDua@nongnu.org
+X-Gm-Message-State: AFuF++n6VMcqDaYSQCSjsXyE2I8u2mV4tNkHoOvobHkWKFCgX/Qch/qZ
+ hOZEjctb27vFbuf+NhtKOYcpCGfZxyfmtmQEnKib2evBqxPEkfB85paAM6BfiIixazWP40r5Rds
+ 9fOd6O7GjdnB4iwDdQsD+LW+haoNmgSqgETI5du61PK/rGmItQVnAx2f74w==
+X-Gm-Gg: AYBFou0AwYKZaPikdK8ezYXeLUthztSqHjNv46h0KPGsxQl5FEjExjLSya8qEV5wI9r
+ Y08vGQziZk8rlfidKqsQRAgb3qkDAvioxApGzKvK6SyldWcPxLU7IkiGFlknLowdiyw99AMzUvJ
+ VsVL9c7w7kxSVamFU2vHeAB4ylPgPxpBNBCjMeEiRE5HDp+m+ghmJ29nmW2zhFwGnLU6zaMN9D9
+ u/GQfF/1Qd2HBkJ4+/jgjBzUKP9RqI1DyKxrCx/tMrUAWIPFhWd6+AH1FF/1K2YGdmZ1a/PvUhn
+ on52e8YHuPvtsiUA0/6xLNPWE/Y828sAfoGNgMm1VamzIiQprpKiIFqLl6uPG37IniPSiyCZ/Tr
+ GiKhi2ObTIMoBoz43X4VLH0mPh/puW9C5iA==
+X-Received: by 2002:a05:620a:2b9b:b0:93b:c6fc:71e9 with SMTP id
+ af79cd13be357-93c8bf447famr269982985a.25.1790659396551; 
+ Mon, 28 Sep 2026 22:23:16 -0700 (PDT)
+X-Received: by 2002:a05:620a:2b9b:b0:93b:c6fc:71e9 with SMTP id
+ af79cd13be357-93c8bf447famr269978885a.25.1790659395930; 
+ Mon, 28 Sep 2026 22:23:15 -0700 (PDT)
 Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af50513c7sm969440f8f.16.2026.09.28.22.21.08
+ 5b1f17b1804b1-4a00d0f68basm49378675e9.12.2026.09.28.22.23.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 22:21:10 -0700 (PDT)
-Message-ID: <2f039184-d0a6-4556-a514-72a39ebfedf0@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 07:21:08 +0200
+ Mon, 28 Sep 2026 22:23:15 -0700 (PDT)
+Message-ID: <c7aadc02-6c5e-4ca1-875c-43050305f4ec@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 07:23:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/24] target/hppa: convert excp to raise_excp
+Subject: Re: [PATCH v2 02/24] accel/tcg: add cpu_loop_exit_excp
 Content-Language: en-US
 To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
@@ -122,47 +122,47 @@ Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
 References: <20260928052051.251-1-luoyonggang@gmail.com>
- <20260928052051.251-15-luoyonggang@gmail.com>
+ <20260928052051.251-3-luoyonggang@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260928052051.251-15-luoyonggang@gmail.com>
+In-Reply-To: <20260928052051.251-3-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX/9NYADgKm3rR
- 51awSqZFWML/hMs9kYnnKvzgRzzeRidqJer83ll75In30UyBOm18o3/hGYCHJnr7AxyjrInS0FV
- P09FrqCqL78OwF8IwvL98u1bUzW6AYo=
-X-Authority-Analysis: v=2.4 cv=ALbfqNVA c=1 sm=1 tr=0 ts=6abb4ac8 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX4BYiut8SKyjy
+ hLb3ezsnneaZoq3+ieyinKm4M9GuBSKvgHYt4J7vCUTXuge0tFMrmg39b3p/HKJ5vPKgz+mXn7C
+ KRFI/dIMQoRyhtND3eQClRteISdMe4E=
+X-Proofpoint-GUID: -zDVXabhtp_OOnfb6eSYetPXP8ngaTh5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfXygdvnBAa2qD/
+ 45V+TQYaF7yomWMZKqMsCSntPgxLoDwGja0O+Qnu7w/A0keFawEvAgDCpxXMBAszRJPcl/yOVGr
+ aD1o0moWI6kLfnZUTnSiNocr47pM1qebpsVuoVPJ4QOqL2bRqyVdFATI31tfI+gSsMxbcESqlcg
+ mmizNbaShGTFp7mjziMkc89jjmSvBXOkZN0xkdN6ePY2Wn3Wgj13drXzf4YMxsUJAnCAqF95q0c
+ GROeVK9ZYcDm2qETozracB6jkqLaF7+eijD7L5oAA8E8BD4wyAkPwmkd7mQ3GhSuC2SOM21WYgE
+ Oj1JBvhxJeNS5y4QERr2Es3PruBldNfVfnnLD2Qf+cDrWyBg2wP9cS4LndDd88ba7U9E1Yw0BXC
+ eqJi+Fwh4KtH+A+H1jMl7xQ6kfGqBu4ak6i7adSwrOFzzPwVz05Xct3+DqO5ljJOY1kg1FjIshy
+ pmQeiJ8hV1ToibPKArQ==
+X-Proofpoint-ORIG-GUID: -zDVXabhtp_OOnfb6eSYetPXP8ngaTh5
+X-Authority-Analysis: v=2.4 cv=SaFi5fRu c=1 sm=1 tr=0 ts=6abb4b45 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=pGLkceISAAAA:8 a=OjroqGzRqyjf1ntX9NUA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX0rzuBsiKJ2OI
- rI5ZMkEUCbPAVwzZMDQ0IO8Fun3AP9F8AE6bKbGFGPKykwcsH4+UCnHvZ65bfSeUUlxH14pRj5v
- COSAgk4zr8SQ74BztHn2ixUM4nxF1js10asgUPbwig/3sBt3BqUlDhjXazcAxsSB8kYxwMVf8S7
- xsaUTt1sO1dV0t/2/uMgpbJeymqOV0jk8/UGxAaz+9bRgpQh4rC/JKIUa8N/S9fyeT/xFKT4VWQ
- 24nJA8z0SBXKhVpdMxpN4TBbE60kzQ+to51p67lIWipQKgxcy+DjV0NMUzHKrBafYJA+O1VNpnw
- p68IGLiPl9ez9ANBmKHEWowd9RRM6KtI9Rmh6wq367+hy1DqKLoFXBLC9Jsh9dcBKuoRCcvlerW
- UXioDQPauYsqYDBWIaB9qETGcJWWjavcKKUw/WgZr4jPr/ZFLIosioqp4eX0NbAFzqfQZVb/2uk
- R9+TY3i3nL4U43vgdpg==
-X-Proofpoint-GUID: xqi00NEy4TTufpEoAIhNViT2rnPrFRHG
-X-Proofpoint-ORIG-GUID: xqi00NEy4TTufpEoAIhNViT2rnPrFRHG
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=pGLkceISAAAA:8 a=tTEf8ENdxh8uo4z6V_4A:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290021
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -179,69 +179,59 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/9/26 07:20, Yonggang Luo wrote:
-> Drop TCG excp and call raise_excp. Keep C hppa_dynamic_excp and use
-> cpu_loop_exit_excp. Route leftover C callers through
-> hppa_dynamic_excp instead of helper_excp.
+> Add cpu_loop_exit_excp next to cpu_loop_exit_restore. Set
+> cpu->exception_index, then restore and exit the current TB the same
+> way as cpu_loop_exit_restore.
 > 
 > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > ---
->   target/hppa/helper.h     |  2 --
->   target/hppa/op_helper.c  | 15 ++-------------
->   target/hppa/sys_helper.c |  4 ++--
->   target/hppa/translate.c  |  2 +-
->   4 files changed, 5 insertions(+), 18 deletions(-)
+>   accel/tcg/cpu-exec-common.c  |  6 ++++++
+>   include/accel/tcg/cpu-loop.h | 12 ++++++++++++
+>   2 files changed, 18 insertions(+)
 > 
-> diff --git a/target/hppa/helper.h b/target/hppa/helper.h
-> index 8369855d78e..5ed39e01e31 100644
-> --- a/target/hppa/helper.h
-> +++ b/target/hppa/helper.h
-> @@ -1,5 +1,3 @@
-> -DEF_HELPER_2(excp, noreturn, env, int)
-> -
->   DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
->   DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
->   DEF_HELPER_FLAGS_3(stby_e, TCG_CALL_NO_WG, void, env, tl, tl)
-> diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-> index 76a8d8a0d34..c4651f0d85a 100644
-> --- a/target/hppa/op_helper.c
-> +++ b/target/hppa/op_helper.c
-> @@ -30,20 +30,9 @@
->   #include "user/page-protection.h"
->   #endif
->   
-> -G_NORETURN void HELPER(excp)(CPUHPPAState *env, int excp)
-> -{
-> -    CPUState *cs = env_cpu(env);
-> -
-> -    cs->exception_index = excp;
-> -    cpu_loop_exit(cs);
-> -}
-> -
->   G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra)
->   {
-> -    CPUState *cs = env_cpu(env);
-> -
-> -    cs->exception_index = excp;
-> -    cpu_loop_exit_restore(cs, ra);
-> +    cpu_loop_exit_excp(env_cpu(env), excp, ra);
-
-cpu_loop_exit_excp() replacement is one logical change, ...
-
+> diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+> index d20cece1c5f..31fed8e497f 100644
+> --- a/accel/tcg/cpu-exec-common.c
+> +++ b/accel/tcg/cpu-exec-common.c
+> @@ -118,6 +118,12 @@ void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc)
+>       cpu_loop_exit(cpu);
 >   }
 >   
->   static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
-> @@ -341,7 +330,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
->           if (excp == EXCP_DTLB_MISS) {
->               excp = EXCP_NA_DTLB_MISS;
->           }
-> -        helper_excp(env, excp);
-> +        hppa_dynamic_excp(env, excp, 0);
+> +void cpu_loop_exit_excp(CPUState *cpu, int exception_index, uintptr_t pc)
+> +{
+> +    cpu->exception_index = exception_index;
+> +    cpu_loop_exit_restore(cpu, pc);
+> +}
+> +
+>   void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc)
+>   {
+>       /* Prevent looping if already executing in a serial context. */
+> diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
+> index f4d38bc2bca..856091020f2 100644
+> --- a/include/accel/tcg/cpu-loop.h
+> +++ b/include/accel/tcg/cpu-loop.h
+> @@ -65,6 +65,18 @@ G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
+>   G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t host_pc);
+>   G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t host_pc);
+>   
+> +/**
+> + * cpu_loop_exit_excp:
+> + * @cpu: the cpu context
+> + * @exception_index: EXCP_* or target trap number
+> + * @host_pc: the host pc within the translation
 
-... removing helper_excp() and calling hppa_dynamic_excp()
-another one. Please split in 2 distinct patches.
+I'm not comfortable this is hidding the 'restore' part,
+not even mentioning no restore is done if host_pc==0.
 
->       }
->       return (want & prot) != 0;
->   #endif
+> + *
+> + * Set cpu->exception_index and exit the current TB, restoring
+> + * guest state from @host_pc the same way as cpu_loop_exit_restore.
+> + */
+> +G_NORETURN void cpu_loop_exit_excp(CPUState *cpu, int exception_index,
+> +                                   uintptr_t host_pc);
+> +
+>   /**
+>    * cpu_loop_exit:
+>    * @cpu: the cpu context
 
 
