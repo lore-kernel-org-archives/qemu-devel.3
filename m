@@ -4,38 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C8ECA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 09:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236D9CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 09:43:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBULL-0001Wk-JP; Tue, 29 Sep 2026 05:41:47 -0400
+	id 1xBUMT-00020b-3m; Tue, 29 Sep 2026 05:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zakinko@snowrabbit.org>)
- id 1xBULJ-0001WY-NX; Tue, 29 Sep 2026 05:41:45 -0400
-Received: from bambi.snowrabbit.org ([182.48.54.220])
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xBUMQ-0001zL-EC
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:42:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <zakinko@snowrabbit.org>)
- id 1xBULH-00037R-5t; Tue, 29 Sep 2026 05:41:45 -0400
-Received: by bambi.snowrabbit.org (Postfix, from userid 3001)
- id 16A18C92A0; Tue, 29 Sep 2026 18:41:38 +0900 (JST)
-From: Showta Ishizaki <zakinko@snowrabbit.org>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>,
- Showta Ishizaki <zakinko@snowrabbit.org>
-Date: Tue, 29 Sep 2026 18:04:42 +0900
-Subject: [PATCH] hw/ppc/spapr: Add the "rtas-version" property to /rtas
-Message-Id: <20260929094138.16A18C92A0@bambi.snowrabbit.org>
-Received-SPF: pass client-ip=182.48.54.220;
- envelope-from=zakinko@snowrabbit.org; helo=bambi.snowrabbit.org
+ (envelope-from <maobibo@loongson.cn>) id 1xBUMN-0003Pi-V7
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 05:42:54 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Axj9ETiLtqNuoQAA--.49555S3;
+ Tue, 29 Sep 2026 17:42:43 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxtMwTiLtqhHwmAA--.54599S2;
+ Tue, 29 Sep 2026 17:42:43 +0800 (CST)
+Subject: Re: [PATCH v2 1/3] bios-tables-test-allowed-diff.h: allow loongarch
+ SPCR
+To: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>, qemu-devel@nongnu.org
+Cc: 17746591750@163.com, jiaxun.yang@flygoat.com,
+ xiaoqiang zhao <zxq_yx_007@163.com>
+References: <20260928085419.188886-1-zxq_yx_007@163.com>
+ <20260928085419.188886-2-zxq_yx_007@163.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <2000955b-2d25-61b7-645b-3a75c8a4053e@loongson.cn>
+Date: Tue, 29 Sep 2026 17:44:07 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20260928085419.188886-2-zxq_yx_007@163.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxtMwTiLtqhHwmAA--.54599S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7Wr4xJw1kJw1Dtw1fWF4Utrc_yoWfKwb_KF
+ 1Iq3Z7G3ZrZanYyFW8GF4kZrW5C3W3Aw48Zr45tr1fWayxArykAa4vg3ZYya4rWrZxGr42
+ qws5ZrW29rW7AosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -51,52 +83,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LoPAR requires every property listed in its table of /rtas device tree
-properties to be present before the OS is booted (R1-7.2.6-3 and Table
-7.4 in LoPAR 2.9; the same requirement is in LoPAPR 1.1). One of them
-is "rtas-version", an integer encoding of the RTAS interface version,
-and LoPAR says it describes version 1 of that interface.
+There is no description for the patch, will add something like this:
+   *For easier bisection add the SPCR table to 
+bios-tables-test-allowed-diff.h.*
 
-spapr_dt_rtas() sets "rtas-size", "rtas-error-log-max" and
-"rtas-event-scan-rate" but never "rtas-version", so a client that reads
-it finds no RTAS: NetBSD's RTAS driver fails to attach when the
-property is absent.
+And subject of the cover-letter is [PATCH] rather than [PATCH v2].
 
-Set it to 1, the version LoPAR describes.
+The others look good to me, no need to re-post, I will change as above 
+if you agree.
 
-Signed-off-by: Showta Ishizaki <zakinko@snowrabbit.org>
----
- hw/ppc/spapr.c         | 1 +
- include/hw/ppc/spapr.h | 3 +++
- 2 files changed, 4 insertions(+)
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 6d99464486..8a1b5b37b6 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1068,6 +1068,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
-                           RTAS_ERROR_LOG_MAX));
-     _FDT(fdt_setprop_cell(fdt, rtas, "rtas-event-scan-rate",
-                           RTAS_EVENT_SCAN_RATE));
-+    _FDT(fdt_setprop_cell(fdt, rtas, "rtas-version", RTAS_VERSION));
- 
-     g_assert(msi_nonbroken);
-     _FDT(fdt_setprop(fdt, rtas, "ibm,change-msix-capable", NULL, 0));
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 9acda15d4f..676d3b4ea1 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -830,6 +830,9 @@ void spapr_load_rtas(SpaprMachineState *spapr, void *fdt, hwaddr addr);
- 
- #define RTAS_EVENT_SCAN_RATE    1
- 
-+/* The interface version LoPAR 2.9 Table 7.4 describes */
-+#define RTAS_VERSION            1
-+
- /* This helper should be used to encode interrupt specifiers when the related
-  * "interrupt-controller" node has its "#interrupt-cells" property set to 2 (ie,
-  * VIO devices, RTAS event sources and PHBs).
--- 
-2.54.0 (Apple Git-157)
+On 2026/9/28 下午4:54, xiaoqiang zhao wrote:
+> Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+> ---
+>   tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..53702282e5 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,2 @@
+>   /* List of comma-separated changed AML files to ignore */
+> +tests/data/acpi/loongarch64/virt/SPCR
+> 
 
 
