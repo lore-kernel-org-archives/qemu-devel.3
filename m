@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD5CC9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368D9CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 07:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBSSW-0003CW-CX; Tue, 29 Sep 2026 03:41:04 -0400
+	id 1xBSSQ-0003Az-Sj; Tue, 29 Sep 2026 03:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSU-0003Bq-FL
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:41:02 -0400
+ id 1xBSSK-00039o-R3
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:53 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBSSS-0005rm-Ej
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:41:02 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xBSSJ-0005r8-0s
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 03:40:52 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T7U4MM3221467
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:53 GMT
+ 68T7Tgtj861246
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=5YE19x1blEu
- tyi92n8x0iT8zwHG5zqqblAAA2ATMedw=; b=VvX4jMbG+pLTgR0hYOssSOx/IiZ
- 1j8T975k1WYRo1ZENem6WKlxwOtfqr4um/WV5Xw0jBNK6kE5jem/GyXLil8Tq+yg
- VnB7H28TOHGLSd5soP0IB+nopbGWvjSM1AeLrfIUSQUmrYepqkJV9/wURMmApZLy
- Sr5FYlP4HhW6OHpGzLjUGOn6oOsq12eLZdBousonhtaw0Mhv3GIzRr4q1MIQVZUQ
- 0NKe4TjfJF5YihY4U/RKOs0r2hKKbtLnSB2rxhGw38YVaOknbPcILO+3KhlK+Xtp
- 27CZoN+tPnjtwonXvqSjCX/uBv587jHMjRD/1/eW7QnObhoHl0qe5vZQfew==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=49r4XCTzTyt
+ rtS5Kbq5zteoe0S7yPOuku/8qP7W3Tws=; b=A8yCwVSKYA3/mrenxOwn2Z8oDSc
+ i6jq0Z7bFD3NbsdRQ23tU6L4xbHf7OoxJDQqBeC931q0iwEehdEIyYr4cokKRBOS
+ HDkwReXkd/5TAeaQhNXiANRzc0K2KI1N1yK1MBBzrPDwjXbEuR8TQaXsRbCKa0Nv
+ ekWeRBPwe1Yxm1BxcR4epGJOrbkw/9lyeuokj2xR7XTivFWvMngiFKxJpOZNKd6Y
+ fPM4UZJH/oOmp0f2mAW0ih51UoRmlA3HqaKn0gaVygXZDqVjq0SnZXbJ7yJ4BxJ/
+ ckJcL55kShc6jja6HojZvsEQGawRWFMvZhfjb78oWH0mI6Xsm8jAceD571A==
 Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
  [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyvw22v1b-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyxmua9gq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:52 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 07:40:49 +0000 (GMT)
 Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-342a0e1d8c4so2108206eec.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:52 -0700 (PDT)
+ 5a478bee46e88-30bcb065bfdso503035eec.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 00:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790667652; x=1791272452; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790667649; x=1791272449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5YE19x1blEutyi92n8x0iT8zwHG5zqqblAAA2ATMedw=;
- b=S48LzrXUfZHExj9eagUpMquoRdqC0i04jE7UpN07b26wQl2LpiJsT2XvdZCDaEv6kP
- swuSQB+0uy6DdU0uJhLiLW5ITJ3wVcyvCB0UZdI5cmDuorpO3Nyn+vPYFCN31rA/3hLi
- 2nhcniLgZB8CjCP1sIMNHnP0rRk4eFEpfLHwdj5w+XF7RkXdgfGrUTT9Vb+jaRKBZoMJ
- zfuwIMdb04/NKndoURj6O9n1uKpvwM136hwgNM3XGonI7oWT8Qn4L8Oygdzorglj7Cvp
- WYYcB0gZajPLr3XEdSw29r9eDJV2/AxO3XB8voD3JXxAEt5uVQBsek+56ONvDR5BzUk/
- 0MGg==
+ bh=49r4XCTzTytrtS5Kbq5zteoe0S7yPOuku/8qP7W3Tws=;
+ b=gSlmYVF6EuBGK+QruZoxtNP3DqrQntRQaL2ePhqSzvu3LKSi+dIZYOAjP3mUzzdztF
+ cCAlPZLWcL36IMnjTn4mfQbZdo9BD+j8QzROta9xMFsiRrKhOzDjG3MPF1j2d1cCp8hK
+ BUKCezrKzEyi0PKEfk9Z5OU2E1eRy9vkss0nE9Nsxtbzgpcs9Z3XXdDDpsGQBnb2q4pc
+ GKJld66gZIWBqCk2HOFfYTrHzgzoLDXqDHvYaUDcLbc2+swQkIWUzK8fsHodEz+EVks2
+ kv1/4ZPCE436VQAnTMUM2w2IVFeN0/N69qtOehWOD9y3hmH7RSxh0QSeL5FQuISnxxHl
+ YTCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790667652; x=1791272452;
+ d=1e100.net; s=20260707; t=1790667649; x=1791272449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5YE19x1blEutyi92n8x0iT8zwHG5zqqblAAA2ATMedw=;
- b=bu7zcoxPsTNnz2Nmumy+hrtV+Lvh6rKEgrLE6KOYRzXu5ASflG7v4ciS18BJs5R8Xm
- kMrWy0jNqGAjg9nT00RMIVrDLIOiG0thEfOmOEmyVlHijcktmu0jqtSXTZz+qubgpRs7
- hmaSldGchgrZBKPdxBic8QNUpoT5qYk6FYAmHHTc1x/UMgHsbipLLYO7XMekvxxYfGo4
- bMiYkjZuxUt6TTxyYk8BoM/rhqxtGbvRI5ACo7cILl1lbwo6lvg3jDv8iEt2wtUznuu6
- baWL3nrqN+8/A7jOMsjnT6PRDMa9pCMXy6sdwmFFI9XhunRAwcvWjVajWG1LklDCTj+o
- VEEw==
-X-Gm-Message-State: AFq9FYJoth+QzFT+yQ2mM51n0w6Nr6DbPWv3nTFP0UI2R1p2X9nQH9zD
- fzN9oHAohfjv7nH74SUd1vNBr4j8bGT4gQCO4wdqKkMzJxTGiLJUmfFhLXaHZFloQOK8BbBl2Jy
- tYnoQ732q6MGOHvpyYxLtFBHed3/dwydK+/w4Sczsl7d2n0faSVNgSWySi3uiDrlaNw==
-X-Gm-Gg: AYBFou3wwlyKsbNSSYxuHUz0gVlX95KawJIkvRq+gsl7luqHQoK5qTKyJO61lIFqEcE
- CKdNWqMI0r0b0yQzEZgsiVvEpr1SnY6Ne6OB1NMyAlokwEAt8/LyTUFsiCl8KWlRXIFix8nGCoN
- oh1pEP9lXBaQ1Hfl7pOEvgxHWZomFzuvOApojI7uFHAswJSPvCtS/1yRBh+MAoSqNP0331LYX6H
- r1zwXPn8//JZzTfDAkc4Wnd0efoECwMCNEoZ8nnkKmrJLpNkH1jYd0IJbeHNi9UF8ZzlL/VyplY
- 6DqP5Duo5KGRqxiA1oco/ma37srEcsVxTM0/TOfWMxQLmuUTleP5AerGVMIgpJ59AIbFKWb5iG9
- 4VcaqZrId7GaPoSaNtDlDOXSI7arGA/O2Py9uHzyz2i80izBzkTpeXrZGjw==
-X-Received: by 2002:a05:7301:4d0b:b0:341:1d4b:451c with SMTP id
- 5a478bee46e88-34272371097mr13607633eec.21.1790667652091; 
- Tue, 29 Sep 2026 00:40:52 -0700 (PDT)
-X-Received: by 2002:a05:7301:4d0b:b0:341:1d4b:451c with SMTP id
- 5a478bee46e88-34272371097mr13607599eec.21.1790667651448; 
- Tue, 29 Sep 2026 00:40:51 -0700 (PDT)
+ bh=49r4XCTzTytrtS5Kbq5zteoe0S7yPOuku/8qP7W3Tws=;
+ b=mCeDSUVB1XgWj+Rq0+BDAtyj9QKTxsRJVK0qOnsy12XRrO89mfNP+ZX0Bzux8ZuZb4
+ DHRxKUSwE0M8CIuFR1Y4RnSIDRVGOyfyi7fxmyBDMaeNRn2IE/Fd1r7ajNwFDJ3Yy4Rk
+ nr4rsKkSTyfr6RORzOhiVXkJ0v8ZQ2IcPv2/+5orATMGSPZ5ple1Ic0pEDNxIR5sYw9+
+ C53UlNZ6zJMDuDnCPjHjmYIXhfhCtaMoAEZSNmcD2QKXydJdwQ1Zbynnzq0mnHLXwl3/
+ Nq6AijyK7O46zSuC7sXwCTQGGBQb3fQbAIjQC29CGXPk4IICU8OmrrsfVFwTHLV0SVK9
+ utcQ==
+X-Gm-Message-State: AFq9FYJjJUpmRTcEq0iyTMchW2KjTb3Xc04lPFeNjpN+0zrEX3mqcQVu
+ lUHfM+RQIYg4vSn3YiH0kedE+X5vPrIHEd2Kr5I0HI2ZKjH0smcJRgL8RbZ+S7XduLYezezgPmD
+ f9hGXd6PXw5LLyybbYohMer0fyDpSGaYxEohVpaI7FO3Y7R3iX++KL/QDuU34KycTDw==
+X-Gm-Gg: AYBFou3DO5flEZic8ETyHhrUegOTHGxCYHG8pU6EqITO2We5IpFLjLcDhETRbjxeaEu
+ YHPkn+1n+/wDXT0XKdoARE1Vdmfqfb49zP7Sq4IV7DzL9w68EiJzkswGKOCLWKVTHUkfc204evc
+ D56bpHZnXnRTsGi/bgwCf893/J8HxSBYBbKjNLWm+ka0QqWEbSBGPN5g06nPtVPmmS/R4W37WQJ
+ VFbjWXm7n02jHMkNPjojSQI/SqiTHZHgdxFRcTrtXFdfSGb4eeWCyVqiGoEc74yQ3+wp+yzXQCV
+ JJdnxYTEWtVdTjyHgBmJIIAoM8QudVxQvoVcSalZKfD0CPLFpr5SXOSEJwj1sT1+EYPlse7NslJ
+ TmSad3n3zNc7t3WEYmiAgOD7feles2XECgzW7sR3HktaA+iSsAvGJbgoYDQ==
+X-Received: by 2002:a05:7301:1f15:b0:341:fa74:9ab with SMTP id
+ 5a478bee46e88-34272853cb7mr18026559eec.31.1790667648885; 
+ Tue, 29 Sep 2026 00:40:48 -0700 (PDT)
+X-Received: by 2002:a05:7301:1f15:b0:341:fa74:9ab with SMTP id
+ 5a478bee46e88-34272853cb7mr18026521eec.31.1790667648310; 
+ Tue, 29 Sep 2026 00:40:48 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.49
+ 5a478bee46e88-3444fd04d93sm14647822eec.12.2026.09.29.00.40.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 00:40:50 -0700 (PDT)
+ Tue, 29 Sep 2026 00:40:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -92,39 +92,39 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 15/19] tests/tcg/mips/include/test_utils_64.h: add
- check_binary_op_64
-Date: Tue, 29 Sep 2026 07:40:03 +0000
-Message-ID: <20260929074007.118970-16-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 13/19] tests/tcg/mips/include/wrappers_mips64r6.h: use
+ proper types for parameters
+Date: Tue, 29 Sep 2026 07:40:01 +0000
+Message-ID: <20260929074007.118970-14-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260929074007.118970-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=N6i8hG9B c=1 sm=1 tr=0 ts=6abb6b84 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX8l+h2alBd5c4
+ Y3j4GDUMI8X9dMgI/MKxu9GAfTw4ijgz2+6sen9g01ZuPwI0n2Yhk5lgnQTbWgypNKGCW2J1XlV
+ z0jn24zWqQT/DLknUsSTsOZSCnd9lAUJb20XlJxJEbHgYxWrNdOWTu48S1LBNQBGow2TNt/4T1Y
+ /+e7dzPb9eaHzuYpOtFbckdsj5rQ4kIjvZOtqZ50GBydrLP6Bfnl60Ud2ldH5sBM45VFm4f2IMn
+ hufZIIXFX5w+mqjRaH+z94U+LSHpHzuL74LhnjcH8rr4E3x/e1MThwscpkVX11quVlmftwzevHr
+ 7Qq84VTgijM4SFf9hXcgdWqZ6sPShSBlteapcKzfC9db7IzeSJouNCqh3NUKUoLKvpztehLTpWA
+ QoBJxLZjqiWO501D9A8UMiENiBJzA3idPSE/YB5MXw2kqDVHTtdkss14IqNZeDBteIR1qriJ+JC
+ twSfIltTH92GHHGg08Q==
+X-Proofpoint-GUID: 1Gip0UOtwuJCMyw1_HevRrEXTCIbBvoU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX9vTx6gaW95sw
+ qtoKWagNFOrJDKWmjrMQ3eus8bjP8BzUg9T0cv6dRJTAB8ltlqwsbJldw6K3s7LZbR52f8woJeJ
+ qDXuSxtN89oxofMKBilV309wH6Crho0=
+X-Proofpoint-ORIG-GUID: 1Gip0UOtwuJCMyw1_HevRrEXTCIbBvoU
+X-Authority-Analysis: v=2.4 cv=c70+0h9l c=1 sm=1 tr=0 ts=6abb6b81 cx=c_pps
  a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=DumKuXrDE2KHUNgktGwA:9 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: _TAIfyryAOeoCcDa_LRVzkCyfNreQ2oT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX/e/0ahQf+A1b
- 4/JZhZ6OmZw4gVwvCoZMe6tcJ00LM6jpQfe/sd3RGyAWe2dPekNKFfCTn9TAvwAOiiP0UyK5Is7
- 0cBhOItXloz1ny7NNw+7aI8UCzlvGPwukCkpdC2WZgo37WppxIWME2fNpGojXWgGrfpdDGsxmuv
- NPk0Kt0BFRN7c0wEDLBmTQag54XLCIUdoa5chAUf01ayfdt4mDEGyTA9Ab+q7WFCJAw19FhYM3h
- 1mseNmuWPN+6qF/TXx8pVhSXuxJ9hL5Lq9k++paWONi2ghmD1WsCv/wNJFWzOa0gH+b96/h+7vA
- pgM0foSXkH/m/2nVkmg+1hvw5pvfCOood4uYQjIKdaH6bD23BV/r2dF9/yPhDLeIoy9/GU2xZQX
- +f7CIgtibMq/CHOqM4VRMAsZUsBEMtdZqrvIxIaHn/a2v0v6QOkGYQ7jE1okuOqG8Fq7lr+X1Tc
- xtLZW0dUBhr1mnUe8NA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzMCBTYWx0ZWRfX3NZIlScBj/2A
- jm/Vv/QKKxQiDdxZSLRthl2T6RdmS26GD65OGTKtLn3nPoSzm3DpfwlVvK+T61s+SrMExN/HonE
- EzGC8P9+bymc10GvEZRuTd22+aa3hv0=
-X-Proofpoint-GUID: _TAIfyryAOeoCcDa_LRVzkCyfNreQ2oT
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=P3XslAPexR1e0_z4TE4A:9 a=scEy_gLbYbu1JhEsrz4S:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290030
 Received-SPF: pass client-ip=205.220.168.131;
@@ -152,86 +152,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each mips64r6 test copies the same loops, to generate an output vector,
-that is compared to expected one. Also, input values are not reported,
-making a failure hard to debug.
-
-Instead of this, factorize this loop in a single function, and compare
-elements one by one. This function generates a C compatible output, that
-can be compiled on host to check that all values are correct.
-
-We use that for the few failing tests to update their reference, and
-check it's correct.
-
-At this point, failing tests are:
-- mips64r6-linux-user-test_mips64r6_and
-- mips64r6-linux-user-test_mips64r6_nor
-- mips64r6-linux-user-test_mips64r6_or
-- mips64r6-linux-user-test_mips64r6_srav
-- mips64r6-linux-user-test_mips64r6_xor
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips/include/test_utils_64.h | 40 ++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ tests/tcg/mips/include/wrappers_mips64r6.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tests/tcg/mips/include/test_utils_64.h b/tests/tcg/mips/include/test_utils_64.h
-index c9609d8281f..b785c26d093 100644
---- a/tests/tcg/mips/include/test_utils_64.h
-+++ b/tests/tcg/mips/include/test_utils_64.h
-@@ -22,6 +22,7 @@
- #ifndef TEST_UTILS_64_H
- #define TEST_UTILS_64_H
+diff --git a/tests/tcg/mips/include/wrappers_mips64r6.h b/tests/tcg/mips/include/wrappers_mips64r6.h
+index f078f534f05..615582968d3 100644
+--- a/tests/tcg/mips/include/wrappers_mips64r6.h
++++ b/tests/tcg/mips/include/wrappers_mips64r6.h
+@@ -26,8 +26,8 @@
+ #include <string.h>
  
-+#include <stdbool.h>
- #include <stdio.h>
- #include <stdint.h>
- #include <inttypes.h>
-@@ -77,5 +78,44 @@ static inline int32_t check_results_64(const char *isa_ase_name,
-     }
- }
+ #define DO_MIPS64R6__RD__RS(suffix, mnemonic)                          \
+-static inline void do_mips64r6_##suffix(const void *input,             \
+-                                        void *output)                  \
++static inline void do_mips64r6_##suffix(const uint64_t *input,         \
++                                        uint64_t *output)              \
+ {                                                                      \
+    __asm__ volatile (                                                  \
+       "ld $t1, 0(%0)\n\t"                                              \
+@@ -48,9 +48,9 @@ DO_MIPS64R6__RD__RS(BITSWAP, bitswap)
+ DO_MIPS64R6__RD__RS(DBITSWAP, dbitswap)
  
-+typedef void (*binary_op_64) (const uint64_t*, const uint64_t*, uint64_t*);
-+static inline bool check_binary_op_64_with_input(binary_op_64 op, const char *op_str,
-+                                                 const uint64_t *expect,
-+                                                 const uint64_t *input,
-+                                                 size_t rows, size_t cols)
-+{
-+    bool ret = true;
-+    for (size_t i = 0; i < rows; i++) {
-+        for (size_t j = 0; j < cols; j++) {
-+            uint64_t input1 = input[i];
-+            uint64_t input2 = input[j];
-+            uint64_t expected = expect[i * cols + j];
-+            uint64_t res = 0;
-+            op(&input1, &input2, &res);
-+            printf("assert(0x%"PRIx64" == %s(0x%"PRIx64", 0x%"PRIx64"));\n",
-+                   res, op_str, input1, input2);
-+            if (expected != res) {
-+                printf("// error: expected 0x%"PRIx64"\n", expected);
-+                ret = false;
-+            }
-+        }
-+    }
-+    return ret;
-+}
-+
-+static inline bool check_binary_op_64(binary_op_64 op, const char *op_str,
-+                                      const uint64_t *expect)
-+{
-+    bool res = true;
-+    size_t pattern_size = PATTERN_INPUTS_64_SHORT_COUNT;
-+    res &= check_binary_op_64_with_input(op, op_str,
-+                                         expect,
-+                                         b64_pattern, pattern_size, pattern_size);
-+    size_t random_size = RANDOM_INPUTS_64_SHORT_COUNT;
-+    res &= check_binary_op_64_with_input(op, op_str,
-+                                         expect + (pattern_size * pattern_size),
-+                                         b64_random, random_size, random_size);
-+    return res;
-+}
+ #define DO_MIPS64R6__RD__RS_RT(suffix, mnemonic)                       \
+-static inline void do_mips64r6_##suffix(const void *input1,            \
+-                                        const void *input2,            \
+-                                        void *output)                  \
++static inline void do_mips64r6_##suffix(const uint64_t *input1,        \
++                                        const uint64_t *input2,        \
++                                        uint64_t *output)              \
+ {                                                                      \
+    __asm__ volatile (                                                  \
+       "ld $t1, 0(%0)\n\t"                                              \
+@@ -86,9 +86,9 @@ DO_MIPS64R6__RD__RS_RT(XOR, xor)
  
- #endif
+ 
+ #define DO_MIPS64R6__RT__RS_RT(suffix, mnemonic)                       \
+-static inline void do_mips64r6_##suffix(const void *input1,            \
+-                                        const void *input2,            \
+-                                        void *output)                  \
++static inline void do_mips64r6_##suffix(const uint64_t *input1,        \
++                                        const uint64_t *input2,        \
++                                        uint64_t *output)              \
+ {                                                                      \
+     if (strncmp(#mnemonic, "crc32", 5) == 0)                           \
+         __asm__ volatile (                                             \
 -- 
 2.43.0
 
