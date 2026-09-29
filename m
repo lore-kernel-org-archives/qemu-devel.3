@@ -4,84 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D6C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7214CA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBQtO-0002Sx-6g; Tue, 29 Sep 2026 02:00:42 -0400
+	id 1xBR04-0003wn-2W; Tue, 29 Sep 2026 02:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBQtM-0002Sh-Pl
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:00:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <malike@kylinos.cn>) id 1xBQzz-0003we-Hf
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:07:31 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBQtL-00056x-2W
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:00:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790661638;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pd1nE8tm6QIZrV/nFhCguSAStzLKRhwQqSFAGuCgj5I=;
- b=e4nIy+kHTSl/pk0RBF1p4vPzd6xH4r3pOiIEaQEM26tyXZSFPff6zGTTv3yzNIRiW/lHO3
- //CoLzj8zi64IVQM8IDn0sHMd/n/XSDU1LmygdUi94/4zRr+s5DMUfxUsgQqovhPwLSfq/
- H3vsYrq88eybT5kwCb+sLpmc4XHH0Fg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-rjXNEiorP-SaACrUtD1MLg-1; Tue,
- 29 Sep 2026 02:00:33 -0400
-X-MC-Unique: rjXNEiorP-SaACrUtD1MLg-1
-X-Mimecast-MFC-AGG-ID: rjXNEiorP-SaACrUtD1MLg_1790661632
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 996971944D40; Tue, 29 Sep 2026 06:00:31 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0FFD19560AB; Tue, 29 Sep 2026 06:00:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3654521E6A04; Tue, 29 Sep 2026 08:00:28 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Jason Wang <jasowangio@gmail.com>,  Eric
- Blake <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  Peter
- Xu <peterx@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Kevin
- Wolf <kwolf@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>
-Subject: Re: [PATCH v3 02/10] qapi: convert/split intros for block-core.json
- commands
-In-Reply-To: <20260928192557.509157-3-jsnow@redhat.com> (John Snow's message
- of "Mon, 28 Sep 2026 15:25:49 -0400")
-References: <20260928192557.509157-1-jsnow@redhat.com>
- <20260928192557.509157-3-jsnow@redhat.com>
-Date: Tue, 29 Sep 2026 08:00:28 +0200
-Message-ID: <87mrt038cj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <malike@kylinos.cn>) id 1xBQzv-0005cT-PH
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:07:31 -0400
+X-UUID: fff68982bbcb11f19a56ed5b684f684d-20260929
+X-CTIC-Tags: HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME,
+ HR_CTE_8B
+ HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+ HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+ HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+ IP_TRUSTED, SRC_TRUSTED, SA_UNTRUSTED, SA_LOWREP, SA_EXISTED
+ SN_UNTRUSTED, SN_LOWREP, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+ DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS
+ GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19, REQID:62d6d7c2-94dc-4305-a428-c43061d90f1b, IP:10,
+ URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+ :release,TS:10
+X-CID-INFO: VERSION:1.3.19, REQID:62d6d7c2-94dc-4305-a428-c43061d90f1b, IP:10,
+ UR
+ L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+ elease,TS:10
+X-CID-META: VersionHash:7db8b62, CLOUDID:b434288b2c717f9d9f62a9505fbe32dc,
+ BulkI
+ D:2609291407102SHSV5HJ,BulkQuantity:0,SF:19|66|72|78|102|127|136|850|865|8
+ 98,TC:nil,Content:0|15|50|99,EDM:-3|-100,IP:-2,URL:0,File:nil,RT:nil,Bulk:
+ nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,B
+ RE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: fff68982bbcb11f19a56ed5b684f684d-20260929
+X-User: malike@kylinos.cn
+Received: from localhost.localdomain [(223.70.159.239)] by mailgw.kylinos.cn
+ (envelope-from <malike@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 1551843066; Tue, 29 Sep 2026 14:07:07 +0800
+From: malike <malike@kylinos.cn>
+To: qemu-devel@nongnu.org
+Cc: michael.roth@amd.com,
+	kkostiuk@redhat.com,
+	malike <malike@kylinos.cn>
+Subject: [PATCH] contrib/systemd: use BindsTo in qemu-guest-agent.service
+Date: Tue, 29 Sep 2026 14:06:53 +0800
+Message-Id: <20260929060653.445985-1-malike@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=124.126.103.232; envelope-from=malike@kylinos.cn;
+ helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,23 +85,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+The qemu-guest-agent systemd unit uses the old BindTo= directive
+name. systemd renamed BindTo= to BindsTo=, so use the current
+directive name here.
 
-> Convert, or split off, intro sections for commands defined in
-> block-core.json. In general, this does not currently impact the way
+systemd commit 7f2cdda committed on Jul 14, 2012:
+unit: rename BindTo= to BindsTo=
 
-Suggest to scratch "In general".
+Fixes: 2ba60ec17518 ("contrib: add systemd unit files")
+Signed-off-by: malike <malike@kylinos.cn>
+---
+ contrib/systemd/qemu-guest-agent.service | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> these commands are rendered, except:
->
-> 1. blockdev-reopen sees its arguments shit up to just below the
-
-I trust you meant "shift" ;)
-
->    formalized introductory section.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-
-Happy to adjust commit messages without a respin.
+diff --git a/contrib/systemd/qemu-guest-agent.service b/contrib/systemd/qemu-guest-agent.service
+index 51cd7b37ff..59f7ecb1b8 100644
+--- a/contrib/systemd/qemu-guest-agent.service
++++ b/contrib/systemd/qemu-guest-agent.service
+@@ -1,6 +1,6 @@
+ [Unit]
+ Description=QEMU Guest Agent
+-BindTo=dev-virtio\x2dports-org.qemu.guest_agent.0.device
++BindsTo=dev-virtio\x2dports-org.qemu.guest_agent.0.device
+ After=dev-virtio\x2dports-org.qemu.guest_agent.0.device
+ 
+ [Service]
+-- 
+2.25.1
 
 
