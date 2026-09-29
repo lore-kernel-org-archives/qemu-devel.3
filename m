@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F30CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A7CCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 10:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBUen-0006z4-R2; Tue, 29 Sep 2026 06:01:53 -0400
+	id 1xBUfb-00082k-2B; Tue, 29 Sep 2026 06:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUek-0006yJ-Tn
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:50 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ id 1xBUfH-0007cn-H5
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:27 -0400
+Received: from mail-ej2-x0d.google.com ([2a00:1450:4864:34::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xBUei-00088X-Ll
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:01:50 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ccf3ca626so24677065e9.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:01:48 -0700 (PDT)
+ id 1xBUfF-0008FY-S7
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 06:02:23 -0400
+Received: by mail-ej2-x0d.google.com with SMTP id
+ a640c23a62f3a-c2dcdc386ddso296526066b.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 03:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790676107; x=1791280907; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Ke7LuNt59a5nMt+1ImY7qly3Ui/jRhDMF92kFPy+wLA=;
- b=x+rkQu6o6N7AZmcTOeTaBqOP8GWS2dyTQ3VZXgigrEYfac5xw8S634QlVpSxDHPdmv
- Jg/iWVkOWpjZIsNbE/8te4QeKaw3tCIaIQvDUmTHQeQbTZAi8+DRxzF8nzHT/iEg58iC
- exRw5grxhARm/+ATl+/tSVlYqlm/EoOSPEHXLhn4LxqIZT6qh5VIK6CTszWod9gk6nj3
- wI3kNNDdO76dfOMA7QQF9QbwT6tnC1g+a17Z9pLuRkOxEcIj+LXvp1mPVNckdOOjsr0M
- Z+s4SOviw4Ovi7cP7laeJ1F7iM6qBjDx2it3gNj25SJv9OjR+Anyp21PI0mOgVpijT0q
- h5ZA==
+ d=linaro.org; s=google; t=1790676140; x=1791280940; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HltrDrUs47tkb4C1KnaoxhwX552riqDQeLdTh8QJq3E=;
+ b=hb0csN5ZuJFpILwpGA+AkgbjW1IkTirSxw/edFYKE5QQh7ZgvNSZgbeIXF3z2XHJCB
+ /91S4OkKd5XaiIXpwvqcInqlfp7/UeE84Wd2t/N0Yywzr486NiWMgRmsxa2AYQNpVUYZ
+ BxuzaEjQeypZ2y6XE36pq3u1PkvdZfDExbf+Ehwn0vjOfrMVVIPJUklam1tWLFcDv8A+
+ S0tYiTnYz80FHKsYr1xcR4H1yNpOyISHToqOpqJuREsVBfXI5UQbbAa3kzpYmIKXSGN8
+ 3iyERs+BWrLO3ftXIBXddg91B2C34LpTJ/EHc8jOohRW2zQQfsU/s6N597MItm+DMUtQ
+ AjTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790676107; x=1791280907;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=Ke7LuNt59a5nMt+1ImY7qly3Ui/jRhDMF92kFPy+wLA=;
- b=ydbxiXimV/JTVCLY/sCFLuL2bDazRbS4Xkg7ccNzkXpJO2tGYYf9H8uZGuPa5cBkf1
- PoJqp7ojzTNcA56XmoE4D6vMRkcT9qCdeBdC/QUmtQ+02K5FTvZ3wF2iynJFuEZ18/EK
- tulAs2xBfy86CXq4yXeZTsQE8HCL42ZX2IZGBLoLhirqWbokkl7WTUFC/HbCEfMw6C4i
- ptH5/Bw6xhQEeCM468kFX+R3Oe0lVxcgXx0ut5OfWRyrw52tAZyPjwBRBFvD7cuzOBdK
- Hd4UkclJPoryme62YkFl1UiuOCweTn5PoqLDgpcaFZUxxsLJsdzmv4QCcpJXEr3Gx0mm
- f8gg==
-X-Gm-Message-State: AFuF++l90w9JQrR1igOP55LRu6dj2YXSrppB2U7IsAvYT81W45pqt2OV
- /9UxcvTMTwfV+LBKYmXW7mGxELhky0rmnay9g2IDIOHncUMDdz7sM01B3rEcqtUpGj2olA4gHkP
- uImBI
-X-Gm-Gg: AYBFou2G936OxhI/ukekkB3RCT3cVZuW7jACq8m629R6AeBVMitMZuwAe9My7kVX6X9
- rvFYU2wu8Yi0gyHXLXVuema3bQZpn/Qu8AmAUdt/iBd4kJv3hw1YuJ05bewA+nqoRr2M/wiMrS2
- 9uCrbbtsRtQkTJTOhrGYRbA6tKW4e+Vn50jT4B0115zqgd+lMk5G0ecfMotvOhi8qVHmUuX+W3l
- Qekv/lajhcnr4L3Oo6fvFffYB+rlve+UE3Wb3aa9csVRu79CUhyr4GVQt5cymlvXz+RG8LmCbKM
- nL+rUX6I7cpC1dXJn3aiGIynP0VQaS/x1d9H2sBOeGD4EA4+qJUqVXdn3DKKRaSxKQ5bzP1Ok9R
- NEBnOcd8ztrIfRP4uRViB4I2Kljr7lr9zm/jzeJODKALCI7lJjir7i4Rv/boYJz2KTgv5b4AIzP
- V3StjOSuAI9tvlqF+RF02etDtxmyPDDPUpStZO/1cqu5luBaMFleubEw7J9okbsm5ufyxHPj677
- KVFxha88kdPKjJErH3fhV4slbPAT4tJFn9o7OYcalHRL/RNPyqQhP0Pjrpzx61fahqUD/uC23YM
- z9AF41fyViPXrg==
-X-Received: by 2002:a05:600c:c173:b0:49c:fa20:cbfd with SMTP id
- 5b1f17b1804b1-49fe66eb262mr268052995e9.20.1790676106415; 
- Tue, 29 Sep 2026 03:01:46 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790676140; x=1791280940;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HltrDrUs47tkb4C1KnaoxhwX552riqDQeLdTh8QJq3E=;
+ b=ZCewd7tutPCNW0eXCWd5Ca4rn1hXmMcvzrmgOTWNIu6m8PrGsJNSnk7vbDkB75fIF5
+ T24f+Uilf+ZSeBQ1DBc7hbEA5n5mED4nevrhALW7coSnLS9nBWJf3a3HmUdtpgAafYaq
+ nkdhCLozDBxqczZ/NmFztcnrpG3Br6H3m5VXrex9pl1aoxw9EKAaNjnxeJBP8xJMUxnR
+ xmKQ+nnIJ0CPkl3n1ISQ+14nBRsLl2a17XlPWYCaRMChuko+EzhWBqyltFXa4I0+q6uO
+ TJ/KTET2bmuRzw2/02+nJTTgleulXfagzn2nnZAgd2ub9WchOM6kbvl2KjSyGe99USJ3
+ N3bA==
+X-Gm-Message-State: AFuF++nBOyS5kriXjaSfwQiJQb2i8Y23JHYhqJK9z+LnyawAzcBGbMvM
+ AkzN0+82sh2xzuUPsZRpnyQs4YxBiEZhMxX9XQZjaAGy4Cz+8qOYiDhhCfYZKEzIgig7GcIg597
+ Unega
+X-Gm-Gg: AYBFou3q6OalenCkae2Z5uHBcInFT4IbXx2FkFH4T0zOOtsADwZyOjlsxte2cRUMINa
+ /kjnuGD92Dn6EBshyVrbEgP9a5JvzPH6AQ5fmLY2B5BCBEnbqTHlUewJNBhH/gTW5pjqLYZS7fj
+ CDj8EcWEKw7D5vg7SilYWPDY3thKeAIwKkHc2wiMC4FUcZrh2H0oT+CJsaoD7KnknBDAN0CoN8N
+ jQe0hynex2lkqXNV7ApdWBeoWNCLZRpiynUNp6kACpGWRz0AVYO9Zcypfevx3W4VVZf9IfXvlV3
+ gzBPX0dPHHqtnYQ29tYsXE9wZRfMTQqv7itPsQhu+3CX8Rx2jFmMOtEpxiEhALRDttKj1e/OKIA
+ 7imldVhl4WwC5vJ5s7FMxlBgRCthoqDonXObNzdXNxSFVVU6ZDqF4Q0j70qmS5FCXyJThKfOuBB
+ yr41sbf5yJ9xVslYEvABeiUzUOqwIcVLq5l7QnyxvE2q9QPClnsvQBzjMh2sMV1G3zc0lZj9QsA
+ +fJpgQbCwSIngW1ZImrgfP2QGe/2YOG8mF6ZaD+T36Ca9WwFun8cGDvirmM4z36Sp+EcHPCum3W
+ kWg=
+X-Received: by 2002:a17:906:c115:b0:c26:22ae:b66b with SMTP id
+ a640c23a62f3a-c2ac2328075mr1328659366b.15.1790676140208; 
+ Tue, 29 Sep 2026 03:02:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.01.45
+ ffacd0b85a97d-48af4f88b37sm3091412f8f.5.2026.09.29.03.02.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 03:01:45 -0700 (PDT)
+ Tue, 29 Sep 2026 03:02:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/37] hw/char/exynos4210_uart: fix fifo overflow
-Date: Tue, 29 Sep 2026 11:01:02 +0100
-Message-ID: <20260929100133.2598676-8-peter.maydell@linaro.org>
+Subject: [PULL 29/37] target/arm: Clear PSTATE.UINJ when taking exceptions
+Date: Tue, 29 Sep 2026 11:01:24 +0100
+Message-ID: <20260929100133.2598676-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 References: <20260929100133.2598676-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:34::d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej2-x0d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,290 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: jprx <jravi@mit.edu>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The Exynos 4210 UART FIFO implementation uses a circular buffer with a
-store and retrieve pointer. When implemented this way, a circular
-buffer's capacity is 1 less than the size of the backing buffer, because
-there is no way to disambiguate the empty and full states (when the
-store pointer == retrieve pointer).
+Clear UINJ when taking an exception.
+Clear UINJ when exception return is invalid.
 
-When exynos4210_uart_can_receive is called, it may report that the
-entire is buffer is available for receiving data, as
-fifo_empty_elements_number may incorrectly report that the FIFO capacity
-is equal to the entire buffer size (rather than 1 less than the size).
+In both cases, perform the clear without feature check,
+since the bit is otherwise RES0.
 
-If this happens, a full FIFO buffer's worth of data will be read into
-the circular buffer, the store pointer will wrap around back to its
-starting value, and the FIFO will reset back to the empty state. The
-next time exynos4210_uart_can_receive is called, it will report the
-entire buffer is empty instead of full, and promptly allow the data to
-be overwritten before the guest has received it.
-
-The consequence is that if a message is sent into the UART (eg. via a
-chardev) longer than the FIFO's buffer length, the first part of the
-message will be lost due to this overflowing behavior, and only the last
-part of the message will be received.
-
-This patch fixes this bug by refactoring the Exynos 4210 UART to make
-use of the fifo8 implementation, which is implemented via a head pointer
-and length field, and therefore has capacity equal to the buffer length
-and is immune to this behavior.
-
-The Exynos 4210 UART FIFO test now passes instead of timing out.
-
-This is a migration compatibility break for the exynos4 boards,
-but that is OK as they are not versioned boards.
-
-Signed-off-by: Joseph Ravichandran <jravi@mit.edu>
-Message-id: 178983644340.22135.11298603231632238119-2@git.sr.ht
-[PMM: bump version fields to indicate migration compat break]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260925215004.456336-9-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/char/exynos4210_uart.c | 111 ++++++++++----------------------------
- 1 file changed, 29 insertions(+), 82 deletions(-)
+ target/arm/cpu.h            | 1 +
+ target/arm/helper.c         | 9 +++++++++
+ target/arm/tcg/helper-a64.c | 2 ++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/hw/char/exynos4210_uart.c b/hw/char/exynos4210_uart.c
-index 46fc4e31b83..9d1825150d1 100644
---- a/hw/char/exynos4210_uart.c
-+++ b/hw/char/exynos4210_uart.c
-@@ -28,6 +28,7 @@
- #include "qemu/timer.h"
- #include "chardev/char-fe.h"
- #include "chardev/char-serial.h"
-+#include "qemu/fifo8.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 141cfdf6a88..78bf4576a58 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1603,6 +1603,7 @@ void pmu_init(ARMCPU *cpu);
+ #define PSTATE_Z (1 << 30)
+ #define PSTATE_N (1ULL << 31)
+ #define PSTATE_EXLOCK (1ULL << 34)
++#define PSTATE_UINJ (1ULL << 36)
+ #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
+ #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
+ #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 9ba924e5de3..76956cfd97b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9744,6 +9744,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
  
- #include "hw/arm/exynos4210.h"
- #include "hw/core/irq.h"
-@@ -133,12 +134,6 @@ static const Exynos4210UartReg exynos4210_uart_regs[] = {
- #define UERSTAT_FRAME    0x4
- #define UERSTAT_BREAK    0x8
- 
--typedef struct {
--    uint8_t    *data;
--    uint32_t    sp, rp; /* store and retrieve pointers */
--    uint32_t    size;
--} Exynos4210UartFIFO;
--
- #define TYPE_EXYNOS4210_UART "exynos4210.uart"
- OBJECT_DECLARE_SIMPLE_TYPE(Exynos4210UartState, EXYNOS4210_UART)
- 
-@@ -148,8 +143,10 @@ struct Exynos4210UartState {
-     MemoryRegion iomem;
- 
-     uint32_t             reg[EXYNOS4210_UART_REGS_MEM_SIZE / sizeof(uint32_t)];
--    Exynos4210UartFIFO   rx;
--    Exynos4210UartFIFO   tx;
-+    Fifo8                rx;
-+    Fifo8                tx;
-+    uint32_t             rx_capacity;
-+    uint32_t             tx_capacity;
- 
-     QEMUTimer *fifo_timeout_timer;
-     uint64_t wordtime;        /* word time in ns */
-@@ -178,45 +175,6 @@ static const char *exynos4210_uart_regname(hwaddr  offset)
-     return NULL;
- }
- 
--
--static void fifo_store(Exynos4210UartFIFO *q, uint8_t ch)
--{
--    q->data[q->sp] = ch;
--    q->sp = (q->sp + 1) % q->size;
--}
--
--static uint8_t fifo_retrieve(Exynos4210UartFIFO *q)
--{
--    uint8_t ret = q->data[q->rp];
--    q->rp = (q->rp + 1) % q->size;
--    return  ret;
--}
--
--static int fifo_elements_number(const Exynos4210UartFIFO *q)
--{
--    if (q->sp < q->rp) {
--        return q->size - q->rp + q->sp;
--    }
--
--    return q->sp - q->rp;
--}
--
--static int fifo_empty_elements_number(const Exynos4210UartFIFO *q)
--{
--    return q->size - fifo_elements_number(q);
--}
--
--static void fifo_reset(Exynos4210UartFIFO *q)
--{
--    g_free(q->data);
--    q->data = NULL;
--
--    q->data = g_malloc0(q->size);
--
--    q->sp = 0;
--    q->rp = 0;
--}
--
- static uint32_t exynos4210_uart_FIFO_trigger_level(uint32_t channel,
-                                                    uint32_t reg)
- {
-@@ -271,7 +229,7 @@ exynos4210_uart_Rx_FIFO_trigger_level(const Exynos4210UartState *s)
- static void exynos4210_uart_update_dmabusy(Exynos4210UartState *s)
- {
-     bool rx_dma_enabled = (s->reg[I_(UCON)] & 0x03) == 0x02;
--    uint32_t count = fifo_elements_number(&s->rx);
-+    uint32_t count = fifo8_num_used(&s->rx);
- 
-     if (rx_dma_enabled && !count) {
-         qemu_irq_raise(s->dmairq);
-@@ -300,7 +258,7 @@ static void exynos4210_uart_update_irq(Exynos4210UartState *s)
-          * Rx interrupt if trigger level is reached or if rx timeout
-          * interrupt is disabled and there is data in the receive buffer
-          */
--        count = fifo_elements_number(&s->rx);
-+        count = fifo8_num_used(&s->rx);
-         if ((count && !(s->reg[I_(UCON)] & 0x80)) ||
-             count >= exynos4210_uart_Rx_FIFO_trigger_level(s)) {
-             exynos4210_uart_update_dmabusy(s);
-@@ -416,12 +374,12 @@ static void exynos4210_uart_write(void *opaque, hwaddr offset,
-     case UFCON:
-         s->reg[I_(UFCON)] = val;
-         if (val & UFCON_Rx_FIFO_RESET) {
--            fifo_reset(&s->rx);
-+            fifo8_reset(&s->rx);
-             s->reg[I_(UFCON)] &= ~UFCON_Rx_FIFO_RESET;
-             trace_exynos_uart_rx_fifo_reset(s->channel);
-         }
-         if (val & UFCON_Tx_FIFO_RESET) {
--            fifo_reset(&s->tx);
-+            fifo8_reset(&s->tx);
-             s->reg[I_(UFCON)] &= ~UFCON_Tx_FIFO_RESET;
-             trace_exynos_uart_tx_fifo_reset(s->channel);
-         }
-@@ -490,8 +448,8 @@ static uint64_t exynos4210_uart_read(void *opaque, hwaddr offset,
-                                exynos4210_uart_regname(offset), res);
-         return res;
-     case UFSTAT: /* Read Only */
--        s->reg[I_(UFSTAT)] = fifo_elements_number(&s->rx) & 0xff;
--        if (fifo_empty_elements_number(&s->rx) == 0) {
-+        s->reg[I_(UFSTAT)] = fifo8_num_used(&s->rx) & 0xff;
-+        if (fifo8_num_free(&s->rx) == 0) {
-             s->reg[I_(UFSTAT)] |= UFSTAT_Rx_FIFO_FULL;
-             s->reg[I_(UFSTAT)] &= ~0xff;
-         }
-@@ -501,10 +459,10 @@ static uint64_t exynos4210_uart_read(void *opaque, hwaddr offset,
-         return s->reg[I_(UFSTAT)];
-     case URXH:
-         if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
--            if (fifo_elements_number(&s->rx)) {
--                res = fifo_retrieve(&s->rx);
-+            if (fifo8_num_used(&s->rx)) {
-+                res = fifo8_pop(&s->rx);
-                 trace_exynos_uart_rx(s->channel, res);
--                if (!fifo_elements_number(&s->rx)) {
-+                if (!fifo8_num_used(&s->rx)) {
-                     s->reg[I_(UTRSTAT)] &= ~UTRSTAT_Rx_BUFFER_DATA_READY;
-                 } else {
-                     s->reg[I_(UTRSTAT)] |= UTRSTAT_Rx_BUFFER_DATA_READY;
-@@ -555,7 +513,7 @@ static int exynos4210_uart_can_receive(void *opaque)
-     Exynos4210UartState *s = (Exynos4210UartState *)opaque;
- 
-     if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
--        return fifo_empty_elements_number(&s->rx);
-+        return fifo8_num_free(&s->rx);
-     } else {
-         return !(s->reg[I_(UTRSTAT)] & UTRSTAT_Rx_BUFFER_DATA_READY);
+         env->condexec_bits = 0;
      }
-@@ -567,12 +525,12 @@ static void exynos4210_uart_receive(void *opaque, const uint8_t *buf, int size)
-     int i;
++
++    /*
++     * R_XKSNJ: If FEAT_UINJ, PSTATE.UINJ is set to 0 *and* the resulting
++     * value stored in SPSR_ELx is 0.  The new PSTATE is automatically
++     * handled by construction of a new value from 0; clear it from the
++     * old state and as UINJ is RES0 otherwise, skip the feature check.
++     */
++    old_mode &= ~PSTATE_UINJ;
++
+     env->banked_spsr[aarch64_banked_spsr_index(new_el)] = old_mode;
  
-     if (s->reg[I_(UFCON)] & UFCON_FIFO_ENABLE) {
--        if (fifo_empty_elements_number(&s->rx) < size) {
--            size = fifo_empty_elements_number(&s->rx);
-+        if (fifo8_num_free(&s->rx) < size) {
-+            size = fifo8_num_free(&s->rx);
-             s->reg[I_(UINTSP)] |= UINTSP_ERROR;
-         }
-         for (i = 0; i < size; i++) {
--            fifo_store(&s->rx, buf[i]);
-+            fifo8_push(&s->rx, buf[i]);
-         }
-         exynos4210_uart_rx_timeout_set(s);
-     } else {
-@@ -591,7 +549,7 @@ static void exynos4210_uart_event(void *opaque, QEMUChrEvent event)
-     if (event == CHR_EVENT_BREAK) {
-         /* When the RxDn is held in logic 0, then a null byte is pushed into the
-          * fifo */
--        fifo_store(&s->rx, '\0');
-+        fifo8_push(&s->rx, '\0');
-         s->reg[I_(UERSTAT)] |= UERSTAT_BREAK;
-         exynos4210_uart_update_irq(s);
-     }
-@@ -608,10 +566,10 @@ static void exynos4210_uart_reset(DeviceState *dev)
-                 exynos4210_uart_regs[i].reset_value;
-     }
- 
--    fifo_reset(&s->rx);
--    fifo_reset(&s->tx);
-+    fifo8_reset(&s->rx);
-+    fifo8_reset(&s->tx);
- 
--    trace_exynos_uart_rxsize(s->channel, s->rx.size);
-+    trace_exynos_uart_rxsize(s->channel, s->rx_capacity);
- }
- 
- static int exynos4210_uart_post_load(void *opaque, int version_id)
-@@ -624,26 +582,13 @@ static int exynos4210_uart_post_load(void *opaque, int version_id)
-     return 0;
- }
- 
--static const VMStateDescription vmstate_exynos4210_uart_fifo = {
--    .name = "exynos4210.uart.fifo",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(sp, Exynos4210UartFIFO),
--        VMSTATE_UINT32(rp, Exynos4210UartFIFO),
--        VMSTATE_VBUFFER_UINT32(data, Exynos4210UartFIFO, 1, NULL, size),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
- static const VMStateDescription vmstate_exynos4210_uart = {
-     .name = "exynos4210.uart",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .post_load = exynos4210_uart_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_STRUCT(rx, Exynos4210UartState, 1,
--                       vmstate_exynos4210_uart_fifo, Exynos4210UartFIFO),
-+        VMSTATE_FIFO8(rx, Exynos4210UartState),
-         VMSTATE_UINT32_ARRAY(reg, Exynos4210UartState,
-                              EXYNOS4210_UART_REGS_MEM_SIZE / sizeof(uint32_t)),
-         VMSTATE_END_OF_LIST()
-@@ -699,6 +644,8 @@ static void exynos4210_uart_realize(DeviceState *dev, Error **errp)
-     s->fifo_timeout_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                          exynos4210_uart_timeout_int, s);
- 
-+    fifo8_create(&s->rx, s->rx_capacity);
-+    fifo8_create(&s->tx, s->tx_capacity);
-     qemu_chr_fe_set_handlers(&s->chr, exynos4210_uart_can_receive,
-                              exynos4210_uart_receive, exynos4210_uart_event,
-                              NULL, s, NULL, true);
-@@ -707,8 +654,8 @@ static void exynos4210_uart_realize(DeviceState *dev, Error **errp)
- static const Property exynos4210_uart_properties[] = {
-     DEFINE_PROP_CHR("chardev", Exynos4210UartState, chr),
-     DEFINE_PROP_UINT32("channel", Exynos4210UartState, channel, 0),
--    DEFINE_PROP_UINT32("rx-size", Exynos4210UartState, rx.size, 16),
--    DEFINE_PROP_UINT32("tx-size", Exynos4210UartState, tx.size, 16),
-+    DEFINE_PROP_UINT32("rx-size", Exynos4210UartState, rx_capacity, 16),
-+    DEFINE_PROP_UINT32("tx-size", Exynos4210UartState, tx_capacity, 16),
- };
- 
- static void exynos4210_uart_class_init(ObjectClass *klass, const void *data)
+     qemu_log_mask(CPU_LOG_INT, "...with SPSR 0x%" PRIx64 "\n", old_mode);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 9d805231a08..f76d89990c3 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -764,10 +764,12 @@ illegal_return:
+      * mandated behaviour:
+      * restore NZCV and DAIF from SPSR_ELx
+      * set PSTATE.IL
++     * reset PSTATE.UINJ
+      * restore PC from ELR_ELx
+      * no change to exception level, execution state or stack pointer
+      */
+     env->pstate |= PSTATE_IL;
++    env->pstate &= ~PSTATE_UINJ;
+     env->pc = new_pc;
+     spsr &= PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT;
+     spsr |= pstate_read(env) & ~(PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT);
 -- 
 2.43.0
 
