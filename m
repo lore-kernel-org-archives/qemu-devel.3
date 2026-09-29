@@ -4,165 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D567CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67004C9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBQMJ-0004ZA-Ou; Tue, 29 Sep 2026 01:26:31 -0400
+	id 1xBQNc-0005BI-KN; Tue, 29 Sep 2026 01:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBQMC-0004Y7-8n
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:26:25 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBQM8-0001bS-RZ
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:26:23 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T47IfO3391345
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:26:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- jpd8CBJugfETkbR85ahF7Wd1aLx5DAhy1NA0fIAAcBk=; b=g7H8i+HE1/gIMjnt
- 9n8xuvpbpUwtSh27XrPTvN659ZsSrb9LKN2vOOTJR3CkxizUcrnDs/iMRyMmK6SQ
- qp4ND+CGmscV7T/tDd41lXoTAT7WLXM/u30aNraCgmAIyM3WME9evsDtaZqpec+O
- 2DxaEPKs81xebpxZNsFRSPJfZvmtWP6AdcGKLxdOEVXbF0mQd5P2ZcOX0syWV98z
- niY4QdXommEl1Gzp9+qVxE7P48heH2Ol4Ux2FZERjsMqmz4ZcwKHAjZKeClRoJ/j
- u/8A71cTF4C9fUflVulcjUbwxqRvMWNqaNPzdM+ZMA1G/CjAU9QDsudn/VN6xDK3
- UinDYg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h01vkh2tg-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:26:19 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93909014c85so781854885a.0
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:26:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xBQNV-00059h-OF
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:27:46 -0400
+Received: from mail-ed2-x0d.google.com ([2a00:1450:4864:33::d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xBQNS-0001g2-Lz
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:27:45 -0400
+Received: by mail-ed2-x0d.google.com with SMTP id
+ 4fb4d7f45d1cf-6ac6f5c507fso2733803a12.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:27:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790659660; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BEFcjAn4AjS3fLsSpTBBWJ7PIQB0qffj3rRTjhUMnAhFEUBcNcATVdCHO30iSUDGaq
+ MTeKL81+SZx1z8WnX6i6TORbn9JpmT9d3vq/UPx+MLJcV+X3RBG1B1JnqoGuTJO0vTbq
+ FMI3NjH9PtOsfTsZq+BFsXxmh3WhwMUEJDHSGkY5650uplUH6iOREYCqs+OIVdqWeVVy
+ FrNJmtThDbk1vPoetmHHohH9B+6nBXt874GXjdvcWRl3ng4D48MgEJyJwlFTePCI+Fpq
+ b78LQEmmlVU4xIrS/9uOIDUACLbekYnrA9mewrWEupW+BeFVWLEmmgqZj8G2ScnMZQ+H
+ Ye4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=PdxkyoUwRHMcuj5cA6kh5ou3VZP2g/6ztdUBPFZW3x4=;
+ fh=/XhB7PTqpds2+yqfZ8mzcKXS0fqCEV1XQQIG8MCCxOU=;
+ b=NH3wuNfSyAO+ajIRZyDdzFLk57rWQBFrI+Y4QYzD7gVrUk18JLpB/w+d0nzNJ0+HMU
+ uBPZvVhEk1cCo40hX7Bte/sNvet7iM9hXzPYr32kiHWZib0f63Qe/pSDhKEFaaaDM5RL
+ oQRUWwmHx2zV0g1NFyC0Eji+metI+11d7XhIwh/H3o7JmWitgSgfeZozEi6H+1x9vChp
+ FoHA7J8UNGPdhfNL8Hh48uQF/QygGLdO29cciM5bgn9vZj/NQ8J9tNMjdYbmIHyEviYi
+ /f+d+BXnH9e6e/2Md96uzgHIY7Tcv5ipeeE3EtIUivMfzZc2K5Lq+1tGnEXarrH4vPrf
+ 4erw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790659579; x=1791264379; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jpd8CBJugfETkbR85ahF7Wd1aLx5DAhy1NA0fIAAcBk=;
- b=ken2vv3akGRYY1DGbzLwwhHC0GUlObpNyGim1rCbNL8Dz3G2l/JpCk62yHLcjoZOX7
- /EhAUqrniED5ShkmiCfEVyPVdAOlw51d8cmakc/bojUDW66TbeABfrgMAeZrl4UU+uCH
- 1VlMZ2t0f6zlKDjHgQIsNmbsFRuGVfXoGz7wipzyR0T428v4MDLMFcgCy2k79deKxEgf
- 7kZFdoAMzalzJKQM0R+cGuF3E7wCNdpF3YwSbRkbjCOCJuE4pQHDwv5EBplKwmqbcs6M
- oxG0WI1dHJIUN+TopVPORUAXjHOMFr3nuf7A9xACYb9Wgq7YTuflzXBjdR0QGbH7hzlh
- vg5Q==
+ d=gmail.com; s=20251104; t=1790659660; x=1791264460; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=PdxkyoUwRHMcuj5cA6kh5ou3VZP2g/6ztdUBPFZW3x4=;
+ b=m+3Xuzj5gK79A+zUdMZeC07knsp/LLfF2k6UXkh32KV2FVOpnw2IFL1SYvDAJhWOA3
+ vwqP+PaG/GYYfgM87wnl/tIyY2CSydH1adPb6aTtAAGEiA0JRUTxuOuOhWvcVUN0b3YZ
+ bjffQQzQK+Wn8HTzfiX/vxixH0vKZwAnY1FTBwYaB/DBoJlePr5GbH3Hzeghw0b1dNZm
+ 6TJBP+MdfmX0BNwpAX3gGOQm/D1Zy/cNchj78ySXx3WMzVhKK5aMcm8EzkTM4rBqfFzQ
+ zuLoCBFK//rR0tQG/6WlnTP1i3JVDFnqr2jFl1mYvXkh4qVPo11qtCbCPMbxoq5S8XuF
+ 2giA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790659579; x=1791264379;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jpd8CBJugfETkbR85ahF7Wd1aLx5DAhy1NA0fIAAcBk=;
- b=AkGQcgim2ugBK/13c/TMCRfUJhJtWUwIGaJqye4n8vrBFh8Jv2NhOEfvWd0gxkj1yQ
- JYd3JlQjzUmBXx+vdy1Fp0vrRw6h1mhX+zwSCCI149e27zvw8CyKg+0VGFVZIEyduDCE
- dcCDabgQilf7vxnuhOxe5A5fAMsSrCfrRa6NyohnyaTXnS1FKqoaieOGFaE7APR8YThr
- iYkVLqmO2qfUzzDRUj2yjpm1eHqWa9V6sC3vzsb5KWk1yN4AOTA8gcOj6uNRIUXDhBFA
- 7ipVojg85n2GO2na9/0orgDSxQnxNS9zlcOQD3KDWof0YnStwTpzwV6HIAdmFLzGIHyL
- RaDQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwRTRgiRXYkiqVbBKzcEI3xb+lyzhsWbZl+gTswZv3nivWTEN5o/IJw1MxeuHr+iEWi9znzceRMrfws@nongnu.org
-X-Gm-Message-State: AFuF++mse3BGL1xJuCKts/nYSjWlNimtOcKKRfogjefX9MR3bmp6CUUh
- gx5eCATGp1/db/MUTAJkSTsQykCSAulAImEOXN25jtVBRyExuwvqYvoQia/VcehCJFp/UAEfrvg
- xL7jlo739MORgZxkrcjo9GRPvkWa/tufWw1FDhfNBmg2SMpuwXSlgDlMxSw==
-X-Gm-Gg: AYBFou2NNtq9SjTJPl1D0sAF1ASj3pGTF9L2uOMYDPFIiFB2E8PgZF+mDA7z2XYA24+
- Rw/DNiq1veK8gRQHTFNlhbVjncIV9AEgiWas/dxd9sYZMMVqFrKXPI5yKvhnEtVvO5mjaHXhYTa
- gZoRhEvGM0zfCZikXLyTLVKqQRd4m7SoXZrmfoTsqNbTLn+SBbZHSzZMnR9k3iB14Mrlm37S8uS
- cNyeYFITb4d8rOBUJbrcbKeboMDZkkFSLdSOdzB+hUDup8/uqNMChGoQOXcP97xRrcGza9B5sW9
- EJOKb5oxgmIOjKV9zt1x9yeEaj0uqnx2mZ9z7HImJcjiQRCSOzE1QwcEduGzHCsV0EYH5jBcvJl
- kacL0eH5Yk/WPbqVcjMlG4PZgpHjSm2Gpug==
-X-Received: by 2002:a05:620a:4623:b0:93c:29b3:3525 with SMTP id
- af79cd13be357-93c43ca0058mr2531052085a.36.1790659578861; 
- Mon, 28 Sep 2026 22:26:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:4623:b0:93c:29b3:3525 with SMTP id
- af79cd13be357-93c43ca0058mr2531048985a.36.1790659578421; 
- Mon, 28 Sep 2026 22:26:18 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a00cfe16a2sm47919265e9.4.2026.09.28.22.26.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 22:26:17 -0700 (PDT)
-Message-ID: <0c156b42-3476-4ac3-bd29-f4e878108f0c@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 07:26:15 +0200
+ d=1e100.net; s=20260707; t=1790659660; x=1791264460;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=PdxkyoUwRHMcuj5cA6kh5ou3VZP2g/6ztdUBPFZW3x4=;
+ b=TFpveGMiihwNOIFvdVsDygXCDBBwJEzpR/YQkYNfQb+U5DxhyP5xjeUG7rVTgRaE5/
+ jEH5AkgQnYyvKVyZpN2wY1hloR1lJT6zWpoF6KF06KzHXVrsRa6O3kZ2X2SVQMq7ll4B
+ OpZaDogfl95XWYcsqMJcVPPZv/j2nR0j50F44IAbnk6zEWjXW99rVv7zSinGwn9SNFwr
+ /CJiGu/Y9QmN/DcKUuB9xHHAnN50rxqtOIkdZaxSQ9nmZtEN4nkO8OUHAFPiKo465Yrw
+ 5Af9aUfPZtRnQG/eAARnFItEY3Eoniai3gFCUThX44I0iNFByqJ0DIUbk5BDpPk/4pqx
+ CMGA==
+X-Gm-Message-State: AFq9FYKpi7M5rM5rm1xPMMiX16eCXcTkPZmkANNZAO3DxYnFX2IFpsGh
+ Md12+WVF32ZXEytTvMoAWBEBtvfmP+fBSVsb8iU7xQSZoHSldj75gvF6F2G9unpBFILWu5Rew0z
+ Tk+28pvNZYkQ506eRQ8Wr4AZsmQfV54M=
+X-Gm-Gg: AYBFou1ubDew1Vzqh3VsjW5mWZI2QudDzd+rW7+WgSufTaK5PhuCUA+9X4HytrKHG6S
+ uBFomu2ye1WEtcAdJztK/Edd/Tg0/ieJLGeDZIMhJWQtv8ro8HUO7VKej4qAWVBhytTgUP8Lye+
+ L409Cut5+LjPE/DVPleZzDUdGAYT3ck/wzRPpOJCR2481COaTgiicUl6YRTtyozIknNesyrkQLR
+ aTQW2NArPhffKLWcttPq+BXn0miDuhKj0Wrumtm6lyqOE6MDKqKhKQfla/k5YlvWrNKzeczqQIY
+ vAhyywZxN2/KpnRvO8tsLIz9VRXOnPG5TKl4SvWXcRy9Oh7h/nChi7W/07mqSbqurQ==
+X-Received: by 2002:a05:6402:52c5:b0:6ac:a828:c0cc with SMTP id
+ 4fb4d7f45d1cf-6aca828ca1fmr947344a12.4.1790659659802; Mon, 28 Sep 2026
+ 22:27:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/24] target/rx: name guest trap numbers RX_EXCP_*
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Weiwei Li <liwei1518@gmail.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+References: <20260928052051.251-1-luoyonggang@gmail.com>
+ <20260928052051.251-3-luoyonggang@gmail.com>
+ <c7aadc02-6c5e-4ca1-875c-43050305f4ec@oss.qualcomm.com>
+In-Reply-To: <c7aadc02-6c5e-4ca1-875c-43050305f4ec@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 29 Sep 2026 13:27:26 +0800
+X-Gm-Features: AclHuK83mWUX3RGbqD-ktRjJRZCuxXxXzLoRrN05Zufmu_RW4xpD4Ai-lcwFtuw
+Message-ID: <CAE2XoE9OxNnrtbtsBwchQ907KERJYuVcCeXBu+awWdgVLpWxxg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/24] accel/tcg: add cpu_loop_exit_excp
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Chao Liu <chao.liu@processmission.com>,
- Aleksandar Rikalo <arikalo@gmail.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Chao Liu <chao.liu@processmission.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
  Philippe Mathieu-Daude <philmd@mailo.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Alistair Francis <alistair.francis@wdc.com>,
- Stafford Horne <shorne@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Stafford Horne <shorne@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Yoshinori Sato <yoshinori.sato@nifty.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Eric Farman <farman@linux.ibm.com>, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>,
- Glenn Miles <milesg@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Eric Farman <farman@linux.ibm.com>,
+ qemu-riscv@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>, 
+ Glenn Miles <milesg@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Song Gao <17746591750@163.com>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Song Gao <17746591750@163.com>, qemu-ppc@nongnu.org, 
+ qemu-arm@nongnu.org, Michael Rolnik <mrolnik@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
-References: <20260928052051.251-1-luoyonggang@gmail.com>
- <20260928052051.251-5-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260928052051.251-5-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX3e2QctbyGcMr
- kD63i34psTovwxugp2cZyljEb2zSRXWC1jnzcglGITB3mk6FX0k4NfZSopTlNEn8HKx+H5BbVjl
- eUE546ShURxX+qdNikE8AqTjmw5GMFt/mGCH31RbLp+XOMPzebd8NUZ16n7t76/CIaobf9d/ydV
- g8ZoRFKdiy70q0dUe6lKjC1TEBLi6nclejo+VW6uzs8EmTqLmCQudhsPScOnlqngzVmoYquDo4H
- k/aftt6pRpZMk7vZC5RFX8b+6ywfN5B9uzhCwlzNrRxk0iOeNnqcxyL+wM07e+Sk8oXSxvZP/7X
- mgaMWqcqIqN/WHg+opUBEzNhm2yQNMMcVzKEoGvftteHN+tWz4Essfbi/d4N9ZNbORxMByvbDqC
- SxUpvo6LdXFrsT3SblnE5LIds8skLFcOC5rowv0fmeTiXa7iweilU9MRQt43h+ZuSOs2qhVv6UD
- NsuBhZJu7fennERs0zQ==
-X-Proofpoint-GUID: stJIgLk6kYdPytzV0btSPP2C19yYU66Z
-X-Authority-Analysis: v=2.4 cv=VcVir1p9 c=1 sm=1 tr=0 ts=6abb4bfb cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=pGLkceISAAAA:8 a=T3N3I3ExGkZWRGUW1XMA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: stJIgLk6kYdPytzV0btSPP2C19yYU66Z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX3iDAJ8P92+Qb
- DBqDqot8OvCwcV4bM55m/P6pyjnBvRpyBL2xuh+lCtdxaoUuBNHnvgNdRGUCFQD2wCdTJLJWFAY
- pmeSxmX2jxSN/SnuyVdkRryRrqOB2pE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 clxscore=1015 suspectscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290021
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:33::d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,39 +140,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/9/26 07:20, Yonggang Luo wrote:
-> Add RX_EXCP_* in cpu.h for the guest trap numbers stored in
-> cs->exception_index.
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->   target/rx/cpu.h | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-> index 64ba48a7329..521e494172e 100644
-> --- a/target/rx/cpu.h
-> +++ b/target/rx/cpu.h
-> @@ -71,6 +71,16 @@ enum {
->       NUM_REGS = 16,
->   };
->   
-> +/* Guest trap numbers. */
-> +enum {
-> +    RX_EXCP_PRIVILEGE_VIOLATION = 20,
-> +    RX_EXCP_ACCESS = 21,
-> +    RX_EXCP_ILLEGAL_INSTRUCTION = 23,
-> +    RX_EXCP_FPU = 25,
-> +    RX_EXCP_NMI = 30,
-> +    RX_EXCP_INT = 0x100,
-> +};
+On Tue, Sep 29, 2026 at 1:23=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 28/9/26 07:20, Yonggang Luo wrote:
+> > Add cpu_loop_exit_excp next to cpu_loop_exit_restore. Set
+> > cpu->exception_index, then restore and exit the current TB the same
+> > way as cpu_loop_exit_restore.
+> >
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >   accel/tcg/cpu-exec-common.c  |  6 ++++++
+> >   include/accel/tcg/cpu-loop.h | 12 ++++++++++++
+> >   2 files changed, 18 insertions(+)
+> >
+> > diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
+> > index d20cece1c5f..31fed8e497f 100644
+> > --- a/accel/tcg/cpu-exec-common.c
+> > +++ b/accel/tcg/cpu-exec-common.c
+> > @@ -118,6 +118,12 @@ void cpu_loop_exit_restore(CPUState *cpu, uintptr_=
+t pc)
+> >       cpu_loop_exit(cpu);
+> >   }
+> >
+> > +void cpu_loop_exit_excp(CPUState *cpu, int exception_index, uintptr_t =
+pc)
+> > +{
+> > +    cpu->exception_index =3D exception_index;
+> > +    cpu_loop_exit_restore(cpu, pc);
+> > +}
+> > +
+> >   void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc)
+> >   {
+> >       /* Prevent looping if already executing in a serial context. */
+> > diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.=
+h
+> > index f4d38bc2bca..856091020f2 100644
+> > --- a/include/accel/tcg/cpu-loop.h
+> > +++ b/include/accel/tcg/cpu-loop.h
+> > @@ -65,6 +65,18 @@ G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
+> >   G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t host_p=
+c);
+> >   G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t host_pc=
+);
+> >
+> > +/**
+> > + * cpu_loop_exit_excp:
+> > + * @cpu: the cpu context
+> > + * @exception_index: EXCP_* or target trap number
+> > + * @host_pc: the host pc within the translation
+>
+> I'm not comfortable this is hidding the 'restore' part,
+> not even mentioning no restore is done if host_pc=3D=3D0.
 
-Thanks for splitting in a previous patch, but we want to
-add the definitions and replace the magic values at the
-same time (i.e. the changes in rx_cpu_do_interrupt() in
-the next patch go here), but also s/21/RX_EXCP_ACCESS/ in
-update_fpsw, etc...).
+
+So it's the pitfall of cpu_loop_exit_restore. what would be
+better, I have no idea how to improve it.
+
+>
+> > + *
+> > + * Set cpu->exception_index and exit the current TB, restoring
+> > + * guest state from @host_pc the same way as cpu_loop_exit_restore.
+> > + */
+> > +G_NORETURN void cpu_loop_exit_excp(CPUState *cpu, int exception_index,
+> > +                                   uintptr_t host_pc);
+> > +
+> >   /**
+> >    * cpu_loop_exit:
+> >    * @cpu: the cpu context
+>
+
+
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
