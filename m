@@ -4,121 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23B6C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6645CCA5FAC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 15:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBa2o-0004YD-D5; Tue, 29 Sep 2026 11:47:02 -0400
+	id 1xBa7P-0005rK-BK; Tue, 29 Sep 2026 11:51:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBa2T-0004XZ-C2; Tue, 29 Sep 2026 11:46:41 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBa2P-0000xU-J2; Tue, 29 Sep 2026 11:46:40 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TB5avZ3836672; Tue, 29 Sep 2026 15:46:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lUw2HU
- o5epfh9F4nrO+cEbr0zv4oiDPHkwj8Op9uvT0=; b=sajit+dCHP4NNMqmOdZA2B
- WsjxSiyhpx2CYLSK3vwcPL76eYzRdlm3gLbph3L/2tFJdws3ZvrvrF09EiW+FBbY
- 9FbPg7RQcMZ1ZZWbr4s6r5S+SK9KApaeTjgWnyH4xgue9BbYt/R5W078EUMiVIeE
- 67A10ghwNYlAgoFji/poh4QdeY20bKV7EagxXY+E5gFxgZoyVdTCVMbW6JVfbLbs
- Wxt7qeYAUS2zfj+6Mvr5327pPjGmxCukbkeaeWPc+wsbXGnRb0YesxKYaK8rn945
- l3MamIuhlrPLy1vk1leiFJb2HQbZwxJipIk0GZKb5zZNRe+1Zj8+aPj+CTEDeR5w
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fk7gst-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:46:22 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TF6HNl1617052; Tue, 29 Sep 2026 15:46:22 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxrrwafaa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2026 15:46:22 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68TFkLRY4457090
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Sep 2026 15:46:21 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0AF075804E;
- Tue, 29 Sep 2026 15:46:21 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C9CBB5803F;
- Tue, 29 Sep 2026 15:46:18 +0000 (GMT)
-Received: from [9.61.92.210] (unknown [9.61.92.210])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Sep 2026 15:46:18 +0000 (GMT)
-Message-ID: <47358c8c-1c1d-4175-bad7-4745e406046e@linux.ibm.com>
-Date: Tue, 29 Sep 2026 11:46:18 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7H-0005mT-JE
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:51:40 -0400
+Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBa7F-0001RF-0h
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 11:51:38 -0400
+Received: by mail-wr2-x0f.google.com with SMTP id
+ ffacd0b85a97d-4887f6cf16bso2751109f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 08:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1790697095; x=1791301895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lFAcWnrWi60JYEjwn6l8H/drw/Jr0F8dV3g2fTSKPqM=;
+ b=hIc6WSSC8x6U2V/ozGyjq8NHrca3JSiuM/FutMg2EXrVMTovfbrrDl1/JBmGejHEnt
+ u9LfEgJojLiD6dmKr4q0YhRq4siY5G39MeJOZQDGrfdEKjl6GSToKS9Ugbv9mBsJOQZX
+ hFWibaawN4KBIW51ioo+GczDfZXoF8PUpXA6ZYmvqNDJLbcqJhlyjCao4EProim4hFX+
+ ms4F+5tLvDnouvGT5m4DeNU20u2j9SEnxv/8LKUza3DPTXInN0XouASb60ofoPcDAM5l
+ NpEQa2wrPqYMQrKVAUEhH467r6Yuxo3fVXUGK/ka7D/P9Ytv2JB52m6ZhEmXqEEci48G
+ vJMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790697095; x=1791301895;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lFAcWnrWi60JYEjwn6l8H/drw/Jr0F8dV3g2fTSKPqM=;
+ b=y8i9Ac7+mSgd4CgATFXpHqDZUsun3PRAXrAkMO5R/AsDYwatFALdLLTLlVdO3/vcwV
+ E8VCY3+uVQ6IhdJaEw385sUJq9yF4mtnx3uQhaEmsmVsHQ4UgyxXPelUXDNU8+WlwREs
+ pXLgRVXGP4qipPkU/AHD/WNblCCB0tW3Y9VdZsVz2/Fj2xuDQAZWDZ9NjfuDAENnZCG8
+ KeglzxL+cOKd2llNIjvLSK/KcI/p+gtS69kDaDOYfVXjqcloyOb7oGaKUxYfqj2I4y0L
+ YzotGQZDL6GMC0601yMhCqdE9oB1D1dBkX9KfTanVWopBmhvaAesIDyF0g6A+594dN8W
+ Jrdw==
+X-Gm-Message-State: AFq9FYLru+r+FgZW5bamQunyTCtxNnyxPCP/s4TN/CW95bRKvSWXDumv
+ cL+9wc1vEQx9zvmLlJDkr8SR+/UIY8VMjZcBqxt/59pSiQhjyZtagRcv1x6U3YjSPFNfS9M9cKf
+ kzOHE
+X-Gm-Gg: AYBFou2JFOkQHk//Ap/QBGhoCfuwV/r+PxrNI/rn2uM3cddQMQqn31PnM0YJkNbZUs4
+ /mbTxjnsjQ0qB4Sn9IgzLlScsLoZe40kEMWrAL6BzXIZN4yqU7ddUmie8Mz0iNyp5sPD+YEQhbd
+ EeLp6KNk8861D/eaEreu8CKsP0OrOxTKZPMcVceF4Rcm3dmq0NPkwyVFQULhme/ff7n7Eql5Rg/
+ /31byMA5tBzSPlVLIggWS5ipaR9KGBjquCmRRAlLTpmqIe0YttpHevTm2jhEpxZKVUYa6M1OZ6g
+ M7iW+JR2c0vTf16Eiyu4FElQYv5jk5niJn0zoxhOx8kuW89YLRsOcoCE09Z+Q/MyRE+sznqKvrR
+ gQkk4+9qbWgDb3cTN3ctvX8/SPdUeKObFkUcAKfPwoIgaPcr5SLAYe9Eo6sSEjE1ZQ3Nt3dxx/q
+ Z7RMTiyM7GcWnPF2fH/drixxXaPpJqmQ0MvJdectcPui+Bt3KUAf9LeZZWXw==
+X-Received: by 2002:a05:6000:4a04:b0:487:aa6:c90d with SMTP id
+ ffacd0b85a97d-4887d9fa6e6mr23686461f8f.1.1790697095528; 
+ Tue, 29 Sep 2026 08:51:35 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:37e8:6d0c:7fb:398c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48af508b13fsm4416852f8f.27.2026.09.29.08.51.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Sep 2026 08:51:34 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH v3 3/9] block/commit: batch block-status queries
+Date: Tue, 29 Sep 2026 17:51:19 +0200
+Message-ID: <20260929155125.3151111-4-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260929155125.3151111-1-den@openvz.org>
+References: <20260929155125.3151111-1-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] s390x/sclpconsole: fix indentation for
- console_reset
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
- filip.hejsek@gmail.com, farman@linux.ibm.com
-Cc: amit@kernel.org, armbru@redhat.com, berrange@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, mst@redhat.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- qemu-s390x@nongnu.org, brueckner@linux.ibm.com, cohuck@redhat.com,
- maximilian.immanuel.brandtner@protonmail.com
-References: <20260921121641.1354712-1-maxbr@linux.ibm.com>
- <20260929152012.2696005-1-maxbr@linux.ibm.com>
- <20260929152012.2696005-2-maxbr@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260929152012.2696005-2-maxbr@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: aH8ShY2U1OuLiAUSVUH1StDafXx85i6r
-X-Proofpoint-GUID: wVPjOAl134PAOWHhthYXhvUs6bWAHDIU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MiBTYWx0ZWRfX4XNGeTHqIeFH
- Kh3v+W+dIYNiU3xH8iZjQLt0guZr4v9i7isb4Vn7uzrH73xJ0DosJ3dPHvYZ00C22u9spGRtUCl
- lF804mB3ve01XIGu0iVldryU/PaEnSE=
-X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6abbdd4f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=dFsXsk1yfU7eR0EVhoEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MiBTYWx0ZWRfX6W+rzf7l8f/q
- KjHiZq9ft6sqm0nNjX0Ky0VGaJP3EDoN6pLosnKAbPYNI/uiuAObxeSXbrm8XE+1DdFLm2obSUm
- eobrDCdhy/n6sJHFjSwA3qsqeHJccNhWY6XIO6IOtEeEtblh+sh8EOlCoBzsV77RgZxXP5elUVf
- dNtmtD8hSYai0VoTs1el2SlnfOgYBCZ3wRm8B3KVa9zPxGQ1nLh+b76ib84JwfXN+tW5GVegoPJ
- rCqRirLhepPxqreUxBqKEdRXEdWEmlLbo1jrqH9X3eZlL07Nz3oirH7SjW8yYBb8BK22r8imSa/
- ty8E5JPhgqd6AN+Xcp9cCGpYcSd73zCIh3/MERGxjPR6bLyG8l8wYPSBNEGVHkXEdUlfy0dQp1a
- Xe5/LWXnuhebfIlC8O/QWC/GGXOC6R5KjlcOY9AMR5vJE70bZ4Cnd1XwNEz3CNnaGc5WKlqudIy
- dZn4sQ5a+lBI7CiS19w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290062
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:30::f; envelope-from=den@openvz.org;
+ helo=mail-wr2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,24 +101,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/29/26 11:20 AM, Maximilian Immanuel Brandtner wrote:
-> Adjust indentation to match the rest of the file. No functional change
-> intended.
-> 
-> Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+From: Denis V. Lunev <den@openvz.org>
 
-Thanks.
+commit_iteration() asks for block status COMMIT_BUFFER_SIZE (512K) at a
+time, so a long run above base pays one query per 512K for an answer
+the whole run shares.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Query the remainder of the image instead and keep the answer in a
+CommitStatus owned by commit_run(). No device or export writes top
+above base_overlay while the job runs: they ask for
+BLK_PERM_CONSISTENT_READ along with BLK_PERM_WRITE, and the job
+withholds CONSISTENT_READ there, having to share WRITE or it would
+block its own writes to base through the backing chain. A job target
+asks for WRITE alone and is refused by the op blocker instead. From
+filtered_base downwards CONSISTENT_READ is shared again, and there only
+the job writes.
 
-@Eric this whitespace fixup applies cleanly to master and could get
-applied separately if you care to -- or it can remain bundled with the
-resize patch (patch 2 of this series) until we sort out the fate of the
-pre-req virtio-console series.
+Copying is still bounded by the read buffer. Zeroes need no buffer, so
+COMMIT_ZERO_CHUNK bounds them, keeping a cancel from waiting on a huge
+write-zeroes, and an unallocated span is crossed in one step.
 
-Thanks,
-Matt
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ block/commit.c | 58 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 11 deletions(-)
 
-
+diff --git a/block/commit.c b/block/commit.c
+index 4e0b0f9029..e8ddd46053 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -31,8 +31,23 @@ enum {
+      * contiguous regions of the image is efficient.
+      */
+     COMMIT_BUFFER_SIZE = 512 * 1024, /* in bytes */
++
++    /*
++     * Zeroes need no buffer, so they are bounded by this instead. It stays
++     * well under BDRV_REQUEST_MAX_BYTES and keeps a cancel from waiting on
++     * a multi-gigabyte write.
++     */
++    COMMIT_ZERO_CHUNK = 256 * 1024 * 1024, /* in bytes */
+ };
+ 
++/* Last block-status answer, covering [offset, end). Empty when equal. */
++typedef struct CommitStatus {
++    int64_t len;
++    int64_t offset;
++    int64_t end;
++    int ret;
++} CommitStatus;
++
+ typedef struct CommitBlockJob {
+     BlockJob common;
+     BlockDriverState *commit_top_bs;
+@@ -130,26 +145,45 @@ static void commit_clean(Job *job)
+ 
+ static int coroutine_fn
+ commit_iteration(CommitBlockJob *s, int64_t offset,
+-                 int64_t *requested_bytes, void *buf)
++                 int64_t *requested_bytes, void *buf, CommitStatus *st)
+ {
+     BlockErrorAction action;
+-    int64_t bytes = *requested_bytes;
++    int64_t bytes;
+     int ret = 0;
+     bool error_in_source = true;
+ 
+-    /* Copy if allocated above the base */
+-    WITH_GRAPH_RDLOCK_GUARD() {
+-        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+-            s->base_overlay, true, BDRV_WANT_PRECISE, offset,
+-            COMMIT_BUFFER_SIZE, &bytes, NULL, NULL, NULL);
++    assert(offset >= st->offset);
++
++    if (offset >= st->end) {
++        /* Copy if allocated above the base */
++        WITH_GRAPH_RDLOCK_GUARD() {
++            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
++                s->base_overlay, true, BDRV_WANT_PRECISE, offset,
++                st->len - offset, &bytes, NULL, NULL, NULL);
++        }
++
++        if (ret < 0) {
++            trace_commit_one_iteration(s, offset, 0, ret);
++            goto fail;
++        }
++
++        st->offset = offset;
++        st->end = offset + bytes;
++        st->ret = ret;
+     }
+ 
+-    trace_commit_one_iteration(s, offset, bytes, ret);
++    ret = st->ret;
++    bytes = st->end - offset;
+ 
+-    if (ret < 0) {
+-        goto fail;
++    /* An unallocated span costs no I/O, so it is crossed in one step. */
++    if (ret & BDRV_BLOCK_ZERO) {
++        bytes = MIN(bytes, COMMIT_ZERO_CHUNK);
++    } else if (ret & BDRV_BLOCK_ALLOCATED) {
++        bytes = MIN(bytes, COMMIT_BUFFER_SIZE);
+     }
+ 
++    trace_commit_one_iteration(s, offset, bytes, ret);
++
+     if (ret & BDRV_BLOCK_ALLOCATED) {
+         if (ret & BDRV_BLOCK_ZERO) {
+             /*
+@@ -215,6 +249,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     int64_t n = 0; /* bytes */
+     QEMU_AUTO_VFREE void *buf = NULL;
+     int64_t len, base_len;
++    CommitStatus st = { 0 };
+ 
+     len = blk_co_getlength(s->top);
+     if (len < 0) {
+@@ -235,6 +270,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+     }
+ 
+     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
++    st.len = len;
+ 
+     for (offset = 0; offset < len; offset += n) {
+         /* Note that even when no rate limit is applied we need to yield
+@@ -245,7 +281,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+             break;
+         }
+ 
+-        ret = commit_iteration(s, offset, &n, buf);
++        ret = commit_iteration(s, offset, &n, buf, &st);
+ 
+         if (ret < 0) {
+             return ret;
+-- 
+2.53.0
 
 
