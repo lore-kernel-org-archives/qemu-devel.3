@@ -4,106 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D6ACA5FA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 18:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53266CA5FA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 18:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBcJi-00036U-00; Tue, 29 Sep 2026 14:12:38 -0400
+	id 1xBcKN-0003Hu-Hg; Tue, 29 Sep 2026 14:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBcJf-000368-QQ
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 14:12:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1xBcKE-0003BB-KU; Tue, 29 Sep 2026 14:13:12 -0400
+Received: from pharaoh.lmichel.fr ([149.202.28.74])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBcJd-0007ZS-Vx
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 14:12:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790705552;
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1xBcKC-0007bs-OT; Tue, 29 Sep 2026 14:13:10 -0400
+Received: from localhost (sekoia-laptop.home.lmichel.fr [192.168.61.102])
+ by pharaoh.lmichel.fr (Postfix) with ESMTPSA id 0CD00C6030C;
+ Tue, 29 Sep 2026 20:13:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lmichel.fr; s=pharaoh; 
+ t=1790705583;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H/bH+/icoyseQhm0iBo/BYOXClhJ2bM3C7Up5vIbuDU=;
- b=a9CQclwwf6wP9uuDzJc2HZnhzHMR2/r1LiT8kT4+MUb54Zz3bupBgmFzfKWRGzt/mcIYGY
- zVQB9aGIk2Nv+0IS2Glgbw1dQFse/wygdlvrx3LtH+WTUpk41TbtBi9GQWh5MUhocBdQOw
- dG5zHD/939LLPR99ZKEFYoAgsmSRo44=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-DnNElg1YNM2XtO06eG6tUA-1; Tue, 29 Sep 2026 14:12:30 -0400
-X-MC-Unique: DnNElg1YNM2XtO06eG6tUA-1
-X-Mimecast-MFC-AGG-ID: DnNElg1YNM2XtO06eG6tUA_1790705549
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93bf4c0af4eso197106085a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 11:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790705549; x=1791310349; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=H/bH+/icoyseQhm0iBo/BYOXClhJ2bM3C7Up5vIbuDU=;
- b=he8+FO8HyHSDZVaxeJw+Qq/5Q40utqA6uyCZBie+ACsSxRZ6mDwCHZkLhvuO0ErTrS
- qE2rT0dDucqlycqmEwUW6so1u4DJfMaAvzWV6KLcXbz+70s5dCQeYyFFL3sfXGFFDjZo
- PgZsvnAY1pZ2PoagGhWmDH5ctxr5OgYowMGSHrgHvmW0bVF0us57GqCTbomrKKAAPAD3
- 32hy5kMQtvlByjf5zCklzPLl6/uJ7caugR4ojDnhHX+vGM5yy46WZ87fPLIdJci/PrOu
- sD7onCeXUBvTKNatALN3DTUIsmWo50UB+HUSz8bTgfKYk6nYi/VGVAz6qC55stalnOjv
- tdjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790705549; x=1791310349;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=H/bH+/icoyseQhm0iBo/BYOXClhJ2bM3C7Up5vIbuDU=;
- b=npft7MBtsB1kmjh66qzCYrHzw1tO3nD8Yksj17gola72wBitNshRr8x5SHvFZB4UpM
- ItHoiRh9Fzm1vIbSrn8cAGPeKNBuXmQ6B+dexEStutQKTOOBt3OAqA0JEeZfl/DM33EC
- Iv9Z5g9psWiJSkH+Vo3Z0XbF3x0iDWjDehif+G+JHqDlkeR0XbVDxIuZPxIL+Opxa6OR
- pz3VL9soEbUyTVqsnN2n1cm0gfol5SXrRLp//9wy6kbSqvfBUg625FF/OvbG73s9zGRQ
- DSYhsSHTz5TECcp/TX2If0GMCu1fXhVw6JcXc39aEd1a5se/cmLmGxP2dukXLNk/Ntp1
- roLQ==
-X-Gm-Message-State: AFuF++m488PUyYdQTApmo9lvxNLBlI4da2pEHv7Iqgg4RHY3u2FtQp5X
- zORSvhUDcygy6WgGZT9lWCyIBfRLcXp4k2/BHrUEm0O41F81VJKmPVCtJWSjLBgeDC/JOgZqhNT
- ewzNYgoHqLKQZjg4vQOFAQ4wqj9MWmhv+3h0WqYgFQqVFEkwi4MK0vQRoWd7iMpYP1UY=
-X-Gm-Gg: AYBFou3hqx4cI/tUy5WZnB02xvs6Wat6mnyc8QHdYP45D/VfpWAKR0xUOtpTGNkhWqG
- ZZY4MA5WKjTQJdiY5KlQHWlmhvoa0F8cVZwx48rXPhfYhwkKhTDrfGCMB/JUP54FjznWnfLEHwI
- A1/OgQPrV63IfHdWgXWuATRt3j2gYusc08lWy8hORFr7vFU3xvzIUH4aiUgVqO9H3ANbGuibzXe
- PaenFyx8ZphYWgMiWj9U5fTAHAaa3jPvJKKfS8OmpNYDiVETlWV9p5V8G/N1nhO82RCznz5Y7zW
- jOM9JduIcy81ATbP0gE8Ng5sasUJwQsNkn7BFR7gLHyjmJXujVJwnFEguEpPZpADAx04JVY=
-X-Received: by 2002:a05:620a:a781:20b0:93c:8d81:b879 with SMTP id
- af79cd13be357-93c9f9b863bmr58161885a.12.1790705549373; 
- Tue, 29 Sep 2026 11:12:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:a781:20b0:93c:8d81:b879 with SMTP id
- af79cd13be357-93c9f9b863bmr58155985a.12.1790705548842; 
- Tue, 29 Sep 2026 11:12:28 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93c9f569504sm27652185a.45.2026.09.29.11.12.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 11:12:28 -0700 (PDT)
-Date: Tue, 29 Sep 2026 14:12:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, maciej.szmigiero@oracle.com,
- philmd@oss.qualcomm.com, odaki@rsg.ci.i.u-tokyo.ac.jp,
- clg@redhat.com, den@openvz.org, mark.kanda@oracle.com,
- vsementsov@yandex-team.ru, farosas@suse.de, sgarzare@redhat.com,
- bchaney@akamai.com, dongli.zhang@oracle.com
-Subject: Re: [PATCH v8 01/17] migration/cpr: forbid saving duplicate CprFds
- into hash table
-Message-ID: <arv_i9Z03WEby3Yp@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20260929-up-vsock-vhost-v5-v8-0-12bcf1c0b84a@virtuozzo.com>
- <20260929-up-vsock-vhost-v5-v8-1-12bcf1c0b84a@virtuozzo.com>
+ bh=O6cuTLJ981lTqoOSboKrJQviLkJB2AGmXyIKcgt+6+4=;
+ b=i6lr8Zb/b64Gq/IrnDXpXXOaihO3KNeP4p2Bq9/wGP3UGBiwo6S1NOBZumxGRxZl6Z31j8
+ Ny3Jb+wM4zPPjfx3ndcXXaevXQ+HdfW/LwF7sgmrMuFi9//OaBtaBU2ebXJ+vmdVRhKPMc
+ cM/6l1pYWJLcExqq/I3HnrsPlhKiXYIXmFSffdMCuoISL50AnpDUwW18Nqa8xZeplgJu/q
+ uQE4viRz1EaMaOgytk1h9uxwMvbW65D3kuCyyIg/wZmqeN/4zR+QT2d1mogZgHUmhCbqDk
+ EwN7Tp764bsKJ8NI2yLskr5xBqPWAkHzzUDHIoLTQydfnBhy3l4xXcRT760Tug==
+Date: Tue, 29 Sep 2026 20:13:02 +0200
+From: Luc Michel <luc@lmichel.fr>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Jonathan Gilbert <logic@deltaq.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] hw/misc/bcm2835_cprman: correct register index in test
+ for mux update
+Message-ID: <arv_rhMRpl_wk7tO@michell-laptop.localdomain>
+References: <20260925100726.1546566-1-logic@deltaq.org>
+ <507fb835-61a8-4e66-80f4-1ae6f07a5bf1@oss.qualcomm.com>
+ <52c613fd-41ca-45c0-9d74-faccb58c11cc@oss.qualcomm.com>
+ <30fa3419-f6a6-402b-a1e0-b009196e9197@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260929-up-vsock-vhost-v5-v8-1-12bcf1c0b84a@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <30fa3419-f6a6-402b-a1e0-b009196e9197@oss.qualcomm.com>
+Received-SPF: pass client-ip=149.202.28.74; envelope-from=luc@lmichel.fr;
+ helo=pharaoh.lmichel.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,50 +74,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 29, 2026 at 08:23:20PM +0300, Andrey Drobyshev wrote:
-> In its current form, the mechanism for saving CPR FDs into hash table
-> has flaws.
+On 09:28 Sun 27 Sep     , Philippe Mathieu-Daudé wrote:
+> On 26/9/26 11:42, Philippe Mathieu-DaudÃ© wrote:
+> > On 26/9/26 11:30, Philippe Mathieu-DaudÃ© wrote:
+> > > Cc'ing Luc
+> > > 
+> > > On 25/9/26 12:07, Jonathan Gilbert wrote:
+> > > > After each register write handled by cprman_write, function update_mux
+> > > > checks each of the clocks to see whether the supplied register index
+> > > > applies to it, calling clock_mux_update if so. Each clock has two
+> > > > registers, so it needs to check the base cm_offset for CM_CTL and then
+> > > > the next slot for CM_DIV. But, it was checking for cm_offset plus 4, as
+> > > > though it were a byte offset when it's a logical index.
+> > > > 
+> > 
+> > Fixes: 7281362484a ("hw/misc/bcm2835_cprman: clock mux skeleton
+> > implementation")
+> > Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> > 
+> > > > Signed-off-by: Jonathan Gilbert <logic@deltaq.org>
+> > > > ---
+> > > >   hw/misc/bcm2835_cprman.c | 2 +-
+> > > >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> The CPR fd hash table uses the same CprFd for both key and value, and
-> is created with a key destroy function.  Inserting a second element
-> with the same (name, id) key leads to a use after free.  According to
-> GLib docs [1], g_hash_table_insert() keeps the old key, replaces the
-> value with the new element, and destroys the new key.  Thus when
-> inserting 2 CprFd elements fd1 and fd2 with equal keys we get:
-> 
->   g_hash_table_insert(table, fd1, fd1);  /* table has fd1 -> fd1 */
->   g_hash_table_insert(table, fd2, fd2);  /* table has fd1 -> fd2, fd2 freed */
-> 
-> Any subsequent cpr_find_fd() for that key then returns freed memory.
-> 
-> This is reachable whenever two CPR-aware objects register fds under the
-> same name, and it happens long before an actual CPR, since cpr_save_fd()
-> is typically called from .realize(), i.e. at boot time.
-> 
-> Apart from the UAF itself, when the user decides to perform CPR migration,
-> on CPR target we'd get corrupted FD from the hash table and fail somewhere
-> in .realize() for affected devices.
-> 
-> As a solution, let's altogether prohibit adding CprFds with duplicate
-> keys.  Since FDs are being registered for a subsequent CPR right at the
-> startup in .realize(), that'll allow us to error out and exit QEMU (or
-> fail a device hotplug op) gracefully instead of delaying potential
-> problems for later.  To do so, let's make cpr_save_fd() return 'bool'
-> instead of 'void' and provide an 'errp' argument to it.  That way caller
-> becomes responsible for checking the return value and propagating the
-> error.
-> 
-> Also update all the callers to use the adjusted interface to keep things
-> compilable and bisectable.
-> 
-> [1] https://docs.gtk.org/glib/type_func.HashTable.insert.html
-> 
-> Fixes: a181df93bb3 ("migration/cpr: use hashtable for cpr fds")
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Trivial fix so patch queued, thanks.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Thanks for the fix.
+A bit late:
 
--- 
-Peter Xu
-
+Reviewed-by: Luc Michel <luc@lmichel.fr>
 
