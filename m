@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45CCCA5FA7
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461DBCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBTSC-0005l3-Cy; Tue, 29 Sep 2026 04:44:48 -0400
+	id 1xBTSU-0005rK-Io; Tue, 29 Sep 2026 04:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTS2-0005jc-JY
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:40 -0400
-Received: from mail-pz2-x2a.google.com ([2607:f8b0:4864:3b::2a])
+ id 1xBTSI-0005pK-ND
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:55 -0400
+Received: from mail-pz2-x0e.google.com ([2607:f8b0:4864:3b::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTS0-0003lN-GA
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:37 -0400
-Received: by mail-pz2-x2a.google.com with SMTP id
- 41be03b00d2f7-cc79f8a6170so965116a12.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:44:36 -0700 (PDT)
+ id 1xBTSH-0003nY-6a
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:54 -0400
+Received: by mail-pz2-x0e.google.com with SMTP id
+ 41be03b00d2f7-cc4c08393b0so1647141a12.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790671475; x=1791276275; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790671491; x=1791276291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oeURIEcCI8TbII/h58ISje3mK5oO8wJcPqe347GxoX0=;
- b=Pr2rgGOE8maB1RV09bBFzcZXE71//tnpv1slH/RT6eAttFxsZomESVGeEsu4BLBiXM
- cZNoXQZSx+jnKxSZetahZ42m9Y7+aDbMRNblnX1lDrmLXukL5OgBjhwU+Przid9cQIR8
- /FmsM52uETaHje1wV7fM+gc0PljYSU8hBXLMsOX8h4EhgwAY1IbVq3oi7Zj1E8ZbIyO4
- A7CJnMypvNEf4oCHfqKAgHrMT6RS+16B8HJJms5ouxieXoDB41583KmLCpFS8G+s8/gi
- 0zpduym4FPzn4PtTwhrYaJeGKm9HZ9BDovMOJSrNAvOWTsWcbYB40MHTtW2qiKHT/Yxy
- Fx1Q==
+ bh=FlA2nQmoOrWyu92q9uY7bri1KbAe5YqKC3sra4MmyoI=;
+ b=JpuyrkXBXJVbKEHT482Tq1eYbSQN+xVK5cggZwCd429EPyhBBHgKgV32niKDC9Evta
+ Y8mzqw/5qFg1OlTmpAG0wjAnHIcFLMziwdjSuOpykcYEMLJFmWyZcRp20C54TzQdxLD6
+ IjfrkB2yC1L3hO6vFLWJwtp1E23CXXkFb062fXDth6ayD0QS6+DIVC1Ya9XFQfi2q0J8
+ hNZxTIHYAakWQO7m9tOynYiWW9dKbmf4gWufcQLMltJ4tAL/7amAHR0cxgtGVQka5QRE
+ SX+mkkPdb+K0JDRr1VMQpR6ptx0jjmFrjhbBamvwyX86jK641u0mGtjfNltOO643G1+A
+ QWWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790671475; x=1791276275;
+ d=1e100.net; s=20260707; t=1790671491; x=1791276291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oeURIEcCI8TbII/h58ISje3mK5oO8wJcPqe347GxoX0=;
- b=Nk9Fe1zXzJFKaCSZhLZ8uP7Shlt/RL3bDzgMEdVLLSfDrr9fVms+WDlFaPFvpIOaKT
- WQwmQzNBU0MsQZ5N4ZeA+COXQAFrCFfP/iZ6DlxNzs+/blTRN6Q251F8CaXTeC+rruLd
- 1ByzNNi2uX/jl7n60oSKCjzd5VdpFLs4Dwa9j4qJMa0TX6rlGKf1jV8srl82aCCZxrPr
- lwjiAp/mVo3Ss4fCrFLqNV9POc7JNHGopJGYv6poU8KsT6qqvYEgShrHUVr6BP3TU7tE
- KAZ19c5JsW5uUrBHgsSCLLjp7J95IVApwQgg3nVGJ6t0zHeSWW3oOknECcnancqSnfKj
- 9YXw==
-X-Gm-Message-State: AFq9FYIN3Kz9Jf6ciRLgdEIcaWTWbxB49M88XxrQSQeGnUOh4HyXzGl5
- VouxgPVGDrlpD8amJ64jpm0bpFiDUde6aA0EYxd6BFX5gcjuBTaNHQyINMPGzPbk
-X-Gm-Gg: AYBFou0E6cn53PecBAhOt9zxE046/fvrnkBC4OXVbS6LG2K0NE7xUZpW/x/rn6WhLab
- 7gzKbGKzoLEknO12HqynIsPiM93CeYPaqphktdwmZYYurwTmxI6ufuGC2D9D+dxI8oBuv76K2QW
- +f2ACt55J/jNBK2zsjnQ1fhbmjEFKuSuct7k6v0r+710bL77nYb+JCItsAFnthHzAgPAFOnfh1/
- Z6ZBt/sKlVtCmDXXBoE+8aTLC7NOs9n7/EvPH6NVWpYKTUJQtjTZMsZK4LSRBXQBJP9OL9NpHxQ
- iMbzR8InZKwYtobnICXjNC9hwZOto4Wi1KjgC5+BG1/UTRCf730HitvH+hx6HtZOd2lTRh741x3
- Hskuk4+1Rttqp9K4IMufXNdykknbAQge5ZUoHyDLIGESOMiWAbPaO7lZz4f9SWoKLFKeabC8pyI
- wBcbQymTaCHkIzlBpqBWXcpvsqayfXRjneo7lhK1EGgUx6ySJo/SCpcYh7BMkh21xnZ5De3AN+4
- Mwn/x2QaMzYGlPIPOWqdo8R99ik
-X-Received: by 2002:a17:90b:57c6:b0:3a0:22bd:6ef6 with SMTP id
- 98e67ed59e1d1-3a09853a6cdmr9957310a91.2.1790671475170; 
- Tue, 29 Sep 2026 01:44:35 -0700 (PDT)
+ bh=FlA2nQmoOrWyu92q9uY7bri1KbAe5YqKC3sra4MmyoI=;
+ b=AU5oQITHs87YevnZHBxNDf+AKT7Psk4ZWc5ZG2qWIFW/9wyGu3BFOsbfK7TUiGKVq0
+ ijGFZhNyxtRNMtDNs8yftSGRXdqvDEWT1mXVlKCDtNzT9NYwBavNeofPveSXDWnsKNU+
+ DIRrrw1J3srwXCveaCXR9ZYVq7Dq8pJ5ITBfVR3XwnZOpOtTplrveTwwgObxmz9JIYek
+ d+1lrt9CcYhRZmGwG9h3PEXH9sCCKxAw++JN0Xnc7qdxc6ael/pxDHKpeoNm+Orz6Svq
+ rZUSNyaqFBkqIn19BuPcGqtjdFwksourlwHl9VF6xnlF3+0KcDeITHNvYD+OvVYjDSPY
+ +uow==
+X-Gm-Message-State: AFq9FYKuhCiEvPAgTiwTspCXJwqHWuHESPGZCJANyVjkq95LCPLTr2+B
+ em3Wn29B+IMbeFGY/KmQrwklddfCDIyxt1hzo5XKjfvO4bcpSpFz+rgMWWTrLpzH
+X-Gm-Gg: AYBFou2Zp6LqvMyESiaZvUy1tHZB7NDd0iBWzU79MIH+46p8uFCuP7nJRKkXZV4Gj2o
+ FwG42w5OihoEnQapJcudzjljp6bG6Jes3oAzg3fwjit7wJTmJP/XMGRfDyGzGq94XaePM1IrKBK
+ NGorpkmz7k1921+L/AGBI40EH7Mssl5Aud3GEYZyrPG5JTge0xEhetf0yXIuNAwF5Flj9E3KTO2
+ b1VeHD90QM1l/UVTDMA2lhnPyE6u8djVpWNJPqYSFtJ47KbKSaeagFdgDwFI9iwTkhjiVl95x/C
+ El5KadkIepLxXv4ec4zGztIn8piuCM4JgiCTdSb0MCjmaqFYg5paYzlITfszNBu0m0qW0U5QBBV
+ Y/DKT5Z0i/Zr+/JcrJX5b+TU4tZHAVUK+LfumAFBx01NvtMGRXFNrhihcj+qTXi2B/DUyB2U/W/
+ K99fAzKn+oTvtVdgIxZEvXzHOPi4q2jkrULrp1UgNxgsm6/9NgX+aydyAhFGkwG2hBEj9u8lilf
+ fzCsYYaKEZqcfvz8RsUmDDKkzU=
+X-Received: by 2002:a17:90b:1c8a:b0:39e:6c69:34d5 with SMTP id
+ 98e67ed59e1d1-3a098e900e7mr14307870a91.57.1790671491637; 
+ Tue, 29 Sep 2026 01:44:51 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.44.31
+ 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.44.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 01:44:34 -0700 (PDT)
+ Tue, 29 Sep 2026 01:44:51 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,16 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V18 03/13] block/export: track IOThread references
-Date: Tue, 29 Sep 2026 16:44:06 +0800
-Message-ID: <20260929084416.1600199-4-zhangckid@gmail.com>
+Subject: [PATCH V18 08/13] virtio-balloon: Update tracking iothread users with
+ holder
+Date: Tue, 29 Sep 2026 16:44:11 +0800
+Message-ID: <20260929084416.1600199-9-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929084416.1600199-1-zhangckid@gmail.com>
 References: <20260929084416.1600199-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::2a;
- envelope-from=zhangckid@gmail.com; helo=mail-pz2-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::e;
+ envelope-from=zhangckid@gmail.com; helo=mail-pz2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,178 +106,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Track the IOThreads used by a block export and identify the holder
-with the unique BlockExportOptions id.
+Replace raw object_ref/unref calls with
+iothread_ref_and_get/unref_and_put_aio_context.
 
-Acquire holder-aware references during export creation and release
-them on error or export deletion.  Support both single- and
-multi-iothread exports.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- block/export/export.c  | 62 ++++++++++++++++++++++++++++++++++++------
- include/block/export.h |  5 ++++
- 2 files changed, 58 insertions(+), 9 deletions(-)
+ hw/virtio/virtio-balloon.c         | 21 ++++++++++++++++-----
+ include/hw/virtio/virtio-balloon.h |  1 +
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/block/export/export.c b/block/export/export.c
-index b733f269f3..0e019545ef 100644
---- a/block/export/export.c
-+++ b/block/export/export.c
-@@ -15,7 +15,6 @@
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 07d519cf6d..cfc581940e 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -896,12 +896,19 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+     s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
  
- #include "block/block.h"
- #include "system/block-backend.h"
--#include "system/iothread.h"
- #include "block/export.h"
- #include "block/fuse.h"
- #include "block/nbd.h"
-@@ -72,6 +71,32 @@ static const BlockExportDriver *blk_exp_find_driver(BlockExportType type)
-     return NULL;
- }
- 
-+static void init_iothreads(const char *holder_id, IOThread **iothreads,
-+                           size_t num_iothreads, AioContext **aio_ctxs)
-+{
-+    const IOThreadHolder holder = {
-+        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-+        .u.block_export.export_id = (char *)holder_id,
-+    };
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
 +
-+    for (size_t i = 0; i < num_iothreads; i++) {
-+        aio_ctxs[i] = iothread_ref_and_get_aio_context(iothreads[i], &holder);
-+    }
-+}
-+
-+static void cleanup_iothreads(const char *holder_id, IOThread **iothreads,
-+                              size_t num_iothreads)
-+{
-+    const IOThreadHolder holder = {
-+        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-+        .u.block_export.export_id = (char *)holder_id,
-+    };
-+
-+    for (size_t i = 0; i < num_iothreads; i++) {
-+        iothread_unref_and_put_aio_context(iothreads[i], &holder);
-+    }
-+}
-+
- BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
- {
-     bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
-@@ -85,6 +110,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     AioContext *ctx;
-     AioContext **multithread_ctxs = NULL;
-     size_t multithread_count = 0;
-+    g_autofree IOThread **local_iothreads = NULL;
-+    size_t iothread_count = 0;
-     uint64_t perm;
-     int ret;
+         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
+                                            virtio_balloon_handle_free_page_vq);
+         precopy_add_notifier(&s->free_page_hint_notify);
  
-@@ -139,7 +166,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             goto fail;
-         }
- 
--        new_ctx = iothread_get_aio_context(iothread);
-+        local_iothreads = g_new0(IOThread *, 1);
-+        local_iothreads[0] = iothread;
-+        init_iothreads(export->id, local_iothreads, 1, &new_ctx);
-+        iothread_count = 1;
- 
-         /* Ignore errors with fixed-iothread=false */
-         set_context_errp = fixed_iothread ? errp : NULL;
-@@ -163,8 +193,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             return NULL;
-         }
- 
-+        local_iothreads = g_new0(IOThread *, multithread_count);
-         multithread_ctxs = g_new(AioContext *, multithread_count);
-         i = 0;
-+
-         for (strList *e = iothread_list; e; e = e->next) {
-             IOThread *iothread = iothread_by_id(e->value);
- 
-@@ -172,9 +204,12 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-                 error_setg(errp, "iothread \"%s\" not found", e->value);
-                 goto fail;
-             }
--            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
-+            local_iothreads[i++] = iothread;
-         }
-         assert(i == multithread_count);
-+        init_iothreads(export->id, local_iothreads, multithread_count,
-+                       multithread_ctxs);
-+        iothread_count = multithread_count;
+-        object_ref(OBJECT(s->iothread));
+-        s->free_page_bh = aio_bh_new_guarded(iothread_get_aio_context(s->iothread),
++        s->free_page_ctx = iothread_ref_and_get_aio_context(s->iothread,
++                                                          &io_holder);
++        s->free_page_bh = aio_bh_new_guarded(s->free_page_ctx,
+                                              virtio_ballloon_get_free_page_hints, s,
+                                              &dev->mem_reentrancy_guard);
      }
+@@ -928,7 +935,11 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
  
-     bdrv_graph_rdlock_main_loop();
-@@ -225,12 +260,14 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     assert(drv->instance_size >= sizeof(BlockExport));
-     exp = g_malloc0(drv->instance_size);
-     *exp = (BlockExport) {
--        .drv        = drv,
--        .refcount   = 1,
--        .user_owned = true,
--        .id         = g_strdup(export->id),
--        .ctx        = ctx,
--        .blk        = blk,
-+        .drv                  = drv,
-+        .refcount             = 1,
-+        .user_owned           = true,
-+        .id                   = g_strdup(export->id),
-+        .ctx                  = ctx,
-+        .blk                  = blk,
-+        .iothreads            = g_steal_pointer(&local_iothreads),
-+        .iothread_count       = iothread_count,
-     };
+     qemu_unregister_resettable(OBJECT(dev));
+     if (s->free_page_bh) {
+-        AioContext *ctx = iothread_get_aio_context(s->iothread);
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
  
-     ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
-@@ -250,8 +287,12 @@ fail:
-         blk_unref(blk);
+         qemu_bh_delete(s->free_page_bh);
+ 
+@@ -936,9 +947,9 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+         s->free_page_hint_status = FREE_PAGE_HINT_S_UNREALIZE;
+         qemu_cond_signal(&s->free_page_cond);
+         qemu_mutex_unlock(&s->free_page_lock);
+-        aio_wait_bh_oneshot(ctx, dummy_bh, NULL);
++        aio_wait_bh_oneshot(s->free_page_ctx, dummy_bh, NULL);
+ 
+-        object_unref(OBJECT(s->iothread));
++        iothread_unref_and_put_aio_context(s->iothread, &io_holder);
+         precopy_remove_notifier(&s->free_page_hint_notify);
      }
-     if (exp) {
-+        cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
-+        g_free(exp->iothreads);
-         g_free(exp->id);
-         g_free(exp);
-+    } else {
-+        cleanup_iothreads(export->id, local_iothreads, iothread_count);
-     }
-     g_free(multithread_ctxs);
-     return NULL;
-@@ -273,6 +314,9 @@ static void blk_exp_delete_bh(void *opaque)
-     exp->drv->delete(exp);
-     blk_set_dev_ops(exp->blk, NULL, NULL);
-     blk_unref(exp->blk);
-+
-+    cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
-+    g_free(exp->iothreads);
-     qapi_event_send_block_export_deleted(exp->id);
-     g_free(exp->id);
-     g_free(exp);
-diff --git a/include/block/export.h b/include/block/export.h
-index ca45da928c..ce8e4eb604 100644
---- a/include/block/export.h
-+++ b/include/block/export.h
-@@ -16,6 +16,7 @@
- 
- #include "qapi/qapi-types-block-export.h"
- #include "qemu/queue.h"
-+#include "system/iothread.h"
- 
- typedef struct BlockExport BlockExport;
- 
-@@ -89,6 +90,10 @@ struct BlockExport {
- 
-     /* List entry for block_exports */
-     QLIST_ENTRY(BlockExport) next;
-+
-+    /* The IOThreads utilized by this specific block export */
-+    IOThread **iothreads;
-+    size_t iothread_count;
- };
- 
- BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
+     balloon_stats_destroy_timer(s);
+diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
+index 53bbaa4c9a..5c3731b3e9 100644
+--- a/include/hw/virtio/virtio-balloon.h
++++ b/include/hw/virtio/virtio-balloon.h
+@@ -54,6 +54,7 @@ struct VirtIOBalloon {
+     size_t stats_vq_offset;
+     QEMUTimer *stats_timer;
+     IOThread *iothread;
++    AioContext *free_page_ctx;
+     QEMUBH *free_page_bh;
+     /*
+      * Lock to synchronize threads to access the free page reporting related
 -- 
 2.43.0
 
