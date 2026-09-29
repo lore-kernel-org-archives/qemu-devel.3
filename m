@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C517CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ADF0CA5FA7
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 08:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBTSd-0005xt-T0; Tue, 29 Sep 2026 04:45:16 -0400
+	id 1xBTSA-0005kr-QP; Tue, 29 Sep 2026 04:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTST-0005rI-GO
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:06 -0400
-Received: from mail-pj2-x2b.google.com ([2607:f8b0:4864:39::2b])
+ id 1xBTRu-0005j9-Ol
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:33 -0400
+Received: from mail-pj2-x0c.google.com ([2607:f8b0:4864:39::c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xBTSR-0003vf-So
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:45:05 -0400
-Received: by mail-pj2-x2b.google.com with SMTP id
- 98e67ed59e1d1-3a49b6bb21eso409531a91.3
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:45:03 -0700 (PDT)
+ id 1xBTRs-0003l0-V7
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 04:44:30 -0400
+Received: by mail-pj2-x0c.google.com with SMTP id
+ 98e67ed59e1d1-3a2adb9bc3cso1193986a91.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 01:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790671502; x=1791276302; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790671467; x=1791276267; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=iPmOtLIRXjhOE0Iym+HCcfkISTVUslh658pj6SzglRU=;
- b=kGU0RVFTlMmkoMqjmSBDUS6RRB4hijFhczI3IEOc3u2rhvCKrhM8Sew2KSPWm+o6XW
- VyCWA/ARvfHkt4boQ0lGmr1nv+Jy4nOA5N9DJYz0BFMPKvNLm1TcICh2Crbpagru73lt
- 58Jaq9xVmblkZ9aSV04AsZ5vKldGFLSaoajkN4+JoHGezWuaIxkKDBYxBXq5FMMDbdIL
- /adO4uiKY17PK/wI42Of5fPA3bdpV8Hp9wCNB7gwIAzauQFl8LSzvseAeT67Z8sZI6TY
- jayrkLdpZKWp98Y4pWwOX2OndQztY3peQTZfFNp+opVE1r6mheqaQ+rrpE+HbOi+zy4X
- jjuA==
+ bh=Er4P8E9bwo23WMOqnc3KMSVAUjE4O4btiiMlCHE7dwc=;
+ b=CqPRuCObnIwouxFI2O3Wnws2oEuVXmYxugGol811XWvCMCgSffaaxHfviMpvGLHXwo
+ 739SudBeR6rTEg5YLCBwwM6cfPhUyugSzevrbFJL4+IZroqo8spxCXOR79J0ZxexcvEP
+ tYzCmw2kYHxOGYbfZ6L6V33+2c2I3mENQ5zoABYf6fymqcPRJEAIr4MPU+xVQqh21cO4
+ YjdcogXZ52z6R8+TqEjm3ODcEkMyhc7YKH8BOOdFVzv35W2+u4zUsrn85IUNgARGO68d
+ YOYcqt1nrp6SUuDk0KBy1f9iFIZrtftLFmFpnjo7Iq7IKPLoRi2PPFz4GfbOy5O8HXGv
+ r9EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790671502; x=1791276302;
+ d=1e100.net; s=20260707; t=1790671467; x=1791276267;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iPmOtLIRXjhOE0Iym+HCcfkISTVUslh658pj6SzglRU=;
- b=ynTuhb/4huXdQ9zc8d7ZsL6zoWAjDY7rPQtV0kkjX2yDd54qBltJQp53Xt9kO1MfGQ
- aUGTwSkRl1+Tbsy+ZDP9/N1AkRHJnsI+cS1NXez1TsMEiTTQet8MejlqBMBjZuJ8cCiL
- 0VBbNLK7NiV0ZvPyJCf1VQLEcjYyWwEws3xuNmtsCSuUr7VOCKHFjdsdR87YM3TiNlcA
- M2AvR2lgOspD1/U5gueNeVwhkKMCZV9JoE3leuc3zRIkOJkivn+zbLAd9wmSLQvBP/c6
- 3wVn1JHprkVq72kxw7fnLWEaEgbqIwkC5r0qZp+z1hTSR4LRaOBLj+rqQF0KGR/nCnpc
- wybg==
-X-Gm-Message-State: AFq9FYKAWjel4MfcSjFkECiG6giqiJA1aYWaJhV2vIJEvMumvsQmBbK3
- Jch6KdUG7G8jexpwk6BEd7x7+czAmkszVUkw+YL6uMlCrfxKYfPosNdCRrJNXhAz
-X-Gm-Gg: AYBFou2AuDltv7b1acoC/M/XYShs6opxrY8BWA7Gh3RKvtigyf/FD7vc//akiLYXRit
- 1bL9TBaMQxondFuJb8YIMQps6lmB5PsJkV1NK7UEw/kRmKHJaXHUJPWQCB4GNKrecGTBC+vSe9W
- f9dn5Qgd6rX3WWESN9ijsv59+vVsjso8GNngs/wJ/TtZX01uRqoOx1VCnHZgrR8mXsJbKmGrKj8
- lyutJxvBQv/BQiqMmjO1dNHv8clEH0lzzS7chESsoVgArCa1HXTfocxXOVZCtzHqdMOffN5F88g
- Z2nig8s7aXRJOOYrwPRQAtY5ZNFONRMPoaiI0tIalPBWZWSByrGPrPuxR8IqFupbzGUQdYynsfy
- 0u1+00XR18sKaVNyRz8l8s/z86VHkMEOyJ/Y7OSz3/JnT5Bj9M3onwHvHA+nCDqVGRoZj8xpFrQ
- v0TNZwmCmYdIwphJjVHmfAkLosjkM3xki3eOMYHYUK6Bi/goGSzvtvmcDlc0rmK0D2kdj+y2HNn
- /e6GQ6yuE3bzrExSG5JaAEKmtI=
-X-Received: by 2002:a17:90b:530d:b0:3a4:a370:d888 with SMTP id
- 98e67ed59e1d1-3a4a370f2cemr566728a91.20.1790671502235; 
- Tue, 29 Sep 2026 01:45:02 -0700 (PDT)
+ bh=Er4P8E9bwo23WMOqnc3KMSVAUjE4O4btiiMlCHE7dwc=;
+ b=f9i0T6zsXGtMJEy2a8Kb+dXuQx3POYranCT+zVPortCAFPsdlHk/O0zuU2HAc38hlO
+ Ixmmb2tTeNuHediN8NU+xTA9UO0DL4GsC5VMcAKZSSroi0ZMdTIKKk//E+FFi9ia53Wi
+ 1wjDexEcbr/aDbS/wIdBlxz+4VJ+chyAHVJk01mznc3mt83xbp8KTC4k6c7NCFirDQe4
+ OgkVQxdnAtmBSBwGKF1dnQwa54Pm3eUCOroa7iGqWCvzuObKy4OoUmox+UkdZfx/QNTO
+ SWBtm/bPqOfUGaVOATNJo/52So9ffz+Attq0LicNLlZ5/NSWNwQl0aA8B4lNhbRx/7fS
+ 3M2A==
+X-Gm-Message-State: AFq9FYI4LB0h61o30FRrlV9T75yoA89cxRJKszMTtcKGkk/m3VMj7fgn
+ rA8YmcvqPM8fSBpNC6vqo1vN0hDPIdNyi9kVZARiBEOnWFacswVaHy/qICgFrQSe
+X-Gm-Gg: AYBFou0CEWjneQdpaYW1QOwLqaW3gvdsXU/0SqrfTdPpdN8nKdHayUYjIwso25couGg
+ S78PDEKw602OGulL0Wy4ww7FUmriy7AfzzRfZ7/gOCfuC9KDu3ezgf7dRkLyimp6CBvakCNLcle
+ G9drU2YnfzmuU3vxq40ZoG/PAFPCvk3r/j2en0R9Ziy7+Ni+PUht6bl8tIxryfoYYML92JDnIiR
+ q3vFmq3j3Huvs/PUDEpBP1V3VNIXLRnRM2HvqSzzjMEPIhbXOOR3VJzZBkl8lC0fFoyXKxokSaj
+ gRIvGRNWMunqdyh+qT0uDlrGghKGgdToiVkLLxdfQD+depfJXMEbQPgTqYPutYn6WDT1FEl2fj1
+ OWsmx/MXhIF3XhQ5h1rmvG6QYf2YLXnhsHVtFdhC1p6X+XoDnU52uPL6CsS+N5Z7GS5Mjrm9u6m
+ qnhoB91eP4cecVw+VlheuZCKlyvksNpjBDdfjU4c34/5D0J70yNM38Udc/tEMQjAv/PIrIDLUCz
+ nKFB9/bpn/OhuZWPSwgoBpc6yU=
+X-Received: by 2002:a17:90b:440e:b0:3a0:bf0a:c9d0 with SMTP id
+ 98e67ed59e1d1-3a0bf0ad1bcmr7265997a91.16.1790671467198; 
+ Tue, 29 Sep 2026 01:44:27 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.44.58
+ 98e67ed59e1d1-3a497e942eesm5163120a91.4.2026.09.29.01.44.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 01:45:01 -0700 (PDT)
+ Tue, 29 Sep 2026 01:44:26 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,16 +73,16 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V18 11/13] monitor/hmp: display IOThread holders
-Date: Tue, 29 Sep 2026 16:44:14 +0800
-Message-ID: <20260929084416.1600199-12-zhangckid@gmail.com>
+Subject: [PATCH V18 01/13] iothread: introduce holder tracking
+Date: Tue, 29 Sep 2026 16:44:04 +0800
+Message-ID: <20260929084416.1600199-2-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260929084416.1600199-1-zhangckid@gmail.com>
 References: <20260929084416.1600199-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::2b;
- envelope-from=zhangckid@gmail.com; helo=mail-pj2-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::c;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj2-x0c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,50 +105,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Display holder information in info iothreads to aid manual debugging.
+IOThreads do not record the QOM objects and block exports that use
+them, making runtime introspection and hotplug debugging difficult.
 
+Add:
+
+- holders: a list describing what is holding an iothread
+- iothread_ref(): add a holder to the list
+- iothread_unref(): remove a holder from the list
+
+A holder can identify either a QOM object or a block export. A later
+patch will expose this information through query-iothreads.
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- monitor/hmp-cmds.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/system/iothread.h |  5 +++
+ iothread.c                | 63 ++++++++++++++++++++++++++
+ qapi/misc.json            | 94 ++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 150 insertions(+), 12 deletions(-)
 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 9b1b94f8ea..7f1b6c35fb 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -247,11 +247,31 @@ void hmp_info_iothreads(MonitorHMP *hmp, const QDict *qdict)
-     IOThreadInfoList *info_list = qmp_query_iothreads(NULL);
-     IOThreadInfoList *info;
-     IOThreadInfo *value;
-+    IOThreadHolderList *h;
+diff --git a/include/system/iothread.h b/include/system/iothread.h
+index a1ef7696cb..b8aeb32b0e 100644
+--- a/include/system/iothread.h
++++ b/include/system/iothread.h
+@@ -18,6 +18,7 @@
+ #include "qemu/thread.h"
+ #include "qom/object.h"
+ #include "system/event-loop-base.h"
++#include "qapi/qapi-types-misc.h"
  
-     for (info = info_list; info; info = info->next) {
-         value = info->value;
-         monitor_hmp_printf(hmp, "%s:\n", value->id);
-         monitor_hmp_printf(hmp, "  thread_id=%" PRId64 "\n", value->thread_id);
-+        monitor_hmp_printf(hmp, "  holders=");
-+        for (h = value->holders; h; h = h->next) {
-+            IOThreadHolder *holder = h->value;
+ #define TYPE_IOTHREAD "iothread"
+ 
+@@ -50,6 +51,7 @@ struct IOThread {
+     bool stopping;              /* has iothread_stop() been called? */
+     bool running;               /* should iothread_run() continue? */
+     int thread_id;
++    IOThreadHolderList *holders;
+ 
+     /* AioContext poll parameters */
+     int64_t poll_max_ns;
+@@ -82,4 +84,7 @@ void iothread_destroy(IOThread *iothread);
+  */
+ bool qemu_in_iothread(void);
+ 
++void iothread_ref(IOThread *iothread, const IOThreadHolder *holder);
++void iothread_unref(IOThread *iothread, const IOThreadHolder *holder);
 +
-+            switch (holder->type) {
-+            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-+                monitor_hmp_printf(hmp, "[block-export: %s]",
-+                                   holder->u.block_export.export_id);
-+                break;
-+            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-+                monitor_hmp_printf(hmp, "[qom-path: %s]",
-+                                   holder->u.qom_object.qom_path);
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
+ #endif /* IOTHREAD_H */
+diff --git a/iothread.c b/iothread.c
+index 76eea6df38..6b0a7c557a 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -21,10 +21,71 @@
+ #include "system/iothread.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-misc.h"
++#include "qapi/clone-visitor.h"
++#include "qapi/qapi-visit-misc.h"
+ #include "qemu/error-report.h"
+ #include "qemu/rcu.h"
+ #include "qemu/main-loop.h"
+ 
++/* Add a deep copy of @holder to @iothread's list of holders. */
++void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
++{
++    assert(holder);
++
++    QAPI_LIST_PREPEND(iothread->holders, QAPI_CLONE(IOThreadHolder, holder));
++}
++
++static int iothread_holder_compare(const IOThreadHolder *holder_a,
++                                   const IOThreadHolder *holder_b)
++{
++    const char *name_a, *name_b;
++
++    if (holder_a->type != holder_b->type) {
++        return holder_a->type - holder_b->type;
++    }
++
++    switch (holder_a->type) {
++    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
++        name_a = holder_a->u.qom_object.qom_path;
++        name_b = holder_b->u.qom_object.qom_path;
++        break;
++    case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
++        name_a = holder_a->u.block_export.export_id;
++        name_b = holder_b->u.block_export.export_id;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    return strcmp(name_a, name_b);
++}
++
++/*
++ * Remove @holder from @iothread's list of holders.
++ *
++ * It is a programming error if @holder is not present.
++ */
++void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
++{
++    IOThreadHolderList **prev = &iothread->holders;
++    IOThreadHolderList *curr;
++
++    assert(holder);
++
++    while (*prev) {
++        curr = *prev;
++        if (iothread_holder_compare(curr->value, holder) == 0) {
++            *prev = curr->next;
++            curr->next = NULL;
++            qapi_free_IOThreadHolderList(curr);
++            return;
 +        }
-+        monitor_hmp_printf(hmp, "\n");
++        prev = &curr->next;
++    }
 +
-         monitor_hmp_printf(hmp, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
-         monitor_hmp_printf(hmp, "  poll-grow=%" PRId64 "\n", value->poll_grow);
-         monitor_hmp_printf(hmp, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
++    g_assert_not_reached();
++}
++
+ static void *iothread_run(void *opaque)
+ {
+     IOThread *iothread = opaque;
+@@ -129,6 +190,7 @@ static void iothread_instance_finalize(Object *obj)
+         iothread->main_loop = NULL;
+     }
+     qemu_sem_destroy(&iothread->init_done_sem);
++    qapi_free_IOThreadHolderList(iothread->holders);
+ }
+ 
+ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
+@@ -373,6 +435,7 @@ static int query_one_iothread(Object *object, void *opaque)
+     info = g_new0(IOThreadInfo, 1);
+     info->id = iothread_get_id(iothread);
+     info->thread_id = iothread->thread_id;
++    info->holders = QAPI_CLONE(IOThreadHolderList, iothread->holders);
+     info->poll_max_ns = iothread->poll_max_ns;
+     info->poll_grow = iothread->poll_grow;
+     info->poll_shrink = iothread->poll_shrink;
+diff --git a/qapi/misc.json b/qapi/misc.json
+index baa50cc844..bb49969b4b 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -67,6 +67,55 @@
+ ##
+ { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
+ 
++##
++# @IOThreadHolderBlockExport:
++#
++# @export-id: The unique block export identifier.
++#
++# Since: 11.2
++#
++##
++{ 'struct': 'IOThreadHolderBlockExport',
++  'data': { 'export-id': 'str' } }
++
++##
++# @IOThreadHolderQomObject:
++#
++# @qom-path: Path to the object in the QOM tree.
++#
++# Since: 11.2
++#
++##
++{ 'struct': 'IOThreadHolderQomObject',
++  'data': { 'qom-path': 'str' } }
++
++##
++# @IOThreadHolderKind:
++#
++# @block-export: A block export.
++# @qom-object: A QOM object.
++#
++# Since: 11.2
++##
++{ 'enum': 'IOThreadHolderKind',
++  'data': [ 'block-export', 'qom-object' ] }
++
++##
++# @IOThreadHolder:
++#
++# The block export or QOM object holding the iothread.
++#
++# @type: the kind of iothread holder.
++#
++# Since: 11.2
++##
++{ 'union': 'IOThreadHolder',
++  'base': { 'type': 'IOThreadHolderKind' },
++  'discriminator': 'type',
++  'data': {
++    'block-export': 'IOThreadHolderBlockExport',
++    'qom-object': 'IOThreadHolderQomObject' } }
++
+ ##
+ # @IOThreadInfo:
+ #
+@@ -76,6 +125,10 @@
+ #
+ # @thread-id: ID of the underlying host thread
+ #
++# @holders: the QOM objects or block exports currently holding this
++#     iothread.  When a holder is detached or destroyed, it is removed
++#     from this list.  (Since 11.2)
++#
+ # @poll-max-ns: maximum polling time in ns, 0 means polling is
+ #     disabled (since 2.9)
+ #
+@@ -98,6 +151,7 @@
+ { 'struct': 'IOThreadInfo',
+   'data': {'id': 'str',
+            'thread-id': 'int',
++           'holders': ['IOThreadHolder'],
+            'poll-max-ns': 'int',
+            'poll-grow': 'int',
+            'poll-shrink': 'int',
+@@ -122,20 +176,36 @@
+ #     -> { "execute": "query-iothreads" }
+ #     <- { "return": [
+ #              {
+-#                 "id":"iothread0",
+-#                 "thread-id":3134,
+-#                 "poll-max-ns":32768,
+-#                 "poll-grow":0,
+-#                 "poll-shrink":0,
+-#                 "aio-max-batch":0
++#                 "id": "iothread0",
++#                 "thread-id": 3134,
++#                 "holders": [
++#                     {
++#                         "qom-path": "/machine/peripheral/blk1/virtio-backend",
++#                         "type": "qom-object"
++#                     },
++#                     {
++#                         "qom-path": "/machine/peripheral/blk2/virtio-backend",
++#                         "type": "qom-object"
++#                     }
++#                 ],
++#                 "poll-max-ns": 32768,
++#                 "poll-grow": 0,
++#                 "poll-shrink": 0,
++#                 "aio-max-batch": 0
+ #              },
+ #              {
+-#                 "id":"iothread1",
+-#                 "thread-id":3135,
+-#                 "poll-max-ns":32768,
+-#                 "poll-grow":0,
+-#                 "poll-shrink":0,
+-#                 "aio-max-batch":0
++#                 "id": "iothread1",
++#                 "thread-id": 3135,
++#                 "holders": [
++#                     {
++#                         "export-id": "export0",
++#                         "type": "block-export"
++#                     }
++#                 ],
++#                 "poll-max-ns": 32768,
++#                 "poll-grow": 0,
++#                 "poll-shrink": 0,
++#                 "aio-max-batch": 0
+ #              }
+ #           ]
+ #        }
 -- 
 2.43.0
 
