@@ -4,133 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C90C9832A
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:03:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9975CCA5FA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 05:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBPzS-0001Nb-W1; Tue, 29 Sep 2026 01:02:55 -0400
+	id 1xBQHH-0003B2-H9; Tue, 29 Sep 2026 01:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBPzL-0001N8-K7
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:02:49 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xBQHE-0003Ac-T8
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:21:16 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBPzJ-00083t-VM
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:02:47 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xBQHD-00018V-2K
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 01:21:16 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68T47NSO3891436
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:02:43 GMT
+ 68T47BKP3643065
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:21:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- M9mhHj6twl8UZM2hyFcx2ajDxRfDBFQMhgUFDwsx3Bg=; b=UBuoOeI5npMPA3T1
- YiHUfj4Y5uWVGbozpZ08iJoxqHzQBb4qON/LDlzCjbsYO1V8d0D+3PW4vJaB2oB9
- sVgq+CekhfKCd7w5ltJnr+wyrF8IZFtm66tEoJ5zbG4s4e9MsX98f9dVR+Gz3lrE
- M2MmEQwV3LZv3yQ/LGF38VtpMhFsutkTJRziHp30SVsekFQsD6oF96za+/PlUbyD
- /+vIFo+ERnxSJAn3gUk6ek0g2FxGjd48qn7iE82/A474AHT3VcKp0peCQJtSy/tD
- pBRY0ze+9kU/U7Es3HG1Ac6Lhc00H7S/5s5XuxX36foDtXJz0R66TAbgYxGpiih1
- mbOWZg==
+ W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=; b=EEa/9RWOg9LSijHI
+ mSaYH/6wPcJO4jK35Sa1D2QlBTS0v/RyWr2wcYEg6mWiYzQA2AtEKMACzEmrJFud
+ /msjKrUAkKccu+iWjtZe8ID0YaQbe60wxIuKwP5bCkoToxg5x92+MLMVnpStF3OU
+ eX5wBlgEsd8iBTGgSiGxt8BpUXSCMMf9/jRf1OIVZkZUUjPRKG3sLIH5I0Ai9Zfk
+ jC/te42ePIfi1qK964Bva38/dNALKfC8LLX5oGUqiAGAs45/fx6p8x2H9X0rSER7
+ U8MWEmamHwhG9EoD1VyUimPjUjzCqjWEnF51OlH3nvCCjEEfdds0Icl3gGFChfDq
+ 3CdzUw==
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gynfkv7et-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h00s4s9rn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:02:43 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 05:21:12 +0000 (GMT)
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93a183a0e93so831133085a.1
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:02:43 -0700 (PDT)
+ af79cd13be357-93c5e9c2ec1so99150985a.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 22:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790658163; x=1791262963; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1790659271; x=1791264071; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=M9mhHj6twl8UZM2hyFcx2ajDxRfDBFQMhgUFDwsx3Bg=;
- b=WWZUsHUqHFugTaT5Ln1/byjcO351khWncKwt/MPermByly3rr5LVhQZ+eZyE3IcNO6
- nkW4y5IH/JCAlJiGVuThc/QM1NloiNtRhbhqZBN4Tt0ErSNKRJFWgy5/E7ojFEBDCnWP
- 8w5eFGQzIXtFIlznqHpGiKBMjCDBDZ+kxb7iXbB888xtwGhtQgac5ZTexhlBgvutDbMP
- 3bH3JADb3K5IKbRFBoUQefl+ePf7LGLoOGIQB+XuoFYmiGbdTGCRvODfyGb1slCHbgvd
- VgPeejloOW0h7LBoVk0pgnKH68shnA78dftSOSXJal83llYIE8kvawVoASnpIZmPkPku
- /EXw==
+ bh=W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=;
+ b=XCWcQKotZMfQPAB/lQydpEYEk7OyXJH+QjPlcXPAl5cvWZK6awSoa5xd+MAQW9oPHF
+ wj+LeHi/OPClMSxuS1RnZ0bCsXe17q3WSrI9gGzFU2d5qmjMe7VfdZSzXsrWZLz/ufnU
+ eKKRFxsBs2fhP4TlgHH0P5hLHR96qVv7WUqQ8keXwiBwqWJDaZNUnd47rpigkvR7LXNM
+ 3gKTuyW4XKRnkQtRN4kwOyavGTkgIAvIi6SNaYY3Fly7qctyzVXPNWVthQRxA+i5U/Qr
+ ZrYDUxceHUyh0W1GxpucWK66rifkHp5FLy8AXblZ4eU2+TVoeh3+rCu0UI3rGwfvq78H
+ jtIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790658163; x=1791262963;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1790659271; x=1791264071;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=M9mhHj6twl8UZM2hyFcx2ajDxRfDBFQMhgUFDwsx3Bg=;
- b=SFMclFHcaGgC0+T8kjCNSkl526bIBgAT4Ev/SOG8j1i7g0mSylC654juFXEu8YqPkb
- 95X2nFmG4PR9aYWGDZqDIhf8HGYM1HT4CGRY5f7aND/IRKSoabPlPGkdyw+9aV/4Vx0g
- lw0uvOC8Wsd2kMKn/PG/NPKTQEpke2VlBwXU9wudogJwABw4tSMuZalRum449daNyyV+
- d7g7qRPvBHetlwikULUKVSlwYQWQHKBSRV5LdmoseN2IOGtvNqD0Gz1I3XnbDzvg6jP7
- dYX2y6nDlJtexwuCP7ozWB5+0lJPdBmN1+bYiSfnqckDRQrCmj/cYlBp3/AKsRkdPMPx
- zgIA==
-X-Gm-Message-State: AFuF++mXL3mobKYXA//95u8+53WnJbmEBC2kCslFYRdhazCAyd8pxZa5
- bN0E8WGFcikjymyfymEEmPIctbCOXHFnOpSnAM5dtHlC5Wx2qosVWk4AR2jc7mc/RjGx3u5WR70
- psCxjk20+B7/ASnxgb56bxWJrWG2n2qmQiHiKLEbZf/OfkSRC1miTtrRndg==
-X-Gm-Gg: AYBFou35qRYfUFJOz5XUBf0IhODdq6/lPTSW5EHyMtkBX2PoDgiZAEmbJsiDkzWsto3
- /uNfZ3+7zrVJDoGCe8ML0hIXdp0pr+aZpRR0BFK4pSLnLYP2a12LchZxszmrmaLl6q72RXLbtVs
- UgT+lKZRHTe+j8AonPcSc5LF5DoxN2f9Jx8gQEYx4FhIhYtlFCOWTIWCwwra8t5M6J0RPuw08EV
- Wy8uQenGuEWCUtSF6X93/gtwHs5kCvzYPQWTJHJb644PjrbLeWCFhdp0yvJBNuMemdv/LWyGBPo
- hkkSpDk5UTdQOglif3nuCu7BhaRtB6J5KVMk1b8hD5iZCSietbXKm0aAIhuhus47MUjJFUKWHKN
- t/6VzcEjsUWKBEsv4BvUHQrSQrZ57z1s5oyW64YQ=
-X-Received: by 2002:a05:620a:8811:b0:93c:23e4:359e with SMTP id
- af79cd13be357-93c43d1608cmr2450108085a.50.1790658162936; 
- Mon, 28 Sep 2026 22:02:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:8811:b0:93c:23e4:359e with SMTP id
- af79cd13be357-93c43d1608cmr2450105285a.50.1790658162438; 
- Mon, 28 Sep 2026 22:02:42 -0700 (PDT)
+ bh=W2XZTiCtdp6e3IMexvjR7U5io+YYIZPaQA1t5PJO66g=;
+ b=JgJF31suz2lYccx7pswZr/WGSVYTDps914dJRK00VwqQabf8YCRugw+oo8DtQavrPx
+ dHBWBJ/6sq05kuYbxSLMg+I1W7L5yq0Qy9IrskzgZRo1CAyEQNEXy4b7+sZ4SSzE/Cv5
+ RjoF468HMSaTlNZfyjWnsm/X2E+gsDSOKJnDXhTo7yEd2+wua0Fphp3Pm8i93NdNGcaE
+ ip5Chs5kXdVRztBvu6SbKwvWvn2T0brO+m+t9KcnrnqPhusQjh3eDMQhsEKIdUCnEo6T
+ 13TMCmY59H/G8Y8a29YtcBxiIr7m04SsryV5GEiOVal7xl3cArqt8YJNyOQpGg8Hz451
+ K+rw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw/u4j8PqTtzXhcapWF9EORy7NjtwMphd17CwtuDXg779uNK+iNS27QlqzzaOw5AuSbiuqepoLGuLnj@nongnu.org
+X-Gm-Message-State: AFuF++nR3k81I3AflCocjdDLa+lVlfrNRNN1RmiWWV6RoNhWTaPeCqhP
+ dJPliuGi6g5GTTLh990TtkS0EtmHbwuchGEiU9XJxekl+47oyVUvzRjq/uyEl8TW6v4MW1xmVZn
+ XJT1o327OQUoivabDkYHFE8Su4CbWsFE++TVJUEDxkiSthtz4BtGczxRd2A==
+X-Gm-Gg: AYBFou22n6fIAPnifAGJTy/L4U4iSGHdUIbiR/88q6NUEOI7/lVLSendI0Kwsvt40wS
+ ssdRkZjyvFH+5anuU8LMvB5sSPrTQfUYZO8lGfgTGnZFBY5KcUbfOZyN/LVQGCFSHpBaTkYcE8p
+ 0ev7oPthlfD8DBSn26BKFx2CLaLD67/babnl37+mZ9C0/KHakgUmeeYtvCM/7XP4PbPEvq7nM40
+ t3TpTt2UKxMUi3NXTdt29sy6siI1C7LEDtFHwdNP/ZA1l7kLLtS5qRY+Zq7vmP9SPCn3cf5kxqH
+ l9E9Aj8f3RkyouS/MHQpdh1kNWlzaSf89K702Tk7oOvWHAdvmqX0MxfaVA+q+EwXmIzBHIOyC59
+ y4D4Ou1h92cV6kCUhj8IqT193ZXMH/DFfYA==
+X-Received: by 2002:a05:620a:880c:b0:939:a095:e458 with SMTP id
+ af79cd13be357-93c8bcd0262mr272687985a.3.1790659271386; 
+ Mon, 28 Sep 2026 22:21:11 -0700 (PDT)
+X-Received: by 2002:a05:620a:880c:b0:939:a095:e458 with SMTP id
+ af79cd13be357-93c8bcd0262mr272684485a.3.1790659270896; 
+ Mon, 28 Sep 2026 22:21:10 -0700 (PDT)
 Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48af502cf08sm993667f8f.9.2026.09.28.22.02.41
+ ffacd0b85a97d-48af50513c7sm969440f8f.16.2026.09.28.22.21.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Sep 2026 22:02:41 -0700 (PDT)
-Message-ID: <3847bbdf-02b8-4511-b745-fafa86bc9204@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 07:02:40 +0200
+ Mon, 28 Sep 2026 22:21:10 -0700 (PDT)
+Message-ID: <2f039184-d0a6-4556-a514-72a39ebfedf0@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 07:21:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] io: prevent unbounded read of websocket data from client
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260928130904.3921495-1-berrange@redhat.com>
- <CAJ+F1C+CqVB45HLPNaiwJJjbnrmwNAkDu=kGN=Ut8OsBW4VdYA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v2 14/24] target/hppa: convert excp to raise_excp
 Content-Language: en-US
-In-Reply-To: <CAJ+F1C+CqVB45HLPNaiwJJjbnrmwNAkDu=kGN=Ut8OsBW4VdYA@mail.gmail.com>
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Chao Liu <chao.liu@processmission.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Stafford Horne <shorne@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Eric Farman <farman@linux.ibm.com>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ Glenn Miles <milesg@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Song Gao <17746591750@163.com>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org
+References: <20260928052051.251-1-luoyonggang@gmail.com>
+ <20260928052051.251-15-luoyonggang@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260928052051.251-15-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAxOSBTYWx0ZWRfX0zCkDgCzjx+K
- ITR8BA+e+r0G2dZ14q6Msu4jWlZgBY4o3xzfw577BxhQ+huGrpl1rkPW1Fevw1Qkgeht7mPVM0X
- 5/+xKJQlEzVCoUvwdcqBQ4lmS8NIWkBQU7HJh2WnySIjwEHghL3V10LVFeJ59c7vUJOP04D7cvX
- xkc6POeYUCMkFXpKoScXxHJcfI3wJplZx0ZLB5a5b0P1Uh/HKgcxy7cxnhKoPYptJsmgVtCymLI
- N0nMTmWme7+8yX4XkfGQjIzKupwvlbBlcQymaxl1v2Wb2VpmmDGz8qAoMjuy9jbIDqjYQfkhlnS
- yPnYDKAHHPmVlgG1Cnc/JAljJb6AxiyYNsUmL0FVOv5GP5tAn+wfhjV5vzAiYya5gXHmdFtgCqk
- O5P+wP5/jq9KuQdP4Y/bH31IEaYM65a6euyXB6aWdVq8l3wMpH/ABpU0SSAQHIC5Pe0Rwx8FUw+
- h3bWUV4cvd/GVsbZI+g==
-X-Authority-Analysis: v=2.4 cv=e6aT2qp/ c=1 sm=1 tr=0 ts=6abb4673 cx=c_pps
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX/9NYADgKm3rR
+ 51awSqZFWML/hMs9kYnnKvzgRzzeRidqJer83ll75In30UyBOm18o3/hGYCHJnr7AxyjrInS0FV
+ P09FrqCqL78OwF8IwvL98u1bUzW6AYo=
+X-Authority-Analysis: v=2.4 cv=ALbfqNVA c=1 sm=1 tr=0 ts=6abb4ac8 cx=c_pps
  a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=FnapOH-xWNCB5aF0RLMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: mDXiTHaCJIsEcD_UyTcld7-gJfgDcm-K
-X-Proofpoint-ORIG-GUID: mDXiTHaCJIsEcD_UyTcld7-gJfgDcm-K
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAxOSBTYWx0ZWRfX3+YtCZowcL+L
- o9o0/zkp43ijH8zdNd8QPLRQluo+jG4enrMlGS/FFiS/WVRX2aheE1HgCbjulIRCrocDPlw7hQk
- /EvTwO7MN9csFISJPI2NCi2xVb1zbYk=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=pGLkceISAAAA:8 a=OjroqGzRqyjf1ntX9NUA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAyMSBTYWx0ZWRfX0rzuBsiKJ2OI
+ rI5ZMkEUCbPAVwzZMDQ0IO8Fun3AP9F8AE6bKbGFGPKykwcsH4+UCnHvZ65bfSeUUlxH14pRj5v
+ COSAgk4zr8SQ74BztHn2ixUM4nxF1js10asgUPbwig/3sBt3BqUlDhjXazcAxsSB8kYxwMVf8S7
+ xsaUTt1sO1dV0t/2/uMgpbJeymqOV0jk8/UGxAaz+9bRgpQh4rC/JKIUa8N/S9fyeT/xFKT4VWQ
+ 24nJA8z0SBXKhVpdMxpN4TBbE60kzQ+to51p67lIWipQKgxcy+DjV0NMUzHKrBafYJA+O1VNpnw
+ p68IGLiPl9ez9ANBmKHEWowd9RRM6KtI9Rmh6wq367+hy1DqKLoFXBLC9Jsh9dcBKuoRCcvlerW
+ UXioDQPauYsqYDBWIaB9qETGcJWWjavcKKUw/WgZr4jPr/ZFLIosioqp4eX0NbAFzqfQZVb/2uk
+ R9+TY3i3nL4U43vgdpg==
+X-Proofpoint-GUID: xqi00NEy4TTufpEoAIhNViT2rnPrFRHG
+X-Proofpoint-ORIG-GUID: xqi00NEy4TTufpEoAIhNViT2rnPrFRHG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290019
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290021
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,52 +178,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/9/26 22:09, Marc-AndrÃ© Lureau wrote:
-> On Mon, Sep 28, 2026 at 5:09 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> The QIOChannelWebsock class wraps an underlying QIOChannel instance,
->> providing a websocket server handshake and packet encoding/decoding.
->>
->> When a watch is added to QIOChannelWebsock, this in turn creates a watch
->> on the underlying QIOChannel that is always monitoring G_IO_IN, as long
->> as the 'encinput' buffer has space.
->>
->> When this watch fires, it reads data off the wire into 'encinput' and
->> then decodes as much of 'encinput' as possible into the 'rawinput'
->> buffer.
->>
->> The qio_channel_websock_set_watch method checks to see that 'encinput'
->> does not exceed a max limit, but fails to check that 'rawinput' size.
->> Since any data read into 'encinput', can usually be immediately decoded
->> into 'rawinput', the 'encinput' size check is largely a no-op, and so
->> 'rawinput' will grow without bound.
->>
->> This is readily seen with the chardev socket backend if enabling
->> websockets, connecting a client that sends data, while not running any
->> guest OS to consume data from the chardev via a virtual serial port.
->>
->> The qio_channel_websock_read_wire() method will also unconditionally
->> read more data into 'encinput' if it has less than 4k present, which
->> is then decoded into 'rawinput'.
->>
->> IOW, if qio_channel_websock_read_wire() is triggered for lots of small
->> reads, it will be reading and decoding more data to 'rawinput' than is
->> consumed. Skip reading more data if 'rawinput' is already at its max
->> size.
->>
->> Reported-by: Aisle Research
->> Fixes: CVE-2026-101291
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On 28/9/26 07:20, Yonggang Luo wrote:
+> Drop TCG excp and call raise_excp. Keep C hppa_dynamic_excp and use
+> cpu_loop_exit_excp. Route leftover C callers through
+> hppa_dynamic_excp instead of helper_excp.
 > 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> ---
+>   target/hppa/helper.h     |  2 --
+>   target/hppa/op_helper.c  | 15 ++-------------
+>   target/hppa/sys_helper.c |  4 ++--
+>   target/hppa/translate.c  |  2 +-
+>   4 files changed, 5 insertions(+), 18 deletions(-)
 > 
-> not sure if it's worth to add:
-> Fixes: 2d1d0e70cf3e ("io: add QIOChannelWebsock class")
+> diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+> index 8369855d78e..5ed39e01e31 100644
+> --- a/target/hppa/helper.h
+> +++ b/target/hppa/helper.h
+> @@ -1,5 +1,3 @@
+> -DEF_HELPER_2(excp, noreturn, env, int)
+> -
+>   DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
+>   DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
+>   DEF_HELPER_FLAGS_3(stby_e, TCG_CALL_NO_WG, void, env, tl, tl)
+> diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+> index 76a8d8a0d34..c4651f0d85a 100644
+> --- a/target/hppa/op_helper.c
+> +++ b/target/hppa/op_helper.c
+> @@ -30,20 +30,9 @@
+>   #include "user/page-protection.h"
+>   #endif
+>   
+> -G_NORETURN void HELPER(excp)(CPUHPPAState *env, int excp)
+> -{
+> -    CPUState *cs = env_cpu(env);
+> -
+> -    cs->exception_index = excp;
+> -    cpu_loop_exit(cs);
+> -}
+> -
+>   G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra)
+>   {
+> -    CPUState *cs = env_cpu(env);
+> -
+> -    cs->exception_index = excp;
+> -    cpu_loop_exit_restore(cs, ra);
+> +    cpu_loop_exit_excp(env_cpu(env), excp, ra);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+cpu_loop_exit_excp() replacement is one logical change, ...
 
-> 
->> ---
->>   io/channel-websock.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
+>   }
+>   
+>   static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
+> @@ -341,7 +330,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
+>           if (excp == EXCP_DTLB_MISS) {
+>               excp = EXCP_NA_DTLB_MISS;
+>           }
+> -        helper_excp(env, excp);
+> +        hppa_dynamic_excp(env, excp, 0);
+
+... removing helper_excp() and calling hppa_dynamic_excp()
+another one. Please split in 2 distinct patches.
+
+>       }
+>       return (want & prot) != 0;
+>   #endif
+
 
