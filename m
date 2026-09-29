@@ -4,117 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB34CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0749BC9832A
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 06:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBRmN-0005wP-C8; Tue, 29 Sep 2026 02:57:31 -0400
+	id 1xBRmz-0005zP-Cf; Tue, 29 Sep 2026 02:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xBRmL-0005wF-MN
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:57:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBRmo-0005yJ-OJ
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:58:02 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xBRmK-0001a6-0n
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:57:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790665046;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/7NJVfGY2eW0AJQWvT/7nf0EnspZT0YwEl7RSBzWsmY=;
- b=CXd822dpDBI+qN2VCBnhJF/fvFHOICcrxt238wVgHxaOQhOwAhRRb6MnTMj2W0O7eUVYgl
- IL6V53hiaaT8NeY9Tq5qJ1OX97zB1syiE9c26HN+LNdU2BZE3rZ0GZx0u6XfPCq9vKa1pp
- fL8JiyspaQ23sjubxi54bHlyxPtzTyQ=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-LQrCeBzVPnKgOIbUHoHvtA-1; Tue, 29 Sep 2026 02:57:23 -0400
-X-MC-Unique: LQrCeBzVPnKgOIbUHoHvtA-1
-X-Mimecast-MFC-AGG-ID: LQrCeBzVPnKgOIbUHoHvtA_1790665043
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-916cc44720aso28161136d6.3
- for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:57:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790665043; cv=none;
- d=google.com; s=arc-20260327;
- b=VFKs2aN9/MTeA/Oke6knnKo6TNSFp0yVFwa52FcqP08RFHMw8xWrlfVB5ljkg2I5ix
- 8fz2rsywBwWWBa+//I/WA79Ai4uYrDcHFDKC18Z6rmbj0JjTEvjin/OBhX4uDxj8ymgr
- cD31Qi5P1t0kMmtj2Y9kZ+pRtcN+A0sSZXC7LQwAJ3v0kn5W3JvSWpMzYtc/mERBQ4Ey
- JEf6mSrdh1S7YDlDIcLAZd8G3TfD4M7DEzvN3WDWLBrBUNTVjcHQgDERK/5EW0iqmmu/
- Dg3itpkck+HfV6+EIZiHEaRbpl0LjObS8jUDl+RvrlW02+TXNSyhaRVk1u1z3PY3hGG3
- vSdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/7NJVfGY2eW0AJQWvT/7nf0EnspZT0YwEl7RSBzWsmY=;
- fh=o66yYXp969Oh3EEeZc2S8sCOAmDpH8iHCTG7TQEgRck=;
- b=DkL66ShKbBIi3X1vF9BKk10hosDvlIgWr6EDmY29N8Xr2MdWJyh/OMjgxY2fElxnIn
- D4d5GcLaDRhmWF+yAG4RvygpHGs5mByQeikSG+564XwIs32tlXMVyC+PiLLaU4iqMOjS
- uRrSYNjkBSYCIq81Upa4CNEcoLXBJ6YS2OzOJz0XcC7+6auVpylbPJodNIDD/O/24ENT
- 65O8uHSoqIObADt1QZe+HL+BO6RTfzAW/F0btDhxrpzgNUue8pJjZwfrU7Xo1oKxmL6G
- oLd8iXLptB1I1U+1cMzZ8hE6HxSwBSosFC8Jjjz5hefDKk1cdodvnNdbrVhYwIRQupEC
- tODQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBRmm-0001cQ-Vw
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 02:57:58 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68T470ab419560
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 06:57:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MbuXH0xr6u/Sl1O/jb1ZFJPYnF1pHVJte0RNDEonFdA=; b=lC0YpYAxjud7P4cg
+ UVTM5I3L3De6deNNsIa2qBEelSnxijqVLreAVhUsYx6Ih3xK+LNbwqnFYzy6XIne
+ UEqTk9dYg3aOW+xZOg+wjZSE8F8jPXtQEGz9v+8oT0x8r/JXZxdjAigw9c/2IQnM
+ Q5rC5sDYHFTgc1+p4bIl4FYeZqfIKIwHGDQ9GkeyLOz1o0s2pzLdywcMPyvcZrkX
+ PJtM4Vj001+dnkjkJck/pbjCK5MUZ4qGRS5FfKt21GSqJawK1lfEsEayy3JxNdnz
+ Zm+tapXp+dcgWTpbNqVnV4ByLM+EUn+94WTbucJKbMoDMVG7xsUWEMJRVlPbbKiX
+ Op1axQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gyxmua46a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 06:57:54 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93c614646e9so417414885a.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Sep 2026 23:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790665043; x=1791269843; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/7NJVfGY2eW0AJQWvT/7nf0EnspZT0YwEl7RSBzWsmY=;
- b=RlPOnrjkLgMRL61ic5rLpthdBP7hs/rqUyOAL27aiBjwJgcjQUheQpxhlfudY/TUg1
- 7Si8sElLl6/J17F/d5ZntnK0TOqXAeOZ3BnN/1zgbQXz9c0BpRmS+iFGmBTRQHnCBMUF
- a7wvOqe5zWDYuz5pyTDxQRJUZ4nzTR4lalFMnyp2iitHVzgnAOvNI9oJ1KojqGDUEhiU
- 7MwywKVT3Gg+zKShWQWtteZXUr+5rWQISEdTH7b42xTUKbcHlieManBpkmN+kY0IP15Z
- vRCXtKOwFYE+izbE2PgJoT61y49Hee4ghDv+G1cXyc//DDLfzS0eEp0vkuDXidpC1WqG
- 9bOg==
+ d=oss.qualcomm.com; s=google; t=1790665073; x=1791269873; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MbuXH0xr6u/Sl1O/jb1ZFJPYnF1pHVJte0RNDEonFdA=;
+ b=OzGD7JG1oXCa5sLmiPbSb3yMeknJqXk6iVCJq5LJ+6apXdVRbUBb4w9DL17Itl0GAN
+ /uob4Yx4GEvYENp/3YYjsS9Cb5SUjmW6tAFc5SBUBjd70u5dMiGk9r7AAhclyDN5D3ZE
+ B08P97s9snpQOkVEd2GUUSL9E8jgARFloq3INdG9r38843a2U6IZATE4mvFhIHHN/0Ns
+ GDZrY2Kz/gq1tbcdzcr5kGiHuFeTVOfq0QTEyf/i7addNQkPouZDkuI8qjTHGowtXtjO
+ svXzaO5h0oP/ANy30gbVuJtcA1IjypCgYOinknUMzTUkT0IQjNmbI8CHPSU+XfPk3UvH
+ dTDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790665043; x=1791269843;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/7NJVfGY2eW0AJQWvT/7nf0EnspZT0YwEl7RSBzWsmY=;
- b=XY26NrBK8hcy8P/kwSf+kE+vKHw/00jpH5lyhim46ltDLaZ4E7fOOpHo5JGJTyjU0g
- 9zfiS0pEQIqQrRbJnuGPIY97ouHHKJmbTU4Tk2XwyTRC5CNlVWU85BA5urcAlpuRn6uV
- nPW0q8CWp+niInf1MmMS/MMPbYP0OizMrero7iSwrQFAb+PlWYYhsNMVNxRmPyoz/2On
- uuDGg51bMhCRFq+I6193e7wiuTbPW7LMTSZdk3bE4tAsARrwUC2gYRay/tUpifEEj6a+
- 9u4nm6Ppe4j2TqMh4jXY5yD5uInnggV5c2k5Se+1iI0L6cepedOUv5fAmDFKP8hS0PoH
- lmFQ==
-X-Gm-Message-State: AFuF++k5vhHWzNpZJXpEuWN+Kqju+SJWEkFZlZhOhbaFke5lbtC0zNne
- 8Vin5TuhU+AzZO6XEdDIvqEA5IIII73jmwqPOAd3P3eloFvhqVUa37FzeHksRP2mhDhnJ5jw04O
- 3GiU2MYWYNZeyqrjXVOEo12I6RauMp7MM3Tyv1lHpZ2tB09yyKZ1Zlm/2iHLfZ87/GlUYjAxVPB
- QoH5cYzaWoXNTSCCUMXSUvhUIntIryrH8=
-X-Gm-Gg: AYBFou0HZDLovHLzJ/9Nmegg83eDUUaMq9Syv5pQFyAWNV5edA77EDZVLo981RZkMbd
- Wa86xNLcPIykSTGkhVu4OeZAELfRN4fhk44io/y4vN9gU/xJZuPM7KvvEadPm6Lf/a8dBzjI/Mz
- Acdqc3MD2lGzI0bXkxaSXF1CEr4cXPNbZPvGuR4TTbbuHryPN6c3F0v09CRUo=
-X-Received: by 2002:a05:6214:e89:b0:90e:8be9:c384 with SMTP id
- 6a1803df08f44-9142f74fd77mr258503726d6.27.1790665043257; 
- Mon, 28 Sep 2026 23:57:23 -0700 (PDT)
-X-Received: by 2002:a05:6214:e89:b0:90e:8be9:c384 with SMTP id
- 6a1803df08f44-9142f74fd77mr258503456d6.27.1790665042782; Mon, 28 Sep 2026
- 23:57:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790665073; x=1791269873;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MbuXH0xr6u/Sl1O/jb1ZFJPYnF1pHVJte0RNDEonFdA=;
+ b=EPWZq7WzCYmKHSOGg8/qI9VxdcQ94bVw8Embf0M83y5Ko7h5bAttAC2Sdiu0jGAoxO
+ LEBXYANBElNMWca6V2rJfBsi3P7Z1IWPefXik2muyTcXUJRS0JVzdxh9qRlx02n+q4WG
+ rM2YY4lZZGCF2eRmyew4Cw+4I6zrYoWbmqcoKAmRLP9UrZUvULWHoEm0bWW66ysEMBUM
+ 9jpeiePR2rTPaEJM1foYX7RCR9ivLYNAGcDtbVVES7sajecKYk7x48PpZQ1AaUbXFxdN
+ xgqkkWKRHQrsMIkLHOlJx7tENvnh6avLT2hwN5k3wq45dQ9NoyoAftVQSg/DqUULZ+mN
+ LxFA==
+X-Gm-Message-State: AFuF++myob6s3uA4zaPqLcn3EL6MjEZZT6meGQmBMQfF/Fn7bPLzDZN5
+ 4BCkGubLwrusGoqdJrvIqZqZhbEVjvUdww+i5x6xCIFlI+hNLjnq0klHFS7/aNRfbHCJ0zeLw+L
+ r7xAWN+1YW/svC+/x0ahLPMpil7bZzZA7jp8p8yPHVybmtYGVm+Cr1SiuALLcBm1m2A==
+X-Gm-Gg: AYBFou2Gq3e8dlwgH1sLQ4j9TZUI5C7SQ3KEWm0GgBj883EKQSMn5YBarQQVTfCdcGj
+ Y54/go3oAAt8RNICnuOSp6Tw19mxB/cLdXJGoUmIuVvG6DsSzC2EIfm7kLZiSXrdpQCjLhf3jRk
+ ydqB9eM+UxR3tvOg86LusS6MXBFbHGCUbatpGw15/UYL2ZZ70vTsP+KME+jEcfeJFqTK1tqNCbQ
+ F1PcQHYn6ER+4JXoA0yJpmDEM5R6byP3Mo+F50lFZWNEGvMK8KOIh9Pux+02aJRsqAAu8/0rBEZ
+ Bo+ep4YbAHqcigMas69hnoDPNiTmGuUT+dsubdMNWQbD3/qnpoJU8NnuvLkj+7AUk9ytsIFWBWX
+ ueVj7B7ftFRa1ZhMO8gfi7m/essFO1k3GMboUTxfR
+X-Received: by 2002:a05:620a:7014:b0:937:11c9:37f1 with SMTP id
+ af79cd13be357-93c43bbcf96mr2511598785a.16.1790665073138; 
+ Mon, 28 Sep 2026 23:57:53 -0700 (PDT)
+X-Received: by 2002:a05:620a:7014:b0:937:11c9:37f1 with SMTP id
+ af79cd13be357-93c43bbcf96mr2511595985a.16.1790665072618; 
+ Mon, 28 Sep 2026 23:57:52 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48af506fdc1sm1630954f8f.21.2026.09.28.23.57.51
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 28 Sep 2026 23:57:51 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 1/2] target/rx: Unify BRK and INT trap handling
+Date: Tue, 29 Sep 2026 08:57:49 +0200
+Message-ID: <20260929065750.9550-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <CAE2XoE9VC6YfqsOQBM_KLrdaKpU-=bD9CscCDGi63EsQt-EhFg@mail.gmail.com>
+References: <CAE2XoE9VC6YfqsOQBM_KLrdaKpU-=bD9CscCDGi63EsQt-EhFg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260916165620.56264-1-bogorodskiy@gmail.com>
-In-Reply-To: <20260916165620.56264-1-bogorodskiy@gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 29 Sep 2026 09:57:11 +0300
-X-Gm-Features: AclHuK-SCInUP7-CibxtwFReIgBmqttXtXJlxjQL-0nU1AfyfBXVSUQNLw9jNts
-Message-ID: <CAPMcbCooZ1_PCt-gN-MxdkA9k4tCasTVN-Euo1FyMOwvNj+URQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/unit/test-qga: enable on FreeBSD
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000c98017065c99b149"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAyNyBTYWx0ZWRfX4OccyAKe/GEU
+ o8oPuLiWfy7PDiXbOJlxpu2XCl9U0ttXUOqHK1MPcB8tZixcUqSoAHdpMjZ/YSikyOIDS95n/hq
+ a8O12hjUmnOAnwIrgJ231WLb6VEXY4nJgVIIEW9eBNAOYsxayX+VM7ta2I3anD6JkwvuFxor2p4
+ NKKgdiclWO3urquc8ZMShl/AD8W0Wj84oWPCHUkgj8wfI3i8wBfSraPbyNHEh+ROFCf6t1/+Eh2
+ KzOw5gT8zJXU6pqG7nbKmVnDlzBiNb0gkY9HkrxYHy9elAdczIzu8ajgRonSwWqCjQiCXVgfAy8
+ YiRpVmJ+U4rWrHkHfAtxjMzpF5NW3DZGXKzzN+H222FiO+AXqBvwfOeiHscbKQ/qmloFz85iiwE
+ oQWCcuXAimiOlm++Wd0ub+DWaia6+3GDuBKmUPwbhUMVORl/9uiagiZ9YTufNqv+XTj0NShPrZ6
+ 1YGYSW1U+iLGcM3McdQ==
+X-Proofpoint-GUID: Os_yH3Gc9VdXMkMWJgcn3noltYA_Ff-r
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAyNyBTYWx0ZWRfXxo9+24HEUIzM
+ e5nka3cHbk7idChFaBazaq3yLG2liiur+HhlYDc1bs/DEPNdRpvtmXNSjZxZxrpJPpgDs7sGtdt
+ VVz2EkT8aY5j914wTI9oAKbL9TGcx/s=
+X-Proofpoint-ORIG-GUID: Os_yH3Gc9VdXMkMWJgcn3noltYA_Ff-r
+X-Authority-Analysis: v=2.4 cv=c70+0h9l c=1 sm=1 tr=0 ts=6abb6172 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=hMD_izP3oHWVbQvYQc4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290027
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,142 +151,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c98017065c99b149
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+BRK is equivalent to INT #0, so route both instructions
+through the same translation path and trap helper.
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Remove the duplicate helper declarations and implementation
+used by the two instructions.
 
-On Wed, Sep 16, 2026 at 7:57=E2=80=AFPM Roman Bogorodskiy <bogorodskiy@gmai=
-l.com>
-wrote:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/rx/helper.h    |  3 +--
+ target/rx/op_helper.c |  7 +------
+ target/rx/translate.c | 21 ++++++++++-----------
+ 3 files changed, 12 insertions(+), 19 deletions(-)
 
-> FreeBSD has all necessary commands implemented,
-> so enable test-qga for it.
->
-> Requires only minimal portability fixes for sockets
-> in connect_qga().
->
-> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> ---
->  tests/unit/meson.build | 2 +-
->  tests/unit/test-qga.c  | 6 +++++-
->  2 files changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-> index e47bc7225a..0ca0d8974e 100644
-> --- a/tests/unit/meson.build
-> +++ b/tests/unit/meson.build
-> @@ -169,7 +169,7 @@ if have_system
->    tests +=3D {'test-qdev': [qom, hwcore]}
->  endif
->
-> -if have_ga and host_os =3D=3D 'linux'
-> +if have_ga and host_os in ['freebsd', 'linux']
->    tests +=3D {'test-qga': ['../qtest/libqmp.c', '../qtest/libqtest.c']}
->    test_deps +=3D {'test-qga': qga}
->  endif
-> diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c
-> index 01ccf826e6..dbedfe3d5f 100644
-> --- a/tests/unit/test-qga.c
-> +++ b/tests/unit/test-qga.c
-> @@ -18,7 +18,7 @@ typedef struct {
->  static int connect_qga(char *path)
->  {
->      int s, ret, len, i =3D 0;
-> -    struct sockaddr_un remote;
-> +    struct sockaddr_un remote =3D { 0 };
->
->      s =3D socket(AF_UNIX, SOCK_STREAM, 0);
->      g_assert(s !=3D -1);
-> @@ -26,7 +26,11 @@ static int connect_qga(char *path)
->      remote.sun_family =3D AF_UNIX;
->      do {
->          strcpy(remote.sun_path, path);
-> +#ifdef SUN_LEN
-> +        len =3D SUN_LEN(&remote);
-> +#else
->          len =3D strlen(remote.sun_path) + sizeof(remote.sun_family);
-> +#endif
->          ret =3D connect(s, (struct sockaddr *)&remote, len);
->          if (ret =3D=3D -1) {
->              g_usleep(G_USEC_PER_SEC);
-> --
-> 2.55.0
->
->
-
---000000000000c98017065c99b149
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, S=
-ep 16, 2026 at 7:57=E2=80=AFPM Roman Bogorodskiy &lt;<a href=3D"mailto:bogo=
-rodskiy@gmail.com">bogorodskiy@gmail.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">FreeBSD has all necessary commands =
-implemented,<br>
-so enable test-qga for it.<br>
-<br>
-Requires only minimal portability fixes for sockets<br>
-in connect_qga().<br>
-<br>
-Signed-off-by: Roman Bogorodskiy &lt;<a href=3D"mailto:bogorodskiy@gmail.co=
-m" target=3D"_blank">bogorodskiy@gmail.com</a>&gt;<br>
----<br>
-=C2=A0tests/unit/meson.build | 2 +-<br>
-=C2=A0tests/unit/test-qga.c=C2=A0 | 6 +++++-<br>
-=C2=A02 files changed, 6 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build<br>
-index e47bc7225a..0ca0d8974e 100644<br>
---- a/tests/unit/meson.build<br>
-+++ b/tests/unit/meson.build<br>
-@@ -169,7 +169,7 @@ if have_system<br>
-=C2=A0 =C2=A0tests +=3D {&#39;test-qdev&#39;: [qom, hwcore]}<br>
-=C2=A0endif<br>
-<br>
--if have_ga and host_os =3D=3D &#39;linux&#39;<br>
-+if have_ga and host_os in [&#39;freebsd&#39;, &#39;linux&#39;]<br>
-=C2=A0 =C2=A0tests +=3D {&#39;test-qga&#39;: [&#39;../qtest/libqmp.c&#39;, =
-&#39;../qtest/libqtest.c&#39;]}<br>
-=C2=A0 =C2=A0test_deps +=3D {&#39;test-qga&#39;: qga}<br>
-=C2=A0endif<br>
-diff --git a/tests/unit/test-qga.c b/tests/unit/test-qga.c<br>
-index 01ccf826e6..dbedfe3d5f 100644<br>
---- a/tests/unit/test-qga.c<br>
-+++ b/tests/unit/test-qga.c<br>
-@@ -18,7 +18,7 @@ typedef struct {<br>
-=C2=A0static int connect_qga(char *path)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int s, ret, len, i =3D 0;<br>
--=C2=A0 =C2=A0 struct sockaddr_un remote;<br>
-+=C2=A0 =C2=A0 struct sockaddr_un remote =3D { 0 };<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0s =3D socket(AF_UNIX, SOCK_STREAM, 0);<br>
-=C2=A0 =C2=A0 =C2=A0g_assert(s !=3D -1);<br>
-@@ -26,7 +26,11 @@ static int connect_qga(char *path)<br>
-=C2=A0 =C2=A0 =C2=A0remote.sun_family =3D AF_UNIX;<br>
-=C2=A0 =C2=A0 =C2=A0do {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strcpy(remote.sun_path, path);<br>
-+#ifdef SUN_LEN<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D SUN_LEN(&amp;remote);<br>
-+#else<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0len =3D strlen(remote.sun_path) + sizeof(=
-remote.sun_family);<br>
-+#endif<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =3D connect(s, (struct sockaddr *)&am=
-p;remote, len);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ret =3D=3D -1) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_usleep(G_USEC_PER_SEC);<b=
-r>
--- <br>
-2.55.0<br>
-<br>
-</blockquote></div>
-
---000000000000c98017065c99b149--
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index 8cc38b0cb71..f3897ce7619 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -2,8 +2,7 @@ DEF_HELPER_1(raise_illegal_instruction, noreturn, env)
+ DEF_HELPER_1(raise_access_fault, noreturn, env)
+ DEF_HELPER_1(raise_privilege_violation, noreturn, env)
+ DEF_HELPER_1(wait, noreturn, env)
+-DEF_HELPER_2(rxint, noreturn, env, i32)
+-DEF_HELPER_1(rxbrk, noreturn, env)
++DEF_HELPER_2(trap, noreturn, env, i32)
+ DEF_HELPER_3(fadd, f32, env, f32, f32)
+ DEF_HELPER_3(fsub, f32, env, f32, f32)
+ DEF_HELPER_3(fmul, f32, env, f32, f32)
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index 36df7d377e5..6782912247e 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -455,12 +455,7 @@ G_NORETURN void helper_wait(CPURXState *env)
+     raise_exception(env, EXCP_HLT, 0);
+ }
+ 
+-G_NORETURN void helper_rxint(CPURXState *env, uint32_t vec)
++G_NORETURN void helper_trap(CPURXState *env, uint32_t vec)
+ {
+     raise_exception(env, 0x100 + vec, 0);
+ }
+-
+-G_NORETURN void helper_rxbrk(CPURXState *env)
+-{
+-    raise_exception(env, 0x100, 0);
+-}
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 132d495710c..d0910fbf8e7 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2170,26 +2170,25 @@ static bool trans_RTE(DisasContext *ctx, arg_RTE *a)
+     return true;
+ }
+ 
++static bool do_trap(DisasContext *ctx, uint8_t vec)
++{
++    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
++    gen_helper_trap(tcg_env, tcg_constant_i32(vec));
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return true;
++}
++
+ /* brk */
+ static bool trans_BRK(DisasContext *ctx, arg_BRK *a)
+ {
+-    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
+-    gen_helper_rxbrk(tcg_env);
+-    ctx->base.is_jmp = DISAS_NORETURN;
+-    return true;
++    return do_trap(ctx, 0);
+ }
+ 
+ /* int #imm */
+ static bool trans_INT(DisasContext *ctx, arg_INT *a)
+ {
+-    TCGv_i32 vec;
+-
+     tcg_debug_assert(a->imm < 0x100);
+-    vec = tcg_constant_i32(a->imm);
+-    tcg_gen_movi_i32(cpu_pc, ctx->base.pc_next);
+-    gen_helper_rxint(tcg_env, vec);
+-    ctx->base.is_jmp = DISAS_NORETURN;
+-    return true;
++    return do_trap(ctx, a->imm);
+ }
+ 
+ /* wait */
+-- 
+2.53.0
 
 
