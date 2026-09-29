@@ -4,71 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80242CA5FA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 13:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F5CCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Sep 2026 13:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBXmf-00071g-5o; Tue, 29 Sep 2026 09:22:13 -0400
+	id 1xBXso-0000qu-DK; Tue, 29 Sep 2026 09:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1xBXmc-000718-Sy
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:22:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBXsc-0000qG-Rt
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:28:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1xBXma-0002rg-F0
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:22:10 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBXsX-0003hR-Iw
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 09:28:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790688124;
+ s=mimecast20190719; t=1790688495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=iooU9FN5TIubzv7f6r7MGbmOFAuzxVs8SmVrAUE2K3M=;
- b=IJCZtf8MIvKUEOVhxgZyS+XI52rYOpaoiYjhhjOMlN99srNMlVVAxYN0LWdrypMXYZz98y
- /2ZQqn8Tw9izi48+KLX0uip2fbwZyWFrDS76THA2gUAftGGY7iQpezD2UV9SShm/JjZwwk
- jQBw1RnWeAXzKEnYNZDsfVS/D2mYcfc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=bJTnR5Zs6wDUQOHeJnI3DoA1hXplVszSUfDxIQPSGkI=;
+ b=iCIUXJrmffZM6nhdJ6Cndjupmz8f374wpRUJoHZSxjNtJtuFY/BJQB9k8sjwzdciVKujJ7
+ Ne6J9BWxKXosVUaBJ1w+2c9qCVY/v424t/O9ASYpxwVLvnTc4Ketj83nWDkQIlcLuxh3c2
+ LT6L95PRjz9xN2+DyadBjbcFkyBG52A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-R0yXyohXMSSA1E91Re4yFQ-1; Tue,
- 29 Sep 2026 09:22:03 -0400
-X-MC-Unique: R0yXyohXMSSA1E91Re4yFQ-1
-X-Mimecast-MFC-AGG-ID: R0yXyohXMSSA1E91Re4yFQ_1790688122
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-ynU8i083OrWTbZAAbWmwkA-1; Tue,
+ 29 Sep 2026 09:28:14 -0400
+X-MC-Unique: ynU8i083OrWTbZAAbWmwkA-1
+X-Mimecast-MFC-AGG-ID: ynU8i083OrWTbZAAbWmwkA_1790688492
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F09491954B27; Tue, 29 Sep 2026 13:22:01 +0000 (UTC)
-Received: from jmarcin-thinkpadt14gen5.tpbc.csb
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7DBDA768; Tue, 29 Sep 2026 13:22:00 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH] migration: Add option to VMSD to synchronize CPU right after
- loading
-Date: Tue, 29 Sep 2026 15:21:46 +0200
-Message-ID: <20260929132150.2215007-1-jmarcin@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34F7E1809CBB; Tue, 29 Sep 2026 13:28:11 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDF321956042; Tue, 29 Sep 2026 13:28:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6C7AC21E6A04; Tue, 29 Sep 2026 15:28:07 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
+ Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
+ Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
+ <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
+ <michael.roth@amd.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?C=C3=A9?=
+ =?utf-8?Q?dric?= Le Goater
+ <clg@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 10/14] qapi/parser: add _append() method
+In-Reply-To: <20260928223657.2303684-11-jsnow@redhat.com> (John Snow's message
+ of "Mon, 28 Sep 2026 18:36:53 -0400")
+References: <20260928223657.2303684-1-jsnow@redhat.com>
+ <20260928223657.2303684-11-jsnow@redhat.com>
+Date: Tue, 29 Sep 2026 15:28:07 +0200
+Message-ID: <87qzicw5js.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,345 +104,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+John Snow <jsnow@redhat.com> writes:
 
-Previously, the post init CPU synchronization with the accelerator, like
-KVM, was performed in the bottom half of the POSTCOPY_RUN command
-handler. However, this causes several problems.
+> This method is intended to become the sole point of appending new
+> sections to the section list, prohibiting outside callers from
+> accessing the list of sections directly.
+>
+> A forthcoming commit will actually convert the "all_sections" field to
+> be a private field to begin enforcing that no outside callers are
+> manipulating the section list from outside of this class.
 
-First issue is that if CPU synchronization fails, the destination QEMU
-crashes. However, it is too late to recover the source side as the
-response to special PING has been already sent, and both sides are
-already in the POSTCOPY_ACTIVE state.
+This suggests you merely add the method now.  Not true, you also put it
+to use.
 
-By moving synchronization before responding, if the machine crashes, the
-response is never sent and the source side can resume from the
-POSTCOPY_DEVICE state.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/parser.py | 50 ++++++++++++++++++++++++++----------------
+>  1 file changed, 31 insertions(+), 19 deletions(-)
+>
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 5fc9c18c81d..0dca1acba4c 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -542,7 +542,7 @@ def get_doc(self) -> 'QAPIDoc':
+>              if not symbol:
+>                  raise QAPIParseError(self, "name required after '@'")
+>              doc = QAPIDoc(info, symbol)
+> -            doc.all_sections.append(QAPIDoc.Section(info, QAPIDoc.Kind.INTRO))
+> +            doc.new_tagged_section(info, QAPIDoc.Kind.INTRO)
+>              line = self.get_doc_indented(doc)
+>              no_more_args = False
+>              last_ordered_section = QAPIDoc.Kind.INTRO
+> @@ -772,6 +772,33 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+>      def has_features(self) -> bool:
+>          return bool(self._features)
+>  
+> +    def _append(self, section: 'QAPIDoc.Section') -> None:
 
-Second issue is caused when migration is paused due to a network
-failure or user command right after transitioning to the POSTCOPY_ACTIVE
-state and the CPU synchronization causes a page fault. This page fault
-blocks the CPU and the main QEMU threads and cannot be resolved until
-postcopy migration is recovered. However, as libvirt also tries to
-execute 'cont' QMP command at this time (destination side transitions
-from POSTCOPY_DEVICE to POSTCOPY_ACTIVE), it will also halt waiting for
-the response from the blocked main QEMU thread, unaware of the fact that
-the migration is paused and needs to be recovered. Thus, it will wait
-indefinitely and never report postcopy migration error.
+Maybe name it _append_section()?  We already have append_line()...
 
-This patch adds an option to VMSD that identifies devices that require
-CPU post init synchronization and runs synchronization for those device
-after they are loaded.
+> +        """
+> +        Primary internal interface for adding a new section.
+> +
+> +        It is intended to become the sole access point for adding new
+> +        sections to the QAPIDoc section list, but we are currently in
+> +        a transitional phase where other methods access the section
+> +        list directly to do insertions of generated sections at
+> +        targeted points.
 
-This moved CPU synchronization right to the device load and if this CPU
-synchronization fails, or the network fails during it, the source side
-can safely transition from POSTCOPY_DEVICE to a FAILED state.
+Yes: ._insert_near_kind().
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
-This patch an alternative approach to my previous RFC patch [1] that is
-in my opinion less hacky and also pretty minimal.
+> +        """
 
-[1]: https://lore.kernel.org/r/20260423154525.10292-1-jmarcin@redhat.com/
----
- include/migration/vmstate.h  | 6 ++++++
- migration/savevm.c           | 5 -----
- migration/vmstate.c          | 6 ++++++
- target/alpha/machine.c       | 1 +
- target/arm/machine.c         | 1 +
- target/avr/machine.c         | 1 +
- target/hexagon/machine.c     | 1 +
- target/hppa/machine.c        | 1 +
- target/i386/machine.c        | 1 +
- target/loongarch/machine.c   | 1 +
- target/m68k/cpu.c            | 1 +
- target/microblaze/machine.c  | 1 +
- target/mips/system/machine.c | 1 +
- target/or1k/machine.c        | 1 +
- target/ppc/machine.c         | 1 +
- target/riscv/machine.c       | 1 +
- target/s390x/machine.c       | 1 +
- target/sh4/cpu.c             | 1 +
- target/sparc/machine.c       | 1 +
- target/xtensa/cpu.c          | 1 +
- 20 files changed, 29 insertions(+), 5 deletions(-)
+This comment will soon change to
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 2901877308..60ddeacdd5 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -298,6 +298,12 @@ struct VMStateDescription {
-      */
- 
-     bool early_setup;
-+    /*
-+     * This VMSD describes a CPU which requires synchronization with an
-+     * accelerator after it's loaded. Can be set to true only if the device
-+     * described by this VMSD is of type CPU.
-+     */
-+    bool cpu_sync;
-     int version_id;
-     int minimum_version_id;
-     MigrationPriority priority;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 4b590ea672..d7153912b1 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2235,8 +2235,6 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
-     /* TODO we should move all of this lot into postcopy_ram.c or a shared code
-      * in migration.c
-      */
--    cpu_synchronize_all_post_init();
--
-     trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cpu-synced");
- 
-     qemu_announce_self(&mis->announce_timer, migrate_announce_params());
-@@ -3217,8 +3215,6 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
-         }
-     }
- 
--    cpu_synchronize_all_post_init();
--
-     return ret;
- }
- 
-@@ -3233,7 +3229,6 @@ int qemu_load_device_state(QEMUFile *f, Error **errp)
-         return ret;
-     }
- 
--    cpu_synchronize_all_post_init();
-     return 0;
- }
- 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 24004565bf..80a23f8943 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -19,6 +19,7 @@
- #include "qemu-file.h"
- #include "qemu/bitops.h"
- #include "qemu/error-report.h"
-+#include "system/hw_accel.h"
- #include "trace.h"
- 
- static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-@@ -449,6 +450,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-         return false;
-     }
- 
-+    if (vmsd->cpu_sync) {
-+        CPUState *cpu = CPU(opaque);
-+        cpu_synchronize_post_init(cpu);
-+    }
-+
-     trace_vmstate_load_state_success(vmsd->name);
-     return true;
- }
-diff --git a/target/alpha/machine.c b/target/alpha/machine.c
-index dcba5d441b..2b72159f06 100644
---- a/target/alpha/machine.c
-+++ b/target/alpha/machine.c
-@@ -82,6 +82,7 @@ static const VMStateField vmstate_cpu_fields[] = {
- 
- const VMStateDescription vmstate_alpha_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = vmstate_cpu_fields,
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 53a2734d25..cdc9003866 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -1247,6 +1247,7 @@ static int cpu_post_load(void *opaque, int version_id)
- 
- const VMStateDescription vmstate_arm_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 22,
-     .minimum_version_id = 22,
-     .pre_save = cpu_pre_save,
-diff --git a/target/avr/machine.c b/target/avr/machine.c
-index 8064a7214a..9232c98e72 100644
---- a/target/avr/machine.c
-+++ b/target/avr/machine.c
-@@ -99,6 +99,7 @@ static const VMStateInfo vms_eind = {
- 
- const VMStateDescription vms_avr_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
-index 179b6f53a2..23548639a7 100644
---- a/target/hexagon/machine.c
-+++ b/target/hexagon/machine.c
-@@ -21,6 +21,7 @@ static int hexagon_cpu_post_load(void *opaque, int version_id)
- 
- const VMStateDescription vmstate_hexagon_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 2,
-     .minimum_version_id = 2,
-     .post_load = hexagon_cpu_post_load,
-diff --git a/target/hppa/machine.c b/target/hppa/machine.c
-index 6a143cf8df..bfc286caaa 100644
---- a/target/hppa/machine.c
-+++ b/target/hppa/machine.c
-@@ -224,6 +224,7 @@ static const VMStateField vmstate_cpu_fields[] = {
- 
- const VMStateDescription vmstate_hppa_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = vmstate_cpu_fields,
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 8d69d7e25e..ced3c9a2ac 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -1806,6 +1806,7 @@ static const VMStateDescription vmstate_apx = {
- 
- const VMStateDescription vmstate_x86_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 12,
-     .minimum_version_id = 11,
-     .pre_save = cpu_pre_save,
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 931a5ca5ba..e6deddce58 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -210,6 +210,7 @@ static const VMStateDescription vmstate_tlb = {
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 4,
-     .minimum_version_id = 4,
-     .fields = (const VMStateField[]) {
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 9b52ad5fc2..28bc7bdd71 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -638,6 +638,7 @@ const VMStateDescription vmstate_68040_spregs = {
- 
- static const VMStateDescription vmstate_m68k_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
-index f930ff8609..63c8816582 100644
---- a/target/microblaze/machine.c
-+++ b/target/microblaze/machine.c
-@@ -101,6 +101,7 @@ static const VMStateField vmstate_cpu_fields[] = {
- 
- const VMStateDescription vmstate_mb_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 0,
-     .minimum_version_id = 0,
-     .fields = vmstate_cpu_fields,
-diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
-index bd1e4002cf..536d98f3c4 100644
---- a/target/mips/system/machine.c
-+++ b/target/mips/system/machine.c
-@@ -374,6 +374,7 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
- 
- const VMStateDescription vmstate_mips_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 21,
-     .minimum_version_id = 21,
-     .post_load = cpu_post_load,
-diff --git a/target/or1k/machine.c b/target/or1k/machine.c
-index 2d5ca16c51..abf11a37a5 100644
---- a/target/or1k/machine.c
-+++ b/target/or1k/machine.c
-@@ -133,6 +133,7 @@ static int cpu_post_load(void *opaque, int version_id)
- 
- const VMStateDescription vmstate_openrisc_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .post_load = cpu_post_load,
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index 569536bd02..33b46d6f3c 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -733,6 +733,7 @@ static const VMStateDescription vmstate_bhrb = {
- 
- const VMStateDescription vmstate_ppc_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 5,
-     .minimum_version_id = 5,
-     .pre_save = cpu_pre_save,
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index bf203bffce..f96f5b4dfb 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -497,6 +497,7 @@ static const VMStateDescription vmstate_mseccfg = {
- 
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = 12,
-     .minimum_version_id = 12,
- #ifdef CONFIG_KVM
-diff --git a/target/s390x/machine.c b/target/s390x/machine.c
-index b44fba43f1..411d563e25 100644
---- a/target/s390x/machine.c
-+++ b/target/s390x/machine.c
-@@ -256,6 +256,7 @@ static const VMStateDescription vmstate_diag318 = {
- 
- const VMStateDescription vmstate_s390_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .post_load = cpu_post_load,
-     .pre_save = cpu_pre_save,
-     .version_id = 4,
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 3bbdee301d..c9c724551b 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -285,6 +285,7 @@ static void superh_cpu_initfn(Object *obj)
- #ifndef CONFIG_USER_ONLY
- static const VMStateDescription vmstate_sh_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .unmigratable = 1,
- };
- 
-diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-index 0d5d79b5e7..a45071b09a 100644
---- a/target/sparc/machine.c
-+++ b/target/sparc/machine.c
-@@ -227,6 +227,7 @@ static int cpu_pre_save(void *opaque)
- 
- const VMStateDescription vmstate_sparc_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .version_id = SPARC_VMSTATE_VER,
-     .minimum_version_id = SPARC_VMSTATE_VER,
-     .pre_save = cpu_pre_save,
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 7c25b9ab70..c431450e58 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -298,6 +298,7 @@ XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
- #ifndef CONFIG_USER_ONLY
- static const VMStateDescription vmstate_xtensa_cpu = {
-     .name = "cpu",
-+    .cpu_sync = true,
-     .unmigratable = 1,
- };
- 
--- 
-2.55.0
+           """
+           Primary internal interface for adding a new section.
+
+           All other methods/helpers/etc ultimately use this and only
+           this interface for appending a new section.
+           """
+
+There's a bit of redundancy.  Suggest
+
+           """
+           Add a new section at the end.
+
+           It is intended to ...
+           """
+
+now, and
+
+           """
+           Add a new section at the end.
+
+           All other ...
+           """
+
+later.
+
+> +        if section.kind == QAPIDoc.Kind.RETURNS:
+> +            if self._returns:
+> +                raise QAPISemError(
+> +                    section.info, "duplicated '%s' section" % section.kind)
+> +            self._returns = section
+> +        elif section.kind == QAPIDoc.Kind.ERRORS:
+> +            if self._errors:
+> +                raise QAPISemError(
+> +                    section.info, "duplicated '%s' section" % section.kind)
+> +            self._errors = section
+> +        elif section.kind == QAPIDoc.Kind.SINCE:
+> +            if self.since:
+> +                raise QAPISemError(
+> +                    section.info, "duplicated '%s' section" % section.kind)
+> +            self.since = section
+> +        self.all_sections.append(section)
+> +
+>      def end(self) -> None:
+>          for section in self.all_sections:
+>              section.text = section.text.strip('\n')
+> @@ -797,7 +824,7 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+>  
+>          # start new section
+>          section = self.Section(info, kind)
+> -        self.all_sections.append(section)
+> +        self._append(section)
+>  
+>      def new_tagged_section(
+>          self,
+> @@ -805,22 +832,7 @@ def new_tagged_section(
+>          kind: 'QAPIDoc.Kind',
+>      ) -> None:
+>          section = self.Section(info, kind)
+> -        if kind == QAPIDoc.Kind.RETURNS:
+> -            if self._returns:
+> -                raise QAPISemError(
+> -                    info, "duplicated '%s' section" % kind)
+> -            self._returns = section
+> -        elif kind == QAPIDoc.Kind.ERRORS:
+> -            if self._errors:
+> -                raise QAPISemError(
+> -                    info, "duplicated '%s' section" % kind)
+> -            self._errors = section
+> -        elif kind == QAPIDoc.Kind.SINCE:
+> -            if self.since:
+> -                raise QAPISemError(
+> -                    info, "duplicated '%s' section" % kind)
+> -            self.since = section
+> -        self.all_sections.append(section)
+> +        self._append(section)
+>  
+>      def _new_description(
+>          self,
+> @@ -834,7 +846,7 @@ def _new_description(
+>          if name in desc:
+>              raise QAPISemError(info, "'%s' parameter name duplicated" % name)
+>          section = self.ArgSection(info, kind, name)
+> -        self.all_sections.append(section)
+> +        self._append(section)
+>          desc[name] = section
+>  
+>      def new_argument(self, info: QAPISourceInfo, name: str) -> None:
 
 
