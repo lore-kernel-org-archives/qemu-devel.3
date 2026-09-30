@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F690CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CA5C9830E
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBoD3-0006Ru-Rv; Wed, 30 Sep 2026 02:54:33 -0400
+	id 1xBoDa-0006ky-5n; Wed, 30 Sep 2026 02:55:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBoCs-0006Q6-Fz
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBoCq-0005Kd-QL
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790751260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oirolLFQi6i7+NVtqgU+mqpX5mzUbu/0fQhDgOzoV3E=;
- b=Nr7Phqwtfh4TCUaXT2JPCUIlfUPc8H5F+kiipnuPAKYIvw1Cagb7Dl7GUQDku0sTlaYbCj
- 9xLuRGD2indVb7CJw6f/UYxbwU/KjP77eT5NfOOWyN6Is51xYGVS/uKeacO3Bf45mHeHnY
- 70ZEbOfX/gd9g9XRA2vZNwqLxeiVwI8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-141-TqLjmIJoNqqNUWD00zY1oA-1; Wed, 30 Sep 2026 02:54:18 -0400
-X-MC-Unique: TqLjmIJoNqqNUWD00zY1oA-1
-X-Mimecast-MFC-AGG-ID: TqLjmIJoNqqNUWD00zY1oA_1790751257
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4888382a9e9so3069679f8f.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:54:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1xBoDW-0006id-EP
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:55:02 -0400
+Received: from mail-yx2-x0c.google.com ([2607:f8b0:4864:41::c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1xBoDT-0005P8-Ec
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:55:02 -0400
+Received: by mail-yx2-x0c.google.com with SMTP id
+ 00721157ae682-8ab46253999so15534237b3.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:54:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790751298; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GX5kKl+iMbgDoi2xpIOF9GubzNoi8T0EVu6hCImob8HoY5tvvpc3ijGhpUDXHadyK3
+ oJvpKkLUTB4LlUtYnc53AJTn5tnu8icCg9gYo8Fyk+yGBPQZXEKPRkHRammh0WGOQSTh
+ hiJ8+FFlMWNcwOlQSFDkyvAngMCqRsoTyFPktGxd6b3Fl73zZEzScE7HImTlC9Vt0EmH
+ VmVsdC9yjXmN9mwFWmVrg1HFAq6buOLVyLB5/kCejYv3LxNIVgrvc47zcjTK59a1tNyr
+ C1hmo3HDY5Wy/15s/TDxvUjUgORR9K3nK73yxIlieRp7O4wZCtqTn3osjsUtVb2PDxDb
+ Ksmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=blhB68vkNBGEEUHWQ/OhcTHQiwO2airpb0N7R54VSjs=;
+ fh=8ik9FFMGHL0a2axiY+q6nxkXql+LJ2KzvU2UfxPrZlE=;
+ b=BCqBqsD9QkHL9e3pv7X4pVr+a8zTFenJdccPYZDGILibLAKPxDVFU6j9NCC1r21BB3
+ cU3R5zvrktVqD3AnE4hDjE+xdxQYG9X0Y5PCw3men1F2xlMgM8jHYigRh70vgSFrZcuq
+ 26ZpcWnXEFR4I3FlKuvWc0RifhePqhFJkAORbaPGXDu0MZAUp+9/dqOb7JtoZZneFzWS
+ PXnKL/RCrHJkRp6y7mDR3R1YO2ewlLXopyNciGgq+ypeBd+CmC8nywjN9vmUfKTgMFJF
+ WMFIvIWucIRBPzWX2jirdsNdtxQE1ke7/wHu6wWGTgFOaIykNSD32yximTY5bzjXfGgy
+ X8qA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790751257; x=1791356057; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oirolLFQi6i7+NVtqgU+mqpX5mzUbu/0fQhDgOzoV3E=;
- b=E6Uw29yvkQV0GSN9+zd24QiSKVtDwU7Xy3J3YYv8lTjn5YMQzkxIyqc3XTAKjhOtWP
- xJM+dRnJ0tavaqmR2HjpWLBePMEeVh/DutOfOjkOJ2J/QBUHRnTAo39lL/OL8HzxDOgu
- ZBPcMWLMW+1OrjlnaOvHhPjVH0TYLBhRTOzwccpeBGHJcsgzRBLGP8wdrAjfUHTe81Z8
- e/FQyL9PvQKriwM7xfW4D0LtMZBi2Y5CSE3XD79pnNTIkwRMVHNjJhJ7Uq6713VnX7p9
- 8/JfEZVCqmSFr10mTMEed3V/hnkKwjUonnMSZ9Frwa3p9lIk+/hvUaVxZ+4F4/eKDZ/k
- atEQ==
+ d=jms.id.au; s=google; t=1790751298; x=1791356098; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=blhB68vkNBGEEUHWQ/OhcTHQiwO2airpb0N7R54VSjs=;
+ b=jXNqCnYsRlTu/b2J0rRHN7Krzz3lZqzbzfUoDc0fm1tIxbM7wRsweiJFpMbINHBGtP
+ kQi6NGoovY+/owhAWA4/faartrl3Tej/rStD26AsglKX+uISazfg/aIaAySXyEZ1KPUn
+ nyTWU7Nv+Z5SvdYp/HHo7v9xUg5FKMtG2Z+Dc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790751257; x=1791356057;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oirolLFQi6i7+NVtqgU+mqpX5mzUbu/0fQhDgOzoV3E=;
- b=wImX/xvajiKhIWfyaRv2rxKUpsa4MVWStYRB9q+R7EOkuSHXxhNrndjmqPSep8Bt9f
- v4KoVMaJubwOajz5o2ihuq19gRIh+LNLUcQCcNMWxUtc0qLJiuC53WGKxjVS/oWoJPnY
- M5SvrQoV7rkM7xGWKQ2qgpJPv1mBnUqscx/ahlmYEojm+x+A0yiPYjlFN0AwQrrMCSgg
- Bt0kSndAMwDb/UqwhD79CRpLKS7kaahpyXuDA6mSdmabVhDKx6egrhanpxOZe4E1fkgk
- RCJODAmG9HTRWCy/BqFh+McfF2Vc8erera6LgI2MZsM0/tjOdRPnlzpHj6Nh96jif2jt
- 6NGw==
-X-Gm-Message-State: AFq9FYL9qwptwtCiPpTMCWrL4p2wOm0+MkLRJK0MF6UndyNAC5UN8XeA
- hfTdMp55QBf3Iqh4+wJSKyZAbLSj97PQ2e1wxkujqvVIQBSzfvRFiPEBJeCGMthCELsFdZZbPAC
- uA2PLJYnXQdOoCy6n/ZD+oZhAYaZ+pI6dyTESfcz2YGjrdHmaRMkT0ZTWdJO1sHRtKhK30Fvjgh
- 0TqBlI5fST0Kde/eTtnkWGPQ/bi6kGsBfk5LOYEOfG
-X-Gm-Gg: AYBFou1r3zzrM7fLxO1em4rznNudgafH/I0Aj+lqQhSUHrZJUBbRl5+N2qUCmSeR1Ma
- eDzXe3+Ze9dVZIEx4ldnoCFuZHF+nvWEB74FXaTUzrFtV7g3pM90GB+cMIg1JAmyecV+jtR4Y9X
- pVBNXoULO/DT1LR3FKSf6z8aoQTpNRIpxuJf3F28WarZqLTf7zohbJzYgRWDIfIrUYpQk+UjsOX
- eNTEO+/Mmpvx0DDoW/cG26079L35oiqS+8JplDoTE9WlQZcXnP2L/+uww5UaZ+t/BYRCFgYIcYU
- saPR/w/1X0eIiNughdFv0qMOuNUaf8SQZq0MpiB/WeEoq+45s2qrSGvQsx56ytvM8y/Pe67EyTs
- wIdHyz+Uau8uSNsmH1PJY/yyol2qgdp/3CLvzjQxDK5A2/Z6mHnSicY00hSSvq2fy5QVbiZ8hQD
- IoTTBC
-X-Received: by 2002:a05:6000:188e:b0:488:7f8b:b4b with SMTP id
- ffacd0b85a97d-48b02505662mr881970f8f.26.1790751257481; 
- Tue, 29 Sep 2026 23:54:17 -0700 (PDT)
-X-Received: by 2002:a05:6000:188e:b0:488:7f8b:b4b with SMTP id
- ffacd0b85a97d-48b02505662mr881936f8f.26.1790751257101; 
- Tue, 29 Sep 2026 23:54:17 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.232.249])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b029bef64sm1437827f8f.10.2026.09.29.23.54.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 23:54:12 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Andrey Polivoda <apolivodaa433@gmail.com>
-Subject: [PATCH 3/3] target/i386/tcg: clarify return value of decode_insn
-Date: Wed, 30 Sep 2026 08:54:06 +0200
-Message-ID: <20260930065406.738374-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260930065406.738374-1-pbonzini@redhat.com>
-References: <20260930065406.738374-1-pbonzini@redhat.com>
+ d=1e100.net; s=20260707; t=1790751298; x=1791356098;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=blhB68vkNBGEEUHWQ/OhcTHQiwO2airpb0N7R54VSjs=;
+ b=eF9sT2FXWX0AaPtIrr7vjhqjDsQRnm80iiv6+S/KKmAQZSSnlduM5FOhCOfpifDrD4
+ x9qnwJgXAvjoCQ4IuQonz3Qg62N4JS+DMXV+/VYTkbBzHhlco2u4nvJBcQII68s6rtiv
+ mOOPrWS+0c+3Ua067WlR5PIiPv7K/qqVa4cT+0Yi0DxWbkfdLk2uWUnkC0wkeHrg3Noo
+ TGUH/KcH6I1YUzkbVrKZdmxXXJ6pM/u41ahV44S2mXk5DoGUnrN9ZY8sjUkox8PeT1ET
+ /y3N33Rm+RuAqAqFvcvKiTPoSrTYsfysmsmjYjnngaPrg7bbvQFFMQ3rF0L1LbTUS/bF
+ BACw==
+X-Gm-Message-State: AFq9FYKMzxdukV5KMu2dNmAgvywjPXAKyN/09H1YP99FOSbxhzO1wHvw
+ g4UrO5fyPTXaVCGmuHA0YoQpeiWW5qmcbZw8xrV+yxJIP0lUnM96KcxPCIl+RfPvT5VApmwaQgb
+ I4yr+ld2wJrM3fqonkIA9GDAAGPKX6Js=
+X-Gm-Gg: AYBFou1wPZPVNImWJd9WDLYwGO49fOJKsOcO1lGa9KgP+D7H545GcxLvRmUxAHovVTn
+ Mmy/ygOPsjx8hIc+SRmWQ7/HBDQdiMWMkFtMBEuephYYU/CdznpERBvcsww0MR7EGSQ7lBB/Pcq
+ CillwLALW0Y52+Xi3XCstVK9IyGj6GVegLUN12UMM/SfvM7FzJhkKap8dPEEc2X3fJtF8cck/og
+ bCxJecvV842zuXFlSwOIdPX8MMdqdWo7BP027misybghK9J6mZ3UMJmf2eGHKVAh5sHNF+3lecC
+ F9wg5HuRJ3mTGT65R3UF72K/Y07KfSCqUk2uFB5gmAOvDBQ1uuUd8QEq5s+yJgDh23WcihQKgIr
+ 6dH9tpIGcyE2ue2Ocj19kiPQBiWL8jULCYI4RW53+pNISKutKlu4Y9eodRQU5RvMG7471qzuRrC
+ iNmccf+Cakv5xVhFVdOHPl4rpvwcXQ
+X-Received: by 2002:a53:e941:0:b0:672:a068:8e43 with SMTP id
+ 956f58d0204a3-67683586fdfmr151428d50.100.1790751297896; Tue, 29 Sep 2026
+ 23:54:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260904-atlantis_prcm-v3-0-8bf20795a381@oss.tenstorrent.com>
+ <20260904-atlantis_prcm-v3-2-8bf20795a381@oss.tenstorrent.com>
+In-Reply-To: <20260904-atlantis_prcm-v3-2-8bf20795a381@oss.tenstorrent.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 30 Sep 2026 16:24:46 +0930
+X-Gm-Features: AclHuK9Ds3xCc0oM-ADDX9JNSJlG-aAWTUcec6SkgoE_xy664Gc_16-xqO-EbR4
+Message-ID: <CACPK8Xf2vW4MLPgNEzbL3YGSgQQmnBM6NyujwgQ8K+sF5aW9qA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis
+ model
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::c;
+ envelope-from=joel.stan@gmail.com; helo=mail-yx2-x0c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,45 +122,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is clearer if decode_insn() returns whether a generator exists;
-if it does not, the entry is empty and all other checks such as
-validate_sse_prefix() or has_cpuid_feature() are moot.
+On Sat, 5 Sept 2026 at 00:18, Anirudh Srinivasan
+<asrinivasan@oss.tenstorrent.com> wrote:
+>
+> Atlantis has 4 PRCMs that are visible from S mode by the Ascalon Core
+> (RCPU, HSIO, PCIe and MM). The remaining 2 are only accessed by the
+> boot cpu which isn't modelled yet.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+Bonus points for adding them if you have a model ready.
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 5212a24e470..4e1cf0a8297 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2478,7 +2478,7 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         e->decode(s, env, e, &decode->b);
-     }
- 
--    return validate_sse_prefix(s, e);
-+    return !!decode.e.gen;
- }
- 
- static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-@@ -2984,12 +2984,11 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     decode.cc_op = -1;
-     decode.b = b;
-     if (!decode_insn(s, env, decode_func, &decode)) {
--        goto illegal_op;
--    }
--    if (!decode.e.gen) {
-         goto unknown_op;
-     }
--
-+    if (!validate_sse_prefix(s, &decode.e)) {
-+        goto illegal_op;
-+    }
-     if (!has_cpuid_feature(s, decode.e.cpuid)) {
-         goto illegal_op;
-     }
--- 
-2.55.0
+> This commit adds these 4 PRCM blocks to the tt-atlantis model, along
+> with necessary device tree nodes for them.
+>
+> Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
+Happy with this once the the sysbus_realize return code checked. A
+bunch of other minor things in here I found from checking the
+generated device tree with the linux tools, which I don't think is
+necessary but does neaten things up a bit.
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+>
+> diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
+> index 1f2880d617..539c22354f 100644
+
+>  };
+> @@ -327,11 +332,36 @@ static void create_fdt_i2c_device(void *fdt, TTAtlantisSoCState *s, int bus,
+>      qemu_fdt_setprop_cell(fdt, name, "reg", addr);
+>  }
+>
+> +static char *create_fdt_prcm(void *fdt, const MemMapEntry *mem,
+> +                             const char *prcm_name)
+> +{
+> +    hwaddr base = mem->base;
+> +    hwaddr size = mem->size;
+> +    char *name = g_strdup_printf("/soc/prcm_%s@%" PRIx64,
+
+clock-controller@ instead of prcm_foo to match the binding, and save
+ourselves the string formatting.
+
+> +                                 prcm_name, base);
+> +    g_autofree char *compatible =
+> +        g_strdup_printf("tenstorrent,atlantis-prcm-%s", prcm_name);
+> +
+> +    qemu_fdt_add_subnode(fdt, name);
+> +    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
+> +    qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, base, 2, size);
+> +    qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
+> +    qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+
+No children, so we don't need size and address cells.
+
+> +    qemu_fdt_setprop_cell(fdt, name, "#clock-cells", 1);
+> +    qemu_fdt_setprop_cell(fdt, name, "#reset-cells", 1);
+> +    qemu_fdt_setprop_cell(fdt, name, "phandle", next_phandle());
+> +
+> +    return name;
+> +}
+> +
+>  static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+>  {
+>      uint32_t aplic_s_phandle = next_phandle();
+>      uint32_t imsic_s_phandle = next_phandle();
+>      uint32_t periph_clk_phandle = next_phandle();
+> +    uint32_t osc_24m_phandle = next_phandle();
+> +    uint32_t prcm_rcpu_phandle;
+> +    g_autofree char *rcpu_name, *hsio_name, *pcie_name, *mm_name;
+>
+>      create_fdt_cpu(fdt, s, aplic_s_phandle, imsic_s_phandle);
+>
+> @@ -348,6 +378,30 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+>                      aplic_s_phandle);
+>
+>      create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
+
+Nothing uses this now, so it can be dropped?
+
+> +    create_fdt_clk(fdt, "osc_24m", 24000000, osc_24m_phandle);
+
+We're not Linux, but the Linux device tree checker will complain if
+you use _ instead of -.
+
+> +
+> +    rcpu_name = create_fdt_prcm(fdt, &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
+> +    prcm_rcpu_phandle = qemu_fdt_get_phandle(fdt, rcpu_name);
+
+I made a mistake the past review, as Daniel pointed out, confusing
+qemu_fdt_get_phandle for qemu_fdt_alloc_phandle. Sorry for the
+confusion.
+
+> @@ -587,6 +650,28 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
+>      serial_mm_init(s->memory, s->memmap[TT_ATL_UART1].base, 2,
+>                     qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ),
+>                     115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> +
+> +    /* 4 PRCM blocks */
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_RCPU]), errp);
+> +    memory_region_add_subregion(
+> +        s->memory, s->memmap[TT_ATL_PRCM_RCPU].base,
+> +        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_RCPU]), 0));
+> +
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_HSIO]), errp);
+> +    memory_region_add_subregion(
+> +        s->memory, s->memmap[TT_ATL_PRCM_HSIO].base,
+> +        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_HSIO]), 0));
+> +
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_PCIE]), errp);
+> +    memory_region_add_subregion(
+> +        s->memory, s->memmap[TT_ATL_PRCM_PCIE].base,
+> +        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_PCIE]), 0));
+> +
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->prcm[PRCM_DOMAIN_MM]), errp);
+
+Check for success and return, for all the sysbus_realize calls we pass errp to.
+
+You could make these a loop with a {type, map} table, but no biggie.
 
