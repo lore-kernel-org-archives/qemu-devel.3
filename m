@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F0EC9830E
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79668CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBoCz-0006R6-NV; Wed, 30 Sep 2026 02:54:31 -0400
+	id 1xBoCy-0006Qr-9r; Wed, 30 Sep 2026 02:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBoCo-0006Po-VD
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:20 -0400
+ id 1xBoCo-0006PW-Ga
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBoCn-0005Jc-8F
+ id 1xBoCl-0005J9-D2
  for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790751255;
+ s=mimecast20190719; t=1790751253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
- b=JsDkHXjY1vXoRTQzTDSGGxCmkH84rTz08zMAs04/eb/JocP1oR9jXf5bnloL+OmFTZSJLU
- HZg9YhZt0PedNWIRo5o1HIbvGwh6AcsnO4mrgljDBALkyTCnQVTDcjQlF4+lMNElkUWWO6
- JbSj+Q9amJsJt2lgGgWWMyLdTvyYnKM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jW131SUAZL4r1wNAL31jTOYaxYTkRe/vwBhIXFgW3wI=;
+ b=jFAimNneUx2xRUhM22UfuWBi1PgHdjqr/yK3Vyw2n2Xu3fkUp5RZzLola9xzPpGUqR1mna
+ /KqCxPbZ5vEgkjMk63KbjrtuLH4g31OedikN8sVw9yAyq2OQco4f/VmYOYYsfZOQb5gxiO
+ J2VLYmUWasr3S67AaMXxw5j/e2lg9z8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-ORlR3aTFMjqQct4XkYtSIg-1; Wed, 30 Sep 2026 02:54:13 -0400
-X-MC-Unique: ORlR3aTFMjqQct4XkYtSIg-1
-X-Mimecast-MFC-AGG-ID: ORlR3aTFMjqQct4XkYtSIg_1790751252
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48b00febba3so198846f8f.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:54:13 -0700 (PDT)
+ us-mta-683-zR7uEdsnP-26tcq9E7J-xg-1; Wed, 30 Sep 2026 02:54:11 -0400
+X-MC-Unique: zR7uEdsnP-26tcq9E7J-xg-1
+X-Mimecast-MFC-AGG-ID: zR7uEdsnP-26tcq9E7J-xg_1790751250
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49e735659b7so36941185e9.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790751252; x=1791356052; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790751250; x=1791356050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
- b=WKRur+7KLyfoRlx7DKTl9EoRIfd9PXdlLTwT0JHtnMCYLm89I5qxHafpzB/Iu/oPmO
- bDEz9Olw4GX5rHVoy0Qjioz0Ix7jRpD/qZB0x0iqiPPPycHdG2/oCkTJ3zpR6KxQ/6jS
- LzIVDWjwgD4MrNLuSSSrhruFNofRyZBACKPU7yKA0s8eY6lH/StU6SuCcoIEbZbMpsBk
- n3NQoHl8rDuuAa6dSyEAMayEcvafCQe9GL5Sd4OTm9pQ4NMBSOWK3KUg7o7pXmg7JJMM
- l059hMTQsm2mguRkz7x9R7Q1iG1JJoGmUhCCj3c2oQZS8/8jC+qZ/TIS2TBIdd8RcTZd
- n3yw==
+ bh=jW131SUAZL4r1wNAL31jTOYaxYTkRe/vwBhIXFgW3wI=;
+ b=YeQEYZ/32c/JhTGtTJX0q9BwsAHYy6nXZdsm35GZp9rbc2olmABIP35JKzcpEdX6Uv
+ pMMlOtRRncTC1Th1Eu1H83vwdazl/GFnA0ypCtM2ueXIdyThbWFtuG1GtOpWvxYJvO6G
+ Hz2CwkMT5SyBOcQM6W6jmmsOyJ0rC+DcWCFty44f9g3dBTVnDlfyUPnys4rj3pFcHM0o
+ bCpooBm9seV8JoxyG2EG+/RCGOq7eO7HXXFykIjD4eFTJf9tYqkJkBVjyWPSbQrugpcW
+ CURnbPA6QRVfc5M/iBZtbLksW4DR+s6hZPwzE9X8WbvaFpfAaPUe3iwXPewdJKF7m3RN
+ LiSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790751252; x=1791356052;
+ d=1e100.net; s=20260707; t=1790751250; x=1791356050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
- b=OuHuAvu7oloXZ6iDb53VT92hl7IKOO5dIu1WlPEMA7GoznZvRc4ZZAzsgWB4ybfZRe
- eejOUdN59g/0mbn+NY4cj9rkO64V16Fw/m5LE4x+ZXhigMFxCspeuhH+OppxuwfuUg3p
- nOw56uy24FVQwFWwDmt/V7nBoVj9417GPSFrqFZejsBffnmaxh4tXUxWi19XLYRinkxr
- WfTqh/iqaQWmBHeBXZWixtmmemToUR7u/joD38hfSwYNFJi7tYexM/L37X1Rt1rx/iEw
- XH7v/+a70oEBtzNKsiV7W23Ek/Ghaoe5Tmp8S2GWS1ABG5nC3vgM3Ezl40PGTA35TGvL
- y81w==
-X-Gm-Message-State: AFq9FYIOudXa8bthXuNBmvciIdx39kqC97fOFqDk4DKaBAzKDFdCTHg+
- hiYfYXt1aLrTPhie0Sx6HCVZWpH9uJFaYg3h2tkdWD2kCmUrG9agXURCNkW5hdDLdRlUP0x7G1t
- IXR3BzAKdBEaYJWTueH2FMJe/hXinf3a1K/LjYxji9FrHN+ZBeAxy0pNq0YaWGVkzCZ8Pb7lHJ7
- 6r2+vBQ+yl8gvRsYvca+ps9bmndnw7We6TuxsOCx5Y
-X-Gm-Gg: AYBFou3EeLfRC8IE20A3p1BoSn3ei3Uyh+DkZUxKYz+QZujj/ByvrPn9U59znIttIlE
- IbrX3L1uCoDyhEtlCI1SD/y+lzqHyc+vwQZAfdMTtKZStGZzUIB1pCZbKp9cSYmB4e5B6YGyYxa
- HFnCW2zXmsZs+0kvunv8GjwbiWhQ1QmYhA0HD1R/OcWRNYy8haMjXI9bII2pfrxRGIHIsh5Glof
- z5u2NtcUqf1V+5BlxVY8zwD255zhbXNnpHXvs2PwN5QouL97ltVb8m1+oqD/YuGmmkCsbt3ZCAp
- bcXiGrSrMW/Xh5WGBjJtY5yFAqF9x4cF7fVyan/I2ht55QqEePwYuQ7AREHoxI4C3rMsyDqi6zS
- KGh6N/sB5s/sE9bOoWyc8MoMBLROvlreQ9XqyC9KvQDRSk3UZ4TkM27CryJbCCv7vwBf3Yie5+h
- bwaOGn
-X-Received: by 2002:adf:e187:0:b0:487:22c6:a623 with SMTP id
- ffacd0b85a97d-48b0243d9b0mr952079f8f.8.1790751252422; 
- Tue, 29 Sep 2026 23:54:12 -0700 (PDT)
-X-Received: by 2002:adf:e187:0:b0:487:22c6:a623 with SMTP id
- ffacd0b85a97d-48b0243d9b0mr952043f8f.8.1790751252028; 
- Tue, 29 Sep 2026 23:54:12 -0700 (PDT)
+ bh=jW131SUAZL4r1wNAL31jTOYaxYTkRe/vwBhIXFgW3wI=;
+ b=nf9801SejhjesbBU5DA13KmZanBDR6q9CkvF1cRazCnaR2zZ0XKpls5GQP4oauZ1Nj
+ Fdn0LmGIWpu3lHpJ8Gpiwu2t81d8cD2QquUjx07hBLdviLtQH/Z01jAO6v48pjD9eTuF
+ cljRKGqr+4mC7td1+ELsLwLiPkxQ09xqJCl5rhJa7+TjbwTI64yNAU+lpuQmnGq+m+60
+ vM9scy744OuB/ZVfpxPMyeO+RxQIAfUBKWxgjmc5xo83QxyOsNV/tUSneev6ykTOxqc7
+ 5O9thmD1oe88Iqwba5src9nmaWFny/LXtlbIzRiBBpUmzkDCVRIiW0HWM9DcQaQq/rIN
+ BmRQ==
+X-Gm-Message-State: AFuF++nH79M676qGQU0Vb+HIFSbV+QZlFyfqmoCjJTk0VKHZtMsVtwP2
+ jYBjjjVuxoGLkpR++ewZdqAT9snK5OIayLSdChRlbM+ztMciLtr8n4Jrb8CgOv+Ts9tdmiSFU9O
+ FPrlkucAiPFkP41QyGcruw/oxaXNhQUpqphz/rEouGgWrsVubOaymDdkr6mbVaJTn4VVQf7UlCO
+ iA7O0VxIYgW5zHGJlhtrKQRvL9SQ2ceRzC0bq0kC9i
+X-Gm-Gg: AYBFou3FpTiYCK01oMxS4R/j2TbLmMOQN3ftWC0YsOfwLv1i/TVOr7scKd0EdQ+408i
+ NrtJzUhYwynQOct41LM6/StajCv7tsoccnSTB8P/8F6rAq9cxS9tCtX9QP1dxv+BMAzgOhH34Oj
+ 8cHleqID2OQgDimbVwudEOuD/MAp9AKGM1pwR3P9iX6x3fUGu0uMbVsV5fkeBn1OZOYqXj9KA3+
+ bNDNKs8nO52kZ79q1rwmook7OA4HmwCisKFuqONK9YQl/BPyMzYRvTMGcZTy4yeEdNu/vPCkxjn
+ axxxtJmMCPowy/udyT8xSf3DHdhQK+dqsI65MpEesLeUUXswNc8i/zamHDCHFgZsjHNYs9xqJvO
+ MkxNhW+9b2dQNf2KMQ36QgJGV2M3U5m+YgnNPUYTYBEvDOmBcm81SVDApAz13zctbSc+WVriAY8
+ TU+CVU
+X-Received: by 2002:a05:600c:c162:b0:49f:ff32:8044 with SMTP id
+ 5b1f17b1804b1-4a01addecdfmr5255595e9.7.1790751250245; 
+ Tue, 29 Sep 2026 23:54:10 -0700 (PDT)
+X-Received: by 2002:a05:600c:c162:b0:49f:ff32:8044 with SMTP id
+ 5b1f17b1804b1-4a01addecdfmr5255285e9.7.1790751249864; 
+ Tue, 29 Sep 2026 23:54:09 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b029fc420sm1084646f8f.28.2026.09.29.23.54.10
+ 5b1f17b1804b1-4a017bad33fsm21208245e9.4.2026.09.29.23.54.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 23:54:10 -0700 (PDT)
+ Tue, 29 Sep 2026 23:54:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Andrey Polivoda <apolivodaa433@gmail.com>
-Subject: [PATCH 2/3] target/i386/tcg: move validate_vex() before all operand
- decoding
-Date: Wed, 30 Sep 2026 08:54:05 +0200
-Message-ID: <20260930065406.738374-3-pbonzini@redhat.com>
+Subject: [PATCH 1/3] target/i386/tcg: extract validate_cr0_exceptions()
+Date: Wed, 30 Sep 2026 08:54:04 +0200
+Message-ID: <20260930065406.738374-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930065406.738374-1-pbonzini@redhat.com>
 References: <20260930065406.738374-1-pbonzini@redhat.com>
@@ -121,70 +120,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Operand sizes are computed in decode_insn(), because s->rip_offset has to
-be known before decode_modrm() computes a RIP-relative address.  However,
-validate_vex() runs later and, for X86_VEX_REPScalar instructions, it must
-be able to turn e->s2 into X86_SIZE_ss or X86_SIZE_sd in presence of a
-memory operand.  But right now decode_op_size() has already run, and
-therefore decode->op[2].ot stays MO_128; the instruction therefore
-accesses 16 bytes of memory instead of 4 or 8.
+The checks on CR0.TS and CR0.EM must be done after all #UD checks,
+so extract them to their own functions.
 
-The only user of s->rip_offset is decode_modrm(), which is called from
-decode_ops(), so the size computation can move there, after validate_vex().
-Thanks to the previous patch, the CR0.TS and CR0.EM checks come after
-decode_ops(), so #UD for an invalid VEX.L still has priority over #NM.
-
-This way, when validate_vex() adjusts the X86OpEntry, decode_op_size()
-picks up the result.  This behaves as intended by commit b7d4ec4832d
-("target/i386/tcg: move VEX validation early", 2026-08-26), and fixes
-REPScalar instructions that have a memory operand.
-
-This also applies to unary operations, which need to ignore VEX.L.
-While this could also be fixed by using "dq" for the operand size, it
-is untidy that simply setting "s->vex_l = 0" does not do the right thing.
-
-Fixes: b7d4ec4832d ("target/i386/tcg: move VEX validation early", 2026-08-26)
-Reported-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 39 ++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 996e12d03d2..5212a24e470 100644
+index 459452b04e3..996e12d03d2 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -2478,9 +2478,13 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         e->decode(s, env, e, &decode->b);
+@@ -2742,23 +2742,39 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+         e->op2 != X86_TYPE_H && e->op2 != X86_TYPE_B) {
+         goto illegal;
      }
- 
--    if (!validate_sse_prefix(s, e)) {
--        return false;
+-
+-    if (s->flags & HF_TS_MASK) {
+-        goto nm_exception;
 -    }
-+    return validate_sse_prefix(s, e);
+-    if (s->flags & HF_EM_MASK) {
+-        goto illegal;
+-    }
+     return true;
+ 
+-nm_exception:
+-    gen_NM_exception(s);
+-    return false;
+ illegal:
+     gen_illegal_opcode(s);
+     return false;
+ }
+ 
++/* Called after decode_ops, so that #UD for invalid encodings has priority over #NM.  */
++static bool validate_cr0_exceptions(DisasContext *s, X86DecodedInsn *decode)
++{
++    switch (decode->e.vex_class) {
++    case 0:
++    case 13:
++    case X86_EVEX_APX:
++    case X86_EVEX_APX_cmp:
++    case X86_EVEX_APX_pp2:
++    case X86_EVEX_APX_zu:
++        return true;
++    default:
++        break;
++    }
++
++    if (s->flags & HF_TS_MASK) {
++        gen_NM_exception(s);
++        return false;
++    }
++    if (s->flags & HF_EM_MASK) {
++        gen_illegal_opcode(s);
++        return false;
++    }
++    return true;
 +}
 +
-+static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-+                       X86DecodedInsn *decode)
-+{
-+    X86OpEntry *e = &decode->e;
- 
-     /* Compute size of operands here in order to initialize s->rip_offset.  */
-     if (e->op0 != X86_TYPE_None) {
-@@ -2515,13 +2519,6 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         assert(e->op3 == X86_TYPE_I && e->s3 == X86_SIZE_b);
-         s->rip_offset += 1;
+ static void dump_unknown_opcode(CPUX86State *env, DisasContext *s)
+ {
+     if (qemu_loglevel_mask(LOG_UNIMP)) {
+@@ -3037,6 +3053,9 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+     if (!decode_ops(s, env, decode_func, &decode)) {
+         goto illegal_op;
      }
--    return true;
--}
--
--static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
--                       X86DecodedInsn *decode)
--{
--    X86OpEntry *e = &decode->e;
++    if (!validate_cr0_exceptions(s, &decode)) {
++        return;
++    }
  
-     if (e->op0 != X86_TYPE_None &&
-         !decode_op(s, env, decode, &decode->op[0], e->op0, decode->b)) {
+     switch (decode.e.special) {
+     case X86_SPECIAL_None:
 -- 
 2.55.0
 
