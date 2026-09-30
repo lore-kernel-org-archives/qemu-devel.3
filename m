@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DAECA5FCB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DBD6CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBwBE-0000Jy-Fx; Wed, 30 Sep 2026 11:25:12 -0400
+	id 1xBwAb-0008Fn-Gn; Wed, 30 Sep 2026 11:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xBwBC-0000I9-5O; Wed, 30 Sep 2026 11:25:10 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xBwAX-00089w-D1; Wed, 30 Sep 2026 11:24:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xBwBA-000240-3s; Wed, 30 Sep 2026 11:25:09 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1xBwAV-0001z9-KB; Wed, 30 Sep 2026 11:24:29 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UE5pQG3167026; Wed, 30 Sep 2026 15:24:36 GMT
+ 68UE5NIr3203128; Wed, 30 Sep 2026 15:24:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=UC5Wrz4cb+APVO1YR
- 6QyOPoogUjb+dWaj+M3wgBMxHI=; b=D50DzZm02hVsthwQeQYTLNjdSqlpLiBnm
- yrlfcBPJt9ovWXrvBHZPmhU8mB9vbGg6OsSVfposKEn47hiuwKW7Ye6NfNgbcxth
- 1H60k9sp18u9h/L3cACrSLmXccZbICdGOu4bdmzILzq20bvyh94SubbrSGG6X8lY
- TSrc7KnhGgU5RXDil02Ci8R7go6xha90++ojfJjVfoWq/CyM9VZpRpeex0O4aTqa
- SrvHyRPyNYOcNMI9DPxOGh51c9p6F7ly3XWZcqzt1tu+UGod1zssZOjvFsOECEOA
- eJaSEllmvajvgFcau8OxKw9FdradNOvCnXBkSYTG7hV857wkcPBmw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5ptcva3-1
+ :mime-version:references:subject:to; s=pp1; bh=tXKNRgTTq7jtJMm/M
+ r6igQPo0Bq+NyCO+YrZawOK9jc=; b=FZQGyp4Yt3sM/zvGBkPGbC2G4kBXp13nx
+ D92bViHFqq2wRBipnkMlvsQY8pdIz+xcfntDq4sP7CKrC17ZrhGKLpy1ZOtGyyJC
+ 1lS5cswakOPFSBDbD8vGY++cZignnUMem04Yb1qWAktW2JDA9ylsgpGYxlrpgeED
+ XUXqrz+42pQpuNaYpMCD/MHXxKzFK+urIIwZHdlGkky0YSEX46uA0NLHDTeeZiEI
+ Yn/zqzSiMFuwbX7M8t1XKcY6ou2nHLrYguvl9JLE4FjTY8MkwZytExwicXIKagT5
+ bWxbP/vl99M4zND09Ldv503HqOqDg6A5G44jbTOWC0+QzmWwTKm/g==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5j5dyjr-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 30 Sep 2026 15:24:36 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UEI1Vq3569533; Wed, 30 Sep 2026 15:24:36 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h0xcs9n35-1
+ Wed, 30 Sep 2026 15:24:25 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UE34AD3605823; Wed, 30 Sep 2026 15:24:24 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxsvhq2ew-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 30 Sep 2026 15:24:36 +0000 (GMT)
+ Wed, 30 Sep 2026 15:24:24 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68UFOYiv25428596
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68UFONeA17695364
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 30 Sep 2026 15:24:34 GMT
+ Wed, 30 Sep 2026 15:24:23 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CBE7358068;
- Wed, 30 Sep 2026 15:24:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 457555805A;
+ Wed, 30 Sep 2026 15:24:23 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 549915805A;
- Wed, 30 Sep 2026 15:24:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CE0FF5805F;
+ Wed, 30 Sep 2026 15:24:22 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.5.156]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 30 Sep 2026 15:24:34 +0000 (GMT)
+ Wed, 30 Sep 2026 15:24:22 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-stable@nongnu.org,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 22/23] s390x/pci: Reject apertures beyond IOAT capacity in
- translation mode
-Date: Wed, 30 Sep 2026 11:24:19 -0400
-Message-ID: <20260930152420.1956230-23-farman@linux.ibm.com>
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL 03/23] virtio-ccw: Fix rc check in read configuration path
+Date: Wed, 30 Sep 2026 11:24:00 -0400
+Message-ID: <20260930152420.1956230-4-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152420.1956230-1-farman@linux.ibm.com>
 References: <20260930152420.1956230-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: f8dSWU0-53z9Z5Iye8EtRzlBjd_mR0O5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfX+cqzTtqTM4v8
- FHmjooW3N0xIHqyQy1L0WRcrACRK/kH8E5+UG64PgIstlKnzUqbX6dBJrJs71qtAgHQ/WtAXOyv
- SYRrjdJQXb8gt6nxOQJD4LYMLiGvadXWjJNNYbXyNCxp6cgPjuSK6AkkB5W/4um3c2c18mB3vn9
- ipON27f2v9WJgsGfu7N7AtP72jyzDvZIjYLFwJolYpJo+rsg0IdRQufaKAMYXpfj6guBhJRN8jd
- Ld3BqakyJBD4vkyD7kdHSjaC04pdvft49ZbFa3gjFpJmDuf/1/juMl5aWy7hr/ZjUAN1r0anPrx
- VDAnbIoKKa7Xzbz33gb47yDATY+De8UqPGUt+QzkFBa0HQ0SUiz+/K8dxbBwuETj1NpmK4HoR0E
- Z9rNmt8xtFBAghCRo0jSDpid83CHO5Fp9P/Jx3Ks0VcmmaxYKu3zdh87NOYBpmC3xczilc9hFop
- ndudgvyMMHxS8dJRpkQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfX457J0bSwtgmo
- 98Tlbsy7qxjXBFr/dh0lKNCNeoTdZ6aETkI6J+qbFjgEfWk6K2hKTNrmFt3OecpLVEfdts/QIpL
- 9nzmhTqDwKEeNAmo+kgcuu3TZNh+i5A=
-X-Authority-Analysis: v=2.4 cv=EY5d0/mC c=1 sm=1 tr=0 ts=6abd29b4 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfX0h+Zcsldd2H5
+ RXzzjRlWpzVo2z5npbrFSE4Lq9qVNgAZkPrJR7LQTPscpTx2YOMd6I1TFh0xcO4NIIe0RQndM7H
+ FZTLr2vxywtbgCNMZk67r4hi4tlSI9A=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfX5wFGrSgJBnX2
+ Qe4DZXY8Vo5HmlkPttSpMKyyoc6fGzHb4U9weUoJryCPK02Ooisv0BIL8iS1m/sizWkkLOSkG+7
+ +7vUXNquD/1iVMu48Esz6ZVGOxBvjsVx5QDbDXm/YjYe9IRFzAeESGV57iTjpPVa1pAbUAamlOg
+ 3YMR8387KgMtAO8jdeS7Sf12IUT/PMU3q4e2rhobzLix9gtWVztVN7Vit+XZ465wA4AjDxMhwWP
+ jDgGnMNFprRCuKkbxH55jx43HsnmS4pd180VcxD2iG2AimJc4D7BYWjtt9TwUXRr4KWXYxcVl2e
+ n3/RAl9nwbuco5ylOXMKoMRfPaFRkvzRIxEmquwJpYsyw2a3BXzAqNbomBYiU0RMN0zF4CyREc2
+ YUBaUyOTDTGWNCqGubX4KNfrAymj3vrvFr367Bcz/6tP9Btzyr+4ssQ8h2LSuyA4vAjtm0zTo4Y
+ zeCa6KL8qiZInAMbQ6g==
+X-Proofpoint-GUID: 53vPhlCWXERcKELjfLD0fvDBMMB7KCGV
+X-Authority-Analysis: v=2.4 cv=RKcmjIi+ c=1 sm=1 tr=0 ts=6abd29a9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=xSIT066dgqKBegNCQIUA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: f8dSWU0-53z9Z5Iye8EtRzlBjd_mR0O5
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=uiMiztMkydEs4ieJCJEA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: 53vPhlCWXERcKELjfLD0fvDBMMB7KCGV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1015
- malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300060
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,68 +121,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+Both the read and write config paths use wrappers around cds->op_handler,
+depending on the direction the I/O is flowing. But they expect opposite
+values in the returned variable to indicate success.
 
-In order to support direct mapping (which is only bound by the aperture
-size of the underlying host EDMA reported via vfio) QEMU reports the
-host-provided EDMA to the guest.  However, when using translation mode
-QEMU only supports up to 4 TiB currently (the size of a single RT
-table).
-
-Reject attempts by a guest to register a translation aperture that
-would exceed what QEMU can support by giving an operand exception on
-the MPCIFC instruction that requested the large aperture.  This
-restriction can be removed in the future if/when support for additional
-IOAT regions is added.
+Fix this by unifying those checks, where CCW_CMD_READ_CONF needs to
+see !ret as success. The end result is some erroneous data in the
+SCSW response data, but the overall success/failure is correct.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929153012.774530-4-mjrosato@linux.ibm.com
+Fixes: d895d25ae2 ("s390x: css: report errors from ccw_dstream_read/write")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-4-farman@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- hw/s390x/s390-pci-inst.c        | 15 +++++++++++++++
- include/hw/s390x/s390-pci-bus.h |  1 +
- 2 files changed, 16 insertions(+)
+ hw/s390x/virtio-ccw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 73417edade..09026360d4 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1054,6 +1054,21 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
-         return -EINVAL;
-     }
- 
-+    /*
-+     * We report an EDMA that may exceed what QEMU can handle in support
-+     * of direct-mapping.  If the guest attempts to register an IOAT that
-+     * is too large, reject it with an informative message.  Only direct
-+     * mapping can be used for guests of this size until support is added
-+     * to QEMU for additional IOAT regions.
-+     */
-+    if (t && pal >= ZPCI_TABLE_SIZE_RT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ioat pal 0x%"PRIx64" exceeds max translatable address\n",
-+                      pal);
-+        s390_program_interrupt(env, PGM_OPERAND, ra);
-+        return -EINVAL;
-+    }
-+
-     iommu->pba = pba;
-     iommu->pal = pal;
-     iommu->g_iota = g_iota;
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index 9228523ce8..f182bab246 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -140,6 +140,7 @@ enum ZpciIoatDtype {
- #define ZPCI_PT_BITS            8
- #define ZPCI_ST_SHIFT           (ZPCI_PT_BITS + TARGET_PAGE_BITS)
- #define ZPCI_RT_SHIFT           (ZPCI_ST_SHIFT + ZPCI_TABLE_BITS)
-+#define ZPCI_TABLE_SIZE_RT      (1ULL << (ZPCI_RT_SHIFT + ZPCI_TABLE_BITS))
- 
- #define ZPCI_RTE_FLAG_MASK      0x3fffULL
- #define ZPCI_RTE_ADDR_MASK      (~ZPCI_RTE_FLAG_MASK)
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index f46f936150..11441e56c1 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -475,7 +475,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+         } else {
+             virtio_bus_get_vdev_config(&dev->bus, vdev->config);
+             ret = ccw_dstream_write_buf(&sch->cds, vdev->config, len);
+-            if (ret) {
++            if (!ret) {
+                 sch->curr_status.scsw.count = ccw.count - len;
+             }
+         }
 -- 
 2.55.0
 
