@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D45ACA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC77CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrko-0007HW-FV; Wed, 30 Sep 2026 06:41:39 -0400
+	id 1xBrkL-0005K7-L9; Wed, 30 Sep 2026 06:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj1-0001ck-DL
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj3-0001ed-96
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0006pw-BB
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrip-0006rv-I2
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764772;
+ s=mimecast20190719; t=1790764774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ibmpWAvO/KJXUafppUWT0tuctCAs0SR+qLSV8sHGXWw=;
- b=BcvA+CJykZuMjHlRBxTbH4AKCND7cWVkGTqFyCBtr1SblSnlRmg416MX7U9tz7vvPxhS8A
- LrF71hfABpXJvBfpeqg96ZkX7rOu47faPdcakTRdfwk9qdqqsnRPnBSTaknSBPL/uwveD2
- fJQ9QZZpG5oqH+St6+gyUbrUBaZnlPw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YEdczjgmY/jTF+h++BkZL0wMmaQd1JBLSGyxqDsXCrw=;
+ b=aFqks8XlabB2mR2SFMnhpoWBA3oOmQbqHpBTmczTlLj8EvX8upG+xv0uLTxQJv+Ey2Q/1S
+ CM2IDmfRhDxxzejk8PjTrxpObw2zAqhppMFdwl7lKAP6DDiDhFm8LX4keE4miuAv1pdFus
+ DfxkVtn+NyUm12EFbWvLztlD6NUZkTo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-GD8ZlogwPDeAUPaeDfRczg-1; Wed,
- 30 Sep 2026 06:39:28 -0400
-X-MC-Unique: GD8ZlogwPDeAUPaeDfRczg-1
-X-Mimecast-MFC-AGG-ID: GD8ZlogwPDeAUPaeDfRczg_1790764767
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-WLxY_jvlMxqREGOBVn_BIQ-1; Wed,
+ 30 Sep 2026 06:39:31 -0400
+X-MC-Unique: WLxY_jvlMxqREGOBVn_BIQ-1
+X-Mimecast-MFC-AGG-ID: WLxY_jvlMxqREGOBVn_BIQ_1790764770
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8281819560AE; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 752211805A0C; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41DCE18004D2; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 337E5195604D; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D91B621E683C; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id 42BB821E5D25; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 079/105] qapi: convert simple data struct intros for
- block-core.json
-Date: Wed, 30 Sep 2026 12:38:44 +0200
-Message-ID: <20260930103910.3934848-80-armbru@redhat.com>
+Subject: [PULL 102/105] qapi: convert/split intros for enums
+Date: Wed, 30 Sep 2026 12:39:07 +0200
+Message-ID: <20260930103910.3934848-103-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,89 +86,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260910203856.99003-10-jsnow@redhat.com>
+Message-ID: <20260928192557.509157-8-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/block-core.json | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ qapi/machine.json | 22 ++++++++++------------
+ qapi/ui.json      |  5 ++---
+ 2 files changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index a1ba4fa05b..da7b5c7fe3 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -440,10 +440,9 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index e9584f9166..75cbeca185 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -641,9 +641,9 @@
  
  ##
- # @BlockGraphInfo:
+ # @HmatLBMemoryHierarchy:
 -#
--# Information about all nodes in a block (sub)graph in the form of
--# `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains the
--# information for the (sub)graph's root node.
-+#     Information about all nodes in a block (sub)graph in the form of
-+#     `BlockNodeInfo` data.  The base `BlockNodeInfo` struct contains
-+#     the information for the (sub)graph's root node.
+-# The memory hierarchy in the System Locality Latency and Bandwidth
+-# Information Structure of HMAT (Heterogeneous Memory Attribute Table)
++#     The memory hierarchy in the System Locality Latency and
++#     Bandwidth Information Structure of HMAT (Heterogeneous Memory
++#     Attribute Table)
  #
- # @children: Array of links to this node's child nodes' information
- #
-@@ -808,9 +807,8 @@
+ # For more information about `HmatLBMemoryHierarchy`, see chapter
+ # 5.2.27.4: Table 5-146: Field "Flags" of ACPI 6.3 spec.
+@@ -663,9 +663,9 @@
  
  ##
- # @BlockInfo:
+ # @HmatLBDataType:
 -#
--# Block device information.  This structure describes a virtual device
--# and the backing device associated with it.
-+#     Block device information.  This structure describes a virtual
-+#     device and the backing device associated with it.
+-# Data type in the System Locality Latency and Bandwidth Information
+-# Structure of HMAT (Heterogeneous Memory Attribute Table)
++#     Data type in the System Locality Latency and Bandwidth
++#     Information Structure of HMAT (Heterogeneous Memory Attribute
++#     Table)
  #
- # @device: The device name associated with the virtual device.
- #
-@@ -1647,9 +1645,8 @@
+ # For more information about `HmatLBDataType`, see chapter 5.2.27.4:
+ # Table 5-146: Field "Data Type" of ACPI 6.3 spec.
+@@ -726,9 +726,8 @@
  
  ##
- # @BackupPerf:
+ # @HmatCacheAssociativity:
 -#
--# Optional parameters for backup.  These parameters don't affect
--# functionality, but may significantly affect performance.
-+#     Optional parameters for backup.  These parameters don't affect
-+#     functionality, but may significantly affect performance.
+-# Cache associativity in the Memory Side Cache Information Structure
+-# of HMAT
++#     Cache associativity in the Memory Side Cache Information
++#     Structure of HMAT
  #
- # @use-copy-range: Use copy offloading.  Default false.
- #
-@@ -2745,11 +2742,10 @@
+ # For more information of `HmatCacheAssociativity`, see chapter
+ # 5.2.27.5: Table 5-147 of ACPI 6.3 spec.
+@@ -747,9 +746,8 @@
  
  ##
- # @ThrottleLimits:
+ # @HmatCacheWritePolicy:
 -#
--# Limit parameters for throttling.  Since some limit combinations are
--# illegal, limits should always be set in one transaction.  All fields
--# are optional.  When setting limits, if a field is missing the
--# current value is not changed.
-+#     Limit parameters for throttling.  Since some limit combinations
-+#     are illegal, limits should always be set in one transaction.
-+#     All fields are optional.  When setting limits, if a field is
-+#     missing the current value is not changed.
+-# Cache write policy in the Memory Side Cache Information Structure of
+-# HMAT
++#     Cache write policy in the Memory Side Cache Information
++#     Structure of HMAT
  #
- # @iops-total: limit total I/O operations per second
- #
-@@ -3532,12 +3528,11 @@
+ # For more information of `HmatCacheWritePolicy`, see chapter
+ # 5.2.27.5: Table 5-147: Field "Cache Attributes" of ACPI 6.3 spec.
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 73ee2cb205..9e3e80a3d7 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -814,10 +814,9 @@
  
  ##
- # @Qcow2OverlapCheckFlags:
--#
--# Structure of flags for each metadata structure.  Setting a field to
--# 'true' makes QEMU guard that Qcow2 format structure against
--# unintended overwriting.  See Qcow2 format specification for detailed
--# information on these structures.  The default value is chosen
--# according to the template given.
-+#     Structure of flags for each metadata structure.  Setting a field
-+#     to 'true' makes QEMU guard that Qcow2 format structure against
-+#     unintended overwriting.  See Qcow2 format specification for
-+#     detailed information on these structures.  The default value is
-+#     chosen according to the template given.
+ # @QKeyCode:
++#     An enumeration of key name.
  #
- # @template: Specifies a template mode which can be adjusted using the
- #     other flags, defaults to 'cached'
+-# An enumeration of key name.
+-#
+-# This is used by the `send-key` command.
++#     This is used by the `send-key` command.
+ #
+ # @unmapped: since 2.0
+ #
 -- 
 2.55.0
 
