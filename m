@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E558CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7078DCA5FBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrl0-0008Ht-0z; Wed, 30 Sep 2026 06:41:51 -0400
+	id 1xBril-0001Ks-Dh; Wed, 30 Sep 2026 06:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj2-0001cn-9o
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrig-0001I1-Fv
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0006qX-Cx
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrie-0006jL-B4
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764772;
+ s=mimecast20190719; t=1790764763;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=grW5h9xdo4RdY7tRHz3OEPkJtiUEU7NxmykRLklawuA=;
- b=YqdcwaaIy0XLV4n/x2jRXR51rovtlSW+FcmvCvkZostZJktjcm5QRUirMLSC0rMnTJTBu/
- lhVs/YaGGY0ASZ343RpKoRMF2metFHdgn1AlcRG1ScJfdSGkfPYu2udSe6r0FtvF9qdumo
- 6JXezLvk1IRu2k7RkW34Ar/Gp76UDvE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=C9Ehh17+wTgva7+02DYQhqMZL87xITRCOLJ+p3hjswA=;
+ b=AxAR1TlSAS2rLecjO9qG+Vc7i4rH2RSuRyYzwNvXGX6nKFuUNqpuAlOSW8gu6gL4z6PJ2/
+ v2in2Pojad+2F1pCLrBhYkarIEYqyRy6urgMt3B9qPAvexdXFofxvm91SRweukXUk2SKaG
+ dymUIotbHmNBonIljh4FVdFMknkdGxA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-ckauHnlxPcmOJJXfuC7WMA-1; Wed,
- 30 Sep 2026 06:39:31 -0400
-X-MC-Unique: ckauHnlxPcmOJJXfuC7WMA-1
-X-Mimecast-MFC-AGG-ID: ckauHnlxPcmOJJXfuC7WMA_1790764770
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-chUUI2hPPQWpibPuurJtKQ-1; Wed,
+ 30 Sep 2026 06:39:20 -0400
+X-MC-Unique: chUUI2hPPQWpibPuurJtKQ-1
+X-Mimecast-MFC-AGG-ID: chUUI2hPPQWpibPuurJtKQ_1790764759
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 445BE1869DAD; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1FD401801239; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02B0E30000E8; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
+ id BD88430001BE; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 258B421E65F3; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
+ id E5DF221E689A; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 095/105] qapi: convert intro sections for
- docs/interop/vhost-user.json
-Date: Wed, 30 Sep 2026 12:39:00 +0200
-Message-ID: <20260930103910.3934848-96-armbru@redhat.com>
+Subject: [PULL 022/105] qapi: convert trivial intro sections for
+ transaction.json
+Date: Wed, 30 Sep 2026 12:37:47 +0200
+Message-ID: <20260930103910.3934848-23-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -86,111 +86,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-All conversions in this patch do not add a new insertion point, except
-for the very last conversion.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260922205605.501602-9-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-23-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/interop/vhost-user.json | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ qapi/transaction.json | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/docs/interop/vhost-user.json b/docs/interop/vhost-user.json
-index 29c84e86e5..65e681a166 100644
---- a/docs/interop/vhost-user.json
-+++ b/docs/interop/vhost-user.json
-@@ -17,8 +17,7 @@
+diff --git a/qapi/transaction.json b/qapi/transaction.json
+index 4b4eb09bf3..c0dc811ba6 100644
+--- a/qapi/transaction.json
++++ b/qapi/transaction.json
+@@ -12,8 +12,7 @@
  
  ##
- # @VHostUserBackendType:
+ # @Abort:
 -#
--# List the various vhost user backend types.
-+#     List the various vhost user backend types.
+-# This action can be used to test transaction failure.
++#     This action can be used to test transaction failure.
  #
- # @9p: 9p virtio console
- #
-@@ -75,8 +74,7 @@
+ # Since: 1.6
+ ##
+@@ -22,8 +21,7 @@
  
  ##
- # @VHostUserBackendBlockFeature:
+ # @ActionCompletionMode:
 -#
--# List of vhost user "block" features.
-+#     List of vhost user "block" features.
+-# An enumeration of transactional completion modes.
++#     An enumeration of transactional completion modes.
  #
- # @read-only: The --read-only command line option is supported.
- #
-@@ -91,8 +89,7 @@
+ # @individual: Do not attempt to cancel any other Actions if any
+ #     Actions fail after the Transaction request succeeds.  All
+@@ -156,9 +154,8 @@
  
  ##
- # @VHostUserBackendCapabilitiesBlock:
+ # @TransactionAction:
 -#
--# Capabilities reported by vhost user "block" backends
-+#     Capabilities reported by vhost user "block" backends
+-# A discriminated record of operations that can be performed with
+-# `transaction`.
++#     A discriminated record of operations that can be performed with
++#     `transaction`.
  #
- # @features: list of supported features.
+ # @type: the operation to be performed
  #
-@@ -107,8 +104,7 @@
+@@ -184,8 +181,7 @@
  
  ##
- # @VHostUserBackendInputFeature:
+ # @TransactionProperties:
 -#
--# List of vhost user "input" features.
-+#     List of vhost user "input" features.
+-# Optional arguments to modify the behavior of a Transaction.
++#     Optional arguments to modify the behavior of a Transaction.
  #
- # @evdev-path: The --evdev-path command line option is supported.
- #
-@@ -123,8 +119,7 @@
- 
- ##
- # @VHostUserBackendCapabilitiesInput:
--#
--# Capabilities reported by vhost user "input" backends
-+#     Capabilities reported by vhost user "input" backends
- #
- # @features: list of supported features.
- #
-@@ -139,8 +134,7 @@
- 
- ##
- # @VHostUserBackendGPUFeature:
--#
--# List of vhost user "gpu" features.
-+#     List of vhost user "gpu" features.
- #
- # @render-node: The --render-node command line option is supported.
- #
-@@ -155,8 +149,7 @@
- 
- ##
- # @VHostUserBackendCapabilitiesGPU:
--#
--# Capabilities reported by vhost user "gpu" backends.
-+#     Capabilities reported by vhost user "gpu" backends.
- #
- # @features: list of supported features.
- #
-@@ -171,8 +164,7 @@
- 
- ##
- # @VHostUserBackendCapabilities:
--#
--# Capabilities reported by vhost user backends.
-+#     Capabilities reported by vhost user backends.
- #
- # @type: The vhost user backend type.
- #
-@@ -190,8 +182,7 @@
- 
- ##
- # @VhostUserBackend:
--#
--# Describes a vhost user backend to management software.
-+#     Describes a vhost user backend to management software.
- #
- # It is possible for multiple @VhostUserBackend elements to match the
- # search criteria of management software.  Applications thus need
+ # @completion-mode: Controls how jobs launched asynchronously by
+ #     Actions will complete or fail as a group.  See
 -- 
 2.55.0
 
