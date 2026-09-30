@@ -4,111 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84253CA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F03CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBwIt-0001Ok-Nh; Wed, 30 Sep 2026 11:33:07 -0400
+	id 1xBwwm-0001Fk-Os; Wed, 30 Sep 2026 12:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBwIr-0001OR-4M; Wed, 30 Sep 2026 11:33:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xBwwi-0001FV-Qa
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:14:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xBwIp-0003OB-BW; Wed, 30 Sep 2026 11:33:04 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UE5QoU3203185; Wed, 30 Sep 2026 15:32:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=03kAhh
- XzuPy6BLsdshkVM+ladkjtll9yJ3j0EW06W34=; b=CGvLJRB8X4Itzw/oCtC5kC
- uVL+Tt1XXcvPXPqDozFE/3bwrQuHNINcRI5qzisrTugjU5BlM2YPRCIkhr/KeFyF
- AIEbV2Lq2MNe5QPsult/lR4dE7Ib69/NloRwo+Bq0men87Pq/kexRpL+1wW063UL
- sR6RPJJY8wDUu+oXwMooa/VRs1Mj00gZf2NlEA2yG5WPyS6esTQn7QiSfSsrMkDz
- qNlNzLDRggWK/1VYjA0JYekPO+YJlron0N0aOJMZWWZt9U79RKF/Ku1F+oCzFg87
- KdoJZ4y7wVil6ryTl/nLtBoCE8K1qdvGk7Dw+JisS4yaDVbwUNwqGz3X2NVkTeZg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5j5e1by-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 30 Sep 2026 15:32:59 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UE36am3541465; Wed, 30 Sep 2026 15:32:58 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h0hfpcg7j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 30 Sep 2026 15:32:58 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 68UFWvI324969866
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 30 Sep 2026 15:32:57 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2724658062;
- Wed, 30 Sep 2026 15:32:57 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62E005805F;
- Wed, 30 Sep 2026 15:32:56 +0000 (GMT)
-Received: from [9.61.92.210] (unknown [9.61.92.210])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 30 Sep 2026 15:32:56 +0000 (GMT)
-Message-ID: <523a3e09-856c-4adb-8134-9a4dc44e16ba@linux.ibm.com>
-Date: Wed, 30 Sep 2026 11:32:55 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xBwwg-0007ix-QJ
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:14:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790784852;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v1dG9o972Hkpvv42s/g6ENgbMFiRwZZPgM8ODS2A8/o=;
+ b=iEOQu6w3lSP27ucz+a37p1o/76qEjUJAXS45lLV0w7aoy1yCX0LKeMBTZ6OX+bJplpcNOA
+ BNEBIaMEf3OsbHryQ+zzK1B9AAi48BrB2a98gjFiFI1OsiilYLL6dCmkf5hLlAh96jGUFd
+ aHYjh8FnJ9wacal52wan2OzP7dWToG4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-RVXNackhNPClV2x_ZKh2xg-1; Wed,
+ 30 Sep 2026 12:14:09 -0400
+X-MC-Unique: RVXNackhNPClV2x_ZKh2xg-1
+X-Mimecast-MFC-AGG-ID: RVXNackhNPClV2x_ZKh2xg_1790784847
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7ACC1954211; Wed, 30 Sep 2026 16:14:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 480EA30000E7; Wed, 30 Sep 2026 16:14:03 +0000 (UTC)
+Date: Wed, 30 Sep 2026 18:14:00 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Warner Losh <imp@bsdimp.com>
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+Message-ID: <ar01SG5Hstps6t0v@redhat.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
+ <05ace2dc-5e44-4f4a-8254-4f9459bdef1c@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] s390x/pci: Reset a device in error state
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: farman@linux.ibm.com, cohuck@redhat.com, alex@shazbot.org, clg@redhat.com
-References: <20260922171756.920-1-alifm@linux.ibm.com>
- <20260922171756.920-3-alifm@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260922171756.920-3-alifm@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfX8quCDz4slcFh
- pbBZ/iy1v/cCFK5HruVnW3YEtbzsQkolO4Cz8mhIwZFtZRGo3NvpkWMnLmCv7mpnZ5M4AZulgRa
- mkBrzPjkKofFNxI8BnLWAaQJCjN+RUk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2MCBTYWx0ZWRfXxjKBQv5GJIRB
- NvTFcqsiAa2KiuPXuyV1zthM015kr0vXCHUSAJrhWSArKmb/TgvOrsB00bglynkuJniXWbtByEg
- Oe3AVIiEq0IIYeNk3XcqhHGdpnDAQOwpssO5e48YT9fq7CKuqYCvR/KqKCVY3eXJa4vo+nbOpPD
- vGEB4z1/l6FfgoGwn3sO2FIYfm1Thtps3CDcXiLw6gmVcK766l9ASd4a52IwqUoT2Q0gWCtwYkd
- y/36Q+jdHyNTn0eJmIeQCFq/4LBtq1+KcbB/c3ICrBHAqlD/jT2St6RG0dYpkIJJIg95q+z1/zu
- ipHonSiyzcGUN7OVvJcm/8HjOhjFezdhjGAyKTNTcF5ol92xFoLEi023FaqE4I3CN+XL5Vfr44h
- 4/71NivSQ+IWnBBbRJSacDg/fAOkNkFg6+q2h3g3zT8fdTFCzRRerloYCHDXNjCgHPxcVX3iwGm
- QI/c9bB8xRWwenM4OfA==
-X-Proofpoint-GUID: z7H6OrMarOvGwlklOqrzcsQZU5xU3DED
-X-Authority-Analysis: v=2.4 cv=RKcmjIi+ c=1 sm=1 tr=0 ts=6abd2bab cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=aKqPpTAkTjwgDZUcLcQA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: z7H6OrMarOvGwlklOqrzcsQZU5xU3DED
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300060
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <05ace2dc-5e44-4f4a-8254-4f9459bdef1c@oss.qualcomm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,54 +92,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Am 30.09.2026 um 14:54 hat Philippe Mathieu-Daudé geschrieben:
+> Hi,
+> 
+> On 30/9/26 10:54, Paolo Bonzini wrote:
+> > Until now QEMU's code provenance policy declined any contribution
+> > believed to include or derive from AI-generated content.  A blanket ban
+> > was easy to maintain while LLM output was rarely usable on its own, but
+> > as the tools improved an absolute prohibition has become harder to
+> > justify and enforce.
+> > 
+> > Even a simple code review task these days may result in the agent
+> > suggesting code changes, or producing a useful test case to verify the
+> > presence or absence of a bug.  A hardline interpretation of the policy
+> > makes it hard to use AI even for tasks that are explicitly allowed.
+> > 
+> > On top of this, several maintainers have pointed out that contributions
+> > that can be reasonably suspected to be AI-assisted or more have been
+> > posted and included.  Some of these contributions are actually of very
+> > high quality; it seems that the mailing list-based contribution process
+> > has mostly protected QEMU from low quality patches.  A prohibition on
+> > AI puts maintainers in a difficult position: on one hand the DCO process
+> > lets them rely on the submitter's certification of origin, on the other
+> > hand maintainers are supposed to know and implement the process policies.
+> > 
+> > Since the policy has been written, other projects have discussed and
+> > taken their stance on AI contributions.  These vary from full prohibition
+> > (though typically motivated by social reasons rather than legal, e.g.
+> > for Zig) to limited use (e.g. GCC, allowing small contributions and
+> > tests to use AI), to cautious experimentation.
+> > 
+> > This proposed policy seeks to implement the cautious experimentation
+> > approach, inspired mostly by the Rust project's policy and by Software
+> > Freedom Conservancy's own recommendations on LLMs and generative AI.
+> > 
+> > Relying on Conservancy's legal guidance allows us to focus on the
+> > interaction between contributors and maintainers.  Conservancy in
+> > particular provides this point to alleviate the concern that motivated
+> > the policy, about whether the submitter has the legal right to contribute
+> > the code and about unintentional reproduction of copyrighted code:
+> > 
+> >     "Copyleft Everything" remains the best viable and safest approach
+> >     Certainly those who want to release FOSS under non-copyleft licenses
+> >     have more to worry about when using these tools.
+> > 
+> > While we shouldn't treat copyleft as a silver bullet, it is effective
+> > as part of a defense in depth strategy that includes, for example,
+> > "de minimis" thresholds and `AGENTS.md` instructions that encourage user
+> > participation in the design.
+> > 
+> > Therefore, the revised policy considers QEMU's copyleft to be a viable
+> > approach to any unanswered legal questions about AI-generated
+> > contributions and their copyright status.  This lets the policy
+> > focus on the topic of what AI-assisted contributions require of
+> > maintainers.
+> > 
+> > In that respect, the Rust project's policy combines two unusual ideas.
+> > One is to hold them to a higher standard, in the spirit of using AI to
+> > work "better, not faster"; the other is to require "pre-arrangement" for
+> > "changes that are originally created by an LLM".  AI lowers the cost of
+> > producing a patch but does nothing to lower the cost of understanding
+> > and reviewing one; if anything it raises it, since a reviewer can
+> > no longer assume that the submitter has reasoned through every line.
+> > Pre-arrangement is an attempt to balance the shift of effort from the
+> > developer to the maintainer, and the QEMU policy includes the same
+> > provision.
+> > 
+> > Going full circle to the reason why we might need to review the
+> > policy, there is the question of how to make sure policy is applied.
+> > QEMU maintainers have already experimented with using AGENTS.md files;
+> > subsequent patches will also try to embody the "work better, not faster"
+> > mantra into an AGENTS.md file.  Nevertheless, some explicit prohibitions
+> > should be included in the policy, and they are indeed.  The list is short
+> > and based on the Rust policy and the GStreamer AGENTS.md file.
+> > 
+> > Revise the policy according to the above considerations, and introduce the
+> > "AI-used-for:" trailer as a record of where AI was used.  The standard is
+> > slightly different from the more usual "Assisted-by"; the intention is for
+> > the metadata to provide more information for reviewers to judge the result,
+> > and to scope areas for which Signed-off-by cannot guarantee full control
+> > of provenance.
+> > 
+> > In any case, use of AI does not relax any other contribution requirement:
+> > authors still need to comply with the DCO (declaring that they have
+> > corporate authorization to contribute, for example) and take technical
+> > responsibility for their work.
+> > 
+> > [Commit message largely based on discussions with Daniel Berrangé,
+> >   Alistair Francis, Peter Maydell, Kevin Wolf and others. - Paolo]
+> > 
+> > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > Cc: Alex Bennée <alex.bennee@linaro.org>
+> > Cc: Alistair Francis <alistair.francis@wdc.com>
+> > Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Cc: Kevin Wolf <kwolf@redhat.com>
+> > Cc: Peter Maydell <peter.maydell@linaro.org>
+> > Cc: Warner Losh <imp@bsdimp.com>
+> > Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   docs/devel/code-provenance.rst |  71 +----------
+> >   docs/devel/index-process.rst   |   1 +
+> >   docs/devel/llm-usage.rst       | 213 +++++++++++++++++++++++++++++++++
+> >   AGENTS.md                      |  42 +++++--
+> >   scripts/checkpatch.pl          |   5 +-
+> >   5 files changed, 252 insertions(+), 80 deletions(-)
+> >   create mode 100644 docs/devel/llm-usage.rst
+> 
+> 
+> > +.. _ai-used-for:
+> > +
+> > +Commit messages for AI-assisted changes
+> > +'''''''''''''''''''''''''''''''''''''''
+> > +
+> > +In order to disclose your usage of AI/LLM tools, add an ``AI-used-for:``
+> > +line before the :ref:`Signed-off-by <code-provenance>` line.  The trailer
+> > +is both a reminder of your DCO obligations and a guide to reviewers.  The
+> > +text is one or more of ``code``, ``tests``, ``docs``, ``research``, possibly
+> > +followed by an explanation in parentheses:
+> > +
+> > +To be able to certify the provenance of AI/LLM-generated code that you submit
+> > +to QEMU, you must follow the policies outlined in this document and in
+> > +QEMU's ``AGENTS.md``.  **By using 'AI-used-for', a contributor both
+> > +identifies areas of the patch that involved use of AI/LLM, and also
+> > +attests that their usage of AI/LLMs was in compliance with the policies
+> > +outlined in this document.**
+> > +
+> > +.. code-block:: none
+> > +
+> > +     AI-used-for: tests, docs
+> > +     AI-used-for: code
+> > +     AI-used-for: code (refactoring)
+> > +     AI-used-for: code (prototype)
+> > +     AI-used-for: research
+> > +
+> > +``AI-used-for`` should not be included for "background" usage such as
+> > +autocomplete or obtaining a pre-review of the patch.
+> > +
+> > +Do not include your prompts or summarize the conversation in the commit
+> > +message or cover letter.  Extract any information that is relevant to the
+> > +reviewer and include it in commit messages, cover letters or code comments.
+> > +
+> > +QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-by``
+> > +trailers to indicate AI usage.  In particular, do not specify the exact
+> > +AI model or tool used to create the commit.
+> > +
+> > +Deterministic tooling (sed, coccinelle, formatters) is out of scope for
+> > +the trailer, but should be mentioned in the commit message.
+> 
+> I noticed a discrepancy in a method docstring and a particular use case.
+> Since the method is used distinctly in various configurations (KVM, TCG,
+> RISCV, ARM) I asked a LLM "using the semcode tools only and deliberately
+> ignoring the method documentation, look at all the call tree and how the
+> passed arguments are used and explain what is expected of this method
+> to a junior engineer" then once I understood out what was wrong I could
+> update the docstring in the header. No code / comment generated by the
+> LLM ends in the commit / repository. IIUC this use case is compatible
+> with the new policy.
 
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -1505,6 +1505,8 @@ static void s390_pci_device_reset(DeviceState *dev)
->          return;
->      case ZPCI_FS_STANDBY:
->          break;
-> +    case ZPCI_FS_ERROR:
-> +        break;
->      default:
->          pbdev->fh &= ~FH_MASK_ENABLE;
->          pbdev->state = ZPCI_FS_DISABLED;
-> @@ -1517,6 +1519,11 @@ static void s390_pci_device_reset(DeviceState *dev)
->      } else if (pbdev->summary_ind) {
->          pci_dereg_irqs(pbdev);
->      }
-> +
-> +    if (pbdev->state == ZPCI_FS_ERROR) {
-> +        s390_pci_reset(pbdev);
-> +    }
+I would think that this is compatible even with the current policy:
 
-I know it was mentioned in the prior version, so apologies for not
-chiming in til now.  But you really need a comment block explaining why
-it's OK to reset the device yet leave it in the ZPCI_FS_ERROR state
-after the fact.  That's confusing.
+  **Current QEMU project policy is to DECLINE any contributions which are
+  believed to include or derive from AI generated content. This includes
+  ChatGPT, Claude, Copilot, Llama and similar tools.**
 
-You mentioned in the last version it's because this happens on the
-disable path, and there yes we will set the device to ZPCI_FS_DISABLED
-right after this -- but what about any other case where we drive this
-reset path (e.g. subsystem reset, reboot, and the ISM-specific extra paths)
+  **This policy does not apply to other uses of AI, such as researching APIs
+  or algorithms, static analysis, or debugging, provided their output is not
+  included in contributions.**
 
-Note that the non-error cases are ensuring we either leave this function
-with the device listed as disabled or standby/reserved.
+You didn't include any AI generated content in your submission, and
+"researching APIs" is quite literally what you did, so it's explicitly
+out of scope for the policy.
 
-Would there be harm in, after performing the reset, doing
-pbdev->fh &= ~FH_MASK_ENABLE;
-pbdev->state = ZPCI_FS_DISABLED;
-for the ZPCI_FS_ERROR case now?
+> What trailer should I use?
+> 
+>   AI-used-for: research
+>   AI-used-for: code (audit)
+>   AI-used-for: code audit (semcode)
 
-Consider that:
-1) For a guest-initiated disable, we already checked those were valid
-before reaching this point.
-2) For all other reset cases, if the device were not in
-error/reserved/standby we were leaving here with the device disabled
-before this patch.  If the device happened to be in error, now you fix
-it up but isn't the proper fix state now 'disabled' to match what an
-enabled device would have been?
+None, because your patch doesn't include AI generated content.
 
-Thanks,
-Matt
+("AI-used-for: research" looks like it might be meant for such cases,
+but I agree with Dan that we shouldn't have it because the project
+honestly shouldn't care.)
+
+Kevin
+
 
