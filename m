@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CC5CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4383CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrih-0001Il-SR; Wed, 30 Sep 2026 06:39:27 -0400
+	id 1xBriw-0001Wb-3e; Wed, 30 Sep 2026 06:39:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrie-0001GJ-A4
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrif-0001HU-Ba
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0006iC-9h
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0006iL-D9
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1790764761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TGU43vtM029oHOjAOp+gEVOqO5wZxYeP/X2E9ZcXfW8=;
- b=OeBXrdBYG7HwNBnQOlZ0xjje0apRuNPqzjQ/5DjcSsCskOXAyc+67OgtEZOIHe0i/CUF5A
- JTrKRHGa9h+Ef37sWHhic5+90M4p30cCyG8MOFZTx5mnYrRLyzNksUepbS6Muoqj5OCj3M
- nbLh9PTxfd6ZJKYAvMzqOF1vQmeGKws=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=6PwFAn0LDje9EpHfOpLdLVeudAHWd4E0rTntGuGP/hw=;
+ b=DLekU7M42RVzDCgpDKIH07BhIvsunmaN5VkQ6xkuRj4gDutP06lilunG+cib6vFUn0Mvwn
+ ybUpX0mdzgA2EbT6O/tVXtZ/ca0ZZnsFRyayGOJIZTbEFuI/ju1pGGeLga03bIzabcOm8E
+ QD9wXb+sTGI2ndVy81gD1luIETKxWWQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-GBJ_4N0hOGmgYs9q6VSPrA-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-Xfu0ezbQM8-pJgO5LkEiyg-1; Wed,
  30 Sep 2026 06:39:20 -0400
-X-MC-Unique: GBJ_4N0hOGmgYs9q6VSPrA-1
-X-Mimecast-MFC-AGG-ID: GBJ_4N0hOGmgYs9q6VSPrA_1790764759
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: Xfu0ezbQM8-pJgO5LkEiyg-1
+X-Mimecast-MFC-AGG-ID: Xfu0ezbQM8-pJgO5LkEiyg_1790764759
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C0941802143; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C1701955DD2; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F00BB195604F; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7138768; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E9B1721E689B; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
+ id F1BB721E689D; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PULL 023/105] qapi: convert trivial intro sections for stats.json
-Date: Wed, 30 Sep 2026 12:37:48 +0200
-Message-ID: <20260930103910.3934848-24-armbru@redhat.com>
+Cc: richard.henderson@linaro.org, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 025/105] qapi: convert trivial intro sections for pci.json
+Date: Wed, 30 Sep 2026 12:37:50 +0200
+Message-ID: <20260930103910.3934848-26-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,114 +87,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260831201945.287730-24-jsnow@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260831201945.287730-26-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/stats.json | 34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ qapi/pci.json | 27 +++++++++------------------
+ 1 file changed, 9 insertions(+), 18 deletions(-)
 
-diff --git a/qapi/stats.json b/qapi/stats.json
-index a98624531c..af57ec0854 100644
---- a/qapi/stats.json
-+++ b/qapi/stats.json
-@@ -16,8 +16,7 @@
+diff --git a/qapi/pci.json b/qapi/pci.json
+index 694c741e42..a6a79f91af 100644
+--- a/qapi/pci.json
++++ b/qapi/pci.json
+@@ -13,8 +13,7 @@
  
  ##
- # @StatsType:
+ # @PciMemoryRange:
 -#
--# Enumeration of statistics types
-+#     Enumeration of statistics types
+-# A PCI device memory region
++#     A PCI device memory region
  #
- # @cumulative: stat is cumulative; value can only increase.
+ # @base: the starting address (guest physical)
  #
-@@ -38,8 +37,7 @@
+@@ -26,8 +25,7 @@
  
  ##
- # @StatsUnit:
+ # @PciMemoryRegion:
 -#
--# Enumeration of unit of measurement for statistics
-+#     Enumeration of unit of measurement for statistics
+-# Information about a PCI device I/O region.
++#     Information about a PCI device I/O region.
  #
- # @bytes: stat reported in bytes.
+ # @bar: the index of the Base Address Register for this region
  #
-@@ -56,8 +54,7 @@
+@@ -51,8 +49,7 @@
  
  ##
- # @StatsProvider:
+ # @PciBusInfo:
 -#
--# Enumeration of statistics providers.
-+#     Enumeration of statistics providers.
+-# Information about a bus of a PCI Bridge device
++#     Information about a bus of a PCI Bridge device
  #
- # @kvm: since 7.1
- #
-@@ -70,8 +67,7 @@
+ # @number: primary bus interface number.  This should be the number of
+ #     the bus the device resides on.
+@@ -80,8 +77,7 @@
  
  ##
- # @StatsTarget:
+ # @PciBridgeInfo:
 -#
--# The kinds of objects on which one can request statistics.
-+#     The kinds of objects on which one can request statistics.
+-# Information about a PCI Bridge device
++#     Information about a PCI Bridge device
  #
- # @vm: statistics that apply to the entire virtual machine or the
- #     entire QEMU process.
-@@ -87,9 +83,8 @@
+ # @bus: information about the bus the device resides on
+ #
+@@ -94,8 +90,7 @@
  
  ##
- # @StatsRequest:
+ # @PciDeviceClass:
 -#
--# Indicates a set of statistics that should be returned by
--# `query-stats`.
-+#     Indicates a set of statistics that should be returned by
-+#     `query-stats`.
+-# Information about the Class of a PCI device
++#     Information about the Class of a PCI device
  #
- # @provider: provider for which to return statistics.
- #
-@@ -113,10 +108,9 @@
+ # @desc: a string description of the device's class (not stable, and
+ #     should only be treated as informational)
+@@ -109,8 +104,7 @@
  
  ##
- # @StatsFilter:
+ # @PciDeviceId:
 -#
--# The arguments to the `query-stats` command; specifies a target for
--# which to request statistics and optionally the required subset of
--# information for that target.
-+#     The arguments to the `query-stats` command; specifies a target
-+#     for which to request statistics and optionally the required
-+#     subset of information for that target.
+-# Information about the Id of a PCI device
++#     Information about the Id of a PCI device
  #
- # @target: the kind of objects to query.  Note that each possible
- #     target may enable additional filtering options
-@@ -200,8 +194,7 @@
+ # @device: the PCI device id
+ #
+@@ -128,8 +122,7 @@
  
  ##
- # @StatsSchemaValue:
+ # @PciDeviceInfo:
 -#
--# Schema for a single statistic.
-+#     Schema for a single statistic.
+-# Information about a PCI device
++#     Information about a PCI device
  #
- # @name: name of the statistic; each element of the schema is uniquely
- #     identified by a target, a provider (both available in
-@@ -236,8 +229,7 @@
+ # @bus: the bus number of the device
+ #
+@@ -161,8 +154,7 @@
  
  ##
- # @StatsSchema:
+ # @PciInfo:
 -#
--# Schema for all available statistics for a provider and target.
-+#     Schema for all available statistics for a provider and target.
+-# Information about a PCI bus
++#     Information about a PCI bus
  #
- # @provider: provider for this set of statistics.
+ # @bus: the bus index
  #
-@@ -255,8 +247,8 @@
+@@ -174,8 +166,7 @@
  
  ##
- # @query-stats-schemas:
+ # @query-pci:
 -#
--# Return the schema for all available runtime-collected statistics.
-+#     Return the schema for all available runtime-collected
-+#     statistics.
+-# Return information about the PCI bus topology of the guest.
++#     Return information about the PCI bus topology of the guest.
  #
- # @provider: a provider to restrict the query to.
- #
+ # Returns: a list of info for each PCI bus.  Each bus is
+ #     represented by a json-object, which has a key with a json-array
 -- 
 2.55.0
 
