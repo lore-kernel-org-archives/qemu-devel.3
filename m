@@ -4,144 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6D5CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 12:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23925CA5FAC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 12:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBtEW-0001TJ-3K; Wed, 30 Sep 2026 08:16:24 -0400
+	id 1xBtq6-0007yr-2r; Wed, 30 Sep 2026 08:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBtET-0001Sa-4J
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 08:16:21 -0400
+ id 1xBtpF-0007hu-F0
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 08:54:32 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBtEQ-0001Ju-OP
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 08:16:20 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xBtp8-0007dW-Kb
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 08:54:16 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UB7bZ53135736
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 12:16:16 GMT
+ 68UB8T9o3286525
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 12:54:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- goEbtEfeRtJMDPsvnvy+NTFIkM9CHsUM+9pQjtFe+LI=; b=XDw3/6WWIQzjY+9H
- hDn7khGop09DpVeo4gOke/FbEj6toQduTAJbz57I/+FQAbNjVuQ8FNGdE6uXD3ua
- UkrBDun3ttpGDylcl5dQQf2anD5uHNfhg024j1N8AJEwGR3Efnx2zHTBFl7qgQ8/
- JEGC6KujBvJAjBOo2VcUo+Ow4gwckDmvzGCRsu+DEqtUMpms5JswJrym6bdhoTFV
- sjp9xXC+ZAlNNWHA33BIP2CgO4MjWSz8LeZIAtp8uZ3ZY1wKQrdZf7MfsIsvtqLN
- uKhIXOnc2WzRb+z+fp11AJbz+Ln8/aami9WdVyyL7rRyNv5RAqGpHGKoV0D9YP87
- i6OeNg==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0x27h988-1
+ hPu2D8wl0it59+zYcN08xQa07UHIMQmPxPaYWEEoHxc=; b=cbeA6wNH/ZAhn6pg
+ pavjI6c8dfySd9x039ncjmKeh5fICf4jQ+D8nY3NqFSNscsmGPoR6ijEz/3JdOYZ
+ NL0LMWAOBC/iYjk38N0AZyojK6Ze0STk/dHkgsGStzroHCevVY3e0PjamoeGzOhm
+ iKtQEMr7VV/N0IVYUPzd1bbgJMQcG7O/BgkKHhVhDiWfVVdq9LjtUGbnXDXqzvbG
+ 54djf7WzyLch+9KjsOxHFxrt+AecTXwfFYgjPAK/XFpFxRFBuVYiN7wqQHFRlOiH
+ rnx2UdHSJuoZvZ7HK5H2MmqiaazB6bQdZVBmgSMJ0jR4AAHfZBQ7YW2eb2vsCn1r
+ huWO2A==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0rj2tvw3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 12:16:16 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-7bf1e774404so40629137.0
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 05:16:16 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 12:54:12 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93ae8e7e546so1048056385a.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 05:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790770576; x=1791375376; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790772852; x=1791377652; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=goEbtEfeRtJMDPsvnvy+NTFIkM9CHsUM+9pQjtFe+LI=;
- b=ERXwTnwxq4NIWTwEQovkToKLXwDGfN/ycwLJ0XTse6t3KgwRTaO9el15OEIBsYTHvg
- fgXJFInVnsO3j/RUrsNbk7V3rwzTmCzp0FYc+z5OtaCOud/XzoQUCPGK+oJsVpUFkIQg
- bhhcmCJR2feqV+e/52agH2eLLOJd/yhTZhVPA/7sQWdD0FEnOHqJuQK0kxGvw8jc+PDK
- Nu3Jru/ygOCyJR79Gr32WZINva7KF+D1x9GFaMEYGUQ5SKHP1Jn7D3Wn43fX4EFlY3Rv
- jbPxApexnJZNIJkrqir4QuG/yTOTXKWVwacNgVxvWOX3L1YUPbLJdyzUr6oBNc2x0fPy
- NgyA==
+ bh=hPu2D8wl0it59+zYcN08xQa07UHIMQmPxPaYWEEoHxc=;
+ b=JC7cDD+60qA57mEmU7v5Xx0CoGq5XK5gIM2r+Dxl5cd5+4JDBw4p+OzoRkqVvM/err
+ izPHzk7Fnxmc/V3ycoP6cDcdpz5w3QqcI/t6MY4XD/YKscerCqJz0Bzs99JG9cNUeb0F
+ f3QkYSXY9/2/bmCR8dLBE9ABXfBoEGNVcVdJO/hhzF3WiyGkie+EJCBNPGcdXeJIaUbX
+ FRNDlC7lKCcE5UcolvUtskB/Iom3GiDwdwB33AlIe+AOBfsNTozODdYYc+0ydIM97Dw5
+ B8EQEslNB0gFa7s3GBACDIKbrhoI214xhr+HIz3bfE9JzJ81Kt4nABjoXKFPNKhVmEdD
+ MPYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790770576; x=1791375376;
+ d=1e100.net; s=20260707; t=1790772852; x=1791377652;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=goEbtEfeRtJMDPsvnvy+NTFIkM9CHsUM+9pQjtFe+LI=;
- b=CeZR1ans0wfqOCelNQHi8+3R0qBmPp5rf+718DYkl3UNYlK58bThBUtZu2zHbGLYC8
- WbnlgFnx6nb9ELnpRcqxCazcYFxbx0uuxoN99rhD2X4k9f+HxHeJeIqQHsroWy3LTfEU
- +LUE6aI9PUgfql5FUVrO4Fz31xIAEi6QNtm0+Gbk6uIVAUjtGcJ1+MNOWF09dCNL1GMK
- P/iCJOODhsALde84D1xcNA4KVxADRsIU4wOx89MYF+hYsb2Ftu8QarmVRCBl//dVTkVy
- rNVzIcULeat8mdv2uHHw76JcxQidNxss7PVgF8k4Qgl/AT8aFxrNAc0//B0N1PAB9D6C
- dA7w==
+ bh=hPu2D8wl0it59+zYcN08xQa07UHIMQmPxPaYWEEoHxc=;
+ b=IU2struT6Vb4JYq5m/m5147YfQuOIHbS7wxKjCCVSF5z9q1PlrTcERyt3SJPesCGSd
+ 7vdsv5pD4pYqiioJY+Z5yqv0QtX/TX0JcT3IdSWr4zTxGWAbBQ1H0n1tss2jlSOQxhSk
+ HoCSr6HE2xtjbBWGs6HdWZqtfW2ND6t+TV8kzMgcKkmRV3RIsIbr1eY8OgCnD7+sqpRy
+ NZmFYj14nCoKsKcF+uuZNOIDj7097HCfGbCFfgZFttvWBeYgEObMv4Rmp6XVvCPFyFc9
+ /2RlRhy4xdf381V/cUv/N9pOKqPK2NHFQFKoiaxQriScWlGHe89ljlzz9smGjKQnFnZS
+ RCMA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzPJyIS7eLmftTQSlMZxaoLQvrtcSJ0AbIePQ1A2iLkllhgOLwnM59yanbpoFySmOYgwdtaqUDMGtFa@nongnu.org
-X-Gm-Message-State: AFq9FYLFCRQS47ZqIt+5V84H9T85soZoeMa3qnVZXpYFPqqDmoG8JqgY
- TCSDmyiJ0akpRSGQx0WrclgYqPKP0saV09EMwJqiYIhZOggsLrD2d1n7H09oteYhDyoSQ3oOGoi
- P+tl31r+nrS/rRDmhEfWUfv9SXGWApawPO1VskOkHz+HUgv+D4HkckIsJZA==
-X-Gm-Gg: AYBFou3cT517QJGC9VU//ET5hcommdA4vMtL4GAI4PBoJhfJ9gAjh922RLl+WgOlAjq
- SJK4UeqRMIgz9guKwMK4zp2fiZaMMSvxopR2lv8M3ph1KysDEGijEWdUA3Od3b0k8jv/P2ZIPHj
- ENI9bW/r9XSYuH3w7dAhPzbz7SUcpXVqfSVNudwhbauZpU/SvSocrYv41c0O84qlwj8IsDGVavi
- MjqM+/AC4sONmuY3EqI9t0rQP5guqvdUo6RZ6h0GHRwTu070t2eb8/1G0eL48m1H5avbOhdthe+
- ofv2wd74Y9j8CfJN9K4RdRNm/36XVtatsIORvzDJk1wRuwUKRzr5BHws9L+gSUbwHEQBwX5a5XW
- MVW03J/RU3jIfgyvhOFfvmb3vDF39r4Xajw==
-X-Received: by 2002:a05:6102:5691:b0:7a7:19aa:f0cf with SMTP id
- ada2fe7eead31-7be73e9a332mr174422137.28.1790770575675; 
- Wed, 30 Sep 2026 05:16:15 -0700 (PDT)
-X-Received: by 2002:a05:6102:5691:b0:7a7:19aa:f0cf with SMTP id
- ada2fe7eead31-7be73e9a332mr174412137.28.1790770575053; 
- Wed, 30 Sep 2026 05:16:15 -0700 (PDT)
+ AKwUvBziuRaM/sfg88/OepLPpPL2NlBPOvmTWMEKfP5TvCLmDBzQFkpH+xdWZqrjuMHpzmlWwunZJ/TurEk2@nongnu.org
+X-Gm-Message-State: AFuF++lNDLONsE405UIndGf9EqudcWWS63sFizTjX4iJQTBCSfRF4Hiz
+ IbwsYWaMsH7UTy2CxJPCOdr7pB/jxYMmJlnLVpdeStV/Zo/cT+Pt1h6F7rGmv1gQ/azDLMugB6j
+ XgERdtckMePa7qZ6RX1KGuTJxG2UD0rk59XMyXd/zOyaCT4QoMtV6Fo/rqQ==
+X-Gm-Gg: AYBFou1aoGQEbuKxTW14LVn2BLOgOHlAgne2ZrXrFi/AaPxGATAW30cg5SUcg3oFWD9
+ yUv29ZckgqdYFl0L1LFIgmnyZOID9RcorMxPS1lidOWPEIH1TX9Ib5OlNHZT//D8i/jikqR78Cy
+ d00CyZiskhO21LO202dfOQHHkJqpZ3hXwhhX3rqiIL4Q98RTzLczu15weW32WyqYdebUK31xa9G
+ HkNdofTABCRHDBBbD8ouq5AgO8fo0V2tGTICUmvU21uGP7azurYJa6jgniQAEvokASSYe3W9+xv
+ fO6nJspVFOp5RcRECEvTocr8CvL+bj80A7+AhjkkbIUpYN+CsY966YWZOfF4wrIAIBKyAU+j6cb
+ 3rCixJtWwo6jxxDhIV4XF/xDoncbVPyLX1Q==
+X-Received: by 2002:a05:620a:6602:b0:939:31b5:4e08 with SMTP id
+ af79cd13be357-93ca9330afemr194167785a.0.1790772851589; 
+ Wed, 30 Sep 2026 05:54:11 -0700 (PDT)
+X-Received: by 2002:a05:620a:6602:b0:939:31b5:4e08 with SMTP id
+ af79cd13be357-93ca9330afemr194159685a.0.1790772850805; 
+ Wed, 30 Sep 2026 05:54:10 -0700 (PDT)
 Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b029f5bcdsm3097737f8f.27.2026.09.30.05.16.13
+ 5b1f17b1804b1-4a017520f98sm48393085e9.8.2026.09.30.05.54.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 05:16:14 -0700 (PDT)
-Message-ID: <1197c1ca-14d5-48c1-b497-0c03a781c258@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 14:16:12 +0200
+ Wed, 30 Sep 2026 05:54:10 -0700 (PDT)
+Message-ID: <05ace2dc-5e44-4f4a-8254-4f9459bdef1c@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 14:54:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/11] hw/arm/aspeed_ast2400: Use unimp array and table
- for unimplemented devices
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
- <20260930072501.2612119-2-jamin_lin@aspeedtech.com>
- <941d7bb6-3205-44cf-8d76-ffbb322a6f4e@oss.qualcomm.com>
- <0cd87753-da91-44ed-a629-43099bfb820d@kaod.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <0cd87753-da91-44ed-a629-43099bfb820d@kaod.org>
+In-Reply-To: <20260930085433.830743-2-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA0OCBTYWx0ZWRfX7VT6H0jvGV9k
- MPv70nPIRqF6k1SgrxJvlivs6dKU8x9CPW0G8bo5LWbkxRJaY+pfxsBIZF6cF8TUYaEeHqwU5Sa
- 4f2rP07oLoLXOSoMkAcNqNyDkhus0WU=
-X-Proofpoint-GUID: TOt60bzWKXb6tr4R93SbW17lvSSLoN0W
-X-Authority-Analysis: v=2.4 cv=W9GtxhWk c=1 sm=1 tr=0 ts=6abcfd90 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: q6mAhV_d7X1eFV6O4QKDov_UH3Gjg6nH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1MSBTYWx0ZWRfX4EKqWk+Hs4nO
+ IeTvICOm8m1Fqo2Xg8k9J9VgA71AuoTTkbuMGZ8QrryfXW+JyVknyHN41Au4YRAa9iOIdWBJ29m
+ 6pIszRthaCXVqsg5BMd4EqAgRZNjY/PW7WK/DyZatsCAMPvG1rxxXRLIRwz6FkIHFTgxop7btNQ
+ 0qiSbYoOVyl6Ceu+a2AFkpIrNopXrRscIXKcZyDYyjL3YXOPDQ9ulZh4+yV3+3SvqNmAj7h1ExF
+ L2AqHlmFW6Cc/e01HYv3HY/fqm0Cnjm+Nq495GYTYno/1AiatJR8kQoseGhtKVsbXAProgVEaMU
+ TSA0J35xt+PcDTaN9H2y7sspwGpZpy1Z2B4zNe14g7rpg3GkscQvbEPsivAJj1pnYUT6HeiwT36
+ dg9SInzLnZx4lQDUbBc+jdf5E/liBJkjWnxaPrZk+Jpi+VWzGHim8ahHE/C9XQzPM/dosqEwZX8
+ /ghDlTSDTwcKE/t9/ug==
+X-Proofpoint-GUID: q6mAhV_d7X1eFV6O4QKDov_UH3Gjg6nH
+X-Authority-Analysis: v=2.4 cv=Ypya1IYX c=1 sm=1 tr=0 ts=6abd0674 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=bypl4A9ATimtlkDC95sA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA0OCBTYWx0ZWRfXyr7Su4+tqHWY
- LIqjS+ZYHrSo9x+CHKN+FusTlW8SSPYOEYnBfSmM+PZ6xQeZDlThpkS2ZoKzI8CLTd7fejf4vFg
- cUVPLUtrXI8O3YDCarwhORHke+n/5IQYLixHJkRX/YmWRQ5sMYQYJplQ9CZWYtz8bpSvmpD7Ita
- lhlslsDLKlVxueALvXx+bOn4t91vLhvonJHVCqpMIDgSNn9RbFfX10wXzzpCcTdXHmQv5qr1Tj/
- yWH6syohKeivOio2OUOG3P1YHLRMaUYCtdHOgla+guwHxDFnjDyYqHU3zB6GtB+jgIa3JOt+r9E
- kn169uoXSnSc/nYDEdJsiO6ByVy9TXDolL4nUMcaKTmnAOIlrmJU3906VLGE6tzdTzVGFNLBMdw
- yV+R2DuCgncs5vhl7SMAkxJwYLqa1XuRlwzCRZLRbG6DHyOH/mjY3BFbRLyN6lu2vjKDLWxw0Cy
- s++UcWw6Y0kwQLnXdUw==
-X-Proofpoint-ORIG-GUID: TOt60bzWKXb6tr4R93SbW17lvSSLoN0W
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=JF9118EUAAAA:8
+ a=7Qk2ozbKAAAA:8 a=PmyWr1nVuGXeHGO5vD0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=xVlTc564ipvMDusKsbsT:22
+ a=1lyxoWkJIXJV6VJUPhuM:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1MSBTYWx0ZWRfX/6zcK3j90u7+
+ arXhag3yParYP1KMVGeWHbJ0leaie5fr4k8yQlr9azqY18aYsmvS4IDmokUnpXxB3mA+mefHIos
+ G5qyWORuh99B7mfIoGI0OuzMd9hXyfE=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_02,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 clxscore=1015 phishscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 impostorscore=0 spamscore=0 bulkscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609300048
+ definitions=main-2609300051
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -166,197 +163,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/26 13:50, CÃ©dric Le Goater wrote:
->> Note to Peter: I really think keeping duplicating the
->> UnimplementedDeviceConfig structure is a basic software
->> development antipattern. Could you reconsider your objection?
-> What's the background ?
+Hi,
 
-I think that was discussed on IRC, the only ref on the list is:
-https://lore.kernel.org/qemu-devel/CAFEAcA_ob6mHqfAAM9iAMae5vfxaYhmcqkk-gJH+s1mHuvFp8g@mail.gmail.com/
+On 30/9/26 10:54, Paolo Bonzini wrote:
+> Until now QEMU's code provenance policy declined any contribution
+> believed to include or derive from AI-generated content.  A blanket ban
+> was easy to maintain while LLM output was rarely usable on its own, but
+> as the tools improved an absolute prohibition has become harder to
+> justify and enforce.
+> 
+> Even a simple code review task these days may result in the agent
+> suggesting code changes, or producing a useful test case to verify the
+> presence or absence of a bug.  A hardline interpretation of the policy
+> makes it hard to use AI even for tasks that are explicitly allowed.
+> 
+> On top of this, several maintainers have pointed out that contributions
+> that can be reasonably suspected to be AI-assisted or more have been
+> posted and included.  Some of these contributions are actually of very
+> high quality; it seems that the mailing list-based contribution process
+> has mostly protected QEMU from low quality patches.  A prohibition on
+> AI puts maintainers in a difficult position: on one hand the DCO process
+> lets them rely on the submitter's certification of origin, on the other
+> hand maintainers are supposed to know and implement the process policies.
+> 
+> Since the policy has been written, other projects have discussed and
+> taken their stance on AI contributions.  These vary from full prohibition
+> (though typically motivated by social reasons rather than legal, e.g.
+> for Zig) to limited use (e.g. GCC, allowing small contributions and
+> tests to use AI), to cautious experimentation.
+> 
+> This proposed policy seeks to implement the cautious experimentation
+> approach, inspired mostly by the Rust project's policy and by Software
+> Freedom Conservancy's own recommendations on LLMs and generative AI.
+> 
+> Relying on Conservancy's legal guidance allows us to focus on the
+> interaction between contributors and maintainers.  Conservancy in
+> particular provides this point to alleviate the concern that motivated
+> the policy, about whether the submitter has the legal right to contribute
+> the code and about unintentional reproduction of copyrighted code:
+> 
+>     "Copyleft Everything" remains the best viable and safest approach
+>     Certainly those who want to release FOSS under non-copyleft licenses
+>     have more to worry about when using these tools.
+> 
+> While we shouldn't treat copyleft as a silver bullet, it is effective
+> as part of a defense in depth strategy that includes, for example,
+> "de minimis" thresholds and `AGENTS.md` instructions that encourage user
+> participation in the design.
+> 
+> Therefore, the revised policy considers QEMU's copyleft to be a viable
+> approach to any unanswered legal questions about AI-generated
+> contributions and their copyright status.  This lets the policy
+> focus on the topic of what AI-assisted contributions require of
+> maintainers.
+> 
+> In that respect, the Rust project's policy combines two unusual ideas.
+> One is to hold them to a higher standard, in the spirit of using AI to
+> work "better, not faster"; the other is to require "pre-arrangement" for
+> "changes that are originally created by an LLM".  AI lowers the cost of
+> producing a patch but does nothing to lower the cost of understanding
+> and reviewing one; if anything it raises it, since a reviewer can
+> no longer assume that the submitter has reasoned through every line.
+> Pre-arrangement is an attempt to balance the shift of effort from the
+> developer to the maintainer, and the QEMU policy includes the same
+> provision.
+> 
+> Going full circle to the reason why we might need to review the
+> policy, there is the question of how to make sure policy is applied.
+> QEMU maintainers have already experimented with using AGENTS.md files;
+> subsequent patches will also try to embody the "work better, not faster"
+> mantra into an AGENTS.md file.  Nevertheless, some explicit prohibitions
+> should be included in the policy, and they are indeed.  The list is short
+> and based on the Rust policy and the GStreamer AGENTS.md file.
+> 
+> Revise the policy according to the above considerations, and introduce the
+> "AI-used-for:" trailer as a record of where AI was used.  The standard is
+> slightly different from the more usual "Assisted-by"; the intention is for
+> the metadata to provide more information for reviewers to judge the result,
+> and to scope areas for which Signed-off-by cannot guarantee full control
+> of provenance.
+> 
+> In any case, use of AI does not relax any other contribution requirement:
+> authors still need to comply with the DCO (declaring that they have
+> corporate authorization to contribute, for example) and take technical
+> responsibility for their work.
+> 
+> [Commit message largely based on discussions with Daniel Berrangé,
+>   Alistair Francis, Peter Maydell, Kevin Wolf and others. - Paolo]
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-mst@kernel.org/T/
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   docs/devel/code-provenance.rst |  71 +----------
+>   docs/devel/index-process.rst   |   1 +
+>   docs/devel/llm-usage.rst       | 213 +++++++++++++++++++++++++++++++++
+>   AGENTS.md                      |  42 +++++--
+>   scripts/checkpatch.pl          |   5 +-
+>   5 files changed, 252 insertions(+), 80 deletions(-)
+>   create mode 100644 docs/devel/llm-usage.rst
 
-create_unimplemented_device() calls qdev_create() and allocate on the
-heap, my motivation was to have another helper for in-place init (when
-the UnimplementedDeviceState state is embedded in the parent). Now we
-ended with such helpers like aspeed_mmio_map_unimplemented() which
-realize in place, make_unimp_dev() and create_unimp() init and realize
-in place and Jamin adds yet another pattern. While all are valids,
-I'd rather unify. Maybe this is now back to the "qdev alloc vs qdev
-struct embedded" discussion we never figured out.
 
-hw/arm/aspeed_ast1040.c:127:    object_initialize_child(obj, "pwm", 
-&s->pwm, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast1040.c:128:    object_initialize_child(obj, "espi", 
-&s->espi, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast1040.c:129:    object_initialize_child(obj, "udc", 
-&s->udc, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast10x0.c:165:    object_initialize_child(obj, "iomem", 
-&s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast10x0.c:166:    object_initialize_child(obj, "pwm", 
-&s->pwm, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast10x0.c:167:    object_initialize_child(obj, "espi", 
-&s->espi, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast10x0.c:168:    object_initialize_child(obj, "udc", 
-&s->udc, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast2400.c:243:    object_initialize_child(obj, "iomem", 
-&s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast2400.c:244:    object_initialize_child(obj, "video", 
-&s->video, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast2600.c:285:    object_initialize_child(obj, "iomem", 
-&s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast2600.c:286:    object_initialize_child(obj, "video", 
-&s->video, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/aspeed_ast2600.c:287:    object_initialize_child(obj, "dpmcu", 
-&s->dpmcu, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/bcm2835_peripherals.c:40:    object_initialize_child(OBJECT(ps), 
-name, uds, TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/mps2-tz.c:440:    object_initialize_child(OBJECT(mms), name, uds, 
-TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/musca.c:146:    object_initialize_child(OBJECT(mms), name, uds, 
-TYPE_UNIMPLEMENTED_DEVICE);
-hw/arm/bcm2835_peripherals.c:36:void 
-create_unimp(BCMSocPeripheralBaseState *ps,
-hw/arm/bcm2835_peripherals.c:521:    create_unimp(s, &s->txp, 
-"bcm2835-txp", TXP_OFFSET, 0x1000);
-hw/arm/bcm2835_peripherals.c:522:    create_unimp(s, &s->armtmr, 
-"bcm2835-sp804", ARMCTRL_TIMER0_1_OFFSET, 0x40);
-hw/arm/bcm2835_peripherals.c:523:    create_unimp(s, &s->i2s, 
-"bcm2835-i2s", I2S_OFFSET, 0x100);
-hw/arm/bcm2835_peripherals.c:524:    create_unimp(s, &s->smi, 
-"bcm2835-smi", SMI_OFFSET, 0x100);
-hw/arm/bcm2835_peripherals.c:525:    create_unimp(s, &s->bscsl, 
-"bcm2835-spis", BSC_SL_OFFSET, 0x100);
-hw/arm/bcm2835_peripherals.c:526:    create_unimp(s, &s->dbus, 
-"bcm2835-dbus", DBUS_OFFSET, 0x8000);
-hw/arm/bcm2835_peripherals.c:527:    create_unimp(s, &s->ave0, 
-"bcm2835-ave0", AVE0_OFFSET, 0x8000);
-hw/arm/bcm2835_peripherals.c:528:    create_unimp(s, &s->v3d, 
-"bcm2835-v3d", V3D_OFFSET, 0x1000);
-hw/arm/bcm2835_peripherals.c:529:    create_unimp(s, &s->sdramc, 
-"bcm2835-sdramc", SDRAMC_OFFSET, 0x100);
-hw/arm/bcm2838_peripherals.c:182:    create_unimp(s_base, &s->clkisp, 
-"bcm2835-clkisp", CLOCK_ISP_OFFSET,
-hw/arm/bcm2838_peripherals.c:196:    create_unimp(s_base, &s->asb, 
-"bcm2838-asb", BRDG_OFFSET, 0x24);
-hw/arm/mps2-tz.c:429:static MemoryRegion 
-*make_unimp_dev(MPS2TZMachineState *mms,
-hw/arm/mps2-tz.c:981:                { "i2s-audio", make_unimp_dev, 
-&mms->i2s_audio,
-hw/arm/mps2-tz.c:988:                { "gfx", make_unimp_dev, &mms->gfx, 
-0x41000000, 0x140000 },
-hw/arm/mps2-tz.c:989:                { "gpio0", make_unimp_dev, 
-&mms->gpio[0], 0x40100000, 0x1000 },
-hw/arm/mps2-tz.c:990:                { "gpio1", make_unimp_dev, 
-&mms->gpio[1], 0x40101000, 0x1000 },
-hw/arm/mps2-tz.c:991:                { "gpio2", make_unimp_dev, 
-&mms->gpio[2], 0x40102000, 0x1000 },
-hw/arm/mps2-tz.c:992:                { "gpio3", make_unimp_dev, 
-&mms->gpio[3], 0x40103000, 0x1000 },
-hw/arm/mps2-tz.c:1035:                { "i2s-audio", make_unimp_dev, 
-&mms->i2s_audio,
-hw/arm/mps2-tz.c:1045:                { "clcd", make_unimp_dev, 
-&mms->cldc, 0x4130a000, 0x1000 },
-hw/arm/mps2-tz.c:1051:                { "gpio0", make_unimp_dev, 
-&mms->gpio[0], 0x41100000, 0x1000 },
-hw/arm/mps2-tz.c:1052:                { "gpio1", make_unimp_dev, 
-&mms->gpio[1], 0x41101000, 0x1000 },
-hw/arm/mps2-tz.c:1053:                { "gpio2", make_unimp_dev, 
-&mms->gpio[2], 0x41102000, 0x1000 },
-hw/arm/mps2-tz.c:1054:                { "gpio3", make_unimp_dev, 
-&mms->gpio[3], 0x41103000, 0x1000 },
-hw/arm/mps2-tz.c:1102:                { "i2s-audio", make_unimp_dev, 
-&mms->i2s_audio, 0x49301000, 0x1000 },
-hw/arm/mps2-tz.c:1111:                { "clcd", make_unimp_dev, 
-&mms->cldc, 0x4930a000, 0x1000 },
-hw/arm/mps2-tz.c:1117:                { "gpio0", make_unimp_dev, 
-&mms->gpio[0], 0x41100000, 0x1000 },
-hw/arm/mps2-tz.c:1118:                { "gpio1", make_unimp_dev, 
-&mms->gpio[1], 0x41101000, 0x1000 },
-hw/arm/mps2-tz.c:1119:                { "gpio2", make_unimp_dev, 
-&mms->gpio[2], 0x41102000, 0x1000 },
-hw/arm/mps2-tz.c:1120:                { "gpio3", make_unimp_dev, 
-&mms->gpio[3], 0x41103000, 0x1000 },
-hw/arm/mps2-tz.c:1141:                { "sram-timing-adapter", 
-make_unimp_dev, &mms->ta[0], 0x41700000, 0x1000 },
-hw/arm/mps2-tz.c:1142:                { "qspi-timing-adapter", 
-make_unimp_dev, &mms->ta[1], 0x41701000, 0x1000 },
-hw/arm/mps2-tz.c:1143:                { "ddr4-timing-adapter", 
-make_unimp_dev, &mms->ta[2], 0x41702000, 0x1000 },
-hw/arm/mps2-tz.c:1167:                { "i2s-audio", make_unimp_dev, 
-&mms->i2s_audio, 0x49301000, 0x1000 },
-hw/arm/mps2-tz.c:1176:                { "clcd", make_unimp_dev, 
-&mms->cldc, 0x4930a000, 0x1000 },
-hw/arm/mps2-tz.c:1182:                { "gpio0", make_unimp_dev, 
-&mms->gpio[0], 0x41100000, 0x1000 },
-hw/arm/mps2-tz.c:1183:                { "gpio1", make_unimp_dev, 
-&mms->gpio[1], 0x41101000, 0x1000 },
-hw/arm/mps2-tz.c:1184:                { "gpio2", make_unimp_dev, 
-&mms->gpio[2], 0x41102000, 0x1000 },
-hw/arm/mps2-tz.c:1185:                { "gpio3", make_unimp_dev, 
-&mms->gpio[3], 0x41103000, 0x1000 },
-hw/arm/mps2-tz.c:1195:                { "qspi-controller0", 
-make_unimp_dev, &mms->qspi_controller[0],
-hw/arm/mps2-tz.c:1197:                { "qspi-controller1", 
-make_unimp_dev, &mms->qspi_controller[1],
-hw/arm/mps2-tz.c:1199:                { "qspi-controller2", 
-make_unimp_dev, &mms->qspi_controller[2],
-hw/arm/musca.c:137:static MemoryRegion *make_unimp_dev(MuscaMachineState 
-*mms,
-hw/arm/musca.c:325:        { "spi", make_unimp_dev, &mms->spi, 0x3000, 
-0x1000 },
-hw/arm/musca.c:326:        { "i2c0", make_unimp_dev, &mms->i2c[0], 
-0x4000, 0x1000 },
-hw/arm/musca.c:327:        { "i2c1", make_unimp_dev, &mms->i2c[1], 
-0x5000, 0x1000 },
-hw/arm/musca.c:328:        { "i2s", make_unimp_dev, &mms->i2s, 0x6000, 
-0x1000 },
-hw/arm/musca.c:329:        { "pwm0", make_unimp_dev, &mms->pwm[0], 
-0x7000, 0x1000 },
-hw/arm/musca.c:331:        { "qspi", make_unimp_dev, &mms->qspi, 0xa000, 
-0x1000 },
-hw/arm/musca.c:332:        { "timer", make_unimp_dev, &mms->timer, 
-0xb000, 0x1000 },
-hw/arm/musca.c:333:        { "scc", make_unimp_dev, &mms->scc, 0xc000, 
-0x1000 },
-hw/arm/musca.c:334:        { "pwm1", make_unimp_dev, &mms->pwm[1], 
-0xe000, 0x1000 },
-hw/arm/musca.c:335:        { "pwm2", make_unimp_dev, &mms->pwm[2], 
-0xf000, 0x1000 },
-hw/arm/musca.c:336:        { "gpio", make_unimp_dev, &mms->gpio, 
-0x10000, 0x1000 },
-hw/arm/musca.c:463:                { "eflash0", make_unimp_dev, 
-&mms->eflash[0],
-hw/arm/musca.c:465:                { "eflash1", make_unimp_dev, 
-&mms->eflash[1],
-hw/arm/musca.c:467:                { "qspi", make_unimp_dev, &mms->qspi, 
-0x42800000, 0x100000 },
-hw/arm/musca.c:472:                { "mhu0", make_unimp_dev, 
-&mms->mhu[0], 0x42600000, 0x100000 },
-hw/arm/musca.c:473:                { "mhu1", make_unimp_dev, 
-&mms->mhu[1], 0x42700000, 0x100000 },
-hw/arm/musca.c:484:                { "pwm0", make_unimp_dev, 
-&mms->pwm[0], 0x40101000, 0x1000 },
-hw/arm/musca.c:485:                { "pwm1", make_unimp_dev, 
-&mms->pwm[1], 0x40102000, 0x1000 },
-hw/arm/musca.c:486:                { "pwm2", make_unimp_dev, 
-&mms->pwm[2], 0x40103000, 0x1000 },
-hw/arm/musca.c:487:                { "i2s", make_unimp_dev, &mms->i2s, 
-0x40104000, 0x1000 },
-hw/arm/musca.c:490:                { "i2c0", make_unimp_dev, 
-&mms->i2c[0], 0x40108000, 0x1000 },
-hw/arm/musca.c:491:                { "i2c1", make_unimp_dev, 
-&mms->i2c[1], 0x40109000, 0x1000 },
-hw/arm/musca.c:492:                { "spi", make_unimp_dev, &mms->spi, 
-0x4010a000, 0x1000 },
-hw/arm/musca.c:493:                { "scc", make_unimp_dev, &mms->scc, 
-0x5010b000, 0x1000 },
-hw/arm/musca.c:494:                { "timer", make_unimp_dev, 
-&mms->timer, 0x4010c000, 0x1000 },
-hw/arm/musca.c:496:                { "pvt", make_unimp_dev, &mms->pvt, 
-0x4010e000, 0x1000 },
-hw/arm/musca.c:497:                { "sdio", make_unimp_dev, &mms->sdio, 
-0x4010f000, 0x1000 },
-hw/arm/musca.c:503:                { "gpio", make_unimp_dev, &mms->gpio, 
-0x41000000, 0x1000 },
+> +.. _ai-used-for:
+> +
+> +Commit messages for AI-assisted changes
+> +'''''''''''''''''''''''''''''''''''''''
+> +
+> +In order to disclose your usage of AI/LLM tools, add an ``AI-used-for:``
+> +line before the :ref:`Signed-off-by <code-provenance>` line.  The trailer
+> +is both a reminder of your DCO obligations and a guide to reviewers.  The
+> +text is one or more of ``code``, ``tests``, ``docs``, ``research``, possibly
+> +followed by an explanation in parentheses:
+> +
+> +To be able to certify the provenance of AI/LLM-generated code that you submit
+> +to QEMU, you must follow the policies outlined in this document and in
+> +QEMU's ``AGENTS.md``.  **By using 'AI-used-for', a contributor both
+> +identifies areas of the patch that involved use of AI/LLM, and also
+> +attests that their usage of AI/LLMs was in compliance with the policies
+> +outlined in this document.**
+> +
+> +.. code-block:: none
+> +
+> +     AI-used-for: tests, docs
+> +     AI-used-for: code
+> +     AI-used-for: code (refactoring)
+> +     AI-used-for: code (prototype)
+> +     AI-used-for: research
+> +
+> +``AI-used-for`` should not be included for "background" usage such as
+> +autocomplete or obtaining a pre-review of the patch.
+> +
+> +Do not include your prompts or summarize the conversation in the commit
+> +message or cover letter.  Extract any information that is relevant to the
+> +reviewer and include it in commit messages, cover letters or code comments.
+> +
+> +QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-by``
+> +trailers to indicate AI usage.  In particular, do not specify the exact
+> +AI model or tool used to create the commit.
+> +
+> +Deterministic tooling (sed, coccinelle, formatters) is out of scope for
+> +the trailer, but should be mentioned in the commit message.
+
+I noticed a discrepancy in a method docstring and a particular use case.
+Since the method is used distinctly in various configurations (KVM, TCG,
+RISCV, ARM) I asked a LLM "using the semcode tools only and deliberately
+ignoring the method documentation, look at all the call tree and how the
+passed arguments are used and explain what is expected of this method
+to a junior engineer" then once I understood out what was wrong I could
+update the docstring in the header. No code / comment generated by the
+LLM ends in the commit / repository. IIUC this use case is compatible
+with the new policy. What trailer should I use?
+
+   AI-used-for: research
+   AI-used-for: code (audit)
+   AI-used-for: code audit (semcode)
+
+'semcode' is a deterministic tool, so instead my commit should contains
+'''
+   When updating foo() contract in commit fe89fe89fe89 we forgot to
+   update its documentation. Checking with the semcode tools, most
+   callers pass @arg as a mask. Update the documentation.
+
+   AI-used-for: code audit
+'''
+
+Would that be a good example?
+
+Thanks,
+
+Phil.
+
 
 
