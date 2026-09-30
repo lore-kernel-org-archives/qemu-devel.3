@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BADC9CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430FCCA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrkC-0004TJ-0q; Wed, 30 Sep 2026 06:41:00 -0400
+	id 1xBrid-0001GD-SK; Wed, 30 Sep 2026 06:39:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriy-0001Yg-1q
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0001FF-Jl
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrim-0006pk-RC
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:43 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriZ-0006h4-U3
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764771;
+ s=mimecast20190719; t=1790764759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wZT3a1R6jtVQqOe7RlXLlnJDBfrW+D0U2TF5Sx2r2wM=;
- b=jIzazJSDodYBKoqp46yIosIIjJxcxgbEdiQ7X3WNjQhJg1f4SIrdH8dvI7yGECdjWO5QhW
- o8P+MX/Yx9PkU+1TARkdcnt5E6JE5Hpt9phICuhiu8p1OBPEjSQ27sXZKqtpqjM+wVxC/Y
- 2e2fYKBVT/NzwV4Dls0RzsnXKGfRnHw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GVKoOA9RtjYTuVfC+cCVXRz7k6r9908LjQ0WAruKgpE=;
+ b=K4Reb55rU6nJQyE0Db5EKno0aydYyxbsl1gezq9wrZAAZViLz4x0LOh+TWdChtL1o2xjBh
+ 0YODJbkQCqOPmARxOhgY0Vy8py90D1/Y6QfulzR8HrkjS38n7LztkFc6qIAMisvyK9Qe/f
+ XbQ7BhApW0ngTWAOpzdzDAY+dt8m7Co=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-DFYIFJH0MmeFgYMSZO624g-1; Wed,
- 30 Sep 2026 06:39:28 -0400
-X-MC-Unique: DFYIFJH0MmeFgYMSZO624g-1
-X-Mimecast-MFC-AGG-ID: DFYIFJH0MmeFgYMSZO624g_1790764767
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-Ic5RE9cMM8qC_eDf_-044g-1; Wed,
+ 30 Sep 2026 06:39:17 -0400
+X-MC-Unique: Ic5RE9cMM8qC_eDf_-044g-1
+X-Mimecast-MFC-AGG-ID: Ic5RE9cMM8qC_eDf_-044g_1790764756
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 827B21954227; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3DDC19540D5; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C6A1195604D; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E61119560AB; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ECE7421E655D; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id C609021E6892; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 084/105] qapi: convert remaining simple intros for
- block-core.json
-Date: Wed, 30 Sep 2026 12:38:49 +0200
-Message-ID: <20260930103910.3934848-85-armbru@redhat.com>
+Subject: [PULL 014/105] qapi: convert trivial intro sections for
+ machine-s390x.json
+Date: Wed, 30 Sep 2026 12:37:39 +0200
+Message-ID: <20260930103910.3934848-15-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,116 +87,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-These are either structs or unions that are used in an inlinable
-context: i.e. the generated documentation is likely to feature a
-version of this documentation block that does not include the intro in
-context of another command, event, or structure.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260917194614.549584-5-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-15-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/block-core.json | 45 +++++++++++++++++++-------------------------
- 1 file changed, 19 insertions(+), 26 deletions(-)
+ qapi/machine-s390x.json | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index da7b5c7fe3..802a4af74e 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4502,9 +4502,8 @@
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index f79864f417..a83a258d6c 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -9,9 +9,8 @@
  
  ##
- # @BlockdevOptionsCurlHttp:
+ # @S390CpuPolarization:
 -#
--# Driver specific block device options for HTTP connections over the
--# curl backend.  URLs must start with "http://".
-+#     Driver specific block device options for HTTP connections over
-+#     the curl backend.  URLs must start with "http://".
+-# An enumeration of CPU polarization that can be assumed by a virtual
+-# S390 CPU
++#     An enumeration of CPU polarization that can be assumed by a
++#     virtual S390 CPU
  #
- # @cookie: List of cookies to set; format is "name1=content1;
- #     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
-@@ -4528,9 +4527,8 @@
+ # Since: 8.2
+ ##
+@@ -94,8 +93,7 @@
  
  ##
- # @BlockdevOptionsCurlHttps:
+ # @CpuPolarizationInfo:
 -#
--# Driver specific block device options for HTTPS connections over the
--# curl backend.  URLs must start with "https://".
-+#     Driver specific block device options for HTTPS connections over
-+#     the curl backend.  URLs must start with "https://".
+-# The result of a CPU polarization query.
++#     The result of a CPU polarization query.
  #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4543,9 +4541,8 @@
+ # @polarization: the CPU polarization
+ #
+@@ -122,9 +120,8 @@
  
  ##
- # @BlockdevOptionsCurlFtp:
+ # @SCLP_CPI_INFO_AVAILABLE:
 -#
--# Driver specific block device options for FTP connections over the
--# curl backend.  URLs must start with "ftp://".
-+#     Driver specific block device options for FTP connections over
-+#     the curl backend.  URLs must start with "ftp://".
+-# Emitted when the Control-Program Identification data is available in
+-# the QOM tree.
++#     Emitted when the Control-Program Identification data is
++#     available in the QOM tree.
  #
- # Since: 2.9
- ##
-@@ -4555,9 +4552,8 @@
- 
- ##
- # @BlockdevOptionsCurlFtps:
--#
--# Driver specific block device options for FTPS connections over the
--# curl backend.  URLs must start with "ftps://".
-+#     Driver specific block device options for FTPS connections over
-+#     the curl backend.  URLs must start with "ftps://".
- #
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
-@@ -4683,14 +4679,13 @@
- 
- ##
- # @BlockdevOptionsCbw:
--#
--# Driver specific block device options for the copy-before-write
--# driver, which does so called copy-before-write operations: when data
--# is written to the filter, the filter first reads corresponding
--# blocks from its file child and copies them to @target child.  After
--# successfully copying, the write request is propagated to file child.
--# If copying fails, the original write request is failed too and no
--# data is written to file child.
-+#     Driver specific block device options for the copy-before-write
-+#     driver, which does so called copy-before-write operations: when
-+#     data is written to the filter, the filter first reads
-+#     corresponding blocks from its file child and copies them to
-+#     @target child.  After successfully copying, the write request is
-+#     propagated to file child.  If copying fails, the original write
-+#     request is failed too and no data is written to file child.
- #
- # @target: The target for copy-before-write operations.
- #
-@@ -4726,9 +4721,8 @@
- 
- ##
- # @BlockdevOptions:
--#
--# Options for creating a block device.  Many options are available for
--# all block devices, independent of the block driver:
-+#     Options for creating a block device.  Many options are available
-+#     for all block devices, independent of the block driver:
- #
- # @driver: block driver name
- #
-@@ -5513,9 +5507,8 @@
- 
- ##
- # @BlockdevAmendOptionsQcow2:
--#
--# Driver specific image amend options for qcow2.  For now, only
--# encryption options can be amended
-+#     Driver specific image amend options for qcow2.  For now, only
-+#     encryption options can be amended
- #
- # @encrypt: Encryption options to be amended
+ # Features:
  #
 -- 
 2.55.0
