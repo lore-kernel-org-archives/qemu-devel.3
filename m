@@ -4,105 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98AC6CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 22:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E895CA5FC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 22:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xC2Wq-0007wu-L2; Wed, 30 Sep 2026 18:11:58 -0400
+	id 1xC2X8-00080f-4V; Wed, 30 Sep 2026 18:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wg-0007vr-Bg
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:46 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wr-0007xT-Bb
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:58 -0400
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wc-00052C-Ds
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:45 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wp-00053M-0r
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:57 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 03BE31FB9E;
- Wed, 30 Sep 2026 22:11:33 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9A8F41FB9A;
+ Wed, 30 Sep 2026 22:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790806297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1790806309; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0Cy48Kfw7fwHXfYachCNmRMbvI6mV12N5r8rM8zoIY=;
- b=yommmJdnx84iJ4GyDn8Oq6uSvVvY5QXilX0Yms7+xDAfX+a3Ms/2Xqe6IiBwKhYAoG3VEE
- lM5gWQzpeFGL652RDGJ5u8GhuFwdOmA/JJXtXypTcq7FsUHmtcmkPbOE724rvx0mmJCTxF
- 0bcFcpKTXHfOuhYcyXWc3lK9jKSHKF4=
+ bh=SOnJeels2bSuMuCJo2UZOcjws9Swp1uxf8tu/IZHLBk=;
+ b=S269t8tk/9rHpFgsx+KsIYc9DGAnYcaZz2nTVbfLGYXOj+xaB3IKarIwOhG+XXC18JansN
+ utE5kCxuvi5AZEVbDnu02Vd1a4HTGqaT1RII81BsqR+GyO9gySdP0L//BsmLlGKQIYnk5M
+ E4jHa1pnt6R8mfmZ6aXkNtzAsuons0Y=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790806297;
+ s=susede2_ed25519; t=1790806309;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0Cy48Kfw7fwHXfYachCNmRMbvI6mV12N5r8rM8zoIY=;
- b=j2jsZYSlZLVXQIIUKU+VW+gLV0fhg/Gd7y0Dr+4+f1UfbfBZ3BqWIRP6unuV793uA/s0tY
- BlWEz7We9vlflvAQ==
+ bh=SOnJeels2bSuMuCJo2UZOcjws9Swp1uxf8tu/IZHLBk=;
+ b=ECLvAHSTrR+w1oTnAokko5hQ3ddoAyvsWvWfZhams2+kZziIyLWLWhSv8bLXoZFiVv4ogy
+ SG0vdLioew5inBCQ==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="fC/bqyXS";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4hxLIlTp
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lxm3EXHc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=OrcW5oyK
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790806293; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1790806305; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0Cy48Kfw7fwHXfYachCNmRMbvI6mV12N5r8rM8zoIY=;
- b=fC/bqyXSzIm9+6eZYp1QYn5hBPoqHNHaPEIRfCBVWXjD3rzLGsLlXmXfyylROt8Y4q+U8Z
- hKaO2L8Pm+aaSPjeflqEKETW+ci1tk48x70C9Bye9syNl5koFymFOseRKyQ/HGPSkBBUvj
- +2g1NKDm1BUEzoEIAPTA/4YrEHC3iFE=
+ bh=SOnJeels2bSuMuCJo2UZOcjws9Swp1uxf8tu/IZHLBk=;
+ b=lxm3EXHcRhfRH4CNFEkjJhky0kTm7kDLBedm+nYgsuhvudNnk2T1il7dRt/VNySbNspTHD
+ 62NlDkIjGAgKpKCklGmM8yscUbWVTV4AoKVkIPTgk7qErC8qkjfK809HOghuozOLkJT9Uw
+ PK7h7yo/D4U50lA7drTNiv6VuWg9+xE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790806293;
+ s=susede2_ed25519; t=1790806305;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Y0Cy48Kfw7fwHXfYachCNmRMbvI6mV12N5r8rM8zoIY=;
- b=4hxLIlTp7BzL0x7sKk25MyWF3SSl9oJXT8EhFqohN2A19k2uDzrJC3oMYREMwRha8LT/K1
- S1Moyi6VC0NO3kBQ==
+ bh=SOnJeels2bSuMuCJo2UZOcjws9Swp1uxf8tu/IZHLBk=;
+ b=OrcW5oyKaJFZvvjyJDcMu3nyVbqqvz3jVBnt6GSUJ3yomhlwK0TArbRR/4LPBNYPBVH9fe
+ G4sRfV/UD7L0s6Ag==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9650613B25;
- Wed, 30 Sep 2026 22:11:30 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B514913B25;
+ Wed, 30 Sep 2026 22:11:42 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id befqOAqJvWpwXAAAD6G6ig:T6
- (envelope-from <farosas@suse.de>); Wed, 30 Sep 2026 22:11:30 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id befqOAqJvWpwXAAAD6G6ig:T12
+ (envelope-from <farosas@suse.de>); Wed, 30 Sep 2026 22:11:42 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 05/11] qemu-option: Add qemu_opts_parse_list
-Date: Wed, 30 Sep 2026 19:10:59 -0300
-Message-ID: <20260930221105.2262063-6-farosas@suse.de>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Jason Wang <jasowangio@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>
+Subject: [PATCH v2 11/11] qemu-option: Remove a few instances of noisily
+ parsing
+Date: Wed, 30 Sep 2026 19:11:05 -0300
+Message-ID: <20260930221105.2262063-12-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260930221105.2262063-1-farosas@suse.de>
 References: <20260930221105.2262063-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 03BE31FB9E
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+];
+ MX_GOOD(-0.01)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,linux.vnet.ibm.com,treblig.org,gmail.com,linaro.org,oss.qualcomm.com,crans.org,web.de];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de];
+ RCPT_COUNT_TWELVE(0.00)[13]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
  DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 9A8F41FB9A
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
  helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -127,521 +139,380 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the qemu_opts_parse and qemu_opts_parse_noisily functions
-are called in one two ways:
+With the removal of the support for short-form flags, the only other
+source of "noise" in the qemu_parse_*noisily() functions aside from
+errors is the printing of the help text.
 
-1) qemu_opts_parse|_noisily(&some_group_list, ...)
-2) qemu_opts_parse|_noisily(qemu_find_opts("some_opt"), ...)
+Therefore, the only difference from the _noisily versions to the
+normal ones is this block:
 
-The second form is problematic. Having the result of qemu_find_opts()
-going directly into the first argument makes it difficult to handle a
-possible NULL pointer retuned by it.
+    if (qemu_opt_has_help_opt(opts) && !opts_accepts_any(list)) {
+        qemu_opts_print_help(list, true);
+        return NULL;
+    }
 
-Next patches will change qemu_opts_parse() and
-qemu_opts_parse_noisily() to receive the option name and call
-qemu_find_opts() in their body so the return of the function can be
-handled properly.
+Stop calling qemu_parse_*noisily() in any case where it's certain that
+opts_accepts_any(list) returns true, i.e. when list->desc is empty.
 
-Add a new qemu_opts_parse_list() and change all callsites that pass
-the list directly to use it. In the next patches this new _list
-version will become the inner function, but at this point, simply make
-it defer to qemu_opts_parse() to make the refactoring easier.
+This creates some instances of the pattern: error_report ->
+exit(1). Use &error_fatal instead.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/qemu/option.h       |   2 +
- tests/unit/test-qemu-opts.c | 179 +++++++++++++++++++-----------------
- util/qemu-option.c          |  13 +++
- util/qemu-sockets.c         |   2 +-
- 4 files changed, 109 insertions(+), 87 deletions(-)
+ block/monitor/block-hmp-cmds.c |  4 ++--
+ include/system/tpm.h           |  3 ++-
+ monitor/hmp.c                  |  4 +++-
+ net/net.c                      |  4 +---
+ plugins/loader.c               |  5 +---
+ qemu-img.c                     |  5 +++-
+ qemu-io-cmds.c                 |  2 +-
+ qemu-io.c                      |  7 ++----
+ system/tpm.c                   |  8 +++----
+ system/vl.c                    | 42 +++++++++++++++-------------------
+ tests/unit/test-replication.c  | 17 +++++++++++---
+ util/qemu-option.c             |  3 +++
+ 12 files changed, 55 insertions(+), 49 deletions(-)
 
-diff --git a/include/qemu/option.h b/include/qemu/option.h
-index 9a00ac0a35..f96d9fae42 100644
---- a/include/qemu/option.h
-+++ b/include/qemu/option.h
-@@ -132,6 +132,8 @@ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
-                                   bool permit_abbrev);
- QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
-                           bool permit_abbrev, Error **errp);
-+QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
-+                               bool permit_abbrev, Error **errp);
- QemuOpts *qemu_opts_from_qdict(QemuOptsList *list, const QDict *qdict,
-                                Error **errp);
- QDict *qemu_opts_to_qdict_filtered(QemuOpts *opts, QDict *qdict,
-diff --git a/tests/unit/test-qemu-opts.c b/tests/unit/test-qemu-opts.c
-index 7cedfba332..c4b6be312e 100644
---- a/tests/unit/test-qemu-opts.c
-+++ b/tests/unit/test-qemu-opts.c
-@@ -349,7 +349,7 @@ static void test_qemu_opt_unset(void)
-     int ret;
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index d94a07314f..93b622227c 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -63,9 +63,9 @@ static void hmp_drive_add_node(MonitorHMP *hmp, const char *optstr)
+     QDict *qdict;
+     Error *err = NULL;
  
-     /* dynamically initialized (parsed) opts */
--    opts = qemu_opts_parse(&opts_list_03, "key=value", false, NULL);
-+    opts = qemu_opts_parse_list(&opts_list_03, "key=value", false, NULL);
-     g_assert(opts != NULL);
+-    opts = qemu_opts_parse_list_noisily(&qemu_drive_opts, optstr, false);
++    opts = qemu_opts_parse_list(&qemu_drive_opts, optstr, false, &err);
+     if (!opts) {
+-        return;
++        goto out;
+     }
  
-     /* check default/parsed value */
-@@ -431,117 +431,118 @@ static void test_opts_parse(void)
+     qdict = qemu_opts_to_qdict(opts, NULL);
+diff --git a/include/system/tpm.h b/include/system/tpm.h
+index 874068d19a..4132a3a641 100644
+--- a/include/system/tpm.h
++++ b/include/system/tpm.h
+@@ -17,7 +17,8 @@
+ 
+ #ifdef CONFIG_TPM
+ 
+-int tpm_config_parse(QemuOptsList *opts_list, const char *optstr);
++bool tpm_config_parse(QemuOptsList *opts_list, const char *optstr,
++                      Error **errp);
+ int tpm_init(void);
+ void tpm_cleanup(void);
+ 
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index fc32cfd1ff..6a6be8f12f 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -883,6 +883,7 @@ static QDict *monitor_parse_arguments(MonitorHMP *mon,
+             {
+                 QemuOptsList *opts_list;
+                 QemuOpts *opts;
++                Error *err = NULL;
+ 
+                 opts_list = qemu_find_opts(key);
+                 if (!opts_list || opts_list->desc->name) {
+@@ -897,8 +898,9 @@ static QDict *monitor_parse_arguments(MonitorHMP *mon,
+                 if (get_str(buf, sizeof(buf), &p) < 0) {
+                     goto fail;
+                 }
+-                opts = qemu_opts_parse_list_noisily(opts_list, buf, true);
++                opts = qemu_opts_parse_list(opts_list, buf, true, &err);
+                 if (!opts) {
++                    error_report_err(err);
+                     goto fail;
+                 }
+                 qemu_opts_to_qdict(opts, qdict);
+diff --git a/net/net.c b/net/net.c
+index 37401ab2b4..09ed34557d 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -2029,9 +2029,7 @@ void netdev_parse_modern(const char *optstr)
+ 
+ void net_client_parse(QemuOptsList *opts_list, const char *optstr)
+ {
+-    if (!qemu_opts_parse_list_noisily(opts_list, optstr, true)) {
+-        exit(1);
+-    }
++    qemu_opts_parse_list(opts_list, optstr, true, &error_fatal);
+ }
+ 
+ /* From FreeBSD */
+diff --git a/plugins/loader.c b/plugins/loader.c
+index 1808679c82..db6ae6d1f4 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -147,10 +147,7 @@ void qemu_plugin_opt_parse(const char *optstr, QemuPluginList *head)
+     struct qemu_plugin_parse_arg arg;
      QemuOpts *opts;
  
-     /* Nothing */
--    opts = qemu_opts_parse(&opts_list_03, "", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 0);
+-    opts = qemu_opts_parse_noisily("plugin", optstr, true);
+-    if (opts == NULL) {
+-        exit(1);
+-    }
++    opts = qemu_opts_parse("plugin", optstr, true, &error_fatal);
+     arg.head = head;
+     arg.curr = NULL;
+     qemu_opt_foreach(opts, plugin_add, &arg, &error_fatal);
+diff --git a/qemu-img.c b/qemu-img.c
+index 5e58ccc587..18501f7fb9 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -354,12 +354,15 @@ static BlockBackend *img_open(bool image_opts,
+     BlockBackend *blk;
+     if (image_opts) {
+         QemuOpts *opts;
++        Error *err = NULL;
++
+         if (fmt) {
+             error_report("--image-opts and --format are mutually exclusive");
+             return NULL;
+         }
+-        opts = qemu_opts_parse_noisily("source", filename, true);
++        opts = qemu_opts_parse("source", filename, true, &err);
+         if (!opts) {
++            error_report_err(err);
+             return NULL;
+         }
+         blk = img_open_opts(filename, opts, flags, writethrough, quiet,
+diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
+index 6c8c4c9540..fa52fbb900 100644
+--- a/qemu-io-cmds.c
++++ b/qemu-io-cmds.c
+@@ -2540,7 +2540,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+             has_cache_option = true;
+             break;
+         case 'o':
+-            if (!qemu_opts_parse_list_noisily(&reopen_opts, optarg, 0)) {
++            if (!qemu_opts_parse_list(&reopen_opts, optarg, 0, errp)) {
+                 qemu_opts_reset(&reopen_opts);
+                 return -EINVAL;
+             }
+diff --git a/qemu-io.c b/qemu-io.c
+index db0ee499e4..837e5048ba 100644
+--- a/qemu-io.c
++++ b/qemu-io.c
+@@ -659,11 +659,8 @@ int main(int argc, char **argv)
+     if ((argc - optind) == 1) {
+         if (imageOpts) {
+             QemuOpts *qopts = NULL;
+-            qopts = qemu_opts_parse_list_noisily(&file_opts, argv[optind],
+-                                                 false);
+-            if (!qopts) {
+-                exit(1);
+-            }
++            qopts = qemu_opts_parse_list(&file_opts, argv[optind], false,
++                                         &error_fatal);
+             opts = qemu_opts_to_qdict(qopts, NULL);
+             if (openfile(NULL, flags, writethrough, force_share, opts)) {
+                 exit(1);
+diff --git a/system/tpm.c b/system/tpm.c
+index f0f5a64d9a..31aeaa5cc6 100644
+--- a/system/tpm.c
++++ b/system/tpm.c
+@@ -176,7 +176,7 @@ int tpm_init(void)
+  * Parse the TPM configuration options.
+  * To display all available TPM backends the user may use '-tpmdev help'
+  */
+-int tpm_config_parse(QemuOptsList *opts_list, const char *optstr)
++bool tpm_config_parse(QemuOptsList *opts_list, const char *optstr, Error **errp)
+ {
+     QemuOpts *opts;
  
-     /* Empty key */
--    opts = qemu_opts_parse(&opts_list_03, "=val", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "=val", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, ""), ==, "val");
+@@ -184,11 +184,11 @@ int tpm_config_parse(QemuOptsList *opts_list, const char *optstr)
+         tpm_display_backend_drivers();
+         exit(EXIT_SUCCESS);
+     }
+-    opts = qemu_opts_parse_list_noisily(opts_list, optstr, true);
++    opts = qemu_opts_parse_list(opts_list, optstr, true, errp);
+     if (!opts) {
+-        return -1;
++        return false;
+     }
+-    return 0;
++    return true;
+ }
  
-     /* Multiple keys, last one wins */
--    opts = qemu_opts_parse(&opts_list_03, "a=1,b=2,,x,a=3",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "a=1,b=2,,x,a=3",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 3);
-     g_assert_cmpstr(qemu_opt_get(opts, "a"), ==, "3");
-     g_assert_cmpstr(qemu_opt_get(opts, "b"), ==, "2,x");
+ /*
+diff --git a/system/vl.c b/system/vl.c
+index 4a3fa80c5c..8382bb902b 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1871,11 +1871,7 @@ static void object_option_parse(const char *str)
+         v = qobject_input_visitor_new(obj);
+         qobject_unref(obj);
+     } else {
+-        opts = qemu_opts_parse_noisily("object", str, true);
+-        if (!opts) {
+-            exit(1);
+-        }
+-
++        opts = qemu_opts_parse("object", str, true, &error_fatal);
+         type = qemu_opt_get(opts, "qom-type");
+         if (!type) {
+             error_report(QERR_MISSING_PARAMETER, "qom-type");
+@@ -2483,12 +2479,15 @@ static void configure_accelerators(const char *progname)
+         accel_list = g_strsplit(accelerators, ":", 0);
  
-     /* Except when it doesn't */
--    opts = qemu_opts_parse(&opts_list_03, "id=foo,id=bar",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "id=foo,id=bar",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 0);
-     g_assert_cmpstr(qemu_opts_id(opts), ==, "foo");
+         for (tmp = accel_list; *tmp; tmp++) {
++            Error *err = NULL;
+             /*
+              * Filter invalid accelerators here, to prevent obscenities
+              * such as "-machine accel=tcg,,thread=single".
+              */
+             if (accel_find(*tmp)) {
+-                qemu_opts_parse_noisily("accel", *tmp, true);
++                if (!qemu_opts_parse("accel", *tmp, true, &err)) {
++                    error_report_err(err);
++                }
+             } else {
+                 init_failed = true;
+                 error_report("invalid accelerator %s", *tmp);
+@@ -3013,9 +3012,7 @@ void qemu_init(int argc, char **argv)
+                 replay_add_blocker("-snapshot");
+                 break;
+             case QEMU_OPTION_numa:
+-                if (!qemu_opts_parse_noisily("numa", optarg, true)) {
+-                    exit(1);
+-                }
++                qemu_opts_parse("numa", optarg, true, &error_fatal);
+                 break;
+             case QEMU_OPTION_display:
+                 parse_display(optarg);
+@@ -3131,9 +3128,7 @@ void qemu_init(int argc, char **argv)
+                 break;
+ #ifdef CONFIG_TPM
+             case QEMU_OPTION_tpmdev:
+-                if (tpm_config_parse(qemu_find_opts("tpmdev"), optarg) < 0) {
+-                    exit(1);
+-                }
++                tpm_config_parse(qemu_find_opts("tpmdev"), optarg, &error_fatal);
+                 break;
+ #endif
+             case QEMU_OPTION_mempath:
+@@ -3396,17 +3391,11 @@ void qemu_init(int argc, char **argv)
+                 object_register_sugar_prop("ide-device", "win2k-install-hack", "true", true);
+                 break;
+             case QEMU_OPTION_acpitable:
+-                opts = qemu_opts_parse_noisily("acpi", optarg, true);
+-                if (!opts) {
+-                    exit(1);
+-                }
++                opts = qemu_opts_parse("acpi", optarg, true, &error_fatal);
+                 acpi_table_add(opts, &error_fatal);
+                 break;
+             case QEMU_OPTION_smbios:
+-                opts = qemu_opts_parse_noisily("smbios", optarg, false);
+-                if (!opts) {
+-                    exit(1);
+-                }
++                opts = qemu_opts_parse("smbios", optarg, false, &error_fatal);
+                 smbios_entry_add(opts, &error_fatal);
+                 break;
+             case QEMU_OPTION_fwcfg:
+@@ -3433,7 +3422,13 @@ void qemu_init(int argc, char **argv)
+                     break;
+                 }
+             case QEMU_OPTION_accel:
+-                accel_opts = qemu_opts_parse_noisily("accel", optarg, true);
++            {
++                Error *err = NULL;
++
++                accel_opts = qemu_opts_parse("accel", optarg, true, &err);
++                if (!accel_opts) {
++                    error_report_err(err);
++                }
+                 optarg = qemu_opt_get(accel_opts, "accel");
+                 if (!optarg || is_help_option(optarg)) {
+                     printf("Accelerators supported in QEMU binary:\n");
+@@ -3459,6 +3454,7 @@ void qemu_init(int argc, char **argv)
+                     exit(0);
+                 }
+                 break;
++            }
+             case QEMU_OPTION_usb:
+                 qdict_put_str(machine_opts_dict, "usb", "on");
+                 break;
+@@ -3475,9 +3471,7 @@ void qemu_init(int argc, char **argv)
+                     assert(opt->opts != NULL);
+                     QTAILQ_INSERT_TAIL(&device_opts, opt, next);
+                 } else {
+-                    if (!qemu_opts_parse_noisily("device", optarg, true)) {
+-                        exit(1);
+-                    }
++                    qemu_opts_parse("device", optarg, true, &error_fatal);
+                 }
+                 break;
+             case QEMU_OPTION_smp:
+diff --git a/tests/unit/test-replication.c b/tests/unit/test-replication.c
+index 101f72acdc..dbed415f87 100644
+--- a/tests/unit/test-replication.c
++++ b/tests/unit/test-replication.c
+@@ -174,12 +174,16 @@ static BlockBackend *start_primary(void)
+     QemuOpts *opts;
+     QDict *qdict;
+     char *cmdline;
++    Error *err = NULL;
  
-     /* TODO Cover low-level access to repeated keys */
+     cmdline = g_strdup_printf("driver=replication,mode=primary,node-name=xxx,"
+                               "file.driver=qcow2,file.file.filename=%s,"
+                               "file.file.locking=off"
+                               , p_local_disk);
+-    opts = qemu_opts_parse_list_noisily(&qemu_drive_opts, cmdline, false);
++    opts = qemu_opts_parse_list(&qemu_drive_opts, cmdline, false, &err);
++    if (!opts) {
++        error_report_err(err);
++    }
+     g_free(cmdline);
  
-     /* Trailing comma is ignored */
--    opts = qemu_opts_parse(&opts_list_03, "x=y,", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "x=y,", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, "x"), ==, "y");
+     qdict = qemu_opts_to_qdict(opts, NULL);
+@@ -290,12 +294,16 @@ static BlockBackend *start_secondary(void)
+     QDict *qdict;
+     BlockBackend *blk;
+     char *cmdline;
++    Error *err = NULL;
  
-     /* Except when it isn't */
--    opts = qemu_opts_parse(&opts_list_03, ",", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, ",", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, ""), ==, "on");
+     /* add s_local_disk and forge S_LOCAL_DISK_ID */
+     cmdline = g_strdup_printf("file.filename=%s,driver=qcow2,"
+                               "file.locking=off",
+                               s_local_disk);
+-    opts = qemu_opts_parse_list_noisily(&qemu_drive_opts, cmdline, false);
++    opts = qemu_opts_parse_list(&qemu_drive_opts, cmdline, false, &err);
++    if (!opts) {
++        error_report_err(err);
++    }
+     g_free(cmdline);
  
-     /* Duplicate ID */
--    opts = qemu_opts_parse(&opts_list_03, "x=y,id=foo", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_03, "x=y,id=foo", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
-     /* TODO Cover .merge_lists = true */
+     qdict = qemu_opts_to_qdict(opts, NULL);
+@@ -321,7 +329,10 @@ static BlockBackend *start_secondary(void)
+                               "file.backing.backing=%s"
+                               , S_ID, s_active_disk, s_hidden_disk
+                               , S_LOCAL_DISK_ID);
+-    opts = qemu_opts_parse_list_noisily(&qemu_drive_opts, cmdline, false);
++    opts = qemu_opts_parse_list(&qemu_drive_opts, cmdline, false, &err);
++    if (!opts) {
++        error_report_err(err);
++    }
+     g_free(cmdline);
  
-     /* Buggy ID recognition (fixed) */
--    opts = qemu_opts_parse(&opts_list_03, "x=,,id=bar", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "x=,,id=bar", false,
-+                                &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert(!qemu_opts_id(opts));
-     g_assert_cmpstr(qemu_opt_get(opts, "x"), ==, ",id=bar");
- 
-     /* Anti-social ID */
--    opts = qemu_opts_parse(&opts_list_01, "id=666", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "id=666", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied key */
--    opts = qemu_opts_parse(&opts_list_03, "an", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "an", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, "implied"), ==, "an");
- 
-     /* Implied key with empty value */
--    opts = qemu_opts_parse(&opts_list_03, ",", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, ",", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, "implied"), ==, "");
- 
-     /* Implied key with comma value */
--    opts = qemu_opts_parse(&opts_list_03, ",,,a=1", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, ",,,a=1", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmpstr(qemu_opt_get(opts, "implied"), ==, ",");
-     g_assert_cmpstr(qemu_opt_get(opts, "a"), ==, "1");
- 
-     /* Empty key is not an implied key */
--    opts = qemu_opts_parse(&opts_list_03, "=val", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "=val", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpstr(qemu_opt_get(opts, ""), ==, "val");
- 
-     /* Unknown key */
--    opts = qemu_opts_parse(&opts_list_01, "nonexistent=", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "nonexistent=", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied value */
--    opts = qemu_opts_parse(&opts_list_03, "an", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_03, "an", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied value, unknown key */
--    opts = qemu_opts_parse(&opts_list_01, "nonexistent", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "nonexistent", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied value, negated key */
--    opts = qemu_opts_parse(&opts_list_03, "noaus", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_03, "noaus", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied value, negated empty key */
--    opts = qemu_opts_parse(&opts_list_03, "no", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_03, "no", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Empty value */
--    opts = qemu_opts_parse(&opts_list_03, "aus=", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "aus=", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
- 
-     /* Implied key */
--    opts = qemu_opts_parse(&opts_list_03, "an", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "an", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
- 
-     /* Implied key, implied value */
--    opts = qemu_opts_parse(&opts_list_03, "an,noaus,noaus=", true, &err);
-+    opts = qemu_opts_parse_list(&opts_list_03, "an,noaus,noaus=", true, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Implied key, empty value */
--    opts = qemu_opts_parse(&opts_list_03, "an,noaus=", true, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "an,noaus=", true, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmpstr(qemu_opt_get(opts, "implied"), ==, "an");
-     g_assert_cmpstr(qemu_opt_get(opts, "noaus"), ==, "");
-@@ -555,13 +556,13 @@ static void test_opts_parse_bool(void)
+     qdict = qemu_opts_to_qdict(opts, NULL);
+diff --git a/util/qemu-option.c b/util/qemu-option.c
+index 83fa2399d3..833c69f6a5 100644
+--- a/util/qemu-option.c
++++ b/util/qemu-option.c
+@@ -995,6 +995,9 @@ QemuOpts *qemu_opts_parse_list_noisily(QemuOptsList *list, const char *params,
      Error *err = NULL;
      QemuOpts *opts;
  
--    opts = qemu_opts_parse(&opts_list_02, "bool1=on,bool2=off",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_02, "bool1=on,bool2=off",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert(qemu_opt_get_bool(opts, "bool1", false));
-     g_assert(!qemu_opt_get_bool(opts, "bool2", true));
- 
--    opts = qemu_opts_parse(&opts_list_02, "bool1=offer", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02, "bool1=offer", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-@@ -574,59 +575,60 @@ static void test_opts_parse_number(void)
-     QemuOpts *opts;
- 
-     /* Lower limit zero */
--    opts = qemu_opts_parse(&opts_list_01, "number1=0", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=0", false,
-+                                &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpuint(qemu_opt_get_number(opts, "number1", 1), ==, 0);
- 
-     /* Upper limit 2^64-1 */
--    opts = qemu_opts_parse(&opts_list_01,
--                           "number1=18446744073709551615,number2=-1",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_01,
-+                                "number1=18446744073709551615,number2=-1",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmphex(qemu_opt_get_number(opts, "number1", 1), ==, UINT64_MAX);
-     g_assert_cmphex(qemu_opt_get_number(opts, "number2", 0), ==, UINT64_MAX);
- 
-     /* Above upper limit */
--    opts = qemu_opts_parse(&opts_list_01, "number1=18446744073709551616",
--                           false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=18446744073709551616",
-+                                false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Below lower limit */
--    opts = qemu_opts_parse(&opts_list_01, "number1=-18446744073709551616",
--                           false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=-18446744073709551616",
-+                                false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Hex and octal */
--    opts = qemu_opts_parse(&opts_list_01, "number1=0x2a,number2=052",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=0x2a,number2=052",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmpuint(qemu_opt_get_number(opts, "number1", 1), ==, 42);
-     g_assert_cmpuint(qemu_opt_get_number(opts, "number2", 0), ==, 42);
- 
-     /* Invalid */
--    opts = qemu_opts_parse(&opts_list_01, "number1=", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
--    opts = qemu_opts_parse(&opts_list_01, "number1=eins", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=eins", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Leading whitespace */
--    opts = qemu_opts_parse(&opts_list_01, "number1= \t42",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1= \t42",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpuint(qemu_opt_get_number(opts, "number1", 1), ==, 42);
- 
-     /* Trailing crap */
--    opts = qemu_opts_parse(&opts_list_01, "number1=3.14", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=3.14", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
--    opts = qemu_opts_parse(&opts_list_01, "number1=08", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=08", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
--    opts = qemu_opts_parse(&opts_list_01, "number1=0 ", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_01, "number1=0 ", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-@@ -639,18 +641,18 @@ static void test_opts_parse_size(void)
-     QemuOpts *opts;
- 
-     /* Lower limit zero */
--    opts = qemu_opts_parse(&opts_list_02, "size1=0", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=0", false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmpuint(qemu_opt_get_size(opts, "size1", 1), ==, 0);
- 
-     /* Note: full 64 bits of precision */
- 
-     /* Around double limit of precision: 2^53-1, 2^53, 2^53+1 */
--    opts = qemu_opts_parse(&opts_list_02,
--                           "size1=9007199254740991,"
--                           "size2=9007199254740992,"
--                           "size3=9007199254740993",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_02,
-+                                "size1=9007199254740991,"
-+                                "size2=9007199254740992,"
-+                                "size3=9007199254740993",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 3);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 1),
-                      ==, 0x1fffffffffffff);
-@@ -660,11 +662,12 @@ static void test_opts_parse_size(void)
-                      ==, 0x20000000000001);
- 
-     /* Close to signed int limit: 2^63-1, 2^63, 2^63+1 */
--    opts = qemu_opts_parse(&opts_list_02,
--                           "size1=9223372036854775807," /* 7fffffffffffffff */
--                           "size2=9223372036854775808," /* 8000000000000000 */
--                           "size3=9223372036854775809", /* 8000000000000001 */
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(
-+        &opts_list_02,
-+        "size1=9223372036854775807," /* 7fffffffffffffff */
-+        "size2=9223372036854775808," /* 8000000000000000 */
-+        "size3=9223372036854775809", /* 8000000000000001 */
-+        false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 3);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 1),
-                      ==, 0x7fffffffffffffff);
-@@ -674,10 +677,11 @@ static void test_opts_parse_size(void)
-                      ==, 0x8000000000000001);
- 
-     /* Close to actual upper limit 0xfffffffffffff800 (53 msbs set) */
--    opts = qemu_opts_parse(&opts_list_02,
--                           "size1=18446744073709549568," /* fffffffffffff800 */
--                           "size2=18446744073709550591", /* fffffffffffffbff */
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(
-+        &opts_list_02,
-+        "size1=18446744073709549568," /* fffffffffffff800 */
-+        "size2=18446744073709550591", /* fffffffffffffbff */
-+        false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 1),
-                      ==, 0xfffffffffffff800);
-@@ -685,47 +689,48 @@ static void test_opts_parse_size(void)
-                      ==, 0xfffffffffffffbff);
- 
-     /* Actual limit, 2^64-1 */
--    opts = qemu_opts_parse(&opts_list_02,
--                           "size1=18446744073709551615", /* ffffffffffffffff */
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(
-+        &opts_list_02,
-+        "size1=18446744073709551615", /* ffffffffffffffff */
-+        false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 1);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 1),
-                      ==, 0xffffffffffffffff);
- 
-     /* Beyond limits */
--    opts = qemu_opts_parse(&opts_list_02, "size1=-1", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=-1", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
--    opts = qemu_opts_parse(&opts_list_02,
--                           "size1=18446744073709551616", /* 2^64 */
--                           false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02,
-+                                "size1=18446744073709551616", /* 2^64 */
-+                                false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Suffixes */
--    opts = qemu_opts_parse(&opts_list_02, "size1=8b,size2=1.5k,size3=2M",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=8b,size2=1.5k,size3=2M",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 3);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 0), ==, 8);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size2", 0), ==, 1536);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size3", 0), ==, 2 * MiB);
--    opts = qemu_opts_parse(&opts_list_02, "size1=0.1G,size2=16777215T",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=0.1G,size2=16777215T",
-+                                false, &error_abort);
-     g_assert_cmpuint(opts_count(opts), ==, 2);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size1", 0), ==, GiB / 10);
-     g_assert_cmphex(qemu_opt_get_size(opts, "size2", 0), ==, 16777215ULL * TiB);
- 
-     /* Beyond limit with suffix */
--    opts = qemu_opts_parse(&opts_list_02, "size1=16777216T",
--                           false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=16777216T",
-+                                false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-     /* Trailing crap */
--    opts = qemu_opts_parse(&opts_list_02, "size1=16E", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=16E", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
--    opts = qemu_opts_parse(&opts_list_02, "size1=16Gi", false, &err);
-+    opts = qemu_opts_parse_list(&opts_list_02, "size1=16Gi", false, &err);
-     error_free_or_abort(&err);
-     g_assert(!opts);
- 
-@@ -752,13 +757,13 @@ static void test_has_help_option(void)
-     for (i = 0; i < ARRAY_SIZE(test); i++) {
-         g_assert_cmpint(has_help_option(test[i].params),
-                         ==, test[i].expect);
--        opts = qemu_opts_parse(&opts_list_03, test[i].params, false,
--                               &error_abort);
-+        opts = qemu_opts_parse_list(&opts_list_03, test[i].params, false,
-+                                    &error_abort);
-         g_assert_cmpint(qemu_opt_has_help_opt(opts),
-                         ==, test[i].expect);
-         qemu_opts_del(opts);
--        opts = qemu_opts_parse(&opts_list_03, test[i].params, true,
--                               &error_abort);
-+        opts = qemu_opts_parse_list(&opts_list_03, test[i].params, true,
-+                                    &error_abort);
-         g_assert_cmpint(qemu_opt_has_help_opt(opts),
-                         ==, test[i].expect_implied);
-         qemu_opts_del(opts);
-@@ -783,7 +788,7 @@ static void test_has_help_option_with_value(void)
-         /* reject all */
-         g_assert_cmpint(has_help_option(test[i].params), ==, false);
- 
--        opts = qemu_opts_parse(&opts_list_03, test[i].params, false, &err);
-+        opts = qemu_opts_parse_list(&opts_list_03, test[i].params, false, &err);
-         error_free_or_abort(&err);
-         g_assert(!opts);
-     }
-@@ -916,8 +921,9 @@ static void test_opts_to_qdict_basic(void)
-     QemuOpts *opts;
-     QDict *dict;
- 
--    opts = qemu_opts_parse(&opts_list_01, "str1=foo,str2=,str3=bar,number1=42",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_01,
-+                                "str1=foo,str2=,str3=bar,number1=42",
-+                                false, &error_abort);
-     g_assert(opts != NULL);
- 
-     dict = qemu_opts_to_qdict(opts, NULL);
-@@ -942,9 +948,9 @@ static void test_opts_to_qdict_filtered(void)
-     first = qemu_opts_append(NULL, &opts_list_02);
-     merged = qemu_opts_append(first, &opts_list_01);
- 
--    opts = qemu_opts_parse(merged,
--                           "str1=foo,str2=,str3=bar,bool1=off,number1=42",
--                           false, &error_abort);
-+    opts = qemu_opts_parse_list(
-+        merged, "str1=foo,str2=,str3=bar,bool1=off,number1=42",
-+        false, &error_abort);
-     g_assert(opts != NULL);
- 
-     /* Convert to QDict without deleting from opts */
-@@ -1001,7 +1007,8 @@ static void test_opts_to_qdict_duplicates(void)
-     QemuOpt *opt;
-     QDict *dict;
- 
--    opts = qemu_opts_parse(&opts_list_03, "foo=a,foo=b", false, &error_abort);
-+    opts = qemu_opts_parse_list(&opts_list_03, "foo=a,foo=b", false,
-+                                &error_abort);
-     g_assert(opts != NULL);
- 
-     /* Verify that opts has two options with the same name */
-diff --git a/util/qemu-option.c b/util/qemu-option.c
-index 483e6cbf70..218bb8ae58 100644
---- a/util/qemu-option.c
-+++ b/util/qemu-option.c
-@@ -939,6 +939,19 @@ QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
-     return opts_parse(list, params, permit_abbrev, errp);
- }
- 
-+/**
-+ * Create a QemuOpts from @list with options parsed from @params.  If
-+ * @permit_abbrev, the first key=value in @params may omit key= and is
-+ * treated as if key was @list->implied_opt_name.  On error, store an
-+ * error object through @errp if non-null.  Return the new QemuOpts on
-+ * success, null pointer on error.
-+ */
-+QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
-+                               bool permit_abbrev, Error **errp)
-+{
-+    return qemu_opts_parse(list, params, permit_abbrev, errp);
-+}
++    assert(g_str_equal("drive", list->name) ||
++           !opts_accepts_any(list));
 +
- /**
-  * Create a QemuOpts in @list and with options parsed from @params.
-  * If @permit_abbrev, the first key=value in @params may omit key=,
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index 4773755fd5..30226671a9 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -704,7 +704,7 @@ static QemuOptsList inet_opts = {
- 
- int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
- {
--    QemuOpts *opts = qemu_opts_parse(&inet_opts, str, true, errp);
-+    QemuOpts *opts = qemu_opts_parse_list(&inet_opts, str, true, errp);
+     opts = opts_parse(list, params, permit_abbrev, &err);
      if (!opts) {
-         return -1;
-     }
+         error_report_err(err);
 -- 
 2.53.0
 
