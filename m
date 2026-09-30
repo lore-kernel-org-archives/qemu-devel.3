@@ -4,106 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F710CA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D9BCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxSe-0001L2-60; Wed, 30 Sep 2026 12:47:16 -0400
+	id 1xBxTN-0002pN-9m; Wed, 30 Sep 2026 12:48:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSV-0001Co-NN
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:10 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSU-00034G-0K
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:07 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3920so42019805e9.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:47:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBxTI-0002mn-5d
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xBxTG-0003Bd-O8
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:55 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UGjO4s4035473
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:47:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=; b=ESg9DmuP6luiYj4J
+ tVtuJZZFQ3ZRf4FvV0li7e+Mzb4NyXi90Fo9Bw+z6NduA+3DrGIbRBMJn13cY/kG
+ JUn8g2XFKsFZM3TFQgEA+wh3HL4FTydzipbCRuD3MdQo0uglbmn8tHmVxztMhjMI
+ AOnbr8xVAUF92NxX8TWDTAsw31Pr3u0D55GU79C7FRQWCnPUaM6yzaHp2925u2W4
+ bh2Bj/gBbsB+5nsl5X3U1g0iPCCc8/7jpjOIILAbmRAMCFhyUJ1WIMfi8wQwwr1M
+ mlW9B5e3Qet2+5+2Ud/OVVxsRZyQJY0Es9ydd4S6fircmB9s6EKoLCzlbd4HV5zw
+ OAIFkw==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pg0r6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:47:53 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7bf67e46ae0so49473137.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790786824; x=1791391624; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ua5U/mVS7GualGNLbAl+n/5rm6lr0GLfnfB1P74/KSM=;
- b=pnw0ZErqIvhlqX9uUSzeVFvKkzn9WdabMp9roTiWHGcdmKrBef8wsZf8m6jfYBCM/J
- RzDflE5aWpWuQOopIeng5NveE40uH5AicXXG6MpzKDOqOMKl/Wi0ng509bejF2IT/b+1
- Fqo1H0ycw4UwiC66tQReIxZ+qjqambVDqK550PwvSDH6tz26bGNmfRumOWJvibceLNMa
- xwSCTbtSqYI8NQmj/G7jVUga6eFrx0GzR1F8cDqeJBzxo/X6Mz7y4xOSNm1Qz3vXl+/1
- QaFxCUK0R08/6WI5y8a/bswxVyZGlD2YLsO5Yca8WsYwrT/wnWWXh8Q/mbQPSXcjstlh
- Hsew==
+ d=oss.qualcomm.com; s=google; t=1790786873; x=1791391673; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=;
+ b=V5JXEm4JKGRVYyNbwv6ifOyj4CZCfsUCyPogdlVLkzEtqOiiqYcRmvz9cbyQkwEMWG
+ +0r0RbAWoPXKzJG/lmvrYkpT8ce7nGqaD6Dl/2zN6I3W1kL3/ZA7iGVbHdFfYwdEf8+q
+ uKjo56jzsBW3zCK5n3qQn9+TOYRocJRs9tQvXF+jCD3hqb0wucXFTymZZpBMStEthOYi
+ yUV/v9xTXmi+SgoPUHyFlBdYEDMs1pRZhkVMdsSv7sGcdCxSiTQeB86Bx2JVO1+8RDRJ
+ QIFINa5s4GeHln5To+p37pc/n/sU+z+vzr/WJScBb/ip7wuHQxXU32PlYy+RtAxKeRlL
+ fyXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790786824; x=1791391624;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ua5U/mVS7GualGNLbAl+n/5rm6lr0GLfnfB1P74/KSM=;
- b=EPeGVm2AmlAuqUgkzStkWVlmbkjTHiatUwB/jSLrVynaMGGbjNZI9pUiSoI41hd1E+
- TI4t1+QAGzWowUhEYU5sXQ5nvBHnPKkzM9d4qTyWrNMn77SfBhxp32GvMiSoLJUE/zAp
- PlLFjkRWrBHYPSSfuYPGOkqj6a2uCUu4a4xfNKDQuZ+s2UT8WoIy/Ecxli3OnVDVw1dj
- H6T/DSgfiAaN4Pluwi6mpOgtqeoNL2oow99mycNRcv5CqQAzWtQnvUbJjYxcmPddPssl
- gJXRv45HJrzR6QxdF61keU7D5JBZrD0BAJd6GDkEGMQnYoJ68bPc/my/rGz9xuYXB5KZ
- iyrA==
-X-Gm-Message-State: AFuF++ne5+krNB2MI2oikiDXifeE6N8NqETSBeqoSzdV4UfWtTSL06//
- CABY1d2nNK2S19I3cHu/VNMcKLQwogkrgwPByxlJ4kv4sFYYsClqAMKY4hpOZZlE1wM=
-X-Gm-Gg: AYBFou0DTD3QwCHK53Ms11woV6mraT2XPOcpMMwL8VVRR8F+46yfaw1QEeQCoWDqSRn
- zEr8q7iHJIAXUb4cQT7anDuZp0TOKd8O8pRkP4TyGhh6w0AzLbPFJKg5aIra1TvsKhS1WXPnup4
- AqIZvpPQYYeZ0hnGOCmoi9U469ddQC0xiBE9tDaWY6NPqNGKojsSWR9sDGjtIy3y6d22HmTIV5f
- 3PnkStR/fSsVNUXAxJCxXW6rqW9+1640Dnb1AX5F5uSLSPOzpLAlPQCJnXiVrE3A0euzZT1y1+9
- KBn0su2EgOz0vKv5ll3yZ9Ijze/k0lXhKzNDsSJiH+LU/6fDwBxeUXuO4W4Lg+wly4gabA1RE0p
- 6vuY45DPoQepqEgwLU+AuQywBnyyMJbl/tzszhToh8B9lUkLF8fq50BLD27NWlrjtkEeS94IZUc
- p+ZgLCTpnH0YmB2S6Q4jOb2r6Zrt/exZOgsFgnK/bd3DjPCDgJtm8+LVh1qNxGx7P4uITBPw==
-X-Received: by 2002:a05:600c:4e8f:b0:4a0:1eb0:1ab9 with SMTP id
- 5b1f17b1804b1-4a01eb01b1bmr4235515e9.16.1790786824083; 
- Wed, 30 Sep 2026 09:47:04 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b068bc9b1sm332261f8f.4.2026.09.30.09.46.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 09:46:58 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D024A616E3;
- Wed, 30 Sep 2026 17:46:50 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
- Ani Sinha <anisinha@redhat.com>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Anders Roxell <anders.roxell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>
-Subject: [PATCH 11/13] tests/guest-debug: add --symbols option to run-test
-Date: Wed, 30 Sep 2026 17:46:47 +0100
-Message-ID: <20260930164649.433573-12-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260930164649.433573-1-alex.bennee@linaro.org>
-References: <20260930164649.433573-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20260707; t=1790786873; x=1791391673;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=;
+ b=bjxe2M9oYRFI8ZHee1qM/WZ2psho4x9difntabBjqi0BmG7VinwI0i9v23hMx0Da64
+ k4SDhUv+NDgKVHjyCvDPala8u0DeOBXQ/4/Q4NcatZ9KF1Ahcq6jArR2oXlJD9oZgQYu
+ roKo5y6181ULOtFGuBDv5z+iMau0jkdjIqnYBuZ4g38Uzwebvl0jtOJAhQo1FIQB7k/Q
+ 5yt+i4lb1emGCxF9qGsQpKnDtDnv1AxpnhJgsGytnFHFFnI0rZDLjrgTde7/sV8rLKbk
+ FPTYoABXoaORpO3OLCqR28+rBcW3AnBXiCVKxkBT6WJavRqO0B4Dq7gM3if9911IqkbW
+ jqUQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzjFFDV4Bkj/OO66KhYED3xfSYNL1zkbAlBZDD6T84NNSpUoTHUemKPe89o+AKm1at5MfKNrFcD980z@nongnu.org
+X-Gm-Message-State: AFq9FYKjSJCpwR6S3PqoETvOpHSmL06wemzNCfYCYZKVfHWPK8NIUde5
+ ZrU3ATcatXU3P+ePi7KwCapbFfSGkgYUr1l7Lxya9p7Rf+uvkmQvZhDZblbGnPeY/jn33//L/hj
+ cOyViqWFuMc5QQKLc1vkg4jmuoewiop7wjB6TydmsDP5mI2CY/+163bdME2DuPmlAUw==
+X-Gm-Gg: AYBFou1SSMy30RSXjYWNsmW5pCNf0Q4ptHxdohF9EObHE3mxY5y5eENbuWqFJWAws6h
+ Nf95gaRi+aWLLpa+ejtw9rCt3orl+KXBE4sHggNKlFPAo3Xt9TQ4TYYDmYS8sQrgfYhes+VsaGu
+ R06CbRSUmMZRiFmvMfsf6qxeLgD3airgExiex5YVN2nz0s/E7+ZK/NL3BhMCGYe3z8Ui5QLrxyf
+ oHGov1BLSgjDA3MgadlqYHxe7vQS4wjxn0cQZcJyS51ZysnS593sq376vk4H24NzIFi8+xq+EDj
+ ChPW4gZhcu5v04eGm2nzVHEzncoXFzGE6QUtG1Swhq8BJwbfDyIWMPfbsXqly5fhUphjyLMuAtH
+ J/F3Y9qpA09Lzu4lWT3E=
+X-Received: by 2002:a05:6102:3ec1:b0:7a7:5355:7fb6 with SMTP id
+ ada2fe7eead31-7be73a8e63cmr363151137.24.1790786872823; 
+ Wed, 30 Sep 2026 09:47:52 -0700 (PDT)
+X-Received: by 2002:a05:6102:3ec1:b0:7a7:5355:7fb6 with SMTP id
+ ada2fe7eead31-7be73a8e63cmr363142137.24.1790786872334; 
+ Wed, 30 Sep 2026 09:47:52 -0700 (PDT)
+Received: from [192.168.0.4] ([79.127.134.49])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a01cd002bcsm24562525e9.4.2026.09.30.09.47.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Sep 2026 09:47:51 -0700 (PDT)
+Message-ID: <a5a9a630-c9cd-4520-a49b-0412a5c6e5af@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 18:47:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 26/27] hw/usb/dev-smartcard-reader: correct
+ CCID_IccPowerOff
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
+ <20260805-smartcard-fixes-v1-26-187ee9122441@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260805-smartcard-fixes-v1-26-187ee9122441@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: AFQCtTupKEfXhH2Dd6cWzszNYRCX1fFw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX+ilyE2lCEolN
+ lubjdEYvIMzAlEnE/TcyBacoCuFCV/xVYF4XMEDG9B2iipYHNXag0PPkjVIU9Ne6gpCqRVxEKjz
+ pM0z3duRp5JUhHFlZza5DMPSmQ7tqYg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX/7tEGetHMhVr
+ Z8glYfzX2KppqSteVOC9oNFHVPBDIGT9+EwfTn7CcxLQ/o6RrIMZr2uF28WkxyeNtqUF8ybT8c+
+ cNnJ9el5YvzEtvYZ4piCWKZj3UaZVX+/1gUI1h3MUVXjrAJtlmM0dZFx8zc2NnL6QfZoB2odC2W
+ cM0jLSKM844bjWcaEu9FQMvk3hbH9R1EccJ0JTc0sIbVWU+IJAh8qqE38C1B7VTW+TIZiKzynor
+ pA1soAMOQTIeOiwQ3zZd/o4hvI4kdBZc/UFfCUcBa6YidTmrN9RyRwyD/NNIFnyxgQDbvYokC5G
+ 2hPaxR4rjQpzIee1fgx2k9oQ+eGqd8bUptUiwJyrn1JfHEFE7g86pGmwiH0LRt7lV0RGe+duW3P
+ BAc4uwFi8wVmRZqHPhnf7mOUim21/ugMTwnCV6yksG4O44+EvckZ+Y4KA+Ix78NN08E13MUsVoF
+ HtS4CxAjmozwlGoVFwg==
+X-Proofpoint-GUID: AFQCtTupKEfXhH2Dd6cWzszNYRCX1fFw
+X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abd3d39 cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300066
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,38 +155,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sometimes the debug symbols are not in the kernel binary image but in
-a separate elf blob. Provide --symbols to facilitate using them.
+On 2026-08-05 13:51, Marc-AndrÃ© Lureau wrote:
+> The struct has 3 bytes reserved according to spec. Fortunately, it's not
+> used yet.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/usb/dev-smartcard-reader.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+> index 99086befe0b8..752571043ee6 100644
+> --- a/hw/usb/dev-smartcard-reader.c
+> +++ b/hw/usb/dev-smartcard-reader.c
+> @@ -264,7 +264,7 @@ typedef struct QEMU_PACKED CCID_IccPowerOn {
+>   
+>   typedef struct QEMU_PACKED CCID_IccPowerOff {
+>       CCID_Header hdr;
+> -    uint16_t    abRFU;
+> +    uint8_t     abRFU[3];
+>   } CCID_IccPowerOff;
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/guest-debug/run-test.py | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index 4aa24939b7d..0c7cbd137ef 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -28,6 +28,7 @@ def get_args():
-     parser.add_argument("--kargs", help="Kernel args to --append")
-     parser.add_argument("--binary", help="Binary to debug",
-                         required=True)
-+    parser.add_argument("--symbols", help="Symbol file for binary to debug")
-     parser.add_argument("--test", help="GDB test script")
-     parser.add_argument('test_args', nargs='*',
-                         help="Additional args for GDB test script. "
-@@ -114,6 +115,10 @@ def log(output, msg):
-     gdb_cmd += " -ex 'set confirm off'"
-     # connect to remote
-     gdb_cmd += " -ex 'target remote %s'" % (socket_name)
-+
-+    if args.symbols:
-+        gdb_cmd += " -ex 'symbol-file %s'" % args.symbols
-+
-     # finally the test script itself
-     if args.test:
-         if args.test_args:
--- 
-2.47.3
+Nice finding...
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
