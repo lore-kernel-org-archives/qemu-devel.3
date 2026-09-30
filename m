@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402C3CA5FAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43763CA5FB1
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 11:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBsrT-0003ji-GX; Wed, 30 Sep 2026 07:52:35 -0400
+	id 1xBssU-0004Vf-4y; Wed, 30 Sep 2026 07:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBsqz-0003Xy-4M
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:52:08 -0400
-Received: from smtpout4.mo539.mail-out.ovh.net ([51.210.91.43])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBsro-00048p-6w
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:52:57 -0400
+Received: from smtpout3.mo540.mail-out.ovh.net ([51.210.91.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBsqx-0006dx-0r
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:52:04 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [79.137.60.221])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hvtgj0hT8z4Dx0;
- Wed, 30 Sep 2026 11:52:01 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 30 Sep 2026 11:52:01 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.245])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hvtgh6ts2z6GrX; Wed, 30 Sep 2026 11:52:00 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBsrk-0006h1-UM
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:52:54 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [79.137.60.226])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4hvthd5qm6z41tq;
+ Wed, 30 Sep 2026 11:52:49 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 30 Sep 2026 11:52:49 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.159])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hvthd10Vrz46XQ; Wed, 30 Sep 2026 11:52:49 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
  (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id C5CD8941393; 
- Wed, 30 Sep 2026 11:51:58 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 1C333202C0C; 
+ Wed, 30 Sep 2026 11:52:47 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002fcf6cd83-5a3d-4a1d-b9b3-5721c1db629c,
+ (GARM-102R004828929d8-f1a6-4c56-9460-b5c9f813f6e0,
  845F429D393748294ED5D50D12AC6EB9B2213B76) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <df47b686-e670-4f2e-b0f7-66619c5cf5dc@kaod.org>
-Date: Wed, 30 Sep 2026 13:51:58 +0200
+Message-ID: <8f869f80-0fc4-4956-819d-a84642f6abdb@kaod.org>
+Date: Wed, 30 Sep 2026 13:52:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/50] docs/system/arm/aspeed: add the sanmiguel-bmc
- machine
+Subject: Re: [PATCH 03/50] hw/arm: sanmiguel: remove the second SPI flash
+ controller
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -54,7 +54,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 References: <20260907-bmc-minerva-v1-0-0d83ad610c3b@free.fr>
- <20260907-bmc-minerva-v1-2-0d83ad610c3b@free.fr>
+ <20260907-bmc-minerva-v1-3-0d83ad610c3b@free.fr>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,23 +99,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260907-bmc-minerva-v1-2-0d83ad610c3b@free.fr>
+In-Reply-To: <20260907-bmc-minerva-v1-3-0d83ad610c3b@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 17861557597507071021
+x-ovh-tracer-id: 17875068397565815853
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTG21huTHvdKVm6Ce0rjttfMRnq7VMlQ2Bi6wFcGsgggCaHDUw823faT2ECnIW5ZE/S4eHVQ7oEkoJmMreHOBDsoLE5+nqSZERSb1QknRw33225k9fJhJeV9g8Kcg7pupnaQOFI7eUUNG2kZrekxPmm1VQkR1UMCVnN7e1hgwBx6Hw9QiXeghDWjR3RLYIiWIVJNwqc9XE67JtNt1MB4dWOG38ZGG1ZBI9PHgNABVv+3kBN+tUxy9ohYxLsbmr0RzLyzToGRdBrU4djvVJfgprHwSKXF7RrdAH5miGTs+oucq452Y5yDr7TyE2Oo907XQv15Y+7jG+mmTWGkNPcga99vbou/ivbFo+WWb0OE4WiosoXq8BwfvP1Tn+rzAWBst2hpY5k6IutRJvbPekXesIduSW1aT6wvCp2kThCs1lRqeWpoW4kOToKckgl1XqwRVghXfyMIokt/qlzoxduE7kQkZRDl8o6rCLALcxzuG0FuuKmGdp/bs5b9ctdH5Yt/UNuD61m1yGHt38DGRaZ2TcGO9VWwwCiAaHkGFzTyTUBmU1O9CIL0riruSEcJgkyZjqXowHTsEOyUyw3Y5UIb3rehFaqXoDOQWbuAD+aN71TZtTqI/lq6kXS36G4bLMURXyzxazwuo7f77mCKYoyAFDnG+VSQTS9s2JGuJnrZ4+K/ug
-DKIM-Signature: a=rsa-sha256; bh=q2+xLKhnfir1POiJ2okQiDfjUfzJjhSl8KZ0pBY7vyU=; 
+X-VR-SPAMCAUSE: dmFkZTEWqrGEjnw5BvXROALZMjHDKS+3timBiobYK4pHUp11pasmZyxiyORZkmOCQFBgppGPXybXnuvIvnJ9hXSB1m0sxRhuZokDa9d6rOpt50P04FLje/MOJgY7S+SmVCeBOuqTbaWjwpR+j7RS9BnrqL7ryKtJlT3XSD8AK0rOwoaesYC4SssXK7wKq3aZ028P0x5xkM2923yJv97zkVCymb7mBlnU7CwTShNQ42QzmCBSjYV0CGx/u0/7EVI7exoD/4WwsIRSpb7YOTi1/VTUVJy07j6A8s/swIMcdw6juDeyfTfezDo4eU8mdBhtVFNY1ZTBAhA9DYCFaGDtSzQhvfL1eErFPckqRTsR3kxXNLP3eGFh/dFAuubTUGHDHUuptnkqwxVU51h9JK5jR5B0eoE9JbUii8FEgP8uK4mQX1oxBAgvb9NwcfrlQiPSw9axOwJEHZYjISF70aWIAsCUtXTKOCJM9bTNIF4Of/48vTqY/cqKGQSox+Lf96iusnTHCtUi+DxQMx/zfn4A09So6R+cQQ6651Cze36ZOU85RaJDspO1E2oYrapw6/i33XJhFqdMVZBxf/60f1GcQXbeYxqajaNnCxUTRCrD+s7j/HOS6ZiSadQ0ltuK9jnUciZ6W5KzX6k+djiAVTxGkLXGF9XbPvP3ILLElM5JeE04aTErdA
+DKIM-Signature: a=rsa-sha256; bh=2CmrnJUkMizc61yKTOYZ1Bw/s9zBikl4YKKo9c2bYTE=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1790769121; v=1;
- b=tXkDLqa9ItA7w6ZhjChP0m0aXgwtyyWpXPmMd192CXTsGTqqivm4tAQkVGNYLJiR11XqIMwR
- pxav116cRbvghpru/mVo6JCoA6o92M+VrtxzEt0QkZQtd/G3m7iSTboMJu4Ly13Z0MXQua1W0AK
- QnqXlQL4X+RBYq42OBP5cq5y133p0MZIgGrA2wxQoiWZ10jChCXxmcx6Sv7slpHThcJKFh85ew9
- zgIgCCxyo1FqOoQkN+KEc//zBN3ApGueGYtftSizlKOL9UqNeXL5CjzeeS1wmT+EYd70xhqUkCT
- B7+s6I31R9ONxJAChDKPpXdyjEPzMFWRyRCdV/QTZu08w==
-Received-SPF: pass client-ip=51.210.91.43; envelope-from=clg@kaod.org;
- helo=smtpout4.mo539.mail-out.ovh.net
+ t=1790769170; v=1;
+ b=E7brEjFdsm/pxCjZEwHXuSTdyCLLuGVKLm63iqRdhKnjhr0Y60480K6R4r6Rur8Ribh8zaPt
+ /mrcrGaIZFRcjf4GI0m6QiI/KCCTPB3CV2ucrj07gFI+Tw4bI3eNIdwuMYyQovpDoo295Pcvnuk
+ 5wiWo7zpGtyf3Q9XfA7J4+mx2o8F9PLwCmpOblbj9aOMrRhtCR9BQ9C8EiJPoNnwBWkPtaYmm91
+ pvriNMB4oM85rICWlY2JlsYB58KcuNkQNZEM90j/c/W4br+/oqUXLWKI0ZuwQrLR8VRjpl8SkZ9
+ 3IIWy9TwmbrWLdEdmlAK2gt7/bo7teYq7yV6ll1LohMQw==
+Received-SPF: pass client-ip=51.210.91.52; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo540.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -138,28 +138,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/7/26 18:41, Emmanuel Blot wrote:
-> The Facebook SanMiguel BMC machine is supported by hw/arm but has never
-> been listed in the Aspeed documentation. Add it to the AST2600 machine
-> table.
+> The board only populates the flash device attached to the FMC
+> controller; the SoC SPI controllers are left unused. Advertising a
+> part there presents the guest with a flash device the hardware does
+> not have.
+> 
+> While here, add the missing year to the copyright line.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->   docs/system/arm/aspeed.rst | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/arm/aspeed_ast2600_sanmiguel.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 933df41f96..f38f33cbe1 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -34,6 +34,7 @@ AST2600 SoC based machines :
->   - ``bletchley-bmc``        Facebook Bletchley BMC
->   - ``fby35-bmc``            Facebook fby35 BMC
->   - ``catalina-bmc``         Facebook Catalina BMC
-> +- ``sanmiguel-bmc``        Facebook SanMiguel BMC
->   - ``anacapa-bmc``          Facebook Anacapa BMC
->   - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
->   
+> diff --git a/hw/arm/aspeed_ast2600_sanmiguel.c b/hw/arm/aspeed_ast2600_sanmiguel.c
+> index 599ef1701f..1dbbef11f2 100644
+> --- a/hw/arm/aspeed_ast2600_sanmiguel.c
+> +++ b/hw/arm/aspeed_ast2600_sanmiguel.c
+> @@ -1,7 +1,7 @@
+>   /*
+>    * Facebook SanMiguel BMC
+>    *
+> - * Copyright (c) Meta Platforms, Inc. and affiliates.
+> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
+
+usually this is a range.
+
+>    *
+>    * SPDX-License-Identifier: GPL-2.0-or-later
+>    */
+> @@ -384,7 +384,7 @@ static void aspeed_machine_sanmiguel_class_init(ObjectClass *oc,
+>       amc->hw_strap1 = SANMIGUEL_BMC_HW_STRAP1;
+>       amc->hw_strap2 = SANMIGUEL_BMC_HW_STRAP2;
+>       amc->fmc_model = "mx66l1g45g";
+> -    amc->spi_model = "mx66l1g45g";
+> +    amc->spi_model = NULL;
+>       amc->num_cs    = 2;
+>       amc->macs_mask = ASPEED_MAC0_ON;
+>       amc->i2c_init  = sanmiguel_bmc_i2c_init;
 > 
+
+anyhow,
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
