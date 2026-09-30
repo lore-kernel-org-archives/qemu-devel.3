@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D59CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28EACA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrkT-00066C-GY; Wed, 30 Sep 2026 06:41:17 -0400
+	id 1xBrk8-0004FD-U1; Wed, 30 Sep 2026 06:40:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriw-0001XC-7b
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriq-0001Ob-1V
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBril-0006oq-6D
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrih-0006mH-Kn
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764770;
+ s=mimecast20190719; t=1790764766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N9SfM+F33aegDiM7mM7xKKo0/dpEnSTem75et+wCWPM=;
- b=HNqFaNgb1nx0qgbqjV4x2zjHXIehqyoK2zOHgmj2XUi6HA5WDSZ7e9VAZb7vgNgPFmyxtk
- Zks7KgNPVRdHnNt7z/Ar/jkPdAdWrV7ZEiYsXr2sCdBtC9Teb0L0UAAs4pmbBggyPupddK
- dKfanrTLerB8sy2O07lMcrT3GpeTKmw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=v9kexHToA4g8KAAOeKD2TikW0yeAiu0gVKdUWBf5nbY=;
+ b=W7GsLACSXidRYQzoz1N0HYwZJSobxmsLXg1pPF3BftuLKiR0SihBQM6yNuRbh5rwjPUM16
+ g7i8IH4KRGmAqDrf9+X2bEj0g+O7PJyKI2olY1X+bTzyJzywfPFJC5jrCuFFDYnKTTLYrf
+ QKnqKqeIHF+w8rZZznGBFhMJ5l7Idc4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-f8II59E6PV69rhV_LUq-FA-1; Wed,
- 30 Sep 2026 06:39:28 -0400
-X-MC-Unique: f8II59E6PV69rhV_LUq-FA-1
-X-Mimecast-MFC-AGG-ID: f8II59E6PV69rhV_LUq-FA_1790764768
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-yho9LXZEP-usrfvpdt4acA-1; Wed,
+ 30 Sep 2026 06:39:23 -0400
+X-MC-Unique: yho9LXZEP-usrfvpdt4acA-1
+X-Mimecast-MFC-AGG-ID: yho9LXZEP-usrfvpdt4acA_1790764762
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F1EE1964CE1; Wed, 30 Sep 2026 10:39:28 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 982F1186FBB7; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D388C768; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52555195604E; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 156F321E6572; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
+ id 6F8B021E677C; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 091/105] qapi: convert simple intros for qga/qapi-schema.json
-Date: Wed, 30 Sep 2026 12:38:56 +0200
-Message-ID: <20260930103910.3934848-92-armbru@redhat.com>
+Subject: [PULL 053/105] qapi: convert simple command intros for migration.json
+Date: Wed, 30 Sep 2026 12:38:18 +0200
+Message-ID: <20260930103910.3934848-54-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,104 +85,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-These are all single-paragraph introductions immediately followed by a
-non-plaintext section, so no new insertion point is created by this
-conversion.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260922205605.501602-5-jsnow@redhat.com>
+Message-ID: <20260901194324.458482-11-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qga/qapi-schema.json | 40 ++++++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 22 deletions(-)
+ qapi/migration.json | 51 +++++++++++++++++++--------------------------
+ 1 file changed, 22 insertions(+), 29 deletions(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 90110af573..b592b14a01 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -205,9 +205,9 @@
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 91681cdf03..1d4cdba5a0 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -333,9 +333,9 @@
  
  ##
- # @guest-shutdown:
+ # @query-migrate:
 -#
--# Initiate guest-activated shutdown.  Note: this is an asynchronous
--# shutdown request, with no guarantee of successful shutdown.
-+#     Initiate guest-activated shutdown.  Note: this is an
-+#     asynchronous shutdown request, with no guarantee of successful
-+#     shutdown.
+-# Return information about current migration process.  If migration is
+-# active there will be another json-object with RAM migration status.
++#     Return information about current migration process.  If
++#     migration is active there will be another json-object with RAM
++#     migration status.
  #
- # @mode: "halt", "powerdown" (default), or "reboot"
+ # Since: 0.14
  #
-@@ -266,10 +266,10 @@
+@@ -825,8 +825,7 @@
  
  ##
- # @guest-file-read:
+ # @migrate-set-parameters:
 -#
--# Read from an open file in the guest.  Data will be base64-encoded.
--# As this command is just for limited, ad-hoc debugging, such as log
--# file access, the number of bytes to read is limited to 48 MB.
-+#     Read from an open file in the guest.  Data will be
-+#     base64-encoded.  As this command is just for limited, ad-hoc
-+#     debugging, such as log file access, the number of bytes to read
-+#     is limited to 48 MB.
+-# Set migration parameters.  All arguments are optional.
++#     Set migration parameters.  All arguments are optional.
  #
- # @handle: filehandle returned by `guest-file-open`
+ # Since: 2.4
  #
-@@ -357,10 +357,9 @@
+@@ -1060,11 +1059,10 @@
  
  ##
- # @guest-file-seek:
+ # @query-migrate-parameters:
 -#
--# Seek to a position in the file, as with fseek(), and return the
--# current file position afterward.  Also encapsulates ftell()'s
--# functionality, with offset=0 and whence=1.
-+#     Seek to a position in the file, as with fseek(), and return the
-+#     current file position afterward.  Also encapsulates ftell()'s
-+#     functionality, with offset=0 and whence=1.
+-# Return information about the current migration parameters.  Optional
+-# members of the return value are always present, except
+-# @block-bitmap-mapping, which is only present if it has been
+-# previously set.
++#     Return information about the current migration parameters.
++#     Optional members of the return value are always present, except
++#     @block-bitmap-mapping, which is only present if it has been
++#     previously set.
  #
- # @handle: filehandle returned by `guest-file-open`
+ # Since: 2.4
  #
-@@ -1254,10 +1253,9 @@
+@@ -1085,10 +1083,9 @@
  
  ##
- # @guest-exec-status:
+ # @migrate-start-postcopy:
 -#
--# Check status of process associated with PID retrieved via
--# `guest-exec`.  Reap the process and associated metadata if it has
--# exited.
-+#     Check status of process associated with PID retrieved via
-+#     `guest-exec`.  Reap the process and associated metadata if it
-+#     has exited.
+-# Followup to a migration command to switch the migration to postcopy
+-# mode.  The postcopy-ram capability must be set on both source and
+-# destination before the original migration command.
++#     Followup to a migration command to switch the migration to
++#     postcopy mode.  The postcopy-ram capability must be set on both
++#     source and destination before the original migration command.
  #
- # @pid: pid returned from `guest-exec`
+ # Since: 2.5
  #
-@@ -1605,10 +1603,9 @@
+@@ -1235,12 +1232,11 @@
  
  ##
- # @guest-ssh-remove-authorized-keys:
+ # @x-colo-lost-heartbeat:
 -#
--# Remove public keys from the user .ssh/authorized_keys on Unix
--# systems (not implemented for other systems).  It's not an error if
--# the key is already missing.
-+#     Remove public keys from the user .ssh/authorized_keys on Unix
-+#     systems (not implemented for other systems).  It's not an error
-+#     if the key is already missing.
+-# Tell QEMU that heartbeat is lost, request it to do takeover
+-# procedures.  If this command is sent to the PVM, the Primary side
+-# will exit COLO mode.  If sent to the Secondary, the Secondary side
+-# will run failover work, then takes over server operation to become
+-# the service VM.
++#     Tell QEMU that heartbeat is lost, request it to do takeover
++#     procedures.  If this command is sent to the PVM, the Primary
++#     side will exit COLO mode.  If sent to the Secondary, the
++#     Secondary side will run failover work, then takes over server
++#     operation to become the service VM.
  #
- # @username: the user account to remove the authorized keys
+ # Features:
  #
-@@ -1838,9 +1835,8 @@
+@@ -1455,9 +1451,8 @@
  
  ##
- # @GuestNetworkRoute:
+ # @migrate-incoming:
 -#
--# Route information.  Supported on Linux (since 9.1) and Windows
--# (since 11.0).
-+#     Route information.  Supported on Linux (since 9.1) and Windows
-+#     (since 11.0).
+-# Start an incoming migration.  QEMU must have been started with
+-# -incoming defer.
++#     Start an incoming migration.  QEMU must have been started with
++#     -incoming defer.
  #
- # @iface: The destination network or host's egress network interface
- #     in the routing table
+ # @uri: The Uniform Resource Identifier identifying the source or
+ #     address to listen on
+@@ -1527,9 +1522,8 @@
+ 
+ ##
+ # @xen-save-devices-state:
+-#
+-# Save the state of all devices to file.  The RAM and the block
+-# devices of the VM are not saved by this command.
++#     Save the state of all devices to file.  The RAM and the block
++#     devices of the VM are not saved by this command.
+ #
+ # @filename: the file to save the state of the devices to as binary
+ #     data.  See `xen-save-devices-state`.txt for a description of the
+@@ -1567,9 +1561,8 @@
+ 
+ ##
+ # @xen-load-devices-state:
+-#
+-# Load the state of all devices from file.  The RAM and the block
+-# devices of the VM are not loaded by this command.
++#     Load the state of all devices from file.  The RAM and the block
++#     devices of the VM are not loaded by this command.
+ #
+ # @filename: the file to load the state of the devices from as binary
+ #     data.  See `xen-save-devices-state`.txt for a description of the
 -- 
 2.55.0
 
