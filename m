@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDA2CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AE1CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrid-0001GC-O5; Wed, 30 Sep 2026 06:39:23 -0400
+	id 1xBrid-0001GB-NG; Wed, 30 Sep 2026 06:39:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrib-0001EK-DP
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBria-0001E2-UT
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriZ-0006gW-Eu
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriZ-0006gZ-DB
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1790764758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j0HzztfBo78VGmnHN33c+VqRiTWMfwGKL1SLmRBRbkg=;
- b=VJfCKK+c7ByXEC3qtRp4vyOLhhaTLvKK7fQCsJlnib/a1OFX2MCc910R4MaSpempMsRlCZ
- GzTbCeBKOMtJBvBjz+Oh38/k4Ke5LxqGQs25Zv3WQxQJhnycAeKvoyB6uMKbB06lJ86geF
- gFfmueypQTE3pVR8AkdPSPNb17USwN0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CIM9MXGA/iPsGSSYEUCc1/mEt4VZ291Gg0u8j4dIfw4=;
+ b=UInnCGZMsFNQRmQmVEj2cXLxaBzyyT0C5eAU4BStTI3mukq/yAuia+LdXzB9siFYNGTLhN
+ MK++gTpA2S0EQcxEMVn1TZ6SPcLYBQPKVGg4vaPrhXh5hKVhj8BOWvybAnCWYVCHfjwAat
+ NGSbjW1XwQNUgoupalfU85kXWredIuM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-0Ps0dj-INHiQw6UDrpHw4w-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-3jCyFz-BMTK3Sx1XrW-dJw-1; Wed,
  30 Sep 2026 06:39:17 -0400
-X-MC-Unique: 0Ps0dj-INHiQw6UDrpHw4w-1
-X-Mimecast-MFC-AGG-ID: 0Ps0dj-INHiQw6UDrpHw4w_1790764756
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+X-MC-Unique: 3jCyFz-BMTK3Sx1XrW-dJw-1
+X-Mimecast-MFC-AGG-ID: 3jCyFz-BMTK3Sx1XrW-dJw_1790764756
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 672671955E86; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FC53187A5C6; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CDE030000E8; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B6251800591; Wed, 30 Sep 2026 10:39:15 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B1C2521E6888; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
+ id AA04721E6886; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 009/105] qapi: convert trivial intro sections for
- machine-common.json
-Date: Wed, 30 Sep 2026 12:37:34 +0200
-Message-ID: <20260930103910.3934848-10-armbru@redhat.com>
+Subject: [PULL 007/105] qapi: convert trivial intro sections for misc-arm.json
+Date: Wed, 30 Sep 2026 12:37:32 +0200
+Message-ID: <20260930103910.3934848-8-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,58 +86,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260831201945.287730-10-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-8-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/machine-common.json | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ qapi/misc-arm.json | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index aca98e994a..fdb0e68d9e 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -12,9 +12,8 @@
+diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+index 4dc66d00e5..a7b5498d2d 100644
+--- a/qapi/misc-arm.json
++++ b/qapi/misc-arm.json
+@@ -48,8 +48,7 @@
  
  ##
- # @S390CpuEntitlement:
+ # @SsidSizeMode:
 -#
--# An enumeration of CPU entitlements that can be assumed by a virtual
--# S390 CPU
-+#     An enumeration of CPU entitlements that can be assumed by a
-+#     virtual S390 CPU
+-# SMMUv3 SubstreamID size configuration mode.
++#     SMMUv3 SubstreamID size configuration mode.
  #
- # Since: 8.2
- ##
-@@ -23,8 +22,7 @@
+ # @auto: derive from host IOMMU capabilities
+ #
+@@ -64,8 +63,7 @@
  
  ##
- # @CpuTopologyLevel:
+ # @OasMode:
 -#
--# An enumeration of CPU topology levels.
-+#     An enumeration of CPU topology levels.
+-# SMMUv3 Output Address Size configuration mode.
++#     SMMUv3 Output Address Size configuration mode.
  #
- # @thread: thread level, which would also be called SMT level or
- #     logical processor level.  The @threads option in
-@@ -84,8 +82,7 @@
- 
- ##
- # @SmpCacheProperties:
--#
--# Cache information for SMP system.
-+#     Cache information for SMP system.
- #
- # @cache: Cache name, which is the combination of cache level and
- #     cache type.
-@@ -103,8 +100,7 @@
- 
- ##
- # @SmpCachePropertiesWrapper:
--#
--# List wrapper of `SmpCacheProperties`.
-+#     List wrapper of `SmpCacheProperties`.
- #
- # @caches: the list of `SmpCacheProperties`.
+ # @auto: derive from host IOMMU capabilities
  #
 -- 
 2.55.0
