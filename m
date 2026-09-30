@@ -4,156 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68821CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 160F4CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBytk-00021C-IH; Wed, 30 Sep 2026 14:19:20 -0400
+	id 1xByuc-0002iR-AS; Wed, 30 Sep 2026 14:20:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xByti-00020d-AS
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:18 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xByuI-0002TV-Pc
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:58 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xBytg-0004EV-FS
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:18 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xByuC-0004Q6-LK
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:52 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UHej5C4160515
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:13 GMT
+ 68UHfApJ643915
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=; b=J6jdMFT+fSCYlob2
- rbU244Q2gQ/4b95CyNxqfvUb69tuMDw/aMoKuOlooyUZz4SQN4KoSpCkHHsEEA5j
- CDORfrpC62eYA2pLUxKjM0si3+EbPt9H4nP4vEJ+tTyvCp9A2pzjQZS5h8zm//xd
- P0NicrxVRGAmTZ1FHqDfGXWnCajz/028K6gpL05gjFUufTa8u6md16/gkkgLrItC
- hKrMOVH1h3O8xs+zY9DFlF7VfBU6nIqFCX+cNfMso+hdHLDL71nv4ohhc3LpYn/G
- vo4YakvSI9lXAouXIb8T83VlDkT1OLXc9xfIHtB3l5fnZ5+oo7n/Md2DbDLkSrDP
- wG0Grw==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pgf57-1
+ YfrBbpW/CUXgr8U2tcXaupAFuNRPeOFN8duMsPtMDOg=; b=FPo055Z0fWtsU9sL
+ wan8e6cxPjR6CaI1BbbunEMHqeSL17ancUydQFKOZYCn7pzEgpkhWJE9wMnHGz+c
+ /kzEZqeYjou2JKEt0sGdar7Z2ipfIOB42//h0os1uzww1nWXPo9qP8TxusZu5ILU
+ /SKTHM7tm2HGFQIHxa1Zi44FEFtkRqTXyfxleo8at7pNW1qovce/tcE1D7BiRuKA
+ s5OdG7TucQXueDnTYlQx5fkPZS+Y17LGEdoaC/h0ObOAX/7C1nrTyNVGjjwcyTSH
+ eumyES9rnZPt82ip0JEjMEKYwVRwoMCUl0f8u49VQi+3bxlfw9TIwMU52VhJ78Kw
+ Ycs2jw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h14n20yyr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:13 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-4b26d8d2498so8856884b6e.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:19:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790792353; cv=none;
- d=google.com; s=arc-20260327;
- b=Hl9yaiPlbwDpXrZPHES0rQCQ4ZBBUmlZEEh18J6a9cbGK2eKD7GNsOdrdkLesh9Yio
- Hs/577W6XtiJrW/AkIYJxzxFseMNIVw/vlRuq64TfkQXOzKyyRYClhIoEn3XEq63OgWM
- enm9VyV2f+3FwNOwXx3Ojv/UyyJv4Sr44Bbwn7e7NgZCIAK70fGCEcY2nARbshj9+0il
- D/zVFrQsqgLox50nzOe9SKaWUByunbwyADsYjXara6miV4Luz5dtoJxZqSmounTu1cpR
- 56AD7+j3ZyBPzuGkUi1btsx/PxlfGeown4tCiypdOI7ZaRCAPWoUVugwVQWm9CVdTdR5
- x/aA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
- fh=11nfX6Do8EaL1FMi+r6eKWxDDoA7QEpVbFRn3KjheFE=;
- b=DkgbIIX5JuhLf4vRey0Jwpa1q+LgMev83xqTrK4JqmXfadA758It67c6oobPhkY2Oj
- 7Pw7S7eDigXo33OMwN98TUNkl6AVFN/UWldfCRvEb8WOoXFhW406Wbwt+mOIRSK2OkW7
- tqdTW4pQtkcDt/oatGGSZFTsHd4hWeEEEoWsXFmcoF2ualjNRNaodklirZwgGMluAuFc
- mYa3uGzCIL0qUrw+eOp/VVZUbT4XCzJlCv9ruizUyrf94FcDag43L7ZBoiG49VzPiVN0
- 6rU0VVYeyo/e47DuRiqblJNWJir2hoRfhRx2rb90ncJLZWM5h5+FdHwvWDZroyvACZ/V
- gZmg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:44 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3a470ead068so3224077a91.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790792353; x=1791397153; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
- b=RZdih1Uent94CCwodQMTWpFZJkC/wD0txi/lHKzKga39rxB+Xw7y1fcFbgToxNUgtD
- 7eG0hbjHrjgQUtlHZwqhEeBsxA6sYrZ7vMd15I7aVAnH4n5T4mirCBaRPklR3jQ8qzzW
- 6g8/9sVsLrTLH4/KVTJTQtowEVyoOrjg8+FRVQQOq+GQ3gQgbBQW+s3DZcgA6wq4mbNM
- wnoa9ORHWOj6dMrUVeiWg1DdWnlduFlFODXm1CELSpUQ9TMyf66fbuLrjeRtAO8JFA6r
- T1CB+dKYXafV1WvnFm4yMOYiWViEtW4/r8WwiCtJIIGlYrpJlYZKZ9JuTLd82AqxUMQa
- nerA==
+ d=oss.qualcomm.com; s=google; t=1790792384; x=1791397184; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YfrBbpW/CUXgr8U2tcXaupAFuNRPeOFN8duMsPtMDOg=;
+ b=bpXzp7gUQljxFWe022TVZf1EihyVVhsM+MF3QrCPquj3L179l/e7vEbrSBWYdsIsY6
+ 3cpKhK2kdNsxkmC1ND6rai7o7cxCHeffqxtysoOLupQ8dpKS8kULBnzDP2ACX/HgxaR0
+ kJHzXDdPI+UpZFtF1SVJNH756lwHFvzZNpskPbxzbG0paBSl4OhZjiWDUQeN4pBWTddF
+ NbCNqasBCMLcsuXT57zx9GpAXu2TjqDP+tWbedFcEuE0lOwklzeLwbZ7pwKF3rrEGoTc
+ OCIc42KzeetqMTZTdRZkq0fkX5C57yL3wppHsj8cDur5kvzhbIIvjOlZRrZWKlceV8bu
+ qkaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790792353; x=1791397153;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
- b=p2/tuYCRRmUwIJdmBA0DDLc3mztYHYQ13ujRFGiZAo4z1YCbXhxcuC/KdLrKkHZDD1
- rYRKTQZFYYucuzqNMWP2n6m8eWc1c/fzwdVSSKf/5xdAjPdjLkvf+TmD/0nOsCqV6BRl
- JwpV5MPocH9lr7f2scCT6f5yadRuRpkLEhuwHsqEmQ4KmFlFo8FB8hWDNyzRLQJnjYXt
- P9JP+zZaOdQJGdVh6P1l30GT4d9G7avYwWppkXWD6t1nlrhGUD88UoUku0WcRPG7wC8W
- aXg/FDZ6Q0QTqP1GcTsTvPb3jxCegtTosHc4wJGmLRt+E/MmeWgDdeXMiTPyiE6COWGU
- 8Elw==
-X-Gm-Message-State: AFuF++lkal42p8Yu5VV/t614Rl8y4daAOCVaf6opT+B0Zj0gt3HVU/yS
- bqFoo9gtHMwpQp9zBvfJWYe3wZeQagk1fb69HFcxBvnR682UYQyC0O1fMhTpB5Mey/9WI1mUlLM
- tP5Q/zk9AeM+bQeFBwFxkb4rE+KilbnZ82DgbqtoaYotNzVQ8+gPj5Hdb5OlcIOuL4Pbc/sUVjv
- pHuP9mTevbuZ+xwECLYA0uajBn1+nYINDT
-X-Gm-Gg: AYBFou113J6YFkt0PXSeVe94q+YjwEr/lQpwaWhY/7JJPtJXfeJwpXDBC/RGTj7THVO
- gIKdvu8UZxMNNz+4SveTxphOTyNABGidHPo7ihxPH8w/s2eVBqzJPRlISM51rz6AcKa8btQVUz7
- PEXLEnRH8nE0pPlkFFkZ0wdN/th8uAvrMyqDHC53jHworPUAK/b2YEwNTMYD5v3uc6hv4shFBtD
- KvjI18W0l179OE+pw==
-X-Received: by 2002:a05:6808:319b:b0:4d5:27da:a492 with SMTP id
- 5614622812f47-4f1b9a4cc54mr2192619b6e.44.1790792352523; 
- Wed, 30 Sep 2026 11:19:12 -0700 (PDT)
-X-Received: by 2002:a05:6808:319b:b0:4d5:27da:a492 with SMTP id
- 5614622812f47-4f1b9a4cc54mr2192577b6e.44.1790792351895; Wed, 30 Sep 2026
- 11:19:11 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790792384; x=1791397184;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YfrBbpW/CUXgr8U2tcXaupAFuNRPeOFN8duMsPtMDOg=;
+ b=YW1lzUcpoiKAE7ECvTBzOj2NPttcJgKvla/g3vHu0nJyy1yklYx/YPSD/fUjQ/Ymmx
+ qkFeRxxOUr7T0qHvIa+8N5RK4/zMXHsRgZyvoUNjPwdC7Y8SF90N+0xReNHf9psSc2yJ
+ XtFVM89+ze7/lwXTtOE3xesDl9V3W6NSiCDOxI46xZv3ynJTj6KQnPsshcor/+q4/dVc
+ yWn+rCxsxg7cE/k6MgXTqgPqej1JxY3TlJCZoHwRHuHq7cgeT2gVgyhxJfHzFtrIn+rg
+ QINKB76A8XgpQTQqdlALKD6cE5HHzhR0Dj68QlrtMFMBBK6GpE6MlFyAV25sLzr136xC
+ sB+w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxeWWnd82+JvIjofHAPLIz9rRCk2M1tJqDq3XOm1SvsW1uUnGErIVmIYRERcmGh4uF8Q8eW6Vpz4xFK@nongnu.org
+X-Gm-Message-State: AFq9FYLCWofk6qPjIJZ6xTHlF2H329/NydLVz1XNh12y6A+jNWSm0JAG
+ 07D8/dsImtOMBqydv+gj0omBFSnvCWWGHQSX6gt/rhrtXA010DwPMfPAlqhgaxlW9y7DyB2ovdv
+ 3Any66ZP45XIMk+HiULZNJYWzlQUF+SiivSmxMaTSiUA3AB+SXeYzm1/LDg==
+X-Gm-Gg: AYBFou3xKmtXcbTSZbM1tjesrpYeUSNkVzZYa34vd10OphEXwIOS6qXdmzgBgFDisp8
+ Ie0V2rHtebQXmnVRwIZuQhHYIhlXc+5Qh5huaAsG8fe2lJJZACQX3g7QwEIPqYjKX/1XBYNIw4B
+ Yp8ZHEd5jsg0CNgI2xAN0yNt+Ma3JcYkZX9gonVCbW4lL+X9X0iL+kN7aDu8U3Y8n5VqhZqYwuH
+ lt5wEIlFY/+qa7ZTn2x8Yp72ibChMtxlbD1R1+e2R1AvXFHE/pc8EDbmF8sIKaffq01IQdKdo27
+ 1LzFaQie13biLV2s8335IMsGZms+WZCW57QvxkYtIPu71PpqvK/pixOi4fYc69iGdnbh7krNf5k
+ RCtBu7LurQKWPkAxcKHTVm0R0JUAXDmQpFpB9pEwer+MLai2funoJLiBgbeh2lLim1dI=
+X-Received: by 2002:a17:90a:dfd0:b0:39d:e54c:8658 with SMTP id
+ 98e67ed59e1d1-3a4d0f02bd9mr1267698a91.5.1790792384006; 
+ Wed, 30 Sep 2026 11:19:44 -0700 (PDT)
+X-Received: by 2002:a17:90a:dfd0:b0:39d:e54c:8658 with SMTP id
+ 98e67ed59e1d1-3a4d0f02bd9mr1267678a91.5.1790792383481; 
+ Wed, 30 Sep 2026 11:19:43 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a4f43f832fsm463662a91.7.2026.09.30.11.19.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Sep 2026 11:19:43 -0700 (PDT)
+Message-ID: <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 11:19:42 -0700
 MIME-Version: 1.0
-References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
- <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 13:19:00 -0500
-X-Gm-Features: AclHuK_mxH4xPjZxpF5RchCH3ZJ0lMe-DjH1vjoBjwp02P2-e4SQg7pmzXOZFIw
-Message-ID: <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
-Subject: Re: [PATCH 06/10] target/hexagon: reserve internal HVX vector state
- for QFloat
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: eJrQM_VsJy2LIqVOYahZqjsc2xu3r1nJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX/MwxklmgAD7W
- oGsVS/9JlfN4rSol7s/qy9buB6PjAeefFR9VgeTGnKLO+XLHLgj8yADGRmfq+TA9BDl/BJHwiyI
- VdSnm98Fwv0eSc8ZV3tSKwkqHxIjRQ0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX3EfngaCYhFug
- 5VWo/OPGz69O9lcOlEVcVl6a5qZvUbQuWDIjc55V6uMkgJixk1emcRlRXfQy2ePnGx5I9XQgr50
- FfEcVLVlN730mFxHdn19Po3vPK0k3JIojzEn3tS6IhqjKqOSCpIDEb2dzgWtIjiKsSV7HilayHA
- zcsdPyxUbg/lxbciiTB51HeUzdjsH2/LQrkH3wFxH6Yel9eFAOdw0nxKbwpNfBmDgUOZ590nzHu
- lvaFdzeDqQT5/eg3iEHUs9W40HE5ltLTpkINWTQ3OsIpdEX56Eqd8ikr29F+7iuguayo04J1DPC
- ZdSNhTSD5QmQGPLCE5EGepdi/7Wg6azROgsXnw5XiPhcROVdYNMU3nCPLGV5FeBYFw585d8vHrd
- X/k17sCIgIyjD58YghXPwF8vzA1i2ptd8jhAWtQSJLtPi9Ut2CRBpSE5KvM7uG5zNt3F8sEtJK0
- skH7cgwBIO429h/ZkZQ==
-X-Proofpoint-GUID: eJrQM_VsJy2LIqVOYahZqjsc2xu3r1nJ
-X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abd52a1 cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=nMl2p6oiNZAOWJzd5FoA:9
- a=QEXdDO2ut3YA:10 a=efpaJB4zofY2dbm2aIRb:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>, Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Stafford Horne <shorne@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Song Gao <17746591750@163.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260926081551.29-1-luoyonggang@gmail.com>
+ <20260926081551.29-2-luoyonggang@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260926081551.29-2-luoyonggang@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Gr3XaU1C c=1 sm=1 tr=0 ts=6abd52c1 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=20KFwNOVAAAA:8 a=JR3Z71xjIoJ_TNlYm3gA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX0AkaUEe7cFZG
+ 19jtTNgWEY4drAZDXQaJ85LTlGIAxW728qfsnNOp8kbEZCO31xZ6LTB11i0FA8brShUIOMvNwj5
+ kL9OK1TvW8J2ntVry40g2s1yx2X0LAM=
+X-Proofpoint-GUID: qoH2_IIcYP-NWZzoIbu8UpZOLHe_VUP3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX+Dabd3G/6rY9
+ RMPqMaREjcOTNu0Z+pVIJcGGS1wIdhRL/Uno7uaIbJfhsN93zoixoOlDMea9X/0YJGj/r5AfhNM
+ s7xddH3BT02iYTmFsgQzJbRUFIhp7cm5HtKnGNPB9Y0VqMbIBeUBWVorfXRIPOnHtWpLkvoqI90
+ k2c0PbcE6/sYn4jedd8nm5H84e5qsQEn5B6l3Ry0osNLlQeUBFcJwvi4HL2x09fyHQU6qwqKg+p
+ TjOQsIrb7NesCmD0QTtasCWHEofz/mYztis/tG2z+MQ9sAkONvf1WJkrGImKLXQ6N5jDr7zY03K
+ LIPTHmCwXjjDlvIRB5o08rH7dG/LWDtk0yZCHk2VgVxnH5uqVme88Ytq9nk/2EC7f/d3Ts7diMz
+ uaGLERffWILvwINaUMijrF6rzl7++Uh4MOnTEI5cvuma1ha6rCrOr9WmSICipUgBCVtbfFFi7o6
+ X5D79rjSESu3bFf/0sQ==
+X-Proofpoint-ORIG-GUID: qoH2_IIcYP-NWZzoIbu8UpZOLHe_VUP3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300075
 Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,145 +171,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 26, 2026 at 2:23=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+On 9/26/26 1:15 AM, Yonggang Luo wrote:
+> - Add machine_class_set_name() so boards can keep a stable -M name
+>    when the QOM type is uniquified. machine_class_base_init still
+>    defaults the name to the QOM type without -machine.
+> - Document that MachineClass::name is the -M name, not the QOM type.
+> - Sort -M help by MachineClass::name so order matches the printed names
+>    when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
+> 
+> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  target/hexagon/mmvec/mmvec.h     | 55 ++++++++++++++++++++------------
->  hw/hexagon/hexagon_hvx_context.c |  5 +++
->  target/hexagon/hex_common.py     | 29 +++++++++++++++++
->  3 files changed, 68 insertions(+), 21 deletions(-)
->
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 02c54506145..55b8a40fe8c 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -448,6 +448,25 @@ def helper_arg_type(self):
->          return "void *"
->      def helper_arg_name(self):
->          return f"{self.reg_tcg()}_void"
-> +    def gen_clear_ext(self, f):
-> +        f.write(code_fmt(f"""\
-> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-> +                    {self.hvx_off()} + offsetof(MMVector, ext),
-> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-> +                    V_EXTENDED_BYTEVAL);
-> +            """))
-> +    def gen_clear_ext_pair(self, f):
-> +        f.write(code_fmt(f"""\
-> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-> +                    {self.hvx_off()} + offsetof(MMVector, ext),
-> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-> +                    V_EXTENDED_BYTEVAL);
-> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-> +                    {self.hvx_off()} + sizeof(MMVector)
-> +                        + offsetof(MMVector, ext),
-> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-> +                    V_EXTENDED_BYTEVAL);
-> +            """))
+>   hw/core/machine.c        |  6 ++++++
+>   include/hw/core/boards.h | 12 +++++++++++-
+>   system/vl.c              |  8 +++-----
+>   3 files changed, 20 insertions(+), 6 deletions(-)
 >
 
-gen_clear_ext() and gen_clear_ext_pair() currently update the
-destination vector=E2=80=99s
-extension field even when the instruction predicate is false. The following=
- test
-demonstrates the issue:
+First, I'm not opposed to this series, and if anyone wants to pull this, 
+I'm ok with that decision. It's just unclear for me what will be 
+direction after this step.
 
-static void test_ext_bits_preserved_on_false_predicate(void)
-{
-    asm volatile(
-        "r0 =3D #0x11111111\n"
-        "v3 =3D vsplat(r0)\n"
-        "v0.x =3D vsetqfext(v3, r0)\n"
-        "r2 =3D #1\n"
-        "v1 =3D vsplat(r2)\n"
-        "r1 =3D #0\n"
-        "p0 =3D cmp.eq(r1, r2)\n"
-        "{\n"
-        "    if (p0) v0 =3D v1\n"
-        "}\n"
-        "v2 =3D vgetqfext(v0.x, r0)\n"
-        "vmemu(%[out]) =3D v2\n"
-        :
-        : [out] "r"(output)
-        : "r0", "r1", "r2", "v0", "v1", "v2", "v3", "p0", "memory");
+If I understand correctly, the goal here is to allow to register 
+multiple "virt" machines, while still having distinct QOM types behind 
+the hood, which does no affect behavior of current binaries who have 
+only a single "virt" type at most.
 
-    for (int i =3D 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
-        expect[0].uw[i] =3D 0x11111111;
-    }
+That said, if we project in the future where we have a binary with 
+multiple of those "virt" machines, how will the current series help? The 
+situation we'll have is distinct QOM types, that all answer to the name 
+"virt", so we have no way to select them individually.
 
-    check_output_w(__LINE__, 1);
-}
+Slightly worse, find_machine() will just pick the first machine name 
+virt, which is a non-deterministic order at the moment.
+https://gitlab.com/qemu-project/qemu/-/blob/master/system/vl.c?ref_type=heads#L846
 
-The extension reset needs to be predicated as well. For example:
+A possible alternative could be to use ".is_available = target_X" on 
+those virt types, which will ensure only one is effectively registered 
+at runtime, thus, there is no ambiguity on name or who is the "virt" 
+machine.
 
-def gen_clear_ext(self, f, tag):
-    predicate =3D None
-    guard =3D ""
-    if is_predicated(tag):
-        for regtype, regid in compute_tag_regs(tag, False):
-            if regtype =3D=3D "P":
-                predicate =3D get_register(tag, regtype, regid).reg_tcg()
-                break
-        assert predicate is not None
-        cond =3D "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_CO=
-ND_EQ"
-        guard =3D f"""
-            TCGv {self.reg_tcg()}_ext_pred =3D tcg_temp_new();
-            TCGLabel *{self.reg_tcg()}_ext_skip =3D gen_new_label();
-            tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
-            tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
-                                {self.reg_tcg()}_ext_skip);
-        """
-        end_guard =3D f"""
-            gen_set_label({self.reg_tcg()}_ext_skip);
-        """
-    else:
-        end_guard =3D ""
-    f.write(code_fmt(f"""\
-            {guard}
-            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-                {self.hvx_off()} + offsetof(MMVector, ext),
-                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-                V_EXTENDED_BYTEVAL);
-            {end_guard}
-        """))
+Again, I'm ok if anyone wants to pull this.
 
-def gen_clear_ext_pair(self, f, tag):
-    predicate =3D None
-    guard =3D ""
-    if is_predicated(tag):
-        for regtype, regid in compute_tag_regs(tag, False):
-            if regtype =3D=3D "P":
-                predicate =3D get_register(tag, regtype, regid).reg_tcg()
-                break
-        assert predicate is not None
-        cond =3D "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_CO=
-ND_EQ"
-        guard =3D f"""
-            TCGv {self.reg_tcg()}_ext_pred =3D tcg_temp_new();
-            TCGLabel *{self.reg_tcg()}_ext_skip =3D gen_new_label();
-            tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
-            tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
-                                {self.reg_tcg()}_ext_skip);
-        """
-        end_guard =3D f"""
-            gen_set_label({self.reg_tcg()}_ext_skip);
-        """
-    else:
-        end_guard =3D ""
-    f.write(code_fmt(f"""\
-            {guard}
-            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-                {self.hvx_off()} + offsetof(MMVector, ext),
-                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-                V_EXTENDED_BYTEVAL);
-            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
-                {self.hvx_off()} + sizeof(MMVector)
-                    + offsetof(MMVector, ext),
-                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
-                V_EXTENDED_BYTEVAL);
-            {end_guard}
-        """))
+Regards,
+Pierrick
 
