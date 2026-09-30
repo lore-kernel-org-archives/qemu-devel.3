@@ -4,57 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4380BCA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3E3CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBoJg-0000s0-9K; Wed, 30 Sep 2026 03:01:24 -0400
+	id 1xBoJf-0000pr-2q; Wed, 30 Sep 2026 03:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xBoJb-0000pF-PE
+ id 1xBoJa-0000os-Vr
  for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xBoJZ-0006a1-1Q
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:19 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1xBoJY-0006Zs-87
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:18 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Bx79K3s7xqoEIRAA--.50906S3;
- Wed, 30 Sep 2026 15:01:11 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJCxOs6ws7xqq+MmAA--.53251S3;
+ by gateway (Coremail) with SMTP id _____8CxutGxs7xqnUIRAA--.50530S3;
  Wed, 30 Sep 2026 15:01:06 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCxOs6ws7xqq+MmAA--.53251S2;
+ Wed, 30 Sep 2026 15:01:04 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>,
- xiaoqiang zhao <zxq_yx_007@163.com>
-Subject: [PULL 1/4] tests/acpi: Allow SPCR acpi table changes
-Date: Wed, 30 Sep 2026 15:02:24 +0800
-Message-ID: <20260930070227.1079521-2-maobibo@loongson.cn>
+Subject: [PULL 0/4] loongarch queue
+Date: Wed, 30 Sep 2026 15:02:23 +0800
+Message-ID: <20260930070227.1079521-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260930070227.1079521-1-maobibo@loongson.cn>
-References: <20260930070227.1079521-1-maobibo@loongson.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxOs6ws7xqq+MmAA--.53251S3
+X-CM-TRANSID: qMiowJCxOs6ws7xqq+MmAA--.53251S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWruryfAF43Kw1kJFW7Xr4xAFc_yoW3CFXEqF
- 4Iq3Z5GF17AF4ktrW8CF4kZryUC3W3Aw48ur1ayFsag3yxJ34UJasYq3Z5Aa43urZxCFW2
- qw1kZrW29FWUAosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb28YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07URa0PUUUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoW7XFW3Cw4UGr4DAF45CrykZwc_yoW8JryUpr
+ W3Zry7Gr48Gr9rJrnrGw45Jr1DJrnrGr42qF17tr18Cw15Cry5Xr10gry0gFyUA34xXr40
+ qr1rAw1UXF1UXrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1j6r15MIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
+ kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -77,25 +74,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>
+The following changes since commit 9c88811b81a935a172c5c873b2ada2d9b38a5f74:
 
-For easier bisection add the SPCR table to bios-tables-test-allowed-diff.h
+  Merge tag 'pull-target-arm-20260929' of https://gitlab.com/pm215/qemu into staging (2026-09-30 06:25:37 +0100)
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+are available in the Git repository at:
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..53702282e5 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+tests/data/acpi/loongarch64/virt/SPCR
--- 
-2.54.0
+  https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20260930
+
+for you to fetch changes up to d31587eb925e4ab646b4e01ce985406b839595f2:
+
+  target/loongarch: Set CPU_INTERRUPT_HARD unless no pending irq (2026-09-30 14:56:11 +0800)
+
+----------------------------------------------------------------
+tags/pull-loongarch-20260930 queue
+
+----------------------------------------------------------------
+Bibo Mao (1):
+      target/loongarch: Set CPU_INTERRUPT_HARD unless no pending irq
+
+xiaoqiang zhao (3):
+      tests/acpi: Allow SPCR acpi table changes
+      hw/loongarch/virt: Fix SPCR bitwidth value
+      tests/acpi: Update SPCR loongarch64 test data
+
+ hw/loongarch/virt-acpi-build.c        |   2 +-
+ target/loongarch/cpu.c                |  14 ++++----------
+ target/loongarch/internals.h          |   2 +-
+ target/loongarch/tcg/csr_helper.c     |   2 +-
+ tests/data/acpi/loongarch64/virt/SPCR | Bin 80 -> 80 bytes
+ 5 files changed, 7 insertions(+), 13 deletions(-)
 
 
