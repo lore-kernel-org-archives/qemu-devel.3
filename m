@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711D6CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E392BCA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrl8-0000Vq-7a; Wed, 30 Sep 2026 06:41:58 -0400
+	id 1xBrkv-0007aZ-OK; Wed, 30 Sep 2026 06:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriq-0001QJ-Dx
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj2-0001cm-AI
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrii-0006me-3y
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0006qY-IF
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764767;
+ s=mimecast20190719; t=1790764772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MHJPLGvdPaGiAflw38JTbGaiBmRRbJ7gqW6J+20DqKU=;
- b=YxTMPLPdM/rjgNu4jAhqfKGIorC8ibf93m82ngmFDpnSBEiaZVw7lfekq2Yki3A1bJj37l
- ApZR1uw9t3QXuHqzs/JXopwQQ/n+WGN258QAIMQp9aijZ089PQzla5evKyAPJ//Yf1nVOI
- LkwbVKftjmIua2peQR+zxS/8jwjY5QM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MX+Y4DIuZxjIfLKQ6vr275xlkQFhbGVChxLW5R4Eh8Y=;
+ b=jQf2lNuUa36W81OCvcbYUYDBVbGpoaHno9cVq4eR1cEPrOsTFpqqkOt7NgisNOSnP7SkJq
+ zKlqiaPSTqJp0NpgGVx6XaTt14mtcrwfYVK2xebE4M6FWDW1fh99AzioQqSMP1SZhsLBdT
+ xWHWC1QJra6elmrw9RBPl1tojHK0doQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-W82s1W9eNsGc4ryaFR1xTA-1; Wed,
- 30 Sep 2026 06:39:26 -0400
-X-MC-Unique: W82s1W9eNsGc4ryaFR1xTA-1
-X-Mimecast-MFC-AGG-ID: W82s1W9eNsGc4ryaFR1xTA_1790764765
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-pF7EGH_tPnOUnF2RGwPO0g-1; Wed,
+ 30 Sep 2026 06:39:31 -0400
+X-MC-Unique: pF7EGH_tPnOUnF2RGwPO0g-1
+X-Mimecast-MFC-AGG-ID: pF7EGH_tPnOUnF2RGwPO0g_1790764770
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F0B7195FD02; Wed, 30 Sep 2026 10:39:25 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51EBA1954233; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5D08180035F; Wed, 30 Sep 2026 10:39:24 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D30776E; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A9A3121E662D; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id 46DA021E5B80; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 067/105] qapi: convert simple enum intros for yank.json
-Date: Wed, 30 Sep 2026 12:38:32 +0200
-Message-ID: <20260930103910.3934848-68-armbru@redhat.com>
+Subject: [PULL 103/105] qapi: split intro sections for events
+Date: Wed, 30 Sep 2026 12:39:08 +0200
+Message-ID: <20260930103910.3934848-104-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -86,29 +86,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260909041640.69080-8-jsnow@redhat.com>
+Message-ID: <20260928192557.509157-9-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/yank.json | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ qapi/machine-s390x.json | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/qapi/yank.json b/qapi/yank.json
-index 9a5aea82f1..85a0c87719 100644
---- a/qapi/yank.json
-+++ b/qapi/yank.json
-@@ -10,9 +10,8 @@
+diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
+index 05716fe247..8d8cbe2fb7 100644
+--- a/qapi/machine-s390x.json
++++ b/qapi/machine-s390x.json
+@@ -57,8 +57,7 @@
  
  ##
- # @YankInstanceType:
+ # @CPU_POLARIZATION_CHANGE:
 -#
--# An enumeration of yank instance types.  See `YankInstance` for more
--# information.
-+#     An enumeration of yank instance types.  See `YankInstance` for
-+#     more information.
+-# Emitted when the guest asks to change the polarization.
++#     Emitted when the guest asks to change the polarization.
  #
- # Since: 6.0
- ##
+ # The guest can tell the host (via the PTF instruction) whether the
+ # CPUs should be provisioned using horizontal or vertical
 -- 
 2.55.0
 
