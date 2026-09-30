@@ -4,141 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D9BCA5FC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A8CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxTN-0002pN-9m; Wed, 30 Sep 2026 12:48:04 -0400
+	id 1xBxSi-0001Sy-JG; Wed, 30 Sep 2026 12:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxTI-0002mn-5d
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:56 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxTG-0003Bd-O8
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:55 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UGjO4s4035473
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:47:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=; b=ESg9DmuP6luiYj4J
- tVtuJZZFQ3ZRf4FvV0li7e+Mzb4NyXi90Fo9Bw+z6NduA+3DrGIbRBMJn13cY/kG
- JUn8g2XFKsFZM3TFQgEA+wh3HL4FTydzipbCRuD3MdQo0uglbmn8tHmVxztMhjMI
- AOnbr8xVAUF92NxX8TWDTAsw31Pr3u0D55GU79C7FRQWCnPUaM6yzaHp2925u2W4
- bh2Bj/gBbsB+5nsl5X3U1g0iPCCc8/7jpjOIILAbmRAMCFhyUJ1WIMfi8wQwwr1M
- mlW9B5e3Qet2+5+2Ud/OVVxsRZyQJY0Es9ydd4S6fircmB9s6EKoLCzlbd4HV5zw
- OAIFkw==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pg0r6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:47:53 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-7bf67e46ae0so49473137.3
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:47:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBxSR-0001Bb-9G
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:04 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBxSN-00032m-Ez
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:02 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-49e6b885ef8so33213385e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790786873; x=1791391673; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=;
- b=V5JXEm4JKGRVYyNbwv6ifOyj4CZCfsUCyPogdlVLkzEtqOiiqYcRmvz9cbyQkwEMWG
- +0r0RbAWoPXKzJG/lmvrYkpT8ce7nGqaD6Dl/2zN6I3W1kL3/ZA7iGVbHdFfYwdEf8+q
- uKjo56jzsBW3zCK5n3qQn9+TOYRocJRs9tQvXF+jCD3hqb0wucXFTymZZpBMStEthOYi
- yUV/v9xTXmi+SgoPUHyFlBdYEDMs1pRZhkVMdsSv7sGcdCxSiTQeB86Bx2JVO1+8RDRJ
- QIFINa5s4GeHln5To+p37pc/n/sU+z+vzr/WJScBb/ip7wuHQxXU32PlYy+RtAxKeRlL
- fyXQ==
+ d=linaro.org; s=google; t=1790786818; x=1791391618; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=GUHPSL0CAZKtb0o+SF8uVME6KydXoNbBvhH5/7wJ/pA=;
+ b=xXZhNeRMadYt6mkHwxvMaioMXQbvbxE9ADqjNTjMFo8RoWdWypvGF1CkETLIABdYHX
+ 06bxej1MyJDVRgux4X84+u2RBx2IexV+tbimz5yYsK4mlw/tMswIUQK9m404OlRaLjkA
+ H64q0pbQWkBP+ZNDjoSeZzwJzT0kVNlvLEcQEO7Az7bNWWD97+htoyEWM8O12MD3RnSc
+ nv++CzrWfjXLxyDZJRjWYr+PpPsFMDCkrGJXB5FJfrdPtaK9lMZOT3jIvJT6I2GQsrtY
+ 0w/smzBlhuNqlcW/MCt5bdishRUagBsPqCd4ddxN06pLqp2C8ev68T49rBgJz158qCwA
+ 99nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790786873; x=1791391673;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=4e8R1nioCLdL/WYy1ipIEd22cMF8IgajANlm3emMgYw=;
- b=bjxe2M9oYRFI8ZHee1qM/WZ2psho4x9difntabBjqi0BmG7VinwI0i9v23hMx0Da64
- k4SDhUv+NDgKVHjyCvDPala8u0DeOBXQ/4/Q4NcatZ9KF1Ahcq6jArR2oXlJD9oZgQYu
- roKo5y6181ULOtFGuBDv5z+iMau0jkdjIqnYBuZ4g38Uzwebvl0jtOJAhQo1FIQB7k/Q
- 5yt+i4lb1emGCxF9qGsQpKnDtDnv1AxpnhJgsGytnFHFFnI0rZDLjrgTde7/sV8rLKbk
- FPTYoABXoaORpO3OLCqR28+rBcW3AnBXiCVKxkBT6WJavRqO0B4Dq7gM3if9911IqkbW
- jqUQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzjFFDV4Bkj/OO66KhYED3xfSYNL1zkbAlBZDD6T84NNSpUoTHUemKPe89o+AKm1at5MfKNrFcD980z@nongnu.org
-X-Gm-Message-State: AFq9FYKjSJCpwR6S3PqoETvOpHSmL06wemzNCfYCYZKVfHWPK8NIUde5
- ZrU3ATcatXU3P+ePi7KwCapbFfSGkgYUr1l7Lxya9p7Rf+uvkmQvZhDZblbGnPeY/jn33//L/hj
- cOyViqWFuMc5QQKLc1vkg4jmuoewiop7wjB6TydmsDP5mI2CY/+163bdME2DuPmlAUw==
-X-Gm-Gg: AYBFou1SSMy30RSXjYWNsmW5pCNf0Q4ptHxdohF9EObHE3mxY5y5eENbuWqFJWAws6h
- Nf95gaRi+aWLLpa+ejtw9rCt3orl+KXBE4sHggNKlFPAo3Xt9TQ4TYYDmYS8sQrgfYhes+VsaGu
- R06CbRSUmMZRiFmvMfsf6qxeLgD3airgExiex5YVN2nz0s/E7+ZK/NL3BhMCGYe3z8Ui5QLrxyf
- oHGov1BLSgjDA3MgadlqYHxe7vQS4wjxn0cQZcJyS51ZysnS593sq376vk4H24NzIFi8+xq+EDj
- ChPW4gZhcu5v04eGm2nzVHEzncoXFzGE6QUtG1Swhq8BJwbfDyIWMPfbsXqly5fhUphjyLMuAtH
- J/F3Y9qpA09Lzu4lWT3E=
-X-Received: by 2002:a05:6102:3ec1:b0:7a7:5355:7fb6 with SMTP id
- ada2fe7eead31-7be73a8e63cmr363151137.24.1790786872823; 
- Wed, 30 Sep 2026 09:47:52 -0700 (PDT)
-X-Received: by 2002:a05:6102:3ec1:b0:7a7:5355:7fb6 with SMTP id
- ada2fe7eead31-7be73a8e63cmr363142137.24.1790786872334; 
- Wed, 30 Sep 2026 09:47:52 -0700 (PDT)
-Received: from [192.168.0.4] ([79.127.134.49])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01cd002bcsm24562525e9.4.2026.09.30.09.47.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 09:47:51 -0700 (PDT)
-Message-ID: <a5a9a630-c9cd-4520-a49b-0412a5c6e5af@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 18:47:50 +0200
+ d=1e100.net; s=20260707; t=1790786818; x=1791391618;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=GUHPSL0CAZKtb0o+SF8uVME6KydXoNbBvhH5/7wJ/pA=;
+ b=sdE02MC5y79FRlP+YaFAx7jk2RvFyfNvjhbaaa8N7iOBEStlhR/PtjE00Gf0kyOMrO
+ fqi8Zh+PzI22oXPTsd+HwuqNVi4TYKJbTFTpN9quVs1NL+OdL+7w/NLFkvQgK9ltcFa6
+ cmK45EVeLE5eSrvw4b/2dlj5PNXzLKVC9xYMNZNTjjXEYIbzFGyqPgEF5yPdm3Q/mXxH
+ QhEOZqx4j9nsdQIQfaxmAzQLUejp9SBlUwnqp/CK1HaURFG+DYXfm/KhVPJi6+q+TeRH
+ aXY9Y5IidLNczUrCNHKvb6H/5upbgUGLJO/+1y/2pI7jkqRq2W16bZGr62o1K7fLwqzY
+ oIjg==
+X-Gm-Message-State: AFuF++m3AVKU7ZiwuVtASTBQRvmkkgwJNYpEMuSYxtABpEaJng+UEnSt
+ nT3QGH1lZJc5xvDWILYrmzbXvxXdEhQ3s5XGWWl/aFxYF9w1QZSAUnJY8Wh85FV2psU=
+X-Gm-Gg: AYBFou0jhGP4aFOyC5pHL7dWUBqLdiynG3D//LN7SbkzIXuSHK08RJ7Bt3EFYnN1vKQ
+ GeRMSezVYTbNj2Y631IlipLAhXplCsyy1NhgCWb4hL/QEdoW8W1XlOp1l6vC46dq39JDhh9SF3I
+ TSsHbkHasd5+o9JfiRRkGmENgVt/mfkQC46XAnv4UuFGD9uDZ4rdsj6O1IPScXdqROJoTlFk085
+ ULCdEyUun32WOh2OAqE/YyEr3GkMrpUWBXeuKb+q8Oahaibiy5ib7dzUBW8xgYwHRBP43hUlk5h
+ kLLb/IJbmu2ZbbUsc4bFpAvGWgO1CcySO5VnZv1T44aktMrViLZ0R7vrei3AbXrUYg75+OFiTjt
+ X42zmIiEPrUsOySXYPqoxC05qCGml1d+KdMdJS2K+XJOPVw8Vhm81vyY5XicW8ilX22+8BJNEqa
+ UxPL3E0KS8hGcmP2YN8f3hakW7e5V87m1IQaO2CSPDTSg7VpSwbpXUAC6wmSt0/pTOu+qsQw==
+X-Received: by 2002:a05:600c:4454:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a01b00f607mr35482605e9.22.1790786817965; 
+ Wed, 30 Sep 2026 09:46:57 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a01eb8372dsm3815315e9.14.2026.09.30.09.46.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Sep 2026 09:46:56 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3C0CA5F9D3;
+ Wed, 30 Sep 2026 17:46:50 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
+ Ani Sinha <anisinha@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Anders Roxell <anders.roxell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 05/13] tests/functional: add basic gdbstub test for KVM
+Date: Wed, 30 Sep 2026 17:46:41 +0100
+Message-ID: <20260930164649.433573-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260930164649.433573-1-alex.bennee@linaro.org>
+References: <20260930164649.433573-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 26/27] hw/usb/dev-smartcard-reader: correct
- CCID_IccPowerOff
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
- <20260805-smartcard-fixes-v1-26-187ee9122441@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260805-smartcard-fixes-v1-26-187ee9122441@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: AFQCtTupKEfXhH2Dd6cWzszNYRCX1fFw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX+ilyE2lCEolN
- lubjdEYvIMzAlEnE/TcyBacoCuFCV/xVYF4XMEDG9B2iipYHNXag0PPkjVIU9Ne6gpCqRVxEKjz
- pM0z3duRp5JUhHFlZza5DMPSmQ7tqYg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX/7tEGetHMhVr
- Z8glYfzX2KppqSteVOC9oNFHVPBDIGT9+EwfTn7CcxLQ/o6RrIMZr2uF28WkxyeNtqUF8ybT8c+
- cNnJ9el5YvzEtvYZ4piCWKZj3UaZVX+/1gUI1h3MUVXjrAJtlmM0dZFx8zc2NnL6QfZoB2odC2W
- cM0jLSKM844bjWcaEu9FQMvk3hbH9R1EccJ0JTc0sIbVWU+IJAh8qqE38C1B7VTW+TIZiKzynor
- pA1soAMOQTIeOiwQ3zZd/o4hvI4kdBZc/UFfCUcBa6YidTmrN9RyRwyD/NNIFnyxgQDbvYokC5G
- 2hPaxR4rjQpzIee1fgx2k9oQ+eGqd8bUptUiwJyrn1JfHEFE7g86pGmwiH0LRt7lV0RGe+duW3P
- BAc4uwFi8wVmRZqHPhnf7mOUim21/ugMTwnCV6yksG4O44+EvckZ+Y4KA+Ix78NN08E13MUsVoF
- HtS4CxAjmozwlGoVFwg==
-X-Proofpoint-GUID: AFQCtTupKEfXhH2Dd6cWzszNYRCX1fFw
-X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abd3d39 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300066
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,28 +120,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-05 13:51, Marc-AndrÃ© Lureau wrote:
-> The struct has 3 bytes reserved according to spec. Fortunately, it's not
-> used yet.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/usb/dev-smartcard-reader.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-> index 99086befe0b8..752571043ee6 100644
-> --- a/hw/usb/dev-smartcard-reader.c
-> +++ b/hw/usb/dev-smartcard-reader.c
-> @@ -264,7 +264,7 @@ typedef struct QEMU_PACKED CCID_IccPowerOn {
->   
->   typedef struct QEMU_PACKED CCID_IccPowerOff {
->       CCID_Header hdr;
-> -    uint16_t    abRFU;
-> +    uint8_t     abRFU[3];
->   } CCID_IccPowerOff;
+We don't really exercise the KVM bits of gdbstub very much as the TCG
+tests are TCG only and the ones in functional tests are focused on
+record/replay and reverse debugging.
 
-Nice finding...
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Add a basic gdbstub test case which uses heuristics to single step
+through the default firmware of guests and kick the tyres and check
+things are working as expected.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
+---
+vAJB:
+  - rewrote to use gdb run-test.py framework
+  - simplified subprocess code
+---
+ .../functional/gdb-scripts/kvm_fw_gdb_test.py | 119 ++++++++++++++++++
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_kvm_gdbstub.py   |  55 ++++++++
+ 3 files changed, 175 insertions(+)
+ create mode 100644 tests/functional/gdb-scripts/kvm_fw_gdb_test.py
+ create mode 100755 tests/functional/x86_64/test_kvm_gdbstub.py
+
+diff --git a/tests/functional/gdb-scripts/kvm_fw_gdb_test.py b/tests/functional/gdb-scripts/kvm_fw_gdb_test.py
+new file mode 100644
+index 00000000000..b38b874dc58
+--- /dev/null
++++ b/tests/functional/gdb-scripts/kvm_fw_gdb_test.py
+@@ -0,0 +1,119 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Generic GDB script to verify gdbstub functionality on guest firmware:
++#  - Single-stepping across VM-exits
++#  - Placing a hardware breakpoint at a branch or ahead in disassembly
++#  - Continuing to the breakpoint and validating that registers changed
++#
++# Copyright (c) 2026 Linaro Limited
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++
++import gdb
++from test_gdbstub import main, report
++
++def parse_registers():
++    """Parse 'info registers' into a name -> value dictionary."""
++    regs = {}
++    for line in gdb.execute("info registers", to_string=True).splitlines():
++        parts = line.split()
++        if len(parts) >= 2:
++            regs[parts[0]] = parts[1]
++    return regs
++
++def test_single_step():
++    """
++    Single-step a few instructions and verify PC advances
++    """
++    current_pc = int(gdb.parse_and_eval("$pc"))
++    for step in range(1, 6):
++        gdb.execute("stepi")
++        gdb.execute("x/3i $pc")
++        pc = int(gdb.parse_and_eval("$pc"))
++        report(pc != current_pc, f"single-step {step} advanced pc")
++        current_pc = pc
++
++
++def might_be_jump(asm):
++    """
++    Return true if the assembly string might contain a branch/jump instruction
++    """
++    branch_keywords = {
++        "jmp", "b", "bl", "bx", "bne", "beq", "bgt", "blt", "bge", "ble",
++        "call", "ret", "br", "jal", "jalr", "bc", "bctrl", "j"
++    }
++
++    parts = asm.split()
++    if not parts:
++        return False
++    mnemonic = parts[0].lower()
++    return mnemonic in branch_keywords
++
++
++def test_hw_bkpt():
++    """
++    Set a hwbkpt somewhere in the future.
++    """
++
++    # FIXME - this is fragile
++    disas = gdb.execute("x/10i $pc", to_string=True)
++    lines = disas.strip().splitlines()
++    insns = 0
++    bp = None
++
++    for line in lines:
++        clean = line.lstrip("=>").strip()
++        parts = clean.split(":", 1)
++        if len(parts) < 2 or not parts[1].strip():
++            continue
++        insns += 1
++
++        if might_be_jump(parts[1]):
++            # jump too close, bail out?
++            if insns < 2:
++                report(False, "found jump far enough away")
++                return
++            else:
++                addr = int(parts[0].split()[0], 16)
++                bp = gdb.Breakpoint(f"*{hex(addr)}",
++                                    type=gdb.BP_HARDWARE_BREAKPOINT)
++                break
++        elif insns == 10:
++            addr = int(parts[0].split()[0], 16)
++            bp = gdb.Breakpoint(f"*{hex(addr)}",
++                                type=gdb.BP_HARDWARE_BREAKPOINT)
++            break
++
++    report(bp is not None, f"set hwbkpt @ {bp.location}")
++    gdb.execute("continue")
++
++    end_pc = gdb.parse_and_eval('$pc')
++    report(bp.hit_count == 1,
++           "break @ %s (%d hits)" % (end_pc, bp.hit_count))
++
++    bp.delete()
++    return
++
++def test_reg_updates(regs_start):
++    regs_end = parse_registers()
++
++    changed = [k for k in regs_start
++               if k in regs_end and regs_start[k] != regs_end[k]]
++
++    report(len(changed) > 0, f"{len(changed)} registers changed.")
++
++def run_test():
++    regs_start = parse_registers()
++
++    test_single_step()
++
++    # skip any pesky mode switching code
++    gdb.execute("stepi 50")
++
++    test_hw_bkpt()
++
++    test_reg_updates(regs_start)
++
++
++main(run_test)
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index 0353b2af8e1..080e12ddef1 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -13,6 +13,7 @@ tests_x86_64_system_quick = [
+   'bad_vmstate',
+   'cpu_model_versions',
+   'cpu_queries',
++  'kvm_gdbstub',
+   'mem_addr_space',
+   'migration',
+   'pc_cpu_hotplug_props',
+diff --git a/tests/functional/x86_64/test_kvm_gdbstub.py b/tests/functional/x86_64/test_kvm_gdbstub.py
+new file mode 100755
+index 00000000000..26876c3dc58
+--- /dev/null
++++ b/tests/functional/x86_64/test_kvm_gdbstub.py
+@@ -0,0 +1,55 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Functional test verifying KVM gdbstub operations on firmware:
++#  - Single-stepping across VM-exits
++#  - Register sampling across execution steps
++#  - Hardware breakpoint at branch destination or instruction
++#
++# Copyright (c) 2026 Linaro Limited
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++
++import os
++import subprocess
++from pathlib import Path
++from qemu_test import QemuSystemTest, skipIfMissingEnv
++
++
++class KvmGdbstubTest(QemuSystemTest):
++
++    @skipIfMissingEnv("QEMU_TEST_GDB")
++    def test_x86_64_kvm_fw_gdb(self):
++        self.require_accelerator("kvm")
++
++        gdb_path = os.getenv("QEMU_TEST_GDB")
++
++        tests_dir = Path(__file__).resolve().parents[2]
++        run_test = tests_dir / "guest-debug" / "run-test.py"
++        gdb_script = (tests_dir / "functional" / "gdb-scripts" /
++                      "kvm_fw_gdb_test.py")
++
++        qargs = "-machine pc -accel kvm -cpu host -smp 1 -m 512M -display none"
++        cmd = [
++            str(run_test),
++            "--qemu", self.qemu_bin,
++            "--qargs", qargs,
++            "--binary", "",
++            "--test", str(gdb_script),
++            "--gdb", gdb_path,
++        ]
++
++        res = subprocess.run(cmd, text=True,
++                             stdout=subprocess.PIPE,
++                             stderr=subprocess.STDOUT)
++        if res.stdout:
++            self.log.info('run-test.py: %s', res.stdout)
++
++        self.assertEqual(res.returncode, 0,
++                         f"run-test.py failed ({res.returncode}):\n")
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.47.3
 
 
