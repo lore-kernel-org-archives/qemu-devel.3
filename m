@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620F8CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B23CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrir-0001RI-0z; Wed, 30 Sep 2026 06:39:37 -0400
+	id 1xBrjz-0003RI-Vw; Wed, 30 Sep 2026 06:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrig-0001II-Nw
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0001NF-Rs
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrie-0006jH-BV
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrig-0006lJ-9F
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764763;
+ s=mimecast20190719; t=1790764765;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=G/ZFiglobtEygR+pSH2umMEJ04yTYt3Ey+a7zaXzn3s=;
- b=J7im94REpeTxmUZVjGHw8T9T4REyIQ3rBxWhCqIwPPJ0OgjbohxwdTBLcfUvg+cPg6yRjh
- vNY0i/LmSpUCu+YBMra4mCwdjO+0CiD0p+0/LuZ6HyL/MSbGIgxFFSDWpxlYr3ZWihSRO8
- PY3RrZkVQwvjbfKWpnMvHmuWqCYfYho=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZUW/XtwkMvf3JSrSH2k+W88J76SqXi24oRdc+DZZ0OI=;
+ b=OyLGEzoAoKewJHoJFTgNVJuLEv3rTyYoDnZVemHQCIgsf6RNcSnc5itBrHb1llYLjtk4oy
+ ikKP5zqhK6ROP6OVbl0ZNtyBg/tu+2+z8f/BU68XbIuRk6LBtWfqyjJtzq3lufsFG9CbWK
+ kX/eCXi9D64WtzYnSPH2fv2UMzup4E0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-851SnS5gOaCDtrDpOS970g-1; Wed,
- 30 Sep 2026 06:39:20 -0400
-X-MC-Unique: 851SnS5gOaCDtrDpOS970g-1
-X-Mimecast-MFC-AGG-ID: 851SnS5gOaCDtrDpOS970g_1790764759
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-aBfdrmvXP_C8fP20PoSAOw-1; Wed,
+ 30 Sep 2026 06:39:23 -0400
+X-MC-Unique: aBfdrmvXP_C8fP20PoSAOw-1
+X-Mimecast-MFC-AGG-ID: aBfdrmvXP_C8fP20PoSAOw_1790764762
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BD7E195FCFA; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3ED811953978; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F254118002B1; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9FDA19560AB; Wed, 30 Sep 2026 10:39:21 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E1F0421E6899; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
+ id 32C7D21E6820; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 021/105] qapi: convert trivial intro sections for sockets.json
-Date: Wed, 30 Sep 2026 12:37:46 +0200
-Message-ID: <20260930103910.3934848-22-armbru@redhat.com>
+Subject: [PULL 038/105] qapi: convert trivial intro sections for net.json
+Date: Wed, 30 Sep 2026 12:38:03 +0200
+Message-ID: <20260930103910.3934848-39-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -86,115 +86,304 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260831201945.287730-22-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-39-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-[Straightforward semantic conflict with commit f58893b0b7
-(spdm-socket: convert SpdmTransportType to QAPI enum) resolved]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/sockets.json | 34 +++++++++++++---------------------
- 1 file changed, 13 insertions(+), 21 deletions(-)
+ qapi/net.json | 92 ++++++++++++++++++---------------------------------
+ 1 file changed, 33 insertions(+), 59 deletions(-)
 
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index a9a8006c22..09d14946ab 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -9,8 +9,7 @@
+diff --git a/qapi/net.json b/qapi/net.json
+index b46af1fdc9..96ca18a3bc 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -12,8 +12,7 @@
  
  ##
- # @NetworkAddressFamily:
+ # @set_link:
 -#
--# The network address family
-+#     The network address family
+-# Sets the link status of a virtual network adapter.
++#     Sets the link status of a virtual network adapter.
  #
- # @ipv4: IPV4 family
+ # @name: the device name of the virtual network adapter
  #
-@@ -41,9 +40,8 @@
+@@ -60,8 +59,7 @@
  
  ##
- # @InetSocketAddress:
+ # @netdev_del:
 -#
--# Captures a socket address or address range in the Internet
--# namespace.
-+#     Captures a socket address or address range in the Internet
-+#     namespace.
+-# Remove a network backend.
++#     Remove a network backend.
  #
- # @numeric: true if the host/port are guaranteed to be numeric, false
- #     if name resolution should be attempted.  Defaults to false.
-@@ -98,8 +96,8 @@
+ # @id: the name of the network backend to remove
+ #
+@@ -80,8 +78,7 @@
  
  ##
- # @UnixSocketAddress:
+ # @NetLegacyNicOptions:
 -#
--# Captures a socket address in the local ("Unix socket") namespace.
-+#     Captures a socket address in the local ("Unix socket")
-+#     namespace.
+-# Create a new Network Interface Card.
++#     Create a new Network Interface Card.
  #
- # @path: filesystem path to use
- #
-@@ -121,8 +119,7 @@
- 
- ##
- # @VsockSocketAddress:
--#
--# Captures a socket address in the vsock namespace.
-+#     Captures a socket address in the vsock namespace.
- #
- # @cid: unique host identifier
+ # @netdev: id of -netdev to connect to
  #
 @@ -140,8 +137,7 @@
  
  ##
- # @FdSocketAddress:
+ # @NetdevPasstOptions:
 -#
--# A file descriptor name or number.
-+#     A file descriptor name or number.
+-# Unprivileged user-mode network connectivity using passt
++#     Unprivileged user-mode network connectivity using passt
  #
- # @str: decimal is for file descriptor number, otherwise it's a file
- #     descriptor name.  Named file descriptors are permitted in
-@@ -197,9 +193,8 @@
+ # @path: Filename of the passt program to run (by default 'passt', and
+ #     use PATH)
+@@ -301,9 +297,8 @@
  
  ##
- # @SocketAddressLegacy:
+ # @NetdevUserOptions:
 -#
--# Captures the address of a socket, which could also be a named file
--# descriptor
-+#     Captures the address of a socket, which could also be a named
-+#     file descriptor
+-# Use the user mode network stack which requires no administrator
+-# privilege to run.
++#     Use the user mode network stack which requires no administrator
++#     privilege to run.
  #
- # @type: Transport type
+ # @hostname: client hostname reported by the builtin DHCP server
  #
-@@ -219,8 +214,7 @@
+@@ -389,8 +384,7 @@
  
  ##
- # @SocketAddressType:
+ # @NetdevTapOptions:
 -#
--# Available `SocketAddress` types
-+#     Available `SocketAddress` types
+-# Used to configure a host TAP network interface backend.
++#     Used to configure a host TAP network interface backend.
  #
- # @inet: Internet address
+ # @ifname: interface name
  #
-@@ -237,9 +231,8 @@
+@@ -486,9 +480,8 @@
  
  ##
- # @SocketAddress:
+ # @NetdevSocketOptions:
 -#
--# Captures the address of a socket, which could also be a socket file
--# descriptor
-+#     Captures the address of a socket, which could also be a socket
-+#     file descriptor
+-# Socket netdevs are used to establish a network connection to another
+-# QEMU virtual machine via a TCP socket.
++#     Socket netdevs are used to establish a network connection to
++#     another QEMU virtual machine via a TCP socket.
  #
- # @type: Transport type
+ # @fd: file descriptor of an already opened socket
  #
-@@ -255,8 +248,7 @@
+@@ -515,8 +508,7 @@
  
  ##
- # @SpdmTransportType:
+ # @NetdevL2TPv3Options:
 -#
--# SPDM transport type
-+#     SPDM transport type
+-# Configure an Ethernet over L2TPv3 tunnel.
++#     Configure an Ethernet over L2TPv3 tunnel.
  #
- # @unspecified: Unspecified transport
+ # @src: source address
+ #
+@@ -570,8 +562,7 @@
+ 
+ ##
+ # @NetdevVdeOptions:
+-#
+-# Connect to a vde switch running on the host.
++#     Connect to a vde switch running on the host.
+ #
+ # @sock: socket path
+ #
+@@ -592,8 +583,7 @@
+ 
+ ##
+ # @NetdevBridgeOptions:
+-#
+-# Connect a host TAP network interface to a host bridge device.
++#     Connect a host TAP network interface to a host bridge device.
+ #
+ # @br: bridge name
+ #
+@@ -608,8 +598,7 @@
+ 
+ ##
+ # @NetdevHubPortOptions:
+-#
+-# Connect two or more net clients through a software hub.
++#     Connect two or more net clients through a software hub.
+ #
+ # @hubid: hub identifier number
+ #
+@@ -625,8 +614,8 @@
+ 
+ ##
+ # @NetdevNetmapOptions:
+-#
+-# Connect a client to a netmap-enabled NIC or to a VALE switch port
++#     Connect a client to a netmap-enabled NIC or to a VALE switch
++#     port
+ #
+ # @ifname: Either the name of an existing network interface supported
+ #     by netmap, or the name of a VALE port (created on the fly).  A
+@@ -646,8 +635,7 @@
+ 
+ ##
+ # @AFXDPMode:
+-#
+-# Attach mode for a default XDP program
++#     Attach mode for a default XDP program
+ #
+ # @skb: generic mode, no driver support necessary
+ #
+@@ -662,8 +650,7 @@
+ 
+ ##
+ # @NetdevAFXDPOptions:
+-#
+-# AF_XDP network backend
++#     AF_XDP network backend
+ #
+ # @ifname: The name of an existing network interface.
+ #
+@@ -714,8 +701,7 @@
+ 
+ ##
+ # @NetdevVhostUserOptions:
+-#
+-# Vhost-user network backend
++#     Vhost-user network backend
+ #
+ # @chardev: name of a unix socket chardev
+ #
+@@ -875,8 +861,7 @@
+ 
+ ##
+ # @NetdevStreamOptions:
+-#
+-# Configuration info for stream socket netdev
++#     Configuration info for stream socket netdev
+ #
+ # @addr: socket address to listen on (server=true) or connect to
+ #     (server=false)
+@@ -900,8 +885,7 @@
+ 
+ ##
+ # @NetdevDgramOptions:
+-#
+-# Configuration info for datagram socket netdev.
++#     Configuration info for datagram socket netdev.
+ #
+ # @remote: remote address
+ #
+@@ -937,8 +921,7 @@
+ 
+ ##
+ # @NetClientDriver:
+-#
+-# Available netdev drivers.
++#     Available netdev drivers.
+ #
+ # @l2tpv3: since 2.1
+ #
+@@ -976,8 +959,7 @@
+ 
+ ##
+ # @Netdev:
+-#
+-# Captures the configuration of a network device.
++#     Captures the configuration of a network device.
+ #
+ # @id: identifier for monitor commands.
+ #
+@@ -1018,8 +1000,7 @@
+ 
+ ##
+ # @RxState:
+-#
+-# Packets receiving state
++#     Packets receiving state
+ #
+ # @normal: filter assigned packets according to the mac-table
+ #
+@@ -1033,8 +1014,7 @@
+ 
+ ##
+ # @RxFilterInfo:
+-#
+-# Rx-filter information for a NIC.
++#     Rx-filter information for a NIC.
+ #
+ # @name: net client name
+ #
+@@ -1079,8 +1059,8 @@
+ 
+ ##
+ # @query-rx-filter:
+-#
+-# Return rx-filter information for all NICs (or for the given NIC).
++#     Return rx-filter information for all NICs (or for the given
++#     NIC).
+ #
+ # @name: net client name
+ #
+@@ -1128,9 +1108,8 @@
+ 
+ ##
+ # @NIC_RX_FILTER_CHANGED:
+-#
+-# Emitted once until the `query-rx-filter` command is executed, the
+-# first event will always be emitted
++#     Emitted once until the `query-rx-filter` command is executed,
++#     the first event will always be emitted
+ #
+ # @name: net client name
+ #
+@@ -1150,8 +1129,7 @@
+ 
+ ##
+ # @AnnounceParameters:
+-#
+-# Parameters for self-announce timers
++#     Parameters for self-announce timers
+ #
+ # @initial: Initial delay (in ms) before sending the first GARP/RARP
+ #     announcement
+@@ -1224,8 +1202,7 @@
+ 
+ ##
+ # @NETDEV_STREAM_CONNECTED:
+-#
+-# Emitted when the netdev stream backend is connected
++#     Emitted when the netdev stream backend is connected
+ #
+ # @netdev-id: QEMU netdev id that is connected
+ #
+@@ -1254,8 +1231,7 @@
+ 
+ ##
+ # @NETDEV_STREAM_DISCONNECTED:
+-#
+-# Emitted when the netdev stream backend is disconnected
++#     Emitted when the netdev stream backend is disconnected
+ #
+ # @netdev-id: QEMU netdev id that is disconnected
+ #
+@@ -1272,8 +1248,7 @@
+ 
+ ##
+ # @NETDEV_VHOST_USER_CONNECTED:
+-#
+-# Emitted when the vhost-user chardev is connected
++#     Emitted when the vhost-user chardev is connected
+ #
+ # @netdev-id: QEMU netdev id that is connected
+ #
+@@ -1292,8 +1267,7 @@
+ 
+ ##
+ # @NETDEV_VHOST_USER_DISCONNECTED:
+-#
+-# Emitted when the vhost-user chardev is disconnected
++#     Emitted when the vhost-user chardev is disconnected
+ #
+ # @netdev-id: QEMU netdev id that is disconnected
  #
 -- 
 2.55.0
