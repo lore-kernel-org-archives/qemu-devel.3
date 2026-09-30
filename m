@@ -4,153 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E2BCA5FF1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFDECA5FFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Oct 2026 09:15:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xENfG-0006fZ-Nf; Wed, 07 Oct 2026 05:10:20 -0400
+	id 1xENfs-0008LZ-PV; Wed, 07 Oct 2026 05:10:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tom.ds1@gmx.com>) id 1xEInY-0007ZP-2l
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:58:42 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1)
+ (envelope-from <69257b6a360b601f5828b3295aca2839e693d6a3@kylie.crudebyte.com>)
+ id 1xELKl-0002cA-4B
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:41:35 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tom.ds1@gmx.com>) id 1xEInV-0003pp-9R
- for qemu-devel@nongnu.org; Tue, 06 Oct 2026 23:58:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
- s=s31663417; t=1791345501; x=1791950301; i=tom.ds1@gmx.com;
- bh=rcHZ1gmKyUcQJYfB1EuvEDFykOuGnXowHTWuR5IPehU=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
- MIME-Version:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=N9Iyy9PG5/UGHbBR1ZH2iQnst8ZzO6oeowFFlbb9ciH8wU01ixGIvA2JWZEHh60k
- p1KYjSO3LFQCMaWlyq9nfyY0MCeWllGShZRWn/Wy9wpV64hqrd6/3T+tKBn/toQM3
- Tq5JJ22xwFSRtLtEIfsG4uE7j487wXkTYg4kikKBuQ/cVZB2BJ69zURAEpxS44S9x
- cuIEAI+vYY8Yn921MokU1ZQrbwWmJv917ulPVs7pxd0GYYX8zaP+dqlgFrwCmzl6+
- N3LhWyp8O78rsD2rW3x5FSYgQxOsVdE9chiRZ09bgtYUW72vyCd8CXOma+RufPBy9
- dcC/Zh02IE79oLAVlQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1M7b2T-1xJpjo2mE9-00EZUh; Tue, 06
- Oct 2026 15:55:13 +0200
-From: Tom Desnoyers <tom.ds1@gmx.com>
+ (Exim 4.90_1)
+ (envelope-from <69257b6a360b601f5828b3295aca2839e693d6a3@kylie.crudebyte.com>)
+ id 1xELKR-0004C2-4b
+ for qemu-devel@nongnu.org; Wed, 07 Oct 2026 02:40:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=heK5kqLpktn7Cv8y8x48VY7afIkRZ8T8fPk4zpOBbRQ=; b=CanIt
+ 8bZCLgTaavPgcFsb8p0WAnAugiPv5jqGoZ4HwBuRBBgKkW0io7f/0n/XTkdrVC0eS+7BODbk1Cl2g
+ 598Jxpg7YKP9/KkXR1ANZ6FJ7IaDy649xFiO2eXLFTE2q9piFWUMz8g1dSto+m2YujOJL5/YQm/8k
+ cS6hoyEij2oyZoLF/EkNoXi/HZ1uggpj02fPHy6ighhR/okAZiB1qKTgFI7f5gxyB7GiqYF6QGZf3
+ 4B683ldEasuM6mpZwAVM2Rk4FvFoGwKD7PjjrmYArvoswqNxqHaare2EQ2wpLqNMZIPGn4o9NUhzn
+ Slv4/YQyiHjXwe56kdPQpUd1lrYiU1JAHHeCYA0JXAvZm5lOuVTphxMYr1NMjJ0/j/dT4vOMLJecB
+ asTfOT/XuTU029390Oq5Gs1kXn/hVvgXlUtEEbIxRk98pIDC4ole2+Ebukqlrsg0EeQgo+eNDBRwW
+ JAOkNZmqbGsHMzQe9aKNdBHQG5EAvyf449RXF7/5Fe2ifoKlZSA5ggHUzfnx/h9T0PBzvuP3+9uTe
+ NVejK1MafJAZs2BcKkUkrKEppVLZxgtInb6tnYaouM4gZY9yYBk27gScb7+p7vbgSXZc5/wu5dbzs
+ 3v6KAd8+/fbErHNlZzbC94RvsIUVHf3pASk4VWnvgLMlkGsoP7+PmoeBGWGA90=;
+Message-ID: <69257b6a360b601f5828b3295aca2839e693d6a3.1791291812.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1791291812.git.qemu_oss@crudebyte.com>
+References: <cover.1791291812.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Wed, 30 Sep 2026 18:21:45 +0000
+Subject: [PATCH 2/9] tests/9p-race: add 9p race test suite (race FID-path
+ mutations)
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
- dmitry.osipenko@collabora.com, Tom Desnoyers <tom.ds1@gmx.com>
-Subject: [PATCH] virtio-gpu: fix memory leaks in virgl and rutabaga
-Date: Tue,  6 Oct 2026 15:55:04 +0200
-Message-ID: <20261006135504.416083-1-tom.ds1@gmx.com>
-X-Mailer: git-send-email 2.55.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:dMWXtIH9Edep8ZaK5hUteQHMuvCYC7pxbRq4CgovKziu9GzaVFm
- Mw59ru6CMpUbi65dHanmA/L+OypqfgvtJ8FQ0dPyShC0dCO9c2+66GWDfI35IooRB7Cvw9R
- FsanQnXAnWgcP65Nvisiov5XZ7LUmt6oX45iT5HMBJZcctx4IKNDlB/z/nHlExyibbYNjQq
- XB9FOKHTX01gL4pbtOd6Q==
-UI-OutboundReport: notjunk:1;M01:P0:V1heLSbpdE4=;g+HXqJXKA32P+FOtOSv77O6glwQ
- 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
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=tom.ds1@gmx.com;
- helo=mout.gmx.net
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Greg Kurz <groug@kaod.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=69257b6a360b601f5828b3295aca2839e693d6a3@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: 13
+X-Spam_score: 1.3
+X-Spam_bar: +
+X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 07 Oct 2026 04:24:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,47 +68,661 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a gpu buffer backed by a guest-memory blob is unreferenced, virgl
-and rutabaga free the resource but not its addrs field, leaking memory
-on every unref.
+Add a qtest-based stress test suite racing 9pfs server-side state.
 
-In virtio-gpu-virgl.c, free res->base.addrs before freeing the resource.
-In virtio-gpu-rutabaga.c, call virtio_gpu_cleanup_mapping() before
-freeing the resource.
+This patch adds the first race test "race/fid-path" for this new
+test suite: it races (per round) one Tlcreate (which is mutating
+the FID path) against a number of reader requests (Twalk and
+Txattrwalk) on the same FID.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4634
-Signed-off-by: Tom Desnoyers <tom.ds1@gmx.com>
-=2D--
- hw/display/virtio-gpu-rutabaga.c | 1 +
- hw/display/virtio-gpu-virgl.c    | 1 +
- 2 files changed, 2 insertions(+)
+This very first 9pfs race test guards CVE-2026-93834 (fixed by
+commit fe9e30899f "hw/9pfs: Use read-write lock for protecting fid
+path.").
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-ruta=
-baga.c
-index 3aafa4dc66..7907aea85a 100644
-=2D-- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -164,6 +164,7 @@ virtio_gpu_rutabaga_resource_unref(VirtIOGPU *g,
-     }
-=20
-     QTAILQ_REMOVE(&g->reslist, res, next);
-+    virtio_gpu_cleanup_mapping(g, res);
-     g_free(res);
- }
-=20
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index f45571060f..b5b160c840 100644
-=2D-- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -458,6 +458,7 @@ virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
-=20
-     QTAILQ_REMOVE(&g->reslist, &res->base, next);
-=20
-+    g_free(res->base.addrs);
-     g_free(res);
-=20
-     return 0;
-=2D-=20
-2.55.0
+Hitting the small race window is timing dependant, so this is a
+probabilistic test, not a deterministic one. During my tests the
+(unpatched) vulnerability triggered sometimes after few hundred
+rounds, and sometimes after >100k rounds. Furthermore, it expects
+QEMU being compiled with a sanitizer (e.g. ASan) which is
+supposed to detect the actual race (e.g. by memory violation):
+
+  ../configure --enable-virtfs --enable-debug \
+  --extra-cflags="-fsanitize=address -fno-omit-frame-pointer" \
+  --extra-ldflags="-fsanitize=address" ...
+
+Even though this is a new test suite, in the codebase separate
+from the already existing deterministic 9pfs test cases (while
+9p test client code being shared between the two test suites),
+this new race test suite is run with the same binary as the
+other qtests. However being a very slow test, it is registered
+as such, so the -m slow argument is required for this race test
+to run (as it is skipped by default):
+
+  ASAN_OPTIONS=detect_leaks=0 \
+  tests/qtest/qos-test -m slow
+
+Or if you only want to run this single race test (e.g. on x86_64):
+
+  ASAN_OPTIONS=detect_leaks=0 \
+  tests/qtest/qos-test -m slow -p \
+  /x86_64/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/race/fid-path
+
+On other systems, use `tests/qtest/qos-test -l` to get the correct
+(arch dependent) full test name.
+
+`ASAN_OPTIONS=detect_leaks=0` is currently required, it suppresses
+a memory leak error at the end of each race test, which is a known
+QEMU shutdown memory leak, unrelated to 9p server or this race test
+suite. The official QEMU CI pipeline sets
+`ASAN_OPTIONS=detect_leaks=0` by default for this reason.
+
+There are some knobs that can be controlled via environment
+variables:
+
+  V9FS_RACE_ROUNDS: total amount of rounds to run
+                    (default: 20000)
+
+  V9FS_RACE_NCONCURRENT: amount of concurrent reader requests
+                         (default: 4)
+
+A full run with 20000 rounds took around 7 minutes on my test
+machine. If you can't hit the (narrow) race window with
+unpatched QEMU, it might help to either add some load on the
+host system and/or turning the two knobs above.
+
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ MAINTAINERS                       |   1 +
+ tests/qtest/meson.build           |   1 +
+ tests/qtest/virtio-9p-race-test.c | 554 ++++++++++++++++++++++++++++++
+ 3 files changed, 556 insertions(+)
+ create mode 100644 tests/qtest/virtio-9p-race-test.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1b66c65f68..0aa36ab53f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2558,6 +2558,7 @@ F: hw/9pfs/
+ X: hw/9pfs/xen-9p*
+ F: fsdev/
+ F: tests/qtest/virtio-9p-test.c
++F: tests/qtest/virtio-9p-race-test.c
+ F: tests/qtest/libqos/virtio-9p*
+ T: git https://github.com/cschoenebeck/qemu.git 9p.next
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 33f58b0e95..4d0f29a7d3 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -365,6 +365,7 @@ if host_os != 'windows'
+ endif
+ if have_virtfs
+   qos_test_ss.add(files('virtio-9p-test.c'))
++  qos_test_ss.add(files('virtio-9p-race-test.c'))
+ endif
+ if have_vhost_user
+   qos_test_ss.add(files('vhost-user-test.c'))
+diff --git a/tests/qtest/virtio-9p-race-test.c b/tests/qtest/virtio-9p-race-test.c
+new file mode 100644
+index 0000000000..d376565626
+--- /dev/null
++++ b/tests/qtest/virtio-9p-race-test.c
+@@ -0,0 +1,554 @@
++/*
++ * virtio 9p fs concurrency race test
++ *
++ * Copyright (c) 2026 Christian Schoenebeck <qemu_oss@crudebyte.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Implements a probabilistic stress test suite (not deterministic reproducers)
++ * by simulating concurrent requests on the same 9p FID. This test suite is
++ * expected to be built and run with sanitizers (e.g. ASan) that are supposed
++ * to actually uncover potential races e.g. by detecting memory violations.
++ */
++
++/*
++ * Not so fast! You might want to read the 9p developer docs first:
++ * https://wiki.qemu.org/Documentation/9p
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "libqos/virtio.h"
++#include "libqos/virtio-9p-client.h"
++#include "libqos/virtio-9p.h"
++
++/*
++ * RACE TEST SUITE INFRASTRUCTURE
++ *
++ * The following functions implement the shared code for all 9p race
++ * tests.
++ */
++
++/* depth of the d1/d2/d3 directory chain created below the export root */
++#define V9P_RACE_DIR_DEPTH 3
++
++/* export root FID */
++#define V9P_RACE_ROOT_FID 0
++
++/* d1 FID of the d1/d2/d3 path chain */
++#define V9P_RACE_D1_FID   40
++/* d2 FID of the d1/d2/d3 path chain */
++#define V9P_RACE_D2_FID   41
++/* d3 FID of the d1/d2/d3 path chain */
++#define V9P_RACE_D3_FID   42
++
++/*
++ * FID range of automatically generated and recycled FIDs per race round.
++ * Kept small and away from the constant FIDs above.
++ */
++#define V9P_RACE_FID_ROUND_BASE 100
++#define V9P_RACE_FID_ROUND_SLOTS 32
++
++static uint16_t v9p_race_tag;
++
++/* returns a new tag for the next 9p request */
++static uint16_t v9p_race_new_tag(void)
++{
++    v9p_race_tag++;
++    /* tag 0 is the reserved no-tag (P9_NOTAG) value, not a real tag */
++    if (v9p_race_tag == 0) {
++        v9p_race_tag = 1;
++    }
++    return v9p_race_tag;
++}
++
++/*
++ * How long the test suite waits for one pending request to arrive before
++ * concluding the 9p server is stuck; ASan builds may be slow, so keep it
++ * generous.
++ */
++#define V9P_RACE_TIMEOUT_US (30 * G_USEC_PER_SEC)
++
++/*
++ * Maximum amount of pending 9p server responses ever expected.
++ *
++ * This is directly tied to server's MAX_REQ (which currently yields to 128).
++ */
++#define V9P_RACE_RCVD_REPL_MAX (MAX_REQ)
++
++/*
++ * A local stash of already received 9p responses.
++ *
++ * With several 9p requests in-flight, used ring entries can arrive in a
++ * different order than the requests were originally sent. A consumed virtio
++ * ring entry belonging to a not-yet-collected response is queued here as a
++ * received-but-unprocessed reply record. The response payload itself stays in
++ * the request's guest buffer either way, so the descriptor index alone is
++ * enough to acquire it later on.
++ */
++static struct {
++    uint32_t desc_idx;
++    uint32_t len;
++    bool used;
++} v9p_race_rcvd_resp[V9P_RACE_RCVD_REPL_MAX];
++
++/*
++ * Reset virtio test driver's descriptor pool.
++ *
++ * The qtest virtio driver never recycles used descriptors, so the
++ * descriptor table (one queue-size worth of entries) must be reset
++ * whenever it is about to run out. Safe as long as no request is in
++ * flight (call between completed round-trips or at the start of a
++ * round where all previous requests have been collected).
++ */
++static void v9p_race_reset_pool(QVirtio9P *v9p)
++{
++    qvirtqueue_reset_pool(v9p->vq);
++}
++
++/*
++ * Feed the QEMU main loop with one no-op qtest command round-trip.
++ *
++ * In qtest mode the 9p device state only advances while the QEMU main
++ * loop services a qtest command: servicing the command runs inside one
++ * main loop iteration, which also dispatches previously queued
++ * virtqueue kicks, steps the 9p handler coroutines on the main thread
++ * (their worker-side parts run on independent thread pool threads) and
++ * writes completed responses back into the virtio used ring.
++ */
++static void v9p_race_feed_main_loop(QVirtio9P *v9p)
++{
++    /*
++     * The read target is the virtqueue descriptor table, which only this
++     * test writes, so the command has no side effects. The read value is
++     * discarded.
++     */
++    qtest_readl(global_qtest, v9p->vq->desc);
++}
++
++/* stash the received reply identified by @desc_idx for later processing */
++static void v9p_race_rcvd_resp_add(uint32_t desc_idx, uint32_t len)
++{
++    int i;
++
++    for (i = 0; i < V9P_RACE_RCVD_REPL_MAX; i++) {
++        if (!v9p_race_rcvd_resp[i].used) {
++            v9p_race_rcvd_resp[i].used = true;
++            v9p_race_rcvd_resp[i].desc_idx = desc_idx;
++            v9p_race_rcvd_resp[i].len = len;
++            return;
++        }
++    }
++    g_assert_not_reached();
++}
++
++/*
++ * Pickup the previously stashed reply for @desc_idx, returning its length,
++ * or UINT32_MAX if no reply for that request has been received yet.
++ */
++static uint32_t v9p_race_rcvd_resp_remove(uint32_t desc_idx)
++{
++    int i;
++
++    for (i = 0; i < V9P_RACE_RCVD_REPL_MAX; i++) {
++        if (v9p_race_rcvd_resp[i].used &&
++            v9p_race_rcvd_resp[i].desc_idx == desc_idx) {
++            uint32_t len = v9p_race_rcvd_resp[i].len;
++
++            v9p_race_rcvd_resp[i].used = false;
++            return len;
++        }
++    }
++    return UINT32_MAX;
++}
++
++/*
++ * Wait for the used ring entry of @req, returns immediately if the response
++ * was already received.
++ *
++ * As responses may arrive in a different order than their requests were
++ * originally sent, received responses that belong to a different, in-flight
++ * request are locally stashed instead (waiting for later pickup).
++ *
++ * NOTE: this implementation polls the used ring directly instead of waiting
++ * on the legacy virtio interrupt status register (ISR) that
++ * qvirtio_wait_used_elem() uses: that register is a single boolean read-clear
++ * flag, not a counter. So it could hide several used-ring entries. And since
++ * that flag is not re-raised for entries that already arrived in the ring,
++ * waiting on the ISR could continue for good, even though all response
++ * entries were already received. Furthermore, qvirtio_wait_used_elem() asserts
++ * that it receives the response of its own request next from the virtio ring.
++ * So we can't use qvirtio_wait_used_elem(), as it is designed to receive
++ * exactly one (in-order) response, whereas this race test is designed to
++ * receive several out-of-order responses.
++ */
++static void v9p_race_req_wait(QVirtio9P *v9p, P9Req *req, uint32_t *len)
++{
++    gint64 start = g_get_monotonic_time();
++
++    /* did the response already arrive and was just stashed locally? */
++    *len = v9p_race_rcvd_resp_remove(req->free_head);
++    if (*len != UINT32_MAX) {
++        return;
++    }
++
++    /* poll virtio ring until requested response arrived */
++    while (true) {
++        uint32_t idx;
++
++        if (qvirtqueue_get_buf(global_qtest, v9p->vq, &idx, len)) {
++            if (idx == req->free_head) {
++                return;
++            }
++            /* not the response we asked for, stash it then continue */
++            v9p_race_rcvd_resp_add(idx, *len);
++        }
++        g_usleep(1000);
++        if (g_get_monotonic_time() - start > V9P_RACE_TIMEOUT_US) {
++            g_printerr("TIMEOUT waiting for tag=%u (free_head=%u)\n",
++                       req->tag, req->free_head);
++            fflush(stderr);
++            g_assert_not_reached();
++        }
++    }
++}
++
++/*
++ * Wait for the response of @req, verify the tag and return the response
++ * ID. Frees @req.
++ */
++static uint8_t v9p_race_resp_collect(QVirtio9P *v9p, P9Req *req)
++{
++    uint32_t len;
++    P9MsgHeader hdr;
++
++    v9p_race_req_wait(v9p, req, &len);
++    v9fs_memread(req, &hdr, sizeof(hdr));
++    g_assert_cmpint(hdr.tag_le, ==, req->tag);
++    g_assert_cmpint(hdr.size_le, >=, sizeof(hdr));
++    v9fs_req_free(req);
++    return hdr.id;
++}
++
++/* Tolerant Tclunk: the FID may or may not exist on the server. */
++static void v9p_race_clunk_relaxed(QVirtio9P *v9p, uint32_t fid)
++{
++    TClunkRes res = v9fs_tclunk((TClunkOpt) {
++        .client = v9p,
++        .fid = fid,
++        .tag = v9p_race_new_tag(),
++        .requestOnly = true,
++    });
++
++    v9p_race_resp_collect(v9p, res.req);
++}
++
++/* Tolerant Tunlinkat: the entry may or may not exist on the server. */
++static void v9p_race_unlink_relaxed(QVirtio9P *v9p, uint32_t dfid,
++                                    const char *name, uint32_t flags)
++{
++    TunlinkatRes res = v9fs_tunlinkat((TunlinkatOpt) {
++        .client = v9p,
++        .dirfd = dfid,
++        .name = name,
++        .flags = flags,
++        .tag = v9p_race_new_tag(),
++        .requestOnly = true,
++    });
++
++    v9p_race_resp_collect(v9p, res.req);
++}
++
++/*
++ * Create the d1/d2/d3 directory chain inside the attached export root,
++ * walking each level into its own FID (V9P_RACE_D1_FID .. V9P_RACE_D3_FID).
++ */
++static void v9p_race_create_subdir_chain(QVirtio9P *v9p)
++{
++    uint16_t dfid = V9P_RACE_ROOT_FID;
++    int i;
++
++    for (i = 1; i <= V9P_RACE_DIR_DEPTH; ++i) {
++        char dir[8];
++        char *wnames[] = { dir };
++        uint16_t newfid =
++            (i == 1) ? V9P_RACE_D1_FID
++                     : (i == 2) ? V9P_RACE_D2_FID : V9P_RACE_D3_FID;
++
++        snprintf(dir, sizeof(dir), "d%d", i);
++        v9fs_tmkdir((TMkdirOpt) {
++            .client = v9p,
++            .dfid = dfid,
++            .name = dir,
++            .mode = 0755,
++            .gid = 0,
++            .tag = v9p_race_new_tag(),
++        });
++        v9fs_twalk((TWalkOpt) {
++            .client = v9p,
++            .fid = dfid,
++            .newfid = newfid,
++            .nwname = 1,
++            .wnames = wnames,
++            .tag = v9p_race_new_tag(),
++        });
++        dfid = newfid;
++    }
++}
++
++/* Prepare this test suite for running a race test. */
++static void v9p_race_prepare(QVirtio9P *v9p)
++{
++    int i;
++
++    /* init local response stash */
++    for (i = 0; i < V9P_RACE_RCVD_REPL_MAX; i++) {
++        v9p_race_rcvd_resp[i].used = false;
++    }
++
++    /* attach to export root */
++    v9fs_tattach((TAttachOpt) {
++        .client = v9p,
++        .fid = V9P_RACE_ROOT_FID,
++        .tag = v9p_race_new_tag(),
++    });
++
++    /* create the d1/d2/d3 subdir chain */
++    v9p_race_create_subdir_chain(v9p);
++
++    /* open d2 and d3 as directory FIDs (V9P_RACE_D2_FID and V9P_RACE_D3_FID) */
++    v9fs_tlopen((TLOpenOpt) {
++        .client = v9p,
++        .fid = V9P_RACE_D2_FID,
++        .flags = O_DIRECTORY,
++        .tag = v9p_race_new_tag(),
++    });
++    v9fs_tlopen((TLOpenOpt) {
++        .client = v9p,
++        .fid = V9P_RACE_D3_FID,
++        .flags = O_DIRECTORY,
++        .tag = v9p_race_new_tag(),
++    });
++}
++
++/* Cleanup after running a race test. */
++static void v9p_race_cleanup(void *data)
++{
++    /* remove the temp directory used as export root */
++    virtio_9p_remove_local_test_dir();
++}
++
++/* number of rounds a race test runs, shared by all race tests */
++static uint32_t v9p_race_rounds(void)
++{
++    const char *val = getenv("V9FS_RACE_ROUNDS");
++
++    if (val && *val) {
++        return atoi(val);
++    }
++    return 20000;
++}
++
++/* number of unsynchronized in-flight race requests per round */
++static int v9p_race_nconcurrent(void)
++{
++    const char *val = getenv("V9FS_RACE_NCONCURRENT");
++    int nreqs = 4;
++
++    if (val && *val) {
++        nreqs = atoi(val);
++    }
++    /* an empty or invalid value falls back to the built-in default */
++    if (nreqs < 1) {
++        nreqs = 4;
++    }
++    return nreqs;
++}
++
++/*
++ * RACE TEST CASES
++ *
++ * The individual 9p race test scenarios.
++ */
++
++/*
++ * Race 9p server's internal FID-path string (CVE-2026-93834).
++ *
++ * Per round, race one Tlcreate (mutating the FID path) request against
++ * FID path reader requests (Twalk and Txattrwalk) on the same FID.
++ */
++static void v9p_race_fid_path(void *obj, void *data, QGuestAllocator *t_alloc)
++{
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++    QVirtio9P *v9p = obj;
++    uint32_t rounds = v9p_race_rounds();
++    unsigned long created_files = 0;
++    unsigned long xattr_fids = 0, walk_fids = 0;
++    uint32_t i, d, k;
++    int nconcurrent = v9p_race_nconcurrent();
++    g_autofree P9Req **readers = NULL;
++
++    v9fs_set_allocator(t_alloc);
++    v9p_race_prepare(v9p);
++
++    /*
++     * A round consumes one twalk, the Tlcreate itself, nconcurrent
++     * readers and up to nconcurrent + 2 clunks/unlinks from the
++     * per-round reset descriptor pool, so limit nconcurrent by the
++     * queue size.
++     */
++    if (4 + 2 * nconcurrent > v9p->vq->size / 2) {
++        g_error("V9FS_RACE_NCONCURRENT: %d readers need %d requests "
++                "per round, but the queue holds at most %d",
++                nconcurrent, 4 + 2 * nconcurrent, v9p->vq->size / 2);
++    }
++    readers = g_new0(P9Req *, nconcurrent);
++
++    for (i = 0; i < rounds; i++) {
++        uint16_t fid_a = V9P_RACE_FID_ROUND_BASE +
++                         (i % V9P_RACE_FID_ROUND_SLOTS);
++        uint16_t fid_b = fid_a + 100;
++        uint16_t fid_c = fid_a + 200;
++        char name[16];
++        uint16_t tag_a = v9p_race_new_tag();
++        P9Req *req_a;
++        uint8_t resp_a;
++
++        /* progress notification */
++        if (i % 2000 == 0) {
++            g_print("race/fid-path: %u/%u rounds\n", i, rounds);
++            fflush(stdout);
++        }
++
++        /*
++         * Reset the descriptor pool at the start of every round, where
++         * no request is in-flight anymore.
++         */
++        v9p_race_reset_pool(v9p);
++
++        /* clone a FID of the target directory */
++        v9fs_twalk((TWalkOpt) {
++            .client = v9p,
++            .fid = V9P_RACE_D3_FID,
++            .newfid = fid_a,
++            .nwname = 0,
++            .tag = v9p_race_new_tag(),
++        });
++
++        snprintf(name, sizeof(name), "r%05x", i);
++
++        /*
++         * writer: Tlcreate on fid_a mutates its (9p server internal) FID-path
++         * string
++         */
++        req_a = v9fs_tlcreate((TlcreateOpt) {
++            .client = v9p,
++            .fid = fid_a,
++            .name = name,
++            .flags = O_RDWR | O_CREAT,
++            .mode = 0644,
++            .gid = 0,
++            .tag = tag_a,
++            .requestOnly = true,
++        }).req;
++
++        /*
++         * readers: Twalk and Txattrwalk requests
++         *
++         * Each reader request is sent after a few v9p_race_feed_main_loop()
++         * calls. That allows the Tlcreate PDU advance processing.
++         */
++        for (k = 0; k < nconcurrent; k++) {
++            /*
++             * Feed the main loop between 0..4 times.
++             *
++             * The amount of main loop feeds is changed per round and per
++             * reader. That way we create different time gaps between the
++             * writer (Tlcreate) and readers, which increases probability
++             * to hit the quite small window where a FID path is mutated.
++             */
++            for (d = 0; d < ((i + k) % 5); d++) {
++                v9p_race_feed_main_loop(v9p);
++            }
++            if (!(k & 1)) {
++                uint16_t tag_c = v9p_race_new_tag();
++
++                /* Txattrwalk (list xattrs) */
++                readers[k] = v9fs_txattrwalk((TXattrWalkOpt) {
++                    .client = v9p,
++                    .fid = fid_a,
++                    .newfid = fid_c + k,
++                    .name = "", /* empty xattr name -> list xattrs */
++                    .tag = tag_c,
++                    .requestOnly = true,
++                }).req;
++            } else {
++                uint16_t tag_b = v9p_race_new_tag();
++
++                /* Twalk (clone FID) */
++                readers[k] = v9fs_twalk((TWalkOpt) {
++                    .client = v9p,
++                    .fid = fid_a,
++                    .newfid = fid_b + k,
++                    .nwname = 0, /* no names to be walked -> clone FID */
++                    .tag = tag_b,
++                    .requestOnly = true,
++                }).req;
++            }
++        }
++
++        resp_a = v9p_race_resp_collect(v9p, req_a);
++        for (k = 0; k < nconcurrent; k++) {
++            uint8_t resp_r = v9p_race_resp_collect(v9p, readers[k]);
++
++            if (!(k & 1) && resp_r == P9_RXATTRWALK) {
++                xattr_fids++;
++                v9p_race_clunk_relaxed(v9p, fid_c + k);
++            } else if ((k & 1) && resp_r == P9_RWALK) {
++                walk_fids++;
++                v9p_race_clunk_relaxed(v9p, fid_b + k);
++            }
++        }
++        v9p_race_clunk_relaxed(v9p, fid_a);
++        if (resp_a == P9_RLCREATE) {
++            created_files++;
++            v9p_race_unlink_relaxed(v9p, V9P_RACE_D3_FID, name, 0);
++        }
++    }
++
++    g_print("race/fid-path: %u rounds done, %lu files created, %lu walk "
++            "fids, %lu xattr fids\n",
++            rounds, created_files, walk_fids, xattr_fids);
++    fflush(stdout);
++}
++
++/* setup and cleanup for race tests using the 9p 'local' fs driver */
++static void *v9p_race_local_driver(GString *cmd_line, void *arg)
++{
++    /* create a temp directory for being used as 9p export root */
++    virtio_9p_create_local_test_dir();
++    /*
++     * Use the "mapped-file" security model (not "mapped-xattr"): xattr only
++     * works on file systems and systems that support and permit writing
++     * xattrs. mapped-file (hidden .virtfs_metadata files) OTOH is universally
++     * more tolerant.
++     */
++    virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-file");
++    g_test_queue_destroy(v9p_race_cleanup, NULL);
++    return arg;
++}
++
++/* register this overall test-suite */
++static void v9p_race_register_tests(void)
++{
++    QOSGraphTestOptions opts = {
++        .before = v9p_race_local_driver,
++    };
++
++    qos_add_test("race/fid-path", "virtio-9p", v9p_race_fid_path, &opts);
++}
++
++libqos_init(v9p_race_register_tests);
+-- 
+2.47.3
 
 
