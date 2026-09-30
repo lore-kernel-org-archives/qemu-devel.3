@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118C7CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C63CA5FBB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBoJn-0001Sy-Vh; Wed, 30 Sep 2026 03:01:32 -0400
+	id 1xBoJh-0000t8-3L; Wed, 30 Sep 2026 03:01:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xBoJl-0001H8-DV
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:29 -0400
+ id 1xBoJc-0000pO-9Y
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:20 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xBoJj-0006bI-CD
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:29 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1xBoJZ-0006Zu-Gw
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:19 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8AxX9O8s7xqq0IRAA--.50384S3;
- Wed, 30 Sep 2026 15:01:16 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJCxOs6ws7xqq+MmAA--.53251S5;
+ by gateway (Coremail) with SMTP id _____8AxX9O4s7xqpEIRAA--.50382S3;
  Wed, 30 Sep 2026 15:01:12 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCxOs6ws7xqq+MmAA--.53251S4;
+ Wed, 30 Sep 2026 15:01:11 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>,
  xiaoqiang zhao <zxq_yx_007@163.com>
-Subject: [PULL 3/4] tests/acpi: Update SPCR loongarch64 test data
-Date: Wed, 30 Sep 2026 15:02:26 +0800
-Message-ID: <20260930070227.1079521-4-maobibo@loongson.cn>
+Subject: [PULL 2/4] hw/loongarch/virt: Fix SPCR bitwidth value
+Date: Wed, 30 Sep 2026 15:02:25 +0800
+Message-ID: <20260930070227.1079521-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260930070227.1079521-1-maobibo@loongson.cn>
 References: <20260930070227.1079521-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxOs6ws7xqq+MmAA--.53251S5
+X-CM-TRANSID: qMiowJCxOs6ws7xqq+MmAA--.53251S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ww1fGF4kGw4DXFWrCFW5twc_yoW8Crykp3
- 47AwsF9rs7JasrCrn5GFZ7tF1rJFZxCFnFkFyxAryj9wnxurn8ZrnIq34jga43Jw4rur4f
- Zw18Kr10vw1rWwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
- Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
- 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
- vE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
- 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
- kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU7MmhUUUUU
+X-Coremail-Antispam: 1Uk129KBj9xXoWruryfAFyrCFyUXFWxWF45Jwc_yoWDCwb_W3
+ Z3GF1UXw18XF9rtw18ua1rAr17Xw18ZFs3uFnrZr1kJas0qr43KFZF9anFvF9FyrWUu393
+ XanFqr1fCr9xGosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb28YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,55 +79,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: xiaoqiang zhao <zhaoxiaoqiang007@gmail.com>
 
-diffs from "iasl -d":
-
-  * ACPI Data Table [SPCR]
-  *
-@@ -13,7 +13,7 @@
- [000h 0000 004h]                   Signature : "SPCR"    [Serial Port
-Console Redirection Table]
- [004h 0004 004h]                Table Length : 00000050
- [008h 0008 001h]                    Revision : 02
--[009h 0009 001h]                    Checksum : C1
-+[009h 0009 001h]                    Checksum : D9
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
-@@ -25,7 +25,7 @@
-
- [028h 0040 00Ch]        Serial Port Register : [Generic Address
-Structure]
- [028h 0040 001h]                    Space ID : 00 [SystemMemory]
--[029h 0041 001h]                   Bit Width : 20
-+[029h 0041 001h]                   Bit Width : 08
- [02Ah 0042 001h]                  Bit Offset : 00
- [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
- [02Ch 0044 008h]                     Address : 000000001FE001E0
+Serial base_addr.width should be 8 instead of 32.
+The wrong reported data will cause ADE in FreeBSD console initialize
+process and trigger a reset loop.
 
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- tests/data/acpi/loongarch64/virt/SPCR       | Bin 80 -> 80 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
+ hw/loongarch/virt-acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
-index 7bb819cd0d2ad20269e40e4a738709a45260cbb2..773433f240eced67530109035ef78a99945472d2 100644
-GIT binary patch
-delta 21
-ccmWFt;0g|K4hmpkU|_mAkxQPDW1^NC05!G*vH$=8
-
-delta 21
-ccmWFt;0g|K4hmpkU|>2pkxQOYVWO5A05v`YvH$=8
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 53702282e5..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--tests/data/acpi/loongarch64/virt/SPCR
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 600ef60fc5..54965f011d 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -268,7 +268,7 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+     AcpiSpcrData serial = {
+         .interface_type = 0,       /* 16550 compatible */
+         .base_addr.id = AML_AS_SYSTEM_MEMORY,
+-        .base_addr.width = 32,
++        .base_addr.width = 8,
+         .base_addr.offset = 0,
+         .base_addr.size = 1,
+         .base_addr.addr = VIRT_UART_BASE,
 -- 
 2.54.0
 
