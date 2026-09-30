@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28EACA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEEDCA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrk8-0004FD-U1; Wed, 30 Sep 2026 06:40:57 -0400
+	id 1xBrkd-0006eK-F2; Wed, 30 Sep 2026 06:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriq-0001Ob-1V
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrix-0001YO-LZ
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrih-0006mH-Kn
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:35 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrim-0006pT-4k
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764766;
+ s=mimecast20190719; t=1790764771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v9kexHToA4g8KAAOeKD2TikW0yeAiu0gVKdUWBf5nbY=;
- b=W7GsLACSXidRYQzoz1N0HYwZJSobxmsLXg1pPF3BftuLKiR0SihBQM6yNuRbh5rwjPUM16
- g7i8IH4KRGmAqDrf9+X2bEj0g+O7PJyKI2olY1X+bTzyJzywfPFJC5jrCuFFDYnKTTLYrf
- QKnqKqeIHF+w8rZZznGBFhMJ5l7Idc4=
+ bh=KThs58CDJc4sJ4/95J/iM0XqI88WJdw/EXHS0/mcfMQ=;
+ b=fbW22H+1ANHOJX/q5eo4PgFfl2jG1ZJUUjeaFWJlcV3nWe4ctE8rR1vism6Cixl1OhbEW6
+ hSM02XcGaWaLyadV7K0FEy+MGhSZ1qIDc7qrf1Tsr7yJSagYs3VGJ99luXz1JjmvLleo6J
+ eACQKatm+q55tf8Gkoe55S5M/z8XGNY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-yho9LXZEP-usrfvpdt4acA-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-f9wNE96_OuSoD2N2cA3Pvg-1; Wed,
  30 Sep 2026 06:39:23 -0400
-X-MC-Unique: yho9LXZEP-usrfvpdt4acA-1
-X-Mimecast-MFC-AGG-ID: yho9LXZEP-usrfvpdt4acA_1790764762
+X-MC-Unique: f9wNE96_OuSoD2N2cA3Pvg-1
+X-Mimecast-MFC-AGG-ID: f9wNE96_OuSoD2N2cA3Pvg_1790764762
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 982F1186FBB7; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
+ id AE5381865FCF; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52555195604E; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
+ id 2360A195604D; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6F8B021E677C; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id 679BC21E6742; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 053/105] qapi: convert simple command intros for migration.json
-Date: Wed, 30 Sep 2026 12:38:18 +0200
-Message-ID: <20260930103910.3934848-54-armbru@redhat.com>
+Subject: [PULL 051/105] qapi: convert simple command intros for cxl.json
+Date: Wed, 30 Sep 2026 12:38:16 +0200
+Message-ID: <20260930103910.3934848-52-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -86,124 +86,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260901194324.458482-11-jsnow@redhat.com>
+Message-ID: <20260901194324.458482-9-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/migration.json | 51 +++++++++++++++++++--------------------------
- 1 file changed, 22 insertions(+), 29 deletions(-)
+ qapi/cxl.json | 74 +++++++++++++++++++++++----------------------------
+ 1 file changed, 34 insertions(+), 40 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 91681cdf03..1d4cdba5a0 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -333,9 +333,9 @@
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index aef849a4c2..58ad82c2dc 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -118,10 +118,9 @@
  
  ##
- # @query-migrate:
+ # @cxl-inject-general-media-event:
 -#
--# Return information about current migration process.  If migration is
--# active there will be another json-object with RAM migration status.
-+#     Return information about current migration process.  If
-+#     migration is active there will be another json-object with RAM
-+#     migration status.
+-# Inject an event record for a General Media Event (CXL r3.2
+-# 8.2.10.2.1.1).  This event type is reported via one of the event
+-# logs specified via the log parameter.
++#     Inject an event record for a General Media Event (CXL r3.2
++#     8.2.10.2.1.1).  This event type is reported via one of the event
++#     logs specified via the log parameter.
  #
- # Since: 0.14
- #
-@@ -825,8 +825,7 @@
+ # Since: 8.1
+ ##
+@@ -201,10 +200,9 @@
  
  ##
- # @migrate-set-parameters:
+ # @cxl-inject-dram-event:
 -#
--# Set migration parameters.  All arguments are optional.
-+#     Set migration parameters.  All arguments are optional.
+-# Inject an event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
+-# This event type is reported via one of the event logs
+-# specified via the log parameter.
++#     Inject an event record for a DRAM Event (CXL r3.2 8.2.10.2.1.2).
++#     This event type is reported via one of the event logs specified
++#     via the log parameter.
  #
- # Since: 2.4
- #
-@@ -1060,11 +1059,10 @@
+ # Since: 8.1
+ ##
+@@ -267,10 +265,9 @@
  
  ##
- # @query-migrate-parameters:
+ # @cxl-inject-memory-module-event:
 -#
--# Return information about the current migration parameters.  Optional
--# members of the return value are always present, except
--# @block-bitmap-mapping, which is only present if it has been
--# previously set.
-+#     Return information about the current migration parameters.
-+#     Optional members of the return value are always present, except
-+#     @block-bitmap-mapping, which is only present if it has been
-+#     previously set.
+-# Inject an event record for a Memory Module Event (CXL r3.2
+-# 8.2.10.2.1.3).  This event includes a copy of the Device Health info
+-# at the time of the event.
++#     Inject an event record for a Memory Module Event (CXL r3.2
++#     8.2.10.2.1.3).  This event includes a copy of the Device Health
++#     info at the time of the event.
  #
- # Since: 2.4
- #
-@@ -1085,10 +1083,9 @@
+ # Since: 8.1
+ ##
+@@ -279,13 +276,12 @@
  
  ##
- # @migrate-start-postcopy:
+ # @cxl-inject-poison:
 -#
--# Followup to a migration command to switch the migration to postcopy
--# mode.  The postcopy-ram capability must be set on both source and
--# destination before the original migration command.
-+#     Followup to a migration command to switch the migration to
-+#     postcopy mode.  The postcopy-ram capability must be set on both
-+#     source and destination before the original migration command.
+-# Poison records indicate that a CXL memory device knows that a
+-# particular memory region may be corrupted.  This may be because of
+-# locally detected errors (e.g. ECC failure) or poisoned writes
+-# received from other components in the system.  This injection
+-# mechanism enables testing of the OS handling of poison records which
+-# may be queried via the CXL mailbox.
++#     Poison records indicate that a CXL memory device knows that a
++#     particular memory region may be corrupted.  This may be because
++#     of locally detected errors (e.g. ECC failure) or poisoned writes
++#     received from other components in the system.  This injection
++#     mechanism enables testing of the OS handling of poison records
++#     which may be queried via the CXL mailbox.
  #
- # Since: 2.5
+ # @path: CXL type 3 device canonical QOM path
  #
-@@ -1235,12 +1232,11 @@
+@@ -382,9 +378,8 @@
  
  ##
- # @x-colo-lost-heartbeat:
+ # @cxl-inject-uncorrectable-errors:
 -#
--# Tell QEMU that heartbeat is lost, request it to do takeover
--# procedures.  If this command is sent to the PVM, the Primary side
--# will exit COLO mode.  If sent to the Secondary, the Secondary side
--# will run failover work, then takes over server operation to become
--# the service VM.
-+#     Tell QEMU that heartbeat is lost, request it to do takeover
-+#     procedures.  If this command is sent to the PVM, the Primary
-+#     side will exit COLO mode.  If sent to the Secondary, the
-+#     Secondary side will run failover work, then takes over server
-+#     operation to become the service VM.
+-# Command to allow injection of multiple errors in one go.  This
+-# allows testing of multiple header log handling in the OS.
++#     Command to allow injection of multiple errors in one go.  This
++#     allows testing of multiple header log handling in the OS.
  #
- # Features:
+ # @path: CXL Type 3 device canonical QOM path
  #
-@@ -1455,9 +1451,8 @@
+@@ -430,12 +425,11 @@
  
  ##
- # @migrate-incoming:
+ # @cxl-inject-correctable-error:
 -#
--# Start an incoming migration.  QEMU must have been started with
--# -incoming defer.
-+#     Start an incoming migration.  QEMU must have been started with
-+#     -incoming defer.
+-# Command to inject a single correctable error.  Multiple error
+-# injection of this error type is not interesting as there is no
+-# associated header log.  These errors are reported via AER as a
+-# correctable internal error, with additional detail available from
+-# the CXL device.
++#     Command to inject a single correctable error.  Multiple error
++#     injection of this error type is not interesting as there is no
++#     associated header log.  These errors are reported via AER as a
++#     correctable internal error, with additional detail available
++#     from the CXL device.
  #
- # @uri: The Uniform Resource Identifier identifying the source or
- #     address to listen on
-@@ -1527,9 +1522,8 @@
+ # @path: CXL Type 3 device canonical QOM path
+ #
+@@ -510,12 +504,12 @@
  
  ##
- # @xen-save-devices-state:
+ # @cxl-add-dynamic-capacity:
 -#
--# Save the state of all devices to file.  The RAM and the block
--# devices of the VM are not saved by this command.
-+#     Save the state of all devices to file.  The RAM and the block
-+#     devices of the VM are not saved by this command.
+-# Initiate adding dynamic capacity extents to a host.  This simulates
+-# operations defined in Compute Express Link (CXL) Specification,
+-# Revision 3.1, Section 7.6.7.6.5.  Note that, currently, establishing
+-# success or failure of the full Add Dynamic Capacity flow requires
+-# out of band communication with the OS of the CXL host.
++#     Initiate adding dynamic capacity extents to a host.  This
++#     simulates operations defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Section 7.6.7.6.5.  Note that,
++#     currently, establishing success or failure of the full Add
++#     Dynamic Capacity flow requires out of band communication with
++#     the OS of the CXL host.
  #
- # @filename: the file to save the state of the devices to as binary
- #     data.  See `xen-save-devices-state`.txt for a description of the
-@@ -1567,9 +1561,8 @@
+ # @path: path to the CXL Dynamic Capacity Device in the QOM tree.
+ #
+@@ -576,12 +570,12 @@
  
  ##
- # @xen-load-devices-state:
+ # @cxl-release-dynamic-capacity:
 -#
--# Load the state of all devices from file.  The RAM and the block
--# devices of the VM are not loaded by this command.
-+#     Load the state of all devices from file.  The RAM and the block
-+#     devices of the VM are not loaded by this command.
+-# Initiate release of dynamic capacity extents from a host.  This
+-# simulates operations defined in Compute Express Link (CXL)
+-# Specification, Revision 3.1, Section 7.6.7.6.6.  Note that,
+-# currently, success or failure of the full Release Dynamic Capacity
+-# flow requires out of band communication with the OS of the CXL host.
++#     Initiate release of dynamic capacity extents from a host.  This
++#     simulates operations defined in Compute Express Link (CXL)
++#     Specification, Revision 3.1, Section 7.6.7.6.6.  Note that,
++#     currently, success or failure of the full Release Dynamic
++#     Capacity flow requires out of band communication with the OS of
++#     the CXL host.
  #
- # @filename: the file to load the state of the devices from as binary
- #     data.  See `xen-save-devices-state`.txt for a description of the
+ # @path: path to the CXL Dynamic Capacity Device in the QOM tree.
+ #
 -- 
 2.55.0
 
