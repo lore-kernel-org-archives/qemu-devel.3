@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AE6CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A578CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrkf-0006uS-EE; Wed, 30 Sep 2026 06:41:29 -0400
+	id 1xBrii-0001Iz-0d; Wed, 30 Sep 2026 06:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj2-0001cr-Ad
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0001FK-Pr
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0006qh-Rb
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:47 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriZ-0006gy-U8
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764772;
+ s=mimecast20190719; t=1790764759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XGVb+9BDQJ1K2qRAe99bP1RQ/41agCjxvO4UGR5aeng=;
- b=FKuyQ3E3vOdGgxIQMDLtECHQmNL8gPvs1gGTouuR0sX/RYFEmLQzrQDQroCEewCinMpBGz
- TtnDZ3fqWv2z/5DklaUByypgOP4R7bVFhNfPHoNzvK4ZZ1a96lUmFtc7q/VtrGo/CjxCLV
- JXzYrAPB45nURTATSVYR0aavMU5WRXc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=wdWLY2wOhtkZeZtRDNHu4lvYz9s7NtxWr3TEqq7Ujbg=;
+ b=hCjkqX+gq/6rz0os/JA3JMjRHmiuFtxOAHI0EDaAD2S+DsBja4F7AWk2bwOghz6qFQzwaO
+ upSvk9yYodgtmUe664Wq51LDA3Srqw4qOBVQQjmHul7TnKSVMcjAVIlGl4gwAs/p1uAIck
+ tj4Q+Zu+uVxogZSqzlbkmrr/16X21Z8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-Plhmzg9pPzu_p9XZtdoZdg-1; Wed,
- 30 Sep 2026 06:39:29 -0400
-X-MC-Unique: Plhmzg9pPzu_p9XZtdoZdg-1
-X-Mimecast-MFC-AGG-ID: Plhmzg9pPzu_p9XZtdoZdg_1790764768
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-ukHZ2C2jMLqen3Ny1l9n2Q-1; Wed,
+ 30 Sep 2026 06:39:17 -0400
+X-MC-Unique: ukHZ2C2jMLqen3Ny1l9n2Q-1
+X-Mimecast-MFC-AGG-ID: ukHZ2C2jMLqen3Ny1l9n2Q_1790764756
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 607F8195F173; Wed, 30 Sep 2026 10:39:28 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 58E681809CB4; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8D4130000E8; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0779A19560AB; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2161121E657F; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
+ id A605221E6885; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 094/105] qapi: convert intro sections for
- docs/interop/firmware.json
-Date: Wed, 30 Sep 2026 12:38:59 +0200
-Message-ID: <20260930103910.3934848-95-armbru@redhat.com>
+Subject: [PULL 006/105] qapi: convert trivial intro sections for trace.json
+Date: Wed, 30 Sep 2026 12:37:31 +0200
+Message-ID: <20260930103910.3934848-7-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,202 +85,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-All conversions in this patch do not create a new documentation
-insertion point, except for one at the very end.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260922205605.501602-8-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-7-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/interop/firmware.json | 76 ++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 45 deletions(-)
+ qapi/trace.json | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 421bee0e5e..1efd32c631 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -23,9 +23,8 @@
+diff --git a/qapi/trace.json b/qapi/trace.json
+index de369dae6b..29c7625605 100644
+--- a/qapi/trace.json
++++ b/qapi/trace.json
+@@ -14,8 +14,7 @@
  
  ##
- # @FirmwareOSInterface:
+ # @TraceEventState:
 -#
--# Lists the firmware-OS interface types provided by various firmware
--# that is commonly used with QEMU virtual machines.
-+#     Lists the firmware-OS interface types provided by various
-+#     firmware that is commonly used with QEMU virtual machines.
+-# State of a tracing event.
++#     State of a tracing event.
  #
- # @bios: Traditional x86 BIOS interface.  For example, firmware built
- #     from the SeaBIOS project usually provides this interface.
-@@ -49,8 +48,7 @@
+ # @unavailable: The event is statically disabled.
+ #
+@@ -30,8 +29,7 @@
  
  ##
- # @FirmwareDevice:
+ # @TraceEventInfo:
 -#
--# Defines the device types that firmware can be mapped into.
-+#     Defines the device types that firmware can be mapped into.
+-# Information of a tracing event.
++#     Information of a tracing event.
  #
- # @flash: The firmware executable and its accompanying NVRAM file are
- #     to be mapped into a pflash chip each.
-@@ -75,9 +73,8 @@
+ # @name: Event name.
+ #
+@@ -44,8 +42,7 @@
  
  ##
- # @FirmwareArchitecture:
+ # @trace-event-get-state:
 -#
--# Enumeration of architectures for which Qemu uses additional firmware
--# files.
-+#     Enumeration of architectures for which Qemu uses additional
-+#     firmware files.
+-# Query the state of events.
++#     Query the state of events.
  #
- # @aarch64: 64-bit Arm.
+ # @name: Event name pattern (case-sensitive glob).
  #
-@@ -98,8 +95,7 @@
+@@ -65,8 +62,7 @@
  
  ##
- # @FirmwareTarget:
+ # @trace-event-set-state:
 -#
--# Defines the machine types that firmware may execute on.
-+#     Defines the machine types that firmware may execute on.
+-# Set the dynamic tracing state of events.
++#     Set the dynamic tracing state of events.
  #
- # @architecture: Determines the emulation target (the QEMU system
- #     emulator) that can execute the firmware.
-@@ -121,9 +117,8 @@
- 
- ##
- # @FirmwareFeature:
--#
--# Defines the features that firmware may support, and the platform
--# requirements that firmware may present.
-+#     Defines the features that firmware may support, and the platform
-+#     requirements that firmware may present.
+ # @name: Event name pattern (case-sensitive glob).
  #
- # @acpi-s3: The firmware supports S3 sleep (suspend to RAM), as
- #     defined in the ACPI specification.  On the "pc-i440fx-*" machine
-@@ -236,8 +231,7 @@
- 
- ##
- # @FirmwareFormat:
--#
--# Formats that are supported for firmware images.
-+#     Formats that are supported for firmware images.
- #
- # @raw: Raw disk image format.
- #
-@@ -250,12 +244,11 @@
- 
- ##
- # @FirmwareFlashFile:
--#
--# Defines common properties that are necessary for loading a firmware
--# file into a pflash chip.  The corresponding QEMU command line option
--# is "-drive file=@filename,format=@format".  Note however that the
--# option-argument shown here is incomplete; it is completed under
--# @FirmwareMappingFlash.
-+#     Defines common properties that are necessary for loading a
-+#     firmware file into a pflash chip.  The corresponding QEMU
-+#     command line option is "-drive file=@filename,format=@format".
-+#     Note however that the option-argument shown here is incomplete;
-+#     it is completed under @FirmwareMappingFlash.
- #
- # @filename: Specifies the filename on the host filesystem where the
- #     firmware file can be found.
-@@ -272,9 +265,8 @@
- 
- ##
- # @FirmwareFlashMode:
--#
--# Describes how the firmware build handles code versus variable
--# persistence.
-+#     Describes how the firmware build handles code versus variable
-+#     persistence.
- #
- # @split: the executable file contains code while the NVRAM template
- #     provides variable storage.  The executable must be configured
-@@ -298,9 +290,9 @@
- 
- ##
- # @FirmwareMappingFlash:
--#
--# Describes loading and mapping properties for the firmware executable
--# and its accompanying NVRAM file, when @FirmwareDevice is @flash.
-+#     Describes loading and mapping properties for the firmware
-+#     executable and its accompanying NVRAM file, when @FirmwareDevice
-+#     is @flash.
- #
- # @mode: Describes how the firmware build handles code versus variable
- #     storage.  If not present, it must be treated as if it was
-@@ -357,9 +349,8 @@
- 
- ##
- # @FirmwareMappingKernel:
--#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @kernel.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @kernel.
- #
- # @filename: Identifies the firmware executable.  The firmware
- #     executable may be shared by multiple virtual machine
-@@ -373,9 +364,8 @@
- 
- ##
- # @FirmwareMemoryUefiVars:
--#
--# Contains information needed to set up the "uefi-vars" device
--# to provide UEFI variable store access to the firmware.
-+#     Contains information needed to set up the "uefi-vars" device to
-+#     provide UEFI variable store access to the firmware.
- #
- # @template: The path to the UEFI JSON variable store template
- #     compatible with the firmware.  Management software instantiates
-@@ -406,9 +396,8 @@
- 
- ##
- # @FirmwareMappingMemory:
--#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @memory.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @memory.
- #
- # @filename: Identifies the firmware executable.  The firmware
- #     executable may be shared by multiple virtual machine
-@@ -430,9 +419,8 @@
- 
- ##
- # @FirmwareMappingIgvm:
--#
--# Describes loading and mapping properties for the firmware
--# executable, when @FirmwareDevice is @igvm.
-+#     Describes loading and mapping properties for the firmware
-+#     executable, when @FirmwareDevice is @igvm.
- #
- # @filename: Identifies the IGVM file containing the firmware
- #     executable along with other information used to configure the
-@@ -448,9 +436,8 @@
- 
- ##
- # @FirmwareMapping:
--#
--# Provides a discriminated structure for firmware to describe its
--# loading / mapping properties.
-+#     Provides a discriminated structure for firmware to describe its
-+#     loading / mapping properties.
- #
- # @device: Selects the device type that the firmware must be mapped
- #     into.
-@@ -467,9 +454,8 @@
- 
- ##
- # @Firmware:
--#
--# Describes a firmware (or a firmware use case) to management
--# software.
-+#     Describes a firmware (or a firmware use case) to management
-+#     software.
- #
- # It is possible for multiple @Firmware elements to match the search
- # criteria of management software.  Applications thus need rules to
 -- 
 2.55.0
 
