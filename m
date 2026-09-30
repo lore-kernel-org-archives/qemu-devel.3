@@ -4,124 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 681D6CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 14:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D59CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 14:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBuyv-00079Q-G3; Wed, 30 Sep 2026 10:08:25 -0400
+	id 1xBv1P-0007jy-GP; Wed, 30 Sep 2026 10:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBuyp-00078t-Rp
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:08:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1xBv1B-0007jY-Lz; Wed, 30 Sep 2026 10:10:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xBuyn-0001QL-Rc
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:08:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790777296;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KsXM6L2YhyUmsUZYqEZ4zdiIFt5coOEZCDGsrciV76k=;
- b=ePWlb+gDdh4WGCnorUkMIeE2VKiySpW1jucTGvMWa4bYi/Ra6c55mvqkQyQq2hq5fULpKY
- i4yqD1B9HjC+uyF7kXbe84CKnBbU42Xj2fn3wKQz2Wn0xmiBjec1Tl/gs9bMc2tnKSr8uA
- qN2hmI9Tt12aL5y+wbltTvhnAk28pag=
-Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
- [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-50MRpfzHMwGWYfPaKPCMPQ-1; Wed, 30 Sep 2026 10:08:12 -0400
-X-MC-Unique: 50MRpfzHMwGWYfPaKPCMPQ-1
-X-Mimecast-MFC-AGG-ID: 50MRpfzHMwGWYfPaKPCMPQ_1790777291
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-67139d2e528so7804543d50.3
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 07:08:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790777291; cv=none;
- d=google.com; s=arc-20260327;
- b=fTgPRkpm2KKvLGR8tSbZH5wkxdoMFkws239YPk0L2Ubf4dBVigPaYtyWvlm82yDGwx
- +T507LZXNMVvwcdUnX1XMPeKMdP6AyH1a79eo0wVJ+2b0F6rdyNcQ64AciGrPwQM8NFE
- 7N2R2+OEZHqJzv+Ox8vnoKJF6sAnmf6u9Noc0poGUUj+mBYWNEv03CBgh+lcYjX5oSZX
- 7ve0Hvi2KuNMheMD8EcKo1QqH0Mx2qIN3CrVvQyS6pppOo+zVysNl6z58AGDEihKwXUB
- Tf/FrjoxaCB3lT1nwt7YxIYnwu5bofvsYYKvCOJLhhcribn/7FmNgIvenGa9Q3gl0Gi3
- Vc9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KsXM6L2YhyUmsUZYqEZ4zdiIFt5coOEZCDGsrciV76k=;
- fh=9fdqRXfOBOypzKvXtoydzTfP73jPiZvb0xAMRDNN+Ys=;
- b=ZNTx5JiFSXWF16HfBAHSSgsIej+gHIhpXpSvLBFMpd2puL1rr01sBnZXgsDYZB56GI
- 7EO1kiSHEGdD/b+4U7dOWi8kVvLj+el3A/PyY33AEfVLGbQPVXMUR/B8MLxEeYYWRtba
- RFhBbjEo28GkFsu07LI/lcNj7w0p3lJTwIx5+/XeOHuYvlr8gMaISYaQAlQQk6IHAnvQ
- +J3ALGrdf2aRKWhUDytq64taJZFcvpyaZKnaJR8mtLvC9uEzSyJIQGO833h9wj6Us9Y8
- kw7Td4ujFAS97lYitw7LnzG4Gaq/yRJYhHGQL3GS/Ceu3Q8gauHqrkf3/HtZb4Ms73A2
- njww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790777291; x=1791382091; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KsXM6L2YhyUmsUZYqEZ4zdiIFt5coOEZCDGsrciV76k=;
- b=NMfNj+OsviaJT5ZUi8KdZwuyPeMJUaIfYvn01G/6rZp4hNv3XeB4tiqSo747dhEnBL
- kT+Dmg2tVh9jX2ByB9HcEJnK0zTm+RM9QhwIACQDYWHXNcr0yk2Kz9GTeVvdHxRxgx3U
- 6BDLWTFdxos34JPgktSz0/QCBEWvqOtmgQEOvGouncGUkuEU5ZkmVHGZx4blCdl4dUAj
- Pz9DnNWb7/sFY3Xv2XHnIHaiGhJsoWw2ePkIDunIkzIXdJZu7qgO/ICB57u3b9jrKutw
- aLZtSOLsORR3USbcHWUV8vavPbAUdl5XFfsyb4gue8W0m1s/c0sHqiq9kRhNilKpbKj4
- ZSfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790777291; x=1791382091;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KsXM6L2YhyUmsUZYqEZ4zdiIFt5coOEZCDGsrciV76k=;
- b=jt20C6HNLV5A26NjDI7GAOKLmzw/+zVbpAxb70niXjXgXuD8kj9YI0HR9yqrbHwry1
- hYh/kuWQNcegKD6Tacrv3WGpW51cvSvcoDMdUV9IsMyHNxkCF8eKB/dJ3UIgwKuyWCpq
- B5Q7YSwJuk9CNIqKLjJkaxl67XbotXyTLPndEFqXPxm1IvVBXorgBohDSzCUZjEbIhAH
- CRbEnSHjlFjjgRvMQjVSnuwCF9tWQ4JN8zRxUjm+UxpfVsqcU3GxpeJLvafpRIDONGPu
- OG+6KcLaVAQuqv+c6ehXEGqE8jSLhkSIWDM4ZNAymqAYsPxrJr02Oxpe2Gxal69dGBfv
- c8Kg==
-X-Gm-Message-State: AFq9FYI2aI16IAHE+urUJbsNScwdZNSqfZpft+2y4CWxjV646QQKAVRj
- O9YOWueXWxNEmbek1wtixWfBJoyYb+bL+3NuYw1sZt10FjDxMlnfAhE6L/UN6Df/eRAXnYi570c
- hMx21sy9zgV752uoT7MZ7B5Z3p6Ork19vR2brBpIJnd/hElXaNMOrg28o4UG0ulrOH1k9n9aaj4
- aSL4+exFwCGLCi9XL5u7dwRgKUjJmczo8=
-X-Gm-Gg: AYBFou00PyoYizQs8ytnSOzyGWzU8eoPY31LI7MU7KGP7sn+pvapAgutRfoW9OAHvFX
- 6V+zTlEsBRaP5LADwQm+WbKuF9zW13JFOA/H4Fnbln/dgwpYLrtaldUDLg7dXZSbGdj9obw8MHv
- 7jCALKoSwW6EHV5/aluPyW71/U6v8M7XvS0XCnCzXB5B4jKcnA5hfCML1iN1lB1rw7SVFwRg/IU
- LwdQkLp+ePxGUn+
-X-Received: by 2002:a05:690e:2150:b0:674:1f9a:9e88 with SMTP id
- 956f58d0204a3-6768351cc3amr645895d50.90.1790777291149; 
- Wed, 30 Sep 2026 07:08:11 -0700 (PDT)
-X-Received: by 2002:a05:690e:2150:b0:674:1f9a:9e88 with SMTP id
- 956f58d0204a3-6768351cc3amr645849d50.90.1790777290495; Wed, 30 Sep 2026
- 07:08:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1xBv18-00021d-Hh; Wed, 30 Sep 2026 10:10:44 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UE5TGA2986162; Wed, 30 Sep 2026 14:10:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/8WAQI
+ d6hRHsitgK5Fs1JNXRdduq9/AcliUQUCGEOu4=; b=QlUN/8XiIIDCimYwBoRtEN
+ wySvssS3jdCBL/Ggnl3m0rE1CUYOBvjd13nokIzq29YAO6EB89R4BCOUFM+VLefb
+ Ig8TFUicMpLqCmWab565zbY9l8goOeRm8OtQK+gza3LK0KbDn+M1GW8LrdClhXc9
+ DAsmOOLWSgeZRMP8f51SeIVPb+JU/pqhWn1ECkq8ccEJ/UFEPJvOuAYYuvTt9S9a
+ iEYC24hMTCD7tBmOl/bCLdq02Jti2oU88B80yk1dImG08vPgJPTaBoXE0k6eu59m
+ arA6oni6VqNosiV6pAkKgwTpBQ0Uxxs5dTVyZ30vZiVfTzo4YjXnCs6ZD9P0qUMQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fkcttc-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 30 Sep 2026 14:10:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UE36Dw3541465; Wed, 30 Sep 2026 14:10:32 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h0hfpc52c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Sep 2026 14:10:32 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 68UEAUD631981998
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 30 Sep 2026 14:10:31 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B028B58054;
+ Wed, 30 Sep 2026 14:10:30 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 277425804E;
+ Wed, 30 Sep 2026 14:10:29 +0000 (GMT)
+Received: from [9.40.186.87] (unknown [9.40.186.87])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 30 Sep 2026 14:10:29 +0000 (GMT)
+Message-ID: <975afd00-0fbb-4538-ab5f-6b69a2ccf013@linux.ibm.com>
+Date: Wed, 30 Sep 2026 09:10:28 -0500
 MIME-Version: 1.0
-References: <20260929223044.2998391-1-jsnow@redhat.com>
- <87ik3nti0x.fsf@pond.sub.org>
-In-Reply-To: <87ik3nti0x.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 30 Sep 2026 10:07:56 -0400
-X-Gm-Features: AclHuK_ZoCZH32Wycc7rCWBDkD8a-J2Id0Tt4sE3rcP4FZD2Rmwmwm9R4rKHLlU
-Message-ID: <CAFn=p-bpoMEVWeS=wexWcT7t7RBHyupFtKdMkqjUs0tKkSV8oA@mail.gmail.com>
-Subject: Re: [PATCH] qapi: convert intro sections fixup
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/9] qtest/phb5: Add testbench for PHB
+To: Saif Abrar <saif.abrar@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
+ fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, milesg@linux.ibm.com,
+ jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
+References: <20260831123005.1485518-1-saif.abrar@linux.ibm.com>
+ <20260831123005.1485518-2-saif.abrar@linux.ibm.com>
+Content-Language: en-US
+From: Caleb Schlossin <calebs@linux.ibm.com>
+In-Reply-To: <20260831123005.1485518-2-saif.abrar@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: Le22IfOevcZIM1jrWLjPRszG2ULi8vGe
+X-Proofpoint-GUID: tiCNClA7-9xRnWHbXAJTwHFlMGUXThs3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfXyPXAEr3q7sbS
+ mmxKvtrg/0g0MWKStvlqpe803p0HL1Yo9CvJz2ib4jSTjE3Vok4e6WE0I1g8fOkusVcvwWIehl4
+ a8FKSuxq4Z8ix8f0pyDuN6GPTGdZPvw=
+X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6abd1859 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=PClYFOg19u5Z3GYdm5AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfX1HG5OmFspNKO
+ HY0hBL/bdnlyaCEBgrOjlhTvbsRjb4aEm/LZT8HjnI6ZN1InrR+sy/mUKPPd9rTNXybSO+UsH1z
+ AzkPJyrsx653U7iHL9a9qh7Q+cM6IINWzJze/vClxK5NfLgDd/lQq9/WspA4KCLSVHgnMndHq05
+ 3l3SNtwg5CUwG1AMGRC/8P3LAlWwKMG4n2e9AYZu/CrzxpERaStb4fAbFoM8GCzrNwypWZUPSk7
+ qpChZM98leKW/q7l6RjqUqUPS7qwF774kC28Vwn4huP+lpKFJvugJsJ0w8ScmteibwJozA3iD28
+ GQ0syUCwYKrkFvkXEjizdE/skxcOrJcJsHLFWJCM4sjnkbLRJxcpgxDvNJZRHEu4TO/snysr0EA
+ i/7GP+ylv0pRMTUM89QVD731Us7npTRH/EW4OUXHZG5N+4RYWA3jckuq+btq92YRj13b9QlPEqh
+ y2IRfs+Ez0CaLYtK1GQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1011 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609300056
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,75 +132,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 30, 2026 at 1:39=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > "We" (Me, I, Myself) missed two last spots during bulk conversion of th=
-e
-> > intro section syntax.
-> >
-> > Some definitions are still intentionally left without an intro
-> > section: BlockdevSnapshotSync is the only case I am presently aware
-> > of.
->
-> There are quite a few more, but BlockdevSnapshotSync is the only one
-> followed by a plain section.
->
-> > The remaining two were genuinely just missed; convert them now.
-> >
-> > Reported-by: Markus Armbruster <armbru@redhat.com>
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  qapi/machine-s390x.json |  4 ++--
-> >  qapi/qom.json           | 14 +++++++-------
-> >  2 files changed, 9 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/qapi/machine-s390x.json b/qapi/machine-s390x.json
-> > index 8d8cbe2fb75..9ae559bbc2d 100644
-> > --- a/qapi/machine-s390x.json
-> > +++ b/qapi/machine-s390x.json
-> > @@ -150,8 +150,8 @@
-> >
-> >  ##
-> >  # @DummyBootCertificates:
-> > -#
-> > -# Not used by QMP; hack to let us use BootCertificatesList internally.
-> > +#     Not used by QMP; hack to let us use BootCertificatesList
-> > +#     internally.
-> >  #
-> >  # Since: 11.2
-> >  ##
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index e03ede34421..2d0d0e47fbb 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -1039,13 +1039,13 @@
-> >
-> >  ##
-> >  # @SevSnpGuestProperties:
-> > -#
-> > -# Properties for sev-snp-guest objects.  Most of these are direct
-> > -# arguments for the KVM_SNP_* interfaces documented in the Linux
-> > -# kernel source under
-> > -# Documentation/arch/x86/amd-memory-encryption.rst, which are in turn
-> > -# closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware commands
-> > -# documented in the SEV-SNP Firmware ABI Specification (Rev 0.9).
-> > +#     Properties for sev-snp-guest objects.  Most of these are direct
-> > +#     arguments for the KVM_SNP_* interfaces documented in the Linux
-> > +#     kernel source under
-> > +#     Documentation/arch/x86/amd-memory-encryption.rst, which are in
-> > +#     turn closely coupled with the SNP_INIT/SNP_LAUNCH_* firmware
-> > +#     commands documented in the SEV-SNP Firmware ABI Specification
-> > +#     (Rev 0.9).
-> >  #
-> >  # More usage information is also available in the QEMU source tree
-> >  # under docs/amd-memory-encryption.
->
-> Hmm, shouldn't we split this one?
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
 
-With fresh eyes in the morning, yes. I was thinking this was dev info
-at the time, but I see now it's *usage* info, so... yes. Hang on.
+On 8/31/26 7:29 AM, Saif Abrar wrote:
+> From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> 
+> New qtest testbench added for PHB[345].
+> Testbench reads PHB Version register and asserts that
+> bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>  tests/qtest/meson.build         |   1 +
+>  tests/qtest/pnv-host-i2c-test.c |  13 +----
+>  tests/qtest/pnv-phb-test.c      | 100 ++++++++++++++++++++++++++++++++
+>  tests/qtest/pnv-qtest-common.h  |  24 ++++++++
+>  tests/qtest/pnv-xive2-common.h  |   7 +--
+>  5 files changed, 127 insertions(+), 18 deletions(-)
+>  create mode 100644 tests/qtest/pnv-phb-test.c
+>  create mode 100644 tests/qtest/pnv-qtest-common.h
+> 
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index cbdef5a545..bfea40bdf3 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -191,6 +191,7 @@ qtests_ppc64 = \
+>    (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
+>    (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
+>    (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
+> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb-test'] : []) +                  \
+>    (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
+>    (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
+>    (slirp.found() ? ['pxe-test'] : []) +              \
+> diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
+> index 5fd54f9de7..7d3c0035f9 100644
+> --- a/tests/qtest/pnv-host-i2c-test.c
+> +++ b/tests/qtest/pnv-host-i2c-test.c
+> @@ -11,18 +11,7 @@
+>  #include "hw/gpio/pca9554_regs.h"
+>  #include "hw/gpio/pca9552_regs.h"
+>  #include "pnv-xscom.h"
+> -
+> -#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
+> -#define PPC_BIT32(bit)          (0x80000000 >> (bit))
+> -#define PPC_BIT8(bit)           (0x80 >> (bit))
+> -#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
+> -#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
+> -                                 PPC_BIT32(bs))
+> -
+> -#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
+> -#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
+> -#define SETFIELD(m, v, val) \
+> -        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
+> +#include "pnv-qtest-common.h"
+>  
+>  #define PNV10_XSCOM_I2CM_BASE   0xa0000
+>  #define PNV10_XSCOM_I2CM_SIZE   0x1000
+> diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
+> new file mode 100644
+> index 0000000000..a6f890ba79
+> --- /dev/null
+> +++ b/tests/qtest/pnv-phb-test.c
+> @@ -0,0 +1,100 @@
+> +/*
+> + * QTest testcase for PowerNV PHB
+> + *
+> + * Copyright (c) 2026, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include "hw/pci-host/pnv_phb4_regs.h"
+> +#include "pnv-xscom.h"
+> +#include "pnv-qtest-common.h"
+> +
+> +#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
+> +#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
+> +
+> +/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
+> +#define PHB4_XSCOM              0x40084800ull
+> +
+> +/* SCOM to PCBA address conversion */
+> +#define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
+> +
+> +/*
+> + * Indirect XSCOM read::
+> + * - Write 'Indirect Address Register' with register-offset to read.
+> + * - Read 'Indirect Data Register' to get the value.
+> + */
+> +static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
+> +        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
+> +        uint64_t reg)
+> +{
+> +    qtest_writeq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom, indirect_addr)),
+> +                 reg);
+> +    return qtest_readq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom,
+> +                                                              indirect_data)));
+> +}
+> +
+> +/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
+> +static void phb_version_test(const void *data)
+> +{
+> +    const PnvChip *chip = (PnvChip *)data;
+> +    QTestState *qts;
+> +    const char *machine = pnv_get_machine_type(chip->chip_type);
+> +
+> +    /* Defaults to PNV_CHIP_POWER8 */
+> +    uint64_t phb_xscom = 0x4809e000;
+> +    uint64_t reg_phb_version = PHB_VERSION;
+> +    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
+> +    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
+> +    uint32_t expected_ver = 0xA3;
+> +    uint64_t ver;
+> +
+> +    if (chip->chip_type == PNV_CHIP_POWER9) {
+> +        phb_xscom = 0x68084800;
+> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
+> +        indirect_data = PHB_SCOM_HV_IND_DATA;
+> +        reg_phb_version |= PPC_BIT(0);
+> +        expected_ver = 0xA4;
+> +    } else if ((chip->chip_type == PNV_CHIP_POWER10) ||
+> +               (chip->chip_type == PNV_CHIP_POWER11)) {
+> +        phb_xscom = PHB4_XSCOM;
+> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
+> +        indirect_data = PHB_SCOM_HV_IND_DATA;
+> +        reg_phb_version |= PPC_BIT(0);
+> +        expected_ver = 0xA5;
+> +    }
+> +
+> +    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
+> +
+> +    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
+> +                                indirect_addr, indirect_data, reg_phb_version);
+> +
+> +    /* PHB Version register bits [24:31] */
+> +    ver = GETFIELD(PPC_BITMASK(24, 31), ver);
+> +    g_assert_cmpuint(ver, ==, expected_ver);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +/* Verify versions of all supported PHB's */
+> +static void add_phbX_version_test(void)
+> +{
+> +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
+> +        g_autofree char *tname = g_strdup_printf("pnv-phb/%s",
+> +                                      pnv_chips[i].cpu_model);
+> +        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
+> +    }
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +
+> +    /* PHB[345] tests */
+> +    add_phbX_version_test();
+> +
+> +    return g_test_run();
+> +}
+> diff --git a/tests/qtest/pnv-qtest-common.h b/tests/qtest/pnv-qtest-common.h
+> new file mode 100644
+> index 0000000000..c2d1bae7bb
+> --- /dev/null
+> +++ b/tests/qtest/pnv-qtest-common.h
+> @@ -0,0 +1,24 @@
+> +/*
+> + * PNV QTest common definitions
+> + *
+> + * Copyright (c) 2026, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef TEST_PNV_QTEST_COMMON_H
+> +#define TEST_PNV_QTEST_COMMON_H
+> +
+> +#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
+> +#define PPC_BIT32(bit)          (0x80000000 >> (bit))
+> +#define PPC_BIT8(bit)           (0x80 >> (bit))
+> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
+> +#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
+> +                                 PPC_BIT32(bs))
+> +
+> +#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
+> +#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
+> +#define SETFIELD(m, v, val) \
+> +        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
+> +
+> +#endif
+> diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
+> index 3b84227424..4b823a57e2 100644
+> --- a/tests/qtest/pnv-xive2-common.h
+> +++ b/tests/qtest/pnv-xive2-common.h
+> @@ -9,12 +9,7 @@
+>  #ifndef TEST_PNV_XIVE2_COMMON_H
+>  #define TEST_PNV_XIVE2_COMMON_H
+>  
+> -#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
+> -#define PPC_BIT32(bit)          (0x80000000 >> (bit))
+> -#define PPC_BIT8(bit)           (0x80 >> (bit))
+> -#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
+> -#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
+> -                                 PPC_BIT32(bs))
+> +#include "pnv-qtest-common.h"
+>  #include "hw/intc/pnv_xive2_regs.h"
+>  #include "hw/ppc/xive_regs.h"
+>  #include "hw/ppc/xive2_regs.h"
 
 
