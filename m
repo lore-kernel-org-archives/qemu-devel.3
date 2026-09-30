@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1772CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BFE0CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrjF-0001kS-LF; Wed, 30 Sep 2026 06:40:04 -0400
+	id 1xBrih-0001IR-7P; Wed, 30 Sep 2026 06:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBris-0001SP-IV
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0001Ey-4t
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrii-0006nL-Rr
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBriZ-0006gp-Lg
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764768;
+ s=mimecast20190719; t=1790764759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C/IaIY0HfvJCiTTcKFuT0QHnZR45AGGsP3tmgap3aDw=;
- b=gnKa5hCCVaLYrhXKssfCXDU3qbm6bVPHcULEGllxFa8fFu47J73f4++UudE4iAf8D8K0hB
- 8nCnrXm/qwWpfKMxw7Oyt9xx0rzW4+MmbLMGOQUYyuA7UfO6jfvbh9vO9fvC22eSXdd00/
- cQgDRlm3hUoa1Vk3+zl7cAxex5PChTE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0/YfEfYaKlFF+JaVabqLO0YowSLpLPSlpoLV38ENBWI=;
+ b=aXSSBYQQjopaeMgHJD14uIEMGtWSeLpNEdlUihiXObR+CQje42LJULYZgdNOFRomCQzncb
+ Ted+8981UUcIb1XbSdBXvvsufM5gt8jB24L756OXAO5ZO0LPPuuwFZsTukEmwvqeFhv1EN
+ ld43mCokkl89SpbgkuPVYlhocEtOFXA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-DRAZwwTvNeCfDGNiaoTaGA-1; Wed,
- 30 Sep 2026 06:39:24 -0400
-X-MC-Unique: DRAZwwTvNeCfDGNiaoTaGA-1
-X-Mimecast-MFC-AGG-ID: DRAZwwTvNeCfDGNiaoTaGA_1790764763
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-T75Fk1PjMbK6OP3jhMkxRA-1; Wed,
+ 30 Sep 2026 06:39:17 -0400
+X-MC-Unique: T75Fk1PjMbK6OP3jhMkxRA-1
+X-Mimecast-MFC-AGG-ID: T75Fk1PjMbK6OP3jhMkxRA_1790764756
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CAE3195F173; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 581631954233; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DC8F1800473; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11F9B30001BE; Wed, 30 Sep 2026 10:39:16 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6B83A21E6761; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id BE22B21E688D; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 052/105] qapi: convert simple command intros for ui.json
-Date: Wed, 30 Sep 2026 12:38:17 +0200
-Message-ID: <20260930103910.3934848-53-armbru@redhat.com>
+Subject: [PULL 012/105] qapi: convert trivial intro sections for yank.json
+Date: Wed, 30 Sep 2026 12:37:37 +0200
+Message-ID: <20260930103910.3934848-13-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,41 +87,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260901194324.458482-10-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-13-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/ui.json | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ qapi/yank.json | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 960d02d142..a59cd63577 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -656,8 +656,7 @@
+diff --git a/qapi/yank.json b/qapi/yank.json
+index f3cd5c15d6..bc8c52bda7 100644
+--- a/qapi/yank.json
++++ b/qapi/yank.json
+@@ -47,9 +47,8 @@
  
  ##
- # @query-vnc-servers:
+ # @YankInstance:
 -#
--# Return a list of vnc servers.  The list can be empty.
-+#     Return a list of vnc servers.  The list can be empty.
+-# A yank instance can be yanked with the `yank` qmp command to recover
+-# from a hanging QEMU.
++#     A yank instance can be yanked with the `yank` qmp command to
++#     recover from a hanging QEMU.
  #
- # Since: 2.3
- ##
-@@ -1634,10 +1633,10 @@
- 
- ##
- # @client_migrate_info:
--#
--# Set migration information for remote display.  This makes the server
--# ask the client to automatically reconnect using the new parameters
--# once migration finished successfully.  Only implemented for SPICE.
-+#     Set migration information for remote display.  This makes the
-+#     server ask the client to automatically reconnect using the new
-+#     parameters once migration finished successfully.  Only
-+#     implemented for SPICE.
- #
- # @protocol: must be "spice"
+ # @type: yank instance type
  #
 -- 
 2.55.0
