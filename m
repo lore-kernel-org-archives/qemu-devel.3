@@ -4,141 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A99CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DABDCA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxSA-0000tG-Vl; Wed, 30 Sep 2026 12:46:47 -0400
+	id 1xBxSZ-0001Cn-3o; Wed, 30 Sep 2026 12:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxS3-0000pV-8V
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:46:40 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxS1-00031G-Sr
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:46:39 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UFXNOR195084
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:46:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ysrwWxf5sZ4v2MvUwxEblE3A4HAJJGOfs++j1EfexOQ=; b=WHEys0WeMP2sBxlo
- u2h96Dbkbp5/+mFyz3LpgUYyy2mJJo1LjzoT/yFbFKmTw6XXcGCb4Hye96vxAvA5
- EhWsk4bCcWccJdG8ljzhfxyqs/MFT5mS5yjwdSNgvzQT1OLnRnJwS0xZRkcGoLcQ
- pMbHgSmWpJmsv5hfyMaK/APaahAmDV/ytP9kaD+uGDLfVFCpBHzMVVyI55r4aTKf
- qj80h89+pOXoB/Rxb9EH4n6W/RGunoZuQ21MennjqKhM9kVdB7gUvnJI55CnNYg1
- VYGS4kuObm9AXaNdJvaFKvNcsDrIBcWmmPZgOEAaxkr6kP7drpl3YgItzFuFclYp
- ppldGQ==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h155vra6t-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:46:36 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-7bf257e7b5eso328783137.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBxSJ-00014G-KB
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:46:55 -0400
+Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xBxSH-000325-R8
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:46:55 -0400
+Received: by mail-wr2-x0f.google.com with SMTP id
+ ffacd0b85a97d-488811c9ebaso2877680f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790786796; x=1791391596; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ysrwWxf5sZ4v2MvUwxEblE3A4HAJJGOfs++j1EfexOQ=;
- b=f52VH5ViQOC6Dk2QaFk+eH5gZMBR/BJyIpV85o1gX1XW39YbfN+fergZNSv9ILGRRX
- aqPiTiZy+tevrM56JUiX6z2YG/QWCbZd7XzbxVJe88/pBwf217VQeqr+kVLSa7FVP2bl
- RNlH5irL+oxF1SQBUwIcAHF2tkKRffjUn+xHFpvQwoFXFYvyCICY0uYYAxnwPdVVnaTJ
- I27HvLnbZNiGKoqIlDLC5jr2vMlO4KDM/9SBvgPcKJQmFEreQZcUfBfqJIJLtl2sG63p
- k8pJcd7q/x4Gewo35VvKgt9IbLSVZUiDIsMHWiglfNFp40q6FX0ZTekrkMY/NY42O7DF
- FGig==
+ d=linaro.org; s=google; t=1790786812; x=1791391612; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=s3d9e3+6lATNIJ3R591QZAB9SA98d8rqm4Qwimrj2Jc=;
+ b=ch5wmFOgy32//GC4k9fA6B/IXPXAIM8V/XyPUrsNhIGfkVP8uAxC8EGO54d72PICar
+ 1GItIWX0e35SNRFeDkdecYj5BKHU21aXZrqojxpiAdzubjnVGx4rN3hJ6XF/DW0jeggr
+ MiTrBv9uRw35rB4+hDoLLfMD8wUJWVJB5S2goiD++g4peiEXNkMdc6BmtU/SL8cwXKHG
+ Cil6AxHrp48f0J1adFV/IxfqcF+zLsDp2u7LfxmdDSO9wpcvyGpRHupfhgvf12zlPPCA
+ 8XLsnfB5CO/TKvGfT9cZbdeUN+oYtm0z+yi9IZnGBOegmsIFxax2TJJqR/7UQh+f8YlO
+ B6kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790786796; x=1791391596;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ysrwWxf5sZ4v2MvUwxEblE3A4HAJJGOfs++j1EfexOQ=;
- b=0IWGYrZ/Ax1TK9moMfEQKGTshzapHwk1ejEg6CZksjTCj8zccBsYxi4mhxsATMke8/
- 1wzZPAkdiR6yTvOn5s95KMAmjW4ig+ot3fKjMkaVzRVQxa/lzMsazHDhP7ULBOYHUHyC
- Pn4YgcXIKUMFKFjupMlt3jbK+byYLkMC6/cjcEaFnNUhcge70TQD5PZjGmEnhwE1BaNU
- A+8c30PyuZ746EDmz+giaFwqMHpv4rHHlqen9avQogttEb0nFwoAc5rG61pmIalEKMMb
- MMpr6agGCuuvEqe+BPgmIS+IIbEeKsQ26ftnLXoiZku3+dbqYm0VR/FDiGrBXi8Yho/9
- Yuvg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxaSn0ZvoCYb5X3Oj0MmP1xiMksQpZPkVlFVcmpQCa27YHqsq/cK687lteWqjanw1YUre09mnw0rv+J@nongnu.org
-X-Gm-Message-State: AFq9FYI74rnt0OVmwntYPTsb5la0xHUNR1kIrHflV5xI7x5G4pp/oT54
- 1ktX+NU/jryjUXPkhv765H0MzXIZo4OjeBC0WFxHf+lDi8TnjF8LYLcqgjDQoUWODO5xQXdm0NB
- CoCHIcv1ICMcTcAn0lH1XweJXXbkWACJMkPuHqellVEa29j9VzKLkcR5bGQ==
-X-Gm-Gg: AYBFou1hHx+vR+1p2IYnms2pVSD7ihiwQELfPWHvD/fcyLXhVJWdA8hg2rbdjvInlkh
- MNVWygUPCEypcVsucP4loCZZyAnruDJKTNMGYtQfv4metZmOPo9vHEjDhAInWySRbdI6l2LtAYh
- hhnvqQJ1lFmiE53hDNFvSYF7ks8BOi+mNqccNw/7ajYAjnKHVdPPsZSOSFbTKwTxDuIe+JdKrL6
- XqNGWkSwrTifJXQgbjA6H+xIhoKSnMwEb/dhODXmVxM4yhaE8GEGH4cJK8m/W22Ef1gqEHTfRd1
- RqGLgUngNa3lcyeo3BxfFabMLJ4OWTPGPDmvmusZ1D+q3zChRsdodYyTGs3zBcbKnND20sF27rL
- 6UW25JOQOQsFi54aMDP4=
-X-Received: by 2002:a05:6102:38cd:b0:7b5:b51:63ae with SMTP id
- ada2fe7eead31-7be73e957d4mr635927137.26.1790786795656; 
- Wed, 30 Sep 2026 09:46:35 -0700 (PDT)
-X-Received: by 2002:a05:6102:38cd:b0:7b5:b51:63ae with SMTP id
- ada2fe7eead31-7be73e957d4mr635914137.26.1790786795176; 
- Wed, 30 Sep 2026 09:46:35 -0700 (PDT)
-Received: from [192.168.0.4] ([79.127.134.49])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01eb60733sm4009665e9.2.2026.09.30.09.46.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 09:46:34 -0700 (PDT)
-Message-ID: <c11d70c3-87a5-4bbf-b571-dbe4232cee7d@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 18:46:33 +0200
+ d=1e100.net; s=20260707; t=1790786812; x=1791391612;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=s3d9e3+6lATNIJ3R591QZAB9SA98d8rqm4Qwimrj2Jc=;
+ b=pJKJi0HUHbQtIi5eFmJmZi1TsKTkWBAGMz2keTAboda1oNqujUw7h2jba57XhYk3tp
+ HFisEk3lMZppQEjCFJ31yYb7FdshcJiE6Inf7tDl9lnoLqqWgKs0BfnpthEYSlEXLC+3
+ 2PjOUtnfPkckv4jJg+0+IMXFe00EVbi7shDdBdpGYlh+PgKoelM29RISOJxktPKMfjxj
+ ZGgVizQ5LnquzCvaYxfGLGmGFjetlrbLe3w94SrKtKB4wAX2OA1/RaktyNY2Gs8e1630
+ X2klqncLdBLQHWfU6JYOboVLZu8WJmgMeB0LKodXl4Xn7uqqWPITobZE+B/jHstsgCf0
+ ZrUQ==
+X-Gm-Message-State: AFuF++lAWO/oJ6+Pq+aXBvGfJXl1vT4YIhpQ0KFO9826BAcc4jQs+rsd
+ QlW5Ehp98//fa7lDrBV8LB6ksclN7wpESfaQHrWVByBggZIJT2sYbiX+k2LqWMIwuII=
+X-Gm-Gg: AYBFou3LP6tBcGfC3g9fm8SCOqElbUEwWLyZNwOs8N2wRYG7bmjrd/q1eXENvqZMmJE
+ 79OlKNiD/zP9ANeY+fNgiCLZBH6cJQT7d41idGx8/OfyN5a+b119q+uTmEE2neZBV8iQwhof/13
+ 76KDH9UBEiUqYjesqZsgErrM5qUcD8BHXBIFIfBlYzBIlPfSfLoBcWoXvmp/pVvDyNa/g7jZTeC
+ X0TcBDvVi5H2KTS0DuhZbL/Dok2fQBT32f/TyVtOyZWF2lueJoXoR6s2mus0c//MuH2tAZ6BZ5L
+ J8zTVBUb17vPzZ5bx9x4uaB4pefeldWk/QEMqLoISvZEOMEBe7H9R5gCoCaEvpftFAINXaSvyvU
+ wqCB23aSspBfGgqLs+rQ0+q0L8/y8vMl9FV13qKOquRMNwZaLncGb+2KO/SZV7c9v8a7hvbR4oq
+ wklsgSHjpuaV674fegZUCBg3FjOPVqNauu9XtJJG1j59OJIe1wOPVQDfoNWbq32QIMkZfpmQ==
+X-Received: by 2002:a05:600d:4448:10b0:49c:fa20:cc02 with SMTP id
+ 5b1f17b1804b1-4a01b1215ddmr28190465e9.25.1790786812048; 
+ Wed, 30 Sep 2026 09:46:52 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a01eb694fcsm3849545e9.6.2026.09.30.09.46.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Sep 2026 09:46:50 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B89045F8D0;
+ Wed, 30 Sep 2026 17:46:49 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
+ Ani Sinha <anisinha@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ John Snow <jsnow@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Anders Roxell <anders.roxell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>
+Subject: [PATCH 00/13] testing/next: functional testing updates for gdb
+Date: Wed, 30 Sep 2026 17:46:36 +0100
+Message-ID: <20260930164649.433573-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 24/27] hw/usb/dev-smartcard-reader: use usb_packet_size()
- accessor
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
- <20260805-smartcard-fixes-v1-24-187ee9122441@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260805-smartcard-fixes-v1-24-187ee9122441@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX3EqLqmdjq4WA
- l+C4yYdiWC4pfqPRuxvyyGllAo7CRIvUOcA1rKGSWNCq9xBCfysFwI2t+YI7b4M9JMgz4mYTHA1
- uSsmcDCLi6H/oW3Bqu7otYWlIHkMIWc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX0XITfYDHvwPv
- mJ0Z+W0jFHtbDb6jralAa0gPQ1ef0jCN9dh3EO6yj4tvKHh6MCm4rBVGXMioa9owfGJmwWnq/By
- 0PPvkSfrDDTRlXezuZvFbuONo7/JV6YnZGEJ+ge2ffFeqaQ3oUeoaWDExx1HPkLaXoGDVo2OdEk
- e1qmTtHQDXBc7cD8enAXHdke7d42LJCLY4BRZwubUaAj2pPPw4kj1X7+wzZOmq1hl4m8F7/waSM
- 3LMbQqtA5nJwTzmMzacq/m1XNxW7YlkJXDt2WiEmVXzMbCyDrASdeIoYTFAEGIb3jkq53hJw85S
- H68zbpNMZzxRuz3nf4UwR/0cqY2sOwtkCHej67AK5ixGs2KQQsPjVx9gTs/gc95E2HSPc0IuK8P
- 2cxpZ8XM6ff7gfziogSv1L4bYB59PAxSpfhvPZGCmlKttLbLLYeZrDJOWuf1vqIvr85QPMcLHzP
- nUzOkXC82RPawjkIyyw==
-X-Proofpoint-ORIG-GUID: K0UXuzKM1v6IrNBy12bZKrDHMnt3jLLL
-X-Proofpoint-GUID: K0UXuzKM1v6IrNBy12bZKrDHMnt3jLLL
-X-Authority-Analysis: v=2.4 cv=ZYOIpcVA c=1 sm=1 tr=0 ts=6abd3cec cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=J71Je4g08bpL2Qf89IAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 phishscore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300066
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:30::f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,14 +116,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-05 13:51, Marc-AndrÃ© Lureau wrote:
-> Replace direct p->iov.size accesses with usb_packet_size(), which
-> correctly handles combined packets.
-> 
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/usb/dev-smartcard-reader.c | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
+Hi,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+This is the current state of my testing/next tree. There a are a few
+minor tweaks and fixes that I've picked up. The majority of the new
+code adds testing for the gdb stub when used via KVM. There are two
+approaches.
+
+The first is an attempt to work just with the default bios code. It's
+a little limited and I'm not super happy with the "special" heuristics
+due to the fragility but it does work without symbols.
+
+As a result I spoke to Anders who handles the tuxrun images and he was
+able to turn on debugging symbols and provide a vmlinux alongside the
+bootable image. With these updates I was able to resurrect the old
+test script I was running by hand and then plumb it into a functional
+test.
+
+So far I've only done x86_64 but if people are happy with the result
+I'll do the remaining KVM hosts and test the ones where I can (do we
+have a riscv kvm host anywhere?).
+
+The reason I went on the side-quest is because when working on
+cleaning up QEMU's internal KVM api I realised that quite a large
+chunk of it is not exercised by our functional tests. This would
+ensure that at least:
+
+  kvm_arch_update_guest_debug
+  kvm_arch_get_registers
+  kvm_arch_set_registers
+
+is exercised and I'm less likely to break things in my r-factor ;-)
+
+Alex.
+
+Alex Bennée (12):
+  tests/functional: test_acpi_bits requires TCG
+  tests/functional: add migration diagnostics and pace nvme activity
+    (HACK!)
+  meson: move gdb detection into the top level build file
+  tests/functional: add basic gdbstub test for KVM
+  tests/functional: allow tuxrun tests to be passed "accel"
+  tests/functional: split x86_64 tuxrun into tcg and kvm run
+  tests/functional: split aarch64 tuxrun into tcg and kvm run
+  tests/functional: update x86_64 tuxrun images
+  tests/guest-debug: add --kargs option to run-test
+  tests/guest-debug: add --symbols option to run-test
+  tests/functional: teach tuxrun about launching gdb tests
+  tests/functional: add tuxrun kvm gdb test for x86_64
+
+Max Filippov (1):
+  tests/tcg: fix buffer overflow in multiarch/linux/linux-sigrtminmax
+
+ meson.build                                   |  15 +-
+ tests/tcg/multiarch/linux/linux-sigrtminmax.c |   2 +-
+ tests/functional/aarch64/test_tuxrun.py       |  10 ++
+ .../functional/gdb-scripts/kernel_gdb_test.py | 157 ++++++++++++++++++
+ .../functional/gdb-scripts/kvm_fw_gdb_test.py | 119 +++++++++++++
+ tests/functional/meson.build                  |   5 +-
+ tests/functional/migration.py                 |  37 ++++-
+ tests/functional/qemu_test/tuxruntest.py      |  99 +++++++++--
+ tests/functional/x86_64/meson.build           |   1 +
+ tests/functional/x86_64/test_acpi_bits.py     |   2 +
+ tests/functional/x86_64/test_kvm_gdbstub.py   |  55 ++++++
+ .../functional/x86_64/test_nvme_migration.py  |   1 +
+ tests/functional/x86_64/test_tuxrun.py        |  45 ++++-
+ tests/guest-debug/run-test.py                 |  10 ++
+ tests/tcg/meson.build                         |   5 -
+ 15 files changed, 523 insertions(+), 40 deletions(-)
+ create mode 100644 tests/functional/gdb-scripts/kernel_gdb_test.py
+ create mode 100644 tests/functional/gdb-scripts/kvm_fw_gdb_test.py
+ create mode 100755 tests/functional/x86_64/test_kvm_gdbstub.py
+
+-- 
+2.47.3
+
 
