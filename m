@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C517DCA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FDFCA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBovN-0001YO-Ke; Wed, 30 Sep 2026 03:40:21 -0400
+	id 1xBoux-00018O-RB; Wed, 30 Sep 2026 03:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBovM-0001Y2-Fp
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:40:20 -0400
-Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
+ id 1xBouu-00016S-Su
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:39:53 -0400
+Received: from mail-dy2-x0d.google.com ([2607:f8b0:4864:36::d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xBovK-00045z-RM
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:40:20 -0400
-Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-34b3e517e6dso791928eec.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 00:40:18 -0700 (PDT)
+ id 1xBouo-0003pd-0w
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:39:52 -0400
+Received: by mail-dy2-x0d.google.com with SMTP id
+ 5a478bee46e88-34ca54bfc48so509777eec.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 00:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790754017; x=1791358817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+uC2yEMOyxovh8AqIe1jMTAS15AngsrHXCfZuPeSjeE=;
- b=oae9caM5YRUa50ukA2kG4Gx1ZAZObF6+A7WKhJ+3VEj63A7XIuPyV0VrnXXdhUcsJs
- qDD/BQ2k8diPcBHGpjHekoW83O6WWk2E705f1XUiQWAHF3bMO0nCEF6QUohWkEfWxsyv
- ijabjjPScbX0l00VXtt0N84H9XmJjKxi+n+X3i/Ob07QfDOI+1SUgE9acUUcXEpmE5Zt
- Ow18jXqfuK2cxBmVgPiVFzWb0AME2Y//Q45kGeVboh0HHLKrDoU1/9RGbsG4wWQUHI1j
- SIfipDOoCzmksCiWqudlRRVshOnwgmNm7GyaNuIgTFO4oN395tcn6u4oZgQ7+o7qWGuc
- Lkvw==
+ d=gmail.com; s=20251104; t=1790753984; x=1791358784; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=bPrjtbYzmeEJemPPRkZ4crVJ0qzXGov83O1lfy6nOkA=;
+ b=lFiL5R1WUOANM3rvdYKKe05ff4wYkZUv6WEDUHd+W5cQPti6N6WhPuC2buMqaXczD/
+ DyfzbzqIP6K8F7K5yxga7uHPEqYiryz4/+EG9YhE4kpRTnsjYzcU9syrEtJuumezVrje
+ 2NELcb4YyxSHOwVpyJvTOJlIqDlsvMI+z8gQGQJaIdbzKQ3pN3pgG7KIfuluxFvGNJbS
+ kpLaYPv3MONukP8kgr8nKMRXZKfyushQLsBUhIZYfG0J0I3oyPMfSLnO506b+cfNaf65
+ TPYlqUzC4ApFU6wFIQsIpLfGl2leGOiuBz+j4S7WtK8aZGpyKyXdkOpCsVWbxkg0XsQQ
+ bmYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790754017; x=1791358817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+uC2yEMOyxovh8AqIe1jMTAS15AngsrHXCfZuPeSjeE=;
- b=MhSnC583m9WN9uV1wQTSfQo2pPL0SkDga1RVluGVzMSUN+U0yGKYSPaOu6RVUdHCTy
- dQg4su72u2oqd0uGSCe/KnVTfMEWzKqhhLWvbw9K0BZulblJ6+PHX2Erd0IRrVV+8N0/
- nM7yP+2c2VkF0yGYEYje474Yn+X3UOW7t7QkVeuTtfk3bsmy7mTJOwBX+UyWoAztnJHi
- zjK+zrNBRhyi8fyaAzhohumEMnZiD60Dp8bPlQyeAA004MTACzBH/O1nKowVEoBvwV6t
- LN2tcqNhcul9r7wRrsMZKatS5kYaB1ZBDeLZ+xR2/CYiUSRBcYIPthQQek3qwDY/5dwN
- MAkQ==
-X-Gm-Message-State: AFq9FYLalgLCXCsce2SJWHHCK730uEMxGDRnOxFcYyWF1qQTLUclWtko
- ZPjltUBmhop+WBTjMufyHoW6RDu44BUvmLRSa0Z9PZdXuhSA0j2IVX2psi1Mtk3i
-X-Gm-Gg: AYBFou39irbT46gBwZcQ6qBANHbaA9hrCSfN7ZkincT5VwD4VhwkhscvkFB9mhD8t5r
- 23zoxCNGy0h5vSGUIbhwQHa7oDypGmXvJfZI34A8lOTdpo7uR017rExatMP5iWXlJFFpYTgfu3Y
- HU8CCSpG+aomfYkh/CQX/EoFfJNXA+zXK7sjXuKCcH3M4XwM+8JYw6RgjDk02iemBM889z7ZEw3
- bco1+pCkNlP1kudix8Wxgk57I9cTrDPY6qAw9D/7PBTzIDUhOnvy56wJK7wXUVdXuBBDhDc4VYS
- 7ytxvm6HGuTlvVhMHyGDMHB243fI1kOQ+FWW99uzF5EJ+CXLX2n6x2Qm3S2+DLtPzSI5y0iNE45
- oQJH90NgdKzHbz4myBPrQAwWozCV4vO8fwTDzCkESG5VZG/sm3jZV8XPVUXaRfBl8d3TJYsutXw
- GHt0nSGAsLfm+Zi0WYkye2kdUDNoCT1yyQtP5yLacsyQYr9m/80KAgmNauqWmgi6TOzHrEDb3en
- DGoRQkPSsJ6QjKF4dA=
-X-Received: by 2002:a05:693c:41d1:10b0:33b:d4a3:81e3 with SMTP id
- 5a478bee46e88-34cdc6c2fc0mr973019eec.25.1790754017169; 
- Wed, 30 Sep 2026 00:40:17 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790753984; x=1791358784;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bPrjtbYzmeEJemPPRkZ4crVJ0qzXGov83O1lfy6nOkA=;
+ b=xDtGF9EYukd5rWmdnvrhdpII3+NNuGC6gnsl3YGc20craOryr7QOz8qxNfnAKTYtMJ
+ An9Hs38sWk82Zuy2wvj+UGPkVG15DDu6V6O0wztJderIimbm38zKzMH0Yzjybap2p67p
+ npn21P7FcTx/cOK8Vn1kcoKIdhL1YPrLoQYdNa7geKvkEMrLAjYVxuBJHOqmeNwFH7IN
+ TGh+eS6oN66agt0bjQ6WF+rOi7RE4FVrN3eJ6Ht+yF8Ykdu9P+Gg8OP0l35EOM/kObM7
+ KzDutzAmfvRn7vP2tVqXwWb6BOxoQ4xrs7LLwxsN9Im2otkZLFYStbUlSgyEPaRzoXj/
+ mWww==
+X-Gm-Message-State: AFq9FYKP12zlOmYWU4lgdlMfdIyS1UotsEc6RaKPo7kqRiWrXKsEU+nM
+ 3ZkAJP9Cs9+ZZ041DBMxGgoIjVYoGyZOGlqQ3NcPeaOhpYCHNtS2wpGMvMWq+3zz
+X-Gm-Gg: AYBFou1UtLxdS9c51JQeyC8Q0I4dYG1xChFm37VUS36k0Swo7webtfuGcUCdYag383Y
+ vSVzfstini7pR0RH1BNefGeAFgE3j9jDUBoRxwDWDwM5IeGcW8LLvio3I/a1dQYT5Wt+csxO6Jl
+ 93aT5voayxiLNXJKpXI7gCkviw0ATK8V8WQpvenUF/adpK2QkWlEo0/8851WNP/Tqnm+taKCnaF
+ j+6KzM5TRLMZW0Jwr9A/LwJwR35M3EWVdltL71BIgBBlUoklocNXuMFhZ/UdmJARot43itsbLEg
+ 2nz9bAlIibCD1ilx/jEmiTiXiTlg326pLj4pVcOf25H59FOVldA9ie7AgTxvtUF9AlVYq9LCawT
+ fwr8Hc6//+ZK9M9v7t+8UuvqRDs2RlAbmzBThhOwYwkRi+WgqxoMJzXl+axmBqe9o0UBd6pqWCx
+ mbvie43YgGcb0V806ihu2ltF0WAVjxuu8WxAV+x8VTVrpdpcBt0BJnJB6H/sRVWduh70JPM4K8n
+ apoEg/fkiYHYiLEPA==
+X-Received: by 2002:a05:7301:2624:b0:34c:7d49:35cd with SMTP id
+ 5a478bee46e88-34cdbbd5d9dmr1003981eec.11.1790753984370; 
+ Wed, 30 Sep 2026 00:39:44 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34cf5b4349bsm1825773eec.25.2026.09.30.00.40.12
+ 5a478bee46e88-34cf5b4349bsm1825773eec.25.2026.09.30.00.39.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 00:40:16 -0700 (PDT)
+ Wed, 30 Sep 2026 00:39:43 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <17746591750@163.com>,
@@ -84,24 +83,22 @@ Cc: Song Gao <17746591750@163.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 6/6] target/arm: rename raise_exception to
- arm_raise_exception
-Date: Wed, 30 Sep 2026 15:39:33 +0800
-Message-ID: <20260930073935.712-7-luoyonggang@gmail.com>
+Subject: [PATCH v2 0/6] treewide: uniquify colliding helper symbols
+Date: Wed, 30 Sep 2026 15:39:27 +0800
+Message-ID: <20260930073935.712-1-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
-In-Reply-To: <20260930073935.712-1-luoyonggang@gmail.com>
-References: <20260930073935.712-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:36::d;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy2-x0d.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,112 +114,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raise_exception is a global C symbol. Prefix it so one binary can
-keep that short name free for another target, and keep the short
-name as a static inline wrapper.
+A combined qemu-system binary cannot export the same C symbol from two targets.
+This revision addresses the review of the original series.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
----
- target/arm/internals.h     | 27 ++++++++++++++++++++-------
- target/arm/tcg-stubs.c     |  4 ++--
- target/arm/tcg/op_helper.c | 10 +++++-----
- 3 files changed, 27 insertions(+), 14 deletions(-)
+Generated TCG helper symbols are namespaced centrally in the DEF_HELPER
+expansions. C helper names remain generic, while target linker symbols and
+metadata get a prefix; core helpers keep their existing linker names.
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index c41fa5225c..c4d6f2d9ed 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -333,20 +333,33 @@ FIELD(FPMR, LSCALE2, 32, 6)
- #define M_FAKE_FSR_SFAULT 0xe /* SecureFault INVTRAN, INVEP or AUVIOL */
- 
- /**
-- * raise_exception: Raise the specified exception.
-+ * arm_raise_exception: Raise the specified exception.
-  * Raise a guest exception with the specified value, syndrome register
-  * and target exception level. This should be called from helper functions,
-  * and never returns because we will longjump back up to the CPU main loop.
-  */
--G_NORETURN void raise_exception(CPUARMState *env, uint32_t excp,
--                                uint64_t syndrome, uint32_t target_el);
--
-+G_NORETURN void arm_raise_exception(CPUARMState *env, uint32_t excp,
-+                                    uint64_t syndrome, uint32_t target_el);
- /*
-  * Similarly, but also use unwinding to restore cpu state.
-  */
--G_NORETURN void raise_exception_ra(CPUARMState *env, uint32_t excp,
--                                   uint64_t syndrome, uint32_t target_el,
--                                   uintptr_t ra);
-+G_NORETURN void arm_raise_exception_ra(CPUARMState *env, uint32_t excp,
-+                                       uint64_t syndrome, uint32_t target_el,
-+                                       uintptr_t ra);
-+
-+static inline G_NORETURN
-+void raise_exception(CPUARMState *env, uint32_t excp,
-+                     uint64_t syndrome, uint32_t target_el)
-+{
-+    arm_raise_exception(env, excp, syndrome, target_el);
-+}
-+
-+static inline G_NORETURN
-+void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-+                        uint32_t target_el, uintptr_t ra)
-+{
-+    arm_raise_exception_ra(env, excp, syndrome, target_el, ra);
-+}
- 
- /*
-  * For AArch64, map a given EL to an index in the banked_spsr array.
-diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
-index aeeede8066..7f9f684ed7 100644
---- a/target/arm/tcg-stubs.c
-+++ b/target/arm/tcg-stubs.c
-@@ -16,8 +16,8 @@ void write_v7m_exception(CPUARMState *env, uint32_t new_exc)
-     g_assert_not_reached();
- }
- 
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
--                        uint32_t target_el, uintptr_t ra)
-+void arm_raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-+                            uint32_t target_el, uintptr_t ra)
- {
-     g_assert_not_reached();
- }
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index af56eff9f1..ae48f9ab98 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -45,8 +45,8 @@ int exception_target_el(CPUARMState *env)
-     return target_el;
- }
- 
--void raise_exception(CPUARMState *env, uint32_t excp,
--                     uint64_t syndrome, uint32_t target_el)
-+void arm_raise_exception(CPUARMState *env, uint32_t excp,
-+                         uint64_t syndrome, uint32_t target_el)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -70,8 +70,8 @@ void raise_exception(CPUARMState *env, uint32_t excp,
-     cpu_loop_exit(cs);
- }
- 
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
--                        uint32_t target_el, uintptr_t ra)
-+void arm_raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-+                            uint32_t target_el, uintptr_t ra)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -81,7 +81,7 @@ void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-      * the caller passed us, and cannot use cpu_loop_exit_restore().
-      */
-     cpu_restore_state(cs, ra);
--    raise_exception(env, excp, syndrome, target_el);
-+    arm_raise_exception(env, excp, syndrome, target_el);
- }
- 
- uint64_t HELPER(neon_tbl)(CPUARMState *env, uint32_t desc,
+- Set TCG_HELPER_PREFIX per target and use it to namespace generated helper
+  linker symbols and metadata
+- Retain explicit i386 and ARM raise_exception implementation prefixes, with
+  static inline wrappers preserving the short names
+- Prefix virt_acpi_setup and virt_is_acpi_enabled on ARM, RISC-V, and LoongArch
+  virt. Leave the ARM trace event virt_acpi_setup unchanged
+
+v1: https://patchew.org/QEMU/20260926110818.1912-1-luoyonggang@gmail.com/
+branch: https://gitlab.com/lygstate-qemu/qemu/-/tree/global_symbol_conflict_resolve?ref_type=heads
+
+Changes v1 -> v2:
+
+- Drop individual helper_wait renames on RX, Hexagon, and MIPS and RISC-V
+  crc32, crc32c, and wfi renames; generated helpers are namespaced centrally
+- Add target-prefixed linker symbols and metadata in DEF_HELPER expansions,
+  with TCG_HELPER_PREFIX; common helpers keep their existing linker names
+
+Yonggang Luo (6):
+  hw/arm/virt: prefix ACPI helpers with arm_virt_
+  hw/riscv/virt: prefix ACPI helpers with riscv_virt_
+  hw/loongarch/virt: prefix ACPI helper with loongarch_virt_
+  tcg: namespace target helper symbols for combined builds
+  target/i386: prefix exception helper implementations
+  target/arm: rename raise_exception to arm_raise_exception
+
+ hw/arm/virt-acpi-build.c           |  4 +--
+ hw/arm/virt.c                      | 12 ++++----
+ hw/loongarch/virt-acpi-build.c     |  6 ++--
+ hw/loongarch/virt.c                |  2 +-
+ hw/riscv/virt-acpi-build.c         |  2 +-
+ hw/riscv/virt.c                    |  6 ++--
+ include/exec/helper-gen-common.h   | 26 ++++++++++++++++
+ include/exec/helper-gen.h.inc      | 48 +++++++++++++++---------------
+ include/exec/helper-head.h.inc     | 25 ++++++++++++++++
+ include/exec/helper-info.c.inc     | 24 ++++++++++-----
+ include/exec/helper-proto-common.h | 26 ++++++++++++++++
+ include/exec/helper-proto.h.inc    | 18 ++++++-----
+ include/hw/arm/virt.h              |  4 +--
+ include/hw/loongarch/virt.h        |  2 +-
+ include/hw/riscv/virt.h            |  4 +--
+ meson.build                        |  6 +++-
+ target/arm/internals.h             | 27 ++++++++++++-----
+ target/arm/tcg-stubs.c             |  4 +--
+ target/arm/tcg/op_helper.c         | 10 +++----
+ target/i386/tcg/excp_helper.c      | 17 ++++++-----
+ target/i386/tcg/helper-tcg.h       | 42 +++++++++++++++++++++-----
+ 21 files changed, 224 insertions(+), 91 deletions(-)
+
 -- 
 2.55.0.windows.3
 
