@@ -4,143 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 979C2CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 14:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4C0CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 14:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBvbk-0007qG-SM; Wed, 30 Sep 2026 10:48:32 -0400
+	id 1xBvcQ-00082o-2F; Wed, 30 Sep 2026 10:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xBvbL-0007kY-Qh
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:48:13 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBvcD-0007xa-02
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:49:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xBvb8-00060d-9w
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:47:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qfbDFxpwjQhOSelCyYqkH7DUtdzuYFLD6iDRqkSUhwvo/SgZ6amd6/PXnnaAMrfPpP+Y0CEQ1/gQSe8swwWVlSX2F1tBn47N5b8SjPZTzOEZMcYGdkKj7pt2pD6oYeBkt+SRJUU9vhevgZOku7xXQufrhUo+2BGdLxQUr2fzfxB6otpHRrEAaOnRjyEtLdHTQz4h+ni4fmdnMzB3Wk1sqkweh5+XD/JfQEvarP8J1UtjWA8sBSFtNunubkFYSW35dUvnRq5+mCaxEFXySuPCSA4t04H55UgMPwfRk0KKaN//NLvMnaKsvQYwM+YsoFle2odERnxbUtTGfi6Nyo9+Bg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HPY6el7bYu0FwL3eAGzntNqy4XDLfwDwwpBCPvELaJ0=;
- b=ytjHk4par99tX32u7fpEPOMrrnYK2+RDC+j36WoV1grKgpVaS4xncl5cYRiV8uwAjKme0NrZaezwGMuyV58NiDoof2XmENxuB2v98RvHEJ4f+SF7XoKeeSzF0m5kCFJI53tQr1Rg83Iq5Ju9KNmwVKL30AFjIWLBKlBT2hT8ooyYL6L6TcPjdNxLHE3+EBTXNoV3Bd1D/juqFsPttbH3QJe6JKuTOLp9YWhnh9RZCDbmkWNGGx67id88+H4RLbbm+3bJp/ooAfHkLEM6A34Ggl13kg8MKmBxs52f/cOfuTKZjd+MQPfpcyk4/g0K+uI0XE+2inKmk6YQu4bDQD31vA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HPY6el7bYu0FwL3eAGzntNqy4XDLfwDwwpBCPvELaJ0=;
- b=XYhYPGVIMDwmYJBwyeUnvNwC6q7r9arOmDM6hVHdoMAPogjzUUVsLA1EW1MSBrNy7TzHGH1q+c7mwpoFQDGuH0JdFvyz46IYt8L9Jc2dNvAgXmjprNEGBtjrKc4aBMDmk6pLAvCFuZaY84IDUAx7CNxh9lD2ctsNXN6eI3aJRJ+RoBjSs6jH8Cmh8KfkvMfXOGqg0kFJj4PjDzfEF3fheZvhdL43OOuLagO6mX4YcsvvGP+0d2OQJNrDt0mGG9oWbz2cSTPzQMIDD+eonFDl6jop6ocpklLhit2kJKvXaqVWgSFnCNNGlQ7ufBEz9Gnh6XUgyrHBWfJccd7xdhJMlw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by MIWPR08MB384561.eurprd08.prod.outlook.com
- (2603:10a6:290:90::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.14; Wed, 30 Sep
- 2026 14:47:16 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0472.012; Wed, 30 Sep 2026
- 14:47:16 +0000
-Message-ID: <afd80b90-9db6-4040-b187-e077b14143f2@virtuozzo.com>
-Date: Wed, 30 Sep 2026 17:47:15 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 16/18] vhost-vsock: hand off device ownership across CPR
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: clg@redhat.com, mst@redhat.com, sgarzare@redhat.com,
- maciej.szmigiero@oracle.com, dongli.zhang@oracle.com, bchaney@akamai.com,
- philmd@oss.qualcomm.com, farosas@suse.de, mark.kanda@oracle.com,
- dwmw2@infradead.org, peterx@redhat.com, vsementsov@yandex-team.ru,
- den@openvz.org
-References: <20260930-up-vsock-vhost-v5-v9-0-e9096f629770@virtuozzo.com>
- <20260930-up-vsock-vhost-v5-v9-16-e9096f629770@virtuozzo.com>
- <f6aefd81-2c13-48cc-873f-26763c815639@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <f6aefd81-2c13-48cc-873f-26763c815639@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR3P281CA0192.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a4::16) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xBvcA-00066E-Em
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 10:49:00 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UDxsdb3519855
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 14:48:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Ox9THxkjgMUKDstf7gWd4n2iJG7WWUiBq4JxIkPJDk4=; b=L187OyvVckTPwexF
+ wlGohWnUKsjQzZHWoJT0Yv7vNlfSQ3YUsBb7k2r/paN5xiS1iJn1yIUYHINhXYc0
+ TfzUxQDtHTlOStkOCGPWGMH8rRZnpmpy6rEUuOo47b12rza7qHCl8bYdtaYvsOfo
+ z7l9fOQmYgYv255iVxCfgKhnFOD5Qaw/wz4upL74YF1ljnPazjoZ63hoX71g8KoA
+ 6rlo19gcvas+HlchgItZ5IO/LcZcRqwrBF9w1sim24mbb1gNBNqV6wBX9cR4s2Kj
+ wvrnDHlXNZ8bE1kRzVc5ytdQeXoNjltRQLhyDmt0rbzQiuWs/cCoEKQGbbXJeH4X
+ dZodig==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0x27hxkh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 14:48:56 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93a082c014aso450920885a.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 07:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790779736; x=1791384536; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ox9THxkjgMUKDstf7gWd4n2iJG7WWUiBq4JxIkPJDk4=;
+ b=gBfhW7t/nm3oIZvkmsikDOi/HN78ljgVg+ZsHM3fZEkQoD9yh/auorK2MCV/x8jX5O
+ XHjwZUE+85E7bmL4nsYE4JyehtAaNjk1MbwnlNYYMV0C4iYolsu3WhmKeGwSJxX24+Qn
+ iEHcxjRz5BRaBnzo1R6FALL4IKzHNjU/pvociloaUsAfaMR68KjKrAx8NIPuQvQz7e0Z
+ PF1lDCWrcJBVsjARVSpx/Fc63LP8WsOuXjhnp6aEzqY/pa1W/0GFVTsrcyM0G4CecSGR
+ JeqS/AgiOOk8+gL17p+xOf6i6Chf5gMiq1l8m24+ojkn6SCTx0oZHQiN1cFcZMulfcza
+ T2uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790779736; x=1791384536;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ox9THxkjgMUKDstf7gWd4n2iJG7WWUiBq4JxIkPJDk4=;
+ b=GiMdmmVhVfNkqX7tBrXM5x3SfFakU4pOS+SVM6HNfbb/21EgVsr8QZF5yjJbImoVo0
+ wokgCtlyNpKYt7nG+cTMesJHY5ICUs9CQQ8ph7LDXpGcIRnTGk+748HCUMnQ5sWBWBYy
+ A8yaq/z3pbIwq2pajCH5bhlOM/auuM2s5dBOKtnOxNsRadx55UhzFwAxabzF22WYX18r
+ i8++OFNLf0wlvHJcWjEQcvaF3AamsenU8Iq2THxwFSup3Xygjqy2YlgdV1DiD9ymePNN
+ l8UZjVskDaOlPBY6daB0hZWtkOlkSvveclFGTURY6YVifGd0vyr6ihm/Wvftg0S64rIR
+ 25fw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwuuxqw7a7J8F0dkrQ5+HYIOQ0/zJatpi7DgDgdGelcvixlhRuMnHFWkoOM8b14rKvbVklC7pA4wgbN@nongnu.org
+X-Gm-Message-State: AFuF++kULux+ML13Q+WfS783QResAPlJ+I1NaoJxnOsXcrQrEGp0zA3s
+ AVAcAQmztfpUuUHdteLkhoHf4krM3GZrymhQBox16d00KVYZoH16Y9g5Gch3803DajiqYSQGc9O
+ 3yjYU/Pytae2P/N9hqP7dwFPRTX/NkWWdD/YbjfXdbQ+XXNf3feQricVd3Q==
+X-Gm-Gg: AYBFou1IMLTMt7XGq0NYCYQJFd+DUgx5lqKr60TIFS8kbNreBW8dcRIBUrrAhS0MR6G
+ DMAjzln8c6LT0N7zBe4nNK4H/+VrkRSSf06Vzx+wNTnJsVes21m9Em6AVoDCa96Es2loYI24T5n
+ NS3N2bMqjdwTi01hNdwyA0qKu+CVi/U14UxdqaPeAg7h45lg7YAiCFkXXXcj7sf3nTn9G4Wy9m9
+ BM7zHxXI0BLtahvvNBFlHMhNFpxkI5Otyy/eqYZOl+0nu+945kZ15ASO97FzyyviPvo8YDVMkLC
+ QdYDTm4akWQnW/oq3hfdRTaNnOj1IXINErJHWcm6tEzytNAdUqs0cPv+h5QhLrbzce5tsjoEXNb
+ swbzWGHXghGB7PKxoojxVNH1rzTfHced9dA==
+X-Received: by 2002:a05:620a:6509:b0:93b:c6fc:71e9 with SMTP id
+ af79cd13be357-93ca9752cfbmr284966085a.25.1790779735617; 
+ Wed, 30 Sep 2026 07:48:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:6509:b0:93b:c6fc:71e9 with SMTP id
+ af79cd13be357-93ca9752cfbmr284959785a.25.1790779735077; 
+ Wed, 30 Sep 2026 07:48:55 -0700 (PDT)
+Received: from [192.168.15.22] ([177.188.45.232])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c2e31c8efb0sm14755866b.23.2026.09.30.07.48.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Sep 2026 07:48:54 -0700 (PDT)
+Message-ID: <706bc560-ee8d-4529-8ece-c849fa8a4602@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 11:48:47 -0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MIWPR08MB384561:EE_
-X-MS-Office365-Filtering-Correlation-Id: eea80d1a-780b-46fa-1fe1-08df1f01b8aa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|23010399003|4143699003|56012099006|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: BHVK9M+Euf9LpBTK8/vHtj0sjCZdGTogOIls+3iKpWghjzhCp/NDWDXKdFDR0u3nMqANZHvoOKcln9mvdD+VNyUm2r0lQ9i30efTFt9ICwKqQRQTeVJgxz6KmYC5UU2XNYJexC2wsxc4LWdSqEjb90kSlsKq+ppfoAjRYg4fb9gE0dgxzSeLazW7dYjls/goidZiUEdMpsssLmV9GfC8mhxtnd7hLl4//9/JcT636FyW9bduueUqzNj77YZ8nAnBfB+uI/6/ef3+uzs3yjabO+zIx4ANfgrbR3Dr8Jv8EbkRX3uMBw9g0LCONnvx2MjtSulYDrgnfziXEJL6z12KQuSgcbSreWYQvHP5Lsnc4UdsOpwIR7IJVPEVzYpx0xCpgm1dpfy0Kdt0lTWdzKtw+9rZ4HXUSHsT8hS/YAnTMcr+fFEWX2ZGg5LzN7BwblULBNrLUKKibmTod3x8h9kpjS5ByAyGNfZUmqAwpUDB7Bg/46Qv3PcRpU3/p4VCcMIA9zfKwRuwRvbPogIHvX4ik2Bleze0tf0og6LIjnQJk8Ct3/0cVyzwGb1cOG7dj/AplPYBiiXxTDCXgXL5OLtWuXi2Prebeax+85qQwDDTIFbVTNHenclEh+h0CtmQJcAvtx8rU3EUY8VfhE+3eS7sPHkM5ow+iuwLYFxs3Ma/HPw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(23010399003)(4143699003)(56012099006)(10067099003)(18002099003)(22082099003)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UDBjcUIyUzJCNXN5WTAvYjVENmUxT21DU0NxTVY2UXV3SkU5ekowSExoVUJI?=
- =?utf-8?B?bHhYb0o1TkwyRlUvM2ZpTlIzRjVoMFVsd3VTTFJINUMxS0NyUnljNElrWUIz?=
- =?utf-8?B?a05TMHkxY29Hb2tzNkJSWC9OMGdUVUMvbDdoTEJwTmJRK0pRRll0UUxIVE56?=
- =?utf-8?B?ZVEyUEVCN0RYNDAvNzA1TVdxSUxYV1NOK25UZzNGRW14dHR6eVNnWHNqdU1U?=
- =?utf-8?B?dU1RUi96M2sxUjEvMEVmRjQ1Ukpjc3RzK2pWUS84SHFjWVIxb3puQ1hmRWFZ?=
- =?utf-8?B?Wk1YZEp3eHFoNDNLc1NFSHlmdFB6RHJwSjRHUVVVY0s5Njl1OGlVa3RwaDNu?=
- =?utf-8?B?MkZ5K3FKSnNHdEFGMTZVaSs5dHNCWTJERlVWWjFSWjc5Rk94bjNtL1RpMzVH?=
- =?utf-8?B?VTdrMjYyZEQvWGhHQW1nejJ6Sm5sQmFBeGRYOWN1cFBFWFFsd2ZvWDRnK2cx?=
- =?utf-8?B?RW1mbDkvcFovRlBNWVlmbEMxOHJNaURCQm5MVXk2cHMrN0NieDAyOWR3NFBy?=
- =?utf-8?B?RHMrL1hGMUo2eTM5Slo3TXZsUG9LYnMyUXVLcTF2OUxFZU1ZOWdPZm92Uy8r?=
- =?utf-8?B?VUo3RndkV0FuVjFDSmVBVmhkcS85Ukx5ekRwemNYM3BXSmwxaHdTNXJSbVV5?=
- =?utf-8?B?ZW4xOXMreE1XZVN1RzUwV2FKVUk2dERhZGxRaThBVytoYmJGZ09qYkkrTXhU?=
- =?utf-8?B?b2FnV3hsSktFOHFZd2xGZDQyZDRoUGNWR0RIMEJWRDFjRU9meVRWUXlGUTdq?=
- =?utf-8?B?WEV1TEV0cmM2andUVkhOUlk2c2M1VHRNMm9zdkdzWTk4ZWZ2aTlQYU1YdXdk?=
- =?utf-8?B?REtnQTJPOEh4L0FSd3hlRHJTVFN2bldMSWw5SzgvRU1ZYmgydjhVbzFIVzVI?=
- =?utf-8?B?OEsyN0d6NXEwUEE5SkFrT0liZDcreXI5c3Z5VHdqZm52QVI0OExTMGN1V2Ja?=
- =?utf-8?B?TzlYOTRycUhPdlJHZDZwbTFyN0VTK1ZIdkVsOHRETk16bXhXbmdIczNnVXdl?=
- =?utf-8?B?TGNucE5EdmMyNktSZHh2djlKNmg1NkNhZGlRclYvQjVaYUlHUnVKMVJLak04?=
- =?utf-8?B?NDRhcTNJTllTWFUzbVJJaHE1M0pVckpKTlpoOHAvV01NZE50b1JkdWxPVDM1?=
- =?utf-8?B?ajlYNDJZS1FmbUtHcUpCVStGYk1GUmE1MzBqbGZ1T3FPY00xK0FTQTczOFV4?=
- =?utf-8?B?UDRrNTNVSVNZb0s0LytlT3BTQW02c1FUdVRyYy9RZmVTUjVMZVZhTTZRNkkz?=
- =?utf-8?B?ZXpoREl5V0d2eGEwWktia2JsOWpveklIcDNlWjR4ZXdXLzR4WjhyVkV5VWs0?=
- =?utf-8?B?RmhJMWpFMU5ibjE3Zk1LdVh6ZXYxcDliK2hpck1HNUR2cDIzWllKMFY1QVpM?=
- =?utf-8?B?WWFiU2JCYi92MlcwZlhXdjlySUk5bHhuSzgyNzFPWW1mMzNKMDVqNmx1NWVV?=
- =?utf-8?B?QThXZnZtWVhXZ2w3a2t6aVdLTTYxa2NSSVEwSEVXd3FSTjJ4V1krcXdGcFNQ?=
- =?utf-8?B?TjQzbWxiY0hQdFhTZUNvSGNlV1VIN2ZobFdlWEJZQ1o2NDMxcFVic1oyVE5y?=
- =?utf-8?B?Qm5HbjRwcExzSXBlVTZpZ3BVdWgyVjg3TFJxbFRhanZzbU52dVd4SGV5RTBk?=
- =?utf-8?B?MUVFZnVibERMYmRRQU1QYWxkWWNta2VQRXJmVTJab2VXV1NRT1pkNnZIeTZ0?=
- =?utf-8?B?ejZkRUthQjFMMzEzcXN5UVVwRGR1NCsrR0lxSWJXZC8xcDUxOWxZZXdjRVZL?=
- =?utf-8?B?THZBL1Q1VGoxSkRjSW5XREtOTTkwWVlaUFI1MnF0VXdVdU1SN0EzSlc5RFRB?=
- =?utf-8?B?eVBkZFdVdnlwRWwvOXlxRmhqZEpuRkI4M1MxU3RTdVlDTVpVL1JqTjNsbEJI?=
- =?utf-8?B?akc2Wm5VNEhWSit6Nk1hdVIyd3NIZTdYZXRZMkhrdGFxWDN5YmxQcnpMVUVk?=
- =?utf-8?B?YXhsbkFqZS9XN0dDVjlkcWlUVVJ5MlVKeTRST1AydENoOWw5NktUemN2TjVj?=
- =?utf-8?B?alRXT3loRXJQM2wreVdQSW11bXhTTG9rb3VWeEc0a2JFWVdyODFlL0VHT0Js?=
- =?utf-8?B?cm5mYzVURHBucmhUSUJLQVhTc1dWeksyQWhXOWFrV2ZpeDcvUVBBZUNGM1dx?=
- =?utf-8?B?K0huaWdLVGJvMTU2aVJ5ZUlzalRuTDNZa0Z3YmRGcCtpR0FCWkZLWXpKclZN?=
- =?utf-8?B?KzZwdTZGLzdUWUZKSUNrV1RFeDhyVzVzSjU4MnE5ZlUrWGxDWlFObjRVZ1dh?=
- =?utf-8?B?RlFXalk1T1BGUW9EaEZqV2IySVFTQ0pVMXpEMHRLR0xGbCtSeDFnUXJha0h2?=
- =?utf-8?B?bjlSOTR5SERsdytzZWtPbEdwbGVabDJHcWxUcm5QR2lteXdwMHpmd095bzlK?=
- =?utf-8?Q?WLYMbuv9hB8V0Ddk=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eea80d1a-780b-46fa-1fe1-08df1f01b8aa
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 14:47:16.4513 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2WM57dR8rirULVCcUx11DP5n0yaIMW5afGNTMM18baFCT6dOyouMSX+I6ySTtdWvrU8kG1IlYEQPHuaYhnitQa7G2vlwQ8eKJ7RSoLfaXq4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR08MB384561
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] hw/riscv/atlantis: Add machine property to select
+ default uart
+To: portias@oss.tenstorrent.com, qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Joel Stanley <joel@jms.id.au>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
+ <20260929031644.1016354-5-portias@oss.tenstorrent.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260929031644.1016354-5-portias@oss.tenstorrent.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1OCBTYWx0ZWRfXwJqxEmTQ17ds
+ 70+Udy4CPFepOZhvO40tLhSvpebS7pG2INF08xghdMv6pBjwYGHFCQGO5kduShawzFaEG0V51/H
+ 5VgjcMaoRCjtwEcfmbSeSBD+5q2tnBU=
+X-Proofpoint-GUID: 5d2qwm0BaJRKEq3jFCfYe2QUBKhLT77d
+X-Authority-Analysis: v=2.4 cv=W9GtxhWk c=1 sm=1 tr=0 ts=6abd2158 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=6l5rUruYTVaW9RSjPQzg2g==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=t9496tuAAAAA:8 a=vr2JyHze2XVrOcvLC_oA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=4wQ91nGE5lQcD7eh5OX0:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1OCBTYWx0ZWRfXzS9zkxFUABVE
+ It7kkT+8eJ8qfQzdX3GP0FlIrzEyN+5+PblqHDm8b73i8dpB3lllI4FGhJVeQScVVQnvshdE1ph
+ CuAAgBgix5uc1HTH5Jzk3bIWabPnGLFFDkuxwDx9E9T5JCKvcFT84kUKKz9uteHbflOqZqS1xms
+ M6xihq5CqipNLkATqiqnP0tSafkWWbfQc3tqSjNjy1zKYlLiqHxYgXOGDcGl4WwlB42IO2S5Ys3
+ STgP/c8ISQO94m92tD2w0LPFA3TEq0peQbVzpEk6dtAgRmB8S/JWMrQWM0fRJtTH/Ip712fsAyD
+ oMN/ESZ//bYwyADliRD9gmA+O+Z8ZHt2TLYZPtjyyE+wV/EkmsJg+9qKBAOC5BxT2f1jM1+VhuS
+ NuSfccdC+giv1V9hGZKl4OCUs5YOHPIR3ixhdx4shhlejEt0/GlzRfkYiUiZy2Ap5Ol5Ew1oBmC
+ cohQ2sKChKWYzqgcZxg==
+X-Proofpoint-ORIG-GUID: 5d2qwm0BaJRKEq3jFCfYe2QUBKhLT77d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 clxscore=1015 phishscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609300058
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,348 +166,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/26 3:13 PM, Akihiko Odaki wrote:
-> On 2026/09/30 19:13, Andrey Drobyshev wrote:
->> The previous patches reuse the source vhost FD on the destination,
->> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
->> in realize().  For cpr-transfer the destination realizes while the source
->> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
->> handed over explicitly.
->>
->> Do this through the device's CPR vmstate hooks.  Namely, release device
->> ownership in pre_save, reclaim in post_load, re-acquire on restart:
->>
->>    - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
->>      the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
->>      cpr-exec).
->>
->>    - .realize(), for an incoming CPR, only sets up the virtio device and
->>      queries the backend features by calling vhost_dev_init_backend().
->>      It doesn't take device ownership and doesn't touch the VQs which
->>      still-running source might use.  The full init is deferred to
->>      .post_load().
->>
->>    - .post_load() reclaims it on the destination: the full vhost_dev_init()
->>      (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
->>      the device is started at vm_start.
->>
->>    - .set_status() refuses to start a device whose init hasn't completed
->>      yet (incoming CPR before post_load).
->>
->>    - .set_status() re-acquires ownership before starting the device if
->>      pre_save released it and this QEMU is about to run the guest again:
->>      the migration failed, or it completed and the management resumed the
->>      source (e.g. cpr-transfer target died).
->>
->> With the handoff in place, lift the CPR blocker.
->>
->> Note: this requires kernel side support of VHOST_RESET_OWNER operation
->> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
->>
->> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
->> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> ---
->>   hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
->>   include/hw/virtio/vhost-vsock.h |   2 +-
->>   2 files changed, 128 insertions(+), 31 deletions(-)
->>
->> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
->> index 6e89007b2ce..65ba573da4d 100644
->> --- a/hw/virtio/vhost-vsock.c
->> +++ b/hw/virtio/vhost-vsock.c
->> @@ -21,7 +21,6 @@
->>   #include "hw/virtio/vhost-vsock.h"
->>   #include "monitor/monitor.h"
->>   #include "migration/cpr.h"
->> -#include "migration/blocker.h"
->>   #include "migration/misc.h"
->>   
->>   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
->> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
->>   static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
->>   {
->>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
->> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
->>       bool should_start = virtio_device_should_start(vdev, status);
->>       int ret;
->>   
->> +    /*
->> +     * During CPR, on target the full vhost_dev_init() is deferred to
->> +     * post_load.  Refuse to start a half-initialised device rather than
->> +     * issue vhost ioctls on it.
->> +     */
->> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
->> +        error_report("vhost-vsock: refusing to start, device init incomplete");
->> +        return 0;
->> +    }
->> +
->>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->>           return 0;
->>       }
->>   
->>       if (should_start) {
->> +        /*
->> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
->> +         * source, after a successful RESET_OWNER op.  If we end up here
->> +         * with this flag set - that means that either CPR migration failed,
->> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
->> +         * target died).  In either case, we need to re-acquire device
->> +         * ownership.
->> +         *
->> +         * On failure leave the device stopped.  The next start attempt
->> +         * (guest driver reset, VM stop/cont) retries.
->> +         */
->> +        if (vsock->owner_reset) {
->> +            ret = vhost_dev_set_owner(&vvc->vhost_dev);
->> +            if (ret < 0) {
->> +                error_report("vhost-vsock: cannot re-acquire device "
->> +                             "ownership: %s", strerror(-ret));
->> +                return 0;
->> +            }
->> +            vsock->owner_reset = false;
->> +        }
->> +
->>           ret = vhost_vsock_common_start(vdev);
->>           if (ret < 0) {
->>               return 0;
->> @@ -123,8 +154,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
->>       return vhost_vsock_common_get_features(vdev, requested_features, errp);
->>   }
->>   
->> +static int vhost_vsock_pre_save(void *opaque)
->> +{
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
->> +    int ret;
->> +
->> +    ret = vhost_vsock_common_pre_save(opaque);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> +
->> +    /*
->> +     * Release the device ownership now for CPR migration.  The device is
->> +     * already stopped at pre_save, and destination reclaims it by calling
->> +     * VHOST_SET_OWNER in post_load.
->> +     */
->> +    if (cpr_incoming_needed(NULL) && migration_is_running() &&
->> +        !vsock->owner_reset) {
->> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
->> +        if (ret < 0) {
->> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
->> +                         strerror(-ret));
->> +            return ret;
->> +        }
->> +        vsock->owner_reset = true;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   static int vhost_vsock_post_load(void *opaque, int version_id)
->>   {
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
->> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(DEVICE(opaque));
->> +    Error *local_err = NULL;
->> +    int vhostfd, ret;
->> +
->>       /*
->>        * Only reset vsock connections for non-CPR migration.  For CPR the
->>        * guest cid is unchanged, and the cid-change reset would otherwise
->> @@ -134,6 +201,35 @@ static int vhost_vsock_post_load(void *opaque, int version_id)
->>           return vhost_vsock_common_post_load(opaque, version_id);
->>       }
->>   
->> +    /*
->> +     * CPR restore case.  The source released device ownership in its
->> +     * pre_save.  Complete the handoff here, before the device is started
->> +     * at vm_start.  Init vhost device on preserved FD, issue
->> +     * VHOST_SET_OWNER on it, and restore the guest cid.
->> +     */
->> +    vhostfd = cpr_find_fd(cpr_name, 0);
->> +    if (vhostfd < 0) {
->> +        error_report("vhost-vsock: could not find restored vhost FD");
->> +        return -1;
->> +    }
->> +
->> +    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
->> +                         VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
->> +    if (ret < 0) {
->> +        error_report_err(local_err);
->> +        cpr_delete_fd(cpr_name, 0);
->> +        return ret;
->> +    }
->> +
->> +    ret = vhost_vsock_set_guest_cid(vdev);
->> +    if (ret < 0) {
->> +        error_report("vhost-vsock: unable to set guest cid: %s",
->> +                     strerror(-ret));
->> +        vhost_dev_cleanup(&vvc->vhost_dev);
-> 
-> The previous patch does fix error handling inside vhost_dev_init(), but 
-> this branch still closes the shared FD after ownership has already been 
-> acquired without resetting it.
 
-You're right, I missed it.  But I think Stefano's suggestion under the
-previous patch is the proper solution for that issue as well.  I.e. if
-we issue RESET_OWNER directly from vhost_dev_cleanup() this hole will be
-closed as well.
+
+On 9/29/2026 12:16 AM, portias@oss.tenstorrent.com wrote:
+> From: Portia Stephens <portias@oss.tenstorrent.com>
+> 
+> The Atlantis SoC has 5 UARTs. This adds a machine property to set
+> which uart is on the first serial interface. This is the same pattern
+> that is used by aspeed. The rest of the uart's will be added in
+> sequential order starting at serial interface 1.
+> 
+> The default value is uart1 which means the Ascalon console will be on
+> serial interface 0 by default.
+> 
+> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> ---
+
+The code LGTM but I wonder if we can make it simpler.
+
+IIUC there is a new ams->uart_chosen being added that holds the numeric ID of
+the first UART.  Then there's a new string property called "console" that needs
+to be on the format "uartN".  To do that there's a string parsing code in
+tt_atlantis_set_console() to guarantee it.  And there's code to guarantee that
+N is also in an acceptable range.  Aside from parsing N the 'console' string is
+not being used.
+
+I believe there's a good case here to make "console" an uint32_t property instead,
+receiving N, getting rid of all the string parsing code.
+
+Also, there's a couple of instances of this:
+
+
+int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+
+
+You can avoid this ternary by initializing ams->uart_chosen  = TT_ATL_UART1; during
+tt_atlantis_soc_init().  Coupled with the parsing code from the "console" property
+there is a guarantee that ams->uart_chosen will always be an acceptable value.
+
+
 
 Thanks,
-Andrey
-> Regards,
-> Akihiko Odaki
+Daniel
+
+
+>   hw/riscv/tt_atlantis.c         | 77 ++++++++++++++++++++++++++++++----
+>   include/hw/riscv/tt_atlantis.h |  1 +
+>   2 files changed, 69 insertions(+), 9 deletions(-)
 > 
->> +        cpr_delete_fd(cpr_name, 0);
->> +        return ret;
->> +    }
->> +
->>       return 0;
->>   }
->>   
->> @@ -145,7 +241,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
->>           VMSTATE_VIRTIO_DEVICE,
->>           VMSTATE_END_OF_LIST()
->>       },
->> -    .pre_save = vhost_vsock_common_pre_save,
->> +    .pre_save = vhost_vsock_pre_save,
->>       .post_load = vhost_vsock_post_load,
->>   };
->>   
->> @@ -171,37 +267,24 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->>           return;
->>       }
->>   
->> -    /*
->> -     * CPR migration of a vhost-vsock device is not supported yet: the
->> -     * device ownership is not handed over, so the target fails to set
->> -     * up its device.  Fail the migration early and gracefully instead.
->> -     */
->> -    error_setg(&vsock->migration_blocker,
->> -               "vhost-vsock: CPR migration is not supported");
->> -    if (migrate_add_blocker_modes(&vsock->migration_blocker,
->> -                                  BIT(MIG_MODE_CPR_TRANSFER) |
->> -                                  BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
->> -        return;
->> -    }
->> -
->>       if (cpr_incoming) {
->>           /* Reuse the fd handed over from the source QEMU */
->>           vhostfd = cpr_find_fd(cpr_name, 0);
->>           if (vhostfd < 0) {
->>               error_setg(errp, "vhost-vsock: could not find restored vhost FD");
->> -            goto err_blocker;
->> +            return;
->>           }
->>       } else if (vsock->conf.vhostfd) {
->>           vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
->>           if (vhostfd == -1) {
->>               error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
->> -            goto err_blocker;
->> +            return;
->>           }
->>       } else {
->>           vhostfd = open("/dev/vhost-vsock", O_RDWR);
->>           if (vhostfd < 0) {
->>               error_setg_file_open(errp, errno, "/dev/vhost-vsock");
->> -            goto err_blocker;
->> +            return;
->>           }
->>       }
->>   
->> @@ -210,19 +293,37 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->>           if (cpr_incoming) {
->>               cpr_delete_fd(cpr_name, 0);
->>           }
->> -        goto err_blocker;
->> +        return;
->>       }
->>   
->>       vhost_vsock_common_realize(vdev);
->>   
->> -    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
->> -                         VHOST_BACKEND_TYPE_KERNEL, 0, errp);
->> -    if (ret < 0) {
->> +    if (!cpr_incoming) {
->> +        ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
->> +                             VHOST_BACKEND_TYPE_KERNEL, 0, errp);
->> +        if (ret < 0) {
->> +            /*
->> +             * vhostfd is closed by vhost_dev_cleanup, which is called
->> +             * by vhost_dev_init on initialization error.
->> +             */
->> +            goto err_virtio;
->> +        }
->> +    } else {
->>           /*
->> -         * vhostfd is closed by vhost_dev_cleanup, which is called
->> -         * by vhost_dev_init on initialization error.
->> +         * CPR restore case: only learn the backend feature set now, but
->> +         * defer taking ownership or touching VQs (the still-running source
->> +         * might be using them).  The full vhost_dev_init()/VHOST_SET_OWNER
->> +         * is done later in post_load.
->>            */
->> -        goto err_virtio;
->> +        ret = vhost_dev_init_backend(&vvc->vhost_dev,
->> +                                     (void *)(uintptr_t)vhostfd,
->> +                                     VHOST_BACKEND_TYPE_KERNEL, errp);
->> +        if (ret < 0) {
->> +            /* vhost_dev_init_backend() does not close the fd on error */
->> +            goto err_vhost_dev;
->> +        }
->> +
->> +        return;
->>       }
->>   
->>       ret = vhost_vsock_set_guest_cid(vdev);
->> @@ -232,7 +333,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->>       }
->>   
->>       /* Register the fd for a future CPR after a fully successful realize */
->> -    if (!cpr_incoming && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
->> +    if (!cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
->>           goto err_vhost_dev;
->>       }
->>   
->> @@ -247,22 +348,18 @@ err_vhost_dev:
->>       }
->>   err_virtio:
->>       vhost_vsock_common_unrealize(vdev);
->> -err_blocker:
->> -    migrate_del_blocker(&vsock->migration_blocker);
->>   }
->>   
->>   static void vhost_vsock_device_unrealize(DeviceState *dev)
->>   {
->>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
->>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->> -    VHostVSock *vsock = VHOST_VSOCK(dev);
->>       g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
->>   
->>       /* This will stop vhost backend if appropriate. */
->>       vhost_vsock_set_status(vdev, 0);
->>   
->>       cpr_delete_fd(cpr_name, 0);
->> -    migrate_del_blocker(&vsock->migration_blocker);
->>       vhost_dev_cleanup(&vvc->vhost_dev);
->>       vhost_vsock_common_unrealize(vdev);
->>   }
->> diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
->> index a964d57e1bc..6e1c39383ef 100644
->> --- a/include/hw/virtio/vhost-vsock.h
->> +++ b/include/hw/virtio/vhost-vsock.h
->> @@ -29,7 +29,7 @@ struct VHostVSock {
->>       /*< private >*/
->>       VHostVSockCommon parent;
->>       VHostVSockConf conf;
->> -    Error *migration_blocker;   /* CPR migration is not supported */
->> +    bool owner_reset;           /* CPR released ownership; needs re-acquire */
->>   
->>       /*< public >*/
->>   };
->>
-> 
+> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> index d567ec1155..32ba755bbf 100644
+> --- a/hw/riscv/tt_atlantis.c
+> +++ b/hw/riscv/tt_atlantis.c
+> @@ -420,6 +420,29 @@ static void load_fdt(TTAtlantisState *ams)
+>       create_fdt_memory(ms->fdt, &ams->soc);
+>   }
+>   
+> +static inline int tt_atlantis_uart_index(int uart_dev)
+> +{
+> +    return uart_dev - TT_ATL_UART0;
+> +}
+> +
+> +static void tt_atlantis_connect_serial_hds_to_uarts(TTAtlantisState *ams)
+> +{
+> +    TTAtlantisSoCState *s = &ams->soc;
+> +
+> +    int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+> +    int uart_index = tt_atlantis_uart_index(uart_chosen);
+> +
+> +    qdev_prop_set_chr(DEVICE(&s->uart[uart_index]), "chardev", serial_hd(0));
+> +
+> +    for (int i = 1, uart = 0; i < TT_ATL_NUM_UARTS; uart++) {
+> +        if (uart == uart_index) {
+> +            continue;
+> +        }
+> +        qdev_prop_set_chr(DEVICE(&s->uart[uart]), "chardev", serial_hd(i++));
+> +    }
+> +}
+> +
+> +
+>   static void tt_atlantis_machine_done(Notifier *n, void *data)
+>   {
+>       TTAtlantisState *ams = container_of(n, TTAtlantisState, machine_done);
+> @@ -482,11 +505,6 @@ static void tt_atlantis_machine_done(Notifier *n, void *data)
+>                                 fdt_load_addr);
+>   }
+>   
+> -static inline int tt_atlantis_uart_index(int uart_dev)
+> -{
+> -    return uart_dev - TT_ATL_UART0;
+> -}
+> -
+>   static void tt_atlantis_soc_init(Object *obj)
+>   {
+>       TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
+> @@ -590,10 +608,6 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
+>       memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
+>                                   &s->bootrom);
+>   
+> -    /* UART1, the soc console (UART0 is for the boot microcontroller */
+> -    qdev_prop_set_chr(DEVICE(&s->uart[tt_atlantis_uart_index(TT_ATL_UART1)]),
+> -                      "chardev", serial_hd(0));
+> -
+>       for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
+>           SysBusDevice *sbd = SYS_BUS_DEVICE(&s->uart[i]);
+>           if (!sysbus_realize(sbd, errp)) {
+> @@ -661,6 +675,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>                                OBJECT(&ams->soc_memory), &error_abort);
+>       object_property_set_link(OBJECT(&ams->soc), "dram", OBJECT(machine->ram),
+>                                &error_abort);
+> +
+> +    /* Map serial interfaces to uart */
+> +    tt_atlantis_connect_serial_hds_to_uarts(ams);
+> +
+>       qdev_realize(DEVICE(&ams->soc), NULL, &error_fatal);
+>   
+>       /* I2C peripherals: qemu specific */
+> @@ -678,6 +696,45 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>       qemu_add_machine_init_done_notifier(&ams->machine_done);
+>   }
+>   
+> +static char *tt_atlantis_get_console(Object *obj, Error **errp)
+> +{
+> +    TTAtlantisState *ams = TT_ATLANTIS_MACHINE(obj);
+> +
+> +    /* Default to Ascalon console */
+> +    int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+> +
+> +    return g_strdup_printf("uart%d", tt_atlantis_uart_index(uart_chosen));
+> +}
+> +
+> +static void tt_atlantis_set_console(Object *obj, const char *value, Error **errp)
+> +{
+> +    TTAtlantisState *ams = TT_ATLANTIS_MACHINE(obj);
+> +
+> +    int val;
+> +    int uart_first = tt_atlantis_uart_index(TT_ATL_UART0);
+> +    int uart_last = tt_atlantis_uart_index(TT_ATL_UART4);
+> +
+> +    if (sscanf(value, "uart%d", &val) != 1 || val < 0) {
+> +        error_setg(errp, "Bad value for \"uart\" property");
+> +        return;
+> +    }
+> +
+> +    if (val < uart_first || val > uart_last) {
+> +        error_setg(errp, "\"uart\" should be in range [%d - %d]",
+> +                   uart_first, uart_last);
+> +        return;
+> +    }
+> +    ams->uart_chosen = val + TT_ATL_UART0;
+> +}
+> +
+> +static void tt_atlantis_machine_class_props_init(ObjectClass *oc)
+> +{
+> +    object_class_property_add_str(oc, "console", tt_atlantis_get_console,
+> +                                  tt_atlantis_set_console);
+> +    object_class_property_set_description(oc, "console",
+> +                           "Change the default UART to \"uartX\"");
+> +}
+> +
+>   static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -691,6 +748,8 @@ static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
+>       mc->block_default_type = IF_VIRTIO;
+>       mc->no_cdrom = 1;
+>       mc->default_ram_id = "tt_atlantis.ram";
+> +
+> +    tt_atlantis_machine_class_props_init(oc);
+>   }
+>   
+>   static const TypeInfo tt_atlantis_types[] = {
+> diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+> index b81b7c8abd..7bd46e9c9b 100644
+> --- a/include/hw/riscv/tt_atlantis.h
+> +++ b/include/hw/riscv/tt_atlantis.h
+> @@ -56,6 +56,7 @@ struct TTAtlantisState {
+>   
+>       MemoryRegion soc_memory;
+>       TTAtlantisSoCState soc;
+> +    uint32_t uart_chosen;
+>   };
+>   
+>   enum {
 
 
