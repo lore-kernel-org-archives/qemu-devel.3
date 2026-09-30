@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADABCA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41036CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrjQ-00026r-Vx; Wed, 30 Sep 2026 06:40:14 -0400
+	id 1xBrjA-0001iE-7m; Wed, 30 Sep 2026 06:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrih-0001Ic-Dm
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrij-0001Js-Cs
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrie-0006jP-DT
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrif-0006kM-6v
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764763;
+ s=mimecast20190719; t=1790764764;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NqzFE4icAEkOZSrELr1wFVdLZElSFKv4bQfvHL4fI9E=;
- b=TO+gwLUVRXpt6/saZfLqP8eRW23Az+wRFLhxPHUY4Z20dHiCzm+h9XRdzIMMOjEsUH3GIz
- hIbRusue2uizdWUnJF6Pesrw+1MAMj9FtTQID8gm0BYwEJeNtNo9AXpad86tsH83iY6FoZ
- QEKLLOnAOXUq5tcebjVhyuPGFeXYBC0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=7PlLrn9wGndDEMy+JfzZPCt4u/0jgARRvlbVgPfgTg8=;
+ b=VCWUuPy0HkF7O1wOZUoi7RIgvY5SHnn90XEFkbSav/Ppzfao5ukiL/qGtC+rBxSxpYNVTT
+ hDHpdp2kWVR95iUqMZ++oGH9JwgQs/XM3oBRzcCLeoS1Y3eS/aOep3wRumdRWXy+Ml9oBo
+ q8nKlrzrr1q2wHHnAqEmCAphlzL/vQY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-vbyes21MNRWYTgJoQB4GJA-1; Wed,
- 30 Sep 2026 06:39:20 -0400
-X-MC-Unique: vbyes21MNRWYTgJoQB4GJA-1
-X-Mimecast-MFC-AGG-ID: vbyes21MNRWYTgJoQB4GJA_1790764759
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-sgERfqqjPgKx43-ic2b-pA-1; Wed,
+ 30 Sep 2026 06:39:23 -0400
+X-MC-Unique: sgERfqqjPgKx43-ic2b-pA-1
+X-Mimecast-MFC-AGG-ID: sgERfqqjPgKx43-ic2b-pA_1790764762
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4104B1808873; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 333FE195DE60; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F298A1956042; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF03D1800361; Wed, 30 Sep 2026 10:39:21 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 09B4B21E68A0; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id 3F61E21E682C; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 028/105] qapi: convert trivial intro sections for misc-i386.json
-Date: Wed, 30 Sep 2026 12:37:53 +0200
-Message-ID: <20260930103910.3934848-29-armbru@redhat.com>
+Subject: [PULL 041/105] qapi: convert trivial intro sections for migration.json
+Date: Wed, 30 Sep 2026 12:38:06 +0200
+Message-ID: <20260930103910.3934848-42-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,180 +87,427 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260831201945.287730-29-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-42-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/misc-i386.json | 52 ++++++++++++++++-----------------------------
- 1 file changed, 18 insertions(+), 34 deletions(-)
+ qapi/migration.json | 131 ++++++++++++++++----------------------------
+ 1 file changed, 48 insertions(+), 83 deletions(-)
 
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index 05a94d6c41..78ec9aec64 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -25,8 +25,7 @@
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 9a1cc7c4e5..91681cdf03 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -13,8 +13,7 @@
  
  ##
- # @SevState:
+ # @MigrationRAMStats:
 -#
--# An enumeration of SEV state information used during `query-sev`.
-+#     An enumeration of SEV state information used during `query-sev`.
+-# Detailed migration status.
++#     Detailed migration status.
  #
- # @uninit: The guest is uninitialized.
+ # @transferred: amount of bytes already transferred to the target VM
  #
-@@ -52,8 +51,7 @@
+@@ -78,8 +77,7 @@
  
  ##
- # @SevGuestType:
+ # @XBZRLECacheStats:
 -#
--# An enumeration indicating the type of SEV guest being run.
-+#     An enumeration indicating the type of SEV guest being run.
+-# Detailed XBZRLE migration cache statistics
++#     Detailed XBZRLE migration cache statistics
  #
- # @sev: The guest is a legacy SEV or SEV-ES guest.
+ # @cache-size: XBZRLE cache size
  #
-@@ -66,8 +64,7 @@
+@@ -104,8 +102,7 @@
  
  ##
- # @SevGuestInfo:
+ # @CompressionStats:
 -#
--# Information specific to legacy SEV/SEV-ES guests.
-+#     Information specific to legacy SEV/SEV-ES guests.
+-# Detailed migration compression statistics
++#     Detailed migration compression statistics
  #
- # @policy: SEV policy value
+ # @pages: amount of pages compressed and transferred to the target VM
  #
-@@ -81,8 +78,7 @@
+@@ -126,8 +123,7 @@
  
  ##
- # @SevSnpGuestInfo:
+ # @MigrationStatus:
 -#
--# Information specific to SEV-SNP guests.
-+#     Information specific to SEV-SNP guests.
+-# An enumeration of migration status.
++#     An enumeration of migration status.
  #
- # @snp-policy: SEV-SNP policy value
+ # @none: no migration has ever happened.
  #
-@@ -93,8 +89,7 @@
+@@ -189,8 +185,7 @@
  
  ##
- # @SevInfo:
+ # @VfioStats:
 -#
--# Information about Secure Encrypted Virtualization (SEV) support
-+#     Information about Secure Encrypted Virtualization (SEV) support
+-# Detailed VFIO devices migration statistics
++#     Detailed VFIO devices migration statistics
  #
- # @enabled: true if SEV is active
- #
-@@ -144,8 +139,7 @@
+ # @transferred: amount of bytes transferred to the target VM by VFIO
+ #     devices
+@@ -202,8 +197,7 @@
  
  ##
- # @SevLaunchMeasureInfo:
+ # @MigrationInfo:
 -#
--# SEV Guest Launch measurement information
-+#     SEV Guest Launch measurement information
+-# Information about current migration process.
++#     Information about current migration process.
  #
- # @data: the measurement value encoded in base64
- #
-@@ -180,9 +174,8 @@
+ # @status: `MigrationStatus` describing the current migration status.
+ #     If this field is not returned, no migration process has been
+@@ -435,8 +429,7 @@
  
  ##
- # @SevCapability:
+ # @MigrationCapability:
 -#
--# The struct describes capability for a Secure Encrypted
--# Virtualization feature.
-+#     The struct describes capability for a Secure Encrypted
-+#     Virtualization feature.
+-# Migration capabilities enumeration
++#     Migration capabilities enumeration
  #
- # @pdh: Platform Diffie-Hellman key (base64 encoded)
- #
-@@ -252,9 +245,8 @@
+ # @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
+ #     Encoding).  This feature allows us to minimize migration traffic
+@@ -545,8 +538,7 @@
  
  ##
- # @SevAttestationReport:
+ # @MigrationCapabilityStatus:
 -#
--# The struct describes attestation report for a Secure Encrypted
--# Virtualization feature.
-+#     The struct describes attestation report for a Secure Encrypted
-+#     Virtualization feature.
+-# Migration capability information
++#     Migration capability information
  #
- # @data: guest attestation report (base64 encoded)
+ # @capability: capability enum
  #
-@@ -294,8 +286,7 @@
+@@ -559,8 +551,8 @@
  
  ##
- # @SgxEpcSection:
+ # @migrate-set-capabilities:
 -#
--# Information about intel SGX EPC section
-+#     Information about intel SGX EPC section
+-# Enable/Disable the following migration capabilities (like xbzrle)
++#     Enable/Disable the following migration capabilities (like
++#     xbzrle)
  #
- # @node: the numa node
+ # @capabilities: json array of capability modifications to make
  #
-@@ -309,8 +300,7 @@
+@@ -577,8 +569,8 @@
  
  ##
- # @SgxInfo:
+ # @query-migrate-capabilities:
 -#
--# Information about intel Safe Guard eXtension (SGX) support
-+#     Information about intel Safe Guard eXtension (SGX) support
+-# Return information about the current migration capabilities status
++#     Return information about the current migration capabilities
++#     status
  #
- # @sgx: true if SGX is supported
+ # Since: 1.2
  #
-@@ -333,8 +323,7 @@
+@@ -598,8 +590,7 @@
  
  ##
- # @query-sgx:
+ # @MultiFDCompression:
 -#
--# Return information about configured SGX capabilities of guest
-+#     Return information about configured SGX capabilities of guest
+-# An enumeration of multifd compression methods.
++#     An enumeration of multifd compression methods.
  #
- # Since: 6.2
+ # @none: no compression.
  #
-@@ -350,8 +339,7 @@
+@@ -776,9 +767,8 @@
  
  ##
- # @query-sgx-capabilities:
+ # @BitmapMigrationNodeAlias:
 -#
--# Return information about SGX capabilities of host
-+#     Return information about SGX capabilities of host
+-# Maps a block node name and the bitmaps it has to aliases for dirty
+-# bitmap migration.
++#     Maps a block node name and the bitmaps it has to aliases for
++#     dirty bitmap migration.
  #
- # Since: 6.2
+ # @node-name: A block node name.
  #
-@@ -367,8 +355,7 @@
+@@ -1111,8 +1101,7 @@
  
  ##
- # @EvtchnPortType:
+ # @MIGRATION:
 -#
--# An enumeration of Xen event channel port types.
-+#     An enumeration of Xen event channel port types.
+-# Emitted when a migration event happens
++#     Emitted when a migration event happens
  #
- # @closed: The port is unused.
+ # @status: `MigrationStatus` describing the current migration status.
  #
-@@ -389,8 +376,7 @@
+@@ -1129,9 +1118,8 @@
  
  ##
- # @EvtchnInfo:
+ # @MIGRATION_PASS:
 -#
--# Information about a Xen event channel port
-+#     Information about a Xen event channel port
+-# Emitted from the source side of a migration at the start of each
+-# pass (when it syncs the dirty bitmap)
++#     Emitted from the source side of a migration at the start of each
++#     pass (when it syncs the dirty bitmap)
  #
- # @port: the port number
+ # @pass: An incrementing count (starting at 1 on the first pass)
  #
-@@ -419,8 +405,7 @@
+@@ -1147,8 +1135,8 @@
  
  ##
- # @xen-event-list:
+ # @COLOMessage:
 -#
--# Query the Xen event channels opened by the guest.
-+#     Query the Xen event channels opened by the guest.
+-# The message transmission between Primary side and Secondary side.
++#     The message transmission between Primary side and Secondary
++#     side.
  #
- # Returns: list of open event channel ports.
+ # @checkpoint-ready: Secondary VM (SVM) is ready for checkpointing
  #
-@@ -456,8 +441,7 @@
+@@ -1174,8 +1162,7 @@
  
  ##
- # @xen-event-inject:
+ # @COLOMode:
 -#
--# Inject a Xen event channel port (interrupt) to the guest.
-+#     Inject a Xen event channel port (interrupt) to the guest.
+-# The COLO current mode.
++#     The COLO current mode.
  #
- # @port: The port number
+ # @none: COLO is disabled.
+ #
+@@ -1190,8 +1177,7 @@
+ 
+ ##
+ # @FailoverStatus:
+-#
+-# An enumeration of COLO failover status
++#     An enumeration of COLO failover status
+ #
+ # @none: no failover has ever happened
+ #
+@@ -1211,9 +1197,8 @@
+ 
+ ##
+ # @COLO_EXIT:
+-#
+-# Emitted when VM finishes COLO mode due to some errors happening or
+-# at the request of users.
++#     Emitted when VM finishes COLO mode due to some errors happening
++#     or at the request of users.
+ #
+ # @mode: report COLO mode when COLO exited.
+ #
+@@ -1231,8 +1216,7 @@
+ 
+ ##
+ # @COLOExitReason:
+-#
+-# The reason for a COLO exit.
++#     The reason for a COLO exit.
+ #
+ # @none: failover has never happened.  This state does not occur in
+ #     the `COLO_EXIT` event, and is only visible in the result of
+@@ -1294,8 +1278,7 @@
+ 
+ ##
+ # @migrate-continue:
+-#
+-# Continue migration when it's in a paused state.
++#     Continue migration when it's in a paused state.
+ #
+ # @state: The state the migration is currently expected to be in
+ #
+@@ -1311,8 +1294,7 @@
+ 
+ ##
+ # @MigrationAddressType:
+-#
+-# The migration stream transport mechanisms.
++#     The migration stream transport mechanisms.
+ #
+ # @socket: Migrate via socket.
+ #
+@@ -1352,8 +1334,7 @@
+ 
+ ##
+ # @MigrationAddress:
+-#
+-# Migration endpoint configuration.
++#     Migration endpoint configuration.
+ #
+ # @transport: The migration stream transport mechanism
+ #
+@@ -1370,8 +1351,7 @@
+ 
+ ##
+ # @MigrationChannelType:
+-#
+-# The migration channel-type request options.
++#     The migration channel-type request options.
+ #
+ # @main: Main outbound migration channel.
+ #
+@@ -1384,8 +1364,7 @@
+ 
+ ##
+ # @MigrationChannel:
+-#
+-# Migration stream channel parameters.
++#     Migration stream channel parameters.
+ #
+ # @channel-type: Channel type for transferring packet information.
+ #
+@@ -1400,8 +1379,7 @@
+ 
+ ##
+ # @migrate:
+-#
+-# Migrates the current running guest to another Virtual Machine.
++#     Migrates the current running guest to another Virtual Machine.
+ #
+ # @uri: the Uniform Resource Identifier of the destination VM
+ #
+@@ -1573,8 +1551,7 @@
+ 
+ ##
+ # @xen-set-global-dirty-log:
+-#
+-# Enable or disable the global dirty log mode.
++#     Enable or disable the global dirty log mode.
+ #
+ # @enable: true to enable, false to disable.
+ #
+@@ -1610,8 +1587,7 @@
+ 
+ ##
+ # @xen-set-replication:
+-#
+-# Enable or disable replication.
++#     Enable or disable replication.
+ #
+ # @enable: true to enable, false to disable.
+ #
+@@ -1634,8 +1610,7 @@
+ 
+ ##
+ # @ReplicationStatus:
+-#
+-# The result format for `query-xen-replication-status`.
++#     The result format for `query-xen-replication-status`.
+ #
+ # @error: true if an error happened, false if replication is normal.
+ #
+@@ -1683,8 +1658,7 @@
+ 
+ ##
+ # @COLOStatus:
+-#
+-# The result format for `query-colo-status`.
++#     The result format for `query-colo-status`.
+ #
+ # @mode: COLO running mode.  If COLO is running, this field will
+ #     return 'primary' or 'secondary'.
+@@ -1722,8 +1696,7 @@
+ 
+ ##
+ # @migrate-recover:
+-#
+-# Provide a recovery migration stream URI.
++#     Provide a recovery migration stream URI.
+ #
+ # @uri: the URI to be used for the recovery of migration stream.
+ #
+@@ -1776,8 +1749,7 @@
+ 
+ ##
+ # @DirtyRateVcpu:
+-#
+-# Dirty rate of vcpu.
++#     Dirty rate of vcpu.
+ #
+ # @id: vcpu index.
+ #
+@@ -1790,8 +1762,7 @@
+ 
+ ##
+ # @DirtyRateStatus:
+-#
+-# Dirty page rate measurement status.
++#     Dirty page rate measurement status.
+ #
+ # @unstarted: measuring thread has not been started yet
+ #
+@@ -1823,8 +1794,7 @@
+ 
+ ##
+ # @TimeUnit:
+-#
+-# Specifies unit in which time-related value is specified.
++#     Specifies unit in which time-related value is specified.
+ #
+ # @second: value is in seconds
+ #
+@@ -1837,8 +1807,7 @@
+ 
+ ##
+ # @DirtyRateInfo:
+-#
+-# Information about measured dirty page rate.
++#     Information about measured dirty page rate.
+ #
+ # @dirty-rate: an estimate of the dirty page rate of the VM in units
+ #     of MiB/s.  Value is present only when @status is 'measured'.
+@@ -1948,8 +1917,8 @@
+ 
+ ##
+ # @query-dirty-rate:
+-#
+-# Query results of the most recent invocation of `calc-dirty-rate`.
++#     Query results of the most recent invocation of
++#     `calc-dirty-rate`.
+ #
+ # @calc-time-unit: time unit in which to report calculation time.
+ #     By default it is reported in seconds.  (Since 8.2)
+@@ -1975,8 +1944,7 @@
+ 
+ ##
+ # @DirtyLimitInfo:
+-#
+-# Dirty page rate limit information of a virtual CPU.
++#     Dirty page rate limit information of a virtual CPU.
+ #
+ # @cpu-index: index of a virtual CPU.
+ #
+@@ -2042,8 +2010,8 @@
+ 
+ ##
+ # @query-vcpu-dirty-limit:
+-#
+-# Return information about virtual CPU dirty page rate limits, if any.
++#     Return information about virtual CPU dirty page rate limits, if
++#     any.
+ #
+ # Since: 7.1
+ #
+@@ -2059,8 +2027,7 @@
+ 
+ ##
+ # @snapshot-save:
+-#
+-# Save a VM snapshot
++#     Save a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
+ #
+@@ -2131,8 +2098,7 @@
+ 
+ ##
+ # @snapshot-load:
+-#
+-# Load a VM snapshot
++#     Load a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
+ #
+@@ -2201,8 +2167,7 @@
+ 
+ ##
+ # @snapshot-delete:
+-#
+-# Delete a VM snapshot
++#     Delete a VM snapshot
+ #
+ # @job-id: identifier for the newly created job
  #
 -- 
 2.55.0
