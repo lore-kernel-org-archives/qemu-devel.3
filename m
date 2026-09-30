@@ -4,122 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14118CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F0EC9830E
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBnta-0003uX-Ua; Wed, 30 Sep 2026 02:34:34 -0400
+	id 1xBoCz-0006R6-NV; Wed, 30 Sep 2026 02:54:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xBntU-0003su-Rv
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:34:22 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xBoCo-0006Po-VD
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xBntQ-0002Rl-Vr
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:34:20 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xBoCn-0005Jc-8F
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:54:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790750054;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1790751255;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/+t48tzd8SxZpF4cNodwXoXUSCQI8Y6xlNeEVPjgDFs=;
- b=b9rbNxQcIhRqO9CJnrnWSEuT1HxwME9/LoBg8b5N1CLSSxesiPbk6t8xqQblh9cehAPP3a
- nVnf9mBclZ3fjVK/PjBXhcpwAuwsLISCtnD9RlTmeldzvOli8c/WIVV76guOEqvjOPyLJe
- /DyDDpZb0AnbEDlsgSzENxGdmXbv/O8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
+ b=JsDkHXjY1vXoRTQzTDSGGxCmkH84rTz08zMAs04/eb/JocP1oR9jXf5bnloL+OmFTZSJLU
+ HZg9YhZt0PedNWIRo5o1HIbvGwh6AcsnO4mrgljDBALkyTCnQVTDcjQlF4+lMNElkUWWO6
+ JbSj+Q9amJsJt2lgGgWWMyLdTvyYnKM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-e5q9KIdmPaSg1MXWdK70Gg-1; Wed, 30 Sep 2026 02:34:11 -0400
-X-MC-Unique: e5q9KIdmPaSg1MXWdK70Gg-1
-X-Mimecast-MFC-AGG-ID: e5q9KIdmPaSg1MXWdK70Gg_1790750050
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49953abe51fso32394175e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:34:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790750050; x=1791354850;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ us-mta-481-ORlR3aTFMjqQct4XkYtSIg-1; Wed, 30 Sep 2026 02:54:13 -0400
+X-MC-Unique: ORlR3aTFMjqQct4XkYtSIg-1
+X-Mimecast-MFC-AGG-ID: ORlR3aTFMjqQct4XkYtSIg_1790751252
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48b00febba3so198846f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790751252; x=1791356052; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/+t48tzd8SxZpF4cNodwXoXUSCQI8Y6xlNeEVPjgDFs=;
- b=iMljVZdUQDuPaZAVLUWR636Byrkpkv9e8IS/PBbAJW6TriZ3/mz80yOB//M15AmleT
- l/8Rp3reQv7fk3Avz3QYMIqBvSYYlYGL5xyv9ZahyYwC9KdLs9mTTpfw/jdfp8FfATw0
- pOFG0rkj20d9dpBI0HikvytLE94KrG3+GYIskwliHcwCudf3vGWqQFkPDO8178y/REi/
- lYRcHHazEZTB/N9ZriaDbLO0SyrZaCKbeeN790L+kNxzkTF8YzmSpDpDc7GqNtjYFgh7
- BN3QhHe216YMRBOENDbxetEECPfwWp3tbfcLI3qYeL08XC0fxSu6eE4y+cq7Am3pVXJU
- POVA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxLrFnhmzOhGM1LqvBlsqoqZC/DXP/ukNViczguSVtSs30fyMK+r5YcSJNKn/y6q0IDtT596Zsj80S7@nongnu.org
-X-Gm-Message-State: AFuF++nUZQN4oAKk1kQHBqTmi6fXD+410EObyjYLUqTWQIATQLBcYBlO
- g8w6OiYAf2+SYMn5QLdOeKuge+oqdBH+lsTzlueT0AXptnJSxZrc3EImfSzKoEEIqeu3x3u14+K
- prMKPvulnq2zZHONXk53KJMZdbqrxMaM1sx58t7/giHWRHJZnMSxZLhlx
-X-Gm-Gg: AYBFou3+4L78QMJhClv7eqysPzyF48fKtpjQOtHpyPuTgTaNpqjkoZ0l/Nj2ln9+LrW
- M+KjItIRNbDSGeCgZbAczu+X2aO1/tker25YnFiNY3ETgWeGDp3HVLQulb4oaD6JMc/9qr+kAhU
- IECgtl8mEyeliHY715vRPyQyGmLaPoOemBp7tu9Bsh9UG8sR5S0NFVnYf3AZmbH4prg6EN/JFnQ
- Ex7nVZDLPZH0uxRlQWXJ6NL2DQfVK0C9V1nIIqiF6vDLgcn3Czyu74ZkZiwJKtkUukqeYsDhpnE
- NdkFbue3yjdMpLwb4QuU9J5Jnb2g1OliL37GSvEmAIr3YaufFddLwMzxgONFCrB6+2PYaZF+FDl
- UWIPVEqA9CLIN/mWrKCa9A559r7pp2tk9DXfu848/txKqtS8e
-X-Received: by 2002:a05:600d:6414:10b0:4a0:1b14:ce81 with SMTP id
- 5b1f17b1804b1-4a01b14cf1dmr2819025e9.3.1790750049746; 
- Tue, 29 Sep 2026 23:34:09 -0700 (PDT)
-X-Received: by 2002:a05:600d:6414:10b0:4a0:1b14:ce81 with SMTP id
- 5b1f17b1804b1-4a01b14cf1dmr2818705e9.3.1790750049266; 
- Tue, 29 Sep 2026 23:34:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
+ b=WKRur+7KLyfoRlx7DKTl9EoRIfd9PXdlLTwT0JHtnMCYLm89I5qxHafpzB/Iu/oPmO
+ bDEz9Olw4GX5rHVoy0Qjioz0Ix7jRpD/qZB0x0iqiPPPycHdG2/oCkTJ3zpR6KxQ/6jS
+ LzIVDWjwgD4MrNLuSSSrhruFNofRyZBACKPU7yKA0s8eY6lH/StU6SuCcoIEbZbMpsBk
+ n3NQoHl8rDuuAa6dSyEAMayEcvafCQe9GL5Sd4OTm9pQ4NMBSOWK3KUg7o7pXmg7JJMM
+ l059hMTQsm2mguRkz7x9R7Q1iG1JJoGmUhCCj3c2oQZS8/8jC+qZ/TIS2TBIdd8RcTZd
+ n3yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790751252; x=1791356052;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fLQU/wYzTWGa06Y9CCXo7IARxyo5SpTv4HEyzUiRnQE=;
+ b=OuHuAvu7oloXZ6iDb53VT92hl7IKOO5dIu1WlPEMA7GoznZvRc4ZZAzsgWB4ybfZRe
+ eejOUdN59g/0mbn+NY4cj9rkO64V16Fw/m5LE4x+ZXhigMFxCspeuhH+OppxuwfuUg3p
+ nOw56uy24FVQwFWwDmt/V7nBoVj9417GPSFrqFZejsBffnmaxh4tXUxWi19XLYRinkxr
+ WfTqh/iqaQWmBHeBXZWixtmmemToUR7u/joD38hfSwYNFJi7tYexM/L37X1Rt1rx/iEw
+ XH7v/+a70oEBtzNKsiV7W23Ek/Ghaoe5Tmp8S2GWS1ABG5nC3vgM3Ezl40PGTA35TGvL
+ y81w==
+X-Gm-Message-State: AFq9FYIOudXa8bthXuNBmvciIdx39kqC97fOFqDk4DKaBAzKDFdCTHg+
+ hiYfYXt1aLrTPhie0Sx6HCVZWpH9uJFaYg3h2tkdWD2kCmUrG9agXURCNkW5hdDLdRlUP0x7G1t
+ IXR3BzAKdBEaYJWTueH2FMJe/hXinf3a1K/LjYxji9FrHN+ZBeAxy0pNq0YaWGVkzCZ8Pb7lHJ7
+ 6r2+vBQ+yl8gvRsYvca+ps9bmndnw7We6TuxsOCx5Y
+X-Gm-Gg: AYBFou3EeLfRC8IE20A3p1BoSn3ei3Uyh+DkZUxKYz+QZujj/ByvrPn9U59znIttIlE
+ IbrX3L1uCoDyhEtlCI1SD/y+lzqHyc+vwQZAfdMTtKZStGZzUIB1pCZbKp9cSYmB4e5B6YGyYxa
+ HFnCW2zXmsZs+0kvunv8GjwbiWhQ1QmYhA0HD1R/OcWRNYy8haMjXI9bII2pfrxRGIHIsh5Glof
+ z5u2NtcUqf1V+5BlxVY8zwD255zhbXNnpHXvs2PwN5QouL97ltVb8m1+oqD/YuGmmkCsbt3ZCAp
+ bcXiGrSrMW/Xh5WGBjJtY5yFAqF9x4cF7fVyan/I2ht55QqEePwYuQ7AREHoxI4C3rMsyDqi6zS
+ KGh6N/sB5s/sE9bOoWyc8MoMBLROvlreQ9XqyC9KvQDRSk3UZ4TkM27CryJbCCv7vwBf3Yie5+h
+ bwaOGn
+X-Received: by 2002:adf:e187:0:b0:487:22c6:a623 with SMTP id
+ ffacd0b85a97d-48b0243d9b0mr952079f8f.8.1790751252422; 
+ Tue, 29 Sep 2026 23:54:12 -0700 (PDT)
+X-Received: by 2002:adf:e187:0:b0:487:22c6:a623 with SMTP id
+ ffacd0b85a97d-48b0243d9b0mr952043f8f.8.1790751252028; 
+ Tue, 29 Sep 2026 23:54:12 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a0174e161bsm49074755e9.5.2026.09.29.23.34.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Sep 2026 23:34:08 -0700 (PDT)
-Message-ID: <3ac31a5c-9a14-448f-a58e-9ddf6567476b@redhat.com>
-Date: Wed, 30 Sep 2026 08:34:06 +0200
+ ffacd0b85a97d-48b029fc420sm1084646f8f.28.2026.09.29.23.54.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Sep 2026 23:54:10 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Andrey Polivoda <apolivodaa433@gmail.com>
+Subject: [PATCH 2/3] target/i386/tcg: move validate_vex() before all operand
+ decoding
+Date: Wed, 30 Sep 2026 08:54:05 +0200
+Message-ID: <20260930065406.738374-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260930065406.738374-1-pbonzini@redhat.com>
+References: <20260930065406.738374-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 07/26] target/arm/cpu-idregs.h.inc: generate with script
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260916144721.751810-1-eric.auger@redhat.com>
- <20260916144721.751810-8-eric.auger@redhat.com>
- <55C86290-BA03-424E-B955-AC6414ED55D1@nutanix.com>
- <bc190f81-a946-454a-b1d1-8f6b79bc7807@redhat.com>
- <313F5707-425B-4CAB-8B5A-95480EB6A250@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <313F5707-425B-4CAB-8B5A-95480EB6A250@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,685 +118,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Operand sizes are computed in decode_insn(), because s->rip_offset has to
+be known before decode_modrm() computes a RIP-relative address.  However,
+validate_vex() runs later and, for X86_VEX_REPScalar instructions, it must
+be able to turn e->s2 into X86_SIZE_ss or X86_SIZE_sd in presence of a
+memory operand.  But right now decode_op_size() has already run, and
+therefore decode->op[2].ot stays MO_128; the instruction therefore
+accesses 16 bytes of memory instead of 4 or 8.
 
+The only user of s->rip_offset is decode_modrm(), which is called from
+decode_ops(), so the size computation can move there, after validate_vex().
+Thanks to the previous patch, the CR0.TS and CR0.EM checks come after
+decode_ops(), so #UD for an invalid VEX.L still has priority over #NM.
 
-On 9/30/26 7:40 AM, Khushit Shah wrote:
->
->> On 29 Sep 2026, at 10:25 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->>
->>
->> On 9/25/26 1:19 PM, Khushit Shah wrote:
->>>> On 16 Sep 2026, at 8:15 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>>>
->>>> !-------------------------------------------------------------------|
->>>> CAUTION: External Email
->>>>
->>>> |-------------------------------------------------------------------!
->>>>
->>>> Generate ID reg definitions with the scripts/update-aarch64-cpu-sysreg-properties.py
->>>> based on AARCHMRS_OPENSOURCE_A_profile_FAT-2026-03 Registers.json
->>>>
->>>> Each register and fields are described with this pattern:
->>>>
->>>> IDREG_START(REG)
->>>> IDREG_FIELD(REG, FIELD, SHIFT, LENGTH)
->>>> ...
->>>> IDREG_END(REG)
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>> Suggested-by: Khushit Shah <khushit.shah@nutanix.com>
->>>> Suggested-by: Shaju Abraham <shaju.abraham@nutanix.com>
->>>> ---
->>>> target/arm/cpu-idregs.h.inc | 607 ++++++++++++++++++++++++++++++++++++
->>>> 1 file changed, 607 insertions(+)
->>>> create mode 100644 target/arm/cpu-idregs.h.inc
->>>>
->>>> diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
->>>> new file mode 100644
->>>> index 0000000000..c9745e2fb6
->>>> --- /dev/null
->>>> +++ b/target/arm/cpu-idregs.h.inc
->>>> @@ -0,0 +1,607 @@
->>>> +/* AUTOMATICALLY GENERATED, DO NOT MODIFY */
->>>> +
->>>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->>>> +
->>>> +/* IDREG_START(REG) */
->>>> +/*     IDREG_FIELD(REG, FIELD, SHIFT, LENGTH) */
->>>> +/* ... */
->>>> +/* IDREG_END(REG) */
->>>> +
->>>> +IDREG_START(AIDR_EL1)
->>>> +IDREG_END(AIDR_EL1)
->>>> +
->>>> +IDREG_START(CLIDR_EL1)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype7, 45, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype6, 43, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype5, 41, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype4, 39, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype3, 37, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype2, 35, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ttype1, 33, 2)
->>>> +    IDREG_FIELD(CLIDR_EL1, ICB, 30, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, LoUU, 27, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, LoC, 24, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, LoUIS, 21, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype7, 18, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype6, 15, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype5, 12, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype4, 9, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype3, 6, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype2, 3, 3)
->>>> +    IDREG_FIELD(CLIDR_EL1, Ctype1, 0, 3)
->>>> +IDREG_END(CLIDR_EL1)
->>>> +
->>>> +IDREG_START(CTR_EL0)
->>>> +    IDREG_FIELD(CTR_EL0, TminLine, 32, 6)
->>>> +    IDREG_FIELD(CTR_EL0, DIC, 29, 1)
->>>> +    IDREG_FIELD(CTR_EL0, IDC, 28, 1)
->>>> +    IDREG_FIELD(CTR_EL0, CWG, 24, 4)
->>>> +    IDREG_FIELD(CTR_EL0, ERG, 20, 4)
->>>> +    IDREG_FIELD(CTR_EL0, DminLine, 16, 4)
->>>> +    IDREG_FIELD(CTR_EL0, L1Ip, 14, 2)
->>>> +    IDREG_FIELD(CTR_EL0, IminLine, 0, 4)
->>>> +IDREG_END(CTR_EL0)
->>>> +
->>>> +IDREG_START(DCZID_EL0)
->>>> +    IDREG_FIELD(DCZID_EL0, TBS, 5, 4)
->>>> +    IDREG_FIELD(DCZID_EL0, DZP, 4, 1)
->>>> +    IDREG_FIELD(DCZID_EL0, BS, 0, 4)
->>>> +IDREG_END(DCZID_EL0)
->>>> +
->>>> +IDREG_START(GMID_EL1)
->>>> +    IDREG_FIELD(GMID_EL1, BS, 0, 4)
->>>> +IDREG_END(GMID_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64AFR0_EL1)
->>>> +IDREG_END(ID_AA64AFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64AFR1_EL1)
->>>> +IDREG_END(ID_AA64AFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64DFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, HPMN0, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, ExtTrcBuff, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, BRBE, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, MTPMU, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, TraceBuffer, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, TraceFilt, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, DoubleLock, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, PMSVer, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, CTX_CMPs, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, WRPs, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, PMSS, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, BRPs, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, PMUVer, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, TraceVer, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR0_EL1, DebugVer, 0, 4)
->>>> +IDREG_END(ID_AA64DFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64DFR1_EL1)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, ABL_CMPs, 56, 8)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, DPFZS, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, EBEP, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, ITE, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, ABLE, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, PMICNTR, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, SPMU, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, CTX_CMPs, 24, 8)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, WRPs, 16, 8)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, BRPs, 8, 8)
->>>> +    IDREG_FIELD(ID_AA64DFR1_EL1, SYSPMUID, 0, 8)
->>>> +IDREG_END(ID_AA64DFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64DFR2_EL1)
->>>> +    IDREG_FIELD(ID_AA64DFR2_EL1, TRBE_EXC, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR2_EL1, SPE_nVM, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR2_EL1, SPE_EXC, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR2_EL1, BWE, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64DFR2_EL1, STEP, 0, 4)
->>>> +IDREG_END(ID_AA64DFR2_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64FPFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8CVT, 31, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8FMA, 30, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8DP4, 29, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8DP2, 28, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8MM8, 27, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8MM4, 26, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F16MM2, 15, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8E4M3, 1, 1)
->>>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, F8E5M2, 0, 1)
->>>> +IDREG_END(ID_AA64FPFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64ISAR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RNDR, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, TLB, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, TS, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, FHM, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, DP, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, SM4, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, SM3, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, SHA3, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RDM, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, Atomic, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, CRC32, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, SHA2, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, SHA1, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, AES, 4, 4)
->>>> +IDREG_END(ID_AA64ISAR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64ISAR1_EL1)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, LS64, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, XS, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, I8MM, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, DGH, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, BF16, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, SPECRES, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, SB, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, FRINTTS, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, GPI, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, GPA, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, LRCPC, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, FCMA, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, JSCVT, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, API, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, APA, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR1_EL1, DPB, 0, 4)
->>>> +IDREG_END(ID_AA64ISAR1_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64ISAR2_EL1)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, ATS1A, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, LUT, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, CSSC, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, RPRFM, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, PCDPHINT, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, PRFMSLC, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, SYSINSTR_128, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, SYSREG_128, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, CLRBHB, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, PAC_frac, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, BC, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, MOPS, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, APA3, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, GPA3, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, RPRES, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR2_EL1, WFxT, 0, 4)
->>>> +IDREG_END(ID_AA64ISAR2_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64ISAR3_EL1)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, LSCP, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, LSCSHINT, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, MTETC, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, PAC_frac2, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, FPRCVT, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, LSUI, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, OCCMO, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, LSFE, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, PACM, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, TLBIW, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, FAMINMAX, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, CPA, 0, 4)
->>>> +IDREG_END(ID_AA64ISAR3_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64MMFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, ECV, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, FGT, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, ExS, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran4_2, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran64_2, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran16_2, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran4, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran64, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, TGran16, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, BigEndEL0, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, SNSMem, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, BigEnd, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, ASIDBits, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, PARange, 0, 4)
->>>> +IDREG_END(ID_AA64MMFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64MMFR1_EL1)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, ECBHB, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, CMOW, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, TIDCP1, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, nTLBPA, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, AFP, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, HCX, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, ETS, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, TWED, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, XNX, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, SpecSEI, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, PAN, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, LO, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, HPDS, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, VH, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, VMIDBits, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR1_EL1, HAFDBS, 0, 4)
->>>> +IDREG_END(ID_AA64MMFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64MMFR2_EL1)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, E0PD, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, EVT, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, BBM, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, TTL, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, FWB, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, IDS, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, AT, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, ST, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, NV, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, CCIDX, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, VARange, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, IESB, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, LSM, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, UAO, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, CnP, 0, 4)
->>>> +IDREG_END(ID_AA64MMFR2_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64MMFR3_EL1)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, Spec_FPACC, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, ADERR, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, SDERR, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, ANERR, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, SNERR, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, D128_2, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, D128, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, MEC, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, AIE, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, S2POE, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, S1POE, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, S2PIE, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, S1PIE, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, SCTLRX, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, TCRX, 0, 4)
->>>> +IDREG_END(ID_AA64MMFR3_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64MMFR4_EL1)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, MTEFGT, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, SCRX, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, TEV, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, TPS, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, SRMASK, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, TLBID, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, E3DSE, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, EAESR, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, RMEGDI, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, E2H0, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, NV_frac, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, FGWTE3, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, HACDBS, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, ASID2, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, EIESB, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64MMFR4_EL1, PoPS, 0, 4)
->>>> +IDREG_END(ID_AA64MMFR4_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64PFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, CSV3, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, CSV2, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, RME, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, DIT, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, AMU, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, MPAM, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, SEL2, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, SVE, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, RAS, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, GIC, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, AdvSIMD, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, FP, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, EL3, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, EL2, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, EL1, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR0_EL1, EL0, 0, 4)
->>>> +IDREG_END(ID_AA64PFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64PFR1_EL1)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, PFAR, 60, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, DF2, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, MTEX, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, THE, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, GCS, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, MTE_frac, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, NMI, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, CSV2_frac, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, RNDR_trap, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, SME, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, MPAM_frac, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, RAS_frac, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, MTE, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, SSBS, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR1_EL1, BT, 0, 4)
->>>> +IDREG_END(ID_AA64PFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64PFR2_EL1)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, VMTETCL, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, VMTETC, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, VMTE, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, FPMR, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, MPAM2, 28, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, FGDT, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, MTEEIRG, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, UINJ, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, GCIE, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, MTEFAR, 8, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, MTESTOREONLY, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64PFR2_EL1, MTEPERM, 0, 4)
->>>> +IDREG_END(ID_AA64PFR2_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64SMFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, FA64, 63, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, LUT6, 61, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, LUTv2, 60, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SMEver, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, I16I64, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F64F64, 48, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, I16I32, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, B16B16, 43, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F16F16, 42, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F8F16, 41, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F8F32, 40, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, I8I32, 36, 4)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F16F32, 35, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, B16F32, 34, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, BI32I32, 33, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, F32F32, 32, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SF8FMA, 30, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SF8DP4, 29, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SF8DP2, 28, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SBitPerm, 25, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, AES, 24, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SFEXPA, 23, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, STMOP, 16, 1)
->>>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, SMOP4, 0, 1)
->>>> +IDREG_END(ID_AA64SMFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AA64ZFR0_EL1)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, F64MM, 56, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, F32MM, 52, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, F16MM, 48, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, I8MM, 44, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, SM4, 40, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, SHA3, 32, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, B16B16, 24, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, BF16, 20, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, BitPerm, 16, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, EltPerm, 12, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, AES, 4, 4)
->>>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, SVEver, 0, 4)
->>>> +IDREG_END(ID_AA64ZFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_AFR0_EL1)
->>>> +IDREG_END(ID_AFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_DFR0_EL1)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, TraceFilt, 28, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, PerfMon, 24, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, MProfDbg, 20, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, MMapTrc, 16, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, CopTrc, 12, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, MMapDbg, 8, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, CopSDbg, 4, 4)
->>>> +    IDREG_FIELD(ID_DFR0_EL1, CopDbg, 0, 4)
->>>> +IDREG_END(ID_DFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_DFR1_EL1)
->>>> +    IDREG_FIELD(ID_DFR1_EL1, HPMN0, 4, 4)
->>>> +    IDREG_FIELD(ID_DFR1_EL1, MTPMU, 0, 4)
->>>> +IDREG_END(ID_DFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR0_EL1)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, Divide, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, Debug, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, Coproc, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, CmpBranch, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, BitField, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, BitCount, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR0_EL1, Swap, 0, 4)
->>>> +IDREG_END(ID_ISAR0_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR1_EL1)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Jazelle, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Interwork, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Immediate, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, IfThen, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Extend, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Except_AR, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Except, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR1_EL1, Endian, 0, 4)
->>>> +IDREG_END(ID_ISAR1_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR2_EL1)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, Reversal, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, PSR_AR, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, MultU, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, MultS, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, Mult, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, MultiAccessInt, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, MemHint, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR2_EL1, LoadStore, 0, 4)
->>>> +IDREG_END(ID_ISAR2_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR3_EL1)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, T32EE, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, TrueNOP, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, T32Copy, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, TabBranch, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, SynchPrim, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, SVC, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, SIMD, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR3_EL1, Saturate, 0, 4)
->>>> +IDREG_END(ID_ISAR3_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR4_EL1)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, SWP_frac, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, PSR_M, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, SynchPrim_frac, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, Barrier, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, SMC, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, Writeback, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, WithShifts, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR4_EL1, Unpriv, 0, 4)
->>>> +IDREG_END(ID_ISAR4_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR5_EL1)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, VCMA, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, RDM, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, CRC32, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, SHA2, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, SHA1, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, AES, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR5_EL1, SEVL, 0, 4)
->>>> +IDREG_END(ID_ISAR5_EL1)
->>>> +
->>>> +IDREG_START(ID_ISAR6_EL1)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, CLRBHB, 28, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, I8MM, 24, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, BF16, 20, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, SPECRES, 16, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, SB, 12, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, FHM, 8, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, DP, 4, 4)
->>>> +    IDREG_FIELD(ID_ISAR6_EL1, JSCVT, 0, 4)
->>>> +IDREG_END(ID_ISAR6_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR0_EL1)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, InnerShr, 28, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, FCSE, 24, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, AuxReg, 20, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, TCM, 16, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, ShareLvl, 12, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, OuterShr, 8, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, PMSA, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR0_EL1, VMSA, 0, 4)
->>>> +IDREG_END(ID_MMFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR1_EL1)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, BPred, 28, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1TstCln, 24, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1Uni, 20, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1Hvd, 16, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1UniSW, 12, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1HvdSW, 8, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1UniVA, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR1_EL1, L1HvdVA, 0, 4)
->>>> +IDREG_END(ID_MMFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR2_EL1)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, HWAccFlg, 28, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, WFIStall, 24, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, MemBarr, 20, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, UniTLB, 16, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, HvdTLB, 12, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, L1HvdRng, 8, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, L1HvdBG, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR2_EL1, L1HvdFG, 0, 4)
->>>> +IDREG_END(ID_MMFR2_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR3_EL1)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, Supersec, 28, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, CMemSz, 24, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, CohWalk, 20, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, PAN, 16, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, MaintBcst, 12, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, BPMaint, 8, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, CMaintSW, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR3_EL1, CMaintVA, 0, 4)
->>>> +IDREG_END(ID_MMFR3_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR4_EL1)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, EVT, 28, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, CCIDX, 24, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, LSM, 20, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, HPDS, 16, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, CnP, 12, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, XNX, 8, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, AC2, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR4_EL1, SpecSEI, 0, 4)
->>>> +IDREG_END(ID_MMFR4_EL1)
->>>> +
->>>> +IDREG_START(ID_MMFR5_EL1)
->>>> +    IDREG_FIELD(ID_MMFR5_EL1, nTLBPA, 4, 4)
->>>> +    IDREG_FIELD(ID_MMFR5_EL1, ETS, 0, 4)
->>>> +IDREG_END(ID_MMFR5_EL1)
->>>> +
->>>> +IDREG_START(ID_PFR0_EL1)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, RAS, 28, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, DIT, 24, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, AMU, 20, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, CSV2, 16, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, State3, 12, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, State2, 8, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, State1, 4, 4)
->>>> +    IDREG_FIELD(ID_PFR0_EL1, State0, 0, 4)
->>>> +IDREG_END(ID_PFR0_EL1)
->>>> +
->>>> +IDREG_START(ID_PFR1_EL1)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, GIC, 28, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, Virt_frac, 24, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, Sec_frac, 20, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, GenTimer, 16, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, Virtualization, 12, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, MProgMod, 8, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, Security, 4, 4)
->>>> +    IDREG_FIELD(ID_PFR1_EL1, ProgMod, 0, 4)
->>>> +IDREG_END(ID_PFR1_EL1)
->>>> +
->>>> +IDREG_START(ID_PFR2_EL1)
->>>>   IDREG_FIELD(ID_PFR2_EL1, RAS_frac, 8, 4)
->>>> +    IDREG_FIELD(ID_PFR2_EL1, SSBS, 4, 4)
->>>> +    IDREG_FIELD(ID_PFR2_EL1, CSV3, 0, 4)
->>>> +IDREG_END(ID_PFR2_EL1)
->>>> +
->>>> +IDREG_START(MIDR_EL1)
->>>> +    IDREG_FIELD(MIDR_EL1, Implementer, 24, 8)
->>>> +    IDREG_FIELD(MIDR_EL1, Variant, 20, 4)
->>>> +    IDREG_FIELD(MIDR_EL1, Architecture, 16, 4)
->>>> +    IDREG_FIELD(MIDR_EL1, PartNum, 4, 12)
->>>> +    IDREG_FIELD(MIDR_EL1, Revision, 0, 4)
->>>> +IDREG_END(MIDR_EL1)
->>>> +
->>>> +IDREG_START(MPIDR_EL1)
->>>> +    IDREG_FIELD(MPIDR_EL1, Aff3, 32, 8)
->>>> +    IDREG_FIELD(MPIDR_EL1, U, 30, 1)
->>>> +    IDREG_FIELD(MPIDR_EL1, MT, 24, 1)
->>>> +    IDREG_FIELD(MPIDR_EL1, Aff2, 16, 8)
->>>> +    IDREG_FIELD(MPIDR_EL1, Aff1, 8, 8)
->>>> +    IDREG_FIELD(MPIDR_EL1, Aff0, 0, 8)
->>>> +IDREG_END(MPIDR_EL1)
->>>> +
->>>> +IDREG_START(MVFR0_EL1)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPRound, 28, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPShVec, 24, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPSqrt, 20, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPDivide, 16, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPTrap, 12, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPDP, 8, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, FPSP, 4, 4)
->>>> +    IDREG_FIELD(MVFR0_EL1, SIMDReg, 0, 4)
->>>> +IDREG_END(MVFR0_EL1)
->>>> +
->>>> +IDREG_START(MVFR1_EL1)
->>>> +    IDREG_FIELD(MVFR1_EL1, SIMDFMAC, 28, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, FPHP, 24, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, SIMDHP, 20, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, SIMDSP, 16, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, SIMDInt, 12, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, SIMDLS, 8, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, FPDNaN, 4, 4)
->>>> +    IDREG_FIELD(MVFR1_EL1, FPFtZ, 0, 4)
->>>> +IDREG_END(MVFR1_EL1)
->>>> +
->>>> +IDREG_START(MVFR2_EL1)
->>>> +    IDREG_FIELD(MVFR2_EL1, FPMisc, 4, 4)
->>>> +    IDREG_FIELD(MVFR2_EL1, SIMDMisc, 0, 4)
->>>> +IDREG_END(MVFR2_EL1)
->>>> +
->>>> +IDREG_START(REVIDR_EL1)
->>>> +IDREG_END(REVIDR_EL1)
->>>> +
->>>> +IDREG_START(SMIDR_EL1)
->>>> +    IDREG_FIELD(SMIDR_EL1, NSMC, 56, 4)
->>>> +    IDREG_FIELD(SMIDR_EL1, HIP, 52, 4)
->>>> +    IDREG_FIELD(SMIDR_EL1, Affinity2, 32, 20)
->>>> +    IDREG_FIELD(SMIDR_EL1, Implementer, 24, 8)
->>>> +    IDREG_FIELD(SMIDR_EL1, Revision, 16, 8)
->>>> +    IDREG_FIELD(SMIDR_EL1, SMPS, 15, 1)
->>>> +    IDREG_FIELD(SMIDR_EL1, SH, 13, 2)
->>>> +    IDREG_FIELD(SMIDR_EL1, Affinity, 0, 12)
->>>> +IDREG_END(SMIDR_EL1)
->>>> +
->>>> -- 
->>>> 2.53.0
->>>>
->>> what is the point of a separate patch for reserved fields?
->>> [PATCH v9 19/26] target/arm/cpu-idregs.h.inc: Generate reserved fields
->>> Can we squash these together?
->> Well I think the support of RES fields introduce quite a significant
->> complexity in scripts/update-aarch64-cpu-sysreg-properties.py,
->> especially because several RESx fields can be in the same reg, inducing
->> ordering issues which I should have better commented ;-) Also having it
->> incremental allows to easily diff the generated file.
->>
->> So if you don't mind I prefer keeping it separate. I will endeavour to
->> add more comments too
->>
-> Okay sure, can we move it closer to this commit if possible?
+This way, when validate_vex() adjusts the X86OpEntry, decode_op_size()
+picks up the result.  This behaves as intended by commit b7d4ec4832d
+("target/i386/tcg: move VEX validation early", 2026-08-26), and fixes
+REPScalar instructions that have a memory operand.
 
-sure
+This also applies to unary operations, which need to ignore VEX.L.
+While this could also be fixed by using "dq" for the operand size, it
+is untidy that simply setting "s->vex_l = 0" does not do the right thing.
 
-Eric
->
-> Thanks,
-> Khushit
->> Eric
+Fixes: b7d4ec4832d ("target/i386/tcg: move VEX validation early", 2026-08-26)
+Reported-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/decode-new.c.inc | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 996e12d03d2..5212a24e470 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2478,9 +2478,13 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
+         e->decode(s, env, e, &decode->b);
+     }
+ 
+-    if (!validate_sse_prefix(s, e)) {
+-        return false;
+-    }
++    return validate_sse_prefix(s, e);
++}
++
++static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
++                       X86DecodedInsn *decode)
++{
++    X86OpEntry *e = &decode->e;
+ 
+     /* Compute size of operands here in order to initialize s->rip_offset.  */
+     if (e->op0 != X86_TYPE_None) {
+@@ -2515,13 +2519,6 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
+         assert(e->op3 == X86_TYPE_I && e->s3 == X86_SIZE_b);
+         s->rip_offset += 1;
+     }
+-    return true;
+-}
+-
+-static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
+-                       X86DecodedInsn *decode)
+-{
+-    X86OpEntry *e = &decode->e;
+ 
+     if (e->op0 != X86_TYPE_None &&
+         !decode_op(s, env, decode, &decode->op[0], e->op0, decode->b)) {
+-- 
+2.55.0
 
 
