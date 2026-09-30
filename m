@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0723ECA5FBB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC81CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBogu-0001rp-87; Wed, 30 Sep 2026 03:25:24 -0400
+	id 1xBoh2-0001ui-0v; Wed, 30 Sep 2026 03:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xBogr-0001pn-OP; Wed, 30 Sep 2026 03:25:21 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1xBogz-0001u8-K0; Wed, 30 Sep 2026 03:25:29 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xBogp-000289-2I; Wed, 30 Sep 2026 03:25:21 -0400
+ id 1xBogx-00027I-A2; Wed, 30 Sep 2026 03:25:29 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yv44/Wi+d65fpulNrzjCsy74VFarzHn3QxY+4BiE+qNlIMX8LTYrqlKdzNcLlBYhzSdmMF26xiP3Ja+cmP82/zhQ5X0IBbRqLMFNMKSJus9yA8ysopz37FU6jU0MBBPev6W5hMkxaASoAjibWLrpcpZYELjzBhA0Fh2lRZ/4pr39WtJT1BFazPnVyA5UFCMdJcg1Sj0YuwwtTKr0ZaGdbEGm/MKEti/bmrfBl+HpO3SDJS6+CBjptKFX2vVx1QgmQUXA3fXuXn8CLhGJzN8K2FiMhqc2zXY6YFpBjXMgcFgx66NHylpHVsYIcuvUKvYDdbjnb33nEd/AvNuYU0tG4w==
+ b=p8/sc+mQtIT8uTBPb9V+3KkEf8Xh+aiuJkgSe4hcK/k1IpJa6NK+T5qr1UITpYVk0N/CXdfqhduImnpG3U10PMGCW9eRrBbI/eK3iC1OBUbR2Yli4mKTRjcYWFYQm5XWT0uaZou/8Jg0Rkyck2+cTnU/F2ARcBD5kr9I1Lc+Q/7uqPRcPkt32d7oHuzdQfBGN7TacR8/BG8OCmO0S6UeXtcetE7rhpC+LgXSK+G6dsye1uPIAkvUHVr7TMZGS2wtEGse+v5SjPjHjo98PF1TILVxQH098Uax7s2CH8XePJ6a0Y5F/s3iisFirv/Ja7qsETUxBs6cernRT3RAbhHWIQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vPQSgB70CZrvDQLHT/M9wtPkHdloPjhLk+ZeFz7+Gy8=;
- b=aLKTae8qV+vsAbqICnGArKRPLQrUIFiYk+BLkAAM1nkuGlXqC4/Y7AMT6Jatvx2QCFNitc1UituKfc0m1A5vkBGHmnvEhM+W5tWjLrv1e3lpP4XDdqNLHknKaHNYajggcjNDzyiYAe9lYWrV4qphu1UoTXLbWcvozy3XB61jlLgUHYvRqEJYcacHZP6rSVxaodq7Jkv0t5xmazu1ZD3DDdnnWMZMOJJcZAnmWGMWpf74ioOIehPi8BWsDCz0nwkK2+/X3b+xvwQ7SNrWZDQv+aZ62eH42+/NlyhVe0SDlImbEQe/C52Ck3ozserwTTAC4ZcBsyXGJ/5TGWjeqHsJBw==
+ bh=tBw00OOwbOoaPXkCTxdHXcTyKSa+MFBgYxlcYASym1M=;
+ b=SagbM40Lo1I0BJv5b7qktb89/4S8WmqL1D7no2hhv03V36K9qpH6y1SalWcyjh8oW2Wics0IiNdVGIbjZ9OyYRnwnMZks7RwK191DzEZCsdcSNHRDe2C2dcJnHjOhfXWHEJrrsDsGD1lhyrDE/pL/2DMol5TEPEj2sixS9J+OI2eneS68pcGUcU+AAF1QEMfXd81RdJ4hKzc4SH+BlTgoTnuIyMAs5faramiwV8Y9vVwdMx1jbIO0t8d/Y00qbHK9eiMygJ0KrCay6WY4OpkpRDdEF2Ut2QCmssV9Pkd3r3iTSR9rLuh0PX8vBOaiYJJNR9aYbjX+UTTYrUsKYMmAA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vPQSgB70CZrvDQLHT/M9wtPkHdloPjhLk+ZeFz7+Gy8=;
- b=PTmcmpg4uTDVu1/ZfXz7KL4+Bli51lHwE3oZllkdn/43vuk7y5ixhkj3joJDAmXEn4VOoyEoZxRHWz6CEkwlSDXvU5LqCWmZ3Cq6jgoXlVz9JxUTtaUh0Q/X/vx0Q6/yxCTSHDtA9KUwb4r+qD61xbPxQKzjT7vcI4rnKL5sZEssyUrnZvEs95NlFcXDvh8Tcglcd6bQ5PHB3ZFskQPi0ImKkaN7DksnUZbfNJoHV+HQTrOWcdQf6/LBpIUUfa5S0wd1IhDf455dXoaa/ofmd2tqwWV8ZwgURyi4KZqwmZ5XtWy6oMc5Jy8vcNO2oSWdpbiVMnG2STYvLzCnrl4AaA==
+ bh=tBw00OOwbOoaPXkCTxdHXcTyKSa+MFBgYxlcYASym1M=;
+ b=ECG/weM8FtRGGzQdLS9fJG4gf2SlGMcboRWYCHN+q1PPt7mNVZ+hmzcbxFFaUgosrK7H+xhjU03hR2H07q7UiEJ4t+rHVV4Qh8MP/aEoqShXFyf+XQ0603Fofltobpbeci2PkgVHAdNL6C/wO2phtPyon4X6+vnIJgCq2+6NTUCxHvmnxmOF2Jtc7m9DxbYIlCxeEr+UyqNZCftF2yupK7E93FCF3arxLiskXF1kfwOu+v93bdW7kLWv1/+Ffr7AeZSOsx3vUTVAzqCI9NFWRVa9r4UAsg/+8s/Gw1CfCOjoXMApXgM/tZd91DSWZJgY/mc3kDTmStfgDdqOhMVHTA==
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by SEYPR06MB6616.apcprd06.prod.outlook.com (2603:1096:101:168::8)
+ by JH0PR06MB6451.apcprd06.prod.outlook.com (2603:1096:990:2d::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Wed, 30 Sep
- 2026 07:25:10 +0000
+ 2026 07:25:07 +0000
 Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
  ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0472.015; Wed, 30 Sep 2026
- 07:25:10 +0000
+ 07:25:07 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,13 +51,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 07/11] hw/arm/aspeed_ast27x0: Use unimp array and table for
- unimplemented devices for SSP/TSP
-Thread-Topic: [PATCH v1 07/11] hw/arm/aspeed_ast27x0: Use unimp array and
- table for unimplemented devices for SSP/TSP
-Thread-Index: AQHdUKzT0HPfyuvLpUK2C6pbfcnGHA==
-Date: Wed, 30 Sep 2026 07:25:10 +0000
-Message-ID: <20260930072501.2612119-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 04/11] hw/arm/aspeed_ast10x0: Use unimp array and table for
+ unimplemented devices
+Thread-Topic: [PATCH v1 04/11] hw/arm/aspeed_ast10x0: Use unimp array and
+ table for unimplemented devices
+Thread-Index: AQHdUKzRJ+J/yCrz9UCxEBMw+L4Fkg==
+Date: Wed, 30 Sep 2026 07:25:07 +0000
+Message-ID: <20260930072501.2612119-5-jamin_lin@aspeedtech.com>
 References: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -67,71 +67,71 @@ X-MS-TNEF-Correlator:
 authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SEYPR06MB6616:EE_
-x-ms-office365-filtering-correlation-id: 68a71afc-3809-4695-5cf3-08df1ec3f610
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|JH0PR06MB6451:EE_
+x-ms-office365-filtering-correlation-id: 84a5a6e6-23ea-41aa-9e02-08df1ec3f407
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|366016|1800799024|38070700021|10067099003|56012099006|22082099003|18002099003;
-x-microsoft-antispam-message-info: nF3y4WL+6GRn794FxHrT6k9WCTPUqoD79D4avvs6NblpCvFxq28PBFHQtjBPO+XXvAJX488O+jR6zt4gbPqfIiWgxVjLUhFKkBYAFFxjUJiyQnS/Fx140X27d010b9rjJ8da3nObEgmRJec8xhzd9zCh40VUqUkA+eFq5g6X82N4WPPmN9qpuMoUn3DyGjzfjSSQIOJCA/QRQN09h00QDsC7n2qgYEKqud5MLma9NYVrkqLTYcM98isdc00J1FqUNUYhlXGbuqw+ET3xDIu8gBF8VDrPb/ie+7z52p5Jgnc3RuHVYq3/pPIjGMdKpl9wleEnjMJJmljJaopYeFaZY0LBlx3ICEtVy9oidoedaPY4H3lCuyCu0CBOkPBAe4cr/JEYyIMmObA3MizP0xh2esjjvAo2noiVLzIKXL8mG5dcvJhxUIgS2lRVigdAXQS+dcDLMB1r5ttP/kMTNYc1muh8VkvS8n/6qV/OPfMHa+hteHPCfRqpfSC3aQJM+7winRZaS9tBf5njFOFteawAjyIqcd4FSbEoctt0AS5w68Mmst7VnNVNwXS/Z6OXzbJ01NOpoWBZ6yZRfZPzY3gp0Pfc37qRj52cg4/c4lso4Z1aNNNuQHX+k9cY9MJKFvg7RfDnG1JjL1NtSg5tzOQt0O3oiOv9GcOkgwrt5Fdb+9IOv3siycGEfevwv04BLM+7T3OTNJvxi+qHyOfy9ufYF/a6xb0Ju3L8592YySKUFpE=
+ ARA:13230040|366016|376014|23010399003|1800799024|10067099003|56012099006|22082099003|18002099003|38070700021;
+x-microsoft-antispam-message-info: axxJnvyrAmiv6U7ATl0BHnrvdfFp5+7qup3cuDqiNaKbCWjPXUb7k+Kcqva277QEhy1mgMllG9dpQHqwB1k759dQl0WCCLgZBJqe732DMT5w7UNRaCo06PmUtDTb0o1GjLTyttbirT3KgrzhvVx7cksJrdhkMt2uMc4iK9Bs/w2Exhfi1uh8RRyb8vzO1rzR4RCXCQBdg0lYtof6pXWimjkWlPK7FPrbwTGV0AoZWYcR+8PBxEv3JxtOySapTOjYzDnGlO+C1Md2wIpkieHDa3kmo/ViXCjjiJlhErXzaLoXkWILjVNrit9a+QmQ6N/ABzKyO/2kymaTGa4niwWgkaEQ4W8ccA6/jEfCI4WNnlB1nl3R6Z8DX9pvEc+Pew7qeNIZIc+Ld6Hf7gErSOl0TQkIbZVCFgS3eZCsftmMnksGqTBYPWdOrhh//ZI/l3VBXyZM/RhvfXOG1HZkvZ+bqnWWmnz/aIiBppALK+3VbUlUaGSf25WD/5s2KNwQWRGGIhRdqs7J4XMG81bKxo1GsFuTc1tmtq2JCr9s3O/WkemthwCC4w+Toli40Pk95BKsZ0gyoYbnx3Hg3vH9L2/jHW710K/J2KES51X9nUonwpBFS3slukxfPvcBKEWSq2GhHP0e/gxKphsN92vV6qhngjQOZ5fpDqhmlGbQkuvHx8BgC48L1YxOQV6J+v9cOyv7Tq6TyfEtUwXVAlfeUhdqlrVMKUOrp82LfvT4m4tZ2VM=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(38070700021)(10067099003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(10067099003)(56012099006)(22082099003)(18002099003)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?MVbqbJMKTupp2TXPfXsH66rDjjeDhyCKg+3+CvrwLdecvCmYSXcn/x8RGV?=
- =?iso-8859-1?Q?1xMLa/t0g4P4cIS3T34PySAMgSxRCCzhEwnhZA2KgeQJ25bufvhnkABqq9?=
- =?iso-8859-1?Q?4aIyrrMPUGbCqA0MYNbHizzXeGthhDNtxQgOykyGAIbX9uKZpw9pznISuI?=
- =?iso-8859-1?Q?Q6QfmbeKUDZMTryvN84m8+6R79VCZDBKufs17gwAZwPQve4htDVKMaTYkF?=
- =?iso-8859-1?Q?hKdmJ4I0DpuBUKE8SOylrL6/JxAkl/1GQu91jFeUvjYWiWH0kCWS6yCESB?=
- =?iso-8859-1?Q?3nOsc7E3oxA8Pq3boIT7nK8lG273kV/5uMd/nP/+wg7+0xxOgETotECBmb?=
- =?iso-8859-1?Q?LcPadLjSxUDaZazJ4Vjql9oUTIsKIC+TDo45np7X/jtobkOj1MFHB4CMOY?=
- =?iso-8859-1?Q?0iiqE5j9xtjWeO+FTxCMFt8gSE6mnWkvZ96wcuD0XNCl9HgDDkYTrJfQur?=
- =?iso-8859-1?Q?jTYvLzqs9Fj60LRM2pejmQsrBVm8Ha8Pohdjnc24N87EBQkQFIcQCqkoUJ?=
- =?iso-8859-1?Q?EuYxna5L681+HWkYysL1Mijd4+nDDa4dXkWzo7TBl8s971HzDIoqkNKns4?=
- =?iso-8859-1?Q?RiMuQJQmpVx7JdoJkQmHeQUB72+uG73RilWAoB/yPDRLNwyos5mlE6SFEo?=
- =?iso-8859-1?Q?7Wd9+2SpUFZa/VqjXBD7oq0WDUAA2QRocRvdep5S0bPX8OvYLGGbxljoTI?=
- =?iso-8859-1?Q?ZJ7KQBiVv6/bDa1CHmJOqWqcv5GPYfMjUwuLEfEFWZjPym2uzv8AHn9zj8?=
- =?iso-8859-1?Q?SWwr45oUQ7s/zhL9vlN+elZxDYWNnPeSV0WZR26Zouh/ShubDxNX1QfWr+?=
- =?iso-8859-1?Q?Aq/tWNeKwQKXNAX/6egTETGijQQ4hynOl3sp4zyM3upZLxWV6BASxvShEJ?=
- =?iso-8859-1?Q?F0G2Oq2SbibfVvAiu1/wgePySyTPghzfrzeDfPZEDbkXnGpCKkvKRG6bxS?=
- =?iso-8859-1?Q?2rVmVfYnPsMBoUXDbM3xJTP9Q1H444JVkwamtwupievkCWNWCxyIMPVcCf?=
- =?iso-8859-1?Q?OXsbwpIK8h5Zrc2y3TQygPYXoPDDXaTMuJhIHn9JbYVxUN5S6Ih+Ozhy57?=
- =?iso-8859-1?Q?SkXyU8OTdSVljfcgECMrZab4eKFUeAhpXJAB/oKT0sOwR1PnwVYwvSQ/If?=
- =?iso-8859-1?Q?/0T2BTy3En205PhBrOYmpLe3b4dnuRzgbO7PfbW5JXh74tHmj7NKbYyEAk?=
- =?iso-8859-1?Q?SfS5Jnj2X+Sdcps/MgZE5PEF8F2NBCzUjOAZqD2U5P3sZb6E/M6JaUCTCT?=
- =?iso-8859-1?Q?TpvVw0SgROXWOKKPYiUPLBF1Pfh9vjZzPQwI9RbYs9h5KK7aZ5iEC2iF4V?=
- =?iso-8859-1?Q?jxTax4BGwjOR7RVyCV+mf6khLCxZu6qGM2CJiFuNlMGIECvNm5wNeBd8ln?=
- =?iso-8859-1?Q?P/MyLvVcRhM06e+Q7Ypeq+xYMofzPXO/jOyT9u0GJut5Xt2V5pCUvZXEms?=
- =?iso-8859-1?Q?/4Aul9tYl5d8I/K89Wto4R3P1/ShbqK3XjzlGIcgpQdw3qy8xHC/KRbQif?=
- =?iso-8859-1?Q?BezN1U+rNjTKYNH4vQdoY153C+46/IGsdKhQ+uaA4zeHOrF6yt3nS2dZlh?=
- =?iso-8859-1?Q?Odn7r/iKGM+iVnp8SVhM/0AuK8P1DzCj+V4cGfwC+onUhjtHnzzZJFcfgT?=
- =?iso-8859-1?Q?EXX3iJ/+EBR3zS3aAWYdv0FEqHa67/cZxXISwLb/xBi6gXB+0n++qvyyP/?=
- =?iso-8859-1?Q?gD5ZtabP4WBQ375QwXqA03HI9m/W8HHI2RMREWBxIIoxWk0VOARSLzpGa5?=
- =?iso-8859-1?Q?iBnZI7qMVF+s8TaKn2+OnEEbX0tZ47OAHlOOLcSZ0FxNVQms/3fZElhQKt?=
- =?iso-8859-1?Q?I1z3JUj1mg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?FfKznhehpd26rNogyGB8y5vltmuQkrzO3SKTDf01Hxri3WzNZP7ALZTITI?=
+ =?iso-8859-1?Q?qQE3zpF4bo58/uTp17IEuP7Z3Pds0EokXxR4pOD5MzEtxcxk/D+n0oDPM2?=
+ =?iso-8859-1?Q?US76xyp5BMwipTSLW6eFuwvUM2yKstzy5S7Jpdjtsmx5At35Pgjm2hoxt7?=
+ =?iso-8859-1?Q?zHGcxy+FkleRrVsgV12L4ekanHDvXAHs5LznsbkpZ+LKvjm3/2zl+TNYks?=
+ =?iso-8859-1?Q?DnrKTnOJEvBf0sMSrX1KQHGPG7GbSV/GrLX9vdeHEkJ+wpHhgcTQLtBNGP?=
+ =?iso-8859-1?Q?1+9AVPhTpJsI8EgR6WR0R8gy7TLrlZrunThmKj1xAR3J5kDcd5jNrGUQg6?=
+ =?iso-8859-1?Q?vaO/14S4YTnCIPmQYHZ5o6wpjclhAUnEeLBSqM/8+YL0VV4OeidTVNOWNV?=
+ =?iso-8859-1?Q?25iq3Bhezj0KmIfI0vbpmYgxjfT9F9qlEzSJqtklZSLrfgu/uzjsm1BnE3?=
+ =?iso-8859-1?Q?+RHK72zt6EAEdhhUv0IZOsvzCmZwLkg/m/zIWZZhnpUnNiTyGjHyMLUxPs?=
+ =?iso-8859-1?Q?4lnI4Cf4Z1BCJ8oBwNRlZTKwJRiZfG2WyoEBHPyhig23yLP8pETAZR2gGf?=
+ =?iso-8859-1?Q?HMZ//UBYNNILkrN+YN4SIuZKm0OeYxGpgLfwpevCpuPnWKyJ+0OjJpyf0/?=
+ =?iso-8859-1?Q?65ceklMV1wzol54gq0W5qozwA0V4ADT7ECC7hIZmEMYnpJyyMLe87qA0at?=
+ =?iso-8859-1?Q?AiahSQYrFAWqI9BHmvNcmPSo5nTww3ODsgRKoRe0N42TxldtEsHU7ZdjOL?=
+ =?iso-8859-1?Q?go/aiXdtqZSPeW3cBjQkD2Put7/KsurKPER5ro9Mf/ixSC+pKU/euwUI2p?=
+ =?iso-8859-1?Q?1wqkYHRk+W9Op4XHh/DDL5DYRfJSyvBYRM7N6RoBCzsMOoY5yCXXmW63jQ?=
+ =?iso-8859-1?Q?e8R6SXMr3G/H2dyb7pSB6GMfuZo93hbGhSAu+GxH818IEPSSI+knmClkXk?=
+ =?iso-8859-1?Q?EZq3pfvUCwE97vC7NxZJf7uyc+hoDYF19YShL0hV8blRir9Y5QAntRks+e?=
+ =?iso-8859-1?Q?NdhO3PM2AGWD9VOGzzYuia7VQtfmc9JTi/ibu4yEKS/Tr4Iy0FRPaFPy+j?=
+ =?iso-8859-1?Q?zflENgfEm2VbdVENvNOY/P8DCKULdMy9OeAp6Q0bHXK3ZhkIu0+8SER0pm?=
+ =?iso-8859-1?Q?v2G5rjl8Jom5C7cOLwYiZYpJqz9XxaTVWsFuAJN6NWvxgfS4DbqM2MOK9R?=
+ =?iso-8859-1?Q?pohUKNE0ocwPeHBI6Tg0tqpw83i//d7qK8qHESknnuESn35I+B2mdp+agJ?=
+ =?iso-8859-1?Q?99ztwadBikp6D9+vrx7mpx2nfbsZXTHGoEIr6Wzb34NnSHjMAAu+gxSfBi?=
+ =?iso-8859-1?Q?2MT1Mw8Ar8swoZEVGyNFwdzw9Rm+Cyn44kMi2ldhaTjH9mKIiU1jyCTJRT?=
+ =?iso-8859-1?Q?jqeJf27cLywpJsTsFQKafaN9IAN6OETdffzPnrCpAFtXS6lekU8TJUzzYo?=
+ =?iso-8859-1?Q?9GHSoHpXbMKxaaTj6iwVFSU2a+oabHibXzf0ZtZeS39+qNn3oPjoAWiifP?=
+ =?iso-8859-1?Q?xVe1K5b76orS4FIRZSOr6UTry0zLRMVeZNVuxC5xrgr+eLipD1sTTYPUH3?=
+ =?iso-8859-1?Q?RqLfwyb9aGoLBbF53KeR9HoC3Dgpn3JtRK1jKQh6NMxZ27BabQ4igByuw9?=
+ =?iso-8859-1?Q?j8OnAh9poyy05j1SgHXL0TjwhnO4pzULDVHUnK18kq00Btxe+8dp++7Knw?=
+ =?iso-8859-1?Q?dHwSJYZSYZM/S49HIOUFG+QMoXWS5xTBfZ8P/0X7MWLSJPcT7CF5M58KwM?=
+ =?iso-8859-1?Q?qCljG8ue/jA4u/M4daqxg3jJHlFLbzlMmbq1PldQ+L/Y5xwcZs1RdZal4F?=
+ =?iso-8859-1?Q?lLB8q53wOg=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: zaNH+4OZMMnjDr+6YVOaKQlqNogC5AI2TYjNmmGZcFdHr99yJc6kMi7S7nOp6QGfPtxntrFVwj/ETDPytQSBE5enpzYvD5RQyr7kjc++2jEylBo7+Bv4zxxJcnS5x8BOrMQM18b/U/I49uuBXt4koYPcLO0tDe+sP7+iaGc15rgdvNGu6PTqG6lCfI1/xAJ74BL8ztOM/auUH0mhTJE20UhfzyiUJ+XTkFHGqfUB1C78V7yFyF09F+HSt2zt6JFfmXrLQ3ikJ+r3pARsBQlWBIfQ1j9QiEbgEFlxel3j+A640qg/dwHaYohJeF1hNrob7D0OSDnUuZM5Y5sLdNpdfw==
+X-Exchange-RoutingPolicyChecked: z9tcQvoWdbUhhMKIGKFP+ZRUVs4lL1/+D+WPvu4bDB4Q9yxFR2Im/khyqGFN10Zw4haSZH1NxMefV4Qu5oFzmpdRABp0xQq7SWAZIjNjRdbx2pRa0B6PYWBcU0WgZ4smXDNF+ALF4RAXURrPCVsg64h4m86/uY+/1xsuffua9kb6NqoLEfT7JxvhCuike9WYOiiqW+BWCY1X2z3eBQehTv9qALxjw/UnhZcxqPWCPOMgdbemJ/r7M6CRfDDg/1FjtdqPYaA987mioYn9uTSLq93Sw90AJ+WD2/+gkdvASzLcJbBtK1XT3oUfmEk/EZQIppLUrp8ZbzNngIFU3/YeDw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68a71afc-3809-4695-5cf3-08df1ec3f610
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Sep 2026 07:25:10.5106 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84a5a6e6-23ea-41aa-9e02-08df1ec3f407
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Sep 2026 07:25:07.0872 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VnoiYcOrzFr0xPJGeZrxkLYGe350WvJ9acUVBoy2lYII0q5p1R/gAAcRDyqIqiNyT+0PpjOx/sk7O/o5YkHq4S3R7B162/WMXW63nRr4jiE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6616
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-userprincipalname: 082ogkYmChKwhZDHu4EYZfwH4H+0WajW/Lo5vCD06/vL4xVBOEkhqdEaYLeHyibD3slMH1TYsDQrEwXAIzu6QVp/d58rPB5LPUjmMbDjcGM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6451
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,269 +149,150 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Before this change, each unimplemented device needed its own field in=0A=
-the coprocessor state. This made the code hard to maintain.=0A=
+AspeedSoCState. This made the variable names confusing. For example,=0A=
+AspeedSoCState has "udc" as an unimplemented device, but=0A=
+Aspeed2600SoCState also has "udc" as the real UDC model.=0A=
 =0A=
-Add an "unimp" array in AspeedCoprocessorState for all unimplemented=0A=
-devices, and use the AspeedUnimpDevice table to describe them. This=0A=
-makes the code easier to maintain and read. Convert AST2700 SSP and=0A=
-TSP to use them.=0A=
+Use the "unimp" array in AspeedSoCState for all unimplemented devices,=0A=
+and use the AspeedUnimpDevice table to describe them. This makes the=0A=
+code easier to maintain and read. Convert AST1030/AST1060 to use them.=0A=
 =0A=
-This also fixes a type mismatch. SSP and TSP used the "timerctrl"=0A=
-field (AspeedTimerCtrlState) to create an unimplemented device. They=0A=
-now use the "unimp" array instead.=0A=
+This also fixes a type mismatch. AST10x0 used the "pwm" field=0A=
+(AspeedPWMState) and the "sgpiom" field (AspeedSGPIOState array) to=0A=
+create unimplemented devices. They now use the "unimp" array instead.=0A=
 =0A=
 No functional change.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- include/hw/arm/aspeed_coprocessor.h |  1 +=0A=
- hw/arm/aspeed_ast27x0-ssp.c         | 56 ++++++++++++++---------------=0A=
- hw/arm/aspeed_ast27x0-tsp.c         | 56 ++++++++++++++---------------=0A=
- 3 files changed, 53 insertions(+), 60 deletions(-)=0A=
+ hw/arm/aspeed_ast10x0.c | 64 ++++++++++++++++-------------------------=0A=
+ 1 file changed, 25 insertions(+), 39 deletions(-)=0A=
 =0A=
-diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_co=
-processor.h=0A=
-index acb8b06457..29b66cc810 100644=0A=
---- a/include/hw/arm/aspeed_coprocessor.h=0A=
-+++ b/include/hw/arm/aspeed_coprocessor.h=0A=
-@@ -23,6 +23,7 @@ struct AspeedCoprocessorState {=0A=
-     Clock *sysclk;=0A=
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c=0A=
+index aeb5a4423d..cc587dcc1a 100644=0A=
+--- a/hw/arm/aspeed_ast10x0.c=0A=
++++ b/hw/arm/aspeed_ast10x0.c=0A=
+@@ -17,8 +17,6 @@=0A=
+ #include "hw/misc/unimp.h"=0A=
+ #include "hw/arm/aspeed_soc.h"=0A=
  =0A=
-     AspeedTimerCtrlState timerctrl;=0A=
-+    UnimplementedDeviceState unimp[ASPEED_UNIMP_NUM];=0A=
-     SerialMM *uart;=0A=
-     int uart_dev;=0A=
- };=0A=
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c=0A=
-index e03653086c..b448a29665 100644=0A=
---- a/hw/arm/aspeed_ast27x0-ssp.c=0A=
-+++ b/hw/arm/aspeed_ast27x0-ssp.c=0A=
-@@ -101,6 +101,17 @@ static struct nvic_intc_irq_info ast2700_ssp_intcmap[]=
- =3D {=0A=
-     {169, 1, 9, NULL},=0A=
+-#define ASPEED_SOC_IOMEM_SIZE 0x00200000=0A=
+-=0A=
+ static const hwaddr aspeed_soc_ast1030_memmap[] =3D {=0A=
+     [ASPEED_DEV_SRAM0]     =3D 0x00000000,=0A=
+     [ASPEED_DEV_SRAM1]     =3D 0x79000000, /* SEC SRAM */=0A=
+@@ -99,6 +97,17 @@ static const int aspeed_soc_ast1030_irqmap[] =3D {=0A=
+     [ASPEED_DEV_JTAG1]     =3D 53,=0A=
  };=0A=
  =0A=
-+static const AspeedUnimpDevice aspeed_soc_ast27x0ssp_unimp_devs[] =3D {=0A=
-+    { "timerctrl", "aspeed.timerctrl", ASPEED_DEV_TIMER1, 0x200 },=0A=
-+    { "ipc0",      "aspeed.ipc0",      ASPEED_DEV_IPC0,   0x1000 },=0A=
-+    { "ipc1",      "aspeed.ipc1",      ASPEED_DEV_IPC1,   0x1000 },=0A=
-+    { "pric0",     "aspeed.pric0",     ASPEED_DEV_PRIC0,  0x1000 },=0A=
-+    { "pric1",     "aspeed.pric1",     ASPEED_DEV_PRIC1,  0x1000 },=0A=
-+    { "otp",       "aspeed.otp",       ASPEED_DEV_OTP,    0x800 },=0A=
++static const AspeedUnimpDevice aspeed_soc_ast10x0_unimp_devs[] =3D {=0A=
++    { "iomem",   "aspeed.io",     ASPEED_DEV_IOMEM,   0x00200000 },=0A=
++    { "pwm",     "aspeed.pwm",    ASPEED_DEV_PWM,     0x100 },=0A=
++    { "espi",    "aspeed.espi",   ASPEED_DEV_ESPI,    0x800 },=0A=
++    { "udc",     "aspeed.udc",    ASPEED_DEV_UDC,     0x1000 },=0A=
++    { "sgpiom",  "aspeed.sgpiom", ASPEED_DEV_SGPIOM0, 0x100 },=0A=
++    { "jtag[0]", "aspeed.jtag0",  ASPEED_DEV_JTAG0,   0x20 },=0A=
++    { "jtag[1]", "aspeed.jtag1",  ASPEED_DEV_JTAG1,   0x20 },=0A=
 +};=0A=
-+QEMU_BUILD_BUG_ON(ARRAY_SIZE(aspeed_soc_ast27x0ssp_unimp_devs) >=0A=
-+                  ASPEED_UNIMP_NUM);=0A=
++QEMU_BUILD_BUG_ON(ARRAY_SIZE(aspeed_soc_ast10x0_unimp_devs) > ASPEED_UNIMP=
+_NUM);=0A=
 +=0A=
- static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedCoprocessorState *s,=
-=0A=
-                                               int dev)=0A=
+ static qemu_irq aspeed_soc_ast1030_get_irq(AspeedSoCState *s, int dev)=0A=
  {=0A=
-@@ -128,6 +139,7 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)=0A=
- {=0A=
-     Aspeed27x0CoprocessorState *a =3D ASPEED27X0SSP_COPROCESSOR(obj);=0A=
-     AspeedCoprocessorState *s =3D ASPEED_COPROCESSOR(obj);=0A=
-+    int i;=0A=
+     Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(s);=0A=
+@@ -162,16 +171,10 @@ static void aspeed_soc_ast10x0_init(Object *obj, cons=
+t char *socname)=0A=
+     snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);=0A=
+     object_initialize_child(obj, "hace", &s->hace, typename);=0A=
  =0A=
-     object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);=0A=
-     s->sysclk =3D qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);=
-=0A=
-@@ -137,18 +149,11 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)=
-=0A=
-     object_initialize_child(obj, "intc1", &a->intc[1],=0A=
-                             TYPE_ASPEED_2700SSP_INTCIO);=0A=
- =0A=
--    object_initialize_child(obj, "timerctrl", &s->timerctrl,=0A=
+-    object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DE=
+VICE);=0A=
+-    object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE=
+);=0A=
+-    object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVI=
+CE);=0A=
+-    object_initialize_child(obj, "udc", &s->udc, TYPE_UNIMPLEMENTED_DEVICE=
+);=0A=
+-    object_initialize_child(obj, "sgpiom", &s->sgpiom,=0A=
 -                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "ipc0", &a->ipc[0],=0A=
+-    object_initialize_child(obj, "jtag[0]", &s->jtag[0],=0A=
 -                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "ipc1", &a->ipc[1],=0A=
+-    object_initialize_child(obj, "jtag[1]", &s->jtag[1],=0A=
 -                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "pric0", &a->pric[0],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "pric1", &a->pric[1],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "otp", &a->otp,=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
-+    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast27x0ssp_unimp_devs); i++) {=
-=0A=
-+        object_initialize_child(obj,=0A=
-+                                aspeed_soc_ast27x0ssp_unimp_devs[i].qom_na=
-me,=0A=
++    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast10x0_unimp_devs); i++) {=0A=
++        object_initialize_child(obj, aspeed_soc_ast10x0_unimp_devs[i].qom_=
+name,=0A=
 +                                &s->unimp[i], TYPE_UNIMPLEMENTED_DEVICE);=
 =0A=
 +    }=0A=
  }=0A=
  =0A=
- static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **er=
-rp)=0A=
-@@ -159,6 +164,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *=
-dev_soc, Error **errp)=0A=
-     DeviceState *armv7m;=0A=
-     MemoryRegion *mr;=0A=
-     g_autofree char *sdram_name =3D NULL;=0A=
-+    const AspeedUnimpDevice *unimp;=0A=
+ static void aspeed_soc_ast1030_init(Object *obj)=0A=
+@@ -209,17 +212,22 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCS=
+tate *a, Error **errp)=0A=
+     int uart;=0A=
      int i;=0A=
+     g_autofree char *sram_name =3D NULL;=0A=
++    const AspeedUnimpDevice *unimp;=0A=
  =0A=
      if (!clock_has_source(s->sysclk)) {=0A=
-@@ -283,24 +289,14 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState=
- *dev_soc, Error **errp)=0A=
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],=0A=
-                                 &a->fmc_alias);=0A=
+         error_setg(errp, "sysclk clock must be wired up by the board code"=
+);=0A=
+         return false;=0A=
+     }=0A=
  =0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl)=
-,=0A=
--                                  "aspeed.timerctrl",=0A=
--                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),=
-=0A=
--                                  "aspeed.ipc0",=0A=
--                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),=
-=0A=
--                                  "aspeed.ipc1",=0A=
--                                  sc->memmap[ASPEED_DEV_IPC1], 0x1000);=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),=
-=0A=
--                                  "aspeed.pric0",=0A=
--                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),=
-=0A=
--                                  "aspeed.pric1",=0A=
--                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->otp),=0A=
--                                  "aspeed.otp",=0A=
--                                  sc->memmap[ASPEED_DEV_OTP], 0x800);=0A=
+-    /* General I/O memory space to catch all unimplemented device */=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->iomem),=0A=
+-                                  "aspeed.io",=0A=
+-                                  sc->memmap[ASPEED_DEV_IOMEM],=0A=
+-                                  ASPEED_SOC_IOMEM_SIZE);=0A=
 +    /* Unimplemented devices */=0A=
-+    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast27x0ssp_unimp_devs); i++) {=
-=0A=
-+        unimp =3D &aspeed_soc_ast27x0ssp_unimp_devs[i];=0A=
++    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast10x0_unimp_devs); i++) {=0A=
++        unimp =3D &aspeed_soc_ast10x0_unimp_devs[i];=0A=
 +        aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->unimp[=
 i]),=0A=
 +                                      unimp->region_name,=0A=
 +                                      sc->memmap[unimp->memmap_idx],=0A=
 +                                      unimp->size);=0A=
 +    }=0A=
- }=0A=
- =0A=
- static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c=0A=
-index 39ba062a20..32b57f9363 100644=0A=
---- a/hw/arm/aspeed_ast27x0-tsp.c=0A=
-+++ b/hw/arm/aspeed_ast27x0-tsp.c=0A=
-@@ -101,6 +101,17 @@ static struct nvic_intc_irq_info ast2700_tsp_intcmap[]=
- =3D {=0A=
-     {169, 1, 9, NULL},=0A=
- };=0A=
- =0A=
-+static const AspeedUnimpDevice aspeed_soc_ast27x0tsp_unimp_devs[] =3D {=0A=
-+    { "timerctrl", "aspeed.timerctrl", ASPEED_DEV_TIMER1, 0x200 },=0A=
-+    { "ipc0",      "aspeed.ipc0",      ASPEED_DEV_IPC0,   0x1000 },=0A=
-+    { "ipc1",      "aspeed.ipc1",      ASPEED_DEV_IPC1,   0x1000 },=0A=
-+    { "pric0",     "aspeed.pric0",     ASPEED_DEV_PRIC0,  0x1000 },=0A=
-+    { "pric1",     "aspeed.pric1",     ASPEED_DEV_PRIC1,  0x1000 },=0A=
-+    { "otp",       "aspeed.otp",       ASPEED_DEV_OTP,    0x800 },=0A=
-+};=0A=
-+QEMU_BUILD_BUG_ON(ARRAY_SIZE(aspeed_soc_ast27x0tsp_unimp_devs) >=0A=
-+                  ASPEED_UNIMP_NUM);=0A=
 +=0A=
- static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedCoprocessorState *s,=
-=0A=
-                                               int dev)=0A=
- {=0A=
-@@ -128,6 +139,7 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)=0A=
- {=0A=
-     Aspeed27x0CoprocessorState *a =3D ASPEED27X0TSP_COPROCESSOR(obj);=0A=
-     AspeedCoprocessorState *s =3D ASPEED_COPROCESSOR(obj);=0A=
-+    int i;=0A=
+     /* AST10x0 CPU Core */=0A=
+     armv7m =3D DEVICE(&a->armv7m);=0A=
+     qdev_prop_set_uint32(armv7m, "num-irq", 256);=0A=
+@@ -394,28 +402,6 @@ static bool aspeed_soc_ast10x0_realize(Aspeed10x0SoCSt=
+ate *a, Error **errp)=0A=
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,=0A=
+                        aspeed_soc_ast1030_get_irq(s, ASPEED_DEV_GPIO));=0A=
  =0A=
-     object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);=0A=
-     s->sysclk =3D qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),=0A=
+-                                  "aspeed.pwm",=0A=
+-                                  sc->memmap[ASPEED_DEV_PWM], 0x100);=0A=
+-=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->espi),=0A=
+-                                  "aspeed.espi",=0A=
+-                                  sc->memmap[ASPEED_DEV_ESPI], 0x800);=0A=
+-=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->udc),=0A=
+-                                  "aspeed.udc",=0A=
+-                                  sc->memmap[ASPEED_DEV_UDC], 0x1000);=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom),=
 =0A=
-@@ -137,18 +149,11 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)=
+-                                  "aspeed.sgpiom",=0A=
+-                                  sc->memmap[ASPEED_DEV_SGPIOM0], 0x100);=
 =0A=
-     object_initialize_child(obj, "intc1", &a->intc[1],=0A=
-                             TYPE_ASPEED_2700TSP_INTCIO);=0A=
- =0A=
--    object_initialize_child(obj, "timerctrl", &s->timerctrl,=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "ipc0", &a->ipc[0],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "ipc1", &a->ipc[1],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "pric0", &a->pric[0],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "pric1", &a->pric[1],=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
--    object_initialize_child(obj, "otp", &a->otp,=0A=
--                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
-+    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast27x0tsp_unimp_devs); i++) {=
+-=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),=
 =0A=
-+        object_initialize_child(obj,=0A=
-+                                aspeed_soc_ast27x0tsp_unimp_devs[i].qom_na=
-me,=0A=
-+                                &s->unimp[i], TYPE_UNIMPLEMENTED_DEVICE);=
+-                                  "aspeed.jtag",=0A=
+-                                  sc->memmap[ASPEED_DEV_JTAG0], 0x20);=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[1]),=
 =0A=
-+    }=0A=
+-                                  "aspeed.jtag",=0A=
+-                                  sc->memmap[ASPEED_DEV_JTAG1], 0x20);=0A=
+-=0A=
+     return true;=0A=
  }=0A=
  =0A=
- static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **er=
-rp)=0A=
-@@ -159,6 +164,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *=
-dev_soc, Error **errp)=0A=
-     DeviceState *armv7m;=0A=
-     MemoryRegion *mr;=0A=
-     g_autofree char *sdram_name =3D NULL;=0A=
-+    const AspeedUnimpDevice *unimp;=0A=
-     int i;=0A=
- =0A=
-     if (!clock_has_source(s->sysclk)) {=0A=
-@@ -283,24 +289,14 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState=
- *dev_soc, Error **errp)=0A=
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],=0A=
-                                 &a->fmc_alias);=0A=
- =0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl)=
-,=0A=
--                                  "aspeed.timerctrl",=0A=
--                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[0]),=
-=0A=
--                                  "aspeed.ipc0",=0A=
--                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),=
-=0A=
--                                  "aspeed.ipc1",=0A=
--                                  sc->memmap[ASPEED_DEV_IPC1], 0x1000);=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),=
-=0A=
--                                  "aspeed.pric0",=0A=
--                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),=
-=0A=
--                                  "aspeed.pric1",=0A=
--                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);=
-=0A=
--    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->otp),=0A=
--                                  "aspeed.otp",=0A=
--                                  sc->memmap[ASPEED_DEV_OTP], 0x800);=0A=
-+    /* Unimplemented devices */=0A=
-+    for (i =3D 0; i < ARRAY_SIZE(aspeed_soc_ast27x0tsp_unimp_devs); i++) {=
-=0A=
-+        unimp =3D &aspeed_soc_ast27x0tsp_unimp_devs[i];=0A=
-+        aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->unimp[=
-i]),=0A=
-+                                      unimp->region_name,=0A=
-+                                      sc->memmap[unimp->memmap_idx],=0A=
-+                                      unimp->size);=0A=
-+    }=0A=
- }=0A=
- =0A=
- static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
 -- =0A=
 2.53.0=0A=
 
