@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6A6CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9790CA5FC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBq5M-0001o7-Bx; Wed, 30 Sep 2026 04:54:44 -0400
+	id 1xBq5b-0001qJ-FU; Wed, 30 Sep 2026 04:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBq5K-0001nx-TY
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:54:42 -0400
+ id 1xBq5Y-0001pY-80
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:54:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xBq5I-0002lO-Ir
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:54:42 -0400
+ id 1xBq5W-0002m3-KC
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:54:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790758479;
+ s=mimecast20190719; t=1790758494;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2Hcb64L706f+uiyGLXfN23w5rfYDEh0B3dDS/vpmVjo=;
- b=MagMF1Qli1dpfBK4Imr+NfUJqmchamBwrqHIWOXnMyniaKgCKjkcmplCfEKSoryD2aFJ6Q
- Vgj8Iz/CqW/wsSctgJccF3+Iy9OcRu5ms1+cGsG7VmBQmwXYWMy8pPixbdQxLrUx/aGR0v
- aSb6KFxWVqE/6pk3R3FhvgcoWWl56Nc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4zb6j5g3eap32rc7OHohtJSqR8TqT7I9O20j5+utjB4=;
+ b=YZvhJ7jIkBceFpsuWl5BFG2AtsC7VIESdMbixhDwR5tpevXo/cg6/YKCHi/hMtgGyUW72X
+ ivpZsrwPy2/Kt1RsaY/YN1/YXLuNEp2JQiS1cndV2Ie7faZUeQva83xxQC2VGFWrTKV/nH
+ 1sjGGQPkcWyOzgKSg48YAUsIpWFOFzI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-D_xCyRD9NhmOWx8GOV2-Nw-1; Wed, 30 Sep 2026 04:54:37 -0400
-X-MC-Unique: D_xCyRD9NhmOWx8GOV2-Nw-1
-X-Mimecast-MFC-AGG-ID: D_xCyRD9NhmOWx8GOV2-Nw_1790758476
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4870af30a85so1449220f8f.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 01:54:37 -0700 (PDT)
+ us-mta-494-EKX4MwLJNGyXApSBrSgN4g-1; Wed, 30 Sep 2026 04:54:52 -0400
+X-MC-Unique: EKX4MwLJNGyXApSBrSgN4g-1
+X-Mimecast-MFC-AGG-ID: EKX4MwLJNGyXApSBrSgN4g_1790758491
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-495689bfcc8so43326615e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 01:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790758476; x=1791363276; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2Hcb64L706f+uiyGLXfN23w5rfYDEh0B3dDS/vpmVjo=;
- b=uCtqUyVp2FVDLEDa0poWc2w3dtxm+AfwPRLXXLJOz8KjSae/Gc2rJJviYlmQd6wyrQ
- SQPcVv8NjS+cgh2X9Z0/uKXRlHNi7X8tFippAV409spL24g58y8E+d6gY8o2pE7+f4XR
- ecLipfwrTu/R4lR1HZuX+vrFDIje4WABovge6f1SMQLd01EjSBZ+R3l5XOFAhRiKENZE
- JfajdbRi62Kw6OBG7Bzr75kJ0yl0VH9NYgsKaXosZTio56wBbdVrcTlf2+1/pZAhNu8q
- VYA3NiDxKzvl2mQ7ebx2TWRT+eubUKySZZVsnqxyl6LRF6uFW/VbJS1IztsAyKPWUFva
- iPZA==
+ d=redhat.com; s=google; t=1790758491; x=1791363291; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=4zb6j5g3eap32rc7OHohtJSqR8TqT7I9O20j5+utjB4=;
+ b=qPCl9LrGV5IE96SlGgfh9qjsLnRfN9jhXhDosl0R3ScZWc4ubsoeq+7qbeg9RjGGSU
+ MUksPRe8d/LOTZrytP9L+3T+IynpfXIeIqiYPNHOK2qy1ylrPZZycmlCxgPc2t+QbqNU
+ kBRRmPdTn1MRP5dYEmvmSTnXTplEhz0pWfP1hLKqaByWYHuVQuu1TzPOppebnxYP4KDK
+ ZvOcQ9S5wjBkvcARlWtA6akB9u7FE2+U6cVN7qOWrM1ms4fSuUou9T0P+chEQXaN4ou1
+ 1mbHDkU3EeMIKbpSfl1J9Pav8I1BIHzGExm/2HPa0dH6LBzgq2afl4jLHiQ4btce1tR3
+ mX4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790758476; x=1791363276;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2Hcb64L706f+uiyGLXfN23w5rfYDEh0B3dDS/vpmVjo=;
- b=juWiN4y1ThQjuXqcuarV1WwDwUOHwFKUo9kLAtuaxHCaqRchQiGhywhHpnehhYt+C4
- FiUV0HTtt6+yMcwoySuYcVU/WHJOhPSBwqT/riAoWEg7gXHeoxuI1WRi9tyuArFdqbZ0
- NS2SvykG5yEj9E+mhtnaGa4zCFTIgdL+vJxXM9+Lm+htBZgG2DrQYIGKLbqcZYRH50wb
- 1ZNcWpPNnOwKIXhh5a1Te/GSzhrzsHW4iRhaxdkSnPac1cVZV49BcNy1kj1pPn/NbDXI
- W6CzIfemoNsbobnMhRODhVw/3lOcF44LhL0O+cAioslYedPILCYo+fTUF0+UB0JLj/03
- 3vFg==
-X-Gm-Message-State: AFq9FYIzhfBEOjWxtBdi7rfMN/BcTloTdlkc/V2nerlqxnVUSPe8v5yW
- 38PY0KNk4+s1FXAvUXtanIcwD24oRCJHmgfPJ8+auP0x0AZYdXESQP/XTaLQsb7LydMLWa+dqsv
- Ix+wp+OWTNP0FXdxi6tqMHc8IAX+DKh+RinmcRRMlw5Qa807Dw7ZjR4xGOJa+Cv5nkB+gxjUqd7
- r4S3lQ7OfanzlVr78/uwXLx8tlbb/NluO4y6W7e0BO
-X-Gm-Gg: AYBFou21WUNsTge8IIhe51lvxWf63tHZ7LXfPKhdlhG4BEdtgD9hboOsN33qbwh2TsM
- rnvHielqnRMafKQVz/aPpy8h5HE4T1IyNW+TiCKj6jVnLee8DA8FCQhsU4872ewsT6SjZ8UDHPP
- Iwg/Js47jvxGnM6l9lxcyhBLXSP7aQ4yDpIshx7KEfpMyoXzVsvlGgAvNd8JOFmbyHD7QxozpiE
- EdvtOEk04sbfCqhaeNhKgmB7VNqLFqOwB/rxu7WrPyqquMStiabMW0/6yNyPw3qmadq6hNU9ku+
- 0vKPl8wPtvmBk6S3K3Y7xkaxUxV9ghrEtVjroKgkkYQE2wqbQgzRUjqC/Dbm5mnLwsdyTn2zAak
- fE88fnqWmk61ydc57Pu9EYWXlsLngsldgS04s3WKx6WdConh/JlDdv0ucJdtzXTHqgXIpVqJNmP
- M3M/dV
-X-Received: by 2002:a5d:6f19:0:b0:486:f3ae:7d93 with SMTP id
- ffacd0b85a97d-48b02737091mr1508698f8f.12.1790758476332; 
- Wed, 30 Sep 2026 01:54:36 -0700 (PDT)
-X-Received: by 2002:a5d:6f19:0:b0:486:f3ae:7d93 with SMTP id
- ffacd0b85a97d-48b02737091mr1508638f8f.12.1790758475891; 
- Wed, 30 Sep 2026 01:54:35 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790758491; x=1791363291;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4zb6j5g3eap32rc7OHohtJSqR8TqT7I9O20j5+utjB4=;
+ b=Fw8wJwZPOOG4OmhYQ5YPu8mHq43ig35uzhqhhPwzAkHUt2ODe5Q3qvyef+O2SIY3bp
+ xPcGVfdmShLpEksJxJM6GmPTFmBZz87JA+cIE42bfZqdLztlOlZQiGYdtsEuQUsTnSrO
+ b/X2xSrugVMsXlElrlr6amgdAI6URFv+/KV6hsAIglDt2EFCSkHMOxYJ7g66EYlCvmL3
+ NqAj3v9WgGYuK1pX/5BN2FtqGcUJs9oBkQO2Ix1HELD0BT+ugExiKgHZfPiuuG+zfMSz
+ HsSkW/d4iwOLeVW4l5Snf0nXaPqQ+Ybyua9lINUvZekFxEcU8FK9WfX30bQtFQ6NzW/G
+ RuJg==
+X-Gm-Message-State: AFuF++n7JulCMN/F9y+RVNOLHG3mtaxOwAoC8N5i+fwMaiX3GxmG7+DV
+ DKeKZjwwjjjviN5mljQqHIAnFWnYsSA6FClqis4jeGlDgwNfn1etRRN5MII0uF1DA+KabXvsJ7y
+ k9O7fdEr+cUgphv9misCjKjMJebD8mp1z2I/zzNj9cDTS7rOYOwTbilTjthWaXvu22yFguNeVtp
+ MNpS+gYFrltHqW+stVWD+vyNKNky8kddkKfLJVv1bl
+X-Gm-Gg: AYBFou3LguisTZDtWGbRHl3TNdd+Sx6hxjYVb3iYLnIU6TlYSAcD7tRVU1oFh1JpH7O
+ Gv7UAFYfsaFuPvGnuSC4rcJ748CASz7dF/icjZkQA3cHdF3kDfQJ3ygHrcZshP4004d6qPXhpO8
+ q+Rd5n1OuCGwB2t97/mb6v0wMkXKX+oTzn71ZDXxpi6/le5vmM0cU6h4BqXMKSCYKWRfHddXDUV
+ wsfpP45s3Aa3kMUvri/UYNeBX7PqJvvTHJ4x6gmh9sQjUHv3UV+QOuqPygVl/3jtMnXnknYYycd
+ +r/KJfdRcgTNv//xFhACA9Z2UK1CvE0wFHzZ283nxBL5N4TLjxGWi+myjd6ANiYV0jXIauIXosB
+ jwZ+mQtCAmEDBQDuYUmYrzEGAcRxTtKzv/FXGI0fPKiKWmDObvWw/fWpzsizRE/KuirmWwzPEPW
+ +iTlXv
+X-Received: by 2002:a05:600c:3486:b0:49d:1f32:c911 with SMTP id
+ 5b1f17b1804b1-4a01ad8edccmr10791765e9.3.1790758491307; 
+ Wed, 30 Sep 2026 01:54:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:3486:b0:49d:1f32:c911 with SMTP id
+ 5b1f17b1804b1-4a01ad8edccmr10791435e9.3.1790758490910; 
+ Wed, 30 Sep 2026 01:54:50 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b029bf85dsm2061093f8f.13.2026.09.30.01.54.34
+ 5b1f17b1804b1-4a015abd9ffsm40265525e9.2.2026.09.30.01.54.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 01:54:35 -0700 (PDT)
+ Wed, 30 Sep 2026 01:54:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>,
@@ -93,13 +95,13 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 0/4] docs/devel,
- AGENTS.md: a completely new policy on AI-generated contributions
-Date: Wed, 30 Sep 2026 10:54:29 +0200
-Message-ID: <20260930085433.830743-1-pbonzini@redhat.com>
+Subject: [PATCH 4/4] AGENTS.md: make the human part of the design process
+Date: Wed, 30 Sep 2026 10:54:33 +0200
+Message-ID: <20260930085433.830743-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260930085433.830743-1-pbonzini@redhat.com>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -125,100 +127,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on the previous discussions, I am finally attempting a non-RFC
-version of the new AI policy.  Discussion on v3 introduced interesting
-points on attestation and I think a consensus is forming.
+This came out of the experiment with the first version of the AGENTS.md
+file.  This addition improved the behavior of the agent from the very
+beginning.  The very first answer to the same prompt was "I'll orient
+in the codebase first, then we should talk about design choices before
+I write anything".
 
-Why review the policy?  The blanket ban no longer reflects reality, since
-contributors have been posting AI-generated patches or even larger series.
-This was done most likely in good faith, as these submissions predated
-the introduction of an AGENTS.md file, and it shows that AI can be used
-for useful and creative work on QEMU.
+In fact, after thinking it pointed out from the start that this requires
+pre-arrangement and asked two questions (how to represent the pressure and
+temperature in the QOM properties, how much of the behavior to implement).
+Even with a single data point it seems worth trying.
 
-Rather than expecting maintainers to police these contributors, the new
-policy seeks to ensure that AI usage helps us produce better code rather
-than simply move faster and flood us with dubious work.  In the words
-of Warner Losh, we want to avoid "free as in puppy" contributions[1]
-that increase the load of present and future maintainers by adding
-technical debt.
+When asked to commit autonomously, the LLM also clarified that it
+wouldn't add S-o-b trailers and that pre-arrangement was on me.
+It included "Message written by an AI and to be rewritten by hand; not
+for submission as is" in the commit message, a "handover notes"
+section about design choices that were made without the user input,
+and the umpteenth reminder that the work may only be posted if a
+maintainer has agreed beforehand to review them.
 
-This is not a free-for-all.  To avoid maintainer burnout, AI
-contributions must be grounded in respect for maintainers and in the
-existing contribution process.  Large, heavily AI-assisted contributions
-require pre-arrangement with the relevant subsystem maintainers, and
-will be held to a higher standard.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ AGENTS.md | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-One of the reasons for the old policy was the issue of code provenance
-and the impossibility to certify the originality of code created by
-AI/LLM tools.  The new policy tries to adopt a "Swiss cheese"
-approach to mitigating the risks implicit in accepting AI-generated code
-in three ways:
-
-1) by requiring pre-arrangement for larger contributions, and making
-maintainers free to apply their own considerations (see [2] for a good
-list).  Maintainers' preferences bring experience and creative thought
-into the process, and contributors must take them into account.
-
-2) by introducing agent instructions that help the contributor drive
-the design and understand the code produced by the LLM;
-
-3) by introducing an "AI-used-for" trailer that scopes areas where
-Signed-off-by cannot guarantee full control of provenance.
-
-This series reflects feedback from earlier requests for comments, and
-even earlier discussions with members of the QEMU community.  Thanks to
-everyone who provided feedback on earlier drafts.
-
-Paolo
-
-v3->v4:
-- rework opening text [Daniel]
-- exempt "official project agents" from not being able to post to
-  GitLab [Alex]
-- explicitly forbid clean room reimplementation [Kevin/Daniel]
-- remove "The DCO still certifies that the contributor has the legal
-  right to submit code in general" paragraph, replace with a note
-  that "AI-used-for" attests respecting the policies and is considered
-  enough for DCO [Daniel, Kevin]
-- make the requirement to "understand and explain your changes"
-  more prominent
-- small edits for grammar and clarity
-
-v2->v3:
-- remove parser example, replace with "adaptations of existing code"
-- when LLMs are used for boilerplate, "highly recommend" disclosure
-  for "non-trivial, functional code".  The idea here is to avoid
-  having to disclose using AI to apply e.g. changes related to
-  automatic code review, and leaving people some leeway.
-- clarify split between DCO (legal right to submit code in general)
-  and AI-used-for acknowledging that the submitter cannot audit LLM
-  output against e.g. the training data.
-- clarify the defense-in-depth/swiss-cheese approach to limit the
-  risk of copyright violations from LLM output
-- mention that pre-arrangement is not an entirely new concept
-- mention that maintainers can demand larger changes than for human-written code
-- do not mention inclusion of the prompt
-- add checkpatch.pl hunk, changing the phrasing of "no AI" lint
-- rebase AGENTS.md on top of existing file, split
-- drop CLAUDE.md/GEMINI.md symlinks, already done via .claude/.gemini
-
-[1] https://lore.kernel.org/qemu-devel/CANCZdfrTwfrK0wnuL2cPVF_9W2-8PXtJeHkgkTP+Uv2sT8s0Ng@mail.gmail.com/
-[2] https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com/
-
-Paolo Bonzini (4):
-  docs/devel: relax policy on AI-generated contributions
-  AGENTS.md: add final instructions
-  AGENTS.md: let agents know what the participation rules are
-  AGENTS.md: make the human part of the design process
-
- docs/devel/code-provenance.rst |  71 +----------
- docs/devel/index-process.rst   |   1 +
- docs/devel/llm-usage.rst       | 213 +++++++++++++++++++++++++++++++++
- AGENTS.md                      | 137 +++++++++++++++++++--
- scripts/checkpatch.pl          |   5 +-
- 5 files changed, 347 insertions(+), 80 deletions(-)
- create mode 100644 docs/devel/llm-usage.rst
-
+diff --git a/AGENTS.md b/AGENTS.md
+index 8c7407b908e..8e18709ee50 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -52,6 +52,9 @@ QEMU's policy for AI-assisted work requires the human to develop in-depth
+ familiarity with contributions and disclose use of agents to write parts
+ of the code.
+ 
++The golden rule: **The human should know the alternatives before
++implementation. ASK instead of choosing for them**.
++
+ ### Human must demonstrate understanding
+ 
+ Staying familiar with what's going on requires constant effort on part of
+@@ -72,6 +75,22 @@ In order to protect the project's scarcest resource, which is review time:
+ - You must **tell humans about these expectations** at handover.  Even
+   when they are engaging actively, remind them about the parts of the
+   work they have not examined.
++- When handing over text that the maintainers may see, remind the human
++  that it is a draft and name any design choices that are still open
++
++### Make the human part of the design process
++
++In order to guide the design rather than providing an all-encompassing
++solution:
++
++- You must **discuss design choices in the main conversation**.  Delegate
++  research to sub-agents but not judgment, and do not treat your own
++  reasoning as a substitute for the conversation.
++- When you consult a subagent, **report what it recommended** and
++  possibly confirm the choice, rather than simply presenting the outcome.
++- Reinstate as visible text any design decision made while thinking.
++  Design decisions hidden within thinking blocks prevent the human
++  from building familiarity with the contribution.
+ 
+ ### AI usage must be disclosed and/or pre-arranged
+ 
 -- 
 2.55.0
 
