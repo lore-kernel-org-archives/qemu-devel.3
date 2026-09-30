@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80491CA5FBA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FFFCA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrja-0002Mb-Q7; Wed, 30 Sep 2026 06:40:23 -0400
+	id 1xBrkB-0004UI-TC; Wed, 30 Sep 2026 06:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0001N2-0P
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBris-0001SQ-Jv
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrif-0006ks-RZ
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrij-0006nd-BD
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764765;
+ s=mimecast20190719; t=1790764768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iawqYrHp4gd8ZgPi8rYWo7kBCkZnjzFK5iLkl32EzXI=;
- b=S1jTdw96WBadH7Mkskcf0ICpvWhkzdlR4PYwl+6itIQBQK0D6R3TTvkBVw4vE36Kzs5ncm
- Mu0ya0VsRpHqzbeb+OURAjBW/M38y7QMlZWU9TJdgX1+X7qNvq29dAJFEqvbHnpzMoLtGk
- YGlxxH3kQeTyM0gKwOHXgHaCtI+iCAk=
+ bh=p/TlFqEoCtPQEyGkaeWkFAOeHqNWgzSGmyLmcClA1l8=;
+ b=YEbzlWZEnQC1zFkKmXBWm7DnwMt3XUvDIAspsETA2wWLqsqd4WuBHrhfXjC4W6lvKa8YIv
+ q6z8PBRcsf5QcI+Cr+SfnXzBYgfJBMAaULsf7aKz0t9zYXBeM0qw58BBES1JkLa3i9Pdk0
+ SgSEZ2q6BZDra84Wg/yUpNkGxC9w98w=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-6593M7V_M3O7f4blQQq83g-1; Wed,
- 30 Sep 2026 06:39:23 -0400
-X-MC-Unique: 6593M7V_M3O7f4blQQq83g-1
-X-Mimecast-MFC-AGG-ID: 6593M7V_M3O7f4blQQq83g_1790764762
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-7koBn3AZOKi7kPHeZS8Z7w-1; Wed,
+ 30 Sep 2026 06:39:27 -0400
+X-MC-Unique: 7koBn3AZOKi7kPHeZS8Z7w-1
+X-Mimecast-MFC-AGG-ID: 7koBn3AZOKi7kPHeZS8Z7w_1790764766
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27D4D1954112; Wed, 30 Sep 2026 10:39:22 +0000 (UTC)
+ id 5D15A1964CFD; Wed, 30 Sep 2026 10:39:25 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FD1B1800473; Wed, 30 Sep 2026 10:39:21 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C0FB76C; Wed, 30 Sep 2026 10:39:25 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 26D8521E68A8; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
+ id B1CDA21E663A; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 035/105] qapi: convert trivial intro sections for run-state.json
-Date: Wed, 30 Sep 2026 12:38:00 +0200
-Message-ID: <20260930103910.3934848-36-armbru@redhat.com>
+Cc: richard.henderson@linaro.org,
+	John Snow <jsnow@redhat.com>
+Subject: [PULL 069/105] qapi: convert simple enum intros for machine.json
+Date: Wed, 30 Sep 2026 12:38:34 +0200
+Message-ID: <20260930103910.3934848-70-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,355 +87,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260831201945.287730-36-jsnow@redhat.com>
+Message-ID: <20260909041640.69080-10-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/run-state.json | 113 ++++++++++++++++----------------------------
- 1 file changed, 42 insertions(+), 71 deletions(-)
+ qapi/machine.json | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index e4fdead1e0..2a968a6bc0 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -10,8 +10,7 @@
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 2ed8273b99..52a688cfbe 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -15,12 +15,11 @@
  
  ##
- # @RunState:
+ # @SysEmuTarget:
 -#
--# An enumeration of VM run states.
-+#     An enumeration of VM run states.
+-# The comprehensive enumeration of QEMU system emulation ("softmmu")
+-# targets.  Run "./configure --help" in the project root directory,
+-# and look for the \*-softmmu targets near the "--target-list" option.
+-# The individual target constants are not documented here, for the
+-# time being.
++#     The comprehensive enumeration of QEMU system emulation
++#     ("softmmu") targets.  Run "./configure --help" in the project
++#     root directory, and look for the \*-softmmu targets near the
++#     "--target-list" option.  The individual target constants are not
++#     documented here, for the time being.
  #
- # @debug: QEMU is running on a debugger
+ # @rx: since 5.0
  #
-@@ -63,8 +62,7 @@
+@@ -388,9 +387,8 @@
  
  ##
- # @ShutdownCause:
+ # @LostTickPolicy:
 -#
--# An enumeration of reasons for a shutdown.
-+#     An enumeration of reasons for a shutdown.
+-# Policy for handling lost ticks in timer devices.  Ticks end up
+-# getting lost when, for example, the guest is paused.
++#     Policy for handling lost ticks in timer devices.  Ticks end up
++#     getting lost when, for example, the guest is paused.
  #
- # @none: No shutdown request pending
- #
-@@ -103,8 +101,7 @@
+ # @discard: throw away the missed ticks and continue with future
+ #     injection normally.  The guest OS will see the timer jump ahead
+@@ -1960,9 +1958,8 @@
  
  ##
- # @StatusInfo:
+ # @CpuModelCompareResult:
 -#
--# Information about VM run state
-+#     Information about VM run state
+-# An enumeration of CPU model comparison results.  The result is
+-# usually calculated using e.g. CPU features or CPU generations.
++#     An enumeration of CPU model comparison results.  The result is
++#     usually calculated using e.g. CPU features or CPU generations.
  #
- # @running: true if all VCPUs are runnable, false if not runnable
- #
-@@ -118,8 +115,7 @@
- 
- ##
- # @query-status:
--#
--# Query the run status of the VM
-+#     Query the run status of the VM
- #
- # Since: 0.14
- #
-@@ -134,9 +130,8 @@
- 
- ##
- # @SHUTDOWN:
--#
--# Emitted when the virtual machine has shut down, indicating that QEMU
--# is about to exit.
-+#     Emitted when the virtual machine has shut down, indicating that
-+#     QEMU is about to exit.
- #
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
-@@ -162,9 +157,8 @@
- 
- ##
- # @POWERDOWN:
--#
--# Emitted when the virtual machine is powered down through the power
--# control system, such as via ACPI.
-+#     Emitted when the virtual machine is powered down through the
-+#     power control system, such as via ACPI.
- #
- # Since: 0.12
- #
-@@ -177,8 +171,7 @@
- 
- ##
- # @RESET:
--#
--# Emitted when the virtual machine is reset
-+#     Emitted when the virtual machine is reset
- #
- # @guest: If true, the reset was triggered by a guest request (such as
- #     a guest-initiated ACPI reboot request or other hardware-specific
-@@ -199,8 +192,7 @@
- 
- ##
- # @STOP:
--#
--# Emitted when the virtual machine is stopped
-+#     Emitted when the virtual machine is stopped
- #
- # Since: 0.12
- #
-@@ -213,8 +205,7 @@
- 
- ##
- # @RESUME:
--#
--# Emitted when the virtual machine resumes execution
-+#     Emitted when the virtual machine resumes execution
- #
- # Since: 0.12
- #
-@@ -227,9 +218,8 @@
- 
- ##
- # @SUSPEND:
--#
--# Emitted when guest enters a hardware suspension state, for example,
--# S3 state, which is sometimes called standby state
-+#     Emitted when guest enters a hardware suspension state, for
-+#     example, S3 state, which is sometimes called standby state
- #
- # Since: 1.1
- #
-@@ -261,9 +251,8 @@
- 
- ##
- # @WAKEUP:
--#
--# Emitted when the guest has woken up from suspend state and is
--# running
-+#     Emitted when the guest has woken up from suspend state and is
-+#     running
- #
- # Since: 1.1
- #
-@@ -276,8 +265,7 @@
- 
- ##
- # @WATCHDOG:
--#
--# Emitted when the watchdog device's timer is expired
-+#     Emitted when the watchdog device's timer is expired
- #
- # @action: action that has been taken
- #
-@@ -300,9 +288,8 @@
- 
- ##
- # @WatchdogAction:
--#
--# An enumeration of the actions taken when the watchdog device's timer
--# is expired
-+#     An enumeration of the actions taken when the watchdog device's
-+#     timer is expired
- #
- # @reset: system resets
- #
-@@ -330,8 +317,7 @@
- 
- ##
- # @RebootAction:
--#
--# Possible QEMU actions upon guest reboot
-+#     Possible QEMU actions upon guest reboot
- #
- # @reset: Reset the VM
- #
-@@ -345,8 +331,7 @@
- 
- ##
- # @ShutdownAction:
--#
--# Possible QEMU actions upon guest shutdown
-+#     Possible QEMU actions upon guest shutdown
- #
- # @poweroff: Shutdown the VM and exit
- #
-@@ -377,8 +362,7 @@
- 
- ##
- # @watchdog-set-action:
--#
--# Set watchdog action.
-+#     Set watchdog action.
- #
- # @action: `WatchdogAction` action taken when watchdog timer expires.
- #
-@@ -394,9 +378,8 @@
- 
- ##
- # @set-action:
--#
--# Set the actions that will be taken by the emulator in response to
--# guest events.
-+#     Set the actions that will be taken by the emulator in response
-+#     to guest events.
- #
- # @reboot: `RebootAction` action taken on guest reboot.
- #
-@@ -427,8 +410,7 @@
- 
- ##
- # @GUEST_PANICKED:
--#
--# Emitted when guest OS panic is detected
-+#     Emitted when guest OS panic is detected
- #
- # @action: action that has been taken, currently always "pause"
- #
-@@ -447,8 +429,7 @@
- 
- ##
- # @GUEST_CRASHLOADED:
--#
--# Emitted when guest OS crash loaded is detected
-+#     Emitted when guest OS crash loaded is detected
- #
- # @action: action that has been taken, currently always "run"
- #
-@@ -467,8 +448,8 @@
- 
- ##
- # @GUEST_PVSHUTDOWN:
--#
--# Emitted when guest submits a shutdown request via pvpanic interface
-+#     Emitted when guest submits a shutdown request via pvpanic
-+#     interface
- #
- # Since: 9.1
- #
-@@ -481,8 +462,8 @@
- 
- ##
- # @GuestPanicAction:
--#
--# An enumeration of the actions taken when guest OS panic is detected
-+#     An enumeration of the actions taken when guest OS panic is
-+#     detected
- #
- # @pause: system pauses
- #
-@@ -497,8 +478,7 @@
- 
- ##
- # @GuestPanicInformationType:
--#
--# An enumeration of the guest panic information types
-+#     An enumeration of the guest panic information types
- #
- # @hyper-v: hyper-v guest panic information type
- #
-@@ -515,8 +495,7 @@
- 
- ##
- # @GuestPanicInformation:
--#
--# Information about a guest panic
-+#     Information about a guest panic
- #
- # @type: Crash type that defines the hypervisor specific information
- #
-@@ -532,8 +511,7 @@
- 
- ##
- # @GuestPanicInformationHyperV:
--#
--# Hyper-V specific guest panic information (HV crash MSRs)
-+#     Hyper-V specific guest panic information (HV crash MSRs)
- #
- # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
- #     an error code.
-@@ -562,8 +540,7 @@
- 
- ##
- # @S390CrashReason:
--#
--# Reason why the CPU is in a crashed state.
-+#     Reason why the CPU is in a crashed state.
- #
- # @unknown: no crash reason was set
- #
-@@ -588,8 +565,7 @@
- 
- ##
- # @GuestPanicInformationS390:
--#
--# S390 specific guest panic information (PSW)
-+#     S390 specific guest panic information (PSW)
- #
- # @core: core id of the CPU that crashed
- #
-@@ -632,9 +608,8 @@
- 
- ##
- # @GuestPanicInformationSev:
--#
--# Information for AMD SEV-specific termination request (GHCB MSR
--# contents)
-+#     Information for AMD SEV-specific termination request (GHCB MSR
-+#     contents)
- #
- # @set: The reason code set provided by the guest
- #
-@@ -648,8 +623,7 @@
- 
- ##
- # @MEMORY_FAILURE:
--#
--# Emitted when a memory failure occurs on host side.
-+#     Emitted when a memory failure occurs on host side.
- #
- # @recipient: recipient is defined as `MemoryFailureRecipient`.
- #
-@@ -675,8 +649,7 @@
- 
- ##
- # @MemoryFailureRecipient:
--#
--# Hardware memory failure occurs, handled by recipient.
-+#     Hardware memory failure occurs, handled by recipient.
- #
- # @hypervisor: memory failure at QEMU process address space.  (none
- #     guest memory, but used by QEMU itself).
-@@ -691,8 +664,7 @@
- 
- ##
- # @MemoryFailureAction:
--#
--# Actions taken by QEMU in response to a hardware memory failure.
-+#     Actions taken by QEMU in response to a hardware memory failure.
- #
- # @ignore: the memory failure could be ignored.  This will only be the
- #     case for action-optional failures.
-@@ -719,8 +691,7 @@
- 
- ##
- # @MemoryFailureFlags:
--#
--# Additional information on memory failures.
-+#     Additional information on memory failures.
- #
- # @action-required: whether a memory failure event is action-required
- #     or action-optional (e.g. a failure during memory scrub).
-@@ -736,8 +707,8 @@
- 
- ##
- # @NotifyVmexitOption:
--#
--# An enumeration of the options specified when enabling notify VM exit
-+#     An enumeration of the options specified when enabling notify VM
-+#     exit
- #
- # @run: enable the feature, do nothing and continue if the notify VM
- #     exit happens.
+ # @incompatible: If model A is incompatible to model B, model A is not
+ #     guaranteed to run where model B runs and the other way around.
 -- 
 2.55.0
 
