@@ -4,134 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BC5CA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F1CCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxDm-0003ld-NZ; Wed, 30 Sep 2026 12:31:54 -0400
+	id 1xBxG1-0004hM-DW; Wed, 30 Sep 2026 12:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxDX-0003hd-EN
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:31:44 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xBxFy-0004gu-Pb
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:34:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBxDV-0001VG-FS
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:31:39 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xBxFx-0001mz-8D
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:34:10 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UDxpo23063756
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:31:35 GMT
+ 68UEvEIK273296
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:34:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FWJYFCRGwZ36QO93eeTM8glMpUUsVmJa+tnJ2Uness0=; b=CT0hJwx9I3yoVAwk
- BVZL/XsuC/AEvBEFRRELUKvLAHMFcssCQJoM4GGVGgPPpJTh1ib1CDeUUpzEiROY
- yVjzUQCuhu2rm3UemWiyF+NUEo89vpPNbvEIzqziNciCMPCT04FOXdY2tmh3zhAa
- Axf7nB+WLxcyS6HH91Y5CYYNTh4QirYYDbRBmWYlGUyyc3OBdNQ/KbnUFssCdVff
- L75rxXfuVXtDAcwArInSyCOYENixevV0Bn/8QekEiOizRtcHqKuEucrsOcJzyHim
- k9YbHDDTYpLwowez0GDZ5da62Ag9bPJpqXHuy4k3ehnwcQnhLvWEEl5fGgObznMV
- Awquew==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0smjkk1b-1
+ Ra0SRpGg6bQV/f5FcILsvwfqNXSqGseoNaKGjqecKT4=; b=aVdQcNxjYwLTYoW9
+ koLekVkiVUldTxxDxkKfmPfe8NVM9mlZMf0ETqMw+Atc65dRTcVuGLDO9e998m0Y
+ sKTHeN4YANmsVCgvfl1XYbG9bgkiyS5gW6ktD8DBNiHZJfWcWdkahbdwcKIVhWt1
+ cyH6luNv8sAjcNYHr9RV6qZy+WVKbtNkYGEuDhcKu6HN87eW5UXOd0TtlgEZoO2N
+ OhnLbGgliiOSToWlcpFLe1HmM7S2fgtP/b/iyRJpGY6y7W71iMJnSAhqfombEW06
+ tTTtamEq3O5U/qkPMkROeztPZcBjh4Con8dn7zTl8G+F9gloFpV2z3aF41ARBLQ2
+ 6oGb+Q==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h14n20fag-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:31:34 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-7b43c5f2b6fso571241137.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:31:34 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 16:34:07 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-980c3b71002so4287552241.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:34:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790785893; x=1791390693; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790786046; x=1791390846; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FWJYFCRGwZ36QO93eeTM8glMpUUsVmJa+tnJ2Uness0=;
- b=Xn93po3t0sGwjppZwAK7aaDd0U+dJ6FNbMnNfP6hSSCOiF17ckd4xYhB9HGV4qbhP1
- 2P4dCmN8/TSlXXwUQV41wayMIAzjjvWlmvOBvKERmJLp8lax7+L8O5L2M+uMFkVVYxsQ
- wCiYONsJxjetCdyjJd7qSRDp4Kv4p3j6iUbeGt+G3AMFv0cCq70qLmYPD8GGFLJ1SxR1
- 7G1fjxAeb9j01ggjM6D6AiEftlNM+MDyDVVryBNWZXEqRXTSbmW7/lNVDqtnRu8BM1U6
- adFL3ihF9SNIi7gpPjbhtTt2wEbLNpl2MtVMlNLyE8GVgmpDm2RFJngH7FWnMmXn7i5N
- UFJQ==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ra0SRpGg6bQV/f5FcILsvwfqNXSqGseoNaKGjqecKT4=;
+ b=RPxOLoVW4Q5S2m5qCrFPStXjrgm0BCrd1JTSSo5F0NaMkV+Cnm758VW5Koj4WEfMrH
+ PVmsVZ/Fl8JZw4+ISX6+zfc39VwRscF7gj/0SNHwugzIvoUbO/Opz3Q4AByA0IQQndxU
+ MZGWi3lxWTHqdfYdZQzPiXVJPsIU2JGGlek3Fbz5Dqs20BOMVbExx4R49STnZQeCoECo
+ Vgnzl0tO6NVmh2q/fU5clOz9FVov/f17DBEx5U3QIuxFHRNLpAFCWcM5uZjOaIBamFB+
+ HKziYX4gJ7u8mHP89U7G/+UTmAo1AmJ+XQ298AdUB8ZXRUnYSbsK0sSBYuLWvqPiHbpv
+ StTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790785893; x=1791390693;
+ d=1e100.net; s=20260707; t=1790786046; x=1791390846;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=FWJYFCRGwZ36QO93eeTM8glMpUUsVmJa+tnJ2Uness0=;
- b=NTe7w5zfjy1K5neP5ljsuRiffODYd1nRFo4PXYr5cSHYRiqQN9GYpgCYpAwNZs0RPs
- BhrNFyWL+tjnbhLJTfNvQzOSuhouxKm2W6FJ4v45sqw0x1YuGR4PhbQN55zbTz17/LQP
- YySisIP3SQOgJjaD+EuzatWjWaXaL6EdLDfPCON3sFHmiOp7MvQ0tiJbmg/V/gClFrHa
- NFaF1hSCtkgdy1L7UHAFdt3fsmsfUmO/aVFr+5DDLVnFgpr8mjynuGtdyxE0odsJqexd
- pO1NXuiujMYPRs6BC7KdM0O3yOsEzkgJrB/Ys8Y9ZX7Et8mwqueD0zbMKMUhK768vzLt
- JM8Q==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ra0SRpGg6bQV/f5FcILsvwfqNXSqGseoNaKGjqecKT4=;
+ b=VrfJ3kmPLc2mdVTMuRzSOtUz+6bklLlHba+kY7PHoOLUW5UKJ//u6tprscRqk/lqKz
+ N+9+IIwrLI1tVBf9GC5kv0aQupLXXjxYKcCPWDL1b7uuVxNieru5ijzgff5v2rjxBKkU
+ JqZJu9/dtXYqKsybwlAqRl/oVX/PZkLmm+Gi26yN4/0VAbSmO1sXU4QblGCRT0ku1qdl
+ W7Q/lb8BQMPsGsTxx2i+Dx+2A9PnO43K27YzH37uWMXURAbUQleRKtAXwEwtHbbMp3lM
+ IXH+uEl4cxzIpCN23eJuTWT3GodeaL/XLqw6XZlkQmxjFFh1nWHOixWxSriQ7FrcoXN3
+ 72Vw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzeiGGdAKwe5Q6t8xFtUPTUkvPiTKtS33G6Rt6/F/DyyMNBXBmq3xvyEjzHJAVZrq20ai1dNLeym/5x@nongnu.org
-X-Gm-Message-State: AFq9FYI/YCCq2POOzYS7FeGwG8AkUzLDzSEJOE5qt/Br8DJVsSurlLRa
- XkenlbDQy6Vma6ypayLCaQYv/RybqM/TalvqwfR6wvDLxwMQxhuCqHibxIz2B1uR7wfJVSHwuwS
- 20r4281EUNUECLWQzI6eln80b/ijTEdBbjVJD+KdyeNqAIXBv21nFuIDZSA==
-X-Gm-Gg: AYBFou2eZ2G9FiZ7980XjcgS0WDwYhKBwKm7nJmLSrLu6s2GssCz8dqNEN7IzHwYZY0
- q5tey9kpYBW36vi7QvBncD4fEyhmLoyJRFliOcnNWku1nZdnAMacLzy9COxbpR0yO/S4uctrijY
- R91IacdvNJbUi0eEETp3pjgj4LOwkj1PnxQmGJ+WDQHABy1dg/shcD39bLaXGqH/+tW/q7WewbJ
- imCAHdhozPoSeC6DfW7t1n4M/8NoL+n6yE9A/eiBnk0uzLFXS6d4qn+QLM/Qy7mUZMAQ1DYiKGs
- V7YAiNV9FAQSIByCoRPoNEESSo2XEZsXjPFukHgKfyEwsqJ2rx4PIF5YJn8FVXUy13q/1KCW78p
- k8oelzQ7IE8270GLedkw=
-X-Received: by 2002:a05:6102:6a91:b0:7a2:2a4c:606a with SMTP id
- ada2fe7eead31-7be729b71c7mr513619137.15.1790785893421; 
- Wed, 30 Sep 2026 09:31:33 -0700 (PDT)
-X-Received: by 2002:a05:6102:6a91:b0:7a2:2a4c:606a with SMTP id
- ada2fe7eead31-7be729b71c7mr513610137.15.1790785892904; 
- Wed, 30 Sep 2026 09:31:32 -0700 (PDT)
+ AKwUvBxhMRrjjLiP44neScXLWqHf+7R7rZiXX6ko69bGa4GxqdGKu6TVuGS5sBjK4g+AYwd0+0XV0q9lISNa@nongnu.org
+X-Gm-Message-State: AFq9FYKXEp2VZCFjEGj7pOal02ag3gvsKuuI2qq/MsOdlT//2pXWMlTg
+ 0FG7UmdqbBQzsr6QJ0LqWXy5anWhyq+IbZ438jgsfGaofpLORA5zNlh8fXBfDCn6kHT+xdNTC+d
+ WqlREyWoxRo928c/W31YQI0Vy3WqdwXTLJTsQlsdWvFT5C1EJt7ReqooxbQ==
+X-Gm-Gg: AYBFou15FJoGuPEtIOXm0Oi3a310uCIuAJCBesa//XqZ6ZrAnmhyJaTtsbSLrRs2/4l
+ l8UhSm894tNFV4pw+S5W6aKJzxdJ/4XBWCes2JpBBPqcTfhqWwskKihXLWFFA7qHoYvStbXgo3L
+ Y59vh/z2A7ARW6l6Dzyw/wukTjUplSOInui7cKTxitXBfRsvUGekM2y8njfPPxfD/4bQeUBhAyn
+ mRm7ffo4RM+5rtjNp7sLwn8sjmuCr5qIef4fPGMbzr1r3A7VtjGHSHIV+su2KG0PCcNykwbZeBk
+ TbVQTvot0IXWwVFOihk/HZ5aQNM0CcRMtRWOvRAbwQ6epCgkMwx611EE/eeuUtVublZWlH304Qs
+ yiJ2qsaARGaUhktkekx4=
+X-Received: by 2002:a05:6102:8098:b0:7a5:2792:32d0 with SMTP id
+ ada2fe7eead31-7be72cb3015mr663954137.15.1790786046388; 
+ Wed, 30 Sep 2026 09:34:06 -0700 (PDT)
+X-Received: by 2002:a05:6102:8098:b0:7a5:2792:32d0 with SMTP id
+ ada2fe7eead31-7be72cb3015mr663936137.15.1790786045825; 
+ Wed, 30 Sep 2026 09:34:05 -0700 (PDT)
 Received: from [192.168.0.4] ([79.127.134.49])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b068bcb8fsm229567f8f.1.2026.09.30.09.31.31
+ ffacd0b85a97d-48b068bcb8fsm243838f8f.1.2026.09.30.09.34.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 09:31:32 -0700 (PDT)
-Message-ID: <9ecf7231-b4f9-4db8-aded-818fd7a79df5@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 18:31:30 +0200
+ Wed, 30 Sep 2026 09:34:04 -0700 (PDT)
+Message-ID: <28911704-879c-4d76-bc9d-b95d4664bae0@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 18:34:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/dev-smartcard-reader: fix OOB read from pending
- bulk-in ring
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260729075743.333920-1-marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 02/27] hw/usb/dev-smartcard-reader: fix OOB read from
+ pending bulk-in ring
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Warisjeet Singh <sinxx198@gmail.com>
+References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
+ <20260805-smartcard-fixes-v1-2-187ee9122441@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260729075743.333920-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260805-smartcard-fixes-v1-2-187ee9122441@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2NSBTYWx0ZWRfXz2TR04iNY0fY
- /RvGbaJhRmpBCwu9twe4SPBuKgWWoH+lYAGOdx46Ul592LndkvpgZwM6KenmPUcPv3sXT15cpFz
- rqcQ52he+7sSqPLbkU0IOE1E+2tV1X0=
-X-Proofpoint-GUID: A9sjDQXMItzfH6S12KbrlUZDD3mFXsn2
-X-Proofpoint-ORIG-GUID: A9sjDQXMItzfH6S12KbrlUZDD3mFXsn2
-X-Authority-Analysis: v=2.4 cv=KfxHIgYD c=1 sm=1 tr=0 ts=6abd3966 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
+X-Authority-Analysis: v=2.4 cv=Gr3XaU1C c=1 sm=1 tr=0 ts=6abd39ff cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=7g8aA7A78AY7OC82r+w+4g==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=bnhSglwntvHQ-2qSQIsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2NSBTYWx0ZWRfX4ZTn4ADwhoHk
- tgTji9qU85wQ7PeHYU48mPiqxNzj5ghnJX+Vbwcb2eHTWyguIzfCobvcEckzWuYzVwSm2dxTIZb
- Oh9/xRz4npHPjs8KyM+62ZqD6bY8hA3AaeyCOGvdwe3/MbNTWzGKvA17FnKN26j1aMJsDjb48bM
- Pl2prgq2NSpl2EzNmKaZUoaJqZdOiux1zqRLgO+bY1KXOKRn7yqLqYU741lup/kRhcKnSNQAMZq
- W27aujodqUN8Qj6VF0co0tlFM7qymDVTM3tT/2btk7f01YVFdAnHsfQbTHX/JoavmxIr9cb9ue8
- ED6566XhB8PmhhgL0x5Luzq+niwmUjlrepvqT6uSt/n0W/sGNUjwD+H/Eh0YUwuOWb1eaAgSOwS
- 0up8oxBpBNUBmTveoXhymKYQ2SqbaSaxJJyEagsL3nb2ny1GcXSWRu8g9nWWHTZZVqbKcIylQst
- NTryK7j1v1tRaTd4GJg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=20KFwNOVAAAA:8 a=rtjhPt-S68vU0-CQRsMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=o1xkdb1NAhiiM49bd1HK:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX22a7mUuX4JpP
+ JTOycuPPvtig2zKakhZyZSABNLpVS94wkSTTLOR+ttbEMfE9H2jCTUCWdSBiikAh5LulVXVVcN/
+ MwMxDU7NQxFtlgkDMk3EzJ6rJAziSHU=
+X-Proofpoint-GUID: goeV886zsP9o3daD3DfgmOSKRtlpiAFO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA2NiBTYWx0ZWRfX/30gwZvCPdS3
+ C8x+QPJIoxadNkYTEpx7+UxOK0aKuMduYsJd6IRrP3gBdODbMahUOIIDrHj+UGPZnS2I3KZxj+h
+ S1WZlEFM8FJXW3jVjj1l3bTcfXSMAvV5PhcJJR7gmrFWjZKHEGlXTNvwm6tKoT48lhaa0xXNwFK
+ mKHtbMvj8llAaSEaDQlkdtRzyfG41UVKjZJ5of8oqcwVCjmG7ViP+r6YIk41654MBuLLJQX/m79
+ ftF8hQldjwswhqU01n3GRPhJ0hdx/VfGT+6OzUxu5W0rDQ4uxKqphTiRsD0Pp5tHvJzJI3s6/MX
+ NWMVV3IsqixHflfGwpdTjIIp7sywAFpU8C/QbAlMenQLLBlaBPDWWZhfo/eXv172PAYLeq4a12R
+ iPSnm08pMOSlclecYax14SCssmD9USclDHoqJQ7EiOjjMqT7V4cf4r7WCR7g+inJCoiG/C3JLT/
+ JbJHR7zoN6kR+ipmeaQ==
+X-Proofpoint-ORIG-GUID: goeV886zsP9o3daD3DfgmOSKRtlpiAFO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300065
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300066
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,18 +157,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-07-29 9:57, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
+On 2026-08-05 13:50, Marc-AndrÃ© Lureau wrote:
 > ccid_bulk_in_get() decrements bulk_in_pending_num when a slot becomes
-> active, but the slot is only truly free after ccid_bulk_in_release().  A
-> guest can fill all 8 ring slots, partially read one (leaving pos
+> active, but the slot is only truly free after ccid_bulk_in_release().
+> A guest can fill all 8 ring slots, partially read one (leaving pos
 > non-zero), then send another command whose response reuses the active
 > slot. The stale pos > new len makes the uint32_t subtraction in
 > ccid_bulk_in_copy_to_guest() wrap, reading past data[].
 > 
 > Move the decrement to ccid_bulk_in_release() so the slot stays busy
-> until then. Add an assert(pos <= len) before the substraction.
+> until then. Add an assert(pos <= len) before the subtraction.
 > 
 > In practice, the device advertises bMaxCCIDBusySlots=1, so a conforming
 > host never has more than one command in flight and the ring never fills.
@@ -178,56 +179,7 @@ On 2026-07-29 9:57, marcandre.lureau@redhat.com wrote:
 > ---
 >   hw/usb/dev-smartcard-reader.c | 4 ++--
 >   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-> index 964c142d1066..5f8b95be46b2 100644
-> --- a/hw/usb/dev-smartcard-reader.c
-> +++ b/hw/usb/dev-smartcard-reader.c
-> @@ -580,6 +580,7 @@ static void ccid_bulk_in_release(USBCCIDState *s)
->       assert(s->current_bulk_in != NULL);
->       s->current_bulk_in->pos = 0;
->       s->current_bulk_in = NULL;
-> +    s->bulk_in_pending_num--;
->   }
->   
->   static void ccid_bulk_in_get(USBCCIDState *s)
-> @@ -587,8 +588,6 @@ static void ccid_bulk_in_get(USBCCIDState *s)
->       if (s->current_bulk_in != NULL || s->bulk_in_pending_num == 0) {
->           return;
->       }
-> -    assert(s->bulk_in_pending_num > 0);
-> -    s->bulk_in_pending_num--;
->       s->current_bulk_in =
->           &s->bulk_in_pending[(s->bulk_in_pending_start++) % BULK_IN_PENDING_NUM];
->   }
-> @@ -1078,6 +1077,7 @@ static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
->   
->       ccid_bulk_in_get(s);
->       if (s->current_bulk_in != NULL) {
-> +        assert(s->current_bulk_in->pos <= s->current_bulk_in->len);
->           len = MIN(s->current_bulk_in->len - s->current_bulk_in->pos,
->                     p->iov.size);
->           if (len) {
 
-This is the runtime path, but we need also to clear the reset (and card
-removal) one:
-
-    static void ccid_bulk_in_clear(USBCCIDState *s)
-    {
-   +    if (s->current_bulk_in != NULL) {
-   +        s->current_bulk_in->pos = 0;
-   +        s->current_bulk_in = NULL;
-   +    }
-        s->bulk_in_pending_start = 0;
-        s->bulk_in_pending_end = 0;
-        s->bulk_in_pending_num = 0;
-    }
-
-'''
-Resetting or removing the card must also discard the active slot so
-that its stale position and pointer cannot be reused.
-'''
-
-With that amended:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+See my comments on previous version:
+https://lore.kernel.org/qemu-devel/9ecf7231-b4f9-4db8-aded-818fd7a79df5@oss.qualcomm.com/
 
