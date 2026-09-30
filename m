@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D799ECA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CC5CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBriv-0001WF-Sx; Wed, 30 Sep 2026 06:39:42 -0400
+	id 1xBrih-0001Il-SR; Wed, 30 Sep 2026 06:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrig-0001Hu-13
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:26 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrie-0001GJ-A4
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrid-0006j6-DU
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:25 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBric-0006iC-9h
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790764762;
+ s=mimecast20190719; t=1790764761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tA3L75/e2bS/LHKv5p6ov9nQS5rZB+IpGs8IOYBoSPk=;
- b=hxWhSHwbfAJfypAjaXn5LpQntfRsiFowfDYx9q6Rcsg6RdQBJEJ6DHmUheKFyf7fqnHokQ
- LCv/ftte9s8sH8inO3TkVMeKf9ta0D2r+aGyHoap97xQHo7dVqI1Hm2S4JR+FdwggZGC2y
- kXeg1oqDpHWR9idyH7FfD5MfuWaKuqg=
+ bh=TGU43vtM029oHOjAOp+gEVOqO5wZxYeP/X2E9ZcXfW8=;
+ b=OeBXrdBYG7HwNBnQOlZ0xjje0apRuNPqzjQ/5DjcSsCskOXAyc+67OgtEZOIHe0i/CUF5A
+ JTrKRHGa9h+Ef37sWHhic5+90M4p30cCyG8MOFZTx5mnYrRLyzNksUepbS6Muoqj5OCj3M
+ nbLh9PTxfd6ZJKYAvMzqOF1vQmeGKws=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-0on2RuadO4CCVo4u_x3ubg-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-GBJ_4N0hOGmgYs9q6VSPrA-1; Wed,
  30 Sep 2026 06:39:20 -0400
-X-MC-Unique: 0on2RuadO4CCVo4u_x3ubg-1
-X-Mimecast-MFC-AGG-ID: 0on2RuadO4CCVo4u_x3ubg_1790764759
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+X-MC-Unique: GBJ_4N0hOGmgYs9q6VSPrA-1
+X-Mimecast-MFC-AGG-ID: GBJ_4N0hOGmgYs9q6VSPrA_1790764759
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19BF81800D81; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
+ id 3C0941802143; Wed, 30 Sep 2026 10:39:19 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C81B93000218; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F00BB195604F; Wed, 30 Sep 2026 10:39:18 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D60BB21E6896; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
+ id E9B1721E689B; Wed, 30 Sep 2026 12:39:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 018/105] qapi: convert trivial intro sections for control.json
-Date: Wed, 30 Sep 2026 12:37:43 +0200
-Message-ID: <20260930103910.3934848-19-armbru@redhat.com>
+Subject: [PULL 023/105] qapi: convert trivial intro sections for stats.json
+Date: Wed, 30 Sep 2026 12:37:48 +0200
+Message-ID: <20260930103910.3934848-24-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -86,109 +86,113 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: John Snow <jsnow@redhat.com>
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260831201945.287730-19-jsnow@redhat.com>
+Message-ID: <20260831201945.287730-24-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/control.json | 30 +++++++++++-------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ qapi/stats.json | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/qapi/control.json b/qapi/control.json
-index 9898552814..2788ce32e2 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -10,8 +10,7 @@
+diff --git a/qapi/stats.json b/qapi/stats.json
+index a98624531c..af57ec0854 100644
+--- a/qapi/stats.json
++++ b/qapi/stats.json
+@@ -16,8 +16,7 @@
  
  ##
- # @qmp_capabilities:
+ # @StatsType:
 -#
--# Enable QMP capabilities.
-+#     Enable QMP capabilities.
+-# Enumeration of statistics types
++#     Enumeration of statistics types
  #
- # @enable: An optional list of `QMPCapability` values to enable.  The
- #     client must not enable any capability that is not mentioned in
-@@ -41,9 +40,9 @@
+ # @cumulative: stat is cumulative; value can only increase.
+ #
+@@ -38,8 +37,7 @@
  
  ##
- # @QMPCapability:
+ # @StatsUnit:
 -#
--# Enumeration of capabilities to be advertised during initial client
--# connection, used for agreeing on particular QMP extension behaviors.
-+#     Enumeration of capabilities to be advertised during initial
-+#     client connection, used for agreeing on particular QMP extension
-+#     behaviors.
+-# Enumeration of unit of measurement for statistics
++#     Enumeration of unit of measurement for statistics
  #
- # @oob: QMP ability to support out-of-band requests.  (Please refer to
- #     qmp-spec.rst for more information on OOB)
-@@ -55,8 +54,7 @@
+ # @bytes: stat reported in bytes.
+ #
+@@ -56,8 +54,7 @@
  
  ##
- # @VersionTriple:
+ # @StatsProvider:
 -#
--# A three-part version number.
-+#     A three-part version number.
+-# Enumeration of statistics providers.
++#     Enumeration of statistics providers.
  #
- # @major: The major version number.
+ # @kvm: since 7.1
  #
-@@ -71,8 +69,7 @@
+@@ -70,8 +67,7 @@
  
  ##
- # @VersionInfo:
+ # @StatsTarget:
 -#
--# A description of QEMU's version.
-+#     A description of QEMU's version.
+-# The kinds of objects on which one can request statistics.
++#     The kinds of objects on which one can request statistics.
  #
- # @qemu: The version of QEMU.  By current convention, a micro version
- #     of 50 signifies a development branch.  A micro version greater
-@@ -92,8 +89,7 @@
+ # @vm: statistics that apply to the entire virtual machine or the
+ #     entire QEMU process.
+@@ -87,9 +83,8 @@
  
  ##
- # @query-version:
+ # @StatsRequest:
 -#
--# Return the current version of QEMU.
-+#     Return the current version of QEMU.
+-# Indicates a set of statistics that should be returned by
+-# `query-stats`.
++#     Indicates a set of statistics that should be returned by
++#     `query-stats`.
  #
- # Returns: An object describing the current version of QEMU.
+ # @provider: provider for which to return statistics.
  #
-@@ -118,8 +114,7 @@
+@@ -113,10 +108,9 @@
  
  ##
- # @CommandInfo:
+ # @StatsFilter:
 -#
--# Information about a QMP command
-+#     Information about a QMP command
+-# The arguments to the `query-stats` command; specifies a target for
+-# which to request statistics and optionally the required subset of
+-# information for that target.
++#     The arguments to the `query-stats` command; specifies a target
++#     for which to request statistics and optionally the required
++#     subset of information for that target.
  #
- # @name: The command name
- #
-@@ -129,8 +124,7 @@
+ # @target: the kind of objects to query.  Note that each possible
+ #     target may enable additional filtering options
+@@ -200,8 +194,7 @@
  
  ##
- # @query-commands:
+ # @StatsSchemaValue:
 -#
--# Return a list of supported QMP commands by this server
-+#     Return a list of supported QMP commands by this server
+-# Schema for a single statistic.
++#     Schema for a single statistic.
  #
- # Returns: A list of all supported commands
- #
-@@ -177,8 +171,7 @@
+ # @name: name of the statistic; each element of the schema is uniquely
+ #     identified by a target, a provider (both available in
+@@ -236,8 +229,7 @@
  
  ##
- # @MonitorMode:
+ # @StatsSchema:
 -#
--# An enumeration of monitor modes.
-+#     An enumeration of monitor modes.
+-# Schema for all available statistics for a provider and target.
++#     Schema for all available statistics for a provider and target.
  #
- # @readline: HMP monitor (human-oriented command line interface)
+ # @provider: provider for this set of statistics.
  #
-@@ -192,8 +185,7 @@
+@@ -255,8 +247,8 @@
  
  ##
- # @MonitorOptions:
+ # @query-stats-schemas:
 -#
--# Options to be used for adding a new monitor.
-+#     Options to be used for adding a new monitor.
+-# Return the schema for all available runtime-collected statistics.
++#     Return the schema for all available runtime-collected
++#     statistics.
  #
- # @id: Name of the monitor
+ # @provider: a provider to restrict the query to.
  #
 -- 
 2.55.0
