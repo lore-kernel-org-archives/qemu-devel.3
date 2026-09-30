@@ -4,108 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6029CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 22:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D51BCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 22:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xC2Wh-0007w7-T7; Wed, 30 Sep 2026 18:11:48 -0400
+	id 1xC2Wi-0007wA-MH; Wed, 30 Sep 2026 18:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2WX-0007ui-Ln
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:38 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wg-0007vq-C2
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:46 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2WW-00051T-1D
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:37 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xC2Wd-00052M-O3
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 18:11:45 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D586A1F7EE;
- Wed, 30 Sep 2026 22:11:25 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B352221F52;
+ Wed, 30 Sep 2026 22:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790806290; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790806297; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IL7p26SMX/LMSZIFbyh1Y8RvPwXs2rZDpFVWpTHGhwQ=;
- b=SMsKWyQoxuCAw5WqzBsgh0cyvWnQd0LKHsC2AXWkjR2WV8XIbA4hc4L6+kRZg5hFDrWyb3
- H9bGG12Yox3E79fy06k6uufulKc3pweZ9ClXx6ZPDdwWWhkY0sqsz625SsWDKLhB4zyYwR
- cVf0kmqW9J/l2wO/QLHP2gpmKMVpm6M=
+ bh=vdgtygysyR7XstxwHmcdv3SLotaep1DmOn9ckWztz7A=;
+ b=AgRmtRzeP+bxXC51qTAiFKytW32IbpTFZPqZifb6WIXgJfPnHhNq0LqxSXS3zlnsAK1pLE
+ ONyJCh5OKl2xn9qC5VPKmtrR0BTJSeVWXrpNH8ajPqm5SJOGQkdBYt9tBwiXDk8x9mTvw3
+ 4UzaTOXyNCIhv3UyDBB1LsXGNNpPblE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790806290;
+ s=susede2_ed25519; t=1790806297;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IL7p26SMX/LMSZIFbyh1Y8RvPwXs2rZDpFVWpTHGhwQ=;
- b=ibgZL+VoQzVfYtOcuegQF48X3sYQeYHWl7X77YVdgpAWgowoVgXzDgnoLy8UEITQnipjPG
- 0QayUGqD64qBVeBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hPJUR0L0;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wjW5a5uJ
+ bh=vdgtygysyR7XstxwHmcdv3SLotaep1DmOn9ckWztz7A=;
+ b=43bSZi0f/1Xm02HkjLXO0FdHtVqDhzItfbFba0UNPLuiYZEDdFBk1dt7980B2N/Cp+tlJs
+ yHZc1IBJn9i6ibBQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790806285; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1790806293; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IL7p26SMX/LMSZIFbyh1Y8RvPwXs2rZDpFVWpTHGhwQ=;
- b=hPJUR0L0TYP5iWjVt0vtaaZhsNZ0ezTf/vy2j0vwVP0mis6CiycFA5W4RiPTEkyVXsDURn
- QJOIcHtx+9/MnExv/IG/fSmZhxFKokb0X/pTTzlsz4qejJDO380P69kIMJ1l7gtGYBo6B3
- twqErhs8gO97tFXgIB+zVeLKPlPvUXA=
+ bh=vdgtygysyR7XstxwHmcdv3SLotaep1DmOn9ckWztz7A=;
+ b=x2c1KJ4YVP/2pCVHm8TWBAO0OWq/2zu7NMxHLLIWfMhYUeQHH4AXKPFq2cDNQuH5epgiwB
+ vudWVB3WHbqF1KSF7U8pRtM7Q6KWS6U9upvzaEf67HcXRqrYvXycj3AQMa5JuMprHhpICI
+ MzdDGjR5Y+PFz9HQZVh7+1AEscKGzkc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790806285;
+ s=susede2_ed25519; t=1790806293;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IL7p26SMX/LMSZIFbyh1Y8RvPwXs2rZDpFVWpTHGhwQ=;
- b=wjW5a5uJH/kvoc1qamhUfdhEBAcnARdaS9UbVMk4F7Ayl9L4LEoxAdQ26vHC/RXL5ok7Os
- O1d00KfJySuQwFBg==
+ bh=vdgtygysyR7XstxwHmcdv3SLotaep1DmOn9ckWztz7A=;
+ b=OwG2psBn4xvcqKCSD0gXl95fqqp1hLcheAIRXaXGBA7gWGJ38FdUt00S+Ox8vFGjmEfJgz
+ 2slO9NsraRO/QYBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4F1613B21;
- Wed, 30 Sep 2026 22:11:24 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2434413B26;
+ Wed, 30 Sep 2026 22:11:31 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id befqOAqJvWpwXAAAD6G6ig:T2
- (envelope-from <farosas@suse.de>); Wed, 30 Sep 2026 22:11:24 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id befqOAqJvWpwXAAAD6G6ig:T7
+ (envelope-from <farosas@suse.de>); Wed, 30 Sep 2026 22:11:31 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 01/11] qemu-option: Use g_autofree when calling
- get_opt_name_value()
-Date: Wed, 30 Sep 2026 19:10:55 -0300
-Message-ID: <20260930221105.2262063-2-farosas@suse.de>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH v2 06/11] qemu-option: Change qemu_parse_opts() to take the
+ group name
+Date: Wed, 30 Sep 2026 19:11:00 -0300
+Message-ID: <20260930221105.2262063-7-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260930221105.2262063-1-farosas@suse.de>
 References: <20260930221105.2262063-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ NEURAL_HAM_SHORT(-0.20)[-0.993]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
  TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: D586A1F7EE
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -128,90 +121,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The get_opt_name_value function takes two pointer arguments that must
-be freed by the callers when not used. This is a good situation to use
-g_autofree. Steal the pointers that need to be passed forward.
+Get rid of the pattern qemu_parse_opts(qemu_find_opts("some-opt")) by
+passing the string directly to qemu_parse_opts().
+
+Don't check for NULL list at this time to preserve the old behavior. A
+subsequent patch will correct that.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- util/qemu-option.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ include/qemu/option.h          |  2 +-
+ system/vl.c                    |  5 ++---
+ tests/unit/test-opts-visitor.c | 12 ++++--------
+ util/qemu-option.c             | 19 +++++++++++--------
+ 4 files changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/util/qemu-option.c b/util/qemu-option.c
-index 9fbf425f86..557d5d929c 100644
---- a/util/qemu-option.c
-+++ b/util/qemu-option.c
-@@ -813,27 +813,24 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
-                           const char *firstname,
-                           bool warn_on_flag, bool *help_wanted, Error **errp)
- {
--    char *option, *value;
-     const char *p;
-     QemuOpt *opt;
- 
-     for (p = params; *p;) {
-+        g_autofree char *option = NULL;
-+        g_autofree char *value = NULL;
-+
-         p = get_opt_name_value(p, firstname, warn_on_flag, help_wanted, &option, &value);
-         if (help_wanted && *help_wanted) {
--            g_free(option);
--            g_free(value);
-             return false;
-         }
-         firstname = NULL;
- 
-         if (!strcmp(option, "id")) {
--            g_free(option);
--            g_free(value);
-             continue;
-         }
- 
--        opt = opt_create(opts, option, value);
--        g_free(option);
-+        opt = opt_create(opts, option, g_steal_pointer(&value));
-         if (!opt_validate(opt, errp)) {
-             qemu_opt_del(opt);
-             return false;
-@@ -846,16 +843,15 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
- static char *opts_parse_id(const char *params)
- {
-     const char *p;
--    char *name, *value;
- 
-     for (p = params; *p;) {
-+        g_autofree char *name = NULL;
-+        g_autofree char *value = NULL;
-+
-         p = get_opt_name_value(p, NULL, false, NULL, &name, &value);
-         if (!strcmp(name, "id")) {
--            g_free(name);
--            return value;
-+            return g_steal_pointer(&value);
-         }
--        g_free(name);
--        g_free(value);
+diff --git a/include/qemu/option.h b/include/qemu/option.h
+index f96d9fae42..dfe0d9b893 100644
+--- a/include/qemu/option.h
++++ b/include/qemu/option.h
+@@ -130,7 +130,7 @@ bool qemu_opts_do_parse(QemuOpts *opts, const char *params,
+                         const char *firstname, Error **errp);
+ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
+                                   bool permit_abbrev);
+-QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
++QemuOpts *qemu_opts_parse(const char *group, const char *params,
+                           bool permit_abbrev, Error **errp);
+ QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
+                                bool permit_abbrev, Error **errp);
+diff --git a/system/vl.c b/system/vl.c
+index 468a9fc247..87398cc8d0 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1441,10 +1441,9 @@ static void qemu_create_default_devices(void)
      }
  
-     return NULL;
-@@ -864,13 +860,13 @@ static char *opts_parse_id(const char *params)
- bool has_help_option(const char *params)
- {
-     const char *p;
--    char *name, *value;
-     bool ret = false;
+     if (default_net) {
+-        QemuOptsList *net = qemu_find_opts("net");
+-        qemu_opts_parse(net, "nic", true, &error_abort);
++        qemu_opts_parse("net", "nic", true, &error_abort);
+ #ifdef CONFIG_SLIRP
+-        qemu_opts_parse(net, "user", true, &error_abort);
++        qemu_opts_parse("net", "user", true, &error_abort);
+ #endif
+     }
  
-     for (p = params; *p;) {
-+        g_autofree char *name = NULL;
-+        g_autofree char *value = NULL;
+diff --git a/tests/unit/test-opts-visitor.c b/tests/unit/test-opts-visitor.c
+index 23e897061c..a9e45c0251 100644
+--- a/tests/unit/test-opts-visitor.c
++++ b/tests/unit/test-opts-visitor.c
+@@ -39,8 +39,7 @@ setup_fixture(OptsVisitorFixture *f, gconstpointer test_data)
+     QemuOpts *opts;
+     Visitor *v;
+ 
+-    opts = qemu_opts_parse(qemu_find_opts("userdef"), opts_string, false,
+-                           NULL);
++    opts = qemu_opts_parse("userdef", opts_string, false, NULL);
+     g_assert(opts != NULL);
+ 
+     v = opts_visitor_new(opts);
+@@ -181,8 +180,7 @@ test_opts_range_unvisited(void)
+     QemuOpts *opts;
+     Visitor *v;
+ 
+-    opts = qemu_opts_parse(qemu_find_opts("userdef"), "ilist=0-2", false,
+-                           &error_abort);
++    opts = qemu_opts_parse("userdef", "ilist=0-2", false, &error_abort);
+ 
+     v = opts_visitor_new(opts);
+ 
+@@ -222,8 +220,7 @@ test_opts_range_beyond(void)
+     Visitor *v;
+     int64_t val;
+ 
+-    opts = qemu_opts_parse(qemu_find_opts("userdef"), "ilist=0", false,
+-                           &error_abort);
++    opts = qemu_opts_parse("userdef", "ilist=0", false, &error_abort);
+ 
+     v = opts_visitor_new(opts);
+ 
+@@ -257,8 +254,7 @@ test_opts_dict_unvisited(void)
+     Visitor *v;
+     UserDefOptions *userdef;
+ 
+-    opts = qemu_opts_parse(qemu_find_opts("userdef"), "i64x=0,bogus=1", false,
+-                           &error_abort);
++    opts = qemu_opts_parse("userdef", "i64x=0,bogus=1", false, &error_abort);
+ 
+     v = opts_visitor_new(opts);
+     visit_type_UserDefOptions(v, NULL, &userdef, &err);
+diff --git a/util/qemu-option.c b/util/qemu-option.c
+index 218bb8ae58..7cb45f0710 100644
+--- a/util/qemu-option.c
++++ b/util/qemu-option.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ 
+ #include "qapi/error.h"
++#include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+ #include "qobject/qbool.h"
+ #include "qobject/qdict.h"
+@@ -927,16 +928,18 @@ static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
+ }
+ 
+ /**
+- * Create a QemuOpts in @list and with options parsed from @params.
+- * If @permit_abbrev, the first key=value in @params may omit key=,
+- * and is treated as if key was @list->implied_opt_name.
+- * On error, store an error object through @errp if non-null.
+- * Return the new QemuOpts on success, null pointer on error.
++ * Find the @group and create a QemuOpts with options parsed from
++ * @params.  If @permit_abbrev, the first key=value in @params may
++ * omit key=.  On error, store an error object through @errp if
++ * non-null.  Return the new QemuOpts on success, null pointer on
++ * error.
+  */
+-QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
++QemuOpts *qemu_opts_parse(const char *group, const char *params,
+                           bool permit_abbrev, Error **errp)
+ {
+-    return opts_parse(list, params, permit_abbrev, errp);
++    QemuOptsList *list = qemu_find_opts_err(group, errp);
 +
-         p = get_opt_name_value(p, NULL, false, &ret, &name, &value);
--        g_free(name);
--        g_free(value);
-         if (ret) {
-             return true;
-         }
++    return qemu_opts_parse_list(list, params, permit_abbrev, errp);
+ }
+ 
+ /**
+@@ -949,7 +952,7 @@ QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
+ QemuOpts *qemu_opts_parse_list(QemuOptsList *list, const char *params,
+                                bool permit_abbrev, Error **errp)
+ {
+-    return qemu_opts_parse(list, params, permit_abbrev, errp);
++    return opts_parse(list, params, permit_abbrev, errp);
+ }
+ 
+ /**
 -- 
 2.53.0
 
