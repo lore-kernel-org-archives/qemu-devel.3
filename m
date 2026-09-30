@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0829CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A75CA5FBA
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 10:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBrm3-00025i-HY; Wed, 30 Sep 2026 06:42:56 -0400
+	id 1xBrm6-00027l-Lw; Wed, 30 Sep 2026 06:42:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrj2-0001cp-Aq
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrix-0001Yd-T9
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrin-0006qe-RP
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xBrim-0006pt-Th
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 06:39:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1790764772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SBsoearseXoaf36T78qF+IBzK+3yvw/bQYK3j2HfHwA=;
- b=Q7bEPsFozZv0UeYzUbc4xme/XoSP7hDGyG9sX15eKalsveGePSHwJL/uzurNVXablL2bzB
- RgFafZJfFCj5HsqXyr/WFh5QhAn3/QjeMvddtZGuyY8hU8JOSOvMtWm971qDu0ZHNA0H0i
- OTIe4szD5olrXxNrWx6MqAZl/NE7ACY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tdspOOTIy5DKEnL1rVHHfb8XyRucwNGktE/N0N/F28U=;
+ b=HgrtwhAjNcl0L/+faDNXsxLrlFJGNPwbvTsarDdiWBHMBN6Shz9d+dM46H17PvLJiLfm0/
+ z3w0jlYl63SE53zpXFfKd6/j6dgZCgO+3kKV8Guo1/sVRYAJzfAA/o/b8fpfa914h2KFBa
+ 47rnoFxcrvD6ZjRfYDrFSQoBcQFjEV0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-o8Yv-xICO86hU0JK94bTcQ-1; Wed,
- 30 Sep 2026 06:39:31 -0400
-X-MC-Unique: o8Yv-xICO86hU0JK94bTcQ-1
-X-Mimecast-MFC-AGG-ID: o8Yv-xICO86hU0JK94bTcQ_1790764770
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-gnc82jiWN1qbiyWRnJHTRw-1; Wed,
+ 30 Sep 2026 06:39:28 -0400
+X-MC-Unique: gnc82jiWN1qbiyWRnJHTRw-1
+X-Mimecast-MFC-AGG-ID: gnc82jiWN1qbiyWRnJHTRw_1790764767
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68C2F185BE99; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F5B818011F8; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 261D31956042; Wed, 30 Sep 2026 10:39:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C5B91800593; Wed, 30 Sep 2026 10:39:27 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3626D21E6486; Wed, 30 Sep 2026 12:39:12 +0200 (CEST)
+ id CD81421E65EC; Wed, 30 Sep 2026 12:39:11 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	John Snow <jsnow@redhat.com>
-Subject: [PULL 099/105] qapi: convert/split intros for job.json commands
-Date: Wed, 30 Sep 2026 12:39:04 +0200
-Message-ID: <20260930103910.3934848-100-armbru@redhat.com>
+Subject: [PULL 076/105] qapi: convert simple data struct intros for cxl.json
+Date: Wed, 30 Sep 2026 12:38:41 +0200
+Message-ID: <20260930103910.3934848-77-armbru@redhat.com>
 In-Reply-To: <20260930103910.3934848-1-armbru@redhat.com>
 References: <20260930103910.3934848-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,110 +85,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-Convert or split apart the existing intro for commands in job.json
-into introduction and details sections. The introduction is indented,
-remaining plaintext/details paragraphs are not.
-
-@job-dismiss has its text split apart a little more aggressively to
-help the documentation read more smoothly in the rendered version.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
-Message-ID: <20260928192557.509157-5-jsnow@redhat.com>
+Message-ID: <20260910203856.99003-7-jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/job.json | 42 +++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+ qapi/cxl.json | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/job.json b/qapi/job.json
-index b68d729242..aa75a8efa2 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -128,8 +128,7 @@
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 82524f47cd..631d4def2a 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -441,10 +441,9 @@
  
  ##
- # @job-pause:
+ # @CxlDynamicCapacityExtent:
 -#
--# Pause an active job.
-+#     Pause an active job.
+-# A single dynamic capacity extent.  This is a contiguous allocation
+-# of memory by Device Physical Address within a single Dynamic
+-# Capacity Region on a CXL Type 3 Device.
++#     A single dynamic capacity extent.  This is a contiguous
++#     allocation of memory by Device Physical Address within a single
++#     Dynamic Capacity Region on a CXL Type 3 Device.
  #
- # This command returns immediately after marking the active job for
- # pausing.  Pausing an already paused job is an error.
-@@ -148,8 +147,7 @@
- 
- ##
- # @job-resume:
--#
--# Resume a paused job.
-+#     Resume a paused job.
- #
- # This command returns immediately after resuming a paused job.
- # Resuming an already running job is an error.
-@@ -165,10 +163,9 @@
- 
- ##
- # @job-cancel:
--#
--# Instruct an active background job to cancel at the next opportunity.
--# This command returns immediately after marking the active job for
--# cancellation.
-+#     Instruct an active background job to cancel at the next
-+#     opportunity.  This command returns immediately after marking the
-+#     active job for cancellation.
- #
- # The job will cancel as soon as possible and then emit a
- # `JOB_STATUS_CHANGE` event.  Usually, the status will change to
-@@ -184,9 +181,9 @@
- 
- ##
- # @job-complete:
--#
--# Manually trigger completion of an active job in the READY or STANDBY
--# state.  Completing the job in any other state is an error.
-+#     Manually trigger completion of an active job in the READY or
-+#     STANDBY state.  Completing the job in any other state is an
-+#     error.
- #
- # This is supported only for drive mirroring, where it also switches
- # the device to write to the target path only.  Note that drive
-@@ -211,14 +208,14 @@
- 
- ##
- # @job-dismiss:
-+#     Deletes a job that is in the CONCLUDED state.
- #
--# Deletes a job that is in the CONCLUDED state.  This command only
--# needs to be run explicitly for jobs that don't have automatic
--# dismiss enabled.  In turn, automatic dismiss may be enabled only for
--# jobs that have @auto-dismiss option, which are `drive-backup`,
--# `blockdev-backup`, `drive-mirror`, `blockdev-mirror`, `block-commit`
--# and `block-stream`.  @auto-dismiss is enabled by default for these
--# jobs.
-+# This command only needs to be run explicitly for jobs that don't
-+# have automatic dismiss enabled.  In turn, automatic dismiss may be
-+# enabled only for jobs that have @auto-dismiss option, which are
-+# `drive-backup`, `blockdev-backup`, `drive-mirror`,
-+# `blockdev-mirror`, `block-commit` and `block-stream`.  @auto-dismiss
-+# is enabled by default for these jobs.
- #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, CONCLUDED.  For jobs that make use of
-@@ -233,11 +230,10 @@
- 
- ##
- # @job-finalize:
--#
--# Instructs all jobs in a transaction (or a single job if it is not
--# part of any transaction) to finalize any graph changes and do any
--# necessary cleanup.  This command requires that all involved jobs are
--# in the PENDING state.
-+#     Instructs all jobs in a transaction (or a single job if it is
-+#     not part of any transaction) to finalize any graph changes and
-+#     do any necessary cleanup.  This command requires that all
-+#     involved jobs are in the PENDING state.
- #
- # For jobs in a transaction, instructing one job to finalize will
- # force ALL jobs in the transaction to finalize, so it is only
+ # @offset: The offset (in bytes) to the start of the region where the
+ #     extent belongs to.
 -- 
 2.55.0
 
