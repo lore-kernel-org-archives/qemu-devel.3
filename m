@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E92CA5FAB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC0E0C9830E
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 04:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBmJU-0006wD-Cm; Wed, 30 Sep 2026 00:53:04 -0400
+	id 1xBmJS-0006v5-Kd; Wed, 30 Sep 2026 00:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xBmJS-0006vC-PO
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 00:53:02 -0400
+ id 1xBmJQ-0006uX-NH
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 00:53:00 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xBmJR-0001ML-2V
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 00:53:02 -0400
+ id 1xBmJO-0001ML-Kb
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 00:53:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1790743981; x=1822279981;
+ t=1790743979; x=1822279979;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ewXxkbe0Gsbub9PB8yI3rmmjueCd7jQf2fr6xKadh2U=;
- b=V/B8rEdqjuBnibrCx+Py02KCipR86pFPfeXQfeAaZtIC91W8nY9gaCLR
- v/jTJqhhk6RVZcOVuCK1rWfgH9ME50X22AlNmUPof55UY2EGGZrmXSDHP
- aR+Ic0tHUwGP/rBXtfRfQ4Ov/y6HV0Y2wHB7JWRuTAtrcE/faIT+28r0A
- j0k7GciX9hcgIpNO8ysIBQJ5omrIGuKYV+hN6qwqy/TZ6UnGQnIacfvX2
- 8GnRLAc0jv1qg9Se+5dG3pOVcTZwT1QWxhJReDU+ITboWPPc8J6cynaAG
- dnB8cFeZ6Hq43aS0Zvz7w34K6wERsNuQ3BegRWC6e/x6HsjYe+o8Vr36M w==;
-X-CSE-ConnectionGUID: ufPgVXERRneVym1BL1LUKQ==
-X-CSE-MsgGUID: BnWbDawYR+KRYGO1Sphg4Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="93959635"
-X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; d="scan'208";a="93959635"
+ bh=MdjqM2uX4tdfwER5KKwp7lZwK7OojUIzEOKitSnAa6g=;
+ b=DOtN2Y7CZgxOklzHciLv9gu3LCLfcGFaoQdydJqACad1netBvO0KUlCg
+ fu2Un4TIYbRnuLpinvwhzrOmTZgZNqRI8eVbpOQzzPUXuVIvi/f+4A+uC
+ N3pYJFN+/vTaiK+t8zkAr6Yw4V7KfCjZNsAhS7GYDjJ6UrW3zS1Dz+xvT
+ VNYlVLMCLhrb/C1YayK63hIC6Sr+6DX6TxpXgXiuPpx5yGYUDdR7YgOL6
+ ArOFVfoXA6kPmCTd4locfLd+PmyO+0ckv+AixuUdAiqf+bnrFqxEKwsSF
+ 2SL8Eu36koBt9f/tLwRjlyNb0SS5TkDOAuT+KxAjihFevJuEHh8R08WUg g==;
+X-CSE-ConnectionGUID: i4lMulO3QRuMdu8i7GnotQ==
+X-CSE-MsgGUID: 7NH21ML3TW2WYse5/VnJTg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="93959629"
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; d="scan'208";a="93959629"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Sep 2026 21:52:58 -0700
-X-CSE-ConnectionGUID: JKH1YjivTuS4qr5tRshOqA==
-X-CSE-MsgGUID: RWDytyoUQp+A9PoHcPj9sQ==
+ 29 Sep 2026 21:52:55 -0700
+X-CSE-ConnectionGUID: wmxvN6C8Q3CNLgAShhy1vg==
+X-CSE-MsgGUID: v358QRS1SbS6x5PU2lMpjQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; d="scan'208";a="275721211"
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; d="scan'208";a="275721203"
 Received: from zhaoliu1-desk.sh.intel.com ([10.112.226.173])
- by fmviesa008.fm.intel.com with ESMTP; 29 Sep 2026 21:52:56 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 29 Sep 2026 21:52:53 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Badari Pulavarty <badari.pulavarty@intel.com>
-Subject: [PATCH 3/3] hw/core/machine-smp: allow thread level cache
-Date: Wed, 30 Sep 2026 12:52:37 +0800
-Message-Id: <20260930045237.784060-4-zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 1/3] i386/cpu: rename feature name avx10-vnni-int to
+ avx10-v1-aux
+Date: Wed, 30 Sep 2026 12:52:35 +0800
+Message-Id: <20260930045237.784060-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260930045237.784060-1-zhao1.liu@intel.com>
 References: <20260930045237.784060-1-zhao1.liu@intel.com>
@@ -82,37 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 87ae7ab84fff allowed i386 CPU to configure thread level cache,
-However, without support for the cache model, users still need to
-configure it through -machine smp-cache.
+Since the AVX10.2 Spec rev. 6.0, CPUID feature bit AVX10_VNNI_INT is
+renamed to AVX10_V1_AUX to cover additional more convert instructions:
+VCVT[,2]PH2[B,H]F8[,S], VCVT2PS2PHX,VCVTBIASPH2[B,H]F8[,S], VCVTHF82PH.
 
-Remove the thread-level restriction in the smp-cache option.
+Therefore, rename the feature name to avx10-v1-aux and use the old name
+avx10-vnni-int as an alias for compatibility.
 
-Reported-by: Badari Pulavarty <badari.pulavarty@intel.com>
-Fixes: commit 87ae7ab84fff ("i386/cpu: Allow cache to be shared at thread level")
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/core/machine-smp.c | 7 -------
- 1 file changed, 7 deletions(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index bef04aa2d713..baf06bca2aeb 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -321,13 +321,6 @@ bool machine_parse_smp_cache(MachineState *ms,
-             return false;
-         }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index f3bc6911c10f..e1c012cf2dfa 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1370,7 +1370,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_24_1_ECX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            [2] = "avx10-vnni-int",
++            [2] = "avx10-v1-aux",
+         },
+         .cpuid = {
+             .eax = 0x24,
+@@ -10556,6 +10556,7 @@ static void x86_cpu_initfn(Object *obj)
+     object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
+     cpu->lbr_fmt = ~PERF_CAP_LBR_FMT;
+     object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
++    object_property_add_alias(obj, "avx10-vnni-int", obj, "avx10-v1-aux");
  
--        if (props->topology == CPU_TOPOLOGY_LEVEL_THREAD) {
--            error_setg(errp,
--                       "%s level cache not supported by this machine",
--                       CpuTopologyLevel_str(props->topology));
--            return false;
--        }
--
-         if (!machine_check_topo_support(ms, props->topology, errp)) {
-             return false;
-         }
+     if (xcc->model) {
+         x86_cpu_load_model(cpu, xcc->model);
 -- 
 2.34.1
 
