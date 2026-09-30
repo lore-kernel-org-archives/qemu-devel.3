@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E05C9830E
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EFD2CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 06:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBnTL-0006kH-SL; Wed, 30 Sep 2026 02:07:20 -0400
+	id 1xBnsI-0003Mx-BU; Wed, 30 Sep 2026 02:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xBnTG-0006k4-Sg
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:07:15 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xBnTD-0007gw-U2
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:07:14 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68U66ekv031467
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 30 Sep 2026 15:06:40 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=n9EeWckRL6yPnCWqL87B4Q1rmpcgOtCGb/fby8DSgj8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1790748400; v=1;
- b=j73ywqLT8s/YmoQn0zzGbEv7x09ZC9LsM1gOGFeZHjFx4B6Q8bzgO2ZP3KnTT7Ix
- NLE+4RHKixyhT+6b/6x/g23+I6jI+PSHvfZ2kM1ldU/hgZJxHPsuQqPadwibiHOf
- QdCbSQ9XvCjfTkeXisnDZ85izIb8mC38wUlj9V0/cOyyOskrmFAGv3YZJp1UvC4d
- Jk/JsMb8q3h2FCAK52IOGa+XmWw/Ugu/GbvFy8kkK3xXIZkKSkVwdymHbxsQajiY
- JLNbkeqA6mSXsdRg+egMPdJKcnHR/PGilDbyzgpQh34sCInpLIK3RkzuAjKlbpkh
- lXzJZcVCbmBAJhhvwBNg4Q==
-Message-ID: <f8554a62-4be5-4ea4-8697-3b0c69f64849@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 30 Sep 2026 15:06:39 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xBnsG-0003Mj-5Z
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:33:04 -0400
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xBnsE-0002IM-G3
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 02:33:03 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49e6598dd44so31384515e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 23:33:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790749980; x=1791354780; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=s2xUazeWbJuW4QCzJsbUerahTXj1bu2ad5ux7bUFuXU=;
+ b=CX54G47FdjFGx1Ocgszrm8ZEtT+qiNTHp7GUTXdq4OsxM6kGVLhGbXKZKrA0kHplqw
+ fUTq4B2Kjs2zWseshL26R6aK9Zz39QFkh8p0dGagcrsh0RBfXMUVBie+wGUFMe3eCfwz
+ nPljOVdQKIkJOniq1JXmwjnWPEzztAEzjAWOjNzy9dqtCn+XCIPtd7b7xXWCq4m96eXG
+ SyYwzd0MXy6LaQYzE6Rx679tHx7NakOwhdez89zfDhqxGOjadJ+K3J/6FuIyGb5jTxvD
+ QtHwpoELbQ6SoCFNbgwyXwW083ckrT0VqcqeaefvnbDpi5rzUarIp0qtxcdPcJ9ZD4+Y
+ KRyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790749980; x=1791354780;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=s2xUazeWbJuW4QCzJsbUerahTXj1bu2ad5ux7bUFuXU=;
+ b=vwtxQ/3pS7G0bsB5a5skVflVNN3t2YqPxMLhJ/cpNLTzhQTdFRuuGBy67+Hb3vlB47
+ u7HNAsQV1b4UGYbIiDqSIDf0oQQT3stZ8fPJylk8x/cOxhs0XcFRpbR8rSOcEK9n1ppk
+ Q17yHGwotAde27eEl65hZbOCHGF9w93vwfYgGrdrLyEnERcBP0nPEc2HRLj687/cHaR5
+ Ubj9Z8zHl/BIFdox7IYWpBS6xRiahAzw7XQTSY5p0xjJu56dnUEGtfRKHkfl1t+uQLFI
+ FxjBHUSphrahsNKzkBO3dsq7IdpNHlFZleQrgSrJrLkzKJeHpEUCKrBDaqMMOrCBgcvY
+ Y/YA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByHv8MqahgSY6C+xh0RTpuHvUUQ5DAzvkCfGHu4KyOdcdpCzjrWBfSN73+pdVOwQOT3yO4cJ3ySDG3s@nongnu.org
+X-Gm-Message-State: AFuF++mDd8ofdZZ6wCJCErXMCirOTRIfNB66qL76yln8AeiZfOdi9x1z
+ SBEsAZt+vle/90+8WUe4C1RofzGOFyVvnadnumvVeR6F59fK8OG6P2MumSp9V8IX+kk=
+X-Gm-Gg: AYBFou0nvAgH9QL3G9vtfI9ivqHHjSDhf1PTdq0Qehx0REg5CNnLE9KTdRmsQdRXnDB
+ 3lmFbQVr/qoLgiA/707OAcWX/cHE6sH0CAygOetBZ9vOLJcyaCWQaKddUaKrlxTzIPBRn8eKlrk
+ MyvMi++EVSIDcnX4BhZFgzmd6Z2qbjaq9G9iSi1TnJezLTEnvfv/mqTpTu3KhNmgKhy0X2RzO1+
+ KjGrgkqyHaIgPk9gDaF/f93X1Y5obLWx4tE8YMmnTHF6IoLybeYCXCuTYWTNpF75+/fapeTsQpC
+ SB2A9oB5XN5VLrcLwE5/QfD9ZmbbBPa0EK7iAQLwtewX72CIXycgN02rmDBshiZaqloEv2pnDY3
+ 75S5KdgelBxE19tuKUBIG/NP1MRS/flZvy1iIrNHB35jo+z8sIA9Oe1/ePWCWrxWC4AJpufCnMx
+ ZrLogwTIcQ4Vx3b7WNTnN1miWPsQbzO/yh4yR8VLbbyFGYnv4hZnoVCGCKpOjzk+hpTfPC9iE4W
+ KqCuwKMy2Q=
+X-Received: by 2002:a05:600c:45d3:b0:49b:d03:8d3a with SMTP id
+ 5b1f17b1804b1-4a01aff2060mr4295175e9.11.1790749980562; 
+ Tue, 29 Sep 2026 23:33:00 -0700 (PDT)
+Received: from [10.70.4.56] ([157.231.30.34]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a0174e161bsm48942125e9.5.2026.09.29.23.32.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Sep 2026 23:32:58 -0700 (PDT)
+Message-ID: <0fafdb2a-d3bc-4fca-8fb1-9d4580546b80@linaro.org>
+Date: Wed, 30 Sep 2026 07:32:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/17] migration: forbid snapshots under Xen
-To: Peter Xu <peterx@redhat.com>, David Woodhouse <dwmw2@infradead.org>
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org, 
- mst@redhat.com, maciej.szmigiero@oracle.com, philmd@oss.qualcomm.com,
- clg@redhat.com, den@openvz.org, mark.kanda@oracle.com,
- vsementsov@yandex-team.ru, farosas@suse.de, sgarzare@redhat.com,
- bchaney@akamai.com, dongli.zhang@oracle.com, Paul Durrant <paul@xen.org>
-References: <20260929-up-vsock-vhost-v5-v8-0-12bcf1c0b84a@virtuozzo.com>
- <20260929-up-vsock-vhost-v5-v8-4-12bcf1c0b84a@virtuozzo.com>
- <arwCADGhCZenoYke@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <b7d2302dfa4b48480e45423ffaceb93ce2239e7b.camel@infradead.org>
- <arwOl9OvOlXJTtwS@zhexu-thinkpadt14gen5.rmtcaon.csb>
- <arwQBnGBbCgv8srv@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Subject: Re: [PULL 00/37] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20260929100133.2598676-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <arwQBnGBbCgv8srv@zhexu-thinkpadt14gen5.rmtcaon.csb>
+In-Reply-To: <20260929100133.2598676-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm2-x10.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,51 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/09/30 4:22, Peter Xu wrote:
-> On Tue, Sep 29, 2026 at 03:16:39PM -0400, Peter Xu wrote:
->> On Tue, Sep 29, 2026 at 07:34:50PM +0100, David Woodhouse wrote:
->>> On Tue, 2026-09-29 at 14:22 -0400, Peter Xu wrote:
->>>> On Tue, Sep 29, 2026 at 08:23:23PM +0300, Andrey Drobyshev wrote:
->>>>> The snapshot RAM-saving path does not support Xen's memory mappings.
->>>>> Refuse 'savevm' and 'loadvm' when running as a Xen device model, the
->>>>> same way they are refused for CPR migration modes.
->>>>>
->>>>> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>>>
->>>> Acked-by: Peter Xu <peterx@redhat.com>
->>>>
->>>> Cc: David Woodhouse <dwmw2@infradead.org>
->>>> Cc: Paul Durrant <paul@xen.org>
->>>
->>> Hm, but surely if QEMU is running as a device model for a Xen domain,
->>> all it should be saving and restoring is that device model. It's then
->>> up to Xen and its toolstack to migrate the domain and its memory.
->>>
->>> We've had guest-transparent live migration working on Xen, as well as
->>> in-place update of QEMU on the same host. Surely all of those require
->>> save/load support?
->>
->> Looks like I was wise copying more people..
->>
->> I knew Xen had qmp_xen_save_devices_state(), I was thinking that is the
->> save support wiring together with Xen's facilities.
->>
->> I confess I never know what is the load support, and I was taking it for
->> granted RAM was managed elsewhere, so load perhaps the same.
->>
->> So I suppose this is still a question to the author, or maybe Akihiko?
+On 9/29/26 11:00, Peter Maydell wrote:
+> Hi; here's a target-arm queue: FEAT_UINJ is the biggest thing here,
+> otherwise largely bugfixes of various kinds.
 > 
-> Ok, I just noticed xen also has @xen-load-devices-state, so maybe this is
-> the answer. I suppose Xen should be using those, rather than the default
-> savevm/loadvm.
+> thanks
+> -- PMM
 > 
-> Note, that what this patch changes (migrate_can_snapshot()) only affects
-> savevm/loadvm command.
-That aligns with my understanding as well, so:
+> The following changes since commit 81ce3a87737aa50716c42db8886082d12783e0a1:
+> 
+>    Merge tag 'hw-misc-20260927' ofhttps://github.com/philmd/qemu into staging (2026-09-27 02:02:29 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260929
+> 
+> for you to fetch changes up to 998b6db69e3ec58fd52ddc7a06ece6cf286f3c77:
+> 
+>    target/arm: Fix WFxT timeouts when the offset puts the count ahead (2026-09-29 10:58:40 +0100)
+> 
+> ----------------------------------------------------------------
+> target-arm queue:
+>   * whpx: arm64: check for physical address width after WHPX availability
+>   * hw/char/stm32l4x5_usart.c: Support 16-bit writes
+>   * hw/arm: Add GPIO to Allwinner A10 model
+>   * hw/arm/tegra241-cmdqv: Keep VINTF page0 region alive
+>   * hw/char/exynos4210_uart: fix fifo overflow
+>   * arm: handle CCSIDR_EL1 as a demuxed register
+>   * target/arm: model Cortex-M0+ privilege extension
+>   * target/arm: Fix migration of Aarch32 Secure banked registers
+>   * target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
+>   * target/arm: Enable FEAT_UINJ for -cpu max-v9
+>   * target/arm: Fix timer tick and WFxT timeouts when the offset puts the count ahead
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Applied, thanks.
 
-Regards,
-Akihiko Odaki
+r~
 
