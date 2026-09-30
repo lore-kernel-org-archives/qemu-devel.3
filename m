@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFFBCA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5253DCA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBw0U-0002Ur-8r; Wed, 30 Sep 2026 11:14:06 -0400
+	id 1xBw0R-0002UG-HA; Wed, 30 Sep 2026 11:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0L-0002Ti-A7
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0H-0002Sw-6p
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0J-0000hG-5J
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0F-0000gS-Jr
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790781233;
+ s=mimecast20190719; t=1790781229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AN8FWwbJqRHvFRPAEkIAwjHl7xfg/WsFk2YJV98zyzY=;
- b=aEFztNIXZy4dm4ehG/jcVx9CFdRgPDOIFCfgX4VTv7hpCLpWYBClcoweoFui5aO9TiiXIE
- bOVPjw1zRumK6ccoF0fbHIWDA2CO+9KkdGKw1540eKq71pz40SPqdwc2j4TvMnR4cIgzRD
- V39+dlLcJgCTWiAM49X2+ZnKY1PWPMs=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EoRCo81I/eGkPgW+8ugkZwxe3C1k/nICl5X7HO6q8Fw=;
+ b=iG5Banwo4NRIhqwDJAsCqf3QMTgaUB5UEsnkLArAbTbb2PTFW80e0VSQy/l6UCMdfQqkL6
+ 89Qg7KWZsvLcNw3g582/GMZl3+VTGT4aJ1dpQzhP4fxzQOTjM6LSGfS2YbPBVYoUlA99F/
+ 1SDWnijdT41P7a5V+hZIkLKYHJQgIMs=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-QXgUaw_yMgG82TikIhe-UA-1; Wed, 30 Sep 2026 11:13:52 -0400
-X-MC-Unique: QXgUaw_yMgG82TikIhe-UA-1
-X-Mimecast-MFC-AGG-ID: QXgUaw_yMgG82TikIhe-UA_1790781231
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5332841f932so83265891cf.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 08:13:52 -0700 (PDT)
+ us-mta-267-r_YTaUwvNkyHA_RTQMcwZA-1; Wed, 30 Sep 2026 11:13:46 -0400
+X-MC-Unique: r_YTaUwvNkyHA_RTQMcwZA-1
+X-Mimecast-MFC-AGG-ID: r_YTaUwvNkyHA_RTQMcwZA_1790781226
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-879b1d03d5fso85978197b3.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 08:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790781231; x=1791386031; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790781226; x=1791386026; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AN8FWwbJqRHvFRPAEkIAwjHl7xfg/WsFk2YJV98zyzY=;
- b=ZCfY/VP7qg6M1HXu1LA5aPb4df87bHfbKFuQvn2Y1aEiSurVzK4ul3gXJqAnC43bUf
- y0tbcIXI2m+M1+0Olefsphv3KQtBQF0aFKO4lj705WBZIEcxnyhOfsbjJs0Sr5zeMEY8
- IrfnUT8/b1KwIorNRFEtMm97ALLLx+gQbj0xApjs8Eah0i7f6AGM0TtgqXwEplmcRWj4
- /KRHRVsgw5wQDgeZqWVL9zzNnokJt7BC7PYHo5hHHGXVg6DzMUfptaOe770wsty1xfmF
- aQS3xwfBUqQ63+KwD6pCeoDy6ifyma+1RPDafAqObgb3y1U8qrVBaZyDLYpY4Ilzo/fs
- tzTw==
+ bh=EoRCo81I/eGkPgW+8ugkZwxe3C1k/nICl5X7HO6q8Fw=;
+ b=PHnkq7kArLLKYtgSQ643LH+7Gk30Ziqa2p9R3AdaksBrjO/h1K74h2heM+p33VYDM9
+ AxkmSoFQmZAdyh+TvXQvLRjIDRcRPGi6UrLOP1o2ukzTtefWrhyL1ZL39G3FHMzQwODZ
+ ZoGJfN7wjmYcRk5GE9m5OAxlM/ufhQXMOiqMQYNMTAQtU9mH1vhlcXYWu6pe0zH5cVq8
+ KqDGO/aZgN6VL59utUjhYPgUottTNQZ8u//iIb+ju4dza69fivGzPUNxjH0/U4HLZYsM
+ fXy68+VhX8Sp13EN3GQtXaSOBZ+QmBleZXLqBPrkG8p5frquONkNxZBHrwjB6RrLW5Y6
+ VILA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790781231; x=1791386031;
+ d=1e100.net; s=20260707; t=1790781226; x=1791386026;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AN8FWwbJqRHvFRPAEkIAwjHl7xfg/WsFk2YJV98zyzY=;
- b=l8eAJ8GBz/oxXnmI6pcGBYDmUl8KwP6AeMGEkssx1XNJOH3dYjfv6XaBydajM4piJQ
- YBPl3Vx/3JnGuTobaNXlNeLbLxDmb5y0HZzepV5h3hQTwKEktFbVIdQl/scn0bhCTk7F
- qSSsPTUn0/YqcsnFS4C2KNIRQh5NxrePzm940f0Ck7pDiteRR9wv2QjBwilTR+8HM7gy
- F73ogMU2zLcg1jutqGz1P280J8uJnveQiqhSG69wiqPEOoxPxxdEHvtl5oTbFxHwrkV6
- VkqIpVQMwDxdLJ6LugQkXgUZ3b2AvIW5ADAMPghUByeDihTZZz+hZEo3WijLx0E17/Mi
- hBbQ==
-X-Gm-Message-State: AFuF++lDj7Q1+ek16T5nvtV1ecrPXYc05Gx7bY9RaJsyIQ5FuOk0S3RB
- C/K9fAnJCh5LoVF2T0fplxaDB0xVvQV0tRE+wAVfv9iEq8TeMB9z0yaYkhyhliWbWp+w0LUUDyr
- /grFTBjLa9mGnoqeC2U+6jA8xNGRMo9LjBonJ5iWEqxd56+iZNmVkQdNBippcSi3xDF/aHjZja7
- v0bqTIG5+lIvGiHDYuqFInM8M7bYeLhE6U/1qumpDT
-X-Gm-Gg: AYBFou3CSZX7sOfIFJ37CpSzBiWCKFfXMJ0h7SydxHgBTc/yGwE6clxCswQ/eowyzTf
- J3sr+euCNncOqlJS8zTwYK0FOuPHirZENn4YQJI7qd6MIDO7xsoaLuGOFywU0u2vlgJ2XtmyI6y
- hOtjiGYL0E0GHw2hM/iXa7zVHNI97elrcYYo+sST10bdjJvrkn6c5TqGv6cPYUfhRif/IffXusM
- vH0WmsCeWRklxSwSrScmjQTvwgW6rH3Z6SnG8zy15Gi+O6Y5UBWdMMz5BLVXX7o8smru9n4Dlrb
- SJtV7vXdWtOBIu9eynM2o5hyzSDgJYBjxEiXN1ywnyxj8xqBaxNr9K6eF5rxgIHphv1Rk08=
-X-Received: by 2002:ac8:598c:0:b0:530:b2e3:86c7 with SMTP id
- d75a77b69052e-53374db3985mr29646721cf.57.1790781231215; 
- Wed, 30 Sep 2026 08:13:51 -0700 (PDT)
-X-Received: by 2002:ac8:598c:0:b0:530:b2e3:86c7 with SMTP id
- d75a77b69052e-53374db3985mr29645621cf.57.1790781230236; 
- Wed, 30 Sep 2026 08:13:50 -0700 (PDT)
+ bh=EoRCo81I/eGkPgW+8ugkZwxe3C1k/nICl5X7HO6q8Fw=;
+ b=db2nZZstuAuHLzcbXGBeFdd+VUnufV2C/pPPQu6vD2tDe0mWkHW1gG61Scv0MWBn4L
+ Fy9F2hV7neNPTiorJrwUda4gnW6ZBhK8mSyb3uUn8rdLRZOhtdxzUqb0lQbLTKfWfaSY
+ QhPuu0SER/xL2mggIVYkmwk7KC4+gqUp7H7/NQKY0G2NsgbPiYEmf+4ui2w7JWEPVf84
+ PFklO6+bwzdYcfNNAfpMRIUf/2mqiEnDA1WEevY+Fp80b97ScR/ghTf6cTCbb5CwrXYA
+ Lcn+/TUr81ANXU1bdmp3Pt5M4CRVYgW0WssKBzJWsQ9Kzh6m22AaPmsZb5u7m5GqRabc
+ PvLA==
+X-Gm-Message-State: AFq9FYJ3wJbF0P0/A5jv0AbPbVI9tH1ffbxyCTKz9EeXJR/eqqfp5lL1
+ NilYeKanQU9N61IzNZhChHXL19lFFuuqM+gp5iQxyj9P6yU6TSG9TLOBCR6/gVFvIWmDqKlsDLE
+ JO37ntdwzkpU5o+JUcsql0khKlEoJxzXBq0xy8cKymMiPS0mIeSFzT5j07PGFjlbwLXg1TwXWlz
+ e7n7fF2ak9cYN7N2y16Hp0TZ1n8MEXJNN2/gfdwNLX
+X-Gm-Gg: AYBFou1JbZpZaWDRs7e3NVDcCXYooQVF9/O+KAmYeWUHi7EWF555kyLd9i1NOafeSF4
+ 3yPnnnidThTDxUu9cGgR5soba4/pn56gbfNGZWlTAd2kug1j7Nn5ZMAaJQs14JWmMFv0wTOHqD5
+ TaMfX62tcCylp3LtVUgOeoMjiMlItdAhmbEK1BImbtJDmSu3yaKsaKPsEfuXEaA/W1GMQZnfSzl
+ kAiASzBSosMAb2kA6x5O4cOv4p6BwFBbNDJfMtCboZ7kuHuQanEA2iQqSQPsyUd1k2WWjOybXFr
+ ugXgYhAZq9A+lusHuqG8BTAiRkSInjZXsepkrMVNJTp0SIFWHkuqThnrQJJ3ob6kVpYDM2w=
+X-Received: by 2002:a05:690e:b45:b0:676:8c59:2a36 with SMTP id
+ 956f58d0204a3-6768c593f17mr366079d50.57.1790781225679; 
+ Wed, 30 Sep 2026 08:13:45 -0700 (PDT)
+X-Received: by 2002:a05:690e:b45:b0:676:8c59:2a36 with SMTP id
+ 956f58d0204a3-6768c593f17mr366032d50.57.1790781224946; 
+ Wed, 30 Sep 2026 08:13:44 -0700 (PDT)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5338242f8d1sm1395211cf.9.2026.09.30.08.13.49
+ 6a1803df08f44-917a8a2feedsm1652086d6.33.2026.09.30.08.13.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 08:13:49 -0700 (PDT)
+ Wed, 30 Sep 2026 08:13:44 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PULL 05/12] memory: Rename RAM_GUEST_MEMFD to RAM_GUEST_MEMFD_PRIVATE
-Date: Wed, 30 Sep 2026 11:13:33 -0400
-Message-ID: <20260930151340.2817042-6-peterx@redhat.com>
+ Xiaoyao Li <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>,
+ Michael Roth <michael.roth@amd.com>
+Subject: [PULL 02/12] kvm: Detect guest-memfd flags supported
+Date: Wed, 30 Sep 2026 11:13:30 -0400
+Message-ID: <20260930151340.2817042-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930151340.2817042-1-peterx@redhat.com>
 References: <20260930151340.2817042-1-peterx@redhat.com>
@@ -117,200 +117,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This name is too generic, and can conflict with support for using
-guest-memfd for shared memory. Add a _PRIVATE suffix to show what it
-really means: it is using guest_memfd specifically for private memory;
-whether or not guest_memfd is being used for shared memory is something
-to be configured/determined separately.
-
-This also paves way for in-place guest-memfd, which means we can have a
-ramblock that allocates pages completely from guest-memfd (private or
-shared).
+Detect supported guest-memfd flags by the current kernel, and reject
+creations of guest-memfd using invalid flags.  When the cap isn't
+available, then no flag is supported.
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
-Reviewed-by: David Hildenbrand <david@kernel.org>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
-Link: https://lore.kernel.org/r/20260929235109.1398509-6-michael.roth@amd.com
+Link: https://lore.kernel.org/r/20260929235109.1398509-3-michael.roth@amd.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/system/memory.h   |  8 ++++----
- include/system/ramblock.h |  2 +-
- backends/hostmem-file.c   |  2 +-
- backends/hostmem-memfd.c  |  2 +-
- backends/hostmem-ram.c    |  2 +-
- backends/hostmem-shm.c    |  2 +-
- system/memory.c           |  2 +-
- system/physmem.c          | 10 +++++-----
- 8 files changed, 15 insertions(+), 15 deletions(-)
+ accel/kvm/kvm-all.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index aef555af80..932072c631 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -262,7 +262,7 @@ typedef struct IOMMUTLBEvent {
- #define RAM_READONLY_FD (1 << 11)
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index cdc7554082..120cab1e22 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -107,6 +107,7 @@ bool kvm_pre_fault_memory_supported;
+ static bool kvm_immediate_exit;
+ static uint64_t kvm_supported_memory_attributes;
+ static bool kvm_guest_memfd_supported;
++static uint64_t kvm_guest_memfd_flags_supported;
+ static hwaddr kvm_max_slot_size = ~0;
  
- /* RAM can be private that has kvm guest memfd backend */
--#define RAM_GUEST_MEMFD   (1 << 12)
-+#define RAM_GUEST_MEMFD_PRIVATE   (1 << 12)
+ static const KVMCapabilityInfo kvm_required_capabilities[] = {
+@@ -3065,6 +3066,8 @@ static int kvm_init(AccelState *as, MachineState *ms)
+         kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+         kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
+     kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
++    kvm_guest_memfd_flags_supported =
++        kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
  
- /*
-  * In RAMBlock creation functions, if MAP_SHARED is 0 in the flags parameter,
-@@ -1119,7 +1119,7 @@ void memory_region_init_io(MemoryRegion *mr,
-  *        must be unique within any device
-  * @size: size of the region.
-  * @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_NORESERVE,
-- *             RAM_GUEST_MEMFD.
-+ *             RAM_GUEST_MEMFD_PRIVATE.
-  * @errp: pointer to Error*, to store an error if it happens.
-  *
-  * Note that this function does not do anything to cause the data in the
-@@ -1181,7 +1181,7 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
-  *         (getpagesize()) will be used.
-  * @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-  *             RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-- *             RAM_READONLY_FD, RAM_GUEST_MEMFD
-+ *             RAM_READONLY_FD, RAM_GUEST_MEMFD_PRIVATE
-  * @path: the path in which to allocate the RAM.
-  * @offset: offset within the file referenced by path
-  * @errp: pointer to Error*, to store an error if it happens.
-@@ -1212,7 +1212,7 @@ bool memory_region_init_ram_from_file(MemoryRegion *mr,
-  * @size: size of the region.
-  * @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-  *             RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-- *             RAM_READONLY_FD, RAM_GUEST_MEMFD
-+ *             RAM_READONLY_FD, RAM_GUEST_MEMFD_PRIVATE
-  * @fd: the fd to mmap.
-  * @offset: offset within the file referenced by fd
-  * @errp: pointer to Error*, to store an error if it happens.
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 0388d6cc6b..1352ec1603 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -257,7 +257,7 @@ static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
-  *  @resized: callback after calls to qemu_ram_resize
-  *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-  *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-- *              RAM_READONLY_FD, RAM_GUEST_MEMFD
-+ *              RAM_READONLY_FD, RAM_GUEST_MEMFD_PRIVATE
-  *  @mem_path or @fd: specify the backing file or device
-  *  @offset: Offset into target file
-  *  @grow: extend file if necessary (but an empty file is always extended).
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index 8cf27ad67e..bb7323d2bf 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -86,7 +86,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index e21c5a3f2e..d917a94d73 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -60,7 +60,7 @@ have_fd:
-     backend->aligned = true;
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
- }
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index 062b1abb11..96ad29112d 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -30,7 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
-diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
-index 806e2670e0..e86fb2e0aa 100644
---- a/backends/hostmem-shm.c
-+++ b/backends/hostmem-shm.c
-@@ -54,7 +54,7 @@ have_fd:
-     /* Let's do the same as memory-backend-ram,share=on would do. */
-     ram_flags = RAM_SHARED;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
--    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
- 
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
-                                               backend_name, backend->size,
-diff --git a/system/memory.c b/system/memory.c
-index b07d5dc542..96e42beb2e 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3597,7 +3597,7 @@ bool memory_region_init_ram_guest_memfd(MemoryRegion *mr, Object *owner,
-                                         Error **errp)
- {
-     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
--                                                RAM_GUEST_MEMFD, errp)) {
-+                                                RAM_GUEST_MEMFD_PRIVATE, errp)) {
-         return false;
-     }
-     memory_region_register_ram(mr, owner);
-diff --git a/system/physmem.c b/system/physmem.c
-index 156853c8db..db3dda563d 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2184,7 +2184,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         }
+     if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+         s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+@@ -4760,6 +4763,13 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+         return -1;
      }
  
--    if (new_block->flags & RAM_GUEST_MEMFD) {
-+    if (new_block->flags & RAM_GUEST_MEMFD_PRIVATE) {
-         int ret;
- 
-         if (!kvm_enabled()) {
-@@ -2322,7 +2322,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-     /* Just support these ram flags by now. */
-     assert((ram_flags & ~(RAM_SHARED | RAM_PMEM | RAM_NORESERVE |
-                           RAM_PROTECTED | RAM_NAMED_FILE | RAM_READONLY |
--                          RAM_READONLY_FD | RAM_GUEST_MEMFD |
-+                          RAM_READONLY_FD | RAM_GUEST_MEMFD_PRIVATE |
-                           RAM_RESIZEABLE)) == 0);
-     assert(max_size >= size);
- 
-@@ -2479,7 +2479,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     ram_flags &= ~RAM_PRIVATE;
- 
-     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
--                          RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
-+                          RAM_NORESERVE | RAM_GUEST_MEMFD_PRIVATE)) == 0);
-     assert(!host ^ (ram_flags & RAM_PREALLOC));
-     assert(max_size >= size);
- 
-@@ -2562,7 +2562,7 @@ RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
- RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags,
-                          MemoryRegion *mr, Error **errp)
- {
--    assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD |
-+    assert((ram_flags & ~(RAM_SHARED | RAM_NORESERVE | RAM_GUEST_MEMFD_PRIVATE |
-                           RAM_PRIVATE)) == 0);
-     return qemu_ram_alloc_internal(size, size, NULL, NULL, ram_flags, mr, errp);
- }
-@@ -2838,7 +2838,7 @@ int ram_block_rebind(Error **errp)
-     qemu_mutex_lock_ramlist();
- 
-     RAMBLOCK_FOREACH(block) {
--        if (block->flags & RAM_GUEST_MEMFD) {
-+        if (block->flags & RAM_GUEST_MEMFD_PRIVATE) {
-             if (block->guest_memfd_private >= 0) {
-                 close(block->guest_memfd_private);
-             }
++    if (flags & ~kvm_guest_memfd_flags_supported) {
++        error_setg(errp, "Current KVM instance does not support "
++                   "guest-memfd flag: 0x%"PRIx64,
++                   flags & ~kvm_guest_memfd_flags_supported);
++        return -1;
++    }
++
+     fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
+     if (fd < 0) {
+         error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
 -- 
 2.55.0
 
