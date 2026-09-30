@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1514CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A208CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBpwR-0004nu-99; Wed, 30 Sep 2026 04:45:31 -0400
+	id 1xBpwn-0005Ug-Gg; Wed, 30 Sep 2026 04:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xBpwP-0004h4-Hq; Wed, 30 Sep 2026 04:45:29 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xBpwZ-0005O5-Rg
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1xBpwO-00020F-22; Wed, 30 Sep 2026 04:45:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1790757928; x=1822293928;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=r4cQIDtOW490g8hA1O3RVU86YVCtU4OcrSXfgeh0oy0=;
- b=LOVe9pGmJYCpFhBBHraAsXJAJUUoPRhG/nJsFR48T3D6PGCB3zAZGAKT
- wwGlGzgBI3gCI0jcEIv5oA53bG5FisyiXUr5lpR9fOefnuBL46wt6lg2L
- zuQU/DXez19DlkmOJtxUjepwxMTSCifpfJpWM2bLAxc9+AhJRlqIMJnNA
- GUmkh6gnV4VTFuD25Ez6hUB8X8whEnMBrVV5Pz5HuCD1yBZDEUrr5FJ9S
- mmKjlye/6dOO83fLLH7pAj0RNzJMinrtJ5yJhn/El2GbJLCT23vxBqdjn
- vsvnwVdD3hSvBKe7kty0oCBc4CgW1f0lxxw2qJfLf2M8a7j+huEYGt6Uh Q==;
-X-CSE-ConnectionGUID: pnszqJjAS0asQIfl5Fy0LA==
-X-CSE-MsgGUID: GT7Agv4oRtybs9T8pNqrhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="102061602"
-X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; d="scan'208";a="102061602"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Sep 2026 01:45:25 -0700
-X-CSE-ConnectionGUID: e/5ifFn3Q824RY7FCyUj7A==
-X-CSE-MsgGUID: wAHwF0tNS+yQ6GQZxDqiBA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; d="scan'208";a="274236165"
-Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.112.226.173])
- by fmviesa006.fm.intel.com with ESMTP; 30 Sep 2026 01:45:20 -0700
-Date: Wed, 30 Sep 2026 16:45:19 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Stafford Horne <shorne@gmail.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Song Gao <17746591750@163.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>
-Subject: Re: [PATCH v3 05/10] hw/hexagon/virt: use unique QOM name
-Message-ID: <arzMH4Tiwv8Dwp08@intel.com>
-References: <20260926081551.29-1-luoyonggang@gmail.com>
- <20260926081551.29-6-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xBpwY-00021X-5j
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790757936;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TbT8ycYYGC2jwOJDhQt0rEIAroIdZitjYaB99eg8B6c=;
+ b=bIShRdynZZJNKIZ5FFmpkDMlh83uHOfEXDhANcVn12GbbLZ/ApOAFon61++H0jWHzpy/xe
+ OFtP/sCbYNTE6YC+albMhHAO8Oewf+zQhZQ5L6PU03L+2GBjkA5s3QyBzae59C5JMHTyI6
+ CY6a8v+deiWWhUm6/wqw8/PhOVjLBQs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-0woTVLgcPeerhlAmUt4uMg-1; Wed,
+ 30 Sep 2026 04:45:30 -0400
+X-MC-Unique: 0woTVLgcPeerhlAmUt4uMg-1
+X-Mimecast-MFC-AGG-ID: 0woTVLgcPeerhlAmUt4uMg_1790757929
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C69A187A5F2; Wed, 30 Sep 2026 08:45:28 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 126B7180035F; Wed, 30 Sep 2026 08:45:25 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260926081551.29-6-luoyonggang@gmail.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+Subject: Re: [PATCH v8 05/12] main-loop: change the handling of SIGWINCH
+From: marcandre.lureau@redhat.com
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
+ Dominique Martinet <asmadeus@codewreck.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Szymon Lukasz <noh4hss@gmail.com>
+In-Reply-To: <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+References: <20260929-console-resize-v8-0-2ff9183f8750@gmail.com>
+ <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+Date: Wed, 30 Sep 2026 12:45:20 +0400
+Message-Id: <179075792011.1303431.7825080413230909437.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2165;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=wixhU4Zohq53XPWw9xSvqtapmUzA3thExu1xI3s64LM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvMwiRSt4dcHAhimDWhiCPvDD/pKWeBunXdT3A
+ sEmdfL/iYaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarzMIgAKCRDa6OEJdZac
+ 5QpBEACHeq/nbfy6BaBqTJHhUVqBKIMinGBez1FpsqdXxzUqV4q6vxHAaIdN170h4bx/sGEQfWE
+ HKTj4h8vA9+7kMboLQeMIyf3YpDJxF6vTSw3QNby4Op78s2HKObePtzmp/XGI6CEbga6dU727kG
+ Rg5OvMIWuSrpzXZzdL7vyVTXAWGTQINcpWom9FSdZCnBtkThkUVkAGeSuQFILjQvZG1HV2UGG2x
+ iSSwahSG6JyFfcsgAQLkSDfk16JqR+6kZLIrgSnFeeXNjIARs3ZraZzxXXAMA6A0KU9aOPIlo5c
+ WUl6qiKVsv/bs57ZJALf+uOM7GHzWYQwE3WRZx5slO+7Uqj75tWdWN2ri+b1N1GTepeWtGBZxUY
+ Rd+Yqizz7prtJySoEZNYp+hogAta5jUTb58sCe+zj9ZxKsd+aTXRJ7qPj+QauJDiiEwcOeX//b6
+ J8XLs5SaciQ+dcdnWZJj/EJ49+/OxMuH0uVW+e6O2y4xnxJfinI1KM8hhmKztmN+QkAAGHt3vAj
+ lpPR/9GBxzsK8695xQh+SbMdQlFGsgMAKCK1kcXvkJmYYaJlxGeZOivTyQbJ3ANRhGvXErnl4Ko
+ b6CG6O0EYkoRjgE9MdN3Mj5KQFXLWLiBu+2+5zsr0/chL6jtpLHha99608KKOQJ7xVgddWslAeu
+ HuRixNmtjes1gHw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,25 +115,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Sep 26, 2026 at 04:15:45PM +0800, Yonggang Luo wrote:
-> Date: Sat, 26 Sep 2026 16:15:45 +0800
-> From: Yonggang Luo <luoyonggang@gmail.com>
-> Subject: [PATCH v3 05/10] hw/hexagon/virt: use unique QOM name
-> X-Mailer: git-send-email 2.52.0.windows.1
+> Block SIGWINCH, so it is delivered only via signalfd.
+> Install a handler that uses NotifierList to tell
+> interested parties about SIGWINCH delivery.
 > 
-> Set TYPE_HEXAGON_VIRT_MACHINE to MACHINE_TYPE_NAME("hexagon-virt") so
-> Hexagon virt no longer collides with other virt-machine types in one
-> process. Keep the -M / help / migration name as virt via
-> machine_class_set_name().
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> Reviewed-by: Marc-Andr� Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/hexagon/virt.c         | 1 +
->  include/hw/hexagon/virt.h | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
+> Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> Message-ID: <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+>
+> diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+> index 8c1241a2c11c..ff41346b0b5a 100644
+> --- a/include/qemu/main-loop.h
+> +++ b/include/qemu/main-loop.h
+> @@ -449,4 +449,8 @@ typedef struct MainLoopPoll {
+>  void main_loop_poll_add_notifier(Notifier *notify);
+>  void main_loop_poll_remove_notifier(Notifier *notify);
+>  
+> +#ifndef _WIN32
+> +void sigwinch_add_notifier(Notifier *n);
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Add a sigwinch_remove_notifier()
+
+> +#endif
+> +
+>  #endif
+> diff --git a/ui/curses.c b/ui/curses.c
+> index 4db32b6168d6..ced5fd1216b2 100644
+> --- a/ui/curses.c
+> +++ b/ui/curses.c
+> @@ -33,6 +33,7 @@
+>  #include <iconv.h>
+>  
+>  #include "qapi/error.h"
+> +#include "qemu/main-loop.h"
+>  #include "qemu/module.h"
+>  #include "ui/console.h"
+>  #include "ui/input.h"
+> @@ -149,7 +150,7 @@ static void curses_resize(DisplayChangeListener *dcl,
+>  }
+>  
+>  #if !defined(_WIN32) && defined(SIGWINCH) && defined(KEY_RESIZE)
+> -static volatile sig_atomic_t got_sigwinch;
+> +static bool got_sigwinch;
+>  static void curses_winch_check(void)
+>  {
+>      struct winsize {
+> @@ -172,17 +173,17 @@ static void curses_winch_check(void)
+>      invalidate = 1;
+>  }
+>  
+> -static void curses_winch_handler(int signum)
+> +static void curses_winch_handler(Notifier *n, void *data)
+>  {
+>      got_sigwinch = true;
+>  }
+>  
+>  static void curses_winch_init(void)
+>  {
+> -    struct sigaction old, winch = {
+> -        .sa_handler  = curses_winch_handler,
+> +    static Notifier n = {
+> +        .notify = curses_winch_handler
+>      };
+> -    sigaction(SIGWINCH, &winch, &old);
+> +    sigwinch_add_notifier(&n);
+>  }
+
+And remove the notifier in curses_cleanup()
+
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
