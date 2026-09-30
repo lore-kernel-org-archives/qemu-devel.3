@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A208CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAABCA5FC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 08:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBpwn-0005Ug-Gg; Wed, 30 Sep 2026 04:45:54 -0400
+	id 1xBpwq-0005WV-Pg; Wed, 30 Sep 2026 04:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xBpwZ-0005O5-Rg
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:39 -0400
+ id 1xBpwb-0005Ow-DJ
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xBpwY-00021X-5j
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:39 -0400
+ id 1xBpwZ-00022u-Mk
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 04:45:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790757936;
+ s=mimecast20190719; t=1790757938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TbT8ycYYGC2jwOJDhQt0rEIAroIdZitjYaB99eg8B6c=;
- b=bIShRdynZZJNKIZ5FFmpkDMlh83uHOfEXDhANcVn12GbbLZ/ApOAFon61++H0jWHzpy/xe
- OFtP/sCbYNTE6YC+albMhHAO8Oewf+zQhZQ5L6PU03L+2GBjkA5s3QyBzae59C5JMHTyI6
- CY6a8v+deiWWhUm6/wqw8/PhOVjLBQs=
+ bh=dNSxQr+yr6uUw9PmZZOTCyF+B8AcKQY4ABTEkMBecPI=;
+ b=fe5UzZR7YA4ZexVvmvbjhOriv4Eq2gHueyFAvWE6Q9GWQGP8g4I8Jqs2wfM7a0w64B/k3U
+ IIL2qGZqz35rNm8zOOs81MhdD1d2uw88idlrDhtyCIghnUjttsZw3BpAmG8v89ySRkCopN
+ NMgYC5e77dtlWCOLdERCDGV76DbBZWw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-0woTVLgcPeerhlAmUt4uMg-1; Wed,
- 30 Sep 2026 04:45:30 -0400
-X-MC-Unique: 0woTVLgcPeerhlAmUt4uMg-1
-X-Mimecast-MFC-AGG-ID: 0woTVLgcPeerhlAmUt4uMg_1790757929
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-9XSoaMO1Ox6Gxi4UM2mqaw-1; Wed,
+ 30 Sep 2026 04:45:35 -0400
+X-MC-Unique: 9XSoaMO1Ox6Gxi4UM2mqaw-1
+X-Mimecast-MFC-AGG-ID: 9XSoaMO1Ox6Gxi4UM2mqaw_1790757933
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C69A187A5F2; Wed, 30 Sep 2026 08:45:28 +0000 (UTC)
+ id 37734187A5D1; Wed, 30 Sep 2026 08:45:33 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 126B7180035F; Wed, 30 Sep 2026 08:45:25 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4DD581956095; Wed, 30 Sep 2026 08:45:30 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v8 05/12] main-loop: change the handling of SIGWINCH
+Subject: Re: [PATCH v8 06/12] char-stdio: add support for the terminal size
 From: marcandre.lureau@redhat.com
 To: Filip Hejsek <filip.hejsek@gmail.com>
 Cc: qemu-devel@nongnu.org, 
@@ -67,29 +67,29 @@ Cc: qemu-devel@nongnu.org,
  Dominique Martinet <asmadeus@codewreck.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Szymon Lukasz <noh4hss@gmail.com>
-In-Reply-To: <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+In-Reply-To: <20260929-console-resize-v8-6-2ff9183f8750@gmail.com>
 References: <20260929-console-resize-v8-0-2ff9183f8750@gmail.com>
- <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+ <20260929-console-resize-v8-6-2ff9183f8750@gmail.com>
 Date: Wed, 30 Sep 2026 12:45:20 +0400
-Message-Id: <179075792011.1303431.7825080413230909437.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2165;
+Message-Id: <179075792013.1303431.129983921020844209.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2364;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wixhU4Zohq53XPWw9xSvqtapmUzA3thExu1xI3s64LM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvMwiRSt4dcHAhimDWhiCPvDD/pKWeBunXdT3A
- sEmdfL/iYaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarzMIgAKCRDa6OEJdZac
- 5QpBEACHeq/nbfy6BaBqTJHhUVqBKIMinGBez1FpsqdXxzUqV4q6vxHAaIdN170h4bx/sGEQfWE
- HKTj4h8vA9+7kMboLQeMIyf3YpDJxF6vTSw3QNby4Op78s2HKObePtzmp/XGI6CEbga6dU727kG
- Rg5OvMIWuSrpzXZzdL7vyVTXAWGTQINcpWom9FSdZCnBtkThkUVkAGeSuQFILjQvZG1HV2UGG2x
- iSSwahSG6JyFfcsgAQLkSDfk16JqR+6kZLIrgSnFeeXNjIARs3ZraZzxXXAMA6A0KU9aOPIlo5c
- WUl6qiKVsv/bs57ZJALf+uOM7GHzWYQwE3WRZx5slO+7Uqj75tWdWN2ri+b1N1GTepeWtGBZxUY
- Rd+Yqizz7prtJySoEZNYp+hogAta5jUTb58sCe+zj9ZxKsd+aTXRJ7qPj+QauJDiiEwcOeX//b6
- J8XLs5SaciQ+dcdnWZJj/EJ49+/OxMuH0uVW+e6O2y4xnxJfinI1KM8hhmKztmN+QkAAGHt3vAj
- lpPR/9GBxzsK8695xQh+SbMdQlFGsgMAKCK1kcXvkJmYYaJlxGeZOivTyQbJ3ANRhGvXErnl4Ko
- b6CG6O0EYkoRjgE9MdN3Mj5KQFXLWLiBu+2+5zsr0/chL6jtpLHha99608KKOQJ7xVgddWslAeu
- HuRixNmtjes1gHw==
+ bh=pA7WPrjUBOngvljoChxZwztK3GhSC19HqbTe9ZrZvCE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvMwjJIPDZ+W0fj2ZUzCJ3z0XOi58jyRZNm8ML
+ 97cNVssBhmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarzMIwAKCRDa6OEJdZac
+ 5aowEACWdSDQTVf9b8tY8Qj9dimhfk4qAXfU/JQbS8fkghGjaBP/8nV4EQKVAmHS1DXilwbznBZ
+ PLGZRqAlrSb9KvWoVoL4CdJ3Gog+p/I1i3pxnNFJmshVwpsSFpNipkjnPCdnZyFpq5WOh6O3tqx
+ lerXpUL5mMX/lJpQOfrOnemPBpr6ZoCWgUsp5OOyiZamtE3+t+9nbx2e/6OwHWZgXYQwopWZ2np
+ C1rPR4LtevL7Ywf4Z57hb/L2NDOw9lR7lojYvMrb7PCe0eziUPikSSWrZbBt0JzzLsJ5PYZnv4u
+ 5HIKF2NXGRSgGYTSzKqiHENAHgJ+oUCScwOB5A4qiDFZTNdwo73IBveZjjkAsdrAILjnL8TEXz8
+ ZVMEcsWuZtKR9qywjgRAj3D7lp/ZKRS+g/D6qDt7bCF/7f0ePd0F/bV5ubR83FDmE0WN49SRDwi
+ Tfab8JZn4DEXRxSf4Y4B+d8SthzS3uoA8erH1fL9MmSXDBCTEAJ/6wxo5cuHmCAfRhGncyLmzIR
+ BDBiidVniV4/OpvVV9WJyTanStalD3BbhGU6RD7VCTOM9pbVEdCOoaQR31HRsHBJyzS2Q+CleFQ
+ FQwTW+lsdZZtcb5Nf0SidnHFfHLeV7XbmsTx9MpR9euzLsdPk0vTZ+v5w99Wn/sjACCFj+iqdqQ
+ WKktWeHYj80XicQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -115,74 +115,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Block SIGWINCH, so it is delivered only via signalfd.
-> Install a handler that uses NotifierList to tell
-> interested parties about SIGWINCH delivery.
+> Update the terminal size upon SIGWINCH delivery.
 > 
 > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> [Filip: use DECLARE_INSTANCE_CHECKER, qemu_chr_resize_stdio -> stdio_chr_resize]
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-> Message-ID: <20260929-console-resize-v8-5-2ff9183f8750@gmail.com>
+> Message-ID: <20260929-console-resize-v8-6-2ff9183f8750@gmail.com>
 >
-> diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-> index 8c1241a2c11c..ff41346b0b5a 100644
-> --- a/include/qemu/main-loop.h
-> +++ b/include/qemu/main-loop.h
-> @@ -449,4 +449,8 @@ typedef struct MainLoopPoll {
->  void main_loop_poll_add_notifier(Notifier *notify);
->  void main_loop_poll_remove_notifier(Notifier *notify);
->  
-> +#ifndef _WIN32
-> +void sigwinch_add_notifier(Notifier *n);
-
-Add a sigwinch_remove_notifier()
-
-> +#endif
-> +
->  #endif
-> diff --git a/ui/curses.c b/ui/curses.c
-> index 4db32b6168d6..ced5fd1216b2 100644
-> --- a/ui/curses.c
-> +++ b/ui/curses.c
-> @@ -33,6 +33,7 @@
->  #include <iconv.h>
->  
->  #include "qapi/error.h"
+> diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
+> index fe1cbb2d880f..4fc8db212cde 100644
+> --- a/chardev/char-stdio.c
+> +++ b/chardev/char-stdio.c
+> @@ -34,7 +34,9 @@
+>  #include "chardev/char-win-stdio.h"
+>  #else
+>  #include <termios.h>
+> +#include <sys/ioctl.h>
+>  #include "chardev/char-fd.h"
 > +#include "qemu/main-loop.h"
->  #include "qemu/module.h"
->  #include "ui/console.h"
->  #include "ui/input.h"
-> @@ -149,7 +150,7 @@ static void curses_resize(DisplayChangeListener *dcl,
+>  #endif
+>  
+>  #ifndef _WIN32
+> @@ -46,6 +48,14 @@ static bool stdio_in_use;
+>  static bool stdio_allow_signal;
+>  static bool stdio_echo_state;
+>  
+> +typedef struct {
+> +    FDChardev parent;
+> +    Notifier resize_notifier;
+> +} StdioChardev;
+> +
+> +DECLARE_INSTANCE_CHECKER(StdioChardev, STDIO_CHARDEV,
+> +                         TYPE_CHARDEV_STDIO)
+> +
+>  static void term_exit(void)
+>  {
+>      if (stdio_in_use) {
+> @@ -85,8 +95,23 @@ static void term_stdio_handler(int sig)
+>      stdio_chr_set_echo(NULL, stdio_echo_state);
 >  }
 >  
->  #if !defined(_WIN32) && defined(SIGWINCH) && defined(KEY_RESIZE)
-> -static volatile sig_atomic_t got_sigwinch;
-> +static bool got_sigwinch;
->  static void curses_winch_check(void)
+> +static void stdio_chr_resize(Chardev *chr)
+> +{
+> +    struct winsize ws;
+> +    if (ioctl(1, TIOCGWINSZ, &ws) != -1) {
+> +        qemu_chr_resize(chr, ws.ws_col, ws.ws_row);
+> +    }
+> +}
+> +
+> +static void term_resize_notify(Notifier *n, void *data)
+> +{
+> +    StdioChardev *s = container_of(n, StdioChardev, resize_notifier);
+> +    stdio_chr_resize(CHARDEV(s));
+> +}
+> +
+>  static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
 >  {
->      struct winsize {
-> @@ -172,17 +173,17 @@ static void curses_winch_check(void)
->      invalidate = 1;
->  }
+> +    StdioChardev *s = STDIO_CHARDEV(chr);
+>      ChardevStdio *opts = backend->u.stdio.data;
+>      struct sigaction act;
 >  
-> -static void curses_winch_handler(int signum)
-> +static void curses_winch_handler(Notifier *n, void *data)
->  {
->      got_sigwinch = true;
->  }
+> @@ -121,6 +146,10 @@ static bool stdio_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+>      stdio_allow_signal = !opts->has_signal || opts->signal;
+>      stdio_chr_set_echo(chr, false);
 >  
->  static void curses_winch_init(void)
->  {
-> -    struct sigaction old, winch = {
-> -        .sa_handler  = curses_winch_handler,
-> +    static Notifier n = {
-> +        .notify = curses_winch_handler
->      };
-> -    sigaction(SIGWINCH, &winch, &old);
-> +    sigwinch_add_notifier(&n);
->  }
+> +    s->resize_notifier.notify = term_resize_notify;
+> +    sigwinch_add_notifier(&s->resize_notifier);
 
-And remove the notifier in curses_cleanup()
+There should be a corresponding sigwinch_remove_notifier() on finalize
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
