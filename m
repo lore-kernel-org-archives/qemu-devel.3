@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F5BCA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92729CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxSa-0001E0-6f; Wed, 30 Sep 2026 12:47:12 -0400
+	id 1xBxSd-0001Jb-UP; Wed, 30 Sep 2026 12:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSP-0001BI-8e
+ id 1xBxSR-0001Bc-Hr
  for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:04 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
+Received: from mail-wr2-x0e.google.com ([2a00:1450:4864:30::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSM-00032T-Qo
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:00 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d37b6so31405025e9.0
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:58 -0700 (PDT)
+ id 1xBxSO-000336-QY
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:03 -0400
+Received: by mail-wr2-x0e.google.com with SMTP id
+ ffacd0b85a97d-48b01c41135so638894f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790786816; x=1791391616; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790786819; x=1791391619; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
- b=WSc8OnrimX93Zjx3cfTlaq/HQBZZtP6cE+58deSu2tV47amiMZdK/y/A0A2o/EZfMp
- brOdT66ICxQWVnxO51S5Ptpvc0C3yKEAIQfo8Ns+OK9ASBgI6HQZlBMtaoHZ9HWCB+Py
- myXispuPKpY5/grk1P0MjLWbkgKGl8KPyw0k3Z+rSFE1Rk53dWVZ8vnotpIV5wIaDy+Y
- HmTR7WR6jNEpXMLQtwoTBMEcyp8U1k5KQEy/LFyn/gaw3PJ5QgqFvMmmfglpn9qO+B/a
- GA0fUAi1fKTeRF0j+DmWGSDIqUleS08TsY1iLdQ8QdBqhoPNW0qjq6DnKbtDSKRf3h0H
- fYEw==
+ bh=Mm5yOz3FMOhLwxnWcg4dJcf6/YApzSZu5a2Cjgw36ho=;
+ b=PLGtDhDq1fq2RLoWGqJanZHLe09pG59yWoqm6k2b3qDxO9tTUSmA4iW2uuZmiqs23e
+ mtQrSZNG7ob8jMnD1zwVXzRbc8LPSG8e/bp0w91xJr0mtDgIMBvTnH5m+8dzR2nHTv41
+ FW8EjHx+SXhKIz0z/eb1V5tAGPY+nBsouesXOPvBTTTETEMgkb76Fv+yD9Mr/PpfR2SO
+ uO0zQDF/gXh65+Ox9EMLSFYP47/A/Kc5ehCupCvS4IG6uhaQjTOOmavWEy6/ICKHcLE0
+ sE7XuaF2it77DvVRo/g4Hn+gWQsNEGamT+fHI5TgM5eGQZX8H/QnOxostQ4sBED8x0wd
+ Wilg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790786816; x=1791391616;
+ d=1e100.net; s=20260707; t=1790786819; x=1791391619;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=op01wSzx++PxzGWlywLCMk6UcO5p6EFFiioUSSIGFPg=;
- b=xVGvStCENnFczkzAR/ogEmsqDF+z5kj/TkWL56CgzReJueK76iizwF3pBv0VjF/s03
- gs0L7aFx/hs5ug/Ay6TaWfMtrBlfCiGNo4JvcStxPZIFBbSBaAADW3jFhhyOBVLYvl/0
- PPsCMDcM4gTiQ/T5X1yZT9awCRWWMrwYiB9W37tqImMqQpa6JYU3eYl/9TooyM+PUhlf
- 3UkDnlM2FLqgR77xY3nGzTj1YDe/haJ7F1Zc++vFZ3RFRgffnC+aDL9hS+L9pZEaejPA
- BU9JUB7IKcaZiwVcBtOx8YJLoOG94EvuPEQViTtpopV8GyE+FRw89iWghG7el4irNEBJ
- WKYA==
-X-Gm-Message-State: AFuF++nN3AlEoHnpS6132vVSKUxFg0HDcr9sacAYi4G5/VpGAxSVwWR5
- XNRY6Jb+QlMe6nkgeKBALYulFBZ7zJk0qv3QyvxW+Xu1F9KugyPQdUnge5Lyf+HDy6Q=
-X-Gm-Gg: AYBFou2JXXKIwIcJigLGkUCq499u56AOyE7H5njgrWmcBTtYtkxKXeBgk//RGhRVaoz
- 3a4CMyc/z9kOWr8Tf1ldZU9Sqjvnp8zzyObzh1mLx5YU9541LS8ZEu8y76JeWm0KlbN1OaaRtql
- yxQsJ7OIuC6cjrMc9LGJI7STdm/YtmC3Ct1S+SPkK/KtxXZ05Dec3UDs8DVLJWXkbUnYR8baxlE
- afJMMn5JSKGRI612prG2iIz3NgLhne9EK65RJFKDiCMwZwFeAVy8lJXayVuDEU9BmnTCpCP/XvH
- yu/UX55S7cDf8p1kxEsbmTr8Zr5Ka0CdCuZQ2AuZVoV+KE8BCgzknZURlOS2sms1Tj+Ad8Cz0l+
- ukR2xvBI5Ly/rdAwnV8hygWcuG5HIM+21wRx+Ku3Pqzcq5QN3fQh5rvfW42SilheCwyIcmoX8+T
- 9ZzpPIGeeOSR+3x3VIC5tNX57PYM8W3W3ec0sUnsPoOXI/oi6HP4q300qrYD0c8f2sko0Kuw==
-X-Received: by 2002:a05:600c:3b10:b0:49f:fbad:29c1 with SMTP id
- 5b1f17b1804b1-4a01b133c13mr36246665e9.33.1790786816126; 
- Wed, 30 Sep 2026 09:46:56 -0700 (PDT)
+ bh=Mm5yOz3FMOhLwxnWcg4dJcf6/YApzSZu5a2Cjgw36ho=;
+ b=0/LSAWoFL5Co5GAAdbT1AdTNXpzjTJ1kDFssQAahwkRmmoK/YIzQ94Z6SkXqBzl2Yn
+ QfJTW7VDxptlyBImReU1s6oqknY+anYJ2HuY1AkzYP12moQzz7u/LnfxyySOwRvXHHNd
+ 3r7Anu4iXvt55m8ng49tlqwSQ338AFqPG8e2jLHWgXdmmcD9aPuGCUwTPJgjA1Veg1GJ
+ x7dcyKgM8O91pxT8/2/HvAeS3bJVFPoQsARCCIaKXneELtVMNC8AAdTZi2z+ZYbPyeF8
+ HOydacG+mty98rNhmNyPlvP+1tcGPCa+TO8wXSwmY0lBXc190TfHTyIfvVmTJNAC4n0Q
+ 7Oyg==
+X-Gm-Message-State: AFq9FYJfMjzEYC8T6SEf9saYhYkNgppqKxJTMYht+PC4LWwbdwas/Ryr
+ Kme6xoG45t8S0LcF0TBoedVCxLsZvjg4C3dHtfDwLtV/3PVgRdiu9S++MivqBNXo+CU=
+X-Gm-Gg: AYBFou0VtqvMJWRJExirxwcIND6j6nqxDW2pMBmjA09Yujm37XEFixSXXY1RU3YGCN9
+ 4ezFk+i/SDGjyZNPNvLPX0SogiN8I2gPgnxjuXgLCezOP/hQC2qTK6ry5EAgrEIuf93ogspO+Ze
+ N54+2uUv0S0X+PKaHVtyqAZUPba+ZLZG2xjR42uPHb/kfCqbifDapP0TuW5u8U6XLoJah3C6faA
+ 3/8r0PrTb4HpG30mx8NfE/8T/tVDrxZgrN3oibqDcDT2ezgylWM5ro4MUDY1i5TQG+SbkOF3eaT
+ sHGgoqkaTB1Cyico6F9WuzN6XRrdsRrEf/E8Bzxrl3OEImUCtUOT8SVj578URJBLAXur8nV0Lvd
+ RLZ0mgcV2tNQSl0Gjmrw4aa8e3wmgzefV4eX2jbHFVyXvhr6q5onJ5+rV2sQRXGIfdgk+yinVhI
+ JANxKq2wqDJ/Ygau4TxuhvCyrH58lnPzrHgI9CRtxZvPfokfKeztEz60xVeyIiRSbvRQoeMA==
+X-Received: by 2002:a5d:588a:0:b0:488:8752:bc91 with SMTP id
+ ffacd0b85a97d-48b02457277mr4854734f8f.2.1790786818728; 
+ Wed, 30 Sep 2026 09:46:58 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01ebadfdfsm2601245e9.14.2026.09.30.09.46.50
+ ffacd0b85a97d-48b068bc9b1sm331787f8f.4.2026.09.30.09.46.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 09:46:50 -0700 (PDT)
+ Wed, 30 Sep 2026 09:46:56 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E8C785F917;
- Wed, 30 Sep 2026 17:46:49 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 56C5B5F9DA;
+ Wed, 30 Sep 2026 17:46:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
@@ -86,28 +86,25 @@ Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
  Eric Farman <farman@linux.ibm.com>,
  Anders Roxell <anders.roxell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>,
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org (open list:nvme)
-Subject: [PATCH 02/13] tests/functional: add migration diagnostics and pace
- nvme activity (HACK!)
-Date: Wed, 30 Sep 2026 17:46:38 +0100
-Message-ID: <20260930164649.433573-3-alex.bennee@linaro.org>
+ Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>
+Subject: [PATCH 06/13] tests/functional: allow tuxrun tests to be passed
+ "accel"
+Date: Wed, 30 Sep 2026 17:46:42 +0100
+Message-ID: <20260930164649.433573-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260930164649.433573-1-alex.bennee@linaro.org>
 References: <20260930164649.433573-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:30::e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,89 +120,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a hacky patch for comment but I've included the diagnostic
-hacks to the migration test as well as my workaround to get itworking.
-
-This test was failing on my KVM system. On investigation I found the
-nVME activity meant the migration never completed. I ended up
-inserting some sleeps into the workload script until I was able to
-get it to run.
-
-*NOTE*: obviously this can't be merged as is but I think we could
-certainly do with more tracking in the test to see when things aren't
-working with possibly the sleep as another patch.
+For some tests we are about to add we want the flexibility to force
+"kvm" so give them that ability.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/migration.py                 | 37 +++++++++++++++----
- .../functional/x86_64/test_nvme_migration.py  |  1 +
- 2 files changed, 31 insertions(+), 7 deletions(-)
+ tests/functional/qemu_test/tuxruntest.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 8d2428efc24..e51a82c22f4 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -22,18 +22,41 @@ class MigrationTest(QemuSystemTest):
-     timeout = 10
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+index 6c442ff0dc4..ca1589fea37 100644
+--- a/tests/functional/qemu_test/tuxruntest.py
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -65,7 +65,7 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
  
-     @staticmethod
--    def migration_finished(vm):
--        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-+    def migration_finished(query):
-+        return query['status'] in ('completed', 'failed')
+         return (kernel_image, disk_image, dtb)
  
--    def assert_migration(self, src_vm, dst_vm):
-+    def wait_for_vm(self, src_or_dst, vm):
-+        "Track the state of one VM in the migration"
-+        current_state = last_state = vm.cmd('query-migrate')
+-    def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
++    def prepare_run(self, accel, kernel, disk, drive, dtb=None, console_index=0):
+         """
+         Setup to run and add the common parameters to the system
+         """
+@@ -79,6 +79,10 @@ def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
+         self.kcmd_line += f" root=/dev/{self.root}"
+         self.kcmd_line += f" console={self.console}"
  
--        end = time.monotonic() + self.timeout
--        while time.monotonic() < end and not self.migration_finished(src_vm):
--            time.sleep(0.1)
-+        self.log.info(f"waiting for {src_or_dst} to complete")
++        # have we specified an accelerator?
++        if accel:
++            self.vm.add_args('-accel', accel)
++
+         self.vm.add_args('-kernel', kernel,
+                          '-append', self.kcmd_line,
+                          '-blockdev', blockdev)
+@@ -118,6 +122,7 @@ def run_tuxtest_tests(self, haltmsg):
+     def common_tuxrun(self,
+                       kernel_asset,
+                       rootfs_asset,
++                      accel=None,
+                       dtb_asset=None,
+                       drive="virtio-blk-device",
+                       haltmsg="reboot: System halted",
+@@ -130,7 +135,7 @@ def common_tuxrun(self,
+         (kernel, disk, dtb) = self.fetch_tuxrun_assets(kernel_asset, rootfs_asset,
+                                                        dtb_asset)
  
-         end = time.monotonic() + self.timeout
--        while time.monotonic() < end and not self.migration_finished(dst_vm):
-+        while time.monotonic() < end:
-+            if self.migration_finished(current_state):
-+                break
-+            else:
-+                last_remain = last_state['remaining']
-+                current_remain = current_state['remaining']
-+
-+                if current_remain > last_remain:
-+                    self.log.warning(f"slow migration {current_remain} > {last_remain}")
-+
-             time.sleep(0.1)
-+            last_state = current_state
-+            current_state = vm.cmd('query-migrate')
-+
-+
-+    def assert_migration(self, src_vm, dst_vm):
-+
-+        self.wait_for_vm("src", src_vm)
-+
-+        # if we hit this we never completed...
-+        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-+
-+        self.wait_for_vm("dst", dst_vm)
-+
-+        self.log.info("checking everything is OK")
- 
-         self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-         self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
-index 890f0aab6d6..58596f63cd3 100755
---- a/tests/functional/x86_64/test_nvme_migration.py
-+++ b/tests/functional/x86_64/test_nvme_migration.py
-@@ -109,6 +109,7 @@ def launch_source_vm(self, vm):
-                 rm -f /tmp/test_nvme_mig_workload.iter_finished; \
-                 echo 3 > /proc/sys/vm/drop_caches; \
-                 find /usr/bin -type f -exec cksum {} \\;; \
-+                sleep 0.3; \
-                 touch /tmp/test_nvme_mig_workload.iter_finished; \
-             done) > /dev/null 2> /tmp/test_nvme_mig_workload.errors &",
-             prompt, vm=vm)
+-        self.prepare_run(kernel, disk, drive, dtb, console_index)
++        self.prepare_run(accel, kernel, disk, drive, dtb, console_index)
+         self.vm.launch()
+         self.run_tuxtest_tests(haltmsg)
+         os.remove(disk)
 -- 
 2.47.3
 
