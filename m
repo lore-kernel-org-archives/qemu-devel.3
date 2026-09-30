@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBD5CA5FAC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 11:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF84CA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 11:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBspw-0003A5-EY; Wed, 30 Sep 2026 07:51:00 -0400
+	id 1xBsqA-0003D6-Bt; Wed, 30 Sep 2026 07:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBspq-00039Y-Q1
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:50:55 -0400
-Received: from smtpout4.mo536.mail-out.ovh.net ([51.210.91.13])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBsq1-0003C1-Ad
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:51:06 -0400
+Received: from smtpout5.mo538.mail-out.ovh.net ([51.210.91.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBspn-0006W4-J7
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:50:54 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [79.137.60.223])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4hvtfG5qxSz892l;
- Wed, 30 Sep 2026 11:50:46 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 30 Sep 2026 11:50:46 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.126])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hvtfG14WYz1xp0; Wed, 30 Sep 2026 11:50:46 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xBspz-0006Xh-0s
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:51:05 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4hvtfV6SJWz6FHN;
+ Wed, 30 Sep 2026 11:50:58 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 30 Sep 2026 11:50:58 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.181])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hvtfV1gNCz6MYj; Wed, 30 Sep 2026 11:50:58 +0000 (UTC)
 Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id B22B712E2C12;
- Wed, 30 Sep 2026 11:50:44 +0000 (UTC)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ CE6ED2402C14; Wed, 30 Sep 2026 11:50:56 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007d8678fd3-31dd-4ff5-accd-51b974f00b4a,
+ (GARM-102R004d9bbd85d-d0f0-4634-ab3d-d1531c030f3d,
  845F429D393748294ED5D50D12AC6EB9B2213B76) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <0cd87753-da91-44ed-a629-43099bfb820d@kaod.org>
-Date: Wed, 30 Sep 2026 13:50:44 +0200
+Message-ID: <4db6a945-eabf-43c3-9525-698eaf1fa638@kaod.org>
+Date: Wed, 30 Sep 2026 13:50:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/11] hw/arm/aspeed_ast2400: Use unimp array and table
- for unimplemented devices
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
+Subject: Re: [PATCH v1 00/11] hw/arm/aspeed: Use unimp array and table for
+ unimplemented devices
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Kane Chen <kane_chen@aspeedtech.com>,
@@ -53,8 +52,6 @@ To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
- <20260930072501.2612119-2-jamin_lin@aspeedtech.com>
- <941d7bb6-3205-44cf-8d76-ffbb322a6f4e@oss.qualcomm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,23 +96,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <941d7bb6-3205-44cf-8d76-ffbb322a6f4e@oss.qualcomm.com>
+In-Reply-To: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 17840446974990593084
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 17843824674993974283
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEzP8T0Jb+SNR1FU2qPTmwx51Jo3dFRk7pAs5kLcbtFj5EcAmC/k+g2Mgs6f0jwRXnaYLiV+Ar96CtA63yntHKLSPfJ63KjaOGJhXFv3jsytAknviOx9dU8FushiRvTx6MAUeARSZYh5wLhduPwfwE2cFXLFhMHadwwh4axGXjIgcHT+fUNBF46guXb1/5cp6ziWKuON7jwpPesm6U/v7rZRX86WonK+ChdDfuXHoT6Q/ApWZRrbcaXiNWDvJqXlgRsY8p/ztly2ohAtEzzFBurN3dRAGwoeaAohfBD6PyJ9LR+Rknf4q6fToqdXSq5Y11HmYae1RM+aMdRDLlB8UeDPHucf6lIzrSSaA+x4oF/roasZsPLEZuCYowoLmmYIsJkz9DQCceM9r83QbYVpv7oQJBTKv/QsPlVOLvT2gRbvGvS6WRfrQ4qLNU7sF0/f5vJKvYupOP9yMGZMgnLP3iYaSA7+c0v2wtJKRmSP5bZY4rHQCpdUDWVHhniokOx4WuBFY0aWU+lxR39U1m7OAxYh0VX1g2uatIHOjIovd4rjCS5h6mU5Y3MSy6oQDx2RvBgAlePUqUkfbPIsB18BJMFcoUnvhtKTVaVHLnkTaVscWMHCMMmIBPjV3mmMO+rd+q/LE3RtKr2bgyGvhQmfQzB3YMwUKy73ndxH6ckAamUjQ
-DKIM-Signature: a=rsa-sha256; bh=FZqEsyg9YU29nqN0gg6LcM4UbOtnOb8/Cm1FZVhplZw=; 
+X-VR-SPAMCAUSE: dmFkZTGwH0hfXj7SpnqDE+HPItNCRDLZ54cy1hX/mqcEWGKf2nSkwJh2koLU+g2CRzJL91M6SOdjrGqbt2Uuyc98K1uGg3L0sgoM1h9QLI7rfsB3B636lA1vpsj2FSF9tQu4kDJQl9P5LoETeeX5DYlktZdINVTV65CbgdLaEnevAw7QW69hNBM4yyEMNj25C9f/CR2EilLXWb0VFdqqS6PEx1gb3qnLNMy/HX7CC4ZRRjeW/jbofwiElSYaDY0eTJTYnF/tusf1DSUsWUA1MUzhOhGeJf0c+4iToCpPWPjk9fO9Wgv+Ni1uFYjPuRvAWjxIkvrMsmOGu4yEp3tvv/uHHxf3q0+p8P+uXqowSK2AG6IrQx6tAiqvE7FT2cO3D2vn3FPakp/PJwU1y6xb5/jVWLGx0hINScSQ1a8s4oyTp8PThBH3lOTKPxNvg6wsniJgov5T164mMazfqq21hHfEK5NvqVCV4Txaw4Exz1+dXgX57HRyMgYcgA4AYs6JiqM9XbyLnzIZppbW9qwEzVQrvzIIKA/eVPNfYtVnp7HEiBDaQlOr9l5NdhHPMOUw60pg+xFBqFxnTDi0JRzgVkYJTooaQhRtAQHDzDxHaFrEjri0qlwJdPOHA+ppiGtL2wM7OxmLWRs3C+6mXymYNA9g93JxpAPWRlr7lk8jqFyNO8ioFA
+DKIM-Signature: a=rsa-sha256; bh=9PjkOAvELwTljUa9P2dswAE1hmvR57HrCxmaoqvtiCY=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1790769048; v=1;
- b=QGSPa62v1ab3LUwSTdmHrDhmOxD62qPtlXipB4mzaIxIe/0k10ZPZGKXB4jSRssfHIOEnVbt
- bgmIzFDIRO2fmlsUif+8Jhs3YObe85MSnjbuDh0t7e0JbQVgqvrayrWuKxYAMdmMYq1OKpwHE2W
- TYIoJ5ZRf+JLCnuIJW4vTW/JNn/xn3MyH8OK9J13Gp2w9oZYr/6+Z3HnzoWWrn6SijGFYEsH/Al
- ZMcUf5qQPgjNQlBz87Swa/zzLqT1/5pUyQcouv8SWzME0g81BgUSy9meSL/ZEyndbHLcbHQN3x/
- hoNfi4S/D0Yoda5mEZKpGS4p0IYgYtjlPxyqKNpWkzEdQ==
-Received-SPF: pass client-ip=51.210.91.13; envelope-from=clg@kaod.org;
- helo=smtpout4.mo536.mail-out.ovh.net
+ t=1790769060; v=1;
+ b=kA2w69VHb6xAO9ExABP+2LrELXli0M8CN2XTwH94rxIeRMBtZK1dDskj/GEbRxi/evG3Slhj
+ 1TsdlDPQ0vlrmf+P+DqJ8bxQc0nJt0raRrpi1t+UcT5IOUdr9bbGc87EnZ4tZLxB1JIGuhWazI0
+ RjcJKB/L14ymmE6C+NKhc+ZOFnokpEEowl1QNTHefoNhIqSkBTPTdnuB0BTnVYMj8rXLOAOUz32
+ WWHBYPQEiH5G70qLeWdepwN+sRMR0yNHzMpDMkoyBAMLcJKNNvTSLpWWBpusAFnM5A9k+ISI9NR
+ IvEHgeG4xOQa5z6NY3CwRLqns+VBYK7vDcwm7eDaCLygw==
+Received-SPF: pass client-ip=51.210.91.34; envelope-from=clg@kaod.org;
+ helo=smtpout5.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,12 +134,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Note to Peter: I really think keeping duplicating the
-> UnimplementedDeviceConfig structure is a basic software
-> development antipattern. Could you reconsider your objection?
-What's the background ?
+On 9/30/26 09:25, Jamin Lin wrote:
+> v1:
+>   1. Use unimp array and table for unimplemented devices
+>   2. Sort device IDs alphabetically
+> 
+> Jamin Lin (11):
+>    hw/arm/aspeed_ast2400: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed_ast2600: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed_ast27x0: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed_ast10x0: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed_ast1040: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed: Remove unused unimplemented device fields
+>    hw/arm/aspeed_ast27x0: Use unimp array and table for unimplemented
+>      devices for SSP/TSP
+>    hw/arm/aspeed_coprocessor: Remove unused unimplemented device fields
+>    hw/arm/aspeed_ast1700: Use unimp array and table for unimplemented
+>      devices
+>    hw/arm/aspeed_ast1700: Remove unused unimplemented device field
+>    hw/arm/aspeed: Sort device IDs alphabetically
+> 
+>   include/hw/arm/aspeed_ast1700.h     |   3 +-
+>   include/hw/arm/aspeed_coprocessor.h |   5 +-
+>   include/hw/arm/aspeed_soc.h         | 195 ++++++++++++++--------------
+>   hw/arm/aspeed_ast1040.c             |  49 ++++---
+>   hw/arm/aspeed_ast10x0.c             |  64 ++++-----
+>   hw/arm/aspeed_ast1700.c             |  42 +++---
+>   hw/arm/aspeed_ast2400.c             |  33 +++--
+>   hw/arm/aspeed_ast2600.c             |  53 ++++----
+>   hw/arm/aspeed_ast27x0-ssp.c         |  56 ++++----
+>   hw/arm/aspeed_ast27x0-tsp.c         |  56 ++++----
+>   hw/arm/aspeed_ast27x0.c             |  49 +++----
+>   11 files changed, 287 insertions(+), 318 deletions(-)
+> 
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
