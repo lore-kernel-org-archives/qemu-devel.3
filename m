@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E41CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 19:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152D0CA5FC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 19:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBzwh-0004Rm-8a; Wed, 30 Sep 2026 15:26:27 -0400
+	id 1xBzwg-0004R3-Gf; Wed, 30 Sep 2026 15:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dominic.plunkett@gmail.com>)
- id 1xBzOy-0000pq-Bh
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:51:36 -0400
-Received: from mail-wr2-f12.google.com ([74.125.225.76])
+ id 1xBzOx-0000pL-2J
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:51:35 -0400
+Received: from mail-wr2-f41.google.com ([74.125.225.105])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dominic.plunkett@gmail.com>)
- id 1xBzOv-000810-LV
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:51:36 -0400
-Received: by mail-wr2-f12.google.com with SMTP id
- ffacd0b85a97d-4843c3ee4cfso2943217f8f.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:51:30 -0700 (PDT)
+ id 1xBzOt-00080n-Kv
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:51:34 -0400
+Received: by mail-wr2-f41.google.com with SMTP id
+ ffacd0b85a97d-4834977ae75so3511115f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:51:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1790794289; x=1791399089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=r7i1IrT64o/7fZxNRm4nqi6zq1D/+yliH52iOpwnxDA=;
- b=notd2bkNnE833Aai97qG7Pbm7hEv1h9F6yS3TyxWXHU0Gsd1uqGWt/qfc8NIJFXeMg
- ztX/dQ3O7tZAXbKb1y3SLcrY+a+RSJYEiltGdPGAw9T9rgKNRVMAhIv0B+ARwjMjTZST
- jqkBZznr2AnJ/Qlva4U8X2ALIVQM6YVwq3EgZEBNYSGi9WimQ2C8vaa5lP1MTPz7jO4u
- BGTyA3C0m1UDAaoF0pk4qmq6SPuEj2qAIDVR+n7C2hte92L2YRAzRlN+DN+kZ6FIbUqt
- 7wGICGJhOk5JrSxwhqDoeeLA8bZyniNaOam824Rnm9mg+mT8IzHvNt//KxJmYn6LjUv9
- 9wzA==
-X-Gm-Message-State: AFq9FYJ8IKQIFQOeg57uD4XvSnfwSdbIs+DWB40VEMGumE21wADGsSQr
- KW8gV2MUUD2Uof7RS7vJWOOXH42Iq5E9Js1zHTQx0ZbMk9QRCbDaMZygHQNppCDA
-X-Gm-Gg: AYBFou1fjdD7zCnzBEG5gnJWDLazywsJMF6wq/NxaoIn/iRE2hLnU9hSNxE2iR7J05p
- UKn3iOuZ138NRgQj/mxuJZu5TSI51jiy5V0BAiblMpw8lTpTjH81Yfayn6tZmQ4blYmNiutZ2Oy
- razKhBsHRv4wey6ZpJ+GNvEnG+wSkmmzHc3TXAeEcCs6GyhFfllmJP+GKT6R/zDvpNiLOHYes2h
- moYn/Xkd/i5An5BM5daci05jljLMtpYzzjAemWiBnAlyCoITUdlMDnumlf6HVtejtNkI8I1uLKc
- OimGxuO+YykF5c6GpKTu2fNX5P5y9Rdh8WuiCV6M0IDEWcf8zIhDaRRK9xt4fBjou6RyOCJZOW+
- JUOKtZ1qkJVB17Ufjf3KaisLkICNFJt2eC7XDMNHJI0GIVgBTXtHumNWpo8V7NrvQR8it1QVzqt
- HXdalZvsA6rIJnxzeZOk58l3RZRpyEKu4pA9sMx4aZLwH1429IN3evqXI=
-X-Received: by 2002:a5d:5e84:0:b0:48a:f11a:c34a with SMTP id
- ffacd0b85a97d-48b02579290mr4487724f8f.52.1790794289597; 
- Wed, 30 Sep 2026 11:51:29 -0700 (PDT)
+ bh=vqQmC6CDMlPYibl5/L6XkExEQME5eKRF7tUaPmypv+M=;
+ b=sVjMkCwDGu5svak/ihf9vGrEfBPQdnwtXUqFpC/6R/No8iMT7iePk1aQIxgPq9avcC
+ DK8K/HSW0TfsYJD5x0d4SLIl+TKP6+4lH/XtbDUTGSMY3b6QDWLtOM19ZPWkX9PNpMb8
+ 60FOTddCYgkBQh64HR/8NPLj2iNcxbLUKf2NPKD4osi4oFLBnz+sS4s8egsu+ZL5gduC
+ TBlKcfbln19lBs/WpFe/YhN2Mb7Z6pF4dNOtSIFjLifNEO0gU/oDFbDqS7sJRfReFQvh
+ cBnFATNegL/xqiw9wV75vluSVC3WcYN68+6OzTvgshZ0ApqqnDryZoKGAqbEFiB4o4TJ
+ gXzg==
+X-Gm-Message-State: AFq9FYKTHJT/nKuKHZ8ROh9nE9InnQxhXroPmH5JYCDgQI+6M1HL5tC+
+ gku9zCH58QYQrg5SRg1NmcYKtVAX7uTfcADQZTm1sMm2+MzhnejhU2aotd1/4uHe
+X-Gm-Gg: AYBFou2kHjt8FJiSjt8tX121fPVAAf4QudC6s55eSSDDQyP2f0y6lBFADiq4UZ6Npwk
+ lsl45lHAlhLhK7zg+gD5w8CDyxW/60tkQVviHBZZKKNQ5Rgfd123hQMOGMCNxopqP2L1GYh61ar
+ a8lhUIU16ao67kFalh/LsZtI6bXRS7I1O+VpTjRTAh9sJm8kOh8wMBvpX85a1Q4axU6StLYglk8
+ 8rF4LdMiUEHAM+bkY+2c8w+wVx9dVIc1RBr58/1ulYbzRqvGJh/Xtn4LUC43tNq6Hej0k8kpsps
+ Lc8QbA8Cs6+Z+y3KBXJcrL7gb8NCzGd0IyAjuLxafH0nS8tAOz9Ch1wq7lM0ayT8kxZxXnCM3fK
+ E+BGAUdrCYXE1SScyy7V0XCXOhrusfNSQaAc11QrnhG2lIiFlIY+R0OtoQ9VI9aS9L+wiwlI6ym
+ XD0brMn6R8sntsBUOWwXgzOGw1fELeG5BqU+jnALeAYj8EOkD011Wz9Vg=
+X-Received: by 2002:a5d:5846:0:b0:48a:f215:c67b with SMTP id
+ ffacd0b85a97d-48b0251d247mr4972583f8f.37.1790794288662; 
+ Wed, 30 Sep 2026 11:51:28 -0700 (PDT)
 Received: from tower ([185.182.52.52]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b068ff96dsm1162790f8f.8.2026.09.30.11.51.28
+ ffacd0b85a97d-48b068ff96dsm1162790f8f.8.2026.09.30.11.51.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 11:51:29 -0700 (PDT)
+ Wed, 30 Sep 2026 11:51:28 -0700 (PDT)
 From: Dominic P <gcc@gcc.dp11.uk>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- pbonzini@redhat.com, qemu-arm@nongnu.org
-Subject: [PATCH 2/3] tests/tcg: Add tests for sign extension after rotate
-Date: Wed, 30 Sep 2026 19:51:23 +0100
-Message-ID: <20260930185124.3036980-3-gcc@gcc.dp11.uk>
+ pbonzini@redhat.com, qemu-arm@nongnu.org, qemu-stable@nongnu.org
+Subject: [PATCH 1/3] tcg/optimize: Do not derive s_mask from rotated s_mask
+Date: Wed, 30 Sep 2026 19:51:22 +0100
+Message-ID: <20260930185124.3036980-2-gcc@gcc.dp11.uk>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930185124.3036980-1-gcc@gcc.dp11.uk>
 References: <20260930185124.3036980-1-gcc@gcc.dp11.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=74.125.225.76;
- envelope-from=dominic.plunkett@gmail.com; helo=mail-wr2-f12.google.com
+Received-SPF: pass client-ip=74.125.225.105;
+ envelope-from=dominic.plunkett@gmail.com; helo=mail-wr2-f41.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -89,98 +89,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover the rotr_i32 (ARM ror) and rotl_i32 (i386 roll) forms fixed by
-the previous patch.  Both tests fail without it.
+fold_shift computes s_mask for a rotate by a constant by rotating the
+input s_mask.  The result is not a sign mask.  For TCG_TYPE_I32,
+fold_masks_zosa_int then ORs in INT32_MIN, which can make it look like
+one: after sextract_i32 x,0,8 (s_mask ...ffffff80), rotr_i32 by 1 gives
+0x7fffffc0, which becomes ...ffffffc0.  A following sextract_i32 0,8
+is then folded to a mov.  rotl_i32 by 31 fails the same way.
 
+ARM, qemu-arm exits 255 instead of 7 (correct with -one-insn-per-tb):
+
+    ldr   r1, [r2]        @ *r2 == 3
+    sxtb  r1, r1
+    ror   r1, r1, #1
+    sxtb  r1, r1          @ dropped
+    cmp   r1, #0
+    movle r0, #255
+    movgt r0, #7
+
+i386, the same with rotl_i32:
+
+    movsbl %al, %eax
+    roll   $31, %eax
+    movsbl %al, %eax      # dropped
+
+Handle rotates like the logical right shift and let fold_masks_zo
+recompute s_mask from z_mask and o_mask.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
 Assisted-by: Claude Opus 5 (Anthropic)
 Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
 ---
- tests/tcg/arm/meson.build          |  1 +
- tests/tcg/arm/test-arm-opt-ror.c   | 21 +++++++++++++++++++++
- tests/tcg/i386/meson.build         |  1 +
- tests/tcg/i386/test-i386-opt-rol.c | 21 +++++++++++++++++++++
- 4 files changed, 44 insertions(+)
- create mode 100644 tests/tcg/arm/test-arm-opt-ror.c
- create mode 100644 tests/tcg/i386/test-i386-opt-rol.c
+ tcg/optimize.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
-index 8f70411dfd..fd82b5c7a6 100644
---- a/tests/tcg/arm/meson.build
-+++ b/tests/tcg/arm/meson.build
-@@ -39,6 +39,7 @@ tests += {
-   },
-   'pcalign-a32.c': {'cflags': ['-marm']},
-   'issue4448.c': {},
-+  'test-arm-opt-ror.c': {'cflags': ['-marm']},
- }
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 1e4d2a0a42..27b7682bd5 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2703,9 +2703,12 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
  
- # Vector SHA1
-diff --git a/tests/tcg/arm/test-arm-opt-ror.c b/tests/tcg/arm/test-arm-opt-ror.c
-new file mode 100644
-index 0000000000..2579168a13
---- /dev/null
-+++ b/tests/tcg/arm/test-arm-opt-ror.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
-+
-+#include <assert.h>
-+
-+int main(void)
-+{
-+    /* Load from memory so that TCG does not see a constant. */
-+    volatile int v = 3;
-+    int x = v, gt;
-+
-+    asm("sxtb %1, %1\n\t"
-+        "ror %1, %1, #1\n\t"
-+        "sxtb %1, %1\n\t"
-+        "cmp %1, #0\n\t"
-+        "movle %0, #0\n\t"
-+        "movgt %0, #1"
-+        : "=r"(gt), "+r"(x) : : "cc");
-+    assert(gt);
-+    return 0;
-+}
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 04d438a062..4152371a3f 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -28,6 +28,7 @@ tests += {
-   'test-i386-fxtract.c': {},
-   'test-i386-fyl2x.c': {},
-   'test-i386-fyl2xp1.c': {},
-+  'test-i386-opt-rol.c': {},
-   'test-i386-pcmpistri.c': {'cflags': ['-msse4.2']},
-   'test-i386-pseudo-denormal.c': {},
-   'test-i386-snan-convert.c': {},
-diff --git a/tests/tcg/i386/test-i386-opt-rol.c b/tests/tcg/i386/test-i386-opt-rol.c
-new file mode 100644
-index 0000000000..e0393147e1
---- /dev/null
-+++ b/tests/tcg/i386/test-i386-opt-rol.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
-+
-+#include <assert.h>
-+
-+int main(void)
-+{
-+    /* Load from memory so that TCG does not see a constant. */
-+    volatile int v = 3;
-+    int x = v;
-+    char test;
-+
-+    asm("movsbl %b1, %1\n\t"
-+        "roll $31, %1\n\t"
-+        "movsbl %b1, %1\n\t"
-+        "testl %1, %1\n\t"
-+        "setg %0"
-+        : "=q"(test), "+q"(x));
-+    assert(test);
-+    return 0;
-+}
+-        if (op->opc == INDEX_op_shr) {
++        if (op->opc == INDEX_op_shr ||
++            op->opc == INDEX_op_rotl ||
++            op->opc == INDEX_op_rotr) {
+             /*
+-             * Logical right shift will force the sign bit zero.
++             * Logical right shift will force the sign bit zero, and
++             * a rotate may move bits unrelated to the sign into it.
+              * Don't bother computing s_mask and let fold_masks
+              * recompute from z_mask.
+              */
 -- 
 2.55.0
 
