@@ -4,114 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF89CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68821CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xByrW-0001RV-Ga; Wed, 30 Sep 2026 14:17:02 -0400
+	id 1xBytk-00021C-IH; Wed, 30 Sep 2026 14:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xByrU-0001R5-3y
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:17:00 -0400
-Received: from mail-yx2-x11.google.com ([2607:f8b0:4864:41::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1xByrS-0003zj-BX
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:16:59 -0400
-Received: by mail-yx2-x11.google.com with SMTP id
- 956f58d0204a3-66e4aa8d882so6504249d50.0
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:16:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790792215; cv=none;
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xByti-00020d-AS
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xBytg-0004EV-FS
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:19:18 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 68UHej5C4160515
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=; b=J6jdMFT+fSCYlob2
+ rbU244Q2gQ/4b95CyNxqfvUb69tuMDw/aMoKuOlooyUZz4SQN4KoSpCkHHsEEA5j
+ CDORfrpC62eYA2pLUxKjM0si3+EbPt9H4nP4vEJ+tTyvCp9A2pzjQZS5h8zm//xd
+ P0NicrxVRGAmTZ1FHqDfGXWnCajz/028K6gpL05gjFUufTa8u6md16/gkkgLrItC
+ hKrMOVH1h3O8xs+zY9DFlF7VfBU6nIqFCX+cNfMso+hdHLDL71nv4ohhc3LpYn/G
+ vo4YakvSI9lXAouXIb8T83VlDkT1OLXc9xfIHtB3l5fnZ5+oo7n/Md2DbDLkSrDP
+ wG0Grw==
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pgf57-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:19:13 +0000 (GMT)
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-4b26d8d2498so8856884b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:19:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790792353; cv=none;
  d=google.com; s=arc-20260327;
- b=cEvw2xcDm2U8PjnrRhtp9CQ5DDaSEDuzqi8iG3OZ+87yoLwZZNS5JpYmMd0Vamom3C
- h4VXWT05u2w8F/44P+KlMuxPv4CzWKx/k4yF8VcHtrtCDVZBAytf5ESKptKVMmJYCPnE
- G6Tfu3Db8MBza5VE/CYnslo1z5umDIptArWNd5nMAuIA/f4+XCUCHdHqnMqDX7urT+3O
- bsgmTOWKNJMgKVtyuqso62nOLVxa0KgstQAtZqYZ9RWQvhucQVoeFNx+rsQ6BOgPcs7+
- n00r3kn40F6TTSDrAma3NNCQN7NqdRm2Y29DpTNAoIT5JB+fof+8QUgujmG+Sr3zep2a
- V/xw==
+ b=Hl9yaiPlbwDpXrZPHES0rQCQ4ZBBUmlZEEh18J6a9cbGK2eKD7GNsOdrdkLesh9Yio
+ Hs/577W6XtiJrW/AkIYJxzxFseMNIVw/vlRuq64TfkQXOzKyyRYClhIoEn3XEq63OgWM
+ enm9VyV2f+3FwNOwXx3Ojv/UyyJv4Sr44Bbwn7e7NgZCIAK70fGCEcY2nARbshj9+0il
+ D/zVFrQsqgLox50nzOe9SKaWUByunbwyADsYjXara6miV4Luz5dtoJxZqSmounTu1cpR
+ 56AD7+j3ZyBPzuGkUi1btsx/PxlfGeown4tCiypdOI7ZaRCAPWoUVugwVQWm9CVdTdR5
+ x/aA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=MtbdXEpG8DpaQ+xxNi+ilmVVIet5CY6WzvlJ0BSki0w=;
- fh=T7GZKU3pqGfZDaVHTkyCxWlgssTqcxXKF3+qSko7WPo=;
- b=LPizgwY8DLLqd0Jtq/hMTynoUk/9ItMNrc9FCBL0H00lXiHhJ1cQEM9SaPk994JXKy
- KbFkoolxp6OBkYtOC18MEqzeW/FxLBLk9avwsCOOKLxBeQBfmta9AVEoO9o+7d5AIfdt
- ixpEGJkHyURzVvog9ip9lINYmCKERgyQs4guwkI5+ShrgxObgKBKx+j/3dwMl87KUGLV
- 9BGS3S+LMJ/Rt+DlixAEbUCwPFn1gh2vB1pafkQBKl0QCDXHrS+Vbb9hfukutul4akmH
- crKXt4jo5DIK4cjI3y/4fyNiBga8sbizlzgQF9jeo6ghhg2h9hH+DsrOiJ5LnXwAfMx+
- IH6A==; darn=nongnu.org
+ bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
+ fh=11nfX6Do8EaL1FMi+r6eKWxDDoA7QEpVbFRn3KjheFE=;
+ b=DkgbIIX5JuhLf4vRey0Jwpa1q+LgMev83xqTrK4JqmXfadA758It67c6oobPhkY2Oj
+ 7Pw7S7eDigXo33OMwN98TUNkl6AVFN/UWldfCRvEb8WOoXFhW406Wbwt+mOIRSK2OkW7
+ tqdTW4pQtkcDt/oatGGSZFTsHd4hWeEEEoWsXFmcoF2ualjNRNaodklirZwgGMluAuFc
+ mYa3uGzCIL0qUrw+eOp/VVZUbT4XCzJlCv9ruizUyrf94FcDag43L7ZBoiG49VzPiVN0
+ 6rU0VVYeyo/e47DuRiqblJNWJir2hoRfhRx2rb90ncJLZWM5h5+FdHwvWDZroyvACZ/V
+ gZmg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1790792215; x=1791397015; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790792353; x=1791397153; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=MtbdXEpG8DpaQ+xxNi+ilmVVIet5CY6WzvlJ0BSki0w=;
- b=O472e8n1m3IirnpuBVAE5KQLFWlkqAoQVsW7wCg4+4J/5KbatOcumGJiMO5KJcQnxu
- EBMqUsb7in9MoAA5L37j+Rum2nUH11ECno0R1ysmT8JE4dhV8OfGYkWyn9WIZOY8rG03
- l1CYvSp7bH2L5wiA+kTvkl/yNePr629I+HI0kfpe8LvzWYo3eRg80Q8BsdTMZh+peNIh
- tsJz7lPko9kos0tGJixKv3xNwUYFySg0mPkQDzViHYZOJW0gRVQAtVbS51XNOpYBuaif
- ZP6GSXAxQbN/DNI/JK9Q5V/I8U0FlJahBd3HEK7lwJKH6UASutEC0mk+bbyKXsFhoeit
- 5KGA==
+ bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
+ b=RZdih1Uent94CCwodQMTWpFZJkC/wD0txi/lHKzKga39rxB+Xw7y1fcFbgToxNUgtD
+ 7eG0hbjHrjgQUtlHZwqhEeBsxA6sYrZ7vMd15I7aVAnH4n5T4mirCBaRPklR3jQ8qzzW
+ 6g8/9sVsLrTLH4/KVTJTQtowEVyoOrjg8+FRVQQOq+GQ3gQgbBQW+s3DZcgA6wq4mbNM
+ wnoa9ORHWOj6dMrUVeiWg1DdWnlduFlFODXm1CELSpUQ9TMyf66fbuLrjeRtAO8JFA6r
+ T1CB+dKYXafV1WvnFm4yMOYiWViEtW4/r8WwiCtJIIGlYrpJlYZKZ9JuTLd82AqxUMQa
+ nerA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790792215; x=1791397015;
+ d=1e100.net; s=20260707; t=1790792353; x=1791397153;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=MtbdXEpG8DpaQ+xxNi+ilmVVIet5CY6WzvlJ0BSki0w=;
- b=uluxYvszemKj8LOlKTdCIPew1ct9Oec3tQ1ZuAGBrlodKr79PHO+ZznKimY/i3dYDl
- jyJ8cKOjWaRgHA0l/RMg3SXnc/9GSYOf0EcfO7g62Ntqt/DRVSk1+tPn6F4MVdgX/ank
- qa/tWRBLH4TB6+Kvg8wOBTrSBCQpUH0yuhiBWdkxtrdyA4SWBd9gEPLpPYyIyrGNUVTK
- h3aiLoIORSFlsFEaalmXlzmbOPEvxsYjKn+2mUWa8hRAwfqW96Diw+9T/jFRsRFPMW14
- 3rWRPLLLTOPzB9DQq4gFtBCmlXn/xzBZxQNrt/a1b4Cw3GZ04wLWNoiUViZRxrLA3fGE
- Aldg==
-X-Gm-Message-State: AFq9FYI7Hp9Koh8u0dMGWACsshi/8kYcT/8zKiyQ/SScZD1W54lg1G0d
- t9r5jElCff2dUvOV4ujSO+3/EPnlP7qgyFUfw230rYyI9Sj8dAHCwWW/8EMl/Xkyl20Y+6AxM17
- HOwWRP61Irv6lvKwU7t0rN0q745fRrg5VLNSkC+r1mA==
-X-Gm-Gg: AYBFou3wnj6vtwsKJwBadjcd7SdO0+ICoOPQs85O0c12TUoT2HAS1rJxvVM51vqa8SD
- ig/fZCX992wAjfxGqFHRjklPrkJUPpBmOuLuFG1Ei00LehNdKR0aTSiU9SmkxYriw3VM0anQXtZ
- LMrgJrKpsqY96nQ3Odnknfy0Pz5fPkJBWRKO8jseDWF3d76ou8PbX0g4F8P3IluFEo6O2MkPqiM
- +Fxi1qhWqWZ7i1+QST6eS2U2GhVno48JceRZz1BMOFO55mVHuFjrH4I7I7GZ8rZro+rJACX7zNC
- UeMbJO6f1fRUWvh3gNO876lwAPDBauyc4N0X4PXLGBcG/v/NS973joOgIzNWw3ZfD8WEE7Rr37a
- 8Ttl1c3+9Sg==
-X-Received: by 2002:a05:690e:1697:b0:671:1ad6:5639 with SMTP id
- 956f58d0204a3-676834acb33mr1425827d50.40.1790792215314; Wed, 30 Sep 2026
- 11:16:55 -0700 (PDT)
+ bh=xEcdHh0kijlBZ1/LtT078dArB4vYOGjCBwXl2ZRbbhQ=;
+ b=p2/tuYCRRmUwIJdmBA0DDLc3mztYHYQ13ujRFGiZAo4z1YCbXhxcuC/KdLrKkHZDD1
+ rYRKTQZFYYucuzqNMWP2n6m8eWc1c/fzwdVSSKf/5xdAjPdjLkvf+TmD/0nOsCqV6BRl
+ JwpV5MPocH9lr7f2scCT6f5yadRuRpkLEhuwHsqEmQ4KmFlFo8FB8hWDNyzRLQJnjYXt
+ P9JP+zZaOdQJGdVh6P1l30GT4d9G7avYwWppkXWD6t1nlrhGUD88UoUku0WcRPG7wC8W
+ aXg/FDZ6Q0QTqP1GcTsTvPb3jxCegtTosHc4wJGmLRt+E/MmeWgDdeXMiTPyiE6COWGU
+ 8Elw==
+X-Gm-Message-State: AFuF++lkal42p8Yu5VV/t614Rl8y4daAOCVaf6opT+B0Zj0gt3HVU/yS
+ bqFoo9gtHMwpQp9zBvfJWYe3wZeQagk1fb69HFcxBvnR682UYQyC0O1fMhTpB5Mey/9WI1mUlLM
+ tP5Q/zk9AeM+bQeFBwFxkb4rE+KilbnZ82DgbqtoaYotNzVQ8+gPj5Hdb5OlcIOuL4Pbc/sUVjv
+ pHuP9mTevbuZ+xwECLYA0uajBn1+nYINDT
+X-Gm-Gg: AYBFou113J6YFkt0PXSeVe94q+YjwEr/lQpwaWhY/7JJPtJXfeJwpXDBC/RGTj7THVO
+ gIKdvu8UZxMNNz+4SveTxphOTyNABGidHPo7ihxPH8w/s2eVBqzJPRlISM51rz6AcKa8btQVUz7
+ PEXLEnRH8nE0pPlkFFkZ0wdN/th8uAvrMyqDHC53jHworPUAK/b2YEwNTMYD5v3uc6hv4shFBtD
+ KvjI18W0l179OE+pw==
+X-Received: by 2002:a05:6808:319b:b0:4d5:27da:a492 with SMTP id
+ 5614622812f47-4f1b9a4cc54mr2192619b6e.44.1790792352523; 
+ Wed, 30 Sep 2026 11:19:12 -0700 (PDT)
+X-Received: by 2002:a05:6808:319b:b0:4d5:27da:a492 with SMTP id
+ 5614622812f47-4f1b9a4cc54mr2192577b6e.44.1790792351895; Wed, 30 Sep 2026
+ 11:19:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260904-atlantis_prcm-v3-0-8bf20795a381@oss.tenstorrent.com>
- <20260904-atlantis_prcm-v3-3-8bf20795a381@oss.tenstorrent.com>
- <CACPK8Xdyg7ZsXzDTAGz6u2wSDPRSsW8mE5yu3+ze_X-Zqiju7g@mail.gmail.com>
-In-Reply-To: <CACPK8Xdyg7ZsXzDTAGz6u2wSDPRSsW8mE5yu3+ze_X-Zqiju7g@mail.gmail.com>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Wed, 30 Sep 2026 13:16:43 -0500
-X-Gm-Features: AclHuK8HCsY0u4is9O7VVlqWlONufxyxdQXW1fXvR1Udje6JaPg-oEHtZNM_2jg
-Message-ID: <CAEev2e-jEBr_HE0gRmmBfYqsaf6LuLxK-d+6brD_Zm4CBm21hw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] hw/riscv/tt-atlantis: Update UART and I2C to use
- clk from PRCM
-To: Joel Stanley <joel@jms.id.au>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
+ <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 13:19:00 -0500
+X-Gm-Features: AclHuK_mxH4xPjZxpF5RchCH3ZJ0lMe-DjH1vjoBjwp02P2-e4SQg7pmzXOZFIw
+Message-ID: <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
+Subject: Re: [PATCH 06/10] target/hexagon: reserve internal HVX vector state
+ for QFloat
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>
+ richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:41::11;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx2-x11.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Proofpoint-ORIG-GUID: eJrQM_VsJy2LIqVOYahZqjsc2xu3r1nJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX/MwxklmgAD7W
+ oGsVS/9JlfN4rSol7s/qy9buB6PjAeefFR9VgeTGnKLO+XLHLgj8yADGRmfq+TA9BDl/BJHwiyI
+ VdSnm98Fwv0eSc8ZV3tSKwkqHxIjRQ0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX3EfngaCYhFug
+ 5VWo/OPGz69O9lcOlEVcVl6a5qZvUbQuWDIjc55V6uMkgJixk1emcRlRXfQy2ePnGx5I9XQgr50
+ FfEcVLVlN730mFxHdn19Po3vPK0k3JIojzEn3tS6IhqjKqOSCpIDEb2dzgWtIjiKsSV7HilayHA
+ zcsdPyxUbg/lxbciiTB51HeUzdjsH2/LQrkH3wFxH6Yel9eFAOdw0nxKbwpNfBmDgUOZ590nzHu
+ lvaFdzeDqQT5/eg3iEHUs9W40HE5ltLTpkINWTQ3OsIpdEX56Eqd8ikr29F+7iuguayo04J1DPC
+ ZdSNhTSD5QmQGPLCE5EGepdi/7Wg6azROgsXnw5XiPhcROVdYNMU3nCPLGV5FeBYFw585d8vHrd
+ X/k17sCIgIyjD58YghXPwF8vzA1i2ptd8jhAWtQSJLtPi9Ut2CRBpSE5KvM7uG5zNt3F8sEtJK0
+ skH7cgwBIO429h/ZkZQ==
+X-Proofpoint-GUID: eJrQM_VsJy2LIqVOYahZqjsc2xu3r1nJ
+X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abd52a1 cx=c_pps
+ a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=nMl2p6oiNZAOWJzd5FoA:9
+ a=QEXdDO2ut3YA:10 a=efpaJB4zofY2dbm2aIRb:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-30_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300075
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,83 +169,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 30, 2026 at 2:07=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrote=
-:
+On Sat, Sep 26, 2026 at 2:23=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com> wrote:
 >
-> On Sat, 5 Sept 2026 at 00:18, Anirudh Srinivasan
-> <asrinivasan@oss.tenstorrent.com> wrote:
-> > @@ -265,7 +265,8 @@ static void create_fdt_cpu(void *fdt, TTAtlantisSoC=
-State *s,
-> >  }
-> >
-> >  static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq=
-,
-> > -                            int irqchip_phandle)
-> > +                            int irqchip_phandle, uint32_t clk_parent_p=
-handle,
-> > +                            uint32_t clk_phandle)
-> >  {
-> >      g_autofree char *name =3D g_strdup_printf("/soc/serial@%"HWADDR_PR=
-IX,
-> >                                              mem->base);
-> > @@ -275,7 +276,8 @@ static void create_fdt_uart(void *fdt, const MemMap=
-Entry *mem, int irq,
-> >      qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, me=
-m->size);
-> >      qemu_fdt_setprop_cell(fdt, name, "reg-shift", 2);
-> >      qemu_fdt_setprop_cell(fdt, name, "reg-io-width", 4);
-> > -    qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 3686400);
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/mmvec/mmvec.h     | 55 ++++++++++++++++++++------------
+>  hw/hexagon/hexagon_hvx_context.c |  5 +++
+>  target/hexagon/hex_common.py     | 29 +++++++++++++++++
+>  3 files changed, 68 insertions(+), 21 deletions(-)
 >
-> The downside of this is we no longer boot with a Linux build that
-> lacks the PRCM driver, like the old build that is used for functional
-> testing in the tree.
+> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+> index 02c54506145..55b8a40fe8c 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -448,6 +448,25 @@ def helper_arg_type(self):
+>          return "void *"
+>      def helper_arg_name(self):
+>          return f"{self.reg_tcg()}_void"
+> +    def gen_clear_ext(self, f):
+> +        f.write(code_fmt(f"""\
+> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+> +                    {self.hvx_off()} + offsetof(MMVector, ext),
+> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+> +                    V_EXTENDED_BYTEVAL);
+> +            """))
+> +    def gen_clear_ext_pair(self, f):
+> +        f.write(code_fmt(f"""\
+> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+> +                    {self.hvx_off()} + offsetof(MMVector, ext),
+> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+> +                    V_EXTENDED_BYTEVAL);
+> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+> +                    {self.hvx_off()} + sizeof(MMVector)
+> +                        + offsetof(MMVector, ext),
+> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+> +                    V_EXTENDED_BYTEVAL);
+> +            """))
 >
-> I suggest we keep clock-frequency along side the clocks node. New
-> kernels with the PRCM driver use the clock phandle and calculate the
-> clock. Old kernels keep booting.
->
-> The other option is to drop this patch entirely for now, and revisit
-> later. I'd prefer keeping clock-frequency along side.
 
-Will add clock-frequency back.
+gen_clear_ext() and gen_clear_ext_pair() currently update the
+destination vector=E2=80=99s
+extension field even when the instruction predicate is false. The following=
+ test
+demonstrates the issue:
 
->
-> > +    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
-> > +                           clk_phandle);
-> >      qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phand=
-le);
-> >      qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
->
-> > @@ -314,8 +318,8 @@ static void create_fdt_i2c(void *fdt, const MemMapE=
-ntry *mem, uint32_t irq,
-> >      qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, me=
-m->size);
-> >      qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phand=
-le);
-> >      qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
-> > -    qemu_fdt_setprop_cell(fdt, name, "clocks", clk_phandle);
-> > -    qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 100000);
->
-> This should stay, it's the bus frequency.
+static void test_ext_bits_preserved_on_false_predicate(void)
+{
+    asm volatile(
+        "r0 =3D #0x11111111\n"
+        "v3 =3D vsplat(r0)\n"
+        "v0.x =3D vsetqfext(v3, r0)\n"
+        "r2 =3D #1\n"
+        "v1 =3D vsplat(r2)\n"
+        "r1 =3D #0\n"
+        "p0 =3D cmp.eq(r1, r2)\n"
+        "{\n"
+        "    if (p0) v0 =3D v1\n"
+        "}\n"
+        "v2 =3D vgetqfext(v0.x, r0)\n"
+        "vmemu(%[out]) =3D v2\n"
+        :
+        : [out] "r"(output)
+        : "r0", "r1", "r2", "v0", "v1", "v2", "v3", "p0", "memory");
 
-Okay, I thought this was a substitute/alternative to the clocks
-property (similar to the UART), so I removed it. Will add it back.
+    for (int i =3D 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
+        expect[0].uw[i] =3D 0x11111111;
+    }
 
->
->
->   clock-frequency:
->     description: Desired I2C bus clock frequency in Hz
->     enum: [100000, 400000, 1000000, 3400000]
->     default: 400000
->
-> (or we omit it, and default to 400kHz. Your call).
->
-> > +    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
-> > +                           clk_phandle);
->
-> This looks good.
->
-> >      qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
-> >      qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
-> >  }
+    check_output_w(__LINE__, 1);
+}
+
+The extension reset needs to be predicated as well. For example:
+
+def gen_clear_ext(self, f, tag):
+    predicate =3D None
+    guard =3D ""
+    if is_predicated(tag):
+        for regtype, regid in compute_tag_regs(tag, False):
+            if regtype =3D=3D "P":
+                predicate =3D get_register(tag, regtype, regid).reg_tcg()
+                break
+        assert predicate is not None
+        cond =3D "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_CO=
+ND_EQ"
+        guard =3D f"""
+            TCGv {self.reg_tcg()}_ext_pred =3D tcg_temp_new();
+            TCGLabel *{self.reg_tcg()}_ext_skip =3D gen_new_label();
+            tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
+            tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
+                                {self.reg_tcg()}_ext_skip);
+        """
+        end_guard =3D f"""
+            gen_set_label({self.reg_tcg()}_ext_skip);
+        """
+    else:
+        end_guard =3D ""
+    f.write(code_fmt(f"""\
+            {guard}
+            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+                {self.hvx_off()} + offsetof(MMVector, ext),
+                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+                V_EXTENDED_BYTEVAL);
+            {end_guard}
+        """))
+
+def gen_clear_ext_pair(self, f, tag):
+    predicate =3D None
+    guard =3D ""
+    if is_predicated(tag):
+        for regtype, regid in compute_tag_regs(tag, False):
+            if regtype =3D=3D "P":
+                predicate =3D get_register(tag, regtype, regid).reg_tcg()
+                break
+        assert predicate is not None
+        cond =3D "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_CO=
+ND_EQ"
+        guard =3D f"""
+            TCGv {self.reg_tcg()}_ext_pred =3D tcg_temp_new();
+            TCGLabel *{self.reg_tcg()}_ext_skip =3D gen_new_label();
+            tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
+            tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
+                                {self.reg_tcg()}_ext_skip);
+        """
+        end_guard =3D f"""
+            gen_set_label({self.reg_tcg()}_ext_skip);
+        """
+    else:
+        end_guard =3D ""
+    f.write(code_fmt(f"""\
+            {guard}
+            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+                {self.hvx_off()} + offsetof(MMVector, ext),
+                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+                V_EXTENDED_BYTEVAL);
+            tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+                {self.hvx_off()} + sizeof(MMVector)
+                    + offsetof(MMVector, ext),
+                MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+                V_EXTENDED_BYTEVAL);
+            {end_guard}
+        """))
 
