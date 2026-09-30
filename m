@@ -4,128 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF79CA5FB1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 02:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36F9CA5FA5
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 02:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBje4-0007bs-Ft; Tue, 29 Sep 2026 22:02:08 -0400
+	id 1xBjdr-0007Vu-OL; Tue, 29 Sep 2026 22:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBje2-0007ak-V1
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 22:02:06 -0400
+ id 1xBjdq-0007VP-OL
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 22:01:54 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xBje1-000372-2H
- for qemu-devel@nongnu.org; Tue, 29 Sep 2026 22:02:06 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xBjdp-000365-7e
+ for qemu-devel@nongnu.org; Tue, 29 Sep 2026 22:01:54 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68TNQHcK484428
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 02:02:03 GMT
+ 68TNQKJt2010202
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 02:01:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=HE7XlXpsGXZ
- wLqu7xkc7+H0x92+GHVv2H2bPnlzV4rc=; b=HIwndWZeqe8DTLvFwp9aCbMhZV3
- C2qf2M2F6f1Y+lx9gt/nenbfTLuqvkO7h59e42LItIJysYcz0hDimMELEhSkck80
- kVZy8B0vA/Wb9VILgq+X3hX5T558xLI69qpDsKRepVeASkbIW2D0Ah8oOTkQQQfy
- hDVlXviA+5cCqaUYPmNDgQUTWjRV8/h9rolTMqUmIRs96FSrvX+JK3ke6slLQKbY
- G/T/qfHPAkVyFkOXst/pmxIy18lfpTvzDML34E6ybB6CmbrbijOESmqnqZIvTsMb
- D6B0MqoFyGy2DyO73hG9ZrMUkcPzDvlgB215uvNXqY0iXWPlP9l3+2Zis9g==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0dsx32g4-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=IivcYLXSjQC
+ JjlTUSpZa7MA1jVfvibsrVhjNPROqgr8=; b=MM6PgONg17hRtCdcElCZc/FjbqZ
+ riwha0Lw+sG7Lkvxc+3OP+o9bklZxJHG7fUnsLoGNKL3LYDtsw2628uC6LHBC+Xc
+ unpYsm+KnCooiEol2zND1/AtEKC7gIGQRGZEhlY/exf+FAhPh3bUl4Cw1ERjbdlQ
+ QmRgy6txHK02Rb1CRnxElJYtXa3LvhTdhSF4JtOzvqGaGcyqVXavBA0SEUfKfR8I
+ o0bK/gw9wfu19JxQwgaWDSDEP1ht6rmGynX626yqkM777JWan2XE4a7XPEtdwHqD
+ ZfZ6xO73yNKkbtisxUVTxn2T4kV+MyRnQG7iWxJVdksVd0qx9ZPlhoZ870g==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0ftujdnq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 02:02:03 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-34bbf2e3c5cso3607962eec.0
- for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 19:02:03 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 02:01:51 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-139b62317d0so1744300c88.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Sep 2026 19:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790733723; x=1791338523; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790733711; x=1791338511; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HE7XlXpsGXZwLqu7xkc7+H0x92+GHVv2H2bPnlzV4rc=;
- b=FxUzwCNZRo7r+hTLMEfcIAnLQSMy1t9vN7tWNofjcJoNLYG4KotS7ky1zsejdCRirF
- 0upUqaMQvNOXPVC0vOiYC5BsS6udMg/4NBWT4P7yZ8uwmJwQ+4nvWx/HLjjY7h6w/fcd
- jqVylPnF8ZqHKod5SpA7dNJCjDX/NAUBUEQdMUy8jaluyKnYc733fwDxE/3WXhK2Qs3K
- gRyLL0FUuXWb4XWvSGjGUwiGk8Ounu+/0YpBS/zlXkK79+ZhCiX2wCjR1tvGPKNaf8MV
- T0BHFL8FMvfNm8ASZ6561P/D6TYunkoMvwW9fnjC0KxJd+04475PfWvqbJ0MZFGPL75X
- e0wA==
+ bh=IivcYLXSjQCJjlTUSpZa7MA1jVfvibsrVhjNPROqgr8=;
+ b=AHXOVot5nEQHt6bLrx/BMuo+m6L6jDWhtIPLGXmTJPzTXnTM4Aod79069EIzK7z+wE
+ 3ehqmfZ2l6NIfXsH5kU0rqyYYPa+L+hrwIZHuIhlOZMB4ooRZGbMyYXSG/uC/wKvUIqN
+ 4rhPyIle69/vc/rG6VLb6YPCKheYuKKibCN6Ihi1c8T1WC2jMJAG/HIj4VaeZ6Tz4yoC
+ arQzocfzGTsw/vaIvEh/RKinZNRWZapALAEVhCUKP9Dzzl4lfOEmGEMgPlEHWMOtyWVx
+ Aa3Pa7EFbMps9VTFHSCpTW/qhA+FWG5LpoLWuz84BOECWMRo6u0UnclsuU7BVMTbrHN2
+ Xd5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790733723; x=1791338523;
+ d=1e100.net; s=20260707; t=1790733711; x=1791338511;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HE7XlXpsGXZwLqu7xkc7+H0x92+GHVv2H2bPnlzV4rc=;
- b=rpxVn/l3VUk2IKkZTcW8bhKoKaiPLt8Ccb5fQtsaHD2+uAI8tAC1h8QDqpVzVy6qmf
- M9mxMUcjhzdV2O3rlQAq5OmE6UKundYVBex67VTTrgGZVQblPcV8ppFQ4pc9ZkXyFqsK
- wX/AF8DA5KNnV/v+aGS7t459zeDLw/yfJ5Z6PtbyNLLgz6WLKAVlxP30DC4CESnw33d+
- vfFGQYRWOKhAkNiktEtVqrAW1vd+bKkJjsCFCUfit6GPdwVqOhM9DJzwuYWtopcEgfmc
- lW4z+pE6odZuWTuOzwQvR5K0vlU8JlKLKE553aIIfdpupjxSvEvej7dafXSats16+6KY
- Q89g==
-X-Gm-Message-State: AFq9FYIP6Y4YhFmJgnHlKb/Mz7K9vM8ecv93uqrv2xoRnuyit846gEzB
- hMxOaaijWygOro2o/Q0sx0zk7ALgofW54xTIrpr5iDV3+evDOkUrbPVdIzHKD4jEltjkIqXoMR6
- 55X2GCLnPwqlk3b1KbGMp5hMaAMDvIPnt7xDwolo5Sn1ckKB6zRVBdewjX71xm9kE2Q==
-X-Gm-Gg: AYBFou1jCkjggv83mTyEslMcVC7NkgRl96jzPZjEeE2Qej/aRGG/bfCuRLDudZTcHMs
- ZnKUpkOvyvwxVwyBHKb6ZnMvMDXhLjadQXYP6drS6YrbGzNmnYDdoKEAYoPn/XmdtShxpAK6VF+
- kDeMPfHmIFHATTrV1OJWJKE8OmVkLLtI9ImTyPRQ9YIvCRarJJs2rzJyy8cjPqHiyiTuRsAUBEd
- SgIpkl/Omqg543nqFTVkJsNsQZvsQ7uWxrfw6zNpsL1FQg3cl9fr3HQ7iPfinb8vP6kLWggfGYA
- JUZmdZD/8I9LwBtIR034AyoUEzf2VwGNxdH7X9lgyDI1krKeP5C/vDx+TMz/HksJ9OTyrZtcFT9
- Y+4SPo1KfNMrBO9CBZgKbXLa65RgA0DnQjJE8hOWLq8GkcaFTg1a0h9ZNhPwT
-X-Received: by 2002:a05:7300:d186:b0:343:9eb1:9940 with SMTP id
- 5a478bee46e88-34ce0836f0emr70353eec.26.1790733722497; 
- Tue, 29 Sep 2026 19:02:02 -0700 (PDT)
-X-Received: by 2002:a05:7300:d186:b0:343:9eb1:9940 with SMTP id
- 5a478bee46e88-34ce0836f0emr70337eec.26.1790733721908; 
- Tue, 29 Sep 2026 19:02:01 -0700 (PDT)
+ bh=IivcYLXSjQCJjlTUSpZa7MA1jVfvibsrVhjNPROqgr8=;
+ b=WyBBqhDbHdY6kaKHqEBZYbODVyuA/O5NrexfSOWdVPffS09WtIDylmHqSFfr0NwP2X
+ VHFtqyB0gRHNMMNTv/wAqhCYq5XYY/OQcHX3qCvEhaCQX28NPr3MPB+jlQSksye/U8Hv
+ JbL3KN86tSSLqgap8qByssteOYzq7i2CznpsGbhW+v13haFi9uRsxjMijdXS+dsszWBb
+ rSTP9sUGtYaQUT+5tKSeH+uvLnW6xZU0m53iArglgpx3t/oN1hM7IL6UlfwUwi5VI2Xv
+ JORcl03fJQkCoiVntPky3lMpmSk6WlbQnvPs4zHQLAG2ij26Sh25WO2uEexwy8876+qe
+ 67wQ==
+X-Gm-Message-State: AFuF++kq4O1mTPLdQe4PKI7tyuqZwDtjDrSfu0vGRBy+EpEeyyRPcwoc
+ WtvktheWXytG039rbSZV55Q0wiVZ4W0tqj9PY2tRgKPvtT2AzKFtMvujeO19uqZL0IpHPWwP05N
+ 6LCz1LAo+KK0NlxZ0agGeyDJ7cmbTtT+CvMhUVKvkw6IDntbxCtPwAPVU+VAuXVi1xA==
+X-Gm-Gg: AYBFou1hM01ejR2H0w5xi7M8Z8DolGHBf3gBZ4z5/yN5d1ebipAYNAqLZyNVUBewNkh
+ ob9vhJ64NsnWY2aNWMUSlQOuW33IchnbvOqERl/qq3RBXS5SCWkik96YQ+SXkLQusz+ynEc3li+
+ PeHzIAVf7iGP9LPxMZoQm/RXjjaRHZjxkIoUhrh7YcW4zvcB7+Smoijy6jhR0D3t6Me7vRwj2MD
+ LCgsko+wS9SquFgWDZsYWkD5saijBctPgS23FJN9GxBr0/FMIeRkUtJ4bXTad/obG3YAB4iF6Au
+ p8uIWELYLg3ym/BGbgvp4dPKAQSs/bLaTqmu/yO2vAR2wAjJ82H2B0pf5eTgWWYNeXu9/NmraR/
+ A++lJgQPx+wZXVmSph9DpmoGncxHHRYdXuh3YG8fY9m3MUJ4pRw/7f6oxNvX+
+X-Received: by 2002:a05:7022:ff49:b0:144:fa75:923e with SMTP id
+ a92af1059eb24-14c9f8e7337mr1726803c88.39.1790733711107; 
+ Tue, 29 Sep 2026 19:01:51 -0700 (PDT)
+X-Received: by 2002:a05:7022:ff49:b0:144:fa75:923e with SMTP id
+ a92af1059eb24-14c9f8e7337mr1726722c88.39.1790733709990; 
+ Tue, 29 Sep 2026 19:01:49 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-34c388cc02esm3174803eec.21.2026.09.29.19.02.00
+ 5a478bee46e88-34c388cc02esm3174803eec.21.2026.09.29.19.01.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Sep 2026 19:02:01 -0700 (PDT)
+ Tue, 29 Sep 2026 19:01:49 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 16/21] target/tricore: prefix helpers conflicting with
- other arch
-Date: Wed, 30 Sep 2026 02:01:03 +0000
-Message-ID: <20260930020108.217892-17-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 10/21] meson.build: add alpha-softmmu to multi-target
+Date: Wed, 30 Sep 2026 02:00:57 +0000
+Message-ID: <20260930020108.217892-11-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDAwNyBTYWx0ZWRfX3o2FBHoPgAVW
- u0F0Kq2vuQ1vXGmYPQb124Znxs8jtY+5lEgAnPIkYe/c+Qivx+lVeosANDchDl5EHlT/JuaZWcF
- g4U9ziAwCHiKySQXsyxe8QnS9BxIN2DHlCwIXsVHZGY8iB7+GRmvT+pF+e6zMa1TWnsEmEhZKMy
- TlyZkQEsuh7rgcrsJA/E7dYm1r/Pkbylu10OiJCsnpFmAm3whdy6+jfGrLKmpMtySa8GhSvvEB7
- GZPtW7t9JGfec3TGt5GFCV2xale9EhCv6s97r5mCKn365vEaBqBs8gKC0giL114/+wjnBr4BfRn
- gvuk0Q32Eywte/c4h5Hje8tqzBdNjAaWbJsfj08jUxhsR05kedQn534LPrJNKDAK98XFiuhtc4n
- R4Mvfq/CH0Ewopr5z8VNgWV5VE9/uNXfpgHqJ4Ry/UhvWPyZCS+Lu375N8ONbvgPMDWIhSadeJB
- ZVJ5X14/2QZdfrps5dA==
-X-Proofpoint-ORIG-GUID: ZZv1Z267rHtVddI1L9aJjCdTofh2HpS3
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDAwNyBTYWx0ZWRfXwhNKDuA6xxvJ
- ViRv8p1xuc/1yQ4LRKX2KuxXYEE1ugYbjn0WE47DFKtCkLrpKF95Po4tFMfqkGipya1fdDku+Eo
- OhhYnsWQ23XaPG224Q/pR8uZIuuEUGk=
-X-Proofpoint-GUID: ZZv1Z267rHtVddI1L9aJjCdTofh2HpS3
-X-Authority-Analysis: v=2.4 cv=DqvDa2/+ c=1 sm=1 tr=0 ts=6abc6d9b cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDAwNyBTYWx0ZWRfX9+zs063BhPYd
+ Mni4D4AOps3ZhblPzHYYH9HsxR9lvXVJNCrDmM08gmlykIwWRf5whASNXGQ06V5cVVPz56rPVJ5
+ QQ/cqLJj06Z6YUYK8A8uKb+mXS2wh7Y1CNaF0Bu1qyH09qtG1AxY5EvdgKxHhWD43/UUSCbzrdm
+ E2kQX7h2P3CFZI+VB6XdIYr05Rm6n/6fmreeRgqyCk+aiiLxUGibyGTfIQNcVwhlrVyG1iBerlH
+ 2ILuZ88htl8qgOxgQGiJ9++cR1OtrYMMbfJA4XNvClvR/bjkX+Nv5BA+J/YbrJrekTOo/7MW9Fy
+ d0gmT75Zfi4kc+Bmxj/cDSnWLiTJlHI+uYuFemeGznyBMog3o3iZmfaoige2HHcqRxGF2fx2YAo
+ O5QaiYLUbB9aFsGCN8mDglgQtCyfTbl+Ef4bbgIW2G4LR0w+1tonbarHSp8sINYln09Dk7trUCr
+ CQJ/Qu17w5gB2x8gzkg==
+X-Authority-Analysis: v=2.4 cv=AoB7T+9P c=1 sm=1 tr=0 ts=6abc6d8f cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=JOp_Co3xa00q_CoykhsA:9 a=bBxd6f-gb0O0v-kibOvt:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=QDFFToLqPBCoCbWQ0rwA:9 a=SMtUHvCfqO8A:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDAwNyBTYWx0ZWRfXxOAI2V6Giqx4
+ zaCOZvRAYgZhE5hF/9tpq1sJ+SAcAqAp8j2gks3OgdveMijqYw8Letd02aGbaXWf1I6KYY0GB7i
+ pjhsPHVQGCErddgfSNJEThKRQ3A/Xg8=
+X-Proofpoint-GUID: 8rxwJ69_n1Es60JHOTOihqmt1tBDKNFN
+X-Proofpoint-ORIG-GUID: 8rxwJ69_n1Es60JHOTOihqmt1tBDKNFN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-29_05,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 phishscore=0 adultscore=0 malwarescore=0
- suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609300007
+ priorityscore=1501 malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300007
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -153,146 +150,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/tricore/fpu_helper.c | 12 ++++++------
- target/tricore/helper.h     | 14 +++++++-------
- target/tricore/translate.c  | 14 +++++++-------
- 3 files changed, 20 insertions(+), 20 deletions(-)
+ meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/tricore/fpu_helper.c b/target/tricore/fpu_helper.c
-index 1b72dcc5f5c..fa268a8a6bc 100644
---- a/target/tricore/fpu_helper.c
-+++ b/target/tricore/fpu_helper.c
-@@ -118,7 +118,7 @@ static void f_update_psw_flags(CPUTriCoreState *env, uint8_t flags)
- }
- 
- #define FADD_SUB(op)                                                           \
--uint32_t helper_f##op(CPUTriCoreState *env, uint32_t r1, uint32_t r2)          \
-+uint32_t helper_tricore_f##op(CPUTriCoreState *env, uint32_t r1, uint32_t r2)  \
- {                                                                              \
-     float32 arg1 = make_float32(r1);                                           \
-     float32 arg2 = make_float32(r2);                                           \
-@@ -144,7 +144,7 @@ uint32_t helper_f##op(CPUTriCoreState *env, uint32_t r1, uint32_t r2)          \
- FADD_SUB(add)
- FADD_SUB(sub)
- 
--uint32_t helper_fmul(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
-+uint32_t helper_tricore_fmul(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
- {
-     uint32_t flags;
-     float32 arg1 = make_float32(r1);
-@@ -251,7 +251,7 @@ uint32_t helper_qseed(CPUTriCoreState *env, uint32_t r1)
-     return (uint32_t) result;
- }
- 
--uint32_t helper_fdiv(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
-+uint32_t helper_tricore_fdiv(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
- {
-     uint32_t flags;
-     float32 arg1 = make_float32(r1);
-@@ -331,7 +331,7 @@ uint32_t helper_fmsub(CPUTriCoreState *env, uint32_t r1,
-     return (uint32_t)f_result;
- }
- 
--uint32_t helper_fcmp(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
-+uint32_t helper_tricore_fcmp(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
- {
-     uint32_t result, flags;
-     float32 arg1 = make_float32(r1);
-@@ -354,7 +354,7 @@ uint32_t helper_fcmp(CPUTriCoreState *env, uint32_t r1, uint32_t r2)
-     return result;
- }
- 
--uint32_t helper_ftoi(CPUTriCoreState *env, uint32_t arg)
-+uint32_t helper_tricore_ftoi(CPUTriCoreState *env, uint32_t arg)
- {
-     float32 f_arg = make_float32(arg);
-     int32_t result, flags;
-@@ -447,7 +447,7 @@ uint32_t helper_ftohp(CPUTriCoreState *env, uint32_t arg)
-     return result;
- }
- 
--uint32_t helper_itof(CPUTriCoreState *env, uint32_t arg)
-+uint32_t helper_tricore_itof(CPUTriCoreState *env, uint32_t arg)
- {
-     float32 f_result;
-     uint32_t flags;
-diff --git a/target/tricore/helper.h b/target/tricore/helper.h
-index 1d97d078b00..6073fd70379 100644
---- a/target/tricore/helper.h
-+++ b/target/tricore/helper.h
-@@ -102,18 +102,18 @@ DEF_HELPER_FLAGS_1(parity, TCG_CALL_NO_RWG_SE, i32, i32)
- /* float */
- DEF_HELPER_FLAGS_4(pack, TCG_CALL_NO_RWG_SE, i32, i32, i32, i32, i32)
- DEF_HELPER_1(unpack, i64, i32)
--DEF_HELPER_3(fadd, i32, env, i32, i32)
--DEF_HELPER_3(fsub, i32, env, i32, i32)
--DEF_HELPER_3(fmul, i32, env, i32, i32)
--DEF_HELPER_3(fdiv, i32, env, i32, i32)
-+DEF_HELPER_3(tricore_fadd, i32, env, i32, i32)
-+DEF_HELPER_3(tricore_fsub, i32, env, i32, i32)
-+DEF_HELPER_3(tricore_fmul, i32, env, i32, i32)
-+DEF_HELPER_3(tricore_fdiv, i32, env, i32, i32)
- DEF_HELPER_4(fmadd, i32, env, i32, i32, i32)
- DEF_HELPER_4(fmsub, i32, env, i32, i32, i32)
--DEF_HELPER_3(fcmp, i32, env, i32, i32)
-+DEF_HELPER_3(tricore_fcmp, i32, env, i32, i32)
- DEF_HELPER_2(qseed, i32, env, i32)
--DEF_HELPER_2(ftoi, i32, env, i32)
-+DEF_HELPER_2(tricore_ftoi, i32, env, i32)
- DEF_HELPER_2(ftohp, i32, env, i32)
- DEF_HELPER_2(hptof, i32, env, i32)
--DEF_HELPER_2(itof, i32, env, i32)
-+DEF_HELPER_2(tricore_itof, i32, env, i32)
- DEF_HELPER_2(utof, i32, env, i32)
- DEF_HELPER_2(ftoiz, i32, env, i32)
- DEF_HELPER_2(ftou, i32, env, i32)
-diff --git a/target/tricore/translate.c b/target/tricore/translate.c
-index 8cd6b58f66b..81db388e5ee 100644
---- a/target/tricore/translate.c
-+++ b/target/tricore/translate.c
-@@ -6290,10 +6290,10 @@ static void decode_rr_divide(DisasContext *ctx)
-         }
-         break;
-     case OPC2_32_RR_MUL_F:
--        gen_helper_fmul(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-+        gen_helper_tricore_fmul(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-         break;
-     case OPC2_32_RR_DIV_F:
--        gen_helper_fdiv(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-+        gen_helper_tricore_fdiv(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-         break;
-     case OPC2_32_RR_FTOHP:
-         if (has_feature(ctx, TRICORE_FEATURE_162)) {
-@@ -6310,13 +6310,13 @@ static void decode_rr_divide(DisasContext *ctx)
-         }
-         break;
-     case OPC2_32_RR_CMP_F:
--        gen_helper_fcmp(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-+        gen_helper_tricore_fcmp(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r2]);
-         break;
-     case OPC2_32_RR_FTOI:
--        gen_helper_ftoi(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1]);
-+        gen_helper_tricore_ftoi(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1]);
-         break;
-     case OPC2_32_RR_ITOF:
--        gen_helper_itof(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1]);
-+        gen_helper_tricore_itof(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1]);
-         break;
-     case OPC2_32_RR_FTOU:
-         gen_helper_ftou(cpu_gpr_d[r3], tcg_env, cpu_gpr_d[r1]);
-@@ -6725,10 +6725,10 @@ static void decode_rrr_divide(DisasContext *ctx)
-         }
-         break;
-     case OPC2_32_RRR_ADD_F:
--        gen_helper_fadd(cpu_gpr_d[r4], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r3]);
-+        gen_helper_tricore_fadd(cpu_gpr_d[r4], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r3]);
-         break;
-     case OPC2_32_RRR_SUB_F:
--        gen_helper_fsub(cpu_gpr_d[r4], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r3]);
-+        gen_helper_tricore_fsub(cpu_gpr_d[r4], tcg_env, cpu_gpr_d[r1], cpu_gpr_d[r3]);
-         break;
-     case OPC2_32_RRR_MADD_F:
-         gen_helper_fmadd(cpu_gpr_d[r4], tcg_env, cpu_gpr_d[r1],
+diff --git a/meson.build b/meson.build
+index bfff019c884..5515f731295 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4263,6 +4263,7 @@ multi_target_deps = []
+ multi_target_crates = []
+ multi_target_supported_targets = [
+   'aarch64-softmmu',
++  'alpha-softmmu',
+   'arm-softmmu',
+   'm68k-softmmu',
+   'microblaze-softmmu',
 -- 
 2.43.0
 
