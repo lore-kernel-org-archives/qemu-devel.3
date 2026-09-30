@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790A8CA5FC7
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 502A3CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxSi-0001Sy-JG; Wed, 30 Sep 2026 12:47:20 -0400
+	id 1xBxSi-0001Qb-6k; Wed, 30 Sep 2026 12:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSR-0001Bb-9G
+ id 1xBxSP-0001BH-1n
  for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:04 -0400
-Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
+Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xBxSN-00032m-Ez
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:02 -0400
-Received: by mail-wm2-x11.google.com with SMTP id
- 5b1f17b1804b1-49e6b885ef8so33213385e9.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:59 -0700 (PDT)
+ id 1xBxSM-00032b-Qi
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:47:00 -0400
+Received: by mail-wm2-x10.google.com with SMTP id
+ 5b1f17b1804b1-49e6598dd44so35382495e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790786818; x=1791391618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790786817; x=1791391617; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=GUHPSL0CAZKtb0o+SF8uVME6KydXoNbBvhH5/7wJ/pA=;
- b=xXZhNeRMadYt6mkHwxvMaioMXQbvbxE9ADqjNTjMFo8RoWdWypvGF1CkETLIABdYHX
- 06bxej1MyJDVRgux4X84+u2RBx2IexV+tbimz5yYsK4mlw/tMswIUQK9m404OlRaLjkA
- H64q0pbQWkBP+ZNDjoSeZzwJzT0kVNlvLEcQEO7Az7bNWWD97+htoyEWM8O12MD3RnSc
- nv++CzrWfjXLxyDZJRjWYr+PpPsFMDCkrGJXB5FJfrdPtaK9lMZOT3jIvJT6I2GQsrtY
- 0w/smzBlhuNqlcW/MCt5bdishRUagBsPqCd4ddxN06pLqp2C8ev68T49rBgJz158qCwA
- 99nA==
+ bh=2qzhyyXoHGr2yM1D8JSzEFWAGi8kfk3KlB3Oj53o17M=;
+ b=A4tL7bJqLu7XL8Rzh8n6o55oTP9XCG2gpRdbfWxQiP7wloPQNpgzflyGp86areuga5
+ eSALMeCFzeCXfARt+JP3EBQXkcCnsbYaYW3IbRz/T3Uv/SM3bDkbGUbwvdYs69y4RVH5
+ o8u5DEtHN8Z090FtlB6VUdXqhXH4bfqznNEmGbAMGcxuTHlBrP08AXSg8NVuekuQrdz4
+ 3B2hK+C3uGfyuZWyLbqOLNPT0ErRHWdr/P35t9BmfToKSzqnTUJrJCdRJTL1z+Z95fQ3
+ Pt66AbypWRqImILXntb+SmM2SIk5iWkP6UO23+mej/3daGD20gtpE2f77KmuISJQ8ixS
+ NB+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790786818; x=1791391618;
+ d=1e100.net; s=20260707; t=1790786817; x=1791391617;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GUHPSL0CAZKtb0o+SF8uVME6KydXoNbBvhH5/7wJ/pA=;
- b=sdE02MC5y79FRlP+YaFAx7jk2RvFyfNvjhbaaa8N7iOBEStlhR/PtjE00Gf0kyOMrO
- fqi8Zh+PzI22oXPTsd+HwuqNVi4TYKJbTFTpN9quVs1NL+OdL+7w/NLFkvQgK9ltcFa6
- cmK45EVeLE5eSrvw4b/2dlj5PNXzLKVC9xYMNZNTjjXEYIbzFGyqPgEF5yPdm3Q/mXxH
- QhEOZqx4j9nsdQIQfaxmAzQLUejp9SBlUwnqp/CK1HaURFG+DYXfm/KhVPJi6+q+TeRH
- aXY9Y5IidLNczUrCNHKvb6H/5upbgUGLJO/+1y/2pI7jkqRq2W16bZGr62o1K7fLwqzY
- oIjg==
-X-Gm-Message-State: AFuF++m3AVKU7ZiwuVtASTBQRvmkkgwJNYpEMuSYxtABpEaJng+UEnSt
- nT3QGH1lZJc5xvDWILYrmzbXvxXdEhQ3s5XGWWl/aFxYF9w1QZSAUnJY8Wh85FV2psU=
-X-Gm-Gg: AYBFou0jhGP4aFOyC5pHL7dWUBqLdiynG3D//LN7SbkzIXuSHK08RJ7Bt3EFYnN1vKQ
- GeRMSezVYTbNj2Y631IlipLAhXplCsyy1NhgCWb4hL/QEdoW8W1XlOp1l6vC46dq39JDhh9SF3I
- TSsHbkHasd5+o9JfiRRkGmENgVt/mfkQC46XAnv4UuFGD9uDZ4rdsj6O1IPScXdqROJoTlFk085
- ULCdEyUun32WOh2OAqE/YyEr3GkMrpUWBXeuKb+q8Oahaibiy5ib7dzUBW8xgYwHRBP43hUlk5h
- kLLb/IJbmu2ZbbUsc4bFpAvGWgO1CcySO5VnZv1T44aktMrViLZ0R7vrei3AbXrUYg75+OFiTjt
- X42zmIiEPrUsOySXYPqoxC05qCGml1d+KdMdJS2K+XJOPVw8Vhm81vyY5XicW8ilX22+8BJNEqa
- UxPL3E0KS8hGcmP2YN8f3hakW7e5V87m1IQaO2CSPDTSg7VpSwbpXUAC6wmSt0/pTOu+qsQw==
-X-Received: by 2002:a05:600c:4454:b0:4a0:8b1:f5c with SMTP id
- 5b1f17b1804b1-4a01b00f607mr35482605e9.22.1790786817965; 
- Wed, 30 Sep 2026 09:46:57 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01eb8372dsm3815315e9.14.2026.09.30.09.46.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=2qzhyyXoHGr2yM1D8JSzEFWAGi8kfk3KlB3Oj53o17M=;
+ b=d9h1R3a8s+OU6BH1gChCChJClLtRpNJJ+8tpubsBADYgaMVWqfXda4gRvmcTRJEmNJ
+ gQiOprFoYgqjqWpiZkHHFWK6ONySbo5386EFKDclDFHDw5d64qk6QVvlz79yxUglkWSy
+ 599rCJSw+91nbn74/4Y+JZou2YFQ/1SnhW0b1B+Snh6KpuyJasfHHs233ydDZMosGPnE
+ xDgF+7RAVg1Ye5Gg/7LaxsR8/78Y2TD5IVKpCb9h6HWUYxywxs9ka5F1kKbiZsMlBCVr
+ NluaoG+dERJUwSp43f2pPUiNA/0VMTWfKVVRFX/LtD9qKeb7IeLIlgStyzHQfVEYrVUi
+ FWQw==
+X-Gm-Message-State: AFuF++ktX2hHa3LQWRL1FPlpHu6hIk9G8cEAPYchTBAPh315NM5LGtFc
+ IZF9SpeDMEj+JcE35xmAUPaMl4AtsYqJ6zRcf5CJLOdaldPIOA7ZHtwXCGA3Rws7o2k=
+X-Gm-Gg: AYBFou04rh0fJkInFKiUsOt8CbWk057RnmBUXfOOkNHuQciz2Sx4+R7nzidY1ye6gTT
+ njdIvUlxcrD6XKwu19duZXW0cUS9MKkM1dJvj0hI1Fu006rnNP5fKnZ5gp2OzaT2tPQhSMPf+8u
+ rqw+c43uZ80DOgxIr2RIW1XZfMQ8LHp4I4/XxIR8Qpj8rHWQYo29crbU3n+jKEm2Jrm+4DFUJ+M
+ TbtTsXJq7QZQFCbizRg6owcGLLZ2vJZnhLC4S39/Reckx5Wz4AZ2WZJK4jRj6G4l+k8wQOjN+vX
+ 11ar7ZqniPwfIzChbyBXNNoAqbE2iWIXdEpUFy0ScbMVQ97f7Kb7Sn3UhdCb8qKKKqgAsnJpVAK
+ pd0juYOf8R8Zg8j4/31CegKDy5EmzfrtFO9OdfdCjUdXPAWnxRQ/WKv4fQjDzGVYWsVFc7EZmHa
+ fnVgFagf62PLBf/If0DrRgoYcg2FPYeV2n30aD5VaCpeVwLUeIYjVQqupmV9MeEs18RVVhIHzpx
+ 11RicaU
+X-Received: by 2002:a05:600c:19cb:b0:4a0:1c17:4fb2 with SMTP id
+ 5b1f17b1804b1-4a01c175025mr27208655e9.31.1790786816818; 
  Wed, 30 Sep 2026 09:46:56 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a01eba6feesm2921925e9.11.2026.09.30.09.46.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Sep 2026 09:46:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3C0CA5F9D3;
+ by draig.lan (Postfix) with ESMTP id 247885F9CC;
  Wed, 30 Sep 2026 17:46:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,22 +89,23 @@ Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/13] tests/functional: add basic gdbstub test for KVM
-Date: Wed, 30 Sep 2026 17:46:41 +0100
-Message-ID: <20260930164649.433573-6-alex.bennee@linaro.org>
+Subject: [PATCH 04/13] meson: move gdb detection into the top level build file
+Date: Wed, 30 Sep 2026 17:46:40 +0100
+Message-ID: <20260930164649.433573-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260930164649.433573-1-alex.bennee@linaro.org>
 References: <20260930164649.433573-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::11;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::10;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x10.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,226 +122,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't really exercise the KVM bits of gdbstub very much as the TCG
-tests are TCG only and the ones in functional tests are focused on
-record/replay and reverse debugging.
-
-Add a basic gdbstub test case which uses heuristics to single step
-through the default firmware of guests and kick the tyres and check
-things are working as expected.
+Currently gdb is only used by TCG based tests but hypervisors want to
+use gdbstub too. To be able to test this case we need to always probe
+and report the gdb we have.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-vAJB:
-  - rewrote to use gdb run-test.py framework
-  - simplified subprocess code
----
- .../functional/gdb-scripts/kvm_fw_gdb_test.py | 119 ++++++++++++++++++
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_kvm_gdbstub.py   |  55 ++++++++
- 3 files changed, 175 insertions(+)
- create mode 100644 tests/functional/gdb-scripts/kvm_fw_gdb_test.py
- create mode 100755 tests/functional/x86_64/test_kvm_gdbstub.py
+ meson.build                  | 15 +++++++--------
+ tests/functional/meson.build |  5 ++---
+ tests/tcg/meson.build        |  5 -----
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/tests/functional/gdb-scripts/kvm_fw_gdb_test.py b/tests/functional/gdb-scripts/kvm_fw_gdb_test.py
-new file mode 100644
-index 00000000000..b38b874dc58
---- /dev/null
-+++ b/tests/functional/gdb-scripts/kvm_fw_gdb_test.py
-@@ -0,0 +1,119 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Generic GDB script to verify gdbstub functionality on guest firmware:
-+#  - Single-stepping across VM-exits
-+#  - Placing a hardware breakpoint at a branch or ahead in disassembly
-+#  - Continuing to the breakpoint and validating that registers changed
-+#
-+# Copyright (c) 2026 Linaro Limited
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
+diff --git a/meson.build b/meson.build
+index cae1591cd28..ea97047362c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -163,6 +163,12 @@ else
+   iasl = find_program(get_option('iasl'), required: true)
+ endif
+ 
++if get_option('gdb') == ''
++  gdb = find_program(['gdb-multiarch', 'gdb'], required: false)
++else
++  gdb = find_program(get_option('gdb'), required: true)
++endif
 +
-+import gdb
-+from test_gdbstub import main, report
-+
-+def parse_registers():
-+    """Parse 'info registers' into a name -> value dictionary."""
-+    regs = {}
-+    for line in gdb.execute("info registers", to_string=True).splitlines():
-+        parts = line.split()
-+        if len(parts) >= 2:
-+            regs[parts[0]] = parts[1]
-+    return regs
-+
-+def test_single_step():
-+    """
-+    Single-step a few instructions and verify PC advances
-+    """
-+    current_pc = int(gdb.parse_and_eval("$pc"))
-+    for step in range(1, 6):
-+        gdb.execute("stepi")
-+        gdb.execute("x/3i $pc")
-+        pc = int(gdb.parse_and_eval("$pc"))
-+        report(pc != current_pc, f"single-step {step} advanced pc")
-+        current_pc = pc
-+
-+
-+def might_be_jump(asm):
-+    """
-+    Return true if the assembly string might contain a branch/jump instruction
-+    """
-+    branch_keywords = {
-+        "jmp", "b", "bl", "bx", "bne", "beq", "bgt", "blt", "bge", "ble",
-+        "call", "ret", "br", "jal", "jalr", "bc", "bctrl", "j"
-+    }
-+
-+    parts = asm.split()
-+    if not parts:
-+        return False
-+    mnemonic = parts[0].lower()
-+    return mnemonic in branch_keywords
-+
-+
-+def test_hw_bkpt():
-+    """
-+    Set a hwbkpt somewhere in the future.
-+    """
-+
-+    # FIXME - this is fragile
-+    disas = gdb.execute("x/10i $pc", to_string=True)
-+    lines = disas.strip().splitlines()
-+    insns = 0
-+    bp = None
-+
-+    for line in lines:
-+        clean = line.lstrip("=>").strip()
-+        parts = clean.split(":", 1)
-+        if len(parts) < 2 or not parts[1].strip():
-+            continue
-+        insns += 1
-+
-+        if might_be_jump(parts[1]):
-+            # jump too close, bail out?
-+            if insns < 2:
-+                report(False, "found jump far enough away")
-+                return
-+            else:
-+                addr = int(parts[0].split()[0], 16)
-+                bp = gdb.Breakpoint(f"*{hex(addr)}",
-+                                    type=gdb.BP_HARDWARE_BREAKPOINT)
-+                break
-+        elif insns == 10:
-+            addr = int(parts[0].split()[0], 16)
-+            bp = gdb.Breakpoint(f"*{hex(addr)}",
-+                                type=gdb.BP_HARDWARE_BREAKPOINT)
-+            break
-+
-+    report(bp is not None, f"set hwbkpt @ {bp.location}")
-+    gdb.execute("continue")
-+
-+    end_pc = gdb.parse_and_eval('$pc')
-+    report(bp.hit_count == 1,
-+           "break @ %s (%d hits)" % (end_pc, bp.hit_count))
-+
-+    bp.delete()
-+    return
-+
-+def test_reg_updates(regs_start):
-+    regs_end = parse_registers()
-+
-+    changed = [k for k in regs_start
-+               if k in regs_end and regs_start[k] != regs_end[k]]
-+
-+    report(len(changed) > 0, f"{len(changed)} registers changed.")
-+
-+def run_test():
-+    regs_start = parse_registers()
-+
-+    test_single_step()
-+
-+    # skip any pesky mode switching code
-+    gdb.execute("stepi 50")
-+
-+    test_hw_bkpt()
-+
-+    test_reg_updates(regs_start)
-+
-+
-+main(run_test)
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 0353b2af8e1..080e12ddef1 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -13,6 +13,7 @@ tests_x86_64_system_quick = [
-   'bad_vmstate',
-   'cpu_model_versions',
-   'cpu_queries',
-+  'kvm_gdbstub',
-   'mem_addr_space',
-   'migration',
-   'pc_cpu_hotplug_props',
-diff --git a/tests/functional/x86_64/test_kvm_gdbstub.py b/tests/functional/x86_64/test_kvm_gdbstub.py
-new file mode 100755
-index 00000000000..26876c3dc58
---- /dev/null
-+++ b/tests/functional/x86_64/test_kvm_gdbstub.py
-@@ -0,0 +1,55 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Functional test verifying KVM gdbstub operations on firmware:
-+#  - Single-stepping across VM-exits
-+#  - Register sampling across execution steps
-+#  - Hardware breakpoint at branch destination or instruction
-+#
-+# Copyright (c) 2026 Linaro Limited
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+
-+import os
-+import subprocess
-+from pathlib import Path
-+from qemu_test import QemuSystemTest, skipIfMissingEnv
-+
-+
-+class KvmGdbstubTest(QemuSystemTest):
-+
-+    @skipIfMissingEnv("QEMU_TEST_GDB")
-+    def test_x86_64_kvm_fw_gdb(self):
-+        self.require_accelerator("kvm")
-+
-+        gdb_path = os.getenv("QEMU_TEST_GDB")
-+
-+        tests_dir = Path(__file__).resolve().parents[2]
-+        run_test = tests_dir / "guest-debug" / "run-test.py"
-+        gdb_script = (tests_dir / "functional" / "gdb-scripts" /
-+                      "kvm_fw_gdb_test.py")
-+
-+        qargs = "-machine pc -accel kvm -cpu host -smp 1 -m 512M -display none"
-+        cmd = [
-+            str(run_test),
-+            "--qemu", self.qemu_bin,
-+            "--qargs", qargs,
-+            "--binary", "",
-+            "--test", str(gdb_script),
-+            "--gdb", gdb_path,
-+        ]
-+
-+        res = subprocess.run(cmd, text=True,
-+                             stdout=subprocess.PIPE,
-+                             stderr=subprocess.STDOUT)
-+        if res.stdout:
-+            self.log.info('run-test.py: %s', res.stdout)
-+
-+        self.assertEqual(res.returncode, 0,
-+                         f"run-test.py failed ({res.returncode}):\n")
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu', 'riscv64-softmmu', 'loongarch64-softmmu' ]
+ unpack_edk2_blobs = false
+ foreach target : edk2_targets
+@@ -4707,14 +4713,7 @@ summary(summary_info, bool_yn: true, section: 'Directories')
+ summary_info = {}
+ summary_info += {'python':            '@0@ (version: @1@)'.format(python.full_path(), python.language_version())}
+ summary_info += {'sphinx-build':      sphinx_build}
+-
+-# FIXME: the [binaries] section of machine files, which can be probed
+-# with find_program(), would be great for passing gdb and genisoimage
+-# paths from configure to Meson.  However, there seems to be no way to
+-# hide a program (for example if gdb is too old).
+-if config_host.has_key('GDB')
+-  summary_info += {'gdb':             config_host['GDB']}
+-endif
++summary_info += {'gdb':               gdb}
+ summary_info += {'iasl':              iasl}
+ summary_info += {'genisoimage':       config_host['GENISOIMAGE']}
+ if host_os == 'windows' and have_ga
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index c7362dd00ef..68c601d4036 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -83,9 +83,8 @@ foreach speed : ['quick', 'thorough']
+                      separator : ':')
+ 
+     # Define the GDB environment variable if gdb is available.
+-    gdb = get_option('gdb')
+-    if gdb != ''
+-      test_env.set('QEMU_TEST_GDB', gdb)
++    if gdb.found()
++      test_env.set('QEMU_TEST_GDB', gdb.full_path())
+     endif
+ 
+     foreach test : target_tests
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 96d5d1249f2..5861ff5ed25 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -1,11 +1,6 @@
+ env = find_program('env')
+ 
+ docker_wrapper = find_program('../docker/docker.py')
+-if get_option('gdb') != ''
+-  gdb = find_program(get_option('gdb'), required: true)
+-else
+-  gdb = find_program(['gdb-multiarch', 'gdb'], required: false)
+-endif
+ prog_check_plugin_output = find_program('./scripts/check_plugin_output.sh')
+ prog_gdb_test = find_program('../guest-debug/run-test.py')
+ prog_record_replay = find_program('./scripts/record_replay.sh')
 -- 
 2.47.3
 
