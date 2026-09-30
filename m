@@ -4,143 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6FDCA5FBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 11:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C245CCA5FAC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 11:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBsHd-0006OK-Ob; Wed, 30 Sep 2026 07:15:33 -0400
+	id 1xBsal-0000UR-T8; Wed, 30 Sep 2026 07:35:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBsHa-0006Nw-EX
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:15:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xBsHY-0002qB-K2
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:15:30 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UB8MtZ2898239
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:15:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AVoAifuMgXXq/4WLHAAeYWum50ZJBFKT3XY+taM+whA=; b=SQG9zJKt6SxL9F0S
- BipFBzZISQB/NPQipU8+/dv0qNzO+FfRPO0IyEh5Tsq5SQKBTfBEyXZUDB0ruX8G
- zGfcbALPaxrIHYKQivn6o1lFOWhXU9MDIxxQmWRabuZ0mPxKt7jBtKdgL7ob9Qoo
- QWSzQKwnCv/PrChvOlfJRtCgabowk2GqarWmLzm6J6Dp6csY+ei+ZWl6TzVSbkDe
- +LSY1V6Sz3S6WG8iM0AOrNDZONvTerF5JxG4P72zLLIWi1lTRqcP0CbROB9v0N1d
- GnH1glYkW1EAp71FH1XwPtEqiyxbo5wNTHLjEQ+GW9aTCvPTYTmeyHjqYf05gZbL
- k/7WRg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0tkn1vq7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:15:24 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93be1861d2dso848852185a.3
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 04:15:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBsak-0000Tq-1M
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:35:18 -0400
+Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xBsai-00053Z-8Z
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 07:35:17 -0400
+Received: by mail-yx2-x2a.google.com with SMTP id
+ 00721157ae682-8ac47074e38so2681627b3.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 04:35:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790768114; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PjwqMpO77uAlHyekafw0QiCbY6xRdglkun1zLw3pet1BB9GQ5LPJsNuBQkzrTWppHA
+ YQkXeCEN851Y1iInZc+GuRvtAYn5LehBKjQsSDtzGTPNkYSh2mJH0zpaVWpuLGhpZy4V
+ N7jxHB9vfnb8DMxm81DbpivdOJKwUIu7d7Y9zDhfCPfBEsVa5MVVUwm3thONQUD/vW4S
+ ck2k5CHgT7VB0bR58ERqaj8GPLbEMtx3MfsRSuWAHxi4Ny2ybG0Nij7F+BWgMbzB3JXo
+ TnzG3bqwrPCJvimWKbBTj2TYvhpv0LvZNTqkGcDtj+LeII83sSpWjE0HcuJ9IYad2kmD
+ hhvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=SeY6Z1jmk7ymRLBox8aezw1ZLI+jut6EQpLQBAspM3Y=;
+ fh=+EjqEHtQwKNufVIRoBGKtWOd7N2ov51GBxxOgvUpuXc=;
+ b=cSH4d8iKlqpuk7hwDzEn18+tQrQJaSFsMh3Z5GdVcXE0C2N7v3Z3RTt5qLp9D4TX+F
+ RfG1Vam9JqKEeLMXdcu8wBv4FMVnVNzVd6lKcCEceVjqqy67Jrejb9VZ/103OFOTuLn2
+ 08j39ubhVpIwX3cPrvOofLIZS1V4vjs3cqYeyG6uHsGEhwu4Nw7mHttelX5iRKlueWP0
+ jGXgwWvhf1I1mw6S04MSJO6cYWC1SoelSzMMsfgRaJdP7QJ/blTeO9CG8MW7qe+GtIO4
+ YXHgdJLl3D+puTbg8CzN8BCun93xE0Bx02gulVKmqh7O+iaZmwUED3v+jYgCq7xqX4KQ
+ gSdg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790766923; x=1791371723; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AVoAifuMgXXq/4WLHAAeYWum50ZJBFKT3XY+taM+whA=;
- b=RcYUGow0WpbniH7gxkbaQV8Fec3C4j5/S9kZJz8BiHwAUPNoMFUXEEiSxKpXKHNaFs
- 5hnf5cxe/M/oVSltLb+gj0cdCxu1n3jwjYTiRljK4HkAeIh7YD9pcEVQn61udOOQbXnz
- jFkSeP/IW4bhpZs0c2oPT8whZLGhhqDAtPefJePY2MAcsKaW/beg7q5ERdTOtkm+cjf/
- hT2UfxGwwEXkzqSonG1c4ur/vTYwgvKJbIKCIGLYGaDWsWS452aaEeH1g57UqNhJ7U5q
- LZZ3oI0nXlE867mIlWDS+1TBuVrCMpVRNK1rrxRghLjz2PD66ltE0I/RpN150Iq10S68
- FjiQ==
+ d=linaro.org; s=google; t=1790768114; x=1791372914; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=SeY6Z1jmk7ymRLBox8aezw1ZLI+jut6EQpLQBAspM3Y=;
+ b=HHl4/JM7PTMKVXcNEsOe42Ji126Unn8iSQ9MLxspYpta5TAb9AnJFv/JN4wC3Qua95
+ rHNNR+UyHi4wVA4QHJgIRW87UqKRH3C+/v47/1JLgAHIYN+rvd0LXSuA6Hf345olvpcj
+ +12C4geTqKJcpwVAZhW2nXt6BxG3+gF91DixlnfcYqcuPRyhRA1iui5Iw1hTjuu0LRH1
+ dHivwqO4ieyM4AoDnLlVjgd1HB2dOwE9It7lFpfNfER7IJU3C8ZyqdgPIFwoqmEnx0RD
+ bquIw1UVNJXc8lgGNOQiEt+wa2n3+Bimwchyq5uu6Gkirpq9atVvtRIdJjKFIwqq7OgZ
+ 7i/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790766923; x=1791371723;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AVoAifuMgXXq/4WLHAAeYWum50ZJBFKT3XY+taM+whA=;
- b=enNE4H9OR246POJIgVea00CXXYyYExwL2naZq6B2Pl5Ey0WT/ARTUN3q6V6dAOKc3d
- doqrL2TAwsP5JVSQM0PebDkIeF3APDpVRAde9nNXdGa61iHSu8mwRuzJPUdmSVfgtgdS
- 14kARHWXZ9C7BPuGgHSd0Z8RjEywKpcaqWJ2xBs0zsj+wXFzh3uHIHtudf6cA7Y9O9Dj
- bT3eXhE0RPnX8UzmAKwY5f/exGyzB8gXkc2YXsCKl1KbGdcfR2oc1skW6u7JhrNlj3Rx
- 30+LcjlJMD/G11RK7Grz6Z4NSXKGPC3liNitQqMbFa0oNCoGAHUuJ4Gu2ETzHxN0rOgP
- gIlg==
+ d=1e100.net; s=20260707; t=1790768114; x=1791372914;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=SeY6Z1jmk7ymRLBox8aezw1ZLI+jut6EQpLQBAspM3Y=;
+ b=wv3LyJiOSivW6CVlqT0eJtci4pynJfKzYiWszkLz2dLJuMQ1LB4+/UiJYEv5CVe+08
+ kWuzLVRGRkDLHu+Zq3l0EIjhQqcQcMjiKwx1w//b0Z0GQJKCp7AkIJRRSDtUzTQtTwws
+ O+Gx6QxVepEYrE7rFxKxD/nr2Qx71lutVnSGefxENiZ3KxUzRDKwA6PDM/q7RGLbEW6G
+ epvLOagBG+BtcVzXArvCThmtTTabWKfkVMAl+SKuYKEqFYtyzTDmuFjqpBYz6fo3mbmH
+ eYeR/ma3R9CKaFUNN1wUMuQXaDOMwtWTmBp1Zrx8yAUOLwTV7E84QMKuC3hfIG1bxD5x
+ xrkA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBy/m0rFH4ko61ZjhyNEnCV5tr160WBNMFUgaInM28caDywNzlHAcvmm8pEhkLiPWBd2ztGPee0dhK9q@nongnu.org
-X-Gm-Message-State: AFuF++mLRIUTGLS7A9ljnMBjlEan23sGw14E/Vef36WGUVAccH5wmBs+
- 5Vc9Q3pSJLJQMCaKpQbsG0zj0P/Fwt1nJlnoTzyNpeKD+t8fGuAnYBrqgSro5bjlTLenPFFvN/3
- ml88rm8QclPMyB+bEPtUQoA8tr75ygisZp/QTaseT1WpaNUD8UZ0Be9QzwQ==
-X-Gm-Gg: AYBFou2nTeUfJJuilP8Yh/PUXDXyyvkuc1fYxz+oM4q3PGMW/rK1DPqFEyUx9lWkVwX
- 1qtQ7EV7cVTaE6r/Fw1tDio592pSwdkJcRJub6vERby4QiIXCWinroSHm9qMd8F9NncwvZa6r17
- evuauswYjUvJvo88fbARaDXXYBOcd1lN6AadqkPxWY23CijGpVu6ED0QI7lPaOP0EJcQFTp3us5
- YwLb0b4azdVdJnLPoNFkaaAQ07OYWOIuqAs3Ed/lvlVaa2gEQDaiQkpgdvKhqF0al2rTD9TQApG
- iVAcCzX/JLGTnJIBHBUemrkNE1pLGkwEZvjwzlyGV4OvW7OQBEuE0sUIjCLLI0S5wFpAjMHxp1f
- D8n6YAWf2QZxIq83MTfPkgAXNGid7l7sH4g==
-X-Received: by 2002:a05:620a:3196:b0:93b:d7ed:ff66 with SMTP id
- af79cd13be357-93ca9882244mr166797285a.58.1790766923318; 
- Wed, 30 Sep 2026 04:15:23 -0700 (PDT)
-X-Received: by 2002:a05:620a:3196:b0:93b:d7ed:ff66 with SMTP id
- af79cd13be357-93ca9882244mr166789085a.58.1790766922696; 
- Wed, 30 Sep 2026 04:15:22 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b028b237esm3034215f8f.0.2026.09.30.04.15.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 04:15:21 -0700 (PDT)
-Message-ID: <82f2fea2-1ac9-4832-81fc-f585f4b50d20@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 13:15:20 +0200
+ AKwUvBySDOpxHYSvCBR5loxa3WyanqIKlk2EacqAnY6zmk56ULBQrlLnV8sSL/SmJ2J4cqFVPaqqrz5G76gp@nongnu.org
+X-Gm-Message-State: AFq9FYJg8z2m4K8gKAo4YsH9NUJHTqy/9zhZYsIoq5Ts7UlUXxMW5/8o
+ WgeWkWGfmfgGy8sxpN0Xgwz4h21pRvZgiVPkfB/RVuiFaNjOpwNDaKUPaznJIhNRJOP/II5ifSR
+ S4YyND4Y1g8mFqhSVxTFnTYlmieFgxCuLI9FjubiwZA==
+X-Gm-Gg: AYBFou3pmFjs4/YyClK5AY5uhnA1vpJUANDlTlYCdujoDL7FcirPt5R8Usb/w2Wb2TZ
+ R6/I7jCULnyXL/DIP+SbiDgKfddEnWAHlHKxQUgL845672ZKqtkR2KSJx6EeHbYhZ6rgc4PtceL
+ +Q11yHLy+hwzzH6WtbPh3pQsvnjE6ZoAMsJEg/54Apgc/u7Zl+EdFp06AdiTU8zJNHPtAZYGm+b
+ aP7k9VcXuUdTpD3NOEr59B6cTUAyn5J98XWEmBwWldrdWNBfd4RP0Ug0bVLbQ4Q1UI9m6gKRSgl
+ M3hv1bJtZu0GCzvCAMqZRRjvLxhUunBXpK0ERMiGUuYedYXxcxVPqPDQu7+BD1nXTEACqxUFps7
+ vBZw2QJMSFOLo29axQjhpnCrQ9bl8YKeFtOjD5ms=
+X-Received: by 2002:a05:690c:ec3:b0:885:cf67:95dd with SMTP id
+ 00721157ae682-8ac97909b55mr3191337b3.31.1790768114223; Wed, 30 Sep 2026
+ 04:35:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hexagon: use i32 for wait helper PC
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Philippe Mathieu-Daude <philmd@mailo.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20260930103454.647-1-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260930103454.647-1-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=CKy/zhrD c=1 sm=1 tr=0 ts=6abcef4c cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: le5m8lRWnq7-rlPF2mkZGxeQpKAnTaFa
-X-Proofpoint-GUID: le5m8lRWnq7-rlPF2mkZGxeQpKAnTaFa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA0NCBTYWx0ZWRfX3wTQsJzA6V9O
- uAdZuYlEB1Slyoml42jqJSVZ+B5jm+ZJ29VkpnSkR5NoPphYqjdbrlLHzyMTMVq8AvjuP7WPLXw
- Adu5Rmzb0jy3Sra/pZDpdXJv+5CPcseso1B4T0FCCiq5gEFSNRC37uQ4Mg5HKvyWutAHVT/FOd5
- l5xcqi8XRyRiJIT+f//J1Uc8tveAf+XVnSJTVsQqlegXtpfXovy2kiivtZLfEZn8L0CA87mGj6K
- i0g4rSA8QvZc57tBJaYNxwpOQbL1qmpI/etKIa3veGkBxery+3g2r3rh6RQhbcqFUl00sUI1xTz
- amyU0vefYhYEC5qFBrC2B7jliN60zuIUbTr3KWHXi8xXpQ1eZdSCuqCiLzdSYU1Iu4gcjS/YgtP
- xhCuOOYhBMkwsfWNKRUvZNXMJBi/Vp+3zU7eR3d8+kamVsQNvUKujuSoy+wdzKPchEVqDU6eXk2
- kuiM5yWR+HSYOB1CdRQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA0NCBTYWx0ZWRfXz4KI4vs/JyF4
- RtVo4zeiXpzKqEd5opChX074fv6iLAhpwGVFc689KpYC/rdHZEtVcC9YPg0TlTVF7XNj3lWmLuc
- BSe04bxpVIAZZNyjvGUqrN+8c5LxsuM=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- phishscore=0 spamscore=0 malwarescore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300044
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260924172928.2110956-1-coltonlewis@google.com>
+ <20260924173051.2117637-1-coltonlewis@google.com>
+ <CAFEAcA9Rwrffx8bYiOxrtQGdg31QAz1oBm8okzpfqHZ6yK0Y7A@mail.gmail.com>
+ <20260929212102.3659389-1-coltonlewis@google.com>
+In-Reply-To: <20260929212102.3659389-1-coltonlewis@google.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 30 Sep 2026 12:35:02 +0100
+X-Gm-Features: AclHuK8bFLv0KvzZpr3GNRdEy1zBXYO_hECfn1oR1UjooEwhow1ZvPDksGAca58
+Message-ID: <CAFEAcA9DYo3GW_59eZjsk1qL0--3amYd7ufPqt80O2qv=Qm_pw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Enable KVM PMU partitioning and counter limit
+To: Colton Lewis <coltonlewis@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvmarm@lists.linux.dev, 
+ Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>,
+ Oliver Upton <oupton@kernel.org>, 
+ Will Deacon <will@kernel.org>, James Clark <james.clark@linaro.org>, 
+ Mingwei Zhang <mizhang@google.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,46 +122,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/9/26 12:34, Yonggang Luo wrote:
-> Fixes: acd2b7a2f19 target/hexagon: Implement wait helper
+On Tue, 29 Sept 2026 at 22:21, Colton Lewis <coltonlewis@google.com> wrote:
+>
+> Hi Peter,
+>
+> Thanks for reviewing!
+>
+> On Mon, Sep 28, 2026 at 03:01:32PM +0100, Peter Maydell wrote:
+> > What should we do with these properties if we're not using KVM
+> > (i.e. for TCG, hvf, etc) ?
+>
+> PMU partitioning is specific to KVM, so moving it into
+> kvm_arm_add_vcpu_properties() (which is only called when kvm_enabled())
+> and naming it "kvm-pmu-partition" per the KVM VCPU Features convention
+> in docs/system/arm/cpu-features.rst seems to make the most sense.
+>
+> For the counter limit property, would you prefer that it also live in
+> kvm_arm_add_vcpu_properties() as "kvm-pmu-num-counters" (KVM-only), or
+> keep "pmu-num-counters" general so TCG can also use it to override
+> PMCR_EL0.N in reset_pmcr_el0?
 
-Not sure if this one or 40085901dbe or another one.
+If it can reasonably easily be implemented (or potentially implemented)
+for TCG, then I guess the general name makes most sense.
 
-DisasContextBase::pc_next is of type vaddr, which expands
-to uint32_t on hexagon. Pierrick has a better view on which
-type is better here.
-
-There is still inconsistency to clean (later), up to the
-maintainers:
-
-target/hexagon/genptr.c:429:        tcg_gen_movi_tl(dest, 
-ctx->base.pc_next);
-target/hexagon/genptr.c:469:        TCGv pc = 
-tcg_constant_tl(ctx->base.pc_next);
-target/hexagon/translate.c:251:    target_ulong fail_pc = 
-ctx->base.pc_next + nwords * sizeof(uint32_t);
-target/hexagon/translate.c:580:    target_ulong next_PC = 
-ctx->base.pc_next + pkt->encod_pkt_size_in_bytes;
-target/hexagon/translate.c:1383: 
-tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], ctx->base.pc_next);
-
-> 
-> Signed-off-by: Yonggang Luo <yonggang@gmail.com>
-> ---
->   target/hexagon/gen_tcg_sys.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/hexagon/gen_tcg_sys.h b/target/hexagon/gen_tcg_sys.h
-> index af5032214c..faec55f502 100644
-> --- a/target/hexagon/gen_tcg_sys.h
-> +++ b/target/hexagon/gen_tcg_sys.h
-> @@ -80,7 +80,7 @@
->   #define fGEN_TCG_Y2_wait(SHORTCODE) \
->       do { \
->           RsV = RsV; \
-> -        gen_helper_wait(tcg_env, tcg_constant_tl(ctx->pkt.pc)); \
-> +        gen_helper_wait(tcg_env, tcg_constant_i32(ctx->pkt.pc)); \
->       } while (0)
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
+-- PMM
 
