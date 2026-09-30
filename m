@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35A2CA5FCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5B3CA5FC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 16:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBxW8-0007xj-OR; Wed, 30 Sep 2026 12:50:52 -0400
+	id 1xBxWA-0008Ae-K8; Wed, 30 Sep 2026 12:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBxVd-0006Zd-BN
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:50:24 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBxVm-0006iI-EL
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:50:30 -0400
 Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBxVZ-0003Xs-1o
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:50:21 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xBxVk-0003YF-MC
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 12:50:30 -0400
 Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49b912d3920so42046725e9.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:50:16 -0700 (PDT)
+ 5b1f17b1804b1-49ffe281cb1so28742805e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 09:50:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1790787015; x=1791391815; darn=nongnu.org;
+ d=openvz.org; s=google; t=1790787017; x=1791391817; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ROdqnZ/nLMN3k6AxZtOjR0wy51FmT8iu0mjenz/VUAk=;
- b=f1FoLtbdcM5bjyPdAQ6PH4sZHClkMu/UMVtmfX4mrr3powxCc6WMbYbyhCmIiqLpN8
- E7fs5DFuNXvAkCe8wdu6JyjRXZ3Z2+agt2W8lNXBVfD7yzpu6MDOEgxxRpbcyfDn+lqL
- vsqWGFmjD3cOBE5MFx5ry7pDwnPr0gw8HMfFJUPijVAUJ825CtPt3Gxg29mZBWD9od+c
- Qqm2LHsXpKqg4eke5/YJuP/cogX5WjPdmkLkT/KXAsWnhIfcykcUXITZsBuZS45kkhKz
- AndOoiPjxo6iFTvpQSWeNai3rrLla7cT3uB78TNPJz2IbLnPXoQq1yVBnZku8LaOR4Uu
- hp3g==
+ bh=5US/vIcb1jdJXn35ECQsGQA2Ouaa1Ah+FNh4z4UiZkI=;
+ b=IhLECNnPewpb5MuAV588HFWozZhvMtuzpZJVpk1HxDRveNQN5QDOIAVKBrbhbL/dcT
+ T5xrYdchUT7EJZSx5ZCsBun4mbkl9bTI/3UCcu6LtO1i3+fOeAUyQuxV7vYTkkHy4AZO
+ pE4cQRFwTxoJZ1Z+WO/g6pxlFRQ+AkiD9VXV+yDatzNZuMqaEsTuBeTMv8Vpa7cQxTio
+ J2fUuIPAHzktGvAYn2veul5/yWZcwP0zMyip/qJsAoBVbU+ttuiIPwiXML0/lxdLQ5rP
+ iq0kpymAr8Dd2HL8isp0RJTWqbwATwRmAG+jYPbFs8cDpEylAgC2bZLw/5VxvV8aYh9B
+ uhcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790787015; x=1791391815;
+ d=1e100.net; s=20260707; t=1790787017; x=1791391817;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ROdqnZ/nLMN3k6AxZtOjR0wy51FmT8iu0mjenz/VUAk=;
- b=0EVnWRoKBXE+pOdhYIDjp2CpxnJog+KNDlOZM8SK/Gb5tdndMrdclIXqcxNrJSX7ZB
- a37ji0QAJw+xlNyInmLT8UbHR5JwAEiPiPGQxhMIXhZMaFEJZ6LuCqYyTQ8yKf87ETcZ
- qVXbDEKkKzBb9tBJXd3Wp5Fd1t4obbkOmWRR5LstN8jGU+zHBeBbhqhaq1W092XiVmD7
- /YQiejxmss9G1E29kfdHF0QMMJFnnQuW8DPIPUVcV5XceaifFBip92u7c3hj4QOq0S6i
- sXu7yPGNZd9kf9gGku1xeuj5YfCWdZMmp+r86qn8Tvw2WsUYG9TRZdCNdb5yixnh4tTr
- E7cA==
-X-Gm-Message-State: AFuF++kBNDSQAIvNU5sRGnQkNcLYlEA2JXMP9cQ45AfIUyoZkjjSTBB4
- 2cJ2UHJfIPK6fCESNlwQRca5S6zQgoVz6e6acC7CX8l1+YJmQJ14jn5i3xHMWSBMNtmF2La5Se/
- Mr9wI
-X-Gm-Gg: AYBFou2zxlRIa0NqMZJgSZbxAq+0ZHmmrUAzDqxBOFx3MwuNmmUWT5TvDKsVb8YZ4cv
- +oUYdgCYYJAt/1r06gRiKYTvrmXu/2A6ObFF3L34uEKvtjOhu7BHbGlCe2tAWzVGJmiwn/UlAoR
- iLvBy8npHVjxrhctS9HtfjrFuN3D5ubZlMoFvQzNq0rBdOWh63PrcPB6HqnBDjZreIc0cVLjevB
- 3CoaQuW3SkXePPNNlx6MAWaL61c8j48DjT9RWjaasFyWWYZB2V0BhOEaMJgEjA/yh6AlK78PS8i
- B6FezkXcprl2PCb2g1jdTWMTADaIGUKnmkrBHkxClR/sxCqAVhSl2VHJOOHkj+Gs1X1Zs4elye5
- BPRe122RL94kxssGHJA/b0Q2bwGvUqqGUGmd1Ze+gZA+XSju9ZbKn90sKYVoBJK1p95OFzOJA/P
- Et6hsGXsY8nFktulgShukViG0kYAww2+Mn2F+a4wRWYEZoGOri/6lxxYyOaU5Ciu8UEmw=
-X-Received: by 2002:a05:600c:4e8f:b0:4a0:1eb0:1ab9 with SMTP id
- 5b1f17b1804b1-4a01eb01b1bmr4389885e9.16.1790787015513; 
- Wed, 30 Sep 2026 09:50:15 -0700 (PDT)
+ bh=5US/vIcb1jdJXn35ECQsGQA2Ouaa1Ah+FNh4z4UiZkI=;
+ b=izCMPJkU/okO8DlatBa94fhndgS8SRNaQl+q7vcucmn1oKzwmb2hJtdhwBGEnDp7XZ
+ Qa/gUH9nnu5jlrQFoXVqivAyehQTorgcHmnyJRYN0wAJPsS5MTGEXx15aVDkyMx+Oe8C
+ ClaQF2uKC9NoSAYojbFm0eUZgv9Lu/yKRLG+V0Gbwc80MejydxQvZG5oP0kinJH6wjRK
+ d4lZlZe8Pp3TjkIN0hgWNbqJoUZghO+oHAX8NX+/3DkzInQjSl5XB8t5gAd/oYMwacQe
+ YxBFLmLvNM4JAIqu+ktSRMul0BWAjztXj6e+0hsfjtsDQ78csUTrjgKK9IqMqaepDVQl
+ 7M8g==
+X-Gm-Message-State: AFuF++mD5W6V/iU2IxyiCvsr87Z0PzUDyBiAgJhwdxY3QlGGiSRzZ5/P
+ sVXlUmnz5l7tFJKPUPlrw4bsk0piqAeDEOvaaCMd/oxmNYW/BdZnqtPPRLGxbAJDT0GVW/xO7kB
+ xsY0h
+X-Gm-Gg: AYBFou19OZxmg9TvSHlrgWfbeaew4Y4g003UIg6I/sJrmASKV4mT0UHSi3qUCJCnFxH
+ jAPe/mw/wBS2l/vITYfq3xhCXl5NmYAh6hroOpBN83wyTfLXSRDzl2hpIWKrIW5rBSOiZThh4JP
+ e/8Kh15QaDsXqur1wTQ7ikjsLRLaDqZIHDqwHQMJD00XBXfrSi061i4o9UvSNv+YQRjHw3ctTVb
+ kxM9IS/KDjhkkV8VtGvCafhXiuLHeflYu7Ftv0yxx2j13bqzGm8oeRhunM50mTEfVUOBs6O0nJc
+ y4WQRfw0oM8dYJRzLw5lXd/Ta1nASGqOYRLM+COMKPAdyPpfzwQTTSWLKZ2T3po1H6T9h6ogJ6s
+ eDhAlcOK3Poo0bENe5poWf7o/Nro3zb3Eap5B150ewdBe8u9NBDGQeX2F7LrIfB/f26YsMjiJwZ
+ Uguu6u7my0RUG6sbrZmKzxodnZ/QBxw3EMSvtCf2gEicBzP5WX7YyslribmQN1wlg9ph8=
+X-Received: by 2002:a05:600c:c162:b0:49f:bc43:9e96 with SMTP id
+ 5b1f17b1804b1-4a01afe1dfamr36181175e9.8.1790787016651; 
+ Wed, 30 Sep 2026 09:50:16 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:c6b8:98e2:93f0:2de6])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01eb71d57sm4144535e9.9.2026.09.30.09.50.14
+ 5b1f17b1804b1-4a01eb71d57sm4144535e9.9.2026.09.30.09.50.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 09:50:15 -0700 (PDT)
+ Wed, 30 Sep 2026 09:50:16 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: den@openvz.org, qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH 09/13] qemu-io: add -t to run an aio request in a named
- iothread
-Date: Wed, 30 Sep 2026 18:49:55 +0200
-Message-ID: <20260930165000.303236-10-den@openvz.org>
+Subject: [PATCH 10/13] qemu-io: add -g to write past the end of the image
+Date: Wed, 30 Sep 2026 18:49:56 +0200
+Message-ID: <20260930165000.303236-11-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260930165000.303236-1-den@openvz.org>
 References: <20260930165000.303236-1-den@openvz.org>
@@ -104,24 +103,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-A multiqueue virtio-blk drives one node from several AioContexts at
-once, and nothing in the test tools could reproduce that shape: every
-qemu-io request ran in the main loop. Filters and drivers that cache
-state across a yield have therefore never been exercised the way
-production runs them.
+The preallocate filter only does anything for a write that lands beyond
+the end of its file, and that is what a format driver above it produces.
+qemu-io could not produce it at all: the backend rejects such a request
+with EIO, and the write path asserts without the resize permission, so
+the filter could only be reached by stacking a real format on top and
+letting it choose the offsets.
 
-blk_aio_preadv() and friends enter the request coroutine in the
-caller's context, so submitting from a bottom half scheduled on an
-iothread is all it takes to put the request on that thread. The node
-itself stays where it is, which is what virtio-blk does with the
-queues it maps to iothreads other than the first.
-
-aio_read and aio_write promise their caller that the request has been
-submitted by the time they return, so wait for the bottom half to run
-before returning. That also makes a test deterministic: entering a
-coroutine from its own context runs it until it yields, so by the time
-the command returns the request has reached, or blocked at, whatever
-the test set up for it.
+Take the resize permission and allow writes beyond the end when -g is
+given, which leaves the tool free to address the filter directly.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
@@ -129,217 +119,115 @@ CC: Hanna Reitz <hreitz@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- qemu-io-cmds.c | 111 ++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 101 insertions(+), 10 deletions(-)
+ qemu-io.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index aa795fd87a..ce5bb53f4e 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -22,6 +22,8 @@
- #include "qemu/timer.h"
- #include "qemu/cutils.h"
- #include "qemu/memalign.h"
-+#include "system/iothread.h"
-+#include "qemu/aio-wait.h"
+diff --git a/qemu-io.c b/qemu-io.c
+index 2b684ccf55..87254b32ff 100644
+--- a/qemu-io.c
++++ b/qemu-io.c
+@@ -45,6 +45,7 @@ static bool quit_qemu_io;
+ static int ncmdline;
+ static char **cmdline;
+ static bool imageOpts;
++static bool write_beyond_eof;
  
- #define CMD_NOFILE_OK   0x01
+ static ReadLineState *readline_state;
  
-@@ -1367,8 +1369,84 @@ struct aio_ctx {
-     int pattern;
-     BdrvRequestFlags flags;
-     struct timespec t1;
-+    AioContext *aio_context;
+@@ -114,6 +115,21 @@ static int openfile(char *name, int flags, bool writethrough, bool force_share,
+ 
+     blk_set_enable_write_cache(qemuio_blk, !writethrough);
+ 
++    if (write_beyond_eof) {
++        uint64_t perm, shared;
++
++        blk_set_allow_write_beyond_eof(qemuio_blk, true);
++
++        blk_get_perm(qemuio_blk, &perm, &shared);
++        if (blk_set_perm(qemuio_blk, perm | BLK_PERM_RESIZE, shared,
++                         &local_err) < 0) {
++            error_reportf_err(local_err, "can't take the resize permission: ");
++            blk_unref(qemuio_blk);
++            qemuio_blk = NULL;
++            return 1;
++        }
++    }
++
+     return 0;
+ }
+ 
+@@ -129,6 +145,7 @@ static void open_help(void)
+ " Opens a file for subsequent use by all of the other qemu-io commands.\n"
+ " -r, -- open file read-only\n"
+ " -s, -- use snapshot file\n"
++" -g, -- let writes extend the image past its end\n"
+ " -C, -- use copy-on-read\n"
+ " -n, -- disable host cache, short for -t none\n"
+ " -U, -- force shared permissions\n"
+@@ -149,7 +166,7 @@ static const cmdinfo_t open_cmd = {
+     .argmin     = 1,
+     .argmax     = -1,
+     .flags      = CMD_NOFILE_OK,
+-    .args       = "[-rsCnkU] [-t cache] [-d discard] [-o options] [path]",
++    .args       = "[-grsCnkU] [-t cache] [-d discard] [-o options] [path]",
+     .oneline    = "open the file specified by path",
+     .help       = open_help,
  };
+@@ -175,7 +192,7 @@ static int open_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+     QDict *opts;
+     bool force_share = false;
  
-+enum aio_submit_type {
-+    AIO_SUBMIT_READ,
-+    AIO_SUBMIT_WRITE,
-+    AIO_SUBMIT_WRITE_ZEROES,
-+};
-+
-+struct aio_submit {
-+    struct aio_ctx *ctx;
-+    enum aio_submit_type type;
-+    int64_t bytes;
-+    BlockCompletionFunc *cb;
-+    bool submitted;
-+};
-+
-+static AioContext *aio_context_by_iothread_id(const char *id)
-+{
-+    IOThread *iothread = iothread_by_id(id);
-+
-+    if (!iothread) {
-+        printf("iothread \"%s\" not found\n", id);
-+        return NULL;
-+    }
-+
-+    return iothread_get_aio_context(iothread);
-+}
-+
-+static void aio_submit_bh(void *opaque)
-+{
-+    struct aio_submit *s = opaque;
-+    struct aio_ctx *ctx = s->ctx;
-+
-+    switch (s->type) {
-+    case AIO_SUBMIT_READ:
-+        blk_aio_preadv(ctx->blk, ctx->offset, &ctx->qiov, ctx->flags,
-+                       s->cb, ctx);
-+        break;
-+    case AIO_SUBMIT_WRITE:
-+        blk_aio_pwritev(ctx->blk, ctx->offset, &ctx->qiov, ctx->flags,
-+                        s->cb, ctx);
-+        break;
-+    case AIO_SUBMIT_WRITE_ZEROES:
-+        blk_aio_pwrite_zeroes(ctx->blk, ctx->offset, s->bytes, ctx->flags,
-+                              s->cb, ctx);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    qatomic_set(&s->submitted, true);
-+    aio_wait_kick();
-+}
-+
-+/*
-+ * blk_aio_*() runs the request in the caller's AioContext, so submitting from
-+ * a bottom half is what puts it on another thread.
-+ */
-+static void aio_submit(struct aio_ctx *ctx, enum aio_submit_type type,
-+                       int64_t bytes, BlockCompletionFunc *cb)
-+{
-+    struct aio_submit s = {
-+        .ctx = ctx,
-+        .type = type,
-+        .bytes = bytes,
-+        .cb = cb,
-+    };
-+
-+    if (!ctx->aio_context) {
-+        aio_submit_bh(&s);
-+        return;
-+    }
-+
-+    aio_bh_schedule_oneshot(ctx->aio_context, aio_submit_bh, &s);
-+    AIO_WAIT_WHILE_UNLOCKED(NULL, !qatomic_read(&s.submitted));
-+}
-+
- static void aio_write_done(void *opaque, int ret)
+-    while ((c = getopt(argc, argv, "snCro:ki:t:d:U")) != -1) {
++    while ((c = getopt(argc, argv, "gsnCro:ki:t:d:U")) != -1) {
+         switch (c) {
+         case 's':
+             flags |= BDRV_O_SNAPSHOT;
+@@ -228,6 +245,9 @@ static int open_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+         case 'U':
+             force_share = true;
+             break;
++        case 'g':
++            write_beyond_eof = true;
++            break;
+         default:
+             qemu_opts_reset(&empty_opts);
+             qemuio_command_usage(&open_cmd);
+@@ -310,6 +330,8 @@ static void usage(const char *name)
+ "                       specify tracing options\n"
+ "                       see qemu-img(1) man page for full description\n"
+ "  -U, --force-share    force shared permissions\n"
++"  -g, --grow           let writes extend the image past its end,\n"
++"                       as a format driver does to its file\n"
+ "  -h, --help           display this help and exit\n"
+ "  -V, --version        output version information and exit\n"
+ "\n"
+@@ -503,7 +525,7 @@ static QemuOptsList file_opts = {
+ int main(int argc, char **argv)
  {
-     struct aio_ctx *ctx = opaque;
-@@ -1468,6 +1546,7 @@ static void aio_read_help(void)
- " -P, -- use a pattern to verify read data\n"
- " -q, -- quiet mode, do not show I/O statistics\n"
- " -r, -- register I/O buffer\n"
-+" -t, -- run the request in the named iothread\n"
- " -v, -- dump buffer to standard output\n"
- "\n");
- }
-@@ -1479,7 +1558,7 @@ static const cmdinfo_t aio_read_cmd = {
-     .cfunc      = aio_read_f,
-     .argmin     = 2,
-     .argmax     = -1,
--    .args       = "[-Ciqrv] [-P pattern] off len [len..]",
-+    .args       = "[-Ciqrv] [-P pattern] [-t iothread] off len [len..]",
-     .oneline    = "asynchronously reads a number of bytes",
-     .help       = aio_read_help,
- };
-@@ -1490,7 +1569,7 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-     struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
- 
-     ctx->blk = blk;
--    while ((c = getopt(argc, argv, "CiP:qrv")) != -1) {
-+    while ((c = getopt(argc, argv, "CiP:qrt:v")) != -1) {
-         switch (c) {
-         case 'C':
-             ctx->Cflag = true;
-@@ -1514,6 +1593,13 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-         case 'r':
-             ctx->flags |= BDRV_REQ_REGISTERED_BUF;
+     int readonly = 0;
+-    const char *sopt = "hVc:d:f:rsnCmki:t:T:U";
++    const char *sopt = "hVc:d:f:grsnCmki:t:T:U";
+     const struct option lopt[] = {
+         { "help", no_argument, NULL, 'h' },
+         { "version", no_argument, NULL, 'V' },
+@@ -522,6 +544,7 @@ int main(int argc, char **argv)
+         { "object", required_argument, NULL, OPTION_OBJECT },
+         { "image-opts", no_argument, NULL, OPTION_IMAGE_OPTS },
+         { "force-share", no_argument, 0, 'U'},
++        { "grow", no_argument, NULL, 'g' },
+         { NULL, 0, NULL, 0 }
+     };
+     int c;
+@@ -607,6 +630,9 @@ int main(int argc, char **argv)
+         case 'U':
+             force_share = true;
              break;
-+        case 't':
-+            ctx->aio_context = aio_context_by_iothread_id(optarg);
-+            if (!ctx->aio_context) {
-+                g_free(ctx);
-+                return -EINVAL;
-+            }
++        case 'g':
++            write_beyond_eof = true;
 +            break;
-         case 'v':
-             ctx->vflag = true;
+         case OPTION_OBJECT:
+             g_ptr_array_add(objects, optarg);
              break;
-@@ -1551,8 +1637,7 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-     clock_gettime(CLOCK_MONOTONIC, &ctx->t1);
-     block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
-                      BLOCK_ACCT_READ);
--    blk_aio_preadv(blk, ctx->offset, &ctx->qiov, ctx->flags, aio_read_done,
--                   ctx);
-+    aio_submit(ctx, AIO_SUBMIT_READ, 0, aio_read_done);
-     return 0;
- }
- 
-@@ -1579,6 +1664,7 @@ static void aio_write_help(void)
- " -P, -- use different pattern to fill file\n"
- " -q, -- quiet mode, do not show I/O statistics\n"
- " -r, -- register I/O buffer\n"
-+" -t, -- run the request in the named iothread\n"
- " -u, -- with -z, allow unmapping\n"
- " -z, -- write zeroes using blk_aio_pwrite_zeroes\n"
- "\n");
-@@ -1592,7 +1678,7 @@ static const cmdinfo_t aio_write_cmd = {
-     .perm       = BLK_PERM_WRITE,
-     .argmin     = 2,
-     .argmax     = -1,
--    .args       = "[-Cfiqruz] [-P pattern] off len [len..]",
-+    .args       = "[-Cfiqruz] [-P pattern] [-t iothread] off len [len..]",
-     .oneline    = "asynchronously writes a number of bytes",
-     .help       = aio_write_help,
- };
-@@ -1604,7 +1690,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-     struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
- 
-     ctx->blk = blk;
--    while ((c = getopt(argc, argv, "CfiP:qruz")) != -1) {
-+    while ((c = getopt(argc, argv, "CfiP:qrt:uz")) != -1) {
-         switch (c) {
-         case 'C':
-             ctx->Cflag = true;
-@@ -1618,6 +1704,13 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-         case 'r':
-             ctx->flags |= BDRV_REQ_REGISTERED_BUF;
-             break;
-+        case 't':
-+            ctx->aio_context = aio_context_by_iothread_id(optarg);
-+            if (!ctx->aio_context) {
-+                g_free(ctx);
-+                return -EINVAL;
-+            }
-+            break;
-         case 'u':
-             ctx->flags |= BDRV_REQ_MAY_UNMAP;
-             break;
-@@ -1692,8 +1785,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-         }
- 
-         ctx->qiov.size = count;
--        blk_aio_pwrite_zeroes(blk, ctx->offset, count, ctx->flags,
--                              aio_write_done, ctx);
-+        aio_submit(ctx, AIO_SUBMIT_WRITE_ZEROES, count, aio_write_done);
-     } else {
-         nr_iov = argc - optind;
-         ctx->buf = create_iovec(blk, &ctx->qiov, &argv[optind], nr_iov,
-@@ -1709,8 +1801,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
-         block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
-                          BLOCK_ACCT_WRITE);
- 
--        blk_aio_pwritev(blk, ctx->offset, &ctx->qiov, ctx->flags,
--                        aio_write_done, ctx);
-+        aio_submit(ctx, AIO_SUBMIT_WRITE, 0, aio_write_done);
-     }
- 
-     return 0;
 -- 
 2.53.0
 
