@@ -4,76 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C72CA5FBB
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A25ACA5FB1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 07:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBoJ0-0000aN-1P; Wed, 30 Sep 2026 03:00:42 -0400
+	id 1xBoJg-0000s2-DT; Wed, 30 Sep 2026 03:01:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xBoIp-0000Zr-Ql
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:00:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xBoIo-0006V6-DF
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:00:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790751627;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=N/jstaymyUw7gArJBIfb3wt7UPvCyIKpH1xc1rOQKqQ=;
- b=ddqqOO41eYb2RNPC/mzjNnql6MUWlEEaCGV8GZSCspTSAQxwzUSS1LzguvU20jQ9Js5/d6
- 2VIvpOUXSEqVnT3WwFb55Ga4sooUZ3ISYpWwnnLBy7FxFqnl2hkwdRBUy54TNw0Kqx5na6
- uAOjrbh19eHGKdiHLigdQMOEsVEnd0Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-DmJo4CxnPHyYvaq4IooDHA-1; Wed,
- 30 Sep 2026 03:00:20 -0400
-X-MC-Unique: DmJo4CxnPHyYvaq4IooDHA-1
-X-Mimecast-MFC-AGG-ID: DmJo4CxnPHyYvaq4IooDHA_1790751618
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 53FBD1964CD0; Wed, 30 Sep 2026 07:00:18 +0000 (UTC)
-Received: from nucbdw.ghoffman.csb.home.kraxel.org
- (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3D161800361; Wed, 30 Sep 2026 07:00:17 +0000 (UTC)
-Received: by nucbdw.ghoffman.csb.home.kraxel.org (Postfix, from userid 11758)
- id A64CE40775D0; Wed, 30 Sep 2026 09:00:15 +0200 (CEST)
-Date: Wed, 30 Sep 2026 09:00:15 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Weqaar Janjua <weqaar.janjua@packetfive.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, mst@redhat.com, 
- pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com, pbonzini@redhat.com,
- farosas@suse.de, lvivier@redhat.com
-Subject: Re: [PATCH v3 1/6] pci: Add device ID for CnuasNIC
-Message-ID: <aryzYrs58TOoHLDp@nucbdw.ghoffman.csb.home.kraxel.org>
-References: <20260929202358.725310-1-weqaar.janjua@packetfive.com>
- <20260929202358.725310-2-weqaar.janjua@packetfive.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xBoJe-0000qG-W0
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xBoJc-0006aV-VU
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 03:01:22 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8CxutG_s7xqrUIRAA--.50532S3;
+ Wed, 30 Sep 2026 15:01:19 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJDxE+S+s7xqs+MmAA--.53665S2;
+ Wed, 30 Sep 2026 15:01:18 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 4/4] target/loongarch: Set CPU_INTERRUPT_HARD unless no pending
+ irq
+Date: Wed, 30 Sep 2026 15:02:27 +0800
+Message-ID: <20260930070227.1079521-5-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260930070227.1079521-1-maobibo@loongson.cn>
+References: <20260930070227.1079521-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260929202358.725310-2-weqaar.janjua@packetfive.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ghoffman@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxE+S+s7xqs+MmAA--.53665S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZw1DZrWrXw1DJryxGFyDArc_yoW5uF17pr
+ W7uFnFqw48GrWDZa4DKas8Wrn8Zr47Ww1a9an3K34fCFW5Xryjqr1kt39F9F4DG3s8WrWj
+ qF1Fy3WUZa18ZFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_Gr0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
+ kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcCD7UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,9 +78,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 29, 2026 at 08:23:52PM +0000, Weqaar Janjua wrote:
-> Reserve device ID 0017 for the Cnuas virtual network adapter.
+On LoongArch CPU_INTERRUPT_HARD is set only when interrupt is injected
+at the first time. Function cpu_interrupt() is not called if there is
+pending irq already, this will not set CPU_INTERRUPT_HARD bit and kick
+dest CPU, however QEMU TCG framework will clear exception_index when
+handling IRQ flow. There will be new interrupt lost issue when handling
+old one, the similar with other architectures call cpu_interrupt() always
+if there is pending interrupt.
 
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/loongarch/cpu.c            | 14 ++++----------
+ target/loongarch/internals.h      |  2 +-
+ target/loongarch/tcg/csr_helper.c |  2 +-
+ 3 files changed, 6 insertions(+), 12 deletions(-)
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index f22f64efb8..54c2699897 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -58,20 +58,16 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/loongarch/virt.h"
+ 
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
++void loongarch_cpu_update_irq(LoongArchCPU *cpu)
+ {
+     CPULoongArchState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
+     CPUSysState *sys = env_sys(env);
+ 
+     if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+-        if (!FIELD_EX64(old, CSR_ESTAT, IS)) {
+-            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+-        }
++        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+     } else {
+-        if (FIELD_EX64(old, CSR_ESTAT, IS)) {
+-            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+-        }
++        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+     }
+ }
+ 
+@@ -81,13 +77,11 @@ static void loongarch_cpu_self_set_irq(CPUState *cs, run_on_cpu_data data)
+     CPULoongArchState *env = cpu_env(cs);
+     CPUSysState *sys = env_sys(env);
+     int irq, level;
+-    uint64_t old;
+ 
+     irq = data.host_int & ~BIT(31);
+     level = (data.host_int >> 31) & 1;
+-    old = sys->CSR_ESTAT;
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+-    loongarch_cpu_update_irq(cpu, old);
++    loongarch_cpu_update_irq(cpu);
+ }
+ 
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index f9a0680fe0..ff956823fd 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -31,7 +31,7 @@ void restore_fp_status(CPULoongArchState *env);
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+-void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
++void loongarch_cpu_update_irq(LoongArchCPU *cpu);
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+ 
+ void cpu_loongarch_timer_cb(void *opaque);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 88656b5344..1a6919417f 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -111,7 +111,7 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+      */
+     if (sys->CSR_ESTAT != old_v) {
+         bql_lock();
+-        loongarch_cpu_update_irq(env_archcpu(env), old_v);
++        loongarch_cpu_update_irq(env_archcpu(env));
+         bql_unlock();
+     }
+ 
+-- 
+2.54.0
 
 
