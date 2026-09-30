@@ -4,131 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F68CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 17:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C0EBCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 17:51:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xByRa-0001ej-4J; Wed, 30 Sep 2026 13:50:19 -0400
+	id 1xBySE-00022s-LB; Wed, 30 Sep 2026 13:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xByRS-0001Rp-HN
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 13:50:08 -0400
+ id 1xByRn-0001pn-Nf
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 13:50:28 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xByRQ-0001Uc-Pb
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 13:50:06 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xByRl-0001Wg-Rc
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 13:50:27 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UHelhw4160745
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 17:50:04 GMT
+ 68UHfCdJ643969
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 17:50:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ivKXbJVdp1NK7x91XcxNYvkjqxRlN7x4uLPtErdpCvo=; b=VaYRc7/03M1vhhRX
- ZQG4dIbj1k7m+8LxYVAsb7cqAeU+u6dJJZ3kPOyMWNff7yQah2aDWQray1lJ+Y1s
- 2O4C+j5fymuw7p2CwSBWVZomocurZcHnvZxEY1Om39rzQvc3E1cPXpE/SQNeSczm
- 0YHmaGrJpi33UDtakXg81t2vQMDNCxEpALlGgoNvOqB4cK9rjZ223t9dW3xDxfjI
- gQcjvgKO4Wb0fBxPcD5HAad4h4pxfVYc60NS8P7ttTuBc01OBZjgv56WUgkUrH+Y
- ktmcPhHeH0V9UappCMILbY9KwQwh+sTjoxkEms3HgJlcXtDSHjCr2BsVxcbf/7qu
- tQz38w==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pgavq-1
+ 3ITDVxMKQyrvO/cJ01b1Bv1m3X4CEZI3TJHmNI/NA9U=; b=eT4e0g3F9F2/lnef
+ Gay76jl0OWK+Mb6RtFekfmi+U4/fOsnjfLfjL2bconqtQtAjJ8xtN+HCwPo2EQ9Y
+ Stbyd5kV0jnib8g4aDt7+kG1KLMz+pHDdUJjN1/0lKxPqcVLPGlm3X9EFNt0vXjT
+ oMSNSF7Jkw+oD727t0cLH+qA2a7wuixdOZd08vdvkt/gVzsp041Jx+5Pn7C/nYSH
+ bpvsDO930ovFAWNk8Vo6hwE43E1Vr9kquyQgiUkHao18kbXK3pqCrO6aBU+wgSNo
+ SeEnrqI4YJEQ4yUIjVxKUJ/3b1A4cdgTEpDT7lVV8Z7fgmF2w7DQP9uNo39iB+EM
+ Lc9WuA==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h14n20uwd-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 17:50:03 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-98087b0c5deso4377967241.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 10:50:03 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 17:50:24 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7989d8ef4a6so892897137.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 10:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790790603; x=1791395403; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790790624; x=1791395424; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ivKXbJVdp1NK7x91XcxNYvkjqxRlN7x4uLPtErdpCvo=;
- b=UzjMf+/eQTE1mFNHF6HC67/d3qu9ubU5Swxy314rmlukIbBVzK+yXwClYz7kLqFZuq
- iYKfqcwvIweZO7R++8tS0Lp3+TLL9kU8dmQ6c8fWAoaIX6KShEu6nUe4cT5ew2P/QIrc
- uadmAW2nw5ubEtVEg6C8oWTCC+xhLTary52OPEPMNwGQ+8BTHDC5U4QBW4otV6AZr2BN
- CjJ2iCHqlkMzyJyZbmm3xIVd//HPcMHoZ04+B1NLOMlUPh4hvUa2o5e47jz97XzZkPmJ
- O9rhUfBWfOKKEzFiTw2CCOwUHteEAEWpPS8ZWzF+fMaG0FHdOdk+3g1EMyR+EEBu3NVW
- gDUA==
+ bh=3ITDVxMKQyrvO/cJ01b1Bv1m3X4CEZI3TJHmNI/NA9U=;
+ b=KZey0DFFLmtJS0BhIP9uYDHiXLKVOthaoIl2XEiu8otgPYuOZYNs6TdzAgB/nGI2Vs
+ N8DpH7Ncphz4cQ0LXt8qtQjX8ljirQVKYE8Uchwf+R3kyP4LLm0kTGH5PrPnYZCZoEXl
+ H46eHK3OLX+fOO87u7cQ6B4bFqlOUMdbkPSSlfnjI+VqgnUdoCH7GyiDIJRQ4M160rsl
+ rKRfm0dV++bMS1MzCQmx60L+8gUwbYdzapo2M/Z7uLq9PnVHS5axPERkgtjXgSyKbUPq
+ ET5cQz9byon30bhu6J/pLZgaC3vFgMoAh6e26uieQWfQY80JJ6N0/IYMWqwySBkHnOr5
+ PBRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790790603; x=1791395403;
+ d=1e100.net; s=20260707; t=1790790624; x=1791395424;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ivKXbJVdp1NK7x91XcxNYvkjqxRlN7x4uLPtErdpCvo=;
- b=MWjrWkvs102fWzDNCpuxGMVUnDeBx3ag5ejmSM3GB12lczs95+Om7fG2frFKu3NrC6
- 9++oCq5vC+yCC5wgoNfpLjLfk5JyGoqQ2hp9OrzAW3aflOBnxqwPIbXq+mGtRWCTS2OA
- fPrDA0K0EcFkGeTHvtKORgyXdAxWhulkF5PzWNbFiitGmi3CKmHSYrgU08ZnLGtd6ZUM
- dqsjmOzgg7+/ejgznNtCvto4VE3flcNGRif2QV7mzPgBOB6NJIn5ar8FaeL/YWGGi+Bz
- fwBQzGmO3B+2bj2GZVkV6LKqUMGLEJvfZmKmcB+PIaZH9G2FSLoNO07DHa36cPh6YWg7
- AJhQ==
-X-Gm-Message-State: AFq9FYKH6TJY0ZbzBg/BlrnoPAzhhxP8pL/YXALB9I0KXRt+vo2oyHHR
- xULdaNTi1HXIaCHYWVTUhTQn11YaCBPWpRwQ/rv9WMk/XO8Po+DnUHdelXk4ep64UELecsruawD
- TMZY1bJzkMRZtAKrK9w23usaYeMOgAEf9T0h9EvMDuHtY9cb5tlaRRItP6gQ66QJFCg==
-X-Gm-Gg: AYBFou2cS5QuUuCUx5Ifi4CrglgZezKHGnhCWF4zP1VW5UGz8uaL2geJYZiGM5MbDWB
- IDI0yQuK5ItndSdgWENBVOGWvjJP0NNhQvyfsoDXpJ9cqCyGAwLmpdpqWze+br7k4sgwowVQnfi
- hXGV6jvKSdbXj7pCGwpIicbLl7bg7Zj3JZfHhn/bGVDZTxQcnPVpplYVP+DgOrl0ZK525oM4xBR
- bJc3V1+0M1KTTbJi5eQHGNB22w28Srr1LKx235zBnVXRtaResKZXMKpMvq9Ax9/Zvt+DgJNuEeU
- QHftxGmUjoRR5KDndp+dI7WfoMfZASQhtq2zLuHbqVzno6MYy3MOYa3jFlRNtVYWSKJmfeVBe3x
- tzyKbqV56ydKJXMap2uWyjvwQSNWgVgBY2QDv3Uyh
-X-Received: by 2002:a05:6102:54a1:b0:7b2:c1b1:1d0 with SMTP id
- ada2fe7eead31-7be729ac2a0mr712646137.11.1790790602940; 
- Wed, 30 Sep 2026 10:50:02 -0700 (PDT)
-X-Received: by 2002:a05:6102:54a1:b0:7b2:c1b1:1d0 with SMTP id
- ada2fe7eead31-7be729ac2a0mr712635137.11.1790790602467; 
- Wed, 30 Sep 2026 10:50:02 -0700 (PDT)
+ bh=3ITDVxMKQyrvO/cJ01b1Bv1m3X4CEZI3TJHmNI/NA9U=;
+ b=puE9FRnTQcaxNxjzW+HtbPmC7Ryd7JCxNUUDqJneiYywMvErmde49tEK6B7HDCfQMQ
+ 3oRBOujmC72AW4HYiMmTeqvOyneuFdoG4qI5Y8BFB+/a4s7Q5BARm+PYmHDw1X8DY+Jc
+ +Eu8RtVVMcECL7jgx0GNUk9SMOezctFLAOPFcWsLuE7ZNU46lrayZ66usjnlqrJsV8uY
+ /myP9GsecUtcxh4enPAHVwQAC8Brbkfw2zGHGZosLKlrrbiWyKUx9+36KpwZ6utsJXs5
+ B8wNCUvSW4f1QVbmMp31OM5zhusH8CHhz6LXMVAOkHdothRuiPGUEi/Zl8k3aDJsiE4A
+ MryA==
+X-Gm-Message-State: AFq9FYLkc/pdNMjAMOHXWu9z512AwARisgjrV6bZ0tlI+8FVpb78sHwO
+ VMxmW51Vm1opmpFIH3Rp7dHKxtPgQUDiHYwZ9v2kVGQTuIKZdT+zEgU8Cv5mYJQfwUdYYMKv9Tn
+ t4Xx9sbxcGyTHzjaUYD9XzY4/uCl7qH1XGOiFlfSQIfoanT5JAlkp3LKMUbs24cSrsg==
+X-Gm-Gg: AYBFou2TS+lm5BgXnvWBmWxUCp6lY4/14hIZZ7E77znbkTmQ3RS1+CI9wT08QGvGwlK
+ FIEuUd0ofhrLu4dpLU/KJw96xlNY5dvk0ALPauMWIOO1TBVXydw4ZHepUDXv/pHHt3JmLImRfkw
+ TCH4mjXbCESrwT/lV92IvuoSC4Dr/TAM1vVQnyI1mM7kU0VQjhpna5b0IxTP0Sq7/1Wa+X2+tlD
+ 5luTLgs1CLm2YBtki80Kwik/oHXqW1zymtykaPthWveXH/40jtfm/AGRUqZcKtUvfekwE3yw4BE
+ rGQKZAwy8ec9PmGSxZBJmqsC74PZyKm7OFpdQm8bA0FIOJj076jnvXeVNc79kHPrSkD+XtuCKWw
+ /H4yWA3plGVNgcwhJRglvKK0MZMF5JrXkdz9PWQoy
+X-Received: by 2002:a05:6102:54a7:b0:7af:4843:5ec9 with SMTP id
+ ada2fe7eead31-7be724b9384mr554128137.8.1790790624118; 
+ Wed, 30 Sep 2026 10:50:24 -0700 (PDT)
+X-Received: by 2002:a05:6102:54a7:b0:7af:4843:5ec9 with SMTP id
+ ada2fe7eead31-7be724b9384mr554116137.8.1790790623690; 
+ Wed, 30 Sep 2026 10:50:23 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b0692b5d7sm628089f8f.28.2026.09.30.10.50.01
+ 5b1f17b1804b1-4a01ef9b9e3sm5652445e9.2.2026.09.30.10.50.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 30 Sep 2026 10:50:01 -0700 (PDT)
+ Wed, 30 Sep 2026 10:50:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4 2/9] accel/tcg: Introduce poll_during_halt() and
- leaving_halt()
-Date: Wed, 30 Sep 2026 19:49:38 +0200
-Message-ID: <20260930174946.82195-3-philmd@oss.qualcomm.com>
+Subject: [PATCH v4 5/9] target/i386: Split APIC polling from
+ x86_cpu_exec_halt()
+Date: Wed, 30 Sep 2026 19:49:41 +0200
+Message-ID: <20260930174946.82195-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930174946.82195-1-philmd@oss.qualcomm.com>
 References: <20260930174946.82195-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: VpZCRkAjoJnXKqwOpqoAIaWFnRCbCtGj
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3MSBTYWx0ZWRfX8NNwvyPldod2
- omyF5PgHU17ovDO4fS7ZlfqDwVey/V3giwXQnr4VXAmvZd/M2benH0LJgkPCsdgWt8j/u6bON7Y
- tsSqDY70BARdwaJWSxnvR2+5hqgA6HE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3MSBTYWx0ZWRfX8uIZpc26cDZ2
- WQg4DTWvRU0do6Un2I9hK1FF1Ea74LRUldJL6pSWAOcvpkfmC6y1FSUtvqa14xpqryEfntY38XG
- u77D80W9TbjaclTa5OI4BFzJ4patla1biSqat/iG2Wqjx5dOvDT/95LZAbqvT8/ZogTYdMEIxin
- y1OK2plUgm+YW1Wl+MZrnvcoGUcGrU6y5U00o2IAqsHtXKOwQ/LO1PUYKOh/bbg0f4Yjw27sAvo
- M6rN0dRPshqKWjRNgP907DH9+tRrA2jd7l5IPI6G3jhHV30dNHq3YgbekhK3rAg5OpjB8ZtLfDj
- ZA0HZuwnO30yXh2xxM7StG9lINnUZBxnfsFx7y5YQ7mmVNqoj2qpFmN38zUmEbyFmWj0goOh8SS
- ZuUezEiRvFi3mv3JFHkcfKBGahTX/aAi8OlmLR620+yt75h3r+0f06MGhp0VHjpuTRgQ/J7YjUt
- /7lPiyDKwL+/BIRSJwg==
-X-Proofpoint-GUID: VpZCRkAjoJnXKqwOpqoAIaWFnRCbCtGj
-X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abd4bcb cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=Gr3XaU1C c=1 sm=1 tr=0 ts=6abd4be0 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=DbqnPDNGgojIjNu1nyEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=h7OMh5kjI76PbTVxvEwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3MSBTYWx0ZWRfX4S48SCQy+C6B
+ qaw+dVn+KEBnoVbxpA4RXQ/8YD13oS9Z9pyZRmCD0M7SFm0Cu8nQL1mg/aDCHkZhgRAUKhe9KaW
+ Ag35L0Hj63BAb0zWJx+h0zj9/CSYPeQ=
+X-Proofpoint-GUID: 7_OF-3tzS8v5TARROijnDsE-ItZ8EfVJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3MSBTYWx0ZWRfX11Mxs2xQs0H5
+ bZ9hEy5ps68oNeWNTjlmnrMwvnr+6h4VYEUPTc7k1IkLK2HzRiPnjmJE4ZF7/OLlIuY/7rraHSy
+ chaRZh6sRMbAlpmKmj8VtAM6opEJbkecVo0OQSI8apFQ2PTVl5QkMBi+IuCNHVgi/9gbfz63yPj
+ 4tk+TqEN0G/A5lyz1gf7zGjpvE1FXbA+6edi//wqtQd++FEY7Ag+DRb/OYHpaWKTfqyIHEGsc2z
+ TXKLvrbDvjjvbZSQ6zd+KqYm/mFCXH7wYNo4yNTuaFAENSkHn9GI2Bvj9iiqO7Guq5H0bjn+2KM
+ oAbrZAujU7Ibb1SoKBt+z1EJYN/VMAReOpwyXNcuGY5kk+uUlHfOqda8qChMY8x6ndi4c9cVo1I
+ ELx2C8tcisnvzSsLHxv5/bQvEWC0ZolgI+xJmEzf/kdecgrhsdL56TQ5vqnVxIhJVpkqHY5k1eG
+ 4ve3gSdphtVl3efRorg==
+X-Proofpoint-ORIG-GUID: 7_OF-3tzS8v5TARROijnDsE-ItZ8EfVJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_04,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300071
 Received-SPF: pass client-ip=205.220.180.131;
@@ -139,7 +138,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,111 +154,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split target-specific halt handling into an optional
-poll_during_halt() callback before cpu_has_work() and a
-leaving_halt() callback after work is found.
+Move APIC polling into x86_cpu_poll_during_halt() while
+keeping the remaining halt handling in x86_cpu_exec_halt().
 
-Keep cpu_exec_halt() as a legacy alternative for targets
-that have not migrated. Require each target to provide either
-cpu_exec_halt() or leaving_halt(), but not both.
-
-Inspired-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h | 24 +++++++++++++++++++++++-
- accel/tcg/cpu-exec.c        | 21 +++++++++++++++++----
- 2 files changed, 40 insertions(+), 5 deletions(-)
+ target/i386/tcg/helper-tcg.h        |  1 +
+ target/i386/tcg/system/seg_helper.c | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index 3ff6e6810e0..1ee5d3d8bdb 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -169,6 +169,27 @@ struct TCGCPUOps {
-      */
-     vaddr (*untagged_addr)(CPUState *cs, vaddr addr);
- #else
-+    /**
-+     * @poll_during_halt: Poll target-specific events while the CPU is halted.
-+     * @cpu: vCPU context
-+     *
-+     * Called when the CPU is halted to handle target-specific asynchronous
-+     * event processing before instruction execution begins.
-+     * The caller does not hold the BQL.
-+     */
-+    void (*poll_during_halt)(CPUState *cpu);
-+    /**
-+     * @leaving_halt: Perform target-specific cleanup before resuming
-+     *                execution.
-+     * @cpu: vCPU context
-+     *
-+     * Called after a halted CPU has detected pending work and is about to
-+     * resume execution from the halted state. This callback performs any
-+     * necessary target-specific state transitions or synchronization before
-+     * instruction execution resumes. The caller does not hold the BQL.
-+     * Either this callback or @cpu_exec_halt must be provided (but not both).
-+     */
-+    void (*leaving_halt)(CPUState *cpu);
-     /** @do_interrupt: Callback for interrupt handling.  */
-     void (*do_interrupt)(CPUState *cpu);
-     /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
-@@ -185,7 +206,8 @@ struct TCGCPUOps {
-      * if it should remain in the halted state. (This should generally
-      * be the same value that cpu_has_work() would return.)
-      *
--     * This method must be provided. If the target does not need to
-+     * Either @leaving_halt or this method must be provided, but not both.
-+     * If the target does not need to
-      * do anything special for halt, the same function used for its
-      * SysemuCPUOps::has_work method can be used here, as they have the
-      * same function signature.
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 853c4b2f67a..122ad9e2e49 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -48,6 +48,7 @@
- #include "internal-common.h"
- #if !defined(CONFIG_USER_ONLY)
- #include "accel/tcg/iommu.h"
-+#include "hw/core/sysemu-cpu-ops.h"
- #endif
- 
- /* -icount align implementation. */
-@@ -659,10 +660,22 @@ static inline void tb_add_jump(TranslationBlock *tb, int n,
- static bool cpu_poll_while_halted(CPUState *cpu)
- {
-     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
--    bool leave_halt = tcg_ops->cpu_exec_halt(cpu);
- 
--    if (!leave_halt) {
--        return false;
-+    if (tcg_ops->leaving_halt) {
-+        assert(!tcg_ops->cpu_exec_halt);
-+        if (tcg_ops->poll_during_halt) {
-+            tcg_ops->poll_during_halt(cpu);
-+        }
-+        if (!cpu_has_work(cpu)) {
-+            return false;
-+        }
-+        tcg_ops->leaving_halt(cpu);
-+    } else {
-+        assert(!tcg_ops->poll_during_halt);
-+        assert(cpu->cc->sysemu_ops->has_work == tcg_ops->cpu_exec_halt);
-+        if (!tcg_ops->cpu_exec_halt(cpu)) {
-+            return false;
-+        }
-     }
- 
-     cpu->halted = 0; /* allow execution */
-@@ -1061,7 +1074,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-         /* Check mandatory TCGCPUOps handlers */
-         const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
+index f4b2ff740d5..58e8ca0bc1b 100644
+--- a/target/i386/tcg/helper-tcg.h
++++ b/target/i386/tcg/helper-tcg.h
+@@ -37,6 +37,7 @@
+  */
+ void x86_cpu_do_interrupt(CPUState *cpu);
  #ifndef CONFIG_USER_ONLY
--        assert(tcg_ops->cpu_exec_halt);
-+        assert(tcg_ops->cpu_exec_halt || tcg_ops->leaving_halt);
-         assert(tcg_ops->cpu_exec_interrupt);
-         assert(tcg_ops->cpu_exec_reset);
-         assert(tcg_ops->pointer_wrap);
++void x86_cpu_poll_during_halt(CPUState *cpu);
+ bool x86_cpu_exec_halt(CPUState *cpu);
+ bool x86_need_replay_interrupt(int interrupt_request);
+ bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
+diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
+index 8c7856be81e..9ce608a0bb7 100644
+--- a/target/i386/tcg/system/seg_helper.c
++++ b/target/i386/tcg/system/seg_helper.c
+@@ -128,10 +128,9 @@ void x86_cpu_do_interrupt(CPUState *cs)
+     }
+ }
+ 
+-bool x86_cpu_exec_halt(CPUState *cpu)
++void x86_cpu_poll_during_halt(CPUState *cpu)
+ {
+     X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
+ 
+     if (cpu_test_interrupt(cpu, CPU_INTERRUPT_POLL)) {
+         bql_lock();
+@@ -139,6 +138,14 @@ bool x86_cpu_exec_halt(CPUState *cpu)
+         cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
+         bql_unlock();
+     }
++}
++
++bool x86_cpu_exec_halt(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++
++    x86_cpu_poll_during_halt(cpu);
+ 
+     if (!cpu_has_work(cpu)) {
+         return false;
 -- 
 2.55.0
 
