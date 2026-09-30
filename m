@@ -4,142 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944EBCA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 09:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE32CA5FC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 09:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBqOD-0006mW-Oj; Wed, 30 Sep 2026 05:14:13 -0400
+	id 1xBqVs-0007xP-Bw; Wed, 30 Sep 2026 05:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xBqOB-0006mF-MA
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 05:14:11 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1)
+ (envelope-from <prvs=7264c68bd=Conor.Dooley@microchip.com>)
+ id 1xBqVq-0007xC-Pt; Wed, 30 Sep 2026 05:22:06 -0400
+Received: from esa.microchip.iphmx.com ([68.232.154.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xBqO9-0004hS-CM
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 05:14:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fq0Pp1E+S6XGFRB4BnH3+qvzdyaB2xrNWlBDzTqiKl9wS6vq8VP0Ke+QnPXhlYmNjsFkr/VjQ5y/KJjMUWCQeRn3omrBMjwb+AuQaIXIom4GKxzb3z69oiWXvkz8shkddadt3rKuyrzYdDL84KOFOycPq5x7BI6CQiy/5ur0g5CENARl6FI51KHeLnXqDnfINC1FOTjgGyoX+YFtINGSkV66E/JnB8RUaiccaaDmcOxb5Q91Oz7ZWdzeNWiwRDxgaCHBF+QOtG/xZStiw5qyLTI1EqPqQ9+fKwj9hrJsb2g0Lnr3vfDcyfnsTlVp0jI0/8SQHOO8GWTD5qKcUAJcDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GN+JRLx6oVoIrpTZpVOjND39msytgbuZLZF84FlpK6M=;
- b=ctq1X1FbHadM+QewkwLxSOJZbLIJLbyFGI912KIZtznwtbLV0+BoUueGuutDC0cw4utcJNToeZqTYt193m1X7SYB1s669QWu44iiuc0z2SaxqE5RCCgPmcIMl41FlxVy/xDieuWv0T5naKoQQYQfm4FheScqav1G2XAo2UH5yrc4OBfsHDBANxJ8wCfzUd7KPxXVFUo8MnO5zrDo87yZJTaC8zov/xodKYu3ZlorfdhLL1L39IkOTQUZArjuj1BShukJwi03TZsmqF03vwT3nZgnlcmopiMYaLCG3wjjkGynktPBekTCbR6ElXAXSJlaXeZzUr3CRlI7jgGpKwFHDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GN+JRLx6oVoIrpTZpVOjND39msytgbuZLZF84FlpK6M=;
- b=BM4kmi50Kdw73PfyyIDl+W1vgMQcaABwPZtRYJ/KCPmCCkOKW+l3cBxCuaRyeew48yxRQs2QJmrFHHEPQn2qUYvx5jtIr7nfiLHkxSd6jgBN8plUUrftMzAaRZBiKa/V3JBSWNvOj0MilEDNlGxi8DCtsxxBUFR7KLMrPrOs7fbdCCEdmtffCU6l2xUi0AWNfYsIZ5E513PWvC/6pnZEooZxS/G/UCuovaSDFDVPSEBDYGF3z1yKN7Up01rQMA3xVkwY5dCQXtFpw2Axehm63+44OmS7Y7rKLwERI5Q85qj2RSjYDPWIQv5ZAXhMTFG7vc6eI7NdNi1LJHkQXjQitg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by MI3PR08MB11878.eurprd08.prod.outlook.com
- (2603:10a6:290:77::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.7; Wed, 30 Sep
- 2026 09:14:05 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0472.012; Wed, 30 Sep 2026
- 09:14:04 +0000
-Message-ID: <8a6aa38c-8fe6-477f-8faa-e7a17a41b4c3@virtuozzo.com>
-Date: Wed, 30 Sep 2026 12:14:03 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 15/17] vhost-vsock: hand off device ownership across CPR
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, maciej.szmigiero@oracle.com, philmd@oss.qualcomm.com,
- clg@redhat.com, den@openvz.org, mark.kanda@oracle.com,
- vsementsov@yandex-team.ru, farosas@suse.de, peterx@redhat.com,
- sgarzare@redhat.com, bchaney@akamai.com, dongli.zhang@oracle.com
-References: <20260929-up-vsock-vhost-v5-v8-0-12bcf1c0b84a@virtuozzo.com>
- <20260929-up-vsock-vhost-v5-v8-15-12bcf1c0b84a@virtuozzo.com>
- <85a83a6a-a697-4fda-86d1-1a2a0796f5d8@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <85a83a6a-a697-4fda-86d1-1a2a0796f5d8@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ZR1PEPF000077B9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::478) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1)
+ (envelope-from <prvs=7264c68bd=Conor.Dooley@microchip.com>)
+ id 1xBqVo-0005Wp-9X; Wed, 30 Sep 2026 05:22:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+ t=1790760129; x=1822296129;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1s6iiEDwHUewvAKDqCXOKXZw9ghp1BXQVwEHNqpBDSk=;
+ b=sRSbfuXqyNJWQpTEcTbIML+bJIV5q/qZVHayarIrGWq0Q0IQ6hVz+WAh
+ oXdGMBs1rcMmX7yPUJYGC9c9vJnfA+5ZZgFsf8HRfU2XXjtvvOTFRACQp
+ VwlMXnABxh2oevOHQAIgasndYFNGVAoLVU86XCPuTXxwOvrAK8J+EImrG
+ 1/+ZXu3TM6tuR9xATvI48rdeYy6KBiJsGMqI9abOFYwTcgDVSsoWgjI4t
+ K0nG2Ja6t3I1DXpLxKG/xN8x8JrAfnAzWfLEA7IMWdOKH1GHbsTYqNc4J
+ LQbF2hbNEx0M14Px8zB7GJ0fI6JxL7frYOPiyQVORQprrN8OyhcwhHumz A==;
+X-CSE-ConnectionGUID: uLPlHziYRrSIOrjwDmPEzQ==
+X-CSE-MsgGUID: DfEJeoCuRwWFQhLaGHKeMg==
+X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
+ d="asc'?scan'208";a="64658238"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+ by esa2.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Sep 2026 02:22:07 -0700
+Received: from chn-vm-ex03.mchp-main.com (10.10.87.152) by
+ chn-vm-ex4.mchp-main.com (10.10.87.33) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.2562.49; Wed, 30 Sep 2026 02:22:01 -0700
+Received: from wendy (10.10.85.11) by chn-vm-ex03.mchp-main.com (10.10.85.151)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.58 via Frontend
+ Transport; Wed, 30 Sep 2026 02:21:59 -0700
+Date: Wed, 30 Sep 2026 10:20:40 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Bin Meng <bin.meng@processmission.com>
+CC: QEMU <qemu-devel@nongnu.org>, Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Conor Dooley <conor@kernel.org>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, Weiwei Li
+ <liwei1518@gmail.com>, <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v2 16/24] hw/misc: pfsoc: Honor PolarFire service
+ notification requests
+Message-ID: <20260930-stapling-pajamas-0b49d92348dd@wendy>
+References: <20260904155758.3833179-1-bin.meng@processmission.com>
+ <20260904155758.3833179-17-bin.meng@processmission.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MI3PR08MB11878:EE_
-X-MS-Office365-Filtering-Correlation-Id: ca5596c2-9a6b-4467-a71f-08df1ed32cb1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|7416014|23010399003|366016|56012099006|6133799003|10067099003|4143699003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 6InUMuU64/klwHNp0IyGTs4IGozbcEOfPBuNupF541C1jJWKuTkH+dPmxfdhG8FoYGQQl6KvxwtVNygdhOmaF5LVY3ArLM09dWrewa6So6WCEXcW6r22C4+f5EnusXeVWpyAtx5sCMdauDGmPeM57wD2dLahCTbPB6Lhhu0qjj4RO/3HXbamh0SOKZjKAHpx2D+UtILucZ0bVPLLSbGrZIB8tDGUAhZrLLRUHLyy/DwFlLwmIiT9X0peJgKp+ApA553XZzJsTJJYRaOsq11KabL3jSpbvCy3uKvqZfTXvxhn0LU68tcCjLT3+kNgoi8KJeSm9br9jmv9VH+3cfLy+ek+p8PEnuvj22UYcA85so96932LjnQRuBrOesHpNNPNLtrlvbEYYX5i/ydvND7gi4E+wj4Qbk3J/5kV3miCBffDlhuKvWfKlhRjVsPQ2w/oBPfgnWYqsWEzn8qdoR7DI/sOMC4505hoQ0y7X2a7IkCJYAe4v3+hw97ExZCzsbA29ZxHvADum9vg6Kqg2+zMlAmW4n2/cFfpV7X8NoZbCPblX6mqTGPkrKOlSJbb4uY4YL4VTPIX/4wbqIbID7/Ov93cxQwQWWFL231UbjzQxRca+MGFJF5p9ivDMg3EhNjwz7jV8kfh8rOgwUjp8FJwxwnCuTZsRx2cs9+ylwIfEeo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(7416014)(23010399003)(366016)(56012099006)(6133799003)(10067099003)(4143699003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NThqZS8weHN2bG1lem9PcWt1SGxEM0dCeGhtemFnVHBiTlNBZW1WbTJQMXFF?=
- =?utf-8?B?V2pDZE1zcnFDODV0MjRDVllwdnZlRFE0b3NLOHI5WmFaVTN3QTFVZmxHeVk2?=
- =?utf-8?B?UlN4WThpaXl3Z0U1dWRzcDF6ZC9jL1krczh3dTJ1WUh5NHkwdTNYcjBlOHhV?=
- =?utf-8?B?ZzBnaGRIdVNrbzVpSUhGQXNyZkxRWkFFQlBPNFRBNzdqYkpnbEV3d0E5MEhF?=
- =?utf-8?B?Zk9uZHUyWWNBQWRUelZSbnRTV3I1VVpQOFVRaGZzamYyYStxWnBpeURVVnRB?=
- =?utf-8?B?WG1EcDk3QnUzeE5VRVJHU2FLUjduV2VzczkxVmFSMFpjNWE0WHJLR05MSUR1?=
- =?utf-8?B?YUI4QW5sSGsveXBrKy9jUXg1RmIrcGhFSlozb3VUaU95Vmg4SXZzWHlkbzgx?=
- =?utf-8?B?cExuN2RrRWhrSktib3p0NnFDVS8xYUlJcGhCZVpMcmRzT1k5Z2lOTkxJRitS?=
- =?utf-8?B?ZnlPcDFiaEUwWDhzb1BCelpndStYQWtPaVk0aEg0V09nV1g1N2o1bmozZ3hC?=
- =?utf-8?B?aWdmQWQ1cWhmV3ZWalVWeCtOQXRKa3pqa2FsWEVRKzBUaEVsTGtJY2d6Ri9t?=
- =?utf-8?B?cGtDNDMxZGtmcEpOa2tYRUl0eHRoeWJWYnpOT2NUcjY2TERUUWNZTllZWDN1?=
- =?utf-8?B?WDB3R0hEazJDTSs4OWJ5Y2VBOW1ycTNKaVhhUFZxbnJxQXV0dysweGpDSmVi?=
- =?utf-8?B?dTIzYUpGcVdMVXNBMnhvZGVPaXIvK1N0c25rYk5vYjZhbUpyVG4wR0NXQTl5?=
- =?utf-8?B?b3VqZ3hkdEc1Z016QmdnczlmdzNLZXpXRlo1Sno0WHpXRzJObVhwTHY2ZlhY?=
- =?utf-8?B?ZGZTODRLZ1ZSSnVRMENOa2YyRzk3eUhVWU9sbmlkblFTbEwyODBJdU5wWWp5?=
- =?utf-8?B?R0s2SnJvTEFHNmZBU2tvUFZ5dHBLbzV1Mkd4UTJzTDhRYXhTa2hkd3hYVWVs?=
- =?utf-8?B?SHB0WHZtUUpoa2k5TUovZ2NOb29SNkRCTkFoY1F3TG1qRCtjWGVhYmtZVHJk?=
- =?utf-8?B?YS9wd2dqTGxFYUhDSm1xRjg2MWhjRzhhL2hvNmlRbmVjenVtaW9KdlpJKzhN?=
- =?utf-8?B?Y1VtUCtya2JBaXAwWlAwNWRCQUVMNEdGQlhQb1ozVjZlY0pMRjdxUUlPc3dD?=
- =?utf-8?B?b1lUbFBYY2hkZS8vS1N6N2lUb2RUVzl6ZHFDYjdRamhvYkdQczBqYjNzRnZQ?=
- =?utf-8?B?TisyY3loVk5ySXZKL2U0cEUySTdBOG8xSkJDOTlQOU9GUXdKUkk4TUMrdmpr?=
- =?utf-8?B?ZDRmNUNNRXN4QjZWZ1ZleWROZVY5d3Y5RzkyQ1VoQUVtdlBiKzhlYWFrK2FU?=
- =?utf-8?B?VmY2TVA3YUFnTGxYZnhQc0VnSkdpMnZuaHlCdHppVjdLZjFhMDNNcTd6VHlM?=
- =?utf-8?B?NHVyckxwaWxMY1cwMmRTWGQxc2Z4V2V1eHl4RDIxV3ovL2p2QjZNUnNMeVUz?=
- =?utf-8?B?MlNzWEpyY0s3QjN5eHcvUHRBYzBYSXdIZUw5ay9pTVVTV1RNVjREWmxwenpk?=
- =?utf-8?B?cUwyamRLOFhuSkQrRWU4cW1sNitNajlqZ0F1UmVydlo5Y2VWa293ZzB2d3hJ?=
- =?utf-8?B?VGJnZm83QnFPN3VmRk9JZWh3T3dWVmlOM3ozOUtmNnlyZG9mbFB2RGxOWHRz?=
- =?utf-8?B?SFZMTG5lS2hXV1RRcTBiMDE2NG5rUWN0dS9xS3hkN2VVTllzWWR1NkpwVFYw?=
- =?utf-8?B?RDE2YXRleTBMZC9acVZyMUVFdEJsT0lKdlB4UHo2dnl5ZERLWVZJZVhOQnlV?=
- =?utf-8?B?L0ZjY2U5aWxVUEcwc3FLZkJZSXlXOHRodVh5MkxjbEhGVnprS1B3eEo4aGht?=
- =?utf-8?B?aTAzcjcwMW1jelZzMDkyZVJGVXI1NlFqdEhkMUhYeEQ2Q1BhOUVycnhNRnQv?=
- =?utf-8?B?SkhzYThhYlhrWVRMVEdzNWxwdktLL2dBZ2pFSU5PMDJnWkJYUTM0ZHNPMGVB?=
- =?utf-8?B?aXltNXJBcXA0MHRPbDV1TFFFT2dLTEp3enp6TXF6dVN5UzArd0Z1c0Z1bUpJ?=
- =?utf-8?B?a3dQQWFpSFliaU5SejRVcytLZGxrZXNpWVdFcjd4Z0d2bDdFR2JaamtZOWIz?=
- =?utf-8?B?cklJZ00xMC93d2RBOFg0enh5dXdMemlmOWQwUWhkT1A4TmpndjdudU9TcGRF?=
- =?utf-8?B?TVIrcjBiVzQyUWE0MEhNbHQ2Y0VITGdEcStYd1RDSlFvWTZTck5tSVRZUEJJ?=
- =?utf-8?B?cXFSWXdUOXg1ME16MFpDS2VkZjIxMVBlbm1xSlM4TG9uR2hBRSsxUzFEK2dw?=
- =?utf-8?B?RDNhVUhHTThPdmhiTUxYMmd2dCsvbElCRXZWVTN5ckxEZWxObkRsamFOa2ZH?=
- =?utf-8?B?N2Y5andQMHByaE12Y2Q3eFJDbmlBMTBDZUxqQnF0cXJjRnJhNkRpNGxrcnNJ?=
- =?utf-8?Q?wn+3WZNpzQ1Duek0=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca5596c2-9a6b-4467-a71f-08df1ed32cb1
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 09:14:04.8464 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PKzuzVNDTmAb8CN0ilG4MipoxsTzQm9lMC7TGyGxbgWFGLBNB0tiaJx3r9Ai46loIG82RVd6jq5Atn20yvodey6NIVXcy4ItmD+dWd2iTAU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI3PR08MB11878
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="2fu0j6JvtvFrnXo+"
+Content-Disposition: inline
+In-Reply-To: <20260904155758.3833179-17-bin.meng@processmission.com>
+Received-SPF: pass client-ip=68.232.154.123;
+ envelope-from=prvs=7264c68bd=Conor.Dooley@microchip.com;
+ helo=esa.microchip.iphmx.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,193 +93,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/26 8:55 AM, Akihiko Odaki wrote:
-> On 2026/09/30 2:23, Andrey Drobyshev wrote:
->> The previous patches reuse the source vhost FD on the destination,
->> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
->> in realize().  For cpr-transfer the destination realizes while the source
->> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
->> handed over explicitly.
->>
->> Do this through the device's CPR vmstate hooks.  Namely, release device
->> ownership in pre_save, reclaim in post_load, re-acquire on restart:
->>
->>    - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
->>      the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
->>      cpr-exec).
->>
->>    - .realize(), for an incoming CPR, only sets up the virtio device and
->>      queries the backend features by calling vhost_dev_init_backend().
->>      It doesn't take device ownership and doesn't touch the VQs which
->>      still-running source might use.  The full init is deferred to
->>      .post_load().
->>
->>    - .post_load() reclaims it on the destination: the full vhost_dev_init()
->>      (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
->>      the device is started at vm_start.
->>
->>    - .set_status() refuses to start a device whose init hasn't completed
->>      yet (incoming CPR before post_load).
->>
->>    - .set_status() re-acquires ownership before starting the device if
->>      pre_save released it and this QEMU is about to run the guest again:
->>      the migration failed, or it completed and the management resumed the
->>      source (e.g. cpr-transfer target died).
->>
->> With the handoff in place, lift the CPR blocker.
->>
->> Note: this requires kernel side support of VHOST_RESET_OWNER operation
->> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
->>
->> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
->> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> ---
->>   hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
->>   include/hw/virtio/vhost-vsock.h |   2 +-
->>   2 files changed, 128 insertions(+), 31 deletions(-)
->>
->> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
->> index 6e89007b2ce..65ba573da4d 100644
->> --- a/hw/virtio/vhost-vsock.c
->> +++ b/hw/virtio/vhost-vsock.c
->> @@ -21,7 +21,6 @@
->>   #include "hw/virtio/vhost-vsock.h"
->>   #include "monitor/monitor.h"
->>   #include "migration/cpr.h"
->> -#include "migration/blocker.h"
->>   #include "migration/misc.h"
->>   
->>   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
->> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
->>   static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
->>   {
->>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
->> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
->>       bool should_start = virtio_device_should_start(vdev, status);
->>       int ret;
->>   
->> +    /*
->> +     * During CPR, on target the full vhost_dev_init() is deferred to
->> +     * post_load.  Refuse to start a half-initialised device rather than
->> +     * issue vhost ioctls on it.
->> +     */
->> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
->> +        error_report("vhost-vsock: refusing to start, device init incomplete");
->> +        return 0;
->> +    }
->> +
->>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->>           return 0;
->>       }
->>   
->>       if (should_start) {
->> +        /*
->> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
->> +         * source, after a successful RESET_OWNER op.  If we end up here
->> +         * with this flag set - that means that either CPR migration failed,
->> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
->> +         * target died).  In either case, we need to re-acquire device
->> +         * ownership.
->> +         *
->> +         * On failure leave the device stopped.  The next start attempt
->> +         * (guest driver reset, VM stop/cont) retries.
->> +         */
->> +        if (vsock->owner_reset) {
->> +            ret = vhost_dev_set_owner(&vvc->vhost_dev);
->> +            if (ret < 0) {
->> +                error_report("vhost-vsock: cannot re-acquire device "
->> +                             "ownership: %s", strerror(-ret));
->> +                return 0;
->> +            }
->> +            vsock->owner_reset = false;
->> +        }
->> +
->>           ret = vhost_vsock_common_start(vdev);
->>           if (ret < 0) {
->>               return 0;
->> @@ -123,8 +154,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
->>       return vhost_vsock_common_get_features(vdev, requested_features, errp);
->>   }
->>   
->> +static int vhost_vsock_pre_save(void *opaque)
->> +{
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
->> +    int ret;
->> +
->> +    ret = vhost_vsock_common_pre_save(opaque);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> +
->> +    /*
->> +     * Release the device ownership now for CPR migration.  The device is
->> +     * already stopped at pre_save, and destination reclaims it by calling
->> +     * VHOST_SET_OWNER in post_load.
->> +     */
->> +    if (cpr_incoming_needed(NULL) && migration_is_running() &&
->> +        !vsock->owner_reset) {
->> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
->> +        if (ret < 0) {
->> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
->> +                         strerror(-ret));
->> +            return ret;
->> +        }
->> +        vsock->owner_reset = true;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   static int vhost_vsock_post_load(void *opaque, int version_id)
->>   {
->> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
->> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
->> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(DEVICE(opaque));
->> +    Error *local_err = NULL;
->> +    int vhostfd, ret;
->> +
->>       /*
->>        * Only reset vsock connections for non-CPR migration.  For CPR the
->>        * guest cid is unchanged, and the cid-change reset would otherwise
->> @@ -134,6 +201,35 @@ static int vhost_vsock_post_load(void *opaque, int version_id)
->>           return vhost_vsock_common_post_load(opaque, version_id);
->>       }
->>   
->> +    /*
->> +     * CPR restore case.  The source released device ownership in its
->> +     * pre_save.  Complete the handoff here, before the device is started
->> +     * at vm_start.  Init vhost device on preserved FD, issue
->> +     * VHOST_SET_OWNER on it, and restore the guest cid.
->> +     */
->> +    vhostfd = cpr_find_fd(cpr_name, 0);
->> +    if (vhostfd < 0) {
->> +        error_report("vhost-vsock: could not find restored vhost FD");
->> +        return -1;
->> +    }
->> +
->> +    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
-> 
-> vhost_dev_init() can successfully issue SET_OWNER and then fail during 
-> virtqueue initialization or memory-slot validation. Its cleanup only 
-> closes the destination FD; the source still holds the same underlying 
-> file, so the kernel retains the destination owner. Resuming the source 
-> then makes vhost_vsock_set_status() repeatedly fail SET_OWNER with 
-> EBUSY, leaving vsock unusable.
+--2fu0j6JvtvFrnXo+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's indeed a real bug.  I suppose the fix should be calling
-RESET_OWNER from vhost_dev_init() on the cleanup path.  And it deserves
-a separate commit predating this one.  Thanks for noticing!
+On Fri, Sep 04, 2026 at 11:57:35PM +0800, Bin Meng wrote:
+> Polling firmware requests system services without requesting an
+> interrupt. The old model ignored this distinction:
+>=20
+> 1. HSS requests the serial number with REQUEST set and NOTIFY clear.
+> 2. QEMU synchronously fills the mailbox and clears REQUEST.
+> 3. QEMU incorrectly asserts PLIC source 96.
+> 4. HSS polls REQUEST and neither waits for nor handles the interrupt.
+> 5. PLIC source 96 remains pending.
+> 6. Linux registers the MPFS mailbox driver.
+> 7. The stale interrupt immediately enters mpfs_mbox_inbox_isr().
+> 8. Linux has not submitted a request or installed its response pointer.
+> 9. The ISR dereferences that null pointer and faults near address 0x10.
 
-> I also suggest using GINT_TO_POINTER().
+This makes sense, and should probably have a fixes tag pointing to my
+2022 commit? Since I was direct kernel booting, I would never had
+noticed anything of this nature.
 
-I'd prefer sticking to plain cast here - only for the sake of
-consistency.  GINT_TO_POINTER() can be done later in a separate commit
-for all such occurrences.
+> Honor SERVICES_CR.NOTIFY, let IOSCB own the pending interrupt state,
+> and route the SYSREG acknowledgement through an IOSCB clear input.
+>=20
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> ---
+>=20
+> (no changes since v1)
+>=20
+>  include/hw/misc/mchp_pfsoc_ioscb.h |  2 ++
+>  hw/misc/mchp_pfsoc_ioscb.c         | 39 +++++++++++++++++++++++++++---
+>  hw/misc/mchp_pfsoc_sysreg.c        |  9 ++++++-
+>  hw/riscv/microchip_pfsoc.c         |  6 ++---
+>  4 files changed, 49 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pf=
+soc_ioscb.h
+> index fd31427304..e39d995b64 100644
+> --- a/include/hw/misc/mchp_pfsoc_ioscb.h
+> +++ b/include/hw/misc/mchp_pfsoc_ioscb.h
+> @@ -26,6 +26,7 @@
+>  #include "hw/core/sysbus.h"
+> =20
+>  #define MCHP_PFSOC_IOSCB_MAILBOX_SIZE 0x1000
+> +#define MCHP_PFSOC_IOSCB_IRQ_CLEAR "irq-clear"
+> =20
+>  typedef struct MchpPfSoCIoscbState {
+>      SysBusDevice parent;
+> @@ -53,6 +54,7 @@ typedef struct MchpPfSoCIoscbState {
+>      uint32_t services_sr;
+>      uint8_t mailbox_data[MCHP_PFSOC_IOSCB_MAILBOX_SIZE];
+>      char *serial_number;
+> +    bool irq_pending;
+>      qemu_irq irq;
+>  } MchpPfSoCIoscbState;
+> =20
+> diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
+> index 7c82b55986..ccc2201b7a 100644
+> --- a/hw/misc/mchp_pfsoc_ioscb.c
+> +++ b/hw/misc/mchp_pfsoc_ioscb.c
+> @@ -192,12 +192,13 @@ static const MemoryRegionOps mchp_pfsoc_io_calib_dd=
+r_ops =3D {
+> =20
+>  #define SERVICES_CR                         0x50
+>  #define SERVICES_CR_REQUEST                 BIT(0)
+> +#define SERVICES_CR_NOTIFY                  BIT(3)
+>  #define SERVICES_CR_COMMAND_SHIFT           16
+>  #define SERVICES_CR_COMMAND_WIDTH           8
+>  #define SERVICES_CR_COMMAND_MASK            \
+>          MAKE_64BIT_MASK(SERVICES_CR_COMMAND_SHIFT, SERVICES_CR_COMMAND_W=
+IDTH)
+>  #define SERVICES_CR_MASK                    \
+> -        (SERVICES_CR_REQUEST | SERVICES_CR_COMMAND_MASK)
+> +        (SERVICES_CR_REQUEST | SERVICES_CR_NOTIFY | SERVICES_CR_COMMAND_=
+MASK)
+>  #define SERVICES_SR                         0x54
+>  #define SERVICES_SR_STATUS_SHIFT            16
+>  #define SERVICES_COMMAND_SERIAL_NUMBER      0
+> @@ -205,6 +206,21 @@ static const MemoryRegionOps mchp_pfsoc_io_calib_ddr=
+_ops =3D {
+>  #define SERVICES_STATUS_FAILED              1
+>  #define SERVICES_MAILBOX_RESPONSE_OFFSET    0
+> =20
+> +static void mchp_pfsoc_ioscb_update_irq(MchpPfSoCIoscbState *s)
+> +{
+> +    qemu_set_irq(s->irq, s->irq_pending);
+> +}
+> +
+> +static void mchp_pfsoc_ioscb_clear_irq(void *opaque, int n, int level)
+> +{
+> +    MchpPfSoCIoscbState *s =3D opaque;
+> +
+> +    if (level) {
+> +        s->irq_pending =3D false;
+> +        mchp_pfsoc_ioscb_update_irq(s);
+> +    }
+> +}
+> +
+>  static void services_cr_write(MchpPfSoCIoscbState *s, uint32_t value)
+>  {
+>      uint32_t command;
+> @@ -236,7 +252,15 @@ static void services_cr_write(MchpPfSoCIoscbState *s=
+, uint32_t value)
+>      }
+> =20
+>      s->services_sr =3D status << SERVICES_SR_STATUS_SHIFT;
+> -    qemu_irq_raise(s->irq);
+> +    /*
+> +     * HSS and U-Boot submit polling requests with REQUEST set and NOTIFY
+> +     * clear, then poll REQUEST/BUSY for completion. Linux sets both bits
+> +     * and expects completion through PLIC source 96.
+> +     */
+> +    if (value & SERVICES_CR_NOTIFY) {
+> +        s->irq_pending =3D true;
+> +        mchp_pfsoc_ioscb_update_irq(s);
+> +    }
+>  }
+> =20
+>  static uint64_t mchp_pfsoc_ctrl_read(void *opaque, hwaddr offset,
+> @@ -325,7 +349,8 @@ static void mchp_pfsoc_ioscb_reset(DeviceState *dev)
+>      s->services_cr =3D 0;
+>      s->services_sr =3D 0;
+>      memset(s->mailbox_data, 0, sizeof(s->mailbox_data));
+> -    qemu_irq_lower(s->irq);
+> +    s->irq_pending =3D false;
+> +    mchp_pfsoc_ioscb_update_irq(s);
+>  }
+> =20
+>  static const Property mchp_pfsoc_ioscb_properties[] =3D {
+> @@ -333,6 +358,13 @@ static const Property mchp_pfsoc_ioscb_properties[] =
+=3D {
+>                         MchpPfSoCIoscbState, serial_number),
+>  };
+> =20
+> +static void mchp_pfsoc_ioscb_init(Object *obj)
+> +{
+> +    /* Accept service interrupt acknowledgements from SYSREG MESSAGE_INT=
+ */
+> +    qdev_init_gpio_in_named(DEVICE(obj), mchp_pfsoc_ioscb_clear_irq,
+> +                            MCHP_PFSOC_IOSCB_IRQ_CLEAR, 1);
+> +}
+> +
+>  static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
+>  {
+>      MchpPfSoCIoscbState *s =3D MCHP_PFSOC_IOSCB(dev);
+> @@ -456,6 +488,7 @@ static const TypeInfo mchp_pfsoc_ioscb_info =3D {
+>      .name          =3D TYPE_MCHP_PFSOC_IOSCB,
+>      .parent        =3D TYPE_SYS_BUS_DEVICE,
+>      .instance_size =3D sizeof(MchpPfSoCIoscbState),
+> +    .instance_init =3D mchp_pfsoc_ioscb_init,
+>      .class_init    =3D mchp_pfsoc_ioscb_class_init,
+>  };
+> =20
+> diff --git a/hw/misc/mchp_pfsoc_sysreg.c b/hw/misc/mchp_pfsoc_sysreg.c
+> index 1d9154280a..899b485da6 100644
+> --- a/hw/misc/mchp_pfsoc_sysreg.c
+> +++ b/hw/misc/mchp_pfsoc_sysreg.c
+> @@ -77,7 +77,14 @@ static void mchp_pfsoc_sysreg_write(void *opaque, hwad=
+dr offset,
+>          }
+>          break;
+>      case MESSAGE_INT:
+> -        qemu_irq_lower(s->irq);
+> +        /*
+> +         * A MESSAGE_INT write is an acknowledgement event, not a level =
+that
+> +         * remains asserted. Model it as an active-high pulse. The risin=
+g edge
 
-Thanks,
-Andrey
-> Regards,
-> Akihiko Odaki
+I found this comment to be really confusing. Why would someone expect
+that a write-zero-clear bit is an asserted level? Mentioning modelling
+it as a pulse further makes it seem like software writing will generate an
+interrupt, which it doesn't - it writes here to clear the interrupt. I
+think this needs to be very clear that modelling this as an interrupt at
+all is just being done for QEMU's sake.
+
+I think this needs to be split in two, with the fix for the problem
+(which I think is limited to only raising the interrupt) kept apart from
+this change. Part of that is because I don't actually understand the
+reason for adding this "fake" interrupt and the commit message is
+currently focused around the bug and doesn't actually provide
+justification for it. Maybe it's obvious to people more familiar with
+Qemu than I, but this complication makes no sense to me!
+
+> +         * invokes IOSCB's irq-clear input with level 1, which clears
+> +         * irq_pending and lowers PLIC source 96. The falling edge invok=
+es the
+> +         * input with level 0 and is ignored.
+> +         */
+> +        qemu_irq_pulse(s->irq);
+>          break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index fb0e18edba..87c9c89cb0 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -336,9 +336,6 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
+dev, Error **errp)
+>      sysbus_realize(SYS_BUS_DEVICE(&s->sysreg), errp);
+>      sysbus_mmio_map(SYS_BUS_DEVICE(&s->sysreg), 0,
+>                      memmap[MICROCHIP_PFSOC_SYSREG].base);
+> -    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sysreg), 0,
+> -                       qdev_get_gpio_in(DEVICE(s->plic),
+> -                       MICROCHIP_PFSOC_MAILBOX_IRQ));
+> =20
+>      /* AXISW */
+>      create_unimplemented_device("microchip.pfsoc.axisw",
+> @@ -492,6 +489,9 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
+dev, Error **errp)
+>      sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioscb), 0,
+>                         qdev_get_gpio_in(DEVICE(s->plic),
+>                         MICROCHIP_PFSOC_MAILBOX_IRQ));
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sysreg), 0,
+> +        qdev_get_gpio_in_named(DEVICE(&s->ioscb),
+> +                               MCHP_PFSOC_IOSCB_IRQ_CLEAR, 0));
+> =20
+>      /* FPGA Fabric */
+>      create_unimplemented_device("microchip.pfsoc.fabricfic3",
+> --=20
+> 2.53.0
+>=20
+>=20
+
+--2fu0j6JvtvFrnXo+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCarzUaAAKCRB4tDGHoIJi
+0oB/AP0a3qtXV8dcnDDGc5mMFy37ZgtBkjVkKlkYH6HTqwDRfQD9FjEoC8bLLv5+
+v3EV6gfCORuf7LluR3fcpx+F/T6uxw4=
+=xX/Q
+-----END PGP SIGNATURE-----
+
+--2fu0j6JvtvFrnXo+--
 
