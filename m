@@ -4,141 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE14CA5FC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9A5CA5FC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 18:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xByvP-0003e6-0Q; Wed, 30 Sep 2026 14:21:03 -0400
+	id 1xByy5-0004Lq-VB; Wed, 30 Sep 2026 14:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xByvN-0003du-At
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:21:01 -0400
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xByxy-0004LP-J0
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:23:44 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xByvL-0004iG-M0
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:21:01 -0400
+ (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
+ id 1xByxv-00053O-2o
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 14:23:41 -0400
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 68UHedhN1198552
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:20:58 GMT
+ 68UHed6x1198557
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:23:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7lyvC/G4EAzoqS/dC5OuajCY+Ld1LQca6036wgedMOk=; b=JppMr9BH1jtQcl+U
- n4KqfzIAelL1R7WVH1E8cmA6nrI+3cJDnE6UZlwG7Pfx8r8XzdlYDg5HlQis0R52
- XCDWO+UmKPnQJQ8A46+mgVbQbSnq2boZYOq7RR7W/2OkxurxYyKvdWtavs/aRvU8
- 1JyMwzUyh+HducSqJqxdOEXv6Jq7+7kmXpZDwDSCVT85I/oxDgCiKlc3E3y/fvty
- UkTQgCkK8TgwS17QfvOCh/y/QWXdVIrEl/DtD9gSmVddnNvU18SDxyIEas9y7ih9
- xvEkGGI9IxAUC8UDwdHzs4mpGC5Ika4Wf6xnIsvmzqf5vsdTMGDAJPYS64azYVlm
- GtiVYQ==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h136thct8-1
+ uVV4OT9T8r6eFlF9IhWa8U2HQeZn0/yx5hL8hnOZ/ZA=; b=io67c3qEQP+N4wcF
+ Yn5EmKb1uaMm6k3ehaZ6br/EHYdbh+EWGBNUhDfwYYyj1JHTtJgCXJGkBPUPtO2D
+ 3F2WR93/eTq3zzLglqJK4VryYuqk8xsqfu8fFPi6S5mhyMw+aS1SNy2EdFxxzlae
+ dxqLEu+RymX65wCU65RJMUjGS+3Hud+/lTSXPmzxb3YbMaHkBWNNKju85+Wd/Pym
+ HnpsPlP8NhhiZZkgcCHSF9uYesuxQv9OOPQXGuPn/6PSD+pmzNpUZqQEf+jS6daD
+ kOK3lzrVg7JJvLMyH2HOwARqwoWq6wuiy2HVFOUa3EiGujBU0F4IC47QV9oKPtgr
+ EkG6fg==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h136thd5q-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:20:57 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cec4226c70so45342965ad.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:20:57 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 18:23:36 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-4e937c5bd4fso3467461b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 11:23:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790792616; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WLha2Tlz11FGJnaG9BAiLJwplE76anwYPq/yFG0/j9OZuFgdJbjx11jt/5q9ua6Xm0
+ B2D3+LaYSLGCS3LpEwPPDTPDoybZ6Gm+iIU/1rMvQ2hRDUu8jCZCEAOsILC7WLTDSn7S
+ TrrBz3M/Y/nNvQMa0Xz1yGu6DoHkC6fP9wh3qVyilpJZbBucKhtTjyKm9jNfmwlB7T3a
+ ZA7jXfWhvrdNqT230gt+q9SyAcZx4UOVn6A4dXoCIldSJ+0DMbBrDym+DtN6Wu9WHswD
+ mpKtDQVdkwa0a8dgQGUTzsgIuzz7QauKW4wdjiNY8N7T6V1tkd1OB+qjLRMiQ2/HJYim
+ pXWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=uVV4OT9T8r6eFlF9IhWa8U2HQeZn0/yx5hL8hnOZ/ZA=;
+ fh=11nfX6Do8EaL1FMi+r6eKWxDDoA7QEpVbFRn3KjheFE=;
+ b=LTZmZp0lOG4FsTweo5y+4oX6h95BGNvOCvIFs8xEh8uzYe0kKI2CH0STqc8/luJlJT
+ WuFmWF0cOw6loLukhIntxwCSKt31Fkuz924aOyR5L7GGn/jNc0WQZcaSewtd571S+FUA
+ og+pH16VqDA2KSy6VUKoo1wzQ00k3zmOrNv0cbaW0Ptuv990ee8WIsomcERIqKkSuNZz
+ fAIXOulhipvCTyich0HfueD9k4hIYVjMp6Q7ZZPNNujQXgQSNVeJ5IHfR1H3NqvoqF/g
+ JwijfpwTgUe+v1KjYJ3EFvLxtzu/idQ4x+Wq7czMonYzyj6//SOFUwL8c4K2hrIPSTDR
+ d2uw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790792457; x=1791397257; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7lyvC/G4EAzoqS/dC5OuajCY+Ld1LQca6036wgedMOk=;
- b=J/ThBV8nDCLHVvEvS0hBNtqjcMg+4i0sJQiu9dNwYABZYxLfBRGvJNYFZhWLctTIZx
- 1mui5554icWaD/EmOm+Op8AQUj1NxrBZE5LH0Cb4nVTcT1jUW6ZFNS5OVdWmpLeFQzXQ
- 8JysQYwkuzmOLnoO3d5VEktWoOUgZlZiZohBK/MliQjfq9s5NzyhtiTn3XncYT2jmiDg
- x//rY5ax0FU0Eb/nFqXRHFA8bMzuDvEDq9CjG0BeTEabE8b+eqY149PCYDdM9N6/nDCW
- TzTbXsfaMdasMFmlOuXTG71XCfuLeLZ6gWtuLYCMDD1H8MrbWQU/tI5V/feZClMZW+gV
- BrOg==
+ d=oss.qualcomm.com; s=google; t=1790792616; x=1791397416; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=uVV4OT9T8r6eFlF9IhWa8U2HQeZn0/yx5hL8hnOZ/ZA=;
+ b=PI8kZPfSwweLdwPWq6UBsLt8BCRVyYyfsTS13oqD+wxlGtwCpdFcgmobnjoPhCsdIe
+ 1stlAiWLHtPYtv/101U+VJHp3m7EnxQBZvijs48pI1G5eOIw+gLvuR0U10K0QirZ2hzz
+ W5gtsshKt6aHiMl7wghSdI8dYHRp/lHmq/90JaTK/C00lpsmIKaeQ7wiAtty86D/EFiH
+ XwX3XM95rnDtrSZkccqpcFFQ4tOVa8gwrJ7swdFPRFd7R7d5PzHBpP/tyHNU1OnHfeKU
+ NTNxTC4SRcgth7Z5j0302e9PAw2F/Box392xcVOF00iqVexTQLBWjiMeT2YxS+D9f7kO
+ /4ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790792457; x=1791397257;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7lyvC/G4EAzoqS/dC5OuajCY+Ld1LQca6036wgedMOk=;
- b=RXXA5jUBSJGCFCAA7EGX4NounNmfPI8B75pCubgn+/gl8n7wLU3wO3ETGclii9m3y9
- 1T4WdYihb4sGfWyuo2Odpr65p/3toVuIwCrCdP8lpMnk+K0mleD6i7rQQbR7Fryr4wbG
- UeigUz9iYhhtWZqAuF0ARD95kWiqnPtZ3aKpfzuDLej7Cr95yzv0wxBE2YzwJmmrVuQY
- iEjNKJiq/dmmBy4ldaaYBh2EXzCQkq/cpe9vT+0jIO/qB3C0iwDbTY2dlrh5zNxmUaOI
- oiBV4Vq+7zQ+D3SC4ZQY3U3YnWHTjq5n2l6O8JD1+83JJKnVXjkfK3M0PNFV4ijX7okW
- 3GOQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzbbY8q95irp8XcicUF1RrmP98CT5k4EUrMLpJUs4O8xu9LjnWjkEvqjjgx2rkd3TQEFYK0P+DX9ygL@nongnu.org
-X-Gm-Message-State: AFq9FYLbWdCtfYoMvwSR4i7clGBPNrkWNCGYpcf5tCcbFmcPzEm5pGy2
- XxWH4ii+8QGAM7REzLdARpw2qqwFPmISJMACSptE4VNYWO/+JfDv1S5sULZUCZKfzcdmP6v26tv
- tqq9IMr0sAIq+Vpla4Sl1CdVl2Db2dvWYJs83ntPdbKnbXhvy+46M1N3gjg==
-X-Gm-Gg: AYBFou3jbj6jON2mLSDV2yWwj6upW+C6NajpxV7RXZerI3wP+mm/m6gG8aUJ+m5KXvk
- TLWWbml6GvseEsFjAXbP4lUKvdr+k0Fu3KGYEiooAx3Cjc2riALUUg/KXNoKkxDJfscyq35Z/aj
- dkxwPydHKPQUwThNVGwpYyheOoyYDW2L3ll3pJU5XlsJjFKhNFhJOTN7Tp6WUyg7etklJYE1ypN
- wcGGs8QtfxqlsJtuuBiGgkD1ESLmUEkqypaDD64dtcvLpIbLWgp8m/csd1rHoe/pWFkMJXxChVI
- rfo6wmSeCeJUoyCNiFU+AKLRvYMSK07cdGIufI3Re26kbD8m1u3wzR9w3nLoWbT6k10TYABWm34
- b/Bbbn/r68/Wj1l/X9ZjnHdAtAWvLadgiwxv/ZXmak5AHz8L1KlbPjuPj
-X-Received: by 2002:a17:902:f690:b0:2dd:ad73:c987 with SMTP id
- d9443c01a7336-2e2e4b49765mr17667045ad.31.1790792457099; 
- Wed, 30 Sep 2026 11:20:57 -0700 (PDT)
-X-Received: by 2002:a17:902:f690:b0:2dd:ad73:c987 with SMTP id
- d9443c01a7336-2e2e4b49765mr17666735ad.31.1790792456643; 
- Wed, 30 Sep 2026 11:20:56 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e300af5f26sm1277535ad.45.2026.09.30.11.20.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2026 11:20:56 -0700 (PDT)
-Message-ID: <7b49c032-2600-41ab-8e80-97fe7f698563@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 11:20:55 -0700
+ d=1e100.net; s=20260707; t=1790792616; x=1791397416;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=uVV4OT9T8r6eFlF9IhWa8U2HQeZn0/yx5hL8hnOZ/ZA=;
+ b=HXmDh3RBxJXSOfAf5Dl+w3g0cqylGlk4j5y9HFeVj7LBEYX3lcsXfe3HDXXarf8Mwp
+ ctTYnVBteSmnJkSedHWAL67HfDiDFI0URYDWQ0Tn9ypiQbytMz9isFBSts7W8W/c2KG0
+ nLyKYSkdrTLh8HqwDWTbz3EhQab6MxVeeIHxJGY2/a5Idkh2IBHQWMFWt2E5NcZtzU4R
+ pV/v64U4flM3IJnsKxG4pdM+VCP4uA/9N0ErdkjQTDv+hboAMDqHWl85CezTNVm7aKTG
+ jGI8XWXD/nPNA0ZClvIJlFVNmxpM/3prJmKuGLBIdjtoVeEkSh4R0slLomWOz3+dKChA
+ aopg==
+X-Gm-Message-State: AFuF++kpUcpfJpARKTPm62N7OY0PyQbWSShqDfErJJzTNQJ10+mUyvtC
+ UzUzRiv1BGcbyVnPla2sjPMxaYlNqHyVzkiJr3K8ft073XqLF4OxzUR1JKrN86Y+/gxo/a0gHBd
+ KieDmVgzkB0cMTzG6gJIqET521u845NwHHbb7GAgiLdlB3GtwWCEmzJ9bCjIk8GjdZuhu5bUq7d
+ Qk9NqnJ/aM3PN+SV5mXqLS2mqfD4P5zvid
+X-Gm-Gg: AYBFou07F+5Sa47Aj+nnq2uuDZLoEYrlHYsUMLpt3/QZkR8D2sW3YU7jvPMtAIIRAc8
+ KDkML2hVHDX+h2Ag6cHMzN+M4O8/iTya3T1217kMQ2bIZMw1WU5RNwCx+1ORs0mqKC4879TFg//
+ c0v6oi7Hz0Dd4oLr8XS66FaDldRdtrdWpjPHumU/j9Rx5/JDvVFnY0Rl5oZCVCua72H8WbMwNE5
+ zIvjQ2sAnE5/krpBQ==
+X-Received: by 2002:a05:6808:3a11:b0:4e9:73ce:e2a1 with SMTP id
+ 5614622812f47-4f1b75313bamr2396589b6e.44.1790792615983; 
+ Wed, 30 Sep 2026 11:23:35 -0700 (PDT)
+X-Received: by 2002:a05:6808:3a11:b0:4e9:73ce:e2a1 with SMTP id
+ 5614622812f47-4f1b75313bamr2396567b6e.44.1790792615437; Wed, 30 Sep 2026
+ 11:23:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] meson: move gdb detection into the top level build
- file
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
- Ani Sinha <anisinha@redhat.com>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Eric Farman <farman@linux.ibm.com>, Anders Roxell
- <anders.roxell@linaro.org>, Brian Cain <brian.cain@oss.qualcomm.com>,
- Klaus Jensen <its@irrelevant.dk>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260930164649.433573-1-alex.bennee@linaro.org>
- <20260930164649.433573-5-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260930164649.433573-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX9DZZ7Io8F658
- qlHNTxTDdz/iqZRyURuhPZFNwuTUiGvJ4hdPXutfUjNFOUeMgVQU2HbvnTLJ02ZzI50rsSsDYn5
- 6Ip1sRJNj5RhvPAu+CIu9qU8MEsMxHs=
-X-Authority-Analysis: v=2.4 cv=aPFlOr9m c=1 sm=1 tr=0 ts=6abd5309 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=A1s84III0mZbFTx4H-0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: v7Skw47QPaDqxgOfDj5Qfcuk_S_EnRjY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX0ogWCVykMggu
- 3j0QrhxH9DiqMb0QbcPn8BX0Zvc8WCBgaC7cR+/T2dT9GLnxquQkuvfgsriWZ2Lkg+hATGaqlEz
- OuJ95EIqIWNdMhCTYXmScPd6/rW2suf+nyZWlbhSXyRO7xUwQmI+BLw+Dsr/1W6keHFTIAIfJ+Y
- IyxUDr9Pn3brm0gr8eaNflYU0hxYAg+48FYg5FL1fxM2F/5cKn4FNMamGfoIL6AqdtYTt2R7SKt
- sgivKpD/pqIigcJvQzYtp605VOOAJj9eu+qY6lkheygvaFCxTQZ/npqGBrwHWIi1cNb7Zqyulwv
- YwgUbhEU1NRk+9ziQnMnkujkOusWCnTV0lsTwmE2qJCTbgOBTy36UEyBeE+gqahrAyH36IZDaqU
- VYyOpaQWzSehOOvDHbukWrKWJCb//BWJ5WpT4COyrHVl0oynmHCtVCk3pDuyPBgYb1/SGkj9V4U
- +HpIXVM8Ls4FAXDLv2g==
-X-Proofpoint-GUID: v7Skw47QPaDqxgOfDj5Qfcuk_S_EnRjY
+References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
+ <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 13:23:24 -0500
+X-Gm-Features: AclHuK9QvXBEVgvCSGqmrOtJ-RkAQovGnARIsqgSTWjiki26i0M0tmychCQwQjI
+Message-ID: <CAJ+KCYPENyZkgspL-a1C=8gAtpqfNTe5k91h835vqCHt_x0brQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] target/hexagon: reserve internal HVX vector state
+ for QFloat
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfX17Y5zzW0jtmM
+ e+65V9T2YKmZbpKwiEZSA5GaCn+99D33A94B3HJqwSMrVH6Hn984ERq2MMKSIpWlcP3BrJEpQVr
+ do68edhQc/wP09eDQmtHBiNZeB3PgY8=
+X-Authority-Analysis: v=2.4 cv=aPFlOr9m c=1 sm=1 tr=0 ts=6abd53a8 cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8 a=HNj8U96WlYJQXntw1dkA:9
+ a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
+X-Proofpoint-ORIG-GUID: LQqcHRcY2DXhRztRqsSkYHI9webb_eTD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA3NSBTYWx0ZWRfXx5qa+RKuShCY
+ Ae2Ehw1sdV3in1KrbhN9YgTr18iawa5zKIBMKuGrLlET1i6yx7u4RXIObfyzKMnbbVW6p6kB+by
+ J+YlDmK09cWFgie6dl+2Zm0r/wOP8XFkpDHyYTvGeQTpyTteCqOsfiA1osCivqgD5KJWHIyClu7
+ xTRXaQsi3SJmyxLvyJnLbp0iLcK51SDCP1yqtCheGcX8B4UemNu8cy/KH2IFG2OL1azdKxhLnHp
+ 0NRmiJ+pweSV4trckrKR6x3a9Q7647oGsvymzs5Z2LtgVhbKHT48/CKlIgXPPhIklV1IQF1MN9l
+ j7qjgutxholg3ceECDrLrOyLJI7TkdQlUTFRBKvZ79uZ4hE+eeAmCrVHUQ65eLN6fiECG5BcO7b
+ dXvb4ESGcFfNdQ0NIirmsk/bGzjh2IwSRHyq+53o2iU4qmR/++OkgRTuxS+JBf0q72D72RHbh2G
+ A6ZBwKUbJx8hTgrTSxg==
+X-Proofpoint-GUID: LQqcHRcY2DXhRztRqsSkYHI9webb_eTD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-30_04,2026-09-21_02,2025-10-01_01
@@ -148,8 +146,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300075
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -172,18 +169,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/26 9:46 AM, Alex Bennée wrote:
-> Currently gdb is only used by TCG based tests but hypervisors want to
-> use gdbstub too. To be able to test this case we need to always probe
-> and report the gdb we have.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On Sat, Sep 26, 2026 at 2:23=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com> wrote:
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   meson.build                  | 15 +++++++--------
->   tests/functional/meson.build |  5 ++---
->   tests/tcg/meson.build        |  5 -----
->   3 files changed, 9 insertions(+), 16 deletions(-)
-> 
+>  target/hexagon/mmvec/mmvec.h     | 55 ++++++++++++++++++++------------
+>  hw/hexagon/hexagon_hvx_context.c |  5 +++
+>  target/hexagon/hex_common.py     | 29 +++++++++++++++++
+>  3 files changed, 68 insertions(+), 21 deletions(-)
+>
+>  /* gvec needs VRegs/QRegs 16-aligned within the struct. */
+> @@ -26,6 +30,7 @@ static const VMStateDescription vmstate_mmvector =3D {
+>      .minimum_version_id =3D 1,
+>      .fields =3D (const VMStateField[]){
+>          VMSTATE_UINT64_ARRAY(ud, MMVector, MAX_VEC_SIZE_BYTES / 8),
+> +        VMSTATE_UINT8_ARRAY(ext, MMVector, MAX_VEC_SIZE_BYTES / 4),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Does the version id need to be updated?
 
