@@ -4,104 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85FE4CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAEACA5FC5
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Sep 2026 15:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xBw0U-0002Uw-Bf; Wed, 30 Sep 2026 11:14:06 -0400
+	id 1xBw0Y-0002Zf-Fz; Wed, 30 Sep 2026 11:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0J-0002TH-C4
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0S-0002Ub-Ma
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:14:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0G-0000gd-6E
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:13:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xBw0Q-0000j6-2y
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 11:14:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790781231;
+ s=mimecast20190719; t=1790781241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vzXXBfHGQcvgtdh3Dg0ExgY6+4z4PmR3YA+bAO8qOHc=;
- b=IbcouEExI15T+1Ek1fvpUg0q6X9f9mX5/RMW9oFZxCluaIWLL0jYfJfMU8bvspuLxPAvLE
- zqlxQwmOoshQlFU1gPCsklDVZWYdSKKsA58Gw9ih3bcqEVrPp9ALEv7C+fO/f+KlSqdV+Z
- uCpXBKgeWP6Hdk9lmluEi/+EP0iZx68=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=J4WCzyxeLEnqop8Uya3q9OBPLKDNbeEY9ZKJooArDxM=;
+ b=gBxTlWj5s8reBG8iaYHElHpuvH4RkeLMPjIuTKyD/LBmyXbZ3Hyh/uUh2MTE5CSzhLSmz1
+ 7eL3LHs6fzQHMaw+ymvQkLCb7yxXtqtPqL5zv0u2M92haWPRxp8G6WIGpr0yiL8Sle+wls
+ AENQrez01XUGrIL+RxsmS5iSEoZ1QCg=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-QDBbzL4PN_OokzFRXFM9hg-1; Wed, 30 Sep 2026 11:13:50 -0400
-X-MC-Unique: QDBbzL4PN_OokzFRXFM9hg-1
-X-Mimecast-MFC-AGG-ID: QDBbzL4PN_OokzFRXFM9hg_1790781229
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-917a438816dso7963196d6.3
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 08:13:49 -0700 (PDT)
+ us-mta-553-49Ha1vakMFGFizvQMp_wsg-1; Wed, 30 Sep 2026 11:13:59 -0400
+X-MC-Unique: 49Ha1vakMFGFizvQMp_wsg-1
+X-Mimecast-MFC-AGG-ID: 49Ha1vakMFGFizvQMp_wsg_1790781239
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92e82060977so376316685a.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 08:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790781229; x=1791386029; darn=nongnu.org;
+ d=redhat.com; s=google; t=1790781239; x=1791386039; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vzXXBfHGQcvgtdh3Dg0ExgY6+4z4PmR3YA+bAO8qOHc=;
- b=aeUiVTZXos1uAHcpicaiJw8lqB3kKtnViS2jbDOw/63nHDZOs1iLQMvapmh7ulTjro
- 79DboZ3Gbn7RdaTeQbC7kJBT4aMmIu3t2v5vWbLjAf+9so1840qkZWi7FP8fK7iLVVs4
- P2KmvSxMVpkMVt+HfRqkyuEbQoO+QppjE3dHkpgfmyQIakI+qI/m1igt4AaZne6L/zpr
- UfqZ/CFX0nG44piVlR3RSb0gBuFMV5JMj18Ei2jk10rdxNK54HEr10ku4z4pfQhCKRgB
- wx+Fy+/ku5QufJogw1KRzFIwHNWVLdFqMmHpgiwRpU9lz/HrkjdLjz3jmjIZkRgWnB8X
- jXFw==
+ bh=J4WCzyxeLEnqop8Uya3q9OBPLKDNbeEY9ZKJooArDxM=;
+ b=EKNMT/hXsWpeDh9ZtCG8Vg7PCcrxx0w5nlJJJMZzFvaaXD+OHD6no6lRWk/PWEObmQ
+ tjRkPOeBaUMlEXZA4dUiHPESgOafhzdPPJVUdhhf3tK/TVdBYykMiWej00U2x6HnCR8p
+ w5pebUPiElJkusBULANBA/JdDwNFoqQ3W5cKckl2dzV4Kwcl1KFSW01zk/67nAvXuAFo
+ TybtCH9dm0DZLx921l0ZqncgaejdNg2tFN7hvOXmVJphbxLfJOf1uHzst4v9j20mJguR
+ E4CquleBQdeePeIeR6xPcGdkiEds0VkUCMIruLkfOtNkwj5mZH3pWk4bsmAQ0PUwYmuf
+ TJpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790781229; x=1791386029;
+ d=1e100.net; s=20260707; t=1790781239; x=1791386039;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vzXXBfHGQcvgtdh3Dg0ExgY6+4z4PmR3YA+bAO8qOHc=;
- b=SA6uyNAFH2Awve5wkXkHVh3RgAowCAjd4C5vAXqwH/pY6RMBnRbbGBX/mPCPoN9jHj
- I7AwcUXdCa0AkpVPZe0mQKMZ/rwLbUuqG3b+OFavOZho8JecN+zUrOLe/ACX+81b1glv
- TponotqhpeWo1hftIEjqA7FIzaUp5tZBuhOOp66g7JiTh4B1xI3ZNP7p6Yh9B7Hw0M2I
- XkKHatCabkh+/ctQOFk0S0m+42BRn8GlUSE5PJGuYa4aiE8SnuntEU/WkGBYxXJAq2DB
- 6vIWQp8U7yBJZYWFyl+5M8Psx1YXkezAlsyRlSFgLDa0GbB3gLGpuN3A97ZARK/Ze2zs
- UVkA==
-X-Gm-Message-State: AFq9FYKVciVdGmSyV1EPnSf3qaVlm3KHOSuCoYUBL9ijvLx3OduTcEQ8
- u/rWkMuCtpCCUjOSeEVxqSUY62r8O5ulmCfzq8biaONpAw91PepZ5KvPtnEjCm8WaKjj7rEWxS5
- 2hN3DdsSrlbqV+lzOxTVzm2/pdqTk5W1kYgbIxbXBAS7/duu/deb+eehOvEw+7I0gZKh/XtDKFR
- j2lCBz8TTnZlsB28UWOe0j7ZoSejaK6/ZNI2OZsrnS
-X-Gm-Gg: AYBFou0QPBmskzmHc7pf3V6hDd0IeB0kem0aVR93WLCYB/lkIy0Ezy1hkccjrQp7cRe
- qrOq9WjULkEIl3vaO9m9nQXXudVmtjwrlGdVno1riffcV6bPiNkTgF4F5wEIKR3lqfuUPGuhG8h
- bBtaOrb7a8lnE1gLePG5Js85ZYM23BZWpiiy4xWMiE7gh3AAvUGhaW6736pXbTW34yKcOULo7ig
- 3gZqMIUkAcOTC3ZIW+VwZDZ5SXvqF2JdJ+/dQrIgFGhIdo1TOL2y+ikK8rC/JKX9QM65JAHbN0r
- 2cxsJX1VDfmDok6N9XMuafws3aghFYJ8yv393YBBunvCNmprPcwoTxR6ZHd9+9RGMnWJA6M=
-X-Received: by 2002:a05:6214:21c1:b0:915:e8dd:4c02 with SMTP id
- 6a1803df08f44-917a0b8bcf6mr30587176d6.23.1790781229162; 
- Wed, 30 Sep 2026 08:13:49 -0700 (PDT)
-X-Received: by 2002:a05:6214:21c1:b0:915:e8dd:4c02 with SMTP id
- 6a1803df08f44-917a0b8bcf6mr30586366d6.23.1790781228487; 
- Wed, 30 Sep 2026 08:13:48 -0700 (PDT)
+ bh=J4WCzyxeLEnqop8Uya3q9OBPLKDNbeEY9ZKJooArDxM=;
+ b=JL4jQPF2yYWhhLY9sPVAPwALVgue8YwP/FyhjnStrUoWzUqg5CNn2hBIf+MkYumZl1
+ +ujbR7ieOe2aRdo94v1w4umCxwJIjtrQYRm17DCyOZCax4WoboVw15RR49RXne+95UBm
+ 2cvAqi91v9ok4e9Vixr6lImn9lOZeYM0tdCYls3yagQZTxicggdsTZVWm+fr0AiqNL/z
+ WzhJAwA/JX7AG0exzP8OGj5gOWwDy2NbqhklwbGfhqrBDO/mupt6xDrZsLzsOWob9Sa2
+ QKhdv2tLjuGSNdsSEaR2AsFvr5SmzmBh5imJOSZb4Ulu+CD2n91eAxoXe8exVGj95EIq
+ B38A==
+X-Gm-Message-State: AFuF++kzo6MM88YdIE+UHteunFr2STgX+JN8iifzfA88IpXDUN562vkd
+ YuzgpM1yEkksw1XY1eidpezbdaCu2FOJ2IlLyy5gSmsExVu6NUl1ETOQZycYVuWmMlwXI5oa0QT
+ LzfH1x/Ohm/yMVZbPUJ5paSd7Lo3tL3NXeyduNgAMF2gJe+jPxj85xVCxGak5GbsP3vxtxxdEbg
+ lq2lW07OJSG3n252F4GU6DYTWh5QSoQQ2fNplKoP5d
+X-Gm-Gg: AYBFou3AcN7Xs5l/uV18YCR7aKfXmrLC675Ou/4WcMC60n7gaAk/aQRM176C8LyCh9+
+ SXonQWocLKso1Qeyc2swmr9z57ucxgBt5cxAOlfvtIdHKHIdN1KbTZQfA/qNSMpuvJxq6bNVfvf
+ xjOz2iegmIc1ApNB2hKTmfBAAa7wBMa0l86+UVrpLpG0d+DsLjSVwmDWljwc6NW2S8ysp8XSwba
+ 5FD3Su4GrRAunj1YZy7Hb4+osvLBifKfdrECEu7cA8ByRN7XUDOVMlGQnxLUv1gKzuVGfLfduKf
+ cJjPTu8Nx7N5X4fEl15sEbALpGUug8gIAKvDZLva56GGQNUWJj7XF7jTwnk9PMOCqoH9jqg=
+X-Received: by 2002:a05:620a:298c:b0:93c:5ff3:2248 with SMTP id
+ af79cd13be357-93ca9a65272mr254587585a.14.1790781238624; 
+ Wed, 30 Sep 2026 08:13:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:298c:b0:93c:5ff3:2248 with SMTP id
+ af79cd13be357-93ca9a65272mr254578185a.14.1790781237773; 
+ Wed, 30 Sep 2026 08:13:57 -0700 (PDT)
 Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-917a8a642ebsm1547976d6.41.2026.09.30.08.13.47
+ af79cd13be357-93ca82d36c4sm137695385a.29.2026.09.30.08.13.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 08:13:47 -0700 (PDT)
+ Wed, 30 Sep 2026 08:13:57 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>,
  David Hildenbrand <david@kernel.org>
-Subject: [PULL 04/12] ramblock: Rename guest_memfd to guest_memfd_private
-Date: Wed, 30 Sep 2026 11:13:32 -0400
-Message-ID: <20260930151340.2817042-5-peterx@redhat.com>
+Subject: [PULL 09/12] memory: Rename memory_region_init_ram_guest_memfd() to
+ *_private()
+Date: Wed, 30 Sep 2026 11:13:37 -0400
+Message-ID: <20260930151340.2817042-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930151340.2817042-1-peterx@redhat.com>
 References: <20260930151340.2817042-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,187 +118,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the field to reflect the fact that the guest_memfd in this case only
-backs private portion of the ramblock rather than all of it.
+Differentiate it from fully shared guest-memfd use cases.
 
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
 Reviewed-by: David Hildenbrand <david@kernel.org>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
-Link: https://lore.kernel.org/r/20260929235109.1398509-5-michael.roth@amd.com
+Link: https://lore.kernel.org/r/20260929235109.1398509-10-michael.roth@amd.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/system/memory.h   |  7 ++++---
- include/system/ramblock.h |  7 ++++++-
- accel/kvm/kvm-all.c       |  2 +-
- system/memory.c           |  2 +-
- system/physmem.c          | 33 +++++++++++++++++----------------
- 5 files changed, 29 insertions(+), 22 deletions(-)
+ include/system/memory.h | 10 +++++-----
+ backends/igvm.c         |  4 ++--
+ hw/i386/pc.c            |  4 ++--
+ hw/i386/pc_sysfw.c      |  4 ++--
+ hw/i386/x86-common.c    |  4 ++--
+ system/memory.c         |  8 +++++---
+ 6 files changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/include/system/memory.h b/include/system/memory.h
-index a7e03fc3e7..aef555af80 100644
+index 96ab920e7d..027ca81bd2 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -1507,10 +1507,11 @@ bool memory_region_skip_iommu_map(const MemoryRegion *mr);
- void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip);
+@@ -1358,11 +1358,11 @@ bool memory_region_init_ram(MemoryRegion *mr,
+                             uint64_t size,
+                             Error **errp);
+ 
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+-                                        Object *owner,
+-                                        const char *name,
+-                                        uint64_t size,
+-                                        Error **errp);
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp);
  
  /**
-- * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
-- *     associated
-+ * memory_region_has_guest_memfd: check whether a memory region has
-+ *     guest_memfd_private associated
-  *
-- * Returns %true if a memory region's ram_block has valid guest_memfd assigned.
-+ * Returns %true if a memory region's ram_block has valid guest_memfd_private
-+ * assigned.
-  *
-  * @mr: the memory region being queried
-  */
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 84624aca2c..0388d6cc6b 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -40,7 +40,12 @@ struct RAMBlock {
-     Error *cpr_blocker;
-     int fd;
-     uint64_t fd_offset;
--    int guest_memfd;
-+    /*
-+     * When RAM_GUEST_MEMFD_PRIVATE flag is set, this ramblock can have
-+     * private pages backed by guest_memfd_private specified, while shared
-+     * pages are backed by the ramblock on its own.
-+     */
-+    int guest_memfd_private;
-     RamBlockAttributes *attributes;
-     size_t page_size;
-     /* dirty bitmap used during migration */
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0b1407e4ea..a29b1d7a3c 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1729,7 +1729,7 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-         mem->ram_start_offset = ram_start_offset;
-         mem->ram = ram;
-         mem->flags = kvm_mem_flags(mr);
--        mem->guest_memfd = mr->ram_block->guest_memfd;
-+        mem->guest_memfd = mr->ram_block->guest_memfd_private;
-         mem->guest_memfd_offset = mem->guest_memfd >= 0 ?
-                                   (uint8_t*)ram - mr->ram_block->host : 0;
+  * memory_region_init_rom: Initialize a ROM memory region.
+diff --git a/backends/igvm.c b/backends/igvm.c
+index ec7bee428b..58f3097e85 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -291,8 +291,8 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+         imr->mr = g_new0(MemoryRegion, 1);
+         if (ctx->machine_state->cgs &&
+             ctx->machine_state->cgs->require_guest_memfd) {
+-            if (!memory_region_init_ram_guest_memfd(imr->mr, NULL,
+-                                                    region_name, size, errp)) {
++            if (!memory_region_init_ram_guest_memfd_private(
++                    imr->mr, NULL, region_name, size, errp)) {
+                 g_free(imr->mr);
+                 g_free(imr);
+                 return NULL;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2fd90fa739..1ae0c4f614 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -874,8 +874,8 @@ void pc_memory_init(PCMachineState *pcms,
+     if (!is_tdx_vm()) {
+         option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+         if (machine_require_guest_memfd_private(machine)) {
+-            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+-                                            PC_ROM_SIZE, &error_fatal);
++            memory_region_init_ram_guest_memfd_private(
++                option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE, &error_fatal);
+         } else {
+             memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+                                 &error_fatal);
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index b6a56ef1fd..6ff0b9baae 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -52,8 +52,8 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
+     /* map the last 128KB of the BIOS in ISA space */
+     isa_bios_size = MIN(flash_size, 128 * KiB);
+     if (machine_require_guest_memfd_private(MACHINE(pcms))) {
+-        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
+-                                           isa_bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            isa_bios, NULL, "isa-bios", isa_bios_size, &error_fatal);
+     } else {
+         memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+                                &error_fatal);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 59e92b1a1b..fa18bf1aec 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -1037,8 +1037,8 @@ static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
  
+     /* BIOS load */
+     if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+-                                           bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
+         if (is_tdx_vm()) {
+             tdx_set_tdvf_region(&x86ms->bios);
+         }
 diff --git a/system/memory.c b/system/memory.c
-index 264dc90c0a..b07d5dc542 100644
+index fa0a2cf563..f1910af8a0 100644
 --- a/system/memory.c
 +++ b/system/memory.c
-@@ -1780,7 +1780,7 @@ void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip)
- 
- bool memory_region_has_guest_memfd(const MemoryRegion *mr)
- {
--    return mr->ram_block && mr->ram_block->guest_memfd >= 0;
-+    return mr->ram_block && mr->ram_block->guest_memfd_private >= 0;
+@@ -3592,9 +3592,11 @@ bool memory_region_init_ram(MemoryRegion *mr, Object *owner,
+     return true;
  }
  
- uint8_t memory_region_get_dirty_log_mask(const MemoryRegion *mr)
-diff --git a/system/physmem.c b/system/physmem.c
-index 1b3f327ed5..156853c8db 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2201,7 +2201,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             goto out_free;
-         }
- 
--        assert(new_block->guest_memfd < 0);
-+        assert(new_block->guest_memfd_private < 0);
- 
-         ret = ram_block_coordinated_discard_require(true);
-         if (ret < 0) {
-@@ -2211,9 +2211,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             goto out_free;
-         }
- 
--        new_block->guest_memfd = kvm_create_guest_memfd(new_block->max_length,
--                                                        0, errp);
--        if (new_block->guest_memfd < 0) {
-+        new_block->guest_memfd_private =
-+            kvm_create_guest_memfd(new_block->max_length, 0, errp);
-+        if (new_block->guest_memfd_private < 0) {
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
-@@ -2230,7 +2230,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-         new_block->attributes = ram_block_attributes_create(new_block);
-         if (!new_block->attributes) {
-             error_setg(errp, "Failed to create ram block attribute");
--            close(new_block->guest_memfd);
-+            close(new_block->guest_memfd_private);
-             ram_block_coordinated_discard_require(false);
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-@@ -2366,7 +2366,7 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-     new_block->max_length = max_size;
-     new_block->resized = resized;
-     new_block->flags = ram_flags;
--    new_block->guest_memfd = -1;
-+    new_block->guest_memfd_private = -1;
-     new_block->host = file_ram_alloc(new_block, max_size, fd,
-                                      file_size < offset + max_size,
-                                      offset, errp);
-@@ -2539,7 +2539,7 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     new_block->used_length = size;
-     new_block->max_length = max_size;
-     new_block->fd = -1;
--    new_block->guest_memfd = -1;
-+    new_block->guest_memfd_private = -1;
-     new_block->page_size = qemu_real_host_page_size();
-     new_block->host = host;
-     new_block->flags = ram_flags;
-@@ -2590,8 +2590,8 @@ static void reclaim_ramblock(RAMBlock *block)
-         qemu_anon_ram_free(block->host, block->max_length);
-     }
- 
--    if (block->guest_memfd >= 0) {
--        close(block->guest_memfd);
-+    if (block->guest_memfd_private >= 0) {
-+        close(block->guest_memfd_private);
-         ram_block_coordinated_discard_require(false);
-     }
- 
-@@ -2839,12 +2839,12 @@ int ram_block_rebind(Error **errp)
- 
-     RAMBLOCK_FOREACH(block) {
-         if (block->flags & RAM_GUEST_MEMFD) {
--            if (block->guest_memfd >= 0) {
--                close(block->guest_memfd);
-+            if (block->guest_memfd_private >= 0) {
-+                close(block->guest_memfd_private);
-             }
--            block->guest_memfd = kvm_create_guest_memfd(block->max_length,
--                                                        0, errp);
--            if (block->guest_memfd < 0) {
-+            block->guest_memfd_private = kvm_create_guest_memfd(
-+                block->max_length, 0, errp);
-+            if (block->guest_memfd_private < 0) {
-                 qemu_mutex_unlock_ramlist();
-                 return -1;
-             }
-@@ -4272,7 +4272,7 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t offset, size_t length)
-         return ret;
-     }
- 
--    if (rb->guest_memfd >= 0) {
-+    if (rb->guest_memfd_private >= 0) {
-         ret = ram_block_discard_guest_memfd_range(rb, offset, length);
-     }
- 
-@@ -4286,7 +4286,8 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t offset,
- 
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-     /* ignore fd_offset with guest_memfd */
--    ret = fallocate(rb->guest_memfd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-+    ret = fallocate(rb->guest_memfd_private,
-+                    FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-                     offset, length);
- 
-     if (ret) {
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr, Object *owner,
+-                                        const char *name, uint64_t size,
+-                                        Error **errp)
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp)
+ {
+     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
+                                                 RAM_GUEST_MEMFD_PRIVATE, errp)) {
 -- 
 2.55.0
 
