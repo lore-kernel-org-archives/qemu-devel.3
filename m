@@ -4,102 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B0ECA5FD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118BECA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCIwo-0003Ds-5h; Thu, 01 Oct 2026 11:43:50 -0400
+	id 1xCJ6q-0004ht-98; Thu, 01 Oct 2026 11:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xCIwl-0003DN-8u
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:43:47 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xCIwi-0004IZ-H5
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:43:46 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6DA6F1FA9A;
- Thu,  1 Oct 2026 15:43:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790869418; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
- b=QwP1Jodxuz/9izu7EEYLyqVnaJLrgYYfeaJzkZsPRGSLPeSmKwZeJ9DncH+rpjmE7NOFFQ
- buUBDDKGakFCk5c0tjN6gxeb+0iWYNp+F3urW8CpJJhChI1URguRiX4NeB90IG518TfjUd
- 2msFhEzlwYkoG89AFQXVqvVgZ9klASQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790869418;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
- b=QowGC2aXcQy4x9QdfsFSw7BEOuexnE7tuck7fwReKmoUq0oP+von3H7Z2cs+80bt97llL6
- pcHQd5/dhQYNLZDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1790869414; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
- b=WlFwYrbtZN1f9wqpsF5XpZFE8zTCeifyZ2q4dW3AuBUcu7gorHmBLMDuCKi3GZ2wqH8jbD
- yrQTAOCMQf4dkBG5CQJa1MRkE6jq4F2VKDV+icjTAwanKYXse5vHpJL85DLeD5S9YDcDAN
- hbkqO9GzIPUrpFumLYhEOfCjpHT9Ywg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1790869414;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
- b=D/F1EJlEMYD3vUpUtB56/bn148liDs9udLvwfwgniKyTKvErbmcFYKnXfZIl+st/S0q4Tj
- RYlZDPkEdGMOMhDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E469113B90;
- Thu,  1 Oct 2026 15:43:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id M3XWIaV/vmrrQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 01 Oct 2026 15:43:33 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 04/11] qemu-option: Fix 'help' parameter parsing
-In-Reply-To: <179084775651.2086187.18098531675845193132.b4-review@b4>
-References: <20260930221105.2262063-1-farosas@suse.de>
- <20260930221105.2262063-5-farosas@suse.de>
- <179084775651.2086187.18098531675845193132.b4-review@b4>
-Date: Thu, 01 Oct 2026 12:43:16 -0300
-Message-ID: <878q4h8m0b.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCJ6Y-0004gy-1k
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:53:54 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCJ6V-0005Xe-4x
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:53:53 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691Dwr2V2008492
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 15:53:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Y0z9kMt+MOeCbUbci/hZcD75nQl/AriPQU/2ISYYsBY=; b=IfUQe7r0Jp3qE73v
+ 6HY/bvIGUC2fNjo6Jew7dnIIa/Q5DsjcgjgYsqWmmd9Ll2c9swkYyOD4oNDYAWte
+ 8cEDfKL7xp31GVkcQYCunpdRztSCbTSRcYIPtGEWM8LQ1mo+ZXa6Uw0wNihNoMv2
+ MeXb9AeljlgxgwDrBw1xmzjhWgG0m35pg1ZTrfmeNs5dLvsNXSINbj+EkorSnxht
+ iLZ61Lj/gaNdqQWRHP1mMhjX93d/D7uGaxYlJ/WW9PY0R2I3bWtoKyK7rQwoZTBe
+ B/sqv6v54cCBazqF0VrfmnjvmzBDmhjns1D31T2rA4LgxieDlUv45vT4lK3cMfNB
+ HU2SWA==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1rvq8hxr-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 15:53:48 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-7c02e1df088so49795137.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 08:53:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790870027; x=1791474827; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Y0z9kMt+MOeCbUbci/hZcD75nQl/AriPQU/2ISYYsBY=;
+ b=cWeDTSkAul/1vNdocINXGDTrI0U9ykg74JO4NkYpfsIYgCKAITRRAlpXVnlVgfJHeq
+ 9vhXE7X/RWFdkNnl8FVJlgLWGTMbJgHyWC9YZUzObVek0Jz2t9sisG2bzvsIAzH51GDJ
+ 6LF+2QJb/ZFxoB6KmFwUITIbRoYWorFkMgeiCNXT7+jyPKSCat2D8Vff6n4JC/r7e1vg
+ XSpMETYrQabf/IUsJJP2ds0KdbsyY5D97z08D3xXWAg8G0K2/2aZl4ddCJpG4mw0tR25
+ doAJ7gi0aoep0D7QRTTkwMcZaxSz+2E9Y3Y0TttjKXxAstbXW4W/urhT36PBWjT6l/Io
+ sP2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790870027; x=1791474827;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Y0z9kMt+MOeCbUbci/hZcD75nQl/AriPQU/2ISYYsBY=;
+ b=lBNQua5UxdRwbePjfkIJ7ikGKbULzmgMKNRhQ3B1OShOvLzVsO3cU6P3PvNnyUeTce
+ qcntDvHYp23XMmwsI9s4IZZbAoiJcQ5jjeOGch5L29C6a7qyCMScjTFxjAWNYZR1t7sF
+ +b4FLOhcgMoaXe+2+psLtcVJCsIB0QewFSQ8oI2yNBinPpYwZ7Ojc+Yn3YA7v/56++oy
+ 4mStAn1iq2h4Y0ElO7faJXz+BN6oBjBnZzGFEwuZU63nV9R+u+dLPasBgavdjXj9OgIT
+ DVQRpJw2Z3+loVwA3pWc29jUfhJuGc1dd3Qy2usaqQJCEyK7nycEpYZGpRRD/p/PprrW
+ o9tg==
+X-Gm-Message-State: AFq9FYJHI1XG2ezH26iKBwU+k61SN42vfL7/bvPr/EG3NMdYuHqoxfyf
+ +n9Jn0uT4wTlgN2UG6umc3n/KBzjVAXV5zIRftJENlB8BE8G2N1UoVg/bmnucL+oEeKtfa+BsdL
+ Yw/8fzLRdBKBugP474Bz/m7tUl90oibCHn/0GyFITRYqss0iQguNmgRUeBqbrbOe3+EVn
+X-Gm-Gg: AYBFou0iIS6Zmra2nn/TEWk8h7xsAtFnUWZ4s87Bk/GrjhTuClx/fa/1VWU609w9jJJ
+ c96j5uvYooTdmMA44q02CSFeiqLOxWIJDxYr1fQ2xwQL3Oxrr2mFOrXGBWxjk1fjYYcadH2ragG
+ JdCprlWCn+ZEwyHiHz9c6zSHaLFHcx0qQgts8XGze4kH1WZJnZpCYBmwHv8yzKjCu9W1xxX5KVe
+ inGoKRjGWArs+jQRMAcVKd64zeEjuZoezEOZIChMmxSdskijwjfhtW0xpXqA/Y4ndyZewRyOqeJ
+ oIPY3JmyMsQsr5AYi++nWghQu8Qy+0+2mN2JrfZvvKAGkpX/cCFXyzwxoLprIfmZghn8+N5BYAh
+ Y3v6PWuKD3I6pK0l8uBea5hIewBgfoKJdkw==
+X-Received: by 2002:a05:6102:4488:b0:7a1:f7d2:e832 with SMTP id
+ ada2fe7eead31-7be730a383amr1268674137.18.1790870026998; 
+ Thu, 01 Oct 2026 08:53:46 -0700 (PDT)
+X-Received: by 2002:a05:6102:4488:b0:7a1:f7d2:e832 with SMTP id
+ ada2fe7eead31-7be730a383amr1268660137.18.1790870026370; 
+ Thu, 01 Oct 2026 08:53:46 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b10d948d1sm1751610f8f.4.2026.10.01.08.53.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 08:53:45 -0700 (PDT)
+Message-ID: <80ced4bc-202b-4223-866f-62a68edff48f@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 17:53:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/21] target/microblaze: prefix helper conflicting
+ with other arch
+Content-Language: en-US
+To: luoyonggang@gmail.com, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260930020108.217892-5-pierrick.bouvier@oss.qualcomm.com>
+ <CAE2XoE_XCgvZLZL8xpRcyw9b_vNXA3w8fmnbd0X4q_-8wjtoxw@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAE2XoE_XCgvZLZL8xpRcyw9b_vNXA3w8fmnbd0X4q_-8wjtoxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA2MyBTYWx0ZWRfXyvULlKnfax8a
+ TA+I2IoWumNTduP/LU7po8CvbRxMfFx+KXKTIYampR2M/V7azOwCC90PBzMNAs47Cx4fXkWkP44
+ l0gAQiPHhXyu8WITYT2GhSWXf3ninQBdP/BaOYLSjRP/CLwDfG9sYrPEjFPoOhmlfF91sKHIgcQ
+ 6INO7k8z6whgLoMUOO+sjhK0nf3gOFKBrx5d8T1UQsFa0PoRvl2GjpC5+t41NSMuv91hi62b84q
+ sLuDH22kpy9pB1M4qOllXd9fdwrhN3n9l25XUCsMP+DoFXiFs/a8PPFfjI2q8/3t3qMLXK52nDU
+ n428OvGz17VRzrGc9TYHRH86wvtUizh9NH1AlcqIqKNFawgXqZv01Gu7cEfWkhXDG6UPJEcET0M
+ T7y7uCJgt22QPAQzj008yPgWwnOezvTq4ZI4JD7jeW1kDDS88qu/kJLgzDMBUYNn73G+NxAlWPy
+ ziKEgtjydWvm/LIAArg==
+X-Authority-Analysis: v=2.4 cv=JIauIMKb c=1 sm=1 tr=0 ts=6abe820c cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=HhcS3YDnCsCj6G8ZmPcA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-GUID: jWZJ3XUlYZQhUPCcf9R-zYJHom4vlKXW
+X-Proofpoint-ORIG-GUID: jWZJ3XUlYZQhUPCcf9R-zYJHom4vlKXW
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA2MyBTYWx0ZWRfX6SdTYh/uWnB5
+ xu9yOqyZWWt7ImEcf0V1r9vlkrxXLKE+IvW1zTeLRfF0j01E0UlgVX5fRRfjrDpbDkKr0GeeFLp
+ jN56KXJ44vP35Q88/7vDX9uuHRRoH60=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610010063
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,345 +155,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+On 1/10/26 13:41, Yonggang Luo wrote:
+> Hi Pierrick
+> I have prepared:
+> 
+> Subject: [PATCH v2 4/6] tcg: namespace target helper symbols for combined builds
+> at
+> https://lore.kernel.org/qemu-devel/20260930073935.712-5-luoyonggang@gmail.com/
+> 
+> to deal with these issues in a generic way.
 
->> Reject invalid values such as help= and help=foo.
->> 
->> Reject valid, but not applicable values such has help=on and help=off.
->> 
->> To achieve the above:
->> 
->> Add an 'is_help' member to QemuOpt so that information can be stored
->> while creating the option. This allows moving the help handling out of
->> get_opt_name_value(), which is necessary because that function doesn't
->> take an Error.
->> 
->> At the caller, opts_do_parse(), let the QemuOpt be created with the
->> name and value fields as they come out of get_opt_name_value().
->> 
->> With a new routine, validate the new QemuOpt against the 'help'
->> parameter rules (to fix the bug), then let the existing opt_validate()
->> reject any NULL values. The two validations need to be separate
->> because in between there needs to be a setting of opt->str to "on"
->> whenever the special short-form parameters require it.
->> 
->> The "on" value is required because of the conversions of QemuOpts
->> from/to QDict since QDict cannot take a NULL value. The conversions
->> also cause opt_validate() to be reentrant via qemu_opt_set(), so the
->> initial validation of 'help' needs to be out of that function,
->> otherwise there's no way to distinguish an user-set help=on vs. the
->> help=on set for compatibility with QDict (the "in between" part from
->> the previous paragraph).
->> 
->> The passing around of help_wanted becomes redundant since opt->is_help
->> can be checked throughout. Remove that argument everywhere.
->> 
->> Stop returning false from opts_do_parse() when is_help=true. Only
->> return false when there's an error and let the callers decide what to
->> do when is_help=true. However, still break the loop when is_help=true
->> to keep the behavior of stopping parsing once the 'help' parameter is
->> seen.
->> 
->> At qemu_opts_parse_noisily(), due to the change of return value
->> mentioned above, it becomes clear when to report the error and when to
->> print the help text. Use qemu_opt_has_help_opt() to obtain the
->> is_help information from QemuOpt.
->> 
->> Since get_opt_name_value() can now return while value=NULL, the other
->> two callsites need to be updated. At opts_parse_id(), assert value !=
->> NULL. At has_help_option(), use the NULL value to keep the existing
->> behavior of rejecting anything but 'help'.
->> 
->> The unit tests are updated accordingly.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> Message-ID: <20260930221105.2262063-5-farosas@suse.de>
+Thanks for proposing a generic way to rename helpers! Let's see
+what Richard (the maintainer of this area) think about it first.
+
+> 
+> The idea is comes from Philippe at
+> 
+> https://lore.kernel.org/qemu-devel/816d8db4-ef58-4eab-be12-6d239300ffe4@oss.qualcomm.com/
+> 
+> That would help us to avoid these renames. do not have to be such way,
+> but it's a option.
+> 
+> On Wed, Sep 30, 2026 at 10:04 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
 >>
->> diff --git a/include/qemu/option_int.h b/include/qemu/option_int.h
->> index 5dd9a5162db9..c31bd6e3aba1 100644
->> --- a/include/qemu/option_int.h
->> +++ b/include/qemu/option_int.h
->> @@ -32,6 +32,7 @@
->>  struct QemuOpt {
->>      char *name;
->>      char *str;
->> +    bool is_help;
->>  
->>      const QemuOptDesc *desc;
->>      union {
->> diff --git a/tests/unit/test-qemu-opts.c b/tests/unit/test-qemu-opts.c
->> index 07ede509204a..7cedfba33278 100644
->> --- a/tests/unit/test-qemu-opts.c
->> +++ b/tests/unit/test-qemu-opts.c
->> @@ -777,16 +777,15 @@ static void test_has_help_option_with_value(void)
->>      };
->>      int i;
->>      QemuOpts *opts;
->> +    Error *err = NULL;
->>  
->>      for (i = 0; i < ARRAY_SIZE(test); i++) {
->>          /* reject all */
->>          g_assert_cmpint(has_help_option(test[i].params), ==, false);
->>  
->> -        /* accept all */
->> -        opts = qemu_opts_parse(&opts_list_03, test[i].params, false,
->> -                               &error_abort);
->> -        g_assert_cmpint(qemu_opt_has_help_opt(opts), ==, true);
->> -        qemu_opts_del(opts);
->> +        opts = qemu_opts_parse(&opts_list_03, test[i].params, false, &err);
->> +        error_free_or_abort(&err);
->> +        g_assert(!opts);
->>      }
->>  }
->>  
->> diff --git a/util/qemu-option.c b/util/qemu-option.c
->> index 8ac848bbc06f..483e6cbf70a1 100644
->> --- a/util/qemu-option.c
->> +++ b/util/qemu-option.c
->> @@ -331,7 +331,7 @@ bool qemu_opt_has_help_opt(QemuOpts *opts)
->>      QemuOpt *opt;
->>  
->>      QTAILQ_FOREACH_REVERSE(opt, &opts->head, next) {
->> -        if (is_help_option(opt->name)) {
->> +        if (opt->is_help) {
->>              return true;
->>          }
->>      }
->> @@ -499,6 +499,7 @@ static QemuOpt *opt_create(QemuOpts *opts, const char *name, char *value)
->>      opt->name = g_strdup(name);
->>      opt->str = value;
->>      opt->opts = opts;
->> +    opt->is_help = is_help_option(name);
->>      QTAILQ_INSERT_TAIL(&opts->head, opt, next);
->>  
->>      return opt;
->> @@ -760,12 +761,10 @@ void qemu_opts_print(QemuOpts *opts, const char *separator)
->>  
->>  static const char *get_opt_name_value(const char *params,
->>                                        const char *firstname,
->> -                                      bool *help_wanted,
->>                                        char **name, char **value)
->>  {
->>      const char *p;
->>      size_t len;
->> -    bool is_help = false;
->>  
->>      len = strcspn(params, "=,");
->>      if (params[len] != '=') {
->> @@ -776,22 +775,6 @@ static const char *get_opt_name_value(const char *params,
->>              p = get_opt_value(params, value);
->>          } else {
->>              p = get_opt_name(params, name, len);
->> -
->> -            /*
->> -             * Short-form flags (i.e. without any value) are not
->> -             * supported, except for two cases:
->> -             */
->> -
->> -            /* the 'help' or '?' flag */
->> -            is_help = is_help_option(*name);
->> -            if (is_help) {
->> -                *value = g_strdup("on");
->> -            }
->> -
->> -            /* a missing, non-implicit key, i.e. a single comma ',' */
->> -            if (g_str_equal(*name, "") && *p == ',') {
->> -                *value = g_strdup("on");
->> -            }
->>          }
->>      } else {
->>          /* found "foo=bar,more" */
->> @@ -802,18 +785,46 @@ static const char *get_opt_name_value(const char *params,
->>      }
->>  
->>      assert(!*p || *p == ',');
->> -    if (help_wanted && is_help) {
->> -        *help_wanted = true;
->> -    }
->>      if (*p == ',') {
->>          p++;
->>      }
->>      return p;
->>  }
->>  
->> +/*
->> + * Short-form parameters (i.e. without any value) are not
->> + * supported, except for two cases:
->> + *
->> + * - the 'help' or '?' flag
->> + * - the empty, non-implicit key combined with an empty
->> + *   non-implicit value, i.e. a single comma ','
->> + *
->> + * The rest of the code is not prepared to deal with empty values, set
->> + * the special cases to "on".
->> + */
->> +static bool opt_short_form_compat(QemuOpt *opt, Error **errp)
->> +{
->> +    if (opt->str) {
->> +        /*
->> +         * Validate the 'help' parameter at this point because the
->> +         * opt_validate() routine can be reentrant and this very check
->> +         * would fail once the "on" value is set below.
->> +         */
->> +        if (opt->is_help) {
->> +            error_setg(errp, "Parameter '%s' doesn't take any values",
->> +                       opt->name);
->> +            return false;
->> +        }
->> +    } else {
->> +        if (opt->is_help || g_str_equal(opt->name, "")) {
->> +            opt->str = g_strdup("on");
->> +        }
->> +    }
->> +    return true;
->> +}
->> +
->>  static bool opts_do_parse(QemuOpts *opts, const char *params,
->> -                          const char *firstname,
->> -                          bool *help_wanted, Error **errp)
->> +                          const char *firstname, Error **errp)
->>  {
->>      const char *p;
->>      QemuOpt *opt;
->> @@ -822,10 +833,7 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
->>          g_autofree char *option = NULL;
->>          g_autofree char *value = NULL;
->>  
->> -        p = get_opt_name_value(p, firstname, help_wanted, &option, &value);
->> -        if (help_wanted && *help_wanted) {
->> -            return false;
->> -        }
->> +        p = get_opt_name_value(p, firstname, &option, &value);
->>          firstname = NULL;
->>  
->>          if (!strcmp(option, "id")) {
->> @@ -833,10 +841,15 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
->>          }
->>  
->>          opt = opt_create(opts, option, g_steal_pointer(&value));
->> -        if (!opt_validate(opt, errp)) {
->> +        if (!opt_short_form_compat(opt, errp) ||
->> +            !opt_validate(opt, errp)) {
->
-> opt_validate() will reject "help" as an invalid parameter beofre the is_help check below. Change it to?:
->
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>   target/microblaze/helper.h    | 10 +++++-----
+>>   target/microblaze/op_helper.c | 10 +++++-----
+>>   target/microblaze/translate.c | 10 +++++-----
+>>   3 files changed, 15 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/target/microblaze/helper.h b/target/microblaze/helper.h
+>> index 1429c1727ef..63a94ac4bbc 100644
+>> --- a/target/microblaze/helper.h
+>> +++ b/target/microblaze/helper.h
+>> @@ -1,15 +1,15 @@
+>> -DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, i32)
+>> +DEF_HELPER_FLAGS_2(microblaze_raise_exception, TCG_CALL_NO_WG, noreturn, env, i32)
+>>
+>>   DEF_HELPER_FLAGS_3(divs, TCG_CALL_NO_WG, i32, env, i32, i32)
+>>   DEF_HELPER_FLAGS_3(divu, TCG_CALL_NO_WG, i32, env, i32, i32)
+>>
+>> -DEF_HELPER_FLAGS_3(fadd, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> +DEF_HELPER_FLAGS_3(microblaze_fadd, TCG_CALL_NO_WG, i32, env, i32, i32)
+>>   DEF_HELPER_FLAGS_3(frsub, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> -DEF_HELPER_FLAGS_3(fmul, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> -DEF_HELPER_FLAGS_3(fdiv, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> +DEF_HELPER_FLAGS_3(microblaze_fmul, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> +DEF_HELPER_FLAGS_3(microblaze_fdiv, TCG_CALL_NO_WG, i32, env, i32, i32)
+>>   DEF_HELPER_FLAGS_2(flt, TCG_CALL_NO_WG, i32, env, i32)
+>>   DEF_HELPER_FLAGS_2(fint, TCG_CALL_NO_WG, i32, env, i32)
+>> -DEF_HELPER_FLAGS_2(fsqrt, TCG_CALL_NO_WG, i32, env, i32)
+>> +DEF_HELPER_FLAGS_2(microblaze_fsqrt, TCG_CALL_NO_WG, i32, env, i32)
+>>
+>>   DEF_HELPER_FLAGS_3(fcmp_un, TCG_CALL_NO_WG, i32, env, i32, i32)
+>>   DEF_HELPER_FLAGS_3(fcmp_lt, TCG_CALL_NO_WG, i32, env, i32, i32)
+>> diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+>> index 3da0c68da39..c169312e954 100644
+>> --- a/target/microblaze/op_helper.c
+>> +++ b/target/microblaze/op_helper.c
+>> @@ -62,7 +62,7 @@ uint32_t helper_get(uint32_t id, uint32_t ctrl)
+>>       return 0xdead0000 | id;
+>>   }
+>>
+>> -void helper_raise_exception(CPUMBState *env, uint32_t index)
+>> +void helper_microblaze_raise_exception(CPUMBState *env, uint32_t index)
+>>   {
+>>       CPUState *cs = env_cpu(env);
+>>
+>> @@ -154,7 +154,7 @@ static void update_fpu_flags(CPUMBState *env, int flags, uintptr_t ra)
+>>       }
+>>   }
+>>
+>> -uint32_t helper_fadd(CPUMBState *env, uint32_t a, uint32_t b)
+>> +uint32_t helper_microblaze_fadd(CPUMBState *env, uint32_t a, uint32_t b)
+>>   {
+>>       CPU_FloatU fd, fa, fb;
+>>       int flags;
+>> @@ -183,7 +183,7 @@ uint32_t helper_frsub(CPUMBState *env, uint32_t a, uint32_t b)
+>>       return fd.l;
+>>   }
+>>
+>> -uint32_t helper_fmul(CPUMBState *env, uint32_t a, uint32_t b)
+>> +uint32_t helper_microblaze_fmul(CPUMBState *env, uint32_t a, uint32_t b)
+>>   {
+>>       CPU_FloatU fd, fa, fb;
+>>       int flags;
+>> @@ -198,7 +198,7 @@ uint32_t helper_fmul(CPUMBState *env, uint32_t a, uint32_t b)
+>>       return fd.l;
+>>   }
+>>
+>> -uint32_t helper_fdiv(CPUMBState *env, uint32_t a, uint32_t b)
+>> +uint32_t helper_microblaze_fdiv(CPUMBState *env, uint32_t a, uint32_t b)
+>>   {
+>>       CPU_FloatU fd, fa, fb;
+>>       int flags;
+>> @@ -352,7 +352,7 @@ uint32_t helper_fint(CPUMBState *env, uint32_t a)
+>>       return r;
+>>   }
+>>
+>> -uint32_t helper_fsqrt(CPUMBState *env, uint32_t a)
+>> +uint32_t helper_microblaze_fsqrt(CPUMBState *env, uint32_t a)
+>>   {
+>>       CPU_FloatU fd, fa;
+>>       int flags;
+>> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+>> index 8b219afb5dd..16794059a22 100644
+>> --- a/target/microblaze/translate.c
+>> +++ b/target/microblaze/translate.c
+>> @@ -100,7 +100,7 @@ static void t_sync_flags(DisasContext *dc)
+>>
+>>   static void gen_raise_exception(DisasContext *dc, uint32_t index)
+>>   {
+>> -    gen_helper_raise_exception(tcg_env, tcg_constant_i32(index));
+>> +    gen_helper_microblaze_raise_exception(tcg_env, tcg_constant_i32(index));
+>>       dc->base.is_jmp = DISAS_NORETURN;
+>>   }
+>>
+>> @@ -421,10 +421,10 @@ static void gen_cmpu(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+>>   DO_TYPEA(cmp, false, gen_cmp)
+>>   DO_TYPEA(cmpu, false, gen_cmpu)
+>>
+>> -ENV_WRAPPER3(gen_fadd, gen_helper_fadd)
+>> +ENV_WRAPPER3(gen_fadd, gen_helper_microblaze_fadd)
+>>   ENV_WRAPPER3(gen_frsub, gen_helper_frsub)
+>> -ENV_WRAPPER3(gen_fmul, gen_helper_fmul)
+>> -ENV_WRAPPER3(gen_fdiv, gen_helper_fdiv)
+>> +ENV_WRAPPER3(gen_fmul, gen_helper_microblaze_fmul)
+>> +ENV_WRAPPER3(gen_fdiv, gen_helper_microblaze_fdiv)
+>>   ENV_WRAPPER3(gen_fcmp_un, gen_helper_fcmp_un)
+>>   ENV_WRAPPER3(gen_fcmp_lt, gen_helper_fcmp_lt)
+>>   ENV_WRAPPER3(gen_fcmp_eq, gen_helper_fcmp_eq)
+>> @@ -447,7 +447,7 @@ DO_TYPEA_CFG(fcmp_ge, use_fpu, true, gen_fcmp_ge)
+>>
+>>   ENV_WRAPPER2(gen_flt, gen_helper_flt)
+>>   ENV_WRAPPER2(gen_fint, gen_helper_fint)
+>> -ENV_WRAPPER2(gen_fsqrt, gen_helper_fsqrt)
+>> +ENV_WRAPPER2(gen_fsqrt, gen_helper_microblaze_fsqrt)
+>>
+>>   DO_TYPEA0_CFG(flt, use_fpu >= 2, true, gen_flt)
+>>   DO_TYPEA0_CFG(fint, use_fpu >= 2, true, gen_fint)
+>> --
+>> 2.43.0
+>>
+>>
+> 
+> 
 
-It does already happen before the series, I'll add a test case for that.
-
-Is it something we want to fix? The situation is that 'help' was present
-but the QemuOptsList declares a set of parameters of which 'help' is a
-part of. I'm not sure if this is an oversight in that it wants to reject
-unlisted parameters, but 'help' should have been special-cased or if the
-API is that options that list a set of parameters must also list the
-'help'.
-
->     opt = opt_create(opts, option, g_steal_pointer(&value));
->     if (!opt_short_form_compat(opt, errp)) {
->         qemu_opt_del(opt);
->         return false;
->     }
->     if (opt->is_help) {
->         return true;
->     }
->     if (!opt_validate(opt, errp)) {
->         qemu_opt_del(opt);
->         return false;
->     }
->
->>              qemu_opt_del(opt);
->>              return false;
->>          }
->> +
->> +        if (opt->is_help) {
->> +            return true;
->> +        }
->>      }
->>  
->>      return true;
->> @@ -850,8 +863,9 @@ static char *opts_parse_id(const char *params)
->>          g_autofree char *name = NULL;
->>          g_autofree char *value = NULL;
->>  
->> -        p = get_opt_name_value(p, NULL, NULL, &name, &value);
->> +        p = get_opt_name_value(p, NULL, &name, &value);
->>          if (!strcmp(name, "id")) {
->> +            assert(value);
->>              return g_steal_pointer(&value);
->>          }
->>      }
->> @@ -862,14 +876,13 @@ static char *opts_parse_id(const char *params)
->>  bool has_help_option(const char *params)
->>  {
->>      const char *p;
->> -    bool ret = false;
->>  
->>      for (p = params; *p;) {
->>          g_autofree char *name = NULL;
->>          g_autofree char *value = NULL;
->>  
->> -        p = get_opt_name_value(p, NULL, &ret, &name, &value);
->> -        if (ret) {
->> +        p = get_opt_name_value(p, NULL, &name, &value);
->> +        if (is_help_option(name) && !value) {
->>              return true;
->>          }
->>      }
->> @@ -886,11 +899,11 @@ bool has_help_option(const char *params)
->>  bool qemu_opts_do_parse(QemuOpts *opts, const char *params,
->>                         const char *firstname, Error **errp)
->>  {
->> -    return opts_do_parse(opts, params, firstname, NULL, errp);
->> +    return opts_do_parse(opts, params, firstname, errp);
->>  }
->>  
->>  static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
->> -                            bool permit_abbrev, bool *help_wanted, Error **errp)
->> +                            bool permit_abbrev, Error **errp)
->>  {
->>      const char *firstname;
->>      char *id = opts_parse_id(params);
->> @@ -905,7 +918,7 @@ static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
->>          return NULL;
->>      }
->>  
->> -    if (!opts_do_parse(opts, params, firstname, help_wanted, errp)) {
->> +    if (!opts_do_parse(opts, params, firstname, errp)) {
->>          qemu_opts_del(opts);
->>          return NULL;
->>      }
->> @@ -923,7 +936,7 @@ static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
->>  QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
->>                            bool permit_abbrev, Error **errp)
->>  {
->> -    return opts_parse(list, params, permit_abbrev, NULL, errp);
->> +    return opts_parse(list, params, permit_abbrev, errp);
->>  }
->>  
->>  /**
->> @@ -939,17 +952,16 @@ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
->>  {
->>      Error *err = NULL;
->>      QemuOpts *opts;
->> -    bool help_wanted = false;
->>  
->> -    opts = opts_parse(list, params, permit_abbrev,
->> -                      opts_accepts_any(list) ? NULL : &help_wanted, &err);
->> +    opts = opts_parse(list, params, permit_abbrev, &err);
->>      if (!opts) {
->> -        assert(!!err + !!help_wanted == 1);
->> -        if (help_wanted) {
->> -            qemu_opts_print_help(list, true);
->> -        } else {
->> -            error_report_err(err);
->> -        }
->> +        error_report_err(err);
->> +        return NULL;
->> +    }
->> +
->> +    if (qemu_opt_has_help_opt(opts) && !opts_accepts_any(list)) {
->> +        qemu_opts_print_help(list, true);
->
-> qemu_opts_del(opts) missing
-
-Indeed. Thanks!
 
