@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CAD5CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA25CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEPY-0005fq-7s; Thu, 01 Oct 2026 06:53:15 -0400
+	id 1xCEQB-0005wb-BU; Thu, 01 Oct 2026 06:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPH-0005dX-Gm; Thu, 01 Oct 2026 06:52:55 -0400
+ id 1xCEPJ-0005dg-4k; Thu, 01 Oct 2026 06:52:58 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPF-0002P4-S8; Thu, 01 Oct 2026 06:52:55 -0400
+ id 1xCEPF-0002PC-R3; Thu, 01 Oct 2026 06:52:56 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6E80020B716A;
- Thu,  1 Oct 2026 03:51:58 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6E80020B716A
+ by linux.microsoft.com (Postfix) with ESMTPSA id 5E4EE20B7169;
+ Thu,  1 Oct 2026 03:51:59 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5E4EE20B7169
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851918;
- bh=37MszlWbJzj+NlQUVtLNagGvC4NXZtVf/7aP5kBq1SA=;
+ s=default; t=1790851919;
+ bh=u3lGqUx8su4RL2vAD7EuzNczAiGM9+1NMl/RudEEoVg=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=MwnWGZGZi08SR9BGkm6ZFg9Atrq9TMT1EL/oOCWIzQEcV9zjiG96mExkX1acDhxdl
- awh/CYBP2WestHS7bSd30g319q7bRO7IXsi01tPMsbOr5Z1xJ5hM+I4DLDxt2Jo0sb
- ARsNzE8dTd9CA6OuYIeThsVMZA9RjqAYTecqemag=
+ b=klUhGS83KDk8PJwuq0tH2l5T7U7Qvu9x38WZn+pqV1GFpQ3itY9ZXO9XXE2gNhczn
+ 5UcqwNHIFqsBYZJ2WfsaMOJjwKVrhwT/5uUDdkuHwfCFJmlYMol7A2/HMomUIoj/9u
+ +WvnKMWO6cGb+ftVXMdseVN8gcFbUGPIkU+P9oLU=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:48 +0000
-Subject: [PATCH v6 03/14] accel/mshv: make MSHV migration initialization
- arch-specific
+Date: Thu, 01 Oct 2026 10:52:49 +0000
+Subject: [PATCH v6 04/14] meson, target/arm/mshv: Enable arm64 build & add
+ initial MSHV support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-3-aefe5e76a0e3@linux.microsoft.com>
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -79,130 +79,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86 specific migration handlers currently live in common MSHV code. Move
-these handlers into x86 backend and add a generic architecture migration
-initialization hook. ARM MSHV live migration support is not added yet,
-this will allow ARM to add an empty initialization hook.
+Enable the build of the MSHV accelerator for arm64 in the Meson build
+system. Introduce initial files and stub implementations to support MSHV
+for the ARM target.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c       | 35 ++++-------------------------------
- include/system/mshv_int.h   |  1 +
- target/i386/mshv/mshv-all.c | 34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 39 insertions(+), 31 deletions(-)
+ accel/mshv/mshv-all.c       | 10 ++++--
+ hw/i386/mshv/clock.c        |  2 +-
+ include/system/mshv.h       |  2 +-
+ meson.build                 |  8 ++---
+ target/arm/meson.build      |  1 +
+ target/arm/mshv/meson.build |  7 ++++
+ target/arm/mshv/mshv-all.c  | 81 +++++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 103 insertions(+), 8 deletions(-)
 
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 860f511fcba..efe19a39140 100644
+index efe19a3914..f3f1825b0b 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -60,30 +60,6 @@ static int init_mshv(int *mshv_fd)
-     return 0;
- }
- 
--static int mshv_load_cleanup(void *opaque)
--{
--    CPUState *cpu;
--    int ret;
--
--    ret = mshv_arch_set_partition_msrs(first_cpu);
--    if (ret < 0) {
--        error_report("Failed to set partition MSRs: %s", strerror(-ret));
--        return -1;
--    }
--
--    CPU_FOREACH(cpu) {
--        ret = mshv_arch_set_mp_state(cpu);
--        if (ret < 0) {
--            error_report("Failed to set mp state for vCPU %d: %s",
--                         cpu->cpu_index, strerror(-ret));
--            return -1;
--        }
--    }
--
--    return 0;
--}
--
--
- static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-                                        uint64_t *value)
+@@ -142,8 +142,10 @@ static int create_partition(int mshv_fd, int *vm_fd)
  {
-@@ -519,10 +495,6 @@ static int mshv_init_vcpu(CPUState *cpu)
-     return 0;
- }
+     int ret;
+     uint64_t pt_flags, host_proc_features;
+-    union hv_partition_processor_xsave_features disabled_xsave_features;
+     union hv_partition_processor_features disabled_partition_features = {0};
++#if defined(__x86_64__)
++    union hv_partition_processor_xsave_features disabled_xsave_features;
++#endif
  
--static SaveVMHandlers savevm_mshv = {
--    .load_cleanup = mshv_load_cleanup,
--};
--
- static int mshv_init(AccelState *as, MachineState *ms)
+     struct mshv_create_partition_v2 args = {0};
+ 
+@@ -155,7 +157,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
+                (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
+                (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
+ 
+-    /* enable all */
++#if defined(__x86_64__)
++    /* enable all xsave features (0 = enabled) */
+     disabled_xsave_features.as_uint64 = 0;
+     /*
+      * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
+@@ -165,6 +168,7 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     disabled_xsave_features.amx_bf16_support = 1;
+     disabled_xsave_features.amx_int8_support = 1;
+     disabled_xsave_features.amx_fp16_support = 1;
++#endif
+ 
+     /*
+      * query host for supported processor features and disable unsupported
+@@ -196,7 +200,9 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     /* populate args structure */
+     args.pt_flags = pt_flags;
+     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
++#if defined(__x86_64__)
+     args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
++#endif
+     args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
+ 
+     ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
+index 02c586503a..b7db382752 100644
+--- a/hw/i386/mshv/clock.c
++++ b/hw/i386/mshv/clock.c
+@@ -182,7 +182,7 @@ static const VMStateDescription vmstate_mshv_clock = {
+     },
+ };
+ 
+-void mshv_clock_init(void)
++void mshv_arch_clock_init(void)
  {
-     MshvState *s;
-@@ -574,9 +546,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-                                   0, "mshv-memory");
-     memory_listener_register(&mshv_io_listener, &address_space_io);
+     vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
+     qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index f98ddff9b5..114f065db5 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -58,7 +58,7 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+ extern MshvState *mshv_state;
  
--    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
--
--    mshv_clock_init();
-+    ret = mshv_arch_migration_init(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
+ /* clock (partition reference time) */
+-void mshv_clock_init(void);
++void mshv_arch_clock_init(void);
  
-     return 0;
- }
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 0e68365c63f..31d2f4381c7 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -109,6 +109,7 @@ void mshv_arch_disable_partition_proc_features(
- int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
- int mshv_arch_post_init_vm(int vm_fd);
- void mshv_setup_hvcall_args(AccelCPUState *state);
-+int mshv_arch_migration_init(MshvState *s);
- int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
- int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
- typedef struct mshv_root_hvcall mshv_root_hvcall;
-diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-index f0b43aa86f1..968fe2a4494 100644
---- a/target/i386/mshv/mshv-all.c
-+++ b/target/i386/mshv/mshv-all.c
-@@ -78,3 +78,37 @@ int mshv_arch_post_init_vm(int vm_fd)
+ /* interrupt */
+ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+diff --git a/meson.build b/meson.build
+index cae1591cd2..6a90a394a2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -304,7 +304,8 @@ if cpu == 'aarch64'
+   accelerator_targets += {
+     'CONFIG_HVF': ['aarch64-softmmu'],
+     'CONFIG_NITRO': ['aarch64-softmmu'],
+-    'CONFIG_WHPX': ['aarch64-softmmu']
++    'CONFIG_WHPX': ['aarch64-softmmu'],
++    'CONFIG_MSHV': ['aarch64-softmmu'],
+   }
+ elif cpu == 'x86_64'
+   accelerator_targets += {
+@@ -884,10 +885,9 @@ if get_option('kvm').allowed() and host_os == 'linux'
+ endif
  
-     return ret;
- }
+ if get_option('mshv').allowed() and host_os == 'linux'
+-  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
+-    error('mshv accelerator requires x64_64 host')
++  if host_machine.cpu() in [ 'x86_64', 'aarch64' ]
++    accelerators += 'CONFIG_MSHV'
+   endif
+-  accelerators += 'CONFIG_MSHV'
+ endif
+ 
+ if get_option('whpx').allowed() and host_os == 'windows'
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 0369f96b4c..1ac2cef26b 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -63,6 +63,7 @@ arm_common_system_ss.add(files(
+ 
+ subdir('hvf')
+ subdir('whpx')
++subdir('mshv')
+ 
+ if 'CONFIG_TCG' in config_all_accel
+    subdir('tcg')
+diff --git a/target/arm/mshv/meson.build b/target/arm/mshv/meson.build
+new file mode 100644
+index 0000000000..169643691e
+--- /dev/null
++++ b/target/arm/mshv/meson.build
+@@ -0,0 +1,7 @@
++arm_mshv_ss = ss.source_set()
 +
-+static int mshv_load_cleanup(void *opaque)
++arm_mshv_ss.add(files(
++  'mshv-all.c',
++))
++
++arm_system_ss.add_all(when: 'CONFIG_MSHV', if_true: arm_mshv_ss)
+diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+new file mode 100644
+index 0000000000..00c54f5d66
+--- /dev/null
++++ b/target/arm/mshv/mshv-all.c
+@@ -0,0 +1,81 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Aastha Rawat          <aastharawat@linux.microsoft.com>
++ *          Anirudh Rayabharam    <anirudh@anirudhrb.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/virt.h"
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++
++static int load_regs(CPUState *cpu)
 +{
-+    CPUState *cpu;
-+    int ret;
-+
-+    ret = mshv_arch_set_partition_msrs(first_cpu);
-+    if (ret < 0) {
-+        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-+        return -1;
-+    }
-+
-+    CPU_FOREACH(cpu) {
-+        ret = mshv_arch_set_mp_state(cpu);
-+        if (ret < 0) {
-+            error_report("Failed to set mp state for vCPU %d: %s",
-+                         cpu->cpu_index, strerror(-ret));
-+            return -1;
-+        }
-+    }
-+
 +    return 0;
 +}
 +
-+static SaveVMHandlers savevm_mshv = {
-+    .load_cleanup = mshv_load_cleanup,
-+};
++static int store_regs(const CPUState *cpu)
++{
++    return 0;
++}
++
++int mshv_arch_load_vcpu_state(CPUState *cpu)
++{
++    return load_regs(cpu);
++}
++
++int mshv_arch_store_vcpu_state(const CPUState *cpu)
++{
++    return store_regs(cpu);
++}
++
++int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
++{
++    return 0;
++}
++
++void mshv_arch_init_vcpu(CPUState *cpu)
++{
++
++}
++
++void mshv_arch_destroy_vcpu(CPUState *cpu)
++{
++
++}
++
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++{
++    return 0;
++}
++
++void mshv_arch_amend_proc_features(
++    union hv_partition_synthetic_processor_features *features)
++{
++    /*
++     * TLB-flush hypercalls are an x86 enlightenment. ARM guests use
++     * broadcast TLBI instructions instead.
++     */
++    features->tb_flush_hypercalls = 0;
++}
++
++void mshv_arch_disable_partition_proc_features(
++    union hv_partition_processor_features *disabled_features)
++{
++    /* No processor features to disable on ARM */
++}
++
++int mshv_arch_post_init_vm(int vm_fd)
++{
++    return 0;
++}
 +
 +int mshv_arch_migration_init(MshvState *s)
 +{
-+    register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
-+    mshv_clock_init();
 +    return 0;
 +}
 
