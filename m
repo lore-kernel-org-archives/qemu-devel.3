@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E619CCA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61253CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCDJb-0005xf-8f; Thu, 01 Oct 2026 05:42:59 -0400
+	id 1xCDJl-0005zI-1M; Thu, 01 Oct 2026 05:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJY-0005xJ-Ng
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:42:56 -0400
+ id 1xCDJk-0005z9-6X
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJX-0003MU-99
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:42:56 -0400
+ id 1xCDJi-0003NC-RT
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790847774;
+ s=mimecast20190719; t=1790847786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mUCXjc1QfCISWmp+w7u0lcuaepvShha5AKKBS8rCRNc=;
- b=OQvj/a9E0OYZIw+PxPTyWNqNCT3zXYkTmyEn4nkfQgb5+BCLMVxjf/qTpTjo3grGFy3Lbn
- vHeu17nGHqO4kEEfiauDO9G0VP4/t4vdr/sEYtWaqDC3BAeJiQoLcHBObD14RdiZJtr1Ty
- Z7yw4YuyoOZgVFsbLVz7liFvZ5gs/3I=
+ bh=w28hSXZeuhAbARcvWDSGPsTK/BM8wdBwnzlkmd63weU=;
+ b=Wm4NfbOwijnvxC8xw4d5ISQvB6hqGADtEpDw4uOpUMZU+yqNWY0/7dhTKrB8hUzla3zhJe
+ O3udvKPD0vSFvl0w/QDYOC3yXgLutl5QnkzhbmgHU80mDCtD5UqMWeTl1uTH/TgDIuQNcZ
+ bHjQ5aPb8XodIyrUSNADoqjsA0gyrh0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-suD2E124OPOy7V4OqnhXOA-1; Thu,
- 01 Oct 2026 05:42:51 -0400
-X-MC-Unique: suD2E124OPOy7V4OqnhXOA-1
-X-Mimecast-MFC-AGG-ID: suD2E124OPOy7V4OqnhXOA_1790847770
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-xv5HNH36NwWpfCsIGcBnwg-1; Thu,
+ 01 Oct 2026 05:43:04 -0400
+X-MC-Unique: xv5HNH36NwWpfCsIGcBnwg-1
+X-Mimecast-MFC-AGG-ID: xv5HNH36NwWpfCsIGcBnwg_1790847784
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A90A1800669; Thu,  1 Oct 2026 09:42:50 +0000 (UTC)
+ id E14141835D41; Thu,  1 Oct 2026 09:43:03 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 67F1E30001A2; Thu,  1 Oct 2026 09:42:48 +0000 (UTC)
+ id 23B6C30001A2; Thu,  1 Oct 2026 09:43:02 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 03/11] qemu-option: Remove short form options
- support
+Subject: Re: [PATCH v2 07/11] qemu-option: Add qemu_opts_parse_list_noisily
 From: marcandre.lureau@redhat.com
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-In-Reply-To: <20260930221105.2262063-4-farosas@suse.de>
+ =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+In-Reply-To: <20260930221105.2262063-8-farosas@suse.de>
 References: <20260930221105.2262063-1-farosas@suse.de>
- <20260930221105.2262063-4-farosas@suse.de>
+ <20260930221105.2262063-8-farosas@suse.de>
 Date: Thu, 01 Oct 2026 13:42:36 +0400
-Message-Id: <179084775651.2086187.10437322887373915103.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=539;
+Message-Id: <179084775655.2086187.33391413113621003.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=508;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bF2OitU+KODlvRQ/P88EUbMYYPZ+qOtYfrsbss6VtnE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvisPCF4so+majuRb4Kpw1MgVQRB03MlGVQC2s
- QfspU9MRo+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar4rDwAKCRDa6OEJdZac
- 5cLUD/wLEoKIxjK378TMdo0g5j2DHVquX8NnY6ErLxrCTLPITYaQVTgJ7tueLULwj2Dd5JN+DTH
- OPA3NPcUVp9hCT2CZBYQrYT1VZAK/u2VwLfPA2JBu4Z2+GheQ/aAo2VzM6bboCYL4ZaGbXOfHqd
- AwE+2fgoiTvSBQWkXxoKoxxbfhNbTDn/B2tarXTEOQguI6qIZIRuv94z7kXqakBcmCB7YlmX365
- T4TPO0khUi4eo/FNRKPbAA/5SrBdKrl3Ps8rAF3Zbxd4ng6oCB3pEDuU8315rRbOeV1TPL2o3TP
- 6ibCbWc64Dppz1crddpYXKV6Lxe/IhcGNo9OzaFIg4/NpCGCXqOtumCzfmMLFYgAYMkMBQujpGF
- JBY1+cgcGY505Zh0gQ6XNZNzNhECeeZOx1bi1MHzVFXUzqSfbXlxAPXOwE7wTJkyMf6jPCxT5qS
- lmneqMrC+9ei3IX0vOOShfsAo+4ZWxH2o1cbMrnzzDK3TqdZ1/2uUwtt8yCO3Y22+fXgQKES2Am
- 3A9Dh+LUgMUcBoLpWNR6YwSIP7cAXTlOIFUYE8ZjJQy+5vT7cihY5Gq5K/NK1F2EhcxaH0MmoHo
- As2sgXoXPyhiOYyFU9JdB8k2fYTfOsSYDX5FhordLbP3ZE+7GaJYo30Pz6JSViPFQEAuUpR2j81
- mpySHi76miMyJ8g==
+ bh=wiOE10Xcbg8EK3TprKQIL0BA123LYEvAKHZNuyMR6U0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvisPS6/YVEGTcin/A4HoORZn8u+Q+fRxP8b93
+ rjq9xJs05SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar4rDwAKCRDa6OEJdZac
+ 5eRCD/90s1GoCy2qT+25mH3FgoT3HxzOjpboAgnrZnFMuT8DZUg22r2BgdiIQLuFh6+SAgVMFhw
+ bh71GcTWzA1DMbmvaFMJ5bsAfJim4eUrYpcgEqD2aLNkawLMcG9gNMx9dRJ2SSvvfqsrEf8hBqz
+ mVRLq2x2Uo/xKC0fKkS7SqYdfj8FYOJ8T2UiENE2BCzz6bHs2HDgmsFk2FKWdULFasMCMoRI9RT
+ UOCsODHvGzCMt6YAVGRb19qeofuOAMiOhU3rCVcjVceZw6EUsOhhfwy1+1K/E4pfCNKLZTAk168
+ uuM4vk4/jE9f5oFsJkCO1DwozEoiM8nb4mKBgfJ9UuaiRFnKBjWoSbmTwqYivUMIv0fYaXJOO9g
+ TncNM65A0DN60F87B+TUwu7S7eJEaGIQGLsSC8kt5zRN+qQpG3Cz388nkApyMsrYoCMd8SyEASn
+ CZ35wkim/rEBM4txAe3rideJh04Mxd7n27c6QiRU1/eLJx38laASXieUFIb5eEBwz0ypLm0WUrn
+ T/a8Wyn2OBCfvPltH/AuYYrn1tUmqMfhShjSCvc9sbtqWNg0qMArElQNFhPpv0/Wrz5WXZ7sqUf
+ 6YboTMsV/VlgoprrXfUhTnFBUc/8SjAqcXlH43JbLpBVtm7/kEwvGQ+vF4Tz9g+tZUaIs1kKpJe
+ QmkCoACMDjDIhug==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -107,13 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Sep 2026 19:10:57 -0300, Fabiano Rosas <farosas@suse.de> wrote:
-> Option parameters without a value (i.e. key vs. key=val) are
-> deprecated. The missing value is currently implied to be either "on"
-> or "off" depending on whether the parameter name starts with "no".
+On Wed, 30 Sep 2026 19:11:01 -0300, Fabiano Rosas <farosas@suse.de> wrote:
+> Add a new function that takes a QemuOptsList pointer and expects
+> informative messages to be printed instead of returned in an Error
+> object. This makes the _noisily version simmetric with the
+> "non-noisily". The next patch will convert the callers to use the
+> appropriate version.
 > 
-> Remove the implied behavior and start rejecting option parameters
-> without values by emitting the error message:
 > 
 > [...]
 
