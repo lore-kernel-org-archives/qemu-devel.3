@@ -4,127 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ACAECA5FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D317CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCKy3-00088H-Jd; Thu, 01 Oct 2026 13:53:15 -0400
+	id 1xCKxy-00086c-Fw; Thu, 01 Oct 2026 13:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxo-00085B-Ta
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:04 -0400
+ id 1xCKxg-00082V-7F
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:52 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxm-0001qm-T9
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:00 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xCKxd-0001pL-Vv
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:51 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691FsoS03512604
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:48 GMT
+ 691FscXm2686639
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cYkuVEtuWrCF8pAS9/3X1k/uyEwk40SoexmcXPuMtsU=; b=aBd6fO+v8y5h2Dzz
- CpCUnuhNCOppkl5C71vmybROCSm7HDcGCxLdWpM81aPNwNqtZutGHUFDTxVmEga6
- lrtRLMs8Pl22GLKRLtkhbYgTGPuQ8yrp2kIbOrm+CmT62Z03UbCJSGLjcEOYb3BN
- boaeOJGbfrLaNcOiiaDRxPjRbGs66lu1CyhUcaPLqFKdmic9s1ZLWeGcAKmoy3pL
- exSQZl9iIPphEtwLCvjJ7wuF8+tf+Kzucma6fsAg0p06fRqwpRYkRm62DXklVBzn
- k0JPmevcF0w899A2BxA1gq7MXdsuR2B0QgXgJ7NmF/cLH5h7dt61igEKeYqasylE
- Zcnktg==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1quk9e25-1
+ V0/rQZ75aOPavArId7LTU7jtbwhgCb3gDLzZrcZO4Go=; b=FhSsYrB0CMq+EvdK
+ CVTDgS/mRbdOVVfjy7EKz6t7OvcOCfkMwOnHKPjfFYoldYVtdz/rHsOF2v5/mTq5
+ KoIzFXsSULpsGjX+KQccxQWLjSI6/MOEpKdySY4hKw85HUvYgx0RdUo2LgfWglBp
+ 7Avm7vAyfCPiR1g4bSiZ74HzXL9gCodcKXML09YMVWjC+1t2YR58Mj31vvOvy0Sy
+ fnfUlpUErz1ic+7gzZ7YZ6awmSoVp3wr8AITYzsi1ACqN2zH/E4LIVDxtQZDbYJ0
+ 2CcTiv+s9xmNzSCFwovdYserUNNkBq/Na/mHOgveWtgpjv+bkqL/fkeN3dDOZAOY
+ kpmYKg==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1t9a8nt8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:47 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-149e8e8ad71so1278334c88.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:47 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:38 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-139b62317d0so4568610c88.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790877167; x=1791481967; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790877158; x=1791481958; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cYkuVEtuWrCF8pAS9/3X1k/uyEwk40SoexmcXPuMtsU=;
- b=J7zjMoUBVOeTVM9HPl0iFefm4xr0rU1uJKpdSyvoAPGRYLg8NUIsBqIVu7Cs8SHtEI
- /5zhd7Wti3J8wEjEXSYwU+drH3la/6mnz+U1UqsdXW8jZCgxPO2wEkK8vO+jYncttBDC
- qROC+lEabBcjVGNM1tmU6v5TVMp+5PPCxjbiLDnE5C3zd5x31NOzYUL1wvpXL1RyR5yI
- Mn5Gf6W8tGm2ND/temasUiqTpb0DdBojygq6PIrFl0tsU4OAcQargGNPzz/61VYQtfWJ
- YqPRzHk8rjBYaVZhmLHrMa3j+xXBz06hoBPtZlJdruIwcnEMnRcZys3ZCcyjv+HqcXs2
- lMIA==
+ bh=V0/rQZ75aOPavArId7LTU7jtbwhgCb3gDLzZrcZO4Go=;
+ b=O7HTGKU/EfDxWhQND/A7SShAal3J39hWPBZZ9Mzyj4n1KBGZS07IrRqD2xblYZATHa
+ //ZiqPa3QDGvoFyr99E/JJg6BFaGngevxvxrf9v1b17QF1z/QFsMGk4SD7HhBMlRFime
+ ya2gVyA7kuwjJFfyRedIpTmHwRWphS9OcsubrG9PeDEF7uDRw/VvSP9mZ5pbut2ILIJB
+ 9bkLMdyQbShNqRKICz+GuoynuqKppWke8dEmvDOq2r6VZceFfxirrCsqaxYpF6N9suQL
+ 98LiaTxwUZuCAtjtFqC2Zf93GF7F2XESYExZWprD6ubfphS7g+fS2Rk8j2Uo/eyIgtW5
+ nHZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790877167; x=1791481967;
+ d=1e100.net; s=20260707; t=1790877158; x=1791481958;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cYkuVEtuWrCF8pAS9/3X1k/uyEwk40SoexmcXPuMtsU=;
- b=WSOLdHuqpJnuTLLf4N7hQjzGPFTTBg6ixXT3yYwWTwSOzeyPGyH32iFXOQy17lct89
- 1DoDFRXWD7fFMfYEq7a7Ci08TukFMpZdAa7+a4s0o1LJBX+9tEDJVfVZdTqjDP/Dr73i
- OaNqF7BXJl+PuU2+Y+xOgShhXfNT+xeaCif7H6a4KpA2hYRf/WJLnMksBPIiJVCkkgHt
- 9G91v94Tv1qZ2L/ZKNW1YFmXc+Gzam1yo+OU7Bd/ibnqO3DVMrE3ARSVsjBWQj8ydJaq
- ijrp3BDBpbUz1dbY1QxzcN6j+D+wKKFaYeVyoglKIDI8/NbpZ7AIIHZqmFZViHoQBkhL
- OoKA==
-X-Gm-Message-State: AFuF++kJ41doquojJ3Izfasnmrb6ThzyELbm4e8GNOrdUhj81psH9/rg
- LpaT1xgYiU3UoIgH7wjfKa4BAXBT8/R1vwKTGrygFr/q8u/d0V34YL+N3Q+/fm60bKP/a0BW+li
- SWd+/49vZFk7HjG83cZZH2QieJXehDUN7mf4K8LgTUR6svSi7vYkg6oYY8X/aHHdx7A==
-X-Gm-Gg: AYBFou1qIVtwi7DVx/F44uYN7F7P5Chxh7XOpvYFHhIfR70FvstQjUZ4l6P79lC3dw2
- FowGWD7u4LeZGXuyPJUvcnP8wgmFTh6k2S8g49Co8NOdHIaWvBQsSYhveSTt0oQcbiJvz7LAU49
- NP4Iy+sIgW3cerb0EzJ6wyZNBWPPvuYz69HjgZ/7hLno1eC/4tVWVRWnXaxYC98qwmcxLSvQv1v
- enAuIQsuLz9RFg1pE76qHpxLfMM4Z+PnmjCPIEaKtYZGpGmxl4nEVeRQWaIK+d/12AX0s4FobH7
- KLZ+JE4KOk/PSQYIX6yWGz6aaI9bfyEWkdtrPSiEoyGboCW0F7rOXia800uvJ77OxaWTkQOPDNj
- mA7W4uA2h3jWREm/Uu92UGV8YOnGHz8NaFYJbghkoXbL0UbLPEyW0i+oFtgWr
-X-Received: by 2002:a05:701b:2611:b0:139:90ab:36c8 with SMTP id
- a92af1059eb24-14d2fbc61fbmr4610685c88.1.1790877166569; 
- Thu, 01 Oct 2026 10:52:46 -0700 (PDT)
-X-Received: by 2002:a05:701b:2611:b0:139:90ab:36c8 with SMTP id
- a92af1059eb24-14d2fbc61fbmr4610643c88.1.1790877165813; 
- Thu, 01 Oct 2026 10:52:45 -0700 (PDT)
+ bh=V0/rQZ75aOPavArId7LTU7jtbwhgCb3gDLzZrcZO4Go=;
+ b=XCllcyV4Pe8avXoxMIcFUBqQ6V73DGIqLHnsi2Rdz+HTdBA5qcSm5Dxmn2YQCHUOMv
+ pTxGPvBsbalUehLJw/j1SuCltu0ugGkrHa9MhkAyIGa5YDXF2bnYHPIH+lwi9Ha0cSiY
+ Yo8fh19wwSJgntyHg94rhpia8emU3sXBDXFVABAJ48tWq4se6lpZ3oLajQF4Pe15fGhC
+ IQZmpfS/LE2NRMfd9kaHdy65ArE2RxS1CBktaSfE65p0UuwLWMrg3MgHuEjlYjWrpAUR
+ 270xaFAiP4/WbT5gQxpIIrVLuDFsP4jZPOTyRyI6Q140SaqFwYYMIYzAcgowMulRV8br
+ rkvw==
+X-Gm-Message-State: AFuF++lVqLYvF1EB2E/kQNpiReaexFjDEnItwuaiUdYnbzieioL0wo/g
+ 535PEUUtE80iPTY8f9YMpf8Z+64dXB/LoRKckmly1G1wP97A6kurBLJKQUBz/WCbrneqKpILNyE
+ ahMCy9gB+hIyQuGmMkBotPWlJDm4kKMFM4wpsAMVe/fgvvL0hRy4jF9MzlRaga6WooQ==
+X-Gm-Gg: AYBFou3bOZmiA6zanuM4s7vEJS3KLdcuX7KyP4bHKx/AwFxagMr7JGupihm6bEFQdsO
+ T4nHMlVMRUUE/cqTxkGLZL5Vmf0DiwbeYcc2iEGkiWkldXrs0T1BrbshwzDemUvnocfttdQqAkX
+ /PxXXuBEzRnnmDFwxzVVI63EQc2xVGeu0E16BIWDSSvABJxMOQzNbotiX43lK16sghKMy2Bh1wI
+ Q/XQSb2gd81y4mTQ7qfvQhW+9dTabqq4cb8oyOsePTqXEJD6wznKETlTJayH5hGngPNh4TQrpy4
+ H1bocIupCltmapDNYrTo8SWDe0yhCvW6fP6Uj0WCgOlOex3KuNrSKQHnL3jm8AJpP2Bs3L7qtIW
+ gHyp26KEoC5PKlAtS3Rs1xQJ/UKgXvm56sCdDaXrQQgtrK+/E09nQwz5HGxsc
+X-Received: by 2002:a05:701a:c951:b0:14d:c23e:c931 with SMTP id
+ a92af1059eb24-14dc23ec9ebmr5205394c88.10.1790877157820; 
+ Thu, 01 Oct 2026 10:52:37 -0700 (PDT)
+X-Received: by 2002:a05:701a:c951:b0:14d:c23e:c931 with SMTP id
+ a92af1059eb24-14dc23ec9ebmr5205333c88.10.1790877156783; 
+ Thu, 01 Oct 2026 10:52:36 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.44
+ a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 10:52:45 -0700 (PDT)
+ Thu, 01 Oct 2026 10:52:36 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 22/27] tests/docker/debian-all-test: add mips32r5 toolchain
-Date: Thu,  1 Oct 2026 17:51:58 +0000
-Message-ID: <20261001175203.8673-23-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 16/27] tests/tcg/mips64/mips64r6: update failing tests to use
+ check_binary_op_64
+Date: Thu,  1 Oct 2026 17:51:52 +0000
+Message-ID: <20261001175203.8673-17-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX81jalv0jZs+U
- PsUflNeFtJDybIr+rAC4EtIEIfGmC/Q6Frr3xCK7m63WXSgDhsK0nnL8qxKCVyoHkA38l8QpwwS
- oHC7jmk+AiSJBuNg8ZWhh6+3jerXl4o=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX8fs57kaZgykf
- eEdD13bMechUdnqzWAZv2tQV6QttSA4IQwNYMIi5YKH9t7/vcSYgDSnRioJ7Zm8GnyQlc3P6iEU
- 0dJRc5QbqJzc6fKyrAnzjxkbc5on8r8PlZPY9rAvSDK+0lqrmzoJR8eMNJEN+/lWCxJjlt29zRx
- WSimeAl430HcEI0TOYqfQsFxqex0ITSRMpgt1PxvgaLUobrk0NIEWf0eATGu6kNnowore13fTS+
- pRYX6xvKbbtvWZnSQV23xKGjnXSXxajPURpyjmyEy2qBpSWoUyjFIlFtgruyZr6NbrHRpJEvZyZ
- UpgP7VtCxFwUH/9X6+Qw2Ovy7dMe604CHAgugFhVaalSOSplqa6OVYQefnRxbJjbE/73XS03n5o
- Q07O9FhINHShnRv42jVWFL95G83XZ6XYBQOqaA/bfRs2LmswrcX3KhFu9QoU7nOWIciOET9WJjW
- KILcw4auB+w3+qmnQpg==
-X-Proofpoint-GUID: id-UyndoQZChkM2NvnuE76hgiwS2stIF
-X-Authority-Analysis: v=2.4 cv=TdADJhQh c=1 sm=1 tr=0 ts=6abe9def cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX4XjGbPvp8tKO
+ C1NPsGmVtYTeO4GjEGRWG84Ljn2sxjQo4Ac4VVlLVQciZBbchPrMyWveGqMy/FlBhy3ARSMMYXk
+ Gvow6do8a8GtR/UL0KiEFd88SnTASzM=
+X-Authority-Analysis: v=2.4 cv=N++8hG9B c=1 sm=1 tr=0 ts=6abe9de7 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=gPJu0pBYAAAA:8 a=P-IC7800AAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=LKAvCFhEUFdIRXT5rOkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22 a=AlIIF0cMT2hfDT4axODj:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-ORIG-GUID: id-UyndoQZChkM2NvnuE76hgiwS2stIF
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ZW_GBMptycfP_MiIRIYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-ORIG-GUID: a5-xQWtmslibd0ohuKEun-TJeaO3SDdL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfXxfGftDvKV733
+ 1PS7R6WyXQmyf1ijYPNBEJ4ydxEaS64TAhYj+O7j4GYGVe2F5HBuOaYYEezTvnTqeiW11md0OW9
+ OcF6mZNfV9VeMbn4+ynEdSZKdZL8i/KTygKFMfsxd6f6ZSDcHWDq5AcPK3VBGraC1kdVDlGPN/k
+ nVeMjMI+WOC4n93HEqc91bGRIq6zLv5on4Fgfwn/KGz00v37JVK27osaPIXnuGOj5B0CgtSVJeT
+ nVYXeHVPZN7fuVaSvbaH4G9FLJgWI4VAuNA3OtWVVnfZ8SsPE1YBK1FjUfXlfyY9XgQ+Tqib702
+ yJhT3yLevquB2Be3025ftuOhpTNf4nBrpoJPxtFjPNoo2GWGUzOuKn2r3lJofM+SIRkF45prGgN
+ UZAsSeSn2LJiJZ8eqLHenxRZ+hC6HYviY3ZW2hbfi9ROj+iU6O2q0eHoNT9Vv+R3ZSptW+DgEAn
+ QPEH/fjcFLxFmAN50DA==
+X-Proofpoint-GUID: a5-xQWtmslibd0ohuKEun-TJeaO3SDdL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010071
 Received-SPF: pass client-ip=205.220.180.131;
@@ -152,85 +152,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For our test, we need a compiler and libc that supports -mnan=2008.
-Debian compilers support this option, but no libc is available for it.
+We can now benefit from a proper trace to update their reference.
 
-One possibility is to use previous version (2019 or 2020) of official
-MIPS toolchain from https://codescape.mips.com/. However, it's a huge
-download (2G), and even bigger on disk (8GB).
-
-Bootlin provides toolchains
-(https://toolchains.bootlin.com/toolchains.html) for mips64r5el only,
-which is small (80MB dl, and 500MB on disk). Since all mipsel* variant
-binaries have the same name, we explicitly rename them to
-mips64r5el-linux-gnu-*. Also, this toolchain is maintained, used, and
-updated frequently, so it's an excellent choice for us.
-
-mips32r5el is more widely used compared to mips32r5, so we can ignore
-the latter.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-23-pierrick.bouvier@oss.qualcomm.com
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-17-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- .../dockerfiles/debian-all-test-cross.docker     | 16 ++++++++++++++++
- tests/lcitool/refresh                            | 16 ++++++++++++++++
- 2 files changed, 32 insertions(+)
+ tests/tcg/mips64/test_mips64r6_and.c  | 38 +--------------------------
+ tests/tcg/mips64/test_mips64r6_nor.c  | 38 +--------------------------
+ tests/tcg/mips64/test_mips64r6_or.c   | 38 +--------------------------
+ tests/tcg/mips64/test_mips64r6_srav.c | 38 +--------------------------
+ tests/tcg/mips64/test_mips64r6_xor.c  | 38 +--------------------------
+ 5 files changed, 5 insertions(+), 185 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index 94524480880..eefc03c49a4 100644
---- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -113,6 +113,22 @@ RUN apt update && \
-   libc6-dev-sparc64-cross \
-   && \
-   dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
-+
-+RUN apt update && DEBIAN_FRONTEND=noninteractive eatmydata apt install -y rename
-+
-+# download mips32r5el toolchain from bootlin, and rename binaries who are simply
-+# named mipsel-linux-gnu-*
-+RUN apt update && \
-+  mkdir -p /opt/mips32r5el/ && \
-+  cd /opt/mips32r5el/ && \
-+  wget -q https://toolchains.bootlin.com/downloads/releases/toolchains/mips32r5el/tarballs/mips32r5el--glibc--stable-2026.08-1.tar.xz && \
-+  tar xvf *.tar.xz && \
-+  rm *.tar.xz && \
-+  mv mips32r5el--glibc--stable-2026.08-1/* . && \
-+  cd bin && \
-+  rename 's/mipsel/mips32r5el/' mipsel*
-+ENV PATH="$PATH:/opt/mips32r5el/bin"
-+
- ENV QEMU_CONFIGURE_OPTS=--disable-docs
- ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
- # As a final step configure the user (if env is defined)
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 662d8a79f3a..94cab24bbdb 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -224,6 +224,22 @@ RUN apt update && \
-   libc6-dev-sparc64-cross \
-   && \
-   dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
-+
-+RUN apt update && DEBIAN_FRONTEND=noninteractive eatmydata apt install -y rename
-+
-+# download mips32r5el toolchain from bootlin, and rename binaries who are simply
-+# named mipsel-linux-gnu-*
-+RUN apt update && \
-+  mkdir -p /opt/mips32r5el/ && \
-+  cd /opt/mips32r5el/ && \
-+  wget -q https://toolchains.bootlin.com/downloads/releases/toolchains/mips32r5el/tarballs/mips32r5el--glibc--stable-2026.08-1.tar.xz && \
-+  tar xvf *.tar.xz && \
-+  rm *.tar.xz && \
-+  mv mips32r5el--glibc--stable-2026.08-1/* . && \
-+  cd bin && \
-+  rename 's/mipsel/mips32r5el/' mipsel*
-+ENV PATH="$PATH:/opt/mips32r5el/bin"
-+
- ENV QEMU_CONFIGURE_OPTS=--disable-docs
- ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
- """
+diff --git a/tests/tcg/mips64/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
+index 3a3d8e68831..f83359107b9 100644
+--- a/tests/tcg/mips64/test_mips64r6_and.c
++++ b/tests/tcg/mips64/test_mips64r6_and.c
+@@ -31,15 +31,6 @@
+ 
+ int32_t main(void)
+ {
+-    char *isa_ase_name = "mips64r6";
+-    char *group_name = "Logic";
+-    char *instruction_name =   "AND";
+-    int32_t ret;
+-    uint32_t i, j;
+-    struct timeval start, end;
+-    double elapsed_time;
+-
+-    uint64_t b64_result[TEST_COUNT_TOTAL];
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+         0x8000000000000000ULL,                    /*   0  */
+         0xffffffffffffffffULL,
+@@ -123,32 +114,5 @@ int32_t main(void)
+         0xc593578c78938000ULL,
+     };
+ 
+-    gettimeofday(&start, NULL);
+-
+-    for (i = 0; i < PATTERN_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < PATTERN_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_AND(b64_pattern + i, b64_pattern + j,
+-                b64_result + (PATTERN_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    for (i = 0; i < RANDOM_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < RANDOM_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_AND(b64_random + i, b64_random + j,
+-                b64_result + (((PATTERN_INPUTS_64_SHORT_COUNT) *
+-                               (PATTERN_INPUTS_64_SHORT_COUNT)) +
+-                              RANDOM_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    gettimeofday(&end, NULL);
+-
+-    elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+-    elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+-
+-    ret = check_results_64(isa_ase_name, group_name,
+-                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return !check_binary_op_64(do_mips64r6_AND, "and", b64_expect);
+ }
+diff --git a/tests/tcg/mips64/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
+index 6edcc1e394c..13a51490187 100644
+--- a/tests/tcg/mips64/test_mips64r6_nor.c
++++ b/tests/tcg/mips64/test_mips64r6_nor.c
+@@ -31,15 +31,6 @@
+ 
+ int32_t main(void)
+ {
+-    char *isa_ase_name = "mips64r6";
+-    char *group_name = "Logic";
+-    char *instruction_name =   "NOR";
+-    int32_t ret;
+-    uint32_t i, j;
+-    struct timeval start, end;
+-    double elapsed_time;
+-
+-    uint64_t b64_result[TEST_COUNT_TOTAL];
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+         0x8000000000000000ULL,                    /*   0  */
+         0xffffffffffffffffULL,
+@@ -123,32 +114,5 @@ int32_t main(void)
+         0xc593578c78938000ULL,
+     };
+ 
+-    gettimeofday(&start, NULL);
+-
+-    for (i = 0; i < PATTERN_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < PATTERN_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_NOR(b64_pattern + i, b64_pattern + j,
+-                b64_result + (PATTERN_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    for (i = 0; i < RANDOM_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < RANDOM_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_NOR(b64_random + i, b64_random + j,
+-                b64_result + (((PATTERN_INPUTS_64_SHORT_COUNT) *
+-                               (PATTERN_INPUTS_64_SHORT_COUNT)) +
+-                              RANDOM_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    gettimeofday(&end, NULL);
+-
+-    elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+-    elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+-
+-    ret = check_results_64(isa_ase_name, group_name,
+-                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return !check_binary_op_64(do_mips64r6_NOR, "nor", b64_expect);
+ }
+diff --git a/tests/tcg/mips64/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
+index e6b07cd4bf8..e4d7a95d37f 100644
+--- a/tests/tcg/mips64/test_mips64r6_or.c
++++ b/tests/tcg/mips64/test_mips64r6_or.c
+@@ -31,15 +31,6 @@
+ 
+ int32_t main(void)
+ {
+-    char *isa_ase_name = "mips64r6";
+-    char *group_name = "Logic";
+-    char *instruction_name =   "OR";
+-    int32_t ret;
+-    uint32_t i, j;
+-    struct timeval start, end;
+-    double elapsed_time;
+-
+-    uint64_t b64_result[TEST_COUNT_TOTAL];
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+         0x8000000000000000ULL,                    /*   0  */
+         0xffffffffffffffffULL,
+@@ -123,32 +114,5 @@ int32_t main(void)
+         0xc593578c78938000ULL,
+     };
+ 
+-    gettimeofday(&start, NULL);
+-
+-    for (i = 0; i < PATTERN_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < PATTERN_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_OR(b64_pattern + i, b64_pattern + j,
+-                b64_result + (PATTERN_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    for (i = 0; i < RANDOM_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < RANDOM_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_OR(b64_random + i, b64_random + j,
+-                b64_result + (((PATTERN_INPUTS_64_SHORT_COUNT) *
+-                               (PATTERN_INPUTS_64_SHORT_COUNT)) +
+-                              RANDOM_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    gettimeofday(&end, NULL);
+-
+-    elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+-    elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+-
+-    ret = check_results_64(isa_ase_name, group_name,
+-                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return !check_binary_op_64(do_mips64r6_OR, "or", b64_expect);
+ }
+diff --git a/tests/tcg/mips64/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
+index 951bd7826dc..e98bb9b90ee 100644
+--- a/tests/tcg/mips64/test_mips64r6_srav.c
++++ b/tests/tcg/mips64/test_mips64r6_srav.c
+@@ -31,15 +31,6 @@
+ 
+ int32_t main(void)
+ {
+-    char *isa_ase_name = "mips64r6";
+-    char *group_name = "Shift";
+-    char *instruction_name =   "SRAV";
+-    int32_t ret;
+-    uint32_t i, j;
+-    struct timeval start, end;
+-    double elapsed_time;
+-
+-    uint64_t b64_result[TEST_COUNT_TOTAL];
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+         0xffffffffffffffffULL,                    /*   0  */
+         0xffffffffffffffffULL,
+@@ -123,32 +114,5 @@ int32_t main(void)
+         0x00000000000178c7ULL,
+     };
+ 
+-    gettimeofday(&start, NULL);
+-
+-    for (i = 0; i < PATTERN_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < PATTERN_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_SRAV(b64_pattern + i, b64_pattern + j,
+-                b64_result + (PATTERN_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    for (i = 0; i < RANDOM_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < RANDOM_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_SRAV(b64_random + i, b64_random + j,
+-                b64_result + (((PATTERN_INPUTS_64_SHORT_COUNT) *
+-                               (PATTERN_INPUTS_64_SHORT_COUNT)) +
+-                              RANDOM_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    gettimeofday(&end, NULL);
+-
+-    elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+-    elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+-
+-    ret = check_results_64(isa_ase_name, group_name,
+-                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return !check_binary_op_64(do_mips64r6_SRAV, "srav", b64_expect);
+ }
+diff --git a/tests/tcg/mips64/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
+index 52981f73579..6aab6fc1d47 100644
+--- a/tests/tcg/mips64/test_mips64r6_xor.c
++++ b/tests/tcg/mips64/test_mips64r6_xor.c
+@@ -31,15 +31,6 @@
+ 
+ int32_t main(void)
+ {
+-    char *isa_ase_name = "mips64r6";
+-    char *group_name = "Logic";
+-    char *instruction_name =   "XOR";
+-    int32_t ret;
+-    uint32_t i, j;
+-    struct timeval start, end;
+-    double elapsed_time;
+-
+-    uint64_t b64_result[TEST_COUNT_TOTAL];
+     uint64_t b64_expect[TEST_COUNT_TOTAL] = {
+         0x8000000000000000ULL,                    /*   0  */
+         0xffffffffffffffffULL,
+@@ -123,32 +114,5 @@ int32_t main(void)
+         0xc593578c78938000ULL,
+     };
+ 
+-    gettimeofday(&start, NULL);
+-
+-    for (i = 0; i < PATTERN_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < PATTERN_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_XOR(b64_pattern + i, b64_pattern + j,
+-                b64_result + (PATTERN_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    for (i = 0; i < RANDOM_INPUTS_64_SHORT_COUNT; i++) {
+-        for (j = 0; j < RANDOM_INPUTS_64_SHORT_COUNT; j++) {
+-            do_mips64r6_XOR(b64_random + i, b64_random + j,
+-                b64_result + (((PATTERN_INPUTS_64_SHORT_COUNT) *
+-                               (PATTERN_INPUTS_64_SHORT_COUNT)) +
+-                              RANDOM_INPUTS_64_SHORT_COUNT * i + j));
+-        }
+-    }
+-
+-    gettimeofday(&end, NULL);
+-
+-    elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+-    elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+-
+-    ret = check_results_64(isa_ase_name, group_name,
+-                           instruction_name, TEST_COUNT_TOTAL, elapsed_time,
+-                           b64_result, b64_expect);
+-
+-    return ret;
++    return !check_binary_op_64(do_mips64r6_XOR, "xor", b64_expect);
+ }
 -- 
 2.43.0
 
