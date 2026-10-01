@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD14CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DA0CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCQHn-0003WC-SY; Thu, 01 Oct 2026 19:33:59 -0400
+	id 1xCQHc-0003Sc-UJ; Thu, 01 Oct 2026 19:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xCQHl-0003VA-Ol
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:57 -0400
-Received: from mail-pj2-x11.google.com ([2607:f8b0:4864:39::11])
+ id 1xCQHb-0003SI-8b
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:47 -0400
+Received: from mail-pj2-x21.google.com ([2607:f8b0:4864:39::21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xCQHk-0002DD-56
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:57 -0400
-Received: by mail-pj2-x11.google.com with SMTP id
- d9443c01a7336-2db425c8ff1so5334085ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:33:55 -0700 (PDT)
+ id 1xCQHZ-0002CD-Ba
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:47 -0400
+Received: by mail-pj2-x21.google.com with SMTP id
+ d9443c01a7336-2dfae9a76c7so5188085ad.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1790897635; x=1791502435; darn=nongnu.org;
+ d=tenstorrent.com; s=google; t=1790897624; x=1791502424; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ruvoRhnnsi30rjj0KB8ImDUhrr8e0NpGQKtL3X4JwoE=;
- b=HbSIDwCA/uU7iRMLlJEBeRhav19zoppbxwxJUbQRjaxo9KbPb3rBMQGxYi0c/dXFUG
- l2sfqBX6AYBvYv9eIZloCdKLHddBfZ8BWRKaLZMs4nG0kalKR3J4HAAR7avSWH9P/Ccy
- 3X1XAvtQc8dVa/jtMwWNOI+LDaBI5P+eBGcIWlZDcbjX6lEYqcuC6ZaHBN3opNk97jx3
- m5tIliVXYGy9GIuVWyk5w/y6Od0hPwbEYjaNPweMJH80CyoQwTfktchrX+AMi6CROYpG
- jdxOtUkZmKiCREwG5nY4d7jtQL31RCaiJ/ceIcnXJ3DQyCS8UpuaJWog87KycyLN8CBW
- 55Jg==
+ bh=IetKryFUORcBJg/H10qABabXkGxY8h+PiZulcPbrm28=;
+ b=hDSWHA5FH18AjULJ6yL047jdZ908QlXzyuQ3iU10XHaJdbhKiv9d1Tz7giNnsn8GPX
+ SE2399ffOz4GajwBYGHU6WKqv+Kfv4tIdlhbKj75wZGdOoFhf/cEYzCO7yO/v1XR8xcK
+ PndHSzKo+tem5+BjRTZZ7hve95g1GJjd0VeIrv5BsWxjnqwWHul284j+LxRP7uLdtxXI
+ CDm+eit4YLPhikiq6NhQ6hd4CjQ3fFCx30w8UjAuJQa+NTtDpHx9iLAHwtOjFyLrjjZZ
+ 3EB2FIcI0Qe2q+g6kg1utBomaKyh6l1fyouykQDmFNNnUaL0Gukje99FHzcn+V9J2vCd
+ mF7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790897635; x=1791502435;
+ d=1e100.net; s=20260707; t=1790897624; x=1791502424;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ruvoRhnnsi30rjj0KB8ImDUhrr8e0NpGQKtL3X4JwoE=;
- b=FUjnEEyZd+5XK7X7YIS9JwHsl6KWObt04eoyoFtJU1ZXi+b2Cg/mQNhm2KeckFMoOy
- o/pZDN9CfnQ0VqEL82esAG2jAH+BhrknPLaziI+pchzv9UGdzE4yROXnUZ37S9aNwnuW
- dN4JjJESFkp9uYZM53EIEhjVyTxAc6GkQifdusuLgXKVsrVVJAIx4iVDCXlxy/IdAv8d
- FIT19Ma0iAZgQJP5gtylGWKRvKRBbjJyFc+xj9ZxgvLOuEnBH0kNSrtAIyVnEB9NGLBk
- VUKwrpA2EMxcSH1Nyk+lIkE3dQKw9KtCoBLYv4bogUF53N8oVPQwenGVp1r+vlt2TjS9
- x0JA==
-X-Gm-Message-State: AFq9FYLIgrKT0smQEh1XQ+XFT2EK1HJyTmIT+04TnKliseyYiXKPTDvl
- ilHzOvzV/nqq6M7SIqkJNqTjgl44IfUeQmalIOgN/yU9YVTwtEBVtIX1llL5gjbIJU7RyngqMY4
- sZXLpu3o=
-X-Gm-Gg: AYBFou0KKUiDsiD0gxNZ/PG1VTszrn2mpITDAwC2JfI5UywOLNZZuYFDbMxUlcAoK+0
- mM+5dk9OWukaHaO22meOEk/bL8BbVG/OkufnvtfDd+cnA92Cy7V2mT7VdONlbNtSIQKK5rOt86f
- 1RvNMy96Xjcg1xxI457A3nX6QApabnacAryJE0LBKmJTgUJNHXAX/dwghw/Hnv1IyJ03iJHkxXQ
- UFVhe2ixuVdWctqOQgRYhee2ADNtdznJvGbBV3F/PDrzrCdhikK37RewmM9IuNKDd5Q1yc+D494
- IvN4ws1BbtoQlvg42FPM7Cd/Mv3E5SPJnvl8OHZePVp4zNUgsFT5iu+lxdwgwY6sW2T7XOiJfBJ
- qtTUUbNWXgmI7/9+Ks74p5ZD2mDQeWQl6YjUB+JcjQUslO0pGp/xFGmNkp0j7jt5bPfdGkkvorQ
- CqQ12xTf2nR3UQU23FbeiWwW9p9LPdqp9ELMK/T3x24vq1cjIDd/dNuRe7lGPki9XB1a9w2eXUF
- E2hwy6mT5lm2LS9PpsPgOtsatQFBTqHgxtildaNG1fteX5/GZ2wAC5CPA==
-X-Received: by 2002:a17:902:e802:b0:2e2:dbfe:8623 with SMTP id
- d9443c01a7336-2e49a20e27fmr15178565ad.1.1790897634777; 
- Thu, 01 Oct 2026 16:33:54 -0700 (PDT)
+ bh=IetKryFUORcBJg/H10qABabXkGxY8h+PiZulcPbrm28=;
+ b=wFAJZregPXRp+y1EFb9jhewCSLiViiL9uPXc/kOWMYL8Lix5ECNbruMAPuQwruVY/T
+ 4IA1n9Fva1Ja+klx/mjXZhMTsfYabnB8cNgfe24Fes/M7loRrFsb83Tp3M7iNSI7NLhh
+ JWOGFy1jYpHKCwFFcKqZbNlZrLUdmK7jDYut1inFyE9fhXUG0inGgxxBpwABqjdkAVDO
+ 4Asb2Kvzk7oH6X9/TwswcNVST7YJAqW7mNqlEdQtaThPOpCjlfIJFywneU2t1/11peF+
+ wSkFG7QH5lqOBbUbOIDEnNhPfDa8IHt4pAhUxQyYfjxaTWdxtsiYk/ixpfiqLRLM4j1p
+ mrFA==
+X-Gm-Message-State: AFq9FYKnfG3eiPtxI/VgIQf5gVySWoX3hM5g1y36Nq1rqe6p2lrJjRa6
+ FtaiBi+JxpH9xuhDauCZSDX23bj1nA9ZIoXyYsb4uACQ28zJKxHQSgLbY3mW2FyeIErtXoXH5Ti
+ talCI8YQ=
+X-Gm-Gg: AYBFou0idEM4DlR9JdBJuLSmnmxRZVxr09owifgcZqF0dk6GGxq/tbfo99+35yrMCjm
+ 2nVtf78y+YJSeogt8YYATi6/cp/nhKEq3ljLTS+R1RxIGkzn2r+8fDm0IMOVGaW+j2zp6oWZd6R
+ Fm2vD5qKgwPTgWGTbtVyZ9u6QknANSXZi85vRpm/GVA08fOoVVrt5LyfXCSnOGJQShvXVpM3Gy4
+ RDGrFB1IXGPiTEmOdk9eg2GZfx/xvJBNnXHeshvKxRs1SOpihohPmtxh4v9jCvyQ8aR/Mp8S8/a
+ 8r48g6bUxH1Pdbj78W+QB2MlvJXAO/HFH6SPOZbHt+wmtmkgdF0uDkuKA3O5y57ikAh8bR90eKI
+ FzIDs/siRdKK13bc0teW/uk/1pVdfyABg6avHCCpph4ZvbofURJCe3b8mMSryVQEbx6m/rWRAOP
+ wywFcdvgZGNET5j6bTZSybfcqSJwBfJp9o6cs9852Unact3H1KZcNCQpy7CnDx/x0rlvhhFwEnU
+ 9eENfRMmyfDN+kg41cnBAT4kkKqB7RVkfawMLUiYEn78ws=
+X-Received: by 2002:a17:902:da8d:b0:2e2:d09f:d762 with SMTP id
+ d9443c01a7336-2e49b692966mr13720945ad.3.1790897623930; 
+ Thu, 01 Oct 2026 16:33:43 -0700 (PDT)
 Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e49f6aea97sm1851855ad.45.2026.10.01.16.33.49
+ d9443c01a7336-2e49f6aea97sm1851855ad.45.2026.10.01.16.33.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 16:33:54 -0700 (PDT)
+ Thu, 01 Oct 2026 16:33:43 -0700 (PDT)
 From: Portia Stephens <portias@oss.tenstorrent.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -80,22 +80,22 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v3 4/4] docs/atlantis: Update Atlantis UART documentation
-Date: Fri,  2 Oct 2026 09:33:24 +1000
-Message-ID: <20261001233324.2636629-5-portias@oss.tenstorrent.com>
+Subject: [PATCH v3 2/4] hw/riscv/atlantis: Add all UARTs for Atlantis SoC
+Date: Fri,  2 Oct 2026 09:33:22 +1000
+Message-ID: <20261001233324.2636629-3-portias@oss.tenstorrent.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
 References: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::11;
- envelope-from=portias@tenstorrent.com; helo=mail-pj2-x11.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::21;
+ envelope-from=portias@tenstorrent.com; helo=mail-pj2-x21.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,52 +111,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation describing how to use the console machine property to
-control the console.
+Previously only the Ascalon console UART was enabled, this enables all 5
+UARTs on the SoC. Only UART1 is added to the serial interface for now.
+The next change will handle adding the rest of the UARTs.
 
 Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- docs/system/riscv/tt_atlantis.rst | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ hw/riscv/tt_atlantis.c         | 54 +++++++++++++++++++++++++---------
+ include/hw/riscv/tt_atlantis.h | 11 ++++++-
+ 2 files changed, 50 insertions(+), 15 deletions(-)
 
-diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
-index 1f2880d617..0bfa82eb77 100644
---- a/docs/system/riscv/tt_atlantis.rst
-+++ b/docs/system/riscv/tt_atlantis.rst
-@@ -13,7 +13,21 @@ tt-atlantis QEMU model features
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index 70815e12ef..2342edce93 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -62,7 +62,11 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+     [TT_ATL_I2C2] =             { 0xd4060000,       0x10000 },
+     [TT_ATL_I2C3] =             { 0xd4070000,       0x10000 },
+     [TT_ATL_I2C4] =             { 0xd4080000,       0x10000 },
++    [TT_ATL_UART0] =            { 0xd4100000,       0x10000 },
+     [TT_ATL_UART1] =            { 0xd4110000,       0x10000 },
++    [TT_ATL_UART2] =            { 0xd4120000,       0x10000 },
++    [TT_ATL_UART3] =            { 0xd4130000,       0x10000 },
++    [TT_ATL_UART4] =            { 0xd4140000,       0x10000 },
+     [TT_ATL_SAPLIC] =           { 0xe8000000,     0x4000000 },
+     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
+ };
+@@ -259,13 +263,14 @@ static void create_fdt_cpu(void *fdt, TTAtlantisSoCState *s,
+ }
  
- * 8-core Ascalon-X CPU Cluster
- * RISC-V compliant Advanced Interrupt Architecture
--* 16550A compatible UART
-+* DW8250 compatible UART x5
-+
-+Boot options
-+----------------
-+
-+ * ``console`` to change the UART which is on the first serial interface.
-+   Most users will be interested in the Ascalon boot console ``UART1`` but
-+   Ascalon has 5 UARTs and this may not always be the case. The RCPU console
-+   is on ``UART0``.
-+
-+To change the serial console and use device ``UART3``
-+
-+.. code-block:: bash
-+
-+  -M tt-atlantis,console=3
+ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
+-                            int irqchip_phandle)
++                            int irqchip_phandle, int index)
+ {
+     static const char * const compat[2] = {
+         "snps,dw-apb-uart", "ns16550a"
+     };
+     g_autofree char *name = g_strdup_printf("/soc/serial@%"HWADDR_PRIX,
+                                             mem->base);
++    g_autofree char *alias = g_strdup_printf("serial%d", index);
  
- Known limitations
- -----------------
-@@ -24,9 +38,6 @@ real platform. Notably:
- * There is no PCI host bridge, so virtio-pci devices cannot be
-   attached. Boots that need block storage must use ``-initrd`` with
-   an initramfs.
--* The DesignWare UART is modelled with QEMU's ns16550-compatible
--  ``serial_mm`` device; DesignWare-specific registers beyond that
--  set return 0.
+     qemu_fdt_add_subnode(fdt, name);
+     qemu_fdt_setprop_string_array(fdt, name, "compatible",
+@@ -277,8 +282,10 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
+     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
+     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
  
- Supported software
- ------------------
+-    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", name);
+-    qemu_fdt_setprop_string(fdt, "/aliases", "serial0", name);
++    if (index == 0) {
++        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", name);
++    }
++    qemu_fdt_setprop_string(fdt, "/aliases", alias, name);
+ }
+ 
+ static void create_fdt_rng(void *fdt)
+@@ -347,8 +354,11 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+      *                       aplic_s_phandle);
+      */
+ 
+-    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
+-                    aplic_s_phandle);
++    /* Skip UART0 since it is the RCPU console, UART1 is the Ascalon console */
++    for (int i = 0; i < TT_ATL_NUM_UARTS - 1; i++) {
++        create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1 + i], TT_ATL_UART1_IRQ + i,
++                        aplic_s_phandle, i);
++    }
+ 
+     create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
+ 
+@@ -474,13 +484,21 @@ static void tt_atlantis_machine_done(Notifier *n, void *data)
+                               fdt_load_addr);
+ }
+ 
++static inline int tt_atlantis_uart_index(int uart_dev)
++{
++    return uart_dev - TT_ATL_UART0;
++}
++
+ static void tt_atlantis_soc_init(Object *obj)
+ {
+     TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
+ 
+     object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
+ 
+-    object_initialize_child(obj, "uart1", &s->uart1, TYPE_DW8250);
++    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
++        object_initialize_child(obj, "uart[*]", &s->uart[i],
++                                TYPE_DW8250);
++    }
+ 
+     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
+         object_initialize_child(obj, "i2c[*]", &s->i2c[i],
+@@ -574,14 +592,22 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
+                                 &s->bootrom);
+ 
+-    /* UART1, the soc console (UART0 is for the boot microcontroller) */
+-    qdev_prop_set_chr(DEVICE(&s->uart1), "chardev", serial_hd(0));
+-    sysbus_realize(SYS_BUS_DEVICE(&s->uart1), &error_fatal);
+-    memory_region_add_subregion(s->memory,
+-                                s->memmap[TT_ATL_UART1].base,
+-                                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart1), 0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart1), 0,
+-                       qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ));
++    /* UART1, the soc console (UART0 is for the boot microcontroller */
++    qdev_prop_set_chr(DEVICE(&s->uart[tt_atlantis_uart_index(TT_ATL_UART1)]),
++                      "chardev", serial_hd(0));
++
++    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
++        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->uart[i]);
++        if (!sysbus_realize(sbd, errp)) {
++            return;
++        }
++
++        memory_region_add_subregion(s->memory,
++                                    s->memmap[TT_ATL_UART0 + i].base,
++                                    sysbus_mmio_get_region(sbd, 0));
++        sysbus_connect_irq(sbd, 0,
++                           qdev_get_gpio_in(s->irqchip, TT_ATL_UART0_IRQ + i));
++    }
+ 
+     /* I2C */
+     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index 000988c037..b81b7c8abd 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -23,6 +23,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisState, TT_ATLANTIS_MACHINE)
+ OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisSoCState, TT_ATLANTIS_SOC)
+ 
+ #define TT_ATL_NUM_I2C 5
++#define TT_ATL_NUM_UARTS 5
+ 
+ struct TTAtlantisSoCState {
+     /*< private >*/
+@@ -39,7 +40,7 @@ struct TTAtlantisSoCState {
+     RISCVHartArrayState cpus;
+     DeviceState *irqchip;
+     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
+-    DW8250State uart1;
++    DW8250State uart[TT_ATL_NUM_UARTS];
+     MemoryRegion bootrom;
+ 
+     uint32_t num_harts;
+@@ -63,7 +64,11 @@ enum {
+     TT_ATL_I2C2_IRQ = 35,
+     TT_ATL_I2C3_IRQ = 36,
+     TT_ATL_I2C4_IRQ = 37,
++    TT_ATL_UART0_IRQ = 38,
+     TT_ATL_UART1_IRQ = 39,
++    TT_ATL_UART2_IRQ = 40,
++    TT_ATL_UART3_IRQ = 41,
++    TT_ATL_UART4_IRQ = 42,
+ };
+ 
+ enum {
+@@ -80,7 +85,11 @@ enum {
+     TT_ATL_MIMSIC,
+     TT_ATL_SAPLIC,
+     TT_ATL_SIMSIC,
++    TT_ATL_UART0,
+     TT_ATL_UART1,
++    TT_ATL_UART2,
++    TT_ATL_UART3,
++    TT_ATL_UART4,
+ };
+ 
+ #endif
 -- 
 2.43.0
 
