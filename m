@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E8FCA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA84CCA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCDK1-00061R-LI; Thu, 01 Oct 2026 05:43:27 -0400
+	id 1xCDUh-0002Bc-G5; Thu, 01 Oct 2026 05:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJu-000609-Ic
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJt-0003Nq-1v
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790847796;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V7ESRc9I7KJE1TSxmJ0588VGktohDiV4YQ5OCwpb7uM=;
- b=A+pxGkGFbTSPm0L30rOUaISIfHjbfhIMoqxMctA5nrGWARgWRYZUe+EvvPF6vovTMhgadc
- 71GLhaIKkYTUjVMd91pKlPCbMX8NHcgA5FvUtlZ/pCmz8mmxbVLdP9bkxMXNQxMKxNHPPb
- T3NglFJiDzEYvddvwLyFShe4x0wHp90=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-KbRp4TFVO_mZBBprPk3Dgw-1; Thu,
- 01 Oct 2026 05:43:13 -0400
-X-MC-Unique: KbRp4TFVO_mZBBprPk3Dgw-1
-X-Mimecast-MFC-AGG-ID: KbRp4TFVO_mZBBprPk3Dgw_1790847792
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A06A1955F54; Thu,  1 Oct 2026 09:43:11 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 364E31956089; Thu,  1 Oct 2026 09:43:09 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xCDUY-0002At-QX
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:54:20 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xCDUX-0004rV-5n
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:54:18 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-8ab43af5e97so4566697b3.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 02:54:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790848450; cv=none;
+ d=google.com; s=arc-20260327;
+ b=stwVbesuNw7hz5gOB1a9JL/RjWU9cY2FbxaYJ/hxiPIe9j2ZA0k/9n9k/U7rDxrQjE
+ UHG/GG9BEyIFRnyPims5xgsuPtjh4BMCSgYUc9fXUJ/CshVTbrhs4xlkSSr2szYWYZzi
+ jezKnXIbM+3wEVxh3wN5ZUgpOhto5681HPObU8Xvxb2v0q+KOq+m97I8wPSjLf38PtHE
+ 3Zs1Fdqvk6ObYG5Hg22dfGME8qxsDagzZmpZuvxsz0lAQhnslZ7ZEWNeAg0WFA6qXpJk
+ EhJIncQcdP+MmM3uRNsGq8YrCyRc1hxR2e5YuQI1+Wduww8qWj39UxDdMNsK7HexjQ8c
+ H52Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=WrZ4og2iqhMmChmov0L+16CZKmGg2p7xKWkxhtoUHFU=;
+ fh=4FtdHUzkuyC2Zq9xaVCFcthZJ7mi8fR7Tp+QzbKQ2zY=;
+ b=Zrzr7yc/S4cKmOb2kSjgdjTmDWzueKlBwola5dl35rK6HslmtOfrdnkdvyxUGdawa3
+ XYxxNz6eWL5Hd1261AyCm0Ipf2uyqhFDR5yK9jRy5649s2prvzKpDD/PBNCuYwuQqzmS
+ yT/8w+3HVA8zwlVa+Bmxl05kqf9mG9CghhDC5nFh/o/z+kzngpaO6nuL92caoXN9t9ya
+ dFX6FnRaW2ym91HWBkEM30cylOLDLpM6rYJHNypXxYd8ZZ8CmYR9d1k0kBDOAFNSSrDJ
+ EtX9lU45eypmQIGjgA3kX8paO+DKDWXtV9mz0BERUsF2X/0SUbU6tB9d4nIt3y9KXhvb
+ E8HA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1790848450; x=1791453250; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=WrZ4og2iqhMmChmov0L+16CZKmGg2p7xKWkxhtoUHFU=;
+ b=tSVaJuDjg82rYiiOYUHAWABIC+umkY8QLwd9PB1HaglHsiZ1l3dq0jGW1n3cj4TcLM
+ HHvMI7wr+JFsU5/Tf1W/s5oAcQcGzWIc/YIgM9kJjOA14Z5Beco7+gaXhVnx8k8lIazG
+ 29wKXetAAYpihJi2+FWEpt+lvpTWRr+yuRID/QhUP24xmzfFhmGCu/tcOvfyPtEIh9uf
+ D2E9I9VcH20FQv7mY/7yQfFzDHqUCT3v5YedmZI5aS/K3LoVIMYKqWugySC9E37rvl9y
+ MRug+B0oYm+JgD6cxS22107LKdexqBW+wClJn3N5Zc3Uq7U62QcsmYn5qg1nXRVsCfEA
+ I4oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790848450; x=1791453250;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=WrZ4og2iqhMmChmov0L+16CZKmGg2p7xKWkxhtoUHFU=;
+ b=dnozOKYaaVXj7/vIBr6p6T/OTd5zWvSgJpGc7yz2o9g2EHgYwQ1wJO0I4LZXe9bAnC
+ eaJ56mhKRY30lK/Fwg0fG6BFUCZ2KOtIz8/hcLQDhPLGXTl+I8celIqd5jV1WgSI7j0A
+ 8Jb+0UaP8Tt9KqVAj94KHRgIs3C4ybv2IFRO9rddkHx4VCU7q23ws7oxyCMN9MDsgY+g
+ m8PWAq3IEXGkB8iAg0plBgaBwkdIPnlgHBYNqnCnUPmcBPxOPnMn/rHSG/1rakG8UhmF
+ bIxhGkzhHRQNHIKiwUjh8Q2llOJpZmbMMf3+tPCIMQqxa2cH8i5NgFO5jstq6nGGG2eO
+ lLHw==
+X-Gm-Message-State: AFq9FYL2CyWfzg+va/9sWV4pBeEvwvBtHEMgH8vfmjofg5PJD48WbY4J
+ NPeQLNtATM6QhsqG/8IjowvKnIwOOKbWlAAaUhQjyRYTH3oZrkAt1F/fFFDK+ORV+kA+AcC8Gcc
+ IkHFMp/LiJYdpWvCSOg1Qpk3vk8liu7MXWtS1ViEnmQ==
+X-Gm-Gg: AYBFou0Fsnofl1aNyrnrk96CwxZQxXxjgITkFoS6tmy/HTl9/F4xRMTLjw5ZSyhUl+W
+ mYRo5jYUAupgxMR2gIxCCBoptEjb/gheQbzG1NQM0v1DqEEaiThdZRoMXUJ/CTC8NB3CQy/MY7P
+ v8OWJQafdIdKeg6qfKs7/QyMDX2ATk+q6n+nVXUBDPbwfFQCSLpe/V48VAAepacakpztNCgl1Pc
+ rCD5yYZ+ZfM7U6I2yh0ufLSRvEsJJOpk6ENkRSJJuSdxwVi3BYwJD+Y/LDnj0H+oUCousE07OVJ
+ TIxDDsxpHU91L12l1etwMb+LIwfoo4FNjcGiuDiAYE/KAio6Rkb1HxG0YfJck4qLDwoLwHU4TSU
+ OvGTd+sx308KiQVTncm4WiMIJKi3o1sgBAXlfP5H/kq2MRPB84w==
+X-Received: by 2002:a05:690c:e3ed:b0:8a8:93e9:381f with SMTP id
+ 00721157ae682-8acdaee44f8mr10634387b3.22.1790848450256; Thu, 01 Oct 2026
+ 02:54:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 09/11] qemu-option: Change qemu_opts_parse_noisily()
- to take the group
-From: marcandre.lureau@redhat.com
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Alexandre Iooss <erdnaxe@crans.org>
-In-Reply-To: <20260930221105.2262063-10-farosas@suse.de>
-References: <20260930221105.2262063-1-farosas@suse.de>
- <20260930221105.2262063-10-farosas@suse.de>
-Date: Thu, 01 Oct 2026 13:42:36 +0400
-Message-Id: <179084775658.2086187.4359745063224723732.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=527;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=pPyxke0QsUx+7tydLHLnexvkW0Ozi0P0G3l4D3tUcGo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvisPD4c6seu6FrMmNWADC+rOVpNEBxzx8JUIC
- ina2RqsZdyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar4rDwAKCRDa6OEJdZac
- 5RsJD/92HstJAF2nypHlYW1cW13+1zNzbyhhzcgO4VUNYKppinCNRMZ25v3F9dkXP0VbsWfpOCN
- QJiKAvpE9mOEGCmP/XOshb6Ldp4tFsCLFcF2PhUQTvrSCkxUfrn0i5zo7czW/4/TTWg8uJL8A/G
- 3sszXAhy7M0Cpy9Egup7xHC2Y97JSed1KtYgTrrJQp5GMPjfDXkoX8/9Bp221pjkTYkSwyDafqe
- MxZTBQLfd5ApmK5bra+hh+0Q5jVRpFIAK09ZN7OgJyt5vmjI60s4cEhgrIDZfytjIckTCFdHdyL
- 1MEdJVOR8v/6HG3NrbINR3H438nrYCSeLuLOwSzbnW5ClH+eOCqKjalnq/C/9b/Ayir56+gkRE+
- 0KBBOMuetgT4aZ2q3I6bISnBJHNaI7iodE2pUBSyaBn4EzjtPMeECkd0B8418MNml5WU55tYZVG
- G4QHzDgFi9D8Sf6RjCMR0YHJMMcMMYhO3j2DMlukQBRTz41dUrkDID98hijFINk2CrBgJOPr7xu
- 5wA1UYyDaKC04RtPYb1eixz3CB9CVTaz/bJvEgL7e/O8S/IzgnhywQOmOyJ9+a1SXa+ZHe5yh2v
- sEaWN3dfwrfXck5+iVENCs3Po3qMN925ePT9DKtZszlqfFPGdm8NO8hNGxbqA8JrWoaWHCw0rvu
- zUmpXANo3PR2RXQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260930174946.82195-1-philmd@oss.qualcomm.com>
+ <20260930174946.82195-10-philmd@oss.qualcomm.com>
+In-Reply-To: <20260930174946.82195-10-philmd@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 1 Oct 2026 10:53:58 +0100
+X-Gm-Features: AclHuK-AQIrHsn86uBQIqSqBHDz3HBv4x_KwjFung085t5QqnfzZ5LMfCBD62IY
+Message-ID: <CAFEAcA81kUriHYPj2EBNYiBsJUMmgknCGRif0q0cc5sndro2dg@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] target/arm: Kick vCPU after updating PSCI power
+ state
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,19 +120,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Sep 2026 19:11:03 -0300, Fabiano Rosas <farosas@suse.de> wrote:
-> Pass the group name as argument to qemu_opts_parse_noisily() to make
-> it simmetric with qemu_opts_parse().
-> 
-> This change solves the issue of qemu_opts_parse_noisily() crashing on
-> a NULL return from qemu_find_opts(), which can happen when an option
-> is invoked for code in a module that is not loaded.
-> 
-> [...]
+On Wed, 30 Sept 2026 at 18:50, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> PSCI can update the power state of a vCPU other than the caller.
+> arm_cpu_has_work() reads env->halt_reason to decide whether that
+> vCPU has work to do, and is called from the vCPU thread without the
+> BQL held. A remote power_state/halt_reason update is therefore not
+> observed until the target vCPU is rescheduled, so the vCPU stays
+> halted and a PSCI CPU_ON of a secondary vCPU can hang.
+>
+> Kick the vCPU after changing its state so it re-evaluates promptly.
+>
+> Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  target/arm/arm-powerctl.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+> index ef14a1f8a94..1ba5277b023 100644
+> --- a/target/arm/arm-powerctl.c
+> +++ b/target/arm/arm-powerctl.c
+> @@ -48,9 +48,14 @@ struct CpuOnInfo {
+>  void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
+>  {
+>      CPUARMState *env =3D &cpu->env;
+> +    CPUState *cs =3D CPU(cpu);
+>
+>      qatomic_set(&cpu->power_state, state);
+>      qatomic_set(&env->halt_reason, state =3D=3D PSCI_OFF ? HALT_PSCI : N=
+OT_HALTED);
+> +
+> +    if (!qemu_cpu_is_self(cs)) {
+> +        qemu_cpu_kick(cs);
+> +    }
+>  }
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Looking at the callsites of this function:
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+ * three places in arm-powerctl.c call it from an async_run_on_cpu
+   callback function which runs it in the context of the vCPU it
+   is changing the power state for
+ * target/arm/cpu.c calls it from within reset for the vCPU being
+   reset, so we definitely don't want to kick the vCPU
+ * target/arm/kvm.c calls it as part of the "sync the vCPU state
+   to/from KVM" function, which should only be running from
+   that vCPU's thread
+ * target/arm/machine.c calls it as part of an inbound migration
+   to set the vCPU's power-state to whatever it was on the source
 
+So I think that in the cases where we're actually running the VM
+the if() check will fail and we do nothing anyway, and in the other
+cases (reset, migration) we don't want to be kicking the vCPU.
+
+thanks
+-- PMM
 
