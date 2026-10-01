@@ -4,47 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F49BCA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 22:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB6FCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 22:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCPWY-0001pW-W3; Thu, 01 Oct 2026 18:45:11 -0400
+	id 1xCPh8-0003aK-E2; Thu, 01 Oct 2026 18:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anbelski@linux.microsoft.com>)
- id 1xCPWX-0001lh-3S
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 18:45:09 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <anbelski@linux.microsoft.com>) id 1xCPWV-00060R-3U
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 18:45:08 -0400
-Received: from frill.fritz.box (p508abfc2.dip0.t-ipconnect.de [80.138.191.194])
- by linux.microsoft.com (Postfix) with ESMTPSA id CCD6C20B7167
- for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 15:44:11 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CCD6C20B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790894652;
- bh=1sEBvs+8ytpbnqpgoFl5oJCCuQJLNx/n/OoSkhHmTJI=;
- h=From:To:Subject:Date:From;
- b=e6zDQ4g0Ja6lycKplUkWq/++QoCjQW1H5pGYFYZtNZnAYSh3mpTYxS0q7rBmeoarU
- Ej8N71FY3/lSwWhxFhnAMf6AKZZM7lV3oQbxIJSP08u/DRxIJqdnZis4AcVmzfoiYE
- CSVYKFGcWqtcK+A2GPzIe/olJ/PmBSidBp/La2UA=
-From: Anatol Belski <anbelski@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] hw/audio/virtio-sound: Report bytes written in used length
-Date: Fri,  2 Oct 2026 00:30:27 +0200
-Message-ID: <20261001224501.1952113-1-anbelski@linux.microsoft.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1xCPh5-0003a6-S3; Thu, 01 Oct 2026 18:56:03 -0400
+Received: from mx1.catap.net ([162.55.82.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1xCPh3-0007R7-V3; Thu, 01 Oct 2026 18:56:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=UFkq2mn
+ EZ2KElLPoHZSTvRTYIGqKaJf7qhl2nEx6GYjuSJz3zfIuZmKzLB09hMuuTgPWwtTGJSLVJ
+ 80xmRE4v+sP8yBR5+bE6dxMxuXF6Pw2wb6UzqW6WflQvDVOnd8G7vUdg/fkcYUjeIqCVZi
+ p70jsmlSgKOlb4z86XFk+2Io7iW02HmNXJt1s3HxVAkbTGiX0mw5HL5/i0OtOY7pyQIuxc
+ fZaSug29FHmWx1jifwM0XQ60fTt7bfQYfLLPzUGKNacsLK5l5i+ADMHBr/U9yaGwI/Xhzk
+ rnPqXHecREF/YB0RV+LZyxyskOOWQ4/UPaSiEr6YiVc8znVdPBFGKnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=D
+ +MYmH2gNjJF78dS6+8McvaqbCDx7TXO68m+FMO6qmA=;
+ h=references:in-reply-to:
+ subject:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net; b=
+ Zzma3ZT5bf1jtHFSExlcy91AN0ApX+pnmrCBSJfw78VHUNP6nqBi3HFPgvT97kPR3j8t3L
+ BwS7TGJzr2Gr6RybLE8koEsZVotw0U0ilLyDljvksZYEw9uWcGwEKScQHybFKqpZrtUlPW
+ X4pe7iq8SGaCT1tbLu9hOUpxDBwOhkH14SFf3qDu+umlLYncMeNv5HMJKidNg17ie3NSWt
+ Wj2YlKMASo0XlDWNsm6HGzYMoRSyxM056BoaZTP5tfgCJ5YipF3Pz3/lwX29/lqWXjFPfG
+ X5l0TIDbFzjRFk3BN+99tOwliOryL+nWfokgf8UhhmOHS73O0eIobWRDpdGoPw==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=ZfdUW5Jb; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=GMlDHKO/;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=D+MYmH2g
+ NjJF78dS6+8McvaqbCDx7TXO68m+FMO6qmA=; h=references:in-reply-to:
+ subject:to:from:date; d=korins.ky;
+ b=ZfdUW5JbliCE/4UZLJ1FeCQS3MzXx8N21
+ vpsDDYJ8Lrr8+F7Mk2S90Y8/PwvWoGsqujnMYGvAey5LNYik6U5kar87mcj0RopL2Qzh07
+ QtbMRkDLRgU4E+Cw+i5foAz7f6T4f+dr7KMpBnfY0bPez58S7zDsNvvVdIFqZRD0U4U1Mx
+ BqHc7oWgLJdGszs7wQbEFzOEOKfy/NdYzk1bDqr0XuEyBgq5eTzLaVbwtpBJr+0IpYw0V9
+ ib9k6u1i1cP1rgG2iKm2HIgTBySRYliX6E3iDi6f+lpa1Xy36Ev4LPYi/7PGKVrA/WU7ct
+ IhpYlPU6D0CDLOmxj9EhQs+h1/67g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=D+MYmH2gNjJF78dS6+8McvaqbCDx7TXO68m+FMO6qmA=; h=references:
+ in-reply-to:subject:to:from:date; d=korins.ky; b=GMlDHKO/nZ/06mfCRzo4Q
+ xCnF8RQRb4D592AnDcbZyxpe5ib12J0sqObc96XY9GonQ2XetGx7FTgkfG+cWgsDw==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id f33585b2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Fri, 2 Oct 2026 00:55:55 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) id 8537968d;
+ Fri, 2 Oct 2026 00:55:54 +0200 (CEST)
+Date: Fri, 02 Oct 2026 00:55:54 +0200
+Message-ID: <877bk1c9ol.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Anushree Mathur <anushree.mathur@linux.ibm.com>
+Subject: Re: [PATCH v2 2/5] ppc: Raise decrementer IRQ on zero write
+In-Reply-To: <20261001143415.3f3b33fc-f8-amachhiw@linux.ibm.com>
+References: <20260923230452.3765-1-kirill@korins.ky>
+ <20260923230452.3765-3-kirill@korins.ky>
+ <20261001143415.3f3b33fc-f8-amachhiw@linux.ibm.com>
+User-Agent: Wanderlust
+Mail-Followup-To: kirill@korins.ky, mark.cave-ayland@ilande.co.uk,
+ rathc@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com,
+ harshpb@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, anushree.mathur@linux.ibm.com
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=anbelski@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,184 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The control, invalid PCM, TX and RX completion paths pass fixed response
-sizes to virtqueue_push() after copying into the guest's writable iovecs.
-iov_from_buf() truncates the copy when those iovecs are undersized, so
-the used length can exceed the writable descriptor capacity.
+On Thu, 01 Oct 2026 11:10:18 +0200,
+Amit Machhiwal <amachhiw@linux.ibm.com> wrote:
+> 
+> On 2026/09/24 01:03 AM, Kirill A. Korinsky wrote:
+> > From: "Kirill A. Korinsky" <kirill@korins.ky>
+> > 
+> > OpenBSD writes zero to an edge triggered decrementer, then enters idle
+> > expecting its interrupt. QEMU defers the already due edge to a timer at
+> > the current virtual time, leaving the guest stalled.
+> > 
+> > Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> > Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> > Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> > Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > ---
+> >  hw/ppc/ppc.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> > 
+> > diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> > index b123b4cc1c..736a37d32b 100644
+> > --- a/hw/ppc/ppc.c
+> > +++ b/hw/ppc/ppc.c
+> > @@ -885,10 +885,17 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+> >       * an edge interrupt, so raise it here too.
+> >       */
+> >      if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> > +        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
+> 
+> Thanks for the v2 — you got the guard right (PPC_DECR_ZERO_TRIGGERED in
+> __cpu_ppc_store_decr), but the flag-setting landed in the wrong place.
+> 
+> >          ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+> >            && signed_decr >= 0)) {
+> >          (*raise_excp)(cpu);
+> >          return;
+> > +    } else {
+> > +        /*
+> > +         * Classic 32-bit edge-triggered decrementer: zero write fires
+> > +         * immediately
+> > +         */
+> > +        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
+> 
+> My suggestion was to set PPC_DECR_ZERO_TRIGGERED once at init time in
+> cpu_ppc_tb_init().  In v2 it ended up inside the else block of
+> __cpu_ppc_store_decr() instead.
+> 
+> That mutates tb_env->flags at runtime on every DEC write that does not
+> immediately fire.  PPE42 goes through ppc_booke_timers_init() and gets
+> PPC_DECR_UNDERFLOW_TRIGGERED but not PPC_DECR_ZERO_TRIGGERED.  The first time a
+> guest writes a non-zero value to DEC on PPE42, this else block stamps
+> PPC_DECR_ZERO_TRIGGERED onto tb_env->flags — from that point on, every zero
+> write fires immediately, which contradicts the PPE42 architecture (commit
+> 7197f6f7baf2).
+> 
+> The fix is the same two-liner I included in my v1 response:
+>
 
-Use the byte count returned by iov_from_buf() for every completion.  For
-PCM_INFO, retain the actual payload byte count so the control completion
-also remains bounded when the requested element size is smaller than the
-native structure.
+Sorry, I had applied your diff manually and for some unknown for me reason
+messed it up.
 
-Signed-off-by: Anatol Belski <anbelski@linux.microsoft.com>
----
-Tested with the following virtio-villain reproducers:
+v3 will be sent shortly.
 
-SND0005:
-https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0005_info_size_short.c
+> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> index b123b4cc1cce..6f99b61a2876 100644
+> --- a/hw/ppc/ppc.c
+> +++ b/hw/ppc/ppc.c
+> @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+>       * an edge interrupt, so raise it here too.
+>       */
+>      if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> +        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
+>          ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+>            && signed_decr >= 0)) {
+>          (*raise_excp)(cpu);
+> @@ -1104,6 +1105,12 @@ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq)
+>      if (is_book3s_arch2x(env)) {
+>          /* All Book3S 64bit CPUs implement level based DEC logic */
+>          tb_env->flags |= PPC_DECR_UNDERFLOW_LEVEL;
+> +    } else {
+> +        /*
+> +         * Classic 32-bit edge-triggered decrementer: zero write fires
+> +         * immediately
+> +         */
+> +        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
+>      }
+>      /* Create new timer */
+>      tb_env->decr_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> 
+> PPE42 never enters cpu_ppc_tb_init() — it uses ppc_booke_timers_init() — so it
+> never gets PPC_DECR_ZERO_TRIGGERED and the new clause does not fire for it.  All
+> 32-bit classic CPUs that go through cpu_ppc_tb_init() (7400, 750, 604, 7457)
+> take the else branch and get the flag set statically at boot, which is the right
+> place for it.
+> 
+> Thanks,
+> Amit
 
-SND0012:
-https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0012_pcm_info_size_zero.c
-
-SND0015:
-https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0015_pcm_info_status_short.c
-
-SND0065:
-https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0065_tx_missing_status.c
-
-SND0066:
-https://github.com/weltling/virtio-villain/blob/e0c649562cf2e836a0a305e19fb72323e6543d10/tests/sound/snd0066_tx_status_short.c
-
-Before this change all five tests fail because the used length exceeds
-the writable descriptor capacity. With this change all five pass.
-
- hw/audio/virtio-snd.c | 82 +++++++++++++++++++++----------------------
- 1 file changed, 40 insertions(+), 42 deletions(-)
-
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 6df7ea0eb0..52e12603dd 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -271,13 +271,12 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-         memset(&pcm_info[i].padding, 0, 5);
-     }
- 
--    cmd->payload_size = sizeof(virtio_snd_pcm_info) * count;
-     cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
--    iov_from_buf(cmd->elem->in_sg,
--                 cmd->elem->in_num,
--                 sizeof(virtio_snd_hdr),
--                 pcm_info,
--                 cmd->payload_size);
-+    cmd->payload_size = iov_from_buf(cmd->elem->in_sg,
-+                                     cmd->elem->in_num,
-+                                     sizeof(virtio_snd_hdr),
-+                                     pcm_info,
-+                                     sizeof(virtio_snd_pcm_info) * count);
- }
- 
- /*
-@@ -774,6 +773,7 @@ static inline void
- process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
- {
-     uint32_t code;
-+    size_t written;
-     size_t msg_sz = iov_to_buf(cmd->elem->out_sg,
-                                cmd->elem->out_num,
-                                0,
-@@ -828,13 +828,12 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
-         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-     }
- 
--    iov_from_buf(cmd->elem->in_sg,
--                 cmd->elem->in_num,
--                 0,
--                 &cmd->resp,
--                 sizeof(virtio_snd_hdr));
--    virtqueue_push(cmd->vq, cmd->elem,
--                   sizeof(virtio_snd_hdr) + cmd->payload_size);
-+    written = iov_from_buf(cmd->elem->in_sg,
-+                           cmd->elem->in_num,
-+                           0,
-+                           &cmd->resp,
-+                           sizeof(virtio_snd_hdr));
-+    virtqueue_push(cmd->vq, cmd->elem, written + cmd->payload_size);
-     g_assert(s->queue_inuse[VIRTIO_SND_VQ_CONTROL] > 0);
-     s->queue_inuse[VIRTIO_SND_VQ_CONTROL] -= 1;
-     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
-@@ -917,6 +916,7 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
-     VirtIOSoundPCMBuffer *buffer = NULL;
-     virtio_snd_pcm_status resp = { 0 };
-     VirtIOSound *vsnd = VIRTIO_SND(vdev);
-+    size_t written;
- 
-     g_assert(!QSIMPLEQ_EMPTY(&vsnd->invalid));
- 
-@@ -926,14 +926,12 @@ static inline void empty_invalid_queue(VirtIODevice *vdev, VirtQueue *vq)
-         g_assert(buffer->vq == vq);
- 
-         resp.status = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
--        iov_from_buf(buffer->elem->in_sg,
--                     buffer->elem->in_num,
--                     0,
--                     &resp,
--                     sizeof(virtio_snd_pcm_status));
--        virtqueue_push(vq,
--                       buffer->elem,
--                       sizeof(virtio_snd_pcm_status));
-+        written = iov_from_buf(buffer->elem->in_sg,
-+                               buffer->elem->in_num,
-+                               0,
-+                               &resp,
-+                               sizeof(virtio_snd_pcm_status));
-+        virtqueue_push(vq, buffer->elem, written);
-         QSIMPLEQ_REMOVE_HEAD(&vsnd->invalid, entry);
-         virtio_snd_pcm_buffer_free(buffer);
-     }
-@@ -1216,17 +1214,17 @@ static inline void return_tx_buffer(VirtIOSoundPCMStream *stream,
-                                     VirtIOSoundPCMBuffer *buffer)
- {
-     virtio_snd_pcm_status resp = { 0 };
-+    size_t written;
-+
-     resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
-     update_latency(stream, buffer->size);
-     resp.latency_bytes = cpu_to_le32(stream->latency_bytes);
--    iov_from_buf(buffer->elem->in_sg,
--                 buffer->elem->in_num,
--                 0,
--                 &resp,
--                 sizeof(virtio_snd_pcm_status));
--    virtqueue_push(buffer->vq,
--                   buffer->elem,
--                   sizeof(virtio_snd_pcm_status));
-+    written = iov_from_buf(buffer->elem->in_sg,
-+                           buffer->elem->in_num,
-+                           0,
-+                           &resp,
-+                           sizeof(virtio_snd_pcm_status));
-+    virtqueue_push(buffer->vq, buffer->elem, written);
-     g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_TX] > 0);
-     stream->s->queue_inuse[VIRTIO_SND_VQ_TX] -= 1;
-     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
-@@ -1306,22 +1304,22 @@ static inline void return_rx_buffer(VirtIOSoundPCMStream *stream,
-                                     VirtIOSoundPCMBuffer *buffer)
- {
-     virtio_snd_pcm_status resp = { 0 };
-+    size_t written;
-+
-     resp.status = cpu_to_le32(VIRTIO_SND_S_OK);
-     resp.latency_bytes = 0;
-     /* Copy data -if any- to guest */
--    iov_from_buf(buffer->elem->in_sg,
--                 buffer->elem->in_num,
--                 0,
--                 buffer->data,
--                 buffer->size);
--    iov_from_buf(buffer->elem->in_sg,
--                 buffer->elem->in_num,
--                 buffer->size,
--                 &resp,
--                 sizeof(virtio_snd_pcm_status));
--    virtqueue_push(buffer->vq,
--                   buffer->elem,
--                   sizeof(virtio_snd_pcm_status) + buffer->size);
-+    written = iov_from_buf(buffer->elem->in_sg,
-+                           buffer->elem->in_num,
-+                           0,
-+                           buffer->data,
-+                           buffer->size);
-+    written += iov_from_buf(buffer->elem->in_sg,
-+                            buffer->elem->in_num,
-+                            buffer->size,
-+                            &resp,
-+                            sizeof(virtio_snd_pcm_status));
-+    virtqueue_push(buffer->vq, buffer->elem, written);
-     g_assert(stream->s->queue_inuse[VIRTIO_SND_VQ_RX] > 0);
-     stream->s->queue_inuse[VIRTIO_SND_VQ_RX] -= 1;
-     virtio_notify(VIRTIO_DEVICE(stream->s), buffer->vq);
 -- 
-2.55.0
-
+wbr, Kirill
 
