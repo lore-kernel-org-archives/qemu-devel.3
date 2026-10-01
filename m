@@ -4,120 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C0DCA5FD6
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4326FCA5FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCKy3-00088J-NV; Thu, 01 Oct 2026 13:53:16 -0400
+	id 1xCKxb-0007yz-Oj; Thu, 01 Oct 2026 13:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxn-00084s-68
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:59 -0400
+ id 1xCKxP-0007xR-Pw
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:37 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxl-0001qO-9L
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:58 -0400
+ id 1xCKxN-0001k1-6d
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:35 -0400
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691FsmDU2687134
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:46 GMT
+ 691FsmDS2687134
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SSNY5oTPStUnkVazOtR9WH497MatXquToFIDV6MfVe4=; b=Yx+8NruQhbvV8jHG
- vqYcYSVnTaKxRXIIYfb+1SzY0ip2ia749NlzuMkCXDwIm8SrEwuUnWhYSsvc1dKc
- ZS/M7gex+t1yNtLhasZiSQGBsLMKvORvIw7MSuab+LasAOFvDoTDnTRcDq3l9M14
- xJtey3u+Jsht4gbTmmckWEdlWC0hniqkSGPRWTtzn6ZJVyw32IzZ8eMF/PFdfkfA
- k8sSk1gxDNsDJ+2m98/ffmujim9sf1EqM7lQ+Sl5ZKq0390vQkMW8tIqb1n5p/ue
- OL3lyzcRsr4SmWVNTs+F0eWuJCjbUUd5MwxMIHPlFEk9HSV+F4KfiuIRhz9t3AGn
- 0MFieA==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1t9a8ntq-1
+ xGcXP1q6VIZtX63dmWB0WlS+QwjMLjeQS4L70F3wJ0c=; b=jUspdaQnj1XfqLsE
+ wsjMxMO5w0VNpmwdNuax4Mhsa4VoNKyCrRwMMtzHUN3PJ7JoEdAc+rmR8vctUK3W
+ tlv+GJnOuMIb7f7kFRO1RUvebuPzVsTyuz/ZUFb8Iyo4+9DoNZ4+m2pBCXa7FXjS
+ J8s5W3xtLVfxFII+TY6s20InXmF4deSImF34UO15gL5snMpUp+wD/mat7YBHTKye
+ 4K5dykENLHr6CpIarCarLlCjF1FowfYEm061wbZhJMBNV6jZ7SiHb3ffMWDYMbp3
+ IJ6RvFsMbQBC7v6HM/W1ZWDSZwd/x0+Zjv3dDiuRvd6FEWP6cMnImAC+DF9wY0qt
+ ImwJxg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1t9a8nry-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:46 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1431ba79941so7872816c88.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:46 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:31 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-3425098ae4bso1172932eec.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790877165; x=1791481965; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790877150; x=1791481950; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=SSNY5oTPStUnkVazOtR9WH497MatXquToFIDV6MfVe4=;
- b=WxjpMYiY5ydsStSmQRqBlThOqc3VnmDwqb9kTzpveyqrL2sqnXnRcxu4WafrojA9GV
- Maa/uppnido96df4btcPKaWfju9x3KaB/KPvIKL+/DVo2YFns4bAu4zePBpervwEwHFe
- Ork6O/0/IasaGp3QtxvY29i5fa/G0qLhci7uopJCPUqFwoKwmyG1BN3h+4vQ0NHJlHfE
- dt1MpF/xkxjhJ5sgrRGNcidgxiJ6b9jiCEoPFyuxhZeVBeLWKbFHo/+bgJZ83YEfMihH
- g6Ub6+pcxeIJ1K/IZGSu2AptQec89IA5fxY6IcLTdGuSUE6rQFnnhPfsk4PuL7U8shQc
- IWgQ==
+ bh=xGcXP1q6VIZtX63dmWB0WlS+QwjMLjeQS4L70F3wJ0c=;
+ b=g2XeUnZ29nwiZMLQZr5GAejH5jM088Q0vYUuKueafZCAvmZ0svYHqgB+ICvXRqGvXV
+ vdoltkFryakcTNhwg/87cnilnSwCIFZbuvo2Y0L20cWtwh/2Snbt1l6+a3LtM0ebl3f9
+ d2yTqYlPBs2Nwk/46QormIKSUCv5KSpBF3TMJOpBKkL2iXjJ/NDMH1Y/kdMrNvwgtlyo
+ lx3U2qrdAXLaJqNrsEFnzqIgb5IYKUW/LJmeZZL4KpLoHjwcKvwYo+GwLZFCXPW4RRc8
+ m3f5fWbvVSGTlDsb5dc5t2L6ERmOUpyIZnqDch53oBcyaG64RMWrGTYIEaKbIJbO0lIJ
+ S4+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790877165; x=1791481965;
+ d=1e100.net; s=20260707; t=1790877150; x=1791481950;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=SSNY5oTPStUnkVazOtR9WH497MatXquToFIDV6MfVe4=;
- b=Yva2aM8R1gwMvLYGqswUDtuskcR9wEE6zt7kBXJcXqEJuETHlDh+fxbF4YsWNU0AAo
- 9OJOJwixwJWp+JmLP0krhcJ2JTriRgQ+v5WQbbimnBU8alRDRlZFHoL4w9n/M7vNaTOF
- xrqHtN0mfKVHwsKkLO2bRh1B+mZD4B0ixOQweQhS3D0hAeKvhj2t9nH1GKwsUuG86KmF
- InfFLqmVWFYY7zpfsGVB2QCBX45CJsTnb3qjSyK5dqet0huqAXKuS7iU8UE53aSmgCWw
- HHDWKdUvWpi3wC4DauGq6cyG5ixUcH0BvOhNY8LQ/UQNXYhMUmJZEtYqirYY2iaQjR4c
- 26bA==
-X-Gm-Message-State: AFuF++kFHg5nLMKzu11o41EPGBJ/prgshq7EcKp1UaiTp9osBD6mhIPH
- DCpVtiIRJD1WlEokoBhSEBvZps/xKPVvnv3zpH37J6R4OSOGfKPbQdVp/no1ZeOLchnFTGR31W2
- 22yXx9/fFofaPhYhy9ZuqFtLs8nLWQUTbTHrL25oFSmeAQB2yP5mmhvw/WFZY/Pxqqw==
-X-Gm-Gg: AYBFou2GE7BW+cpVJWz6/oeMWWdMGKdm7P27eySU3JLeJSdATFT0pajQN+21/zPKkeA
- HSWDN+RDmKthzDs6DWv1+Tcx1cbdJGX/OBKuqkuWxQdHSLx38z2po/iNkgArw+GSJ9MAV6VUfI0
- QuXejcBWDbAjrylt/IkuiM2OpZVx4FuCdY1DFm8DIytnxaXNs/eYJEzSwEPfkm+8un7PEB06dQ2
- fmf/OOB9xBdniyxQLfzAD+j25Qqc4+qwG2f5aJcd85G8yrvhjdp5MEeoZEdQkng+7GzDZHAJ8gi
- MLFa72o+Njcrp6nJNR9fN9t76RuX9CzNb++jFMoGHsHjv0YqmPgWlzroDv4OVByXwo4u9Eu/LkK
- TNykDI53g/2SWc/nCWrhszcSXAnXC014L2aV5nD4f1+xqwoJaPCoQXrfsK7vh
-X-Received: by 2002:a05:701b:2712:b0:148:302e:1bed with SMTP id
- a92af1059eb24-14d33490065mr6002511c88.38.1790877165277; 
- Thu, 01 Oct 2026 10:52:45 -0700 (PDT)
-X-Received: by 2002:a05:701b:2712:b0:148:302e:1bed with SMTP id
- a92af1059eb24-14d33490065mr6002401c88.38.1790877163624; 
- Thu, 01 Oct 2026 10:52:43 -0700 (PDT)
+ bh=xGcXP1q6VIZtX63dmWB0WlS+QwjMLjeQS4L70F3wJ0c=;
+ b=u4lW2sgv8jSK6g+NMElVEwHxBzM9UmLzR9oZ0IzMgsU2vHl9buTIT2JTDzbClahVD+
+ zEXhqaD2NtOS7ea7lO8KsC/YEVPOGu/xnr85fQB6S1X0Tn0OtAx8mSJKtAJZmEmO2/vF
+ WWMuGzUAjE0+dOoFwc4iq2AHAGwfiAblHyQtrxcbWMl6cqAe/Qwc0PCeoLpQKkhEQ6qW
+ I8UsstHj35MGemM+EdAN3FMFd8TPNCu1ongZ+2kCtYk5dQOMKYMUe957wFQC9kNMPbxf
+ Ps36kaNiYWauf1TjXOfNMpdBYlGAzD2hZqKlx2npO6z2ZOh18dw5yEzI2uSQFVosh57K
+ OMBg==
+X-Gm-Message-State: AFuF++lJ5QogtGutcgNFxJx3U2B022uw5eePh0rgqCB2zv15kLT0tDLd
+ /xR6zsvBd8QMAOzX7mvf4+G7RMTgds5dUd2e5XhpEMP8Kmn+GZJZClwDe14U/VY9mGu/E4n/uVN
+ IA8YpL6GeltGOrCh26aW1gGzRhTLyK7vUumQ4BgjfdfAfjTewxa7tWRvghAfLVAXS7w==
+X-Gm-Gg: AYBFou1minRnYaxv3LJCjgU8KQv0h9Gq/pUt6EUkl5eeJqLF//3VOsihZd/imtIdmS9
+ Xk2iGlOM7NOkws0k7eLIKoThI+Yeo98JggxsTaypCLZbV3nQmZIxOfgMQ1FZ466WPj9mKqGZyWP
+ SJNisJeK6Dv5sk1oQpJgW0TBqEO+uNiA8dHRLRk2h+oJp/ocAf1jKi1q6oH73hXHHeYMqOLmWHY
+ tYnfrF+JDc2eTz+Yd/w3ibJ+rN4uQkMouclFUX0lab40cIjtQ+k0wIdAlcEXCPxtffhZUCw0Vkk
+ BPkYTxP9CurZKjdo4IZV0+GGCfHhyyoC6EeJ05zaaqIS18M3VH2cFECyxOs2tRMpawIhX7COLQz
+ dxaQXdLUvioLXs9k/L2wBnAarcLkfLWN0v57SbbWtT/RNbw18Nq9lOyltDz0U
+X-Received: by 2002:a05:701b:2816:b0:14a:6a66:f6e3 with SMTP id
+ a92af1059eb24-14dd1969ba7mr3023190c88.20.1790877150080; 
+ Thu, 01 Oct 2026 10:52:30 -0700 (PDT)
+X-Received: by 2002:a05:701b:2816:b0:14a:6a66:f6e3 with SMTP id
+ a92af1059eb24-14dd1969ba7mr3023148c88.20.1790877149313; 
+ Thu, 01 Oct 2026 10:52:29 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.42
+ a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 10:52:43 -0700 (PDT)
+ Thu, 01 Oct 2026 10:52:28 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 21/27] tests/tcg/mips64/mips64r6: add msa tests
-Date: Thu,  1 Oct 2026 17:51:57 +0000
-Message-ID: <20261001175203.8673-22-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 09/27] tests/tcg/mips64: move mips64r6 sources
+Date: Thu,  1 Oct 2026 17:51:45 +0000
+Message-ID: <20261001175203.8673-10-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX4GxmF3eCcUuH
- ggHudx39NOROkf2QSjDXC2ykco0Z47jo1excvyQZYXuCJ1tngcHVrJBY5X2YMokLnSCDVqs1gR5
- zVgXpX8l6UqmUlSdTAk99yp/vhN1wqM=
-X-Authority-Analysis: v=2.4 cv=N++8hG9B c=1 sm=1 tr=0 ts=6abe9dee cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfXwVRaG8Dxobcb
+ rshbkg19xqysJBaIzYotPDDtW8rEL6nnwo4FdGsnUcSW4GAV6tTU87k+sXodorlAUZPgfkFgN4V
+ w17UoDyeBNEI9c2SqzzlmdQe2E7niw0=
+X-Authority-Analysis: v=2.4 cv=N++8hG9B c=1 sm=1 tr=0 ts=6abe9ddf cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=xXatPaY6A71EF1Dc_LYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
-X-Proofpoint-ORIG-GUID: Wb_sB4CWblb78_vNciLJeDHf8k0wg_sv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX4CTt1VUeJFNs
- 6NfJmio5kG1+/LjPAmz56+WFpiRe8vRpS7tU3RfEzGR6XzNvYukdO/rXwrvgZAvUsqV81/M9wld
- jngavvLp/IJ2Kl44S5MEFj5Z41ZlYIGO7p5GsHwi5MANbByjyX5qD85O7oD9KPpdeMBx1yirpE+
- OobGRpUpDCaBlNeshqIoddZQWjtBf03FTNxmrBc3wDU3glX8z8u4S4kEqMPjHJ6n3CsnH2TutnS
- W0i44CKerXegWA3tbGlCLA6/H7Z2bsXzCyyl1EvJZSZmmdWP1rcvN6hv8iv/h728jo8K+NpAbVV
- B3Dx6xnI6LT3t5WMdC7j5Z/ndPA26eiTk9xXMI6ol39Rz6ytnTfQbO8Vefedt1ifHbCGjULYupW
- Rxm/28yehgK/x+jpLgfr6HRhirD5ZE/yLw3fW6HW5ZYJo6hDt0upy06GYuDZCwGbDEkjEnPm1EV
- FGgYgmT3pmQrp83xJUA==
-X-Proofpoint-GUID: Wb_sB4CWblb78_vNciLJeDHf8k0wg_sv
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ALku5c8DAAAA:8 a=xz38mcJZfOssY3GY9MsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+ a=Skunnq644UPbuD6fT1yj:22
+X-Proofpoint-ORIG-GUID: GJY9i38A51Z6OepbFYAFxu6HB5RDd-4v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX846CavkUMlaB
+ LodFS2E5vafvks1IRQ79JXy9UblvVMr3GuyQf06yHQaCqMP7IwmRVJHGyF5pEwZ4VvZCF04iVoQ
+ vXOh5P8L0boFU0a1WfKuZtP+w4aZd5+zuxJKajzlxQj9l6h6OtopBWz0e/8uu5UKfFFFjPoJpBM
+ u4eLg4gYpl/fs6E9ehQLWgusca8DfL4IgIsSfvVfxhV8K8yB4dljmGgb+d6XrJXeiZyMiuvQzeW
+ dLqk35SjpN8R5vRHu+yP98yJcQRiDBDKdFAHvhcMUR2LC3WPeUey17ufALV8yD9FcKJAuy9agOn
+ CbovpVvwTVmaJyqlOnxUEwbBQzp46dRwok/bKrht6YxvoZ9G/zST0QXxwhAn1zJFXtHC+Z5DL7n
+ pV8bROSbmVWMkVem/h/1J7bkOhvDHpZZey1thsNsnotkOOJNmu0DqvZCaQn6jH/I2nCZLxhOyOG
+ S5GLJUP3q2WwOHWXC/g==
+X-Proofpoint-GUID: GJY9i38A51Z6OepbFYAFxu6HB5RDd-4v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
@@ -151,35 +153,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those tests are added to mips64r6 and mips64r6el test suites.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-22-pierrick.bouvier@oss.qualcomm.com
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-10-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/mips64/meson.build | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tests/tcg/mips/user/isa/mips64r6/crc/Makefile | 40 -------------------
+ .../logic => mips64}/test_mips64r6_and.c      |  0
+ .../test_mips64r6_bitswap.c                   |  0
+ .../bit-count => mips64}/test_mips64r6_clo.c  |  0
+ .../bit-count => mips64}/test_mips64r6_clz.c  |  0
+ .../crc => mips64}/test_mips64r6_crc32b.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32cb.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32cd.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32ch.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32cw.c    |  0
+ .../crc => mips64}/test_mips64r6_crc32d.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32h.c     |  0
+ .../crc => mips64}/test_mips64r6_crc32w.c     |  0
+ .../test_mips64r6_dbitswap.c                  |  0
+ .../bit-count => mips64}/test_mips64r6_dclo.c |  0
+ .../bit-count => mips64}/test_mips64r6_dclz.c |  0
+ .../test_mips64r6_dmuh.c                      |  0
+ .../test_mips64r6_dmuhu.c                     |  0
+ .../test_mips64r6_dmul.c                      |  0
+ .../test_mips64r6_dmulu.c                     |  0
+ .../shift => mips64}/test_mips64r6_dsllv.c    |  0
+ .../shift => mips64}/test_mips64r6_dsrav.c    |  0
+ .../shift => mips64}/test_mips64r6_dsrlv.c    |  0
+ .../test_mips64r6_muh.c                       |  0
+ .../test_mips64r6_muhu.c                      |  0
+ .../test_mips64r6_mul.c                       |  0
+ .../test_mips64r6_mulu.c                      |  0
+ .../logic => mips64}/test_mips64r6_nor.c      |  0
+ .../logic => mips64}/test_mips64r6_or.c       |  0
+ .../shift => mips64}/test_mips64r6_sllv.c     |  0
+ .../shift => mips64}/test_mips64r6_srav.c     |  0
+ .../shift => mips64}/test_mips64r6_srlv.c     |  0
+ .../logic => mips64}/test_mips64r6_xor.c      |  0
+ 33 files changed, 40 deletions(-)
+ delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_and.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-swap => mips64}/test_mips64r6_bitswap.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_clo.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_clz.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32b.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cb.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cd.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32ch.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32cw.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32d.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32h.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/crc => mips64}/test_mips64r6_crc32w.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-swap => mips64}/test_mips64r6_dbitswap.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_dclo.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/bit-count => mips64}/test_mips64r6_dclz.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmuh.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmuhu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmul.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_dmulu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsllv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsrav.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_dsrlv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_muh.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_muhu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_mul.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/int-multiply => mips64}/test_mips64r6_mulu.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_nor.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_or.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_sllv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_srav.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/shift => mips64}/test_mips64r6_srlv.c (100%)
+ rename tests/tcg/{mips/user/isa/mips64r6/logic => mips64}/test_mips64r6_xor.c (100%)
 
-diff --git a/tests/tcg/mips64/meson.build b/tests/tcg/mips64/meson.build
-index 676a47f5c8f..c80a3716f55 100644
---- a/tests/tcg/mips64/meson.build
-+++ b/tests/tcg/mips64/meson.build
-@@ -65,6 +65,15 @@ foreach src: tests_mips64r6
-   tests += {src: {'cflags': '-march=mips64r6'}}
- endforeach
- 
-+foreach src: tests_mips_msa
-+  tests += {
-+    src: {
-+      'cflags': ['-march=mips64r6', '-mmsa'],
-+      'qemu_args': ['-cpu', 'I6400'],
-+    }
-+  }
-+endforeach
-+
- # export tests for mips64el
- tcg_tests_mips64r6 = tests
- 
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/Makefile b/tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+deleted file mode 100644
+index b7f5811a5e9..00000000000
+--- a/tests/tcg/mips/user/isa/mips64r6/crc/Makefile
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#
+-#  Test program for MIPS64R6 CRC32 instructions
+-#
+-#  Copyright (C) 2025  Aleksandar Rakic <aleksandar.rakic@htecgroup.com>
+-#
+-#  SPDX-License-Identifier: GPL-2.0-or-later
+-#
+-
+-ifndef PREFIX
+-  $(error "PREFIX not set, please export GNU Toolchain install directory.")
+-endif
+-
+-ifndef SYSROOT
+-  $(error "SYSROOT not set, please export GNU Toolchain system root directory.")
+-endif
+-
+-SIM = ../../../../../../../build/qemu-mips64
+-SIM_FLAGS = -L $(SYSROOT)
+-
+-CC      =  $(PREFIX)/bin/mips64-r6-linux-gnu-gcc
+-
+-TESTCASES  = test_mips64r6_crc32b.tst
+-TESTCASES += test_mips64r6_crc32h.tst
+-TESTCASES += test_mips64r6_crc32w.tst
+-TESTCASES += test_mips64r6_crc32d.tst
+-TESTCASES += test_mips64r6_crc32cb.tst
+-TESTCASES += test_mips64r6_crc32ch.tst
+-TESTCASES += test_mips64r6_crc32cw.tst
+-TESTCASES += test_mips64r6_crc32cd.tst
+-
+-all: $(TESTCASES)
+-	@for case in $(TESTCASES); do \
+-            echo $(SIM) $(SIM_FLAGS) ./$$case; \
+-            $(SIM) $(SIM_FLAGS) ./$$case; \
+-            echo $(RM) -rf ./$$case; \
+-            $(RM) -rf ./$$case; \
+-	done
+-
+-%.tst: %.c
+-	$(CC) $< -o $@
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_and.c
+rename to tests/tcg/mips64/test_mips64r6_and.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c b/tests/tcg/mips64/test_mips64r6_bitswap.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_bitswap.c
+rename to tests/tcg/mips64/test_mips64r6_bitswap.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c b/tests/tcg/mips64/test_mips64r6_clo.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clo.c
+rename to tests/tcg/mips64/test_mips64r6_clo.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c b/tests/tcg/mips64/test_mips64r6_clz.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_clz.c
+rename to tests/tcg/mips64/test_mips64r6_clz.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32b.c b/tests/tcg/mips64/test_mips64r6_crc32b.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32b.c
+rename to tests/tcg/mips64/test_mips64r6_crc32b.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cb.c b/tests/tcg/mips64/test_mips64r6_crc32cb.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cb.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cb.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cd.c b/tests/tcg/mips64/test_mips64r6_crc32cd.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cd.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cd.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32ch.c b/tests/tcg/mips64/test_mips64r6_crc32ch.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32ch.c
+rename to tests/tcg/mips64/test_mips64r6_crc32ch.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cw.c b/tests/tcg/mips64/test_mips64r6_crc32cw.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32cw.c
+rename to tests/tcg/mips64/test_mips64r6_crc32cw.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32d.c b/tests/tcg/mips64/test_mips64r6_crc32d.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32d.c
+rename to tests/tcg/mips64/test_mips64r6_crc32d.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32h.c b/tests/tcg/mips64/test_mips64r6_crc32h.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32h.c
+rename to tests/tcg/mips64/test_mips64r6_crc32h.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32w.c b/tests/tcg/mips64/test_mips64r6_crc32w.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/crc/test_mips64r6_crc32w.c
+rename to tests/tcg/mips64/test_mips64r6_crc32w.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c b/tests/tcg/mips64/test_mips64r6_dbitswap.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-swap/test_mips64r6_dbitswap.c
+rename to tests/tcg/mips64/test_mips64r6_dbitswap.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c b/tests/tcg/mips64/test_mips64r6_dclo.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclo.c
+rename to tests/tcg/mips64/test_mips64r6_dclo.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c b/tests/tcg/mips64/test_mips64r6_dclz.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/bit-count/test_mips64r6_dclz.c
+rename to tests/tcg/mips64/test_mips64r6_dclz.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c b/tests/tcg/mips64/test_mips64r6_dmuh.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuh.c
+rename to tests/tcg/mips64/test_mips64r6_dmuh.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c b/tests/tcg/mips64/test_mips64r6_dmuhu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmuhu.c
+rename to tests/tcg/mips64/test_mips64r6_dmuhu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c b/tests/tcg/mips64/test_mips64r6_dmul.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmul.c
+rename to tests/tcg/mips64/test_mips64r6_dmul.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c b/tests/tcg/mips64/test_mips64r6_dmulu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_dmulu.c
+rename to tests/tcg/mips64/test_mips64r6_dmulu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c b/tests/tcg/mips64/test_mips64r6_dsllv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsllv.c
+rename to tests/tcg/mips64/test_mips64r6_dsllv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c b/tests/tcg/mips64/test_mips64r6_dsrav.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrav.c
+rename to tests/tcg/mips64/test_mips64r6_dsrav.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c b/tests/tcg/mips64/test_mips64r6_dsrlv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_dsrlv.c
+rename to tests/tcg/mips64/test_mips64r6_dsrlv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c b/tests/tcg/mips64/test_mips64r6_muh.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muh.c
+rename to tests/tcg/mips64/test_mips64r6_muh.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c b/tests/tcg/mips64/test_mips64r6_muhu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_muhu.c
+rename to tests/tcg/mips64/test_mips64r6_muhu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c b/tests/tcg/mips64/test_mips64r6_mul.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mul.c
+rename to tests/tcg/mips64/test_mips64r6_mul.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c b/tests/tcg/mips64/test_mips64r6_mulu.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/int-multiply/test_mips64r6_mulu.c
+rename to tests/tcg/mips64/test_mips64r6_mulu.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_nor.c
+rename to tests/tcg/mips64/test_mips64r6_nor.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_or.c
+rename to tests/tcg/mips64/test_mips64r6_or.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c b/tests/tcg/mips64/test_mips64r6_sllv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_sllv.c
+rename to tests/tcg/mips64/test_mips64r6_sllv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srav.c
+rename to tests/tcg/mips64/test_mips64r6_srav.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c b/tests/tcg/mips64/test_mips64r6_srlv.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/shift/test_mips64r6_srlv.c
+rename to tests/tcg/mips64/test_mips64r6_srlv.c
+diff --git a/tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
+similarity index 100%
+rename from tests/tcg/mips/user/isa/mips64r6/logic/test_mips64r6_xor.c
+rename to tests/tcg/mips64/test_mips64r6_xor.c
 -- 
 2.43.0
 
