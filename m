@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A9C8CA5FD6
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7725ECA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCJ84-0005bi-Bd; Thu, 01 Oct 2026 11:55:28 -0400
+	id 1xCJ87-0005i6-9f; Thu, 01 Oct 2026 11:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xCJ6w-0004if-F4; Thu, 01 Oct 2026 11:54:19 -0400
+ id 1xCJ7G-0004ls-Js; Thu, 01 Oct 2026 11:54:40 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xCJ6t-0005Yd-VJ; Thu, 01 Oct 2026 11:54:17 -0400
+ id 1xCJ7C-0005Zl-1R; Thu, 01 Oct 2026 11:54:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=JuC1bWlP6yIATEmc+CYZD4veX79fOfSLfMfHNvGlCk4=; b=VJCbgOizsffStFk
- vOzjb80+4//dgkFcRJQF2a9Z5YfhSILP+mOqY8dA6alN/C0tgjHmon+xS0ZeWhX6OlBY/Y0o30571
- qP9aRcJ9vQmf//pg5FKQj0bRN828shI0ot5s76cuC4uCeWQ5o76SOdDIo7AJJuf88lcaSsMvbCrl6
- xE=;
-Date: Thu, 01 Oct 2026 17:59:26 +0200
-Subject: [PATCH 03/18] target/riscv: Move pmu CSR read to csr.h
+ List-Help; bh=B0q3w5DhSG2jct5MZ8IPXoFepkWLqd9q/DuxSw7Mhm4=; b=rAFriZhi+oKBFEe
+ C57IRmJowVhlJwNKBBj8IhlWpmcLX2RZOrIwgioY3C557wRyDIl8PhVw2sqHP4AFaOW5WtTHuIBZf
+ iVQl02Pk6ic5AcFCnww6k1sqRuLZ2TIIU1KaFoEEzQ3IshYFigFqGutbx8afFOIpFNS3sfRBvZG2p
+ 48=;
+Date: Thu, 01 Oct 2026 17:59:34 +0200
+Subject: [PATCH 11/18] target/riscv: Compile cpu_helper.c once for system-mode
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-rv-dedup-v1-3-ea69b07afd31@rev.ng>
+Message-Id: <20261001-rv-dedup-v1-11-ea69b07afd31@rev.ng>
 References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
 In-Reply-To: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1790870392; l=2538;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1790870392; l=14792;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=fac/1tm9guqMIVUco+MSAGCnqrGck+mVQAHi4ShvikM=;
- b=sIebRiRkkdGGGFjnlFYSj/gs72ekfSrgru0BvWS73zrI8mSE9e/+cDTSRjGj0AyoVNmKRcLZH
- 8NDIMMdEfGNCqqe+jA3pJN0p9QaI6hdcDKa60JrelEUFohxcbJjDa0o
+ bh=L/hx24b67XJiakW2ZduR8TVdD7g2wVHJAdnanqUdWyA=;
+ b=vH3gun0tX+MvqcDrkgn3LZ7Odfwuqw7Jq2Qb6pXE7RVjecRW051tdrE5AfM0P9ICFJ6+uaX3A
+ 2UsF1Giy2u8D51sJ8cJp2t3ad+/S+7Q8XUm40ffYBBPu2qgOF+4M1cN
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -73,76 +73,349 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pmu.c can then be compiled once for system-mode alongside csr.c/csr.h
-in a follow up commit, since it's otherwise target agnostic.
+Makes cpu_helper.c agnostic to compile-time target specifics, allowing
+it to be compiled twice (once for user- and once for system mode).
+target_[u]long is widened to [u]int64_t and runtime target_long_bits()
+is used in place of the equivalent macro.  Most changes are straight
+forward and no behavioural change is intended.
+
+Note: the following change might be a bit unclear at first glance
+
+  #define PTE_PPN_MASK 0x3FFFFFFFFFFC00ULL
+
+  - target_ulong pte;
+  + uint64_t pte;
+
+  - ppn = (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PPN_SHIFT;
+  + ppn = (pte & PTE_PPN_MASK) >> PTE_PPN_SHIFT;
+
+but retains expected behaviour as pte is written a uint32_t for
+MXL_RV32, meaning the top bits of PTE_PPN_MASK or chopped of in the &,
+rather than truncated.
+
+Note: This commit will print all addresses as 64-bit values, even for a
+32-bit target. If breaking this interface is not an option we can
+instead opt for more runtime branching, as done by Joel Stanley
+in commit 409c7d8682a.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/tcg/csr.h       | 4 ++++
- target/riscv/tcg/pmu.h       | 3 ---
- target/riscv/tcg/pmu.c       | 5 +++--
- target/riscv/tcg/meson.build | 2 --
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ target/riscv/tcg/cpu_helper.c | 79 ++++++++++++++++++++++---------------------
+ target/riscv/tcg/meson.build  |  3 +-
+ 2 files changed, 43 insertions(+), 39 deletions(-)
 
-diff --git a/target/riscv/tcg/csr.h b/target/riscv/tcg/csr.h
-index 53ba3b4a4d..03f96cce04 100644
---- a/target/riscv/tcg/csr.h
-+++ b/target/riscv/tcg/csr.h
-@@ -99,4 +99,8 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-                        target_ulong val);
- target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
- 
-+/* Used in pmu.c */
-+RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-+                                  bool upper_half, uint32_t ctr_idx);
-+
- #endif /* RISCV_CSR_H */
-diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-index fbdbfe7600..7e42359f87 100644
---- a/target/riscv/tcg/pmu.h
-+++ b/target/riscv/tcg/pmu.h
-@@ -21,7 +21,6 @@
- 
- #include "cpu.h"
- #include "qapi/error.h"
--#include "exec/target_long.h"
- 
- bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
-                                         uint32_t target_ctr);
-@@ -38,7 +37,5 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
-                                  bool new_virt);
- void riscv_pmu_decr_instret(CPURISCVState *env);
--RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
--                                  bool upper_half, uint32_t ctr_idx);
- 
- #endif /* RISCV_PMU_H */
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 1a4658319b..c8acb85df4 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -20,8 +20,9 @@
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..ee433a88fe 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
  #include "qemu/log.h"
- #include "qemu/error-report.h"
- #include "qemu/timer.h"
--#include "cpu.h"
--#include "pmu.h"
-+#include "target/riscv/cpu.h"
-+#include "target/riscv/tcg/pmu.h"
-+#include "target/riscv/tcg/csr.h"
- #include "exec/icount.h"
- #include "system/device_tree.h"
+ #include "qemu/main-loop.h"
++#include "qemu/target-info.h"
+ #include "cpu.h"
+ #include "internals.h"
+ #include "pmu.h"
+@@ -28,7 +29,6 @@
+ #include "exec/target_page.h"
+ #include "system/memory.h"
+ #include "instmap.h"
+-#include "tcg/tcg-op.h"
+ #include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "trace.h"
+@@ -1017,7 +1017,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     bool use_background = false;
+     hwaddr ppn;
+     int napot_bits = 0;
+-    target_ulong napot_mask;
++    uint64_t napot_mask;
+     bool is_sstack_idx = ((mmu_idx & MMU_IDX_SS_WRITE) == MMU_IDX_SS_WRITE);
+     bool sstack_page = false;
  
+@@ -1101,7 +1101,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     int sxlen_bytes = sxlen / 8;
+ 
+     if (first_stage == true) {
+-        target_ulong mask, masked_msbs;
++        uint64_t mask, masked_msbs;
+ 
+         if (sxlen > (va_bits - 1)) {
+             mask = (1L << (sxlen - (va_bits - 1))) - 1;
+@@ -1131,7 +1131,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     }
+ 
+     int ptshift;
+-    target_ulong pte;
++    uint64_t pte;
+     hwaddr pte_addr;
+     const hwaddr base_root = base;
+     const bool be = mo_endian_env(env) == MO_BE;
+@@ -1141,7 +1141,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     ptshift = (levels - 1) * ptidxbits;
+     base = base_root;
+     for (i = 0; i < levels; i++, ptshift -= ptidxbits) {
+-        target_ulong idx;
++        uint64_t idx;
+         if (i == 0) {
+             idx = (addr >> (PGSHIFT + ptshift)) &
+                            ((1 << (ptidxbits + widened)) - 1);
+@@ -1214,7 +1214,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         } else {
+             if (pte & PTE_RESERVED(svrsw60t59b)) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: reserved bits set in PTE: "
+-                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                              "addr: 0x%" HWADDR_PRIx
++                              " pte: 0x%016" PRIx64 "\n",
+                               __func__, pte_addr, pte);
+                 return TRANSLATE_FAIL;
+             }
+@@ -1223,7 +1224,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                 /* Reserved without Svpbmt. */
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
+                               "and Svpbmt extension is disabled: "
+-                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                              "addr: 0x%" HWADDR_PRIx
++                              " pte: 0x%016" PRIx64 "\n",
+                               __func__, pte_addr, pte);
+                 return TRANSLATE_FAIL;
+             }
+@@ -1242,7 +1244,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             if ((pte & PTE_PBMT) == PTE_PBMT) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
+                         "reserved but are set in PTE: "
+-                        "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                        "addr: 0x%" HWADDR_PRIx " pte: 0x%016" PRIx64 "\n",
+                         __func__, pte_addr, pte);
+                 return TRANSLATE_FAIL;
+             }
+@@ -1251,12 +1253,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                 /* Reserved without Svnapot extension */
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: N bit set in PTE, "
+                               "and Svnapot extension is disabled: "
+-                              "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                              "addr: 0x%" HWADDR_PRIx
++                              " pte: 0x%016" PRIx64 "\n",
+                               __func__, pte_addr, pte);
+                 return TRANSLATE_FAIL;
+             }
+ 
+-            ppn = (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PPN_SHIFT;
++            ppn = (pte & PTE_PPN_MASK) >> PTE_PPN_SHIFT;
+         }
+ 
+         if (!(pte & PTE_V)) {
+@@ -1271,7 +1274,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         if (pte & (PTE_D | PTE_A | PTE_U | PTE_ATTR)) {
+             /* D, A, and U bits are reserved in non-leaf/inner PTEs */
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: D, A, or U bits set in non-leaf PTE: "
+-                          "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                          "addr: 0x%" HWADDR_PRIx " pte: 0x%016" PRIx64 "\n",
+                           __func__, pte_addr, pte);
+             return TRANSLATE_FAIL;
+         }
+@@ -1286,7 +1289,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     if (ppn & ((1ULL << ptshift) - 1)) {
+         /* Misaligned PPN */
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: PPN bits in PTE is misaligned: "
+-                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                      "addr: 0x%" HWADDR_PRIx " pte: 0x%016" PRIx64 "\n",
+                       __func__, pte_addr, pte);
+         return TRANSLATE_FAIL;
+     }
+@@ -1294,7 +1297,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         /* Reserved without Svpbmt. */
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits set in PTE, "
+                       "and Svpbmt extension is disabled: "
+-                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                      "addr: 0x%" HWADDR_PRIx " pte: 0x%016" PRIx64 "\n",
+                       __func__, pte_addr, pte);
+         return TRANSLATE_FAIL;
+     }
+@@ -1311,12 +1314,12 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     if ((pte & PTE_PBMT) == PTE_PBMT) {
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
+                       "reserved but are set in leaf PTE: "
+-                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                      "addr: 0x%" HWADDR_PRIx " pte: 0x%016" PRIx64 "\n",
+                       __func__, pte_addr, pte);
+         return TRANSLATE_FAIL;
+     }
+ 
+-    target_ulong rwx = pte & (PTE_R | PTE_W | PTE_X);
++    uint64_t rwx = pte & (PTE_R | PTE_W | PTE_X);
+     /* Check for reserved combinations of RWX flags. */
+     switch (rwx) {
+     case PTE_W | PTE_X:
+@@ -1403,7 +1406,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+     }
+ 
+-    target_ulong updated_pte = pte;
++    uint64_t updated_pte = pte;
+ 
+     /*
+      * If ADUE is enabled, set accessed and dirty bits.
+@@ -1471,7 +1474,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     }
+ 
+     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
+-    target_ulong vpn = addr >> PGSHIFT;
++    uint64_t vpn = addr >> PGSHIFT;
+ 
+     if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+         napot_bits = ctzl(ppn) + 1;
+@@ -1482,7 +1485,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+ 
+     napot_mask = (1 << napot_bits) - 1;
+     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
+-                  (vpn & (((target_ulong)1 << ptshift) - 1))
++                  (vpn & ((1ULL << ptshift) - 1))
+                  ) << PGSHIFT) | (addr & ~TARGET_PAGE_MASK);
+ 
+     /*
+@@ -1498,7 +1501,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     return TRANSLATE_SUCCESS;
+ }
+ 
+-static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
++static void raise_mmu_exception(CPURISCVState *env, vaddr address,
+                                 MMUAccessType access_type,
+                                 bool pmp_pma_violation,
+                                 bool first_stage, bool two_stage,
+@@ -1795,12 +1798,12 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     return true;
+ }
+ 
+-static target_ulong riscv_transformed_insn(CPURISCVState *env,
+-                                           target_ulong insn,
+-                                           target_ulong taddr)
++static uint64_t riscv_transformed_insn(CPURISCVState *env,
++                                           uint64_t insn,
++                                           uint64_t taddr)
+ {
+-    target_ulong xinsn = 0;
+-    target_ulong access_rs1 = 0, access_imm = 0, access_size = 0;
++    uint64_t xinsn = 0;
++    uint64_t access_rs1 = 0, access_imm = 0, access_size = 0;
+ 
+     /*
+      * Only Quadrant 0 and Quadrant 2 of RVC instruction space need to
+@@ -1956,7 +1959,7 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
+          * Clear Bit1 of transformed instruction to indicate that
+          * original insruction was a 16bit instruction
+          */
+-        xinsn &= ~((target_ulong)0x2);
++        xinsn &= ~((uint64_t)0x2);
+     } else {
+         /* Transform 32bit (or wider) instructions */
+         switch (MASK_OP_MAJOR(insn)) {
+@@ -2000,7 +2003,7 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
+     return xinsn;
+ }
+ 
+-static target_ulong promote_load_fault(target_ulong orig_cause)
++static uint64_t promote_load_fault(uint64_t orig_cause)
+ {
+     switch (orig_cause) {
+     case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
+@@ -2020,7 +2023,7 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
+     return orig_cause;
+ }
+ 
+-static void riscv_do_nmi(CPURISCVState *env, target_ulong cause, bool virt)
++static void riscv_do_nmi(CPURISCVState *env, uint64_t cause, bool virt)
+ {
+     env->mnstatus = set_field(env->mnstatus, MNSTATUS_NMIE, false);
+     env->mnstatus = set_field(env->mnstatus, MNSTATUS_MNPV, virt);
+@@ -2059,7 +2062,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+      * so we mask off the MSB and separate into trap type and cause.
+      */
+     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+-    target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
++    uint64_t cause = cs->exception_index & RISCV_EXCP_INT_MASK;
+     uint64_t deleg = async ? env->mideleg : env->medeleg;
+     bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
+         !(env->mip & (1ULL << cause));
+@@ -2070,17 +2073,17 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     const bool prev_virt = env->virt_enabled;
+     const privilege_mode_t prev_priv = env->priv;
+     uint64_t last_pc = env->pc;
+-    target_ulong tval = 0;
+-    target_ulong tinst = 0;
+-    target_ulong htval = 0;
+-    target_ulong mtval2 = 0;
+-    target_ulong src;
++    uint64_t tval = 0;
++    uint64_t tinst = 0;
++    uint64_t htval = 0;
++    uint64_t mtval2 = 0;
++    uint64_t src;
+     int sxlen = 0;
+     int mxlen = 16 << riscv_cpu_mxl(env);
+     bool nnmi_excep = false;
+ 
+     if (cpu->cfg.ext_smrnmi && env->rnmip && async) {
+-        riscv_do_nmi(env, cause | ((target_ulong)1U << (mxlen - 1)),
++        riscv_do_nmi(env, cause | (1ULL << (mxlen - 1)),
+                      env->virt_enabled);
+         return;
+     }
+@@ -2173,8 +2176,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                      riscv_cpu_get_trap_name(cause, async));
+ 
+     qemu_log_mask(CPU_LOG_INT,
+-                  "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
+-                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=%s\n",
++                  "%s: hart:%"PRIu64", async:%d, cause:%016"PRIx64", "
++                  "epc:0x%016"PRIx64", tval:0x%016"PRIx64", desc=%s\n",
+                   __func__, env->mhartid, async, cause, env->pc,
+                   tval, riscv_cpu_get_trap_name(cause, async));
+ 
+@@ -2253,7 +2256,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         }
+         env->mstatus = s;
+         sxlen = 16 << riscv_cpu_sxl(env);
+-        env->scause = cause | ((target_ulong)async << (sxlen - 1));
++        env->scause = cause | ((uint64_t)async << (sxlen - 1));
+         env->sepc = env->pc;
+         env->stval = tval;
+         env->htval = htval;
+@@ -2325,7 +2328,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             s = set_field(s, MSTATUS_MDT, 1);
+         }
+         env->mstatus = s;
+-        env->mcause = cause | ((target_ulong)async << (mxlen - 1));
++        env->mcause = cause | ((uint64_t)async << (mxlen - 1));
+         if (smode_double_trap) {
+             env->mtval2 = env->mcause;
+             env->mcause = RISCV_EXCP_DOUBLE_TRAP;
 diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
-index a05ab642f4..954dfc10e0 100644
+index 8f95c8f400..cc50f3764c 100644
 --- a/target/riscv/tcg/meson.build
 +++ b/target/riscv/tcg/meson.build
-@@ -25,5 +25,3 @@ riscv_system_ss.add(files(
-   'pmu.c',
-   'th_csr.c',
+@@ -4,7 +4,6 @@ endif
+ 
+ riscv_ss.add(files(
+   'bitmanip_helper.c',
+- 'cpu_helper.c',
+   'crypto_helper.c',
+   'fpu_helper.c',
+   'm128_helper.c',
+@@ -24,11 +23,13 @@ riscv_system_ss.add(files(
+ 
+ 
+ riscv_user_ss.add(files(
++  'cpu_helper.c',
+   'csr.c',
  ))
--
--
+ 
+ 
+ riscv_common_system_ss.add(files(
++  'cpu_helper.c',
+   'csr.c',
+   'mips_csr.c',
+   'pmu.c',
 
 -- 
 2.52.0
