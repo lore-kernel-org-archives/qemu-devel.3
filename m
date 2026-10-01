@@ -4,96 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B528CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F6DCA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCBjM-0005bb-4z; Thu, 01 Oct 2026 04:01:28 -0400
+	id 1xCBjw-0005lM-U5; Thu, 01 Oct 2026 04:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCBjK-0005bD-9i
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:01:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCBjr-0005hq-39; Thu, 01 Oct 2026 04:01:59 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCBjI-0000Lw-0e
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:01:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790841682;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TSDSG27pOYDlx7fURK7B2sNNTQGfiLK1fpx3UA4SUXg=;
- b=Ap2yOTKrt+YzKHk76eaRATNRM5lKkw6uPndIEImc0H0QFeiElbTWNL54JjBrpJYaBlorj5
- WV86D7cyO/hgQxfupsiZb9vybh/UCa+VMl5fIq2Peygk1Iz7+lHjeFMOoRW3q1P+QXmYYT
- zivjPB6t0v44Q6VtjfC6+rQjIOSFBmw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-KodMQDpuPuy9LcRmdd0a3Q-1; Thu,
- 01 Oct 2026 04:01:19 -0400
-X-MC-Unique: KodMQDpuPuy9LcRmdd0a3Q-1
-X-Mimecast-MFC-AGG-ID: KodMQDpuPuy9LcRmdd0a3Q_1790841676
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25D4C1956054; Thu,  1 Oct 2026 08:01:15 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48580180035F; Thu,  1 Oct 2026 08:01:09 +0000 (UTC)
-Date: Thu, 1 Oct 2026 09:01:06 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: luoyonggang@gmail.com, qemu-devel@nongnu.org,
- Chao Liu <chao.liu@processmission.com>,
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Stafford Horne <shorne@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Song Gao <17746591750@163.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
-Message-ID: <ar4TQtKqfXX5Ul9O@redhat.com>
-References: <20260926081551.29-1-luoyonggang@gmail.com>
- <20260926081551.29-2-luoyonggang@gmail.com>
- <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
- <CAE2XoE_+nhj58M9_yx6wf532qCSVcERpTw7F4AU7PXN7prhpzg@mail.gmail.com>
- <74853ef8-7315-466a-99ac-41c8182f9b13@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCBjo-0000Ng-0h; Thu, 01 Oct 2026 04:01:58 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 69180mtc019025
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 1 Oct 2026 17:00:48 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=gBeo4zNov0MTvuBL9k++6OZxquvuRij2R9kUJGaP8z0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1790841648; v=1;
+ b=a7CO+4+d+Lw8xb2ymBUC7U7rEj4v8zhYRdiH61D92fVMSlX+M/2D8Q2jJzgjWJQ8
+ OdfUC0W2zmwZvp5IQZ7f9aKsC8fZtNEIP/6WFzXAQAa2JLIj4kK5EsU3SqVyO/eD
+ XqCo9T0PMY26pmI4kWCm+6izPFFJeVm9+pUJbU/hvxRf5jFfphUkSfD+d+3ADyaU
+ jScaL/j6OUF0Y+SXnqhZNKcFBTewqwtHKrqfHDjV64+lv6MGlDjC4dfT2CCdRCnV
+ 070v4wI5nFHnoXbTz2oIuLhlUIjkBsGvKKFV48DCmgX1o8Z6nZfs47lbc5qk1nXg
+ egzjv4bAd9T+zWnAQO1zsw==
+Message-ID: <33ad7803-82ad-49f0-b39d-d3a23807ab75@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 1 Oct 2026 17:00:48 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/10] monitor/hmp: replace MonitorDef with GDB registers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
+References: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
+ <1b9d9cef-8f65-4e96-9e7b-fd136f64a75d@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <1b9d9cef-8f65-4e96-9e7b-fd136f64a75d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <74853ef8-7315-466a-99ac-41c8182f9b13@oss.qualcomm.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 35
-X-Spam_score: 3.5
-X-Spam_bar: +++
-X-Spam_report: (3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- THIS_AD=2.599 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,106 +88,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Sep 30, 2026 at 09:23:50PM -0700, Pierrick Bouvier wrote:
-> On 9/30/26 6:55 PM, Yonggang Luo wrote:
-> > On Thu, Oct 1, 2026 at 2:19 AM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> > > 
-> > > On 9/26/26 1:15 AM, Yonggang Luo wrote:
-> > > > - Add machine_class_set_name() so boards can keep a stable -M name
-> > > >     when the QOM type is uniquified. machine_class_base_init still
-> > > >     defaults the name to the QOM type without -machine.
-> > > > - Document that MachineClass::name is the -M name, not the QOM type.
-> > > > - Sort -M help by MachineClass::name so order matches the printed names
-> > > >     when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
-> > > > 
-> > > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > > > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> > > > ---
-> > > >    hw/core/machine.c        |  6 ++++++
-> > > >    include/hw/core/boards.h | 12 +++++++++++-
-> > > >    system/vl.c              |  8 +++-----
-> > > >    3 files changed, 20 insertions(+), 6 deletions(-)
-> > > > 
-> > > 
-> > > First, I'm not opposed to this series, and if anyone wants to pull this,
-> > > I'm ok with that decision. It's just unclear for me what will be
-> > > direction after this step.
-> > > 
-> > > If I understand correctly, the goal here is to allow to register
-> > > multiple "virt" machines, while still having distinct QOM types behind
-> > > the hood, which does no affect behavior of current binaries who have
-> > > only a single "virt" type at most.
-> > > 
-> > > That said, if we project in the future where we have a binary with
-> > > multiple of those "virt" machines, how will the current series help? The
-> > > situation we'll have is distinct QOM types, that all answer to the name
-> > > "virt", so we have no way to select them individually.
-> > > 
-> > > Slightly worse, find_machine() will just pick the first machine name
-> > > virt, which is a non-deterministic order at the moment.
-> > > https://gitlab.com/qemu-project/qemu/-/blob/master/system/vl.c?ref_type=heads#L846
-> > 
-> > That will handle it properly. For single-target binary qemu-system-$arch.exe,
-> > this won't be an issue, as there is no conflict as they won't be compiled in.
-> > For multi-target binary qemu-system.exe, we will choose the target through
-> > -M $arch:$machine, and when no $arch is specified, the default to arch
-> > to be "none",
-> > so still won't be non-deterministic.
-> > 
+On 2026/10/01 2:18, Philippe Mathieu-Daudé wrote:
+> Cc'ing Akihiko who worked on gdbstub.
 > 
-> > "when no $arch is specified, the default to arch to be "none",so still >
-> won't be non-deterministic.
+> On 11/9/26 14:27, Marc-AndrÃ© Lureau wrote:
+>> Hi,
+>>
+>> HMP monitor supports printing $register expression. The lookup
+>> was done via GDB stub registers, and supplementary MonitorDef
+>> HMP-specific tables.
+>>
+>> Migrate HMP registers to use the GDB infrastructure and remove the
+>> legacy HMP MonitorDef. Use a "qemu-debug" register group, as they are
+>> aliases or synthetic registers, but gdb doesn't seem to care.
+
+Unfortunately, these aliases and synthetic registers appear to have 
+several problems:
+
+- GDB already provides writable pseudo-registers for SPARC64's asi and
+   pstate. The new QEMU registers shadow them but ignore writes, breaking
+   previously supported functionality. See:
+  
+https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/sparc64-tdep.c;h=93db3417a2a9f64790acab33288eb05764112e0b;hb=6a5e5259790e5a854ddbb69eb486b9245fcfeee8#l976
+
+- GDB caches each raw register independently. Updating one alias can
+   leave another stale, causing incorrect reads or skipped writes.
+
+- The new raw aliases do not inherit the original registers' unwind
+   rules, leading to incorrect register values when selecting older
+   call frames.
+
+The latter two issues also affect the RISC-V aliases and cannot be 
+resolved merely by changing QEMU's register read/write callbacks. I 
+therefore think we need to retain HMP-specific handling for these aliases.
+
+Regards,
+Akihiko Odaki
+
+>>
+>> Known behavioural changes on RISC-V: CSR lookup is now case-sensitive
+>> and vector registers now report "unkown register" instead of a
+>> target-specific message ("Unable to print the value of vector vreg 'v0'
+>> from this API")
+>>
+>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>> ---
+>> Marc-André Lureau (10):
+>>        hmp: don't crash on invalid register
+>>        gdbstub: fix next register base after register gaps
+>>        gdbstub: set feature->base_reg for dynamic features
+>>        target/i386: expose segment limits via GDB
+>>        monitor/hmp: add CPUClass::get_pc fallback for HMP $pc
+>>        target/m68k: expose system registers via GDB
+>>        target/sparc64: expose system registers via GDB
+>>        target/riscv: bypass smstateen check in debugger mode
+>>        target/riscv: expose register aliases via GDB
+>>        monitor/hmp: remove legacy MonitorDef infrastructure
+>>
+>>   configs/targets/i386-softmmu.mak          |   2 +-
+>>   configs/targets/m68k-softmmu.mak          |   2 +-
+>>   configs/targets/riscv32-linux-user.mak    |   2 +-
+>>   configs/targets/riscv32-softmmu.mak       |   2 +-
+>>   configs/targets/riscv64-bsd-user.mak      |   2 +-
+>>   configs/targets/riscv64-linux-user.mak    |   2 +-
+>>   configs/targets/riscv64-softmmu.mak       |   2 +-
+>>   configs/targets/sparc64-softmmu.mak       |   2 +-
+>>   configs/targets/x86_64-softmmu.mak        |   2 +-
+>>   gdbstub/gdb-xml/i386-segments.xml         |  14 +++
+>>   gdbstub/gdb-xml/m68k-system.xml           |  32 +++++++
+>>   gdbstub/gdb-xml/riscv-32bit-alias.xml     | 105 ++++++++++++++++++++++
+>>   gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml |  40 +++++++++
+>>   gdbstub/gdb-xml/riscv-64bit-alias.xml     | 105 ++++++++++++++++++++++
+>>   gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml |  46 ++++++++++
+>>   gdbstub/gdb-xml/sparc64-system.xml        |  22 +++++
+>>   gdbstub/gdbstub.c                         |  14 +--
+>>   include/hw/core/cpu.h                     |   2 +-
+>>   include/hw/core/sysemu-cpu-ops.h          |  16 ----
+>>   include/monitor/hmp.h                     |   6 --
+>>   include/qemu/typedefs.h                   |   1 -
+>>   monitor/hmp.c                             |  52 ++---------
+>>   target/arm/gdbstub.c                      |   8 +-
+>>   target/arm/gdbstub64.c                    |  10 ++-
+>>   target/i386/cpu.c                         |  32 -------
+>>   target/i386/gdbstub.c                     |  24 +++++
+>>   target/m68k/cpu.c                         |  22 -----
+>>   target/m68k/helper.c                      |  47 ++++++++++
+>>   target/ppc/gdbstub.c                      |   2 +-
+>>   target/riscv/cpu.c                        |   1 -
+>>   target/riscv/gdbstub.c                    |  52 ++++++++++-
+>>   target/riscv/internals.h                  |   3 -
+>>   target/riscv/monitor.c                    | 140 
+>> ------------------------------
+>>   target/riscv/tcg/csr.c                    |   3 +-
+>>   target/sparc/cpu.c                        |  19 ----
+>>   target/sparc/gdbstub.c                    |  38 ++++++++
+>>   target/xtensa/cpu.c                       |   2 +-
+>>   37 files changed, 562 insertions(+), 314 deletions(-)
+>> ---
+>> base-commit: 209b2afaface001c7d4d981e38f186afe7b24a50
+>> change-id: 20260910-query-reg-80cd59cf4707
+>>
+>> Best regards,
+>> -- 
+>> Marc-André Lureau <marcandre.lureau@redhat.com>
+>>
+>>
 > 
-> That's my point, the current abstraction will create something ambiguous by
-> design. When people will specify -M virt, without $arch:, a random machine
-> will be selected. At least, maybe this series should ensure there is only
-> one virt alias, or make it forbidden and uses unambiguous names only.
-
-Yes, if there are multiple choices, we should not pick an arbitrary one
-non-deterministically, we must require the user to narrow the choice
-explicitly in some manner.
-
-> "$arch:" is just a workaround to not add -target option, except that it
-> comes with additional problems, creating inconsistent command lines.
-> I already expressed my skepticism about the "machine prefix" based approach,
-> being more in favor to strongly filter types per target with an unambiguous
-> -target option. I'll accept the community's choice on this, but just wanted
-> to see this explained before someone hits the pull button on this series, so
-> they know what will come down the road.
-
-Historically, QEMU do alot of things like this where we invented magic
-syntax that needed custom parsing of the command line. Over time we
-came to the conclusion this ad-hoc parsing was a bad idea, and we
-should always explicitly model things, even if it is more verbose.
-
-Thus I would not want to see "$target:$machine" as something that is
-parsed into two pieces.
-
-IOW, "aarch64-virt" would be OK as a unique name which treated as an
-opaque string, but "aarch64:virt" as something split into "aarch64"
-(target) and "virt" (machine) would be a bad idea.
-
-An acceptable way of modelling the latter would be to use
-
-  '-machine name=virt,target=aarch64'
-
-or
-
-  -machine virt -target aarch64
-
-Inferring from the binary name would be acceptable too, as that can
-be thought of a syntax sugar for "-target aarch64".
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
