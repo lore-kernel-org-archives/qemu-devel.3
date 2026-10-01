@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1932CA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74514CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCGsq-0000qa-M2; Thu, 01 Oct 2026 09:31:36 -0400
+	id 1xCGuL-0002hf-I7; Thu, 01 Oct 2026 09:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGsI-0008Eo-PO
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xCGsL-0008GU-85
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGsG-0006Pk-Oy
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:02 -0400
+ id 1xCGsI-0006Px-UR
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790861460;
+ s=mimecast20190719; t=1790861462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GP0N80FMfdTeLjOQZMxys4fYS7GjXTkdh1zfBikzr5A=;
- b=HnVT5DpVGGnaDOiPLg/Uhy3Cn7RXpwyaHAfx86q+kI7urgjwmgoA1z7GVW+TF5jrKUJRFH
- 70K/qs58NJAaOcutyGLV9NFQIbsdnr9xUYm58r/x0Ixxq8QeQGFgJBXKqlKtg8p0wQD6r9
- EJvjkMv9nBgG66GFPTczLzBKcvLjUN4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=yYHNvJpFLSZFL7ouF7hNfIkVHpQ4xl/jm8rXxvtAA6A=;
+ b=OVmN5SwXVKOiEIUHy8+9hzidpiX3h5Rxi0a8iLaOcYyJ7XerEDk8u02UsGko0RNHPV3xW1
+ /4gIYcLzL5oSoqLPuneSCF22ALWy/VjzIUhkgOBKF8j1dKi50cMOrDyd+joHd2bluB7lI3
+ lS4dNbyCY2bCuPuaAmqW/gVgRZm3PRQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-G70bYXx6Om-gibXrzHmRRA-1; Thu,
- 01 Oct 2026 09:30:57 -0400
-X-MC-Unique: G70bYXx6Om-gibXrzHmRRA-1
-X-Mimecast-MFC-AGG-ID: G70bYXx6Om-gibXrzHmRRA_1790861457
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-j3L0RfReMQ-msMEWOshdfg-1; Thu,
+ 01 Oct 2026 09:31:00 -0400
+X-MC-Unique: j3L0RfReMQ-msMEWOshdfg-1
+X-Mimecast-MFC-AGG-ID: j3L0RfReMQ-msMEWOshdfg_1790861460
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7CF71905689; Thu,  1 Oct 2026 13:30:56 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 011D018011F3; Thu,  1 Oct 2026 13:31:00 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1BDCD180029C; Thu,  1 Oct 2026 13:30:55 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 36A9B30000E4; Thu,  1 Oct 2026 13:30:58 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 01 Oct 2026 17:29:59 +0400
-Subject: [GIT PULL 20/27] hw/usb/dev-smartcard-reader: zero bChainParameter
- in DataBlock responses
+Date: Thu, 01 Oct 2026 17:30:00 +0400
+Subject: [GIT PULL 21/27] hw/usb/dev-smartcard-reader: report error on
+ XfrBlock with no card
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261001-smartcard-fixes-v1-20-ebb5a40dd497@redhat.com>
+Message-Id: <20261001-smartcard-fixes-v1-21-ebb5a40dd497@redhat.com>
 References: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 In-Reply-To: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1135;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1267;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=EBwgarzTmp5yziTLazD7l+GBWBLKDmJY/xE6xM+3dGw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBIKnOVs3vuXyn6lVnDCsL3wspuWft9QDwcS
- fhnXY2gqzKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gSAAKCRDa6OEJdZac
- 5bAwD/0Y0/aR9L9qP+xJRzNr6sQpjpz3npJiTdkvA+E2T5ta+I4m3ClYJUh6bktca9WRBP9ITqf
- D50mu49+0HwihIP51EF5mfkvmz212Wqu/8FvFg80L1CBbtvMwBm6Qp6RZVBkATitWweJkUGsbNb
- mulXJEpacjUjs30jY6pIDeXreRCQ7lf0vQR++pR23UuGnhzbUvH1Yk9aDqAr/aAEeE87SYKltf8
- mxMqzsUI7df/wMlPvtpFb4ASn6bC5vSZaxAwSzBujJqm4AmqJAfcDc1l1+rm9gT1Kwy+ybJmTAN
- OER8Yvq1fMdye+wkcvXjdvQgKHnypCFTxOr539Sch70PXNwiAnXmEcpTRMMzGQOwUBL1S0J58RR
- 1QJVshC2NjIpDiLAwan2m2nzcxbQcNWDjNaso6qnda+GTNPOiCOTSXy6F7pPcQrzKEMXjPRXAFk
- xaL4/Z5n0NGH1CZm8e664iVall9DI5M8TLnZHygml96+lGHWEPfzoJzJPTphOvX+7HeM5XzXf3i
- WQF8IxVmajhsOHJrLVjmwQoqOG1v2ihebHv4QM6Haa+4RHeudco9oeFvRgY6S1f+K8Is53o6bxH
- 7zMF/z7s/OUniYJNB5vP2WYTf5SiugaZIZ6CS35xJ9krBkcUUInsPZukb0Z/scYu+/LJ4VRf98l
- BBQY+lRgFrSHemg==
+ bh=L3ECr7grYuToT7blHOBeTWg+GgZ4M8ndBx33X1qV31Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBIu60d1Nh6qNBBlByNuui9Uc0p7WDG9iOal
+ yxqjucX5bSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gSAAKCRDa6OEJdZac
+ 5aNUD/99r6ZvqwNbbgIA/6cXs52Yw3INBU93vcgo7rdudyKnl97Poc9r+Fs1iGVchCzTGr9Zsio
+ 8EZNDU8/lPoWFB0QR1VfxyzwK2JT3xK576ziRRER2Zl1ZCXMnevSQ1mq5GuQRwe3iymbLZdkbMJ
+ NgIWsTGd/khS9MheFje/0MXQXXPRzd6SdbIRAt30NB34fijn1VMY80fN8QElhaS/ci2iH/0HVMM
+ 27qY7x43b/dJ71vehFCyvChY2+J+/Zf8Rn7fWmHjKevqkfM1QJdMMmTr0srjcs7w7Qzq093JNlT
+ O8S8xd38lJnkuy51sZFDIz4cTGlJUoGmOcyqhHunB5fcclHLfJV94iqG+7poKdWBAe/JSfgeEvm
+ /85ENJcizj6xDC4QJATCSYEk9opxvqJnx1Qi+cZPfhXRjoIYmFGpO4dY+kVsrSmbvxuTNGNibVV
+ uMXNi5J/jvWbrf3aG81Xvn0stXfOw2veQDUBZclARPGX2pf4VbsyXDzG/1bESQT6hnzwktjbv/o
+ mxgZbkeFsfveHj+XxOaAHJSsH7qkLdDpZIQHC7/9yZNCjasMbifjjxnw1vLTrNR5xS+N5kfrfo0
+ XBTRUPC8tur87ZPZVdq4tsi2l3hkffRFp5rr6uhAv5eu0CGQUZJGdqJFggFrR0l9a0Pg+8KCvol
+ xbf5Y4OEaF/3kMQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ccid_write_data_block() initializes every CCID_DataBlock field except
-bChainParameter. Since bulk-in buffers are reused without zeroing, a
-stale non-zero value can make the guest CCID driver misinterpret a
-complete response as chained.
+ccid_on_apdu_from_guest() returns an empty DataBlock when no card is
+active, but without first setting failed command status. This makes
+bStatus report success and leaves bError unset, violating CCID Rev 1.1
+section 6.1.4 which requires failed status with ICC_MUTE.
 
-This device never chains responses, so set bChainParameter to 00h as
-required by CCID Rev 1.1 section 6.2.1 for TPDU-level exchange.
+Call ccid_report_error_failed() with ERROR_ICC_MUTE before queuing the
+response, matching the existing pattern in the slot-busy error path.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
  hw/usb/dev-smartcard-reader.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index cc7356c77413..208a14dbd1b3 100644
+index 208a14dbd1b3..65ceed57541a 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -848,6 +848,7 @@ static bool ccid_write_data_block(USBCCIDState *s, uint8_t slot, uint8_t seq,
-     p->b.hdr.bSeq = seq;
-     p->b.bStatus = ccid_calc_status(s);
-     p->b.bError = s->bError;
-+    p->bChainParameter = 0;
-     if (p->b.bError) {
-         DPRINTF(s, D_VERBOSE, "error %d\n", p->b.bError);
+@@ -1046,6 +1046,7 @@ static void ccid_on_apdu_from_guest(USBCCIDState *s, CCID_XferBlock *recv)
+     if (ccid_card_status(s) != ICC_STATUS_PRESENT_ACTIVE) {
+         DPRINTF(s, 1,
+                 "usb-ccid: not sending apdu to client, no card connected\n");
++        ccid_report_error_failed(s, ERROR_ICC_MUTE);
+         ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
+         return;
      }
 
 -- 
