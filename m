@@ -4,64 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FD5CA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E17BCA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEQA-0005v7-N2; Thu, 01 Oct 2026 06:53:50 -0400
+	id 1xCEVa-0003e9-Ay; Thu, 01 Oct 2026 06:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPI-0005de-1E; Thu, 01 Oct 2026 06:52:57 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPF-0002Oy-PQ; Thu, 01 Oct 2026 06:52:55 -0400
-Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id B52CA20B7167;
- Thu,  1 Oct 2026 03:51:56 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B52CA20B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851916;
- bh=U0nd/4Iq0xD9cKCsBxbD2ZrG6VpTMUeDNYqS+HS3BmE=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=lQx+QhGObGfzJ33rAjJlq7bHbv+ZNF/Lec3Qetdb9prYKO+1fJRhdvtrJAXuSpIXq
- 2MiaWNfohoxbpPo3ye3eazuy/fYyLDaQqiAJl/53qpxXco75nxbSit4hasMK25P4Tr
- kYl5xqtaiUBJz6ZSDoRDn+WeKuoGzT4PEjBdIP9Q=
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:46 +0000
-Subject: [PATCH v6 01/14] accel/mshv: extract common CPU register helpers
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCEVW-0003dh-M8
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:59:23 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCEVU-0003ZP-Ct
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:59:22 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6916xnrW1661097
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 10:59:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ LpFCNcSkvOvWBdMaXT5h2gNwq2rEZcgH5ZJCFraudCo=; b=XLbU4ZgULm136Jfv
+ JbHHkcwcByPIa5/1LoXLtK3jT3dcskWd+wUALNmGCxwX6075LrR1phcWf3GQdmJr
+ 1Xxl8pptv3KT5voC/G4Q7HGgHIk7kiUgof0y7etl2rZZw2NQKHVC66i1DEZI35D9
+ s4/BobezRHZhdKm890eU0crwfA9vKM8xC8pritUIx5Jw+xM2n1t+lKxPYcsRwGBL
+ q4b75UDWae7qcgBrj6ch5ILDvCssqDsL65dj02Mfp2hntj+VCcV7ZXu3RdUp07tz
+ Ana6UdLPKwPSI8XeIYfVPn+obesgbfu1N7EIXcahY+i+at1+TcpvB7mIlFhzgfl6
+ Cet8fA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h167pm3r9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:59:16 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93ca4a2b9c4so330294885a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 03:59:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790852356; x=1791457156; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=LpFCNcSkvOvWBdMaXT5h2gNwq2rEZcgH5ZJCFraudCo=;
+ b=SOtmVS8k2cGbZ0PRQU2QJPw994JsTjb2RdHYWN9pr/tA0CjCnvN00RR0V41MIUJl+h
+ epvgqT5M2k3Dk5ifSvf3rPEOsvpRsgvp7BNBoQDmGciK6OLa35ATJyT7cZd52FM44odl
+ 9e+bmO6iT9bf09fuorarjPWGYeNQdPg1jx3GF1iDZdRi3YNOKbS1on+3yFUQ/RIzftra
+ 1oDyB0T/pz2sGudLlw8xMDeSNAUAaLD0VSpP/dKVvptpxM/cJCJPHNtMxeIIdMxvjxx+
+ mR0PCZBSaJ9ZEi+CClXLHGkZqP17jYBnkTnvg3cFhAhyHmGeTzjn5tgwgrq4icP4q5dQ
+ qPFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790852356; x=1791457156;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=LpFCNcSkvOvWBdMaXT5h2gNwq2rEZcgH5ZJCFraudCo=;
+ b=xfN2Jpt3hgsdGtHXSLPHEpsLATVLXdReE78vpL76XwPCJszKrT63m+Odk2YVqaSp/k
+ VezFZ8BYYpmYk8ZxuSZ1Zl7HVgT1Z/rjay8slb0qqpJjULQKj4wlmv8R1U5Df0W8/SJ3
+ 6KykxSHQfq0GMnK9kVl3EgzQOPGtiB7t0wITrgsKRDatBy7MwL1m2jKyhWIXSsZ3a+oC
+ 6O/wTm8esd9WxBxOUtQE+SP+o6mN+91AdibQtsIhnaO1xjsIWeYx4zkqwziyfI5Llm9W
+ pXBn8BSAOtmWi/8DQ7efrYP1JdIB+T00ncnvSpPGlvZHl2+ddLBR2yyfWa61rFdDtz+f
+ ekKg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByizANscG3Xm7dU012ZcM5ALgiXwy9WrbSckSTWrkzdGAoouB/7bBfC0L+EigOWuQbBFSOC1NFcg1OR@nongnu.org
+X-Gm-Message-State: AFuF++lpc2XqstGgk/ksi6wC8bbct2Brwera4fLu9xE6ygjjkGT4Rx+u
+ hWgHfdMKJIOfUIN5d6YFOA4stgXfNuftwG2yrSuqlXAYIgIarjIv/wXMm9gyXjHrdkU7Pasa1bR
+ r92LI4X6lIU822cGjTITani830loZbi/BG57adqh8Vw6i1/M55Fl0DbLuEQ==
+X-Gm-Gg: AYBFou34hEGC/p81BvzFwLDju5X3cKKkTiJvH0BuZwhd0hiJAyz3ag/+/Sb3GKUtbAW
+ OsV3HNjTA3YdJYxUx4190FMiFhDUSbYK+jROBcaqsIS9kCMjF0OAmlS2AU/OxqFLwB+FsQpD3fl
+ yYT7HwPHVFBWqdt6RmwIpYSwaiFwy81/xtUCY3575fdXEY60aIJtR9s3+KOjCf/EpIYWNWKCGLo
+ Jiu9ICTppIB6s8IHBGLYsRFUR+ezTnGm778MK54uXrcjt9lkgY8GWLMjYeBjQ1XeMfC38FHQJUv
+ +tFkgcrDZOk8md3MjNTuoKkTbgPAKi7NDrk4SKw8eDWru+KRKAFJZ2t56rHe6p+9kGPcvijGJ5N
+ N6j5NP5y2pviKHveXeeNEc+KANuixays5Rw==
+X-Received: by 2002:a05:620a:7017:b0:93c:6976:e3a2 with SMTP id
+ af79cd13be357-93ca97a83f1mr775454285a.26.1790852355755; 
+ Thu, 01 Oct 2026 03:59:15 -0700 (PDT)
+X-Received: by 2002:a05:620a:7017:b0:93c:6976:e3a2 with SMTP id
+ af79cd13be357-93ca97a83f1mr775450585a.26.1790852355062; 
+ Thu, 01 Oct 2026 03:59:15 -0700 (PDT)
+Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a02209280bsm13702025e9.4.2026.10.01.03.59.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 03:59:13 -0700 (PDT)
+Message-ID: <25c82098-07bd-4ade-85e1-ea35ff7d2037@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 12:59:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-1-aefe5e76a0e3@linux.microsoft.com>
-References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
-In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, 
- =?utf-8?q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Mailer: b4 0.15.1
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/vga: fix OOB writes after external surface
+ resize
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Chad Jablonski <chad@jablonski.xyz>
+References: <20261001104112.2167807-2-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261001104112.2167807-2-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: HHp_iTy1dvgbjEMWdJkhM_AlsQyjNesl
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA0MyBTYWx0ZWRfX9l9ayN1SdL+9
+ +vPsJqEaRcCoZII5vyI96hF57g2Ij6M2B+tN4IGB0gNmVM8oK0yEmCpsH35cgcCI/ZFgufR4FDO
+ ZKaDr1b1WWg8/YvJRiP+pBg7W8LBxoM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA0MyBTYWx0ZWRfXyo81OxkDpj8G
+ e2MxyimXV8JQowkeZpY+ydNXTkY95Y2RtcTQl/JvzqopxWKFoSsHOtfNjhbQwA1EmOh0QRmmfAx
+ EvLHk+cDYUKWuuHQ2n8DgbCk/Pe1tkl9qhiz93kJiXfdhUems8QG2otLnkw+hpHN/DrsuiYzCNE
+ IRdGOFhHSaL5v0xaa3rzGxltkgFs3NSDc7CVlVEkKi+Th2GGgRfkoC4+20f0Xns3oj8eLz0rvJU
+ iYs+D6iyN3wDjmB0FeiNOpAt+qqZ+ZjA3nfdrY/V3uCgaCYRr0DcEWNYK9b/kq3m/Q26YM0CkjU
+ M/NMUrFZgRbVzkAcipjn/i/LI++NZH6SQpzkTWKTeuZv9UFnoaIUDXqGDSIzdSngU2gOmL4kbW6
+ rwcZdk/gbQKl+WZI9kYliOUFbfz+vyu+dFob+WpVgC5C43I5Fbo/OqmS0AtFXr5yptqQkVzv2qu
+ XxO9V2IdQI9Z/MsImng==
+X-Proofpoint-GUID: HHp_iTy1dvgbjEMWdJkhM_AlsQyjNesl
+X-Authority-Analysis: v=2.4 cv=WpC+otfv c=1 sm=1 tr=0 ts=6abe3d04 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=5VKOrE_a3cXIK9zXM5UA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010043
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,361 +155,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move arch-independent MSHV CPU register handling functions into
-accel/mshv/mshv-cpu-common.c. Update x86 MSHV backends to use these
-shared helpers.
+On 1/10/26 12:41, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> virtio-vga has two renderers (VGA core and virtio-gpu) sharing a single
+> QemuConsole, with no invalidation protocol between them. When virtio-gpu
+> replaces the surface (SET_SCANOUT) or destroys it (reset via
+> qemu_console_set_surface(con, NULL)), the VGA renderer's cached geometry
+> (last_scr_width, last_height, last_depth, etc.) is never cleared:
+> vga_common_reset() does not run during a virtio-gpu reset.
+> 
+> The text draw path was fixed by 418396be80 (CVE-2026-77913), but
+> vga_draw_blank() and vga_draw_graphic() still trust stale cache against
+> a foreign surface:
+> 
+> vga_draw_blank() uses last_scr_width/height to memset the display
+> surface. When the surface has been replaced by a smaller one (e.g.
+> after a text-to-graphics mode switch, or a virtio-gpu reset installing
+> a 16x16 placeholder), the memset writes past the surface buffer. Use
+> the actual surface dimensions for the memset bounds instead of the
+> cached last_scr values.
+> 
+> vga_draw_graphic() decides whether to recreate the DisplaySurface based
+> solely on VGA register state (line_offset, width, height, depth,
+> byteswap, allocated). When virtio-gpu replaces the surface with a
+> smaller one, the predicate sees no change and the drawing loop writes a
+> full VGA-geometry frame into the undersized surface. Add surface
+> dimension checks to the predicate so that a foreign surface whose size
+> does not match the VGA geometry triggers a resize before drawing.
+> 
+> Ideally the two renderers could coordinate through a console-level
+> invalidation callback, but these defensive checks are needed regardless
+> as a safety net against any path that replaces the surface.
+> 
+> Fixes: CVE-2026-97889
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4579
+> Reported-by: david korczynski (@david1766)
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/display/vga.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/display/vga.c b/hw/display/vga.c
+> index cb0e28b79b6a..b9b8c529419d 100644
+> --- a/hw/display/vga.c
+> +++ b/hw/display/vga.c
+> @@ -1641,7 +1641,9 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+>           height != s->last_height ||
+>           s->last_depth != depth ||
+>           s->last_byteswap != byteswap ||
+> -        allocate_surface != surface_is_allocated(surface)) {
+> +        allocate_surface != surface_is_allocated(surface) ||
+> +        disp_width != surface_width(surface) ||
+> +        height != surface_height(surface)) {
 
-Prefix get_generic_regs() with mshv_ for proper namespacing since it
-is now public.
+This if() condition became very complex and is hideous to read,
+could we split as a helper for readability? (improvement that can
+be done on top).
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
----
- accel/mshv/meson.build       |   3 +-
- accel/mshv/mshv-cpu-common.c | 151 +++++++++++++++++++++++++++++++++++++++++++
- include/system/mshv_int.h    |   1 +
- target/i386/mshv/mshv-cpu.c  | 125 +----------------------------------
- 4 files changed, 155 insertions(+), 125 deletions(-)
+>           /* display parameters changed -> need new display surface */
+>           s->last_scr_width = disp_width;
+>           s->last_scr_height = height;
+> @@ -1789,9 +1791,9 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
+>           qemu_console_set_surface(s->con, surface);
+>       }
+>   
+> -    w = s->last_scr_width * surface_bytes_per_pixel(surface);
+> +    w = surface_width(surface) * surface_bytes_per_pixel(surface);
+>       d = surface_data(surface);
+> -    for(i = 0; i < s->last_scr_height; i++) {
+> +    for (i = 0; i < surface_height(surface); i++) {
+>           memset(d, 0, w);
+>           d += surface_stride(surface);
+>       }
 
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index e433187cde0..ebe32921b3d 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -1,5 +1,6 @@
- system_ss.add(when: 'CONFIG_MSHV', if_true: files(
-   'irq.c',
-   'mem.c',
--  'mshv-all.c'
-+  'mshv-all.c',
-+  'mshv-cpu-common.c'
- ))
-diff --git a/accel/mshv/mshv-cpu-common.c b/accel/mshv/mshv-cpu-common.c
-new file mode 100644
-index 00000000000..e8ef34689e3
---- /dev/null
-+++ b/accel/mshv/mshv-cpu-common.c
-@@ -0,0 +1,151 @@
-+/*
-+ * QEMU MSHV common CPU register helpers
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke  <magnuskulke@microsoft.com>
-+ *          Jinank Jain   <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/memalign.h"
-+
-+#include "system/mshv.h"
-+#include "linux/mshv.h"
-+#include "system/mshv_int.h"
-+
-+#include "hw/core/cpu.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-+                          size_t n_regs)
-+{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+    size_t in_sz, assocs_sz;
-+    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
-+    struct mshv_root_hvcall args = {0};
-+    int ret;
-+
-+    /* find out the size of the struct w/ a flexible array at the tail */
-+    assocs_sz = n_regs * sizeof(hv_register_assoc);
-+    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
-+
-+    /* fill the input struct */
-+    memset(in, 0, sizeof(hv_input_set_vp_registers));
-+    in->vp_index = vp_index;
-+    memcpy(in->elements, assocs, assocs_sz);
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_SET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uint64_t) in;
-+    args.reps = (uint16_t) n_regs;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set registers");
-+        return -1;
-+    }
-+
-+    /* assert we set all registers */
-+    if (args.reps != n_regs) {
-+        error_report("Failed to set registers: expected %zu elements"
-+                     ", got %u", n_regs, args.reps);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                            size_t n_regs)
-+{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
-+    hv_register_value *values = cpu->accel->hvcall_args.output_page;
-+    size_t in_sz, names_sz, values_sz;
-+    int i, ret;
-+    struct mshv_root_hvcall args = {0};
-+
-+    /* find out the size of the struct w/ a flexible array at the tail */
-+    names_sz = n_regs * sizeof(hv_register_name);
-+    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-+
-+    /* fill the input struct */
-+    memset(in, 0, sizeof(hv_input_get_vp_registers));
-+    in->vp_index = vp_index;
-+    for (i = 0; i < n_regs; i++) {
-+        in->names[i] = assocs[i].name;
-+    }
-+
-+    /* determine size of value output buffer */
-+    values_sz = n_regs * sizeof(union hv_register_value);
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_GET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uint64_t) in;
-+    args.out_sz = values_sz;
-+    args.out_ptr = (uint64_t) values;
-+    args.reps = (uint16_t) n_regs;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to retrieve registers");
-+        return -1;
-+    }
-+
-+    /* assert we got all registers */
-+    if (args.reps != n_regs) {
-+        error_report("Failed to retrieve registers: expected %zu elements"
-+                     ", got %u", n_regs, args.reps);
-+        return -1;
-+    }
-+
-+    /* copy values into assoc */
-+    for (i = 0; i < n_regs; i++) {
-+        assocs[i].value = values[i];
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
-+{
-+    int ret;
-+    struct mshv_create_vp vp_arg = {
-+        .vp_index = vp_index,
-+    };
-+
-+    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
-+    if (ret < 0) {
-+        error_report("failed to create mshv vcpu: %s", strerror(errno));
-+        return -1;
-+    }
-+
-+    *cpu_fd = ret;
-+
-+    return 0;
-+}
-+
-+void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-+{
-+    close(cpu_fd);
-+}
-+
-+void mshv_setup_hvcall_args(AccelCPUState *state)
-+{
-+    void *mem = qemu_memalign(HV_HYP_PAGE_SIZE, 2 * HV_HYP_PAGE_SIZE);
-+
-+    state->hvcall_args.base = mem;
-+    state->hvcall_args.input_page = mem;
-+    state->hvcall_args.output_page = (uint8_t *)mem + HV_HYP_PAGE_SIZE;
-+}
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 3dffe3c5fbf..2e8caad8fde 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -107,6 +107,7 @@ void mshv_arch_amend_proc_features(
- void mshv_arch_disable_partition_proc_features(
-      union hv_partition_processor_features *disabled_features);
- int mshv_arch_post_init_vm(int vm_fd);
-+void mshv_setup_hvcall_args(AccelCPUState *state);
- int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
- int mshv_set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state);
- typedef struct mshv_root_hvcall mshv_root_hvcall;
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index f528dd2b9a2..3eee097432a 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -357,103 +357,6 @@ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
-     return 0;
- }
- 
--int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
--                          size_t n_regs)
--{
--    int cpu_fd = mshv_vcpufd(cpu);
--    int vp_index = cpu->cpu_index;
--    size_t in_sz, assocs_sz;
--    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
--    struct mshv_root_hvcall args = {0};
--    int ret;
--
--    /* find out the size of the struct w/ a flexible array at the tail */
--    assocs_sz = n_regs * sizeof(hv_register_assoc);
--    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
--
--    /* fill the input struct */
--    memset(in, 0, sizeof(hv_input_set_vp_registers));
--    in->vp_index = vp_index;
--    memcpy(in->elements, assocs, assocs_sz);
--
--    /* create the hvcall envelope */
--    args.code = HVCALL_SET_VP_REGISTERS;
--    args.in_sz = in_sz;
--    args.in_ptr = (uint64_t) in;
--    args.reps = (uint16_t) n_regs;
--
--    /* perform the call */
--    ret = mshv_hvcall(cpu_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to set registers");
--        return -1;
--    }
--
--    /* assert we set all registers */
--    if (args.reps != n_regs) {
--        error_report("Failed to set registers: expected %zu elements"
--                     ", got %u", n_regs, args.reps);
--        return -1;
--    }
--
--    return 0;
--}
--
--int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
--                          size_t n_regs)
--{
--    int cpu_fd = mshv_vcpufd(cpu);
--    int vp_index = cpu->cpu_index;
--    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
--    hv_register_value *values = cpu->accel->hvcall_args.output_page;
--    size_t in_sz, names_sz, values_sz;
--    int i, ret;
--    struct mshv_root_hvcall args = {0};
--
--    /* find out the size of the struct w/ a flexible array at the tail */
--    names_sz = n_regs * sizeof(hv_register_name);
--    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
--
--    /* fill the input struct */
--    memset(in, 0, sizeof(hv_input_get_vp_registers));
--    in->vp_index = vp_index;
--    for (i = 0; i < n_regs; i++) {
--        in->names[i] = assocs[i].name;
--    }
--
--    /* determine size of value output buffer */
--    values_sz = n_regs * sizeof(union hv_register_value);
--
--    /* create the hvcall envelope */
--    args.code = HVCALL_GET_VP_REGISTERS;
--    args.in_sz = in_sz;
--    args.in_ptr = (uint64_t) in;
--    args.out_sz = values_sz;
--    args.out_ptr = (uint64_t) values;
--    args.reps = (uint16_t) n_regs;
--
--    /* perform the call */
--    ret = mshv_hvcall(cpu_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to retrieve registers");
--        return -1;
--    }
--
--    /* assert we got all registers */
--    if (args.reps != n_regs) {
--        error_report("Failed to retrieve registers: expected %zu elements"
--                     ", got %u", n_regs, args.reps);
--        return -1;
--    }
--
--    /* copy values into assoc */
--    for (i = 0; i < n_regs; i++) {
--        assocs[i].value = values[i];
--    }
--
--    return 0;
--}
--
- static int set_standard_regs(const CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -2040,29 +1943,6 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-     return 0;
- }
- 
--void mshv_remove_vcpu(int vm_fd, int cpu_fd)
--{
--    close(cpu_fd);
--}
--
--
--int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
--{
--    int ret;
--    struct mshv_create_vp vp_arg = {
--        .vp_index = vp_index,
--    };
--    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
--    if (ret < 0) {
--        error_report("failed to create mshv vcpu: %s", strerror(errno));
--        return -1;
--    }
--
--    *cpu_fd = ret;
--
--    return 0;
--}
--
- static void read_segment_descriptor(CPUState *cpu,
-                                     struct x86_segment_descriptor *desc,
-                                     enum X86Seg seg_idx)
-@@ -2121,7 +2001,6 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     CPUX86State *env = &x86_cpu->env;
-     AccelCPUState *state = cpu->accel;
-     size_t page = HV_HYP_PAGE_SIZE, xsave_len;
--    void *mem = qemu_memalign(page, 2 * page);
-     int ret;
-     X86XSaveHeader *header;
- 
-@@ -2143,9 +2022,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-         env->regs_page = (struct hv_vp_register_page *) rp;
-     }
- 
--    state->hvcall_args.base = mem;
--    state->hvcall_args.input_page = mem;
--    state->hvcall_args.output_page = (uint8_t *)mem + page;
-+    mshv_setup_hvcall_args(state);
- 
-     env->emu_mmio_buf = g_new(char, 4096);
- 
+Changes LGTM and make sense but I'd rather another review on top
+since this is a CVE fix (Cc'ed Chad and Zoltan in case...).
 
--- 
-2.45.4
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
