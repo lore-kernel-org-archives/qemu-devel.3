@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46DD7CA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31ADCA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:55:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEQH-000682-TT; Thu, 01 Oct 2026 06:53:57 -0400
+	id 1xCEQA-0005se-Ce; Thu, 01 Oct 2026 06:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPk-0005iq-MS; Thu, 01 Oct 2026 06:53:29 -0400
+ id 1xCEPK-0005dr-T4; Thu, 01 Oct 2026 06:52:58 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPf-0002PZ-BG; Thu, 01 Oct 2026 06:53:23 -0400
+ id 1xCEPJ-0002Pw-8a; Thu, 01 Oct 2026 06:52:58 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1543C20B7170;
- Thu,  1 Oct 2026 03:52:05 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1543C20B7170
+ by linux.microsoft.com (Postfix) with ESMTPSA id D6EFA20B716F;
+ Thu,  1 Oct 2026 03:52:02 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D6EFA20B716F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851925;
- bh=g32FtN7zhAeCl2w8hrf4rtf6fwQeoKilahj640QmQXQ=;
+ s=default; t=1790851922;
+ bh=kLyvmCLMXT7DfvfYtsKKM05/x39s9i2kRcqJoImJrzw=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=kV1gNORdxbLn0dkkvwensOwOblLftn/G5u8y1Myps5H5D7TIOWBSiV8ZlgjpSGdiq
- h/szVhRO15TKE/kJeQZdTOBdEgeuEjNaq8DZ/drjS+nms46XbiqgxshqYEshw1TiZN
- gBbNL2BsiVe12paAMd4RNCdRa35pNVD1y0QSU13o=
+ b=DbOYKNmvelr5DAYqAnen2Ijx9GHmYXNbGjdD2JhaqSwfZh6Zq1gXoOC54OcV96FCa
+ kYhtjdGcgxwafp3s1ycSLtXBcnIEH91bwAQ3RbxjY59IRYYyDowrwV0aVT35EGwOf7
+ 3qa1rjiWaKitQTaqpZLnmdYts/FnqWo4CYjAukoE=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:56 +0000
-Subject: [PATCH v6 11/14] target/arm/mshv: add vCPU run loop
+Date: Thu, 01 Oct 2026 10:52:53 +0000
+Subject: [PATCH v6 08/14] accel/mshv: Add access_vp_regs synthetic proc
+ features
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-11-aefe5e76a0e3@linux.microsoft.com>
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-8-aefe5e76a0e3@linux.microsoft.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -78,200 +79,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+Enable access_vp_regs feature for regs. In arm64, this feature bit
+allows the guest to set VP registers using hypercall. This wasn't
+required for x86 because such registers are set using wrmsr instead of
+hypercall.
 
-Add the main vCPU run loop for MSHV using the MSHV_RUN_VP_IOCTL.
-
-Handle MMIO exits by emulating the instruction using the syndrome
-information from ESR_EL2.
-
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk_mini.h |  44 +++++++++++++++++
- target/arm/mshv/mshv-all.c     | 107 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 151 insertions(+)
+ accel/mshv/mshv-all.c     |  1 +
+ include/hw/hyperv/hvhdk.h | 91 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 91 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 33c9e4f3e0..53dc58813e 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -896,6 +896,50 @@ struct hv_x64_memory_intercept_message {
-     uint8_t instruction_bytes[16];
- } QEMU_PACKED;
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index f3f1825b0b..9603f0360e 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -235,6 +235,7 @@ static int set_synthetic_proc_features(int vm_fd)
+     features.tb_flush_hypercalls = 1;
+     features.synthetic_cluster_ipi = 1;
+     features.direct_synthetic_timers = 1;
++    features.access_vp_regs = 1;
  
-+union hv_arm64_vp_execution_state {
-+    uint16_t as_uint16;
-+    struct {
-+        uint16_t cpl:2;
-+        uint16_t debug_active:1;
-+        uint16_t interruption_pending:1;
-+        uint16_t vtl:4;
-+        uint16_t virtualization_fault_active:1;
-+        uint16_t reserved:7;
-+    };
-+};
-+
-+struct hv_arm64_intercept_message_header {
-+    uint32_t vp_index;
-+    uint8_t instruction_length;
-+    uint8_t intercept_access_type;
-+    union hv_arm64_vp_execution_state execution_state;
-+    uint64_t pc;
-+    uint64_t cpsr;
-+};
-+
-+union hv_arm64_memory_access_info {
-+    uint8_t as_uint8;
-+    struct {
-+        uint8_t gva_valid:1;
-+        uint8_t gva_gpa_valid:1;
-+        uint8_t hypercall_output_pending:1;
-+        uint8_t reserved:5;
-+    };
-+};
-+
-+struct hv_arm64_memory_intercept_message {
-+    struct hv_arm64_intercept_message_header header;
-+    uint32_t cache_type; /* enum hv_cache_type */
-+    uint8_t instruction_byte_count;
-+    union hv_arm64_memory_access_info memory_access_info;
-+    uint16_t reserved1;
-+    uint8_t instruction_bytes[4];
-+    uint32_t reserved2;
-+    uint64_t guest_virtual_address;
-+    uint64_t guest_physical_address;
-+    uint64_t syndrome;
-+};
-+
- union hv_message_flags {
-     uint8_t asu8;
-     struct {
-diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-index d835614fd5..786d815312 100644
---- a/target/arm/mshv/mshv-all.c
-+++ b/target/arm/mshv/mshv-all.c
-@@ -20,6 +20,7 @@
- #include "target/arm/cpu.h"
- #include "target/arm/internals.h"
- #include "target/arm/mshv_arm.h"
-+#include "target/arm/helper.h"
+     mshv_arch_amend_proc_features(&features);
  
- #include "system/mshv.h"
- #include "system/mshv_int.h"
-@@ -158,8 +159,114 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-     return store_regs(cpu);
- }
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 9e6dcb22f6..d0adbea0c7 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -94,11 +94,16 @@ union hv_partition_synthetic_processor_features {
+          */
+         uint64_t access_partition_reference_tsc:1;
  
-+static int set_memory_info(const struct hyperv_message *msg,
-+                           struct hv_arm64_memory_intercept_message *info)
-+{
-+    if (msg->header.message_type != HVMSG_GPA_INTERCEPT
-+            && msg->header.message_type != HVMSG_UNMAPPED_GPA
-+            && msg->header.message_type != HVMSG_UNACCEPTED_GPA) {
-+        error_report("invalid message type");
-+        return -1;
-+    }
-+    memcpy(info, msg->payload, sizeof(*info));
++#if defined(__x86_64__)
 +
-+    return 0;
-+}
+         /*
+          * Partition has access to the guest idle reg. Corresponds to
+          * access_guest_idle_reg privilege.
+          */
+         uint64_t access_guest_idle_reg:1;
++#else
++        uint64_t reserved_z10:1;
++#endif
+ 
+         /*
+          * Partition has access to frequency regs. corresponds to
+@@ -110,11 +115,16 @@ union hv_partition_synthetic_processor_features {
+         uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
+         uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
+ 
++#if defined(__x86_64__)
 +
-+static uint64_t mshv_mmio_get_reg(CPUState *cpu, int reg_index)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    return reg_index < 31 ? env->xregs[reg_index] : 0ULL;
-+}
+         /*
+          * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
+          * Corresponds to privilege.
+          */
+         uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
++#else
++        uint64_t reserved_z15:1;
++#endif
+ 
+         uint64_t reserved_z16:1; /* Reserved for access_vsm. */
+         uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
+@@ -161,13 +171,92 @@ union hv_partition_synthetic_processor_features {
+         /* HvCallRetargetDeviceInterrupt is supported. */
+         uint64_t retarget_device_interrupt:1;
+ 
++#if defined(__x86_64__)
+         /* HvCallRestorePartitionTime is supported. */
+         uint64_t restore_time:1;
+ 
+         /* EnlightenedVmcs nested enlightenment is supported. */
+         uint64_t enlightened_vmcs:1;
+ 
+-        uint64_t reserved:30;
++        uint64_t nested_debug_ctl:1;
++        uint64_t synthetic_time_unhalted_timer:1;
++        uint64_t idle_spec_ctrl:1;
 +
-+static void mshv_mmio_set_reg(CPUState *cpu, int reg_index, uint64_t val)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    if (reg_index < 31) {
-+        env->xregs[reg_index] = val;
-+    }
-+}
++#else
++        uint64_t reserved_z31:1;
++        uint64_t reserved_z32:1;
++        uint64_t reserved_z33:1;
++        uint64_t reserved_z34:1;
++        uint64_t reserved_z35:1;
++#endif
 +
-+static int handle_unmapped_mem(int vm_fd, CPUState *cpu,
-+                               const struct hyperv_message *msg,
-+                               MshvVmExit *exit_reason)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    struct hv_arm64_memory_intercept_message info = { 0 };
-+    int ret;
-+    EsrEl2 syndrome;
++#if defined(__aarch64__)
++        /*
++         * Register intercepts supported in V1. As more registers are supported
++         * in future releases, new bits will be added here to prevent migration
++         * between incompatible hosts.
++         *
++         * List of registers supported in V1:
++         * 1. TPIDRRO_EL0
++         * 2. TPIDR_EL1
++         * 3. SCTLR_EL1 - Supports write intercept mask.
++         * 4. VBAR_EL1
++         * 5. TCR_EL1 - Supports write intercept mask.
++         * 6. MAIR_EL1 - Supports write intercept mask.
++         * 7. CPACR_EL1 - Supports write intercept mask.
++         * 8. CONTEXTIDR_EL1
++         * 9. PAuth keys (total 10 registers)
++         * 10. HvArm64RegisterSyntheticException
++         */
++        uint64_t register_intercepts_v1:1;
++#else
++        uint64_t reserved_z36:1;
++#endif
 +
-+    ret = set_memory_info(msg, &info);
-+    if (ret < 0) {
-+        error_report("failed to convert message to memory info");
-+        return -1;
-+    }
++        /* HvCallWakeVps is supported */
++        uint64_t wake_vps:1;
 +
-+    syndrome.raw = info.syndrome;
++        /*
++         * HvCallGet/SetVpRegisters is supported.
++         * Corresponds to AccessVpRegisters privilege.
++         * This feature only affects exo partitions.
++         */
++        uint64_t access_vp_regs:1;
 +
-+    ret = load_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to load registers");
-+        return -1;
-+    }
++#if defined(__aarch64__)
++        /* HvCallSyncContext/Ex is supported. */
++        uint64_t sync_context:1;
++#else
++        uint64_t reserved_z39:1;
++#endif /* __aarch64__ */
 +
-+    static const struct arm_emul_ops mshv_arm_emul_ops = {
-+        .get_reg = mshv_mmio_get_reg,
-+        .set_reg = mshv_mmio_set_reg,
-+    };
++        /*
++         * Management VTL synic support is allowed.
++         * Corresponds to the ManagementVtlSynicSupport privilege.
++         */
++        uint64_t management_vtl_synic_support:1;
 +
-+    ret = arm_emulate_mmio(cpu, syndrome, info.guest_physical_address,
-+                           &mshv_arm_emul_ops);
-+    if (ret < 0) {
-+        error_report("Failed to emulate with syndrome");
-+        return -1;
-+    }
++#if defined(__x86_64__)
++        /*
++         * Hypervisor supports guest mechanism to signal pending interrupts to
++         * paravisor.
++         */
++        uint64_t proxy_interrupt_doorbell_support:1;
++#else
++        uint64_t reserved_z41:1;
++#endif
 +
-+    /* Advance PC past the faulting instruction */
-+    env->pc += (syndrome.il == 1) ? 4 : 2;
++#if defined(__aarch64__)
++        /* InterceptSystemResetAvailable is exposed. */
++        uint64_t intercept_system_reset:1;
++#else
++        uint64_t reserved_z42:1;
++#endif
 +
-+    ret = store_regs(cpu);
-+    if (ret < 0) {
-+        error_report("Failed to store registers");
-+        return -1;
-+    }
++        /* Hypercalls for host MMIO operations are available. */
++        uint64_t mmio_hypercalls:1;
 +
-+    *exit_reason = MshvVmExitIgnore;
-+
-+    return 0;
-+}
-+
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- {
-+    int ret;
-+    int cpu_fd = mshv_vcpufd(cpu);
-+
-+    ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-+    if (ret < 0) {
-+        *exit = MshvVmExitShutdown;
-+        return ret;
-+    }
-+
-+    switch (msg->header.message_type) {
-+    case HVMSG_UNRECOVERABLE_EXCEPTION:
-+        *exit = MshvVmExitShutdown;
-+        break;
-+    case HVMSG_GPA_INTERCEPT:
-+    case HVMSG_UNMAPPED_GPA:
-+        ret = handle_unmapped_mem(vm_fd, cpu, msg, exit);
-+        if (ret < 0) {
-+            error_report("failed to handle mmio");
-+            return -1;
-+        }
-+        break;
-+    default:
-+        error_report("Unhandled message type: 0x%x", msg->header.message_type);
-+        return -1;
-+    }
-+
-     return 0;
- }
++        uint64_t reserved:20;
+     };
+ };
  
 
 -- 
