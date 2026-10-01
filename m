@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E07CA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447BFCA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:31:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCGrd-0007dM-6Z; Thu, 01 Oct 2026 09:30:26 -0400
+	id 1xCGrx-0007sw-Re; Thu, 01 Oct 2026 09:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGrT-0007b8-V8
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:13 -0400
+ id 1xCGrY-0007dB-JQ
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGrP-00063S-OY
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:11 -0400
+ id 1xCGrW-0006Gx-SC
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790861406;
+ s=mimecast20190719; t=1790861414;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oGb7bVxl71pK2JI9jeAzvy64NbfX5B2LGX/SdioEfnE=;
- b=AWieXnroFbvZd5zSjUkdc3CAw6L1B0iDBxKRHJoq7FZnifAVG8WK++mi6BjMKvHBDiF4i9
- r6xw7eBafWDck7oxNd2f6z4xUoGf4DjE9IZdVz3YYPQkJCnmKrAKg+bOcaWh9kfNyGd7xs
- I6QjZEUMW8jTKu6MZHe6UuHbkH841P8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=afFbDYOQZfArFQRaDE/FdfHqCf2G1EobRY/qHgBIMl0=;
+ b=AqwmrySn+u8tBTd+iwwITa6vc+mq1LQqsoTPZkyG8Ip8m2sDN4BFuba6dVG7Zuo/4ZbcWU
+ 2dErR0a+KwW8gTEWMecxCIFm2FmpVubLjEhKkAmdAY6Tbc3NVz7JPDqnZVy1f0ozkxcQOt
+ Lb2BeKERu8mBi16NeVsxZWFySEs7xsk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-WKqq3ouFNlK_NE-5HTw9dw-1; Thu,
- 01 Oct 2026 09:30:03 -0400
-X-MC-Unique: WKqq3ouFNlK_NE-5HTw9dw-1
-X-Mimecast-MFC-AGG-ID: WKqq3ouFNlK_NE-5HTw9dw_1790861402
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-W45b975PNuuWfpSnuCq77A-1; Thu,
+ 01 Oct 2026 09:30:10 -0400
+X-MC-Unique: W45b975PNuuWfpSnuCq77A-1
+X-Mimecast-MFC-AGG-ID: W45b975PNuuWfpSnuCq77A_1790861410
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 160841977019; Thu,  1 Oct 2026 13:30:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEC30180136E; Thu,  1 Oct 2026 13:30:09 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3357D1800361; Thu,  1 Oct 2026 13:30:00 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2F7D5180029C; Thu,  1 Oct 2026 13:30:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 01 Oct 2026 17:29:43 +0400
-Subject: [GIT PULL 04/27] hw/usb/dev-smartcard-reader: decode bulk-out
- length as little-endian
+Date: Thu, 01 Oct 2026 17:29:45 +0400
+Subject: [GIT PULL 06/27] hw/usb/dev-smartcard-reader: fix OOB read in
+ atr_get_protocol_num()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261001-smartcard-fixes-v1-4-ebb5a40dd497@redhat.com>
+Message-Id: <20261001-smartcard-fixes-v1-6-ebb5a40dd497@redhat.com>
 References: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 In-Reply-To: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2144;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1100;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=lvJc5DJaAPhL2Dub2eXYFx0OHUIFgKPZrlORX3sOSZI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBHAFVJYpSew7vYXBVTrtav1O/L8yYYqRlLe
- t0f6PnO4duJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gRwAKCRDa6OEJdZac
- 5bRlEAC7MOLkDXLj5i6LpFNjvz9epr1sfXbEgVsxgzWCXdzJq8RDRXppNkMaXk3P/THWwB2JCjb
- IXcyq7fS8HR2bZmAGkQOuxzdNeKB83KWUCG6TJz81clZuQ2xajIHithumXwsFWR3dacvew7C54l
- SBaQ9Ei27ncrZkjl0q266vkF5cJ6pLZOoTT3zPUuMpMPWtCnoBdZUSbiowiPpBDpxSn6qjq48zw
- 83UG9yCZ8LetS2ZVUmmaHM0Cg1EwfUj3hfTv3+m9OiX93jLh23UBhtFxVDjK+q18yjXZSJWPk+X
- iOPNhi3K8M26R//uqcDC39/nFYfTwHRj1yjb18lUddTMJdZRbPCnHy/3hvO3rkvZPAm1NA5acVh
- VGbhf0Q+7lRce9kYrTiYED8xcLisFhW+l+4XfMzSRAv8djP9lRlwrl1/to6w3mJCgs7LwV7ThKB
- DCPbLtMkCw7qWrCp+XvzD2Q6gu3rV4Gh6LSeHF/cOHVDg6iSTY36h1NfyNLPe8QJoTscQsthibJ
- VQfQsp5mD0nhJGH3YsY/GU228hT/X8rVPHIaTPKowbiUJNql/IQq1S8MjbO8VTLb4XQVN9ZM+gD
- pqQITUZ0l05aly6uje/Vjmbu31xfmTxJTJbZau7zN9X+m59g2ohw8H7JrAxxKyyhEET+YEjnp9f
- NVhP9+0IvjQ8wTg==
+ bh=5iowlDNhVdaQdg2jc1MaJUDefvrVlJpEui2BMNoySAo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBHZQHDGvfZh0IipXzszfc5h2BqRV3BJTEha
+ Fq13m65e0iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gRwAKCRDa6OEJdZac
+ 5V0kEACw/JzN1QFUoLZtw5DJ8236XBGs5DM+fkQSjHfYCiYtK/pRuv7wqBWHYbDDG6Bfb88eGFM
+ E25Y6WsYUogDf8kSH6uSawTvpEyshZrEjga3jpmpwfkqALhtjOpTrcFR2snn+DcIV/txFS2Xhz3
+ xUyPiEVSsr2KJTQQcxZGQ/AqvtD+aaAlJkFcmsDnt9u2XnuOrn1X7rcWbyLwHoVi2kIjalawHjx
+ bjN2WY7MRt7VXjvLEBvGBWWE54+VKPmW30mHucAUCYbcrzfyrBcQjaX0NG09xjs6lyNgepzp1uH
+ rNrWABeScS0joM5SqR+FAQ0aZLtGCw62qs5r6NNNhPvd1f6IRduiCZx43VCa+zxc7Aw+xXy3wlr
+ Ccmu8QHimLbiSPz0DtOEGlGokVQwzeg+HTuheV1GtW2oGg+wY2XeBD2daXp6FPkoDCIqMMewXKD
+ pCDpXmxQ3xX8Uq8wKQZD7KA/j4a1j6+/BWahkk98Oul3Ddq2+qOlHy585wrXNutDdwkFdMA+Fot
+ VJfj+MDhsRkD6/ViZd1ryPW18p/rt9fBxfvkZuBlQa+i+FUpM/Wb6mcKWxFybVC7Ls9evm3AoPm
+ YQc/lwd9ICJR6A429fSsX2jXQYxn0iprsLrplNjYLN5zuwtCtrYc5GQEuWFJr69T4SSI25evPUn
+ UMPXWvzVZVyqV2w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,55 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CCID Rev 1.1 specification states in section 1.3, Document
-Conventions, that fields larger than one byte are stored in
-little-endian format. The bulk message header's dwLength field is a
-four-byte field described in section 6, CCID Messages.
+atr_get_protocol_num() computes the TD1 offset from the T0 presence bits
+without checking that the byte exists in the ATR buffer. A truncated ATR
+causes an out-of-bounds read.
 
-Decode dwLength with le32_to_cpu() before using it to assemble and
-validate Bulk-OUT messages. This fixes message handling on big-endian
-hosts.
+Validate the offset before dereferencing and fall back to T=0.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+This is only triggerable by a buggy backend.
+
+Fixes: 2f8f916b6d44 ("dev-smartcard-reader: copy atr protocol to ccid parameters")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/usb/dev-smartcard-reader.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ hw/usb/dev-smartcard-reader.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 9cbacf08e77d..4cb5f6e1a485 100644
+index c200af41c83d..b05f4a85666d 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -993,6 +993,7 @@ static const char *ccid_message_type_to_str(uint8_t type)
- static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
- {
-     CCID_Header *ccid_header;
-+    uint32_t payload_len;
- 
-     if (p->iov.size + s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
-         goto err;
-@@ -1005,17 +1006,18 @@ static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
+@@ -840,6 +840,9 @@ static uint8_t atr_get_protocol_num(const uint8_t *atr, uint32_t len)
      }
- 
-     ccid_header = (CCID_Header *)s->bulk_out_data;
--    if ((s->bulk_out_pos - 10 < ccid_header->dwLength) &&
-+    payload_len = le32_to_cpu(ccid_header->dwLength);
-+    if ((s->bulk_out_pos - 10 < payload_len) &&
-         (p->iov.size == CCID_MAX_PACKET_SIZE)) {
-         DPRINTF(s, D_VERBOSE,
-                 "usb-ccid: bulk_in: expecting more packets (%u/%u)\n",
--                s->bulk_out_pos - 10, ccid_header->dwLength);
-+                s->bulk_out_pos - 10, payload_len);
-         return;
-     }
--    if (s->bulk_out_pos - 10 != ccid_header->dwLength) {
-+    if (s->bulk_out_pos - 10 != payload_len) {
-         DPRINTF(s, 1,
-                 "usb-ccid: bulk_in: message size mismatch (got %u, expected %u)\n",
--                s->bulk_out_pos - 10, ccid_header->dwLength);
-+                s->bulk_out_pos - 10, payload_len);
-         goto err;
-     }
+     i = 1 + !!(atr[1] & 0x10) + !!(atr[1] & 0x20) + !!(atr[1] & 0x40);
+     i += !!(atr[1] & 0x80);
++    if (i >= len) {
++        return 0;
++    }
+     return atr[i] & 0x0f;
+ }
  
 
 -- 
