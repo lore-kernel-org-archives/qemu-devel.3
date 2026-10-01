@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807BACA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315B0CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEpC-00008q-9q; Thu, 01 Oct 2026 07:19:42 -0400
+	id 1xCEp6-0008Sd-3l; Thu, 01 Oct 2026 07:19:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEpB-00008X-7e
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:41 -0400
+ id 1xCEp3-0008Jy-7T
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEp9-0006Ov-Qs
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:41 -0400
+ id 1xCEp1-0006OH-PW
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790853579;
+ s=mimecast20190719; t=1790853571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SMfUnEijOpQcT9qvbvZDsXxDPBidl7oRQevK8poyrQo=;
- b=jQDudXn6j4XIM3CAGrTc16SZKwr/4LO9zXB+Y23P5yONhV3artQKVad5URWbbgeDB9peNL
- wRL9aYbCpo7aANxZg7c0k+9/XeMVPl6ekbo3vFEJdzTTQEROIApR9kAtKVEfUM4GzIOUm6
- ZNrz69ll0yrmLCLFyPr3Bdd7SKf50js=
+ bh=cDiSSzy502Mi3ANASIwx6iMikzlqYIG9eSC03+1pETM=;
+ b=KZeeiJi0FpQlbYIvHxYsxe3PiLgWyzdIY47JJ2J80Y0rvtm00faqYsM6z3uEro7yiccjZB
+ Klx2b9F9iCjZQ66aL7uWJWrzR9aWnve3Yzt9AtuigIfsVwW86CjlKM4Y/nfX5t3dqSjCp7
+ o9r3J4ZVoKSZLb2OzMRDV7Ib8ChbtgI=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-0Z_f_IVRMj-AXiGfrOJ0Pw-1; Thu,
- 01 Oct 2026 07:19:34 -0400
-X-MC-Unique: 0Z_f_IVRMj-AXiGfrOJ0Pw-1
-X-Mimecast-MFC-AGG-ID: 0Z_f_IVRMj-AXiGfrOJ0Pw_1790853572
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-1Y-XZ2WGPR2piPH5ee2g4A-1; Thu,
+ 01 Oct 2026 07:19:27 -0400
+X-MC-Unique: 1Y-XZ2WGPR2piPH5ee2g4A-1
+X-Mimecast-MFC-AGG-ID: 1Y-XZ2WGPR2piPH5ee2g4A_1790853565
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31BDB18005B3; Thu,  1 Oct 2026 11:19:32 +0000 (UTC)
+ id ACF541800A37; Thu,  1 Oct 2026 11:19:24 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF30D418; Thu,  1 Oct 2026 11:19:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 433BA180029C; Thu,  1 Oct 2026 11:19:22 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 09/13] tests/functional: update x86_64 tuxrun images
+Subject: Re: [PATCH 07/13] tests/functional: split x86_64 tuxrun into tcg
+ and kvm run
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
@@ -73,29 +74,29 @@ Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20260930164649.433573-10-alex.bennee@linaro.org>
+In-Reply-To: <20260930164649.433573-8-alex.bennee@linaro.org>
 References: <20260930164649.433573-1-alex.bennee@linaro.org>
- <20260930164649.433573-10-alex.bennee@linaro.org>
-Date: Thu, 01 Oct 2026 15:18:52 +0400
-Message-Id: <179085353201.2170790.1849228492778911632.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=362;
+ <20260930164649.433573-8-alex.bennee@linaro.org>
+Date: Thu, 01 Oct 2026 15:18:51 +0400
+Message-Id: <179085353198.2170790.6398975312834011925.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=386;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rZ1omox/FWF7aJwmjf1CmIIrePOvD6uNeO2fLj/UPAU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvkGe1ysLqUn/cCDpyATob+f2jxhCYpv+8M5DR
- NSa+Z0s8aiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5BngAKCRDa6OEJdZac
- 5fsJD/4n8FSzT8EfOvEIFlbfREgaYH3s1eyiYFM/dAmqoRhOBzBTfB5/mR2c4VRs+zTfW4q5sjR
- ia8ZNjNKP3DpwAsC2ru6XDcROYaazkje94578E8Y96ALuGHhfeUeLwfNNQX1WYie1lwkANNKpg5
- 1mHf6Lmjm3nXxxylRfeXjyzlmr2k6IxBzU4bPaaOZXOV5ck0xSlqAbiKJurkjgLwL3tKSkMDD5i
- MU1uiPwX/QvbuApOhAxKMRj0qW3rqOmgfVzcEXk+z1Gl2vDkGh0nENSWtyH4ejvM8uE9hK0cVB8
- 2BiKap14vs2FG9awuSSkJf37IjKlVmJouifYGww8KmJsQutt52338Egm7C6ftLue7tqU0DYBplU
- YFDFu3LocbUJovZpq5Onq3PjKd/r1PjBIoRjVd+ujHXG2G8WCLMECapY1cPWwA22E5UAZGJ87T3
- QXGrOtZ67uSbJleN/RGqrdqqcwr2MOJ8SmNTNDWld2Ov09XhbG5vwy0psLKkz78N+Mjowtm07w2
- 9+rdO6EcDZpqT6sH5DEqCjUDLcHZ4MXEOiVnMijXGMRnqksnVRH/WIYaPObuv5ULglQKLPPvQvq
- RrudQCP0a5e4mWXDjcZaWua6YBGDO6Y4BfPr/f0pr7+tj7G3XXR8JJggjLrbpxZnueZEy42iDJv
- y7+u3R1rheQHsBQ==
+ bh=ZoTRJE45TIV6Jj1MNhOO/zBSF1H7RlQcwqoMI0vYFSg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvkGei67aQBN0rnvQCm5U1mLKJuNQB98Xhr/bG
+ Cu32rr+6xCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5BngAKCRDa6OEJdZac
+ 5ZPlD/4kXOrKTjWcXUF1GfV25M1tt1gwRGbMiPscLTzNpEAO4PQeAUrRNgN/3hgFMgM1sTjpjoR
+ 1PXPyzR2E8k2ZMhnQd/3GBbKmCI9QcCzDPjfN9k/ncNNBEwFHNFNquPDGmgKMvqdOpujbLklzPB
+ I047TM1ALsoZZX+annydVyGYeI9AGobszXp/+cHVBBWo+Q6E3J5ZMtQSj3MIna9bWowCeHg2k2S
+ 74ZZ9yMrboX69C7N2SHxlGDJcrL4vmMB8hXYP7yd926/mCKihdHs/EST9qwkk6v6aSNbp7zMgJl
+ 0vRsE97aM7m3P93wagwtKGYZEyDJCCR71xHisgycjf1FunsxEAgz/y5W4u1KaVzQdvWaqIaDmAZ
+ hhSuaVFVUTSsHf7v+vsb5F5Eg1fiNzToL7114Tkc4Tcj+IHAV92hcyWjbW1lqqAgsgCcQ91Ci1H
+ FUeo8vvIBY9JyGw32PzzB0if0F1DUXnh++e8ZwjjScVOaUlLED9Va5BwOlnThb5TfEmfDOVL2qn
+ QS2QThphUoqAdJ8rZMS8Lzw0HUwq6OslKAZCLxJIMl0cXuIve5OeexRnNvW9UujLAkJFcd4wOAQ
+ xOVn4ifS4/pSON0CtBbyfSfYICEs1GbCbGwMr0wya6siKHV7Z0w7S/CBn2De078JlFOxB7oncWU
+ N9/gLNcMBuj75Bg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -121,10 +122,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Sep 2026 17:46:45 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
-> We now split the fetching of the buildroot image from the kernel
-> itself. This is because we will want to access additional metadata in
-> future tests.
+On Wed, 30 Sep 2026 17:46:43 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
+> Add an explicit "kvm" run to the tuxrun tests. Although running on an
+> x86_64 host would probably have defaulted to "kvm" anyway we want to
+> exercise specific features later.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
