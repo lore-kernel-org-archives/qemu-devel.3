@@ -4,88 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BB7CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 03:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E25BCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 04:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xC7iA-0001pa-Hh; Wed, 30 Sep 2026 23:43:58 -0400
+	id 1xC8F5-0006YV-S3; Thu, 01 Oct 2026 00:18:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xC6Rz-000627-D2
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 22:23:11 -0400
-Received: from mail-pj2-x2b.google.com ([2607:f8b0:4864:39::2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xC6Rx-0002Pg-SJ
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 22:23:11 -0400
-Received: by mail-pj2-x2b.google.com with SMTP id
- d9443c01a7336-2e2d2bbcab2so9326345ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 19:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790821387; x=1791426187; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=25/d1dCfiKxBdZddH9o9DF4FktZi+IUyeXrIT2DnE6o=;
- b=VLpMtR8i1T8+M6b5ewBvXKFpM3+fobl5e2tdTPG10gBW1zfO0EImoVQ4oFrP8Nyx/E
- Jsm2H/CxFS5zqOnRVuDDN96npXg5hos7C42H9hXZNTjMKaANHTA8C3I9bGEBDM4k6WzY
- /1zZ/zaN5Xd6ZLr7+gLI7QjlxBfqEIMnwhiVQcCwPqAzlVFydM/bwop3clsu3PE/ThVu
- Y+ERcc2yDiGYh3A9lkFaRPQp8ePbkzSTY1Ds4qrQbflHeiSEFkDEo8nQqoCGhb15WWM4
- 1F65tyt+bcc5X2JkLKss2NBDV95ExUI41LkiZHdOryAYJ3ObuRHMlyDRkJv9pifmEhkd
- gflQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790821387; x=1791426187;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=25/d1dCfiKxBdZddH9o9DF4FktZi+IUyeXrIT2DnE6o=;
- b=ABixtokSfV1p15gK+rHI6SrLeOR5lCimvVexVtZfAohDU0/lms2wKXICk2gg9Liias
- TMVZQjGBYKS1d0Xn1P7LLlOmGHj9Zj8xFWG5fLR0GY4yFGe0lR97hoH1MmUqmAmm3+uj
- vpThxpGcoGOUXnyyYk6v9NEuTzJonbRdE+mQtL1s36u80MiHpJQ+b32QoacZu1EUagaH
- nw9DSOMVahPeHix66spGl0fu3ZgEM/CaMKKbRZzsI5/eSk8zmFbZT7fheNGfC0veqJwl
- Poa2VkpA6nmLNinZ34UzPgXWlwqeCbVJD6HrWnXXasDIhSu4ol+7wBBoFZm96LTsDCC/
- 0nlg==
-X-Gm-Message-State: AFq9FYJVR/AWeOLN2dw618CFX1Bmelt4+RiL5widawcaJ0Vb5S0Kk44h
- dagSkxC6kCktcdYvd3+icf1mGet3Ssnf9HpdIE/f7jkowORULCiTrRNl+9RIfyQN2iA=
-X-Gm-Gg: AYBFou1H25XYqT3bBYDV5FjAjEWxwtQtaYnZ5IJEmo5USJqu48qa+fUkmqS3dB/yybf
- hZlT6+xDZLzu/nv1xqkRalwzlcOSijV3gXS06Oz3bGYX+vk+x44yLjmK0PT3rjgF6p5IPuV8i52
- qavrH/t28pYOzFz9mhiGw50tzK6j3DgdtstOqcCPnpQzxQ1cn1ubbNkveNQGIASCN/M5ZOmp89m
- 9hT7rvwfBKv4m3MzzkKKEr+z5urivSRw9TxxTA55NZt7D0e9zhfXDZQQ6j/GCxhsztQW59EnEpn
- D4kQG5/is2un5yP5MfEdEppSWmv2yBaGIyVlFzni6l2oOkYnk3yHnxUfWRYYzFMPFxnEVuGfrBk
- B9530bksiDMKFF9rAq385/0DLwFAM0lNNWNPgtiIUC/djyM7WpeU0clGoUp39JeZRtvp/AVe1NV
- VgKJQPs0faZbkM3lNU9WH3RZRlDWt5QI1fEZMXYlOBfktQLzRjGi8YD5MmCa/JzUs89eSfS6UAD
- DnzS0heOPepbBV6jLS+Js+EFjw=
-X-Received: by 2002:a17:902:f712:b0:2dd:ad74:6d1d with SMTP id
- d9443c01a7336-2e2e4b8a668mr30239625ad.26.1790821387403; 
- Wed, 30 Sep 2026 19:23:07 -0700 (PDT)
-Received: from dt-VM.localdomain ([175.152.37.254])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e300b8fd4csm3943635ad.80.2026.09.30.19.22.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Sep 2026 19:23:07 -0700 (PDT)
-From: Tao Ding <dingtaodtdt@gmail.com>
-X-Google-Original-From: Tao Ding <dingtao0430@163.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com, Tao Ding <dingtao0430@163.com>
-Subject: [PATCH 0/3] Fix integer handling issues in k230_gsdma and
- k230_decomp_gzip
-Date: Thu,  1 Oct 2026 10:22:20 +0800
-Message-ID: <20261001022223.8633-1-dingtao0430@163.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xC8F3-0006YK-24
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 00:17:57 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xC8Ez-0003hD-0b
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 00:17:56 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6914Hjrh003862
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 13:17:45 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=rzyAGyEKEsjxKfSnUi3spwW6eXRvG5gsNvKiW96saUI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1790828265; v=1;
+ b=N8kN5cBj+xYcN5OQ8/uDrbu+xkJVDrCSH7vp7iY1Klq6iOZTVTvqdTu6fFSMaAtA
+ i2yzsRpKlqEuqzFKGsnF1LSZP/YrkZu661+P5CMmki0Ye2OacZaAEyWZlb/9Hzmj
+ mSKFdRdGqJChUIhJ0oxkzU23qfqczGQLP4JXyCrIJv6yx4SUJQm0jCOlb/vdXtUO
+ XHktZfHyckoJyt3YX8Vwiaj9WWU4FYELQylqTGhvvpRggUxP3Ygwz1fv8OQi6sKa
+ rFK12AyqwOxMIl+qj8RE/ahse3Bu1feN7i2RAeNJV15fJRHkNEDVuAi5QnGEvPUb
+ s9rJaK7SXT0nFDYF6uIrZw==
+Message-ID: <d5a34ad2-d64d-4343-b99b-aba7da03152e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 1 Oct 2026 13:17:45 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/10] monitor/hmp: add CPUClass::get_pc fallback for HMP
+ $pc
+To: qemu-devel@nongnu.org
+References: <20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com>
+ <20260911-query-reg-v1-5-0c04f0c02cf3@redhat.com>
+ <cdf83c82-5f26-4e06-920f-5596a9e3560f@oss.qualcomm.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <cdf83c82-5f26-4e06-920f-5596a9e3560f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::2b;
- envelope-from=dingtaodtdt@gmail.com; helo=mail-pj2-x2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 30 Sep 2026 23:43:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,27 +74,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, all
+On 2026/10/01 2:31, Philippe Mathieu-Daudé wrote:
+> On 11/9/26 14:27, Marc-AndrÃ© Lureau wrote:
+>> Some targets, including x86, have no GDB register named "pc" (x86
+>> uses eip/rip). When the GDB register lookup fails for "$pc" in
+>> HMP expressions, fall back to CPUClass::get_pc so that "p $pc",
+>> "x $pc" etc. work without relying on the legacy MonitorDef table.
+>>
+>> This prepares for the eventual removal of MonitorDef while making
+>> $pc available immediately for all targets that implement get_pc.
+>>
+>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>> ---
+>>   monitor/hmp.c | 8 ++++++--
+>>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> 
+>> @@ -435,6 +435,10 @@ static bool gdb_get_register(MonitorHMP *hmp, 
+>> int64_t *pval, const char *name)
+> 
+>> +    if (!strcmp(name, "pc") && cs->cc->get_pc) {
+>> +        *pval = cs->cc->get_pc(cs);
+>> +        return true;
+>> +    }
+>>       return false;
+>>   }
+> Before commit 57206fd42a0 ("more register values in monitor") we had
+> $eip (32-bit) aliased as $pc, but I suppose in order to add the 64-bit
+> port (see next commit, 75dfaa1e64b "x86-64 port (Jocelyn Mayer)") it
+> was unified as a single $pc instead of adding the corresponding $rip:
+> 
+> -    { "eip|pc", offsetof(CPUState, eip) },
+> +    { "pc", 0, monitor_get_pc, },
+> 
+> This was 22 years ago :) With retrospective I'd say a generic $pc is
+> misleading (note, this is only for the x86 architecture, the other
+> ones don't suffer from this problem).
+> 
+> To be pedantic we could add a 'const char *CPUClass::get_pc_regname()'
+> helper, but TBH I'd just drop this and let the monitor reports an error.
+> gdbstub doesn't suffer from that because EIP/RIP register index are
+> used.
+> 
+> What is the community view on this?
 
-This series fixes integer overflow, truncation, and underflow issues
-reported by Coverity in the K230 GZIP decompressor, its qtest, and GSDMA.
-https://lore.kernel.org/qemu-devel/5fc57f49cea0ac3542128d0e2208edd6d7484f7e.camel@wdc.com/
+One detail to note is that this patch changes the behavior of $pc in 
+32-bit mode.
 
-Thanks
+The new fallback calls x86_cpu_get_pc(), which omits the truncation 
+previously performed by the old monitor getter. For example, with a 
+32-bit code segment having a base of 0xffff0000 and an EIP of 0x10000, 
+execution correctly wraps to address zero, but HMP will report $pc = 
+0x100000000. Consequently, `x /1xb $pc` fails while `x /1xb 0` succeeds.
 
-Tao Ding (3):
-  hw/misc: fix k230_decomp_gzip integer handling issues
-  qtest: fix k230_decomp_gzip test integer handling issues
-  hw/dma: fix k230_gsdma integer handling issues
+That said, I'm fine with dropping $pc anyway.
 
- hw/dma/k230_gsdma.c                 | 6 +++++-
- hw/misc/k230_decomp_gzip.c          | 6 +++---
- tests/qtest/k230-decomp-gzip-test.c | 2 +-
- 3 files changed, 9 insertions(+), 5 deletions(-)
-
-
-base-commit: 0a1ebd448b38afaa118597cbb633dbec24ef74d3
--- 
-2.43.0
-
+Regards,
+Akihiko Odaki
 
