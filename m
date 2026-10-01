@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597AACA5FD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E80CA5FD9
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCPmV-0004S7-Vw; Thu, 01 Oct 2026 19:01:40 -0400
+	id 1xCPmW-0004T2-RW; Thu, 01 Oct 2026 19:01:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1xCPmF-0004O5-U2; Thu, 01 Oct 2026 19:01:25 -0400
+ id 1xCPmD-0004No-US; Thu, 01 Oct 2026 19:01:23 -0400
 Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
- id 1xCPmC-0007jJ-1U; Thu, 01 Oct 2026 19:01:22 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=C7kwGQU
- Js4dEHLCE6s0OP+dCEh/G3wPn4grDylO4+tU5LnOLanpwivURlaAlDGo0BiFQHVLWOm9iD
- TfYB3+8tQ3MoPakfMahGvtSmCd4L8FsULHP1dNjYB7IWZMxx+mmwTbok43qaFQtcwXTNsj
- yjm5d7QBkYUae9H87aAx7Z8jeaVDr/s56hRkYKTrxkHuRgOG3fkNE95jBVyDiGe4hml5lH
- 96JPO/7+Vy2gYpqligy9mMXw9qpY2ICyB4k+JPIfusSxQiw0nIYYO41ei3hMVpWsTlmr8l
- R1jRBSvQxHxUlh7IIaapIZmfEdxxN/sR0P3KZ+cXsgnkK1nYoUCO2FQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=r
- 8RxrIuKF+SSKpGnXLnXksMXwzKdo+kIEVyUUZgk3/Q=;
- h=references:in-reply-to:
- date:subject:to:from:dkim-signature:dkim-signature; d=mx.catap.net; b=
- Hg5BJNA/bVEz8nFBgCkzmw5mZJsg6mCQSRC56YjeTnop1hB6kQXh0eP8qHjnFpPj+tXj3M
- KZQ/aBOxjiqQQdRN1oKcWsQfUlIeLhShhd/B8hGqxUkfi6yso6s9AJLJ62KKTSPQ3aGzve
- b4aARr+fulsyf9XHkDbU624cmZDpvm4t/fbtn4+bT6Q7jAmVv4Ep1sikJsDUP7cwd3Rizk
- tZFpkCej4VZfyihiVsZx2UyOfp13mFkLsghjY4/vscgWTtXcrJN4Qxmu2Y1sFW4RcFAfPq
- L2UhPAD54ARrDXDaYrsj5fAE4LrWcz8XGQJURmRw78d4ZohTVweVtJ1UEBzACA==
+ id 1xCPmB-0007j6-6d; Thu, 01 Oct 2026 19:01:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=oLvcy91
+ 6Zrm3p3lNsJ5YSMrApPJMDsbPzDO9ykXfSFl+s+U5bK07CAntal8vgp+6tvwWIddqvQu7P
+ YsAyaCnkAzV8kLa8QS8/F6jyQ01WpsnSD/3pf71Wv7lzhWfX/X4j78F+ChRXMpwQgwTvvs
+ aAw4ETNCClWQ7NC9oU2hF0iEoArcNoXzPl3Dhi/GolcaNqZknbyusRhFVcy818GqYNME2O
+ gVS5S+YcA4vWLNFJrN1OY9/kQv7cLLkrn67mOIl4JrcFk9GyeLtIsz8yEOzPp3TpNlbeBK
+ S8rHp+RRXJPCBgTgX/syXUNh/crxPRbdkB5I+ZsF1epIewNjID/lBgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=E
+ qHMsD07ijabZjxI5PNG9FDX08Et3qQ2lL3yHz8x/v4=;
+ h=date:subject:to:from:
+ dkim-signature:dkim-signature; d=mx.catap.net; b=Q/wPHvE9zyYNpxqCVzF28
+ Oj6D6nZH4Wni3Pjj8Ha6hzVChMtZtF5HEJfUKB9EDTK8XayEmlpXQ2tfkzzRFUXOLXoTGn
+ t0POYMoSjlx6SMkdtmZPftHJ1kByldg/2YZUigIwofBioS0sN5xAsv1CkqI5S/kKn1mGNg
+ DSJKHKliZFBIoMsj1WonOChlcordsBKavGoZGt7JbQ66soT1fi33UtiKDWmTDXE4qBLxkS
+ pc2svP2X5ZA9Q2sDyEWdfzAcf1+pu93lDO2UKIk45pR5kaDBkJIuw/y1165Ve6/8EbRoD8
+ TAJMZbUr0NuXYOzHt6Of+16fuaUFvQIQu2t8PjdWQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=FMSkFWPK; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=ioLpxsBS;
+ header.b=iYEk0kmt; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=oHFr2k09;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=r8RxrIuK
- F+SSKpGnXLnXksMXwzKdo+kIEVyUUZgk3/Q=;
- h=references:in-reply-to:date:
- subject:to:from; d=korins.ky; b=FMSkFWPK4PrLf6e6yK6jC1K7hktD7F3z2qbs6P
- USt35RcjirA8+xdxEm1QWs5Zhvlzv8SULpkb9Y85AEvb28Sq8NlaCea5oXMn7TlCBBdw1l
- 4DeTqT6t6JcZJkNPYtyz7GB4Sy8xmm8fUtqgJBLAKq0SQJkWe8Fs4W0JUSSk+DY86HOl+X
- eU1vwC655CfMLgNrhmtma8fYXrYVQ8Y6PSlGsibwDORCefInB+C5OvUkvFKttJYY2eWc80
- FYjYTe+pB8NCngHGh2L3D5NTQryCW/hnpgLnKbLjfDBOdSEAUuCejDZu/PrAG7kem4u8py
- 3CcgLaCtgn70KLpWNW6Wisbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=EqHMsD07
+ ijabZjxI5PNG9FDX08Et3qQ2lL3yHz8x/v4=; h=date:subject:to:from; 
+ d=korins.ky;
+ b=iYEk0kmt0i86nbwaOFzTdh2RjWnI5ApDNmUmWkfORp9Bo67PONhxMHt
+ UhwxjMQvknVqUhhIP4VMkVIW99Dpyn5RK6qKwPQZ8q9dFmmYk94zJortxbSdffUqxN2FwF
+ crigR+mU4DQ0qNBJo/KTOnT7KCFM0jVPsveu80GecnzuFaQwLuB34jhRnVJgcIot4ksIAX
+ UgBkuaY5M9sGCtsiaXdGHwdHXgBaP9eQ1YRdft6lnV/pTvkRK4LAJMszD69IzuRitG0bra
+ nKZznc7TPaoNVojjAnYk27bdH24N9W+peH9V8j6nug1HLIT+xdHXBV1VlWOe3u4lryx527
+ BpDlyYw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=r8RxrIuKF+SSKpGnXLnXksMXwzKdo+kIEVyUUZgk3/Q=; h=references:
- in-reply-to:date:subject:to:from; d=korins.ky; b=ioLpxsBSAebYdA71fhao7
- g+qg5ccWmZbtSjCww71QiIZHx3cCqfALFmBaYdaFKYUGPwo3lP1zQWIOQdP1Uf9Ag==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id ad663969
+ bh=EqHMsD07ijabZjxI5PNG9FDX08Et3qQ2lL3yHz8x/v4=; h=date:subject:to:
+ from; d=korins.ky; b=oHFr2k0981dOg03mMVm8pij6sh+flchtkyTslcUsQs2iyWm/w
+ 0kNe89HYzVdmtYS1sgTuq3RUpDm//Wxj+tHDw==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 40273242
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 2 Oct 2026 01:01:11 +0200 (CEST)
+ Fri, 2 Oct 2026 01:01:08 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id a9dabf87;
- Fri, 2 Oct 2026 01:01:07 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 60c58c4d;
+ Fri, 2 Oct 2026 01:01:06 +0200 (CEST)
 From: Kirill A. Korinsky <kirill@korins.ky>
 To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Kirill A. Korinsky" <kirill@korins.ky>,
@@ -67,13 +67,12 @@ To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
  qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
  Anushree Mathur <anushree.mathur@linux.ibm.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Miles Glenn <milesg@linux.ibm.com>
-Subject: [PATCH v3 4/5] cuda: Make shift register delay configurable
-Date: Fri,  2 Oct 2026 00:59:03 +0200
-Message-ID: <20261001230058.11465-5-kirill@korins.ky>
+Subject: [PATCH v3 0/5] mac99: Boot OpenBSD/macppc
+Date: Fri,  2 Oct 2026 00:58:59 +0200
+Message-ID: <20261001230058.11465-1-kirill@korins.ky>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261001230058.11465-1-kirill@korins.ky>
-References: <20261001230058.11465-1-kirill@korins.ky>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
  helo=mx2.catap.net
@@ -99,42 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+Greetings,
 
-The CUDA model assumes a 20 microsecond delay before each shift
-register interrupt. OpenBSD times out during device discovery with that
-timing, so retain the existing default but allow an override.
+This is the third version of patch series to boot OpenBSD/macppc.
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/misc/macio/cuda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+OpenBSD/macppc does not complete early boot on mac99: OpenPIC can
+reassert an interrupt still masked by CTPR; the edge triggered
+decrementer does not raise on zero; successful CUDA ADB replies omit the
+original command; and the fixed CUDA shift register delay can stretch
+packet delivery past the guest timeout on hosts with coarse timers.
 
-diff --git a/hw/misc/macio/cuda.c b/hw/misc/macio/cuda.c
-index ccb3e1d74b..f06583377a 100644
---- a/hw/misc/macio/cuda.c
-+++ b/hw/misc/macio/cuda.c
-@@ -535,7 +535,6 @@ static void cuda_realize(DeviceState *dev, Error **errp)
-     s->tick_offset = (uint32_t)mktimegm(&tm) + RTC_OFFSET;
- 
-     s->sr_delay_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, cuda_set_sr_int, s);
--    s->sr_delay_ns = 20 * SCALE_US;
- 
-     adb_register_autopoll_callback(adb_bus, cuda_adb_poll, s);
- }
-@@ -557,6 +556,8 @@ static void cuda_init(Object *obj)
- 
- static const Property cuda_properties[] = {
-     DEFINE_PROP_UINT64("timebase-frequency", CUDAState, tb_frequency, 0),
-+    DEFINE_PROP_UINT64("x-sr-delay-ns", CUDAState, sr_delay_ns,
-+                       20 * SCALE_US),
- };
- 
- static void cuda_class_init(ObjectClass *oc, const void *data)
+This series corrects these four behaviours and adds a functional test
+which boots the official OpenBSD 7.9 macppc CD to the installer prompt.
+
 -- 
-2.55.0
+wbr, Kirill
 
 
