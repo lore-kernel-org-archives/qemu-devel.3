@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C2ECA5FD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35B1CA5FD6
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCJ8A-0005oR-No; Thu, 01 Oct 2026 11:55:34 -0400
+	id 1xCJ88-0005ja-0W; Thu, 01 Oct 2026 11:55:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xCJ7E-0004lP-2X; Thu, 01 Oct 2026 11:54:40 -0400
+ id 1xCJ7G-0004lu-L8; Thu, 01 Oct 2026 11:54:40 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1xCJ7B-0005Zb-9C; Thu, 01 Oct 2026 11:54:35 -0400
+ id 1xCJ7D-0005aZ-U4; Thu, 01 Oct 2026 11:54:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nkYkSGfN1pD++4jmG1v1QhxL26UrZEZF2cfjdMHZqd4=; b=VQpwgHd7CC+ui0x
- FdZWI+cI2ScYnARnrzfTqe6nWrCRA4B9w+vFaH7TdkKOSolOrvILmpt29ZLNWcycd5HKglQxcZ6fB
- LjAv1QmPwxwrRHzgvSZxZePfvmqW9qTor/LW5/jq5N3VhQSCa3HNg6EHjfG5r1QWbmE+4mHHyt/Dz
- 58=;
-Date: Thu, 01 Oct 2026 17:59:33 +0200
-Subject: [PATCH 10/18] target/riscv: Compile cpu.c once for system-mode
+ List-Help; bh=67urEZrrLZLfxiSUP4cCvhaGfeO+QbGGD4yUuNMHKck=; b=TrHtYbq7uo62uPU
+ 1UvaeCRQpv0jN8NxdwMWcUSnxdLbN0pe0nDJngIAMzCxFYqZ2fxVKUXlTM3cUG501kf+mpf+r1uEh
+ Z1vD3Drn2DKDrmbuG/tSKy/WN/gSQFOSzquXXdo7n1kY02OWo0tMg7muST1Dod9xjlyR+ZCB5t7Fs
+ NU=;
+Date: Thu, 01 Oct 2026 17:59:37 +0200
+Subject: [PATCH 14/18] target/riscv: Compile pmp.c once
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-rv-dedup-v1-10-ea69b07afd31@rev.ng>
+Message-Id: <20261001-rv-dedup-v1-14-ea69b07afd31@rev.ng>
 References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
 In-Reply-To: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
 To: qemu-devel@nongnu.org
@@ -41,11 +41,11 @@ Cc: Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org,
  daniel.barboza@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1790870392; l=779;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1790870392; l=1773;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=M8wPAD0VrrMS7VrrQBP9MtLmfLGrzEUjWNBoCiUi7AM=;
- b=EA9WuRNcQaN4pFFntVzNlKGc8EoJH8Mgor/ctFToihv7qqj9KLRHnilxekTHs3CDBho6TK0JT
- PqTyY96jyKeAOuhRnVb+b9Xiux8hkpvT3Zqg+A3W6+u67nB8Mqo80G5
+ bh=46laoFS2O1FEmGvazfOrBL5i7heNu+O4jHIx/CRLZMI=;
+ b=AT909Gd+cR/v49Nb688zi+PGRD0Xm2e+zQFJGDIdiwJSPL+krKIgsZNI6gaYzUvPne1kuIRiM
+ UccIMkreMUECtdFdmxqJEMVkwBXaFH8TnF8Q43f9elja7EJy7CahOzU
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -75,36 +75,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/meson.build | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/riscv/tcg/pmp.c       | 5 +++--
+ target/riscv/tcg/meson.build | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index 3cdff11f75..ba38e421c5 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -15,7 +15,6 @@ riscv_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		     if_true: files('common-semi-target.c'))
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 99345d63dc..2d7194de10 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -638,19 +638,20 @@ uint64_t pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+     if (addr_index < pmp_regions) {
+         val = env->pmp_state.pmp[addr_index].addr_reg;
+         int g = pmp_get_granularity_g(env);
++        const unsigned long_bits = target_long_bits();
+         switch (pmp_get_a_field(env->pmp_state.pmp[addr_index].cfg_reg)) {
+         case PMP_AMATCH_OFF:
+             /* fallthrough */
+         case PMP_AMATCH_TOR:
+             /* Bit [g-1:0] read all zero */
+-            if (g >= 1 && g < TARGET_LONG_BITS) {
++            if (g >= 1 && g < long_bits) {
+                 uint64_t granule = 1ULL << g;
+                 val = ROUND_DOWN(val, granule);
+             }
+             break;
+         case PMP_AMATCH_NAPOT:
+             /* Bit [g-2:0] read all one */
+-            if (g >= 2 && g < TARGET_LONG_BITS) {
++            if (g >= 2 && g < long_bits) {
+                 val = deposit64(val, 0, g - 1, -1ULL);
+             }
+             break;
+diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
+index 69dadfd662..0aaba9cf34 100644
+--- a/target/riscv/tcg/meson.build
++++ b/target/riscv/tcg/meson.build
+@@ -17,7 +17,6 @@ riscv_ss.add(files(
  
- riscv_ss.add(files(
--  'cpu.c',
-   'gdbstub.c',
+ riscv_system_ss.add(files(
+   'debug.c',
+-  'pmp.c',
  ))
  
-@@ -33,6 +32,14 @@ riscv_system_ss.add(files(
- riscv_user_ss = ss.source_set()
- riscv_common_system_ss = ss.source_set()
  
-+riscv_user_ss.add(files(
-+  'cpu.c',
-+))
-+
-+riscv_common_system_ss.add(files(
-+  'cpu.c',
-+))
-+
- subdir('tcg')
- subdir('kvm')
- 
+@@ -35,4 +34,5 @@ riscv_common_system_ss.add(files(
+   'pmu.c',
+   'tcg-cpu.c',
+   'th_csr.c',
++  'pmp.c',
+ ))
 
 -- 
 2.52.0
