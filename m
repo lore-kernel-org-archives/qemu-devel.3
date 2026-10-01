@@ -4,105 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C015DCA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 19:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD927CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 20:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCMpP-0008Pl-VC; Thu, 01 Oct 2026 15:52:27 -0400
+	id 1xCNFe-00038x-N6; Thu, 01 Oct 2026 16:19:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xCMpI-0008O1-H6
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:52:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xCNFa-00038Q-19
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:19:31 -0400
+Received: from mail-northeuropeazon11021102.outbound.protection.outlook.com
+ ([52.101.65.102] helo=DU2PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xCMpG-0005aU-BO
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:52:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790884337;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
- b=QYJKEEHRu7kM+qi1hlM6fppZS1NmhJewgH+i/MRSgMYT07LfcUuWoU+j4gqCWLHgAy3LTh
- rIaTTBOoylK8QLvzffmBnP/47/Tu49G4fAOhmpedKgNRT31yPcrLJfqAn0VIWFwGDcadt/
- UjjDFZsarI02iBHcnNPxRT34xBIKB+s=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-GUrDX3GqMaWKHzxxz5soNg-1; Thu, 01 Oct 2026 15:52:16 -0400
-X-MC-Unique: GUrDX3GqMaWKHzxxz5soNg-1
-X-Mimecast-MFC-AGG-ID: GUrDX3GqMaWKHzxxz5soNg_1790884335
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-53395d51187so10326971cf.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 12:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790884335; x=1791489135; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
- b=facsvK5gIvYgZ2h3wMd4QD/0qNGmIQJLgq/ZXECOND5Bv1D56XfVtMB+xIuGZg8fvy
- WqmSf2j8dUO6AkTRFg5Wtu7vrsQSnw7liZjUEwLCFv4OjPfpuS2ZEXWgBJa4Q9/qro0z
- lAVuVHSDTHgi1/ae1HzQ4pUXZGvvIxNepVKY0RwA818OvpZAW3ymkziFhQYArn6GfwxO
- 4+KNccrUycPr/F+DenC5I/srNICXQgce94SdzUWnllxPy/Y5w+rVXlfjxgV5bVMnSuQu
- XEtK61bsnJiXV08JFPiwo9l2+fNw3o7kS1okv2SLvYTPracj6mrxAvo/y3xu5hHHw4j3
- ygUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790884335; x=1791489135;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
- b=tAyJ/uM32hPlNcDTc7wUjxiXndwGJsgiu+zrmIntFFxWJeiSeAFyWBY/wseUHMNybq
- Xb6H7NxKXUwGyjl/OwvxAkzzLh/oxdD14AOG/QOGcEFb7v1PajMFAAuix6vTy7WGdmbA
- YPW88MnNN2xwcRhUv0RHvovMBphcR3WpXsdOXLn94UN5je/V4oZZEnmFSnyVeKIC9x5i
- 1VWWVRAWSoJgMh3a1vtyCOf2MdYXGPd0bWsuP/2RyBJ+gLvf1QWs1Wmx4TfscMo514xu
- qObWFLOj0qm+QcB78SX6Ek2SSLYK86TjPnQiKQWeEl1cAmd6JcQV9ZWqjploky7495F4
- 5kxw==
-X-Gm-Message-State: AFuF++kO8ylxAK/O51Y7o3pL99ziffWH4CA0Ec+wF2hxxsdcnSkrLr0U
- DX1nz7EylggIYU6OZKGZKLeteyz+78IQ0zZLH7n2kFLGCPZs1bHS96iojPl/0veBTDq/wt9I6r9
- PWP5T4B/pcRUzyu7qTcuzhxr2O0m9ah4Gsq4dxmgUyb5f5mQp+TAZ7Kop
-X-Gm-Gg: AYBFou2ui9Sk7aD49GBZZSK3IdmRGAuvhga8nmkYplTGw4ZOvl9Qdsr6vM8Kk9xR8OF
- mdBw5iErG49yH0+IXk9ObTTNI34Rs8sFfSamGacBny/BMPetB+JZWJuXK2Vp/6OTE5lZQOB33cs
- nv6BZVSe6haVZ2PFpkU16anbDsGUFLQB55sBTYfT3quZobeLrhzejaF8+TJ7qfzqSJ7nMiFraVt
- 9FJNQf7uigo2CoJ8671OCMVfaeUO5VmZIG9Y5GK7Bj7wtBHWszBCEhfIkEz5cK1qg5cykoDFA2X
- 7kcbM4xd/hUchWmLpKCeQB3beeWyY1MAECZjHgVDW2NVL56Ea0eIgUcoM0X8E4U0Rq2GJzg=
-X-Received: by 2002:ac8:5a01:0:b0:530:5152:75f0 with SMTP id
- d75a77b69052e-533cbc78724mr3997881cf.22.1790884335282; 
- Thu, 01 Oct 2026 12:52:15 -0700 (PDT)
-X-Received: by 2002:ac8:5a01:0:b0:530:5152:75f0 with SMTP id
- d75a77b69052e-533cbc78724mr3997261cf.22.1790884334631; 
- Thu, 01 Oct 2026 12:52:14 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53398d122a4sm6360721cf.23.2026.10.01.12.52.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 12:52:13 -0700 (PDT)
-Date: Thu, 1 Oct 2026 15:52:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Denis V. Lunev" <den@openvz.org>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xCNFY-0008B6-1g
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:19:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QTdCnsVw1ktZZsRgbCEn/F73GkYSfX6MycHnNh1X82cpTV6HtpHrc6TKvvh8OhTk7WTky40Vod1i17q19TXVHWnSp/ooGb63c9FCZPZGwYKUYJIcBoyAQYBvtylmMxrbu7hiZJ7ahbgka3Vfp19HXr4fZaMOURj7/OShGCqXdcMe7Tk9wzV1rkE+D0p05DAhKkqzomjEfN0oicn+eOkgPYgSHoswjqFLPaZEbLpn4knnUL1P+2+Kmtb09bow5d3oRePapv2cU/dACK+UdUgoC4c9Ptg9tJtDxXSHP9sL+OptgNHPRVa5b/A328jSd3jynC2Sm892acRtAFs4f9xHIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=y0NdD+WGuwTeiWq6mDxeJIvitsls6ZxSa3nPwr5vEcY=;
+ b=IjESxNM6+K9eB4Wb+Lh1UbdH3gnEo67U/BsVdQDA2fYg+8YTKcBE96cv9dCjtAKE8VdnuV7j5gu96qLe7OTIR4ce5KgvMoIJqgTYU6FgPHxXdsJbUKwbXc1S4BSzbsv7F1J5XFs0zLXZ4pbSMwU8BtSxWqM2XNts68vBmnqLSENgiPq1k3Wj1bfuvpDWqaAYmLKL8RZ2M/R/7JE+QgQuAIlLaF+fZrEOp2bA5lWCUmFSuRRgV93EYBtmpS8EDy3nuoZBdqfWydiPdnyJVEfHfs1rl4Jn8jIx7hdfkWpf4qh47N6o1XRKt0JFqw3+SxpN81CU5XTVgYcUloE1tDWaTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=y0NdD+WGuwTeiWq6mDxeJIvitsls6ZxSa3nPwr5vEcY=;
+ b=QAOk3TFwhU8D4LIIMQSc2jZz+lmaXc0+2Varn0neXe9aYy5ZqOgRM8My0jC7Lwo6OdLUSl2Wq1zQvzPiMW/31+eIpNE045XG2JpoEptjmyxh7Lz2iQmagzA9vPP8MCv0JBvuKDFRrmSLd4tahZyXdV6C1BFHhkjBNIEDsw06nLid5GX571caHau8LNjmlcEjHuml79nugf8MVLjVpirKvE03Fn6gpMy6SRThbCd5a2BrI5osiA3Ct8U3MkQbZyffyBElaIouCJaILn8TwG0RSUXnwXXw7Gl3000/hNqDsIWbUCkgU1NSu0zZZjwZiXg9+aH5kAyGZ/30Knbxi4xFSg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS2PR08MB10084.eurprd08.prod.outlook.com (2603:10a6:20b:648::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Thu, 1 Oct
+ 2026 20:14:21 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0472.016; Thu, 1 Oct 2026
+ 20:14:21 +0000
+Message-ID: <52ae1c53-5c97-45eb-b183-7dfea81e8ecb@virtuozzo.com>
+Date: Thu, 1 Oct 2026 22:14:20 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] migration: defer a post_load which only rearranges
+ memory
+To: Peter Xu <peterx@redhat.com>, "Denis V. Lunev" <den@openvz.org>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Denis V. Lunev" <den@virtuozzo.com>
-Subject: Re: [PATCH 1/2] migration: let a vmstate defer its post_load to end
- of stream
-Message-ID: <ar657ehBVdQKSWXF@zhexu-thinkpadt14gen5.rmtcaon.csb>
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
 References: <20260911142345.3999518-1-den@openvz.org>
- <20260911142345.3999518-2-den@openvz.org>
+ <ar64sJucQdmgu7mB@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <ar64sJucQdmgu7mB@zhexu-thinkpadt14gen5.rmtcaon.csb>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI4PEPF00000153.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::86f) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260911142345.3999518-2-den@openvz.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS2PR08MB10084:EE_
+X-MS-Office365-Filtering-Correlation-Id: 67df9e76-cd6b-41c9-d3ba-08df1ff8947a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|10070799003|366016|1800799024|376014|10067099003|56012099006|5023799004|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 9TVB8VygijmnhpPVxkUtHpwg24jbdE82G9/Nrs01gAp5pijaFkgsMu88owQT69KowDFChFG6o4kPpS4a6P8au8QeJ7/MO/qOxmmqFQKuAbSpAgO2Spz6Hht8E0O4cmWzQBJOTrQO1ch5R8zOG7biS1z7x9o9aEjN/pkpB1ktRCIv1kF12LYsuSfGOnePyZDLfE/XPHpk+d8PAxousb5rzWGX4eMVpvREQme/GKagqcx20+i3As1bB318EYDSnfgQBXlJlHSsu7NeUltaMH6BVQtj8rRu0lbxkM+FF1aewj6apzk6ccpubJ8aeALXvnlv9FuIAVDCTdPueVkFTtMVsD8cg0bNRxkMx8yXoi4u0SIbv2REGwj4zWDl1t7zF7JaiiW/JyjEKtfqf91u1TmZKE9yTwvttJsetGZYuEGEiji4zDYdbIGiiMwr4AJEsShFlxUPJAVCHQcDOzUvBl0wIKkhg8AwshSg09SITnqVmPb7ZR7egLW139tyWschd2V0lKU/H681VNaIC7xQRGu6MB+gne1B9yZ7PGTIRL5pjQ6BCdSpfPX9WrCLc5XLzYlNpEgNKnQWAjjneOKkAweNtWTkyDK9j6sjGRTAvZytKY4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(10070799003)(366016)(1800799024)(376014)(10067099003)(56012099006)(5023799004)(4143699003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NjBYOEVEQUlyNzFDekQwZE5mL1RoeWVUcGJpVjdZRWFWV0thRlBnNzdQeWQv?=
+ =?utf-8?B?bWJ0VXhxZTJKLzZkQWdHaUJsb2Jid1JqYVg1N2l4U0dBcmZxMGtYRk1ZVGov?=
+ =?utf-8?B?a0NhMUxpNmN4Mm1tSVlGY296UE1BUDMrSWxxS1lYdjdVejNtZW9hRmF5azJV?=
+ =?utf-8?B?aHFGdXJrcDdTZFczTWFuRU82SHE2bDFHRitqeVo1VzMzR3FLOUxxVzZ0VXBj?=
+ =?utf-8?B?M2JvbXJEQU5XYWFLNUsxSVVlNzVobEJ2NzNUajg1NHJBSkFyemFjVWlKSUc1?=
+ =?utf-8?B?aHFpQ3dwYWgvV1dFY05aeUJDakxFVHJCMTJReGo5VTFIRXgxaXRQTk5acUlM?=
+ =?utf-8?B?TGl4dnBjNVVUQUFIMW5SYU1zWWtOOHA2K0J6d0t0U2dHUkp6MDhHSEpnb3BL?=
+ =?utf-8?B?YzlNMmtlTEswYjh6YitmZGd4VWNFYTFvb01qemlTSDhGOFpRZHRUK3pHWDl4?=
+ =?utf-8?B?bHhhL0g5UVY2Y0QwZFlsSzRYNkVFSnZlRy9LUlE3QmtmV3ErWkU2a3BLWFFp?=
+ =?utf-8?B?Mll6Yys3YUoza0tQZ3FNWVlQZWd4ZncxSEthaVVHMDF1NGxXajZITWZYSzJv?=
+ =?utf-8?B?YVlaQi9XSGpBTW1RTXBDRVM5TkREdlJ6WklFN1BtNDJJZ2crc01kR29VQm8w?=
+ =?utf-8?B?Y2RjdzY1K2ZSOWVtOHF4Ty9WSmg3M3ppMEpKSUtxTURZWG9kcWx2TTNCSEZZ?=
+ =?utf-8?B?dFF1SWRhaVFXOER3WkFwNkRDVVBadzFpZHZpMDJweXU1TXhlR3RrbS9ObzdJ?=
+ =?utf-8?B?dnkyTjFIeUVqRzlGVWRIeURnT3ZwVTVEcGdNOFU5d2hLSENqb3ZjZ2FSVVZD?=
+ =?utf-8?B?Q0s5N0xiTXJvRkliNWVJMTNUU05zVW1VNlhpMVhGMUxYNEhESXlxV3hTZVV5?=
+ =?utf-8?B?WXlsWHFuZk1RUGFmL0toZ2hRR3VZZ0ZpTVAxK0c0SU5wYzlVRGk0c295eGEz?=
+ =?utf-8?B?UDI3UWw2QUNRWjZxaWNFNVJyZmZ1QkpURmJ0WUVReWRkb1J5MllYMjBwY0c3?=
+ =?utf-8?B?c0Nsem5WWEdmTFFUeFdGa3htTXk5Wks2QlFIOUJ0TGRYaERSUGQ4RldHM0E4?=
+ =?utf-8?B?K2JQTTg5cTkxak96Z090Y0ZNUmcrdGtrNnU3WG9tdFZlWUhOUHc1amNrZjlI?=
+ =?utf-8?B?YlVqbVJpWkQyTkFhOXo3UXA5ZjhZTzZ5eGxLbzFlM2pCMGc4QWREL1pGZ2FE?=
+ =?utf-8?B?TktWYjFSb3JuTm9QeWVDRkhwUkxTT2tRcUpPaFJFOFVQWnJ3U1dOb2R5QW5Q?=
+ =?utf-8?B?dG1GZGJyWFhnNzZwRzdMQlJtYUVKaVE1TTdWMjV3WVEyWFJNR0tiN2JZbVRq?=
+ =?utf-8?B?OU10SEViZVZHbTJqSHVDeXpLOG5xTndJQTVVMGJIZlFwd0d1ano4NHlWUFJr?=
+ =?utf-8?B?K2pENEw3eFlxWDdBdFhkbDB2L1pWN0JzZDh4SDJpa2wybmYyMzdPZjdNY3dZ?=
+ =?utf-8?B?OVp4dXpsRGQyK2JkdUhnaEdKVWZIcW5MQUVvWFFmTkNYek5SN1ZIeWZ5MUc0?=
+ =?utf-8?B?R2o0T2RsZEZZUTNYZUdrZWN1eWhORWM0K0Y5REtvWHg2NVVGSDVzY09udUNK?=
+ =?utf-8?B?cWFYUElNc1NBR0VMZVkxMUVOVzJrVmRCL2F6OGozUVBFTnBMR0d0b01WWEJN?=
+ =?utf-8?B?QkM2SmJUajBxeERhY2kvTjltOGRDYXBTaHdqMUl6QjBvS1FsdUxhcytKbHh1?=
+ =?utf-8?B?bVVuaks3MVFaQlNTVXg2VFhaU21GWHl0TjZMMjRJRldrdmRJWEU3YkVaSjJP?=
+ =?utf-8?B?SEF5TzJicHgvUUtLQ2N4MGM5R3hXQ0FpOUJxUmVvSTE3bVBmc2tURUJCZ3ZE?=
+ =?utf-8?B?VktOdzZLY2J5TE5FdWNwc3Q3ckZRR2t3TVp2QXRmL0NpQVJaVzFSenNoYlVz?=
+ =?utf-8?B?K1V5Z3hZcmdDeHNiMyt3OHI1eGFmMFJrbXRELzI1RzJEcFEzK0dvemcwNjJa?=
+ =?utf-8?B?UXdxanoxNFVQTld4dFBwbGN1Yk5IQy8wc0ZWSEl5SWVtOXJ4THNtc04rT3l3?=
+ =?utf-8?B?SmtGN1dzZ3VBTENHaGg1bk9oaXlLdGRuRDd0TDNjOThsQWtPNTdJVzVYWXF1?=
+ =?utf-8?B?L1pwN24xZ0JpUzk3Y3hjVFhVNEFTc20xUnIwN2lGQ0dwckc0ZmlNVnMyWlh2?=
+ =?utf-8?B?UDBwdTc0Nm5GdkJjUVVWMmNNc1hDMENzNmErTmM4bWE3VlE0UW5hQnJRYUU5?=
+ =?utf-8?B?d2hnK1U3ZzNQcDZ6YXdreEsrSXpYSjRHS2lTTXEvenBHQ1BCRUUxMHI1RXlv?=
+ =?utf-8?B?TVZoM0dlU1ZKOU9SYVpUMmhDamRtUExOditMaHdyZW8rSFVQeXVNTzlDaFJn?=
+ =?utf-8?B?dE15aHVjMFdTd211dWszU3FBenNTdWxvcWJpYWdjOVV3ejRYVDdtL3pRNzB2?=
+ =?utf-8?Q?Kw9JYl6bM5PDAJin4dMSlRNdbWvHDFCXKxX51wwy18GH4?=
+X-MS-Exchange-AntiSpam-MessageData-1: 2EQQ7nFue3pgsQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67df9e76-cd6b-41c9-d3ba-08df1ff8947a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 20:14:21.4711 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KC5rjKrwoUIWnxVC6UTJVAAD6EBVsgTPAdduKE9JR4/8KZMaHovIyVof1H1/TluPhHJW40OefYTvKdCs6v2WYw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB10084
+Received-SPF: pass client-ip=52.101.65.102; envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,162 +152,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Sep 11, 2026 at 04:23:44PM +0200, Denis V. Lunev wrote:
-> From: Denis V. Lunev <den@openvz.org>
-> 
-> A post_load hook which only rearranges the memory topology forces a
-> flatview rebuild as its section is read, and the cost of a rebuild grows
-> with the number of regions in the machine. A device which does this once
-> per vCPU therefore scales badly on the destination.
-> 
-> Add post_load_deferrable. A vmsd which sets it has its hook queued during
-> the load and run once the stream has been consumed, in the order the
-> hooks would have fired, with the whole drain sharing one memory
-> transaction.
-> 
-> Opt-in, because deferral is not free in general. A hook which can fail
-> must not be deferred: failing after the stream is consumed means the
-> source has already been told the migration succeeded, and may release a
-> guest the destination never started. A hook which reads guest memory must
-> not be deferred either, since the drain runs with the topology in flux.
-> Postcopy is excluded because its listen thread walks the same stream
-> concurrently.
-> 
-> CC: Peter Xu <peterx@redhat.com>
-> CC: Fabiano Rosas <farosas@suse.de>
-> CC: Paolo Bonzini <pbonzini@redhat.com>
-> CC: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
-> ---
->  include/migration/vmstate.h |  40 +++++++++++++
->  migration/savevm.c          |  23 ++++++++
->  migration/vmstate.c         |  67 +++++++++++++++++++++-
->  tests/unit/test-vmstate.c   | 111 ++++++++++++++++++++++++++++++++++++
->  4 files changed, 239 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index e72c3fae9a..16045319d5 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -303,6 +303,29 @@ struct VMStateDescription {
->      bool (*pre_load_errp)(void *opaque, Error **errp);
->      int (*post_load)(void *opaque, int version_id);
->      bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
-> +
-> +    /*
-> +     * Run .post_load() once the whole stream has been loaded rather than
-> +     * as this section is read, so that it sees a machine whose devices
-> +     * have all been restored, and so that several of them can share the
-> +     * work they would each repeat.
-> +     *
-> +     * Three things must hold of a hook before it may be deferred.
-> +     *
-> +     * It must not fail. By the time the queue is drained the stream has
-> +     * been consumed, so a source may already have been told the migration
-> +     * succeeded and may have released the guest; there is nothing left to
-> +     * report a failure to. A hook which fails here is a bug in its vmsd
-> +     * and is fatal.
-> +     *
-> +     * Nothing else in the load may depend on what it does. The hooks run
-> +     * after every section has been read, so anything a later section needs
-> +     * to observe must not be produced here.
-> +     *
-> +     * It must not read guest memory or resolve an address space, because
-> +     * the drain runs as one batch with the memory topology in flux.
-> +     */
-> +    bool post_load_deferrable;
->      int (*pre_save)(void *opaque);
->      bool (*pre_save_errp)(void *opaque, Error **errp);
->  
-> @@ -1299,6 +1322,23 @@ bool vmstate_save_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
->  
->  bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque);
->  
-> +/**
-> + * vmstate_post_load_defer_begin: Queue deferrable post_load hooks
-> + *
-> + * Between this and vmstate_post_load_defer_finish(), a post_load hook whose
-> + * vmsd sets post_load_deferrable is recorded rather than called. Hooks are
-> + * queued in the order they would have run.
-> + */
-> +void vmstate_post_load_defer_begin(void);
-> +
-> +/**
-> + * vmstate_post_load_defer_finish: Stop deferring and drain the queue
-> + * @run: run the queued hooks, in order; when false, discard them
-> + *
-> + * Returns false if a hook failed, in which case the rest are discarded.
-> + */
-> +bool vmstate_post_load_defer_finish(bool run, Error **errp);
-> +
->  #define  VMSTATE_INSTANCE_ID_ANY  -1
->  
->  /* Returns: 0 on success, -1 on failure */
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 4b590ea672..2352dcf684 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -3128,6 +3128,7 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
->  {
->      MigrationState *s = migrate_get_current();
->      MigrationIncomingState *mis = migration_incoming_get_current();
-> +    bool defer_post_load;
->      int ret;
->  
->      if (qemu_savevm_state_blocked(errp)) {
-> @@ -3147,7 +3148,29 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
->  
->      cpu_synchronize_all_pre_loadvm();
->  
-> +    /*
-> +     * The postcopy listen thread walks the same stream concurrently, so the
-> +     * queue would need locking and a defined owner for the drain.
-> +     */
-> +    defer_post_load = !migrate_postcopy_ram();
+On 10/1/26 21:46, Peter Xu wrote:
+> On Fri, Sep 11, 2026 at 04:23:43PM +0200, Denis V. Lunev wrote:
+>> Restoring a big Windows guest spends most of its destination-side time in
+>> post_load hooks which do nothing but move memory regions around. Each one
+>> ends a memory transaction, and a transaction commit re-renders every
+>> flatview it touches at a cost which grows with the number of regions in
+>> the machine. A hook which runs once per vCPU therefore pays that render
+>> once per vCPU, and the machine gets slower to migrate the bigger it is.
+>>
+>> The Hyper-V SynIC is the case that hurts: restoring the synthetic
+>> interrupt controller maps a message page and an event page per vCPU, so a
+>> 64-vCPU guest forces 128 remaps, each with its own rebuild, while the rest
+>> of the stream is still being read.
+> This is partly a known issue, not from Hyper-V, but from virtio mmio
+> regions.. please see:
+>
+> https://wiki.qemu.org/ToDo/LiveMigration#Optimize_memory_updates_for_non-iterative_vmstates
+> https://lore.kernel.org/r/20230317081904.24389-1-xuchuangxclwt@bytedance.com
+>
+> I believe we also thought about do MR update per-device, so batching but
+> smaller scale, easier to make sure no illegal access to a stale flatview.
+>
+> So in general, I agree this approach might be the right way to do, which is
+> to shrink the transaction to be smaller than "batch everything".. as what
+> Chuang used to do.  I still have some pure questions inline.
+>
+>> Patch 1 adds post_load_deferrable. A vmsd which sets it has its hook
+> Nit, IMHO if so it needs to be called "deferred", as "deferrable" implies
+> the defer is optional.
+>
+>> queued during the load and run once the stream has been consumed, in the
+>> order the hooks would have fired, with the whole drain sharing one memory
+>> transaction. Patch 2 sets it on the SynIC subsection.
+>>
+>> It is opt-in rather than automatic, and the three preconditions are
+>> spelled out on the field: the hook must not fail, nothing later in the
+> Actually, I _think_ maybe it can still fail.. IIUC source QEMU only dies if
+> it receives shut from migrate_send_rp_shut(), which is after the deferred
+> loads at least with the current change.  Worth check..
+>
+>> load may depend on what it does, and it must not read guest memory or
+>> resolve an address space.
+> Yes, but I think this is partial of the whole picture: IIUC if this
+> deferred hook may inject some MRs that may be accessed by other VMSD
+> loaders, or anything (including hard-coded loading process), I think it's
+> an issue too.
+>
+> So personally I don't like this API very much yet on how it was defined;
+> it'll be very hard to be used right unless we fully understand what will
+> happen..
+>
+> I wonder if there's better way to define the API to be clearer.
+>
+> Since all the known issues about this is about MR updates: virtio MMIO
+> regions, hyper-v, pci bar/bridge (mentioned below), I wonder if this can be
+> something dedicated to MR updates, and maybe it doesn't need to be
+> "deferred", just grouped together properly into one transaction, which can
+> happen in the middle too or maybe it doesn't matter much. Then it applies
+> some form of limitation to what can be split out from normal VMSD flow. The
+> current API relies on allowing to defer anything, which is fine but very
+> hard to control, and we may face tricky bugs if users grows but when
+> they're not used right..
+>
+>> A hook which breaks the first is fatal rather
+>> than silently reported, because by drain time the source may already have
+>> been told the migration succeeded.
+>>
+>> Deferring is not free in general, which is the other reason it is opt-in.
+>> Deferring the APIC post_load, whose cost is a synchronous run_on_cpu per
+>> vCPU rather than a memory remap, moves 3 ms out of the section walk and
+>> pays about 9 ms of drain for it. Deferral helps a hook which repeats
+> I'm just curious: why something will take 9ms if deferred, even if it used
+> to take 3ms?  I think I misread something, but I can't tell myself.
+>
+>> topology work; it makes a hook which does cross-thread work worse.
+>>
+>> Measurements
+>> ------------
+>>
+>> Destination-side non-iterable load, ie. the sum of vmstate_downtime_load
+>> over non-iterable sections, on a guest which has actually programmed its
+>> Hyper-V state. Five interleaved rounds per point on an otherwise idle
+>> host, twice; medians, with the spread across all ten rounds.
+>>
+>>   upstream                          377 ms   (363-400)
+>>   + pci mapping transactions        247 ms   (242-255)
+>>   + this series                      96 ms   (86-97)
+> Definitely a great improvement.  I think we need this, just one way or
+> another. I may have some other trivial comments later in the patch.  Thanks
+> for working on it.
 
-Just to mention we have two other paths that will enable this too:
+Right now I have series staying at 32 ms with boost to ordinary
+QEMU startup, that is why I have said that I'll send follow up.
+This patch will be included along as flatview rebuild on startup.
 
-qmp_xen_load_devices_state
-load_snapshot
+Anyway, right now I need to understand and eat your notes to
+send v2. This just intersects with upcoming release of downstream,
+but this change is in my priority list and I hope to finish
+v2 early next week.
 
-It looks all fine at least considering the hyper-v scope, but still raise
-this in case it's not expected.
-
-The other thing is, IMHO we should enable this feature for both precopy and
-postcopy.  Postcopy loads that in the package, please kindly share more on
-the above comment on disabling it; I didn't directly get that part.
-
-> +    if (defer_post_load) {
-> +        vmstate_post_load_defer_begin();
-> +    }
-> +
->      ret = qemu_loadvm_state_main(f, mis, errp);
-> +
-> +    if (defer_post_load) {
-> +        /*
-> +         * A deferrable hook only rearranges the memory topology, so the
-> +         * whole drain can share one flatview rebuild.
-> +         */
-> +        memory_region_transaction_begin();
-
-IMHO we should document this behavior in the "deferrable" interface above,
-this is important knowledge to know that the whole deferred vmsd loads are
-wrapped with boosted transaction depths and all memory access is illegal.
-
-AFAIU, that partly supplement my other reply, that the whole thing is not
-about "defer" or not, but about "batching MR update".  It can still be at
-the end of course, but it's not the major goal, the major goal is about
-memory updates.
-
-Thanks,
-
-> +        if (!vmstate_post_load_defer_finish(ret == 0, errp)) {
-> +            ret = -EINVAL;
-> +        }
-> +        memory_region_transaction_commit();
-> +    }
-
--- 
-Peter Xu
-
+Thank you for you time,
+    Den
 
