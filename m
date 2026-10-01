@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263C5CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 19:39:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B8DCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 19:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCMbu-0005cC-46; Thu, 01 Oct 2026 15:38:30 -0400
+	id 1xCMdF-000632-3h; Thu, 01 Oct 2026 15:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xCMbr-0005bj-US
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:38:27 -0400
+ id 1xCMd7-00062I-KT
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:39:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xCMbq-0004LP-5n
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:38:27 -0400
+ id 1xCMd4-0004R9-RV
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:39:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790883503;
+ s=mimecast20190719; t=1790883581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rDT2Rdq8znCutx4vr9yAF0EcigZ00vQSOtF0Mcd82wY=;
- b=FKFRHZPsWhGDvANVif+mwrWoTvuHB1w9M3WCBUm+bLjbnW7MOZPkHa+QbMqijQaumY5jBG
- Z6ETRB76OOpisoFRktfrigDvzNGfohffUJQaDlpgoVtPh4D2jtwMnvjl8Omvn1s7B1Qlxv
- H+Fmyjo0uyXH2GdvMvzLet9MwvbcZWU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lgD/5Fz7JtIStuuhZPmhp3hbQocabtUF5be3NFPZ0V0=;
+ b=PWt3G8cEqQAxYI4qEBSScDWm2Oy/YKxgGOFer34V2ZxEcKoi+s8RvHrCGN7P/XfpZMlm4d
+ c8yCsmNWEF5dvsuusAbfdnrPkFoOSz6HFb9RtJU2G7FI2axTxPUaEUiwtKx48F8gC/wupz
+ oP8W8mZGBHPbbAsYTUM3LnJRgYBl0ao=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-KG7g2nZ0Om6jajUHQE8eKg-1; Thu,
- 01 Oct 2026 15:38:20 -0400
-X-MC-Unique: KG7g2nZ0Om6jajUHQE8eKg-1
-X-Mimecast-MFC-AGG-ID: KG7g2nZ0Om6jajUHQE8eKg_1790883499
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-BEbWQIFHM9-DX2MuacNg8w-1; Thu,
+ 01 Oct 2026 15:39:40 -0400
+X-MC-Unique: BEbWQIFHM9-DX2MuacNg8w-1
+X-Mimecast-MFC-AGG-ID: BEbWQIFHM9-DX2MuacNg8w_1790883579
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F8B51800613; Thu,  1 Oct 2026 19:38:19 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A4EA19772E6; Thu,  1 Oct 2026 19:39:39 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C73691800473; Thu,  1 Oct 2026 19:38:18 +0000 (UTC)
-Date: Thu, 1 Oct 2026 15:38:17 -0400
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D729F1800446; Thu,  1 Oct 2026 19:39:38 +0000 (UTC)
+Date: Thu, 1 Oct 2026 15:39:37 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/char/virtio-serial: return throttled descriptor on
- port close
-Message-ID: <20261001193817.GA378684@shajnocz.csb>
-References: <20260928152648.249959-1-marcandre.lureau@redhat.com>
+To: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, nsoffer@redhat.com,
+ Eric Biggers <ebiggers@google.com>
+Subject: Re: [PATCH] file-posix: add statx(STATX_DIOALIGN) support
+Message-ID: <20261001193937.GB378684@shajnocz.csb>
+References: <20260922154351.226540-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260928152648.249959-1-marcandre.lureau@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <20260922154351.226540-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,52 +84,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 28, 2026 at 07:26:48PM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Tue, Sep 22, 2026 at 11:43:51AM -0400, Stefan Hajnoczi wrote:
+> Linux v6.1 commit 825cf206ed51 ("statx: add direct I/O alignment
+> information") added an interface to fetch O_DIRECT alignment values for
+> block devices and file systems.
 > 
-> When the host chardev disconnects while the output queue is throttled,
-> virtio_serial_close() calls discard_throttle_data() which detaches the
-> in-flight element with virtqueue_detach_element(). This silently removes
-> the descriptor without placing it on the used ring, so the guest never
-> sees the write complete and the descriptor leaks.
+> Prefer STATX_DIOALIGN to older interfaces and probing, but keep them as
+> fallbacks in case STATX_DIOALIGN cannot provide the information.
 > 
-> Add return_throttle_data(), which pushes the element back via
-> virtqueue_push() instead of detaching it, and call it from
-> virtio_serial_close().
-
-Thanks for fixing this!
+> STATX_DIOALIGN support as of Linux 6.1:
+> - btrfs: no
+> - ext4: yes
+> - XFS: yes
+> - block devices: yes
+> - dm-crypt: yes
 > 
-> Fixes: d4c19cdeeb2f ("virtio-serial: add missing virtio_detach_element() call")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> This change fixes #1290 ("IO alignment probing delivers incorrect
+> results on Linux when used with e.g. dm-crypt") on Linux host kernel
+> version 6.1 or later by avoiding the problematic probing code in
+> raw_probe_alignment(). It would be nice to fix the probing code but I
+> have not been able to reproduce it. Stable/LTS distros ship Linux 6.1+,
+> so the number of users without STATX_DIOALIGN is becoming small.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1290
+> Cc: Eric Biggers <ebiggers@google.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 > ---
->  hw/char/virtio-serial-bus.c | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
+> v3:
+> - Rebase and update commit description
+> v2:
+> - Make sure that XFS_IOC_DIOINFO takes priority over logical blocksize [Eric Biggers]
+> ---
+>  block/file-posix.c | 56 +++++++++++++++++++++++++++++++---------------
+>  1 file changed, 38 insertions(+), 18 deletions(-)
+
+Ping
+
 > 
-> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-> index 623e9f17a83e..008cad1b625c 100644
-> --- a/hw/char/virtio-serial-bus.c
-> +++ b/hw/char/virtio-serial-bus.c
-> @@ -158,6 +158,20 @@ static void discard_throttle_data(VirtIOSerialPort *port)
->      }
->  }
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 9aad156aad4..0dedd090068 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -426,28 +426,48 @@ static void raw_probe_alignment(BlockDriverState *bs, int fd, Error **errp)
 >  
-> +/*
-> + * Return a partial element held back by throttling to the guest via
-> + * the used ring, so the guest driver can reclaim the descriptor.
-> + * Unlike discard_throttle_data() this must be used when the virtqueue
-> + * stays live (port close) rather than being reset.
-> + */
-> +static void return_throttle_data(VirtIOSerialPort *port)
-> +{
-> +    if (port->elem) {
-> +        virtqueue_push(port->ovq, port->elem, 0);
-
-virtio_notify() is missing here. discard_vq_data() calls virtio_notify()
-as long as the vq is set up, so in practice the guest will receive a
-notification. However, this is a latent bug and the code isn't
-performance-critical, so I suggest adding an explicit virtio_notify()
-call to prevent future issues.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>      bs->bl.request_alignment = 0;
+>      s->buf_align = 0;
+> -    /* Let's try to use the logical blocksize for the alignment. */
+> -    if (probe_logical_blocksize(fd, &bs->bl.request_alignment) < 0) {
+> -        bs->bl.request_alignment = 0;
+> +
+> +#if defined(__linux__) && defined(STATX_DIOALIGN)
+> +    struct statx stx;
+> +
+> +    /*
+> +     * Linux 6.1 introduced an interface for both block devices and file
+> +     * systems. The system call returns with the STATX_DIOALIGN bit cleared
+> +     * when the information is unavailable.
+> +     */
+> +    if (statx(fd, "", AT_EMPTY_PATH, STATX_DIOALIGN, &stx) == 0 &&
+> +        (stx.stx_mask & STATX_DIOALIGN)) {
+> +        bs->bl.request_alignment = stx.stx_dio_offset_align;
+> +        s->buf_align = stx.stx_dio_mem_align;
+>      }
+> +#endif /* defined(__linux__) && defined(STATX_DIOALIGN) */
+>  
+>  #ifdef __linux__
+> -    /*
+> -     * The XFS ioctl definitions are shipped in extra packages that might
+> -     * not always be available. Since we just need the XFS_IOC_DIOINFO ioctl
+> -     * here, we simply use our own definition instead:
+> -     */
+> -    struct xfs_dioattr {
+> -        uint32_t d_mem;
+> -        uint32_t d_miniosz;
+> -        uint32_t d_maxiosz;
+> -    } da;
+> -    if (ioctl(fd, _IOR('X', 30, struct xfs_dioattr), &da) >= 0) {
+> -        bs->bl.request_alignment = da.d_miniosz;
+> -        /* The kernel returns wrong information for d_mem */
+> -        /* s->buf_align = da.d_mem; */
+> +    if (!bs->bl.request_alignment) {
+> +        /*
+> +         * The XFS ioctl definitions are shipped in extra packages that might
+> +         * not always be available. Since we just need the XFS_IOC_DIOINFO ioctl
+> +         * here, we simply use our own definition instead:
+> +         */
+> +        struct xfs_dioattr {
+> +            uint32_t d_mem;
+> +            uint32_t d_miniosz;
+> +            uint32_t d_maxiosz;
+> +        } da;
+> +        if (ioctl(fd, _IOR('X', 30, struct xfs_dioattr), &da) >= 0) {
+> +            bs->bl.request_alignment = da.d_miniosz;
+> +            /* The kernel returns wrong information for d_mem */
+> +            /* s->buf_align = da.d_mem; */
+> +        }
+> +    }
+> +#endif /* __linux__ */
+> +
+> +    /* Let's try to use the logical blocksize for the alignment. */
+> +    if (!bs->bl.request_alignment) {
+> +        if (probe_logical_blocksize(fd, &bs->bl.request_alignment) < 0) {
+> +            bs->bl.request_alignment = 0;
+> +        }
+>      }
+> -#endif
+>  
+>      /*
+>       * If we could not get the sizes so far, we can only guess them. First try
+> -- 
+> 2.55.0
+> 
 
 
