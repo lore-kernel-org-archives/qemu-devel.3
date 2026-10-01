@@ -4,146 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941C3CA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 12:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313B8CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 12:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCFWF-0002Vj-BR; Thu, 01 Oct 2026 08:04:13 -0400
+	id 1xCFZd-0003aQ-Kg; Thu, 01 Oct 2026 08:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCFVw-0002NN-SC
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 08:03:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xCFZY-0003Zi-JN
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 08:07:36 -0400
+Received: from smtpout7.mo537.mail-out.ovh.net ([51.210.91.26])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCFVu-0003JX-3y
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 08:03:52 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6916xNBg1932325
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 12:03:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FyWQZBIDMMX0sgWn/UaLxEh8Xnt9Yh8i1P6UdPwFnwk=; b=Kk1Xc7+g/HKFpQrV
- ZCGuELGWT+QDxYOC2vTN8QIi1FF3D6dtvG9JcETtyKN17/WqtH1qbsFGvvckY/mP
- D6zAGTs9LNSUJXS6cZDx/hkViuoRMPOthrd76kkE4gIo+Y4IU7B8mKqg5ZwcHrCi
- jfEzPr4l/Tgw2e5HWbMNsk7n2mz/S9ASKN3Z/j56lrsGDYVMzuMldjifBAW3uhtz
- Xi/cKth7XQmC0uK+k+vb4jjgjO0ckkbWpVrm+EZCFziTsffk4I7pLtXc26sZMu0h
- obft9NRpTVYQqPTgSpV+QFcR+6tZfUCppqT/DTYW9l+Z6PKdiCTr6DSFTxHLpXqr
- PND0Qw==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1bh5aua6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 12:03:42 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-7bf6e54f4cdso856695137.2
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 05:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790856218; x=1791461018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FyWQZBIDMMX0sgWn/UaLxEh8Xnt9Yh8i1P6UdPwFnwk=;
- b=e3GqNzaqODrrv+Skk9dvIOlL3j4ibkmlveD2RaZzz8rTg0deK/NIJeeEWk07NuA21S
- iS9ogg9H3HHBSjVEkMJtZcQ8Efj7ZRco/1btnEESlPZC5Lpxem2vYgvMEUVC8Ie/SMaT
- lRlptGkMgIRPde+573wK9WSjyqnf7sqGT6ezfEur4iFSUerVagdgn8O7LJ0/AXxq93pc
- FBg7+rUYFufAnwGKo88y6zztAUYlpP8RzgyICWYGpyCtt0JSapvDvWffHRB0TYHuA4RP
- d+mphG4gXtZUx1XMDqem7qszMIrzXdkyTnOxAm/SrzuDSMQILjKOhIJjkCV7osGdb79q
- c9Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790856218; x=1791461018;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=FyWQZBIDMMX0sgWn/UaLxEh8Xnt9Yh8i1P6UdPwFnwk=;
- b=wS0WaE83toPAa3zPF6SNk5qyzDOB1nE7JZvIfiZgjUBrU8POZj8MT+bGJWBy64tuEy
- b66CXlBWRkesVwz1h1yI6IZiaj7WRYqqR65kMvgLQeBkTx1z0qegws9O1n64ub+Uwo4U
- QyYUHcAvhXtAwhAat0+d+EaV409jh8TDTy61QgKaUc0T/I0lbIN4yPSwRwyOngW77Wrq
- GzzUEe474q0TY/Q5XFzBSWEfCf+i4xl5kxGfrAQtbwOxof4CS2n3vTIVn2e1ns8fevhx
- lxbDvW9qjQ24lYXFk5CN8wJIPq0Qn3RMQNT8Hczdkym+WSjh6BbOphvmq+apPjbAaAkX
- qlJw==
-X-Gm-Message-State: AFq9FYKfX0xWNLk0p2Iz3SI+7ZAvPF7H/Xpd/xgxGwpmsuIsChuzkkda
- 5XEqkXyVhv2bc+ud8zcsxHRlhC1OORQir6nXBlngeBO/RYv7d3Y6YsfNsVQrjC+GP00/peMu9bl
- L/Nb81kowoBn1OPV7tplHuxjXWDj6B+eE4HUqNFkqwvNyuIqWhq5YohuBXw==
-X-Gm-Gg: AYBFou0LlzjZDv712oWPnvV83yK3Jhul0QLvy2SUT/WZF3UdR4vjZBTvINP9BAMb7Qm
- 0GhXSk84G6zSSIlk0Qg/5eUjjp0EfvNeCBahaY0z0E8aBN232WuEet5rVKhiST0/Z3LSZoHtJN3
- WMcbEKY1doFHYVy0qrHw7n8b3gWFhDB1jT5FbNUvaYV1IjSRehI8eQ623e9vPuCElKS2o1zy4KC
- 40zxGtSQrZHrd7CyE35EBNeGRFP5KrpGiISjpnkkOujEnKKFhCOjCJcS77H6+KOlU9iLS10EhRQ
- wMat3jrUz3SP6Fik5AFrJGxM4y22yaYApwB1KaaUEIs49QpGKjeKNTvVTqBqGiFi2aC6hAjiZoo
- QxwxFnuvSRU2gCsAfbiUQqw==
-X-Received: by 2002:a05:6102:2ad0:b0:7ba:5d33:7ff6 with SMTP id
- ada2fe7eead31-7be72ab783amr1422827137.11.1790856218345; 
- Thu, 01 Oct 2026 05:03:38 -0700 (PDT)
-X-Received: by 2002:a05:6102:2ad0:b0:7ba:5d33:7ff6 with SMTP id
- ada2fe7eead31-7be72ab783amr1422815137.11.1790856217750; 
- Thu, 01 Oct 2026 05:03:37 -0700 (PDT)
-Received: from [10.111.137.66] ([212.136.9.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01fdfcacdsm74245e9.1.2026.10.01.05.03.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 05:03:36 -0700 (PDT)
-Message-ID: <4d1e3aa2-f725-405b-88a7-d2ad47e054d8@oss.qualcomm.com>
-Date: Thu, 1 Oct 2026 14:03:33 +0200
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xCFZV-0003qu-Ir
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 08:07:36 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4hwVyx542xz48nB;
+ Thu,  1 Oct 2026 12:07:21 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu,  1 Oct 2026 12:07:21 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.70])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hwVyx095mz1xrb;
+ Thu,  1 Oct 2026 12:07:21 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id B6B2F202C1D; 
+ Thu,  1 Oct 2026 12:07:19 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-106R006e6afaedb-9ddf-4640-bbf9-772595ef9fa5,
+ B87720B9A20974DAEE7745F8F0A851FD039C1C56) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <0c9ae93c-cd18-4552-9969-0f01568800f3@kaod.org>
+Date: Thu, 1 Oct 2026 14:07:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/11] target/arm: Call arm*_cpu_do_interrupt directly
- instead of via TCGCPUOps
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
- <20260902152044.31291-2-philmd@oss.qualcomm.com>
- <CAFEAcA-w24c71SHh1Sr7JkO5RTVK7THH8GP_ixVvnWiBXWQMdg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA-w24c71SHh1Sr7JkO5RTVK7THH8GP_ixVvnWiBXWQMdg@mail.gmail.com>
+Subject: Re: [PATCH v1 01/11] hw/arm/aspeed_ast2400: Use unimp array and table
+ for unimplemented devices
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Maydell Peter <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>
+References: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
+ <20260930072501.2612119-2-jamin_lin@aspeedtech.com>
+ <941d7bb6-3205-44cf-8d76-ffbb322a6f4e@oss.qualcomm.com>
+ <0cd87753-da91-44ed-a629-43099bfb820d@kaod.org>
+ <1197c1ca-14d5-48c1-b497-0c03a781c258@oss.qualcomm.com>
+ <330f9a96-4508-4db1-a8a0-fa36c57ed093@kaod.org>
+ <672CD4C9-8FCA-4E5A-B610-3F9C51B986B6@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <672CD4C9-8FCA-4E5A-B610-3F9C51B986B6@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: IlrqlFI4JbuToHv1yL0GZLapsVrkB_ye
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA0NyBTYWx0ZWRfXwnrUmHaylxwO
- ipL8DC7yl24EGMwZMmJ1Fl2Wv64C024PZLf9PnCfzk8xzkmWLDYrdqjf845Fx5Ifjdew5Fz5Gqs
- 8xw+exUo61uRvOTj2O9dcSzGMkwRjZY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA0NyBTYWx0ZWRfX/kZzHul2ooPb
- BwoRpIiHstFtID73jqRuhdpeoI65bcBVMLYRD17toopJqY+hJsHKNkG3eCbNZvT3WkdNE1mZxGp
- B8yDN6xmbZ3pCv85l9+nX7YQpHfFrEmAn74kfy6TpNSHRR+R84Aw5lB//eQRLmwbvfBe7zIewAB
- r6B4hOaASpn++7SBDBHvbIEbeTNjsyoX2jwJRkkN7RKcl3zzXi4hI/Qg9z3ZgRPfAoaKLcoLMWy
- sYIIM17J0eQ5nWVVvtgUiLYVmcQF4dReWYfrpmbEPtRrKyotRV2SJD7OYVq7Fbgy2bkx18qjesi
- GPudIVD3HBaFaT4NNouCrNaw1C2kxJaD3gFewMZzTC1l2f9n5OwKaY32w7ugA510PazLIUjemQr
- mQBoLKcSRtfxQjs/acQB1k6MB0UZFKxJr7MkGB8GL2wce1nFAuX0I87EZgykF4EIjp02dS3PzLy
- PSJkum3VBc/RhlVhzXw==
-X-Authority-Analysis: v=2.4 cv=NuxE4MdJ c=1 sm=1 tr=0 ts=6abe4c1e cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=PwczH0WBcc6DY_pivE8A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: IlrqlFI4JbuToHv1yL0GZLapsVrkB_ye
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610010047
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+x-ovh-tracer-id: 5546464416201681980
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFo95sMjzSY7Ea8TjgdeiRWlLAQpr582piUiKXpTyl5sigCLhS5Fa04elxR7y8mHcsY/edaU0Qk/r/Uh6fc+/7vrGp4X1KarFZnCxsJYUu+ZD8RBRecpu884JVp/DN9/90gnJ9abOJxnnCdqJTiFGYJ4y7jCqs/OL++KIlQ1A/Rfr4unWXbq4gGRisfixUnr15aH8bs2Gxo6bBLioMqOfF27QLUtpoTnjswshzHbZDaXMN8JErFrISAJVlceFcwEJgoVu8zG3ThAbtsGQu05L2TlA5OyKvz/LBfk6SmqGkWYCqbVkluu5zqZUfUMX7ugGFZZS/x3pHNmgTvxmSu0dkGIVx0xXTSW82YCBtMnFTXDdRmRhGWzPRskE8dTdKhvcscOYX+p0UdWm/RxMnSVC+6TopUmtLxJLSjNyONrglqy6P0PBuNr3KCrq5Q92hdcbUunE4nTEFXmBGClaRlCs+eUK7xe/amC54lm0rPMDjOxxoVhssYQmgS55OMjfYHTsRcOgtUbMcqR8mpIyFhZBjk+Ob0DNnq4PhLckZuzqmTNohkQTcw2W8D02vZ7AlEluvg1CHgf9Q3yxSykn33QaLWewhi25G0Yi1SLW3zv5v0Zj7mD0t/JznjCAflykqb1WsP4JrXjMRXkVlyon7F+EZ6uFMsxfiX/3tt5+hM51AVJQ
+DKIM-Signature: a=rsa-sha256; bh=4qeKRVEbMgCxr8/XpYb+XaWMZj1N0vt3xMDb0BkFeas=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1790856443; v=1;
+ b=HscwjvUVRh13KpaCzNKt5M6iG94hRTuF2U72a9fyzBMtVr/1FCdUv6d7gi0rvn3mf8S6529S
+ qk3XfsrudHLd4B6PzzNrQZ/zZmKbWkqOK2X/cdJjcHtOV6uLtZa3ebc6tk6Bn3nc5rfM9sEzO0h
+ BPz/A4qFRAku1kTuSJc2jQpGaHwam3hxpJFthNlS1GMH7IdDov8hjDeIato+CF+EwVMEkOhWQs4
+ 8ja9KqZl1V+5M37zAqNP+rxqYgKeBLZ/0QqyAVx/pI3E6uL85KHsy69SJu3R2LsocPrDan5zpGw
+ EYanWCbDbgXGDZ3Qed5a0+F08rQpkpdjnlujSFw+dvkxA==
+Received-SPF: pass client-ip=51.210.91.26; envelope-from=clg@kaod.org;
+ helo=smtpout7.mo537.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,64 +142,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-08 18:09, Peter Maydell wrote:
-> On Wed, 2 Sept 2026 at 16:20, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> The TCGCPUOps.do_interrupt handler is a target-specific
->> callback installed for use by target-agnostic TCG core methods.
->> Target-specific code should not dispatch through this indirection;
->> call the ARM implementation directly instead.
->>
->> Reported-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> ---
->>   target/arm/cpu-irq.c     | 2 +-
->>   target/arm/tcg/cpu-v7m.c | 2 +-
->>   2 files changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/arm/cpu-irq.c b/target/arm/cpu-irq.c
->> index 883e8a176c3..e8a6520e5ca 100644
->> --- a/target/arm/cpu-irq.c
->> +++ b/target/arm/cpu-irq.c
->> @@ -270,7 +270,7 @@ bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->>    found:
->>       cs->exception_index = excp_idx;
->>       env->exception.target_el = target_el;
->> -    cs->cc->tcg_ops->do_interrupt(cs);
->> +    arm_cpu_do_interrupt(cs);
->>       return true;
->>   }
->>   #endif /* CONFIG_TCG */
->> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
->> index 48b31d5eac8..502998dbd1c 100644
->> --- a/target/arm/tcg/cpu-v7m.c
->> +++ b/target/arm/tcg/cpu-v7m.c
->> @@ -34,7 +34,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->>       if (interrupt_request & CPU_INTERRUPT_HARD
->>           && (armv7m_nvic_can_take_pending_exception(env->nvic))) {
->>           cs->exception_index = EXCP_IRQ;
->> -        cs->cc->tcg_ops->do_interrupt(cs);
->> +        arm_v7m_cpu_do_interrupt(cs);
->>           ret = true;
->>       }
+On 10/1/26 13:51, Jamin Lin wrote:
 > 
-> This works because we have separate cpu_exec_interrupt
-> methods for M-profile and A/R-profile, so we can drop the
-> indirection. If we had anywhere where we were trying to
-> do "call the appropriate do_interrupt function" from
-> code that's agnostic to M vs A/R this wouldn't work, but
-> happily we don't.
 > 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Thanks for the clarification, I amended:
+>> Cédric Le Goater <clg@kaod.org> 於 2026年10月1日 下午3:41 寫道：
+>>
+>> ﻿On 9/30/26 14:16, Philippe Mathieu-Daudé wrote:
+>>> On 30/9/26 13:50, CÃ©dric Le Goater wrote:
+>>>>> Note to Peter: I really think keeping duplicating the
+>>>>> UnimplementedDeviceConfig structure is a basic software
+>>>>> development antipattern. Could you reconsider your objection?
+>>>> What's the background ?
+>>> I think that was discussed on IRC, the only ref on the list is:
+>>> https://lore.kernel.org/qemu-devel/CAFEAcA_ob6mHqfAAM9iAMae5vfxaYhmcqkk-gJH+s1mHuvFp8g@mail.gmail.com/
+>>> create_unimplemented_device() calls qdev_create() and allocate on the
+>>> heap, my motivation was to have another helper for in-place init (when
+>>> the UnimplementedDeviceState state is embedded in the parent). Now we
+>>> ended with such helpers like aspeed_mmio_map_unimplemented() which
+>>> realize in place, make_unimp_dev() and create_unimp() init and realize
+>>> in place and Jamin adds yet another pattern. While all are valids,
+>>> I'd rather unify.
+>>
+>> Could an array such as  :
+>>
+>> static const AspeedUnimpDevice aspeed_soc_ast2700_unimp_devs[] = {
+>>    { "dpmcu",  "aspeed.dpmcu",  ASPEED_DEV_DPMCU,  0x00040000 },
+>>    { "iomem",  "aspeed.io",     ASPEED_DEV_IOMEM,  0x00FE0000 },
+>>    { "iomem0", "aspeed.iomem0", ASPEED_DEV_IOMEM0, 0x01000000 },
+>>    { "iomem1", "aspeed.iomem1", ASPEED_DEV_IOMEM1, 0x01000000 },
+>> };
+>>
+>> be defined at the class level of the SoC and handled automatically ?
+>>
+>> I guess would need some kind on common SoC model in that case.
+>>
+>> C.
+>>
+> Hi Cédric,
+> 
+> I will resend v2 and rework the design along these lines.
 
-   This is valid because M-profile and A/R-profile have separate
-   cpu_exec_interrupt() implementations. Code agnostic to these
-   profiles would still require an appropriate dispatch mechanism,
-   but no such caller exists here.
+Please wait a bit for Phil's feedback.
 
-Regards,
+> Defining the unimplemented devices as a class-level array and I will look
+> into introducing a common SoC helper/model for this.
 
-Phil.
+This could be a start for a more generalized solution.
+
+> Besides that, we found that patch 11 breaks the AST2700 I/O expander support.
+
+Ah. Did the functional catch this regression ?
+
+> The device list should include:
+> 
+> ASPEED_DEV_IOEXP0_I2C,
+> ASPEED_DEV_IOEXP1_I2C,
+> ASPEED_DEV_IOEXP0_I3C,
+> ASPEED_DEV_IOEXP1_I3C,
+> ASPEED_DEV_IOEXP0_INTCIO,
+> ASPEED_DEV_IOEXP1_INTCIO,
+> 
+> I will fix this in v2 as well.
+
+OK.
+
+Thanks,
+
+C.
+
+
 
