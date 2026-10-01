@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD9FCA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3D2CA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCISh-0000qI-6x; Thu, 01 Oct 2026 11:12:43 -0400
+	id 1xCIT9-000105-DL; Thu, 01 Oct 2026 11:13:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCISf-0000q3-OL
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xCISw-0000xo-6t
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCISe-0000uX-Bc
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:41 -0400
+ id 1xCISu-0000wz-Az
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790867559;
+ s=mimecast20190719; t=1790867574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sypz/BgWChTRSIxZdQNXlaZ+pSkAaVAKoHDa+kh8fWk=;
- b=DPAQqnjYVAdZjkl4T6vu3z1efKEsJStTxmqxa66/q+LQuVXI7fx9brAJUEU5CqBPq5tXuN
- 4xn4As7zM2lIrzvCFyQMoFbttqnV4UUBZGNACHeW7HMC5zSyeA1naXk+aNBT8GJ07LkWwj
- uRlMUg1jfoiYQIfYkxIiGtb3OaZ/YIs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=G7iaZPI6BqXig10NmgcIbIlFNdla2yflwu0xr4IggAU=;
+ b=E5Zgm3Nu3CLUAAVywCAne1k8lrLQA69tq3koi7QMaUBAmhddiqYpoXPnic1PI2NB9SRH15
+ JGcRUiTVyszDo0bnupn0HPw+pkNQgGlxrNJCS6wtmnSmydFg6Mqi+zi3hP+ICIEfyFrTRL
+ gU2iTx7o4KgbvwrIN4iu+Wd2SHCbwVc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-zG2bluv8NTqSV-b6MvbiEw-1; Thu,
- 01 Oct 2026 11:12:38 -0400
-X-MC-Unique: zG2bluv8NTqSV-b6MvbiEw-1
-X-Mimecast-MFC-AGG-ID: zG2bluv8NTqSV-b6MvbiEw_1790867557
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-0oz5XdI8NfONgy1WN2p8WA-1; Thu,
+ 01 Oct 2026 11:12:53 -0400
+X-MC-Unique: 0oz5XdI8NfONgy1WN2p8WA-1
+X-Mimecast-MFC-AGG-ID: 0oz5XdI8NfONgy1WN2p8WA_1790867572
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E36A1955F7B
- for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 15:12:37 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 732321955D80
+ for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 15:12:52 +0000 (UTC)
 Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C67D1956042; Thu,  1 Oct 2026 15:12:36 +0000 (UTC)
+ id 878821956042; Thu,  1 Oct 2026 15:12:51 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 05/20] trace: block use of "long int" for dtrace
-Date: Thu,  1 Oct 2026 16:12:13 +0100
-Message-ID: <20261001151228.3373747-6-berrange@redhat.com>
+Subject: [PATCH 17/20] trace: remove "disable" property from trace files
+Date: Thu,  1 Oct 2026 16:12:25 +0100
+Message-ID: <20261001151228.3373747-18-berrange@redhat.com>
 In-Reply-To: <20261001151228.3373747-1-berrange@redhat.com>
 References: <20261001151228.3373747-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,31 +87,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dtrace (or at least systemtap's fake "dtrace" binary) complains about a
-syntax error due to use of "long int", as it wants a bare "long" type
-Enforce this when parsing the trace-events files.
+The scenarios are not significant enough to justify its use
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/tracetool/__init__.py | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/display/trace-events  |  2 +-
+ target/hppa/trace-events | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 61ba6f1ba8c..6ed7cdd6ce4 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -177,6 +177,11 @@ def out(*lines, **kwargs):
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index c5e7e42af23..223a085922b 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -60,7 +60,7 @@ virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
+ virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
  
- def validate_type(name):
-     bits = name.split(" ")
-+
-+    if "long" in bits and "int" in bits:
-+        raise ValueError("Invalid use of 'int' typename in %s, "
-+                         "use 'long' alone" % name)
-+
-     for bit in bits:
-         bit = re.sub(r"\*", "", bit)
-         if bit == "":
+ # qxl.c
+-disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
++qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
+ qxl_create_guest_primary(int qid, uint32_t width, uint32_t height, uint64_t mem, uint32_t format, uint32_t position) "%d %ux%u mem=0x%" PRIx64 " %u,%u"
+ qxl_create_guest_primary_rest(int qid, int32_t stride, uint32_t type, uint32_t flags) "%d %d,%d,%d"
+ qxl_destroy_primary(int qid) "%d"
+diff --git a/target/hppa/trace-events b/target/hppa/trace-events
+index 01761a4559b..7c897610a9e 100644
+--- a/target/hppa/trace-events
++++ b/target/hppa/trace-events
+@@ -1,19 +1,19 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
+ # mem_helper.c
+-disable hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+-disable hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+-disable hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
+-disable hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
+-disable hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
+-disable hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
+-disable hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
+-disable hppa_tlb_ptlb(void *env) "env=%p"
+-disable hppa_tlb_ptlb_local(void *env) "env=%p"
+-disable hppa_tlb_ptlbe(void *env) "env=%p"
+-disable hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
+-disable hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
++hppa_tlb_flush_ent(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
++hppa_tlb_find_entry(void *env, void *ent, int valid, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p valid=%d va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
++hppa_tlb_find_entry_not_found(void *env, uint64_t addr) "env=%p addr=%08lx"
++hppa_tlb_get_physical_address(void *env, int ret, int prot, uint64_t addr, uint64_t phys) "env=%p ret=%d prot=%d addr=0x%lx phys=0x%lx"
++hppa_tlb_fill_excp(void *env, uint64_t addr, int size, int type, int mmu_idx) "env=%p addr=0x%lx size=%d type=%d mmu_idx=%d"
++hppa_tlb_fill_success(void *env, uint64_t addr, uint64_t phys, int size, int type, int mmu_idx) "env=%p addr=0x%lx phys=0x%lx size=%d type=%d mmu_idx=%d"
++hppa_tlb_itlba(void *env, void *ent, uint64_t va_b, uint64_t va_e, uint64_t pa) "env=%p ent=%p va_b=0x%lx va_e=0x%lx pa=0x%" PRIx64
++hppa_tlb_itlbp(void *env, void *ent, int access_id, int u, int pl2, int pl1, int type, int b, int d, int t) "env=%p ent=%p access_id=%x u=%d pl2=%d pl1=%d type=%d b=%d d=%d t=%d"
++hppa_tlb_ptlb(void *env) "env=%p"
++hppa_tlb_ptlb_local(void *env) "env=%p"
++hppa_tlb_ptlbe(void *env) "env=%p"
++hppa_tlb_lpa_success(void *env, uint64_t addr, uint64_t phys) "env=%p addr=0x%lx phys=0x%lx"
++hppa_tlb_lpa_failed(void *env, uint64_t addr) "env=%p addr=0x%lx"
+ 
+ # op_helper.c
+-disable hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
++hppa_tlb_probe(uint64_t addr, int level, int want) "addr=0x%lx level=%d want=%d"
 -- 
 2.55.0
 
