@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61253CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9633DCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCDJl-0005zI-1M; Thu, 01 Oct 2026 05:43:09 -0400
+	id 1xCDJU-0005wW-LE; Thu, 01 Oct 2026 05:42:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJk-0005z9-6X
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:08 -0400
+ id 1xCDJT-0005wO-4b
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:42:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCDJi-0003NC-RT
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:43:07 -0400
+ id 1xCDJR-0003M1-Iv
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:42:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790847786;
+ s=mimecast20190719; t=1790847767;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w28hSXZeuhAbARcvWDSGPsTK/BM8wdBwnzlkmd63weU=;
- b=Wm4NfbOwijnvxC8xw4d5ISQvB6hqGADtEpDw4uOpUMZU+yqNWY0/7dhTKrB8hUzla3zhJe
- O3udvKPD0vSFvl0w/QDYOC3yXgLutl5QnkzhbmgHU80mDCtD5UqMWeTl1uTH/TgDIuQNcZ
- bHjQ5aPb8XodIyrUSNADoqjsA0gyrh0=
+ bh=+IdoXXawdPEIK9qZoqDlm+JGdkIOkp2MHBcFmf3W1ng=;
+ b=SvdZjqzilNEwfiy0Bs/mttj3rGLrrbOak4XJXd3fHMaSTe05SuU0N4nvOgRlt9hCnuiWhk
+ cqayEuIdAMIS/riijGMo5eggQw71zqaIyseTev36zchhfsgyQLI69t96lhkI2gAtIplr+p
+ Ffcn842+IkJ1ELf8eYWBEquP9tyU3kw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-xv5HNH36NwWpfCsIGcBnwg-1; Thu,
- 01 Oct 2026 05:43:04 -0400
-X-MC-Unique: xv5HNH36NwWpfCsIGcBnwg-1
-X-Mimecast-MFC-AGG-ID: xv5HNH36NwWpfCsIGcBnwg_1790847784
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-2Owfu8JaNESjn8ir_j6x2g-1; Thu,
+ 01 Oct 2026 05:42:44 -0400
+X-MC-Unique: 2Owfu8JaNESjn8ir_j6x2g-1
+X-Mimecast-MFC-AGG-ID: 2Owfu8JaNESjn8ir_j6x2g_1790847763
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E14141835D41; Thu,  1 Oct 2026 09:43:03 +0000 (UTC)
+ id 6342A186BB0E; Thu,  1 Oct 2026 09:42:43 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23B6C30001A2; Thu,  1 Oct 2026 09:43:02 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 98C231800348; Thu,  1 Oct 2026 09:42:42 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 07/11] qemu-option: Add qemu_opts_parse_list_noisily
+Subject: Re: [PATCH v2 01/11] qemu-option: Use g_autofree when calling
+ get_opt_name_value()
 From: marcandre.lureau@redhat.com
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
  =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-In-Reply-To: <20260930221105.2262063-8-farosas@suse.de>
+In-Reply-To: <20260930221105.2262063-2-farosas@suse.de>
 References: <20260930221105.2262063-1-farosas@suse.de>
- <20260930221105.2262063-8-farosas@suse.de>
+ <20260930221105.2262063-2-farosas@suse.de>
 Date: Thu, 01 Oct 2026 13:42:36 +0400
-Message-Id: <179084775655.2086187.33391413113621003.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=508;
+Message-Id: <179084775648.2086187.2347645849423779624.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=411;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wiOE10Xcbg8EK3TprKQIL0BA123LYEvAKHZNuyMR6U0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvisPS6/YVEGTcin/A4HoORZn8u+Q+fRxP8b93
- rjq9xJs05SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar4rDwAKCRDa6OEJdZac
- 5eRCD/90s1GoCy2qT+25mH3FgoT3HxzOjpboAgnrZnFMuT8DZUg22r2BgdiIQLuFh6+SAgVMFhw
- bh71GcTWzA1DMbmvaFMJ5bsAfJim4eUrYpcgEqD2aLNkawLMcG9gNMx9dRJ2SSvvfqsrEf8hBqz
- mVRLq2x2Uo/xKC0fKkS7SqYdfj8FYOJ8T2UiENE2BCzz6bHs2HDgmsFk2FKWdULFasMCMoRI9RT
- UOCsODHvGzCMt6YAVGRb19qeofuOAMiOhU3rCVcjVceZw6EUsOhhfwy1+1K/E4pfCNKLZTAk168
- uuM4vk4/jE9f5oFsJkCO1DwozEoiM8nb4mKBgfJ9UuaiRFnKBjWoSbmTwqYivUMIv0fYaXJOO9g
- TncNM65A0DN60F87B+TUwu7S7eJEaGIQGLsSC8kt5zRN+qQpG3Cz388nkApyMsrYoCMd8SyEASn
- CZ35wkim/rEBM4txAe3rideJh04Mxd7n27c6QiRU1/eLJx38laASXieUFIb5eEBwz0ypLm0WUrn
- T/a8Wyn2OBCfvPltH/AuYYrn1tUmqMfhShjSCvc9sbtqWNg0qMArElQNFhPpv0/Wrz5WXZ7sqUf
- 6YboTMsV/VlgoprrXfUhTnFBUc/8SjAqcXlH43JbLpBVtm7/kEwvGQ+vF4Tz9g+tZUaIs1kKpJe
- QmkCoACMDjDIhug==
+ bh=9DPa/JwlLfyu6qoMIgSqBlVDo4Vp2dbRfagj0FkLG7o=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvisO3jzSWj3/ATlCU39pwqVLG8J6N7rPwtNDX
+ XYHENr2wgmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar4rDgAKCRDa6OEJdZac
+ 5VdED/0dCflFNOV3wjSp29kGn6K2QwQ2y0Dn6gl1npeAvx+AUDHq+D1Kv53C8x405OHi2kgTlaV
+ 05q6lkuwYzudrNn4mtQmYyroPfQeDXoabxaISJSH6cTcw9vkiZslI+3zqgdEqr5upwnOh395OXF
+ zGMFNUq+x+inw7IohFmkI9vg9Un7HjwWq11qemTWhXx3gEaGz1Oip4l3qUNkroJTz2OR9HwLGgM
+ 5MWSeS/HQbrE7aa3c/u6YjCxziJOjYXxQAa2LmCdL8UOswx016H3Kf/2a1gXzdi9vt0N/d92Iba
+ WO/XePueY3M+DzuYtajhPpIzm0m+eCB6R1pwUGQviqgWYszQKPF8imSkTDiCD6ILbP9v712pkTh
+ mNIjKmaW/sIN1ZnvfS3cvfpfsn5C4KWcnPy+zm90EccgK7UZ/Xow/EFa6mUbP8lJcy/9LqPPtyo
+ xUnhNzQDtVg1N4ToXWYKAycgZsxDAZlbWCukJlq6puptGrSI3P2YyOdQYxx2NSR4+Gef/mSjbQI
+ uL81yCCHe8kauX0GA6vP4ueqbglKmwnewaonRkqb+MQdPJYQSFJ0/UdbI8iPBXVb5y8nloLXJlV
+ AV5PavHrPiOtOAiUc1EPKt4FmH5+157144H00wEkqgZiHmMepkkJWYvW8aiurI+sCDY1muy0fm0
+ pGJTP20k3fz+xZQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,15 +105,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Sep 2026 19:11:01 -0300, Fabiano Rosas <farosas@suse.de> wrote:
-> Add a new function that takes a QemuOptsList pointer and expects
-> informative messages to be printed instead of returned in an Error
-> object. This makes the _noisily version simmetric with the
-> "non-noisily". The next patch will convert the callers to use the
-> appropriate version.
-> 
-> 
-> [...]
+On Wed, 30 Sep 2026 19:10:55 -0300, Fabiano Rosas <farosas@suse.de> wrote:
+> The get_opt_name_value function takes two pointer arguments that must
+> be freed by the callers when not used. This is a good situation to use
+> g_autofree. Steal the pointers that need to be passed forward.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
