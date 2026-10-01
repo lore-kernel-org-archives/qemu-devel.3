@@ -4,120 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFE6CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DFFCA5FA5
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCCDF-0004MP-Dx; Thu, 01 Oct 2026 04:32:21 -0400
+	id 1xCCDR-0004PQ-Dd; Thu, 01 Oct 2026 04:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xCCDB-0004M1-Ff
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xCCDN-0004NJ-AL
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:29 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xCCD9-00048P-4U
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790843534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
- b=K/3WeptSoOCZPCFUlTlPkLS36qpXPRP87a/+ShhOxLJzXlCy8vCC5vacSAip8AOsAP4UTk
- vNA1c0BODGysWdC79x+opMtxjqN4K1rPJdizNF4WS4gJLLUbPfS0nZgvddLrr/4rQA1jWQ
- Qm/QCxPixEwPCJaGiOFIxFJCuJ8BVrg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-eMU9pct7O2a-S5wNjkFhZA-1; Thu, 01 Oct 2026 04:32:13 -0400
-X-MC-Unique: eMU9pct7O2a-S5wNjkFhZA-1
-X-Mimecast-MFC-AGG-ID: eMU9pct7O2a-S5wNjkFhZA_1790843532
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a0023f2b97so23027925e9.2
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 01:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790843532; x=1791448332; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
- b=HDTs1SMshviUiWjCDsL87f1kmr3Iy/mGeiwwhqdPuIr55s8kPMNG67+DU/RqapRPW4
- Q0iGoj3dRAfNa0ArVIP6Z4NnHOtBQFsE79VS3xkovOgiMjesDD4u2Tm4wVqVbPnQRRpO
- zxSg2o0Fhe4QXWU206OJP2I/Z5H17aaCRfKYFVZI4JxKaoFwa8WqzF1w0d4W6aY/FtTV
- BE93Sjvvl9ipra0gDlyQ8xutnq3d+dsKjDjU2n8FVmG3usF3BkLMT6fg1GpUUP44HMZJ
- 4LTs19KePj9veSWS9ciZpY6XH4x2rV7+wXFw9/za+XRMNIeQ6LaM8OzNGFJQ8zxo0hFO
- ktHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790843532; x=1791448332;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
- b=wRhSlm8o7AyVYvFX6+gEpnKCz6li7tdmuDESPCWvOa39fu3NYHR50gC/Dmj/cUpIZu
- 8NEWZkFu+h2+kDN4P3QsrpheRG0SF1cAzkGJFwHpSZdX4gp/phP2411HGR0mzcR8YDTv
- pDY4GEPMaDfSgNa28nwaSHxXNf9UKsmw09HUmfAuL9KmZBB9yY7ChEzChJYj8qm703xf
- zmf/D0TO60hhEr7NoF/dvb6fzbvGWYpOd4a4FFvUui62t3zq4ewo7BiwnJkM+9Rhnl0A
- Q6KIZJRMD+4+wXtcD9DG9dBGaSPoPKkuh/7QN8RR1/bhTxcUH7UzWvQpOq2TF+CZgh1J
- 7zvQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy82B0o93CaS64Iy3X49+opDTx8mRxRRKmoj/qbwuGp8VX9NDvYhLw2rAXfGHJrKElJoqxMnk4KUJIY@nongnu.org
-X-Gm-Message-State: AFuF++kE426ICPuBZm1jG28wysZ7UHxgTUI1ib3MTLC/Z2sFcE69Iqrs
- +gtsC32PtCJQO9QtJirfivywU1NFUeSjPE37M9yaM/7CwUpbA8I9ZZul0pqMBmPmf5Lg/BbwIg1
- CeemKT7JC3l5Sd90w8wkN+SMsz11o0cKpVde0vxUrFy2Abkwe58OfnLf0
-X-Gm-Gg: AYBFou2DO9LOGkuLOmvMgAI8V2IO76D2BnstMD0v4D56JSEZEmGh+2TPCfoq2Tmosmt
- l89+lZxO+awG+TL3ifASaVFdyYTEK8HiKvrKtRDe43OASymwR0o11xUInLGjxoZuJJkJisQ2OX/
- SKaU5FZQInQ2sAUzt5Cnn/u9a3+3JhsLrauAj4QmAbxJgAHR/u3R0T5cnPL4JsgfAElYNKH9Id/
- 0CuMn150HD2jkrHix0xNSpHVc2zo4lOVwHSyXXcH6wS+psoX5+1y6eEEGBkouO0gfV+DqHTyceg
- nFgmDE6YB1B0FwGUdQze/RqSNnzDJJ+6BjfqwPgH4GzvMpggeUnrFY5cJFhsWO3E7YnY2rrHpb9
- FuR9eFeQul8o=
-X-Received: by 2002:a05:600c:45d3:b0:49f:df99:ff1a with SMTP id
- 5b1f17b1804b1-4a01affcfa9mr56849295e9.17.1790843531681; 
- Thu, 01 Oct 2026 01:32:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:45d3:b0:49f:df99:ff1a with SMTP id
- 5b1f17b1804b1-4a01affcfa9mr56848705e9.17.1790843531145; 
- Thu, 01 Oct 2026 01:32:11 -0700 (PDT)
-Received: from sgarzare-redhat ([5.77.112.40])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b0690d284sm4627928f8f.17.2026.10.01.01.32.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 01:32:10 -0700 (PDT)
-Date: Thu, 1 Oct 2026 10:32:00 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Dorinda Bassey <dbassey@redhat.com>, qemu-devel@nongnu.org
-Cc: virtualization@lists.linux.dev, rust-vmm@lists.opendev.org, 
- Albert Esteve <aesteve@redhat.com>, Sergio Lopez Pascual <slp@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Matej Hrica <mhrica@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Gurchetan Singh <gurchetansingh@google.com>,
- "Jorge E. Moreira" <jemoreira@google.com>, 
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Alberto Ruiz <aruiz@redhat.com>, 
- Erico Nunes <ernunes@redhat.com>, John Ferlan <jferlan@redhat.com>, 
- Michael Tsirkin <mst@redhat.com>, German Maglione <gmaglion@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, t.ampelikiotis@virtualopensystems.com, 
- harald.mommer@oss.qualcomm.com
-Subject: Re: Invitation: Virtio and Vhost-User Ecosystem BoF - LPC 2026 (Oct
- 7, Prague)
-Message-ID: <ar4aTDEPwCbmjR3a@sgarzare-redhat>
-References: <CACzuRyxNzJ7E_K0zL3J4F9MGm+UX01uRkNhtEXKOHT732JytBA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xCCDJ-00048Z-Vd
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1790843535; bh=blwcTsKC+DBZq22o4sHu7IF+o3YodsW0Cq6OuhFW0Pc=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=OuML2p8TP1ZJjd2JyZ0rRxQJc17rQ8nAOWYyk2y1myVCOJWgwQioYa7Kt8EpWu8/k
+ buujzJQlI+EIKPoJOw9OC6Z+yz0UvNmgDWt+4UL5/3E4RyTsHZP5rryXTmYXhHcBGJ
+ qi9btg5HOX51uUJjKyDd8egtDpaG7+HLPhQbtz3Sr6m5BKdzqqh9xE0UpPvn1x05PB
+ +wKwBWi/uPWeKi3XE+ZutmYdL3QJirEojyu2vCRmuM3VKUsQ8wa7W7Eci6TDhSjBEs
+ lJshArdxPNvi+a+Bt78ToWtUxAPxHqVcPDwK3xVcQtpe3ilJpr1dHia4QJd3pUYINE
+ iNT3kegJWb15w==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A314D1DA1B4;
+ Thu, 01 Oct 2026 11:32:15 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 12366438136;
+ Thu, 01 Oct 2026 11:32:14 +0300 (MSK)
+Message-ID: <81a1f791-37ef-4d26-bcf7-024eab4cd810@tls.msk.ru>
+Date: Thu, 1 Oct 2026 11:32:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CACzuRyxNzJ7E_K0zL3J4F9MGm+UX01uRkNhtEXKOHT732JytBA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/7] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu"
+ is configured
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ sandipan.das@amd.com, babu.moger@amd.com, likexu@tencent.com,
+ like.xu.linux@gmail.com, groug@kaod.org, khorenko@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
+ davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-2-dongli.zhang@oracle.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20251230074354.88958-2-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,75 +78,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/30/25 10:42, Dongli Zhang wrote:
+> Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
+> there is no way to fully disable KVM AMD PMU virtualization. Neither
+> "-cpu host,-pmu" nor "-cpu EPYC" achieves this.
+> 
+> As a result, the following message still appears in the VM dmesg:
+> 
+> [    0.263615] Performance Events: AMD PMU driver.
+> 
+> However, the expected output should be:
+> 
+> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
+> 
+> This occurs because AMD does not use any CPUID bit to indicate PMU
+> availability.
+> 
+> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
+> when "-pmu" is configured.
+> 
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-+Cc qemu-devel
+This is commit 4f0dd09e61b080c27589fe35b575503783c5a256 (v10.2.0-1114-g4f0dd09e61b)
+in the master branch now.
 
-On Wed, Sep 30, 2026 at 06:38:42PM +0200, Dorinda Bassey wrote:
->Hi all,
->
->I'd like to invite you to join us for a Birds of a Feather session at
->the Linux Plumbers Conference 2026:
->
->"Virtio and Vhost-User Ecosystem for Production and Automotive Systems"
->
->When: Tuesday, October 7, 2026 at 17:45 CEST (UTC+2) (45 minutes)
->Where: South Hall 1 B, Prague Congress Centre
->Speakers: Dorinda Bassey, Albert Esteve, Stefano Garzarella (Red Hat)
->
->If you are unable to join in-person, there's also an option for remote
->attendance,
->See the link on how to register: https://lpc.events/event/20/page/267-attend
->
->Description:
->The vhost-user protocol started as a simple QEMU feature, but it has
->grown into a standard used across the entire Linux virtualization
->community. Today, it powers production workloads in the cloud (e.g.
->QEMU and cloud-hypervisor), lightweight environments like libkrun, and
->modern automotive systems.
->However, as the ecosystem expands, we are hitting new "plumbing"
->bottlenecks. For example, the protocol specification is still stored
->inside the QEMU documentation, which makes it harder for other
->projects to participate in its growth. At the same time, automotive
->deployments are introducing strict new needs, such as safety
->certification, real-time performance, and long-term support, that
->impact everyone.
->This BoF will bring developers and users together to address these
->challenges and other emerging topics across the ecosystem. Our goal is
->to establish better coordination, align technical roadmaps for both
->cloud and automotive, and build shared tests and tools to ensure all
->implementations work together.
->
->Key Discussion Topics:
->- vhost-user Specification Governance: Discuss official location for
->the vhost-user specification
->- Automotive Virtualization Requirements & Reference Platforms:
->Coordinate deployment needs across Automotive platforms [1]
->- Real-time performance needs (camera, display, CAN)
->- Status Update: Ongoing work on vhost-user device (virtio-Media,
->virtio-can, virtio-rtc, etc) [2][3]
->- Graphics Stack Alignment: on roadmaps for shared dependencies like
->rutabaga_gfx across libkrun, crosvm, vhost-device-gpu [4]
->- Shared Virtio Message-Parsing Crates: Evaluate creating unified Rust
->crates for Virtio device specs to share virtqueue parsing logic across
->backends and VMMs
->- Open questions about:
->  - vhost-user Specification Refinements: Identify protocol gaps,
->missing features, and necessary standard improvements
->  - New Virtio/vhost-user Device Proposals
->
->References:
->[1] https://source.android.com/docs/automotive/virtualization/reference_platform
->[2] https://lore.kernel.org/virtualization/ab2FlQTWUxl0KmlT@fedora/
->[3] https://github.com/rust-vmm/vhost-device/pull/944
->[4] https://github.com/magma-gpu/rutabaga_gfx/issues/24
->
->Session details: https://lpc.events/event/20/contributions/2365/
->
->Looking forward to seeing you there!
->
->Best regards,
->Dorinda Bassey
->Red Hat
->
+This change seem to broke booting windows 10/11 on an AMD host, in paticular
+with -cpu EPYC-Rome-v4.  It were initially reported in debian qemu bug tracker,
+and I verified and bisected the issue on my AMD desktop machine (which is AMD
+Ryzen 7 5700G, Zen 3.
+
+When booting windows11 VM with -cpu EPYC-Rome-v4 -enable-kvm, the
+guest enters tight CPU loop while displaying a boot screen, before
+it starts showing up the rotating circle (which shows boot progress).
+
+Before this patch, it boots ok.
+
+There's no other fancy options, just
+
+  qemu-system-x86_64 -m 2G -enable-kvm -cpu EPYC-Rome-v4 -smp 2
+
+(I'm replying to the original email message with all original recipients,
+hope it's okay).
+
+Can someone please take a look?
+
+Thanks,
+
+/mjt
+
+>   target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
+>   1 file changed, 31 insertions(+)
+> 
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 7b9b740a8e..c98832f423 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -179,6 +179,8 @@ static int has_triple_fault_event;
+>   
+>   static bool has_msr_mcg_ext_ctl;
+>   
+> +static int pmu_cap;
+> +
+>   static struct kvm_cpuid2 *cpuid_cache;
+>   static struct kvm_cpuid2 *hv_cpuid_cache;
+>   static struct kvm_msr_list *kvm_feature_msrs;
+> @@ -2080,6 +2082,33 @@ full:
+>   
+>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>   {
+> +    static bool first = true;
+> +    int ret;
+> +
+> +    if (first) {
+> +        first = false;
+> +
+> +        /*
+> +         * Since Linux v5.18, KVM provides a VM-level capability to easily
+> +         * disable PMUs; however, QEMU has been providing PMU property per
+> +         * CPU since v1.6. In order to accommodate both, have to configure
+> +         * the VM-level capability here.
+> +         *
+> +         * KVM_PMU_CAP_DISABLE doesn't change the PMU
+> +         * behavior on Intel platform because current "pmu" property works
+> +         * as expected.
+> +         */
+> +        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
+> +            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+> +                                    KVM_PMU_CAP_DISABLE);
+> +            if (ret < 0) {
+> +                error_setg_errno(errp, -ret,
+> +                                 "Failed to set KVM_PMU_CAP_DISABLE");
+> +                return ret;
+> +            }
+> +        }
+> +    }
+> +
+>       if (is_tdx_vm()) {
+>           return tdx_pre_create_vcpu(cpu, errp);
+>       }
+> @@ -3391,6 +3420,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>           }
+>       }
+>   
+> +    pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+> +
+>       return 0;
+>   }
+>   
 
 
