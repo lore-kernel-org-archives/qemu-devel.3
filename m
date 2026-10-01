@@ -4,92 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFDBBCA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEDFCA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCGv2-00034M-88; Thu, 01 Oct 2026 09:33:59 -0400
+	id 1xCH2O-0000jC-Np; Thu, 01 Oct 2026 09:41:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGsS-0008QQ-TP
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCH1v-0000hV-DD
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:41:13 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGsP-0006Qk-Oj
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:31:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790861469;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bKw6fkq7NI7n/7XJwVwBUUecKUqBRGB1AOlajcKyMQ8=;
- b=JjyFXnvgQVJJBMapORqJi5Rquo846XxBaI9RMtd3GXhpbH9qEP8CYa+Jqxs9i7s1fd50R3
- 48o7Xq9XAdfKOoQGgQexwUgRsrtsFaYTjKyW30/wnLsSS92i7l4I12/1Gf7wftWmqa4X+Q
- DHMDhwy8DJPtHBZzg3TKeaFslRdCngg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-FGGwCB7_OpWTnBx-G9i5WA-1; Thu,
- 01 Oct 2026 09:31:04 -0400
-X-MC-Unique: FGGwCB7_OpWTnBx-G9i5WA-1
-X-Mimecast-MFC-AGG-ID: FGGwCB7_OpWTnBx-G9i5WA_1790861463
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67C9E185588D; Thu,  1 Oct 2026 13:31:03 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9BD0C30000E6; Thu,  1 Oct 2026 13:31:02 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 01 Oct 2026 17:30:01 +0400
-Subject: [GIT PULL 22/27] hw/usb/dev-smartcard-reader: stop advertising PIN
- support
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xCH1s-0007YM-7H
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:40:58 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691AkDDx3388135
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 13:40:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=; b=Vwv2ikBdD7MQvrj0
+ XgfLdUG+NJvpEn/wfoG5MF52zwghDTNs+aE/ZqQL0WjWY6VupI05zCzkeCv7pA9+
+ U56IO+vI76+iwcc2NEmQy3/fW2LYT92OYuLOKmHO7SvS/rNlhJlrTFy5/Zs+Rzm4
+ BybLpmNR7qyoSeL+V+8FUKRBhroWKUtmoeSOW1D0UzRSIZWfJK7cfXsm1cIVH1zM
+ 2AKP5MZVZtdXt/2SFzH/CKL9pqwO259jQLAZU0NnDGD/AAyhgNtRDPLEC5SADVGe
+ Qi7vMA+r3cZlv3T2DXH7ymPHhl5QdiHUMnBUalugOrXHGBwwvk4nFLydJs5vcOPq
+ QWL7Dg==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1p2b8nnf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 13:40:54 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-7bf853be08eso208570137.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 06:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790862053; x=1791466853; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=;
+ b=UnTVBC/1tlM+tKyQVzpi2jBrhxT8cvkARiJYjVBCQUMt4VRhatMFd8o1artWluH5oJ
+ RrBA4Bwcv5kPqfnq2ztDNeUGN72aOaXb3EKQ+QnqHchgZF9jldota0ytKkacmNZ233ml
+ k2ghgeT0hZ3mSd6nVK08KBETHromSOcLXgYiC/CCE64pCRThDA5yreEFRvL7i84Tsk2X
+ 96A7eOgEOBPo9n4krSpbMqBlKa5pMKQOQQH9iAZnxi1yvT4hbbxB3dVZW8ud2daWpvQd
+ LsPGMWbTZdsgu6TSQrxvkgK4L8zqO2PmnvBaKas2CaEvYYA45NbuFf7b6ysxOFbl+vKG
+ u9Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790862053; x=1791466853;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=;
+ b=ShxZQXsDmaN5nKiz1bLEH0M4ujc2uJ5BQIRZYPDn9mnl/Dl0glAUSgz4R72FgmcB8W
+ XkILH5zAH76QgDtbptgwKXVRlmdAN3OpSerkGIhf0yTo+9OrGYvbd1HWujMOuN1gb75L
+ AgVLqGh0/pDjRUUzIi0znpyktgaAaRO5P8OFs7BMNgLzYjsf82PIn+rXVUfn2NwQ4Y4h
+ cvr84C4/GxDuxbU+QKjOyBxFgG5DNwvNcJDU/rVkre+45C92ZofbfY06KsdbVioan41N
+ Fojx3PXjVDPRm+1LiZrlkKsiqo+xrtLLMQ5yJxaNYsCObmP1IXT2A7jA0s9HAaOA6w7e
+ DNsA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzALZVtXCrQu4QOCc/xHtGBekfyRkceJRdcjTmbiBdR2D7MPQES138mrUZWUbOEd2xOIB7kThoine/p@nongnu.org
+X-Gm-Message-State: AFq9FYKKu1ucD/3j5lF8dART9zp0l39bSQc9Q34xm2Xk2+Q5Fxv3zrtN
+ 3I01zl0FkTyT6lGqRLYBRFuxVCR+14AZIgGO2Yat8qRk4aqo3Yfb6PSIKz+3dab082QdQaLPxXj
+ HkeLDyZvr7VDpmdhgZ7b347QW3dsvh6V4jiWnprt7M3TRlkb24c+LlGfMbA==
+X-Gm-Gg: AYBFou07reyZDBl++9p35Q/T+4qk8v0dRrhouCa5Oipspmje9uEgBdcy2QOoGojKd3g
+ B3OCEbh2fQPiRnHE5WscyNGpHkEQ3DWTeSV1rRkMHBG6VIj0x0So/AcJ4NuKy+lCM59JjG+NNac
+ WUhjO06nfuHJv+Y9a7J0iuo3JxxfsuWSx1+0zbRu80WfvjshUwSFwQQIsU65Srmc19tfMc73Bl1
+ G7toaYfN3JSCeCSv337GI0484imwrQm6DI+hjFboajKeKrGqpj6N+zeEScCoC7YfgHygL3uevOY
+ Rr3XRL7RJAi9RODeE2thwA5yy6W2qa4hkIK56XEAobEQPQBQav4zNu+CNVRVJxCYxJu2Nfm/LX6
+ wvw2yA3wIJnER4iTGnFlvMA==
+X-Received: by 2002:a05:6102:3fa3:b0:7a7:198a:c2bf with SMTP id
+ ada2fe7eead31-7be735975ffmr1079574137.29.1790862053279; 
+ Thu, 01 Oct 2026 06:40:53 -0700 (PDT)
+X-Received: by 2002:a05:6102:3fa3:b0:7a7:198a:c2bf with SMTP id
+ ada2fe7eead31-7be735975ffmr1079560137.29.1790862052780; 
+ Thu, 01 Oct 2026 06:40:52 -0700 (PDT)
+Received: from [10.111.137.66] ([212.136.9.21])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b0692b1c9sm6125022f8f.27.2026.10.01.06.40.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 06:40:51 -0700 (PDT)
+Message-ID: <75d53637-5cb8-4a03-bcd8-97acd646b527@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 15:40:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 08/11] target/hexagon: Move to do_interrupt() (BQL
+ acquired internally)
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
+ <20260902152044.31291-9-philmd@oss.qualcomm.com>
+ <ee1807fd-eb2d-4fcb-b7e5-e44e64829b5a@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ee1807fd-eb2d-4fcb-b7e5-e44e64829b5a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261001-smartcard-fixes-v1-22-ebb5a40dd497@redhat.com>
-References: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
-In-Reply-To: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3148;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wjdQd/MOl1N5vuQvFluSxxpU2EXe4n1TUXXXwQA5c9Q=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBIzTHur2g/HmCzGFYPvcfwFNL/0em2s6WSE
- WNBIxfeTBuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gSAAKCRDa6OEJdZac
- 5S0RD/sGJZMqqHL3WHNVFDtwmy8XRobHt/FBtkysYaWsRjWMHt5VPvIeMpEciSABsM5++/8mbmg
- a4OfemJ/LSqU681xFjRVqWIGPYkUiIWIQd+c6O+CBkzeNhPOi+0hiBDmcNngF+oKVvDtsLFrHC1
- PoaPBt/fiaIl9Zmrzx1rIFGlLSs0UCQ6FUmSnsMlS2NinfqPnYWlsYKaACpipZjoYUcX5KMlO23
- 0+fbGRgtmF6ElCaoyLN6GdAtHgkcW8WKacoVBjQ4kX6U7BjlIqRfBlTdpQ/5URo14IUDNwuQ5L8
- Zq4Fsxu9USRL8QOs4JM/7Q0awRl1RP9bAKFtXNijXAXJpEvYlDey+6GC+ZZ6ZoOd2QjU4HlXuGM
- VGlwg6uRCKz2tEjyWOJ3dSLwRxvY2nhaTy6idB0Z7WQ9EJuh8HgoGI0s7qhYNSs68cmRwiasn8q
- 0pKB5ocaB7v9Mfq1LV3S+iWguuW9Zwpdu3C+pwGpe0za0El7qyoUj0LeUPhng/UBIM1YKfzQ5NS
- zt7bR4iS/ohO6eXCMOz6fmNStm3XlxiQ15JepEPMOwEIAWpBFOQzZuIElICbcxKUt2RGYDQH9/1
- F+RrKKt1ETgHIxlMdtaShSA0TT/adIl4wFu4oR7+tT5LIpVMB9Ilwb8mv6ZLNySyp+rYu55ueO+
- bYG8EeRP6pQUOlQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Proofpoint-GUID: eiHhgAtAtEFCUquw0NssLPcEJUNbsS_H
+X-Proofpoint-ORIG-GUID: eiHhgAtAtEFCUquw0NssLPcEJUNbsS_H
+X-Authority-Analysis: v=2.4 cv=O8SsLx9W c=1 sm=1 tr=0 ts=6abe62e6 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=neIvRC4PW-D10HVD7IUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA1MyBTYWx0ZWRfX6VFMNw9m+DZU
+ BWjJoR0DgDoime0ke7n0GXvn0vQ5OCrM+e4M+9oG1Y9cT5LxT/MJCnl1rIbkoPDLnVsgVfGXwc/
+ LX3+8/k2DbwVC3cWcT+TXBwZpRnsy3g=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA1MyBTYWx0ZWRfXzIpwQeCbr3NW
+ yeLeVjHO+Qw8BRDghYC0kpPB4Hs3bACkGHhYKtqZ/z/cXq+N/ys/vmP4j5QtbkxQiO5CYcermgW
+ SLSFzTLxvA8/P7zLrrf4qie8CiEGuo2KBkXuY5lGUGjugdq+ymgFi9HlgT2BE9LU1PfQdiE11dK
+ Uyrc6iGnBE/D02J8OrNV+sdfwjxA2LoN465BOUYsLefQqK2CHDWbYuW2ba83HbWqJrOcGS3mZ1g
+ CmqT7Vre1yf8uCoulSaSqK3MPuXiYIaP8ZmLd6gr0/grBmx6snDvsG1VyWM9L6YISh8/MdDirQG
+ HygurSednSVwEDas5SHLtGZ/lk1bFGXLgRYcGhPX5LIfi1Ffju6uta2Ls5bHl7IVrFQ7Sd1kPas
+ 4SBAi6iUuBO0gXpIGr4WhKGj1po73lOTGU95OJ3ZYvO2fQJtM0not1WO8iBMphdfyOD56ZWaFm8
+ gXVloMexuQPUBumIlpQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010053
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +161,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CCID descriptor claims bPINSupport=1 (PIN Verification) but the
-device does not implement it, returning CMD_NOT_SUPPORTED for Secure
-commands. Stop advertising the capability by default, gated behind
-an x-pin-support property for backward compatibility.
+On 2026-09-13 5:55, Richard Henderson wrote:
+> On 9/2/26 05:20, Philippe Mathieu-Daudé wrote:
+>> hexagon_cpu_do_interrupt() already acquires the BQL internally,
+>> so register it as do_interrupt() instead of do_interrupt_locked().
+>> This reflects the actual locking model used by the target.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/cpu.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+>> index b5dcbfc99db..7067e5b70f7 100644
+>> --- a/target/hexagon/cpu.c
+>> +++ b/target/hexagon/cpu.c
+>> @@ -769,7 +769,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
+>>       .tlb_fill = hexagon_tlb_fill,
+>>       .do_unaligned_access = hexagon_cpu_do_unaligned_access,
+>>       .cpu_exec_halt = hexagon_cpu_has_work,
+>> -    .do_interrupt_locked = hexagon_cpu_do_interrupt,
+>> +    .do_interrupt = hexagon_cpu_do_interrupt,
+>>   #endif /* !CONFIG_USER_ONLY */
+>>   };
+> 
+> Eh.  Except all that hexagon does is acquire the lock at the beginning 
+> of the function and keep it for the entire duration.  I think hexagon 
+> should stay using _locked and *not* do internal locking.
 
-Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- hw/core/machine.c             |  1 +
- hw/usb/dev-smartcard-reader.c | 12 +++++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+I'm rewording to clarify:
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 4aa5df13f386..a5a168d72521 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -58,6 +58,7 @@ GlobalProperty hw_compat_11_0[] = {
-     { TYPE_ARM_SMMUV3, "oas", "44" },
-     { "migration", "switchover-ack-legacy", "on" },
-     { "usb-ccid", "x-accurate-message-length", "off" },
-+    { "usb-ccid", "x-pin-support", "on" },
-     { "usb-ccid", "x-migrate-pending-answers", "off" },
- };
- const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 65ceed57541a..a973a0396bb3 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -328,6 +328,7 @@ struct USBCCIDState {
-     bool accurate_message_length;
-     bool migrate_pending_answers;
-     bool pending_answers_loaded;
-+    bool pin_support;
- };
- 
- static uint32_t ccid_bulk_in_pending_num(USBCCIDState *s)
-@@ -436,10 +437,14 @@ static uint8_t qemu_ccid_descriptor[] = {
-                      * u16 wLcdLayout; XXYY Number of lines (XX) and chars per
-                      * line for LCD display used for PIN entry. 0000 - no LCD
-                      */
--        0x01,       /*
-+                    /*
-                      * u8  bPINSupport; 01h PIN Verification,
-                      *                  02h PIN Modification
-+                     *
-+                     * Corrected to 0 when !x-pin-support
-                      */
-+#define CCID_DESC_OFFSET_B_PIN_SUPPORT 52
-+        0x01,
-         0x01,       /* u8  bMaxCCIDBusySlots; */
- };
- 
-@@ -1498,6 +1503,9 @@ static void ccid_realize(USBDevice *dev, Error **errp)
-         stl_le_p(&qemu_ccid_descriptor[CCID_DESC_OFFSET_DW_MAX_MSG_LEN],
-                  BULK_IN_BUF_SIZE);
-     }
-+    if (!s->pin_support) {
-+        qemu_ccid_descriptor[CCID_DESC_OFFSET_B_PIN_SUPPORT] = 0;
-+    }
-     usb_desc_create_serial(dev);
-     usb_desc_init(dev);
-     qbus_init(&s->bus, sizeof(s->bus), TYPE_CCID_BUS, DEVICE(dev), NULL);
-@@ -1692,6 +1700,8 @@ static const Property ccid_properties[] = {
-     DEFINE_PROP_UINT8("debug", USBCCIDState, debug, 0),
-     DEFINE_PROP_BOOL("x-accurate-message-length", USBCCIDState,
-                      accurate_message_length, true),
-+    DEFINE_PROP_BOOL("x-pin-support", USBCCIDState,
-+                     pin_support, false),
-     DEFINE_PROP_BOOL("x-migrate-pending-answers", USBCCIDState,
-                      migrate_pending_answers, true),
- };
+```
+   target/hexagon: Use do_interrupt() for internal BQL locking
 
--- 
-2.56.0.rc0.29.g47ce80527c56
-
+   hexagon_cpu_do_interrupt() acquires the BQL with BQL_LOCK_GUARD() and
+   holds it throughout exception delivery. Register it as do_interrupt()
+   to match this locking contract and allow removal of
+   do_interrupt_locked().
+```
 
