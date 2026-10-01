@@ -4,87 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF343CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 19:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C015DCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 19:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCMlK-0007YT-SV; Thu, 01 Oct 2026 15:48:14 -0400
+	id 1xCMpP-0008Pl-VC; Thu, 01 Oct 2026 15:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCMl8-0007XA-Gf
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:48:02 -0400
-Received: from mail-wm2-x10.google.com ([2a00:1450:4864:31::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCMl6-0005JH-85
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:48:02 -0400
-Received: by mail-wm2-x10.google.com with SMTP id
- 5b1f17b1804b1-49ffed768deso19411565e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 12:47:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xCMpI-0008O1-H6
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:52:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xCMpG-0005aU-BO
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 15:52:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790884337;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
+ b=QYJKEEHRu7kM+qi1hlM6fppZS1NmhJewgH+i/MRSgMYT07LfcUuWoU+j4gqCWLHgAy3LTh
+ rIaTTBOoylK8QLvzffmBnP/47/Tu49G4fAOhmpedKgNRT31yPcrLJfqAn0VIWFwGDcadt/
+ UjjDFZsarI02iBHcnNPxRT34xBIKB+s=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-GUrDX3GqMaWKHzxxz5soNg-1; Thu, 01 Oct 2026 15:52:16 -0400
+X-MC-Unique: GUrDX3GqMaWKHzxxz5soNg-1
+X-Mimecast-MFC-AGG-ID: GUrDX3GqMaWKHzxxz5soNg_1790884335
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-53395d51187so10326971cf.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 12:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790884078; x=1791488878; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=23uqGxTIRP+avYlWnX6RBS8M1xljOsbsyiHLIJKGG9o=;
- b=YaBFdeZ2l1M2Bh+ELIfqdOXXN9y6VzdACBX+NP8e1bwJsOitE0mL2916bI24LyEYdu
- bm3AHHrXRlQ4q06+Zk5pSsuwtz7CRzsxOYyZ0zvhyBCPrr3LemnHrua5ujaVSVMCok7V
- TdVeVRi/JyWxuacbTfJ+v6hNQAzAzaInat/vSRgF1ArYFeOyVczR+KR7Rj6r9ALromAL
- KHqY3cUntt2B85vSeLQq6gWNcCYrw501qBDNpJs48bJy5D62HTAhgoPumSOEIQuLZSay
- qDKAEK1KPzm0TXjHIqNqVJh7oEdN8KDerj/M4lbLEKlb9nLEoBnkR2ABk7VVqlwL1ySb
- IvIQ==
+ d=redhat.com; s=google; t=1790884335; x=1791489135; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
+ b=facsvK5gIvYgZ2h3wMd4QD/0qNGmIQJLgq/ZXECOND5Bv1D56XfVtMB+xIuGZg8fvy
+ WqmSf2j8dUO6AkTRFg5Wtu7vrsQSnw7liZjUEwLCFv4OjPfpuS2ZEXWgBJa4Q9/qro0z
+ lAVuVHSDTHgi1/ae1HzQ4pUXZGvvIxNepVKY0RwA818OvpZAW3ymkziFhQYArn6GfwxO
+ 4+KNccrUycPr/F+DenC5I/srNICXQgce94SdzUWnllxPy/Y5w+rVXlfjxgV5bVMnSuQu
+ XEtK61bsnJiXV08JFPiwo9l2+fNw3o7kS1okv2SLvYTPracj6mrxAvo/y3xu5hHHw4j3
+ ygUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790884078; x=1791488878;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=23uqGxTIRP+avYlWnX6RBS8M1xljOsbsyiHLIJKGG9o=;
- b=zFTUgSkeuqToAQK8HTjgOzshuCxXADUp5kU8+Wf0hyihFxX4MPbRCDzXG7nWR7lOmC
- gCOK95Tmcmq+qrn/kk4iwQw1r8DuFaYb5UJF8X23v1trY2HTQoZB014DkW0QbnDh/sl+
- NxqD/1AotGCeeFpwnhvKj7VqWq3HPp+yIWtOCP9jObN3TpO3HG0hUCYEGhwO8DNh/CcH
- TtWWqOelpg/7q8smajII0sFSmJnznraVXA/a4gG133gmKR6WiKMUZHDv3bXMHAG/6r37
- E7Msjr2439F7DOnaFr9fB7vXb0D0wdqF+k8WiOnx291mc5X34Illwt7BvqEUMqe9oA52
- ihcQ==
-X-Gm-Message-State: AFuF++k1UADQr6/k1wpYQaiSXMBjafkct1I06rAhcl76uMS4Xam7S51y
- ehC14tJL/vszF3y46fOch+2e5F7GAiRKQWhFwnPkyHmQAiKbbJW9WDBrRxDBxlTnfXw7UikV6u4
- BpBaiWQM=
-X-Gm-Gg: AYBFou0NLEJVdkyU6o2v9G4Za7C6GGMzSBJqFX6Q7fiHTVuWf4dVr6gdX0GDg8q1X02
- uK6YvFS1ykTPKrpi2FX9/LeTA6nXWaP4nv0wfAFKlOYo4L1f9QHjtk7960QKjBisF9PAzxh8VQm
- hvmQY7cGPBbdo76TmzY5OVZRE4taemTRgW1BguNJT9UdyF5DFtrduDPxBGIqtaq808D/H1rLSEh
- uXCgof8oAXkHsU5eYMYeLASrB9B9WD6HmM0x0pSPJzKRWIUtEe9e5JW4bA+udW1J5tx4xQc98Vk
- kNF4flyMHUTQmilTFqlebEr5x63JDNr0dMpR27ndIsf/EjYUASh+D+V+FF9yHVKRIwbs8UMeEIN
- spFQD17KWx7b5hmKZfxs4dXcMBKQcShUaXcl6yhkyabgo2vVZa0K1FBPBQF3usBpu60JSHrV1Fu
- 1HbJG0NqH+mT0fv4CdwkyL6lYM4PgRDDqcsmBlkPJ7o7WJt47KKm2w8WSRy8b6cF45FCI5D5Mmt
- ibeNI0E5Q9+cB6HNu1s43OjVRtRnqN2U+Bv1u+hBqu+DJj+W0yYP0XoU0oqLq3xQZS+SvVcUKvw
- 9LA=
-X-Received: by 2002:a05:600c:4e93:b0:4a0:1ef1:b62b with SMTP id
- 5b1f17b1804b1-4a02754f71emr11551095e9.10.1790884078484; 
- Thu, 01 Oct 2026 12:47:58 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a03ff0c2fbsm220025e9.3.2026.10.01.12.47.57
+ d=1e100.net; s=20260707; t=1790884335; x=1791489135;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=waWMTGeo8thKUDMoGE+Jn7tt0Extekr910m9VE/kZTM=;
+ b=tAyJ/uM32hPlNcDTc7wUjxiXndwGJsgiu+zrmIntFFxWJeiSeAFyWBY/wseUHMNybq
+ Xb6H7NxKXUwGyjl/OwvxAkzzLh/oxdD14AOG/QOGcEFb7v1PajMFAAuix6vTy7WGdmbA
+ YPW88MnNN2xwcRhUv0RHvovMBphcR3WpXsdOXLn94UN5je/V4oZZEnmFSnyVeKIC9x5i
+ 1VWWVRAWSoJgMh3a1vtyCOf2MdYXGPd0bWsuP/2RyBJ+gLvf1QWs1Wmx4TfscMo514xu
+ qObWFLOj0qm+QcB78SX6Ek2SSLYK86TjPnQiKQWeEl1cAmd6JcQV9ZWqjploky7495F4
+ 5kxw==
+X-Gm-Message-State: AFuF++kO8ylxAK/O51Y7o3pL99ziffWH4CA0Ec+wF2hxxsdcnSkrLr0U
+ DX1nz7EylggIYU6OZKGZKLeteyz+78IQ0zZLH7n2kFLGCPZs1bHS96iojPl/0veBTDq/wt9I6r9
+ PWP5T4B/pcRUzyu7qTcuzhxr2O0m9ah4Gsq4dxmgUyb5f5mQp+TAZ7Kop
+X-Gm-Gg: AYBFou2ui9Sk7aD49GBZZSK3IdmRGAuvhga8nmkYplTGw4ZOvl9Qdsr6vM8Kk9xR8OF
+ mdBw5iErG49yH0+IXk9ObTTNI34Rs8sFfSamGacBny/BMPetB+JZWJuXK2Vp/6OTE5lZQOB33cs
+ nv6BZVSe6haVZ2PFpkU16anbDsGUFLQB55sBTYfT3quZobeLrhzejaF8+TJ7qfzqSJ7nMiFraVt
+ 9FJNQf7uigo2CoJ8671OCMVfaeUO5VmZIG9Y5GK7Bj7wtBHWszBCEhfIkEz5cK1qg5cykoDFA2X
+ 7kcbM4xd/hUchWmLpKCeQB3beeWyY1MAECZjHgVDW2NVL56Ea0eIgUcoM0X8E4U0Rq2GJzg=
+X-Received: by 2002:ac8:5a01:0:b0:530:5152:75f0 with SMTP id
+ d75a77b69052e-533cbc78724mr3997881cf.22.1790884335282; 
+ Thu, 01 Oct 2026 12:52:15 -0700 (PDT)
+X-Received: by 2002:ac8:5a01:0:b0:530:5152:75f0 with SMTP id
+ d75a77b69052e-533cbc78724mr3997261cf.22.1790884334631; 
+ Thu, 01 Oct 2026 12:52:14 -0700 (PDT)
+Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-53398d122a4sm6360721cf.23.2026.10.01.12.52.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 12:47:57 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso endpoints
- and vice-versa
-Date: Thu,  1 Oct 2026 20:47:56 +0100
-Message-ID: <20261001194756.3003085-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ Thu, 01 Oct 2026 12:52:13 -0700 (PDT)
+Date: Thu, 1 Oct 2026 15:52:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Denis V. Lunev" <den@virtuozzo.com>
+Subject: Re: [PATCH 1/2] migration: let a vmstate defer its post_load to end
+ of stream
+Message-ID: <ar657ehBVdQKSWXF@zhexu-thinkpadt14gen5.rmtcaon.csb>
+References: <20260911142345.3999518-1-den@openvz.org>
+ <20260911142345.3999518-2-den@openvz.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::10;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260911142345.3999518-2-den@openvz.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,163 +118,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The OHCI USB controller requires software to set up an Endpoint
-Descriptor data structure.  This specifies (among other things) both
-an EndpointNumber telling the controller which USB endpoint to talk
-to, and a Format (F) bit which is 1 for Isochronous transfers and 0
-for General transfers.
+On Fri, Sep 11, 2026 at 04:23:44PM +0200, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
+> 
+> A post_load hook which only rearranges the memory topology forces a
+> flatview rebuild as its section is read, and the cost of a rebuild grows
+> with the number of regions in the machine. A device which does this once
+> per vCPU therefore scales badly on the destination.
+> 
+> Add post_load_deferrable. A vmsd which sets it has its hook queued during
+> the load and run once the stream has been consumed, in the order the
+> hooks would have fired, with the whole drain sharing one memory
+> transaction.
+> 
+> Opt-in, because deferral is not free in general. A hook which can fail
+> must not be deferred: failing after the stream is consumed means the
+> source has already been told the migration succeeded, and may release a
+> guest the destination never started. A hook which reads guest memory must
+> not be deferred either, since the drain runs with the topology in flux.
+> Postcopy is excluded because its listen thread walks the same stream
+> concurrently.
+> 
+> CC: Peter Xu <peterx@redhat.com>
+> CC: Fabiano Rosas <farosas@suse.de>
+> CC: Paolo Bonzini <pbonzini@redhat.com>
+> CC: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Denis V. Lunev <den@virtuozzo.com>
+> ---
+>  include/migration/vmstate.h |  40 +++++++++++++
+>  migration/savevm.c          |  23 ++++++++
+>  migration/vmstate.c         |  67 +++++++++++++++++++++-
+>  tests/unit/test-vmstate.c   | 111 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 239 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index e72c3fae9a..16045319d5 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -303,6 +303,29 @@ struct VMStateDescription {
+>      bool (*pre_load_errp)(void *opaque, Error **errp);
+>      int (*post_load)(void *opaque, int version_id);
+>      bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
+> +
+> +    /*
+> +     * Run .post_load() once the whole stream has been loaded rather than
+> +     * as this section is read, so that it sees a machine whose devices
+> +     * have all been restored, and so that several of them can share the
+> +     * work they would each repeat.
+> +     *
+> +     * Three things must hold of a hook before it may be deferred.
+> +     *
+> +     * It must not fail. By the time the queue is drained the stream has
+> +     * been consumed, so a source may already have been told the migration
+> +     * succeeded and may have released the guest; there is nothing left to
+> +     * report a failure to. A hook which fails here is a bug in its vmsd
+> +     * and is fatal.
+> +     *
+> +     * Nothing else in the load may depend on what it does. The hooks run
+> +     * after every section has been read, so anything a later section needs
+> +     * to observe must not be produced here.
+> +     *
+> +     * It must not read guest memory or resolve an address space, because
+> +     * the drain runs as one batch with the memory topology in flux.
+> +     */
+> +    bool post_load_deferrable;
+>      int (*pre_save)(void *opaque);
+>      bool (*pre_save_errp)(void *opaque, Error **errp);
+>  
+> @@ -1299,6 +1322,23 @@ bool vmstate_save_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+>  
+>  bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque);
+>  
+> +/**
+> + * vmstate_post_load_defer_begin: Queue deferrable post_load hooks
+> + *
+> + * Between this and vmstate_post_load_defer_finish(), a post_load hook whose
+> + * vmsd sets post_load_deferrable is recorded rather than called. Hooks are
+> + * queued in the order they would have run.
+> + */
+> +void vmstate_post_load_defer_begin(void);
+> +
+> +/**
+> + * vmstate_post_load_defer_finish: Stop deferring and drain the queue
+> + * @run: run the queued hooks, in order; when false, discard them
+> + *
+> + * Returns false if a hook failed, in which case the rest are discarded.
+> + */
+> +bool vmstate_post_load_defer_finish(bool run, Error **errp);
+> +
+>  #define  VMSTATE_INSTANCE_ID_ANY  -1
+>  
+>  /* Returns: 0 on success, -1 on failure */
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 4b590ea672..2352dcf684 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -3128,6 +3128,7 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+>  {
+>      MigrationState *s = migrate_get_current();
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> +    bool defer_post_load;
+>      int ret;
+>  
+>      if (qemu_savevm_state_blocked(errp)) {
+> @@ -3147,7 +3148,29 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+>  
+>      cpu_synchronize_all_pre_loadvm();
+>  
+> +    /*
+> +     * The postcopy listen thread walks the same stream concurrently, so the
+> +     * queue would need locking and a defined owner for the drain.
+> +     */
+> +    defer_post_load = !migrate_postcopy_ram();
 
-The specification requires that software matches the F bit with the
-endpoint it's setting up the descriptor for, so that Control, Bulk
-and Interrupt endpoints use F=0, and Isochronous endpoints use F=1.
-It doesn't require the controller to check whether software gets this
-right.
+Just to mention we have two other paths that will enable this too:
 
-The spec isn't totally clear about what happens if software creates
-an ED with a mismatch, but I believe that the controller just trusts
-the F bit, and tries to talk to the endpoint with the wrong sequence
-of USB tokens (notably, isochronous transactions have no handshaking
-and the others do). This probably results in the transfer failing.
+qmp_xen_load_devices_state
+load_snapshot
 
-In hcd-ehci.c we check for the "iso transfer to non-iso endpoint" and
-make it fail, but we don't do this in hcd-ohci.c.  The result is that
-a guest that deliberately sets up this situation can cause us to hit
-the assertion added in commit 7b1eba96aeca, where the endpoint is not
-isochronous and returns USB_RET_ASYNC to an iso TD handling function
-that isn't prepared to deal with that.
+It looks all fine at least considering the hyper-v scope, but still raise
+this in case it's not expected.
 
-Add checks for both "iso transfer to non-iso endpoint" and "non-iso
-transfer to iso endpoint" and make those TDs fail rather than blindly
-sending them to the endpoint.
+The other thing is, IMHO we should enable this feature for both precopy and
+postcopy.  Postcopy loads that in the package, please kindly share more on
+the above comment on disabling it; I didn't directly get that part.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3729
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-The diff looks a little complex because of the re-indenting;
-looking at an "ignore whitespace changes" diff might be clearer
+> +    if (defer_post_load) {
+> +        vmstate_post_load_defer_begin();
+> +    }
+> +
+>      ret = qemu_loadvm_state_main(f, mis, errp);
+> +
+> +    if (defer_post_load) {
+> +        /*
+> +         * A deferrable hook only rearranges the memory topology, so the
+> +         * whole drain can share one flatview rebuild.
+> +         */
+> +        memory_region_transaction_begin();
 
-Only testing here has been running the repro in the bug tracker
-plus "make check-functional", which probably doesn't exercise
-USB very much.
+IMHO we should document this behavior in the "deferrable" interface above,
+this is important knowledge to know that the whole deferred vmsd loads are
+wrapped with boosted transaction depths and all memory access is illegal.
 
----
- hw/usb/hcd-ohci.c   | 61 +++++++++++++++++++++++++++------------------
- hw/usb/trace-events |  2 ++
- 2 files changed, 39 insertions(+), 24 deletions(-)
+AFAIU, that partly supplement my other reply, that the whole thing is not
+about "defer" or not, but about "batching MR update".  It can still be at
+the end of course, but it's not the major goal, the major goal is about
+memory updates.
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 5e5fe41f473..4d38150a845 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -579,7 +579,6 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     int i;
-     USBDevice *dev;
-     USBEndpoint *ep;
--    USBPacket *pkt;
-     QEMU_UNINITIALIZED uint8_t buf[8192];
-     bool int_req;
-     struct ohci_iso_td iso_td;
-@@ -742,24 +741,31 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-         return 1;
-     }
-     ep = usb_ep_get(dev, pid, OHCI_BM(ed->flags, ED_EN));
--    pkt = g_new0(USBPacket, 1);
--    usb_packet_init(pkt);
--    int_req = relative_frame_number == frame_count &&
--              OHCI_BM(iso_td.flags, TD_DI) == 0;
--    usb_packet_setup(pkt, pid, ep, 0, addr, false, int_req);
--    usb_packet_addbuf(pkt, buf, len);
--    usb_handle_packet(dev, pkt);
-+    if (ep->type == USB_ENDPOINT_XFER_ISOC) {
-+        USBPacket *pkt = g_new0(USBPacket, 1);
- 
--    /* The USB core guarantees to never defer ISO TDs. */
--    assert(pkt->status != USB_RET_ASYNC);
-+        usb_packet_init(pkt);
-+        int_req = relative_frame_number == frame_count &&
-+            OHCI_BM(iso_td.flags, TD_DI) == 0;
-+        usb_packet_setup(pkt, pid, ep, 0, addr, false, int_req);
-+        usb_packet_addbuf(pkt, buf, len);
-+        usb_handle_packet(dev, pkt);
- 
--    if (pkt->status == USB_RET_SUCCESS) {
--        ret = pkt->actual_length;
-+        /* The USB core guarantees to never defer ISO TDs. */
-+        assert(pkt->status != USB_RET_ASYNC);
-+
-+        if (pkt->status == USB_RET_SUCCESS) {
-+            ret = pkt->actual_length;
-+        } else {
-+            ret = pkt->status;
-+        }
-+        usb_packet_cleanup(pkt);
-+        g_free(pkt);
-     } else {
--        ret = pkt->status;
-+        /* Attempted iso transfer to non-iso endpoint */
-+        ret = USB_RET_NAK;
-+        trace_usb_ohci_iso_td_to_non_iso_endpoint(ep->nr);
-     }
--    usb_packet_cleanup(pkt);
--    g_free(pkt);
- 
-     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
-                              str, len, ret);
-@@ -1022,16 +1028,23 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-             trace_usb_ohci_td_too_many_pending(ep->nr);
-             return 1;
-         }
--        usb_packet_setup(&ohci->usb_packet, pid, ep, 0, addr, !flag_r,
--                         OHCI_BM(td.flags, TD_DI) == 0);
--        usb_packet_addbuf(&ohci->usb_packet, ohci->usb_buf, pktlen);
--        usb_handle_packet(dev, &ohci->usb_packet);
--        trace_usb_ohci_td_packet_status(ohci->usb_packet.status);
-+        if (ep->type != USB_ENDPOINT_XFER_ISOC) {
-+            usb_packet_setup(&ohci->usb_packet, pid, ep, 0, addr, !flag_r,
-+                             OHCI_BM(td.flags, TD_DI) == 0);
-+            usb_packet_addbuf(&ohci->usb_packet, ohci->usb_buf, pktlen);
-+            usb_handle_packet(dev, &ohci->usb_packet);
-+            trace_usb_ohci_td_packet_status(ohci->usb_packet.status);
- 
--        if (ohci->usb_packet.status == USB_RET_ASYNC) {
--            usb_device_flush_ep_queue(dev, ep);
--            ohci->async_td = addr;
--            return 1;
-+            if (ohci->usb_packet.status == USB_RET_ASYNC) {
-+                usb_device_flush_ep_queue(dev, ep);
-+                ohci->async_td = addr;
-+                return 1;
-+            }
-+        } else {
-+            /* Attempted non-iso transfer to iso endpoint */
-+            ohci->usb_packet.status = USB_RET_NAK;
-+            ohci->usb_packet.actual_length = 0;
-+            trace_usb_ohci_td_to_iso_endpoint(ep->nr);
-         }
-     }
-     if (ohci->usb_packet.status == USB_RET_SUCCESS) {
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-index 80ead23358f..15f2d27dbfd 100644
---- a/hw/usb/trace-events
-+++ b/hw/usb/trace-events
-@@ -23,6 +23,7 @@ usb_ohci_iso_td_bad_direction(int dir) "Bad direction %d"
- usb_ohci_iso_td_bad_bp_be(uint32_t bp, uint32_t be) "ISO_TD bp 0x%.8x be 0x%.8x"
- usb_ohci_iso_td_bad_cc_not_accessed(uint32_t start, uint32_t next) "ISO_TD cc != not accessed 0x%.8x 0x%.8x"
- usb_ohci_iso_td_bad_cc_overrun(uint32_t start, uint32_t next) "ISO_TD start_offset=0x%.8x > next_offset=0x%.8x"
-+usb_ohci_iso_td_to_non_iso_endpoint(int ep) "ep=%d"
- usb_ohci_iso_td_so(uint32_t so, uint32_t eo, uint32_t s, uint32_t e, const char *str, ssize_t len, int ret) "0x%.8x eo 0x%.8x sa 0x%.8x ea 0x%.8x dir %s len %zu ret %d"
- usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
- usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
-@@ -55,6 +56,7 @@ usb_ohci_td_pkt_short(const char *dir, const char *buf) "%s data: %s"
- usb_ohci_td_pkt_full(const char *dir, const char *buf) "%s data: %s"
- usb_ohci_td_too_many_pending(int ep) "ep=%d"
- usb_ohci_td_packet_status(int status) "status=%d"
-+usb_ohci_td_to_iso_endpoint(int ep) "ep=%d"
- usb_ohci_ed_read_error(uint32_t addr) "ED read error at 0x%x"
- usb_ohci_ed_pkt(uint32_t cur, int h, int c, uint32_t head, uint32_t tail, uint32_t next) "ED @ 0x%.8x h=%u c=%u head=0x%.8x tailp=0x%.8x next=0x%.8x"
- usb_ohci_ed_pkt_flags(uint32_t fa, uint32_t en, uint32_t d, int s, int k, int f, uint32_t mps) "fa=%u en=%u d=%u s=%u k=%u f=%u mps=%u"
+Thanks,
+
+> +        if (!vmstate_post_load_defer_finish(ret == 0, errp)) {
+> +            ret = -EINVAL;
+> +        }
+> +        memory_region_transaction_commit();
+> +    }
+
 -- 
-2.43.0
+Peter Xu
 
 
