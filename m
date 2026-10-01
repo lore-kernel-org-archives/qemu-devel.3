@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 143E3CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53810CA5FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCKxk-00084H-VF; Thu, 01 Oct 2026 13:52:57 -0400
+	id 1xCKxg-00082T-7B; Thu, 01 Oct 2026 13:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxh-00082q-3X
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:53 -0400
+ id 1xCKxc-0007za-E0
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:48 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxf-0001pi-Dd
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:52 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xCKxZ-0001kU-0f
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:52:48 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691FsfiR3512258
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:40 GMT
+ 691Ft5xZ3355856
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Zsfr6Y2ElMPfKd2qlKJpI7SXl7Iyzpdam4HT9g91Y/Y=; b=aYb+33AEeWY9ztUS
- lOMZL0BsFXEc1mRdjEBNEjlqR3djZ6wLGbEtQyIN7vPFThXVm7+tctfbS8PU76Ag
- zX9CaOpFNSZtc+LEPLI6/bwxBVlGWrfgIeUcrMonZZUwKoLrUx3q5G9W0g2b4D3R
- jlQ6ulaU4D+dkCaYKucZZOTZjbDfDu2kCn9PPWQFrsDorD5rU1VNcsMHxFKVfS1l
- UE+hBWw/7ja3ecGNbF2VJ5srHpXHieCpA8yiWzG6EeevVJgLiBXluGTePZ29soaf
- 38z1mb0DlcJZ/3I2R4pvQzQJK1XmikhCOd7VV0+f1Qk54R5+VRHAoH1gPXrObKGS
- PPq1mQ==
+ oZ6T/rUJbKvq74ZpXHAO96KkEZpMJB1GRPP3PdMqKvg=; b=c6zfQnbkqUD/51km
+ SSJxdxeKfKOZrl2qsQUlkUpsNHbFG4uL8SNYmDV0Z57tv6e9PLso1J9/VXAHqPDq
+ 9GHnJgN8JH6h55kKR9hbcITxULyS7xfwy8i926mF/pMVxN80ciwVtPDH1fO62Mcb
+ wvPKnt/y7xk+6xax0JySZ0TmHxOnnZkyiT02KkhxGgjG2VXmcJnuosyVGIkGqzvq
+ CGifdu5F9mu2uDe0srU6YmEYdX+uMoSu2LzGB4o7+pGyWWT9/OZj8Iaf8eV9JnkM
+ ASEMer4N2X4eUrRYQtqLyGz8Rfu+PgIB5SgFi8trZAEUbFYuSstZnTQ2Bd1JT7W4
+ qKFCGA==
 Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1quk9e1t-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1h7nub7a-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:40 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:33 +0000 (GMT)
 Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-144d4ba280aso688140c88.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:40 -0700 (PDT)
+ a92af1059eb24-1466ab2bc8dso9220525c88.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790877159; x=1791481959; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790877152; x=1791481952; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Zsfr6Y2ElMPfKd2qlKJpI7SXl7Iyzpdam4HT9g91Y/Y=;
- b=A9+MBmOmCtUOkiVTtuOiLYjVZqLEtjGEJTh7KSBQToBNm/tspeKnJv2fp0ifsXe76G
- s9cK24WGHb+RV5QIZKh/lAtHu6Knga14opDJHT6Y5Jn5puknhaG5h9iEAY9KQNDxurTH
- f/4uXzFyBiYZzOxZbN2h/84a+AS3gcpqXGpaYhdHu3T7su5Xw5z2ZtzO5aZBcDrvZo1v
- mtnoTfuRueIF31N78T5f0mdVZqdGVLWpaQDHcSXwHS1vT7OPp3l7YVDVVjB6luJBELAy
- SiUsHXsfIk1pxTE3dEeyqPHn0uS+2DcNMg0ETZxmyivyqHZfWpmSqajnktZ04SPTIZPC
- /CJA==
+ bh=oZ6T/rUJbKvq74ZpXHAO96KkEZpMJB1GRPP3PdMqKvg=;
+ b=PLkLUJd1+LVA+b8zcLvQldXpG7NDJIhHKDs+mqC7mnOp0ZniD462CybZrnZ00RphjH
+ HeNs5mKhtPiyttrdpzTrW8VyiTCH9LrHKccbKx/uUJ3CnI77+agZPUrLm4yluVah2lKz
+ 4IxS9oxovP+JMLpJ42YCMPBG7W62khlMdmnIKKEJaLyzwRzqe8iYAXPL04uAns8l0Rlw
+ 3pvovopA4FcbH2JGloZNTTN0nblbMfXwxgeE227paCpya57e7hNdQIWHRstkR1htucxi
+ 6cwZggEyloBCoqgBDW/Hz4SLzXIzB4k5/c6jgOE4mijzlUTc9beB4OXYz2mJoMTpnWPC
+ ZCOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790877159; x=1791481959;
+ d=1e100.net; s=20260707; t=1790877152; x=1791481952;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Zsfr6Y2ElMPfKd2qlKJpI7SXl7Iyzpdam4HT9g91Y/Y=;
- b=2VU+qI3qATzGrLBh4wR3fmIcE2ZKCYvDcRywBpg5kDx0F2hY5FH8O3Ld2juUvjioGW
- pXiv0WuLibnvS8NIjsA+krB52KLZWqeDtK9pMLw/nEJEIJEKpEgC8y1TA8enK2bbYceH
- HvGXZC9+fW/iBGv7DQ2BOaigjamkJvW7ycSlnTAmSMRSix0z6pfJ8iB+/07+BadvpV4U
- Vkqwg6ctg3EQFJnNbVZUA2Oh3agk6SQjSV0jo3wUAUuD74dIpruZ+Mc6zEslBhPVCivf
- 66AfWi3BxQsqm+qTnjuR7+//ixAN+YkaFIvCb/rxgUw7hEnftHnCEuXWiCzZiRTidPc2
- ca4w==
-X-Gm-Message-State: AFuF++kC+MSj+/AzgMW+qGyosaZaryh4RowoUmhTwIESPpResSQLYvjZ
- 2BAhhOOF+xLWjA6a8p/CX6e1Ne8audB6rEgRal8rysO6aUqXal0075a7QnXIKP5XAgxDnsw7VbW
- O7L5U6qhKT4UcNcNSWJfA1ZfPXDJVomo3Sgt0xdn31xyXcTukdzJhKw04mGgAml437w==
-X-Gm-Gg: AYBFou3aaehDCLb4ngkL2BQoX9ma6/Mh6WOCa2rxlXkY+xyRYJtEk6Ifelpsrnnn1YE
- /WDD1GtGtX2CsOHvSNKyTPSpWBfmr3VtzmmLkkXi9ty5L2ryNE8dUshDQ0n5s/410ya1WnU3Cuv
- BZABE/ki4m/J8tI3R1bJXyH2kL/JE1LxaQbvAwckFMy9/91QOCgNfo8nF6HmNXkMPOAI5kPoGgQ
- uvjibw3Md04dMV2Hnx1oR4YegzMahLbBFsWKd5Z6RLxW8YZfunq5P2TuPVfSht1IZAKVzcrNBpA
- j2oMiPe49ep5lMHTUOCzIsEJkBy3yu2c9xvyXk40tVfyIQRTHfx0Dnjkf1KcHA06j5ly3D/RbpN
- aKmDh/MIdbRBtgoDF2BeVj1h23yYEx5d5ojnq9SMRlvm/qo/NLHu19DG0Q1PA
-X-Received: by 2002:a05:701b:2605:b0:14e:5e6b:e6e2 with SMTP id
- a92af1059eb24-14e5e6bee29mr2470963c88.18.1790877159239; 
- Thu, 01 Oct 2026 10:52:39 -0700 (PDT)
-X-Received: by 2002:a05:701b:2605:b0:14e:5e6b:e6e2 with SMTP id
- a92af1059eb24-14e5e6bee29mr2470926c88.18.1790877158584; 
- Thu, 01 Oct 2026 10:52:38 -0700 (PDT)
+ bh=oZ6T/rUJbKvq74ZpXHAO96KkEZpMJB1GRPP3PdMqKvg=;
+ b=BxoE6gT6XMU7rjqtZllWVsjfUK7sSki/PmA6FLio/7227rkhIxoTn+B5O8Paiy5fIl
+ EbuJ/ghK2xgnEfxYyQUCjznwy7gZdfoyIQBTjcsUVjbJ3rx0TqyP5X/CEVTDU5nbbSEy
+ RwHikN28/qsrHOyC04rfbbx9XdGhe+F1pRLHZ4m0lxGdHCJHl1ezRIw7ihBY4wVbK8QS
+ 2iu3lLJy6KYqO2jJffdMHSBSEcRrD5zePPRMtIAaojFAapYWmLf0jWkgvdoXmX/GFKgK
+ qPZ60PJryCVENBVg9QU5tyS6n9ioIX6ysVlhawbTjWrRFwQFWNCG1pdjFDOugLXfQzey
+ UIGQ==
+X-Gm-Message-State: AFuF++k27I3PsCz1ywK/HZcn/lmPghVIatdvo8OzbIkLT3WL9CpP7GOV
+ sW5NPKlyybVmHK1tqPPfjxI/UvBuupyxSzsSECZK9ycUEYAKB0/7sBh/MIZw/v4+sOYhJVwo4Wh
+ yvQFMviPB2Xp6FAHDzsIBQqoOYr/kYPt9ouOPEKRHeCBdzQjy6zr6IBILjrLRtAiFuQ==
+X-Gm-Gg: AYBFou3uCEcLJiw5F1OcheXQELal2yYbxEap6b8FJQEyxTzCN7ioxpgKTTCqvFrbZ5m
+ CEDazr3EO4MLrRrG2XZRN6hYO1HJuN/b3gDof6XBjnuG6MKYL4pzbXgGTRZgJA2S/+3BuTEbGWz
+ /GUHzOBjv4/tnx1ECUUw3GbPv5rVl8HRq6ZO1Mzi8ECjdntDw8R2e6SPVuoNVV7RPYm0OHoJeC8
+ B4rBYJUBqA/nd6WYQ8PV1x+G7jEya6Ic0T3gAIgR5Umlz2P6LQTKsNtqOeET5xyHfZOUpxhUM1C
+ 8e7XkF4dwFHrIxkX2v8lA/s2qvjyhz1oQlg3hlFZ/zGg71Dw5tm0mGHvCp+MeRgIt8n95hSMwlq
+ TggClJtuR339xXHw+cI8YvSLnfdD1YQ7+10HMCkjPBpPxk4ALgNkqHDetp159
+X-Received: by 2002:a05:701b:21c7:b0:144:ed03:8972 with SMTP id
+ a92af1059eb24-14d31798ec0mr5820869c88.16.1790877151536; 
+ Thu, 01 Oct 2026 10:52:31 -0700 (PDT)
+X-Received: by 2002:a05:701b:21c7:b0:144:ed03:8972 with SMTP id
+ a92af1059eb24-14d31798ec0mr5820820c88.16.1790877150801; 
+ Thu, 01 Oct 2026 10:52:30 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.37
+ a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 10:52:37 -0700 (PDT)
+ Thu, 01 Oct 2026 10:52:29 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 17/27] target/mips: Sign-extend the SRAV operand
-Date: Thu,  1 Oct 2026 17:51:53 +0000
-Message-ID: <20261001175203.8673-18-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 10/27] tests/tcg/mips64/test_mips64r6: fix include path
+Date: Thu,  1 Oct 2026 17:51:46 +0000
+Message-ID: <20261001175203.8673-11-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfXzslb/fMIDk7j
- vgf7rbNd6oIE7J2Rl4KmsITNoV2hjCXzs5E21LpwgdhHk2PwioeF/PAfwlH38itqUGDmJBnXe0F
- JryP31KoufYVQ44LsBNBuYDIc2r434E=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX1Z0KFMk/I3ir
- r7368yN74rxvBYEAPhdxgNf/X3RwEkmBxdxJXERddUgUvE8uaQ5pWWyJ5nczdmObGb4HFU0M7WI
- jQIw+/FjPgOopqJjdAKLu3IjF3Q0EjZGs740qxAabR8D9WAFeE6tT6X8YherTWAPv8uU/d+ws0B
- e6y9KQslKFf69i6jpNPfMQfVOmixJmbE14AMO4bhAzWfdky+NYXSClhczKauUTRxT+e6Zk8eJh6
- 6jTKrRhOIy7sA89bM2Nt7Gu7m2oC7dPJeRKCuVKAbRMYuQP70fHGUhTGM7kQhcI0wl79QY1LodT
- fakfUQ95Nfvo4OV/3NyEO7Z4k2t/PfikG5iSGxA7WF2KUZp/qHCV6nxVpbUWsQ40OOZocQX/jO1
- XwBU8P0nvk4IE33WsKoAbvRVgV+XK3+JgXvL6EclCcJDth3tKGm4PsEBdKelgnV9pfaqE0sdQ7v
- KpRQqL6PExzcLh4QFDQ==
-X-Proofpoint-GUID: zUu1QgIPHmoszC_6-s6MWC7-PUyxu55f
-X-Authority-Analysis: v=2.4 cv=TdADJhQh c=1 sm=1 tr=0 ts=6abe9de8 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=OI6yTiaB c=1 sm=1 tr=0 ts=6abe9de1 cx=c_pps
  a=SvEPeNj+VMjHSW//kvnxuw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=W5-BjZYuLqWngTJxaqwA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=XxA8iSUrf-6v42RAVLYA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-ORIG-GUID: zUu1QgIPHmoszC_6-s6MWC7-PUyxu55f
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX4mpA29ih8C/P
+ FoRKIO5/V8AJQSVSBIGKVF6cj0zyrBFm8ofY3smNdkyyVKk93nbt5nVvL6YOti3+i5NyRjqd0/P
+ kLaDEa4edfux+h0C4phBgc4pPYqaEbQ=
+X-Proofpoint-ORIG-GUID: L_Jfz1LZ-WYbjF9vHuRHFxc0w2G8zPAO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX5PSXG05MWXeQ
+ Lah/+LF5+eC+qpnktVVI7tm++Btn0WhWysKjnUXg255++qt4ZCKaodHzt21bvl3tLAFJLr0Y47Y
+ Xqu9MznHU0NCQHFU4TJsgxZWxgeAFEcUiN2Rzop4EvZxZQ/sNSrGHUFQlIeIr5fq4i2uh/J7+Zh
+ 0qW60g26ZqURU1Y0v0WsmZ/bQlR4uMehHazlDUWejqSgYAyCvpoyn2IvLgqx4t0KHAfx4uBQf14
+ 7+IuMZcxicphuYMgSfGS8eBpf33tOJ862sGOxsBxNIg2Iu2cpEd5P8CmTaDZCgmdw0VF3PSFmk9
+ i1nYSyQJ63epcMk69rPu+2tiRLIiGS8b3myjHPy8cVdhRemTvUPes3/5ptxxCao5yR2QGudh+2z
+ Lv08ZtFzPgm5dCw0DW9cfoXAxFlfokpz+Odh/l2mP7lBb1HWE8Nt5ho9/8aDv6lRTNqMMJAgtnY
+ aOjPE2/1WFPNPDYFg4g==
+X-Proofpoint-GUID: L_Jfz1LZ-WYbjF9vHuRHFxc0w2G8zPAO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 suspectscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 spamscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010071
 Received-SPF: pass client-ip=205.220.180.131;
@@ -151,33 +151,589 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SRAV operates on the low-order 32-bit word of its source and
-sign-extends the shifted result. Sign-extend the source before
-shifting to make results deterministic when the source register
-is not already sign-extended.
-
-Fixes: 48d38ca52b6 ("Switch most MIPS logical and arithmetic  instructions to TCG")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-18-pierrick.bouvier@oss.qualcomm.com
+Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-11-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/mips/tcg/translate.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/mips64/test_mips64r6_and.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_bitswap.c  | 6 +++---
+ tests/tcg/mips64/test_mips64r6_clo.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_clz.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32b.c   | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32cb.c  | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32cd.c  | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32ch.c  | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32cw.c  | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32d.c   | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32h.c   | 6 +++---
+ tests/tcg/mips64/test_mips64r6_crc32w.c   | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dbitswap.c | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dclo.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dclz.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dmuh.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dmuhu.c    | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dmul.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dmulu.c    | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dsllv.c    | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dsrav.c    | 6 +++---
+ tests/tcg/mips64/test_mips64r6_dsrlv.c    | 6 +++---
+ tests/tcg/mips64/test_mips64r6_muh.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_muhu.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_mul.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_mulu.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_nor.c      | 6 +++---
+ tests/tcg/mips64/test_mips64r6_or.c       | 6 +++---
+ tests/tcg/mips64/test_mips64r6_sllv.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_srav.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_srlv.c     | 6 +++---
+ tests/tcg/mips64/test_mips64r6_xor.c      | 6 +++---
+ 32 files changed, 96 insertions(+), 96 deletions(-)
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index e3467d15251..936f8c4eddc 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -2853,6 +2853,7 @@ static void gen_shift(DisasContext *ctx, uint32_t opc,
-         tcg_gen_ext32s_tl(cpu_gpr[rd], t0);
-         break;
-     case OPC_SRAV:
-+        tcg_gen_ext32s_tl(t1, t1);
-         tcg_gen_andi_tl(t0, t0, 0x1f);
-         tcg_gen_sar_tl(cpu_gpr[rd], t1, t0);
-         break;
+diff --git a/tests/tcg/mips64/test_mips64r6_and.c b/tests/tcg/mips64/test_mips64r6_and.c
+index 4d6cf2e1f1d..38ae641e907 100644
+--- a/tests/tcg/mips64/test_mips64r6_and.c
++++ b/tests/tcg/mips64/test_mips64r6_and.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_bitswap.c b/tests/tcg/mips64/test_mips64r6_bitswap.c
+index df3d1b11f6b..ae2f74b34ee 100644
+--- a/tests/tcg/mips64/test_mips64r6_bitswap.c
++++ b/tests/tcg/mips64/test_mips64r6_bitswap.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_clo.c b/tests/tcg/mips64/test_mips64r6_clo.c
+index e7ecdc59100..611dcc9572f 100644
+--- a/tests/tcg/mips64/test_mips64r6_clo.c
++++ b/tests/tcg/mips64/test_mips64r6_clo.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_clz.c b/tests/tcg/mips64/test_mips64r6_clz.c
+index a77a8e4eb59..3f89cbdec2f 100644
+--- a/tests/tcg/mips64/test_mips64r6_clz.c
++++ b/tests/tcg/mips64/test_mips64r6_clz.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32b.c b/tests/tcg/mips64/test_mips64r6_crc32b.c
+index bb1f3f69249..7b8955cffd5 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32b.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32b.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32cb.c b/tests/tcg/mips64/test_mips64r6_crc32cb.c
+index 1439d44bf20..58479c2733b 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32cb.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32cb.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32cd.c b/tests/tcg/mips64/test_mips64r6_crc32cd.c
+index bf258e0696d..417cd895fb9 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32cd.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32cd.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32ch.c b/tests/tcg/mips64/test_mips64r6_crc32ch.c
+index 0e7b67732e0..9ae4804e687 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32ch.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32ch.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32cw.c b/tests/tcg/mips64/test_mips64r6_crc32cw.c
+index f7110b3a0a4..2e1ca6f836f 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32cw.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32cw.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32d.c b/tests/tcg/mips64/test_mips64r6_crc32d.c
+index e391be803f7..d916ee2586b 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32d.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32d.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32h.c b/tests/tcg/mips64/test_mips64r6_crc32h.c
+index 100f02c7dda..72575e95858 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32h.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32h.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_crc32w.c b/tests/tcg/mips64/test_mips64r6_crc32w.c
+index b4f5f4bbee2..4518b4fe482 100644
+--- a/tests/tcg/mips64/test_mips64r6_crc32w.c
++++ b/tests/tcg/mips64/test_mips64r6_crc32w.c
+@@ -11,9 +11,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dbitswap.c b/tests/tcg/mips64/test_mips64r6_dbitswap.c
+index 377835940d9..7473f3f0ceb 100644
+--- a/tests/tcg/mips64/test_mips64r6_dbitswap.c
++++ b/tests/tcg/mips64/test_mips64r6_dbitswap.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dclo.c b/tests/tcg/mips64/test_mips64r6_dclo.c
+index eb41fbdfdf7..a6f8688b76c 100644
+--- a/tests/tcg/mips64/test_mips64r6_dclo.c
++++ b/tests/tcg/mips64/test_mips64r6_dclo.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dclz.c b/tests/tcg/mips64/test_mips64r6_dclz.c
+index be393ac1992..ab2d3eadeff 100644
+--- a/tests/tcg/mips64/test_mips64r6_dclz.c
++++ b/tests/tcg/mips64/test_mips64r6_dclz.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dmuh.c b/tests/tcg/mips64/test_mips64r6_dmuh.c
+index eb21615f952..490c81f884a 100644
+--- a/tests/tcg/mips64/test_mips64r6_dmuh.c
++++ b/tests/tcg/mips64/test_mips64r6_dmuh.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dmuhu.c b/tests/tcg/mips64/test_mips64r6_dmuhu.c
+index 7316d79e2af..28dd2026418 100644
+--- a/tests/tcg/mips64/test_mips64r6_dmuhu.c
++++ b/tests/tcg/mips64/test_mips64r6_dmuhu.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dmul.c b/tests/tcg/mips64/test_mips64r6_dmul.c
+index 3ac1965cca3..2a33d678992 100644
+--- a/tests/tcg/mips64/test_mips64r6_dmul.c
++++ b/tests/tcg/mips64/test_mips64r6_dmul.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dmulu.c b/tests/tcg/mips64/test_mips64r6_dmulu.c
+index 0862780e3de..161d1fe96bc 100644
+--- a/tests/tcg/mips64/test_mips64r6_dmulu.c
++++ b/tests/tcg/mips64/test_mips64r6_dmulu.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dsllv.c b/tests/tcg/mips64/test_mips64r6_dsllv.c
+index 4f719efda12..fc93e0b218a 100644
+--- a/tests/tcg/mips64/test_mips64r6_dsllv.c
++++ b/tests/tcg/mips64/test_mips64r6_dsllv.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dsrav.c b/tests/tcg/mips64/test_mips64r6_dsrav.c
+index 024d508ca87..e496e8fa83a 100644
+--- a/tests/tcg/mips64/test_mips64r6_dsrav.c
++++ b/tests/tcg/mips64/test_mips64r6_dsrav.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_dsrlv.c b/tests/tcg/mips64/test_mips64r6_dsrlv.c
+index fd1c398ffde..2c4c04f4c42 100644
+--- a/tests/tcg/mips64/test_mips64r6_dsrlv.c
++++ b/tests/tcg/mips64/test_mips64r6_dsrlv.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_muh.c b/tests/tcg/mips64/test_mips64r6_muh.c
+index ff1ae6fd9ce..8f371e22e61 100644
+--- a/tests/tcg/mips64/test_mips64r6_muh.c
++++ b/tests/tcg/mips64/test_mips64r6_muh.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_muhu.c b/tests/tcg/mips64/test_mips64r6_muhu.c
+index cb2752767a5..79824c05b13 100644
+--- a/tests/tcg/mips64/test_mips64r6_muhu.c
++++ b/tests/tcg/mips64/test_mips64r6_muhu.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_mul.c b/tests/tcg/mips64/test_mips64r6_mul.c
+index 5cdc4d56324..9589c4c3a08 100644
+--- a/tests/tcg/mips64/test_mips64r6_mul.c
++++ b/tests/tcg/mips64/test_mips64r6_mul.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_mulu.c b/tests/tcg/mips64/test_mips64r6_mulu.c
+index ccb3bdc1ac5..72b4d038cfe 100644
+--- a/tests/tcg/mips64/test_mips64r6_mulu.c
++++ b/tests/tcg/mips64/test_mips64r6_mulu.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_nor.c b/tests/tcg/mips64/test_mips64r6_nor.c
+index 21005ddc53b..04b841c8df1 100644
+--- a/tests/tcg/mips64/test_mips64r6_nor.c
++++ b/tests/tcg/mips64/test_mips64r6_nor.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_or.c b/tests/tcg/mips64/test_mips64r6_or.c
+index 345b4544fe0..fde9601a78d 100644
+--- a/tests/tcg/mips64/test_mips64r6_or.c
++++ b/tests/tcg/mips64/test_mips64r6_or.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_sllv.c b/tests/tcg/mips64/test_mips64r6_sllv.c
+index a5fa72b7278..46136de0634 100644
+--- a/tests/tcg/mips64/test_mips64r6_sllv.c
++++ b/tests/tcg/mips64/test_mips64r6_sllv.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_srav.c b/tests/tcg/mips64/test_mips64r6_srav.c
+index 79e1a047eb7..94c528f8ab8 100644
+--- a/tests/tcg/mips64/test_mips64r6_srav.c
++++ b/tests/tcg/mips64/test_mips64r6_srav.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_srlv.c b/tests/tcg/mips64/test_mips64r6_srlv.c
+index 1f8c45d8cc8..993d0b75205 100644
+--- a/tests/tcg/mips64/test_mips64r6_srlv.c
++++ b/tests/tcg/mips64/test_mips64r6_srlv.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
+diff --git a/tests/tcg/mips64/test_mips64r6_xor.c b/tests/tcg/mips64/test_mips64r6_xor.c
+index 7e36fee517a..3ab67ea0555 100644
+--- a/tests/tcg/mips64/test_mips64r6_xor.c
++++ b/tests/tcg/mips64/test_mips64r6_xor.c
+@@ -22,9 +22,9 @@
+ #include <sys/time.h>
+ #include <stdint.h>
+ 
+-#include "../../../../include/wrappers_mips64r6.h"
+-#include "../../../../include/test_inputs_64.h"
+-#include "../../../../include/test_utils_64.h"
++#include "../mips/include/wrappers_mips64r6.h"
++#include "../mips/include/test_inputs_64.h"
++#include "../mips/include/test_utils_64.h"
+ 
+ #define TEST_COUNT_TOTAL (PATTERN_INPUTS_64_COUNT + RANDOM_INPUTS_64_COUNT)
+ 
 -- 
 2.43.0
 
