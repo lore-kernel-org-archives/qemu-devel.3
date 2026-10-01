@@ -4,120 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB63CA5FC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 02:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF19ACA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 03:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xC6D8-0003la-T2; Wed, 30 Sep 2026 22:07:50 -0400
+	id 1xC7ER-0004ZL-VS; Wed, 30 Sep 2026 23:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xC6D7-0003kj-5m
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 22:07:49 -0400
-Received: from mail-ed2-x0f.google.com ([2a00:1450:4864:33::f])
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1xC7EQ-0004Yo-0M
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 23:13:14 -0400
+Received: from mail-pj2-x2b.google.com ([2607:f8b0:4864:39::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xC6D3-0000v1-Vd
- for qemu-devel@nongnu.org; Wed, 30 Sep 2026 22:07:48 -0400
-Received: by mail-ed2-x0f.google.com with SMTP id
- 4fb4d7f45d1cf-6aa1d00daaaso10608572a12.1
- for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 19:07:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790820464; cv=none;
- d=google.com; s=arc-20260327;
- b=Y5/baxgoKSNewEm86OrjsSrwC0wdS+d4ETC2iWVvoDrBn6sn5nPB9AEpJ5yM0ppgst
- bqlwD7XHw58xZWkDCogsOh+CQ+78y+4GXbc9twEDD36aA0DLc5imoniIsvRcTo8V/5wz
- by/F1zABoVA8cu6op7KLaOPS7SdKk/CF1sq/dLihcOskkICjHzHT9wFrvmPeVPYFuAFO
- Y3LIbH6wNqV5sXSnwsjBgaGt3XnxmeeOr5uJQZZJDdAm8kLXJCBKQEMeRxizLUoCY4qV
- qz4JbYRlCdmddVgkPYYh0GJM1JpSJ8vZdR9YEaE71msLPzipglJoj74iUspT7VaMsiP4
- 76Rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=iq3esjhG4aVafagvf/oWSo/6s5umcwYrzfq6e+nN6YA=;
- fh=pS42xvTpIuaUSSfWP0KHETKPUIOchqwI7/2RYG7wagY=;
- b=SmX7CAe1plL1tF030FVgJfkBd9g0OAHd25yt8FyFMIAb8Odnv9fP4G2MWktt2xJjUW
- VkG1udUWPAJSJKa98B4T5muUe7eHrqrkyG4jVVdcCCMVht4GejEuDDH3xv5fFwISzh4x
- iUbuC8oBlssxF2HWt/jPMDdmETRMJvcawl8MG0H62v4dbqKs6pIMW8qNojzoitdwCCtE
- 3+fJ97063TpEqvhceaChQ1LuOZn+y9EI8K4etxiVHgiiqHcJymyiWqX6fQVg8q3HdhJh
- TD75lMSyuBzRQNQkQPWy5xXbUKA8kNhrsT2IJol2FrYWnhHNEf2jha8+kXVYQAOQscG/
- ImCQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1xC7EO-0006VS-5d
+ for qemu-devel@nongnu.org; Wed, 30 Sep 2026 23:13:13 -0400
+Received: by mail-pj2-x2b.google.com with SMTP id
+ 98e67ed59e1d1-3a49b3e7bc3so443555a91.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Sep 2026 20:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790820464; x=1791425264; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=iq3esjhG4aVafagvf/oWSo/6s5umcwYrzfq6e+nN6YA=;
- b=sw8rGU/dctpdLbvA9r3I0SFbZ7DP6XrxOy9WvsMEgrkVynGVYGvBOgUU36nmpjYnz1
- GVD82vpxDNYOr75gN/ovWsJ2pOKtW8EDSVdAD7g5aaj2OSM2sAWvLAeit6yHAFL29b3E
- 2ld2B/kD4DeTDRfXAAycflndXJyn67mTxBVQ1i5bniOumRoVsi/HEAPpB7fYWKAK0Na1
- 6RbM7ffYdbnkIoRPbN09UhB84Sd9YmNgSZzpGMSguiE0OmndOS98wZFAsK6x1UK/3SW2
- eyEaqCUireWt8gj/y5Ve5P2gH8q7ZpdIimgdtWzay7X2ssZEQgmnCA0TAZAoUIAkTPod
- 5OZA==
+ d=tenstorrent.com; s=google; t=1790824390; x=1791429190; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:from:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Y+zlM5o8tj72RsI5d/qQ9Ifd5fAfAiSENQxMGm6NXfQ=;
+ b=QdTp9tX2gmEljvq7jSM98zUcWYys7Hgyn3DMkkU//lqcAay2Ag5px6kIDitdtY/z8r
+ xHpQkRyHEYGxXgSb48HYx3yFJ0BfIzwcEyfLJF92ZNFaf8F65GZEx53tCByEUXf4IImT
+ oy2P7txsxNRN3kh8WTr2J0AItR0lEC+GTWn1YhpTcNvEtehEMhtoNgxzRXUF4b5zMFRO
+ y99jAMwEYtX9DggQK3R6C4HY35Y5j+GBRcb9N4rH1r9N7/y/9zezNRYY1DaWriLX99a9
+ 6m1ehOI/0p0HBuqgt7SemkY50W7e/XIqInXCbpCnsYwxqGWhJaVsq3+f6BkviFrC1YYz
+ DVjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790820464; x=1791425264;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iq3esjhG4aVafagvf/oWSo/6s5umcwYrzfq6e+nN6YA=;
- b=npcdk/a4R78yKyQnRn6W5J40cqflMYti1DBiMoadR8KD1zBfPuhhINLqMNRkvbH9+d
- O02NizThvT9ma10RJayTjtZuHv9XecnEcR95/N7UUfwriCtZ13h9Teq8fHdpQ81REyQo
- LniGWjX0Lan6q7z1pQCrpuSrKsvC4NjZ/SPzOlSZvr1SnKmbiiDG6BWXkQmuAj6APYCS
- 8wADGQH5G2jkt7brBuolfihrWh4ranwJffuAz8rxC4YMv+cFQM5hVXVlQYuPYfoVcTPm
- m1TTNgCn/FDz7WZnJkCJFhSpFLH71Zdmdrzvvbw/h/pYazGACxVWelar0BnvjmpQdDAO
- oxLw==
-X-Gm-Message-State: AFq9FYKY7uw7N3TVlTA5fcoYCxVNLfrN2ANyXdH/VSzD4vYpkVO1yx1f
- lhOLJg/08BZ+BcEJP+wVy/uj3I4tS+yWHqz7g1TdDv1/xHIQoBouKVuZqSOPQPwUd7mU8AzptxQ
- +nwk9J+ClojvR9uItNoO7gPJOW/oXooY=
-X-Gm-Gg: AYBFou3S8YPkpH1XOQ24ALKk6xcRIrSVr8ZmeDI4IYeoHwmTkuHHod1L7OqPGNrRW/I
- NFCurorNVZxtrgTi5ynkflD0r7NvAVQoMpQQdqE4rCiKespCfhXgNqqgCY5W0uxP8TuZu75WyED
- CEVX3mLuYyahx1Yyxwq9ZOpTxaD6KKyk8z8xO+EWHpB05olsc87W9WNosj/t8k1UnCx7NuWiJJg
- 7mjvPnm6ggWQ5ukb8ue+d/Ulh/PR+H1c8tv6bvTqaa1Z7HTSElJMTCb1MtJgdP9gIbj5p7eDYMD
- +u+/b/nasF5YbMUlmsfmDpDmH4lbw//Qll1QA+KJwn0RA/ZQ0TO8Eu8=
-X-Received: by 2002:a05:6402:4442:b0:6ab:373:54f9 with SMTP id
- 4fb4d7f45d1cf-6ae1996cf19mr2256379a12.40.1790820463967; Wed, 30 Sep 2026
- 19:07:43 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790824390; x=1791429190;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:from:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Y+zlM5o8tj72RsI5d/qQ9Ifd5fAfAiSENQxMGm6NXfQ=;
+ b=pmGnoSwNBMq8g2I/X1v3A2me954UvwLgYaxj+1JGRECmAW8C6mDPshKxXKxzaV9JnO
+ WsSOzdYye2o1b4HSkvIs1ARR5kb33RcqFGmWz8hwmGfkcNCwHRUfturhYJVE5Yag9n5v
+ eNU+5d0oWmsJBrbZZY064cVKatz4IYRHtXppliNqW27JS2BhoEQi3LwjT5k0eU0+XnMH
+ gYFrwwjPmU8C3h8teNb7sWXNba72gpb6tYMsV4CmSI5NFWOuzcxV3aSDniy6l3+9Ol9x
+ h/LJDzMHtL2mObJD+dgKmIiT8q0IISjWhmxEmJOBHiy34bsNUWkDuJJU6flMo0Ngn0U6
+ zqwg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwTidWRExLwUqSh35TizcFK9Zl7BQ1geGOGVjWjRa1b3OvAwIWixPMUqZct3LeMhGum7/UAQNSdDior@nongnu.org
+X-Gm-Message-State: AFq9FYK+S9PZ3cbqq+v+SXMIypCUhFDGIqEyKrcX6UJgNUjR+7Eq7Zfz
+ AhtMUWtaytd0gzUlwR1Pm/52F6u5DpkhinCkg1Z2DmP10s3pA/NnifgzYbDd1Mrnj3g=
+X-Gm-Gg: AYBFou2wfvMc/zuu/Cx7QgkquopKv2QwtYCxXI0ZPB5LCtAM5aS4VaMIn/an3TzKKMe
+ tmfGn1ZU5rFCd4y1q2TXLqRNnAc7mc0GKtnkoFYAOIfCvTAAv0YfY8MWdOExQIobwOyMpuLf6x1
+ VXxLD3jt2rX/4EG0sY+KA2gSLeprhcOZwriFSMH3pls7KBQ625GgojGx4HJQQ/TKITZkSXwPUeh
+ Q3smTGZ08hFPYDIKyNv48bzMpPPgY0tLjkR2gPw9jBfSHHdLiwqajT56FPuzzsHzcJr4MwgjwIF
+ gKxrmeWQN67UpxTKpxFNvU/06syqJZOwhupH0wIZxOEf41ox2kSvz7hNuZwvpvJ9MXIMhvyZscv
+ wbsordPJOf/VjX5Z0HeSk8CLxcNM2twn9HTPtMtsrEfVKlsjHLvCNlnQv7lqEESsNwwavtd2N2n
+ /93kxu28iDSIofGfaAh1spSGSsj05i9J1cImBegBS5QkkDjzvsTnlB18HcO+1PZyEJiLgK6iZrU
+ isHFPJAudFBPbo/liD7FgKbBkc=
+X-Received: by 2002:a17:902:f690:b0:2e2:c797:d87f with SMTP id
+ d9443c01a7336-2e2e490bfadmr43000625ad.1.1790824389777; 
+ Wed, 30 Sep 2026 20:13:09 -0700 (PDT)
+Received: from [172.16.1.33] ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2e311774747sm100965ad.32.2026.09.30.20.13.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Sep 2026 20:13:09 -0700 (PDT)
+Message-ID: <5a5f0085-186d-47bc-9d6e-7719ea9ed024@oss.tenstorrent.com>
+Date: Thu, 1 Oct 2026 13:13:01 +1000
 MIME-Version: 1.0
-References: <20260926081551.29-1-luoyonggang@gmail.com>
- <20260926081551.29-2-luoyonggang@gmail.com>
- <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
-In-Reply-To: <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 1 Oct 2026 10:07:31 +0800
-X-Gm-Features: AclHuK_YhTQfAsWte1TerVMP62F1spamOd33K7zgFzLJQ-ObHmTnnRtITObfAsQ
-Message-ID: <CAE2XoE8FM0JG4YWkNo=vLfTAfCHe0U56vYjG8FSJb6XhhJGhhg@mail.gmail.com>
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, Stafford Horne <shorne@gmail.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, 
- Laurent Vivier <lvivier@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Song Gao <17746591750@163.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+From: Portia Stephens <portias@oss.tenstorrent.com>
+Subject: Re: [PATCH 1/5] hw/char/dw8250: Fix leak when creating child device
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Joel Stanley <joel@jms.id.au>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
+ <20260929031644.1016354-2-portias@oss.tenstorrent.com>
+ <238b1bf5-c7a4-4103-9e70-c5bf9efc3691@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <238b1bf5-c7a4-4103-9e70-c5bf9efc3691@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::2b;
+ envelope-from=portias@tenstorrent.com; helo=mail-pj2-x2b.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,92 +113,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 1, 2026 at 2:19=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 9/26/26 1:15 AM, Yonggang Luo wrote:
-> > - Add machine_class_set_name() so boards can keep a stable -M name
-> >    when the QOM type is uniquified. machine_class_base_init still
-> >    defaults the name to the QOM type without -machine.
-> > - Document that MachineClass::name is the -M name, not the QOM type.
-> > - Sort -M help by MachineClass::name so order matches the printed names
-> >    when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > ---
-> >   hw/core/machine.c        |  6 ++++++
-> >   include/hw/core/boards.h | 12 +++++++++++-
-> >   system/vl.c              |  8 +++-----
-> >   3 files changed, 20 insertions(+), 6 deletions(-)
-> >
->
-> First, I'm not opposed to this series, and if anyone wants to pull this,
-> I'm ok with that decision. It's just unclear for me what will be
-> direction after this step.
->
-> If I understand correctly, the goal here is to allow to register
-> multiple "virt" machines, while still having distinct QOM types behind
-> the hood, which does no affect behavior of current binaries who have
-> only a single "virt" type at most.
 
+On 30/9/2026 11:28 PM, Daniel Henrique Barboza wrote:
+> Hi Portia,
+>
+> I believe this fix should be made by the original patch that 
+> introduces the device,
+> which isn't upstreamed yet:
+>
+> [PATCH v5 1/7] hw/char: Add dw8250 UART
+> https://lore.kernel.org/qemu-devel/20260927201326.650943-2-visitorckw@gmail.com/ 
+>
+
+
+Whoops sorry. I saw Alistair reviewed it and I must of read it as applied.
 
 
 >
-> That said, if we project in the future where we have a binary with
-> multiple of those "virt" machines, how will the current series help? The
-> situation we'll have is distinct QOM types, that all answer to the name
-> "virt", so we have no way to select them individually.
-
-https://gitlab.com/lygstate-qemu/qemu/-/blob/combined-binary-multi-targets/=
-tests/qtest/machine-option-test.c?ref_type=3Dheads#L393
-
-This is the tests example to demo this, and all tests are already passed
-that in combine of a
-
-multi_target_supported_targets =3D [
-  'none-softmmu',
-
-  'aarch64-softmmu',
-  'arm-softmmu',
-  'i386-softmmu',
-  'microblaze-softmmu',
-  'riscv32-softmmu',
-  'riscv64-softmmu',
-  'x86_64-softmmu',
-]
-
-I tried hard to get 'i386-softmmu' 'x86_64-softmmu' to work. As they are th=
-e
-most complicated targets. And now it works. so this patch series is fine.
-
 >
-> Slightly worse, find_machine() will just pick the first machine name
-> virt, which is a non-deterministic order at the moment.
-> https://gitlab.com/qemu-project/qemu/-/blob/master/system/vl.c?ref_type=
-=3Dheads#L846
+> Thanks,
+> Daniel
 >
-> A possible alternative could be to use ".is_available =3D target_X" on
-> those virt types, which will ensure only one is effectively registered
-> at runtime, thus, there is no ambiguity on name or who is the "virt"
-> machine.
+> On 9/29/2026 12:16 AM, portias@oss.tenstorrent.com wrote:
+>> From: Portia Stephens <portias@oss.tenstorrent.com>
+>>
+>> dw8250_instance_init() creates two references for serial_mm, one from
+>> qdev_new() and one from object_property_add_child() which leaks the
+>> serial_mm object. Fix embedding the SerialMM struct in the DW8250State.
+>>
+>> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+>> ---
+>>   hw/char/dw8250.c         | 11 +++++------
+>>   include/hw/char/dw8250.h |  3 ++-
+>>   2 files changed, 7 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
+>> index ccf05dd9ad..50baeae62c 100644
+>> --- a/hw/char/dw8250.c
+>> +++ b/hw/char/dw8250.c
+>> @@ -72,23 +72,22 @@ static void dw8250_instance_init(Object *obj)
+>>   {
+>>       DW8250State *s = DW8250(obj);
+>>   -    s->serial_mm = qdev_new("serial-mm");
+>> -    object_property_add_child(obj, "serial-mm", OBJECT(s->serial_mm));
+>> -    object_property_add_alias(obj, "chardev", OBJECT(s->serial_mm), 
+>> "chardev");
+>> +    object_initialize_child(obj, "serial-mm", &s->serial_mm, 
+>> TYPE_SERIAL_MM);
+>> +    object_property_add_alias(obj, "chardev", OBJECT(&s->serial_mm), 
+>> "chardev");
+>>   }
+>>     static void dw8250_realize(DeviceState *dev, Error **errp)
+>>   {
+>>       DW8250State *s = DW8250(dev);
+>>       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+>> -    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(s->serial_mm);
+>> +    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(&s->serial_mm);
+>>         memory_region_init(&s->container, OBJECT(dev), 
+>> "dw8250-container",
+>>                          DW_UART_REGION_SIZE);
+>>       sysbus_init_mmio(sbd, &s->container);
+>>   -    qdev_prop_set_uint8(s->serial_mm, "regshift", s->regshift);
+>> -    qdev_prop_set_uint8(s->serial_mm, "endianness", 
+>> DEVICE_LITTLE_ENDIAN);
+>> +    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "regshift", 
+>> s->regshift);
+>> +    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "endianness", 
+>> DEVICE_LITTLE_ENDIAN);
+>>       if (!sysbus_realize(serial_sbd, errp)) {
+>>           return;
+>>       }
+>> diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
+>> index 59396ad202..ce0b97715b 100644
+>> --- a/include/hw/char/dw8250.h
+>> +++ b/include/hw/char/dw8250.h
+>> @@ -10,6 +10,7 @@
+>>     #include "hw/core/sysbus.h"
+>>   #include "qom/object.h"
+>> +#include "hw/char/serial-mm.h"
+>>     #define TYPE_DW8250 "dw8250"
+>>   OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
+>> @@ -19,7 +20,7 @@ struct DW8250State {
+>>         MemoryRegion container;
+>>       MemoryRegion ext_iomem;
+>> -    DeviceState *serial_mm;
+>> +    SerialMM serial_mm;
+>>         uint8_t regshift;
+>>   };
 >
-> Again, I'm ok if anyone wants to pull this.
->
-> Regards,
-> Pierrick
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
