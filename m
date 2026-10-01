@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185F8CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A15ACA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEoo-0008IU-A4; Thu, 01 Oct 2026 07:19:18 -0400
+	id 1xCEpF-0000Fh-Of; Thu, 01 Oct 2026 07:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEom-0008Hy-HX
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:16 -0400
+ id 1xCEpE-00009Y-A5
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEok-0006Mu-9Q
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:15 -0400
+ id 1xCEpC-0006PT-VW
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790853553;
+ s=mimecast20190719; t=1790853582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ttqap0xOgpwCf1MNj3ScDeR3kvZSDaIHJNJm2AqN+yo=;
- b=S4pwc6YBE6c/UbELapsVzhdCN73PKrb8AHBXM+5RTA3P7x/DqaiiA4y3FkdSWbm6DRj0sB
- NDeDRxP97w8Lg4zFaVduNpwGaTxI98KplvJ96AYgmgKaGioij7aTDH7IWDr3WXR0VLHZUF
- 6o+NHCU/DAKqqSwLlCVfRvZzKVb1Z6o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XFx/t9mrsXH6YarujWO+vCAcCXE/LsovmrFJgKG/B9U=;
+ b=jO6D2Rmjb125oGsstVVRMDVQqd/f/AMxRFlAmO/8yboXFZoWagnDs4iKRJ/GoQh5K1g+mD
+ 4hQi9XOM/rDp471tL6S4VV7qWLbs5gI+cwUVtGPq/g/cFkcIGXt5HdolMDGYzY2vOaGbrp
+ A0iVo17qv0aSSCW3HkS77dwYQkoZoxM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-P62N8RfxOfusI-EzmulP9Q-1; Thu,
- 01 Oct 2026 07:19:10 -0400
-X-MC-Unique: P62N8RfxOfusI-EzmulP9Q-1
-X-Mimecast-MFC-AGG-ID: P62N8RfxOfusI-EzmulP9Q_1790853547
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-2HV03222MuSNDPtF07Gz8Q-1; Thu,
+ 01 Oct 2026 07:19:38 -0400
+X-MC-Unique: 2HV03222MuSNDPtF07Gz8Q-1
+X-Mimecast-MFC-AGG-ID: 2HV03222MuSNDPtF07Gz8Q_1790853576
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4CE141955DC9; Thu,  1 Oct 2026 11:19:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9624B1953942; Thu,  1 Oct 2026 11:19:35 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD67F30000E4; Thu,  1 Oct 2026 11:19:03 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 735541956095; Thu,  1 Oct 2026 11:19:34 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 03/13] tests/tcg: fix buffer overflow in
- multiarch/linux/linux-sigrtminmax
+Subject: Re: [PATCH 10/13] tests/guest-debug: add --kargs option to
+ run-test
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
@@ -72,31 +72,30 @@ Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
  Eric Farman <farman@linux.ibm.com>, 
  Anders Roxell <anders.roxell@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>, 
- Max Filippov <jcmvbkbc@gmail.com>
-In-Reply-To: <20260930164649.433573-4-alex.bennee@linaro.org>
+ Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>
+In-Reply-To: <20260930164649.433573-11-alex.bennee@linaro.org>
 References: <20260930164649.433573-1-alex.bennee@linaro.org>
- <20260930164649.433573-4-alex.bennee@linaro.org>
-Date: Thu, 01 Oct 2026 15:18:51 +0400
-Message-Id: <179085353194.2170790.11593114851916026251.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=560;
+ <20260930164649.433573-11-alex.bennee@linaro.org>
+Date: Thu, 01 Oct 2026 15:18:52 +0400
+Message-Id: <179085353203.2170790.14889873774163155791.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=418;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NBSVaOT83ohqmCEhAhGvgcN2RlvHZx1Kg6yugNu1b58=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvkGe3XA1dooFP3hzdciyWOEaLck5FxC33W4OM
- SlVkm4et42JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5BngAKCRDa6OEJdZac
- 5QzRD/9LBSpUmVYNUfNYcR8f9FEi7BNK9F4IAXWmqCnlDajKpXo/SxM9TToKRZjOPBeiRmrQKES
- YWYtFqxeTqkzjlCccEhJXWX5OIAXACswfESIYEtWgRkugOiqiPWDDcsoMpPFyyIZlEEiKIqJDl3
- M5hnMl2hPy3ZUScD92nz7tec9mvOS4zRqG+Ipl0lG3dwOyyDcUWzJn40QpQX5RMsZcBu89I6B1k
- 6966MafahS1zedizSQTWwbGFUJvzhBeAw9x5sakHqReK49iK2yRQrLpEXGClF3hT2nmMIdu2212
- MmVDcHIqSvfJLjqS5KXGz+3z+lohiQ7a3x46NnRktV9uMJ4ZeEa5gprlV2Z8WbRJtRSSrla4cIt
- jWlotUqpWRfXSW04kpEHbofTN9S72jZ87L5VVRMRGoJyDHiuEsMWQskqfvfAzfcT/kxOguMNxk+
- eOqfbDdYzJUnDrKckPrY3XQwOKDYINbLH5YzMLaH2+ngONDY9eOV91nrPzGlSfP87yBVUHuaDCT
- cDvSIFfP9OGlAcgeldEod9O06TESU2Lgb6Xs6NhsAkk0RzIEvl8CzhJ/PlURHcXo7v7cglthmls
- H5+qg1bC2J3Vq5gvbPaWmau17ZW3kHPcBdiV/aWEh9Iy4VTIrFxOg14tTZTfqtQdLNhLuK60fxh
- pYWqZX9wnL2loLQ==
+ bh=prjud92xUckoOOFuZCG/0MVqz0Iz0HlAjCP7KlAVYEM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvkGepVzD3JRQe4N8ifDeUd9cHC/QBF+AJUpn2
+ 87kGYcdktmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5BngAKCRDa6OEJdZac
+ 5avEEACAeR7X0EG5uFIPOTqCZla3SsPuYssMOHhb5u3Sh1qR5Vrlj53fs5t5/vto3F2AeQKyd4v
+ uF9YfQa9HIelemCXhywzd5lu0reRjpuujouFdZFwGsICFnw85BJEj3DhmzS3P+hR4HXlWMkrqHn
+ rzsH3tK1ypKP/ESCLW0S/tJvvpLlofg8m6i5sgXb01t9GW1i5+NLrWll5eKQTfaCQavMfxXAlHL
+ vUpKM86FXv7s9QQaa2jR27B3SihrJY3l03PoFFdtrJAhH8TVTa3GnBgox8IL7UjM0Lv5oj/9/zC
+ faoHozwbLmzgjJkh0kUdOB8HYjhbAssrj5XksX/FXoAFSHbDc8vyiTbZrmH0yAb2dMVcFPdOw4E
+ raQtqGyTnsS8O0Itz6kXnjXLLyo6eiyaMw4Bw9jS6Z8r44YTq9HAwP3/0qRClu34WmwzLjwuU/6
+ rGipcyvWv3B4MQU4eTjjut7Pgvg1MkZNuCcoTta94LlyZPRI2mwDPE2QRIGq1QlfI6YvbKr/jYK
+ t0GMFaqmClS3k7UMKbDWX4FNaDNfz/1wjwSuTDGrHQSPxC5acYs837clJRv8gw83A76Jo/bqjuH
+ NcWaBvfpDcEUFWyOPmIPaF/m64A/KSlzqr6zlhobkLxubST+Rg3jQeZ6xzLsgRg6xuDEDpxom9s
+ NC0hi1m5kLI3AxA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,16 +122,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Sep 2026 17:46:39 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
-> Fix new_argv allocation size to be `(argc + 2) * sizeof(char *)` bytes,
-> which matches the way it's used to store `argc + 2` pointers.
-> 
-> This fixes the test for me, which otherwise fails on xtensa with the
-> following message
-> 
->   linux-sigrtminmax.c: 59: main: Assertion `execve(new_argv[0], new_argv, environ) == 0' failed.'.
-> 
-> [...]
+On Wed, 30 Sep 2026 17:46:46 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
+> When passing kernel arguments to QEMU with --append we need to take
+> care that things are properly escaped. It's easier if we get the run
+> script to do it for us that constructed the nested escaped --qargs.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
