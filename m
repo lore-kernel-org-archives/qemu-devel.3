@@ -4,90 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83970CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AD8CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCQ5l-00018e-Hc; Thu, 01 Oct 2026 19:21:33 -0400
+	id 1xCQBD-0001ww-8j; Thu, 01 Oct 2026 19:27:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xCQ5k-00018M-Ay
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:21:32 -0400
-Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xCQ5h-0001A5-P6
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:21:32 -0400
-Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d8fb334e72so29734895ad.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:21:29 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=727d860e1=Alistair.Francis@wdc.com>)
+ id 1xCQBC-0001wf-Cx; Thu, 01 Oct 2026 19:27:10 -0400
+Received: from esa2.hgst.iphmx.com ([68.232.143.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=727d860e1=Alistair.Francis@wdc.com>)
+ id 1xCQB9-0001VA-Qn; Thu, 01 Oct 2026 19:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1790897233; x=1822433233;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=UN6g+3tB0Ve2aDVh5bZJt8TrKudd+LpXQrwWpAuK1CU=;
+ b=lLlDp+a19T+rzePRtaV1qsg5n8r/NNj3L2bdMEOeluvMbvoR9+Kxlduj
+ cinbtp/tJAoMlzFSSfKmcfY7WeXaAwqUFXIWLsSL8uinD1ySj2SDQUb/e
+ OaXQQ1+CDoD5Abb9SCok92NaW9qfBsI3dr9dIGBletO9U+Ezozpb3KL4k
+ JrnJEMcSV4lnyP6ARxtk2xbEVVCq3VQxJpiNcYpnsv+T3hb4Y1M4om/9J
+ pIcKdvVh2y2Um5WEE09FdO70Rn2ZpmVSOu6LMyNyEFlHfHS4DlpfgC5A3
+ KkWAuYpd+SCD6PUbGUJ3vdFLUlmsi2cukBPMUqgHx2c6uV9GwCDdCvpYx A==;
+X-CSE-ConnectionGUID: aW/eliYKRIuAnqwyP12oLQ==
+X-CSE-MsgGUID: egKyD7f9QCWk3DYE7gdP1g==
+X-IronPort-AV: E=Sophos;i="6.27,135,1786982400"; d="scan'208";a="158020820"
+Received: from mail-southcentralusazon11012007.outbound.protection.outlook.com
+ (HELO SN4PR2101CU001.outbound.protection.outlook.com) ([40.93.195.7])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 02 Oct 2026 07:27:10 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IkvOCtGmFQvC1I2dprdKL4gjabc5qEGaPdgfUeAvZVVAR2hRdGO0u7+UGRjSUYeThFLQJE4tOiPEgvOna49iqZWTaqDqMYAjOwmB1IrDVtkMOfYRBNp3H7LavdOzX65rqXjWi/izzkqJp/NVC8OBVfgW+sOdTWeHk/A61qNhafnYBp21qfotVRg8Cu8zD/Mj12gknSiw70FO+KWqAuuUhAKk+s2Nb9tALmUvmh7XbMd+J+aOTG2CpAjsGeTJtxEV1VLNb7949RG6sOfTBq4c3zpNbx5AUi3Pj/A8M6yeRiWB0iXTZramZcXYKe9FFbjjrV5vnMmAlbsVL40UGbZYrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UN6g+3tB0Ve2aDVh5bZJt8TrKudd+LpXQrwWpAuK1CU=;
+ b=wYIPjP8AeUdLMjMx+szlLDnPgfocX0M1dr6+jU8VDmg6/0r2C95G//436TlNIa95+r90goyaHfzFoWX2nJ9LEDz55d/HozSGw7gvLC0D5bP1/Uu2VXjRjGIlSfX0XVyZXIzmjyctsrwr8wbf3MGOiDMw7vfFQq1RKAOb9BhQGEd/QJIFHUwqTIiFUj7iAjIU3VBYEIsrblwHX8SeG2GxEsh9Lc7CNHqGUuB0dkCiD9nBzDIpzTqRuKPwGzYV8DInF4MN10JipB7HFYSellScjhjlOLwUFvqyg3l/MCvEqELTdXKap6ilvU2LO1Ylgc70V/CdfSpRhTxEA8lxg4LJug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790896888; x=1791501688; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=umuO7KjrzWJxY73yA3QaLJ0MmCz3EkHg6ALsjC4PLOA=;
- b=Eo4oLMUo21WRGSdSalCiFFAicUu2iHKgKXVDY/33uDR8Y34s7P7h2AtsGdEDw8Fang
- J4VpWSkld5occ3dNoKfnU8ri7xld7grmD4LsnBxpUEVs/5g7ZjoZsxbtjU2gavk49LVM
- upg4oDAMDZNAX5KozgcMx9t6FndjTWR9VKv8rN7S0OUWS09CtFd/Qs2H5R0h/V2XYOSS
- B+ipqdm0zPOQL0ykLbCym5EjtL3mSEKav+K8g4c+WLxZchvJ68HYDgJxQVIbWnI5bLGm
- 2wCyPy9lZd2uCqnt8snqSj0UXv7PdpZm6cOPhz5PILdaC+KMIJ5MTvJyk5xb/1yncXqi
- H9Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790896888; x=1791501688;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=umuO7KjrzWJxY73yA3QaLJ0MmCz3EkHg6ALsjC4PLOA=;
- b=eH3mzkQFATnoqCybI9Zp/NGbe+OgqVFBruzVW9HOQiMBG8OQTcKu7fBIILD9YAgeyR
- 0DemTQVkTd6BmWc6iESb9e6Qan0oyAGHFliQrhbnykGakoDyUJTSr+W59uth799SvfjO
- QPX8yLLZQdeWT/oXCeF9DwX0KDTVrfge2Z+7zp1iRkVzJg5x7GAT7RPZ8Yh9ywmNJYe+
- 6yx5poQcJdGL2YsbGiySeDG2D8apEx6aG5hOuFutO4Fd1VOG08rCKXGn2ZoUFiw7s8tb
- L2yHL3O3i4zsy/mcYyHnUFeAh87yNAOdaygEp0M4xEljwp/u0uNqgXZT3eNJ1AVccD8k
- 8fMw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxywEQ/EDl7Cjqpwa5GCwRBcrZO/AcjlliGcW2Z+ipwmkgihFud4W2Ddqme8yZvZkcokFtdy6VQRs1/@nongnu.org
-X-Gm-Message-State: AFq9FYJyWhtWg26Ciy+YNqf8zr0F4m1xizI3x34ycchlSJUbai0/BV1w
- azTMUCmMV6ZydW8RtaqaWtglEvjQ6oPHGw6UzDCjkP8IVqpJdLKULnwz
-X-Gm-Gg: AYBFou1f3b2ijTgHhrcT0Y5sHlINi5FGW7/XosupfadoNhjh7ai5OnflDgDW8hzq96f
- 2QmJO4M2BptuvXrwjBJFpsX5Syq2N5Xsr0aMFhC+CLqvsql/6Tk/CaeV1sqVLY3NZHDvJW8vyDf
- 5I8fOxDZR5qOpsiq05EZ7WbmQ79ACXGJoUG0rPPF0q3hJ79CGwFzAL/f+5yG0BXhj0a4U/mmyKs
- aOrlY8n7ZBc1SjWiqEouxMklHxGt02UdgpL/DdQfq5Tdp0m7AP2JipW6PREDXv11aNu/ndBLhNX
- CTKuBbyqz2yMC+Fd9o04GaUweV06aqMTNvrSOvBR2rXi+RZ9k/HPbSFpqehwLG03B88C6qs8xB3
- sO6hmrd95mRyDI775KWmunsZMqpQsa37anBBVPZIlZ3NLxCP2sgFkO4QhkW/OL4yXkHkgB0lrl7
- Yba3Hnp7zreHQtjMNaA0M6umGcBgak12ugVt8ZJydzNr8zUZFuq3mZwi8YPLJky6tdM2FiSHa4W
- 6tufk87c2D2EQ0EzA==
-X-Received: by 2002:a17:902:e88e:b0:2dd:ad73:5b69 with SMTP id
- d9443c01a7336-2e49b651eedmr8519995ad.25.1790896887555; 
- Thu, 01 Oct 2026 16:21:27 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e49f71c1d8sm1750815ad.70.2026.10.01.16.21.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 16:21:26 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Rick <rick@sloservers.com>
-Subject: [PATCH] Revert "linux-user/riscv: invalidate reservations after
- stores"
-Date: Fri,  2 Oct 2026 09:21:19 +1000
-Message-ID: <20261001232119.1765494-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.55.0
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UN6g+3tB0Ve2aDVh5bZJt8TrKudd+LpXQrwWpAuK1CU=;
+ b=hCbCbVWLjWqn2sregZD0PgczQHtEo13lp+Mi4KzMjeOCqZw3EShLoBgJoMkw5NbdCWQcqWC3yN845m9NzlWBojksbHlUDvv2Ip5fTH43NLjvoXTueDh/wbOATgoanbMYlCZYtOxZ5d/BZjjbFgTM+2oe7ep+AS3Rb3d+CB1AJCM=
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
+ by CH4PR04MB9313.namprd04.prod.outlook.com (2603:10b6:610:23d::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Thu, 1 Oct
+ 2026 23:27:01 +0000
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888%6]) with mapi id 15.21.0451.026; Thu, 1 Oct 2026
+ 23:27:01 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "dingtaodtdt@gmail.com" <dingtaodtdt@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "dingtao0430@163.com" <dingtao0430@163.com>, "qemu-riscv@nongnu.org"
+ <qemu-riscv@nongnu.org>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>, "chao.liu@processmission.com"
+ <chao.liu@processmission.com>, "lvivier@redhat.com" <lvivier@redhat.com>
+Subject: Re: [PATCH 1/3] hw/misc: fix k230_decomp_gzip integer handling issues
+Thread-Topic: [PATCH 1/3] hw/misc: fix k230_decomp_gzip integer handling issues
+Thread-Index: AQHdUUvR86nsKRfHmUOJTVWNqPKs17bpVh8A
+Date: Thu, 1 Oct 2026 23:27:01 +0000
+Message-ID: <35b8af2703f942f608f419fef23be6f6429d342b.camel@wdc.com>
+References: <20261001022223.8633-1-dingtao0430@163.com>
+ <20261001022223.8633-2-dingtao0430@163.com>
+In-Reply-To: <20261001022223.8633-2-dingtao0430@163.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.62.0 (by Flathub.org) 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CH4PR04MB9313:EE_
+x-ms-office365-filtering-correlation-id: cd3af324-6910-41e9-4ac1-08df20137eec
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|23010399003|1800799024|19092799006|366016|10070799003|3023799007|38070700021|4143699003|11063799006|56012099006|10067099003|18002099003|22082099003;
+x-microsoft-antispam-message-info: yOT4vf3wxuiMua6nqp5riDsZJkuO3zLTU129a7sitmJv4kXPi2nLg2Df6oQE0KGSANTJBxH462DDa20y8zbA9J47RuQmEhDnXVS7+xEljROefRRTf4ZCBtmtVRrQJGbO4SSJP0Lz88dDD48+/Id4rerd8pskqHh+wgQWo5FvietcpmobiohEhfMed+9mZSPa2uhN5J79IV/7pL5ZiPhXPEdsg7gbGpuN0pxysZTs06JF1pdr1q6lugHbID2w6SCPa9DhbUITE0gihY7R5SWbwLJRWuM4EsZgJszKyXRn6O3AhnvR8NiWYBCihAv6Vr47i8HWkgbLrSgwJrSfMZXT8MsVH/O/Zh8dPtBD0MUL7e3cL7L7XZQisFxQLJXBSFN8Q26d9l7NTRKrobktP4SrmUIXDkynB8BidMfid7iir3c/79lrUoVe+WQHjYIZqutY3apGFqf3a5deosmzJj8TOOZ8JEpRYBIJScTB6yw/pGDW1t02xunK9JBPL8DARxND1/7S0yoHCQKaBubjog6tGnKoPjJa+yhrmn+AO+KD4R80swm2Qp88P+tTbKYYdrZn/+L1UlIh5MArNBiZzdvDj/Ojk7/o6NOEzpsRs+L7FYBK64wB46lPOIV7vTur3zolgT3jOZ//F6xEHcJirLqdoZGBzNnJAPCbUAmhk/fnVPHePSXFoP0sUawOvYkzv7kr+hDKNXP56G1j2bv6BmxCBGA23IiUuK6GNeOitv0+P5E=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(1800799024)(19092799006)(366016)(10070799003)(3023799007)(38070700021)(4143699003)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MjJ2UEk0RlN3WnBsWG9PcDRIQmhzVkc2eUhBdzU4QWl2eitDUzcvVms4QkVC?=
+ =?utf-8?B?UkVZNXdpa1U0WGd4aUZlQzRUTy9JWkJGZDh2Q2lpcldMVHl4MW54QmVtdFNN?=
+ =?utf-8?B?QUgrb0IyclFidUhTaWY4KzdtOExDWTVrTWNXZEgya010VjV6VzhFa29MZkhn?=
+ =?utf-8?B?SmU5U3h5WmlheTJaUWM4Z1hJRzJwanNBU0REaEZMWVg4NmhxKzd0V1E4eU5N?=
+ =?utf-8?B?bi9xd3p3TDg0UGliRllKUEljTkprUGRQOE5FekxuZVdpclV6WGx4UkgzODFE?=
+ =?utf-8?B?eEVTR1NOV2pQSGpYdzMzNkpidFdtWVRtTFpyYVQ1cjhodlVoYmhxVUNScFd4?=
+ =?utf-8?B?WVZEOHZ1aGFaK3hxSUx4enVaUWNTWUZlOU84NzNsQkpIUzFMaFZOVHFnYXZS?=
+ =?utf-8?B?eERzbXM3OWREZmNNWE9aV3MvZDJ6YXBwUkw1aXlMTExnTXB4T2FJakMwSStL?=
+ =?utf-8?B?Ym1aMzA3SUhQN2xUd0tLbTJzYTFScU45emQ1NkhneWlqSE9QT2JPQmpLV0pS?=
+ =?utf-8?B?UTZnejc1S1RwcFYweEFSMVEzMldLdVlZSjZPQ3V2OHpKTmdnMDRTRElhQ2ZI?=
+ =?utf-8?B?Z2kwVDA5U001RHkvbWJ2VFkrb1FWS3ByM2ZBZlF5dXV4ZmpxTkJxNnFla3dL?=
+ =?utf-8?B?UjBGdFlkYVUzcXBKc0I3ZEszQnZhTFRLWUlwRE5mYWwxaHhkb3JvcHZQWEFJ?=
+ =?utf-8?B?L3gxK3U0amJSV2JlS3p1bFp1OFpKd2JWQVBQc0dsa1FOSlVkZTZzTUFCaTBQ?=
+ =?utf-8?B?eTFpeERTZ0IrZk5wTDNwLzdMeXA4NXJQTXVzeUFKRWZIMjI5Nlkyb2xDakc0?=
+ =?utf-8?B?LzlPL2ZsMHN1SXBFM2FHVjFQRFh1RGlTYzEyWWIvR2xqVHVGVFBVZEh4T2xF?=
+ =?utf-8?B?MFkvY2l0MytXN3laVUZyUEJSUnhBazhwYlo1cUlkcXFWTWc5NDZMSlJtRXpU?=
+ =?utf-8?B?U2FjeFpEVU02L28vZVFGcXFtZTRiRGJIQXhacEV4bUlUYjA1UkZOSzhjQmRa?=
+ =?utf-8?B?c0h4TWhaKytsUjNBK0VCVEorTy9HSzg4b1JTT1doanA3K2RSWDRHRXU2Skp6?=
+ =?utf-8?B?Y2NQb09iWE11Y2liblJZeXRYN0dFNFpBdFRPSDI3ZFkwZDI3K1JpV3pSRXN5?=
+ =?utf-8?B?bFUxSURiL1BSeDhpbld4NWZROTQwVEh0d1IwcmVhUktaU2tkM0dWQjF6SzBQ?=
+ =?utf-8?B?OGpQL0xkank2VVp2TWxjYzA5Y1RPZ2J1Z3FNNmJQSjdnVkwrZ2t2czZsdTF5?=
+ =?utf-8?B?alJuN1RLajBIY1Y4Tm0rbFBlY2lrL2o4aXZ4MW8veWdhQ21KUTdNNkhzQ1p3?=
+ =?utf-8?B?NlByMmRUMnhPMEk3WU9GNjdPbzZuRE4zNytvdmN5VHRzYU5VN2ZnWHBjWnBV?=
+ =?utf-8?B?UDU0K3dESEh1bm8wR3ZLVElqanV6SW82Z1hpVFlxZWpzRWMrQmI5SUFXdmMr?=
+ =?utf-8?B?T0tXazQxMkdONXNtakZ1amZ5Slk2dTMzZk5GL1lQdFBoQnB6aVQySDFHRVVJ?=
+ =?utf-8?B?eDdDbkVjV09RT3Q2QWtUSFhFd2QvU0RTRk9EeG53RFJjeVpTSmxzQmNYZll1?=
+ =?utf-8?B?d2F6dzA5dzNaajE1NVJHRk8vbmI1Nm0zZk9pVjBTRUNTTWwvSWRnQ0JtZnlX?=
+ =?utf-8?B?UWYveGZzOEVJeHRQSWNvdjNtN0orMHdpQjZwYU5hY1QzVVNKcmJtVVUyOE5L?=
+ =?utf-8?B?N2pRbTFIbzlvSWVGeE82ajcvRFVPZzhsUjJ3MTIxb2FtSmVmNXZJbFdoN09n?=
+ =?utf-8?B?Wm1YM0NZRXRVd1IvMFY1WjFkRW4wc1c5VEhUODhxNURJcmZWRlg1dko0WTJD?=
+ =?utf-8?B?cHZaenVrYlRFNlRIeUlrQjFNS21mZmV4eXRUb2ViNk8weGpTUXQrSFFPWXJk?=
+ =?utf-8?B?OHRCdVc3bVUwN2Z4VDRaeUp4RmVyZWRiQW00MFI0VmY4M3B3YklDdDA5MEda?=
+ =?utf-8?B?NU5lRnp3YndCSE1JK1JheWtHbHlzTzJ4eU9yNDR4Q1NXVTIwYUtjSXBzSS9X?=
+ =?utf-8?B?MndIdTEzMnN2SjZvMEtNdWducTdzYkg4cENQdEhLV0cxMnNkTlNLd0RReS9O?=
+ =?utf-8?B?a2crQW95YmU1MFJ0emxyQjVLNDFZWDc3NDlOSGJjaDloVFFoOGxEdHhjblJJ?=
+ =?utf-8?B?L29QUzVRYVBxUHhEV1RjWThHdnBzdE43dXd6enM3a1RBVWxSOUU3NjY3TElt?=
+ =?utf-8?B?a3dENFlvWnprWkpBSkp3TFJ4cUJpNkUxYXRQS2pyNmovNkUveHBYdzZ6RUZL?=
+ =?utf-8?B?OEFSbmlZMnFOV2w0bUZiWk16Z1hWcTU1MVNOZTJTRm1hY1k0cVFOVndNWmF6?=
+ =?utf-8?B?YnV1YmVKVlRDOEFycWx6WkFFMTBYMFhTcGkrazVrNnc2bW81OEpaTWJNbVVt?=
+ =?utf-8?Q?BIB5s58X7uL2SrioRFc08sNZdxJ1kOCitmF3TEAFzwoKp?=
+x-ms-exchange-antispam-messagedata-1: Ml3JunC0Tpu9zstozNoJDxHZsR7ZBD9M81U=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <76ECD94BA2678945A7D69788759910CE@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::10;
- envelope-from=alistair23@gmail.com; helo=mail-pj2-x10.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Exchange-RoutingPolicyChecked: xVYTOUUg9FEH5ohOTvhmpLhd8EGOUpRcCpC/dgFeosopksKHknebuf7gEnjs8VIcDU6i+4AeaUwKVkwwuW9dHSTQAJsUoPtAJ2Ezz08z1oNuSqAJjwBvEQwsF+qLqneouKn0ChI35v1Y8okDvkYAa3H0jAMLd5qqTbm8AHe+b11PtFpBqqXUZSIbVH9GQu80z9oROtj+29uYYohbtOxxytvplQEMYgX3trr3OW5ZwzgvgTxbCKOoH1ebbl1xcM/qwtbZHHFWEY3UpkMsEJDO34+j4ZZ3x0INXcmpQ7bInzSRE87wswOoTkCHDdEqlQdTAGI317xD3uEJ3zdfYTCRFQ==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: laDCMMQ46fwyipHe+/wjHbIjvJHM4KDnMpjaJi97Hhls/0jXokkpcHdacwYevrVQy/Cf657WIMIJhRAwn/h9ztCgk99e3X3D1/BncRCBLFagqj8zDa54J056hzuthFpZ2et1Zx7YWGsPMuMMRQSTg6nBXe7+kmkZw54essfW9nvIx17Kr3suUHgxh61M2er7DSgslp4tvnWdIV44Cld/bQHpf+49Z0fthYybeBH2ARPlaqfsEqdFZ39pSkXDfarhJNDfE3QJh4zMCMRseFcqOMsbupEJUUs87S1+oNTQvdOtWbfoKTcJ3mdVaekFLtqdqUw741PXiT/ayOSMVe/xJSfraExMg+Ya9fsACoWoHNuNPx2EI++JhKwBeQyXJnHHqOe6GeMeTB4LJyjZbDrjlp7cXjFdtNCKhRzUOj8xvbRHik8s3qVIn2nEVT99MxMnsrWuNdxcMwKpsN0Z7Mx+rMZ/ojUW0Psxxz1+hDtDayjXovDEjXiP+2KomSkZQoPYx9jmzXEOryivqr5kegjfBtDq0wSqR4v+eRMtfKlJ06pU7lKrhgi9J4HQ0NlC0BFnTHKLgdPU2BSXizEOjE9Eo3iOCyKL7QmrN6n83qu0NlepZOlImPvJgiZZLbCKA4FX
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd3af324-6910-41e9-4ac1-08df20137eec
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Oct 2026 23:27:01.5674 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Hg2aFqhCuTol/LvfZlKSFm/xPgl2O5lFb0w0r38pH0pGVsPRSQosEkJkBoHLJb0sslmi1ytVj+e6tTAlKQGkka8sTRRcAj7/PsFiWhOLwr8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR04MB9313
+Received-SPF: pass client-ip=68.232.143.124;
+ envelope-from=prvs=727d860e1=Alistair.Francis@wdc.com;
+ helo=esa2.hgst.iphmx.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,341 +182,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
-
-This reverts commit 5089493e45d3be2bae9ffd2a22186f57b0cabe3f.
-
-Rick reported that this patch results in large slowdowns when using
-multiple threads. The original patch serialises all stores, resulting in
-all vCPUs stopping for every store, which would explain the slowdown.
-
-The results from Rick show
-
-xz compressing 2 MB at -6, without and with the patch:
-
-                 without patch    with patch
-   xz -T1        5 s              122 s   (identical output)
-   xz -T8        1 s              no output after 600 s
-
-That is too large of an overhead, so let's revert this patch until a
-better solution is found.
-
-Reported-by: Rick <rick@sloservers.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- linux-user/riscv/target_cpu.h                 |  2 -
- target/riscv/cpu.h                            |  3 --
- target/riscv/helper.h                         |  5 ---
- target/riscv/cpu.c                            |  3 --
- target/riscv/tcg/op_helper.c                  | 35 -----------------
- target/riscv/tcg/translate.c                  | 38 -------------------
- target/riscv/tcg/insn_trans/trans_rva.c.inc   | 24 ------------
- target/riscv/tcg/insn_trans/trans_rvi.c.inc   | 11 ------
- .../riscv/tcg/insn_trans/trans_rvzawrs.c.inc  |  3 --
- 9 files changed, 124 deletions(-)
-
-diff --git a/linux-user/riscv/target_cpu.h b/linux-user/riscv/target_cpu.h
-index eff18b37ba..9c642367a3 100644
---- a/linux-user/riscv/target_cpu.h
-+++ b/linux-user/riscv/target_cpu.h
-@@ -9,8 +9,6 @@ static inline void cpu_clone_regs_child(CPURISCVState *env, target_ulong newsp,
-     }
- 
-     env->gpr[xA0] = 0;
--    env->load_res = -1;
--    env->load_res_size = 0;
- }
- 
- static inline void cpu_clone_regs_parent(CPURISCVState *env, unsigned flags)
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 8c8ffe94cd..c2138dbd4b 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -264,9 +264,6 @@ struct CPUArchState {
- 
-     uint64_t pc;
-     uint64_t load_res;
--#ifdef CONFIG_USER_ONLY
--    uint64_t load_res_size;
--#endif
-     uint64_t load_val;
- 
-     /* Floating-Point state */
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index aab92bf132..4fc2d3a155 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1357,8 +1357,3 @@ DEF_HELPER_1(ssamoswap_disabled, void, env)
- 
- /* Zalrsc SC write probe */
- DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
--
--#ifdef CONFIG_USER_ONLY
--/* Invalidate reservations overlapping a completed linux-user store. */
--DEF_HELPER_3(riscv_invalidate_reservations, void, env, tl, tl)
--#endif
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b..5fff9d745e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1084,9 +1084,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
-     env->xl = riscv_cpu_mxl(env);
-     cs->exception_index = RISCV_EXCP_NONE;
-     env->load_res = -1;
--#ifdef CONFIG_USER_ONLY
--    env->load_res_size = 0;
--#endif
-     set_default_nan_mode(1, &env->fp_status);
-     /* Default NaN value: sign bit clear, frac msb set */
-     set_float_default_nan_pattern(0b01000000, &env->fp_status);
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index b67c7718db..3e94005d2b 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -19,9 +19,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#ifdef CONFIG_USER_ONLY
--#include "qemu/rcu.h"
--#endif
- #include "cpu.h"
- #include "target/riscv/tcg/csr.h"
- #ifndef CONFIG_USER_ONLY
-@@ -301,38 +298,6 @@ void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
-     probe_write(env, addr, size, mmu_idx, ra);
- }
- 
--#ifdef CONFIG_USER_ONLY
--
--void helper_riscv_invalidate_reservations(CPURISCVState *env,
--                                          target_ulong addr,
--                                          target_ulong size)
--{
--    CPUState *cpu;
--
--    /* EXCP_ATOMIC keeps other guest harts out while this list is updated. */
--    WITH_RCU_READ_LOCK_GUARD() {
--        CPU_FOREACH(cpu) {
--            CPURISCVState *other_env = cpu_env(cpu);
--            target_ulong reservation = other_env->load_res;
--            target_ulong reservation_size = other_env->load_res_size;
--            bool overlap;
--
--            if (other_env == env || reservation == (target_ulong)-1) {
--                continue;
--            }
--            overlap = reservation < addr
--                ? addr - reservation < reservation_size
--                : reservation - addr < size;
--            if (overlap) {
--                other_env->load_res = -1;
--                other_env->load_res_size = 0;
--            }
--        }
--    }
--}
--
--#endif
--
- #ifndef CONFIG_USER_ONLY
- 
- target_ulong helper_sret(CPURISCVState *env)
-diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
-index cce3b6dc72..9684dbe752 100644
---- a/target/riscv/tcg/translate.c
-+++ b/target/riscv/tcg/translate.c
-@@ -42,9 +42,6 @@ static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
- static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
- static TCGv_i32 cpu_vl, cpu_vstart;
- static TCGv load_res;
--#ifdef CONFIG_USER_ONLY
--static TCGv load_res_size;
--#endif
- static TCGv load_val;
- 
- /*
-@@ -1144,34 +1141,10 @@ static bool gen_unary_per_ol(DisasContext *ctx, arg_r2 *a, DisasExtend ext,
-     return gen_unary(ctx, a, ext, f_tl);
- }
- 
--#ifdef CONFIG_USER_ONLY
--static bool gen_riscv_reservation_serialize(DisasContext *ctx)
--{
--    /* Keep the memory operation and reservation update in one guest step. */
--    if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
--        gen_helper_exit_atomic(tcg_env);
--        ctx->base.is_jmp = DISAS_NORETURN;
--        return false;
--    }
--    return true;
--}
--
--static void gen_riscv_invalidate_reservations(TCGv addr, MemOp mop)
--{
--    gen_helper_riscv_invalidate_reservations(tcg_env, addr,
--                                             tcg_constant_tl(memop_size(mop)));
--}
--#endif
--
- static bool gen_amo(DisasContext *ctx, arg_atomic *a,
-                     void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
-                     MemOp mop)
- {
--#ifdef CONFIG_USER_ONLY
--    if (!gen_riscv_reservation_serialize(ctx)) {
--        return false;
--    }
--#endif
-     TCGv dest = dest_gpr(ctx, a->rd);
-     TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
-     MemOp size = mop & MO_SIZE;
-@@ -1186,9 +1159,6 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     src1 = get_address(ctx, a->rs1, 0);
-     func(dest, src1, src2, ctx->mem_idx, mop);
--#ifdef CONFIG_USER_ONLY
--    gen_riscv_invalidate_reservations(src1, mop);
--#endif
- 
-     gen_set_gpr(ctx, a->rd, dest);
-     return true;
-@@ -1512,10 +1482,6 @@ void riscv_translate_init(void)
-     size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
-     size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
-     size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
--#ifdef CONFIG_USER_ONLY
--    size_t res_size_offset = offsetof(CPURISCVState, load_res_size)
--                             + field_offset;
--#endif
- 
-     for (i = 1; i < 32; i++) {
-         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
-@@ -1535,9 +1501,5 @@ void riscv_translate_init(void)
-     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
-     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
-     load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
--#ifdef CONFIG_USER_ONLY
--    load_res_size = tcg_global_mem_new(tcg_env, res_size_offset,
--                                       "load_res_size");
--#endif
-     load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
- }
-diff --git a/target/riscv/tcg/insn_trans/trans_rva.c.inc b/target/riscv/tcg/insn_trans/trans_rva.c.inc
-index 248a8c60d7..44c1696fe4 100644
---- a/target/riscv/tcg/insn_trans/trans_rva.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rva.c.inc
-@@ -32,11 +32,6 @@
- 
- static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
- {
--#ifdef CONFIG_USER_ONLY
--    if (!gen_riscv_reservation_serialize(ctx)) {
--        return false;
--    }
--#endif
-     TCGv src1;
- 
-     mop |= MO_ALIGN;
-@@ -58,9 +53,6 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
- 
-     /* Put addr in load_res, data in load_val.  */
-     tcg_gen_mov_tl(load_res, src1);
--#ifdef CONFIG_USER_ONLY
--    tcg_gen_movi_tl(load_res_size, memop_size(mop));
--#endif
-     gen_set_gpr(ctx, a->rd, load_val);
- 
-     return true;
-@@ -68,17 +60,9 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
- 
- static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
- {
--#ifdef CONFIG_USER_ONLY
--    if (!gen_riscv_reservation_serialize(ctx)) {
--        return false;
--    }
--#endif
-     TCGv dest, src1, src2;
-     TCGLabel *l1 = gen_new_label();
-     TCGLabel *l2 = gen_new_label();
--#ifdef CONFIG_USER_ONLY
--    TCGLabel *l3 = gen_new_label();
--#endif
- 
-     mop |= MO_ALIGN;
-     mop |= ctx->mo_endianness;
-@@ -95,11 +79,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
-     src2 = get_gpr(ctx, a->rs2, EXT_NONE);
-     tcg_gen_atomic_cmpxchg_tl(dest, load_res, load_val, src2,
-                               ctx->mem_idx, mop);
--#ifdef CONFIG_USER_ONLY
--    tcg_gen_brcond_tl(TCG_COND_NE, dest, load_val, l3);
--    gen_riscv_invalidate_reservations(src1, mop);
--    gen_set_label(l3);
--#endif
-     tcg_gen_setcond_tl(TCG_COND_NE, dest, dest, load_val);
-     gen_set_gpr(ctx, a->rd, dest);
-     tcg_gen_br(l2);
-@@ -125,9 +104,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
-      * an SC to any address, in between an LR and SC pair.
-      */
-     tcg_gen_movi_tl(load_res, -1);
--#ifdef CONFIG_USER_ONLY
--    tcg_gen_movi_tl(load_res_size, 0);
--#endif
- 
-     return true;
- }
-diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-index 40b4c9aa4a..cc1b5dbbad 100644
---- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-@@ -489,9 +489,6 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
-     }
- 
-     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
--#ifdef CONFIG_USER_ONLY
--    gen_riscv_invalidate_reservations(addr, memop);
--#endif
-     return true;
- }
- 
-@@ -521,19 +518,11 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
-         }
-         tcg_gen_qemu_st_i128(t16, addrl, ctx->mem_idx, memop);
-     }
--#ifdef CONFIG_USER_ONLY
--    gen_riscv_invalidate_reservations(addrl, memop);
--#endif
-     return true;
- }
- 
- static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
- {
--#ifdef CONFIG_USER_ONLY
--    if (!gen_riscv_reservation_serialize(ctx)) {
--        return false;
--    }
--#endif
-     memop |= ctx->mo_endianness;
-     if (ctx->cfg_ptr->ext_zama16b) {
-         memop |= MO_ATOM_WITHIN16;
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-index 1831bbcfc0..0eef033838 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-@@ -32,9 +32,6 @@ static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
- 
-     /* Clear the load reservation  (if any).  */
-     tcg_gen_movi_tl(load_res, -1);
--#ifdef CONFIG_USER_ONLY
--    tcg_gen_movi_tl(load_res_size, 0);
--#endif
- 
-     gen_update_pc(ctx, ctx->cur_insn_len);
-     tcg_gen_exit_tb(NULL, 0);
--- 
-2.55.0
-
+T24gVGh1LCAyMDI2LTEwLTAxIGF0IDEwOjIyICswODAwLCBUYW8gRGluZyB3cm90ZToNCj4gVXNl
+IGh3YWRkciBmb3IgYWRkcmVzcyBjYWxjdWxhdGlvbnMgdG8gYXZvaWQgMzItYml0IG92ZXJmbG93
+IGFuZA0KPiBhZGRyZXNzIHRydW5jYXRpb24uDQo+IA0KPiBSZXNvbHZlczogQ292ZXJpdHkgQ0lE
+IDE2ODU1MTUsIDE2ODU1MTcNCj4gDQo+IFJlcG9ydGVkLWJ5OiBBbGlzdGFpciBGcmFuY2lzIDxB
+bGlzdGFpci5GcmFuY2lzQHdkYy5jb20+DQo+IFNpZ25lZC1vZmYtYnk6IFRhbyBEaW5nIDxkaW5n
+dGFvMDQzMEAxNjMuY29tPg0KPiAtLS0NCj4gwqBody9taXNjL2syMzBfZGVjb21wX2d6aXAuYyB8
+IDYgKysrLS0tDQo+IMKgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlv
+bnMoLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9taXNjL2syMzBfZGVjb21wX2d6aXAuYyBiL2h3
+L21pc2MvazIzMF9kZWNvbXBfZ3ppcC5jDQo+IGluZGV4IDBkOGEzYjJkMmUuLjU0MzAzYzBlN2Yg
+MTAwNjQ0DQo+IC0tLSBhL2h3L21pc2MvazIzMF9kZWNvbXBfZ3ppcC5jDQo+ICsrKyBiL2h3L21p
+c2MvazIzMF9kZWNvbXBfZ3ppcC5jDQo+IEBAIC01MywxMyArNTMsMTMgQEAgc3RhdGljIGJvb2wN
+Cj4gazIzMF9kZWNvbXBfZ3ppcF93cml0ZV9tZW0oSzIzMERlY29tcEd6aXBTdGF0ZSAqcywgaHdh
+ZGRyIGFkZHIsDQo+IMKgc3RhdGljIGh3YWRkciBrMjMwX2RlY29tcF9nemlwX291dHB1dF9hZGRy
+KEsyMzBEZWNvbXBHemlwU3RhdGUgKnMpDQo+IMKgew0KPiDCoMKgwqDCoCByZXR1cm4gSzIzMF9E
+RUNPTVBfR1pJUF9TUkFNX09VVF9CQVNFICsNCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgIHMtPm91
+dHB1dC5zbG90ICogSzIzMF9ERUNPTVBfR1pJUF9CTE9DS19TSVpFICsNCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgIChod2FkZHIpIHMtPm91dHB1dC5zbG90ICogSzIzMF9ERUNPTVBfR1pJUF9CTE9D
+S19TSVpFICsNCg0KSXNuJ3QgSzIzMF9ERUNPTVBfR1pJUF9CTE9DS19TSVpFIHN0aWxsIGEgMzIt
+Yml0IHZhbHVlLCBzaG91bGQgaXQgYmUgYQ0KVUxMPw0KDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgcy0+b3V0cHV0LmN1cnJlbnRfb2Zmc2V0Ow0KPiDCoH0NCj4gwqANCj4gwqBzdGF0aWMgaHdh
+ZGRyIGsyMzBfZGVjb21wX2d6aXBfaW5wdXRfYWRkcihLMjMwRGVjb21wR3ppcFN0YXRlICpzKQ0K
+PiDCoHsNCj4gLcKgwqDCoCByZXR1cm4gcy0+aW5wdXQuc2xvdCAqIEsyMzBfREVDT01QX0daSVBf
+QkxPQ0tfU0laRSArDQo+ICvCoMKgwqAgcmV0dXJuIChod2FkZHIpIHMtPmlucHV0LnNsb3QgKiBL
+MjMwX0RFQ09NUF9HWklQX0JMT0NLX1NJWkUgKw0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEsy
+MzBfREVDT01QX0daSVBfU1JBTV9JTl9CQVNFOw0KPiDCoH0NCj4gwqANCj4gQEAgLTEwMiw3ICsx
+MDIsNyBAQCBzdGF0aWMgdm9pZA0KPiBrMjMwX2RlY29tcF9nemlwX2ZpbmlzaChLMjMwRGVjb21w
+R3ppcFN0YXRlICpzLCBib29sIGNyY19vaykNCj4gwqB9DQo+IMKgDQo+IMKgc3RhdGljIGJvb2wg
+azIzMF9kZWNvbXBfZ3ppcF9sb2FkX2lucHV0KEsyMzBEZWNvbXBHemlwU3RhdGUgKnMsDQo+IC3C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgYWRkciwgdWludDMyX3QNCj4gc2l6ZSkNCj4g
+K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBod2FkZHIgYWRkciwgdWludDMyX3Qgc2l6ZSkNCg0KVGhp
+cyBzaG91bGQgcHJvYmFibHkgYmUgaXQncyBvd24gcGF0Y2gNCg0KQWxpc3RhaXINCg0KPiDCoHsN
+Cj4gwqDCoMKgwqAgcy0+aW5wdXQuY3VycmVudF9vZmZzZXQgPSAwOw0KPiDCoA0K
 
