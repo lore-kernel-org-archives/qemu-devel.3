@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87746CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C319CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 11:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEk5-0007SL-8C; Thu, 01 Oct 2026 07:14:25 -0400
+	id 1xCEol-0008Hj-9v; Thu, 01 Oct 2026 07:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCEjz-0007Rv-2f
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:14:20 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xCEoj-0008Ha-0z
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCEjw-0005wa-WB
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:14:18 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xCEof-0006MV-V7
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 07:19:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790853256;
+ s=mimecast20190719; t=1790853548;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SlpgCC/iHhwTrZ4cV9lduqd3OQXYxOaAYNHBS3Yil+c=;
- b=DgYge3aAMZwoeRjSv47e9nnXFrRbppSVViC3ObY4ElmJUQZ5WqnBkYiWIFtmL4gzNqdq+L
- GuwnJdcsktiQ8+DTZ6pKgUrvgR4dcmkuGMH/N6OvlDq5H1EFXdfIrdm4iSEJWKCKLc8VWu
- H6V7BoeBaiPV7aOpuQF37FfDC1Bw4/Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cut7Dm59hhGdhNnAK4vJ6+pEKoL76z0B9x5gmrcabS8=;
+ b=dFSUe2x2mTi9ov+oLNGOkvM/wJsm9dxCJMEgI86zjbVF5e0fsRopHDGQ76pP9/vu3q23N0
+ 4FFAGfnm9fR0KmlLH+otPddiQj5ihAazDuu043PTE9Q74EG7iBjYtXDiqqzaNA6ncDiyD3
+ zFyeXYQ/pwZXaMlZ8j6Wr9wSSmoFxcs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-jQwUb_hxN6G8p9WB9WhIMQ-1; Thu,
- 01 Oct 2026 07:14:09 -0400
-X-MC-Unique: jQwUb_hxN6G8p9WB9WhIMQ-1
-X-Mimecast-MFC-AGG-ID: jQwUb_hxN6G8p9WB9WhIMQ_1790853247
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-sfBhx71dMkaW_Nu30hnvQA-1; Thu,
+ 01 Oct 2026 07:19:05 -0400
+X-MC-Unique: sfBhx71dMkaW_Nu30hnvQA-1
+X-Mimecast-MFC-AGG-ID: sfBhx71dMkaW_Nu30hnvQA_1790853542
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACFB01802147; Thu,  1 Oct 2026 11:14:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F9AB5BC; Thu,  1 Oct 2026 11:14:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 422A721E6A04; Thu, 01 Oct 2026 13:14:03 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
- Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
- Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
- <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
- <michael.roth@amd.com>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?C=C3=A9?=
- =?utf-8?Q?dric?= Le Goater
- <clg@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Jason Wang
- <jasowangio@gmail.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 05/14] qapi: move 'details' sections to the bottom of
- doc blocks
-In-Reply-To: <20260928223657.2303684-6-jsnow@redhat.com> (John Snow's message
- of "Mon, 28 Sep 2026 18:36:48 -0400")
-References: <20260928223657.2303684-1-jsnow@redhat.com>
- <20260928223657.2303684-6-jsnow@redhat.com>
-Date: Thu, 01 Oct 2026 13:14:03 +0200
-Message-ID: <875wzlad1g.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EFD4E19540E4; Thu,  1 Oct 2026 11:19:00 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F42118002B7; Thu,  1 Oct 2026 11:18:57 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 01/13] tests/functional: test_acpi_bits requires TCG
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
+ Song Gao <gaosong@loongson.cn>, Ani Sinha <anisinha@redhat.com>, 
+ Warner Losh <imp@bsdimp.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ John Snow <jsnow@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Brad Smith <brad@comstyle.com>, 
+ Peter Xu <peterx@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Eric Farman <farman@linux.ibm.com>, 
+ Anders Roxell <anders.roxell@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, Klaus Jensen <its@irrelevant.dk>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20260930164649.433573-2-alex.bennee@linaro.org>
+References: <20260930164649.433573-1-alex.bennee@linaro.org>
+ <20260930164649.433573-2-alex.bennee@linaro.org>
+Date: Thu, 01 Oct 2026 15:18:51 +0400
+Message-Id: <179085353192.2170790.16933925473037069882.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=378;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=svMhN2tqyV/rBu4VaN6dinJbBXXmzkdoi8DXosBuDe4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvkGdVk4i4v404xupHSS4ei75vFaWYgECSi5q3
+ i1ZqZuTtlyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5BnQAKCRDa6OEJdZac
+ 5eGGEACXC5Yrzf5shcusH7qYagR1aLB8bjlNMBm5Cz7UQ3WyY0geCqbx2qu5W/LwDClFzme/kNB
+ HOCO3dtncSm25Rxlt9biW50SByZ8TMe78kFfSYPUQlTyR+lmn7NcYOZ7Abkr67CKUZlkbarJyxL
+ TvbbMORyJllLLbv7+LFh2mq+thXbHk4lxjbGDFsvA+evBlyCH005zVo+C4Qyr94g7BHs3XRG1lT
+ 7zXZFfpJceO+A4sq+3JeQ6NDLeZFQGA3+4zvHp2YZ3w2pdtinlqsz5HZ7NnuQEBfJAdxNDD8KNO
+ gwQvt0CcWRc4PxCOHjOSj6pcLB+9DdA98NkeV90FzJ8KEBxI9rgmPL4AfB83OieKtkjh9a6qdip
+ mtA3Qw/CijYgTdJjKlsbxjOgUm13/rnaAS99iAXDdXyvbHv2ZERX86n9ufV47yste9sHHo8Lzj1
+ MNOyO2Lsf6MQ3y+PhQabdySBdczzhS7yXOD9RT8Ie4EcuBHyiGJEeQq+BgC61u6M8OswO4nnyug
+ hckj44yB9omr8sipHRP5+3Qpf3rInUiIIut3xyWk0SSfhU2vG5anWEx3MjwqJ46/0Fk4Se4LnLE
+ yKkQVxh7DZQuwHMDlK977zvzhk0ObElvHHgPtt5YYydfeQxG8XLe9mc6OaugssYVKDIOjlhXbnH
+ XJT4P94q3BLbzOg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +122,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Wed, 30 Sep 2026 17:46:37 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
+> Running a full thorough test suite on a KVM-only build fails due to
+> acpi bits needing icount, therefor tcg. Declare the restriction so the
+> test harness can skip it.
 
-> This patch is focused on moving any and all "Details" sections to
-> below any Members/Returns/Errors/Features sections, generally
-> appearing last or after "Since:" sections.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-You mean right before "Since:", don't you?
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
-
-Patch looks good to me.
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
