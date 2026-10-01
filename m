@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D008ECA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39A2CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCGrT-0007Vh-6s; Thu, 01 Oct 2026 09:30:11 -0400
+	id 1xCGrK-0007Qv-Bc; Thu, 01 Oct 2026 09:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGrM-0007Rs-Sd
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xCGrH-0007Q6-LS
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:29:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCGrK-00061N-69
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:30:04 -0400
+ id 1xCGrE-00060i-1x
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:29:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790861401;
+ s=mimecast20190719; t=1790861395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qL159fZtKp7u06YGG825uhx3tm+W5SLrbiiIFzQwURU=;
- b=GrR6Ux+Z9xbBhMIDNrLFgCExriznDOMK7LBhvwp6zAslPp19FkKMb0nB1Kq5U8bedFw4Gu
- rMGU8Jri43xDk4JyOjeogGSapNDPvzY0Vd930C0xMLIQEWA+qn2RSaaXynPIJ/WqIL/DlX
- eXhph0gPn+xmgNvgBXM6Xg0/7SH7rlQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TZmbH2/gqfx6THgqOZHwDcdXnhArTAtbTDCTFsdTcTc=;
+ b=c7M69yYWOcy7ZRqYAw2lXCTRJ1zFKAyjPLFY289jfWKXpuNsXLztyj9UWUHr+o1i9bA1eK
+ mhWhyny3WtouJeLCj2a8IN50p6tuvJagvHOvPD2AskMvrEDJxKR53l1w8f6HOCvVvlUJaZ
+ FD5eCzw7on2B4SdQNv8/qh1YVUJFPVo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-3ah_9hiGN9OmPKlPl8V4og-1; Thu,
- 01 Oct 2026 09:29:59 -0400
-X-MC-Unique: 3ah_9hiGN9OmPKlPl8V4og-1
-X-Mimecast-MFC-AGG-ID: 3ah_9hiGN9OmPKlPl8V4og_1790861398
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-KxRaXhP3M_igJdh5lrJL_A-1; Thu,
+ 01 Oct 2026 09:29:52 -0400
+X-MC-Unique: KxRaXhP3M_igJdh5lrJL_A-1
+X-Mimecast-MFC-AGG-ID: KxRaXhP3M_igJdh5lrJL_A_1790861392
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 831EE19772EA; Thu,  1 Oct 2026 13:29:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB9D3190F9F5; Thu,  1 Oct 2026 13:29:51 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B990146E; Thu,  1 Oct 2026 13:29:57 +0000 (UTC)
+ id E6503214; Thu,  1 Oct 2026 13:29:50 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 01 Oct 2026 17:29:42 +0400
-Subject: [GIT PULL 03/27] hw/usb/dev-smartcard-reader: fix assert on
- pending answers overflow
+Date: Thu, 01 Oct 2026 17:29:40 +0400
+Subject: [GIT PULL 01/27] hw/usb/dev-smartcard-reader: validate interrupt
+ transfer length
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261001-smartcard-fixes-v1-3-ebb5a40dd497@redhat.com>
+Message-Id: <20261001-smartcard-fixes-v1-1-ebb5a40dd497@redhat.com>
 References: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 In-Reply-To: <20261001-smartcard-fixes-v1-0-ebb5a40dd497@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2030;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1629;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=oqfQZyWAvu53wFDKF++P6kpwZhpc4SiPNvpqAl1WC7s=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBHMw/uQxgMcnsHeVEpUn9vnVWh0RM/rkdmm
- BuDWL7/z9eJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gRwAKCRDa6OEJdZac
- 5QBCEAClA05WQdzXqb6osqMmF3gSEtm/kxo5AOj8yeK5dQMyHxgOq3PIE5sYl/3Khty34gIV9Im
- g5zpd9V8xv+CRNy0FCJSEsxkwD0ecNSvOIsE3hYfG1hXGybSVTIs839H59aLyhojI1evAG3geFo
- ig90V0jNiqv3YYJX3JC8TCm05Kn83wFrVo0ZKBDRXn8LCV26R3Lcw2SjpM66pZPTkNs1nsSZAL4
- qvXqQA579eNzyUQAkyCOXZcjjU0nmu/gutOA7Hr2ddBsYECeWSYRtA7FhuEbIDFY8R+anzZprB+
- bf1+9VQg4uOkXPJpI63gC1yynaeLCXSl8MZiJlV22U3QR4HT6t+EXsKLbh7mb2ekACUZg8A9h6z
- 578HjXbSFVXgP73cTyCgA9wmcy8C5Zez1web9/2Ns0Q3pmNUneob2wBDq7M9NyDU579RZOZcoSe
- vm5dZaQUGsXJe8m0w4lB+kxI184omhkV88VFmQ5n1R0wN/4mcLbZTxYyztm5JQj4IZQSrE2OvYA
- BHMg81B4sH8U6/sG2Hbs308ezAvEeCvUxsU49fIb9K6xPceqv3zq/2tG/aCmWuKWPYl9OBIsyxp
- 8nGdigRujw3cyC53uef1FLzJHzTF8nBUxnAW358FCR30fRpon+gJVXmvIrERdBFIMsc/dRXwIrX
- 6I8eirbb1lLMUFw==
+ bh=gd9+exY4PBpz0mUvPkUrJQXW6HE9iDS2lLF+QiYhkko=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqvmBHd4EJLQYu1qcXhvbakIhRY+34byVQPUdBu
+ XJf+qkMZ/yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar5gRwAKCRDa6OEJdZac
+ 5c74D/95XmYyTCZ3nb59/cbyqU0LuejLHJSSKya0c268hx20M35iW0h/ybVRuf5hLLDvjUAzA4v
+ dYTWBZBd6drFN/6bfOSahjzgXpSSXKFFlbwzo4sGg6x2s4beVnjhAuT8bkF9LvDT7tcsZ9caMSO
+ keKfGDcei3TzTGONch4gg22OESRu/o9LGt7hJFRGOyrIPD0TqygOom8B0EQfT/HMevpcr3Zsc+I
+ Y4FpP0lLs7A/r6ZJhbH9hz0q7AzcrTM3+K3ev9XaQQ9PgO6vQbvVVUS8HAg/krtkW+ZTWNbzFHw
+ lkeAIlgL1Y0f79g5UCw/ZAwPxT6zGphcK3VATvT5IE+fypS4OeLR+bhtUKl2bH7OG3qcQInV81B
+ F/wkF6yT7MoB4vFLh4O0gGth4zXePhoslCOPaBLvrV79ZJm5SLU20jwTh7UKLU+egTL07edIBvY
+ T9TqXSdRCUN1LcsYnNAtLz7o0OxTNakXFJTLK/3YO/WxLL69QWaZNEV76RI+MPEZvWQv8JZTrr2
+ 14uGlfXFV1UN3JByh8Qs3AnEh0sXhIDS8lXnF9Bjswm4LJ5j1yanE6upi7WJDn1yf1Y+5IAiUDa
+ F/mM163O02KglsQi+r+7Nw++AgOxjOR/xZ+k8TBJ709A/QtVIVkJAc67C8mu7PmpYqSC/zaqV2M
+ uUmGndXAxfm/Bbw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -86,9 +86,8 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,54 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest can send PC_to_RDR_XfrBlock USB messages faster than the async
-card backend can process them. When the pending_answers ring buffer
-(128 entries) fills, ccid_add_pending_answer() hits an assert() and
-crashes QEMU.
+A guest can submit an interrupt IN transfer shorter than the 2-byte
+RDR_to_PC_NotifySlotChange message. usb_packet_copy() asserts that
+the packet has enough space, so a zero- or one-byte request triggers
+an assertion failure, crashing QEMU.
 
-The CCID spec (section 4) states that a slot can only accept one
-command at a time. A second command to a busy slot must be rejected
-with CMD_SLOT_BUSY (section 6.2.6).
+Check the transfer length before copying and stall the endpoint when
+it is too short. The notification is preserved for a subsequent
+properly-sized transfer.
 
-Enforce this by checking pending_answers_num before queuing a new
-APDU. When the slot is already busy, report ERROR_CMD_SLOT_BUSY and
-send a DataBlock error response back to the guest.
+Note: a later refactoring patch will switch to usb_packet_size(), but
+this patch open-code p->iov.size for consistency with the rest of the
+code.
 
-Fixes: CVE-2026-18410
+Fixes: CVE-2026-18609
 Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3997
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4128
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/usb/dev-smartcard-reader.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/usb/dev-smartcard-reader.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index aee966c0c92d..9cbacf08e77d 100644
+index 964c142d1066..bba97a2b19e6 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -166,6 +166,7 @@ enum {
-     ERROR_XFR_PARITY_ERROR  = -3,
-     ERROR_XFR_OVERRUN       = -4,
-     ERROR_HW_ERROR          = -5,
-+    ERROR_CMD_SLOT_BUSY     = -32,
- };
- 
- /* 6.2.6 RDR_to_PC_SlotStatus definitions */
-@@ -949,6 +950,13 @@ static void ccid_on_apdu_from_guest(USBCCIDState *s, CCID_XferBlock *recv)
-         ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
-         return;
-     }
-+    if (s->pending_answers_num > 0) {
-+        DPRINTF(s, D_WARN,
-+                "usb-ccid: slot already busy, rejecting apdu\n");
-+        ccid_report_error_failed(s, ERROR_CMD_SLOT_BUSY);
-+        ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
-+        return;
-+    }
-     len = le32_to_cpu(recv->hdr.dwLength);
-     DPRINTF(s, 1, "%s: seq %d, len %u\n", __func__,
-                 recv->hdr.bSeq, len);
+@@ -1122,6 +1122,10 @@ static void ccid_handle_data(USBDevice *dev, USBPacket *p)
+             break;
+         case CCID_INT_IN_EP:
+             if (s->notify_slot_change) {
++                if (p->iov.size < 2) {
++                    p->status = USB_RET_STALL;
++                    break;
++                }
+                 /* page 56, RDR_to_PC_NotifySlotChange */
+                 buf[0] = CCID_MESSAGE_TYPE_RDR_to_PC_NotifySlotChange;
+                 buf[1] = s->bmSlotICCState;
 
 -- 
 2.56.0.rc0.29.g47ce80527c56
