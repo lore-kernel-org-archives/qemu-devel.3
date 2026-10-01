@@ -4,138 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD927CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 20:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90AF5CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 20:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCNFe-00038x-N6; Thu, 01 Oct 2026 16:19:34 -0400
+	id 1xCNnI-000824-L3; Thu, 01 Oct 2026 16:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xCNFa-00038Q-19
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:19:31 -0400
-Received: from mail-northeuropeazon11021102.outbound.protection.outlook.com
- ([52.101.65.102] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xCNnG-00081e-My
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:54:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1xCNFY-0008B6-1g
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:19:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QTdCnsVw1ktZZsRgbCEn/F73GkYSfX6MycHnNh1X82cpTV6HtpHrc6TKvvh8OhTk7WTky40Vod1i17q19TXVHWnSp/ooGb63c9FCZPZGwYKUYJIcBoyAQYBvtylmMxrbu7hiZJ7ahbgka3Vfp19HXr4fZaMOURj7/OShGCqXdcMe7Tk9wzV1rkE+D0p05DAhKkqzomjEfN0oicn+eOkgPYgSHoswjqFLPaZEbLpn4knnUL1P+2+Kmtb09bow5d3oRePapv2cU/dACK+UdUgoC4c9Ptg9tJtDxXSHP9sL+OptgNHPRVa5b/A328jSd3jynC2Sm892acRtAFs4f9xHIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=y0NdD+WGuwTeiWq6mDxeJIvitsls6ZxSa3nPwr5vEcY=;
- b=IjESxNM6+K9eB4Wb+Lh1UbdH3gnEo67U/BsVdQDA2fYg+8YTKcBE96cv9dCjtAKE8VdnuV7j5gu96qLe7OTIR4ce5KgvMoIJqgTYU6FgPHxXdsJbUKwbXc1S4BSzbsv7F1J5XFs0zLXZ4pbSMwU8BtSxWqM2XNts68vBmnqLSENgiPq1k3Wj1bfuvpDWqaAYmLKL8RZ2M/R/7JE+QgQuAIlLaF+fZrEOp2bA5lWCUmFSuRRgV93EYBtmpS8EDy3nuoZBdqfWydiPdnyJVEfHfs1rl4Jn8jIx7hdfkWpf4qh47N6o1XRKt0JFqw3+SxpN81CU5XTVgYcUloE1tDWaTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y0NdD+WGuwTeiWq6mDxeJIvitsls6ZxSa3nPwr5vEcY=;
- b=QAOk3TFwhU8D4LIIMQSc2jZz+lmaXc0+2Varn0neXe9aYy5ZqOgRM8My0jC7Lwo6OdLUSl2Wq1zQvzPiMW/31+eIpNE045XG2JpoEptjmyxh7Lz2iQmagzA9vPP8MCv0JBvuKDFRrmSLd4tahZyXdV6C1BFHhkjBNIEDsw06nLid5GX571caHau8LNjmlcEjHuml79nugf8MVLjVpirKvE03Fn6gpMy6SRThbCd5a2BrI5osiA3Ct8U3MkQbZyffyBElaIouCJaILn8TwG0RSUXnwXXw7Gl3000/hNqDsIWbUCkgU1NSu0zZZjwZiXg9+aH5kAyGZ/30Knbxi4xFSg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS2PR08MB10084.eurprd08.prod.outlook.com (2603:10a6:20b:648::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Thu, 1 Oct
- 2026 20:14:21 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%6]) with mapi id 15.21.0472.016; Thu, 1 Oct 2026
- 20:14:21 +0000
-Message-ID: <52ae1c53-5c97-45eb-b183-7dfea81e8ecb@virtuozzo.com>
-Date: Thu, 1 Oct 2026 22:14:20 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] migration: defer a post_load which only rearranges
- memory
-To: Peter Xu <peterx@redhat.com>, "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20260911142345.3999518-1-den@openvz.org>
- <ar64sJucQdmgu7mB@zhexu-thinkpadt14gen5.rmtcaon.csb>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <ar64sJucQdmgu7mB@zhexu-thinkpadt14gen5.rmtcaon.csb>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI4PEPF00000153.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::86f) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xCNnE-0003IA-9E
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:54:18 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691Fscs02686639
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 20:54:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7wUeYxW0omCcFiopDDahpGHg24cE9hRmoJjqWrNZ4OM=; b=m1voN/XiSwP1sMRD
+ 5DOlGRoRT8W/g2C0JoHnjkFcpkCwtMast2lq+i/zgu9ZtDSBPJZK/zD+GHnCD0G9
+ G2XUDBPbwCntQX5QUlM9fKouNN0rgFHQhZY4w+6wzQxkjMLSl0kS0aS87CDPDTsi
+ 41m192McCXtVNJAaafkZXl9Bp2x6rpUi/467SZj57N6Ytx0irIpF94Q7JPLZRdKL
+ NerffMr21jQo3tcnHKUPB+ILCEiKpR8gojpGX5B/EVn1iIxp0ZMG4XnJrVYieUgH
+ WAvCd0uqvz4uVtZbaFhw0cafRLUANyB+JR3Y+AWrqSA/0zcpOvfUV/F9M1xzW0H5
+ UvMfoQ==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1t9a9caa-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 20:54:13 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-34afa104860so4619781eec.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 13:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790888053; x=1791492853; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7wUeYxW0omCcFiopDDahpGHg24cE9hRmoJjqWrNZ4OM=;
+ b=E/9pEEshmupFNdnOX6NQrjc5SXt6WtOt1gSKrBYe9JGmka0AGaRewZqGBpnq3kDuLW
+ QPjt1xQi+ZqnBMkwdgYBhbHB5B/YbWPE2uGgQaYMq5igenXLYrQJ4MH35xKEX9dKfZIn
+ 6CkWzfCVvrlwDQye2NVF5rr6G3/6CtCQfTV7YdmVnuBmRP99ecPYY40LUSBNGS0N1WO5
+ PjJwm13EUCQc3W4X2yBa7eajtTf9qeE8lVP0EySFi7olfukCeD8Fv5agf/GVGPrhzK/w
+ o1UVzEkzD9UkcZRjLpFuRQsEhhfhTaeeqXTRkp1IZeBZ5M1oP+JBZ4nk0janSNU4byc1
+ omlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790888053; x=1791492853;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7wUeYxW0omCcFiopDDahpGHg24cE9hRmoJjqWrNZ4OM=;
+ b=qSGCHfLTRoOMPh0PERo6iZXSeIsFd5TTOOqht+w1EjtefY1WQ58wv/TNnh3HJyxO4i
+ 73Tusklj1X+z1WJSfRPAYdLhXcH4xPDonoTXgOormD4UzZMidR/fehfJYvwq886PVdtJ
+ RtwVY9sKrJiGcZit3jw/8OfGFS9uIMMfxgKk7ICwDa4+ENHE/IHMo8eYQS9R/9ZA7W/T
+ 6MtyTvUw+/54O1ZPRMLZ5vBU8JicQZhMAfTe5xj8YZCxKlimb3yrNDb5EzMKk/h3S5mn
+ oo8KGW3Y2BbN/+SsJwoelVgilMGW9AkcMnsLXguaEfNqRoKTxtnVGMzgUsCy2pQR2p7D
+ vorQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz4Jzq2gvQoDGHn8yhbiknK2uYP4pmw7kpnnCG0iA6JG7W/qsSCUbzaAXwFBl0Z6upEc2K6EnhlMuyY@nongnu.org
+X-Gm-Message-State: AFuF++naMOodmmyxMwvUg5RMhEkbMNaeG67Op4j1zP8VsD44SNgOsl7R
+ Pd5JBWsAfynJb7PQo7KnQcGZ35ElrETZZTL0xy/dBqm+tSm2YjCoGsAdR3OIIPIW/w6YNAWkyiR
+ 6i9hqTrx2mk+HOs5T34gI0qf+C2bdLkyZfLVX3GJAM72Gtjnj/b/BEnNehA==
+X-Gm-Gg: AYBFou3K33BooCjAVt0ArChAEpJAqWBpiZiDpsXeJ/YR9RThXkNyaQVmsV16B/gG4VA
+ +J+DZ9xLnb6Q2crfijwu7OdQuOBgXwsTLQZO/PX7Z+80/Awk3bqUsPFyZZOL3/6G0KP6+Zy6WVs
+ gSIyPe8lg76mFmZ+48NeWEmNq1eK+xrkjYFP2NFMtHgqyOtbu3F22GgS9XQL5eCmi70GYzOVeSq
+ VgL478LmvQzNpxzvKG/MSqcamfNHHX+qdw4krs3PKVXrrRR+7XPZExFej4Tlkm9QL3aVIg0SHZg
+ c523zLEz9Fvzuo9OfCUsd+NNJpQeePJYoHgMlD3PGiSIGl33I9PnsNZWQrLpfFm9rCfH3DBp7X3
+ Ud8gbAqKPEX9LRNVG0TQ1Wh3dGGNr07I06OG0oimAmXbUZYI3/si12Db/P9ReE+rCDu7ClA==
+X-Received: by 2002:a05:7300:ea0e:b0:34e:9923:e372 with SMTP id
+ 5a478bee46e88-34f21859675mr474315eec.29.1790888052500; 
+ Thu, 01 Oct 2026 13:54:12 -0700 (PDT)
+X-Received: by 2002:a05:7300:ea0e:b0:34e:9923:e372 with SMTP id
+ 5a478bee46e88-34f21859675mr474290eec.29.1790888051942; 
+ Thu, 01 Oct 2026 13:54:11 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-34f14f2dfbbsm794296eec.10.2026.10.01.13.54.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 13:54:11 -0700 (PDT)
+Message-ID: <4ce0a49c-a7dd-4e1c-8863-30ef03809ff8@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 13:54:09 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS2PR08MB10084:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67df9e76-cd6b-41c9-d3ba-08df1ff8947a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|10070799003|366016|1800799024|376014|10067099003|56012099006|5023799004|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 9TVB8VygijmnhpPVxkUtHpwg24jbdE82G9/Nrs01gAp5pijaFkgsMu88owQT69KowDFChFG6o4kPpS4a6P8au8QeJ7/MO/qOxmmqFQKuAbSpAgO2Spz6Hht8E0O4cmWzQBJOTrQO1ch5R8zOG7biS1z7x9o9aEjN/pkpB1ktRCIv1kF12LYsuSfGOnePyZDLfE/XPHpk+d8PAxousb5rzWGX4eMVpvREQme/GKagqcx20+i3As1bB318EYDSnfgQBXlJlHSsu7NeUltaMH6BVQtj8rRu0lbxkM+FF1aewj6apzk6ccpubJ8aeALXvnlv9FuIAVDCTdPueVkFTtMVsD8cg0bNRxkMx8yXoi4u0SIbv2REGwj4zWDl1t7zF7JaiiW/JyjEKtfqf91u1TmZKE9yTwvttJsetGZYuEGEiji4zDYdbIGiiMwr4AJEsShFlxUPJAVCHQcDOzUvBl0wIKkhg8AwshSg09SITnqVmPb7ZR7egLW139tyWschd2V0lKU/H681VNaIC7xQRGu6MB+gne1B9yZ7PGTIRL5pjQ6BCdSpfPX9WrCLc5XLzYlNpEgNKnQWAjjneOKkAweNtWTkyDK9j6sjGRTAvZytKY4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(10070799003)(366016)(1800799024)(376014)(10067099003)(56012099006)(5023799004)(4143699003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NjBYOEVEQUlyNzFDekQwZE5mL1RoeWVUcGJpVjdZRWFWV0thRlBnNzdQeWQv?=
- =?utf-8?B?bWJ0VXhxZTJKLzZkQWdHaUJsb2Jid1JqYVg1N2l4U0dBcmZxMGtYRk1ZVGov?=
- =?utf-8?B?a0NhMUxpNmN4Mm1tSVlGY296UE1BUDMrSWxxS1lYdjdVejNtZW9hRmF5azJV?=
- =?utf-8?B?aHFGdXJrcDdTZFczTWFuRU82SHE2bDFHRitqeVo1VzMzR3FLOUxxVzZ0VXBj?=
- =?utf-8?B?M2JvbXJEQU5XYWFLNUsxSVVlNzVobEJ2NzNUajg1NHJBSkFyemFjVWlKSUc1?=
- =?utf-8?B?aHFpQ3dwYWgvV1dFY05aeUJDakxFVHJCMTJReGo5VTFIRXgxaXRQTk5acUlM?=
- =?utf-8?B?TGl4dnBjNVVUQUFIMW5SYU1zWWtOOHA2K0J6d0t0U2dHUkp6MDhHSEpnb3BL?=
- =?utf-8?B?YzlNMmtlTEswYjh6YitmZGd4VWNFYTFvb01qemlTSDhGOFpRZHRUK3pHWDl4?=
- =?utf-8?B?bHhhL0g5UVY2Y0QwZFlsSzRYNkVFSnZlRy9LUlE3QmtmV3ErWkU2a3BLWFFp?=
- =?utf-8?B?Mll6Yys3YUoza0tQZ3FNWVlQZWd4ZncxSEthaVVHMDF1NGxXajZITWZYSzJv?=
- =?utf-8?B?YVlaQi9XSGpBTW1RTXBDRVM5TkREdlJ6WklFN1BtNDJJZ2crc01kR29VQm8w?=
- =?utf-8?B?Y2RjdzY1K2ZSOWVtOHF4Ty9WSmg3M3ppMEpKSUtxTURZWG9kcWx2TTNCSEZZ?=
- =?utf-8?B?dFF1SWRhaVFXOER3WkFwNkRDVVBadzFpZHZpMDJweXU1TXhlR3RrbS9ObzdJ?=
- =?utf-8?B?dnkyTjFIeUVqRzlGVWRIeURnT3ZwVTVEcGdNOFU5d2hLSENqb3ZjZ2FSVVZD?=
- =?utf-8?B?Q0s5N0xiTXJvRkliNWVJMTNUU05zVW1VNlhpMVhGMUxYNEhESXlxV3hTZVV5?=
- =?utf-8?B?WXlsWHFuZk1RUGFmL0toZ2hRR3VZZ0ZpTVAxK0c0SU5wYzlVRGk0c295eGEz?=
- =?utf-8?B?UDI3UWw2QUNRWjZxaWNFNVJyZmZ1QkpURmJ0WUVReWRkb1J5MllYMjBwY0c3?=
- =?utf-8?B?c0Nsem5WWEdmTFFUeFdGa3htTXk5Wks2QlFIOUJ0TGRYaERSUGQ4RldHM0E4?=
- =?utf-8?B?K2JQTTg5cTkxak96Z090Y0ZNUmcrdGtrNnU3WG9tdFZlWUhOUHc1amNrZjlI?=
- =?utf-8?B?YlVqbVJpWkQyTkFhOXo3UXA5ZjhZTzZ5eGxLbzFlM2pCMGc4QWREL1pGZ2FE?=
- =?utf-8?B?TktWYjFSb3JuTm9QeWVDRkhwUkxTT2tRcUpPaFJFOFVQWnJ3U1dOb2R5QW5Q?=
- =?utf-8?B?dG1GZGJyWFhnNzZwRzdMQlJtYUVKaVE1TTdWMjV3WVEyWFJNR0tiN2JZbVRq?=
- =?utf-8?B?OU10SEViZVZHbTJqSHVDeXpLOG5xTndJQTVVMGJIZlFwd0d1ano4NHlWUFJr?=
- =?utf-8?B?K2pENEw3eFlxWDdBdFhkbDB2L1pWN0JzZDh4SDJpa2wybmYyMzdPZjdNY3dZ?=
- =?utf-8?B?OVp4dXpsRGQyK2JkdUhnaEdKVWZIcW5MQUVvWFFmTkNYek5SN1ZIeWZ5MUc0?=
- =?utf-8?B?R2o0T2RsZEZZUTNYZUdrZWN1eWhORWM0K0Y5REtvWHg2NVVGSDVzY09udUNK?=
- =?utf-8?B?cWFYUElNc1NBR0VMZVkxMUVOVzJrVmRCL2F6OGozUVBFTnBMR0d0b01WWEJN?=
- =?utf-8?B?QkM2SmJUajBxeERhY2kvTjltOGRDYXBTaHdqMUl6QjBvS1FsdUxhcytKbHh1?=
- =?utf-8?B?bVVuaks3MVFaQlNTVXg2VFhaU21GWHl0TjZMMjRJRldrdmRJWEU3YkVaSjJP?=
- =?utf-8?B?SEF5TzJicHgvUUtLQ2N4MGM5R3hXQ0FpOUJxUmVvSTE3bVBmc2tURUJCZ3ZE?=
- =?utf-8?B?VktOdzZLY2J5TE5FdWNwc3Q3ckZRR2t3TVp2QXRmL0NpQVJaVzFSenNoYlVz?=
- =?utf-8?B?K1V5Z3hZcmdDeHNiMyt3OHI1eGFmMFJrbXRELzI1RzJEcFEzK0dvemcwNjJa?=
- =?utf-8?B?UXdxanoxNFVQTld4dFBwbGN1Yk5IQy8wc0ZWSEl5SWVtOXJ4THNtc04rT3l3?=
- =?utf-8?B?SmtGN1dzZ3VBTENHaGg1bk9oaXlLdGRuRDd0TDNjOThsQWtPNTdJVzVYWXF1?=
- =?utf-8?B?L1pwN24xZ0JpUzk3Y3hjVFhVNEFTc20xUnIwN2lGQ0dwckc0ZmlNVnMyWlh2?=
- =?utf-8?B?UDBwdTc0Nm5GdkJjUVVWMmNNc1hDMENzNmErTmM4bWE3VlE0UW5hQnJRYUU5?=
- =?utf-8?B?d2hnK1U3ZzNQcDZ6YXdreEsrSXpYSjRHS2lTTXEvenBHQ1BCRUUxMHI1RXlv?=
- =?utf-8?B?TVZoM0dlU1ZKOU9SYVpUMmhDamRtUExOditMaHdyZW8rSFVQeXVNTzlDaFJn?=
- =?utf-8?B?dE15aHVjMFdTd211dWszU3FBenNTdWxvcWJpYWdjOVV3ejRYVDdtL3pRNzB2?=
- =?utf-8?Q?Kw9JYl6bM5PDAJin4dMSlRNdbWvHDFCXKxX51wwy18GH4?=
-X-MS-Exchange-AntiSpam-MessageData-1: 2EQQ7nFue3pgsQ==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67df9e76-cd6b-41c9-d3ba-08df1ff8947a
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 20:14:21.4711 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KC5rjKrwoUIWnxVC6UTJVAAD6EBVsgTPAdduKE9JR4/8KZMaHovIyVof1H1/TluPhHJW40OefYTvKdCs6v2WYw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB10084
-Received-SPF: pass client-ip=52.101.65.102; envelope-from=den@virtuozzo.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/plugins/uftrace: add support for Hexagon
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+References: <20260930175519.3601312-1-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260930175519.3601312-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA4MyBTYWx0ZWRfX2HOwU6PRlHqx
+ mZn3AUy7IKoU+CROLaqkgiLoagtWDcDtpl5/Stc9Ga+6EVrf6G+C/dWX13SVZx0a8ik0CMxKau6
+ WZde3HNDyNAhHlogo/8X5p5JanQTdzg=
+X-Authority-Analysis: v=2.4 cv=N++8hG9B c=1 sm=1 tr=0 ts=6abec875 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=aBqTEAnWmo68wvCxqZQA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-ORIG-GUID: TxdOPOZkxxRU350Rqs6-U9SMlbtfjMG-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA4MyBTYWx0ZWRfX5ywyAT/dcQ9s
+ CFuOwc+23RvFqVqA0iI23Xl2fjiivlPgBdi8MlYy/qGJ0vqmrOLr9q5/0EIWwcBcLijcoWtReFG
+ XpPSgzGafZuhLT51W+mvR7t8RWYvRj68K7IglbTHPrYnSU/d6l1DBz4NhfE93Wlx1/BuGmRnuE+
+ T2+N+nl30PQn9wGF0OpluwqEjwr3GCFAQshAwHBlvDXXDmPCaVrYxylKBG3WjHansnz3BEqy8Sw
+ 1+eYhMSkimwUNzEv218g25I8zlvrQvQICpZB+lQb8LXK616lWfBjQ6WrJtUt0YbxVYj/2cGD6dr
+ tA3OB2Sgdcqa3jSpjKA9pmKZJZzT6J8p3O+XcoXZU6rGwIGWBPt7AtaTD/tk8A1CCY9XxS6JTIB
+ nR1/eaQfCdh+l1+ODGG29E4WkQQmHZLy5mOJI8wdVHSUp0ra3958jssgdnIlVNXL75vS1/gktUg
+ 5OpQWH0INcbXXQ1ajhA==
+X-Proofpoint-GUID: TxdOPOZkxxRU350Rqs6-U9SMlbtfjMG-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010083
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,106 +156,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/26 21:46, Peter Xu wrote:
-> On Fri, Sep 11, 2026 at 04:23:43PM +0200, Denis V. Lunev wrote:
->> Restoring a big Windows guest spends most of its destination-side time in
->> post_load hooks which do nothing but move memory regions around. Each one
->> ends a memory transaction, and a transaction commit re-renders every
->> flatview it touches at a cost which grows with the number of regions in
->> the machine. A hook which runs once per vCPU therefore pays that render
->> once per vCPU, and the machine gets slower to migrate the bigger it is.
->>
->> The Hyper-V SynIC is the case that hurts: restoring the synthetic
->> interrupt controller maps a message page and an event page per vCPU, so a
->> 64-vCPU guest forces 128 remaps, each with its own rebuild, while the rest
->> of the stream is still being read.
-> This is partly a known issue, not from Hyper-V, but from virtio mmio
-> regions.. please see:
->
-> https://wiki.qemu.org/ToDo/LiveMigration#Optimize_memory_updates_for_non-iterative_vmstates
-> https://lore.kernel.org/r/20230317081904.24389-1-xuchuangxclwt@bytedance.com
->
-> I believe we also thought about do MR update per-device, so batching but
-> smaller scale, easier to make sure no illegal access to a stale flatview.
->
-> So in general, I agree this approach might be the right way to do, which is
-> to shrink the transaction to be smaller than "batch everything".. as what
-> Chuang used to do.  I still have some pure questions inline.
->
->> Patch 1 adds post_load_deferrable. A vmsd which sets it has its hook
-> Nit, IMHO if so it needs to be called "deferred", as "deferrable" implies
-> the defer is optional.
->
->> queued during the load and run once the stream has been consumed, in the
->> order the hooks would have fired, with the whole drain sharing one memory
->> transaction. Patch 2 sets it on the SynIC subsection.
->>
->> It is opt-in rather than automatic, and the three preconditions are
->> spelled out on the field: the hook must not fail, nothing later in the
-> Actually, I _think_ maybe it can still fail.. IIUC source QEMU only dies if
-> it receives shut from migrate_send_rp_shut(), which is after the deferred
-> loads at least with the current change.  Worth check..
->
->> load may depend on what it does, and it must not read guest memory or
->> resolve an address space.
-> Yes, but I think this is partial of the whole picture: IIUC if this
-> deferred hook may inject some MRs that may be accessed by other VMSD
-> loaders, or anything (including hard-coded loading process), I think it's
-> an issue too.
->
-> So personally I don't like this API very much yet on how it was defined;
-> it'll be very hard to be used right unless we fully understand what will
-> happen..
->
-> I wonder if there's better way to define the API to be clearer.
->
-> Since all the known issues about this is about MR updates: virtio MMIO
-> regions, hyper-v, pci bar/bridge (mentioned below), I wonder if this can be
-> something dedicated to MR updates, and maybe it doesn't need to be
-> "deferred", just grouped together properly into one transaction, which can
-> happen in the middle too or maybe it doesn't matter much. Then it applies
-> some form of limitation to what can be split out from normal VMSD flow. The
-> current API relies on allowing to defer anything, which is fine but very
-> hard to control, and we may face tricky bugs if users grows but when
-> they're not used right..
->
->> A hook which breaks the first is fatal rather
->> than silently reported, because by drain time the source may already have
->> been told the migration succeeded.
->>
->> Deferring is not free in general, which is the other reason it is opt-in.
->> Deferring the APIC post_load, whose cost is a synchronous run_on_cpu per
->> vCPU rather than a memory remap, moves 3 ms out of the section walk and
->> pays about 9 ms of drain for it. Deferral helps a hook which repeats
-> I'm just curious: why something will take 9ms if deferred, even if it used
-> to take 3ms?  I think I misread something, but I can't tell myself.
->
->> topology work; it makes a hook which does cross-thread work worse.
->>
->> Measurements
->> ------------
->>
->> Destination-side non-iterable load, ie. the sum of vmstate_downtime_load
->> over non-iterable sections, on a guest which has actually programmed its
->> Hyper-V state. Five interleaved rounds per point on an otherwise idle
->> host, twice; medians, with the spread across all ten rounds.
->>
->>   upstream                          377 ms   (363-400)
->>   + pci mapping transactions        247 ms   (242-255)
->>   + this series                      96 ms   (86-97)
-> Definitely a great improvement.  I think we need this, just one way or
-> another. I may have some other trivial comments later in the patch.  Thanks
-> for working on it.
+On 9/30/2026 10:55 AM, Brian Cain wrote:
+> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> 
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  docs/about/emulation.rst  |   2 +-
+>  contrib/plugins/uftrace.c | 130 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 131 insertions(+), 1 deletion(-)
+> 
 
-Right now I have series staying at 32 ms with boost to ordinary
-QEMU startup, that is why I have said that I'll send follow up.
-This patch will be included along as flatview rebuild on startup.
+Thanks for sending this one Brian.
+You can take it in your next pull request.
 
-Anyway, right now I need to understand and eat your notes to
-send v2. This just intersects with upcoming release of downstream,
-but this change is in my priority list and I hope to finish
-v2 early next week.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Thank you for you time,
-    Den
+Regards,
+Pierrick
 
