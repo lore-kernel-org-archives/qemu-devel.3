@@ -4,142 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6232CA5FA5
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFE6CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCC8V-0005lX-HG; Thu, 01 Oct 2026 04:27:27 -0400
+	id 1xCCDF-0004MP-Dx; Thu, 01 Oct 2026 04:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCC89-0005HX-OI
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:27:05 -0400
-Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xCCDB-0004M1-Ff
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCC88-0003QQ-5T
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:27:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QC2g1JGAiUvfjYDfndYduGjoCXJVxY08usTgiTGinCivcs2A4YEz4CL7GKCUfFZZrnW5OrxmiLPqgntx+icjG6VkX22VwMsB8dh/C6hg5DUURpG9tGB4NVpGrX8MaArv4WzMbV4bEm5rqpb/X2PJXA7Vb04stXr9HmewcA9iEob9bGFsy+Q71EpQCllvROkn/Qf8jPm9bdaB07Io7Zqa47kTjvqBmwkshsYE6Onqb9RCrJRSCEFNmGmmcfclOeFtW7y3nc8dMP8vl4sxECOFKd8KtdRDD5DQRSR3Qlm0QhXvU7SVrx0CU7Z/ewpbVtcrnJE33VIq4Yyg6wH65qMFzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FcuGN9hpYxvaYCpdin9mbHCgP4Avfu9wY6q9yhDjwqM=;
- b=QeUCD//Knu1AK+4NHKqKb/+/ZGuHniSmZb15ALIy3lB9Ohm7PIHbVSPEfhMxNi0NjBtoPUv4YwzEdJ3jeniyDgpPk8HthMJ9tMN+JAjLuySiXPRIhx3pgSBzd6LHqjHnF8EdbWTuWmjJvk3x5I5XQlohPjLqnk7H0isB25b+K48tQj1UtKRTDUe4FQTdvJ9x5wSrLtB9VX8taoXlhGyCilW/pexA+7MrgBR4SeODDIzzig7r4PJwhsyO1z+qUJlfhVucXbQwS9m3mBr/J0H2qrlE5K2dWebWwvSdTMbKSGy71c/O/6tJwL9WH9eGph2MIp3tzZVzl0wdBv9hE5OXLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FcuGN9hpYxvaYCpdin9mbHCgP4Avfu9wY6q9yhDjwqM=;
- b=OO20qFPmmLbgj7oqf7zSZ6T5lxzQpTNAV6hPEEXLuZkGdCIUhAZH5mVcGHdY5v8gcPaFUqFsz/kuwHSe82xBgWeCbDVYXhi/CCiRodu1AC2NIRrMamxzTX7Y7LsAWgWVG22B99MnnvPZk43X+nDQowuFPWEFeojDDovHEU65oTxktYD52ukynXzOOgqkvcJ1kZhk5JpbssBv93hdl7/65kAVkLcwcfWe41r8zveZFRAYvbbmy8UiOY5wEGI336WAUoVEubZFHu4SRzrwwyO5qDGGSKUaAjSCRceQjzV1tLskNVOPcqBJc647KjaWmUn6R0R2zy0TYkLgWdr2rN74TA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by DB9PR08MB9442.eurprd08.prod.outlook.com
- (2603:10a6:10:458::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Thu, 1 Oct
- 2026 08:26:50 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0472.012; Thu, 1 Oct 2026
- 08:26:50 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Date: Thu, 01 Oct 2026 11:25:15 +0300
-Subject: [PATCH v10 15/18] vhost: release ownership in vhost_dev_cleanup()
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-up-vsock-vhost-v5-v10-15-8c094843e98b@virtuozzo.com>
-References: <20261001-up-vsock-vhost-v5-v10-0-8c094843e98b@virtuozzo.com>
-In-Reply-To: <20261001-up-vsock-vhost-v5-v10-0-8c094843e98b@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: den@openvz.org, odaki@rsg.ci.i.u-tokyo.ac.jp, dwmw2@infradead.org, 
- peterx@redhat.com, mst@redhat.com, sgarzare@redhat.com, 
- vsementsov@yandex-team.ru, farosas@suse.de, mark.kanda@oracle.com, 
- dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, 
- philmd@oss.qualcomm.com, bchaney@akamai.com, clg@redhat.com, 
- andrey.drobyshev@virtuozzo.com
-X-Mailer: b4 0.16.0
-X-ClientProxiedBy: VI1PR07CA0284.eurprd07.prod.outlook.com
- (2603:10a6:800:130::12) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xCCD9-00048P-4U
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790843534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
+ b=K/3WeptSoOCZPCFUlTlPkLS36qpXPRP87a/+ShhOxLJzXlCy8vCC5vacSAip8AOsAP4UTk
+ vNA1c0BODGysWdC79x+opMtxjqN4K1rPJdizNF4WS4gJLLUbPfS0nZgvddLrr/4rQA1jWQ
+ Qm/QCxPixEwPCJaGiOFIxFJCuJ8BVrg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-eMU9pct7O2a-S5wNjkFhZA-1; Thu, 01 Oct 2026 04:32:13 -0400
+X-MC-Unique: eMU9pct7O2a-S5wNjkFhZA-1
+X-Mimecast-MFC-AGG-ID: eMU9pct7O2a-S5wNjkFhZA_1790843532
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a0023f2b97so23027925e9.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 01:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1790843532; x=1791448332; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
+ b=HDTs1SMshviUiWjCDsL87f1kmr3Iy/mGeiwwhqdPuIr55s8kPMNG67+DU/RqapRPW4
+ Q0iGoj3dRAfNa0ArVIP6Z4NnHOtBQFsE79VS3xkovOgiMjesDD4u2Tm4wVqVbPnQRRpO
+ zxSg2o0Fhe4QXWU206OJP2I/Z5H17aaCRfKYFVZI4JxKaoFwa8WqzF1w0d4W6aY/FtTV
+ BE93Sjvvl9ipra0gDlyQ8xutnq3d+dsKjDjU2n8FVmG3usF3BkLMT6fg1GpUUP44HMZJ
+ 4LTs19KePj9veSWS9ciZpY6XH4x2rV7+wXFw9/za+XRMNIeQ6LaM8OzNGFJQ8zxo0hFO
+ ktHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790843532; x=1791448332;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=96UgSydltxa/aXK5jn89QtK6huSyIDJAMZTOZOEjhK8=;
+ b=wRhSlm8o7AyVYvFX6+gEpnKCz6li7tdmuDESPCWvOa39fu3NYHR50gC/Dmj/cUpIZu
+ 8NEWZkFu+h2+kDN4P3QsrpheRG0SF1cAzkGJFwHpSZdX4gp/phP2411HGR0mzcR8YDTv
+ pDY4GEPMaDfSgNa28nwaSHxXNf9UKsmw09HUmfAuL9KmZBB9yY7ChEzChJYj8qm703xf
+ zmf/D0TO60hhEr7NoF/dvb6fzbvGWYpOd4a4FFvUui62t3zq4ewo7BiwnJkM+9Rhnl0A
+ Q6KIZJRMD+4+wXtcD9DG9dBGaSPoPKkuh/7QN8RR1/bhTxcUH7UzWvQpOq2TF+CZgh1J
+ 7zvQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy82B0o93CaS64Iy3X49+opDTx8mRxRRKmoj/qbwuGp8VX9NDvYhLw2rAXfGHJrKElJoqxMnk4KUJIY@nongnu.org
+X-Gm-Message-State: AFuF++kE426ICPuBZm1jG28wysZ7UHxgTUI1ib3MTLC/Z2sFcE69Iqrs
+ +gtsC32PtCJQO9QtJirfivywU1NFUeSjPE37M9yaM/7CwUpbA8I9ZZul0pqMBmPmf5Lg/BbwIg1
+ CeemKT7JC3l5Sd90w8wkN+SMsz11o0cKpVde0vxUrFy2Abkwe58OfnLf0
+X-Gm-Gg: AYBFou2DO9LOGkuLOmvMgAI8V2IO76D2BnstMD0v4D56JSEZEmGh+2TPCfoq2Tmosmt
+ l89+lZxO+awG+TL3ifASaVFdyYTEK8HiKvrKtRDe43OASymwR0o11xUInLGjxoZuJJkJisQ2OX/
+ SKaU5FZQInQ2sAUzt5Cnn/u9a3+3JhsLrauAj4QmAbxJgAHR/u3R0T5cnPL4JsgfAElYNKH9Id/
+ 0CuMn150HD2jkrHix0xNSpHVc2zo4lOVwHSyXXcH6wS+psoX5+1y6eEEGBkouO0gfV+DqHTyceg
+ nFgmDE6YB1B0FwGUdQze/RqSNnzDJJ+6BjfqwPgH4GzvMpggeUnrFY5cJFhsWO3E7YnY2rrHpb9
+ FuR9eFeQul8o=
+X-Received: by 2002:a05:600c:45d3:b0:49f:df99:ff1a with SMTP id
+ 5b1f17b1804b1-4a01affcfa9mr56849295e9.17.1790843531681; 
+ Thu, 01 Oct 2026 01:32:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:45d3:b0:49f:df99:ff1a with SMTP id
+ 5b1f17b1804b1-4a01affcfa9mr56848705e9.17.1790843531145; 
+ Thu, 01 Oct 2026 01:32:11 -0700 (PDT)
+Received: from sgarzare-redhat ([5.77.112.40])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b0690d284sm4627928f8f.17.2026.10.01.01.32.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Oct 2026 01:32:10 -0700 (PDT)
+Date: Thu, 1 Oct 2026 10:32:00 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Dorinda Bassey <dbassey@redhat.com>, qemu-devel@nongnu.org
+Cc: virtualization@lists.linux.dev, rust-vmm@lists.opendev.org, 
+ Albert Esteve <aesteve@redhat.com>, Sergio Lopez Pascual <slp@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Matej Hrica <mhrica@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Gurchetan Singh <gurchetansingh@google.com>,
+ "Jorge E. Moreira" <jemoreira@google.com>, 
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Alberto Ruiz <aruiz@redhat.com>, 
+ Erico Nunes <ernunes@redhat.com>, John Ferlan <jferlan@redhat.com>, 
+ Michael Tsirkin <mst@redhat.com>, German Maglione <gmaglion@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, t.ampelikiotis@virtualopensystems.com, 
+ harald.mommer@oss.qualcomm.com
+Subject: Re: Invitation: Virtio and Vhost-User Ecosystem BoF - LPC 2026 (Oct
+ 7, Prague)
+Message-ID: <ar4aTDEPwCbmjR3a@sgarzare-redhat>
+References: <CACzuRyxNzJ7E_K0zL3J4F9MGm+UX01uRkNhtEXKOHT732JytBA@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB9442:EE_
-X-MS-Office365-Filtering-Correlation-Id: a69ddb3f-b1cc-49e7-ae2d-08df1f95bc38
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|52116014|376014|23010399003|18002099003|22082099003|38350700014|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info: ffHEURSxH1+kOl7XV53JZTaaCmKSEosqZZ5ueo9wLrCVQ7eZZlsZAi4uqEson3rY0LExghLij8MsoVs1qTdjRBnDurCZNUL+PouP3CwILjqeDLZnwSJ2Cdu4+da1Y44e41c3DpY4XiiCo57jCj9sbPerZAlXBqwjCWi73amZoqNCLtmGTgxoV+qIdKMS3Udtz6F0ZtD5tf8Yz0NCoJogAcXoaNCHdB4DUDBbmR8lXXQXcf/BUIR8wDD8cupYrzbkbpjXcTloye58lOuBKLkUCjKa6u1hN0Mp52Eksd/525ySpFjS6e0ZweicF6IlKVrnJKRlhUgwA5RqeFTk/fRX/JWEHvyMEuZDksCQwgGLtAjO936LKMczZbo4An4AmAMaYLfTn/vWNhrmvvj6grQVYPivYzO98iyMS0gvq1cqRFMeq6rxqwtIaOtLkXkHJSlLwrasuPt95uPwjGf1pO0tpak+ReGUm5bYdiX/gO3ZDpfAnieMVcIDde9gh8RyiuShIgEGza9rFRnKjZK7TjiOY0DIdmdKeDwMl6wZzHYswKPMi/h8JZc6MC/VyW9w//sDDVxWWhj5iLMVndI9xrhsmC0rezet2xep87dWT60EwvjSqLmGhpLD9gFVAUlgWMTMoqOWHJ+8wvnsGGGlUBtAErVWEaWz3NXp07CMlGLDeicz2ioCoqqB/S+cs+K3wqfc/f/s95bvFE7Jtuj5nOvZpdmIVuKipO3XTqudBvi7HBo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(52116014)(376014)(23010399003)(18002099003)(22082099003)(38350700014)(10067099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmpjTDlrMjM2NlpZcXVkbG8rTE9pM05mVlpQVVdsSEQwa09pNEE4UDk3Umg0?=
- =?utf-8?B?V01GZTBjUEUxNFpFMzk1akphU0ZyazRuZGgyTWcrRDhJZGNXeVc3bHliOWth?=
- =?utf-8?B?SVp0MUJkaXpTMmI1a2RDU0toQTY3ejduSThpODFVYjE2clg0L3d4U2hTUFVx?=
- =?utf-8?B?a2ZLKzJkRkJEc3BIU3oxQTFWK0ozcXExYjZwVDYyWjFNREw2cnhhSGVhbDRI?=
- =?utf-8?B?ODZORms3YWdZQzNvUVgxbW1BN1VsbkdPSWRsM0c2WXlNS1JEVDFMUEM1blRB?=
- =?utf-8?B?ZE81VU4wWDRWc3dyTVBYTk0xRCsvOWdrMjBsc2xTdUszbTFPTGF1dTZTQ3RU?=
- =?utf-8?B?bGdpZXVadDFrdno1dmZWU09wQ3VMRWRvQjBZQkthWG1sMGV4OTJ3amNBa0Zi?=
- =?utf-8?B?eldsOFY5Nyt2ODI3eFdUa081dTREOU1kc1hpVjhRQUlPL21QOXBJTWI1UFky?=
- =?utf-8?B?dHkydzJnZVpzckZkQ0EzWVRvYWV5YXh3bm1KN2hFU0F0ZHZFd0JBL0V0Wis3?=
- =?utf-8?B?MTAyQ3FDY0VOOEZMSkJvbjJmZ0hsMWRRVHlmUERJeFVQYi8wcGpiaEMvSm1M?=
- =?utf-8?B?azUreXRneFVwRm5mOHAralpJdzVLT3JTVnM3dlFJZGVEcFY0d3dhdjNJYVFP?=
- =?utf-8?B?aXY4cC9jSncvTUlRWFdzelNWWkNsbXpiUHpsWUNnT3hGOWVlRDVrRGdMcGsy?=
- =?utf-8?B?Z1J0eHBQM3NNUXFMOXBIZTYzVlh6RE82UkM0a0hvRXo5dVhBUUtFUTE2WkJP?=
- =?utf-8?B?QnBRV0RadWJiOHNkbms2OGpQYlh0UFBmTEp1N0FhTWJPQm0yWnJ3VWtzSmNn?=
- =?utf-8?B?ZnJuNVZoaGdvNnhIR2RaR1k0VGJKbld2cXBGMWJUK2V5M09ObFFuaVI5STFV?=
- =?utf-8?B?NTNUeXZjTGVIQWJUM2RZUE1VSC84Wjc0RUpHdXlaNGV2ODhKZEhWWW1DSDNU?=
- =?utf-8?B?dWpub0pqdXgzYklVbE4wdDVXQnkwZ0tsUUxIYjdzU09CMG9yWWwrV092RjBx?=
- =?utf-8?B?T2pOb1pyc3dXNWlHb1NzZW52SHE2UEREbGRvYklNNnpBV0ZzUStmMFNHVmNJ?=
- =?utf-8?B?a1VvOUQ5Y1E5VnFIbk1FUytJVys2N0tTUUY0ODN1dWVLZHdjdllOWUhoSUJX?=
- =?utf-8?B?Myt1d1NyUExMYzZZZ2UyUUYxQWZGcVlHeHAyR05BUnJucEZZNldrVllwOGF4?=
- =?utf-8?B?aTFnQzhHeEJMdWtBUkVXZ3dpeElRK3pwNFFtclJGaURjMGtEUXNwR0VIWjBG?=
- =?utf-8?B?ZzZRVFBSTEMzNFU3TmlKVE95WkFkZkpXWEtwM0pmT0VDTVZLNmllNE90bXh5?=
- =?utf-8?B?bnFvczhHUkJiUDBhZnd6MzdpSGtkMlZvRFR2aHF1UnlkUmM0MUQrQUtZbk4x?=
- =?utf-8?B?anFwVjdjWXRnRjBUUE1pRjRyYVI0c1hRRi9wWlYzRmg2T1F6cjB4VDFmYWxN?=
- =?utf-8?B?d1hNQk1OVXhEMjdTemgwRkJ2YjhFQ3VHSVBucHFsdWNhS2hnUVhlclRoMWlz?=
- =?utf-8?B?d1FCVVJTWldUblIrWW0vYkJTOGx2b2ZGcGIzVFo0YUFFeUo2RkxRdWhHOVBt?=
- =?utf-8?B?eDUreFQzTUV0eEJtMXdBSkg3TTN2Q1hLUTYrLzFlbkZuTTIyY1FEN0Q3bGta?=
- =?utf-8?B?bXlwMllsK3pOVk00RHNVSnF0N3c3Z0c1ZTZTdDVBeGpvTU1GUDNSYW5iSjZS?=
- =?utf-8?B?QmVib3FKNW10NWtWc1VmM0h1WkxSTVk2dG4zZGFuUWtMblVLTG5zMERFakp5?=
- =?utf-8?B?L213SERuTDBNS2tjd09QeFlNczFhdlYzQWJtOUdKQ3A4dmlzOXFpY3FGMTRw?=
- =?utf-8?B?N3NsODJNLzIrcitQNGhGVWY1dFlJakJldGtjNXBUWjduYjBneHdiR1BBN3Rv?=
- =?utf-8?B?M1ErKzNtbXhCWGlzQzkwRERlTnBXcUFBL1BQK0xvYVA5czlVcnlhOXE2Tk96?=
- =?utf-8?B?NnNFd0JNc2lQa1RtS0JYVHZ6elV6LzNhU1ZsTFhPbFlaQThOcGV6MW9XSHBt?=
- =?utf-8?B?YjZnUFBiN3d6aURET1Q0eEZyUldsK3VQZFd5WlhvNG9YQWpaVWVnTWR2SkhT?=
- =?utf-8?B?UEJYNXlCa3IxSHM5RFpwQ1gwR1ZWTkUzd0VXNlcxd24yYjd2czRUZVhqamVw?=
- =?utf-8?B?aDBTYVVUdmNVVC9UZXloNnA2Z0hJTEJTdXZ5cks5MTdkYUh5WTFHUGRiOUJB?=
- =?utf-8?B?NTFVYnFGSnhyZmZ4QUptbUJNQWw5QUtrKzM1aFFVdCtLYy9yWExKNUhmbWlB?=
- =?utf-8?B?QzdSL1dJenREeFkyazBXYWx5MmlFaVowd0VlbFdWM2w5R3JUZWVTQXdvOEFQ?=
- =?utf-8?B?UEY4MHFyRGFvRitpM2NEMlM5S0E4aSs4NGQydkhLa3BENWNlVWlVRkFra0h5?=
- =?utf-8?Q?cS8LJaIkyIMQt7Xc=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a69ddb3f-b1cc-49e7-ae2d-08df1f95bc38
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 08:26:47.9365 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wwrNtECS8n/X3ZFhbHlwqsDjpaOxLLky7FU57GEgCEwswdDcxeMMbYt+GyXp9lvUAn/6aXVwCn2dN3PhyNSNE23o2YZXZX81NBaNtV4mJVs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB9442
-Received-SPF: pass client-ip=2a01:111:f403:c202::7;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=GVXPR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACzuRyxNzJ7E_K0zL3J4F9MGm+UX01uRkNhtEXKOHT732JytBA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,45 +133,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vhost_dev_cleanup() closes the backend FD, but that doesn't release the
-device ownership taken with VHOST_SET_OWNER if the same file is open
-elsewhere.  That's the case on a CPR target: the source keeps the FD,
-so if the target fails after SET_OWNER, either inside vhost_dev_init()
-or later in its caller, the ownership stays with the target.  Once the
-source is resumed it can't take the device back, SET_OWNER fails with
-EBUSY.
 
-Issue VHOST_RESET_OWNER in vhost_dev_cleanup() as the common teardown
-for all those paths.  That's safe in any case: the kernel refuses it
-from a non-owner, and an owner is about to close the FD anyway.
++Cc qemu-devel
 
-Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- hw/virtio/vhost.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index c01ccc800cb..0bc6a0b6b00 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1864,6 +1864,13 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-     g_free(hdev->mem);
-     g_free(hdev->mem_sections);
-     if (hdev->vhost_ops) {
-+        /*
-+         * Issue RESET_OWNER to drop device ownership.  Needed e.g. for
-+         * failing CPR target, so the source can re-acquire it.
-+         * Should be a no-op for non-owner, and harmless for an owner who's
-+         * about to close the device backend.
-+         */
-+        vhost_dev_reset_owner(hdev);
-         hdev->vhost_ops->vhost_cleanup(hdev);
-     }
-     assert(!hdev->log);
-
--- 
-2.47.1
+On Wed, Sep 30, 2026 at 06:38:42PM +0200, Dorinda Bassey wrote:
+>Hi all,
+>
+>I'd like to invite you to join us for a Birds of a Feather session at
+>the Linux Plumbers Conference 2026:
+>
+>"Virtio and Vhost-User Ecosystem for Production and Automotive Systems"
+>
+>When: Tuesday, October 7, 2026 at 17:45 CEST (UTC+2) (45 minutes)
+>Where: South Hall 1 B, Prague Congress Centre
+>Speakers: Dorinda Bassey, Albert Esteve, Stefano Garzarella (Red Hat)
+>
+>If you are unable to join in-person, there's also an option for remote
+>attendance,
+>See the link on how to register: https://lpc.events/event/20/page/267-attend
+>
+>Description:
+>The vhost-user protocol started as a simple QEMU feature, but it has
+>grown into a standard used across the entire Linux virtualization
+>community. Today, it powers production workloads in the cloud (e.g.
+>QEMU and cloud-hypervisor), lightweight environments like libkrun, and
+>modern automotive systems.
+>However, as the ecosystem expands, we are hitting new "plumbing"
+>bottlenecks. For example, the protocol specification is still stored
+>inside the QEMU documentation, which makes it harder for other
+>projects to participate in its growth. At the same time, automotive
+>deployments are introducing strict new needs, such as safety
+>certification, real-time performance, and long-term support, that
+>impact everyone.
+>This BoF will bring developers and users together to address these
+>challenges and other emerging topics across the ecosystem. Our goal is
+>to establish better coordination, align technical roadmaps for both
+>cloud and automotive, and build shared tests and tools to ensure all
+>implementations work together.
+>
+>Key Discussion Topics:
+>- vhost-user Specification Governance: Discuss official location for
+>the vhost-user specification
+>- Automotive Virtualization Requirements & Reference Platforms:
+>Coordinate deployment needs across Automotive platforms [1]
+>- Real-time performance needs (camera, display, CAN)
+>- Status Update: Ongoing work on vhost-user device (virtio-Media,
+>virtio-can, virtio-rtc, etc) [2][3]
+>- Graphics Stack Alignment: on roadmaps for shared dependencies like
+>rutabaga_gfx across libkrun, crosvm, vhost-device-gpu [4]
+>- Shared Virtio Message-Parsing Crates: Evaluate creating unified Rust
+>crates for Virtio device specs to share virtqueue parsing logic across
+>backends and VMMs
+>- Open questions about:
+>  - vhost-user Specification Refinements: Identify protocol gaps,
+>missing features, and necessary standard improvements
+>  - New Virtio/vhost-user Device Proposals
+>
+>References:
+>[1] https://source.android.com/docs/automotive/virtualization/reference_platform
+>[2] https://lore.kernel.org/virtualization/ab2FlQTWUxl0KmlT@fedora/
+>[3] https://github.com/rust-vmm/vhost-device/pull/944
+>[4] https://github.com/magma-gpu/rutabaga_gfx/issues/24
+>
+>Session details: https://lpc.events/event/20/contributions/2365/
+>
+>Looking forward to seeing you there!
+>
+>Best regards,
+>Dorinda Bassey
+>Red Hat
+>
 
 
