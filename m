@@ -4,54 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A022CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7133ACA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCO27-0005cB-Dt; Thu, 01 Oct 2026 17:09:39 -0400
+	id 1xCO9N-0008L8-GK; Thu, 01 Oct 2026 17:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anbelski@linux.microsoft.com>)
- id 1xCO25-0005bu-7V
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:09:37 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <anbelski@linux.microsoft.com>) id 1xCO22-0004mw-F8
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:09:36 -0400
-Received: from frill.fritz.box (p508abfc2.dip0.t-ipconnect.de [80.138.191.194])
- by linux.microsoft.com (Postfix) with ESMTPSA id EA92520B7166;
- Thu,  1 Oct 2026 14:08:36 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EA92520B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790888918;
- bh=XJ8K2celsQmqhzuZk7zWZRUiyLa2Qzcp/x+y0gU7anA=;
- h=From:To:Cc:Subject:Date:From;
- b=cTnIpLvyiW8M647E1QnpJZrzE+IqrdQh3AFgsdnoYCQ/rHrosurLibzBChLfaZaAh
- rhNeqauY+RLrwVZKnEzfKdOegjYm7KPpbhoAIGs6PvTc1vsIuxGdnVejfXxflsCZDY
- oDpmGm/4O2diYb6BLOHpGAn95lhj/7hetRXxdRVM=
-From: Anatol Belski <anbelski@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC PATCH] tests/functional: Add virtio-villain fault injection test
-Date: Thu,  1 Oct 2026 23:09:16 +0200
-Message-ID: <20261001210916.1907716-1-anbelski@linux.microsoft.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <finalspace@googlemail.com>)
+ id 1xCNro-0001cF-MN
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:59:00 -0400
+Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <finalspace@googlemail.com>)
+ id 1xCNrm-0003op-MU
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:59:00 -0400
+Received: by mail-wr2-x0f.google.com with SMTP id
+ ffacd0b85a97d-48b09f6bbe8so729039f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 13:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=googlemail.com; s=20251104; t=1790888337; x=1791493137; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:subject:cc:to
+ :content-language:user-agent:mime-version:date:message-id:from:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=h0eoJxX310phepsHQO5YNfa7hvQCj3jKCbKUYBWFB68=;
+ b=YBiamG7MnJS2DTqWUPm1yCVBMS02yIZU67AdlNpRcopyEmSqXqQlEZ2qVIqu+6gbqM
+ WXcOugLUayYG928EUk4OUn/ObLhsv+0/x8x5DuCPssyqvFRKGt98+PvBGDG8d8X+hh5d
+ 2jp0U8RXNtZ9AQYAdsiUpVWq3XjfbCOXXQn532H5k+InIEqeIbK6uf14aLtfkDt2Q70K
+ 9POgbyCEsAKyXtRiRj9snC9zFvkT7TIjJrB+YX100nayR8LR/YWTEiF3QtsIWQhOKwIQ
+ wwIppIPS0/3D4kdcLDG+msAHiPBMooi8cjARvXWf+vP8nuNQoTDw/vP+yw3SB4mqkVY+
+ 9S/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790888337; x=1791493137;
+ h=content-transfer-encoding:content-type:subject:cc:to
+ :content-language:user-agent:mime-version:date:message-id:from
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=h0eoJxX310phepsHQO5YNfa7hvQCj3jKCbKUYBWFB68=;
+ b=Dz+izYqL+8F3q1IM0ZG6jSBS0qK/16ENDkpmSodNTdllHOf7z6XDR8+54g2auyRjCq
+ Gx2R7UuYNWm3mixSereS3YBbZmQx0ATSMKBUSH/ovqcuqYd9WR50ZvouFedrd6aE1ev4
+ 3iVOlx4K8YIPZncSapqePaf/0I9vSsSBdimJM+pUU+dwgrps5wgT5Sk7xlT+nfj4YuGQ
+ Y3j5CijnZfJ6+rNnHVTr1TzssAasEYZQSCMpqSym6KPwsdkqw9sS/dv9TmMi8zrLGa4G
+ 86/DdRDtzeuqGuJg5vTlk2vn8OhX8ZIXxKLs1XmbTs1JdHdWh8QagikXH5ws/6nQlDyf
+ JYxw==
+X-Gm-Message-State: AFq9FYLzYvOhqwOU3prUAlwVBnSNaRXkySWw074MIIWtdyNGVCLyti6b
+ xFM8MsCdqD1yMA3FBKh6dvK5HgkouyTcFaMmYRYT45Xksz5ddZ+n8nvOORjRjsLn
+X-Gm-Gg: AYBFou0dil5tDT3ZAjQFGkSdL2IlrviW6jHDRPR23uK3vdi5sTPIBcv0e3fvDzcrpHK
+ EPBsN8mH/1DgdryJEvnlH6RrKhwYo1vcahYqghQScTrqjlpJDhTocODDfH+GFqDXxTRIo8HVqzZ
+ IckoRi8MVMS4EhPd06M+hJGKmK5mBsaUshg5gFPBxmTSety2N1pX/cDV/f5e8//PiITwWAJLmR0
+ exH9++eHrMjU/xD/8ibQXAHSEv3OWHKd/jzNqf41xVqdLfuPj2/tjpGSqNQU2sIGL2VrXkSJkwL
+ ODGinMjWCVVp4g9ukHx3hi9Z9xL74gLrpXPQJqOz83T4qIRtXUyB1AtCO5iEYS/D3OF6ozCsv1h
+ SNjfYIQkuv6lkrO6lYDUuOKn1WJ9GwlRtbItRXRtSl8ILTQv/bSETPvLmC5/pDGUFdphAhQwt3a
+ khz7K0qnpkxGLbY1V1HtLEVUQrrUbOI9Sa59KPujCDxj1g4SzE6eaMbrNpIdkE66c9fbppuseiG
+ WQJH2MF+JL6Uc/fkp5w+w8QaPYo+TEs1rlFlD5o/qUaa8mmlQIi
+X-Received: by 2002:a5d:4ecb:0:b0:486:f42f:6860 with SMTP id
+ ffacd0b85a97d-48b127350a0mr1141021f8f.56.1790888336706; 
+ Thu, 01 Oct 2026 13:58:56 -0700 (PDT)
+Received: from ?IPV6:2a02:8070:a187:e860:9b62:bb2d:1448:9374?
+ ([2a02:8070:a187:e860:9b62:bb2d:1448:9374])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48b380f07cdsm779286f8f.10.2026.10.01.13.58.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 13:58:56 -0700 (PDT)
+From: Finalspace <finalspace@googlemail.com>
+X-Google-Original-From: Finalspace <finalspace@gmail.com>
+Message-ID: <9ac0657c-aacf-49c1-8320-bb57b6c57ca4@gmail.com>
+Date: Thu, 1 Oct 2026 22:58:55 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com
+Subject: Hints to fixing the critical ES1370 bugs which are currently unusable
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=anbelski@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:30::f;
+ envelope-from=finalspace@googlemail.com; helo=mail-wr2-x0f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 01 Oct 2026 17:16:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,352 +104,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test that drives the virtio-villain harness against
-the QEMU under test. virtio-villain is a guest side fault injection
-tool that boots one short lived guest per case. Each case violates a
-driver rule from the virtio spec and checks that the device model
-handles the bad input without crashing, hanging, or corrupting state.
+The following bug-report / hint in this e-mail was detected by Claude 
+Opus 5 at 2026-09-01. This includes also adding traces to the qemu 
+source codes to identify the issue by claude autonomously.
 
-The harness is added as a git submodule under
-tests/functional/virtio-villain. The test builds the static guest init
-with the host compiler for a native guest, or an architecture cross
-compiler for a foreign guest, then runs the whole supported suite one
-guest per case and fails if any case reports FAIL, WEDGED, or XPASS.
-Cases that need host support which is absent, such as vhost-vsock or a
-virtiofs daemon, are skipped.
 
-The guest kernel is fetched as a cached asset. The test lives in the
-generic directory and is registered in the x86_64 and aarch64 thorough
-suites, skipping any host that cannot provide a kernel or a compiler
-for the guest architecture.
+However this entire email and verification of the bug itself was done by 
+me (Torsten Spaete), a professional developer with almost 3 decades of 
+programming experience with focus on 
+multimedia/game/simulation/emulation programming (C, Delphi, C++).
 
-Signed-off-by: Anatol Belski <anbelski@linux.microsoft.com>
----
- .gitmodules                                   |   3 +
- MAINTAINERS                                   |   6 +
- docs/devel/testing/functional.rst             |  27 +++
- tests/functional/aarch64/meson.build          |   2 +
- .../functional/generic/test_virtio_villain.py | 195 ++++++++++++++++++
- tests/functional/virtio-villain               |   1 +
- tests/functional/x86_64/meson.build           |   2 +
- 7 files changed, 236 insertions(+)
- create mode 100755 tests/functional/generic/test_virtio_villain.py
- create mode 160000 tests/functional/virtio-villain
 
-diff --git a/.gitmodules b/.gitmodules
-index c307216d17..3a3b85c516 100644
---- a/.gitmodules
-+++ b/.gitmodules
-@@ -45,3 +45,6 @@
- [submodule "tests/lcitool/libvirt-ci"]
- 	path = tests/lcitool/libvirt-ci
- 	url = https://gitlab.com/libvirt/libvirt-ci.git
-+[submodule "tests/functional/virtio-villain"]
-+	path = tests/functional/virtio-villain
-+	url = https://github.com/weltling/virtio-villain.git
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1312bbd1bd..0021e8498e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4647,6 +4647,12 @@ F: tests/functional/generic/test_linters.py
- F: tests/functional/pylintrc
- F: tests/functional/qemu_test/
- 
-+virtio-villain fault injection test
-+M: Anatol Belski <anbelski@linux.microsoft.com>
-+S: Maintained
-+F: tests/functional/generic/test_virtio_villain.py
-+F: tests/functional/virtio-villain
-+
- Windows Hosted Continuous Integration
- M: Yonggang Luo <luoyonggang@gmail.com>
- S: Maintained
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index 60a427d175..963542f9b8 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -83,6 +83,33 @@ files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
- variable.  Any preserved files will be deleted the next time the test is run
- without this variable set.
- 
-+The virtio-villain fault injection test
-+---------------------------------------
-+
-+The ``virtio_villain`` test drives a guest side virtio fault injection
-+harness against the QEMU under test. It is included as a git submodule
-+under ``tests/functional/virtio-villain``. Initialize it before running
-+the test::
-+
-+  $ git submodule update --init tests/functional/virtio-villain
-+
-+The harness boots one short lived guest per case. Each case violates a
-+driver rule from the virtio spec and checks that the device model
-+handles the bad input without crashing, hanging, or corrupting state.
-+The test builds a static guest init and then runs the whole supported
-+suite through the harness, failing if any case reports a failure.
-+
-+Building the guest init needs a static toolchain that targets the
-+guest architecture. When the guest matches the host, musl-gcc or the
-+host compiler is used. When it differs, a cross compiler such as
-+``aarch64-linux-gnu-gcc`` is used. The test is skipped when no
-+suitable kernel or compiler is available for the guest architecture.
-+
-+The test is part of the thorough suite for x86_64 and aarch64, so it
-+runs with ``make check-functional-x86_64`` or on its own with::
-+
-+  $ meson test -C build --setup thorough func-x86_64-virtio_villain
-+
- Logging
- -------
- 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index f0881bed16..28563655ae 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -18,6 +18,7 @@ test_aarch64_timeouts = {
-   'virt' : 360,
-   'virt_gpu' : 480,
-   'virt_vbsa' : 240,
-+  'virtio_villain' : 900,
- }
- 
- tests_aarch64_system_quick = [
-@@ -55,6 +56,7 @@ tests_aarch64_system_thorough = [
-   'virt_aarch64_off',
-   'virt_gpu',
-   'virt_vbsa',
-+  'virtio_villain',
-   'xen',
-   'xlnx_versal',
- ]
-diff --git a/tests/functional/generic/test_virtio_villain.py b/tests/functional/generic/test_virtio_villain.py
-new file mode 100755
-index 0000000000..d4e656edc0
---- /dev/null
-+++ b/tests/functional/generic/test_virtio_villain.py
-@@ -0,0 +1,195 @@
-+#!/usr/bin/env python3
-+#
-+# virtio-villain functional test
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# This test drives the virtio-villain harness, a git submodule under
-+# tests/functional/virtio-villain, against the QEMU under test. The
-+# harness boots one short lived guest per case. Each case violates one
-+# driver rule from the virtio spec and checks that the device model
-+# handles it without crashing, hanging, or corrupting state.
-+#
-+# virtio-villain targets x86_64 and aarch64. The guest init is built
-+# static with musl-gcc or the host compiler for a native guest, or with
-+# an architecture cross compiler when the guest differs from the host.
-+# The whole supported suite runs one guest per case and the test fails
-+# if any case is FAIL, WEDGED, or XPASS. Cases needing host support that
-+# is absent, such as vhost-vsock or a virtiofs daemon, are skipped by
-+# --skip-unsupported.
-+#
-+# Run it directly with meson test -C <build> --setup thorough
-+# func-<arch>-virtio_villain
-+
-+import ast
-+import json
-+import os
-+import platform
-+import re
-+import shutil
-+import subprocess
-+import unittest
-+from unittest import mock
-+
-+from qemu_test import Asset, QemuSystemTest, skipIfMissingCommands
-+
-+
-+ASSET_KERNEL_X86_64 = Asset(
-+    ('https://github.com/cloud-hypervisor/linux/releases/download/'
-+     'ch-release-v6.16.9-20260508/vmlinux-x86_64'),
-+    '9d3570b47d5abb069ca00edfbfcef4c68306a9c3d078a01f10082b258f1001b8')
-+
-+ASSET_KERNEL_AARCH64 = Asset(
-+    ('https://github.com/cloud-hypervisor/linux/releases/download/'
-+     'ch-release-v6.16.9-20260508/Image-arm64'),
-+    '69d1b1235381ec50f1b45cf771a7dff4a9013d452833ab34682d6283e2114010')
-+
-+KERNELS = {
-+    'x86_64': ASSET_KERNEL_X86_64,
-+    'aarch64': ASSET_KERNEL_AARCH64,
-+}
-+
-+
-+def _native_compiler():
-+    if shutil.which('musl-gcc'):
-+        return 'musl-gcc'
-+    build_root = os.environ.get('MESON_BUILD_ROOT')
-+    if build_root:
-+        cross = os.path.join(build_root, 'config-meson.cross')
-+        try:
-+            with open(cross) as f:
-+                for line in f:
-+                    if line.strip().startswith('c ='):
-+                        val = ast.literal_eval(line.split('=', 1)[1].strip())
-+                        return val[0] if isinstance(val, list) else val
-+        except OSError:
-+            pass
-+    return 'cc'
-+
-+
-+def _villain_compiler(arch):
-+    if arch == platform.machine():
-+        return _native_compiler()
-+    for cc in (arch + '-linux-musl-gcc', arch + '-linux-gnu-gcc'):
-+        if shutil.which(cc):
-+            return cc
-+    return None
-+
-+
-+_ANSI_RE = re.compile(r'\x1b\[[0-9;?]*[ -/]*[@-~]')
-+
-+
-+def _clean(text):
-+    return _ANSI_RE.sub('', text.replace('\r', ''))
-+
-+
-+class VirtioVillain(QemuSystemTest):
-+
-+    timeout = 900
-+
-+    @skipIfMissingCommands('make', 'strip', 'cpio', 'gzip')
-+    def test_suite(self):
-+        kernel = KERNELS.get(self.arch)
-+        if kernel is None:
-+            self.skipTest('no virtio-villain kernel for %s' % self.arch)
-+        cc = _villain_compiler(self.arch)
-+        if cc is None:
-+            self.skipTest('no compiler to build the %s guest init'
-+                          % self.arch)
-+
-+        villain_dir = os.path.join(os.path.dirname(__file__), '..',
-+                                   'virtio-villain')
-+        # The runner reads the initramfs from its own default target path.
-+        subprocess.run(['make', '-C', villain_dir, 'initramfs',
-+                        f'-j{os.cpu_count() or 1}',
-+                        f'CC={cc}',
-+                        'CFLAGS=-static -O2 -Wall -Wextra -Werror '
-+                        '-Wno-unused-but-set-variable'],
-+                       stdout=subprocess.DEVNULL, check=True)
-+
-+        report = self.scratch_file('villain-report.json')
-+        runner = os.path.join(villain_dir, 'run')
-+        result = subprocess.run(
-+            [runner, '-m', self.qemu_bin,
-+             '-k', kernel.fetch(),
-+             '--skip-unsupported',
-+             '-j', str(os.cpu_count() or 1),
-+             '--format', 'json', '--output', report],
-+            capture_output=True, text=True, check=False)
-+
-+        if not os.path.exists(report):
-+            self.fail('virtio-villain runner produced no report:\n'
-+                      + (result.stderr or result.stdout or '')[-2000:])
-+
-+        with open(report) as f:
-+            data = json.load(f)
-+        counts = data['counts']
-+        self.log.info('virtio-villain: %d tests, %s', data['total'], counts)
-+
-+        bad = [t for t in data['tests']
-+               if t['status'] in ('FAIL', 'WEDGED', 'XPASS')]
-+
-+        runlog = os.path.join(self.outputdir, 'villain-run.log')
-+        with open(runlog, 'w') as f:
-+            f.write(_clean(result.stdout or ''))
-+            for t in bad:
-+                f.write('\n===== %s %s (spec %s) %s =====\n'
-+                        % (t['status'], t['name'], t.get('spec_section'),
-+                           t.get('description')))
-+                f.write(_clean(t.get('output') or ''))
-+        self.log.info('virtio-villain full log: %s', runlog)
-+
-+        if bad:
-+            detail = '\n  '.join(
-+                '%s %s (spec %s) %s'
-+                % (t['status'], t['name'], t.get('spec_section'),
-+                   t.get('description'))
-+                for t in bad)
-+            self.fail('virtio-villain reported %d failing case(s):\n  %s\n'
-+                      'full guest output in %s'
-+                      % (len(bad), detail, runlog))
-+
-+
-+class VillainHelpers(unittest.TestCase):
-+
-+    def test_kernels_cover_both_arches(self):
-+        self.assertIn('x86_64', KERNELS)
-+        self.assertIn('aarch64', KERNELS)
-+
-+    def test_native_prefers_musl(self):
-+        with mock.patch.object(shutil, 'which',
-+                               side_effect=lambda c: c == 'musl-gcc'):
-+            self.assertEqual(_native_compiler(), 'musl-gcc')
-+
-+    def test_native_falls_back_to_cc(self):
-+        with mock.patch.object(shutil, 'which', return_value=None), \
-+             mock.patch.dict(os.environ, {}, clear=True):
-+            self.assertEqual(_native_compiler(), 'cc')
-+
-+    def test_native_arch_uses_native(self):
-+        with mock.patch.object(platform, 'machine', return_value='x86_64'), \
-+             mock.patch.object(shutil, 'which',
-+                               side_effect=lambda c: c == 'musl-gcc'):
-+            self.assertEqual(_villain_compiler('x86_64'), 'musl-gcc')
-+
-+    def test_foreign_arch_uses_cross(self):
-+        def which(cmd):
-+            if cmd == 'aarch64-linux-gnu-gcc':
-+                return '/usr/bin/' + cmd
-+            return None
-+        with mock.patch.object(platform, 'machine', return_value='x86_64'), \
-+             mock.patch.object(shutil, 'which', side_effect=which):
-+            self.assertEqual(_villain_compiler('aarch64'),
-+                             'aarch64-linux-gnu-gcc')
-+
-+    def test_foreign_arch_without_cross_is_none(self):
-+        with mock.patch.object(platform, 'machine', return_value='x86_64'), \
-+             mock.patch.object(shutil, 'which', return_value=None):
-+            self.assertIsNone(_villain_compiler('aarch64'))
-+
-+    def test_clean_strips_cr_and_escapes(self):
-+        self.assertEqual(_clean('a\r\n\x1b[32mok\x1b[0m\r'), 'a\nok')
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/virtio-villain b/tests/functional/virtio-villain
-new file mode 160000
-index 0000000000..59d02ac357
---- /dev/null
-+++ b/tests/functional/virtio-villain
-@@ -0,0 +1 @@
-+Subproject commit 59d02ac35766732247670ae608177a6fd7181d7f
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 0353b2af8e..2a7c708ddb 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -7,6 +7,7 @@ test_x86_64_timeouts = {
-   'netdev_ethtool' : 180,
-   'replay' : 480,
-   'virtio_balloon': 120,
-+  'virtio_villain' : 900,
- }
- 
- tests_x86_64_system_quick = [
-@@ -50,5 +51,6 @@ tests_x86_64_system_thorough = [
-   'vhost_user_bridge',
-   'virtio_balloon',
-   'virtio_gpu',
-+  'virtio_villain',
-   'rebuild_vmfd',
- ]
--- 
-2.55.0
+# Bug
+
+Since QEMU 3.1.0 (december 2018, commit 154c1d1f96) the ES1370 sound 
+device is not usable anymore in any windows 9x guest -> Issue 
+(https://gitlab.com/qemu-project/qemu/-/work_items/2243).
+
+The ensonic audio driver (eapci95.inf) can be installed just fine, but 
+after the installation there is a constant low-volume noise that is 
+playing (hard to describe in words).
+You need really good headphones to hear that, but you can still verify 
+it by never hearing any sounds playing, not from windows, not from 
+games. Executing other sound actions such as changing the volume freezes 
+the entire guest for a few seconds (even the mouse freezes).
+
+## Why the bug happens
+
+Due to a bug in the register handling of the ES1370 system, a sample 
+value of 5512 Hz (reset-value) on DAC1 and value 705.600 Hz on DAC2 is 
+used to play any sound in windows 9x.
+But the ES1370 driver sets DAC1/22050 Hz by default, so those values are 
+clearly wrong.
+
+The issue is that 8-bit and 16-bit register writing/reading handling is 
+not properly handled for all register.
+To be exact, any 8-bit or 16-bit access to non 4-byte aligned offsets fails.
+
+Only 32-bit register read/write operations are handled properly, so when 
+an assembly instruction is executed that operates on AL or even AX, 
+depending on of the position of the register, writes do nothing and 
+reads returns 0xFF or 0xFFFF (all bits set).
+This means that writing with offset 0x01, 0x02, 0x05 will not write at 
+all (not aligned to 4-bytes). Offsets multiples of 4 (0x00, 0x04, ...) 
+reads just fine but writes resets remaining bytes to zero.
+
+An example is 8-bit writing 0x21 to the CONTROL register starting with 
+Offset 0x01 (not 4-byte aligned!). This effectly does nothing and 
+reading from that register in that way returns 0xFF for 8-bit accessors.
+The result should set DAC1/WTSRSEL to 22050 Hz and enables XCTL0 (line 
+out), but it does not and properly was working before in QEMU 3.0.
+
+In addition 8-bit reading of the STATUS register returns 0xFF as well. 
+This results in short freezes in windows 9x when using the volume slider 
+or start actual playing sounds.
+
+## Reproduce
+
+To reproduce the issue, you need a default QEMU 11.1.1 build (with or 
+without the tracing enabled).
+
+- You install windows 98 SE (i only tested win98 se) with a quick 
+install iso or use a default installation, it doesn't matter that much.
+- You attach an iso with the proper ES1370 win9x drivers (eapci95.inf) 
+and run the `setup.exe`.
+- After installation is done, you reboot
+- You should hear that low-volume noise sound and/or changing 
+volume/playing sounds freezes the guest for a few secs
+
+- Ideally you have enabled logging, so you clearly which sample format 
+are used
+
+## Debugging
+
+To see the wrong values in the log/console, you can use `-trace 
+es1370_stream_format` which prints the `fmt=5512` in the wrong case.
+Also lost register accesses can also be made visible by enabling the 
+define `VERBOSE_ES1370`.
+
+# Host Environment
+
+I am running a CachyOS system with classic xorg/X11 and a KDE plasma 
+desktop environment with decent hardware (Ryzen 9 7950X, 64 GB DDR5, 
+Fast M.2. SSD's with DRAM caching, RTX 3090, Creative Sound Blaster G8).
+The qemu version is the unmodified 11.1.1 cachyOS/arch binary package 
+version.
+
+# Guest Environment
+
+```
+set -x
+"$QEMU" \
+   -M pc-i440fx-9.2,accel=kvm,hpet=off -cpu coreduo -m 256 \
+   -nodefaults -display sdl -rtc base=localtime \
+   -device VGA \
+   -audiodev pipewire,id=snd0 -device ES1370,audiodev=snd0,addr=5 \
+   -netdev user,id=net0 -device pcnet,netdev=net0 \
+   -device piix3-usb-uhci,id=usb \
+   -drive 
+id=hd,if=ide,index=0,media=disk,file="$R/vm/run/es1370-stock.qcow2" \
+   -drive 
+id=hd2,if=ide,index=1,media=disk,file="$R/vm/run/es1370-stock-data.qcow2" \
+   -drive 
+id=cd,if=ide,index=2,media=cdrom,file="$R/vm/iso/es1370-original.iso" \
+   -boot order=c \
+   -qmp unix:"$R/vm/qmp.sock",server,nowait \
+   -trace enable=es1370_stream_format \
+   2>&1 | tee "$TRACE_LOG"
+
+```
+
+
+Thats about it.
+
+I hope you everything you need to reproduce the issue and include a fix 
+to future qemu versions to make ES1370 usable again.
+
+
+Thanks,
+
+Finalspace
 
 
