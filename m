@@ -4,165 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64402CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 08:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61092CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 09:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCCPn-0006zx-PK; Thu, 01 Oct 2026 04:45:21 -0400
+	id 1xCCf0-0000vO-Li; Thu, 01 Oct 2026 05:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCCPR-0006lx-Kq
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:45:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1xCCe9-0000hT-DR
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:00:11 -0400
+Received: from mail-westus2azon11010009.outbound.protection.outlook.com
+ ([52.101.46.9] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCCPN-0005id-1s
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 04:44:56 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6916xLVo1932287
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 08:44:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 46PonqXm2c3LXlS5HOmrTuSsf/tKo1kW2NgnJc9s/Uc=; b=bOo8oguaE92B9M3G
- lbrietfHVbQXLo+9FkQAnx7p9k6M4E3OuFqvQyWn/HPw2cHlyWn51HKoWkKINiLl
- vRlqR85Ouwl2XQs29CllOuYdi5sEmEGbUnBKJu+JsUw38o3WIZypZTFS+38zbbLI
- ml7QPhfLDXYxBzHUayOQ1RZ3Kf3uZ4WxcAbX68xHg4NKK6giBPCsUIBG5dkUunzc
- uEEwhN+kdKZL4hO50N0xlGMk6Qr7hnazS3T4CkfIYsp/KRxN39lS1RdMddq8IqKW
- Q4CkCxQrfQS0po35nV9DShkyL+mSfSlZvUKBvSAz6+asO7BdFI0y33OgMLEFao5l
- ImZuog==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1bh59wnk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 08:44:50 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93c58ee2116so1160167085a.3
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 01:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790844290; x=1791449090; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=46PonqXm2c3LXlS5HOmrTuSsf/tKo1kW2NgnJc9s/Uc=;
- b=RcDX8reak09eYOcp5vS0XvWPZqGk3S2rjooCyPFGxBnxat1MeghEN+7MBZjvnQp67M
- sBkjs77inKXZhkNMQHOOzZQv9RDoZiy9s6zJUlWTaKAZD9hfwPov1f8p8uT1vy0HpnWq
- cCZMYudPZqZ8/9TMjNDCqiS2G4cmvQzvTPKgdbsY6GjjoFVTEcIRGSpjbkFBcOBlPjqr
- 3NaUriayBgX7+A6he/utZMowOyeKwn6xKf7Lot7fhnip5S/y0wGq99bIrXBDOd+fhBWB
- pSGyMfPbpuivJNiwLGO37KyY0XkmSSejqc7SRQAuZhY9dEoaqfo1DeyqnhQhrlvrlfoh
- WrvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790844290; x=1791449090;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=46PonqXm2c3LXlS5HOmrTuSsf/tKo1kW2NgnJc9s/Uc=;
- b=n1a4+sI939rhIpuJeqYfVp3tYqp66MPlP/YKzBGKqTj+2x0iUuI8b3rQqYy+qT9jy9
- 1NJEcw7G+FRh86VstHL5E881nBQfQOkJ2ryy20qC9Q3vnhttmIl3bOwGCkGlEsO108E1
- Or4FstkWuSbCtGvc5VVkMXfAvMXxv9r+kJM/Epz0pkX8mvy++iDIH+M2IRDOyYjixv6b
- fI6Nnli8n07ADwGCzeQJTkUGWkiSkp+kj8EtH1fiLvJv6MHed6JVVjFz/RjyO0NaESps
- nYGpcTHIKuxXfdEWPa3JqNgI+OP9ZKDWjFbyOIXHHOYEOLEFSFyclAqHtVUwlms7tfWG
- aFoQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvByNn2V+vnHCWto1mERwn0hhdykaS4oLGXlc5EDdlFaBsxXlifmgSr6oz1/S9bCyHlNSwAkE7j2LN43M@nongnu.org
-X-Gm-Message-State: AFuF++kQ/4FnOMVAIX/Vsl55SaYJ6fruBVP9n5AuToHy01BC7hfxjMz6
- JjNVjPwDjWDwZbGKw7rvLKkws3XqjwizQI7jkTISXTA+ssh1HoYHBM2LooEtMyG4kli83D0HKrY
- s/iWiO+gEsuRDE7046a9FvxBunzSF9cElo1nb7yqLPgphkBFv1Jlg7p6cmA==
-X-Gm-Gg: AYBFou1tE8SxBHfS4ZcyYHDmnavG4lJfhYrBOQb5jTkL2NFv8meIqV0gr+wWvqYyUDV
- 2hnfM0o634FUzAYIrM366JDrfHVWWcRV9Io6+AIAZ1w9LMDGCOUgjtUD0xcyg5gVoH8DOUDyA6y
- uHSdCQBD18InfPGKpxErRupmSVmKnTHADmKODOAMznMSuhB/KLkXki/myGY5cePdtFgWtZLVl7r
- WyjhaVWsaDcxrsc+X1qTQdUZMcXjKPdGGLG0PzrOOdTdUXu9B9VgaUhFxn13U7ANgqrtv6GErSz
- zKbqtoI3c7EOvuWy2gM2cRH4ql+mTz7ZQvf6PK4PHXVlPZkVm/xCHkFJQyGo8FhjMhrmtqCSUre
- 9ZnL9qsuSgB1M/SpkBGzn9LCsYtGk8AvwCA==
-X-Received: by 2002:a05:620a:4095:b0:93b:c209:b6c0 with SMTP id
- af79cd13be357-93ca9513afemr721155685a.5.1790844289857; 
- Thu, 01 Oct 2026 01:44:49 -0700 (PDT)
-X-Received: by 2002:a05:620a:4095:b0:93b:c209:b6c0 with SMTP id
- af79cd13be357-93ca9513afemr721150985a.5.1790844289301; 
- Thu, 01 Oct 2026 01:44:49 -0700 (PDT)
-Received: from [192.168.69.225] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a01f96d01csm37581595e9.2.2026.10.01.01.44.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 01:44:48 -0700 (PDT)
-Message-ID: <26b0d44d-0322-4ceb-a47b-747fc52c61b7@oss.qualcomm.com>
-Date: Thu, 1 Oct 2026 10:44:46 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1xCCe7-0007HN-DX
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 05:00:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=liCUgs/ZAZG1z5qO8UCpZrS/mlILBSg0+e6vHl+UVs9cgiKeJwrkoAEvml1xM6vs7t7r5ywNl07ZB0AqtfUoQNu6Bs6ejfWJvpsJ0sOrIO+lm+8g4iH1Tau8uvfk030ikw1MDb2Wy+y2wNnudG+/7TN4/pSY/1akN2WqmnLEm8H0fKE4qwXvqC7EYoSttTt3XiBjqy87SdL7R3tiQFkXPW1/HIyGpDCVR+dumEZdB8yxS+AzVO8c5WpxQ5Xkm9qgR9sdcX4hA42ZSR08FcAweUW6bCBcmfmNTVDm3d5EquYS3Zac8uUZc/R6augGvHPrXcNqh05Vw3y8Bd3ith/Ztg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=q0iiT+EBH7xa5hSx8gQKxVr4jdAoN4RlgaICtyY3aYA=;
+ b=khxSfuKb+WxrW0xyiZaucr6+HiJCP+PCS0tJIO+8dXESDTI85rGzb5+p3xno8i9MYq4VVA8/68zvEB8FniD7FTTPPHYAoM08hxTmIgskbmg5wU5LNkWnOU+vpBxjKYtyx03IIu3vXNZHaLfpPqHJ4CboyWjP/b7E+UEZXAHEesxL/SQ68c7DbWJq/LbtszAbb70oXSPxze2S8UZIGnynB0zv/9mzq21frkPye5zZqP5qDTcSMy+xr0gXDjtRkB4IXf/rEIs4LeETCvzK63IahjE2Sq9mI2L4W86/X2YZ6/Q0AsHHjf+SCuJJ9SFB/GDPyyiYxMxntJg0tyM1VuWWgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=q0iiT+EBH7xa5hSx8gQKxVr4jdAoN4RlgaICtyY3aYA=;
+ b=C58u5vwW8ssDF8oM0EHfoZnhQNXdcTPW0Kr8YPYfGH+9p68pjgzJW4IE9wzGvUNf0mCsmsYecTIdSdvoo4KtSNZpMPPZp2V0RFAe2IEbTnjr2f+Xs7qWivbKOoTfmhdXKKZvO5JGcCz7DSSIBmE2j8lHCBuhKWSZmpCRnN9iASU=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
+ by BL1PR12MB5730.namprd12.prod.outlook.com (2603:10b6:208:385::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.25; Thu, 1 Oct
+ 2026 08:54:58 +0000
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7]) by PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7%4]) with mapi id 15.21.0472.015; Thu, 1 Oct 2026
+ 08:54:58 +0000
+Message-ID: <fa8b40df-a35c-4ae3-8eaa-b4b65c546a91@amd.com>
+Date: Thu, 1 Oct 2026 14:24:47 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
+Subject: Re: [PATCH v8 1/7] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu"
+ is configured
+To: Michael Tokarev <mjt@tls.msk.ru>, Dongli Zhang <dongli.zhang@oracle.com>, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-2-dongli.zhang@oracle.com>
+ <81a1f791-37ef-4d26-bcf7-024eab4cd810@tls.msk.ru>
 Content-Language: en-US
-To: luoyonggang@gmail.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Stafford Horne <shorne@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Song Gao <17746591750@163.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260926081551.29-1-luoyonggang@gmail.com>
- <20260926081551.29-2-luoyonggang@gmail.com>
- <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
- <CAE2XoE_+nhj58M9_yx6wf532qCSVcERpTw7F4AU7PXN7prhpzg@mail.gmail.com>
- <74853ef8-7315-466a-99ac-41c8182f9b13@oss.qualcomm.com>
- <ar4TQtKqfXX5Ul9O@redhat.com>
- <CAE2XoE8q3LYJ-JCTbRBk4iPdUQdRE8zzmOgiZ=HEXDL78iw8UQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAE2XoE8q3LYJ-JCTbRBk4iPdUQdRE8zzmOgiZ=HEXDL78iw8UQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <81a1f791-37ef-4d26-bcf7-024eab4cd810@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: irU86tUo6UoOlLBl3KFbwSWN_eFKZZz8
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfX2mWbuIvufSau
- kcE9nIEtCnN9egx90Zy18YRHySekYwlrD32xN25by29ILAmGfpoZSN/JVNf1s+IkOr9OPx5qP8S
- D+C4f0ipFvD/ssSACeQHouEQ5j1i8UE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfX03TGGm4TiHID
- SV/S1sITimUW8SONN/1mE0W5r68mACCoOGTh9iA75zBavi7PkyppD22w1z9+9N3SUcU/ZhNRiuO
- kcaIXajmCAlo8yN08DpA7HPnikxNn3F4exsAm/TPPT5KX9vYNBxlP8izTzPBd4bvWzVhgdA7Q20
- mOWl+rsvN+TaF2UUZRgudErTKORMyb/PjlQVQTTgYFaOJXxu7lUxHTMW+CKnCxg+wTs9L+JUhpr
- wFvNMTZoxoF7LgO4QDx5PewUMM2FzCy1SqfFML6h1ZJf6izj+O082xhw9Yl1mXOv95dkrmuQncG
- zi+YdqKA6Q5ybUhxYMueTWWz/bCV6PqR8AR7ItoAbSq5ItKh6OPKfFLid6icUIj7Kcnc3qDKacr
- bv/O5NcRffYDcKHpuH2CF+fMVVEcrFl/nnpFnDJY7LAk37hwzzDXsk/y21s/fc4X4qk5M869puT
- Vs4E1ZDL4c/nElLQWew==
-X-Authority-Analysis: v=2.4 cv=NuxE4MdJ c=1 sm=1 tr=0 ts=6abe1d82 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=p0WdMEafAAAA:8 a=voM4FWlXAAAA:8 a=EUspDBNiAAAA:8 a=iyRaGYhiAAAA:20
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=pGLkceISAAAA:8 a=aXWF5__G5Zs2yFWEykkA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=IC2XNlieTeVoXbcui8wp:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-ORIG-GUID: irU86tUo6UoOlLBl3KFbwSWN_eFKZZz8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610010034
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: MA5PR01CA0209.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1b0::8) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|BL1PR12MB5730:EE_
+X-MS-Office365-Filtering-Correlation-Id: afb3c118-d2d3-4f2c-b2af-08df1f99ab7e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|23010399003|18002099003|22082099003|10067099003|11063799006|56012099006|3023799007|4143699003;
+X-Microsoft-Antispam-Message-Info: Isk9RKvnFcf7qlBEodwT0AY76goGitvKpVbUwpQM/vWOEKOz9Ut5BWeNqKeAsxWG5YC42ZKDlE4S5UKgFmBu1xmtZKlE6mjpjMzHzZ1wxFNm2w93mcifUBRtUPmFx2yB/wArXbwJCE8Tv8KLlLqAgNKTwlwK1g+YgXKxrWBLNlSCKsTQI6+J6qguCFds9l+QPtQkYQXpU4H2rnHcJdCHv4ePtUS5NaldZ8S0gC23F/jFkN4jaFF/gHpKSHo01DzW1hs/3EsaxPk+SgEI41O62/WAiKubpN/+AmcBTFPzaw8sTbipDwAhL8bpBIrzROQd0BoBVULv40ppyQK8rtxwyp1mYiRNnCygxrSTXF0bNz3ekzNd9oQuYV/w6RtAhz/1iaK3wXujjMEBv1SpL1G5jw7K01KlswEycLB0nKdu6WDjDXvhWhqoVeWQin5Y4MMUUwK+XQDpX5147jZ6CuHztX0hrLY51bd9RbZ1v/FQIIO9+Ts3i3/IwsGROI9HUAVL4QOrtm+HxUd7NFEtZEwxTwyD49g8rrKqyK4ph3VR+PH6jf1u3RbCr1OWr2oPTMLQwKKJCflo4rviqurC8wbK8AuzxcYTkWPoQePgaUBFvovKAIUWaNRbog7nxW3rBO8imYVulweNA/NwXv72bE49wr6qP0WixGacLocvq06rWIo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(18002099003)(22082099003)(10067099003)(11063799006)(56012099006)(3023799007)(4143699003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzQvckRmUzU1UklGVjc1bnk0R1g4RGFGRmhNc2hBLzJkNi9pM215amNJZloz?=
+ =?utf-8?B?WkZZNThwaDV2dUhUNmNxSTBxZWNUcXRlUDBZREQyYjRCdGU3ZnFlbkxEaXRy?=
+ =?utf-8?B?UkltMW5pN0dNUGxjM0hFcUdYRTJIajcvWFRkMWZWeUlvWUtaVXdxSFdNRGhj?=
+ =?utf-8?B?WGoxNkcxd2VybnBpKzBuTktMdHAvdnVsU0lkQ0pYTWRuRnlHdnNsZGhneXVG?=
+ =?utf-8?B?ZHVlWW5TeE9GQlBYUmpzc1FEWm5KdllRWk13TTN0T3FGR09UUzhvYW1SblRQ?=
+ =?utf-8?B?OEZpZ3JDK08rclh4Tit2U1dLQUFwZFlGTlRiL1loTExvVjhlMUlGTjNMTkJu?=
+ =?utf-8?B?YlRiRnlzNlFaa2lwZXJsVGo0blVJVVVBN2lZeG1Ob2pUcGlScSt2cmtDSjJn?=
+ =?utf-8?B?dFJBRTl2Si8wQXNUNlJnMmxqcGowYldMdDF5YVExZHM5dmZVOXBnTE1ZbVZq?=
+ =?utf-8?B?TGs4MG1xdnM3R3oxNS96N0piZUdsczU0U0RoZEpHcGNoUEJCZENWNXdSbmd0?=
+ =?utf-8?B?Ykl6ZGRrSjZESWpWNHJBUFdpMzJMY2dNZDVZcHJvUnNVNHpwZVFpOVF2emVU?=
+ =?utf-8?B?YjZBVTk1RXhxbklibnUwc2tUZk81MWVUb1lpcnZlc213emxwWmF2TDFtT09Q?=
+ =?utf-8?B?TmZyYmgvakhsZzhrM3A2NkEvaWxxSTVRbEJzR2UveWlNNWNCMENLZ2lCclpL?=
+ =?utf-8?B?TC9ETS9ZOTAvKzdJRHRwQnA1Q3lQWnE0anQzcGhDYmcrc3lRcFlGZk9uUHlM?=
+ =?utf-8?B?ejFZZkdmNXZlSWpGWkF6NjR3ZkVqUnZCSU5lVTJQUXpuYTRlSnVwalpVWk5E?=
+ =?utf-8?B?b3NxSHhxWi8zSm8ybzFvZm51aE5KWnhMQU05eHdDZnA3UHVsZHhZRkswMGVF?=
+ =?utf-8?B?UlA0dGp2SDhRS2ZGZkFIeDl4MTJYTXdJVEphL2NMd0t3WXNGZUc0WGo5YnRV?=
+ =?utf-8?B?cHdBanMxSWtWcTZobGJjZFV5aW9ESU9mWFh4OHRBdFBxcVpIQ0lMNW9qUHlZ?=
+ =?utf-8?B?Tjk2a2ozeVlFem54UHA5MTRlK25aUGlTNkIzeU9aOXpWWXJVbC80M2JmM0hl?=
+ =?utf-8?B?ZXFMZkVORFNoc0NKakhhMTlzdnF3SmluemNLRDNTeWFkNUFuOUdsdGtjY20x?=
+ =?utf-8?B?ZWJSSitLT3NoNUJMUFBNREt4bGdTRlB6Q0lDWnJNcGplMWVKYkNSTG9oVEFK?=
+ =?utf-8?B?dStpZG1WUnc3aS8rdDVCUmhaSUozTUc4S3c5SUtUcWNROG51cVhXRGNrUG1E?=
+ =?utf-8?B?dXlGaWFZbEUzd0FTcmZDZ3h5czh1Mm44QVV2YTlERkFLTUNvTTZDT3NLV0hm?=
+ =?utf-8?B?TUdvNnVBWm1iVVl1MnFtUWlSTUkvdlVuMU5aSmExcDNQOXhhQThhOVc2UEp1?=
+ =?utf-8?B?YVptZU9JMktQQ1Q4MHE5SjFiR3Y3V09NcEt0NzQ2bHVBVkJobTh5anZXZVVy?=
+ =?utf-8?B?Q2N1RXRkckU0ZDhZM3plaDg2WHdabHZEbFh3bE53bmVPdnYyYVJhZ0x0blNJ?=
+ =?utf-8?B?WnQ3Z1lPdGdObU15R0pCSkVkK0tQYk40b0taazZRblR6NWdyYjdHVHArNnBh?=
+ =?utf-8?B?OThwN0lCWnhmMnQ0MmEvVTRtdkhZQ1lzb1ZKL0hKbjlyTGJZQXpmaGhBQmdS?=
+ =?utf-8?B?SVU5TStHWktmRmNrTFp2M2t0bjJ2d2QrNnlBLzZiNXNHOXVjc0V6bUkwUnNO?=
+ =?utf-8?B?MkFjWU5oZHRCeExNSDhiSHY0aXJTUW82dFBtZDE3U0JJckRidk1jK09ncUVM?=
+ =?utf-8?B?aFk5TWNiYnZHQm04bklHRXg3L1pYUERZM3hWc0JnUGdkTjMvT2kyTVNPa1hw?=
+ =?utf-8?B?a1k0d2lyVXZObk9TUTVOSWlOaHVRL0VRbjN5WEJOR0xCQy9kTkRjTWk2OWV0?=
+ =?utf-8?B?ak5QVFdFUHA4WjJta09TRWRzY3RDK242Smt3ZUR5NmR1VTJrZ3VNeHZXaTRa?=
+ =?utf-8?B?N0NzUEJkOWcyczFwRVRDb1BJU1JoWjFHV0RUTm81TE1URDJLV25RZDV5R0xQ?=
+ =?utf-8?B?UCtSY284T2Y4K2YvS0x1VTlreFBVSE1SV2JSRFRVN1JscU96RVRjNnhvYzFw?=
+ =?utf-8?B?TWlLVjBjQitHV1JReVcya29BYXVTblFBTWpRbHI3QmtGWjZINUtjMUJaQUVy?=
+ =?utf-8?B?Nmc3WFRCK3BaZTBwcHNsU281K1dPa2pCdTFEU0ptTzhXK3MyVktxQ1dHdnZt?=
+ =?utf-8?B?Y0tYZ2hZTGRyR1VDVnRkbHlYOUc3c2MxVXBEcTdVSmZSL3p0WjhRWldZeHBB?=
+ =?utf-8?B?UGwzNk8yazBhaHJkRytoLzJlUzBTS1UvU0xGT0pqS0RSMVJhUHJhUXNDM3Fu?=
+ =?utf-8?Q?HIFkZTQJqGGrHEFbsp?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: afb3c118-d2d3-4f2c-b2af-08df1f99ab7e
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 08:54:58.1846 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tmtepsesNXdShB2kpFanB+3DilvrH22FVYEqfaGXDmtjl2v4nkjNhnNVs8CZyTd0OB5gjoJaxLA1S8Z7ScTksg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5730
+Received-SPF: permerror client-ip=52.101.46.9;
+ envelope-from=Sandipan.Das@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,155 +158,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/10/26 10:13, Yonggang Luo wrote:
-> On Thu, Oct 1, 2026 at 4:01 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+On 01-10-2026 14:02, Michael Tokarev wrote:
+> On 12/30/25 10:42, Dongli Zhang wrote:
+>> Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
+>> there is no way to fully disable KVM AMD PMU virtualization. Neither
+>> "-cpu host,-pmu" nor "-cpu EPYC" achieves this.
 >>
->> On Wed, Sep 30, 2026 at 09:23:50PM -0700, Pierrick Bouvier wrote:
->>> On 9/30/26 6:55 PM, Yonggang Luo wrote:
->>>> On Thu, Oct 1, 2026 at 2:19 AM Pierrick Bouvier
->>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>>
->>>>> On 9/26/26 1:15 AM, Yonggang Luo wrote:
->>>>>> - Add machine_class_set_name() so boards can keep a stable -M name
->>>>>>      when the QOM type is uniquified. machine_class_base_init still
->>>>>>      defaults the name to the QOM type without -machine.
->>>>>> - Document that MachineClass::name is the -M name, not the QOM type.
->>>>>> - Sort -M help by MachineClass::name so order matches the printed names
->>>>>>      when QOM types are prefixed (arm-virt-11.1-machine vs virt-11.1).
->>>>>>
->>>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
->>>>>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->>>>>> ---
->>>>>>     hw/core/machine.c        |  6 ++++++
->>>>>>     include/hw/core/boards.h | 12 +++++++++++-
->>>>>>     system/vl.c              |  8 +++-----
->>>>>>     3 files changed, 20 insertions(+), 6 deletions(-)
->>>>>>
->>>>>
->>>>> First, I'm not opposed to this series, and if anyone wants to pull this,
->>>>> I'm ok with that decision. It's just unclear for me what will be
->>>>> direction after this step.
->>>>>
->>>>> If I understand correctly, the goal here is to allow to register
->>>>> multiple "virt" machines, while still having distinct QOM types behind
->>>>> the hood, which does no affect behavior of current binaries who have
->>>>> only a single "virt" type at most.
->>>>>
->>>>> That said, if we project in the future where we have a binary with
->>>>> multiple of those "virt" machines, how will the current series help? The
->>>>> situation we'll have is distinct QOM types, that all answer to the name
->>>>> "virt", so we have no way to select them individually.
->>>>>
->>>>> Slightly worse, find_machine() will just pick the first machine name
->>>>> virt, which is a non-deterministic order at the moment.
->>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/system/vl.c?ref_type=heads#L846
->>>>
->>>> That will handle it properly. For single-target binary qemu-system-$arch.exe,
->>>> this won't be an issue, as there is no conflict as they won't be compiled in.
->>>> For multi-target binary qemu-system.exe, we will choose the target through
->>>> -M $arch:$machine, and when no $arch is specified, the default to arch
->>>> to be "none",
->>>> so still won't be non-deterministic.
->>>>
->>>
->>>> "when no $arch is specified, the default to arch to be "none",so still >
->>> won't be non-deterministic.
->>>
->>> That's my point, the current abstraction will create something ambiguous by
->>> design. When people will specify -M virt, without $arch:, a random machine
->>> will be selected. At least, maybe this series should ensure there is only
->>> one virt alias, or make it forbidden and uses unambiguous names only.
+>> As a result, the following message still appears in the VM dmesg:
 >>
->> Yes, if there are multiple choices, we should not pick an arbitrary one
->> non-deterministically, we must require the user to narrow the choice
->> explicitly in some manner.
+>> [    0.263615] Performance Events: AMD PMU driver.
 >>
->>> "$arch:" is just a workaround to not add -target option, except that it
->>> comes with additional problems, creating inconsistent command lines.
->>> I already expressed my skepticism about the "machine prefix" based approach,
->>> being more in favor to strongly filter types per target with an unambiguous
->>> -target option. I'll accept the community's choice on this, but just wanted
->>> to see this explained before someone hits the pull button on this series, so
->>> they know what will come down the road.
+>> However, the expected output should be:
 >>
->> Historically, QEMU do alot of things like this where we invented magic
->> syntax that needed custom parsing of the command line. Over time we
->> came to the conclusion this ad-hoc parsing was a bad idea, and we
->> should always explicitly model things, even if it is more verbose.
+>> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+>> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
 >>
->> Thus I would not want to see "$target:$machine" as something that is
->> parsed into two pieces.
+>> This occurs because AMD does not use any CPUID bit to indicate PMU
+>> availability.
 >>
->> IOW, "aarch64-virt" would be OK as a unique name which treated as an
->> opaque string, but "aarch64:virt" as something split into "aarch64"
->> (target) and "virt" (machine) would be a bad idea.
+>> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
+>> when "-pmu" is configured.
 >>
->> An acceptable way of modelling the latter would be to use
->>
->>    '-machine name=virt,target=aarch64'
-
-Why mix target information parsing at machine level when the
-machine already know it is target specific? People wanting to
-use the ARM virt machine don't want to know (and don't care)
-about the M68k virt machine.
-
+>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>> Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 > 
->>
->> or
->>
->>    -machine virt -target aarch64
+> This is commit 4f0dd09e61b080c27589fe35b575503783c5a256 (v10.2.0-1114-g4f0dd09e61b)
+> in the master branch now.
 > 
+> This change seem to broke booting windows 10/11 on an AMD host, in paticular
+> with -cpu EPYC-Rome-v4.  It were initially reported in debian qemu bug tracker,
+> and I verified and bisected the issue on my AMD desktop machine (which is AMD
+> Ryzen 7 5700G, Zen 3.
 > 
-> That's made me confused, as different people propose different ways to
-> handle it.
-> Can we just choose one first?
-> '-machine name=virt,target=aarch64' is introducing new options, so is
-> '-machine virt -target aarch64'
-> I can not argue which is better, my suggestion may land one first. Both
-> "-machine virt -target aarch64" and "-machine $arch:$name" I have
-> already implemented. And currently I chose
-> "-machine $arch:$name" according to
-> https://patchwork.ozlabs.org/project/qemu-devel/cover/20260828225901.367438-1-pierrick.bouvier@oss.qualcomm.com/#3749257
-
-You still did not explained what you are trying to achieve
-with all your contributions, so my view is surely biased by
-what we envisioned 3 years ago when we started to pave our
-way for heterogenous emulation.
-
-My options so far for a single binary:
-
-- infer from argv[]
-- enforce with CLI -target
-- not expose any machine
-
-That said I asked you multiple times what you are trying to
-achieve to understand and get a consensus or pick the best
-approach (we do not want to compete here, the point of the
-community is to join efforts).
-You are ignoring my questions, so this post is my last try
-before I ignore you on your future contributions. Sorry if
-it sounds unfriendly but you are about to reach the end of
-my patience, exhausting my review time.
-
-If you have AI power, please have a look at semcode + lore
-to dig in the mailing list archive and summarize the previous
-work and discussions we had before offering distinct single
-binary alternatives.
-https://github.com/facebookexperimental/semcode/blob/main/docs/lore.md
-Once installed and configured, you only need to run:
-$ semcode-index --lore qemu-devel/3
-
+> When booting windows11 VM with -cpu EPYC-Rome-v4 -enable-kvm, the
+> guest enters tight CPU loop while displaying a boot screen, before
+> it starts showing up the rotating circle (which shows boot progress).
 > 
->>
->> Inferring from the binary name would be acceptable too, as that can
->> be thought of a syntax sugar for "-target aarch64".
+> Before this patch, it boots ok.
+> 
+> There's no other fancy options, just
+> 
+>  qemu-system-x86_64 -m 2G -enable-kvm -cpu EPYC-Rome-v4 -smp 2
+> 
+> (I'm replying to the original email message with all original recipients,
+> hope it's okay).
+> 
+> Can someone please take a look?
+> 
 
-Yes. Better for my mental health to defer the merge of this work
-to you Daniel, since you already had a look a reviewed it. But
-please compare with Pierrick approach before doing so:
-https://lore.kernel.org/qemu-devel/20260930020108.217892-1-pierrick.bouvier@oss.qualcomm.com/
-
-Regards,
-
-Phil.
+What happens if you use "-cpu EPYC-Rome-v4,+pmu"?
 
