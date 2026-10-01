@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36951CA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F65CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCIU5-0001dh-Gn; Thu, 01 Oct 2026 11:14:10 -0400
+	id 1xCISp-0000uG-3U; Thu, 01 Oct 2026 11:12:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCITU-00018E-LS
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:13:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xCISn-0000tj-2n
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCITR-0000z8-HK
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:13:32 -0400
+ id 1xCISk-0000vh-IS
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:12:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790867603;
+ s=mimecast20190719; t=1790867565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gh6GvLedMPXxMa7C6DrVw9z9ZSeYEC1PbeWcSzEncw0=;
- b=Cji2c/x+9iy+Tzi5s2CjaQ/EUTexRmw8sGd4cCgDCOclkmhsQk3IZiN2I1ShWqJZqy0+BY
- HaW++RW3is06b5usl2iYvXvqtOPQEG+MrMJ72G5bV1/sQZV1r27VD2VTnrUlcuqTO93drN
- bBXqXgSpk+n+p1dtBsBCVf8FEhyYiSg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5M/lTi0dFEyGuGUtXD3oLpwdwGCtBiVJVWpXtVUyNGI=;
+ b=i6pXkmrTxMEsNltOGsL0p2iGRw6Qg7WeGyYKqiD7qOCiYclVwB0ZgSL0KLD1l1o77hPQvR
+ mjeL46jA16vWWrC+tnuN7er6L7ax/CJRRvuRkvVrpYXgLneUqTnkwbTusl12AyzCQmnsat
+ ShtYrFQNanAuU6ZdncGUuRkB8L5Ig+E=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-qmqvfyAJO5KThgzjEUnECA-1; Thu,
- 01 Oct 2026 11:13:05 -0400
-X-MC-Unique: qmqvfyAJO5KThgzjEUnECA-1
-X-Mimecast-MFC-AGG-ID: qmqvfyAJO5KThgzjEUnECA_1790867573
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-G8AQjkmeNwa5hXzLgvf65w-1; Thu,
+ 01 Oct 2026 11:12:44 -0400
+X-MC-Unique: G8AQjkmeNwa5hXzLgvf65w-1
+X-Mimecast-MFC-AGG-ID: G8AQjkmeNwa5hXzLgvf65w_1790867563
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC23E18007F7
- for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 15:12:53 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C935182FA26
+ for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 15:12:43 +0000 (UTC)
 Received: from berrange.csb (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C3F9F1956042; Thu,  1 Oct 2026 15:12:52 +0000 (UTC)
+ id 83EB71956042; Thu,  1 Oct 2026 15:12:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 18/20] trace: stop tracking static disabled state
-Date: Thu,  1 Oct 2026 16:12:26 +0100
-Message-ID: <20261001151228.3373747-19-berrange@redhat.com>
+Subject: [PATCH 10/20] trace: add testing of 'nop' trace backend
+Date: Thu,  1 Oct 2026 16:12:18 +0100
+Message-ID: <20261001151228.3373747-11-berrange@redhat.com>
 In-Reply-To: <20261001151228.3373747-1-berrange@redhat.com>
 References: <20261001151228.3373747-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,682 +86,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TraceEvent struct contains a "bool sstate" field which track whether
-a trace event was disabled statically. i.e. at build time via the
-"disable" property annotation in trace-events.
-
-The only runtime use of this field is to let "trace-event-get-state"
-report that an event is "unavailable" instead of reporting an error for
-an unknown trace event.
-
-Trace events are not ABI so their names can change and the event can
-come and go at any time. Thus there is little utility in reporting the
-existence of a disabled event that cannot ever be used at runtime.
-
-Removing the "bool sstate" field from TraceEvent saves 8 bytes of
-space in the struct, adding up to approx 64 KB across all current
-events.
+This will be used to demonstrate that tracetool outputs the bare
+minimum of code when tracing is disabled. Currently, as of this
+initial commit of reference output, too much code is generated.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qapi/trace.json               |  5 ++--
- scripts/tracetool/format/c.py |  2 --
- scripts/tracetool/format/h.py |  8 ------
- stubs/trace-control.c         |  1 -
- tests/tracetool/all.c         |  2 --
- tests/tracetool/all.h         | 14 +++++------
- tests/tracetool/dtrace.c      |  2 --
- tests/tracetool/dtrace.h      |  2 --
- tests/tracetool/ftrace.c      |  2 --
- tests/tracetool/ftrace.h      |  6 ++---
- tests/tracetool/log.c         |  2 --
- tests/tracetool/log.h         |  6 ++---
- tests/tracetool/nop.h         |  2 --
- tests/tracetool/simple.c      |  2 --
- tests/tracetool/simple.h      |  2 --
- tests/tracetool/syslog.c      |  2 --
- tests/tracetool/syslog.h      |  6 ++---
- tests/tracetool/ust.c         |  2 --
- tests/tracetool/ust.h         |  2 --
- trace/control-internal.h      |  6 -----
- trace/control-target.c        |  2 --
- trace/control.c               |  9 -------
- trace/control.h               | 18 +++-----------
- trace/event-internal.h        |  2 --
- trace/qmp.c                   | 47 ++++++++++-------------------------
- 25 files changed, 30 insertions(+), 124 deletions(-)
+ tests/tracetool/meson.build       |  1 +
+ tests/tracetool/nop.c             | 36 ++++++++++++++++++++++
+ tests/tracetool/nop.h             | 29 ++++++++++++++++++
+ tests/tracetool/nop.rs            | 51 +++++++++++++++++++++++++++++++
+ tests/tracetool/tracetool-test.py |  2 +-
+ 5 files changed, 118 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tracetool/nop.c
+ create mode 100644 tests/tracetool/nop.h
+ create mode 100644 tests/tracetool/nop.rs
 
-diff --git a/qapi/trace.json b/qapi/trace.json
-index de369dae6b5..a5aaf2cab0e 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -17,8 +17,6 @@
- #
- # State of a tracing event.
- #
--# @unavailable: The event is statically disabled.
--#
- # @disabled: The event is dynamically disabled.
- #
- # @enabled: The event is dynamically enabled.
-@@ -26,7 +24,7 @@
- # Since: 2.2
- ##
- { 'enum': 'TraceEventState',
--  'data': ['unavailable', 'disabled', 'enabled'] }
-+  'data': ['disabled', 'enabled'] }
+diff --git a/tests/tracetool/meson.build b/tests/tracetool/meson.build
+index 09bbaaa86bf..f4f583e6224 100644
+--- a/tests/tracetool/meson.build
++++ b/tests/tracetool/meson.build
+@@ -5,6 +5,7 @@ test_env.set('PYTHONPATH', meson.project_source_root() / 'scripts')
+ test_env.set('PYTHONIOENCODING', 'utf-8')
  
- ##
- # @TraceEventInfo:
-@@ -73,6 +71,7 @@
- # @enable: Whether to enable tracing.
- #
- # @ignore-unavailable: Do not match unavailable events with @name.
-+#      Deprecated: since 11.2
- #
- # Since: 2.2
- #
-diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
-index 5f6669c917c..9f06894623e 100644
---- a/scripts/tracetool/format/c.py
-+++ b/scripts/tracetool/format/c.py
-@@ -39,12 +39,10 @@ def generate(events, backend, group):
-                 '    .id = 0,',
-                 '#endif',
-                 '    .name = \"%(name)s\",',
--                '    .sstate = %(sstate)s,',
-                 '    .dstate = &%(dstate)s',
-                 '};',
-                 event = e.api(e.QEMU_EVENT),
-                 name = e.name,
--                sstate = "TRACE_%s_ENABLED" % e.name.upper(),
-                 dstate = e.api(e.QEMU_DSTATE))
- 
-         out('TraceEvent *%(group)s_trace_events[] = {',
-diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-index 6ffb7256e31..3ca92ba5fbe 100644
---- a/scripts/tracetool/format/h.py
-+++ b/scripts/tracetool/format/h.py
-@@ -38,14 +38,6 @@ def generate(events, backend, group):
-         for e in events:
-             out('#define %s 0' % e.api(e.QEMU_DSTATE))
- 
--    # static state
--    for e in events:
--        if 'disable' in e.properties:
--            enabled = 0
--        else:
--            enabled = 1
--        out('#define TRACE_%s_ENABLED %d' % (e.name.upper(), enabled))
--
-     backend.generate_begin(events, group)
- 
-     for e in events:
-diff --git a/stubs/trace-control.c b/stubs/trace-control.c
-index 3f196835db0..6016307ed8b 100644
---- a/stubs/trace-control.c
-+++ b/stubs/trace-control.c
-@@ -14,7 +14,6 @@
- void trace_event_set_state_dynamic(TraceEvent *ev, bool state)
- {
-     bool state_pre;
--    assert(trace_event_get_state_static(ev));
- 
-     /*
-      * We ignore the "vcpu" property here, since there's no target code. Then
-diff --git a/tests/tracetool/all.c b/tests/tracetool/all.c
-index 3b8d4d32d17..670f9f06e85 100644
---- a/tests/tracetool/all.c
-+++ b/tests/tracetool/all.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/all.h b/tests/tracetool/all.h
-index a2c2d40388e..6eed86edb4d 100644
---- a/tests/tracetool/all.h
-+++ b/tests/tracetool/all.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #ifndef SDT_USE_VARIADIC
- #define SDT_USE_VARIADIC 1
- #endif
-@@ -59,16 +57,16 @@ static inline void trace_test_blah(void *context, const char *filename)
-     if (trace_event_get_state(TRACE_TEST_BLAH)) {
- #line 4 "trace-events"
-         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
--#line 62 "all.h"
-+#line 60 "all.h"
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 4 "trace-events"
-             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
--#line 66 "all.h"
-+#line 64 "all.h"
-         }
-         _simple_trace_test_blah(context, filename);
- #line 4 "trace-events"
-         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
--#line 71 "all.h"
-+#line 69 "all.h"
-     }
- }
- 
-@@ -89,16 +87,16 @@ static inline void trace_test_wibble(void *context, int value)
-     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
- #line 5 "trace-events"
-         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
--#line 91 "all.h"
-+#line 89 "all.h"
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 5 "trace-events"
-             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
--#line 95 "all.h"
-+#line 93 "all.h"
-         }
-         _simple_trace_test_wibble(context, value);
- #line 5 "trace-events"
-         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
--#line 100 "all.h"
-+#line 98 "all.h"
-     }
- }
- #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/dtrace.c b/tests/tracetool/dtrace.c
-index f83d06252ea..d51ba85503a 100644
---- a/tests/tracetool/dtrace.c
-+++ b/tests/tracetool/dtrace.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
-index 0b5b47089e8..b9283851eb0 100644
---- a/tests/tracetool/dtrace.h
-+++ b/tests/tracetool/dtrace.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #ifndef SDT_USE_VARIADIC
- #define SDT_USE_VARIADIC 1
- #endif
-diff --git a/tests/tracetool/ftrace.c b/tests/tracetool/ftrace.c
-index f83d06252ea..d51ba85503a 100644
---- a/tests/tracetool/ftrace.c
-+++ b/tests/tracetool/ftrace.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
-index b34eef17d10..4eba6b4d599 100644
---- a/tests/tracetool/ftrace.h
-+++ b/tests/tracetool/ftrace.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #include "trace/ftrace.h"
- 
- 
-@@ -24,7 +22,7 @@ static inline void trace_test_blah(void *context, const char *filename)
-     if (trace_event_get_state(TRACE_TEST_BLAH)) {
- #line 4 "trace-events"
-         ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
--#line 28 "ftrace.h"
-+#line 26 "ftrace.h"
-     }
- }
- 
-@@ -37,7 +35,7 @@ static inline void trace_test_wibble(void *context, int value)
-     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
- #line 5 "trace-events"
-         ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
--#line 41 "ftrace.h"
-+#line 39 "ftrace.h"
-     }
- }
- #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/log.c b/tests/tracetool/log.c
-index f83d06252ea..d51ba85503a 100644
---- a/tests/tracetool/log.c
-+++ b/tests/tracetool/log.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
-index fe08277887f..cf37ed3ce26 100644
---- a/tests/tracetool/log.h
-+++ b/tests/tracetool/log.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #include "qemu/log-for-trace.h"
- 
- 
-@@ -26,7 +24,7 @@ static inline void trace_test_blah(void *context, const char *filename)
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 4 "trace-events"
-             qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
--#line 29 "log.h"
-+#line 27 "log.h"
-         }
-     }
- }
-@@ -42,7 +40,7 @@ static inline void trace_test_wibble(void *context, int value)
-         if (qemu_loglevel_mask(LOG_TRACE)) {
- #line 5 "trace-events"
-             qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
--#line 44 "log.h"
-+#line 42 "log.h"
-         }
-     }
- }
-diff --git a/tests/tracetool/nop.h b/tests/tracetool/nop.h
-index 64b6b005684..00771577943 100644
---- a/tests/tracetool/nop.h
-+++ b/tests/tracetool/nop.h
-@@ -8,8 +8,6 @@
- 
- #define _TRACE_TEST_BLAH_DSTATE 0
- #define _TRACE_TEST_WIBBLE_DSTATE 0
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- 
- #define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
-     false)
-diff --git a/tests/tracetool/simple.c b/tests/tracetool/simple.c
-index 3b8d4d32d17..670f9f06e85 100644
---- a/tests/tracetool/simple.c
-+++ b/tests/tracetool/simple.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
-index 735cb21d911..9b066364b0a 100644
---- a/tests/tracetool/simple.h
-+++ b/tests/tracetool/simple.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- void _simple_trace_test_blah(void *context, const char *filename);
- void _simple_trace_test_wibble(void *context, int value);
- 
-diff --git a/tests/tracetool/syslog.c b/tests/tracetool/syslog.c
-index f83d06252ea..d51ba85503a 100644
---- a/tests/tracetool/syslog.c
-+++ b/tests/tracetool/syslog.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
-index 4203b8b37dc..6a9304489f6 100644
---- a/tests/tracetool/syslog.h
-+++ b/tests/tracetool/syslog.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #include <syslog.h>
- 
- 
-@@ -24,7 +22,7 @@ static inline void trace_test_blah(void *context, const char *filename)
-     if (trace_event_get_state(TRACE_TEST_BLAH)) {
- #line 4 "trace-events"
-         syslog(LOG_INFO, "test_blah " "Blah context=%p filename=%s" , context, filename);
--#line 28 "syslog.h"
-+#line 26 "syslog.h"
-     }
- }
- 
-@@ -37,7 +35,7 @@ static inline void trace_test_wibble(void *context, int value)
-     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
- #line 5 "trace-events"
-         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
--#line 41 "syslog.h"
-+#line 39 "syslog.h"
-     }
- }
- #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/tests/tracetool/ust.c b/tests/tracetool/ust.c
-index f83d06252ea..d51ba85503a 100644
---- a/tests/tracetool/ust.c
-+++ b/tests/tracetool/ust.c
-@@ -12,7 +12,6 @@ TraceEvent _TRACE_TEST_BLAH_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_blah",
--    .sstate = TRACE_TEST_BLAH_ENABLED,
-     .dstate = &_TRACE_TEST_BLAH_DSTATE
- };
- TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-@@ -20,7 +19,6 @@ TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
-     .id = 0,
- #endif
-     .name = "test_wibble",
--    .sstate = TRACE_TEST_WIBBLE_ENABLED,
-     .dstate = &_TRACE_TEST_WIBBLE_DSTATE
- };
- TraceEvent *testsuite_trace_events[] = {
-diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
-index 079b2c74491..c6c5d6d7c1c 100644
---- a/tests/tracetool/ust.h
-+++ b/tests/tracetool/ust.h
-@@ -10,8 +10,6 @@ extern TraceEvent _TRACE_TEST_BLAH_EVENT;
- extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
- extern uint8_t _TRACE_TEST_BLAH_DSTATE;
- extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
--#define TRACE_TEST_BLAH_ENABLED 1
--#define TRACE_TEST_WIBBLE_ENABLED 1
- #include <lttng/tracepoint.h>
- #include "trace-ust-testsuite.h"
- 
-diff --git a/trace/control-internal.h b/trace/control-internal.h
-index f626b047264..9a95e6714bb 100644
---- a/trace/control-internal.h
-+++ b/trace/control-internal.h
-@@ -33,12 +33,6 @@ static inline const char * trace_event_get_name(TraceEvent *ev)
-     return ev->name;
- }
- 
--static inline bool trace_event_get_state_static(TraceEvent *ev)
--{
--    assert(ev != NULL);
--    return ev->sstate;
--}
--
- /* it's on fast path, avoid consistency checks (asserts) */
- #define trace_event_get_state_dynamic_by_id(id) \
-     (unlikely(trace_events_enabled_count) && _ ## id ## _DSTATE)
-diff --git a/trace/control-target.c b/trace/control-target.c
-index 87b0f5037df..348125a5822 100644
---- a/trace/control-target.c
-+++ b/trace/control-target.c
-@@ -12,8 +12,6 @@
- 
- void trace_event_set_state_dynamic(TraceEvent *ev, bool state)
- {
--    assert(trace_event_get_state_static(ev));
--
-     bool state_pre = *ev->dstate;
-     if (state_pre != state) {
-         if (state) {
-diff --git a/trace/control.c b/trace/control.c
-index 947b220056a..d414b1a9072 100644
---- a/trace/control.c
-+++ b/trace/control.c
-@@ -167,15 +167,6 @@ static void do_trace_enable_events(const char *line_buf)
- 
-     trace_event_iter_init_pattern(&iter, line_ptr);
-     while ((ev = trace_event_iter_next(&iter)) != NULL) {
--        if (!trace_event_get_state_static(ev)) {
--            if (!is_pattern) {
--                warn_report("trace event '%s' is not traceable",
--                            line_ptr);
--                return;
--            }
--            continue;
--        }
--
-         /* start tracing */
-         trace_event_set_state_dynamic(ev, enable);
-         if (!is_pattern) {
-diff --git a/trace/control.h b/trace/control.h
-index e77c07a8e68..80eb2bd14e6 100644
---- a/trace/control.h
-+++ b/trace/control.h
-@@ -107,13 +107,13 @@ static const char * trace_event_get_name(TraceEvent *ev);
-  * impact.
-  */
- #define trace_event_get_state(id)                       \
--    ((id ##_ENABLED) && trace_event_get_state_dynamic_by_id(id))
-+    (trace_event_get_state_dynamic_by_id(id))
- 
- /**
-  * trace_event_get_state_backends:
-  * @id: Event identifier name.
-  *
-- * Get the tracing state of an event, both static and dynamic state from all
-+ * Get the tracing state of an event from all
-  * compiled-in backends.
-  *
-  * If the event has the disabled property, the check will have no performance
-@@ -123,18 +123,7 @@ static const char * trace_event_get_name(TraceEvent *ev);
-  * does not have the disabled property.
-  */
- #define trace_event_get_state_backends(id)              \
--    ((id ##_ENABLED) && id ##_BACKEND_DSTATE())
--
--/**
-- * trace_event_get_state_static:
-- * @id: Event identifier.
-- *
-- * Get the static tracing state of an event.
-- *
-- * Use the define 'TRACE_${EVENT_NAME}_ENABLED' for compile-time checks (it will
-- * be set to 1 or 0 according to the presence of the disabled property).
-- */
--static bool trace_event_get_state_static(TraceEvent *ev);
-+    (id ##_BACKEND_DSTATE())
- 
- /**
-  * trace_event_get_state_dynamic:
-@@ -148,7 +137,6 @@ static bool trace_event_get_state_dynamic(TraceEvent *ev);
-  *
-  * Set the dynamic tracing state of an event.
-  *
-- * Pre-condition: trace_event_get_state_static(ev) == true
-  */
- void trace_event_set_state_dynamic(TraceEvent *ev, bool state);
- 
-diff --git a/trace/event-internal.h b/trace/event-internal.h
-index ad1578aa2c5..40f06691063 100644
---- a/trace/event-internal.h
-+++ b/trace/event-internal.h
-@@ -14,7 +14,6 @@
-  * TraceEvent:
-  * @id: Unique event identifier.
-  * @name: Event name.
-- * @sstate: Static tracing state.
-  * @dstate: Dynamic tracing state
-  *
-  * Opaque generic description of a tracing event.
-@@ -24,7 +23,6 @@ typedef struct TraceEvent {
-     uint32_t id;
- #endif
-     const char * name;
--    const bool sstate;
-     uint8_t *dstate;
- } TraceEvent;
- 
-diff --git a/trace/qmp.c b/trace/qmp.c
-index 074a27b204f..331496a1471 100644
---- a/trace/qmp.c
-+++ b/trace/qmp.c
-@@ -11,9 +11,10 @@
- #include "qapi/error.h"
- #include "qapi/qapi-commands-trace.h"
- #include "control.h"
-+#include "qemu/error-report.h"
- 
- 
--static bool check_events(bool ignore_unavailable, bool is_pattern,
-+static bool check_events(bool is_pattern,
-                          const char *name, Error **errp)
- {
-     if (!is_pattern) {
-@@ -24,27 +25,8 @@ static bool check_events(bool ignore_unavailable, bool is_pattern,
-             error_setg(errp, "unknown event \"%s\"", name);
-             return false;
-         }
--
--        /* error for unavailable event */
--        if (!ignore_unavailable && !trace_event_get_state_static(ev)) {
--            error_setg(errp, "event \"%s\" is disabled", name);
--            return false;
--        }
--
--        return true;
--    } else {
--        /* error for unavailable events */
--        TraceEventIter iter;
--        TraceEvent *ev;
--        trace_event_iter_init_pattern(&iter, name);
--        while ((ev = trace_event_iter_next(&iter)) != NULL) {
--            if (!ignore_unavailable && !trace_event_get_state_static(ev)) {
--                error_setg(errp, "event \"%s\" is disabled", trace_event_get_name(ev));
--                return false;
--            }
--        }
--        return true;
-     }
-+    return true;
- }
- 
- TraceEventInfoList *qmp_trace_event_get_state(const char *name,
-@@ -56,7 +38,7 @@ TraceEventInfoList *qmp_trace_event_get_state(const char *name,
-     bool is_pattern = trace_event_is_pattern(name);
- 
-     /* Check events */
--    if (!check_events(true, is_pattern, name, errp)) {
-+    if (!check_events(is_pattern, name, errp)) {
-         return NULL;
-     }
- 
-@@ -68,14 +50,10 @@ TraceEventInfoList *qmp_trace_event_get_state(const char *name,
-         value = g_new(TraceEventInfo, 1);
-         value->name = g_strdup(trace_event_get_name(ev));
- 
--        if (!trace_event_get_state_static(ev)) {
--            value->state = TRACE_EVENT_STATE_UNAVAILABLE;
-+        if (trace_event_get_state_dynamic(ev)) {
-+            value->state = TRACE_EVENT_STATE_ENABLED;
-         } else {
--            if (trace_event_get_state_dynamic(ev)) {
--                value->state = TRACE_EVENT_STATE_ENABLED;
--            } else {
--                value->state = TRACE_EVENT_STATE_DISABLED;
--            }
-+            value->state = TRACE_EVENT_STATE_DISABLED;
-         }
-         QAPI_LIST_PREPEND(events, value);
-     }
-@@ -91,18 +69,19 @@ void qmp_trace_event_set_state(const char *name, bool enable,
-     TraceEvent *ev;
-     bool is_pattern = trace_event_is_pattern(name);
- 
-+    if (has_ignore_unavailable && ignore_unavailable) {
-+        warn_report_once("the 'ignore-unavailable' property is deprecated "
-+                         "and has no effect");
-+    }
+ backends = [
++    'nop',
+     'dtrace',
+     'ftrace',
+     'log',
+diff --git a/tests/tracetool/nop.c b/tests/tracetool/nop.c
+new file mode 100644
+index 00000000000..f83d06252ea
+--- /dev/null
++++ b/tests/tracetool/nop.c
+@@ -0,0 +1,36 @@
++/* This file is autogenerated by tracetool, do not edit. */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +
-     /* Check events */
--    if (!check_events(has_ignore_unavailable && ignore_unavailable,
--                      is_pattern, name, errp)) {
-+    if (!check_events(is_pattern, name, errp)) {
-         return;
-     }
- 
-     /* Apply changes (all errors checked above) */
-     trace_event_iter_init_pattern(&iter, name);
-     while ((ev = trace_event_iter_next(&iter)) != NULL) {
--        if (!trace_event_get_state_static(ev)) {
--            continue;
--        }
-         trace_event_set_state_dynamic(ev, enable);
-     }
- }
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "trace-testsuite.h"
++
++uint8_t _TRACE_TEST_BLAH_DSTATE;
++uint8_t _TRACE_TEST_WIBBLE_DSTATE;
++TraceEvent _TRACE_TEST_BLAH_EVENT = {
++#ifdef CONFIG_TRACE_SIMPLE
++    .id = 0,
++#endif
++    .name = "test_blah",
++    .sstate = TRACE_TEST_BLAH_ENABLED,
++    .dstate = &_TRACE_TEST_BLAH_DSTATE
++};
++TraceEvent _TRACE_TEST_WIBBLE_EVENT = {
++#ifdef CONFIG_TRACE_SIMPLE
++    .id = 0,
++#endif
++    .name = "test_wibble",
++    .sstate = TRACE_TEST_WIBBLE_ENABLED,
++    .dstate = &_TRACE_TEST_WIBBLE_DSTATE
++};
++TraceEvent *testsuite_trace_events[] = {
++    &_TRACE_TEST_BLAH_EVENT,
++    &_TRACE_TEST_WIBBLE_EVENT,
++  NULL,
++};
++
++static void trace_testsuite_register_events(void)
++{
++    trace_event_register_group(testsuite_trace_events);
++}
++trace_init(trace_testsuite_register_events)
+diff --git a/tests/tracetool/nop.h b/tests/tracetool/nop.h
+new file mode 100644
+index 00000000000..443f5e0cf6e
+--- /dev/null
++++ b/tests/tracetool/nop.h
+@@ -0,0 +1,29 @@
++/* This file is autogenerated by tracetool, do not edit. */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef TRACE_TESTSUITE_GENERATED_TRACERS_H
++#define TRACE_TESTSUITE_GENERATED_TRACERS_H
++
++#include "trace/control.h"
++
++extern TraceEvent _TRACE_TEST_BLAH_EVENT;
++extern TraceEvent _TRACE_TEST_WIBBLE_EVENT;
++extern uint8_t _TRACE_TEST_BLAH_DSTATE;
++extern uint8_t _TRACE_TEST_WIBBLE_DSTATE;
++#define TRACE_TEST_BLAH_ENABLED 1
++#define TRACE_TEST_WIBBLE_ENABLED 1
++
++#define TRACE_TEST_BLAH_BACKEND_DSTATE() ( \
++    false)
++
++static inline void trace_test_blah(void *context, const char *filename)
++{
++}
++
++#define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
++    false)
++
++static inline void trace_test_wibble(void *context, int value)
++{
++}
++#endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/nop.rs b/tests/tracetool/nop.rs
+new file mode 100644
+index 00000000000..5f007cecd04
+--- /dev/null
++++ b/tests/tracetool/nop.rs
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// This file is @generated by tracetool, do not edit.
++
++#[allow(unused_imports)]
++use std::ffi::c_char;
++#[allow(unused_imports)]
++use util::bindings;
++
++#[allow(dead_code)]
++#[inline(always)]
++fn trace_event_state_is_enabled(dstate: u8) -> bool {
++    (unsafe { trace_events_enabled_count }) != 0 && dstate != 0
++}
++
++extern "C" {
++    #[allow(dead_code)]
++    static mut trace_events_enabled_count: u32;
++}
++extern "C" {
++    #[allow(dead_code)]
++    static mut _TRACE_TEST_BLAH_DSTATE: u8;
++    #[allow(dead_code)]
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u8;
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_blah_enabled() -> bool
++{
++    false
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
++{
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_wibble_enabled() -> bool
++{
++    false
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
++{
++}
++
+diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
+index 59e9ab3d6ef..74f315a4629 100755
+--- a/tests/tracetool/tracetool-test.py
++++ b/tests/tracetool/tracetool-test.py
+@@ -14,7 +14,7 @@ def get_formats(backend):
+         "c",
+         "h",
+     ]
+-    if backend in {"dtrace", "ftrace", "log", "simple", "syslog"}:
++    if backend in {"nop", "dtrace", "ftrace", "log", "simple", "syslog"}:
+         formats += ["rs"]
+     if backend == "dtrace":
+         formats += [
 -- 
 2.55.0
 
