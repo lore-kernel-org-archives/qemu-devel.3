@@ -4,71 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D17B1CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5258DCA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEE8-00032e-P6; Thu, 01 Oct 2026 06:41:24 -0400
+	id 1xCEGR-0003Ri-ER; Thu, 01 Oct 2026 06:43:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEE5-00032N-L4
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:41:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1xCEGP-0003Ra-UA
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:43:45 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCEE3-0001Wl-Vg
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:41:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790851278;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4yOJXHxvJWFb03okiF3FBz8IA/gBOQnGxB73IwO3j34=;
- b=BhwDfiGotHg+4XdLQprIg68d+QpNeq0kCSR28wGm5NvVexh9cXfeEslKssgtfMS+hEPzro
- DmlDCO9mL/fDWyAsqcAp4xZNH9pf5vlVvNB+ZSpQnU+Rj+iz2I9krRx+hadxNI721+2n+k
- tnAKF6M/O2C5XZvit7xZd8sWKCkZQ8U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-W8fVmTuVNG277FP7e62qiw-1; Thu,
- 01 Oct 2026 06:41:17 -0400
-X-MC-Unique: W8fVmTuVNG277FP7e62qiw-1
-X-Mimecast-MFC-AGG-ID: W8fVmTuVNG277FP7e62qiw_1790851276
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68A3818052CC
- for <qemu-devel@nongnu.org>; Thu,  1 Oct 2026 10:41:16 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3EBDB1956089; Thu,  1 Oct 2026 10:41:14 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] hw/display/vga: fix OOB writes after external surface resize
-Date: Thu,  1 Oct 2026 14:41:13 +0400
-Message-ID: <20261001104112.2167807-2-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1xCEGO-0001dk-3q
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 06:43:45 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=l6mmtpK1/IIGxH9bUuOB856fGfshwzqFM63yrSfvESV9QOT9eojrtca7gXZ0RgueY63hm/Dmk5TRTFyzmMG0qxLpYi5GpH65xisXPzCTmxmxlMH7qYR0xVr76WWo3qheqP9EYmMtaoDcmHL3KAjJQTU8d+rO+R+vgQxnql7zEVh24JU3dhFplp7TTNHlCz+Nlg9SKgbwimC3Ttj3SqF3r4jIB1xI0/xqW1TDFnv9/meDNDMLJDMIkOtgdBZNPWot4YqJW8s0LskoGp32+Fu0tWKvYcEv8b1RN/SjonVT5k3wEQZ+aow2E+B2EOiVouo9DsqLQOlV9I38htSVBi9Yrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Nz+12wPx8qP5UxoeU6RETGqNvk5Ep2MIhAAwx8sKkAA=;
+ b=iqR2byjncPM8yAJDPUyu/Te1sNDnffDBp1p6Nn48K4CcgitXCVK2CQNQUtI9lRbcXjQ2xWSQe1GEa7E8OOyeNcQdZFu/83qrvo94ZNKzwZdTmWAYRLOm1x46VdyQEk+T1LsO/YpDXZBQctVyuTRJ9YPYSgeMpVgnquWiyJXNpMTvPk5XogjV3a7szJI50vR+XWgJluHmwS7bx5UqdXzAb7Jw8litdsGXyTGL7OVghsU8cvIdtWeHcrLhOZMrDGkwoBRwaQ9zNaV/qeaSX3Ix0+4HnbDkrA5IOfrZ6pBGReeuDyBUqjRufqcFSIZPugXVPu3VymuNiyy1Vqpj8NOxSg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Nz+12wPx8qP5UxoeU6RETGqNvk5Ep2MIhAAwx8sKkAA=;
+ b=xh50RLPKx5q5eZ9rt/20QIQJZNLM4q5x/2K+nM9BhP25qX9UxHpnvKZBsvfIL/tNxrVN4kwqE85q4LyQ2gpNCylTId7mpkKl0GKSwE6KGuqcXBdpIms1Yx/KLvlDe8wAS3qNlKwj0dKAiRGKPl4/OvV618f2zzrB5IlUhaI1mis=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
+ by DS2PR12MB9616.namprd12.prod.outlook.com (2603:10b6:8:275::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Thu, 1 Oct
+ 2026 10:43:36 +0000
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7]) by PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::afe1:7dd0:ea71:b7e7%4]) with mapi id 15.21.0472.015; Thu, 1 Oct 2026
+ 10:43:36 +0000
+Message-ID: <6ee6f858-37f6-4acb-8253-acd3cec584ad@amd.com>
+Date: Thu, 1 Oct 2026 16:13:26 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/7] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu"
+ is configured
+To: Michael Tokarev <mjt@tls.msk.ru>, Dongli Zhang <dongli.zhang@oracle.com>, 
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20251230074354.88958-1-dongli.zhang@oracle.com>
+ <20251230074354.88958-2-dongli.zhang@oracle.com>
+ <81a1f791-37ef-4d26-bcf7-024eab4cd810@tls.msk.ru>
+ <fa8b40df-a35c-4ae3-8eaa-b4b65c546a91@amd.com>
+ <18ff5158-a515-4659-8388-5bcc074afb94@tls.msk.ru>
+Content-Language: en-US
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <18ff5158-a515-4659-8388-5bcc074afb94@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5PR01CA0039.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d6::12) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|DS2PR12MB9616:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1e4ecd86-2169-4134-6af3-08df1fa8d8c2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|23010399003|1800799024|10067099003|56012099006|4143699003|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: bosfeqdYBOfixkNe/llq58p8aBRzTkwj+9AGgIoW4acHE7k7GWPk4rMBVhV1CbDyQZiSBbWae1XpZ2TvqbN9+gSFxhSI9RxCthIcKBltAUmh6XkNBi3MYP6WFlOjY4Wz8kw69tEkMmWT4mERmT2OxKGgxLZIuTZbd+Q+VwaSLeewz32NJ8fUcCxYv4HpbRb3UaCdetd1K/wE/BTaua7AyQ1lG3XLteIaUDUcrzkDB1KJBZIztYAu2Gvr/87JyaT6xXj3RqHpPpO23rvPEXJ39sghy40ZEDgdKHSGLRICJBFncuBlhv3lB6SupekDP56Fi3lCAF9ufKt5ZG/s26SGsnwirFM+Ofk7U4uPLXJeUTZMVGqGOl901zIKyCvz3WNrrCNchxtdE9qhJ4awDkpn5UAvsmeMqAkdXpsugtiTzUoZ6BFnv4uF+vDZ2ldVGD0Pt0IQyd/cHUj4Yjwi5Y/EyiyFL+0sRVf2x+1171c/Z39uxQK/C3znGqfxd44Dpk1hMdQlXRMJZa0dFr6sYAV5/Jcqr4Z0ZySbOKItB1qlEv3bTOg9ty8QWcyNLfQA/YkEgwPbfVxclS0LckVXuNLvH/1tXNT8Nb8oATIJKN62p1FAp5jDSFM8T64kNt400nu5
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V1A2UGJwYllreHQvNGc4b3RYSG5JWVhXMG14eVJLRzFaRTMrNk5DNXBsbTRX?=
+ =?utf-8?B?NGxOTXlwcmtMWW8wMVBnanZrcmVueXJ3ZnVrdFBVT1BtY2JKOVZsTXh3dEdh?=
+ =?utf-8?B?QXRKaWVTQnVneGFQUktwR09nbnllR3RQWStiTmVTNmtMUkZGdTFpQW9vZFM4?=
+ =?utf-8?B?OHZaUVFlTVVmeVhZZmVLVUtGZUc5WlRuQ2RwcnVDUWhtQ1FyUFZLMUFjaVFz?=
+ =?utf-8?B?OThrS2FWRktUcnBFYWFLVzZGRHpJTWJ5WjNsdHl1RUVscDZ3c29KU2QzcWRv?=
+ =?utf-8?B?T0s1eDlwa2VzazYwcUI4M2hvYzd0Nks0UXpUY3hvdnU5VThvVDJTcm1URVpU?=
+ =?utf-8?B?ZWFwOHRpbDVvbW9WQnRZbkRpNGh1bVF1QUU1VVZQT2ErSDJzdmVvaUl0Wmto?=
+ =?utf-8?B?bHI0STNacEc3dkJ5dFZleTR0WE5pS0w5SEdxdFFiVmdkWDdQQVduR2U4RUh6?=
+ =?utf-8?B?ek90ekZOMENXSGNibG9HcGU0Z1VKWlQ2R1gra2lxZ1NSdGp3MkpOdkZnVVZt?=
+ =?utf-8?B?NHFNUTVWRWFmSWRQWFVodEpnN1lmTGVhSFh5UERWdk92WWEzQ3c1VXdrWkVD?=
+ =?utf-8?B?eVZGbmVMVkZwNEYzdWJTZ3IzQlYxVHZaa1EwREo5VW9pZVJ2aWxPbndWSHBO?=
+ =?utf-8?B?dUJ6Z3B1YklwS3pOUjRQK2xiY2xwK1U1dzFSL1piWDJFR3Exbi9tRkxWNTVC?=
+ =?utf-8?B?V3h5eWhnYVNsNkFkVmQvOGJaZk5VY0JqT0E0SEZCVHFqWHdSa0dYRCs5S2Rl?=
+ =?utf-8?B?ZDNWbUV2R2pxOTNCQmlSc1VydlZ5MVlRK1FmWEhNVTZWbHh1TzJ2VWZBbnox?=
+ =?utf-8?B?QlJISEZpOHhrSkNxblR1MFZqNTUzNytCUGMvYmRxTTNBTWhLdGQxeSszZU1i?=
+ =?utf-8?B?bzBEd0VmNzNGK1VnYkdwcG9ubm54cnJzVk5oSUZMNGhucEZiVlRWT2hpci9j?=
+ =?utf-8?B?SVRob2M0eWF0TGVNcFRIVHVYRlFNV2RGdTEwNjMyUnNSMUdwNWIzcWQ2aW1T?=
+ =?utf-8?B?aEJ4SXUxbldzWXk4SUI1VXBtbnBuOWgrL1l6VFloL2ppTWVrL3VWcUtLbTR3?=
+ =?utf-8?B?bXY4MW4rWmJibEJZdThnL1didDErL3hBOVlCU2h2d2VrTDRZQzRTZmNDbjNy?=
+ =?utf-8?B?eEFmbUJEQXByVXJnMGJmY3NOM1I2TkxNa0k3K28wRlUxb0dDdmVSWkVid3NK?=
+ =?utf-8?B?M3NzbTErbGZQYU12bHRVYjhMUmNkcUh4eWs1eGN0aDNad0pnSVdMditZVzlW?=
+ =?utf-8?B?Rk5aMWpPanpjaVRGcmM1UHBMVjdkZE1QeXJYTGdSeDRCUnVWUGt2MnY0U09l?=
+ =?utf-8?B?cHp2T2xscGc0Rmw0VXZWN014S2xOdk9MWW1DTS8rOTJ0M2tMUDBxWGZkTWNq?=
+ =?utf-8?B?SGhmWGlHbWQ4Y1dWcXhGWUdiMzhKWjlxQ1VoNmRlOUpCdmVUQVJzaFlkUjBs?=
+ =?utf-8?B?RjdTM0lpOEtqMWVwN1orTTZxaWRjVWV4ZnFIVlhMZGUzMGhpQWlINWh2Y1lJ?=
+ =?utf-8?B?ZnZxNHlnVHptTG50VTRaZWpzZTRrRDJuWXAwL25KSVhBVXA0c0FYUGhmT2pC?=
+ =?utf-8?B?Rk1KdkloamhRblc2Mk92ZC9MVWhyOFpkUFJmNmRzeTI0MWpZd1dTaGZsSGti?=
+ =?utf-8?B?SE9HdDVSYWFqbHJMd0FpODh5SVZUaEtOY3VBZjEwQ0FJTVdzN04xaDFLMHBj?=
+ =?utf-8?B?S3VZbVZ1bW5obDF3TE1yQUdvZU1IMzBWU3kzUkN5bU1XMUNhK2s2aGY0d2Zq?=
+ =?utf-8?B?cnliRW1od1NBWGtGS09qUlBuS1NyTndUQnBEMm9ta05aME1ORVVIRmxseXVR?=
+ =?utf-8?B?SGtxQm9WQXl4dFhlQmVjV0FCUkY4VXhwUG9RbzYwQ0tNcWtWSFVEbE00SEtk?=
+ =?utf-8?B?WEt3amtadEpiMjh3VTJ5YisxMjBmVlRZQU83eXJBQ2VhUVNpRCtlN2JzV2x3?=
+ =?utf-8?B?N0dLZHJ6N3AvenMydFJxL3ZlUU8xWW9Db0NqNWlnL1ZWUC9VVTdDTHJwdmRM?=
+ =?utf-8?B?cCtuZU9BRzY2dDFUdzljU2NjMmpWS2d6Qmk1TWdZSlBnTm1OdllZZEUzbTNx?=
+ =?utf-8?B?SmdGSUVwd3VTczB5d0xmVWpvODYyQVU2bXJSV1ZWcnBoNFEwMGs1WlRDVTJk?=
+ =?utf-8?B?ZiswOUNYQVdLQkhkTVBCWE8yUzdUdlhDeFduYUsyYmVjMmpOR08yYWtlM3N5?=
+ =?utf-8?B?MjIySFV1bTBhdy8xMHpvVEVSSzluQjJLSDZLRml0Y24xREpueUJESStXS0x4?=
+ =?utf-8?B?VSszRHgvQkM4V2tLWHNVVmZKaFFlYk5WR04zZXNvVVVRR01IQmNJemVCaG9I?=
+ =?utf-8?Q?UCVs2zEQfRzniVi8el?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e4ecd86-2169-4134-6af3-08df1fa8d8c2
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 10:43:36.2776 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IlvrkAlTd/XpEw5XLx5iaaBKRqMmmVYDh1JIsY7+2d6+foZxx0HUJOWMwi+fn0mHOVvQx564uvHPeHcXQIyYeQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9616
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=Sandipan.Das@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,74 +159,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-virtio-vga has two renderers (VGA core and virtio-gpu) sharing a single
-QemuConsole, with no invalidation protocol between them. When virtio-gpu
-replaces the surface (SET_SCANOUT) or destroys it (reset via
-qemu_console_set_surface(con, NULL)), the VGA renderer's cached geometry
-(last_scr_width, last_height, last_depth, etc.) is never cleared:
-vga_common_reset() does not run during a virtio-gpu reset.
-
-The text draw path was fixed by 418396be80 (CVE-2026-77913), but
-vga_draw_blank() and vga_draw_graphic() still trust stale cache against
-a foreign surface:
-
-vga_draw_blank() uses last_scr_width/height to memset the display
-surface. When the surface has been replaced by a smaller one (e.g.
-after a text-to-graphics mode switch, or a virtio-gpu reset installing
-a 16x16 placeholder), the memset writes past the surface buffer. Use
-the actual surface dimensions for the memset bounds instead of the
-cached last_scr values.
-
-vga_draw_graphic() decides whether to recreate the DisplaySurface based
-solely on VGA register state (line_offset, width, height, depth,
-byteswap, allocated). When virtio-gpu replaces the surface with a
-smaller one, the predicate sees no change and the drawing loop writes a
-full VGA-geometry frame into the undersized surface. Add surface
-dimension checks to the predicate so that a foreign surface whose size
-does not match the VGA geometry triggers a resize before drawing.
-
-Ideally the two renderers could coordinate through a console-level
-invalidation callback, but these defensive checks are needed regardless
-as a safety net against any path that replaces the surface.
-
-Fixes: CVE-2026-97889
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4579
-Reported-by: david korczynski (@david1766)
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/display/vga.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index cb0e28b79b6a..b9b8c529419d 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1641,7 +1641,9 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         height != s->last_height ||
-         s->last_depth != depth ||
-         s->last_byteswap != byteswap ||
--        allocate_surface != surface_is_allocated(surface)) {
-+        allocate_surface != surface_is_allocated(surface) ||
-+        disp_width != surface_width(surface) ||
-+        height != surface_height(surface)) {
-         /* display parameters changed -> need new display surface */
-         s->last_scr_width = disp_width;
-         s->last_scr_height = height;
-@@ -1789,9 +1791,9 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
-         qemu_console_set_surface(s->con, surface);
-     }
- 
--    w = s->last_scr_width * surface_bytes_per_pixel(surface);
-+    w = surface_width(surface) * surface_bytes_per_pixel(surface);
-     d = surface_data(surface);
--    for(i = 0; i < s->last_scr_height; i++) {
-+    for (i = 0; i < surface_height(surface); i++) {
-         memset(d, 0, w);
-         d += surface_stride(surface);
-     }
--- 
-2.56.0.rc0.29.g47ce80527c56
-
+On 01-10-2026 15:30, Michael Tokarev wrote:
+> On 10/1/26 11:54, Sandipan Das wrote:
+>> On 01-10-2026 14:02, Michael Tokarev wrote:
+> ...
+> 
+>>> When booting windows11 VM with -cpu EPYC-Rome-v4 -enable-kvm, the
+>>> guest enters tight CPU loop while displaying a boot screen, before
+>>> it starts showing up the rotating circle (which shows boot progress).
+> 
+> 
+>> What happens if you use "-cpu EPYC-Rome-v4,+pmu"?
+> 
+> With that, it boots fine, just like before this patch.
+> I checked current master too - same, +pmu fixes it.
+> 
+A guest OS cannot expect a functioning PMU if the hypervisor has disabled
+it. Linux runs a basic sanity test to determine this. See:
+https://github.com/torvalds/linux/blob/master/arch/x86/events/core.c#L268
 
