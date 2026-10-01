@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA25CA5FB3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BF1CA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEQB-0005wb-BU; Thu, 01 Oct 2026 06:53:51 -0400
+	id 1xCEPf-0005hx-La; Thu, 01 Oct 2026 06:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPJ-0005dg-4k; Thu, 01 Oct 2026 06:52:58 -0400
+ id 1xCEPJ-0005di-SW; Thu, 01 Oct 2026 06:52:58 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPF-0002PC-R3; Thu, 01 Oct 2026 06:52:56 -0400
+ id 1xCEPI-0002Pa-8v; Thu, 01 Oct 2026 06:52:57 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id 5E4EE20B7169;
- Thu,  1 Oct 2026 03:51:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5E4EE20B7169
+ by linux.microsoft.com (Postfix) with ESMTPSA id 3006520B716D;
+ Thu,  1 Oct 2026 03:52:01 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3006520B716D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851919;
- bh=u3lGqUx8su4RL2vAD7EuzNczAiGM9+1NMl/RudEEoVg=;
+ s=default; t=1790851921;
+ bh=/GxhITBh1+jKbAWn25Pdnou1UmhxhK/tBbYd1+mXE2s=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=klUhGS83KDk8PJwuq0tH2l5T7U7Qvu9x38WZn+pqV1GFpQ3itY9ZXO9XXE2gNhczn
- 5UcqwNHIFqsBYZJ2WfsaMOJjwKVrhwT/5uUDdkuHwfCFJmlYMol7A2/HMomUIoj/9u
- +WvnKMWO6cGb+ftVXMdseVN8gcFbUGPIkU+P9oLU=
+ b=KN5U3oK5AYXpqcQiIdtekLnpDZ1BQTHr6uVccQxoS/rCH64TX+GrJnqYRNbkqCyR0
+ yTo+Zm2xP4vEUF+TKr4GaebpLpuR6p27cB0dKGiFcSXRzhrCgQqRr5cqeKtUII5GR6
+ zchHrV02Mt3fQKg+x36J10FcA7GIuAACnPXJBigA=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:49 +0000
-Subject: [PATCH v6 04/14] meson, target/arm/mshv: Enable arm64 build & add
- initial MSHV support
+Date: Thu, 01 Oct 2026 10:52:51 +0000
+Subject: [PATCH v6 06/14] target/arm: convert host CPU feature ifdef ladder
+ to runtime checks
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-4-aefe5e76a0e3@linux.microsoft.com>
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-6-aefe5e76a0e3@linux.microsoft.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -79,230 +79,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable the build of the MSHV accelerator for arm64 in the Meson build
-system. Introduce initial files and stub implementations to support MSHV
-for the ARM target.
+Replace the compile-time #if/#elif preprocessor ladder in
+aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
+This ensures the correct accelerator is selected at runtime when
+multiple accelerators are compiled in.
+
+Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
+register the "host" CPU type.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c       | 10 ++++--
- hw/i386/mshv/clock.c        |  2 +-
- include/system/mshv.h       |  2 +-
- meson.build                 |  8 ++---
- target/arm/meson.build      |  1 +
- target/arm/mshv/meson.build |  7 ++++
- target/arm/mshv/mshv-all.c  | 81 +++++++++++++++++++++++++++++++++++++++++++++
- 7 files changed, 103 insertions(+), 8 deletions(-)
+ target/arm/cpu64.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index efe19a3914..f3f1825b0b 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -142,8 +142,10 @@ static int create_partition(int mshv_fd, int *vm_fd)
- {
-     int ret;
-     uint64_t pt_flags, host_proc_features;
--    union hv_partition_processor_xsave_features disabled_xsave_features;
-     union hv_partition_processor_features disabled_partition_features = {0};
-+#if defined(__x86_64__)
-+    union hv_partition_processor_xsave_features disabled_xsave_features;
-+#endif
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index dcd0d698b3..a9e346049d 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -811,17 +811,21 @@ void aarch64_host_initfn(Object *obj)
+     }
+ #endif
  
-     struct mshv_create_partition_v2 args = {0};
- 
-@@ -155,7 +157,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
-                (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
-                (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
- 
--    /* enable all */
-+#if defined(__x86_64__)
-+    /* enable all xsave features (0 = enabled) */
-     disabled_xsave_features.as_uint64 = 0;
-     /*
-      * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
-@@ -165,6 +168,7 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     disabled_xsave_features.amx_bf16_support = 1;
-     disabled_xsave_features.amx_int8_support = 1;
-     disabled_xsave_features.amx_fp16_support = 1;
-+#endif
- 
-     /*
-      * query host for supported processor features and disable unsupported
-@@ -196,7 +200,9 @@ static int create_partition(int mshv_fd, int *vm_fd)
-     /* populate args structure */
-     args.pt_flags = pt_flags;
-     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
-+#if defined(__x86_64__)
-     args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
-+#endif
-     args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
- 
-     ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
-diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
-index 02c586503a..b7db382752 100644
---- a/hw/i386/mshv/clock.c
-+++ b/hw/i386/mshv/clock.c
-@@ -182,7 +182,7 @@ static const VMStateDescription vmstate_mshv_clock = {
-     },
++    if (mshv_enabled()) {
++        mshv_arm_set_cpu_features_from_host(cpu);
++    } else if (kvm_enabled()) {
+ #if defined(CONFIG_KVM)
+-    kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu);
+-    aarch64_add_sve_properties(obj);
+-#elif defined(CONFIG_HVF)
+-    hvf_arm_set_cpu_features_from_host(cpu);
+-#elif defined(CONFIG_WHPX)
+-    whpx_arm_set_cpu_features_from_host(cpu);
+-#else
+-    g_assert_not_reached();
++        kvm_arm_set_cpreg_mig_tolerances(cpu);
+ #endif
++        kvm_arm_set_cpu_features_from_host(cpu);
++        aarch64_add_sve_properties(obj);
++    } else if (hvf_enabled()) {
++        hvf_arm_set_cpu_features_from_host(cpu);
++    } else if (whpx_enabled()) {
++        whpx_arm_set_cpu_features_from_host(cpu);
++    } else {
++        g_assert_not_reached();
++    }
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         aarch64_add_pauth_properties(obj);
+     }
+@@ -830,7 +834,8 @@ void aarch64_host_initfn(Object *obj)
+ static const ARMCPUInfo aarch64_cpus[] = {
+     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
+     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
++    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
+     { .name = "host",               .initfn = aarch64_host_initfn },
+ #endif
  };
- 
--void mshv_clock_init(void)
-+void mshv_arch_clock_init(void)
- {
-     vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
-     qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index f98ddff9b5..114f065db5 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -58,7 +58,7 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
- extern MshvState *mshv_state;
- 
- /* clock (partition reference time) */
--void mshv_clock_init(void);
-+void mshv_arch_clock_init(void);
- 
- /* interrupt */
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-diff --git a/meson.build b/meson.build
-index cae1591cd2..6a90a394a2 100644
---- a/meson.build
-+++ b/meson.build
-@@ -304,7 +304,8 @@ if cpu == 'aarch64'
-   accelerator_targets += {
-     'CONFIG_HVF': ['aarch64-softmmu'],
-     'CONFIG_NITRO': ['aarch64-softmmu'],
--    'CONFIG_WHPX': ['aarch64-softmmu']
-+    'CONFIG_WHPX': ['aarch64-softmmu'],
-+    'CONFIG_MSHV': ['aarch64-softmmu'],
-   }
- elif cpu == 'x86_64'
-   accelerator_targets += {
-@@ -884,10 +885,9 @@ if get_option('kvm').allowed() and host_os == 'linux'
- endif
- 
- if get_option('mshv').allowed() and host_os == 'linux'
--  if get_option('mshv').enabled() and host_machine.cpu() != 'x86_64'
--    error('mshv accelerator requires x64_64 host')
-+  if host_machine.cpu() in [ 'x86_64', 'aarch64' ]
-+    accelerators += 'CONFIG_MSHV'
-   endif
--  accelerators += 'CONFIG_MSHV'
- endif
- 
- if get_option('whpx').allowed() and host_os == 'windows'
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 0369f96b4c..1ac2cef26b 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -63,6 +63,7 @@ arm_common_system_ss.add(files(
- 
- subdir('hvf')
- subdir('whpx')
-+subdir('mshv')
- 
- if 'CONFIG_TCG' in config_all_accel
-    subdir('tcg')
-diff --git a/target/arm/mshv/meson.build b/target/arm/mshv/meson.build
-new file mode 100644
-index 0000000000..169643691e
---- /dev/null
-+++ b/target/arm/mshv/meson.build
-@@ -0,0 +1,7 @@
-+arm_mshv_ss = ss.source_set()
-+
-+arm_mshv_ss.add(files(
-+  'mshv-all.c',
-+))
-+
-+arm_system_ss.add_all(when: 'CONFIG_MSHV', if_true: arm_mshv_ss)
-diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-new file mode 100644
-index 0000000000..00c54f5d66
---- /dev/null
-+++ b/target/arm/mshv/mshv-all.c
-@@ -0,0 +1,81 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Aastha Rawat          <aastharawat@linux.microsoft.com>
-+ *          Anirudh Rayabharam    <anirudh@anirudhrb.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/arm/virt.h"
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+static int load_regs(CPUState *cpu)
-+{
-+    return 0;
-+}
-+
-+static int store_regs(const CPUState *cpu)
-+{
-+    return 0;
-+}
-+
-+int mshv_arch_load_vcpu_state(CPUState *cpu)
-+{
-+    return load_regs(cpu);
-+}
-+
-+int mshv_arch_store_vcpu_state(const CPUState *cpu)
-+{
-+    return store_regs(cpu);
-+}
-+
-+int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-+{
-+    return 0;
-+}
-+
-+void mshv_arch_init_vcpu(CPUState *cpu)
-+{
-+
-+}
-+
-+void mshv_arch_destroy_vcpu(CPUState *cpu)
-+{
-+
-+}
-+
-+int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-+{
-+    return 0;
-+}
-+
-+void mshv_arch_amend_proc_features(
-+    union hv_partition_synthetic_processor_features *features)
-+{
-+    /*
-+     * TLB-flush hypercalls are an x86 enlightenment. ARM guests use
-+     * broadcast TLBI instructions instead.
-+     */
-+    features->tb_flush_hypercalls = 0;
-+}
-+
-+void mshv_arch_disable_partition_proc_features(
-+    union hv_partition_processor_features *disabled_features)
-+{
-+    /* No processor features to disable on ARM */
-+}
-+
-+int mshv_arch_post_init_vm(int vm_fd)
-+{
-+    return 0;
-+}
-+
-+int mshv_arch_migration_init(MshvState *s)
-+{
-+    return 0;
-+}
 
 -- 
 2.45.4
