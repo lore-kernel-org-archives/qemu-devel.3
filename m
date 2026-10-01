@@ -4,103 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F00CA5FD6
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 16:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1B9CA5FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 16:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCJq4-0007Te-4z; Thu, 01 Oct 2026 12:40:56 -0400
+	id 1xCK05-00017X-HM; Thu, 01 Oct 2026 12:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xCJq3-0007TN-Cw
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 12:40:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xCK03-000173-Vy
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 12:51:16 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xCJq1-0002JN-Jg
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 12:40:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790872852;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h+d5BA/o4/DJWgRC7JbYOChISWKn7wqrzMH+zuVl9EY=;
- b=YSrz1PJ9HbQdjcHvWaunv4y670hFIghn+oSg/4uqZbp3IyeJdIg2O/6BR3wbYGko4zf+Bb
- BbwuPV2DJAMY69a5cmLSqeSAeUt90+xc/6YrMsDVYzCKQ3J9ecItdZtHpWg0E/kwpnPN0V
- 29DuJZnFwXBUz4wqQoMWk8vXbr+BQvY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-ihPkKLeOPC6IRfAN5DWs2A-1; Thu, 01 Oct 2026 12:40:51 -0400
-X-MC-Unique: ihPkKLeOPC6IRfAN5DWs2A-1
-X-Mimecast-MFC-AGG-ID: ihPkKLeOPC6IRfAN5DWs2A_1790872850
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a01b112fa2so20733455e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 09:40:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xCK01-0003cJ-9K
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 12:51:15 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691FsR652267821
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 16:51:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1EC1Zmm9ffg5+j3mLvgjjCqQBv9SUjaEWLtb4hTneL8=; b=mj6/1HHlzzR1Bd3x
+ lf6T5Nr0ZL/V56pK4C3H8oHPVz9EUDLl+WT6fpe5ioLFiZlGwCKHNLJKlpgwNkb3
+ GibrIOMpu5EreBoLiv7ejQmx1q33Vl+cXedXYs8toxYqivxz/gFEHg5+uI+NDirW
+ TOFlZPoGS70J08R8UHkWn+eA30igGxo1KFpaPQsFiM3MjzTS3jPzv57FHGUdvte4
+ 8HDs6/uagPUZ0rsUKsVLGYVkuckZapFvRKMgMrx0alq9CVEG9N6XJuJSU527LhPa
+ 67+veKxAB/yQGzw7/HtFyzk6mb1Gg9AQPNrQ8be8gGdMbcZVL411IW1Hc58FPhnm
+ cAHt0Q==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1rvq8un6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:51:11 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-14383177746so15579801c88.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 09:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790873470; x=1791478270; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1EC1Zmm9ffg5+j3mLvgjjCqQBv9SUjaEWLtb4hTneL8=;
+ b=cMxShBAW+Wzy0j6NV8YJUc6VEmZfqiQHwSzco2kHPtibEpfGkL3l5coEiwU6E6PRId
+ zGRTDK2VZHq1A3weft2RA7dIQ69l07a3e1AjOzyUVEftEna93oUrE22Bx0YgNHH3Yu7l
+ 1UMr+dW0EulunC+IF9UEFbq6A7UzSYtsTPYFEZk3U64ahWuBIDhLHzfMY7ZqhqAs1j+5
+ lOGUj7xAOSgeZEc9xkchFGvs8IsfSTIzYH6yRtxpVmGL6Yd26dIgOpEJ5T+54WpCHsvp
+ GpqCU2aibaixC5Th6drItU3Byk6NaG3zUpiGH7/xGs0oJEGkh3xsrPwFRYfD2KqDFStV
+ aMpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790872850; x=1791477650;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1790873470; x=1791478270;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=h+d5BA/o4/DJWgRC7JbYOChISWKn7wqrzMH+zuVl9EY=;
- b=dW5+VLtLZiMPaJTmfpvWNSXOeYtXfMci/GbPfqfJb4lCcXgFod0oQFTYks6S9B720O
- eMIr8H81c2qqiCEFyapfZ/c7g7Q+lpUKIXXOuRYEAlLdKTn0GxaUxWkylkDoDhNCmIZS
- PaZLPUZCaoX3goYo/UKpuqSZQUIKj/0AdjLO1TTzni6czil+tDIHX8qZF/hFJQo/AHbe
- T8Loi/1so74B7xyY2RJVC+LQOeJ735Cnr6ELH1D6LsekQv9Pl1Ik9eehRg1fT+ZeKcKn
- XLXwrxVLBftSZq7YbPPXRoxV3ApedMUaDFV81rZ/FztVjnqUWX/Q62IBBsAY2Fu8eRco
- lJCw==
+ bh=1EC1Zmm9ffg5+j3mLvgjjCqQBv9SUjaEWLtb4hTneL8=;
+ b=Ym4Ku4qK8xjckRIHc7U89jDwaHeXmOuiXacVJT13lMQkQQG+j9CrxRqpK8wbGcTSfu
+ vn99L1GaP1AtFXExg8+vhfy+bLD327c3hvA1jAcuKbrZ52KD8htte8u4AOV61RRq5ALT
+ 8X/GII0uymZxL5/PM5t7Vsdy5mRuHMvrHovqp4EKXs36uy1IhZcpScXQrpYV/FaRunTD
+ CsYwoSF9Clev/C8yRPLdPTr+oB0beOmkYT7GUcNfPs13HfCfrEopPlr5kk9ifwhJfIL2
+ nS/qofHHi9ybahPm/6FPhzhu+tHWtb4mdnaKtPhBNjsTe339Hn4BecADd4AmdbVkzqJQ
+ pg9A==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwfFgj3b8OYzQ2Q5kSfPctonO13wTCRdcBaxboGVh+/9VWeAyysI9dmwoKNqN4tthzxjFEG2CEShNKF@nongnu.org
-X-Gm-Message-State: AFq9FYL8M1c/exGcPi0t90yfvAbUtW95VV8v5GQChS24gGxmPUR3L3qI
- vI1w/9LDPqidtAtGcxhip7FOHZyqXQwzroIh/BQftW9Ip+lu+ymEDJuDl+cwvt82xHZ681Q8sFT
- d/OjBB/L+OEI6efe2709F0fTcBZtxiC37XS6UCBCpDYdHEkqkGAby8OZR
-X-Gm-Gg: AYBFou3Nbydg5VgVD+GhreJ4RR1e1wOVAn1Jj9i8ftMTCUogCs5nVX5iqXUvQrYlZ2N
- kXYIrFnQMPVrFJtFKqjdLM5MvO7WKIidamtquM5MCiYRelwlwmEYa69voj7YhHp95kzQNnODZ3P
- yS1y2v87M0HVx9PqzvHNRJvjRauJJsm0HnqCrlUYEZDpZNZopVUbTQZRI3bKsQupfJG6mPhnwh3
- Q9sKHaaUwvmBvO+jZ4jI5Ts5gMHYjB2Lm56TbTCmNHvRGlgz7RFXI/MAZs8HFzJuHeTYLA0L5DS
- 1mzqMUSsPMlB9wTL8BcMMZ2oCF/20FEJQkI2P5e/IMRC4ayhIFNmAcGoMhPyPORG1nYbAe0HCfi
- 99uLPXEJCDLjXG2r9Qgfl0MqWzr+5Ba4/hszkg246f32qYqno
-X-Received: by 2002:a5d:5d08:0:b0:48b:b6:6a92 with SMTP id
- ffacd0b85a97d-48b12743d91mr316960f8f.26.1790872850322; 
- Thu, 01 Oct 2026 09:40:50 -0700 (PDT)
-X-Received: by 2002:a5d:5d08:0:b0:48b:b6:6a92 with SMTP id
- ffacd0b85a97d-48b12743d91mr316886f8f.26.1790872849674; 
- Thu, 01 Oct 2026 09:40:49 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b0db6de18sm3754213f8f.44.2026.10.01.09.40.48
+ AKwUvBwbRCsbHCG8u1Wq0T6JkscsfXPwZ3AzPeBSp8g73FNAedDLPfQm5jbqJ+sy4uI1zGhmHYA/4yZQZ1VM@nongnu.org
+X-Gm-Message-State: AFuF++lJGHk1WEZh8pp+K0uNRX/338x7OJ072+ziFLEfFAuf7hw/cuaD
+ 3360YRdyyztja/PAwmCsmyFeb8Rn6dP0LAJIh6geAXAw0AitjbcUIBCCyXoR7Piqpzk2IZ8qhS9
+ bjGGi0QNySGGP+icJsa2BjXXJyuK58GaSdHBZE+96knHnJjwN61Q+kd9PTQ==
+X-Gm-Gg: AYBFou0ICB5zKpy9Ds2eoFWsFqJIR7KHxPx0+QS0gXgbBZz1ajBdVuZIoUrKmudvO/H
+ aYIt0OSZ78jQoQtEmLNN9GD5j/wpHNalrffoTCL+OmHyTx3Mi04NAQBwJjZQvjmXP0p6dPupTCI
+ 7rvJ58jUhzzKEjUNEJ2ImUG9ALMrna0FPGvqeJbZcWjL/097phds+QdcYEeg9hGo8MgKhQJ8YtA
+ Hl9APtEyyBEpAV2w4IQ5Rwkym0jCfHN509jsptzWlmPFFhTk87Ci73MvjUDxssAHMMQBSpfnI+7
+ GxjZcVMdKoGlshRBv6ybfWhNCtcPFW/b0UnSGZc4F7IvfqjOdpu4+h/065tssszmnHEiv8IFzaG
+ IaoLz2EHlkMpbQf3Mr3wbnjb9Nhi6kxJR2i947B4aWvBSlFPR8tWHczmg5DaDVMt1b8K4Og==
+X-Received: by 2002:a05:701b:2712:b0:13e:5a50:1e17 with SMTP id
+ a92af1059eb24-14d31a7d13bmr6469370c88.3.1790873470290; 
+ Thu, 01 Oct 2026 09:51:10 -0700 (PDT)
+X-Received: by 2002:a05:701b:2712:b0:13e:5a50:1e17 with SMTP id
+ a92af1059eb24-14d31a7d13bmr6469309c88.3.1790873469323; 
+ Thu, 01 Oct 2026 09:51:09 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-14f26bb14cbsm432639c88.7.2026.10.01.09.51.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 09:40:49 -0700 (PDT)
-Message-ID: <cfca1664-2d41-4f02-b7cc-6e0e421426cc@redhat.com>
-Date: Thu, 1 Oct 2026 18:40:47 +0200
+ Thu, 01 Oct 2026 09:51:08 -0700 (PDT)
+Message-ID: <374ba010-b530-4310-b20f-65ada56cda6b@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 09:51:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/7] hw/arm/smmuv3: Live migration for accel=on
+Subject: Re: [PATCH v2 4/6] tcg: namespace target helper symbols for combined
+ builds
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260930073935.712-1-luoyonggang@gmail.com>
+ <20260930073935.712-5-luoyonggang@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- mochs@nvidia.com, jan@nvidia.com, jgg@ziepe.ca, ankita@nvidia.com,
- aniketa@nvidia.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com
-References: <20260904180513.248396-1-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260904180513.248396-1-skolothumtho@nvidia.com>
+In-Reply-To: <20260930073935.712-5-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA2NyBTYWx0ZWRfXyTkKRVvCE2za
+ qWU8JPzoVxr30N10S1pGJWx7yFq0USEeAOhjXD02Q3NmKHLLtH4+dXHHBhZfq7qKD+t+bRPtPiu
+ uWTL7c9XG+GNKTMeGNzqPoIsiMvStqBtaBDUnecNOOyBM5uZImSLoiIUjDjALux2ewl7gX8tSJo
+ rAIYAYidM0tLBRXN7YOez61HfKIXSG4PZUXqHkeMjYYgN3EWgN9Ih10/xoi9VFzpNJUBZqnnHV8
+ lUz+HwiCYCq4MzYOea0+Tx3UZxv3LOqoQLpD+nV/bmZxV71lBKKpzkiQJqQKUh1zt8fpLU1DvOE
+ 6VIdV7DMceWj03t7vCsY1skvoG8JwmrdaVXNzPtSaOj7r6Mg4DNoverGK+mN6DzO9WxIFXHzhMW
+ VzknjOJynhi/T8P4TjaaUOS/7ocBFWYv7/JWxSgJEe/Jx9/Cn8CUgwLnF76z2QF13wTr8YjSXqh
+ V02+p7KYvIjzM6/l+cQ==
+X-Authority-Analysis: v=2.4 cv=JIauIMKb c=1 sm=1 tr=0 ts=6abe8f7f cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=ZidyKko-PBEqLHQ7VRUA:9 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-GUID: cAGpxKQmQ9wyTdWfzOqng-hx44GecTSz
+X-Proofpoint-ORIG-GUID: cAGpxKQmQ9wyTdWfzOqng-hx44GecTSz
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA2NyBTYWx0ZWRfX82pJrBQbBiae
+ 0TIeLw9PWgpmBi3IDvbIH910yjTwp5X/3ThuYV8VaLa+GihePoiykF7IsxqgY4Toi8bVDBrWt9S
+ HwlVYLPBM8letYnihQD9EBoF31Jn28E=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610010067
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,79 +166,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 9/30/2026 12:39 AM, Yonggang Luo wrote:
+> Use target-specific assembler names and helper metadata for TCG helpers
+> when multiple targets share a binary. The generated prototype maps the
+> generic C helper name to a target-specific linker symbol, for example:
+> 
+>     helper_raise_exception
+>         __asm__("helper_i386_raise_exception")
+> 
+> This lets target helper definitions keep generic C names while avoiding
+> linker symbol collisions between targets.
+>
+Hi Richard, do you have an opinion on this patch?
 
-On 9/4/26 8:05 PM, Shameer Kolothum wrote:
-> Hi,
->
-> This series adds live migration support for an accelerated SMMUv3
-> (-device arm-smmuv3,accel=on) with vfio-pci endpoints on the iommufd
-> backend.
->
-> The destination replays rather than receives. The stream table, the STEs,
-> the CDs and the Stage 1 page tables all live in guest RAM, so once that
-> and the registers are restored, the destination walks the stream table
-> again and rebuilds the vDEVICE and the nested HWPT for every device.
->
-> What the series does:
->
->  - drains the kernel vEVENTQ into the guest event queue when the VM stops,
->    so that pending fault events are not lost (1, 2)
->  - migrates the resolved SMMUv3 feature set in a new smmuv3/accel
->    subsection and fails the load if the two ends differ (3)
->  - replays the guest stream table on the destination and restores the
->    vEVENTQ and the GBPA HWPT (4, 5)
->  - asks VFIO for dirty tracking on the Stage 2 nesting parent (6)
->  - replaces the accel migration blocker with one scoped to CMDQV, which
->    cannot be migrated for now (7)
->
-> This depends on the host kernel supporting dirty tracking on the Stage 2
-> nesting parent, for assigned devices that cannot track dirty pages
-> themselves. A branch based on Jason's iommu page table work is here [0].
->
-> Big caveat:
->
-> This is not yet tested with a real device that supports migration as I
-> do not have a test setup for that. Folks who do have such a setup have
-> reached out and are copied here, so hopefully this RFC lets them give
-> it a spin and provide some early feedback.
+We are trying to see if we do renaming per helper, or if we introduce a
+"generic" way to deal with it. I don't have a strong opinion, renaming
+things or adding more macros and build system soup are both ok on my
+side, so direction would depend on your culinary taste.
 
-Please could you clarify all the requirements for supporting this
-migration scenario (at EP, SMMU and kernel level)?
-
-Thanks in advance
-
-Eric
->
-> QEMU branch is here:
->
-> https://github.com/shamiali2008/qemu-master/tree/smmuv3-accel-live-migrn-rfcv1
->
-> Please let me know your feedback.
->
-> Thanks,
-> Shameer
-> [0]: https://github.com/shamiali2008/linux/commits/iommu_pt_arm64_s2_dbm/ 
->
-> Shameer Kolothum (7):
->   hw/arm/smmuv3-accel: Factor out the single vEVENT read
->   hw/arm/smmuv3-accel: Drain the vEVENTQ when the VM stops
->   hw/arm/smmuv3: Migrate the accelerator feature set
->   hw/arm/smmuv3-accel: Add a helper to replay all STEs
->   hw/arm/smmuv3-accel: Restore accelerator state on incoming migration
->   hw/arm/smmuv3-accel: Request dirty tracking on the nesting parent
->   hw/arm/smmuv3: Support migration with accel=on
->
->  hw/arm/smmuv3-accel.h       |   2 +
->  include/hw/arm/smmuv3.h     |   7 +-
->  hw/arm/smmuv3-accel-stubs.c |  17 ++++
->  hw/arm/smmuv3-accel.c       | 192 ++++++++++++++++++++++++++++++++++--
->  hw/arm/smmuv3.c             |   6 +-
->  5 files changed, 210 insertions(+), 14 deletions(-)
->
-
+Regards,
+Pierrick
 
