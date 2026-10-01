@@ -4,91 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D37DCA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FDBCA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCOPy-0004sS-LJ; Thu, 01 Oct 2026 17:34:18 -0400
+	id 1xCOVA-0005ig-KT; Thu, 01 Oct 2026 17:39:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <30tG-agsKCs0v74C764xF1Bz77z4x.v759x5D-wxEx4676z6D.7Az@flex--coltonlewis.bounces.google.com>)
- id 1xCOPv-0004ql-UG
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:34:15 -0400
-Received: from mail-oi1-x246.google.com ([2607:f8b0:4864:20::246])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <30tG-agsKCs0v74C764xF1Bz77z4x.v759x5D-wxEx4676z6D.7Az@flex--coltonlewis.bounces.google.com>)
- id 1xCOPu-0007ZT-6k
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:34:15 -0400
-Received: by mail-oi1-x246.google.com with SMTP id
- 5614622812f47-4b26d8d2498so10805015b6e.2
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 14:34:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1790890451; x=1791495251; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=bZc4ogm5/WT7GTGjXs62z4TP6S2W3GOrNVtANWpbLNc=;
- b=lI2Acj7wC/cv+CKzyqu1uHbXtj0tncW+6bQMWXYkP/N7QjXLD1tVD8rkfjfhKAt+7G
- 1J9EfS3ifBD93/mhVi48W0yyD15Sc2RwvTBRtXWCY920OxLhiG2hKsMgoV5vhI+T6MjR
- b0ZWNK1X5srGI1Gj8r7LTVY2w7dB+0HLfle/6MF/SIAX0lqPxT0LovFvAAukqARIJDhw
- 4m2RvxmqMMvEoLksAeYZ36G4wjqAwDMiiy3l/amcTzhyG9DvfYTHCpRk71EIa9/kMq6y
- PPzhr9FWjQiCc4+TdZqUJmURVYDt332q8W1/YgMt8qmwhPLAWr/k7Db51oFxhU+NdIoy
- /TnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790890451; x=1791495251;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=bZc4ogm5/WT7GTGjXs62z4TP6S2W3GOrNVtANWpbLNc=;
- b=un6v/SZPBaTRdrP/hI36GuABEd84+M6SDPMH+a65kh3i/oyoXiY86HDvziWRN65IOC
- WbxsTg1G9w5PToDn1ZdHm5rMbRdMDlTsdFyAaHhcDIcP5goXNRELtwAc9KjjSxQgRi+Y
- rRvrBN6M/TeRakq4fZe5FJn9gb4kwjfHC5K2poF8babZn3QzeD3NqEwu5oaP97yjNljx
- HAV+BRn3jyu4+4TgI2akKn7KOZGu0GMhu+gc3Uk6+pmLW+RoX1tLoFART++jJgWxPNNF
- O37KHam9CpmRAcZMtVieaPftJzeowkx6UAeEi4QJC3fhd6f9gfGgoD+5KsmSyMYoIzco
- SxfA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxeqtipQbaPJCQy09HHTOH96rrfwdj0rdKq1zXG08wwS45kYhXUWyq3Wp6mj/PLDwm/jLgCEylcQrmh@nongnu.org
-X-Gm-Message-State: AFuF++l8D97z7jmoNrKpxx/sxJsR7U2ZiAn+c4IP2TRkX/N3AS9AH0PI
- nQ/MZMv4B3sgkS35FCAIHeAsgBjEQhcrxHKmyUe5kg+6ZsCZkeBT/pnPGlHXCxj5l3zoHEnl2MM
- bAD8piH6+isH2x4aTvtPHP/j60g==
-X-Received: from iou20.prod.google.com ([2002:a05:6602:64d4:b0:9c7:5697:9ad7])
- (user=coltonlewis job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6808:1583:b0:4c5:12a4:ec8a with SMTP id
- 5614622812f47-4f52aa86098mr422937b6e.36.1790890450368; 
- Thu, 01 Oct 2026 14:34:10 -0700 (PDT)
-Date: Thu,  1 Oct 2026 21:34:09 +0000
-In-Reply-To: <CAFEAcA9DYo3GW_59eZjsk1qL0--3amYd7ufPqt80O2qv=Qm_pw@mail.gmail.com>
-Mime-Version: 1.0
-References: <20260924172928.2110956-1-coltonlewis@google.com>
- <20260924173051.2117637-1-coltonlewis@google.com>
- <CAFEAcA9Rwrffx8bYiOxrtQGdg31QAz1oBm8okzpfqHZ6yK0Y7A@mail.gmail.com>
- <20260929212102.3659389-1-coltonlewis@google.com>
- <CAFEAcA9DYo3GW_59eZjsk1qL0--3amYd7ufPqt80O2qv=Qm_pw@mail.gmail.com>
-X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20261001213409.2090008-1-coltonlewis@google.com>
-Subject: Re: [PATCH] target/arm: Enable KVM PMU partitioning and counter limit
-From: Colton Lewis <coltonlewis@google.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Colton Lewis <coltonlewis@google.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, 
- kvmarm@lists.linux.dev, Paolo Bonzini <pbonzini@redhat.com>,
- Marc Zyngier <maz@kernel.org>, 
- Oliver Upton <oupton@kernel.org>, Will Deacon <will@kernel.org>, 
- James Clark <james.clark@linaro.org>, Mingwei Zhang <mizhang@google.com>,
- kvm@vger.kernel.org
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xCOV8-0005iK-FO; Thu, 01 Oct 2026 17:39:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1xCOV6-00083H-8s; Thu, 01 Oct 2026 17:39:38 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691G5kno369149; Thu, 1 Oct 2026 21:39:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=Un1AFaKh39v+J0OuS6Xn7izWF7pqev3m1svx42eL3Mo=; b=VpVLTLYBn854
+ 6zFeDqozh5WxjN6XSiEBToiN6rNBIEvfAaIyOd4PDZo0DnpJN4OJPrJqGcImHsvb
+ OKNYrupP6YwQxGeRcUT1N2fot/ZSiKooYVJ6kebs3qS2ZdHuFBqJ0J/r1gYoGD/0
+ Jo9S5tn4vO7qTaClUdy/e9r8jIcfLvKD6IlFXU9NaArLZ4gStVAXrQd84erYTs1Z
+ AAnXxI0wbYKL9k+qE7rEZ1VNROcqe8IVkXL5LbpHRW/OiQZMHRS7A2T9EOqGvFJf
+ wES2hwbT8kmRy1GpQKmRmXFiJZZQi3RUaerQXrvQoYzc3vHH+mT4U+xE4Y5kNdgI
+ ZIli52Vzhw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qrp4ny-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 01 Oct 2026 21:39:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691KRqx61481405; Thu, 1 Oct 2026 21:39:23 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h1xk108uv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Oct 2026 21:39:23 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 691LdLQm27853388
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Oct 2026 21:39:21 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF02358056;
+ Thu,  1 Oct 2026 21:39:20 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3560B5803F;
+ Thu,  1 Oct 2026 21:39:20 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Oct 2026 21:39:20 +0000 (GMT)
+Message-ID: <583c2f44e7dce2f948908fc1cb012589c810335e.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 2/5] ppc: Raise decrementer IRQ on zero write
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, "Kirill A. Korinsky"
+ <kirill@korins.ky>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Date: Thu, 01 Oct 2026 16:39:19 -0500
+In-Reply-To: <826a6e78-6e61-4a47-bdfe-eb5c3adbbe6e@linux.ibm.com>
+References: <20260923230452.3765-1-kirill@korins.ky>
+ <20260923230452.3765-3-kirill@korins.ky>
+ <20261001143415.3f3b33fc-f8-amachhiw@linux.ibm.com>
+ <826a6e78-6e61-4a47-bdfe-eb5c3adbbe6e@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::246;
- envelope-from=30tG-agsKCs0v74C764xF1Bz77z4x.v759x5D-wxEx4676z6D.7Az@flex--coltonlewis.bounces.google.com;
- helo=mail-oi1-x246.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA4NiBTYWx0ZWRfX42xYZIdSbsAQ
+ BD9Pti4ulWNprTo0mjovKuckxDDKggpJhys8Zbh/6KAN616HCzmEpqNOgDYvXcK3GTf8MPkLXZI
+ zLMFuabd6fQ67UFvHtv0fYY/jKVfnM8ZzCC9jz92oQwXZMW5iH1/FKED512EDDfKPb+nRgV0AHo
+ f4FeZ+IGgqMTwc48gWdGcVwz6Jwtyq+gH5G9YjTyneIPO+guU9NyELL230vv3Gl/ruKTe+ldD1z
+ Dw0K6TwavZpxr92ZuDcvrXfztnrDVz60LHMmFLWcXHbxiPEgKJbtXZHt+otnKjRSKiAZcJcpvdM
+ XertOa2rOkxYy7IgQLJT1Lk0R4+VVyXHFJVLLz0/kpwJT6qDzlP7PnpZxlM5P5MrpVbpIjUS1zy
+ zps2ntVrcN5m2Tdxgy4o/ZNUQkkNyU1r1GB14/75SXoaaxaS/UEnT3BK4mSkxp25zhTac74hOcM
+ pJYaBvlkTFDZCHO0ppA==
+X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6abed30c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=pcZqCyVeAAAA:8 a=oDiNktlHzzYgXybswTkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=SGy6VSG0Ue1xmPAwIFl9:22 a=ojN_UKswjOqU4wFocON6:22
+X-Proofpoint-ORIG-GUID: FBLVaBdtlvhaiRSCdz2lxp5hXnA3TZyI
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA4NiBTYWx0ZWRfXzH2xgSuEyH3B
+ 9QJiLwCVYTXFs201iqvTp7lO81SiQWNEW09btkgfIddt9F7pZd138IBVCpWEMlqU6DfjEpRhONS
+ 9YzyJ0dS0rCSrdr1Oh5/0gls1cvgb0k=
+X-Proofpoint-GUID: JOgSdD-Tl7eiy-zi35SSxr8QO7G2VY9L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 clxscore=1011 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610010086
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,25 +129,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Hi Harsh,
 
-On Wed, Sep 30, 2026 at 12:35:02PM +0100, Peter Maydell wrote:
-> On Tue, 29 Sept 2026 at 22:21, Colton Lewis <coltonlewis@google.com> wrote:
-> > For the counter limit property, would you prefer that it also live in
-> > kvm_arm_add_vcpu_properties() as "kvm-pmu-num-counters" (KVM-only), or
-> > keep "pmu-num-counters" general so TCG can also use it to override
-> > PMCR_EL0.N in reset_pmcr_el0?
->
-> If it can reasonably easily be implemented (or potentially implemented)
-> for TCG, then I guess the general name makes most sense.
-
-Sounds good. I will keep "pmu-num-counters" general (and wire it up to
-override PMCR_EL0.N for TCG as well) and move the partitioning toggle
-into kvm_arm_add_vcpu_properties() as "kvm-pmu-partition" in RFC v2.
+I will try to take a look tomorrow or Monday.
 
 Thanks,
-Colton
+
+Glenn
+
+On Thu, 2026-10-01 at 14:46 +0530, Harsh Prateek Bora wrote:
+> + BALATON
+> 
+> Hi Glenn, BALATON,
+> 
+> Any review feedback on below patch?
+> 
+> Thanks
+> Harsh
+> 
+> On 01/10/26 2:40 pm, Amit Machhiwal wrote:
+> > On 2026/09/24 01:03 AM, Kirill A. Korinsky wrote:
+> > > From: "Kirill A. Korinsky" <kirill@korins.ky>
+> > > 
+> > > OpenBSD writes zero to an edge triggered decrementer, then enters idle
+> > > expecting its interrupt. QEMU defers the already due edge to a timer at
+> > > the current virtual time, leaving the guest stalled.
+> > > 
+> > > Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> > > Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> > > Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> > > Suggested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > > ---
+> > >   hw/ppc/ppc.c | 7 +++++++
+> > >   1 file changed, 7 insertions(+)
+> > > 
+> > > diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> > > index b123b4cc1c..736a37d32b 100644
+> > > --- a/hw/ppc/ppc.c
+> > > +++ b/hw/ppc/ppc.c
+> > > @@ -885,10 +885,17 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+> > >        * an edge interrupt, so raise it here too.
+> > >        */
+> > >       if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> > > +        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
+> > 
+> > Thanks for the v2 — you got the guard right (PPC_DECR_ZERO_TRIGGERED in
+> > __cpu_ppc_store_decr), but the flag-setting landed in the wrong place.
+> > 
+> > >           ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+> > >             && signed_decr >= 0)) {
+> > >           (*raise_excp)(cpu);
+> > >           return;
+> > > +    } else {
+> > > +        /*
+> > > +         * Classic 32-bit edge-triggered decrementer: zero write fires
+> > > +         * immediately
+> > > +         */
+> > > +        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
+> > 
+> > My suggestion was to set PPC_DECR_ZERO_TRIGGERED once at init time in
+> > cpu_ppc_tb_init().  In v2 it ended up inside the else block of
+> > __cpu_ppc_store_decr() instead.
+> > 
+> > That mutates tb_env->flags at runtime on every DEC write that does not
+> > immediately fire.  PPE42 goes through ppc_booke_timers_init() and gets
+> > PPC_DECR_UNDERFLOW_TRIGGERED but not PPC_DECR_ZERO_TRIGGERED.  The first time a
+> > guest writes a non-zero value to DEC on PPE42, this else block stamps
+> > PPC_DECR_ZERO_TRIGGERED onto tb_env->flags — from that point on, every zero
+> > write fires immediately, which contradicts the PPE42 architecture (commit
+> > 7197f6f7baf2).
+> > 
+> > The fix is the same two-liner I included in my v1 response:
+> > 
+> > diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+> > index b123b4cc1cce..6f99b61a2876 100644
+> > --- a/hw/ppc/ppc.c
+> > +++ b/hw/ppc/ppc.c
+> > @@ -885,6 +885,7 @@ static void __cpu_ppc_store_decr(PowerPCCPU *cpu, int64_t now, uint64_t *nextp,
+> >        * an edge interrupt, so raise it here too.
+> >        */
+> >       if (((flags & PPC_DECR_UNDERFLOW_LEVEL) && signed_value < 0) ||
+> > +        ((flags & PPC_DECR_ZERO_TRIGGERED) && value == 0) ||
+> >           ((flags & PPC_DECR_UNDERFLOW_TRIGGERED) && signed_value < 0
+> >             && signed_decr >= 0)) {
+> >           (*raise_excp)(cpu);
+> > @@ -1104,6 +1105,12 @@ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq)
+> >       if (is_book3s_arch2x(env)) {
+> >           /* All Book3S 64bit CPUs implement level based DEC logic */
+> >           tb_env->flags |= PPC_DECR_UNDERFLOW_LEVEL;
+> > +    } else {
+> > +        /*
+> > +         * Classic 32-bit edge-triggered decrementer: zero write fires
+> > +         * immediately
+> > +         */
+> > +        tb_env->flags |= PPC_DECR_ZERO_TRIGGERED;
+> >       }
+> >       /* Create new timer */
+> >       tb_env->decr_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > 
+> > PPE42 never enters cpu_ppc_tb_init() — it uses ppc_booke_timers_init() — so it
+> > never gets PPC_DECR_ZERO_TRIGGERED and the new clause does not fire for it.  All
+> > 32-bit classic CPUs that go through cpu_ppc_tb_init() (7400, 750, 604, 7457)
+> > take the else branch and get the flag set statically at boot, which is the right
+> > place for it.
+> > 
+> > Thanks,
+> > Amit
+
 
