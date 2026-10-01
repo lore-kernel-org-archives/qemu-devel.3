@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE3FCA5FD6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B0ECA5FD4
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 15:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCIwl-0003DF-8V; Thu, 01 Oct 2026 11:43:47 -0400
+	id 1xCIwo-0003Ds-5h; Thu, 01 Oct 2026 11:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xCIwc-0003A7-0F; Thu, 01 Oct 2026 11:43:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1xCIwa-0004Hu-2L; Thu, 01 Oct 2026 11:43:37 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691DbEt51889786; Thu, 1 Oct 2026 15:43:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9tq1jq
- +7nWAVIEv9UdG/nSono4ibzhnaSWn2stkxD4Y=; b=LHBFItCMCVKzvJpJCLCDCu
- 1M1iET7dZkNj20/qrnE3+GEkz8nZHSBwJZa2ODoQ+GxibHTqNdJDlvxv0oBH6opK
- rdkFOB48Buoxf6HYpbPDAb2ZADC+JOaWhYpQjr3dxdwMvF+hcKAMdK9SI9NBWJrL
- MtYAGX7lTKiKhxUKc/QBncucOAfjFs91yBZjEIfJTsJ85PYw9VA7fmA4dxXHtsOL
- bvZKyEixLxIbf0+4ECAiGTC037eMjGqHhsXdOldOUPfxaBfleU2ol/lBALrkKdKZ
- qMOnuwViE6FVBPHldi7A84wODzePRwx4dmuSnGwxN6NAZSHm+p3p8gMVoibph2aw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5ptjvad-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 01 Oct 2026 15:43:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691DlU2t1043320; Thu, 1 Oct 2026 15:43:31 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h1aa7ukkj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Oct 2026 15:43:31 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 691FhTs041877990
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Oct 2026 15:43:29 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 84A7558054;
- Thu,  1 Oct 2026 15:43:29 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A78DB5805C;
- Thu,  1 Oct 2026 15:43:28 +0000 (GMT)
-Received: from [9.61.92.210] (unknown [9.61.92.210])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Oct 2026 15:43:28 +0000 (GMT)
-Message-ID: <07bbd091-14fc-4767-92ee-6c2241755d9d@linux.ibm.com>
-Date: Thu, 1 Oct 2026 11:43:28 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xCIwl-0003DN-8u
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:43:47 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xCIwi-0004IZ-H5
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 11:43:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6DA6F1FA9A;
+ Thu,  1 Oct 2026 15:43:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790869418; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
+ b=QwP1Jodxuz/9izu7EEYLyqVnaJLrgYYfeaJzkZsPRGSLPeSmKwZeJ9DncH+rpjmE7NOFFQ
+ buUBDDKGakFCk5c0tjN6gxeb+0iWYNp+F3urW8CpJJhChI1URguRiX4NeB90IG518TfjUd
+ 2msFhEzlwYkoG89AFQXVqvVgZ9klASQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790869418;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
+ b=QowGC2aXcQy4x9QdfsFSw7BEOuexnE7tuck7fwReKmoUq0oP+von3H7Z2cs+80bt97llL6
+ pcHQd5/dhQYNLZDA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1790869414; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
+ b=WlFwYrbtZN1f9wqpsF5XpZFE8zTCeifyZ2q4dW3AuBUcu7gorHmBLMDuCKi3GZ2wqH8jbD
+ yrQTAOCMQf4dkBG5CQJa1MRkE6jq4F2VKDV+icjTAwanKYXse5vHpJL85DLeD5S9YDcDAN
+ hbkqO9GzIPUrpFumLYhEOfCjpHT9Ywg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1790869414;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J+dLPFexctCAjAd9VJOpRJNGmx3JJpVpYQke16IQIR8=;
+ b=D/F1EJlEMYD3vUpUtB56/bn148liDs9udLvwfwgniKyTKvErbmcFYKnXfZIl+st/S0q4Tj
+ RYlZDPkEdGMOMhDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E469113B90;
+ Thu,  1 Oct 2026 15:43:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id M3XWIaV/vmrrQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 01 Oct 2026 15:43:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 04/11] qemu-option: Fix 'help' parameter parsing
+In-Reply-To: <179084775651.2086187.18098531675845193132.b4-review@b4>
+References: <20260930221105.2262063-1-farosas@suse.de>
+ <20260930221105.2262063-5-farosas@suse.de>
+ <179084775651.2086187.18098531675845193132.b4-review@b4>
+Date: Thu, 01 Oct 2026 12:43:16 -0300
+Message-ID: <878q4h8m0b.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] s390x/pci: Add PCI error handling for vfio pci
- devices
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: farman@linux.ibm.com, cohuck@redhat.com, alex@shazbot.org, clg@redhat.com
-References: <20260922171756.920-1-alifm@linux.ibm.com>
- <20260922171756.920-2-alifm@linux.ibm.com>
- <2ee98743-546b-4726-904a-6fe828dbb175@linux.ibm.com>
- <28cc3141-6db8-418d-bd7f-5ed6efe51a01@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <28cc3141-6db8-418d-bd7f-5ed6efe51a01@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: U3Wem6qtNTivYIzOrmOAixz-YKQwnQOy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA2MiBTYWx0ZWRfX5+I2GWE2MMBG
- 6KQT47o7Z/N0uL4QZEVjR68y+n2X1Pluv99mNJ3BmQs+hvsOvVOjh41Ka+aA+YRBRoOEACfAe0Y
- 9G3wexkuzK6MDCioNwRma36Cg6Y8z+BHc0xwR6vRxRO3NrDkaSub0bSHl7nkaSa0oBqkmQfCXBU
- /9e37qV9UuVHFfOzEYlDfalfLMbl8S1IWpDg2Obtd3WjouRJ2doKooRfJA8uFwaKxScsqq8yP9d
- Ngnj5ndZV9WJnQe2DlSdEV8yHtJmayLtJlzR0aTW1q4icgtIclc6Dl5celpXMN57hEzn4Cj6vIL
- XJbCitm1qom8HdnnT9phdoIKzX7XnjgAmDyypUPb9EB53CFDdhrxnfN+JFJ/S1vjgDoU3sHbJed
- 75+hfrBkiegt2Th4n+rydNdJrtdP+q/Re7Ame9fNzc7PdnL/V2geoQ8I1acfyO553UoyMxnA69G
- 2fDLKyUii7KRmjlL4HA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA2MiBTYWx0ZWRfXzLB8bsS+TAqa
- 3WJ7CBfTgPFmK8QqbmsFJ+aKNKa2TCL5MvNOkfW8NJ1sSJ4Y/pyinv3kCyhy5QeLg/0ZDtFXY3Q
- b0iS9hGjm7kmI0eIdGkQHSOLAgKcOFI=
-X-Authority-Analysis: v=2.4 cv=EY5d0/mC c=1 sm=1 tr=0 ts=6abe7fa3 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=P-IC7800AAAA:8
- a=Y8FCvOAAzpBorN9fmocA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-GUID: U3Wem6qtNTivYIzOrmOAixz-YKQwnQOy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1015
- malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010062
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,90 +116,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/26 1:46 PM, Farhan Ali wrote:
-> 
-> On 9/30/2026 9:30 AM, Matthew Rosato wrote:
->>> +static int s390_pci_get_feature_err(VFIOPCIDevice *vfio_pci,
->>> +                                    PciCcdfErr *ccdf,
->>> +                                    uint32_t ccdf_err_length,
->>> +                                    Error **errp)
->>> +{
->>> +    ERRP_GUARD();
->>> +    int ret;
->>> +    size_t total_size;
->>> +    struct vfio_device_feature_zpci_err *err;
->>> +    g_autofree void *buf = NULL;
->>> +    g_autofree struct vfio_device_feature *feature = NULL;
->>> +
->>> +    total_size = sizeof(*feature) + sizeof(*err);
->>> +    feature = g_malloc(total_size);
->>> +    feature->argsz = total_size;
->>> +    feature->flags = VFIO_DEVICE_FEATURE_GET |
->>> VFIO_DEVICE_FEATURE_ZPCI_ERROR;
->>> +
->>> +    buf = g_malloc(ccdf_err_length);
->>> +    err = (void *)feature->data;
->>> +    err->data = (uint64_t)buf;
->>> +    ret = vfio_device_get_feature(&vfio_pci->vbasedev, feature);
->>> +
->>> +    if (ret) {
->>> +        error_setg(errp, "Failed feature get
->>> VFIO_DEVICE_FEATURE_ZPCI_ERROR"
->>> +                   " (rc=%d)", ret);
->> I see this was changed from last version, but doesn't this fall under
->> 'avoid useless error object creation and destruction' described in
->> qapi/error.h for the -ENOMSG return value?
+marcandre.lureau@redhat.com writes:
+
+>> Reject invalid values such as help= and help=foo.
+>> 
+>> Reject valid, but not applicable values such has help=on and help=off.
+>> 
+>> To achieve the above:
+>> 
+>> Add an 'is_help' member to QemuOpt so that information can be stored
+>> while creating the option. This allows moving the help handling out of
+>> get_opt_name_value(), which is necessary because that function doesn't
+>> take an Error.
+>> 
+>> At the caller, opts_do_parse(), let the QemuOpt be created with the
+>> name and value fields as they come out of get_opt_name_value().
+>> 
+>> With a new routine, validate the new QemuOpt against the 'help'
+>> parameter rules (to fix the bug), then let the existing opt_validate()
+>> reject any NULL values. The two validations need to be separate
+>> because in between there needs to be a setting of opt->str to "on"
+>> whenever the special short-form parameters require it.
+>> 
+>> The "on" value is required because of the conversions of QemuOpts
+>> from/to QDict since QDict cannot take a NULL value. The conversions
+>> also cause opt_validate() to be reentrant via qemu_opt_set(), so the
+>> initial validation of 'help' needs to be out of that function,
+>> otherwise there's no way to distinguish an user-set help=on vs. the
+>> help=on set for compatibility with QDict (the "in between" part from
+>> the previous paragraph).
+>> 
+>> The passing around of help_wanted becomes redundant since opt->is_help
+>> can be checked throughout. Remove that argument everywhere.
+>> 
+>> Stop returning false from opts_do_parse() when is_help=true. Only
+>> return false when there's an error and let the callers decide what to
+>> do when is_help=true. However, still break the loop when is_help=true
+>> to keep the behavior of stopping parsing once the 'help' parameter is
+>> seen.
+>> 
+>> At qemu_opts_parse_noisily(), due to the change of return value
+>> mentioned above, it becomes clear when to report the error and when to
+>> print the help text. Use qemu_opt_has_help_opt() to obtain the
+>> is_help information from QemuOpt.
+>> 
+>> Since get_opt_name_value() can now return while value=NULL, the other
+>> two callsites need to be updated. At opts_parse_id(), assert value !=
+>> NULL. At has_help_option(), use the NULL value to keep the existing
+>> behavior of rejecting anything but 'help'.
+>> 
+>> The unit tests are updated accordingly.
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> Message-ID: <20260930221105.2262063-5-farosas@suse.de>
 >>
->> We create it here only to explicitly destroy it from the caller.
->>
->> Can we instead switch to the negative/non-negative return structure with
->> something like...
->>
->> <0: error as defined (so we set errp)
->> 0-N: number of errors to process (and we do not set errp)
->>
->> For the non-negative case we can realistically only have 0 (-ENOMSG maps
->> to this) or 1 (the feature found something - it is reporting 1 error to
->> handle).
-> 
-> I was trying to follow what I assumed to be existing pattern for
-> handling expected errno[1]. I am okay to change it, but I would like to
-> understand what is the preferred approach here.
-> 
-> [1] https://elixir.bootlin.com/qemu/v11.1.2/source/hw/vfio/iommufd.c#L408
-> 
-AFAICT the example you provided is using a shared routine where in some
-cases the errp generated for -EINVAL is actually propagated vs just
-thrown out immediately. (see line 483 of the same reference)
+>> diff --git a/include/qemu/option_int.h b/include/qemu/option_int.h
+>> index 5dd9a5162db9..c31bd6e3aba1 100644
+>> --- a/include/qemu/option_int.h
+>> +++ b/include/qemu/option_int.h
+>> @@ -32,6 +32,7 @@
+>>  struct QemuOpt {
+>>      char *name;
+>>      char *str;
+>> +    bool is_help;
+>>  
+>>      const QemuOptDesc *desc;
+>>      union {
+>> diff --git a/tests/unit/test-qemu-opts.c b/tests/unit/test-qemu-opts.c
+>> index 07ede509204a..7cedfba33278 100644
+>> --- a/tests/unit/test-qemu-opts.c
+>> +++ b/tests/unit/test-qemu-opts.c
+>> @@ -777,16 +777,15 @@ static void test_has_help_option_with_value(void)
+>>      };
+>>      int i;
+>>      QemuOpts *opts;
+>> +    Error *err = NULL;
+>>  
+>>      for (i = 0; i < ARRAY_SIZE(test); i++) {
+>>          /* reject all */
+>>          g_assert_cmpint(has_help_option(test[i].params), ==, false);
+>>  
+>> -        /* accept all */
+>> -        opts = qemu_opts_parse(&opts_list_03, test[i].params, false,
+>> -                               &error_abort);
+>> -        g_assert_cmpint(qemu_opt_has_help_opt(opts), ==, true);
+>> -        qemu_opts_del(opts);
+>> +        opts = qemu_opts_parse(&opts_list_03, test[i].params, false, &err);
+>> +        error_free_or_abort(&err);
+>> +        g_assert(!opts);
+>>      }
+>>  }
+>>  
+>> diff --git a/util/qemu-option.c b/util/qemu-option.c
+>> index 8ac848bbc06f..483e6cbf70a1 100644
+>> --- a/util/qemu-option.c
+>> +++ b/util/qemu-option.c
+>> @@ -331,7 +331,7 @@ bool qemu_opt_has_help_opt(QemuOpts *opts)
+>>      QemuOpt *opt;
+>>  
+>>      QTAILQ_FOREACH_REVERSE(opt, &opts->head, next) {
+>> -        if (is_help_option(opt->name)) {
+>> +        if (opt->is_help) {
+>>              return true;
+>>          }
+>>      }
+>> @@ -499,6 +499,7 @@ static QemuOpt *opt_create(QemuOpts *opts, const char *name, char *value)
+>>      opt->name = g_strdup(name);
+>>      opt->str = value;
+>>      opt->opts = opts;
+>> +    opt->is_help = is_help_option(name);
+>>      QTAILQ_INSERT_TAIL(&opts->head, opt, next);
+>>  
+>>      return opt;
+>> @@ -760,12 +761,10 @@ void qemu_opts_print(QemuOpts *opts, const char *separator)
+>>  
+>>  static const char *get_opt_name_value(const char *params,
+>>                                        const char *firstname,
+>> -                                      bool *help_wanted,
+>>                                        char **name, char **value)
+>>  {
+>>      const char *p;
+>>      size_t len;
+>> -    bool is_help = false;
+>>  
+>>      len = strcspn(params, "=,");
+>>      if (params[len] != '=') {
+>> @@ -776,22 +775,6 @@ static const char *get_opt_name_value(const char *params,
+>>              p = get_opt_value(params, value);
+>>          } else {
+>>              p = get_opt_name(params, name, len);
+>> -
+>> -            /*
+>> -             * Short-form flags (i.e. without any value) are not
+>> -             * supported, except for two cases:
+>> -             */
+>> -
+>> -            /* the 'help' or '?' flag */
+>> -            is_help = is_help_option(*name);
+>> -            if (is_help) {
+>> -                *value = g_strdup("on");
+>> -            }
+>> -
+>> -            /* a missing, non-implicit key, i.e. a single comma ',' */
+>> -            if (g_str_equal(*name, "") && *p == ',') {
+>> -                *value = g_strdup("on");
+>> -            }
+>>          }
+>>      } else {
+>>          /* found "foo=bar,more" */
+>> @@ -802,18 +785,46 @@ static const char *get_opt_name_value(const char *params,
+>>      }
+>>  
+>>      assert(!*p || *p == ',');
+>> -    if (help_wanted && is_help) {
+>> -        *help_wanted = true;
+>> -    }
+>>      if (*p == ',') {
+>>          p++;
+>>      }
+>>      return p;
+>>  }
+>>  
+>> +/*
+>> + * Short-form parameters (i.e. without any value) are not
+>> + * supported, except for two cases:
+>> + *
+>> + * - the 'help' or '?' flag
+>> + * - the empty, non-implicit key combined with an empty
+>> + *   non-implicit value, i.e. a single comma ','
+>> + *
+>> + * The rest of the code is not prepared to deal with empty values, set
+>> + * the special cases to "on".
+>> + */
+>> +static bool opt_short_form_compat(QemuOpt *opt, Error **errp)
+>> +{
+>> +    if (opt->str) {
+>> +        /*
+>> +         * Validate the 'help' parameter at this point because the
+>> +         * opt_validate() routine can be reentrant and this very check
+>> +         * would fail once the "on" value is set below.
+>> +         */
+>> +        if (opt->is_help) {
+>> +            error_setg(errp, "Parameter '%s' doesn't take any values",
+>> +                       opt->name);
+>> +            return false;
+>> +        }
+>> +    } else {
+>> +        if (opt->is_help || g_str_equal(opt->name, "")) {
+>> +            opt->str = g_strdup("on");
+>> +        }
+>> +    }
+>> +    return true;
+>> +}
+>> +
+>>  static bool opts_do_parse(QemuOpts *opts, const char *params,
+>> -                          const char *firstname,
+>> -                          bool *help_wanted, Error **errp)
+>> +                          const char *firstname, Error **errp)
+>>  {
+>>      const char *p;
+>>      QemuOpt *opt;
+>> @@ -822,10 +833,7 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
+>>          g_autofree char *option = NULL;
+>>          g_autofree char *value = NULL;
+>>  
+>> -        p = get_opt_name_value(p, firstname, help_wanted, &option, &value);
+>> -        if (help_wanted && *help_wanted) {
+>> -            return false;
+>> -        }
+>> +        p = get_opt_name_value(p, firstname, &option, &value);
+>>          firstname = NULL;
+>>  
+>>          if (!strcmp(option, "id")) {
+>> @@ -833,10 +841,15 @@ static bool opts_do_parse(QemuOpts *opts, const char *params,
+>>          }
+>>  
+>>          opt = opt_create(opts, option, g_steal_pointer(&value));
+>> -        if (!opt_validate(opt, errp)) {
+>> +        if (!opt_short_form_compat(opt, errp) ||
+>> +            !opt_validate(opt, errp)) {
+>
+> opt_validate() will reject "help" as an invalid parameter beofre the is_help check below. Change it to?:
+>
 
-In your case, this isn't a shared routine and the errp associated with
--ENOMSG will never be used.
+It does already happen before the series, I'll add a test case for that.
 
-But anyway, I think we're at a point of semantics.
+Is it something we want to fix? The situation is that 'help' was present
+but the QemuOptsList declares a set of parameters of which 'help' is a
+part of. I'm not sure if this is an oversight in that it wants to reject
+unlisted parameters, but 'help' should have been special-cased or if the
+API is that options that list a set of parameters must also list the
+'help'.
 
-You made this change based on [a] from include/qapi/error.h:
- * - On success, the function should not touch *errp.
+>     opt = opt_create(opts, option, g_steal_pointer(&value));
+>     if (!opt_short_form_compat(opt, errp)) {
+>         qemu_opt_del(opt);
+>         return false;
+>     }
+>     if (opt->is_help) {
+>         return true;
+>     }
+>     if (!opt_validate(opt, errp)) {
+>         qemu_opt_del(opt);
+>         return false;
+>     }
+>
+>>              qemu_opt_del(opt);
+>>              return false;
+>>          }
+>> +
+>> +        if (opt->is_help) {
+>> +            return true;
+>> +        }
+>>      }
+>>  
+>>      return true;
+>> @@ -850,8 +863,9 @@ static char *opts_parse_id(const char *params)
+>>          g_autofree char *name = NULL;
+>>          g_autofree char *value = NULL;
+>>  
+>> -        p = get_opt_name_value(p, NULL, NULL, &name, &value);
+>> +        p = get_opt_name_value(p, NULL, &name, &value);
+>>          if (!strcmp(name, "id")) {
+>> +            assert(value);
+>>              return g_steal_pointer(&value);
+>>          }
+>>      }
+>> @@ -862,14 +876,13 @@ static char *opts_parse_id(const char *params)
+>>  bool has_help_option(const char *params)
+>>  {
+>>      const char *p;
+>> -    bool ret = false;
+>>  
+>>      for (p = params; *p;) {
+>>          g_autofree char *name = NULL;
+>>          g_autofree char *value = NULL;
+>>  
+>> -        p = get_opt_name_value(p, NULL, &ret, &name, &value);
+>> -        if (ret) {
+>> +        p = get_opt_name_value(p, NULL, &name, &value);
+>> +        if (is_help_option(name) && !value) {
+>>              return true;
+>>          }
+>>      }
+>> @@ -886,11 +899,11 @@ bool has_help_option(const char *params)
+>>  bool qemu_opts_do_parse(QemuOpts *opts, const char *params,
+>>                         const char *firstname, Error **errp)
+>>  {
+>> -    return opts_do_parse(opts, params, firstname, NULL, errp);
+>> +    return opts_do_parse(opts, params, firstname, errp);
+>>  }
+>>  
+>>  static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
+>> -                            bool permit_abbrev, bool *help_wanted, Error **errp)
+>> +                            bool permit_abbrev, Error **errp)
+>>  {
+>>      const char *firstname;
+>>      char *id = opts_parse_id(params);
+>> @@ -905,7 +918,7 @@ static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
+>>          return NULL;
+>>      }
+>>  
+>> -    if (!opts_do_parse(opts, params, firstname, help_wanted, errp)) {
+>> +    if (!opts_do_parse(opts, params, firstname, errp)) {
+>>          qemu_opts_del(opts);
+>>          return NULL;
+>>      }
+>> @@ -923,7 +936,7 @@ static QemuOpts *opts_parse(QemuOptsList *list, const char *params,
+>>  QemuOpts *qemu_opts_parse(QemuOptsList *list, const char *params,
+>>                            bool permit_abbrev, Error **errp)
+>>  {
+>> -    return opts_parse(list, params, permit_abbrev, NULL, errp);
+>> +    return opts_parse(list, params, permit_abbrev, errp);
+>>  }
+>>  
+>>  /**
+>> @@ -939,17 +952,16 @@ QemuOpts *qemu_opts_parse_noisily(QemuOptsList *list, const char *params,
+>>  {
+>>      Error *err = NULL;
+>>      QemuOpts *opts;
+>> -    bool help_wanted = false;
+>>  
+>> -    opts = opts_parse(list, params, permit_abbrev,
+>> -                      opts_accepts_any(list) ? NULL : &help_wanted, &err);
+>> +    opts = opts_parse(list, params, permit_abbrev, &err);
+>>      if (!opts) {
+>> -        assert(!!err + !!help_wanted == 1);
+>> -        if (help_wanted) {
+>> -            qemu_opts_print_help(list, true);
+>> -        } else {
+>> -            error_report_err(err);
+>> -        }
+>> +        error_report_err(err);
+>> +        return NULL;
+>> +    }
+>> +
+>> +    if (qemu_opt_has_help_opt(opts) && !opts_accepts_any(list)) {
+>> +        qemu_opts_print_help(list, true);
+>
+> qemu_opts_del(opts) missing
 
-And you've done that successfully.
-
-But I'm complaining about [b] from the same file:
- * - Whenever practical, also return a value that indicates success /
- *   failure.  This can make the error checking more concise, and can
- *   avoid useless error object creation and destruction.
-
-AFAIU, the point is to always have an errp when there was a failure, and
-to not have an errp when there is a success.
-
-Do you consider the -ENOMSG return from the ioctl a success or a
-failure?  It seems like a success to me (the ioctl worked, there was
-just nothing to get), but you're treating it as an error case.  That
-satisfies [a] but I'm suggesting it violates [b] since you create an
-errp that is guaranteed to never be used.
-
-So as for preferred approach for this: I would prefer not to create
-Error objects that are guaranteed not to get used, but I will also not
-reject the series on that alone.
-
-Thanks,
-Matt
+Indeed. Thanks!
 
