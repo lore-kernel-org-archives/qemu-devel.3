@@ -4,126 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32FABCA5FA5
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 07:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38986CA5FB3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 07:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCBPz-0002Pn-F5; Thu, 01 Oct 2026 03:41:27 -0400
+	id 1xCBbR-0003t1-05; Thu, 01 Oct 2026 03:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1xCBPx-0002PS-It; Thu, 01 Oct 2026 03:41:26 -0400
-Received: from smtpout2.mo536.mail-out.ovh.net ([51.210.91.11])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xCBbO-0003sJ-Nf
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 03:53:14 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1xCBPv-0006lc-2u; Thu, 01 Oct 2026 03:41:25 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [79.137.60.221])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4hwP3x5QmVz89l2;
- Thu,  1 Oct 2026 07:41:17 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu,  1 Oct 2026 07:41:17 +0000 (UTC)
-Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.168.21])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hwP3x4HLzz6MfD; Thu,  1 Oct 2026 07:41:17 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
- (Authenticated sender: clg@kaod.org)
- by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id DCC299417BB; 
- Thu,  1 Oct 2026 07:41:15 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-99G00325a3a1c4-8f76-4608-a16e-e59d639d4e31,
- B87720B9A20974DAEE7745F8F0A851FD039C1C56) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <330f9a96-4508-4db1-a8a0-fa36c57ed093@kaod.org>
-Date: Thu, 1 Oct 2026 09:41:15 +0200
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xCBbM-0007xj-BP
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 03:53:14 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6916xOf01932342
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 07:53:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ jobQL0NL7gyPfwCx0thkR7MpsCc51neupv1GL6WP+4U=; b=Qas5SBj5qkPbPjtv
+ OCfWfyH9ey9nACVVjS01eqDdaEHHKgXEsstRNtggMZtvtnHX/8ipcXYci/TdijNh
+ b8ZWZMbmQVian7SQ9i14VL9Isc8KluqcqvPWJF9BOX6LDARZem92jhuNzM/iUWN3
+ WEnKBuvJtSofygJnEylSMr/pvEY/4quVXMGmsJpTClA1D5y4gNnVS4451oiuqTc2
+ wVlhk/ZsvsaYtYyTzTMKl5mQYTv4m1nW9wYhkFcuO0N/vx4RfcREFlbZ4hL0Aqfo
+ 3StcRYMUWDDjpziwq29hygogT2PrafW5xxFrLkAv5VDFS7GFl58XP+xuvy2HXUrD
+ DvWH9w==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1bh59pc6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 07:53:09 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-934963b2bc0so1602430385a.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 00:53:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1790841188; x=1791445988; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jobQL0NL7gyPfwCx0thkR7MpsCc51neupv1GL6WP+4U=;
+ b=E84nirQxJAzDeCEeI7T6dOk/3iGyknQKjlS4DQLddHjKUGQqi1gE+769/XORCqJmic
+ s5k6LjMYPLHBxlWvVMnzH51qCAYYVNZGgUFsZwrCh6hpaMlxZok9qH5HWPI18hjdkaR8
+ /tavJ/j2XZcsZG6UJqqlCrBWNwBRmZLpEbMa1mk6w/SDnESggo6oPWlsYMR4CXolMQpq
+ iQartBLbbYBjh4ocaXCNtMcqm0ebnIrMJTgCPI22sj2wFxd0Gj4N9YCvgEsYuAZ85DU0
+ 7ftmBKv41eRLJgAntMo2mC2SN5yFqGlvs/fN9vni8om/q1qXInjCJqOg+VvIbAJo2h6k
+ Xsbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790841188; x=1791445988;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jobQL0NL7gyPfwCx0thkR7MpsCc51neupv1GL6WP+4U=;
+ b=MZgCDJwQLcomMCHkwJRYoHCqZ0NLJly+VT9R51/Nh4w01aBcn3fv0/Iac8q/v6Ct1J
+ K7bcttyaKas8YYaH6Fjvj5z4pIrFJMXllb180/kuUtByq0eIHwzokgbGN/vAsDtEXGCn
+ Qr26PiwyfeDBk1DqsjmOEUZyMzU7+dp7xJLQQCDh5JskWCT4uAyGeARD5JhKxCiF27cT
+ jVI5fKsF658mYx4d6DBAZD4leMpIvKWXZOS2i2Kh/8e1lZbEXhpoSVgPNFc3BVLMX5AW
+ liPMnQIOZeKzN42R+iq6xWCyG2W4i4WJTd0kVOkOd+vkb/6QamJnCbLwXbyYHnwvo52f
+ dbxQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwScfJ4IamcF+34nIitEuih6blYfq4rfu++5kOiAX6Yun33ZhO3hOq9AuCZHnlRbKKW2aT9SyrbFVaT@nongnu.org
+X-Gm-Message-State: AFuF++n5ok/604Tti+nN5che2kdGN/o0eDOk/pZ5wTLqkmgd0Jee7r0I
+ /xQEYRvzfjfuZuTQ9wR1DSXNkDHPbafJRpYiRBv2fEz1nQunD1/sh7ZC6b0A48c/0UwbmswwvcT
+ irYumzSoA43nO00aXyAjeZAnkuIxAcgHMuj0aP9gZPsgoqxiPvLhHOHHfKA==
+X-Gm-Gg: AYBFou32gC0HAb2cWDZ+UHnY0AE25ClMDxEkkFCF9NAJaKVgjT4KKmptvCegtKg+JLO
+ /9JQFS8H8J1UMa4I0Uv+4reMMDMBDddGJH45pa6YVJo1Ky+a4ym2uMRdm7M/yqCkrjYuCxvaqso
+ DV/TFFOUsJxBonMCU3vzmGKgS6vLPbU2XRLVJ1ANRLyKmp5g6cb0lZi4cWy2NvxmJ05PhDOV/Ri
+ vTT0wSoLgoM/C7+HAQZvG3eKySwca8taat+I1vlYl8YT8Uc/ElTn/JVDCg2zT7eZxe4XYfhrAzb
+ kY8+Vv6Z4+FgQ8wmpD1bUVhKi2euDPahUk7GiC7ej+qe768CTy+VeWTAYvkjJ3VnmJr5l6sI8h1
+ EuxXa3k/uF7nKmQ/kxE+dOKwA+B6rnwzG0A==
+X-Received: by 2002:a05:620a:6413:b0:93c:2356:4e21 with SMTP id
+ af79cd13be357-93cac1ab15emr599015085a.41.1790841188332; 
+ Thu, 01 Oct 2026 00:53:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:6413:b0:93c:2356:4e21 with SMTP id
+ af79cd13be357-93cac1ab15emr599012585a.41.1790841187775; 
+ Thu, 01 Oct 2026 00:53:07 -0700 (PDT)
+Received: from [192.168.68.100] ([187.10.234.20])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93cb65c1705sm160673385a.47.2026.10.01.00.53.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 00:53:07 -0700 (PDT)
+Message-ID: <ba7078a2-2252-4c11-a820-535848551ab9@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 04:53:02 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/11] hw/arm/aspeed_ast2400: Use unimp array and table
- for unimplemented devices
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260930072501.2612119-1-jamin_lin@aspeedtech.com>
- <20260930072501.2612119-2-jamin_lin@aspeedtech.com>
- <941d7bb6-3205-44cf-8d76-ffbb322a6f4e@oss.qualcomm.com>
- <0cd87753-da91-44ed-a629-43099bfb820d@kaod.org>
- <1197c1ca-14d5-48c1-b497-0c03a781c258@oss.qualcomm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <1197c1ca-14d5-48c1-b497-0c03a781c258@oss.qualcomm.com>
+Subject: Re: [PATCH 4/5] hw/riscv/atlantis: Add machine property to select
+ default uart
+To: Portia Stephens <portias@oss.tenstorrent.com>, qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Joel Stanley <joel@jms.id.au>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260929031644.1016354-1-portias@oss.tenstorrent.com>
+ <20260929031644.1016354-5-portias@oss.tenstorrent.com>
+ <706bc560-ee8d-4529-8ece-c849fa8a4602@oss.qualcomm.com>
+ <74c91fe7-c3cc-4cb8-af4c-d406851a3690@oss.tenstorrent.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <74c91fe7-c3cc-4cb8-af4c-d406851a3690@oss.tenstorrent.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 1052997888192588860
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFiFQ/7g89ddLsW7eNeMKyl9txn8OTlxJ+ljJtiJG/8Q5V5I/bs95+UaUI3bMUDFTKIU0PtphCtIXpp52k8P7ruTZ73Xgq/ibnR4Mn+ZZE5eHdj3g7H09qxNIQipS7OkEeLr9vjN7On2RAI1vt0RzuwdmnFr6FRH7BzrNEXCZecquKx2q/th/dLFwDwRaTd5psvSyGSSE19hl+QgWVjugtlqPyoc9srbN1ZVmFxNywcRboueivOGLKoatPVl6N+ZnfCF7LqHOC1l+pWOUdZ04dS2SP5GhqTyWlqodlduZ3fsZ2hQ2liLaJC30YwFt6KnEMqeqq3UHdaWEDnNqF2a4jKQM7ZGt+xZArC1fqet7FwmFPaALpsTAnCQIJtzj+IKTwxR/OamLqh5PusSWiF8wtkPm+fQOgtiG27r7RQboHXKiCik2ZYTswiZorTPa5zS6tdV/ltBtAWG5NA4DIvitHLHnsFw/LWbAAvgSR26JKXjMer80MUIlJltM86Gp5tZtHDuEwTsqdmAIbkI63zQfqZY1p7B/8b47i7eNzKIEUhwuEIbawPcfPPaaXFtAKxaIq9gtPKJhS3dsuHxAnt3fAj1z5hTuWS05OLnAsexzO43aQCqDjtCOclY+Touy9cNGcQOlq9cGlAtbTVfWctOmIPsWxiokbY8sfM+zBlvRUiyg
-DKIM-Signature: a=rsa-sha256; bh=uMfARK20eBcOEeEbvRRqwd9flngVD2Gsf4oq3y9DkbY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1790840479; v=1;
- b=DSGbTDRDicaR46puhb+8AigPWQ/F5nKSHQ0JhKTBIEmpLFNvcjyPNRCMSIX0/Lk5RGp26oty
- rH1a7vHyX7xJswq0GY6v1d2Bv5pDMUv2ZxxlZiQIEn2XNIOxkfIL7HuJEWWJSkf8Fx2ile9N6z5
- 1YhvKGEBNnSutQSuGFh6eujV3vx5+SRnQXCuo9R3J5KbiUlnzpBxIi6WI1Nw19KQYNIx7f1ROh5
- ++C0XhcvKnEQKFcUR67kj6TBb0r3/nHTQKEsyyt6hPOL2MEO4q4y4zsnU788JS4MoYID11QzzE+
- qMFcb2Ab7wztVejmMZ4lvqYbDBH8owesq3C6YwkxoaGHw==
-Received-SPF: pass client-ip=51.210.91.11; envelope-from=clg@kaod.org;
- helo=smtpout2.mo536.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: QQ1gL-FdrF3Z3iSECTY7IWj5kKa3M4Cl
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDAzMSBTYWx0ZWRfXyucX766dTaCB
+ vhPBifb6Arxpr5F2TR/u6dxteLXwrin/hzDF28nGaJjbNh2gSxdppBaGPNuIARy+UQTBY39Znxh
+ 7ORartu4tcqC3CEyqlwNTN7q9m2uFoQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDAzMSBTYWx0ZWRfXwxqCmJYC8e5u
+ opcXwSDEllAtw8I2NAtb1DjCGkrXNiSXwKz8f4xZX86kStx5AgTiy0/1qjirDzxQiawUJ3BRrxP
+ F4eOwknhkUaWodBZouP69pe2p+yY5rzlBr4GZbjb0j/4ssmhhBXzPL/VOlvK9VKpMBYcmvPEOJv
+ 8FybNQDKmh6a5wLoErLsy1WNNp5ENIUn8S1RREJCsd3IRWzds8kK2+6eticZv0UKiHBghT0oA8J
+ 82ANnaNxGWue/4AP3UtpM/+VDEMJPj7/ca7FwF0r4sDCHZ6Em7UpPNV/8OHJk4o1fUyio/nu+qs
+ Zffm6e8N2sscnCN6dVrwWYOTyFiLK54ZGExp0ztWG4AGxDaiFBkUDqRptdi0dD4pNC20tywItPj
+ WsCljNVmeoQYZsizyW3Er4aQYKV5fGJQftZbe0uEBWk0jq33e/p1aFMPSvF+TIgA3eYrL5HjKWE
+ r6uTmrd2GgxRar5oN2Q==
+X-Authority-Analysis: v=2.4 cv=NuxE4MdJ c=1 sm=1 tr=0 ts=6abe1165 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=jbqyKmyYbxlRs/MVMa3Ccg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=t9496tuAAAAA:8 a=lgtMTc-wgasgzdguBScA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=4wQ91nGE5lQcD7eh5OX0:22
+X-Proofpoint-ORIG-GUID: QQ1gL-FdrF3Z3iSECTY7IWj5kKa3M4Cl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610010031
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,37 +168,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/30/26 14:16, Philippe Mathieu-Daudé wrote:
-> On 30/9/26 13:50, CÃ©dric Le Goater wrote:
->>> Note to Peter: I really think keeping duplicating the
->>> UnimplementedDeviceConfig structure is a basic software
->>> development antipattern. Could you reconsider your objection?
->> What's the background ?
+
+
+On 10/1/2026 12:14 AM, Portia Stephens wrote:
 > 
-> I think that was discussed on IRC, the only ref on the list is:
-> https://lore.kernel.org/qemu-devel/CAFEAcA_ob6mHqfAAM9iAMae5vfxaYhmcqkk-gJH+s1mHuvFp8g@mail.gmail.com/
+> On 1/10/2026 12:48 AM, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 9/29/2026 12:16 AM, portias@oss.tenstorrent.com wrote:
+>>> From: Portia Stephens <portias@oss.tenstorrent.com>
+>>>
+>>> The Atlantis SoC has 5 UARTs. This adds a machine property to set
+>>> which uart is on the first serial interface. This is the same pattern
+>>> that is used by aspeed. The rest of the uart's will be added in
+>>> sequential order starting at serial interface 1.
+>>>
+>>> The default value is uart1 which means the Ascalon console will be on
+>>> serial interface 0 by default.
+>>>
+>>> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+>>> ---
+>>
+>> The code LGTM but I wonder if we can make it simpler.
+>>
+>> IIUC there is a new ams->uart_chosen being added that holds the numeric ID of
+>> the first UART.  Then there's a new string property called "console" that needs
+>> to be on the format "uartN".  To do that there's a string parsing code in
+>> tt_atlantis_set_console() to guarantee it.  And there's code to guarantee that
+>> N is also in an acceptable range.  Aside from parsing N the 'console' string is
+>> not being used.
+>>
+>> I believe there's a good case here to make "console" an uint32_t property instead,
+>> receiving N, getting rid of all the string parsing code.
+>>
+>> Also, there's a couple of instances of this:
+>>
+>>
+>> int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+>>
+>>
+>> You can avoid this ternary by initializing ams->uart_chosen  = TT_ATL_UART1; during
+>> tt_atlantis_soc_init().  Coupled with the parsing code from the "console" property
+>> there is a guarantee that ams->uart_chosen will always be an acceptable value.
 > 
-> create_unimplemented_device() calls qdev_create() and allocate on the
-> heap, my motivation was to have another helper for in-place init (when
-> the UnimplementedDeviceState state is embedded in the parent). Now we
-> ended with such helpers like aspeed_mmio_map_unimplemented() which
-> realize in place, make_unimp_dev() and create_unimp() init and realize
-> in place and Jamin adds yet another pattern. While all are valids,
-> I'd rather unify.
+> 
+> uart_chosen is part of the machine class, so it would need to be initialized in the machine_init.  The machine property is set from user inputs prior to the machine_init being called.  Initializing uart_chosen in the machine_init will just overwrite the user input value. There is a object_property_set_default_uint() which allows setting a default value for a machine property , I have used this instead in v2 which has the same end result.
 
-Could an array such as  :
+I guess I forgot I was talking about a machine property in the middle of my reply
+:D
 
-static const AspeedUnimpDevice aspeed_soc_ast2700_unimp_devs[] = {
-     { "dpmcu",  "aspeed.dpmcu",  ASPEED_DEV_DPMCU,  0x00040000 },
-     { "iomem",  "aspeed.io",     ASPEED_DEV_IOMEM,  0x00FE0000 },
-     { "iomem0", "aspeed.iomem0", ASPEED_DEV_IOMEM0, 0x01000000 },
-     { "iomem1", "aspeed.iomem1", ASPEED_DEV_IOMEM1, 0x01000000 },
-};
+Yes, using set_default_uint() will have the desired effect (set a default value for
+uart_chosen that users can overwrite later) and you should use that.
 
-be defined at the class level of the SoC and handled automatically ?
 
-I guess would need some kind on common SoC model in that case.
+Cheers,
+Daniel
 
-C.
+> 
+> 
+>>
+>>
+>>
+>> Thanks,
+>> Daniel
+>>
+>>
+>>>   hw/riscv/tt_atlantis.c         | 77 ++++++++++++++++++++++++++++++----
+>>>   include/hw/riscv/tt_atlantis.h |  1 +
+>>>   2 files changed, 69 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+>>> index d567ec1155..32ba755bbf 100644
+>>> --- a/hw/riscv/tt_atlantis.c
+>>> +++ b/hw/riscv/tt_atlantis.c
+>>> @@ -420,6 +420,29 @@ static void load_fdt(TTAtlantisState *ams)
+>>>       create_fdt_memory(ms->fdt, &ams->soc);
+>>>   }
+>>>   +static inline int tt_atlantis_uart_index(int uart_dev)
+>>> +{
+>>> +    return uart_dev - TT_ATL_UART0;
+>>> +}
+>>> +
+>>> +static void tt_atlantis_connect_serial_hds_to_uarts(TTAtlantisState *ams)
+>>> +{
+>>> +    TTAtlantisSoCState *s = &ams->soc;
+>>> +
+>>> +    int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+>>> +    int uart_index = tt_atlantis_uart_index(uart_chosen);
+>>> +
+>>> +    qdev_prop_set_chr(DEVICE(&s->uart[uart_index]), "chardev", serial_hd(0));
+>>> +
+>>> +    for (int i = 1, uart = 0; i < TT_ATL_NUM_UARTS; uart++) {
+>>> +        if (uart == uart_index) {
+>>> +            continue;
+>>> +        }
+>>> +        qdev_prop_set_chr(DEVICE(&s->uart[uart]), "chardev", serial_hd(i++));
+>>> +    }
+>>> +}
+>>> +
+>>> +
+>>>   static void tt_atlantis_machine_done(Notifier *n, void *data)
+>>>   {
+>>>       TTAtlantisState *ams = container_of(n, TTAtlantisState, machine_done);
+>>> @@ -482,11 +505,6 @@ static void tt_atlantis_machine_done(Notifier *n, void *data)
+>>>                                 fdt_load_addr);
+>>>   }
+>>>   -static inline int tt_atlantis_uart_index(int uart_dev)
+>>> -{
+>>> -    return uart_dev - TT_ATL_UART0;
+>>> -}
+>>> -
+>>>   static void tt_atlantis_soc_init(Object *obj)
+>>>   {
+>>>       TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
+>>> @@ -590,10 +608,6 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
+>>>       memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
+>>>                                   &s->bootrom);
+>>>   -    /* UART1, the soc console (UART0 is for the boot microcontroller */
+>>> - qdev_prop_set_chr(DEVICE(&s->uart[tt_atlantis_uart_index(TT_ATL_UART1)]),
+>>> -                      "chardev", serial_hd(0));
+>>> -
+>>>       for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
+>>>           SysBusDevice *sbd = SYS_BUS_DEVICE(&s->uart[i]);
+>>>           if (!sysbus_realize(sbd, errp)) {
+>>> @@ -661,6 +675,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>>>                                OBJECT(&ams->soc_memory), &error_abort);
+>>>       object_property_set_link(OBJECT(&ams->soc), "dram", OBJECT(machine->ram),
+>>>                                &error_abort);
+>>> +
+>>> +    /* Map serial interfaces to uart */
+>>> +    tt_atlantis_connect_serial_hds_to_uarts(ams);
+>>> +
+>>>       qdev_realize(DEVICE(&ams->soc), NULL, &error_fatal);
+>>>         /* I2C peripherals: qemu specific */
+>>> @@ -678,6 +696,45 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>>> qemu_add_machine_init_done_notifier(&ams->machine_done);
+>>>   }
+>>>   +static char *tt_atlantis_get_console(Object *obj, Error **errp)
+>>> +{
+>>> +    TTAtlantisState *ams = TT_ATLANTIS_MACHINE(obj);
+>>> +
+>>> +    /* Default to Ascalon console */
+>>> +    int uart_chosen = ams->uart_chosen ? ams->uart_chosen : TT_ATL_UART1;
+>>> +
+>>> +    return g_strdup_printf("uart%d", tt_atlantis_uart_index(uart_chosen));
+>>> +}
+>>> +
+>>> +static void tt_atlantis_set_console(Object *obj, const char *value, Error **errp)
+>>> +{
+>>> +    TTAtlantisState *ams = TT_ATLANTIS_MACHINE(obj);
+>>> +
+>>> +    int val;
+>>> +    int uart_first = tt_atlantis_uart_index(TT_ATL_UART0);
+>>> +    int uart_last = tt_atlantis_uart_index(TT_ATL_UART4);
+>>> +
+>>> +    if (sscanf(value, "uart%d", &val) != 1 || val < 0) {
+>>> +        error_setg(errp, "Bad value for \"uart\" property");
+>>> +        return;
+>>> +    }
+>>> +
+>>> +    if (val < uart_first || val > uart_last) {
+>>> +        error_setg(errp, "\"uart\" should be in range [%d - %d]",
+>>> +                   uart_first, uart_last);
+>>> +        return;
+>>> +    }
+>>> +    ams->uart_chosen = val + TT_ATL_UART0;
+>>> +}
+>>> +
+>>> +static void tt_atlantis_machine_class_props_init(ObjectClass *oc)
+>>> +{
+>>> +    object_class_property_add_str(oc, "console", tt_atlantis_get_console,
+>>> +                                  tt_atlantis_set_console);
+>>> +    object_class_property_set_description(oc, "console",
+>>> +                           "Change the default UART to \"uartX\"");
+>>> +}
+>>> +
+>>>   static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
+>>>   {
+>>>       MachineClass *mc = MACHINE_CLASS(oc);
+>>> @@ -691,6 +748,8 @@ static void tt_atlantis_machine_class_init(ObjectClass *oc, const void *data)
+>>>       mc->block_default_type = IF_VIRTIO;
+>>>       mc->no_cdrom = 1;
+>>>       mc->default_ram_id = "tt_atlantis.ram";
+>>> +
+>>> +    tt_atlantis_machine_class_props_init(oc);
+>>>   }
+>>>     static const TypeInfo tt_atlantis_types[] = {
+>>> diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+>>> index b81b7c8abd..7bd46e9c9b 100644
+>>> --- a/include/hw/riscv/tt_atlantis.h
+>>> +++ b/include/hw/riscv/tt_atlantis.h
+>>> @@ -56,6 +56,7 @@ struct TTAtlantisState {
+>>>         MemoryRegion soc_memory;
+>>>       TTAtlantisSoCState soc;
+>>> +    uint32_t uart_chosen;
+>>>   };
+>>>     enum {
+>>
 
 
