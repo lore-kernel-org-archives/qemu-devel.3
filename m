@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7133ACA5FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164D9CA5FCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 21:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCO9N-0008L8-GK; Thu, 01 Oct 2026 17:17:09 -0400
+	id 1xCOA0-0000Ra-NN; Thu, 01 Oct 2026 17:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <finalspace@googlemail.com>)
- id 1xCNro-0001cF-MN
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:59:00 -0400
-Received: from mail-wr2-x0f.google.com ([2a00:1450:4864:30::f])
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xCO9y-0000N7-FC
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:17:46 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <finalspace@googlemail.com>)
- id 1xCNrm-0003op-MU
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 16:59:00 -0400
-Received: by mail-wr2-x0f.google.com with SMTP id
- ffacd0b85a97d-48b09f6bbe8so729039f8f.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 13:58:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xCO9w-0005yA-3z
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 17:17:46 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-4a022e9cbebso7865265e9.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 14:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20251104; t=1790888337; x=1791493137; darn=nongnu.org;
- h=content-transfer-encoding:content-type:subject:cc:to
- :content-language:user-agent:mime-version:date:message-id:from:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=h0eoJxX310phepsHQO5YNfa7hvQCj3jKCbKUYBWFB68=;
- b=YBiamG7MnJS2DTqWUPm1yCVBMS02yIZU67AdlNpRcopyEmSqXqQlEZ2qVIqu+6gbqM
- WXcOugLUayYG928EUk4OUn/ObLhsv+0/x8x5DuCPssyqvFRKGt98+PvBGDG8d8X+hh5d
- 2jp0U8RXNtZ9AQYAdsiUpVWq3XjfbCOXXQn532H5k+InIEqeIbK6uf14aLtfkDt2Q70K
- 9POgbyCEsAKyXtRiRj9snC9zFvkT7TIjJrB+YX100nayR8LR/YWTEiF3QtsIWQhOKwIQ
- wwIppIPS0/3D4kdcLDG+msAHiPBMooi8cjARvXWf+vP8nuNQoTDw/vP+yw3SB4mqkVY+
- 9S/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790888337; x=1791493137;
- h=content-transfer-encoding:content-type:subject:cc:to
- :content-language:user-agent:mime-version:date:message-id:from
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=gmail.com; s=20251104; t=1790889462; x=1791494262; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=h0eoJxX310phepsHQO5YNfa7hvQCj3jKCbKUYBWFB68=;
- b=Dz+izYqL+8F3q1IM0ZG6jSBS0qK/16ENDkpmSodNTdllHOf7z6XDR8+54g2auyRjCq
- Gx2R7UuYNWm3mixSereS3YBbZmQx0ATSMKBUSH/ovqcuqYd9WR50ZvouFedrd6aE1ev4
- 3iVOlx4K8YIPZncSapqePaf/0I9vSsSBdimJM+pUU+dwgrps5wgT5Sk7xlT+nfj4YuGQ
- Y3j5CijnZfJ6+rNnHVTr1TzssAasEYZQSCMpqSym6KPwsdkqw9sS/dv9TmMi8zrLGa4G
- 86/DdRDtzeuqGuJg5vTlk2vn8OhX8ZIXxKLs1XmbTs1JdHdWh8QagikXH5ws/6nQlDyf
- JYxw==
-X-Gm-Message-State: AFq9FYLzYvOhqwOU3prUAlwVBnSNaRXkySWw074MIIWtdyNGVCLyti6b
- xFM8MsCdqD1yMA3FBKh6dvK5HgkouyTcFaMmYRYT45Xksz5ddZ+n8nvOORjRjsLn
-X-Gm-Gg: AYBFou0dil5tDT3ZAjQFGkSdL2IlrviW6jHDRPR23uK3vdi5sTPIBcv0e3fvDzcrpHK
- EPBsN8mH/1DgdryJEvnlH6RrKhwYo1vcahYqghQScTrqjlpJDhTocODDfH+GFqDXxTRIo8HVqzZ
- IckoRi8MVMS4EhPd06M+hJGKmK5mBsaUshg5gFPBxmTSety2N1pX/cDV/f5e8//PiITwWAJLmR0
- exH9++eHrMjU/xD/8ibQXAHSEv3OWHKd/jzNqf41xVqdLfuPj2/tjpGSqNQU2sIGL2VrXkSJkwL
- ODGinMjWCVVp4g9ukHx3hi9Z9xL74gLrpXPQJqOz83T4qIRtXUyB1AtCO5iEYS/D3OF6ozCsv1h
- SNjfYIQkuv6lkrO6lYDUuOKn1WJ9GwlRtbItRXRtSl8ILTQv/bSETPvLmC5/pDGUFdphAhQwt3a
- khz7K0qnpkxGLbY1V1HtLEVUQrrUbOI9Sa59KPujCDxj1g4SzE6eaMbrNpIdkE66c9fbppuseiG
- WQJH2MF+JL6Uc/fkp5w+w8QaPYo+TEs1rlFlD5o/qUaa8mmlQIi
-X-Received: by 2002:a5d:4ecb:0:b0:486:f42f:6860 with SMTP id
- ffacd0b85a97d-48b127350a0mr1141021f8f.56.1790888336706; 
- Thu, 01 Oct 2026 13:58:56 -0700 (PDT)
-Received: from ?IPV6:2a02:8070:a187:e860:9b62:bb2d:1448:9374?
- ([2a02:8070:a187:e860:9b62:bb2d:1448:9374])
+ bh=LJrM2zHJE0bHSadqxaKwcktCdzBCY82pB6AzlRB6GKg=;
+ b=ENHyWyP5rZ663xXRhUI1rFNefXuQpcxqtFkDjLveXWLG3r3qZmKFjvFU+Pkc0C5wSQ
+ JogBL7EYYaiFbM5rlFi8z34+qVPidGN0tPa1rjoE0Cfr7UVEmI+bDQ1GPqFXrhpeIpWV
+ SkFdzGdZwYh+pUBhhVNqI1hMxUv0Uar+oExXbX0KwYhuYGhXzBldLl78QtNDTAV8QAip
+ H+A8s/qDLvSYRndZO8Mar/xxzaawZ0NfXqjI+MrjP+ieEZG0Cj7oWsIC2NctFJxG1ylT
+ +l3KPru4AkEVUl0VpfRp0LjbrenJZ1dxS+Ina0b6zWTl1d7fmgwGUWAaIZoqUrWlnMyK
+ LNfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790889462; x=1791494262;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=LJrM2zHJE0bHSadqxaKwcktCdzBCY82pB6AzlRB6GKg=;
+ b=s8jMoTE6qhVQwR1/WmDcEPOWpSgf6cRCCtdQ9G3s0m26Qsmy2lQWxWo7ekWQflOojw
+ LE1qKQTtDe/kGaPTv1moPqabW7LR87zG6oz/5wseVrglgzCOHdfoDppyQc4y/ZulQLqG
+ 4WdyElWm1Tv+sZcAGdqeqXvwXjLvhNVjy2btD/iNCVmle19h04AstS6vG0eecOX8BtCr
+ JqUOKlx1+ILmEc+Sd8HfbbPn4ZuzRUXH0x2fx4iynGjAZqlGxJ+Qv6az3nYukssWElVp
+ gNy8KZPqgeIPxErxWqiPF58ENyXBGuICZfpHLcgc+DnI4ayTELhrH+Qd6MVZXRbDYGQj
+ nKiQ==
+X-Gm-Message-State: AFuF++klK2o4JQ4lgQfxHY8fQIvzVY9KnaJ9v30ClAIUgDyc1qZBKO4N
+ cMn4Qb8bSvCqXFxPrUTs/sceOVhuKHFNvtXzbro3zWsCnykjrx2GPrSE
+X-Gm-Gg: AYBFou32MItkxICTzSf8MSG5Z3uzYwc0rGIaS1AOlAlrfmDeHlysupdum30PBDz1HMb
+ pvJJ6e2G1wZz8EO+qlmYQMWaD3mJuIb2xBC99s7sjnK4n+sbvRFLtdoHwgtauocPfeFZKFJ904x
+ Bk4d8jNiSDO+y/wpKzG5/4SiLRhUBEuZUClLYujNq9SjX1tOLpFeLdxsRsQ2aaMEFBujwqOczot
+ VTlInjntSXk1okXdMy7apTS1k+vZMDCPzJ4hVx6UArLiqwYxIcSK5fXa31A3YvJkpfVaMkSb3x8
+ Ovwfp09AwRslTsjgG5ZGJxEgVOBgscI48kre32e3U/3Hdzf8tKqSWj1zLmyIDRH/nF3DZToHrkg
+ 83NKX5ArfUNSEipC0ZGILv0nBsfsBXBLchYXTDvJN5Vp0OpC5ZppTWddF6+fEvIif63oN8WALfy
+ bsXuh3tS472kjqHh/GeCsPdYXf+lRKST28FzeFxcIXQNpgNLU0mzn6lnZIS0qp0UgKKbMRuyobs
+ 6yOjUCwahqHtNTIiDpgnPsH0PPIov7Vavylu5R8jjvsTrfcZLVA/AsrxjiAVhdghozmX0XUZVVT
+ htyJppYZpWuxefAgiR6C7U55zpvCkQs/XNz9sbzl
+X-Received: by 2002:a05:600c:3e1a:b0:4a0:1b15:8852 with SMTP id
+ 5b1f17b1804b1-4a027559e29mr12171665e9.16.1790889462067; 
+ Thu, 01 Oct 2026 14:17:42 -0700 (PDT)
+Received: from tim-m2.local
+ (dynamic-2a02-3100-6629-ec00-3db8-be4b-50ee-6c68.310.pool.telefonica.de.
+ [2a02:3100:6629:ec00:3db8:be4b:50ee:6c68])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b380f07cdsm779286f8f.10.2026.10.01.13.58.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 13:58:56 -0700 (PDT)
-From: Finalspace <finalspace@googlemail.com>
-X-Google-Original-From: Finalspace <finalspace@gmail.com>
-Message-ID: <9ac0657c-aacf-49c1-8320-bb57b6c57ca4@gmail.com>
-Date: Thu, 1 Oct 2026 22:58:55 +0200
+ 5b1f17b1804b1-4a027734b49sm19825835e9.10.2026.10.01.14.17.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Oct 2026 14:17:41 -0700 (PDT)
+From: Tim Pambor <timpambor@gmail.com>
+Date: Thu, 01 Oct 2026 23:15:41 +0200
+Subject: [PATCH v2] net/vmnet: Add host address options for vmnet-host
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261001-vmnet-host-address-v2-1-6de517697453@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32Nyw6CMBBFf4XM2jHQAA2u/A/Doo8p1Ag1ndpoC
+ P8u4N7lSc49dwGm6InhUiwQKXv2Yd5AnAowo5oHQm83BlGKtuyExDzNlHAMnFBZG4kZa+lcYzt
+ ljdawDZ+RnH8f0Vv/Y37pO5m0l3Zj9JxC/Byvudq9vwe5wgpbR1rWTgppmuswKf84mzBBv67rF
+ 7jYPJrGAAAA
+X-Change-ID: 20260927-vmnet-host-address-47ff5d9adcbb
 To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com
-Subject: Hints to fixing the critical ES1370 bugs which are currently unusable
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::f;
- envelope-from=finalspace@googlemail.com; helo=mail-wr2-x0f.google.com
+Cc: Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Tim Pambor <timpambor@gmail.com>
+X-Mailer: b4 0.16.0
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=timpambor@gmail.com; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,7 +96,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 01 Oct 2026 17:16:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,125 +110,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following bug-report / hint in this e-mail was detected by Claude 
-Opus 5 at 2026-09-01. This includes also adding traces to the qemu 
-source codes to identify the issue by claude autonomously.
+When a vmnet-host interface is added to an isolated network via
+'net-uuid', vmnet does not provide DHCP, and the host side of the
+bridge gets no address, so the host cannot talk to guests on that
+network without manually assigning an IP address to the bridge
+interface after QEMU has started.
 
+vmnet provides the vmnet_host_ip_address_key,
+vmnet_host_subnet_mask_key and vmnet_host_ipv6_address_key
+properties to assign addresses to the host interface in this case.
+Expose them as the 'host-ip-address', 'host-subnet-mask' and
+'host-ipv6-address' options of the vmnet-host backend.
 
-However this entire email and verification of the bug itself was done by 
-me (Torsten Spaete), a professional developer with almost 3 decades of 
-programming experience with focus on 
-multimedia/game/simulation/emulation programming (C, Delphi, C++).
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Tim Pambor <timpambor@gmail.com>
+---
+Changes in v2:
+- Fixed spelling in the commit message
+- Link to v1: https://lore.kernel.org/qemu-devel/20260927-vmnet-host-address-v1-1-6feb74f727c5@gmail.com
+---
+ net/vmnet-host.c | 35 +++++++++++++++++++++++++++++++++++
+ qapi/net.json    | 15 ++++++++++++++-
+ qemu-options.hx  |  6 +++++-
+ 3 files changed, 54 insertions(+), 2 deletions(-)
 
+diff --git a/net/vmnet-host.c b/net/vmnet-host.c
+index 49fb25c224..8ed7ee9d41 100644
+--- a/net/vmnet-host.c
++++ b/net/vmnet-host.c
+@@ -41,6 +41,26 @@ static bool validate_options(const Netdev *netdev, Error **errp)
+         return false;
+     }
+ 
++    if ((options->host_ip_address || options->host_subnet_mask) &&
++        !(options->host_ip_address && options->host_subnet_mask)) {
++        error_setg(errp,
++                   "'host-ip-address' and 'host-subnet-mask' "
++                   "should be provided together");
++        return false;
++    }
++
++    if (options->host_ip_address && !options->net_uuid) {
++        error_setg(errp,
++                   "'host-ip-address' requires 'net-uuid' to be specified");
++        return false;
++    }
++
++    if (options->host_ipv6_address && !options->net_uuid) {
++        error_setg(errp,
++                   "'host-ipv6-address' requires 'net-uuid' to be specified");
++        return false;
++    }
++
+     return true;
+ }
+ 
+@@ -77,6 +97,21 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
+                                   options->subnet_mask);
+     }
+ 
++    if (options->host_ip_address) {
++        xpc_dictionary_set_string(if_desc,
++                                  vmnet_host_ip_address_key,
++                                  options->host_ip_address);
++        xpc_dictionary_set_string(if_desc,
++                                  vmnet_host_subnet_mask_key,
++                                  options->host_subnet_mask);
++    }
++
++    if (options->host_ipv6_address) {
++        xpc_dictionary_set_string(if_desc,
++                                  vmnet_host_ipv6_address_key,
++                                  options->host_ipv6_address);
++    }
++
+     return if_desc;
+ }
+ 
+diff --git a/qapi/net.json b/qapi/net.json
+index b46af1fdc9..38b43d20ed 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -795,6 +795,16 @@
+ #     is allowed only with other interfaces added to this network
+ #     identified by the UUID.  Requires at least macOS Big Sur 11.0.
+ #
++# @host-ip-address: The IPv4 address to set on the host side of the
++#     interface.  Only applicable when @net-uuid is also specified.
++#     Must be specified along with @host-subnet-mask.
++#
++# @host-subnet-mask: The IPv4 subnet mask to set on the host side of
++#     the interface.  Must be specified along with @host-ip-address.
++#
++# @host-ipv6-address: The IPv6 address to set on the host side of the
++#     interface.  Only applicable when @net-uuid is also specified.
++#
+ # Since: 7.1
+ ##
+ { 'struct': 'NetdevVmnetHostOptions',
+@@ -803,7 +813,10 @@
+     '*end-address':   'str',
+     '*subnet-mask':   'str',
+     '*isolated':      'bool',
+-    '*net-uuid':      'str' },
++    '*net-uuid':      'str',
++    '*host-ip-address': 'str',
++    '*host-subnet-mask': 'str',
++    '*host-ipv6-address': 'str' },
+   'if': 'CONFIG_VMNET' }
+ 
+ ##
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 2f6863180b..9e250ad196 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3137,11 +3137,15 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+ #ifdef CONFIG_VMNET
+     "-netdev vmnet-host,id=str[,isolated=on|off][,net-uuid=uuid]\n"
+     "         [,start-address=addr,end-address=addr,subnet-mask=mask]\n"
++    "         [,host-ip-address=addr,host-subnet-mask=mask][,host-ipv6-address=addr]\n"
+     "                configure a vmnet network backend in host mode with ID 'str',\n"
+     "                isolate this interface from others with 'isolated',\n"
+     "                configure the address range and choose a subnet mask,\n"
+     "                specify network UUID 'uuid' to disable DHCP and interact with\n"
+-    "                vmnet-host interfaces within this isolated network\n"
++    "                vmnet-host interfaces within this isolated network,\n"
++    "                set the host-side IPv4 address and subnet mask on an\n"
++    "                isolated network with 'host-ip-address' and 'host-subnet-mask',\n"
++    "                set the host-side IPv6 address with 'host-ipv6-address'\n"
+     "-netdev vmnet-shared,id=str[,isolated=on|off][,nat66-prefix=addr]\n"
+     "         [,start-address=addr,end-address=addr,subnet-mask=mask]\n"
+     "                configure a vmnet network backend in shared mode with ID 'str',\n"
 
-# Bug
+---
+base-commit: efa3b9d5ac8024078225e1ab434411fdfe53b457
+change-id: 20260927-vmnet-host-address-47ff5d9adcbb
 
-Since QEMU 3.1.0 (december 2018, commit 154c1d1f96) the ES1370 sound 
-device is not usable anymore in any windows 9x guest -> Issue 
-(https://gitlab.com/qemu-project/qemu/-/work_items/2243).
-
-The ensonic audio driver (eapci95.inf) can be installed just fine, but 
-after the installation there is a constant low-volume noise that is 
-playing (hard to describe in words).
-You need really good headphones to hear that, but you can still verify 
-it by never hearing any sounds playing, not from windows, not from 
-games. Executing other sound actions such as changing the volume freezes 
-the entire guest for a few seconds (even the mouse freezes).
-
-## Why the bug happens
-
-Due to a bug in the register handling of the ES1370 system, a sample 
-value of 5512 Hz (reset-value) on DAC1 and value 705.600 Hz on DAC2 is 
-used to play any sound in windows 9x.
-But the ES1370 driver sets DAC1/22050 Hz by default, so those values are 
-clearly wrong.
-
-The issue is that 8-bit and 16-bit register writing/reading handling is 
-not properly handled for all register.
-To be exact, any 8-bit or 16-bit access to non 4-byte aligned offsets fails.
-
-Only 32-bit register read/write operations are handled properly, so when 
-an assembly instruction is executed that operates on AL or even AX, 
-depending on of the position of the register, writes do nothing and 
-reads returns 0xFF or 0xFFFF (all bits set).
-This means that writing with offset 0x01, 0x02, 0x05 will not write at 
-all (not aligned to 4-bytes). Offsets multiples of 4 (0x00, 0x04, ...) 
-reads just fine but writes resets remaining bytes to zero.
-
-An example is 8-bit writing 0x21 to the CONTROL register starting with 
-Offset 0x01 (not 4-byte aligned!). This effectly does nothing and 
-reading from that register in that way returns 0xFF for 8-bit accessors.
-The result should set DAC1/WTSRSEL to 22050 Hz and enables XCTL0 (line 
-out), but it does not and properly was working before in QEMU 3.0.
-
-In addition 8-bit reading of the STATUS register returns 0xFF as well. 
-This results in short freezes in windows 9x when using the volume slider 
-or start actual playing sounds.
-
-## Reproduce
-
-To reproduce the issue, you need a default QEMU 11.1.1 build (with or 
-without the tracing enabled).
-
-- You install windows 98 SE (i only tested win98 se) with a quick 
-install iso or use a default installation, it doesn't matter that much.
-- You attach an iso with the proper ES1370 win9x drivers (eapci95.inf) 
-and run the `setup.exe`.
-- After installation is done, you reboot
-- You should hear that low-volume noise sound and/or changing 
-volume/playing sounds freezes the guest for a few secs
-
-- Ideally you have enabled logging, so you clearly which sample format 
-are used
-
-## Debugging
-
-To see the wrong values in the log/console, you can use `-trace 
-es1370_stream_format` which prints the `fmt=5512` in the wrong case.
-Also lost register accesses can also be made visible by enabling the 
-define `VERBOSE_ES1370`.
-
-# Host Environment
-
-I am running a CachyOS system with classic xorg/X11 and a KDE plasma 
-desktop environment with decent hardware (Ryzen 9 7950X, 64 GB DDR5, 
-Fast M.2. SSD's with DRAM caching, RTX 3090, Creative Sound Blaster G8).
-The qemu version is the unmodified 11.1.1 cachyOS/arch binary package 
-version.
-
-# Guest Environment
-
-```
-set -x
-"$QEMU" \
-   -M pc-i440fx-9.2,accel=kvm,hpet=off -cpu coreduo -m 256 \
-   -nodefaults -display sdl -rtc base=localtime \
-   -device VGA \
-   -audiodev pipewire,id=snd0 -device ES1370,audiodev=snd0,addr=5 \
-   -netdev user,id=net0 -device pcnet,netdev=net0 \
-   -device piix3-usb-uhci,id=usb \
-   -drive 
-id=hd,if=ide,index=0,media=disk,file="$R/vm/run/es1370-stock.qcow2" \
-   -drive 
-id=hd2,if=ide,index=1,media=disk,file="$R/vm/run/es1370-stock-data.qcow2" \
-   -drive 
-id=cd,if=ide,index=2,media=cdrom,file="$R/vm/iso/es1370-original.iso" \
-   -boot order=c \
-   -qmp unix:"$R/vm/qmp.sock",server,nowait \
-   -trace enable=es1370_stream_format \
-   2>&1 | tee "$TRACE_LOG"
-
-```
-
-
-Thats about it.
-
-I hope you everything you need to reproduce the issue and include a fix 
-to future qemu versions to make ES1370 usable again.
-
-
-Thanks,
-
-Finalspace
+Best regards,
+--  
+Tim Pambor <timpambor@gmail.com>
 
 
