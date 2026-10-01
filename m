@@ -4,98 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DA0CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF3ECA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 23:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCQHc-0003Sc-UJ; Thu, 01 Oct 2026 19:33:48 -0400
+	id 1xCQQD-0006u6-EX; Thu, 01 Oct 2026 19:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xCQHb-0003SI-8b
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:47 -0400
-Received: from mail-pj2-x21.google.com ([2607:f8b0:4864:39::21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1xCQHZ-0002CD-Ba
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:33:47 -0400
-Received: by mail-pj2-x21.google.com with SMTP id
- d9443c01a7336-2dfae9a76c7so5188085ad.3
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:33:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xCQQA-0006tm-Gy
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:42:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xCQQ8-000343-DZ
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 19:42:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790898154;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h1rty/hi1E13diYp3gmh8YwjoDszZTbFvppq31VQMDY=;
+ b=JHsULws3a327/0dvdabsfgKW6zi32GbaIqzjvl++L51NJLCXxbtdEu9L2aFcOxnATAtvYz
+ UmJvBGCNP0DJuFLtz7TLvLII8SuZ1TN75icc1jAsZ4qjnMgxleZYDvfriESwjdKrljjlT6
+ v1h950aa1F7wtYIBh4kq9INatZ2MSqI=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-306-fdHBxDa8NZSqyafLXlRZIw-1; Thu, 01 Oct 2026 19:42:33 -0400
+X-MC-Unique: fdHBxDa8NZSqyafLXlRZIw-1
+X-Mimecast-MFC-AGG-ID: fdHBxDa8NZSqyafLXlRZIw_1790898152
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-39deda201bcso11285031a91.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 16:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1790897624; x=1791502424; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IetKryFUORcBJg/H10qABabXkGxY8h+PiZulcPbrm28=;
- b=hDSWHA5FH18AjULJ6yL047jdZ908QlXzyuQ3iU10XHaJdbhKiv9d1Tz7giNnsn8GPX
- SE2399ffOz4GajwBYGHU6WKqv+Kfv4tIdlhbKj75wZGdOoFhf/cEYzCO7yO/v1XR8xcK
- PndHSzKo+tem5+BjRTZZ7hve95g1GJjd0VeIrv5BsWxjnqwWHul284j+LxRP7uLdtxXI
- CDm+eit4YLPhikiq6NhQ6hd4CjQ3fFCx30w8UjAuJQa+NTtDpHx9iLAHwtOjFyLrjjZZ
- 3EB2FIcI0Qe2q+g6kg1utBomaKyh6l1fyouykQDmFNNnUaL0Gukje99FHzcn+V9J2vCd
- mF7Q==
+ d=redhat.com; s=google; t=1790898152; x=1791502952; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=h1rty/hi1E13diYp3gmh8YwjoDszZTbFvppq31VQMDY=;
+ b=UO6QGu9bLF4ZUGA4kdAzHQHCCWJmKXS+JAnSMlDr4yqHE10/UTjvLd4XcHPHA7CFpF
+ lgn1wDVhHs2jVmM4cGFYBr+Mt6wisxcfUdeY2iQBRXWUHkD79HAxj/m4boGWMyoh6fqG
+ 52X+qfIhLrSnGgx6BwWEc+SJTEg8qX+VtfNQiDIFAGBFm1kBzJHWO7KxPi1+259eF51E
+ b598poDKQVdn2UitZazY3nHMS0JInmBd9jnP439HSlUkjpM9FZVRVkjQtMr58oG/UQZd
+ 2GK6ntVclXX0RikPo8ba8kHNTs8IB6Xb8I31o8KE4/GZCWFgNKCnutK2Ud4hqtTp2nVs
+ CF3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790897624; x=1791502424;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IetKryFUORcBJg/H10qABabXkGxY8h+PiZulcPbrm28=;
- b=wFAJZregPXRp+y1EFb9jhewCSLiViiL9uPXc/kOWMYL8Lix5ECNbruMAPuQwruVY/T
- 4IA1n9Fva1Ja+klx/mjXZhMTsfYabnB8cNgfe24Fes/M7loRrFsb83Tp3M7iNSI7NLhh
- JWOGFy1jYpHKCwFFcKqZbNlZrLUdmK7jDYut1inFyE9fhXUG0inGgxxBpwABqjdkAVDO
- 4Asb2Kvzk7oH6X9/TwswcNVST7YJAqW7mNqlEdQtaThPOpCjlfIJFywneU2t1/11peF+
- wSkFG7QH5lqOBbUbOIDEnNhPfDa8IHt4pAhUxQyYfjxaTWdxtsiYk/ixpfiqLRLM4j1p
- mrFA==
-X-Gm-Message-State: AFq9FYKnfG3eiPtxI/VgIQf5gVySWoX3hM5g1y36Nq1rqe6p2lrJjRa6
- FtaiBi+JxpH9xuhDauCZSDX23bj1nA9ZIoXyYsb4uACQ28zJKxHQSgLbY3mW2FyeIErtXoXH5Ti
- talCI8YQ=
-X-Gm-Gg: AYBFou0idEM4DlR9JdBJuLSmnmxRZVxr09owifgcZqF0dk6GGxq/tbfo99+35yrMCjm
- 2nVtf78y+YJSeogt8YYATi6/cp/nhKEq3ljLTS+R1RxIGkzn2r+8fDm0IMOVGaW+j2zp6oWZd6R
- Fm2vD5qKgwPTgWGTbtVyZ9u6QknANSXZi85vRpm/GVA08fOoVVrt5LyfXCSnOGJQShvXVpM3Gy4
- RDGrFB1IXGPiTEmOdk9eg2GZfx/xvJBNnXHeshvKxRs1SOpihohPmtxh4v9jCvyQ8aR/Mp8S8/a
- 8r48g6bUxH1Pdbj78W+QB2MlvJXAO/HFH6SPOZbHt+wmtmkgdF0uDkuKA3O5y57ikAh8bR90eKI
- FzIDs/siRdKK13bc0teW/uk/1pVdfyABg6avHCCpph4ZvbofURJCe3b8mMSryVQEbx6m/rWRAOP
- wywFcdvgZGNET5j6bTZSybfcqSJwBfJp9o6cs9852Unact3H1KZcNCQpy7CnDx/x0rlvhhFwEnU
- 9eENfRMmyfDN+kg41cnBAT4kkKqB7RVkfawMLUiYEn78ws=
-X-Received: by 2002:a17:902:da8d:b0:2e2:d09f:d762 with SMTP id
- d9443c01a7336-2e49b692966mr13720945ad.3.1790897623930; 
- Thu, 01 Oct 2026 16:33:43 -0700 (PDT)
-Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e49f6aea97sm1851855ad.45.2026.10.01.16.33.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 16:33:43 -0700 (PDT)
-From: Portia Stephens <portias@oss.tenstorrent.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v3 2/4] hw/riscv/atlantis: Add all UARTs for Atlantis SoC
-Date: Fri,  2 Oct 2026 09:33:22 +1000
-Message-ID: <20261001233324.2636629-3-portias@oss.tenstorrent.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
-References: <20261001233324.2636629-1-portias@oss.tenstorrent.com>
+ d=1e100.net; s=20260707; t=1790898152; x=1791502952;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=h1rty/hi1E13diYp3gmh8YwjoDszZTbFvppq31VQMDY=;
+ b=dGjfWBnuBObLMnpsNjnuVAcMZtpjiRXe/ZjLSETWfp0R0iTVMp2/ewrR2V/2Y7B7sT
+ 2aruyVKVJ94FqG0Exy+1AmcSSZykcNj5ZR19Rez4qjf+YQzWzNTcmnxx3zQ3heDue+mZ
+ YJ+XHpccgAuVbBLGArfQRUNkfciha5TA8LzWZzZwlNc26hZXpbm5FQLQ+O7r2/tYybyu
+ VJVHS04xXNNQwKNzNYjtODwFrDhD1vDu9pswI5jf0vDkC5Qt+OUX8z14mEnRx8vWDDzP
+ MP2VW5EoGtE5PD2N2LHHwerwQJCT9PO2KC75HcsMYLpnmn3C8Eg1Eyod2DnrKNXJyw64
+ 6H3g==
+X-Gm-Message-State: AFq9FYJvqVhplx8n0dEeiI2qylzxJal506iCzBLonbIZISpBWXMxmTQx
+ Rm1SbDHOHinz6NPhXFWleX+SltOTXpS7nXPzwPACekb9M224cMiAcSRrKVg/3Eo3ZBobqLu85h7
+ olJQzPIuGxCFdUFLiPlEAsLZjrfiXSNT5Vp4DnH3c/Hg8QWmpJrczKOx5
+X-Gm-Gg: AYBFou1cjupGg/7ZSUqcVMXr+e7N3L64MLfaJ30nBTqCtpKoQ+2O+cWCv/6XPr+mwBD
+ 8YU0fcOPV5+sVvRH6i4KDJahn68FFe+563Hj9YPHAhZvUD93L/O1OlOPoae82kRCVjtnQ9Vh8uq
+ d1rQv8rpSxnNr+HGkbpG74H3RtLqANVg4hi5JQA3nbASO98tzHy7z8Cdzj32d4eXUpK3Uilkgqg
+ R8BXU3B2h7Tlp2Roie7hEpf5xVVqNaqqaQgf55SCVmO0Zv+cJvOWhHc6v6mOIBvvIW6QDlEFuNO
+ O0r0qMS2ZyFmlKiFwxkeKGeexSZjbs7KMiyLXnRHIUjghKGJvExa9pqlSnkXpJ4jxSRAK/tv8hd
+ fqncDIMOu6w5SXNM0OIgRa5wl7n+hVon13QkrHUVwfQ==
+X-Received: by 2002:a17:90b:1c86:b0:3a4:d5c0:f826 with SMTP id
+ 98e67ed59e1d1-3a6ce9b0fe4mr918289a91.65.1790898152004; 
+ Thu, 01 Oct 2026 16:42:32 -0700 (PDT)
+X-Received: by 2002:a17:90b:1c86:b0:3a4:d5c0:f826 with SMTP id
+ 98e67ed59e1d1-3a6ce9b0fe4mr918273a91.65.1790898151463; 
+ Thu, 01 Oct 2026 16:42:31 -0700 (PDT)
+Received: from [192.168.68.52] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3a4f4709a7csm6244308a91.8.2026.10.01.16.42.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Oct 2026 16:42:30 -0700 (PDT)
+Message-ID: <5461472f-8ab2-4549-b04f-85f0030b4b79@redhat.com>
+Date: Fri, 2 Oct 2026 09:42:23 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::21;
- envelope-from=portias@tenstorrent.com; helo=mail-pj2-x21.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 04/24] target/arm/kvm-rme: Add mechanic to initialize
+ realms
+To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-5-mathieu.poirier@linaro.org>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20260903193611.1058589-5-mathieu.poirier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,176 +125,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously only the Ascalon console UART was enabled, this enables all 5
-UARTs on the SoC. Only UART1 is added to the serial interface for now.
-The next change will handle adding the rest of the UARTs.
+On 9/4/26 5:35 AM, Mathieu Poirier wrote:
+> Initialise an @rme_guest object and install a handler to get notified
+> when the Realm is ready to start.  That way we can finish reading the
+> Realm once we know everything is in place.
+> 
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
+> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>   target/arm/kvm-rme.c | 51 ++++++++++++++++++++++++++++++++++++++++++++
+>   target/arm/kvm.c     | 15 +++++++++++--
+>   2 files changed, 64 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> index 42e1d1e7b859..a4a5e195c196 100644
+> --- a/target/arm/kvm-rme.c
+> +++ b/target/arm/kvm-rme.c
+> @@ -13,6 +13,7 @@
+>   #include "kvm_arm.h"
+>   #include "migration/blocker.h"
+>   #include "qapi/error.h"
+> +#include "qemu/error-report.h"
+>   #include "qom/object_interfaces.h"
+>   #include "system/confidential-guest-support.h"
+>   #include "system/kvm.h"
+> @@ -29,12 +30,62 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+>                                             CONFIDENTIAL_GUEST_SUPPORT,
+>                                             { TYPE_USER_CREATABLE }, { })
+>   
+> +static RmeGuest *rme_guest;
+> +
+> +static void rme_vm_state_change(void *opaque, bool running, RunState state)
+> +{
+> +    if (!running) {
+> +        return;
+> +    }
+> +
+> +    kvm_mark_guest_state_protected();
+> +}
+> +
+> +static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
+> +{
+> +    KVMState *s = KVM_STATE(current_accel());
+> +    static Error *rme_mig_blocker;
+> +
+> +    if (!rme_guest) {
+> +        return 0;
+> +    }
+> +
+> +    if (!kvm_vm_check_extension(s, KVM_CAP_ARM_RMI)) {
+> +        error_setg(errp, "VM doesn't support Realms");
+> +        return -ENODEV;
+> +    }
+> +
+> +    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
+> +    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
+> +
+> +    /*
+> +     * The realm activation is done last, when the VM starts, after all images
+> +     * have been loaded and all vcpus finalized.
+> +     */
+> +    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
+> +
+> +    cgs->require_guest_memfd = true;
+> +    cgs->ready = true;
+> +    return 0;
+> +}
+> +
+>   static void rme_guest_class_init(ObjectClass *oc, const void *data)
+>   {
+> +    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+> +
+> +    klass->kvm_init = kvm_arm_rme_init;
+>   }
+>   
+>   static void rme_guest_init(Object *obj)
+>   {
+> +    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+> +
+> +    if (rme_guest) {
+> +        error_report("a single instance of RmeGuest is supported");
+> +        exit(1);
+> +    }
+> +    rme_guest = RME_GUEST(obj);
+> +    cgs->allow_convert_in_place = true;
+>   }
+>   
+>   static void rme_guest_finalize(Object *obj)
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index ed99be7fd80c..401a6f669cbb 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -33,6 +33,7 @@
+>   #include "hw/pci/pci.h"
+>   #include "exec/memattrs.h"
+>   #include "system/address-spaces.h"
+> +#include "system/confidential-guest-support.h"
+>   #include "gdbstub/enums.h"
+>   #include "hw/core/boards.h"
+>   #include "hw/core/irq.h"
+> @@ -596,7 +597,8 @@ int kvm_arch_get_default_type(MachineState *ms)
+>   
+>   int kvm_arch_init(MachineState *ms, KVMState *s)
+>   {
+> -    int ret;
+> +    Error *local_err = NULL;
+> +    int ret = 0;
+>       /* For ARM interrupt delivery is always asynchronous,
+>        * whether we are using an in-kernel VGIC or not.
+>        */
+> @@ -610,6 +612,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>   
+>       cap_has_mp_state = kvm_check_extension(s, KVM_CAP_MP_STATE);
+>   
+> +    /* Initialize confidential guest (Realm) if needed */
+> +    if (ms->cgs) {
+> +        ret = confidential_guest_kvm_init(ms->cgs, &local_err);
+> +            if (ret < 0) {
+            ^^^^^
 
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/tt_atlantis.c         | 54 +++++++++++++++++++++++++---------
- include/hw/riscv/tt_atlantis.h | 11 ++++++-
- 2 files changed, 50 insertions(+), 15 deletions(-)
+            Code alignment issue here.
 
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 70815e12ef..2342edce93 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -62,7 +62,11 @@ static const MemMapEntry tt_atlantis_memmap[] = {
-     [TT_ATL_I2C2] =             { 0xd4060000,       0x10000 },
-     [TT_ATL_I2C3] =             { 0xd4070000,       0x10000 },
-     [TT_ATL_I2C4] =             { 0xd4080000,       0x10000 },
-+    [TT_ATL_UART0] =            { 0xd4100000,       0x10000 },
-     [TT_ATL_UART1] =            { 0xd4110000,       0x10000 },
-+    [TT_ATL_UART2] =            { 0xd4120000,       0x10000 },
-+    [TT_ATL_UART3] =            { 0xd4130000,       0x10000 },
-+    [TT_ATL_UART4] =            { 0xd4140000,       0x10000 },
-     [TT_ATL_SAPLIC] =           { 0xe8000000,     0x4000000 },
-     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
- };
-@@ -259,13 +263,14 @@ static void create_fdt_cpu(void *fdt, TTAtlantisSoCState *s,
- }
- 
- static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
--                            int irqchip_phandle)
-+                            int irqchip_phandle, int index)
- {
-     static const char * const compat[2] = {
-         "snps,dw-apb-uart", "ns16550a"
-     };
-     g_autofree char *name = g_strdup_printf("/soc/serial@%"HWADDR_PRIX,
-                                             mem->base);
-+    g_autofree char *alias = g_strdup_printf("serial%d", index);
- 
-     qemu_fdt_add_subnode(fdt, name);
-     qemu_fdt_setprop_string_array(fdt, name, "compatible",
-@@ -277,8 +282,10 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
-     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
-     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
- 
--    qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", name);
--    qemu_fdt_setprop_string(fdt, "/aliases", "serial0", name);
-+    if (index == 0) {
-+        qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", name);
-+    }
-+    qemu_fdt_setprop_string(fdt, "/aliases", alias, name);
- }
- 
- static void create_fdt_rng(void *fdt)
-@@ -347,8 +354,11 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
-      *                       aplic_s_phandle);
-      */
- 
--    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
--                    aplic_s_phandle);
-+    /* Skip UART0 since it is the RCPU console, UART1 is the Ascalon console */
-+    for (int i = 0; i < TT_ATL_NUM_UARTS - 1; i++) {
-+        create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1 + i], TT_ATL_UART1_IRQ + i,
-+                        aplic_s_phandle, i);
-+    }
- 
-     create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
- 
-@@ -474,13 +484,21 @@ static void tt_atlantis_machine_done(Notifier *n, void *data)
-                               fdt_load_addr);
- }
- 
-+static inline int tt_atlantis_uart_index(int uart_dev)
-+{
-+    return uart_dev - TT_ATL_UART0;
-+}
-+
- static void tt_atlantis_soc_init(Object *obj)
- {
-     TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
- 
-     object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
- 
--    object_initialize_child(obj, "uart1", &s->uart1, TYPE_DW8250);
-+    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
-+        object_initialize_child(obj, "uart[*]", &s->uart[i],
-+                                TYPE_DW8250);
-+    }
- 
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-         object_initialize_child(obj, "i2c[*]", &s->i2c[i],
-@@ -574,14 +592,22 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(s->memory, s->memmap[TT_ATL_BOOTROM].base,
-                                 &s->bootrom);
- 
--    /* UART1, the soc console (UART0 is for the boot microcontroller) */
--    qdev_prop_set_chr(DEVICE(&s->uart1), "chardev", serial_hd(0));
--    sysbus_realize(SYS_BUS_DEVICE(&s->uart1), &error_fatal);
--    memory_region_add_subregion(s->memory,
--                                s->memmap[TT_ATL_UART1].base,
--                                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart1), 0));
--    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart1), 0,
--                       qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ));
-+    /* UART1, the soc console (UART0 is for the boot microcontroller */
-+    qdev_prop_set_chr(DEVICE(&s->uart[tt_atlantis_uart_index(TT_ATL_UART1)]),
-+                      "chardev", serial_hd(0));
-+
-+    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
-+        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->uart[i]);
-+        if (!sysbus_realize(sbd, errp)) {
-+            return;
-+        }
-+
-+        memory_region_add_subregion(s->memory,
-+                                    s->memmap[TT_ATL_UART0 + i].base,
-+                                    sysbus_mmio_get_region(sbd, 0));
-+        sysbus_connect_irq(sbd, 0,
-+                           qdev_get_gpio_in(s->irqchip, TT_ATL_UART0_IRQ + i));
-+    }
- 
-     /* I2C */
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 000988c037..b81b7c8abd 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -23,6 +23,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisState, TT_ATLANTIS_MACHINE)
- OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisSoCState, TT_ATLANTIS_SOC)
- 
- #define TT_ATL_NUM_I2C 5
-+#define TT_ATL_NUM_UARTS 5
- 
- struct TTAtlantisSoCState {
-     /*< private >*/
-@@ -39,7 +40,7 @@ struct TTAtlantisSoCState {
-     RISCVHartArrayState cpus;
-     DeviceState *irqchip;
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
--    DW8250State uart1;
-+    DW8250State uart[TT_ATL_NUM_UARTS];
-     MemoryRegion bootrom;
- 
-     uint32_t num_harts;
-@@ -63,7 +64,11 @@ enum {
-     TT_ATL_I2C2_IRQ = 35,
-     TT_ATL_I2C3_IRQ = 36,
-     TT_ATL_I2C4_IRQ = 37,
-+    TT_ATL_UART0_IRQ = 38,
-     TT_ATL_UART1_IRQ = 39,
-+    TT_ATL_UART2_IRQ = 40,
-+    TT_ATL_UART3_IRQ = 41,
-+    TT_ATL_UART4_IRQ = 42,
- };
- 
- enum {
-@@ -80,7 +85,11 @@ enum {
-     TT_ATL_MIMSIC,
-     TT_ATL_SAPLIC,
-     TT_ATL_SIMSIC,
-+    TT_ATL_UART0,
-     TT_ATL_UART1,
-+    TT_ATL_UART2,
-+    TT_ATL_UART3,
-+    TT_ATL_UART4,
- };
- 
- #endif
--- 
-2.43.0
+> +                error_report_err(local_err);
+> +                return ret;
+> +        }
+> +    }
+> +
+>       /* Check whether user space can specify guest syndrome value */
+>       cap_has_inject_serror_esr =
+>           kvm_check_extension(s, KVM_CAP_ARM_INJECT_SERROR_ESR);
+> @@ -660,7 +671,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>       hw_breakpoints = g_array_sized_new(true, true,
+>                                          sizeof(HWBreakpoint), max_hw_bps);
+>   
+> -    return 0;
+> +    return ret;
+>   }
+>   
+>   unsigned long kvm_arch_vcpu_id(CPUState *cpu)
+
+Thanks,
+Gavin
 
 
