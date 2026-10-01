@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BF1CA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B962CA5FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEPf-0005hx-La; Thu, 01 Oct 2026 06:53:24 -0400
+	id 1xCEQE-00062o-Uc; Thu, 01 Oct 2026 06:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPJ-0005di-SW; Thu, 01 Oct 2026 06:52:58 -0400
+ id 1xCEPk-0005it-Kw; Thu, 01 Oct 2026 06:53:29 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPI-0002Pa-8v; Thu, 01 Oct 2026 06:52:57 -0400
+ id 1xCEPg-0002Pr-PU; Thu, 01 Oct 2026 06:53:24 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3006520B716D;
- Thu,  1 Oct 2026 03:52:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3006520B716D
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8D1A420B7175;
+ Thu,  1 Oct 2026 03:52:06 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8D1A420B7175
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851921;
- bh=/GxhITBh1+jKbAWn25Pdnou1UmhxhK/tBbYd1+mXE2s=;
+ s=default; t=1790851926;
+ bh=kO5yDa9MjuEH9aJfOVbxhXNcke2p8aFjNpu6Rd0pTuE=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=KN5U3oK5AYXpqcQiIdtekLnpDZ1BQTHr6uVccQxoS/rCH64TX+GrJnqYRNbkqCyR0
- yTo+Zm2xP4vEUF+TKr4GaebpLpuR6p27cB0dKGiFcSXRzhrCgQqRr5cqeKtUII5GR6
- zchHrV02Mt3fQKg+x36J10FcA7GIuAACnPXJBigA=
+ b=DUUTpSUrKKJ1W/4hKG93p63XCnnguWusBUM42NoLUPTNYNnN0UIvkPPobztSAIOKa
+ LqJSORGDzV2duZq38kNQDPlxmLcvTdtOIie0eUdGw8inwWT8Sza1e92WdS0HudyM9t
+ NFdSHtrjlE2hH/SJdZNX/GiEfA+q5af8cqU0t31A=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:51 +0000
-Subject: [PATCH v6 06/14] target/arm: convert host CPU feature ifdef ladder
- to runtime checks
+Date: Thu, 01 Oct 2026 10:52:58 +0000
+Subject: [PATCH v6 13/14] hw/intc,target/arm/mshv: add MSHV vGICv3
+ implementation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-6-aefe5e76a0e3@linux.microsoft.com>
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-13-aefe5e76a0e3@linux.microsoft.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -79,64 +79,447 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the compile-time #if/#elif preprocessor ladder in
-aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
-This ensures the correct accelerator is selected at runtime when
-multiple accelerators are compiled in.
+From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 
-Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
-register the "host" CPU type.
+Add in-kernel GICv3 support for the MSHV accelerator, following the
+same approach as the KVM and WHPX vGIC backends. The implementation
+handles IRQ injection via the HVCALL_ASSERT_VIRTUAL_INTERRUPT hypercall.
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+Introduce mshv_arch_pre_init_vm(), an arch-specific hook called after
+VM creation but before VM initialization, used on arm64 to configure
+GIC partition properties (GICD base, ITS translater base, timer and PMU
+PPI numbers). The x86 side provides a no-op stub.
+
+Update the virt machine to treat MSHV like WHPX for GIC version
+selection (GICv3 only) and MSI controller finalization (no ITS support).
+
+Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- target/arm/cpu64.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ accel/mshv/mshv-all.c              |   5 +
+ hw/arm/virt.c                      |   8 +-
+ hw/intc/arm_gicv3_common.c         |   3 +
+ hw/intc/arm_gicv3_mshv.c           | 181 +++++++++++++++++++++++++++++++++++++
+ hw/intc/meson.build                |   2 +
+ include/hw/hyperv/hvgdk_mini.h     |   2 +
+ include/hw/hyperv/hvhdk_mini.h     |   6 ++
+ include/hw/intc/arm_gicv3_common.h |   1 +
+ include/system/mshv_int.h          |   1 +
+ target/arm/mshv/mshv-all.c         |  61 +++++++++++++
+ target/i386/mshv/mshv-all.c        |   5 +
+ 11 files changed, 273 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index dcd0d698b3..a9e346049d 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -811,17 +811,21 @@ void aarch64_host_initfn(Object *obj)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 9603f0360e1..e1264952873 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -279,6 +279,11 @@ static int create_vm(int mshv_fd, int *vm_fd)
+         return -1;
      }
- #endif
  
-+    if (mshv_enabled()) {
-+        mshv_arm_set_cpu_features_from_host(cpu);
-+    } else if (kvm_enabled()) {
- #if defined(CONFIG_KVM)
--    kvm_arm_set_cpreg_mig_tolerances(cpu);
--    kvm_arm_set_cpu_features_from_host(cpu);
--    aarch64_add_sve_properties(obj);
--#elif defined(CONFIG_HVF)
--    hvf_arm_set_cpu_features_from_host(cpu);
--#elif defined(CONFIG_WHPX)
--    whpx_arm_set_cpu_features_from_host(cpu);
--#else
--    g_assert_not_reached();
-+        kvm_arm_set_cpreg_mig_tolerances(cpu);
- #endif
-+        kvm_arm_set_cpu_features_from_host(cpu);
-+        aarch64_add_sve_properties(obj);
-+    } else if (hvf_enabled()) {
-+        hvf_arm_set_cpu_features_from_host(cpu);
-+    } else if (whpx_enabled()) {
-+        whpx_arm_set_cpu_features_from_host(cpu);
-+    } else {
-+        g_assert_not_reached();
++    ret = mshv_arch_pre_init_vm(*vm_fd);
++    if (ret < 0) {
++        return -1;
 +    }
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         aarch64_add_pauth_properties(obj);
-     }
-@@ -830,7 +834,8 @@ void aarch64_host_initfn(Object *obj)
- static const ARMCPUInfo aarch64_cpus[] = {
-     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
-     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
--#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
-+#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
-+    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
-     { .name = "host",               .initfn = aarch64_host_initfn },
- #endif
- };
++
+     ret = initialize_vm(*vm_fd);
+     if (ret < 0) {
+         return -1;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ee03a85f482..67a1f19190b 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2706,7 +2706,7 @@ static void finalize_gic_version(VirtMachineState *vms)
+         /* KVM w/o kernel irqchip can only deal with GICv2 */
+         gics_supported |= VIRT_GIC_VERSION_2_MASK;
+         accel_name = "KVM with kernel-irqchip=off";
+-    } else if (whpx_enabled()) {
++    } else if (whpx_enabled() || mshv_enabled()) {
+         gics_supported |= VIRT_GIC_VERSION_3_MASK;
+     } else if (hvf_enabled()) {
+         if (!hvf_irqchip_in_kernel()) {
+@@ -2760,7 +2760,7 @@ static void finalize_msi_controller(VirtMachineState *vms)
+     if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
+         if (vms->gic_version == VIRT_GIC_VERSION_2) {
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+-        } else if (whpx_enabled()) {
++        } else if (whpx_enabled() || mshv_enabled()) {
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+         }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+@@ -2790,6 +2790,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
+             error_report("ITS not supported on WHPX.");
+             exit(1);
+         }
++        if (mshv_enabled()) {
++            error_report("ITS not supported on MSHV.");
++            exit(1);
++        }
+         if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+             error_report("ITS not supported on HVF when using the hardware vGIC.");
+             exit(1);
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index f7ba74e6d52..fb34b6a942d 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -34,6 +34,7 @@
+ #include "system/kvm.h"
+ #include "system/whpx.h"
+ #include "system/hvf.h"
++#include "system/mshv.h"
+ 
+ 
+ static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
+@@ -662,6 +663,8 @@ const char *gicv3_class_name(void)
+         return TYPE_WHPX_GICV3;
+     } else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+         return TYPE_HVF_GICV3;
++    } else if (mshv_enabled()) {
++        return TYPE_MSHV_GICV3;
+     } else {
+         if (kvm_enabled()) {
+             error_report("Userspace GICv3 is not supported with KVM");
+diff --git a/hw/intc/arm_gicv3_mshv.c b/hw/intc/arm_gicv3_mshv.c
+new file mode 100644
+index 00000000000..a87819a5ba3
+--- /dev/null
++++ b/hw/intc/arm_gicv3_mshv.c
+@@ -0,0 +1,181 @@
++/*
++ * ARM Generic Interrupt Controller using MSHV in-kernel support
++ *
++ * Copyright Microsoft, Corp. 2026
++ * Based on vGICv3 KVM code by Pavel Fedin
++ *
++ * Authors:
++ *      Aastha Rawat <aastharawat@microsoft.com>
++ *      Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "hw/intc/arm_gicv3_common.h"
++#include "migration/blocker.h"
++#include "target/arm/cpregs.h"
++#include "hw/hyperv/hvgdk_mini.h"
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++
++struct MSHVARMGICv3Class {
++    ARMGICv3CommonClass parent_class;
++    DeviceRealize parent_realize;
++    ResettablePhases parent_phases;
++};
++
++OBJECT_DECLARE_TYPE(GICv3State, MSHVARMGICv3Class, MSHV_GICV3)
++
++static void mshv_gicv3_get(GICv3State *s)
++{
++}
++
++static void mshv_gicv3_put(GICv3State *s)
++{
++}
++
++static void mshv_gicv3_reset_hold(Object *obj, ResetType type)
++{
++    GICv3State *s = ARM_GICV3_COMMON(obj);
++    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
++
++    if (mgc->parent_phases.hold) {
++        mgc->parent_phases.hold(obj, type);
++    }
++
++    mshv_gicv3_put(s);
++}
++
++static void mshv_gicv3_set_irq(void *opaque, int irq, int level)
++{
++    int ret;
++    GICv3State *s = (GICv3State *)opaque;
++    int vm_fd = mshv_state->vm;
++    struct hv_input_assert_virtual_interrupt arg = {0};
++    struct mshv_root_hvcall args = {0};
++    union hv_interrupt_control control = {
++        .interrupt_type = HV_ARM64_INTERRUPT_TYPE_FIXED,
++        .rsvd1 = 0,
++        .asserted = level,
++        .rsvd2 = 0
++    };
++
++    if (irq >= s->num_irq) {
++        return;
++    }
++
++    arg.control = control;
++    arg.vector = GIC_INTERNAL + irq;
++
++    args.code   = HVCALL_ASSERT_VIRTUAL_INTERRUPT;
++    args.in_sz  = sizeof(arg);
++    args.in_ptr = (uint64_t)&arg;
++
++    ret = mshv_hvcall(vm_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to set GICv3 IRQ %d to level %d", irq, level);
++    }
++}
++
++static void mshv_gicv3_realize(DeviceState *dev, Error **errp)
++{
++    ERRP_GUARD();
++    GICv3State *s = MSHV_GICV3(dev);
++    MSHVARMGICv3Class *mgc = MSHV_GICV3_GET_CLASS(s);
++    int i, ret;
++
++    mgc->parent_realize(dev, errp);
++    if (*errp) {
++        return;
++    }
++
++    if (s->revision != 3) {
++        error_setg(errp, "unsupported GIC revision %d for platform GIC",
++                   s->revision);
++        return;
++    }
++
++    if (s->security_extn) {
++        error_setg(errp, "the platform vGICv3 does not implement the "
++                   "security extensions");
++        return;
++    }
++
++    if (s->nmi_support) {
++        error_setg(errp, "NMI is not supported with the platform GIC");
++        return;
++    }
++
++    if (s->nb_redist_regions > 1) {
++        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
++                   "supported by MSHV");
++        error_append_hint(errp, "A maximum of %d VCPUs can be used",
++                          s->redist_region_count[0]);
++        return;
++    }
++
++    gicv3_init_irqs_and_mmio(s, mshv_gicv3_set_irq, NULL);
++
++    for (i = 0; i < s->num_cpu; i++) {
++        CPUState *cpu_state = qemu_get_cpu(i);
++
++        hv_register_assoc gicr_base = {
++            .name = HV_ARM64_REGISTER_GICR_BASE_GPA,
++            .value = {
++                .reg64 = 0x080A0000 + (GICV3_REDIST_SIZE * i)
++            }
++        };
++
++        ret = mshv_set_generic_regs(cpu_state, &gicr_base, 1);
++        if (ret < 0) {
++            error_setg(errp, "Failed to set GICR base for CPU %d", i);
++            return;
++        }
++    }
++
++    if (s->maint_irq) {
++        error_setg(errp,
++               "Nested virtualisation not currently supported by MSHV");
++        return;
++    }
++
++    error_setg(&s->migration_blocker,
++        "Live migration disabled because GIC state save/restore not supported on MSHV");
++    if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
++        error_report_err(*errp);
++    }
++}
++
++static void mshv_gicv3_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
++    MSHVARMGICv3Class *mgc = MSHV_GICV3_CLASS(klass);
++
++    agcc->pre_save = mshv_gicv3_get;
++    agcc->post_load = mshv_gicv3_put;
++
++    device_class_set_parent_realize(dc, mshv_gicv3_realize,
++                                    &mgc->parent_realize);
++    resettable_class_set_parent_phases(rc, NULL, mshv_gicv3_reset_hold, NULL,
++                                       &mgc->parent_phases);
++}
++
++static const TypeInfo mshv_arm_gicv3_info = {
++    .name = TYPE_MSHV_GICV3,
++    .parent = TYPE_ARM_GICV3_COMMON,
++    .instance_size = sizeof(GICv3State),
++    .class_init = mshv_gicv3_class_init,
++    .class_size = sizeof(MSHVARMGICv3Class),
++};
++
++static void mshv_gicv3_register_types(void)
++{
++    type_register_static(&mshv_arm_gicv3_info);
++}
++
++type_init(mshv_gicv3_register_types)
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 0620b0792a1..e0047ab1c0f 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -49,6 +49,8 @@ specific_ss.add(when: ['CONFIG_WHPX', 'CONFIG_ARM_GICV3'], if_true: files('arm_g
+ specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
+ stub_ss.add(files('arm_gicv3_hvf_stub.c'))
+ specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
++specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
++specific_ss.add(when: ['CONFIG_MSHV', 'TARGET_AARCH64'], if_true: files('arm_gicv3_mshv.c'))
+ arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
+ specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
+ specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index d81c9816e7f..2b4b1406ab0 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -85,6 +85,8 @@ typedef enum hv_register_name {
+     HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
+     HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
+ 
++    HV_ARM64_REGISTER_GICR_BASE_GPA       = 0x00063000,
++
+ #elif defined(__x86_64__)
+     /* X64 User-Mode Registers */
+     HV_X64_REGISTER_RAX     = 0x00020000,
+diff --git a/include/hw/hyperv/hvhdk_mini.h b/include/hw/hyperv/hvhdk_mini.h
+index 9c2f3cf5aee..4d78fa06777 100644
+--- a/include/hw/hyperv/hvhdk_mini.h
++++ b/include/hw/hyperv/hvhdk_mini.h
+@@ -62,6 +62,12 @@ enum hv_partition_property_code {
+     HV_PARTITION_PROPERTY_ISOLATION_POLICY                       = 0x00050014,
+     HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION               = 0x00050017,
+     HV_PARTITION_PROPERTY_SEV_VMGEXIT_OFFLOADS                   = 0x00050022,
++    HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS                      = 0x00050028,
++    HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS           = 0x00050029,
++    HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS                    = 0x0005002A,
++    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV   = 0x0005002B,
++    HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTP   = 0x0005002C,
++    HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT = 0x0005002D,
+ 
+     /* Compatibility properties */
+     HV_PARTITION_PROPERTY_PROCESSOR_VENDOR              = 0x00060000,
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 03ab3e8f2ff..2ed456e654a 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -316,6 +316,7 @@ DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
+ /* Types for GICv3 kernel-irqchip */
+ #define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
+ #define TYPE_HVF_GICV3 "hvf-arm-gicv3"
++#define TYPE_MSHV_GICV3 "mshv-arm-gicv3"
+ 
+ struct ARMGICv3CommonClass {
+     /*< private >*/
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 31d2f4381c7..2dcfd11d8df 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -107,6 +107,7 @@ void mshv_arch_amend_proc_features(
+ void mshv_arch_disable_partition_proc_features(
+      union hv_partition_processor_features *disabled_features);
+ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
++int mshv_arch_pre_init_vm(int vm_fd);
+ int mshv_arch_post_init_vm(int vm_fd);
+ void mshv_setup_hvcall_args(AccelCPUState *state);
+ int mshv_arch_migration_init(MshvState *s);
+diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+index 786d815312b..8fa497c9a89 100644
+--- a/target/arm/mshv/mshv-all.c
++++ b/target/arm/mshv/mshv-all.c
+@@ -288,6 +288,67 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+ }
+ 
++static int set_partition_prop(int vm_fd, uint32_t prop_code,
++                                uint64_t prop_value)
++{
++    int ret;
++    struct hv_input_set_partition_property in = {0};
++    in.property_code = prop_code;
++    in.property_value = prop_value;
++
++    struct mshv_root_hvcall args = {0};
++    args.code = HVCALL_SET_PARTITION_PROPERTY;
++    args.in_sz = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++
++    ret = mshv_hvcall(vm_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to set partition property code %u", prop_code);
++        return -1;
++    }
++
++    return 0;
++}
++
++int mshv_arch_pre_init_vm(int vm_fd)
++{
++    int ret;
++    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
++
++    ret = set_partition_prop(vm_fd,
++                            HV_PARTITION_PROPERTY_GICD_BASE_ADDRESS,
++                            vms->memmap[VIRT_GIC_DIST].base);
++    if (ret < 0) {
++        return ret;
++    }
++
++    ret = set_partition_prop(vm_fd,
++                        HV_PARTITION_PROPERTY_GITS_TRANSLATER_BASE_ADDRESS,
++                        vms->memmap[VIRT_GIC_ITS].base);
++    if (ret < 0) {
++        return ret;
++    }
++
++    ret = set_partition_prop(vm_fd,
++                        HV_PARTITION_PROPERTY_GIC_LPI_INT_ID_BITS,
++                        0);
++    if (ret < 0) {
++        return ret;
++    }
++
++    ret = set_partition_prop(vm_fd,
++                        HV_PARTITION_PROPERTY_GIC_PPI_OVERFLOW_INTERRUPT_FROM_CNTV,
++                        ARCH_TIMER_VIRT_IRQ);
++    if (ret < 0) {
++        return ret;
++    }
++
++    ret = set_partition_prop(vm_fd,
++                        HV_PARTITION_PROPERTY_GIC_PPI_PERFORMANCE_MONITORS_INTERRUPT,
++                        VIRTUAL_PMU_IRQ);
++
++    return ret;
++}
+ 
+ static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
+ {
+diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+index 968fe2a4494..85dbacf98ff 100644
+--- a/target/i386/mshv/mshv-all.c
++++ b/target/i386/mshv/mshv-all.c
+@@ -39,6 +39,11 @@ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+     return 0;
+ }
+ 
++int mshv_arch_pre_init_vm(int vm_fd)
++{
++    return 0;
++}
++
+ /*
+  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+  * fault to the guest if it tries to access it. It is possible to override
 
 -- 
 2.45.4
