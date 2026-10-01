@@ -4,44 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23FD5CA5FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0406FCA5FB3
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEQB-0005wi-Bq; Thu, 01 Oct 2026 06:53:51 -0400
+	id 1xCEQ2-0005oi-D9; Thu, 01 Oct 2026 06:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPJ-0005dh-Fl; Thu, 01 Oct 2026 06:52:58 -0400
+ id 1xCEPL-0005eh-FA; Thu, 01 Oct 2026 06:53:00 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPF-0002Oq-Pt; Thu, 01 Oct 2026 06:52:57 -0400
+ id 1xCEPI-0002Pr-UV; Thu, 01 Oct 2026 06:52:59 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id E944C20B7166;
- Thu,  1 Oct 2026 03:51:55 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E944C20B7166
+ by linux.microsoft.com (Postfix) with ESMTPSA id DA60E20B716C;
+ Thu,  1 Oct 2026 03:52:01 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DA60E20B716C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851916;
- bh=WXBI+mFLrpwb4SHUBeepop8QFOSXFk3Toa3MOc+cVKc=;
- h=From:Subject:Date:To:Cc:From;
- b=G+T3ZDIOH1lD9yfH8XWwyAW/NJtOpau8XWHKTRcVouJ2KfNpjN1nJdbR5pmu6yetN
- QCq1a7jIXZruKawCvA6QQ33BVuuiIpbxv7HJ3gjJxmazzVvCebCf//SbrgWXiNB05r
- FU8fg9kLAGLxA5b9Yga/WIi0F+4cy3WDLHwO/gzI=
+ s=default; t=1790851921;
+ bh=h7x1VQ2/cO6ObnaTE3oiGHXeoaEPG3yQY7j+xBadS5k=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=RLDwpwnvvN8VWFmEietlyWgwFw7H+n202MeBnMRxjEQolBD1hgbX7CjRprQL7Cr/9
+ OUHUtozmRsaRkNcVJIzwV55d6k8v5tw4GZB83wYGMaghDasy8yq5p+yMlICKSu6Bip
+ S1Si/IhJ77az9WKdaonoK9qPc+FQVTlXdX2RZ5R8=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Subject: [PATCH v6 00/14] Add ARM64 support for MSHV accelerator
-Date: Thu, 01 Oct 2026 10:52:45 +0000
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+Date: Thu, 01 Oct 2026 10:52:52 +0000
+Subject: [PATCH v6 07/14] target/arm/mshv: implement -cpu host for MSHV
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH47vmoC/4XNwa7CIBCF4VcxrMVAodC68j2MaYAOdhJbGrBEY
- /ruopturrnL/yTzzYskiAiJHHcvEiFjwjCVUPsdcYOZrkCxL00qVikmOKdjGnJnnINbZ+KoZJe
- WeabQKMtYUxkAScrtHMHj4+ueL6UHTPcQn983mX/W/8TMKaNOcNW2VlvH/clMGJd+iPbgwkg+a
- habJKufkiiSVK2vpdS6seZ0w2l5HEZ0MaTg75tXb57m+pdXFw880710ygqh//bWdX0DIGLZs14
- BAAA=
-X-Change-ID: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-7-aefe5e76a0e3@linux.microsoft.com>
+References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
+In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
  Wei Liu <wei.liu@kernel.org>, 
@@ -82,141 +78,406 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
-accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
-using the mshv Linux kernel module.
+This commit enables support for the `-cpu host` option with MSHV
+accelerator on ARM64. The implementation queries the partition's CPU's
+ID registers and features via hypervisor interface, allowing to pass all
+CPU capabilities for the host CPU to the guest.
 
-The first few patches refactor the existing x86 MSHV code to separate
-arch-specific pieces from common infrastructure: moving MSR handling to
-target/i386, extracting shared register hypercall helpers, provisioning
-host CPU features, and introducing arch-specific init hooks.
-
-The remaining patches add the ARM64 backend:
- - vCPU state get/set using hypervisor register hypercalls
- - -cpu host support by querying ID registers from the hypervisor
- - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
- - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
- - Interrupt control structure adjustments for arm64
-
-With this series, a standard aarch64 virt machine can be launched with:
-  qemu-system-aarch64 -accel mshv -cpu host -M virt ...
-
-Caveats:
-- Live migration is not yet supported.
-
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
-Changes in v2:
-- Removed PATCH: "accel/mshv: provision guests with the same features as host".
-- Extracted common MMIO emulation logic for hvf, whpx and mshv to a
-  common place.
-- Fixed checkpatch errors/warnings.
-- Picked up reviewed-by tags.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com
+ hw/arm/virt.c                  |   3 +-
+ include/hw/hyperv/hvgdk_mini.h |  17 ++++
+ include/system/hw_accel.h      |   3 +-
+ target/arm/cpu.c               |   6 +-
+ target/arm/cpu64.c             |   2 +
+ target/arm/mshv/mshv-all.c     | 217 +++++++++++++++++++++++++++++++++++++++++
+ target/arm/mshv_arm.h          |  18 ++++
+ 7 files changed, 262 insertions(+), 4 deletions(-)
 
----
-Changes in v3:
-- Handled GPA Intercept in vCPU run loop to fix EDK2 firmware boot.
-- Updated the cover letter: removed caveat about EDK2 firmware boot as
-  it is now fixed.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260402-mshv_accel_arm64_supp-v2-0-754895c15e9e@linux.microsoft.com/
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index bdac33a1de8..ee03a85f482 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -48,6 +48,7 @@
+ #include "system/kvm.h"
+ #include "system/hvf.h"
+ #include "system/whpx.h"
++#include "system/mshv.h"
+ #include "system/qtest.h"
+ #include "system/system.h"
+ #include "hw/core/loader.h"
+@@ -4143,7 +4144,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
+     if (target_aarch64()) {
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
+         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
+-        if (kvm_enabled() || hvf_enabled() || whpx_enabled()) {
++        if (kvm_enabled() || hvf_enabled() || whpx_enabled() || mshv_enabled()) {
+             g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
+         }
+     }
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index b5bcea353aa..33c9e4f3e08 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -67,6 +67,20 @@ typedef enum hv_register_name {
+     HV_ARM64_REGISTER_LR    = 0x0002001E,
+     HV_ARM64_REGISTER_PC    = 0x00020022,
+ 
++    /* AArch64 System Register Descriptions: ID Registers */
++    HV_ARM64_REGISTER_ID_MIDR_EL1         = 0x00022000,
++    HV_ARM64_REGISTER_ID_MPIDR_EL1        = 0x00022005,
++    HV_ARM64_REGISTER_ID_AA64_PFR0_EL1    = 0x00022020,
++    HV_ARM64_REGISTER_ID_AA64_PFR1_EL1    = 0x00022021,
++    HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1   = 0x00022030,
++    HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1   = 0x00022031,
++    HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1   = 0x00022032,
++    HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1   = 0x00022038,
++    HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1   = 0x00022039,
++    HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1   = 0x0002203a,
++    HV_ARM64_REGISTER_ID_AA64_DFR0_EL1    = 0x00022028,
++    HV_ARM64_REGISTER_ID_AA64_DFR1_EL1    = 0x00022029,
++
+     /* AArch64 System Register Descriptions: General system control registers */
+     HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
+     HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
+@@ -988,6 +1002,9 @@ struct hv_cpuid {
+ #define HV_HYP_PAGE_SIZE        BIT(HV_HYP_PAGE_SHIFT)
+ #define HV_HYP_PAGE_MASK        (~(HV_HYP_PAGE_SIZE - 1))
+ 
++#define HV_ANY_VP               ((uint32_t)-1)
++#define HV_VTL_ALL              0xF
++
+ #define HVCALL_GET_PARTITION_PROPERTY    0x0044
+ #define HVCALL_SET_PARTITION_PROPERTY    0x0045
+ #define HVCALL_GET_VP_REGISTERS          0x0050
+diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
+index f0c10b6d805..614ea60be3f 100644
+--- a/include/system/hw_accel.h
++++ b/include/system/hw_accel.h
+@@ -51,7 +51,8 @@ static inline bool hwaccel_enabled(void)
+     return hvf_enabled()
+         || kvm_enabled()
+         || nvmm_enabled()
+-        || whpx_enabled();
++        || whpx_enabled()
++        || mshv_enabled();
+ }
+ 
+ #endif /* QEMU_HW_ACCEL_H */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10ac6c98318..8ad5e346d1a 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -47,6 +47,7 @@
+ #include "system/tcg.h"
+ #include "system/qtest.h"
+ #include "system/hw_accel.h"
++#include "system/mshv.h"
+ #include "kvm_arm.h"
+ #include "disas/capstone.h"
+ #include "fpu/softfloat.h"
+@@ -1843,8 +1844,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+      * this is the first point where we can report it.
+      */
+     if (cpu->host_cpu_probe_failed) {
+-        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
+-            error_setg(errp, "The 'host' CPU type can only be used with KVM, HVF or WHPX");
++        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled() && !mshv_enabled()) {
++            error_setg(errp,
++                       "The 'host' CPU type can only be used with KVM, HVF, WHPX, or MSHV");
+         } else {
+             error_setg(errp, "Failed to retrieve host CPU features");
+         }
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index a9e346049df..71fc6824188 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -26,12 +26,14 @@
+ #include "qemu/units.h"
+ #include "system/kvm.h"
+ #include "system/hvf.h"
++#include "system/mshv.h"
+ #include "system/whpx.h"
+ #include "system/hw_accel.h"
+ #include "system/qtest.h"
+ #include "system/tcg.h"
+ #include "kvm_arm.h"
+ #include "hvf_arm.h"
++#include "mshv_arm.h"
+ #include "whpx_arm.h"
+ #include "qapi/visitor.h"
+ #include "hw/core/qdev-properties.h"
+diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+index 29dd45a1231..d835614fd59 100644
+--- a/target/arm/mshv/mshv-all.c
++++ b/target/arm/mshv/mshv-all.c
+@@ -18,10 +18,23 @@
+ 
+ #include "system/cpus.h"
+ #include "target/arm/cpu.h"
++#include "target/arm/internals.h"
++#include "target/arm/mshv_arm.h"
+ 
+ #include "system/mshv.h"
+ #include "system/mshv_int.h"
+ #include "hw/hyperv/hvgdk_mini.h"
++#include "hw/hyperv/hvhdk_mini.h"
++
++typedef struct ARMHostCPUFeatures {
++    ARMISARegisters isar;
++    uint64_t features;
++    uint64_t midr;
++    uint32_t reset_sctlr;
++    const char *dtb_compatible;
++} ARMHostCPUFeatures;
++
++static ARMHostCPUFeatures arm_host_cpu_features;
+ 
+ static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
+     HV_ARM64_REGISTER_X0,
+@@ -168,8 +181,46 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+ }
+ 
++
++static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
++{
++    int ret;
++    struct hv_input_get_partition_property in = {0};
++    struct hv_output_get_partition_property out = {0};
++    struct mshv_root_hvcall args = {0};
++
++    in.property_code = HV_PARTITION_PROPERTY_PHYSICAL_ADDRESS_WIDTH;
++
++    args.code = HVCALL_GET_PARTITION_PROPERTY;
++    args.in_sz = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++    args.out_sz = sizeof(out);
++    args.out_ptr = (uint64_t)&out;
++
++    ret = mshv_hvcall(mshv_fd, &args);
++
++    if (ret < 0) {
++        error_report("Failed to get IPA size");
++        exit(1);
++    }
++
++    return out.property_value;
++}
++
+ int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
+ {
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int pa_range;
++    uint32_t ipa_size;
++
++    if (mc->get_physical_address_range) {
++        ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
++        pa_range = mc->get_physical_address_range(ms, ipa_size, ipa_size);
++        if (pa_range < 0) {
++            return -EINVAL;
++        }
++    }
++
+     return 0;
+ }
+ 
+@@ -198,3 +249,169 @@ int mshv_arch_migration_init(MshvState *s)
+ {
+     return 0;
+ }
++
++static void clamp_id_aa64mmfr0_parange_to_ipa_size(int mshv_fd,
++                                                   ARMISARegisters *isar)
++{
++    uint32_t ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
++    uint64_t id_aa64mmfr0;
++
++    /* Clamp down the PARange to the IPA size the kernel supports. */
++    uint8_t index = round_down_to_parange_index(ipa_size);
++    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
++    id_aa64mmfr0 = FIELD_DP64(id_aa64mmfr0, ID_AA64MMFR0, PARANGE, index);
++    SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
++}
++
++static int mshv_get_partition_regs(int vm_fd, hv_register_name *names,
++                             hv_register_value *values, size_t n_regs)
++{
++    int ret = 0;
++    size_t in_sz, names_sz, values_sz;
++    void *in_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    void *out_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    hv_input_get_vp_registers *in = in_buffer;
++
++    struct mshv_root_hvcall args = {0};
++
++    names_sz = n_regs * sizeof(hv_register_name);
++    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
++
++    memset(in, 0, HV_HYP_PAGE_SIZE);
++
++    in->vp_index = HV_ANY_VP;
++    in->input_vtl.target_vtl = HV_VTL_ALL;
++    in->input_vtl.use_target_vtl = 1;
++
++    for (int i = 0; i < n_regs; i++) {
++        in->names[i] = names[i];
++    }
++
++    values_sz = n_regs * sizeof(hv_register_value);
++
++    args.code = HVCALL_GET_VP_REGISTERS;
++    args.in_sz = in_sz;
++    args.in_ptr = (uintptr_t)in_buffer;
++    args.out_sz = values_sz;
++    args.out_ptr = (uintptr_t)out_buffer;
++    args.reps = n_regs;
++
++    ret = mshv_hvcall(vm_fd, &args);
++
++    if (ret == 0) {
++        memcpy(values, out_buffer, values_sz);
++    }
++
++    qemu_vfree(in_buffer);
++    qemu_vfree(out_buffer);
++
++    return ret;
++}
++
++static bool mshv_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++{
++    int mshv_fd = mshv_state->fd;
++    int vm_fd = mshv_state->vm;
++    int i, ret;
++    bool success = true;
++    uint64_t pfr0, pfr1;
++    gchar *contents = NULL;
++
++    static const struct {
++        hv_register_name name;
++        int isar_idx;
++    } regs[] = {
++        { HV_ARM64_REGISTER_ID_AA64_PFR0_EL1,  ID_AA64PFR0_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_PFR1_EL1,  ID_AA64PFR1_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_DFR0_EL1,  ID_AA64DFR0_EL1_IDX },
++        { HV_ARM64_REGISTER_ID_AA64_DFR1_EL1,  ID_AA64DFR1_EL1_IDX },
++    };
++
++    size_t n_regs = ARRAY_SIZE(regs);
++    hv_register_name *reg_names = g_new(hv_register_name, n_regs);
++    hv_register_value *reg_values = g_new(hv_register_value, n_regs);
++
++    for (i = 0; i < n_regs; i++) {
++        reg_names[i] = regs[i].name;
++    }
++
++    ret = mshv_get_partition_regs(vm_fd, reg_names, reg_values, n_regs);
++
++    if (ret < 0) {
++        error_report("Failed to get host ID registers");
++        success = false;
++        goto out;
++    }
++
++    for (i = 0; i < n_regs; i++) {
++        ahcf->isar.idregs[regs[i].isar_idx] = reg_values[i].reg64;
++    }
++
++    /* Read MIDR_EL1 from sysfs */
++    if (g_file_get_contents(
++            "/sys/devices/system/cpu/cpu0/regs/identification/midr_el1",
++            &contents, NULL, NULL)) {
++        ahcf->midr = g_ascii_strtoull(contents, NULL, 0);
++    } else {
++        error_report("Failed to read MIDR_EL1 from sysfs");
++        success = false;
++        goto out;
++    }
++
++    ahcf->dtb_compatible = "arm,armv8";
++    ahcf->features = (1ULL << ARM_FEATURE_V8) |
++                     (1ULL << ARM_FEATURE_AARCH64) |
++                     (1ULL << ARM_FEATURE_PMU) |
++                     (1ULL << ARM_FEATURE_GENERIC_TIMER) |
++                     (1ULL << ARM_FEATURE_NEON);
++
++    clamp_id_aa64mmfr0_parange_to_ipa_size(mshv_fd, &ahcf->isar);
++
++    /*
++     * SVE (Scalable Vector Extension) and SME (Scalable Matrix Extension)
++     * require specific context switch logic in the accelerator.
++     * Mask them out for now to ensure stability.
++     */
++    /* Mask SVE in PFR0 */
++    pfr0 = GET_IDREG(&ahcf->isar, ID_AA64PFR0);
++    pfr0 &= ~R_ID_AA64PFR0_SVE_MASK;
++    SET_IDREG(&ahcf->isar, ID_AA64PFR0, pfr0);
++
++    /* Mask SME in PFR1 */
++    pfr1 = GET_IDREG(&ahcf->isar, ID_AA64PFR1);
++    pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
++    SET_IDREG(&ahcf->isar, ID_AA64PFR1, pfr1);
++
++out:
++    g_free(contents);
++    g_free(reg_names);
++    g_free(reg_values);
++    return success;
++}
++
++void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu)
++{
++    if (!arm_host_cpu_features.dtb_compatible) {
++        if (!mshv_enabled() ||
++            !mshv_arm_get_host_cpu_features(&arm_host_cpu_features)) {
++            /*
++             * We can't report this error yet, so flag that we need to
++             * in arm_cpu_realizefn().
++             */
++            cpu->host_cpu_probe_failed = true;
++            return;
++        }
++    }
++
++    cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
++    cpu->isar = arm_host_cpu_features.isar;
++    cpu->env.features = arm_host_cpu_features.features;
++    cpu->midr = arm_host_cpu_features.midr;
++    cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
++}
+diff --git a/target/arm/mshv_arm.h b/target/arm/mshv_arm.h
+new file mode 100644
+index 00000000000..a03f9a4405e
+--- /dev/null
++++ b/target/arm/mshv_arm.h
+@@ -0,0 +1,18 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Aastha Rawat   <aastharawat@linux.microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_MSHV_ARM_H
++#define QEMU_MSHV_ARM_H
++
++#include "target/arm/cpu.h"
++
++void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu);
++
++#endif
 
----
-Changes in v4:
-- Split "target/arm: convert host CPU features ifdef ladder to runtime
-  checks" out of the -cpu host patch to separate the refactoring.
-- Refactored MMIO emulation helper (arm_emulate_mmio) to use callback
-  ops for per-register access avoiding full CPU state sync for single
-  register MMIO operations for HVF & WHPX.
-- Reordered patches: moved "arch-specific accelerator init hook" earlier
-  (patch 3), before the arm64 build enablement.
-- Updated cpu_thread_is_idle() comment to be arch-neutral.
-- Link to v3: https://lore.kernel.org/qemu-devel/20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com
-
----
-Changes in v5:
-- Rebased onto v11.1.0 rc0.
-- Dropped "accel/mshv: implement cpu_thread_is_idle() hook" as it has been
-  merged upstream and is now part of the base.
-- Dropped "accel/mshv: move msr.c to target/i386" for the same reason (msr.c
-  now lives in target/i386/mshv/ upstream).
-- Adapted the arm64 code to MSHV API changes already present in the new base:
-   - * follow the mshv_arch_put_registers() -> mshv_arch_load_vcpu_state() /
-       mshv_arch_store_vcpu_state() rename;
-   - * add an arm64 stub for the new mshv_arch_disable_partition_proc_features()
-       hook and guard the x86-only xsave handling in create_partition() with
-       `#if defined(__x86_64__)`.
-- Made the arm64 register helpers file-local static (load_regs(), store_regs(),
-  get_standard_regs()).
-- Link to v4: https://lore.kernel.org/qemu-devel/20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com
-
----
-Changes in v6:
-- Rebased to the latest master.
-- Fixed an MSHV header-order dependency exposed by the rebase.
-- Made MSHV migration initialization architecture-specific; kept MSR,
-  MP-state, and clock restore code in the x86 backend.
-- Added an empty ARM migration-init hook; migration remains unsupported.
-- Cleared the x86-only TLB-flush enlightenment on ARM.
-- Link to v5: https://lore.kernel.org/qemu-devel/20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com
-
----
-Aastha Rawat (9):
-      accel/mshv: extract common CPU register helpers
-      accel/mshv: make MSHV migration initialization arch-specific
-      meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
-      target/arm/mshv: implement vcpu state operations for ARM64
-      target/arm: convert host CPU feature ifdef ladder to runtime checks
-      target/arm/mshv: implement -cpu host for MSHV
-      accel/mshv: Add access_vp_regs synthetic proc features
-      target/arm: cpu: Mark MSHV supporting PSCI 1.3
-      target/arm: extract MMIO emulation logic for HVF & WHPX
-
-Anirudh Rayabharam (Microsoft) (5):
-      accel/mshv: add arch-specific accelerator init hook
-      target/arm/mshv: add vCPU run loop
-      include/hw/hyperv: adjust hv_interrupt_control structure for arm64
-      hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
-      MAINTAINERS: updates for MSHV arm64 code
-
- MAINTAINERS                        |   8 +
- accel/mshv/irq.c                   |   2 +
- accel/mshv/meson.build             |   3 +-
- accel/mshv/mshv-all.c              |  56 ++--
- accel/mshv/mshv-cpu-common.c       | 151 ++++++++++
- hw/arm/virt.c                      |  11 +-
- hw/i386/mshv/clock.c               |   2 +-
- hw/intc/arm_gicv3_common.c         |   3 +
- hw/intc/arm_gicv3_mshv.c           | 181 ++++++++++++
- hw/intc/meson.build                |   2 +
- include/hw/hyperv/hvgdk_mini.h     | 129 ++++++++
- include/hw/hyperv/hvhdk.h          |  91 +++++-
- include/hw/hyperv/hvhdk_mini.h     |   6 +
- include/hw/intc/arm_gicv3_common.h |   1 +
- include/system/hw_accel.h          |   3 +-
- include/system/mshv.h              |   4 +-
- include/system/mshv_int.h          |   4 +
- meson.build                        |   8 +-
- target/arm/cpu.c                   |   8 +-
- target/arm/cpu64.c                 |  27 +-
- target/arm/helper.c                |  62 ++++
- target/arm/helper.h                |  16 +
- target/arm/hvf/hvf.c               |  57 ++--
- target/arm/meson.build             |   1 +
- target/arm/mshv/meson.build        |   7 +
- target/arm/mshv/mshv-all.c         | 585 +++++++++++++++++++++++++++++++++++++
- target/arm/mshv_arm.h              |  18 ++
- target/arm/syndrome.h              |  47 +++
- target/arm/whpx/whpx-all.c         |  45 ++-
- target/i386/mshv/meson.build       |   1 +
- target/i386/mshv/mshv-all.c        | 119 ++++++++
- target/i386/mshv/mshv-cpu.c        | 165 +----------
- 32 files changed, 1542 insertions(+), 281 deletions(-)
----
-base-commit: afe27627a13dadab6a7a45a605b21c7c809f4f56
-change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
-
-Best regards,
---  
-Aastha Rawat <aastharawat@linux.microsoft.com>
+-- 
+2.45.4
 
 
