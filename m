@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C15DCA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE0CCA5FCB
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 10:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCEQD-00061v-0y; Thu, 01 Oct 2026 06:53:53 -0400
+	id 1xCEQD-00062K-MU; Thu, 01 Oct 2026 06:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPJ-0005df-2e; Thu, 01 Oct 2026 06:52:57 -0400
+ id 1xCEPm-0005iv-1E; Thu, 01 Oct 2026 06:53:29 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1xCEPF-0002P2-Pc; Thu, 01 Oct 2026 06:52:56 -0400
+ id 1xCEPh-0002Pa-MT; Thu, 01 Oct 2026 06:53:24 -0400
 Received: from localhost (unknown [131.107.1.165])
- by linux.microsoft.com (Postfix) with ESMTPSA id A8F3420B7168;
- Thu,  1 Oct 2026 03:51:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A8F3420B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9BE3320B7179;
+ Thu,  1 Oct 2026 03:52:07 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9BE3320B7179
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1790851917;
- bh=5ZHK54BtZ1HmFz5+7cCRNy9EwyJVBkDJHoi8fEbeTsg=;
+ s=default; t=1790851927;
+ bh=7hOufKOPzIQwADcMhT46WTXAlBvQ3DlmIGHDoOfMqeI=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=CeCGh2nuuyQEriu0HtmwmBz9GNSMFYWmwPXpy1yYmmNk6II9TeRkYViqfy1jYuaCS
- Vosk0f77r7PN9eYlkC8nqgr6lzoAeFB93rANCovb0GKY/NJDWWxe3cWSr4/7XZebNP
- qRdRQNiziPzyoKKet8RrzRNdRDoVOVaBytTFeIvs=
+ b=ePpi67xxgSMJTqvUcfzB0atpkH6uf9bcWUPkssdJaS2NXEwwkRrm1RwK+5EsiYP/S
+ 9mYLYqMIEIKeFzDwv2F2t/ZtNa5cSRKUm6jsJBB8j2QWLfgz8nrOsf8rEGzC3PN4P5
+ e4IH4OhQSctTne0GvD/UJs/kz9vP8D5iN8EKxc+k=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Thu, 01 Oct 2026 10:52:47 +0000
-Subject: [PATCH v6 02/14] accel/mshv: add arch-specific accelerator init hook
+Date: Thu, 01 Oct 2026 10:52:59 +0000
+Subject: [PATCH v6 14/14] MAINTAINERS: updates for MSHV arm64 code
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261001-mshv_accel_arm64_supp-v6-2-aefe5e76a0e3@linux.microsoft.com>
+Message-Id: <20261001-mshv_accel_arm64_supp-v6-14-aefe5e76a0e3@linux.microsoft.com>
 References: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 In-Reply-To: <20261001-mshv_accel_arm64_supp-v6-0-aefe5e76a0e3@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -80,201 +80,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
 
-Introduce mshv_arch_accel_init() as an arch-specific hook called early
-in mshv_init(), before VM creation. This allows each architecture to
-perform platform-specific initialization at accelerator init time.
+Add myself and Aastha Rawat as maintainers.
 
-For x86, the hook calls mshv_init_mmio_emu() which was previously called
-directly from the common init path. Also move set_unimplemented_msr_action()
-and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
-they are not vCPU-specific.
+Add Magnus Kulke as reviewer.
 
 Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- accel/mshv/mshv-all.c        |  5 ++-
- include/system/mshv_int.h    |  1 +
- target/i386/mshv/meson.build |  1 +
- target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
- target/i386/mshv/mshv-cpu.c  | 40 ----------------------
- 5 files changed, 86 insertions(+), 41 deletions(-)
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 5921ce693ee..860f511fcba 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -544,7 +544,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-         return -1;
-     }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1312bbd1bd..84a911ac26 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -624,6 +624,14 @@ S: Supported
+ F: target/i386/mshv/
+ F: hw/i386/mshv/
  
--    mshv_init_mmio_emu();
-+    ret = mshv_arch_accel_init(as, ms, mshv_fd);
-+    if (ret < 0) {
-+        return -1;
-+    }
- 
-     ret = create_vm(mshv_fd, &vm_fd);
-     if (ret < 0) {
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 2e8caad8fde..0e68365c63f 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -106,6 +106,7 @@ void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- void mshv_arch_disable_partition_proc_features(
-      union hv_partition_processor_features *disabled_features);
-+int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
- int mshv_arch_post_init_vm(int vm_fd);
- void mshv_setup_hvcall_args(AccelCPUState *state);
- int mshv_get_vp_state(int cpu_fd, struct mshv_get_set_vp_state *state);
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 31ff4cc9950..0e95c5a00b9 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -1,6 +1,7 @@
- i386_mshv_ss = ss.source_set()
- 
- i386_mshv_ss.add(files(
-+  'mshv-all.c',
-   'mshv-cpu.c',
-   'msr.c',
-   'synic.c',
-diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
-new file mode 100644
-index 00000000000..f0b43aa86f1
---- /dev/null
-+++ b/target/i386/mshv/mshv-all.c
-@@ -0,0 +1,80 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke  <magnuskulke@microsoft.com>
-+ *          Jinank Jain   <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++ARM64 MSHV CPUs
++M: Anirudh Rayabharam <anirudh@anirudhrb.com>
++M: Aastha Rawat <aastharawat@linux.microsoft.com>
++R: Magnus Kulke <magnus.kulke@linux.microsoft.com>
++S: Supported
++F: target/arm/mshv/
++F: hw/intc/arm_gicv3_mshv.c
 +
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/memalign.h"
-+
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+#include "system/address-spaces.h"
-+#include "linux/mshv.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/i386/apic_internal.h"
-+
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "emulate/x86_flags.h"
-+
-+#include "trace-accel_mshv.h"
-+#include "trace.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
-+{
-+    mshv_init_mmio_emu();
-+    return 0;
-+}
-+
-+/*
-+ * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-+ * fault to the guest if it tries to access it. It is possible to override
-+ * this behavior with a more suitable option i.e., ignore writes from the guest
-+ * and return zero in attempt to read unimplemented.
-+ */
-+static int set_unimplemented_msr_action(int vm_fd)
-+{
-+    struct hv_input_set_partition_property in = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
-+    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
-+
-+    args.code   = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz  = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+
-+    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
-+
-+    int ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set unimplemented MSR action");
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+int mshv_arch_post_init_vm(int vm_fd)
-+{
-+    int ret;
-+
-+    ret = set_unimplemented_msr_action(vm_fd);
-+    if (ret < 0) {
-+        error_report("Failed to set unimplemented MSR action");
-+    }
-+
-+    return ret;
-+}
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 3eee097432a..f1056bd215e 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -2125,46 +2125,6 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-     return ret;
- }
- 
--/*
-- * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-- * fault to the guest if it tries to access it. It is possible to override
-- * this behavior with a more suitable option i.e., ignore writes from the guest
-- * and return zero in attempt to read unimplemented.
-- */
--static int set_unimplemented_msr_action(int vm_fd)
--{
--    struct hv_input_set_partition_property in = {0};
--    struct mshv_root_hvcall args = {0};
--
--    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
--    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
--
--    args.code   = HVCALL_SET_PARTITION_PROPERTY;
--    args.in_sz  = sizeof(in);
--    args.in_ptr = (uint64_t)&in;
--
--    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
--
--    int ret = mshv_hvcall(vm_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to set unimplemented MSR action");
--        return -1;
--    }
--    return 0;
--}
--
--int mshv_arch_post_init_vm(int vm_fd)
--{
--    int ret;
--
--    ret = set_unimplemented_msr_action(vm_fd);
--    if (ret < 0) {
--        error_report("Failed to set unimplemented MSR action");
--    }
--
--    return ret;
--}
--
- static void mshv_cpu_xsave_init(void)
- {
-     static bool first = true;
+ X86 Instruction Emulator
+ M: Roman Bolshakov <rbolshakov@ddn.com>
+ R: Phil Dennis-Jordan <phil@philjordan.eu>
 
 -- 
 2.45.4
