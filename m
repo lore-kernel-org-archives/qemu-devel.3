@@ -4,148 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEDFCA5FCB
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E523CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 13:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCH2O-0000jC-Np; Thu, 01 Oct 2026 09:41:28 -0400
+	id 1xCHD4-0001ws-9X; Thu, 01 Oct 2026 09:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCH1v-0000hV-DD
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:41:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xCH1s-0007YM-7H
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:40:58 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691AkDDx3388135
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 13:40:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=; b=Vwv2ikBdD7MQvrj0
- XgfLdUG+NJvpEn/wfoG5MF52zwghDTNs+aE/ZqQL0WjWY6VupI05zCzkeCv7pA9+
- U56IO+vI76+iwcc2NEmQy3/fW2LYT92OYuLOKmHO7SvS/rNlhJlrTFy5/Zs+Rzm4
- BybLpmNR7qyoSeL+V+8FUKRBhroWKUtmoeSOW1D0UzRSIZWfJK7cfXsm1cIVH1zM
- 2AKP5MZVZtdXt/2SFzH/CKL9pqwO259jQLAZU0NnDGD/AAyhgNtRDPLEC5SADVGe
- Qi7vMA+r3cZlv3T2DXH7ymPHhl5QdiHUMnBUalugOrXHGBwwvk4nFLydJs5vcOPq
- QWL7Dg==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1p2b8nnf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 13:40:54 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-7bf853be08eso208570137.0
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 06:40:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1xCHD3-0001wX-41
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:52:29 -0400
+Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1xCHD0-0000Pn-P2
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 09:52:28 -0400
+Received: by mail-yx2-x2a.google.com with SMTP id
+ 00721157ae682-8ab41af29caso31200597b3.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 06:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790862053; x=1791466853; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=;
- b=UnTVBC/1tlM+tKyQVzpi2jBrhxT8cvkARiJYjVBCQUMt4VRhatMFd8o1artWluH5oJ
- RrBA4Bwcv5kPqfnq2ztDNeUGN72aOaXb3EKQ+QnqHchgZF9jldota0ytKkacmNZ233ml
- k2ghgeT0hZ3mSd6nVK08KBETHromSOcLXgYiC/CCE64pCRThDA5yreEFRvL7i84Tsk2X
- 96A7eOgEOBPo9n4krSpbMqBlKa5pMKQOQQH9iAZnxi1yvT4hbbxB3dVZW8ud2daWpvQd
- LsPGMWbTZdsgu6TSQrxvkgK4L8zqO2PmnvBaKas2CaEvYYA45NbuFf7b6ysxOFbl+vKG
- u9Jw==
+ d=tenstorrent.com; s=google; t=1790862745; x=1791467545; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=QeHXIKOndEh8UofaOXrQ/46qeOt4qDlXAHo7DT2xHn8=;
+ b=GYLmzu1807qadMmgbDgH3F7SuRNQ7Al5zISPuQMwEH6960KJy/D/ocWMHV6wyTq/70
+ JuwkbNEnaY/30JjhxnCKKPNiieSEJcOSvefMMbCUt6IB8wtBpqFFeFdsJG2bPqiUgWwF
+ 4voUwplyQEbidl106awOFbUuo3kSHMWFJeeDV239NZ82SZMHYSITAK0LdET2St9tO5d+
+ Pdml+I+Y4dhBcilrIW6xwYP9FEIvauHJin3mfbCFV6BmnLSGTFIpv08hGV3yZl7+d2p/
+ AgyrcBM8nJ01FBA61C2xZbcjDSf6NC49uneQxshGfE061RRb+Qis4+Me2AbzJiOv6MUA
+ bNFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790862053; x=1791466853;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=I1ry2hqtlM6+ycp+jQDXy0kAQRh2IWE47tSm+AaQiBY=;
- b=ShxZQXsDmaN5nKiz1bLEH0M4ujc2uJ5BQIRZYPDn9mnl/Dl0glAUSgz4R72FgmcB8W
- XkILH5zAH76QgDtbptgwKXVRlmdAN3OpSerkGIhf0yTo+9OrGYvbd1HWujMOuN1gb75L
- AgVLqGh0/pDjRUUzIi0znpyktgaAaRO5P8OFs7BMNgLzYjsf82PIn+rXVUfn2NwQ4Y4h
- cvr84C4/GxDuxbU+QKjOyBxFgG5DNwvNcJDU/rVkre+45C92ZofbfY06KsdbVioan41N
- Fojx3PXjVDPRm+1LiZrlkKsiqo+xrtLLMQ5yJxaNYsCObmP1IXT2A7jA0s9HAaOA6w7e
- DNsA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzALZVtXCrQu4QOCc/xHtGBekfyRkceJRdcjTmbiBdR2D7MPQES138mrUZWUbOEd2xOIB7kThoine/p@nongnu.org
-X-Gm-Message-State: AFq9FYKKu1ucD/3j5lF8dART9zp0l39bSQc9Q34xm2Xk2+Q5Fxv3zrtN
- 3I01zl0FkTyT6lGqRLYBRFuxVCR+14AZIgGO2Yat8qRk4aqo3Yfb6PSIKz+3dab082QdQaLPxXj
- HkeLDyZvr7VDpmdhgZ7b347QW3dsvh6V4jiWnprt7M3TRlkb24c+LlGfMbA==
-X-Gm-Gg: AYBFou07reyZDBl++9p35Q/T+4qk8v0dRrhouCa5Oipspmje9uEgBdcy2QOoGojKd3g
- B3OCEbh2fQPiRnHE5WscyNGpHkEQ3DWTeSV1rRkMHBG6VIj0x0So/AcJ4NuKy+lCM59JjG+NNac
- WUhjO06nfuHJv+Y9a7J0iuo3JxxfsuWSx1+0zbRu80WfvjshUwSFwQQIsU65Srmc19tfMc73Bl1
- G7toaYfN3JSCeCSv337GI0484imwrQm6DI+hjFboajKeKrGqpj6N+zeEScCoC7YfgHygL3uevOY
- Rr3XRL7RJAi9RODeE2thwA5yy6W2qa4hkIK56XEAobEQPQBQav4zNu+CNVRVJxCYxJu2Nfm/LX6
- wvw2yA3wIJnER4iTGnFlvMA==
-X-Received: by 2002:a05:6102:3fa3:b0:7a7:198a:c2bf with SMTP id
- ada2fe7eead31-7be735975ffmr1079574137.29.1790862053279; 
- Thu, 01 Oct 2026 06:40:53 -0700 (PDT)
-X-Received: by 2002:a05:6102:3fa3:b0:7a7:198a:c2bf with SMTP id
- ada2fe7eead31-7be735975ffmr1079560137.29.1790862052780; 
- Thu, 01 Oct 2026 06:40:52 -0700 (PDT)
-Received: from [10.111.137.66] ([212.136.9.21])
+ d=1e100.net; s=20260707; t=1790862745; x=1791467545;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=QeHXIKOndEh8UofaOXrQ/46qeOt4qDlXAHo7DT2xHn8=;
+ b=qQin6+EpIvgHVwIY1sGZc5c0vQYrD82zjZI9cz21rfILRWHHsIlZBJsPNXasj5gzER
+ Y5E1cpsC4sc/Qey57copb4u/4tmKj0f1l0MjzmfZnpcb4h8EJ6AYiC2+hhmrLBismeSf
+ V9xEeovhjyF2e2z7AYIvB/4m2Hcr8IEe3eKE++pVVKLQRaSM70/zUGlHKerh8MCYkNIm
+ dnxjUqEiCbd0TLJUBh7esZn5oMo4BjPS5Kp6u6CnU6axCDO167HgZU+WatK09TzbeiR2
+ DSs33p2znuzUJ29SLmnf1ViHqCC2xUvQ5Uhr6ykvxp+k1X/VTVO26QsTjkwpXYBtagOQ
+ LacQ==
+X-Gm-Message-State: AFq9FYJEPRifujxZSWOWBQ//HWGyPBoL6NTF4iaibaQTGHjmj/uOJ4YD
+ HwBesFzyPBGQ7VYGaXZSEFcAXCyk1Y/9/8E2VCuvftnlemhIOveboz9f+mSOFQhsRyA=
+X-Gm-Gg: AYBFou1Jy+xm5E1Khe27kbIC1I5TcZrqJ4QMGMJdywyjL39vfwSrJuR97QZhN8LoIpK
+ +0fFcQ/sf8T0+zJJZ5Zr7fR2E/jahIBMBVr2+bbhP/5s0VFFj5fKHFJgv8HPiokdZWyA1i4KO5A
+ H6LJ3CZecbHZ3E/bO9bee70kGQPuYSNw2WOhwvbrRehSVVZGAkf1HND1nR1zCREmSnH1g7cA8EK
+ 7TCbmF5N4jN/hyyxzU6CPC9UM+bMjCKo2S+JmmPvuV/KsHotoSSyfA8W1Rfu25ZwB3wQuvVEu/n
+ 0rFCwuGadLFiCLw7kWFiesfIDFQAUNeIWpSLcbMo52qGhZ1U8GAIfNVPFeaT6wnpzfxGBs5x/Qa
+ FoMt/vjxzOAk3NbmXFmfexkWrvTE6hEHSzDa+ydPHs4gcFIDWxBf5QJdU9awZkI9I0I6HVC7Qiv
+ bLw3oqlci5LQy29solE/PY5rcPRsXSt2OlPMfGE+kLv2FFTg1OknPqj/TNi6Kum/dS2UvKkVBOu
+ De82SroiGxJNbayBKWmJqd62J+eHUZxLJvDgL609ba4GOUL
+X-Received: by 2002:a05:690c:e650:10b0:8ab:359f:ed19 with SMTP id
+ 00721157ae682-8ac92c2adcfmr17358807b3.33.1790862745049; 
+ Thu, 01 Oct 2026 06:52:25 -0700 (PDT)
+Received: from [10.200.24.109] ([12.55.13.134])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b0692b1c9sm6125022f8f.27.2026.10.01.06.40.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 06:40:51 -0700 (PDT)
-Message-ID: <75d53637-5cb8-4a03-bcd8-97acd646b527@oss.qualcomm.com>
-Date: Thu, 1 Oct 2026 15:40:49 +0200
+ 00721157ae682-8acdac9e4d6sm10587707b3.11.2026.10.01.06.52.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Oct 2026 06:52:24 -0700 (PDT)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Subject: [PATCH v4 0/3] Add Model for Tenstorrent Atlantis PRCM
+Date: Thu, 01 Oct 2026 08:52:07 -0500
+Message-Id: <20261001-atlantis_prcm-v4-0-95d33c470eeb@oss.tenstorrent.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/11] target/hexagon: Move to do_interrupt() (BQL
- acquired internally)
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Brian Cain <brian.cain@oss.qualcomm.com>
-References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
- <20260902152044.31291-9-philmd@oss.qualcomm.com>
- <ee1807fd-eb2d-4fcb-b7e5-e44e64829b5a@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ee1807fd-eb2d-4fcb-b7e5-e44e64829b5a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: eiHhgAtAtEFCUquw0NssLPcEJUNbsS_H
-X-Proofpoint-ORIG-GUID: eiHhgAtAtEFCUquw0NssLPcEJUNbsS_H
-X-Authority-Analysis: v=2.4 cv=O8SsLx9W c=1 sm=1 tr=0 ts=6abe62e6 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=neIvRC4PW-D10HVD7IUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=ODZdjJIeia2B_SHc_B0f:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA1MyBTYWx0ZWRfX6VFMNw9m+DZU
- BWjJoR0DgDoime0ke7n0GXvn0vQ5OCrM+e4M+9oG1Y9cT5LxT/MJCnl1rIbkoPDLnVsgVfGXwc/
- LX3+8/k2DbwVC3cWcT+TXBwZpRnsy3g=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA1MyBTYWx0ZWRfXzIpwQeCbr3NW
- yeLeVjHO+Qw8BRDghYC0kpPB4Hs3bACkGHhYKtqZ/z/cXq+N/ys/vmP4j5QtbkxQiO5CYcermgW
- SLSFzTLxvA8/P7zLrrf4qie8CiEGuo2KBkXuY5lGUGjugdq+ymgFi9HlgT2BE9LU1PfQdiE11dK
- Uyrc6iGnBE/D02J8OrNV+sdfwjxA2LoN465BOUYsLefQqK2CHDWbYuW2ba83HbWqJrOcGS3mZ1g
- CmqT7Vre1yf8uCoulSaSqK3MPuXiYIaP8ZmLd6gr0/grBmx6snDvsG1VyWM9L6YISh8/MdDirQG
- HygurSednSVwEDas5SHLtGZ/lk1bFGXLgRYcGhPX5LIfi1Ffju6uta2Ls5bHl7IVrFQ7Sd1kPas
- 4SBAi6iUuBO0gXpIGr4WhKGj1po73lOTGU95OJ3ZYvO2fQJtM0not1WO8iBMphdfyOD56ZWaFm8
- gXVloMexuQPUBumIlpQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0
- phishscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010053
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIdlvmoC/3XO0WoDIRAF0F8JPtegoxs1T/2PEoqasbE0blAjL
+ WH/vZpSAgt5vHDn3LmRgjliIfvNjWRsscQ59SBfNsSfbPpAGo89E2CwYwoUtfXLphrL+yX7M3U
+ 7CT44oY6TIv3mkjHE77v3dvjL5eo+0deBjMYpljrnn/tg46P3b5uV3ThldGKgNRghcOKvcynbi
+ mkAGVPd+vlMxkqDh6P5+scG3QnBWeaMlJKb5454OIbJtSO6o10ApsxkhX7yz7Isv/mU7g5WAQA
+ A
+X-Change-ID: 20260727-atlantis_prcm-b642cfb37d57
+To: qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx2-x2a.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,42 +114,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-09-13 5:55, Richard Henderson wrote:
-> On 9/2/26 05:20, Philippe Mathieu-Daudé wrote:
->> hexagon_cpu_do_interrupt() already acquires the BQL internally,
->> so register it as do_interrupt() instead of do_interrupt_locked().
->> This reflects the actual locking model used by the target.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> ---
->>   target/hexagon/cpu.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
->> index b5dcbfc99db..7067e5b70f7 100644
->> --- a/target/hexagon/cpu.c
->> +++ b/target/hexagon/cpu.c
->> @@ -769,7 +769,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
->>       .tlb_fill = hexagon_tlb_fill,
->>       .do_unaligned_access = hexagon_cpu_do_unaligned_access,
->>       .cpu_exec_halt = hexagon_cpu_has_work,
->> -    .do_interrupt_locked = hexagon_cpu_do_interrupt,
->> +    .do_interrupt = hexagon_cpu_do_interrupt,
->>   #endif /* !CONFIG_USER_ONLY */
->>   };
-> 
-> Eh.  Except all that hexagon does is acquire the lock at the beginning 
-> of the function and keep it for the entire duration.  I think hexagon 
-> should stay using _locked and *not* do internal locking.
+This series adds a qemu model for the PRCM blocks present in Tenstorrent
+Atlantis. This block controls clock, reset and other misc functionality
+in the SoC. Linux support for the Clocks/Resets served by the RCPU PRCM
+was added in [1]. This PRCM model has been tested with a linux DT that
+enables the PRCM and sets the UART clk to the one provided by the PRCM.
+This DT will be sent out shortly.
 
-I'm rewording to clarify:
+[1] https://lore.kernel.org/linux-riscv/20260306-atlantis-clocks-v8-0-6c9b14a4aa8e@oss.tenstorrent.com/
 
-```
-   target/hexagon: Use do_interrupt() for internal BQL locking
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+---
+Changes in v4:
+- Addressed style comments from Joel's review
+- Added error handling for sysbus_realize calls
+- Dropped redundant realize/ops setting lines for PRCM subclasses
+- Updated PRCM min_access_size to allow byte accesses
+- Added back clock-frequency prop to UART node to allow linux boots without clk driver
+- Added back bus clock-frequency prop to I2C node
+- Link to v3: https://lore.kernel.org/qemu-devel/20260904-atlantis_prcm-v3-0-8bf20795a381@oss.tenstorrent.com
 
-   hexagon_cpu_do_interrupt() acquires the BQL with BQL_LOCK_GUARD() and
-   holds it throughout exception delivery. Register it as do_interrupt()
-   to match this locking contract and allow removal of
-   do_interrupt_locked().
-```
+Changes in v3:
+- Rebase on top of Joel's socify series v3 https://lore.kernel.org/qemu-riscv/20260903055131.257903-1-joel@jms.id.au/T/#t
+- I2C and UART now use clk provided by PRCM, and periph_clk is dropped
+- Addressed style edit comments from Joel (comment about clk IDs coming from DT bindings,) and Alistair (drop size from trace prints, move decalartions to top of function, use PRCM_DOMAIN enums)
+- Link to v2: https://lore.kernel.org/qemu-devel/20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com
+
+Changes in v2:
+- Coding style edits based on Chao Liu's feedback
+- Changed prcm to use Resettable inferface instead of legacy reset
+- Edits requested by Daniel related to tracing, pll_en logic and unnecessary switch/case statement
+- Added comments to some of the magic numbers in the reset values for PRCM registers
+- Link to v1: https://lore.kernel.org/qemu-devel/20260729-atlantis_prcm-v1-0-502882933e51@oss.tenstorrent.com
+
+---
+Anirudh Srinivasan (3):
+      hw/misc: Add Tenstorrent Atlantis PRCM model
+      hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis model
+      hw/riscv/tt-atlantis: Update UART and I2C to use clk from PRCM
+
+ MAINTAINERS                        |   2 +
+ docs/system/riscv/tt_atlantis.rst  |   1 +
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ hw/misc/tt_atlantis_prcm.c         | 428 +++++++++++++++++++++++++++++++++++++
+ hw/riscv/tt_atlantis.c             | 125 ++++++++++-
+ include/hw/misc/tt_atlantis_prcm.h |  51 +++++
+ include/hw/riscv/tt_atlantis.h     |  28 +++
+ 8 files changed, 632 insertions(+), 8 deletions(-)
+---
+base-commit: b23a62773a7856299cbb3782e64968b6a92c792f
+change-id: 20260727-atlantis_prcm-b642cfb37d57
+
+Best regards,
+--  
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+
 
