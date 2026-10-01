@@ -4,120 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E23ECA5FD6
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9181BCA5FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Oct 2026 17:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCKy4-00088T-OL; Thu, 01 Oct 2026 13:53:16 -0400
+	id 1xCKy5-00088t-3X; Thu, 01 Oct 2026 13:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxt-00085o-4A
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:06 -0400
+ id 1xCKy1-00087k-Bw
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:13 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xCKxr-0001rm-F5
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:04 -0400
+ id 1xCKxw-0001sZ-6z
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 13:53:13 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 691HUvKh2353177
- for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:52 GMT
+ 691HUtNR2353164
+ for <qemu-devel@nongnu.org>; Thu, 1 Oct 2026 17:52:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- z0El8y1UPi4rBBlipj2PQNSZNuXkXFPICS/103bB8BM=; b=oWNMSxS98UwBMq61
- l7dBBFReUNTSxiBaJSN9DoT7dqrbt/3Y8siPr0UvPcheW0+BpNG1mDIoWsX8e+e9
- 24KcHF0xypN8BM9aCmKoUFi30rYojNIdHrfuB+ma9jsDv7y8F0cgU6WRAUXn3dHc
- QCLXLuLQEhqLSQzhBNRY+pGOcpMvoyrs3qgC1J0EJn1SZ4zphsCkn+XCKqGMNwsc
- Et2naHMGt/mBPXJ4WYleBvwJ3w/tb5oHwgKAT5XWOk/xF8jvZp+g+VOuQ5Xd67gS
- WEVp5AKgS7N6+c2t62X7X3JJpJAj9x/tu3FxqIgNGoj7kOvSmonibp1txvPouiDG
- Z6puaQ==
+ 3NYpwPpQctQax7RhwVRZY9eFzfsAutY0MEyzHuKWM+c=; b=ISei446j83F/Xp4E
+ Njp3BVhFZaX5OYyGfECOWFJ1APwHAYNsS85hbdRoI+5nuqhYm8IhTwPpRm+2BFZ6
+ 4y70H4df6MmpM1vde406198VSIwLaRS8f5y19kresHX/4dbgq58apSZ3fFVbKHHs
+ IGyvyeELeC2jH959/4KweIdU+oAAPd8HYm8nYgSPDCtk4sbZ2lY+jZDyRYiw56YX
+ l2ir/E6usHLnI1tyjjDLsqCRvBExcrZlD8u3f2Bj7hvGXdieb0989mgoJXJpClbD
+ Rp7O+iyOCpgVawMm7oXx73j1av2zkFGO1pkMTasd7D2t7lP+wpmrwWUJueI1ljVp
+ IMs+mw==
 Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1v0304qq-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h1v0304qv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:52 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 17:52:56 +0000 (GMT)
 Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-144d4ba280aso688238c88.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:52 -0700 (PDT)
+ a92af1059eb24-146e698b8adso625455c88.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 10:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790877171; x=1791481971; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790877176; x=1791481976; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=z0El8y1UPi4rBBlipj2PQNSZNuXkXFPICS/103bB8BM=;
- b=XeGra5KyHT72fKCk+la27LLGYCfaymuc2BYo842ci4LwwJRD2p0/i1WMhzAjXJKpfI
- YoPyaXaJU4w3AjBL63npAawP0Y8of8ZlvBL/ppPEy4gsa6NpfXmFc634ElMpFs8SNmF7
- ng2EBpvAfvqZ7mCZSLrCqOKgUyexyi9QCeZ0tFHBrOMIQULlSe6E6XeUakUypxQbptnR
- 4tCMMusqtnTdVM6WllHRoUvB+lR/SO1SlPZrX+4HdG/vPFWIbeTPvED080V/K1rh/GL3
- 0fx1KkHXZw5wk4XT7cd/oZDWomBqqBzWajXH6Kb3CusPeqeFAWn8xZmuSG171/jxynTM
- 5vCw==
+ bh=3NYpwPpQctQax7RhwVRZY9eFzfsAutY0MEyzHuKWM+c=;
+ b=dRYVtD7ly/qNrFoiVd1UrazrtNwVTsHkPZ8rRTXISHN85zYjZ1KKKlTBvkyTwmyOM4
+ mTD9f4M2ZZ2EWNDVu5eqThZ0W2jZa8lfLmN9NUTN5jc218bGYVYJAquuRmfb3gRSV9ui
+ qN2DS8qEv5f7RZgjKUCUZUivv5ApQDb8zSqpuayHM3IhUAM303jQRJgX5UeN8/lRiMOi
+ Z/yjrkiQz52jTW3i5MWpJpFCbLtmfwwe/tczI+FhicSt4ESVoUV+PNwWeQ+OUCieDCID
+ ZLwGTUkSfSq+ZUUPvTjkbQmO4MH0kL3o3hCocja2Y8YvyMU92aK/jDE6F2vioQ+rpt5w
+ OfGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790877171; x=1791481971;
+ d=1e100.net; s=20260707; t=1790877176; x=1791481976;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=z0El8y1UPi4rBBlipj2PQNSZNuXkXFPICS/103bB8BM=;
- b=UBMCuEeobl/cIfT0Dmo1QMoQJ9VS4g/BmaQ9HBG6SPGOHK/8mkFY5Xmli5rP5+tSQm
- hlZZE7xZ6k4NC2HXppne0f6eSq7KQWMFJXqHz4Zx7B29wo8s6VLz4EPvpJjkY/nFOVNI
- nvuA+LCFjMA5lfht6BqV4Bk3KiSJ/m6kCWImrOWxhcvSlIiH8udUeH047Bl7QbfGi9TF
- k/9dD+72VaT6pmMVYV4S2dQvG6pRSsY4Pxe/FMZVtPkWsgrRyFe2Iw3mJFDZmwGPHM6E
- BMUrDmY/ZmnA+5IHaCLBZUKZZKGuoSuT0KlOwI3T1jUE1Wm/osEKYJgDwPKIbxV3rLCe
- telw==
-X-Gm-Message-State: AFuF++mWqMS9y5avyc0QlV4N+WGzie/TEuUcowAAtz9AMZ2ZS30bJjQO
- VAS6dWJ/5mFwIqbfNw5DeLZ17uVo00QyblRzex0WK3j/9kXh5Ow4M9fJUtiUZmZv+dCS39b7/k5
- M930yjzL9swCgyu798xf2ZEKwCUnC1hxoLYsaCyIPYGu5r10aTSTZuh1z4jSoXFmHZQ==
-X-Gm-Gg: AYBFou2Df9ytcnD9kH1g2DdEcXuCeoK/xP+WHGzW0KdxQGXYFuvUg1XrxRrxclb185D
- rdj5KAHoMCyihOL+KebYJ66OnDnGusQLnl7nYtx6KLIU0TTLKq+So5hTPzQUpiS8fK/FVyMd+VF
- J/2bSBAZrM3eKLCw8FrbZppXEiMXSUGv0ExeDW0BoXZw7A2sCy1QeLMKqy1Zue5Zl0/i2n5pnkY
- ywy/6P2A+ThsAEjXgCKP6J1h3kegsgmfXd5FLQ9hJWplOeEJIhyUt79ICIgX9ieKtvYNGj2RkgA
- QHJAWnTGFFWniqVUiQh4sy+Dm2vrCQvCRyXo5c0j0NAD7E/zfw/lGq5KtcWunARJIOt1K//1bBy
- +XyPD2or8ibPEqRlsDQwODj+yyXr9GZSqe+X4ebfQ9ZWh6CiXESlLi/AbpsVU
-X-Received: by 2002:a05:7022:ec84:b0:13c:e1e2:fc86 with SMTP id
- a92af1059eb24-14dd07fcb2bmr4397046c88.4.1790877171162; 
- Thu, 01 Oct 2026 10:52:51 -0700 (PDT)
-X-Received: by 2002:a05:7022:ec84:b0:13c:e1e2:fc86 with SMTP id
- a92af1059eb24-14dd07fcb2bmr4396998c88.4.1790877170551; 
- Thu, 01 Oct 2026 10:52:50 -0700 (PDT)
+ bh=3NYpwPpQctQax7RhwVRZY9eFzfsAutY0MEyzHuKWM+c=;
+ b=H8kRVLSbEOwK9y1Yh57dehYcZr1ZoAPb5NpCN1LzOAXI8ERMDPzsH+AQUx2F2MrSwj
+ SVb/peBnqtKhnV3ZZVEoxASkDn1EQjHaktLL+oMRnOY87VmbWiUGxhuZOa2c/bYRWczh
+ IZKzGYBzNri7ESKdPh9LeF9xxqtrtTVU0ZFu8l495hNBxsOBGgnqwYFffUivDELDW24l
+ fLBJoMdQAQvBajIlKRxivVY6qSsEHjMSoxPo1yGfaTuI4FNZ/BxgaczNtpgZpZ2dUrik
+ +5D8Ku1opSw4E/kjG4AyhCWODIE6GlNSVxCjEJslkIR+93a7c6VzMjoJDD8lF83kvdkn
+ tgTA==
+X-Gm-Message-State: AFuF++lsm0bDBNw9yzRTJfDDrdhdcjyucUyRRjerR844V1IuQPiHghbz
+ OU/opYLXf+GLp51vWJvYYeoWovP/6yBqRq2xNeEO0bxQtpKu5vVpPchUphTHUOO+poZblEP+zen
+ SURybQOr/q+w+HCM0fuxIW26muJ9HqKdLo8zdPOiq3bEf7La7KQIkdILcEZH+JZnHIg==
+X-Gm-Gg: AYBFou1gjlWNiUIsng7rCKdhWWRkHY8FGoHmelABmBNDkHvm+dbpxG2jeNaWYQPr3tD
+ /kHAPhvMGCZHzGkpBDH4JqVfU7muQPxyRbmY0pNaovhXwKbRfqYgGSahJ5mv8IWHDfvaaDJS2JN
+ V0it2aq5IlxPbCMc10zy8RI5H6V5knmAdl8hVf+46j5NqM0estC0ACrdUnOMogWgwdX429weTYi
+ Xel7VF4OCDtJw6KAIUQIrNBNXPA13n0RaunQ24wrRsmy7Qe9e195+GNiFgT6A8rwzqeZOnLubaA
+ JPhkoPQjH6jUpgbu7K8x9BIslGkwfysxIcG0/oXo0eKi/GW0LUrKk3ZbC/rCFZ3cAnVuPbAvNJE
+ hhSj4E9Zq5WTHWF5njGhLaBEwvUOd/ER5NZupdbxgKMsKd5OfgShr6qvvHCbF
+X-Received: by 2002:a05:701b:464b:b0:13b:32f4:e826 with SMTP id
+ a92af1059eb24-14dd0cd2a54mr3059168c88.11.1790877172822; 
+ Thu, 01 Oct 2026 10:52:52 -0700 (PDT)
+X-Received: by 2002:a05:701b:464b:b0:13b:32f4:e826 with SMTP id
+ a92af1059eb24-14dd0cd2a54mr3059037c88.11.1790877168462; 
+ Thu, 01 Oct 2026 10:52:48 -0700 (PDT)
 Received: from debian.qualcomm.com (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.49
+ a92af1059eb24-14f43fb3417sm207518c88.1.2026.10.01.10.52.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Oct 2026 10:52:50 -0700 (PDT)
+ Thu, 01 Oct 2026 10:52:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 26/27] tests/tcg/i386: Build test-i386-opt-shr
-Date: Thu,  1 Oct 2026 17:52:02 +0000
-Message-ID: <20261001175203.8673-27-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 24/27] tests/tcg/mips/user/ase/msa: remove compilation/run
+ scripts
+Date: Thu,  1 Oct 2026 17:52:00 +0000
+Message-ID: <20261001175203.8673-25-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261001175203.8673-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfXxZTB3KyqMuqa
- iXBlNPtYYqlGvYCBMnXCGGEU1HjmKYtd6AQP0woReUY8ftPuP5JPMWHF4U73Su3x92YFleBK70m
- 7eFmNDrMOL9TS979pNL2mp2Pk+Vctag=
-X-Authority-Analysis: v=2.4 cv=GqfXaU1C c=1 sm=1 tr=0 ts=6abe9df4 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX/Ke/3YrBahx2
+ hDEhsXMkpFp0LjlmwXWBBlrfau0f0tozKldW/XW2NE297kEV10BqyA1LI75uexds/m7/pQDgfE9
+ ojOf0JnVKn8f+2F5uHLtdA6lI9Pfaaw=
+X-Authority-Analysis: v=2.4 cv=GqfXaU1C c=1 sm=1 tr=0 ts=6abe9df9 cx=c_pps
  a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=zTXboHLKykkbUYI2VpAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-GUID: Q3C_PNPVG_UAVVI_fizvffCgAxJLTdVQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfX3RlSQHLk2Y7e
- yRLLLMMXqG3HYoBv//CvdvJbo/53NK7PnLe0RzCEM/PcdadzPl97Gr4SXN2EVsGRNlTpT4Pfpv9
- mRkwmhjV7MMu6WVfg4cG35gASlqTzs5OFzjUfw/qlGnsSIx86CqnRd5rGyaA2SagtZSSb+k90O5
- 1hO3NHxs/++prEof43X6+5tmTi3MgujS6AnJpub25RoFFlzTKH1JbmOxK0rnwtljCSKhTahiwc5
- DqPcwC6RF4cNEsL+jmU10cHvTWvKRusGov67pbW2jpM2/yClwv/5RX+fDnhdJhZZh5PSEY8Bwc/
- zSJQUz9EiNX0IGcYo4wmnpvFpSSuD2mHjrP8MiqTd5knYGaJ81vAbqIn5FSxEjUiJ33/tUdsbJV
- i7ymnedrqKpl7mVOpFsNBlcMRC4D/8Xgx9RkqwPIIrlPlGOoOiS0RqS5fED8Rfu3tqQmZCrX6pq
- 5AcELarQTo3HAEU10SA==
-X-Proofpoint-ORIG-GUID: Q3C_PNPVG_UAVVI_fizvffCgAxJLTdVQ
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=OJP8RuXJTy_725aGFdsA:9
+ a=bVZE1pa5ipFLeOpb:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-GUID: q2qMWM6VZ4DJFfkWOVy3iC77jLQDbILK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA3MSBTYWx0ZWRfXyFc331wFzSXx
+ CZvtg+yEd9yMmtzjmm2TVNYsLSmMVcOSGp6b5BsMTREYXiOOra8H2WK2ifk91KgV3afJWStxcll
+ DQ0b7YHrWaUu/a7imJ4DBV4r/ECSJBgcoEeWUp7ENfw0p+Nt7kvkHzMZe/4WxQV/pXzLMhBClnU
+ cJenku3bQcSEplSUYyuqaQ2RzI/7C8TUuIYVCULx43hbu23PhYwZ4weOmzp+0HKUMfXUmL/NlFZ
+ YvkLTqQAUBCAHT51XelU1XSvHAl0z9EyXaAT8Cr7yKE8mfZefUjd3TZ5y5p6wJU0uZxeenKTxKy
+ 6FyjgbjWQcpbNkSH8C9QQhbvN1jCEXthMUVYNsNYYITSYqu6tgTKfim29Ydmmipr9XXK9AoKirL
+ Ui731XzlGvuPpkM344DKPe2XrwxIwXzd7/tGwrYCbPnouFLPmKKor56eXGu0O8tgXtwyBOq7aMN
+ 7TGqk8xnhippUup+xoQ==
+X-Proofpoint-ORIG-GUID: q2qMWM6VZ4DJFfkWOVy3iC77jLQDbILK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_04,2026-10-01_01,2025-10-01_01
@@ -152,34 +154,4711 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominic P <gcc@gcc.dp11.uk>
+Now those tests are integrated in meson, we don't need those files
+anymore.
 
-The old Makefile.target built every tests/tcg/i386/*.c.  The meson
-conversion lists the tests explicitly and missed test-i386-opt-shr.c,
-which 5fe51606146 had added in the meantime, so it is no longer built.
-
-Fixes: b4e3e90d61 ("tests/tcg/i386: user tests")
-Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20261001163751.172720-3-pierrick.bouvier@oss.qualcomm.com
+Link: https://lore.kernel.org/qemu-devel/20260929212439.110454-25-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/i386/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/mips/user/ase/msa/README            |  20 -
+ .../user/ase/msa/test_msa_compile_32r5eb.sh   | 917 ------------------
+ .../user/ase/msa/test_msa_compile_32r5el.sh   | 917 ------------------
+ .../user/ase/msa/test_msa_compile_64r6eb.sh   | 643 ------------
+ .../user/ase/msa/test_msa_compile_64r6el.sh   | 643 ------------
+ .../mips/user/ase/msa/test_msa_run_32r5eb.sh  | 371 -------
+ .../mips/user/ase/msa/test_msa_run_32r5el.sh  | 371 -------
+ .../mips/user/ase/msa/test_msa_run_64r6eb.sh  | 371 -------
+ .../mips/user/ase/msa/test_msa_run_64r6el.sh  | 371 -------
+ 9 files changed, 4624 deletions(-)
+ delete mode 100644 tests/tcg/mips/user/ase/msa/README
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_compile_32r5eb.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_compile_32r5el.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_compile_64r6eb.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_compile_64r6el.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_run_32r5eb.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_run_32r5el.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_run_64r6eb.sh
+ delete mode 100755 tests/tcg/mips/user/ase/msa/test_msa_run_64r6el.sh
 
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 04d438a062a..38723d7f8df 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -28,6 +28,7 @@ tests += {
-   'test-i386-fxtract.c': {},
-   'test-i386-fyl2x.c': {},
-   'test-i386-fyl2xp1.c': {},
-+  'test-i386-opt-shr.c': {},
-   'test-i386-pcmpistri.c': {'cflags': ['-msse4.2']},
-   'test-i386-pseudo-denormal.c': {},
-   'test-i386-snan-convert.c': {},
+diff --git a/tests/tcg/mips/user/ase/msa/README b/tests/tcg/mips/user/ase/msa/README
+deleted file mode 100644
+index ca4f070ec1e..00000000000
+--- a/tests/tcg/mips/user/ase/msa/README
++++ /dev/null
+@@ -1,20 +0,0 @@
+-The tests in subdirectories of this directory are supposed to be compiled for
+-mips64el MSA-enabled CPU (I6400, I6500), using an appropriate MIPS toolchain.
+-For example:
+-
+-/opt/img/bin/mips-img-linux-gnu-gcc <source file>                  \
+--EL -static -mabi=64 -march=mips64r6 -mmsa  -o <executable file>
+-
+-They are to be executed using QEMU user mode, using command line:
+-
+-mips64el-linux-user/qemu-mips64el -cpu I6400 <executable file>
+-
+-Helper scripts test_msa_compile.sh and test_msa_run.sh are also
+-provided. This is an example of compilation and execution of all
+-MSA tests:
+-
+-cd <QEMU root directory>
+-cd tests/tcg/mips/user/ase/msa
+-
+-./test_msa_compile.sh
+-./test_msa_run.sh
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5eb.sh b/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5eb.sh
+deleted file mode 100755
+index 940cabe4d81..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5eb.sh
++++ /dev/null
+@@ -1,917 +0,0 @@
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_d_32r5eb
+-
+-#
+-# Bit move
+-# --------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bmnz_v.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bmnz_v_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bmz_v.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bmz_v_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bsel_v.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bsel_v_32r5eb
+-
+-#
+-# Bit Set
+-# -------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_d_32r5eb
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_madd_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_madd_q_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddr_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddr_q_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msub_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msub_q_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubr_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubr_q_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mul_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mul_q_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulr_q_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulr_q_w_32r5eb
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_a_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_a_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_a_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_a_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_d_32r5eb
+-
+-#
+-# Int Add
+-# -------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_d_32r5eb
+-
+-#
+-# Int Average
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_d_32r5eb
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_b.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_h.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_w.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_d.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_d_32r5eb
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_d_32r5eb
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_d.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_d.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_d.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_h.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_w.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_d.c       \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_d_32r5eb
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_d_32r5eb
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_d_32r5eb
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_d_32r5eb
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_b.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_h.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_w.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_d.c        \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_b.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_h.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_w.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_d.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_b.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_h.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_w.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_d.c      \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_d_32r5eb
+-
+-#
+-# Interleave
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_d_32r5eb
+-
+-#
+-# Logic
+-# -----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_and_v.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_and_v_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_nor_v.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nor_v_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_or_v.c            \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_or_v_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_xor_v.c           \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_xor_v_32r5eb
+-
+-#
+-# Move
+-# ----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            move/test_msa_move_v.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_move_v_32r5eb
+-
+-#
+-# Pack
+-# ----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_d_32r5eb
+-
+-#
+-# Shift
+-# -----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_b.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_h.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_w.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_d.c          \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_d_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_b.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_b_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_h.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_h_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_w.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_w_32r5eb
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_d.c         \
+--EB -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_d_32r5eb
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5el.sh b/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5el.sh
+deleted file mode 100755
+index 048b30b8d7b..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_compile_32r5el.sh
++++ /dev/null
+@@ -1,917 +0,0 @@
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nloc_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nloc_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_nlzc_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nlzc_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc       bit-count/test_msa_pcnt_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pcnt_d_32r5el
+-
+-#
+-# Bit move
+-# --------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsl_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsl_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_binsr_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_binsr_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bmnz_v.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bmnz_v_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bmz_v.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bmz_v_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-move/test_msa_bsel_v.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bsel_v_32r5el
+-
+-#
+-# Bit Set
+-# -------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bclr_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bclr_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bneg_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bneg_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         bit-set/test_msa_bset_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_bset_d_32r5el
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_madd_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_madd_q_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddr_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddr_q_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msub_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msub_q_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubr_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubr_q_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mul_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mul_q_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulr_q_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulr_q_w_32r5el
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_a_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_a_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmax_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmax_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_a_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_a_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc   float-max-min/test_msa_fmin_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_fmin_d_32r5el
+-
+-#
+-# Int Add
+-# -------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_add_a_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_add_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_a_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_adds_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_adds_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_addv_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_addv_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc         int-add/test_msa_hadd_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hadd_u_d_32r5el
+-
+-#
+-# Int Average
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_ave_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ave_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-average/test_msa_aver_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_aver_u_d_32r5el
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_b.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_h.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_w.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_ceq_d.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ceq_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_cle_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_cle_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-compare/test_msa_clt_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_clt_u_d_32r5el
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-divide/test_msa_div_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_div_u_d_32r5el
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dotp_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dotp_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_d.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_d.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpadd_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_d.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_h.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_w.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_d.c       \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_dpsub_u_d_32r5el
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_a_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_max_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_max_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_a_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_a_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc     int-max-min/test_msa_min_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_min_u_d_32r5el
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_s_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      int-modulo/test_msa_mod_u_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mod_u_d_32r5el
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_maddv_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_maddv_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_msubv_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_msubv_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-multiply/test_msa_mulv_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_mulv_d_32r5el
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_asub_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_asub_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_hsub_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_hsub_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_s_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_b.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_h.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_w.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subs_u_d.c        \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subs_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_b.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_h.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_w.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsus_u_d.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsus_u_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_b.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_h.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_w.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_d.c      \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subsuu_s_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc    int-subtract/test_msa_subv_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_subv_d_32r5el
+-
+-#
+-# Interleave
+-# ----------
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvev_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvev_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvod_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvod_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvl_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvl_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc      interleave/test_msa_ilvr_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_ilvr_d_32r5el
+-
+-#
+-# Logic
+-# -----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_and_v.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_and_v_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_nor_v.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_nor_v_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_or_v.c            \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_or_v_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc           logic/test_msa_xor_v.c           \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_xor_v_32r5el
+-
+-#
+-# Move
+-# ----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            move/test_msa_move_v.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_move_v_32r5el
+-
+-#
+-# Pack
+-# ----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckev_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckev_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_pckod_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_pckod_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            pack/test_msa_vshf_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_vshf_d_32r5el
+-
+-#
+-# Shift
+-# -----
+-#
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sll_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sll_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_sra_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_sra_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srar_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srar_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_b.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_h.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_w.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srl_d.c          \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srl_d_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_b.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_b_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_h.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_h_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_w.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_w_32r5el
+-/opt/mti/bin/mips-mti-linux-gnu-gcc            shift/test_msa_srlr_d.c         \
+--EL -static -mabi=32 -march=mips32r5 -mmsa -mno-odd-spreg -mfp64 -mnan=2008 -o \
+-      /tmp/test_msa_srlr_d_32r5el
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6eb.sh b/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6eb.sh
+deleted file mode 100755
+index 6bc8907a53d..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6eb.sh
++++ /dev/null
+@@ -1,643 +0,0 @@
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_d_64r6eb
+-
+-#
+-# Bit move
+-# --------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bmnz_v.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bmnz_v_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bmz_v.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bmz_v_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bsel_v.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bsel_v_64r6eb
+-
+-#
+-# Bit Set
+-# -------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_d_64r6eb
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_madd_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_madd_q_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddr_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddr_q_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msub_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msub_q_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubr_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubr_q_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mul_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mul_q_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulr_q_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulr_q_w_64r6eb
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_a_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_a_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_a_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_a_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_d_64r6eb
+-
+-#
+-# Int Add
+-# -------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_d_64r6eb
+-
+-#
+-# Int Average
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_d_64r6eb
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_b.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_h.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_w.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_d.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_d_64r6eb
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_d_64r6eb
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_d.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_d.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_d.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_h.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_w.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_d.c       \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_d_64r6eb
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_d_64r6eb
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_d_64r6eb
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_d_64r6eb
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_b.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_h.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_w.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_d.c        \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_b.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_h.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_w.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_d.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_b.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_h.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_w.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_d.c      \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_d_64r6eb
+-
+-#
+-# Interleave
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_d_64r6eb
+-
+-#
+-# Logic
+-# -----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_and_v.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_and_v_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_nor_v.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nor_v_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_or_v.c            \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_or_v_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_xor_v.c           \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_xor_v_64r6eb
+-
+-#
+-# Move
+-# ----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            move/test_msa_move_v.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_move_v_64r6eb
+-
+-#
+-# Pack
+-# ----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_d_64r6eb
+-
+-#
+-# Shift
+-# -----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_b.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_h.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_w.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_d.c          \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_d_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_b.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_b_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_h.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_h_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_w.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_w_64r6eb
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_d.c         \
+--EB -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_d_64r6eb
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6el.sh b/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6el.sh
+deleted file mode 100755
+index 4a92c55a4e4..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_compile_64r6el.sh
++++ /dev/null
+@@ -1,643 +0,0 @@
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nloc_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nloc_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_nlzc_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nlzc_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc       bit-count/test_msa_pcnt_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pcnt_d_64r6el
+-
+-#
+-# Bit move
+-# --------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsl_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsl_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_binsr_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_binsr_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bmnz_v.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bmnz_v_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bmz_v.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bmz_v_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-move/test_msa_bsel_v.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_bsel_v_64r6el
+-
+-#
+-# Bit Set
+-# -------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bclr_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bclr_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bneg_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bneg_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         bit-set/test_msa_bset_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_bset_d_64r6el
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_madd_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_madd_q_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_madd_q_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddr_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_maddr_q_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddr_q_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msub_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msub_q_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msub_q_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubr_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_msubr_q_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubr_q_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mul_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mul_q_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mul_q_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulr_q_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc  fixed-multiply/test_msa_mulr_q_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulr_q_w_64r6el
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_a_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_a_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmax_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmax_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_a_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_a_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc   float-max-min/test_msa_fmin_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_fmin_d_64r6el
+-
+-#
+-# Int Add
+-# -------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_add_a_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_add_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_a_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_adds_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_adds_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_addv_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_addv_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc         int-add/test_msa_hadd_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hadd_u_d_64r6el
+-
+-#
+-# Int Average
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_ave_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ave_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-average/test_msa_aver_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_aver_u_d_64r6el
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_b.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_h.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_w.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_ceq_d.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ceq_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_cle_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_cle_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-compare/test_msa_clt_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_clt_u_d_64r6el
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-divide/test_msa_div_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_div_u_d_64r6el
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dotp_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dotp_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_s_d.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpadd_u_d.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpadd_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_s_d.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_h.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_w.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc int-dot-product/test_msa_dpsub_u_d.c       \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_dpsub_u_d_64r6el
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_a_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_max_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_max_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_a_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_a_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc     int-max-min/test_msa_min_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_min_u_d_64r6el
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_s_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      int-modulo/test_msa_mod_u_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mod_u_d_64r6el
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_maddv_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_maddv_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_msubv_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_msubv_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-multiply/test_msa_mulv_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_mulv_d_64r6el
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_asub_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_asub_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_hsub_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_hsub_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_s_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_b.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_h.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_w.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subs_u_d.c        \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subs_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_b.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_h.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_w.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsus_u_d.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsus_u_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_b.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_h.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_w.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subsuu_s_d.c      \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subsuu_s_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc    int-subtract/test_msa_subv_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_subv_d_64r6el
+-
+-#
+-# Interleave
+-# ----------
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvev_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvev_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvod_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvod_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvl_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvl_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc      interleave/test_msa_ilvr_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_ilvr_d_64r6el
+-
+-#
+-# Logic
+-# -----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_and_v.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_and_v_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_nor_v.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_nor_v_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_or_v.c            \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_or_v_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc           logic/test_msa_xor_v.c           \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_xor_v_64r6el
+-
+-#
+-# Move
+-# ----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            move/test_msa_move_v.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_move_v_64r6el
+-
+-#
+-# Pack
+-# ----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckev_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckev_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_pckod_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_pckod_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            pack/test_msa_vshf_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o  /tmp/test_msa_vshf_d_64r6el
+-
+-#
+-# Shift
+-# -----
+-#
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sll_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sll_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_sra_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_sra_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srar_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srar_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_b.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_h.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_w.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srl_d.c          \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srl_d_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_b.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_b_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_h.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_h_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_w.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_w_64r6el
+-/opt/img/bin/mips-img-linux-gnu-gcc            shift/test_msa_srlr_d.c         \
+--EL -static -mabi=64 -march=mips64r6 -mmsa -o   /tmp/test_msa_srlr_d_64r6el
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_run_32r5eb.sh b/tests/tcg/mips/user/ase/msa/test_msa_run_32r5eb.sh
+deleted file mode 100755
+index 32dbf313479..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_run_32r5eb.sh
++++ /dev/null
+@@ -1,371 +0,0 @@
+-PATH_TO_QEMU="../../../../../../mips-linux-user/qemu-mips"
+-
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_d_32r5eb
+-
+-#
+-# Bit move
+-# --------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bmnz_v_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bmz_v_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bsel_v_32r5eb
+-
+-#
+-# Bit Set
+-# -------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_d_32r5eb
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_madd_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_madd_q_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddr_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddr_q_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msub_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msub_q_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubr_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubr_q_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mul_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mul_q_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulr_q_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulr_q_w_32r5eb
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_d_32r5eb
+-
+-#
+-# Int Add
+-# -------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_d_32r5eb
+-
+-#
+-# Int Average
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_d_32r5eb
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_d_32r5eb
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_d_32r5eb
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_d_32r5eb
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_d_32r5eb
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_d_32r5eb
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_d_32r5eb
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_d_32r5eb
+-
+-#
+-# Interleave
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_d_32r5eb
+-
+-#
+-# Logic
+-# -----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_and_v_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nor_v_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_or_v_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_xor_v_32r5eb
+-
+-#
+-# Move
+-# ----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_move_v_32r5eb
+-
+-#
+-# Pack
+-# ----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_d_32r5eb
+-
+-#
+-# Shift
+-# -----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_d_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_b_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_h_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_w_32r5eb
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_d_32r5eb
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_run_32r5el.sh b/tests/tcg/mips/user/ase/msa/test_msa_run_32r5el.sh
+deleted file mode 100755
+index a2e6092522a..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_run_32r5el.sh
++++ /dev/null
+@@ -1,371 +0,0 @@
+-PATH_TO_QEMU="../../../../../../mipsel-linux-user/qemu-mipsel"
+-
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nloc_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nlzc_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pcnt_d_32r5el
+-
+-#
+-# Bit move
+-# --------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsl_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_binsr_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bmnz_v_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bmz_v_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bsel_v_32r5el
+-
+-#
+-# Bit Set
+-# -------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bclr_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bneg_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_bset_d_32r5el
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_madd_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_madd_q_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddr_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddr_q_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msub_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msub_q_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubr_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubr_q_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mul_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mul_q_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulr_q_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulr_q_w_32r5el
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmax_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_fmin_d_32r5el
+-
+-#
+-# Int Add
+-# -------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_add_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_adds_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_addv_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hadd_u_d_32r5el
+-
+-#
+-# Int Average
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ave_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_aver_u_d_32r5el
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ceq_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_cle_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_clt_u_d_32r5el
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_div_u_d_32r5el
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dotp_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpadd_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_dpsub_u_d_32r5el
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_max_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_a_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_min_u_d_32r5el
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mod_u_d_32r5el
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_maddv_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_msubv_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_mulv_d_32r5el
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_asub_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_hsub_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subs_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsus_u_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subsuu_s_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_subv_d_32r5el
+-
+-#
+-# Interleave
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvev_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvod_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvl_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_ilvr_d_32r5el
+-
+-#
+-# Logic
+-# -----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_and_v_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_nor_v_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_or_v_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_xor_v_32r5el
+-
+-#
+-# Move
+-# ----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_move_v_32r5el
+-
+-#
+-# Pack
+-# ----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckev_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_pckod_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_vshf_d_32r5el
+-
+-#
+-# Shift
+-# -----
+-#
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sll_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_sra_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srar_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srl_d_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_b_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_h_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_w_32r5el
+-$PATH_TO_QEMU -cpu P5600  /tmp/test_msa_srlr_d_32r5el
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_run_64r6eb.sh b/tests/tcg/mips/user/ase/msa/test_msa_run_64r6eb.sh
+deleted file mode 100755
+index 6de6d7cacf3..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_run_64r6eb.sh
++++ /dev/null
+@@ -1,371 +0,0 @@
+-PATH_TO_QEMU="../../../../../../mips64-linux-user/qemu-mips64"
+-
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_d_64r6eb
+-
+-#
+-# Bit move
+-# --------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bmnz_v_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bmz_v_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bsel_v_64r6eb
+-
+-#
+-# Bit Set
+-# -------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_d_64r6eb
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_madd_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_madd_q_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddr_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddr_q_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msub_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msub_q_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubr_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubr_q_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mul_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mul_q_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulr_q_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulr_q_w_64r6eb
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_d_64r6eb
+-
+-#
+-# Int Add
+-# -------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_d_64r6eb
+-
+-#
+-# Int Average
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_d_64r6eb
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_d_64r6eb
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_d_64r6eb
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_d_64r6eb
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_d_64r6eb
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_d_64r6eb
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_d_64r6eb
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_d_64r6eb
+-
+-#
+-# Interleave
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_d_64r6eb
+-
+-#
+-# Logic
+-# -----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_and_v_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nor_v_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_or_v_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_xor_v_64r6eb
+-
+-#
+-# Move
+-# ----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_move_v_64r6eb
+-
+-#
+-# Pack
+-# ----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_d_64r6eb
+-
+-#
+-# Shift
+-# -----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_d_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_b_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_h_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_w_64r6eb
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_d_64r6eb
+diff --git a/tests/tcg/mips/user/ase/msa/test_msa_run_64r6el.sh b/tests/tcg/mips/user/ase/msa/test_msa_run_64r6el.sh
+deleted file mode 100755
+index 979057df746..00000000000
+--- a/tests/tcg/mips/user/ase/msa/test_msa_run_64r6el.sh
++++ /dev/null
+@@ -1,371 +0,0 @@
+-PATH_TO_QEMU="../../../../../../mips64el-linux-user/qemu-mips64el"
+-
+-
+-#
+-# Bit Count
+-# ---------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nloc_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nlzc_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pcnt_d_64r6el
+-
+-#
+-# Bit move
+-# --------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsl_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_binsr_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bmnz_v_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bmz_v_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bsel_v_64r6el
+-
+-#
+-# Bit Set
+-# -------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bclr_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bneg_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_bset_d_64r6el
+-
+-#
+-# Fixed Multiply
+-# --------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_madd_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_madd_q_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddr_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddr_q_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msub_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msub_q_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubr_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubr_q_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mul_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mul_q_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulr_q_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulr_q_w_64r6el
+-
+-#
+-# Float Max Min
+-# -------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmax_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_fmin_d_64r6el
+-
+-#
+-# Int Add
+-# -------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_add_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_adds_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_addv_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hadd_u_d_64r6el
+-
+-#
+-# Int Average
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ave_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_aver_u_d_64r6el
+-
+-#
+-# Int Compare
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ceq_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_cle_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_clt_u_d_64r6el
+-
+-#
+-# Int Divide
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_div_u_d_64r6el
+-
+-#
+-# Int Dot Product
+-# ---------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dotp_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpadd_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_dpsub_u_d_64r6el
+-
+-#
+-# Int Max Min
+-# -----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_max_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_a_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_min_u_d_64r6el
+-
+-#
+-# Int Modulo
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mod_u_d_64r6el
+-
+-#
+-# Int Multiply
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_maddv_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_msubv_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_mulv_d_64r6el
+-
+-#
+-# Int Subtract
+-# ------------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_asub_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_hsub_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subs_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsus_u_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subsuu_s_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_subv_d_64r6el
+-
+-#
+-# Interleave
+-# ----------
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvev_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvod_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvl_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_ilvr_d_64r6el
+-
+-#
+-# Logic
+-# -----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_and_v_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_nor_v_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_or_v_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_xor_v_64r6el
+-
+-#
+-# Move
+-# ----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_move_v_64r6el
+-
+-#
+-# Pack
+-# ----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckev_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_pckod_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_vshf_d_64r6el
+-
+-#
+-# Shift
+-# -----
+-#
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sll_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_sra_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srar_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srl_d_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_b_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_h_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_w_64r6el
+-$PATH_TO_QEMU -cpu I6400  /tmp/test_msa_srlr_d_64r6el
 -- 
 2.43.0
 
