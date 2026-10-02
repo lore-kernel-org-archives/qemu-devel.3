@@ -4,66 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9037BCA5FE0
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707E2CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCalj-0004HT-2M; Fri, 02 Oct 2026 06:45:35 -0400
+	id 1xCams-0004bx-RI; Fri, 02 Oct 2026 06:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xCalS-0004Gb-51
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:45:27 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCamW-0004U7-Md
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:46:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1xCalN-0006MR-BH
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:45:17 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 692Aie52084081
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 2 Oct 2026 19:44:40 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wkxoaWH/u01wDu1xCmZpGRu38HrqyeH8Lh13jNXJ8UU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1790937881; v=1;
- b=msZJ2I/O8MxN5OEjRzUy8DOxw8XqiHOtGTkPUFQVUzrFWwqsJ2dXsNLDtmu/ySW8
- AHKxPosv84iM2/daGfS5Vot9UcAwvUCM7YbQ1y8Rt/xV4gmPruycoJ5I7wy+l/+c
- 1viUtxpMDoK9Db3Y6SYD0FtC/0oxcqW+s0J2D4YxzVtOeZW5Q4qwMPH2dlorAfJ1
- pIBVWt3i+6fHoSvuEru3fTJ/Sn3Az5IINRsc0Bsz1NKpN6M1/jD3BJequAhaDN13
- eHcmyc8SmFsYXu6EENjxf8wlj6PyuBV/euMwtJjfhvafMixIx3yQsRbyz3dfmsfI
- 6gwEEOEKYdghO5YpaYYvgA==
-Message-ID: <0b16690d-8d74-421f-a4d7-2089e49a1de7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 2 Oct 2026 19:44:40 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCamV-0006bX-2f
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:46:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1790937982;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DuktG/lNxiTxF+gnr0j8iS+0I2kNk62bZlFjQxEAjAY=;
+ b=MlLfkv4oqxZ1zJ2ItUwoOdm3+YDlC2e1/siHDB6Fzl9MzQxadtzHNFFHWnYHCriR1G4YJM
+ SUZnayrc35nS4pyiof601SjrSxWj0ZhfByMesE+rvaBjkPS79aFLJs7KAtouFVji52sey6
+ YC38WGWMPl+xd0sxZQhnID8RBQqjIUU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-_wW23gmJMQWHOovQut4H7w-1; Fri,
+ 02 Oct 2026 06:46:18 -0400
+X-MC-Unique: _wW23gmJMQWHOovQut4H7w-1
+X-Mimecast-MFC-AGG-ID: _wW23gmJMQWHOovQut4H7w_1790937977
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B48ED196C42D; Fri,  2 Oct 2026 10:46:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 555941800345; Fri,  2 Oct 2026 10:46:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 09AB021E6A04; Fri, 02 Oct 2026 12:46:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [qemu-web PATCH] contribute: define clear limits on bug report
+ volume
+In-Reply-To: <20260924135634.2626603-1-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 24 Sep 2026 14:56:34
+ +0100")
+References: <20260924135634.2626603-1-berrange@redhat.com>
+Date: Fri, 02 Oct 2026 12:46:15 +0200
+Message-ID: <87qzi82xe0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 15/18] vhost: release ownership in vhost_dev_cleanup()
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
-Cc: den@openvz.org, dwmw2@infradead.org, peterx@redhat.com, mst@redhat.com,
- sgarzare@redhat.com, vsementsov@yandex-team.ru, farosas@suse.de,
- mark.kanda@oracle.com, dongli.zhang@oracle.com,
- maciej.szmigiero@oracle.com, philmd@oss.qualcomm.com,
- bchaney@akamai.com, clg@redhat.com
-References: <20261001-up-vsock-vhost-v5-v10-0-8c094843e98b@virtuozzo.com>
- <20261001-up-vsock-vhost-v5-v10-15-8c094843e98b@virtuozzo.com>
- <44332097-63da-40e8-9908-d0535b7bf8e8@rsg.ci.i.u-tokyo.ac.jp>
- <c8a4e48d-77ee-42a5-be7a-41fc8a7989a9@virtuozzo.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <c8a4e48d-77ee-42a5-be7a-41fc8a7989a9@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,48 +90,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/10/02 19:27, Andrey Drobyshev wrote:
-> On 10/1/26 2:04 PM, Akihiko Odaki wrote:
->> On 2026/10/01 17:25, Andrey Drobyshev wrote:
->>> vhost_dev_cleanup() closes the backend FD, but that doesn't release the
->>> device ownership taken with VHOST_SET_OWNER if the same file is open
->>> elsewhere.  That's the case on a CPR target: the source keeps the FD,
->>> so if the target fails after SET_OWNER, either inside vhost_dev_init()
->>> or later in its caller, the ownership stays with the target.  Once the
->>> source is resumed it can't take the device back, SET_OWNER fails with
->>> EBUSY.
->>>
->>> Issue VHOST_RESET_OWNER in vhost_dev_cleanup() as the common teardown
->>> for all those paths.  That's safe in any case: the kernel refuses it
->>> from a non-owner, and an owner is about to close the FD anyway.
->>
->> There is one minor counterexample: if a second netdev receives a
->> duplicate of an already-used vhost-net FD, initialization fails with
->> EBUSY, but cleanup then resets the first device.
->>
->> Regards,
->> Akihiko Odaki
-> 
-> Hmm, IIUC QEMU itself doesn't dup vhostfd backend FD provided to it by
-> the management.  So we're talking about the case when the management
-> (i.e. libvirt) dup'ed vhostfd and provided same backend FD for multiple
-> different devices.  Correct?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Yes, that is the case I had in mind: management supplies two distinct 
-FDs referring to the same open file. I agree that this is an invalid 
-configuration. My concern is that rejecting the second device should not 
-reset the first device's backend.
+> Recently QEMU has received a denial of service attack on
+> its bug tracker in the form of 120 reports in 10 minutes,
+> and now repeated by another reporter in the form of 50
+> reports in the same day.
+>
+> Prior to switching security disclosures to the bug tracker,
+> single reporters have submited 18, 22, and 114 bug reports.
+>
+> None of this is sustainable. It is an effective denial of
+> service attack on the project maintainers' time. Every bug
+> report is a TODO item added to someone's workload.
+>
+> It is time to put hard limits on how many bugs, discovered
+> with assitance of automated tools, we are willing to accept
+> in a givenm time frame.
+>
+> This patch proposal suggests
+>
+>  * No more than 5 bugs per week, per reporter
+>  * No more than 10 bugs are permitted to be open at any
+>    time, per reporter.
+>
+> This is explicitly scoped to bugs discovered with the assistance
+> of automated tools. Bugs where a human puts in exclusively
+> personal time / effort to discover a problem are not limited.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  contribute/report-a-bug.md | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
+> index b506f9f..8fb7b0b 100644
+> --- a/contribute/report-a-bug.md
+> +++ b/contribute/report-a-bug.md
+> @@ -32,6 +32,43 @@ on GitLab, taking into account the following guidance.
+>    triage of their output to validate all findings and reproducer
+>    scenarios prior to submitting a bug report.
+>=20=20
+> +* QEMU policy forbids the bulk filing of large numbers of
+> +  bug disclosures that were generated with automated tools
+> +  (AI/LLM, static analysis, fuzers). Such actions are not
 
-> 
-> I didn't think of such config cause it's clearly illegal.  However I
-> agree we should probably be more error-prone for such a case.  So if we
-> want to have this covered, then I guess we'll have to add another flag
-> to 'struct vhost_dev', indicating whether this particular vhost_dev
-> instance currently holds the ownership.  That's pretty much what Stefano
-> was suggesting in the previous thread.
+fuzzers
 
-A per-vhost_dev ownership flag sounds reasonable.
+> +  a benefit to the project, placing an unsustainable burden
+> +  on maintainers.
 
-Regards,
-Akihiko Odaki
+[...]
+
 
