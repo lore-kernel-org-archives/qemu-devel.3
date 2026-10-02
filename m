@@ -4,130 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BE3CA5FCE
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 03:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D2FDCA5FCE
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 03:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCTfT-0004s7-RN; Thu, 01 Oct 2026 23:10:39 -0400
+	id 1xCU2H-0007ar-3g; Thu, 01 Oct 2026 23:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCTfS-0004rm-Jz
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 23:10:38 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCTfR-0004No-63
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 23:10:38 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a8038a9f10so9911609a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 20:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790910635; cv=none;
- d=google.com; s=arc-20260327;
- b=Zudn41KPgxqG2clN6oiY9I61HJ+nt1dm+KJbeZ7PFUFYT86IA6F6SxzCMKypzciDpl
- EWEifHjJDL6dT86OGgwulvG/0/dNHpDMPPzca350wwMi9BD1PcGG6zQsRsoK308rqGfV
- RSbAln4l5RoLXxpXbr7y2WfDRmxNQxLtyxOSXvBP+rDTZ6TJyxJF4H5fh3HREVcRLVhx
- DwC6QDDdbd8oZ0tV9ELsUTWBqs4T7zWfqhfgyPjC/Bv8ddG1iHoc9ZbKp9FE+zixds56
- fhymnEzdWmRZa3MZS68m4mob2pQyuTWI9FUS2I1KzRtaSZvwVp6Qw6gDzfRgWPaaYULE
- XNpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=O2qwL9HHfLSa8iidf6iXkOt32mrRAdwATltII/NaBwI=;
- fh=3bi/XHrCCnMCgy5hotJFZ1RYRGIsl3APZaDMWQAcg4o=;
- b=Z269JbvIO0yI/yFabpD9Vh3Ugr30VZzl17k/dYxMqXG3IWaKKwKR5BPECGfMiYAUm+
- TZBQqYV4X28y2r3obAOTctreXu4v232NohuocM9RQWkehfeRfOnpLs9cAyXtB0SZ9J9X
- umyqPUxCj+cpzRaMSkFcDgP3aBtUUOnnS4wm99YuOwNXpEUPyrbZaPO1dwPGc5wz9rYq
- J26P5J7bEgzUtdS4MtS+3hrLjxVlmkS38AHp/PVjWgyUGT/wqfE2h7B7SK0vqAEfTZmw
- 0LSTFOsMuVIjgVswDmZnbodBnXPJXfGjdNUVTsGeEwIJ13YknxQUf0SvE7n4obe6GZgV
- mXWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790910635; x=1791515435; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=O2qwL9HHfLSa8iidf6iXkOt32mrRAdwATltII/NaBwI=;
- b=hT2oSSR96rJIknSbB8YtZeMnMivA3E1IoesMW3S3evXZhD0IC753Ex7rNUe59YY5Z1
- WKQCkFomIjXwVV2gQ4kE65GhyFPvjVyVT3o9+tgI5WTYg0UYFTs6VtsiXoikfNHsaass
- 4P9AeWtHH2aQjdE4R727f8VoCxlvrecHxcxRVNnQ0vSX9gIIhhevYwAJrvLoLHlfyGdY
- O9EKDdc9pATWcmrDtpb/6x6urD1L4uLeM1TTuMqnFSdS4HFcmcfttFQQnPbSrxoT1XA7
- y3GJBpf9CTacXmNASBk8ZYAHLv9Nu/NWaicV8IDv/WmSZVTdnVyYFaFtnt7R1xnd2Fsf
- 81rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790910635; x=1791515435;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=O2qwL9HHfLSa8iidf6iXkOt32mrRAdwATltII/NaBwI=;
- b=lVvwqOIP5T0e/8BobEngdn0XMy1XiS99yHrzQ8PW1PSipTBJwu99JrjRYFVjcI0pcb
- 9O2PK5PQwe15RKN/nu3rHco1/063UZzvmlp6uXBHrWoLuM/aagtItvDjmWcjttasmrYz
- U5wB62L2WlnkAF8oZiCpM4PkjXfrhI9/aTdRANqkKRBldjVPz3ImD2AHLDIFwoCQrzew
- 3/ylUpaE33thmhaXMlMdC5o5bVOv7H3TFT2idjzV+nEX3vxcp34iPfOQJVwSqf4+0GEb
- qNjIacAdvYL+m1ktClgcDbq46BVVrs9hO1hTVCScaWg6wOgigc2bxN5DceMtsjgR1Eau
- yhGA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxFxiRNA1kr2hR1EnZ53DZ8cgiZlu4++cWP4DkFHVEwPCvDEa6ZDGjgAa40puX90ARzpM/yYGuCPzC0@nongnu.org
-X-Gm-Message-State: AFq9FYKxJJSigQueGXjZ/adyI/ldeLZzZ4S7sTt+kHlAkSyB7eQzsJzT
- G/aS1IR3tp8XbKNE3bOIB3gIDTEimbfSJmPdtKsRtf4J9AVu0F2jNrtTyfKY1qJaj9jX03l7za/
- 3Dxq//BBJqPiy87xT55xFLpXetlrUYY8=
-X-Gm-Gg: AYBFou0S6wchXa070OteebAVp6nT0z2WP+HBBuMZqBVoD3CasNykVJ5/sVvwXC3R5Z8
- DthnuZSKIyGBBrABKKEuSUQiqpUdVw5jQfMfiSm0ENIylfEpt/NaSwB8czM4ZCz96UJkyy1VYwV
- R0Vf+FxH1Ff4WIh6JKqCi1I/rIYLPFw34gl268OZBy5aOzAmaHph548dTTxQ2b+mtUmEq3TFPJ8
- fX5Chiyqp9R8DihXo8jxBglLHe5BYn2LYcWh9GPPmnr5J3FyNYlbOOlWhm4ZSq/xiz10zvfYl3J
- /HLnu+JTu5kzgRIRwaBNt5loAWKOgS3DQS1PfeHqURqB4Hn+bGGppElEe6gQ/unflQ==
-X-Received: by 2002:a05:6402:241a:b0:6ab:81e:e827 with SMTP id
- 4fb4d7f45d1cf-6af9e342c7amr588658a12.43.1790910635387; Thu, 01 Oct 2026
- 20:10:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCU2E-0007ab-Uc
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 23:34:10 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCU2A-0006JL-9K
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 23:34:10 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6923XdQi024225
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 2 Oct 2026 12:33:39 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=S98OeaeYoLt9VxTWmv0rfllCDisW68XX6M3NxFpTe5M=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1790912019; v=1;
+ b=IYeUSfKD3vReXEXj2pKP1SYHQ24jEkYYeNLN2iMV6GT9oCOW/yyDodwTRI+ahBM4
+ PXXUT8vyfDcypig/ZeufAhIPs2lzKp7hyDpDP9Ezht2US/AX7EDAraUjMT3nWnW1
+ nR5+i1GtxwVJCRMExg51nOj6JH7I73L8/4NFYaUVTBmgBfrDVUtKkNirhM2HUHAS
+ 0UotTokW3mLbf4s9gAxuLSu6MkdHDuCPjsN+wt/jDV7RReM5fxOIEbvteT3EQJm6
+ NB2CI+gdMywGMulKHQsRu25WQVAFzf/ec09kFv9hRhZV9LuYjF2WPeFpGuEN3b49
+ 9r0U1L1s7XXEdla1/Otn9g==
+Message-ID: <8599ac70-7443-4dc9-975c-ee59166354ac@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 2 Oct 2026 12:33:38 +0900
 MIME-Version: 1.0
-References: <82250296-78bc-4345-9e57-1fcac485d18a@oss.qualcomm.com>
- <CAE2XoE_+nhj58M9_yx6wf532qCSVcERpTw7F4AU7PXN7prhpzg@mail.gmail.com>
- <74853ef8-7315-466a-99ac-41c8182f9b13@oss.qualcomm.com>
- <ar4TQtKqfXX5Ul9O@redhat.com>
- <CAE2XoE8q3LYJ-JCTbRBk4iPdUQdRE8zzmOgiZ=HEXDL78iw8UQ@mail.gmail.com>
- <26b0d44d-0322-4ceb-a47b-747fc52c61b7@oss.qualcomm.com>
- <CAE2XoE8VyCpPCqRVFArBn_dDsyMw8vrSJxWMhKq17btZvO2n6A@mail.gmail.com>
- <b02db9e2-b348-4011-a98d-122e9d9f17e5@oss.qualcomm.com>
- <ar6a_uDw9OeLng6c@redhat.com>
- <6bf4dad5-4fa2-4df1-b6b8-d594dbd3842c@oss.qualcomm.com>
- <ar6lw3jAcnVej6vK@redhat.com>
- <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
-In-Reply-To: <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 2 Oct 2026 11:10:23 +0800
-X-Gm-Features: AclHuK-V0xU1FhvPsvL3Y6lfOZX2d6Sg1XJ8ZXrABF_10hAEPt_ryix_uYLfPvs
-Message-ID: <CAE2XoE8mmz9jjhEgJUYZ3Symk==RJTSO6uVy_2haxcuFkunmHA@mail.gmail.com>
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, 
- Laurent Vivier <lvivier@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Song Gao <17746591750@163.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 16/18] vhost-vsock: hand off device ownership across
+ CPR
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: den@openvz.org, dwmw2@infradead.org, peterx@redhat.com, mst@redhat.com,
+ sgarzare@redhat.com, vsementsov@yandex-team.ru, farosas@suse.de,
+ mark.kanda@oracle.com, dongli.zhang@oracle.com,
+ maciej.szmigiero@oracle.com, philmd@oss.qualcomm.com,
+ bchaney@akamai.com, clg@redhat.com
+References: <20261001-up-vsock-vhost-v5-v10-0-8c094843e98b@virtuozzo.com>
+ <20261001-up-vsock-vhost-v5-v10-16-8c094843e98b@virtuozzo.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261001-up-vsock-vhost-v5-v10-16-8c094843e98b@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,33 +75,359 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 2, 2026 at 2:56=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> So, for existing binary: -M virt works as before.
->
-> For new multi binary:
-> $ qemu-system -M virt:
-> Multiple machines were found, select one among:
-> - aarch64-virt
-> - riscv64-virt
+On 2026/10/01 17:25, Andrey Drobyshev wrote:
+> The previous patches reuse the source vhost FD on the destination,
+> however both source and target still call vhost_dev_init() (VHOST_SET_OWNER)
+> in realize().  For cpr-transfer the destination realizes while the source
+> still owns the shared FD, so its SET_OWNER would fail - ownership has to be
+> handed over explicitly.
+> 
+> Do this through the device's CPR vmstate hooks.  Namely, release device
+> ownership in pre_save, reclaim in post_load, re-acquire on restart:
+> 
+>    - .pre_save() releases ownership on the source (VHOST_RESET_OWNER) once
+>      the VM is stopped, for the FD-preserving CPR modes (cpr-transfer and
+>      cpr-exec).
+> 
+>    - .realize(), for an incoming CPR, only sets up the virtio device and
+>      queries the backend features by calling vhost_dev_init_backend().
+>      It doesn't take device ownership and doesn't touch the VQs which
+>      still-running source might use.  The full init is deferred to
+>      .post_load().
+> 
+>    - .post_load() reclaims it on the destination: the full vhost_dev_init()
+>      (VHOST_SET_OWNER) on the preserved FD, plus sets the guest cid, before
+>      the device is started at vm_start.
+> 
+>    - .set_status() refuses to start a device whose init hasn't completed
+>      yet (incoming CPR before post_load).
+> 
+>    - .set_status() re-acquires ownership before starting the device if
+>      pre_save released it and this QEMU is about to run the guest again:
+>      the migration failed, or it completed and the management resumed the
+>      source (e.g. cpr-transfer target died).
+> 
+> With the handoff in place, lift the CPR blocker.
+> 
+> Note: this requires kernel side support of VHOST_RESET_OWNER operation
+> for vhost-vsock.  Otherwise CPR attempt fails in .pre_save().
+> 
+> Suggested-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
+>   hw/virtio/vhost-vsock.c         | 157 ++++++++++++++++++++++++++++++++--------
+>   include/hw/virtio/vhost-vsock.h |   2 +-
+>   2 files changed, 128 insertions(+), 31 deletions(-)
+> 
+> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+> index 6e89007b2ce..65ba573da4d 100644
+> --- a/hw/virtio/vhost-vsock.c
+> +++ b/hw/virtio/vhost-vsock.c
+> @@ -21,7 +21,6 @@
+>   #include "hw/virtio/vhost-vsock.h"
+>   #include "monitor/monitor.h"
+>   #include "migration/cpr.h"
+> -#include "migration/blocker.h"
+>   #include "migration/misc.h"
+>   
+>   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
+> @@ -85,14 +84,46 @@ static char *vhost_vsock_cpr_name(DeviceState *dev)
+>   static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+>   {
+>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
+> +    VHostVSock *vsock = VHOST_VSOCK(vdev);
+>       bool should_start = virtio_device_should_start(vdev, status);
+>       int ret;
+>   
+> +    /*
+> +     * During CPR, on target the full vhost_dev_init() is deferred to
+> +     * post_load.  Refuse to start a half-initialised device rather than
+> +     * issue vhost ioctls on it.
+> +     */
+> +    if (should_start && !vhost_dev_is_initialized(&vvc->vhost_dev)) {
+> +        error_report("vhost-vsock: refusing to start, device init incomplete");
+> +        return 0;
+> +    }
+> +
+>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+>           return 0;
+>       }
+>   
+>       if (should_start) {
+> +        /*
+> +         * vsock->owner_reset is only set in .pre_save() on CPR migration
+> +         * source, after a successful RESET_OWNER op.  If we end up here
+> +         * with this flag set - that means that either CPR migration failed,
+> +         * or we got 'cont' cmd from the management (e.g. cpr-transfer
+> +         * target died).  In either case, we need to re-acquire device
+> +         * ownership.
 
+I'm not requesting changes to this patch, but there is a case where
+the source cannot reacquire ownership:
 
-This is what I implemented:
- ./qemu-system -M virt
-qemu-system: unsupported machine type: "virt" for target "none"
-Available for targets: aarch64, arm
+1. The destination successfully completes vhost_vsock_post_load().
 
+2. A subsequent load error, such as a truncated VMState section
+    footer, causes the destination to call exit() without reaching
+    vhost_dev_cleanup().
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+3. The source still holds an FD for the same open file, so closing
+    the destination's FD does not destroy the kernel backend or
+    release its retained owner.
+
+4. Resuming the source with cont calls VHOST_SET_OWNER, which fails
+    with -EBUSY. Repeated attempts do not resolve the stale ownership.
+
+An atexit() hook could cover this exit() path, but would not run after 
+SIGKILL or abort(). This appears to be a broader limitation of the 
+kernel vhost UAPI when sharing an open file between processes: recovery 
+cannot rely solely on the destination releasing ownership before it exits.
+
+Regards,
+Akihiko Odaki
+
+> +         *
+> +         * On failure leave the device stopped.  The next start attempt
+> +         * (guest driver reset, VM stop/cont) retries.
+> +         */
+> +        if (vsock->owner_reset) {
+> +            ret = vhost_dev_set_owner(&vvc->vhost_dev);
+> +            if (ret < 0) {
+> +                error_report("vhost-vsock: cannot re-acquire device "
+> +                             "ownership: %s", strerror(-ret));
+> +                return 0;
+> +            }
+> +            vsock->owner_reset = false;
+> +        }
+> +
+>           ret = vhost_vsock_common_start(vdev);
+>           if (ret < 0) {
+>               return 0;
+> @@ -123,8 +154,44 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+>       return vhost_vsock_common_get_features(vdev, requested_features, errp);
+>   }
+>   
+> +static int vhost_vsock_pre_save(void *opaque)
+> +{
+> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
+> +    VHostVSock *vsock = VHOST_VSOCK(opaque);
+> +    int ret;
+> +
+> +    ret = vhost_vsock_common_pre_save(opaque);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +
+> +    /*
+> +     * Release the device ownership now for CPR migration.  The device is
+> +     * already stopped at pre_save, and destination reclaims it by calling
+> +     * VHOST_SET_OWNER in post_load.
+> +     */
+> +    if (cpr_incoming_needed(NULL) && migration_is_running() &&
+> +        !vsock->owner_reset) {
+> +        ret = vhost_dev_reset_owner(&vvc->vhost_dev);
+> +        if (ret < 0) {
+> +            error_report("vhost-vsock: vhost_reset_owner failed: %s",
+> +                         strerror(-ret));
+> +            return ret;
+> +        }
+> +        vsock->owner_reset = true;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>   static int vhost_vsock_post_load(void *opaque, int version_id)
+>   {
+> +    VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(opaque);
+> +    VirtIODevice *vdev = VIRTIO_DEVICE(opaque);
+> +    g_autofree char *cpr_name = vhost_vsock_cpr_name(DEVICE(opaque));
+> +    Error *local_err = NULL;
+> +    int vhostfd, ret;
+> +
+>       /*
+>        * Only reset vsock connections for non-CPR migration.  For CPR the
+>        * guest cid is unchanged, and the cid-change reset would otherwise
+> @@ -134,6 +201,35 @@ static int vhost_vsock_post_load(void *opaque, int version_id)
+>           return vhost_vsock_common_post_load(opaque, version_id);
+>       }
+>   
+> +    /*
+> +     * CPR restore case.  The source released device ownership in its
+> +     * pre_save.  Complete the handoff here, before the device is started
+> +     * at vm_start.  Init vhost device on preserved FD, issue
+> +     * VHOST_SET_OWNER on it, and restore the guest cid.
+> +     */
+> +    vhostfd = cpr_find_fd(cpr_name, 0);
+> +    if (vhostfd < 0) {
+> +        error_report("vhost-vsock: could not find restored vhost FD");
+> +        return -1;
+> +    }
+> +
+> +    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
+> +                         VHOST_BACKEND_TYPE_KERNEL, 0, &local_err);
+> +    if (ret < 0) {
+> +        error_report_err(local_err);
+> +        cpr_delete_fd(cpr_name, 0);
+> +        return ret;
+> +    }
+> +
+> +    ret = vhost_vsock_set_guest_cid(vdev);
+> +    if (ret < 0) {
+> +        error_report("vhost-vsock: unable to set guest cid: %s",
+> +                     strerror(-ret));
+> +        vhost_dev_cleanup(&vvc->vhost_dev);
+> +        cpr_delete_fd(cpr_name, 0);
+> +        return ret;
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> @@ -145,7 +241,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+>           VMSTATE_VIRTIO_DEVICE,
+>           VMSTATE_END_OF_LIST()
+>       },
+> -    .pre_save = vhost_vsock_common_pre_save,
+> +    .pre_save = vhost_vsock_pre_save,
+>       .post_load = vhost_vsock_post_load,
+>   };
+>   
+> @@ -171,37 +267,24 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> -    /*
+> -     * CPR migration of a vhost-vsock device is not supported yet: the
+> -     * device ownership is not handed over, so the target fails to set
+> -     * up its device.  Fail the migration early and gracefully instead.
+> -     */
+> -    error_setg(&vsock->migration_blocker,
+> -               "vhost-vsock: CPR migration is not supported");
+> -    if (migrate_add_blocker_modes(&vsock->migration_blocker,
+> -                                  BIT(MIG_MODE_CPR_TRANSFER) |
+> -                                  BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
+> -        return;
+> -    }
+> -
+>       if (cpr_incoming) {
+>           /* Reuse the fd handed over from the source QEMU */
+>           vhostfd = cpr_find_fd(cpr_name, 0);
+>           if (vhostfd < 0) {
+>               error_setg(errp, "vhost-vsock: could not find restored vhost FD");
+> -            goto err_blocker;
+> +            return;
+>           }
+>       } else if (vsock->conf.vhostfd) {
+>           vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+>           if (vhostfd == -1) {
+>               error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+> -            goto err_blocker;
+> +            return;
+>           }
+>       } else {
+>           vhostfd = open("/dev/vhost-vsock", O_RDWR);
+>           if (vhostfd < 0) {
+>               error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+> -            goto err_blocker;
+> +            return;
+>           }
+>       }
+>   
+> @@ -210,19 +293,37 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>           if (cpr_incoming) {
+>               cpr_delete_fd(cpr_name, 0);
+>           }
+> -        goto err_blocker;
+> +        return;
+>       }
+>   
+>       vhost_vsock_common_realize(vdev);
+>   
+> -    ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
+> -                         VHOST_BACKEND_TYPE_KERNEL, 0, errp);
+> -    if (ret < 0) {
+> +    if (!cpr_incoming) {
+> +        ret = vhost_dev_init(&vvc->vhost_dev, (void *)(uintptr_t)vhostfd,
+> +                             VHOST_BACKEND_TYPE_KERNEL, 0, errp);
+> +        if (ret < 0) {
+> +            /*
+> +             * vhostfd is closed by vhost_dev_cleanup, which is called
+> +             * by vhost_dev_init on initialization error.
+> +             */
+> +            goto err_virtio;
+> +        }
+> +    } else {
+>           /*
+> -         * vhostfd is closed by vhost_dev_cleanup, which is called
+> -         * by vhost_dev_init on initialization error.
+> +         * CPR restore case: only learn the backend feature set now, but
+> +         * defer taking ownership or touching VQs (the still-running source
+> +         * might be using them).  The full vhost_dev_init()/VHOST_SET_OWNER
+> +         * is done later in post_load.
+>            */
+> -        goto err_virtio;
+> +        ret = vhost_dev_init_backend(&vvc->vhost_dev,
+> +                                     (void *)(uintptr_t)vhostfd,
+> +                                     VHOST_BACKEND_TYPE_KERNEL, errp);
+> +        if (ret < 0) {
+> +            /* vhost_dev_init_backend() does not close the fd on error */
+> +            goto err_vhost_dev;
+> +        }
+> +
+> +        return;
+>       }
+>   
+>       ret = vhost_vsock_set_guest_cid(vdev);
+> @@ -232,7 +333,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       /* Register the fd for a future CPR after a fully successful realize */
+> -    if (!cpr_incoming && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
+> +    if (!cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
+>           goto err_vhost_dev;
+>       }
+>   
+> @@ -247,22 +348,18 @@ err_vhost_dev:
+>       }
+>   err_virtio:
+>       vhost_vsock_common_unrealize(vdev);
+> -err_blocker:
+> -    migrate_del_blocker(&vsock->migration_blocker);
+>   }
+>   
+>   static void vhost_vsock_device_unrealize(DeviceState *dev)
+>   {
+>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+> -    VHostVSock *vsock = VHOST_VSOCK(dev);
+>       g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
+>   
+>       /* This will stop vhost backend if appropriate. */
+>       vhost_vsock_set_status(vdev, 0);
+>   
+>       cpr_delete_fd(cpr_name, 0);
+> -    migrate_del_blocker(&vsock->migration_blocker);
+>       vhost_dev_cleanup(&vvc->vhost_dev);
+>       vhost_vsock_common_unrealize(vdev);
+>   }
+> diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
+> index a964d57e1bc..6e1c39383ef 100644
+> --- a/include/hw/virtio/vhost-vsock.h
+> +++ b/include/hw/virtio/vhost-vsock.h
+> @@ -29,7 +29,7 @@ struct VHostVSock {
+>       /*< private >*/
+>       VHostVSockCommon parent;
+>       VHostVSockConf conf;
+> -    Error *migration_blocker;   /* CPR migration is not supported */
+> +    bool owner_reset;           /* CPR released ownership; needs re-acquire */
+>   
+>       /*< public >*/
+>   };
+> 
+
 
