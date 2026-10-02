@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FD5CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 16:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4EFCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 16:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCfxp-0007qf-3R; Fri, 02 Oct 2026 12:18:25 -0400
+	id 1xCfxs-0007wL-Rr; Fri, 02 Oct 2026 12:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCfx5-0007iA-1m; Fri, 02 Oct 2026 12:17:39 -0400
+ id 1xCfx8-0007it-Bh; Fri, 02 Oct 2026 12:17:43 -0400
 Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xCfx2-00050E-LT; Fri, 02 Oct 2026 12:17:38 -0400
+ id 1xCfx5-00050E-UD; Fri, 02 Oct 2026 12:17:41 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gdD/EzPdINGbmdHypYN2dPu33rRYfndT3PN2ceFAdzSIrwDuzc3GiI7V/KRM+gXdd9LnvjlWcvwWfW2px8P32uH+jfI/YnFARaEcfFpYys56w0Wa9lg5qF3skpWfWHW0fZr16s38EkGDTn+hywW0J6ozBIBm7zBQpUcwKq+3IePTwfxPrsmgBz2VPxfJdKLt7xKMjwW6Asgojl/wQjju5sx5jCyGG8nd/TWEXFn8sPgJx2BNeDz25fe6p+qVYl4o74eIQ+pt/bDI8LPaWnbgOSYHBvt8bmbVV3tepJv7kz/PXIwbH8ljuncCKOIf3xYV6wKlw2tGukDIEVMyoNk/wg==
+ b=aaH4wJINm2yWDnyluKmtbLZi3y0qg75+BXE+DGv6bTjo3Lc0aZKEg+IepULVSA+TRYDzgkNpGEchMvk/qmnhIAeYIJ0gz5Gi8FXZt+lWvE4Y500Kkkx2HIa/o4oa910l6EwwqspUxO0VBHP1HomUA5llSBttO39QcGFSffvlIGVetngBxNKntVp/iM4kBLpWsAPSmoCqFQD/EHE2Oww9VHfwI2ivKHgf1PlnN+KayLMrwU2r8tbiyS6X7Wy2ueFbTSy8o/O+MlPazKNJ6lX5iul095mSTYv859yU2w907YEEN64PS+rhq/HD3TEcgk04YFQhZEBVS+onzwTr3TJ47w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kyalyKqO98eMj9oxO7m+GSWD/w4XHp3fZqTjwQMuKrM=;
- b=jtwf6eOUVHpIJz33b0MAnvjGycgebMFi54RJPVpXntkihiCnUnP8AoGnreGN6zJBmV38LK+IYmYmODE1vAG3eKKhyY/EiOfq+d0Q0mH+VbYqCkAwc3qyHwJKo3kLJHl4nQocv6F/6AraHoH3Kw13EzZ+bK+TNsDY14/Ha5+Kybu5Em4y0+NrediqGaI1lUqbQw8wDMFx1oa1pr/3trc2E0Xxxc3cuma9hDCTtmP5UQaUkM0wkWKy9WdcvTBlOAc3ZmrDUgKGhvsbUqypoO2+C/EtZ3N3a6mQo0NcFSerwPSRD2JdGWNJbbSgM0PHGJY0FfVEIU3eKnmh9GZ5BVgVLw==
+ bh=l8t1TvHEbHdcRn6FyK66JKIB7xDD/fAm6ISY071wzIM=;
+ b=x1onHToo2ZbYqJViWvFUR2rKpkvPlyOllfK0ggmI7nsVkjHE9hMJ+9pTexAEKLjmuGth68ETqC+tOmHX2yLd60G9MRdu/zp1sC4scLaSjdenZzo5KoceWcQ8YGh+otWz38UEAfOLTk1i6y+y+dMVWbP7xpBGaAv07bsqmYfjoUfucjT9y2r01GPQYD2Sht5aKXQa1O8Fkge5EtWK9uuk4ixQOXPAT5SYLY4Uw2Z+ZcCnQ9TCCGbRJZXDGVtTCMz7AVJIdzYacs7HNsKzUol22Hb4BUAaZyfXFUjXiEeZjcKDPPl+YYgoKFsIQmjaocwhbr8aZ1EiT+q5UjHUBD2tjw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kyalyKqO98eMj9oxO7m+GSWD/w4XHp3fZqTjwQMuKrM=;
- b=xBHBm7C+3B9CnlCNozN63t9Rh22i/aOkDw6UB4oz2EbDx857NYsFlnTq1A/DlaG5IFnmxxCcirAOXQ8RkOQAIJaL36QDDZH3WLFdWyRkGMLrzCmkyENoaj+Fo7sHMUkQycYghNuPyAfGRNAS8/yalw6ZU8bcdCDD8pNfUOn9JM3/TJ8Xd+ULv4eeRKmtOflJsFNF9Rr0TXZLrWWO8BIkMPiYyy8Q94H5BI/kuL/kNuwjjqwA/J+qEGcegRY7FsyawtgUYM4sLNzsY9/fdn2Nr3dZwsMkXjpujVPcqe73a89UQY+A6VFcKFZcrEKuDk2JCg6pfHgDJYG4FiFdP60Djg==
+ bh=l8t1TvHEbHdcRn6FyK66JKIB7xDD/fAm6ISY071wzIM=;
+ b=tabj/4k/YNw9u1wmxdLFTcowJpe/C05+H2K3FJ6BlNRBAhOw/sOsn4eAZp5s9yfkij/C8BH2dNUEBiCI6gYuqpOEs2xlIhpGvoiDEiB0ei/40O5xxi9DBwCZCYD5eZq2E3nRlw0+RUiiEDLrcT3gLhidWOZm3JSyHP1ryUwh9idByK9Vk5BzyyniUOVXgLHSr80yhXzy8gBvd6ETxjYFTYxM6XcEwOcIT9IvgWGsdG4mCNPLvQ92ZKApBjn4UxP9RlPEvBFXIvBHMmZ1xHMlKHNsWL2TZN5rg5Tpc4D++dN5OP3GH9j56a1ctdrE0gmO3kqJEWmPDbO1htSJnxhafw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from GVXPR08MB10667.eurprd08.prod.outlook.com
  (2603:10a6:150:15a::13) by PAXPR08MB7396.eurprd08.prod.outlook.com
  (2603:10a6:102:2ba::18) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Fri, 2 Oct
- 2026 16:17:19 +0000
+ 2026 16:17:21 +0000
 Received: from GVXPR08MB10667.eurprd08.prod.outlook.com
  ([fe80::d70a:96e3:8888:668d]) by GVXPR08MB10667.eurprd08.prod.outlook.com
  ([fe80::d70a:96e3:8888:668d%5]) with mapi id 15.21.0496.010; Fri, 2 Oct 2026
- 16:17:19 +0000
+ 16:17:21 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 02/13] block/preallocate: keep zero_start above written
- data
+Subject: Re: [PATCH 05/13] block/preallocate: hold back writes into a
+ preallocation in flight
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: "Denis V. Lunev" <den@openvz.org>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org, 
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260930165000.303236-3-den@openvz.org>
+In-Reply-To: <20260930165000.303236-6-den@openvz.org>
 References: <20260930165000.303236-1-den@openvz.org>
- <20260930165000.303236-3-den@openvz.org>
+ <20260930165000.303236-6-den@openvz.org>
 Date: Fri, 02 Oct 2026 19:16:59 +0300
-Message-Id: <179095781937.643598.2197648215507275856.b4-review@b4>
+Message-Id: <179095781937.643598.10736910750466449353.b4-review@b4>
 X-Mailer: b4 0.16.0
 X-ClientProxiedBy: VI1PR09CA0091.eurprd09.prod.outlook.com
  (2603:10a6:803:78::14) To GVXPR08MB10667.eurprd08.prod.outlook.com
@@ -67,66 +67,66 @@ X-ClientProxiedBy: VI1PR09CA0091.eurprd09.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GVXPR08MB10667:EE_|PAXPR08MB7396:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c6d2c7a-a824-4d78-7bef-08df20a098fc
+X-MS-Office365-Filtering-Correlation-Id: 2edf3968-a3e7-4169-3df3-08df20a09ac8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|52116014|366016|376014|56012099006|38350700014|4143699003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: z94vmAxgGGd2eOMi7SX10vZ8w4aWyMnOgQWp8QmZAGHbg719xM2lRbvdX4KRWDnZDEHLXkfAnhZHJ4pChoxdoFsSlk74r1C+4uhICBHYRW2knDlwd8orHSTKLNXop9w87SwDhQnnsjlmX0qe5mpBke/d2uEEUjgQgFKhZ7w5PANCGVTve/jP9cgE7WLoX/hqvvjTkcL/W7pNa+oB8ArjNMCJqIt0tXbzEz6tPQOTE+ZSr1v8UMAyYkx/de/NAOi/wTTsCy0fzN5K8bo0cEocWUQpDuvPfIlajtrs9orLBXOS6BCCbI//PrDxbXXBZ1wGI2ItZORi8bDEdXWxX4+bdTL8pcPTLxx7Z6V6bF5K33xX002+T4stTYg/u1XV7cvAXiqbdCl6+crDmG/hPsSuJqzctDGIikjjOJhoznJlzJJj08BAkqlw+kt2KxVUOckLuKf/sL0iEwUrk5P22lK7NbXiUgMxkKDCOyXK4NPl6Q1PI4THWeYSQHl4gkSLv4a2biW9VbRXozcRpSfVjb5zDN7kcob2M5LthRVSuoqj4vrx5NyJnzOSUOzvQi3Eur3r+5Oj8TPFhzIgtjInP2jRcs0RCB6o1ln9v9O+K50AFasSx8+DNGcLJG8JNEky5Nj734vC8SVwXns0j6JV3SknB3DbIBXLI3fx17eJORm7Gx56JD74G9sTpvjOkV1Ika4V4TY+FkN3JfII7HlDVaVUgEIa6Z7hgDo/BxRGgHxETJQ=
+ ARA:13230040|23010399003|1800799024|52116014|366016|376014|5023799004|56012099006|38350700014|4143699003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 5lcaWvTqs7ynQqKG2/JVIbcMVKqmqWzb9xlfDuspFLPZOWdpGqmHPm+3kH9gV2Zy18C95rVBCZp47YUuUGUM6dh3XWEheT4AOAaLN9YiPNyKdG4sQO/CcXw4fAb4cap9KaHhFtfCX9koTDT2nGztXL5IJq7pdrOe5vgptHhQnu2D1RDSSefFAsnJmDGF8BWIqG0amr3i9duNPIHqgK5SSQwa9jjhqrBOp+NA/Png5lfLwx9yokWx2mjf3eo/dKrQLmRBkbpo4Ee2U2j4hqIcnTTnIYSiF1HLYBmAEvjP6h1S1YKDlMjyaebKrfkGlEc/O58033CcSVwfxLqffucbnkQNAVaeFedG2Niy+dyl3NVdXk7J8zsZr3Q/wGF4hxMLdqMHWZhHsWOugKmpzrS5BsrG+ZRuJJXATsvC0ws6F1EMLOPWqSH1jE19krBUdXWBjEjSD6j+wqyeVNRghaf7tPmPTmRfqWGODECDGfN6FYa+DpVJbNMSspuU3gRozjE5SPBCpdQrMpqKq873XrnxKtaUw0lMdN2lIYbZDohaaDJdL3nSOhB2Dj07GyrD1pjIc+TTSThyFpROy/7p1iAuqpn6EsldE1Mo3POJBwci/0o6sTShyy5vp0bSXFGG6EFQhKHy7naqZXp+LDyIcg8uiYAufw6GXGwlNaPgBP2IzaRTzWyHYhbh7MS/yP5mc56mhCkuyo+mfMdWUM6Cx1bGIfwX+iVGqQ+sxSqPHCLX+dk=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GVXPR08MB10667.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(52116014)(366016)(376014)(56012099006)(38350700014)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);
+ SFS:(13230040)(23010399003)(1800799024)(52116014)(366016)(376014)(5023799004)(56012099006)(38350700014)(4143699003)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cENRRWZhREhSM0JjOURCWW4zbHNscmM3R0J2QlY4UGYwc2RtQWsvQ0JBSXdn?=
- =?utf-8?B?SzBSMEw1WjNRa0hTSVUvbUVMSDRURDZMbUR3MzlWN0tRMVhUMWJpZDBYbmZi?=
- =?utf-8?B?Mmd0TmtlM0Mvclc3dTUzaysySFFtWUpkMFVUZjNTUnJUdXowdGJ0WjhhU3R3?=
- =?utf-8?B?azBoT1VQTEFHUU1DUXlHLytkdWVETXViNW10SzdnemIxZEtaZ01iQnRYTWVl?=
- =?utf-8?B?VVdhR0VVQ1lmakJDenM5c0hWSVkxVVRSOFNWd1YwZzEvL2UyVnBBYVJqd09Q?=
- =?utf-8?B?RStqNVN2VWF3L0ljbUJES1lTWjd3b1FEbWFSM3ZCN2NKRmIwU28rVURISkU4?=
- =?utf-8?B?QnVyQ3JJeG95amN1Z1ROR09SU1lFRGhTRGJxYzhCWmNFZnl5VlorcGRBdUNt?=
- =?utf-8?B?RitlTDVOcS9PWk1HbVNXdE1OQ1FnVW92ZkduVzdVYkJaSi9KZDNRQTRUK05t?=
- =?utf-8?B?SlBUU0tocFF5NkpBcGxwbWVScnFPZ01jMlVLOGpYS0sxRDRabStRQlZSU3dQ?=
- =?utf-8?B?cXlkUC9DRXFBL2xDTzRJMVRSNStYay9oT210THFwWURwYnBGRW10ODBFRzRP?=
- =?utf-8?B?T0s0VHRDY3J0WlplQ1RLSnIzbzdxYVdZVGJNYnpEY3FOdlBSVHRiQjMvWlhI?=
- =?utf-8?B?eUhUcDJ2K0gxQlJheG55UUgrK3pValFWb29lRkpiL1V0bHAxQllSbG9TRXJn?=
- =?utf-8?B?OEtKU0c5TUZjUFVGVFVrYnJ1Q3phKzUyTmtHUXpYdFhRTU5DRG9xWmQraVkw?=
- =?utf-8?B?MnNOODdmakllbXRYcVMzWnJuR1gyQlgwQWF0ZjhnZjVsV2c0VUJMMVpweE9w?=
- =?utf-8?B?ZVoyUXB4cVAvQ3lac1BxdmhkUEY1Qi9rOUwvKzdJaTBKKzQvYlhLYTBnRnlJ?=
- =?utf-8?B?dUVybXZZcTY2eFV5QmJQS1hFUXVFRHhpY3NEOGdnNXhJbjNmTzhTZHZYWWkx?=
- =?utf-8?B?NFpZT1dmeUVhU2RHR1RRbEd0TzVmQ05TOS8vcllyK2pFZDlFTGtNTjh0U2tj?=
- =?utf-8?B?UEY1T2lxMmdXNHFXenlCcUJNY2hGOGp2K2xDUG9mZGhvUzE5aHBqS2drWEZ0?=
- =?utf-8?B?SVpSbjQxZUZTZEN2YU5rVUszZExRUDFQM3MzUVROdDJaUll5bGZkbzhXNktQ?=
- =?utf-8?B?WUJ5ZkR2Wkl6M0YxUU1vTEF0ZVcybGlZZWlwRHVyKzFvUlFWaGJNc2xEaTR3?=
- =?utf-8?B?eitRN1VnaWhyQWQ1RnpTY3NFamdnZmp2VGJpQU45NkZGaFU0OFQwemcwOGRB?=
- =?utf-8?B?RExCVElSTHBUeXpFTjNncWVwb29qTUFWa2owTWd2MEoySnd6dFNoWlprS21Y?=
- =?utf-8?B?alNBaW9wbkFZTUl0UU5Pc21yOVh1dzBrOE0vclM1dzVpb0ZOR2dRdGNDZCtD?=
- =?utf-8?B?ZkNZa1dza0M5SGlyRGlZc0tRN3lURWhvellsQTEyZHh2VGt1cHYwUFVkSGxW?=
- =?utf-8?B?RTB0MkxVNmFiK01Kc0JWRmJtMnZpT1lsL0pHYldNOENlbEdGR3I3dm1pQVRm?=
- =?utf-8?B?TCtOcDBPVCtZMXNHYys1UGNQblQ2VnJJMHYvWHVwWU5BRytxdU4wVFRqWjhE?=
- =?utf-8?B?dVBDNWpBdmZZRE9HeFRvSTNHVWJxMmtabWR3SGMwb0ZsdDdZTDZyT0Y0bVZn?=
- =?utf-8?B?ZHBFY0orSGlyK0lBTjBSVUttVXJOSGw3NGNhekNENFEvNURHdHkwREpETjhL?=
- =?utf-8?B?a3c4c2hkNWxaUkxqem9KdFIzd0JwMFVaczRaUUd1TzJ0RlUvaHFYT1lVU2tN?=
- =?utf-8?B?U3FXaTB2cDh2S0VpSWNCN002b3QxNHd6eG5IT0lJM0lQVUoyODNGOHYxdXBw?=
- =?utf-8?B?RHMvczF5MlhkM1FKRkZ4SHNOalFoL3luanlsWUNZK01rckRpdWpJZkFXT0pp?=
- =?utf-8?B?Vnp3a21JSjZJaEEwUlIySGlGMVdYbVp1VjZlclBHam1MMzFEeFQ5VVpXdzlo?=
- =?utf-8?B?QVJaRWRKckh4QlJob25xak9RdWk2RGRGc2Nnd2tZUDl2YnJnQ2FGT3kxUERN?=
- =?utf-8?B?WHFucE5MbnQyaXUwR1dELzVRM3VVZFBCTGthc1phK3RmazRpQU9aN2FKc0pU?=
- =?utf-8?B?eXZBT3NqakU5TnBtQVJuQ0pDOTRtbjVWdHRPSjgvanZCaFN5NDR0enlrVUk2?=
- =?utf-8?B?eGFTRHVqUkRzdEFHZnZGdW1oMEJDRGxFc0ZMYXNwSmdUZGtDTjNlUlA5WHZR?=
- =?utf-8?B?YUlldXVXejliT1hlT0xNMGVXRDVqdEx4eFRFcUpnYjZLWGxzSmxEY1RlUTlF?=
- =?utf-8?B?Zms1UUc3UnBCNlMyZDdHayttUCtzQWpBYWJDUWtoZUczZ21nMUY2Q2g3SjN6?=
- =?utf-8?B?UEVmUG5aS3R6dkxldHQ5QW5PY3NDTXBTRi9IR0N4SUlsS295RlNWM1QwT1p6?=
- =?utf-8?Q?muRqbYJ9IU8O+ddo=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dWh1Sk9xVm40aUVlZ01XWUN1eUZsSzRVWXFmS2NSeU5QRDBwTFJiblF5bzc1?=
+ =?utf-8?B?MVpWUWtvd2hUV1lvR1gwWGVnVEkwS2Vjd0tuWGVyOTlXUUVwdm5BTEVTblJp?=
+ =?utf-8?B?czlnY3Vza3Z6Ym80SnhCV1R3ejc5M1pYK2NuMXkyYkE3T1R3Nkd1S1RGeHBp?=
+ =?utf-8?B?cTI0QlJGQjg0OUZ3QjdsKzEzdW12bjNTaVlCMEp6dmovcFZEdXRRaXZiUXhC?=
+ =?utf-8?B?cjNhVWNiaFQ1OWRRVElvdXRoNW9GRXZGRHdPUVI3bkllY1owb0tHWVg1ZTVV?=
+ =?utf-8?B?Qmc0RHFoUjFQdFpSRC9WbHVaaFlUQldzaklaMThoKzNoVVcvZXBzZFFDUVZN?=
+ =?utf-8?B?SWFrU0MwdEFpdlBhTnFSL2hMdkx3Qm9oRE02NWZZaEVPdFdnK01BOWZ6ODNm?=
+ =?utf-8?B?Y2kyWGJrdzBzL203ME9wd1ljYWFxaVpjK2Z0a2ZyUWlhcGFtQTIraldzdTdv?=
+ =?utf-8?B?VkJUWDRnVHZrYjJZeTRsajZ1NXE4RjVFKzV1VjdBT3JwWVdkb1lvUDMyRlBO?=
+ =?utf-8?B?K3Q0RlJrbzFmRkh2RnNvQWd3UWZBZ2pRb0tKTmNRc1hNS0VQZGx0ejNybEFS?=
+ =?utf-8?B?TFFqZGJ1U2I0VFYwVERHVlhHRGdWQ1VoL0J4cWlPdWhIVm5RUjd6SklkNlJP?=
+ =?utf-8?B?YnZ5SFZwcTVPc0lzUkppWm9HR0hEdnhNQWRpNW1ZM3pyVlVaMFRSejNQZk1U?=
+ =?utf-8?B?eXRUTCs2NGtrZFlway9iSlRTbThrUzZpMkxRZXYzYTJYZ0U2OGZTdlYwV0U0?=
+ =?utf-8?B?QThtZ0MxZzlPd25nem1lbzJuSmVDbjhrUFdpTnMzQll1N0R4a1Q0Slk0cCtZ?=
+ =?utf-8?B?TTZtblBxamVwdTY0bEhsMHNqM0dNR3l0dEZJSFdadmpoQlpYckpvQ3NiOE8v?=
+ =?utf-8?B?OHhvbHRnYnJ2d2kzdUZoejVDbXdiZU0rODZHVnd4NVVTK0lySkNvdHRSZWEy?=
+ =?utf-8?B?TW5hM25LZlRWRitKT2I3cjVldFdLdFp0YThkVjRKSGY0NnQ3RWRic1VFbXdi?=
+ =?utf-8?B?RzB3akZpeVRjV3YwRExTNXJLWnp5eFlvY240OEFXdTRWL0dPOUhoZlNPRm9Y?=
+ =?utf-8?B?TkdaVmYzcGpaZHBaTEd5Rm0vS1ppcmI5S0Q0OHhrZWhVZndlVTlpaDRZM1FZ?=
+ =?utf-8?B?N2wxNFRqRHo3ODdLa3lNa1ppcUdFNXBET3FBaFdub05JK2hEbnRuWk85bEIv?=
+ =?utf-8?B?L3MydDAxMmhUY0VEY0owaldBL0l0M3I0Q2hjRWw4a3U2UXZ5Q25zSTU0WmVw?=
+ =?utf-8?B?elk4VHFOSjRvZEZSa2Fvd0FlSnNpeUlaeCs1QzM0RkFuTU1VQUZ5NmRkVTVH?=
+ =?utf-8?B?Ynk0NmppdjltMXBPT011eURxd21pSkJlS01oMGU4dURXa0JCMldFaVhremRF?=
+ =?utf-8?B?cHBZRE1NYWNyZnpLeFljVW4zSmJhVWxmaGpoUnEremZjeHkxc011NlUraXc4?=
+ =?utf-8?B?clI4U1FrQjR5SHJaY05GcmZ1eWhQM0RDWjRJOVMwTjdkdkt0eHpRQkxxWktM?=
+ =?utf-8?B?V2pHbEVNOVdDZ1I3QlJHSTNMQkNsM3p1THBHVnlyTnJMWUFlM3JiaFFMYlE2?=
+ =?utf-8?B?aGM1ZC9sWUFrMzR5dE02RFd2Y3BvVUpVUENuY05tTzdxWHpVSWhwTFk1SDN0?=
+ =?utf-8?B?NjgwYXZIcStQb0tnV1padURWWHVBWmtXTFl3LzRlRFVZdVBCcWR3a09veC9Z?=
+ =?utf-8?B?NzA0MXRZaXpqUFBncm8zZjU4T3VBQ01VL0Q3NG80eTNYRzhoT3dIYjdHK0k1?=
+ =?utf-8?B?OXFKSmYrZVlUdUM2ZkJZUnRLK0xIeFJSb0hqNG5mSVBISitzNHlvUjNubllO?=
+ =?utf-8?B?RjFqMlB4WE4zb1FQRDFqc1NFeExoU1YrbWZjQmVQVGR4SkR1YUJyMEZrRFIw?=
+ =?utf-8?B?SkZ0VW5BVS83VWhVd2JNWTJ3V2ZBV0pYdEp2Y2VBR2hrczhHNzl6L2tlaDVx?=
+ =?utf-8?B?VHBhSGlZWFVzZlZlRi81dy85UytRWS9DRlVzeHZxbGc1eXRPYkFaOVdpRTZh?=
+ =?utf-8?B?RWdSMzRVQWVnV2t4NkNRZTE1TVMxWmg3Y2RtTjgzK3ZLRnlZZTNaaGxHdjI0?=
+ =?utf-8?B?UEpLeFR1SUhHbUdmLy9idW9zSXNpdldaejJJZytka2tyMjVhWGE5U2NyZGQ0?=
+ =?utf-8?B?WHV3UmhLcTNONXFCcWplV1hMNGpBclVUV3Zuci8yaWsvQlRxY0Qzb01CTncz?=
+ =?utf-8?B?MFdobjQ2cDg5VE1ieEJoRnlPa3VGdnBwMHdrZ1dreDJGelB5VzNWUTUzdGxK?=
+ =?utf-8?B?NFV1RFJCTm5Obkk5bVdkUDJmOE9xdWx5NXFzU2lSMmE4cUF5bUV5K3VxZGsy?=
+ =?utf-8?B?eU80VC9mS0EycHNZS0NZNC9ZVHNFdjM0bEl4SW9NekdiQnJlZlkxMkVJUjAr?=
+ =?utf-8?Q?3pdNgqvV1RkH6WcA=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c6d2c7a-a824-4d78-7bef-08df20a098fc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2edf3968-a3e7-4169-3df3-08df20a09ac8
 X-MS-Exchange-CrossTenant-AuthSource: GVXPR08MB10667.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 16:17:04.5180 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 16:17:07.5105 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eAx+8m5TFqqbM/fFJ7mt4Y10mPewDFxAkvS3PTl4JrQWw95m6DfGem5w4G0X2w8mZ0ryB9LA6tgIop6GeHvARIUZsk8mzChwLW09EMonw74=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9TI/EvQWaTtl/vYWwBDJDJft+M0Ofy6/Ijf/yhX40OmJzsadIR++Hs4Gs2ABjY6ahgkbprtSRSHp1COStGha4BCnkXQLvSXVz800rKrpejI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR08MB7396
 Received-SPF: pass client-ip=2a01:111:f403:c200::1;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -153,36 +153,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> The filter records where the trailing preallocated zeroes begin, and
-> skips a write zeroes request that starts at or above that point,
-
-Just "starts"?  Maybe "skips a write zeroes request which lies within
-the preallocated zeroed area"?
-
-> because the range is zero already. A plain write below data_end returns
-> before that bookkeeping, so a write into the zero region leaves the
-> mark behind it.
-
-IMHO this is hard to comprehend.  Which mark?  The 'zero_start' mark,
-I suppose?  And behind the written data?
-
-So, If I follow correctly, by this point we have 'zero_start' pointing
-not at the beginning of zeroes as it should, but at actual data - that
-is the bug.
-
-> The guest then loses an acknowledged write zeroes over the range: it is
-> skipped as already zero, and the plain write's data stays. Reachable
-> from qcow2 when a cluster is allocated again after a discard and the
-> allocating write zeroes straddles data_end.
-
-I guess this is covered in one of subsequent tests?  Maybe either name
-the test/commit, or put the test triggering this bug directly after this
-commit.
-
-> Move the mark past any write that reaches into the region it covers and
-> leaves data there. want_merge_zero is what the function already uses to
-> tell those apart when the write extends the file: a request that writes
-> zeroes leaves the region zero and the mark where it is.
+> The previous patch holds the mutex across all of handle_write(),
+> including the preallocating write zeroes. That is correct and far too
+> coarse: the fallocate takes as long as it takes, and every writer that
+> extends the file waits for it.
+> 
+> Reserve the range instead of holding the lock over it. file_end moves
+> to the end of the preallocated range before the request is issued, so
+> a writer arriving while it is in flight works from a length that
+> already covers the range being zeroed.
+> 
+> That leaves it going straight into the range, and BDRV_REQ_SERIALISING
+> cannot stop it. Serialisation orders a request against the ones in
+> bs->tracked_requests, and the zeroing request is not there yet: the
+> filter runs above bdrv_co_pwritev_part(), which is what tracks it.
+> Whatever the filter lets through in that window is unordered by
+> construction, so the filter has to hold it back itself.
+> 
+> safe_end trails file_end, standing at the lowest start of a
+> preallocation in flight and reaching file_end once none is left. A
+> write above it waits on a queue and re-reads the state when the
+> preallocations drain. A write zeroes merged into a preallocation
+> starts it below file_end, so safe_end has to move down as well as up.
+> 
+> Below safe_end nothing can be zeroed any more, so those writes do not
+> queue, and below zero_start there is nothing to record either, so
+> those take no mutex at all. The stores are qatomic_set() because that
+> path reads them without it.
 > 
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
 > Cc: qemu-stable@nongnu.org
@@ -192,24 +189,220 @@ commit.
 > CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 >
 > diff --git a/block/preallocate.c b/block/preallocate.c
-> index d215bc5d6d0..99bd6b1ae76 100644
+> index 442cdb01768..128f1da0145 100644
 > --- a/block/preallocate.c
 > +++ b/block/preallocate.c
-> @@ -347,6 +347,10 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+> @@ -32,6 +32,7 @@
+>  #include "qemu/units.h"
+>  #include "block/block-io.h"
+>  #include "block/block_int.h"
+> +#include "qemu/atomic.h"
+>  
+>  
+>  typedef struct PreallocateOpts {
+> @@ -76,6 +77,21 @@ typedef struct BDRVPreallocateState {
+>       * BLK_PERM_WRITE permissions on file child.
+>       */
+>  
+> +    /*
+> +     * @file_end is reserved as soon as a preallocation is decided on, so
+> +     * that the next one starts above it. @safe_end is the lowest start of
+> +     * a preallocation in flight, or @file_end when there is none: nothing
+> +     * below it can still be zeroed, so a write ending below it does not
+> +     * queue.
+> +     */
+> +    int64_t safe_end;
+> +    int prealloc_in_flight;
+> +    CoQueue prealloc_waiters;
+> +
+> +    /*
+> +     * Nothing done while this is held may wait for a request that has already
+> +     * passed the filter: that request can need it back.
+> +     */
+>      CoMutex lock;
+>  
+>      /* Gives up the resize permission on children when parents don't need it */
+> @@ -106,9 +122,17 @@ static QemuOptsList runtime_opts = {
+>      },
+>  };
+>  
+> +static void preallocate_set_file_end(BDRVPreallocateState *s, int64_t v)
+> +{
+> +    s->file_end = v;
+> +    qatomic_set(&s->safe_end, v);
+> +}
+> +
+>  static void preallocate_set_state(BDRVPreallocateState *s, int64_t v)
+>  {
+> -    s->file_end = s->zero_start = s->data_end = v;
+> +    preallocate_set_file_end(s, v);
+> +    qatomic_set(&s->data_end, v);
+> +    qatomic_set(&s->zero_start, v);
+>  }
+>  
+>  static bool preallocate_absorb_opts(PreallocateOpts *dest, QDict *options,
+> @@ -158,6 +182,7 @@ static int preallocate_open(BlockDriverState *bs, QDict *options, int flags,
+>       */
+>      preallocate_set_state(s, -EINVAL);
+>      qemu_co_mutex_init(&s->lock);
+> +    qemu_co_queue_init(&s->prealloc_waiters);
+>      s->drop_resize_bh = qemu_bh_new(preallocate_drop_resize_bh, bs);
+>  
+>      ret = bdrv_open_file_child(NULL, options, "file", bs, errp);
+> @@ -188,7 +213,7 @@ preallocate_truncate_to_real_size(BlockDriverState *bs, Error **errp)
+>      int ret;
+>  
+>      if (s->file_end < 0) {
+> -        s->file_end = bdrv_getlength(bs->file->bs);
+> +        preallocate_set_file_end(s, bdrv_getlength(bs->file->bs));
+>          if (s->file_end < 0) {
+>              error_setg_errno(errp, -s->file_end, "Failed to get file length");
+>              return s->file_end;
+> @@ -200,10 +225,10 @@ preallocate_truncate_to_real_size(BlockDriverState *bs, Error **errp)
+>                              NULL);
+>          if (ret < 0) {
+>              error_setg_errno(errp, -ret, "Failed to drop preallocation");
+> -            s->file_end = ret;
+> +            preallocate_set_file_end(s, ret);
+>              return ret;
+>          }
+> -        s->file_end = s->data_end;
+> +        preallocate_set_file_end(s, s->data_end);
+>      }
+>  
+>      return 0;
+> @@ -345,18 +370,21 @@ handle_write_locked(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>      }
+>  
+>      if (s->data_end < 0) {
+> -        s->data_end = bdrv_co_getlength(bs->file->bs);
+> -        if (s->data_end < 0) {
+> +        int64_t len = bdrv_co_getlength(bs->file->bs);
+> +
+> +        if (len < 0) {
+> +            s->data_end = len;
+>              return false;
+>          }
+> +        qatomic_set(&s->data_end, len);
+>  
+>          if (s->file_end < 0) {
+> -            s->file_end = s->data_end;
+> +            preallocate_set_file_end(s, len);
 >          }
 >      }
 >  
-> +    if (!want_merge_zero && s->zero_start >= 0 && end > s->zero_start) {
-> +        s->zero_start = end;
+>      if (!want_merge_zero && s->zero_start >= 0 && end > s->zero_start) {
+> -        s->zero_start = end;
+> +        qatomic_set(&s->zero_start, end);
+>      }
+>  
+>      if (end <= s->data_end) {
+> @@ -365,13 +393,13 @@ handle_write_locked(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>  
+>      /* We have valid s->data_end, and request writes beyond it. */
+>  
+> -    s->data_end = end;
+> +    qatomic_set(&s->data_end, end);
+>      if (s->zero_start < 0 || !want_merge_zero) {
+> -        s->zero_start = end;
+> +        qatomic_set(&s->zero_start, end);
+>      }
+>  
+>      if (s->file_end < 0) {
+> -        s->file_end = bdrv_co_getlength(bs->file->bs);
+> +        preallocate_set_file_end(s, bdrv_co_getlength(bs->file->bs));
+>          if (s->file_end < 0) {
+>              return false;
+>          }
+> @@ -395,16 +423,27 @@ handle_write_locked(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>  
+>      want_merge_zero = want_merge_zero && (prealloc_start <= offset);
+>  
+> +    /* Reserve the range; safe_end keeps writers out of it until it is zero. */
+> +    s->file_end = prealloc_end;
+> +    if (s->prealloc_in_flight++ == 0 || prealloc_start < s->safe_end) {
+> +        qatomic_set(&s->safe_end, prealloc_start);
+> +    }
+> +    qemu_co_mutex_unlock(&s->lock);
+> +
+>      ret = bdrv_co_pwrite_zeroes(
+>              bs->file, prealloc_start, prealloc_end - prealloc_start,
+>              BDRV_REQ_NO_FALLBACK | BDRV_REQ_SERIALISING | BDRV_REQ_NO_WAIT);
+> +
+> +    qemu_co_mutex_lock(&s->lock);
+>      if (ret < 0) {
+>          s->file_end = ret;
+> -        return false;
+>      }
+> +    if (--s->prealloc_in_flight == 0) {
+> +        qatomic_set(&s->safe_end, s->file_end);
+> +    }
+> +    qemu_co_queue_restart_all(&s->prealloc_waiters);
+>  
+> -    s->file_end = prealloc_end;
+> -    return want_merge_zero;
+> +    return ret < 0 ? false : want_merge_zero;
+>  }
+>  
+>  static bool coroutine_fn GRAPH_RDLOCK
+> @@ -412,9 +451,22 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>               bool want_merge_zero)
+>  {
+>      BDRVPreallocateState *s = bs->opaque;
+> +    int64_t zero_start = qatomic_read(&s->zero_start);
+> +    int64_t end = offset + bytes;
+>      bool ret;
+>  
+> +    /*
+> +     * Below zero_start there is nothing to record: data_end covers it, and
+> +     * only a write zeroes that already covers it can preallocate over it.
+> +     */
+> +    if (zero_start >= 0 && end <= zero_start) {
+> +        return false;
+> +    }
+> +
+>      qemu_co_mutex_lock(&s->lock);
+> +    while (s->prealloc_in_flight && (s->safe_end < 0 || end > s->safe_end)) {
+> +        qemu_co_queue_wait(&s->prealloc_waiters, &s->lock);
 > +    }
 
-Maybe (0 <= s->zero_start && s->zero_start < end).  Cosmetic, for
-readability only.
+I feel this patch logic might be over-engineered.  Let's see when we
+ever get past the above waiting condition.
 
-The actual code and the logic LGTM.  I'd only like to make this more
-readable and easier to comprehend.
+1. To start a zeroing a writer needs 'end > file_end' (otherwise "no
+preallocation needed").
+2. 'safe_end' is always either a start of the running zeroing
+preallocation, or just 'file_end'.  Thus condition 'safe_end <= file_end'
+is always true.
 
-Thanks,
+Now the above wait loop.  A writer can get past it in 2 cases:
+
+  * nothing is in flight -> it might start a preallocation zeroing, and
+    it's  the only one;
+  * something is in flight but 'end <= safe_end'.  But then based on 2)
+    'end <= file_end'.  Then then based on 1) this writer cannot start
+    zeroing.
+
+Please correct me if I'm wrong somewhere up until this point.
+
+Now, if the above facts hold, it means that while 1st zeroing runs
+nobody can ever start a 2nd.  Thus 'prealloc_in_flight' only ever goes
+between 0 and 1.
+
+And if so, nothing prevents us from safely getting rid of the queue, the
+in_flight counter and 'safe_end'.  We can just do:
+
+
+  static bool handle_write(...)
+  {
+      ...
+
+      QEMU_LOCK_GUARD(&s->lock);
+      return handle_write_locked(...);
+  }
+
+What do you think?
+
 Andrey
 
 -- 
