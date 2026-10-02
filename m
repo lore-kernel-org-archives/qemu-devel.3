@@ -4,93 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7782CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76348CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZpc-0001Ym-02; Fri, 02 Oct 2026 05:45:32 -0400
+	id 1xCZqf-00021l-0Y; Fri, 02 Oct 2026 05:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1xCZpZ-0001VQ-5r
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:45:29 -0400
-Received: from mail-pj2-x0f.google.com ([2607:f8b0:4864:39::f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xCZqJ-000217-3y
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:46:15 -0400
+Received: from mail-wm2-x11.google.com ([2a00:1450:4864:31::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1xCZpW-0000HP-8w
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:45:28 -0400
-Received: by mail-pj2-x0f.google.com with SMTP id
- 98e67ed59e1d1-3a4c8262465so2925753a91.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:45:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xCZqG-0000J4-Q2
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:46:14 -0400
+Received: by mail-wm2-x11.google.com with SMTP id
+ 5b1f17b1804b1-4a022e9cbebso11451965e9.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790934324; x=1791539124; darn=nongnu.org;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:from:to:cc
+ d=linaro.org; s=google; t=1790934370; x=1791539170; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=oaK1Iww8lvF5t8hxvFyuonSoWuZq1OdBhRc5xHfmq7o=;
- b=DhlYgZU46nKA+nHeEIpkkqkkl730FcyWL/GpKFiGS5gUxk2UBMVY7ngFOdsADLLJYi
- wrdecAEAszous9uyEQcRozU9xcTLFFx1b4QkILd7WPcxk7a/KmMxOZr1q/eYc0pZYvQh
- xXpU/2LAr4w52D/p0hLjtuvv09nYrvCnqrUIUtFszq4A0dEZ+/ToQIp9hIz1gOtMa8AF
- 2Wlg+gO+1VWZaB2zdtl7z8kblwpQdkPo83g6j0IuL2HxMf2611OmRDZTb8qFDmLVUjiI
- kwFfrS2EQrisHcLCdFAWVskRn5tqiCZi6GbyyhyTWuZmAzh149CdNl3/7cuLOvUrT6gb
- ELhA==
+ bh=WVmb6E2uchkXq/33Frna5un6zpnD5HsHMY046QL1GQM=;
+ b=PNL4KKVWuF61HSE58ZlViOVZb604TEoqEPJWthFKQXgPrxL8Ss04eRn/5HNNLwwV+x
+ BKKDmP76OkqTq9Y0ZvAZ7H3JPDchoFG0gs7Y02V+dW5/EvdeaFVRJ8ZbYrPk1QCrPqld
+ AUneU9JzxiQtRQkcd3l5DbsI+bZyp188Ss+PJfAW6u6hqZrseR5mmnjgFcPqzU3MKwdR
+ P3aLkENruIGoh5AOaOdxc70K31GwmgGRzVg0wFqdzFxftvZ4FAeedX7Y19ux6KbhkMc4
+ WPVCaPEj6EIgm8i1+L1nN3PeINBA6O+LoR3msWB4NIRfdx+8jbEcrTT6KS0aXvv7/sPZ
+ mwtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790934324; x=1791539124;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1790934370; x=1791539170;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=oaK1Iww8lvF5t8hxvFyuonSoWuZq1OdBhRc5xHfmq7o=;
- b=tzXAfabS/L+/u1MOmPtB/mwY0SBmyHm5y6ghsBg/CojZKk60yIGeY9sVIIFX7Lkskq
- 0yO/Sx65iMRp+vbOoyAznShRZMpWfEiuNnWvJIEN2v6BDujMylqjkS4bzwoZ2eM07o09
- AIqSwlvbmYkVdE4wirKtRPxCpsJ9wm9FgAA2NRQ8P/d4u/QNOKpTrA+MbyXDGnzspqk1
- z3FctK2PQr2okXa1D22BR0GR93Vhzj7AM3CtmdPnpOKStbsnTH0/NVYY6X2wDr2GM7bJ
- eCcLE9DZk3NMDDXnbll+eh2sdduKyzIg1OoCke8kGx8MvLub5eMowNZlPm5uwU4AGOI6
- mCJg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzhqfk2mvAv3plkXeDkoaVwFWSQn9PxJ//wHbG3WUxSdPyAEkVxp0GNemweUe5HfMOGG3Db8c0Omqr6@nongnu.org
-X-Gm-Message-State: AFq9FYJ8XDnh6fP6q6skY3FJkNSyRgobBwgFeZ4i1JU9fIzoIhikb9LQ
- S/GwtfqBMAzJKtyhNdwKm0tw0p5rb8l7a8TOy+kW5CW2VnRc/r3ix83Q
-X-Gm-Gg: AYBFou3qbqG548D5xlCJqAVktVm7r/ppbYQgshjQC/EIggHULcmDUnApMPkF+wKLHYZ
- QPOGJykMzag5uaUl1xeRf0ZQwnSgqYyzkO7odD8OyHFPQM4Iw846gE7h4BCZL2i0evZYUu0k8x/
- nbycBicYweKjWxbCkOkTDYy6eS6fYNvukxJqe3BWloWIbpHWJYlNFEKOidI5V6BawEAolIvL38z
- Xq116cQNl2ZPaIKPCnJpZbFO0ELrVpV6p+Z1jH5K3l1MZfrllXitDjFECSnOggySylvRu+CDqt9
- MDCQIEeFzX8sUm3XuHYMuG/Sd2E6BvWORkUxzcuz7qWiJFawEcojPTNh9G2Kj8Xrz16S3f/OHhV
- HgPay/T7AwV5MU7kwlH+B/PVQeA+NvMk3E7W8yBSibqnJflZMETrS+F4k3O0kPRPvGRMnCU56MS
- sNpXBOA971HuQKshEhPRxqR5iDp7BfpT3TGKjncSO6dl6HMRlK1oug8M2MwKa0CxmOlWirAmMSH
- w==
-X-Received: by 2002:a17:90b:48c7:b0:3a2:b4a6:92a7 with SMTP id
- 98e67ed59e1d1-3a6ce830993mr2174526a91.47.1790934324037; 
- Fri, 02 Oct 2026 02:45:24 -0700 (PDT)
-Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3a4f43a12c9sm9050919a91.2.2026.10.02.02.45.22
+ bh=WVmb6E2uchkXq/33Frna5un6zpnD5HsHMY046QL1GQM=;
+ b=L7qCjCSKP2D0D3rbXZGdO+GOISzR01CpZnEgZrFleb3dt7+eq1OYlTvoEjsUwcj1Zi
+ 7RAc/sBWEOFygMesBGDSbMKodyU3ChVI60qtcqt9uItDbkmPoR8hBnmUZePhCmqxVQcd
+ NY3OyTSJSdoXdMcfoQU3dg0tMTwmLbEo9YSzu1lIKAqackaAgF7Ebg8ZPJ3WKPipnryv
+ Z7ha3I7ewhLWr8EEQwC+PErzlADcJISCGcBDniRt7FY2iL0AYiRkDucQceqqH+xPq4Af
+ u3SQwJNuiX+g7Dmnzk1fedjIEyfYI49krCe1iV1SmJ1yAm/ZGEl6tN9t8Xh9U9AtCBZJ
+ eQZw==
+X-Gm-Message-State: AFuF++la+YfJ7fxldgZEvXZODQr1zSE2vdjCtRiO/h1wECE2mXJZAOMu
+ 9ebWWUaX9R49tPYdfjZDVY0TfNxKeNiQnXvKkJbIrVtJhICEvP+xsLrgn3bmkW+wpQs=
+X-Gm-Gg: AYBFou2ESqlNcXhdHsrdeRDerxhRH2WgqYOLzeZIAval4f8bpnDxywBwXRJpj7EqaBf
+ 1wWwhjTPtcovsj2RAn0kP9qfXYf85lWr8SJAEwM0YJJCYskymUYPGSdnbyHg+jkC+Y+ueieeDpB
+ V0QNvh0ZJY060wO3qrCUUhQFHZ5VN3l0mn/CZvbknOjoCKM8aPiPSd2FZser03X0KmzIEOpI3r4
+ G4ZlyoC6LgGmjmdtjycBv72e+9WTNUVO2qW+9xZiw3Qx7wZ2snRKM81Fpl+PrM3/YOd7b2wFJyP
+ 16q9o8KmrpsczlnEE22TAlZaDWOVcKhzXkfqI0mCmclTKoI4pSz0Q5Yv98/FEqs+Jn/zr94JXbV
+ 773y4TdVEwOG1VaCNZlW0uOE2R4dsYSrZoTUOTNFtOKC/UTE+aGUdXwND0NdHURmrsob0mWn2eV
+ ZCTl/KewnH0ysnTYMptOi/9ntNf9ZcaMZBNEdAcZN+MfQYeToGFK2Hny7B5tgPH/sOIbyY9A==
+X-Received: by 2002:a05:600c:1d15:b0:49f:e427:e88f with SMTP id
+ 5b1f17b1804b1-4a027564ddemr39614625e9.21.1790934370503; 
+ Fri, 02 Oct 2026 02:46:10 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a0a6e894a4sm47576975e9.5.2026.10.02.02.46.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 02:45:23 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+ Fri, 02 Oct 2026 02:46:09 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 708125F8A5;
+ Fri, 02 Oct 2026 10:46:08 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,  Kyle Evans <kevans@freebsd.org>,  Song Gao
+ <gaosong@loongson.cn>,  Ani Sinha <anisinha@redhat.com>,  Warner Losh
+ <imp@bsdimp.com>,  Richard Henderson <richard.henderson@linaro.org>,  John
+ Snow <jsnow@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Cornelia Huck
+ <cohuck@redhat.com>,  Thomas Huth <th.huth+qemu@posteo.eu>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Peter Maydell <peter.maydell@linaro.org>,  Laurent
+ Vivier <laurent@vivier.eu>,  Brad Smith <brad@comstyle.com>,  Peter Xu
+ <peterx@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Ilya
+ Leoshkevich <iii@linux.ibm.com>,  Matthew Rosato <mjrosato@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Eric
+ Farman <farman@linux.ibm.com>,  Anders Roxell <anders.roxell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Klaus Jensen <its@irrelevant.dk>,  Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 05/13] tests/functional: add basic gdbstub test for KVM
+In-Reply-To: <179085353196.2170790.3865077624161009164.b4-review@b4>
+ (marcandre lureau's message of "Thu, 01 Oct 2026 15:18:51 +0400")
+References: <20260930164649.433573-1-alex.bennee@linaro.org>
+ <20260930164649.433573-6-alex.bennee@linaro.org>
+ <179085353196.2170790.3865077624161009164.b4-review@b4>
+User-Agent: mu4e 1.14.4-pre4; emacs 30.1
+Date: Fri, 02 Oct 2026 10:46:08 +0100
+Message-ID: <87v77kjuzj.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2 1/2] hw/ufs: Add experimental fault injection
- properties for task abort testing
-To: Jeuk Kim <jeuk20.kim@samsung.com>, qemu-devel@nongnu.org, 
- stanleyjhu@google.com
-Cc: Brian Kao <powenkao@google.com>, j-young.choi@samsung.com
-In-Reply-To: <20260909031229.1650315-2-stanleyjhu@google.com>
-References: <20260909031229.1650315-1-stanleyjhu@google.com>
- <20260909031229.1650315-2-stanleyjhu@google.com>
-Date: Fri, 02 Oct 2026 18:45:15 +0900
-Message-Id: <179093431586.95788.6113334726548476720.b4-review@b4>
-X-Mailer: b4 0.16.1-dev
-Received-SPF: pass client-ip=2607:f8b0:4864:39::f;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pj2-x0f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:31::11;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm2-x11.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,320 +119,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Add experimental properties x-hold-tag and x-hold-mode to ufs-pci and
-> ufs-sysbus devices to facilitate end-to-end testing of host driver error
-> handling, task aborts, and SCSI recovery routines.
-> 
-> When x-hold-tag is set to a specific tag (0..255), the controller holds
-> the matching transfer request until a Task Management Request (TMR) targeting
-> the held request is issued by the host driver. If x-hold-tag=0xfffffffe
-> (UFS_HOLD_TAG_ANY), the controller intercepts the first READ_10/WRITE_10
-> request with LBA >= 512, avoiding guest boot-time metadata requests. The default
-> value is 0xffffffff (UFS_HOLD_TAG_NONE), which disables fault injection.
-> 
-> The x-hold-mode property controls how the held request and subsequent
-> recovery are resolved:
-> - "abort-success": TMR ABORT_TASK aborts the held request, clears its
->   state, and returns SUCCESS (COMPL).
-> - "abort-failed": TMR ABORT_TASK returns TASK_MANAGEMENT_FUNC_FAILED.
-> - "in-transition": TMR QUERY_TASK / ABORT_TASK completes the held request
->   successfully and returns COMPL (simulating a command completing in transition).
-> - "timeout": TMR ABORT_TASK does not complete, triggering TMR timeout.
-> 
-> Both properties support runtime modification via QOM (e.g., QMP qom-set),
-> enabling continuous fault injection testing within a single running VM.
-> 
-> Together with the companion Linux kernel patch:
->   "[PATCH] scsi: ufs: core: Add fault injection for task abort failures"
->   Link: https://lore.kernel.org/r/20260903235308.1240963-1-stanleyjhu@google.com/
-> these changes provide a deterministic testbed for automated CI/CD validation
-> across driver error recovery and emulation layers.
-> 
-> Based-on: <20260909031146.1646684-1-stanleyjhu@google.com>
-> 
-> Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-> ---
->  hw/ufs/trace-events |   3 +
->  hw/ufs/ufs-pci.c    |   4 +
->  hw/ufs/ufs-sysbus.c |   4 +
->  hw/ufs/ufs.c        | 289 +++++++++++++++++++++++++++++++++++++++++---
->  hw/ufs/ufs.h        |  54 +++++++++
->  5 files changed, 339 insertions(+), 15 deletions(-)
+marcandre.lureau@redhat.com writes:
+
+>> We don't really exercise the KVM bits of gdbstub very much as the TCG
+>> tests are TCG only and the ones in functional tests are focused on
+>> record/replay and reverse debugging.
+>>=20
+>> Add a basic gdbstub test case which uses heuristics to single step
+>> through the default firmware of guests and kick the tyres and check
+>> things are working as expected.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> Message-ID: <20260930164649.433573-6-alex.bennee@linaro.org>
+>>
+>> diff --git a/tests/functional/gdb-scripts/kvm_fw_gdb_test.py b/tests/fun=
+ctional/gdb-scripts/kvm_fw_gdb_test.py
+>> new file mode 100644
+>> index 000000000000..b38b874dc586
+>> --- /dev/null
+>> +++ b/tests/functional/gdb-scripts/kvm_fw_gdb_test.py
+>> @@ -0,0 +1,119 @@
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +#
+>> +# Generic GDB script to verify gdbstub functionality on guest firmware:
+>> +#  - Single-stepping across VM-exits
+>> +#  - Placing a hardware breakpoint at a branch or ahead in disassembly
+>> +#  - Continuing to the breakpoint and validating that registers changed
+>> +#
+>> +# Copyright (c) 2026 Linaro Limited
+>> +#
+>> +# Author:
+>> +#  Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> +
+>> +import gdb
+>> +from test_gdbstub import main, report
+>> +
+>> +def parse_registers():
+>> +    """Parse 'info registers' into a name -> value dictionary."""
+>> +    regs =3D {}
+>> +    for line in gdb.execute("info registers", to_string=3DTrue).splitli=
+nes():
+>> +        parts =3D line.split()
+>> +        if len(parts) >=3D 2:
+>> +            regs[parts[0]] =3D parts[1]
+>> +    return regs
+>> +
+>> +def test_single_step():
+>> +    """
+>> +    Single-step a few instructions and verify PC advances
+>> +    """
+>> +    current_pc =3D int(gdb.parse_and_eval("$pc"))
+>> +    for step in range(1, 6):
+>> +        gdb.execute("stepi")
+>> +        gdb.execute("x/3i $pc")
+>> +        pc =3D int(gdb.parse_and_eval("$pc"))
+>> +        report(pc !=3D current_pc, f"single-step {step} advanced pc")
+>> +        current_pc =3D pc
+>> +
+>> +
+>> +def might_be_jump(asm):
+>> +    """
+>> +    Return true if the assembly string might contain a branch/jump inst=
+ruction
+>> +    """
+>> +    branch_keywords =3D {
+>> +        "jmp", "b", "bl", "bx", "bne", "beq", "bgt", "blt", "bge", "ble=
+",
+>> +        "call", "ret", "br", "jal", "jalr", "bc", "bctrl", "j"
+>> +    }
 >
-> diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-> index 5e5a54a3fb..a2c8f80811 100644
-> --- a/hw/ufs/trace-events
-> +++ b/hw/ufs/trace-events
-> @@ -16,6 +16,9 @@ ufs_mcq_create_sq(uint8_t sqid, uint8_t cqid, uint64_t addr, uint16_t size) "mcq
->  ufs_mcq_create_cq(uint8_t cqid, uint64_t addr, uint16_t size) "mcq create cq cqid %"PRIu8", addr 0x%"PRIx64", size %"PRIu16""
->  ufs_write_mcq_op_reg(uint8_t qid, uint32_t offset, uint32_t data) "qid %"PRIu8", offset 0x%"PRIx32", data 0x%"PRIx32""
->  ufs_process_tmr(uint8_t func, uint32_t tag, uint8_t resp) "query_func 0x%"PRIx8", task_tag %"PRIu32", tm_resp 0x%"PRIx8""
-> +ufs_inject_hold_req(uint8_t tag, uint32_t lba) "held command tag %"PRIu8", lba %"PRIu32""
-> +ufs_set_hold_tag(uint32_t tag) "hold-tag set to 0x%"PRIx32""
-> +ufs_set_hold_mode(const char *mode) "hold-mode set to %s"
->  ufs_hce_reset(void) "HCE 1 -> 0 reset: cancelling BHs, resetting MCQ and request lists"
->  
->  # error condition
-> diff --git a/hw/ufs/ufs-pci.c b/hw/ufs/ufs-pci.c
-> index 8abd7d98e3..fe6c497dc2 100644
-> --- a/hw/ufs/ufs-pci.c
-> +++ b/hw/ufs/ufs-pci.c
-> @@ -72,6 +72,10 @@ static const Property ufs_pci_props[] = {
->                         0x400),
->      DEFINE_PROP_UINT32("wb-min-size", UfsPciState, ufs.params.wb_min_size,
->                         0x100),
-> +    DEFINE_PROP_UNSIGNED("x-hold-tag", UfsPciState, ufs.params.x_hold_tag,
-> +                         UFS_HOLD_TAG_NONE, ufs_prop_hold_tag, uint32_t),
-> +    DEFINE_PROP("x-hold-mode", UfsPciState, ufs.params.x_hold_mode,
-> +                ufs_prop_hold_mode, char *),
+>
+> Do you plan to make this per-architecture? It doesn't cover x86
+> conditional jumps.
 
-Could we use names such as `x-fault-inject-tag` and
-`x-fault-inject-mode`, so their deliberate fault-injection purpose is clear?
+I think I'm just going to wrap the register checking code into the other
+test and drop this one as the heuristics are potentially flaky. It was
+really just a workaround to not having symbols easily accessible (which I
+have now).
 
->  };
->  
->  static const VMStateDescription ufs_pci_vmstate = {
-> diff --git a/hw/ufs/ufs-sysbus.c b/hw/ufs/ufs-sysbus.c
-> index 84de2e95ac..f0e4dfcd71 100644
-> --- a/hw/ufs/ufs-sysbus.c
-> +++ b/hw/ufs/ufs-sysbus.c
-> @@ -45,6 +45,10 @@ static const Property ufs_sysbus_props[] = {
->                         0x400),
->      DEFINE_PROP_UINT32("wb-min-size", SysbusUfsState, ufs.params.wb_min_size,
->                         0x100),
-> +    DEFINE_PROP_UNSIGNED("x-hold-tag", SysbusUfsState, ufs.params.x_hold_tag,
-> +                         UFS_HOLD_TAG_NONE, ufs_prop_hold_tag, uint32_t),
-> +    DEFINE_PROP("x-hold-mode", SysbusUfsState, ufs.params.x_hold_mode,
-> +                ufs_prop_hold_mode, char *),
->  };
->  
->  static const VMStateDescription ufs_sysbus_vmstate = {
-> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-> index ca5f6f2e96..3bdfe5762e 100644
-> --- a/hw/ufs/ufs.c
-> +++ b/hw/ufs/ufs.c
-> @@ -15,6 +15,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
-> +#include "qapi/visitor.h"
->  #include "scsi/constants.h"
->  #include "hw/core/irq.h"
->  #include "trace.h"
-> @@ -816,6 +817,14 @@ static void ufs_hce_reset(UfsHc *u)
->          memset(u->mcq_op_reg, 0, sizeof(u->mcq_op_reg));
->      }
->  
-> +    if (u->held_req) {
-> +        u->held_req = NULL;
-> +        u->active_hold_tag = UFS_HOLD_TAG_NONE;
-> +        u->params.x_hold_tag = UFS_HOLD_TAG_NONE;
-> +    } else {
-> +        u->active_hold_tag = u->params.x_hold_tag;
-> +    }
-> +
->      u->resetting = false;
->  
->      /* 5. De-assert IRQ */
-> @@ -873,27 +882,95 @@ static void ufs_process_tmr(UfsHc *u, uint32_t val)
->              task_tag = be32_to_cpu(desc.upiu_req.input_param2);
->  
->              if (tm_func == UFS_QUERY_TASK) {
-> -                UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
-> -
-> -                if (req) {
-> -                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED;
-> +                if (u->held_req && task_tag == u->active_hold_tag) {
-> +                    if (u->hold_mode == UFS_HOLD_IN_TRANSITION) {
-> +                        UfsRequest *hreq = u->held_req;
-> +                        u->held_req = NULL;
-> +                        u->active_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        u->params.x_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
-> +                        if (hreq) {
-> +                            uint16_t data_seg_len =
-> +                                sizeof(hreq->rsp_upiu.sr.sense_data_len);
-> +                            hreq->rsp_upiu.sr.sense_data_len = 0;
-> +                            hreq->rsp_upiu.sr.residual_transfer_count = 0;
-> +                            ufs_build_upiu_header(hreq,
-> +                                                  UFS_UPIU_TRANSACTION_RESPONSE,
-> +                                                  0,
-> +                                                  UFS_COMMAND_RESULT_SUCCESS,
-> +                                                  0,
-> +                                                  data_seg_len);
-> +                            ufs_complete_req(hreq, UFS_REQUEST_SUCCESS);
-> +                        }
-> +                    } else {
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED;
-> +                    }
->                  } else {
-> -                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
-> +                    UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
-> +
-> +                    if (req) {
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_SUCCEEDED;
-> +                    } else {
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
-> +                    }
->                  }
->              } else if (tm_func == UFS_ABORT_TASK) {
-> -                UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
-> -
-> -                if (req) {
-> -                    ufs_clear_req(req);
-> -                    req->state = UFS_REQUEST_IDLE;
-> -                    if (ufs_mcq_req(req)) {
-> -                        QTAILQ_INSERT_TAIL(&req->sq->req_list, req, entry);
-> -                        qemu_bh_schedule(req->sq->bh);
-> +                if (u->held_req && task_tag == u->active_hold_tag) {
-> +                    if (u->hold_mode == UFS_HOLD_ABORT_FAILED) {
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_FAILED;
-> +                    } else if (u->hold_mode == UFS_HOLD_TIMEOUT) {
-> +                        continue;
-> +                    } else if (u->hold_mode == UFS_HOLD_IN_TRANSITION) {
-> +                        UfsRequest *hreq = u->held_req;
-> +                        u->held_req = NULL;
-> +                        u->active_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        u->params.x_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
-> +                        if (hreq) {
-> +                            uint16_t data_seg_len =
-> +                                sizeof(hreq->rsp_upiu.sr.sense_data_len);
-> +                            hreq->rsp_upiu.sr.sense_data_len = 0;
-> +                            hreq->rsp_upiu.sr.residual_transfer_count = 0;
-> +                            ufs_build_upiu_header(hreq,
-> +                                                  UFS_UPIU_TRANSACTION_RESPONSE,
-> +                                                  0,
-> +                                                  UFS_COMMAND_RESULT_SUCCESS,
-> +                                                  0,
-> +                                                  data_seg_len);
-> +                            ufs_complete_req(hreq, UFS_REQUEST_SUCCESS);
-> +                        }
->                      } else {
-> -                        u->reg.utrldbr &= ~(1 << req->slot);
-> +                        /* UFS_HOLD_ABORT_SUCCESS or default */
-> +                        UfsRequest *hreq = u->held_req;
-> +                        u->held_req = NULL;
-> +                        ufs_clear_req(hreq);
-> +                        hreq->state = UFS_REQUEST_IDLE;
-> +                        if (ufs_mcq_req(hreq)) {
-> +                            QTAILQ_INSERT_TAIL(&hreq->sq->req_list,
-> +                                               hreq, entry);
-> +                            qemu_bh_schedule(hreq->sq->bh);
-> +                        } else {
-> +                            u->reg.utrldbr &= ~(1 << hreq->slot);
-> +                        }
-> +                        u->active_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        u->params.x_hold_tag = UFS_HOLD_TAG_NONE;
-> +                        tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
-> +                    }
-> +                } else {
-> +                    UfsRequest *req = ufs_find_req_by_tag(u, task_tag);
-> +
-> +                    if (req) {
-> +                        ufs_clear_req(req);
-> +                        req->state = UFS_REQUEST_IDLE;
-> +                        if (ufs_mcq_req(req)) {
-> +                            QTAILQ_INSERT_TAIL(&req->sq->req_list, req, entry);
-> +                            qemu_bh_schedule(req->sq->bh);
-> +                        } else {
-> +                            u->reg.utrldbr &= ~(1 << req->slot);
-> +                        }
->                      }
-> +                    tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
->                  }
-> -                tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
->              } else {
->                  tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_NOT_SUPPORTED;
->              }
-> @@ -2327,6 +2404,42 @@ static void ufs_exec_req(UfsRequest *req)
->          return;
->      }
->  
-> +    if (unlikely(req->hc->active_hold_tag != UFS_HOLD_TAG_NONE)) {
+>
+>> +
+>> +    parts =3D asm.split()
+>> +    if not parts:
+>> +        return False
+>> +    mnemonic =3D parts[0].lower()
+>> +    return mnemonic in branch_keywords
+>> +
+>> +
+>> +def test_hw_bkpt():
+>> +    """
+>> +    Set a hwbkpt somewhere in the future.
+>> +    """
+>> +
+>> +    # FIXME - this is fragile
+>> +    disas =3D gdb.execute("x/10i $pc", to_string=3DTrue)
+>> +    lines =3D disas.strip().splitlines()
+>> +    insns =3D 0
+>> +    bp =3D None
+>> +
+>> +    for line in lines:
+>> +        clean =3D line.lstrip("=3D>").strip()
+>> +        parts =3D clean.split(":", 1)
+>> +        if len(parts) < 2 or not parts[1].strip():
+>> +            continue
+>> +        insns +=3D 1
+>> +
+>> +        if might_be_jump(parts[1]):
+>> +            # jump too close, bail out?
+>> +            if insns < 2:
+>> +                report(False, "found jump far enough away")
+>> +                return
+>> +            else:
+>> +                addr =3D int(parts[0].split()[0], 16)
+>> +                bp =3D gdb.Breakpoint(f"*{hex(addr)}",
+>> +                                    type=3Dgdb.BP_HARDWARE_BREAKPOINT)
+>> +                break
+>> +        elif insns =3D=3D 10:
+>> +            addr =3D int(parts[0].split()[0], 16)
+>> +            bp =3D gdb.Breakpoint(f"*{hex(addr)}",
+>> +                                type=3Dgdb.BP_HARDWARE_BREAKPOINT)
+>> +            break
+>> +
+>> +    report(bp is not None, f"set hwbkpt @ {bp.location}")
+>
+> Maybe to make debugging easier:
+>
+>   if bp is None:
+>       report(False, "failed to set hwbkpt (no suitable instruction found)=
+")
+>       return
+>   report(True, f"set hwbkpt @ {bp.location}")
+>
+>> +    gdb.execute("continue")
+>> +
+>> +    end_pc =3D gdb.parse_and_eval('$pc')
+>> +    report(bp.hit_count =3D=3D 1,
+>> +           "break @ %s (%d hits)" % (end_pc, bp.hit_count))
+>> +
+>> +    bp.delete()
+>> +    return
+>> +
+>> +def test_reg_updates(regs_start):
+>> +    regs_end =3D parse_registers()
+>> +
+>> +    changed =3D [k for k in regs_start
+>> +               if k in regs_end and regs_start[k] !=3D regs_end[k]]
+>> +
+>> +    report(len(changed) > 0, f"{len(changed)} registers changed.")
+>> +
+>> +def run_test():
+>> +    regs_start =3D parse_registers()
+>> +
+>> +    test_single_step()
+>> +
+>> +    # skip any pesky mode switching code
+>> +    gdb.execute("stepi 50")
+>> +
+>> +    test_hw_bkpt()
+>> +
+>> +    test_reg_updates(regs_start)
+>> +
+>> +
+>> +main(run_test)
+>> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_=
+64/meson.build
+>> index 0353b2af8e1d..080e12ddef13 100644
+>> --- a/tests/functional/x86_64/meson.build
+>> +++ b/tests/functional/x86_64/meson.build
+>> @@ -13,6 +13,7 @@ tests_x86_64_system_quick =3D [
+>>    'bad_vmstate',
+>>    'cpu_model_versions',
+>>    'cpu_queries',
+>> +  'kvm_gdbstub',
+>>    'mem_addr_space',
+>>    'migration',
+>>    'pc_cpu_hotplug_props',
+>> diff --git a/tests/functional/x86_64/test_kvm_gdbstub.py b/tests/functio=
+nal/x86_64/test_kvm_gdbstub.py
+>> new file mode 100755
+>> index 000000000000..26876c3dc580
+>> --- /dev/null
+>> +++ b/tests/functional/x86_64/test_kvm_gdbstub.py
+>> @@ -0,0 +1,55 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +#
+>> +# Functional test verifying KVM gdbstub operations on firmware:
+>> +#  - Single-stepping across VM-exits
+>> +#  - Register sampling across execution steps
+>> +#  - Hardware breakpoint at branch destination or instruction
+>> +#
+>> +# Copyright (c) 2026 Linaro Limited
+>> +#
+>> +# Author:
+>> +#  Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> +
+>> +import os
+>> +import subprocess
+>> +from pathlib import Path
+>> +from qemu_test import QemuSystemTest, skipIfMissingEnv
+>> +
+>> +
+>> +class KvmGdbstubTest(QemuSystemTest):
+>> +
+>> +    @skipIfMissingEnv("QEMU_TEST_GDB")
+>> +    def test_x86_64_kvm_fw_gdb(self):
+>> +        self.require_accelerator("kvm")
+>> +
+>> +        gdb_path =3D os.getenv("QEMU_TEST_GDB")
+>> +
+>> +        tests_dir =3D Path(__file__).resolve().parents[2]
+>> +        run_test =3D tests_dir / "guest-debug" / "run-test.py"
+>> +        gdb_script =3D (tests_dir / "functional" / "gdb-scripts" /
+>> +                      "kvm_fw_gdb_test.py")
+>> +
+>> +        qargs =3D "-machine pc -accel kvm -cpu host -smp 1 -m 512M -dis=
+play none"
+>> +        cmd =3D [
+>> +            str(run_test),
+>> +            "--qemu", self.qemu_bin,
+>> +            "--qargs", qargs,
+>> +            "--binary", "",
+>> +            "--test", str(gdb_script),
+>> +            "--gdb", gdb_path,
+>> +        ]
+>> +
+>> +        res =3D subprocess.run(cmd, text=3DTrue,
+>> +                             stdout=3Dsubprocess.PIPE,
+>> +                             stderr=3Dsubprocess.STDOUT)
+>> +        if res.stdout:
+>> +            self.log.info('run-test.py: %s', res.stdout)
+>> +
+>> +        self.assertEqual(res.returncode, 0,
+>> +                         f"run-test.py failed ({res.returncode}):\n")
+>> +
+>> +
+>> +if __name__ =3D=3D '__main__':
+>> +    QemuSystemTest.main()
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Could we move this and the other fault-injection paths (TMR, reset, and
-property updates) behind `ufs_fault_inject_*()` helpers?  This would keep
-test-only logic out of the normal UFS paths.
-
-> +        if (req->hc->active_hold_tag == UFS_HOLD_TAG_ANY) {
-> +            if (req->req_upiu.header.trans_type ==
-> +                UFS_UPIU_TRANSACTION_COMMAND) {
-> +                uint8_t op = req->req_upiu.sc.cdb[0];
-> +
-> +                if (op == READ_10 || op == WRITE_10) {
-> +                    /*
-> +                     * In 10-byte SCSI read/write commands (SBC-4), bytes 2..5
-> +                     * encode the 32-bit Logical Block Address (LBA) in
-> +                     * big-endian.
-> +                     */
-> +                    uint32_t lba = ldl_be_p(&req->req_upiu.sc.cdb[2]);
-> +
-> +                    /*
-> +                     * Only intercept target I/O targeting LBA >=
-> +                     * UFS_HOLD_MIN_LBA. Skips guest boot-time partition table
-> +                     * and superblock scanning.
-> +                     */
-> +                    if (lba >= UFS_HOLD_MIN_LBA) {
-> +                        req->hc->active_hold_tag =
-> +                            req->req_upiu.header.task_tag;
-> +                        req->hc->held_req = req;
-> +                        trace_ufs_inject_hold_req(req->req_upiu.header.task_tag,
-> +                                                  lba);
-> +                        return;
-> +                    }
-> +                }
-> +            }
-> +        } else if (req->req_upiu.header.task_tag == req->hc->active_hold_tag) {
-> +            req->hc->held_req = req;
-> +            trace_ufs_inject_hold_req(req->req_upiu.header.task_tag, 0);
-> +            return;
-> +        }
-> +    }
-> +
->      switch (req->req_upiu.header.trans_type) {
->      case UFS_UPIU_TRANSACTION_NOP_OUT:
->          req_result = ufs_exec_nop_cmd(req);
-> @@ -2947,8 +3060,140 @@ static void ufs_init_hc(UfsHc *u)
->  
->      timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL_RT, ufs_idle_timer_cb, u);
->      timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
-> +
-> +    u->active_hold_tag = u->params.x_hold_tag;
-> +    u->held_req = NULL;
-> +}
-> +
-> +static void ufs_prop_get_hold_tag(Object *obj, Visitor *v, const char *name,
-> +                                  void *opaque, Error **errp)
-> +{
-> +    Property *prop = opaque;
-> +    uint32_t *ptr = object_field_prop_ptr(obj, prop);
-> +    UfsParams *params = container_of(ptr, UfsParams, x_hold_tag);
-> +    UfsHc *u = container_of(params, UfsHc, params);
-> +
-> +    visit_type_uint32(v, name, &u->active_hold_tag, errp);
-> +}
-> +
-> +static void ufs_prop_set_hold_tag(Object *obj, Visitor *v, const char *name,
-> +                                  void *opaque, Error **errp)
-> +{
-> +    Property *prop = opaque;
-> +    uint32_t *ptr = object_field_prop_ptr(obj, prop);
-> +    uint32_t val;
-> +
-> +    if (!visit_type_uint32(v, name, &val, errp)) {
-> +        return;
-> +    }
-> +
-> +    *ptr = val;
-> +    UfsParams *params = container_of(ptr, UfsParams, x_hold_tag);
-> +    UfsHc *u = container_of(params, UfsHc, params);
-> +    u->active_hold_tag = val;
-
-Since the tag can be changed at runtime via `qom-set`, `active_hold_tag` may
-be updated while `held_req` still points to the previous request.  A later
-match would then silently overwrite `held_req`; is that intentional?
-
--- 
-Jeuk Kim <jeuk20.kim@samsung.com>
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
