@@ -4,130 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0313CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 16:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AA6CA5FDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 17:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCgb1-0004P7-ML; Fri, 02 Oct 2026 12:58:55 -0400
+	id 1xCgj0-0006Lr-Tg; Fri, 02 Oct 2026 13:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCgaw-0004OO-OV
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 12:58:52 -0400
-Received: from mail-ed2-x0f.google.com ([2a00:1450:4864:33::f])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1xCgiu-0006LJ-8N
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:07:05 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xCgat-0000tW-Dh
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 12:58:50 -0400
-Received: by mail-ed2-x0f.google.com with SMTP id
- 4fb4d7f45d1cf-6aa135d6e97so146215a12.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 09:58:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790960323; cv=none;
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1xCgiq-0001nn-L3
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:07:03 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6acbdbc1725so648518a12.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 10:06:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790960818; cv=none;
  d=google.com; s=arc-20260327;
- b=iDlJeyKMTVCCxKpKo6/cdq2Ed6PiVMMqvowyxUWo/N2cvBYLDSEeXoA2t3VCdpZzj6
- 96wjlW3BNkEBdkG7NGspiGSCd53yHTew8CqKZfF/r5lyiiOa89Q/fwEPLwN47zyAhB2M
- ttxPBwVhRjGyDtT+0mOILhYBI5RTtbATJwzuweJb2GPcktR6qJYebYGj9PiFYjiwLD5v
- 5AaKh0CeEPOEinJal6Yb5cTI6Qe/4qi38dgHQw+9dOPs2ZZ2/57Cp3b0TNw4XD9hDCuX
- dHt8tdB5QOTsQXPHyxwC+Rt0sv4LdZ+qt06lhaZiZJqb0m05x8M2Fpx+D5JrRC0HUvtW
- Q5SA==
+ b=lPT4A5wOWrlbPgjqQMf3CmYsyEPKr0SgrdnO6uODt6IV/vjPDQrPItLvak49BI2R+l
+ YWaX1dklTaTGU2Ki4NijFo720hrLc9fCtW0EyCup1FbMhdTnwsTcbjtRhgqgAdOFxrCE
+ ws1f93hut1nItdtUC/QmAgNuAiYKLdXkLbZEN+CCjs71X8II2S7CxdIDW8TajllHPGbs
+ zlS5ogFDqTUej37lrFsDMb+70B/q1pmgCZYKd3VMiiYu4ydlD6b2vPR25SdONSJRMU7f
+ J0qsACgvLdTJ/VZzZPte01zHds5NJ5P/7KP7MtwWUzEt3dm97Va1luSCyiyN8BUwAT3A
+ JeAw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=xP5DDHCMbAjbUs3xe/3crv71NDZ6i37Mh/QwccJb0iw=;
- fh=AaEvk/D5tmlvu8+VmUVG12WAyVyClVXPdjEib6bz5hI=;
- b=NJQOlhZ8rcG3DwQZ0TWc70OchhDkPj5Rr0zkn5zGaaeF4f0Ay4oQJFteWc/keoKKUO
- tKdEhKTXZiAMEsxE3dwit8FExhJ42bac6eb+jQ+OEZsSwa1uhgprqKgoMhACkOQYb41e
- DSvEkcjRD7riIXlr5pCOSmFu8UwVHLOZO3e9F8uRe8kXmwS+Df9N/ZJTdGbrMrsWYR0t
- INBzAFVIlULnUZgtDa2w/2p6z/uwfDJTNwIXL6s59Hn2JcLuVld/hn75xirEWH3SwtpJ
- XVtk+VqNj6iYNVx/QIzfiE11Pp4BcgOTyhtGxyJBhb6RPK8uB/K62825qiAokiPMKYCn
- zCxg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=EdzkP4H+Ytt5Y2R1+BII7fVFFgZux+fpIpPKaTbCxQg=;
+ fh=ZY42IKakwEggoisEzVAtYxLW7OPmO5+fJ/ez2T4velY=;
+ b=MDXuz0+ytUbWwFSzw7BGT/9GOz26nW6A2JUovxaVP2vLrxcqO8jwiFDgdFPjCBRBdQ
+ h7gkDHgGuWSszufk2v7QLR9onkzd8Tq+Ovb2GkIeq1MeZjdU0Q/b+oSXb4XX0sHA3MB5
+ PUjM5H4XNlcwyHN6cfxTE2nLav1be+n98Kb4TwNIFDoVY9T68da1ogsv1Me0PHBokKAF
+ j8H7nfSDaZRrfeuW5iJRwhJTpgEnjQCo2tXpDSqCO2rg52N3qBWwvIDb7l6mVLtFt12u
+ nCbykLgGt+cPvUE9seHUxG3o445Wwec7iuF5M6wp92qus+esHlxSsA+u2ZvtiafGs3Mr
+ rsGw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790960323; x=1791565123; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=xP5DDHCMbAjbUs3xe/3crv71NDZ6i37Mh/QwccJb0iw=;
- b=OBkuXYHuP5IP6Q3QVpCgtBEUjLRnfdGlk3/WLm+p4Ypqb893firRw6ebsF4szQTixo
- aOs0uyK/hs03fNXyYN3PYDCjO/hQvojkWFzMQecUE4yRqW790nySpR4JW/6dNJB9yM4r
- YWj5eGj5OZHBrsIVIBhVSVbp+5e7ZPnpv4mt5bko+XwOkke8vUFrFU5Z3pBl8Tyk49cv
- qwQVlDCDlYzDCBAsxnEHK2wNPLEqZwqeKupWgiigQ5/ryZRwdFbLyHYLq0PcfOS2MQel
- uyNeQGR+tWRwJvuiy8lZMO6dwZPmOSutR4lG40wdm3DdBeg0TtAsJjIrghqui26rKnRe
- 1YnQ==
+ d=mihalicyn.com; s=mihalicyn; t=1790960818; x=1791565618; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=EdzkP4H+Ytt5Y2R1+BII7fVFFgZux+fpIpPKaTbCxQg=;
+ b=BnoEKZVJ5335c6lLlQgF9T3HtjZ/00I6GaZV8fMYGmA3C1mbUtvOLTeF5UNbDZy9VE
+ 9G0voQ8QvokYwWUdVw+FZi59lJ6OrnKXccAb7u8ajaG9ZO0YsDBORx//LwfeLFlIgpLg
+ lEyQbbr7SE4jqXrNQ/tlX54COJaO5lB4JTwRs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790960323; x=1791565123;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xP5DDHCMbAjbUs3xe/3crv71NDZ6i37Mh/QwccJb0iw=;
- b=rpHX35D5F6rCpEwIbc6FkhHrmqIOxtwZ6GQk1t6D3h+Djr9oI/JYvuUGWM7BbPAmwP
- Wgbh96y47dyIHTbzbyqRlTzKdmvUjVQNXd6rHHqQVq0aO3zAz6K1/4mb7P8NNzGeV3+u
- 4lwyEqkVVNUmP7gKBMrWQZXbdntv/r0vK8tdxRLInJiIAqVqMQ+bVhNWK8n0sU+ktdq2
- 41VGb9zMIMTuDZGbtshZtN87VJFBLGhi68wOQ0NKzovcSi3yWzgtmZPVETucxw6HJaYl
- lEY1GhNvSBjxbbavDMZjsYGV77KVapnJ9lNBQuIeuwaxC9CzWdhG2nYwR5JlGoJiaSJc
- N2DQ==
+ d=1e100.net; s=20260707; t=1790960818; x=1791565618;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=EdzkP4H+Ytt5Y2R1+BII7fVFFgZux+fpIpPKaTbCxQg=;
+ b=CY/L9S8+esdVtwY4bOx4IvKvylp3jlgGxIRHegCAbbY2L6y9QsGRybA+GBdwFH+O0F
+ qLImhw3iWB+BGxyfTRrmS8b8cGRf3qmfBYldibbPrkOvNFGdXDlDtp+WpZSwrMpocTvE
+ BMp7ITi2Q/OkEW3pw/YxI2cHCk7AZy1YMv3LxTniRIwq2xtg0Bk8j6+1rkiV4hpNXu6B
+ foJ80rbsRdUOxWIzd0/qa6jX9ppheLNGrcBM6BEh3Ra6Exvzs4V+ml+LAhU+6HrjhyNF
+ 3TcS+BMDf5taa4nQpMmDLOi9tMh1SqFk8gkiYSmdFmuwBT5zPUnkMpbXJArSxnx6Pe4H
+ 30cg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxjegRPe0gwz4C6KXwGWRa84240POVbgttlCEs5f4xJkSqpg6lv9A1/D0YL1Ol6Y552G9YvJbVv2MYh@nongnu.org
-X-Gm-Message-State: AFq9FYJ4bYlXja6ss2EBMM3eSpHPEzzG+ofNqCGJQciJQFHZZjWrz0EZ
- LmVQdO5xwVqE2c4623ZYGGekrC72+ddLjHBpqxBM0bKI+1LdRhROvN3t7ZdUeiIWqGBC/IwEyLf
- pvJT4/wWTP2F86lq+EK5urExWEcVmaJY=
-X-Gm-Gg: AYBFou0knoCTTsYhNhMXaj49/BoennSQ7t7wEJxjcah1ELTiOL+/dkCbd7ot7a1DRXc
- 6sYSVnwE3OAICGbyr6vpoff3J7x9U5EPrwL0ltcTyRxmC8oj4LKaD2ap+NevD+lIRA/5mgYaUdO
- +SbUtwsMvuMEa2jVVt32mwCmBjKAY6eOgbW1/VSwKPewNlJ7JxAlIL3Vrpaax8jlhh2bnmxNVPz
- +hh2Y/44b/mLui7Nm+aS0mkTGc7XubHE/X7EI3Gas2QOoxDreKHJUkZKgmkjtvtdldUS180jLc0
- bQBo1+kftxSxQb9waBbX3Y+LAhAgKdMa+BOcu5rE0tH305ZqOSRLO5CqdYC8EImtydk=
-X-Received: by 2002:a05:6402:27c9:b0:6ab:6f77:c4eb with SMTP id
- 4fb4d7f45d1cf-6af9e362590mr2151368a12.37.1790960323384; Fri, 02 Oct 2026
- 09:58:43 -0700 (PDT)
+ AKwUvBz8gee+CgGedLGQRePzpwE/waIg14rCqZGCKty+MbMi/4D+eSIH0FMcLtHXEU8vA0sr+PXlC5iExTKh@nongnu.org
+X-Gm-Message-State: AFq9FYITIbiol1QX8r3DIEa5h0WA2LgrS+fz4YypefHf1j583cdTKyPL
+ worNhE3G0NRG8o39SfCGyG/5BwMQ//JVntdoEg1nrM5didGdtyxQ8fhSKY4u49MKYq+gJzBKn0f
+ nphEgZxpCD/dos5kZTRjzmkKqPeoq8T0Tb5NuHKiKgg==
+X-Gm-Gg: AYBFou2HeVzorHVWpumeIZxrFI/7vjK97cPfNzmpomS/cIm5jq8Bd6TNM6Bt87QVFlT
+ As3e2gO3jyntFJ/HQ7nWdmYT7wvBUwCBbRm54UCy8ZVrGFbwwnLxaZqXZbq+t8aAmlEctazvqQV
+ 0cMWQMX1Dfrz1GyLlPHavFF/J+L/tEZ/F+fWLEruGnRSripJ0sMVNoWGV8sDH4SLKZjL/+tEcN/
+ lzmRp7cQDLwqfNa9u7twmjmphcVw3Zvbyrev0BP5LWT/zCEtaMzxJ2xUGQkqQVcrxL9a/BOTK02
+ PvSkMTln/UUXWfbyY2C6Sog6LRbb0NKB53GMvBlaP2F75BA/kLXAnzf8R8Y3pNo5ZhBE8M+krzu
+ aA21g+R8QjwePZRWpQyLh
+X-Received: by 2002:a05:6402:24c7:b0:6ab:1cd:a2b0 with SMTP id
+ 4fb4d7f45d1cf-6afad8bd80bmr90612a12.15.1790960817545; Fri, 02 Oct 2026
+ 10:06:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAE2XoE8VyCpPCqRVFArBn_dDsyMw8vrSJxWMhKq17btZvO2n6A@mail.gmail.com>
- <b02db9e2-b348-4011-a98d-122e9d9f17e5@oss.qualcomm.com>
- <ar6a_uDw9OeLng6c@redhat.com>
- <6bf4dad5-4fa2-4df1-b6b8-d594dbd3842c@oss.qualcomm.com>
- <ar6lw3jAcnVej6vK@redhat.com>
- <557262df-b8e7-49b5-a245-ae46b8885b30@oss.qualcomm.com>
- <CAE2XoE8MriyEEeRF3uDwWgnJWPHBieK_-pD1+k0tUjROWjDpWg@mail.gmail.com>
- <a9cba466-f442-4bbf-9154-3674b5f10882@oss.qualcomm.com>
- <ar_coT44h5-zJPVV@redhat.com>
- <CAE2XoE8Jg=WHDF1_pQ-K-Y6f_aE2N8y5_=aJSeC4A52HWFwEkA@mail.gmail.com>
- <ar_hNU0Y4BxXKHnv@redhat.com>
-In-Reply-To: <ar_hNU0Y4BxXKHnv@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sat, 3 Oct 2026 00:58:29 +0800
-X-Gm-Features: AclHuK9oLDsuIH_-0tyf2D0IfUvd5pve5TCsKMnaTRuIfsSbB4TbL5MGHOTOL9s
-Message-ID: <CAE2XoE8YbxQobHHhttKHQrEgrMg2Z1XePzwFDKB2g7E1yH1noQ@mail.gmail.com>
-Subject: Re: [PATCH v3 01/10] machine: allow -M name to differ from QOM type
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
- Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- Stafford Horne <shorne@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Fabiano Rosas <farosas@suse.de>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, 
- Laurent Vivier <lvivier@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Song Gao <17746591750@163.com>, 
- Philippe Mathieu-Daude <philmd@mailo.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Laurent Vivier <laurent@vivier.eu>, Weiwei Li <liwei1518@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>
+References: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
+ <20260919085510.3388454-11-manos.pitsidianakis@linaro.org>
+ <CAFEAcA-K7L5NWk0cC9R8yVvojSS6O6Eh+i9KXP8Lijo4Tjnd-Q@mail.gmail.com>
+ <c58c324d1ce1f095c0036c43691d61d9dcac6f1d.camel@mihalicyn.com>
+ <CAFEAcA-J9R2ZOSR+Y=5xOidR6fZq2Y9Z6f9MZoSxgRK0iNTzhA@mail.gmail.com>
+In-Reply-To: <CAFEAcA-J9R2ZOSR+Y=5xOidR6fZq2Y9Z6f9MZoSxgRK0iNTzhA@mail.gmail.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Fri, 2 Oct 2026 19:06:46 +0200
+X-Gm-Features: AclHuK8EgMTKWFPDhFRSd0vkAVgYouGaHmllM0Cr1zeKLZ57euSDdraOTg5tmi4
+Message-ID: <CAJqdLronpmuKPezWUYHRtG3xNDSBDMEzUaM2PpmoNn-QSDiUqA@mail.gmail.com>
+Subject: Re: [PULL v2 10/10] hw/audio/virtio-sound: add missing vmstate fields
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ aleksandr.mikhalitsyn@futurfusion.io, 
+ qemu-devel@nongnu.org, =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:33::f;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x0f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,112 +118,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Oct 3, 2026 at 12:52=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+Am Fr., 2. Okt. 2026 um 16:38 Uhr schrieb Peter Maydell
+<peter.maydell@linaro.org>:
 >
-> On Sat, Oct 03, 2026 at 12:43:19AM +0800, Yonggang Luo wrote:
-> > On Sat, Oct 3, 2026 at 12:32=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
+> On Fri, 2 Oct 2026 at 15:07, Alexander Mikhalitsyn
+> <alexander@mihalicyn.com> wrote:
+> >
+> > On Fri, 2026-10-02 at 14:49 +0100, Peter Maydell wrote:
+> > > Here we call virtio_snd_pcm_get_stream(), but we don't check
+> > > for a NULL return, unlike the other callsites.
 > > >
-> > > "is_available" is probably a bit overkill as a mechanism for
-> > > introspecting, when we just need to return a list of targets,
-> > > Since we have that already we might as well use it initially
-> > > though.
+> > > This NULL can't actually happen, because it only occurs for an
+> > > out-of-range index, and here our index is by construction
+> > > in-bounds. So this is a Coverity false positive.
 > >
-> > I have experimented with x86_64/i386 arm/aarch64 riscv32/riscv64 so
-> > that I can tell:
-> > using is_available will be a better option. As we can use inherent the
-> > is_available from
-> > parent, if we just use a bit set like QEMU_ARCH_ARM, then that means we=
- need
-> > specify it for every single machine. And if any customization is
-> > needed, for example, depends
-> > on KVM config or other accel config or any condition not just
-> > QEMU_ARCH_*, then is_available
-> > still needed, so I would insist is_available with a TargetInfo*
-> > parameter, then all concern
-> > will be addressed.
+> > yes, I did know about this, but haven't expected Coverity to overreact here,
+> > cause I specifically checked that NULL pointer dereference is not possible.
 > >
-> >
-> >
+> > My fault, sorry :-(
+>
+> No worries -- the coverity scan only runs on head-of-git and it's
+> hard to tell what it's going to complain about in advance (and it
+> has plenty of false-positive reports on perfectly good code).
+>
+> > > But I think it would probably be slightly better to follow the
+> > > convention that seems to be used in the rest of the file, which
+> > > is that virtio_snd_pcm_get_stream() is used when dealing with
+> > > stream IDs from the guest that need validation, and for "loop over
+> > > all streams" (as we do in virtio_snd_realize(), virtio_snd_unrealize()
+> > > and virtio_snd_reset()) we write that like:
 > > >
-> > > > >> Does it matches what you would expect?
-> > > > >>
-> > > > >> Also, for compatibility with existing binaries, should we accept=
- -M
-> > > > >> $arch-virt also? I feel like it does not hurt and would make thi=
-ng
-> > > > >> simpler to switch between existing and new binary.
-> > > > >
-> > > > > Same reason -M $arch-virt, indeed like -M $arch:virt,  but $arch-=
-virt
-> > > > > would be even harder.
-> > > > > Because "-" is a valid separator in machine names, ":" is not a v=
-alid
-> > > > > machine name.
-> > > > > So without init QOM, we can not reliably identify "$arch-virt" be=
-longs
-> > > > > to which target.
-> > > > >
-> > > >
-> > > > From the conversation above, Daniel and I are not in favor to have =
-any
-> > > > kind of parsing based on this string. So either we'll pick virt, or=
- the
-> > > > real qom name, but not anything else.
+> > >     for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+> > >         VirtIOSoundPCMStream *stream = &vsnd->streams[i];
+> > >         ...
+> > >     }
 > > >
-> > > Yeah, I'm leaning more towards always exposing the $arch-virt names
-> > > in all binaries, and also exposing 'virt' in the traditional
-> > > binaries only.
+> > > What do you think?
 > >
-> > I have a question, do we expose the "$arch-virt" as a machine "name"
-> > and expose "$arch-virt" as machine qom "typename";
-> > or expose "virt" as a machine "name" and expose "$arch-virt" as
-> > machine qom "typename".
+> > I'm happy to submit a patch for this if you and Manos don't mind.
 >
-> The human facing machine "name" is the important one.
->
-> For the QOM typename, I don't really mind either way. If we can keep
-> the QOM typename and human "name" matching that's nice, but if they
-> differ, then it is not a big deal - your series has the patch to
-> expose the QOM typename in QAPI 'MachineInfo' which addresses the
-> only downside of them differing. So whatever approach works best when
-> implementing the ideas...
+> That would be great.
 
-Then it's clear, for
-single-target binary:
-"virt" as machine "name" and "virt" as qom "typename"
-multi-target binary:
-"virt" as machine "name" and "$arch-virt" as qom "typename"
+https://lore.kernel.org/qemu-devel/20261002165039.212819-1-alexander@mihalicyn.com
 
-
-So for humans, we still use the familiar "virt". And for libvirt and so on
-they still can use the old way to talk with qemu-system-$arch.
-And to talk with the new qemu-system, we have returned qom "typename"
-for them, the libvirt and so
-on needs to be updated(not a big deal) as the qemu-system is a new
-thing. If no more new concern
-I'll go this direction for this series.
+Kind regards,
+Alex
 
 >
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+> thanks
+> -- PMM
 
