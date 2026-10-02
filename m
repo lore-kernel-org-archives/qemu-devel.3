@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FB4CA5FE3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F68CA5FC4
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZMc-00029z-Oo; Fri, 02 Oct 2026 05:15:36 -0400
+	id 1xCZMw-0002Bh-TF; Fri, 02 Oct 2026 05:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZMX-00029R-5Y
+ id 1xCZMX-00029Q-05
  for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:15:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZMU-0005NJ-G8
+ id 1xCZMU-0005NO-Vv
  for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:15:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790932524;
+ s=mimecast20190719; t=1790932526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sdA5VWeQalxE1pUEtjHxl6J/PiyyjM4wgMtWUK0qgNw=;
- b=HdpB3gjyPliATZ8sARAverlt66++SogM23Ryyoa/xsDbNt91trriUdrflz9mXxB5IhIbbH
- r7JpHJ1mt/c9psXZRN95Qc1B/ZERLvKvYp7ZhBnFeEnn/JbFxvz5T7uYVuRY8HyiacqaAa
- 29JS/2iIRsDH5CTTQ0I5VLhGqMYldUE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gZzt01cQhTLHkCcugG6UcD8OeCoErq/eIerFTFSiw/M=;
+ b=A4h55h8tyKl5XG+xUn+BfrQpvLzVwnglrwMif+4SHzF7SQFyuHeaKXdJpkiDv+mKxRL9Yx
+ QitpM17xAlR+Hzb1dGWz/OrSXvy6cAaNoCW+Ho16bAG6j7WexJ1Jc+Fqc+tKLn+isIA4eO
+ HNfW3HtdiHSpxhfFkDWYwP9o4DhhjZE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-191-JwQw0YILOmmZeWfvC31JaQ-1; Fri, 02 Oct 2026 05:15:23 -0400
-X-MC-Unique: JwQw0YILOmmZeWfvC31JaQ-1
-X-Mimecast-MFC-AGG-ID: JwQw0YILOmmZeWfvC31JaQ_1790932522
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48885f0ffe7so4182326f8f.0
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:15:22 -0700 (PDT)
+ us-mta-142-DZBj74tFPSmbICAuDLAXiA-1; Fri, 02 Oct 2026 05:15:24 -0400
+X-MC-Unique: DZBj74tFPSmbICAuDLAXiA-1
+X-Mimecast-MFC-AGG-ID: DZBj74tFPSmbICAuDLAXiA_1790932524
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a1624abeacso1859695e9.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790932522; x=1791537322; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=sdA5VWeQalxE1pUEtjHxl6J/PiyyjM4wgMtWUK0qgNw=;
- b=Vy4ff925owoj3aNiLOZBm5b+E45CeNOPXJdpDyzVrujnrfT2CsKR0TrTi++cofzc18
- fpCTjw68Kx//8dtRLeoeAaKM9Q9Nc7z0s3DB3dwCSXAgdQlisT8SKjiolppqORS8NY/O
- s05tDI0XYF/koE/Zi0kCT2Y/lYFKFIRQtEO6CpAQmDe1pkxy4VqX47i5PPO1nL1xAJf8
- bfVP+010OoIEw4BdjclolmrgY9j+DI+1zK/rswxIEqwQTr8PhH2qP42uYV2WXF0scXlH
- YJ/rq7rASbjNVUGwslZ7grM/Rh7JuAAkizDGme2G0Mvjwa7csjm13BJ377jyYe6BoPV7
- Q25g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790932522; x=1791537322;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1790932523; x=1791537323; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=sdA5VWeQalxE1pUEtjHxl6J/PiyyjM4wgMtWUK0qgNw=;
- b=FQ6uVXSqmvPof3Drq+FKnI3QVZX78UwF7Oh3ljqZlfREMh5lWNDThQhls4xLAXndf5
- Q5abcYgvX3trmA9lGH+5wgsoqoKouJea8je+nY6cAiG3vuh6bg5PXxROi+AyNOET+weR
- QhqD6ueynNOSKu570dxCWs+Nj9tYiWsIbwn/RtpS0Ma1lUrCHGEx82TAmMtbCDzWcNDJ
- jo89M36apwgj2jNRwEqkaUMyfSei7SXxJRyPFHro+9YwN3KKE/uPBH0JfAwq6W/AB2L7
- Hmv5SXb/MmjBsja3peWwgL9422+CPjSPlAVWoHqGJM2dRYBy17mP8nEE6auJVGvx8I9+
- T0yQ==
-X-Gm-Message-State: AFq9FYJlufaTlkJUVwqvb6fWS7g7e0zBIg0Nl37OCOo6i36RltKXEKPa
- gJ9RvtnNrk19ZC7ZWNlm9DpLUmuGDG8s8LD6ErwL99/eQxvorwIHvvZ83FYMg9gn/ZdOEn+xBy1
- BHtC0p8tf+zL+fuW5u3VyfBb/7fgUK5PZYtp4iR6OmZkT5vGqWKBfI+kikuoQa0JpafeJMG0WRr
- WbfZremAhxdEF3DeLxMCZumylWlTynfTJsucqowmUS
-X-Gm-Gg: AYBFou0tUl07Hkf3F6F5thwfgGpaT2DLswUYUupkpTA5Zc0Td3Sb5t7kLHC9ROcKQLp
- Dw86MJv/VXy210PjVr9rJp5Qc/DIF3aPvJHIydEb0oLEZv2nNmJ+asfqTnCeYC3sgYUB4awZLLv
- euv4OtoBabARvsxlNYIHzVN59qFYXR2dfPn+Y61I854t0JzY1FnBQngtAIVPdi7uzunwKNvcEgq
- p1jVHeZ+hR+D3bPTqvBbk9GIRPltYlNKvhiyLD7u+1Eg0j3K4uvJDd8Ld1ju82+CPJKZ+mwbpJJ
- JCD5I7gp1kIT2vvaud6VvtWp4990xLCSvg3YvLeWry+X5I6SZ3bxkwj80qf4EETtuqF4Mjmrz0A
- VP6xYqvZwRY1DH/z5q4MKR7aUFiEtg2lWtloONm4ot13ln5cvgOi5C98T6vqvhGZKUM9XLix24G
- iQBTL8
-X-Received: by 2002:a5d:5e92:0:b0:486:f4ae:72a2 with SMTP id
- ffacd0b85a97d-48b126bdd48mr3950790f8f.1.1790932521836; 
- Fri, 02 Oct 2026 02:15:21 -0700 (PDT)
-X-Received: by 2002:a5d:5e92:0:b0:486:f4ae:72a2 with SMTP id
- ffacd0b85a97d-48b126bdd48mr3950717f8f.1.1790932521239; 
- Fri, 02 Oct 2026 02:15:21 -0700 (PDT)
+ bh=gZzt01cQhTLHkCcugG6UcD8OeCoErq/eIerFTFSiw/M=;
+ b=CKDrq1nYxoE1fddtPs+nx1MPzWStH3KYbC6L6B2L/m2D2zaNT+3p8DwQgBOE1Cvm94
+ x7TJhMTYToaEgdazAPdJ4JItpetF1m4nAa1L99VKcWnwGeATXYuaHBy2HrcXwUTXsFfH
+ 1aziZWqdlhc17b5ImBc3v5NISjoDKZA5js3nhgmQd8V+G+w7dNt7j8QMs6NCmqC4CD7k
+ T6N/yCwzjlytSFyqwpH2xJcTFdnbDqzc83Xnr34iwwIzqJfhZNelBV30ot/ba/zxs8ty
+ 4u2itFneso/hlg/UDoLPKQZD9DB8fskHNVTU/QPM2duRQ0xBoaklh1RQb02Sk/4qfXQG
+ CRSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1790932523; x=1791537323;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gZzt01cQhTLHkCcugG6UcD8OeCoErq/eIerFTFSiw/M=;
+ b=BImCuY45cG/OZBGeHpFzwF9SurYP1oiPG0t8yfNdnrFvIBxepaDhBwuWD0YgRyTFmK
+ StIevxIBsw9wEDwOgNQiq3iSrPnNGY5a+GJsxq+bqBoD/nInLWfVK16Q7fvyapr8n0sM
+ MzDb6PaO6w6pWSZmPRFLIq8WQ5LPP3/FCgMw+AMK1caUbu7HaH2EPTifrfTv7I73kqUT
+ O2aYQ0pKx1nRHWDE2wMfpZWSSosvxsc40Mych45G8LefWq5CYWqN5glyleJ3Fsztzd6k
+ jpoapZDX9ocR01/lQCnVP4HBf8DZE4iAzKvSW1IVxjt2HzHi4o1VDMnx8p79phORY93a
+ DJvA==
+X-Gm-Message-State: AFuF++lsMxw8LsY1aO6lRRsiJ8p6p0KQzVwGeEJEN38506IJYpw7MtOo
+ MXIzWdc8mwJUT+Rr9z6WzSedp3Lo3bGg6CZbqsdTF94oBZIZzJLbChhNQSG6cWmy1Bmhh/a7siH
+ rLhrrNYFVpjYBS2hktj8/Ma6gv1HtsE0xsGQUOA6I036csTaN6CksC+crLKuJe2Frp0ZT4CfJlJ
+ rYddJHlzG9WkY7PKv3vjgePDInza/KqSKcLfXEt2I8
+X-Gm-Gg: AYBFou1NEdA+RZ59cWw3FmDWaBXJVLx1JWiHyFOzq087BqVhSCH63eTteXLEO6aiocS
+ SdGkmveg8llN078+WUaRbAdJ/acZLno0b51uJBKpiP7tJAB29K4nGt8aIfoYDVVmdiqCH4u2rpU
+ UiNx+YrUWtDTEUPyefJcEpugnfAcnAFDCOUQx25c76nl/HME7QbuvqMpS/roSX+JS/Su90oIPwX
+ 60/VwI3hdvN0I3fKcL+RGbfnWbghtUrW7gJGaVdSN9vwkFcFl45H6hnZNCdcHKRGQ9up7Mu3Ewe
+ LQfXg2xkV3RJAk1hk/FN556y+bk7EbbPRB8uoeSEdKKto9um1gOoNF383RnF/dEKRsqWBhvM3iE
+ jH6/1qJF+/Az1qRMlVym55IAf5/h0KG7fCNpsqWmQI7FBe2fOXIUHWSJWFxUYwmBIkCf9oBBcV2
+ ns0Xfs
+X-Received: by 2002:a7b:cd11:0:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a027565217mr22761265e9.22.1790932523605; 
+ Fri, 02 Oct 2026 02:15:23 -0700 (PDT)
+X-Received: by 2002:a7b:cd11:0:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a027565217mr22760745e9.22.1790932523058; 
+ Fri, 02 Oct 2026 02:15:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.232.249])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48b82253dc9sm4082086f8f.3.2026.10.02.02.15.19
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-4a0304407d2sm39570865e9.0.2026.10.02.02.15.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 02:15:20 -0700 (PDT)
+ Fri, 02 Oct 2026 02:15:22 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/32] target/i386 and misc changes for 2026-09-28
-Date: Fri,  2 Oct 2026 11:15:15 +0200
-Message-ID: <20261002091518.1139575-1-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 06/32] target/i386/tcg: extract validate_cr0_exceptions()
+Date: Fri,  2 Oct 2026 11:15:16 +0200
+Message-ID: <20261002091518.1139575-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261002091518.1139575-1-pbonzini@redhat.com>
+References: <20261002091518.1139575-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,104 +120,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 9c88811b81a935a172c5c873b2ada2d9b38a5f74:
+The checks on CR0.TS and CR0.EM must be done after all #UD checks,
+so extract them to their own functions.
 
-  Merge tag 'pull-target-arm-20260929' of https://gitlab.com/pm215/qemu into staging (2026-09-30 06:25:37 +0100)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/decode-new.c.inc | 39 ++++++++++++++++++++++++--------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 7b596a6918055eee8e17a78c84127b934ae4531e:
-
-  agents: Add a skill for finding your way around QEMU (2026-10-02 11:11:37 +0200)
-
-v1->v2: move validate_vex() before all operand decoding (patches 6-8)
-
-----------------------------------------------------------------
-* target/i386/tcg: fix EFLAGS reads in TCG plugin callbacks
-* target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
-* target/i386/tcg: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
-* target/i386/tcg: implement APX
-* target/i386: Migrate error code only with an exception
-* agents: Add a skill for finding your way around QEMU
-* tdx: fix buffer overflow in tdx_parse_panic_message
-* accel/kvm: fixes
-
-----------------------------------------------------------------
-Artemii Mashanov (1):
-      target/i386: fix EFLAGS reads in TCG plugin callbacks
-
-Jakub Lipový (1):
-      target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
-
-Maxim Levitsky (3):
-      system: fix buffer overflow in tdx_parse_panic_message
-      accel/kvm: protect kvm_resample_fd_list with a mutex
-      accel/kvm: coalesced mmio: check lenght of the MMIO write entry
-
-Paolo Bonzini (25):
-      target/i386/tcg: compute C of CC_OP_ADOX without going through helper
-      target/i386/tcg: extract validate_cr0_exceptions()
-      target/i386/tcg: move validate_vex() before all operand decoding
-      target/i386/tcg: clarify return value of decode_insn
-      target/i386/tcg: ignore VEX.L for unary scalar instructions
-      target/i386/tcg: JO/JNO can use flags directly if it is in CC_SRC
-      target/i386/tcg: generalize zero- and sign-extension
-      target/i386/tcg: use standard operand order for BSF and BSR
-      target/i386/tcg: use zextT1 for CMPXCHG
-      target/i386/tcg: unify MOVBE and BSWAP generators
-      target/i386/tcg: add APX support to XSAVE/XRSTOR
-      target/i386/tcg: add definition for REX2 prefix
-      target/i386/tcg: mark XSAVE* as not allowing REX2
-      target/i386/tcg: treat 0x0F as a prefix
-      target/i386/tcg: decode REX2 prefix
-      target/i386/tcg: implement JMPABS instruction
-      target/i386/tcg: extend VEX.vvvv parsing for APX
-      target/i386/tcg: decode EVEX prefix
-      target/i386/tcg: add decode functionality for APX
-      target/i386/tcg: implement CCMP/CTEST
-      target/i386/tcg: decode APX instructions
-      target/i386/tcg: optimize CCMP
-      target/i386: extract computation of no-autoenable features
-      target/i386/tcg: mark APX as supported
-      agents: Add a skill for finding your way around QEMU
-
-Simon Scherer (1):
-      target/i386: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
-
-Yanfei Xu (1):
-      target/i386: Migrate error code only with an exception
-
- configs/targets/x86_64-bsd-user.mak      |   2 +-
- configs/targets/x86_64-linux-user.mak    |   2 +-
- target/i386/cpu.h                        |  10 +-
- target/i386/helper.h                     |   1 +
- target/i386/tcg/decode-new.h             |  38 +-
- target/i386/tcg/tcg-cpu.h                |  18 +-
- target/i386/tcg/cc_helper_template.h.inc |  11 +
- accel/kvm/kvm-all.c                      |  26 +-
- hw/i386/pc.c                             |   1 -
- system/runstate.c                        |  36 +-
- target/i386/cpu.c                        |  46 +-
- target/i386/gdbstub.c                    |   3 +
- target/i386/helper.c                     |  11 +
- target/i386/machine.c                    |   2 +-
- target/i386/tcg/cc_helper.c              |  14 +
- target/i386/tcg/excp_helper.c            |   5 +
- target/i386/tcg/fpu_helper.c             |  63 ++-
- target/i386/tcg/seg_helper.c             |   4 +-
- target/i386/tcg/tcg-cpu.c                |   7 +-
- target/i386/tcg/translate.c              | 120 ++++-
- target/i386/tcg/decode-new.c.inc         | 898 +++++++++++++++++++++++++------
- target/i386/tcg/emit.c.inc               | 303 ++++++++++-
- .agents/skills/qemu-codebase/SKILL.md    |  59 ++
- .claude/skills                           |   1 +
- .gemini/skills                           |   1 +
- 25 files changed, 1418 insertions(+), 264 deletions(-)
- create mode 100644 .agents/skills/qemu-codebase/SKILL.md
- create mode 120000 .claude/skills
- create mode 120000 .gemini/skills
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 459452b04e3..996e12d03d2 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2742,23 +2742,39 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+         e->op2 != X86_TYPE_H && e->op2 != X86_TYPE_B) {
+         goto illegal;
+     }
+-
+-    if (s->flags & HF_TS_MASK) {
+-        goto nm_exception;
+-    }
+-    if (s->flags & HF_EM_MASK) {
+-        goto illegal;
+-    }
+     return true;
+ 
+-nm_exception:
+-    gen_NM_exception(s);
+-    return false;
+ illegal:
+     gen_illegal_opcode(s);
+     return false;
+ }
+ 
++/* Called after decode_ops, so that #UD for invalid encodings has priority over #NM.  */
++static bool validate_cr0_exceptions(DisasContext *s, X86DecodedInsn *decode)
++{
++    switch (decode->e.vex_class) {
++    case 0:
++    case 13:
++    case X86_EVEX_APX:
++    case X86_EVEX_APX_cmp:
++    case X86_EVEX_APX_pp2:
++    case X86_EVEX_APX_zu:
++        return true;
++    default:
++        break;
++    }
++
++    if (s->flags & HF_TS_MASK) {
++        gen_NM_exception(s);
++        return false;
++    }
++    if (s->flags & HF_EM_MASK) {
++        gen_illegal_opcode(s);
++        return false;
++    }
++    return true;
++}
++
+ static void dump_unknown_opcode(CPUX86State *env, DisasContext *s)
+ {
+     if (qemu_loglevel_mask(LOG_UNIMP)) {
+@@ -3037,6 +3053,9 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+     if (!decode_ops(s, env, decode_func, &decode)) {
+         goto illegal_op;
+     }
++    if (!validate_cr0_exceptions(s, &decode)) {
++        return;
++    }
+ 
+     switch (decode.e.special) {
+     case X86_SPECIAL_None:
 -- 
 2.55.0
 
