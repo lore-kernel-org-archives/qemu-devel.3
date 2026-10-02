@@ -4,109 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD4ACA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1D4CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCeP2-00064T-Oe; Fri, 02 Oct 2026 10:38:25 -0400
+	id 1xCeX6-00088h-B8; Fri, 02 Oct 2026 10:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCeOv-00062C-Fb
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:38:18 -0400
-Received: from mail-yx2-x2a.google.com ([2607:f8b0:4864:41::2a])
+ id 1xCeWz-00086n-LK
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:46:40 -0400
+Received: from mail-yx2-x0e.google.com ([2607:f8b0:4864:41::e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCeOu-0002wb-0E
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:38:17 -0400
-Received: by mail-yx2-x2a.google.com with SMTP id
- 00721157ae682-8ac4967f1c9so33301947b3.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 07:38:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790951894; cv=none;
+ id 1xCeWw-0003sX-UE
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:46:36 -0400
+Received: by mail-yx2-x0e.google.com with SMTP id
+ 956f58d0204a3-672c2880f58so7785734d50.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 07:46:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790952392; cv=none;
  d=google.com; s=arc-20260327;
- b=Ee8h9KY1bzFamZLDZOfWGMFY7y+goyszZqeAK3ReGtmwwfY5JO6vuHtc2MjhaF4WyV
- tJQbFN33//9b9AXC5FgR6NYe1L1XT3uNS6vChbSla77sfgmSVaIG746EHsLC3l6J9FnB
- BgV+8IsS/M5789TltTFgIdO8WRjtwujmhDuTUUBfzzaanm+L13GuWRHjKfN0ZElvkwMw
- DvBLRIVRLLVig+FMhMZH7dOU05DR5nDcCs7yfcl+GBoiLhKDPxKyySO8UCx89V1b6uWl
- Iyau7xo7GworFLU7NrliYKgIRN20Fylu9ej8j3EA90YGRQoWk7RXYU9ZbgpsDZaxQD0h
- C4oQ==
+ b=A5n+pxEsaG9zBZYg3Q0U6g7ZB8kklYl+ZXNYZArRllfpBMKhVbml6Zp46+LxUa4jmx
+ Egr+BrnziZ1I9qgVWNuNOqetXRaX+dSEA0Phb3F8z8J6hgWZ8gX7+gti9A3K87MX9D2M
+ hLb1GEhSD3Bh/nV1Vo6cAeqpDNq4r0ztVwXD/56Y87APQayb+9nMHRmPnnDQspOXJ0U1
+ 1BfXaLSBPippCKRqMC2HyN2eUR6HF6E2jswlU0v2r+onSJtvjYDHX8vtkQhH9YdL691/
+ Q2hEhhOFwtL4xKScQOZC4PlKAxEeTDQWxVeMdiiB1mJXMxGIVcVcjlXNVYMOyHptMUge
+ NN9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/Ni7h1HvRIj85bwqLGcPfZ4eX8EkSqi8uCorPtNtrnc=;
- fh=tNOmbw+NM37rz3VUVErnRJ68Xx8SSOnONFGjeyr03MQ=;
- b=TRflWC1YaE0DK4jkWBmhg2wvGYll3NH3lJ7SbQmtrUW6C8ZlpDwiXknA6VQPW5B7KX
- bVoagOEomV5dgzPxNxq0MWeXYVR6EyUqoKJmPX3O0gmuzDDXoyjlqORmrezIO5h3XENV
- bWXDd2lhWEvXya0EbKwk/oiW5jvuXeGq1DpVEjih+Ljh5LzuGomgiVS9vmOqus5eH/hh
- Q2ge1cf4poZeNb0GaFXZ+HaH9MF+86+s18nG+ZcaUk9yXgOgt4Q+phz4R6bJluCQZ9oR
- AiuR/P5LapTPcLsyTNWSHFJC4Um1CF5ZvrLDM8GeIQFTz7zBPG/t4qJ7tZ7HuUwfiEmC
- GxnQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lAMwcizW1zvjHgl1QSKNa8I7V2eg1prWhDiB8byQ7nA=;
+ fh=CKGv7PpI7GuseLo3IyfferWYLuL7PC/ovF0PN+PD6ds=;
+ b=KOOG5OvARlgYvNMDy+9fu5jyBeygY6w7wMvrDTSdTFMAfTFdSOfjCslqqSp+9Ws84c
+ HIQeDwXtrjgsBMpUqdauN+tfbqUGAokZ4FeuZei1yC4XkSYulEjaa9GztIxBAm9xvIyV
+ jv+R+f6vnGo8O1GHD8MQeBfNbX3svk+XkrmthhRcC5nZEuyoo4aI/SZ6+B9V3tNtFzEX
+ Xv437sjmYEt6UhnYx9IPopamXsczyB94YOQJBN6vrBFqsOJDbWuHg51MSqBs3XJvXTLl
+ ttATj0LOF1MMmO0dRrTYGMEuVb3wHxrvTS/f83FWZtNd0rF2KXIJRLMt7vFrpsFQhbTt
+ a4fg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790951894; x=1791556694; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/Ni7h1HvRIj85bwqLGcPfZ4eX8EkSqi8uCorPtNtrnc=;
- b=FaQqGGbyiftWOubh1lYTUJgUBXXGR24EH6nAaqAkeUgRt+b9R/yZpXNT3PBCjJSrQm
- j0z6HfUfBpczIRYlseGL/MDXtNTPsdndDkLseq5IfEFG0nePdM6SKZXDygsZNWFnGhvh
- UZyqnrW9HvqUogYH2+fTN1nlbF8xFMyGZq/ucKGjo5rEAYHZkqvCXvVNFDLt+CsvruBw
- iGwrVkmCzExgoV5UGkO1OqnSB5DoKT1Ec2wKh6epOrBfTJuys5iwateXCZa67xeK76kD
- f3kxTK0A/ym2NK1e5rrhSO2Q6o3+xGR5d5u3Zth68t6MlfBg5flWDsdzYPJk0Pp5OqU+
- OG8w==
+ d=linaro.org; s=google; t=1790952392; x=1791557192; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=lAMwcizW1zvjHgl1QSKNa8I7V2eg1prWhDiB8byQ7nA=;
+ b=UM+bImMp1EcYgPmlJII+aPMkd8AZz3ROX1E7dt49XrYwF9vQFqbW6IvRa5MYXyTApt
+ /77FRImcKboz/UmC2sP7XMdiDUfF+DPngptI8jGLWbXl63R+JaNX+5ZujLRcddncuvuo
+ jEQNEfThHHLze60NpJlc7UVAG3BEZLYtkyFeSPMv9vjkmbxFPhxO/nNGRHvaZC7fwALv
+ +dQS9n/kd9NUX8xLcca8oVwpGjcQOrOplAC/n4HZs+pnFdhSNisHkSx1MXhprFff+Zob
+ xlDHOD1EPuts+mOyDHC+cw3lo07bL/k77B8B/dOnRD+98NU8afJwcG4VF3YPniF/gzph
+ g6Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790951894; x=1791556694;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/Ni7h1HvRIj85bwqLGcPfZ4eX8EkSqi8uCorPtNtrnc=;
- b=X1lG36k9N86iiZD24vipMt02X8cdQF4WyFMHsoQx/PJz/VU+4CY8+uocRZmivT6Yjd
- rXpgG+vJ+Ej3gYKRPv7A9pl8CXNiPdb2IaKyA4FLFGSTIwcK3FChCXvWLw+4iOfeRA1X
- sph0myU+3+HfODP+jwvC1XUxqCAMkkXYBR1Bge5NQH4txgzwLqADy5G0WeUo+NsvhqdO
- 2B9gwCITcbvq7P88g9xDXCn2klF6OYxYAjdl4+k1umtdniJ0b3fSY9Xh/AF0zXBu6h+P
- LNfTr6BV+M2EPlekZn0mUyHbWkTTcyTko4HGG5mup9Io/fw4cZEkfjCSIB8tGmlr4okx
- SK2g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxnPPj7awgJqIzeaTFsrxKKlubX/XrVhacP6fGzKecm84Rv0eQ2IWJC2S6fJzPD+BXnQsmk/X7mrbWw@nongnu.org
-X-Gm-Message-State: AFq9FYJsJq48nlxY77jwDTSoSTCB7zmdnMq9mVSrfV6GzAK8jFTsnnud
- DDlY4l17il+o8r4/WpQotjXIkSe1b7/NYAzi2hWuSBBn5WQQHawJ28kda34Sl7fHQRiAaLREaoa
- JSMaRyrxfUIWdsLn1IU5mb3wVhwJsLP04nm52cQasRQ==
-X-Gm-Gg: AYBFou1Aw0xx05XYR++X5iAlHdjpudJN3WLRKrj5Zd3ZxVuOk9FclJhPMLsFBP9CNYy
- vxT8214Y07f3AL/QCRIg8nBkK8mqdIuaS08NGkFt1+NDtIJzkRqIiv9+cgXEL/b9DcyyvxgkjrK
- nIzSIvpf0wHLs/sP6puQcaVMl/mZtQwdwDG92UdIpxXwBwWzypRGrroLtKWtyqD7bQfZXfoTrup
- ianq6ergIo334qV9XrAKV9f8kdz+DkegxyK+vWt4Q0lIRaTA9rHPFbgXDxRxNfCv0QbC3Y6oNMz
- Hhgvu5uT6bIqCKigDH2DRHdUnvGamcXjRK3r1Uo7Mj+kNJpL4LHweMPV6hkxb+CTq3PnwacJlzR
- EZgwifvroxF6K4Oxd3WHLb5pKjthVlyO3w8Dt+hE=
-X-Received: by 2002:a05:690c:c6c5:b0:8a8:7fda:15fc with SMTP id
- 00721157ae682-8ae3afdaeaemr8950567b3.79.1790951894454; Fri, 02 Oct 2026
- 07:38:14 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790952392; x=1791557192;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lAMwcizW1zvjHgl1QSKNa8I7V2eg1prWhDiB8byQ7nA=;
+ b=SAh0L4+yEnzXNntMvlW8YCQFtGVBNx0H8DL9Owl5fQX+6rs6nuT0AlCWfVp+gWlvX5
+ o34E4I19Nny2b8pjrP63kaon222MSUJkcCIVN1x1hloTgsB1g0DVczyqXf6b1ibImkuG
+ xQIPdncOyAM02jMoHtvYbfJq0vhWvFF1hHuTdAd6oJ6bXaURCn5l+Zl5ghzKcFixlAXh
+ 2J2gCOCojJDcjknQ0UdUpsc0tf8FN1ClMRKqoiKxedaH6wOl+Vmbsfx2PpwY8NKaYz53
+ gAuj1QhQkhWnYFVbTctG+ZLkBSik/V6c3efr9TbtGIvtMhq4SZ1lzD5pbeUWMIuHx3VW
+ JtRQ==
+X-Gm-Message-State: AFq9FYLTRvoCaZwv2cO/ij4bmc28xrUPyfU98O0Ofh2ZLhM9m22i586u
+ IAHqSZyhgzb9qkBxdjyVuhpXUIbKN5Mr6mct3eki9r8l8y9q63XQgv+DZQoO1Xsaf8Utx+od51p
+ MW7xS9ijX/jMETMGQvrXyiUAU/jeT7pJAepjDQQVV9g==
+X-Gm-Gg: AYBFou1Fp/DMfMaN4+N9GTwyX/1LBU8rxvsh9Nu4pBKjkh60m+VE1vDWg6rnynQQjQR
+ V3A5sHYQvrsi2YWcHlVMGqhczQr+XpeKxiesHizj25fgcNInonxCT2WSDGlcg79PXQOjmjl9kFa
+ eUt6Jw59XBlLdKlEMbuFJiLQFBTS7tiEWvWIcfA1uYVJiCvA2jB3/u4JbQZwcMF7AlsrpMi0IBu
+ k0o+b6Z7PlwBxb31hWrqYk7CIl73J4fJf7F9ZGGu1Sv9dDFSdxFZIoU+MYnh5qywwMffSL2D99j
+ j3yUJg0ZwhgG0fZ2Mx7HWysyb3UXoKqxb324bZLts6VM9qW1jWK7Ppxzh1dLLAJKTA50RVB1WoO
+ Inc40UjC6+bNNrvlVbI/nu442tQoFD7NO+0y4u2A=
+X-Received: by 2002:a05:690c:dd5:b0:8ae:8d28:77b6 with SMTP id
+ 00721157ae682-8ae8d28827dmr2796367b3.41.1790952392226; Fri, 02 Oct 2026
+ 07:46:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260919085510.3388454-1-manos.pitsidianakis@linaro.org>
- <20260919085510.3388454-11-manos.pitsidianakis@linaro.org>
- <CAFEAcA-K7L5NWk0cC9R8yVvojSS6O6Eh+i9KXP8Lijo4Tjnd-Q@mail.gmail.com>
- <c58c324d1ce1f095c0036c43691d61d9dcac6f1d.camel@mihalicyn.com>
-In-Reply-To: <c58c324d1ce1f095c0036c43691d61d9dcac6f1d.camel@mihalicyn.com>
+References: <20260902152044.31291-1-philmd@oss.qualcomm.com>
+ <20260902152044.31291-5-philmd@oss.qualcomm.com>
+ <CAFEAcA-9R6ov530pA5FV6=ECr9qj5HP7yz=O4YtyCDJDP3qc6Q@mail.gmail.com>
+ <19c91bbd-894b-4d23-86eb-00d68482aa8c@oss.qualcomm.com>
+In-Reply-To: <19c91bbd-894b-4d23-86eb-00d68482aa8c@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Oct 2026 15:38:02 +0100
-X-Gm-Features: AclHuK-USmvAVMxQzUyl86qLnunOQASjJHpksz59K6dNXS1FelpVH-fXTNc8Qis
-Message-ID: <CAFEAcA-J9R2ZOSR+Y=5xOidR6fZq2Y9Z6f9MZoSxgRK0iNTzhA@mail.gmail.com>
-Subject: Re: [PULL v2 10/10] hw/audio/virtio-sound: add missing vmstate fields
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- aleksandr.mikhalitsyn@futurfusion.io, 
- qemu-devel@nongnu.org, =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Date: Fri, 2 Oct 2026 15:46:21 +0100
+X-Gm-Features: AclHuK-N7jZnW5v3yjx5u5hYWXxHIx7oDI_Nuia5TNL-57X1H-xPAy_-gw54sV4
+Message-ID: <CAFEAcA-7DDa1u4OsH05EuD6xt0rCVwTVeQE+ppRX3tdCqg9kxQ@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] accel/tcg: Document cpu_exec_interrupt()
+ callback contract
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::2a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x2a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:41::e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,43 +125,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026 at 15:07, Alexander Mikhalitsyn
-<alexander@mihalicyn.com> wrote:
+On Fri, 2 Oct 2026 at 15:37, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+> Does that update sound good to you?
 >
-> On Fri, 2026-10-02 at 14:49 +0100, Peter Maydell wrote:
-> > Here we call virtio_snd_pcm_get_stream(), but we don't check
-> > for a NULL return, unlike the other callsites.
-> >
-> > This NULL can't actually happen, because it only occurs for an
-> > out-of-range index, and here our index is by construction
-> > in-bounds. So this is a Coverity false positive.
->
-> yes, I did know about this, but haven't expected Coverity to overreact here,
-> cause I specifically checked that NULL pointer dereference is not possible.
->
-> My fault, sorry :-(
+> * Called from cpu_handle_interrupt() with the BQL held. Identify which,
+> * if any, of the possibly multiple pending interrupts specified by
+> * @interrupt_request should be taken, using the target architecture's
+> * prioritization and masking rules. If an interrupt can be taken, update
+> * the emulated CPU state for interrupt entry.
 
-No worries -- the coverity scan only runs on head-of-git and it's
-hard to tell what it's going to complain about in advance (and it
-has plenty of false-positive reports on perfectly good code).
+Looks good to me.
 
-> > But I think it would probably be slightly better to follow the
-> > convention that seems to be used in the rest of the file, which
-> > is that virtio_snd_pcm_get_stream() is used when dealing with
-> > stream IDs from the guest that need validation, and for "loop over
-> > all streams" (as we do in virtio_snd_realize(), virtio_snd_unrealize()
-> > and virtio_snd_reset()) we write that like:
-> >
-> >     for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
-> >         VirtIOSoundPCMStream *stream = &vsnd->streams[i];
-> >         ...
-> >     }
-> >
-> > What do you think?
->
-> I'm happy to submit a patch for this if you and Manos don't mind.
+> With the update desc I wonder if we should rename the
+> helper as cpu_take_interrupt()...
 
-That would be great.
+Mmm. the "exec" in the current method name is "because it's
+called by cpu_exec", I think (compare cpu_exec_reset,
+cpu_exec_halt), which is not necessarily a very useful thing
+to encode in the method name.
+
+I guess my opinions are:
+ * don't bother renaming unless we think we have a clearly
+   better name/set of names
+ * if we rename one of the cpu_exec_foo then we should probably
+   rename all of them in some consistent way
+ * a new set of names would ideally make it clearer what the
+   difference is between do_interrupt and cpu_exec_interrupt
+   (I can't remember myself why we need both or what the difference
+   is offhand...)
 
 thanks
 -- PMM
