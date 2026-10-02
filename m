@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE840CA5FE6
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 21:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC72CA5FDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 21:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCl9B-0001Ks-0b; Fri, 02 Oct 2026 17:50:29 -0400
+	id 1xCl97-0001KI-ML; Fri, 02 Oct 2026 17:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xCl9A-0001Ki-3K
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 17:50:28 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xCl95-0001JM-Ah
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 17:50:23 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xCl98-0006Se-KF
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 17:50:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xCl93-0006Rh-FS
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 17:50:23 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id F412D60D82;
- Fri,  2 Oct 2026 21:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E8C1F000FF;
- Fri,  2 Oct 2026 21:50:24 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9975943D17;
+ Fri,  2 Oct 2026 21:50:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610C41F00893;
+ Fri,  2 Oct 2026 21:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1790977825;
- bh=7ty486zj2cWF0dMkg/hdGOsjUhARo1TtCR6KVaW+2ck=;
+ s=k20260515; t=1790977819;
+ bh=NkT44wOH/Bm8CQMq/WHe4RMkOg0p5p+CGjBUunZw5QY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WvoEG/WiZTT8n4sDm46JloDGPpI9PQlL3EXOFEGSpJhfng0TE4xFul7KGfug2cASk
- /x4l0Wq/bP3LIEkmqwi7chwWVBvQkx1OcShi5JwjhqCMCANAb+qKYbDHT+YFz9lxXG
- l3Q/MTwx6fgvm32hdtUvNXxIbl1ofiwLau5vLKYqwZLgE2I2vMk4seLCkyAtocNiaa
- /x8N2ehen81msXqsJK4srjeEnuPIMMOGMIkyEsLH+EJfztPgUdoYiKDc8NGcmL068N
- qsnKqgVJvfwzwaHfjSLCp9ZRdTO9UZzBrSE77aHuIsCwb5S+5Mouvov115A0g+maVb
- 6tozNYVnZR4Cw==
+ b=j+44RCpx/xWyibFfw1s0bhqDREFSx9v3lXeyg61ca5dWBsH7PVDBhNWESAU3aMcKd
+ jiwIgu3aF2vjBp+TfwD9soIICVKbG/ONZosZI49qMxAU0q/bnP1pMmR14L3jvOuK8F
+ wIvOTg5W+f7TSLmZSqOXNczImCw9ni5YnYpJJgqmwqvQckDMHc9NEaSHwLMQfreCwc
+ hCMyiZytTff22skrszGsZLJ8HCW+HuXMfdn2gEyePLY47rHNzStE47cCNOnDZFPhVA
+ N5hIs0pcYMNabB9GJ0yipruBM2yhRE2FNDpYyYzoBSvlLZHtB0hI/S4wrLErc+GOYL
+ 1mlSFWcKbT5AQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Craig Lalley <mr_lalley@yahoo.com>, Helge Deller <deller@gmx.de>
-Subject: [PULL 4/4] hw/hppa: Place the CPU at HPA 0xfffa0000 and fw_cfg at
- 0xfffb0000
-Date: Fri,  2 Oct 2026 23:50:14 +0200
-Message-ID: <20261002215014.45371-5-deller@kernel.org>
+Subject: [PULL 1/4] hw/hppa: Rotate Elroy PCI interrupts by pin on the A400
+Date: Fri,  2 Oct 2026 23:50:11 +0200
+Message-ID: <20261002215014.45371-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261002215014.45371-1-deller@kernel.org>
 References: <20261002215014.45371-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
@@ -72,65 +71,116 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Craig Lalley <mr_lalley@yahoo.com>
 
-On real Astro based machines (C3700, A400, A500) the first CPU is at
-HPA 0xfffa0000.  QEMU puts it one page higher at 0xfffb0000 and uses
-0xfffa0000 for the fw_cfg interface, which does not exist on real
-hardware.  Swap both, so that the OS sees the CPU at its real address.
+elroy_pci_map_irq() routes all four interrupt pins of a PCI slot to the
+same IOSAPIC input, so on a multi-function device all functions share
+one line.
 
-Please note:
+Add an Astro property "rotate-pci-pins" and set it for the A400: INTA
+of slot n then goes to IOSAPIC input n, INTB to n+1, and so on (modulo
+ELROY_IRQS).  The C3700 is unchanged.
 
-- CPU_HPA is shared with the 32-bit machines, so the CPU of the B160L
-  and the 715 moves as well.  On the B160L this also changes the CPU
-  module number, which the firmware derives from the HPA, from 48 to
-  32.  The real B160L has its CPU at 0xfff10000, so neither value is
-  the real one there.
-
-- MIN_SEABIOS_HPPA_VERSION is raised to 26. Starting with this version
-  the firmware is able to cope with any CPU_HPA address which is
-  provided by QEMU.
+The firmware describes the routing to the OS in the interrupt routing
+table, so this needs the matching SeaBIOS-hppa change "parisc: Rotate
+IRT interrupt lines by PCI pin on the A400".  With only one side
+applied, functions using INTB..INTD on an A400 are described with an
+IOSAPIC input which never fires.
 
 Signed-off-by: Craig Lalley <mr_lalley@yahoo.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/hppa_hardware.h | 4 ++--
- hw/hppa/machine.c       | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/hppa/machine.c           | 10 ++++++----
+ hw/pci-host/astro.c         |  6 ++++++
+ include/hw/pci-host/astro.h |  1 +
+ 3 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
-index 615b422865..c7ac6bdb85 100644
---- a/hw/hppa/hppa_hardware.h
-+++ b/hw/hppa/hppa_hardware.h
-@@ -24,7 +24,7 @@
- #define LASI_HPA        0xffd00000
- #define LASI_GFX_HPA    0xf8000000
- #define ARTIST_FB_ADDR  0xf9000000
--#define CPU_HPA         0xfffb0000
-+#define CPU_HPA         0xfffa0000      /* as on real Astro based machines */
- #define MEMORY_HPA      0xfffff000
- 
- #define IDE_HPA         0xf9000000      /* Boot disc controller */
-@@ -48,7 +48,7 @@
- #define PORT_PCI_CMD    hppa_port_pci_cmd
- #define PORT_PCI_DATA   hppa_port_pci_data
- 
--#define FW_CFG_IO_BASE  0xfffa0000
-+#define FW_CFG_IO_BASE  0xfffb0000
- 
- #define PORT_SERIAL1    (LASI_UART_HPA + 0x800)
- #define PORT_SERIAL2    (DINO_UART_HPA + 0x800)
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index fb3ef25f04..0b0a8047ed 100644
+index 96133f09ba..df25877cb1 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -48,7 +48,7 @@ struct HppaMachineState {
-     uint64_t memsplit_addr;
+@@ -730,7 +730,7 @@ static void machine_HP_B160L_init(MachineState *machine)
+     machine_HP_common_init_tail(machine, pci_bus, translate, false);
+ }
+ 
+-static AstroState *astro_init(void)
++static AstroState *astro_init(bool is_a400)
+ {
+     DeviceState *dev;
+ 
+@@ -738,6 +738,8 @@ static AstroState *astro_init(void)
+     object_property_set_int(OBJECT(dev), "phys-addr-bits",
+                             hppa_phys_addr_bits(&cpu[0]->env),
+                             &error_abort);
++    object_property_set_bool(OBJECT(dev), "rotate-pci-pins", is_a400,
++                             &error_abort);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     return ASTRO_CHIP(dev);
+@@ -753,6 +755,8 @@ static void machine_HP_C3700_init(MachineState *machine)
+     DeviceState *astro_dev;
+     MemoryRegion *addr_space = get_system_memory();
+     TranslateFn *translate;
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    bool is_C3700 = strcmp(mc->name, "C3700") == 0;
+ 
+     /* Create CPUs and RAM.  */
+     translate = machine_HP_common_init_cpus(machine);
+@@ -764,7 +768,7 @@ static void machine_HP_C3700_init(MachineState *machine)
+     }
+ 
+     /* Init Astro and the Elroys (PCI host bus chips).  */
+-    astro = astro_init();
++    astro = astro_init(!is_C3700);
+     astro_dev = DEVICE(astro);
+     memory_region_add_subregion(addr_space, translate(NULL, ASTRO_HPA),
+                                 sysbus_mmio_get_region(
+@@ -773,8 +777,6 @@ static void machine_HP_C3700_init(MachineState *machine)
+     assert(pci_bus);
+ 
+     /* The C3700 has a SuperIO chip, while the A400 hasn't. */
+-    MachineClass *mc = MACHINE_GET_CLASS(machine);
+-    bool is_C3700 = strcmp(mc->name, "C3700") == 0;
+     if (is_C3700)  {
+         PCIDevice *ide_pdev = pci_create_simple(pci_bus, PCI_DEVFN(2, 0),
+                                                 "pc87560-ide");
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index fc07608da7..c024dab858 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -406,9 +406,14 @@ static void elroy_set_irq(void *opaque, int irq, int level)
+ 
+ static int elroy_pci_map_irq(PCIDevice *d, int irq_num)
+ {
++    ElroyState *s = pci_get_bus(d)->irq_opaque;
+     int slot = PCI_SLOT(d->devfn);
+ 
+     assert(irq_num >= 0 && irq_num < ELROY_IRQS);
++    /* INTB..INTD of a slot may be rotated to the following inputs */
++    if (s->astro && s->astro->rotate_pci_pins) {
++        return (slot + irq_num) & (ELROY_IRQS - 1);
++    }
+     return slot & (ELROY_IRQS - 1);
+ }
+ 
+@@ -1064,6 +1069,7 @@ static void astro_realize(DeviceState *obj, Error **errp)
+ 
+ static const Property astro_props[] = {
+     DEFINE_PROP_UINT8("phys-addr-bits", AstroState, phys_addr_bits, 32),
++    DEFINE_PROP_BOOL("rotate-pci-pins", AstroState, rotate_pci_pins, false),
  };
  
--#define MIN_SEABIOS_HPPA_VERSION 22 /* require at least this fw version */
-+#define MIN_SEABIOS_HPPA_VERSION 26 /* require at least this fw version */
+ static void astro_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
+index 0cd384bceb..3297cd2e62 100644
+--- a/include/hw/pci-host/astro.h
++++ b/include/hw/pci-host/astro.h
+@@ -84,6 +84,7 @@ struct AstroState {
+     uint64_t tlb_pdir_base;
  
- #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
+     uint8_t phys_addr_bits;
++    bool rotate_pci_pins;       /* PCI INTx pin rotation (A400) */
+ 
+     struct ElroyState *elroy[ELROY_NUM];
+ 
 -- 
 2.54.0
 
