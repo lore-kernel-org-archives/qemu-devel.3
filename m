@@ -4,143 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0728FCA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 18:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77068CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 18:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xChlA-0004Rl-4f; Fri, 02 Oct 2026 14:13:29 -0400
+	id 1xChzh-0007CS-Ft; Fri, 02 Oct 2026 14:28:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xChky-0004Qi-F6
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:13:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xChze-0007Ba-S7; Fri, 02 Oct 2026 14:28:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xChkw-0001Zw-HF
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:13:16 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 692H6Lm62357381
- for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 18:13:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=; b=FrL/8ODPx/hFURj5
- FfDlwuhQxpjfw3WmVgJPr5Q+xR/swVT81VHQNZboK3IvqU4n8wGZ/tlwwlxqEZQh
- fRBOjIR4Nd5Czq4ZkWhMUXtiNqmkLywjZLat3VaNJpxc5HWQBBHFUhOYJnRFriwK
- AJe7zwuBiQ1uaj2CXoIPkawYuLU1rkeg3w7kqOqcWUEgZm6qj+aemhGRs1nZGwgU
- 3NQuLLYB/DWF2dZFoVfQ3ujV73gH6hVKAN7Y2gFHdIuG0LeoMRt5/rRrG6v3LWcC
- awcWmA/s2AYID1RItaxY9mXb9r7xxSLUG/VGjxq2dMNl1GFbRFbOI2ZHCHf5BdvT
- j8wXIQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h20sh3n9a-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 18:13:12 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c26012cd0so156741301cf.0
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 11:13:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1790964792; x=1791569592; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=;
- b=MOFhbaFuK1U5ElH03Q19XJBNmCEipIYmQYoqTh7FCdJnm4eKUTko6heyvQWu0maYZ4
- aKBiYmKcPEUu9h5v9NUA60/neqjGcFiR8c/oDSPqtb8VfTETDCelluSo72axfXXhqLnu
- 5Ds2kiAt0Yx4gBOEfUXbNCwui+79Ad6EPOJp+K/LbJigZLah9TmI8AUpGSqBSid/DMTM
- WQ3huTn+sLmABvopD3UzptyOsbsVjh1kO9CpMnEF8bqOlceT3d1BMqqBtVvQGUCcE3f/
- MRXna2A0kW+df9eqb3Uz1Dj4a9aiRZ8BFRaXZqD3oIPxWk5N5lM6Z//EZqVu3IrtafMI
- rSNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790964792; x=1791569592;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=;
- b=QQKvErQthoyBQPfs7Qo6luAhwe7tcq3e5YlEDpr1Dq1nyoTTEbL+UKxqWk7hDLPc4E
- XZ9YcPVvWaQ+6QABhRqhPdJofywdzEtFiYTaYsNQhlGa/Ha5BmQGo90qdQEsC7Q9b7a6
- 6rLXqwitN7SZIFRw80pLDagHlDvp96+hdR/QVYJzPquD/ysEsbHuXbIshZJ84RqMS++y
- 7NorBGp19X+PzORF9iQG4mgLSa4H34wa6O2KRFyFymgP56yQxo3nvK8DWWEx1EuwJe0V
- hSbWHZZbh7dFCZFCChiPATicv796T5PUARm5/PNgvsY5BDw8cK32e01j92ctOOgTFvAK
- DFGg==
-X-Gm-Message-State: AFuF++kWNa741tKKbucJ05MFgGYxs3qOREl19Q3ViO7HCqrBLYrOkiFq
- sND637sDTKOeNozebidwg4l38hCtwYstaKcSiZ9J6qaNzqz7YohpWbwKD5TsyXhYiceJi0Uf4Zz
- 0zldCcONO0LeOoScW6bhVqW3JFz8QtcUJHZUnZ9nS/iwU5lGjfmkgIY3+bg==
-X-Gm-Gg: AYBFou34YNuLQT/WSioOt6ribtPSfFQQcV2Yratnpz5BQwS6cKYMMd15//KrasyIwW/
- IMGcM91zZW/q26U8x4B7WPy/Eb7XY/hPqvOXFZVS1p/4ZTs8dK/wVh2pANVkUf65w9qwOEQMLfK
- NdXJ3I7cIZcKqoopNBi2dMzfVx76S0G+tQh4T7W2gAWImv5kZiJD4HM+kWfZ31IXHesihRwHvw1
- BYORIbxUnFoP4xEtCIOPoPlV/zq4CSLEtGnYJIjdWcVIJbDZ7CIOml+JAMwUjnKHb/jlcxXG9El
- EiOeAeH2ZwHFlhKCCQ27u50ukljMWGmgud7iBPwgKu9wZ7IHlNthe86CJ1WIstkjzYA2y9nJDoh
- Ed6F+kHAH31omGPbGQJI8SnShvaTcvsgw7OLsMChhf1L+BMweFayWYyey6W6g04cB
-X-Received: by 2002:a05:622a:1b1e:b0:535:981:7851 with SMTP id
- d75a77b69052e-535098186edmr31540191cf.56.1790964791864; 
- Fri, 02 Oct 2026 11:13:11 -0700 (PDT)
-X-Received: by 2002:a05:622a:1b1e:b0:535:981:7851 with SMTP id
- d75a77b69052e-535098186edmr31539301cf.56.1790964791151; 
- Fri, 02 Oct 2026 11:13:11 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-53398a9c92csm33490921cf.11.2026.10.02.11.13.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Oct 2026 11:13:10 -0700 (PDT)
-Message-ID: <9e914efb-c4c3-4860-8ed5-8a4046e0ca01@oss.qualcomm.com>
-Date: Fri, 2 Oct 2026 13:13:09 -0500
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1xChzd-0003QX-9G; Fri, 02 Oct 2026 14:28:26 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 692H74bR4024881; Fri, 2 Oct 2026 18:28:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BHn7no
+ QXDoCV074o81O78rkRFXg4YHI9PtudVeVtWN0=; b=Suppdvc70NR/v+5G06E0JQ
+ +lcszz8qM3UcYnTDccuYNpO2h72zAY/7kfi1C0ce2JyjK1cBY3lvPgJqgYvW2r6k
+ jbhvxm8G4JDj+tO/0830InENB4x/pHNkOY/fGeMgaNgEe0ito9RJbdyDC7XreyLG
+ 4MlC5Fq4qUl8qyCYa8dBEOjtQF8ihDyrLkBmCleVXBpRcs11sb+0HKEBQMDlIDDq
+ 8UqQIXiDzHl+ZtjS3pVi0QVCCskTXpOmT5l5q/wNdBBvRduQ9rqBqhGrEGZXcTJt
+ 2NumdyWgpbeS/PCSq+10AA4LQNvICWg0IXGUrn4AhQda0JwoiKc2WMAWJd+oPhDQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fesedd-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 02 Oct 2026 18:28:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 692HHWKR1562150; Fri, 2 Oct 2026 18:28:18 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h0q4pndg7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 02 Oct 2026 18:28:18 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 692ISHIK33620588
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 2 Oct 2026 18:28:18 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A27EE58054;
+ Fri,  2 Oct 2026 18:28:17 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8715A5805C;
+ Fri,  2 Oct 2026 18:28:16 +0000 (GMT)
+Received: from [9.61.92.210] (unknown [9.61.92.210])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  2 Oct 2026 18:28:16 +0000 (GMT)
+Message-ID: <a58ad322-bfb3-4ca6-a9fd-098391da4f3b@linux.ibm.com>
+Date: Fri, 2 Oct 2026 14:28:15 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] target/hexagon: reserve internal HVX vector state
- for QFloat
-To: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- richard.henderson@linaro.org
-References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
- <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
- <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
+Subject: Re: [PATCH v11 14/16] s390x/pci: Factor ioat sanity checks into a
+ separate function
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260930145255.140164-1-kshk@linux.ibm.com>
+ <20260930145255.140164-15-kshk@linux.ibm.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfX54vmYRnTH9Sd
- rq1/9g2pDcdCzOqmJrwnr3gzu4h/1eKfsIEbYCVGNi5XesFEWWbL+tBc6H3CqU3mVr84eXG7UXV
- +1sPTWefGwh1ASWCghodX2oQqI1h5wA=
-X-Authority-Analysis: v=2.4 cv=IpmL47/g c=1 sm=1 tr=0 ts=6abff438 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=FttlZHXPmNnUGXYr6mEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfX3D+jkCO6jMCI
- wEK81s1sCT0CB4lWBQIJbVzfsFznGURE3xAHdxm8xMXbnOqCfJFHXzdJYCqWzR5vAVe5nCricaX
- lz8H2q5caWBoiQh9nW6XjbYNJHM/81M+e5Gl3ywHLZkfSG+ZXTMPppwaEX+56WLlI+aflWDixdI
- 5Jclfr80JS6qP8BlNV5G451VfY8TyYHIj2d8awoaVHNt/6+JOE+6e/oiXrILAkcNYwpr1zDPIGd
- FsfW+/Sla3zFWwzcTsdlKDarE1GRG/iY38VIhtQc60EVxRfji6EyhpXLc3iqf7HuGK/Miagz8y9
- CWNlqwR6ueeaJxZlGoraf4+cdoY0jfQXAHmu72r4Ah0jSol6q0iv7bv05z8C+72LZ+ge9rdtnVF
- NozqI53bCkiHai7KP/aNhZCx4yhPCwrC5XspKYAHcONtOLTkzD9u9Ol4s0uLhGcDlEg2llrPESh
- 1r9RydXc8V4auJ+yqEA==
-X-Proofpoint-GUID: YbMykLILXtpxiAKD9V_3lUiHBUvIKUXg
-X-Proofpoint-ORIG-GUID: YbMykLILXtpxiAKD9V_3lUiHBUvIKUXg
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260930145255.140164-15-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abff7c3 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=OYmD3GKB3kDPFZGHF4IA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfXyNeu2fUUya0Q
+ 3ze+fBfY4X6OOicYfJpMFs6fld8eizQo9+EgDRoml5TZyWjcikX/UU/tv59aIw9rqlCPZVn7Ozi
+ 38ehM8kNQyYbEcBPz5BHQPJseEliO88=
+X-Proofpoint-ORIG-GUID: X3fNpyW69K5qstI8npwM-DtNQ_A846jQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfX6aEItQZos/e2
+ XWOU/jH61wui0TAxephER2EoYwmokRro1BCRWCzsqe90kUlcG54dnVHFUf5y9i92dFiZj71cVjz
+ 8v0rsdC0ZOAPApFQPeqGZA2kU2BX7nryrsPJaA/pUrDDM43lZH2Usjaqi0XI5Hd5erwwgLDHyhq
+ RiOG5SXKyhpi/cJT0XXwDzlcovZ3MpPNqawvsAYeh6t9vs4njzwWL/4NAwkMSgA8QuHlUINNxUF
+ rY+D1WUUHrKqgyujNPyjGvhtbxBu9QeB2p6bla/jGoRjgaY5lXaRSQR+j7cSOvEIciKDUgijs2D
+ vU9hfzDghNPSAbwTNaQBj+otuWPrGOJb3XRlyFd9GgY6n1/FgNdU5Bxo6b5sPgvngJiUN6pm4uB
+ 3ZZ+ER692p81alnG3yS+oXz9hna40jv04IXbTU1z/OERv1hl90KX1VVuTfARjq78tNHooeQ/9p1
+ d/7iEuSiEHGuOjICLEA==
+X-Proofpoint-GUID: X3fNpyW69K5qstI8npwM-DtNQ_A846jQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-02_05,2026-10-02_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0 spamscore=0
- phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020072
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610020072
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,145 +129,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 9/30/2026 1:19 PM, Marco Liebel wrote:
-> On Sat, Sep 26, 2026 at 2:23 PM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/mmvec/mmvec.h     | 55 ++++++++++++++++++++------------
->>   hw/hexagon/hexagon_hvx_context.c |  5 +++
->>   target/hexagon/hex_common.py     | 29 +++++++++++++++++
->>   3 files changed, 68 insertions(+), 21 deletions(-)
->>
->> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
->> index 02c54506145..55b8a40fe8c 100755
->> --- a/target/hexagon/hex_common.py
->> +++ b/target/hexagon/hex_common.py
->> @@ -448,6 +448,25 @@ def helper_arg_type(self):
->>           return "void *"
->>       def helper_arg_name(self):
->>           return f"{self.reg_tcg()}_void"
->> +    def gen_clear_ext(self, f):
->> +        f.write(code_fmt(f"""\
->> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->> +                    {self.hvx_off()} + offsetof(MMVector, ext),
->> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->> +                    V_EXTENDED_BYTEVAL);
->> +            """))
->> +    def gen_clear_ext_pair(self, f):
->> +        f.write(code_fmt(f"""\
->> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->> +                    {self.hvx_off()} + offsetof(MMVector, ext),
->> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->> +                    V_EXTENDED_BYTEVAL);
->> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->> +                    {self.hvx_off()} + sizeof(MMVector)
->> +                        + offsetof(MMVector, ext),
->> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->> +                    V_EXTENDED_BYTEVAL);
->> +            """))
->>
-> gen_clear_ext() and gen_clear_ext_pair() currently update the
-> destination vector’s
-> extension field even when the instruction predicate is false. The following test
-> demonstrates the issue:
+> -static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+> -                    uintptr_t ra)
+> +bool s390_pci_ioat_validate(S390PCIBusDevice *pbdev, uint64_t pba,
+> +                             uint64_t pal, uint64_t g_iota, Error **errp)
+>  {
+> -    uint64_t pba = ldq_be_p(&fib.pba);
+> -    uint64_t pal = ldq_be_p(&fib.pal);
+> -    uint64_t g_iota = ldq_be_p(&fib.iota);
+>      uint8_t dt = (g_iota >> 2) & 0x7;
+>      bool t = s390_pci_is_translation_enabled(g_iota);
+>  
+> -    pba &= ~0xfff;
+> -    pal |= 0xfff;
+>      if (pba > pal || pba < pbdev->zpci_fn.sdma || pal > pbdev->zpci_fn.edma) {
+> -        s390_program_interrupt(env, PGM_OPERAND, ra);
+> -        return -EINVAL;
+> +        return false;
 
+This will now violate include/qapi/error.h because you're returning
+false but not setting errp:
 
-Thanks for the fix and the test!  Will address them.
+ * - On success, the function should not touch *errp.  On failure, it
+ *   should set a new error, e.g. with error_setg(errp, ...), or
+ *   propagate an existing one, e.g. with error_propagate(errp, ...).
 
+A simple solution would be to add a new message for this case.
 
->
-> static void test_ext_bits_preserved_on_false_predicate(void)
-> {
->      asm volatile(
->          "r0 = #0x11111111\n"
->          "v3 = vsplat(r0)\n"
->          "v0.x = vsetqfext(v3, r0)\n"
->          "r2 = #1\n"
->          "v1 = vsplat(r2)\n"
->          "r1 = #0\n"
->          "p0 = cmp.eq(r1, r2)\n"
->          "{\n"
->          "    if (p0) v0 = v1\n"
->          "}\n"
->          "v2 = vgetqfext(v0.x, r0)\n"
->          "vmemu(%[out]) = v2\n"
->          :
->          : [out] "r"(output)
->          : "r0", "r1", "r2", "v0", "v1", "v2", "v3", "p0", "memory");
->
->      for (int i = 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
->          expect[0].uw[i] = 0x11111111;
->      }
->
->      check_output_w(__LINE__, 1);
-> }
->
-> The extension reset needs to be predicated as well. For example:
->
-> def gen_clear_ext(self, f, tag):
->      predicate = None
->      guard = ""
->      if is_predicated(tag):
->          for regtype, regid in compute_tag_regs(tag, False):
->              if regtype == "P":
->                  predicate = get_register(tag, regtype, regid).reg_tcg()
->                  break
->          assert predicate is not None
->          cond = "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_COND_EQ"
->          guard = f"""
->              TCGv {self.reg_tcg()}_ext_pred = tcg_temp_new();
->              TCGLabel *{self.reg_tcg()}_ext_skip = gen_new_label();
->              tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
->              tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
->                                  {self.reg_tcg()}_ext_skip);
->          """
->          end_guard = f"""
->              gen_set_label({self.reg_tcg()}_ext_skip);
->          """
->      else:
->          end_guard = ""
->      f.write(code_fmt(f"""\
->              {guard}
->              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->                  {self.hvx_off()} + offsetof(MMVector, ext),
->                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->                  V_EXTENDED_BYTEVAL);
->              {end_guard}
->          """))
->
-> def gen_clear_ext_pair(self, f, tag):
->      predicate = None
->      guard = ""
->      if is_predicated(tag):
->          for regtype, regid in compute_tag_regs(tag, False):
->              if regtype == "P":
->                  predicate = get_register(tag, regtype, regid).reg_tcg()
->                  break
->          assert predicate is not None
->          cond = "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_COND_EQ"
->          guard = f"""
->              TCGv {self.reg_tcg()}_ext_pred = tcg_temp_new();
->              TCGLabel *{self.reg_tcg()}_ext_skip = gen_new_label();
->              tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
->              tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
->                                  {self.reg_tcg()}_ext_skip);
->          """
->          end_guard = f"""
->              gen_set_label({self.reg_tcg()}_ext_skip);
->          """
->      else:
->          end_guard = ""
->      f.write(code_fmt(f"""\
->              {guard}
->              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->                  {self.hvx_off()} + offsetof(MMVector, ext),
->                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->                  V_EXTENDED_BYTEVAL);
->              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
->                  {self.hvx_off()} + sizeof(MMVector)
->                      + offsetof(MMVector, ext),
->                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
->                  V_EXTENDED_BYTEVAL);
->              {end_guard}
->          """))
+[...]
+> +
+> +static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+> +                    uintptr_t ra)
+> +{
+> +    Error *err = NULL;
+> +    uint64_t pba = ldq_be_p(&fib.pba);
+> +    uint64_t pal = ldq_be_p(&fib.pal);
+> +    uint64_t g_iota = ldq_be_p(&fib.iota);
+> +    bool t = s390_pci_is_translation_enabled(g_iota);
+> +
+> +    pba &= ~0xfff;
+> +    pal |= 0xfff;
+> +
+> +    if (!s390_pci_ioat_validate(pbdev, pba, pal, g_iota, &err)) {
+> +        if (err) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s\n", error_get_pretty(err));
+> +            error_free(err);
+> +        }
+
+With that change, you won't need the if (err) check anymore.
+
+Thanks,
+Matt
 
