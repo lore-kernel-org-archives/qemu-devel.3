@@ -4,102 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF99CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41647CA5FE0
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 10:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCaa0-0001Of-4r; Fri, 02 Oct 2026 06:33:28 -0400
+	id 1xCadK-00023I-Qh; Fri, 02 Oct 2026 06:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCaZy-0001OW-4N
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:33:26 -0400
-Received: from mail-yx2-x0f.google.com ([2607:f8b0:4864:41::f])
+ id 1xCadJ-000237-Nh
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:36:53 -0400
+Received: from mail-yx2-x29.google.com ([2607:f8b0:4864:41::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xCaZw-0004pb-9R
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:33:25 -0400
-Received: by mail-yx2-x0f.google.com with SMTP id
- 00721157ae682-895353e9051so74412557b3.0
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 03:33:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790937202; cv=none;
+ id 1xCadI-0005Gk-Ag
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 06:36:53 -0400
+Received: by mail-yx2-x29.google.com with SMTP id
+ 00721157ae682-8adb500dc50so8507797b3.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 03:36:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790937411; cv=none;
  d=google.com; s=arc-20260327;
- b=NLLwHx7/6gUjW6BvKOUgtfHUHR1mZTNUml0G+6Mv+z+0mJ5gF3W73ZPko9N7+whm+Z
- T3ywjezw7gecF0wehuB3vOnlc0uC2UXn34xUkfT4jEN0ZVK/UVb2KoSeO+E1g6RzcowV
- Qd3P81FPCskaZzYAcakjYnwyEMMvCWIUibFDoba9gxnogYJeSAQAyN8pYrn6uxCGzqI+
- nMnAHPhP3QrcnN2TUeR0jOoGdGJz8WvttBlw4e0vwmImh81GuLT16Z4MORVXi5HTgRL0
- FYzrlHIE/iw6gi5YDot8JYlzpgOJHOp752QWcnHfDiB9WJeCZ4y+3vMVUlwZP4ornxni
- bKOg==
+ b=BLnw8J7+EwU/RrN9W+0ON+uimdVn3K1z5DVcicxueBU7Q/8uXftexrUOVgp9RAqb1T
+ tpkJJNeCB6IyrmhhiEZexcQXGK4A9ZjuVM2c8RDJIw11X8mol3RghtN4heYhNpGeezYy
+ aRE7NjBH1iLk8TT/bFupZUGzsmavEx/Qq4zZnbioAabXuY1BYdUCzHE4DK5XOMKcZPEw
+ eSohYhjFHL1+S4euAotdrCOw9Ey9924OeYTVBeaYZO0Wit+PrvlKUzST2+vvuH+Q/s6A
+ tOV6b8B/1NSLhau4dBD6a+/C1950t7eH/wBys/snSmSuRsEug4grDa+kWo5f+C3Ukx8B
+ VbdQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=5xBJFiWxzjNBYYsawGQdNWSGN1yiA0tg7yBUGcp+QmE=;
- fh=r3wCZZDbTOKO9lZVTIFhMQQt4+cjrhRhMpQ+tvz+wiY=;
- b=Pq38qduDQKWlqALMMzDB7V+lpmt57QLzr10gkjc3qjV4yoZcy5TY8Gbv8qgKQkSYmo
- 2Qhq4YyhQzrj/6tLrMj4TVJEHNifijf8ag5XyMieeVHPsb3wNV+lc1nbdNIUh7G92j44
- UdXWmfKCde+/JsIJAN+zPhB3bMQ9mZyY95JXa6l10u5ignWHS5VRO1eerD+pVBN66ybk
- zoOd4g8a7E4CJmg17aG949nr9LHyemwwjjN108M1zGik0VRjb3Fv62pL+UkmMWcn9cFl
- EkFF/brBP4OFJHsqRKSSpflpStUS1Sy05SfIY2gOR11MwOYO3zgHR9WXL8Dmx800OHor
- I4qQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
+ fh=BrDbiuabHust4eYX2NJNSsVgLOQNM/UF9WmiiykNrt8=;
+ b=PM7p3nuoVserGTJlhVqOz7I6RHBLjASRzKj5KZIJ/dKLlMaPW+EJbVCBQ7iZLUVhG8
+ kz/0Zd/jK5zVQhGgTRyXsofNuWd8CMHfQYphBO+Q2ZcNAdWuQen1AwajW3/9MzCJsNKT
+ DuEQsjMyn92zt2yXkadFfF8dN7LKAJtnQ3/pEsV8X0wca1eAOZMeHchLRTwCBSgowRtr
+ 3ooDPaZ94rIhoID2hV0tUc7P490SOdlicaCwnHEYiW3kFre6n6iboNkyFO2BX5MRV22D
+ AZgG9BRTrkosSNJxWVaGs/ueggo6CRK97X+yKaWusGKII08/mq9u6jSA0jj4bB2sYtrD
+ 18tQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790937202; x=1791542002; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=5xBJFiWxzjNBYYsawGQdNWSGN1yiA0tg7yBUGcp+QmE=;
- b=rtJJpX6JwQFnSIp/eirDlo5Gxi1Up/N/vZ+GMnrvrizoHfxBVmzCii7eNWwAhX+cd8
- /tlDtXa5Q2U0kFQmvy2mWSlq2KpqYj8CUAW+BB/SifNpAF3ZRsFnpjuF1swbt0zoPRpO
- NkikhEnunGe7KgWTHQWEjUAJMcdqGP8Oo/pL4gosC0Oq4r4zlo1dkEsjOG0kaXCfOD60
- aYf0lvl4zOXh8khOzSqYkEe+wMWM4TTPU+ssRiPr/OK6wzyi9X2+nqtTjbPLQdr/K43Q
- CGL3kbV5XvguHO8j3dtTGZFv6knUitHGBf3jvUdN+tRIj3Yuo5ZKloTbwfXn2etRJBWN
- 2YXw==
+ d=linaro.org; s=google; t=1790937411; x=1791542211; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
+ b=NahGg6V5wQk1tXjjzdTd4LaP6eODt/a+4p1dH1oc8ujOI4Z1V0TZu4xbY8S3vLlN/C
+ cI8ARwXQhR51KIBK6jJ/d2T/1ri2WKjdQ9GneG2hlWuJdfCT8M7emCRB72FFpNMu8b7v
+ Fjqk5+UqqOg6/tExhcNn/1FmvFmXAkxD9J/hw5ZfLskoPyG975K95PFS+mzF/Ge+vsvp
+ 12fqhS44CWeeOOYsgUYwn7u2g1VwZBwV5qjPYuD9JDSkNLAUa6Q95TIbrBvsXJ03XiwS
+ 7x4BZxNh8X2zMGpvsERQQ3xo1xadRodS5BVFiGhxyWeyIFJ92X1RT88u+m7LEYB1n3GB
+ xRdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790937202; x=1791542002;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=5xBJFiWxzjNBYYsawGQdNWSGN1yiA0tg7yBUGcp+QmE=;
- b=E6kQYZ/q38O7Lo+hNaQOpQrGYPMEgDdSb0QJ8lnfFi6g7drkl59dJ3cz2fvMP3Wnp6
- 11hnUcPK/Q0rYALpawkXTIZeNg7bPREpxuljjc5lPu3xyJOSTfQtNrhG0GvH5ehxQavJ
- ayjlZlUf8tHo6jqcNN/QlRcdP8/chrrPsdJ8E0FN0PGWnVjZpVCalz1JjErdRLqG4Hq1
- 1QV4NPiQ/OdvxFCpkWKtYSQzPb5WhyQtgKn7Y5y9S0d0uE85+py6U8qnDJpJoBdJODzP
- Vn3BITbHZnGs9l9A6V3ebx1LSNMkVHp86DNY9qbnnKoDjVSsaerOJKqTILSsOqRJEPtU
- 5UYw==
-X-Gm-Message-State: AFq9FYKFccGROriFaMdBqThGeZfcYhO8ipBLvD+pjyYF/oqibW191D3h
- usk/gjcrSMFL7XJTnkE+xy7lV1RzrBeqiG38xevlbXAxLGAYehjdjd9FLQVT1xRmH4CjFddsrB1
- /OYDVVDX9jAZjPj+MsfhbbFbqLJHWgC9/pIWMreHJ1g==
-X-Gm-Gg: AYBFou1Ud2u9r5yO3jrf2YYv9ed72UmUa/aa5tFQTy2qBk/WZU6gnuiRfCpOKM0Z1kG
- iYzIpqyuW4W35NK3TAphZ8As7gaS6djLNCKDz8G4WX0vhs0uIn+MOsawpYH7zXE1x0wrQwavMpC
- 0prryMk5fFe+iFE/iqAp+uL0TQmTjigx8Gifs3/ZAc3/Rjzf6fWkgJuM/Ygki4n6V14S6wFu1vp
- XsbPUlO3olX3Ceh7KurUDyN5ZP5ryw7CSEHYWRfmcRgh6bgMPAyg9bTrytr30glDyabC5WuDas5
- Ldt+xmEQodxI3eqUsHYXpoluX0ZXtcGHCzHgPIghkxqJa/Ewb4l0i0s7Rl+ztvU+djyO9YypA3b
- 8uJI7RAzeCdoDp13Av3m5/6Xs+6W4jrR3Si++SL2r
-X-Received: by 2002:a05:690c:e218:10b0:8ac:e393:16bd with SMTP id
- 00721157ae682-8ae3aedd9d2mr5858157b3.63.1790937202176; Fri, 02 Oct 2026
- 03:33:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790937411; x=1791542211;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=oUCEYwkNux/SM3FpLbGhHlzWx0ByOriSAUEBeLMtcjU=;
+ b=mR35ArgBG3kDWrhtJWqGqNR7DRVGavNPUu5xhjOaKP6yX/g5c/0bMnU5tDuiNxA+Ec
+ o3T070XYR/tvkk/oX2VQR9cRO8xpNzRJLsn+5Zs9dVpI/472XVeMRQoS8yV68MH/Ri65
+ XhcSLbG7+cuVezXbyt3SicVR5hvZBf6wix781xqd28hrWKvqLOZKwcPwyXAnHbZS26lI
+ zCMYGP/inqur6ghDWzmbyBXR7IqncNY9mWeKdSBfX9rmhoVrBe9gD4Qi1ttHXiBSlnFJ
+ wI8G0prJw8oLOGUb3NPNXZ+5lpuAThTN19WUxz5zdxgwDdrOHZe3KsXhmRY/4qu3CLrn
+ L3vg==
+X-Gm-Message-State: AFq9FYI/B/K31Eua8e49koGUqJrro3kVhR5VaNxor1O1mZycx1L1vQev
+ m309Aurw1mRQjAJbnctcraC+aiCFBzGpo6ifSghNO+XFxeCEgxfQF8N40FScpIEgUOp5OD11Sos
+ bhWk+J8hPmy0fJEeM6RZ4Y88HtACjLrmnO9IWfhancQ==
+X-Gm-Gg: AYBFou0/F6qTVvmm+h5dP3WszGJST8DNBX/3v7BndkqS0l7i6dCS4Q3lyC5apIp9uus
+ kJtDse16ihhH08V9Ts1iYebkaNvJPgpEO3V5taJBBwwtVCaJmpL59gdbYGc90Ir6hdjMTVeV4tx
+ TaEz1vefROyusg30P6/RSOSVyfu0iV6VWd9XeCiqhaW2Dn9BKQxEwb1+PRLiIB1hyQodGY68CTq
+ H/3i4eS/Of5h6OBsRp2UhrIa7RIRdtS62DySKROIy5Vi2Le+TeeA5g8thI/eMvb4iVWEfZBAPE5
+ OwCHyDQiPtdQk6+EuXN8cabncJlrRfZwt+ZV4cWKw3r0pksg16MVBS0cWWndu+EcdQzueFlM8Ag
+ 5p4WrCzcsV7NGX7F3kDTwqpTk3EfBQF66/tTbzyU=
+X-Received: by 2002:a05:690c:9988:b0:89a:63da:cbe7 with SMTP id
+ 00721157ae682-8ae3a5ed914mr9513357b3.45.1790937410556; Fri, 02 Oct 2026
+ 03:36:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261001194756.3003085-1-peter.maydell@linaro.org>
- <a3dd935a-0e15-411f-837b-3cfdc1c5bf63@redhat.com>
-In-Reply-To: <a3dd935a-0e15-411f-837b-3cfdc1c5bf63@redhat.com>
+ <b9019487-979f-4b37-9c30-3fc43c308d06@oss.qualcomm.com>
+In-Reply-To: <b9019487-979f-4b37-9c30-3fc43c308d06@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 Oct 2026 11:33:10 +0100
-X-Gm-Features: AclHuK-K2AVTvHvMqkzZrfQuz0gwhjcyCrwE4Mo18jjqW9S0HwPeS_Sa6b2FcB8
-Message-ID: <CAFEAcA_Wjx8CpkWkgM=FjaFZ7buQ9AygnCzGTmV9mJAvLrmRJw@mail.gmail.com>
+Date: Fri, 2 Oct 2026 11:36:39 +0100
+X-Gm-Features: AclHuK-yfFOg3f1SJlcsG5E9lczz6Vu3ns3dzELweMEJY18IwBcr4_vA9gJtXPo
+Message-ID: <CAFEAcA_mTJiq-hn-_h=p6Ksi5GS62nqG9i9af4QK5Qc8QWm4VA@mail.gmail.com>
 Subject: Re: [PATCH] hw/usb/hcd-ohci: Fail iso packets sent to non-iso
  endpoints and vice-versa
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:41::f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x0f.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:41::29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx2-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,55 +118,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Oct 2026 at 11:22, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 01/10/2026 21.47, Peter Maydell wrote:
-> > The OHCI USB controller requires software to set up an Endpoint
-> > Descriptor data structure.  This specifies (among other things) both
-> > an EndpointNumber telling the controller which USB endpoint to talk
-> > to, and a Format (F) bit which is 1 for Isochronous transfers and 0
-> > for General transfers.
-> >
-> > The specification requires that software matches the F bit with the
-> > endpoint it's setting up the descriptor for, so that Control, Bulk
-> > and Interrupt endpoints use F=0, and Isochronous endpoints use F=1.
-> > It doesn't require the controller to check whether software gets this
-> > right.
-> >
-> > The spec isn't totally clear about what happens if software creates
-> > an ED with a mismatch, but I believe that the controller just trusts
-> > the F bit, and tries to talk to the endpoint with the wrong sequence
-> > of USB tokens (notably, isochronous transactions have no handshaking
-> > and the others do). This probably results in the transfer failing.
-> >
-> > In hcd-ehci.c we check for the "iso transfer to non-iso endpoint" and
-> > make it fail, but we don't do this in hcd-ohci.c.  The result is that
-> > a guest that deliberately sets up this situation can cause us to hit
-> > the assertion added in commit 7b1eba96aeca, where the endpoint is not
-> > isochronous and returns USB_RET_ASYNC to an iso TD handling function
-> > that isn't prepared to deal with that.
-> >
-> > Add checks for both "iso transfer to non-iso endpoint" and "non-iso
-> > transfer to iso endpoint" and make those TDs fail rather than blindly
-> > sending them to the endpoint.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3729
-> Looks like this issue got assigned with a CVE number, so please add:
->
-> CVE: CVE-2026-7180
+On Fri, 2 Oct 2026 at 11:31, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+> Side note, I don't get why we copy packet data *then* return
+> error if device not found (trace_usb_ohci_td_dev_error), this
+> is sub-optimal.
 
-I guess we might as well, but honestly I don't think this is CVE worthy,
-and I can't find any record of what that CVE number is supposed to cover
-from a websearch.
+Yeah, that's a bit silly, but it will never happen in normal
+operation, because a guest is never going to set up a transfer
+to a non-existent endpoint.
 
-This is in OHCI, which I thought was agreed to be outside
-the security envelope, and in any case it's only an assertion failure.
-
-The use-after-free that was the original subject of the bug report
-has already been fixed by 7b1eba96aeca (which downgraded it to
-"fails assertion").
-
-thanks
 -- PMM
 
