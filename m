@@ -4,99 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21430CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE16CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZMz-0002C3-1x; Fri, 02 Oct 2026 05:15:57 -0400
+	id 1xCZTh-0004To-Jq; Fri, 02 Oct 2026 05:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZMb-00029v-SI
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:15:34 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCZTf-0004TN-E1
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:22:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZMa-0005Nz-Bc
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:15:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xCZTc-000612-Pu
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:22:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790932531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1790932967;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LpKljmHzfmHceX3soTNWw65aPAyZeluzaSunMbjO8To=;
- b=INN99xVrmKYLN3T3oQrTDCyMGBiDDLKeNTC4hYEJoLST4r5aSdWE7VOdUrNTvgflC11rYG
- gSkiGLH/MOqdqA5ZN5/DDe1MOnoUHgq4/9mY28fiQJkkvDhWOe/DOr+mZdv8VhC5vFdkSN
- IyfsTgTDnX7q6eV5YnI9SPl2ipYiGwI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-ePb1a4U_PrqE1CJDf7S3DA-1; Fri, 02 Oct 2026 05:15:29 -0400
-X-MC-Unique: ePb1a4U_PrqE1CJDf7S3DA-1
-X-Mimecast-MFC-AGG-ID: ePb1a4U_PrqE1CJDf7S3DA_1790932528
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4994d67d0e3so54258875e9.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 02:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790932528; x=1791537328; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LpKljmHzfmHceX3soTNWw65aPAyZeluzaSunMbjO8To=;
- b=qXF21JNJuNauXs+Sr/DbKYTE/YKCox6ziISjTChT+l0ASQXwUOk6WxSMLKay9RgUSO
- sIIjtOkjDSHVhQuM5mjBnbGeMJe7pVFEcY7JFN2CN2eoYUyyXYD9dG+zXvNztKeoRjQi
- VLXcBQJThsLCBCEsu5JGKnlHKZlBE5IrxDusPCy8L6hKPo3Rtjl5AP5Gs31DdYo6v3SE
- CPDq10wenSlTWhaqkps70aBMJ+n5dDCnizpWoTXiKLDBkwBKzR4/GVW//RdovJnBHYbk
- hhhGW/92LgVkb4GFu/voVhX3+IjnIN0teVuMxV+fYVAZwwGC37qut6vU3zr3MtWhI0oi
- WhPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790932528; x=1791537328;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LpKljmHzfmHceX3soTNWw65aPAyZeluzaSunMbjO8To=;
- b=pPUawa0lzS/tp0bqXOp45b93KuGWKbLKQD86K7IKuIIg+QAE/kcB9tweGlRLATcBun
- 5K5EuqDEEdatSzPzIe7d4H5qAMKuphVDpTkd7Yv3uTIL8JLZqYddpzJb/krbIAzomn9R
- fQjxeuJfWhL5xCZ8NSIoZ3qmaumfBWXSst7iruotkk2VhU/wNTNkcKg2RQsw9bhPOz50
- ErhY4g64cLpVOCZPmDOfdYOKVevQdJyCk64RYB3afnh3dC3tw8pSMGWaM5FN93/mFGVh
- OMfZzAe43QlGXyXz4E5OkOac6gK+NUWlzI3CoROODnKVK+gsidYetH0sepIGoZt4YUo9
- 9vkQ==
-X-Gm-Message-State: AFuF++k1GesSVc1AUO9f/OjvFPBr4JzqzN638picroQR8bRZpej+KBpo
- FwoRcGXaUNX2Tqse4Cd7a9rhpxC1C+Cz8iD463xQMMx5HTJZok60VLb/8zcvNJLAIOeG/gooedJ
- WQ2XFAJOfDP7prvbpeVgmGN+fRfi6sLox+rfxdzDANDR6et8/DylY25/ewQrrKOdYrHo/j4xKH2
- 8fYeTx3jMjPAd21Vqfgj1K6ZE2WsnNEQ7VT6DbIeVA
-X-Gm-Gg: AYBFou0SzJG0Hbv8MnxZ5fz0JXmkhxwYBRrYMh2HBDVz67zQWlvb2QI4yjjsqru228F
- sZw36rwuQ1ZehMg+Ze1lCnX3O88hRTbgliEB4/wempyLT5f55wd111LZ/CvuH5lRynexNtmJkQJ
- eXpLXn3DSjsrhxDpDfNQ4M8TFd9myrw1XjAvCKtvFdPpt7PsqKumAU/Lok18XAQGOSz5WVEt5Cz
- QF+w7/808ARMCiFbujSMRka2caT37NOCKgeMGPsjI4nJhfc0Vypy2r5H14XGuS34GsNywJeB81l
- d53wz/frYWc2uIY3SXtgq80KLT3hhJA+oRk/prSgk/rQvJK12YT8m+jL4/9CI9XTNr7eG9Tx8Kw
- CbUCVAkq2I+qmXyMQ5OWA/DpJQihEIFTqOrx+0NIP1lHyc0dC984AMYuo+Ide2WobjUJeB08rej
- 1DXCZn
-X-Received: by 2002:a05:600c:19cb:b0:4a0:98c:e082 with SMTP id
- 5b1f17b1804b1-4a02759fc4cmr40250705e9.13.1790932528311; 
- Fri, 02 Oct 2026 02:15:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:19cb:b0:4a0:98c:e082 with SMTP id
- 5b1f17b1804b1-4a02759fc4cmr40250145e9.13.1790932527730; 
- Fri, 02 Oct 2026 02:15:27 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.232.249])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a027734b49sm68467885e9.10.2026.10.02.02.15.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 02:15:26 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 08/32] target/i386/tcg: clarify return value of decode_insn
-Date: Fri,  2 Oct 2026 11:15:18 +0200
-Message-ID: <20261002091518.1139575-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261002091518.1139575-1-pbonzini@redhat.com>
-References: <20261002091518.1139575-1-pbonzini@redhat.com>
+ bh=AqB2LOZkrCwbmpkKwKjjoZBMftnU9w2l3FL1sB8d2WI=;
+ b=Htg1G6hyj+T+oSyLajseWFSFZIo+uBQjtRZwLzcmwbUIgeMHKMTp/V3bxT09gt6KBx0WtB
+ Z8RNOc1rQTMEmsgIExJ/YugVA0vDMS+XmEvVSvgpa1Yi7lzmq3Axy8bCQ4f4KKWyrL26TO
+ Gz1+9/sjSLNm1ANpfkaKw3s+dUnGRaU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-x5_rz-A3Pn62RAAI4PY8iw-1; Fri,
+ 02 Oct 2026 05:22:45 -0400
+X-MC-Unique: x5_rz-A3Pn62RAAI4PY8iw-1
+X-Mimecast-MFC-AGG-ID: x5_rz-A3Pn62RAAI4PY8iw_1790932965
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3ACB184AE52
+ for <qemu-devel@nongnu.org>; Fri,  2 Oct 2026 09:22:44 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88E09756; Fri,  2 Oct 2026 09:22:43 +0000 (UTC)
+Date: Fri, 2 Oct 2026 10:22:40 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH 18/20] trace: stop tracking static disabled state
+Message-ID: <ar934CPHs5HlIo4P@redhat.com>
+References: <20261001151228.3373747-1-berrange@redhat.com>
+ <20261001151228.3373747-19-berrange@redhat.com>
+ <179088207684.2348671.5166153170222056421.b4-review@b4>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <179088207684.2348671.5166153170222056421.b4-review@b4>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -117,49 +87,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is clearer if decode_insn() returns whether a generator exists;
-if it does not, the entry is empty and all other checks such as
-validate_sse_prefix() or has_cpuid_feature() are moot.
+On Thu, Oct 01, 2026 at 11:14:36PM +0400, marcandre.lureau@redhat.com wrote:
+> > The TraceEvent struct contains a "bool sstate" field which track whether
+> > a trace event was disabled statically. i.e. at build time via the
+> > "disable" property annotation in trace-events.
+> > 
+> > The only runtime use of this field is to let "trace-event-get-state"
+> > report that an event is "unavailable" instead of reporting an error for
+> > an unknown trace event.
+> > 
+> > Trace events are not ABI so their names can change and the event can
+> > come and go at any time. Thus there is little utility in reporting the
+> > existence of a disabled event that cannot ever be used at runtime.
+> > 
+> > Removing the "bool sstate" field from TraceEvent saves 8 bytes of
+> > space in the struct, adding up to approx 64 KB across all current
+> > events.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Message-ID: <20261001151228.3373747-19-berrange@redhat.com>
+> 
+> Need a tracing.rst documentation update too.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+I'll do that docs in the next patch, since that is the
+one that actually removes the functional part of the
+feature.
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 5212a24e470..388cc3a7ccd 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2478,7 +2478,7 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
-         e->decode(s, env, e, &decode->b);
-     }
- 
--    return validate_sse_prefix(s, e);
-+    return !!e->gen;
- }
- 
- static bool decode_ops(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_func,
-@@ -2984,12 +2984,11 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     decode.cc_op = -1;
-     decode.b = b;
-     if (!decode_insn(s, env, decode_func, &decode)) {
--        goto illegal_op;
--    }
--    if (!decode.e.gen) {
-         goto unknown_op;
-     }
--
-+    if (!validate_sse_prefix(s, &decode.e)) {
-+        goto illegal_op;
-+    }
-     if (!has_cpuid_feature(s, decode.e.cpuid)) {
-         goto illegal_op;
-     }
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
