@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF5ACA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FCBECA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:53:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZwl-0003Pm-5Y; Fri, 02 Oct 2026 05:52:55 -0400
+	id 1xCZwz-0003c6-Be; Fri, 02 Oct 2026 05:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZwi-0003Oy-Up
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xCZww-0003au-Qd
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:53:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCZwh-0000uJ-8u
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:52:52 -0400
+ id 1xCZwv-0000xw-DM
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:53:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790934770;
+ s=mimecast20190719; t=1790934784;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vYK8uyoSgHR5oFrvRW3UePwVftb7R2+FEmXyIxd1LQ4=;
- b=R/avJFGSCmKbL0dwAaFVJTXWm6W9QTT4Nngb5zGQxaIoGcxfmVVEpKMVRDjTY79Hgvyjyq
- WewJ8p0lgLI2BaFmfdsbhmnsaEEzSAm46KWlV2nqsYxvFuQVmqsyrDkEUaTFpbbfMVv5i6
- sN0kza7sV0R7bOz9x2p0L3ovQE2UIv4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=38McGp5Xm1dQXhbAUpMdkHym6qcL4iNQX0mqlyg4uho=;
+ b=Ru00ZtE8o/FM1BRiprbM6Giw3i4c44ucSfPmTMRznSeiSki0Wlkv9Gr3GNQ5sk3zZTPMuz
+ Nsof78Cm7G7ZIrD83TqgTnDmGkNloB8cp6N3QlkRAHdGfWgHvv0E/R4u1FamPGzqyih3S9
+ fiy8DcFs6OpF1gSQrHy3KFRFI2HHS80=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-tqMP6WWWPxWByzclegA7gQ-1; Fri,
- 02 Oct 2026 05:52:49 -0400
-X-MC-Unique: tqMP6WWWPxWByzclegA7gQ-1
-X-Mimecast-MFC-AGG-ID: tqMP6WWWPxWByzclegA7gQ_1790934768
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-xKNTSwyyNzWU9zc5ZmNaeQ-1; Fri,
+ 02 Oct 2026 05:53:03 -0400
+X-MC-Unique: xKNTSwyyNzWU9zc5ZmNaeQ-1
+X-Mimecast-MFC-AGG-ID: xKNTSwyyNzWU9zc5ZmNaeQ_1790934782
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B72A1955BD9; Fri,  2 Oct 2026 09:52:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37D27180AEFB; Fri,  2 Oct 2026 09:53:02 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50B381800348; Fri,  2 Oct 2026 09:52:47 +0000 (UTC)
+ id F1413180056E; Fri,  2 Oct 2026 09:53:00 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 07/20] trace: remove obsolete references to vcpu property
-Date: Fri,  2 Oct 2026 10:52:19 +0100
-Message-ID: <20261002095232.3605567-8-berrange@redhat.com>
+Subject: [PATCH v2 15/20] hw/ppc: remove mistaken use of
+ trace_event_get_state()
+Date: Fri,  2 Oct 2026 10:52:27 +0100
+Message-ID: <20261002095232.3605567-16-berrange@redhat.com>
 In-Reply-To: <20261002095232.3605567-1-berrange@redhat.com>
 References: <20261002095232.3605567-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,124 +88,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'vcpu' property for trace events was removed 2 years ago
-but some mentions of it remain in the code.
+Conditional checks must call trace_event_get_state_backends()
+which checks the state of all backends (dtrace, ftrace, log,
+syslog, simple & ust), while trace_event_get_state() only
+validates state for backends using QEMU's internal state
+tracking (ftrace, log, syslog, simple).
 
-Fixes: 7ffc4894a6(trace: Remove deprecated 'vcpu' field from QMP trace events)
+Furthermore, checking qemu_loglevel_mask() is inappropriate since
+there are many trace backends, of which 'log' is only one.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- trace/control-target.c |  6 ------
- trace/control.c        |  6 ------
- trace/control.h        | 12 ------------
- trace/event-internal.h | 11 -----------
- 4 files changed, 35 deletions(-)
+ hw/ppc/vof.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/trace/control-target.c b/trace/control-target.c
-index 24d9b7abbde..87b0f5037df 100644
---- a/trace/control-target.c
-+++ b/trace/control-target.c
-@@ -14,12 +14,6 @@ void trace_event_set_state_dynamic(TraceEvent *ev, bool state)
- {
-     assert(trace_event_get_state_static(ev));
+diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+index 873e967f1e4..e2ff9bf96a3 100644
+--- a/hw/ppc/vof.c
++++ b/hw/ppc/vof.c
+@@ -252,8 +252,7 @@ static uint32_t vof_getprop(const void *fdt, uint32_t nodeph, uint32_t pname,
+              */
+             ret = proplen;
+             /* Do not format a value if tracepoint is silent, for performance */
+-            if (trace_event_get_state(TRACE_VOF_GETPROP) &&
+-                qemu_loglevel_mask(LOG_TRACE)) {
++            if (trace_event_get_state_backends(TRACE_VOF_GETPROP)) {
+                 prop_format(trval, sizeof(trval), prop, ret);
+             }
+         }
+@@ -337,8 +336,7 @@ static uint32_t vof_setprop(MachineState *ms, void *fdt, Vof *vof,
+         goto trace_exit;
+     }
  
--    /*
--     * There is no longer a "vcpu" property, dstate can only be 1 or
--     * 0. With it, we haven't instantiated any vCPU yet, so we will
--     * set a global state instead, and trace_init_vcpu will reconcile
--     * it afterwards.
--     */
-     bool state_pre = *ev->dstate;
-     if (state_pre != state) {
-         if (state) {
-diff --git a/trace/control.c b/trace/control.c
-index 49f0a4c5cda..6971157cbe7 100644
---- a/trace/control.c
-+++ b/trace/control.c
-@@ -37,7 +37,6 @@ typedef struct TraceEventGroup {
- static TraceEventGroup *event_groups;
- static size_t nevent_groups;
- static uint32_t next_id;
--static uint32_t next_vcpu_id;
- #ifdef CONFIG_TRACE_SIMPLE
- static bool init_trace_on_startup;
- #endif
-@@ -304,8 +303,3 @@ void trace_opt_parse(const char *optstr)
-     trace_opts_file = g_strdup(qemu_opt_get(opts, "file"));
-     qemu_opts_del(opts);
- }
+-    if (trace_event_get_state(TRACE_VOF_SETPROP) &&
+-        qemu_loglevel_mask(LOG_TRACE)) {
++    if (trace_event_get_state_backends(TRACE_VOF_SETPROP)) {
+         prop_format(trval, sizeof(trval), val, vallen);
+     }
+     ret = vallen;
+@@ -584,8 +582,7 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+         }
+ 
+         /* FIXME: there is no backend(s) yet so just call a trace */
+-        if (trace_event_get_state(TRACE_VOF_WRITE) &&
+-            qemu_loglevel_mask(LOG_TRACE)) {
++        if (trace_event_get_state_backends(TRACE_VOF_WRITE)) {
+             tmp[cb] = '\0';
+             trace_vof_write(ihandle, cb, tmp);
+         }
+@@ -599,9 +596,7 @@ static void vof_claimed_dump(GArray *claimed)
+     int i;
+     OfClaimed c;
+ 
+-    if (trace_event_get_state(TRACE_VOF_CLAIMED) &&
+-        qemu_loglevel_mask(LOG_TRACE)) {
 -
--uint32_t trace_get_vcpu_event_count(void)
--{
--    return next_vcpu_id;
--}
-diff --git a/trace/control.h b/trace/control.h
-index 6754bfe052b..20033fb6669 100644
---- a/trace/control.h
-+++ b/trace/control.h
-@@ -139,8 +139,6 @@ static bool trace_event_get_state_static(TraceEvent *ev);
-  * trace_event_get_state_dynamic:
-  *
-  * Get the dynamic tracing state of an event.
-- *
-- * If the event has the 'vcpu' property, gets the OR'ed state of all vCPUs.
-  */
- static bool trace_event_get_state_dynamic(TraceEvent *ev);
- 
-@@ -149,8 +147,6 @@ static bool trace_event_get_state_dynamic(TraceEvent *ev);
-  *
-  * Set the dynamic tracing state of an event.
-  *
-- * If the event has the 'vcpu' property, sets the state on all vCPUs.
-- *
-  * Pre-condition: trace_event_get_state_static(ev) == true
-  */
- void trace_event_set_state_dynamic(TraceEvent *ev, bool state);
-@@ -203,14 +199,6 @@ extern QemuOptsList qemu_trace_opts;
-  */
- void trace_opt_parse(const char *optstr);
- 
--/**
-- * trace_get_vcpu_event_count:
-- *
-- * Return the number of known vcpu-specific events
-- */
--uint32_t trace_get_vcpu_event_count(void);
--
--
- #include "control-internal.h"
- 
- #endif /* TRACE__CONTROL_H */
-diff --git a/trace/event-internal.h b/trace/event-internal.h
-index 1d57b0ff1b5..cc095a6ad54 100644
---- a/trace/event-internal.h
-+++ b/trace/event-internal.h
-@@ -10,12 +10,6 @@
- #ifndef TRACE__EVENT_INTERNAL_H
- #define TRACE__EVENT_INTERNAL_H
- 
--/*
-- * Special value for TraceEvent.vcpu_id field to indicate
-- * that the event is not VCPU specific
-- */
--#define TRACE_VCPU_EVENT_NONE ((uint32_t)-1)
--
- /**
-  * TraceEvent:
-  * @id: Unique event identifier.
-@@ -23,11 +17,6 @@
-  * @sstate: Static tracing state.
-  * @dstate: Dynamic tracing state
-  *
-- * Interpretation of @dstate depends on whether the event has the 'vcpu'
-- *  property:
-- * - false: Boolean value indicating whether the event is active.
-- * - true : Integral counting the number of vCPUs that have this event enabled.
-- *
-  * Opaque generic description of a tracing event.
-  */
- typedef struct TraceEvent {
++    if (trace_event_get_state_backends(TRACE_VOF_CLAIMED)) {
+         for (i = 0; i < claimed->len; ++i) {
+             c = g_array_index(claimed, OfClaimed, i);
+             trace_vof_claimed(c.start, c.start + c.size, c.size);
 -- 
 2.55.0
 
