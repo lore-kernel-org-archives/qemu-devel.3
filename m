@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B95CCCA5FDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3D7CA5FE4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCeCx-0001LD-5d; Fri, 02 Oct 2026 10:25:55 -0400
+	id 1xCeCv-0001Ja-C2; Fri, 02 Oct 2026 10:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xCeCm-0001Du-Bp
+ id 1xCeCl-0001Do-Fb
  for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:25:46 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1xCeCh-0001np-9X
+ id 1xCeCh-0001nm-90
  for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:25:43 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 692DZe6v628960; Fri, 2 Oct 2026 14:25:34 GMT
+ 692DZitM628989; Fri, 2 Oct 2026 14:25:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wvKNC6
- 8fB/4KCoF9RcZ6H/26rnYyA4+27dfgr9SNgKI=; b=WJ1ajd79Ffqjy0Tej7Obda
- 44f/cMogkC2HEj0scELh70QXLFvA85Ly9PYAPBNSb6kAP8+8WQdFeSOTlO58uFGR
- DdA9VCYbNEV7Yl4Q7J5nKmK/tRVmHBYLoYVl8W35gcMUEImUaaBAndMPrWMxHS8h
- FteSdlBX7MtmvVlqD1zffx21Ihnb63iY28dQTT0m6Mc+rdNh+Vr+/KVoSjI/kLQZ
- 4q0jDroL4FqEMa9eOMwPvfAA0ZmYwLi5Zoc4995AsqleCYTFemxvovH/lWtewZCf
- jenmjgZHjBC6VGnT8rM127LTj5PzaRywhrUq39HEu34c/XaS1jd7lfO1HV5lD33w
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5s5smky-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=ejSz+8qsil+oPW+VE
+ 9qbDsELOhWiD1+FFDWueBABIYk=; b=F8vTe73lbeVSqulvShpT87mWtPUkTYoPo
+ FwJcuKbtyFKBRnoIA6evpMr2LGnYbMafkbxIjRg0WvYRjiI9xWMJGQmgzLnHUY+2
+ yoSlzRyxWJTjU5BPts2VTOoC+I+yHY8Q+aUSGNjO2YJRAelf/P18JVh8d7CtbUML
+ hOF5BFTBsyWM0PrsL4XTT51XhSIN4xeTQknrkRHxtge6aQitZge6B2/VhkXjYKRX
+ XMiLHjLibUIPPVtQNH5w/p0pifrU6NMpETDcP/4uz8lLt2fmpPvsjCI36vdmh8KV
+ buVJXmRzCISwYWeE497M119idWHt5jgcuGLodiYq74Ut++9zeFIgQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5s5smkt-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 02 Oct 2026 14:25:34 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 692DHeNk2575972; Fri, 2 Oct 2026 14:25:33 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h21nu2f0x-1
+ Fri, 02 Oct 2026 14:25:32 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 692DHae41296300; Fri, 2 Oct 2026 14:25:32 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h0q4pmjgh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 02 Oct 2026 14:25:33 +0000 (GMT)
+ Fri, 02 Oct 2026 14:25:32 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 692EPXu227394770
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 692EPVcq27460126
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 2 Oct 2026 14:25:33 GMT
+ Fri, 2 Oct 2026 14:25:31 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E753A5805A;
- Fri,  2 Oct 2026 14:25:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8DB0F5805D;
+ Fri,  2 Oct 2026 14:25:31 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6485E5805C;
- Fri,  2 Oct 2026 14:25:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1BC725805A;
+ Fri,  2 Oct 2026 14:25:31 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  2 Oct 2026 14:25:32 +0000 (GMT)
+ Fri,  2 Oct 2026 14:25:31 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: armenon@redhat.com, marcandre.lureau@gmail.com,
- Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 10/10] tests: Add tests with commands with bad length
-Date: Fri,  2 Oct 2026 10:25:16 -0400
-Message-ID: <20261002142516.2063735-11-stefanb@linux.ibm.com>
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v3 08/10] hw/tpm: crb: Implement tpm_ppi_uninit and use it in
+ tpm_crb_unrealize
+Date: Fri,  2 Oct 2026 10:25:14 -0400
+Message-ID: <20261002142516.2063735-9-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261002142516.2063735-1-stefanb@linux.ibm.com>
 References: <20261002142516.2063735-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA1NiBTYWx0ZWRfX9903EnvWh2wO
- 1XY6P2szqcMVdu8hX3Yd2nghNP5Mwz4W7xLrSGbkM9KKSeJtgzksDyeF61/U2jKqNVyvSXi+mFX
- 2tKlc3Vy12dc1AhDCNKTcK2vWpbfhSU=
-X-Authority-Analysis: v=2.4 cv=HJ5WhYtv c=1 sm=1 tr=0 ts=6abfbede cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=rfWPa_Qpybt_VECXH-MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Oi8t_ogBFlOfWQC6p09YdCtCCM8n5D-2
-X-Proofpoint-ORIG-GUID: w-CLc9YKulV6oh1Ng8yMkDO1utyZEiGZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA1NiBTYWx0ZWRfX06GPa+ygvRi4
- NGbczkI1/Bj44VS9n8OA1s5LmbSDJevuUTzXKH9fMk+a0VZ53JdhQh8c7YlmJgYL3QedhqIry1Y
- rOisX7Ge6hZn2YmDUPBZ7ZNHHpDFcQd7dnnpNlRc+vnZP45bea8MJzu2MEDrXgEPSDb4eSV2p0i
- qMntYfBGYjP7SHxpRdvLB7QH0mGaMb7u7g3teAHymDo51GqbQ2/EHLuu2JSev2hRdcEJzEkJedo
- jBNhuAkNZe6JJJocO87+zpJr9M26OM387lsqgFGA83VLl4FpRhBJwf2XEEzqzNkvzZewgF6mVNE
- NohXVZKuOWeXY7Xhq8TxF5Z6HmB9Obc7FfNLjTmXQJkZUyPg+HFLixw9XWlQTzkxoYUDWneCG0u
- Y75RhAqZFfpeGfZAoqzKZmkFPRvMWiEj2TVNvMSHdq+Sw7D3gkilutHpkbyCWo+fDX/TCalUS2e
- mHUBjOAC5GqwcLCA8Ew==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA1NiBTYWx0ZWRfX+Hfh3NqOQm6S
+ +6q1ztad/agcaJgfys5XNBk401leCDflLWVuOiO1D+28/QduCE7dRy1zul4oJc7NmqVbYazzAEN
+ SCqLIUh0N5S5O1ybdVwQYzocgYNHYQ4=
+X-Authority-Analysis: v=2.4 cv=HJ5WhYtv c=1 sm=1 tr=0 ts=6abfbedd cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=RjRD9IDzg1SnJ7wAG4QA:9
+X-Proofpoint-GUID: mhXUfCZxH-UzRpRP-PDKW84--WDQUeIN
+X-Proofpoint-ORIG-GUID: aBcih26-I_Sym-DAVR_md3T2k7_uCumJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA1NiBTYWx0ZWRfX8O4EcxH70YJB
+ PBOPtEjU+uqKLYtfkVO/Pq6oOSalOgO5aYkKRcNOqsMhzgY05bzWgs4CLxXsIDTwvH61mUlW2CU
+ BGFiTnkuOS/ojZ7YdAX+vySTjbgb1wyKscPkNilORfXMW6Bs56RN7uHtS7d8+TxRqEQdk+oek80
+ eQmteVcwI9V4V2CYKa92MMyK/Lc9zVswGwglOPWwzDGtSCfm2n6MkDckPsEHa0SymNMWcS/fPbm
+ BSjfrQe9dEg7OdJ7oizkYGVY6Jh41F4Qr11kx9CckbwgJkG9R2P8gkgEjfG1QAFHCXZ7CcGGapN
+ 1JyRC2FjTzN2BJDK9rpFCV3IRCkP1WyLIKPGz3z/OQ8USNS2yveZ26tB31i4l94JTZywssJexc/
+ GyZ4plqXwPzRpj19Bo49ewD/9iAr0YMUYeT0lgoOaK+9XobofM42MNpFv9TQZS7fKZUjjSnxUCF
+ 9O/kPNhxToaiQo57p+w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-02_04,2026-10-01_01,2025-10-01_01
@@ -126,279 +123,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two test cases with commands with bad length:
+Implement tpm_ppi_uninit and use it for proper teardown of the PPI in
+tpm_crb_unrealize.
 
-- Send a command that indicates a very large size (0x10000 bytes) to the
-  TPM. This will only work with the CRB interface since the TIS wants
-  to receive all the bytes indicated by the command header.
-
-- Send a command that indicates that its size is only 9 bytes, which is
-  too short to be valid since the command header alone is 10 bytes.
-  This test only works with the TIS. The CRB silently rejects commands
-  that are shorter than the command header.
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- tests/qtest/tpm-crb-swtpm-test.c        | 10 +++++
- tests/qtest/tpm-tests.c                 | 56 +++++++++++++++++++++++++
- tests/qtest/tpm-tests.h                 |  8 ++++
- tests/qtest/tpm-tis-device-swtpm-test.c | 10 +++++
- tests/qtest/tpm-tis-swtpm-test.c        | 10 +++++
- tests/qtest/tpm-util.c                  | 55 ++++++++++++++++++++++++
- tests/qtest/tpm-util.h                  |  3 ++
- 7 files changed, 152 insertions(+)
+ hw/tpm/tpm_crb.c |  3 +++
+ hw/tpm/tpm_ppi.c | 10 ++++++++++
+ hw/tpm/tpm_ppi.h | 10 ++++++++++
+ 3 files changed, 23 insertions(+)
 
-diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
-index 050c7b0c1f..0e83a5325f 100644
---- a/tests/qtest/tpm-crb-swtpm-test.c
-+++ b/tests/qtest/tpm-crb-swtpm-test.c
-@@ -33,6 +33,14 @@ static void tpm_crb_swtpm_test(const void *data)
-                         "tpm-crb", NULL);
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index cd46b2e888..5c50a79936 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -16,6 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include "qemu/memalign.h"
+ #include "qemu/module.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+@@ -527,6 +528,8 @@ static void tpm_crb_unrealize(DeviceState *dev)
+     if (s->migration_blocker) {
+         migrate_del_blocker(&s->migration_blocker);
+     }
++
++    tpm_ppi_uninit(&s->ppi, get_system_memory(), OBJECT(s));
  }
  
-+static void tpm_crb_short_write_swtpm_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_short_write_swtpm_test(ts->src_tpm_path, tpm_util_crb_transfer,
-+                                    "tpm-crb", NULL);
-+}
-+
- static void tpm_crb_chunk_swtpm_test(const void *data)
- {
-     const TestState *ts = data;
-@@ -62,6 +70,8 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
+ static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/tpm/tpm_ppi.c b/hw/tpm/tpm_ppi.c
+index f0c34291dc..35baa083f2 100644
+--- a/hw/tpm/tpm_ppi.c
++++ b/hw/tpm/tpm_ppi.c
+@@ -57,3 +57,13 @@ void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
  
-     qtest_add_data_func("/tpm/crb-swtpm/test", &ts, tpm_crb_swtpm_test);
-+    qtest_add_data_func("/tpm/crb-short-write-swtpm/test", &ts,
-+                        tpm_crb_short_write_swtpm_test);
-     qtest_add_data_func("/tpm/crb-chunk-swtpm/test", &ts,
-                         tpm_crb_chunk_swtpm_test);
-     qtest_add_data_func("/tpm/crb-swtpm-migration/test", &ts,
-diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
-index 1b4f932b0c..74b22c43aa 100644
---- a/tests/qtest/tpm-tests.c
-+++ b/tests/qtest/tpm-tests.c
-@@ -79,6 +79,62 @@ void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
-     qapi_free_SocketAddress(addr);
+     memory_region_add_subregion(m, addr, &tpmppi->ram);
  }
- 
-+/* Setup the TPM and send a command by calling a passed function */
-+static void
-+tpm_test_simple_cmd_swtpm_test(const char *src_tpm_path, tx_func *tx,
-+                               const char *ifmodel,
-+                               const char *machine_options,
-+                               void (*test_func)(QTestState *, tx_func))
++
++void tpm_ppi_uninit(TPMPPI *tpmppi, MemoryRegion *m, Object *obj)
 +{
-+    char *args = NULL;
-+    QTestState *s;
-+    SocketAddress *addr = NULL;
-+    gboolean succ;
-+    GPid swtpm_pid;
-+    GError *error = NULL;
++    memory_region_del_subregion(m, &tpmppi->ram);
 +
-+    if (tpm_test_swtpm_skip()) {
-+        return;
-+    }
++    vmstate_unregister_ram(&tpmppi->ram, DEVICE(obj));
 +
-+    succ = tpm_util_swtpm_start(src_tpm_path, &swtpm_pid, &addr, &error);
-+    g_assert_true(succ);
-+
-+    args = g_strdup_printf(
-+        "%s "
-+        "-chardev socket,id=chr,path=%s "
-+        "-tpmdev emulator,id=tpm0,chardev=chr "
-+        "-device %s,tpmdev=tpm0",
-+        machine_options ? : "", addr->u.q_unix.path, ifmodel);
-+
-+    s = qtest_start(args);
-+    g_free(args);
-+
-+    test_func(s, tx);
-+
-+    qtest_end();
-+    tpm_util_swtpm_kill(swtpm_pid);
-+
-+    g_unlink(addr->u.q_unix.path);
-+    qapi_free_SocketAddress(addr);
++    qemu_vfree(tpmppi->buf);
++    tpmppi->buf = NULL;
 +}
-+
-+void tpm_test_short_write_swtpm_test(const char *src_tpm_path, tx_func *tx,
-+                                     const char *ifmodel,
-+                                     const char *machine_options)
-+{
-+    tpm_test_simple_cmd_swtpm_test(src_tpm_path, tx, ifmodel, machine_options,
-+                                   tpm_util_short_write);
-+}
-+
-+void tpm_test_too_short_cmd_swtpm_test(const char *src_tpm_path, tx_func *tx,
-+                                       const char *ifmodel,
-+                                       const char *machine_options)
-+{
-+    tpm_test_simple_cmd_swtpm_test(src_tpm_path, tx, ifmodel, machine_options,
-+                                   tpm_util_too_short_cmd);
-+}
-+
- void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-                                    const char *dst_tpm_path,
-                                    const char *uri, tx_func *tx,
-diff --git a/tests/qtest/tpm-tests.h b/tests/qtest/tpm-tests.h
-index 07ba60d26e..7684abf8f4 100644
---- a/tests/qtest/tpm-tests.h
-+++ b/tests/qtest/tpm-tests.h
-@@ -18,6 +18,14 @@
- void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
-                          const char *ifmodel, const char *machine_options);
+diff --git a/hw/tpm/tpm_ppi.h b/hw/tpm/tpm_ppi.h
+index 88f316ee95..c173889033 100644
+--- a/hw/tpm/tpm_ppi.h
++++ b/hw/tpm/tpm_ppi.h
+@@ -32,6 +32,16 @@ typedef struct TPMPPI {
+ void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
+                   hwaddr addr, Object *obj);
  
-+void tpm_test_short_write_swtpm_test(const char *src_tpm_path, tx_func *tx,
-+                                     const char *ifmodel,
-+                                     const char *machine_options);
-+
-+void tpm_test_too_short_cmd_swtpm_test(const char *src_tpm_path, tx_func *tx,
-+                                       const char *ifmodel,
-+                                       const char *machine_options);
-+
- void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-                                    const char *dst_tpm_path,
-                                    const char *uri, tx_func *tx,
-diff --git a/tests/qtest/tpm-tis-device-swtpm-test.c b/tests/qtest/tpm-tis-device-swtpm-test.c
-index 517a077005..48a7389306 100644
---- a/tests/qtest/tpm-tis-device-swtpm-test.c
-+++ b/tests/qtest/tpm-tis-device-swtpm-test.c
-@@ -38,6 +38,14 @@ static void tpm_tis_swtpm_test(const void *data)
-                         "tpm-tis-device", MACHINE_OPTIONS);
- }
- 
-+static void tpm_tis_too_short_cmd_swtpm_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_too_short_cmd_swtpm_test(ts->src_tpm_path, tpm_tis_transfer,
-+                                      "tpm-tis-device", MACHINE_OPTIONS);
-+}
-+
- static void tpm_tis_swtpm_migration_test(const void *data)
- {
-     const TestState *ts = data;
-@@ -62,6 +70,8 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_data_func("/tpm/tis-swtpm/test", &ts, tpm_tis_swtpm_test);
-+    qtest_add_data_func("/tpm/tis-too-short-cmd-swtpm/test", &ts,
-+                        tpm_tis_too_short_cmd_swtpm_test);
-     qtest_add_data_func("/tpm/tis-swtpm-migration/test", &ts,
-                         tpm_tis_swtpm_migration_test);
-     ret = g_test_run();
-diff --git a/tests/qtest/tpm-tis-swtpm-test.c b/tests/qtest/tpm-tis-swtpm-test.c
-index 105e42e21d..14b4cbce21 100644
---- a/tests/qtest/tpm-tis-swtpm-test.c
-+++ b/tests/qtest/tpm-tis-swtpm-test.c
-@@ -36,6 +36,14 @@ static void tpm_tis_swtpm_test(const void *data)
-                         "tpm-tis", NULL);
- }
- 
-+static void tpm_tis_too_short_cmd_swtpm_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_too_short_cmd_swtpm_test(ts->src_tpm_path, tpm_tis_transfer,
-+                                      "tpm-tis", NULL);
-+}
-+
- static void tpm_tis_swtpm_migration_test(const void *data)
- {
-     const TestState *ts = data;
-@@ -57,6 +65,8 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_data_func("/tpm/tis-swtpm/test", &ts, tpm_tis_swtpm_test);
-+    qtest_add_data_func("/tpm/tis-too-short-cmd-swtpm/test", &ts,
-+                        tpm_tis_too_short_cmd_swtpm_test);
-     qtest_add_data_func("/tpm/tis-swtpm-migration/test", &ts,
-                         tpm_tis_swtpm_migration_test);
-     ret = g_test_run();
-diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-index 151002ea24..d2042ed5df 100644
---- a/tests/qtest/tpm-util.c
-+++ b/tests/qtest/tpm-util.c
-@@ -194,6 +194,61 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
-                     &exp_resp[14], exp_resp_size - 14);
- }
- 
-+/*
-+ * Write a TPM command with too large length indicator
-+ * The CRB will send the command to the TPM.
-+ * The TIS will never send the command since it wants to receive the number of
-+ * bytes indicate in the command.
++/**
++ * tpm_ppi_uninit:
++ * @tpmppi: a TPMPPI
++ * @m: the address-space / MemoryRegion to use
++ * @obj: the owner object
++ *
++ * Function to unregister the TPM PPI region.
 + */
-+void tpm_util_short_write(QTestState *s, tx_func *tx)
-+{
-+    unsigned char buffer[1024] = { 0 };
-+    static const unsigned char tpm_bad_command[] = {
-+        0x80, 0x01,
-+        0x00, 0x01, 0x00, 0x00, /* length = 0x10000 */
-+        0x00, 0x00, 0x01, 0x7e,
-+        0x00, 0x00, 0x00, 0x01, 0x00, 0x0b, 0x03, 0x00, 0x04, 0x00
-+    };
++void tpm_ppi_uninit(TPMPPI *tpmppi, MemoryRegion *m, Object *obj);
 +
-+    tx(s, tpm_bad_command, sizeof(tpm_bad_command), buffer, sizeof(buffer));
-+
-+    static const unsigned char tpm_error_resp[] = {
-+        0x80, 0x01,
-+        0x00, 0x00, 0x00, 0x0a,
-+        0x00, 0x00, 0x01, 0x42, /* TPM_RC_COMMAND_SIZE */
-+    };
-+
-+    g_assert_cmpmem(buffer, sizeof(tpm_error_resp),
-+                    tpm_error_resp, sizeof(tpm_error_resp));
-+}
-+
-+/*
-+ * Write a TPM command that is shorter than the header.
-+ * The CRB will not send this command.
-+ * The TIS will send the command to the backend (needs to be at least
-+ * 6 bytes).
-+ */
-+void tpm_util_too_short_cmd(QTestState *s, tx_func *tx)
-+{
-+    unsigned char buffer[1024] = { 0 };
-+    static const unsigned char tpm_bad_command[] = {
-+        0x80, 0x01,
-+        0x00, 0x00, 0x00, 0x09, /* 9 bytes command is too short */
-+        0x00, 0x00, 0x01,
-+    };
-+
-+    tx(s, tpm_bad_command, sizeof(tpm_bad_command), buffer, sizeof(buffer));
-+
-+    static const unsigned char tpm_error_resp[] = {
-+        0x80, 0x01,
-+        0x00, 0x00, 0x00, 0x0a,
-+        0x00, 0x00, 0x01, 0x01, /* TPM_RC_FAILURE from tpm_emulator.c */
-+    };
-+
-+    g_assert_cmpmem(buffer, sizeof(tpm_error_resp),
-+                    tpm_error_resp, sizeof(tpm_error_resp));
-+}
-+
- bool tpm_util_swtpm_has_tpm2(void)
- {
-     bool has_tpm2 = false;
-diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-index 681544e7d8..70c2fc09c6 100644
---- a/tests/qtest/tpm-util.h
-+++ b/tests/qtest/tpm-util.h
-@@ -38,6 +38,9 @@ void tpm_util_pcrextend(QTestState *s, tx_func *tx);
- void tpm_util_pcrread(QTestState *s, tx_func *tx,
-                       const unsigned char *exp_resp, size_t exp_resp_size);
- 
-+void tpm_util_short_write(QTestState *s, tx_func *tx);
-+void tpm_util_too_short_cmd(QTestState *s, tx_func *tx);
-+
- bool tpm_util_swtpm_has_tpm2(void);
- 
- gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
+ /**
+  * tpm_ppi_reset:
+  * @tpmppi: a TPMPPI
 -- 
 2.55.0
 
