@@ -4,112 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC6BCA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 01:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43DF3CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 01:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCS0h-00025B-Rb; Thu, 01 Oct 2026 21:24:28 -0400
+	id 1xCSWK-0005at-Th; Thu, 01 Oct 2026 21:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xCS0b-00024H-Th
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 21:24:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xCSWJ-0005ai-Bf
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 21:57:07 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xCS0X-0003mu-1P
- for qemu-devel@nongnu.org; Thu, 01 Oct 2026 21:24:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790904249;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=De8yorP9FudcMiIi/X0cxcjwqsKGIT811EzMXUc/PSI=;
- b=J11H8uAA0DgAHK06DBJdhdRWCEHsvLbaLxQSYTciVAE6yw4J0xITeXh1ncHIZ4BkQ31gIt
- WdieGhZ/0ZnxCPWFBDQXsXLZxK9q9GAXPU3wKzFWFCtTaNBol5Bw4xsPUlYNHQbFOj7CEm
- KB6YtCR714aBtInkAp/NUjLPlR7W9m4=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-2oXfuxu8MgKhsruyY6jfRQ-1; Thu, 01 Oct 2026 21:24:08 -0400
-X-MC-Unique: 2oXfuxu8MgKhsruyY6jfRQ-1
-X-Mimecast-MFC-AGG-ID: 2oXfuxu8MgKhsruyY6jfRQ_1790904246
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cc1ca15334cso7998236a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 18:24:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xCSWH-0006d5-HB
+ for qemu-devel@nongnu.org; Thu, 01 Oct 2026 21:57:07 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 691NEW2o4046335
+ for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 01:57:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ QZWlUb84F/8nJ3CfAYsukFAu7PEIk4UVTTAG5pEG3yE=; b=FydpMb7wGzPAFMo2
+ NSRVSn/SJOXTGXIcM5nDbGRD1uZks5GOKkEm3nTFuDfq5Hg16kQ8VuIIrTwKFWu8
+ wWCGf1jyqhe3mwDYc5hFInnkiXqQk8w60lc6YZ9Xo5ttevoPyL9r5rlvS8ND7+98
+ 9E+Wmzvwey7jKXofYdQsvK8U2EgFS39hiBvfV/PQZC8tpShtpTqSRT0l3lAKne5y
+ StsEucnZhTSpHw68QZdk6bc7NL92fJRjTUU2Yutr35ksGr/eysk2sW3lWgvgtjnV
+ Irm74UT+YDxnMwnH0H0IX+j+exy8dxWf6OlcWLjbbKdtsF/A50el8Yy8JWekE0D5
+ 2rYN9A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h20nfrf3k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 01:57:02 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93ca4a2b9c4so490437385a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Oct 2026 18:57:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1790904245; x=1791509045; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1790906221; x=1791511021; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=De8yorP9FudcMiIi/X0cxcjwqsKGIT811EzMXUc/PSI=;
- b=LOWtZnEN8+9sA7rWqN4ACjux3aa2Y14kBkxoFTSMuU1vFxEp1cX/0UfXsL8C0XzMoi
- ucuwxlbdQyETKwlbiwtP41+LXPI0Ajmbea+jRCN1CZxcoitcE7EQa/NDBEICtwe11I3I
- lNMVNnWe3g4POdHf7jGs+DbQVZdWMdHkOQJHCCHT+q4953QcQwrkZVIq/ZfYMAm+usc0
- p0d2+n6DMuZykHEh7dLVwGndWgNYOAPh78z5iWbaEzLUgBTavcwma9JEqSpjiakSng0P
- d1J6hVROiXwNfKMxhh13dz1yvrLPzq+epoCktkCKcNkqVGnctZkC6S6u0Zt0l6MtBekV
- OFBQ==
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QZWlUb84F/8nJ3CfAYsukFAu7PEIk4UVTTAG5pEG3yE=;
+ b=S6gVROsgIh04opowTboC8bRqpMbzpMZNxf3vKIhvERmixNk3u7mWJam2c6HghUSv8t
+ T96ABuWbsFT1DaQV2mKtd5ktdiHxGbKmzcZ4rR5/1mORnuc1h5eaaBUVlUNwrLV9ppOE
+ Y5T0YrIn1RxPBhISfJfdmXvQXCyvRBdj3txpAYkL2bj2JP9CLaxH06nsME6PdUcbq00C
+ 8n6m9BqqkutZHweHZOYgZln791S7cRqOUzPa+9f8++o575p8ytw7Ffe6H5gx73E29zqn
+ rBB78P9wTrtQdqsv6C5MQ6OJVBiLqkAuAUzFidDH7iOP9zvwqUz7RJnKmsNGMGDagI/x
+ sgVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790904245; x=1791509045;
+ d=1e100.net; s=20260707; t=1790906221; x=1791511021;
  h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=De8yorP9FudcMiIi/X0cxcjwqsKGIT811EzMXUc/PSI=;
- b=pbttRUPaU0/zoHcN3lsnTq16CoZ62gbcEgBWbtcLmbAejLlb3tJMuLZFHqiAS0gI91
- 8lhfrAfF4f119FpVD779PumhicXhBd+VRv+b/8WfqVniujCVNKqe0Q6pcxg4b45+zEZX
- w+dzHWg2O+3M/TAj/Jw4tJr1UIi5+4eShltkQvNkxeYyy/wtz++o2KDQ9J4K5mtCtUNv
- mDW9l/cRT/zD49QFz0E3jUsVSysltZ5/JmzmWHLzYppjYbrnUIbXlfYYrwUqfif+XVHV
- SU8Wrc4Mqm2kaZ03SGG3zV37nsCjvgiqk9V3YwtMnuAJURNE0xWZwj3/dAE31LL1Oczu
- /Mlw==
-X-Gm-Message-State: AFuF++l/M0XTtKasfxx40doqcNxcjM6ITfaBv4tivO4MZh7ZLX/krvWF
- 86/tw0Fw/ZsMyyCGdKNOdr+otXDfHADeXLBP08kW/ewfliyw8agKJ1C7yS+0ZYKYNsGTQcgwWAC
- i0fy7rF5Ys77rLe1jXTmzGxNiRgscFXn0sWiXpNyxrdl94Ptc3EUuESTC
-X-Gm-Gg: AYBFou0WKr1PFlFaCU3F44x+lnRsaJbYqlvoEd/RVX9QLgQQ5kowAHjrZg+WtE2bTpM
- i4yLoNJFBdeU4uSq2TSbbhM6qFLI6xgAKLDPCqNqFjzJHtsTp+Aw0ar7DJUEvpPneK/lhM2Zrjy
- IkPniWK9kfPNfe19EPyb2IoPABmMIBF1L2Tv4IrGjt0gdR5t/8jNILX24G1Kt8XXAYrakhGXhyI
- CRDYHHU8WhNxGfgNbp8o/rJPZofqg6VMvbnxGjb7MogE6AWK1Brgc4XjRznDKp4LiGFy31/L0rb
- YLDp1hcqTqE5h36+n6lZPjNwa5jd0qa8njubIQt+wgkbi1KYtbQ+cIDFfnxoYnGBFOUlTvSp3yw
- gzHsetQMEj+tzldYWH7LbhqvVXsIr1/xIIKDCb+iaFg==
-X-Received: by 2002:a05:6a21:4ead:b0:3dd:a196:69df with SMTP id
- adf61e73a8af0-3e0bd12e409mr1203132637.58.1790904245521; 
- Thu, 01 Oct 2026 18:24:05 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4ead:b0:3dd:a196:69df with SMTP id
- adf61e73a8af0-3e0bd12e409mr1203101637.58.1790904244966; 
- Thu, 01 Oct 2026 18:24:04 -0700 (PDT)
-Received: from [192.168.68.52] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc9f7384ca1sm297063a12.21.2026.10.01.18.24.00
+ bh=QZWlUb84F/8nJ3CfAYsukFAu7PEIk4UVTTAG5pEG3yE=;
+ b=KP4F8gIn54s2aY5E3TMAdPFIVQr7EZXpZTvlzsXR0TYd9TeeLyJXim683nrq0btGzT
+ +Gp+qmvK/YwbdsKP74efUpCFdB3RXSRtpNmtFPdUlMLnbq3i+Xz68xYAWmH74ZioQWvp
+ 1SJIZjZ8vjfnRijO1z1vZXp/3jVBOin3QV21R+Aypq0tcEFY4+SwlukAjLUgtoZWmU/r
+ 4JtEOtP4XnYMl2ObVmnlYpELsCuggPiJ2Pp6alOVJhh7G7vDmflEQQLhIwnv5vq/MkVe
+ tThz+P/KMF+tmLVezb1KQ84Dow5ij7Kk9Tabus2l2TkXdGwhvL1H5ftAgBpwDw8j8CEr
+ D5Bg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwEiqzlG0e1uzLFyDXkDqUNSMB3RXlZC34CyjuovN+eWuXmAfneFPQBiOyQOKSBCrf1p2pGkr8dK8c9@nongnu.org
+X-Gm-Message-State: AFuF++mig44qiOI3tjb5NdcrO/zXZckb/Knzb5pRUSH72OIhRrohjgRD
+ n0T5eU4/Gm+/uTqpoCKn2R9fpG4Is97eCBY1E4BssU+acKEMQG2y36iUHHoyAXN4CkQI+JC8mXo
+ mBpPb3J/eKIwyaV1jhQNykiDtpLJZ4dzRyYUSHq63BEJRlxIsFrPUztarkw==
+X-Gm-Gg: AYBFou0FvaljJZ4GolYVUWjENc9Fey4Nbp9ejHeH0n5tPsRJ/5tkQcv2CaV6s2gpxPg
+ d05naczNGPq0n2xErCDMNaZi2a1EM/2ezP3cylOFGRWo5doyz2ctS+y1BxriI9Re5d1XzYyOloa
+ lPdHcnPf75t5QPaBAMyw1qfxk6HlmLQJQxodJAu1ar//hp41eipm3BAmWJf03sWC/aPjyCx2e7X
+ ChWT0N868o6mBRzZb1iNg6kv3k5YI/9FXgjB4F1AhCRr49ewrJMRFluIFeCXx3+nzkGHJXMtUvj
+ QdoZjIWYlY6luBU1tXkXbcNhO+D0n7i8nogDRgT7zw6VtAPO5UEnzK6LPUiZqYawxasmlTerXBi
+ D4b675k+kUkJlQ6SnJ/DgkBkz2oNf+DidF9S4+WHxJeSySI5eDin7vDYRgTbc3poOsdoYksqruz
+ ROsFE=
+X-Received: by 2002:a05:620a:4713:b0:939:fce5:f6d2 with SMTP id
+ af79cd13be357-93cf16de7femr218161685a.27.1790906221460; 
+ Thu, 01 Oct 2026 18:57:01 -0700 (PDT)
+X-Received: by 2002:a05:620a:4713:b0:939:fce5:f6d2 with SMTP id
+ af79cd13be357-93cf16de7femr218158785a.27.1790906220981; 
+ Thu, 01 Oct 2026 18:57:00 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93cca202e42sm99210985a.19.2026.10.01.18.56.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Oct 2026 18:24:04 -0700 (PDT)
-Message-ID: <062da66b-73fa-40e5-94cc-80b1ca760687@redhat.com>
-Date: Fri, 2 Oct 2026 11:23:58 +1000
+ Thu, 01 Oct 2026 18:56:59 -0700 (PDT)
+Message-ID: <5fa8da54-5f3b-497b-a174-5c6537ce5520@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 20:56:58 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 10/24] target/arm/kvm-rme: Keep track of images loaded in
- Realm memory
-To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-11-mathieu.poirier@linaro.org>
+Subject: Re: [PATCH 1/2] gdbstub/gdb-xml: Add hexagon sys regs
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+References: <20260930175108.3592113-1-brian.cain@oss.qualcomm.com>
+ <20260930175108.3592113-2-brian.cain@oss.qualcomm.com>
+ <42ce6d66-e33a-4455-a1bc-dcda53f143c6@oss.qualcomm.com>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260903193611.1058589-11-mathieu.poirier@linaro.org>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <42ce6d66-e33a-4455-a1bc-dcda53f143c6@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: lQ6iPEG329AVprmTKhDV1tDMchh3h1wf
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAwNyBTYWx0ZWRfXyGClrYwZKTKQ
+ 6n8hSphypd3mlJ5To6qAWTQtOM+znLDS6x1mRJg79Fpz3GH++O8m9tby+5Mv68w+4H2ye87oHK2
+ dq3hAxzc1r4lZ/rEpykrWWNy3meDAK8=
+X-Proofpoint-ORIG-GUID: lQ6iPEG329AVprmTKhDV1tDMchh3h1wf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAwNyBTYWx0ZWRfX1gy7qxVqpzll
+ 4APA8CrUJ7L3fW4bNccLAnAreBhpcca2zu0YcOcKB/aL0npJGl2c331mn9nU2o/9UbrMt+11Qrb
+ XIhzOrYwI6dWXdzMIHfelV4zE6YyNCaQps5k1dGPuOpnhgs4OyPHuAe2nYXoyQ/uQq4flEpSKww
+ D0v3aBb5xzxCJvpJgCm0BW2g5vn+ErT5gPxCFY1ral1LKMVS6Q65pk4B2xwKpTPGpxMdLUEqtZz
+ y+3JTioIohRaeInIV5YYc+C3RAjb0kxxC4xBl0j/Q139q1tBxqYYf0XNK4/gCoM3QTDuSne98M6
+ Tob9pn/d2FuDwgwPVzbjNkV//0TIX3S+9/ukxZ9FZYAGBpoCAQ+dFHq0S0TkJjms2JlxJ0CWICA
+ FKTYLHWUVnIUm1/UxjbuPTZwjnC4jUwfSSq2a7LeHSZ1E6eWDIFpG8AaMjXwLineDRlQ0Q4eLmw
+ tbZzIo8At6FzCEhff/Q==
+X-Authority-Analysis: v=2.4 cv=f+jdl+yM c=1 sm=1 tr=0 ts=6abf0f6e cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=eU0e3LhYAAAA:20 a=EUspDBNiAAAA:8 a=Mag2Khele19Lara0ktIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_05,2026-10-01_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020007
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,112 +155,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/4/26 5:35 AM, Mathieu Poirier wrote:
-> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> 
-> Add a Rom notifier to keep track of binary blobs loaded in Realm memory.
-> That way we can deterministically calculate the Realm Initial Measurement (RIM).
-> 
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
-> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> ---
->   target/arm/kvm-rme.c | 52 ++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 52 insertions(+)
-> 
-> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> index f7c2cc786e2c..9985f5daba89 100644
-> --- a/target/arm/kvm-rme.c
-> +++ b/target/arm/kvm-rme.c
-> @@ -10,6 +10,7 @@
->   
->   #include "hw/core/boards.h"
->   #include "hw/core/cpu.h"
-> +#include "hw/core/loader.h"
->   #include "kvm_arm.h"
->   #include "migration/blocker.h"
->   #include "qapi/error.h"
-> @@ -22,8 +23,18 @@
->   #define TYPE_RME_GUEST "rme-guest"
->   OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
->   
-> +#define RME_PAGE_SIZE qemu_real_host_page_size()
-> +
-> +typedef struct {
-> +    hwaddr base;
-> +    hwaddr size;
-> +    uint8_t *data;
-> +} RmeRamRegion;
-> +
 
-This is the equivalent to 'RomLoaderNotifyData' defined in PATCH[09/24]. We may
-use 'RomLoaderNotifyData' if it can be renamed to reflect its purpose, no need
-to define an identical structure.
+On 10/1/2026 3:58 PM, Pierrick Bouvier wrote:
+> On 9/30/2026 10:51 AM, Brian Cain wrote:
+>> Add the hexagon-sys.xml gdb feature describing the system and guest
+>> registers.
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   configs/targets/hexagon-softmmu.mak |   2 +-
+>>   gdbstub/gdb-xml/hexagon-sys.xml     | 157 ++++++++++++++++++++++++++++
+>>   2 files changed, 158 insertions(+), 1 deletion(-)
+>>   create mode 100644 gdbstub/gdb-xml/hexagon-sys.xml
+>>
+>> diff --git a/configs/targets/hexagon-softmmu.mak b/configs/targets/hexagon-softmmu.mak
+>> index 6cbdc64be56..1ba6420d205 100644
+>> --- a/configs/targets/hexagon-softmmu.mak
+>> +++ b/configs/targets/hexagon-softmmu.mak
+>> @@ -1,7 +1,7 @@
+>>   # Default configuration for hexagon-softmmu
+>>   
+>>   TARGET_ARCH=hexagon
+>> -TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml
+>> +TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml hexagon-sys.xml
+>>   TARGET_LONG_BITS=32
+>>   TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+>>   TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+>> diff --git a/gdbstub/gdb-xml/hexagon-sys.xml b/gdbstub/gdb-xml/hexagon-sys.xml
+>> new file mode 100644
+>> index 00000000000..434f11c0747
+>> --- /dev/null
+>> +++ b/gdbstub/gdb-xml/hexagon-sys.xml
+>> @@ -0,0 +1,157 @@
+>> +<?xml version="1.0"?>
+>> +<!--
+>> +  Copyright(c) 2023-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>> +
+>> +  SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +  Note: this file is intended to be use with LLDB, so it contains fields
+>> +  that may be unknown to GDB. For more information on such fields, please
+>> +  see:
+>> +  https://github.com/llvm/llvm-project/blob/287aa6c4536408413b860e61fca0318a27214cf3/lldb/docs/lldb-gdb-remote.txt#L738-L860
+>> +  https://github.com/llvm/llvm-project/blob/287aa6c4536408413b860e61fca0318a27214cf3/lldb/source/Plugins/Process/gdb-remote/ProcessGDBRemote.cpp#L4275-L4335
+>> +-->
+> small nit - could we reference a specific llvm version (tag) instead of
+> a commit?
 
->   struct RmeGuest {
->       ConfidentialGuestSupport parent_obj;
-> +    Notifier rom_load_notifier;
-> +    GSList *ram_regions;
->   };
->   
->   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> @@ -41,6 +52,44 @@ static void rme_vm_state_change(void *opaque, bool running, RunState state)
->       kvm_mark_guest_state_protected();
->   }
->   
-> +static gint rme_compare_ram_regions(gconstpointer a, gconstpointer b)
-> +{
-> +    const RmeRamRegion *ra = a;
-> +    const RmeRamRegion *rb = b;
-> +
-> +    g_assert(ra->base != rb->base);
-> +    return ra->base < rb->base ? -1 : 1;
-> +}
-> +
-> +static void rme_rom_load_notify(Notifier *notifier, void *data)
-> +{
-> +    RmeRamRegion *region;
-> +    RomLoaderNotifyData *rom = data;
-> +
-> +    if (rom->addr == -1) {
-> +        /*
-> +         * These blobs (ACPI tables) are not loaded into guest RAM at reset.
-> +         * Instead the firmware will load them via fw_cfg and measure them
-> +         * itself.
-> +         */
-> +        return;
-> +    }
-> +
-> +    region = g_new0(RmeRamRegion, 1);
-> +    region->base = rom->addr;
-> +    region->size = rom->len;
-> +    region->data = rom->data;
-> +
-> +    /*
-> +     * The Realm Initial Measurement (RIM) depends on the order in which we
-> +     * initialize and populate the RAM regions. To help a verifier
-> +     * independently calculate the RIM, sort regions by GPA.
-> +     */
-> +    rme_guest->ram_regions = g_slist_insert_sorted(rme_guest->ram_regions,
-> +                                                   region,
-> +                                                   rme_compare_ram_regions);
-> +}
-> +
->   static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
->   {
->       KVMState *s = KVM_STATE(current_accel());
-> @@ -58,6 +107,9 @@ static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
->       error_setg(&rme_mig_blocker, "RME: migration is not implemented");
->       migrate_add_blocker(&rme_mig_blocker, &error_fatal);
->   
-> +    rme_guest->rom_load_notifier.notify = rme_rom_load_notify;
-> +    rom_add_load_notifier(&rme_guest->rom_load_notifier);
-> +
->       /*
->        * The realm activation is done last, when the VM starts, after all images
->        * have been loaded and all vcpus finalized.
 
-Thanks,
-Gavin
+Ok - can do.  New URLs below are what I'll use instead:
 
+
+https://github.com/llvm/llvm-project/blob/llvmorg-16.0.0/lldb/docs/lldb-gdb-remote.txt#L738-L860
+
+https://github.com/llvm/llvm-project/blob/llvmorg-16.0.0/lldb/source/Plugins/Process/gdb-remote/ProcessGDBRemote.cpp#L4056-L4116
+
+
+>
+> For the rest,
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>
+> Regards,
+> Pierrick
 
