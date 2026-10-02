@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7F6CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 17:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34089CA5FDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 17:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xChQ1-0003v1-Kt; Fri, 02 Oct 2026 13:51:39 -0400
+	id 1xChQj-0004Tv-Aw; Fri, 02 Oct 2026 13:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xChPg-0003mt-Dn
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:51:16 -0400
+ id 1xChQM-0004E4-6f
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:52:01 -0400
 Received: from mail-dy2-x0f.google.com ([2607:f8b0:4864:36::f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xChPe-0007Je-KB
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:51:15 -0400
+ id 1xChQI-0007Qu-O8
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:51:57 -0400
 Received: by mail-dy2-x0f.google.com with SMTP id
- 5a478bee46e88-34b1743e9c7so2340381eec.3
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 10:51:14 -0700 (PDT)
+ 5a478bee46e88-34b3e517e6dso2357940eec.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 10:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790963473; x=1791568273; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1790963512; x=1791568312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kLOBJyItJ1+wNCmx4Q5Z29VyAFIZnj6HoQfSvPthpZk=;
- b=ET9WTKKNOsAYEA+HuRudT08kUE8vVbVJxBXLVf6gzjoFDQ1XhmkZU1rA9wbIzvrmnV
- H0CCu0KJfSewgJOr1D/OUU5qTHHY0PRD6sScrNFnTYCkGTBSp3GjX+QfoE8ROETVM75E
- PDXxCXBglB3NimuXAjIMRLCoQTzdGxWRFSO98Mf2ns9Tuy6iCq3l2AQAWoC2ji4vOFp5
- T45McXq1mqe8spVRN0NqXcnxtNTo1VtiJxm+Fa5xx6CkeWfQ8Ya5p22afIuIgnpqsYu0
- g1YKQtiJUBgudC9jbOcQ5ea8+2GydZzrij5murSKr7v6xr4wXGDXxizsLftUCLIKVfnJ
- qhzQ==
+ bh=sB6wgEvVNcwq25z55JvixoNQOs+J2ayZm8e/ED1pw70=;
+ b=PLtqjOXTaKhUn3LWIHAhZahRHKiSWiIMF0Ulhhzm4AojXkwZ1/0Io3B8/WKoxt7aZ7
+ vtrRYdDdXXIIhHEZ0UJ/iekRENKmhVN0LZtn/zWRLpP/N8stKfQUPY5SdDUyA9PdpHWH
+ 8JsWh1zZ7CAcs770B9AjpUtesH4Oj2HwcBzMU+uBG5vsg7DqlV7LKjESSsq8Vard0gTX
+ ZzTcerOLVS1S8Y0P+yYCSyTYg/2RcmILUq1iG1N4ueJovQgXkBGvGwZGey/QFi9QE+QR
+ nL4SNgs1MVC3fD1oKWhdj50X+tSN5ECFhsrqoB8DmsI+7NCVvDFG4fZUtH5IvPSAlxC0
+ UifQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790963473; x=1791568273;
+ d=1e100.net; s=20260707; t=1790963512; x=1791568312;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kLOBJyItJ1+wNCmx4Q5Z29VyAFIZnj6HoQfSvPthpZk=;
- b=1O6YyJ5RjiQ+G8VMexu8KJmBMC8MBWkWvTxA6lJEheQYDM6tUhwsm5WronNme+T90Z
- 8G0Xni/x9J6/03Y+t2COj835MY68vPgXCed6IlthghbX0bLBKDMQ5FbiGqNcKCpeVxqm
- 097VaefzSFJjyqIQAOGe5lHuHwWKPoECbz5qmFVyxpq/G8BQPtZUBClTV0DT/IZDzkm1
- x3yOHj+PPi6Cp4p2VWuqqbZ2H+ALcHgq/wFpbvag8yQ7UaDscyhScpryc56tzog9JbcQ
- OsDhoLSvmenGbThDbfBMBXuxhjeX3LdsuirqCMwei9/r7m0Yo0ABhoibm3EgOR1fZYeb
- O5sA==
-X-Gm-Message-State: AFq9FYIu71eOZnRZ3wAccU1d0kIvr+dZIrHB+xXWhTwwh20wsUMvsvw3
- GjGO50I3ftaRdeVQ02jrkpuGbjkCpmJCpReyQeQBYF1rdDuAL0kC+GEJr3hiODXjD8w=
-X-Gm-Gg: AYBFou0Ywu8NcmXPu7ajDSGHH7lV9YpIH4D9yx0nnrT6Duo+Z2CQhnEm6Ne49UtGJbz
- 4OTM6lUvdlxSK+5awt3GEm/hkGWmTfXaNnmN00zCrypNUOvaO1NjEreAW+Ulhis3DVBHeFi3Jxz
- xPVK0l0zVhI7hzvBgDSClJ4dGi+upfzUpkGjIQOWLooPDswL9g0NGhlHhh28gSsU9lu5sSIWN+6
- t1h8fx0+9TL374pppjoGTwSQ6/6WeWXkOppZhUoDRK53algkpWzwIXLqVrz/oZoGS3qpktREwmb
- MxcuxgJpg52lRGJ9KfumTEABl7zXzsJ2t/z4v1RV6/NslQ5udH9dYEBiDE8O+fbxAIxicivxf+1
- JzJ8KKqChBM6I1d9O6A0JkB5qH5tGnGXzTpjO+SyYFynCzaELIlfqjnj9n0AjjyFX8KTIauUmee
- cAOLHv3XOQZrLKgbA1b/T928ZDoxk06lCKlscH65JSjPZUDmW+9s4prlg2DpysHSUY3ey2+R73l
- +zjrYb2QA7cDU0SiLDIXBfake9cGj0=
+ bh=sB6wgEvVNcwq25z55JvixoNQOs+J2ayZm8e/ED1pw70=;
+ b=yhYHoUWAIuwCrCAzGcfBSh3AddlU+Uve/yT68xLMwquOFe2U1fFXyJLTkPPKKMMLgc
+ 9Ffv9zEfCqSsLU0fq26tThMNlxUWNTCtngx2J8yEPO3p4cir5drYGVx96kuSD3oMR+Dd
+ qkO6aZBgzeRMfHRrKaOQ3Hp2dt1kCPMI9A4bY779Cl5z+qFqMvpC8TJHpqoy5/vFohMX
+ v78ak61FTqyJyRZtaRiKQpWihvMl9Kp6OxJeTnuRsRBuDLU7vGvo5wJzLgFsAA3THaxr
+ OUZZSf97ADQOvJU6AehiGjlXDFfQjBHkrsL/NR1gRHPO0El3/D3ecCwcpnzOVnnMIf1q
+ T19w==
+X-Gm-Message-State: AFuF++mZ8CijGN3Xm8JeQIZgjB/nbR+j/0YqVZg+De1lhzAQoxhgO6Hp
+ 4SstX6jSrwJPhbT7vIH7s/Dy/e5cp2xRMnJSfWs2N51suQsm+vHHZTcsUj8Fyv72vi8=
+X-Gm-Gg: AYBFou2YxJZt1pzj3egvVGGGXn3xFGvNTFwEe7NkxzmFt+FNgvwBBm6eAda3W6P4hLW
+ 8V7CEo0iq74ksspybWvgHhKW+TMUHp7gSmnXulM9jwWqVkdxkuHacckZgKbP+EaNHfdO7UGny0H
+ W4qCH7B7MvANXmm6fp/QXg25JaFuI5kmb6lp2eZeJ8ny8Gm92iRtMIWjNX4tC4y0X/X8jl2W0Sb
+ 5pbU3CzMlTANsP1qwIdwUr+dWU2EFH2mvNfkUnDFZhohwkU/hsax8yONe/eXIvBzttvb0Rkt0zB
+ hHJNAxMNgNIdgELvLxFQcv+pQ3XJJNs15U5vcHhboXlF3F/aK4l80Ii0Jvmvc4HisVKc/SWLzWf
+ 7iwrXZfhQ7++b/AtWLRSFcghX1kC4AzEhFZKWxJrsbvjkoS7y976cDxPty4ARR0Tcd5I90uF/ww
+ 9o8pr0qJOO6dI9jYloP3cb46UvOAmTkkLjjnqqivGLYQ7D7e+s9Wfmuz23o4GwKuhU4EGtxgmKi
+ 1neqxOfg+YBs3GHfDkpeaYFghNX6x3Q
 X-Received: by 2002:a05:7301:b0a:b0:344:1bd9:1f0d with SMTP id
- 5a478bee46e88-34f150d42e6mr3480798eec.21.1790963473082; 
- Fri, 02 Oct 2026 10:51:13 -0700 (PDT)
+ 5a478bee46e88-34f150d42e6mr3482254eec.21.1790963512373; 
+ Fri, 02 Oct 2026 10:51:52 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-34f14f9f2afsm18027361eec.18.2026.10.02.10.51.06
+ 5a478bee46e88-34f14f9f2afsm18027361eec.18.2026.10.02.10.51.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 10:51:12 -0700 (PDT)
+ Fri, 02 Oct 2026 10:51:51 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Max Filippov <jcmvbkbc@gmail.com>, Stafford Horne <shorne@gmail.com>,
@@ -96,10 +96,9 @@ Cc: Max Filippov <jcmvbkbc@gmail.com>, Stafford Horne <shorne@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 03/27] accel/tcg: add raise_excp and raise_excp_restore
- generator helpers
-Date: Sat,  3 Oct 2026 01:50:11 +0800
-Message-ID: <20261002175037.1747-4-luoyonggang@gmail.com>
+Subject: [PATCH v3 08/27] target/hppa: remove hppa_dynamic_excp
+Date: Sat,  3 Oct 2026 01:50:16 +0800
+Message-ID: <20261002175037.1747-9-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20261002175037.1747-1-luoyonggang@gmail.com>
 References: <20261002175037.1747-1-luoyonggang@gmail.com>
@@ -129,44 +128,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use cpu_raise_excp_restore() for FPU exceptions and remove the redundant
+HPPA wrapper.
+
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- accel/tcg/cpu-exec-common.c | 12 ++++++++++++
- accel/tcg/cpu-exec-common.h |  2 ++
- 2 files changed, 14 insertions(+)
+ target/hppa/cpu.h        | 1 -
+ target/hppa/fpu_helper.c | 3 ++-
+ target/hppa/op_helper.c  | 8 --------
+ 3 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index b551c1439ec..715e3cb327c 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -131,6 +131,18 @@ void cpu_raise_excp_restore(CPUState *cpu, int exception_index,
-     cpu_loop_exit_restore(cpu, retaddr);
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index f453444d7f9..da3cc15fe9a 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -407,6 +407,5 @@ extern const MemoryRegionOps hppa_io_eir_ops;
+ extern const VMStateDescription vmstate_hppa_cpu;
+ void hppa_cpu_alarm_timer(void *);
+ #endif
+-G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra);
+ 
+ #endif /* HPPA_CPU_H */
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index cdbebcfeb3a..1115b90407d 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "fpu/softfloat.h"
+ 
+ void HELPER(loaded_fr0)(CPUHPPAState *env)
+@@ -131,7 +132,7 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+     env->fr[0] = (uint64_t)shadow << 32 | fr1;
+ 
+     if (hard_exp & shadow) {
+-        hppa_dynamic_excp(env, EXCP_ASSIST, ra);
++        cpu_raise_excp_restore(env_cpu(env), EXCP_ASSIST, ra);
+     }
  }
  
-+/* Raise exception and exit the TB without restoring guest state. */
-+void HELPER(raise_excp)(CPUArchState *env, uint32_t exception)
-+{
-+    cpu_raise_excp(env_cpu(env), exception);
-+}
-+
-+/* Raise exception and exit the TB, restoring state from GETPC(). */
-+void HELPER(raise_excp_restore)(CPUArchState *env, uint32_t exception)
-+{
-+    cpu_raise_excp_restore(env_cpu(env), exception, GETPC());
-+}
-+
- void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc)
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 9c560a56d34..c1728f1fb91 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -30,14 +30,6 @@
+ #include "user/page-protection.h"
+ #endif
+ 
+-G_NORETURN void hppa_dynamic_excp(CPUHPPAState *env, int excp, uintptr_t ra)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    cs->exception_index = excp;
+-    cpu_loop_exit_restore(cs, ra);
+-}
+-
+ static void atomic_store_mask32(CPUHPPAState *env, target_ulong addr,
+                                 uint32_t val, uint32_t mask, uintptr_t ra)
  {
-     /* Prevent looping if already executing in a serial context. */
-diff --git a/accel/tcg/cpu-exec-common.h b/accel/tcg/cpu-exec-common.h
-index 19359a97bae..1e82f3b14d3 100644
---- a/accel/tcg/cpu-exec-common.h
-+++ b/accel/tcg/cpu-exec-common.h
-@@ -1,2 +1,4 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- DEF_HELPER_FLAGS_1(exit_atomic, TCG_CALL_NO_WG, noreturn, env)
-+DEF_HELPER_FLAGS_2(raise_excp, TCG_CALL_NO_WG, noreturn, env, i32)
-+DEF_HELPER_FLAGS_2(raise_excp_restore, TCG_CALL_NO_WG, noreturn, env, i32)
 -- 
 2.52.0.windows.1
 
