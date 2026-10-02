@@ -4,80 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A93CA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC487CA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 14:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCedh-00026r-PY; Fri, 02 Oct 2026 10:53:33 -0400
+	id 1xCeeX-0002Ke-U5; Fri, 02 Oct 2026 10:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCedf-00026T-Oc
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:53:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCeeF-0002Fs-UH
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:54:10 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xCedd-0004Qu-Qt
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:53:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790952808;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3QRQy3iI5/5IPtACg4wY10aCRW+6u1TuSfC7Eq23xBw=;
- b=jBI4OgiqzNHEf6Zy9hRvDWb9wGFrghjog/rP9W63HE5gG3zi7Cqwd8Xhh1sEZT4NNGk3Vu
- UNGm29Ep8qBrOUdho0+erfixmMxGThgfDtjqq7Y1OkEsr4RzzkQHHEAaYVi4H+PyNrMvQT
- nUVKeJaTPZ8ymN0wzWT2sdUTyiR1JU8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-8_u8yLIoNzaw76XQ7Jp7KQ-1; Fri,
- 02 Oct 2026 10:53:25 -0400
-X-MC-Unique: 8_u8yLIoNzaw76XQ7Jp7KQ-1
-X-Mimecast-MFC-AGG-ID: 8_u8yLIoNzaw76XQ7Jp7KQ_1790952803
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89DD318009C0; Fri,  2 Oct 2026 14:53:22 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81795180056E; Fri,  2 Oct 2026 14:53:19 +0000 (UTC)
-Date: Fri, 2 Oct 2026 15:53:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-Message-ID: <ar_FXE5rzVqKcTc4@redhat.com>
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-2-pbonzini@redhat.com>
- <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1xCeeC-0004RZ-Tp
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 10:54:07 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 692ErMhA057176
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 2 Oct 2026 23:53:22 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=tlDHkHzguE5+h3w/7LtxOPCuucDwFmlthDMq86DA9HM=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1790952802; v=1;
+ b=R5TIz1tlPWsRxMMuxG+2UZJw1m3tsiClMqXxenveVr//ddhzO51QAp2P9bBfB9I4
+ b84ftRJz9OJGC95Aty6a06KUXrNQLXOxeKBxv9O588ggSmnVCJVt7XVOyAiTMDJA
+ IuGVvyuF3JBuEBnd7oR8Gu4bRhs2ZIRArq5w8kFiWF84mFk96QFclGYUKvUhZUTl
+ CkLGY9g0HeKj8rkujDuga8H+De6rv4wVs530rBx9oB3CG6UTjxVWvHnfuSBdS+js
+ V11oik7dBrGTkEv28iwGG/tSEHSRk9NxgCDnyqQ0w4w71k3xYh0F4N6CoUkgILqn
+ F+ApIztcVUW2IAnvgoxwqA==
+Message-ID: <674e4907-1065-42a3-838e-400d369ed28e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 2 Oct 2026 23:53:21 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 16/19] vhost: release ownership on exit
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: farosas@suse.de, bchaney@akamai.com, dongli.zhang@oracle.com,
+ vsementsov@yandex-team.ru, philmd@oss.qualcomm.com,
+ maciej.szmigiero@oracle.com, mst@redhat.com, dwmw2@infradead.org,
+ mark.kanda@oracle.com, sgarzare@redhat.com, den@openvz.org,
+ peterx@redhat.com, clg@redhat.com
+References: <20261002-up-vsock-vhost-v5-v11-0-18fa09d8273d@virtuozzo.com>
+ <20261002-up-vsock-vhost-v5-v11-16-18fa09d8273d@virtuozzo.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20261002-up-vsock-vhost-v5-v11-16-18fa09d8273d@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,113 +74,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 01, 2026 at 01:21:43PM +0100, Peter Maydell wrote:
-> On Wed, 30 Sept 2026 at 09:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > +LLM-assisted and LLM-created contributions
-> > +''''''''''''''''''''''''''''''''''''''''''
-> > +
-> > +Use of generative AI can be classified in the following four buckets:
-> > +
-> > +- "background" assistance, such as completion and code review.  This does
-> > +  not need disclosure.
-> > +
-> > +- small LLM-assisted bugfixes (as a rule of thumb, below 10 lines of code)
-> > +  are allowed with disclosure.  Splitting a submission in multiple parts
-> > +  is **not** a valid way to bypass this rule; repeated, frequent posting
-> > +  of such fixes must follow the rule for full contributions.
-> > +
-> > +- use of LLMs to help generating parts of a larger patch---test cases,
-> > +  adaptations of existing code, boilerplate code for a new API, a tool to
-> > +  help performing mechanical changes, etc.  These are generally allowed;
-> > +  disclosure is highly recommended for non-trivial, functional code.
+On 2026/10/02 22:02, Andrey Drobyshev wrote:
+> A CPR target that has taken the device ownership in post_load() doesn't
+> always reach vhost_dev_cleanup(): a subsequent load error, e.g. a
+> truncated migration stream footer, makes QEMU exit() right away, and the
+> ownership stays with the dead process.  The source still holds the FD,
+> so the kernel never releases the device, and the source can't take it
+> back after being resumed -> SET_OWNER fails with EBUSY.
 > 
-> I think we can get or have consensus on these first three buckets...
+> Add an exit notifier to each vhost_dev, registered for its lifetime,
+> that releases the ownership if still held.  This covers every orderly
+> exit, which is every failure QEMU detects itself.  A target killed with
+> SIGKILL or crashing still leaves the device unrecoverable.
+
+With return-path enabled, incoming failure first sends "SHUT" with 
+migrate_send_rp_shut(). The source can automatically resume before the 
+notifier runs, receive EBUSY, and leave vsock stopped while the guest runs.
+
+Regards,
+Akihiko Odaki
+
 > 
-> > +- large, heavily LLM-assisted contributions where LLMs write large parts
-> > +  of functional code.  These are only allowed if *pre-arranged*,
-> > +  *high-quality* and *well-tested*.
-> > +
-> > +The last case (*"LLM-created contribution"*) is the one that requires
-> > +a more careful approach.  In particular:
-> > +
-> > +- "Pre-arranged" means that a maintainer has communicated ahead of time,
-> > +  for example on `IRC or the QEMU mailing
-> > +  list <https://www.qemu.org/contribute/>`__, that they are willing
-> > +  to review an LLM-created contribution.
-> > +
-> > +- "High-quality" means that the contributor must apply the same judgment
-> > +  that would be applied to other code changes.  Contributors must invest
-> > +  substantial time reviewing their contributions, curating them, and
-> > +  understanding them in depth.
-> > +
-> > +- "Well-tested" means the LLM-created contributions will be held to a
-> > +  higher standard than human-created ones, because LLMs make it easier
-> > +  to write tests.  There are no exceptions for "writing the tests seems
-> > +  hard" or for `yak shaving <https://en.wiktionary.org/wiki/yak_shaving>`__.
+> Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
+>   hw/virtio/vhost.c         | 22 ++++++++++++++++++++++
+>   include/hw/virtio/vhost.h |  3 +++
+>   2 files changed, 25 insertions(+)
 > 
-> ...but I think fundamentally I am not in favour of having this
-> fourth category of permitted uses. It seems even to have lost the
-> idea of it being an "experimental" approach in this revision of the
-> series. The first three categories are fine, and I have no particular
-> problem with our relaxing our current policy to explicitly permit them.
-
-I suggested previously to remove the "experimental" tag, because it
-felt rather misleading wrt what the policy was actually proposing to
-permit in practice.
-
-
-When we're saying that a maintainer and contributor can agree to
-use AI for *anything* and will merge it, then that work has ceased
-to be for "experiments". It is a fully accepted use case for writing
-and merging code. All the policy is doing at that point is attempting
-to rate-limit work by requiring prior agreement to use AI.
-
-
-> Our problem as a project does not seem to be on the "writing
-> code" side of things, but has always been on the "code review"
-> side. This policy relaxation makes it much easier to write more
-> code. Even when there's a "pre-arranged reviewer" that isn't
-> necessarily helpful -- if you're one of the primary maintainers
-> for an area of QEMU then the fact that somebody else is reviewing
-> it doesn't make a big AI-generated code infusion any more palatable.
-
-Yes, that is my concern with anything that ends up spreading outside
-the bounds of a single subsystem & its maintainer(s).
-
-
-> I look at our issue tracker where we see AI assisted contributions
-> that run the whole range from "an human making intelligent use of
-> the tool to provide high-quality bug reports with good analysis"
-> through to "absolute slop dumped on us with no apparent human
-> thought or intervention". I don't really want to expand that
-> from our issue tracker to our code review and codebase, please.
-
-One of the problems I have with the AI contribs in the bug tracker
-is that the quality/accuracy is just about high enough that I am
-not comfortable rejecting (closing) most of the bugs, as there's
-usually some nugget of a real problem in there. At the same time
-the quality is not high enough to make it pleasant to deal with
-the issues, which is amplified by the volume of bugs.
-
-I expect the same thing will happen with code. The patches will be
-good enough, such that you'll have a really hard time to justify
-rejecting them outright. They can even be as good as an initial
-patch from a human. The difference is that when you point out all
-the mistakes to the human, they'll remember most of it and not
-make the same mistakes again in future contributions. For bots,
-it is a potluck whether your feedback has any effect long time
-on future contributions. So we'll end up suffering through the
-review of the work regardless.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 1241c5a954d..60cbb763e35 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -30,6 +30,7 @@
+>   #include "system/dma.h"
+>   #include "system/memory.h"
+>   #include "system/ramblock.h"
+> +#include "system/system.h"
+>   #include "trace.h"
+>   
+>   /* enabled until disconnected backend stabilizes */
+> @@ -53,6 +54,21 @@ static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+>   static QLIST_HEAD(, vhost_dev) vhost_devices =
+>       QLIST_HEAD_INITIALIZER(vhost_devices);
+>   
+> +/*
+> + * Release the ownership of the vhost devices still held at exit(), so that
+> + * another process sharing the backend FDs (e.g. the CPR source) can take
+> + * them over.
+> + */
+> +static void vhost_exit_notify(Notifier *notifier, void *data)
+> +{
+> +    struct vhost_dev *hdev = container_of(notifier, struct vhost_dev,
+> +                                          exit_notifier);
+> +
+> +    if (hdev->owner) {
+> +        vhost_dev_reset_owner(hdev);
+> +    }
+> +}
+> +
+>   unsigned int vhost_get_max_memslots(void)
+>   {
+>       unsigned int max = UINT_MAX;
+> @@ -1823,6 +1839,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+>       hdev->log_enabled = false;
+>       hdev->started = false;
+>       memory_listener_register(&hdev->memory_listener, &address_space_memory);
+> +    hdev->exit_notifier.notify = vhost_exit_notify;
+> +    qemu_add_exit_notifier(&hdev->exit_notifier);
+>       QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+>   
+>       /*
+> @@ -1872,6 +1890,10 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+>           memory_listener_unregister(&hdev->memory_listener);
+>           QLIST_REMOVE(hdev, entry);
+>       }
+> +    if (hdev->exit_notifier.notify) {
+> +        qemu_remove_exit_notifier(&hdev->exit_notifier);
+> +        hdev->exit_notifier.notify = NULL;
+> +    }
+>       migrate_del_blocker(&hdev->migration_blocker);
+>       g_free(hdev->mem);
+>       g_free(hdev->mem_sections);
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index f6e32b59ab2..6bd19d1d51b 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -3,6 +3,7 @@
+>   
+>   #include "net/vhost_net.h"
+>   #include "hw/virtio/vhost-backend.h"
+> +#include "qemu/notify.h"
+>   #include "hw/virtio/virtio.h"
+>   #include "system/memory.h"
+>   
+> @@ -116,6 +117,8 @@ struct vhost_dev {
+>        * Updated only by vhost_dev_set_owner()/vhost_dev_reset_owner()
+>        */
+>       bool owner;
+> +    /* @exit_notifier: releases the ownership at exit, vhost_exit_notify() */
+> +    Notifier exit_notifier;
+>       bool log_enabled;
+>       uint64_t log_size;
+>       Error *migration_blocker;
+> 
 
 
