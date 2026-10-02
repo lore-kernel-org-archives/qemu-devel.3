@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43451CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 05:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5BCCA5FC4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 05:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCVpI-00007u-8D; Fri, 02 Oct 2026 01:28:56 -0400
+	id 1xCVpJ-00008x-2X; Fri, 02 Oct 2026 01:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xCVoL-0008Ge-0h; Fri, 02 Oct 2026 01:28:00 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1xCVof-0008L4-H0; Fri, 02 Oct 2026 01:28:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1xCVoH-00081e-JQ; Fri, 02 Oct 2026 01:27:55 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1xCVob-00082H-VY; Fri, 02 Oct 2026 01:28:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6922ZhiQ3344813; Fri, 2 Oct 2026 05:27:45 GMT
+ 6922Ztvb1681085; Fri, 2 Oct 2026 05:27:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=rGFDGchg20xlJgXEM
- i6LAfLwxo4549rcy0LzhG9ApYM=; b=FcZjwUQZ6haf1P+VFsfIqRvX83ISDaSqh
- zsgVaKo49gRt7llAez/poyzO4eoUIS7TShpV2fIBBuKcCcU5cP70AcG34CM13EvA
- OuT7kGi1KZNdUAJuXbHOh79ojneP0SDJfdWhBLcij9rcCyAhIR4zYOGTFpL7pW8e
- UUgSNEzbOgEEaIP8LYQzRtKvbNT1ttbfTYx0E+OIYHdjqZMYOqplJWHO4I8Bmoz7
- N0qC+Zh44m5zTSbddcUzKLRvRuMlpaCf3axFSqND3mKdnEsCSRDs9Ng3SdVGnIE1
- HGOFpsAviY1k6ls5E5JrL7ACmMtHpXXXwC0T0yS7Mkr2EACqzSNPg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fkpp0n-1
+ :mime-version:references:subject:to; s=pp1; bh=pKW69llRPjvNfawX6
+ 8bCaiVT8YQXNTvAEwYS9v8HB3E=; b=W1B4xnG0axxyCwz2BpJKvoWhbHURZ/cLU
+ YIaEs4ZGWCiSW+Dnga8hvbMiFnxNj+6cEQO6r3in1Wel1uHUEVUtuflbQjehQGat
+ dc+4RVN7q97t7QO3pbcZceFaJxrGcTBzvBX1T9SovsboTF+ppUVcs0Emog8mHTyz
+ Kwv4aABjVvrdscac7SHY/xFVBp62mkQ5SaYgEgCMkfwTd5T8jKOgwadcKd/eAvY6
+ vme3iFpGb9H55Ph730kg5XSx0OJ+ZrrByBQF5iMp8Ra8sVUpaxf2YAb1emCeHLdh
+ gYhj+ClXzx1ou4qtMNeRYVdDQUG6Bc50B/aw9FyY85JglrYmYGb9Q==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qrqm05-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 02 Oct 2026 05:27:45 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6922K7SU1834166; Fri, 2 Oct 2026 05:27:44 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h1y2dhfhv-1
+ Fri, 02 Oct 2026 05:27:55 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6922K8cR1897644; Fri, 2 Oct 2026 05:27:54 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h1aa7xhf2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 02 Oct 2026 05:27:44 +0000 (GMT)
+ Fri, 02 Oct 2026 05:27:54 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6925Rgbg60424554
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6925RqQ857672128
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 2 Oct 2026 05:27:43 GMT
+ Fri, 2 Oct 2026 05:27:52 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BEF9358063;
- Fri,  2 Oct 2026 05:27:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8537058064;
+ Fri,  2 Oct 2026 05:27:52 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 21D7D5805A;
- Fri,  2 Oct 2026 05:27:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 93D105805A;
+ Fri,  2 Oct 2026 05:27:43 +0000 (GMT)
 Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
  [9.43.111.176]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  2 Oct 2026 05:27:33 +0000 (GMT)
+ Fri,  2 Oct 2026 05:27:43 +0000 (GMT)
 From: uverma@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@amd.com,
  nnmlinux@linux.ibm.com, avnish@linux.ibm.com
@@ -65,9 +65,10 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, sbhat@linux.ibm.com,
  balaton@eik.bme.hu, philmd@linaro.org, npiggin@gmail.com,
  marcandre.lureau@redhat.com, fam@euphon.net, alex.bennee@linaro.org,
  richard.henderson@linaro.org, Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [RFC PATCH v2 3/8] ppc/spapr: add baseline VOF disk boot support
-Date: Fri,  2 Oct 2026 10:55:42 +0530
-Message-ID: <20261002052605.605858-4-uverma@linux.ibm.com>
+Subject: [RFC PATCH v2 4/8] ppc/spapr: add VTY backend support to OF
+ read/write/open services
+Date: Fri,  2 Oct 2026 10:55:43 +0530
+Message-ID: <20261002052605.605858-5-uverma@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261002052605.605858-1-uverma@linux.ibm.com>
 References: <20261002052605.605858-1-uverma@linux.ibm.com>
@@ -75,40 +76,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: JYRb0Dz7TFlzUWqCWQOUHAgVCbKgR-Q2
-X-Proofpoint-GUID: F5iRt29pWE1USwN0TfBB5vXK74FtcCvi
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfXyeN20Gv1A03g
- wdwEKvIqi5RmKHTP7vdhbupS+mzZdyJUM2esOVqDLdyBWf/00xrkKPhnK60PgnBRerdUA/NV+bY
- /KdarxtnNZN1LuST+z4POEXDRXi9PfA=
-X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6abf40d1 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfX95S6msiyyhYD
+ 7neTDHI6p+do7tVBVM/0/h8V/NCpKOHdjK3s2kygyArpSunqxd8AG/AIHrS4hdfaqO4K/KcLBvl
+ 9IWL9ZreTGBwzCB+1URM6gYdi1zSXWA/wkNBg7qT9Of94dPtGBVF+gKnRm43gVnDAVRrCZbCtev
+ 21CSAxzdW1pR+wAM07zfEJSAEZgaVzKysXcrblGReMcoeX/TYIz+2BEsncpDsF+G+36jtasOLuz
+ /L47z68jMcEHG7Co32ner2bwaIKKQt0hK/KWW6c3GaBIhPOYX10AS+Jns/iILwRPm1Js8ooOr/1
+ He+TSojzpmw0ONchT5WGyj6j4qco5PUp0FWPJiMhO2hFK450Z1nWrfQhbRqYkUyNEq3FHmj7aDX
+ wM4S7CptdhEfjtVjsHVWcAZuVo+YQCmYILoMlzrUU72yOitCaKLX8tHQ6RStE1ueSffA6l29JQH
+ 9obJUXwk3PsFkOCsiVg==
+X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6abf40db cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=Ei6tgeEkNT0KFwxEUYUA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfXwwzKLJQ8EdxR
- DTaHM6vuOhfq2psFkfo2ofWryfkPfMd0xaGtz82AafPvrE4XEO8YTEEifefyEy05vCtfAf3EGym
- pQfLrfBgLKHgwzvmL8UJvfgwrGDpQcTXGcfAMK4pdCQliPcqq6zbfr+A+oMRbpRXPHy4lyypetf
- bokLw3ben/dgSI3MXg8oaKAJu66Q2MCV6Nf4E1pvHMOEDfkaJwQIptaT+sBbfZk2rhs7sV61L7o
- zhNE0lV8saa1y/oxl65BF5mRgpFAdMmtSA6JlIJZl5QIYlS4o5bW+fh6dIk/Ktlmzg6PUfGFDRK
- /ezRw5lGdwlmttPDEyTtl6s2rdWu0foByIv6kdE2fj52uQiW7ZV/q6o+nVkyeTQI1Rnmg01EWLe
- /R2tMAhEV8c2RRvGaySNHRPVvvqIqu11smiLSjz5ePtQ2nQxlLinjOvJ5nXZ8kWwuGtNU8/9IdK
- xJIGKVh66PWZJQ+66nQ==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=P1mcZCzRt2f-fA_eBAMA:9
+X-Proofpoint-ORIG-GUID: DRN-kCGFLv5DHOHWZSGLsvZybKyO9Js2
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDAyMCBTYWx0ZWRfXwtQJVCwlHdZE
+ nJKnJ25vLJ4aA27ivM1RoceVVkzgzJe3i5NRQt3ABBJsB3RSeV2Gsz/mqNFTeTRtlMz2MqAzl9t
+ Msh2OFFMsvUQAOWootw2obnLIe5neR8=
+X-Proofpoint-GUID: L-G-MbOmTSfNtPwRbmJcuRhLGHGtFbyZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-02_01,2026-10-01_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1011 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
  definitions=main-2610020020
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,277 +128,221 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Utkarsh Verma <uverma@linux.ibm.com>
 
-Add initial support for disk boot via VOF.
-Scan all the block devices, and for each device search for PReP partition,
-load the ELF payload (GRUB), and set the '/chosen' node in FDT with boot kernel
-and bootpath properties.
+Extend the VOF client interface to support console I/O through the sPAPR VTY
+device, which is needed by bootloaders such as GRUB during disk boot.
+
+Add vof_read() to implement the OpenFirmware "read" client service, which was
+previously missing.
+
+Route the OF read and write services backed by vty_getchars() and vty_putchars()
+
+Make vty_getchars() public similar to vty_putchars().
 
 AI-used-for: code
 Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 ---
-Chaneglog:
-v2:
-- Added bounds checking for partition size before doing g_malloc.
-- Added a roll back logic for cleaning the memory map FDT for paritial
-  claims.
----
- hw/ppc/spapr_vof.c   | 162 ++++++++++++++++++++++++++++++++++++++++---
- hw/ppc/vof.c         |   3 +
- include/hw/ppc/vof.h |   2 +
- 3 files changed, 159 insertions(+), 8 deletions(-)
+ hw/char/spapr_vty.c        |  2 +-
+ hw/ppc/spapr_vof.c         |  2 +
+ hw/ppc/trace-events        |  2 +
+ hw/ppc/vof.c               | 84 ++++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/spapr_vio.h |  1 +
+ 5 files changed, 90 insertions(+), 1 deletion(-)
 
+diff --git a/hw/char/spapr_vty.c b/hw/char/spapr_vty.c
+index 1dd9fb155c..2c97e0e027 100644
+--- a/hw/char/spapr_vty.c
++++ b/hw/char/spapr_vty.c
+@@ -52,7 +52,7 @@ static void vty_receive(void *opaque, const uint8_t *buf, int size)
+     }
+ }
+ 
+-static int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max)
++int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max)
+ {
+     SpaprVioVty *dev = VIO_SPAPR_VTY_DEVICE(sdev);
+     int n = 0;
 diff --git a/hw/ppc/spapr_vof.c b/hw/ppc/spapr_vof.c
-index 46d78756e6..78d5b7d5b5 100644
+index 78d5b7d5b5..3195c859a4 100644
 --- a/hw/ppc/spapr_vof.c
 +++ b/hw/ppc/spapr_vof.c
-@@ -10,10 +10,19 @@
- #include "hw/ppc/spapr_cpu_core.h"
- #include "hw/ppc/fdt.h"
- #include "hw/ppc/vof.h"
-+#include "hw/ppc/spapr_vof.h"
-+#include "hw/core/qdev.h"
-+#include "hw/core/loader.h"
- #include "system/system.h"
-+#include "system/block-backend.h"
-+#include "system/block-backend-global-state.h"
- #include "qom/qom-qobject.h"
-+#include "target/ppc/cpu.h"
-+#include "elf.h"
- #include "trace.h"
- 
-+#define SPAPR_VOF_PREP_MAX_SIZE (10 * 1024 * 1024)
-+
- target_ulong spapr_h_vof_client(PowerPCCPU *cpu, SpaprMachineState *spapr,
-                                 target_ulong opcode, target_ulong *_args)
- {
-@@ -32,10 +41,10 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
- 
-     vof_build_dt(fdt, spapr->vof);
- 
--    if (spapr->vof->bootargs) {
--        int chosen;
-+    int chosen;
-+    _FDT(chosen = fdt_path_offset(fdt, "/chosen"));
- 
--        _FDT(chosen = fdt_path_offset(fdt, "/chosen"));
-+    if (spapr->vof->bootargs) {
-         /*
-          * If the client did not change "bootargs", spapr_dt_chosen() must have
-          * stored machine->kernel_cmdline in it before getting here.
-@@ -43,6 +52,22 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
-         _FDT(fdt_setprop_string(fdt, chosen, "bootargs", spapr->vof->bootargs));
-     }
- 
-+    if (spapr->vof->disk_boot) {
-+        /*
-+         * If disk boot is detected change the "qemu,boot-kernel" to hold
-+         * kernel_addr/kernel_size which contain the GRUB entry point and size
-+         */
-+        uint64_t kern[2];
-+        kern[0] = cpu_to_be64(spapr->kernel_addr);
-+        kern[1] = cpu_to_be64(spapr->kernel_size);
-+        _FDT(fdt_setprop(fdt, chosen, "qemu,boot-kernel", &kern, sizeof(kern)));
-+
-+        if (spapr->vof->bootpath) {
-+            _FDT(fdt_setprop_string(fdt, chosen, "bootpath",
-+                                    spapr->vof->bootpath));
-+        }
-+    }
-+
-     /*
-      * SLOF-less setup requires an open instance of stdout for early
-      * kernel printk. By now all phandles are settled so we can open
-@@ -54,11 +79,116 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
+@@ -76,6 +76,8 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt)
+     if (stdout_path) {
+         _FDT(vof_client_open_store(fdt, spapr->vof, "/chosen", "stdout",
+                                    stdout_path));
++        _FDT(vof_client_open_store(fdt, spapr->vof, "/chosen", "stdin",
++                                   stdout_path));
      }
  }
  
-+static bool vof_elf_segment_cb(void *opaque,
-+                                uint64_t paddr, uint64_t vaddr,
-+                                uint64_t filesz, uint64_t memsz)
-+{
-+    Vof *vof = opaque;
-+
-+    if (memsz == 0) {
-+        return true;
-+    }
-+
-+    if (paddr != vaddr) {
-+        error_report("spapr_vof_load_elf: segment paddr/vaddr mismatch "
-+                     "(paddr=0x%" PRIx64 " vaddr=0x%" PRIx64 ")",
-+                     paddr, vaddr);
-+        return false;
-+    }
-+
-+    if (vof_claim(vof, paddr, memsz, 0) == -1) {
-+        error_report("spapr_vof_load_elf: vof_claim failed for "
-+                     "paddr=0x%" PRIx64 " size=0x%" PRIx64, paddr, memsz);
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+static bool spapr_vof_try_prep_boot(SpaprMachineState *spapr, Vof *vof)
-+{
-+    BlockBackend *blk;
-+    DeviceState *dev;
-+    uint64_t partition_offset;
-+    uint64_t partition_size;
-+    uint8_t *prep_data;
-+    uint64_t entry_point;
-+    uint64_t load_size;
-+    int64_t blk_len;
-+
-+    for (blk = blk_next(NULL); blk; blk = blk_next(blk)) {
-+
-+        if (!blk_is_inserted(blk)) {
-+            continue;
-+        }
-+
-+        partition_offset = 0;
-+        partition_size   = 0;
-+
-+        if (!spapr_vof_find_prep_partition(blk, &partition_offset,
-+                                           &partition_size)) {
-+            continue;
-+        }
-+
-+        blk_len = blk_getlength(blk);
-+        if (blk_len < 0 ||
-+            partition_size == 0 ||
-+            partition_size > SPAPR_VOF_PREP_MAX_SIZE ||
-+            partition_offset > (uint64_t)blk_len ||
-+            partition_size > (uint64_t)blk_len - partition_offset) {
-+            continue;
-+        }
-+
-+        prep_data = g_malloc(partition_size);
-+        if (blk_pread(blk, partition_offset, partition_size,
-+                      prep_data, 0) < 0) {
-+            g_free(prep_data);
-+            continue;
-+        }
-+
-+        guint saved_claimed_len = vof->claimed->len;
-+        uint64_t saved_claimed_base = vof->claimed_base;
-+
-+        uint64_t lowaddr = UINT64_MAX, highaddr = 0;
-+        entry_point = 0;
-+        ssize_t ret = load_elf_ram_sym_buf(prep_data, partition_size,
-+                                           NULL, NULL, NULL,
-+                                           &entry_point, &lowaddr, &highaddr,
-+                                           NULL, ELFDATA2MSB,
-+                                           PPC_ELF_MACHINE, 0, 0,
-+                                           NULL, false, NULL,
-+                                           vof_elf_segment_cb, vof);
-+        if (ret <= 0) {
-+            error_report("spapr_vof_try_prep_boot: %s", load_elf_strerror(ret));
-+            /* Roll back any partial claims made during the failed load. */
-+            g_array_set_size(vof->claimed, saved_claimed_len);
-+            vof->claimed_base = saved_claimed_base;
-+            g_free(prep_data);
-+            continue;
-+        }
-+        load_size = highaddr - lowaddr;
-+
-+        g_free(prep_data);
-+
-+        spapr->kernel_addr = entry_point;
-+        spapr->kernel_size = load_size;
-+
-+        vof->disk_boot = true;
-+        dev = blk_get_attached_dev(blk);
-+        if (dev) {
-+            vof->bootpath = qdev_get_fw_dev_path(dev);
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
- void spapr_vof_reset(SpaprMachineState *spapr, void *fdt, Error **errp)
- {
-     target_ulong stack_ptr;
-     Vof *vof = spapr->vof;
-     PowerPCCPU *first_ppc_cpu = POWERPC_CPU(first_cpu);
-+    MachineState *machine = MACHINE(spapr);
+diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
+index 1f125ce841..dbdcfada26 100644
+--- a/hw/ppc/trace-events
++++ b/hw/ppc/trace-events
+@@ -79,6 +79,7 @@ vof_error_unknown_method(const char *method) "\"%s\""
+ vof_error_unknown_ihandle_close(uint32_t ih) "ih=0x%x"
+ vof_error_unknown_path(const char *path) "\"%s\""
+ vof_error_write(uint32_t ih) "ih=0x%x"
++vof_error_read(uint32_t ih) "ih=0x%x"
+ vof_finddevice(const char *path, uint32_t ph) "\"%s\" => ph=0x%x"
+ vof_claim(uint32_t virt, uint32_t size, uint32_t align, uint32_t ret) "virt=0x%x size=0x%x align=0x%x => 0x%x"
+ vof_release(uint32_t virt, uint32_t size, uint32_t ret) "virt=0x%x size=0x%x => 0x%x"
+@@ -92,6 +93,7 @@ vof_package_to_path(uint32_t ph, const char *tmp, int ret) "ph=0x%x => %s len=%d
+ vof_instance_to_path(uint32_t ih, uint32_t ph, const char *tmp, int ret) "ih=0x%x ph=0x%x => %s len=%d"
+ vof_instance_to_package(uint32_t ih, uint32_t ph) "ih=0x%x => ph=0x%x"
+ vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
++vof_read(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
+ vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
+ vof_claimed(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
  
-     vof_init(vof, spapr->rma_size, errp);
- 
-@@ -70,7 +200,7 @@ void spapr_vof_reset(SpaprMachineState *spapr, void *fdt, Error **errp)
-     /* Stack grows downwards plus reserve space for the minimum stack frame */
-     stack_ptr += VOF_STACK_SIZE - 0x20;
- 
--    if (spapr->kernel_size &&
-+    if (machine->kernel_filename && spapr->kernel_size &&
-         vof_claim(vof, spapr->kernel_addr, spapr->kernel_size, 0) == -1) {
-         error_setg(errp, "Memory for kernel is in use");
-         return;
-@@ -82,6 +212,14 @@ void spapr_vof_reset(SpaprMachineState *spapr, void *fdt, Error **errp)
-         return;
-     }
- 
-+    /*
-+     * Disk boot: load GRUB from the PReP boot partition on the block device, if
-+     * no kernel/initrd are provided
-+     */
-+    if (!machine->kernel_filename) {
-+        spapr_vof_try_prep_boot(spapr, vof);
-+    }
-+
-     spapr_vof_client_dt_finalize(spapr, fdt);
- 
-     spapr_cpu_set_entry_state(first_ppc_cpu, SPAPR_ENTRY_POINT,
-@@ -91,10 +229,18 @@ void spapr_vof_reset(SpaprMachineState *spapr, void *fdt, Error **errp)
-     /*
-      * At this point the expected allocation map is:
-      *
--     * 0..c38 - the initial firmware
--     * 8000..10000 - stack
--     * 400000.. - kernel
--     * 3ea0000.. - initramdisk
-+     * Kernel + initrd boot:
-+     *   0..d80       - the initial firmware
-+     *   8000..10000  - stack
-+     *   10000..20000 - vscsi-report-luns table (up to 64 KB, if needed)
-+     *   400000..     - kernel
-+     *   3ea0000..    - initramdisk
-+     *
-+     * Disk (GRUB) boot:
-+     *   0..d80       - the initial firmware
-+     *   8000..10000  - stack
-+     *   10000..20000 - vscsi-report-luns table (up to 64 KB, if needed)
-+     *   400000..     - GRUB (loaded from PReP partition)
-      *
-      * We skip writing FDT as nothing expects it; OF client interface is
-      * going to be used for reading the device tree.
 diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index 873e967f1e..9ad1aa7626 100644
+index 9ad1aa7626..6f6d424347 100644
 --- a/hw/ppc/vof.c
 +++ b/hw/ppc/vof.c
-@@ -1042,6 +1042,9 @@ void vof_cleanup(Vof *vof)
-     vof->of_instances = NULL;
-     vof->of_instance_last = 0;
-     vof->claimed_base = 0;
-+    g_free(vof->bootpath);
-+    vof->bootpath = NULL;
-+    vof->disk_boot = false;
+@@ -9,6 +9,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
++#include CONFIG_DEVICES /* CONFIG_PSERIES */
+ #include "qemu/osdep.h"
+ #include "qemu/ctype.h"
+ #include "qemu/timer.h"
+@@ -23,6 +24,7 @@
+ #include "qom/qom-qobject.h"
+ #include "trace.h"
+ 
++#include "hw/ppc/spapr_vio.h"
+ #include <libfdt.h>
+ 
+ /*
+@@ -45,6 +47,7 @@ typedef struct {
+ typedef struct {
+     char *path; /* the path used to open the instance */
+     uint32_t phandle;
++    void *vty;
+ } OfInstance;
+ 
+ static int readstr(hwaddr pa, char *buf, int size)
+@@ -459,6 +462,28 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
+     ++vof->of_instance_last;
+ 
+     inst->path = g_strdup(path);
++    inst->vty = NULL;
++
++#ifdef CONFIG_PSERIES
++    const char *node_name = fdt_get_name(fdt, offset, NULL);
++    if (node_name && strncmp(node_name, "vty", 3) == 0) {
++        uint8_t discard_buf[VOF_VTY_BUF_SIZE];
++        MachineState *ms = MACHINE(qdev_get_machine());
++        SpaprMachineState *spapr = SPAPR_MACHINE(ms);
++
++        if (spapr && spapr->vio_bus) {
++            inst->vty = spapr_vty_get_default(spapr->vio_bus);
++            if (inst->vty) {
++                /* Flush any stale data from the VTY input buffer */
++                while (vty_getchars(inst->vty, discard_buf,
++                                    sizeof(discard_buf)) > 0) {
++                    /* discard */
++                }
++            }
++        }
++    }
++#endif
++
+     g_hash_table_insert(vof->of_instances,
+                         GINT_TO_POINTER(vof->of_instance_last),
+                         inst);
+@@ -577,6 +602,23 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+         return PROM_ERROR;
+     }
+ 
++#ifdef CONFIG_PSERIES
++    if (inst->vty) {
++        uint32_t total_written = 0;
++
++        for ( ; len > 0; len -= cb) {
++            cb = MIN(len, sizeof(tmp));
++            if (VOF_MEM_READ(buf, tmp, cb) != MEMTX_OK) {
++                return PROM_ERROR;
++            }
++            vty_putchars(inst->vty, (uint8_t *)tmp, cb);
++            buf += cb;
++            total_written += cb;
++        }
++        return total_written;
++    }
++#endif
++
+     for ( ; len > 0; len -= cb) {
+         cb = MIN(len, sizeof(tmp) - 1);
+         if (VOF_MEM_READ(buf, tmp, cb) != MEMTX_OK) {
+@@ -594,6 +636,46 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
+     return len;
  }
  
- void vof_build_dt(void *fdt, Vof *vof)
-diff --git a/include/hw/ppc/vof.h b/include/hw/ppc/vof.h
-index 3a0fbffe54..e17779ee8a 100644
---- a/include/hw/ppc/vof.h
-+++ b/include/hw/ppc/vof.h
-@@ -18,6 +18,8 @@ typedef struct Vof {
-     GHashTable *of_instances; /* ihandle -> SpaprOfInstance */
-     uint32_t of_instance_last;
-     char *bootargs;
-+    char *bootpath;
-+    bool disk_boot;
-     long fw_size;
- } Vof;
++static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
++                         uint32_t len)
++{
++    OfInstance *inst = (OfInstance *)
++        g_hash_table_lookup(vof->of_instances, GINT_TO_POINTER(ihandle));
++
++    if (!inst) {
++        trace_vof_error_read(ihandle);
++        return PROM_ERROR;
++    }
++
++#ifdef CONFIG_PSERIES
++    if (inst->vty) {
++        uint8_t tmp[VOF_VTY_BUF_SIZE];
++        unsigned cb = MIN(len, sizeof(tmp));
++        uint32_t bytes_read = vty_getchars(inst->vty, tmp, cb);
++        if (bytes_read > 0) {
++            if (VOF_MEM_WRITE(buf, tmp, bytes_read) != MEMTX_OK) {
++                trace_vof_error_read(ihandle);
++                return PROM_ERROR;
++            }
++        }
++        if (trace_event_get_state(TRACE_VOF_READ) &&
++            qemu_loglevel_mask(LOG_TRACE)) {
++            char trace_buf[VOF_VTY_BUF_SIZE + 1];
++            memcpy(trace_buf, tmp, bytes_read);
++            trace_buf[bytes_read] = '\0';
++            trace_vof_read(ihandle, bytes_read, trace_buf);
++        }
++        return bytes_read;
++    }
++#endif
++
++    /*
++     * For other devices, return 0 to indicate no data available.
++     * This allows GRUB to continue without blocking on input.
++     */
++    return 0;
++}
++
+ static void vof_claimed_dump(GArray *claimed)
+ {
+     int i;
+@@ -906,6 +988,8 @@ static uint32_t vof_client_handle(MachineState *ms, void *fdt, Vof *vof,
+         ret = vof_instance_to_path(fdt, vof, args[0], args[1], args[2]);
+     } else if (cmpserv("write", 3, 1)) {
+         ret = vof_write(vof, args[0], args[1], args[2]);
++    } else if (cmpserv("read", 3, 1)) {
++        ret = vof_read(vof, args[0], args[1], args[2]);
+     } else if (cmpserv("claim", 3, 1)) {
+         uint64_t ret64 = vof_claim(vof, args[0], args[1], args[2]);
  
+diff --git a/include/hw/ppc/spapr_vio.h b/include/hw/ppc/spapr_vio.h
+index 0ea0dbae8b..81e7c0b91b 100644
+--- a/include/hw/ppc/spapr_vio.h
++++ b/include/hw/ppc/spapr_vio.h
+@@ -136,6 +136,7 @@ static inline int spapr_vio_dma_set(SpaprVioDevice *dev, uint64_t taddr,
+ int spapr_vio_send_crq(SpaprVioDevice *dev, uint8_t *crq);
+ 
+ SpaprVioDevice *vty_lookup(SpaprMachineState *spapr, target_ulong reg);
++int vty_getchars(SpaprVioDevice *sdev, uint8_t *buf, int max);
+ void vty_putchars(SpaprVioDevice *sdev, uint8_t *buf, int len);
+ void spapr_vty_create(SpaprVioBus *bus, Chardev *chardev);
+ void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd);
 -- 
 2.55.0
 
