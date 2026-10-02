@@ -4,108 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B606CA5FDD
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 18:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0728FCA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 18:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xChfu-0002Qy-0B; Fri, 02 Oct 2026 14:08:02 -0400
+	id 1xChlA-0004Rl-4f; Fri, 02 Oct 2026 14:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xChfK-0002Ce-6R
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:07:36 -0400
-Received: from mail-ed2-x10.google.com ([2a00:1450:4864:33::10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xChfI-00015X-AT
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:07:25 -0400
-Received: by mail-ed2-x10.google.com with SMTP id
- 4fb4d7f45d1cf-6a6063d7dc4so308583a12.3
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 11:07:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790964443; cv=none;
- d=google.com; s=arc-20260327;
- b=hAa6O56zY5daKYstU4fcOBsD2Y+9TJPhbRi8Lyb64vBytOjFGvNz28IsG36+7HOUPd
- 79sqvm3kLoN8GH/GGJqsr+8zX+x1rNCaXrmx/KqAnFNRFmpQtLNT1TuqweA8adugnt/8
- OiTVdvHQW93cRk0f55yswwUH4KnNqmAfsdxBhSH99PXCZinSNWNYusWfcLDJM6rtV3aF
- fJpRHa3q1K3wUjDHBLSAvZOOXH08PwfIWHQ0kcN8Iir7R3iLHygH6fbz7oJbnqyxeXyy
- 8k1rYaM+zsYPjfLt8tnvB1AbLPKVBYxvJVQa7Q2ohq7PKbNtgRX7l+6Oxmga/5U0ACcv
- XiNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6QdMYUD3lRG1Bj9A6I+iBn991Jd0ZSPxjiMHO5cGzhU=;
- fh=WZ/DKXgQCIh3xZLEBR4fX/H1ZM9PKF/y9o2qJfJ3mIo=;
- b=CFjSwAZOGm0rzxIyjQUw2nZXI+C8MxAEqCIfJpAvOsss5qHv2lPVBDkKgDXzo3KIT8
- ts9mpo1I2Gj0ETwQ/kvSPpULmXcyTI++DVonb3uYmdk4Yb1JdDvBfSPaWzN5PRvsENsw
- sR+FPoF9PysvATrfyHbbI1nCTUxJ/Wd2Wf7v+8coG/FTBxzm8Drqlijm7QOWeD4FJiL4
- 1JkUqkbgmyrgyBD+fhhgGvoiUZMw3jKhwy6foMDVqeCFtuDzVHDdyLA9RS140UofyuS/
- JGDpNPE5ycQ3yFox2FQYEIFjkApXJiXebkTSCYRDlnqpXiS94gWdOApxS4OxMbypNpdb
- GYaw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xChky-0004Qi-F6
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:13:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xChkw-0001Zw-HF
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 14:13:16 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 692H6Lm62357381
+ for <qemu-devel@nongnu.org>; Fri, 2 Oct 2026 18:13:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=; b=FrL/8ODPx/hFURj5
+ FfDlwuhQxpjfw3WmVgJPr5Q+xR/swVT81VHQNZboK3IvqU4n8wGZ/tlwwlxqEZQh
+ fRBOjIR4Nd5Czq4ZkWhMUXtiNqmkLywjZLat3VaNJpxc5HWQBBHFUhOYJnRFriwK
+ AJe7zwuBiQ1uaj2CXoIPkawYuLU1rkeg3w7kqOqcWUEgZm6qj+aemhGRs1nZGwgU
+ 3NQuLLYB/DWF2dZFoVfQ3ujV73gH6hVKAN7Y2gFHdIuG0LeoMRt5/rRrG6v3LWcC
+ awcWmA/s2AYID1RItaxY9mXb9r7xxSLUG/VGjxq2dMNl1GFbRFbOI2ZHCHf5BdvT
+ j8wXIQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h20sh3n9a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 18:13:12 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c26012cd0so156741301cf.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 11:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1790964443; x=1791569243; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6QdMYUD3lRG1Bj9A6I+iBn991Jd0ZSPxjiMHO5cGzhU=;
- b=RTsqA8py81AlAyM/Ey3ZIclm8uPdywPs6pntyg1u+N/yF9YI81kdYYRRBbT9+wjEFF
- YeNkN8AA+vn2LXIXOWUhnABfJJCW3tAhUpitSvI8kmQqNW1DAvG7skSl/xE5R1tx4sRf
- MluPlMK7rWE/dmo8C04Oi/LAUEnQvgkvJ9/ey+hEx41p0k5XuaB2MDhjZ+5/xudxLlcV
- YqSwRXTNY0D/jBY4aEccRpclH8ukTxPZqQwRNApDfSor9II3dbHxxRK4pAnk2mlkY6i4
- UWnrtIA7yXUJj//mbqFsUsYlyg1Y1bYjavARHIIZo4UBbtea0SBQOKnLFnkhRRIe27nx
- S7iQ==
+ d=oss.qualcomm.com; s=google; t=1790964792; x=1791569592; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=;
+ b=MOFhbaFuK1U5ElH03Q19XJBNmCEipIYmQYoqTh7FCdJnm4eKUTko6heyvQWu0maYZ4
+ aKBiYmKcPEUu9h5v9NUA60/neqjGcFiR8c/oDSPqtb8VfTETDCelluSo72axfXXhqLnu
+ 5Ds2kiAt0Yx4gBOEfUXbNCwui+79Ad6EPOJp+K/LbJigZLah9TmI8AUpGSqBSid/DMTM
+ WQ3huTn+sLmABvopD3UzptyOsbsVjh1kO9CpMnEF8bqOlceT3d1BMqqBtVvQGUCcE3f/
+ MRXna2A0kW+df9eqb3Uz1Dj4a9aiRZ8BFRaXZqD3oIPxWk5N5lM6Z//EZqVu3IrtafMI
+ rSNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790964443; x=1791569243;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6QdMYUD3lRG1Bj9A6I+iBn991Jd0ZSPxjiMHO5cGzhU=;
- b=Kt0r923AmBLCEk4D0mrcntEJWUrGssWSX2ALP/n6pdae2DK0V78s6ExR2jBRICjxgd
- YflT3QwhS1VaNaeJRQrCyZ5uiHgimiubvfIK5JZbBGwfl6bb2rrKIheDVF+nBhSJ/0w7
- zr/M5UNWf4DyU7eBRveMzK6gWQPGbcbKDvrobgebexHixwO3v9mP2aciiSvGeX/xkTJY
- umNlrxYX246ovgp0jczCIC38rZrx74AtH0sexC5D3YHp24s2gsGbatUoI6+o8LAp0vYR
- ru/D5Wy/vN6RR8PD43XlfZIApfbAdbnu1xnV65KxcsemszSsJJqs0GWPbfN34ueDq7rG
- FRlA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzLRn3amk8njEG/qjk9+AqBsjGOuLCtcdZxk8mbj5/1r5AXTr7ebgUqRWwaMeMZTuc5YB4fwBinfdc5@nongnu.org
-X-Gm-Message-State: AFq9FYLrBvX4qIkonJ87W0TRG0+wxoSPBRtXtTqQEtnooJNc27mqirhH
- S+HWPJzXHUgjm07xixmMfFZ5v/yxNsn0j/gsv96YRxk1IrkWp/8WKbGHCPmx0wpBIrgnH8A8pkT
- jqodpOwonIl78GC/6Bhg/tV7LTGx0/ni6dbrDVxU=
-X-Gm-Gg: AYBFou1XsVs2Lrywkmx+npQMGHULEhB9PYTDWarMqjAQ269SE6kIJHxP9NDdbZrEnmS
- Akg1YA69zPPeou+80FLl/odcakOGX+dqZinDeoao0j+GWU3M5OznWP+gvYGFO0I+KUstH54cdNd
- r13RTt+fRZZtwOnmW5uSbDAJ97qBqhk6Y5f5KzZz6icM9iWDoJOQZNTGJULoYdco3wC+67fKqj3
- uZFmjr7aiBar8nuVKDJh+/3Rh+7FqVJZn33QIl7Lyzp+F31vXS+9+p7fl2VRnfHbnU1I2A5xeeq
- 1FCFCntgh3VOEZlmOVDBt8zssWVMqSM48/RTff57mEYkzBeV2eMsyeUKXnEM+TzmUP4=
-X-Received: by 2002:a05:6402:24ce:b0:6aa:734b:1a28 with SMTP id
- 4fb4d7f45d1cf-6af9e2ecaedmr1899769a12.34.1790964442424; Fri, 02 Oct 2026
- 11:07:22 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1790964792; x=1791569592;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TtwM8aleJty5ZExqkZofHwVMwW51moecoMgUxfqlmWY=;
+ b=QQKvErQthoyBQPfs7Qo6luAhwe7tcq3e5YlEDpr1Dq1nyoTTEbL+UKxqWk7hDLPc4E
+ XZ9YcPVvWaQ+6QABhRqhPdJofywdzEtFiYTaYsNQhlGa/Ha5BmQGo90qdQEsC7Q9b7a6
+ 6rLXqwitN7SZIFRw80pLDagHlDvp96+hdR/QVYJzPquD/ysEsbHuXbIshZJ84RqMS++y
+ 7NorBGp19X+PzORF9iQG4mgLSa4H34wa6O2KRFyFymgP56yQxo3nvK8DWWEx1EuwJe0V
+ hSbWHZZbh7dFCZFCChiPATicv796T5PUARm5/PNgvsY5BDw8cK32e01j92ctOOgTFvAK
+ DFGg==
+X-Gm-Message-State: AFuF++kWNa741tKKbucJ05MFgGYxs3qOREl19Q3ViO7HCqrBLYrOkiFq
+ sND637sDTKOeNozebidwg4l38hCtwYstaKcSiZ9J6qaNzqz7YohpWbwKD5TsyXhYiceJi0Uf4Zz
+ 0zldCcONO0LeOoScW6bhVqW3JFz8QtcUJHZUnZ9nS/iwU5lGjfmkgIY3+bg==
+X-Gm-Gg: AYBFou34YNuLQT/WSioOt6ribtPSfFQQcV2Yratnpz5BQwS6cKYMMd15//KrasyIwW/
+ IMGcM91zZW/q26U8x4B7WPy/Eb7XY/hPqvOXFZVS1p/4ZTs8dK/wVh2pANVkUf65w9qwOEQMLfK
+ NdXJ3I7cIZcKqoopNBi2dMzfVx76S0G+tQh4T7W2gAWImv5kZiJD4HM+kWfZ31IXHesihRwHvw1
+ BYORIbxUnFoP4xEtCIOPoPlV/zq4CSLEtGnYJIjdWcVIJbDZ7CIOml+JAMwUjnKHb/jlcxXG9El
+ EiOeAeH2ZwHFlhKCCQ27u50ukljMWGmgud7iBPwgKu9wZ7IHlNthe86CJ1WIstkjzYA2y9nJDoh
+ Ed6F+kHAH31omGPbGQJI8SnShvaTcvsgw7OLsMChhf1L+BMweFayWYyey6W6g04cB
+X-Received: by 2002:a05:622a:1b1e:b0:535:981:7851 with SMTP id
+ d75a77b69052e-535098186edmr31540191cf.56.1790964791864; 
+ Fri, 02 Oct 2026 11:13:11 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b1e:b0:535:981:7851 with SMTP id
+ d75a77b69052e-535098186edmr31539301cf.56.1790964791151; 
+ Fri, 02 Oct 2026 11:13:11 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-53398a9c92csm33490921cf.11.2026.10.02.11.13.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Oct 2026 11:13:10 -0700 (PDT)
+Message-ID: <9e914efb-c4c3-4860-8ed5-8a4046e0ca01@oss.qualcomm.com>
+Date: Fri, 2 Oct 2026 13:13:09 -0500
 MIME-Version: 1.0
-References: <20261001-rv-dedup-v1-0-ea69b07afd31@rev.ng>
- <20261001-rv-dedup-v1-7-ea69b07afd31@rev.ng>
- <CAE2XoE_ag1RR_JFwgcg+9zPed+qpO2skf7W1_kiqvwB=Vf9aAQ@mail.gmail.com>
- <f8f27bc3-83ce-4ccf-ae38-a43188b2ebc5@oss.qualcomm.com>
- <ar_AzEWpF9XDGNdg@hive.localdomain>
-In-Reply-To: <ar_AzEWpF9XDGNdg@hive.localdomain>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Sat, 3 Oct 2026 02:07:08 +0800
-X-Gm-Features: AclHuK8jeeqrBIeLEQk0WzZH3UqzYofOSJR5_ayEbariFLjWbJZZyb52zf4nZho
-Message-ID: <CAE2XoE_vsVDXH2qggECnqHC8dMpo7zyTTg9w64uvjnPeXE9y6A@mail.gmail.com>
-Subject: Re: [PATCH 07/18] target/riscv: Runtime register MAX and BARE CPUs
-To: Anton Johansson <anjo@rev.ng>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com, 
- philmd@oss.qualcomm.com, palmer@dabbelt.com, alistair.francis@wdc.com
-Content-Type: multipart/mixed; boundary="00000000000065b75f065cdf67bc"
-Received-SPF: pass client-ip=2a00:1450:4864:33::10;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed2-x10.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/10] target/hexagon: reserve internal HVX vector state
+ for QFloat
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ richard.henderson@linaro.org
+References: <20260926192338.2702952-1-brian.cain@oss.qualcomm.com>
+ <20260926192338.2702952-7-brian.cain@oss.qualcomm.com>
+ <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAJ+KCYP4jViUrM0M-EktGgDj=wHaK-vnmBZ1dOfJzhH7KZjF=w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfX54vmYRnTH9Sd
+ rq1/9g2pDcdCzOqmJrwnr3gzu4h/1eKfsIEbYCVGNi5XesFEWWbL+tBc6H3CqU3mVr84eXG7UXV
+ +1sPTWefGwh1ASWCghodX2oQqI1h5wA=
+X-Authority-Analysis: v=2.4 cv=IpmL47/g c=1 sm=1 tr=0 ts=6abff438 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=FttlZHXPmNnUGXYr6mEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAyMDA3MiBTYWx0ZWRfX3D+jkCO6jMCI
+ wEK81s1sCT0CB4lWBQIJbVzfsFznGURE3xAHdxm8xMXbnOqCfJFHXzdJYCqWzR5vAVe5nCricaX
+ lz8H2q5caWBoiQh9nW6XjbYNJHM/81M+e5Gl3ywHLZkfSG+ZXTMPppwaEX+56WLlI+aflWDixdI
+ 5Jclfr80JS6qP8BlNV5G451VfY8TyYHIj2d8awoaVHNt/6+JOE+6e/oiXrILAkcNYwpr1zDPIGd
+ FsfW+/Sla3zFWwzcTsdlKDarE1GRG/iY38VIhtQc60EVxRfji6EyhpXLc3iqf7HuGK/Miagz8y9
+ CWNlqwR6ueeaJxZlGoraf4+cdoY0jfQXAHmu72r4Ah0jSol6q0iv7bv05z8C+72LZ+ge9rdtnVF
+ NozqI53bCkiHai7KP/aNhZCx4yhPCwrC5XspKYAHcONtOLTkzD9u9Ol4s0uLhGcDlEg2llrPESh
+ 1r9RydXc8V4auJ+yqEA==
+X-Proofpoint-GUID: YbMykLILXtpxiAKD9V_3lUiHBUvIKUXg
+X-Proofpoint-ORIG-GUID: YbMykLILXtpxiAKD9V_3lUiHBUvIKUXg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-02_05,2026-10-02_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610020072
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,158 +154,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000065b75f065cdf67bc
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-target/riscv: resolve target-dependent CPU definition fields
+On 9/30/2026 1:19 PM, Marco Liebel wrote:
+> On Sat, Sep 26, 2026 at 2:23 PM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/mmvec/mmvec.h     | 55 ++++++++++++++++++++------------
+>>   hw/hexagon/hexagon_hvx_context.c |  5 +++
+>>   target/hexagon/hex_common.py     | 29 +++++++++++++++++
+>>   3 files changed, 68 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+>> index 02c54506145..55b8a40fe8c 100755
+>> --- a/target/hexagon/hex_common.py
+>> +++ b/target/hexagon/hex_common.py
+>> @@ -448,6 +448,25 @@ def helper_arg_type(self):
+>>           return "void *"
+>>       def helper_arg_name(self):
+>>           return f"{self.reg_tcg()}_void"
+>> +    def gen_clear_ext(self, f):
+>> +        f.write(code_fmt(f"""\
+>> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>> +                    {self.hvx_off()} + offsetof(MMVector, ext),
+>> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>> +                    V_EXTENDED_BYTEVAL);
+>> +            """))
+>> +    def gen_clear_ext_pair(self, f):
+>> +        f.write(code_fmt(f"""\
+>> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>> +                    {self.hvx_off()} + offsetof(MMVector, ext),
+>> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>> +                    V_EXTENDED_BYTEVAL);
+>> +                tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>> +                    {self.hvx_off()} + sizeof(MMVector)
+>> +                        + offsetof(MMVector, ext),
+>> +                    MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>> +                    V_EXTENDED_BYTEVAL);
+>> +            """))
+>>
+> gen_clear_ext() and gen_clear_ext_pair() currently update the
+> destination vector’s
+> extension field even when the instruction predicate is false. The following test
+> demonstrates the issue:
 
-The class-base initializer later reads def->misa_mxl_max and passes
-def->cfg to riscv_cpu_cfg_merge(), which merges max_satp_mode. Resolve
-both chooser results in a mutable copy so those steps use the selected
-values without modifying the const TypeInfo class data.
+
+Thanks for the fix and the test!  Will address them.
 
 
-defer riscv_cpu_validate_misa_mxl is not enough, mainly
-def->misa_mxl_max is accessed in
-riscv_cpu_class_base_init, for exactly match previous behavior, add
-two callback for each value
-
-On Fri, Oct 2, 2026 at 11:36=E2=80=AFPM Anton Johansson <anjo@rev.ng> wrote=
-:
 >
-> On 02/10/26, Pierrick Bouvier wrote:
-> > On 10/1/2026 9:28 AM, Yonggang Luo wrote:
-> > > On Thu, Oct 1, 2026 at 11:55=E2=80=AFPM Anton Johansson via qemu deve=
-lopment
-> > > <qemu-devel@nongnu.org> wrote:
-> > >>
-> > >> Moves initialization of satp and mxl fields to a class initializatio=
-n
-> > >> function that checks target_riscv64().
-> > >>
-> > >> Note: I'm aware the current iteration of this patch is rather hacky,=
- I
-> > >> don't like the introduction of runtime_misa_mxl_max, but I'm keeping
-> > >> this in to get the series out there and collect feedback.
-> > >>
-> > >> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > >> ---
-> > >>  target/riscv/cpu.h |  1 +
-> > >>  target/riscv/cpu.c | 90 +++++++++++++++++++++++++++++++++++--------=
------------
-> > >>  2 files changed, 59 insertions(+), 32 deletions(-)
-> > >>
-> > >
-> > > This patch is how I handle these, just for reference, not a review.
-> >
-> > Yonggang approach looks cleaner, I would favor this one.
+> static void test_ext_bits_preserved_on_false_predicate(void)
+> {
+>      asm volatile(
+>          "r0 = #0x11111111\n"
+>          "v3 = vsplat(r0)\n"
+>          "v0.x = vsetqfext(v3, r0)\n"
+>          "r2 = #1\n"
+>          "v1 = vsplat(r2)\n"
+>          "r1 = #0\n"
+>          "p0 = cmp.eq(r1, r2)\n"
+>          "{\n"
+>          "    if (p0) v0 = v1\n"
+>          "}\n"
+>          "v2 = vgetqfext(v0.x, r0)\n"
+>          "vmemu(%[out]) = v2\n"
+>          :
+>          : [out] "r"(output)
+>          : "r0", "r1", "r2", "v0", "v1", "v2", "v3", "p0", "memory");
 >
-> I'm personally not a huge fan, it still feels rather hacky. Why add a
-> completely new RISCVCPUDef::target_init just to make sure fields are
-> initialized before riscv_cpu_validate_misa_mxl()? Wouldn't moving the
-> check to a later point, maybe .instance_init, be better? Then for
-> riscv_cpu_init() we get
+>      for (int i = 0; i < MAX_VEC_SIZE_BYTES / 4; i++) {
+>          expect[0].uw[i] = 0x11111111;
+>      }
 >
->   riscv_cpu_validate_misa_mxl(mcc);
->   env->misa_mxl =3D mcc->def->misa_mxl_max;
+>      check_output_w(__LINE__, 1);
+> }
 >
-> misa_mxl_max would be verified only during instance rather than
-> class initialization, which seems like a decent tradeoff for a simpler
-> solution.
+> The extension reset needs to be predicated as well. For example:
 >
-> --
-> Anton Johansson
-> rev.ng Labs Srl.
-
-
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---00000000000065b75f065cdf67bc
-Content-Type: text/plain; charset="US-ASCII"; 
-	name="0001-target-riscv-resolve-target-dependent-CPU-definition.patch"
-Content-Disposition: attachment; 
-	filename="0001-target-riscv-resolve-target-dependent-CPU-definition.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mur9xek10>
-X-Attachment-Id: f_mur9xek10
-
-RnJvbSAzMTEzODg5MmZlNWNmODc4ZGE5ODE4Y2Y5MzUzNWNlMTBiMTI1Y2IwIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBZb25nZ2FuZyBMdW8gPGx1b3lvbmdnYW5nQGdtYWlsLmNvbT4K
-RGF0ZTogU2F0LCAzIE9jdCAyMDI2IDAxOjU0OjUyICswODAwClN1YmplY3Q6IFtQQVRDSF0gdGFy
-Z2V0L3Jpc2N2OiByZXNvbHZlIHRhcmdldC1kZXBlbmRlbnQgQ1BVIGRlZmluaXRpb24gZmllbGRz
-CgpUaGUgY2xhc3MtYmFzZSBpbml0aWFsaXplciBsYXRlciByZWFkcyBkZWYtPm1pc2FfbXhsX21h
-eCBhbmQgcGFzc2VzCmRlZi0+Y2ZnIHRvIHJpc2N2X2NwdV9jZmdfbWVyZ2UoKSwgd2hpY2ggbWVy
-Z2VzIG1heF9zYXRwX21vZGUuIFJlc29sdmUKYm90aCBjaG9vc2VyIHJlc3VsdHMgaW4gYSBtdXRh
-YmxlIGNvcHkgc28gdGhvc2Ugc3RlcHMgdXNlIHRoZSBzZWxlY3RlZAp2YWx1ZXMgd2l0aG91dCBt
-b2RpZnlpbmcgdGhlIGNvbnN0IFR5cGVJbmZvIGNsYXNzIGRhdGEuCgpTaWduZWQtb2ZmLWJ5OiBZ
-b25nZ2FuZyBMdW8gPGx1b3lvbmdnYW5nQGdtYWlsLmNvbT4KLS0tCiB0YXJnZXQvcmlzY3YvY3B1
-LmMgfCA0MCArKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tCiB0YXJnZXQv
-cmlzY3YvY3B1LmggfCAgMiArKwogMiBmaWxlcyBjaGFuZ2VkLCAyOSBpbnNlcnRpb25zKCspLCAx
-MyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvY3B1LmMgYi90YXJnZXQv
-cmlzY3YvY3B1LmMKaW5kZXggYzZmMTczOTA3NS4uNzU0ZjE1ODI1MCAxMDA2NDQKLS0tIGEvdGFy
-Z2V0L3Jpc2N2L2NwdS5jCisrKyBiL3RhcmdldC9yaXNjdi9jcHUuYwpAQCAtMzA5Miw2ICszMDky
-LDggQEAgc3RhdGljIHZvaWQgcmlzY3ZfY3B1X2NsYXNzX2Jhc2VfaW5pdChPYmplY3RDbGFzcyAq
-YywgY29uc3Qgdm9pZCAqZGF0YSkKIAogICAgIGlmIChwY2MtPmRlZikgewogICAgICAgICBtY2Mt
-PmRlZiA9IGdfbWVtZHVwMihwY2MtPmRlZiwgc2l6ZW9mKCpwY2MtPmRlZikpOworICAgICAgICBt
-Y2MtPmRlZi0+bWF4X3NhdHBfbW9kZV9jaG9vc2UgPSBOVUxMOworICAgICAgICBtY2MtPmRlZi0+
-bWlzYV9teGxfbWF4X2Nob29zZSA9IE5VTEw7CiAgICAgfSBlbHNlIHsKICAgICAgICAgbWNjLT5k
-ZWYgPSBnX25ldzAoUklTQ1ZDUFVEZWYsIDEpOwogICAgIH0KQEAgLTMxMDgsNyArMzExMCwxNiBA
-QCBzdGF0aWMgdm9pZCByaXNjdl9jcHVfY2xhc3NfYmFzZV9pbml0KE9iamVjdENsYXNzICpjLCBj
-b25zdCB2b2lkICpkYXRhKQogI2VuZGlmCiAKICAgICBpZiAoZGF0YSkgewotICAgICAgICBjb25z
-dCBSSVNDVkNQVURlZiAqZGVmID0gZGF0YTsKKyAgICAgICAgUklTQ1ZDUFVEZWYgZGVmX2RhdGEg
-PSAqKGNvbnN0IFJJU0NWQ1BVRGVmICopZGF0YTsKKyAgICAgICAgUklTQ1ZDUFVEZWYgKmRlZiA9
-ICZkZWZfZGF0YTsKKworICAgICAgICBpZiAoZGVmLT5tYXhfc2F0cF9tb2RlX2Nob29zZSkgewor
-ICAgICAgICAgICAgZGVmLT5jZmcubWF4X3NhdHBfbW9kZSA9IGRlZi0+bWF4X3NhdHBfbW9kZV9j
-aG9vc2UoZGVmKTsKKyAgICAgICAgfQorICAgICAgICBpZiAoZGVmLT5taXNhX214bF9tYXhfY2hv
-b3NlKSB7CisgICAgICAgICAgICBkZWYtPm1pc2FfbXhsX21heCA9IGRlZi0+bWlzYV9teGxfbWF4
-X2Nob29zZShkZWYpOworICAgICAgICB9CisKICAgICAgICAgbWNjLT5kZWYtPmJhcmUgfD0gZGVm
-LT5iYXJlOwogICAgICAgICBpZiAoZGVmLT5wcm9maWxlKSB7CiAgICAgICAgICAgICBhc3NlcnQo
-cHJvZmlsZV9leHRlbmRzKGRlZi0+cHJvZmlsZSwgbWNjLT5kZWYtPnByb2ZpbGUpKTsKQEAgLTMy
-OTksNiArMzMxMCwxOCBAQCBzdGF0aWMgdm9pZCByaXNjdl9jcHVfaW5zdGFuY2VfZmluYWxpemUo
-T2JqZWN0ICpvYmopCiAgICAgZ19jbGVhcl9wb2ludGVyKCZjcHUtPm11bHRpX2V4dF91c2VyX29w
-dHMsIGdfaGFzaF90YWJsZV9kZXN0cm95KTsKIH0KIAorc3RhdGljIGludDhfdCByaXNjdl9jcHVf
-bWF4X3NhdHBfbW9kZV9jaG9vc2UoY29uc3QgUklTQ1ZDUFVEZWYgKmRlZikKK3sKKyAgICAodm9p
-ZClkZWY7CisgICAgcmV0dXJuIHRhcmdldF9yaXNjdjMyKCkgPyBWTV8xXzEwX1NWMzIgOiBWTV8x
-XzEwX1NWNTc7Cit9CisKK3N0YXRpYyBSSVNDVk1YTCByaXNjdl9jcHVfbWlzYV9teGxfbWF4X2No
-b29zZShjb25zdCBSSVNDVkNQVURlZiAqZGVmKQoreworICAgICh2b2lkKWRlZjsKKyAgICByZXR1
-cm4gdGFyZ2V0X3Jpc2N2MzIoKSA/IE1YTF9SVjMyIDogTVhMX1JWNjQ7Cit9CisKIHN0YXRpYyBj
-b25zdCBUeXBlSW5mbyByaXNjdl9jcHVfdHlwZV9pbmZvc1tdID0gewogICAgIHsKICAgICAgICAg
-Lm5hbWUgPSBUWVBFX1JJU0NWX0NQVSwKQEAgLTMzMzksMjEgKzMzNjIsMTIgQEAgc3RhdGljIGNv
-bnN0IFR5cGVJbmZvIHJpc2N2X2NwdV90eXBlX2luZm9zW10gPSB7CiAgICAgICAgICAqIG9ubHkg
-TUJBUkUgd2lsbCBiZSBhdmFpbGFibGUgaWYgdGhlIHVzZXIgZG9lc24ndCBlbmFibGUKICAgICAg
-ICAgICogYSBtb2RlIG1hbnVhbGx5IChzZWUgcmlzY3ZfY3B1X3NhdHBfbW9kZV9maW5hbGl6ZSgp
-KS4KICAgICAgICAgICovCi0jaWZkZWYgVEFSR0VUX1JJU0NWMzIKLSAgICAgICAgLmNmZy5tYXhf
-c2F0cF9tb2RlID0gVk1fMV8xMF9TVjMyLAotI2Vsc2UKLSAgICAgICAgLmNmZy5tYXhfc2F0cF9t
-b2RlID0gVk1fMV8xMF9TVjU3LAotI2VuZGlmCisgICAgICAgIC5tYXhfc2F0cF9tb2RlX2Nob29z
-ZSA9IHJpc2N2X2NwdV9tYXhfc2F0cF9tb2RlX2Nob29zZSwKICAgICApLAogCiAgICAgREVGSU5F
-X1JJU0NWX0NQVShUWVBFX1JJU0NWX0NQVV9NQVgsIFRZUEVfUklTQ1ZfRFlOQU1JQ19DUFUsCi0j
-aWYgZGVmaW5lZChUQVJHRVRfUklTQ1YzMikKLSAgICAgICAgLm1pc2FfbXhsX21heCA9IE1YTF9S
-VjMyLAotICAgICAgICAuY2ZnLm1heF9zYXRwX21vZGUgPSBWTV8xXzEwX1NWMzIsCi0jZWxpZiBk
-ZWZpbmVkKFRBUkdFVF9SSVNDVjY0KQotICAgICAgICAubWlzYV9teGxfbWF4ID0gTVhMX1JWNjQs
-Ci0gICAgICAgIC5jZmcubWF4X3NhdHBfbW9kZSA9IFZNXzFfMTBfU1Y1NywKLSNlbmRpZgorICAg
-ICAgICAubWF4X3NhdHBfbW9kZV9jaG9vc2UgPSByaXNjdl9jcHVfbWF4X3NhdHBfbW9kZV9jaG9v
-c2UsCisgICAgICAgIC5taXNhX214bF9tYXhfY2hvb3NlID0gcmlzY3ZfY3B1X21pc2FfbXhsX21h
-eF9jaG9vc2UsCiAgICAgKSwKIAogICAgIERFRklORV9BQlNUUkFDVF9SSVNDVl9DUFUoVFlQRV9S
-SVNDVl9DUFVfU0lGSVZFX0UsIFRZUEVfUklTQ1ZfVkVORE9SX0NQVSwKZGlmZiAtLWdpdCBhL3Rh
-cmdldC9yaXNjdi9jcHUuaCBiL3RhcmdldC9yaXNjdi9jcHUuaAppbmRleCAwMzRkN2U5NmM0Li5i
-NmI1ZjY3OWM5IDEwMDY0NAotLS0gYS90YXJnZXQvcmlzY3YvY3B1LmgKKysrIGIvdGFyZ2V0L3Jp
-c2N2L2NwdS5oCkBAIC01OTcsNiArNTk3LDggQEAgdHlwZWRlZiBzdHJ1Y3QgUklTQ1ZDUFVEZWYg
-ewogI2VuZGlmCiAgICAgLyogVGhpcyBpcyBqdXN0IGEgc2V0dGVyIGZvciBlbnYtPm51bV90cmln
-Z2Vycy4gICovCiAgICAgdWludDMyX3QgbnVtX3RyaWdnZXJzOworICAgIGludDhfdCAoKm1heF9z
-YXRwX21vZGVfY2hvb3NlKShjb25zdCBzdHJ1Y3QgUklTQ1ZDUFVEZWYgKmRlZik7CisgICAgUklT
-Q1ZNWEwgKCptaXNhX214bF9tYXhfY2hvb3NlKShjb25zdCBzdHJ1Y3QgUklTQ1ZDUFVEZWYgKmRl
-Zik7CiB9IFJJU0NWQ1BVRGVmOwogCiAvKioKLS0gCjIuNTUuMC53aW5kb3dzLjMKCg==
---00000000000065b75f065cdf67bc--
+> def gen_clear_ext(self, f, tag):
+>      predicate = None
+>      guard = ""
+>      if is_predicated(tag):
+>          for regtype, regid in compute_tag_regs(tag, False):
+>              if regtype == "P":
+>                  predicate = get_register(tag, regtype, regid).reg_tcg()
+>                  break
+>          assert predicate is not None
+>          cond = "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_COND_EQ"
+>          guard = f"""
+>              TCGv {self.reg_tcg()}_ext_pred = tcg_temp_new();
+>              TCGLabel *{self.reg_tcg()}_ext_skip = gen_new_label();
+>              tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
+>              tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
+>                                  {self.reg_tcg()}_ext_skip);
+>          """
+>          end_guard = f"""
+>              gen_set_label({self.reg_tcg()}_ext_skip);
+>          """
+>      else:
+>          end_guard = ""
+>      f.write(code_fmt(f"""\
+>              {guard}
+>              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>                  {self.hvx_off()} + offsetof(MMVector, ext),
+>                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>                  V_EXTENDED_BYTEVAL);
+>              {end_guard}
+>          """))
+>
+> def gen_clear_ext_pair(self, f, tag):
+>      predicate = None
+>      guard = ""
+>      if is_predicated(tag):
+>          for regtype, regid in compute_tag_regs(tag, False):
+>              if regtype == "P":
+>                  predicate = get_register(tag, regtype, regid).reg_tcg()
+>                  break
+>          assert predicate is not None
+>          cond = "TCG_COND_NE" if "fLSBOLDNOT" in semdict[tag] else "TCG_COND_EQ"
+>          guard = f"""
+>              TCGv {self.reg_tcg()}_ext_pred = tcg_temp_new();
+>              TCGLabel *{self.reg_tcg()}_ext_skip = gen_new_label();
+>              tcg_gen_andi_tl({self.reg_tcg()}_ext_pred, {predicate}, 1);
+>              tcg_gen_brcondi_tl({cond}, {self.reg_tcg()}_ext_pred, 0,
+>                                  {self.reg_tcg()}_ext_skip);
+>          """
+>          end_guard = f"""
+>              gen_set_label({self.reg_tcg()}_ext_skip);
+>          """
+>      else:
+>          end_guard = ""
+>      f.write(code_fmt(f"""\
+>              {guard}
+>              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>                  {self.hvx_off()} + offsetof(MMVector, ext),
+>                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>                  V_EXTENDED_BYTEVAL);
+>              tcg_gen_gvec_dup_imm_var(MO_8, {self.hvx_base()},
+>                  {self.hvx_off()} + sizeof(MMVector)
+>                      + offsetof(MMVector, ext),
+>                  MAX_VEC_SIZE_BYTES / 4, MAX_VEC_SIZE_BYTES / 4,
+>                  V_EXTENDED_BYTEVAL);
+>              {end_guard}
+>          """))
 
