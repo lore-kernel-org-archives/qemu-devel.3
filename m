@@ -4,117 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF3BCA5FC4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512A1CA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 09:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCZmI-0000ZL-FG; Fri, 02 Oct 2026 05:42:06 -0400
+	id 1xCZoh-00013l-JD; Fri, 02 Oct 2026 05:44:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZmG-0000Yy-Ln
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:42:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCZog-000138-3d
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:44:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xCZmE-0008J9-9C
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:42:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xCZoe-0008V7-CN
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 05:44:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790934120;
+ s=mimecast20190719; t=1790934271;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4CtC/SBr+WhTdke8jNTJ4zGFAIu3I9ldDfDhJGS/rVk=;
- b=FNfKRpZWrX8+0BaLz1WqHYqZQQcGQj4AX1DvzDkbGarB8DyZOgLSsxdkGgIv9nqQyqaGDD
- WxvFMyOep1juSZTPmgPJcnDpRDVatbzS0EF/uVf9kwFWYe0ikAfz+j4NU60LWk+KjUHk5y
- jUIKYHli+7YRowq3m5XOSF/FErWzbB8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=WtrwlKo2ztpal6IM2+TGn9lxh3NDPHoQCpS37gqA8B8=;
+ b=h4PFCXUVyqaz9qCDSxihbK+2qT0CRZBxk+iqdn74JXr2CHB+DuPWM584JP0cH8XOgF2xNs
+ El8CaO0ZIxZcrLVKeM4dmW+4iHfFNGuIi/aY2FmAEqXrUVQRshuF8AlqryjqAXjc2tS21J
+ 5ONIUn0qOGdGJXlY+oBgyMh4Ma6owEU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-MDD4dQSOO0OZZIY96PwVZA-1; Fri,
- 02 Oct 2026 05:41:57 -0400
-X-MC-Unique: MDD4dQSOO0OZZIY96PwVZA-1
-X-Mimecast-MFC-AGG-ID: MDD4dQSOO0OZZIY96PwVZA_1790934116
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-4so4EyWIPEmIhas1xqi74A-1; Fri,
+ 02 Oct 2026 05:44:28 -0400
+X-MC-Unique: 4so4EyWIPEmIhas1xqi74A-1
+X-Mimecast-MFC-AGG-ID: 4so4EyWIPEmIhas1xqi74A_1790934266
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95EA618011EC; Fri,  2 Oct 2026 09:41:55 +0000 (UTC)
-Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1ECB541D; Fri,  2 Oct 2026 09:41:51 +0000 (UTC)
-Message-ID: <69164823-7271-4d59-9684-637bec454a1d@redhat.com>
-Date: Fri, 2 Oct 2026 11:41:47 +0200
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98634195607F; Fri,  2 Oct 2026 09:44:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 25E1F41D; Fri,  2 Oct 2026 09:44:24 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BA53821E6A04; Fri, 02 Oct 2026 11:44:21 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Hanna
+ Reitz <hreitz@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Kevin Wolf <kwolf@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Jiri Pirko <jiri@resnulli.us>,  Alex
+ Williamson <alex@shazbot.org>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Kostiantyn Kostiuk
+ <kkostiuk@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Michael Roth
+ <michael.roth@amd.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?C=C3=A9?=
+ =?utf-8?Q?dric?= Le Goater
+ <clg@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 14/14] qapi/parser: convert single-section properties to
+ getter properties
+In-Reply-To: <20260928223657.2303684-15-jsnow@redhat.com> (John Snow's message
+ of "Mon, 28 Sep 2026 18:36:57 -0400")
+References: <20260928223657.2303684-1-jsnow@redhat.com>
+ <20260928223657.2303684-15-jsnow@redhat.com>
+Date: Fri, 02 Oct 2026 11:44:21 +0200
+Message-ID: <87cxts4etm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-2-pbonzini@redhat.com>
- <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA91XU=_hS3iB+0p7hXQ_nvf0YpgNZaKsd=b=fSVaTJDxw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.331,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,106 +106,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/1/26 14:21, Peter Maydell wrote:
-> On Wed, 30 Sept 2026 at 09:54, Paolo Bonzini <pbonzini@redhat.com> wrote:
->> +- large, heavily LLM-assisted contributions where LLMs write large parts
->> +  of functional code.  These are only allowed if *pre-arranged*,
->> +  *high-quality* and *well-tested*.
->> +
->> +The last case (*"LLM-created contribution"*) is the one that requires
->> +a more careful approach.  In particular:
->> +
->> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
->> +  for example on `IRC or the QEMU mailing
->> +  list <https://www.qemu.org/contribute/>`__, that they are willing
->> +  to review an LLM-created contribution.
->> +
->> +- "High-quality" means that the contributor must apply the same judgment
->> +  that would be applied to other code changes.  Contributors must invest
->> +  substantial time reviewing their contributions, curating them, and
->> +  understanding them in depth.
->> +
->> +- "Well-tested" means the LLM-created contributions will be held to a
->> +  higher standard than human-created ones, because LLMs make it easier
->> +  to write tests.  There are no exceptions for "writing the tests seems
->> +  hard" or for `yak shaving <https://en.wiktionary.org/wiki/yak_shaving>`__.
-> 
-> ...but I think fundamentally I am not in favour of having this
-> fourth category of permitted uses. It seems even to have lost the
-> idea of it being an "experimental" approach in this revision of the
-> series. The first three categories are fine, and I have no particular
-> problem with our relaxing our current policy to explicitly permit them.
-> 
-> Our problem as a project does not seem to be on the "writing
-> code" side of things, but has always been on the "code review"
-> side. This policy relaxation makes it much easier to write more
-> code. Even when there's a "pre-arranged reviewer" that isn't
-> necessarily helpful -- if you're one of the primary maintainers
-> for an area of QEMU then the fact that somebody else is reviewing
-> it doesn't make a big AI-generated code infusion any more palatable.
+John Snow <jsnow@redhat.com> writes:
 
-I understand where you're coming from.
+> Remove dedicated pointers to single sections, instead preferring a
+> functional getter property that returns the same thing dynamically.
+>
+> This is being done mainly for the benefit of being able to condense
+> the _append() function, but I'm not convinced it's worth it. I'm not
+> convinced it's not not worth it either, though.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/parser.py | 47 +++++++++++++++++++++++-------------------
+>  1 file changed, 26 insertions(+), 21 deletions(-)
 
-The purpose of the fourth category is norming contributions that are 
-already happening.  I apologize for the allegation in advance, but take 
-for example 
-https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/; 
-on one hand it is very high quality, on the other hand I give it at 
-least a 70% likelihood of being heavily LLM-assisted for the 
-implementation and not just for the analysis.
+Hmm.
 
-The question is: do we want contributions like that one?  If we decide 
-that their quality and usefulness are high enough to want them, what 
-process do we need around them?  I think we all agree that, if that kind 
-of contribution is desirable, we want the submitters to declare AI usage 
-and the reviewers to be aware of it.
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index 1d8f1d39ab1..d4b5b3e5ab6 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -773,12 +773,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+>          self._args: Dict[str, QAPIDoc.ArgSection] = {}
+>          self._features: Dict[str, QAPIDoc.ArgSection] = {}
+>  
+> -        # a command's "Returns" and "Errors" section
+> -        self._returns: Optional[QAPIDoc.Section] = None
+> -        self._errors: Optional[QAPIDoc.Section] = None
+> -        # "Since" section
+> -        self.since: Optional[QAPIDoc.Section] = None
+> -
+>      @property
+>      def has_features(self) -> bool:
+>          return bool(self._features)
+> @@ -790,21 +784,10 @@ def _append(self, section: 'QAPIDoc.Section') -> None:
+>          All other methods/helpers/etc ultimately use this and only
+>          this interface for appending a new section.
+>          """
+> -        if section.kind == QAPIDoc.Kind.RETURNS:
+> -            if self._returns:
+> -                raise QAPISemError(
+> -                    section.info, "duplicated '%s' section" % section.kind)
+> -            self._returns = section
+> -        elif section.kind == QAPIDoc.Kind.ERRORS:
+> -            if self._errors:
+> -                raise QAPISemError(
+> -                    section.info, "duplicated '%s' section" % section.kind)
+> -            self._errors = section
+> -        elif section.kind == QAPIDoc.Kind.SINCE:
+> -            if self.since:
+> -                raise QAPISemError(
+> -                    section.info, "duplicated '%s' section" % section.kind)
+> -            self.since = section
+> +        if str(section.kind) in ('Intro', 'Returns', 'Errors', 'Since'):
+> +            if self._sections[section.kind]:
+> +                raise QAPISemError(section.info,
+> +                                   "duplicated '%s' section" % section.kind)
+>          self._sections[section.kind].append(section)
+>          self._active_section = section
+>  
 
-> Allowing large heavily LLM-assisted contributions seems to me:
->   * the biggest risk legally speaking (though I think this is
->     in practice not all that big a risk at this point)
->   * the biggest risk of the codebase degenerating into
->     unmaintainability
->   * the biggest risk of finding ourselves reviewing contributions
->     that are in practice much more vibe-coded than the policy text
->     above is asking for
+Likable so far.
 
-I agree completely with how you phrased the first and third.  I agree 
-that the second bullet is a risk too, but it's mitigated by "LLM-created 
-contributions will be held to a higher standard than human-created ones, 
-because LLMs make it easier to write tests" (and by maintainers being 
-able to *refuse* specific contributions, which is the point of 
-pre-arrangement; note that pre-arrangement should exist today as a 
-matter of courtesy for any large change).
+> @@ -815,6 +798,28 @@ def __iter__(self) -> Iterator['QAPIDoc.Section']:
+>      def __len__(self) -> int:
+>          return sum(len(x) for x in self._sections.values())
+>  
+> +    def _single_section_property(
+> +        self,
+> +        kind: 'QAPIDoc.Kind'
+> +    ) -> Optional['QAPIDoc.Section']:
+> +        try:
+> +            return self._sections[kind][0]
+> +        except IndexError:
+> +            pass
+> +        return None
 
-The third risk is probably the biggest of these.  The heaviest toll that 
-AI has on maintainers may not be the review per se; if a contribution is 
-good and desirable, having to review it is all fine.  Rather, the 
-problem is that maintainers have to be ready to say no more often to the 
-free puppies, and that is not necessarily easy.  And dually, that 
-contributors may not realize it when they're not respecting the 
-maintainers' efforts.
+Returns the first section of a kind.  Let's name it after what it does:
+_first_section().
 
-I add a fourth risk: that new contributors using AI will not be willing 
-to do the final stretch of the work that *has* to be manual, and makes a 
-difference between work worth reviewing and work worth including.  This 
-would be the biggest waste of time for the reviewer.
+The try works, but
 
-> I look at our issue tracker where we see AI assisted contributions
-> that run the whole range from "an human making intelligent use of
-> the tool to provide high-quality bug reports with good analysis"
-> through to "absolute slop dumped on us with no apparent human
-> thought or intervention". I don't really want to expand that
-> from our issue tracker to our code review and codebase, please.
-> 
-> I would be much happier seeing the advocates of AI putting
-> effort into making the process of QEMU code review better and
-> less work, rather than in applying it to the code writing process.
-To clarify, my goal with this policy change is not to advocate for AI 
-usage, but to advocate for transparency when AI is involved.
+           return self._sections[kind][0] if self._sections[kind] else None
 
-I agree that making QEMU code review better should be a goal. 
-Unfortunately it is an expensive goal (in real-world money).
+seems to work as well, and with less ceremony :)
 
-Paolo
+> +
+> +    @property
+> +    def _returns(self) -> Optional['QAPIDoc.Section']:
+> +        return self._single_section_property(QAPIDoc.Kind.RETURNS)
+> +
+> +    @property
+> +    def _errors(self) -> Optional['QAPIDoc.Section']:
+> +        return self._single_section_property(QAPIDoc.Kind.ERRORS)
+> +
+> +    @property
+> +    def since(self) -> Optional['QAPIDoc.Section']:
+> +        return self._single_section_property(QAPIDoc.Kind.SINCE)
+> +
+>      def end(self) -> None:
+>          for section in self:
+>              section.text = section.text.strip('\n')
 
 
