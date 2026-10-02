@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B671DCA5FE5
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 20:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB98CA5FDD
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 20:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCjki-0007aC-4o; Fri, 02 Oct 2026 16:21:08 -0400
+	id 1xCjki-0007aO-Je; Fri, 02 Oct 2026 16:21:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xCjkc-0007Q7-4f
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:21:02 -0400
+ id 1xCjkg-0007Wx-7O
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:21:06 -0400
 Received: from mail-pj2-x10.google.com ([2607:f8b0:4864:39::10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xCjka-0005pJ-8b
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:21:01 -0400
+ id 1xCjkd-0005qG-W3
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 16:21:05 -0400
 Received: by mail-pj2-x10.google.com with SMTP id
- d9443c01a7336-2d747f01363so51437765ad.2
- for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 13:20:59 -0700 (PDT)
+ d9443c01a7336-2d747f01363so51438155ad.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Oct 2026 13:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1790972459; x=1791577259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1790972462; x=1791577262; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=EutMuVi05q7D0n6FZ3Jv8HMw5DGbhkWXN2U7LRtbrK8=;
- b=k8G6dJUooSdY8HUDAmK2rHUym0QQpo1DVGV+mjQssb8f2oyQGxfvJpvuIRMFA4tSo1
- cxxEsR9b0YrMeXUKN5BsACDKiRlxXDrDLfQV3IfPGbUvsGCCI0wFQL2zglPKwsFwqkAf
- 6kIViT+yVWFRKhk1sY2iygRolWDJEDwIWhqmU2flJz0z/SEcdRuuCUmwiENnZ7VurM+d
- Y2bjVXDWOED+gyk1lx2st0TpCJuCZVzggqZ2lx2cpDOadwmIxb0RLzTRFHCML0z1+T1R
- P5/AzyaJT8b8UffuBnfQdWaIwUCOlBLbGZqFVWODcDrSSSCDaa2IjtdtpbC8bFnroJq+
- dUwA==
+ bh=j+ANu5/w+3rJ4mUcgJRlo2PrYM3VCrz9wWUfzRyMbAU=;
+ b=RGAX3AqNPOothrIS3hj+FrR+/Td0rKOKRrG3d5nnMfJ8qnsENM34+jdK7M8W5xP5um
+ Qhec9Y7kj6Xomv07QqtufYCMUKXXRzUVPdl8Rd1HCYCYn2ztB6/LWCi4wADb/CPEag/T
+ TLTbAkLQy43RYU5KFJdcm1tOTyFai2ZP7NWtw2cUMf4jrUEt36UCM+oUsbOhuhbX/hHb
+ 8YQKR8mc90pQbs+DWIkHfT+J0Pxpi8txFZ1l9NQL30Ejodi0EelU7D5FwoQytHL8KK8G
+ UTgyZw6Jms0b+qQNqc/0n1Y6T0qraLTvoLosuH5tBkcixNTVQKrrB1L8Z/HhY2Ex5bJ7
+ w4Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1790972459; x=1791577259;
+ d=1e100.net; s=20260707; t=1790972462; x=1791577262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=EutMuVi05q7D0n6FZ3Jv8HMw5DGbhkWXN2U7LRtbrK8=;
- b=e5SdxIhnscNy258ZoVbR4H7biOYntZCjhAC7COZmWGPK6Z0QP6dGV1HC4h5qrwOHAz
- gqsEzCTpiua1FDOGvzqzveWXJxkcLrglDH7e/w59jBH1N1OPPRdotXjT3M/JwnpMgGhR
- Y+4p5dGbJCJa0vOz9JO5k5n7z3NNc9hSCBps0yO1mJdFi/mCAPaDsUJwzWwJ1o4HaYMA
- 5D5tEH7Edff5INXNwW+RNQrpXB3rZo53S7bfA96tPnC8c1kJ3B7Pu8/tyVt45yOfBgR3
- Iz1HBnx2zrV9IhdvGXgZI90nv5J/HKthYiGaSrI9f6yZ70z4en5bIRz743PLsG0NBo04
- Dm4Q==
-X-Gm-Message-State: AFq9FYJSulT2DAZ9nIv4tC7+qPl+9D7BhKoOntL5m9Uf5opBhAZX5C5Z
- D1Z+2BegnmDkgxyVGOET8Nv8IwpoHyZmtbYzE65DR4DRRM0B4TOnjUKMfRv8fi96TsE=
-X-Gm-Gg: AYBFou1nfgp7WTJ09h7ASVkPBQ7xhaEXI+Pn5RLC4Tkg9GB+bXi2GyZEYjCes0OvFn6
- QtxBpC1f8SyAsj6uBloULHxFHb1sn+tNRZn53+U5W32171/E9LFgJqwt0XutJfBEwrFYzHuYQZs
- 86tF67L/7cNHzXhSaZmfabWt3ZAvS9aZ9WOV+kjBQqqFLHVy4l/2VEWEVqX/UxsVLAjOE9vAZH2
- vV4xIU/tFuSwkddH4OnzRHMh5Z0D7dLwO+YR2B4qdpZ3RBdNIjQCjXte2K0HBpMKNr/23nyFwEz
- jr7+CzPYRDpE7aWu+XqyHtz+wkgvX4Wlstv4KZ07tv3nps0sPCaGotPgo8a7DaLv3/QHojQINFA
- UyoEOhF8r2X0MzSUwmJP2H0KXk3ZmYJMlN53sbHoHacGvUxpCfFI4tUhg2lkKl/UPBZDx2yC8Jg
- bUNscm7sbqur+ThKLZ1KU18My2M8YTd0DfXLGu9TbErWuC0cyb9szQ8mXaM9poJ4j6+5JTAlT1H
- PP0u/jqkQp78QssrKFHN0Qq
-X-Received: by 2002:a17:903:3d0e:b0:2d8:d4ce:7e40 with SMTP id
- d9443c01a7336-2e49b64e249mr33210835ad.21.1790972458684; 
- Fri, 02 Oct 2026 13:20:58 -0700 (PDT)
+ bh=j+ANu5/w+3rJ4mUcgJRlo2PrYM3VCrz9wWUfzRyMbAU=;
+ b=AM3yTJ2RNxmhHAWR7Lh5r2bDVfPuLoZUNGgKitQkzEeW3mazeTCJg29JNtFpATDNbx
+ oOCKwFevUdwwNsy3hvJjC53LorTB6EDhUNVfPy1Tv2HowCe4NcWAXsgYeR8eh8iCcq1n
+ ly4lboxGzDAzIlCZPHUwAtETz/5jN9sS2rZE55Ois8kxzUPJ81v97l5nhU+V8juc4sl8
+ ezfZOun6MesYF6s7JM5wv6uBlaCQs0pu+EJmGfyShIHXVt5FORb9JYxnro3RS2mjw0yG
+ tg8WacjMrIb5HuX6jQKc+X3KFDTVDoEpEiIDVa8mNeikVPnANdu1qMeJroJfF1kmXEvt
+ zPMA==
+X-Gm-Message-State: AFq9FYKHcGPR6P1LMFyj26+m5o0HnPOYIpv2r2/Khakfx7pBDU3VSUXF
+ 2ThffFjYf5ibha7rcpbmHcrfZC2RMmbAfmRFzfOivr7LT4w6d33na0qJxdtQRx/2jO4=
+X-Gm-Gg: AYBFou0QWkhXtTMqnwDtCSreEBYg1RFoJLZGyosiTR8/tGHrDy7YBLyp52KGPzhv85/
+ zrNksH+cHCtUMjohJz9xd0lH+B/0B5K+Ws5fLqPH+Oj4ivpSpIYyaqMlqzx0i4MbCEMpFtK6/IV
+ m0ySy8J6rTC2s5V21xgbBlOlAhGssZWnoV+PDVJC2MV+tvqu/QWAIhIi8AXzt2gUjraatHugnpy
+ 2OS322c674VTGVUTkKiub32KX3nl4wSVDxMxUwTyGyQvI92FbywCVHIF+jnL2UiIuJ4VodP+jNC
+ ylM7OAhxU4r2yg25HJ8zuBe6pNap/FAkx5E/iuefes9zVKNIXSLUFW11PQxD0GgkN31FHhmlbdN
+ 94lEv3PWE0hwFcb2IsNP84RBOxrqGPATYCN4ho+Aq38FPkfRZuLnT7xxjm/0wblyqyEZtAw5LQm
+ d8CK+tx4yhGwzpY+tQPIL6oJDXm5zKFFeeg9rnv77PBSMA2S8Ych7vnhslt6CDwxIHL4nvJK7zf
+ J3zsnQTRaO6+vRpSH+d9eS8
+X-Received: by 2002:a17:902:d98c:b0:2df:8b9e:f87b with SMTP id
+ d9443c01a7336-2e49b64e333mr34944315ad.15.1790972462440; 
+ Fri, 02 Oct 2026 13:21:02 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:61ac:e744:6559:a357])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e49f6a99acsm12399415ad.34.2026.10.02.13.20.56
+ d9443c01a7336-2e49f6a99acsm12399415ad.34.2026.10.02.13.21.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Oct 2026 13:20:57 -0700 (PDT)
+ Fri, 02 Oct 2026 13:21:01 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -75,10 +75,10 @@ To: berrange@redhat.com, kchamart@redhat.com,
 Cc: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	kvm@vger.kernel.org
-Subject: [RFC v5 16/22] hw/arm/virt: Disable DTB randomness for confidential
- VMs
-Date: Fri,  2 Oct 2026 14:20:20 -0600
-Message-ID: <20261002202026.1204110-17-mathieu.poirier@linaro.org>
+Subject: [RFC v5 18/22] hw/arm/virt: Use RAM instead of flash for confidential
+ guest firmware
+Date: Fri,  2 Oct 2026 14:20:22 -0600
+Message-ID: <20261002202026.1204110-19-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261002202026.1204110-1-mathieu.poirier@linaro.org>
 References: <20261002202026.1204110-1-mathieu.poirier@linaro.org>
@@ -92,7 +92,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,161 +110,207 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-The dtb-randomness feature, which adds random seeds to the DTB, isn't
-really compatible with confidential VMs since it randomizes the Realm
-Initial Measurement. Enabling it is not an error, but it prevents
-attestation. It also isn't useful to a Realm, which doesn't trust host
-input.
-
-Currently the feature is automatically enabled, unless the user disables
-it on the command-line. Change it to OnOffAuto, and automatically
-disable it for confidential VMs, unless the user explicitly enables it.
+Use RAM instead of flash to store firmware image and boot information,
+including UEFI variables.  That way the firmware can be measured and
+included in the Realm's initial measurements.  It also prevents
+variable stored in flash and modified as part of the boot process to
+be leaked outside the Realm.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- docs/system/arm/virt.rst |  9 +++++----
- hw/arm/virt.c            | 41 +++++++++++++++++++++++++---------------
- include/hw/arm/virt.h    |  2 +-
- 3 files changed, 32 insertions(+), 20 deletions(-)
+ hw/arm/boot.c         | 37 +++++++++++++++++++++++++--
+ hw/arm/virt.c         | 58 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/boot.h |  9 +++++++
+ 3 files changed, 102 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index 5f6dd1797862..9882b842ddd5 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -238,10 +238,11 @@ dtb-randomness
-   rng-seed and kaslr-seed nodes (in both "/chosen" and
-   "/secure-chosen") to use for features like the random number
-   generator and address space randomisation. The default is
--  ``on``. You will want to disable it if your trusted boot chain
--  will verify the DTB it is passed, since this option causes the
--  DTB to be non-deterministic. It would be the responsibility of
--  the firmware to come up with a seed and pass it on if it wants to.
-+  ``off`` for confidential VMs, and ``on`` otherwise. You will want
-+  to disable it if your trusted boot chain will verify the DTB it is
-+  passed, since this option causes the DTB to be non-deterministic.
-+  It would be the responsibility of the firmware to come up with a
-+  seed and pass it on if it wants to.
- 
- dtb-kaslr-seed
-   A deprecated synonym for dtb-randomness.
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index b2cca73dda6f..35e76951dafd 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -394,6 +394,7 @@ static int gic_fdt_irq_type_spi(const VirtMachineState *vms)
- 
- static void create_fdt(VirtMachineState *vms)
- {
-+    bool dtb_randomness = true;
-     MachineState *ms = MACHINE(vms);
-     int nb_numa_nodes = ms->numa_state->num_nodes;
-     void *fdt = create_device_tree(&vms->fdt_size);
-@@ -403,6 +404,16 @@ static void create_fdt(VirtMachineState *vms)
-         exit(1);
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index 9b7553dde5e1..1e8efada209f 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -1112,7 +1112,36 @@ static void arm_setup_direct_kernel_boot(ARMCPU *cpu,
      }
+ }
  
-+    /*
-+     * Including random data in the DTB causes random intial measurement on CCA,
-+     * so disable it for confidential VMs.
-+     */
-+    if (vms->dtb_randomness == ON_OFF_AUTO_OFF ||
-+        (vms->dtb_randomness == ON_OFF_AUTO_AUTO &&
-+         virt_machine_is_confidential(vms))) {
-+        dtb_randomness = false;
+-static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
++static void arm_setup_confidential_firmware_boot(ARMCPU *cpu,
++                                                 struct arm_boot_info *info,
++                                                 const char *firmware_filename)
++{
++    ssize_t fw_size;
++    const char *fname;
++    AddressSpace *as = arm_boot_address_space(cpu, info);
++
++    fname = qemu_find_file(QEMU_FILE_TYPE_BIOS, firmware_filename);
++    if (!fname) {
++        error_report("Could not find firmware image '%s'", firmware_filename);
++        exit(1);
 +    }
 +
-     ms->fdt = fdt;
++    /*
++     * Load the firmware image in the Realm's address space.  Mapping of the
++     * firmware area in the Realm's address space is done in function
++     * virt_confidential_firmware_init().
++     */
++    fw_size = load_image_targphys_as(firmware_filename,
++                                     info->firmware_base,
++                                     info->firmware_max_size, as, NULL);
++    if (fw_size <= 0) {
++        error_report("could not load firmware '%s'", firmware_filename);
++        exit(1);
++    }
++}
++
++static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info,
++                                    const char *firmware_filename)
+ {
+     /* Set up for booting firmware (which might load a kernel via fw_cfg) */
  
-     /* Header */
-@@ -424,13 +435,13 @@ static void create_fdt(VirtMachineState *vms)
- 
-     /* /chosen must exist for load_dtb to fill in necessary properties later */
-     qemu_fdt_add_subnode(fdt, "/chosen");
--    if (vms->dtb_randomness) {
-+    if (dtb_randomness) {
-         create_randomness(ms, "/chosen");
-     }
- 
-     if (vms->secure) {
-         qemu_fdt_add_subnode(fdt, "/secure-chosen");
--        if (vms->dtb_randomness) {
-+        if (dtb_randomness) {
-             create_randomness(ms, "/secure-chosen");
+@@ -1168,6 +1197,10 @@ static void arm_setup_firmware_boot(ARMCPU *cpu, struct arm_boot_info *info)
          }
      }
-@@ -3505,18 +3516,21 @@ static void virt_set_virtio_transports(Object *obj, Visitor *v,
-     vms->virtio_transports = transports;
- }
  
--static bool virt_get_dtb_randomness(Object *obj, Error **errp)
-+static void virt_get_dtb_randomness(Object *obj, Visitor *v, const char *name,
-+                                    void *opaque, Error **errp)
++    if (info->confidential) {
++        arm_setup_confidential_firmware_boot(cpu, info, firmware_filename);
++    }
++
+     /*
+      * We will start from address 0 (typically a boot ROM image) in the
+      * same way as hardware. Leave env->boot_info NULL, so that
+@@ -1212,7 +1245,7 @@ void arm_load_kernel(ARMCPU *cpu, MachineState *ms, struct arm_boot_info *info)
+ 
+     /* Load the kernel.  */
+     if (!info->kernel_filename || info->firmware_loaded) {
+-        arm_setup_firmware_boot(cpu, info);
++        arm_setup_firmware_boot(cpu, info, ms->firmware);
+     } else {
+         arm_setup_direct_kernel_boot(cpu, info);
+     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 886ea7a97ea0..7accb9f55ec8 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1816,6 +1816,16 @@ static PFlashCFI01 *virt_flash_create1(VirtMachineState *vms,
+ 
+ static void virt_flash_create(VirtMachineState *vms)
  {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-+    OnOffAuto dtb_randomness = vms->dtb_randomness;
++    /*
++     * For Realms, the firmware image is placed directly in the guest's
++     * RAM area.  The association between the final location in the
++     * guest's RAM and the system memory is done in function
++     * virt_confidential_firmware_init().
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return;
++    }
++
+     vms->flash[0] = virt_flash_create1(vms, "virt.flash0", "pflash0");
+     vms->flash[1] = virt_flash_create1(vms, "virt.flash1", "pflash1");
+ }
+@@ -1866,6 +1876,16 @@ static void virt_flash_fdt(VirtMachineState *vms,
+     MachineState *ms = MACHINE(vms);
+     char *nodename;
  
--    return vms->dtb_randomness;
-+    visit_type_OnOffAuto(v, name, &dtb_randomness, errp);
++    /*
++     * For Realms the firmware images are stored in the guest's address
++     * space.  As such there is no need for flash configuration in the FDT.
++     * See function virt_confidential_firmware_init() and
++     * arm_setup_confidential_firmware_boot() for details.
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return;
++    }
++
+     if (sysmem == secure_sysmem) {
+         /* Report both flash devices as a single node in the DT */
+         nodename = g_strdup_printf("/flash@%" PRIx64, flashbase);
+@@ -1901,6 +1921,32 @@ static void virt_flash_fdt(VirtMachineState *vms,
+     }
  }
  
--static void virt_set_dtb_randomness(Object *obj, bool value, Error **errp)
-+static void virt_set_dtb_randomness(Object *obj, Visitor *v, const char *name,
-+                                    void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
++static bool virt_confidential_firmware_init(VirtMachineState *vms,
++                                            MemoryRegion *sysmem)
++{
++    MemoryRegion *fw_ram;
++    hwaddr fw_base = vms->memmap[VIRT_FLASH].base;
++    hwaddr fw_size = vms->memmap[VIRT_FLASH].size;
++
++    if (!MACHINE(vms)->firmware) {
++        return false;
++    }
++
++    assert(machine_require_guest_memfd_private(MACHINE(vms)));
++
++    fw_ram = g_new(MemoryRegion, 1);
++    memory_region_init_ram_guest_memfd_private(fw_ram, NULL, "fw_ram", fw_size,
++                                               &error_fatal);
++    /*
++     * Map the guest's firmware image directly in its address space.
++     * Copying of the firmware image itself is done in function
++     * arm_setup_confidential_firmware_boot().
++     */
++    memory_region_add_subregion(sysmem, fw_base, fw_ram);
++
++    return true;
++}
++
+ static bool virt_firmware_init(VirtMachineState *vms,
+                                MemoryRegion *sysmem,
+                                MemoryRegion *secure_sysmem)
+@@ -1909,6 +1955,15 @@ static bool virt_firmware_init(VirtMachineState *vms,
+     const char *bios_name;
+     BlockBackend *pflash_blk0;
  
--    vms->dtb_randomness = value;
-+    visit_type_OnOffAuto(v, name, &vms->dtb_randomness, errp);
- }
++    /*
++     * For a confidential VM, the firmware image and any boot information,
++     * including EFI variables, are stored in RAM in order to be measurable and
++     * private. Create a RAM region and load the firmware image there.
++     */
++    if (virt_machine_is_confidential(vms)) {
++        return virt_confidential_firmware_init(vms, sysmem);
++    }
++
+     /* Map legacy -drive if=pflash to machine properties */
+     for (i = 0; i < ARRAY_SIZE(vms->flash); i++) {
+         pflash_cfi01_legacy_drive(vms->flash[i],
+@@ -3271,7 +3326,10 @@ static void machvirt_init(MachineState *machine)
+     vms->bootinfo.get_dtb = machvirt_dtb;
+     vms->bootinfo.skip_dtb_autoload = true;
+     vms->bootinfo.firmware_loaded = firmware_loaded;
++    vms->bootinfo.firmware_base = vms->memmap[VIRT_FLASH].base;
++    vms->bootinfo.firmware_max_size = vms->memmap[VIRT_FLASH].size;
+     vms->bootinfo.psci_conduit = vms->psci_conduit;
++    vms->bootinfo.confidential = virt_machine_is_confidential(vms);
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &vms->bootinfo);
  
- static char *virt_get_oem_id(Object *obj, Error **errp)
-@@ -4339,16 +4353,16 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "Set MSI settings. "
-                                           "Valid values are auto, gicv2m, its and off");
+     vms->machine_done.notify = virt_machine_done;
+diff --git a/include/hw/arm/boot.h b/include/hw/arm/boot.h
+index 94386fdbea6c..fe7e14e94651 100644
+--- a/include/hw/arm/boot.h
++++ b/include/hw/arm/boot.h
+@@ -113,6 +113,10 @@ struct arm_boot_info {
+      */
+     bool firmware_loaded;
  
--    object_class_property_add_bool(oc, "dtb-randomness",
--                                   virt_get_dtb_randomness,
--                                   virt_set_dtb_randomness);
-+    object_class_property_add(oc, "dtb-randomness", "OnOffAuto",
-+                              virt_get_dtb_randomness, virt_set_dtb_randomness,
-+                              NULL, NULL);
-     object_class_property_set_description(oc, "dtb-randomness",
-                                           "Set off to disable passing random or "
-                                           "non-deterministic dtb nodes to guest");
++    /* Used when loading firmware into RAM */
++    hwaddr firmware_base;
++    hwaddr firmware_max_size;
++
+     /* Address at which board specific loader/setup code exists. If enabled,
+      * this code-blob will run before anything else. It must return to the
+      * caller via the link register. There is no stack set up. Enabled by
+@@ -136,6 +140,11 @@ struct arm_boot_info {
  
--    object_class_property_add_bool(oc, "dtb-kaslr-seed",
--                                   virt_get_dtb_randomness,
--                                   virt_set_dtb_randomness);
-+    object_class_property_add(oc, "dtb-kaslr-seed", "OnOffAuto",
-+                              virt_get_dtb_randomness, virt_set_dtb_randomness,
-+                              NULL, NULL);
-     object_class_property_set_description(oc, "dtb-kaslr-seed",
-                                           "Deprecated synonym of dtb-randomness");
+     /* CPU having load the kernel and that should be the first to boot.  */
+     ARMCPU *primary_cpu;
++
++    /*
++     * Confidential guest boot loads everything into RAM so it can be measured.
++     */
++    bool confidential;
+ };
  
-@@ -4411,9 +4425,6 @@ static void virt_instance_init(Object *obj)
-     /* MTE is disabled by default.  */
-     vms->mte = false;
- 
--    /* Supply kaslr-seed and rng-seed by default */
--    vms->dtb_randomness = true;
--
-     vms->irqmap = a15irqmap;
- 
-     vms->virtio_transports = NUM_VIRTIO_TRANSPORTS;
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 22e66d1a113c..d4c1aa04f664 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -176,7 +176,7 @@ struct VirtMachineState {
-     bool virt;
-     bool ras;
-     bool mte;
--    bool dtb_randomness;
-+    OnOffAuto dtb_randomness;
-     bool second_ns_uart_present;
-     OnOffAuto acpi;
-     VirtGICType gic_version;
+ /**
 -- 
 2.43.0
 
