@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24698CA5FD4
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 17:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C3BCA5FD4
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Oct 2026 17:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xCgyk-0001p7-NH; Fri, 02 Oct 2026 13:23:26 -0400
+	id 1xCgyY-00015U-4r; Fri, 02 Oct 2026 13:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCgxD-0008Ts-7x
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:21:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xCgwp-0008Il-7U
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:21:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xCgxA-0003WN-0l
- for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:21:49 -0400
+ id 1xCgwm-0003Ov-TQ
+ for qemu-devel@nongnu.org; Fri, 02 Oct 2026 13:21:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790961707;
+ s=mimecast20190719; t=1790961684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9w4jIAPaUQybA3EsxmBsJb1p/fnbPpxufD6dm+ex3Jo=;
- b=NpEGgLbyAHJVroTOFAc1/Q8AFkTuTbC+h8vS7ZYbDS0dd8MC9KAs+baR/qf7NJJbjS2cM7
- yY6c5Zzjlm5KZqu3Kn4Z7YA3nWvzRlTWHVIgE2d7Ghmi3bhExvLzPMnCArtu5zxMfOl3ci
- RJw/czHeJYQf3Qc8RrT3M7I68lSMdYc=
+ bh=e9nvmUr2zbUVTbvHTbhwfcDg5wbAhEW73Shs3YiPq8I=;
+ b=giPQIHvWq3lUicxpsnrX5ha83WxKtndm5/v6Ca/+UJ+yoEGZYZx3yrVAzE/TATJYvsvgHU
+ DcrrYW+OEDhlK64xRSMUPtwlb3ae7tPomAThF/Bu4Ygp94pYZHbn8dm5V1tog+Hfq+zH57
+ AARJKZG/qGUozIqmwyHMWZTJdK28dY0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-y1zeXxcEMaePaVYyLaVHJg-1; Fri,
- 02 Oct 2026 13:21:43 -0400
-X-MC-Unique: y1zeXxcEMaePaVYyLaVHJg-1
-X-Mimecast-MFC-AGG-ID: y1zeXxcEMaePaVYyLaVHJg_1790961701
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-RsuvaWbCNU6Fy0yWVSacOQ-1; Fri,
+ 02 Oct 2026 13:21:22 -0400
+X-MC-Unique: RsuvaWbCNU6Fy0yWVSacOQ-1
+X-Mimecast-MFC-AGG-ID: RsuvaWbCNU6Fy0yWVSacOQ_1790961681
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9080F1801354; Fri,  2 Oct 2026 17:21:41 +0000 (UTC)
+ id 5D97F1806D3D; Fri,  2 Oct 2026 17:21:21 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B9CF1433; Fri,  2 Oct 2026 17:21:40 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 91C321800576; Fri,  2 Oct 2026 17:21:20 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 09/28] hw/net: mark e1000, e1000e, IGB, rtl8139 & sPAPR
- VLAN as secure
+Subject: Re: [PATCH 03/28] hw: mark all virtio PCI devices as secure
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, xen-devel@lists.xenproject.org, 
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org, 
  qemu-s390x@nongnu.org, qemu-arm@nongnu.org
-In-Reply-To: <20260911143627.2743803-10-berrange@redhat.com>
+In-Reply-To: <20260911143627.2743803-4-berrange@redhat.com>
 References: <20260911143627.2743803-1-berrange@redhat.com>
- <20260911143627.2743803-10-berrange@redhat.com>
+ <20260911143627.2743803-4-berrange@redhat.com>
 Date: Fri, 02 Oct 2026 21:21:01 +0400
-Message-Id: <179096166117.3025252.3399554700496925383.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3195;
+Message-Id: <179096166110.3025252.6768256984831473183.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3371;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+tdgjJRXFosxAEmGsg3dsoMhhj4DzUSDUOZcS2OqB2Y=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqv+gBMjIspCHTznfNZU7JF57wkV8PBkHXjvof1
- p5wZaOADoWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar/oAQAKCRDa6OEJdZac
- 5WtfD/0Zj1WkqtuXuTJ8VTcQzQYbxbvIz9VU6P+lif52L+QHHdQ21YYM6Sy8FIrUBWUZco8vgDK
- GwEyfj1drJm3qZ8xlUa7VxVPXpkFQ1RcllwAykU0HVrC5MatPWUwU/ZxNIMf2jtux6fIYe7RQIq
- rkZTMkiztkzhBwXsDk8VnJzlfj6m4EwVJchW8Nd3dP8se1dzq9mfkz9cvSLSt+IfZOXxyadmXlc
- wak8ZD1CC3wEDs72d/7pBnQA7v7LD3nCRsyh5o1JKQz31ssNG1YKocOfEt7lKYv1TR5FGzTeZCQ
- oQ/9vH/WJVfB1aqDLL7RLAiuh7LuNhZJ5ANELS7kDQXHRpQPPGu6Xxv2GP5MR/oeV3c/WLSzmaa
- AuBMpBeUUzUar7Fta1LCk4unWf0aOIjsA2YSgh2NyDiDQodDH5cgAGNayQRgoBhA26pGXypUttf
- RwpbO9IfMp8a12IkbUYNsom156/YhTldVv2bTk70XIWgATx0H4654n/xWR5a2ZIx2LRmvej9qYV
- dchyuXHAxg1JeV3OuV2z3j7SyJoS+UOfMR9TQD1llwIs1wKsfnAix3TC+dPKLbQoJ6g7e7bbCHu
- ammVmErv9BT/w16BB1+sVuMWupFu/vDGJnFADgnXWXPVPOXdlVagcUO8K+xKEmtgh3VumGbSwAJ
- pMxuon8+bGqjDWQ==
+ bh=GospWORxvPtPg6gnBQ7dvqsk9jcJVQRH3jLXkM10C5c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqv+gBUwkiX50cyBdHiy6yEWHewc/R0CgJqBOM7
+ rnWyAd8pw2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCar/oAQAKCRDa6OEJdZac
+ 5QgFEACmrMfF16N8JIcF1CCPQH4SbV7IsoMLIKEYYTYkokijSr1WOk2XRGGRxsoc8S5e8iPXunM
+ +kDqRcSYef2u4k0/yv/Nk2YPSDxYzOvDkXfO80/OFcbK4NG64GKsqYyTKNLBgeGLiGNNaull6Sv
+ TWrBjTrice0kyAVB9yMsUNqXWphqvVqBJeK2x7Si0YLVolSt5yk4oay7Qgo4w94mTm9onRrf/5o
+ 71tKe3RU+pF/CsiqdxwXfx7nNjAOQEhkFmKhFMv20/AmaYH3203J4DZhw0YquGilXgW4+JccPD6
+ E5rbwKdRXwqH4dYMvB19MSYn4MmhM2/rObmsRLClWQOwZArQ+SNDhw0rhCR1h2+X8B6HRRHEtoe
+ jlTGaC7ZG/L+3xP4dozO4rJSCcg60xItlqpBotEZydHaXKXv+9JvhgDYsGNBh62t7XJcXu7T1vL
+ X/6E0wAJWOC6dF77VNbc+0Y3vVqDZHoqxK9jovQQngVT8xFkKQYQC7SI245ndEfhrx8h/wT4rjY
+ Tx+c6lbb8SLxcnv4LUYAI/Du9VUVh6oLF20+kqDucW6Quog7CsHu8Bw6eJgoUan4OLH7nocby2S
+ GfiCSXNpC5utmgVKGmye8Qqi27E6A4Fs/7AGsbQcZqlng3CBylAClMtVGNdOZ7QQ9rozmQFnIyJ
+ Ha9UE9XGAHZcJSA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -89,8 +88,8 @@ X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.336,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,92 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Historically most NICs are only interesting for non-virtualization
-> use cases and have not been written with malicious guests in mind.
+> These are all intended for use in a virtualization scenario and must
+> provide a security boundary. This can be done for almost all virtio
+> PCI devices by modifying the common type register helper.
 > 
-> As a general rule either virtio-net or xen-net should be used in
-> all virtualized guests requiring a security boundary.
-> 
-> There are a handful of exceptions resulting from historical usage
-> in the x86 world, to support virtualized guests lacking virtio
-> support.
-> 
-> Thus the rtl8139, e1000, e1000e & IGB NICs are declared to provide
-> a security boundary.
-> 
-> The PPC sPAPR Virutal LAN device is also marked secure.
-
-Virtual
-
+> The virtio-gpu devices are unusual in not using the common
+> virtio_pci_types_register() method, so need marking directly.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20260911143627.2743803-10-berrange@redhat.com>
+> Message-ID: <20260911143627.2743803-4-berrange@redhat.com>
 >
-> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-> index 202ad404013a..da0667c40ec0 100644
-> --- a/hw/net/e1000.c
-> +++ b/hw/net/e1000.c
-> @@ -1759,6 +1759,7 @@ static void e1000_register_types(void)
->          type_info.parent = TYPE_E1000_BASE;
->          type_info.class_data = info;
->          type_info.class_init = e1000_class_init;
-> +        type_info.secure = true,
+> diff --git a/hw/display/virtio-gpu-pci-rutabaga.c b/hw/display/virtio-gpu-pci-rutabaga.c
+> index 4db77cb868db..a8e5e1d96cf3 100644
+> --- a/hw/display/virtio-gpu-pci-rutabaga.c
+> +++ b/hw/display/virtio-gpu-pci-rutabaga.c
+> @@ -34,6 +34,7 @@ static const TypeInfo virtio_gpu_rutabaga_pci_info[] = {
+>          .parent = TYPE_VIRTIO_GPU_PCI_BASE,
+>          .instance_size = sizeof(VirtIOGPURutabagaPCI),
+>          .instance_init = virtio_gpu_rutabaga_initfn,
+> +        .secure = true,
 
-  type_info.secure = true;
+This is unusual, I wonder why it's not using the VirtioPCIDeviceTypeInfo
 
->  
->          type_register_static(&type_info);
->      }
-> diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
-> index 9faf0c74c3d4..96737ddb51ac 100644
-> --- a/hw/net/e1000e.c
-> +++ b/hw/net/e1000e.c
-> @@ -721,6 +721,7 @@ static const TypeInfo e1000e_info = {
->      .instance_size = sizeof(E1000EState),
->      .class_init = e1000e_class_init,
->      .instance_init = e1000e_instance_init,
+>          .interfaces = (const InterfaceInfo[]) {
+>              { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>              { },
+> diff --git a/hw/display/virtio-gpu-pci.c b/hw/display/virtio-gpu-pci.c
+> index 22659ca196b5..0b0d926a5b95 100644
+> --- a/hw/display/virtio-gpu-pci.c
+> +++ b/hw/display/virtio-gpu-pci.c
+> @@ -75,7 +75,8 @@ static const TypeInfo virtio_gpu_pci_base_info = {
+>      .parent = TYPE_VIRTIO_PCI,
+>      .instance_size = sizeof(VirtIOGPUPCIBase),
+>      .class_init = virtio_gpu_pci_base_class_init,
+> -    .abstract = true
+> +    .abstract = true,
 > +    .secure = true,
->      .interfaces = (const InterfaceInfo[]) {
->          { INTERFACE_PCIE_DEVICE },
->          { }
-> diff --git a/hw/net/igb.c b/hw/net/igb.c
-> index c076807e7110..0bd03efea0cd 100644
-> --- a/hw/net/igb.c
-> +++ b/hw/net/igb.c
-> @@ -635,6 +635,7 @@ static const TypeInfo igb_info = {
->      .instance_size = sizeof(IGBState),
->      .class_init = igb_class_init,
->      .instance_init = igb_instance_init,
-> +    .secure = true,
->      .interfaces = (const InterfaceInfo[]) {
->          { INTERFACE_PCIE_DEVICE },
->          { }
-> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-> index 16479284eea9..38bc16f312fb 100644
-> --- a/hw/net/rtl8139.c
-> +++ b/hw/net/rtl8139.c
-> @@ -3450,6 +3450,7 @@ static const TypeInfo rtl8139_info = {
->      .instance_size = sizeof(RTL8139State),
->      .class_init    = rtl8139_class_init,
->      .instance_init = rtl8139_instance_init,
-> +    .secure        = true,
->      .interfaces = (const InterfaceInfo[]) {
->          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->          { },
-> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
-> index 550848307d16..c7ac58273c6f 100644
-> --- a/hw/net/spapr_llan.c
-> +++ b/hw/net/spapr_llan.c
-> @@ -873,6 +873,7 @@ static const TypeInfo spapr_vlan_info = {
->      .class_init    = spapr_vlan_class_init,
->      .instance_init = spapr_vlan_instance_init,
->      .instance_finalize = spapr_vlan_instance_finalize,
-> +    .secure        = true,
+
+This is a base class, probably doesn't need marking.
+
 >  };
->  
->  static void spapr_vlan_register_types(void)
+>  module_obj(TYPE_VIRTIO_GPU_PCI_BASE);
+>  module_kconfig(VIRTIO_PCI);
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 6f5db5fc42b7..cd5fe8f1d8d8 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -2520,6 +2520,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+>          .name = t->generic_name,
+>          .parent = base_type_info.name,
+>          .class_init = virtio_pci_generic_class_init,
+> +        .secure = true,
+>          .interfaces = (const InterfaceInfo[]) {
+>              { INTERFACE_PCIE_DEVICE },
+>              { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+> @@ -2555,6 +2556,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+>              .name          = t->non_transitional_name,
+>              .parent        = base_type_info.name,
+>              .instance_init = virtio_pci_non_transitional_instance_init,
+> +            .secure = true,
+>              .interfaces = (const InterfaceInfo[]) {
+>                  { INTERFACE_PCIE_DEVICE },
+>                  { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+> @@ -2569,6 +2571,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+>              .name          = t->transitional_name,
+>              .parent        = base_type_info.name,
+>              .instance_init = virtio_pci_transitional_instance_init,
+> +            .secure = true,
+>              .interfaces = (const InterfaceInfo[]) {
+>                  /*
+>                   * Transitional virtio devices work only as Conventional PCI
 
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+otherwise lgtm
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
